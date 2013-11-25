@@ -33,6 +33,8 @@ import com.esofthead.mycollab.module.crm.service.CallService;
 import com.esofthead.mycollab.module.crm.service.CrmNotificationSettingService;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.user.UserLinkUtils;
+import com.esofthead.mycollab.module.user.domain.SimpleUser;
+import com.esofthead.mycollab.schedule.ScheduleUserTimeZoneUtils;
 import com.esofthead.mycollab.schedule.email.crm.CallRelayEmailNotificationAction;
 
 @Component
@@ -57,7 +59,7 @@ public class CallRelayEmailNotificationActionImpl extends
 
 	@Override
 	protected TemplateGenerator templateGeneratorForCreateAction(
-			SimpleRelayEmailNotification emailNotification) {
+			SimpleRelayEmailNotification emailNotification, SimpleUser user) {
 		SimpleCall simpleCall = callService.findById(
 				emailNotification.getTypeid(),
 				emailNotification.getSaccountid());
@@ -69,6 +71,8 @@ public class CallRelayEmailNotificationActionImpl extends
 					"Call: \"" + subject + "\" has been created",
 					"templates/email/crm/callCreatedNotifier.mt");
 
+			ScheduleUserTimeZoneUtils.formatDateTimeZone(simpleCall,
+					user.getTimezone(), new String[] { "startdate" });
 			templateGenerator.putVariable("simpleCall", simpleCall);
 			templateGenerator.putVariable("hyperLinks",
 					constructHyperLinks(simpleCall));
@@ -97,7 +101,7 @@ public class CallRelayEmailNotificationActionImpl extends
 
 	@Override
 	protected TemplateGenerator templateGeneratorForUpdateAction(
-			SimpleRelayEmailNotification emailNotification) {
+			SimpleRelayEmailNotification emailNotification, SimpleUser user) {
 		SimpleCall simpleCall = callService.findById(
 				emailNotification.getTypeid(),
 				emailNotification.getSaccountid());
@@ -107,6 +111,8 @@ public class CallRelayEmailNotificationActionImpl extends
 		TemplateGenerator templateGenerator = new TemplateGenerator("Call: \""
 				+ subject + "...\" has been updated",
 				"templates/email/crm/callUpdatedNotifier.mt");
+		ScheduleUserTimeZoneUtils.formatDateTimeZone(simpleCall,
+				user.getTimezone(), new String[] { "startdate" });
 		templateGenerator.putVariable("simpleCall", simpleCall);
 		templateGenerator.putVariable("hyperLinks",
 				constructHyperLinks(simpleCall));
@@ -119,6 +125,8 @@ public class CallRelayEmailNotificationActionImpl extends
 					.generatePreviewFullUserLink(
 							getSiteUrl(simpleCall.getSaccountid()),
 							auditLog.getPosteduser()));
+			ScheduleUserTimeZoneUtils.formatDate(auditLog, user.getTimezone(),
+					new String[] { "birthday" });
 			templateGenerator.putVariable("historyLog", auditLog);
 
 			templateGenerator.putVariable("mapper", mapper);
@@ -128,7 +136,7 @@ public class CallRelayEmailNotificationActionImpl extends
 
 	@Override
 	protected TemplateGenerator templateGeneratorForCommentAction(
-			SimpleRelayEmailNotification emailNotification) {
+			SimpleRelayEmailNotification emailNotification, SimpleUser user) {
 		SimpleCall simpleCall = callService.findById(
 				emailNotification.getTypeid(),
 				emailNotification.getSaccountid());

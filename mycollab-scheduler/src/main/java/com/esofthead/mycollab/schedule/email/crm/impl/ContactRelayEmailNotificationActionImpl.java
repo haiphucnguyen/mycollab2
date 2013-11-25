@@ -33,6 +33,8 @@ import com.esofthead.mycollab.module.crm.service.ContactService;
 import com.esofthead.mycollab.module.crm.service.CrmNotificationSettingService;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.user.UserLinkUtils;
+import com.esofthead.mycollab.module.user.domain.SimpleUser;
+import com.esofthead.mycollab.schedule.ScheduleUserTimeZoneUtils;
 import com.esofthead.mycollab.schedule.email.crm.ContactRelayEmailNotificationAction;
 
 @Component
@@ -57,7 +59,7 @@ public class ContactRelayEmailNotificationActionImpl extends
 
 	@Override
 	protected TemplateGenerator templateGeneratorForCreateAction(
-			SimpleRelayEmailNotification emailNotification) {
+			SimpleRelayEmailNotification emailNotification, SimpleUser user) {
 		SimpleContact simpleContact = contactService.findById(
 				emailNotification.getTypeid(),
 				emailNotification.getSaccountid());
@@ -69,6 +71,8 @@ public class ContactRelayEmailNotificationActionImpl extends
 					"Contact: \"" + subject + "\" has been created",
 					"templates/email/crm/contactCreatedNotifier.mt");
 
+			ScheduleUserTimeZoneUtils.formatDateTimeZone(simpleContact,
+					user.getTimezone(), new String[] { "birthday" });
 			templateGenerator.putVariable("simpleContact", simpleContact);
 			templateGenerator.putVariable("hyperLinks",
 					constructHyperLinks(simpleContact));
@@ -106,7 +110,7 @@ public class ContactRelayEmailNotificationActionImpl extends
 
 	@Override
 	protected TemplateGenerator templateGeneratorForUpdateAction(
-			SimpleRelayEmailNotification emailNotification) {
+			SimpleRelayEmailNotification emailNotification, SimpleUser user) {
 		SimpleContact simpleContact = contactService.findById(
 				emailNotification.getTypeid(),
 				emailNotification.getSaccountid());
@@ -117,6 +121,8 @@ public class ContactRelayEmailNotificationActionImpl extends
 		TemplateGenerator templateGenerator = new TemplateGenerator(
 				"Contact: \"" + subject + "...\" has been updated",
 				"templates/email/crm/contactUpdatedNotifier.mt");
+		ScheduleUserTimeZoneUtils.formatDateTimeZone(simpleContact,
+				user.getTimezone(), new String[] { "birthday" });
 		templateGenerator.putVariable("simpleContact", simpleContact);
 		templateGenerator.putVariable("hyperLinks",
 				constructHyperLinks(simpleContact));
@@ -125,6 +131,9 @@ public class ContactRelayEmailNotificationActionImpl extends
 			SimpleAuditLog auditLog = auditLogService.findLatestLog(
 					emailNotification.getTypeid(),
 					emailNotification.getSaccountid());
+
+			ScheduleUserTimeZoneUtils.formatDate(auditLog, user.getTimezone(),
+					new String[] { "birthday" });
 			templateGenerator.putVariable("postedUserURL", UserLinkUtils
 					.generatePreviewFullUserLink(
 							getSiteUrl(simpleContact.getSaccountid()),
@@ -138,7 +147,7 @@ public class ContactRelayEmailNotificationActionImpl extends
 
 	@Override
 	protected TemplateGenerator templateGeneratorForCommentAction(
-			SimpleRelayEmailNotification emailNotification) {
+			SimpleRelayEmailNotification emailNotification, SimpleUser user) {
 		int accountRecordId = emailNotification.getTypeid();
 		SimpleContact simpleContact = contactService.findById(accountRecordId,
 				emailNotification.getSaccountid());

@@ -33,6 +33,7 @@ import com.esofthead.mycollab.module.crm.service.CrmNotificationSettingService;
 import com.esofthead.mycollab.module.crm.service.LeadService;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.user.UserLinkUtils;
+import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.schedule.email.crm.LeadRelayEmailNotificationAction;
 
 @Component
@@ -57,7 +58,7 @@ public class LeadRelayEmailNotificationActionImpl extends
 
 	@Override
 	protected TemplateGenerator templateGeneratorForCreateAction(
-			SimpleRelayEmailNotification emailNotification) {
+			SimpleRelayEmailNotification emailNotification, SimpleUser user) {
 		SimpleLead simpleLead = leadService.findById(
 				emailNotification.getTypeid(),
 				emailNotification.getSaccountid());
@@ -98,7 +99,7 @@ public class LeadRelayEmailNotificationActionImpl extends
 
 	@Override
 	protected TemplateGenerator templateGeneratorForUpdateAction(
-			SimpleRelayEmailNotification emailNotification) {
+			SimpleRelayEmailNotification emailNotification, SimpleUser user) {
 		SimpleLead simpleLead = leadService.findById(
 				emailNotification.getTypeid(),
 				emailNotification.getSaccountid());
@@ -129,7 +130,7 @@ public class LeadRelayEmailNotificationActionImpl extends
 
 	@Override
 	protected TemplateGenerator templateGeneratorForCommentAction(
-			SimpleRelayEmailNotification emailNotification) {
+			SimpleRelayEmailNotification emailNotification, SimpleUser user) {
 		SimpleLead simpleLead = leadService.findById(
 				emailNotification.getTypeid(),
 				emailNotification.getSaccountid());
