@@ -18,7 +18,7 @@ package com.esofthead.mycollab.vaadin.events;
 
 /**
  * 
- *
+ * Popup action handler of table
  */
 public interface TablePopupActionHandler {
 	public static final String MAIL_ACTION = "mail";

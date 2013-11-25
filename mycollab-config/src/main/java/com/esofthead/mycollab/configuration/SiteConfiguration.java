@@ -75,14 +75,19 @@ public class SiteConfiguration {
 
 		// load sharing options
 		SharingOptions shareOptions = new SharingOptions();
-		shareOptions.setFacebookUrl(ApplicationProperties
-				.getString(ApplicationProperties.FACEBOOK_URL));
-		shareOptions.setTwitterUrl(ApplicationProperties
-				.getString(ApplicationProperties.TWITTER_URL));
-		shareOptions.setLinkedinUrl(ApplicationProperties
-				.getString(ApplicationProperties.LINKEDIN_URL));
-		shareOptions.setGoogleplusUrl(ApplicationProperties
-				.getString(ApplicationProperties.GOOGLE_URL));
+		shareOptions.setFacebookUrl(ApplicationProperties.getString(
+				ApplicationProperties.FACEBOOK_URL,
+				"https://www.facebook.com/mycollab2"));
+		shareOptions.setTwitterUrl(ApplicationProperties.getString(
+				ApplicationProperties.TWITTER_URL,
+				"https://twitter.com/mycollabdotcom"));
+		shareOptions.setLinkedinUrl(ApplicationProperties.getString(
+				ApplicationProperties.LINKEDIN_URL,
+				"http://www.linkedin.com/company/mycollab"));
+		shareOptions
+				.setGoogleplusUrl(ApplicationProperties
+						.getString(ApplicationProperties.GOOGLE_URL,
+								"https://plus.google.com/u/0/b/112053350736358775306/+Mycollab/about/p/pub"));
 
 		instance.sharingOptions = shareOptions;
 
