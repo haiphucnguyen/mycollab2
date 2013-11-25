@@ -46,7 +46,7 @@ public class DateTimeUtils {
 			"MM/dd/yyyy");
 
 	private static SimpleDateFormat simpleDateTimeFormat = new SimpleDateFormat(
-			"MM/dd/yyyy HH:mm:ss Z");
+			"MM/dd/yyyy hh:mm aa");
 
 	/**
 	 * Trim hour-minute-second of date instance value to zero.
