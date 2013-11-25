@@ -134,16 +134,17 @@ public class ProjectActivityStreamPagedList
 					String arg9 = "'" + AppContext.getSiteUrl() + "tooltip/'";
 					String arg10 = "'" + activityStream.getSaccountid() + "'";
 					String arg11 = "'" + AppContext.getSiteUrl() + "'";
-					String arg12 = activityStream.getNamefield();
-					String arg13 = idStickyToolTipDiv;
-					String arg14 = idToopTipDiv;
-					String arg15 = idDivSeverData;
+					String arg12 = AppContext.getSession().getTimezone();
+					String arg13 = activityStream.getNamefield();
+					String arg14 = idStickyToolTipDiv;
+					String arg15 = idToopTipDiv;
+					String arg16 = idDivSeverData;
 					content = LocalizationHelper
 							.getMessage(
 									ProjectCommonI18nEnum.FEED_USER_ACTIVITY_CREATE_ACTION_TITLE,
 									arg0, arg1, arg2, arg3, arg4, arg5, arg6,
 									arg7, arg8, arg9, arg10, arg11, arg12,
-									arg13, arg14, arg15);
+									arg13, arg14, arg15, arg16);
 				} else if (ActivityStreamConstants.ACTION_UPDATE
 						.equals(activityStream.getAction())) {
 					// tooltip id is = tooltip + dateTime + typeId
@@ -170,16 +171,17 @@ public class ProjectActivityStreamPagedList
 					String arg9 = "'" + AppContext.getSiteUrl() + "tooltip/'";
 					String arg10 = "'" + activityStream.getSaccountid() + "'";
 					String arg11 = "'" + AppContext.getSiteUrl() + "'";
-					String arg12 = activityStream.getNamefield();
-					String arg13 = idStickyToolTipDiv;
-					String arg14 = idToopTipDiv;
-					String arg15 = idDivSeverData;
+					String arg12 = AppContext.getSession().getTimezone();
+					String arg13 = activityStream.getNamefield();
+					String arg14 = idStickyToolTipDiv;
+					String arg15 = idToopTipDiv;
+					String arg16 = idDivSeverData;
 					content = LocalizationHelper
 							.getMessage(
 									ProjectCommonI18nEnum.FEED_USER_ACTIVITY_UPDATE_ACTION_TITLE,
 									arg0, arg1, arg2, arg3, arg4, arg5, arg6,
 									arg7, arg8, arg9, arg10, arg11, arg12,
-									arg13, arg14, arg15);
+									arg13, arg14, arg15, arg16);
 					log.debug("CONTENT: " + content);
 					if (activityStream.getAssoAuditLog() != null) {
 						content += ProjectActivityStreamGenerator

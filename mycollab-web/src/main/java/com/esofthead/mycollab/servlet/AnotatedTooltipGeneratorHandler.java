@@ -43,51 +43,53 @@ public class AnotatedTooltipGeneratorHandler extends GenericServlet {
 			Integer sAccountId = Integer.parseInt(request
 					.getParameter("sAccountId"));
 			String siteURL = request.getParameter("siteURL");
+			String timeZone = request.getParameter("timeZone");
 
 			String html = "";
 			if ("Bug".equals(type)) {
 				BugService service = ApplicationContextUtil
 						.getSpringBean(BugService.class);
 				SimpleBug bug = service.findById(typeid, sAccountId);
-				html = ProjectTooltipGenerator.generateToolTipBug(bug, siteURL);
+				html = ProjectTooltipGenerator.generateToolTipBug(bug, siteURL,
+						timeZone);
 			} else if ("Task".equals(type)) {
 				ProjectTaskService service = ApplicationContextUtil
 						.getSpringBean(ProjectTaskService.class);
 				SimpleTask task = service.findById(typeid, sAccountId);
 				html = ProjectTooltipGenerator.generateToolTipTask(task,
-						siteURL);
+						siteURL, timeZone);
 			} else if ("Risk".equals(type)) {
 				RiskService service = ApplicationContextUtil
 						.getSpringBean(RiskService.class);
 				SimpleRisk risk = service.findById(typeid, sAccountId);
 				html = ProjectTooltipGenerator.generateToolTipRisk(risk,
-						siteURL);
+						siteURL, timeZone);
 			} else if ("Problem".equals(type)) {
 				ProblemService service = ApplicationContextUtil
 						.getSpringBean(ProblemService.class);
 				SimpleProblem problem = service.findById(typeid, sAccountId);
 				html = ProjectTooltipGenerator.generateToolTipProblem(problem,
-						siteURL);
+						siteURL, timeZone);
 			} else if ("Version".equals(type)) {
 				VersionService service = ApplicationContextUtil
 						.getSpringBean(VersionService.class);
 				SimpleVersion version = service.findById(typeid, sAccountId);
 				html = ProjectTooltipGenerator.generateToolTipVersion(version,
-						siteURL);
+						siteURL, timeZone);
 			} else if ("Component".equals(type)) {
 				ComponentService service = ApplicationContextUtil
 						.getSpringBean(ComponentService.class);
 				SimpleComponent component = service
 						.findById(typeid, sAccountId);
 				html = ProjectTooltipGenerator.generateToolTipComponent(
-						component, siteURL);
+						component, siteURL, timeZone);
 			} else if ("StandUp".equals(type)) {
 				StandupReportService service = ApplicationContextUtil
 						.getSpringBean(StandupReportService.class);
 				SimpleStandupReport standup = service.findStandupReportById(
 						typeid, sAccountId);
 				html = ProjectTooltipGenerator.generateToolTipStandUp(standup,
-						siteURL);
+						siteURL, timeZone);
 			}
 			PrintWriter out = response.getWriter();
 			out.println(html);

@@ -15,7 +15,6 @@ import com.esofthead.mycollab.module.tracker.domain.SimpleComponent;
 import com.esofthead.mycollab.module.tracker.domain.SimpleVersion;
 import com.esofthead.mycollab.module.user.UserLinkUtils;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
-import com.esofthead.mycollab.web.AppContext;
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.H3;
@@ -27,11 +26,12 @@ public class ProjectTooltipGenerator {
 	private static Logger log = LoggerFactory
 			.getLogger(ProjectTooltipGenerator.class);
 
-	public static String generateToolTipTask(SimpleTask task, String siteURL) {
+	public static String generateToolTipTask(SimpleTask task, String siteURL,
+			String timeZone) {
 		try {
 			if (task == null)
 				return null;
-			Div div = new Div();
+			Div div = new Div().setStyle("background-color: #FDFDEE;");
 			H3 taksName = new H3();
 			taksName.appendText(Jsoup.parse(task.getTaskname()).html());
 			div.appendChild(taksName);
@@ -45,16 +45,14 @@ public class ProjectTooltipGenerator {
 							.appendText("Start Date:")).appendChild(
 					new Td().appendText(DateTimeUtils
 							.converToStringWithUserTimeZone(
-									task.getStartdate(), AppContext
-											.getSession().getTimezone())));
+									task.getStartdate(), timeZone)));
 			trRow1.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
 							.appendText("Actual Start Date:")).appendChild(
 					new Td().appendText(DateTimeUtils
-							.converToStringWithUserTimeZone(task
-									.getActualstartdate(), AppContext
-									.getSession().getTimezone())));
+							.converToStringWithUserTimeZone(
+									task.getActualstartdate(), timeZone)));
 
 			Tr trRow2 = new Tr();
 			trRow2.appendChild(
@@ -63,15 +61,14 @@ public class ProjectTooltipGenerator {
 							.appendText("End Date:")).appendChild(
 					new Td().appendText(DateTimeUtils
 							.converToStringWithUserTimeZone(task.getEnddate(),
-									AppContext.getSession().getTimezone())));
+									timeZone)));
 			trRow2.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
 							.appendText("Actual End Date:")).appendChild(
 					new Td().appendText(DateTimeUtils
-							.converToStringWithUserTimeZone(task
-									.getActualenddate(), AppContext
-									.getSession().getTimezone())));
+							.converToStringWithUserTimeZone(
+									task.getActualenddate(), timeZone)));
 
 			Tr trRow3 = new Tr();
 			trRow3.appendChild(
@@ -80,7 +77,7 @@ public class ProjectTooltipGenerator {
 							.appendText("Deadline:")).appendChild(
 					new Td().appendText(DateTimeUtils
 							.converToStringWithUserTimeZone(task.getDeadline(),
-									AppContext.getSession().getTimezone())));
+									timeZone)));
 			trRow3.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
@@ -165,11 +162,12 @@ public class ProjectTooltipGenerator {
 		}
 	}
 
-	public static String generateToolTipBug(SimpleBug bug, String siteURL) {
+	public static String generateToolTipBug(SimpleBug bug, String siteURL,
+			String timeZone) {
 		try {
 			if (bug == null)
 				return null;
-			Div div = new Div();
+			Div div = new Div().setStyle("background-color: #FDFDEE;");
 			H3 bugSummary = new H3();
 			bugSummary.appendText(Jsoup.parse(bug.getSummary()).html());
 			div.appendChild(bugSummary);
@@ -239,15 +237,14 @@ public class ProjectTooltipGenerator {
 							.appendText("Due Date:")).appendChild(
 					new Td().appendText(DateTimeUtils
 							.converToStringWithUserTimeZone(bug.getDuedate(),
-									AppContext.getSession().getTimezone())));
+									timeZone)));
 			trRow5.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
 							.appendText("Created Time:")).appendChild(
 					new Td().appendText(DateTimeUtils
-							.converToStringWithUserTimeZone(bug
-									.getCreatedtime(), AppContext.getSession()
-									.getTimezone())));
+							.converToStringWithUserTimeZone(
+									bug.getCreatedtime(), timeZone)));
 
 			// Assignee
 
@@ -338,9 +335,10 @@ public class ProjectTooltipGenerator {
 		}
 	}
 
-	public static String generateToolTipRisk(SimpleRisk risk, String siteURL) {
+	public static String generateToolTipRisk(SimpleRisk risk, String siteURL,
+			String timeZone) {
 		try {
-			Div div = new Div();
+			Div div = new Div().setStyle("background-color: #FDFDEE;");
 			H3 riskName = new H3();
 			riskName.appendText(risk.getRiskname());
 			div.appendChild(riskName);
@@ -375,8 +373,7 @@ public class ProjectTooltipGenerator {
 											new A().setHref(
 													(risk.getRaisedbyuser() != null) ? UserLinkUtils
 															.generatePreviewFullUserLink(
-																	AppContext
-																			.getSiteUrl(),
+																	siteURL,
 																	risk.getRaisedbyuser())
 															: "")
 													.appendChild(
@@ -409,8 +406,7 @@ public class ProjectTooltipGenerator {
 											new A().setHref(
 													(risk.getAssigntouser() != null) ? UserLinkUtils
 															.generatePreviewFullUserLink(
-																	AppContext
-																			.getSiteUrl(),
+																	siteURL,
 																	risk.getAssigntouser())
 															: "")
 													.appendChild(
@@ -435,10 +431,10 @@ public class ProjectTooltipGenerator {
 			trRow3.appendChild(
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
-							.appendText("Date due:"))
-					.appendChild(
-							new Td().appendText(AppContext.formatDate(risk
-									.getDatedue())));
+							.appendText("Date due:")).appendChild(
+					new Td().appendText(DateTimeUtils
+							.converToStringWithUserTimeZone(risk.getDatedue(),
+									timeZone)));
 			trRow3.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
@@ -481,14 +477,17 @@ public class ProjectTooltipGenerator {
 			div.appendChild(table);
 			return div.write();
 		} catch (Exception e) {
+			log.error(
+					"Error while generate tooltip for Risk in TooptipGeneratorServlet",
+					e);
 			return null;
 		}
 	}
 
 	public static String generateToolTipProblem(SimpleProblem problem,
-			String siteURL) {
+			String siteURL, String timeZone) {
 		try {
-			Div div = new Div();
+			Div div = new Div().setStyle("background-color: #FDFDEE;");
 			H3 problemName = new H3();
 			problemName.appendText(problem.getIssuename());
 			div.appendChild(problemName);
@@ -523,8 +522,7 @@ public class ProjectTooltipGenerator {
 											new A().setHref(
 													(problem.getRaisedbyuser() != null) ? UserLinkUtils
 															.generatePreviewFullUserLink(
-																	AppContext
-																			.getSiteUrl(),
+																	siteURL,
 																	problem.getRaisedbyuser())
 															: "")
 													.appendChild(
@@ -557,8 +555,7 @@ public class ProjectTooltipGenerator {
 											new A().setHref(
 													(problem.getAssigntouser() != null) ? UserLinkUtils
 															.generatePreviewFullUserLink(
-																	AppContext
-																			.getSiteUrl(),
+																	siteURL,
 																	problem.getAssigntouser())
 															: "")
 													.appendChild(
@@ -584,8 +581,9 @@ public class ProjectTooltipGenerator {
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
 							.appendText("Date due:")).appendChild(
-					new Td().appendText(AppContext.formatDate(problem
-							.getDatedue())));
+					new Td().appendText(DateTimeUtils
+							.converToStringWithUserTimeZone(
+									problem.getDatedue(), timeZone)));
 			trRow3.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
@@ -630,14 +628,17 @@ public class ProjectTooltipGenerator {
 			div.appendChild(table);
 			return div.write();
 		} catch (Exception e) {
+			log.error(
+					"Error while generator tooltip for Problem in TooltipGenertor Servlet",
+					e);
 			return null;
 		}
 	}
 
 	public static String generateToolTipVersion(SimpleVersion version,
-			String siteURL) {
+			String siteURL, String timeZone) {
 		try {
-			Div div = new Div();
+			Div div = new Div().setStyle("background-color: #FDFDEE;");
 			H3 versionName = new H3();
 			versionName
 					.appendText(Jsoup.parse(version.getVersionname()).html());
@@ -672,8 +673,9 @@ public class ProjectTooltipGenerator {
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
 							.appendText("Due Date:")).appendChild(
-					new Td().appendText(AppContext.formatDate(version
-							.getDuedate())));
+					new Td().appendText(DateTimeUtils
+							.converToStringWithUserTimeZone(
+									version.getDuedate(), timeZone)));
 
 			table.appendChild(trRow1);
 			table.appendChild(trRow2);
@@ -687,9 +689,9 @@ public class ProjectTooltipGenerator {
 	}
 
 	public static String generateToolTipComponent(SimpleComponent component,
-			String siteURL) {
+			String siteURL, String timeZone) {
 		try {
-			Div div = new Div();
+			Div div = new Div().setStyle("background-color: #FDFDEE;");
 			H3 componentName = new H3();
 			componentName.appendText(Jsoup.parse(component.getComponentname())
 					.html());
@@ -732,8 +734,7 @@ public class ProjectTooltipGenerator {
 											new A().setHref(
 													(component.getUserlead() != null) ? UserLinkUtils
 															.generatePreviewFullUserLink(
-																	AppContext
-																			.getSiteUrl(),
+																	siteURL,
 																	component
 																			.getUserlead())
 															: "")
@@ -762,7 +763,7 @@ public class ProjectTooltipGenerator {
 	}
 
 	public static String generateToolTipStandUp(SimpleStandupReport standup,
-			String siteURL) {
+			String siteURL, String timeZone) {
 		return null;
 	}
 }

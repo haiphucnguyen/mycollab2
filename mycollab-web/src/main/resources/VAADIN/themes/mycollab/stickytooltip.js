@@ -146,7 +146,7 @@ var stickytooltip={
 	}
 }
 
-function overIt(dateTimeTypeIdStr, type, typeId, url, sAccountId, siteURL){
+function overIt(dateTimeTypeIdStr, type, typeId, url, sAccountId, siteURL, timeZone){
 	var idDIVserverdata = "serverdata" + dateTimeTypeIdStr;
 	var idStickyToolTipDiv = "mystickyTooltip"+dateTimeTypeIdStr;
 	var idTagA = "tagA"+ dateTimeTypeIdStr;
@@ -157,7 +157,7 @@ function overIt(dateTimeTypeIdStr, type, typeId, url, sAccountId, siteURL){
 		$.ajax({
 		      type: 'POST',
 		      url: url,
-		      data : { type: type, typeId: typeId , sAccountId : sAccountId, siteURL: siteURL},
+		      data : { type: type, typeId: typeId , sAccountId : sAccountId, siteURL: siteURL , timeZone: timeZone},
 		      success: function(data){
 		      	 if(data.trim()!= "null"){
 		      	 		$("#"+ idTagA).attr('data-tooltip', idStickyToolTipDiv);
