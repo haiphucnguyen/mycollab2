@@ -108,13 +108,33 @@ following features:
     or
 
       $MYCOLLAB_HOME/bin/mycollab.sh start
+      
+      
+(4.2) If you start MyCollab at the first time, MyCollab will ask you to enter database 
+information, email smtp information. Here are detail instruction of set up system 
+variables.
 
-(4.2) After startup, the default web applications included with MyCollab will be
+(4.2.1)
+
+(4.2.2) MyCollab requires MySQL schema to run, so first you must create a new schema instance 
+in MySQL by typing `CREATE SCHEMA `mycollab` DEFAULT CHARACTER SET utf8mb4 ;`
+
+You need to give MyCollab your created database schema as well as username and password with sufficient
+permission allows MyCollab can set up data
+
+(4.2.3) MyCollab have many schedule jobs to send notification by email to you and members in your
+ account, then it needs a SMTP account to do this job. This task is optional in case you want to 
+ receive MyCollab notifications of your assignments and many more types of notification MyCollab 
+ supported. 
+ 
+ 
+
+(4.3) After startup, the default web applications included with MyCollab will be
       available by visiting:
 
       http://localhost:8080/
 
-(4.3) Further information about configuring and running MyCollab can be found in
+(4.4) Further information about configuring and running MyCollab can be found in
       the documentation included here, as well as on the MyCollab web site:
 
       http://www.mycollab.com/
@@ -151,15 +171,15 @@ MyCollab install:
     matter) has laid claim to port 8080.  This is the default HTTP port that
     MyCollab attempts to bind to at startup.  To change this, open the file:
 
-       $MYCOLLAB_HOME/conf/server.xml
+       $MYCOLLAB_HOME/conf/mycollab.properties
 
-    and search for '8080'.  Change it to a port that isn't in use, and is
+    and search for 'server.port'.  Change it to a port that isn't in use, and is
     greater than 1024, as ports less than or equal to 1024 require superuser
     access to bind under UNIX.
 
     Restart MyCollab and you're in business.  Be sure that you replace the "8080"
     in the URL you're using to access MyCollab.  For example, if you change the
-    port to 1977, you would request the URL http://localhost:1977/ in your
+    port to 1979, you would request the URL http://localhost:1979/ in your
     browser.
 
 (2) The 'localhost' machine isn't found.  This could happen if you're behind a

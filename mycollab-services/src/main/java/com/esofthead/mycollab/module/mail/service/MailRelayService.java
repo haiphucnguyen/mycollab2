@@ -22,11 +22,27 @@ import com.esofthead.mycollab.common.domain.RelayEmailWithBLOBs;
 import com.esofthead.mycollab.core.dist.NotMobile;
 import com.esofthead.mycollab.core.persistence.service.IService;
 
+/**
+ * 
+ * @author haiphucnguyen
+ *
+ */
 @NotMobile
 public interface MailRelayService extends IService {
+	/**
+	 * 
+	 * @param toNames
+	 * @param toEmails
+	 * @param subject
+	 * @param bodyContent
+	 */
 	void saveRelayEmail(String[] toNames, String[] toEmails, String subject,
 			String bodyContent);
 
+	/**
+	 * 
+	 * @return
+	 */
 	List<RelayEmailWithBLOBs> getRelayEmails();
 
 	void cleanEmails();

@@ -20,7 +20,6 @@
  */
 package com.esofthead.mycollab.module.user.accountsettings.team.view;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -86,11 +85,10 @@ public class RoleAddViewImpl extends AbstractView implements RoleAddView {
 		private final Map<String, KeyCaptionComboBox> permissionControlsMap = new HashMap<String, KeyCaptionComboBox>();
 
 		@Override
-		public void setItemDataSource(final Item newDataSource,
-				final Collection<?> propertyIds) {
+		public void setItemDataSource(final Item newDataSource) {
 			this.setFormLayoutFactory(new RoleAddViewImpl.EditForm.FormLayoutFactory());
 			this.setFormFieldFactory(new RoleAddViewImpl.EditForm.EditFormFieldFactory());
-			super.setItemDataSource(newDataSource, propertyIds);
+			super.setItemDataSource(newDataSource);
 		}
 
 		private class FormLayoutFactory extends RoleFormLayoutFactory {

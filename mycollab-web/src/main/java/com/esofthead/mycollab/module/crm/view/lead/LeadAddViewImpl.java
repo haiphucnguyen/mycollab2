@@ -33,46 +33,46 @@ import com.vaadin.ui.Layout;
 
 @ViewComponent
 public class LeadAddViewImpl extends AbstractView implements
-        IFormAddView<Lead>, LeadAddView {
+		IFormAddView<Lead>, LeadAddView {
 
-    private static final long serialVersionUID = 1L;
-    private EditForm editForm;
-    private Lead lead;
+	private static final long serialVersionUID = 1L;
+	private EditForm editForm;
+	private Lead lead;
 
-    public LeadAddViewImpl() {
-        super();
-        editForm = new EditForm();
-        this.addComponent(editForm);
-    }
+	public LeadAddViewImpl() {
+		super();
+		editForm = new EditForm();
+		this.addComponent(editForm);
+	}
 
-    @Override
-    public void editItem(Lead item) {
-        this.lead = item;
-        editForm.setItemDataSource(new BeanItem<Lead>(lead));
-    }
+	@Override
+	public void editItem(Lead item) {
+		this.lead = item;
+		editForm.setItemDataSource(new BeanItem<Lead>(lead));
+	}
 
-    private class EditForm extends AdvancedEditBeanForm<Lead> {
+	private class EditForm extends AdvancedEditBeanForm<Lead> {
 
-        private static final long serialVersionUID = 1L;
+		private static final long serialVersionUID = 1L;
 
-        @Override
-        public void setItemDataSource(Item newDataSource,
-                Collection<?> propertyIds) {
-            this.setFormLayoutFactory(new FormLayoutFactory());
-            this.setFormFieldFactory(new LeadEditFormFieldFactory(lead));
-            super.setItemDataSource(newDataSource, propertyIds);
-        }
+		@Override
+		public void setItemDataSource(Item newDataSource) {
+			this.setFormLayoutFactory(new FormLayoutFactory());
+			this.setFormFieldFactory(new LeadEditFormFieldFactory(lead));
+			super.setItemDataSource(newDataSource);
+		}
 
-        class FormLayoutFactory extends LeadFormLayoutFactory {
+		class FormLayoutFactory extends LeadFormLayoutFactory {
 
-            private static final long serialVersionUID = 1L;
+			private static final long serialVersionUID = 1L;
 
-            public FormLayoutFactory() {
-                super((lead.getId() == null) ? "Create Lead" : lead.getLastname());
-            }
+			public FormLayoutFactory() {
+				super((lead.getId() == null) ? "Create Lead" : lead
+						.getLastname());
+			}
 
-            private Layout createButtonControls() {
-            	final HorizontalLayout controlPanel = new HorizontalLayout();
+			private Layout createButtonControls() {
+				final HorizontalLayout controlPanel = new HorizontalLayout();
 				final Layout controlButtons = (new EditFormControlsGenerator<Lead>(
 						EditForm.this)).createButtonControls();
 				controlButtons.setSizeUndefined();
@@ -81,22 +81,22 @@ public class LeadAddViewImpl extends AbstractView implements
 				controlPanel.setComponentAlignment(controlButtons,
 						Alignment.MIDDLE_CENTER);
 				return controlPanel;
-            }
+			}
 
-            @Override
-            protected Layout createTopPanel() {
-                return createButtonControls();
-            }
+			@Override
+			protected Layout createTopPanel() {
+				return createButtonControls();
+			}
 
-            @Override
-            protected Layout createBottomPanel() {
-                return createButtonControls();
-            }
-        }
-    }
+			@Override
+			protected Layout createBottomPanel() {
+				return createButtonControls();
+			}
+		}
+	}
 
-    @Override
-    public HasEditFormHandlers<Lead> getEditFormHandlers() {
-        return editForm;
-    }
+	@Override
+	public HasEditFormHandlers<Lead> getEditFormHandlers() {
+		return editForm;
+	}
 }

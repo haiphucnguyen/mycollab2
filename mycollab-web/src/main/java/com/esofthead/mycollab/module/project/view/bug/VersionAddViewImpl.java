@@ -20,8 +20,6 @@
  */
 package com.esofthead.mycollab.module.project.view.bug;
 
-import java.util.Collection;
-
 import com.esofthead.mycollab.module.tracker.domain.Version;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
@@ -67,11 +65,10 @@ public class VersionAddViewImpl extends AbstractView implements VersionAddView {
 		private static final long serialVersionUID = 1L;
 
 		@Override
-		public void setItemDataSource(final Item newDataSource,
-				final Collection<?> propertyIds) {
+		public void setItemDataSource(final Item newDataSource) {
 			this.setFormLayoutFactory(new FormLayoutFactory());
 			this.setFormFieldFactory(new EditFormFieldFactory());
-			super.setItemDataSource(newDataSource, propertyIds);
+			super.setItemDataSource(newDataSource);
 		}
 
 		private class FormLayoutFactory extends VersionFormLayoutFactory {

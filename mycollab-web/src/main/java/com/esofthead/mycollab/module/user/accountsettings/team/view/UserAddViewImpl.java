@@ -20,7 +20,6 @@
  */
 package com.esofthead.mycollab.module.user.accountsettings.team.view;
 
-import java.util.Collection;
 import java.util.Date;
 
 import org.vaadin.addon.customfield.CustomField;
@@ -121,12 +120,11 @@ public class UserAddViewImpl extends AbstractView implements UserAddView {
 		}
 
 		@Override
-		public void setItemDataSource(final Item newDataSource,
-				final Collection<?> propertyIds) {
+		public void setItemDataSource(final Item newDataSource) {
 			this.setFormLayoutFactory(new UserAddViewImpl.AdvanceEditForm.FormLayoutFactory(
 					isLoadEdit));
 			this.setFormFieldFactory(new UserAddViewImpl.AdvanceEditForm.EditFormFieldFactory());
-			super.setItemDataSource(newDataSource, propertyIds);
+			super.setItemDataSource(newDataSource);
 		}
 
 		private class FormLayoutFactory extends ProfileFormLayoutFactory {

@@ -5,6 +5,11 @@ import java.util.List;
 import com.esofthead.mycollab.common.domain.MailRecipientField;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 
+/**
+ * 
+ * @author haiphucnguyen
+ *
+ */
 public interface IMailer {
 	void sendHTMLMail(String fromEmail, String fromName,
 			List<MailRecipientField> toEmail, List<MailRecipientField> ccEmail,

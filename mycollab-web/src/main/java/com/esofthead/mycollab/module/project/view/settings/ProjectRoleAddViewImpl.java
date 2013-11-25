@@ -20,7 +20,6 @@
  */
 package com.esofthead.mycollab.module.project.view.settings;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -83,11 +82,10 @@ public class ProjectRoleAddViewImpl extends AbstractView implements
 		private final Map<String, AccessPermissionComboBox> permissionControlsMap = new HashMap<String, AccessPermissionComboBox>();
 
 		@Override
-		public void setItemDataSource(final Item newDataSource,
-				final Collection<?> propertyIds) {
+		public void setItemDataSource(final Item newDataSource) {
 			this.setFormLayoutFactory(new FormLayoutFactory());
 			this.setFormFieldFactory(new EditFormFieldFactory());
-			super.setItemDataSource(newDataSource, propertyIds);
+			super.setItemDataSource(newDataSource);
 		}
 
 		private class FormLayoutFactory extends ProjectRoleFormLayoutFactory {
