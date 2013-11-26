@@ -3,9 +3,7 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <name>mycollab-flex-generator</name>
-    <groupId>com.esofthead.mycollab</groupId>
     <artifactId>mycollab-flex-generator</artifactId>
-    <version>2.0-SNAPSHOT</version>
     <parent>
         <groupId>com.esofthead.mycollab</groupId>
         <artifactId>parent-premium</artifactId>
@@ -17,12 +15,12 @@
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-core</artifactId>
-            <version>2.0-SNAPSHOT</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-dao</artifactId>
-            <version>2.0-SNAPSHOT</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.maven</groupId>

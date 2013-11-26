@@ -3,23 +3,11 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <name>mycollab-parent-premium</name>
-    <groupId>com.esofthead.mycollab</groupId>
     <artifactId>parent-premium</artifactId>
-    <version>2.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <parent>
         <groupId>com.esofthead.mycollab</groupId>
         <artifactId>parent</artifactId>
-        <version>2.0-SNAPSHOT</version>
+        <version>2.0.0</version>
     </parent>
-    <!-- 
-    <modules>
-        <module>../mycollab-services-premium</module>
-        <module>../mycollab-flex-generator</module>
-        <module>../mycollab-jetty-session-premium</module>
-        <module>../mycollab-caching-premium</module>
-        <module>../mycollab-web-premium</module>
-        <module>../mycollab-app-premium</module>
-    </modules>
-    -->
 </project>
