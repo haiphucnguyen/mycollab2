@@ -248,7 +248,8 @@ public class ProblemListViewImpl extends AbstractView implements
 
 		this.tableActionControls = new PopupButtonControl(
 				TablePopupActionHandler.DELETE_ACTION, deleteBtn);
-		this.tableActionControls.addOptionItem(TablePopupActionHandler.MAIL_ACTION,
+		this.tableActionControls.addOptionItem(
+				TablePopupActionHandler.MAIL_ACTION,
 				LocalizationHelper.getMessage(GenericI18Enum.BUTTON_MAIL));
 		this.tableActionControls
 				.addOptionItem(TablePopupActionHandler.EXPORT_CSV_ACTION,
@@ -346,7 +347,7 @@ public class ProblemListViewImpl extends AbstractView implements
 					.setStyle(
 							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 					.appendText(
-							StringUtils.getStringFieldValue(problem
+							StringUtils.getStringRemoveHtmlTag(problem
 									.getDescription()));
 			trRow5_value.setAttribute("colspan", "3");
 

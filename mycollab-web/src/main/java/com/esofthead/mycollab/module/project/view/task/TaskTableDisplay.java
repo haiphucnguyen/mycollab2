@@ -409,7 +409,7 @@ public class TaskTableDisplay extends
 			div.appendChild(taksName);
 
 			com.hp.gagawa.java.elements.Table table = new com.hp.gagawa.java.elements.Table();
-			table.setStyle("padding-left:10px; width :500px; color: #5a5a5a; font-size:12px;");
+			table.setStyle("padding-left:10px; width :500px; color: #5a5a5a; font-size:11px;");
 			Tr trRow1 = new Tr();
 			trRow1.appendChild(
 					new Td().setStyle(
@@ -489,12 +489,14 @@ public class TaskTableDisplay extends
 									"width: 200px;word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 									.appendChild(
 											new A().setHref(
-													AppContext.getSiteUrl()
+													(task.getTasklistid() != null) ? AppContext
+															.getSiteUrl()
 															+ "#"
 															+ ProjectLinkUtils
 																	.generateTaskGroupPreviewLink(
 																			task.getProjectid(),
-																			task.getTasklistid()))
+																			task.getTasklistid())
+															: "")
 													.appendText(
 															StringUtils
 																	.getStringFieldValue(task
@@ -517,7 +519,7 @@ public class TaskTableDisplay extends
 					.setStyle(
 							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 					.appendText(
-							StringUtils.getStringFieldValue(task.getNotes()));
+							StringUtils.getStringRemoveHtmlTag(task.getNotes()));
 			trRow6_value.setAttribute("colspan", "3");
 
 			trRow6.appendChild(

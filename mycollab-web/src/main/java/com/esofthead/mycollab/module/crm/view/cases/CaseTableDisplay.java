@@ -23,6 +23,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.esofthead.mycollab.core.utils.StringUtils;
+import com.esofthead.mycollab.module.crm.CrmLinkGenerator;
 import com.esofthead.mycollab.module.crm.domain.SimpleCase;
 import com.esofthead.mycollab.module.crm.domain.criteria.CaseSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.CaseService;
@@ -188,7 +189,7 @@ public class CaseTableDisplay extends
 			div.appendChild(caseName);
 
 			com.hp.gagawa.java.elements.Table table = new com.hp.gagawa.java.elements.Table();
-			table.setStyle("padding-left:10px; width :500px; color: #5a5a5a; font-size:12px;");
+			table.setStyle("padding-left:10px; width :500px; color: #5a5a5a; font-size:11px;");
 			Tr trRow1 = new Tr();
 			trRow1.appendChild(
 					new Td().setStyle(
@@ -222,14 +223,28 @@ public class CaseTableDisplay extends
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
 							.appendText("Account Name:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(cases
-							.getAccountName())));
+					new Td().appendChild(new A().setHref(
+							(cases.getAccountid() != null) ? AppContext
+									.getSiteUrl()
+									+ "#"
+									+ CrmLinkGenerator
+											.generateAccountPreviewLink(cases
+													.getAccountid()) : "")
+							.appendText(
+									StringUtils.getStringFieldValue(cases
+											.getAccountName()))));
 			trRow3.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
-							.appendText("Email:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(cases
-							.getEmail())));
+							.appendText("Email:"))
+					.appendChild(
+							new Td().appendChild(new A().setHref(
+									(cases.getEmail() != null) ? "mailto:"
+											+ cases.getEmail() : "")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(cases
+															.getEmail()))));
 
 			Tr trRow4 = new Tr();
 			trRow4.appendChild(
@@ -270,7 +285,7 @@ public class CaseTableDisplay extends
 					.setStyle(
 							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 					.appendText(
-							StringUtils.getStringFieldValue(cases
+							StringUtils.getStringRemoveHtmlTag(cases
 									.getDescription()));
 			trRow5_value.setAttribute("colspan", "3");
 

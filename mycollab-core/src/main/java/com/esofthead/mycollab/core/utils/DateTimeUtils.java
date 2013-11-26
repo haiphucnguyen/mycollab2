@@ -96,6 +96,8 @@ public class DateTimeUtils {
 
 	public static String converToStringWithUserTimeZone(Date date,
 			String userTimeZone) {
+		if (date == null)
+			return "";
 		return DateTimeUtils.formatDate(date,
 				TimezoneMapper.getTimezone(userTimeZone).getTimezone());
 	}

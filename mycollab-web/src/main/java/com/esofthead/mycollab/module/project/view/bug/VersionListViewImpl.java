@@ -270,11 +270,11 @@ public class VersionListViewImpl extends AbstractView implements
 			div.appendChild(versionName);
 
 			com.hp.gagawa.java.elements.Table table = new com.hp.gagawa.java.elements.Table();
-			table.setStyle("padding-left:10px; width :400px; color: #5a5a5a; font-size:12px;");
+			table.setStyle("padding-left:10px; width :400px; color: #5a5a5a; font-size:11px;");
 			Tr trRow1 = new Tr();
 			trRow1.appendChild(
 					new Td().setStyle(
-							"width: 90px; vertical-align: top; text-align: right;")
+							"width: 100px; vertical-align: top; text-align: right;")
 							.appendText("Version Name:")).appendChild(
 					new Td().appendText(StringUtils.getStringFieldValue(version
 							.getVersionname())));
@@ -285,18 +285,18 @@ public class VersionListViewImpl extends AbstractView implements
 					.setStyle(
 							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 					.appendText(
-							StringUtils.getStringFieldValue(version
+							StringUtils.getStringRemoveHtmlTag(version
 									.getDescription()));
 			trRow2_value.setAttribute("colspan", "3");
 			trRow2.appendChild(
 					new Td().setStyle(
-							"width: 90px; vertical-align: top; text-align: right;")
+							"width: 100px; vertical-align: top; text-align: right;")
 							.appendText("Description:")).appendChild(
 					trRow2_value);
 			Tr trRow3 = new Tr();
 			trRow3.appendChild(
 					new Td().setStyle(
-							"width: 90px; vertical-align: top; text-align: right;")
+							"width: 100px; vertical-align: top; text-align: right;")
 							.appendText("Due Date:")).appendChild(
 					new Td().appendText(AppContext.formatDate(version
 							.getDuedate())));

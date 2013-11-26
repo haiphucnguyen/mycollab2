@@ -28,6 +28,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.esofthead.mycollab.core.utils.StringUtils;
+import com.esofthead.mycollab.module.crm.CrmLinkGenerator;
 import com.esofthead.mycollab.module.crm.domain.SimpleEvent;
 import com.esofthead.mycollab.module.crm.domain.criteria.EventSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.EventService;
@@ -185,7 +186,7 @@ public class EventTableDisplay extends
 			div.appendChild(eventName);
 
 			com.hp.gagawa.java.elements.Table table = new com.hp.gagawa.java.elements.Table();
-			table.setStyle("padding-left:10px; width :500px; color: #5a5a5a; font-size:12px;");
+			table.setStyle("padding-left:10px; width :500px; color: #5a5a5a; font-size:11px;");
 			Tr trRow1 = new Tr();
 			trRow1.appendChild(
 					new Td().setStyle(
@@ -226,10 +227,8 @@ public class EventTableDisplay extends
 					.setStyle(
 							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 					.appendText(
-							(meeting.getDescription() != null) ? (meeting
-									.getDescription().length() > 200) ? meeting
-									.getDescription().substring(0, 200)
-									: meeting.getDescription() : "");
+							StringUtils.getStringRemoveHtmlTag(meeting
+									.getDescription()));
 			trRow3_value.setAttribute("colspan", "3");
 
 			trRow3.appendChild(
@@ -256,7 +255,7 @@ public class EventTableDisplay extends
 			div.appendChild(callName);
 
 			com.hp.gagawa.java.elements.Table table = new com.hp.gagawa.java.elements.Table();
-			table.setStyle("padding-left:10px; width :500px; color: #5a5a5a; font-size:12px;");
+			table.setStyle("padding-left:10px; width :500px; color: #5a5a5a; font-size:11px;");
 			Tr trRow1 = new Tr();
 			trRow1.appendChild(
 					new Td().setStyle(
@@ -289,10 +288,8 @@ public class EventTableDisplay extends
 					.setStyle(
 							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 					.appendText(
-							(call.getDescription() != null) ? (call
-									.getDescription().length() > 200) ? call
-									.getDescription().substring(0, 200) : call
-									.getDescription() : "");
+							StringUtils.getStringRemoveHtmlTag(call
+									.getDescription()));
 			trRow3_value.setAttribute("colspan", "3");
 
 			trRow3.appendChild(
@@ -306,10 +303,8 @@ public class EventTableDisplay extends
 					.setStyle(
 							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 					.appendText(
-							(call.getCallResult() != null) ? (call
-									.getCallResult().length() > 200) ? call
-									.getCallResult().substring(0, 200) : call
-									.getCallResult() : "");
+							StringUtils.getStringRemoveHtmlTag(call
+									.getCallResult()));
 			trRow4_value.setAttribute("colspan", "3");
 
 			trRow4.appendChild(
@@ -335,7 +330,7 @@ public class EventTableDisplay extends
 			div.appendChild(eventName);
 
 			com.hp.gagawa.java.elements.Table table = new com.hp.gagawa.java.elements.Table();
-			table.setStyle("padding-left:10px; width :500px; color: #5a5a5a; font-size:12px;");
+			table.setStyle("padding-left:10px; width :500px; color: #5a5a5a; font-size:11px;");
 			Tr trRow1 = new Tr();
 			trRow1.appendChild(
 					new Td().setStyle(
@@ -369,9 +364,19 @@ public class EventTableDisplay extends
 					.appendChild(
 							new Td().setStyle(
 									"width:110px; vertical-align: top; text-align: left;")
-									.appendText(
-											StringUtils.getStringFieldValue(event
-													.getContactFullName())));
+									.appendChild(
+											new A().setHref(
+													(event.getContactId() != null) ? AppContext
+															.getSiteUrl()
+															+ "#"
+															+ CrmLinkGenerator
+																	.generateContactPreviewLink(event
+																			.getContactId())
+															: "")
+													.appendText(
+															StringUtils
+																	.getStringFieldValue(event
+																			.getContactFullName()))));
 
 			Tr trRow3 = new Tr();
 			trRow3.appendChild(
@@ -412,7 +417,7 @@ public class EventTableDisplay extends
 					.setStyle(
 							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 					.appendText(
-							StringUtils.getStringFieldValue(event
+							StringUtils.getStringRemoveHtmlTag(event
 									.getDescription()));
 			trRow4_value.setAttribute("colspan", "3");
 
