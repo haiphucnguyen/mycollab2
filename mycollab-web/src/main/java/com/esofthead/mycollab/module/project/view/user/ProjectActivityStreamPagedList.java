@@ -102,84 +102,80 @@ public class ProjectActivityStreamPagedList
 				}
 				String content = "";
 
+				// --------------Item hidden div tooltip----------------
 				String randomStrId = UUID.randomUUID().toString();
 				String idDivSeverData = "serverdata" + randomStrId + "";
 				String idToopTipDiv = "tooltip" + randomStrId + "";
-				String idStickyToolTipDiv = "mystickyTooltip"
-						+ randomStrId;
+				String idStickyToolTipDiv = "mystickyTooltip" + randomStrId;
 				String idtagA = "tagA" + randomStrId;
+				// --------------User hidden div tooltip-----------------
+				String idDivUserSeverData = "userserverdata" + randomStrId + "";
+				String idUserToopTipDiv = "usertooltip" + randomStrId + "";
+				String idUserStickyToolTipDiv = "usermystickyTooltip"
+						+ randomStrId;
+				String idUsertagA = "usertagA" + randomStrId;
 
+				String arg0 = UserAvatarControlFactory.getAvatarLink(
+						activityStream.getCreatedUserAvatarId(), 16);
+				String arg1 = idUsertagA;
+				String arg2 = ProjectLinkBuilder.generateProjectMemberFullLink(
+						activityStream.getExtratypeid(),
+						activityStream.getCreateduser());
+				String arg3 = "'" + randomStrId + "'";
+				String arg4 = "'" + activityStream.getCreateduser() + "'";
+				String arg5 = "'" + AppContext.getSiteUrl() + "tooltip/'";
+				String arg6 = "'" + AppContext.getSiteUrl() + "'";
+				String arg7 = AppContext.getSession().getTimezone();
+				String arg8 = activityStream.getCreatedUserFullName();
+				String arg9 = idUserStickyToolTipDiv;
+				String arg10 = idUserToopTipDiv;
+				String arg11 = idDivUserSeverData;
+				String arg12 = ProjectResources.getResourceLink(activityStream
+						.getType());
+				String arg13 = idtagA;
+				String arg14 = ProjectLinkBuilder.generateProjectItemLink(
+						activityStream.getExtratypeid(),
+						activityStream.getType(), activityStream.getTypeid());
+				String arg15 = "'" + randomStrId + "'";
+				String arg16 = "'" + activityStream.getType() + "'";
+				String arg17 = "'" + activityStream.getTypeid() + "'";
+				String arg18 = "'" + AppContext.getSiteUrl() + "tooltip/'";
+				String arg19 = "'" + activityStream.getSaccountid() + "'";
+				String arg20 = "'" + AppContext.getSiteUrl() + "'";
+				String arg21 = AppContext.getSession().getTimezone();
+				String arg22 = activityStream.getNamefield();
+				String arg23 = idStickyToolTipDiv;
+				String arg24 = idToopTipDiv;
+				String arg25 = idDivSeverData;
+				content = LocalizationHelper
+						.getMessage(
+								ProjectCommonI18nEnum.FEED_USER_ACTIVITY_CREATE_ACTION_TITLE,
+								arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7,
+								arg8, arg9, arg10, arg11, arg12, arg13, arg14,
+								arg15, arg16, arg17, arg18, arg19, arg20,
+								arg21, arg22, arg23, arg24, arg25);
 				if (ActivityStreamConstants.ACTION_CREATE.equals(activityStream
 						.getAction())) {
-					String arg0 = UserAvatarControlFactory.getAvatarLink(
-							activityStream.getCreatedUserAvatarId(), 16);
-					String arg1 = ProjectLinkBuilder
-							.generateProjectMemberFullLink(
-									activityStream.getExtratypeid(),
-									activityStream.getCreateduser());
-					String arg2 = activityStream.getCreatedUserFullName();
-
-					String arg3 = ProjectResources
-							.getResourceLink(activityStream.getType());
-					String arg4 = idtagA;
-					String arg5 = ProjectLinkBuilder.generateProjectItemLink(
-							activityStream.getExtratypeid(),
-							activityStream.getType(),
-							activityStream.getTypeid());
-					String arg6 = "'" + randomStrId + "'";
-					String arg7 = "'" + activityStream.getType() + "'";
-					String arg8 = "'" + activityStream.getTypeid() + "'";
-					String arg9 = "'" + AppContext.getSiteUrl() + "tooltip/'";
-					String arg10 = "'" + activityStream.getSaccountid() + "'";
-					String arg11 = "'" + AppContext.getSiteUrl() + "'";
-					String arg12 = AppContext.getSession().getTimezone();
-					String arg13 = activityStream.getNamefield();
-					String arg14 = idStickyToolTipDiv;
-					String arg15 = idToopTipDiv;
-					String arg16 = idDivSeverData;
 					content = LocalizationHelper
 							.getMessage(
 									ProjectCommonI18nEnum.FEED_USER_ACTIVITY_CREATE_ACTION_TITLE,
 									arg0, arg1, arg2, arg3, arg4, arg5, arg6,
 									arg7, arg8, arg9, arg10, arg11, arg12,
-									arg13, arg14, arg15, arg16);
+									arg13, arg14, arg15, arg16, arg17, arg18,
+									arg19, arg20, arg21, arg22, arg23, arg24,
+									arg25);
 				} else if (ActivityStreamConstants.ACTION_UPDATE
 						.equals(activityStream.getAction())) {
 					// tooltip id is = tooltip + dateTime + typeId
 					// serverData id is = serverdata + dateTime + typeId
-
-					String arg0 = UserAvatarControlFactory.getAvatarLink(
-							activityStream.getCreatedUserAvatarId(), 16);
-					String arg1 = ProjectLinkBuilder
-							.generateProjectMemberFullLink(
-									activityStream.getExtratypeid(),
-									activityStream.getCreateduser());
-					String arg2 = activityStream.getCreatedUserFullName();
-
-					String arg3 = ProjectResources
-							.getResourceLink(activityStream.getType());
-					String arg4 = idtagA;
-					String arg5 = ProjectLinkBuilder.generateProjectItemLink(
-							activityStream.getExtratypeid(),
-							activityStream.getType(),
-							activityStream.getTypeid());
-					String arg6 = "'" + randomStrId + "'";
-					String arg7 = "'" + activityStream.getType() + "'";
-					String arg8 = "'" + activityStream.getTypeid() + "'";
-					String arg9 = "'" + AppContext.getSiteUrl() + "tooltip/'";
-					String arg10 = "'" + activityStream.getSaccountid() + "'";
-					String arg11 = "'" + AppContext.getSiteUrl() + "'";
-					String arg12 = AppContext.getSession().getTimezone();
-					String arg13 = activityStream.getNamefield();
-					String arg14 = idStickyToolTipDiv;
-					String arg15 = idToopTipDiv;
-					String arg16 = idDivSeverData;
 					content = LocalizationHelper
 							.getMessage(
 									ProjectCommonI18nEnum.FEED_USER_ACTIVITY_UPDATE_ACTION_TITLE,
 									arg0, arg1, arg2, arg3, arg4, arg5, arg6,
 									arg7, arg8, arg9, arg10, arg11, arg12,
-									arg13, arg14, arg15, arg16);
+									arg13, arg14, arg15, arg16, arg17, arg18,
+									arg19, arg20, arg21, arg22, arg23, arg24,
+									arg25);
 					log.debug("CONTENT: " + content);
 					if (activityStream.getAssoAuditLog() != null) {
 						content += ProjectActivityStreamGenerator
