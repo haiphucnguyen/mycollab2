@@ -16,7 +16,7 @@
 		<tr>
 			<td style="background: url('${defaultUrls.cdn_url}border_large_center_new.png') repeat-y 0 0 transparent; color: #4e4e4e; font: 13px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif; padding: 10px 30px 0px;">
 				<div style="font-weight: bold; display: block; border-bottom: 1px solid rgb(212, 212, 212); padding-bottom: 5px; margin-bottom: 10px;">Hello SIR,</div>
-				<div style="display: block; padding: 8px; background-color: rgb(247, 228, 221);">$!name wana contact you. Here're details about it:</div>
+				<div style="display: block; padding: 8px; background-color: rgb(247, 228, 221);">$!name wanna contact you. Here're details about it:</div>
 				<table width="588" cellpadding="0" cellspacing="0" border="0" style="margin: 0 auto 25px;">
 					<tr>
 						<td style="color: #5a5a5a; font: 10px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif; padding: 3px 10px;">

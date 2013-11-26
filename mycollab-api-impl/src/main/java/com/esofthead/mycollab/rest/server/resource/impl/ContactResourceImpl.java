@@ -31,7 +31,7 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
 public class ContactResourceImpl implements ContactResource {
 	private static Logger log = LoggerFactory
 			.getLogger(ContactResourceImpl.class);
-	private static final String contactUsTemplate = "template/contactUs.mt";
+	private static final String contactUsTemplate = "contactUs.mt";
 
 	@Override
 	public String submit(@Form final ContactForm entity) {
