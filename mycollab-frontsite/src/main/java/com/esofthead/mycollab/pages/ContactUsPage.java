@@ -5,8 +5,6 @@ import java.io.ByteArrayOutputStream;
 import java.rmi.server.UID;
 
 import javax.imageio.ImageIO;
-import javax.ws.rs.BadRequestException;
-import javax.ws.rs.core.Response;
 
 import org.apache.wicket.Session;
 import org.apache.wicket.markup.html.basic.Label;
@@ -27,14 +25,13 @@ import org.apache.wicket.validation.validator.EmailAddressValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.esofthead.mycollab.ErrorReportingUtils;
 import com.esofthead.mycollab.SiteConfiguration;
 import com.esofthead.mycollab.WicketApplication;
 import com.esofthead.mycollab.base.BasePage;
 import com.esofthead.mycollab.rest.client.RemoteServiceProxy;
 import com.esofthead.mycollab.rest.server.domain.ContactForm;
 import com.esofthead.mycollab.rest.server.resource.ContactResource;
-import com.octo.captcha.service.image.DefaultManageableImageCaptchaService;
-import com.octo.captcha.service.image.ImageCaptchaService;
 
 public class ContactUsPage extends BasePage {
 
@@ -118,16 +115,9 @@ public class ContactUsPage extends BasePage {
 					final String response = contactResource.submit(dataform);
 					ContactUsPage.log.debug("Response of site: {}", response);
 
-				} catch (final BadRequestException e) {
-					final Response response = e.getResponse();
-					final String mycollabEx = response.readEntity(String.class);
-					if (mycollabEx != null) {
-						error(mycollabEx);
-					} else {
-						error(e.getMessage());
-					}
 				} catch (final Exception e) {
 					error(e.getMessage());
+					ErrorReportingUtils.reportError(e);
 				}
 			}
 		};
