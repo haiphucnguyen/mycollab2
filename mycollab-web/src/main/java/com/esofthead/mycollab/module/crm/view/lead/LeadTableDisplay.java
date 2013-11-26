@@ -192,7 +192,7 @@ public class LeadTableDisplay extends
 			div.appendChild(leadName);
 
 			com.hp.gagawa.java.elements.Table table = new com.hp.gagawa.java.elements.Table();
-			table.setStyle("padding-left:10px; width :500px; color: #5a5a5a; font-size:12px;");
+			table.setStyle("padding-left:10px; width :500px; color: #5a5a5a; font-size:11px;");
 			Tr trRow1 = new Tr();
 			trRow1.appendChild(
 					new Td().setStyle(
@@ -204,8 +204,10 @@ public class LeadTableDisplay extends
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
 							.appendText("Email:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(lead
-							.getEmail())));
+					new Td().appendChild(new A().setHref(
+							(lead.getEmail() != null) ? "mailto:"
+									+ lead.getEmail() : "").appendText(
+							StringUtils.getStringFieldValue(lead.getEmail()))));
 
 			Tr trRow2 = new Tr();
 			trRow2.appendChild(
@@ -258,9 +260,13 @@ public class LeadTableDisplay extends
 			trRow5.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
-							.appendText("Website:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(lead
-							.getWebsite())));
+							.appendText("Website:"))
+					.appendChild(
+							new Td().appendChild(new A().setHref(
+									(lead.getWebsite() != null) ? lead
+											.getWebsite() : "").appendText(
+									StringUtils.getStringFieldValue(lead
+											.getWebsite()))));
 
 			Tr trRow6 = new Tr();
 			trRow6.appendChild(
@@ -328,7 +334,7 @@ public class LeadTableDisplay extends
 					.setStyle(
 							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 					.appendText(
-							StringUtils.getStringFieldValue(lead
+							StringUtils.getStringRemoveHtmlTag(lead
 									.getDescription()));
 			trRow9_value.setAttribute("colspan", "3");
 

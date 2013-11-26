@@ -245,7 +245,7 @@ public class CampaignTableDisplay
 			div.appendChild(campaginName);
 
 			com.hp.gagawa.java.elements.Table table = new com.hp.gagawa.java.elements.Table();
-			table.setStyle("padding-left:10px; width :500px; color: #5a5a5a; font-size:12px;");
+			table.setStyle("padding-left:10px; width :500px; color: #5a5a5a; font-size:11px;");
 			Tr trRow1 = new Tr();
 			trRow1.appendChild(
 					new Td().setStyle(
@@ -346,7 +346,7 @@ public class CampaignTableDisplay
 					.setStyle(
 							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 					.appendText(
-							StringUtils.getStringFieldValue(campagin
+							StringUtils.getStringRemoveHtmlTag(campagin
 									.getDescription()));
 			trRow6_value.setAttribute("colspan", "3");
 

@@ -198,16 +198,23 @@ public class AccountTableDisplay
 			div.appendChild(accountName);
 
 			com.hp.gagawa.java.elements.Table table = new com.hp.gagawa.java.elements.Table();
-			table.setStyle("padding-left:10px; width :500px; color: #5a5a5a; font-size:12px;");
+			table.setStyle("padding-left:10px; width :500px; color: #5a5a5a; font-size:11px;");
 			Tr trRow1 = new Tr();
 			trRow1.appendChild(
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
-							.appendText("Website:")).appendChild(
-					new Td().setStyle("vertical-align:top; text-align: left;")
-							.appendText(
-									StringUtils.getStringFieldValue(account
-											.getWebsite())));
+							.appendText("Website:"))
+					.appendChild(
+							new Td().setStyle(
+									"vertical-align:top; text-align: left;")
+									.appendChild(
+											new A().setHref(
+													(account.getWebsite() != null) ? account
+															.getWebsite() : "")
+													.appendText(
+															StringUtils
+																	.getStringFieldValue(account
+																			.getWebsite()))));
 			trRow1.appendChild(
 					new Td().setStyle(
 							"width: 150px; vertical-align: top; text-align: right;")
@@ -229,8 +236,12 @@ public class AccountTableDisplay
 					new Td().setStyle(
 							"width: 100px; vertical-align: top; text-align: right;")
 							.appendText("Email:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(account
-							.getEmail())));
+					new Td().appendChild(new A().setHref(
+							(account.getEmail() != null) ? "mailto:"
+									+ account.getEmail() : "")
+							.appendText(
+									StringUtils.getStringFieldValue(account
+											.getEmail()))));
 
 			Tr trRow3 = new Tr();
 			trRow3.appendChild(
@@ -277,7 +288,7 @@ public class AccountTableDisplay
 					.setStyle(
 							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 					.appendText(
-							StringUtils.getStringFieldValue(account
+							StringUtils.getStringRemoveHtmlTag(account
 									.getDescription()));
 			trRow4_value.setAttribute("colspan", "3");
 			trRow4.appendChild(

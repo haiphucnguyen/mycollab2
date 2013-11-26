@@ -209,7 +209,7 @@ public class ContactTableDisplay
 			div.appendChild(contactName);
 
 			com.hp.gagawa.java.elements.Table table = new com.hp.gagawa.java.elements.Table();
-			table.setStyle("padding-left:10px; width :500px; color: #5a5a5a; font-size:12px;");
+			table.setStyle("padding-left:10px; width :500px; color: #5a5a5a; font-size:11px;");
 			Tr trRow1 = new Tr();
 			trRow1.appendChild(
 					new Td().setStyle(
@@ -242,8 +242,12 @@ public class ContactTableDisplay
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
 							.appendText("Email:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(contact
-							.getEmail())));
+					new Td().appendChild(new A().setHref(
+							(contact.getEmail() != null) ? "mailto:"
+									+ contact.getEmail() : "")
+							.appendText(
+									StringUtils.getStringFieldValue(contact
+											.getEmail()))));
 
 			trRow3.appendChild(
 					new Td().setStyle(
@@ -320,7 +324,7 @@ public class ContactTableDisplay
 					.setStyle(
 							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 					.appendText(
-							StringUtils.getStringFieldValue(contact
+							StringUtils.getStringRemoveHtmlTag(contact
 									.getDescription()));
 			trRow6_value.setAttribute("colspan", "3");
 

@@ -106,4 +106,16 @@ public class StringUtils {
 			return str;
 		}
 	}
+	
+	public static String getStringRemoveHtmlTag(Object o){
+		if (o == null) {
+			return "";
+		} else {
+			String str = Jsoup.parse(o.toString()).text();
+			if (str.length() > 200) {
+				str = str.substring(0, 200);
+			}
+			return str;
+		}
+	}
 }

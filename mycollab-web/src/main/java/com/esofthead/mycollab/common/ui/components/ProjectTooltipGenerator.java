@@ -6,11 +6,15 @@ import org.slf4j.LoggerFactory;
 
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.core.utils.StringUtils;
+import com.esofthead.mycollab.module.project.ProjectLinkUtils;
+import com.esofthead.mycollab.module.project.domain.SimpleMilestone;
 import com.esofthead.mycollab.module.project.domain.SimpleProblem;
+import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.SimpleRisk;
 import com.esofthead.mycollab.module.project.domain.SimpleStandupReport;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
+import com.esofthead.mycollab.module.project.view.ProjectLinkBuilder;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.SimpleComponent;
 import com.esofthead.mycollab.module.tracker.domain.SimpleVersion;
@@ -61,8 +65,8 @@ public class ProjectTooltipGenerator {
 							"width: 70px; vertical-align: top; text-align: right;")
 							.appendText("End Date:")).appendChild(
 					new Td().appendText(DateTimeUtils
-							.converToStringWithUserTimeZone(
-									task.getEnddate(), timeZone)));
+							.converToStringWithUserTimeZone(task.getEnddate(),
+									timeZone)));
 			trRow2.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
@@ -77,8 +81,8 @@ public class ProjectTooltipGenerator {
 							"width: 70px; vertical-align: top; text-align: right;")
 							.appendText("Deadline:")).appendChild(
 					new Td().appendText(DateTimeUtils
-							.converToStringWithUserTimeZone(
-									task.getDeadline(), timeZone)));
+							.converToStringWithUserTimeZone(task.getDeadline(),
+									timeZone)));
 			trRow3.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
@@ -119,10 +123,17 @@ public class ProjectTooltipGenerator {
 					.appendChild(
 							new Td().setStyle(
 									"width: 200px;word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
-									.appendText(
-											StringUtils
-													.getStringFieldValue(task
-															.getTaskListName())));
+									.appendChild(
+											new A().setHref(
+													(task.getTaskListName() != null) ? ProjectLinkBuilder
+															.generateTaskGroupPreviewFullLink(
+																	task.getProjectid(),
+																	task.getTasklistid())
+															: "")
+													.appendText(
+															StringUtils
+																	.getStringFieldValue(task
+																			.getTaskListName()))));
 
 			Tr trRow5 = new Tr();
 			trRow5.appendChild(
@@ -180,7 +191,7 @@ public class ProjectTooltipGenerator {
 					.setStyle(
 							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 					.appendText(
-							StringUtils.getStringFieldValue(bug
+							StringUtils.getStringRemoveHtmlTag(bug
 									.getDescription()));
 			trRow1_value.setAttribute("colspan", "3");
 			trRow1.appendChild(
@@ -237,8 +248,8 @@ public class ProjectTooltipGenerator {
 							"width: 70px; vertical-align: top; text-align: right;")
 							.appendText("Due Date:")).appendChild(
 					new Td().appendText(DateTimeUtils
-							.converToStringWithUserTimeZone(
-									bug.getDuedate(), timeZone)));
+							.converToStringWithUserTimeZone(bug.getDuedate(),
+									timeZone)));
 			trRow5.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
@@ -309,9 +320,18 @@ public class ProjectTooltipGenerator {
 			Td trRow7_value = new Td()
 					.setStyle(
 							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
-					.appendText(
-							StringUtils.getStringFieldValue(bug
-									.getMilestoneName()));
+					.appendChild(
+							new A().setHref(
+									(bug.getMilestoneid() != null) ? siteURL
+											+ "#"
+											+ ProjectLinkUtils
+													.generateMilestonePreviewLink(
+															bug.getProjectid(),
+															bug.getMilestoneid())
+											: "").appendText(
+									StringUtils.getStringFieldValue(bug
+											.getMilestoneName())));
+
 			trRow7_value.setAttribute("colspan", "3");
 			trRow7.appendChild(
 					new Td().setStyle(
@@ -354,7 +374,7 @@ public class ProjectTooltipGenerator {
 					.setStyle(
 							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 					.appendText(
-							StringUtils.getStringFieldValue(risk
+							StringUtils.getStringRemoveHtmlTag(risk
 									.getDescription()));
 			trRow5_value.setAttribute("colspan", "3");
 
@@ -436,8 +456,8 @@ public class ProjectTooltipGenerator {
 							"width: 70px; vertical-align: top; text-align: right;")
 							.appendText("Date due:")).appendChild(
 					new Td().appendText(DateTimeUtils
-							.converToStringWithUserTimeZone(
-									risk.getDatedue(), timeZone)));
+							.converToStringWithUserTimeZone(risk.getDatedue(),
+									timeZone)));
 			trRow3.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
@@ -505,7 +525,7 @@ public class ProjectTooltipGenerator {
 					.setStyle(
 							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 					.appendText(
-							StringUtils.getStringFieldValue(problem
+							StringUtils.getStringRemoveHtmlTag(problem
 									.getDescription()));
 			trRow5_value.setAttribute("colspan", "3");
 
@@ -667,7 +687,7 @@ public class ProjectTooltipGenerator {
 					.setStyle(
 							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 					.appendText(
-							StringUtils.getStringFieldValue(version
+							StringUtils.getStringRemoveHtmlTag(version
 									.getDescription()));
 			trRow2_value.setAttribute("colspan", "3");
 			trRow2.appendChild(
@@ -723,7 +743,7 @@ public class ProjectTooltipGenerator {
 					.setStyle(
 							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 					.appendText(
-							StringUtils.getStringFieldValue(component
+							StringUtils.getStringRemoveHtmlTag(component
 									.getDescription()));
 			trRow2_value.setAttribute("colspan", "3");
 			trRow2.appendChild(
@@ -801,7 +821,7 @@ public class ProjectTooltipGenerator {
 					.setStyle(
 							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 					.appendText(
-							StringUtils.getStringFieldValue(taskList
+							StringUtils.getStringRemoveHtmlTag(taskList
 									.getDescription()));
 			trRow2_value.setAttribute("colspan", "3");
 			trRow2.appendChild(
@@ -846,10 +866,18 @@ public class ProjectTooltipGenerator {
 					.appendChild(
 							new Td().setStyle(
 									"width: 200px;word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
-									.appendText(
-											StringUtils
-													.getStringFieldValue(taskList
-															.getMilestoneName())));
+									.appendChild(
+											new A().setHref(
+													siteURL
+															+ "#"
+															+ ProjectLinkUtils
+																	.generateMilestonePreviewLink(
+																			taskList.getProjectid(),
+																			taskList.getId()))
+													.appendText(
+															StringUtils
+																	.getStringFieldValue(taskList
+																			.getMilestoneName()))));
 
 			table.appendChild(trRow1);
 			table.appendChild(trRow2);
@@ -858,6 +886,230 @@ public class ProjectTooltipGenerator {
 			return div.write();
 		} catch (Exception e) {
 			log.error("Error while generate tooltip for TaskGroup", e);
+			return null;
+		}
+	}
+
+	public static String generateToolTipProject(SimpleProject project,
+			String siteURL, String timeZone) {
+		try {
+			if (project == null)
+				return null;
+			Div div = new Div();
+			H3 taksName = new H3();
+			taksName.appendText(Jsoup.parse(project.getName()).html());
+			div.appendChild(taksName);
+
+			com.hp.gagawa.java.elements.Table table = new com.hp.gagawa.java.elements.Table();
+			table.setStyle("padding-left:10px; width :500px; color: #5a5a5a; font-size:12px;");
+			Tr trRow1 = new Tr();
+			trRow1.appendChild(
+					new Td().setStyle(
+							"width: 100px; vertical-align: top; text-align: right;")
+							.appendText("Home Page:")).appendChild(
+					new Td().appendChild(new A().setHref(
+							(project.getHomepage() != null) ? project
+									.getHomepage() : "").appendText(
+							StringUtils.getStringFieldValue(project
+									.getHomepage()))));
+			trRow1.appendChild(
+					new Td().setStyle(
+							"width: 110px; vertical-align: top; text-align: right;")
+							.appendText("Status:")).appendChild(
+					new Td().appendText(StringUtils.getStringFieldValue(project
+							.getProjectstatus())));
+
+			Tr trRow2 = new Tr();
+			trRow2.appendChild(
+					new Td().setStyle(
+							"width: 100px; vertical-align: top; text-align: right;")
+							.appendText("Plan Start Date:")).appendChild(
+					new Td().appendText(DateTimeUtils
+							.converToStringWithUserTimeZone(
+									project.getPlanstartdate(), timeZone)));
+			trRow2.appendChild(
+					new Td().setStyle(
+							"width: 110px; vertical-align: top; text-align: right;")
+							.appendText("Currency:"))
+					.appendChild(
+							new Td().appendText((project.getCurrency() != null) ? StringUtils
+									.getStringFieldValue(project.getCurrency()
+											.getSymbol()) : ""));
+
+			Tr trRow3 = new Tr();
+			trRow3.appendChild(
+					new Td().setStyle(
+							"width: 100px; vertical-align: top; text-align: right;")
+							.appendText("Plan End Date:")).appendChild(
+					new Td().appendText(DateTimeUtils
+							.converToStringWithUserTimeZone(
+									project.getPlanenddate(), timeZone)));
+			trRow3.appendChild(
+					new Td().setStyle(
+							"width: 110px; vertical-align: top; text-align: right;")
+							.appendText("Rate:")).appendChild(
+					new Td().appendText(StringUtils.getStringFieldValue(project
+							.getDefaultbillingrate())));
+			Tr trRow4 = new Tr();
+			trRow4.appendChild(
+					new Td().setStyle(
+							"width: 100px; vertical-align: top; text-align: right;")
+							.appendText("Actual Start Date:")).appendChild(
+					new Td().appendText(DateTimeUtils
+							.converToStringWithUserTimeZone(
+									project.getActualstartdate(), timeZone)));
+			trRow4.appendChild(
+					new Td().setStyle(
+							"width: 110px; vertical-align: top; text-align: right;")
+							.appendText("Target Budget:")).appendChild(
+					new Td().appendText(StringUtils.getStringFieldValue(project
+							.getTargetbudget())));
+			Tr trRow5 = new Tr();
+			trRow5.appendChild(
+					new Td().setStyle(
+							"width: 100px; vertical-align: top; text-align: right;")
+							.appendText("Actual End Date:")).appendChild(
+					new Td().appendText(DateTimeUtils
+							.converToStringWithUserTimeZone(
+									project.getActualenddate(), timeZone)));
+			trRow5.appendChild(
+					new Td().setStyle(
+							"width: 110px; vertical-align: top; text-align: right;")
+							.appendText("Actual Budget:")).appendChild(
+					new Td().appendText(StringUtils.getStringFieldValue(project
+							.getActualbudget())));
+			Tr trRow6 = new Tr();
+			Td trRow6_value = new Td()
+					.setStyle(
+							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+					.appendText(
+							StringUtils.getStringRemoveHtmlTag(project
+									.getDescription()));
+			trRow6_value.setAttribute("colspan", "3");
+			trRow6.appendChild(
+					new Td().setStyle(
+							"width: 100px; vertical-align: top; text-align: right;")
+							.appendText("Description:")).appendChild(
+					trRow6_value);
+
+			table.appendChild(trRow1);
+			table.appendChild(trRow2);
+			table.appendChild(trRow3);
+			table.appendChild(trRow4);
+			table.appendChild(trRow5);
+			table.appendChild(trRow6);
+			div.appendChild(table);
+			return div.write();
+		} catch (Exception e) {
+			log.error(
+					"Error while generate tooltip for servlet project tooltip",
+					e);
+			return null;
+		}
+	}
+
+	public static String generateToolTipMilestone(SimpleMilestone milestone,
+			String siteURL, String timeZone) {
+		try {
+			if (milestone == null)
+				return null;
+			Div div = new Div();
+			H3 milestoneName = new H3();
+			milestoneName.appendText(Jsoup.parse(milestone.getName()).html());
+			div.appendChild(milestoneName);
+
+			com.hp.gagawa.java.elements.Table table = new com.hp.gagawa.java.elements.Table();
+			table.setStyle("padding-left:10px; width :500px; color: #5a5a5a; font-size:12px;");
+
+			Tr trRow2 = new Tr();
+			trRow2.appendChild(
+					new Td().setStyle(
+							"width: 70px; vertical-align: top; text-align: right;")
+							.appendText("Start Date:")).appendChild(
+					new Td().appendText(DateTimeUtils
+							.converToStringWithUserTimeZone(
+									milestone.getStartdate(), timeZone)));
+			trRow2.appendChild(
+					new Td().setStyle(
+							"width: 110px; vertical-align: top; text-align: right;")
+							.appendText("Assignee:"))
+					.appendChild(
+							new Td().setStyle(
+									"width: 200px;word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendChild(
+											new A().setHref(
+													(milestone.getOwner() != null) ? UserLinkUtils
+															.generatePreviewFullUserLink(
+																	siteURL,
+																	(milestone
+																			.getOwner() != null) ? milestone
+																			.getOwner()
+																			: "")
+															: "")
+													.appendChild(
+															new Img(
+																	"",
+																	UserAvatarControlFactory
+																			.getAvatarLink(
+																					milestone
+																							.getOwnerAvatarId(),
+																					16)))
+													.appendText(
+															StringUtils
+																	.getStringFieldValue(milestone
+																			.getOwnerFullName()))));
+
+			Tr trRow3 = new Tr();
+			trRow3.appendChild(
+					new Td().setStyle(
+							"width: 70px; vertical-align: top; text-align: right;")
+							.appendText("End Date:")).appendChild(
+					new Td().appendText(DateTimeUtils
+							.converToStringWithUserTimeZone(
+									milestone.getEnddate(), timeZone)));
+			trRow3.appendChild(
+					new Td().setStyle(
+							"width: 110px; vertical-align: top; text-align: right;")
+							.appendText("Status:")).appendChild(
+					new Td().appendText(StringUtils
+							.getStringFieldValue(milestone.getStatus())));
+			Tr trRow4 = new Tr();
+			trRow4.appendChild(
+					new Td().setStyle(
+							"width: 70px; vertical-align: top; text-align: right;")
+							.appendText("Tasks:")).appendChild(
+					new Td().appendText(StringUtils
+							.getStringFieldValue(milestone.getNumTasks())));
+			trRow4.appendChild(
+					new Td().setStyle(
+							"width: 110px; vertical-align: top; text-align: right;")
+							.appendText("Bugs:")).appendChild(
+					new Td().appendText(StringUtils
+							.getStringFieldValue(milestone.getNumBugs())));
+			Tr trRow6 = new Tr();
+			Td trRow6_value = new Td()
+					.setStyle(
+							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+					.appendText(
+							StringUtils.getStringRemoveHtmlTag(milestone
+									.getDescription()));
+			trRow6_value.setAttribute("colspan", "3");
+			trRow6.appendChild(
+					new Td().setStyle(
+							"width: 70px; vertical-align: top; text-align: right;")
+							.appendText("Description:")).appendChild(
+					trRow6_value);
+
+			table.appendChild(trRow2);
+			table.appendChild(trRow3);
+			table.appendChild(trRow4);
+			table.appendChild(trRow6);
+			div.appendChild(table);
+			return div.write();
+		} catch (Exception e) {
+			log.error(
+					"Error while generate tooltip for servlet project tooltip",
+					e);
 			return null;
 		}
 	}

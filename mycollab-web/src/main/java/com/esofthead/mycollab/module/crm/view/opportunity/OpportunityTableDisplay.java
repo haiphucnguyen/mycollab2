@@ -29,6 +29,7 @@ import org.slf4j.LoggerFactory;
 
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.EventBus;
+import com.esofthead.mycollab.module.crm.CrmLinkGenerator;
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
@@ -252,7 +253,7 @@ public class OpportunityTableDisplay
 			div.appendChild(opportunityName);
 
 			com.hp.gagawa.java.elements.Table table = new com.hp.gagawa.java.elements.Table();
-			table.setStyle("padding-left:10px; width :500px; color: #5a5a5a; font-size:12px;");
+			table.setStyle("padding-left:10px; width :500px; color: #5a5a5a; font-size:11px;");
 			Tr trRow1 = new Tr();
 			trRow1.appendChild(
 					new Td().setStyle(
@@ -272,9 +273,19 @@ public class OpportunityTableDisplay
 							"width: 110px; vertical-align: top; text-align: right;")
 							.appendText("Account Name:"))
 					.appendChild(
-							new Td().appendText(StringUtils
-									.getStringFieldValue(opportunity
-											.getAccountName())));
+							new Td().appendChild(new A()
+									.setHref(
+											(opportunity.getAccountid() != null) ? AppContext
+													.getSiteUrl()
+													+ "#"
+													+ CrmLinkGenerator
+															.generateAccountPreviewLink(opportunity
+																	.getAccountid())
+													: "")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(opportunity
+															.getAccountName()))));
 
 			Tr trRow2 = new Tr();
 			trRow2.appendChild(
@@ -320,9 +331,19 @@ public class OpportunityTableDisplay
 							"width: 110px; vertical-align: top; text-align: right;")
 							.appendText("Campaign:"))
 					.appendChild(
-							new Td().appendText(StringUtils
-									.getStringFieldValue(opportunity
-											.getCampaignName())));
+							new Td().appendChild(new A()
+									.setHref(
+											(opportunity.getCampaignid() != null) ? AppContext
+													.getSiteUrl()
+													+ "#"
+													+ CrmLinkGenerator
+															.generateCampaignPreviewLink(opportunity
+																	.getCampaignid())
+													: "")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(opportunity
+															.getCampaignName()))));
 
 			Tr trRow5 = new Tr();
 			trRow5.appendChild(
@@ -366,7 +387,7 @@ public class OpportunityTableDisplay
 					.setStyle(
 							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 					.appendText(
-							StringUtils.getStringFieldValue(opportunity
+							StringUtils.getStringRemoveHtmlTag(opportunity
 									.getDescription()));
 			trRow6_value.setAttribute("colspan", "3");
 

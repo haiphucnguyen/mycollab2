@@ -7,7 +7,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.jsoup.Jsoup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -34,12 +33,16 @@ import com.esofthead.mycollab.module.crm.service.LeadService;
 import com.esofthead.mycollab.module.crm.service.MeetingService;
 import com.esofthead.mycollab.module.crm.service.OpportunityService;
 import com.esofthead.mycollab.module.crm.service.TaskService;
+import com.esofthead.mycollab.module.project.domain.SimpleMilestone;
 import com.esofthead.mycollab.module.project.domain.SimpleProblem;
+import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.SimpleRisk;
 import com.esofthead.mycollab.module.project.domain.SimpleStandupReport;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
+import com.esofthead.mycollab.module.project.service.MilestoneService;
 import com.esofthead.mycollab.module.project.service.ProblemService;
+import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.project.service.ProjectTaskListService;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.project.service.RiskService;
@@ -80,7 +83,20 @@ public class AnotatedTooltipGeneratorHandler extends GenericServlet {
 			String username = request.getParameter("username");
 
 			String html = "";
-			if ("TaskList".equals(type)) {
+			if ("Project".equals(type)) {
+				ProjectService service = ApplicationContextUtil
+						.getSpringBean(ProjectService.class);
+				SimpleProject project = service.findById(typeid, sAccountId);
+				html = ProjectTooltipGenerator.generateToolTipProject(project,
+						siteURL, timeZone);
+			} else if ("Milestone".equals(type)) {
+				MilestoneService service = ApplicationContextUtil
+						.getSpringBean(MilestoneService.class);
+				SimpleMilestone milestone = service
+						.findById(typeid, sAccountId);
+				html = ProjectTooltipGenerator.generateToolTipMilestone(
+						milestone, siteURL, timeZone);
+			} else if ("TaskList".equals(type)) {
 				ProjectTaskListService service = ApplicationContextUtil
 						.getSpringBean(ProjectTaskListService.class);
 				SimpleTaskList taskList = service.findById(typeid, sAccountId);
@@ -223,7 +239,7 @@ public class AnotatedTooltipGeneratorHandler extends GenericServlet {
 		try {
 			Div div = new Div();
 			H3 userFullName = new H3();
-			userFullName.appendText(Jsoup.parse(getDisplayName(user)).html());
+			userFullName.appendText(getDisplayName(user));
 			div.appendChild(userFullName);
 
 			com.hp.gagawa.java.elements.Table table = new com.hp.gagawa.java.elements.Table();

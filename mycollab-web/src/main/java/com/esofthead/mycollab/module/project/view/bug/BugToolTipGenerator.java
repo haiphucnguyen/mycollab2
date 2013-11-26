@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.esofthead.mycollab.core.utils.StringUtils;
+import com.esofthead.mycollab.module.project.view.ProjectLinkBuilder;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.user.UserLinkUtils;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
@@ -28,13 +29,13 @@ public class BugToolTipGenerator {
 			div.appendChild(bugSummary);
 
 			com.hp.gagawa.java.elements.Table table = new com.hp.gagawa.java.elements.Table();
-			table.setStyle("padding-left:10px; width :500px; color: #5a5a5a; font-size:12px;");
+			table.setStyle("padding-left:10px; width :500px; color: #5a5a5a; font-size:11px;");
 			Tr trRow1 = new Tr();
 			Td trRow1_value = new Td()
 					.setStyle(
 							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 					.appendText(
-							StringUtils.getStringFieldValue(bug
+							StringUtils.getStringRemoveHtmlTag(bug
 									.getDescription()));
 			trRow1_value.setAttribute("colspan", "3");
 			trRow1.appendChild(
@@ -48,7 +49,7 @@ public class BugToolTipGenerator {
 					.setStyle(
 							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 					.appendText(
-							StringUtils.getStringFieldValue(bug
+							StringUtils.getStringRemoveHtmlTag(bug
 									.getEnvironment()));
 			trRow2_value.setAttribute("colspan", "3");
 			trRow2.appendChild(
@@ -164,9 +165,15 @@ public class BugToolTipGenerator {
 			Td trRow7_value = new Td()
 					.setStyle(
 							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
-					.appendText(
-							StringUtils.getStringFieldValue(bug
-									.getMilestoneName()));
+					.appendChild(
+							new A().setHref(
+									ProjectLinkBuilder
+											.generateMilestonePreviewFullLink(
+													bug.getProjectid(),
+													bug.getMilestoneid()))
+									.appendText(
+											StringUtils.getStringFieldValue(bug
+													.getMilestoneName())));
 			trRow7_value.setAttribute("colspan", "3");
 			trRow7.appendChild(
 					new Td().setStyle(

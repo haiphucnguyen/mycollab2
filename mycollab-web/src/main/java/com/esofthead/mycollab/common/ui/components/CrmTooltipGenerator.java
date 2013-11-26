@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.core.utils.StringUtils;
+import com.esofthead.mycollab.module.crm.CrmLinkGenerator;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.SimpleCall;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
@@ -45,11 +46,18 @@ public class CrmTooltipGenerator {
 			trRow1.appendChild(
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
-							.appendText("Website:")).appendChild(
-					new Td().setStyle("vertical-align:top; text-align: left;")
-							.appendText(
-									StringUtils.getStringFieldValue(account
-											.getWebsite())));
+							.appendText("Website:"))
+					.appendChild(
+							new Td().setStyle(
+									"vertical-align:top; text-align: left;")
+									.appendChild(
+											new A().setHref(
+													(account.getWebsite() != null) ? account
+															.getWebsite() : "")
+													.appendText(
+															StringUtils
+																	.getStringFieldValue(account
+																			.getWebsite()))));
 			trRow1.appendChild(
 					new Td().setStyle(
 							"width: 150px; vertical-align: top; text-align: right;")
@@ -71,8 +79,12 @@ public class CrmTooltipGenerator {
 					new Td().setStyle(
 							"width: 100px; vertical-align: top; text-align: right;")
 							.appendText("Email:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(account
-							.getEmail())));
+					new Td().appendChild(new A().setHref(
+							(account.getEmail() != null) ? "mailto:"
+									+ account.getEmail() : "")
+							.appendText(
+									StringUtils.getStringFieldValue(account
+											.getEmail()))));
 
 			Tr trRow3 = new Tr();
 			trRow3.appendChild(
@@ -118,7 +130,7 @@ public class CrmTooltipGenerator {
 					.setStyle(
 							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 					.appendText(
-							StringUtils.getStringFieldValue(account
+							StringUtils.getStringRemoveHtmlTag(account
 									.getDescription()));
 			trRow4_value.setAttribute("colspan", "3");
 			trRow4.appendChild(
@@ -184,8 +196,12 @@ public class CrmTooltipGenerator {
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
 							.appendText("Email:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(contact
-							.getEmail())));
+					new Td().appendChild(new A().setHref(
+							(contact.getEmail() != null) ? "mailto:"
+									+ contact.getEmail() : "")
+							.appendText(
+									StringUtils.getStringFieldValue(contact
+											.getEmail()))));
 
 			trRow3.appendChild(
 					new Td().setStyle(
@@ -262,7 +278,7 @@ public class CrmTooltipGenerator {
 					.setStyle(
 							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 					.appendText(
-							StringUtils.getStringFieldValue(contact
+							StringUtils.getStringRemoveHtmlTag(contact
 									.getDescription()));
 			trRow6_value.setAttribute("colspan", "3");
 
@@ -399,7 +415,7 @@ public class CrmTooltipGenerator {
 					.setStyle(
 							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 					.appendText(
-							StringUtils.getStringFieldValue(campagin
+							StringUtils.getStringRemoveHtmlTag(campagin
 									.getDescription()));
 			trRow6_value.setAttribute("colspan", "3");
 
@@ -446,8 +462,10 @@ public class CrmTooltipGenerator {
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
 							.appendText("Email:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(lead
-							.getEmail())));
+					new Td().appendChild(new A().setHref(
+							(lead.getEmail() != null) ? "mailto:"
+									+ lead.getEmail() : "").appendText(
+							StringUtils.getStringFieldValue(lead.getEmail()))));
 
 			Tr trRow2 = new Tr();
 			trRow2.appendChild(
@@ -500,9 +518,13 @@ public class CrmTooltipGenerator {
 			trRow5.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
-							.appendText("Website:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(lead
-							.getWebsite())));
+							.appendText("Website:"))
+					.appendChild(
+							new Td().appendChild(new A().setHref(
+									(lead.getWebsite() != null) ? lead
+											.getWebsite() : "").appendText(
+									StringUtils.getStringFieldValue(lead
+											.getWebsite()))));
 
 			Tr trRow6 = new Tr();
 			trRow6.appendChild(
@@ -569,7 +591,7 @@ public class CrmTooltipGenerator {
 					.setStyle(
 							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 					.appendText(
-							StringUtils.getStringFieldValue(lead
+							StringUtils.getStringRemoveHtmlTag(lead
 									.getDescription()));
 			trRow9_value.setAttribute("colspan", "3");
 
@@ -627,9 +649,18 @@ public class CrmTooltipGenerator {
 							"width: 110px; vertical-align: top; text-align: right;")
 							.appendText("Account Name:"))
 					.appendChild(
-							new Td().appendText(StringUtils
-									.getStringFieldValue(opportunity
-											.getAccountName())));
+							new Td().appendChild(new A()
+									.setHref(
+											(opportunity.getAccountid() != null) ? siteURl
+													+ "#"
+													+ CrmLinkGenerator
+															.generateAccountPreviewLink(opportunity
+																	.getAccountid())
+													: "")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(opportunity
+															.getAccountName()))));
 
 			Tr trRow2 = new Tr();
 			trRow2.appendChild(
@@ -677,9 +708,18 @@ public class CrmTooltipGenerator {
 							"width: 110px; vertical-align: top; text-align: right;")
 							.appendText("Campaign:"))
 					.appendChild(
-							new Td().appendText(StringUtils
-									.getStringFieldValue(opportunity
-											.getCampaignName())));
+							new Td().appendChild(new A()
+									.setHref(
+											(opportunity.getCampaignid() != null) ? siteURl
+													+ "#"
+													+ CrmLinkGenerator
+															.generateCampaignPreviewLink(opportunity
+																	.getCampaignid())
+													: "")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(opportunity
+															.getCampaignName()))));
 
 			Tr trRow5 = new Tr();
 			trRow5.appendChild(
@@ -722,7 +762,7 @@ public class CrmTooltipGenerator {
 					.setStyle(
 							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 					.appendText(
-							StringUtils.getStringFieldValue(opportunity
+							StringUtils.getStringRemoveHtmlTag(opportunity
 									.getDescription()));
 			trRow6_value.setAttribute("colspan", "3");
 
@@ -791,14 +831,27 @@ public class CrmTooltipGenerator {
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
 							.appendText("Account Name:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(cases
-							.getAccountName())));
+					new Td().appendChild(new A().setHref(
+							(cases.getAccountid() != null) ? siteURL
+									+ "#"
+									+ CrmLinkGenerator
+											.generateAccountPreviewLink(cases
+													.getAccountid()) : "")
+							.appendText(
+									StringUtils.getStringFieldValue(cases
+											.getAccountName()))));
 			trRow3.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
-							.appendText("Email:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(cases
-							.getEmail())));
+							.appendText("Email:"))
+					.appendChild(
+							new Td().appendChild(new A().setHref(
+									(cases.getEmail() != null) ? "mailto:"
+											+ cases.getEmail() : "")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(cases
+															.getEmail()))));
 
 			Tr trRow4 = new Tr();
 			trRow4.appendChild(
@@ -838,7 +891,7 @@ public class CrmTooltipGenerator {
 					.setStyle(
 							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 					.appendText(
-							StringUtils.getStringFieldValue(cases
+							StringUtils.getStringRemoveHtmlTag(cases
 									.getDescription()));
 			trRow5_value.setAttribute("colspan", "3");
 
@@ -933,7 +986,7 @@ public class CrmTooltipGenerator {
 					.setStyle(
 							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 					.appendText(
-							StringUtils.getStringFieldValue(meeting
+							StringUtils.getStringRemoveHtmlTag(meeting
 									.getDescription()));
 			trRow3_value.setAttribute("colspan", "3");
 
@@ -1001,7 +1054,7 @@ public class CrmTooltipGenerator {
 					.setStyle(
 							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 					.appendText(
-							StringUtils.getStringFieldValue(call
+							StringUtils.getStringRemoveHtmlTag(call
 									.getDescription()));
 			trRow3_value.setAttribute("colspan", "3");
 
@@ -1080,13 +1133,22 @@ public class CrmTooltipGenerator {
 					new Td().setStyle(
 							"width: 90px; vertical-align: top; text-align: right;")
 							.appendText("Contact:"))
+
 					.appendChild(
 							new Td().setStyle(
 									"width:110px; vertical-align: top; text-align: left;")
-									.appendText(
-											StringUtils
-													.getStringFieldValue(task
-															.getContactName())));
+									.appendChild(
+											new A().setHref(
+													(task.getContactid() != null) ? siteURL
+															+ "#"
+															+ CrmLinkGenerator
+																	.generateContactPreviewLink(task
+																			.getContactid())
+															: "")
+													.appendText(
+															StringUtils
+																	.getStringFieldValue(task
+																			.getContactName()))));
 
 			Tr trRow3 = new Tr();
 			trRow3.appendChild(
@@ -1126,7 +1188,7 @@ public class CrmTooltipGenerator {
 					.setStyle(
 							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 					.appendText(
-							StringUtils.getStringFieldValue(task
+							StringUtils.getStringRemoveHtmlTag(task
 									.getDescription()));
 			trRow4_value.setAttribute("colspan", "3");
 

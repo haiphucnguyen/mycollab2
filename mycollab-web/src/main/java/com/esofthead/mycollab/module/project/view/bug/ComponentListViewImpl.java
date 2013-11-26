@@ -288,7 +288,7 @@ public class ComponentListViewImpl extends AbstractView implements
 			div.appendChild(componentName);
 
 			com.hp.gagawa.java.elements.Table table = new com.hp.gagawa.java.elements.Table();
-			table.setStyle("padding-left:10px; width :350px; color: #5a5a5a; font-size:12px;");
+			table.setStyle("padding-left:10px; width :350px; color: #5a5a5a; font-size:11px;");
 			Tr trRow1 = new Tr();
 			trRow1.appendChild(
 					new Td().setStyle(
@@ -304,7 +304,7 @@ public class ComponentListViewImpl extends AbstractView implements
 					.setStyle(
 							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 					.appendText(
-							StringUtils.getStringFieldValue(component
+							StringUtils.getStringRemoveHtmlTag(component
 									.getDescription()));
 			trRow2_value.setAttribute("colspan", "3");
 			trRow2.appendChild(
