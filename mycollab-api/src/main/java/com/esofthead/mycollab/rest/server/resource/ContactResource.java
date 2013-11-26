@@ -15,7 +15,7 @@ public interface ContactResource {
 	@POST
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces(MediaType.TEXT_PLAIN)
-	@Path("submit")
+	@Path("/submit")
 	String submit(@Form ContactForm entity);
 
 }
