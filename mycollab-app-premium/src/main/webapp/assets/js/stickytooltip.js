@@ -79,7 +79,7 @@ var stickytooltip={
 	},
 
 	init:function(targetselector, tipid){
-		$('.stickytooltip').hide();
+		$('.stickytooltip').stop(false, true).hide();
 		var $targets=$(targetselector)
 		var $tooltip=$('#'+tipid).appendTo(document.body)
 		if ($targets.length==0)
@@ -90,12 +90,6 @@ var stickytooltip={
 		// show box
 		$tooltip.show();
 		stickytooltip.showboxForFirstTime($, $tooltip, mousePosition.currentMousePos)		
-		
-		$targets.bind('mouseenter', function(e){
-			$('.stickytooltip').hide();
-			stickytooltip.showbox($, $tooltip, e)
-			stickytooltip.docktooltip($, $tooltip, e);
-		})
 		$targets.bind('mouseleave', function(e){
 			if(stickytooltip.isdocked == false){
 				stickytooltip.isdocked = false;
@@ -109,7 +103,67 @@ var stickytooltip={
 		})
 		$tooltip.bind('mouseenter', function(){
 			// stickytooltip.hidebox($, $tooltip)
-			console.log('a');
+		})
+		
+		$tooltip.bind('mouseleave',function(){
+			stickytooltip.hidebox($, $tooltip)
+		})
+		
+		$tooltip.bind('click', function(e){
+			e.stopPropagation()
+		})
+		
+		$(this).bind("click", function(e){
+			if (e.button==0){
+				stickytooltip.isdocked=false
+				stickytooltip.hidebox($, $tooltip)
+			}
+		})
+		$(this).bind("contextmenu", function(e){
+			if (stickytooltip.rightclickstick && $(e.target).parents().andSelf().filter(targetselector).length==1){ // if
+																													// oncontextmenu
+																													// over
+																													// a
+																													// target
+																													// element
+				stickytooltip.docktooltip($, $tooltip, e)
+				return false
+			}
+		})
+		$(this).bind('keypress', function(e){
+			var keyunicode=e.charCode || e.keyCode
+			if (keyunicode==115){ // if "s" key was pressed
+				stickytooltip.docktooltip($, $tooltip, e)
+			}
+		})
+	},
+	
+	init2:function(targetselector, tipid){
+		$('.stickytooltip').stop(false, true).hide();
+		var $targets=$(targetselector)
+		var $tooltip=$('#'+tipid).appendTo(document.body)
+		if ($targets.length==0)
+			return
+		var $alltips=$tooltip.find('div.atip')
+		if (!stickytooltip.rightclickstick)
+			stickytooltip.stickynotice1[1]=''
+		// show box
+		$tooltip.show();
+		stickytooltip.showboxForFirstTime($, $tooltip, mousePosition.currentMousePos)		
+		stickytooltip.docktooltip($, $tooltip, null);
+		$targets.bind('mouseleave', function(e){
+			if(stickytooltip.isdocked == false){
+				stickytooltip.isdocked = false;
+				stickytooltip.hidebox($, $tooltip)
+			}
+		})
+		$targets.bind('mousemove', function(e){
+// if (!stickytooltip.isdocked){
+// stickytooltip.positiontooltip($, $tooltip, e)
+// }
+		})
+		$tooltip.bind('mouseenter', function(){
+			// stickytooltip.hidebox($, $tooltip)
 		})
 		
 		$tooltip.bind('mouseleave',function(){
@@ -150,8 +204,9 @@ function overIt(dateTimeTypeIdStr, type, typeId, url, sAccountId, siteURL, timeZ
 	var idDIVserverdata = "serverdata" + dateTimeTypeIdStr;
 	var idStickyToolTipDiv = "mystickyTooltip"+dateTimeTypeIdStr;
 	var idTagA = "tagA"+ dateTimeTypeIdStr;
+	$('#'+idStickyToolTipDiv).stop(false, true).hide();
 	$('.stickytooltip').bind('mouseleave',function(e){
-    	$('.stickytooltip').hide();
+    	$('.stickytooltip').stop(false, true).hide();
 	});
 	if($("#"+idDIVserverdata).html()== ""){
 		$.ajax({
@@ -163,14 +218,11 @@ function overIt(dateTimeTypeIdStr, type, typeId, url, sAccountId, siteURL, timeZ
 		      	 		$("#"+ idTagA).attr('data-tooltip', idStickyToolTipDiv);
 		      	 		$("#"+idDIVserverdata).html(data);
 		      	 		stickytooltip.init("*[data-tooltip]", idStickyToolTipDiv);
-		      	 }else{
-		      		// $("#"+idDIVserverdata).html("This item has removed!");
 		      	 }
-		      	
 		      }
 		});
 	}else{
-		stickytooltip.init("*[data-tooltip]", idStickyToolTipDiv);
+		stickytooltip.init2("*[data-tooltip]", idStickyToolTipDiv);
 	}
 }
 
@@ -178,8 +230,9 @@ function projectOverViewOverIt(dateTimeTypeIdStr, type, typeId, url, sAccountId,
 	var idDIVserverdata = "projectOverViewserverdata" + dateTimeTypeIdStr;
 	var idStickyToolTipDiv = "projectOverViewmystickyTooltip"+dateTimeTypeIdStr;
 	var idTagA = "projectOverViewtagA"+ dateTimeTypeIdStr;
+	$('#'+idStickyToolTipDiv).stop(false, true).hide();
 	$('.stickytooltip').bind('mouseleave',function(e){
-    	$('.stickytooltip').hide();
+    	$('.stickytooltip').stop(false, true).hide();
 	});
 	if($("#"+idDIVserverdata).html()== ""){
 		$.ajax({
@@ -191,14 +244,11 @@ function projectOverViewOverIt(dateTimeTypeIdStr, type, typeId, url, sAccountId,
 		      	 		$("#"+ idTagA).attr('data-tooltip', idStickyToolTipDiv);
 		      	 		$("#"+idDIVserverdata).html(data);
 		      	 		stickytooltip.init("*[data-tooltip]", idStickyToolTipDiv);
-		      	 }else{
-		      		// $("#"+idDIVserverdata).html("This item has removed!");
 		      	 }
-		      	
 		      }
 		});
 	}else{
-		stickytooltip.init("*[data-tooltip]", idStickyToolTipDiv);
+		stickytooltip.init2("*[data-tooltip]", idStickyToolTipDiv);
 	}
 }
 
@@ -206,8 +256,9 @@ function crmActivityOverIt(dateTimeTypeIdStr, type, typeId, url, sAccountId, sit
 	var idDIVserverdata = "crmActivityserverdata" + dateTimeTypeIdStr;
 	var idStickyToolTipDiv = "crmActivitymystickyTooltip"+dateTimeTypeIdStr;
 	var idTagA = "crmActivitytagA"+ dateTimeTypeIdStr;
+	$('#'+idStickyToolTipDiv).stop(false, true).hide();
 	$('.stickytooltip').bind('mouseleave',function(e){
-    	$('.stickytooltip').hide();
+    	$('.stickytooltip').stop(false, true).hide();
 	});
 	if(type=="Task") type="CRMTask";
 	if($("#"+idDIVserverdata).html()== ""){
@@ -220,14 +271,11 @@ function crmActivityOverIt(dateTimeTypeIdStr, type, typeId, url, sAccountId, sit
 		      	 		$("#"+ idTagA).attr('data-tooltip', idStickyToolTipDiv);
 		      	 		$("#"+idDIVserverdata).html(data);
 		      	 		stickytooltip.init("*[data-tooltip]", idStickyToolTipDiv);
-		      	 }else{
-		      		// $("#"+idDIVserverdata).html("This item has removed!");
 		      	 }
-		      	
 		      }
 		});
 	}else{
-		stickytooltip.init("*[data-tooltip]", idStickyToolTipDiv);
+		stickytooltip.init2("*[data-tooltip]", idStickyToolTipDiv);
 	}
 }
 
@@ -235,8 +283,9 @@ function useroverIt(dateTimeTypeIdStr, username, url, siteURL, timeZone){
 	var idDIVserverdata = "userserverdata" + dateTimeTypeIdStr;
 	var idStickyToolTipDiv = "usermystickyTooltip"+dateTimeTypeIdStr;
 	var idTagA = "usertagA"+ dateTimeTypeIdStr;
+	$('#'+idStickyToolTipDiv).stop(false, true).hide();
 	$('.stickytooltip').bind('mouseleave',function(e){
-    	$('.stickytooltip').hide();
+    	$('.stickytooltip').stop(false, true).hide();
 	});
 	if($("#"+idDIVserverdata).html()== ""){
 		$.ajax({
@@ -248,14 +297,11 @@ function useroverIt(dateTimeTypeIdStr, username, url, siteURL, timeZone){
 		      	 		$("#"+ idTagA).attr('data-tooltip', idStickyToolTipDiv);
 		      	 		$("#"+idDIVserverdata).html(data);
 		      	 		stickytooltip.init("*[data-tooltip]", idStickyToolTipDiv);
-		      	 }else{
-		      		// $("#"+idDIVserverdata).html("This item has removed!");
 		      	 }
-		      	
 		      }
 		});
 	}else{
-		stickytooltip.init("*[data-tooltip]", idStickyToolTipDiv);
+		stickytooltip.init2("*[data-tooltip]", idStickyToolTipDiv);
 	}
 }
 
@@ -263,8 +309,9 @@ function projectuseroverIt(dateTimeTypeIdStr, username, url, siteURL, timeZone){
 	var idDIVserverdata = "projectuserserverdata" + dateTimeTypeIdStr;
 	var idStickyToolTipDiv = "projectusermystickyTooltip"+dateTimeTypeIdStr;
 	var idTagA = "projectusertagA"+ dateTimeTypeIdStr;
+	$('#'+idStickyToolTipDiv).stop(false, true).hide();
 	$('.stickytooltip').bind('mouseleave',function(e){
-    	$('.stickytooltip').hide();
+    	$('.stickytooltip').stop(false, true).hide();
 	});
 	if($("#"+idDIVserverdata).html()== ""){
 		$.ajax({
@@ -276,13 +323,11 @@ function projectuseroverIt(dateTimeTypeIdStr, username, url, siteURL, timeZone){
 		      	 		$("#"+ idTagA).attr('data-tooltip', idStickyToolTipDiv);
 		      	 		$("#"+idDIVserverdata).html(data);
 		      	 		stickytooltip.init("*[data-tooltip]", idStickyToolTipDiv);
-		      	 }else{
-		      		// $("#"+idDIVserverdata).html("This item has removed!");
 		      	 }
 		      }
 		});
 	}else{
-		stickytooltip.init("*[data-tooltip]", idStickyToolTipDiv);
+		stickytooltip.init2("*[data-tooltip]", idStickyToolTipDiv);
 	}
 }
 
@@ -290,8 +335,9 @@ function crmuseroverIt(dateTimeTypeIdStr, username, url, siteURL, timeZone){
 	var idDIVserverdata = "crmuserserverdata" + dateTimeTypeIdStr;
 	var idStickyToolTipDiv = "crmusermystickyTooltip"+dateTimeTypeIdStr;
 	var idTagA = "crmusertagA"+ dateTimeTypeIdStr;
+	$('#'+idStickyToolTipDiv).stop(false, true).hide();
 	$('.stickytooltip').bind('mouseleave',function(e){
-    	$('.stickytooltip').hide();
+    	$('.stickytooltip').stop(false, true).hide();
 	});
 	if($("#"+idDIVserverdata).html()== ""){
 		$.ajax({
@@ -303,12 +349,10 @@ function crmuseroverIt(dateTimeTypeIdStr, username, url, siteURL, timeZone){
 		      	 		$("#"+ idTagA).attr('data-tooltip', idStickyToolTipDiv);
 		      	 		$("#"+idDIVserverdata).html(data);
 		      	 		stickytooltip.init("*[data-tooltip]", idStickyToolTipDiv);
-		      	 }else{
-		      		// $("#"+idDIVserverdata).html("This item has removed!");
 		      	 }
 		      }
 		});
 	}else{
-		stickytooltip.init("*[data-tooltip]", idStickyToolTipDiv);
+		stickytooltip.init2("*[data-tooltip]", idStickyToolTipDiv);
 	}
 }
