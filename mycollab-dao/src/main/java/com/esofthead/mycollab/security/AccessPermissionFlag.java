@@ -17,8 +17,7 @@
 package com.esofthead.mycollab.security;
 
 /**
- * 
- * @author haiphucnguyen
+ * Access permission flag
  */
 public class AccessPermissionFlag implements PermissionFlag {
 
@@ -27,17 +26,35 @@ public class AccessPermissionFlag implements PermissionFlag {
 	public static final int READ_WRITE = 2;
 	public static final int ACCESS = 4;
 
+	/**
+	 * Check whether <code>flag</code> implies read permission
+	 * 
+	 * @param flag
+	 * @return true of <code>flag</code> implies read permission
+	 */
 	public static boolean canRead(int flag) {
 		return ((flag & READ_ONLY) == READ_ONLY)
 				|| ((flag & READ_WRITE) == READ_WRITE)
 				|| ((flag & ACCESS) == ACCESS);
 	}
 
+	/**
+	 * Check whether <code>flag</code> implies write permission
+	 * 
+	 * @param flag
+	 * @return true of <code>flag</code> implies write permission
+	 */
 	public static boolean canWrite(int flag) {
 		return ((flag & READ_WRITE) == READ_WRITE)
 				|| ((flag & ACCESS) == ACCESS);
 	}
 
+	/**
+	 * Check whether <code>flag</code> implies access permission
+	 * 
+	 * @param flag
+	 * @return true of <code>flag</code> implies access permission
+	 */
 	public static boolean canAccess(int flag) {
 		return ((flag & ACCESS) == ACCESS);
 	}

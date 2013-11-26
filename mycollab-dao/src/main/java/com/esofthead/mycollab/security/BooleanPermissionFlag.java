@@ -19,8 +19,7 @@ package com.esofthead.mycollab.security;
 import com.esofthead.mycollab.core.MyCollabException;
 
 /**
- * 
- * @author haiphucnguyen
+ * Boolean permission flag
  * 
  */
 public class BooleanPermissionFlag implements PermissionFlag {
@@ -28,10 +27,22 @@ public class BooleanPermissionFlag implements PermissionFlag {
 
 	public static final int FALSE = 129;
 
+	/**
+	 * Check whether <code>flag</code> is true permission
+	 * 
+	 * @param flag
+	 * @return
+	 */
 	public static boolean beTrue(int flag) {
 		return (flag == TRUE);
 	}
 
+	/**
+	 * Check whether <code>flag</code> is false permission
+	 * 
+	 * @param flag
+	 * @return
+	 */
 	public static boolean beFalse(int flag) {
 		return (flag == FALSE);
 	}

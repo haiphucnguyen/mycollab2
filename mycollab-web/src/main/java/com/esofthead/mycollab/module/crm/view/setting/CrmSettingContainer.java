@@ -40,7 +40,7 @@ public class CrmSettingContainer extends CssLayout implements View {
 	private final DetachedTabs settingTab;
 	private final CssLayout mySpaceArea = new CssLayout();
 
-	private CrmCustomViewPresenter customViewPresenter;
+	private ICrmCustomViewPresenter customViewPresenter;
 	private CrmNotifcationSettingPresenter notificationPresenter;
 
 	public CrmSettingContainer() {
@@ -118,7 +118,7 @@ public class CrmSettingContainer extends CssLayout implements View {
 
 	private Component constructCustomView() {
 		customViewPresenter = PresenterResolver
-				.getPresenter(CrmCustomViewPresenter.class);
+				.getPresenter(ICrmCustomViewPresenter.class);
 		return customViewPresenter.getView();
 	}
 

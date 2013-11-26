@@ -49,18 +49,12 @@ import com.vaadin.ui.Window.Notification;
 /**
  * 
  * @author haiphucnguyen
- *
+ * 
  */
 public class MyCollabApplication extends Application implements
 		HttpServletRequestListener {
 
 	private static final long serialVersionUID = 1L;
-
-	private String initialUrl = "";
-	private String initialSubDomain = "1";
-	private boolean isInitializeApp = false;
-	private Throwable currentThrowable;
-	BasicCache<String, Object> variables;
 
 	private static Logger log = LoggerFactory
 			.getLogger(MyCollabApplication.class);
@@ -69,7 +63,20 @@ public class MyCollabApplication extends Application implements
 
 	private static ThreadLocal<MyCollabApplication> threadLocal = new ThreadLocal<MyCollabApplication>();
 
+	/**
+	 * Context of current logged in user
+	 */
 	private AppContext currentContext;
+
+	private String initialUrl = "";
+	private String initialSubDomain = "1";
+	private boolean isInitializeApp = false;
+	private Throwable currentThrowable;
+
+	/**
+	 * Cache to keep all variables in user session
+	 */
+	BasicCache<String, Object> variables;
 
 	static {
 		try {

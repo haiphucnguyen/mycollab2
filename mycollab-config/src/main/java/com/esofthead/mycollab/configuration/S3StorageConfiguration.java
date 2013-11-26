@@ -26,8 +26,6 @@ import com.amazonaws.services.s3.AmazonS3Client;
 /**
  * Amazon S3 Configuration
  * 
- * @author haiphucnguyen
- * 
  */
 public class S3StorageConfiguration implements StorageConfiguration {
 

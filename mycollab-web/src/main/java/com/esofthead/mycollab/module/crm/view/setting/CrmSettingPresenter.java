@@ -22,7 +22,7 @@ import com.esofthead.mycollab.module.crm.data.CustomViewScreenData;
 import com.esofthead.mycollab.module.crm.data.NotificationSettingScreenData;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
 import com.esofthead.mycollab.module.crm.view.CrmModule;
-import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
+import com.esofthead.mycollab.vaadin.mvp.IPresenter;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.vaadin.ui.ComponentContainer;
@@ -37,7 +37,7 @@ public class CrmSettingPresenter extends
 
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
-		AbstractPresenter presenter = null;
+		IPresenter presenter = null;
 		CrmModule crmModule = (CrmModule) container;
 		crmModule.addView(view);
 
@@ -47,7 +47,7 @@ public class CrmSettingPresenter extends
 					.getPresenter(CrmNotifcationSettingPresenter.class);
 		} else if (ClassUtils.instanceOf(data, CustomViewScreenData.Read.class)) {
 			presenter = PresenterResolver
-					.getPresenter(CrmCustomViewPresenter.class);
+					.getPresenter(ICrmCustomViewPresenter.class);
 		} else {
 			throw new MyCollabException("Do not support screen data " + data);
 		}

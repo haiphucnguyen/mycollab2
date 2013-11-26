@@ -19,19 +19,35 @@ package com.esofthead.mycollab.security;
 import com.esofthead.mycollab.core.MyCollabException;
 
 /**
- * 
- * @author haiphucnguyen
- *
+ * Utility to check permission value
  */
 public class PermissionChecker {
+	/**
+	 * 
+	 * @param flag
+	 * @return true if <code>flag</code> is boolean permission flag
+	 */
 	public static boolean isBooleanPermission(int flag) {
 		return (flag >> 7) == 1;
 	}
 
+	/**
+	 * 
+	 * @param flag
+	 * @return true of <code>flag</code> is access permission
+	 */
 	public static boolean isAccessPermission(int flag) {
 		return (flag >> 3) == 0;
 	}
 
+	/**
+	 * Check whether permission value <code>flag</code> implies permission value
+	 * <code>impliedVal</code>
+	 * 
+	 * @param flag
+	 * @param impliedVal
+	 * @return
+	 */
 	public static boolean isImplied(int flag, int impliedVal) {
 		if (isBooleanPermission(flag)) {
 			return flag == impliedVal;

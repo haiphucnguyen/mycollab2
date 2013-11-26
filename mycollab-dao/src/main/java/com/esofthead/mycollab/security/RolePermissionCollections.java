@@ -17,8 +17,7 @@
 package com.esofthead.mycollab.security;
 
 /**
- * 
- * @author haiphucnguyen
+ * Keep all permissions of MyCollab
  */
 public class RolePermissionCollections {
 

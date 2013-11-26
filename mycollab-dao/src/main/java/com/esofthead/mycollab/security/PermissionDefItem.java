@@ -17,15 +17,20 @@
 package com.esofthead.mycollab.security;
 
 /**
+ * Permission item
  * 
- * @author haiphucnguyen
- *
  */
 public class PermissionDefItem {
 	private String key;
 
+	/**
+	 * Display name of permission
+	 */
 	private String caption;
 
+	/**
+	 * Permission flag of permission
+	 */
 	private Class<? extends PermissionFlag> permissionCls;
 
 	public PermissionDefItem(String key, String caption,

@@ -41,9 +41,7 @@ import com.esofthead.template.velocity.TemplateContext;
 import com.esofthead.template.velocity.TemplateEngine;
 
 /**
- * 
- * @author haiphucnguyen
- * 
+ * Generic MyCollab embedded server
  */
 public abstract class GenericServerRunner {
 	private static Logger log = LoggerFactory
@@ -52,21 +50,32 @@ public abstract class GenericServerRunner {
 	private Server server;
 	private int port = 0;
 
-	public GenericServerRunner() {
-
-	}
-
 	public abstract WebAppContext buildContext(String baseDir);
 
+	/**
+	 * Start server
+	 * 
+	 * @throws Exception
+	 */
 	public void start() throws Exception {
 		server.start();
 		server.join();
 	}
 
+	/**
+	 * Stop server
+	 * 
+	 * @throws Exception
+	 */
 	public void stop() throws Exception {
 		server.stop();
 	}
 
+	/**
+	 * Detect web app folder
+	 * 
+	 * @return
+	 */
 	private String detectWebApp() {
 		File webappFolder = new File(System.getProperty("user.dir"), "webapp");
 
@@ -82,6 +91,12 @@ public abstract class GenericServerRunner {
 		}
 	}
 
+	/**
+	 * Run web server with arguments
+	 * 
+	 * @param args
+	 * @throws Exception
+	 */
 	public void run(String[] args) throws Exception {
 		int stopPort = 0;
 		String stopKey = null;
@@ -135,6 +150,12 @@ public abstract class GenericServerRunner {
 
 	}
 
+	/**
+	 * Detect localtion of config file
+	 * 
+	 * @param filename
+	 * @return
+	 */
 	private File detectConfigFile(String filename) {
 		File confFile = new File(System.getProperty("user.dir"), "conf/"
 				+ filename);
@@ -151,6 +172,9 @@ public abstract class GenericServerRunner {
 		}
 	}
 
+	/**
+	 * Pre-Start server process
+	 */
 	protected void preStartServer() {
 		File file = detectConfigFile("mycollab.properties");
 		if (file == null) {
@@ -233,43 +257,64 @@ public abstract class GenericServerRunner {
 			System.out
 					.println("=====================================================");
 			System.out
-					.println("                     EMAIL SETUP                     ");
+					.println("                 EMAIL SETUP  (Optional)             ");
 			System.out
 					.println("=====================================================");
 
-			System.out.println("Outgoing server address:");
-			String stmpHost = device.readLine();
-			templateContext.put("smtpAddress", stmpHost);
-
-			System.out.println("Mail server port:");
-			int mailServerPort = 0;
+			System.out
+					.println("We need your smtp email configuration to send system notifications such as bug assignment, new account created to your team. If you do not have any smtp account, you can ignore this setting section. Do you want continue to set up stmp settings (y/n):");
 
 			while (true) {
-				String serverPortVal = device.readLine();
+				String acceptContinue = device.readLine();
+				if ("y".equals(acceptContinue)) {
+					System.out.println("Outgoing server address:");
+					String stmpHost = device.readLine();
+					templateContext.put("smtpAddress", stmpHost);
 
-				try {
-					mailServerPort = Integer.parseInt(serverPortVal);
+					System.out.println("Mail server port:");
+					int mailServerPort = 0;
+
+					while (true) {
+						String serverPortVal = device.readLine();
+
+						try {
+							mailServerPort = Integer.parseInt(serverPortVal);
+							break;
+						} catch (Exception e) {
+							System.out
+									.println("Port must be the number from 1-65000.");
+						}
+					}
+					templateContext.put("smtpPort", mailServerPort + "");
+
+					System.out.println("Mail user name:");
+					String mailUser = device.readLine();
+					templateContext.put("smtpUserName", mailUser);
+
+					System.out.println("Mail password:");
+					String mailPassword = device.readLine();
+					templateContext.put("smtpPassword", mailPassword);
+
+					System.out.println("Enable TLS (y/n):");
+					String tlsEnable = device.readLine();
+					if (tlsEnable.equals("y")) {
+						templateContext.put("smtpTLSEnable", "true");
+					} else {
+						templateContext.put("smtpTLSEnable", "false");
+					}
 					break;
-				} catch (Exception e) {
-					System.out.println("Port must be the number from 1-65000");
+				} else if ("n".equals(acceptContinue)) {
+					System.out
+							.println("You can set up stmp account later in file %MYCOLLAB_HOME%/conf/mycollab.properties");
+					templateContext.put("smtpAddress", "");
+					templateContext.put("smtpPort", "1");
+					templateContext.put("smtpUserName", "");
+					templateContext.put("smtpPassword", "");
+					templateContext.put("smtpTLSEnable", "false");
+					break;
+				} else {
+					System.out.println("You must select y (yes) or n (no)");
 				}
-			}
-			templateContext.put("smtpPort", mailServerPort + "");
-
-			System.out.println("Mail user name:");
-			String mailUser = device.readLine();
-			templateContext.put("smtpUserName", mailUser);
-
-			System.out.println("Mail password:");
-			String mailPassword = device.readLine();
-			templateContext.put("smtpPassword", mailPassword);
-
-			System.out.println("Enable TLS (y/n):");
-			String tlsEnable = device.readLine();
-			if (tlsEnable.equals("y")) {
-				templateContext.put("smtpTLSEnable", "true");
-			} else {
-				templateContext.put("smtpTLSEnable", "false");
 			}
 
 			templateContext.put("error.sendTo", "hainguyen@esofthead.com");

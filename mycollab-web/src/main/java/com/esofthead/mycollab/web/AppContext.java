@@ -113,8 +113,9 @@ public class AppContext implements Serializable {
 	}
 
 	/**
+	 * Get context of current logged in user
 	 * 
-	 * @return
+	 * @return context of current logged in user
 	 */
 	public static AppContext getInstance() {
 		try {
@@ -124,6 +125,9 @@ public class AppContext implements Serializable {
 		}
 	}
 
+	/**
+	 * Request on every transaction between client and server finish
+	 */
 	public void transactionEnd() {
 		long currentTime = new GregorianCalendar().getTimeInMillis();
 		if (currentTime - lastAccessTime > UPDATE_TIME_DURATION) {
@@ -148,6 +152,12 @@ public class AppContext implements Serializable {
 		}
 	}
 
+	/**
+	 * Update last module visit then the next sign in, MyCollab will lead user
+	 * to last visit module
+	 * 
+	 * @param moduleName
+	 */
 	public void updateLastModuleVisit(String moduleName) {
 		try {
 			UserPreference pref = getInstance().userPreference;
@@ -422,8 +432,9 @@ public class AppContext implements Serializable {
 	}
 
 	/**
+	 * Get permission map of current user
 	 * 
-	 * @return
+	 * @return permission map of current user
 	 */
 	public static PermissionMap getPermissionMap() {
 		return getInstance().session.getPermissionMaps();
