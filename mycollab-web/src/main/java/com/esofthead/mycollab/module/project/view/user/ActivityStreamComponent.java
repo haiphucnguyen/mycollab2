@@ -147,6 +147,7 @@ public class ActivityStreamComponent extends Depot {
 
 					String content = "";
 
+					// --------------Item hidden div tooltip----------------
 					String randomStrId = UUID.randomUUID().toString();
 					String idDivSeverData = "projectOverViewserverdata"
 							+ randomStrId + "";
@@ -155,42 +156,58 @@ public class ActivityStreamComponent extends Depot {
 					String idStickyToolTipDiv = "projectOverViewmystickyTooltip"
 							+ randomStrId;
 					String idtagA = "projectOverViewtagA" + randomStrId;
+					// --------------User hidden div tooltip-----------------
+					String idDivUserSeverData = "projectuserserverdata"
+							+ randomStrId + "";
+					String idUserToopTipDiv = "projectusertooltip"
+							+ randomStrId + "";
+					String idUserStickyToolTipDiv = "projectusermystickyTooltip"
+							+ randomStrId;
+					String idUsertagA = "projectusertagA" + randomStrId;
 
 					String arg0 = UserAvatarControlFactory.getAvatarLink(
 							activityStream.getCreatedUserAvatarId(), 16);
-					String arg1 = ProjectLinkBuilder
+					String arg1 = idUsertagA;
+					String arg2 = ProjectLinkBuilder
 							.generateProjectMemberFullLink(
 									activityStream.getExtratypeid(),
 									activityStream.getCreateduser());
-					String arg2 = activityStream.getCreatedUserFullName();
-
-					String arg3 = LocalizationHelper
+					String arg3 = "'" + randomStrId + "'";
+					String arg4 = "'" + activityStream.getCreateduser() + "'";
+					String arg5 = "'" + AppContext.getSiteUrl() + "tooltip/'";
+					String arg6 = "'" + AppContext.getSiteUrl() + "'";
+					String arg7 = AppContext.getSession().getTimezone();
+					String arg8 = activityStream.getCreatedUserFullName();
+					String arg9 = idUserStickyToolTipDiv;
+					String arg10 = idUserToopTipDiv;
+					String arg11 = idDivUserSeverData;
+					String arg12 = LocalizationHelper
 							.getMessage(ProjectLocalizationTypeMap
 									.getType(activityStream.getType()));
-					String arg4 = ProjectResources
+					String arg13 = ProjectResources
 							.getResourceLink(activityStream.getType());
-					String arg5 = idtagA;
-					String arg6 = ProjectLinkBuilder.generateProjectItemLink(
+					String arg14 = idtagA;
+					String arg15 = ProjectLinkBuilder.generateProjectItemLink(
 							activityStream.getExtratypeid(),
 							activityStream.getType(),
 							activityStream.getTypeid());
-					String arg7 = "'" + randomStrId + "'";
-					String arg8 = "'" + activityStream.getType() + "'";
-					String arg9 = "'" + activityStream.getTypeid() + "'";
-					String arg10 = "'" + AppContext.getSiteUrl() + "tooltip/'";
-					String arg11 = "'" + activityStream.getSaccountid() + "'";
-					String arg12 = "'" + AppContext.getSiteUrl() + "'";
-					String arg13 = AppContext.getSession().getTimezone();
-					String arg14 = activityStream.getNamefield();
-					String arg15 = MyCollabResource
+					String arg16 = "'" + randomStrId + "'";
+					String arg17 = "'" + activityStream.getType() + "'";
+					String arg18 = "'" + activityStream.getTypeid() + "'";
+					String arg19 = "'" + AppContext.getSiteUrl() + "tooltip/'";
+					String arg20 = "'" + activityStream.getSaccountid() + "'";
+					String arg21 = "'" + AppContext.getSiteUrl() + "'";
+					String arg22 = AppContext.getSession().getTimezone();
+					String arg23 = activityStream.getNamefield();
+					String arg24 = MyCollabResource
 							.newResourceLink("icons/16/project/project.png");
-					String arg16 = ProjectLinkBuilder.generateProjectFullLink(
+					String arg25 = ProjectLinkBuilder.generateProjectFullLink(
 							activityStream.getProjectId(),
 							GenericLinkUtils.URL_PREFIX_PARAM);
-					String arg17 = activityStream.getProjectName();
-					String arg18 = idStickyToolTipDiv;
-					String arg19 = idToopTipDiv;
-					String arg20 = idDivSeverData;
+					String arg26 = activityStream.getProjectName();
+					String arg27 = idStickyToolTipDiv;
+					String arg28 = idToopTipDiv;
+					String arg29 = idDivSeverData;
 
 					if (ActivityStreamConstants.ACTION_CREATE
 							.equals(activityStream.getAction())) {
@@ -200,7 +217,9 @@ public class ActivityStreamComponent extends Depot {
 										arg0, arg1, arg2, arg3, arg4, arg5,
 										arg6, arg7, arg8, arg9, arg10, arg11,
 										arg12, arg13, arg14, arg15, arg16,
-										arg17, arg18, arg19, arg20);
+										arg17, arg18, arg19, arg20, arg21,
+										arg22, arg23, arg24, arg25, arg26,
+										arg27, arg28, arg29);
 					} else if (ActivityStreamConstants.ACTION_UPDATE
 							.equals(activityStream.getAction())) {
 						content = LocalizationHelper
@@ -209,7 +228,9 @@ public class ActivityStreamComponent extends Depot {
 										arg0, arg1, arg2, arg3, arg4, arg5,
 										arg6, arg7, arg8, arg9, arg10, arg11,
 										arg12, arg13, arg14, arg15, arg16,
-										arg17, arg18, arg19, arg20);
+										arg17, arg18, arg19, arg20, arg21,
+										arg22, arg23, arg24, arg25, arg26,
+										arg27, arg28, arg29);
 						if (activityStream.getAssoAuditLog() != null) {
 							content += ProjectActivityStreamGenerator
 									.generatorDetailChangeOfActivity(activityStream);

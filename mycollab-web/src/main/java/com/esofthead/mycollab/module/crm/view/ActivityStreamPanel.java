@@ -150,43 +150,66 @@ public class ActivityStreamPanel extends Depot {
 							.equals(activityStream.getAction())) {
 						action = CrmCommonI18nEnum.WIDGET_ACTIVITY_UPDATE_ACTION;
 					}
+					// --------------Item hidden div tooltip----------------
 					String randomStrId = UUID.randomUUID().toString();
-					String idDivSeverData = "crmActivityserverdata" + randomStrId + "";
-					String idToopTipDiv = "crmActivitytooltip" + randomStrId + "";
-					String idStickyToolTipDiv = "crmActivitymystickyTooltip" + randomStrId;
+					String idDivSeverData = "crmActivityserverdata"
+							+ randomStrId + "";
+					String idToopTipDiv = "crmActivitytooltip" + randomStrId
+							+ "";
+					String idStickyToolTipDiv = "crmActivitymystickyTooltip"
+							+ randomStrId;
 					String idtagA = "crmActivitytagA" + randomStrId;
+					// --------------User hidden div tooltip-----------------
+					String idDivUserSeverData = "crmuserserverdata"
+							+ randomStrId + "";
+					String idUserToopTipDiv = "crmusertooltip" + randomStrId
+							+ "";
+					String idUserStickyToolTipDiv = "crmusermystickyTooltip"
+							+ randomStrId;
+					String idUsertagA = "crmusertagA" + randomStrId;
+
 					String arg0 = UserAvatarControlFactory.getAvatarLink(
 							activityStream.getCreatedUserAvatarId(), 16);
-					String arg1 = UserLinkUtils.generatePreviewFullUserLink(
+					String arg1 = idUsertagA;
+					String arg2 = UserLinkUtils.generatePreviewFullUserLink(
 							SiteConfiguration.getSiteUrl(AppContext
 									.getSession().getSubdomain()),
 							activityStream.getCreateduser());
-					String arg2 = activityStream.getCreatedUserFullName();
-					String arg3 = LocalizationHelper
+					String arg3 = "'" + randomStrId + "'";
+					String arg4 = "'" + activityStream.getCreateduser() + "'";
+					String arg5 = "'" + AppContext.getSiteUrl() + "tooltip/'";
+					String arg6 = "'" + AppContext.getSiteUrl() + "'";
+					String arg7 = AppContext.getSession().getTimezone();
+					String arg8 = activityStream.getCreatedUserFullName();
+					String arg9 = idUserStickyToolTipDiv;
+					String arg10 = idUserToopTipDiv;
+					String arg11 = idDivUserSeverData;
+					String arg12 = LocalizationHelper
 							.getMessage(CrmLocalizationTypeMap
 									.getType(activityStream.getType()));
-					String arg4 = CrmResources.getResourceLink(activityStream
+					String arg13 = CrmResources.getResourceLink(activityStream
 							.getType());
-					String arg5 = idtagA;
-					String arg6 = CrmLinkGenerator.generateCrmItemLink(
+					String arg14 = idtagA;
+					String arg15 = CrmLinkGenerator.generateCrmItemLink(
 							activityStream.getType(),
 							activityStream.getTypeid());
-					String arg7 = "'" + randomStrId + "'";
-					String arg8 = "'" + activityStream.getType() + "'";
-					String arg9 = "'" + activityStream.getTypeid() + "'";
-					String arg10 = "'" + AppContext.getSiteUrl() + "tooltip/'";
-					String arg11 = "'" + activityStream.getSaccountid() + "'";
-					String arg12 = "'" + AppContext.getSiteUrl() + "'";
-					String arg13 = AppContext.getSession().getTimezone();
-					String arg14 = activityStream.getNamefield();
-					String arg15 = idStickyToolTipDiv;
-					String arg16 = idToopTipDiv;
-					String arg17 = idDivSeverData;
+					String arg16 = "'" + randomStrId + "'";
+					String arg17 = "'" + activityStream.getType() + "'";
+					String arg18 = "'" + activityStream.getTypeid() + "'";
+					String arg19 = "'" + AppContext.getSiteUrl() + "tooltip/'";
+					String arg20 = "'" + activityStream.getSaccountid() + "'";
+					String arg21 = "'" + AppContext.getSiteUrl() + "'";
+					String arg22 = AppContext.getSession().getTimezone();
+					String arg23 = activityStream.getNamefield();
+					String arg24 = idStickyToolTipDiv;
+					String arg25 = idToopTipDiv;
+					String arg26 = idDivSeverData;
 					StringBuffer content = new StringBuffer(
 							LocalizationHelper.getMessage(action, arg0, arg1,
 									arg2, arg3, arg4, arg5, arg6, arg7, arg8,
 									arg9, arg10, arg11, arg12, arg13, arg14,
-									arg15, arg16, arg17));
+									arg15, arg16, arg17, arg18, arg19, arg20,
+									arg21, arg22, arg23, arg24, arg25, arg26));
 					if (activityStream.getAssoAuditLog() != null) {
 						content.append(CrmActivityStreamGenerator
 								.generatorDetailChangeOfActivity(activityStream));

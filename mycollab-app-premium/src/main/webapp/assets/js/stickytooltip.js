@@ -230,3 +230,85 @@ function crmActivityOverIt(dateTimeTypeIdStr, type, typeId, url, sAccountId, sit
 		stickytooltip.init("*[data-tooltip]", idStickyToolTipDiv);
 	}
 }
+
+function useroverIt(dateTimeTypeIdStr, username, url, siteURL, timeZone){
+	var idDIVserverdata = "userserverdata" + dateTimeTypeIdStr;
+	var idStickyToolTipDiv = "usermystickyTooltip"+dateTimeTypeIdStr;
+	var idTagA = "usertagA"+ dateTimeTypeIdStr;
+	$('.stickytooltip').bind('mouseleave',function(e){
+    	$('.stickytooltip').hide();
+	});
+	if($("#"+idDIVserverdata).html()== ""){
+		$.ajax({
+		      type: 'POST',
+		      url: url,
+		      data : { type: "User", username: username ,siteURL: siteURL , timeZone: timeZone},
+		      success: function(data){
+		      	 if(data.trim()!= "null"){
+		      	 		$("#"+ idTagA).attr('data-tooltip', idStickyToolTipDiv);
+		      	 		$("#"+idDIVserverdata).html(data);
+		      	 		stickytooltip.init("*[data-tooltip]", idStickyToolTipDiv);
+		      	 }else{
+		      		// $("#"+idDIVserverdata).html("This item has removed!");
+		      	 }
+		      	
+		      }
+		});
+	}else{
+		stickytooltip.init("*[data-tooltip]", idStickyToolTipDiv);
+	}
+}
+
+function projectuseroverIt(dateTimeTypeIdStr, username, url, siteURL, timeZone){
+	var idDIVserverdata = "projectuserserverdata" + dateTimeTypeIdStr;
+	var idStickyToolTipDiv = "projectusermystickyTooltip"+dateTimeTypeIdStr;
+	var idTagA = "projectusertagA"+ dateTimeTypeIdStr;
+	$('.stickytooltip').bind('mouseleave',function(e){
+    	$('.stickytooltip').hide();
+	});
+	if($("#"+idDIVserverdata).html()== ""){
+		$.ajax({
+		      type: 'POST',
+		      url: url,
+		      data : { type: "User", username: username ,siteURL: siteURL , timeZone: timeZone},
+		      success: function(data){
+		      	 if(data.trim()!= "null"){
+		      	 		$("#"+ idTagA).attr('data-tooltip', idStickyToolTipDiv);
+		      	 		$("#"+idDIVserverdata).html(data);
+		      	 		stickytooltip.init("*[data-tooltip]", idStickyToolTipDiv);
+		      	 }else{
+		      		// $("#"+idDIVserverdata).html("This item has removed!");
+		      	 }
+		      }
+		});
+	}else{
+		stickytooltip.init("*[data-tooltip]", idStickyToolTipDiv);
+	}
+}
+
+function crmuseroverIt(dateTimeTypeIdStr, username, url, siteURL, timeZone){
+	var idDIVserverdata = "crmuserserverdata" + dateTimeTypeIdStr;
+	var idStickyToolTipDiv = "crmusermystickyTooltip"+dateTimeTypeIdStr;
+	var idTagA = "crmusertagA"+ dateTimeTypeIdStr;
+	$('.stickytooltip').bind('mouseleave',function(e){
+    	$('.stickytooltip').hide();
+	});
+	if($("#"+idDIVserverdata).html()== ""){
+		$.ajax({
+		      type: 'POST',
+		      url: url,
+		      data : { type: "User", username: username ,siteURL: siteURL , timeZone: timeZone},
+		      success: function(data){
+		      	 if(data.trim()!= "null"){
+		      	 		$("#"+ idTagA).attr('data-tooltip', idStickyToolTipDiv);
+		      	 		$("#"+idDIVserverdata).html(data);
+		      	 		stickytooltip.init("*[data-tooltip]", idStickyToolTipDiv);
+		      	 }else{
+		      		// $("#"+idDIVserverdata).html("This item has removed!");
+		      	 }
+		      }
+		});
+	}else{
+		stickytooltip.init("*[data-tooltip]", idStickyToolTipDiv);
+	}
+}

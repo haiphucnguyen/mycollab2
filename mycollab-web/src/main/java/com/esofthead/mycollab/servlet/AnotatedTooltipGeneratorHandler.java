@@ -7,12 +7,16 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.jsoup.Jsoup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.common.ui.components.CrmTooltipGenerator;
 import com.esofthead.mycollab.common.ui.components.ProjectTooltipGenerator;
+import com.esofthead.mycollab.core.utils.DateTimeUtils;
+import com.esofthead.mycollab.core.utils.StringUtils;
+import com.esofthead.mycollab.core.utils.TimezoneMapper;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.SimpleCall;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
@@ -46,7 +50,16 @@ import com.esofthead.mycollab.module.tracker.domain.SimpleVersion;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.module.tracker.service.ComponentService;
 import com.esofthead.mycollab.module.tracker.service.VersionService;
+import com.esofthead.mycollab.module.user.domain.User;
+import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
+import com.hp.gagawa.java.elements.A;
+import com.hp.gagawa.java.elements.Div;
+import com.hp.gagawa.java.elements.H3;
+import com.hp.gagawa.java.elements.Img;
+import com.hp.gagawa.java.elements.Td;
+import com.hp.gagawa.java.elements.Tr;
 
 @Component("tooltipGeneratorServlet")
 public class AnotatedTooltipGeneratorHandler extends GenericServlet {
@@ -58,11 +71,13 @@ public class AnotatedTooltipGeneratorHandler extends GenericServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		try {
 			String type = request.getParameter("type");
-			Integer typeid = Integer.parseInt(request.getParameter("typeId"));
-			Integer sAccountId = Integer.parseInt(request
-					.getParameter("sAccountId"));
+			Integer typeid = (request.getParameter("typeId") != null) ? Integer
+					.parseInt(request.getParameter("typeId")) : 0;
+			Integer sAccountId = (request.getParameter("sAccountId") != null) ? Integer
+					.parseInt(request.getParameter("sAccountId")) : 0;
 			String siteURL = request.getParameter("siteURL");
 			String timeZone = request.getParameter("timeZone");
+			String username = request.getParameter("username");
 
 			String html = "";
 			if ("TaskList".equals(type)) {
@@ -171,6 +186,11 @@ public class AnotatedTooltipGeneratorHandler extends GenericServlet {
 						.findById(typeid, sAccountId);
 				html = CrmTooltipGenerator.generateToolTipCrmTask(crmTask,
 						siteURL, timeZone);
+			} else if ("User".equals(type)) {
+				UserService service = ApplicationContextUtil
+						.getSpringBean(UserService.class);
+				User user = service.findUserByUserName(username);
+				html = generateTooltipUser(user, siteURL, timeZone);
 			}
 			PrintWriter out = response.getWriter();
 			out.println(html);
@@ -183,6 +203,105 @@ public class AnotatedTooltipGeneratorHandler extends GenericServlet {
 			PrintWriter out = response.getWriter();
 			out.println(html);
 			return;
+		}
+	}
+
+	private String getDisplayName(User user) {
+		String result = user.getFirstname() + " " + user.getLastname();
+		if (result.trim().equals("")) {
+			String displayName = user.getUsername();
+			int index = (displayName != null) ? displayName.indexOf("@") : 0;
+			if (index > 0) {
+				return displayName.substring(0, index);
+			}
+		}
+		return result;
+	}
+
+	private String generateTooltipUser(User user, String siteURL,
+			String timeZone) {
+		try {
+			Div div = new Div();
+			H3 userFullName = new H3();
+			userFullName.appendText(Jsoup.parse(getDisplayName(user)).html());
+			div.appendChild(userFullName);
+
+			com.hp.gagawa.java.elements.Table table = new com.hp.gagawa.java.elements.Table();
+			table.setStyle("padding-left:10px; width :350px; color: #5a5a5a; font-size:12px;");
+			Tr trRow1 = new Tr();
+			trRow1.appendChild(
+					new Td().setStyle(
+							"width: 70px; vertical-align: top; text-align: right;")
+							.appendText("Email:")).appendChild(
+					new Td().setStyle("vertical-align: top;").appendChild(
+							new A().setHref("mailto:" + user.getEmail())
+									.appendText(
+											StringUtils
+													.getStringFieldValue(user
+															.getEmail()))));
+
+			Td trRow1_value = new Td().setStyle(
+					"text-align: left; vertical-align: top;").appendChild(
+					new Img("", UserAvatarControlFactory.getAvatarLink(
+							user.getAvatarid(), 100)));
+			trRow1_value.setAttribute("rowspan", "4");
+			trRow1.appendChild(new Td().setStyle(
+					"width: 0px; vertical-align: top; text-align: left;")
+					.appendChild(trRow1_value));
+
+			Tr trRow2 = new Tr();
+			trRow2.appendChild(
+					new Td().setStyle(
+							"width: 70px; vertical-align: top; text-align: right;")
+							.appendText("Time:")).appendChild(
+					new Td().setStyle("vertical-align: top;").appendText(
+							TimezoneMapper.getTimezone(user.getTimezone())
+									.getDisplayName()));
+			Tr trRow3 = new Tr();
+			trRow3.appendChild(
+					new Td().setStyle(
+							"width: 70px; vertical-align: top; text-align: right;")
+							.appendText("Country:"))
+					.appendChild(
+							new Td().setStyle("vertical-align: top;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(user
+															.getCountry())));
+
+			Tr trRow4 = new Tr();
+			trRow4.appendChild(
+					new Td().setStyle(
+							"width: 70px; vertical-align: top; text-align: right;")
+							.appendText("Phone:")).appendChild(
+					new Td().setStyle("vertical-align: top;")
+							.appendText(
+									StringUtils.getStringFieldValue(user
+											.getWorkphone())));
+
+			Tr trRow5 = new Tr();
+			trRow5.appendChild(
+					new Td().setStyle(
+							"width: 70px; vertical-align: top; text-align: right;")
+							.appendText("Last access time:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											DateTimeUtils.getStringDateFromNow(user
+													.getLastaccessedtime())));
+			table.appendChild(trRow1);
+			table.appendChild(trRow2);
+			table.appendChild(trRow3);
+			table.appendChild(trRow4);
+			table.appendChild(trRow5);
+			div.appendChild(table);
+			return div.write();
+		} catch (Exception e) {
+			log.error(
+					"Error while generate tooltip for servlet project-task tooltip",
+					e);
+			return null;
 		}
 	}
 }
