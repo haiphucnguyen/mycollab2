@@ -27,17 +27,20 @@ import org.slf4j.LoggerFactory;
 
 import com.esofthead.mycollab.ErrorReportingUtils;
 import com.esofthead.mycollab.SiteConfiguration;
-import com.esofthead.mycollab.WicketApplication;
 import com.esofthead.mycollab.base.BasePage;
 import com.esofthead.mycollab.rest.client.RemoteServiceProxy;
 import com.esofthead.mycollab.rest.server.domain.ContactForm;
 import com.esofthead.mycollab.rest.server.resource.ContactResource;
+import com.octo.captcha.service.image.DefaultManageableImageCaptchaService;
+import com.octo.captcha.service.image.ImageCaptchaService;
 
 public class ContactUsPage extends BasePage {
 
 	private static final long serialVersionUID = 1L;
 
 	private static Logger log = LoggerFactory.getLogger(ContactUsPage.class);
+
+	private ImageCaptchaService captchaService = new DefaultManageableImageCaptchaService();
 
 	private String challengeId = null;
 
@@ -138,7 +141,7 @@ public class ContactUsPage extends BasePage {
 			@Override
 			protected byte[] getImageData(final Attributes arg0) {
 				challengeId = new UID().toString();
-				final BufferedImage challenge = WicketApplication.captchaService
+				final BufferedImage challenge = captchaService
 						.getImageChallengeForID(challengeId, Session.get()
 								.getLocale());
 				try {
@@ -166,8 +169,8 @@ public class ContactUsPage extends BasePage {
 
 		@Override
 		public void validate(final IValidatable<String> validatable) {
-			if (!WicketApplication.captchaService.validateResponseForID(
-					challengeId, validatable.getValue())) {
+			if (!captchaService.validateResponseForID(challengeId,
+					validatable.getValue())) {
 				error("Wrong captcha");
 			}
 		}
