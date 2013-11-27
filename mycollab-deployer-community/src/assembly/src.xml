@@ -42,6 +42,7 @@
                             <exclude>**/.settings/**</exclude>
                             <exclude>**/.springBeans</exclude>
                             <exclude>**/.gitignore</exclude>
+                            <exclude>**/*.versionsBackup</exclude>
                         </excludes>
                     </fileSet>
                 </fileSets>
