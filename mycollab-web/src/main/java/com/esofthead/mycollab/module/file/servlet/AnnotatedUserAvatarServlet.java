@@ -64,6 +64,14 @@ public class AnnotatedUserAvatarServlet implements HttpRequestHandler {
 			if (params.length >= 3) {
 				username = params[1];
 				size = Integer.parseInt(params[2]);
+
+				if (size <= 0) {
+					log.error("Error to get avatar", new MyCollabException(
+							"Invalid request for avatar " + path));
+				}
+			} else {
+				log.error("Error to get avatar", new MyCollabException(
+						"Invalid request for avatar " + path));
 			}
 		}
 
@@ -72,18 +80,13 @@ public class AnnotatedUserAvatarServlet implements HttpRequestHandler {
 		avatarFile = fileConfiguration.getAvatarFile(username, size);
 
 		if (avatarFile == null) {
-			if (size == 0) {
-				throw new MyCollabException("Invalid request for avatar "
-						+ path);
-			} else {
-				String realpath = request.getSession().getServletContext()
-						.getRealPath("");
-				String userAvatarPath = realpath
-						+ "/assets/images/default_user_avatar_" + size + ".png";
-				avatarFile = new File(userAvatarPath);
-				log.debug("Get default user avatar at "
-						+ avatarFile.getAbsolutePath());
-			}
+			String realpath = request.getSession().getServletContext()
+					.getRealPath("");
+			String userAvatarPath = realpath
+					+ "/assets/images/default_user_avatar_" + size + ".png";
+			avatarFile = new File(userAvatarPath);
+			log.debug("Get default user avatar at "
+					+ avatarFile.getAbsolutePath());
 		}
 
 		response.setHeader("Content-Type", "image/png");

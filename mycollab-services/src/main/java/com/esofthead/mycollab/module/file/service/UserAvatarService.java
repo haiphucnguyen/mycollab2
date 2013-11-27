@@ -27,6 +27,13 @@ import com.esofthead.mycollab.core.persistence.service.IService;
  */
 public interface UserAvatarService extends IService {
 	/**
+	 * 
+	 * @param username
+	 * @return
+	 */
+	String uploadDefaultAvatar(String username);
+
+	/**
 	 * Upload user avatar
 	 * 
 	 * @param image

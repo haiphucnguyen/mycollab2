@@ -20,6 +20,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.UUID;
 
 import javax.imageio.ImageIO;
@@ -38,7 +39,7 @@ import com.esofthead.mycollab.module.file.service.UserAvatarService;
 import com.esofthead.mycollab.module.user.dao.UserMapper;
 import com.esofthead.mycollab.module.user.domain.User;
 
-@Service
+@Service(value = "userAvatarService")
 public class UserAvatarServiceImpl implements UserAvatarService {
 	private static Logger log = LoggerFactory
 			.getLogger(UserAvatarServiceImpl.class);
@@ -58,6 +59,24 @@ public class UserAvatarServiceImpl implements UserAvatarService {
 
 	private static final int[] SUPPORT_SIZES = { PIXELS_100, PIXELS_64,
 			PIXELS_48, PIXELS_32, PIXELS_24, PIXELS_16 };
+
+	@Override
+	public String uploadDefaultAvatar(String username) {
+		// Save default user avatar
+		InputStream imageResourceStream = this
+				.getClass()
+				.getClassLoader()
+				.getResourceAsStream(
+						"assets/images/default_user_avatar_100.png");
+		BufferedImage imageBuff;
+		try {
+			imageBuff = ImageIO.read(imageResourceStream);
+			return uploadAvatar(imageBuff, username, null);
+		} catch (IOException e) {
+			throw new MyCollabException(
+					"Error while set default avatar to user", e);
+		}
+	}
 
 	@Override
 	public String uploadAvatar(BufferedImage image, String username,

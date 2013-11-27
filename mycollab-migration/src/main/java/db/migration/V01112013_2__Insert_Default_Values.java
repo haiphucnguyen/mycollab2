@@ -76,7 +76,7 @@ public class V01112013_2__Insert_Default_Values implements SpringJdbcMigration {
 		SimpleJdbcInsert userJdbcInsert = new SimpleJdbcInsert(jdbcTemplate)
 				.withTableName("s_user").usingColumns("username", "firstname",
 						"lastname", "email", "status", "registeredTime",
-						"password");
+						"password", "avatarId");
 
 		Map<String, Object> userParameters = new HashMap<String, Object>();
 		userParameters.put("username", "admin@mycollab.com");
@@ -87,7 +87,10 @@ public class V01112013_2__Insert_Default_Values implements SpringJdbcMigration {
 		userParameters.put("registeredTime", new Date());
 		userParameters.put("password",
 				PasswordEncryptHelper.encryptSaltPassword("admin123"));
+		userParameters.put("avatarId", "null");
 		userJdbcInsert.execute(userParameters);
+
+		log.debug("Insert default user avatar");
 
 		log.debug("Create associate between user and billing plan");
 		SimpleJdbcInsert userAccountJdbcInsert = new SimpleJdbcInsert(
