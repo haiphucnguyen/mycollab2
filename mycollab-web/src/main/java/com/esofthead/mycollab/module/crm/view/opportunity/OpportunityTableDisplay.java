@@ -291,67 +291,95 @@ public class OpportunityTableDisplay
 			trRow2.appendChild(
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
-							.appendText("Amount:")).appendChild(
-					new Td().appendText(StringUtils
-							.getStringFieldValue(opportunity.getAmount())));
+							.appendText("Amount:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(opportunity
+															.getAmount())));
 			trRow2.appendChild(
 					new Td().setStyle(
 							"width: 140px; vertical-align: top; text-align: right;")
-							.appendText("Expected Close Date:")).appendChild(
-					new Td().appendText(AppContext.formatDate(opportunity
-							.getExpectedcloseddate())));
+							.appendText("Expected Close Date:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											AppContext.formatDate(opportunity
+													.getExpectedcloseddate())));
 
 			Tr trRow3 = new Tr();
 			trRow3.appendChild(
 					new Td().setStyle(
 							"width: 90px; vertical-align: top; text-align: right;")
-							.appendText("Sales Stage:")).appendChild(
-					new Td().setStyle("vertical-align: top; text-align: left;")
-							.appendText(
-									StringUtils.getStringFieldValue(opportunity
-											.getSalesstage())));
+							.appendText("Sales Stage:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(opportunity
+															.getSalesstage())));
 			trRow3.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
-							.appendText("Lead Source:")).appendChild(
-					new Td().appendText(StringUtils
-							.getStringFieldValue(opportunity.getSource())));
+							.appendText("Lead Source:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(opportunity
+															.getSource())));
 
 			Tr trRow4 = new Tr();
 			trRow4.appendChild(
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
-							.appendText("Probability (%):")).appendChild(
-					new Td().setStyle("vertical-align: top; text-align: left;")
-							.appendText(
-									StringUtils.getStringFieldValue(opportunity
-											.getProbability())));
+							.appendText("Probability (%):"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(opportunity
+															.getProbability())));
 			trRow4.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
 							.appendText("Campaign:"))
 					.appendChild(
-							new Td().appendChild(new A()
-									.setHref(
-											(opportunity.getCampaignid() != null) ? AppContext
-													.getSiteUrl()
-													+ "#"
-													+ CrmLinkGenerator
-															.generateCampaignPreviewLink(opportunity
-																	.getCampaignid())
-													: "")
-									.appendText(
-											StringUtils
-													.getStringFieldValue(opportunity
-															.getCampaignName()))));
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendChild(
+											new A().setHref(
+													(opportunity
+															.getCampaignid() != null) ? AppContext
+															.getSiteUrl()
+															+ "#"
+															+ CrmLinkGenerator
+																	.generateCampaignPreviewLink(opportunity
+																			.getCampaignid())
+															: "")
+													.appendText(
+															StringUtils
+																	.getStringFieldValue(opportunity
+																			.getCampaignName()))));
 
 			Tr trRow5 = new Tr();
 			trRow5.appendChild(
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
-							.appendText("Next Step:")).appendChild(
-					new Td().appendText(StringUtils
-							.getStringFieldValue(opportunity.getNextstep())));
+							.appendText("Next Step:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(opportunity
+															.getNextstep())));
 			trRow5.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")

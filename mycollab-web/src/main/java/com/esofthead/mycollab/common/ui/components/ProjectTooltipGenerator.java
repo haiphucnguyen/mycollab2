@@ -30,7 +30,6 @@ import com.esofthead.mycollab.module.project.domain.SimpleRisk;
 import com.esofthead.mycollab.module.project.domain.SimpleStandupReport;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
-import com.esofthead.mycollab.module.project.view.ProjectLinkBuilder;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.SimpleComponent;
 import com.esofthead.mycollab.module.tracker.domain.SimpleVersion;
@@ -102,9 +101,14 @@ public class ProjectTooltipGenerator {
 			trRow3.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
-							.appendText("Priority:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(task
-							.getPriority())));
+							.appendText("Priority:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(task
+															.getPriority())));
 
 			Tr trRow4 = new Tr();
 			trRow4.appendChild(
@@ -141,10 +145,12 @@ public class ProjectTooltipGenerator {
 									"width: 200px;word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 									.appendChild(
 											new A().setHref(
-													(task.getTaskListName() != null) ? ProjectLinkBuilder
-															.generateTaskGroupPreviewFullLink(
-																	task.getProjectid(),
-																	task.getTasklistid())
+													(task.getTaskListName() != null) ? siteURL
+															+ "#"
+															+ ProjectLinkUtils
+																	.generateTaskGroupPreviewLink(
+																			task.getProjectid(),
+																			task.getTasklistid())
 															: "")
 													.appendText(
 															StringUtils
@@ -167,7 +173,7 @@ public class ProjectTooltipGenerator {
 					.setStyle(
 							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 					.appendText(
-							StringUtils.getStringFieldValue(task.getNotes()));
+							StringUtils.getStringRemoveHtmlTag(task.getNotes()));
 			trRow6_value.setAttribute("colspan", "3");
 			trRow6.appendChild(
 					new Td().setStyle(
@@ -221,7 +227,7 @@ public class ProjectTooltipGenerator {
 					.setStyle(
 							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 					.appendText(
-							StringUtils.getStringFieldValue(bug
+							StringUtils.getStringRemoveHtmlTag(bug
 									.getEnvironment()));
 			trRow2_value.setAttribute("colspan", "3");
 			trRow2.appendChild(
@@ -234,29 +240,45 @@ public class ProjectTooltipGenerator {
 			trRow3.appendChild(
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
-							.appendText("Status:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(bug
-							.getStatus())));
+							.appendText("Status:"))
+					.appendChild(
+							new Td().setStyle(
+									"break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils.getStringFieldValue(bug
+													.getStatus())));
 			trRow3.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
-							.appendText("Priority:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(bug
-							.getPriority())));
+							.appendText("Priority:"))
+					.appendChild(
+							new Td().setStyle(
+									"break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils.getStringFieldValue(bug
+													.getPriority())));
 
 			Tr trRow4 = new Tr();
 			trRow4.appendChild(
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
-							.appendText("Severity:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(bug
-							.getSeverity())));
+							.appendText("Severity:"))
+					.appendChild(
+							new Td().setStyle(
+									"break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils.getStringFieldValue(bug
+													.getSeverity())));
 			trRow4.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
-							.appendText("Resolution:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(bug
-							.getResolution())));
+							.appendText("Resolution:"))
+					.appendChild(
+							new Td().setStyle(
+									"break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils.getStringFieldValue(bug
+													.getResolution())));
 
 			Tr trRow5 = new Tr();
 			trRow5.appendChild(
@@ -429,9 +451,14 @@ public class ProjectTooltipGenerator {
 			trRow1.appendChild(
 					new Td().setStyle(
 							"width: 80px; vertical-align: top; text-align: right;")
-							.appendText("Consequence:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(risk
-							.getConsequence())));
+							.appendText("Consequence:"))
+					.appendChild(
+							new Td().setStyle(
+									"break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(risk
+															.getConsequence())));
 
 			Tr trRow2 = new Tr();
 			trRow2.appendChild(
@@ -462,44 +489,68 @@ public class ProjectTooltipGenerator {
 			trRow2.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
-							.appendText("Probability:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(risk
-							.getProbalitity())));
+							.appendText("Probability:"))
+					.appendChild(
+							new Td().setStyle(
+									"break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(risk
+															.getProbalitity())));
 
 			Tr trRow3 = new Tr();
 			trRow3.appendChild(
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
-							.appendText("Date due:")).appendChild(
-					new Td().appendText(DateTimeUtils
-							.converToStringWithUserTimeZone(risk.getDatedue(),
-									timeZone)));
+							.appendText("Date due:"))
+					.appendChild(
+							new Td().setStyle(
+									"break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											DateTimeUtils
+													.converToStringWithUserTimeZone(
+															risk.getDatedue(),
+															timeZone)));
 			trRow3.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
-							.appendText("Rating:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(risk
-							.getLevel())));
+							.appendText("Rating:"))
+					.appendChild(
+							new Td().setStyle(
+									"break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(risk
+															.getLevel())));
 
 			Tr trRow4 = new Tr();
 			trRow4.appendChild(
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
-							.appendText("Status:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(risk
-							.getStatus())));
+							.appendText("Status:"))
+					.appendChild(
+							new Td().setStyle(
+									"break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(risk
+															.getStatus())));
 			trRow4.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
-							.appendText("Related to:")).appendChild(
-					new Td().appendText(""));
+							.appendText("Related to:"))
+					.appendChild(
+							new Td().setStyle(
+									"break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(""));
 
 			Tr trRow6 = new Tr();
 			Td trRow6_value = new Td()
 					.setStyle(
 							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 					.appendText(
-							StringUtils.getStringFieldValue(risk.getResponse()));
+							StringUtils.getStringRemoveHtmlTag(risk
+									.getResponse()));
 			trRow6_value.setAttribute("colspan", "3");
 
 			trRow6.appendChild(
@@ -580,9 +631,14 @@ public class ProjectTooltipGenerator {
 			trRow1.appendChild(
 					new Td().setStyle(
 							"width: 80px; vertical-align: top; text-align: right;")
-							.appendText("Impact:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(problem
-							.getImpact())));
+							.appendText("Impact:"))
+					.appendChild(
+							new Td().setStyle(
+									"break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(problem
+															.getImpact())));
 
 			Tr trRow2 = new Tr();
 			trRow2.appendChild(
@@ -613,44 +669,67 @@ public class ProjectTooltipGenerator {
 			trRow2.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
-							.appendText("Priority:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(problem
-							.getPriority())));
+							.appendText("Priority:"))
+					.appendChild(
+							new Td().setStyle(
+									"break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(problem
+															.getPriority())));
 
 			Tr trRow3 = new Tr();
 			trRow3.appendChild(
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
-							.appendText("Date due:")).appendChild(
-					new Td().appendText(DateTimeUtils
-							.converToStringWithUserTimeZone(
-									problem.getDatedue(), timeZone)));
+							.appendText("Date due:"))
+					.appendChild(
+							new Td().setStyle(
+									"break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											DateTimeUtils
+													.converToStringWithUserTimeZone(
+															problem.getDatedue(),
+															timeZone)));
 			trRow3.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
-							.appendText("Rating:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(problem
-							.getLevel())));
+							.appendText("Rating:"))
+					.appendChild(
+							new Td().setStyle(
+									"break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(problem
+															.getLevel())));
 
 			Tr trRow4 = new Tr();
 			trRow4.appendChild(
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
-							.appendText("Status:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(problem
-							.getStatus())));
+							.appendText("Status:"))
+					.appendChild(
+							new Td().setStyle(
+									"break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(problem
+															.getStatus())));
 			trRow4.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
-							.appendText("Related to:")).appendChild(
-					new Td().appendText(""));
+							.appendText("Related to:"))
+					.appendChild(
+							new Td().setStyle(
+									"break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(""));
 
 			Tr trRow6 = new Tr();
 			Td trRow6_value = new Td()
 					.setStyle(
 							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 					.appendText(
-							StringUtils.getStringFieldValue(problem
+							StringUtils.getStringRemoveHtmlTag(problem
 									.getResolution()));
 			trRow6_value.setAttribute("colspan", "3");
 
@@ -684,7 +763,7 @@ public class ProjectTooltipGenerator {
 			Div div = new Div();
 			H3 versionName = new H3();
 			versionName
-					.appendText(Jsoup.parse(version.getVersionname()).html());
+					.appendText(Jsoup.parse(version.getVersionname()).text());
 			div.appendChild(versionName);
 
 			com.hp.gagawa.java.elements.Table table = new com.hp.gagawa.java.elements.Table();
@@ -692,10 +771,15 @@ public class ProjectTooltipGenerator {
 			Tr trRow1 = new Tr();
 			trRow1.appendChild(
 					new Td().setStyle(
-							"width: 70px; vertical-align: top; text-align: right;")
-							.appendText("Version Name:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(version
-							.getVersionname())));
+							"width: 100px; vertical-align: top; text-align: right;")
+							.appendText("Version Name:"))
+					.appendChild(
+							new Td().setStyle(
+									"break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(version
+															.getVersionname())));
 
 			Tr trRow2 = new Tr();
 
@@ -708,13 +792,13 @@ public class ProjectTooltipGenerator {
 			trRow2_value.setAttribute("colspan", "3");
 			trRow2.appendChild(
 					new Td().setStyle(
-							"width: 70px; vertical-align: top; text-align: right;")
+							"width: 100px; vertical-align: top; text-align: right;")
 							.appendText("Description:")).appendChild(
 					trRow2_value);
 			Tr trRow3 = new Tr();
 			trRow3.appendChild(
 					new Td().setStyle(
-							"width: 70px; vertical-align: top; text-align: right;")
+							"width: 100px; vertical-align: top; text-align: right;")
 							.appendText("Due Date:")).appendChild(
 					new Td().appendText(DateTimeUtils
 							.converToStringWithUserTimeZone(
@@ -739,7 +823,7 @@ public class ProjectTooltipGenerator {
 			Div div = new Div();
 			H3 componentName = new H3();
 			componentName.appendText(Jsoup.parse(component.getComponentname())
-					.html());
+					.text());
 			div.appendChild(componentName);
 
 			com.hp.gagawa.java.elements.Table table = new com.hp.gagawa.java.elements.Table();
@@ -747,12 +831,15 @@ public class ProjectTooltipGenerator {
 			Tr trRow1 = new Tr();
 			trRow1.appendChild(
 					new Td().setStyle(
-							"width: 70px; vertical-align: top; text-align: right;")
+							"width: 100px; vertical-align: top; text-align: right;")
 							.appendText("Component Name:"))
 					.appendChild(
-							new Td().appendText(StringUtils
-									.getStringFieldValue(component
-											.getComponentname())));
+							new Td().setStyle(
+									"break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(component
+															.getComponentname())));
 
 			Tr trRow2 = new Tr();
 			Td trRow2_value = new Td()
@@ -764,13 +851,13 @@ public class ProjectTooltipGenerator {
 			trRow2_value.setAttribute("colspan", "3");
 			trRow2.appendChild(
 					new Td().setStyle(
-							"width: 70px; vertical-align: top; text-align: right;")
+							"width: 100px; vertical-align: top; text-align: right;")
 							.appendText("Description:")).appendChild(
 					trRow2_value);
 			Tr trRow3 = new Tr();
 			trRow3.appendChild(
 					new Td().setStyle(
-							"width: 70px; vertical-align: top; text-align: right;")
+							"width: 100px; vertical-align: top; text-align: right;")
 							.appendText("Lead:"))
 					.appendChild(
 							new Td().setStyle(
@@ -814,7 +901,7 @@ public class ProjectTooltipGenerator {
 				return null;
 			Div div = new Div();
 			H3 bugSummary = new H3();
-			bugSummary.appendText(Jsoup.parse(taskList.getName()).html());
+			bugSummary.appendText(Jsoup.parse(taskList.getName()).text());
 			div.appendChild(bugSummary);
 
 			com.hp.gagawa.java.elements.Table table = new com.hp.gagawa.java.elements.Table();
@@ -922,78 +1009,129 @@ public class ProjectTooltipGenerator {
 			trRow1.appendChild(
 					new Td().setStyle(
 							"width: 100px; vertical-align: top; text-align: right;")
-							.appendText("Home Page:")).appendChild(
-					new Td().appendChild(new A().setHref(
-							(project.getHomepage() != null) ? project
-									.getHomepage() : "").appendText(
-							StringUtils.getStringFieldValue(project
-									.getHomepage()))));
+							.appendText("Home Page:"))
+					.appendChild(
+							new Td().setStyle(
+									"break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendChild(
+											new A().setHref(
+													(project.getHomepage() != null) ? project
+															.getHomepage() : "")
+													.appendText(
+															StringUtils
+																	.getStringFieldValue(project
+																			.getHomepage()))));
 			trRow1.appendChild(
 					new Td().setStyle(
-							"width: 110px; vertical-align: top; text-align: right;")
-							.appendText("Status:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(project
-							.getProjectstatus())));
+							"width: 100px; vertical-align: top; text-align: right;")
+							.appendText("Status:"))
+					.appendChild(
+							new Td().setStyle(
+									"break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(project
+															.getProjectstatus())));
 
 			Tr trRow2 = new Tr();
 			trRow2.appendChild(
 					new Td().setStyle(
 							"width: 100px; vertical-align: top; text-align: right;")
-							.appendText("Plan Start Date:")).appendChild(
-					new Td().appendText(DateTimeUtils
-							.converToStringWithUserTimeZone(
-									project.getPlanstartdate(), timeZone)));
+							.appendText("Plan Start Date:"))
+					.appendChild(
+							new Td().setStyle(
+									"break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											DateTimeUtils
+													.converToStringWithUserTimeZone(
+															project.getPlanstartdate(),
+															timeZone)));
 			trRow2.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
 							.appendText("Currency:"))
 					.appendChild(
-							new Td().appendText((project.getCurrency() != null) ? StringUtils
-									.getStringFieldValue(project.getCurrency()
-											.getSymbol()) : ""));
+							new Td().setStyle(
+									"break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											(project.getCurrency() != null) ? StringUtils
+													.getStringFieldValue(project
+															.getCurrency()
+															.getSymbol())
+													: ""));
 
 			Tr trRow3 = new Tr();
 			trRow3.appendChild(
 					new Td().setStyle(
 							"width: 100px; vertical-align: top; text-align: right;")
-							.appendText("Plan End Date:")).appendChild(
-					new Td().appendText(DateTimeUtils
-							.converToStringWithUserTimeZone(
-									project.getPlanenddate(), timeZone)));
+							.appendText("Plan End Date:"))
+					.appendChild(
+							new Td().setStyle(
+									"break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											DateTimeUtils
+													.converToStringWithUserTimeZone(
+															project.getPlanenddate(),
+															timeZone)));
 			trRow3.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
-							.appendText("Rate:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(project
-							.getDefaultbillingrate())));
+							.appendText("Rate:"))
+					.appendChild(
+							new Td().setStyle(
+									"break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(project
+															.getDefaultbillingrate())));
 			Tr trRow4 = new Tr();
 			trRow4.appendChild(
 					new Td().setStyle(
 							"width: 100px; vertical-align: top; text-align: right;")
-							.appendText("Actual Start Date:")).appendChild(
-					new Td().appendText(DateTimeUtils
-							.converToStringWithUserTimeZone(
-									project.getActualstartdate(), timeZone)));
+							.appendText("Actual Start Date:"))
+					.appendChild(
+							new Td().setStyle(
+									"break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											DateTimeUtils
+													.converToStringWithUserTimeZone(
+															project.getActualstartdate(),
+															timeZone)));
 			trRow4.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
-							.appendText("Target Budget:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(project
-							.getTargetbudget())));
+							.appendText("Target Budget:"))
+					.appendChild(
+							new Td().setStyle(
+									"break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(project
+															.getTargetbudget())));
 			Tr trRow5 = new Tr();
 			trRow5.appendChild(
 					new Td().setStyle(
 							"width: 100px; vertical-align: top; text-align: right;")
-							.appendText("Actual End Date:")).appendChild(
-					new Td().appendText(DateTimeUtils
-							.converToStringWithUserTimeZone(
-									project.getActualenddate(), timeZone)));
+							.appendText("Actual End Date:"))
+					.appendChild(
+							new Td().setStyle(
+									"break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											DateTimeUtils
+													.converToStringWithUserTimeZone(
+															project.getActualenddate(),
+															timeZone)));
 			trRow5.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
-							.appendText("Actual Budget:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(project
-							.getActualbudget())));
+							.appendText("Actual Budget:"))
+					.appendChild(
+							new Td().setStyle(
+									"break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(project
+															.getActualbudget())));
 			Tr trRow6 = new Tr();
 			Td trRow6_value = new Td()
 					.setStyle(
@@ -1040,14 +1178,14 @@ public class ProjectTooltipGenerator {
 			Tr trRow2 = new Tr();
 			trRow2.appendChild(
 					new Td().setStyle(
-							"width: 70px; vertical-align: top; text-align: right;")
+							"width: 80px; vertical-align: top; text-align: right;")
 							.appendText("Start Date:")).appendChild(
 					new Td().appendText(DateTimeUtils
 							.converToStringWithUserTimeZone(
 									milestone.getStartdate(), timeZone)));
 			trRow2.appendChild(
 					new Td().setStyle(
-							"width: 110px; vertical-align: top; text-align: right;")
+							"width: 100px; vertical-align: top; text-align: right;")
 							.appendText("Assignee:"))
 					.appendChild(
 							new Td().setStyle(
@@ -1078,30 +1216,51 @@ public class ProjectTooltipGenerator {
 			Tr trRow3 = new Tr();
 			trRow3.appendChild(
 					new Td().setStyle(
-							"width: 70px; vertical-align: top; text-align: right;")
-							.appendText("End Date:")).appendChild(
-					new Td().appendText(DateTimeUtils
-							.converToStringWithUserTimeZone(
-									milestone.getEnddate(), timeZone)));
+							"width: 80px; vertical-align: top; text-align: right;")
+							.appendText("End Date:"))
+					.appendChild(
+							new Td().setStyle(
+									"break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											DateTimeUtils
+													.converToStringWithUserTimeZone(
+															milestone
+																	.getEnddate(),
+															timeZone)));
 			trRow3.appendChild(
 					new Td().setStyle(
-							"width: 110px; vertical-align: top; text-align: right;")
-							.appendText("Status:")).appendChild(
-					new Td().appendText(StringUtils
-							.getStringFieldValue(milestone.getStatus())));
+							"width: 100px; vertical-align: top; text-align: right;")
+							.appendText("Status:"))
+					.appendChild(
+							new Td().setStyle(
+									"break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(milestone
+															.getStatus())));
 			Tr trRow4 = new Tr();
 			trRow4.appendChild(
 					new Td().setStyle(
-							"width: 70px; vertical-align: top; text-align: right;")
-							.appendText("Tasks:")).appendChild(
-					new Td().appendText(StringUtils
-							.getStringFieldValue(milestone.getNumTasks())));
+							"width: 80px; vertical-align: top; text-align: right;")
+							.appendText("Tasks:"))
+					.appendChild(
+							new Td().setStyle(
+									"break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(milestone
+															.getNumTasks())));
 			trRow4.appendChild(
 					new Td().setStyle(
-							"width: 110px; vertical-align: top; text-align: right;")
-							.appendText("Bugs:")).appendChild(
-					new Td().appendText(StringUtils
-							.getStringFieldValue(milestone.getNumBugs())));
+							"width: 100px; vertical-align: top; text-align: right;")
+							.appendText("Bugs:"))
+					.appendChild(
+							new Td().setStyle(
+									"break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(milestone
+															.getNumBugs())));
 			Tr trRow6 = new Tr();
 			Td trRow6_value = new Td()
 					.setStyle(
@@ -1112,7 +1271,7 @@ public class ProjectTooltipGenerator {
 			trRow6_value.setAttribute("colspan", "3");
 			trRow6.appendChild(
 					new Td().setStyle(
-							"width: 70px; vertical-align: top; text-align: right;")
+							"width: 80px; vertical-align: top; text-align: right;")
 							.appendText("Description:")).appendChild(
 					trRow6_value);
 

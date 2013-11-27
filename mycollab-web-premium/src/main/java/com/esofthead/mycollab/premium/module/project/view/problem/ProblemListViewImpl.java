@@ -340,7 +340,7 @@ public class ProblemListViewImpl extends AbstractView implements
 			div.appendChild(problemName);
 
 			com.hp.gagawa.java.elements.Table table = new com.hp.gagawa.java.elements.Table();
-			table.setStyle("padding-left:10px; width :500px; color: #5a5a5a; font-size:12px;");
+			table.setStyle("padding-left:10px; width :500px; color: #5a5a5a; font-size:11px;");
 
 			Tr trRow5 = new Tr();
 			Td trRow5_value = new Td()
@@ -387,9 +387,14 @@ public class ProblemListViewImpl extends AbstractView implements
 			trRow1.appendChild(
 					new Td().setStyle(
 							"width: 80px; vertical-align: top; text-align: right;")
-							.appendText("Impact:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(problem
-							.getImpact())));
+							.appendText("Impact:"))
+					.appendChild(
+							new Td().setStyle(
+									"width: 150px;word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(problem
+															.getImpact())));
 
 			Tr trRow2 = new Tr();
 			trRow2.appendChild(
@@ -421,9 +426,14 @@ public class ProblemListViewImpl extends AbstractView implements
 			trRow2.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
-							.appendText("Priority:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(problem
-							.getPriority())));
+							.appendText("Priority:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(problem
+															.getPriority())));
 
 			Tr trRow3 = new Tr();
 			trRow3.appendChild(
@@ -449,15 +459,18 @@ public class ProblemListViewImpl extends AbstractView implements
 			trRow4.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
-							.appendText("Related to:")).appendChild(
-					new Td().appendText(""));
+							.appendText("Related to:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(""));
 
 			Tr trRow6 = new Tr();
 			Td trRow6_value = new Td()
 					.setStyle(
 							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 					.appendText(
-							StringUtils.getStringFieldValue(problem
+							StringUtils.getStringRemoveHtmlTag(problem
 									.getResolution()));
 			trRow6_value.setAttribute("colspan", "3");
 
