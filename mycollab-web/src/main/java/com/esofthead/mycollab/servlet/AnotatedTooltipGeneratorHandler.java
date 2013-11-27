@@ -225,9 +225,10 @@ public class AnotatedTooltipGeneratorHandler extends GenericServlet {
 						sAccountId);
 				html = generateTooltipUser(user, siteURL, timeZone);
 			}
-			PrintWriter out = response.getWriter();
+
 			response.setCharacterEncoding("UTF-8");
 			response.setContentType("text/html;charset=UTF-8");
+			PrintWriter out = response.getWriter();
 			out.println(html);
 			return;
 		} catch (Exception e) {
