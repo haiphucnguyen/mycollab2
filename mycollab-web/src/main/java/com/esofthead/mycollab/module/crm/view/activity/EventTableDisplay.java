@@ -191,9 +191,13 @@ public class EventTableDisplay extends
 			trRow1.appendChild(
 					new Td().setStyle(
 							"width: 100px; vertical-align: top; text-align: right;")
-							.appendText("Start Date & Time:")).appendChild(
-					new Td().appendText(AppContext.formatDateTime(meeting
-							.getStartDate())));
+							.appendText("Start Date & Time:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											AppContext.formatDateTime(meeting
+													.getStartDate())));
 			trRow1.appendChild(
 					new Td().setStyle(
 							"width: 90px; vertical-align: top; text-align: right;")
@@ -209,16 +213,20 @@ public class EventTableDisplay extends
 			trRow2.appendChild(
 					new Td().setStyle(
 							"width: 100px; vertical-align: top; text-align: right;")
-							.appendText("End Date & Time:")).appendChild(
-					new Td().appendText(AppContext.formatDateTime(meeting
-							.getEndDate())));
+							.appendText("End Date & Time:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											AppContext.formatDateTime(meeting
+													.getEndDate())));
 			trRow2.appendChild(
 					new Td().setStyle(
 							"width: 90px; vertical-align: top; text-align: right;")
 							.appendText("Location:"))
 					.appendChild(
 							new Td().setStyle(
-									"width:110px; vertical-align: top; text-align: left;")
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 									.appendText(
 											(meeting.getMeetingLocation() != null) ? meeting
 													.getMeetingLocation() : ""));
@@ -260,29 +268,46 @@ public class EventTableDisplay extends
 			trRow1.appendChild(
 					new Td().setStyle(
 							"width: 120px; vertical-align: top; text-align: right;")
-							.appendText("Start Date & Time:")).appendChild(
-					new Td().appendText(AppContext.formatDateTime(call
-							.getStartDate())));
+							.appendText("Start Date & Time:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											AppContext.formatDateTime(call
+													.getStartDate())));
 			trRow1.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
-							.appendText("Status:")).appendChild(
-					new Td().appendText((call.getStatus() != null) ? call
-							.getStatus() : ""));
+							.appendText("Status:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											(call.getStatus() != null) ? call
+													.getStatus() : ""));
 
 			Tr trRow2 = new Tr();
 			trRow2.appendChild(
 					new Td().setStyle(
 							"width: 90px; vertical-align: top; text-align: right;")
-							.appendText("Duration:")).appendChild(
-					new Td().appendText((call.getCallDuration() != null) ? call
-							.getCallDuration().toString() : ""));
+							.appendText("Duration:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											(call.getCallDuration() != null) ? call
+													.getCallDuration()
+													.toString() : ""));
 			trRow2.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
-							.appendText("Purpose:")).appendChild(
-					new Td().appendText((call.getCallPurpose() != null) ? call
-							.getCallPurpose() : ""));
+							.appendText("Purpose:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											(call.getCallPurpose() != null) ? call
+													.getCallPurpose() : ""));
 			Tr trRow3 = new Tr();
 			Td trRow3_value = new Td()
 					.setStyle(
@@ -335,16 +360,22 @@ public class EventTableDisplay extends
 			trRow1.appendChild(
 					new Td().setStyle(
 							"width: 100px; vertical-align: top; text-align: right;")
-							.appendText("Start Date:")).appendChild(
-					new Td().appendText(AppContext.formatDateTime(event
-							.getStartDate())));
+							.appendText("Start Date:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											AppContext.formatDateTime(event
+													.getStartDate())));
 			trRow1.appendChild(
 					new Td().setStyle(
 							"width: 90px; vertical-align: top; text-align: right;")
 							.appendText("Status:"))
 					.appendChild(
 							new Td().setStyle(
-									"width:110px; vertical-align: top; text-align: left;")
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.setStyle(
+											"width:110px; vertical-align: top; text-align: left;")
 									.appendText(
 											StringUtils
 													.getStringFieldValue(event
@@ -354,9 +385,13 @@ public class EventTableDisplay extends
 			trRow2.appendChild(
 					new Td().setStyle(
 							"width: 100px; vertical-align: top; text-align: right;")
-							.appendText("Due Date:")).appendChild(
-					new Td().appendText(AppContext.formatDateTime(event
-							.getEndDate())));
+							.appendText("Due Date:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											AppContext.formatDateTime(event
+													.getEndDate())));
 			trRow2.appendChild(
 					new Td().setStyle(
 							"width: 90px; vertical-align: top; text-align: right;")
@@ -382,9 +417,14 @@ public class EventTableDisplay extends
 			trRow3.appendChild(
 					new Td().setStyle(
 							"width: 100px; vertical-align: top; text-align: right;")
-							.appendText("Priority:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(event
-							.getPriority())));
+							.appendText("Priority:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(event
+															.getPriority())));
 			trRow3.appendChild(
 					new Td().setStyle(
 							"width: 90px; vertical-align: top; text-align: right;")

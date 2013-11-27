@@ -193,46 +193,72 @@ public class CaseTableDisplay extends
 			Tr trRow1 = new Tr();
 			trRow1.appendChild(
 					new Td().setStyle(
-							"width: 70px; vertical-align: top; text-align: right;")
-							.appendText("Priority:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(cases
-							.getPriority())));
+							"width: 90px; vertical-align: top; text-align: right;")
+							.appendText("Priority:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(cases
+															.getPriority())));
 			trRow1.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
-							.appendText("Type:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(cases
-							.getType())));
+							.appendText("Type:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(cases
+															.getType())));
 
 			Tr trRow2 = new Tr();
 			trRow2.appendChild(
 					new Td().setStyle(
-							"width: 70px; vertical-align: top; text-align: right;")
-							.appendText("Status:")).appendChild(
-					new Td().appendText((StringUtils.getStringFieldValue(cases
-							.getStatus()))));
+							"width: 90px; vertical-align: top; text-align: right;")
+							.appendText("Status:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											(StringUtils
+													.getStringFieldValue(cases
+															.getStatus()))));
 			trRow2.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
-							.appendText("Reason:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(cases
-							.getReason())));
+							.appendText("Reason:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(cases
+															.getReason())));
 
 			Tr trRow3 = new Tr();
 			trRow3.appendChild(
 					new Td().setStyle(
-							"width: 70px; vertical-align: top; text-align: right;")
-							.appendText("Account Name:")).appendChild(
-					new Td().appendChild(new A().setHref(
-							(cases.getAccountid() != null) ? AppContext
-									.getSiteUrl()
-									+ "#"
-									+ CrmLinkGenerator
-											.generateAccountPreviewLink(cases
-													.getAccountid()) : "")
-							.appendText(
-									StringUtils.getStringFieldValue(cases
-											.getAccountName()))));
+							"width: 90px; vertical-align: top; text-align: right;")
+							.appendText("Account Name:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendChild(
+											new A().setHref(
+													(cases.getAccountid() != null) ? AppContext
+															.getSiteUrl()
+															+ "#"
+															+ CrmLinkGenerator
+																	.generateAccountPreviewLink(cases
+																			.getAccountid())
+															: "")
+													.appendText(
+															StringUtils
+																	.getStringFieldValue(cases
+																			.getAccountName()))));
 			trRow3.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
@@ -250,9 +276,14 @@ public class CaseTableDisplay extends
 			trRow4.appendChild(
 					new Td().setStyle(
 							"width: 100px; vertical-align: top; text-align: right;")
-							.appendText("Phone Number:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(cases
-							.getPhonenumber())));
+							.appendText("Phone Number:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(cases
+															.getPhonenumber())));
 			trRow4.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
@@ -300,7 +331,7 @@ public class CaseTableDisplay extends
 					.setStyle(
 							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 					.appendText(
-							StringUtils.getStringFieldValue(cases
+							StringUtils.getStringRemoveHtmlTag(cases
 									.getResolution()));
 			trRow6_value.setAttribute("colspan", "3");
 

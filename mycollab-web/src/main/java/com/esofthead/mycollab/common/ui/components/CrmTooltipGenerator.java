@@ -65,7 +65,7 @@ public class CrmTooltipGenerator {
 							.appendText("Website:"))
 					.appendChild(
 							new Td().setStyle(
-									"vertical-align:top; text-align: left;")
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 									.appendChild(
 											new A().setHref(
 													(account.getWebsite() != null) ? account
@@ -77,11 +77,14 @@ public class CrmTooltipGenerator {
 			trRow1.appendChild(
 					new Td().setStyle(
 							"width: 150px; vertical-align: top; text-align: right;")
-							.appendText("Office Phone:")).appendChild(
-					new Td().setStyle("width:200px; vertical-align: top;")
-							.appendText(
-									StringUtils.getStringFieldValue(account
-											.getPhoneoffice())));
+							.appendText("Office Phone:"))
+					.appendChild(
+							new Td().setStyle(
+									"width:180px;word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(account
+															.getPhoneoffice())));
 
 			Tr trRow2 = new Tr();
 			trRow2.appendChild(
@@ -94,13 +97,20 @@ public class CrmTooltipGenerator {
 			trRow2.appendChild(
 					new Td().setStyle(
 							"width: 100px; vertical-align: top; text-align: right;")
-							.appendText("Email:")).appendChild(
-					new Td().appendChild(new A().setHref(
-							(account.getEmail() != null) ? "mailto:"
-									+ account.getEmail() : "")
-							.appendText(
-									StringUtils.getStringFieldValue(account
-											.getEmail()))));
+							.appendText("Email:"))
+					.appendChild(
+							new Td().setStyle(
+									"width:180px;word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendChild(
+											new A().setHref(
+													(account.getEmail() != null) ? "mailto:"
+															+ account
+																	.getEmail()
+															: "")
+													.appendText(
+															StringUtils
+																	.getStringFieldValue(account
+																			.getEmail()))));
 
 			Tr trRow3 = new Tr();
 			trRow3.appendChild(
@@ -184,48 +194,80 @@ public class CrmTooltipGenerator {
 			trRow1.appendChild(
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
-							.appendText("First Name:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(contact
-							.getFirstname())));
+							.appendText("First Name:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(contact
+															.getFirstname())));
 			trRow1.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
-							.appendText("Office Phone:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(contact
-							.getOfficephone())));
+							.appendText("Office Phone:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(contact
+															.getOfficephone())));
 			Tr trRow2 = new Tr();
 			trRow2.appendChild(
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
-							.appendText("Last Name:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(contact
-							.getLastname())));
+							.appendText("Last Name:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(contact
+															.getLastname())));
 			trRow2.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
-							.appendText("Mobile:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(contact
-							.getMobile())));
+							.appendText("Mobile:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(contact
+															.getMobile())));
 
 			Tr trRow3 = new Tr();
 			trRow3.appendChild(
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
-							.appendText("Email:")).appendChild(
-					new Td().appendChild(new A().setHref(
-							(contact.getEmail() != null) ? "mailto:"
-									+ contact.getEmail() : "")
-							.appendText(
-									StringUtils.getStringFieldValue(contact
-											.getEmail()))));
+							.appendText("Email:"))
+					.appendChild(
+							new Td().setStyle(
+									"width:200px;word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendChild(
+											new A().setHref(
+													(contact.getEmail() != null) ? "mailto:"
+															+ contact
+																	.getEmail()
+															: "")
+													.appendText(
+															StringUtils
+																	.getStringFieldValue(contact
+																			.getEmail()))));
 
 			trRow3.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
-							.appendText("Birthday:")).appendChild(
-					new Td().appendText(DateTimeUtils
-							.converToStringWithUserTimeZone(
-									contact.getBirthday(), userTimeZone)));
+							.appendText("Birthday:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											DateTimeUtils
+													.converToStringWithUserTimeZone(
+															contact.getBirthday(),
+															userTimeZone)));
 
 			Tr trRow4 = new Tr();
 			trRow4.appendChild(
@@ -234,7 +276,7 @@ public class CrmTooltipGenerator {
 							.appendText("Department:"))
 					.appendChild(
 							new Td().setStyle(
-									"width: 150px;word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									"width: 200px;word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 									.appendText(
 											StringUtils
 													.getStringFieldValue(contact
@@ -334,31 +376,51 @@ public class CrmTooltipGenerator {
 			trRow1.appendChild(
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
-							.appendText("Start Date:")).appendChild(
-					new Td().appendText(DateTimeUtils
-							.converToStringWithUserTimeZone(
-									campagin.getStartdate(), userTimeZone)));
+							.appendText("Start Date:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											DateTimeUtils
+													.converToStringWithUserTimeZone(
+															campagin.getStartdate(),
+															userTimeZone)));
 			trRow1.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
-							.appendText("Status:")).appendChild(
-					new Td().appendText(StringUtils
-							.getStringFieldValue(campagin.getStatus())));
+							.appendText("Status:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(campagin
+															.getStatus())));
 
 			Tr trRow2 = new Tr();
 			trRow2.appendChild(
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
-							.appendText("End Date:")).appendChild(
-					new Td().appendText(DateTimeUtils
-							.converToStringWithUserTimeZone(
-									campagin.getEnddate(), userTimeZone)));
+							.appendText("End Date:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											DateTimeUtils
+													.converToStringWithUserTimeZone(
+															campagin.getEnddate(),
+															userTimeZone)));
 			trRow2.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
-							.appendText("Type:")).appendChild(
-					new Td().appendText(StringUtils
-							.getStringFieldValue(campagin.getType())));
+							.appendText("Type:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(campagin
+															.getType())));
 
 			Tr trRow3 = new Tr();
 			trRow3.appendChild(
@@ -366,10 +428,14 @@ public class CrmTooltipGenerator {
 							"width: 70px; vertical-align: top; text-align: right;")
 							.appendText("Currency:"))
 					.appendChild(
-							new Td().appendText(StringUtils
-									.getStringFieldValue((campagin
-											.getCurrency() != null) ? campagin
-											.getCurrency().getSymbol() : "")));
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue((campagin
+															.getCurrency() != null) ? campagin
+															.getCurrency()
+															.getSymbol() : "")));
 			trRow3.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
@@ -400,15 +466,25 @@ public class CrmTooltipGenerator {
 			trRow4.appendChild(
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
-							.appendText("Expected Cost:")).appendChild(
-					new Td().appendText(StringUtils
-							.getStringFieldValue(campagin.getExpectedcost())));
+							.appendText("Expected Cost:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(campagin
+															.getExpectedcost())));
 			trRow4.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
-							.appendText("Budget:")).appendChild(
-					new Td().appendText(StringUtils
-							.getStringFieldValue(campagin.getBudget())));
+							.appendText("Budget:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(campagin
+															.getBudget())));
 
 			Tr trRow5 = new Tr();
 			trRow5.appendChild(
@@ -416,15 +492,23 @@ public class CrmTooltipGenerator {
 							"width: 100px; vertical-align: top; text-align: right;")
 							.appendText("Expected Revenue:"))
 					.appendChild(
-							new Td().appendText(StringUtils
-									.getStringFieldValue(campagin
-											.getExpectedrevenue())));
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(campagin
+															.getExpectedrevenue())));
 			trRow5.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
-							.appendText("Actual Cost:")).appendChild(
-					new Td().appendText(StringUtils
-							.getStringFieldValue(campagin.getActualcost())));
+							.appendText("Actual Cost:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(campagin
+															.getActualcost())));
 			Tr trRow6 = new Tr();
 
 			Td trRow6_value = new Td()
@@ -471,84 +555,141 @@ public class CrmTooltipGenerator {
 			trRow1.appendChild(
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
-							.appendText("First Name:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(lead
-							.getFirstname())));
+							.appendText("First Name:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(lead
+															.getFirstname())));
 			trRow1.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
-							.appendText("Email:")).appendChild(
-					new Td().appendChild(new A().setHref(
-							(lead.getEmail() != null) ? "mailto:"
-									+ lead.getEmail() : "").appendText(
-							StringUtils.getStringFieldValue(lead.getEmail()))));
+							.appendText("Email:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendChild(
+											new A().setHref(
+													(lead.getEmail() != null) ? "mailto:"
+															+ lead.getEmail()
+															: "")
+													.appendText(
+															StringUtils
+																	.getStringFieldValue(lead
+																			.getEmail()))));
 
 			Tr trRow2 = new Tr();
 			trRow2.appendChild(
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
-							.appendText("Last Name:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(lead
-							.getLastname())));
+							.appendText("Last Name:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(lead
+															.getLastname())));
 			trRow2.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
-							.appendText("Office Phone:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(lead
-							.getOfficephone())));
+							.appendText("Office Phone:"))
+					.appendChild(
+							new Td().setStyle(
+									"width:150px;word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(lead
+															.getOfficephone())));
 
 			Tr trRow3 = new Tr();
 			trRow3.appendChild(
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
-							.appendText("Title:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(lead
-							.getTitle())));
+							.appendText("Title:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(lead
+															.getTitle())));
 			trRow3.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
-							.appendText("Mobile:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(lead
-							.getMobile())));
+							.appendText("Mobile:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(lead
+															.getMobile())));
 
 			Tr trRow4 = new Tr();
 			trRow4.appendChild(
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
-							.appendText("Department:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(lead
-							.getDepartment())));
+							.appendText("Department:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(lead
+															.getDepartment())));
 			trRow4.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
-							.appendText("Fax:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(lead
-							.getFax())));
+							.appendText("Fax:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(lead
+															.getFax())));
 			Tr trRow5 = new Tr();
 			trRow5.appendChild(
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
-							.appendText("Account Name:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(lead
-							.getAccountname())));
+							.appendText("Account Name:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(lead
+															.getAccountname())));
 			trRow5.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
 							.appendText("Website:"))
 					.appendChild(
-							new Td().appendChild(new A().setHref(
-									(lead.getWebsite() != null) ? lead
-											.getWebsite() : "").appendText(
-									StringUtils.getStringFieldValue(lead
-											.getWebsite()))));
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendChild(
+											new A().setHref(
+													(lead.getWebsite() != null) ? lead
+															.getWebsite() : "")
+													.appendText(
+															StringUtils
+																	.getStringFieldValue(lead
+																			.getWebsite()))));
 
 			Tr trRow6 = new Tr();
 			trRow6.appendChild(
 					new Td().setStyle(
 							"width: 90px; vertical-align: top; text-align: right;")
-							.appendText("Lead Source:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(lead
-							.getLeadsourcedesc())));
+							.appendText("Lead Source:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils.getStringFieldValue(lead
+													.getLeadsourcedesc())));
 			trRow6.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
@@ -578,29 +719,47 @@ public class CrmTooltipGenerator {
 			trRow7.appendChild(
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
-							.appendText("Address:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(lead
-							.getPrimaddress())));
+							.appendText("Address:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(lead
+															.getPrimaddress())));
 			trRow7.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
-							.appendText("Other Address:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(lead
-							.getOtheraddress())));
+							.appendText("Other Address:"))
+					.appendChild(
+							new Td().setStyle(
+									"width:200px;word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(lead
+															.getOtheraddress())));
 
 			Tr trRow8 = new Tr();
 			trRow8.appendChild(
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
-							.appendText("Postal Code:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(lead
-							.getPrimpostalcode())));
+							.appendText("Postal Code:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils.getStringFieldValue(lead
+													.getPrimpostalcode())));
 			trRow8.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
-							.appendText("Other Postal Code:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(lead
-							.getOtherpostalcode())));
+							.appendText("Other Postal Code:"))
+					.appendChild(
+							new Td().setStyle(
+									"width:150px;word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils.getStringFieldValue(lead
+													.getOtherpostalcode())));
 			Tr trRow9 = new Tr();
 
 			Td trRow9_value = new Td()
@@ -665,85 +824,116 @@ public class CrmTooltipGenerator {
 							"width: 110px; vertical-align: top; text-align: right;")
 							.appendText("Account Name:"))
 					.appendChild(
-							new Td().appendChild(new A()
-									.setHref(
-											(opportunity.getAccountid() != null) ? siteURl
-													+ "#"
-													+ CrmLinkGenerator
-															.generateAccountPreviewLink(opportunity
-																	.getAccountid())
-													: "")
-									.appendText(
-											StringUtils
-													.getStringFieldValue(opportunity
-															.getAccountName()))));
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendChild(
+											new A().setHref(
+													(opportunity.getAccountid() != null) ? siteURl
+															+ "#"
+															+ CrmLinkGenerator
+																	.generateAccountPreviewLink(opportunity
+																			.getAccountid())
+															: "")
+													.appendText(
+															StringUtils
+																	.getStringFieldValue(opportunity
+																			.getAccountName()))));
 
 			Tr trRow2 = new Tr();
 			trRow2.appendChild(
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
-							.appendText("Amount:")).appendChild(
-					new Td().appendText(StringUtils
-							.getStringFieldValue(opportunity.getAmount())));
+							.appendText("Amount:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(opportunity
+															.getAmount())));
 			trRow2.appendChild(
 					new Td().setStyle(
 							"width: 140px; vertical-align: top; text-align: right;")
-							.appendText("Expected Close Date:")).appendChild(
-					new Td().appendText(DateTimeUtils
-							.converToStringWithUserTimeZone(
-									opportunity.getExpectedcloseddate(),
-									userTimeZone)));
+							.appendText("Expected Close Date:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											DateTimeUtils
+													.converToStringWithUserTimeZone(
+															opportunity
+																	.getExpectedcloseddate(),
+															userTimeZone)));
 
 			Tr trRow3 = new Tr();
 			trRow3.appendChild(
 					new Td().setStyle(
 							"width: 90px; vertical-align: top; text-align: right;")
-							.appendText("Sales Stage:")).appendChild(
-					new Td().setStyle("vertical-align: top; text-align: left;")
-							.appendText(
-									StringUtils.getStringFieldValue(opportunity
-											.getSalesstage())));
+							.appendText("Sales Stage:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(opportunity
+															.getSalesstage())));
 			trRow3.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
-							.appendText("Lead Source:")).appendChild(
-					new Td().appendText(StringUtils
-							.getStringFieldValue(opportunity.getSource())));
+							.appendText("Lead Source:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(opportunity
+															.getSource())));
 
 			Tr trRow4 = new Tr();
 			trRow4.appendChild(
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
-							.appendText("Probability (%):")).appendChild(
-					new Td().setStyle("vertical-align: top; text-align: left;")
-							.appendText(
-									StringUtils.getStringFieldValue(opportunity
-											.getProbability())));
+							.appendText("Probability (%):"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(opportunity
+															.getProbability())));
 			trRow4.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
 							.appendText("Campaign:"))
 					.appendChild(
-							new Td().appendChild(new A()
-									.setHref(
-											(opportunity.getCampaignid() != null) ? siteURl
-													+ "#"
-													+ CrmLinkGenerator
-															.generateCampaignPreviewLink(opportunity
-																	.getCampaignid())
-													: "")
-									.appendText(
-											StringUtils
-													.getStringFieldValue(opportunity
-															.getCampaignName()))));
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendChild(
+											new A().setHref(
+													(opportunity
+															.getCampaignid() != null) ? siteURl
+															+ "#"
+															+ CrmLinkGenerator
+																	.generateCampaignPreviewLink(opportunity
+																			.getCampaignid())
+															: "")
+													.appendText(
+															StringUtils
+																	.getStringFieldValue(opportunity
+																			.getCampaignName()))));
 
 			Tr trRow5 = new Tr();
 			trRow5.appendChild(
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
-							.appendText("Next Step:")).appendChild(
-					new Td().appendText(StringUtils
-							.getStringFieldValue(opportunity.getNextstep())));
+							.appendText("Next Step:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(opportunity
+															.getNextstep())));
 			trRow5.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
@@ -817,65 +1007,100 @@ public class CrmTooltipGenerator {
 			Tr trRow1 = new Tr();
 			trRow1.appendChild(
 					new Td().setStyle(
-							"width: 70px; vertical-align: top; text-align: right;")
-							.appendText("Priority:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(cases
-							.getPriority())));
+							"width: 90px; vertical-align: top; text-align: right;")
+							.appendText("Priority:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(cases
+															.getPriority())));
 			trRow1.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
-							.appendText("Type:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(cases
-							.getType())));
+							.appendText("Type:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(cases
+															.getType())));
 
 			Tr trRow2 = new Tr();
 			trRow2.appendChild(
 					new Td().setStyle(
-							"width: 70px; vertical-align: top; text-align: right;")
-							.appendText("Status:")).appendChild(
-					new Td().appendText((StringUtils.getStringFieldValue(cases
-							.getStatus()))));
+							"width: 90px; vertical-align: top; text-align: right;")
+							.appendText("Status:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											(StringUtils
+													.getStringFieldValue(cases
+															.getStatus()))));
 			trRow2.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
-							.appendText("Reason:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(cases
-							.getReason())));
+							.appendText("Reason:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(cases
+															.getReason())));
 
 			Tr trRow3 = new Tr();
 			trRow3.appendChild(
 					new Td().setStyle(
-							"width: 70px; vertical-align: top; text-align: right;")
-							.appendText("Account Name:")).appendChild(
-					new Td().appendChild(new A().setHref(
-							(cases.getAccountid() != null) ? siteURL
-									+ "#"
-									+ CrmLinkGenerator
-											.generateAccountPreviewLink(cases
-													.getAccountid()) : "")
-							.appendText(
-									StringUtils.getStringFieldValue(cases
-											.getAccountName()))));
+							"width: 90px; vertical-align: top; text-align: right;")
+							.appendText("Account Name:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendChild(
+											new A().setHref(
+													(cases.getAccountid() != null) ? siteURL
+															+ "#"
+															+ CrmLinkGenerator
+																	.generateAccountPreviewLink(cases
+																			.getAccountid())
+															: "")
+													.appendText(
+															StringUtils
+																	.getStringFieldValue(cases
+																			.getAccountName()))));
 			trRow3.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
 							.appendText("Email:"))
 					.appendChild(
-							new Td().appendChild(new A().setHref(
-									(cases.getEmail() != null) ? "mailto:"
-											+ cases.getEmail() : "")
-									.appendText(
-											StringUtils
-													.getStringFieldValue(cases
-															.getEmail()))));
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendChild(
+											new A().setHref(
+													(cases.getEmail() != null) ? "mailto:"
+															+ cases.getEmail()
+															: "")
+													.appendText(
+															StringUtils
+																	.getStringFieldValue(cases
+																			.getEmail()))));
 
 			Tr trRow4 = new Tr();
 			trRow4.appendChild(
 					new Td().setStyle(
 							"width: 100px; vertical-align: top; text-align: right;")
-							.appendText("Phone Number:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(cases
-							.getPhonenumber())));
+							.appendText("Phone Number:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(cases
+															.getPhonenumber())));
 			trRow4.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
@@ -922,7 +1147,7 @@ public class CrmTooltipGenerator {
 					.setStyle(
 							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 					.appendText(
-							StringUtils.getStringFieldValue(cases
+							StringUtils.getStringRemoveHtmlTag(cases
 									.getResolution()));
 			trRow6_value.setAttribute("colspan", "3");
 
@@ -962,17 +1187,24 @@ public class CrmTooltipGenerator {
 			trRow1.appendChild(
 					new Td().setStyle(
 							"width: 100px; vertical-align: top; text-align: right;")
-							.appendText("Start Date & Time:")).appendChild(
-					new Td().appendText(DateTimeUtils
-							.converToStringWithUserTimeZone(
-									meeting.getStartdate(), userTimeZone)));
+							.appendText("Start Date & Time:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											DateTimeUtils
+													.converToStringWithUserTimeZone(
+															meeting.getStartdate(),
+															userTimeZone)));
 			trRow1.appendChild(
 					new Td().setStyle(
 							"width: 90px; vertical-align: top; text-align: right;")
 							.appendText("Status:"))
 					.appendChild(
 							new Td().setStyle(
-									"width:110px; vertical-align: top; text-align: left;")
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.setStyle(
+											"width:110px; vertical-align: top; text-align: left;")
 									.appendText(
 											StringUtils
 													.getStringFieldValue(meeting
@@ -982,17 +1214,22 @@ public class CrmTooltipGenerator {
 			trRow2.appendChild(
 					new Td().setStyle(
 							"width: 100px; vertical-align: top; text-align: right;")
-							.appendText("End Date & Time:")).appendChild(
-					new Td().appendText(DateTimeUtils
-							.converToStringWithUserTimeZone(
-									meeting.getEnddate(), userTimeZone)));
+							.appendText("End Date & Time:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											DateTimeUtils
+													.converToStringWithUserTimeZone(
+															meeting.getEnddate(),
+															userTimeZone)));
 			trRow2.appendChild(
 					new Td().setStyle(
 							"width: 90px; vertical-align: top; text-align: right;")
 							.appendText("Location:"))
 					.appendChild(
 							new Td().setStyle(
-									"width:110px; vertical-align: top; text-align: left;")
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 									.appendText(
 											StringUtils
 													.getStringFieldValue(meeting
@@ -1041,30 +1278,49 @@ public class CrmTooltipGenerator {
 			trRow1.appendChild(
 					new Td().setStyle(
 							"width: 120px; vertical-align: top; text-align: right;")
-							.appendText("Start Date & Time:")).appendChild(
-					new Td().appendText(DateTimeUtils
-							.converToStringWithUserTimeZone(
-									call.getStartdate(), userTimeZone)));
+							.appendText("Start Date & Time:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											DateTimeUtils
+													.converToStringWithUserTimeZone(
+															call.getStartdate(),
+															userTimeZone)));
 			trRow1.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
-							.appendText("Status:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(call
-							.getStatus())));
+							.appendText("Status:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(call
+															.getStatus())));
 
 			Tr trRow2 = new Tr();
 			trRow2.appendChild(
 					new Td().setStyle(
 							"width: 90px; vertical-align: top; text-align: right;")
-							.appendText("Duration:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(call
-							.getDurationinseconds())));
+							.appendText("Duration:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils.getStringFieldValue(call
+													.getDurationinseconds())));
 			trRow2.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
-							.appendText("Purpose:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(call
-							.getPurpose())));
+							.appendText("Purpose:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(call
+															.getPurpose())));
 			Tr trRow3 = new Tr();
 			Td trRow3_value = new Td()
 					.setStyle(
@@ -1085,7 +1341,7 @@ public class CrmTooltipGenerator {
 					.setStyle(
 							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 					.appendText(
-							StringUtils.getStringFieldValue(call.getResult()));
+							StringUtils.getStringRemoveHtmlTag(call.getResult()));
 			trRow4_value.setAttribute("colspan", "3");
 
 			trRow4.appendChild(
@@ -1121,17 +1377,22 @@ public class CrmTooltipGenerator {
 			trRow1.appendChild(
 					new Td().setStyle(
 							"width: 100px; vertical-align: top; text-align: right;")
-							.appendText("Start Date:")).appendChild(
-					new Td().appendText(DateTimeUtils
-							.converToStringWithUserTimeZone(
-									task.getStartdate(), userTimeZone)));
+							.appendText("Start Date:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											DateTimeUtils
+													.converToStringWithUserTimeZone(
+															task.getStartdate(),
+															userTimeZone)));
 			trRow1.appendChild(
 					new Td().setStyle(
 							"width: 90px; vertical-align: top; text-align: right;")
 							.appendText("Status:"))
 					.appendChild(
 							new Td().setStyle(
-									"width:110px; vertical-align: top; text-align: left;")
+									"width:150px;word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 									.appendText(
 											StringUtils
 													.getStringFieldValue(task
@@ -1141,10 +1402,15 @@ public class CrmTooltipGenerator {
 			trRow2.appendChild(
 					new Td().setStyle(
 							"width: 100px; vertical-align: top; text-align: right;")
-							.appendText("Due Date:")).appendChild(
-					new Td().appendText(DateTimeUtils
-							.converToStringWithUserTimeZone(task.getDuedate(),
-									userTimeZone)));
+							.appendText("Due Date:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											DateTimeUtils
+													.converToStringWithUserTimeZone(
+															task.getDuedate(),
+															userTimeZone)));
 			trRow2.appendChild(
 					new Td().setStyle(
 							"width: 90px; vertical-align: top; text-align: right;")
@@ -1170,9 +1436,14 @@ public class CrmTooltipGenerator {
 			trRow3.appendChild(
 					new Td().setStyle(
 							"width: 100px; vertical-align: top; text-align: right;")
-							.appendText("Priority:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(task
-							.getPriority())));
+							.appendText("Priority:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(task
+															.getPriority())));
 			trRow3.appendChild(
 					new Td().setStyle(
 							"width: 90px; vertical-align: top; text-align: right;")

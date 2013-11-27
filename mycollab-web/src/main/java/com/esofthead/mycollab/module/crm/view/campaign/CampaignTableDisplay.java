@@ -250,29 +250,47 @@ public class CampaignTableDisplay
 			trRow1.appendChild(
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
-							.appendText("Start Date:")).appendChild(
-					new Td().appendText(AppContext.formatDate(campagin
-							.getStartdate())));
+							.appendText("Start Date:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											AppContext.formatDate(campagin
+													.getStartdate())));
 			trRow1.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
-							.appendText("Status:")).appendChild(
-					new Td().appendText(StringUtils
-							.getStringFieldValue(campagin.getStatus())));
+							.appendText("Status:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(campagin
+															.getStatus())));
 
 			Tr trRow2 = new Tr();
 			trRow2.appendChild(
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
-							.appendText("End Date:")).appendChild(
-					new Td().appendText(AppContext.formatDate(campagin
-							.getEnddate())));
+							.appendText("End Date:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											AppContext.formatDate(campagin
+													.getEnddate())));
 			trRow2.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
-							.appendText("Type:")).appendChild(
-					new Td().appendText(StringUtils
-							.getStringFieldValue(campagin.getType())));
+							.appendText("Type:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(campagin
+															.getType())));
 
 			Tr trRow3 = new Tr();
 			trRow3.appendChild(
@@ -280,10 +298,14 @@ public class CampaignTableDisplay
 							"width: 70px; vertical-align: top; text-align: right;")
 							.appendText("Currency:"))
 					.appendChild(
-							new Td().appendText(StringUtils
-									.getStringFieldValue((campagin
-											.getCurrency() != null) ? campagin
-											.getCurrency().getSymbol() : "")));
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue((campagin
+															.getCurrency() != null) ? campagin
+															.getCurrency()
+															.getSymbol() : "")));
 			trRow3.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
@@ -315,15 +337,25 @@ public class CampaignTableDisplay
 			trRow4.appendChild(
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
-							.appendText("Expected Cost:")).appendChild(
-					new Td().appendText(StringUtils
-							.getStringFieldValue(campagin.getExpectedcost())));
+							.appendText("Expected Cost:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(campagin
+															.getExpectedcost())));
 			trRow4.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
-							.appendText("Budget:")).appendChild(
-					new Td().appendText(StringUtils
-							.getStringFieldValue(campagin.getBudget())));
+							.appendText("Budget:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(campagin
+															.getBudget())));
 
 			Tr trRow5 = new Tr();
 			trRow5.appendChild(
@@ -331,15 +363,23 @@ public class CampaignTableDisplay
 							"width: 100px; vertical-align: top; text-align: right;")
 							.appendText("Expected Revenue:"))
 					.appendChild(
-							new Td().appendText(StringUtils
-									.getStringFieldValue(campagin
-											.getExpectedrevenue())));
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(campagin
+															.getExpectedrevenue())));
 			trRow5.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
-							.appendText("Actual Cost:")).appendChild(
-					new Td().appendText(StringUtils
-							.getStringFieldValue(campagin.getActualcost())));
+							.appendText("Actual Cost:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(campagin
+															.getActualcost())));
 			Tr trRow6 = new Tr();
 
 			Td trRow6_value = new Td()

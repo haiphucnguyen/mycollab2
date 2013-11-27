@@ -335,7 +335,7 @@ public class RiskListViewImpl extends AbstractView implements RiskListView {
 			div.appendChild(riskName);
 
 			com.hp.gagawa.java.elements.Table table = new com.hp.gagawa.java.elements.Table();
-			table.setStyle("padding-left:10px; width :500px; color: #5a5a5a; font-size:12px;");
+			table.setStyle("padding-left:10px; width :500px; color: #5a5a5a; font-size:11px;");
 
 			Tr trRow5 = new Tr();
 			Td trRow5_value = new Td()
@@ -382,9 +382,14 @@ public class RiskListViewImpl extends AbstractView implements RiskListView {
 			trRow1.appendChild(
 					new Td().setStyle(
 							"width: 80px; vertical-align: top; text-align: right;")
-							.appendText("Consequence:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(risk
-							.getConsequence())));
+							.appendText("Consequence:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(risk
+															.getConsequence())));
 
 			Tr trRow2 = new Tr();
 			trRow2.appendChild(
@@ -393,7 +398,7 @@ public class RiskListViewImpl extends AbstractView implements RiskListView {
 							.appendText("Assignee:"))
 					.appendChild(
 							new Td().setStyle(
-									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									"width:150px;word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 									.appendChild(
 											new A().setHref(
 													(risk.getAssigntouser() != null) ? UserLinkUtils
@@ -416,9 +421,14 @@ public class RiskListViewImpl extends AbstractView implements RiskListView {
 			trRow2.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
-							.appendText("Probability:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(risk
-							.getProbalitity())));
+							.appendText("Probability:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(risk
+															.getProbalitity())));
 
 			Tr trRow3 = new Tr();
 			trRow3.appendChild(
@@ -445,15 +455,19 @@ public class RiskListViewImpl extends AbstractView implements RiskListView {
 			trRow4.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
-							.appendText("Related to:")).appendChild(
-					new Td().appendText(""));
+							.appendText("Related to:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(""));
 
 			Tr trRow6 = new Tr();
 			Td trRow6_value = new Td()
 					.setStyle(
 							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 					.appendText(
-							StringUtils.getStringFieldValue(risk.getResponse()));
+							StringUtils.getStringRemoveHtmlTag(risk
+									.getResponse()));
 			trRow6_value.setAttribute("colspan", "3");
 
 			trRow6.appendChild(

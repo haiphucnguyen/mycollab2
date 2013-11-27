@@ -214,47 +214,78 @@ public class ContactTableDisplay
 			trRow1.appendChild(
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
-							.appendText("First Name:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(contact
-							.getFirstname())));
+							.appendText("First Name:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(contact
+															.getFirstname())));
 			trRow1.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
-							.appendText("Office Phone:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(contact
-							.getOfficephone())));
+							.appendText("Office Phone:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(contact
+															.getOfficephone())));
 			Tr trRow2 = new Tr();
 			trRow2.appendChild(
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
-							.appendText("Last Name:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(contact
-							.getLastname())));
+							.appendText("Last Name:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(contact
+															.getLastname())));
 			trRow2.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
-							.appendText("Mobile:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(contact
-							.getMobile())));
+							.appendText("Mobile:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(contact
+															.getMobile())));
 
 			Tr trRow3 = new Tr();
 			trRow3.appendChild(
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
-							.appendText("Email:")).appendChild(
-					new Td().appendChild(new A().setHref(
-							(contact.getEmail() != null) ? "mailto:"
-									+ contact.getEmail() : "")
-							.appendText(
-									StringUtils.getStringFieldValue(contact
-											.getEmail()))));
+							.appendText("Email:"))
+					.appendChild(
+							new Td().setStyle(
+									"width:200px;word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendChild(
+											new A().setHref(
+													(contact.getEmail() != null) ? "mailto:"
+															+ contact
+																	.getEmail()
+															: "")
+													.appendText(
+															StringUtils
+																	.getStringFieldValue(contact
+																			.getEmail()))));
 
 			trRow3.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
-							.appendText("Birthday:")).appendChild(
-					new Td().appendText(AppContext.formatDate(contact
-							.getBirthday())));
+							.appendText("Birthday:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											AppContext.formatDate(contact
+													.getBirthday())));
 
 			Tr trRow4 = new Tr();
 			trRow4.appendChild(
@@ -263,7 +294,7 @@ public class ContactTableDisplay
 							.appendText("Department:"))
 					.appendChild(
 							new Td().setStyle(
-									"width: 150px;word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									"width: 200px;word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 									.appendText(
 											StringUtils
 													.getStringFieldValue(contact

@@ -197,84 +197,141 @@ public class LeadTableDisplay extends
 			trRow1.appendChild(
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
-							.appendText("First Name:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(lead
-							.getFirstname())));
+							.appendText("First Name:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(lead
+															.getFirstname())));
 			trRow1.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
-							.appendText("Email:")).appendChild(
-					new Td().appendChild(new A().setHref(
-							(lead.getEmail() != null) ? "mailto:"
-									+ lead.getEmail() : "").appendText(
-							StringUtils.getStringFieldValue(lead.getEmail()))));
+							.appendText("Email:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendChild(
+											new A().setHref(
+													(lead.getEmail() != null) ? "mailto:"
+															+ lead.getEmail()
+															: "")
+													.appendText(
+															StringUtils
+																	.getStringFieldValue(lead
+																			.getEmail()))));
 
 			Tr trRow2 = new Tr();
 			trRow2.appendChild(
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
-							.appendText("Last Name:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(lead
-							.getLastname())));
+							.appendText("Last Name:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(lead
+															.getLastname())));
 			trRow2.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
-							.appendText("Office Phone:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(lead
-							.getOfficephone())));
+							.appendText("Office Phone:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(lead
+															.getOfficephone())));
 
 			Tr trRow3 = new Tr();
 			trRow3.appendChild(
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
-							.appendText("Title:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(lead
-							.getTitle())));
+							.appendText("Title:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(lead
+															.getTitle())));
 			trRow3.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
-							.appendText("Mobile:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(lead
-							.getMobile())));
+							.appendText("Mobile:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(lead
+															.getMobile())));
 
 			Tr trRow4 = new Tr();
 			trRow4.appendChild(
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
-							.appendText("Department:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(lead
-							.getDepartment())));
+							.appendText("Department:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(lead
+															.getDepartment())));
 			trRow4.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
-							.appendText("Fax:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(lead
-							.getFax())));
+							.appendText("Fax:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(lead
+															.getFax())));
 			Tr trRow5 = new Tr();
 			trRow5.appendChild(
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
-							.appendText("Account Name:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(lead
-							.getAccountname())));
+							.appendText("Account Name:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(lead
+															.getAccountname())));
 			trRow5.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
 							.appendText("Website:"))
 					.appendChild(
-							new Td().appendChild(new A().setHref(
-									(lead.getWebsite() != null) ? lead
-											.getWebsite() : "").appendText(
-									StringUtils.getStringFieldValue(lead
-											.getWebsite()))));
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendChild(
+											new A().setHref(
+													(lead.getWebsite() != null) ? lead
+															.getWebsite() : "")
+													.appendText(
+															StringUtils
+																	.getStringFieldValue(lead
+																			.getWebsite()))));
 
 			Tr trRow6 = new Tr();
 			trRow6.appendChild(
 					new Td().setStyle(
 							"width: 90px; vertical-align: top; text-align: right;")
-							.appendText("Lead Source:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(lead
-							.getLeadsourcedesc())));
+							.appendText("Lead Source:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils.getStringFieldValue(lead
+													.getLeadsourcedesc())));
 			trRow6.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
@@ -305,29 +362,47 @@ public class LeadTableDisplay extends
 			trRow7.appendChild(
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
-							.appendText("Address:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(lead
-							.getPrimaddress())));
+							.appendText("Address:"))
+					.appendChild(
+							new Td().setStyle(
+									"width:150px;word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(lead
+															.getPrimaddress())));
 			trRow7.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
-							.appendText("Other Address:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(lead
-							.getOtheraddress())));
+							.appendText("Other Address:"))
+					.appendChild(
+							new Td().setStyle(
+									"width:200px;word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(lead
+															.getOtheraddress())));
 
 			Tr trRow8 = new Tr();
 			trRow8.appendChild(
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
-							.appendText("Postal Code:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(lead
-							.getPrimpostalcode())));
+							.appendText("Postal Code:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils.getStringFieldValue(lead
+													.getPrimpostalcode())));
 			trRow8.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
-							.appendText("Other Postal Code:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(lead
-							.getOtherpostalcode())));
+							.appendText("Other Postal Code:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils.getStringFieldValue(lead
+													.getOtherpostalcode())));
 			Tr trRow9 = new Tr();
 
 			Td trRow9_value = new Td()

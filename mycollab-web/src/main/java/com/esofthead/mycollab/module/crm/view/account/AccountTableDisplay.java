@@ -206,7 +206,7 @@ public class AccountTableDisplay
 							.appendText("Website:"))
 					.appendChild(
 							new Td().setStyle(
-									"vertical-align:top; text-align: left;")
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 									.appendChild(
 											new A().setHref(
 													(account.getWebsite() != null) ? account
@@ -218,11 +218,14 @@ public class AccountTableDisplay
 			trRow1.appendChild(
 					new Td().setStyle(
 							"width: 150px; vertical-align: top; text-align: right;")
-							.appendText("Office Phone:")).appendChild(
-					new Td().setStyle("width:200px; vertical-align: top;")
-							.appendText(
-									StringUtils.getStringFieldValue(account
-											.getPhoneoffice())));
+							.appendText("Office Phone:"))
+					.appendChild(
+							new Td().setStyle(
+									"width:200px;word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											StringUtils
+													.getStringFieldValue(account
+															.getPhoneoffice())));
 
 			Tr trRow2 = new Tr();
 			trRow2.appendChild(
@@ -230,18 +233,29 @@ public class AccountTableDisplay
 							"width: 70px; vertical-align: top; text-align: right;")
 							.appendText("Employees:"))
 					.appendChild(
-							new Td().appendText((account.getNumemployees() != null) ? account
-									.getNumemployees().toString() : ""));
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											(account.getNumemployees() != null) ? account
+													.getNumemployees()
+													.toString() : ""));
 			trRow2.appendChild(
 					new Td().setStyle(
 							"width: 100px; vertical-align: top; text-align: right;")
-							.appendText("Email:")).appendChild(
-					new Td().appendChild(new A().setHref(
-							(account.getEmail() != null) ? "mailto:"
-									+ account.getEmail() : "")
-							.appendText(
-									StringUtils.getStringFieldValue(account
-											.getEmail()))));
+							.appendText("Email:"))
+					.appendChild(
+							new Td().setStyle(
+									"width:200px;word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendChild(
+											new A().setHref(
+													(account.getEmail() != null) ? "mailto:"
+															+ account
+																	.getEmail()
+															: "")
+													.appendText(
+															StringUtils
+																	.getStringFieldValue(account
+																			.getEmail()))));
 
 			Tr trRow3 = new Tr();
 			trRow3.appendChild(
