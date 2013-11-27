@@ -8,32 +8,33 @@
         <groupId>com.esofthead.mycollab</groupId>
         <artifactId>parent-community</artifactId>
         <version>2.0.0</version>
+        <relativePath>../mycollab-parent-community/pom.xml</relativePath>
     </parent>
     <packaging>jar</packaging>
     <dependencies>
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-core</artifactId>
-            <version>2.0.0</version>
+            <version>${project.version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-services</artifactId>
-            <version>2.0.0</version>
+            <version>${project.version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-test</artifactId>
-            <version>2.0.0</version>
+            <version>${project.version}</version>
             <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>net.sourceforge.dynamicreports</groupId>
             <artifactId>dynamicreports-core</artifactId>
-            <version>3.1.5</version>
+            <version>3.1.6</version>
             <exclusions>
                 <exclusion>
                     <groupId>jfree</groupId>

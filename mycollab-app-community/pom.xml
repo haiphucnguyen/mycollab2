@@ -8,6 +8,7 @@
         <groupId>com.esofthead.mycollab</groupId>
         <artifactId>parent-community</artifactId>
         <version>2.0.0</version>
+        <relativePath>../mycollab-parent-community/pom.xml</relativePath>
     </parent>
     <packaging>war</packaging>
 

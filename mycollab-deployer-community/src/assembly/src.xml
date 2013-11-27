@@ -41,6 +41,7 @@
                             <exclude>**/.project</exclude>
                             <exclude>**/.settings/**</exclude>
                             <exclude>**/.springBeans</exclude>
+                            <exclude>**/.gitignore</exclude>
                         </excludes>
                     </fileSet>
                 </fileSets>
