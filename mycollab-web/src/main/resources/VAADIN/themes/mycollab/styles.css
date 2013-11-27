@@ -5147,6 +5147,8 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 /* 	border:5px solid black; Border around tooltip */
 	background-color: #FDFDEE;
 	z-index:3000;
+	font: 11px Arial, Verdana, Helvetica, sans-serif !important;
+	line-height: normal;
 }
 
 .stickytooltip .stickystatus{ /*Style for footer bar within tooltip*/
@@ -5154,5 +5156,6 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 	color:white;
 	padding-top:5px;
 	text-align:center;
-	font:bold 11px Arial;
+	font: 11px Arial, Verdana, Helvetica, sans-serif !important;
+	line-height: normal;
 }

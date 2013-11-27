@@ -9,6 +9,12 @@
 </head>
 <body>
 	<wicket:extend>
+		<div class="modal-curtain"></div>
+		<div class="horizontal-line">
+			<div class="submit-success-box">
+				<p>Thanks for contacting us! We will redirect you back to home page in a moment...</p>
+			</div>
+		</div>
 		<div class="contact-us-content">
 			<div class="left-col">
 				<div class="header">
@@ -97,7 +103,7 @@
 						<div wicket:id="recaptcha"></div>
 					</div>
 					<div class="formfield colspan">
-						<input type="submit" value="Send" />
+						<input wicket-id="submit-link" type="submit" value="Send" />
 					</div>
 					<div class="clear"></div>
 				</form>

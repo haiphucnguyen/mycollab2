@@ -210,7 +210,7 @@ function overIt(dateTimeTypeIdStr, type, typeId, url, sAccountId, siteURL, timeZ
 	});
 	if($("#"+idDIVserverdata).html()== ""){
 		$.ajax({
-		      type: 'POST',
+	          type:'POST',
 		      url: url,
 		      data : { type: type, typeId: typeId , sAccountId : sAccountId, siteURL: siteURL , timeZone: timeZone},
 		      success: function(data){
@@ -279,7 +279,7 @@ function crmActivityOverIt(dateTimeTypeIdStr, type, typeId, url, sAccountId, sit
 	}
 }
 
-function useroverIt(dateTimeTypeIdStr, username, url, siteURL, timeZone){
+function useroverIt(dateTimeTypeIdStr, username, url, siteURL, timeZone, sAccountId){
 	var idDIVserverdata = "userserverdata" + dateTimeTypeIdStr;
 	var idStickyToolTipDiv = "usermystickyTooltip"+dateTimeTypeIdStr;
 	var idTagA = "usertagA"+ dateTimeTypeIdStr;
@@ -291,7 +291,7 @@ function useroverIt(dateTimeTypeIdStr, username, url, siteURL, timeZone){
 		$.ajax({
 		      type: 'POST',
 		      url: url,
-		      data : { type: "User", username: username ,siteURL: siteURL , timeZone: timeZone},
+		      data : { type: "User", username: username ,siteURL: siteURL , timeZone: timeZone , sAccountId:sAccountId},
 		      success: function(data){
 		      	 if(data.trim()!= "null"){
 		      	 		$("#"+ idTagA).attr('data-tooltip', idStickyToolTipDiv);
@@ -305,7 +305,7 @@ function useroverIt(dateTimeTypeIdStr, username, url, siteURL, timeZone){
 	}
 }
 
-function projectuseroverIt(dateTimeTypeIdStr, username, url, siteURL, timeZone){
+function projectuseroverIt(dateTimeTypeIdStr, username, url, siteURL, timeZone, sAccountId){
 	var idDIVserverdata = "projectuserserverdata" + dateTimeTypeIdStr;
 	var idStickyToolTipDiv = "projectusermystickyTooltip"+dateTimeTypeIdStr;
 	var idTagA = "projectusertagA"+ dateTimeTypeIdStr;
@@ -317,7 +317,7 @@ function projectuseroverIt(dateTimeTypeIdStr, username, url, siteURL, timeZone){
 		$.ajax({
 		      type: 'POST',
 		      url: url,
-		      data : { type: "User", username: username ,siteURL: siteURL , timeZone: timeZone},
+		      data : { type: "User", username: username ,siteURL: siteURL , timeZone: timeZone, sAccountId:sAccountId},
 		      success: function(data){
 		      	 if(data.trim()!= "null"){
 		      	 		$("#"+ idTagA).attr('data-tooltip', idStickyToolTipDiv);
@@ -331,7 +331,7 @@ function projectuseroverIt(dateTimeTypeIdStr, username, url, siteURL, timeZone){
 	}
 }
 
-function crmuseroverIt(dateTimeTypeIdStr, username, url, siteURL, timeZone){
+function crmuseroverIt(dateTimeTypeIdStr, username, url, siteURL, timeZone,sAccountId){
 	var idDIVserverdata = "crmuserserverdata" + dateTimeTypeIdStr;
 	var idStickyToolTipDiv = "crmusermystickyTooltip"+dateTimeTypeIdStr;
 	var idTagA = "crmusertagA"+ dateTimeTypeIdStr;
@@ -343,7 +343,7 @@ function crmuseroverIt(dateTimeTypeIdStr, username, url, siteURL, timeZone){
 		$.ajax({
 		      type: 'POST',
 		      url: url,
-		      data : { type: "User", username: username ,siteURL: siteURL , timeZone: timeZone},
+		      data : { type: "User", username: username ,siteURL: siteURL , timeZone: timeZone,sAccountId:sAccountId},
 		      success: function(data){
 		      	 if(data.trim()!= "null"){
 		      	 		$("#"+ idTagA).attr('data-tooltip', idStickyToolTipDiv);

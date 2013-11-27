@@ -1,9 +1,11 @@
 package com.esofthead.mycollab.pages;
 
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.HiddenField;
 import org.apache.wicket.markup.html.form.RequiredTextField;
-import org.apache.wicket.markup.html.form.StatelessForm;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
@@ -70,12 +72,16 @@ public class ContactUsPage extends BasePage {
 		message.setRequired(true);
 		message.setLabel(new ResourceModel("label.message"));
 
-		final StatelessForm<Void> form = new StatelessForm<Void>("contact-form") {
+		final Form<Void> form = new Form<Void>("contact-form");
+
+		final AjaxButton submitLink = new AjaxButton("submit-link") {
 
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onSubmit() {
+			public void onSubmit(final AjaxRequestTarget target,
+					final Form<?> form) {
+				target.add(feedbackPanel);
 				final ContactResource contactResource = RemoteServiceProxy
 						.build(SiteConfiguration.getApiUrl(),
 								ContactResource.class);
@@ -101,6 +107,12 @@ public class ContactUsPage extends BasePage {
 					ErrorReportingUtils.reportError(e);
 				}
 			}
+
+			@Override
+			public void onError(final AjaxRequestTarget target,
+					final Form<?> form) {
+				target.add(feedbackPanel);
+			}
 		};
 
 		this.add(form);
@@ -112,6 +124,7 @@ public class ContactUsPage extends BasePage {
 		form.add(industry);
 		form.add(subject);
 		form.add(message);
+		form.add(submitLink);
 
 		form.add(new CreateReCaptchaPanel("recaptcha"));
 
