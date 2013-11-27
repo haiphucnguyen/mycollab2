@@ -55,12 +55,12 @@
             <directory>src/main/conf</directory>
             <outputDirectory>conf</outputDirectory>
             <includes>
-                <include>**/*</include>
+                <include>**/*.template</include>
             </includes>
         </fileSet>
 
         <fileSet>
-            <directory>logs</directory>
+            <directory>src/main/logs</directory>
             <outputDirectory>logs</outputDirectory>
             <includes>
                 <include>**/*</include>

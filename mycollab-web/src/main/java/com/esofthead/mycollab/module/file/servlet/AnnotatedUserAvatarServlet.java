@@ -56,6 +56,7 @@ public class AnnotatedUserAvatarServlet implements HttpRequestHandler {
 
 		String path = request.getPathInfo();
 		File avatarFile = null;
+
 		String username = "";
 		int size = 0;
 
