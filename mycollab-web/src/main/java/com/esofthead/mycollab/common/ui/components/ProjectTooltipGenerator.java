@@ -1179,10 +1179,16 @@ public class ProjectTooltipGenerator {
 			trRow2.appendChild(
 					new Td().setStyle(
 							"width: 80px; vertical-align: top; text-align: right;")
-							.appendText("Start Date:")).appendChild(
-					new Td().appendText(DateTimeUtils
-							.converToStringWithUserTimeZone(
-									milestone.getStartdate(), timeZone)));
+							.appendText("Start Date:"))
+					.appendChild(
+							new Td().setStyle(
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									.appendText(
+											DateTimeUtils
+													.converToStringWithUserTimeZone(
+															milestone
+																	.getStartdate(),
+															timeZone)));
 			trRow2.appendChild(
 					new Td().setStyle(
 							"width: 100px; vertical-align: top; text-align: right;")
@@ -1220,7 +1226,7 @@ public class ProjectTooltipGenerator {
 							.appendText("End Date:"))
 					.appendChild(
 							new Td().setStyle(
-									"break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 									.appendText(
 											DateTimeUtils
 													.converToStringWithUserTimeZone(
