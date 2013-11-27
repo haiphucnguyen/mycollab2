@@ -212,6 +212,9 @@ public abstract class GenericServerRunner {
 				} catch (Exception e) {
 					System.out.println("Port must be the number from 1-65000");
 					numTries++;
+					if (numTries == 3) {
+						System.exit(-1);
+					}
 				}
 			}
 
@@ -255,6 +258,9 @@ public abstract class GenericServerRunner {
 					e.printStackTrace();
 					System.err.println("Can not set up database.");
 					numTries++;
+					if (numTries == 3) {
+						System.exit(-1);
+					}
 				}
 			}
 
