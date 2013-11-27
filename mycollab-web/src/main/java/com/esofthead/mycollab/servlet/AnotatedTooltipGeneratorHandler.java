@@ -69,7 +69,7 @@ import com.esofthead.mycollab.module.tracker.domain.SimpleVersion;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.module.tracker.service.ComponentService;
 import com.esofthead.mycollab.module.tracker.service.VersionService;
-import com.esofthead.mycollab.module.user.domain.User;
+import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
@@ -221,10 +221,13 @@ public class AnotatedTooltipGeneratorHandler extends GenericServlet {
 			} else if ("User".equals(type)) {
 				UserService service = ApplicationContextUtil
 						.getSpringBean(UserService.class);
-				User user = service.findUserByUserName(username);
+				SimpleUser user = service.findUserByUserNameInAccount(username,
+						sAccountId);
 				html = generateTooltipUser(user, siteURL, timeZone);
 			}
 			PrintWriter out = response.getWriter();
+			response.setCharacterEncoding("UTF-8");
+			response.setContentType("text/html;charset=UTF-8");
 			out.println(html);
 			return;
 		} catch (Exception e) {
@@ -238,33 +241,22 @@ public class AnotatedTooltipGeneratorHandler extends GenericServlet {
 		}
 	}
 
-	private String getDisplayName(User user) {
-		String result = user.getFirstname() + " " + user.getLastname();
-		if (result.trim().equals("")) {
-			String displayName = user.getUsername();
-			int index = (displayName != null) ? displayName.indexOf("@") : 0;
-			if (index > 0) {
-				return displayName.substring(0, index);
-			}
-		}
-		return result;
-	}
-
-	private String generateTooltipUser(User user, String siteURL,
+	private String generateTooltipUser(SimpleUser user, String siteURL,
 			String timeZone) {
 		try {
 			Div div = new Div();
-			H3 userFullName = new H3();
+			H3 userFullName = new H3()
+					.setStyle("font: 12px Arial, Verdana, Helvetica, sans-serif !important;line-height: normal;");
 			userFullName.setStyle("padding-left:10px;").appendText(
-					getDisplayName(user));
+					user.getDisplayName());
 			div.appendChild(userFullName);
 
 			com.hp.gagawa.java.elements.Table table = new com.hp.gagawa.java.elements.Table();
-			table.setStyle("padding-left:10px; width :380px; color: #5a5a5a; font-size:12px;");
+			table.setStyle("padding-left:10px; width :380px; color: #5a5a5a; font-size:11px;");
 			Tr trRow1 = new Tr();
 			trRow1.appendChild(
 					new Td().setStyle(
-							"width: 100px; vertical-align: top; text-align: right;")
+							"width: 110px; vertical-align: top; text-align: right;")
 							.appendText("Email:")).appendChild(
 					new Td().setStyle("vertical-align: top;").appendChild(
 							new A().setHref("mailto:" + user.getEmail())
@@ -286,7 +278,7 @@ public class AnotatedTooltipGeneratorHandler extends GenericServlet {
 			Tr trRow2 = new Tr();
 			trRow2.appendChild(
 					new Td().setStyle(
-							"width: 100px; vertical-align: top; text-align: right;")
+							"width: 110px; vertical-align: top; text-align: right;")
 							.appendText("Time:")).appendChild(
 					new Td().setStyle("vertical-align: top;").appendText(
 							TimezoneMapper.getTimezone(user.getTimezone())
@@ -294,7 +286,7 @@ public class AnotatedTooltipGeneratorHandler extends GenericServlet {
 			Tr trRow3 = new Tr();
 			trRow3.appendChild(
 					new Td().setStyle(
-							"width: 100px; vertical-align: top; text-align: right;")
+							"width: 110px; vertical-align: top; text-align: right;")
 							.appendText("Country:"))
 					.appendChild(
 							new Td().setStyle("vertical-align: top;")
@@ -306,7 +298,7 @@ public class AnotatedTooltipGeneratorHandler extends GenericServlet {
 			Tr trRow4 = new Tr();
 			trRow4.appendChild(
 					new Td().setStyle(
-							"width: 100px; vertical-align: top; text-align: right;")
+							"width: 110px; vertical-align: top; text-align: right;")
 							.appendText("Phone:")).appendChild(
 					new Td().setStyle("vertical-align: top;")
 							.appendText(
@@ -316,7 +308,7 @@ public class AnotatedTooltipGeneratorHandler extends GenericServlet {
 			Tr trRow5 = new Tr();
 			trRow5.appendChild(
 					new Td().setStyle(
-							"width: 100px; vertical-align: top; text-align: right;")
+							"width: 110px; vertical-align: top; text-align: right;")
 							.appendText("Last access time:"))
 					.appendChild(
 							new Td().setStyle(
