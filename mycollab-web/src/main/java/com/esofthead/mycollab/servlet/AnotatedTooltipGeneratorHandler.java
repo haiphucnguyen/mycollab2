@@ -272,7 +272,7 @@ public class AnotatedTooltipGeneratorHandler extends GenericServlet {
 					.appendChild(
 							new Img("", UserAvatarControlFactory.getAvatarLink(
 									user.getAvatarid(), 100)));
-			trRow1_value.setAttribute("rowspan", "4");
+			trRow1_value.setAttribute("rowspan", "5");
 			trRow1.appendChild(new Td().setStyle(
 					"width: 0px; vertical-align: top; text-align: right;")
 					.appendChild(trRow1_value));
