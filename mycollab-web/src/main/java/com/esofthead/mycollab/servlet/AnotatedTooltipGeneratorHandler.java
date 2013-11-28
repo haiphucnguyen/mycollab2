@@ -245,6 +245,8 @@ public class AnotatedTooltipGeneratorHandler extends GenericServlet {
 	private String generateTooltipUser(SimpleUser user, String siteURL,
 			String timeZone) {
 		try {
+			if (user == null)
+				return null;
 			Div div = new Div();
 			H3 userFullName = new H3()
 					.setStyle("font: 12px Arial, Verdana, Helvetica, sans-serif !important;line-height: normal;");
@@ -271,7 +273,7 @@ public class AnotatedTooltipGeneratorHandler extends GenericServlet {
 					.appendChild(
 							new Img("", UserAvatarControlFactory.getAvatarLink(
 									user.getAvatarid(), 100)));
-			trRow1_value.setAttribute("rowspan", "4");
+			trRow1_value.setAttribute("rowspan", "5");
 			trRow1.appendChild(new Td().setStyle(
 					"width: 0px; vertical-align: top; text-align: right;")
 					.appendChild(trRow1_value));
@@ -330,5 +332,13 @@ public class AnotatedTooltipGeneratorHandler extends GenericServlet {
 					e);
 			return null;
 		}
+	}
+
+	public static void main(String[] args) {
+		UserService service = ApplicationContextUtil
+				.getSpringBean(UserService.class);
+		SimpleUser user = service.findUserByUserNameInAccount(
+				"hainguyen@esofthead.com", 1);
+		System.out.print(user.getDisplayName());
 	}
 }
