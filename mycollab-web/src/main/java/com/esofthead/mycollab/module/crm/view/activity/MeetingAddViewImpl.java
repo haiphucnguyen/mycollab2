@@ -16,8 +16,6 @@
  */
 package com.esofthead.mycollab.module.crm.view.activity;
 
-import java.util.Collection;
-
 import org.vaadin.addon.customfield.CustomField;
 
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
@@ -136,6 +134,7 @@ public class MeetingAddViewImpl extends AbstractView implements MeetingAddView {
 					field.setType(meeting.getType());
 					return field;
 				} else if (propertyId.equals("isrecurrence")) {
+					return new RecurringActivityCustomField(meeting);
 				}
 				return null;
 			}

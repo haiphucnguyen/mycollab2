@@ -16,12 +16,6 @@
  */
 package com.esofthead.mycollab.module.crm.view.activity;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-
-import org.vaadin.addon.customfield.CustomField;
-
 import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.form.view.DynaFormLayout;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
@@ -40,8 +34,6 @@ import com.vaadin.data.util.BeanItem;
 import com.vaadin.terminal.ExternalResource;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
@@ -96,6 +88,8 @@ public class MeetingPreviewBuilder extends VerticalLayout {
 					return null;
 				return new DateFieldWithUserTimeZone(meeting.getEnddate(),
 						"DATETIME_FIELD");
+			} else if (propertyId.equals("isrecurrence")) {
+				return null;
 			}
 			return null;
 		}

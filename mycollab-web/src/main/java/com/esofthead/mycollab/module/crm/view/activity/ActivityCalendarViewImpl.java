@@ -17,7 +17,6 @@
 package com.esofthead.mycollab.module.crm.view.activity;
 
 import java.text.DateFormatSymbols;
-import java.util.Collection;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
@@ -395,7 +394,7 @@ public class ActivityCalendarViewImpl extends AbstractView implements
 		public EventQuickCreateWindow(Date startDate, Date endDate) {
 			super("Quick Create Event");
 			this.center();
-			this.setWidth("1000px");
+			this.setWidth("1220px");
 
 			this.meeting = new Meeting();
 			this.meeting.setSaccountid(AppContext.getAccountId());
@@ -529,6 +528,7 @@ public class ActivityCalendarViewImpl extends AbstractView implements
 						field.setType(meeting.getType());
 						return field;
 					} else if (propertyId.equals("isrecurrence")) {
+						return new RecurringActivityCustomField(meeting);
 					}
 					return null;
 				}

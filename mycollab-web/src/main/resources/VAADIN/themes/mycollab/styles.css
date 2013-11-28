@@ -5159,3 +5159,7 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 	font: 11px Arial, Verdana, Helvetica, sans-serif !important;
 	line-height: normal;
 }
+
+.label-padding-left-5px{
+	padding-left:5px;
+}
