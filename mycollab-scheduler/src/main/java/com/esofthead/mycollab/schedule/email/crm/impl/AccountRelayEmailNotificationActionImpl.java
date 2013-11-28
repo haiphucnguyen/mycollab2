@@ -36,7 +36,6 @@ import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.user.UserLinkUtils;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.service.UserService;
-import com.esofthead.mycollab.schedule.ScheduleUserTimeZoneUtils;
 import com.esofthead.mycollab.schedule.email.crm.AccountRelayEmailNotificationAction;
 
 @Component
@@ -78,15 +77,6 @@ public class AccountRelayEmailNotificationActionImpl extends
 			TemplateGenerator templateGenerator = new TemplateGenerator(
 					"Account: \"" + subject + "\" has been created",
 					"templates/email/crm/accountCreatedNotifier.mt");
-
-			ScheduleUserTimeZoneUtils.formatDateTimeZone(simpleAccount,
-					user.getTimezone(), new String[] { "startdate", "enddate",
-							"deadline", "actualstartdate", "actualenddate" });
-
-			ScheduleUserTimeZoneUtils.formatDateTimeZone(simpleAccount,
-					user.getTimezone(), new String[] { "startdate", "enddate",
-							"deadline", "actualstartdate", "actualenddate" });
-
 			templateGenerator.putVariable("simpleAccount", simpleAccount);
 			templateGenerator.putVariable("hyperLinks",
 					constructHyperLinks(simpleAccount));

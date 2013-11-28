@@ -123,7 +123,7 @@ public class ProjectMilestoneRelayEmailNotificationActionImpl extends
 					emailNotification.getTypeid(),
 					emailNotification.getSaccountid());
 			ScheduleUserTimeZoneUtils.formatDate(auditLog, user.getTimezone(),
-					new String[] { "duedate", "enddate" });
+					new String[] { "startdate", "enddate" });
 			templateGenerator.putVariable("historyLog", auditLog);
 			templateGenerator.putVariable("mapper", mapper);
 		}
