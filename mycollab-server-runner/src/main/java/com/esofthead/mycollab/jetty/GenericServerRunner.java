@@ -229,14 +229,19 @@ public abstract class GenericServerRunner {
 
 			numTries = 0;
 			while (numTries < 3) {
-				System.out
-						.println("Enter database name (Database must be created before):");
-
-				String dbName = device.readLine();
 				templateContext.put("db.driverClassName",
 						"com.mysql.jdbc.Driver");
+
+				System.out.println("Enter database server address:");
+				String dbServerAddress = device.readLine();
+
+				System.out
+						.println("Enter database name (Database must be created before):");
+				String dbName = device.readLine();
+
 				String dbUrl = String.format(
-						"jdbc:mysql://localhost/%s?useUnicode=true", dbName);
+						"jdbc:mysql://%s/%s?useUnicode=true", dbServerAddress,
+						dbName);
 				templateContext.put("dbUrl", dbUrl);
 
 				System.out.println("Enter database user name:");

@@ -110,8 +110,7 @@ public class V01112013_3__Insert_Default_Values implements SpringJdbcMigration {
 		userAccountParameters.put("registeredTime", new Date());
 		userAccountParameters.put("registerStatus", "Active");
 
-		Number userAccountId = userAccountJdbcInsert
-				.executeAndReturnKey(userAccountParameters);
+		userAccountJdbcInsert.executeAndReturnKey(userAccountParameters);
 
 		log.debug("Insert default roles");
 		SimpleJdbcInsert roleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate)

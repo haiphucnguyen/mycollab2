@@ -64,15 +64,15 @@
   <classpathentry kind="var" path="M2_REPO/com/fasterxml/jackson/core/jackson-annotations/2.3.0-rc1/jackson-annotations-2.3.0-rc1.jar" sourcepath="M2_REPO/com/fasterxml/jackson/core/jackson-annotations/2.3.0-rc1/jackson-annotations-2.3.0-rc1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/jasypt/jasypt/1.9.1/jasypt-1.9.1.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/jasypt/jasypt-spring31/1.9.1/jasypt-spring31-1.9.1.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/eclipse/jetty/jetty-server/8.1.13.v20130916/jetty-server-8.1.13.v20130916.jar" sourcepath="M2_REPO/org/eclipse/jetty/jetty-server/8.1.13.v20130916/jetty-server-8.1.13.v20130916-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/eclipse/jetty/jetty-continuation/8.1.13.v20130916/jetty-continuation-8.1.13.v20130916.jar" sourcepath="M2_REPO/org/eclipse/jetty/jetty-continuation/8.1.13.v20130916/jetty-continuation-8.1.13.v20130916-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/eclipse/jetty/jetty-http/8.1.13.v20130916/jetty-http-8.1.13.v20130916.jar" sourcepath="M2_REPO/org/eclipse/jetty/jetty-http/8.1.13.v20130916/jetty-http-8.1.13.v20130916-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/eclipse/jetty/jetty-io/8.1.13.v20130916/jetty-io-8.1.13.v20130916.jar" sourcepath="M2_REPO/org/eclipse/jetty/jetty-io/8.1.13.v20130916/jetty-io-8.1.13.v20130916-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/eclipse/jetty/jetty-util/8.1.13.v20130916/jetty-util-8.1.13.v20130916.jar" sourcepath="M2_REPO/org/eclipse/jetty/jetty-util/8.1.13.v20130916/jetty-util-8.1.13.v20130916-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/eclipse/jetty/jetty-servlet/8.1.13.v20130916/jetty-servlet-8.1.13.v20130916.jar" sourcepath="M2_REPO/org/eclipse/jetty/jetty-servlet/8.1.13.v20130916/jetty-servlet-8.1.13.v20130916-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/eclipse/jetty/jetty-security/8.1.13.v20130916/jetty-security-8.1.13.v20130916.jar" sourcepath="M2_REPO/org/eclipse/jetty/jetty-security/8.1.13.v20130916/jetty-security-8.1.13.v20130916-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/eclipse/jetty/jetty-webapp/8.1.13.v20130916/jetty-webapp-8.1.13.v20130916.jar" sourcepath="M2_REPO/org/eclipse/jetty/jetty-webapp/8.1.13.v20130916/jetty-webapp-8.1.13.v20130916-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/eclipse/jetty/jetty-xml/8.1.13.v20130916/jetty-xml-8.1.13.v20130916.jar" sourcepath="M2_REPO/org/eclipse/jetty/jetty-xml/8.1.13.v20130916/jetty-xml-8.1.13.v20130916-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/eclipse/jetty/jetty-server/8.1.14.v20131031/jetty-server-8.1.14.v20131031.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/eclipse/jetty/jetty-continuation/8.1.14.v20131031/jetty-continuation-8.1.14.v20131031.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/eclipse/jetty/jetty-http/8.1.14.v20131031/jetty-http-8.1.14.v20131031.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/eclipse/jetty/jetty-io/8.1.14.v20131031/jetty-io-8.1.14.v20131031.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/eclipse/jetty/jetty-util/8.1.14.v20131031/jetty-util-8.1.14.v20131031.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/eclipse/jetty/jetty-servlet/8.1.14.v20131031/jetty-servlet-8.1.14.v20131031.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/eclipse/jetty/jetty-security/8.1.14.v20131031/jetty-security-8.1.14.v20131031.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/eclipse/jetty/jetty-webapp/8.1.14.v20131031/jetty-webapp-8.1.14.v20131031.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/eclipse/jetty/jetty-xml/8.1.14.v20131031/jetty-xml-8.1.14.v20131031.jar"/>
   <classpathentry kind="src" path="/mycollab-services-ondemand"/>
   <classpathentry kind="src" path="/mycollab-services"/>
   <classpathentry kind="src" path="/mycollab-dao"/>

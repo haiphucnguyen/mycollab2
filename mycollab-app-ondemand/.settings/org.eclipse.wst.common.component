@@ -163,31 +163,31 @@
     <dependent-module archiveName="jasypt-spring31-1.9.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/jasypt/jasypt-spring31/1.9.1/jasypt-spring31-1.9.1.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="jetty-server-8.1.13.v20130916.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/jetty-server/8.1.13.v20130916/jetty-server-8.1.13.v20130916.jar">
+    <dependent-module archiveName="jetty-server-8.1.14.v20131031.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/jetty-server/8.1.14.v20131031/jetty-server-8.1.14.v20131031.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="jetty-continuation-8.1.13.v20130916.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/jetty-continuation/8.1.13.v20130916/jetty-continuation-8.1.13.v20130916.jar">
+    <dependent-module archiveName="jetty-continuation-8.1.14.v20131031.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/jetty-continuation/8.1.14.v20131031/jetty-continuation-8.1.14.v20131031.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="jetty-http-8.1.13.v20130916.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/jetty-http/8.1.13.v20130916/jetty-http-8.1.13.v20130916.jar">
+    <dependent-module archiveName="jetty-http-8.1.14.v20131031.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/jetty-http/8.1.14.v20131031/jetty-http-8.1.14.v20131031.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="jetty-io-8.1.13.v20130916.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/jetty-io/8.1.13.v20130916/jetty-io-8.1.13.v20130916.jar">
+    <dependent-module archiveName="jetty-io-8.1.14.v20131031.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/jetty-io/8.1.14.v20131031/jetty-io-8.1.14.v20131031.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="jetty-util-8.1.13.v20130916.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/jetty-util/8.1.13.v20130916/jetty-util-8.1.13.v20130916.jar">
+    <dependent-module archiveName="jetty-util-8.1.14.v20131031.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/jetty-util/8.1.14.v20131031/jetty-util-8.1.14.v20131031.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="jetty-servlet-8.1.13.v20130916.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/jetty-servlet/8.1.13.v20130916/jetty-servlet-8.1.13.v20130916.jar">
+    <dependent-module archiveName="jetty-servlet-8.1.14.v20131031.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/jetty-servlet/8.1.14.v20131031/jetty-servlet-8.1.14.v20131031.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="jetty-security-8.1.13.v20130916.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/jetty-security/8.1.13.v20130916/jetty-security-8.1.13.v20130916.jar">
+    <dependent-module archiveName="jetty-security-8.1.14.v20131031.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/jetty-security/8.1.14.v20131031/jetty-security-8.1.14.v20131031.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="jetty-webapp-8.1.13.v20130916.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/jetty-webapp/8.1.13.v20130916/jetty-webapp-8.1.13.v20130916.jar">
+    <dependent-module archiveName="jetty-webapp-8.1.14.v20131031.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/jetty-webapp/8.1.14.v20131031/jetty-webapp-8.1.14.v20131031.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="jetty-xml-8.1.13.v20130916.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/jetty-xml/8.1.13.v20130916/jetty-xml-8.1.13.v20130916.jar">
+    <dependent-module archiveName="jetty-xml-8.1.14.v20131031.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/jetty-xml/8.1.14.v20131031/jetty-xml-8.1.14.v20131031.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="mycollab-services-ondemand.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mycollab-services-ondemand/mycollab-services-ondemand">
