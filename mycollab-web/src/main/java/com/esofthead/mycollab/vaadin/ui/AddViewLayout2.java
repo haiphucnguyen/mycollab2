@@ -17,6 +17,7 @@
 package com.esofthead.mycollab.vaadin.ui;
 
 import com.vaadin.terminal.Resource;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
@@ -26,49 +27,52 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
 public class AddViewLayout2 extends CssLayout {
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    private final HorizontalLayout header;
-    private final Embedded iconEmbed;
-    private final Label titleLbl;
-    private final VerticalLayout body;
+	private final HorizontalLayout header;
+	private final Embedded iconEmbed;
+	private final Label titleLbl;
+	private final VerticalLayout body;
 
-    public AddViewLayout2(final String title, final Resource icon) {
-        // this.setSizeFull();
-        setStyleName("addview-layout");
+	public AddViewLayout2(final String title, final Resource icon) {
+		// this.setSizeFull();
+		setStyleName("addview-layout");
 
-        header = new HorizontalLayout();
-        header.setWidth("100%");
-        header.setMargin(true, true, false, true);
-        header.setStyleName("addview-layout-header");
-        this.addComponent(header);
+		header = new HorizontalLayout();
+		header.setWidth("100%");
+		header.setSpacing(true);
+		header.setStyleName("addview-layout-header");
+		header.setHeight("30px");
+		this.addComponent(header);
 
-        iconEmbed = new Embedded();
-        iconEmbed.setSource(icon);
-        header.addComponent(iconEmbed);
+		iconEmbed = new Embedded();
+		iconEmbed.setSource(icon);
+		header.addComponent(iconEmbed);
+		header.setComponentAlignment(iconEmbed, Alignment.MIDDLE_LEFT);
 
-        titleLbl = new Label(title);
-        titleLbl.setStyleName("h1");
-        titleLbl.setWidth("100%");
-        header.addComponent(titleLbl);
-        header.setExpandRatio(titleLbl, 1.0f);
+		titleLbl = new Label(title);
+		titleLbl.setStyleName("h2");
+		titleLbl.setWidth("100%");
+		header.addComponent(titleLbl);
+		header.setComponentAlignment(titleLbl, Alignment.MIDDLE_LEFT);
+		header.setExpandRatio(titleLbl, 1.0f);
 
-        body = new VerticalLayout();
-        body.setStyleName("addview-layout-body");
-        this.addComponent(body);
-    }
+		body = new VerticalLayout();
+		body.setStyleName("addview-layout-body");
+		this.addComponent(body);
+	}
 
-    public void addBody(final ComponentContainer body) {
-        this.body.addComponent(body);
-        this.body.setExpandRatio(body, 1.0f);
-    }
+	public void addBody(final ComponentContainer body) {
+		this.body.addComponent(body);
+		this.body.setExpandRatio(body, 1.0f);
+	}
 
-    public void addControlButtons(final Component controlsBtn) {
-        controlsBtn.addStyleName("control-buttons");
-        body.addComponent(controlsBtn);
-    }
+	public void addControlButtons(final Component controlsBtn) {
+		controlsBtn.addStyleName("control-buttons");
+		body.addComponent(controlsBtn);
+	}
 
-    public void setTitle(final String title) {
-        titleLbl.setValue(title);
-    }
+	public void setTitle(final String title) {
+		titleLbl.setValue(title);
+	}
 }
