@@ -45,7 +45,7 @@ public class ReadViewLayout extends CssLayout {
         if (hasHeader) {
             this.header = new HorizontalLayout();
             this.header.setWidth("100%");
-            this.header.setMargin(true, true, false, true);
+//            this.header.setMargin(true, true, false, true);
             this.header.setStyleName("readview-layout-header");
             this.addComponent(this.header);
 

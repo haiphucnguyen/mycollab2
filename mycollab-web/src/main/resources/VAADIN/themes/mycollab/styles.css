@@ -5174,6 +5174,10 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 	padding: 4px 5px 4px 15px;
 }
 
+.v-horizontallayout-readview-layout-header .v-horizontallayout-margin{
+	padding: 2px 5px 0px 8px;
+}
+
 .addview-layout-header .v-label.h2 {
 	font-size: 12px;
 }

@@ -42,7 +42,7 @@ public class AddViewLayout2 extends CssLayout {
 		header.setWidth("100%");
 		header.setSpacing(true);
 		header.setStyleName("addview-layout-header");
-		header.setHeight("30px");
+		header.setHeight("35px");
 		this.addComponent(header);
 
 		iconEmbed = new Embedded();
