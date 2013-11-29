@@ -3741,7 +3741,7 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 
 /* New ReadViewLayout */
 .v-csslayout-readview-layout {
-	margin-top: 20px;
+	margin-top: 10px;
 }
 
 .projectTabContent .usergroup-view .v-csslayout-readview-layout {
@@ -3930,7 +3930,7 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 
 /* New AddViewLayout */
 .v-csslayout-addview-layout {
-	margin-top: 20px;
+	margin-top: 10px;
 }
 
 .v-csslayout-addview-layout>.v-csslayout-margin {
