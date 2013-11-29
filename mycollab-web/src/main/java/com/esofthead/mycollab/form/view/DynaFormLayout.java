@@ -131,6 +131,7 @@ public class DynaFormLayout implements IFormLayoutFactory {
 			gridLayout.getLayout().setWidth("100%");
 			gridLayout.getLayout().setMargin(false);
 			gridLayout.getLayout().setSpacing(false);
+            gridLayout.getLayout().addStyleName("colored-gridlayout");
 			layout.addComponent(gridLayout.getLayout());
 
 			sectionMappings.put(section, gridLayout);

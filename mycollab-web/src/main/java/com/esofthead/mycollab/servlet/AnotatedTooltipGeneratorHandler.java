@@ -333,12 +333,4 @@ public class AnotatedTooltipGeneratorHandler extends GenericServlet {
 			return null;
 		}
 	}
-
-	public static void main(String[] args) {
-		UserService service = ApplicationContextUtil
-				.getSpringBean(UserService.class);
-		SimpleUser user = service.findUserByUserNameInAccount(
-				"hainguyen@esofthead.com", 1);
-		System.out.print(user.getDisplayName());
-	}
 }

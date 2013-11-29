@@ -801,11 +801,10 @@ h1, h2, h3, h4, h5, h6 {
     height: 145px;
     padding-top: 30px;
     position: relative;
-    width: 700px;
 }
 
 .footer-sitemap .sitemap-col {
-	width: 180px;
+	width: 160px;
 	height: 125px;
 	float: left;
 	background: url("../images/footer_home_line.png") no-repeat right top transparent;
@@ -819,7 +818,7 @@ h1, h2, h3, h4, h5, h6 {
 .footer-sitemap .sitemap-col h1 {
 	color: #FFF;
 	font-size: 14px;
-	margin-left: 40px;
+	margin-left: 30px;
 	padding-bottom: 5px;
 	font-family: 'Monda';
 }
@@ -827,7 +826,7 @@ h1, h2, h3, h4, h5, h6 {
 .footer-sitemap .sitemap-col ul {
 	list-style: none;
 	padding: 0;
-	margin: 0 0 0 40px;
+	margin: 0 0 0 30px;
 }
 
 .footer-sitemap .sitemap-col ul li a {
@@ -839,6 +838,50 @@ h1, h2, h3, h4, h5, h6 {
 .footer-sitemap .sitemap-col ul li a:hover {
 	cursor: pointer;
 	text-decoration: underline;
+}
+.footer-sitemap .sitemap-col .social-links {
+    margin-top: 7px;
+}
+
+.footer-sitemap .sitemap-col .social-links div {
+    float: left;
+    width: 34px;
+    height: 34px;
+    margin-left: 15px;
+}
+
+.footer-sitemap .sitemap-col .social-links div:first-child {
+    margin-left: 20px;
+}
+
+.footer-sitemap .sitemap-col .social-links a {
+    display: block;
+    width: 34px;
+    height: 34px;
+}
+
+.footer-sitemap .sitemap-col .social-links .twitter-link {
+    background: url('../images/twitter_gray.png') no-repeat left top transparent;
+}
+
+.footer-sitemap .sitemap-col .social-links .twitter-link:hover {
+    background: url('../images/twitter.png') no-repeat left top transparent;
+}
+
+.footer-sitemap .sitemap-col .social-links .facebook-link {
+    background: url('../images/facebook_gray.png') no-repeat left top transparent;
+}
+
+.footer-sitemap .sitemap-col .social-links .facebook-link:hover {
+    background: url('../images/facebook.png') no-repeat left top transparent;
+}
+
+.footer-sitemap .sitemap-col .social-links .gplus-link {
+    background: url('../images/gplus_gray.png') no-repeat left top transparent;
+}
+
+.footer-sitemap .sitemap-col .social-links .gplus-link:hover {
+    background: url('../images/gplus.png') no-repeat left top transparent;
 }
 
 .copyright-txt1 {
