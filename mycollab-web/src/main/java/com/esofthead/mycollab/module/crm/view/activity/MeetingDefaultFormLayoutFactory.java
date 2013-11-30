@@ -55,9 +55,9 @@ public class MeetingDefaultFormLayoutFactory {
 		meetingSection.addField(new TextDynaFieldBuilder()
 				.fieldName("location").displayName("Location").fieldIndex(5)
 				.build());
-		meetingSection.addField(new CheckBoxDynaFieldBuilder()
-				.fieldName("isrecurrence").displayName("Recurring Activity")
-				.fieldIndex(6).build());
+//		meetingSection.addField(new CheckBoxDynaFieldBuilder()
+//				.fieldName("isrecurrence").displayName("Recurring Activity")
+//				.fieldIndex(6).build());
 
 		defaultForm.addSection(meetingSection);
 
