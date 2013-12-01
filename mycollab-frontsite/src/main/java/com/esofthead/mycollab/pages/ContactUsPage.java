@@ -9,6 +9,7 @@ import org.apache.wicket.markup.html.form.RequiredTextField;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
+import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.ResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
@@ -130,6 +131,23 @@ public class ContactUsPage extends BasePage {
 
 		this.add(feedbackPanel);
 		this.add(new Label("pagetitle", "Contact Us"));
+	}
+
+	@Override
+	public IModel getPageTitle() {
+		return new Model<String>("MyCollab - Contact Us");
+	}
+
+	@Override
+	public IModel getDescription() {
+		return new Model<String>(
+				"Contact us for inquiry, support about MyCollab services");
+	}
+
+	@Override
+	public IModel getKeywords() {
+		return new Model<String>(
+				"project management tool, business tools, crm system, online collaboration, cloud office, documents management, online office");
 	}
 
 }
