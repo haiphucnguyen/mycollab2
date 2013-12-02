@@ -183,7 +183,6 @@ public class MessageListViewImpl extends AbstractView implements
 
 			final HorizontalLayout messageHeader = new HorizontalLayout();
 			messageHeader.setStyleName("message-header");
-			messageHeader.setHeight("32px");
 			final VerticalLayout leftHeader = new VerticalLayout();
 
 			final Label username = new Label(message.getFullPostedUserName());
@@ -406,6 +405,7 @@ public class MessageListViewImpl extends AbstractView implements
 					.newResource("icons/24/project/message.png"));
 			final HorizontalLayout layoutHeader = new HorizontalLayout();
 			layoutHeader.setStyleName("message-toppanel-header");
+			layoutHeader.setHeight("30px");
 			layoutHeader.addComponent(icon);
 			layoutHeader.addComponent(headerLbl);
 			layoutHeader.setExpandRatio(headerLbl, 1.0f);
