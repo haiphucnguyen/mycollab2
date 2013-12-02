@@ -1446,8 +1446,8 @@ input.v-textfield-errorField {
 
 .projectDashboardView .v-label-h2,.v-label h2 {
 	font-size:12px;
-	margin-top: 3px;
-	line-height: 20px!important;
+/* 	margin-top: 3px; */
+/* 	line-height: 20px!important; */
 	font-weight : bold;
 	padding: 0px;
 }
@@ -3620,7 +3620,7 @@ table.legendBox .legendBoxContent .v-csslayout-container>div {
 	border-style: solid;
 	border-color: rgb(169, 169, 169);
 	border-radius: 3px 3px 0px 0px;
-	padding: 7px 10px 7px 18px;
+	padding: 3px 10px 3px 18px;
 	background: url('icons/grad-light-top2.png') repeat-x left top
 		rgb(228, 228, 228);
 }
