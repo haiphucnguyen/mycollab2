@@ -1,4 +1,4 @@
-<!DOCTYPE dataset PUBLIC "-//eSoftHead/Engroup Database Schema//EN" "http://www.esofthead.com/engroup.dtd">
+<!DOCTYPE dataset PUBLIC "-//MyCollab/MyCollab Database Schema//EN" "http://www.mycollab.com/mycollab.dtd">
 <dataset>
     <s_billing_plan id="1" billingType="Credit Card"
         numProjects="10" numUsers="10" volume="500" pricing="20" />

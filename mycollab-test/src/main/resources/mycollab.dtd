@@ -1,7 +1,4 @@
 <!ELEMENT dataset (
-    ECM_JOURNALLOCAL_REVISIONS*,
-    ECM_P_VERSIONNAMES*,
-    ECM_P_WORKSPACENAMES*,
     JGROUPSPING*,
     QRTZ_BLOB_TRIGGERS*,
     QRTZ_CALENDARS*,
@@ -14,20 +11,7 @@
     QRTZ_SIMPLE_TRIGGERS*,
     QRTZ_SIMPROP_TRIGGERS*,
     QRTZ_TRIGGERS*,
-    ecm_journalglobal_revision*,
-    ecm_journaljournal*,
-    ecm_p_versionbinval*,
-    ecm_p_versionbundle*,
-    ecm_p_versionrefs*,
-    ecm_p_workspacebinval*,
-    ecm_p_workspacebundle*,
-    ecm_p_workspacerefs*,
-    ecm_s_fsentry*,
     m_audit_log*,
-    m_colla_workgroup*,
-    m_colla_workgroup_comment*,
-    m_colla_workgroup_message*,
-    m_colla_workgroup_user*,
     m_comment*,
     m_crm_account*,
     m_crm_accounts_leads*,
@@ -106,24 +90,6 @@
     s_user_preference*,
     s_user_tracking*,
     schema_version*)>
-
-<!ELEMENT ECM_JOURNALLOCAL_REVISIONS EMPTY>
-<!ATTLIST ECM_JOURNALLOCAL_REVISIONS
-    JOURNAL_ID CDATA #REQUIRED
-    REVISION_ID CDATA #REQUIRED
->
-
-<!ELEMENT ECM_P_VERSIONNAMES EMPTY>
-<!ATTLIST ECM_P_VERSIONNAMES
-    ID CDATA #REQUIRED
-    NAME CDATA #REQUIRED
->
-
-<!ELEMENT ECM_P_WORKSPACENAMES EMPTY>
-<!ATTLIST ECM_P_WORKSPACENAMES
-    ID CDATA #REQUIRED
-    NAME CDATA #REQUIRED
->
 
 <!ELEMENT JGROUPSPING EMPTY>
 <!ATTLIST JGROUPSPING
@@ -255,64 +221,6 @@
     JOB_DATA CDATA #IMPLIED
 >
 
-<!ELEMENT ecm_journalglobal_revision EMPTY>
-<!ATTLIST ecm_journalglobal_revision
-    REVISION_ID CDATA #REQUIRED
->
-
-<!ELEMENT ecm_journaljournal EMPTY>
-<!ATTLIST ecm_journaljournal
-    REVISION_ID CDATA #REQUIRED
-    JOURNAL_ID CDATA #IMPLIED
-    PRODUCER_ID CDATA #IMPLIED
-    REVISION_DATA CDATA #IMPLIED
->
-
-<!ELEMENT ecm_p_versionbinval EMPTY>
-<!ATTLIST ecm_p_versionbinval
-    BINVAL_ID CDATA #REQUIRED
-    BINVAL_DATA CDATA #REQUIRED
->
-
-<!ELEMENT ecm_p_versionbundle EMPTY>
-<!ATTLIST ecm_p_versionbundle
-    NODE_ID CDATA #REQUIRED
-    BUNDLE_DATA CDATA #REQUIRED
->
-
-<!ELEMENT ecm_p_versionrefs EMPTY>
-<!ATTLIST ecm_p_versionrefs
-    NODE_ID CDATA #REQUIRED
-    REFS_DATA CDATA #REQUIRED
->
-
-<!ELEMENT ecm_p_workspacebinval EMPTY>
-<!ATTLIST ecm_p_workspacebinval
-    BINVAL_ID CDATA #REQUIRED
-    BINVAL_DATA CDATA #REQUIRED
->
-
-<!ELEMENT ecm_p_workspacebundle EMPTY>
-<!ATTLIST ecm_p_workspacebundle
-    NODE_ID CDATA #REQUIRED
-    BUNDLE_DATA CDATA #REQUIRED
->
-
-<!ELEMENT ecm_p_workspacerefs EMPTY>
-<!ATTLIST ecm_p_workspacerefs
-    NODE_ID CDATA #REQUIRED
-    REFS_DATA CDATA #REQUIRED
->
-
-<!ELEMENT ecm_s_fsentry EMPTY>
-<!ATTLIST ecm_s_fsentry
-    FSENTRY_PATH CDATA #REQUIRED
-    FSENTRY_NAME CDATA #REQUIRED
-    FSENTRY_DATA CDATA #IMPLIED
-    FSENTRY_LASTMOD CDATA #REQUIRED
-    FSENTRY_LENGTH CDATA #REQUIRED
->
-
 <!ELEMENT m_audit_log EMPTY>
 <!ATTLIST m_audit_log
     id CDATA #REQUIRED
@@ -325,53 +233,6 @@
     typeid CDATA #REQUIRED
     module CDATA #REQUIRED
     activityLogId CDATA #IMPLIED
->
-
-<!ELEMENT m_colla_workgroup EMPTY>
-<!ATTLIST m_colla_workgroup
-    id CDATA #REQUIRED
-    owner CDATA #IMPLIED
-    description CDATA #IMPLIED
-    isModerated CDATA #IMPLIED
-    sAccountId CDATA #IMPLIED
-    groupname CDATA #IMPLIED
-    accessMode CDATA #IMPLIED
-    createdTime CDATA #IMPLIED
->
-
-<!ELEMENT m_colla_workgroup_comment EMPTY>
-<!ATTLIST m_colla_workgroup_comment
-    id CDATA #REQUIRED
-    comment CDATA #IMPLIED
-    postedUser CDATA #IMPLIED
-    postedDate CDATA #IMPLIED
-    messageid CDATA #IMPLIED
-    createdTime CDATA #IMPLIED
-    lastUpdatedTime CDATA #IMPLIED
->
-
-<!ELEMENT m_colla_workgroup_message EMPTY>
-<!ATTLIST m_colla_workgroup_message
-    id CDATA #REQUIRED
-    message CDATA #IMPLIED
-    postedUser CDATA #IMPLIED
-    createdTime CDATA #IMPLIED
-    workgroupId CDATA #IMPLIED
-    title CDATA #IMPLIED
-    m_colla_workgroup_messagecol CDATA #IMPLIED
-    lastUpdatedDate CDATA #IMPLIED
->
-
-<!ELEMENT m_colla_workgroup_user EMPTY>
-<!ATTLIST m_colla_workgroup_user
-    workgroup_id CDATA #REQUIRED
-    username CDATA #REQUIRED
-    joinedDate CDATA #IMPLIED
-    isApproved CDATA #IMPLIED
-    id CDATA #REQUIRED
-    role CDATA #IMPLIED
-    createdTime CDATA #IMPLIED
-    lastUpdatedTime CDATA #IMPLIED
 >
 
 <!ELEMENT m_comment EMPTY>
@@ -973,16 +834,31 @@
     date3 CDATA #IMPLIED
     date4 CDATA #IMPLIED
     date5 CDATA #IMPLIED
-    string1 CDATA #IMPLIED
-    string2 CDATA #IMPLIED
-    string3 CDATA #IMPLIED
-    string4 CDATA #IMPLIED
-    string5 CDATA #IMPLIED
-    string6 CDATA #IMPLIED
-    string7 CDATA #IMPLIED
-    string8 CDATA #IMPLIED
-    string9 CDATA #IMPLIED
-    string10 CDATA #IMPLIED
+    text1 CDATA #IMPLIED
+    text2 CDATA #IMPLIED
+    text3 CDATA #IMPLIED
+    text4 CDATA #IMPLIED
+    text5 CDATA #IMPLIED
+    textarea1 CDATA #IMPLIED
+    textarea2 CDATA #IMPLIED
+    textarea3 CDATA #IMPLIED
+    textarea4 CDATA #IMPLIED
+    textarea5 CDATA #IMPLIED
+    bool1 CDATA #IMPLIED
+    bool2 CDATA #IMPLIED
+    bool3 CDATA #IMPLIED
+    bool4 CDATA #IMPLIED
+    bool5 CDATA #IMPLIED
+    pick1 CDATA #IMPLIED
+    pick2 CDATA #IMPLIED
+    pick3 CDATA #IMPLIED
+    pick4 CDATA #IMPLIED
+    pick5 CDATA #IMPLIED
+    multipick1 CDATA #IMPLIED
+    multipick2 CDATA #IMPLIED
+    multipick3 CDATA #IMPLIED
+    multipick4 CDATA #IMPLIED
+    multipick5 CDATA #IMPLIED
 >
 
 <!ELEMENT m_form_section EMPTY>
