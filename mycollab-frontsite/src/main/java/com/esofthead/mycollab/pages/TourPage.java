@@ -37,13 +37,14 @@ public class TourPage extends BasePage {
 
 	@Override
 	public IModel getPageTitle() {
-		return new Model<String>("MyCollab - Cloud Office Tools");
+		return new Model<String>(
+				"MyCollab - Cloud CRM, Project, Document Management and more tools");
 	}
 
 	@Override
 	public IModel getDescription() {
 		return new Model<String>(
-				"MyCollab is a secure cloud office that enables you to manage documents, projects, bug and issue tracking, milestones, time tracking, team and customer relations and more in one place.");
+				"See what MyCollab offers to users, it includes Collaboration platform, CRM, Project, Document Management and more.");
 	}
 
 	@Override

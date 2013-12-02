@@ -2,7 +2,6 @@ package com.esofthead.mycollab.pages;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
-import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.HiddenField;
 import org.apache.wicket.markup.html.form.RequiredTextField;
@@ -130,7 +129,6 @@ public class ContactUsPage extends BasePage {
 		form.add(new CreateReCaptchaPanel("recaptcha"));
 
 		this.add(feedbackPanel);
-		this.add(new Label("pagetitle", "Contact Us"));
 	}
 
 	@Override
