@@ -1,8 +1,5 @@
 package com.esofthead.mycollab.module.crm.view.activity;
 
-import java.util.Arrays;
-import java.util.List;
-
 import org.vaadin.addon.customfield.CustomField;
 
 import com.esofthead.mycollab.module.crm.domain.Meeting;
@@ -13,7 +10,6 @@ import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.OptionGroup;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
@@ -147,27 +143,71 @@ public class RecurringActivityCustomField extends CustomField {
 		}
 
 		private VerticalLayout constructLayoutForDaily(final Meeting meeting) {
-			List<String> options = Arrays.asList(new String[] { "Every day",
-					"Repeat for every " });
-			OptionGroup optionGroup = new OptionGroup(null, options);
-			// HorizontalLayout horLayoutRepeatEveryDay = new
-			// HorizontalLayout();
-			// horLayoutRepeatEveryDay.addComponent(new Label("Every day"));
-			// optionGroup.addItem(horLayoutRepeatEveryDay);
-			//
-			// HorizontalLayout horizontal = new HorizontalLayout();
-			// horizontal.setSpacing(true);
-			// horizontal.addComponent(new Label("Repeat for every "));
-			// TextField inputRepeatTextField = new TextField();
-			// inputRepeatTextField.setWidth("50px");
-			// horizontal.addComponent(inputRepeatTextField);
-			// horizontal.addComponent(new Label("days"));
-			// optionGroup.addItem(horizontal);
+			final CheckBox repeatFromInputDaycheckbOx = new CheckBox();
+			repeatFromInputDaycheckbOx.setImmediate(true);
+			repeatFromInputDaycheckbOx.setValue(false);
+
+			HorizontalLayout horLayoutRepeatEveryDay = new HorizontalLayout();
+			horLayoutRepeatEveryDay.setSpacing(true);
+			final CheckBox everydaycheckBox = new CheckBox();
+			everydaycheckBox.setImmediate(true);
+			everydaycheckBox.setValue(false);
+			everydaycheckBox.addListener(new ClickListener() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void buttonClick(ClickEvent arg0) {
+					if ((Boolean) repeatFromInputDaycheckbOx.getValue()) {
+						everydaycheckBox.setValue(true);
+						repeatFromInputDaycheckbOx.setValue(false);
+						// TODO;
+					}
+				}
+			});
+			horLayoutRepeatEveryDay.addComponent(everydaycheckBox);
+			horLayoutRepeatEveryDay.setComponentAlignment(everydaycheckBox,
+					Alignment.MIDDLE_LEFT);
+			Label lblrow1 = new Label("Every day");
+			horLayoutRepeatEveryDay.addComponent(lblrow1);
+			horLayoutRepeatEveryDay.setComponentAlignment(lblrow1,
+					Alignment.MIDDLE_LEFT);
+
+			HorizontalLayout horizontalRepeatFromInputDay = new HorizontalLayout();
+			repeatFromInputDaycheckbOx.addListener(new ClickListener() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void buttonClick(ClickEvent arg0) {
+					if ((Boolean) everydaycheckBox.getValue()) {
+						everydaycheckBox.setValue(false);
+						// TODO;
+					}
+				}
+			});
+			horizontalRepeatFromInputDay
+					.addComponent(repeatFromInputDaycheckbOx);
+			horizontalRepeatFromInputDay.setComponentAlignment(
+					repeatFromInputDaycheckbOx, Alignment.MIDDLE_LEFT);
+			horizontalRepeatFromInputDay.setSpacing(true);
+			Label lablerow2 = new Label("Repeat for every ");
+			horizontalRepeatFromInputDay.addComponent(lablerow2);
+			horizontalRepeatFromInputDay.setComponentAlignment(lablerow2,
+					Alignment.MIDDLE_LEFT);
+			TextField inputRepeatTextField = new TextField();
+			inputRepeatTextField.setWidth("50px");
+			horizontalRepeatFromInputDay.addComponent(inputRepeatTextField);
+			horizontalRepeatFromInputDay.setComponentAlignment(
+					inputRepeatTextField, Alignment.MIDDLE_LEFT);
+			Label dayLbl = new Label("days");
+			horizontalRepeatFromInputDay.addComponent(dayLbl);
+			horizontalRepeatFromInputDay.setComponentAlignment(dayLbl,
+					Alignment.MIDDLE_LEFT);
 
 			VerticalLayout layout = new VerticalLayout();
 			layout.setSpacing(true);
 			layout.setHeight("50px");
-			layout.addComponent(optionGroup);
+			layout.addComponent(horLayoutRepeatEveryDay);
+			layout.addComponent(horizontalRepeatFromInputDay);
 			return layout;
 		}
 
@@ -241,19 +281,20 @@ public class RecurringActivityCustomField extends CustomField {
 			weeklydatepickerHorizontalLayout.setComponentAlignment(
 					wednesLayout, Alignment.MIDDLE_LEFT);
 
+			HorizontalLayout weeklydatepickerHorizontalLayoutRow2 = new HorizontalLayout();
+			weeklydatepickerHorizontalLayoutRow2.setSpacing(true);
+			layout.addComponent(weeklydatepickerHorizontalLayoutRow2);
+
 			HorizontalLayout thursLayout = new HorizontalLayout();
 			CheckBox thursCk = new CheckBox();
 			Label thurLbl = new Label("Thursday");
 			thursLayout.addComponent(thursCk);
 			thursLayout.addComponent(thurLbl);
 			thursLayout.setComponentAlignment(thurLbl, Alignment.MIDDLE_LEFT);
-			weeklydatepickerHorizontalLayout.addComponent(thursLayout);
-			weeklydatepickerHorizontalLayout.setComponentAlignment(thursLayout,
-					Alignment.MIDDLE_LEFT);
+			weeklydatepickerHorizontalLayoutRow2.addComponent(thursLayout);
+			weeklydatepickerHorizontalLayoutRow2.setComponentAlignment(
+					thursLayout, Alignment.MIDDLE_LEFT);
 
-			HorizontalLayout weeklydatepickerHorizontalLayoutRow2 = new HorizontalLayout();
-			weeklydatepickerHorizontalLayoutRow2.setSpacing(true);
-			layout.addComponent(weeklydatepickerHorizontalLayoutRow2);
 			HorizontalLayout fridayLayout = new HorizontalLayout();
 			CheckBox fridayCk = new CheckBox();
 			Label friLbl = new Label("Friday");
@@ -279,15 +320,32 @@ public class RecurringActivityCustomField extends CustomField {
 		}
 
 		private VerticalLayout constructLayoutForMonthly(final Meeting meeting) {
+			final CheckBox followKindDateCk = new CheckBox();
+			followKindDateCk.setImmediate(true);
+			followKindDateCk.setValue(false);
 			VerticalLayout layout = new VerticalLayout();
 			layout.setSpacing(true);
 
 			HorizontalLayout opptionFollowDayLayout = new HorizontalLayout();
 			opptionFollowDayLayout.setSpacing(true);
-			CheckBox followDayCheckbox = new CheckBox();
+			final CheckBox followDayCheckbox = new CheckBox();
+			followDayCheckbox.setValue(false);
+			followDayCheckbox.setImmediate(true);
+			followDayCheckbox.addListener(new ClickListener() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void buttonClick(ClickEvent arg0) {
+					if ((Boolean) followKindDateCk.getValue()) {
+						followKindDateCk.setValue(false);
+						followDayCheckbox.setValue(true);
+					}
+
+				}
+			});
 			opptionFollowDayLayout.addComponent(followDayCheckbox);
 			Label ondayLbl = new Label("On day");
-			ondayLbl.setWidth("74px");
+			ondayLbl.setWidth("50px");
 			opptionFollowDayLayout.addComponent(ondayLbl);
 			opptionFollowDayLayout.setComponentAlignment(ondayLbl,
 					Alignment.MIDDLE_LEFT);
@@ -308,13 +366,32 @@ public class RecurringActivityCustomField extends CustomField {
 
 			HorizontalLayout opptionFollowKindDateLayout = new HorizontalLayout();
 			opptionFollowKindDateLayout.setSpacing(true);
-			CheckBox followKindDateCk = new CheckBox();
+			followKindDateCk.addListener(new ClickListener() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void buttonClick(ClickEvent arg0) {
+					if ((Boolean) followDayCheckbox.getValue()) {
+						followDayCheckbox.setValue(false);
+						followKindDateCk.setValue(true);
+					}
+				}
+			});
 			opptionFollowKindDateLayout.addComponent(followKindDateCk);
 			Label onLbel = new Label("On");
-			onLbel.setWidth("74px");
+			onLbel.setWidth("50px");
 			opptionFollowKindDateLayout.addComponent(onLbel);
 			opptionFollowKindDateLayout.setComponentAlignment(onLbel,
 					Alignment.MIDDLE_LEFT);
+
+			ValueComboBox sttComboBox = new ValueComboBox();
+			sttComboBox.setCaption(null);
+			sttComboBox.setWidth("60px");
+			sttComboBox.setNullSelectionAllowed(false);
+			sttComboBox.loadData(new String[] { "First", "Second", "Third",
+					"Fourth", "Fifth" });
+
+			opptionFollowKindDateLayout.addComponent(sttComboBox);
 			opptionFollowKindDateLayout.addComponent(new KindDateInWeek());
 			Label ofEveryLbl2 = new Label("Of every");
 			opptionFollowKindDateLayout.addComponent(ofEveryLbl2);
@@ -347,7 +424,7 @@ public class RecurringActivityCustomField extends CustomField {
 			public DateInMonth() {
 				super();
 				setCaption(null);
-				this.setWidth("90px");
+				this.setWidth("60px");
 				this.loadData(DATEINMONTHDATA);
 			}
 		}
