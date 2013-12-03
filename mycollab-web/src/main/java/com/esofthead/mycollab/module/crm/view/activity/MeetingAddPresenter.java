@@ -20,7 +20,7 @@ import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.eventmanager.EventBus;
-import com.esofthead.mycollab.module.crm.domain.Meeting;
+import com.esofthead.mycollab.module.crm.domain.MeetingWithBLOBs;
 import com.esofthead.mycollab.module.crm.events.ActivityEvent;
 import com.esofthead.mycollab.module.crm.service.MeetingService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
@@ -35,7 +35,6 @@ import com.esofthead.mycollab.vaadin.ui.MessageBox;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.Window;
 
 public class MeetingAddPresenter extends CrmGenericPresenter<MeetingAddView> {
 
@@ -45,9 +44,9 @@ public class MeetingAddPresenter extends CrmGenericPresenter<MeetingAddView> {
 		super(MeetingAddView.class);
 
 		view.getEditFormHandlers().addFormHandler(
-				new EditFormHandler<Meeting>() {
+				new EditFormHandler<MeetingWithBLOBs>() {
 					@Override
-					public void onSave(final Meeting item) {
+					public void onSave(final MeetingWithBLOBs item) {
 						save(item);
 						ViewState viewState = HistoryViewManager.back();
 						if (viewState instanceof NullViewState) {
@@ -66,7 +65,7 @@ public class MeetingAddPresenter extends CrmGenericPresenter<MeetingAddView> {
 					}
 
 					@Override
-					public void onSaveAndNew(final Meeting item) {
+					public void onSaveAndNew(final MeetingWithBLOBs item) {
 						save(item);
 						EventBus.getInstance().fireEvent(
 								new ActivityEvent.MeetingAdd(this, null));
@@ -77,9 +76,9 @@ public class MeetingAddPresenter extends CrmGenericPresenter<MeetingAddView> {
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		if (AppContext.canWrite(RolePermissionCollections.CRM_MEETING)) {
-			Meeting meeting = null;
-			if (data.getParams() instanceof Meeting) {
-				meeting = (Meeting) data.getParams();
+			MeetingWithBLOBs meeting = null;
+			if (data.getParams() instanceof MeetingWithBLOBs) {
+				meeting = (MeetingWithBLOBs) data.getParams();
 			} else if (data.getParams() instanceof Integer) {
 				MeetingService meetingService = ApplicationContextUtil
 						.getSpringBean(MeetingService.class);
@@ -113,7 +112,7 @@ public class MeetingAddPresenter extends CrmGenericPresenter<MeetingAddView> {
 		}
 	}
 
-	public void save(Meeting item) {
+	public void save(MeetingWithBLOBs item) {
 		MeetingService meetingService = ApplicationContextUtil
 				.getSpringBean(MeetingService.class);
 

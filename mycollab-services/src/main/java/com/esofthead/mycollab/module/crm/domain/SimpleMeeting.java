@@ -18,7 +18,7 @@ package com.esofthead.mycollab.module.crm.domain;
 
 import java.util.List;
 
-public class SimpleMeeting extends Meeting {
+public class SimpleMeeting extends MeetingWithBLOBs {
 	private static final long serialVersionUID = 1L;
 
 	private String relatedTo;

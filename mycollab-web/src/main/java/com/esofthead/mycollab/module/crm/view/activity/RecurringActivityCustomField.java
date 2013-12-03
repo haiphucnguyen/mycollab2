@@ -2,7 +2,7 @@ package com.esofthead.mycollab.module.crm.view.activity;
 
 import org.vaadin.addon.customfield.CustomField;
 
-import com.esofthead.mycollab.module.crm.domain.Meeting;
+import com.esofthead.mycollab.module.crm.domain.MeetingWithBLOBs;
 import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button.ClickEvent;
@@ -15,8 +15,8 @@ import com.vaadin.ui.VerticalLayout;
 
 public class RecurringActivityCustomField extends CustomField {
 	private static final long serialVersionUID = 1L;
-	private DateTimePicker<Meeting> startDate;
-	private DateTimePicker<Meeting> endDate;
+	private DateTimePicker<MeetingWithBLOBs> startDate;
+	private DateTimePicker<MeetingWithBLOBs> endDate;
 	private RepeatTypeComboBox repeatTypeComboBox;
 	private VerticalLayout layout;
 	private HorizontalLayout startDateHorizontalLayout;
@@ -24,7 +24,7 @@ public class RecurringActivityCustomField extends CustomField {
 	private HorizontalLayout repeatTypeHorizontalLayout;
 	private CheckBox checkbox;
 
-	public RecurringActivityCustomField(final Meeting meeting) {
+	public RecurringActivityCustomField(final MeetingWithBLOBs meeting) {
 		layout = new VerticalLayout();
 		layout.setSpacing(true);
 		checkbox = new CheckBox();
@@ -43,8 +43,8 @@ public class RecurringActivityCustomField extends CustomField {
 					startDateHorizontalLayout.addComponent(startDateLbl);
 					startDateHorizontalLayout.setComponentAlignment(
 							startDateLbl, Alignment.MIDDLE_LEFT);
-					startDate = new DateTimePicker<Meeting>("startdate",
-							meeting);
+					startDate = new DateTimePicker<MeetingWithBLOBs>(
+							"startdate", meeting);
 					startDateHorizontalLayout.addComponent(startDate);
 					startDateHorizontalLayout.setComponentAlignment(startDate,
 							Alignment.MIDDLE_LEFT);
@@ -57,7 +57,8 @@ public class RecurringActivityCustomField extends CustomField {
 					endDateHorizontalLayout.addComponent(endDateLbl);
 					endDateHorizontalLayout.setComponentAlignment(endDateLbl,
 							Alignment.MIDDLE_LEFT);
-					endDate = new DateTimePicker<Meeting>("enddate", meeting);
+					endDate = new DateTimePicker<MeetingWithBLOBs>("enddate",
+							meeting);
 					endDateHorizontalLayout.addComponent(endDate);
 					endDateHorizontalLayout.setComponentAlignment(endDate,
 							Alignment.MIDDLE_LEFT);
@@ -105,7 +106,7 @@ public class RecurringActivityCustomField extends CustomField {
 
 		private VerticalLayout layoutForCurrentRepeatType;
 
-		public RepeatTypeComboBox(final Meeting meeting) {
+		public RepeatTypeComboBox(final MeetingWithBLOBs meeting) {
 			super();
 			setCaption(null);
 			this.setNullSelectionAllowed(false);
@@ -142,7 +143,8 @@ public class RecurringActivityCustomField extends CustomField {
 			layoutForCurrentRepeatType = constructLayoutForDaily(meeting);
 		}
 
-		private VerticalLayout constructLayoutForDaily(final Meeting meeting) {
+		private VerticalLayout constructLayoutForDaily(
+				final MeetingWithBLOBs meeting) {
 			final CheckBox repeatFromInputDaycheckbOx = new CheckBox();
 			repeatFromInputDaycheckbOx.setImmediate(true);
 			repeatFromInputDaycheckbOx.setValue(false);
@@ -211,7 +213,8 @@ public class RecurringActivityCustomField extends CustomField {
 			return layout;
 		}
 
-		private VerticalLayout constructLayoutForWeekly(final Meeting meeting) {
+		private VerticalLayout constructLayoutForWeekly(
+				final MeetingWithBLOBs meeting) {
 			VerticalLayout layout = new VerticalLayout();
 			layout.setSpacing(true);
 
@@ -319,7 +322,8 @@ public class RecurringActivityCustomField extends CustomField {
 			return layout;
 		}
 
-		private VerticalLayout constructLayoutForMonthly(final Meeting meeting) {
+		private VerticalLayout constructLayoutForMonthly(
+				final MeetingWithBLOBs meeting) {
 			final CheckBox followKindDateCk = new CheckBox();
 			followKindDateCk.setImmediate(true);
 			followKindDateCk.setValue(false);
