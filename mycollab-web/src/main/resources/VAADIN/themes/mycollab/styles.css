@@ -2624,13 +2624,23 @@ div.v-splitbutton,div.v-splitbutton .v-button {
 	padding: 0px 0px 0px 58px;
 }
 
+.message .message-container {
+    padding-left: 10px;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
 .message .message-container>.v-csslayout-margin {
 	background-color: #fff;
 	padding: 10px;
 	border: 2px solid #a9a9a9;
 	border-radius: 5px;
-	margin-left: 10px;
+	/*margin-left: 10px;*/
 	position: relative;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 .v-ie7 .message .message-container>.v-csslayout-margin {
@@ -5231,4 +5241,7 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 }
 .v-ie9 .v-gridlayout-margin > div > div > .v-caption, .v-ie9 .v-horizontallayout.gridform-field > div > div > .v-caption {
     margin-right: 0px;
+}
+.v-required-field-indicator {
+    width: 4px;
 }
