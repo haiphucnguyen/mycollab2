@@ -95,6 +95,7 @@ public class BugDashboardViewImpl extends AbstractView implements
 		headerWrapper.removeAllComponents();
 		final CssLayout headerTop = new CssLayout();
 		headerTop.setWidth("100%");
+		headerTop.setHeight("30px");
 		headerTop.addStyleName("bugdashboard-header-top");
 		final HorizontalLayout header = new HorizontalLayout();
 		header.setWidth("100%");

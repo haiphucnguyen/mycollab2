@@ -19,6 +19,7 @@ package db.migration;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TimeZone;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,12 +29,13 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
 import com.esofthead.mycollab.configuration.PasswordEncryptHelper;
+import com.esofthead.mycollab.core.utils.TimezoneMapper;
 import com.esofthead.mycollab.security.PermissionMap;
 import com.googlecode.flyway.core.api.migration.spring.SpringJdbcMigration;
 
-public class V01112013_2__Insert_Default_Values implements SpringJdbcMigration {
+public class V01112013_3__Insert_Default_Values implements SpringJdbcMigration {
 	private static Logger log = LoggerFactory
-			.getLogger(V01112013_2__Insert_Default_Values.class);
+			.getLogger(V01112013_3__Insert_Default_Values.class);
 
 	public void migrate(JdbcTemplate jdbcTemplate) throws Exception {
 		log.info("Set up initial values");
@@ -76,7 +78,7 @@ public class V01112013_2__Insert_Default_Values implements SpringJdbcMigration {
 		SimpleJdbcInsert userJdbcInsert = new SimpleJdbcInsert(jdbcTemplate)
 				.withTableName("s_user").usingColumns("username", "firstname",
 						"lastname", "email", "status", "registeredTime",
-						"password");
+						"password", "avatarId", "timezone");
 
 		Map<String, Object> userParameters = new HashMap<String, Object>();
 		userParameters.put("username", "admin@mycollab.com");
@@ -87,7 +89,12 @@ public class V01112013_2__Insert_Default_Values implements SpringJdbcMigration {
 		userParameters.put("registeredTime", new Date());
 		userParameters.put("password",
 				PasswordEncryptHelper.encryptSaltPassword("admin123"));
+		userParameters.put("avatarId", "null");
+		userParameters.put("timezone",
+				TimezoneMapper.getTimezoneDbId(TimeZone.getDefault()));
 		userJdbcInsert.execute(userParameters);
+
+		log.debug("Insert default user avatar");
 
 		log.debug("Create associate between user and billing plan");
 		SimpleJdbcInsert userAccountJdbcInsert = new SimpleJdbcInsert(
@@ -103,8 +110,7 @@ public class V01112013_2__Insert_Default_Values implements SpringJdbcMigration {
 		userAccountParameters.put("registeredTime", new Date());
 		userAccountParameters.put("registerStatus", "Active");
 
-		Number userAccountId = userAccountJdbcInsert
-				.executeAndReturnKey(userAccountParameters);
+		userAccountJdbcInsert.executeAndReturnKey(userAccountParameters);
 
 		log.debug("Insert default roles");
 		SimpleJdbcInsert roleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate)

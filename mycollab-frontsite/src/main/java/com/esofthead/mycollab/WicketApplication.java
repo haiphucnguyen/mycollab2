@@ -1,16 +1,19 @@
 package com.esofthead.mycollab;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.wicket.core.request.handler.PageProvider;
 import org.apache.wicket.core.request.handler.RenderPageRequestHandler;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.protocol.http.servlet.ServletWebRequest;
+import org.apache.wicket.protocol.http.servlet.ServletWebResponse;
 import org.apache.wicket.request.IRequestHandler;
 import org.apache.wicket.request.cycle.AbstractRequestCycleListener;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.http.WebRequest;
+import org.apache.wicket.request.http.WebResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -93,6 +96,53 @@ public class WicketApplication extends WebApplication {
 				filterPath);
 		return new ServletWebRequest(servletRequest, filterPath, webRequest
 				.getUrl().canonical());
+	}
+
+	@Override
+	protected WebResponse newWebResponse(final WebRequest webRequest,
+			HttpServletResponse httpServletResponse) {
+		return new ServletWebResponse((ServletWebRequest) webRequest,
+				httpServletResponse) {
+
+			@Override
+			public String encodeURL(CharSequence url) {
+				return isRobot(webRequest) ? url.toString() : super
+						.encodeURL(url);
+			}
+
+			@Override
+			public String encodeRedirectURL(CharSequence url) {
+				return isRobot(webRequest) ? url.toString() : super
+						.encodeRedirectURL(url);
+			}
+
+			private boolean isRobot(WebRequest request) {
+				final String agent = webRequest.getHeader("User-Agent");
+				return isAgent(agent);
+			}
+		};
+	}
+
+	private static final String[] botAgents = { "googlebot", "msnbot", "slurp",
+			"jeeves", "appie", "architext", "jeeves", "bjaaland", "ferret",
+			"gulliver", "harvest", "htdig", "linkwalker", "lycos_", "moget",
+			"muscatferret", "myweb", "nomad", "scooter",
+			"yahoo!\\sslurp\\schina", "slurp", "weblayers", "antibot",
+			"bruinbot", "digout4u", "echo!", "ia_archiver", "jennybot",
+			"mercator", "netcraft", "msnbot", "petersnews",
+			"unlost_web_crawler", "voila", "webbase", "webcollage", "cfetch",
+			"zyborg", "wisenutbot", "robot", "crawl", "spider" };
+
+	public static boolean isAgent(final String agent) {
+		if (agent != null) {
+			final String lowerAgent = agent.toLowerCase();
+			for (final String bot : botAgents) {
+				if (lowerAgent.indexOf(bot) != -1) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 }

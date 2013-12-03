@@ -202,7 +202,8 @@ public abstract class GenericServerRunner {
 
 			int serverPort = 0;
 
-			while (true) {
+			int numTries = 0;
+			while (numTries < 3) {
 				String serverPortVal = device.readLine();
 
 				try {
@@ -210,6 +211,10 @@ public abstract class GenericServerRunner {
 					break;
 				} catch (Exception e) {
 					System.out.println("Port must be the number from 1-65000");
+					numTries++;
+					if (numTries == 3) {
+						System.exit(-1);
+					}
 				}
 			}
 
@@ -222,15 +227,21 @@ public abstract class GenericServerRunner {
 			System.out
 					.println("=====================================================");
 
-			while (true) {
-				System.out
-						.println("Enter database name (Database must be created before):");
-
-				String dbName = device.readLine();
+			numTries = 0;
+			while (numTries < 3) {
 				templateContext.put("db.driverClassName",
 						"com.mysql.jdbc.Driver");
+
+				System.out.println("Enter database server address:");
+				String dbServerAddress = device.readLine();
+
+				System.out
+						.println("Enter database name (Database must be created before):");
+				String dbName = device.readLine();
+
 				String dbUrl = String.format(
-						"jdbc:mysql://localhost/%s?useUnicode=true", dbName);
+						"jdbc:mysql://%s/%s?useUnicode=true", dbServerAddress,
+						dbName);
 				templateContext.put("dbUrl", dbUrl);
 
 				System.out.println("Enter database user name:");
@@ -251,6 +262,10 @@ public abstract class GenericServerRunner {
 				} catch (Exception e) {
 					e.printStackTrace();
 					System.err.println("Can not set up database.");
+					numTries++;
+					if (numTries == 3) {
+						System.exit(-1);
+					}
 				}
 			}
 
@@ -264,7 +279,8 @@ public abstract class GenericServerRunner {
 			System.out
 					.println("We need your smtp email configuration to send system notifications such as bug assignment, new account created to your team. If you do not have any smtp account, you can ignore this setting section. Do you want continue to set up stmp settings (y/n):");
 
-			while (true) {
+			numTries = 0;
+			while (numTries < 3) {
 				String acceptContinue = device.readLine();
 				if ("y".equals(acceptContinue)) {
 					System.out.println("Outgoing server address:");
@@ -314,6 +330,17 @@ public abstract class GenericServerRunner {
 					break;
 				} else {
 					System.out.println("You must select y (yes) or n (no)");
+					numTries++;
+
+					if (numTries == 3) {
+						System.out
+								.println("You can set up stmp account later in file %MYCOLLAB_HOME%/conf/mycollab.properties");
+						templateContext.put("smtpAddress", "");
+						templateContext.put("smtpPort", "1");
+						templateContext.put("smtpUserName", "");
+						templateContext.put("smtpPassword", "");
+						templateContext.put("smtpTLSEnable", "false");
+					}
 				}
 			}
 

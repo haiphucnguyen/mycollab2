@@ -1,7 +1,8 @@
 package com.esofthead.mycollab.pages;
 
-import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 import com.esofthead.mycollab.base.BasePage;
@@ -16,7 +17,6 @@ public class TourPage extends BasePage {
 
 	public TourPage(PageParameters parameters) {
 		super(parameters);
-		add(new Label("pagetitle", "Highlights"));
 
 		BookmarkablePageLink<Void> whoisitfor = new BookmarkablePageLink<Void>(
 				"whoisitforLink", WhoisitForPage.class);
@@ -33,6 +33,24 @@ public class TourPage extends BasePage {
 		BookmarkablePageLink<Void> crm = new BookmarkablePageLink<Void>(
 				"crmLink", CRMPage.class);
 		add(crm);
+	}
+
+	@Override
+	public IModel getPageTitle() {
+		return new Model<String>(
+				"MyCollab - Cloud CRM, Project, Document Management and more tools");
+	}
+
+	@Override
+	public IModel getDescription() {
+		return new Model<String>(
+				"See what MyCollab offers to users, it includes Collaboration platform, CRM, Project, Document Management and more.");
+	}
+
+	@Override
+	public IModel getKeywords() {
+		return new Model<String>(
+				"project management tool, business tools, crm system, online collaboration, cloud office, documents management, online office");
 	}
 
 }

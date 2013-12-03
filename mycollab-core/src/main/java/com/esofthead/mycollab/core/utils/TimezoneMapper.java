@@ -993,11 +993,22 @@ public class TimezoneMapper {
 				"Pacific", "Pacific/Kiritimati"));
 	}
 
-	public static TimezoneExt getTimezone(String id) {
-		if (id == null || id.equals("")) {
+	public static TimezoneExt getTimezone(String mycollabId) {
+		if (mycollabId == null || mycollabId.equals("")) {
 			return timeMap.get("3");
 		}
-		return timeMap.get(id);
+		return timeMap.get(mycollabId);
+	}
+
+	public static String getTimezoneDbId(TimeZone timeZone) {
+		String timeZoneId = timeZone.getID();
+		for (TimezoneExt timeZoneExt : timeMap.values()) {
+			if (timeZoneExt.getTimezone().getID().equals(timeZoneId)) {
+				return timeZoneExt.getId();
+			}
+		}
+
+		return "3";
 	}
 
 	public static class TimezoneExt {
@@ -1031,22 +1042,6 @@ public class TimezoneMapper {
 		}
 	}
 
-	private static String getOffsetString(int offset, String name) {
-		String strOffSetNum = (Math.abs(offset) < 10) ? ("0" + Math.abs(offset))
-				: Math.abs(offset) + "";
-		name = name.replace("_", " ");
-		String strOffset = strOffSetNum + ":" + "00) " + name;
-		return (offset < 0) ? "(GMT-" + strOffset : "(GMT+" + strOffset;
-	}
-
-	private static String getNameOffset(String timeZoneDisplay) {
-		if (timeZoneDisplay.indexOf("/") > -1) {
-			return timeZoneDisplay.substring(timeZoneDisplay.indexOf("/") + 1,
-					timeZoneDisplay.length());
-		}
-		return "";
-	}
-
 	private static String getArea(String timeZoneDisplay) {
 		String areas[] = new String[] { "Africa", "America", "Antarctica",
 				"Asia", "Atlantic", "Australia", "Europe", "Etc", "Indian",
@@ -1063,7 +1058,26 @@ public class TimezoneMapper {
 		return "";
 	}
 
+	private static String getOffsetString(TimeZone timeZone) {
+		int offset = timeZone.getRawOffset() / (1000 * 60 * 60);
+
+		String timeZoneDisplay = timeZone.getID();
+		if (timeZoneDisplay.indexOf("/") > -1) {
+			timeZoneDisplay = timeZoneDisplay.substring(
+					timeZoneDisplay.indexOf("/") + 1, timeZoneDisplay.length());
+		} else {
+			timeZoneDisplay = "";
+		}
+
+		String strOffSetNum = (Math.abs(offset) < 10) ? ("0" + Math.abs(offset))
+				: Math.abs(offset) + "";
+		timeZoneDisplay = timeZoneDisplay.replace("_", " ");
+		String strOffset = strOffSetNum + ":" + "00) " + timeZoneDisplay;
+		return (offset < 0) ? "(GMT-" + strOffset : "(GMT+" + strOffset;
+	}
+
 	public static void main(String[] args) {
+		System.out.println(TimeZone.getDefault().getDisplayName());
 		String[] availableIDs = TimeZone.getAvailableIDs();
 		for (int i = 0; i < availableIDs.length; i++) {
 			String timezoneId = availableIDs[i];
@@ -1071,16 +1085,11 @@ public class TimezoneMapper {
 
 			if (!getArea(timeZone.getID()).equals("")) {
 				System.out
-						.println("timeMap.put(\""
-								+ (i + 1)
-								+ "\", new TimezoneExt(\""
-								+ (i + 1)
-								+ "\", \""
-								+ getOffsetString(timeZone.getRawOffset()
-										/ (1000 * 60 * 60),
-										getNameOffset(timeZone.getID()))
-								+ "\",\"" + getArea(timeZone.getID()) + "\","
-								+ "\"" + timeZone.getID() + "\")); "
+						.println("timeMap.put(\"" + (i + 1)
+								+ "\", new TimezoneExt(\"" + (i + 1) + "\", \""
+								+ getOffsetString(timeZone) + "\",\""
+								+ getArea(timeZone.getID()) + "\"," + "\""
+								+ timeZone.getID() + "\")); "
 								+ timeZone.getRawOffset());
 			}
 		}

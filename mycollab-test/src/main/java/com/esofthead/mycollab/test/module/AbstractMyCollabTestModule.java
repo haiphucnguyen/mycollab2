@@ -18,7 +18,7 @@ package com.esofthead.mycollab.test.module;
 
 import com.esofthead.mycollab.test.MyCollabTestModule;
 
-public abstract class AbstractEngroupTestModule implements MyCollabTestModule {
+public abstract class AbstractMyCollabTestModule implements MyCollabTestModule {
     protected Class host;
 
     public void setHost(Class host) {

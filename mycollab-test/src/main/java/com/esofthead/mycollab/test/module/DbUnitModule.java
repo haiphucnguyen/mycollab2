@@ -37,7 +37,7 @@ import org.slf4j.LoggerFactory;
 import com.esofthead.mycollab.test.DataSourceFactoryBean;
 import com.esofthead.mycollab.test.TestException;
 
-public final class DbUnitModule extends AbstractEngroupTestModule {
+public final class DbUnitModule extends AbstractMyCollabTestModule {
 
 	private DataSource dataSource;
 
@@ -52,7 +52,6 @@ public final class DbUnitModule extends AbstractEngroupTestModule {
 		} catch (Exception e1) {
 			throw new RuntimeException("Error while getting data source", e1);
 		}
-		
 
 		// Load dataset from xml file
 		IDataSet dataSet = null;
@@ -77,7 +76,7 @@ public final class DbUnitModule extends AbstractEngroupTestModule {
 			FlatXmlDataSetBuilder dataSetBuilder = new FlatXmlDataSetBuilder();
 			dataSetBuilder.setCaseSensitiveTableNames(true);
 			dataSetBuilder.setMetaDataSetFromDtd(DbUnitModule.class
-					.getClassLoader().getResourceAsStream("engroup.dtd"));
+					.getClassLoader().getResourceAsStream("mycollab.dtd"));
 			dataSet = dataSetBuilder.build(stream);
 		} catch (Exception e) {
 			throw new TestException(e);

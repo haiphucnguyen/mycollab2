@@ -152,3 +152,10 @@ mycollab-test/.settings/org.eclipse.jdt.core.prefs
 mycollab-extra-lib/.classpath
 mycollab-extra-lib/.project
 mycollab-extra-lib/.settings/org.eclipse.jdt.core.prefs
+mycollab-api-impl/pom.xml.versionsBackup
+mycollab-api/pom.xml.versionsBackup
+mycollab-app-premium/pom.xml.versionsBackup
+mycollab-frontsite/pom.xml.versionsBackup
+mycollab-jetty-session-premium/pom.xml.versionsBackup
+mycollab-services-ondemand/pom.xml.versionsBackup
+mycollab-web-premium/pom.xml.versionsBackup

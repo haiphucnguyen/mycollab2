@@ -169,20 +169,7 @@ public class UserServiceDBImpl extends
 			record.setRegisterstatus(RegisterStatusConstants.VERIFICATING);
 			userMapper.insert(record);
 
-			// Save default user avatar
-			InputStream imageResourceStream = this
-					.getClass()
-					.getClassLoader()
-					.getResourceAsStream(
-							"assets/images/default_user_avatar_100.png");
-			BufferedImage imageBuff;
-			try {
-				imageBuff = ImageIO.read(imageResourceStream);
-				userAvatarService.uploadAvatar(imageBuff, record.getUsername(),
-						null);
-			} catch (IOException e) {
-				log.error("Error while set default avatar to user", e);
-			}
+			userAvatarService.uploadDefaultAvatar(record.getUsername());
 		}
 
 		// save record in s_user_account table
