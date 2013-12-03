@@ -2,6 +2,13 @@ package com.esofthead.mycollab.module.crm.view.activity;
 
 import org.vaadin.addon.customfield.CustomField;
 
+import com.esofthead.mycollab.core.schedule.recurring.DailyEvent;
+import com.esofthead.mycollab.core.schedule.recurring.MonthlyEventFollowDay;
+import com.esofthead.mycollab.core.schedule.recurring.MonthlyEventFollowKindDay;
+import com.esofthead.mycollab.core.schedule.recurring.WeeklyEvent;
+import com.esofthead.mycollab.core.schedule.recurring.YearlyEventFollowAdvanceSettingMonth;
+import com.esofthead.mycollab.core.schedule.recurring.YearlyEventFollowEveryMonth;
+import com.esofthead.mycollab.core.utils.JsonDeSerializer;
 import com.esofthead.mycollab.module.crm.domain.MeetingWithBLOBs;
 import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
 import com.vaadin.ui.Alignment;
@@ -35,6 +42,7 @@ public class RecurringActivityCustomField extends CustomField {
 			@Override
 			public void buttonClick(ClickEvent arg0) {
 				if ((Boolean) checkbox.getValue()) {
+					meeting.setIsrecurrence(true);
 					startDateHorizontalLayout = new HorizontalLayout();
 					startDateHorizontalLayout.setSpacing(true);
 					Label startDateLbl = new Label("Start Date:");
@@ -44,7 +52,7 @@ public class RecurringActivityCustomField extends CustomField {
 					startDateHorizontalLayout.setComponentAlignment(
 							startDateLbl, Alignment.MIDDLE_LEFT);
 					startDate = new DateTimePicker<MeetingWithBLOBs>(
-							"startdate", meeting);
+							"recurrencestartdate", meeting);
 					startDateHorizontalLayout.addComponent(startDate);
 					startDateHorizontalLayout.setComponentAlignment(startDate,
 							Alignment.MIDDLE_LEFT);
@@ -57,8 +65,8 @@ public class RecurringActivityCustomField extends CustomField {
 					endDateHorizontalLayout.addComponent(endDateLbl);
 					endDateHorizontalLayout.setComponentAlignment(endDateLbl,
 							Alignment.MIDDLE_LEFT);
-					endDate = new DateTimePicker<MeetingWithBLOBs>("enddate",
-							meeting);
+					endDate = new DateTimePicker<MeetingWithBLOBs>(
+							"recurrenceenddate", meeting);
 					endDateHorizontalLayout.addComponent(endDate);
 					endDateHorizontalLayout.setComponentAlignment(endDate,
 							Alignment.MIDDLE_LEFT);
@@ -82,6 +90,7 @@ public class RecurringActivityCustomField extends CustomField {
 					layout.addComponent(repeatTypeComboBox
 							.getLayoutForCurrentRepeatType());
 				} else {
+					meeting.setIsrecurrence(false);
 					layout.removeComponent(startDateHorizontalLayout);
 					layout.removeComponent(endDateHorizontalLayout);
 					layout.removeComponent(repeatTypeHorizontalLayout);
@@ -102,7 +111,7 @@ public class RecurringActivityCustomField extends CustomField {
 	private class RepeatTypeComboBox extends ValueComboBox {
 		private static final long serialVersionUID = 1L;
 		private String[] REPEATTYPEDATA = new String[] { "Daily", "Weekly",
-				"Monthly" };
+				"Monthly", "Yearly" };
 
 		private VerticalLayout layoutForCurrentRepeatType;
 
@@ -137,6 +146,12 @@ public class RecurringActivityCustomField extends CustomField {
 						layoutForCurrentRepeatType = constructLayoutForMonthly(meeting);
 						RecurringActivityCustomField.this.layout
 								.addComponent(layoutForCurrentRepeatType);
+					} else if (arg0.getProperty().getValue().equals("Yearly")) {
+						RecurringActivityCustomField.this.layout
+								.removeComponent(layoutForCurrentRepeatType);
+						layoutForCurrentRepeatType = constructLayoutForYearly(meeting);
+						RecurringActivityCustomField.this.layout
+								.addComponent(layoutForCurrentRepeatType);
 					}
 				}
 			});
@@ -145,6 +160,8 @@ public class RecurringActivityCustomField extends CustomField {
 
 		private VerticalLayout constructLayoutForDaily(
 				final MeetingWithBLOBs meeting) {
+			meeting.setRecurrencetype("DailyEvent");
+			final DailyEvent dailyEvent = new DailyEvent();
 			final CheckBox repeatFromInputDaycheckbOx = new CheckBox();
 			repeatFromInputDaycheckbOx.setImmediate(true);
 			repeatFromInputDaycheckbOx.setValue(false);
@@ -159,10 +176,11 @@ public class RecurringActivityCustomField extends CustomField {
 
 				@Override
 				public void buttonClick(ClickEvent arg0) {
-					if ((Boolean) repeatFromInputDaycheckbOx.getValue()) {
-						everydaycheckBox.setValue(true);
-						repeatFromInputDaycheckbOx.setValue(false);
-						// TODO;
+					repeatFromInputDaycheckbOx.setValue(false);
+					if ((Boolean) everydaycheckBox.getValue()) {
+						dailyEvent.setRepeatInDay(1);
+						meeting.setRecurrenceinfo(JsonDeSerializer
+								.toJson(dailyEvent));
 					}
 				}
 			});
@@ -175,17 +193,6 @@ public class RecurringActivityCustomField extends CustomField {
 					Alignment.MIDDLE_LEFT);
 
 			HorizontalLayout horizontalRepeatFromInputDay = new HorizontalLayout();
-			repeatFromInputDaycheckbOx.addListener(new ClickListener() {
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public void buttonClick(ClickEvent arg0) {
-					if ((Boolean) everydaycheckBox.getValue()) {
-						everydaycheckBox.setValue(false);
-						// TODO;
-					}
-				}
-			});
 			horizontalRepeatFromInputDay
 					.addComponent(repeatFromInputDaycheckbOx);
 			horizontalRepeatFromInputDay.setComponentAlignment(
@@ -195,11 +202,53 @@ public class RecurringActivityCustomField extends CustomField {
 			horizontalRepeatFromInputDay.addComponent(lablerow2);
 			horizontalRepeatFromInputDay.setComponentAlignment(lablerow2,
 					Alignment.MIDDLE_LEFT);
-			TextField inputRepeatTextField = new TextField();
+			final TextField inputRepeatTextField = new TextField();
 			inputRepeatTextField.setWidth("50px");
+			inputRepeatTextField.setValue("1");
+			inputRepeatTextField.setImmediate(true);
+			inputRepeatTextField.addListener(new ValueChangeListener() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void valueChange(
+						com.vaadin.data.Property.ValueChangeEvent arg0) {
+					try {
+						dailyEvent.setRepeatInDay(Integer
+								.parseInt((String) inputRepeatTextField
+										.getValue()));
+						meeting.setRecurrenceinfo(JsonDeSerializer
+								.toJson(dailyEvent));
+					} catch (Exception e) {
+						RecurringActivityCustomField.this.getWindow()
+								.showNotification("Please input numberic");
+					}
+				}
+			});
 			horizontalRepeatFromInputDay.addComponent(inputRepeatTextField);
 			horizontalRepeatFromInputDay.setComponentAlignment(
 					inputRepeatTextField, Alignment.MIDDLE_LEFT);
+			repeatFromInputDaycheckbOx.addListener(new ClickListener() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void buttonClick(ClickEvent arg0) {
+					try {
+						everydaycheckBox.setValue(false);
+						if ((Boolean) repeatFromInputDaycheckbOx.getValue()) {
+							Integer day = Integer
+									.parseInt((String) inputRepeatTextField
+											.getValue());
+							dailyEvent.setRepeatInDay(day);
+							meeting.setRecurrenceinfo(JsonDeSerializer
+									.toJson(dailyEvent));
+						}
+					} catch (Exception e) {
+						RecurringActivityCustomField.this.getWindow()
+								.showNotification("Please input numberic");
+					}
+				}
+			});
+
 			Label dayLbl = new Label("days");
 			horizontalRepeatFromInputDay.addComponent(dayLbl);
 			horizontalRepeatFromInputDay.setComponentAlignment(dayLbl,
@@ -215,6 +264,8 @@ public class RecurringActivityCustomField extends CustomField {
 
 		private VerticalLayout constructLayoutForWeekly(
 				final MeetingWithBLOBs meeting) {
+			final WeeklyEvent weeklyEvent = new WeeklyEvent();
+			meeting.setRecurrencetype("WeeklyEvent");
 			VerticalLayout layout = new VerticalLayout();
 			layout.setSpacing(true);
 
@@ -226,8 +277,25 @@ public class RecurringActivityCustomField extends CustomField {
 			repeatWeekHorizontalLayout.addComponent(lbl);
 			repeatWeekHorizontalLayout.setComponentAlignment(lbl,
 					Alignment.MIDDLE_LEFT);
-			TextField tf = new TextField();
+			final TextField tf = new TextField();
 			tf.setWidth("50px");
+			tf.setImmediate(true);
+			tf.addListener(new ValueChangeListener() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void valueChange(
+						com.vaadin.data.Property.ValueChangeEvent arg0) {
+					try {
+						weeklyEvent.setRepeatInWeekNum(Integer
+								.parseInt((String) tf.getValue()));
+					} catch (Exception e) {
+						RecurringActivityCustomField.this.getWindow()
+								.showNotification("Please input numberic");
+					}
+				}
+			});
+
 			repeatWeekHorizontalLayout.addComponent(tf);
 			repeatWeekHorizontalLayout.setComponentAlignment(tf,
 					Alignment.MIDDLE_LEFT);
@@ -242,7 +310,22 @@ public class RecurringActivityCustomField extends CustomField {
 			layout.addComponent(weeklydatepickerHorizontalLayout);
 
 			HorizontalLayout sundayLayout = new HorizontalLayout();
-			CheckBox sundayck = new CheckBox();
+			final CheckBox sundayck = new CheckBox();
+			sundayck.setImmediate(true);
+			sundayck.addListener(new ClickListener() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void buttonClick(ClickEvent arg0) {
+					if ((Boolean) sundayck.getValue()) {
+						weeklyEvent.setHappenInSunday(true);
+					} else {
+						weeklyEvent.setHappenInSunday(false);
+					}
+					meeting.setRecurrenceinfo(JsonDeSerializer
+							.toJson(weeklyEvent));
+				}
+			});
 			Label sunLbl = new Label("Sunday");
 			sundayLayout.addComponent(sundayck);
 			sundayLayout.addComponent(sunLbl);
@@ -252,7 +335,23 @@ public class RecurringActivityCustomField extends CustomField {
 					sundayLayout, Alignment.MIDDLE_LEFT);
 
 			HorizontalLayout mondayLayout = new HorizontalLayout();
-			CheckBox mondayck = new CheckBox();
+			final CheckBox mondayck = new CheckBox();
+			mondayck.setImmediate(true);
+			mondayck.addListener(new ClickListener() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void buttonClick(ClickEvent arg0) {
+					if ((Boolean) mondayck.getValue()) {
+						weeklyEvent.setHappenInMonday(true);
+					} else {
+						weeklyEvent.setHappenInMonday(false);
+					}
+					meeting.setRecurrenceinfo(JsonDeSerializer
+							.toJson(weeklyEvent));
+				}
+			});
+
 			Label mondayLbl = new Label("Monday");
 			mondayLayout.addComponent(mondayck);
 			mondayLayout.addComponent(mondayLbl);
@@ -263,7 +362,22 @@ public class RecurringActivityCustomField extends CustomField {
 					mondayLayout, Alignment.MIDDLE_LEFT);
 
 			HorizontalLayout tuedayLayout = new HorizontalLayout();
-			CheckBox tuedayck = new CheckBox();
+			final CheckBox tuedayck = new CheckBox();
+			tuedayck.setImmediate(true);
+			tuedayck.addListener(new ClickListener() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void buttonClick(ClickEvent arg0) {
+					if ((Boolean) tuedayck.getValue()) {
+						weeklyEvent.setHappenInTuesday(true);
+					} else {
+						weeklyEvent.setHappenInTuesday(false);
+					}
+					meeting.setRecurrenceinfo(JsonDeSerializer
+							.toJson(weeklyEvent));
+				}
+			});
 			Label tuedayLbl = new Label("Tuesday");
 			tuedayLayout.addComponent(tuedayck);
 			tuedayLayout.addComponent(tuedayLbl);
@@ -274,7 +388,22 @@ public class RecurringActivityCustomField extends CustomField {
 					tuedayLayout, Alignment.MIDDLE_LEFT);
 
 			HorizontalLayout wednesLayout = new HorizontalLayout();
-			CheckBox wednesCk = new CheckBox();
+			final CheckBox wednesCk = new CheckBox();
+			wednesCk.setImmediate(true);
+			wednesCk.addListener(new ClickListener() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void buttonClick(ClickEvent arg0) {
+					if ((Boolean) wednesCk.getValue()) {
+						weeklyEvent.setHappenInWednesday(true);
+					} else {
+						weeklyEvent.setHappenInWednesday(false);
+					}
+					meeting.setRecurrenceinfo(JsonDeSerializer
+							.toJson(weeklyEvent));
+				}
+			});
 			Label wednesLbl = new Label("Wednesday");
 			wednesLayout.addComponent(wednesCk);
 			wednesLayout.addComponent(wednesLbl);
@@ -289,7 +418,22 @@ public class RecurringActivityCustomField extends CustomField {
 			layout.addComponent(weeklydatepickerHorizontalLayoutRow2);
 
 			HorizontalLayout thursLayout = new HorizontalLayout();
-			CheckBox thursCk = new CheckBox();
+			final CheckBox thursCk = new CheckBox();
+			thursCk.setImmediate(true);
+			thursCk.addListener(new ClickListener() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void buttonClick(ClickEvent arg0) {
+					if ((Boolean) thursCk.getValue()) {
+						weeklyEvent.setHappenInThursday(true);
+					} else {
+						weeklyEvent.setHappenInThursday(false);
+					}
+					meeting.setRecurrenceinfo(JsonDeSerializer
+							.toJson(weeklyEvent));
+				}
+			});
 			Label thurLbl = new Label("Thursday");
 			thursLayout.addComponent(thursCk);
 			thursLayout.addComponent(thurLbl);
@@ -299,7 +443,22 @@ public class RecurringActivityCustomField extends CustomField {
 					thursLayout, Alignment.MIDDLE_LEFT);
 
 			HorizontalLayout fridayLayout = new HorizontalLayout();
-			CheckBox fridayCk = new CheckBox();
+			final CheckBox fridayCk = new CheckBox();
+			fridayCk.setImmediate(true);
+			fridayCk.addListener(new ClickListener() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void buttonClick(ClickEvent arg0) {
+					if ((Boolean) fridayCk.getValue()) {
+						weeklyEvent.setHappenInFriday(true);
+					} else {
+						weeklyEvent.setHappenInFriday(false);
+					}
+					meeting.setRecurrenceinfo(JsonDeSerializer
+							.toJson(weeklyEvent));
+				}
+			});
 			Label friLbl = new Label("Friday");
 			fridayLayout.addComponent(fridayCk);
 			fridayLayout.addComponent(friLbl);
@@ -309,7 +468,22 @@ public class RecurringActivityCustomField extends CustomField {
 					fridayLayout, Alignment.MIDDLE_LEFT);
 
 			HorizontalLayout staturdayLayout = new HorizontalLayout();
-			CheckBox staturdayCk = new CheckBox();
+			final CheckBox staturdayCk = new CheckBox();
+			staturdayCk.setImmediate(true);
+			staturdayCk.addListener(new ClickListener() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void buttonClick(ClickEvent arg0) {
+					if ((Boolean) staturdayCk.getValue()) {
+						weeklyEvent.setHappenInSaturday(true);
+					} else {
+						weeklyEvent.setHappenInSaturday(false);
+					}
+					meeting.setRecurrenceinfo(JsonDeSerializer
+							.toJson(weeklyEvent));
+				}
+			});
 			Label staturdayLbl = new Label("Saturday");
 			staturdayLayout.addComponent(staturdayCk);
 			staturdayLayout.addComponent(staturdayLbl);
@@ -324,6 +498,8 @@ public class RecurringActivityCustomField extends CustomField {
 
 		private VerticalLayout constructLayoutForMonthly(
 				final MeetingWithBLOBs meeting) {
+			final MonthlyEventFollowDay monthDayEvent = new MonthlyEventFollowDay();
+			final MonthlyEventFollowKindDay monthKindDayEvent = new MonthlyEventFollowKindDay();
 			final CheckBox followKindDateCk = new CheckBox();
 			followKindDateCk.setImmediate(true);
 			followKindDateCk.setValue(false);
@@ -335,32 +511,82 @@ public class RecurringActivityCustomField extends CustomField {
 			final CheckBox followDayCheckbox = new CheckBox();
 			followDayCheckbox.setValue(false);
 			followDayCheckbox.setImmediate(true);
-			followDayCheckbox.addListener(new ClickListener() {
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public void buttonClick(ClickEvent arg0) {
-					if ((Boolean) followKindDateCk.getValue()) {
-						followKindDateCk.setValue(false);
-						followDayCheckbox.setValue(true);
-					}
-
-				}
-			});
 			opptionFollowDayLayout.addComponent(followDayCheckbox);
 			Label ondayLbl = new Label("On day");
 			ondayLbl.setWidth("50px");
 			opptionFollowDayLayout.addComponent(ondayLbl);
 			opptionFollowDayLayout.setComponentAlignment(ondayLbl,
 					Alignment.MIDDLE_LEFT);
-			opptionFollowDayLayout.addComponent(new DateInMonth());
+			final DateInMonth dateInMonthComboBox = new DateInMonth();
+			dateInMonthComboBox.setImmediate(true);
+			dateInMonthComboBox.addListener(new ValueChangeListener() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void valueChange(
+						com.vaadin.data.Property.ValueChangeEvent arg0) {
+					if ((Boolean) followDayCheckbox.getValue()) {
+						monthDayEvent.setNumday(Integer
+								.parseInt((String) dateInMonthComboBox
+										.getValue()));
+						meeting.setRecurrencetype("MonthlyEventFollowDay");
+						meeting.setRecurrenceinfo(JsonDeSerializer
+								.toJson(monthDayEvent));
+					}
+				}
+			});
+			opptionFollowDayLayout.addComponent(dateInMonthComboBox);
 			Label ofEveryLbl = new Label("Of every");
 			opptionFollowDayLayout.addComponent(ofEveryLbl);
 			opptionFollowDayLayout.setComponentAlignment(ofEveryLbl,
 					Alignment.MIDDLE_LEFT);
-			TextField tf = new TextField();
+			final TextField tf = new TextField();
 			tf.setImmediate(true);
 			tf.setWidth("50px");
+			tf.setValue("1");
+			tf.addListener(new ValueChangeListener() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void valueChange(
+						com.vaadin.data.Property.ValueChangeEvent arg0) {
+					try {
+						if ((Boolean) followDayCheckbox.getValue()) {
+							monthDayEvent.setMonthStep(Integer
+									.parseInt((String) tf.getValue()));
+							meeting.setRecurrencetype("MonthlyEventFollowDay");
+							meeting.setRecurrenceinfo(JsonDeSerializer
+									.toJson(monthDayEvent));
+						}
+					} catch (Exception e) {
+						RecurringActivityCustomField.this.getWindow()
+								.showNotification("Please input numberic");
+					}
+				}
+			});
+			followDayCheckbox.addListener(new ClickListener() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void buttonClick(ClickEvent arg0) {
+					followKindDateCk.setValue(false);
+					try {
+						if ((Boolean) followDayCheckbox.getValue()) {
+							meeting.setRecurrencetype("MonthlyEventFollowDay");
+							monthDayEvent.setNumday(Integer
+									.parseInt((String) dateInMonthComboBox
+											.getValue()));
+							monthDayEvent.setMonthStep(Integer
+									.parseInt((String) (tf.getValue())));
+							meeting.setRecurrenceinfo(JsonDeSerializer
+									.toJson(monthDayEvent));
+						}
+					} catch (Exception e) {
+						RecurringActivityCustomField.this.getWindow()
+								.showNotification("Please input numberic");
+					}
+				}
+			});
 			opptionFollowDayLayout.addComponent(tf);
 			Label monthLbl = new Label("months");
 			opptionFollowDayLayout.addComponent(monthLbl);
@@ -370,17 +596,6 @@ public class RecurringActivityCustomField extends CustomField {
 
 			HorizontalLayout opptionFollowKindDateLayout = new HorizontalLayout();
 			opptionFollowKindDateLayout.setSpacing(true);
-			followKindDateCk.addListener(new ClickListener() {
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public void buttonClick(ClickEvent arg0) {
-					if ((Boolean) followDayCheckbox.getValue()) {
-						followDayCheckbox.setValue(false);
-						followKindDateCk.setValue(true);
-					}
-				}
-			});
 			opptionFollowKindDateLayout.addComponent(followKindDateCk);
 			Label onLbel = new Label("On");
 			onLbel.setWidth("50px");
@@ -388,28 +603,340 @@ public class RecurringActivityCustomField extends CustomField {
 			opptionFollowKindDateLayout.setComponentAlignment(onLbel,
 					Alignment.MIDDLE_LEFT);
 
-			ValueComboBox sttComboBox = new ValueComboBox();
+			final ValueComboBox sttComboBox = new ValueComboBox();
 			sttComboBox.setCaption(null);
 			sttComboBox.setWidth("60px");
 			sttComboBox.setNullSelectionAllowed(false);
+			sttComboBox.setImmediate(true);
 			sttComboBox.loadData(new String[] { "First", "Second", "Third",
 					"Fourth", "Fifth" });
+			sttComboBox.addListener(new ValueChangeListener() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void valueChange(
+						com.vaadin.data.Property.ValueChangeEvent arg0) {
+					if ((Boolean) followKindDateCk.getValue()) {
+						if (arg0.getProperty().getValue().equals("First")) {
+							monthKindDayEvent.setHappenIn(1);
+						} else if (arg0.getProperty().getValue()
+								.equals("Second")) {
+							monthKindDayEvent.setHappenIn(2);
+						} else if (arg0.getProperty().getValue()
+								.equals("Third")) {
+							monthKindDayEvent.setHappenIn(3);
+						} else if (arg0.getProperty().getValue()
+								.equals("Fourth")) {
+							monthKindDayEvent.setHappenIn(4);
+						} else if (arg0.getProperty().getValue()
+								.equals("Fifth")) {
+							monthKindDayEvent.setHappenIn(5);
+						}
+						meeting.setRecurrencetype("MonthlyEventFollowKindDay");
+						meeting.setRecurrenceinfo(JsonDeSerializer
+								.toJson(monthKindDayEvent));
+					}
+				}
+			});
 
 			opptionFollowKindDateLayout.addComponent(sttComboBox);
-			opptionFollowKindDateLayout.addComponent(new KindDateInWeek());
+
+			final KindDateInWeek kindDateInWeek = new KindDateInWeek();
+			kindDateInWeek.setImmediate(true);
+			kindDateInWeek.addListener(new ValueChangeListener() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void valueChange(
+						com.vaadin.data.Property.ValueChangeEvent arg0) {
+					if ((Boolean) followKindDateCk.getValue()) {
+						monthKindDayEvent.setKindOfDay((String) kindDateInWeek
+								.getValue());
+						meeting.setRecurrencetype("MonthlyEventFollowKindDay");
+						meeting.setRecurrenceinfo(JsonDeSerializer
+								.toJson(monthKindDayEvent));
+					}
+				}
+			});
+			opptionFollowKindDateLayout.addComponent(kindDateInWeek);
 			Label ofEveryLbl2 = new Label("Of every");
 			opptionFollowKindDateLayout.addComponent(ofEveryLbl2);
 			opptionFollowKindDateLayout.setComponentAlignment(ofEveryLbl2,
 					Alignment.MIDDLE_LEFT);
-			TextField tfMonths = new TextField();
+			final TextField tfMonths = new TextField();
 			tfMonths.setImmediate(true);
 			tfMonths.setWidth("50px");
+			tfMonths.setValue("1");
+			tfMonths.addListener(new ValueChangeListener() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void valueChange(
+						com.vaadin.data.Property.ValueChangeEvent arg0) {
+					try {
+						if ((Boolean) followKindDateCk.getValue()) {
+							monthKindDayEvent.setMonthStep(Integer
+									.parseInt((String) tfMonths.getValue()));
+							meeting.setRecurrencetype("MonthlyEventFollowKindDay");
+							meeting.setRecurrenceinfo(JsonDeSerializer
+									.toJson(monthKindDayEvent));
+						}
+					} catch (Exception e) {
+						RecurringActivityCustomField.this.getWindow()
+								.showNotification("Please input numberic");
+					}
+				}
+			});
+			followKindDateCk.addListener(new ClickListener() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void buttonClick(ClickEvent arg0) {
+					followDayCheckbox.setValue(false);
+					try {
+						if ((Boolean) followKindDateCk.getValue()) {
+							meeting.setRecurrencetype("MonthlyEventFollowKindDay");
+							if (sttComboBox.getValue().equals("Frist")) {
+								monthKindDayEvent.setHappenIn(1);
+							} else if (sttComboBox.getValue().equals("Second")) {
+								monthKindDayEvent.setHappenIn(2);
+							} else if (sttComboBox.getValue().equals("Third")) {
+								monthKindDayEvent.setHappenIn(3);
+							} else if (sttComboBox.getValue().equals("Fourth")) {
+								monthKindDayEvent.setHappenIn(4);
+							} else if (sttComboBox.getValue().equals("Fifth")) {
+								monthKindDayEvent.setHappenIn(5);
+							}
+							monthKindDayEvent
+									.setKindOfDay((String) kindDateInWeek
+											.getValue());
+							monthKindDayEvent.setMonthStep(Integer
+									.parseInt((String) tfMonths.getValue()));
+							meeting.setRecurrenceinfo(JsonDeSerializer
+									.toJson(monthKindDayEvent));
+						}
+					} catch (Exception e) {
+						RecurringActivityCustomField.this.getWindow()
+								.showNotification("Please input numberic");
+					}
+				}
+			});
+
 			opptionFollowKindDateLayout.addComponent(tfMonths);
 			Label monthLbl2 = new Label("months");
 			opptionFollowKindDateLayout.addComponent(monthLbl2);
 			opptionFollowKindDateLayout.setComponentAlignment(monthLbl2,
 					Alignment.MIDDLE_LEFT);
 			layout.addComponent(opptionFollowKindDateLayout);
+
+			return layout;
+		}
+
+		private VerticalLayout constructLayoutForYearly(
+				final MeetingWithBLOBs meeting) {
+			final YearlyEventFollowEveryMonth yearlyFollowEveryMonthEvent = new YearlyEventFollowEveryMonth();
+			final YearlyEventFollowAdvanceSettingMonth yearlyAdSttFollowEveryMonthEvent = new YearlyEventFollowAdvanceSettingMonth();
+			VerticalLayout layout = new VerticalLayout();
+			layout.setSpacing(true);
+
+			final CheckBox kindMonthCheckBox = new CheckBox();
+			kindMonthCheckBox.setImmediate(true);
+			kindMonthCheckBox.setValue(false);
+			final CheckBox kindAdvanceSettingMonthCheckBox = new CheckBox();
+			kindAdvanceSettingMonthCheckBox.setImmediate(true);
+			kindAdvanceSettingMonthCheckBox.setValue(false);
+
+			HorizontalLayout kindMonthLayout = new HorizontalLayout();
+			kindMonthLayout.setSpacing(true);
+			kindMonthLayout.addComponent(kindMonthCheckBox);
+			kindMonthLayout.setComponentAlignment(kindMonthCheckBox,
+					Alignment.MIDDLE_LEFT);
+			Label row1Labl = new Label("Of every");
+			kindMonthLayout.addComponent(row1Labl);
+			kindMonthLayout.setComponentAlignment(row1Labl,
+					Alignment.MIDDLE_LEFT);
+			final KindMonth kindMonthComboBox = new KindMonth();
+			kindMonthComboBox.setImmediate(true);
+			kindMonthComboBox.addListener(new ValueChangeListener() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void valueChange(
+						com.vaadin.data.Property.ValueChangeEvent arg0) {
+					if ((Boolean) kindMonthCheckBox.getValue()) {
+						yearlyFollowEveryMonthEvent
+								.setMonth((String) kindMonthComboBox.getValue());
+						meeting.setRecurrenceinfo(JsonDeSerializer
+								.toJson(yearlyFollowEveryMonthEvent));
+					}
+				}
+			});
+			kindMonthLayout.addComponent(kindMonthComboBox);
+			kindMonthLayout.setComponentAlignment(kindMonthComboBox,
+					Alignment.MIDDLE_LEFT);
+			final DateInMonth dateInMonth = new DateInMonth();
+			dateInMonth.setImmediate(true);
+			dateInMonth.addListener(new ValueChangeListener() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void valueChange(
+						com.vaadin.data.Property.ValueChangeEvent arg0) {
+					if ((Boolean) kindMonthCheckBox.getValue()) {
+						yearlyFollowEveryMonthEvent.setDay(Integer
+								.parseInt((String) dateInMonth.getValue()));
+						meeting.setRecurrenceinfo(JsonDeSerializer
+								.toJson(yearlyFollowEveryMonthEvent));
+					}
+				}
+			});
+			kindMonthLayout.addComponent(dateInMonth);
+			kindMonthLayout.setComponentAlignment(dateInMonth,
+					Alignment.MIDDLE_LEFT);
+			layout.addComponent(kindMonthLayout);
+
+			kindMonthCheckBox.addListener(new ClickListener() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void buttonClick(ClickEvent arg0) {
+					kindAdvanceSettingMonthCheckBox.setValue(false);
+					if ((Boolean) kindMonthCheckBox.getValue()) {
+						meeting.setRecurrencetype("YearlyEventFollowEveryMonth");
+						yearlyFollowEveryMonthEvent.setDay(Integer
+								.parseInt((String) dateInMonth.getValue()));
+						yearlyFollowEveryMonthEvent
+								.setMonth((String) kindMonthComboBox.getValue());
+						meeting.setRecurrenceinfo(JsonDeSerializer
+								.toJson(yearlyFollowEveryMonthEvent));
+					}
+				}
+			});
+			HorizontalLayout kindAdvanceSettingMonthLayout = new HorizontalLayout();
+			kindAdvanceSettingMonthLayout.setSpacing(true);
+			kindAdvanceSettingMonthLayout
+					.addComponent(kindAdvanceSettingMonthCheckBox);
+			kindAdvanceSettingMonthLayout.setComponentAlignment(
+					kindAdvanceSettingMonthCheckBox, Alignment.MIDDLE_LEFT);
+			Label onLbl = new Label("On");
+			kindAdvanceSettingMonthLayout.addComponent(onLbl);
+			kindAdvanceSettingMonthLayout.setComponentAlignment(onLbl,
+					Alignment.MIDDLE_LEFT);
+
+			final ValueComboBox sttComboBox = new ValueComboBox();
+			sttComboBox.setCaption(null);
+			sttComboBox.setWidth("60px");
+			sttComboBox.setNullSelectionAllowed(false);
+			sttComboBox.setImmediate(true);
+			sttComboBox.loadData(new String[] { "First", "Second", "Third",
+					"Fourth", "Fifth" });
+			sttComboBox.setValue("First");
+			sttComboBox.addListener(new ValueChangeListener() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void valueChange(
+						com.vaadin.data.Property.ValueChangeEvent arg0) {
+					if ((Boolean) kindAdvanceSettingMonthCheckBox.getValue()) {
+						if (arg0.getProperty().getValue().equals("First")) {
+							yearlyAdSttFollowEveryMonthEvent.setHappenIn(1);
+						} else if (arg0.getProperty().getValue()
+								.equals("Second")) {
+							yearlyAdSttFollowEveryMonthEvent.setHappenIn(2);
+						} else if (arg0.getProperty().getValue()
+								.equals("Third")) {
+							yearlyAdSttFollowEveryMonthEvent.setHappenIn(3);
+						} else if (arg0.getProperty().getValue()
+								.equals("Fourth")) {
+							yearlyAdSttFollowEveryMonthEvent.setHappenIn(4);
+						} else if (arg0.getProperty().getValue()
+								.equals("Fifth")) {
+							yearlyAdSttFollowEveryMonthEvent.setHappenIn(5);
+						}
+						meeting.setRecurrenceinfo(JsonDeSerializer
+								.toJson(yearlyAdSttFollowEveryMonthEvent));
+					}
+				}
+			});
+			kindAdvanceSettingMonthLayout.addComponent(sttComboBox);
+			kindAdvanceSettingMonthLayout.setComponentAlignment(sttComboBox,
+					Alignment.MIDDLE_LEFT);
+			final KindDateInWeek kindInDate = new KindDateInWeek();
+			kindInDate.setImmediate(true);
+			kindInDate.setNullSelectionAllowed(false);
+			kindInDate.addListener(new ValueChangeListener() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void valueChange(
+						com.vaadin.data.Property.ValueChangeEvent arg0) {
+					if ((Boolean) kindAdvanceSettingMonthCheckBox.getValue()) {
+						yearlyAdSttFollowEveryMonthEvent
+								.setKindOfDay((String) kindInDate.getValue());
+						meeting.setRecurrenceinfo(JsonDeSerializer
+								.toJson(yearlyAdSttFollowEveryMonthEvent));
+					}
+				}
+			});
+			kindAdvanceSettingMonthLayout.addComponent(kindInDate);
+			kindAdvanceSettingMonthLayout.setComponentAlignment(kindInDate,
+					Alignment.MIDDLE_LEFT);
+			Label ofLbl = new Label("of");
+			kindAdvanceSettingMonthLayout.addComponent(ofLbl);
+			kindAdvanceSettingMonthLayout.setComponentAlignment(ofLbl,
+					Alignment.MIDDLE_LEFT);
+
+			final KindMonth kindMonthRow2 = new KindMonth();
+			kindMonthRow2.setImmediate(true);
+			kindMonthRow2.setNullSelectionAllowed(false);
+			kindMonthRow2.addListener(new ValueChangeListener() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void valueChange(
+						com.vaadin.data.Property.ValueChangeEvent arg0) {
+					if ((Boolean) kindAdvanceSettingMonthCheckBox.getValue()) {
+						yearlyAdSttFollowEveryMonthEvent
+								.setMonth((String) kindMonthRow2.getValue());
+						meeting.setRecurrenceinfo(JsonDeSerializer
+								.toJson(yearlyAdSttFollowEveryMonthEvent));
+					}
+				}
+			});
+			kindAdvanceSettingMonthCheckBox.addListener(new ClickListener() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void buttonClick(ClickEvent arg0) {
+					kindMonthCheckBox.setValue(false);
+					if ((Boolean) kindAdvanceSettingMonthCheckBox.getValue()) {
+						meeting.setRecurrencetype("YearlyEventFollowAdvanceSettingMonth");
+						yearlyAdSttFollowEveryMonthEvent
+								.setMonth((String) kindMonthRow2.getValue());
+						yearlyAdSttFollowEveryMonthEvent
+								.setKindOfDay((String) kindInDate.getValue());
+						System.out.print(sttComboBox.getValue());
+						if (((String) sttComboBox.getValue()).equals("First")) {
+							yearlyAdSttFollowEveryMonthEvent.setHappenIn(1);
+						} else if (sttComboBox.getValue().equals("Second")) {
+							yearlyAdSttFollowEveryMonthEvent.setHappenIn(2);
+						} else if (sttComboBox.getValue().equals("Third")) {
+							yearlyAdSttFollowEveryMonthEvent.setHappenIn(3);
+						} else if (sttComboBox.getValue().equals("Fourth")) {
+							yearlyAdSttFollowEveryMonthEvent.setHappenIn(4);
+						} else if (sttComboBox.getValue().equals("Fifth")) {
+							yearlyAdSttFollowEveryMonthEvent.setHappenIn(5);
+						}
+						meeting.setRecurrenceinfo(JsonDeSerializer
+								.toJson(yearlyAdSttFollowEveryMonthEvent));
+					}
+				}
+			});
+
+			kindAdvanceSettingMonthLayout.addComponent(kindMonthRow2);
+			kindAdvanceSettingMonthLayout.setComponentAlignment(kindMonthRow2,
+					Alignment.MIDDLE_LEFT);
+			layout.addComponent(kindAdvanceSettingMonthLayout);
 
 			return layout;
 		}
@@ -428,8 +955,10 @@ public class RecurringActivityCustomField extends CustomField {
 			public DateInMonth() {
 				super();
 				setCaption(null);
+				this.setNullSelectionAllowed(false);
 				this.setWidth("60px");
 				this.loadData(DATEINMONTHDATA);
+				this.setValue("1");
 			}
 		}
 
@@ -442,8 +971,26 @@ public class RecurringActivityCustomField extends CustomField {
 			public KindDateInWeek() {
 				super();
 				setCaption(null);
+				this.setNullSelectionAllowed(false);
 				this.setWidth("90px");
 				this.loadData(KINDDATEINWEEK);
+				this.setValue("Sunday");
+			}
+		}
+
+		private class KindMonth extends ValueComboBox {
+			private static final long serialVersionUID = 1L;
+			private String[] DATA = new String[] { "January", "February",
+					"March", "April", "May", "June", "July", "August",
+					"September", "October", "November", "December" };
+
+			public KindMonth() {
+				super();
+				setCaption(null);
+				this.setNullSelectionAllowed(false);
+				this.setWidth("90px");
+				this.loadData(DATA);
+				this.setValue("January");
 			}
 		}
 

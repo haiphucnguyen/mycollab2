@@ -261,7 +261,7 @@ public class CrmToolbar extends CssLayout implements View {
 		final ButtonLink newAccountBtn = new ButtonLink(
 				LocalizationHelper
 						.getMessage(CrmCommonI18nEnum.TOOLBAR_ACCOUNT_NEW_ACTION),
-				listener);
+				listener, false);
 		newAccountBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_ACCOUNT));
 		newAccountBtn.setIcon(MyCollabResource
@@ -271,7 +271,7 @@ public class CrmToolbar extends CssLayout implements View {
 		final ButtonLink newContactBtn = new ButtonLink(
 				LocalizationHelper
 						.getMessage(CrmCommonI18nEnum.TOOLBAR_CONTACT_NEW_ACTION),
-				listener);
+				listener, false);
 		newContactBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_CONTACT));
 		newContactBtn.setIcon(MyCollabResource
@@ -281,7 +281,7 @@ public class CrmToolbar extends CssLayout implements View {
 		final ButtonLink newCampaignBtn = new ButtonLink(
 				LocalizationHelper
 						.getMessage(CrmCommonI18nEnum.TOOLBAR_CAMPAIGN_NEW_ACTION),
-				listener);
+				listener, false);
 		newCampaignBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_CAMPAIGN));
 		newCampaignBtn.setIcon(MyCollabResource
@@ -291,7 +291,7 @@ public class CrmToolbar extends CssLayout implements View {
 		final ButtonLink newOpportunityBtn = new ButtonLink(
 				LocalizationHelper
 						.getMessage(CrmCommonI18nEnum.TOOLBAR_OPPORTUNITY_NEW_ACTION),
-				listener);
+				listener, false);
 		newOpportunityBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_OPPORTUNITY));
 		newOpportunityBtn.setIcon(MyCollabResource
@@ -301,7 +301,7 @@ public class CrmToolbar extends CssLayout implements View {
 		final ButtonLink newLeadBtn = new ButtonLink(
 				LocalizationHelper
 						.getMessage(CrmCommonI18nEnum.TOOLBAR_LEAD_NEW_ACTION),
-				listener);
+				listener, false);
 		newLeadBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_LEAD));
 		newLeadBtn.setIcon(MyCollabResource
@@ -311,7 +311,7 @@ public class CrmToolbar extends CssLayout implements View {
 		final ButtonLink newCaseBtn = new ButtonLink(
 				LocalizationHelper
 						.getMessage(CrmCommonI18nEnum.TOOLBAR_CASE_NEW_ACTION),
-				listener);
+				listener, false);
 		newCaseBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_CASE));
 		newCaseBtn.setIcon(MyCollabResource
@@ -321,7 +321,7 @@ public class CrmToolbar extends CssLayout implements View {
 		final ButtonLink newTaskBtn = new ButtonLink(
 				LocalizationHelper
 						.getMessage(CrmCommonI18nEnum.TOOLBAR_TASK_NEW_ACTION),
-				listener);
+				listener, false);
 		newTaskBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_TASK));
 		newTaskBtn.setIcon(MyCollabResource
@@ -331,7 +331,7 @@ public class CrmToolbar extends CssLayout implements View {
 		final ButtonLink newCallBtn = new ButtonLink(
 				LocalizationHelper
 						.getMessage(CrmCommonI18nEnum.TOOLBAR_CALL_NEW_ACTION),
-				listener);
+				listener, false);
 		newCallBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_CALL));
 		newCallBtn.setIcon(MyCollabResource
@@ -341,7 +341,7 @@ public class CrmToolbar extends CssLayout implements View {
 		final ButtonLink newMeetingBtn = new ButtonLink(
 				LocalizationHelper
 						.getMessage(CrmCommonI18nEnum.TOOLBAR_MEETING_NEW_ACTION),
-				listener);
+				listener, false);
 		newMeetingBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_MEETING));
 		newMeetingBtn.setIcon(MyCollabResource
