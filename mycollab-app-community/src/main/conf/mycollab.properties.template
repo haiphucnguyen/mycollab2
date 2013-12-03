@@ -1,4 +1,9 @@
 #=====================================================
+# You can visit link http://wiki.mycollab.com/Configuration
+# to get all configuration parameters and their meanings
+#=====================================================
+
+#=====================================================
 #    SITE CONFIGURATION
 #=====================================================
 site.name=${sitename}
@@ -32,7 +37,7 @@ mail.isTLS=${smtpTLSEnable}
 # MyCollab running. It just collect java stack trace not
 # any end user sensitive data. In case you are serious not
 # want to send report automatically to our team, you can
-# leave this field to empty   
+# leave this field to empty
 #=====================================================
 error.sendTo=support@mycollab.com
 

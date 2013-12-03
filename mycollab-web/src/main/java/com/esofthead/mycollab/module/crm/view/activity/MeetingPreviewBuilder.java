@@ -19,7 +19,7 @@ package com.esofthead.mycollab.module.crm.view.activity;
 import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.form.view.DynaFormLayout;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
-import com.esofthead.mycollab.module.crm.domain.Meeting;
+import com.esofthead.mycollab.module.crm.domain.MeetingWithBLOBs;
 import com.esofthead.mycollab.module.crm.domain.SimpleMeeting;
 import com.esofthead.mycollab.module.crm.ui.components.NoteListItems;
 import com.esofthead.mycollab.module.crm.ui.components.RelatedReadItemField;
@@ -43,7 +43,7 @@ public class MeetingPreviewBuilder extends VerticalLayout {
 
 	protected SimpleMeeting meeting;
 
-	protected AdvancedPreviewBeanForm<Meeting> previewForm;
+	protected AdvancedPreviewBeanForm<MeetingWithBLOBs> previewForm;
 	protected NoteListItems noteListItems;
 
 	protected void initRelatedComponent() {
@@ -52,7 +52,7 @@ public class MeetingPreviewBuilder extends VerticalLayout {
 
 	public void previewItem(SimpleMeeting meeting) {
 		this.meeting = meeting;
-		previewForm.setItemDataSource(new BeanItem<Meeting>(meeting));
+		previewForm.setItemDataSource(new BeanItem<SimpleMeeting>(meeting));
 
 		displayNotes();
 	}
@@ -61,7 +61,7 @@ public class MeetingPreviewBuilder extends VerticalLayout {
 		noteListItems.showNotes(CrmTypeConstants.MEETING, meeting.getId());
 	}
 
-	public AdvancedPreviewBeanForm<Meeting> getPreviewForm() {
+	public AdvancedPreviewBeanForm<MeetingWithBLOBs> getPreviewForm() {
 		return previewForm;
 	}
 
@@ -112,7 +112,7 @@ public class MeetingPreviewBuilder extends VerticalLayout {
 
 			initRelatedComponent();
 
-			previewForm = new AdvancedPreviewBeanForm<Meeting>() {
+			previewForm = new AdvancedPreviewBeanForm<MeetingWithBLOBs>() {
 				@Override
 				public void setItemDataSource(Item newDataSource) {
 					this.setFormLayoutFactory(new DynaFormLayout(
@@ -191,7 +191,7 @@ public class MeetingPreviewBuilder extends VerticalLayout {
 
 		public PrintView() {
 			initRelatedComponent();
-			previewForm = new AdvancedPreviewBeanForm<Meeting>() {
+			previewForm = new AdvancedPreviewBeanForm<MeetingWithBLOBs>() {
 				@Override
 				public void setItemDataSource(Item newDataSource) {
 					this.setFormLayoutFactory(new FormLayoutFactory());

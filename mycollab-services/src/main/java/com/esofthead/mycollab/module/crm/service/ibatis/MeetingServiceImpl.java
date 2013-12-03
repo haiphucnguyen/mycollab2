@@ -32,7 +32,7 @@ import com.esofthead.mycollab.core.persistence.service.DefaultService;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.dao.MeetingMapper;
 import com.esofthead.mycollab.module.crm.dao.MeetingMapperExt;
-import com.esofthead.mycollab.module.crm.domain.Meeting;
+import com.esofthead.mycollab.module.crm.domain.MeetingWithBLOBs;
 import com.esofthead.mycollab.module.crm.domain.SimpleMeeting;
 import com.esofthead.mycollab.module.crm.domain.criteria.MeetingSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.EventService;
@@ -45,8 +45,8 @@ import com.esofthead.mycollab.schedule.email.crm.MeetingRelayEmailNotificationAc
 @Auditable(module = "Crm", type = "Meeting")
 @Watchable(type = CrmTypeConstants.MEETING, userFieldName = "createduser", emailHandlerBean = MeetingRelayEmailNotificationAction.class)
 public class MeetingServiceImpl extends
-		DefaultService<Integer, Meeting, MeetingSearchCriteria> implements
-		MeetingService {
+		DefaultService<Integer, MeetingWithBLOBs, MeetingSearchCriteria>
+		implements MeetingService {
 
 	@Autowired
 	protected MeetingMapper meetingMapper;
@@ -55,7 +55,7 @@ public class MeetingServiceImpl extends
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public ICrudGenericDAO<Integer, Meeting> getCrudMapper() {
+	public ICrudGenericDAO<Integer, MeetingWithBLOBs> getCrudMapper() {
 		return meetingMapper;
 	}
 
@@ -70,14 +70,14 @@ public class MeetingServiceImpl extends
 	}
 
 	@Override
-	public int saveWithSession(Meeting record, String username) {
+	public int saveWithSession(MeetingWithBLOBs record, String username) {
 		int result = super.saveWithSession(record, username);
 		CacheUtils.cleanCaches(record.getSaccountid(), EventService.class);
 		return result;
 	}
 
 	@Override
-	public int updateWithSession(Meeting record, String username) {
+	public int updateWithSession(MeetingWithBLOBs record, String username) {
 		int result = super.updateWithSession(record, username);
 		CacheUtils.cleanCaches(record.getSaccountid(), EventService.class);
 		return result;
@@ -105,14 +105,14 @@ public class MeetingServiceImpl extends
 	}
 
 	@Override
-	public void massUpdateWithSession(Meeting record,
+	public void massUpdateWithSession(MeetingWithBLOBs record,
 			List<Integer> primaryKeys, int accountId) {
 		super.massUpdateWithSession(record, primaryKeys, accountId);
 		CacheUtils.cleanCaches(accountId, EventService.class);
 	}
 
 	@Override
-	public void updateBySearchCriteria(Meeting record,
+	public void updateBySearchCriteria(MeetingWithBLOBs record,
 			MeetingSearchCriteria searchCriteria) {
 		super.updateBySearchCriteria(record, searchCriteria);
 		CacheUtils.cleanCaches((Integer) searchCriteria.getSaccountid()

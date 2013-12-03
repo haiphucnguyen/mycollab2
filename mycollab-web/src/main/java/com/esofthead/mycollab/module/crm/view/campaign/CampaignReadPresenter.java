@@ -38,7 +38,7 @@ import com.esofthead.mycollab.module.crm.domain.CampaignLead;
 import com.esofthead.mycollab.module.crm.domain.CampaignWithBLOBs;
 import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.module.crm.domain.Lead;
-import com.esofthead.mycollab.module.crm.domain.Meeting;
+import com.esofthead.mycollab.module.crm.domain.MeetingWithBLOBs;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
@@ -185,7 +185,7 @@ public class CampaignReadPresenter extends
 									new ActivityEvent.TaskEdit(
 											CampaignReadPresenter.this, task));
 						} else if (itemId.equals("meeting")) {
-							Meeting meeting = new Meeting();
+							MeetingWithBLOBs meeting = new MeetingWithBLOBs();
 							meeting.setType(CrmTypeConstants.CAMPAIGN);
 							meeting.setTypeid(view.getItem().getId());
 							EventBus.getInstance()

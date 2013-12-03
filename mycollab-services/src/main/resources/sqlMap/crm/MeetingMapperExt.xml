@@ -25,6 +25,7 @@
             m_crm_meeting.createdUser, m_crm_meeting.sAccountId,
             m_crm_meeting.location, m_crm_meeting.description,
             m_crm_meeting.isRecurrence, m_crm_meeting.recurrenceType,
+            m_crm_meeting.recurrenceInfo,
             m_crm_meeting.recurrenceStartDate,
             m_crm_meeting.recurrenceEndDate, m_crm_meeting.contactType,
             m_crm_meeting.contactTypeId, m_crm_meeting.isClosed,

@@ -34,7 +34,7 @@ import com.esofthead.mycollab.module.crm.domain.CallWithBLOBs;
 import com.esofthead.mycollab.module.crm.domain.CaseWithBLOBs;
 import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.module.crm.domain.ContactCase;
-import com.esofthead.mycollab.module.crm.domain.Meeting;
+import com.esofthead.mycollab.module.crm.domain.MeetingWithBLOBs;
 import com.esofthead.mycollab.module.crm.domain.SimpleCase;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.Task;
@@ -175,7 +175,7 @@ public class CaseReadPresenter extends CrmGenericPresenter<CaseReadView> {
 									new ActivityEvent.TaskEdit(
 											CaseReadPresenter.this, task));
 						} else if (itemId.equals("meeting")) {
-							Meeting meeting = new Meeting();
+							MeetingWithBLOBs meeting = new MeetingWithBLOBs();
 							meeting.setType(CrmTypeConstants.CASE);
 							meeting.setTypeid(view.getItem().getId());
 							EventBus.getInstance().fireEvent(

@@ -25,7 +25,7 @@ import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.crm.data.CustomViewScreenData;
 import com.esofthead.mycollab.module.crm.data.NotificationSettingScreenData;
 import com.esofthead.mycollab.module.crm.domain.CallWithBLOBs;
-import com.esofthead.mycollab.module.crm.domain.Meeting;
+import com.esofthead.mycollab.module.crm.domain.MeetingWithBLOBs;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.SimpleCall;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
@@ -347,15 +347,15 @@ public class CrmController implements IController {
 						ActivityRootPresenter presenter = PresenterResolver
 								.getPresenter(ActivityRootPresenter.class);
 
-						Meeting meeting = null;
+						MeetingWithBLOBs meeting = null;
 						if (event.getData() instanceof Integer) {
 							MeetingService meetingService = ApplicationContextUtil
 									.getSpringBean(MeetingService.class);
 							meeting = meetingService.findById(
 									(Integer) event.getData(),
 									AppContext.getAccountId());
-						} else if (event.getData() instanceof Meeting) {
-							meeting = (Meeting) event.getData();
+						} else if (event.getData() instanceof MeetingWithBLOBs) {
+							meeting = (MeetingWithBLOBs) event.getData();
 						} else {
 							throw new MyCollabException(
 									"Do not support event param: "
