@@ -19,8 +19,8 @@ package com.esofthead.mycollab.module.crm.view.activity;
 import com.esofthead.mycollab.form.view.builder.CheckBoxDynaFieldBuilder;
 import com.esofthead.mycollab.form.view.builder.DateTimeDynaFieldBuilder;
 import com.esofthead.mycollab.form.view.builder.DynaSectionBuilder;
-import com.esofthead.mycollab.form.view.builder.TextDynaFieldBuilder;
 import com.esofthead.mycollab.form.view.builder.TextAreaDynaFieldBuilder;
+import com.esofthead.mycollab.form.view.builder.TextDynaFieldBuilder;
 import com.esofthead.mycollab.form.view.builder.type.DynaForm;
 import com.esofthead.mycollab.form.view.builder.type.DynaSection;
 import com.esofthead.mycollab.form.view.builder.type.DynaSection.LayoutType;
@@ -55,9 +55,9 @@ public class MeetingDefaultFormLayoutFactory {
 		meetingSection.addField(new TextDynaFieldBuilder()
 				.fieldName("location").displayName("Location").fieldIndex(5)
 				.build());
-//		meetingSection.addField(new CheckBoxDynaFieldBuilder()
-//				.fieldName("isrecurrence").displayName("Recurring Activity")
-//				.fieldIndex(6).build());
+		meetingSection.addField(new CheckBoxDynaFieldBuilder()
+				.fieldName("isrecurrence").displayName("Recurring Activity")
+				.fieldIndex(6).build());
 
 		defaultForm.addSection(meetingSection);
 

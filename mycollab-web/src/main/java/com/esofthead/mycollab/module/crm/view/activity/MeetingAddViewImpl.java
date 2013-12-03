@@ -16,8 +16,6 @@
  */
 package com.esofthead.mycollab.module.crm.view.activity;
 
-import org.vaadin.addon.customfield.CustomField;
-
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.MeetingWithBLOBs;
 import com.esofthead.mycollab.module.crm.ui.components.RelatedEditItemField;
@@ -31,7 +29,6 @@ import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Alignment;
-import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Layout;
@@ -146,19 +143,6 @@ public class MeetingAddViewImpl extends AbstractView implements MeetingAddView {
 	@Override
 	public HasEditFormHandlers<MeetingWithBLOBs> getEditFormHandlers() {
 		return editForm;
-	}
-
-	private class RecurringSettingPanel extends CustomField {
-		private static final long serialVersionUID = 1L;
-
-		public RecurringSettingPanel() {
-			CheckBox isRecurringBox = new CheckBox();
-		}
-
-		@Override
-		public Class<?> getType() {
-			return Object.class;
-		}
 	}
 
 	private class MeetingStatusComboBox extends ValueComboBox {

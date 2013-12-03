@@ -30,6 +30,13 @@ import org.slf4j.LoggerFactory;
 import com.esofthead.mycollab.core.arguments.DateTimeSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
+import com.esofthead.mycollab.core.schedule.recurring.DailyEvent;
+import com.esofthead.mycollab.core.schedule.recurring.MonthlyEventFollowDay;
+import com.esofthead.mycollab.core.schedule.recurring.MonthlyEventFollowKindDay;
+import com.esofthead.mycollab.core.schedule.recurring.WeeklyEvent;
+import com.esofthead.mycollab.core.schedule.recurring.YearlyEventFollowAdvanceSettingMonth;
+import com.esofthead.mycollab.core.schedule.recurring.YearlyEventFollowEveryMonth;
+import com.esofthead.mycollab.core.utils.JsonDeSerializer;
 import com.esofthead.mycollab.module.crm.domain.SimpleMeeting;
 import com.esofthead.mycollab.module.crm.domain.criteria.MeetingSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.MeetingService;
@@ -72,6 +79,8 @@ public class ActivityEventProvider implements CalendarEventProvider {
 						searchCriteria, 0, Integer.MAX_VALUE));
 		log.debug("There are " + crmEvents.size() + " events from " + startDate
 				+ " to " + endDate);
+
+		filterListEventRecurringActivity(crmEvents, startDate, endDate);
 
 		if (crmEvents != null && crmEvents.size() > 0) {
 			for (SimpleMeeting crmEvent : crmEvents) {
@@ -131,6 +140,49 @@ public class ActivityEventProvider implements CalendarEventProvider {
 		}
 
 		return events;
+	}
+
+	private void filterListEventRecurringActivity(
+			final List<SimpleMeeting> crmEvents, Date eventStartDate,
+			Date eventEndDate) {
+		for (SimpleMeeting meeting : crmEvents) {
+			if (meeting.getIsrecurrence()) {
+				// TODO : xac dinh lai. khoan thoi gian cua recurring activity
+				// TODO: xac dinh lai cac events trong khoan thoi gian cua
+				// recurring activity
+				if (meeting.getRecurrencetype() != null) {
+					if (meeting.getRecurrencetype().equals("DailyEvent")) {
+						DailyEvent dailyEvent = JsonDeSerializer.fromJson(
+								meeting.getRecurrenceinfo(), DailyEvent.class);
+					} else if (meeting.getRecurrencetype()
+							.equals("WeeklyEvent")) {
+						WeeklyEvent weeklyEvent = JsonDeSerializer.fromJson(
+								meeting.getRecurrenceinfo(), WeeklyEvent.class);
+					} else if (meeting.getRecurrencetype().equals(
+							"MonthlyEventFollowDay")) {
+						MonthlyEventFollowDay monthEventFollowDay = JsonDeSerializer
+								.fromJson(meeting.getRecurrenceinfo(),
+										MonthlyEventFollowDay.class);
+					} else if (meeting.getRecurrencetype().equals(
+							"MonthlyEventFollowKindDay")) {
+						MonthlyEventFollowKindDay monthEventFollowKindDay = JsonDeSerializer
+								.fromJson(meeting.getRecurrenceinfo(),
+										MonthlyEventFollowKindDay.class);
+					} else if (meeting.getRecurrencetype().equals(
+							"YearlyEventFollowEveryMonth")) {
+						YearlyEventFollowEveryMonth yearlyEventFollowEveryMonth = JsonDeSerializer
+								.fromJson(meeting.getRecurrenceinfo(),
+										YearlyEventFollowEveryMonth.class);
+					} else if (meeting.getRecurrencetype().equals(
+							"YearlyEventFollowAdvanceSettingMonth")) {
+						YearlyEventFollowAdvanceSettingMonth yearlyEventFollowAdvanceSettingMonth = JsonDeSerializer
+								.fromJson(
+										meeting.getRecurrenceinfo(),
+										YearlyEventFollowAdvanceSettingMonth.class);
+					}
+				}
+			}
+		}
 	}
 
 	public static class CrmEvent extends BasicEvent {
