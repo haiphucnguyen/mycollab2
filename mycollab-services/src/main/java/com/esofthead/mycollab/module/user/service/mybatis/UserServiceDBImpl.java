@@ -16,14 +16,9 @@
  */
 package com.esofthead.mycollab.module.user.service.mybatis;
 
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Arrays;
 import java.util.GregorianCalendar;
 import java.util.List;
-
-import javax.imageio.ImageIO;
 
 import org.apache.ibatis.session.RowBounds;
 import org.slf4j.Logger;
@@ -221,6 +216,8 @@ public class UserServiceDBImpl extends
 
 	@Override
 	public void updateUserAccount(SimpleUser record, Integer sAccountId) {
+		// now we keep username similar than email
+		record.setUsername(record.getEmail());
 		userMapper.updateByPrimaryKeySelective(record);
 
 		UserAccountExample userAccountEx = new UserAccountExample();
