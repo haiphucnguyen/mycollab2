@@ -151,7 +151,7 @@ public class AnotatedVerifyProjectMemberInvitationHandlerServlet extends
 				member.setStatus(RegisterStatusConstants.ACTIVE);
 				member.setSaccountid(sAccountId);
 				member.setProjectroleid(projectRoleId);
-				projectMemberService.updateWithSession(member, " ");
+				projectMemberService.updateWithSession(member, "");
 			}
 			ProjectMailLinkGenerator linkGenerator = new ProjectMailLinkGenerator(
 					projectId);
