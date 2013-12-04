@@ -57,6 +57,7 @@ public abstract class GenericServerRunner {
 
 	private Server server;
 	private int port = 0;
+	public static boolean isFirstTimeRunner = false;
 
 	public abstract WebAppContext buildContext(String baseDir);
 
@@ -187,6 +188,7 @@ public abstract class GenericServerRunner {
 		File file = detectConfigFile("mycollab.properties");
 		if (file == null) {
 			log.debug("Can not detect mycollab.properties file. It seems mycollab is in first use.");
+			isFirstTimeRunner = true;
 			TemplateContext templateContext = new TemplateContext();
 
 			System.out

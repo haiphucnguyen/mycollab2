@@ -18,6 +18,7 @@ package com.esofthead.mycollab.module.user.view;
 
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.eventmanager.EventBus;
+import com.esofthead.mycollab.jetty.GenericServerRunner;
 import com.esofthead.mycollab.module.user.events.UserEvent;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
@@ -32,6 +33,7 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.CustomLayout;
 import com.vaadin.ui.Form;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Link;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
@@ -113,6 +115,14 @@ public class LoginViewImpl extends AbstractView implements LoginView {
 					});
 			forgotPasswordBtn.setStyleName("link");
 			custom.addComponent(forgotPasswordBtn, "forgotLink");
+
+			// if (GenericServerRunner.isFirstTimeRunner) {
+			Label infoLbl = new Label(
+					"It seems it is the first time you use MyCollab. The default username is admin@mycollab.com, password is admin123. You should change email/password when you access MyCollab successfully.",
+					Label.CONTENT_XHTML);
+			custom.addComponent(infoLbl);
+			GenericServerRunner.isFirstTimeRunner = false;
+			// }
 
 			this.setLayout(custom);
 			this.setHeight("100%");
