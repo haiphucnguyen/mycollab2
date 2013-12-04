@@ -60,11 +60,11 @@ import com.esofthead.template.velocity.TemplateContext;
 import com.esofthead.template.velocity.TemplateEngine;
 
 @Component("acceptMemberInvitationServlet")
-public class AnotatedVerifyProjectMemberInvitationHandlerServlet extends
+public class AnnotatedVerifyProjectMemberInvitationHandlerServlet extends
 		GenericServlet {
 
 	private static Logger log = LoggerFactory
-			.getLogger(AnotatedVerifyProjectMemberInvitationHandlerServlet.class);
+			.getLogger(AnnotatedVerifyProjectMemberInvitationHandlerServlet.class);
 
 	private static String OUTSIDE_MEMBER_WELCOME_PAGE = "templates/page/project/OutsideMemberAcceptInvitationPage.mt";
 	private static String EXPIER_PAGE = "templates/page/ExpirePage.mt";
@@ -86,12 +86,12 @@ public class AnotatedVerifyProjectMemberInvitationHandlerServlet extends
 		Reader reader;
 		try {
 			reader = new InputStreamReader(
-					AnotatedVerifyProjectMemberInvitationHandlerServlet.class
+					AnnotatedVerifyProjectMemberInvitationHandlerServlet.class
 							.getClassLoader().getResourceAsStream(EXPIER_PAGE),
 					"UTF-8");
 		} catch (UnsupportedEncodingException e) {
 			reader = new InputStreamReader(
-					AnotatedVerifyProjectMemberInvitationHandlerServlet.class
+					AnnotatedVerifyProjectMemberInvitationHandlerServlet.class
 							.getClassLoader().getResourceAsStream(EXPIER_PAGE));
 		}
 		context.put("inviterEmail", inviterEmail);
@@ -191,12 +191,12 @@ public class AnotatedVerifyProjectMemberInvitationHandlerServlet extends
 		Reader reader;
 		try {
 			reader = new InputStreamReader(
-					AnotatedVerifyProjectMemberInvitationHandlerServlet.class
+					AnnotatedVerifyProjectMemberInvitationHandlerServlet.class
 							.getClassLoader().getResourceAsStream(
 									OUTSIDE_MEMBER_WELCOME_PAGE), "UTF-8");
 		} catch (UnsupportedEncodingException e) {
 			reader = new InputStreamReader(
-					AnotatedVerifyProjectMemberInvitationHandlerServlet.class
+					AnnotatedVerifyProjectMemberInvitationHandlerServlet.class
 							.getClassLoader().getResourceAsStream(
 									OUTSIDE_MEMBER_WELCOME_PAGE));
 		}

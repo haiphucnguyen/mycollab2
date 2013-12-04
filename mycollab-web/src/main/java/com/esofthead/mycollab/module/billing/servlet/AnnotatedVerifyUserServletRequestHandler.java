@@ -40,7 +40,7 @@ import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.ResourceNotFoundException;
 import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
-import com.esofthead.mycollab.module.billing.servlet.AnotatedDenyUserServletRequestHandler.PageUserNotExistGenerator;
+import com.esofthead.mycollab.module.billing.servlet.AnnotatedDenyUserServletRequestHandler.PageUserNotExistGenerator;
 import com.esofthead.mycollab.module.user.dao.UserAccountInvitationMapper;
 import com.esofthead.mycollab.module.user.dao.UserAccountMapper;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
@@ -52,10 +52,10 @@ import com.esofthead.template.velocity.TemplateContext;
 import com.esofthead.template.velocity.TemplateEngine;
 
 @Component("acceptUserInvitationServlet")
-public class AnotatedVerifyUserServletRequestHandler extends GenericServlet {
+public class AnnotatedVerifyUserServletRequestHandler extends GenericServlet {
 
 	private static Logger log = LoggerFactory
-			.getLogger(AnotatedVerifyUserServletRequestHandler.class);
+			.getLogger(AnnotatedVerifyUserServletRequestHandler.class);
 
 	@Autowired
 	private UserService userService;
@@ -74,12 +74,12 @@ public class AnotatedVerifyUserServletRequestHandler extends GenericServlet {
 		Reader reader;
 		try {
 			reader = new InputStreamReader(
-					AnotatedVerifyUserServletRequestHandler.class
+					AnnotatedVerifyUserServletRequestHandler.class
 							.getClassLoader().getResourceAsStream(template),
 					"UTF-8");
 		} catch (UnsupportedEncodingException e) {
 			reader = new InputStreamReader(
-					AnotatedVerifyUserServletRequestHandler.class
+					AnnotatedVerifyUserServletRequestHandler.class
 							.getClassLoader().getResourceAsStream(template));
 		}
 

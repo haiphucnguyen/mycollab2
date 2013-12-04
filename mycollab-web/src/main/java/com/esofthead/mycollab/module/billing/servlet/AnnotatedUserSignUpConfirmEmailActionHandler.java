@@ -29,13 +29,13 @@ import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.ResourceNotFoundException;
 import com.esofthead.mycollab.module.billing.UserStatusConstants;
-import com.esofthead.mycollab.module.billing.servlet.AnotatedDenyUserServletRequestHandler.PageUserNotExistGenerator;
+import com.esofthead.mycollab.module.billing.servlet.AnnotatedDenyUserServletRequestHandler.PageUserNotExistGenerator;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.servlet.GenericServlet;
 
 @Component("userconfirmsignupServlet")
-public class AnotatedUserSignUpConfirmEmailActionHandler extends GenericServlet {
+public class AnnotatedUserSignUpConfirmEmailActionHandler extends GenericServlet {
 
 	@Autowired
 	private UserService userServices;

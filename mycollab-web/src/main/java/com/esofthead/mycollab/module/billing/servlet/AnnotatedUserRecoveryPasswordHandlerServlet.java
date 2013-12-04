@@ -37,7 +37,7 @@ import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.DeploymentMode;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.ResourceNotFoundException;
-import com.esofthead.mycollab.module.billing.servlet.AnotatedDenyUserServletRequestHandler.PageUserNotExistGenerator;
+import com.esofthead.mycollab.module.billing.servlet.AnnotatedDenyUserServletRequestHandler.PageUserNotExistGenerator;
 import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.servlet.GenericServlet;
@@ -45,10 +45,10 @@ import com.esofthead.template.velocity.TemplateContext;
 import com.esofthead.template.velocity.TemplateEngine;
 
 @Component("recoverUserPasswordServlet")
-public class AnotatedUserRecoveryPasswordHandlerServlet extends GenericServlet {
+public class AnnotatedUserRecoveryPasswordHandlerServlet extends GenericServlet {
 
 	private static Logger log = LoggerFactory
-			.getLogger(AnotatedUserRecoveryPasswordHandlerServlet.class);
+			.getLogger(AnnotatedUserRecoveryPasswordHandlerServlet.class);
 	@Autowired
 	private UserService userService;
 
@@ -59,12 +59,12 @@ public class AnotatedUserRecoveryPasswordHandlerServlet extends GenericServlet {
 		Reader reader;
 		try {
 			reader = new InputStreamReader(
-					AnotatedUserRecoveryPasswordHandlerServlet.class
+					AnnotatedUserRecoveryPasswordHandlerServlet.class
 							.getClassLoader().getResourceAsStream(template),
 					"UTF-8");
 		} catch (UnsupportedEncodingException e) {
 			reader = new InputStreamReader(
-					AnotatedUserRecoveryPasswordHandlerServlet.class
+					AnnotatedUserRecoveryPasswordHandlerServlet.class
 							.getClassLoader().getResourceAsStream(template));
 		}
 

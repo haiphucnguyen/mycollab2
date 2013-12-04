@@ -40,7 +40,7 @@ import com.esofthead.mycollab.core.ResourceNotFoundException;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
-import com.esofthead.mycollab.module.project.servlet.AnotatedDenyProjectMemberInvitationServletHandler.FeedBackPageGenerator;
+import com.esofthead.mycollab.module.project.servlet.AnnotatedDenyProjectMemberInvitationServletHandler.FeedBackPageGenerator;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
 import com.esofthead.mycollab.module.user.service.UserService;
@@ -50,13 +50,13 @@ import com.esofthead.template.velocity.TemplateContext;
 import com.esofthead.template.velocity.TemplateEngine;
 
 @Component("denyUserInviteServlet")
-public class AnotatedDenyUserServletRequestHandler extends GenericServlet {
+public class AnnotatedDenyUserServletRequestHandler extends GenericServlet {
 
 	private static String USER_DENY_FEEDBACK_TEMPLATE = "templates/page/user/UserDenyInvitationPage.mt";
 	private static String USER_HAS_DENIED_PAGE = "templates/page/user/UserDeniedPage.mt";
 
 	private static Logger log = LoggerFactory
-			.getLogger(AnotatedDenyUserServletRequestHandler.class);
+			.getLogger(AnnotatedDenyUserServletRequestHandler.class);
 
 	public static class PageUserNotExistGenerator {
 		public static void responeUserNotExistPage(
@@ -97,12 +97,12 @@ public class AnotatedDenyUserServletRequestHandler extends GenericServlet {
 		Reader reader;
 		try {
 			reader = new InputStreamReader(
-					AnotatedDenyUserServletRequestHandler.class
+					AnnotatedDenyUserServletRequestHandler.class
 							.getClassLoader().getResourceAsStream(
 									pageNotFoundTemplate), "UTF-8");
 		} catch (UnsupportedEncodingException e) {
 			reader = new InputStreamReader(
-					AnotatedDenyUserServletRequestHandler.class
+					AnnotatedDenyUserServletRequestHandler.class
 							.getClassLoader().getResourceAsStream(
 									pageNotFoundTemplate));
 		}

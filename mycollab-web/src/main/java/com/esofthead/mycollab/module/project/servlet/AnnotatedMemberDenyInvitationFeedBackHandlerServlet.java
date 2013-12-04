@@ -31,7 +31,7 @@ import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.servlet.GenericServlet;
 
 @Component("denyMemberInvitationFeedbackServlet")
-public class AnotatedMemberDenyInvitationFeedBackHandlerServlet extends
+public class AnnotatedMemberDenyInvitationFeedBackHandlerServlet extends
 		GenericServlet {
 
 	@Autowired

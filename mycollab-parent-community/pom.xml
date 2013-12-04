@@ -11,12 +11,12 @@
     <properties>
         <springVersion>3.2.4.RELEASE</springVersion>
         <aspectjVersion>1.7.3</aspectjVersion>
-        <javaVersion>1.6</javaVersion>
+        <javaVersion>1.7</javaVersion>
         <slf4jVersion>1.6.4</slf4jVersion>
         <log4jVersion>1.2.16</log4jVersion>
         <vaadinVersion>6.8.13</vaadinVersion>
         <gwtversion>2.3.0</gwtversion>
-        <jettyVersion>8.1.14.v20131031</jettyVersion>
+        <jettyVersion>9.1.0.v20131115</jettyVersion>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.inceptionYear>2011</project.inceptionYear>
     </properties>

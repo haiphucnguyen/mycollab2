@@ -50,11 +50,11 @@ import com.esofthead.template.velocity.TemplateContext;
 import com.esofthead.template.velocity.TemplateEngine;
 
 @Component("denyMemberInvitationServlet")
-public class AnotatedDenyProjectMemberInvitationServletHandler extends
+public class AnnotatedDenyProjectMemberInvitationServletHandler extends
 		GenericServlet {
 
 	private static Logger log = LoggerFactory
-			.getLogger(AnotatedDenyProjectMemberInvitationServletHandler.class);
+			.getLogger(AnnotatedDenyProjectMemberInvitationServletHandler.class);
 
 	private static String DENY_FEEDBACK_TEMPLATE = "templates/page/project/MemberDenyInvitationPage.mt";
 	private static String REFUSE_MEMBER_DENY_TEMPLATE = "templates/page/project/RefuseMemberDenyActionPage.mt";
@@ -74,12 +74,12 @@ public class AnotatedDenyProjectMemberInvitationServletHandler extends
 		Reader reader;
 		try {
 			reader = new InputStreamReader(
-					AnotatedDenyProjectMemberInvitationServletHandler.class
+					AnnotatedDenyProjectMemberInvitationServletHandler.class
 							.getClassLoader().getResourceAsStream(
 									REFUSE_MEMBER_DENY_TEMPLATE), "UTF-8");
 		} catch (UnsupportedEncodingException e) {
 			reader = new InputStreamReader(
-					AnotatedDenyProjectMemberInvitationServletHandler.class
+					AnnotatedDenyProjectMemberInvitationServletHandler.class
 							.getClassLoader().getResourceAsStream(
 									REFUSE_MEMBER_DENY_TEMPLATE));
 		}
@@ -111,12 +111,12 @@ public class AnotatedDenyProjectMemberInvitationServletHandler extends
 			Reader reader;
 			try {
 				reader = new InputStreamReader(
-						AnotatedDenyProjectMemberInvitationServletHandler.class
+						AnnotatedDenyProjectMemberInvitationServletHandler.class
 								.getClassLoader().getResourceAsStream(
 										templateURL), "UTF-8");
 			} catch (UnsupportedEncodingException e) {
 				reader = new InputStreamReader(
-						AnotatedDenyProjectMemberInvitationServletHandler.class
+						AnnotatedDenyProjectMemberInvitationServletHandler.class
 								.getClassLoader().getResourceAsStream(
 										templateURL));
 			}

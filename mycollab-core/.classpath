@@ -6,7 +6,7 @@
   <classpathentry kind="var" path="M2_REPO/javax/validation/validation-api/1.0.0.GA/validation-api-1.0.0.GA.jar" sourcepath="M2_REPO/javax/validation/validation-api/1.0.0.GA/validation-api-1.0.0.GA-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/javax/validation/validation-api/1.0.0.GA/validation-api-1.0.0.GA-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/javax/persistence/persistence-api/1.0/persistence-api-1.0.jar" sourcepath="M2_REPO/javax/persistence/persistence-api/1.0/persistence-api-1.0-sources.jar"/>
-  <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
+  <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
   <classpathentry kind="var" path="M2_REPO/com/mortennobel/java-image-scaling/0.8.5/java-image-scaling-0.8.5.jar" sourcepath="M2_REPO/com/mortennobel/java-image-scaling/0.8.5/java-image-scaling-0.8.5-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/jhlabs/filters/2.0.235/filters-2.0.235.jar" sourcepath="M2_REPO/com/jhlabs/filters/2.0.235/filters-2.0.235-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/ch/qos/cal10n/cal10n-api/0.8.1/cal10n-api-0.8.1.jar" sourcepath="M2_REPO/ch/qos/cal10n/cal10n-api/0.8.1/cal10n-api-0.8.1-sources.jar"/>
