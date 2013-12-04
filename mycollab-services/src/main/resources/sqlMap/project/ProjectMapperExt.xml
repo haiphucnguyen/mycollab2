@@ -84,7 +84,8 @@
         </if>
         <if test="searchCriteria.involvedMember != null">
           <![CDATA[
-            ${searchCriteria.involvedMember.operation} (SELECT COUNT(*) FROM m_prj_member WHERE m_prj_member.projectId=m_prj_project.id AND m_prj_member.username=#{searchCriteria.involvedMember.value}) > 0
+            ${searchCriteria.involvedMember.operation} 
+            (SELECT COUNT(*) FROM m_prj_member WHERE m_prj_member.status='Active' AND m_prj_member.projectId=m_prj_project.id AND m_prj_member.username=#{searchCriteria.involvedMember.value}) > 0
             ]]>
         </if>
     </sql>
@@ -142,7 +143,8 @@
         </if>
         <if test="searchCriteria.involvedMember != null">
           <![CDATA[
-            ${searchCriteria.involvedMember.operation} (SELECT COUNT(*) FROM m_prj_member WHERE m_prj_member.projectId=m_prj_project.id AND m_prj_member.username=#{searchCriteria.involvedMember.value}) > 0
+            ${searchCriteria.involvedMember.operation} 
+            (SELECT COUNT(*) FROM m_prj_member WHERE m_prj_member.status='Active' AND m_prj_member.projectId=m_prj_project.id AND m_prj_member.username=#{searchCriteria.involvedMember.value}) > 0
             ]]>
         </if>
     </sql>

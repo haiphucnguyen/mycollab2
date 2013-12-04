@@ -72,11 +72,8 @@ public class UserAddViewImpl extends AbstractView implements UserAddView {
 	private DateComboboxSelectionField cboDateBirthday;
 	private TimeZoneSelection cboTimezone;
 
-	// private boolean isFullLayout = false;
-
 	public UserAddViewImpl() {
 		super();
-		// isFullLayout = false;
 		this.advanceEditForm = new UserAddViewImpl.AdvanceEditForm(true);
 		this.addComponent(this.advanceEditForm);
 	}

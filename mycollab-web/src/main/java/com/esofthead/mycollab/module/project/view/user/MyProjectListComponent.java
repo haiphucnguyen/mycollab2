@@ -78,14 +78,11 @@ public class MyProjectListComponent extends Depot {
 	static class ProjectPagedList extends
 			BeanList<ProjectService, ProjectSearchCriteria, SimpleProject> {
 		private static final long serialVersionUID = 1L;
-		private final ProjectService projectService;
 
 		public ProjectPagedList() {
-			super(null, ApplicationContextUtil.getSpringBean(ProjectService.class),
+			super(null, ApplicationContextUtil
+					.getSpringBean(ProjectService.class),
 					ProjectRowDisplayHandler.class);
-
-			this.projectService = ApplicationContextUtil
-					.getSpringBean(ProjectService.class);
 		}
 	}
 
