@@ -80,19 +80,19 @@ public class ContactUsPage extends BasePage {
 
 		final Form<Void> form = new Form<Void>("contact-form");
 
-        final ModalWindow modal = new ModalWindow("modal");
-        modal.setResizable(false);
-        modal.setInitialHeight(90);
-        modal.setInitialWidth(400);
-        modal.setHeightUnit("px");
-        modal.setWidthUnit("px");
-        modal.setCloseButtonCallback(new ModalWindow.CloseButtonCallback() {
-            @Override
-            public boolean onCloseButtonClicked(AjaxRequestTarget target) {
-                return false;
-            }
-        });
-        modal.setContent(new ContactFormNotificationPanel(modal.getContentId()));
+		final ModalWindow modal = new ModalWindow("modal");
+		modal.setResizable(false);
+		modal.setInitialHeight(90);
+		modal.setInitialWidth(400);
+		modal.setHeightUnit("px");
+		modal.setWidthUnit("px");
+		modal.setCloseButtonCallback(new ModalWindow.CloseButtonCallback() {
+			@Override
+			public boolean onCloseButtonClicked(AjaxRequestTarget target) {
+				return false;
+			}
+		});
+		modal.setContent(new ContactFormNotificationPanel(modal.getContentId()));
 
 		final AjaxButton submitLink = new AjaxButton("submit-link") {
 
@@ -104,7 +104,7 @@ public class ContactUsPage extends BasePage {
 				target.add(feedbackPanel);
 				final ContactResource contactResource = RemoteServiceProxy
 						.build(SiteConfiguration.getApiUrl(),
-                                ContactResource.class);
+								ContactResource.class);
 
 				try {
 					final ContactForm dataform = new ContactForm();
@@ -117,11 +117,10 @@ public class ContactUsPage extends BasePage {
 					dataform.setSubject(subject.getModelObject());
 					dataform.setMessage(message.getModelObject());
 
-					ContactUsPage.log.debug("Submit form {}",
-							SiteConfiguration.getApiUrl());
+					log.debug("Submit form {}", SiteConfiguration.getApiUrl());
 					final String response = contactResource.submit(dataform);
-					ContactUsPage.log.debug("Response of site: {}", response);
-                    modal.show(target);
+					log.debug("Response of site: {}", response);
+					modal.show(target);
 
 				} catch (final Exception e) {
 					error(e.getMessage());
@@ -138,7 +137,7 @@ public class ContactUsPage extends BasePage {
 		};
 
 		this.add(form);
-        this.add(modal);
+		this.add(modal);
 		form.add(email);
 		form.add(name);
 		form.add(company);
@@ -152,12 +151,13 @@ public class ContactUsPage extends BasePage {
 		form.add(new CreateReCaptchaPanel("recaptcha"));
 
 		this.add(feedbackPanel);
-        this.add(new Behavior() {
-            @Override
-            public void renderHead(Component component, IHeaderResponse response) {
-                response.render(new OnDomReadyHeaderItem("Wicket.Window.unloadConfirmation = false;"));
-            }
-        });
+		this.add(new Behavior() {
+			@Override
+			public void renderHead(Component component, IHeaderResponse response) {
+				response.render(new OnDomReadyHeaderItem(
+						"Wicket.Window.unloadConfirmation = false;"));
+			}
+		});
 	}
 
 	@Override
