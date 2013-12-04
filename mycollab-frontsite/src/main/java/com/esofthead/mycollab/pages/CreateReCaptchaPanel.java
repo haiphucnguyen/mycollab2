@@ -28,20 +28,15 @@ public class CreateReCaptchaPanel extends Panel {
 	private static final Logger log = LoggerFactory
 			.getLogger(CreateReCaptchaPanel.class);
 
-	private ReCaptchaImpl reCaptcha;
-
 	public CreateReCaptchaPanel(final String id) {
 		super(id);
-		final ReCaptcha recaptcha = ReCaptchaFactory.newReCaptcha(
-				"6Lfj3eoSAAAAAO732dbG8MYpvdbQelEyRCpX-F_J",
-				"6Lfj3eoSAAAAACQppgZu_idhxCU7g3AOwLKE5jJC", false);
 
 		add(new FormComponent<Void>("captcha", new Model()) {
 			@Override
 			public void onComponentTagBody(final MarkupStream markupStream,
 					final ComponentTag openTag) {
 				replaceComponentTagBody(markupStream, openTag,
-						recaptcha.createRecaptchaHtml(null, null));
+						ReCaptchaUtil.createRecaptchaHtml());
 			}
 
 			@Override
@@ -51,9 +46,6 @@ public class CreateReCaptchaPanel extends Panel {
 
 				final String remoteAddr = request.getContainerRequest()
 						.toString();
-				reCaptcha = new ReCaptchaImpl();
-				reCaptcha
-						.setPrivateKey("6Lfj3eoSAAAAACQppgZu_idhxCU7g3AOwLKE5jJC");
 
 				final String challenge = request.getRequestParameters()
 						.getParameterValue("recaptcha_challenge_field")
@@ -61,7 +53,7 @@ public class CreateReCaptchaPanel extends Panel {
 				final String uresponse = request.getRequestParameters()
 						.getParameterValue("recaptcha_response_field")
 						.toString();
-				final ReCaptchaResponse reCaptchaResponse = reCaptcha
+				final ReCaptchaResponse reCaptchaResponse = ReCaptchaUtil
 						.checkAnswer(remoteAddr, challenge, uresponse);
 
 				if (!reCaptchaResponse.isValid()) {
