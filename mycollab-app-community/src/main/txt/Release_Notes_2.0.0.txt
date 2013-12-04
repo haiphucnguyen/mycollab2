@@ -18,7 +18,7 @@
 	System requirements
 	===================
 	
-	MyCollab requires a running Java Runtime Environment (6 or greater), Java command should be presented
+	MyCollab requires a running Java Runtime Environment (7 or greater), Java command should be presented
 	in PATH environment and MySQL (InnoDB support recommended).
 
 	
