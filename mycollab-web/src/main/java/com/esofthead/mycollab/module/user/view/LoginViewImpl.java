@@ -116,13 +116,12 @@ public class LoginViewImpl extends AbstractView implements LoginView {
 			forgotPasswordBtn.setStyleName("link");
 			custom.addComponent(forgotPasswordBtn, "forgotLink");
 
-			// if (GenericServerRunner.isFirstTimeRunner) {
-			Label infoLbl = new Label(
-					"It seems it is the first time you use MyCollab. The default username is admin@mycollab.com, password is admin123. You should change email/password when you access MyCollab successfully.",
-					Label.CONTENT_XHTML);
-			custom.addComponent(infoLbl);
-			GenericServerRunner.isFirstTimeRunner = false;
-			// }
+			if (GenericServerRunner.isFirstTimeRunner) {
+				LoginForm.this
+						.setComponentError(new UserError(
+								"For the first time using MyCollab, the default email/password is admin@mycollab.com/admin123. You should change email/password when you access MyCollab successfully."));
+				GenericServerRunner.isFirstTimeRunner = false;
+			}
 
 			this.setLayout(custom);
 			this.setHeight("100%");

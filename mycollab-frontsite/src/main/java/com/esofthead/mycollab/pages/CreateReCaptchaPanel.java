@@ -28,6 +28,8 @@ public class CreateReCaptchaPanel extends Panel {
 	private static final Logger log = LoggerFactory
 			.getLogger(CreateReCaptchaPanel.class);
 
+	private ReCaptchaImpl reCaptcha;
+
 	public CreateReCaptchaPanel(final String id) {
 		super(id);
 		final ReCaptcha recaptcha = ReCaptchaFactory.newReCaptcha(
@@ -49,7 +51,7 @@ public class CreateReCaptchaPanel extends Panel {
 
 				final String remoteAddr = request.getContainerRequest()
 						.toString();
-				final ReCaptchaImpl reCaptcha = new ReCaptchaImpl();
+				reCaptcha = new ReCaptchaImpl();
 				reCaptcha
 						.setPrivateKey("6Lfj3eoSAAAAACQppgZu_idhxCU7g3AOwLKE5jJC");
 
