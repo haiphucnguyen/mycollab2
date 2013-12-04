@@ -1,7 +1,18 @@
 package com.esofthead.mycollab.pages;
 
+import com.esofthead.mycollab.ErrorReportingUtils;
+import com.esofthead.mycollab.SiteConfiguration;
+import com.esofthead.mycollab.rest.client.RemoteServiceProxy;
+import com.esofthead.mycollab.rest.server.domain.ContactForm;
+import com.esofthead.mycollab.rest.server.resource.ContactResource;
+import com.esofthead.mycollab.uicomponents.ContactFormNotificationPanel;
+import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
+import org.apache.wicket.behavior.Behavior;
+import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.HiddenField;
 import org.apache.wicket.markup.html.form.RequiredTextField;
@@ -16,12 +27,7 @@ import org.apache.wicket.validation.validator.EmailAddressValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.esofthead.mycollab.ErrorReportingUtils;
-import com.esofthead.mycollab.SiteConfiguration;
 import com.esofthead.mycollab.base.BasePage;
-import com.esofthead.mycollab.rest.client.RemoteServiceProxy;
-import com.esofthead.mycollab.rest.server.domain.ContactForm;
-import com.esofthead.mycollab.rest.server.resource.ContactResource;
 
 public class ContactUsPage extends BasePage {
 
@@ -74,6 +80,20 @@ public class ContactUsPage extends BasePage {
 
 		final Form<Void> form = new Form<Void>("contact-form");
 
+        final ModalWindow modal = new ModalWindow("modal");
+        modal.setResizable(false);
+        modal.setInitialHeight(90);
+        modal.setInitialWidth(400);
+        modal.setHeightUnit("px");
+        modal.setWidthUnit("px");
+        modal.setCloseButtonCallback(new ModalWindow.CloseButtonCallback() {
+            @Override
+            public boolean onCloseButtonClicked(AjaxRequestTarget target) {
+                return false;
+            }
+        });
+        modal.setContent(new ContactFormNotificationPanel(modal.getContentId()));
+
 		final AjaxButton submitLink = new AjaxButton("submit-link") {
 
 			private static final long serialVersionUID = 1L;
@@ -84,7 +104,7 @@ public class ContactUsPage extends BasePage {
 				target.add(feedbackPanel);
 				final ContactResource contactResource = RemoteServiceProxy
 						.build(SiteConfiguration.getApiUrl(),
-								ContactResource.class);
+                                ContactResource.class);
 
 				try {
 					final ContactForm dataform = new ContactForm();
@@ -101,11 +121,13 @@ public class ContactUsPage extends BasePage {
 							SiteConfiguration.getApiUrl());
 					final String response = contactResource.submit(dataform);
 					ContactUsPage.log.debug("Response of site: {}", response);
+                    modal.show(target);
 
 				} catch (final Exception e) {
 					error(e.getMessage());
 					ErrorReportingUtils.reportError(e);
 				}
+
 			}
 
 			@Override
@@ -116,6 +138,7 @@ public class ContactUsPage extends BasePage {
 		};
 
 		this.add(form);
+        this.add(modal);
 		form.add(email);
 		form.add(name);
 		form.add(company);
@@ -129,6 +152,12 @@ public class ContactUsPage extends BasePage {
 		form.add(new CreateReCaptchaPanel("recaptcha"));
 
 		this.add(feedbackPanel);
+        this.add(new Behavior() {
+            @Override
+            public void renderHead(Component component, IHeaderResponse response) {
+                response.render(new OnDomReadyHeaderItem("Wicket.Window.unloadConfirmation = false;"));
+            }
+        });
 	}
 
 	@Override
