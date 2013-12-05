@@ -15,43 +15,43 @@
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-core</artifactId>
-            <version>${project.version}</version>
+            <version>3.0-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-dao</artifactId>
-            <version>${project.version}</version>
+            <version>3.0-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-migration</artifactId>
-            <version>${project.version}</version>
+            <version>3.0-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-config</artifactId>
-            <version>${project.version}</version>
+            <version>3.0-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-caching</artifactId>
-            <version>${project.version}</version>
+            <version>3.0-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-jackrabbit</artifactId>
-            <version>${project.version}</version>
+            <version>3.0-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-test</artifactId>
-            <version>${project.version}</version>
+            <version>3.0-SNAPSHOT</version>
             <scope>test</scope>
         </dependency>
 
