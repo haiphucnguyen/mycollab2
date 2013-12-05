@@ -140,7 +140,7 @@ public class ContactInfoChangeWindow extends Window {
 
 					@Override
 					public void buttonClick(final ClickEvent event) {
-						ContactInfoChangeWindow.this.changePassword();
+						ContactInfoChangeWindow.this.changeUserInfo();
 					}
 				});
 		sendBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
@@ -198,7 +198,7 @@ public class ContactInfoChangeWindow extends Window {
 		return true;
 	}
 
-	private void changePassword() {
+	private void changeUserInfo() {
 
 		this.txtWorkPhone.removeStyleName("errorField");
 		this.txtHomePhone.removeStyleName("errorField");

@@ -215,6 +215,28 @@ public class UserServiceDBImpl extends
 	}
 
 	@Override
+	public int updateWithSession(User record, String username) {
+		log.debug("Check whether there is exist email in system before");
+		if (!record.getUsername().equals(record.getEmail())) {
+			UserExample ex = new UserExample();
+			ex.createCriteria().andUsernameEqualTo(record.getEmail());
+			int numUsers = userMapper.countByExample(ex);
+			if (numUsers > 0) {
+				throw new UserInvalidInputException(
+						"Email "
+								+ record.getEmail()
+								+ " is already existed in system. Please choose another email.");
+			}
+		}
+
+		// now we keep username similar than email
+		UserExample ex = new UserExample();
+		ex.createCriteria().andUsernameEqualTo(record.getUsername());
+		record.setUsername(record.getEmail());
+		return userMapper.updateByExampleSelective(record, ex);
+	}
+
+	@Override
 	public void updateUserAccount(SimpleUser record, Integer sAccountId) {
 		log.debug("Check whether there is exist email in system before");
 		if (!record.getUsername().equals(record.getEmail())) {
