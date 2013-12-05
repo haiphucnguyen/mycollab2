@@ -35,6 +35,7 @@
                         <excludes>
                             <exclude>**/target/**</exclude>
                             <exclude>**/repo/**</exclude>
+                            <exclude>**/repo-test/**</exclude>
                             <exclude>**/bin/**</exclude>
                             <exclude>**/*.log</exclude>
                             <exclude>**/.classpath</exclude>
