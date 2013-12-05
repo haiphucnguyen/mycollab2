@@ -16,6 +16,8 @@
  */
 package com.esofthead.mycollab.module.user.view;
 
+import com.esofthead.mycollab.configuration.SiteConfiguration;
+import com.esofthead.mycollab.core.DeploymentMode;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.jetty.GenericServerRunner;
@@ -33,7 +35,6 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.CustomLayout;
 import com.vaadin.ui.Form;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.Link;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
@@ -97,10 +98,13 @@ public class LoginViewImpl extends AbstractView implements LoginView {
 			loginBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 			custom.addComponent(loginBtn, "loginButton");
 
-			Link signupLink = new Link("Create an Account",
-					new ExternalResource("https://www.mycollab.com/pricing"));
-			signupLink.setTargetName("_blank");
-			custom.addComponent(signupLink, "signupLink");
+			if (SiteConfiguration.getDeploymentMode() == DeploymentMode.SITE) {
+				Link signupLink = new Link(
+						"Create an Account",
+						new ExternalResource("https://www.mycollab.com/pricing"));
+				signupLink.setTargetName("_blank");
+				custom.addComponent(signupLink, "signupLink");
+			}
 
 			Button forgotPasswordBtn = new Button("Forgot your password?",
 					new Button.ClickListener() {
