@@ -25,6 +25,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
+import com.esofthead.mycollab.module.user.domain.SimpleUser;
+import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.test.DataSet;
@@ -45,5 +47,20 @@ public class UserServiceTest extends ServiceTest {
 				.findPagableListByCriteria(new SearchRequest<UserSearchCriteria>(
 						criteria, 0, Integer.MAX_VALUE));
 		Assert.assertEquals(2, lstUser.size());
+	}
+
+	@DataSet
+	@Test
+	public void updateUserEmail() {
+		SimpleUser user = userService.findUserByUserNameInAccount(
+				"hainguyen@esofthead.com", 1);
+		Assert.assertNotNull(user);
+
+		user.setEmail("hannguyen@esofthead.com");
+		userService.updateUserAccount(user, 1);
+
+		SimpleUser anotherUser = userService.findUserByUserNameInAccount(
+				"hannguyen@esofthead.com", 1);
+		Assert.assertNotNull(anotherUser);
 	}
 }
