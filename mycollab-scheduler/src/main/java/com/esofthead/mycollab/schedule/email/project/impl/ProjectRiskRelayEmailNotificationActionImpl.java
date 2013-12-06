@@ -69,7 +69,7 @@ public class ProjectRiskRelayEmailNotificationActionImpl extends
 						+ "\" has been created",
 				"templates/email/project/riskCreatedNotifier.mt");
 		ScheduleUserTimeZoneUtils.formatDateTimeZone(risk, user.getTimezone(),
-				new String[] { "dateraised", "duedate" });
+				new String[] { "dateraised", "datedue" });
 		templateGenerator.putVariable("risk", risk);
 		templateGenerator.putVariable("hyperLinks",
 				createHyperLinks(risk, emailNotification));
@@ -116,7 +116,7 @@ public class ProjectRiskRelayEmailNotificationActionImpl extends
 				"templates/email/project/riskUpdateNotifier.mt");
 
 		ScheduleUserTimeZoneUtils.formatDateTimeZone(risk, user.getTimezone(),
-				new String[] { "dateraised", "duedate" });
+				new String[] { "dateraised", "datedue" });
 		templateGenerator.putVariable("risk", risk);
 		templateGenerator.putVariable("hyperLinks",
 				createHyperLinks(risk, emailNotification));
@@ -125,7 +125,7 @@ public class ProjectRiskRelayEmailNotificationActionImpl extends
 					emailNotification.getTypeid(),
 					emailNotification.getSaccountid());
 			ScheduleUserTimeZoneUtils.formatDate(auditLog, user.getTimezone(),
-					new String[] { "dateraised", "duedate" });
+					new String[] { "dateraised", "datedue" });
 			templateGenerator.putVariable("historyLog", auditLog);
 			templateGenerator.putVariable("mapper", mapper);
 		}

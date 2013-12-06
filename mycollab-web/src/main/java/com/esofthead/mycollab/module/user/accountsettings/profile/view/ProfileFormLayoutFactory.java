@@ -56,7 +56,7 @@ public abstract class ProfileFormLayoutFactory implements IFormLayoutFactory {
 
 	public void setAvatarLink(String avatarId) {
 		userAvatarIcon = UserAvatarControlFactory.createAvatarResource(
-				avatarId, 32);
+				avatarId, 16);
 	}
 
 	@Override

@@ -37,6 +37,7 @@ public class AddViewLayout extends CustomLayoutExt {
 		this.header = new HorizontalLayout();
 		this.header.setWidth("100%");
 		this.header.setSpacing(true);
+		this.header.setHeight("30px");
 
 		this.icon = new Embedded();
 		this.setTitleIcon(resource);

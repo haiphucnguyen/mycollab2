@@ -16,7 +16,7 @@
  */
 package com.esofthead.mycollab.module.crm.view.activity;
 
-import com.esofthead.mycollab.module.crm.domain.Meeting;
+import com.esofthead.mycollab.module.crm.domain.MeetingWithBLOBs;
 import com.esofthead.mycollab.module.crm.domain.SimpleMeeting;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
@@ -41,7 +41,7 @@ public class MeetingReadViewImpl extends AbstractView implements
 	}
 
 	@Override
-	public HasPreviewFormHandlers<Meeting> getPreviewFormHandlers() {
+	public HasPreviewFormHandlers<MeetingWithBLOBs> getPreviewFormHandlers() {
 		return previewForm.getPreviewForm();
 	}
 

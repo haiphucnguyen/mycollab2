@@ -25,7 +25,7 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.crm.CrmLinkGenerator;
-import com.esofthead.mycollab.module.crm.domain.Meeting;
+import com.esofthead.mycollab.module.crm.domain.MeetingWithBLOBs;
 import com.esofthead.mycollab.module.crm.domain.SimpleMeeting;
 import com.esofthead.mycollab.module.crm.domain.criteria.MeetingSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.ActivityEvent;
@@ -52,15 +52,15 @@ public class MeetingReadPresenter extends CrmGenericPresenter<MeetingReadView> {
 
 	private void bind() {
 		view.getPreviewFormHandlers().addFormHandler(
-				new DefaultPreviewFormHandler<Meeting>() {
+				new DefaultPreviewFormHandler<MeetingWithBLOBs>() {
 					@Override
-					public void onEdit(Meeting data) {
+					public void onEdit(MeetingWithBLOBs data) {
 						EventBus.getInstance().fireEvent(
 								new ActivityEvent.MeetingEdit(this, data));
 					}
 
 					@Override
-					public void onDelete(final Meeting data) {
+					public void onDelete(final MeetingWithBLOBs data) {
 						ConfirmDialogExt.show(
 								view.getWindow(),
 								LocalizationHelper.getMessage(
@@ -94,8 +94,9 @@ public class MeetingReadPresenter extends CrmGenericPresenter<MeetingReadView> {
 					}
 
 					@Override
-					public void onClone(Meeting data) {
-						Meeting cloneData = (Meeting) data.copy();
+					public void onClone(MeetingWithBLOBs data) {
+						MeetingWithBLOBs cloneData = (MeetingWithBLOBs) data
+								.copy();
 						cloneData.setId(null);
 						EventBus.getInstance().fireEvent(
 								new ActivityEvent.MeetingEdit(this, cloneData));
@@ -108,7 +109,7 @@ public class MeetingReadPresenter extends CrmGenericPresenter<MeetingReadView> {
 					}
 
 					@Override
-					public void gotoNext(Meeting data) {
+					public void gotoNext(MeetingWithBLOBs data) {
 						MeetingService accountService = ApplicationContextUtil
 								.getSpringBean(MeetingService.class);
 						MeetingSearchCriteria criteria = new MeetingSearchCriteria();
@@ -130,7 +131,7 @@ public class MeetingReadPresenter extends CrmGenericPresenter<MeetingReadView> {
 					}
 
 					@Override
-					public void gotoPrevious(Meeting data) {
+					public void gotoPrevious(MeetingWithBLOBs data) {
 						MeetingService accountService = ApplicationContextUtil
 								.getSpringBean(MeetingService.class);
 						MeetingSearchCriteria criteria = new MeetingSearchCriteria();

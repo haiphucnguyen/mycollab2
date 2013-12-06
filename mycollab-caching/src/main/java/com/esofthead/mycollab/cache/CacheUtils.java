@@ -16,12 +16,16 @@
  */
 package com.esofthead.mycollab.cache;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.persistence.service.IService;
 import com.esofthead.mycollab.core.utils.ClassUtils;
 import com.esofthead.mycollab.core.utils.JsonDeSerializer;
 
 public class CacheUtils {
+	private static Logger log = LoggerFactory.getLogger(CacheUtils.class);
 
 	public static String constructParamsKey(Object[] args) {
 		return JsonDeSerializer.toJson(args);
@@ -49,6 +53,7 @@ public class CacheUtils {
 	}
 
 	public static void cleanCache(Integer accountId, String prefixKey) {
+		log.debug("Remove cache account {}  and key {}", accountId, prefixKey);
 		LocalCacheManager.removeCacheItems(accountId.toString(), prefixKey);
 	}
 

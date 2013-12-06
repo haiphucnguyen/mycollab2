@@ -72,21 +72,23 @@ div.v-button-link {
 	text-align: left;
 }
 
-.v-button-buttonlinkcenter .v-button-wrap .v-popup-indicator{
-	background: url('icons/calendar_2.png') no-repeat scroll center center rgba(0, 0, 0, 0);
-    cursor: pointer;
-    display: inline-block;
-    height: 16px;
-    width: 24px;
+.v-button-buttonlinkcenter .v-button-wrap .v-popup-indicator {
+	background: url('icons/calendar_2.png') no-repeat scroll center center
+		rgba(0, 0, 0, 0);
+	cursor: pointer;
+	display: inline-block;
+	height: 16px;
+	width: 24px;
 }
 
-div.v-button .v-button-link .link .v-button-buttonlinkcenter .buttonlinkcenter .v-popupbutton{
+div.v-button .v-button-link .link .v-button-buttonlinkcenter .buttonlinkcenter .v-popupbutton
+	{
 	margin: 0px;
 	text-align: center;
 }
 
-
-.v-button-link .v-button-caption , .v-button-link-buttonlinkcenter .v-button-caption {
+.v-button-link .v-button-caption,.v-button-link-buttonlinkcenter .v-button-caption
+	{
 	text-decoration: none;
 	padding-left: 1px;
 	-moz-box-sizing: border-box;
@@ -1129,7 +1131,8 @@ input.v-textfield-errorField {
 }
 
 .addViewHeader {
-	padding: 10px 10px 10px;
+	height: 25px;
+	padding: 3px 5px 3px 18px;
 	background: url('icons/grad-light-top2.png') repeat-x left top
 		rgb(227, 227, 227);
 	border-radius: 3px 3px 0px 0px;
@@ -1150,10 +1153,11 @@ input.v-textfield-errorField {
 }
 
 .addViewLayout .addViewHeader .headerName {
-	font-size: 16px;
+	font-size: 12px;
 	font-weight: bold;
-	margin-top: 3px;
+/* 	margin-top: 3px; */
 	line-height: 20px !important;
+	padding-top:2px;
 }
 
 .addViewLayout .h2 {
@@ -1442,6 +1446,10 @@ input.v-textfield-errorField {
 }
 
 .projectDashboardView .v-label-h2,.v-label h2 {
+	font-size:12px;
+/* 	margin-top: 3px; */
+/* 	line-height: 20px!important; */
+	font-weight : bold;
 	padding: 0px;
 }
 
@@ -1501,7 +1509,7 @@ input.v-textfield-errorField {
 .projectTabContent .h1 {
 	padding: .67em 0 .33em 0;
 	font-size: 20px;
-/* 	border-bottom: 1px solid #B7B7B7; */
+	/* 	border-bottom: 1px solid #B7B7B7; */
 	text-shadow: #F0F0F0 0 1px 0;
 	margin-bottom: 10px;
 }
@@ -1536,9 +1544,13 @@ input.v-textfield-errorField {
 	border-radius: 3px 3px 0px 0px;
 }
 
-.v-horizontallayout-projectinfo-header .v-horizontallayout-margin,.v-horizontallayout-message-toppanel-header .v-horizontallayout-margin
+.v-horizontallayout-projectinfo-header .v-horizontallayout-margin
 	{
 	padding: 7px 10px 7px 18px;
+}
+
+.v-horizontallayout-message-toppanel-header .v-horizontallayout-margin{
+	padding : 3px 10px 2px 18px;
 }
 
 .projectinfo-header .project-name {
@@ -1824,15 +1836,19 @@ input.v-textfield-errorField {
 	background: -o-linear-gradient(top, #E6E6E6 0, #DDD 100%);
 	background: -ms-linear-gradient(top, #E6E6E6 0, #DDD 100%);
 	background: linear-gradient(to bottom, #E6E6E6 0, #DDD 100%);
-	filter: progid:                                                DXImageTransform.Microsoft.gradient(startColorstr='#E6E6E6',
-		endColorstr=                                                '#DDD',
-		GradientType=          
+<<<<<<< HEAD
+	filter: progid:                                                 DXImageTransform.Microsoft.gradient(startColorstr='#E6E6E6',
+		endColorstr=                                                 '#DDD',
+		GradientType=           
         
         
          
             
                  
                           0);
+=======
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#E6E6E6',endColorstr='#DDD',GradientType=0);
+>>>>>>> 3b0b6d50cd838066c23eb0e415d83e1856cdb17b
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
@@ -1859,82 +1875,84 @@ input.v-textfield-errorField {
 	border-bottom: 1px solid #AAA;
 }
 
-.v-calendar-header-month .v-calendar-header-day{
+.v-calendar-header-month .v-calendar-header-day {
 	background: none no-repeat left top #C9E4F3;
 	border-bottom: 1px solid #A1A1A1;
-    border-top: 1px solid #A1A1A1;
-    height:30px;
-    vertical-align: middle;
-    line-height: 30px;
+	border-top: 1px solid #A1A1A1;
+	height: 30px;
+	vertical-align: middle;
+	line-height: 30px;
 }
 
-.v-calendar-header-month td:nth-of-type(7) .v-calendar-header-day{
+.v-calendar-header-month td:nth-of-type(7) .v-calendar-header-day {
 	background: none no-repeat left top #C9E4F3;
-    border-right: 1px solid #A1A1A1;
-    border-bottom: 1px solid #A1A1A1;
-    border-top: 1px solid #A1A1A1;
-    height:30px;
-    vertical-align: middle;
-    line-height: 30px;
+	border-right: 1px solid #A1A1A1;
+	border-bottom: 1px solid #A1A1A1;
+	border-top: 1px solid #A1A1A1;
+	height: 30px;
+	vertical-align: middle;
+	line-height: 30px;
 }
 
-.v-calendar-header-month td:nth-of-type(1) .v-calendar-header-day{
+.v-calendar-header-month td:nth-of-type(1) .v-calendar-header-day {
 	background: none no-repeat left top #C9E4F3;
-    border-left: 1px solid #A1A1A1;
-    border-bottom: 1px solid #A1A1A1;
-    border-top: 1px solid #A1A1A1;
-    height:30px;
-    vertical-align: middle;
-    line-height: 30px;
+	border-left: 1px solid #A1A1A1;
+	border-bottom: 1px solid #A1A1A1;
+	border-top: 1px solid #A1A1A1;
+	height: 30px;
+	vertical-align: middle;
+	line-height: 30px;
 }
 
 .v-calendar-header-week td .v-calendar-header-day {
 	background: none no-repeat left top #C9E4F3;
 	border-bottom: 1px solid #A1A1A1;
-    border-top: 1px solid #A1A1A1;
-    height:30px;
-    vertical-align: middle;
-    line-height: 30px;
+	border-top: 1px solid #A1A1A1;
+	height: 30px;
+	vertical-align: middle;
+	line-height: 30px;
 }
 
-.v-calendar-header-week .v-calendar-datecell{
+.v-calendar-header-week .v-calendar-datecell {
 	min-height: 10px;
 }
 
-.v-calendar-header-week td:nth-of-type(2) .v-calendar-header-day .v-calendar-header-day-today .v-calendar-header-day-Vsized{
+.v-calendar-header-week td:nth-of-type(2) .v-calendar-header-day .v-calendar-header-day-today .v-calendar-header-day-Vsized
+	{
 	background: none no-repeat left top #C9E4F3;
 	border-right: 1px solid #A1A1A1;
-    height:30px;
-    vertical-align: middle;
-    line-height: 30px;
+	height: 30px;
+	vertical-align: middle;
+	line-height: 30px;
 }
 
-.v-calendar-header-week td:nth-of-type(8) .v-calendar-header-day{
+.v-calendar-header-week td:nth-of-type(8) .v-calendar-header-day {
 	background: none no-repeat left top #C9E4F3;
-    border-right: 1px solid #A1A1A1;
-    border-bottom: 1px solid #A1A1A1;
-    border-top: 1px solid #A1A1A1;
-    height:30px;
-    vertical-align: middle;
-    line-height: 30px;
+	border-right: 1px solid #A1A1A1;
+	border-bottom: 1px solid #A1A1A1;
+	border-top: 1px solid #A1A1A1;
+	height: 30px;
+	vertical-align: middle;
+	line-height: 30px;
 }
 
-.v-calendar-header-week td:nth-of-type(2) .v-calendar-header-day{
+.v-calendar-header-week td:nth-of-type(2) .v-calendar-header-day {
 	background: none no-repeat left top #C9E4F3;
-    border-left: 1px solid #A1A1A1;
-    border-bottom: 1px solid #A1A1A1;
-    border-top: 1px solid #A1A1A1;
-    height:30px;
-    vertical-align: middle;
-    line-height: 30px;
+	border-left: 1px solid #A1A1A1;
+	border-bottom: 1px solid #A1A1A1;
+	border-top: 1px solid #A1A1A1;
+	height: 30px;
+	vertical-align: middle;
+	line-height: 30px;
 }
 
-.v-calendar-header-day .v-calendar-header-day-today .v-calendar-header-day-Vsized{
+.v-calendar-header-day .v-calendar-header-day-today .v-calendar-header-day-Vsized
+	{
 	background: none no-repeat left top #C9E4F3;
-    border: 1px solid #A1A1A1;
-    height:30px;
-    vertical-align: middle;
-    line-height: 30px;
+	border: 1px solid #A1A1A1;
+	height: 30px;
+	vertical-align: middle;
+	line-height: 30px;
 }
 
 .v-calendar-header-week {
@@ -1957,7 +1975,9 @@ input.v-textfield-errorField {
 	background: -o-linear-gradient(top, #F8F8F8 0, #EEEEEE 100%);
 	background: -ms-linear-gradient(top, #F8F8F8 0, #EEEEEE 100%);
 	background: linear-gradient(to bottom, #F8F8F8 0, #EEEEEE 100%);
-	filter: progid:                                                DXImageTransform.Microsoft.gradient(startColorstr=
+<<<<<<< HEAD
+	filter: progid:                                                 DXImageTransform.Microsoft.gradient(startColorstr=
+		
 		
         
         
@@ -2001,15 +2021,18 @@ input.v-textfield-errorField {
         
         
          
-           '#F8F8F8', endColorstr=   
+           '#F8F8F8', endColorstr=    
                                                     '#EEEEEE',
-		GradientType=   
+		GradientType=    
                                
         
         
           
             
                   0);
+=======
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#F8F8F8', endColorstr='#EEEEEE',GradientType=0);
+>>>>>>> 3b0b6d50cd838066c23eb0e415d83e1856cdb17b
 	border-right: 1px solid #CCC;
 	border-top: 1px solid #CCC;
 }
@@ -2026,7 +2049,7 @@ input.v-textfield-errorField {
 }
 
 .v-calendar-weekly-longevents .v-calendar-datecell {
-	min-height:10px;
+	min-height: 10px;
 }
 
 .v-calendar-header-week .v-calendar-back,.v-calendar-header-week .v-calendar-next
@@ -2234,6 +2257,10 @@ input.v-textfield-errorField {
 	border-width: 0px 1px 1px;
 	border-style: solid;
 	border-color: rgb(169, 169, 169);
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    height: 100%;
 }
 
 .date-wrapper {
@@ -2248,10 +2275,13 @@ input.v-textfield-errorField {
 	border-style: solid;
 	border-color: rgb(169, 169, 169);
 	color: white;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
 }
 
 .project-member-readview .date-wrapper>.v-csslayout-margin,.project-member-readview .stream-wrapper>.v-csslayout-margin
-	{
+{
 	border-width: 0px 0px 1px;
 }
 /* End Activity Stream Channel */
@@ -2404,11 +2434,15 @@ div.v-splitbutton,div.v-splitbutton .v-button {
 .v-splitbutton .bluebtn,.v-splitbutton .graybtn {
 	margin: 0px;
 	border-radius: 3px 0px 0px 3px;
-	padding: 3px 8px;
+	padding: 3px 3px 3px 8px;
 }
 
 .v-ie .v-splitbutton .bluebtn,.v-ie .v-splitbutton .graybtn {
-	padding: 5px 8px 0px 8px;
+	padding: 3px 3px 3px 8px;
+    box-sizing: border-box;
+}
+.v-ie .v-splitbutton .graybtn.v-popupbutton, .v-ie .v-splitbutton .bluebtn.v-popupbutton {
+    padding: 3px 7px 3px 2px;
 }
 
 .v-splitbutton .v-popupbutton.bluebtn,.v-splitbutton .v-popupbutton.graybtn
@@ -2420,12 +2454,12 @@ div.v-splitbutton,div.v-splitbutton .v-button {
 
 .v-splitbutton .v-popupbutton.bluebtn,.v-splitbutton .v-popupbutton.bluebtn:active,.v-splitbutton .v-popupbutton.graybtn,.v-splitbutton .v-popupbutton.graybtn:active
 	{
-	padding: 3px 7px 8px 2px;
+	padding: 3px 7px 3px 2px;
 }
 
 .v-ie7 .v-splitbutton .v-popupbutton.bluebtn,.v-ie7 .v-splitbutton .v-popupbutton.graybtn:active,.v-ie7 .v-splitbutton .v-popupbutton.graybtn,.v-ie7 .v-splitbutton .v-popupbutton.graybtn:active
 	{
-	padding: 5px 7px 0px 2px;
+	padding: 3px 7px 3px 2px;
 }
 
 .v-splitbutton .v-popupbutton.bluebtn .v-popup-indicator,.v-splitbutton .v-popupbutton.graybtn .v-popup-indicator
@@ -2448,14 +2482,14 @@ div.v-splitbutton,div.v-splitbutton .v-button {
 	font-size: 10px;
 	cursor: pointer;
 }
+
 .v-table-table {
-    width: 100%;
+	width: 100%;
 }
 /*
 .v-table-cell-content {
     padding-right: 0px;
 }*/
-
 .v-table-row {
 	background: none repeat scroll 0% 0% rgb(212, 223, 239);
 }
@@ -2590,13 +2624,23 @@ div.v-splitbutton,div.v-splitbutton .v-button {
 	padding: 0px 0px 0px 58px;
 }
 
+.message .message-container {
+    padding-left: 10px;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
 .message .message-container>.v-csslayout-margin {
 	background-color: #fff;
 	padding: 10px;
 	border: 2px solid #a9a9a9;
 	border-radius: 5px;
-	margin-left: 10px;
+	/*margin-left: 10px;*/
 	position: relative;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 .v-ie7 .message .message-container>.v-csslayout-margin {
@@ -2756,7 +2800,8 @@ div.v-splitbutton,div.v-splitbutton .v-button {
 	border-color: rgb(169, 169, 169);
 }
 
-.v-button .v-button-v-button-bluebtn-calendar .v-button-bluebtn-calendar .v-popupbutton .v-button-wrap .v-popup-indicator{
+.v-button .v-button-v-button-bluebtn-calendar .v-button-bluebtn-calendar .v-popupbutton .v-button-wrap .v-popup-indicator
+	{
 	background: url("icons/sprites-white.png") no-repeat scroll -5px -10px
 		transparent;
 }
@@ -3590,7 +3635,7 @@ table.legendBox .legendBoxContent .v-csslayout-container>div {
 	border-style: solid;
 	border-color: rgb(169, 169, 169);
 	border-radius: 3px 3px 0px 0px;
-	padding: 7px 10px 7px 18px;
+	padding: 3px 10px 3px 18px;
 	background: url('icons/grad-light-top2.png') repeat-x left top
 		rgb(228, 228, 228);
 }
@@ -3735,7 +3780,7 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 
 /* New ReadViewLayout */
 .v-csslayout-readview-layout {
-	margin-top: 20px;
+	margin-top: 10px;
 }
 
 .projectTabContent .usergroup-view .v-csslayout-readview-layout {
@@ -3924,7 +3969,7 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 
 /* New AddViewLayout */
 .v-csslayout-addview-layout {
-	margin-top: 20px;
+	margin-top: 10px;
 }
 
 .v-csslayout-addview-layout>.v-csslayout-margin {
@@ -3958,7 +4003,7 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 
 .addview-layout-header .v-label-h1 {
 	padding: 0px 0px 15px 5px;
-	font-size: 15px;
+	font-size: 12px;
 	text-overflow: ellipsis;
 	overflow: hidden;
 	white-space: nowrap;
@@ -3973,6 +4018,9 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 	font-size: 12px;
 	border-bottom: 1px solid #a9a9a9;
 	color: rgb(69, 69, 69);
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 .addview-layout-body .control-buttons {
@@ -4162,7 +4210,7 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 }
 
 .bugdashboard-header-top>.v-csslayout-margin {
-	padding: 5px 10px 5px 18px;
+	padding: 2px 10px 5px 10px;
 	border-bottom: 1px solid rgb(169, 169, 169);
 }
 
@@ -4981,15 +5029,18 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 .CrmCustomViewHeader .headerTitle .v-horizontallayout-margin {
 	padding: 4px 10px 4px 15px;
 }
+
 .CrmCustomViewHeader .headerTitle .control-buttons .v-horizontallayout-margin
-{
+	{
 	padding: 0px;
 }
 
 /* Custom Field Settings Section */
-.crmContainer .projectDashboardView.main-content-wrapper > .v-csslayout-margin {
+.crmContainer .projectDashboardView.main-content-wrapper>.v-csslayout-margin
+	{
 	padding: 0px;
 }
+
 .v-verticallayout-customFieldSection {
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
@@ -5046,7 +5097,8 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 	vertical-align: bottom;
 }
 
-.customFieldComponent .editFieldBtn, .deleteSection .customFieldComponent .editFieldBtn:active:focus, .deleteSection .customFieldComponent:hover .editFieldBtn {
+.customFieldComponent .editFieldBtn,.deleteSection .customFieldComponent .editFieldBtn:active:focus,.deleteSection .customFieldComponent:hover .editFieldBtn
+	{
 	visibility: hidden;
 }
 
@@ -5093,66 +5145,103 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 	opacity: 0.8;
 }
 
-.v-horizontallayout-eventLblcompleted{
+.v-horizontallayout-eventLblcompleted {
 	background-color: #96D794;
 	text-align: center;
 }
 
-.v-horizontallayout-eventLbloverdue{
+.v-horizontallayout-eventLbloverdue {
 	background-color: #EF8585;
 	text-align: center;
 }
 
-.v-horizontallayout-eventLblfuture{
+.v-horizontallayout-eventLblfuture {
 	background-color: #99C4DD;
 	text-align: center;
 }
 
-.v-calendar-event-eventoverdue-all-day{
+.v-calendar-event-eventoverdue-all-day {
 	background: none repeat scroll 0 0 #EF8585;
 }
 
-.v-calendar-event-all-day{
+.v-calendar-event-all-day {
 	background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
-    display: block;
-    margin-left: -2px;
+	display: block;
+	margin-left: -2px;
 }
 
 /* .v-buttongroup .v-button.v-button-right */
-.v-button-selected-style{
+.v-button-selected-style {
 	background: none repeat scroll 0 0 #A1A1A1;
-	border-color : #ABABAB;
+	border-color: #ABABAB;
 }
 
-.v-horizontallayout-eventdatepicker{
-    border: 1px solid #093768;
-    border-radius: 3px;
-    color: #FFFFFF;
-    padding: 3px 13px;
-    text-shadow: 1px 1px 0 #000000;
+.v-horizontallayout-eventdatepicker {
+	border: 1px solid #093768;
+	border-radius: 3px;
+	color: #FFFFFF;
+	padding: 3px 13px;
+	text-shadow: 1px 1px 0 #000000;
 }
 
 /* Create Custome Field Window */
 .createCustomFieldWindow .panel-header {
-    font-weight: bold;
+	font-weight: bold;
 }
 
-.stickytooltip{
+.stickytooltip {
 	box-shadow: 5px 5px 8px #818181; /*shadow for CSS3 capable browsers.*/
 	-webkit-box-shadow: 5px 5px 8px #818181;
 	-moz-box-shadow: 5px 5px 8px #818181;
-	display:none;
-	position:absolute;
-	display:none;
-/* 	border:5px solid black; Border around tooltip */
+	display: none;
+	position: absolute;
+	display: none;
+	/* 	border:5px solid black; Border around tooltip */
 	background-color: #FDFDEE;
-	z-index:3000;
+	z-index: 3000;
+	font: 11px Arial, Verdana, Helvetica, sans-serif !important;
+	line-height: normal;
 }
 
-.stickytooltip .stickystatus{ /*Style for footer bar within tooltip*/
-	background:black;
-	color:white;
-	padding-top:5px;
-	text-align:center;
-	font:bold 11px Arial;
+.stickytooltip .stickystatus { /*Style for footer bar within tooltip*/
+	background: black;
+	color: white;
+	padding-top: 5px;
+	text-align: center;
+	font: 11px Arial, Verdana, Helvetica, sans-serif !important;
+	line-height: normal;
+}
+
+
+.v-horizontallayout-addview-layout-header .v-horizontallayout-margin {
+	padding: 4px 5px 4px 15px;
+}
+
+.v-horizontallayout-readview-layout-header .v-horizontallayout-margin{
+	padding: 2px 5px 0px 8px;
+}
+.readview-header-left .v-horizontallayout-margin {
+	padding: 0px 0px 0px 7px;;
+}
+
+.readview-header-left .v-label.h2{
+	font-size : 12px;
+}
+
+.addview-layout-header .v-label.h2 {
+	font-size: 12px;
+}
+
+.v-horizontallayout-readview-header-left .readview-header-left{
+	padding-bottom: 10px;
+}
+
+.label-padding-left-5px{
+	padding-left:5px;
+}
+.v-ie9 .v-gridlayout-margin > div > div > .v-caption, .v-ie9 .v-horizontallayout.gridform-field > div > div > .v-caption {
+    margin-right: 0px;
+}
+.v-required-field-indicator {
+    width: 4px;
 }

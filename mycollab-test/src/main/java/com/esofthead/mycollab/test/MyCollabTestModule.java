@@ -17,9 +17,9 @@
 package com.esofthead.mycollab.test;
 
 /**
- * Engroup test class can be tested against external entities like database,
- * ldap, email server etc or combine several of them. EngroupTestModule provide
- * the plugin module for engroup test class that they can add several supported
+ * MyCollab test class can be tested against external entities like database,
+ * ldap, email server etc or combine several of them. MyCollabTestModule provide
+ * the plugin module for MyCollab test class that they can add several supported
  * module that helps the process of set up and destroy external entities without
  * impacting to test code.
  * 
@@ -29,7 +29,7 @@ package com.esofthead.mycollab.test;
  *     public ATest () {
  *         addTestModule(new DbUnitModule());
  *     }
- *
+ * 
  *     public void testXyz() {
  *         //do the test against database
  *     }

@@ -1,12 +1,25 @@
 package com.esofthead.mycollab.pages;
 
-import org.apache.wicket.markup.html.basic.Label;
+import com.esofthead.mycollab.ErrorReportingUtils;
+import com.esofthead.mycollab.SiteConfiguration;
+import com.esofthead.mycollab.rest.client.RemoteServiceProxy;
+import com.esofthead.mycollab.rest.server.domain.ContactForm;
+import com.esofthead.mycollab.rest.server.resource.ContactResource;
+import com.esofthead.mycollab.uicomponents.ContactFormNotificationPanel;
+import org.apache.wicket.Component;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.markup.html.form.AjaxButton;
+import org.apache.wicket.behavior.Behavior;
+import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
+import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.HiddenField;
 import org.apache.wicket.markup.html.form.RequiredTextField;
-import org.apache.wicket.markup.html.form.StatelessForm;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
+import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.ResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
@@ -14,12 +27,7 @@ import org.apache.wicket.validation.validator.EmailAddressValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.esofthead.mycollab.ErrorReportingUtils;
-import com.esofthead.mycollab.SiteConfiguration;
 import com.esofthead.mycollab.base.BasePage;
-import com.esofthead.mycollab.rest.client.RemoteServiceProxy;
-import com.esofthead.mycollab.rest.server.domain.ContactForm;
-import com.esofthead.mycollab.rest.server.resource.ContactResource;
 
 public class ContactUsPage extends BasePage {
 
@@ -70,12 +78,30 @@ public class ContactUsPage extends BasePage {
 		message.setRequired(true);
 		message.setLabel(new ResourceModel("label.message"));
 
-		final StatelessForm<Void> form = new StatelessForm<Void>("contact-form") {
+		final Form<Void> form = new Form<Void>("contact-form");
+
+		final ModalWindow modal = new ModalWindow("modal");
+		modal.setResizable(false);
+		modal.setInitialHeight(90);
+		modal.setInitialWidth(400);
+		modal.setHeightUnit("px");
+		modal.setWidthUnit("px");
+		modal.setCloseButtonCallback(new ModalWindow.CloseButtonCallback() {
+			@Override
+			public boolean onCloseButtonClicked(AjaxRequestTarget target) {
+				return false;
+			}
+		});
+		modal.setContent(new ContactFormNotificationPanel(modal.getContentId()));
+
+		final AjaxButton submitLink = new AjaxButton("submit-link") {
 
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onSubmit() {
+			public void onSubmit(final AjaxRequestTarget target,
+					final Form<?> form) {
+				target.add(feedbackPanel);
 				final ContactResource contactResource = RemoteServiceProxy
 						.build(SiteConfiguration.getApiUrl(),
 								ContactResource.class);
@@ -91,19 +117,27 @@ public class ContactUsPage extends BasePage {
 					dataform.setSubject(subject.getModelObject());
 					dataform.setMessage(message.getModelObject());
 
-					ContactUsPage.log.debug("Submit form {}",
-							SiteConfiguration.getApiUrl());
+					log.debug("Submit form {}", SiteConfiguration.getApiUrl());
 					final String response = contactResource.submit(dataform);
-					ContactUsPage.log.debug("Response of site: {}", response);
+					log.debug("Response of site: {}", response);
+					modal.show(target);
 
 				} catch (final Exception e) {
 					error(e.getMessage());
 					ErrorReportingUtils.reportError(e);
 				}
+
+			}
+
+			@Override
+			public void onError(final AjaxRequestTarget target,
+					final Form<?> form) {
+				target.add(feedbackPanel);
 			}
 		};
 
 		this.add(form);
+		this.add(modal);
 		form.add(email);
 		form.add(name);
 		form.add(company);
@@ -112,11 +146,35 @@ public class ContactUsPage extends BasePage {
 		form.add(industry);
 		form.add(subject);
 		form.add(message);
+		form.add(submitLink);
 
 		form.add(new CreateReCaptchaPanel("recaptcha"));
 
 		this.add(feedbackPanel);
-		this.add(new Label("pagetitle", "Contact Us"));
+		this.add(new Behavior() {
+			@Override
+			public void renderHead(Component component, IHeaderResponse response) {
+				response.render(new OnDomReadyHeaderItem(
+						"Wicket.Window.unloadConfirmation = false;"));
+			}
+		});
+	}
+
+	@Override
+	public IModel getPageTitle() {
+		return new Model<String>("MyCollab - Contact Us");
+	}
+
+	@Override
+	public IModel getDescription() {
+		return new Model<String>(
+				"Contact us for inquiry, support about MyCollab services");
+	}
+
+	@Override
+	public IModel getKeywords() {
+		return new Model<String>(
+				"project management tool, business tools, crm system, online collaboration, cloud office, documents management, online office");
 	}
 
 }

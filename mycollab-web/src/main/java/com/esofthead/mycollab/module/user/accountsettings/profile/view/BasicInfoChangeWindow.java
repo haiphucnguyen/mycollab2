@@ -132,7 +132,7 @@ public class BasicInfoChangeWindow extends Window {
 
 			@Override
 			public void buttonClick(final ClickEvent event) {
-				BasicInfoChangeWindow.this.changePassword();
+				BasicInfoChangeWindow.this.changeUserInfo();
 			}
 		});
 		sendBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
@@ -155,7 +155,7 @@ public class BasicInfoChangeWindow extends Window {
 		mb.show();
 	}
 
-	private void changePassword() {
+	private void changeUserInfo() {
 
 		this.txtLastName.removeStyleName("errorField");
 		this.txtEmail.removeStyleName("errorField");

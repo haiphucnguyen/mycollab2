@@ -27,10 +27,18 @@ import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 
+import org.eclipse.jetty.annotations.AnnotationConfiguration;
+import org.eclipse.jetty.plus.webapp.EnvConfiguration;
+import org.eclipse.jetty.plus.webapp.PlusConfiguration;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.HandlerList;
+import org.eclipse.jetty.webapp.Configuration;
+import org.eclipse.jetty.webapp.FragmentConfiguration;
+import org.eclipse.jetty.webapp.MetaInfConfiguration;
 import org.eclipse.jetty.webapp.WebAppContext;
+import org.eclipse.jetty.webapp.WebInfConfiguration;
+import org.eclipse.jetty.webapp.WebXmlConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,6 +57,7 @@ public abstract class GenericServerRunner {
 
 	private Server server;
 	private int port = 0;
+	public static boolean isFirstTimeRunner = false;
 
 	public abstract WebAppContext buildContext(String baseDir);
 
@@ -179,6 +188,7 @@ public abstract class GenericServerRunner {
 		File file = detectConfigFile("mycollab.properties");
 		if (file == null) {
 			log.debug("Can not detect mycollab.properties file. It seems mycollab is in first use.");
+			isFirstTimeRunner = true;
 			TemplateContext templateContext = new TemplateContext();
 
 			System.out
@@ -212,6 +222,9 @@ public abstract class GenericServerRunner {
 				} catch (Exception e) {
 					System.out.println("Port must be the number from 1-65000");
 					numTries++;
+					if (numTries == 3) {
+						System.exit(-1);
+					}
 				}
 			}
 
@@ -226,14 +239,19 @@ public abstract class GenericServerRunner {
 
 			numTries = 0;
 			while (numTries < 3) {
-				System.out
-						.println("Enter database name (Database must be created before):");
-
-				String dbName = device.readLine();
 				templateContext.put("db.driverClassName",
 						"com.mysql.jdbc.Driver");
+
+				System.out.println("Enter database server address:");
+				String dbServerAddress = device.readLine();
+
+				System.out
+						.println("Enter database name (Database must be created before):");
+				String dbName = device.readLine();
+
 				String dbUrl = String.format(
-						"jdbc:mysql://localhost/%s?useUnicode=true", dbName);
+						"jdbc:mysql://%s/%s?useUnicode=true", dbServerAddress,
+						dbName);
 				templateContext.put("dbUrl", dbUrl);
 
 				System.out.println("Enter database user name:");
@@ -255,6 +273,9 @@ public abstract class GenericServerRunner {
 					e.printStackTrace();
 					System.err.println("Can not set up database.");
 					numTries++;
+					if (numTries == 3) {
+						System.exit(-1);
+					}
 				}
 			}
 
@@ -383,12 +404,16 @@ public abstract class GenericServerRunner {
 		String webappDirLocation = detectWebApp();
 
 		WebAppContext appContext = buildContext(webappDirLocation);
+		appContext.setConfigurations(new Configuration[] {
+				new AnnotationConfiguration(), new WebXmlConfiguration(),
+				new WebInfConfiguration(), new PlusConfiguration(),
+				new MetaInfConfiguration(), new FragmentConfiguration(),
+				new EnvConfiguration() });
 		HandlerList handlers = new HandlerList();
 		handlers.setHandlers(new Handler[] { appContext });
 		server.setHandler(handlers);
 
 		server.setStopAtShutdown(true);
-		server.setSendServerVersion(true);
 
 		server.start();
 

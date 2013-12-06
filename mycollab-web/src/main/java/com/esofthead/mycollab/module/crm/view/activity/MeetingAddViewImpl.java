@@ -16,12 +16,8 @@
  */
 package com.esofthead.mycollab.module.crm.view.activity;
 
-import java.util.Collection;
-
-import org.vaadin.addon.customfield.CustomField;
-
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
-import com.esofthead.mycollab.module.crm.domain.Meeting;
+import com.esofthead.mycollab.module.crm.domain.MeetingWithBLOBs;
 import com.esofthead.mycollab.module.crm.ui.components.RelatedEditItemField;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
@@ -33,7 +29,6 @@ import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Alignment;
-import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Layout;
@@ -45,7 +40,7 @@ public class MeetingAddViewImpl extends AbstractView implements MeetingAddView {
 
 	private static final long serialVersionUID = 1L;
 	private EditForm editForm;
-	private Meeting meeting;
+	private MeetingWithBLOBs meeting;
 
 	public MeetingAddViewImpl() {
 		super();
@@ -54,12 +49,12 @@ public class MeetingAddViewImpl extends AbstractView implements MeetingAddView {
 	}
 
 	@Override
-	public void editItem(Meeting item) {
+	public void editItem(MeetingWithBLOBs item) {
 		this.meeting = item;
-		editForm.setItemDataSource(new BeanItem<Meeting>(meeting));
+		editForm.setItemDataSource(new BeanItem<MeetingWithBLOBs>(meeting));
 	}
 
-	private class EditForm extends AdvancedEditBeanForm<Meeting> {
+	private class EditForm extends AdvancedEditBeanForm<MeetingWithBLOBs> {
 
 		private static final long serialVersionUID = 1L;
 
@@ -81,7 +76,7 @@ public class MeetingAddViewImpl extends AbstractView implements MeetingAddView {
 
 			private Layout createButtonControls() {
 				final HorizontalLayout controlPanel = new HorizontalLayout();
-				final Layout controlButtons = (new EditFormControlsGenerator<Meeting>(
+				final Layout controlButtons = (new EditFormControlsGenerator<MeetingWithBLOBs>(
 						EditForm.this)).createButtonControls();
 				controlButtons.setSizeUndefined();
 				controlPanel.addComponent(controlButtons);
@@ -118,9 +113,11 @@ public class MeetingAddViewImpl extends AbstractView implements MeetingAddView {
 				} else if (propertyId.equals("status")) {
 					return new MeetingStatusComboBox();
 				} else if (propertyId.equals("startdate")) {
-					return new DateTimePicker<Meeting>("startdate", meeting);
+					return new DateTimePicker<MeetingWithBLOBs>("startdate",
+							meeting);
 				} else if (propertyId.equals("enddate")) {
-					return new DateTimePicker<Meeting>("enddate", meeting);
+					return new DateTimePicker<MeetingWithBLOBs>("enddate",
+							meeting);
 				} else if (propertyId.equals("description")) {
 					TextArea descArea = new TextArea();
 					descArea.setNullRepresentation("");
@@ -136,6 +133,7 @@ public class MeetingAddViewImpl extends AbstractView implements MeetingAddView {
 					field.setType(meeting.getType());
 					return field;
 				} else if (propertyId.equals("isrecurrence")) {
+					return new RecurringActivityCustomField(meeting);
 				}
 				return null;
 			}
@@ -143,21 +141,8 @@ public class MeetingAddViewImpl extends AbstractView implements MeetingAddView {
 	}
 
 	@Override
-	public HasEditFormHandlers<Meeting> getEditFormHandlers() {
+	public HasEditFormHandlers<MeetingWithBLOBs> getEditFormHandlers() {
 		return editForm;
-	}
-
-	private class RecurringSettingPanel extends CustomField {
-		private static final long serialVersionUID = 1L;
-
-		public RecurringSettingPanel() {
-			CheckBox isRecurringBox = new CheckBox();
-		}
-
-		@Override
-		public Class<?> getType() {
-			return Object.class;
-		}
 	}
 
 	private class MeetingStatusComboBox extends ValueComboBox {

@@ -50,14 +50,15 @@ public class CrmTooltipGenerator {
 		try {
 			if (account == null)
 				return null;
-			Div div = new Div();
+			Div div = new Div()
+					.setStyle("font: 12px Arial, Verdana, Helvetica, sans-serif !important;line-height: normal;");
 			H3 accountName = new H3();
 			accountName
 					.appendText(Jsoup.parse(account.getAccountname()).html());
 			div.appendChild(accountName);
 
 			com.hp.gagawa.java.elements.Table table = new com.hp.gagawa.java.elements.Table();
-			table.setStyle("padding-left:10px; width :500px; color: #5a5a5a; font-size:12px;");
+			table.setStyle("padding-left:10px; width :500px; color: #5a5a5a; font-size:11px;");
 			Tr trRow1 = new Tr();
 			trRow1.appendChild(
 					new Td().setStyle(
@@ -182,14 +183,15 @@ public class CrmTooltipGenerator {
 		try {
 			if (contact == null)
 				return null;
-			Div div = new Div();
+			Div div = new Div()
+					.setStyle("font: 12px Arial, Verdana, Helvetica, sans-serif !important;line-height: normal;");
 			H3 contactName = new H3();
 			contactName
 					.appendText(Jsoup.parse(contact.getContactName()).html());
 			div.appendChild(contactName);
 
 			com.hp.gagawa.java.elements.Table table = new com.hp.gagawa.java.elements.Table();
-			table.setStyle("padding-left:10px; width :500px; color: #5a5a5a; font-size:12px;");
+			table.setStyle("padding-left:10px; width :500px; color: #5a5a5a; font-size:11px;");
 			Tr trRow1 = new Tr();
 			trRow1.appendChild(
 					new Td().setStyle(
@@ -365,13 +367,14 @@ public class CrmTooltipGenerator {
 		try {
 			if (campagin == null)
 				return null;
-			Div div = new Div();
+			Div div = new Div()
+					.setStyle("font: 12px Arial, Verdana, Helvetica, sans-serif !important;line-height: normal;");
 			H3 campaginName = new H3();
 			campaginName.appendText(campagin.getCampaignname());
 			div.appendChild(campaginName);
 
 			com.hp.gagawa.java.elements.Table table = new com.hp.gagawa.java.elements.Table();
-			table.setStyle("padding-left:10px; width :500px; color: #5a5a5a; font-size:12px;");
+			table.setStyle("padding-left:10px; width :500px; color: #5a5a5a; font-size:11px;");
 			Tr trRow1 = new Tr();
 			trRow1.appendChild(
 					new Td().setStyle(
@@ -544,13 +547,14 @@ public class CrmTooltipGenerator {
 		try {
 			if (lead == null)
 				return null;
-			Div div = new Div();
+			Div div = new Div()
+					.setStyle("font: 12px Arial, Verdana, Helvetica, sans-serif !important;line-height: normal;");
 			H3 leadName = new H3();
 			leadName.appendText(Jsoup.parse(lead.getLeadName()).html());
 			div.appendChild(leadName);
 
 			com.hp.gagawa.java.elements.Table table = new com.hp.gagawa.java.elements.Table();
-			table.setStyle("padding-left:10px; width :500px; color: #5a5a5a; font-size:12px;");
+			table.setStyle("padding-left:10px; width :500px; color: #5a5a5a; font-size:11px;");
 			Tr trRow1 = new Tr();
 			trRow1.appendChild(
 					new Td().setStyle(
@@ -797,14 +801,15 @@ public class CrmTooltipGenerator {
 		try {
 			if (opportunity == null)
 				return null;
-			Div div = new Div();
+			Div div = new Div()
+					.setStyle("font: 12px Arial, Verdana, Helvetica, sans-serif !important;line-height: normal;");
 			H3 opportunityName = new H3();
 			opportunityName.appendText(Jsoup.parse(
 					opportunity.getOpportunityname()).html());
 			div.appendChild(opportunityName);
 
 			com.hp.gagawa.java.elements.Table table = new com.hp.gagawa.java.elements.Table();
-			table.setStyle("padding-left:10px; width :500px; color: #5a5a5a; font-size:12px;");
+			table.setStyle("padding-left:10px; width :500px; color: #5a5a5a; font-size:11px;");
 			Tr trRow1 = new Tr();
 			trRow1.appendChild(
 					new Td().setStyle(
@@ -997,13 +1002,14 @@ public class CrmTooltipGenerator {
 		try {
 			if (cases == null)
 				return null;
-			Div div = new Div();
+			Div div = new Div()
+					.setStyle("font: 12px Arial, Verdana, Helvetica, sans-serif !important;line-height: normal;");
 			H3 caseName = new H3();
 			caseName.appendText(Jsoup.parse(cases.getSubject()).html());
 			div.appendChild(caseName);
 
 			com.hp.gagawa.java.elements.Table table = new com.hp.gagawa.java.elements.Table();
-			table.setStyle("padding-left:10px; width :500px; color: #5a5a5a; font-size:12px;");
+			table.setStyle("padding-left:10px; width :500px; color: #5a5a5a; font-size:11px;");
 			Tr trRow1 = new Tr();
 			trRow1.appendChild(
 					new Td().setStyle(
@@ -1176,13 +1182,14 @@ public class CrmTooltipGenerator {
 		try {
 			if (meeting == null)
 				return null;
-			Div div = new Div();
+			Div div = new Div()
+					.setStyle("font: 12px Arial, Verdana, Helvetica, sans-serif !important;line-height: normal;");
 			H3 eventName = new H3();
 			eventName.appendText(meeting.getSubject());
 			div.appendChild(eventName);
 
 			com.hp.gagawa.java.elements.Table table = new com.hp.gagawa.java.elements.Table();
-			table.setStyle("padding-left:10px; width :500px; color: #5a5a5a; font-size:12px;");
+			table.setStyle("padding-left:10px; width :500px; color: #5a5a5a; font-size:11px;");
 			Tr trRow1 = new Tr();
 			trRow1.appendChild(
 					new Td().setStyle(
@@ -1267,13 +1274,14 @@ public class CrmTooltipGenerator {
 		try {
 			if (call == null)
 				return null;
-			Div div = new Div();
+			Div div = new Div()
+					.setStyle("font: 12px Arial, Verdana, Helvetica, sans-serif !important;line-height: normal;");
 			H3 callName = new H3();
 			callName.appendText(call.getSubject());
 			div.appendChild(callName);
 
 			com.hp.gagawa.java.elements.Table table = new com.hp.gagawa.java.elements.Table();
-			table.setStyle("padding-left:10px; width :500px; color: #5a5a5a; font-size:12px;");
+			table.setStyle("padding-left:10px; width :500px; color: #5a5a5a; font-size:11px;");
 			Tr trRow1 = new Tr();
 			trRow1.appendChild(
 					new Td().setStyle(
@@ -1366,13 +1374,14 @@ public class CrmTooltipGenerator {
 		try {
 			if (task == null)
 				return null;
-			Div div = new Div();
+			Div div = new Div()
+					.setStyle("font: 12px Arial, Verdana, Helvetica, sans-serif !important;line-height: normal;");
 			H3 eventName = new H3();
 			eventName.appendText(Jsoup.parse(task.getSubject()).html());
 			div.appendChild(eventName);
 
 			com.hp.gagawa.java.elements.Table table = new com.hp.gagawa.java.elements.Table();
-			table.setStyle("padding-left:10px; width :500px; color: #5a5a5a; font-size:12px;");
+			table.setStyle("padding-left:10px; width :500px; color: #5a5a5a; font-size:11px;");
 			Tr trRow1 = new Tr();
 			trRow1.appendChild(
 					new Td().setStyle(

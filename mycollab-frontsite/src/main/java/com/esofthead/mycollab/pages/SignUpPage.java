@@ -18,6 +18,7 @@ import org.apache.wicket.markup.html.list.AbstractItem;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.AbstractReadOnlyModel;
+import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.ResourceModel;
 import org.apache.wicket.protocol.http.servlet.ServletWebRequest;
@@ -351,8 +352,6 @@ public class SignUpPage extends BasePage {
 		if (currentService == "") {
 			backToNormal.setVisible(false);
 		}
-
-		this.add(new Label("pagetitle", "Sign Up"));
 	}
 
 	private void doAuthenticate(String authId) {
@@ -421,6 +420,23 @@ public class SignUpPage extends BasePage {
 		} catch (Exception e) {
 			throw new MyCollabException(e);
 		}
+	}
+
+	@Override
+	public IModel getPageTitle() {
+		return new Model<String>("MyCollab - Signup");
+	}
+
+	@Override
+	public IModel getDescription() {
+		return new Model<String>(
+				"MyCollab offers various ways to signup system via Facebook, Twitter, Google and Github accounts");
+	}
+
+	@Override
+	public IModel getKeywords() {
+		return new Model<String>(
+				"project management tool, business tools, crm system, online collaboration, cloud office, documents management, online office");
 	}
 
 }

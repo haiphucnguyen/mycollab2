@@ -2,16 +2,10 @@ package com.esofthead.mycollab.base;
 
 import com.esofthead.mycollab.SiteConfiguration;
 import com.esofthead.mycollab.uicomponents.ChatIFrame;
+import com.esofthead.mycollab.pages.*;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.link.ExternalLink;
 import org.apache.wicket.markup.html.panel.Panel;
-
-import com.esofthead.mycollab.pages.ContactUsPage;
-import com.esofthead.mycollab.pages.PricingPage;
-import com.esofthead.mycollab.pages.PrivacyPage;
-import com.esofthead.mycollab.pages.SignInPage;
-import com.esofthead.mycollab.pages.TermOfServicePage;
-import com.esofthead.mycollab.pages.TourPage;
 
 public class Footer extends Panel {
 
@@ -44,6 +38,9 @@ public class Footer extends Panel {
 		final BookmarkablePageLink<Void> terms = new BookmarkablePageLink<Void>(
 				"termslink", TermOfServicePage.class);
 		this.add(terms);
+        final BookmarkablePageLink<Void> blog = new BookmarkablePageLink<Void>(
+                "bloglink", BlogPage.class);
+        this.add(blog);
 
 		this.setRenderBodyOnly(true);
 	}

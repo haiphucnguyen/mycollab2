@@ -43,7 +43,6 @@ import com.esofthead.mycollab.module.project.domain.criteria.MessageSearchCriter
 import com.esofthead.mycollab.module.project.events.MessageEvent;
 import com.esofthead.mycollab.module.project.localization.MessageI18nEnum;
 import com.esofthead.mycollab.module.project.service.MessageService;
-import com.esofthead.mycollab.shell.view.ScreenSize;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
@@ -406,6 +405,7 @@ public class MessageListViewImpl extends AbstractView implements
 					.newResource("icons/24/project/message.png"));
 			final HorizontalLayout layoutHeader = new HorizontalLayout();
 			layoutHeader.setStyleName("message-toppanel-header");
+			layoutHeader.setHeight("30px");
 			layoutHeader.addComponent(icon);
 			layoutHeader.addComponent(headerLbl);
 			layoutHeader.setExpandRatio(headerLbl, 1.0f);

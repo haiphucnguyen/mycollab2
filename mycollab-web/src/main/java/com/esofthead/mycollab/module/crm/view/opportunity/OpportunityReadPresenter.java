@@ -33,7 +33,7 @@ import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.CallWithBLOBs;
 import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.module.crm.domain.Lead;
-import com.esofthead.mycollab.module.crm.domain.Meeting;
+import com.esofthead.mycollab.module.crm.domain.MeetingWithBLOBs;
 import com.esofthead.mycollab.module.crm.domain.Opportunity;
 import com.esofthead.mycollab.module.crm.domain.OpportunityContact;
 import com.esofthead.mycollab.module.crm.domain.OpportunityLead;
@@ -187,7 +187,7 @@ public class OpportunityReadPresenter extends
 													OpportunityReadPresenter.this,
 													task));
 						} else if (itemId.equals("meeting")) {
-							Meeting meeting = new Meeting();
+							MeetingWithBLOBs meeting = new MeetingWithBLOBs();
 							meeting.setType(CrmTypeConstants.OPPORTUNITY);
 							meeting.setTypeid(view.getItem().getId());
 							EventBus.getInstance().fireEvent(

@@ -33,7 +33,7 @@ import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.CallWithBLOBs;
 import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.module.crm.domain.ContactOpportunity;
-import com.esofthead.mycollab.module.crm.domain.Meeting;
+import com.esofthead.mycollab.module.crm.domain.MeetingWithBLOBs;
 import com.esofthead.mycollab.module.crm.domain.Opportunity;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
@@ -176,7 +176,7 @@ public class ContactReadPresenter extends CrmGenericPresenter<ContactReadView> {
 									new ActivityEvent.TaskEdit(
 											ContactReadPresenter.this, task));
 						} else if (itemId.equals("meeting")) {
-							Meeting meeting = new Meeting();
+							MeetingWithBLOBs meeting = new MeetingWithBLOBs();
 							meeting.setType(CrmTypeConstants.CONTACT);
 							meeting.setTypeid(view.getItem().getId());
 							EventBus.getInstance()

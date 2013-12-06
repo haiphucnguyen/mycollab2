@@ -28,6 +28,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.esofthead.mycollab.cache.CacheUtils;
 import com.esofthead.mycollab.common.service.RelayEmailNotificationService;
 import com.esofthead.mycollab.configuration.PasswordEncryptHelper;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
@@ -202,6 +203,6 @@ public class ProjectMemberServiceImpl extends
 				BeanUtility.printBeanObj(member));
 
 		saveWithSession(member, "");
-
+		CacheUtils.cleanCache(sAccountId, ProjectMemberService.class.getName());
 	}
 }

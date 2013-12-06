@@ -35,13 +35,17 @@
                         <excludes>
                             <exclude>**/target/**</exclude>
                             <exclude>**/repo/**</exclude>
+                            <exclude>**/repo-test/**</exclude>
                             <exclude>**/bin/**</exclude>
                             <exclude>**/*.log</exclude>
                             <exclude>**/.classpath</exclude>
                             <exclude>**/.project</exclude>
                             <exclude>**/.settings/**</exclude>
                             <exclude>**/.springBeans</exclude>
+                            <exclude>**/nb-configuration.xml</exclude>
+                            <exclude>**/proguard.conf</exclude>
                             <exclude>**/.gitignore</exclude>
+                            <exclude>**/*.versionsBackup</exclude>
                         </excludes>
                     </fileSet>
                 </fileSets>

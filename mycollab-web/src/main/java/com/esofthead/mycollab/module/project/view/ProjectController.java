@@ -1158,6 +1158,8 @@ public class ProjectController implements IController {
 						ProjectMemberSearchCriteria criteria = new ProjectMemberSearchCriteria();
 						criteria.setProjectId(new NumberSearchField(project
 								.getId()));
+						criteria.setSaccountid(new NumberSearchField(AppContext
+								.getAccountId()));
 						criteria.setStatus(new StringSearchField(
 								ProjectMemberStatusConstants.ACTIVE));
 						projectView

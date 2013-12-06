@@ -177,37 +177,38 @@ public class ActivityStreamComponent extends Depot {
 					String arg5 = "'" + AppContext.getSiteUrl() + "tooltip/'";
 					String arg6 = "'" + AppContext.getSiteUrl() + "'";
 					String arg7 = AppContext.getSession().getTimezone();
-					String arg8 = activityStream.getCreatedUserFullName();
-					String arg9 = idUserStickyToolTipDiv;
-					String arg10 = idUserToopTipDiv;
-					String arg11 = idDivUserSeverData;
-					String arg12 = LocalizationHelper
+					String arg8 = "'" + activityStream.getSaccountid() + "'";
+					String arg9 = activityStream.getCreatedUserFullName();
+					String arg10 = idUserStickyToolTipDiv;
+					String arg11 = idUserToopTipDiv;
+					String arg12 = idDivUserSeverData;
+					String arg13 = LocalizationHelper
 							.getMessage(ProjectLocalizationTypeMap
 									.getType(activityStream.getType()));
-					String arg13 = ProjectResources
+					String arg14 = ProjectResources
 							.getResourceLink(activityStream.getType());
-					String arg14 = idtagA;
-					String arg15 = ProjectLinkBuilder.generateProjectItemLink(
+					String arg15 = idtagA;
+					String arg16 = ProjectLinkBuilder.generateProjectItemLink(
 							activityStream.getExtratypeid(),
 							activityStream.getType(),
 							activityStream.getTypeid());
-					String arg16 = "'" + randomStrId + "'";
-					String arg17 = "'" + activityStream.getType() + "'";
-					String arg18 = "'" + activityStream.getTypeid() + "'";
-					String arg19 = "'" + AppContext.getSiteUrl() + "tooltip/'";
-					String arg20 = "'" + activityStream.getSaccountid() + "'";
-					String arg21 = "'" + AppContext.getSiteUrl() + "'";
-					String arg22 = AppContext.getSession().getTimezone();
-					String arg23 = activityStream.getNamefield();
-					String arg24 = MyCollabResource
+					String arg17 = "'" + randomStrId + "'";
+					String arg18 = "'" + activityStream.getType() + "'";
+					String arg19 = "'" + activityStream.getTypeid() + "'";
+					String arg20 = "'" + AppContext.getSiteUrl() + "tooltip/'";
+					String arg21 = "'" + activityStream.getSaccountid() + "'";
+					String arg22 = "'" + AppContext.getSiteUrl() + "'";
+					String arg23 = AppContext.getSession().getTimezone();
+					String arg24 = activityStream.getNamefield();
+					String arg25 = MyCollabResource
 							.newResourceLink("icons/16/project/project.png");
-					String arg25 = ProjectLinkBuilder.generateProjectFullLink(
+					String arg26 = ProjectLinkBuilder.generateProjectFullLink(
 							activityStream.getProjectId(),
 							GenericLinkUtils.URL_PREFIX_PARAM);
-					String arg26 = activityStream.getProjectName();
-					String arg27 = idStickyToolTipDiv;
-					String arg28 = idToopTipDiv;
-					String arg29 = idDivSeverData;
+					String arg27 = activityStream.getProjectName();
+					String arg28 = idStickyToolTipDiv;
+					String arg29 = idToopTipDiv;
+					String arg30 = idDivSeverData;
 
 					if (ActivityStreamConstants.ACTION_CREATE
 							.equals(activityStream.getAction())) {
@@ -219,7 +220,7 @@ public class ActivityStreamComponent extends Depot {
 										arg12, arg13, arg14, arg15, arg16,
 										arg17, arg18, arg19, arg20, arg21,
 										arg22, arg23, arg24, arg25, arg26,
-										arg27, arg28, arg29);
+										arg27, arg28, arg29, arg30);
 					} else if (ActivityStreamConstants.ACTION_UPDATE
 							.equals(activityStream.getAction())) {
 						content = LocalizationHelper
@@ -230,7 +231,7 @@ public class ActivityStreamComponent extends Depot {
 										arg12, arg13, arg14, arg15, arg16,
 										arg17, arg18, arg19, arg20, arg21,
 										arg22, arg23, arg24, arg25, arg26,
-										arg27, arg28, arg29);
+										arg27, arg28, arg29, arg30);
 						if (activityStream.getAssoAuditLog() != null) {
 							content += ProjectActivityStreamGenerator
 									.generatorDetailChangeOfActivity(activityStream);

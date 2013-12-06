@@ -16,14 +16,9 @@
  */
 package com.esofthead.mycollab.module.user.service.mybatis;
 
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Arrays;
 import java.util.GregorianCalendar;
 import java.util.List;
-
-import javax.imageio.ImageIO;
 
 import org.apache.ibatis.session.RowBounds;
 import org.slf4j.Logger;
@@ -220,8 +215,47 @@ public class UserServiceDBImpl extends
 	}
 
 	@Override
+	public int updateWithSession(User record, String username) {
+		log.debug("Check whether there is exist email in system before");
+		if (!record.getUsername().equals(record.getEmail())) {
+			UserExample ex = new UserExample();
+			ex.createCriteria().andUsernameEqualTo(record.getEmail());
+			int numUsers = userMapper.countByExample(ex);
+			if (numUsers > 0) {
+				throw new UserInvalidInputException(
+						"Email "
+								+ record.getEmail()
+								+ " is already existed in system. Please choose another email.");
+			}
+		}
+
+		// now we keep username similar than email
+		UserExample ex = new UserExample();
+		ex.createCriteria().andUsernameEqualTo(record.getUsername());
+		record.setUsername(record.getEmail());
+		return userMapper.updateByExampleSelective(record, ex);
+	}
+
+	@Override
 	public void updateUserAccount(SimpleUser record, Integer sAccountId) {
-		userMapper.updateByPrimaryKeySelective(record);
+		log.debug("Check whether there is exist email in system before");
+		if (!record.getUsername().equals(record.getEmail())) {
+			UserExample ex = new UserExample();
+			ex.createCriteria().andUsernameEqualTo(record.getEmail());
+			int numUsers = userMapper.countByExample(ex);
+			if (numUsers > 0) {
+				throw new UserInvalidInputException(
+						"Email "
+								+ record.getEmail()
+								+ " is already existed in system. Please choose another email.");
+			}
+		}
+
+		// now we keep username similar than email
+		UserExample ex = new UserExample();
+		ex.createCriteria().andUsernameEqualTo(record.getUsername());
+		record.setUsername(record.getEmail());
+		userMapper.updateByExampleSelective(record, ex);
 
 		UserAccountExample userAccountEx = new UserAccountExample();
 		userAccountEx.createCriteria().andUsernameEqualTo(record.getUsername());

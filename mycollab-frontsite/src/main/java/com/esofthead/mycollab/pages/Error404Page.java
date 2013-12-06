@@ -12,8 +12,6 @@ public class Error404Page extends BaseErrorPage {
 	public Error404Page(PageParameters parameters) {
 		super(parameters);
 
-		add(new Label("pagetitle", "Page Not Found!"));
-
 		add(new Label("error_code", "404"));
 		add(new Label("error_brief", "Page not found, sorry"));
 	}

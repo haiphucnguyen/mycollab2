@@ -104,7 +104,7 @@ public class DateTimeUtils {
 
 	public static Date converToDateWithUserTimeZone(Date date,
 			String userTimeZone) {
-		if (date == null) {
+		if (date == null || userTimeZone == null) {
 			return null;
 		}
 

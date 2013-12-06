@@ -29,8 +29,11 @@ import com.esofthead.mycollab.common.dao.ReportBugIssueMapper;
 import com.esofthead.mycollab.common.domain.MailRecipientField;
 import com.esofthead.mycollab.common.domain.ReportBugIssueExample;
 import com.esofthead.mycollab.common.domain.ReportBugIssueWithBLOBs;
+import com.esofthead.mycollab.configuration.EmailConfiguration;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.module.mail.DefaultMailer;
+import com.esofthead.mycollab.module.mail.IMailer;
+import com.esofthead.mycollab.module.mail.NullMailer;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 
@@ -51,8 +54,17 @@ public class SendingErrorReportEmailJob extends QuartzJobBean {
 						"My Collab Error Report",
 						"templates/email/errorReport.mt");
 				templateGenerator.putVariable("issueCol", listIssues);
-				DefaultMailer mailer = new DefaultMailer(
-						SiteConfiguration.getEmailConfiguration());
+				EmailConfiguration emailConfiguration = SiteConfiguration
+						.getRelayEmailConfiguration();
+				IMailer mailer;
+				if (emailConfiguration.getHost().equals("")) {
+					mailer = new NullMailer();
+				} else {
+					// check whether email is configured properly
+
+					mailer = new DefaultMailer(emailConfiguration);
+				}
+
 				mailer.sendHTMLMail("mail@mycollab.com", "Error Agent", Arrays
 						.asList(new MailRecipientField(SiteConfiguration
 								.getSendErrorEmail(), SiteConfiguration

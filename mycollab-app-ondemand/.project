@@ -4,16 +4,17 @@
   <comment>NO_M2ECLIPSE_SUPPORT: Project files created with the maven-eclipse-plugin are not supported in M2Eclipse.</comment>
   <projects>
     <project>mycollab-server-runner</project>
+    <project>mycollab-config</project>
+    <project>mycollab-core</project>
     <project>mycollab-services-ondemand</project>
     <project>mycollab-services</project>
-    <project>mycollab-core</project>
     <project>mycollab-dao</project>
     <project>mycollab-migration</project>
-    <project>mycollab-config</project>
     <project>mycollab-caching</project>
     <project>mycollab-jackrabbit</project>
-    <project>mycollab-caching-premium</project>
     <project>mycollab-api</project>
+    <project>mycollab-api-impl</project>
+    <project>mycollab-caching-premium</project>
     <project>mycollab-web-premium</project>
     <project>mycollab-web</project>
     <project>mycollab-reporting</project>
@@ -21,7 +22,6 @@
     <project>mycollab-scheduler</project>
     <project>ckeditor</project>
     <project>mycollab-jetty-session-premium</project>
-    <project>mycollab-api-impl</project>
   </projects>
   <buildSpec>
     <buildCommand>
@@ -35,8 +35,8 @@
     </buildCommand>
   </buildSpec>
   <natures>
-    <nature>org.eclipse.jdt.core.javanature</nature>
     <nature>org.eclipse.wst.common.project.facet.core.nature</nature>
+    <nature>org.eclipse.jdt.core.javanature</nature>
     <nature>org.eclipse.wst.common.modulecore.ModuleCoreNature</nature>
     <nature>org.eclipse.jem.workbench.JavaEMFNature</nature>
   </natures>

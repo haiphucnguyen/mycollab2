@@ -1,7 +1,8 @@
 package com.esofthead.mycollab.pages;
 
-import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 import com.esofthead.mycollab.base.BasePage;
@@ -12,8 +13,6 @@ public class PricingPage extends BasePage {
 
 	public PricingPage(final PageParameters parameters) {
 		super(parameters);
-
-		this.add(new Label("pagetitle", "Pricing & Sign Up"));
 
 		this.add(new BookmarkablePageLink<Void>("free-link", SignUpPage.class,
 				new PageParameters().add("planId", "5")));
@@ -26,5 +25,22 @@ public class PricingPage extends BasePage {
 		this.add(new BookmarkablePageLink<Void>("enterprise-link",
 				SignUpPage.class, new PageParameters().add("planId", "4")));
 
+	}
+
+	@Override
+	public IModel getPageTitle() {
+		return new Model<String>("MyCollab - Pricing");
+	}
+
+	@Override
+	public IModel getDescription() {
+		return new Model<String>(
+				"MyCollab offers various options of pricing to meet customer needs");
+	}
+
+	@Override
+	public IModel getKeywords() {
+		return new Model<String>(
+				"project management tool, business tools, crm system, online collaboration, cloud office, documents management, online office");
 	}
 }

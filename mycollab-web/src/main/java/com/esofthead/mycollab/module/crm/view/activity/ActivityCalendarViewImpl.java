@@ -17,7 +17,6 @@
 package com.esofthead.mycollab.module.crm.view.activity;
 
 import java.text.DateFormatSymbols;
-import java.util.Collection;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
@@ -28,7 +27,7 @@ import org.vaadin.peter.buttongroup.ButtonGroup;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
-import com.esofthead.mycollab.module.crm.domain.Meeting;
+import com.esofthead.mycollab.module.crm.domain.MeetingWithBLOBs;
 import com.esofthead.mycollab.module.crm.domain.SimpleMeeting;
 import com.esofthead.mycollab.module.crm.events.ActivityEvent;
 import com.esofthead.mycollab.module.crm.service.MeetingService;
@@ -388,28 +387,29 @@ public class ActivityCalendarViewImpl extends AbstractView implements
 	public class EventQuickCreateWindow extends Window {
 		private static final long serialVersionUID = 1L;
 		private EditForm editForm;
-		private Meeting meeting;
-		private DateTimePicker<Meeting> startDatePicker;
-		private DateTimePicker<Meeting> endDatePicker;
+		private MeetingWithBLOBs meeting;
+		private DateTimePicker<MeetingWithBLOBs> startDatePicker;
+		private DateTimePicker<MeetingWithBLOBs> endDatePicker;
 
 		public EventQuickCreateWindow(Date startDate, Date endDate) {
 			super("Quick Create Event");
 			this.center();
-			this.setWidth("1000px");
+			this.setWidth("1220px");
 
-			this.meeting = new Meeting();
+			this.meeting = new MeetingWithBLOBs();
 			this.meeting.setSaccountid(AppContext.getAccountId());
 			this.meeting.setStartdate(startDate);
 			this.meeting.setEnddate(endDate);
-			this.startDatePicker = new DateTimePicker<Meeting>("startdate",
-					meeting);
-			this.endDatePicker = new DateTimePicker<Meeting>("enddate", meeting);
+			this.startDatePicker = new DateTimePicker<MeetingWithBLOBs>(
+					"startdate", meeting);
+			this.endDatePicker = new DateTimePicker<MeetingWithBLOBs>(
+					"enddate", meeting);
 			editForm = new EditForm();
-			editForm.setItemDataSource(new BeanItem<Meeting>(meeting));
+			editForm.setItemDataSource(new BeanItem<MeetingWithBLOBs>(meeting));
 			this.addComponent(editForm);
 		}
 
-		private class EditForm extends AdvancedEditBeanForm<Meeting> {
+		private class EditForm extends AdvancedEditBeanForm<MeetingWithBLOBs> {
 
 			private static final long serialVersionUID = 1L;
 
@@ -529,6 +529,7 @@ public class ActivityCalendarViewImpl extends AbstractView implements
 						field.setType(meeting.getType());
 						return field;
 					} else if (propertyId.equals("isrecurrence")) {
+						return new RecurringActivityCustomField(meeting);
 					}
 					return null;
 				}

@@ -11,12 +11,13 @@
     <properties>
         <springVersion>3.2.4.RELEASE</springVersion>
         <aspectjVersion>1.7.3</aspectjVersion>
-        <javaVersion>1.6</javaVersion>
+        <javaVersion>1.7</javaVersion>
         <slf4jVersion>1.6.4</slf4jVersion>
         <log4jVersion>1.2.16</log4jVersion>
+        <servletVersion>3.1.0</servletVersion>
         <vaadinVersion>6.8.13</vaadinVersion>
         <gwtversion>2.3.0</gwtversion>
-        <jettyVersion>8.1.13.v20130916</jettyVersion>
+        <jettyVersion>9.1.0.v20131115</jettyVersion>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.inceptionYear>2011</project.inceptionYear>
     </properties>
@@ -24,6 +25,29 @@
         <connection>https://hainguyen@bitbucket.org/hainguyen/mycollab2.git</connection>
     </scm>
     <dependencies>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4jVersion}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>${slf4jVersion}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+            <version>${slf4jVersion}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>${log4jVersion}</version>
+        </dependency>
         <dependency>
             <groupId>commons-beanutils</groupId>
             <artifactId>commons-beanutils</artifactId>

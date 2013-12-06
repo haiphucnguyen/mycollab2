@@ -27,10 +27,12 @@ import com.esofthead.mycollab.module.project.ProjectMemberStatusConstants;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectMemberSearchCriteria;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.MessageBox;
+import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
 /**
@@ -60,6 +62,8 @@ public class ProjectMemberListPresenter extends
 						CurrentProjectVariables.getProjectId()));
 				criteria.setStatus(new StringSearchField(
 						ProjectMemberStatusConstants.ACTIVE));
+				criteria.setSaccountid(new NumberSearchField(AppContext
+						.getAccountId()));
 			} else {
 				criteria = (ProjectMemberSearchCriteria) data.getParams();
 			}

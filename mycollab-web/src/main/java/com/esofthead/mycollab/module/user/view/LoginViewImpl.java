@@ -16,8 +16,11 @@
  */
 package com.esofthead.mycollab.module.user.view;
 
+import com.esofthead.mycollab.configuration.SiteConfiguration;
+import com.esofthead.mycollab.core.DeploymentMode;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.eventmanager.EventBus;
+import com.esofthead.mycollab.jetty.GenericServerRunner;
 import com.esofthead.mycollab.module.user.events.UserEvent;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
@@ -95,10 +98,13 @@ public class LoginViewImpl extends AbstractView implements LoginView {
 			loginBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 			custom.addComponent(loginBtn, "loginButton");
 
-			Link signupLink = new Link("Create an Account",
-					new ExternalResource("https://www.mycollab.com/pricing"));
-			signupLink.setTargetName("_blank");
-			custom.addComponent(signupLink, "signupLink");
+			if (SiteConfiguration.getDeploymentMode() == DeploymentMode.SITE) {
+				Link signupLink = new Link(
+						"Create an Account",
+						new ExternalResource("https://www.mycollab.com/pricing"));
+				signupLink.setTargetName("_blank");
+				custom.addComponent(signupLink, "signupLink");
+			}
 
 			Button forgotPasswordBtn = new Button("Forgot your password?",
 					new Button.ClickListener() {
@@ -113,6 +119,13 @@ public class LoginViewImpl extends AbstractView implements LoginView {
 					});
 			forgotPasswordBtn.setStyleName("link");
 			custom.addComponent(forgotPasswordBtn, "forgotLink");
+
+			if (GenericServerRunner.isFirstTimeRunner) {
+				LoginForm.this
+						.setComponentError(new UserError(
+								"For the first time using MyCollab, the default email/password is admin@mycollab.com/admin123. You should change email/password when you access MyCollab successfully."));
+				GenericServerRunner.isFirstTimeRunner = false;
+			}
 
 			this.setLayout(custom);
 			this.setHeight("100%");

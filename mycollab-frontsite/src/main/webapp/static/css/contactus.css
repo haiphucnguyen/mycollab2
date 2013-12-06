@@ -1,7 +1,34 @@
+.modal-curtain {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 100%;
+	z-index: 999;
+	background-color: rgba(0, 0, 0, 0.65);
+}
+.horizontal-line {
+	position: absolute;
+	overflow: visible;
+	height: 1px;
+	width: 100%;
+	top: 50%;
+	z-index: 1000;
+}
+.submit-success-box {
+	position: absolute;
+	top: -40px;
+	left: 50%;
+	margin-left: -300px;
+	background-color: rgb(255, 255, 255);
+	z-index: 1000;
+	width: 600px;
+	height: 80px;
+}
 .contact-us-content {
 	width: 1100px;
 	margin: 10px auto;
-	font-family: "verdana", Arial, sans-serif;
+	font-family: "Monda", Arial, sans-serif;
 	color: rgb(106, 106, 106);
 }
 
@@ -11,7 +38,7 @@
 }
 .contact-us-content .left-col .header h1 {
 	font-weight: normal;
-	font-family: "verdana", Arial, sans-serif;
+	font-family: "Monda", Arial, sans-serif;
 	color: rgb(9, 118, 185);
 }
 .contact-us-content .left-col .intro-text {
@@ -63,7 +90,7 @@
 	padding: 5px;
 	border-color: rgb(217, 217, 217);
 	border-width: 1px;
-	font-family: "verdana", Arial, sans-serif;
+	font-family: "Monda", Arial, sans-serif;
 	color: rgb(82, 82, 82);
 	font-size: 16px;
 }
@@ -80,7 +107,7 @@
 	padding: 3px 0px 0px 0px;
 	margin: 6px auto 0px;
 	font-size: 13px;
-	font-family: 'verdana';
+	font-family: 'Monda';
 	font-weight: bold;
 	background-color: rgb(99, 182, 232);
 	border-radius: 3px;
@@ -137,7 +164,7 @@
 
 .contact-us-content .right-col .info-block h2 {
 	font-weight: normal;
-	font-family: "verdana", Arial, sans-serif;
+	font-family: "Monda", Arial, sans-serif;
 	color: rgb(9, 118, 185);
 	font-size: 20px;
 }
@@ -149,4 +176,17 @@
 	display: block;
 	float: left;
 	margin-right: 10px;
+}
+.w_close {
+    visibility: hidden;
+}
+div.wicket-modal div.w_content_3 {
+    border: none;
+}
+.notification-body {
+    font-family: "Monda", Arial, sans-serif;
+    text-align: center;
+}
+.notification-body .notification-txt {
+    font-weight: bold;
 }

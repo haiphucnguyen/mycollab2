@@ -27,7 +27,7 @@
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-web-community</artifactId>
-            <version>2.0.0</version>
+            <version>${project.version}</version>
         </dependency>
 
 

@@ -34,7 +34,7 @@ import com.esofthead.mycollab.module.crm.domain.CallWithBLOBs;
 import com.esofthead.mycollab.module.crm.domain.CampaignLead;
 import com.esofthead.mycollab.module.crm.domain.CampaignWithBLOBs;
 import com.esofthead.mycollab.module.crm.domain.Lead;
-import com.esofthead.mycollab.module.crm.domain.Meeting;
+import com.esofthead.mycollab.module.crm.domain.MeetingWithBLOBs;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.module.crm.domain.Task;
@@ -176,7 +176,7 @@ public class LeadReadPresenter extends CrmGenericPresenter<LeadReadView> {
 									new ActivityEvent.TaskEdit(
 											LeadReadPresenter.this, task));
 						} else if (itemId.equals("meeting")) {
-							Meeting meeting = new Meeting();
+							MeetingWithBLOBs meeting = new MeetingWithBLOBs();
 							meeting.setType(CrmTypeConstants.LEAD);
 							meeting.setTypeid(view.getItem().getId());
 							EventBus.getInstance().fireEvent(

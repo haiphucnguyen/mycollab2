@@ -126,7 +126,7 @@ public class CallRelayEmailNotificationActionImpl extends
 							getSiteUrl(simpleCall.getSaccountid()),
 							auditLog.getPosteduser()));
 			ScheduleUserTimeZoneUtils.formatDate(auditLog, user.getTimezone(),
-					new String[] { "birthday" });
+					new String[] { "startdate" });
 			templateGenerator.putVariable("historyLog", auditLog);
 
 			templateGenerator.putVariable("mapper", mapper);
