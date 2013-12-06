@@ -8,6 +8,16 @@ _gaq.push(['_trackPageview']);
 	var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 })();
 
+$(document).ready(function() {
+   $("#livechat-compact > .livechat-title").click(function(){
+       $("#livechat-full").css("visibility", "visible");
+   });
+
+   $("#livechat-full > .livechat-title").click(function(){
+       $("#livechat-full").css("visibility", "hidden");
+   });
+});
+
 //$(document).ready(function(){
 //	// Footer position
 //	var window_height = $(window).height();

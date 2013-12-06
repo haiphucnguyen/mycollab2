@@ -2721,3 +2721,42 @@ a.nivo-prevNav {
 	font-size: 14px;
 	font-family: "Monda", Arial, sans-serif;
 }
+
+/* Live Support */
+#livechat-compact {
+    position: fixed;
+    bottom: 0px;
+    right: 50px;
+    width: 320px;
+    z-index: 998;
+}
+#livechat-full {
+    position: fixed;
+    bottom: 0px;
+    right: 50px;
+    z-index: 999;
+    visibility: hidden;
+}
+.livechat-title {
+    display: block;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 5px 20px;
+    background-color: rgb(241, 174, 40);
+    border-radius: 10px 10px 0px 0px;
+    cursor: pointer;
+    color: rgb(255, 255, 255);
+    background-image: url('../images/toggle_chat.png');
+    background-repeat: no-repeat;
+    background-position: right top;
+}
+#livechat-compact .livechat-title {
+    background-position: right -35px;
+}
+#livechat-content {
+    float: left;
+    border-width: 0px 5px;
+    border-style: solid;
+    border-color: rgb(241, 174, 40);
+}

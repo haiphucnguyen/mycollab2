@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.base;
 
+import com.esofthead.mycollab.SiteConfiguration;
+import com.esofthead.mycollab.uicomponents.ChatIFrame;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.link.ExternalLink;
 import org.apache.wicket.markup.html.panel.Panel;
@@ -17,6 +19,9 @@ public class Footer extends Panel {
 
 	public Footer(final String id) {
 		super(id);
+
+        final ChatIFrame chatFrame = new ChatIFrame("livechat-frame", SiteConfiguration.getChatUrl());
+        this.add(chatFrame);
 
 		final BookmarkablePageLink<Void> tour = new BookmarkablePageLink<Void>(
 				"tourlink", TourPage.class);

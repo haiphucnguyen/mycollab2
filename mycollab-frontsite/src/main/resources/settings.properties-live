@@ -2,3 +2,4 @@ running.mode=site
 api.url=http://localhost:8080/api
 app.url=https://%s.mycollab.com/
 site.url=https://www.mycollab.com/
+chat.url=http://chat.mycollab.com/
