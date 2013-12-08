@@ -17,7 +17,7 @@
 package com.esofthead.mycollab.module.project.view.user;
 
 import com.esofthead.mycollab.module.project.view.ProjectInformationComponent;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.ui.HorizontalLayout;
@@ -25,7 +25,7 @@ import com.vaadin.ui.VerticalLayout;
 
 @SuppressWarnings("serial")
 @ViewComponent
-public class ProjectSummaryViewImpl extends AbstractView implements
+public class ProjectSummaryViewImpl extends AbstractPageView implements
 		ProjectSummaryView {
 
 	private final ProjectActivityStreamComponent activityPanel;

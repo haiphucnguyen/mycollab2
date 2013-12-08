@@ -23,11 +23,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.vaadin.addon.customfield.CustomField;
-
 import com.vaadin.data.Property;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.ComboBox;
+import com.vaadin.ui.CustomField;
 import com.vaadin.ui.HorizontalLayout;
 
 @SuppressWarnings("serial")
@@ -83,7 +82,7 @@ public class DateComboboxSelectionField extends CustomField {
 		layout.addComponent(cboYear);
 		layout.setComponentAlignment(cboYear, Alignment.TOP_CENTER);
 
-		cboMonth.addListener(new Property.ValueChangeListener() {
+		cboMonth.addValueChangeListener(new Property.ValueChangeListener() {
 
 			@Override
 			public void valueChange(Property.ValueChangeEvent event) {
@@ -92,7 +91,7 @@ public class DateComboboxSelectionField extends CustomField {
 			}
 		});
 
-		cboDate.addListener(new Property.ValueChangeListener() {
+		cboDate.addValueChangeListener(new Property.ValueChangeListener() {
 
 			@Override
 			public void valueChange(Property.ValueChangeEvent event) {
@@ -101,7 +100,7 @@ public class DateComboboxSelectionField extends CustomField {
 			}
 		});
 
-		cboYear.addListener(new Property.ValueChangeListener() {
+		cboYear.addValueChangeListener(new Property.ValueChangeListener() {
 
 			@Override
 			public void valueChange(Property.ValueChangeEvent event) {

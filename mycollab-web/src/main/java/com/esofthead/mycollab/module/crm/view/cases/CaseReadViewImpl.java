@@ -21,11 +21,11 @@ import com.esofthead.mycollab.module.crm.domain.SimpleCase;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.view.IRelatedListHandlers;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 
 @ViewComponent
-public class CaseReadViewImpl extends AbstractView implements CaseReadView {
+public class CaseReadViewImpl extends AbstractPageView implements CaseReadView {
 
     private static final long serialVersionUID = 1L;
     private CasePreviewBuilder casePreview;

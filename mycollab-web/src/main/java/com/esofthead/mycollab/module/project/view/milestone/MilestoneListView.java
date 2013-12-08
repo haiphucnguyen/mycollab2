@@ -23,12 +23,12 @@ package com.esofthead.mycollab.module.project.view.milestone;
 import java.util.List;
 
 import com.esofthead.mycollab.module.project.domain.SimpleMilestone;
-import com.esofthead.mycollab.vaadin.mvp.View;
+import com.esofthead.mycollab.vaadin.mvp.PageView;
 
 /**
  * 
  * @author haiphucnguyen
  */
-public interface MilestoneListView extends View {
+public interface MilestoneListView extends PageView {
 	void displayMilestones(List<SimpleMilestone> milestones);
 }

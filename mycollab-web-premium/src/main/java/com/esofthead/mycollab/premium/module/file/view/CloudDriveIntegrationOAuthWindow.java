@@ -30,6 +30,7 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Layout.MarginInfo;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
@@ -86,7 +87,7 @@ public abstract class CloudDriveIntegrationOAuthWindow extends Window {
 	}
 
 	@Override
-	protected void close() {
+	public void close() {
 		if (listener != null) {
 			EventBus.getInstance().removeListener(listener);
 		}
@@ -152,7 +153,7 @@ public abstract class CloudDriveIntegrationOAuthWindow extends Window {
 		HorizontalLayout controllGroupBtn = new HorizontalLayout();
 		controllGroupBtn.setSpacing(true);
 		controllGroupBtn.setHeight("50px");
-		controllGroupBtn.setMargin(true, false, false, false);
+		controllGroupBtn.setMargin(new MarginInfo(true, false, false, false));
 
 		Button doneBtn = new Button(
 				LocalizationHelper.getMessage(GenericI18Enum.BUTTON_OK_LABEL),
@@ -166,9 +167,7 @@ public abstract class CloudDriveIntegrationOAuthWindow extends Window {
 									.trim();
 							if (name.equals("")) {
 								NotificationUtil
-										.showNotification(
-												"Please enter folder name",
-												Window.Notification.TYPE_WARNING_MESSAGE);
+										.showWarningNotification("Please enter folder name");
 								return;
 							}
 							ExternalDrive externalDrive = new ExternalDrive();

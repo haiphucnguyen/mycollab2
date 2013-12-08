@@ -22,7 +22,7 @@ public class Hr extends Label {
 	private static final long serialVersionUID = 1L;
 
 	public Hr() {
-		super("<hr/>", Label.CONTENT_XHTML);
+		super("<hr/>", ContentMode.HTML);
 		this.addStyleName("hr");
 	}
 }

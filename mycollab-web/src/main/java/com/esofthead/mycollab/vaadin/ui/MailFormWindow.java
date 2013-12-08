@@ -22,13 +22,10 @@ import java.util.List;
 
 import org.vaadin.easyuploads.MultiFileUploadExt;
 
-import com.esofthead.mycollab.common.localization.GenericI18Enum;
-import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.mail.EmailAttachementSource;
 import com.esofthead.mycollab.module.mail.FileEmailAttachmentSource;
 import com.esofthead.mycollab.module.mail.service.ExtMailService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.vaadin.ui.MessageBox.ButtonType;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -42,6 +39,7 @@ import com.vaadin.ui.Layout;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
 public class MailFormWindow extends Window {
@@ -92,7 +90,7 @@ public class MailFormWindow extends Window {
 		inputLayout.addComponent(btnLinkBcc, 2, 0);
 		inputLayout.setComponentAlignment(btnLinkBcc, Alignment.MIDDLE_CENTER);
 
-		btnLinkCc.addListener(new Button.ClickListener() {
+		btnLinkCc.addClickListener(new Button.ClickListener() {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
@@ -100,13 +98,11 @@ public class MailFormWindow extends Window {
 			}
 		});
 
-		btnLinkBcc.addListener(new Button.ClickListener() {
+		btnLinkBcc.addClickListener(new Button.ClickListener() {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-
 				butonLinkBccClick(event);
-
 			}
 		});
 	}
@@ -189,13 +185,11 @@ public class MailFormWindow extends Window {
 		MultiFileUploadExt uploadExt = new MultiFileUploadExt(attachments);
 
 		Panel attachedFilepanel = new Panel();
-		attachedFilepanel.setScrollable(true);
-		attachedFilepanel.setHeight("80px");
-		attachedFilepanel.setStyleName("noneBorder-panel");
-		attachedFilepanel.getContent().setSizeUndefined();
-		attachedFilepanel.addComponent(attachments);
-
-		attachedFilepanel.addComponent(uploadExt);
+		VerticalLayout contentLayout = new VerticalLayout();
+		contentLayout.setStyleName("noneBorder-panel");
+		contentLayout.addComponent(attachments);
+		contentLayout.addComponent(uploadExt);
+		attachedFilepanel.setContent(contentLayout);
 
 		controlsLayout.addComponent(attachedFilepanel);
 		controlsLayout.setExpandRatio(attachedFilepanel, 1.0f);
@@ -222,15 +216,9 @@ public class MailFormWindow extends Window {
 			public void buttonClick(ClickEvent event) {
 
 				if (tokenFieldMailTo.getListRecipient().size() <= 0
-						|| subject.toString().equals("")) {
-					MessageBox mb = new MessageBox(
-							AppContext.getApplication().getMainWindow(),
-							LocalizationHelper
-									.getMessage(GenericI18Enum.WARNING_WINDOW_TITLE),
-							MessageBox.Icon.WARN,
-							"The To Email field and Subject field must be not empty! Please fulfil them before pressing enter button.",
-							new MessageBox.ButtonConfig(ButtonType.OK, "Ok"));
-					mb.show();
+						|| subject.getValue().equals("")) {
+					NotificationUtil
+							.showErrorNotification("To Email field and Subject field must be not empty! Please fulfil them before sending email.");
 					return;
 				}
 				if (AppContext.getSession().getEmail() != null
@@ -258,13 +246,8 @@ public class MailFormWindow extends Window {
 							emailAttachmentSource);
 					MailFormWindow.this.close();
 				} else {
-					MessageBox mb = new MessageBox(
-							AppContext.getApplication().getMainWindow(),
-							"Warming!",
-							MessageBox.Icon.WARN,
-							"Your email is not configured, please fulfil it before sending email!",
-							new MessageBox.ButtonConfig(ButtonType.OK, "Ok"));
-					mb.show();
+					NotificationUtil
+							.showErrorNotification("Your email is empty value, please fulfil it before sending email!");
 				}
 			}
 		});

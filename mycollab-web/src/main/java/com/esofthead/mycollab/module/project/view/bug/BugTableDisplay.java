@@ -50,7 +50,7 @@ import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
-import com.vaadin.terminal.Resource;
+import com.vaadin.server.Resource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Embedded;
@@ -63,8 +63,8 @@ import com.vaadin.ui.Table;
  * @author haiphucnguyen
  */
 public class BugTableDisplay extends
-		DefaultPagedBeanTable<BugService, BugSearchCriteria, SimpleBug> implements
-		IBugCallbackStatusComp {
+		DefaultPagedBeanTable<BugService, BugSearchCriteria, SimpleBug>
+		implements IBugCallbackStatusComp {
 	private static final long serialVersionUID = 1L;
 
 	public BugTableDisplay(List<TableViewField> displayColumns) {
@@ -97,7 +97,7 @@ public class BugTableDisplay extends
 
 				final ContextMenu menu = new ContextMenu();
 
-				menu.addListener(new ContextMenu.ClickListener() {
+				menu.addItemClickListener(new ContextMenu.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
@@ -203,12 +203,12 @@ public class BugTableDisplay extends
 				bugSettingBtn.setEnabled(CurrentProjectVariables
 						.canWrite(ProjectRolePermissionCollections.BUGS));
 
-				bugSettingBtn.addListener(new Button.ClickListener() {
+				bugSettingBtn.addClickListener(new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
 					public void buttonClick(ClickEvent event) {
-						menu.show(event.getClientX() - 25, event.getClientY());
+						menu.open(event.getClientX() - 25, event.getClientY());
 						menu.removeAllItems();
 
 						menu.addItem("Edit", "action", "edit");

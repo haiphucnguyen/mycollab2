@@ -36,7 +36,7 @@ import com.esofthead.mycollab.module.crm.events.LeadEvent;
 import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.security.RolePermissionCollections;
-import com.esofthead.mycollab.vaadin.mvp.View;
+import com.esofthead.mycollab.vaadin.mvp.PageView;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
@@ -49,7 +49,7 @@ import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.GridLayout;
 
 @ViewComponent
-public class CrmToolbar extends CssLayout implements View {
+public class CrmToolbar extends CssLayout implements PageView {
 	private class NavigatorItemListener implements Button.ClickListener {
 
 		private static final long serialVersionUID = 1L;

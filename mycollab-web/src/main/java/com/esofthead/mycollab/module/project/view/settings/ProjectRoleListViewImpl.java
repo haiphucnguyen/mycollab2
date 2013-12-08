@@ -40,7 +40,7 @@ import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
 import com.esofthead.mycollab.vaadin.events.TablePopupActionHandler;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -48,6 +48,8 @@ import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.table.AbstractPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.DefaultPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
+import com.vaadin.data.Property;
+import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CheckBox;
@@ -63,7 +65,7 @@ import com.vaadin.ui.VerticalLayout;
  * @author haiphucnguyen
  */
 @ViewComponent
-public class ProjectRoleListViewImpl extends AbstractView implements
+public class ProjectRoleListViewImpl extends AbstractPageView implements
 		ProjectRoleListView {
 	private static final long serialVersionUID = 1L;
 
@@ -104,12 +106,12 @@ public class ProjectRoleListViewImpl extends AbstractView implements
 							final Object itemId, final Object columnId) {
 						final CheckBox cb = new CheckBox("", false);
 						cb.setImmediate(true);
-						cb.addListener(new Button.ClickListener() {
+						cb.addValueChangeListener(new ValueChangeListener() {
 							private static final long serialVersionUID = 1L;
 
 							@Override
-							public void buttonClick(
-									final Button.ClickEvent event) {
+							public void valueChange(
+									Property.ValueChangeEvent event) {
 								final SimpleProjectRole role = ProjectRoleListViewImpl.this.tableItem
 										.getBeanByIndex(itemId);
 								ProjectRoleListViewImpl.this.tableItem
@@ -180,7 +182,8 @@ public class ProjectRoleListViewImpl extends AbstractView implements
 
 		this.tableActionControls = new PopupButtonControl(
 				TablePopupActionHandler.DELETE_ACTION, deleteBtn);
-		this.tableActionControls.addOptionItem(TablePopupActionHandler.MAIL_ACTION,
+		this.tableActionControls.addOptionItem(
+				TablePopupActionHandler.MAIL_ACTION,
 				LocalizationHelper.getMessage(GenericI18Enum.BUTTON_MAIL));
 		this.tableActionControls
 				.addOptionItem(TablePopupActionHandler.EXPORT_CSV_ACTION,

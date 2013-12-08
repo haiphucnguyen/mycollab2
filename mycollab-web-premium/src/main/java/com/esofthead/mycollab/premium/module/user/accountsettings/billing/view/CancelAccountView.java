@@ -16,8 +16,8 @@
  */
 package com.esofthead.mycollab.premium.module.user.accountsettings.billing.view;
 
-import com.esofthead.mycollab.vaadin.mvp.View;
+import com.esofthead.mycollab.vaadin.mvp.PageView;
 
-public interface CancelAccountView extends View {
+public interface CancelAccountView extends PageView {
 
 }

@@ -26,7 +26,7 @@ import com.esofthead.mycollab.module.user.domain.SimpleRole;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.events.RoleEvent;
 import com.esofthead.mycollab.module.user.events.UserEvent;
-import com.esofthead.mycollab.vaadin.mvp.View;
+import com.esofthead.mycollab.vaadin.mvp.PageView;
 import com.esofthead.mycollab.vaadin.ui.CommonUIFactory;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.utils.LabelStringGenerator;
@@ -38,7 +38,7 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComponentContainer;
 
 @ViewComponent
-public class AccountSettingBreadcrumb extends Breadcrumb implements View {
+public class AccountSettingBreadcrumb extends Breadcrumb implements PageView {
 	private static final long serialVersionUID = 1L;
 
 	private static LabelStringGenerator menuLinkGenerator = new BreadcrumbLabelStringGenerator();

@@ -23,7 +23,7 @@ package com.esofthead.mycollab.module.project.view.user;
 import com.esofthead.mycollab.module.project.ProjectDataTypeFactory;
 import com.esofthead.mycollab.module.project.domain.Project;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.CurrencyComboBox;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
@@ -45,7 +45,7 @@ import com.vaadin.ui.TextField;
  */
 @SuppressWarnings("serial")
 @ViewComponent
-public class ProjectAddViewImpl extends AbstractView implements ProjectAddView {
+public class ProjectAddViewImpl extends AbstractPageView implements ProjectAddView {
 
 	private Project project;
 	private final EditForm editForm;

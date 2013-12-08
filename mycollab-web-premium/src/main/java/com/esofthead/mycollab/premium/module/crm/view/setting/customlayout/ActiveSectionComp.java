@@ -23,7 +23,6 @@ import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.form.view.builder.type.AbstractDynaField;
 import com.esofthead.mycollab.form.view.builder.type.DynaSection;
 import com.esofthead.mycollab.form.view.builder.type.DynaSection.LayoutType;
-import com.esofthead.mycollab.module.crm.ui.components.CustomFieldComponent;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.event.dd.DragAndDropEvent;
 import com.vaadin.event.dd.DropHandler;

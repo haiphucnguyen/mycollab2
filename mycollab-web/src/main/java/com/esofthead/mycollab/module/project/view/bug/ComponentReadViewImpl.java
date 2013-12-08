@@ -35,7 +35,7 @@ import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.ComponentService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.ProjectPreviewFormControlsGenerator;
@@ -47,15 +47,17 @@ import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
-import com.vaadin.terminal.ExternalResource;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.JavaScript;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
@@ -64,7 +66,7 @@ import com.vaadin.ui.Window;
  * @author haiphucnguyen
  */
 @ViewComponent
-public class ComponentReadViewImpl extends AbstractView implements
+public class ComponentReadViewImpl extends AbstractPageView implements
 		ComponentReadView {
 
 	private static final long serialVersionUID = 1L;
@@ -132,22 +134,14 @@ public class ComponentReadViewImpl extends AbstractView implements
 
 			final ComponentReadViewImpl printView = new ComponentReadViewImpl.PrintView();
 			printView.previewItem(ComponentReadViewImpl.this.component);
-			window.addComponent(printView);
+			window.setContent(printView);
 
-			// Add the printing window as a new application-level window
-			this.getApplication().addWindow(window);
+			UI.getCurrent().addWindow(window);
 
-			// Open it as a popup window with no decorations
-			this.getWindow().open(new ExternalResource(window.getURL()),
-					"_blank", 1100, 200, // Width and height
-					Window.BORDER_NONE); // No decorations
-
-			// Print automatically when the window opens.
-			// This call will block until the print dialog exits!
-			window.executeJavaScript("print();");
-
-			// Close the window automatically after printing
-			window.executeJavaScript("self.close();");
+			// Print automatically when the window opens
+			JavaScript.getCurrent().execute(
+					"setTimeout(function() {"
+							+ "  print(); self.close();}, 0);");
 		}
 
 		@Override
@@ -155,7 +149,7 @@ public class ComponentReadViewImpl extends AbstractView implements
 			final ComponentHistoryLogWindow historyLog = new ComponentHistoryLogWindow(
 					ModuleNameConstants.PRJ, ProjectContants.BUG_COMPONENT,
 					ComponentReadViewImpl.this.component.getId());
-			this.getWindow().addWindow(historyLog);
+			UI.getCurrent().addWindow(historyLog);
 		}
 
 		class FormLayoutFactory extends ComponentFormLayoutFactory implements
@@ -236,13 +230,14 @@ public class ComponentReadViewImpl extends AbstractView implements
 			protected Layout createBottomPanel() {
 
 				this.mainBottomLayout = new VerticalLayout();
-				this.mainBottomLayout.setMargin(false, false, true, false);
+				this.mainBottomLayout.setMargin(new MarginInfo(false, false,
+						true, false));
 				this.mainBottomLayout.setSpacing(true);
 				this.mainBottomLayout.setWidth("100%");
 				this.mainBottomLayout.addStyleName("relatedbug-comp");
 
 				final HorizontalLayout header = new HorizontalLayout();
-				header.setMargin(false, true, false, false);
+				header.setMargin(new MarginInfo(false, true, false, false));
 				header.setSpacing(true);
 				header.setWidth("100%");
 				header.addStyleName("relatedbug-comp-header");
@@ -292,9 +287,9 @@ public class ComponentReadViewImpl extends AbstractView implements
 				this.bottomLayout = new HorizontalLayout();
 				this.bottomLayout.setSpacing(true);
 				this.bottomLayout.setWidth("100%");
-				this.bottomLayout.setMargin(false, true, false, true);
+				this.bottomLayout.setMargin(new MarginInfo(false, true, false,
+						true));
 
-				this.viewGroup.removeButtonsCss("selected");
 				advanceDisplay.addStyleName("selected");
 
 				this.displayBugReports();
@@ -382,7 +377,8 @@ public class ComponentReadViewImpl extends AbstractView implements
 						.setSearchCriteria(unresolvedByAssigneeSearchCriteria);
 
 				final VerticalLayout rightColumn = new VerticalLayout();
-				rightColumn.setMargin(false, false, false, true);
+				rightColumn
+						.setMargin(new MarginInfo(false, false, false, true));
 				this.bottomLayout.addComponent(rightColumn);
 
 				final BugSearchCriteria chartSearchCriteria = new BugSearchCriteria();
@@ -402,7 +398,6 @@ public class ComponentReadViewImpl extends AbstractView implements
 
 			@Override
 			public void displayBugReports() {
-				this.viewGroup.setDefaultSelectionByIndex(1);
 				this.displayAdvancedView();
 			}
 

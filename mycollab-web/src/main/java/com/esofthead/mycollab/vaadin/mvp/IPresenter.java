@@ -25,7 +25,7 @@ import com.vaadin.ui.ComponentContainer;
  *
  * @param <V>
  */
-public interface IPresenter<V extends View> extends Serializable {
+public interface IPresenter<V extends PageView> extends Serializable {
 
 	/**
 	 * 

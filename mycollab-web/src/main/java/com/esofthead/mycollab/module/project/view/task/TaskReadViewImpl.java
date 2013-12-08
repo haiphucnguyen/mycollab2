@@ -35,7 +35,7 @@ import com.esofthead.mycollab.module.project.ui.components.CommentListDepot.Comm
 import com.esofthead.mycollab.schedule.email.project.ProjectTaskRelayEmailNotificationAction;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.ProjectPreviewFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -43,12 +43,13 @@ import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.util.BeanItem;
-import com.vaadin.terminal.ExternalResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.JavaScript;
 import com.vaadin.ui.TabSheet;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.Window;
 
 /**
@@ -56,7 +57,7 @@ import com.vaadin.ui.Window;
  * @author haiphucnguyen
  */
 @ViewComponent
-public class TaskReadViewImpl extends AbstractView implements TaskReadView {
+public class TaskReadViewImpl extends AbstractPageView implements TaskReadView {
 
 	private static final long serialVersionUID = 1L;
 
@@ -222,22 +223,14 @@ public class TaskReadViewImpl extends AbstractView implements TaskReadView {
 
 			final TaskReadViewImpl printView = new TaskReadViewImpl.PrintView();
 			printView.previewItem(TaskReadViewImpl.this.task);
-			window.addComponent(printView);
+			window.setContent(printView);
 
-			// Add the printing window as a new application-level window
-			this.getApplication().addWindow(window);
+			UI.getCurrent().addWindow(window);
 
-			// Open it as a popup window with no decorations
-			this.getWindow().open(new ExternalResource(window.getURL()),
-					"_blank", 1100, 200, // Width and height
-					Window.BORDER_NONE); // No decorations
-
-			// Print automatically when the window opens.
-			// This call will block until the print dialog exits!
-			window.executeJavaScript("print();");
-
-			// Close the window automatically after printing
-			window.executeJavaScript("self.close();");
+			// Print automatically when the window opens
+			JavaScript.getCurrent().execute(
+					"setTimeout(function() {"
+							+ "  print(); self.close();}, 0);");
 		}
 
 		@Override
@@ -245,7 +238,7 @@ public class TaskReadViewImpl extends AbstractView implements TaskReadView {
 			final TaskHistoryLogWindow historyLog = new TaskHistoryLogWindow(
 					ModuleNameConstants.PRJ, ProjectContants.TASK,
 					TaskReadViewImpl.this.task.getId());
-			this.getWindow().addWindow(historyLog);
+			UI.getCurrent().addWindow(historyLog);
 		}
 	}
 

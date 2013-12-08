@@ -22,7 +22,7 @@ import com.esofthead.mycollab.module.user.accountsettings.profile.view.ProfilePr
 import com.esofthead.mycollab.module.user.accountsettings.team.view.UserPermissionManagementPresenter;
 import com.esofthead.mycollab.module.user.accountsettings.view.events.ProfileEvent;
 import com.esofthead.mycollab.module.user.accountsettings.view.parameters.BillingScreenData;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ControllerRegistry;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
@@ -37,7 +37,7 @@ import com.vaadin.ui.HorizontalLayout;
 
 @SuppressWarnings("serial")
 @ViewComponent
-public class AccountModuleImpl extends AbstractView implements AccountModule {
+public class AccountModuleImpl extends AbstractPageView implements AccountModule {
 
 	private final HorizontalLayout root;
 	private final DetachedTabs accountTab;

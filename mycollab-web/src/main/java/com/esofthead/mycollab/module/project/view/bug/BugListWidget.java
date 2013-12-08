@@ -27,6 +27,7 @@ import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.VerticalLayout;
@@ -57,7 +58,7 @@ public class BugListWidget extends Depot {
 				});
 		// contentLayout.addComponent(backToBugReportsBtn);
 		final VerticalLayout backBtnWrapper = new VerticalLayout();
-		backBtnWrapper.setMargin(false, false, true, false);
+		backBtnWrapper.setMargin(new MarginInfo(false, false, true, false));
 
 		backToBugReportsBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		backBtnWrapper.addComponent(backToBugReportsBtn);

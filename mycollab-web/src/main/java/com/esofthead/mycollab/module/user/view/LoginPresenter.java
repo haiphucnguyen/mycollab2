@@ -37,7 +37,6 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.web.AppContext;
-import com.vaadin.terminal.gwt.server.AbstractWebApplicationContext;
 import com.vaadin.ui.ComponentContainer;
 
 public class LoginPresenter extends AbstractPresenter<LoginView> {
@@ -76,7 +75,7 @@ public class LoginPresenter extends AbstractPresenter<LoginView> {
 				AppContext.getSubDomain(), false);
 
 		if (isRemmeberPassword) {
-			((MainWindowContainer) AppContext.getApplication().getMainWindow())
+			((MainWindowContainer) UI.getCurrent())
 					.rememberPassword(username, password);
 		}
 
@@ -100,13 +99,6 @@ public class LoginPresenter extends AbstractPresenter<LoginView> {
 		AppContext.getInstance().setSession(user, pref, billingAccount);
 		EventBus.getInstance().fireEvent(
 				new ShellEvent.GotoMainPage(this, null));
-
-		// Tracking user service
-		AbstractWebApplicationContext context = (AbstractWebApplicationContext) AppContext
-				.getApplication().getContext();
-
-		log.debug("User agent: " + context.getBrowser().getBrowserApplication()
-				+ "  " + context.getBrowser().getAddress());
 	}
 
 	@Override

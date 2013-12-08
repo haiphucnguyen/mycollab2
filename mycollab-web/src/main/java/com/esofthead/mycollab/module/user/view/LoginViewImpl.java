@@ -23,13 +23,13 @@ import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.jetty.GenericServerRunner;
 import com.esofthead.mycollab.module.user.events.UserEvent;
 import com.esofthead.mycollab.shell.events.ShellEvent;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.CustomLayoutLoader;
 import com.vaadin.data.validator.StringLengthValidator;
-import com.vaadin.terminal.ExternalResource;
-import com.vaadin.terminal.UserError;
+import com.vaadin.server.ExternalResource;
+import com.vaadin.server.UserError;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CheckBox;
@@ -40,7 +40,7 @@ import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
 
 @ViewComponent
-public class LoginViewImpl extends AbstractView implements LoginView {
+public class LoginViewImpl extends AbstractPageView implements LoginView {
 
 	private static final long serialVersionUID = 1L;
 

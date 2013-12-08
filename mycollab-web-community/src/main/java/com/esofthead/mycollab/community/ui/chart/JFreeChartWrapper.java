@@ -55,7 +55,7 @@ import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.Application;
 import com.vaadin.terminal.ApplicationResource;
 import com.vaadin.terminal.DownloadStream;
-import com.vaadin.terminal.Resource;
+import com.vaadin.server.Resource;
 import com.vaadin.terminal.Sizeable;
 import com.vaadin.terminal.gwt.server.AbstractWebApplicationContext;
 import com.vaadin.ui.Embedded;

@@ -16,8 +16,6 @@
  */
 package com.esofthead.mycollab.module.user.accountsettings.profile.view;
 
-import com.esofthead.mycollab.common.localization.GenericI18Enum;
-import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.core.utils.TimezoneMapper;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.user.accountsettings.view.events.ProfileEvent;
@@ -26,11 +24,11 @@ import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.DateComboboxSelectionField;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
-import com.esofthead.mycollab.vaadin.ui.MessageBox;
-import com.esofthead.mycollab.vaadin.ui.MessageBox.ButtonType;
+import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.vaadin.ui.TimeZoneSelection;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -54,17 +52,14 @@ public class BasicInfoChangeWindow extends Window {
 	public BasicInfoChangeWindow(final User user) {
 		this.user = user;
 		this.setWidth("450px");
-		// this.setHeight("350px");
 		this.initUI();
 		this.center();
 		this.setCaption("Change your basic information");
-		((VerticalLayout) this.getContent()).setMargin(false, false, true,
-				false);
 	}
 
 	private void initUI() {
-
 		final VerticalLayout mainLayout = new VerticalLayout();
+		mainLayout.setMargin(new MarginInfo(false, false, true, false));
 		mainLayout.setWidth("100%");
 		mainLayout.setMargin(true);
 		mainLayout.setSpacing(true);
@@ -147,27 +142,21 @@ public class BasicInfoChangeWindow extends Window {
 		this.setContent(mainLayout);
 	}
 
-	private void showMessage(final String title, final String message) {
-		final MessageBox mb = new MessageBox(AppContext.getApplication()
-				.getMainWindow(), title, MessageBox.Icon.WARN, message,
-				new MessageBox.ButtonConfig(ButtonType.OK, LocalizationHelper
-						.getMessage(GenericI18Enum.BUTTON_OK_LABEL)));
-		mb.show();
-	}
-
 	private void changeUserInfo() {
 
 		this.txtLastName.removeStyleName("errorField");
 		this.txtEmail.removeStyleName("errorField");
 
 		if (this.txtLastName.getValue().equals("")) {
-			this.showMessage("Warning!", "The last name must be not null!");
+			NotificationUtil
+					.showErrorNotification("The last name must be not null!");
 			this.txtLastName.addStyleName("errorField");
 			return;
 		}
 
 		if (this.txtEmail.getValue().equals("")) {
-			this.showMessage("Warning!", "The email must be not null!");
+			NotificationUtil
+					.showErrorNotification("The email must be not null!");
 			this.txtLastName.addStyleName("errorField");
 			return;
 		}

@@ -45,7 +45,7 @@ import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
 import com.esofthead.mycollab.vaadin.events.TablePopupActionHandler;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -61,6 +61,7 @@ import com.hp.gagawa.java.elements.H3;
 import com.hp.gagawa.java.elements.Img;
 import com.hp.gagawa.java.elements.Td;
 import com.hp.gagawa.java.elements.Tr;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CheckBox;
@@ -76,7 +77,7 @@ import com.vaadin.ui.VerticalLayout;
  * @author haiphucnguyen
  */
 @ViewComponent
-public class ComponentListViewImpl extends AbstractView implements
+public class ComponentListViewImpl extends AbstractPageView implements
 		ComponentListView {
 	private static Logger log = LoggerFactory
 			.getLogger(ComponentListViewImpl.class);
@@ -90,7 +91,7 @@ public class ComponentListViewImpl extends AbstractView implements
 	private final Label selectedItemsNumberLabel = new Label();
 
 	public ComponentListViewImpl() {
-		this.setMargin(false, true, true, true);
+		this.setMargin(new MarginInfo(false, true, true, true));
 
 		this.componentSearchPanel = new ComponentSearchPanel();
 		this.addComponent(this.componentSearchPanel);

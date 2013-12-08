@@ -16,8 +16,8 @@
  */
 package com.esofthead.mycollab.premium.module.user.accountsettings.billing.view;
 
-import com.esofthead.mycollab.vaadin.mvp.View;
+import com.esofthead.mycollab.vaadin.mvp.PageView;
 
-public interface BillingSummaryView extends View {
+public interface BillingSummaryView extends PageView {
 	void loadCurrentPlan();
 }

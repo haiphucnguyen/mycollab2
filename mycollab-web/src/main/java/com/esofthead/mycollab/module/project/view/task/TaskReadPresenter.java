@@ -44,11 +44,10 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
-import com.esofthead.mycollab.vaadin.ui.MessageBox;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.Window;
+import com.vaadin.ui.UI;
 
 /**
  * 
@@ -69,8 +68,7 @@ public class TaskReadPresenter extends AbstractPresenter<TaskReadView> {
 
 					@Override
 					public void onAssign(final Task data) {
-						AppContext.getApplication().getMainWindow()
-								.addWindow(new AssignTaskWindow(data));
+						UI.getCurrent().addWindow(new AssignTaskWindow(data));
 					}
 
 					@Override
@@ -82,7 +80,7 @@ public class TaskReadPresenter extends AbstractPresenter<TaskReadView> {
 					@Override
 					public void onDelete(final Task data) {
 						ConfirmDialogExt.show(
-								AppContext.getApplication().getMainWindow(),
+								UI.getCurrent(),
 								LocalizationHelper.getMessage(
 										GenericI18Enum.DELETE_DIALOG_TITLE,
 										SiteConfiguration.getSiteName()),
@@ -198,7 +196,7 @@ public class TaskReadPresenter extends AbstractPresenter<TaskReadView> {
 				breadCrumb.gotoTaskRead(task);
 			}
 		} else {
-			MessageBox.showMessagePermissionAlert();
+			NotificationUtil.showMessagePermissionAlert();
 		}
 	}
 }

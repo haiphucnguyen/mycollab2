@@ -19,7 +19,7 @@ package com.esofthead.mycollab.module.project.view.bug;
 import java.util.Arrays;
 import java.util.GregorianCalendar;
 
-import org.vaadin.addon.customfield.CustomField;
+import com.vaadin.ui.CustomField;
 import org.vaadin.dialogs.ConfirmDialog;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
@@ -47,14 +47,17 @@ import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.event.MouseEvents;
 import com.vaadin.event.MouseEvents.ClickEvent;
-import com.vaadin.terminal.Resource;
+import com.vaadin.server.Resource;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.Table;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.Table.ColumnGenerator;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
@@ -78,7 +81,42 @@ public class BugRelatedField extends CustomField {
 
 		relatedBugService = ApplicationContextUtil
 				.getSpringBean(RelatedBugService.class);
+	}
 
+	private void setCriteria() {
+		BugRelatedSearchCriteria searchCriteria = new BugRelatedSearchCriteria();
+		searchCriteria.setBugId(new NumberSearchField(bean.getId()));
+		tableItem.setSearchCriteria(searchCriteria);
+	}
+
+	private void callItemSelectionWindow() {
+		BugSelectionWindow bugSeletionWindow = new BugSelectionWindow(this);
+		UI.getCurrent().addWindow(bugSeletionWindow);
+		bugSeletionWindow.show();
+	}
+
+	public void fireValueChange(SimpleBug data) {
+		relatedBean = data;
+
+		String bugname = "[%s-%s] %s";
+		bugname = String.format(bugname, CurrentProjectVariables.getProject()
+				.getShortname(), data.getBugkey(), data.getSummary());
+		setItemFieldValue(bugname);
+	}
+
+	@Override
+	public Class<?> getType() {
+		return (new String[2]).getClass();
+	}
+
+	private void setItemFieldValue(String value) {
+		itemField.setReadOnly(false);
+		itemField.setValue(value);
+		itemField.setReadOnly(true);
+	}
+
+	@Override
+	protected Component initContent() {
 		VerticalLayout mainLayout = new VerticalLayout();
 		mainLayout.setWidth("100%");
 		mainLayout.setMargin(true);
@@ -102,7 +140,7 @@ public class BugRelatedField extends CustomField {
 
 		browseBtn = new Embedded(null,
 				MyCollabResource.newResource("icons/16/browseItem.png"));
-		browseBtn.addListener(new MouseEvents.ClickListener() {
+		browseBtn.addClickListener(new MouseEvents.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -116,7 +154,7 @@ public class BugRelatedField extends CustomField {
 
 		clearBtn = new Embedded(null,
 				MyCollabResource.newResource("icons/16/clearItem.png"));
-		clearBtn.addListener(new MouseEvents.ClickListener() {
+		clearBtn.addClickListener(new MouseEvents.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -159,7 +197,8 @@ public class BugRelatedField extends CustomField {
 									.canWrite(ProjectRolePermissionCollections.BUGS));
 		}
 
-		btnRelate.addListener(new Button.ClickListener() {
+		btnRelate.addClickListener(new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void buttonClick(com.vaadin.ui.Button.ClickEvent event) {
@@ -227,7 +266,7 @@ public class BugRelatedField extends CustomField {
 
 		Label lbInstruction = new Label(
 				"<strong>Relate to an existing ticket</strong>",
-				Label.CONTENT_XHTML);
+				ContentMode.HTML);
 		mainLayout.addComponent(lbInstruction);
 
 		mainLayout.addComponent(layoutAdd);
@@ -331,6 +370,8 @@ public class BugRelatedField extends CustomField {
 		});
 
 		tableItem.addGeneratedColumn("id", new ColumnGenerator() {
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public Object generateCell(Table source, Object itemId,
 					Object columnId) {
@@ -338,12 +379,13 @@ public class BugRelatedField extends CustomField {
 						.getBeanByIndex(itemId);
 
 				Button deleteBtn = new Button(null, new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
 
 					@Override
 					public void buttonClick(
 							com.vaadin.ui.Button.ClickEvent event) {
-						ConfirmDialogExt.show(AppContext.getApplication()
-								.getMainWindow(), "Please Confirm:",
+						ConfirmDialogExt.show(UI.getCurrent(),
+								"Please Confirm:",
 								"Are you sure to remove this relationship?",
 								"Yes", "No", new ConfirmDialog.Listener() {
 									private static final long serialVersionUID = 1L;
@@ -412,39 +454,7 @@ public class BugRelatedField extends CustomField {
 
 		setCriteria();
 
-		this.setCompositionRoot(mainLayout);
-	}
-
-	private void setCriteria() {
-		BugRelatedSearchCriteria searchCriteria = new BugRelatedSearchCriteria();
-		searchCriteria.setBugId(new NumberSearchField(bean.getId()));
-		tableItem.setSearchCriteria(searchCriteria);
-	}
-
-	private void callItemSelectionWindow() {
-		BugSelectionWindow bugSeletionWindow = new BugSelectionWindow(this);
-		getWindow().addWindow(bugSeletionWindow);
-		bugSeletionWindow.show();
-	}
-
-	public void fireValueChange(SimpleBug data) {
-		relatedBean = data;
-
-		String bugname = "[%s-%s] %s";
-		bugname = String.format(bugname, CurrentProjectVariables.getProject()
-				.getShortname(), data.getBugkey(), data.getSummary());
-		setItemFieldValue(bugname);
-	}
-
-	@Override
-	public Class<?> getType() {
-		return (new String[2]).getClass();
-	}
-
-	private void setItemFieldValue(String value) {
-		itemField.setReadOnly(false);
-		itemField.setValue(value);
-		itemField.setReadOnly(true);
+		return mainLayout;
 	}
 
 }

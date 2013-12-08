@@ -25,6 +25,7 @@ import com.esofthead.mycollab.vaadin.ui.CountryComboBox;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -50,15 +51,12 @@ public class AdvancedInfoChangeWindow extends Window {
 		this.initUI();
 		this.center();
 		this.setCaption("Change your advanced information");
-		((VerticalLayout) this.getContent()).setMargin(false, false, true,
-				false);
 	}
 
 	private void initUI() {
-
 		final VerticalLayout mainLayout = new VerticalLayout();
 		mainLayout.setWidth("100%");
-		mainLayout.setMargin(true);
+		mainLayout.setMargin(new MarginInfo(false, false, true, false));
 		mainLayout.setSpacing(true);
 
 		final GridFormLayoutHelper passInfo = new GridFormLayoutHelper(1, 4,

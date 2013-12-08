@@ -16,9 +16,9 @@
  */
 package com.esofthead.mycollab.module.crm.view;
 
-import com.esofthead.mycollab.vaadin.mvp.View;
+import com.esofthead.mycollab.vaadin.mvp.PageView;
 
-public interface CrmHomeView extends View{
+public interface CrmHomeView extends PageView{
 
     void displayDashboard();
 }

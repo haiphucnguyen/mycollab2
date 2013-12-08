@@ -93,7 +93,7 @@ public abstract class RelatedItemSelectionWindow<T, S extends SearchCriteria>
 	}
 
 	@Override
-	protected void close() {
+	public void close() {
 		super.close();
 		if (!selectedItems.isEmpty()) {
 			relatedListComp.setSelectedItems(selectedItems);

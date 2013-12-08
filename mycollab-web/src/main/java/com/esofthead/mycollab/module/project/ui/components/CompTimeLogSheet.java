@@ -36,12 +36,14 @@ import com.esofthead.mycollab.vaadin.ui.table.DefaultPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.Table.ColumnGenerator;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
@@ -146,10 +148,10 @@ public abstract class CompTimeLogSheet<V extends ValuedBean> extends
 									CompTimeLogSheet.this.saveTimeInvest();
 									AddTimeInvest.this.loadTimeInvestItem();
 									AddTimeInvest.this.numberField
-											.setValue(0.0);
+											.setValue("0.0");
 								}
 							} catch (final Exception e) {
-								AddTimeInvest.this.numberField.setValue(0.0);
+								AddTimeInvest.this.numberField.setValue("0.0");
 							}
 						}
 
@@ -172,7 +174,8 @@ public abstract class CompTimeLogSheet<V extends ValuedBean> extends
 					.setComponentAlignment(lbIntructAdd, Alignment.MIDDLE_LEFT);
 
 			CompTimeLogSheet.this.tableItem = new DefaultPagedBeanTable<ItemTimeLoggingService, ItemTimeLoggingSearchCriteria, SimpleItemTimeLogging>(
-					ApplicationContextUtil.getSpringBean(ItemTimeLoggingService.class),
+					ApplicationContextUtil
+							.getSpringBean(ItemTimeLoggingService.class),
 					SimpleItemTimeLogging.class, Arrays.asList(
 							new TableViewField("User", "logUserFullName",
 									UIConstants.TABLE_X_LABEL_WIDTH),
@@ -229,7 +232,7 @@ public abstract class CompTimeLogSheet<V extends ValuedBean> extends
 							final SimpleItemTimeLogging itemTimeLogging = CompTimeLogSheet.this.tableItem
 									.getBeanByIndex(itemId);
 							final Label l = new Label();
-							l.setValue(itemTimeLogging.getLogvalue());
+							l.setValue(itemTimeLogging.getLogvalue() + "");
 							return l;
 						}
 					});
@@ -249,35 +252,33 @@ public abstract class CompTimeLogSheet<V extends ValuedBean> extends
 										@Override
 										public void buttonClick(
 												final ClickEvent event) {
-											ConfirmDialog
-													.show(AppContext
-															.getApplication()
-															.getMainWindow(),
-															"Please Confirm:",
-															"Are you sure to delete this invest?",
-															"Yes",
-															"No",
-															new ConfirmDialog.Listener() {
-																private static final long serialVersionUID = 1L;
+											ConfirmDialog.show(
+													UI.getCurrent(),
+													"Please Confirm:",
+													"Are you sure to delete this invest?",
+													"Yes",
+													"No",
+													new ConfirmDialog.Listener() {
+														private static final long serialVersionUID = 1L;
 
-																@Override
-																public void onClose(
-																		final ConfirmDialog dialog) {
-																	if (dialog
-																			.isConfirmed()) {
-																		CompTimeLogSheet.this.itemTimeLoggingService
-																				.removeWithSession(
-																						itemTimeLogging
-																								.getId(),
-																						AppContext
-																								.getUsername(),
-																						AppContext
-																								.getAccountId());
-																		AddTimeInvest.this
-																				.loadTimeInvestItem();
-																	}
-																}
-															});
+														@Override
+														public void onClose(
+																final ConfirmDialog dialog) {
+															if (dialog
+																	.isConfirmed()) {
+																CompTimeLogSheet.this.itemTimeLoggingService
+																		.removeWithSession(
+																				itemTimeLogging
+																						.getId(),
+																				AppContext
+																						.getUsername(),
+																				AppContext
+																						.getAccountId());
+																AddTimeInvest.this
+																		.loadTimeInvestItem();
+															}
+														}
+													});
 										}
 									});
 							deleteBtn.setStyleName("link");
@@ -330,7 +331,7 @@ public abstract class CompTimeLogSheet<V extends ValuedBean> extends
 
 		public void setTotalTimeValue() {
 			if (this.getTotalInvest() > 0) {
-				this.lbTimeTotal.setValue(this.getTotalInvest());
+				this.lbTimeTotal.setValue(this.getTotalInvest() + "");
 			}
 		}
 	}
@@ -344,7 +345,7 @@ public abstract class CompTimeLogSheet<V extends ValuedBean> extends
 		public UpdateTimeRemain() {
 
 			this.setSpacing(true);
-			this.setMargin(false, false, false, true);
+			this.setMargin(new MarginInfo(false, false, false, true));
 			this.setWidth("100%");
 
 			final VerticalLayout updateLayout = new VerticalLayout();
@@ -386,10 +387,11 @@ public abstract class CompTimeLogSheet<V extends ValuedBean> extends
 											.setValue(UpdateTimeRemain.this.numberField
 													.getValue());
 									UpdateTimeRemain.this.numberField
-											.setValue(0.0);
+											.setValue("0.0");
 								}
 							} catch (final Exception e) {
-								UpdateTimeRemain.this.numberField.setValue(0.0);
+								UpdateTimeRemain.this.numberField
+										.setValue("0.0");
 							}
 						}
 
@@ -413,7 +415,7 @@ public abstract class CompTimeLogSheet<V extends ValuedBean> extends
 		public void setUpdateTimeValue() {
 			if (CompTimeLogSheet.this.getEstimateRemainTime() > -1) {
 				this.lbUpdateTime.setValue(CompTimeLogSheet.this
-						.getEstimateRemainTime());
+						.getEstimateRemainTime() + "");
 			}
 		}
 	}
@@ -422,13 +424,13 @@ public abstract class CompTimeLogSheet<V extends ValuedBean> extends
 		private static final long serialVersionUID = 1L;
 
 		@Override
-		protected void setValue(final Object newValue,
+		protected void setValue(final String newValue,
 				final boolean repaintIsNotNeeded) {
 			try {
-				final double d = Double.parseDouble((String) newValue);
+				final String d = Double.parseDouble((String) newValue) + "";
 				super.setValue(d, repaintIsNotNeeded);
 			} catch (final Exception e) {
-				super.setValue(0.0, repaintIsNotNeeded);
+				super.setValue("0.0", repaintIsNotNeeded);
 			}
 		}
 	}

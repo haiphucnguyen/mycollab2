@@ -56,7 +56,7 @@ public class PieChartDescriptionBox {
 							% GenericChartWrapper.CHART_COLOR_STR.length]
 					+ "\" />";
 			final Label lblCircle = new Label(color);
-			lblCircle.setContentMode(Label.CONTENT_XHTML);
+			lblCircle.setContentMode(ContentMode.HTML);
 
 			final Button btnLink = new Button(
 					key

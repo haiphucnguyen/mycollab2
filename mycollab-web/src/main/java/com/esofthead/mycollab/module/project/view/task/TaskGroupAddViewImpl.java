@@ -25,7 +25,7 @@ import com.esofthead.mycollab.module.project.domain.TaskList;
 import com.esofthead.mycollab.module.project.ui.components.ProjectMilestoneComboBox;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberComboBox;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormContainerHorizontalViewField;
@@ -47,7 +47,7 @@ import com.vaadin.ui.TextField;
  * @author haiphucnguyen
  */
 @ViewComponent
-public class TaskGroupAddViewImpl extends AbstractView implements
+public class TaskGroupAddViewImpl extends AbstractPageView implements
 		TaskGroupAddView {
 	private static final long serialVersionUID = 1L;
 	private final EditForm editForm;

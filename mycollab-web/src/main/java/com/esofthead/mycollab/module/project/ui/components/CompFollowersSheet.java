@@ -45,6 +45,7 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.Table.ColumnGenerator;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 @SuppressWarnings("serial")
@@ -63,7 +64,8 @@ public abstract class CompFollowersSheet<V extends ValuedBean> extends
 		this.setSpacing(true);
 		this.setWidth("100%");
 
-		monitorItemService = ApplicationContextUtil.getSpringBean(MonitorItemService.class);
+		monitorItemService = ApplicationContextUtil
+				.getSpringBean(MonitorItemService.class);
 
 		initUI();
 	}
@@ -150,7 +152,7 @@ public abstract class CompFollowersSheet<V extends ValuedBean> extends
 		followBtn.addStyleName("link");
 		followBtn.setCaption("Follow by Me");
 		followBtn.setDescription("Follow");
-		followBtn.addListener(new Button.ClickListener() {
+		followBtn.addClickListener(new Button.ClickListener() {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
@@ -228,32 +230,27 @@ public abstract class CompFollowersSheet<V extends ValuedBean> extends
 				Button deleteBtn = new Button(null, new Button.ClickListener() {
 					@Override
 					public void buttonClick(ClickEvent event) {
-						ConfirmDialog
-								.show(AppContext.getApplication()
-										.getMainWindow(),
-										"Please Confirm:",
-										"Are you sure to remove this user from the notification of item activity?",
-										"Yes", "No",
-										new ConfirmDialog.Listener() {
-											private static final long serialVersionUID = 1L;
+						ConfirmDialog.show(
+								UI.getCurrent(),
+								"Please Confirm:",
+								"Are you sure to remove this user from the notification of item activity?",
+								"Yes", "No", new ConfirmDialog.Listener() {
+									private static final long serialVersionUID = 1L;
 
-											@Override
-											public void onClose(
-													ConfirmDialog dialog) {
-												if (dialog.isConfirmed()) {
-													MonitorItemService monitorItemService = ApplicationContextUtil
-															.getSpringBean(MonitorItemService.class);
-													monitorItemService.removeWithSession(
-															monitorItem.getId(),
-															AppContext
-																	.getUsername(),
-															AppContext
-																	.getAccountId());
-													CompFollowersSheet.this
-															.loadMonitorItems();
-												}
-											}
-										});
+									@Override
+									public void onClose(ConfirmDialog dialog) {
+										if (dialog.isConfirmed()) {
+											MonitorItemService monitorItemService = ApplicationContextUtil
+													.getSpringBean(MonitorItemService.class);
+											monitorItemService.removeWithSession(
+													monitorItem.getId(),
+													AppContext.getUsername(),
+													AppContext.getAccountId());
+											CompFollowersSheet.this
+													.loadMonitorItems();
+										}
+									}
+								});
 					}
 				});
 				deleteBtn.setStyleName("link");

@@ -45,7 +45,7 @@ import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
 import com.esofthead.mycollab.vaadin.events.TablePopupActionHandler;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -58,6 +58,7 @@ import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.H3;
 import com.hp.gagawa.java.elements.Td;
 import com.hp.gagawa.java.elements.Tr;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CheckBox;
@@ -74,7 +75,7 @@ import com.vaadin.ui.VerticalLayout;
  * @author haiphucnguyen
  */
 @ViewComponent
-public class VersionListViewImpl extends AbstractView implements
+public class VersionListViewImpl extends AbstractPageView implements
 		VersionListView {
 
 	private static Logger log = LoggerFactory
@@ -89,7 +90,7 @@ public class VersionListViewImpl extends AbstractView implements
 	private final Label selectedItemsNumberLabel = new Label();
 
 	public VersionListViewImpl() {
-		this.setMargin(false, true, true, true);
+		this.setMargin(new MarginInfo(false, true, true, true));
 
 		this.componentSearchPanel = new VersionSearchPanel();
 		this.addComponent(this.componentSearchPanel);

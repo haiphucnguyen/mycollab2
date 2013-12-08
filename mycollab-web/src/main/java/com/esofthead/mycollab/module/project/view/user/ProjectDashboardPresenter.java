@@ -29,7 +29,7 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
-import com.esofthead.mycollab.vaadin.ui.MessageBox;
+import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.vaadin.ui.ComponentContainer;
 
 /**
@@ -67,7 +67,7 @@ public class ProjectDashboardPresenter extends
 				presenter.go(view, data);
 				breadcrumb.gotoProjectEdit();
 			} else {
-				MessageBox.showMessagePermissionAlert();
+				NotificationUtil.showMessagePermissionAlert();
 			}
 		} else {
 			if (CurrentProjectVariables
@@ -77,7 +77,7 @@ public class ProjectDashboardPresenter extends
 				presenter.go(view, data);
 				breadcrumb.gotoProjectDashboard();
 			} else {
-				MessageBox.showMessagePermissionAlert();
+				NotificationUtil.showMessagePermissionAlert();
 			}
 		}
 	}

@@ -17,8 +17,8 @@
 package com.esofthead.mycollab.module.project.view.bug;
 
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
-import com.esofthead.mycollab.vaadin.mvp.View;
+import com.esofthead.mycollab.vaadin.mvp.PageView;
 
-public interface IPrioritySummaryChartWidget extends View {
+public interface IPrioritySummaryChartWidget extends PageView {
 	void setSearchCriteria(BugSearchCriteria searchCriteria);
 }

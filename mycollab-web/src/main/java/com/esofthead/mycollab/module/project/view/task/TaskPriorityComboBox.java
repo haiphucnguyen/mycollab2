@@ -18,7 +18,7 @@ package com.esofthead.mycollab.module.project.view.task;
 
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.util.IndexedContainer;
-import com.vaadin.terminal.Resource;
+import com.vaadin.server.Resource;
 import com.vaadin.ui.ComboBox;
 
 public class TaskPriorityComboBox extends ComboBox {
@@ -38,7 +38,7 @@ public class TaskPriorityComboBox extends ComboBox {
 	public static final String PRIORITY_URGENT = "Urgent";
 
 	public TaskPriorityComboBox() {
-		this.setItemCaptionMode(ITEM_CAPTION_MODE_EXPLICIT_DEFAULTS_ID);
+		this.setItemCaptionMode(ItemCaptionMode.EXPLICIT_DEFAULTS_ID);
 
 		IndexedContainer ic = new IndexedContainer();
 		ic.addItem(PRIORITY_URGENT);

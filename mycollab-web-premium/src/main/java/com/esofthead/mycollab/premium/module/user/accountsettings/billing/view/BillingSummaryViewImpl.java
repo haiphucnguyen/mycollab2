@@ -30,10 +30,12 @@ import com.esofthead.mycollab.module.user.accountsettings.view.events.AccountBil
 import com.esofthead.mycollab.module.user.domain.BillingPlan;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
+import com.vaadin.shared.ui.MarginInfo;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -41,12 +43,13 @@ import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
 @SuppressWarnings("serial")
 @ViewComponent
-public class BillingSummaryViewImpl extends AbstractView implements
+public class BillingSummaryViewImpl extends AbstractPageView implements
 		BillingSummaryView {
 	private static Logger log = LoggerFactory
 			.getLogger(BillingSummaryViewImpl.class);
@@ -116,7 +119,7 @@ public class BillingSummaryViewImpl extends AbstractView implements
 
 		Label contentText = new Label(
 				"For specific questions related to billing, features, plans, upgrades, downgrades or cancellations, please send email to <a href=\"mailto:support@mycollab.com\">support@mycollab.com</a>",
-				Label.CONTENT_XHTML);
+				ContentMode.HTML);
 		contentText.addStyleName("faq-content");
 		FAQLayout.addComponent(contentText);
 
@@ -148,53 +151,51 @@ public class BillingSummaryViewImpl extends AbstractView implements
 			singlePlan.addComponent(billingType);
 
 			Label billingPrice = new Label("<span class='billing-price'>$"
-					+ plan.getPricing() + "</span>/month", Label.CONTENT_XHTML);
+					+ plan.getPricing() + "</span>/month", ContentMode.HTML);
 			billingPrice.addStyleName("billing-price-lbl");
 			singlePlan.addComponent(billingPrice);
 
 			Label billingUser = new Label("<span class='billing-user'>"
 					+ plan.getNumusers() + "</span>&nbsp;Users",
-					Label.CONTENT_XHTML);
+					ContentMode.HTML);
 			singlePlan.addComponent(billingUser);
 
-			String planVolume = ResourceUtils.getVolumeDisplay(plan.getVolume());
+			String planVolume = ResourceUtils
+					.getVolumeDisplay(plan.getVolume());
 
 			Label billingStorage = new Label("<span class='billing-storage'>"
-					+ planVolume + "</span>&nbsp;Storage", Label.CONTENT_XHTML);
+					+ planVolume + "</span>&nbsp;Storage", ContentMode.HTML);
 			singlePlan.addComponent(billingStorage);
 
 			Label billingProject = new Label("<span class='billing-project'>"
 					+ plan.getNumprojects() + "</span>&nbsp;Project"
-					+ (plan.getNumprojects() > 1 ? "s" : ""),
-					Label.CONTENT_XHTML);
+					+ (plan.getNumprojects() > 1 ? "s" : ""), ContentMode.HTML);
 			singlePlan.addComponent(billingProject);
 
 			Label billingBugTracking;
 			if (plan.getHasbugenable()) {
 				billingBugTracking = new Label("Bugs Tracking",
-						Label.CONTENT_DEFAULT);
+						ContentMode.HTML);
 			} else {
-				billingBugTracking = new Label("&nbsp;", Label.CONTENT_XHTML);
+				billingBugTracking = new Label("&nbsp;", ContentMode.HTML);
 			}
 			billingBugTracking.addStyleName("billing-bug-feature");
 			singlePlan.addComponent(billingBugTracking);
 
 			Label billingTimeTracking;
 			if (plan.getHastimetracking()) {
-				billingTimeTracking = new Label("Time Tracking",
-						Label.CONTENT_DEFAULT);
+				billingTimeTracking = new Label("Time Tracking");
 			} else {
-				billingTimeTracking = new Label("&nbsp;", Label.CONTENT_XHTML);
+				billingTimeTracking = new Label("&nbsp;", ContentMode.HTML);
 			}
 			billingTimeTracking.addStyleName("billing-timetrack-feature");
 			singlePlan.addComponent(billingTimeTracking);
 
 			Label billingStandup;
 			if (plan.getHasstandupmeetingenable()) {
-				billingStandup = new Label("Standup Meeting",
-						Label.CONTENT_DEFAULT);
+				billingStandup = new Label("Standup Meeting", ContentMode.TEXT);
 			} else {
-				billingStandup = new Label("&nbsp;", Label.CONTENT_XHTML);
+				billingStandup = new Label("&nbsp;", ContentMode.HTML);
 			}
 			billingStandup.addStyleName("billing-standup-feature");
 			singlePlan.addComponent(billingStandup);
@@ -203,7 +204,7 @@ public class BillingSummaryViewImpl extends AbstractView implements
 
 				@Override
 				public void buttonClick(ClickEvent event) {
-					BillingSummaryViewImpl.this.getWidget().getWindow()
+					UI.getCurrent()
 							.addWindow(new UpdateBillingPlanWindow(plan));
 				}
 			});
@@ -219,7 +220,7 @@ public class BillingSummaryViewImpl extends AbstractView implements
 		layout.addComponent(plansList);
 
 		String billingFAQText = "<div class='prig-bottom'><div class='prig-bottom-cnt'><div class='pri-bott-coll pri-coll-1'><div class='pri-bott-block'><h2>How does the 30-day trial work?</h2><p>When you sign up, you are automatically enrolled in a free30-day trial that gives you unrestricted access to all the greatfeatures MyCollab has to offer. During your free trial, you havethe option to cancel at any time. When your trial ends, you canchoose to remain on your current package, upgrade to another onewith more users and storages, downgrade, or cancel.</p></div><div class='pri-bott-block'><h2>Can I upgrade my plan at any time?</h2><p>Yes, you may upgrade your plan at any time. Choose a planthat suits your needs today, and upgrade as the numbers of usersand spaces grow. After you upgrade the changes will be updatedon your next billing cycle.</p></div><div class='pri-bott-block'><h2>What if I want to downgrade my plan?</h2><p>You can downgrade your package at any time as long as theone you select is consistent with your current usage. Forexample, if you currently have 30 users, you must delete 10 ofthem before you can downgrade to a Compact package that allowsfor up to 20 users.</p></div></div><div class='pri-bott-coll'><div class='pri-bott-block prig-block-1'><h2>Do I have to provide payment information up front?</h2><p>No, you can choose the \"manual payment\" option in thebilling information panel. At the end of the trial, we will sendyou an email to remind you to submit payment information. Youcan then choose if and how you want to pay.</p></div><div class='pri-bott-block prig-block-2'><h2>What payment options are available?</h2><p>We accept Visa, Mastercard, and American Express forautomatic payments. We also accept PayPal, checks, and bankwires for manual payments.</p></div><div class='pri-bott-block'><h2>Do I have to sign a long-term contract?</h2><p>No, there are no contracts. You can choose to pay monthly,or you can pay in advance for a year and get 2 months free (12months for the price of 10). By paying in advance, you cansubmit one expense report or purchase order for the year.</p></div></div></div><div class='clear'></div></div>";
-		Label billingFAQ = new Label(billingFAQText, Label.CONTENT_XHTML);
+		Label billingFAQ = new Label(billingFAQText, ContentMode.HTML);
 
 		this.addComponent(layout);
 		this.addComponent(billingFAQ);
@@ -239,7 +240,7 @@ public class BillingSummaryViewImpl extends AbstractView implements
 
 		Label currentBillingPrice = new Label("<span class='current-price'>$"
 				+ currentBillingPlan.getPricing() + "</span>/Month",
-				Label.CONTENT_XHTML);
+				ContentMode.HTML);
 		currentBillingPrice.setStyleName("current-price-lbl");
 		currentBillingPrice.setImmediate(true);
 		currentPlan.addComponent(currentBillingPrice);
@@ -265,16 +266,16 @@ public class BillingSummaryViewImpl extends AbstractView implements
 		usedStorageVolume = driveInfoService.getUsedStorageVolume(AppContext
 				.getAccountId());
 
-		String usedStorageTxt = ResourceUtils.getVolumeDisplay(usedStorageVolume);
+		String usedStorageTxt = ResourceUtils
+				.getVolumeDisplay(usedStorageVolume);
 
 		planInfo = String.format(planInfo, numOfActiveProjects,
 				currentBillingPlan.getNumprojects(), usedStorageTxt,
 				ResourceUtils.getVolumeDisplay(currentBillingPlan.getVolume()),
 				numOfActiveUsers, currentBillingPlan.getNumusers());
 
-		Label currentUsage = new Label(planInfo, Label.CONTENT_XHTML);
+		Label currentUsage = new Label(planInfo, ContentMode.HTML);
 		currentUsage.addStyleName("current-usage");
-		currentUsage.setWidth(SIZE_UNDEFINED, 0);
 		currentPlan.addComponent(currentUsage);
 		currentPlan
 				.setComponentAlignment(currentUsage, Alignment.MIDDLE_CENTER);
@@ -283,24 +284,32 @@ public class BillingSummaryViewImpl extends AbstractView implements
 	private class UpdateBillingPlanWindow extends Window {
 		private final BillingPlan chosenPlan;
 
+		private VerticalLayout contentLayout;
+
 		public UpdateBillingPlanWindow(BillingPlan billingPlan) {
 			this.chosenPlan = billingPlan;
 			this.addStyleName("updateplan-window");
 			this.setWidth("400px");
 
-			this.initUI(((VerticalLayout) this.getContent()));
+			contentLayout = new VerticalLayout();
+			contentLayout.setSpacing(true);
+			contentLayout.setMargin(new MarginInfo(false, false, true, false));
+			this.setContent(contentLayout);
+			initUI();
+
 			this.center();
 			this.setCaption("Change your current billing plan");
 		}
 
-		private void initUI(VerticalLayout thisContent) {
+		private void initUI() {
 			Label header = new Label(
 					"Are you sure you want to change your current billing plan to the following billing plan?");
 			header.addStyleName("updateplan-hdr");
 			header.setWidth("300px");
 
-			this.addComponent(header);
-			thisContent.setComponentAlignment(header, Alignment.MIDDLE_CENTER);
+			contentLayout.addComponent(header);
+			contentLayout
+					.setComponentAlignment(header, Alignment.MIDDLE_CENTER);
 
 			VerticalLayout chosenPlanInfo = new VerticalLayout();
 			chosenPlanInfo.setWidth("300px");
@@ -311,12 +320,12 @@ public class BillingSummaryViewImpl extends AbstractView implements
 
 			Label chosenPlanPrice = new Label("<span class='billing-price'>$"
 					+ this.chosenPlan.getPricing() + "</span>/month",
-					Label.CONTENT_XHTML);
+					ContentMode.HTML);
 			chosenPlanPrice.addStyleName("billing-price-lbl");
 			chosenPlanInfo.addComponent(chosenPlanPrice);
 
-			this.addComponent(chosenPlanInfo);
-			thisContent.setComponentAlignment(chosenPlanInfo,
+			contentLayout.addComponent(chosenPlanInfo);
+			contentLayout.setComponentAlignment(chosenPlanInfo,
 					Alignment.MIDDLE_CENTER);
 
 			HorizontalLayout controlBtns = new HorizontalLayout();
@@ -370,11 +379,9 @@ public class BillingSummaryViewImpl extends AbstractView implements
 			controlBtns.addComponent(saveBtn);
 			controlBtns.setComponentAlignment(saveBtn, Alignment.MIDDLE_CENTER);
 
-			this.addComponent(controlBtns);
-			thisContent.setComponentAlignment(controlBtns,
+			contentLayout.addComponent(controlBtns);
+			contentLayout.setComponentAlignment(controlBtns,
 					Alignment.MIDDLE_RIGHT);
-			thisContent.setSpacing(true);
-			thisContent.setMargin(false, false, true, false);
 		}
 
 		private void updateBillingPlan() {

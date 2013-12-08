@@ -28,7 +28,7 @@ import com.esofthead.mycollab.module.project.ui.components.ProjectTaskListComboB
 import com.esofthead.mycollab.module.project.ui.components.TaskPercentageCompleteComboBox;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberComboBox;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.AttachmentUploadField;
@@ -50,7 +50,7 @@ import com.vaadin.ui.TextField;
  * @author haiphucnguyen
  */
 @ViewComponent
-public class TaskAddViewImpl extends AbstractView implements TaskAddView {
+public class TaskAddViewImpl extends AbstractPageView implements TaskAddView {
 
 	private static final long serialVersionUID = 1L;
 	private final EditForm editForm;

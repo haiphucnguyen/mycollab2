@@ -39,7 +39,7 @@ import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.MyCollabThread;
 import com.esofthead.mycollab.reporting.ReportExportType;
 import com.esofthead.mycollab.reporting.Templates;
-import com.vaadin.terminal.StreamResource;
+import com.vaadin.server.StreamResource;
 
 public abstract class ExportItemsStreamResource<T> implements
 		StreamResource.StreamSource {

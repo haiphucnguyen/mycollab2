@@ -32,15 +32,16 @@ import com.esofthead.mycollab.module.file.resource.SimpleGridExportItemsStreamRe
 import com.esofthead.mycollab.reporting.ReportExportType;
 import com.esofthead.mycollab.reporting.RpParameterBuilder;
 import com.esofthead.mycollab.vaadin.events.PagableHandler;
-import com.esofthead.mycollab.vaadin.events.TablePopupActionHandler;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.events.SelectableItemHandler;
 import com.esofthead.mycollab.vaadin.events.SelectionOptionHandler;
+import com.esofthead.mycollab.vaadin.events.TablePopupActionHandler;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.table.AbstractPagedBeanTable;
-import com.vaadin.terminal.Resource;
-import com.vaadin.terminal.StreamResource;
+import com.vaadin.server.Resource;
+import com.vaadin.server.StreamResource;
 import com.vaadin.ui.CheckBox;
+import com.vaadin.ui.UI;
 
 public abstract class ListSelectionPresenter<V extends ListView<S, B>, S extends SearchCriteria, B extends ValuedBean>
 		extends AbstractPresenter<V> {
@@ -184,7 +185,7 @@ public abstract class ListSelectionPresenter<V extends ListView<S, B>, S extends
 		public void onSelect(String id, String caption) {
 			if (TablePopupActionHandler.DELETE_ACTION.equals(id)) {
 				ConfirmDialogExt
-						.show(presenter.getView().getWindow(),
+						.show(UI.getCurrent(),
 								LocalizationHelper.getMessage(
 										GenericI18Enum.DELETE_DIALOG_TITLE,
 										SiteConfiguration.getSiteName()),
@@ -218,8 +219,7 @@ public abstract class ListSelectionPresenter<V extends ListView<S, B>, S extends
 									ReportExportType.CSV,
 									presenter.getSearchService(),
 									presenter.searchCriteria,
-									getReportModelClassType()), "export.csv",
-							presenter.view.getApplication());
+									getReportModelClassType()), "export.csv");
 				} else {
 
 					res = new StreamResource(
@@ -229,8 +229,7 @@ public abstract class ListSelectionPresenter<V extends ListView<S, B>, S extends
 											.getDisplayColumns()),
 									ReportExportType.CSV,
 									presenter.getSelectedItems(),
-									getReportModelClassType()), "export.csv",
-							presenter.view.getApplication());
+									getReportModelClassType()), "export.csv");
 				}
 
 				presenter.view.getWidget().getWindow().open(res, "_blank");
@@ -247,8 +246,7 @@ public abstract class ListSelectionPresenter<V extends ListView<S, B>, S extends
 									ReportExportType.PDF,
 									presenter.getSearchService(),
 									presenter.searchCriteria,
-									getReportModelClassType()), "export.pdf",
-							presenter.view.getApplication());
+									getReportModelClassType()), "export.pdf");
 				} else {
 
 					res = new StreamResource(
@@ -258,8 +256,7 @@ public abstract class ListSelectionPresenter<V extends ListView<S, B>, S extends
 											.getDisplayColumns()),
 									ReportExportType.PDF,
 									presenter.getSelectedItems(),
-									getReportModelClassType()), "export.pdf",
-							presenter.view.getApplication());
+									getReportModelClassType()), "export.pdf");
 				}
 
 				presenter.view.getWidget().getWindow().open(res, "_blank");
@@ -276,8 +273,7 @@ public abstract class ListSelectionPresenter<V extends ListView<S, B>, S extends
 									ReportExportType.EXCEL,
 									presenter.getSearchService(),
 									presenter.searchCriteria,
-									getReportModelClassType()), "export.xlsx",
-							presenter.view.getApplication());
+									getReportModelClassType()), "export.xlsx");
 				} else {
 
 					res = new StreamResource(
@@ -287,8 +283,7 @@ public abstract class ListSelectionPresenter<V extends ListView<S, B>, S extends
 											.getDisplayColumns()),
 									ReportExportType.EXCEL,
 									presenter.getSelectedItems(),
-									getReportModelClassType()), "export.xlsx",
-							presenter.view.getApplication());
+									getReportModelClassType()), "export.xlsx");
 				}
 
 				presenter.view.getWidget().getWindow().open(res, "_blank");

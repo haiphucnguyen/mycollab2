@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.esofthead.mycollab.module.project.domain.Risk;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
@@ -16,7 +16,7 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Layout;
 
 @ViewComponent
-public class RiskAddViewImpl extends AbstractView implements RiskAddView {
+public class RiskAddViewImpl extends AbstractPageView implements RiskAddView {
 
 	private static final long serialVersionUID = 1L;
 	private final EditForm editForm;

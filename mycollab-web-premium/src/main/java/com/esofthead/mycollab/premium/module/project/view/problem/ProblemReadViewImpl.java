@@ -13,7 +13,7 @@ import com.esofthead.mycollab.module.project.ui.components.CommentListDepot;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserFormLinkField;
 import com.esofthead.mycollab.schedule.email.project.ProjectProblemRelayEmailNotificationAction;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.ProjectPreviewFormControlsGenerator;
@@ -30,7 +30,7 @@ import com.vaadin.ui.Layout;
 import com.vaadin.ui.Window;
 
 @ViewComponent
-public class ProblemReadViewImpl extends AbstractView implements
+public class ProblemReadViewImpl extends AbstractPageView implements
 		ProblemReadView {
 
 	private static final long serialVersionUID = 1L;

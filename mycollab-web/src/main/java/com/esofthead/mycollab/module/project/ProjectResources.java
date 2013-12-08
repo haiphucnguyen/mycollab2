@@ -24,7 +24,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.esofthead.mycollab.web.MyCollabResource;
-import com.vaadin.terminal.Resource;
+import com.vaadin.server.Resource;
 
 /**
  * 

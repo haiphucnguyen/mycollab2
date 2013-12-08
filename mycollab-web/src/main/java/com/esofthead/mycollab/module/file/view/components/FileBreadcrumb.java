@@ -27,20 +27,19 @@ import com.esofthead.mycollab.module.ecm.domain.Folder;
 import com.esofthead.mycollab.module.file.domain.criteria.FileSearchCriteria;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
-import com.esofthead.mycollab.vaadin.mvp.View;
+import com.esofthead.mycollab.vaadin.mvp.PageView;
 import com.esofthead.mycollab.vaadin.ui.CommonUIFactory;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.utils.LabelStringGenerator;
 import com.esofthead.mycollab.web.AppContext;
 import com.lexaden.breadcrumb.Breadcrumb;
-import com.vaadin.terminal.Sizeable;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.ComponentContainer;
 
 @ViewComponent
-public class FileBreadcrumb extends Breadcrumb implements View,
+public class FileBreadcrumb extends Breadcrumb implements PageView,
 		HasSearchHandlers<FileSearchCriteria> {
 
 	private static final long serialVersionUID = 1L;
@@ -72,7 +71,7 @@ public class FileBreadcrumb extends Breadcrumb implements View,
 				notifySelectHandler(criteria);
 			}
 		}));
-		this.setHeight(25, Sizeable.UNITS_PIXELS);
+		this.setHeight(25, Unit.PIXELS);
 
 		this.select(0);
 		Button documentBtnLink = generateBreadcrumbLink("My Documents",

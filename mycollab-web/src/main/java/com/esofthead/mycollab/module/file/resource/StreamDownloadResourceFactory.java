@@ -23,11 +23,10 @@ import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.configuration.StorageConfiguration;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.ecm.domain.Folder;
-import com.esofthead.mycollab.web.AppContext;
-import com.vaadin.terminal.ExternalResource;
-import com.vaadin.terminal.FileResource;
-import com.vaadin.terminal.Resource;
-import com.vaadin.terminal.StreamResource;
+import com.vaadin.server.ExternalResource;
+import com.vaadin.server.FileResource;
+import com.vaadin.server.Resource;
+import com.vaadin.server.StreamResource;
 
 public class StreamDownloadResourceFactory {
 
@@ -52,10 +51,10 @@ public class StreamDownloadResourceFactory {
 					.getName() + ".zip" : lstRes.get(0).getName();
 			return new StreamResource(
 					new StreamDownloadResourceSupportExtDrive(lstRes,
-							isSearchAction), name, AppContext.getApplication());
+							isSearchAction), name);
 		}
 		return new StreamResource(new StreamDownloadResourceSupportExtDrive(
-				lstRes, isSearchAction), "out.zip", AppContext.getApplication());
+				lstRes, isSearchAction), "out.zip");
 	}
 
 	public static Resource getImagePreviewResource(String documentPath) {
@@ -63,8 +62,7 @@ public class StreamDownloadResourceFactory {
 				.getStorageConfiguration();
 		if (SiteConfiguration.isSupportFileStorage()) {
 			return new FileResource(new File(
-					storageConfiguration.generateResourcePath(documentPath)),
-					AppContext.getApplication());
+					storageConfiguration.generateResourcePath(documentPath)));
 		} else if (SiteConfiguration.isSupportS3Storage()) {
 			return new ExternalResource(
 					storageConfiguration.generateResourcePath(documentPath));

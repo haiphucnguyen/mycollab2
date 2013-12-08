@@ -48,14 +48,13 @@ import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanPagedList.RowDisplayHandler;
 import com.esofthead.mycollab.vaadin.ui.AttachmentPanel;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.DefaultBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
-import com.esofthead.mycollab.vaadin.ui.MessageBox;
-import com.esofthead.mycollab.vaadin.ui.MessageBox.ButtonType;
+import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
@@ -64,7 +63,7 @@ import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.event.FieldEvents.TextChangeEvent;
 import com.vaadin.event.FieldEvents.TextChangeListener;
-import com.vaadin.terminal.Sizeable;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.AbstractTextField.TextChangeEventMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -77,10 +76,11 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 @ViewComponent
-public class MessageListViewImpl extends AbstractView implements
+public class MessageListViewImpl extends AbstractPageView implements
 		MessageListView, HasEditFormHandlers<Message> {
 
 	private static final long serialVersionUID = 8433776359091397422L;
@@ -245,7 +245,7 @@ public class MessageListViewImpl extends AbstractView implements
 				@Override
 				public void buttonClick(ClickEvent event) {
 					ConfirmDialogExt.show(
-							MessageListViewImpl.this.getWindow(),
+							UI.getCurrent(),
 							LocalizationHelper.getMessage(
 									GenericI18Enum.DELETE_DIALOG_TITLE,
 									SiteConfiguration.getSiteName()),
@@ -293,7 +293,7 @@ public class MessageListViewImpl extends AbstractView implements
 
 			final Label messageContent = new Label(
 					StringUtils.formatExtraLink(message.getMessage()),
-					Label.CONTENT_XHTML);
+					ContentMode.HTML);
 			messageContent.setStyleName("message-body");
 			rowLayout.addComponent(messageContent);
 
@@ -329,7 +329,7 @@ public class MessageListViewImpl extends AbstractView implements
 			basicSearchBody.setSpacing(false);
 
 			final TextField nameField = new TextField();
-			nameField.addListener(new TextChangeListener() {
+			nameField.addTextChangeListener(new TextChangeListener() {
 				@Override
 				public void textChange(final TextChangeEvent event) {
 					MessageSearchPanel.this.messageSearchCriteria = new MessageSearchCriteria();
@@ -358,7 +358,7 @@ public class MessageListViewImpl extends AbstractView implements
 					Alignment.MIDDLE_LEFT);
 
 			final Button searchBtn = new Button();
-			searchBtn.addListener(new Button.ClickListener() {
+			searchBtn.addClickListener(new Button.ClickListener() {
 				private static final long serialVersionUID = 1L;
 
 				@Override
@@ -436,7 +436,7 @@ public class MessageListViewImpl extends AbstractView implements
 			final HorizontalLayout titleLayout = new HorizontalLayout();
 			titleLayout.setSpacing(true);
 			final Label titleLbl = new Label("Title: ");
-			titleLbl.setWidth(Sizeable.SIZE_UNDEFINED, 0);
+			titleLbl.setWidth("100%");
 
 			titleField.setWidth("100%");
 			titleField.setNullRepresentation("");
@@ -518,16 +518,8 @@ public class MessageListViewImpl extends AbstractView implements
 								attachments.saveContentsToRepo(attachmentPath);
 							} else {
 								titleField.addStyleName("errorField");
-								final MessageBox mb = new MessageBox(
-										AppContext.getApplication()
-												.getMainWindow(),
-										LocalizationHelper
-												.getMessage(GenericI18Enum.ERROR_WINDOW_TITLE),
-										MessageBox.Icon.ERROR,
-										"Title must be not null!",
-										new MessageBox.ButtonConfig(
-												ButtonType.OK, "Ok"));
-								mb.show();
+								NotificationUtil
+										.showErrorNotification("Title must be not null!");
 							}
 						}
 					});

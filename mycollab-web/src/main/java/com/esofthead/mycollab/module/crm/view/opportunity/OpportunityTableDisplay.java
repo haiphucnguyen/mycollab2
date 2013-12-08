@@ -51,6 +51,8 @@ import com.hp.gagawa.java.elements.H3;
 import com.hp.gagawa.java.elements.Img;
 import com.hp.gagawa.java.elements.Td;
 import com.hp.gagawa.java.elements.Tr;
+import com.vaadin.data.Property;
+import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.Label;
@@ -90,11 +92,11 @@ public class OpportunityTableDisplay
 					Object columnId) {
 				final CheckBox cb = new CheckBox("", false);
 				cb.setImmediate(true);
-				cb.addListener(new Button.ClickListener() {
+				cb.addValueChangeListener(new Property.ValueChangeListener() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
-					public void buttonClick(Button.ClickEvent event) {
+					public void valueChange(ValueChangeEvent event) {
 						SimpleOpportunity opportunity = OpportunityTableDisplay.this
 								.getBeanByIndex(itemId);
 						OpportunityTableDisplay.this

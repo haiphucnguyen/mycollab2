@@ -40,6 +40,7 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.web.AppContext;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Label;
 
@@ -176,7 +177,7 @@ public class ProjectActivityStreamPagedList
 								.generatorDetailChangeOfActivity(activityStream);
 					}
 				}
-				final Label actionLbl = new Label(content, Label.CONTENT_XHTML);
+				final Label actionLbl = new Label(content, ContentMode.HTML);
 				final CssLayout streamWrapper = new CssLayout();
 				streamWrapper.setWidth("100%");
 				streamWrapper.addStyleName("stream-wrapper");

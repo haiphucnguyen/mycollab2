@@ -16,8 +16,7 @@
  */
 package com.esofthead.mycollab.vaadin.ui;
 
-import com.github.wolfie.detachedtabs.DetachedTabs;
-import com.vaadin.terminal.Resource;
+import com.vaadin.server.Resource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
@@ -25,6 +24,7 @@ import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.TabSheet;
 
 public class ReadViewLayout extends CssLayout {
 	private static final long serialVersionUID = 1L;
@@ -32,7 +32,7 @@ public class ReadViewLayout extends CssLayout {
 	private final HorizontalLayout header;
 	private final Embedded iconEmbed;
 	private final Label titleLbl;
-	private final DetachedTabs viewTab;
+	private final TabSheet viewTab;
 	private final CssLayout body;
 
 	public ReadViewLayout(final Resource icon) {
@@ -46,7 +46,6 @@ public class ReadViewLayout extends CssLayout {
 			this.header = new HorizontalLayout();
 			this.header.setWidth("100%");
 			header.setSpacing(true);
-			// this.header.setMargin(true, true, false, true);
 			this.header.setStyleName("readview-layout-header");
 			this.addComponent(this.header);
 
@@ -105,9 +104,9 @@ public class ReadViewLayout extends CssLayout {
 		}
 	}
 
-	public void addTab(final Component content, final String button) {
+	public void addTab(final Component content, final String caption) {
 		if (this.viewTab != null) {
-			this.viewTab.addTab(content, new Button(button));
+			this.viewTab.addTab(content, caption);
 		}
 	}
 
@@ -124,7 +123,7 @@ public class ReadViewLayout extends CssLayout {
 
 	public void selectTab(final String viewName) {
 		if (this.viewTab != null) {
-			this.viewTab.selectTab(viewName);
+			this.viewTab.setSelectedTab(viewName);
 		}
 	}
 

@@ -17,8 +17,6 @@
 package com.esofthead.mycollab.module.project.view.parameters;
 
 import com.esofthead.mycollab.module.project.domain.TaskList;
-import com.esofthead.mycollab.module.project.domain.criteria.TaskListSearchCriteria;
-import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 
 public class TaskGroupScreenData {
@@ -39,14 +37,6 @@ public class TaskGroupScreenData {
 
 		public ReorderTaskListRequest() {
 			super(null);
-		}
-	}
-
-	public static class DisplayGanttChartRequest extends ScreenData {
-		private TaskListSearchCriteria searchCriteria;
-
-		public DisplayGanttChartRequest(TaskSearchCriteria searchCriteria) {
-			super(searchCriteria);
 		}
 	}
 

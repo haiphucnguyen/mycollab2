@@ -96,9 +96,7 @@ public class OpportunitySelectionWindow extends Window {
 								.getData();
 						if ("opportunityname".equals(event.getFieldName())) {
 							fieldSelection.fireValueChange(opportunity);
-							OpportunitySelectionWindow.this.getParent()
-									.removeWindow(
-											OpportunitySelectionWindow.this);
+							OpportunitySelectionWindow.this.close();
 						}
 					}
 				});

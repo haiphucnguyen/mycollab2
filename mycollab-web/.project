@@ -15,7 +15,6 @@
     <project>mycollab-scheduler</project>
     <project>mycollab-test</project>
     <project>mycollab-server-runner</project>
-    <project>ckeditor</project>
   </projects>
   <buildSpec>
     <buildCommand>

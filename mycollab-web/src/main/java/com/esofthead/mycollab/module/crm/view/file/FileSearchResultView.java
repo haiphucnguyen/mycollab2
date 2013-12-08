@@ -17,8 +17,8 @@
 package com.esofthead.mycollab.module.crm.view.file;
 
 import com.esofthead.mycollab.module.file.domain.criteria.FileSearchCriteria;
-import com.esofthead.mycollab.vaadin.mvp.View;
+import com.esofthead.mycollab.vaadin.mvp.PageView;
 
-public interface FileSearchResultView extends View {
+public interface FileSearchResultView extends PageView {
 	void displaySearchResult(FileSearchCriteria searchCriteria);
 }

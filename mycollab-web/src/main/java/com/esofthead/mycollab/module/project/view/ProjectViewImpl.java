@@ -68,11 +68,11 @@ import com.esofthead.mycollab.module.project.view.time.ITimeTrackingPresenter;
 import com.esofthead.mycollab.module.project.view.user.ProjectDashboardPresenter;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
-import com.esofthead.mycollab.vaadin.mvp.View;
+import com.esofthead.mycollab.vaadin.mvp.PageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -91,7 +91,7 @@ import com.vaadin.ui.VerticalLayout;
 
 @SuppressWarnings("serial")
 @ViewComponent
-public class ProjectViewImpl extends AbstractView implements ProjectView {
+public class ProjectViewImpl extends AbstractPageView implements ProjectView {
 
 	private static Logger log = LoggerFactory.getLogger(ProjectViewImpl.class);
 	private final HorizontalLayout root;
@@ -583,7 +583,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 	@Override
 	public Component gotoSubView(String name) {
 		log.debug("Project: Go to tab view name " + name);
-		View component = (View) myProjectTab.selectTab(name);
+		PageView component = (PageView) myProjectTab.selectTab(name);
 		return component;
 	}
 }

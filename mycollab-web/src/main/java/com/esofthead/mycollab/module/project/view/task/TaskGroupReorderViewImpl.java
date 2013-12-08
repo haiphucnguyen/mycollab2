@@ -32,7 +32,7 @@ import com.esofthead.mycollab.module.project.domain.criteria.TaskListSearchCrite
 import com.esofthead.mycollab.module.project.events.TaskListEvent;
 import com.esofthead.mycollab.module.project.service.ProjectTaskListService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.ui.BeanList;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
@@ -58,7 +58,7 @@ import fi.jasoft.dragdroplayouts.events.VerticalLocationIs;
  * @author haiphucnguyen
  */
 @ViewComponent
-public class TaskGroupReorderViewImpl extends AbstractView implements
+public class TaskGroupReorderViewImpl extends AbstractPageView implements
         TaskGroupReorderView {
     private static final long serialVersionUID = 1L;
     private BeanList<ProjectTaskListService, TaskListSearchCriteria, SimpleTaskList> taskLists;

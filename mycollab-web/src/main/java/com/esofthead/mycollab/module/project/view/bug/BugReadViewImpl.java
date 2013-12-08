@@ -45,7 +45,7 @@ import com.esofthead.mycollab.module.tracker.domain.Version;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.schedule.email.project.BugRelayEmailNotificationAction;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
@@ -58,7 +58,7 @@ import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
-import com.vaadin.terminal.Resource;
+import com.vaadin.server.Resource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -69,9 +69,10 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.TabSheet;
+import com.vaadin.ui.UI;
 
 @ViewComponent
-public class BugReadViewImpl extends AbstractView implements BugReadView,
+public class BugReadViewImpl extends AbstractPageView implements BugReadView,
 		IBugCallbackStatusComp {
 
 	private class BugPreviewForm extends AdvancedPreviewBeanForm<SimpleBug> {
@@ -236,13 +237,10 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 
 							@Override
 							public void buttonClick(final ClickEvent event) {
-								AppContext
-										.getApplication()
-										.getMainWindow()
-										.addWindow(
-												new AssignBugWindow(
-														BugReadViewImpl.this,
-														BugReadViewImpl.this.bug));
+								UI.getCurrent().addWindow(
+										new AssignBugWindow(
+												BugReadViewImpl.this,
+												BugReadViewImpl.this.bug));
 							}
 						});
 				assignBtn.setEnabled(CurrentProjectVariables
@@ -282,46 +280,44 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 
 							@Override
 							public void buttonClick(final ClickEvent event) {
-								ConfirmDialogExt
-										.show(AppContext.getApplication()
-												.getMainWindow(),
-												LocalizationHelper
-														.getMessage(
-																GenericI18Enum.DELETE_DIALOG_TITLE,
-																SiteConfiguration
-																		.getSiteName()),
-												LocalizationHelper
-														.getMessage(GenericI18Enum.CONFIRM_DELETE_RECORD_DIALOG_MESSAGE),
-												LocalizationHelper
-														.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
-												LocalizationHelper
-														.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
-												new ConfirmDialog.Listener() {
-													private static final long serialVersionUID = 1L;
+								ConfirmDialogExt.show(
+										UI.getCurrent(),
+										LocalizationHelper
+												.getMessage(
+														GenericI18Enum.DELETE_DIALOG_TITLE,
+														SiteConfiguration
+																.getSiteName()),
+										LocalizationHelper
+												.getMessage(GenericI18Enum.CONFIRM_DELETE_RECORD_DIALOG_MESSAGE),
+										LocalizationHelper
+												.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
+										LocalizationHelper
+												.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
+										new ConfirmDialog.Listener() {
+											private static final long serialVersionUID = 1L;
 
-													@Override
-													public void onClose(
-															final ConfirmDialog dialog) {
-														if (dialog
-																.isConfirmed()) {
-															final BugService bugService = ApplicationContextUtil
-																	.getSpringBean(BugService.class);
-															bugService
-																	.removeWithSession(
-																			BugReadViewImpl.this.bug
-																					.getId(),
-																			AppContext
-																					.getUsername(),
-																			AppContext
-																					.getAccountId());
-															EventBus.getInstance()
-																	.fireEvent(
-																			new BugEvent.GotoDashboard(
-																					BugReadViewImpl.this,
-																					null));
-														}
-													}
-												});
+											@Override
+											public void onClose(
+													final ConfirmDialog dialog) {
+												if (dialog.isConfirmed()) {
+													final BugService bugService = ApplicationContextUtil
+															.getSpringBean(BugService.class);
+													bugService
+															.removeWithSession(
+																	BugReadViewImpl.this.bug
+																			.getId(),
+																	AppContext
+																			.getUsername(),
+																	AppContext
+																			.getAccountId());
+													EventBus.getInstance()
+															.fireEvent(
+																	new BugEvent.GotoDashboard(
+																			BugReadViewImpl.this,
+																			null));
+												}
+											}
+										});
 							}
 						});
 				deleteBtn.setIcon(MyCollabResource
@@ -612,13 +608,10 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 
 						@Override
 						public void buttonClick(final ClickEvent event) {
-							AppContext
-									.getApplication()
-									.getMainWindow()
-									.addWindow(
-											new ResolvedInputWindow(
-													BugReadViewImpl.this,
-													BugReadViewImpl.this.bug));
+							UI.getCurrent().addWindow(
+									new ResolvedInputWindow(
+											BugReadViewImpl.this,
+											BugReadViewImpl.this.bug));
 						}
 					}));
 
@@ -628,13 +621,10 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 
 						@Override
 						public void buttonClick(final ClickEvent event) {
-							AppContext
-									.getApplication()
-									.getMainWindow()
-									.addWindow(
-											new WontFixExplainWindow(
-													BugReadViewImpl.this,
-													BugReadViewImpl.this.bug));
+							UI.getCurrent().addWindow(
+									new WontFixExplainWindow(
+											BugReadViewImpl.this,
+											BugReadViewImpl.this.bug));
 						}
 					}));
 			this.bugWorkflowControl.addComponent(navButton);
@@ -663,13 +653,10 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 
 						@Override
 						public void buttonClick(final ClickEvent event) {
-							AppContext
-									.getApplication()
-									.getMainWindow()
-									.addWindow(
-											new ResolvedInputWindow(
-													BugReadViewImpl.this,
-													BugReadViewImpl.this.bug));
+							UI.getCurrent().addWindow(
+									new ResolvedInputWindow(
+											BugReadViewImpl.this,
+											BugReadViewImpl.this.bug));
 						}
 					}));
 			this.bugWorkflowControl.addComponent(navButton);
@@ -682,13 +669,9 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 
 						@Override
 						public void buttonClick(final ClickEvent event) {
-							AppContext
-									.getApplication()
-									.getMainWindow()
-									.addWindow(
-											new ReOpenWindow(
-													BugReadViewImpl.this,
-													BugReadViewImpl.this.bug));
+							UI.getCurrent().addWindow(
+									new ReOpenWindow(BugReadViewImpl.this,
+											BugReadViewImpl.this.bug));
 						}
 					});
 			navButton.addButton(reopenBtn);
@@ -703,13 +686,9 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 
 						@Override
 						public void buttonClick(final ClickEvent event) {
-							AppContext
-									.getApplication()
-									.getMainWindow()
-									.addWindow(
-											new ReOpenWindow(
-													BugReadViewImpl.this,
-													BugReadViewImpl.this.bug));
+							UI.getCurrent().addWindow(
+									new ReOpenWindow(BugReadViewImpl.this,
+											BugReadViewImpl.this.bug));
 						}
 					}));
 			navButton.addButton(new Button("Approve & Close",
@@ -718,13 +697,10 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 
 						@Override
 						public void buttonClick(final ClickEvent event) {
-							AppContext
-									.getApplication()
-									.getMainWindow()
-									.addWindow(
-											new ApproveInputWindow(
-													BugReadViewImpl.this,
-													BugReadViewImpl.this.bug));
+							UI.getCurrent().addWindow(
+									new ApproveInputWindow(
+											BugReadViewImpl.this,
+											BugReadViewImpl.this.bug));
 						}
 					}));
 			this.bugWorkflowControl.addComponent(navButton);
@@ -737,13 +713,9 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 
 						@Override
 						public void buttonClick(final ClickEvent event) {
-							AppContext
-									.getApplication()
-									.getMainWindow()
-									.addWindow(
-											new ReOpenWindow(
-													BugReadViewImpl.this,
-													BugReadViewImpl.this.bug));
+							UI.getCurrent().addWindow(
+									new ReOpenWindow(BugReadViewImpl.this,
+											BugReadViewImpl.this.bug));
 						}
 					});
 			reopenBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);

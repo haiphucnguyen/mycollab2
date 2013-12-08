@@ -16,8 +16,8 @@
  */
 package com.esofthead.mycollab.module.common.view;
 
-import com.esofthead.mycollab.vaadin.mvp.View;
+import com.esofthead.mycollab.vaadin.mvp.PageView;
 
-public interface InvalidSomeView extends View {
+public interface InvalidSomeView extends PageView {
 
 }

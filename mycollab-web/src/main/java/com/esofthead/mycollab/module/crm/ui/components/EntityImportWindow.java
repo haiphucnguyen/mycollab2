@@ -67,6 +67,7 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
@@ -134,7 +135,7 @@ public abstract class EntityImportWindow<E> extends Window {
 			controlGroupBtn.setSpacing(true);
 			Button nextBtn = new Button("Next");
 
-			nextBtn.addListener(new ClickListener() {
+			nextBtn.addClickListener(new ClickListener() {
 				private static final long serialVersionUID = 1L;
 
 				@Override
@@ -142,10 +143,8 @@ public abstract class EntityImportWindow<E> extends Window {
 					try {
 						contentStream = uploadField.getContentAsStream();
 					} catch (Exception e) {
-						NotificationUtil.showNotification(
-								LocalizationHelper
-										.getMessage(GenericI18Enum.NOT_ATTACH_FILE_WARNING),
-								Window.Notification.TYPE_WARNING_MESSAGE);
+						NotificationUtil.showWarningNotification(LocalizationHelper
+								.getMessage(GenericI18Enum.NOT_ATTACH_FILE_WARNING));
 					}
 					if (contentStream != null) {
 						String filename = uploadField.getFileName();
@@ -153,8 +152,7 @@ public abstract class EntityImportWindow<E> extends Window {
 								filename.indexOf(".") + 1, filename.length());
 						if (fileuploadType.equals("vcf") && isSupportVCard) {
 							ConfirmDialog
-									.show(EntityImportWindow.this.getParent()
-											.getWindow(),
+									.show(UI.getCurrent(),
 											"Message information",
 											"You choose a vcf file. This step will import to database. Do you want to do it?",
 											"Import", "Cancel",

@@ -20,11 +20,10 @@ import java.io.File;
 
 import com.esofthead.mycollab.configuration.FileStorageConfiguration;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
-import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
-import com.vaadin.terminal.ExternalResource;
-import com.vaadin.terminal.FileResource;
-import com.vaadin.terminal.Resource;
+import com.vaadin.server.ExternalResource;
+import com.vaadin.server.FileResource;
+import com.vaadin.server.Resource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Embedded;
 
@@ -67,8 +66,7 @@ public class UserAvatarControlFactory {
 			File avatarFile = fileStorageConfiguration.getAvatarFile(avatarId,
 					size);
 			if (avatarFile != null) {
-				avatarRes = new FileResource(avatarFile,
-						AppContext.getApplication());
+				avatarRes = new FileResource(avatarFile);
 			} else {
 				avatarRes = MyCollabResource
 						.newResource("icons/default_user_avatar_" + size

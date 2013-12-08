@@ -23,7 +23,7 @@ import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
 import com.esofthead.mycollab.vaadin.ui.table.AbstractPagedBeanTable;
 
-public interface ListView<S extends SearchCriteria, B> extends View {
+public interface ListView<S extends SearchCriteria, B> extends PageView {
 	void enableActionControls(int numOfSelectedItem);
 
 	void disableActionControls();

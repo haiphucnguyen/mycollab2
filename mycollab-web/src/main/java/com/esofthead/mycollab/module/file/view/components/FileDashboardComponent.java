@@ -42,6 +42,7 @@ import com.esofthead.mycollab.vaadin.ui.UiUtils;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.event.ItemClickEvent;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -74,7 +75,7 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 	public FileDashboardComponent() {
 		this.setWidth("100%");
 		this.setSpacing(true);
-		this.setMargin(false, true, true, true);
+		this.setMargin(new MarginInfo(false, true, true, true));
 		this.resourceService = ApplicationContextUtil
 				.getSpringBean(ResourceService.class);
 		this.fileSearchPanel = new FileSearchPanel(null);
@@ -147,7 +148,7 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 		}
 
 		private void constructBody() {
-			final VerticalLayout layout = new VerticalLayout();
+			final VerticalLayout contentLayout = new VerticalLayout();
 			final HorizontalLayout topRename = new HorizontalLayout();
 			topRename.setSpacing(true);
 			topRename.setMargin(true);
@@ -159,7 +160,8 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 			newName.setWidth("150px");
 			UiUtils.addComponent(topRename, newName, Alignment.MIDDLE_LEFT);
 
-			UiUtils.addComponent(layout, topRename, Alignment.MIDDLE_LEFT);
+			UiUtils.addComponent(contentLayout, topRename,
+					Alignment.MIDDLE_LEFT);
 
 			final HorizontalLayout controlButton = new HorizontalLayout();
 			controlButton.setSpacing(true);
@@ -200,8 +202,10 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 			});
 			cancel.addStyleName(UIConstants.THEME_BLUE_LINK);
 			UiUtils.addComponent(controlButton, cancel, Alignment.MIDDLE_CENTER);
-			UiUtils.addComponent(layout, controlButton, Alignment.MIDDLE_CENTER);
-			this.addComponent(layout);
+			UiUtils.addComponent(contentLayout, controlButton,
+					Alignment.MIDDLE_CENTER);
+
+			this.setContent(contentLayout);
 		}
 	}
 
@@ -288,7 +292,7 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 				searchBtn.setStyleName("search-icon-button");
 				searchBtn.setIcon(MyCollabResource
 						.newResource("icons/16/search_white.png"));
-				searchBtn.addListener(new Button.ClickListener() {
+				searchBtn.addClickListener(new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
@@ -314,7 +318,7 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 								.getMessage(GenericI18Enum.BUTTON_CLEAR));
 				cancelBtn.setStyleName(UIConstants.THEME_LINK);
 				cancelBtn.addStyleName("cancel-button");
-				cancelBtn.addListener(new Button.ClickListener() {
+				cancelBtn.addClickListener(new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
@@ -392,11 +396,9 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 		}
 
 		private void constructBody() {
-			VerticalLayout layout = new VerticalLayout();
-			layout.setSpacing(true);
-
-			// fileSearchPanel = new FileSearchPanel(null);
-			// layout.addComponent(fileSearchPanel);
+			VerticalLayout contentLayout = new VerticalLayout();
+			contentLayout.setSpacing(true);
+			this.setContent(contentLayout);
 
 			final HorizontalLayout resourceContainer = new HorizontalLayout();
 			resourceContainer.setSizeFull();
@@ -415,7 +417,7 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 
 			resourceContainer.addComponent(this.folderTree);
 
-			this.folderTree.addListener(new Tree.ExpandListener() {
+			this.folderTree.addExpandListener(new Tree.ExpandListener() {
 				private static final long serialVersionUID = 1L;
 
 				@Override
@@ -523,7 +525,7 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 				}
 			});
 
-			this.folderTree.addListener(new Tree.CollapseListener() {
+			this.folderTree.addCollapseListener(new Tree.CollapseListener() {
 				private static final long serialVersionUID = 1L;
 
 				@Override
@@ -566,17 +568,18 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 				}
 			});
 
-			this.folderTree.addListener(new ItemClickEvent.ItemClickListener() {
-				private static final long serialVersionUID = 1L;
+			this.folderTree
+					.addItemClickListener(new ItemClickEvent.ItemClickListener() {
+						private static final long serialVersionUID = 1L;
 
-				@Override
-				public void itemClick(final ItemClickEvent event) {
-					AbstractMoveWindow.this.baseFolder = (Folder) event
-							.getItemId();
-				}
-			});
+						@Override
+						public void itemClick(final ItemClickEvent event) {
+							AbstractMoveWindow.this.baseFolder = (Folder) event
+									.getItemId();
+						}
+					});
 
-			layout.addComponent(resourceContainer);
+			contentLayout.addComponent(resourceContainer);
 			displayFiles();
 
 			HorizontalLayout controlGroupBtnLayout = new HorizontalLayout();
@@ -631,10 +634,8 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 			cancelBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
 			controlGroupBtnLayout.addComponent(cancelBtn);
 
-			UiUtils.addComponent(layout, controlGroupBtnLayout,
+			UiUtils.addComponent(contentLayout, controlGroupBtnLayout,
 					Alignment.MIDDLE_CENTER);
-
-			this.addComponent(layout);
 		}
 
 		public abstract void displayAfterMoveSuccess(Folder folder,

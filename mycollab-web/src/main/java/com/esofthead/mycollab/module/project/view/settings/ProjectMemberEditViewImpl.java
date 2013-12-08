@@ -16,13 +16,14 @@
  */
 package com.esofthead.mycollab.module.project.view.settings;
 
-import org.vaadin.addon.customfield.CustomField;
+import com.vaadin.shared.ui.MarginInfo;
+import com.vaadin.ui.CustomField;
 
 import com.esofthead.mycollab.module.project.domain.ProjectMember;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectRoleComboBox;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
@@ -33,12 +34,13 @@ import com.vaadin.data.Item;
 import com.vaadin.data.Property;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Layout;
 
 @ViewComponent
-public class ProjectMemberEditViewImpl extends AbstractView implements
+public class ProjectMemberEditViewImpl extends AbstractPageView implements
 		ProjectMemberEditView {
 
 	private static final long serialVersionUID = 1L;
@@ -47,7 +49,7 @@ public class ProjectMemberEditViewImpl extends AbstractView implements
 
 	public ProjectMemberEditViewImpl() {
 		super();
-		this.setMargin(false, false, true, false);
+		this.setMargin(new MarginInfo(false, false, true, false));
 		this.editForm = new EditForm();
 		this.addComponent(this.editForm);
 	}
@@ -133,24 +135,7 @@ public class ProjectMemberEditViewImpl extends AbstractView implements
 
 		private class AdminRoleSelectionField extends CustomField {
 			private static final long serialVersionUID = 1L;
-			private final ProjectRoleComboBox roleComboBox;
-
-			public AdminRoleSelectionField() {
-				this.roleComboBox = new ProjectRoleComboBox();
-				this.roleComboBox
-						.addListener(new Property.ValueChangeListener() {
-							private static final long serialVersionUID = 1L;
-
-							@Override
-							public void valueChange(
-									final Property.ValueChangeEvent event) {
-								getValue();
-
-							}
-						});
-
-				this.setCompositionRoot(this.roleComboBox);
-			}
+			private ProjectRoleComboBox roleComboBox;
 
 			@Override
 			public Object getValue() {
@@ -180,6 +165,24 @@ public class ProjectMemberEditViewImpl extends AbstractView implements
 			@Override
 			public Class<Integer> getType() {
 				return Integer.class;
+			}
+
+			@Override
+			protected Component initContent() {
+				this.roleComboBox = new ProjectRoleComboBox();
+				this.roleComboBox
+						.addValueChangeListener(new Property.ValueChangeListener() {
+							private static final long serialVersionUID = 1L;
+
+							@Override
+							public void valueChange(
+									final Property.ValueChangeEvent event) {
+								getValue();
+
+							}
+						});
+
+				return roleComboBox;
 			}
 		}
 	}

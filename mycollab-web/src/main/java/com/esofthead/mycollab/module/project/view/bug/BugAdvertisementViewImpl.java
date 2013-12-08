@@ -20,14 +20,14 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import com.esofthead.mycollab.core.MyCollabException;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
-import com.vaadin.terminal.ExternalResource;
+import com.vaadin.server.ExternalResource;
 import com.vaadin.ui.Embedded;
 
 @ViewComponent
-public class BugAdvertisementViewImpl extends AbstractView implements
+public class BugAdvertisementViewImpl extends AbstractPageView implements
 		BugAdvertisementView {
 	private static final long serialVersionUID = 1L;
 
@@ -44,6 +44,8 @@ public class BugAdvertisementViewImpl extends AbstractView implements
 		Embedded browser = new Embedded("", new ExternalResource(url));
 		browser.setWidth("100%");
 		browser.setHeight("100%");
+
+		// TODO: refactor here
 		browser.setType(Embedded.TYPE_BROWSER);
 		this.addComponent(browser);
 	}

@@ -20,7 +20,7 @@
  */
 package com.esofthead.mycollab.module.project.view.milestone;
 
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 
 /**
@@ -28,7 +28,7 @@ import com.esofthead.mycollab.vaadin.ui.ViewComponent;
  * @author haiphucnguyen
  */
 @ViewComponent
-public class MilestoneContainer extends AbstractView {
+public class MilestoneContainer extends AbstractPageView {
 	private static final long serialVersionUID = 1L;
     
 }

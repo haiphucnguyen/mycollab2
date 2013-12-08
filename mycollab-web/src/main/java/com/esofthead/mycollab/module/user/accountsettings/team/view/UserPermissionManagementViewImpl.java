@@ -20,9 +20,9 @@
  */
 package com.esofthead.mycollab.module.user.accountsettings.team.view;
 
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
-import com.esofthead.mycollab.vaadin.mvp.View;
+import com.esofthead.mycollab.vaadin.mvp.PageView;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.github.wolfie.detachedtabs.DetachedTabs;
@@ -36,7 +36,7 @@ import com.vaadin.ui.HorizontalLayout;
  * @author haiphucnguyen
  */
 @ViewComponent
-public class UserPermissionManagementViewImpl extends AbstractView implements
+public class UserPermissionManagementViewImpl extends AbstractPageView implements
 		UserPermissionManagementView {
 	private static final long serialVersionUID = 1L;
 	private DetachedTabs groupTab;
@@ -93,7 +93,7 @@ public class UserPermissionManagementViewImpl extends AbstractView implements
 
 	@Override
 	public Component gotoSubView(String name) {
-		View component = (View) groupTab.selectTab(name);
+		PageView component = (PageView) groupTab.selectTab(name);
 		return component;
 	}
 

@@ -25,7 +25,6 @@ import org.vaadin.hene.popupbutton.PopupButton;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
-import com.esofthead.mycollab.module.ecm.ContentException;
 import com.esofthead.mycollab.module.ecm.ResourceUtils;
 import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.module.ecm.domain.Resource;
@@ -182,10 +181,10 @@ public abstract class FileSearchResultComponent extends VerticalLayout {
 											.setPopupVisible(false);
 									List<Resource> lstRes = new ArrayList<Resource>();
 									lstRes.add(resource);
-									final com.vaadin.terminal.Resource downloadResource = StreamDownloadResourceFactory
+									final com.vaadin.server.Resource downloadResource = StreamDownloadResourceFactory
 											.getStreamResourceSupportExtDrive(
 													lstRes, false);
-									AppContext.getApplication().getMainWindow()
+									UI.getCurrent()
 											.open(downloadResource, "_blank");
 								}
 							});
@@ -268,7 +267,7 @@ public abstract class FileSearchResultComponent extends VerticalLayout {
 					}
 					final HorizontalLayout resourceLabel = new HorizontalLayout();
 
-					com.vaadin.terminal.Resource iconResource = null;
+					com.vaadin.server.Resource iconResource = null;
 					if (resource instanceof Content) {
 						iconResource = UiUtils
 								.getFileIconResource(((Content) resource)

@@ -20,7 +20,7 @@ import com.esofthead.mycollab.eventmanager.ApplicationEvent;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.vaadin.ui.ComponentContainer;
 
-public interface View extends ComponentContainer {
+public interface PageView extends ComponentContainer, CacheableComponent {
 
 	ComponentContainer getWidget();
 

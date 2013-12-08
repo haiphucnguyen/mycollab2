@@ -16,7 +16,7 @@
  */
 package com.esofthead.mycollab.vaadin.ui;
 
-import com.vaadin.terminal.ExternalResource;
+import com.vaadin.server.ExternalResource;
 import com.vaadin.ui.Link;
 
 @SuppressWarnings("serial")
@@ -28,5 +28,5 @@ public class SocialNetworkLink extends Link {
 		this.setCaption(caption);
 		this.setTargetName("_blank");
 	}
-	
+
 }

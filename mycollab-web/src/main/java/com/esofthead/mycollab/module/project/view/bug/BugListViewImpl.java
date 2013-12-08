@@ -36,13 +36,14 @@ import com.esofthead.mycollab.reporting.RpParameterBuilder;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.web.MyCollabResource;
-import com.vaadin.terminal.StreamResource;
+import com.vaadin.server.StreamResource;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComponentContainer;
@@ -52,7 +53,7 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
 @ViewComponent
-public class BugListViewImpl extends AbstractView implements BugListView {
+public class BugListViewImpl extends AbstractPageView implements BugListView {
 
 	private static final long serialVersionUID = 1L;
 	private final BugSearchPanel bugSearchPanel;
@@ -61,7 +62,7 @@ public class BugListViewImpl extends AbstractView implements BugListView {
 	private SplitButtonExt exportButtonControl;
 
 	public BugListViewImpl() {
-		this.setMargin(false, true, true, true);
+		this.setMargin(new MarginInfo(false, true, true, true));
 
 		this.bugSearchPanel = new BugSearchPanel();
 		this.addComponent(this.bugSearchPanel);

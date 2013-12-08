@@ -31,10 +31,11 @@ import com.esofthead.mycollab.vaadin.ui.ReadViewLayout;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
-import com.vaadin.terminal.ExternalResource;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
+import com.vaadin.ui.JavaScript;
 import com.vaadin.ui.Layout;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
@@ -151,23 +152,14 @@ public class CallPreviewBuilder extends VerticalLayout {
 
 					final CallPreviewBuilder printView = new CallPreviewBuilder.PrintView();
 					printView.previewItem(ReadView.this.call);
-					window.addComponent(printView);
+					window.setContent(printView);
 
-					// Add the printing window as a new application-level window
-					this.getApplication().addWindow(window);
+					UI.getCurrent().addWindow(window);
 
-					// Open it as a popup window with no decorations
-					this.getWindow().open(
-							new ExternalResource(window.getURL()), "_blank",
-							1100, 200, // Width and height
-							Window.BORDER_NONE); // No decorations
-
-					// Print automatically when the window opens.
-					// This call will block until the print dialog exits!
-					window.executeJavaScript("print();");
-
-					// Close the window automatically after printing
-					window.executeJavaScript("self.close();");
+					// Print automatically when the window opens
+					JavaScript.getCurrent().execute(
+							"setTimeout(function() {"
+									+ "  print(); self.close();}, 0);");
 				}
 
 				@Override
@@ -175,7 +167,7 @@ public class CallPreviewBuilder extends VerticalLayout {
 					final CallHistoryLogWindow historyLog = new CallHistoryLogWindow(
 							ModuleNameConstants.CRM, CrmTypeConstants.CALL,
 							ReadView.this.call.getId());
-					this.getWindow().addWindow(historyLog);
+					UI.getCurrent().addWindow(historyLog);
 				}
 			};
 

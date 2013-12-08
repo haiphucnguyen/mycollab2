@@ -20,7 +20,7 @@ import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.MeetingWithBLOBs;
 import com.esofthead.mycollab.module.crm.ui.components.RelatedEditItemField;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
@@ -36,7 +36,7 @@ import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 
 @ViewComponent
-public class MeetingAddViewImpl extends AbstractView implements MeetingAddView {
+public class MeetingAddViewImpl extends AbstractPageView implements MeetingAddView {
 
 	private static final long serialVersionUID = 1L;
 	private EditForm editForm;

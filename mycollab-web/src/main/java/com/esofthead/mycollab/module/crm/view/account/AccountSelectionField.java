@@ -16,104 +16,31 @@
  */
 package com.esofthead.mycollab.module.crm.view.account;
 
-import org.vaadin.addon.customfield.FieldWrapper;
-
 import com.esofthead.mycollab.module.crm.domain.Account;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
-import com.esofthead.mycollab.module.crm.service.AccountService;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.FieldSelection;
-import com.esofthead.mycollab.vaadin.ui.UIHelper;
-import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
-import com.vaadin.data.Property;
 import com.vaadin.event.MouseEvents;
 import com.vaadin.event.MouseEvents.ClickEvent;
 import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Component;
+import com.vaadin.ui.CustomField;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.UI;
 
 @SuppressWarnings("serial")
-public class AccountSelectionField extends FieldWrapper<Account> implements
+public class AccountSelectionField extends CustomField<Account> implements
 		FieldSelection {
 
-	private final HorizontalLayout layout;
-	private final TextField accountName;
+	private TextField accountName;
 	private SimpleAccount account = new SimpleAccount();
-	private final Embedded browseBtn;
-	private final Embedded clearBtn;
-
-	public AccountSelectionField() {
-		super(new TextField(""), Account.class);
-
-		layout = new HorizontalLayout();
-		layout.setSpacing(true);
-		layout.setWidth("100%");
-
-		accountName = new TextField();
-		accountName.setEnabled(true);
-		accountName.setWidth("100%");
-		layout.addComponent(accountName);
-		layout.setComponentAlignment(accountName, Alignment.MIDDLE_LEFT);
-
-		browseBtn = new Embedded(null,
-				MyCollabResource.newResource("icons/16/browseItem.png"));
-		layout.addComponent(browseBtn);
-		layout.setComponentAlignment(browseBtn, Alignment.MIDDLE_LEFT);
-
-		browseBtn.addListener(new MouseEvents.ClickListener() {
-			@Override
-			public void click(ClickEvent event) {
-				AccountSelectionWindow accountWindow = new AccountSelectionWindow(
-						AccountSelectionField.this);
-				UIHelper.addWindowToRoot(AccountSelectionField.this,
-						accountWindow);
-				accountWindow.show();
-			}
-		});
-
-		clearBtn = new Embedded(null,
-				MyCollabResource.newResource("icons/16/clearItem.png"));
-
-		clearBtn.addListener(new MouseEvents.ClickListener() {
-			@Override
-			public void click(ClickEvent event) {
-				clearValue();
-			}
-		});
-		layout.addComponent(clearBtn);
-		layout.setComponentAlignment(clearBtn, Alignment.MIDDLE_LEFT);
-
-		layout.setExpandRatio(accountName, 1.0f);
-
-		this.setCompositionRoot(layout);
-		this.addListener(new Property.ValueChangeListener() {
-			@Override
-			public void valueChange(
-					com.vaadin.data.Property.ValueChangeEvent event) {
-				try {
-					AccountService accountService = ApplicationContextUtil
-							.getSpringBean(AccountService.class);
-
-					Integer accountId = Integer.parseInt((String) event
-							.getProperty().getValue());
-					SimpleAccount account = accountService.findById(accountId,
-							AppContext.getAccountId());
-					if (account != null) {
-						accountName.setValue(account.getAccountname());
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-
-			}
-		});
-	}
+	private Embedded browseBtn;
+	private Embedded clearBtn;
 
 	public void clearValue() {
 		accountName.setValue("");
-		AccountSelectionField.this.getWrappedField().setValue(null);
 		this.account = new SimpleAccount();
 	}
 
@@ -131,8 +58,56 @@ public class AccountSelectionField extends FieldWrapper<Account> implements
 		account = (SimpleAccount) data;
 		if (account != null) {
 			accountName.setValue(account.getAccountname());
-			this.getWrappedField().setValue(account.getId());
 		}
 
+	}
+
+	@Override
+	protected Component initContent() {
+		HorizontalLayout layout = new HorizontalLayout();
+		layout.setSpacing(true);
+		layout.setWidth("100%");
+
+		accountName = new TextField();
+		accountName.setEnabled(true);
+		accountName.setWidth("100%");
+		layout.addComponent(accountName);
+		layout.setComponentAlignment(accountName, Alignment.MIDDLE_LEFT);
+
+		browseBtn = new Embedded(null,
+				MyCollabResource.newResource("icons/16/browseItem.png"));
+		layout.addComponent(browseBtn);
+		layout.setComponentAlignment(browseBtn, Alignment.MIDDLE_LEFT);
+
+		browseBtn.addClickListener(new MouseEvents.ClickListener() {
+			@Override
+			public void click(ClickEvent event) {
+				AccountSelectionWindow accountWindow = new AccountSelectionWindow(
+						AccountSelectionField.this);
+				UI.getCurrent().addWindow(accountWindow);
+				accountWindow.show();
+			}
+		});
+
+		clearBtn = new Embedded(null,
+				MyCollabResource.newResource("icons/16/clearItem.png"));
+
+		clearBtn.addClickListener(new MouseEvents.ClickListener() {
+			@Override
+			public void click(ClickEvent event) {
+				clearValue();
+			}
+		});
+		layout.addComponent(clearBtn);
+		layout.setComponentAlignment(clearBtn, Alignment.MIDDLE_LEFT);
+
+		layout.setExpandRatio(accountName, 1.0f);
+
+		return layout;
+	}
+
+	@Override
+	public Class<? extends Account> getType() {
+		return Account.class;
 	}
 }

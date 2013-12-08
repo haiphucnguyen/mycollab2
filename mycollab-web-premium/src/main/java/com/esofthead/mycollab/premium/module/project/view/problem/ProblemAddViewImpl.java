@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.esofthead.mycollab.module.project.domain.Problem;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.IFormAddView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
@@ -17,7 +17,7 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Layout;
 
 @ViewComponent
-public class ProblemAddViewImpl extends AbstractView implements ProblemAddView,
+public class ProblemAddViewImpl extends AbstractPageView implements ProblemAddView,
 		IFormAddView<Problem> {
 
 	private static final long serialVersionUID = 1L;

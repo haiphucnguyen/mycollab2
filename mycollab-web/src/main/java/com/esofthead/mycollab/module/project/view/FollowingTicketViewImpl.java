@@ -20,8 +20,6 @@ import java.util.Arrays;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-import org.vaadin.hene.splitbutton.SplitButtonExt;
-
 import com.esofthead.mycollab.common.domain.criteria.MonitorSearchCriteria;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
@@ -39,7 +37,7 @@ import com.esofthead.mycollab.reporting.ReportExportType;
 import com.esofthead.mycollab.reporting.RpParameterBuilder;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -48,7 +46,8 @@ import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.table.AbstractPagedBeanTable;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
-import com.vaadin.terminal.StreamResource;
+import com.vaadin.server.StreamResource;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -61,7 +60,7 @@ import com.vaadin.ui.Table.ColumnGenerator;
 import com.vaadin.ui.VerticalLayout;
 
 @ViewComponent
-public class FollowingTicketViewImpl extends AbstractView implements
+public class FollowingTicketViewImpl extends AbstractPageView implements
 		FollowingTicketView {
 	private static final long serialVersionUID = 1L;
 
@@ -100,7 +99,7 @@ public class FollowingTicketViewImpl extends AbstractView implements
 		contentWrapper.addComponent(headerWrapper);
 
 		final Button backBtn = new Button("Back to Work Board");
-		backBtn.addListener(new Button.ClickListener() {
+		backBtn.addClickListener(new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -115,7 +114,7 @@ public class FollowingTicketViewImpl extends AbstractView implements
 		backBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
 
 		HorizontalLayout controlBtns = new HorizontalLayout();
-		controlBtns.setMargin(true, false, true, false);
+		controlBtns.setMargin(new MarginInfo(true, false, true, false));
 		controlBtns.setWidth("100%");
 		controlBtns.addComponent(backBtn);
 		controlBtns.setExpandRatio(backBtn, 1.0f);
@@ -260,7 +259,7 @@ public class FollowingTicketViewImpl extends AbstractView implements
 						}
 					}
 
-					ticketLink.addListener(new Button.ClickListener() {
+					ticketLink.addClickListener(new Button.ClickListener() {
 						private static final long serialVersionUID = 1L;
 
 						@Override
@@ -302,7 +301,7 @@ public class FollowingTicketViewImpl extends AbstractView implements
 							.getBeanByIndex(itemId);
 					final ButtonLink projectLink = new ButtonLink(ticket
 							.getProjectName());
-					projectLink.addListener(new Button.ClickListener() {
+					projectLink.addClickListener(new Button.ClickListener() {
 						private static final long serialVersionUID = 1L;
 
 						@Override

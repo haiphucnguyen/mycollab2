@@ -33,15 +33,14 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
-import com.vaadin.terminal.ExternalResource;
-import com.vaadin.terminal.Sizeable;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Label;
+import com.vaadin.ui.JavaScript;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.TabSheet.SelectedTabChangeEvent;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
@@ -228,23 +227,14 @@ public class MilestonePreviewBuilder extends VerticalLayout {
 
 					final MilestonePreviewBuilder printView = new MilestonePreviewBuilder.PrintView();
 					printView.previewItem(ReadView.this.milestone);
-					window.addComponent(printView);
+					window.setContent(printView);
 
-					// Add the printing window as a new application-level window
-					this.getApplication().addWindow(window);
+					UI.getCurrent().addWindow(window);
 
-					// Open it as a popup window with no decorations
-					this.getWindow().open(
-							new ExternalResource(window.getURL()), "_blank",
-							1100, 200, // Width and height
-							Window.BORDER_NONE); // No decorations
-
-					// Print automatically when the window opens.
-					// This call will block until the print dialog exits!
-					window.executeJavaScript("print();");
-
-					// Close the window automatically after printing
-					window.executeJavaScript("self.close();");
+					// Print automatically when the window opens
+					JavaScript.getCurrent().execute(
+							"setTimeout(function() {"
+									+ "  print(); self.close();}, 0);");
 				}
 
 				@Override
@@ -277,7 +267,6 @@ public class MilestonePreviewBuilder extends VerticalLayout {
 
 			this.tabContainer = new TabSheet();
 			this.tabContainer.setWidth("100%");
-			this.tabContainer.setHeight(Sizeable.SIZE_UNDEFINED, 0);
 
 			this.associateCommentListComp = new CommentDisplay(
 					CommentType.PRJ_MILESTONE, null,
@@ -291,7 +280,7 @@ public class MilestonePreviewBuilder extends VerticalLayout {
 			this.tabContainer.addTab(this.associateBugListComp, "Related Bugs");
 
 			this.tabContainer
-					.addListener(new TabSheet.SelectedTabChangeListener() {
+					.addSelectedTabChangeListener(new TabSheet.SelectedTabChangeListener() {
 						private static final long serialVersionUID = 1L;
 
 						@Override

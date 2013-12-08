@@ -26,7 +26,7 @@ import com.esofthead.mycollab.premium.module.crm.view.setting.customlayout.field
 import com.esofthead.mycollab.premium.module.crm.view.setting.customlayout.fieldinfo.TextDetailFieldInfoPanel;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.MyCollabResource;
-import com.vaadin.terminal.Resource;
+import com.vaadin.server.Resource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;

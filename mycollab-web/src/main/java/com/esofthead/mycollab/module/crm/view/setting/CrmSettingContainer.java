@@ -21,7 +21,7 @@ import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.module.crm.data.CustomViewScreenData;
 import com.esofthead.mycollab.module.crm.data.NotificationSettingScreenData;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
-import com.esofthead.mycollab.vaadin.mvp.View;
+import com.esofthead.mycollab.vaadin.mvp.PageView;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.github.wolfie.detachedtabs.DetachedTabs;
@@ -33,7 +33,7 @@ import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 
 @ViewComponent
-public class CrmSettingContainer extends CssLayout implements View {
+public class CrmSettingContainer extends CssLayout implements PageView {
 	private static final long serialVersionUID = 1L;
 
 	private final HorizontalLayout root;
@@ -135,7 +135,7 @@ public class CrmSettingContainer extends CssLayout implements View {
 	}
 
 	public Component gotoSubView(String name) {
-		View component = (View) settingTab.selectTab(name);
+		PageView component = (PageView) settingTab.selectTab(name);
 		return component;
 	}
 

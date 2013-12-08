@@ -66,7 +66,7 @@ import com.esofthead.mycollab.module.tracker.domain.Version;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
-import com.esofthead.mycollab.vaadin.mvp.View;
+import com.esofthead.mycollab.vaadin.mvp.PageView;
 import com.esofthead.mycollab.vaadin.ui.CommonUIFactory;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.utils.LabelStringGenerator;
@@ -84,7 +84,7 @@ import com.vaadin.ui.VerticalLayout;
  * @author haiphucnguyen
  */
 @ViewComponent
-public class ProjectBreadcrumb extends Breadcrumb implements View {
+public class ProjectBreadcrumb extends Breadcrumb implements PageView {
 	private static final long serialVersionUID = 1L;
 	private static LabelStringGenerator menuLinkGenerator = new BreadcrumbLabelStringGenerator();
 
@@ -767,7 +767,7 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 				"project/user/preview/"
 						+ UrlEncodeDecoder.encode(project.getId() + "/"
 								+ member.getUsername()),
-				"View Project Member: " + member.getMemberFullName());
+				"PageView Project Member: " + member.getMemberFullName());
 	}
 
 	public void gotoUserEdit(SimpleProjectMember member) {
@@ -801,7 +801,7 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 				"project/role/preview/"
 						+ UrlEncodeDecoder.encode(project.getId() + "/"
 								+ role.getId()),
-				"View Project Role: " + role.getRolename());
+				"PageView Project Role: " + role.getRolename());
 	}
 
 	public void gotoNotificationSetting(ProjectNotificationSetting notify) {

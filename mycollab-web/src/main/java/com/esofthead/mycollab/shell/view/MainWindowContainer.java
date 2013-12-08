@@ -21,7 +21,6 @@ import java.util.Date;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.vaadin.browsercookies.BrowserCookies;
 
 import com.esofthead.mycollab.configuration.PasswordEncryptHelper;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
@@ -30,23 +29,22 @@ import com.esofthead.mycollab.module.user.view.LoginView;
 import com.esofthead.mycollab.shell.ShellController;
 import com.esofthead.mycollab.vaadin.mvp.ControllerRegistry;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
-import com.esofthead.mycollab.vaadin.mvp.View;
+import com.esofthead.mycollab.vaadin.mvp.PageView;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabApplication;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.UriFragmentUtility;
-import com.vaadin.ui.UriFragmentUtility.FragmentChangedEvent;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.Window;
 
-public class MainWindowContainer extends Window implements View {
+public class MainWindowContainer extends UI implements PageView {
 
 	private static final long serialVersionUID = 1L;
 
 	private static final Logger log = LoggerFactory
 			.getLogger(MainWindowContainer.class);
-	
+
 	private boolean isAutoLogin;
 
 	private final Content content;
@@ -54,18 +52,7 @@ public class MainWindowContainer extends Window implements View {
 	private final UriFragmentUtility urifu;
 
 	public MainWindowContainer() {
-		this.addListener(new Window.ResizeListener() {
-			private static final long serialVersionUID = 1L;
 
-			@Override
-			public void windowResized(ResizeEvent e) {
-				log.debug("Application size is changed. New value is: "
-						+ MainWindowContainer.this.getBrowserWindowWidth());
-				ScreenSize.setWidth(MainWindowContainer.this
-						.getBrowserWindowWidth());
-			}
-		});
-		
 		urifu = new UriFragmentUtility();
 
 		urifu.addListener(new UriFragmentUtility.FragmentChangedListener() {

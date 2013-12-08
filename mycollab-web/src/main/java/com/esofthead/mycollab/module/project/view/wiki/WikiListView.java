@@ -16,8 +16,8 @@
  */
 package com.esofthead.mycollab.module.project.view.wiki;
 
-import com.esofthead.mycollab.vaadin.mvp.View;
+import com.esofthead.mycollab.vaadin.mvp.PageView;
 
-public interface WikiListView extends View {
+public interface WikiListView extends PageView {
 
 }

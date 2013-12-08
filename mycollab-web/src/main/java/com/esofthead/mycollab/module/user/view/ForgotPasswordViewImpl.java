@@ -28,7 +28,7 @@ import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.schedule.email.user.SendingRecoveryPasswordEmailAction;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
@@ -39,14 +39,13 @@ import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CustomLayout;
 import com.vaadin.ui.Form;
 import com.vaadin.ui.TextField;
-import com.vaadin.ui.Window;
 
 /**
  * 
  * @author haiphucnguyen
  */
 @ViewComponent
-public class ForgotPasswordViewImpl extends AbstractView implements
+public class ForgotPasswordViewImpl extends AbstractPageView implements
 		ForgotPasswordView {
 	private static final long serialVersionUID = 1L;
 
@@ -68,7 +67,7 @@ public class ForgotPasswordViewImpl extends AbstractView implements
 
 			Button sendEmail = new Button("Send verification email");
 			sendEmail.setStyleName(UIConstants.THEME_BLUE_LINK);
-			sendEmail.addListener(new ClickListener() {
+			sendEmail.addClickListener(new ClickListener() {
 				private static final long serialVersionUID = 1L;
 
 				@Override
@@ -79,9 +78,8 @@ public class ForgotPasswordViewImpl extends AbstractView implements
 					User user = userService.findUserByUserName(username);
 
 					if (user == null) {
-						NotificationUtil.showNotification(
-								"User is not existed",
-								Window.Notification.TYPE_ERROR_MESSAGE);
+						NotificationUtil
+								.showErrorNotification("User is not existed");
 						return;
 					} else {
 						String hideEmailStr = user.getEmail();
@@ -115,7 +113,7 @@ public class ForgotPasswordViewImpl extends AbstractView implements
 			Button memoBackBtn = new Button(
 					"<<< No thanks, memory's back! Magika!!!");
 			memoBackBtn.setStyleName(UIConstants.THEME_LINK);
-			memoBackBtn.addListener(new ClickListener() {
+			memoBackBtn.addClickListener(new ClickListener() {
 				private static final long serialVersionUID = 1L;
 
 				@Override

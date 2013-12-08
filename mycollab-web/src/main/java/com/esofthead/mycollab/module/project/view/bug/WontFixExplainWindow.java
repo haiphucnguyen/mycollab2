@@ -44,6 +44,7 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -72,12 +73,14 @@ public class WontFixExplainWindow extends Window {
 		this.bug = bug;
 		this.callbackForm = callbackForm;
 		this.setWidth("750px");
+
+		VerticalLayout contentLayout = new VerticalLayout();
+		contentLayout.setMargin(new MarginInfo(false, false, true, false));
 		this.editForm = new EditForm();
-		this.addComponent(this.editForm);
+		contentLayout.addComponent(this.editForm);
 		this.editForm.setItemDataSource(new BeanItem<SimpleBug>(bug));
+		this.setContent(contentLayout);
 		this.center();
-		((VerticalLayout) this.getContent()).setMargin(false, false, true,
-				false);
 	}
 
 	private class EditForm extends AdvancedEditBeanForm<BugWithBLOBs> {
@@ -111,7 +114,7 @@ public class WontFixExplainWindow extends Window {
 
 				final HorizontalLayout controlsBtn = new HorizontalLayout();
 				controlsBtn.setSpacing(true);
-				controlsBtn.setMargin(true, true, false, false);
+				controlsBtn.setMargin(new MarginInfo(true, true, false, false));
 				layout.addComponent(controlsBtn);
 
 				final Button cancelBtn = new Button(
@@ -180,10 +183,7 @@ public class WontFixExplainWindow extends Window {
 											.refreshBugItem();
 								} else {
 									NotificationUtil
-											.showNotification(
-													"Error",
-													"You must enter a comment to explain for won't fix resolution",
-													Window.Notification.TYPE_HUMANIZED_MESSAGE);
+											.showErrorNotification("You must enter a comment to explain for won't fix resolution");
 									return;
 								}
 

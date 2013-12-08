@@ -34,7 +34,8 @@ import com.esofthead.mycollab.module.file.resource.StreamDownloadResourceFactory
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
-import com.vaadin.terminal.Resource;
+import com.vaadin.server.Resource;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -43,6 +44,7 @@ import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 /**
@@ -67,7 +69,7 @@ public class AttachmentDisplayComponent extends VerticalLayout {
 
 		final HorizontalLayout attachmentLayout = new HorizontalLayout();
 		attachmentLayout.setSpacing(true);
-		attachmentLayout.setMargin(false, false, false, true);
+		attachmentLayout.setMargin(new MarginInfo(false, false, false, true));
 
 		Embedded fileTypeIcon = new Embedded(null,
 				UiUtils.getFileIconResource(docName));
@@ -96,11 +98,8 @@ public class AttachmentDisplayComponent extends VerticalLayout {
 				public void buttonClick(ClickEvent event) {
 					Resource previewResource = StreamDownloadResourceFactory
 							.getImagePreviewResource(attachment.getPath());
-					AppContext
-							.getApplication()
-							.getMainWindow()
-							.addWindow(
-									new AttachmentPreviewWindow(previewResource));
+					UI.getCurrent().addWindow(
+							new AttachmentPreviewWindow(previewResource));
 				}
 			});
 			previewBtn.setIcon(MyCollabResource
@@ -115,11 +114,13 @@ public class AttachmentDisplayComponent extends VerticalLayout {
 			@Override
 			public void buttonClick(ClickEvent event) {
 
-				ConfirmDialogExt.show(AppContext.getApplication()
-						.getMainWindow(), LocalizationHelper.getMessage(
-						GenericI18Enum.DELETE_DIALOG_TITLE,
-						SiteConfiguration.getSiteName()), LocalizationHelper
-						.getMessage(GenericI18Enum.CONFIRM_DELETE_ATTACHMENT),
+				ConfirmDialogExt.show(
+						UI.getCurrent(),
+						LocalizationHelper.getMessage(
+								GenericI18Enum.DELETE_DIALOG_TITLE,
+								SiteConfiguration.getSiteName()),
+						LocalizationHelper
+								.getMessage(GenericI18Enum.CONFIRM_DELETE_ATTACHMENT),
 						LocalizationHelper
 								.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
 						LocalizationHelper
@@ -156,7 +157,7 @@ public class AttachmentDisplayComponent extends VerticalLayout {
 			public void buttonClick(ClickEvent event) {
 				Resource downloadResource = StreamDownloadResourceFactory
 						.getStreamResource(attachment.getPath());
-				AppContext.getApplication().getMainWindow()
+				UI.getCurrent()
 						.open(downloadResource, "_blank");
 			}
 		});

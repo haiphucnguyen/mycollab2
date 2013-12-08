@@ -16,8 +16,8 @@
  */
 package com.esofthead.mycollab.module.project.view.standup;
 
-import com.esofthead.mycollab.vaadin.mvp.View;
+import com.esofthead.mycollab.vaadin.mvp.PageView;
 
-public interface IStandupContainer extends View {
+public interface IStandupContainer extends PageView {
 
 }

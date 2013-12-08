@@ -5,8 +5,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.vaadin.hene.splitbutton.SplitButtonExt;
-
 import com.esofthead.mycollab.common.MonitorTypeConstants;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.RangeDateSearchField;
@@ -32,8 +30,9 @@ import com.esofthead.mycollab.module.project.view.time.TimeTrackingTableDisplay;
 import com.esofthead.mycollab.reporting.ReportExportType;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
+import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
@@ -44,10 +43,14 @@ import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.Property;
 import com.vaadin.event.FieldEvents.TextChangeEvent;
 import com.vaadin.event.FieldEvents.TextChangeListener;
-import com.vaadin.terminal.Resource;
-import com.vaadin.terminal.StreamResource;
+import com.vaadin.server.Resource;
+import com.vaadin.server.StreamResource;
+import com.vaadin.shared.ui.MarginInfo;
+import com.vaadin.shared.ui.combobox.FilteringMode;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.AbstractSelect.ItemCaptionMode;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.CssLayout;
@@ -55,10 +58,11 @@ import com.vaadin.ui.DateField;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 @ViewComponent
-public class TimeTrackingListViewImpl extends AbstractView implements
+public class TimeTrackingListViewImpl extends AbstractPageView implements
 		TimeTrackingListView {
 	private static final long serialVersionUID = 1L;
 
@@ -75,7 +79,7 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 	private boolean isNeedConstructLayout;
 
 	public TimeTrackingListViewImpl() {
-		this.setMargin(false, true, true, true);
+		this.setMargin(new MarginInfo(false, true, true, true));
 
 		this.itemTimeLoggingService = ApplicationContextUtil
 				.getSpringBean(ItemTimeLoggingService.class);
@@ -100,7 +104,7 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 		headerLayout.setWidth("100%");
 		headerLayout.setSpacing(true);
 		headerWrapper.addComponent(headerLayout);
-		this.lbTimeRange = new Label("", Label.CONTENT_XHTML);
+		this.lbTimeRange = new Label("", ContentMode.HTML);
 		headerLayout.addComponent(this.lbTimeRange);
 		headerLayout.setComponentAlignment(this.lbTimeRange,
 				Alignment.MIDDLE_LEFT);
@@ -235,7 +239,7 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 		final Resource res = new StreamResource(exportStream,
 				exportStream.getDefaultExportFileName(),
 				AppContext.getApplication());
-		AppContext.getApplication().getMainWindow().open(res, "_blank");
+		UI.getCurrent().open(res, "_blank");
 		exportButtonControl.setPopupVisible(false);
 	}
 
@@ -267,7 +271,7 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 		this.setTimeRange();
 	}
 
-	public class EntryComponentLayout extends AbstractView {
+	public class EntryComponentLayout extends AbstractPageView {
 		private static final long serialVersionUID = 1L;
 		private GridFormLayoutHelper gridLayout;
 
@@ -337,8 +341,8 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 					ProjectGenericTask projectGenericTask = (ProjectGenericTask) ticketComboBox
 							.getCurrentItem();
 					if (projectGenericTask == null) {
-						getWindow()
-								.showNotification("Please choose assignment");
+						NotificationUtil
+								.showErrorNotification("Please choose assignment");
 						return;
 					}
 					try {
@@ -391,12 +395,12 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 
 			public AssignmentSelectionComboBox() {
 				super();
-				this.setFilteringMode(ComboBox.FILTERINGMODE_STARTSWITH);
+				this.setFilteringMode(FilteringMode.STARTSWITH);
 				this.setTextInputAllowed(true);
 				this.setImmediate(true);
 				this.setNullSelectionAllowed(true);
-				this.setItemCaptionMode(ComboBox.ITEM_CAPTION_MODE_EXPLICIT);
-				this.addListener(new Property.ValueChangeListener() {
+				this.setItemCaptionMode(ItemCaptionMode.EXPLICIT);
+				this.addValueChangeListener(new Property.ValueChangeListener() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
@@ -469,7 +473,7 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 			private String oldText;
 
 			public NumbericTextField() {
-				this.addListener(new TextChangeListener() {
+				this.addTextChangeListener(new TextChangeListener() {
 					private static final long serialVersionUID = 1L;
 
 					@Override

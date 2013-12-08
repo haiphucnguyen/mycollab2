@@ -32,10 +32,10 @@ import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
-import com.esofthead.mycollab.vaadin.ui.MessageBox;
-import com.esofthead.mycollab.vaadin.ui.MessageBox.ButtonType;
+import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -66,15 +66,13 @@ public class ContactInfoChangeWindow extends Window {
 		this.center();
 		this.setCaption(LocalizationHelper
 				.getMessage(UserI18nEnum.CHANGE_CONTACT_INFO_WINDOW_TITLE));
-		((VerticalLayout) this.getContent()).setMargin(false, false, true,
-				false);
 	}
 
 	private void initUI() {
 
 		final VerticalLayout mainLayout = new VerticalLayout();
 		mainLayout.setWidth("100%");
-		mainLayout.setMargin(true);
+		mainLayout.setMargin(new MarginInfo(false, false, true, false));
 		mainLayout.setSpacing(true);
 
 		final GridFormLayoutHelper passInfo = new GridFormLayoutHelper(1, 6,
@@ -181,16 +179,7 @@ public class ContactInfoChangeWindow extends Window {
 
 			}
 
-			final MessageBox mb = new MessageBox(
-					AppContext.getApplication().getMainWindow(),
-					LocalizationHelper
-							.getMessage(GenericI18Enum.ERROR_WINDOW_TITLE),
-					MessageBox.Icon.ERROR,
-					errorMsg.toString(),
-					new MessageBox.ButtonConfig(ButtonType.OK,
-							LocalizationHelper
-									.getMessage(GenericI18Enum.BUTTON_OK_LABEL)));
-			mb.show();
+			NotificationUtil.showErrorNotification(errorMsg.toString());
 
 			return false;
 		}

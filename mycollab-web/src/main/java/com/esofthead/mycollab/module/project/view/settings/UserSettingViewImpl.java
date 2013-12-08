@@ -28,10 +28,10 @@ import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectMemberSearchCriteria;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectRoleSearchCriteria;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectRoleScreenData;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
-import com.esofthead.mycollab.vaadin.mvp.View;
+import com.esofthead.mycollab.vaadin.mvp.PageView;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.github.wolfie.detachedtabs.DetachedTabs;
@@ -45,7 +45,7 @@ import com.vaadin.ui.HorizontalLayout;
  * @author haiphucnguyen
  */
 @ViewComponent
-public class UserSettingViewImpl extends AbstractView implements
+public class UserSettingViewImpl extends AbstractPageView implements
 		UserSettingView {
 	private static final long serialVersionUID = 1L;
 
@@ -130,7 +130,7 @@ public class UserSettingViewImpl extends AbstractView implements
 
 	@Override
 	public Component gotoSubView(final String name) {
-		final View component = (View) this.myProjectTab.selectTab(name);
+		final PageView component = (PageView) this.myProjectTab.selectTab(name);
 		return component;
 	}
 }

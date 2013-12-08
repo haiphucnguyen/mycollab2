@@ -23,7 +23,7 @@ package com.esofthead.mycollab.module.project.view.bug;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberComboBox;
 import com.esofthead.mycollab.module.tracker.domain.Component;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
@@ -42,7 +42,7 @@ import com.vaadin.ui.TextField;
  * @author haiphucnguyen
  */
 @ViewComponent
-public class ComponentAddViewImpl extends AbstractView implements
+public class ComponentAddViewImpl extends AbstractPageView implements
 		ComponentAddView {
 
 	private static final long serialVersionUID = 1L;

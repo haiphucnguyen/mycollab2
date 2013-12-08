@@ -14,7 +14,7 @@
     <project>mycollab-jackrabbit</project>
     <project>mycollab-esb</project>
     <project>mycollab-scheduler</project>
-    <project>ckeditor</project>
+    <project>mycollab-server-runner</project>
   </projects>
   <buildSpec>
     <buildCommand>

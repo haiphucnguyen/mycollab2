@@ -28,7 +28,7 @@ import com.esofthead.mycollab.module.project.domain.SimpleProjectRole;
 import com.esofthead.mycollab.security.AccessPermissionFlag;
 import com.esofthead.mycollab.security.PermissionMap;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
@@ -36,12 +36,14 @@ import com.esofthead.mycollab.vaadin.ui.ProjectPreviewFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
-import com.vaadin.terminal.ExternalResource;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
+import com.vaadin.ui.JavaScript;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
@@ -50,7 +52,7 @@ import com.vaadin.ui.Window;
  * @author haiphucnguyen
  */
 @ViewComponent
-public class ProjectRoleReadViewImpl extends AbstractView implements
+public class ProjectRoleReadViewImpl extends AbstractPageView implements
 		ProjectRoleReadView {
 
 	private static final long serialVersionUID = 1L;
@@ -59,7 +61,7 @@ public class ProjectRoleReadViewImpl extends AbstractView implements
 
 	public ProjectRoleReadViewImpl() {
 		super();
-		this.setMargin(false, false, true, false);
+		this.setMargin(new MarginInfo(false, false, true, false));
 		this.previewForm = new PreviewForm();
 		this.addComponent(this.previewForm);
 	}
@@ -101,22 +103,14 @@ public class ProjectRoleReadViewImpl extends AbstractView implements
 
 			final ProjectRoleReadViewImpl printView = new ProjectRoleReadViewImpl.PrintView();
 			printView.previewItem(ProjectRoleReadViewImpl.this.role);
-			window.addComponent(printView);
+			window.setContent(printView);
 
-			// Add the printing window as a new application-level window
-			this.getApplication().addWindow(window);
+			UI.getCurrent().addWindow(window);
 
-			// Open it as a popup window with no decorations
-			this.getWindow().open(new ExternalResource(window.getURL()),
-					"_blank", 1100, 200, // Width and height
-					Window.BORDER_NONE); // No decorations
-
-			// Print automatically when the window opens.
-			// This call will block until the print dialog exits!
-			window.executeJavaScript("print();");
-
-			// Close the window automatically after printing
-			window.executeJavaScript("self.close();");
+			// Print automatically when the window opens
+			JavaScript.getCurrent().execute(
+					"setTimeout(function() {"
+							+ "  print(); self.close();}, 0);");
 		}
 
 		@Override
@@ -124,7 +118,7 @@ public class ProjectRoleReadViewImpl extends AbstractView implements
 			final ProjectRoleHistoryLogWindow historyLog = new ProjectRoleHistoryLogWindow(
 					ModuleNameConstants.PRJ, ProjectContants.PROJECT_ROLE,
 					ProjectRoleReadViewImpl.this.role.getId());
-			this.getWindow().addWindow(historyLog);
+			UI.getCurrent().addWindow(historyLog);
 		}
 
 		class FormLayoutFactory extends ProjectRoleFormLayoutFactory {

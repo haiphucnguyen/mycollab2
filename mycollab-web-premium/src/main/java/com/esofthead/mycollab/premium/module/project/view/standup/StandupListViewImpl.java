@@ -18,7 +18,7 @@ import com.esofthead.mycollab.module.project.domain.criteria.StandupReportSearch
 import com.esofthead.mycollab.module.project.events.StandUpEvent;
 import com.esofthead.mycollab.module.project.service.StandupReportService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.ui.BeanList;
 import com.esofthead.mycollab.vaadin.ui.BeanList.RowDisplayHandler;
 import com.esofthead.mycollab.vaadin.ui.Depot;
@@ -31,6 +31,7 @@ import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -41,7 +42,7 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
 @ViewComponent
-public class StandupListViewImpl extends AbstractView implements
+public class StandupListViewImpl extends AbstractPageView implements
 		StandupListView {
 	private static final long serialVersionUID = 1L;
 
@@ -81,7 +82,7 @@ public class StandupListViewImpl extends AbstractView implements
 	@SuppressWarnings("serial")
 	private void addCalendarEvent() {
 
-		this.standupCalendar.getStyleCalendar().addListener(
+		this.standupCalendar.getStyleCalendar().addValueChangeListener(
 				new ValueChangeListener() {
 
 					@Override
@@ -99,7 +100,7 @@ public class StandupListViewImpl extends AbstractView implements
 					}
 				});
 
-		this.standupCalendar.getBtnShowNextYear().addListener(
+		this.standupCalendar.getBtnShowNextYear().addClickListener(
 				new Button.ClickListener() {
 					@Override
 					public void buttonClick(final ClickEvent event) {
@@ -112,7 +113,7 @@ public class StandupListViewImpl extends AbstractView implements
 					}
 				});
 
-		this.standupCalendar.getBtnShowNextMonth().addListener(
+		this.standupCalendar.getBtnShowNextMonth().addClickListener(
 				new Button.ClickListener() {
 					@Override
 					public void buttonClick(final ClickEvent event) {
@@ -125,7 +126,7 @@ public class StandupListViewImpl extends AbstractView implements
 					}
 				});
 
-		this.standupCalendar.getBtnShowPreviousMonth().addListener(
+		this.standupCalendar.getBtnShowPreviousMonth().addClickListener(
 				new Button.ClickListener() {
 					@Override
 					public void buttonClick(final ClickEvent event) {
@@ -138,7 +139,7 @@ public class StandupListViewImpl extends AbstractView implements
 					}
 				});
 
-		this.standupCalendar.getBtnShowPreviousYear().addListener(
+		this.standupCalendar.getBtnShowPreviousYear().addClickListener(
 				new Button.ClickListener() {
 					@Override
 					public void buttonClick(final ClickEvent event) {
@@ -184,9 +185,6 @@ public class StandupListViewImpl extends AbstractView implements
 		this.reportInDay.setSearchCriteria(searchCriteria);
 
 		if (searchCriteria.getOnDate() != null) {
-			// this.titleLbl.setValue("StandUp Report for "
-			// + AppContext.formatDate(searchCriteria.getOnDate()
-			// .getValue()));
 			this.dateChooser.setCaption(AppContext.formatDate(searchCriteria
 					.getOnDate().getValue()));
 			this.standupCalendar.getStyleCalendar().setShowingDate(
@@ -215,7 +213,7 @@ public class StandupListViewImpl extends AbstractView implements
 		headerLeft.addComponent(this.titleLbl);
 
 		this.dateChooser = new PopupButton("Choose date to view reports");
-		this.dateChooser.addComponent(this.standupCalendar);
+		this.dateChooser.setContent(this.standupCalendar);
 		headerLeft.addComponent(this.dateChooser);
 		headerLeft.setComponentAlignment(this.dateChooser,
 				Alignment.BOTTOM_RIGHT);
@@ -273,7 +271,7 @@ public class StandupListViewImpl extends AbstractView implements
 							UserAvatarControlFactory.getAvatarLink(
 									report.getLogByAvatarId(), 16),
 							report.getLogByFullName()));
-			this.getHeaderLbl().setContentMode(Label.CONTENT_XHTML);
+			this.getHeaderLbl().setContentMode(ContentMode.HTML);
 			((VerticalLayout) this.bodyContent).setSpacing(true);
 			final Label whatYesterdayLbl = new Label(
 					"What I did in the last day/week");

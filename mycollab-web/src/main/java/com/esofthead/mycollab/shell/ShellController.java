@@ -105,24 +105,6 @@ public class ShellController implements IController {
 					}
 				});
 
-		EventBus.getInstance().addListener(
-				new ApplicationEventListener<ShellEvent.GotoSignupPage>() {
-					private static final long serialVersionUID = 1L;
-
-					@Override
-					public Class<? extends ApplicationEvent> getEventType() {
-						return ShellEvent.GotoSignupPage.class;
-					}
-
-					@Override
-					public void handle(GotoSignupPage event) {
-						SignupPresenter presenter = PresenterResolver
-								.getPresenter(SignupPresenter.class);
-						presenter.go(container, null);
-					}
-
-				});
-
 		EventBus.getInstance()
 				.addListener(
 						new ApplicationEventListener<ShellEvent.GotoForgotPasswordPage>() {

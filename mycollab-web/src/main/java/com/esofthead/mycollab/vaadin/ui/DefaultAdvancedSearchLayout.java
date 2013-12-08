@@ -38,6 +38,7 @@ import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel.SearchLayout;
 import com.esofthead.mycollab.web.AppContext;
 import com.google.gson.reflect.TypeToken;
 import com.vaadin.data.util.BeanContainer;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -47,6 +48,7 @@ import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 @SuppressWarnings("serial")
@@ -161,8 +163,9 @@ public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
 				Alignment.MIDDLE_RIGHT);
 		UiUtils.addComponent(saveSearchControls, addnewBtn,
 				Alignment.MIDDLE_RIGHT);
+
 		// -----Defined Listener ---------------------
-		addnewBtn.addListener(new ClickListener() {
+		addnewBtn.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				saveSearchControls.removeComponent(addnewBtn);
@@ -174,7 +177,7 @@ public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
 						saveSearchValue);
 			}
 		});
-		saveBtn.addListener(new ClickListener() {
+		saveBtn.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				S searchCriteria = fillupSearchCriteria();
@@ -211,7 +214,7 @@ public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
 				saveSearchControls.addComponent(tableActionControls);
 			}
 		});
-		cancelBtn.addListener(new ClickListener() {
+		cancelBtn.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				saveSearchControls.removeComponent(cancelBtn);
@@ -220,7 +223,7 @@ public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
 						saveResultComboBox);
 			}
 		});
-		updateBtn.addListener(new ClickListener() {
+		updateBtn.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				Integer itemId = (Integer) saveResultComboBox.getValue();
@@ -254,70 +257,76 @@ public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
 				}
 			}
 		});
-		tableActionControls.addPopupActionHandler(new TablePopupActionHandler() {
-			@Override
-			public void onSelect(String id, String caption) {
-				if ("delete".equals(id)) {
-					ConfirmDialogExt.show(
-							getWindow(),
-							LocalizationHelper.getMessage(
-									GenericI18Enum.DELETE_DIALOG_TITLE,
-									SiteConfiguration.getSiteName()),
-							"Do you want to delete record ?",
-							LocalizationHelper
-									.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
-							LocalizationHelper
-									.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
-							new ConfirmDialog.Listener() {
-								private static final long serialVersionUID = 1L;
+		tableActionControls
+				.addPopupActionHandler(new TablePopupActionHandler() {
+					@Override
+					public void onSelect(String id, String caption) {
+						if ("delete".equals(id)) {
+							ConfirmDialogExt.show(
+									UI.getCurrent(),
+									LocalizationHelper.getMessage(
+											GenericI18Enum.DELETE_DIALOG_TITLE,
+											SiteConfiguration.getSiteName()),
+									"Do you want to delete record ?",
+									LocalizationHelper
+											.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
+									LocalizationHelper
+											.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
+									new ConfirmDialog.Listener() {
+										private static final long serialVersionUID = 1L;
 
-								@Override
-								public void onClose(ConfirmDialog dialog) {
-									if (dialog.isConfirmed()) {
-										Integer itemDelete = (Integer) saveResultComboBox
-												.getValue();
-										saveSearchResultService
-												.removeWithSession(itemDelete,
-														AppContext
-																.getUsername(),
-														AppContext
-																.getAccountId());
-										NotificationUtil
-												.showNotification("Delete successfully.");
+										@Override
+										public void onClose(ConfirmDialog dialog) {
+											if (dialog.isConfirmed()) {
+												Integer itemDelete = (Integer) saveResultComboBox
+														.getValue();
+												saveSearchResultService
+														.removeWithSession(
+																itemDelete,
+																AppContext
+																		.getUsername(),
+																AppContext
+																		.getAccountId());
+												NotificationUtil
+														.showNotification("Delete successfully.");
 
-										BeanContainer<String, SaveSearchResultWithBLOBs> beanData = saveResultComboBox
-												.getBeanIteam();
-										beanData.removeItem(itemDelete);
-										saveResultComboBox
-												.setContainerDataSource(beanData);
-										saveResultComboBox
-												.setItemCaptionPropertyId("queryname");
+												BeanContainer<String, SaveSearchResultWithBLOBs> beanData = saveResultComboBox
+														.getBeanIteam();
+												beanData.removeItem(itemDelete);
+												saveResultComboBox
+														.setContainerDataSource(beanData);
+												saveResultComboBox
+														.setItemCaptionPropertyId("queryname");
 
-										clearFields();
-										saveResultComboBox.setValue(null);
-									}
-								}
-							}); // end confirm Dialog
-				} else if ("new".equals(id)) {
-					saveSearchControls.replaceComponent(tableActionControls,
-							saveBtn);
-					saveSearchControls.replaceComponent(saveResultComboBox,
-							saveSearchValue);
-					cancelBtn.addListener(new ClickListener() {
-						@Override
-						public void buttonClick(ClickEvent event) {
+												clearFields();
+												saveResultComboBox
+														.setValue(null);
+											}
+										}
+									}); // end confirm Dialog
+						} else if ("new".equals(id)) {
 							saveSearchControls.replaceComponent(
-									saveSearchValue, saveResultComboBox);
-							saveSearchControls.replaceComponent(saveBtn,
-									tableActionControls);
-							saveSearchControls.removeComponent(cancelBtn);
-							saveSearchControls.removeComponent(addnewBtn);
+									tableActionControls, saveBtn);
+							saveSearchControls.replaceComponent(
+									saveResultComboBox, saveSearchValue);
+							cancelBtn.addListener(new ClickListener() {
+								@Override
+								public void buttonClick(ClickEvent event) {
+									saveSearchControls
+											.replaceComponent(saveSearchValue,
+													saveResultComboBox);
+									saveSearchControls.replaceComponent(
+											saveBtn, tableActionControls);
+									saveSearchControls
+											.removeComponent(cancelBtn);
+									saveSearchControls
+											.removeComponent(addnewBtn);
+								}
+							});
+							saveSearchControls.addComponent(cancelBtn);
 						}
-					});
-					saveSearchControls.addComponent(cancelBtn);
-				}
-			}
-		});
+					}
+				});
 
 		return saveSearchControls;
 	}
@@ -326,7 +335,7 @@ public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
 		// ------Define VerticalLayout for footerLayout ------------------
 		VerticalLayout footerLayout = new VerticalLayout();
 		footerLayout.setSpacing(true);
-		footerLayout.setMargin(false, true, false, false);
+		footerLayout.setMargin(new MarginInfo(false, true, false, false));
 		// ------Define & contruct TopfooterLayout ------------------------
 		HorizontalLayout topfooterLayout = new HorizontalLayout();
 		topfooterLayout.setWidth("100%");
@@ -334,12 +343,12 @@ public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
 		HorizontalLayout buttonControls = createButtonControls();
 		UiUtils.addComponent(topfooterLayout, buttonControls,
 				Alignment.MIDDLE_RIGHT);
-		buttonControls.setMargin(false, true, false, false);
+		buttonControls.setMargin(new MarginInfo(false, true, false, false));
 		topfooterLayout.setExpandRatio(buttonControls, 3.0f);
 
 		saveSearchControls = createSaveSearchControls();
 		saveSearchControls.setSpacing(true);
-		saveSearchControls.setMargin(false, true, false, true);
+		saveSearchControls.setMargin(new MarginInfo(false, true, false, false));
 		UiUtils.addComponent(topfooterLayout, saveSearchControls,
 				Alignment.MIDDLE_RIGHT);
 		topfooterLayout.setExpandRatio(saveSearchControls, 1.0f);
@@ -353,11 +362,11 @@ public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
 
 		public SavedSearchResultComboBox() {
 			this.setImmediate(true);
-			this.setItemCaptionMode(ITEM_CAPTION_MODE_PROPERTY);
+			this.setItemCaptionMode(ItemCaptionMode.PROPERTY);
 
 			contructComboBox();
 
-			this.addListener(new ValueChangeListener() {
+			this.addValueChangeListener(new ValueChangeListener() {
 				@Override
 				public void valueChange(
 						com.vaadin.data.Property.ValueChangeEvent event) {

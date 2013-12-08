@@ -43,8 +43,10 @@ import com.esofthead.mycollab.vaadin.mvp.ViewPermission;
 import com.esofthead.mycollab.vaadin.ui.MailFormWindow;
 import com.esofthead.mycollab.vaadin.ui.MessageBox;
 import com.esofthead.mycollab.vaadin.ui.MessageBox.ButtonType;
+import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.UI;
 
 /**
  * 
@@ -67,8 +69,7 @@ public class RoleListPresenter extends
 					@Override
 					protected void onSelectExtra(String id, String caption) {
 						if (TablePopupActionHandler.MAIL_ACTION.equals(id)) {
-							view.getWidget().getWindow()
-									.addWindow(new MailFormWindow());
+							UI.getCurrent().addWindow(new MailFormWindow());
 						}
 
 					}
@@ -97,18 +98,10 @@ public class RoleListPresenter extends
 								.getIssystemrole() == Boolean.FALSE)) {
 					keyList.add(item.getId());
 				} else {
-					MessageBox mb = new MessageBox(
-							AppContext.getApplication().getMainWindow(),
-							LocalizationHelper
-									.getMessage(GenericI18Enum.WARNING_WINDOW_TITLE),
-							MessageBox.Icon.WARN,
-							"Can not delete role " + item.getRolename()
-									+ " because it is the system role.",
-							new MessageBox.ButtonConfig(
-									ButtonType.OK,
-									LocalizationHelper
-											.getMessage(GenericI18Enum.BUTTON_OK_LABEL)));
-					mb.show();
+					NotificationUtil
+							.showErrorNotification("Can not delete role "
+									+ item.getRolename()
+									+ " because it is the system role.");
 				}
 			}
 
@@ -139,7 +132,7 @@ public class RoleListPresenter extends
 					.getView(AccountSettingBreadcrumb.class);
 			breadcrumb.gotoRoleList();
 		} else {
-			MessageBox.showMessagePermissionAlert();
+			NotificationUtil.showMessagePermissionAlert();
 		}
 	}
 

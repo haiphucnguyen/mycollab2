@@ -33,6 +33,7 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.BeanList;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Label;
@@ -89,7 +90,7 @@ public class ProjectMembersWidget extends Depot {
 			body.setStyleName("activity-date");
 
 			Label memberRole = new Label();
-			memberRole.setContentMode(Label.CONTENT_XHTML);
+			memberRole.setContentMode(ContentMode.HTML);
 			String textRole = "";
 			if (member.getIsadmin() != null
 					&& member.getIsadmin() == Boolean.TRUE) {

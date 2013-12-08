@@ -16,40 +16,37 @@
  */
 package com.esofthead.mycollab.module.crm.view.campaign;
 
-import org.vaadin.addon.customfield.FieldWrapper;
-
 import com.esofthead.mycollab.module.crm.domain.CampaignWithBLOBs;
-import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
-import com.esofthead.mycollab.module.crm.service.CampaignService;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.FieldSelection;
-import com.esofthead.mycollab.vaadin.ui.UIHelper;
-import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
-import com.vaadin.data.Property;
 import com.vaadin.event.MouseEvents;
 import com.vaadin.event.MouseEvents.ClickEvent;
 import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Component;
+import com.vaadin.ui.CustomField;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.UI;
 
 @SuppressWarnings("serial")
-public class CampaignSelectionField extends FieldWrapper<CampaignWithBLOBs>
-		implements FieldSelection {
+public class CampaignSelectionField extends CustomField<CampaignWithBLOBs>
+		implements FieldSelection<CampaignWithBLOBs> {
 
-	private HorizontalLayout layout;
-
-	private SimpleCampaign campaign;
+	private CampaignWithBLOBs campaign;
 
 	private TextField campaignName;
 	private Embedded browseBtn;
 	private Embedded clearBtn;
 
-	public CampaignSelectionField() {
-		super(new TextField(""), CampaignWithBLOBs.class);
+	public void setCampaign(CampaignWithBLOBs campaign) {
+		this.campaign = campaign;
+		campaignName.setValue(campaign.getCampaignname());
+	}
 
-		layout = new HorizontalLayout();
+	@Override
+	protected Component initContent() {
+		HorizontalLayout layout = new HorizontalLayout();
 		layout.setSpacing(true);
 
 		campaignName = new TextField();
@@ -59,14 +56,14 @@ public class CampaignSelectionField extends FieldWrapper<CampaignWithBLOBs>
 				MyCollabResource.newResource("icons/16/browseItem.png"));
 		layout.addComponent(browseBtn);
 		layout.setComponentAlignment(browseBtn, Alignment.MIDDLE_LEFT);
-		browseBtn.addListener(new MouseEvents.ClickListener() {
+
+		browseBtn.addClickListener(new MouseEvents.ClickListener() {
 
 			@Override
 			public void click(ClickEvent event) {
 				CampaignSelectionWindow campaignWindow = new CampaignSelectionWindow(
 						CampaignSelectionField.this);
-				UIHelper.addWindowToRoot(CampaignSelectionField.this,
-						campaignWindow);
+				UI.getCurrent().addWindow(campaignWindow);
 				campaignWindow.show();
 
 			}
@@ -74,51 +71,28 @@ public class CampaignSelectionField extends FieldWrapper<CampaignWithBLOBs>
 
 		clearBtn = new Embedded(null,
 				MyCollabResource.newResource("icons/16/clearItem.png"));
-		clearBtn.addListener(new MouseEvents.ClickListener() {
+		clearBtn.addClickListener(new MouseEvents.ClickListener() {
 
 			@Override
 			public void click(ClickEvent event) {
 				campaignName.setValue("");
-				CampaignSelectionField.this.getWrappedField().setValue(null);
+				campaign = null;
 			}
 		});
 		layout.addComponent(clearBtn);
 		layout.setComponentAlignment(clearBtn, Alignment.MIDDLE_LEFT);
 
-		this.setCompositionRoot(layout);
-		this.addListener(new Property.ValueChangeListener() {
-
-			@Override
-			public void valueChange(
-					com.vaadin.data.Property.ValueChangeEvent event) {
-				try {
-					Integer campaignId = Integer.parseInt((String) event
-							.getProperty().getValue());
-					CampaignService campaignService = ApplicationContextUtil
-							.getSpringBean(CampaignService.class);
-					SimpleCampaign campaign = campaignService.findById(
-							campaignId, AppContext.getAccountId());
-					if (campaign != null) {
-						campaignName.setValue(campaign.getCampaignname());
-					}
-				} catch (Exception e) {
-
-				}
-
-			}
-		});
-	}
-
-	public void setCampaign(SimpleCampaign campaign) {
-		this.campaign = campaign;
-		campaignName.setValue(campaign.getCampaignname());
+		return layout;
 	}
 
 	@Override
-	public void fireValueChange(Object data) {
-		this.campaign = (SimpleCampaign) data;
-		campaignName.setValue(campaign.getCampaignname());
-		this.getWrappedField().setValue(campaign.getId());
+	public Class<? extends CampaignWithBLOBs> getType() {
+		return CampaignWithBLOBs.class;
+	}
+
+	@Override
+	public void fireValueChange(CampaignWithBLOBs data) {
+		this.campaign = data;
 	}
 
 }

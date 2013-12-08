@@ -41,6 +41,7 @@ import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.web.AppContext;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
@@ -188,17 +189,17 @@ public class HistoryLogComponent extends VerticalLayout {
 
 					gridLayout.addComponent(new Label(
 							"<div style=\"font-weight: bold;\">Field</div>",
-							Label.CONTENT_XHTML), 0, 1);
+							ContentMode.HTML), 0, 1);
 					gridLayout
 							.addComponent(
 									new Label(
 											"<div style=\"font-weight: bold;\">Old Value</div>",
-											Label.CONTENT_XHTML), 1, 1);
+											ContentMode.HTML), 1, 1);
 					gridLayout
 							.addComponent(
 									new Label(
 											"<div style=\"font-weight: bold;\">New Value</div>",
-											Label.CONTENT_XHTML), 2, 1);
+											ContentMode.HTML), 2, 1);
 
 					gridLayout.setRows(visibleRows + 2);
 					layout.addComponent(gridLayout);

@@ -21,7 +21,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-import org.tepi.listbuilder.ListBuilder;
+import org.vaadin.tepi.listbuilder.ListBuilder;
 
 import com.esofthead.mycollab.common.domain.CustomViewStore;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
@@ -33,6 +33,7 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.AbstractSelect;
+import com.vaadin.ui.AbstractSelect.ItemCaptionMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -57,7 +58,7 @@ public abstract class CustomizedTableWindow extends Window {
 
 	public CustomizedTableWindow(final String viewId,
 			final AbstractPagedBeanTable table) {
-		super("Customize View");
+		super("Customize PageView");
 		this.viewId = viewId;
 		this.setWidth("800px");
 		this.center();
@@ -69,16 +70,15 @@ public abstract class CustomizedTableWindow extends Window {
 		final VerticalLayout body = new VerticalLayout();
 		body.setSpacing(true);
 		body.setSizeFull();
-		this.addComponent(body);
+		this.setContent(body);
 
 		this.listBuilder = new ListBuilder();
 		this.listBuilder.setImmediate(true);
 		this.listBuilder.setLeftColumnCaption("Available Columns");
-		this.listBuilder.setRightColumnCaption("View Columns");
+		this.listBuilder.setRightColumnCaption("PageView Columns");
 		this.listBuilder.setWidth("100%");
 
-		this.listBuilder
-				.setItemCaptionMode(AbstractSelect.ITEM_CAPTION_MODE_PROPERTY);
+		this.listBuilder.setItemCaptionMode(ItemCaptionMode.PROPERTY);
 		this.listBuilder.setItemCaptionPropertyId("desc");
 		final BeanItemContainer<TableViewField> container = new BeanItemContainer<TableViewField>(
 				TableViewField.class, this.getAvailableColumns());

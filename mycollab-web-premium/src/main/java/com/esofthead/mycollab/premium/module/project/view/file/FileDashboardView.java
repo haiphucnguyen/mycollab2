@@ -1,7 +1,7 @@
 package com.esofthead.mycollab.premium.module.project.view.file;
 
-import com.esofthead.mycollab.vaadin.mvp.View;
+import com.esofthead.mycollab.vaadin.mvp.PageView;
 
-public interface FileDashboardView extends View {
+public interface FileDashboardView extends PageView {
 	void displayProjectFiles();
 }

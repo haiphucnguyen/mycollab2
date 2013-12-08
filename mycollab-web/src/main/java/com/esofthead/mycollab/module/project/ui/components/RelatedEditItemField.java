@@ -17,7 +17,6 @@
 package com.esofthead.mycollab.module.project.ui.components;
 
 import org.apache.commons.beanutils.PropertyUtils;
-import org.vaadin.addon.customfield.CustomField;
 
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.vaadin.ui.FieldSelection;
@@ -26,6 +25,8 @@ import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.event.MouseEvents;
 import com.vaadin.event.MouseEvents.ClickEvent;
 import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Component;
+import com.vaadin.ui.CustomField;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.TextField;
@@ -39,7 +40,15 @@ public class RelatedEditItemField extends CustomField implements FieldSelection 
 	private Embedded browseBtn;
 	private Embedded clearBtn;
 
+	private String[] types;
+
 	public RelatedEditItemField(String[] types, Object bean) {
+		this.types = types;
+		this.bean = bean;
+	}
+
+	@Override
+	protected Component initContent() {
 		this.bean = bean;
 		HorizontalLayout layout = new HorizontalLayout();
 		layout.setSpacing(true);
@@ -54,7 +63,7 @@ public class RelatedEditItemField extends CustomField implements FieldSelection 
 
 		browseBtn = new Embedded(null,
 				MyCollabResource.newResource("icons/16/browseItem.png"));
-		browseBtn.addListener(new MouseEvents.ClickListener() {
+		browseBtn.addClickListener(new MouseEvents.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -74,7 +83,7 @@ public class RelatedEditItemField extends CustomField implements FieldSelection 
 
 		clearBtn = new Embedded(null,
 				MyCollabResource.newResource("icons/16/clearItem.png"));
-		clearBtn.addListener(new MouseEvents.ClickListener() {
+		clearBtn.addClickListener(new MouseEvents.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -93,7 +102,7 @@ public class RelatedEditItemField extends CustomField implements FieldSelection 
 		layout.addComponent(clearBtn);
 		layout.setComponentAlignment(clearBtn, Alignment.MIDDLE_LEFT);
 
-		this.setCompositionRoot(layout);
+		return layout;
 	}
 
 	@Override

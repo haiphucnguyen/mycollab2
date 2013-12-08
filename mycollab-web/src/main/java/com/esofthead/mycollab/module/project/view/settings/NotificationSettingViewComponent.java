@@ -25,6 +25,7 @@ import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.ValuedBean;
 import com.esofthead.mycollab.core.persistence.service.ICrudService;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Property.ValueChangeEvent;
@@ -150,9 +151,8 @@ public abstract class NotificationSettingViewComponent<B extends ValuedBean, S e
 											.updateWithSession(bean,
 													AppContext.getUsername());
 								}
-								getWindow()
-										.showNotification(
-												"Update notification setting successfully.");
+								NotificationUtil
+										.showNotification("Update notification setting successfully.");
 							} catch (Exception e) {
 								throw new MyCollabException(e);
 							}

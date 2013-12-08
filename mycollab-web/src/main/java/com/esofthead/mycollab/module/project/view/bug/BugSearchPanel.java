@@ -39,7 +39,6 @@ import com.esofthead.mycollab.module.project.localization.BugI18nEnum;
 import com.esofthead.mycollab.module.tracker.domain.Component;
 import com.esofthead.mycollab.module.tracker.domain.Version;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
-import com.esofthead.mycollab.shell.view.ScreenSize;
 import com.esofthead.mycollab.vaadin.ui.DateSelectionField;
 import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
@@ -253,16 +252,8 @@ public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 			String dateFieldWidth = "245px";
 			String componentFieldWidth = "225px";
 
-			if (ScreenSize.hasSupport1024Pixels()) {
-				gridLayout = new GridFormLayoutHelper(2, 6,
-						UIConstants.DEFAULT_CONTROL_WIDTH_1024_RESOLUTION,
-						"150px");
-				nameFieldWidth = "380px";
-				dateFieldWidth = "195px";
-				componentFieldWidth = "170px";
-			} else if (ScreenSize.hasSupport1280Pixels()) {
-				gridLayout = new GridFormLayoutHelper(2, 6, "150px");
-			}
+			gridLayout = new GridFormLayoutHelper(2, 6, "150px");
+
 			gridLayout.getLayout().setWidth("100%");
 			gridLayout.getLayout().setSpacing(true);
 
@@ -399,7 +390,8 @@ public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 					.setProjectId(new NumberSearchField(SearchField.AND,
 							BugSearchPanel.this.project.getId()));
 
-			if (StringUtils.isNotNullOrEmpty((String) this.nameField.getValue())) {
+			if (StringUtils
+					.isNotNullOrEmpty((String) this.nameField.getValue())) {
 
 				if (((Boolean) this.summaryField.getValue()) == true) {
 					BugSearchPanel.this.searchCriteria

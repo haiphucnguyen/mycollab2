@@ -20,12 +20,12 @@
  */
 package com.esofthead.mycollab.module.project.view.task;
 
-import com.esofthead.mycollab.vaadin.mvp.View;
+import com.esofthead.mycollab.vaadin.mvp.PageView;
 
 /**
  *
  * @author haiphucnguyen
  */
-public interface TaskGroupReorderView extends View {
+public interface TaskGroupReorderView extends PageView {
     void displayTaskLists();
 }

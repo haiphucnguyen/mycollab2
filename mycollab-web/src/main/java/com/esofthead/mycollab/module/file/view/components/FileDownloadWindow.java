@@ -91,9 +91,9 @@ public class FileDownloadWindow extends Window {
 				List<Resource> lstRes = new ArrayList<Resource>();
 				lstRes.add(content);
 
-				com.vaadin.terminal.Resource downloadResource = StreamDownloadResourceFactory
+				com.vaadin.server.Resource downloadResource = StreamDownloadResourceFactory
 						.getStreamResourceSupportExtDrive(lstRes, false);
-				AppContext.getApplication().getMainWindow()
+				UI.getCurrent()
 						.open(downloadResource, "_blank");
 			}
 		});

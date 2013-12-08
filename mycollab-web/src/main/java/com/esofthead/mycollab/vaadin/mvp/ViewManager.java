@@ -38,14 +38,14 @@ public abstract class ViewManager {
 		viewClasses = reflections.getTypesAnnotatedWith(ViewComponent.class);
 	}
 
-	protected abstract <T extends View> T getViewInstance(
+	protected abstract <T extends PageView> T getViewInstance(
 			final Class<T> viewClass);
 
 	public static void init() {
 
 	}
 
-	public static <T extends View> T getView(final Class<T> viewClass) {
+	public static <T extends PageView> T getView(final Class<T> viewClass) {
 		return impl.getViewInstance(viewClass);
 	}
 }

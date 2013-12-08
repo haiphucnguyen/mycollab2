@@ -18,20 +18,18 @@ package com.esofthead.mycollab.module.file.resource;
 
 import java.io.InputStream;
 
-import com.vaadin.Application;
-import com.vaadin.terminal.StreamResource;
+import com.vaadin.server.StreamResource;
 
 @SuppressWarnings("serial")
 public class FileStreamResource extends StreamResource {
-	public FileStreamResource(final InputStream inputStream, String filename,
-			Application app) {
+	public FileStreamResource(final InputStream inputStream, String filename) {
 		super(new StreamSource() {
 
 			@Override
 			public InputStream getStream() {
 				return inputStream;
 			}
-		}, filename, app);
+		}, filename);
 	}
 
 }

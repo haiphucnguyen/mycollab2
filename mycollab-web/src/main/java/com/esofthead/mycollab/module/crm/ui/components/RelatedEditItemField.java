@@ -19,7 +19,6 @@ package com.esofthead.mycollab.module.crm.ui.components;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.vaadin.addon.customfield.CustomField;
 
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
@@ -47,23 +46,35 @@ import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.event.MouseEvents;
 import com.vaadin.event.MouseEvents.ClickEvent;
 import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Component;
+import com.vaadin.ui.CustomField;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.UI;
 
 public class RelatedEditItemField extends CustomField implements FieldSelection {
 
 	private static final long serialVersionUID = 1L;
 	private static Logger log = LoggerFactory
 			.getLogger(RelatedEditItemField.class);
-	private Object bean;
+
 	private RelatedItemComboBox relatedItemComboBox;
+	private Object bean;
+	private String[] types;
+
 	private TextField itemField;
 	private Embedded browseBtn;
 	private Embedded clearBtn;
 
 	public RelatedEditItemField(String[] types, Object bean) {
 		this.bean = bean;
+		this.types = types;
+
+	}
+
+	@Override
+	protected Component initContent() {
 		HorizontalLayout layout = new HorizontalLayout();
 		layout.setSpacing(true);
 
@@ -77,7 +88,7 @@ public class RelatedEditItemField extends CustomField implements FieldSelection 
 
 		browseBtn = new Embedded(null,
 				MyCollabResource.newResource("icons/16/browseItem.png"));
-		browseBtn.addListener(new MouseEvents.ClickListener() {
+		browseBtn.addClickListener(new MouseEvents.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -86,62 +97,32 @@ public class RelatedEditItemField extends CustomField implements FieldSelection 
 				if ("Account".equals(type)) {
 					AccountSelectionWindow accountWindow = new AccountSelectionWindow(
 							RelatedEditItemField.this);
-					try {
-						getWindow().getParent().addWindow(accountWindow);
-					} catch (Exception e) {
-						RelatedEditItemField.this.getParent().getWindow()
-								.addWindow(accountWindow);
-					}
+					UI.getCurrent().addWindow(accountWindow);
 					accountWindow.show();
 				} else if ("Campaign".equals(type)) {
 					CampaignSelectionWindow campaignWindow = new CampaignSelectionWindow(
 							RelatedEditItemField.this);
-					try {
-						getWindow().getParent().addWindow(campaignWindow);
-					} catch (Exception e) {
-						RelatedEditItemField.this.getParent().getWindow()
-								.addWindow(campaignWindow);
-					}
+					UI.getCurrent().addWindow(campaignWindow);
 					campaignWindow.show();
 				} else if ("Contact".equals(type)) {
 					ContactSelectionWindow contactWindow = new ContactSelectionWindow(
 							RelatedEditItemField.this);
-					try {
-						getWindow().getParent().addWindow(contactWindow);
-					} catch (Exception e) {
-						RelatedEditItemField.this.getParent().getWindow()
-								.addWindow(contactWindow);
-					}
+					UI.getCurrent().addWindow(contactWindow);
 					contactWindow.show();
 				} else if ("Lead".equals(type)) {
 					LeadSelectionWindow leadWindow = new LeadSelectionWindow(
 							RelatedEditItemField.this);
-					try {
-						getWindow().getParent().addWindow(leadWindow);
-					} catch (Exception e) {
-						RelatedEditItemField.this.getParent().getWindow()
-								.addWindow(leadWindow);
-					}
+					UI.getCurrent().addWindow(leadWindow);
 					leadWindow.show();
 				} else if ("Opportunity".equals(type)) {
 					OpportunitySelectionWindow opportunityWindow = new OpportunitySelectionWindow(
 							RelatedEditItemField.this);
-					try {
-						getWindow().getParent().addWindow(opportunityWindow);
-					} catch (Exception e) {
-						RelatedEditItemField.this.getParent().getWindow()
-								.addWindow(opportunityWindow);
-					}
+					UI.getCurrent().addWindow(opportunityWindow);
 					opportunityWindow.show();
 				} else if ("Case".equals(type)) {
 					CaseSelectionWindow caseWindow = new CaseSelectionWindow(
 							RelatedEditItemField.this);
-					try {
-						getWindow().getParent().addWindow(caseWindow);
-					} catch (Exception e) {
-						RelatedEditItemField.this.getParent().getWindow()
-								.addWindow(caseWindow);
-					}
+					UI.getCurrent().addWindow(caseWindow);
 					caseWindow.show();
 				} else {
 					relatedItemComboBox.focus();
@@ -154,7 +135,7 @@ public class RelatedEditItemField extends CustomField implements FieldSelection 
 
 		clearBtn = new Embedded(null,
 				MyCollabResource.newResource("icons/16/clearItem.png"));
-		clearBtn.addListener(new MouseEvents.ClickListener() {
+		clearBtn.addClickListener(new MouseEvents.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -173,7 +154,7 @@ public class RelatedEditItemField extends CustomField implements FieldSelection 
 		layout.addComponent(clearBtn);
 		layout.setComponentAlignment(clearBtn, Alignment.MIDDLE_LEFT);
 
-		this.setCompositionRoot(layout);
+		return layout;
 	}
 
 	@Override

@@ -40,10 +40,10 @@ import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.mvp.ViewPermission;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
-import com.esofthead.mycollab.vaadin.ui.MessageBox;
-import com.esofthead.mycollab.vaadin.ui.MessageBox.ButtonType;
+import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.UI;
 
 /**
  * 
@@ -71,7 +71,7 @@ public class UserReadPresenter extends AbstractPresenter<UserReadView> {
 					@Override
 					public void onDelete(final User data) {
 						ConfirmDialogExt.show(
-								view.getWindow(),
+								UI.getCurrent(),
 								LocalizationHelper.getMessage(
 										GenericI18Enum.DELETE_DIALOG_TITLE,
 										SiteConfiguration.getSiteName()),
@@ -136,21 +136,12 @@ public class UserReadPresenter extends AbstractPresenter<UserReadView> {
 						.getView(AccountSettingBreadcrumb.class);
 				breadcrumb.gotoUserRead(user);
 			} else {
-				MessageBox mb = new MessageBox(
-						AppContext.getApplication().getMainWindow(),
-						LocalizationHelper
-								.getMessage(GenericI18Enum.WARNING_WINDOW_TITLE),
-						MessageBox.Icon.WARN,
-						"There is no user " + username + " in this account",
-						new MessageBox.ButtonConfig(
-								ButtonType.OK,
-								LocalizationHelper
-										.getMessage(GenericI18Enum.BUTTON_OK_LABEL)));
-				mb.show();
+				NotificationUtil.showErrorNotification("There is no user "
+						+ username + " in this account");
 			}
 
 		} else {
-			MessageBox.showMessagePermissionAlert();
+			NotificationUtil.showMessagePermissionAlert();
 		}
 
 	}

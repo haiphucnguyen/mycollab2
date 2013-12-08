@@ -5,12 +5,12 @@ import com.esofthead.mycollab.module.file.domain.criteria.FileSearchCriteria;
 import com.esofthead.mycollab.module.file.view.components.FileDashboardComponent;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.events.ProjectContentEvent;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 
 @ViewComponent
-public class FileDashboardViewImpl extends AbstractView implements
+public class FileDashboardViewImpl extends AbstractPageView implements
 		FileDashboardView {
 	private static final long serialVersionUID = 1L;
 

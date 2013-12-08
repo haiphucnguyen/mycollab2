@@ -27,7 +27,7 @@ import com.esofthead.mycollab.module.tracker.domain.Component;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.Version;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
@@ -43,7 +43,7 @@ import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.TextField;
 
 @ViewComponent
-public class BugAddViewImpl extends AbstractView implements BugAddView {
+public class BugAddViewImpl extends AbstractPageView implements BugAddView {
 
 	private static final long serialVersionUID = 1L;
 

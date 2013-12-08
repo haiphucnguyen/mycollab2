@@ -17,7 +17,6 @@
 package com.esofthead.mycollab.module.crm.ui.components;
 
 import org.apache.commons.beanutils.PropertyUtils;
-import org.vaadin.addon.customfield.CustomField;
 
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
@@ -43,6 +42,8 @@ import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Component;
+import com.vaadin.ui.CustomField;
 import com.vaadin.ui.Label;
 
 public class RelatedReadItemField extends CustomField {
@@ -52,20 +53,21 @@ public class RelatedReadItemField extends CustomField {
 
 	public RelatedReadItemField(Object bean) {
 		this.bean = bean;
+	}
 
+	@Override
+	protected Component initContent() {
 		try {
 			final Integer typeid = (Integer) PropertyUtils.getProperty(
 					RelatedReadItemField.this.bean, "typeid");
 			if (typeid == null) {
-				this.setCompositionRoot(new Label(""));
-				return;
+				return new Label("");
 			}
 
 			final String type = (String) PropertyUtils
 					.getProperty(bean, "type");
 			if (type == null || type.equals("")) {
-				this.setCompositionRoot(new Label(""));
-				return;
+				return new Label("");
 			}
 
 			ButtonLink relatedLink = null;
@@ -184,13 +186,13 @@ public class RelatedReadItemField extends CustomField {
 			}
 
 			if (relatedLink != null) {
-				this.setCompositionRoot(relatedLink);
+				return relatedLink;
 			} else {
-				this.setCompositionRoot(new Label(""));
+				return new Label("");
 			}
 
 		} catch (Exception e) {
-			this.setCompositionRoot(new Label(""));
+			return new Label("");
 		}
 	}
 

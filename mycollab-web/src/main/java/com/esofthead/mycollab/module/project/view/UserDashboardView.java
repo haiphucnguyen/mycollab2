@@ -16,9 +16,9 @@
  */
 package com.esofthead.mycollab.module.project.view;
 
-import com.esofthead.mycollab.vaadin.mvp.View;
+import com.esofthead.mycollab.vaadin.mvp.PageView;
 
-public interface UserDashboardView extends View {
+public interface UserDashboardView extends PageView {
 
    void display();
 }

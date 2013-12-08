@@ -24,7 +24,7 @@ import com.esofthead.mycollab.module.project.domain.Milestone;
 import com.esofthead.mycollab.module.project.domain.SimpleMilestone;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberComboBox;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormContainerHorizontalViewField;
@@ -47,7 +47,7 @@ import com.vaadin.ui.TextField;
  * @author haiphucnguyen
  */
 @ViewComponent
-public class MilestoneAddViewImpl extends AbstractView implements
+public class MilestoneAddViewImpl extends AbstractPageView implements
 		MilestoneAddView {
 
 	private static final long serialVersionUID = 1L;

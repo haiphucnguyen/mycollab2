@@ -22,7 +22,7 @@ package com.esofthead.mycollab.module.user.accountsettings.team.view;
 
 import java.util.Date;
 
-import org.vaadin.addon.customfield.CustomField;
+import com.vaadin.ui.CustomField;
 
 import com.esofthead.mycollab.core.utils.TimezoneMapper;
 import com.esofthead.mycollab.core.utils.TimezoneMapper.TimezoneExt;
@@ -35,7 +35,7 @@ import com.esofthead.mycollab.module.user.view.component.RoleComboBox;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.HistoryViewManager;
 import com.esofthead.mycollab.vaadin.mvp.NullViewState;
 import com.esofthead.mycollab.vaadin.mvp.ViewState;
@@ -54,6 +54,7 @@ import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Layout;
@@ -64,7 +65,7 @@ import com.vaadin.ui.TextField;
  * @author haiphucnguyen
  */
 @ViewComponent
-public class UserAddViewImpl extends AbstractView implements UserAddView {
+public class UserAddViewImpl extends AbstractPageView implements UserAddView {
 
 	private static final long serialVersionUID = 1L;
 	private UserAddViewImpl.AdvanceEditForm advanceEditForm;
@@ -283,16 +284,18 @@ public class UserAddViewImpl extends AbstractView implements UserAddView {
 					return UserAddViewImpl.this.cboTimezone;
 				} else if (propertyId.equals("country")) {
 					final CountryComboBox cboCountry = new CountryComboBox();
-					cboCountry.addListener(new Property.ValueChangeListener() {
-						private static final long serialVersionUID = 1L;
+					cboCountry
+							.addValueChangeListener(new Property.ValueChangeListener() {
+								private static final long serialVersionUID = 1L;
 
-						@Override
-						public void valueChange(
-								final Property.ValueChangeEvent event) {
-							UserAddViewImpl.this.user
-									.setCountry((String) cboCountry.getValue());
-						}
-					});
+								@Override
+								public void valueChange(
+										final Property.ValueChangeEvent event) {
+									UserAddViewImpl.this.user
+											.setCountry((String) cboCountry
+													.getValue());
+								}
+							});
 					return cboCountry;
 				}
 				return null;
@@ -303,21 +306,6 @@ public class UserAddViewImpl extends AbstractView implements UserAddView {
 			private static final long serialVersionUID = 1L;
 
 			private RoleComboBox roleBox;
-
-			public AdminRoleSelectionField() {
-				roleBox = new RoleComboBox();
-				this.roleBox.addListener(new Property.ValueChangeListener() {
-					private static final long serialVersionUID = 1L;
-
-					@Override
-					public void valueChange(
-							final Property.ValueChangeEvent event) {
-						getValue();
-
-					}
-				});
-				this.setCompositionRoot(roleBox);
-			}
 
 			public void setRoleId(int roleId) {
 				roleBox.setValue(roleId);
@@ -344,6 +332,23 @@ public class UserAddViewImpl extends AbstractView implements UserAddView {
 			@Override
 			public Class<Integer> getType() {
 				return Integer.class;
+			}
+
+			@Override
+			protected Component initContent() {
+				roleBox = new RoleComboBox();
+				this.roleBox
+						.addValueChangeListener(new Property.ValueChangeListener() {
+							private static final long serialVersionUID = 1L;
+
+							@Override
+							public void valueChange(
+									final Property.ValueChangeEvent event) {
+								getValue();
+
+							}
+						});
+				return roleBox;
 			}
 		}
 	}

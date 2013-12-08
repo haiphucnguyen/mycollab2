@@ -67,7 +67,7 @@ public class ProjectMessageListComponent extends Depot {
 							message.getProjectid(), message.getId(),
 							GenericLinkUtils.URL_PREFIX_PARAM), message
 							.getTitle());
-			final Label actionLbl = new Label(content, Label.CONTENT_XHTML);
+			final Label actionLbl = new Label(content, ContentMode.HTML);
 
 			header.addComponent(actionLbl);
 

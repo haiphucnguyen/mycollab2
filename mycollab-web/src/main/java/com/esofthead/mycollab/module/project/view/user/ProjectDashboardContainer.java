@@ -20,7 +20,7 @@
  */
 package com.esofthead.mycollab.module.project.view.user;
 
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 
 /**
@@ -28,7 +28,7 @@ import com.esofthead.mycollab.vaadin.ui.ViewComponent;
  * @author haiphucnguyen
  */
 @ViewComponent
-public class ProjectDashboardContainer extends AbstractView {
+public class ProjectDashboardContainer extends AbstractPageView {
 	private static final long serialVersionUID = 1L;
     
 }

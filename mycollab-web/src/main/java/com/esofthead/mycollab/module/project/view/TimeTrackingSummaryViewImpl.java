@@ -21,8 +21,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-import org.vaadin.hene.splitbutton.SplitButtonExt;
-
 import com.esofthead.mycollab.common.MonitorTypeConstants;
 import com.esofthead.mycollab.core.arguments.RangeDateSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
@@ -44,19 +42,20 @@ import com.esofthead.mycollab.reporting.ReportExportType;
 import com.esofthead.mycollab.reporting.RpParameterBuilder;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
-import com.vaadin.terminal.StreamResource;
+import com.vaadin.server.StreamResource;
+import com.vaadin.shared.ui.MarginInfo;
+import com.vaadin.shared.ui.datefield.Resolution;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.DateField;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
@@ -64,7 +63,7 @@ import com.vaadin.ui.PopupDateField;
 import com.vaadin.ui.VerticalLayout;
 
 @ViewComponent
-public class TimeTrackingSummaryViewImpl extends AbstractView implements
+public class TimeTrackingSummaryViewImpl extends AbstractPageView implements
 		TimeTrackingSummaryView {
 	private static final long serialVersionUID = 1L;
 
@@ -110,7 +109,7 @@ public class TimeTrackingSummaryViewImpl extends AbstractView implements
 		contentWrapper.addComponent(headerWrapper);
 
 		final Button backBtn = new Button("Back to Work Board");
-		backBtn.addListener(new Button.ClickListener() {
+		backBtn.addClickListener(new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -125,25 +124,26 @@ public class TimeTrackingSummaryViewImpl extends AbstractView implements
 		backBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
 
 		HorizontalLayout controlBtns = new HorizontalLayout();
-		controlBtns.setMargin(true, false, true, false);
+		controlBtns.setMargin(new MarginInfo(true, false, true, false));
 		controlBtns.addComponent(backBtn);
 
 		contentWrapper.addComponent(controlBtns);
 
 		final HorizontalLayout dateSelectionLayout = new HorizontalLayout();
 		dateSelectionLayout.setSpacing(true);
-		dateSelectionLayout.setMargin(false, false, true, false);
+		dateSelectionLayout
+				.setMargin(new MarginInfo(false, false, true, false));
 		contentWrapper.addComponent(dateSelectionLayout);
 
 		dateSelectionLayout.addComponent(new Label("From:  "));
 
 		fromDateField = new PopupDateField();
-		fromDateField.setResolution(DateField.RESOLUTION_DAY);
+		fromDateField.setResolution(Resolution.DAY);
 		dateSelectionLayout.addComponent(fromDateField);
 
 		dateSelectionLayout.addComponent(new Label("  To:  "));
 		toDateField = new PopupDateField();
-		toDateField.setResolution(DateField.RESOLUTION_DAY);
+		toDateField.setResolution(Resolution.DAY);
 		dateSelectionLayout.addComponent(toDateField);
 
 		final Button queryBtn = new Button("Submit",

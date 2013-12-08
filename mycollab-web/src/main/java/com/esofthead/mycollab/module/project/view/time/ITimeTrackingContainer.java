@@ -16,8 +16,8 @@
  */
 package com.esofthead.mycollab.module.project.view.time;
 
-import com.esofthead.mycollab.vaadin.mvp.View;
+import com.esofthead.mycollab.vaadin.mvp.PageView;
 
-public interface ITimeTrackingContainer extends View {
+public interface ITimeTrackingContainer extends PageView {
 
 }

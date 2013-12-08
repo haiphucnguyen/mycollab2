@@ -22,9 +22,9 @@ import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.view.parameters.BugScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.BugSearchParameter;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
-import com.esofthead.mycollab.vaadin.mvp.View;
+import com.esofthead.mycollab.vaadin.mvp.PageView;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.github.wolfie.detachedtabs.DetachedTabs;
@@ -34,7 +34,7 @@ import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 
 @ViewComponent
-public class TrackerContainer extends AbstractView {
+public class TrackerContainer extends AbstractPageView {
 
 	private static final long serialVersionUID = 1L;
 
@@ -119,7 +119,7 @@ public class TrackerContainer extends AbstractView {
 	}
 
 	public Component gotoSubView(final String name) {
-		final View component = (View) this.myProjectTab.selectTab(name);
+		final PageView component = (PageView) this.myProjectTab.selectTab(name);
 		return component;
 	}
 }

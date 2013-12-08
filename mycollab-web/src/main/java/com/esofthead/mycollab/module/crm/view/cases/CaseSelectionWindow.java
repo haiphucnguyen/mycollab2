@@ -99,8 +99,7 @@ public class CaseSelectionWindow extends Window {
 													.getId()));
 						} else if ("accountName".equals(event.getFieldName())) {
 							fieldSelection.fireValueChange(cases);
-							CaseSelectionWindow.this.getParent().removeWindow(
-									CaseSelectionWindow.this);
+							CaseSelectionWindow.this.close();
 						}
 					}
 				});

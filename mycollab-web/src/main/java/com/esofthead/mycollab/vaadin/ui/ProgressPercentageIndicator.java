@@ -25,14 +25,4 @@ public class ProgressPercentageIndicator extends Label {
 		String perVal = ((int) (val * 100)) / 100 + "%";
 		this.setValue(perVal);
 	}
-	
-	@Override
-	public void setValue(Object val) {
-		if (val instanceof Double) {
-			String perVal = ((int) ((Double)val * 100)) / 100 + "%";
-			this.setValue(perVal);
-		} else {
-			super.setValue(val);
-		}
-	}
 }

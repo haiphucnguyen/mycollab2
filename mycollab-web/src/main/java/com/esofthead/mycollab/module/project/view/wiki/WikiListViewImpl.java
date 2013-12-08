@@ -16,9 +16,9 @@
  */
 package com.esofthead.mycollab.module.project.view.wiki;
 
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 
-public class WikiListViewImpl extends AbstractView implements WikiListView {
+public class WikiListViewImpl extends AbstractPageView implements WikiListView {
 	private static final long serialVersionUID = 1L;
 
 }

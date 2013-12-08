@@ -31,7 +31,7 @@ import com.esofthead.mycollab.module.file.view.components.ResourceHandlerCompone
 import com.esofthead.mycollab.module.user.domain.BillingPlan;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
 import com.esofthead.mycollab.vaadin.ui.Hr;
@@ -44,7 +44,8 @@ import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.Container;
 import com.vaadin.event.ItemClickEvent;
-import com.vaadin.terminal.Sizeable;
+import com.vaadin.server.Sizeable;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -57,6 +58,7 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.Tree;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.Tree.CollapseEvent;
 import com.vaadin.ui.Tree.ExpandEvent;
 import com.vaadin.ui.VerticalLayout;
@@ -64,7 +66,7 @@ import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.Reindeer;
 
 @ViewComponent
-public class FileMainViewImpl extends AbstractView implements FileMainView {
+public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 	private static final long serialVersionUID = 1L;
 	private static final String illegalFileNamePattern = "[<>:&/\\|?*&]";
 
@@ -127,7 +129,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 		switchViewBtn.setDescription("Event");
 		switchViewBtn.setIcon(MyCollabResource
 				.newResource("icons/16/ecm/event.png"));
-		switchViewBtn.addListener(new Button.ClickListener() {
+		switchViewBtn.addClickListener(new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -200,8 +202,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 										.expandItem(rootECMFolder);
 							}
 						};
-						FileMainViewImpl.this.getWindow().addWindow(
-								dropboxConnectWindow);
+						UI.getCurrent().addWindow(dropboxConnectWindow);
 					}
 				});
 		uploadDropboxBtn.addStyleName("link");
@@ -221,12 +222,13 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 		String usedStorageTxt = ResourceUtils.getVolumeDisplay(driveInfoService
 				.getUsedStorageVolume(AppContext.getAccountId()))
 				+ " of "
-				+ ResourceUtils.getVolumeDisplay(currentBillingPlan.getVolume());
+				+ ResourceUtils
+						.getVolumeDisplay(currentBillingPlan.getVolume());
 		usedVolumeInfo
 				.setValue("<div id='left-side'>&nbsp;</div><div id='info-content'>"
 						+ usedStorageTxt
 						+ "</div><div id='right-side'>&nbsp;</div>");
-		usedVolumeInfo.setContentMode(Label.CONTENT_XHTML);
+		usedVolumeInfo.setContentMode(ContentMode.HTML);
 		usedVolumeInfo.setWidth("100%");
 		topControlMenuWrapper.addComponent(usedVolumeInfo);
 		topControlMenuWrapper.setComponentAlignment(usedVolumeInfo,
@@ -241,7 +243,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 
 		menuLayout.addComponent(this.menuTree);
 
-		this.menuTree.addListener(new Tree.ExpandListener() {
+		this.menuTree.addExpandListener(new Tree.ExpandListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -318,7 +320,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 			}
 		});
 
-		this.menuTree.addListener(new Tree.CollapseListener() {
+		this.menuTree.addCollapseListener(new Tree.CollapseListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -373,7 +375,6 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 				Alignment.TOP_LEFT);
 
 		Separator separator = new Separator();
-		separator.setWidth(Sizeable.SIZE_UNDEFINED, 0);
 		separator.setHeight("100%");
 		mainView.addComponent(separator);
 		mainView.setComponentAlignment(separator, Alignment.TOP_LEFT);
@@ -621,7 +622,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 				searchBtn.setStyleName("search-icon-button");
 				searchBtn.setIcon(MyCollabResource
 						.newResource("icons/16/search_white.png"));
-				searchBtn.addListener(new Button.ClickListener() {
+				searchBtn.addClickListener(new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
@@ -728,8 +729,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 									bodyLayout.addComponent(new Hr());
 								}
 							};
-							FileMainViewImpl.this.getWindow().addWindow(
-									dropboxConnectWindow);
+							UI.getCurrent().addWindow(dropboxConnectWindow);
 						}
 					});
 			connectAccountBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
@@ -844,8 +844,7 @@ public class FileMainViewImpl extends AbstractView implements FileMainView {
 								public void buttonClick(ClickEvent event) {
 									try {
 										ConfirmDialogExt.show(
-												FileMainViewImpl.this
-														.getWindow(),
+												UI.getCurrent(),
 												LocalizationHelper
 														.getMessage(
 																GenericI18Enum.DELETE_DIALOG_TITLE,

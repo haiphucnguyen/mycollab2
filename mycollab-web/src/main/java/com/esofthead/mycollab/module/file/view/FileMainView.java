@@ -16,9 +16,9 @@
  */
 package com.esofthead.mycollab.module.file.view;
 
-import com.esofthead.mycollab.vaadin.mvp.View;
+import com.esofthead.mycollab.vaadin.mvp.PageView;
 
-public interface FileMainView extends View {
+public interface FileMainView extends PageView {
 
 	void display();
 }

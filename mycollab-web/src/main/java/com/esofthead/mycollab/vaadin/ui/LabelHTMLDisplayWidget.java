@@ -19,6 +19,7 @@ package com.esofthead.mycollab.vaadin.ui;
 import com.esofthead.mycollab.vaadin.ui.utils.LabelStringGenerator;
 import com.vaadin.event.LayoutEvents.LayoutClickEvent;
 import com.vaadin.event.LayoutEvents.LayoutClickListener;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 
@@ -37,7 +38,7 @@ public class LabelHTMLDisplayWidget extends HorizontalLayout implements
 		description = content;
 
 		String contentLabel = menuLinkGenerator.handleText(content);
-		lbDes = new Label(description, Label.CONTENT_XHTML);
+		lbDes = new Label(description, ContentMode.HTML);
 		if (contentLabel != null && contentLabel.length() > NUM_CUT) {
 			hasShowLess = true;
 			pathIconPlus = " <img class='plus-btn' src=\"VAADIN/themes/mycollab/icons/16/plus.png\" />";
@@ -49,7 +50,6 @@ public class LabelHTMLDisplayWidget extends HorizontalLayout implements
 		}
 		lbDes.setDescription(description);
 		this.addComponent(lbDes);
-		this.addListener(this);
 	}
 
 	private static class BugDescriptionLinkLabelStringGenerator implements
@@ -75,7 +75,7 @@ public class LabelHTMLDisplayWidget extends HorizontalLayout implements
 					lbDes.setValue(menuLinkGenerator.handleText(description)
 							+ " " + pathIconPlus);
 				}
-				lbDes.setContentMode(Label.CONTENT_XHTML);
+				lbDes.setContentMode(ContentMode.HTML);
 				hasShowLess = !hasShowLess;
 			}
 		}

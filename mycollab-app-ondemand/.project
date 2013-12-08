@@ -20,7 +20,6 @@
     <project>mycollab-reporting</project>
     <project>mycollab-esb</project>
     <project>mycollab-scheduler</project>
-    <project>ckeditor</project>
     <project>mycollab-jetty-session-premium</project>
   </projects>
   <buildSpec>

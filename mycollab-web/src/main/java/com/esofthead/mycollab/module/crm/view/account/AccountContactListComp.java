@@ -20,7 +20,6 @@ import java.util.Arrays;
 import java.util.Set;
 
 import org.vaadin.dialogs.ConfirmDialog;
-import org.vaadin.hene.splitbutton.SplitButton;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
@@ -51,6 +50,7 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.Table.ColumnGenerator;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 public class AccountContactListComp extends
@@ -158,42 +158,40 @@ public class AccountContactListComp extends
 						new Button.ClickListener() {
 							@Override
 							public void buttonClick(final ClickEvent event) {
-								ConfirmDialogExt
-										.show(AppContext.getApplication()
-												.getMainWindow(),
-												LocalizationHelper
-														.getMessage(
-																GenericI18Enum.DELETE_DIALOG_TITLE,
-																SiteConfiguration
-																		.getSiteName()),
-												LocalizationHelper
-														.getMessage(CrmCommonI18nEnum.DIALOG_DELETE_RELATIONSHIP_TITLE),
-												LocalizationHelper
-														.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
-												LocalizationHelper
-														.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
-												new ConfirmDialog.Listener() {
-													private static final long serialVersionUID = 1L;
+								ConfirmDialogExt.show(
+										UI.getCurrent(),
+										LocalizationHelper
+												.getMessage(
+														GenericI18Enum.DELETE_DIALOG_TITLE,
+														SiteConfiguration
+																.getSiteName()),
+										LocalizationHelper
+												.getMessage(CrmCommonI18nEnum.DIALOG_DELETE_RELATIONSHIP_TITLE),
+										LocalizationHelper
+												.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
+										LocalizationHelper
+												.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
+										new ConfirmDialog.Listener() {
+											private static final long serialVersionUID = 1L;
 
-													@Override
-													public void onClose(
-															final ConfirmDialog dialog) {
-														if (dialog
-																.isConfirmed()) {
-															final ContactService contactService = ApplicationContextUtil
-																	.getSpringBean(ContactService.class);
-															contact.setAccountid(null);
-															contactService
-																	.updateWithSession(
-																			contact,
-																			AppContext
-																					.getUsername());
+											@Override
+											public void onClose(
+													final ConfirmDialog dialog) {
+												if (dialog.isConfirmed()) {
+													final ContactService contactService = ApplicationContextUtil
+															.getSpringBean(ContactService.class);
+													contact.setAccountid(null);
+													contactService
+															.updateWithSession(
+																	contact,
+																	AppContext
+																			.getUsername());
 
-															AccountContactListComp.this
-																	.refresh();
-														}
-													}
-												});
+													AccountContactListComp.this
+															.refresh();
+												}
+											}
+										});
 							}
 						});
 				deleteBtn.setStyleName("link");

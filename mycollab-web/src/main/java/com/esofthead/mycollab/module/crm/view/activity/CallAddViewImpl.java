@@ -16,14 +16,14 @@
  */
 package com.esofthead.mycollab.module.crm.view.activity;
 
-import org.vaadin.addon.customfield.CustomField;
+import com.vaadin.ui.CustomField;
 
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.CallWithBLOBs;
 import com.esofthead.mycollab.module.crm.ui.components.RelatedEditItemField;
 import com.esofthead.mycollab.module.user.ui.components.ActiveUserComboBox;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
@@ -33,6 +33,7 @@ import com.vaadin.data.Item;
 import com.vaadin.data.Property;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
@@ -41,7 +42,7 @@ import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 
 @ViewComponent
-public class CallAddViewImpl extends AbstractView implements CallAddView {
+public class CallAddViewImpl extends AbstractPageView implements CallAddView {
 
 	private static final long serialVersionUID = 1L;
 	private EditForm editForm;
@@ -176,50 +177,6 @@ public class CallAddViewImpl extends AbstractView implements CallAddView {
 		private TextField hourField;
 		private ValueComboBox minutesField;
 
-		public CallDurationControl() {
-			HorizontalLayout layout = new HorizontalLayout();
-			layout.setSpacing(true);
-			hourField = new TextField();
-			hourField.setWidth("30px");
-			hourField.addListener(new Property.ValueChangeListener() {
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public void valueChange(Property.ValueChangeEvent event) {
-					calculateDurationInSeconds();
-				}
-			});
-
-			layout.addComponent(hourField);
-
-			minutesField = new ValueComboBox();
-			minutesField.loadData(new String[] { "0", "15", "30", "45" });
-			minutesField.setWidth("40px");
-			minutesField.addListener(new Property.ValueChangeListener() {
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public void valueChange(Property.ValueChangeEvent event) {
-					calculateDurationInSeconds();
-
-				}
-			});
-
-			Integer duration = call.getDurationinseconds();
-			if (duration != null && duration != 0) {
-				int hours = duration / 3600;
-				int minutes = (duration % 3600) / 60;
-				hourField.setValue("" + hours);
-				minutesField.select("" + minutes);
-			}
-
-			layout.addComponent(minutesField);
-
-			layout.addComponent(new Label("(hours/minutes)"));
-
-			this.setCompositionRoot(layout);
-		}
-
 		@Override
 		public Class<?> getType() {
 			return Integer.class;
@@ -248,13 +205,66 @@ public class CallAddViewImpl extends AbstractView implements CallAddView {
 				call.setDurationinseconds(seconds);
 			}
 		}
+
+		@Override
+		protected Component initContent() {
+			HorizontalLayout layout = new HorizontalLayout();
+			layout.setSpacing(true);
+			hourField = new TextField();
+			hourField.setWidth("30px");
+			hourField
+					.addValueChangeListener(new Property.ValueChangeListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void valueChange(Property.ValueChangeEvent event) {
+							calculateDurationInSeconds();
+						}
+					});
+
+			layout.addComponent(hourField);
+
+			minutesField = new ValueComboBox();
+			minutesField.loadData(new String[] { "0", "15", "30", "45" });
+			minutesField.setWidth("40px");
+			minutesField
+					.addValueChangeListener(new Property.ValueChangeListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void valueChange(Property.ValueChangeEvent event) {
+							calculateDurationInSeconds();
+
+						}
+					});
+
+			Integer duration = call.getDurationinseconds();
+			if (duration != null && duration != 0) {
+				int hours = duration / 3600;
+				int minutes = (duration % 3600) / 60;
+				hourField.setValue("" + hours);
+				minutesField.select("" + minutes);
+			}
+
+			layout.addComponent(minutesField);
+
+			layout.addComponent(new Label("(hours/minutes)"));
+
+			return layout;
+		}
 	}
 
 	private class CallStatusTypeField extends CustomField {
 
 		private static final long serialVersionUID = 1L;
 
-		public CallStatusTypeField() {
+		@Override
+		public Class<?> getType() {
+			return String.class;
+		}
+
+		@Override
+		protected Component initContent() {
 			HorizontalLayout layout = new HorizontalLayout();
 			layout.setSpacing(true);
 
@@ -266,12 +276,7 @@ public class CallAddViewImpl extends AbstractView implements CallAddView {
 			layout.addComponent(statusField);
 			statusField.select(call.getStatus());
 
-			this.setCompositionRoot(layout);
-		}
-
-		@Override
-		public Class<?> getType() {
-			return String.class;
+			return layout;
 		}
 	}
 
@@ -284,7 +289,7 @@ public class CallAddViewImpl extends AbstractView implements CallAddView {
 			setCaption(null);
 			this.setWidth("80px");
 			this.loadData(new String[] { "Inbound", "Outbound" });
-			this.addListener(new Property.ValueChangeListener() {
+			this.addValueChangeListener(new Property.ValueChangeListener() {
 				private static final long serialVersionUID = 1L;
 
 				@Override
@@ -305,7 +310,7 @@ public class CallAddViewImpl extends AbstractView implements CallAddView {
 			setCaption(null);
 			this.setWidth("100px");
 			this.loadData(new String[] { "Planned", "Held", "Not Held" });
-			this.addListener(new Property.ValueChangeListener() {
+			this.addValueChangeListener(new Property.ValueChangeListener() {
 				private static final long serialVersionUID = 1L;
 
 				@Override

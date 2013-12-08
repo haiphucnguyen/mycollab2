@@ -82,7 +82,7 @@ public class ProjectTaskStatusComponent extends Depot {
 							genericTask.getTypeId()), taskType, genericTask
 							.getName());
 
-			final Label taskLink = new Label(content, Label.CONTENT_XHTML);
+			final Label taskLink = new Label(content, ContentMode.HTML);
 
 			header.addComponent(taskLink);
 

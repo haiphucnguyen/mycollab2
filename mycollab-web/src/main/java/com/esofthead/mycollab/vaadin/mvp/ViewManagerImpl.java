@@ -38,7 +38,7 @@ class ViewManagerImpl extends ViewManager {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	protected <T extends View> T getViewInstance(final Class<T> viewClass) {
+	protected <T extends PageView> T getViewInstance(final Class<T> viewClass) {
 		try {
 			Map<Class<?>, Object> viewMap = (Map<Class<?>, Object>) AppContext
 					.getVariable(VIEW_MANAGER_VAL);

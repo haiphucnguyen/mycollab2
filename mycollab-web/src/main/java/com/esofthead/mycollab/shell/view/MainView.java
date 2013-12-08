@@ -31,7 +31,7 @@ import com.esofthead.mycollab.module.user.domain.BillingPlan;
 import com.esofthead.mycollab.module.user.domain.SimpleBillingAccount;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ControllerRegistry;
 import com.esofthead.mycollab.vaadin.mvp.IModule;
 import com.esofthead.mycollab.vaadin.mvp.ModuleHelper;
@@ -45,6 +45,8 @@ import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.event.LayoutEvents;
 import com.vaadin.event.LayoutEvents.LayoutClickEvent;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
+import com.vaadin.shared.ui.MarginInfo;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -54,11 +56,12 @@ import com.vaadin.ui.CustomLayout;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 @SuppressWarnings("serial")
 @ViewComponent
-public final class MainView extends AbstractView {
+public final class MainView extends AbstractPageView {
 
 	private final CssLayout bodyLayout;
 
@@ -106,11 +109,11 @@ public final class MainView extends AbstractView {
 		final CustomLayout footer = CustomLayoutLoader.createLayout("footer");
 		final Button sendFeedback = new Button("Feedback");
 		sendFeedback.setStyleName(UIConstants.THEME_ROUND_BUTTON);
-		sendFeedback.addListener(new ClickListener() {
+		sendFeedback.addClickListener(new ClickListener() {
 
 			@Override
 			public void buttonClick(final ClickEvent event) {
-				MainView.this.getWindow().addWindow(new FeedbackWindow());
+				UI.getCurrent().addWindow(new FeedbackWindow());
 			}
 		});
 		footer.addComponent(sendFeedback, "footer-right");
@@ -167,7 +170,7 @@ public final class MainView extends AbstractView {
 		docLink.setIcon(MyCollabResource.newResource("icons/16/document.png"));
 		vLayout.addComponent(docLink);
 
-		serviceMenu.addComponent(vLayout);
+		serviceMenu.setContent(vLayout);
 		layout.addComponent(serviceMenu, "serviceMenu");
 
 		final HorizontalLayout accountLayout = new HorizontalLayout();
@@ -175,23 +178,24 @@ public final class MainView extends AbstractView {
 		// display trial box if user in trial mode
 		SimpleBillingAccount billingAccount = AppContext.getBillingAccount();
 		if (AccountStatusConstants.TRIAL.equals(billingAccount.getStatus())) {
-			Label informLbl = new Label("", Label.CONTENT_XHTML);
+			Label informLbl = new Label("", ContentMode.HTML);
 			informLbl.addStyleName("trialEndingNotification");
 			informLbl.setHeight("100%");
 			HorizontalLayout informBox = new HorizontalLayout();
 			informBox.addStyleName("trialInformBox");
 			informBox.setSizeFull();
 			informBox.addComponent(informLbl);
-			informBox.setMargin(false, true, false, false);
-			informBox.addListener(new LayoutEvents.LayoutClickListener() {
+			informBox.setMargin(new MarginInfo(false, true, false, false));
+			informBox
+					.addLayoutClickListener(new LayoutEvents.LayoutClickListener() {
 
-				@Override
-				public void layoutClick(LayoutClickEvent event) {
-					EventBus.getInstance().fireEvent(
-							new ShellEvent.GotoUserAccountModule(this,
-									new String[] { "billing" }));
-				}
-			});
+						@Override
+						public void layoutClick(LayoutClickEvent event) {
+							EventBus.getInstance().fireEvent(
+									new ShellEvent.GotoUserAccountModule(this,
+											new String[] { "billing" }));
+						}
+					});
 			accountLayout.addComponent(informBox);
 			accountLayout.setSpacing(true);
 			accountLayout.setComponentAlignment(informBox,
@@ -288,7 +292,7 @@ public final class MainView extends AbstractView {
 		signoutBtn.setStyleName("link");
 		accLayout.addComponent(signoutBtn);
 
-		accountMenu.addComponent(accLayout);
+		accountMenu.setContent(accLayout);
 		accountMenu.setStyleName("accountMenu");
 		accountMenu.addStyleName("topNavPopup");
 		accountLayout.addComponent(accountMenu);

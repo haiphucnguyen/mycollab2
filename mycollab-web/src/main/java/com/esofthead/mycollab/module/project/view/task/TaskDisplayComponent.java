@@ -40,7 +40,6 @@ import com.esofthead.mycollab.module.project.events.TaskListEvent;
 import com.esofthead.mycollab.module.project.localization.TaskI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectTaskListService;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserFormLinkField;
-import com.esofthead.mycollab.shell.view.ScreenSize;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
@@ -49,6 +48,7 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
@@ -95,7 +95,7 @@ public class TaskDisplayComponent extends CssLayout {
 			final Label descLbl = (Label) this.layoutHelper.addComponent(
 					new Label(), "Description", 0, 0, 2, "100%",
 					Alignment.TOP_RIGHT);
-			descLbl.setContentMode(Label.CONTENT_XHTML);
+			descLbl.setContentMode(ContentMode.HTML);
 			descLbl.setValue(StringUtils.preStringFormat(this.taskList
 					.getDescription()));
 
@@ -141,37 +141,21 @@ public class TaskDisplayComponent extends CssLayout {
 			taskNumberProgress.addComponent(this.taskNumberLbl);
 		}
 
-		if (ScreenSize.hasSupport1024Pixels()) {
-			this.taskDisplay = new TaskTableDisplay(
-					new String[] { "id", "taskname", "deadline",
-							"percentagecomplete", "assignUserFullName" },
-					new String[] {
-							"",
-							LocalizationHelper
-									.getMessage(TaskI18nEnum.TABLE_TASK_NAME_HEADER),
-							LocalizationHelper
-									.getMessage(TaskI18nEnum.TABLE_DUE_DATE_HEADER),
-							LocalizationHelper
-									.getMessage(TaskI18nEnum.TABLE_PER_COMPLETE_HEADER),
-							LocalizationHelper
-									.getMessage(TaskI18nEnum.TABLE_ASSIGNEE_HEADER) });
-		} else if (ScreenSize.hasSupport1280Pixels()) {
-			this.taskDisplay = new TaskTableDisplay(
-					new String[] { "id", "taskname", "startdate", "deadline",
-							"percentagecomplete", "assignUserFullName" },
-					new String[] {
-							"",
-							LocalizationHelper
-									.getMessage(TaskI18nEnum.TABLE_TASK_NAME_HEADER),
-							LocalizationHelper
-									.getMessage(TaskI18nEnum.TABLE_START_DATE_HEADER),
-							LocalizationHelper
-									.getMessage(TaskI18nEnum.TABLE_DUE_DATE_HEADER),
-							LocalizationHelper
-									.getMessage(TaskI18nEnum.TABLE_PER_COMPLETE_HEADER),
-							LocalizationHelper
-									.getMessage(TaskI18nEnum.TABLE_ASSIGNEE_HEADER) });
-		}
+		this.taskDisplay = new TaskTableDisplay(
+				new String[] { "id", "taskname", "startdate", "deadline",
+						"percentagecomplete", "assignUserFullName" },
+				new String[] {
+						"",
+						LocalizationHelper
+								.getMessage(TaskI18nEnum.TABLE_TASK_NAME_HEADER),
+						LocalizationHelper
+								.getMessage(TaskI18nEnum.TABLE_START_DATE_HEADER),
+						LocalizationHelper
+								.getMessage(TaskI18nEnum.TABLE_DUE_DATE_HEADER),
+						LocalizationHelper
+								.getMessage(TaskI18nEnum.TABLE_PER_COMPLETE_HEADER),
+						LocalizationHelper
+								.getMessage(TaskI18nEnum.TABLE_ASSIGNEE_HEADER) });
 		this.addComponent(this.taskDisplay);
 
 		this.taskDisplay
@@ -285,7 +269,7 @@ public class TaskDisplayComponent extends CssLayout {
 		final double newProgressTask = (this.taskList.getPercentageComplete() * this.taskList
 				.getNumAllTasks()) / newAllTasks;
 		if (this.taskListProgress != null) {
-			this.taskListProgress.setValue(newProgressTask);
+			this.taskListProgress.setValue(newProgressTask + "");
 		}
 	}
 

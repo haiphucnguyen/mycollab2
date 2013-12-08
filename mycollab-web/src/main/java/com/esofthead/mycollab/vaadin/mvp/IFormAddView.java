@@ -22,7 +22,7 @@ package com.esofthead.mycollab.vaadin.mvp;
  *
  * @param <T>
  */
-public interface IFormAddView<T> extends View {
+public interface IFormAddView<T> extends PageView {
 	/**
 	 * 
 	 * @param item

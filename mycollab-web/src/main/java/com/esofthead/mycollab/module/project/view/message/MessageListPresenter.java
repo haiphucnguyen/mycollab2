@@ -28,7 +28,7 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ListCommand;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
-import com.esofthead.mycollab.vaadin.ui.MessageBox;
+import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
@@ -80,7 +80,7 @@ public class MessageListPresenter extends AbstractPresenter<MessageListView>
             messageContainer.addComponent(view.getWidget());
             doSearch((MessageSearchCriteria) data.getParams());
         } else {
-            MessageBox.showMessagePermissionAlert();
+            NotificationUtil.showMessagePermissionAlert();
         }
     }
 

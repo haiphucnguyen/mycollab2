@@ -43,6 +43,7 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Field;
@@ -65,12 +66,15 @@ public class AssignTaskGroupWindow extends Window {
 		super("Assign task group '" + task.getName() + "'");
 		this.task = task;
 		this.setWidth("750px");
+
+		VerticalLayout contentLayout = new VerticalLayout();
 		editForm = new EditForm();
-		this.addComponent(editForm);
 		editForm.setItemDataSource(new BeanItem<TaskList>(task));
-		VerticalLayout contentLayout = (VerticalLayout) this.getContent();
+		contentLayout.addComponent(editForm);
 		contentLayout.setSpacing(true);
-		contentLayout.setMargin(false, false, true, false);
+		contentLayout.setMargin(new MarginInfo(false, false, true, false));
+
+		this.setContent(contentLayout);
 		center();
 	}
 
@@ -105,7 +109,7 @@ public class AssignTaskGroupWindow extends Window {
 
 				HorizontalLayout controlsBtn = new HorizontalLayout();
 				controlsBtn.setSpacing(true);
-				controlsBtn.setMargin(true, true, true, false);
+				controlsBtn.setMargin(new MarginInfo(true, true, true, false));
 				layout.addComponent(controlsBtn);
 
 				Button cancelBtn = new Button("Cancel",

@@ -21,11 +21,11 @@ import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.view.IRelatedListHandlers;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 
 @ViewComponent
-public class AccountReadViewImpl extends AbstractView implements
+public class AccountReadViewImpl extends AbstractPageView implements
         AccountReadView {
 
     private static final long serialVersionUID = 1L;

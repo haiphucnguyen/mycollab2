@@ -31,7 +31,7 @@ import com.esofthead.mycollab.module.project.domain.SimpleMilestone;
 import com.esofthead.mycollab.module.project.events.MilestoneEvent;
 import com.esofthead.mycollab.module.project.localization.TaskI18nEnum;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserLink;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.ProgressBar;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -57,7 +57,7 @@ import com.vaadin.ui.VerticalLayout;
  * @author haiphucnguyen
  */
 @ViewComponent
-public class MilestoneListViewImpl extends AbstractView implements
+public class MilestoneListViewImpl extends AbstractPageView implements
 		MilestoneListView {
 	private static final long serialVersionUID = 1L;
 

@@ -239,7 +239,7 @@ public class ActivityStreamComponent extends Depot {
 					}
 
 					final Label activityLink = new Label(content,
-							Label.CONTENT_XHTML);
+							ContentMode.HTML);
 					final CssLayout streamWrapper = new CssLayout();
 					streamWrapper.setWidth("100%");
 					streamWrapper.addStyleName("stream-wrapper");

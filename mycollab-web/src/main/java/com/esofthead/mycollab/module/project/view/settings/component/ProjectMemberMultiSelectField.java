@@ -28,6 +28,7 @@ import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.project.ui.components.MultiSelectComp;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
+import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.ui.CheckBox;
 
 @SuppressWarnings("serial")
@@ -82,7 +83,7 @@ public class ProjectMemberMultiSelectField extends MultiSelectComp {
 			chkItem.setImmediate(true);
 			chkItem.setIcon(UserAvatarControlFactory.createAvatarResource(
 					userAvatarId, 16));
-			chkItem.addListener(new ValueChangeListener() {
+			chkItem.addValueChangeListener(new ValueChangeListener() {
 				@Override
 				public void valueChange(
 						com.vaadin.data.Property.ValueChangeEvent event) {

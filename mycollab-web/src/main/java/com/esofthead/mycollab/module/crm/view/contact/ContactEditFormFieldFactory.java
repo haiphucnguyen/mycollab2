@@ -18,7 +18,7 @@ package com.esofthead.mycollab.module.crm.view.contact;
 
 import java.util.Date;
 
-import org.vaadin.addon.customfield.CustomField;
+import com.vaadin.ui.CustomField;
 
 import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.module.crm.view.account.AccountSelectionField;
@@ -29,6 +29,7 @@ import com.esofthead.mycollab.vaadin.ui.DateComboboxSelectionField;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.FieldSelection;
 import com.vaadin.data.Item;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
@@ -50,8 +51,8 @@ public class ContactEditFormFieldFactory extends DefaultEditFormFieldFactory {
 			LeadSourceComboBox leadSource = new LeadSourceComboBox();
 			return leadSource;
 		} else if (propertyId.equals("accountid")) {
-			AccountSelectionField contactField = new AccountSelectionField();
-			return contactField;
+			AccountSelectionField accountField = new AccountSelectionField();
+			return accountField;
 		} else if (propertyId.equals("lastname")) {
 			TextField tf = new TextField();
 			tf.setNullRepresentation("");
@@ -80,23 +81,17 @@ public class ContactEditFormFieldFactory extends DefaultEditFormFieldFactory {
 		return null;
 	}
 
-	private class ContactBirthdayField extends CustomField implements
+	private class ContactBirthdayField extends CustomField<Date> implements
 			FieldSelection {
 		private static final long serialVersionUID = 1L;
-		private final DateComboboxSelectionField dateSelection;
-
-		public ContactBirthdayField() {
-			this.dateSelection = new DateComboboxSelectionField(this);
-
-			this.setCompositionRoot(this.dateSelection);
-		}
+		private DateComboboxSelectionField dateSelection;
 
 		@Override
-		public Class<?> getType() {
+		public Class<Date> getType() {
 			return Date.class;
 		}
 
-		public Object getValue() {
+		public Date getValue() {
 			return dateSelection.getDate();
 		}
 
@@ -108,6 +103,12 @@ public class ContactEditFormFieldFactory extends DefaultEditFormFieldFactory {
 		public void fireValueChange(Object data) {
 			contact.setBirthday((Date) data);
 
+		}
+
+		@Override
+		protected Component initContent() {
+			this.dateSelection = new DateComboboxSelectionField(this);
+			return dateSelection;
 		}
 	}
 }

@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
 
 import com.esofthead.mycollab.security.PermissionChecker;
 import com.esofthead.mycollab.security.PermissionMap;
-import com.esofthead.mycollab.vaadin.ui.MessageBox;
+import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
@@ -31,7 +31,7 @@ import com.vaadin.ui.ComponentContainer;
  * 
  * @param <V>
  */
-public abstract class AbstractPresenter<V extends View> implements
+public abstract class AbstractPresenter<V extends PageView> implements
 		IPresenter<V> {
 
 	private static final long serialVersionUID = 1L;
@@ -76,7 +76,7 @@ public abstract class AbstractPresenter<V extends View> implements
 		if (checkPermissionAccessIfAny()) {
 			onGo(container, data);
 		} else {
-			MessageBox.showMessagePermissionAlert();
+			NotificationUtil.showMessagePermissionAlert();
 		}
 
 	}

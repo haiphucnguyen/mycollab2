@@ -43,14 +43,13 @@ import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator2;
 import com.esofthead.mycollab.vaadin.ui.ReadViewLayout;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
-import com.github.wolfie.detachedtabs.DetachedTabs;
-import com.github.wolfie.detachedtabs.DetachedTabs.TabChangedEvent;
 import com.vaadin.data.Item;
-import com.vaadin.terminal.ExternalResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
+import com.vaadin.ui.JavaScript;
 import com.vaadin.ui.Layout;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
@@ -263,22 +262,14 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
 
 					final AccountPreviewBuilder printView = new AccountPreviewBuilder.PrintView();
 					printView.previewItem(account);
-					window.addComponent(printView);
+					window.setContent(printView);
 
-					// Add the printing window as a new application-level window
-					getApplication().addWindow(window);
+					UI.getCurrent().addWindow(window);
 
-					// Open it as a popup window with no decorations
-					getWindow().open(new ExternalResource(window.getURL()),
-							"_blank", 1100, 200, // Width and height
-							Window.BORDER_NONE); // No decorations
-
-					// Print automatically when the window opens.
-					// This call will block until the print dialog exits!
-					window.executeJavaScript("print();");
-
-					// Close the window automatically after printing
-					window.executeJavaScript("self.close();");
+					// Print automatically when the window opens
+					JavaScript.getCurrent().execute(
+							"setTimeout(function() {"
+									+ "  print(); self.close();}, 0);");
 				}
 
 				@Override
@@ -292,7 +283,7 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
 					final AccountHistoryLogWindow historyLog = new AccountHistoryLogWindow(
 							ModuleNameConstants.CRM, CrmTypeConstants.ACCOUNT,
 							account.getId());
-					getWindow().addWindow(historyLog);
+					UI.getCurrent().addWindow(historyLog);
 				}
 
 				@Override

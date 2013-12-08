@@ -81,7 +81,7 @@ public class TaskGroupAddWindow extends Window {
 		this.setWidth("800px");
 		this.taskListForm = new TaskGroupAddWindow.TaskListForm();
 		this.taskListForm.setItemDataSource(new BeanItem(this.taskList));
-		this.addComponent(this.taskListForm);
+		this.setContent(this.taskListForm);
 		((VerticalLayout) this.getContent()).setMargin(false);
 
 		this.center();

@@ -21,10 +21,8 @@
 package com.esofthead.mycollab.module.project.view.settings;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
-import org.vaadin.addon.customfield.CustomField;
 import org.vaadin.tokenfield.TokenField;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
@@ -39,7 +37,7 @@ import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectRoleComboBox;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.HistoryViewManager;
 import com.esofthead.mycollab.vaadin.mvp.NullViewState;
 import com.esofthead.mycollab.vaadin.mvp.ViewState;
@@ -59,21 +57,24 @@ import com.vaadin.data.Property;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.data.util.ObjectProperty;
 import com.vaadin.data.util.PropertysetItem;
+import com.vaadin.shared.ui.MarginInfo;
+import com.vaadin.shared.ui.combobox.FilteringMode;
+import com.vaadin.ui.AbstractSelect.ItemCaptionMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.ComboBox;
+import com.vaadin.ui.Component;
+import com.vaadin.ui.CustomField;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Layout;
-import com.vaadin.ui.Window;
 
 /**
  * 
  * @author haiphucnguyen
  */
 @ViewComponent
-public class ProjectMemberInviteViewImpl extends AbstractView implements
+public class ProjectMemberInviteViewImpl extends AbstractPageView implements
 		ProjectMemberInviteView {
 
 	private static final long serialVersionUID = 1L;
@@ -87,7 +88,7 @@ public class ProjectMemberInviteViewImpl extends AbstractView implements
 
 	public ProjectMemberInviteViewImpl() {
 		super();
-		this.setMargin(false, false, true, false);
+		this.setMargin(new MarginInfo(false, false, true, false));
 		this.editForm = new InviteMembersForm();
 		this.addComponent(this.editForm);
 	}
@@ -218,10 +219,20 @@ public class ProjectMemberInviteViewImpl extends AbstractView implements
 		private class UserComboBoxWithInviteBtnCustomField extends CustomField {
 			private static final long serialVersionUID = 1L;
 
-			public UserComboBoxWithInviteBtnCustomField() {
+			@Override
+			public Object getValue() {
+				return "";
+			}
+
+			@Override
+			public Class<String> getType() {
+				return String.class;
+			}
+
+			@Override
+			protected Component initContent() {
 				InviteUserTokenField inviteUserTokenField = new InviteUserTokenField();
-				inviteUserTokenField
-						.setFilteringMode(ComboBox.FILTERINGMODE_CONTAINS);
+				inviteUserTokenField.setFilteringMode(FilteringMode.CONTAINS);
 
 				final ProjectMemberService prjMemberService = ApplicationContextUtil
 						.getSpringBean(ProjectMemberService.class);
@@ -235,7 +246,7 @@ public class ProjectMemberInviteViewImpl extends AbstractView implements
 				inviteUserTokenField.setContainerDataSource(dsContainer);
 
 				inviteUserTokenField
-						.setTokenCaptionMode(ComboBox.ITEM_CAPTION_MODE_PROPERTY);
+						.setTokenCaptionMode(ItemCaptionMode.PROPERTY);
 				inviteUserTokenField.setTokenCaptionPropertyId("displayName");
 				for (SimpleUser user : users) {
 					inviteUserTokenField.setTokenIcon(
@@ -244,18 +255,7 @@ public class ProjectMemberInviteViewImpl extends AbstractView implements
 									user.getAvatarid(), 16));
 				}
 
-				this.setCompositionRoot(inviteUserTokenField);
-			}
-
-			@Override
-			public Object getValue() {
-				// return (String) userBox.getValue();
-				return "";
-			}
-
-			@Override
-			public Class<String> getType() {
-				return String.class;
+				return inviteUserTokenField;
 			}
 
 		}
@@ -283,13 +283,8 @@ public class ProjectMemberInviteViewImpl extends AbstractView implements
 					super.addToken(tokenId);
 				}
 			} else {
-				NotificationUtil
-						.showNotification(
-								LocalizationHelper
-										.getMessage(GenericI18Enum.WARNING_WINDOW_TITLE),
-								LocalizationHelper
-										.getMessage(GenericI18Enum.WARNING_NOT_VALID_EMAIL),
-								Window.Notification.TYPE_HUMANIZED_MESSAGE);
+				NotificationUtil.showErrorNotification(LocalizationHelper
+						.getMessage(GenericI18Enum.WARNING_NOT_VALID_EMAIL));
 			}
 
 		}
@@ -314,22 +309,7 @@ public class ProjectMemberInviteViewImpl extends AbstractView implements
 
 	private class ProjectRoleSelectionField extends CustomField {
 		private static final long serialVersionUID = 1L;
-		private final ProjectRoleComboBox roleComboBox;
-
-		public ProjectRoleSelectionField() {
-			this.roleComboBox = new ProjectRoleComboBox();
-			this.roleComboBox.addListener(new Property.ValueChangeListener() {
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public void valueChange(final Property.ValueChangeEvent event) {
-					getValue();
-
-				}
-			});
-
-			this.setCompositionRoot(this.roleComboBox);
-		}
+		private ProjectRoleComboBox roleComboBox;
 
 		@Override
 		public Object getValue() {
@@ -338,13 +318,27 @@ public class ProjectMemberInviteViewImpl extends AbstractView implements
 			return roleId;
 		}
 
-		public void setRoleId(int projectRoleId) {
-			roleComboBox.setValue(projectRoleId);
-		}
-
 		@Override
 		public Class<Integer> getType() {
 			return Integer.class;
+		}
+
+		@Override
+		protected Component initContent() {
+			this.roleComboBox = new ProjectRoleComboBox();
+			this.roleComboBox
+					.addValueChangeListener(new Property.ValueChangeListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void valueChange(
+								final Property.ValueChangeEvent event) {
+							getValue();
+
+						}
+					});
+
+			return roleComboBox;
 		}
 	}
 }

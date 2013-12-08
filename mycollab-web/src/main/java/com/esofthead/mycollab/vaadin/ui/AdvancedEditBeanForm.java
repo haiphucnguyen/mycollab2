@@ -26,14 +26,10 @@ import javax.validation.Validator;
 
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
-import com.esofthead.mycollab.common.localization.GenericI18Enum;
-import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
-import com.esofthead.mycollab.vaadin.ui.MessageBox.ButtonType;
 import com.esofthead.mycollab.validator.constraints.DateComparision;
-import com.esofthead.mycollab.web.AppContext;
 
 /**
  * Generic form with java bean as datasource. It includes validation against
@@ -51,7 +47,6 @@ public class AdvancedEditBeanForm<T> extends GenericForm implements
 
 	public AdvancedEditBeanForm() {
 		this.setImmediate(true);
-		this.setWriteThrough(true);
 		validation = ApplicationContextUtil
 				.getSpringBean(LocalValidatorFactoryBean.class);
 	}
@@ -96,13 +91,7 @@ public class AdvancedEditBeanForm<T> extends GenericForm implements
 
 			}
 
-			MessageBox mb = new MessageBox(AppContext.getApplication()
-					.getMainWindow(),
-					LocalizationHelper
-							.getMessage(GenericI18Enum.ERROR_WINDOW_TITLE),
-					MessageBox.Icon.ERROR, errorMsg.toString(),
-					new MessageBox.ButtonConfig(ButtonType.OK, "Ok"));
-			mb.show();
+			NotificationUtil.showErrorNotification(errorMsg.toString());
 
 			return false;
 		}

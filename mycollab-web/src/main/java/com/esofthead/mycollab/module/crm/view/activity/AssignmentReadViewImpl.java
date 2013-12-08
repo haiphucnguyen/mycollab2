@@ -18,11 +18,11 @@ package com.esofthead.mycollab.module.crm.view.activity;
 
 import com.esofthead.mycollab.module.crm.domain.SimpleTask;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 
 @ViewComponent
-public class AssignmentReadViewImpl extends AbstractView implements
+public class AssignmentReadViewImpl extends AbstractPageView implements
 		AssignmentReadView {
 	private static final long serialVersionUID = 1L;
 	

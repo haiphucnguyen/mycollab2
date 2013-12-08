@@ -104,8 +104,7 @@ public class BugSelectionWindow extends Window {
 							@Override
 							public void buttonClick(Button.ClickEvent event) {
 								fieldSelection.fireValueChange(bug);
-								BugSelectionWindow.this.getParent()
-										.removeWindow(BugSelectionWindow.this);
+								BugSelectionWindow.this.close();
 							}
 						});
 

@@ -12,7 +12,6 @@ import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
 import com.esofthead.mycollab.module.project.localization.TimeTrackingI18nEnum;
 import com.esofthead.mycollab.module.project.view.user.ProjectMemberListSelect;
-import com.esofthead.mycollab.shell.view.ScreenSize;
 import com.esofthead.mycollab.vaadin.ui.DateRangeField;
 import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
@@ -90,12 +89,6 @@ public class ItemTimeLoggingSearchPanel extends
 			int dateFieldWidth = 140;
 			String nameFieldWidth = "300px";
 
-			if (ScreenSize.hasSupport1024Pixels()) {
-				gridLayout = new GridFormLayoutHelper(2, 2, "250px", "100px");
-				dateFieldWidth = 120;
-				nameFieldWidth = "200px";
-			}
-
 			gridLayout.getLayout().setWidth("100%");
 			gridLayout.getLayout().setSpacing(true);
 
@@ -122,7 +115,8 @@ public class ItemTimeLoggingSearchPanel extends
 					new Button.ClickListener() {
 						@Override
 						public void buttonClick(final ClickEvent event) {
-							TimeLoggingAdvancedSearchLayout.this.callSearchAction();
+							TimeLoggingAdvancedSearchLayout.this
+									.callSearchAction();
 						}
 					});
 

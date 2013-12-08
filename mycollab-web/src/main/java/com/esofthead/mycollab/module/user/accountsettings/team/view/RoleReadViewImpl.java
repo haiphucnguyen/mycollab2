@@ -30,7 +30,7 @@ import com.esofthead.mycollab.security.PermissionDefItem;
 import com.esofthead.mycollab.security.PermissionMap;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.Depot;
@@ -40,13 +40,14 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
-import com.vaadin.terminal.ExternalResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.JavaScript;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
@@ -55,7 +56,7 @@ import com.vaadin.ui.Window;
  * @author haiphucnguyen
  */
 @ViewComponent
-public class RoleReadViewImpl extends AbstractView implements RoleReadView {
+public class RoleReadViewImpl extends AbstractPageView implements RoleReadView {
 
 	private static final long serialVersionUID = 1L;
 	protected AdvancedPreviewBeanForm<Role> previewForm;
@@ -141,22 +142,14 @@ public class RoleReadViewImpl extends AbstractView implements RoleReadView {
 
 			final RoleReadViewImpl printView = new RoleReadViewImpl.PrintView();
 			printView.previewItem(RoleReadViewImpl.this.role);
-			window.addComponent(printView);
+			window.setContent(printView);
 
-			// Add the printing window as a new application-level window
-			this.getApplication().addWindow(window);
+			UI.getCurrent().addWindow(window);
 
-			// Open it as a popup window with no decorations
-			this.getWindow().open(new ExternalResource(window.getURL()),
-					"_blank", 1100, 200, // Width and height
-					Window.BORDER_NONE); // No decorations
-
-			// Print automatically when the window opens.
-			// This call will block until the print dialog exits!
-			window.executeJavaScript("print();");
-
-			// Close the window automatically after printing
-			window.executeJavaScript("self.close();");
+			// Print automatically when the window opens
+			JavaScript.getCurrent().execute(
+					"setTimeout(function() {"
+							+ "  print(); self.close();}, 0);");
 		}
 
 		@Override

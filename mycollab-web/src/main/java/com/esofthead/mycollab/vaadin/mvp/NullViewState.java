@@ -49,7 +49,7 @@ public class NullViewState extends ViewState {
 		}
 
 		@Override
-		public View getView() {
+		public PageView getView() {
 			// do nothing
 			return null;
 		}

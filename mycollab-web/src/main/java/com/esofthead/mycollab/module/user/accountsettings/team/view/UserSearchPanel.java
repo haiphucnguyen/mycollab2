@@ -31,7 +31,6 @@ import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
 import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
 import com.esofthead.mycollab.module.user.events.UserEvent;
 import com.esofthead.mycollab.security.RolePermissionCollections;
-import com.esofthead.mycollab.shell.view.ScreenSize;
 import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
@@ -55,9 +54,6 @@ public class UserSearchPanel extends GenericSearchPanel<UserSearchCriteria> {
 
 	public UserSearchPanel() {
 		this.setCompositionRoot(new UserBasicSearchLayout());
-		if (ScreenSize.hasSupport1024Pixels()) {
-			this.setWidth("750px");
-		}
 	}
 
 	private HorizontalLayout createSearchTopPanel() {
@@ -165,7 +161,8 @@ public class UserSearchPanel extends GenericSearchPanel<UserSearchCriteria> {
 									RegisterStatusConstants.SENT_VERIFICATION_EMAIL,
 									RegisterStatusConstants.VERIFICATING }));
 
-			if (StringUtils.isNotNullOrEmpty((String) this.nameField.getValue())) {
+			if (StringUtils
+					.isNotNullOrEmpty((String) this.nameField.getValue())) {
 				UserSearchPanel.this.searchCriteria
 						.setDisplayName(new StringSearchField(SearchField.AND,
 								(String) this.nameField.getValue()));

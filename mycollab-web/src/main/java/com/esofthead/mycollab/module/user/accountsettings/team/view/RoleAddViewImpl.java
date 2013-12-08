@@ -30,7 +30,7 @@ import com.esofthead.mycollab.security.PermissionDefItem;
 import com.esofthead.mycollab.security.PermissionMap;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
@@ -56,7 +56,7 @@ import com.vaadin.ui.VerticalLayout;
  * @author haiphucnguyen
  */
 @ViewComponent
-public class RoleAddViewImpl extends AbstractView implements RoleAddView {
+public class RoleAddViewImpl extends AbstractPageView implements RoleAddView {
 
 	private static final long serialVersionUID = 1L;
 	private final RoleAddViewImpl.EditForm editForm;

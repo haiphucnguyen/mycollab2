@@ -41,6 +41,7 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Field;
@@ -65,12 +66,15 @@ public class AssignBugWindow extends Window {
 		super("Assign bug '" + bug.getSummary() + "'");
 		this.bug = bug;
 		this.callbackForm = callbackForm;
-		this.setWidth("750px");
+
+		VerticalLayout contentLayout = new VerticalLayout();
+		contentLayout.setWidth("750px");
 		this.editForm = new EditForm();
-		this.addComponent(this.editForm);
+		contentLayout.addComponent(this.editForm);
 		this.editForm.setItemDataSource(new BeanItem<SimpleBug>(bug));
-		((VerticalLayout) this.getContent()).setMargin(false, false, true,
-				false);
+		contentLayout.setMargin(new MarginInfo(false, false, true, false));
+
+		this.setContent(contentLayout);
 		this.center();
 	}
 
@@ -105,7 +109,7 @@ public class AssignBugWindow extends Window {
 
 				final HorizontalLayout controlsBtn = new HorizontalLayout();
 				controlsBtn.setSpacing(true);
-				controlsBtn.setMargin(true, true, true, false);
+				controlsBtn.setMargin(new MarginInfo(true, true, true, false));
 				layout.addComponent(controlsBtn);
 
 				final Button cancelBtn = new Button("Cancel",

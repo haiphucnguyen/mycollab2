@@ -43,6 +43,7 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -89,7 +90,7 @@ public class CaseSearchPanel extends
 			GridFormLayoutHelper gridLayout = new GridFormLayoutHelper(3, 3,
 					"100%", "90px");
 			gridLayout.getLayout().setWidth("100%");
-			gridLayout.getLayout().setMargin(true, true, true, false);
+			gridLayout.getLayout().setMargin(new MarginInfo(true, true, true, false));
 
 			this.numberField = (TextField) gridLayout.addComponent(
 					new TextField(), "Number", 0, 0);

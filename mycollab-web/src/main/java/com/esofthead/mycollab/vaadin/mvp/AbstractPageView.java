@@ -32,10 +32,10 @@ import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.VerticalLayout;
 
 @SuppressWarnings("serial")
-public abstract class AbstractView extends VerticalLayout implements View,
+public abstract class AbstractPageView extends VerticalLayout implements PageView,
         Serializable {
 
-    private static Logger log = LoggerFactory.getLogger(AbstractView.class);
+    private static Logger log = LoggerFactory.getLogger(AbstractPageView.class);
     public static String SAVE_ACTION = "Save";
     public static String SAVE_AND_NEW_ACTION = "Save & New";
     public static String EDIT_ACTION = "Edit";

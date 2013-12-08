@@ -16,7 +16,7 @@
  */
 package com.esofthead.mycollab.vaadin.mvp;
 
-public interface IPreviewView<T> extends View {
+public interface IPreviewView<T> extends PageView {
 	void previewItem(T item);
 	
 	T getItem();

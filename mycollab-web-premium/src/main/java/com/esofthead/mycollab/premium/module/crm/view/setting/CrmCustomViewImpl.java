@@ -39,7 +39,7 @@ import com.esofthead.mycollab.premium.module.crm.view.setting.customlayout.Creat
 import com.esofthead.mycollab.premium.module.crm.view.setting.customlayout.CreateSectionWindow;
 import com.esofthead.mycollab.premium.module.crm.view.setting.customlayout.CustomLayoutDDComp;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
@@ -54,7 +54,7 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
 @ViewComponent
-public class CrmCustomViewImpl extends AbstractView implements ICrmCustomView {
+public class CrmCustomViewImpl extends AbstractPageView implements ICrmCustomView {
 
 	private static final long serialVersionUID = 1L;
 

@@ -35,7 +35,7 @@ import com.esofthead.mycollab.module.crm.ui.components.RelatedEditItemField;
 import com.esofthead.mycollab.module.crm.view.activity.ActivityEventProvider.CrmEvent;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
@@ -83,7 +83,7 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
 @ViewComponent
-public class ActivityCalendarViewImpl extends AbstractView implements
+public class ActivityCalendarViewImpl extends AbstractPageView implements
 		ActivityCalendarView {
 
 	private static final long serialVersionUID = 1L;
@@ -113,7 +113,7 @@ public class ActivityCalendarViewImpl extends AbstractView implements
 		this.addComponent(actionPanel);
 
 		groupViewBtn = new ButtonGroup();
-		monthViewBtn = new Button("Monthly View", new Button.ClickListener() {
+		monthViewBtn = new Button("Monthly PageView", new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -125,7 +125,7 @@ public class ActivityCalendarViewImpl extends AbstractView implements
 		});
 
 		groupViewBtn.addButton(monthViewBtn);
-		Button weekViewBtn = new Button("Weekly View",
+		Button weekViewBtn = new Button("Weekly PageView",
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
@@ -135,7 +135,7 @@ public class ActivityCalendarViewImpl extends AbstractView implements
 					}
 				});
 		groupViewBtn.addButton(weekViewBtn);
-		Button dailyViewBtn = new Button("Daily View",
+		Button dailyViewBtn = new Button("Daily PageView",
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 

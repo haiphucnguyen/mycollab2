@@ -20,11 +20,11 @@ import com.esofthead.mycollab.module.crm.domain.CrmNotificationSetting;
 import com.esofthead.mycollab.module.crm.service.CrmNotificationSettingService;
 import com.esofthead.mycollab.module.project.view.settings.NotificationSettingViewComponent;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 
 @ViewComponent
-public class CrmNotificationSettingViewImpl extends AbstractView implements
+public class CrmNotificationSettingViewImpl extends AbstractPageView implements
 		CrmNotificationSettingView {
 	private static final long serialVersionUID = 1L;
 	

@@ -4,14 +4,14 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import com.esofthead.mycollab.core.MyCollabException;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.terminal.ExternalResource;
 import com.vaadin.ui.Embedded;
 
 @ViewComponent
-public class StandupAdvertisementViewImpl extends AbstractView implements
+public class StandupAdvertisementViewImpl extends AbstractPageView implements
 		StandupAdvertisementView {
 	private static final long serialVersionUID = 1L;
 

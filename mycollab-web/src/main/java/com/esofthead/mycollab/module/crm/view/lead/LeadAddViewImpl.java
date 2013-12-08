@@ -20,7 +20,7 @@ import java.util.Collection;
 
 import com.esofthead.mycollab.module.crm.domain.Lead;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.IFormAddView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
@@ -32,7 +32,7 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Layout;
 
 @ViewComponent
-public class LeadAddViewImpl extends AbstractView implements
+public class LeadAddViewImpl extends AbstractPageView implements
 		IFormAddView<Lead>, LeadAddView {
 
 	private static final long serialVersionUID = 1L;

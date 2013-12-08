@@ -20,13 +20,13 @@
  */
 package com.esofthead.mycollab.module.project.view.settings;
 
-import com.esofthead.mycollab.vaadin.mvp.View;
+import com.esofthead.mycollab.vaadin.mvp.PageView;
 import com.vaadin.ui.Component;
 
 /**
  * 
  * @author haiphucnguyen
  */
-public interface UserSettingView extends View {
+public interface UserSettingView extends PageView {
 	Component gotoSubView(String name);
 }

@@ -1,6 +1,6 @@
 package com.esofthead.mycollab.module.crm.view.activity;
 
-import org.vaadin.addon.customfield.CustomField;
+import com.vaadin.ui.CustomField;
 
 import com.esofthead.mycollab.core.schedule.recurring.DailyEvent;
 import com.esofthead.mycollab.core.schedule.recurring.MonthlyEventFollowDay;

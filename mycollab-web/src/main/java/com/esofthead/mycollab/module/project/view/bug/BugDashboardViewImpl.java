@@ -18,8 +18,6 @@ package com.esofthead.mycollab.module.project.view.bug;
 
 import java.util.GregorianCalendar;
 
-import org.vaadin.hene.splitbutton.SplitButtonExt;
-
 import com.esofthead.mycollab.core.arguments.DateTimeSearchField;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
@@ -36,13 +34,13 @@ import com.esofthead.mycollab.module.project.events.BugVersionEvent;
 import com.esofthead.mycollab.module.project.localization.BugI18nEnum;
 import com.esofthead.mycollab.module.tracker.BugStatusConstants;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
-import com.esofthead.mycollab.shell.view.ScreenSize;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -54,7 +52,7 @@ import com.vaadin.ui.VerticalLayout;
 
 @SuppressWarnings("serial")
 @ViewComponent
-public class BugDashboardViewImpl extends AbstractView implements
+public class BugDashboardViewImpl extends AbstractPageView implements
 		BugDashboardView {
 
 	private VerticalLayout leftColumn, rightColumn, headerWrapper;
@@ -78,7 +76,7 @@ public class BugDashboardViewImpl extends AbstractView implements
 
 		this.leftColumn = new VerticalLayout();
 		this.leftColumn.setSpacing(true);
-		this.leftColumn.setMargin(false, true, false, false);
+		this.leftColumn.setMargin(new MarginInfo(false, true, false, false));
 		body.addComponent(this.leftColumn);
 		body.setExpandRatio(this.leftColumn, 1.0f);
 
@@ -174,11 +172,7 @@ public class BugDashboardViewImpl extends AbstractView implements
 		this.leftColumn.removeAllComponents();
 		this.rightColumn.removeAllComponents();
 
-		if (ScreenSize.hasSupport1024Pixels()) {
-			this.rightColumn.setWidth("310px");
-		} else if (ScreenSize.hasSupport1280Pixels()) {
-			this.rightColumn.setWidth("400px");
-		}
+		this.rightColumn.setWidth("400px");
 
 		final SimpleProject project = CurrentProjectVariables.getProject();
 

@@ -20,13 +20,13 @@
  */
 package com.esofthead.mycollab.module.project.view.settings;
 
-import com.esofthead.mycollab.vaadin.mvp.View;
+import com.esofthead.mycollab.vaadin.mvp.PageView;
 
 /**
  * 
  * @author haiphucnguyen
  */
-public interface ProjectMemberInviteView extends View {
+public interface ProjectMemberInviteView extends PageView {
 
 	void display();
 

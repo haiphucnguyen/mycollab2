@@ -28,21 +28,22 @@ import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskListSearchCriteria;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.project.localization.TaskI18nEnum;
-import com.esofthead.mycollab.module.project.view.task.GanttChartDisplayWidget;
 import com.esofthead.mycollab.module.project.view.task.TaskDisplayWidget;
 import com.esofthead.mycollab.module.project.view.task.TaskGroupAddWindow;
 import com.esofthead.mycollab.module.project.view.task.TaskGroupDisplayView;
 import com.esofthead.mycollab.module.project.view.task.TaskGroupDisplayWidget;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.ui.ToggleButtonGroup;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.MyCollabResource;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 public class MilestoneTaskGroupListComp extends VerticalLayout {
@@ -58,7 +59,7 @@ public class MilestoneTaskGroupListComp extends VerticalLayout {
 		taskGroup.contructTaskLayout();
 	}
 
-	private class TaskGroupListView extends AbstractView implements
+	private class TaskGroupListView extends AbstractPageView implements
 			TaskGroupDisplayView {
 		private static final long serialVersionUID = 1L;
 		private VerticalLayout mainLayout;
@@ -80,8 +81,7 @@ public class MilestoneTaskGroupListComp extends VerticalLayout {
 							taskList.setMilestoneName(milestone.getName());
 							TaskGroupAddWindow taskListWindow = new TaskGroupAddWindow(
 									TaskGroupListView.this, taskList);
-							MilestoneTaskGroupListComp.this.getWindow()
-									.addWindow(taskListWindow);
+							UI.getCurrent().addWindow(taskListWindow);
 						}
 					});
 			newTaskListBtn.setEnabled(CurrentProjectVariables
@@ -96,7 +96,7 @@ public class MilestoneTaskGroupListComp extends VerticalLayout {
 					.setComponentAlignment(newTaskListBtn, Alignment.TOP_LEFT);
 
 			HorizontalLayout header = new HorizontalLayout();
-			header.setMargin(true, false, false, false);
+			header.setMargin(new MarginInfo(true, false, false, false));
 			header.setSpacing(true);
 			header.setWidth("100%");
 			Label taskGroupSelection = new Label("Tasks");
@@ -134,20 +134,6 @@ public class MilestoneTaskGroupListComp extends VerticalLayout {
 			advanceDisplay.setIcon(MyCollabResource
 					.newResource("icons/16/project/advanced_display.png"));
 			viewGroup.addButton(advanceDisplay);
-
-			Button ganttChartDisplay = new Button(null,
-					new Button.ClickListener() {
-						private static final long serialVersionUID = 1L;
-
-						@Override
-						public void buttonClick(ClickEvent event) {
-							displayGanttView();
-						}
-					});
-			ganttChartDisplay.setStyleName("link");
-			ganttChartDisplay.setIcon(MyCollabResource
-					.newResource("icons/16/project/gantt_chart.png"));
-			viewGroup.addButton(ganttChartDisplay);
 
 			header.addComponent(viewGroup);
 			header.setComponentAlignment(viewGroup, Alignment.MIDDLE_RIGHT);
@@ -194,18 +180,6 @@ public class MilestoneTaskGroupListComp extends VerticalLayout {
 		taskDisplayWidget.setSearchCriteria(criteria);
 	}
 
-	private void displayGanttView() {
-		if (this.getComponentCount() > 1) {
-			this.removeComponent(this.getComponent(1));
-		}
-
-		TaskListSearchCriteria criteria = createBaseSearchCriteria();
-		GanttChartDisplayWidget ganttChartWidget = new GanttChartDisplayWidget();
-		ganttChartWidget.setSearchCriteria(criteria);
-		this.addComponent(ganttChartWidget);
-		this.setExpandRatio(ganttChartWidget, 1.0f);
-	}
-
 	private void displayAdvancedView() {
 
 		if (this.getComponentCount() > 1) {
@@ -221,7 +195,7 @@ public class MilestoneTaskGroupListComp extends VerticalLayout {
 
 	public void displayTakLists(Milestone milestone) {
 		this.milestone = milestone;
-		viewGroup.setDefaultSelectionByIndex(1);
+		//TODO: check default selected index
 		displayAdvancedView();
 	}
 

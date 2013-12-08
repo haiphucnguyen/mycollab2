@@ -19,32 +19,29 @@ package com.esofthead.mycollab.vaadin.ui;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.vaadin.addon.customfield.CustomField;
-
 import com.esofthead.mycollab.core.utils.TimezoneMapper;
 import com.esofthead.mycollab.core.utils.TimezoneMapper.TimezoneExt;
 import com.vaadin.data.Property;
+import com.vaadin.ui.Component;
+import com.vaadin.ui.CustomField;
 import com.vaadin.ui.VerticalLayout;
 
 @SuppressWarnings("serial")
-public class TimeZoneSelection extends CustomField{
-	
+public class TimeZoneSelection extends CustomField {
+
 	private ValueComboBox comboArea;
 	private ValueComboBox comboTimezone;
 	private List<String> lstLimeZoneArea = new ArrayList<String>();
-	
-	public TimeZoneSelection() {
-		initUI();
-	}
-	
-	private void initUI() {
+
+	@Override
+	protected Component initContent() {
 		VerticalLayout layout = new VerticalLayout();
 		layout.setSpacing(true);
-		
+
 		comboArea = new ValueComboBox(false, TimezoneMapper.AREAS);
 		comboArea.setWidth("100%");
-		comboArea.addListener(new Property.ValueChangeListener() {
-			
+		comboArea.addValueChangeListener(new Property.ValueChangeListener() {
+
 			@Override
 			public void valueChange(
 					com.vaadin.data.Property.ValueChangeEvent event) {
@@ -53,36 +50,38 @@ public class TimeZoneSelection extends CustomField{
 			}
 		});
 		layout.addComponent(comboArea);
-		
+
 		lstLimeZoneArea.removeAll(lstLimeZoneArea);
 		for (TimezoneExt timezone : TimezoneMapper.timeMap.values()) {
 			if (timezone.getArea().equals(comboArea.getValue())) {
 				lstLimeZoneArea.add(timezone.getDisplayName());
 			}
 		}
-		
-		String[] arrayTimezone = lstLimeZoneArea.toArray(new String[lstLimeZoneArea.size()]);
-		
+
+		String[] arrayTimezone = lstLimeZoneArea
+				.toArray(new String[lstLimeZoneArea.size()]);
+
 		comboTimezone = new ValueComboBox(false, arrayTimezone);
 		comboTimezone.setWidth("100%");
 		layout.addComponent(comboTimezone);
-		
-		this.setCompositionRoot(layout);
+
+		return layout;
 	}
-	
+
 	private void setCboTimeZone(String area) {
-		
+
 		for (TimezoneExt timezone : TimezoneMapper.timeMap.values()) {
 			if (timezone.getArea().trim().equals(area)) {
 				lstLimeZoneArea.add(timezone.getDisplayName());
 			}
 		}
-		
+
 		comboTimezone.removeAllItems();
-		String[] arrayTimezone = lstLimeZoneArea.toArray(new String[lstLimeZoneArea.size()]);
+		String[] arrayTimezone = lstLimeZoneArea
+				.toArray(new String[lstLimeZoneArea.size()]);
 		comboTimezone.loadData(arrayTimezone);
 	}
-	
+
 	public void setTimeZone(TimezoneExt timeZone) {
 		if (timeZone != null && !timeZone.getArea().equals("")) {
 			comboArea.select(timeZone.getArea());
@@ -90,10 +89,11 @@ public class TimeZoneSelection extends CustomField{
 			comboTimezone.select(timeZone.getDisplayName());
 		}
 	}
-	
+
 	public TimezoneExt getTimeZone() {
 		for (TimezoneExt timezone : TimezoneMapper.timeMap.values()) {
-			if (timezone.getDisplayName().trim().equals(comboTimezone.getValue())) {
+			if (timezone.getDisplayName().trim()
+					.equals(comboTimezone.getValue())) {
 				return timezone;
 			}
 		}

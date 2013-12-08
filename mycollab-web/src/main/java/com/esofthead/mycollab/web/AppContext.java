@@ -47,9 +47,8 @@ import com.esofthead.mycollab.module.user.domain.UserPreference;
 import com.esofthead.mycollab.module.user.service.BillingAccountService;
 import com.esofthead.mycollab.module.user.service.UserPreferenceService;
 import com.esofthead.mycollab.security.PermissionMap;
-import com.esofthead.mycollab.shell.view.MainWindowContainer;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.vaadin.Application;
+import com.vaadin.server.Page;
 
 /**
  * The core class that keep user session data while user login to MyCollab
@@ -325,7 +324,7 @@ public class AppContext implements Serializable {
 	 * 
 	 * @return current application instance
 	 */
-	public static Application getApplication() {
+	public static MyCollabApplication getApplication() {
 		return MyCollabApplication.getInstance();
 	}
 
@@ -574,11 +573,8 @@ public class AppContext implements Serializable {
 	 * @param windowTitle
 	 */
 	public static void addFragment(String fragement, String windowTitle) {
-		MainWindowContainer mainWindow = (MainWindowContainer) getApplication()
-				.getMainWindow();
-		mainWindow.addFragement(fragement);
-		log.debug("Add fragement: " + fragement + " to " + mainWindow);
-		mainWindow.setCaption(StringUtils.subString(windowTitle, 150)
-				+ " [MyCollab]");
+		Page.getCurrent().setUriFragment(fragement);
+		Page.getCurrent().setTitle(
+				StringUtils.subString(windowTitle, 150) + " [MyCollab]");
 	}
 }

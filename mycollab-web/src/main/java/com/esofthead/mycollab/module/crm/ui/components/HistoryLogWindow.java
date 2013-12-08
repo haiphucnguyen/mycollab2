@@ -21,6 +21,7 @@
 package com.esofthead.mycollab.module.crm.ui.components;
 
 import com.esofthead.mycollab.vaadin.ui.HistoryLogComponent;
+import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
 /**
@@ -35,10 +36,13 @@ public class HistoryLogWindow extends Window {
 	public HistoryLogWindow(final String module, final String type,
 			final int typeid) {
 		super("Change Log");
-		this.setWidth("700px");
+
+		VerticalLayout contentLayout = new VerticalLayout();
+		contentLayout.setWidth("700px");
 
 		this.historyLogComponent = new HistoryLogComponent(module, type, typeid);
-		this.addComponent(this.historyLogComponent);
+		contentLayout.addComponent(this.historyLogComponent);
+		this.setContent(contentLayout);
 		this.center();
 	}
 

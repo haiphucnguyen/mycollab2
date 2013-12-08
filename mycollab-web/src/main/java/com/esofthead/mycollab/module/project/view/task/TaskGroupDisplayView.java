@@ -17,9 +17,9 @@
 package com.esofthead.mycollab.module.project.view.task;
 
 import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
-import com.esofthead.mycollab.vaadin.mvp.View;
+import com.esofthead.mycollab.vaadin.mvp.PageView;
 
-public interface TaskGroupDisplayView extends View {
+public interface TaskGroupDisplayView extends PageView {
 
     void insertTaskList(SimpleTaskList taskList);
 

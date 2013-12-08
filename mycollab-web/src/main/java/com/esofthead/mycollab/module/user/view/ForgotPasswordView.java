@@ -20,12 +20,12 @@
  */
 package com.esofthead.mycollab.module.user.view;
 
-import com.esofthead.mycollab.vaadin.mvp.View;
+import com.esofthead.mycollab.vaadin.mvp.PageView;
 
 /**
  *
  * @author haiphucnguyen
  */
-public interface ForgotPasswordView extends View {
+public interface ForgotPasswordView extends PageView {
     
 }

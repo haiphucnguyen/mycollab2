@@ -43,7 +43,7 @@ import com.esofthead.mycollab.module.project.ui.components.ProjectAttachmentDisp
 import com.esofthead.mycollab.schedule.email.project.MessageRelayEmailNotificationAction;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
@@ -54,6 +54,7 @@ import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
@@ -63,6 +64,7 @@ import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 /**
@@ -70,7 +72,7 @@ import com.vaadin.ui.VerticalLayout;
  * @author haiphucnguyen
  */
 @ViewComponent
-public class MessageReadViewImpl extends AbstractView implements
+public class MessageReadViewImpl extends AbstractPageView implements
 		MessageReadView {
 	private static final long serialVersionUID = 1L;
 
@@ -79,7 +81,7 @@ public class MessageReadViewImpl extends AbstractView implements
 
 	public MessageReadViewImpl() {
 		super();
-		this.setMargin(false, true, true, true);
+		this.setMargin(new MarginInfo(false, true, true, true));
 		previewForm = new PreviewForm();
 		this.addComponent(previewForm);
 	}
@@ -139,7 +141,7 @@ public class MessageReadViewImpl extends AbstractView implements
 				rowLayout.setWidth("100%");
 
 				Label title = new Label("<h2 style='color: #006699;'>"
-						+ message.getTitle() + "</h2>", Label.CONTENT_XHTML);
+						+ message.getTitle() + "</h2>", ContentMode.HTML);
 
 				HorizontalLayout messageHeader = new HorizontalLayout();
 				messageHeader.setStyleName("message-header");
@@ -170,7 +172,7 @@ public class MessageReadViewImpl extends AbstractView implements
 					@Override
 					public void buttonClick(ClickEvent event) {
 						ConfirmDialogExt.show(
-								MessageReadViewImpl.this.getWindow(),
+								UI.getCurrent(),
 								LocalizationHelper.getMessage(
 										GenericI18Enum.DELETE_DIALOG_TITLE,
 										SiteConfiguration.getSiteName()),
@@ -218,7 +220,7 @@ public class MessageReadViewImpl extends AbstractView implements
 
 				Label messageContent = new Label(
 						StringUtils.formatExtraLink(message.getMessage()),
-						Label.CONTENT_XHTML);
+						ContentMode.HTML);
 				messageContent.setStyleName("message-body");
 				rowLayout.addComponent(messageContent);
 

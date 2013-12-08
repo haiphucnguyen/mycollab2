@@ -19,9 +19,9 @@ package com.esofthead.mycollab.module.crm.view.setting;
 import java.util.List;
 
 import com.esofthead.mycollab.form.view.builder.type.DynaSection;
-import com.esofthead.mycollab.vaadin.mvp.View;
+import com.esofthead.mycollab.vaadin.mvp.PageView;
 
-public interface ICrmCustomView extends View {
+public interface ICrmCustomView extends PageView {
 	void display(String moduleName);
 
 	void addActiveSection(DynaSection section);

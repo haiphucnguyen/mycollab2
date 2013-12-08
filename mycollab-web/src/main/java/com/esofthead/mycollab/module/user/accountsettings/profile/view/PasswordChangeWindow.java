@@ -28,8 +28,7 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.utils.InvalidPasswordException;
 import com.esofthead.mycollab.utils.PasswordCheckerUtil;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
-import com.esofthead.mycollab.vaadin.ui.MessageBox;
-import com.esofthead.mycollab.vaadin.ui.MessageBox.ButtonType;
+import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Alignment;
@@ -137,14 +136,6 @@ public class PasswordChangeWindow extends Window {
 		this.setContent(mainLayout);
 	}
 
-	private void showMessage(final String title, final String message) {
-		final MessageBox mb = new MessageBox(AppContext.getApplication()
-				.getMainWindow(), title, MessageBox.Icon.WARN, message,
-				new MessageBox.ButtonConfig(ButtonType.OK, LocalizationHelper
-						.getMessage(GenericI18Enum.BUTTON_OK_LABEL)));
-		mb.show();
-	}
-
 	private void changePassword() {
 
 		this.txtNewPassword.removeStyleName("errorField");
@@ -152,10 +143,8 @@ public class PasswordChangeWindow extends Window {
 
 		if (!this.txtNewPassword.getValue().equals(
 				this.txtConfirmPassword.getValue())) {
-			this.showMessage(LocalizationHelper
-					.getMessage(GenericI18Enum.WARNING_WINDOW_TITLE),
-					LocalizationHelper
-							.getMessage(UserI18nEnum.PASSWORDS_ARE_NOT_MATCH));
+			NotificationUtil.showErrorNotification(LocalizationHelper
+					.getMessage(UserI18nEnum.PASSWORDS_ARE_NOT_MATCH));
 			this.txtNewPassword.addStyleName("errorField");
 			this.txtConfirmPassword.addStyleName("errorField");
 			return;
@@ -165,9 +154,7 @@ public class PasswordChangeWindow extends Window {
 			PasswordCheckerUtil.checkValidPassword((String) this.txtNewPassword
 					.getValue());
 		} catch (InvalidPasswordException e) {
-			this.showMessage(LocalizationHelper
-					.getMessage(GenericI18Enum.WARNING_WINDOW_TITLE), e
-					.getMessage());
+			NotificationUtil.showErrorNotification(e.getMessage());
 		}
 
 		this.user.setPassword(PasswordEncryptHelper

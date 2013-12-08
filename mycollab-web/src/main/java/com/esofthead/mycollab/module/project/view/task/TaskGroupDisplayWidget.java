@@ -177,7 +177,7 @@ public class TaskGroupDisplayWidget
 			actionBtnLayout.setWidth("200px");
 			this.taskListActionControl.addComponent(actionBtnLayout);
 
-			final Button readBtn = new Button("View",
+			final Button readBtn = new Button("PageView",
 					new Button.ClickListener() {
 						private static final long serialVersionUID = 1L;
 

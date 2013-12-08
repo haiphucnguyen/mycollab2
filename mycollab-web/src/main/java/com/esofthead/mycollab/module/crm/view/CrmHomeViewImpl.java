@@ -22,7 +22,7 @@ import com.esofthead.mycollab.module.crm.view.activity.MeetingListDashlet;
 import com.esofthead.mycollab.module.crm.view.lead.LeadListDashlet;
 import com.esofthead.mycollab.module.crm.view.opportunity.IOpportunityPipelineFunnelChartDashlet;
 import com.esofthead.mycollab.security.RolePermissionCollections;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
@@ -34,7 +34,7 @@ import com.vaadin.ui.VerticalLayout;
 
 @SuppressWarnings("serial")
 @ViewComponent
-public class CrmHomeViewImpl extends AbstractView implements CrmHomeView {
+public class CrmHomeViewImpl extends AbstractPageView implements CrmHomeView {
 	private IOpportunityPipelineFunnelChartDashlet opportunityChartDashlet;
 	private AccountListDashlet accountDashlet;
 	private MeetingListDashlet meetingDashlet;

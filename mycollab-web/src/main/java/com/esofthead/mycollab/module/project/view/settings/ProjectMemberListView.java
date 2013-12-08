@@ -21,12 +21,12 @@
 package com.esofthead.mycollab.module.project.view.settings;
 
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectMemberSearchCriteria;
-import com.esofthead.mycollab.vaadin.mvp.View;
+import com.esofthead.mycollab.vaadin.mvp.PageView;
 
 /**
  * 
  * @author haiphucnguyen
  */
-public interface ProjectMemberListView extends View {
+public interface ProjectMemberListView extends PageView {
 	void setSearchCriteria(ProjectMemberSearchCriteria searchCriteria);
 }

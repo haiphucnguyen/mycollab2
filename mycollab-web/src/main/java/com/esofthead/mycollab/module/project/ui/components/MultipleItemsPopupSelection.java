@@ -19,24 +19,22 @@ package com.esofthead.mycollab.module.project.ui.components;
 import org.vaadin.hene.popupbutton.PopupButton;
 
 import com.vaadin.ui.Component;
-import com.vaadin.ui.Panel;
-import com.vaadin.ui.themes.Reindeer;
+import com.vaadin.ui.VerticalLayout;
 
 @SuppressWarnings("serial")
 public class MultipleItemsPopupSelection extends PopupButton {
 
-    private Panel panel;
+	private VerticalLayout contentLayout;
 
-    public MultipleItemsPopupSelection() {
-        panel = new Panel();
-        panel.setStyleName(Reindeer.PANEL_LIGHT);
-        panel.setHeight("200px");
-        panel.setWidth("300px");
-        this.addComponent(panel);
+	public MultipleItemsPopupSelection() {
+		contentLayout = new VerticalLayout();
+		contentLayout.setHeight("200px");
+		contentLayout.setWidth("300px");
+		this.setContent(contentLayout);
 
-    }
+	}
 
-    public void addItemComponent(Component itemName) {
-        panel.addComponent(itemName);
-    }
+	public void addItemComponent(Component itemName) {
+		contentLayout.addComponent(itemName);
+	}
 }

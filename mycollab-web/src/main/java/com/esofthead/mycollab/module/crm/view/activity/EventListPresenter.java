@@ -33,9 +33,10 @@ import com.esofthead.mycollab.vaadin.events.TablePopupActionHandler;
 import com.esofthead.mycollab.vaadin.mvp.ListSelectionPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.ui.MailFormWindow;
-import com.esofthead.mycollab.vaadin.ui.MessageBox;
+import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.UI;
 
 public class EventListPresenter extends
 		ListSelectionPresenter<EventListView, EventSearchCriteria, SimpleEvent> {
@@ -50,8 +51,7 @@ public class EventListPresenter extends
 					@Override
 					protected void onSelectExtra(String id, String caption) {
 						if (TablePopupActionHandler.MAIL_ACTION.equals(id)) {
-							view.getWidget().getWindow()
-									.addWindow(new MailFormWindow());
+							UI.getCurrent().addWindow(new MailFormWindow());
 						}
 					}
 
@@ -79,7 +79,7 @@ public class EventListPresenter extends
 			doSearch((EventSearchCriteria) data.getParams());
 			AppContext.addFragment("crm/activity/todo", "Activity To Do");
 		} else {
-			MessageBox.showMessagePermissionAlert();
+			NotificationUtil.showMessagePermissionAlert();
 		}
 	}
 
