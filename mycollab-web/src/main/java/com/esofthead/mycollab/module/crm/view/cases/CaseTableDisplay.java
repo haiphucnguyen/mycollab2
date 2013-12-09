@@ -43,6 +43,8 @@ import com.hp.gagawa.java.elements.H3;
 import com.hp.gagawa.java.elements.Img;
 import com.hp.gagawa.java.elements.Td;
 import com.hp.gagawa.java.elements.Tr;
+import com.vaadin.data.Property.ValueChangeEvent;
+import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CheckBox;
@@ -78,17 +80,16 @@ public class CaseTableDisplay extends
 					Object columnId) {
 				final CheckBox cb = new CheckBox("", false);
 				cb.setImmediate(true);
-				cb.addListener(new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
+				cb.addValueChangeListener(new ValueChangeListener() {
 
 					@Override
-					public void buttonClick(Button.ClickEvent event) {
+					public void valueChange(ValueChangeEvent event) {
 						SimpleCase cases = CaseTableDisplay.this
 								.getBeanByIndex(itemId);
 						CaseTableDisplay.this.fireSelectItemEvent(cases);
-
 					}
 				});
+
 				SimpleCase cases = CaseTableDisplay.this.getBeanByIndex(itemId);
 				cases.setExtraData(cb);
 				return cb;

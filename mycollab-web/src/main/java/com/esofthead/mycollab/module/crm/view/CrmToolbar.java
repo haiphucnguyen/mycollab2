@@ -41,7 +41,6 @@ import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
-import com.vaadin.terminal.Sizeable;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComponentContainer;
@@ -147,8 +146,8 @@ public class CrmToolbar extends CssLayout implements PageView {
 
 			addBtn.setPopupVisible(false);
 
-			for (final Iterator<com.vaadin.ui.Component> it = getComponentIterator(); it
-					.hasNext();) {
+			for (final Iterator<com.vaadin.ui.Component> it = CrmToolbar.this
+					.iterator(); it.hasNext();) {
 				final Button btn = (Button) it.next();
 				btn.removeStyleName("isSelected");
 			}
@@ -162,7 +161,6 @@ public class CrmToolbar extends CssLayout implements PageView {
 	private final PopupButton addBtn;
 
 	public CrmToolbar() {
-		this.setWidth(Sizeable.SIZE_UNDEFINED, 0);
 		this.setHeight("30px");
 		final NavigatorItemListener listener = new NavigatorItemListener();
 		final Button homeBtn = new Button(null, listener);
@@ -348,7 +346,7 @@ public class CrmToolbar extends CssLayout implements PageView {
 				.newResource("icons/18/crm/meeting.png"));
 		addBtnLayout.addComponent(newMeetingBtn);
 
-		addBtn.addComponent(addBtnLayout);
+		addBtn.setContent(addBtnLayout);
 		addBtn.setStyleName("link");
 		addComponent(addBtn);
 	}
@@ -364,7 +362,7 @@ public class CrmToolbar extends CssLayout implements PageView {
 	}
 
 	public void gotoItem(final String crmItem) {
-		for (final Iterator<com.vaadin.ui.Component> it = getComponentIterator(); it
+		for (final Iterator<com.vaadin.ui.Component> it = this.iterator(); it
 				.hasNext();) {
 			final Button btn = (Button) it.next();
 			if (crmItem.equals(btn.getCaption())) {

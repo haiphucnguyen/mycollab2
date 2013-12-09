@@ -46,6 +46,9 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.JavaScript;
 import com.vaadin.ui.Layout;
+import com.vaadin.ui.TabSheet.SelectedTabChangeEvent;
+import com.vaadin.ui.TabSheet.SelectedTabChangeListener;
+import com.vaadin.ui.TabSheet.Tab;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
@@ -216,12 +219,14 @@ public class CasePreviewBuilder extends VerticalLayout {
 			this.addComponent(caseAddLayout);
 
 			caseAddLayout
-					.addTabChangedListener(new DetachedTabs.TabChangedListener() {
+					.addSelectedTabChangeListener(new SelectedTabChangeListener() {
 
 						@Override
-						public void tabChanged(final TabChangedEvent event) {
-							final Button btn = event.getSource();
-							final String caption = btn.getCaption();
+						public void selectedTabChange(
+								SelectedTabChangeEvent event) {
+							final Tab tab = (Tab) event.getTabSheet()
+									.getSelectedTab();
+							final String caption = tab.getCaption();
 							if ("More Information".equals(caption)) {
 								if (!isLoadedRelateItem) {
 									displayActivities();
@@ -229,6 +234,7 @@ public class CasePreviewBuilder extends VerticalLayout {
 									isLoadedRelateItem = true;
 								}
 							}
+
 						}
 					});
 		}

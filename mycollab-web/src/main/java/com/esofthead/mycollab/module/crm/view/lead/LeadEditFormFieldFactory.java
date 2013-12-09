@@ -16,8 +16,6 @@
  */
 package com.esofthead.mycollab.module.crm.view.lead;
 
-import org.vaadin.addon.customfield.FieldWrapper;
-
 import com.esofthead.mycollab.module.crm.domain.Lead;
 import com.esofthead.mycollab.module.crm.ui.components.IndustryComboBox;
 import com.esofthead.mycollab.module.user.ui.components.ActiveUserComboBox;
@@ -26,6 +24,8 @@ import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
 import com.vaadin.data.Item;
 import com.vaadin.data.Property;
+import com.vaadin.ui.Component;
+import com.vaadin.ui.CustomField;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.TextArea;
@@ -76,13 +76,15 @@ public class LeadEditFormFieldFactory extends DefaultEditFormFieldFactory {
 		return null;
 	}
 
-	class LeadFirstNamePrefixField extends FieldWrapper<Lead> {
+	class LeadFirstNamePrefixField extends CustomField<Lead> {
 		private static final long serialVersionUID = 1L;
 
-		LeadFirstNamePrefixField() {
-			super(new TextField(), null, Lead.class);
-			this.setWidth("100%");
+		public LeadFirstNamePrefixField() {
 
+		}
+
+		@Override
+		protected Component initContent() {
 			HorizontalLayout layout = new HorizontalLayout();
 			layout.setWidth("100%");
 			layout.setSpacing(true);
@@ -91,22 +93,28 @@ public class LeadEditFormFieldFactory extends DefaultEditFormFieldFactory {
 			prefixSelect.setValue(lead.getPrefixname());
 			layout.addComponent(prefixSelect);
 
-			prefixSelect.addListener(new Property.ValueChangeListener() {
-				private static final long serialVersionUID = 1L;
+			prefixSelect
+					.addValueChangeListener(new Property.ValueChangeListener() {
+						private static final long serialVersionUID = 1L;
 
-				@Override
-				public void valueChange(Property.ValueChangeEvent event) {
-					lead.setPrefixname((String) prefixSelect.getValue());
+						@Override
+						public void valueChange(Property.ValueChangeEvent event) {
+							lead.setPrefixname((String) prefixSelect.getValue());
 
-				}
-			});
+						}
+					});
 
-			TextField firstnameTxtField = (TextField) getWrappedField();
+			TextField firstnameTxtField = new TextField();
 			firstnameTxtField.setWidth("100%");
 			layout.addComponent(firstnameTxtField);
 			layout.setExpandRatio(firstnameTxtField, 1.0f);
 
-			this.setCompositionRoot(layout);
+			return layout;
+		}
+
+		@Override
+		public Class<? extends Lead> getType() {
+			return Lead.class;
 		}
 
 	}

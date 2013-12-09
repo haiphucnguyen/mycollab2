@@ -18,8 +18,6 @@ package com.esofthead.mycollab.module.project.view.bug;
 
 import java.util.Arrays;
 
-import com.esofthead.mycollab.vaadin.ui.SplitButtonExt;
-
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.eventmanager.ApplicationEvent;
@@ -37,6 +35,7 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
+import com.esofthead.mycollab.vaadin.ui.SplitButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable;
@@ -60,7 +59,7 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
 	private final BugSearchPanel bugSearchPanel;
 	private BugTableDisplay tableItem;
 	private final VerticalLayout bugListLayout;
-	private SplitButtonExt exportButtonControl;
+	private SplitButton exportButtonControl;
 
 	public BugListViewImpl() {
 		this.setMargin(new MarginInfo(false, true, true, true));
@@ -154,7 +153,7 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
 
 			}
 		});
-		exportButtonControl = new SplitButtonExt(exportBtn);
+		exportButtonControl = new SplitButton(exportBtn);
 		exportButtonControl.setStyleName(UIConstants.THEME_GRAY_LINK);
 		exportButtonControl.addStyleName(UIConstants.SPLIT_BUTTON);
 		exportButtonControl.setIcon(MyCollabResource

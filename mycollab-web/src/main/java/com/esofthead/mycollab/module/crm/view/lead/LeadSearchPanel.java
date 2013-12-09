@@ -42,6 +42,7 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -238,7 +239,8 @@ public class LeadSearchPanel extends
 			GridFormLayoutHelper gridLayout = new GridFormLayoutHelper(3, 4,
 					"100%", "90px");
 			gridLayout.getLayout().setWidth("100%");
-			gridLayout.getLayout().setMargin(true, true, true, false);
+			gridLayout.getLayout().setMargin(
+					new MarginInfo(true, true, true, false));
 
 			// if (ScreenSize.hasSupport1024Pixels()) {
 			// gridLayout = new GridFormLayoutHelper(3, 4,
@@ -355,14 +357,15 @@ public class LeadSearchPanel extends
 								(String) this.anyPhoneField.getValue()));
 			}
 
-			if (StringUtils.isNotNullOrEmpty((String) this.cityField.getValue())) {
+			if (StringUtils
+					.isNotNullOrEmpty((String) this.cityField.getValue())) {
 				LeadSearchPanel.this.searchCriteria
 						.setAnyCity(new StringSearchField(SearchField.AND,
 								(String) this.cityField.getValue()));
 			}
 
-			if (StringUtils
-					.isNotNullOrEmpty((String) this.stateField.getValue())) {
+			if (StringUtils.isNotNullOrEmpty((String) this.stateField
+					.getValue())) {
 				LeadSearchPanel.this.searchCriteria
 						.setAnyState(new StringSearchField(SearchField.AND,
 								(String) this.stateField.getValue()));

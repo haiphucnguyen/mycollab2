@@ -127,7 +127,7 @@ public class SalesDashboardView extends Depot {
 
 		this.displayReport();
 
-		saleChartPopup.addComponent(filterBtnLayout);
+		saleChartPopup.setContent(filterBtnLayout);
 		this.addHeaderElement(saleChartPopup);
 	}
 }

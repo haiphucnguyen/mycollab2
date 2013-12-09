@@ -39,6 +39,7 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
+import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.vaadin.ui.StandupStyleCalendarExp;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
@@ -77,8 +78,10 @@ import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
+import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
@@ -113,16 +116,17 @@ public class ActivityCalendarViewImpl extends AbstractPageView implements
 		this.addComponent(actionPanel);
 
 		groupViewBtn = new ButtonGroup();
-		monthViewBtn = new Button("Monthly PageView", new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
+		monthViewBtn = new Button("Monthly PageView",
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
 
-			@Override
-			public void buttonClick(ClickEvent event) {
-				calendarComponent.switchToMonthView(new Date(), true);
-				monthViewBtn.addStyleName("selected-style");
-				initLabelCaption();
-			}
-		});
+					@Override
+					public void buttonClick(ClickEvent event) {
+						calendarComponent.switchToMonthView(new Date(), true);
+						monthViewBtn.addStyleName("selected-style");
+						initLabelCaption();
+					}
+				});
 
 		groupViewBtn.addButton(monthViewBtn);
 		Button weekViewBtn = new Button("Weekly PageView",
@@ -153,7 +157,7 @@ public class ActivityCalendarViewImpl extends AbstractPageView implements
 		horizontalWapper.addStyleName("eventdatepicker");
 		this.dateChooser = new PopupButton("");
 		this.dateChooser.setWidth("110px");
-		this.dateChooser.addComponent(datePicker);
+		this.dateChooser.setContent(datePicker);
 		dateChooser.setStyleName(UIConstants.THEME_LINK);
 		dateChooser.addStyleName("buttonlinkcenter");
 		horizontalWapper.addComponent(dateChooser);
@@ -193,7 +197,7 @@ public class ActivityCalendarViewImpl extends AbstractPageView implements
 		meetingBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_MEETING));
 
-		calendarActionBtn.addComponent(actionBtnLayout);
+		calendarActionBtn.setContent(actionBtnLayout);
 
 		calendarComponent = new MonthViewCalendar();
 		this.addComponent(calendarComponent);
@@ -283,7 +287,7 @@ public class ActivityCalendarViewImpl extends AbstractPageView implements
 	}
 
 	private void addCalendarEvent() {
-		this.datePicker.getStyleCalendar().addListener(
+		this.datePicker.getStyleCalendar().addValueChangeListener(
 				new ValueChangeListener() {
 					private static final long serialVersionUID = 1L;
 
@@ -300,7 +304,7 @@ public class ActivityCalendarViewImpl extends AbstractPageView implements
 					}
 				});
 
-		this.datePicker.getBtnShowNextYear().addListener(
+		this.datePicker.getBtnShowNextYear().addClickListener(
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
@@ -313,7 +317,7 @@ public class ActivityCalendarViewImpl extends AbstractPageView implements
 					}
 				});
 
-		this.datePicker.getBtnShowNextMonth().addListener(
+		this.datePicker.getBtnShowNextMonth().addClickListener(
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
@@ -326,7 +330,7 @@ public class ActivityCalendarViewImpl extends AbstractPageView implements
 					}
 				});
 
-		this.datePicker.getBtnShowPreviousMonth().addListener(
+		this.datePicker.getBtnShowPreviousMonth().addClickListener(
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
@@ -339,7 +343,7 @@ public class ActivityCalendarViewImpl extends AbstractPageView implements
 					}
 				});
 
-		this.datePicker.getBtnShowPreviousYear().addListener(
+		this.datePicker.getBtnShowPreviousYear().addClickListener(
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
@@ -404,9 +408,12 @@ public class ActivityCalendarViewImpl extends AbstractPageView implements
 					"startdate", meeting);
 			this.endDatePicker = new DateTimePicker<MeetingWithBLOBs>(
 					"enddate", meeting);
+
+			VerticalLayout contentLayout = new VerticalLayout();
+			this.setContent(contentLayout);
 			editForm = new EditForm();
 			editForm.setItemDataSource(new BeanItem<MeetingWithBLOBs>(meeting));
-			this.addComponent(editForm);
+			contentLayout.addComponent(editForm);
 		}
 
 		private class EditForm extends AdvancedEditBeanForm<MeetingWithBLOBs> {
@@ -529,7 +536,7 @@ public class ActivityCalendarViewImpl extends AbstractPageView implements
 						field.setType(meeting.getType());
 						return field;
 					} else if (propertyId.equals("isrecurrence")) {
-						return new RecurringActivityCustomField(meeting);
+						return null;
 					}
 					return null;
 				}
@@ -666,7 +673,7 @@ public class ActivityCalendarViewImpl extends AbstractPageView implements
 				public void rangeSelect(RangeSelectEvent event) {
 					if (AppContext
 							.canWrite(RolePermissionCollections.CRM_MEETING)) {
-						ActivityCalendarViewImpl.this.getWindow().addWindow(
+						UI.getCurrent().addWindow(
 								new EventQuickCreateWindow(event.getStart(),
 										event.getEnd()));
 					}
@@ -686,9 +693,9 @@ public class ActivityCalendarViewImpl extends AbstractPageView implements
 							.getSpringBean(MeetingService.class);
 					service.updateWithSession(simpleMeeting,
 							AppContext.getUsername());
-					ActivityCalendarViewImpl.this.getWindow().showNotification(
-							"Event: \"" + simpleMeeting.getSubject()
-									+ "\" has been updated!");
+					NotificationUtil.showNotification("Success", "Event: \""
+							+ simpleMeeting.getSubject()
+							+ "\" has been updated!", Type.HUMANIZED_MESSAGE);
 					EventBus.getInstance().fireEvent(
 							new ActivityEvent.GotoCalendar(this, null));
 				}
@@ -725,11 +732,10 @@ public class ActivityCalendarViewImpl extends AbstractPageView implements
 								.getSpringBean(MeetingService.class);
 						service.updateWithSession(simpleMeeting,
 								AppContext.getUsername());
-						ActivityCalendarViewImpl.this.getWindow()
-								.showNotification(
-										"Event: \""
-												+ simpleMeeting.getSubject()
-												+ "\" has been updated!");
+						NotificationUtil.showNotification("Success",
+								"Event: \"" + simpleMeeting.getSubject()
+										+ "\" has been updated!",
+								Type.HUMANIZED_MESSAGE);
 						EventBus.getInstance().fireEvent(
 								new ActivityEvent.GotoCalendar(this, null));
 					}

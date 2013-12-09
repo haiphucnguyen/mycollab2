@@ -34,17 +34,17 @@ import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator2;
 import com.esofthead.mycollab.vaadin.ui.ReadViewLayout;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
-import com.github.wolfie.detachedtabs.DetachedTabs;
-import com.github.wolfie.detachedtabs.DetachedTabs.TabChangedEvent;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
-import com.vaadin.terminal.ExternalResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.JavaScript;
 import com.vaadin.ui.Layout;
+import com.vaadin.ui.TabSheet.SelectedTabChangeEvent;
+import com.vaadin.ui.TabSheet.SelectedTabChangeListener;
+import com.vaadin.ui.TabSheet.Tab;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
@@ -222,11 +222,14 @@ public class LeadPreviewBuilder extends VerticalLayout {
 			relatedItemsContainer.addComponent(associateCampaignList);
 			leadAddLayout.addTab(relatedItemsContainer, "More Information");
 			leadAddLayout
-					.addTabChangedListener(new DetachedTabs.TabChangedListener() {
+					.addSelectedTabChangeListener(new SelectedTabChangeListener() {
+
 						@Override
-						public void tabChanged(final TabChangedEvent event) {
-							final Button btn = event.getSource();
-							final String caption = btn.getCaption();
+						public void selectedTabChange(
+								SelectedTabChangeEvent event) {
+							final Tab tab = (Tab) event.getTabSheet()
+									.getSelectedTab();
+							final String caption = tab.getCaption();
 							if ("More Information".equals(caption)) {
 								if (!isLoadedRelateItem) {
 									displayActivities();

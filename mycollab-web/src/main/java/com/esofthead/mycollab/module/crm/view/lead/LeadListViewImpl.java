@@ -186,7 +186,7 @@ public class LeadListViewImpl extends AbstractPageView implements LeadListView {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				leadImportWindow = new LeadImportWindow();
-				getWindow().addWindow(leadImportWindow);
+				UI.getCurrent().addWindow(leadImportWindow);
 			}
 		});
 		importBtn.setDescription("Import");

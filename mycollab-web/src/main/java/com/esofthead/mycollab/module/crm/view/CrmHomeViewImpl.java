@@ -27,7 +27,7 @@ import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
-import com.vaadin.terminal.Sizeable;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.VerticalLayout;
@@ -86,8 +86,7 @@ public class CrmHomeViewImpl extends AbstractPageView implements CrmHomeView {
 		layout.addComponent(myAssignmentsLayout);
 
 		VerticalLayout streamsLayout = new VerticalLayout();
-		streamsLayout.setMargin(false, false, false, true);
-		streamsLayout.setWidth(Sizeable.SIZE_UNDEFINED, 0);
+		streamsLayout.setMargin(new MarginInfo(false, false, false, true));
 
 		salesDashboard = new SalesDashboardView();
 		salesDashboard.setWidth("400px");

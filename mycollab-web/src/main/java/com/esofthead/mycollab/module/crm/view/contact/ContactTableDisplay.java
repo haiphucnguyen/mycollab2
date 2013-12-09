@@ -42,6 +42,8 @@ import com.hp.gagawa.java.elements.H3;
 import com.hp.gagawa.java.elements.Img;
 import com.hp.gagawa.java.elements.Td;
 import com.hp.gagawa.java.elements.Tr;
+import com.vaadin.data.Property.ValueChangeEvent;
+import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CheckBox;
@@ -77,18 +79,19 @@ public class ContactTableDisplay
 					final Object columnId) {
 				final CheckBox cb = new CheckBox("", false);
 				cb.setImmediate(true);
-				cb.addListener(new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
+				cb.addValueChangeListener(new ValueChangeListener() {
 
 					@Override
-					public void buttonClick(final Button.ClickEvent event) {
+					public void valueChange(ValueChangeEvent event) {
 						final SimpleContact contact = ContactTableDisplay.this
 								.getBeanByIndex(itemId);
 						ContactTableDisplay.this.fireSelectItemEvent(contact);
 						fireTableEvent(new TableClickEvent(
 								ContactTableDisplay.this, contact, "selected"));
+
 					}
 				});
+
 				final SimpleContact contact = ContactTableDisplay.this
 						.getBeanByIndex(itemId);
 				contact.setExtraData(cb);

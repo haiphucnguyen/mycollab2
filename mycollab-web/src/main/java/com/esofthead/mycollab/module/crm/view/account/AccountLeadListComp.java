@@ -169,47 +169,45 @@ public class AccountLeadListComp extends
 
 							@Override
 							public void buttonClick(final ClickEvent event) {
-								ConfirmDialogExt
-										.show(AppContext.getApplication()
-												.getMainWindow(),
-												LocalizationHelper
-														.getMessage(
-																GenericI18Enum.DELETE_DIALOG_TITLE,
-																SiteConfiguration
-																		.getSiteName()),
-												LocalizationHelper
-														.getMessage(CrmCommonI18nEnum.DIALOG_DELETE_RELATIONSHIP_TITLE),
-												LocalizationHelper
-														.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
-												LocalizationHelper
-														.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
-												new ConfirmDialog.Listener() {
-													private static final long serialVersionUID = 1L;
+								ConfirmDialogExt.show(
+										UI.getCurrent(),
+										LocalizationHelper
+												.getMessage(
+														GenericI18Enum.DELETE_DIALOG_TITLE,
+														SiteConfiguration
+																.getSiteName()),
+										LocalizationHelper
+												.getMessage(CrmCommonI18nEnum.DIALOG_DELETE_RELATIONSHIP_TITLE),
+										LocalizationHelper
+												.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
+										LocalizationHelper
+												.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
+										new ConfirmDialog.Listener() {
+											private static final long serialVersionUID = 1L;
 
-													@Override
-													public void onClose(
-															final ConfirmDialog dialog) {
-														if (dialog
-																.isConfirmed()) {
-															final AccountService accountService = ApplicationContextUtil
-																	.getSpringBean(AccountService.class);
-															final AccountLead associateLead = new AccountLead();
-															associateLead
-																	.setAccountid(account
-																			.getId());
-															associateLead
-																	.setLeadid(lead
-																			.getId());
-															accountService
-																	.removeAccountLeadRelationship(
-																			associateLead,
-																			AppContext
-																					.getAccountId());
-															AccountLeadListComp.this
-																	.refresh();
-														}
-													}
-												});
+											@Override
+											public void onClose(
+													final ConfirmDialog dialog) {
+												if (dialog.isConfirmed()) {
+													final AccountService accountService = ApplicationContextUtil
+															.getSpringBean(AccountService.class);
+													final AccountLead associateLead = new AccountLead();
+													associateLead
+															.setAccountid(account
+																	.getId());
+													associateLead
+															.setLeadid(lead
+																	.getId());
+													accountService
+															.removeAccountLeadRelationship(
+																	associateLead,
+																	AppContext
+																			.getAccountId());
+													AccountLeadListComp.this
+															.refresh();
+												}
+											}
+										});
 							}
 						});
 				deleteBtn.setStyleName("link");

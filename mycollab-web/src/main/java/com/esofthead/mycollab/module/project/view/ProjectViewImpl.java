@@ -21,7 +21,6 @@ import java.util.GregorianCalendar;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vaadin.dialogs.ConfirmDialog;
-import com.esofthead.mycollab.vaadin.ui.SplitButtonExt;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
@@ -70,17 +69,16 @@ import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
+import com.esofthead.mycollab.vaadin.mvp.PageView;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
-import com.esofthead.mycollab.vaadin.mvp.PageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
+import com.esofthead.mycollab.vaadin.ui.SplitButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
-import com.github.wolfie.detachedtabs.DetachedTabs;
-import com.github.wolfie.detachedtabs.DetachedTabs.TabChangedEvent;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -110,7 +108,7 @@ public class ProjectViewImpl extends AbstractPageView implements ProjectView {
 	private UserSettingPresenter userPresenter;
 	private IStandupPresenter standupPresenter;
 	private final ProjectBreadcrumb breadCrumb;
-	private SplitButtonExt controlsBtn;
+	private SplitButton controlsBtn;
 
 	public ProjectViewImpl() {
 		this.setWidth("100%");
@@ -374,7 +372,7 @@ public class ProjectViewImpl extends AbstractPageView implements ProjectView {
 						controlsBtn.setPopupVisible(true);
 					}
 				});
-		controlsBtn = new SplitButtonExt(quickActionBtn);
+		controlsBtn = new SplitButton(quickActionBtn);
 		controlsBtn.addStyleName(UIConstants.SPLIT_BUTTON);
 		controlsBtn.setIcon(MyCollabResource
 				.newResource("icons/16/project/quick_action.png"));

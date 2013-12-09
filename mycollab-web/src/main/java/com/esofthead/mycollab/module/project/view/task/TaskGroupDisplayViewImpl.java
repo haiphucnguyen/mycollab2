@@ -17,7 +17,6 @@
 package com.esofthead.mycollab.module.project.view.task;
 
 import org.vaadin.hene.popupbutton.PopupButton;
-import com.esofthead.mycollab.vaadin.ui.SplitButtonExt;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
@@ -37,6 +36,7 @@ import com.esofthead.mycollab.module.project.view.parameters.TaskGroupScreenData
 import com.esofthead.mycollab.reporting.ReportExportType;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
+import com.esofthead.mycollab.vaadin.ui.SplitButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.MyCollabResource;
@@ -59,7 +59,7 @@ public class TaskGroupDisplayViewImpl extends AbstractPageView implements
 	private TaskGroupDisplayWidget taskLists;
 	private Button reOrderBtn;
 
-	private SplitButtonExt exportButtonControl;
+	private SplitButton exportButtonControl;
 
 	public TaskGroupDisplayViewImpl() {
 		super();
@@ -231,7 +231,7 @@ public class TaskGroupDisplayViewImpl extends AbstractPageView implements
 				exportButtonControl.setPopupVisible(true);
 			}
 		});
-		exportButtonControl = new SplitButtonExt(exportBtn);
+		exportButtonControl = new SplitButton(exportBtn);
 		exportButtonControl.setStyleName(UIConstants.THEME_BLUE_LINK);
 		exportButtonControl.addStyleName(UIConstants.SPLIT_BUTTON);
 		exportButtonControl.setIcon(MyCollabResource

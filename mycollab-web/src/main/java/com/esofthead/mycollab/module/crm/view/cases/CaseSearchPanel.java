@@ -90,7 +90,8 @@ public class CaseSearchPanel extends
 			GridFormLayoutHelper gridLayout = new GridFormLayoutHelper(3, 3,
 					"100%", "90px");
 			gridLayout.getLayout().setWidth("100%");
-			gridLayout.getLayout().setMargin(new MarginInfo(true, true, true, false));
+			gridLayout.getLayout().setMargin(
+					new MarginInfo(true, true, true, false));
 
 			this.numberField = (TextField) gridLayout.addComponent(
 					new TextField(), "Number", 0, 0);
@@ -294,7 +295,7 @@ public class CaseSearchPanel extends
 					LocalizationHelper.getMessage(GenericI18Enum.BUTTON_CLEAR));
 			cancelBtn.setStyleName(UIConstants.THEME_LINK);
 			cancelBtn.addStyleName("cancel-button");
-			cancelBtn.addListener(new Button.ClickListener() {
+			cancelBtn.addClickListener(new Button.ClickListener() {
 				@Override
 				public void buttonClick(final ClickEvent event) {
 					CaseBasicSearchLayout.this.subjectField.setValue("");

@@ -40,6 +40,7 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
+import com.esofthead.mycollab.vaadin.ui.SplitButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UserLink;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
@@ -64,7 +65,7 @@ public class FollowingTicketViewImpl extends AbstractPageView implements
 		FollowingTicketView {
 	private static final long serialVersionUID = 1L;
 
-	private SplitButtonExt exportButtonControl;
+	private SplitButton exportButtonControl;
 	private final FollowingTicketTable ticketTable;
 	private MonitorSearchCriteria searchCriteria;
 
@@ -128,7 +129,7 @@ public class FollowingTicketViewImpl extends AbstractPageView implements
 
 			}
 		});
-		exportButtonControl = new SplitButtonExt(exportBtn);
+		exportButtonControl = new SplitButton(exportBtn);
 		exportButtonControl.setStyleName(UIConstants.THEME_GRAY_LINK);
 		exportButtonControl.addStyleName(UIConstants.SPLIT_BUTTON);
 		exportButtonControl.setIcon(MyCollabResource

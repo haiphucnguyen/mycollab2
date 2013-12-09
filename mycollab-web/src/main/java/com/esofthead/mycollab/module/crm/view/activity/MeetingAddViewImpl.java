@@ -36,7 +36,8 @@ import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 
 @ViewComponent
-public class MeetingAddViewImpl extends AbstractPageView implements MeetingAddView {
+public class MeetingAddViewImpl extends AbstractPageView implements
+		MeetingAddView {
 
 	private static final long serialVersionUID = 1L;
 	private EditForm editForm;
@@ -133,7 +134,7 @@ public class MeetingAddViewImpl extends AbstractPageView implements MeetingAddVi
 					field.setType(meeting.getType());
 					return field;
 				} else if (propertyId.equals("isrecurrence")) {
-					return new RecurringActivityCustomField(meeting);
+					return null;
 				}
 				return null;
 			}

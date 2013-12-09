@@ -93,8 +93,7 @@ public class ContactSelectionWindow extends Window {
 						SimpleContact contact = (SimpleContact) event.getData();
 						if ("contactName".equals(event.getFieldName())) {
 							fieldSelection.fireValueChange(contact);
-							ContactSelectionWindow.this.getParent()
-									.removeWindow(ContactSelectionWindow.this);
+							ContactSelectionWindow.this.close();
 						}
 					}
 				});

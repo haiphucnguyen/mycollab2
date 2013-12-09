@@ -93,8 +93,7 @@ public class LeadSelectionWindow extends Window {
 						SimpleLead lead = (SimpleLead) event.getData();
 						if ("leadName".equals(event.getFieldName())) {
 							fieldSelection.fireValueChange(lead);
-							LeadSelectionWindow.this.getParent().removeWindow(
-									LeadSelectionWindow.this);
+							LeadSelectionWindow.this.close();
 						}
 					}
 				});

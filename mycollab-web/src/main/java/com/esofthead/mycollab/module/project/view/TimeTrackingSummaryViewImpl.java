@@ -44,6 +44,7 @@ import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
+import com.esofthead.mycollab.vaadin.ui.SplitButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
@@ -73,7 +74,7 @@ public class TimeTrackingSummaryViewImpl extends AbstractPageView implements
 	private TimeTrackingTableDisplay tableItem;
 
 	private Label totalHoursLoggingLabel;
-	private SplitButtonExt exportButtonControl;
+	private SplitButton exportButtonControl;
 
 	private ItemTimeLoggingSearchCriteria searchCriteria;
 
@@ -178,7 +179,7 @@ public class TimeTrackingSummaryViewImpl extends AbstractPageView implements
 
 			}
 		});
-		exportButtonControl = new SplitButtonExt(exportBtn);
+		exportButtonControl = new SplitButton(exportBtn);
 		exportButtonControl.setStyleName(UIConstants.THEME_GRAY_LINK);
 		exportButtonControl.addStyleName(UIConstants.SPLIT_BUTTON);
 		exportButtonControl.setIcon(MyCollabResource

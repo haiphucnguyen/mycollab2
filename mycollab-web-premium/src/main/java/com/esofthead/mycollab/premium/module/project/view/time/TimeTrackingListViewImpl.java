@@ -33,6 +33,7 @@ import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
+import com.esofthead.mycollab.vaadin.ui.SplitButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
@@ -50,7 +51,6 @@ import com.vaadin.shared.ui.combobox.FilteringMode;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.AbstractSelect.ItemCaptionMode;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.CssLayout;
@@ -70,7 +70,7 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements
 	private final ItemTimeLoggingSearchPanel itemTimeLoggingPanel;
 	private ItemTimeLoggingSearchCriteria itemTimeLogginSearchCriteria;
 
-	private SplitButtonExt exportButtonControl;
+	private SplitButton exportButtonControl;
 	private final ItemTimeLoggingService itemTimeLoggingService;
 
 	private final Label lbTimeRange;
@@ -143,7 +143,7 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements
 				exportButtonControl.setPopupVisible(true);
 			}
 		});
-		exportButtonControl = new SplitButtonExt(exportBtn);
+		exportButtonControl = new SplitButton(exportBtn);
 		exportButtonControl.setStyleName(UIConstants.THEME_GRAY_LINK);
 		exportButtonControl.addStyleName(UIConstants.SPLIT_BUTTON);
 		exportButtonControl.setIcon(MyCollabResource

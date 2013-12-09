@@ -35,6 +35,7 @@ import com.esofthead.mycollab.module.project.localization.BugI18nEnum;
 import com.esofthead.mycollab.module.tracker.BugStatusConstants;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
+import com.esofthead.mycollab.vaadin.ui.SplitButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
@@ -121,7 +122,7 @@ public class BugDashboardViewImpl extends AbstractPageView implements
 		createBugBtn.setEnabled(CurrentProjectVariables
 				.canWrite(ProjectRolePermissionCollections.BUGS));
 
-		final SplitButtonExt controlsBtn = new SplitButtonExt(createBugBtn);
+		final SplitButton controlsBtn = new SplitButton(createBugBtn);
 		controlsBtn.addStyleName(UIConstants.SPLIT_BUTTON);
 		controlsBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
 
