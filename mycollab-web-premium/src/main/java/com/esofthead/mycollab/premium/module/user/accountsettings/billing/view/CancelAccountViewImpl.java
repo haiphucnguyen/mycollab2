@@ -42,6 +42,7 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.OptionGroup;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 @ViewComponent
@@ -150,9 +151,8 @@ public class CancelAccountViewImpl extends AbstractPageView implements
 						BillingService billingService = ApplicationContextUtil
 								.getSpringBean(BillingService.class);
 						billingService.cancelAccount(AppContext.getAccountId());
-						getWindow()
-								.open(new ExternalResource(
-										"http://www.mycollab.com"));
+						UI.getCurrent().getPage()
+								.setLocation("http://www.mycollab.com");
 					}
 				});
 		submitBtn.addStyleName(UIConstants.THEME_BLUE_LINK);

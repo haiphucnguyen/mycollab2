@@ -35,12 +35,14 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
+import com.esofthead.mycollab.vaadin.ui.OnDemandFileDownloader;
 import com.esofthead.mycollab.vaadin.ui.SplitButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.web.MyCollabResource;
+import com.vaadin.server.FileDownloader;
 import com.vaadin.server.StreamResource;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Button;
@@ -163,33 +165,23 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
 		popupButtonsControl.setWidth("150px");
 		exportButtonControl.addComponent(popupButtonsControl);
 
-		Button exportPdfBtn = new Button("Pdf", new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
+		Button exportPdfBtn = new Button("Pdf");
+		String title = "Bugs of Project "
+				+ ((CurrentProjectVariables.getProject() != null && CurrentProjectVariables
+						.getProject().getName() != null) ? CurrentProjectVariables
+						.getProject().getName() : "");
+		BugSearchCriteria searchCriteria = new BugSearchCriteria();
+		searchCriteria.setProjectId(new NumberSearchField(SearchField.AND,
+				CurrentProjectVariables.getProject().getId()));
 
-			@Override
-			public void buttonClick(ClickEvent event) {
-				String title = "Bugs of Project "
-						+ ((CurrentProjectVariables.getProject() != null && CurrentProjectVariables
-								.getProject().getName() != null) ? CurrentProjectVariables
-								.getProject().getName() : "");
-				BugSearchCriteria searchCriteria = new BugSearchCriteria();
-				searchCriteria.setProjectId(new NumberSearchField(
-						SearchField.AND, CurrentProjectVariables.getProject()
-								.getId()));
-
-				StreamResource res = new StreamResource(
-						new SimpleGridExportItemsStreamResource.AllItems<BugSearchCriteria, SimpleBug>(
-								title, new RpParameterBuilder(tableItem
-										.getDisplayColumns()),
-								ReportExportType.PDF, ApplicationContextUtil
-										.getSpringBean(BugService.class),
-								searchCriteria, SimpleBug.class), "export.pdf",
-						BugListViewImpl.this.getApplication());
-				BugListViewImpl.this.getWindow().open(res, "_blank");
-				exportButtonControl.setPopupVisible(false);
-
-			}
-		});
+		StreamResource res = new StreamResource(
+				new SimpleGridExportItemsStreamResource.AllItems<BugSearchCriteria, SimpleBug>(
+						title, new RpParameterBuilder(tableItem
+								.getDisplayColumns()), ReportExportType.PDF,
+						ApplicationContextUtil.getSpringBean(BugService.class),
+						searchCriteria, SimpleBug.class), "export.pdf");
+		OnDemandFileDownloader fileDownloader = new OnDemandFileDownloader(res);
+		fileDownloader.extend(exportPdfBtn);
 		exportPdfBtn.setIcon(MyCollabResource
 				.newResource("icons/16/filetypes/pdf.png"));
 		exportPdfBtn.setStyleName("link");
@@ -255,6 +247,7 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
 			}
 		});
 
+		FileDownloader a = new FileDownloader(resource);
 		exportCsvBtn.setIcon(MyCollabResource
 				.newResource("icons/16/filetypes/csv.png"));
 		exportCsvBtn.setStyleName("link");

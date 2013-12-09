@@ -34,6 +34,7 @@ import com.esofthead.mycollab.module.file.resource.StreamDownloadResourceFactory
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
+import com.vaadin.server.FileDownloader;
 import com.vaadin.server.Resource;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
@@ -150,17 +151,12 @@ public class AttachmentDisplayComponent extends VerticalLayout {
 		trashBtn.setStyleName("link");
 		attachmentLayout.addComponent(trashBtn);
 
-		Button downloadBtn = new Button(null, new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
+		Button downloadBtn = new Button();
+		FileDownloader fileDownloader = new FileDownloader(
+				StreamDownloadResourceFactory.getStreamResource(attachment
+						.getPath()));
+		fileDownloader.extend(downloadBtn);
 
-			@Override
-			public void buttonClick(ClickEvent event) {
-				Resource downloadResource = StreamDownloadResourceFactory
-						.getStreamResource(attachment.getPath());
-				UI.getCurrent()
-						.open(downloadResource, "_blank");
-			}
-		});
 		downloadBtn.setIcon(MyCollabResource
 				.newResource("icons/16/download.png"));
 		downloadBtn.setStyleName("link");

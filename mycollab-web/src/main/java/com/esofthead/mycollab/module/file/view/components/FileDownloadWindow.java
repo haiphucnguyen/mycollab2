@@ -28,6 +28,7 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
+import com.vaadin.server.FileDownloader;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -83,21 +84,17 @@ public class FileDownloadWindow extends Window {
 
 		final HorizontalLayout buttonControls = new HorizontalLayout();
 		buttonControls.setSpacing(true);
-		final Button download = new Button("Download", new ClickListener() {
-			private static final long serialVersionUID = 1L;
+		final Button downloadBtn = new Button("Download");
+		List<Resource> lstRes = new ArrayList<Resource>();
+		lstRes.add(content);
+		com.vaadin.server.Resource downloadResource = StreamDownloadResourceFactory
+				.getStreamResourceSupportExtDrive(lstRes, false);
 
-			@Override
-			public void buttonClick(final ClickEvent event) {
-				List<Resource> lstRes = new ArrayList<Resource>();
-				lstRes.add(content);
+		FileDownloader fileDownloader = new FileDownloader(downloadResource);
+		fileDownloader.extend(downloadBtn);
 
-				com.vaadin.server.Resource downloadResource = StreamDownloadResourceFactory
-						.getStreamResourceSupportExtDrive(lstRes, false);
-				UI.getCurrent().open(downloadResource, "_blank");
-			}
-		});
-		download.addStyleName(UIConstants.THEME_BLUE_LINK);
-		UiUtils.addComponent(buttonControls, download, Alignment.MIDDLE_CENTER);
+		downloadBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
+		UiUtils.addComponent(buttonControls, downloadBtn, Alignment.MIDDLE_CENTER);
 
 		final Button cancle = new Button("Cancel", new ClickListener() {
 			private static final long serialVersionUID = 1L;

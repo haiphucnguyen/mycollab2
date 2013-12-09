@@ -40,6 +40,7 @@ import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.Container;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.server.FileDownloader;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -172,22 +173,15 @@ public abstract class FileSearchResultComponent extends VerticalLayout {
 					renameBtn.setStyleName("link");
 					filterBtnLayout.addComponent(renameBtn);
 
-					final Button downloadBtn = new Button("Download",
-							new Button.ClickListener() {
+					final Button downloadBtn = new Button("Download");
+					List<Resource> lstRes = new ArrayList<Resource>();
+					lstRes.add(resource);
+					final com.vaadin.server.Resource downloadResource = StreamDownloadResourceFactory
+							.getStreamResourceSupportExtDrive(lstRes, false);
+					FileDownloader fileDownloader = new FileDownloader(
+							downloadResource);
+					fileDownloader.extend(downloadBtn);
 
-								@Override
-								public void buttonClick(final ClickEvent event) {
-									resourceSettingPopupBtn
-											.setPopupVisible(false);
-									List<Resource> lstRes = new ArrayList<Resource>();
-									lstRes.add(resource);
-									final com.vaadin.server.Resource downloadResource = StreamDownloadResourceFactory
-											.getStreamResourceSupportExtDrive(
-													lstRes, false);
-									UI.getCurrent().open(downloadResource,
-											"_blank");
-								}
-							});
 					downloadBtn.setStyleName("link");
 					filterBtnLayout.addComponent(downloadBtn);
 
@@ -199,8 +193,7 @@ public abstract class FileSearchResultComponent extends VerticalLayout {
 									resourceSettingPopupBtn
 											.setPopupVisible(false);
 									ConfirmDialogExt.show(
-											FileSearchResultComponent.this
-													.getWindow(),
+											UI.getCurrent(),
 											LocalizationHelper
 													.getMessage(
 															GenericI18Enum.DELETE_DIALOG_TITLE,

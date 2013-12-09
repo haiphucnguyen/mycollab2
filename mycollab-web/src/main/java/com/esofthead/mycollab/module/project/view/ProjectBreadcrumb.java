@@ -65,15 +65,14 @@ import com.esofthead.mycollab.module.tracker.domain.Component;
 import com.esofthead.mycollab.module.tracker.domain.Version;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.mvp.CacheableComponent;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
-import com.esofthead.mycollab.vaadin.mvp.PageView;
 import com.esofthead.mycollab.vaadin.ui.CommonUIFactory;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.utils.LabelStringGenerator;
 import com.esofthead.mycollab.web.AppContext;
 import com.lexaden.breadcrumb.Breadcrumb;
 import com.lexaden.breadcrumb.BreadcrumbLayout;
-import com.vaadin.terminal.Sizeable;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComponentContainer;
@@ -84,7 +83,7 @@ import com.vaadin.ui.VerticalLayout;
  * @author haiphucnguyen
  */
 @ViewComponent
-public class ProjectBreadcrumb extends Breadcrumb implements PageView {
+public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent {
 	private static final long serialVersionUID = 1L;
 	private static LabelStringGenerator menuLinkGenerator = new BreadcrumbLabelStringGenerator();
 
@@ -919,11 +918,6 @@ public class ProjectBreadcrumb extends Breadcrumb implements PageView {
 		return super.getComponentCount();
 	}
 
-	@Override
-	public ComponentContainer getWidget() {
-		throw new UnsupportedOperationException("Not supported yet.");
-	}
-
 	private static Button generateBreadcrumbLink(String linkname) {
 		return CommonUIFactory.createButtonTooltip(
 				menuLinkGenerator.handleText(linkname), linkname);
@@ -946,11 +940,5 @@ public class ProjectBreadcrumb extends Breadcrumb implements PageView {
 			return value;
 		}
 
-	}
-
-	@Override
-	public void addViewListener(
-			ApplicationEventListener<? extends ApplicationEvent> listener) {
-		throw new UnsupportedOperationException("Not supported yet.");
 	}
 }

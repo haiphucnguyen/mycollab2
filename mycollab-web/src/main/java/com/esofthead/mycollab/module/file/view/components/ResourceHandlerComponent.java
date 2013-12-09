@@ -297,6 +297,8 @@ public class ResourceHandlerComponent extends VerticalLayout {
 				}
 			}
 		});
+		
+		
 		downloadBtn.setIcon(MyCollabResource
 				.newResource("icons/16/ecm/download.png"));
 		downloadBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
@@ -791,6 +793,7 @@ public class ResourceHandlerComponent extends VerticalLayout {
 							UI.getCurrent().open(downloadResource, "_blank");
 						}
 					});
+			
 			downloadBtn.addStyleName("link");
 			filterBtnLayout.addComponent(downloadBtn);
 
