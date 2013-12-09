@@ -18,7 +18,7 @@ package com.esofthead.mycollab.module.project.view.bug;
 
 import java.util.Arrays;
 
-import org.vaadin.hene.splitbutton.SplitButtonExt;
+import com.esofthead.mycollab.vaadin.ui.SplitButtonExt;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
@@ -50,6 +50,7 @@ import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 @ViewComponent
@@ -132,7 +133,7 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				getWindow().addWindow(
+				UI.getCurrent().addWindow(
 						new BugListCustomizeWindow(BugListView.VIEW_DEF_ID,
 								tableItem));
 

@@ -23,8 +23,8 @@ import com.esofthead.mycollab.module.crm.localization.AccountI18nEnum;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
+import com.esofthead.mycollab.vaadin.ui.MassUpdateLayout;
 import com.esofthead.mycollab.vaadin.ui.MassUpdateWindow;
-import com.esofthead.mycollab.vaadin.ui.ReadViewLayout;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
@@ -39,7 +39,7 @@ public class MassUpdateAccountWindow extends MassUpdateWindow<Account> {
 
 	private final Account account;
 	private final EditForm updateForm;
-	private final ReadViewLayout accountAddLayout;
+	private final MassUpdateLayout accountAddLayout;
 	private final VerticalLayout layout;
 
 	public MassUpdateAccountWindow(final String title,
@@ -49,7 +49,7 @@ public class MassUpdateAccountWindow extends MassUpdateWindow<Account> {
 
 		this.setIcon(MyCollabResource.newResource("icons/18/account.png"));
 
-		this.accountAddLayout = new ReadViewLayout(null, false);
+		this.accountAddLayout = new MassUpdateLayout();
 
 		this.account = new Account();
 
@@ -61,7 +61,7 @@ public class MassUpdateAccountWindow extends MassUpdateWindow<Account> {
 
 		this.accountAddLayout.addBody(this.updateForm);
 
-		this.addComponent(this.accountAddLayout);
+		this.setContent(this.accountAddLayout);
 	}
 
 	private class EditForm extends AdvancedEditBeanForm<Account> {

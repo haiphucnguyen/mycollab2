@@ -39,6 +39,7 @@ import com.esofthead.mycollab.vaadin.ui.MailFormWindow;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.UI;
 
 public class CampaignListPresenter
 		extends
@@ -50,7 +51,8 @@ public class CampaignListPresenter
 
 	public CampaignListPresenter() {
 		super(CampaignListView.class);
-		campaignService = ApplicationContextUtil.getSpringBean(CampaignService.class);
+		campaignService = ApplicationContextUtil
+				.getSpringBean(CampaignService.class);
 
 		view.getPopupActionHandlers().addPopupActionHandler(
 				new DefaultPopupActionHandler(this) {
@@ -58,8 +60,7 @@ public class CampaignListPresenter
 					@Override
 					protected void onSelectExtra(String id, String caption) {
 						if ("mail".equals(id)) {
-							view.getWidget().getWindow()
-									.addWindow(new MailFormWindow());
+							UI.getCurrent().addWindow(new MailFormWindow());
 						} else if ("massUpdate".equals(id)) {
 							MassUpdateCampaignWindow massUpdateWindow = new MassUpdateCampaignWindow(
 									LocalizationHelper
@@ -67,7 +68,7 @@ public class CampaignListPresenter
 													GenericI18Enum.MASS_UPDATE_WINDOW_TITLE,
 													"Campaign"),
 									CampaignListPresenter.this);
-							view.getWindow().addWindow(massUpdateWindow);
+							UI.getCurrent().addWindow(massUpdateWindow);
 						}
 
 					}

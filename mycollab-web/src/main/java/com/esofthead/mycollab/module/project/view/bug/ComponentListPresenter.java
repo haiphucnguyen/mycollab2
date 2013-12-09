@@ -39,6 +39,7 @@ import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.MailFormWindow;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.web.AppContext;
+import com.vaadin.ui.UI;
 
 /**
  * 
@@ -54,7 +55,8 @@ public class ComponentListPresenter
 	public ComponentListPresenter() {
 		super(ComponentListView.class);
 
-		componentService = ApplicationContextUtil.getSpringBean(ComponentService.class);
+		componentService = ApplicationContextUtil
+				.getSpringBean(ComponentService.class);
 
 		view.getPopupActionHandlers().addPopupActionHandler(
 				new DefaultPopupActionHandler(this) {
@@ -62,8 +64,7 @@ public class ComponentListPresenter
 					@Override
 					protected void onSelectExtra(String id, String caption) {
 						if (TablePopupActionHandler.MAIL_ACTION.equals(id)) {
-							view.getWidget().getWindow()
-									.addWindow(new MailFormWindow());
+							UI.getCurrent().addWindow(new MailFormWindow());
 						}
 
 					}

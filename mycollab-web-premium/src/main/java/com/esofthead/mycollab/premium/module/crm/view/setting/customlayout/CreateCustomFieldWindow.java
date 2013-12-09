@@ -30,6 +30,7 @@ import com.vaadin.server.Resource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Table.ColumnHeaderMode;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
@@ -116,21 +117,21 @@ public class CreateCustomFieldWindow extends Window {
 
 		VerticalLayout content = new VerticalLayout();
 		content.setSizeFull();
-        content.setStyleName("createCustomFieldWindow");
+		content.setStyleName("createCustomFieldWindow");
 		this.setContent(content);
 		content.setSpacing(true);
-        content.setMargin(true);
+		content.setMargin(true);
 
 		HorizontalLayout body = new HorizontalLayout();
 		body.setSizeFull();
-        body.setSpacing(true);
+		body.setSpacing(true);
 		body.addComponent(constructLeftBodyPanel());
-        VerticalLayout rightPanel = constructRightBodyPanel();
+		VerticalLayout rightPanel = constructRightBodyPanel();
 		body.addComponent(rightPanel);
-        body.setExpandRatio(rightPanel, 1.0f);
-        body.setComponentAlignment(rightPanel, Alignment.TOP_RIGHT);
+		body.setExpandRatio(rightPanel, 1.0f);
+		body.setComponentAlignment(rightPanel, Alignment.TOP_RIGHT);
 		content.addComponent(body);
-        content.setExpandRatio(body, 1.0f);
+		content.setExpandRatio(body, 1.0f);
 
 		HorizontalLayout buttonControls = new HorizontalLayout();
 		Button saveBtn = new Button(
@@ -172,16 +173,14 @@ public class CreateCustomFieldWindow extends Window {
 
 	private VerticalLayout constructLeftBodyPanel() {
 		VerticalLayout panel = new VerticalLayout();
-		panel.setWidth(SIZE_UNDEFINED, 0);
-        panel.setSpacing(true);
+		panel.setSpacing(true);
 		Label title = new Label("Select Field Type:");
-        title.addStyleName("panel-header");
+		title.addStyleName("panel-header");
 		panel.addComponent(title);
 
 		Table fieldSelectionTable = new Table();
-        fieldSelectionTable.setWidth("100%");
-		fieldSelectionTable
-				.setColumnHeaderMode(Table.COLUMN_HEADER_MODE_HIDDEN);
+		fieldSelectionTable.setWidth("100%");
+		fieldSelectionTable.setColumnHeaderMode(ColumnHeaderMode.HIDDEN);
 		fieldSelectionTable.addContainerProperty("icon", Embedded.class, null);
 		fieldSelectionTable.addContainerProperty("type", Button.class, null);
 		fieldSelectionTable.setColumnWidth("icon", 20);
@@ -212,9 +211,9 @@ public class CreateCustomFieldWindow extends Window {
 	private VerticalLayout constructRightBodyPanel() {
 		VerticalLayout panel = new VerticalLayout();
 		panel.setWidth("300px");
-        panel.setSpacing(true);
+		panel.setSpacing(true);
 		Label title = new Label("Provide Field Detail:");
-        title.addStyleName("panel-header");
+		title.addStyleName("panel-header");
 		panel.addComponent(title);
 
 		fieldLayoutWrapper = new CssLayout();

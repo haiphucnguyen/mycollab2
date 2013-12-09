@@ -19,7 +19,7 @@ package com.esofthead.mycollab.vaadin.ui;
 import java.util.List;
 
 import org.vaadin.dialogs.ConfirmDialog;
-import org.vaadin.hene.splitbutton.PopupButtonControl;
+import com.esofthead.mycollab.vaadin.ui.PopupButtonControl;
 
 import com.esofthead.mycollab.common.domain.SaveSearchResultWithBLOBs;
 import com.esofthead.mycollab.common.domain.criteria.SaveSearchResultCriteria;

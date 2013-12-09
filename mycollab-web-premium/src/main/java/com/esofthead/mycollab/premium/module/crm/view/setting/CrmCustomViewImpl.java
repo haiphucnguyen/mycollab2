@@ -46,15 +46,18 @@ import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.Property;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 @ViewComponent
-public class CrmCustomViewImpl extends AbstractPageView implements ICrmCustomView {
+public class CrmCustomViewImpl extends AbstractPageView implements
+		ICrmCustomView {
 
 	private static final long serialVersionUID = 1L;
 
@@ -83,7 +86,7 @@ public class CrmCustomViewImpl extends AbstractPageView implements ICrmCustomVie
 
 		VerticalLayout headerContent = new VerticalLayout();
 		headerContent.setWidth("100%");
-		headerContent.setMargin(false, true, true, true);
+		headerContent.setMargin(new MarginInfo(false, true, true, true));
 		Label descLbl = new Label(
 				"Customize the page layout by changing the order of the columns and fields, marking fields as mandatory, adding or removing the fields and sections. You can drag and drop the originSection header to reorder the sections. You need to drag and drop the fields to move them to the List of Removed Fields");
 		descLbl.setStyleName("instructionLbl");
@@ -109,7 +112,7 @@ public class CrmCustomViewImpl extends AbstractPageView implements ICrmCustomVie
 					public void buttonClick(ClickEvent event) {
 						CreateCustomFieldWindow createCustomFieldWindow = new CreateCustomFieldWindow(
 								CrmCustomViewImpl.this);
-						getWindow().addWindow(createCustomFieldWindow);
+						UI.getCurrent().addWindow(createCustomFieldWindow);
 
 					}
 				});
@@ -128,7 +131,7 @@ public class CrmCustomViewImpl extends AbstractPageView implements ICrmCustomVie
 					public void buttonClick(ClickEvent event) {
 						CreateSectionWindow createSectionWindow = new CreateSectionWindow(
 								CrmCustomViewImpl.this);
-						getWindow().addWindow(createSectionWindow);
+						UI.getCurrent().addWindow(createSectionWindow);
 
 					}
 				});
@@ -248,7 +251,7 @@ public class CrmCustomViewImpl extends AbstractPageView implements ICrmCustomVie
 					CrmTypeConstants.TASK, CrmTypeConstants.CALL,
 					CrmTypeConstants.MEETING);
 
-			this.addListener(new Property.ValueChangeListener() {
+			this.addValueChangeListener(new Property.ValueChangeListener() {
 				private static final long serialVersionUID = 1L;
 
 				@Override

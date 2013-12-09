@@ -17,7 +17,7 @@
 package com.esofthead.mycollab.module.project.view.task;
 
 import org.vaadin.hene.popupbutton.PopupButton;
-import org.vaadin.hene.splitbutton.SplitButtonExt;
+import com.esofthead.mycollab.vaadin.ui.SplitButtonExt;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;

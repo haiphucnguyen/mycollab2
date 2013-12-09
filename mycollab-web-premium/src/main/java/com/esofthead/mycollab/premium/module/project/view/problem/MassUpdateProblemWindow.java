@@ -7,8 +7,8 @@ import com.esofthead.mycollab.module.project.domain.Problem;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
+import com.esofthead.mycollab.vaadin.ui.MassUpdateLayout;
 import com.esofthead.mycollab.vaadin.ui.MassUpdateWindow;
-import com.esofthead.mycollab.vaadin.ui.ReadViewLayout;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
@@ -21,14 +21,14 @@ import com.vaadin.ui.VerticalLayout;
 /**
  * 
  * @author haiphucnguyen
- *
+ * 
  */
 public class MassUpdateProblemWindow extends MassUpdateWindow<Problem> {
 	private static final long serialVersionUID = 1L;
 
 	private final Problem problem;
 	private final EditForm updateForm;
-	private final ReadViewLayout accountAddLayout;
+	private final MassUpdateLayout accountAddLayout;
 	private final VerticalLayout layout;
 
 	public MassUpdateProblemWindow(final String title,
@@ -39,7 +39,7 @@ public class MassUpdateProblemWindow extends MassUpdateWindow<Problem> {
 		this.setIcon(MyCollabResource
 				.newResource("icons/24/project/problem.png"));
 
-		this.accountAddLayout = new ReadViewLayout(null, false);
+		this.accountAddLayout = new MassUpdateLayout();
 
 		this.problem = new Problem();
 
@@ -51,7 +51,7 @@ public class MassUpdateProblemWindow extends MassUpdateWindow<Problem> {
 
 		this.accountAddLayout.addBody(this.updateForm);
 
-		this.addComponent(this.accountAddLayout);
+		this.setContent(this.accountAddLayout);
 	}
 
 	private class EditForm extends AdvancedEditBeanForm<Account> {

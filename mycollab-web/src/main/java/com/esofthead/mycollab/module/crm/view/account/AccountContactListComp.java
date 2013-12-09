@@ -97,7 +97,7 @@ public class AccountContactListComp extends
 						final ContactSearchCriteria criteria = new ContactSearchCriteria();
 						criteria.setSaccountid(new NumberSearchField(AppContext
 								.getAccountId()));
-						getWindow().addWindow(contactsWindow);
+						UI.getCurrent().addWindow(contactsWindow);
 						contactsWindow.setSearchCriteria(criteria);
 						controlsBtn.setPopupVisible(false);
 					}

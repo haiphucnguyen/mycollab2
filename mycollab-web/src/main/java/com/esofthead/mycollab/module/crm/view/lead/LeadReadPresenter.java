@@ -57,6 +57,7 @@ import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.UI;
 
 public class LeadReadPresenter extends CrmGenericPresenter<LeadReadView> {
 
@@ -79,7 +80,7 @@ public class LeadReadPresenter extends CrmGenericPresenter<LeadReadView> {
 					@Override
 					public void onDelete(final Lead data) {
 						ConfirmDialogExt.show(
-								view.getWindow(),
+								UI.getCurrent(),
 								LocalizationHelper.getMessage(
 										GenericI18Enum.DELETE_DIALOG_TITLE,
 										SiteConfiguration.getSiteName()),

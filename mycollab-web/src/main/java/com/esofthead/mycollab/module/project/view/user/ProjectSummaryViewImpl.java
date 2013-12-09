@@ -20,6 +20,7 @@ import com.esofthead.mycollab.module.project.view.ProjectInformationComponent;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.VerticalLayout;
 
@@ -53,7 +54,7 @@ public class ProjectSummaryViewImpl extends AbstractPageView implements
 		layout.addComponent(leftPanel);
 
 		final VerticalLayout rightPanel = new VerticalLayout();
-		rightPanel.setMargin(false, false, false, true);
+		rightPanel.setMargin(new MarginInfo(false, false, false, true));
 		rightPanel.setSpacing(true);
 		layout.addComponent(rightPanel);
 

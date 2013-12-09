@@ -94,8 +94,7 @@ public class CampaignSelectionWindow extends Window {
 								.getData();
 						if ("campaignname".equals(event.getFieldName())) {
 							fieldSelection.fireValueChange(campaign);
-							CampaignSelectionWindow.this.getParent()
-									.removeWindow(CampaignSelectionWindow.this);
+							CampaignSelectionWindow.this.close();
 						}
 
 					}

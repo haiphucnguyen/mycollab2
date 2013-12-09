@@ -16,7 +16,7 @@
  */
 package com.esofthead.mycollab.module.crm.view.activity;
 
-import org.vaadin.hene.splitbutton.SplitButton;
+import com.esofthead.mycollab.vaadin.ui.SplitButton;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;

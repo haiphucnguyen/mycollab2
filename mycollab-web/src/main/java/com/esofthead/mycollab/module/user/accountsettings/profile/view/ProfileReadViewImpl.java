@@ -50,6 +50,7 @@ import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 @SuppressWarnings("serial")
@@ -98,11 +99,8 @@ public class ProfileReadViewImpl extends AbstractPageView implements
 
 					@Override
 					public void buttonClick(final ClickEvent event) {
-						ProfileReadViewImpl.this
-								.getWidget()
-								.getWindow()
-								.addWindow(
-										new PasswordChangeWindow(formItem.user));
+						UI.getCurrent().addWindow(
+								new PasswordChangeWindow(formItem.user));
 					}
 				});
 		final VerticalLayout passLayout = new VerticalLayout();
@@ -148,7 +146,6 @@ public class ProfileReadViewImpl extends AbstractPageView implements
 		};
 		avatarUploadField.setButtonCaption("Change Avatar");
 		avatarUploadField.setFieldType(FieldType.BYTE_ARRAY);
-		avatarUploadField.setWidth(Sizeable.SIZE_UNDEFINED, 0);
 		this.userAvatar.addComponent(avatarUploadField);
 	}
 
@@ -194,7 +191,6 @@ public class ProfileReadViewImpl extends AbstractPageView implements
 				final Label basicInformationHeaderLbl = new Label(
 						"Basic Information");
 				basicInformationHeaderLbl.setStyleName("h2");
-				basicInformationHeaderLbl.setWidth(Sizeable.SIZE_UNDEFINED, 0);
 				basicInformationHeader.addComponent(basicInformationHeaderLbl);
 
 				final CssLayout contactInformationHeader = new CssLayout();
@@ -246,12 +242,9 @@ public class ProfileReadViewImpl extends AbstractPageView implements
 
 							@Override
 							public void buttonClick(final ClickEvent event) {
-								ProfileReadViewImpl.this
-										.getWidget()
-										.getWindow()
-										.addWindow(
-												new BasicInfoChangeWindow(
-														PreviewForm.this.user));
+								UI.getCurrent().addWindow(
+										new BasicInfoChangeWindow(
+												PreviewForm.this.user));
 							}
 						});
 				btnChangeBasicInfo.addStyleName("link");
@@ -266,12 +259,9 @@ public class ProfileReadViewImpl extends AbstractPageView implements
 
 							@Override
 							public void buttonClick(final ClickEvent event) {
-								ProfileReadViewImpl.this
-										.getWidget()
-										.getWindow()
-										.addWindow(
-												new ContactInfoChangeWindow(
-														PreviewForm.this.user));
+								UI.getCurrent().addWindow(
+										new ContactInfoChangeWindow(
+												PreviewForm.this.user));
 							}
 						});
 				btnChangeContactInfo.addStyleName("link");
@@ -286,12 +276,9 @@ public class ProfileReadViewImpl extends AbstractPageView implements
 
 							@Override
 							public void buttonClick(final ClickEvent event) {
-								ProfileReadViewImpl.this
-										.getWidget()
-										.getWindow()
-										.addWindow(
-												new AdvancedInfoChangeWindow(
-														PreviewForm.this.user));
+								UI.getCurrent().addWindow(
+										new AdvancedInfoChangeWindow(
+												PreviewForm.this.user));
 							}
 						});
 				btnChangeAdvanceInfo.addStyleName("link");

@@ -23,8 +23,8 @@ import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
+import com.esofthead.mycollab.vaadin.ui.MassUpdateLayout;
 import com.esofthead.mycollab.vaadin.ui.MassUpdateWindow;
-import com.esofthead.mycollab.vaadin.ui.ReadViewLayout;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
@@ -39,7 +39,7 @@ public class MassUpdateCampaignWindow extends
 	private static final long serialVersionUID = 1L;
 	private final CampaignWithBLOBs campaign;
 	private final EditForm updateForm;
-	private final ReadViewLayout campaginAddLayout;
+	private final MassUpdateLayout campaginAddLayout;
 	private final VerticalLayout layout;
 
 	public MassUpdateCampaignWindow(final String title,
@@ -50,7 +50,7 @@ public class MassUpdateCampaignWindow extends
 
 		this.setIcon(MyCollabResource.newResource("icons/18/crm/campaign.png"));
 
-		this.campaginAddLayout = new ReadViewLayout(null, false);
+		this.campaginAddLayout = new MassUpdateLayout();
 
 		this.campaign = new CampaignWithBLOBs();
 
@@ -63,7 +63,7 @@ public class MassUpdateCampaignWindow extends
 
 		this.campaginAddLayout.addBody(this.updateForm);
 
-		this.addComponent(this.campaginAddLayout);
+		this.setContent(this.campaginAddLayout);
 	}
 
 	private class EditForm extends AdvancedEditBeanForm<Contact> {

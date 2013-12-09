@@ -24,7 +24,7 @@ import java.util.Arrays;
 import java.util.Set;
 
 import org.vaadin.dialogs.ConfirmDialog;
-import org.vaadin.hene.splitbutton.SplitButton;
+import com.esofthead.mycollab.vaadin.ui.SplitButton;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
@@ -54,6 +54,7 @@ import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Table;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 /**
@@ -113,7 +114,7 @@ public class CaseContactListComp extends
 						ContactSearchCriteria criteria = new ContactSearchCriteria();
 						criteria.setSaccountid(new NumberSearchField(AppContext
 								.getAccountId()));
-						getWindow().addWindow(contactsWindow);
+						UI.getCurrent().addWindow(contactsWindow);
 						contactsWindow.setSearchCriteria(criteria);
 						controlsBtn.setPopupVisible(false);
 					}

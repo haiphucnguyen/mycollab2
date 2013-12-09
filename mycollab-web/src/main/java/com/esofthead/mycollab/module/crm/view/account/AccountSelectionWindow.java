@@ -93,8 +93,7 @@ public class AccountSelectionWindow extends Window {
 						SimpleAccount account = (SimpleAccount) event.getData();
 						if ("accountname".equals(event.getFieldName())) {
 							fieldSelection.fireValueChange(account);
-							AccountSelectionWindow.this.getParent()
-									.removeWindow(AccountSelectionWindow.this);
+							AccountSelectionWindow.this.close();
 						}
 					}
 				});

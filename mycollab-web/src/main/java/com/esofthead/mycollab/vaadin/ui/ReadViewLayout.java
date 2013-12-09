@@ -18,13 +18,13 @@ package com.esofthead.mycollab.vaadin.ui;
 
 import com.vaadin.server.Resource;
 import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TabSheet;
+import com.vaadin.ui.TabSheet.Tab;
 
 public class ReadViewLayout extends CssLayout {
 	private static final long serialVersionUID = 1L;
@@ -33,67 +33,43 @@ public class ReadViewLayout extends CssLayout {
 	private final Embedded iconEmbed;
 	private final Label titleLbl;
 	private final TabSheet viewTab;
-	private final CssLayout body;
 
 	public ReadViewLayout(final Resource icon) {
-		this(icon, true);
-	}
-
-	public ReadViewLayout(final Resource icon, final Boolean hasHeader) {
 		this.setSizeFull();
 		this.setStyleName("readview-layout");
-		if (hasHeader) {
-			this.header = new HorizontalLayout();
-			this.header.setWidth("100%");
-			header.setSpacing(true);
-			this.header.setStyleName("readview-layout-header");
-			this.addComponent(this.header);
 
-			final HorizontalLayout headerLeft = new HorizontalLayout();
-			headerLeft.setSizeFull();
-			headerLeft.addStyleName("readview-header-left");
-			headerLeft.setSpacing(true);
-			this.iconEmbed = new Embedded();
-			headerLeft.addComponent(this.iconEmbed);
+		this.header = new HorizontalLayout();
+		this.header.setWidth("100%");
+		header.setSpacing(true);
+		this.header.setStyleName("readview-layout-header");
+		this.addComponent(this.header);
 
-			this.setTitleIcon(icon);
+		final HorizontalLayout headerLeft = new HorizontalLayout();
+		headerLeft.setSizeFull();
+		headerLeft.addStyleName("readview-header-left");
+		headerLeft.setSpacing(true);
+		this.iconEmbed = new Embedded();
+		headerLeft.addComponent(this.iconEmbed);
 
-			headerLeft.setComponentAlignment(this.iconEmbed,
-					Alignment.MIDDLE_LEFT);
+		this.setTitleIcon(icon);
 
-			this.titleLbl = new Label();
-			this.titleLbl.setStyleName("h2");
-			this.titleLbl.setWidth("100%");
-			headerLeft.addComponent(this.titleLbl);
-			headerLeft.setExpandRatio(this.titleLbl, 1.0f);
-			headerLeft.setComponentAlignment(this.titleLbl,
-					Alignment.MIDDLE_LEFT);
-			this.header.addComponent(headerLeft);
-			this.header.setComponentAlignment(headerLeft, Alignment.TOP_LEFT);
-			this.header.setExpandRatio(headerLeft, 1.0f);
+		headerLeft.setComponentAlignment(this.iconEmbed, Alignment.MIDDLE_LEFT);
 
-			this.body = new CssLayout();
-			this.body.setStyleName("readview-layout-body");
-			this.body.setSizeFull();
-			this.addComponent(this.body);
+		this.titleLbl = new Label();
+		this.titleLbl.setStyleName("h2");
+		this.titleLbl.setWidth("100%");
+		headerLeft.addComponent(this.titleLbl);
+		headerLeft.setExpandRatio(this.titleLbl, 1.0f);
+		headerLeft.setComponentAlignment(this.titleLbl, Alignment.MIDDLE_LEFT);
+		this.header.addComponent(headerLeft);
+		this.header.setComponentAlignment(headerLeft, Alignment.TOP_LEFT);
+		this.header.setExpandRatio(headerLeft, 1.0f);
 
-			this.viewTab = new DetachedTabs.Horizontal(this.body);
-			this.viewTab.setSizeUndefined();
-			this.header.addComponent(this.viewTab);
-			this.header.setComponentAlignment(this.viewTab,
-					Alignment.BOTTOM_CENTER);
-		} else {
-			this.header = null;
-			this.titleLbl = null;
-			this.iconEmbed = null;
-			this.viewTab = null;
-
-			this.body = new CssLayout();
-			this.body.setStyleName("readview-layout-body");
-			this.body.setSizeFull();
-			this.addComponent(this.body);
-		}
-
+		this.viewTab = new TabSheet();
+		this.viewTab.setSizeUndefined();
+		this.header.addComponent(this.viewTab);
+		this.header
+				.setComponentAlignment(this.viewTab, Alignment.BOTTOM_CENTER);
 	}
 
 	public void addControlButtons(final Component controlsBtn) {
@@ -110,20 +86,22 @@ public class ReadViewLayout extends CssLayout {
 		}
 	}
 
-	public void addBody(final Component content) {
-		this.body.addComponent(content);
-	}
-
-	public void addTabChangedListener(
-			final DetachedTabs.TabChangedListener listener) {
+	public void addSelectedTabChangeListener(
+			final TabSheet.SelectedTabChangeListener listener) {
 		if (this.viewTab != null) {
-			this.viewTab.addTabChangedListener(listener);
+			this.viewTab.addSelectedTabChangeListener(listener);
 		}
 	}
 
 	public void selectTab(final String viewName) {
 		if (this.viewTab != null) {
-			this.viewTab.setSelectedTab(viewName);
+			int compCount = viewTab.getComponentCount();
+			for (int i = 0; i < compCount; i++) {
+				Tab tab = viewTab.getTab(i);
+				if (tab.getCaption().equals(viewName)) {
+					viewTab.setSelectedTab(tab);
+				}
+			}
 		}
 	}
 

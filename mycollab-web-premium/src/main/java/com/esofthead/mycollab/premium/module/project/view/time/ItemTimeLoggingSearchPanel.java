@@ -86,15 +86,13 @@ public class ItemTimeLoggingSearchPanel extends
 			GridFormLayoutHelper gridLayout = new GridFormLayoutHelper(2, 2,
 					"300px", "100px");
 
-			int dateFieldWidth = 140;
 			String nameFieldWidth = "300px";
 
 			gridLayout.getLayout().setWidth("100%");
 			gridLayout.getLayout().setSpacing(true);
 
 			this.dateRangeField = (DateRangeField) gridLayout.addComponent(
-					new DateRangeField(new HorizontalLayout(), dateFieldWidth),
-					null, 0, 0);
+					new DateRangeField(), null, 0, 0);
 			this.dateRangeField.setDateFormat(AppContext.getDateFormat());
 
 			this.userField = (ProjectMemberListSelect) gridLayout.addComponent(

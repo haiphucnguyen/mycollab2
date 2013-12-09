@@ -23,8 +23,8 @@ import com.esofthead.mycollab.module.crm.domain.Lead;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
+import com.esofthead.mycollab.vaadin.ui.MassUpdateLayout;
 import com.esofthead.mycollab.vaadin.ui.MassUpdateWindow;
-import com.esofthead.mycollab.vaadin.ui.ReadViewLayout;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
@@ -38,7 +38,7 @@ public class MassUpdateLeadWindow extends MassUpdateWindow<Lead> {
 	private static final long serialVersionUID = 1L;
 	private final Lead lead;
 	private final EditForm updateForm;
-	private final ReadViewLayout leadAddLayout;
+	private final MassUpdateLayout leadAddLayout;
 	private final VerticalLayout layout;
 
 	public MassUpdateLeadWindow(final String title,
@@ -49,7 +49,7 @@ public class MassUpdateLeadWindow extends MassUpdateWindow<Lead> {
 
 		this.setIcon(MyCollabResource.newResource("icons/18/crm/lead.png"));
 
-		this.leadAddLayout = new ReadViewLayout(null, false);
+		this.leadAddLayout = new MassUpdateLayout();
 
 		this.lead = new Lead();
 
@@ -61,7 +61,7 @@ public class MassUpdateLeadWindow extends MassUpdateWindow<Lead> {
 
 		this.leadAddLayout.addBody(this.updateForm);
 
-		this.addComponent(this.leadAddLayout);
+		this.setContent(this.leadAddLayout);
 	}
 
 	private class EditForm extends AdvancedEditBeanForm<Contact> {

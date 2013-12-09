@@ -36,6 +36,7 @@ import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.VerticalLayout;
 
@@ -83,7 +84,7 @@ public class AccountListDashlet extends Depot {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				getWindow().addWindow(
+				UI.getCurrent().addWindow(
 						new AccountListCustomizeWindow(
 								AccountListDashlet.VIEW_DEF_ID, tableItem));
 

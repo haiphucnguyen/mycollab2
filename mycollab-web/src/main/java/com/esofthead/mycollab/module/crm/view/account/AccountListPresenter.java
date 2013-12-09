@@ -40,7 +40,7 @@ import com.esofthead.mycollab.vaadin.ui.MailFormWindow;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.Window;
+import com.vaadin.ui.UI;
 
 public class AccountListPresenter
 		extends
@@ -73,10 +73,9 @@ public class AccountListPresenter
 					protected void onSelectExtra(String id, String caption) {
 						if ("mail".equals(id)) {
 							if (isSelectAll) {
-								NotificationUtil.showNotification(LocalizationHelper
-										.getMessage(
-												WebExceptionI18nEnum.NOT_SUPPORT_SENDING_EMAIL_TO_ALL_USERS,
-												Window.Notification.TYPE_WARNING_MESSAGE));
+								NotificationUtil
+										.showWarningNotification(LocalizationHelper
+												.getMessage(WebExceptionI18nEnum.NOT_SUPPORT_SENDING_EMAIL_TO_ALL_USERS));
 							} else {
 								List<String> lstMail = new ArrayList<String>();
 								List<SimpleAccount> tableData = view
@@ -88,8 +87,8 @@ public class AccountListPresenter
 												+ " <" + item.getEmail() + ">");
 									}
 								}
-								view.getWidget().getWindow()
-										.addWindow(new MailFormWindow(lstMail));
+								UI.getCurrent().addWindow(
+										new MailFormWindow(lstMail));
 							}
 						} else if ("massUpdate".equals(id)) {
 							MassUpdateAccountWindow massUpdateWindow = new MassUpdateAccountWindow(
@@ -98,7 +97,7 @@ public class AccountListPresenter
 													GenericI18Enum.MASS_UPDATE_WINDOW_TITLE,
 													"Account"),
 									AccountListPresenter.this);
-							view.getWindow().addWindow(massUpdateWindow);
+							UI.getCurrent().addWindow(massUpdateWindow);
 						}
 
 					}

@@ -27,6 +27,7 @@ import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.Window;
 
 public class RiskReadPresenter extends AbstractPresenter<RiskReadView> {
@@ -51,7 +52,7 @@ public class RiskReadPresenter extends AbstractPresenter<RiskReadView> {
 					public void onDelete(final SimpleRisk data) {
 
 						ConfirmDialogExt.show(
-								view.getWindow(),
+								UI.getCurrent(),
 								LocalizationHelper.getMessage(
 										GenericI18Enum.DELETE_DIALOG_TITLE,
 										SiteConfiguration.getSiteName()),

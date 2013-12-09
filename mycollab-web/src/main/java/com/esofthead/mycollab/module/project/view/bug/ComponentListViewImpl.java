@@ -25,7 +25,6 @@ import java.util.Arrays;
 import org.jsoup.Jsoup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.vaadin.hene.splitbutton.PopupButtonControl;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
@@ -47,6 +46,7 @@ import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
 import com.esofthead.mycollab.vaadin.events.TablePopupActionHandler;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
+import com.esofthead.mycollab.vaadin.ui.PopupButtonControl;
 import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
@@ -61,6 +61,8 @@ import com.hp.gagawa.java.elements.H3;
 import com.hp.gagawa.java.elements.Img;
 import com.hp.gagawa.java.elements.Td;
 import com.hp.gagawa.java.elements.Tr;
+import com.vaadin.data.Property;
+import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -123,12 +125,11 @@ public class ComponentListViewImpl extends AbstractPageView implements
 							final Object itemId, final Object columnId) {
 						final CheckBox cb = new CheckBox("", false);
 						cb.setImmediate(true);
-						cb.addListener(new Button.ClickListener() {
+						cb.addValueChangeListener(new Property.ValueChangeListener() {
 							private static final long serialVersionUID = 1L;
 
 							@Override
-							public void buttonClick(
-									final Button.ClickEvent event) {
+							public void valueChange(ValueChangeEvent event) {
 								final SimpleComponent component = ComponentListViewImpl.this.tableItem
 										.getBeanByIndex(itemId);
 								ComponentListViewImpl.this.tableItem

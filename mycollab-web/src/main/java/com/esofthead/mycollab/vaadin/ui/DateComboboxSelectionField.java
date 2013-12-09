@@ -26,6 +26,7 @@ import java.util.Map;
 import com.vaadin.data.Property;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.ComboBox;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomField;
 import com.vaadin.ui.HorizontalLayout;
 
@@ -45,10 +46,10 @@ public class DateComboboxSelectionField extends CustomField {
 
 	public DateComboboxSelectionField(FieldSelection fieldSelection) {
 		this.fieldSelection = fieldSelection;
-		initUI();
 	}
 
-	private void initUI() {
+	@Override
+	protected Component initContent() {
 		HorizontalLayout layout = new HorizontalLayout();
 		layout.setSpacing(true);
 
@@ -108,7 +109,7 @@ public class DateComboboxSelectionField extends CustomField {
 
 			}
 		});
-		setCompositionRoot(layout);
+		return layout;
 	}
 
 	private void fireDateChange() {

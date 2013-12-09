@@ -18,7 +18,7 @@ package com.esofthead.mycollab.module.crm.view.lead;
 
 import java.util.Arrays;
 
-import org.vaadin.hene.splitbutton.PopupButtonControl;
+import com.esofthead.mycollab.vaadin.ui.PopupButtonControl;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
@@ -49,6 +49,7 @@ import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 @ViewComponent
@@ -133,7 +134,8 @@ public class LeadListViewImpl extends AbstractPageView implements LeadListView {
 
 		this.tableActionControls = new PopupButtonControl(
 				TablePopupActionHandler.DELETE_ACTION, deleteBtn);
-		this.tableActionControls.addOptionItem(TablePopupActionHandler.MAIL_ACTION,
+		this.tableActionControls.addOptionItem(
+				TablePopupActionHandler.MAIL_ACTION,
 				LocalizationHelper.getMessage(GenericI18Enum.BUTTON_MAIL));
 		this.tableActionControls
 				.addOptionItem(TablePopupActionHandler.EXPORT_CSV_ACTION,
@@ -165,7 +167,7 @@ public class LeadListViewImpl extends AbstractPageView implements LeadListView {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				getWindow().addWindow(
+				UI.getCurrent().addWindow(
 						new LeadListCustomizeWindow(LeadListView.VIEW_DEF_ID,
 								tableItem));
 

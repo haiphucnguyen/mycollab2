@@ -22,8 +22,8 @@ import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
+import com.esofthead.mycollab.vaadin.ui.MassUpdateLayout;
 import com.esofthead.mycollab.vaadin.ui.MassUpdateWindow;
-import com.esofthead.mycollab.vaadin.ui.ReadViewLayout;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
@@ -38,7 +38,7 @@ public class MassUpdateContactWindow extends MassUpdateWindow<Contact> {
 
 	private final Contact contact;
 	private final EditForm updateForm;
-	private final ReadViewLayout contactAddLayout;
+	private final MassUpdateLayout contactAddLayout;
 	private final VerticalLayout layout;
 
 	public MassUpdateContactWindow(final String title,
@@ -49,7 +49,7 @@ public class MassUpdateContactWindow extends MassUpdateWindow<Contact> {
 
 		this.setIcon(MyCollabResource.newResource("icons/18/crm/contact.png"));
 
-		this.contactAddLayout = new ReadViewLayout(null, false);
+		this.contactAddLayout = new MassUpdateLayout();
 
 		this.contact = new Contact();
 
@@ -61,7 +61,7 @@ public class MassUpdateContactWindow extends MassUpdateWindow<Contact> {
 
 		this.contactAddLayout.addBody(this.updateForm);
 
-		this.addComponent(this.contactAddLayout);
+		this.setContent(this.contactAddLayout);
 	}
 
 	private class EditForm extends AdvancedEditBeanForm<Contact> {

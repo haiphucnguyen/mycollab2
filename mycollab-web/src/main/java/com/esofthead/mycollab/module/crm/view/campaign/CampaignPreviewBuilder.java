@@ -36,11 +36,13 @@ import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
-import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.JavaScript;
 import com.vaadin.ui.Layout;
+import com.vaadin.ui.TabSheet;
+import com.vaadin.ui.TabSheet.SelectedTabChangeEvent;
+import com.vaadin.ui.TabSheet.Tab;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
@@ -55,9 +57,6 @@ public class CampaignPreviewBuilder extends VerticalLayout {
 	protected CampaignLeadListComp associateLeadList;
 	protected EventRelatedItemListComp associateActivityList;
 	protected NoteListItems noteListItems;
-
-	public CampaignPreviewBuilder() {
-	}
 
 	protected void initRelatedComponent() {
 		associateAccountList = new CampaignAccountListComp();
@@ -240,12 +239,14 @@ public class CampaignPreviewBuilder extends VerticalLayout {
 			campaignAddLayout.addTab(relatedItemsContainer, "More Information");
 
 			campaignAddLayout
-					.addTabChangedListener(new DetachedTabs.TabChangedListener() {
+					.addSelectedTabChangeListener(new TabSheet.SelectedTabChangeListener() {
 
 						@Override
-						public void tabChanged(final TabChangedEvent event) {
-							final Button btn = event.getSource();
-							final String caption = btn.getCaption();
+						public void selectedTabChange(
+								SelectedTabChangeEvent event) {
+							final Tab tab = (Tab) event.getTabSheet()
+									.getSelectedTab();
+							final String caption = tab.getCaption();
 							if ("More Information".equals(caption)) {
 								if (!isLoadedRelateItem) {
 									displayActivities();
@@ -255,6 +256,7 @@ public class CampaignPreviewBuilder extends VerticalLayout {
 									isLoadedRelateItem = true;
 								}
 							}
+
 						}
 					});
 		}

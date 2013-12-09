@@ -23,6 +23,7 @@ import com.esofthead.mycollab.vaadin.ui.MailFormWindow;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.UI;
 
 public class RiskListPresenter extends
 		ListSelectionPresenter<RiskListView, RiskSearchCriteria, SimpleRisk>
@@ -42,14 +43,13 @@ public class RiskListPresenter extends
 					@Override
 					protected void onSelectExtra(String id, String caption) {
 						if (TablePopupActionHandler.MAIL_ACTION.equals(id)) {
-							view.getWidget().getWindow()
-									.addWindow(new MailFormWindow());
+							UI.getCurrent().addWindow(new MailFormWindow());
 
 						} else if (TablePopupActionHandler.MASS_UPDATE_ACTION
 								.equals(id)) {
 							MassUpdateRiskWindow massUpdateWindow = new MassUpdateRiskWindow(
 									"Mass Update Risk", RiskListPresenter.this);
-							view.getWindow().addWindow(massUpdateWindow);
+							UI.getCurrent().addWindow(massUpdateWindow);
 						}
 
 					}

@@ -21,13 +21,11 @@ import java.util.Date;
 
 import com.esofthead.mycollab.core.arguments.RangeDateSearchField;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
-import com.vaadin.server.Sizeable;
 import com.vaadin.shared.ui.datefield.Resolution;
-import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomField;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.VerticalLayout;
 
 public class DateRangeField extends CustomField {
 
@@ -36,27 +34,19 @@ public class DateRangeField extends CustomField {
 	private DateField dateStart = new DateField();
 	private DateField dateEnd = new DateField();
 
-	private ComponentContainer container;
-
-	public DateRangeField(ComponentContainer container, float widthDateField) {
-		this.container = container;
-
-		if (container instanceof HorizontalLayout) {
-			((HorizontalLayout) container).setSpacing(true);
-		} else if (container instanceof VerticalLayout) {
-			((VerticalLayout) container).setSpacing(true);
-		}
-
+	@Override
+	protected Component initContent() {
+		HorizontalLayout container = new HorizontalLayout();
 		dateStart.setCaption("From: ");
 		dateEnd.setCaption("To: ");
 
 		container.addComponent(dateStart);
 		container.addComponent(dateEnd);
 
-		setDateWidth(widthDateField);
+		setDateWidth(140);
 		setDefaultValue();
 
-		this.setCompositionRoot(container);
+		return container;
 	}
 
 	public RangeDateSearchField getRangeSearchValue() {
@@ -96,5 +86,4 @@ public class DateRangeField extends CustomField {
 	public Class<?> getType() {
 		return null;
 	}
-
 }

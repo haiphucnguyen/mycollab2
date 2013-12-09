@@ -23,8 +23,8 @@ import com.esofthead.mycollab.module.crm.domain.Opportunity;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
+import com.esofthead.mycollab.vaadin.ui.MassUpdateLayout;
 import com.esofthead.mycollab.vaadin.ui.MassUpdateWindow;
-import com.esofthead.mycollab.vaadin.ui.ReadViewLayout;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
@@ -39,7 +39,7 @@ public class MassUpdateOpportunityWindow extends MassUpdateWindow<Opportunity> {
 
 	private final Opportunity opportunity;
 	private final EditForm updateForm;
-	private final ReadViewLayout opportunityAddLayout;
+	private final MassUpdateLayout opportunityAddLayout;
 	private final VerticalLayout layout;
 
 	public MassUpdateOpportunityWindow(final String title,
@@ -50,7 +50,7 @@ public class MassUpdateOpportunityWindow extends MassUpdateWindow<Opportunity> {
 		this.setIcon(MyCollabResource
 				.newResource("icons/18/crm/opportunity.png"));
 
-		this.opportunityAddLayout = new ReadViewLayout(null, false);
+		this.opportunityAddLayout = new MassUpdateLayout();
 
 		this.opportunity = new Opportunity();
 
@@ -63,7 +63,7 @@ public class MassUpdateOpportunityWindow extends MassUpdateWindow<Opportunity> {
 
 		this.opportunityAddLayout.addBody(this.updateForm);
 
-		this.addComponent(this.opportunityAddLayout);
+		this.setContent(this.opportunityAddLayout);
 	}
 
 	private class EditForm extends AdvancedEditBeanForm<Account> {

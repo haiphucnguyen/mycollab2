@@ -447,7 +447,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 								gotoEnclosingFoder(res, criteria);
 								return;
 							}
-							FileMainViewImpl.this.getWindow().addWindow(
+							UI.getCurrent().addWindow(
 									new FileDownloadWindow((Content) res));
 						}
 					});

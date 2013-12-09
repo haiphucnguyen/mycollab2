@@ -44,11 +44,13 @@ import com.esofthead.mycollab.vaadin.ui.ReadViewLayout;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.Item;
-import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.JavaScript;
 import com.vaadin.ui.Layout;
+import com.vaadin.ui.TabSheet;
+import com.vaadin.ui.TabSheet.SelectedTabChangeEvent;
+import com.vaadin.ui.TabSheet.Tab;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
@@ -337,12 +339,15 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
 			this.addComponent(accountAddLayout);
 
 			accountAddLayout
-					.addTabChangedListener(new DetachedTabs.TabChangedListener() {
+					.addSelectedTabChangeListener(new TabSheet.SelectedTabChangeListener() {
+						private static final long serialVersionUID = 1L;
 
 						@Override
-						public void tabChanged(final TabChangedEvent event) {
-							final Button btn = event.getSource();
-							final String caption = btn.getCaption();
+						public void selectedTabChange(
+								SelectedTabChangeEvent event) {
+							final Tab tab = (Tab) event.getTabSheet()
+									.getSelectedTab();
+							final String caption = tab.getCaption();
 
 							if ("More Information".equals(caption)) {
 								if (!isLoadedRelateItem) {
@@ -356,6 +361,7 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
 								}
 
 							}
+
 						}
 					});
 		}

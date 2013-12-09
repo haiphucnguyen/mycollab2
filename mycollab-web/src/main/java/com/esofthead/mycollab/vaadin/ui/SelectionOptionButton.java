@@ -19,7 +19,7 @@ package com.esofthead.mycollab.vaadin.ui;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.vaadin.hene.splitbutton.SplitButton;
+import com.esofthead.mycollab.vaadin.ui.SplitButton;
 
 import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
@@ -117,7 +117,7 @@ public class SelectionOptionButton extends SplitButton implements
 				});
 		deSelectBtn.setStyleName("link");
 		selectContent.addComponent(deSelectBtn);
-		setComponent(selectContent);
+		setContent(selectContent);
 	}
 
 	@Override

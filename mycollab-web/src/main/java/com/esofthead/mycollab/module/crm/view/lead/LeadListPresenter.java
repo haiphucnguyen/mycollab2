@@ -41,7 +41,7 @@ import com.esofthead.mycollab.vaadin.ui.MailFormWindow;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.Window;
+import com.vaadin.ui.UI;
 
 public class LeadListPresenter extends
 		CrmGenericListPresenter<LeadListView, LeadSearchCriteria, SimpleLead>
@@ -61,10 +61,9 @@ public class LeadListPresenter extends
 					protected void onSelectExtra(String id, String caption) {
 						if (TablePopupActionHandler.MAIL_ACTION.equals(id)) {
 							if (isSelectAll) {
-								NotificationUtil.showNotification(LocalizationHelper
-										.getMessage(
-												WebExceptionI18nEnum.NOT_SUPPORT_SENDING_EMAIL_TO_ALL_USERS,
-												Window.Notification.TYPE_WARNING_MESSAGE));
+								NotificationUtil
+										.showWarningNotification(LocalizationHelper
+												.getMessage(WebExceptionI18nEnum.NOT_SUPPORT_SENDING_EMAIL_TO_ALL_USERS));
 							} else {
 								List<String> lstMail = new ArrayList<String>();
 
@@ -78,8 +77,8 @@ public class LeadListPresenter extends
 									}
 								}
 
-								view.getWidget().getWindow()
-										.addWindow(new MailFormWindow(lstMail));
+								UI.getCurrent().addWindow(
+										new MailFormWindow(lstMail));
 							}
 
 						} else if (TablePopupActionHandler.MASS_UPDATE_ACTION
@@ -90,7 +89,7 @@ public class LeadListPresenter extends
 													GenericI18Enum.MASS_UPDATE_WINDOW_TITLE,
 													"Lead"),
 									LeadListPresenter.this);
-							view.getWindow().addWindow(massUpdateWindow);
+							UI.getCurrent().addWindow(massUpdateWindow);
 						}
 
 					}

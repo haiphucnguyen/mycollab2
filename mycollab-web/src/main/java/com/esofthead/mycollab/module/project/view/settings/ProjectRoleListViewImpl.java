@@ -22,7 +22,7 @@ package com.esofthead.mycollab.module.project.view.settings;
 
 import java.util.Arrays;
 
-import org.vaadin.hene.splitbutton.PopupButtonControl;
+import com.esofthead.mycollab.vaadin.ui.PopupButtonControl;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;

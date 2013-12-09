@@ -23,8 +23,8 @@ import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
+import com.esofthead.mycollab.vaadin.ui.MassUpdateLayout;
 import com.esofthead.mycollab.vaadin.ui.MassUpdateWindow;
-import com.esofthead.mycollab.vaadin.ui.ReadViewLayout;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
@@ -38,7 +38,7 @@ public class MassUpdateCaseWindow extends MassUpdateWindow<CaseWithBLOBs> {
 	private static final long serialVersionUID = 1L;
 	private final CaseWithBLOBs cases;
 	private final EditForm updateForm;
-	private final ReadViewLayout caseAddLayout;
+	private final MassUpdateLayout caseAddLayout;
 	private final VerticalLayout layout;
 
 	public MassUpdateCaseWindow(final String title,
@@ -49,7 +49,7 @@ public class MassUpdateCaseWindow extends MassUpdateWindow<CaseWithBLOBs> {
 
 		this.setIcon(MyCollabResource.newResource("icons/18/crm/case.png"));
 
-		this.caseAddLayout = new ReadViewLayout(null, false);
+		this.caseAddLayout = new MassUpdateLayout();
 
 		this.cases = new CaseWithBLOBs();
 
@@ -62,7 +62,7 @@ public class MassUpdateCaseWindow extends MassUpdateWindow<CaseWithBLOBs> {
 
 		this.caseAddLayout.addBody(this.updateForm);
 
-		this.addComponent(this.caseAddLayout);
+		this.setContent(this.caseAddLayout);
 	}
 
 	private class EditForm extends AdvancedEditBeanForm<Contact> {

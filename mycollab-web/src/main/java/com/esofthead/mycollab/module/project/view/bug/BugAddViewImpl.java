@@ -213,7 +213,7 @@ public class BugAddViewImpl extends AbstractPageView implements BugAddView {
 				} else if (propertyId.equals("milestoneid")) {
 					final MilestoneComboBox milestoneBox = new MilestoneComboBox();
 					milestoneBox
-							.addListener(new Property.ValueChangeListener() {
+							.addValueChangeListener(new Property.ValueChangeListener() {
 								private static final long serialVersionUID = 1L;
 
 								@Override
