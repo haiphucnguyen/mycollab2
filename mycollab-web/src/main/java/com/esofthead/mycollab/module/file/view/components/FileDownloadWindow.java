@@ -71,8 +71,8 @@ public class FileDownloadWindow extends Window {
 		final Label author = new Label(this.content.getCreatedBy());
 		info.addComponent(author, "Created by", 0, 1);
 
-		final Label size = new Label(ResourceUtils.getVolumeDisplay(this.content
-				.getSize()));
+		final Label size = new Label(
+				ResourceUtils.getVolumeDisplay(this.content.getSize()));
 		info.addComponent(size, "Size", 0, 2);
 
 		final Label dateCreate = new Label(AppContext.formatDate(this.content
@@ -93,8 +93,7 @@ public class FileDownloadWindow extends Window {
 
 				com.vaadin.server.Resource downloadResource = StreamDownloadResourceFactory
 						.getStreamResourceSupportExtDrive(lstRes, false);
-				UI.getCurrent()
-						.open(downloadResource, "_blank");
+				UI.getCurrent().open(downloadResource, "_blank");
 			}
 		});
 		download.addStyleName(UIConstants.THEME_BLUE_LINK);
@@ -112,6 +111,6 @@ public class FileDownloadWindow extends Window {
 
 		UiUtils.addComponent(buttonControls, cancle, Alignment.MIDDLE_CENTER);
 		UiUtils.addComponent(layout, buttonControls, Alignment.MIDDLE_CENTER);
-		this.addComponent(layout);
+		this.setContent(layout);
 	}
 }

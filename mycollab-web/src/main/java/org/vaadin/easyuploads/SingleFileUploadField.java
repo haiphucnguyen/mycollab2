@@ -16,6 +16,7 @@
  */
 package org.vaadin.easyuploads;
 
+import java.io.File;
 
 public class SingleFileUploadField extends UploadField {
 	private static final long serialVersionUID = 1L;
@@ -25,19 +26,9 @@ public class SingleFileUploadField extends UploadField {
 		this.setFileFactory(new TempFileFactory());
 	}
 
-	// @Override
-	// protected void updateDisplay() {
-	// // super.updateDisplay();
-	// String filename = getLastFileName();
-	//
-	// HorizontalLayout layout = new HorizontalLayout();
-	// layout.addComponent(new Embedded(null, UiUtils
-	// .getFileIconResource(filename)));
-	// layout.addComponent(new Label(filename));
-	//
-	// getRootLayout().addComponent(layout);
-	// upload.setVisible(false);
-	// }
+	public File getContentAsFile() {
+		return (File) getValue();
+	}
 
 	public String getFileName() {
 		return getLastFileName();

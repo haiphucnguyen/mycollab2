@@ -209,7 +209,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 		connectDropboxLayout.addComponent(uploadDropboxBtn);
 		filterBtnLayout.addComponent(connectDropboxLayout);
 
-		linkBtn.addComponent(filterBtnLayout);
+		linkBtn.setContent(filterBtnLayout);
 		linkBtn.addStyleName("graybtn2");
 		navButton.addButton(linkBtn);
 
@@ -914,7 +914,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 							});
 					deleteBtn.addStyleName("link");
 					popupOptionActionLayout.addComponent(deleteBtn);
-					popupBtn.addComponent(popupOptionActionLayout);
+					popupBtn.setContent(popupOptionActionLayout);
 					title.addComponent(popupBtn);
 					title.setComponentAlignment(popupBtn,
 							Alignment.MIDDLE_RIGHT);
@@ -953,9 +953,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 								boolean checkingError = checkValidFolderName(folderName);
 								if (checkingError) {
 									NotificationUtil
-											.showNotification(
-													"Please enter valid folder name except any follow characters : <>:&/\\|?*&",
-													Window.Notification.TYPE_WARNING_MESSAGE);
+											.showErrorNotification("Please enter valid folder name except any follow characters : <>:&/\\|?*&");
 									return;
 								}
 								ExternalFolder res = (ExternalFolder) externalResourceService

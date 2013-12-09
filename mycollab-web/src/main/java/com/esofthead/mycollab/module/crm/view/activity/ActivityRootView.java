@@ -24,24 +24,25 @@ import com.esofthead.mycollab.module.crm.localization.ActivityI18nEnum;
 import com.esofthead.mycollab.module.crm.view.parameters.ActivityScreenData;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
+import com.esofthead.mycollab.vaadin.ui.VerticalTabsheet;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
-import com.github.wolfie.detachedtabs.DetachedTabs;
-import com.github.wolfie.detachedtabs.DetachedTabs.TabChangedEvent;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.TabSheet.SelectedTabChangeEvent;
+import com.vaadin.ui.TabSheet.SelectedTabChangeListener;
+import com.vaadin.ui.TabSheet.Tab;
 
 @ViewComponent
 public class ActivityRootView extends AbstractPageView {
 	private static final long serialVersionUID = 1L;
 
 	private final HorizontalLayout root;
-	private final DetachedTabs activityTabs;
-	private final CssLayout mySpaceArea = new CssLayout();
+	private final VerticalTabsheet activityTabs;
 
 	private ActivityCalendarPresenter calendarPresenter;
 	private EventPresenter eventPresenter;
@@ -61,7 +62,7 @@ public class ActivityRootView extends AbstractPageView {
 		root = new HorizontalLayout();
 		root.setStyleName("menuContent");
 
-		activityTabs = new DetachedTabs.Vertical(mySpaceArea);
+		activityTabs = new VerticalTabsheet();
 		activityTabs.setSizeFull();
 		activityTabs.setHeight(null);
 
@@ -71,30 +72,27 @@ public class ActivityRootView extends AbstractPageView {
 		menu.addComponent(activityTabs);
 
 		root.addComponent(menu);
-		mySpaceArea.setStyleName("projectTabContent");
-		mySpaceArea.setWidth("100%");
-		mySpaceArea.setHeight(null);
-		mySpaceArea.setMargin(true);
-		root.addComponent(mySpaceArea);
-		root.setExpandRatio(mySpaceArea, 1.0f);
 		root.setWidth("100%");
 		buildComponents();
 		contentWrapper.addComponent(root);
 	}
 
 	private void buildComponents() {
-		activityTabs.addTab(constructCalendarView(), new MenuButton("Calendar",
-				"calendar.png"));
-		activityTabs.addTab(constructActivityListView(), new MenuButton(
-				"Activities List", "activitylist.png"));
+		activityTabs.addTab(constructCalendarView(), "Calendar",
+				MyCollabResource.newResource("icons/22/crm/calendar.png"));
+
+		activityTabs.addTab(constructCalendarView(), "Activities List",
+				MyCollabResource.newResource("icons/22/crm/activitylist.png"));
 
 		activityTabs
-				.addTabChangedListener(new DetachedTabs.TabChangedListener() {
+				.addSelectedTabChangeListener(new SelectedTabChangeListener() {
+					private static final long serialVersionUID = 1L;
+
 					@Override
-					public void tabChanged(TabChangedEvent event) {
-						Button btn = event.getSource();
-						String caption = btn.getCaption();
-						mySpaceArea.setStyleName("projectTabContent");
+					public void selectedTabChange(SelectedTabChangeEvent event) {
+						Tab tab = ((VerticalTabsheet) event.getSource())
+								.getSelectedTab();
+						String caption = tab.getCaption();
 
 						if ("Calendar".equals(caption)) {
 							calendarPresenter.go(ActivityRootView.this,
@@ -107,6 +105,7 @@ public class ActivityRootView extends AbstractPageView {
 									new ActivityScreenData.GotoActivityList(
 											criteria));
 						}
+
 					}
 				});
 	}
@@ -124,10 +123,10 @@ public class ActivityRootView extends AbstractPageView {
 	}
 
 	public void gotoCalendar() {
-		com.vaadin.ui.Component calendarComp = activityTabs
-				.selectTab(LocalizationHelper
-						.getMessage(ActivityI18nEnum.CALENDAR_TAB_TITLE));
-		this.mySpaceArea.setStyleName("calendarTab");
+		com.vaadin.ui.Component calendarComp = activityTabs.selectTab(
+				LocalizationHelper
+						.getMessage(ActivityI18nEnum.CALENDAR_TAB_TITLE))
+				.getComponent();
 
 		if (calendarComp != null) {
 			calendarPresenter.go(this, null);
@@ -146,14 +145,15 @@ public class ActivityRootView extends AbstractPageView {
 	}
 
 	public Component gotoView(String viewName) {
-		return activityTabs.selectTab(viewName);
+		Tab selectedTab = activityTabs.selectTab(viewName);
+		return (selectedTab != null) ? selectedTab.getComponent() : null;
 	}
 
 	public void gotoActivityList() {
-		com.vaadin.ui.Component activityList = activityTabs
-				.selectTab(LocalizationHelper
-						.getMessage(ActivityI18nEnum.ACTIVITY_LIST_TAB_TITLE));
-		this.mySpaceArea.setStyleName("activityTab");
+		Component activityList = activityTabs.selectTab(
+				LocalizationHelper
+						.getMessage(ActivityI18nEnum.ACTIVITY_LIST_TAB_TITLE))
+				.getComponent();
 
 		if (activityList != null) {
 			EventSearchCriteria searchCriteria = new EventSearchCriteria();

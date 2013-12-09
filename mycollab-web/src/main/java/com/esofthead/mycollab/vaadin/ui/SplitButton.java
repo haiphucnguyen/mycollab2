@@ -37,6 +37,11 @@ public class SplitButton extends CustomComponent {
 
 	}
 
+	public void addPopupVisibilityListener(
+			SplitButtonPopupVisibilityListener listener) {
+
+	}
+
 	public void setPopupVisible(boolean isvisible) {
 
 	}
@@ -55,5 +60,16 @@ public class SplitButton extends CustomComponent {
 
 	public static class SplitButtonClickEvent {
 
+	}
+
+	public static interface SplitButtonPopupVisibilityListener {
+		void splitButtonPopupVisibilityChange(
+				SplitButtonPopupVisibilityEvent event);
+	}
+
+	public static class SplitButtonPopupVisibilityEvent {
+		public boolean isPopupVisible() {
+			return true;
+		}
 	}
 }

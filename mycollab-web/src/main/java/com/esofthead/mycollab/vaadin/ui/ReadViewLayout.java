@@ -24,7 +24,6 @@ import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TabSheet;
-import com.vaadin.ui.TabSheet.Tab;
 
 public class ReadViewLayout extends CssLayout {
 	private static final long serialVersionUID = 1L;
@@ -32,7 +31,7 @@ public class ReadViewLayout extends CssLayout {
 	private final HorizontalLayout header;
 	private final Embedded iconEmbed;
 	private final Label titleLbl;
-	private final TabSheet viewTab;
+	private final TabsheetDecor viewTab;
 
 	public ReadViewLayout(final Resource icon) {
 		this.setSizeFull();
@@ -65,7 +64,7 @@ public class ReadViewLayout extends CssLayout {
 		this.header.setComponentAlignment(headerLeft, Alignment.TOP_LEFT);
 		this.header.setExpandRatio(headerLeft, 1.0f);
 
-		this.viewTab = new TabSheet();
+		this.viewTab = new TabsheetDecor();
 		this.viewTab.setSizeUndefined();
 		this.header.addComponent(this.viewTab);
 		this.header
@@ -95,13 +94,7 @@ public class ReadViewLayout extends CssLayout {
 
 	public void selectTab(final String viewName) {
 		if (this.viewTab != null) {
-			int compCount = viewTab.getComponentCount();
-			for (int i = 0; i < compCount; i++) {
-				Tab tab = viewTab.getTab(i);
-				if (tab.getCaption().equals(viewName)) {
-					viewTab.setSelectedTab(tab);
-				}
-			}
+			viewTab.selectTab(viewName);
 		}
 	}
 

@@ -42,6 +42,7 @@ public class CustomFieldComponent extends CssLayout {
 	private Label fieldNameLbl;
 	private String fieldName;
 	private Panel fieldEditPanel;
+	private VerticalLayout panelContentLayout = new VerticalLayout();
 	private PopupButton editFieldBtn;
 
 	public CustomFieldComponent(AbstractDynaField field) {
@@ -72,17 +73,17 @@ public class CustomFieldComponent extends CssLayout {
 					.newResource("icons/16/edit.png"));
 
 			fieldEditPanel = new Panel();
-			VerticalLayout panelLayout = new VerticalLayout();
-			panelLayout.setSpacing(true);
-			panelLayout.setMargin(true);
-			panelLayout.setWidth("100%");
-			fieldEditPanel.setContent(panelLayout);
+			panelContentLayout = new VerticalLayout();
+			panelContentLayout.setSpacing(true);
+			panelContentLayout.setMargin(true);
+			panelContentLayout.setWidth("100%");
+			fieldEditPanel.setContent(panelContentLayout);
 			fieldEditPanel.setStyleName(Reindeer.PANEL_LIGHT);
 			fieldEditPanel.setWidth("300px");
 
 			createDefaultEditOption();
 
-			editFieldBtn.addComponent(fieldEditPanel);
+			editFieldBtn.setContent(fieldEditPanel);
 			fieldWrapper.addComponent(editFieldBtn);
 			this.addComponent(fieldWrapper);
 		}
@@ -91,7 +92,7 @@ public class CustomFieldComponent extends CssLayout {
 	protected void createDefaultEditOption() {
 		final CheckBox isRequired = new CheckBox("Is Required Field",
 				field.isRequired());
-		fieldEditPanel.addComponent(isRequired);
+		panelContentLayout.addComponent(isRequired);
 
 		Button saveBtn = new Button("Save", new Button.ClickListener() {
 
@@ -102,17 +103,16 @@ public class CustomFieldComponent extends CssLayout {
 				editFieldBtn.setPopupVisible(false);
 				CustomFieldComponent.this.setRequired((Boolean) isRequired
 						.getValue());
-				CustomFieldComponent.this.requestRepaint();
 			}
 		});
 		saveBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-		fieldEditPanel.addComponent(saveBtn);
+		panelContentLayout.addComponent(saveBtn);
 		((VerticalLayout) fieldEditPanel.getContent()).setComponentAlignment(
 				saveBtn, Alignment.MIDDLE_CENTER);
 	}
 
 	protected void addFieldEditOption(Component comp) {
-		fieldEditPanel.addComponent(comp);
+		panelContentLayout.addComponent(comp);
 	}
 
 	public String getFieldName() {

@@ -4,7 +4,6 @@ import java.util.GregorianCalendar;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.vaadin.artur.icepush.ICEPush;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.MyCollabException;
@@ -23,14 +22,14 @@ import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
-import com.vaadin.terminal.ExternalResource;
+import com.vaadin.server.ExternalResource;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.Layout.MarginInfo;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
@@ -44,7 +43,7 @@ public abstract class CloudDriveIntegrationOAuthWindow extends Window {
 	private static Logger log = LoggerFactory
 			.getLogger(CloudDriveIntegrationOAuthWindow.class);
 
-	private ICEPush pusher = new ICEPush();
+	// private ICEPush pusher = new ICEPush();
 
 	private VerticalLayout mainLayout;
 	private VerticalLayout messageBox;
@@ -59,7 +58,7 @@ public abstract class CloudDriveIntegrationOAuthWindow extends Window {
 		constructBody();
 		registerListeners();
 
-		this.addComponent(pusher);
+		// this.addComponent(pusher);
 	}
 
 	private void registerListeners() {
@@ -75,7 +74,7 @@ public abstract class CloudDriveIntegrationOAuthWindow extends Window {
 				messageBox.removeAllComponents();
 				messageBox.addComponent(new Label("Access token retrieved"));
 				CloudDriveIntegrationOAuthWindow.this.setHeight("210px");
-				pusher.push();
+				// pusher.push();
 			}
 
 			@Override
@@ -114,8 +113,9 @@ public abstract class CloudDriveIntegrationOAuthWindow extends Window {
 					@Override
 					public void buttonClick(ClickEvent event) {
 						String authorizeUrl = buildAuthUrl();
-						open(new ExternalResource(authorizeUrl), "New Window",
-								true);
+						// open(new ExternalResource(authorizeUrl),
+						// "New Window",
+						// true);
 					}
 				});
 		btnLogin.addStyleName(UIConstants.THEME_BLUE_LINK);
@@ -211,7 +211,7 @@ public abstract class CloudDriveIntegrationOAuthWindow extends Window {
 		mainLayout.addComponent(controllGroupBtn);
 		mainLayout.setComponentAlignment(controllGroupBtn,
 				Alignment.MIDDLE_CENTER);
-		this.addComponent(mainLayout);
+		this.setContent(mainLayout);
 	}
 
 	public String getCloudDriveFolderName() {

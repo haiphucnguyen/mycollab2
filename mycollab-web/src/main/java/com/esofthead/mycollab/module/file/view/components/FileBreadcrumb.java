@@ -19,15 +19,13 @@ package com.esofthead.mycollab.module.file.view.components;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.esofthead.mycollab.eventmanager.ApplicationEvent;
-import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.module.ecm.StorageNames;
 import com.esofthead.mycollab.module.ecm.domain.ExternalFolder;
 import com.esofthead.mycollab.module.ecm.domain.Folder;
 import com.esofthead.mycollab.module.file.domain.criteria.FileSearchCriteria;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
-import com.esofthead.mycollab.vaadin.mvp.PageView;
+import com.esofthead.mycollab.vaadin.mvp.CacheableComponent;
 import com.esofthead.mycollab.vaadin.ui.CommonUIFactory;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.utils.LabelStringGenerator;
@@ -36,10 +34,9 @@ import com.lexaden.breadcrumb.Breadcrumb;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.ComponentContainer;
 
 @ViewComponent
-public class FileBreadcrumb extends Breadcrumb implements PageView,
+public class FileBreadcrumb extends Breadcrumb implements CacheableComponent,
 		HasSearchHandlers<FileSearchCriteria> {
 
 	private static final long serialVersionUID = 1L;
@@ -115,7 +112,7 @@ public class FileBreadcrumb extends Breadcrumb implements PageView,
 																	// folder
 			Button btn = new Button(((ExternalFolder) folder)
 					.getExternalDrive().getFoldername());
-			btn.addListener(new Button.ClickListener() {
+			btn.addClickListener(new Button.ClickListener() {
 				private static final long serialVersionUID = 1L;
 
 				@Override
@@ -162,7 +159,7 @@ public class FileBreadcrumb extends Breadcrumb implements PageView,
 				}
 				btn.setDescription(pathName);
 				final String currentResourcePath = curPath.toString();
-				btn.addListener(new Button.ClickListener() {
+				btn.addClickListener(new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
@@ -234,17 +231,6 @@ public class FileBreadcrumb extends Breadcrumb implements PageView,
 				handler.onSearch(criteria);
 			}
 		}
-	}
-
-	@Override
-	public ComponentContainer getWidget() {
-		throw new UnsupportedOperationException("Not supported yet.");
-	}
-
-	@Override
-	public void addViewListener(
-			ApplicationEventListener<? extends ApplicationEvent> listener) {
-		throw new UnsupportedOperationException("Not supported yet.");
 	}
 
 	public Folder getCurrentBreadCrumbFolder() {

@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 import org.infinispan.api.BasicCache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.context.WebApplicationContext;
 
 import com.dropbox.core.DbxAppInfo;
 import com.dropbox.core.DbxRequestConfig;
@@ -18,7 +19,8 @@ import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.module.ecm.StorageNames;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabApplication;
-import com.vaadin.terminal.gwt.server.WebApplicationContext;
+import com.vaadin.server.VaadinService;
+import com.vaadin.server.WrappedSession;
 
 public abstract class DropBoxOAuthWindow extends
 		CloudDriveIntegrationOAuthWindow {
@@ -43,10 +45,10 @@ public abstract class DropBoxOAuthWindow extends
 		DbxAppInfo appInfo = new DbxAppInfo("y43ga49m30dfu02",
 				"rheskqqb6f8fo6a");
 		log.debug("redirect URL : " + redirectUri);
-		WebApplicationContext webContext = (WebApplicationContext) AppContext
-				.getApplication().getContext();
-
-		HttpSession session = webContext.getHttpSession();
+		WrappedSession wrappedSession = VaadinService.getCurrentRequest()
+				.getWrappedSession();
+		// TODO: fix compile issue only. Need to revise this feature
+		HttpSession session = null;
 		String appId = MyCollabApplication.getInstance().toString();
 		String sessionKey = "dropbox-auth-csrf-token";
 		DbxSessionStore csrfTokenStore = new DbxStandardSessionStore(session,

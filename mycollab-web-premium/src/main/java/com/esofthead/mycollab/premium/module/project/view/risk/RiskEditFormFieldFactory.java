@@ -13,15 +13,16 @@ import com.vaadin.ui.Field;
 import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.TextField;
 
-public class RiskEditFormFieldFactory extends DefaultEditFormFieldFactory{
+public class RiskEditFormFieldFactory extends DefaultEditFormFieldFactory {
 	private static final long serialVersionUID = 1L;
 	private Risk risk;
-	public RiskEditFormFieldFactory(Risk risk){
+
+	public RiskEditFormFieldFactory(Risk risk) {
 		this.risk = risk;
 	}
+
 	@Override
-	protected Field onCreateField(final Item item,
-			final Object propertyId,
+	protected Field onCreateField(final Item item, final Object propertyId,
 			final com.vaadin.ui.Component uiContext) {
 		if (propertyId.equals("description")) {
 			final RichTextArea risk = new RichTextArea();
@@ -31,8 +32,7 @@ public class RiskEditFormFieldFactory extends DefaultEditFormFieldFactory{
 			return risk;
 		} else if (propertyId.equals("raisedbyuser")) {
 			if (this.risk.getRaisedbyuser() == null) {
-				this.risk.setRaisedbyuser(AppContext
-						.getUsername());
+				this.risk.setRaisedbyuser(AppContext.getUsername());
 			}
 			return new ProjectMemberComboBox();
 		} else if (propertyId.equals("assigntouser")) {
@@ -43,23 +43,21 @@ public class RiskEditFormFieldFactory extends DefaultEditFormFieldFactory{
 			if (this.risk.getConsequence() == null) {
 				this.risk.setConsequence("Marginal");
 			}
-			final ValueComboBox box = new ValueComboBox(false,
-					"Catastrophic", "Critical", "Marginal",
-					"Negligible");
+			final ValueComboBox box = new ValueComboBox(false, "Catastrophic",
+					"Critical", "Marginal", "Negligible");
 			return box;
 		} else if (propertyId.equals("probalitity")) {
 			if (this.risk.getProbalitity() == null) {
 				this.risk.setProbalitity("Possible");
 			}
-			final ValueComboBox box = new ValueComboBox(false,
-					"Certain", "Likely", "Possible", "Unlikely", "Rare");
+			final ValueComboBox box = new ValueComboBox(false, "Certain",
+					"Likely", "Possible", "Unlikely", "Rare");
 			return box;
 		} else if (propertyId.equals("status")) {
 			if (this.risk.getStatus() == null) {
 				risk.setStatus("Open");
 			}
-			final ValueComboBox box = new ValueComboBox(false, "Open",
-					"Closed");
+			final ValueComboBox box = new ValueComboBox(false, "Open", "Closed");
 			return box;
 		} else if (propertyId.equals("level")) {
 			final RatingStars ratingField = new RatingStars();
@@ -69,31 +67,32 @@ public class RiskEditFormFieldFactory extends DefaultEditFormFieldFactory{
 			ratingField.setValueCaption(RiskAddViewImpl.getValueCaptions()
 					.values().toArray(new String[5]));
 
-			ratingField.addListener(new Property.ValueChangeListener() {
-				private static final long serialVersionUID = -3277119031169194273L;
+			ratingField
+					.addValueChangeListener(new Property.ValueChangeListener() {
+						private static final long serialVersionUID = -3277119031169194273L;
 
-				@Override
-				public void valueChange(
-						final Property.ValueChangeEvent event) {
-					final Double value = (Double) event.getProperty()
-							.getValue();
-					final RatingStars changedRs = (RatingStars) event
-							.getProperty();
+						@Override
+						public void valueChange(
+								final Property.ValueChangeEvent event) {
+							final Double value = (Double) event.getProperty()
+									.getValue();
+							final RatingStars changedRs = (RatingStars) event
+									.getProperty();
 
-					// reset value captions
-					changedRs
-							.setValueCaption(RiskAddViewImpl.getValueCaptions()
-									.values().toArray(new String[5]));
-					// set "Your Rating" caption
-					if (value == null) {
-						changedRs.setValue(3);
-					} else {
-						changedRs.setValueCaption(
-								(int) Math.round(value), "Your Rating");
-					}
+							// reset value captions
+							changedRs.setValueCaption(RiskAddViewImpl
+									.getValueCaptions().values()
+									.toArray(new String[5]));
+							// set "Your Rating" caption
+							if (value == null) {
+								changedRs.setValue(3d);
+							} else {
+								changedRs.setValueCaption(
+										(int) Math.round(value), "Your Rating");
+							}
 
-				}
-			});
+						}
+					});
 			return ratingField;
 		}
 

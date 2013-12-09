@@ -13,15 +13,16 @@ import com.vaadin.ui.Field;
 import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.TextField;
 
-public class ProblemEditFormFieldFactory extends DefaultEditFormFieldFactory{
+public class ProblemEditFormFieldFactory extends DefaultEditFormFieldFactory {
 	private static final long serialVersionUID = 1L;
 	private Problem problem;
-	public ProblemEditFormFieldFactory(Problem problem){
+
+	public ProblemEditFormFieldFactory(Problem problem) {
 		this.problem = problem;
 	}
+
 	@Override
-	protected Field onCreateField(final Item item,
-			final Object propertyId,
+	protected Field onCreateField(final Item item, final Object propertyId,
 			final com.vaadin.ui.Component uiContext) {
 
 		if (propertyId.equals("description")) {
@@ -32,8 +33,7 @@ public class ProblemEditFormFieldFactory extends DefaultEditFormFieldFactory{
 			return risk;
 		} else if (propertyId.equals("raisedbyuser")) {
 			if (this.problem.getRaisedbyuser() == null) {
-				this.problem
-						.setRaisedbyuser(AppContext.getUsername());
+				this.problem.setRaisedbyuser(AppContext.getUsername());
 			}
 			return new ProjectMemberComboBox();
 		} else if (propertyId.equals("type")) {
@@ -50,43 +50,42 @@ public class ProblemEditFormFieldFactory extends DefaultEditFormFieldFactory{
 			if (this.problem.getStatus() == null) {
 				this.problem.setStatus("Open");
 			}
-			final ValueComboBox box = new ValueComboBox(false, "Open",
-					"Closed");
+			final ValueComboBox box = new ValueComboBox(false, "Open", "Closed");
 			return box;
 		} else if (propertyId.equals("level")) {
 			final RatingStars ratingField = new RatingStars();
 			ratingField.setMaxValue(5);
 			ratingField.setImmediate(true);
 			ratingField.setDescription("Problem level");
+			ratingField.setValueCaption(ProblemAddViewImpl.getValueCaptions()
+					.values().toArray(new String[5]));
+
 			ratingField
-					.setValueCaption(ProblemAddViewImpl.getValueCaptions()
-							.values().toArray(new String[5]));
+					.addValueChangeListener(new Property.ValueChangeListener() {
+						private static final long serialVersionUID = -3277119031169194273L;
 
-			ratingField.addListener(new Property.ValueChangeListener() {
-				private static final long serialVersionUID = -3277119031169194273L;
+						@Override
+						public void valueChange(
+								final Property.ValueChangeEvent event) {
+							final Double value = (Double) event.getProperty()
+									.getValue();
+							final RatingStars changedRs = (RatingStars) event
+									.getProperty();
 
-				@Override
-				public void valueChange(
-						final Property.ValueChangeEvent event) {
-					final Double value = (Double) event.getProperty()
-							.getValue();
-					final RatingStars changedRs = (RatingStars) event
-							.getProperty();
+							// reset value captions
+							changedRs.setValueCaption(ProblemAddViewImpl
+									.getValueCaptions().values()
+									.toArray(new String[5]));
+							// set "Your Rating" caption
+							if (value == null) {
+								changedRs.setValue(3d);
+							} else {
+								changedRs.setValueCaption(
+										(int) Math.round(value), "Your Rating");
+							}
 
-					// reset value captions
-					changedRs
-							.setValueCaption(ProblemAddViewImpl.getValueCaptions()
-									.values().toArray(new String[5]));
-					// set "Your Rating" caption
-					if (value == null) {
-						changedRs.setValue(3);
-					} else {
-						changedRs.setValueCaption(
-								(int) Math.round(value), "Your Rating");
-					}
-
-				}
-			});
+						}
+					});
 			return ratingField;
 		} else if (propertyId.equals("resolution")) {
 			return new RichTextArea();

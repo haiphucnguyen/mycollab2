@@ -39,8 +39,10 @@ public class CreateSectionWindow extends Window {
 		super("Create Section");
 		center();
 		this.setWidth("600px");
-		VerticalLayout windowLayout = (VerticalLayout) this.getContent();
-		windowLayout.setMargin(false);
+
+		VerticalLayout contentLayout = new VerticalLayout();
+		contentLayout.setMargin(false);
+		this.setContent(contentLayout);
 
 		GridFormLayoutHelper layoutHelper = new GridFormLayoutHelper(1, 2,
 				"100%", "167px", Alignment.MIDDLE_LEFT);
@@ -54,7 +56,7 @@ public class CreateSectionWindow extends Window {
 		final SectionLayoutComboBox sectionLayoutComboBox = new SectionLayoutComboBox();
 		layoutHelper.addComponent(sectionLayoutComboBox, "Column Layout", 0, 1);
 
-		this.addComponent(layoutHelper.getLayout());
+		contentLayout.addComponent(layoutHelper.getLayout());
 
 		HorizontalLayout controlLayout = new HorizontalLayout();
 		controlLayout.setWidth("100%");
@@ -98,14 +100,14 @@ public class CreateSectionWindow extends Window {
 		controlLayout.setComponentAlignment(cancelBtn, Alignment.MIDDLE_LEFT);
 		controlLayout.setExpandRatio(cancelBtn, 1.0f);
 
-		this.addComponent(controlLayout);
+		contentLayout.addComponent(controlLayout);
 	}
 
 	private static class SectionLayoutComboBox extends ComboBox {
 		private static final long serialVersionUID = 1L;
 
 		public SectionLayoutComboBox() {
-			this.setItemCaptionMode(ITEM_CAPTION_MODE_EXPLICIT);
+			this.setItemCaptionMode(ItemCaptionMode.EXPLICIT_DEFAULTS_ID);
 			this.setNullSelectionAllowed(false);
 			this.addItem(LayoutType.ONE_COLUMN);
 			this.setItemCaption(LayoutType.ONE_COLUMN, "One Column");

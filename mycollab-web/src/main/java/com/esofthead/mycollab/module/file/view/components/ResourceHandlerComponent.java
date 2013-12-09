@@ -772,8 +772,7 @@ public class ResourceHandlerComponent extends VerticalLayout {
 							resourceSettingPopupBtn.setPopupVisible(false);
 							final RenameResourceWindow renameWindow = new RenameResourceWindow(
 									res, resourceService);
-							ResourceHandlerComponent.this.getWindow()
-									.addWindow(renameWindow);
+							UI.getCurrent().addWindow(renameWindow);
 						}
 					});
 			renameBtn.addStyleName("link");
