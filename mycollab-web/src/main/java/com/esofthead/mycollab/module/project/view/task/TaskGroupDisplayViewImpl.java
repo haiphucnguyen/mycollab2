@@ -48,6 +48,7 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 @SuppressWarnings("serial")
@@ -154,7 +155,7 @@ public class TaskGroupDisplayViewImpl extends AbstractPageView implements
 		archievedTasksFilterBtn.setStyleName("link");
 		filterBtnLayout.addComponent(archievedTasksFilterBtn);
 
-		this.taskGroupSelection.addComponent(filterBtnLayout);
+		this.taskGroupSelection.setContent(filterBtnLayout);
 
 		final Button newTaskListBtn = new Button(
 				LocalizationHelper
@@ -164,8 +165,7 @@ public class TaskGroupDisplayViewImpl extends AbstractPageView implements
 					public void buttonClick(final ClickEvent event) {
 						final TaskGroupAddWindow taskListWindow = new TaskGroupAddWindow(
 								TaskGroupDisplayViewImpl.this);
-						TaskGroupDisplayViewImpl.this.getWindow().addWindow(
-								taskListWindow);
+						UI.getCurrent().addWindow(taskListWindow);
 					}
 				});
 		newTaskListBtn.setEnabled(CurrentProjectVariables
@@ -194,32 +194,6 @@ public class TaskGroupDisplayViewImpl extends AbstractPageView implements
 				.getMessage(TaskI18nEnum.REODER_TASKGROUP_ACTION));
 		header.addComponent(this.reOrderBtn);
 		header.setComponentAlignment(this.reOrderBtn, Alignment.MIDDLE_RIGHT);
-
-		final Button showGanttChartBtn = new Button(null,
-				new Button.ClickListener() {
-
-					@Override
-					public void buttonClick(final ClickEvent event) {
-						final TaskSearchCriteria searchCriteria = new TaskSearchCriteria();
-						searchCriteria.setProjectid(new NumberSearchField(
-								CurrentProjectVariables.getProjectId()));
-						EventBus.getInstance()
-								.fireEvent(
-										new TaskListEvent.GotoGanttChartView(
-												this,
-												new TaskGroupScreenData.DisplayGanttChartRequest(
-														searchCriteria)));
-					}
-				});
-		showGanttChartBtn.setEnabled(CurrentProjectVariables
-				.canRead(ProjectRolePermissionCollections.TASKS));
-		showGanttChartBtn.setDescription(LocalizationHelper
-				.getMessage(TaskI18nEnum.DISPLAY_GANTT_CHART_ACTION));
-		showGanttChartBtn.setIcon(MyCollabResource
-				.newResource("icons/16/project/gantt_chart.png"));
-		showGanttChartBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-		header.addComponent(showGanttChartBtn);
-		header.setComponentAlignment(showGanttChartBtn, Alignment.MIDDLE_RIGHT);
 
 		mainLayout.addComponent(header);
 

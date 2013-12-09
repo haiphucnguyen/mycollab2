@@ -64,7 +64,9 @@ public class AccountModuleImpl extends AbstractPageView implements
 		final HorizontalLayout headerWrapper = new HorizontalLayout();
 		headerWrapper.setWidth("100%");
 		headerWrapper.setMargin(true);
+		
 		this.breadcrumb = ViewManager.getView(AccountSettingBreadcrumb.class);
+		
 		headerWrapper.addComponent(this.breadcrumb);
 		contentWrapper.addComponent(headerWrapper);
 

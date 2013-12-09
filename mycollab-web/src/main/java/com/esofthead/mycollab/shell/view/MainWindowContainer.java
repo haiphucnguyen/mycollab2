@@ -36,9 +36,10 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.UI;
+import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
-public class MainWindowContainer extends UI implements PageView {
+public class MainWindowContainer extends VerticalLayout implements PageView {
 
 	private static final long serialVersionUID = 1L;
 

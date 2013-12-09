@@ -154,7 +154,7 @@ public class BugChartComponent extends Depot {
 
 		displayReport();
 
-		bugChartPopup.addComponent(filterBtnLayout);
+		bugChartPopup.setContent(filterBtnLayout);
 		this.addHeaderElement(bugChartPopup);
 		this.setHeaderColor(true);
 	}

@@ -25,7 +25,7 @@ import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 /**
  * 
  * @author haiphucnguyen
- *
+ * 
  */
 public abstract class ViewManager {
 
@@ -38,14 +38,15 @@ public abstract class ViewManager {
 		viewClasses = reflections.getTypesAnnotatedWith(ViewComponent.class);
 	}
 
-	protected abstract <T extends PageView> T getViewInstance(
+	protected abstract <T extends CacheableComponent> T getViewInstance(
 			final Class<T> viewClass);
 
 	public static void init() {
 
 	}
 
-	public static <T extends PageView> T getView(final Class<T> viewClass) {
+	public static <T extends CacheableComponent> T getView(
+			final Class<T> viewClass) {
 		return impl.getViewInstance(viewClass);
 	}
 }

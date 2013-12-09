@@ -76,6 +76,7 @@ import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.SplitButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.VerticalTabsheet;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
@@ -85,6 +86,10 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.TabSheet.SelectedTabChangeEvent;
+import com.vaadin.ui.TabSheet.SelectedTabChangeListener;
+import com.vaadin.ui.TabSheet.Tab;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 @SuppressWarnings("serial")
@@ -93,8 +98,7 @@ public class ProjectViewImpl extends AbstractPageView implements ProjectView {
 
 	private static Logger log = LoggerFactory.getLogger(ProjectViewImpl.class);
 	private final HorizontalLayout root;
-	private final DetachedTabs myProjectTab;
-	private final CssLayout mySpaceArea = new CssLayout();
+	private final VerticalTabsheet myProjectTab;
 	private final HorizontalLayout topPanel;
 	private ProjectDashboardPresenter dashboardPresenter;
 	private MessagePresenter messagePresenter;
@@ -129,24 +133,10 @@ public class ProjectViewImpl extends AbstractPageView implements ProjectView {
 		root = new HorizontalLayout();
 		root.setStyleName("menuContent");
 
-		myProjectTab = new DetachedTabs.Vertical(mySpaceArea);
-		myProjectTab.setSizeFull();
-		myProjectTab.setHeight(null);
-
-		CssLayout menu = new CssLayout();
-		menu.setWidth("170px");
-		menu.setStyleName("sidebar-menu");
-		menu.addComponent(myProjectTab);
-
-		root.addComponent(menu);
-		mySpaceArea.setStyleName("projectTabContent");
-		mySpaceArea.setWidth("100%");
-		mySpaceArea.setHeight(null);
-		root.addComponent(mySpaceArea);
-		root.setExpandRatio(mySpaceArea, 1.0f);
+		myProjectTab = new VerticalTabsheet();
 		root.setWidth("100%");
 		buildComponents();
-		contentWrapper.addComponent(root);
+		contentWrapper.addComponent(myProjectTab);
 	}
 
 	private static class MenuButton extends Button {
@@ -159,99 +149,112 @@ public class ProjectViewImpl extends AbstractPageView implements ProjectView {
 	}
 
 	private void buildComponents() {
-		myProjectTab.addTab(constructProjectDashboardComponent(),
-				new MenuButton("Dashboard", "menu_dashboard.png"));
-		myProjectTab.addTab(constructProjectMessageComponent(), new MenuButton(
-				"Messages", "menu_message.png"));
-		myProjectTab.addTab(constructProjectMilestoneComponent(),
-				new MenuButton("Phases", "menu_milestone.png"));
-		myProjectTab.addTab(constructTaskDashboardComponent(), new MenuButton(
-				"Tasks", "menu_task.png"));
-		myProjectTab.addTab(constructProjectBugComponent(), new MenuButton(
-				"Bugs", "menu_bug.png"));
-		myProjectTab.addTab(constructProjectFileComponent(), new MenuButton(
-				"Files", "menu_file.png"));
-		myProjectTab.addTab(constructProjectRiskComponent(), new MenuButton(
-				"Risks", "menu_risk.png"));
-		myProjectTab.addTab(constructProjectProblemComponent(), new MenuButton(
-				"Problems", "menu_problem.png"));
-		myProjectTab.addTab(constructTimeTrackingComponent(), new MenuButton(
-				"Time", "menu_time.png"));
-		myProjectTab.addTab(constructProjectStandupMeeting(), new MenuButton(
-				"StandUp", "menu_standup.png"));
-		myProjectTab.addTab(constructProjectUsers(), new MenuButton(
-				"Users & Settings", "menu_user.png"));
+		myProjectTab.addTab(constructProjectDashboardComponent(), "Dashboard",
+				MyCollabResource
+						.newResource("icons/22/project/menu_dashboard.png"));
 
-		myProjectTab
-				.addTabChangedListener(new DetachedTabs.TabChangedListener() {
-					@Override
-					public void tabChanged(TabChangedEvent event) {
-						Button btn = event.getSource();
-						String caption = btn.getCaption();
-						mySpaceArea.setStyleName("projectTabContent");
-						if ("Messages".equals(caption)) {
-							messagePresenter.go(ProjectViewImpl.this, null);
-						} else if ("Phases".equals(caption)) {
-							mySpaceArea.addStyleName("Phases");
-							MilestoneSearchCriteria searchCriteria = new MilestoneSearchCriteria();
-							searchCriteria.setProjectId(new NumberSearchField(
-									SearchField.AND, CurrentProjectVariables
-											.getProjectId()));
-							gotoMilestoneView(new MilestoneScreenData.Search(
-									searchCriteria));
-						} else if ("Tasks".equals(caption)) {
-							taskPresenter.go(ProjectViewImpl.this, null);
-						} else if ("Bugs".equals(caption)) {
-							gotoBugView(null);
-						} else if ("Risks".equals(caption)) {
-							RiskSearchCriteria searchCriteria = new RiskSearchCriteria();
-							searchCriteria.setProjectId(new NumberSearchField(
-									SearchField.AND, CurrentProjectVariables
-											.getProjectId()));
-							gotoRiskView(new RiskScreenData.Search(
-									searchCriteria));
-						} else if ("Files".equals(caption)) {
-							filePresenter.go(ProjectViewImpl.this,
-									new FileScreenData.GotoDashboard());
-						} else if ("Problems".equals(caption)) {
-							ProblemSearchCriteria searchCriteria = new ProblemSearchCriteria();
-							searchCriteria.setProjectId(new NumberSearchField(
-									SearchField.AND, CurrentProjectVariables
-											.getProjectId()));
-							problemPresenter
-									.go(ProjectViewImpl.this,
-											new ProblemScreenData.Search(
-													searchCriteria));
-						} else if ("Dashboard".equals(caption)) {
-							dashboardPresenter.go(ProjectViewImpl.this, null);
-						} else if ("Users & Settings".equals(caption)) {
-							ProjectMemberSearchCriteria criteria = new ProjectMemberSearchCriteria();
-							criteria.setProjectId(new NumberSearchField(
-									CurrentProjectVariables.getProjectId()));
-							criteria.setStatus(new StringSearchField(
-									ProjectMemberStatusConstants.ACTIVE));
-							gotoUsersAndGroup(new ProjectMemberScreenData.Search(
-									criteria));
-						} else if ("Time".equals(caption)) {
-							ItemTimeLoggingSearchCriteria searchCriteria = new ItemTimeLoggingSearchCriteria();
-							searchCriteria.setProjectId(new NumberSearchField(
-									CurrentProjectVariables.getProjectId()));
-							searchCriteria.setRangeDate(ItemTimeLoggingSearchCriteria
-									.getCurrentRangeDateOfWeekSearchField());
-							gotoTimeTrackingView(new TimeTrackingScreenData.Search(
-									searchCriteria));
-						} else if ("StandUp".equals(caption)) {
-							StandupReportSearchCriteria criteria = new StandupReportSearchCriteria();
-							criteria.setProjectId(new NumberSearchField(
-									CurrentProjectVariables.getProjectId()));
-							criteria.setOnDate(new DateSearchField(
-									SearchField.AND, new GregorianCalendar()
-											.getTime()));
-							standupPresenter.go(ProjectViewImpl.this,
-									new StandupScreenData.Search(criteria));
-						}
-					}
-				});
+		myProjectTab.addTab(constructProjectMessageComponent(), "Messages",
+				MyCollabResource
+						.newResource("icons/22/project/menu_message.png"));
+
+		myProjectTab.addTab(constructProjectMilestoneComponent(), "Phases",
+				MyCollabResource
+						.newResource("icons/22/project/menu_milestone.png"));
+
+		myProjectTab.addTab(constructTaskDashboardComponent(), "Tasks",
+				MyCollabResource.newResource("icons/22/project/menu_task.png"));
+
+		myProjectTab.addTab(constructProjectBugComponent(), "Bugs",
+				MyCollabResource.newResource("icons/22/project/menu_bug.png"));
+		
+		myProjectTab.addTab(constructProjectFileComponent(), "Files",
+				MyCollabResource.newResource("icons/22/project/menu_file.png"));
+		
+		myProjectTab.addTab(constructProjectRiskComponent(), "Risks",
+				MyCollabResource.newResource("icons/22/project/menu_risk.png"));
+		
+		myProjectTab.addTab(constructProjectProblemComponent(), "Problems",
+				MyCollabResource.newResource("icons/22/project/menu_problem.png"));
+		
+		myProjectTab.addTab(constructTimeTrackingComponent(), "Time",
+				MyCollabResource.newResource("icons/22/project/menu_time.png"));
+		
+		myProjectTab.addTab(constructProjectStandupMeeting(), "StandUp",
+				MyCollabResource.newResource("icons/22/project/menu_standup.png"));
+		
+		myProjectTab.addTab(constructProjectUsers(), "Users & Settings",
+				MyCollabResource.newResource("icons/22/project/menu_user.png"));
+		
+
+		myProjectTab.addSelectedTabChangeListener(new SelectedTabChangeListener() {
+			
+			@Override
+			public void selectedTabChange(SelectedTabChangeEvent event) {
+						Tab tab = (Tab)event.getTabSheet().getSelectedTab();
+				String caption = tab.getCaption();
+				if ("Messages".equals(caption)) {
+					messagePresenter.go(ProjectViewImpl.this, null);
+				} else if ("Phases".equals(caption)) {
+					MilestoneSearchCriteria searchCriteria = new MilestoneSearchCriteria();
+					searchCriteria.setProjectId(new NumberSearchField(
+							SearchField.AND, CurrentProjectVariables
+									.getProjectId()));
+					gotoMilestoneView(new MilestoneScreenData.Search(
+							searchCriteria));
+				} else if ("Tasks".equals(caption)) {
+					taskPresenter.go(ProjectViewImpl.this, null);
+				} else if ("Bugs".equals(caption)) {
+					gotoBugView(null);
+				} else if ("Risks".equals(caption)) {
+					RiskSearchCriteria searchCriteria = new RiskSearchCriteria();
+					searchCriteria.setProjectId(new NumberSearchField(
+							SearchField.AND, CurrentProjectVariables
+									.getProjectId()));
+					gotoRiskView(new RiskScreenData.Search(
+							searchCriteria));
+				} else if ("Files".equals(caption)) {
+					filePresenter.go(ProjectViewImpl.this,
+							new FileScreenData.GotoDashboard());
+				} else if ("Problems".equals(caption)) {
+					ProblemSearchCriteria searchCriteria = new ProblemSearchCriteria();
+					searchCriteria.setProjectId(new NumberSearchField(
+							SearchField.AND, CurrentProjectVariables
+									.getProjectId()));
+					problemPresenter
+							.go(ProjectViewImpl.this,
+									new ProblemScreenData.Search(
+											searchCriteria));
+				} else if ("Dashboard".equals(caption)) {
+					dashboardPresenter.go(ProjectViewImpl.this, null);
+				} else if ("Users & Settings".equals(caption)) {
+					ProjectMemberSearchCriteria criteria = new ProjectMemberSearchCriteria();
+					criteria.setProjectId(new NumberSearchField(
+							CurrentProjectVariables.getProjectId()));
+					criteria.setStatus(new StringSearchField(
+							ProjectMemberStatusConstants.ACTIVE));
+					gotoUsersAndGroup(new ProjectMemberScreenData.Search(
+							criteria));
+				} else if ("Time".equals(caption)) {
+					ItemTimeLoggingSearchCriteria searchCriteria = new ItemTimeLoggingSearchCriteria();
+					searchCriteria.setProjectId(new NumberSearchField(
+							CurrentProjectVariables.getProjectId()));
+					searchCriteria.setRangeDate(ItemTimeLoggingSearchCriteria
+							.getCurrentRangeDateOfWeekSearchField());
+					gotoTimeTrackingView(new TimeTrackingScreenData.Search(
+							searchCriteria));
+				} else if ("StandUp".equals(caption)) {
+					StandupReportSearchCriteria criteria = new StandupReportSearchCriteria();
+					criteria.setProjectId(new NumberSearchField(
+							CurrentProjectVariables.getProjectId()));
+					criteria.setOnDate(new DateSearchField(
+							SearchField.AND, new GregorianCalendar()
+									.getTime()));
+					standupPresenter.go(ProjectViewImpl.this,
+							new StandupScreenData.Search(criteria));
+				}
+				
+			}
+		});
 	}
 
 	@Override
@@ -463,62 +466,6 @@ public class ProjectViewImpl extends AbstractPageView implements ProjectView {
 		editProjectBtn.setStyleName("link");
 		popupButtonsControl.addComponent(editProjectBtn);
 
-		// if (CurrentProjectVariables
-		// .canAccess(ProjectRolePermissionCollections.PROJECT)) {
-		// Button archievedProjectBtn = new Button(
-		// LocalizationHelper
-		// .getMessage(ProjectCommonI18nEnum.ARCHIVE_PROJECT_ACTION),
-		// new Button.ClickListener() {
-		// @Override
-		// public void buttonClick(ClickEvent event) {
-		// controlsBtn.setPopupVisible(false);
-		// ConfirmDialogExt.show(
-		// ProjectViewImpl.this.getWindow(),
-		// LocalizationHelper
-		// .getMessage(
-		// ProjectCommonI18nEnum.DIALOG_ARCHIVE_PROJECT_TITLE,
-		// SiteConfiguration
-		// .getSiteName()),
-		// LocalizationHelper
-		// .getMessage(ProjectCommonI18nEnum.CONFIRM_PROJECT_ARCHIVE_MESSAGE),
-		// LocalizationHelper
-		// .getMessage(GenericI18Enum.BUTTON_YES_LABEL),
-		// LocalizationHelper
-		// .getMessage(GenericI18Enum.BUTTON_NO_LABEL),
-		// new ConfirmDialog.Listener() {
-		// private static final long serialVersionUID = 1L;
-		//
-		// @Override
-		// public void onClose(ConfirmDialog dialog) {
-		// if (dialog.isConfirmed()) {
-		// ProjectService projectService = AppContext
-		// .getSpringBean(ProjectService.class);
-		// SimpleProject project = CurrentProjectVariables
-		// .getProject();
-		// project.setProjectstatus(ProjectStatusConstants.ARCHIVE);
-		// projectService
-		// .updateWithSession(
-		// project,
-		// AppContext
-		// .getUsername());
-		// EventBus.getInstance()
-		// .fireEvent(
-		// new ShellEvent.GotoProjectModule(
-		// this,
-		// null));
-		// }
-		// }
-		// });
-		// }
-		// });
-		// archievedProjectBtn.setEnabled(CurrentProjectVariables
-		// .canAccess(ProjectRolePermissionCollections.PROJECT));
-		// archievedProjectBtn.setIcon(MyCollabResource
-		// .newResource("icons/16/project/delete_project.png"));
-		// archievedProjectBtn.setStyleName("link");
-		// popupButtonsControl.addComponent(archievedProjectBtn);
-		// }
-
 		if (CurrentProjectVariables
 				.canAccess(ProjectRolePermissionCollections.PROJECT)) {
 			Button deleteProjectBtn = new Button(
@@ -529,7 +476,7 @@ public class ProjectViewImpl extends AbstractPageView implements ProjectView {
 						public void buttonClick(ClickEvent event) {
 							controlsBtn.setPopupVisible(false);
 							ConfirmDialogExt.show(
-									ProjectViewImpl.this.getWindow(),
+									UI.getCurrent(),
 									LocalizationHelper.getMessage(
 											GenericI18Enum.DELETE_DIALOG_TITLE,
 											SiteConfiguration.getSiteName()),

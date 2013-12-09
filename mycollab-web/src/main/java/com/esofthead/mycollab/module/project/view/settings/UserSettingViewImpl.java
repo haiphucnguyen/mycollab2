@@ -29,16 +29,15 @@ import com.esofthead.mycollab.module.project.domain.criteria.ProjectMemberSearch
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectRoleSearchCriteria;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectRoleScreenData;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
+import com.esofthead.mycollab.vaadin.mvp.PageView;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
-import com.esofthead.mycollab.vaadin.mvp.PageView;
-import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.TabsheetDecor;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
-import com.github.wolfie.detachedtabs.DetachedTabs;
-import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.TabSheet.SelectedTabChangeEvent;
+import com.vaadin.ui.TabSheet.SelectedTabChangeListener;
+import com.vaadin.ui.TabSheet.Tab;
 
 /**
  * 
@@ -53,28 +52,15 @@ public class UserSettingViewImpl extends AbstractPageView implements
 	private ProjectRolePresenter rolePresenter;
 	private ProjectNotificationSettingPresenter notificationSettingPresenter;
 
-	private final DetachedTabs myProjectTab;
-	private final CssLayout mySpaceArea = new CssLayout();
+	private final TabsheetDecor myProjectTab;
 
 	public UserSettingViewImpl() {
-
-		this.myProjectTab = new DetachedTabs.Horizontal(this.mySpaceArea);
-		this.myProjectTab.setSizeUndefined();
-
-		final HorizontalLayout menu = new HorizontalLayout();
-		menu.setWidth("100%");
-		menu.setStyleName(UIConstants.THEME_TAB_STYLE3);
-		menu.setHeight("40px");
-		menu.addComponent(this.myProjectTab);
-
-		this.addComponent(menu);
-		this.mySpaceArea.setWidth("100%");
-		this.mySpaceArea.setHeight(null);
-		this.mySpaceArea.addStyleName("usergroup-view");
-		this.addComponent(this.mySpaceArea);
-		this.setExpandRatio(this.mySpaceArea, 1.0f);
 		this.setWidth("100%");
 		this.setMargin(true);
+		this.myProjectTab = new TabsheetDecor();
+
+		this.addComponent(myProjectTab);
+
 		this.buildComponents();
 	}
 
@@ -93,12 +79,13 @@ public class UserSettingViewImpl extends AbstractPageView implements
 				"Notification Settings");
 
 		this.myProjectTab
-				.addTabChangedListener(new DetachedTabs.TabChangedListener() {
+				.addSelectedTabChangeListener(new SelectedTabChangeListener() {
+					private static final long serialVersionUID = 1L;
+
 					@Override
-					public void tabChanged(
-							final DetachedTabs.TabChangedEvent event) {
-						final Button btn = event.getSource();
-						final String caption = btn.getCaption();
+					public void selectedTabChange(SelectedTabChangeEvent event) {
+						final Tab tab = (Tab)event.getTabSheet().getSelectedTab();
+						final String caption = tab.getCaption();
 						final SimpleProject project = CurrentProjectVariables
 								.getProject();
 
@@ -123,6 +110,7 @@ public class UserSettingViewImpl extends AbstractPageView implements
 							notificationSettingPresenter.go(
 									UserSettingViewImpl.this, null);
 						}
+
 					}
 				});
 

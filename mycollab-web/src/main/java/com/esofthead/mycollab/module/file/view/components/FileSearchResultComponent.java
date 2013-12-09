@@ -166,8 +166,7 @@ public abstract class FileSearchResultComponent extends VerticalLayout {
 									final RenameResourceWindow renameWindow = new RenameResourceWindow(
 											resource,
 											FileSearchResultComponent.this.resourceService);
-									ResourceTableDisplay.this.getWindow()
-											.addWindow(renameWindow);
+									UI.getCurrent().addWindow(renameWindow);
 								}
 							});
 					renameBtn.setStyleName("link");
@@ -185,8 +184,8 @@ public abstract class FileSearchResultComponent extends VerticalLayout {
 									final com.vaadin.server.Resource downloadResource = StreamDownloadResourceFactory
 											.getStreamResourceSupportExtDrive(
 													lstRes, false);
-									UI.getCurrent()
-											.open(downloadResource, "_blank");
+									UI.getCurrent().open(downloadResource,
+											"_blank");
 								}
 							});
 					downloadBtn.setStyleName("link");
@@ -248,7 +247,7 @@ public abstract class FileSearchResultComponent extends VerticalLayout {
 					resourceSettingPopupBtn.setIcon(MyCollabResource
 							.newResource("icons/16/item_settings.png"));
 					resourceSettingPopupBtn.setStyleName("link");
-					resourceSettingPopupBtn.addComponent(filterBtnLayout);
+					resourceSettingPopupBtn.setContent(filterBtnLayout);
 					return resourceSettingPopupBtn;
 				}
 			});
@@ -291,8 +290,8 @@ public abstract class FileSearchResultComponent extends VerticalLayout {
 
 									final FileDownloadWindow downloadFileWindow = new FileDownloadWindow(
 											(Content) resource);
-									ResourceTableDisplay.this.getWindow()
-											.addWindow(downloadFileWindow);
+									UI.getCurrent().addWindow(
+											downloadFileWindow);
 
 								}
 							});
@@ -449,7 +448,7 @@ public abstract class FileSearchResultComponent extends VerticalLayout {
 			cancel.addStyleName(UIConstants.THEME_BLUE_LINK);
 			UiUtils.addComponent(controlButton, cancel, Alignment.MIDDLE_CENTER);
 			UiUtils.addComponent(layout, controlButton, Alignment.MIDDLE_CENTER);
-			this.addComponent(layout);
+			this.setContent(layout);
 		}
 	}
 

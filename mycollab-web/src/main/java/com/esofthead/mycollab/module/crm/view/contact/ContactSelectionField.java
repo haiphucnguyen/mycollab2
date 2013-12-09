@@ -16,25 +16,21 @@
  */
 package com.esofthead.mycollab.module.crm.view.contact;
 
-import org.vaadin.addon.customfield.FieldWrapper;
-
 import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
-import com.esofthead.mycollab.module.crm.service.ContactService;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.FieldSelection;
-import com.esofthead.mycollab.vaadin.ui.UIHelper;
-import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
-import com.vaadin.data.Property;
 import com.vaadin.event.MouseEvents;
 import com.vaadin.event.MouseEvents.ClickEvent;
 import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Component;
+import com.vaadin.ui.CustomField;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.UI;
 
-public class ContactSelectionField extends FieldWrapper<Contact> implements
+public class ContactSelectionField extends CustomField<Contact> implements
 		FieldSelection {
 	private static final long serialVersionUID = 1L;
 
@@ -47,10 +43,23 @@ public class ContactSelectionField extends FieldWrapper<Contact> implements
 	private Embedded browseBtn;
 	private Embedded clearBtn;
 
-	@SuppressWarnings("serial")
-	public ContactSelectionField() {
-		super(new TextField(""), Contact.class);
+	public void setContact(SimpleContact contact) {
+		this.contact = contact;
+		contactName.setValue(contact.getContactName());
+	}
 
+	@Override
+	public void fireValueChange(Object data) {
+		contact = (SimpleContact) data;
+		if (contact != null) {
+			contactName.setValue(contact.getContactName());
+			contact = null;
+		}
+
+	}
+
+	@Override
+	protected Component initContent() {
 		layout = new HorizontalLayout();
 		layout.setSpacing(true);
 
@@ -64,15 +73,14 @@ public class ContactSelectionField extends FieldWrapper<Contact> implements
 		layout.addComponent(browseBtn);
 		layout.setComponentAlignment(browseBtn, Alignment.MIDDLE_LEFT);
 
-		browseBtn.addListener(new MouseEvents.ClickListener() {
+		browseBtn.addClickListener(new MouseEvents.ClickListener() {
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void click(ClickEvent event) {
-				ContactSelectionWindow accountWindow = new ContactSelectionWindow(
+				ContactSelectionWindow contactWindow = new ContactSelectionWindow(
 						ContactSelectionField.this);
-				UIHelper.addWindowToRoot(ContactSelectionField.this,
-						accountWindow);
-				accountWindow.show();
+				UI.getCurrent().addWindow(contactWindow);
 
 			}
 		});
@@ -80,53 +88,23 @@ public class ContactSelectionField extends FieldWrapper<Contact> implements
 		clearBtn = new Embedded(null,
 				MyCollabResource.newResource("icons/16/clearItem.png"));
 
-		clearBtn.addListener(new MouseEvents.ClickListener() {
+		clearBtn.addClickListener(new MouseEvents.ClickListener() {
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void click(ClickEvent event) {
 				contactName.setValue("");
-				ContactSelectionField.this.getWrappedField().setValue(null);
+				contact = null;
 			}
 		});
 		layout.addComponent(clearBtn);
 		layout.setComponentAlignment(clearBtn, Alignment.MIDDLE_LEFT);
 
-		this.setCompositionRoot(layout);
-		this.addListener(new Property.ValueChangeListener() {
-
-			@Override
-			public void valueChange(
-					com.vaadin.data.Property.ValueChangeEvent event) {
-				try {
-					ContactService accountService = ApplicationContextUtil
-							.getSpringBean(ContactService.class);
-					Integer accountId = Integer.parseInt((String) event
-							.getProperty().getValue());
-					SimpleContact contact = accountService.findById(accountId,
-							AppContext.getAccountId());
-					if (contact != null) {
-						contactName.setValue(contact.getContactName());
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-
-			}
-		});
-	}
-
-	public void setContact(SimpleContact contact) {
-		this.contact = contact;
-		contactName.setValue(contact.getContactName());
+		return layout;
 	}
 
 	@Override
-	public void fireValueChange(Object data) {
-		contact = (SimpleContact) data;
-		if (contact != null) {
-			contactName.setValue(contact.getContactName());
-			this.getWrappedField().setValue(contact.getId());
-		}
-
+	public Class<? extends Contact> getType() {
+		return Contact.class;
 	}
 }

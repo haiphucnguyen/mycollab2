@@ -103,8 +103,6 @@ public class ProjectBreadcrumb extends Breadcrumb implements PageView {
 						new ShellEvent.GotoProjectModule(this, null));
 			}
 		}));
-
-		this.setHeight(25, Sizeable.UNITS_PIXELS);
 	}
 
 	public void setProject(SimpleProject project) {
@@ -151,7 +149,7 @@ public class ProjectBreadcrumb extends Breadcrumb implements PageView {
 			filterBtnLayout.addComponent(btnProject);
 		}
 
-		projectSelectionPopupBtn.addComponent(filterBtnLayout);
+		projectSelectionPopupBtn.setContent(filterBtnLayout);
 		this.addLink(projectSelectionPopupBtn);
 		this.setLinkEnabled(true, 1);
 	}
@@ -800,8 +798,8 @@ public class ProjectBreadcrumb extends Breadcrumb implements PageView {
 		AppContext.addFragment(
 				"project/role/preview/"
 						+ UrlEncodeDecoder.encode(project.getId() + "/"
-								+ role.getId()),
-				"PageView Project Role: " + role.getRolename());
+								+ role.getId()), "PageView Project Role: "
+						+ role.getRolename());
 	}
 
 	public void gotoNotificationSetting(ProjectNotificationSetting notify) {

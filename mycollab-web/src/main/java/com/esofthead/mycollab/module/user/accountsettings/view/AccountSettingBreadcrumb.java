@@ -17,8 +17,6 @@
 package com.esofthead.mycollab.module.user.accountsettings.view;
 
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
-import com.esofthead.mycollab.eventmanager.ApplicationEvent;
-import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.user.accountsettings.view.events.ProfileEvent;
 import com.esofthead.mycollab.module.user.domain.Role;
@@ -26,19 +24,18 @@ import com.esofthead.mycollab.module.user.domain.SimpleRole;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.events.RoleEvent;
 import com.esofthead.mycollab.module.user.events.UserEvent;
-import com.esofthead.mycollab.vaadin.mvp.PageView;
+import com.esofthead.mycollab.vaadin.mvp.CacheableComponent;
 import com.esofthead.mycollab.vaadin.ui.CommonUIFactory;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.utils.LabelStringGenerator;
 import com.esofthead.mycollab.web.AppContext;
 import com.lexaden.breadcrumb.Breadcrumb;
-import com.vaadin.terminal.Sizeable;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.ComponentContainer;
 
 @ViewComponent
-public class AccountSettingBreadcrumb extends Breadcrumb implements PageView {
+public class AccountSettingBreadcrumb extends Breadcrumb implements
+		CacheableComponent {
 	private static final long serialVersionUID = 1L;
 
 	private static LabelStringGenerator menuLinkGenerator = new BreadcrumbLabelStringGenerator();
@@ -56,8 +53,6 @@ public class AccountSettingBreadcrumb extends Breadcrumb implements PageView {
 						new ProfileEvent.GotoProfileView(this, null));
 			}
 		}));
-
-		this.setHeight(25, Sizeable.UNITS_PIXELS);
 	}
 
 	public void gotoProfile() {
@@ -203,18 +198,6 @@ public class AccountSettingBreadcrumb extends Breadcrumb implements PageView {
 			Button.ClickListener listener) {
 		return CommonUIFactory.createButtonTooltip(
 				menuLinkGenerator.handleText(linkname), linkname, listener);
-	}
-
-	@Override
-	public ComponentContainer getWidget() {
-
-		return null;
-	}
-
-	@Override
-	public void addViewListener(
-			ApplicationEventListener<? extends ApplicationEvent> listener) {
-
 	}
 
 	private static class BreadcrumbLabelStringGenerator implements

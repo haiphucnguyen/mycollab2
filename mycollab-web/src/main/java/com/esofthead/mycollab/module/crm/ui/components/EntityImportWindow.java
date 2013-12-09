@@ -98,7 +98,7 @@ public abstract class EntityImportWindow<E> extends Window {
 		this.cls = cls;
 
 		fileConfigurationLayout = new FileConfigurationLayout();
-		this.addComponent(fileConfigurationLayout);
+		this.setContent(fileConfigurationLayout);
 	}
 
 	abstract protected List<FieldMapperDef> constructCSVFieldMapper();
@@ -216,15 +216,15 @@ public abstract class EntityImportWindow<E> extends Window {
 								mappingCrmFieldLayout = new MappingCrmConfigurationLayout(
 										(Boolean) hasHeaderCheckBox.getValue(),
 										uploadFile);
-								EntityImportWindow.this
-										.removeComponent(fileConfigurationLayout);
-
-								EntityImportWindow.this.setWidth("800px");
-
-								EntityImportWindow.this.center();
-
-								EntityImportWindow.this
-										.addComponent(mappingCrmFieldLayout);
+//								EntityImportWindow.this
+//										.removeComponent(fileConfigurationLayout);
+//
+//								EntityImportWindow.this.setWidth("800px");
+//
+//								EntityImportWindow.this.center();
+//
+//								EntityImportWindow.this
+//										.addComponent(mappingCrmFieldLayout);
 							}
 
 						} else {
@@ -614,10 +614,10 @@ public abstract class EntityImportWindow<E> extends Window {
 
 				@Override
 				public void buttonClick(ClickEvent event) {
-					EntityImportWindow.this.removeAllComponents();
-					EntityImportWindow.this.setWidth("950px");
-					EntityImportWindow.this
-							.addComponent(fileConfigurationLayout);
+//					EntityImportWindow.this.removeAllComponents();
+//					EntityImportWindow.this.setWidth("950px");
+//					EntityImportWindow.this
+//							.addComponent(fileConfigurationLayout);
 					EntityImportWindow.this.center();
 				}
 			});

@@ -170,7 +170,7 @@ public class ResourceHandlerComponent extends VerticalLayout {
 		selectAllBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
 		selectAllBtn.setIcon(MyCollabResource
 				.newResource("icons/16/checkbox_empty.png"));
-		selectAllBtn.setValue(false);
+		selectAllBtn.setData(false);
 		selectAllBtn.setImmediate(true);
 
 		selectAllBtn.addClickListener(new ClickListener() {
@@ -178,10 +178,10 @@ public class ResourceHandlerComponent extends VerticalLayout {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				if (!(Boolean) selectAllBtn.getValue()) {
+				if (!(Boolean) selectAllBtn.getData()) {
 					selectAllBtn.setIcon(MyCollabResource
 							.newResource("icons/16/checkbox.png"));
-					selectAllBtn.setValue(true);
+					selectAllBtn.setData(true);
 					if (itemResourceContainerLayout.getListAllCheckBox() != null) {
 						for (CheckBox cb : itemResourceContainerLayout
 								.getListAllCheckBox()) {
@@ -190,7 +190,7 @@ public class ResourceHandlerComponent extends VerticalLayout {
 						}
 					}
 				} else {
-					selectAllBtn.setValue(false);
+					selectAllBtn.setData(false);
 					selectAllBtn.setIcon(MyCollabResource
 							.newResource("icons/16/checkbox_empty.png"));
 					if (itemResourceContainerLayout.getListAllCheckBox() != null) {
@@ -269,8 +269,7 @@ public class ResourceHandlerComponent extends VerticalLayout {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				MultiUploadContentWindow multiUploadWindow = new MultiUploadContentWindow();
-				ResourceHandlerComponent.this.getWindow().addWindow(
-						multiUploadWindow);
+				UI.getCurrent().addWindow(multiUploadWindow);
 			}
 		});
 		uploadBtn.setIcon(MyCollabResource
@@ -415,7 +414,7 @@ public class ResourceHandlerComponent extends VerticalLayout {
 									itemResourceContainerLayout
 											.constructBody(baseFolder);
 								}
-								if ((Boolean) selectAllBtn.getValue())
+								if ((Boolean) selectAllBtn.getData())
 									selectAllBtn.click();
 
 								if (menuTree != null) {
@@ -629,7 +628,7 @@ public class ResourceHandlerComponent extends VerticalLayout {
 			checkbox.setStyleName(UIConstants.THEME_ROUND_BUTTON);
 			listAllCheckBox.add(checkbox);
 
-			checkbox.addListener(new ValueChangeListener() {
+			checkbox.addValueChangeListener(new ValueChangeListener() {
 				private static final long serialVersionUID = 1L;
 
 				@Override
@@ -644,7 +643,7 @@ public class ResourceHandlerComponent extends VerticalLayout {
 			layout.addComponent(checkbox);
 			layout.setComponentAlignment(checkbox, Alignment.MIDDLE_LEFT);
 
-			layout.addListener(new LayoutClickListener() {
+			layout.addLayoutClickListener(new LayoutClickListener() {
 				private static final long serialVersionUID = 1L;
 
 				@Override
@@ -698,8 +697,7 @@ public class ResourceHandlerComponent extends VerticalLayout {
 							} else {
 								FileDownloadWindow fileDownloadWindow = new FileDownloadWindow(
 										(Content) res);
-								ResourceHandlerComponent.this.getWindow()
-										.addWindow(fileDownloadWindow);
+								UI.getCurrent().addWindow(fileDownloadWindow);
 							}
 						}
 					});
@@ -1493,7 +1491,7 @@ public class ResourceHandlerComponent extends VerticalLayout {
 				}
 			}
 
-			if ((Boolean) ResourceHandlerComponent.this.selectAllBtn.getValue())
+			if ((Boolean) ResourceHandlerComponent.this.selectAllBtn.getData())
 				ResourceHandlerComponent.this.selectAllBtn.click();
 		}
 

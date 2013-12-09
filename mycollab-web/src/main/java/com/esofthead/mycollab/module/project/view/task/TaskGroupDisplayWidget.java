@@ -53,7 +53,8 @@ public class TaskGroupDisplayWidget
 	private static final long serialVersionUID = 1L;
 
 	public TaskGroupDisplayWidget() {
-		super(null, ApplicationContextUtil.getSpringBean(ProjectTaskListService.class),
+		super(null, ApplicationContextUtil
+				.getSpringBean(ProjectTaskListService.class),
 				TaskListRowDisplayHandler.class, true);
 		this.setDisplayEmptyListText(false);
 	}
@@ -161,7 +162,7 @@ public class TaskGroupDisplayWidget
 					});
 			archievedTasksFilterBtn.setStyleName("link");
 			filterBtnLayout.addComponent(archievedTasksFilterBtn);
-			this.taskListFilterControl.addComponent(filterBtnLayout);
+			this.taskListFilterControl.setContent(filterBtnLayout);
 			this.addHeaderElement(this.taskListFilterControl);
 
 			final Separator divider = new Separator();
@@ -175,7 +176,7 @@ public class TaskGroupDisplayWidget
 			actionBtnLayout.setMargin(true);
 			actionBtnLayout.setSpacing(true);
 			actionBtnLayout.setWidth("200px");
-			this.taskListActionControl.addComponent(actionBtnLayout);
+			this.taskListActionControl.setContent(actionBtnLayout);
 
 			final Button readBtn = new Button("PageView",
 					new Button.ClickListener() {

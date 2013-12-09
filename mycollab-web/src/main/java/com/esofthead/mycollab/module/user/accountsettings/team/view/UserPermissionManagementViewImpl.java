@@ -21,47 +21,32 @@
 package com.esofthead.mycollab.module.user.accountsettings.team.view;
 
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
-import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.PageView;
-import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
+import com.esofthead.mycollab.vaadin.ui.TabsheetDecor;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
-import com.github.wolfie.detachedtabs.DetachedTabs;
-import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.TabSheet.SelectedTabChangeEvent;
+import com.vaadin.ui.TabSheet.SelectedTabChangeListener;
+import com.vaadin.ui.TabSheet.Tab;
 
 /**
  * 
  * @author haiphucnguyen
  */
 @ViewComponent
-public class UserPermissionManagementViewImpl extends AbstractPageView implements
-		UserPermissionManagementView {
+public class UserPermissionManagementViewImpl extends AbstractPageView
+		implements UserPermissionManagementView {
 	private static final long serialVersionUID = 1L;
-	private DetachedTabs groupTab;
+	private TabsheetDecor groupTab;
 	private UserPresenter userPresenter;
 	private RolePresenter rolePresenter;
-	private CssLayout mySpaceArea = new CssLayout();
 
 	public UserPermissionManagementViewImpl() {
 		this.setMargin(true);
-		groupTab = new DetachedTabs.Horizontal(mySpaceArea);
-		groupTab.setSizeUndefined();
+		groupTab = new TabsheetDecor();
 
-		HorizontalLayout menu = new HorizontalLayout();
-		menu.setWidth("100%");
-		menu.setStyleName(UIConstants.THEME_TAB_STYLE3);
-		menu.setHeight("40px");
-		menu.setStyleName(UIConstants.THEME_TAB_STYLE3);
-		menu.addComponent(groupTab);
-
-		this.addComponent(menu);
-		mySpaceArea.setWidth("100%");
-		mySpaceArea.setHeight(null);
-		this.addComponent(mySpaceArea);
-		this.setExpandRatio(mySpaceArea, 1.0f);
-		this.setWidth("100%");
+		this.addComponent(groupTab);
 
 		buildComponents();
 	}
@@ -73,11 +58,13 @@ public class UserPermissionManagementViewImpl extends AbstractPageView implement
 		rolePresenter = PresenterResolver.getPresenter(RolePresenter.class);
 		groupTab.addTab(rolePresenter.getView(), "Roles");
 
-		groupTab.addTabChangedListener(new DetachedTabs.TabChangedListener() {
+		groupTab.addSelectedTabChangeListener(new SelectedTabChangeListener() {
+			private static final long serialVersionUID = 1L;
+
 			@Override
-			public void tabChanged(DetachedTabs.TabChangedEvent event) {
-				Button btn = event.getSource();
-				String caption = btn.getCaption();
+			public void selectedTabChange(SelectedTabChangeEvent event) {
+				Tab tab = (Tab) event.getTabSheet().getSelectedTab();
+				String caption = tab.getCaption();
 				if ("Users".equals(caption)) {
 					userPresenter.go(UserPermissionManagementViewImpl.this,
 							null);
@@ -87,13 +74,15 @@ public class UserPermissionManagementViewImpl extends AbstractPageView implement
 				}
 			}
 		});
+
 		userPresenter.go(this, null);
 
 	}
 
 	@Override
 	public Component gotoSubView(String name) {
-		PageView component = (PageView) groupTab.selectTab(name);
+		PageView component = (PageView) ((Tab) groupTab.selectTab(name))
+				.getComponent();
 		return component;
 	}
 

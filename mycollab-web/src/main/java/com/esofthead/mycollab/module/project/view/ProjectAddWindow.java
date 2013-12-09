@@ -35,6 +35,7 @@ import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -56,13 +57,16 @@ public class ProjectAddWindow extends Window {
 		this.setWidth("900px");
 		this.center();
 
+		VerticalLayout contentLayout = new VerticalLayout();
+		contentLayout.setMargin(new MarginInfo(false, false, true, false));
+		this.setContent(contentLayout);
+
 		this.project = new Project();
 		this.editForm = new EditForm();
-		this.addComponent(this.editForm);
+		contentLayout.addComponent(this.editForm);
 		this.setCaption("New Project");
 		this.editForm.setItemDataSource(new BeanItem<Project>(this.project));
-		((VerticalLayout) this.getContent()).setMargin(false, false, true,
-				false);
+
 	}
 
 	private class EditForm extends AdvancedEditBeanForm<Project> {
