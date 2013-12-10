@@ -22,8 +22,6 @@ package com.esofthead.mycollab.module.project.service;
 
 import java.util.List;
 
-import org.springframework.flex.remoting.RemotingDestination;
-
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.persistence.service.ISearchableService;
 import com.esofthead.mycollab.module.project.domain.ProjectGenericTask;
@@ -34,7 +32,6 @@ import com.esofthead.mycollab.module.project.domain.criteria.ProjectGenericTaskS
  * 
  * @author haiphucnguyen
  */
-@RemotingDestination
 public interface ProjectGenericTaskService extends
 		ISearchableService<ProjectGenericTaskSearchCriteria> {
 	

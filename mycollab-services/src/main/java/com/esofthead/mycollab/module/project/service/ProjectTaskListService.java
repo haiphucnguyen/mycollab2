@@ -20,8 +20,6 @@
  */
 package com.esofthead.mycollab.module.project.service;
 
-import org.springframework.flex.remoting.RemotingDestination;
-
 import com.esofthead.mycollab.core.cache.CacheEvict;
 import com.esofthead.mycollab.core.cache.CacheKey;
 import com.esofthead.mycollab.core.cache.Cacheable;
@@ -35,7 +33,6 @@ import com.esofthead.mycollab.module.project.domain.criteria.TaskListSearchCrite
  * 
  * @author haiphucnguyen
  */
-@RemotingDestination
 public interface ProjectTaskListService extends
 		IDefaultService<Integer, TaskList, TaskListSearchCriteria> {
 	@Cacheable

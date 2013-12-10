@@ -22,8 +22,6 @@ package com.esofthead.mycollab.module.project.service;
 
 import java.util.List;
 
-import org.springframework.flex.remoting.RemotingDestination;
-
 import com.esofthead.mycollab.core.cache.CacheEvict;
 import com.esofthead.mycollab.core.cache.CacheKey;
 import com.esofthead.mycollab.core.cache.Cacheable;
@@ -38,7 +36,6 @@ import com.esofthead.mycollab.module.user.domain.SimpleUser;
  * 
  * @author haiphucnguyen
  */
-@RemotingDestination
 public interface ProjectMemberService extends
 		IDefaultService<Integer, ProjectMember, ProjectMemberSearchCriteria> {
 
