@@ -38,6 +38,7 @@ import com.esofthead.mycollab.vaadin.mvp.BeanItemCustomExt;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanCustomForm;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
+import com.esofthead.mycollab.vaadin.ui.TabsheetDecor;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.UserLinkViewField;
 import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator2;
 import com.esofthead.mycollab.vaadin.ui.ReadViewLayout;
@@ -345,8 +346,8 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
 						@Override
 						public void selectedTabChange(
 								SelectedTabChangeEvent event) {
-							final Tab tab = (Tab) event.getTabSheet()
-									.getSelectedTab();
+							final Tab tab = ((TabsheetDecor) event
+									.getTabSheet()).getSelectedTabInfo();
 							final String caption = tab.getCaption();
 
 							if ("More Information".equals(caption)) {

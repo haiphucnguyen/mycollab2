@@ -17,4 +17,8 @@ public class TabsheetDecor extends TabSheet {
 
 		return null;
 	}
+
+	public Tab getSelectedTabInfo() {
+		return this.getTab(this.getSelectedTab());
+	}
 }

@@ -18,11 +18,9 @@ package com.esofthead.mycollab.web;
 
 import java.io.InputStream;
 
-import org.infinispan.api.BasicCache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.esofthead.mycollab.cache.LocalCacheManager;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.DeploymentMode;
@@ -38,6 +36,7 @@ import com.vaadin.annotations.Theme;
 import com.vaadin.server.DefaultErrorHandler;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServletRequest;
+import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.UI;
 
 /**
@@ -50,12 +49,12 @@ public class MyCollabApplication extends UI {
 
 	private static final long serialVersionUID = 1L;
 
+	private static final String CURRENT_APP = "currentApp";
+
 	private static Logger log = LoggerFactory
 			.getLogger(MyCollabApplication.class);
 
 	private static DatabaseReader reader = null;
-
-	private static ThreadLocal<MyCollabApplication> threadLocal = new ThreadLocal<MyCollabApplication>();
 
 	/**
 	 * Context of current logged in user
@@ -63,11 +62,6 @@ public class MyCollabApplication extends UI {
 	private AppContext currentContext;
 
 	private String initialSubDomain = "1";
-
-	/**
-	 * Cache to keep all variables in user session
-	 */
-	BasicCache<String, Object> variables;
 
 	static {
 		try {
@@ -81,14 +75,14 @@ public class MyCollabApplication extends UI {
 
 	// @return the current application instance
 	public static MyCollabApplication getInstance() {
-		return threadLocal.get();
+		return (MyCollabApplication) VaadinSession.getCurrent().getAttribute(
+				CURRENT_APP);
 	}
 
 	@Override
 	protected void init(VaadinRequest request) {
 		log.debug("Init mycollab application {}", this.toString());
-		setInstance(this);
-		variables = LocalCacheManager.getCache(this.toString());
+		VaadinSession.getCurrent().setAttribute(CURRENT_APP, this);
 		currentContext = new AppContext(this);
 		postSetupApp(request);
 		try {
@@ -132,11 +126,6 @@ public class MyCollabApplication extends UI {
 
 	public AppContext getSessionData() {
 		return currentContext;
-	}
-
-	// Set the current application instance
-	public static void setInstance(MyCollabApplication application) {
-		threadLocal.set(application);
 	}
 
 	// @Override
@@ -199,8 +188,8 @@ public class MyCollabApplication extends UI {
 		super.close();
 		log.debug("Application is closed. Clean all resources");
 		AppContext.clearSession();
-		variables.clear();
 		currentContext = null;
+		VaadinSession.getCurrent().close();
 	}
 
 	/**
@@ -209,7 +198,7 @@ public class MyCollabApplication extends UI {
 	 * @param value
 	 */
 	public static void putVariable(String key, Object value) {
-		getInstance().variables.put(key, value);
+		VaadinSession.getCurrent().setAttribute(key, value);
 	}
 
 	/**
@@ -217,7 +206,7 @@ public class MyCollabApplication extends UI {
 	 * @param key
 	 */
 	public static void removeVariable(String key) {
-		getInstance().variables.remove(key);
+		VaadinSession.getCurrent().setAttribute(key, null);
 	}
 
 	/**
@@ -226,7 +215,7 @@ public class MyCollabApplication extends UI {
 	 * @return
 	 */
 	public static Object getVariable(String key) {
-		return getInstance().variables.get(key);
+		return VaadinSession.getCurrent().getAttribute(key);
 	}
 
 	private static Throwable getUserInvalidException(Throwable e) {

@@ -49,6 +49,7 @@ import com.esofthead.mycollab.module.user.service.UserPreferenceService;
 import com.esofthead.mycollab.security.PermissionMap;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.vaadin.server.Page;
+import com.vaadin.server.VaadinSession;
 
 /**
  * The core class that keep user session data while user login to MyCollab
@@ -188,8 +189,7 @@ public class AppContext implements Serializable {
 		billingAccount = billingAc;
 
 		TimeZone timezone = getTimezoneInContext();
-		MyCollabApplication.getInstance().variables
-				.put(USER_TIMEZONE, timezone);
+		MyCollabApplication.putVariable(USER_TIMEZONE, timezone);
 	}
 
 	/**
@@ -444,9 +444,9 @@ public class AppContext implements Serializable {
 	 */
 	public static void clearSession() {
 		if (getInstance() != null) {
-			MyCollabApplication.getInstance().variables.clear();
 			getInstance().session = null;
 			getInstance().userPreference = null;
+			VaadinSession.getCurrent().close();
 		}
 	}
 
