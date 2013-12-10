@@ -36,6 +36,7 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.MyCollabApplication;
 import com.vaadin.ui.ComponentContainer;
 
 public class LoginPresenter extends AbstractPresenter<LoginView> {
@@ -74,9 +75,8 @@ public class LoginPresenter extends AbstractPresenter<LoginView> {
 				AppContext.getSubDomain(), false);
 
 		if (isRemmeberPassword) {
-			//TODO: remember password
-			// ((MainWindowContainer) UI.getCurrent())
-			// .rememberPassword(username, password);
+			MyCollabApplication.getInstance().rememberPassword(username,
+					password);
 		}
 
 		BillingAccountService billingAccountService = ApplicationContextUtil

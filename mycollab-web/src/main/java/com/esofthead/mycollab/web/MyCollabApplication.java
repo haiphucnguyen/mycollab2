@@ -18,10 +18,13 @@ package com.esofthead.mycollab.web;
 
 import java.io.InputStream;
 
+import javax.servlet.http.Cookie;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.configuration.PasswordEncryptHelper;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.DeploymentMode;
 import com.esofthead.mycollab.core.UserInvalidInputException;
@@ -35,6 +38,7 @@ import com.maxmind.geoip2.DatabaseReader.Builder;
 import com.vaadin.annotations.Theme;
 import com.vaadin.server.DefaultErrorHandler;
 import com.vaadin.server.VaadinRequest;
+import com.vaadin.server.VaadinService;
 import com.vaadin.server.VaadinServletRequest;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.UI;
@@ -62,6 +66,8 @@ public class MyCollabApplication extends UI {
 	private AppContext currentContext;
 
 	private String initialSubDomain = "1";
+
+	public static final String NAME_COOKIE = "mycollab";
 
 	static {
 		try {
@@ -216,6 +222,42 @@ public class MyCollabApplication extends UI {
 	 */
 	public static Object getVariable(String key) {
 		return VaadinSession.getCurrent().getAttribute(key);
+	}
+
+	public void rememberPassword(String username, String password) {
+		// Remember password
+
+		Cookie cookie = getCookieByName(MyCollabApplication.NAME_COOKIE);
+		if (cookie == null) {
+			cookie = new Cookie(MyCollabApplication.NAME_COOKIE, username + "$"
+					+ PasswordEncryptHelper.encyptText(password));
+		} else {
+			cookie.setValue(username + "$"
+					+ PasswordEncryptHelper.encyptText(password));
+		}
+		cookie.setMaxAge(60 * 60 * 24 * 7);
+	}
+
+	public void unsetRememberPassword() {
+		Cookie cookie = getCookieByName(MyCollabApplication.NAME_COOKIE);
+
+		if (cookie != null) {
+			cookie.setValue("");
+		}
+	}
+
+	public static Cookie getCookieByName(String name) {
+		// Fetch all cookies from the request
+		Cookie[] cookies = VaadinService.getCurrentRequest().getCookies();
+
+		// Iterate to find cookie by its name
+		for (Cookie cookie : cookies) {
+			if (name.equals(cookie.getName())) {
+				return cookie;
+			}
+		}
+
+		return null;
 	}
 
 	private static Throwable getUserInvalidException(Throwable e) {

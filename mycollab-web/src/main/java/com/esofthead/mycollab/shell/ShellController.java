@@ -32,6 +32,7 @@ import com.esofthead.mycollab.vaadin.mvp.ControllerRegistry;
 import com.esofthead.mycollab.vaadin.mvp.IController;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.MyCollabApplication;
 
 public class ShellController implements IController {
 
@@ -81,18 +82,17 @@ public class ShellController implements IController {
 						LoginPresenter presenter = PresenterResolver
 								.getPresenter(LoginPresenter.class);
 						LoginView loginView = presenter.getView();
-						((MainWindowContainer) container)
+						MyCollabApplication.getInstance()
 								.unsetRememberPassword();
 
 						container.setStyleName("loginView");
 
 						if (loginView.getParent() == null
 								|| loginView.getParent() == container) {
-							// TODO: implement logou function
-							// ((MainWindowContainer) container)
-							// .setAutoLogin(false);
-							// ((MainWindowContainer) container)
-							// .setMainContent(loginView);
+							((MainWindowContainer) container)
+									.setAutoLogin(false);
+							((MainWindowContainer) container)
+									.setContent(loginView);
 						} else {
 							presenter.go(container, null);
 						}

@@ -32,9 +32,6 @@
  */
 package com.esofthead.mycollab.core.persistence.service;
 
-import org.springframework.flex.remoting.RemotingDestination;
-
-@RemotingDestination(channels = { "mycollab-amf", "mycollab-secure-amf" })
 public interface IService {
 
 }

@@ -18,8 +18,6 @@ package com.esofthead.mycollab.core.arguments;
 
 import java.io.Serializable;
 
-import org.springframework.flex.core.io.AmfIgnoreField;
-
 /**
  * 
  * @author haiphucnguyen
@@ -28,11 +26,9 @@ import org.springframework.flex.core.io.AmfIgnoreField;
 public class ValuedBean implements Cloneable, Serializable {
 
 	private static final long serialVersionUID = 1L;
-
-	@AmfIgnoreField
+	
 	private boolean selected = false;
-
-	@AmfIgnoreField
+	
 	private Object extraData;
 
 	public Object getExtraData() {
