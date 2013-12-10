@@ -15,7 +15,7 @@
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-server-runner</artifactId>
-            <version>2.0.0</version>
+            <version>3.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
@@ -26,19 +26,19 @@
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-caching-premium</artifactId>
-            <version>2.0.0</version>
+            <version>3.0-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-web-premium</artifactId>
-            <version>2.0.0</version>
+            <version>3.0-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-jetty-session-premium</artifactId>
-            <version>2.0.0</version>
+            <version>3.0-SNAPSHOT</version>
         </dependency>
 
         <dependency>
