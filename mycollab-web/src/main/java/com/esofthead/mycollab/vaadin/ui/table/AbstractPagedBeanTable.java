@@ -44,14 +44,12 @@ import com.google.gson.reflect.TypeToken;
 import com.vaadin.data.Container;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.util.BeanItemContainer;
-import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
@@ -61,7 +59,7 @@ import com.vaadin.ui.VerticalLayout;
 /**
  * 
  * @author haiphucnguyen
- *
+ * 
  * @param <S>
  * @param <T>
  */
@@ -137,12 +135,6 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, T>
 	}
 
 	public void setTableViewFieldCollection(List<TableViewField> viewFields) {
-		this.displayColumns = viewFields;
-		setTableViewFieldCollection(displayColumns, true);
-	}
-
-	private void setTableViewFieldCollection(List<TableViewField> viewFields,
-			boolean requestRepaint) {
 		List<String> visibleColumnsCol = new ArrayList<String>();
 		List<String> columnHeadersCol = new ArrayList<String>();
 
@@ -171,10 +163,6 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, T>
 
 		this.tableItem.setVisibleColumns(visibleColumns);
 		this.tableItem.setColumnHeaders(columnHeaders);
-
-		if (requestRepaint) {
-			this.tableItem.requestRepaint();
-		}
 	}
 
 	@Override
@@ -464,10 +452,8 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, T>
 
 		this.tableItem = new Table();
 		this.tableItem.setWidth("100%");
-		final CustomComponent tableWrap = new CustomComponent(this.tableItem);
-		LazyLoadWrapper tableLazyLoadContainer = new LazyLoadWrapper(tableWrap);
 		this.tableItem.addStyleName("striped");
-		this.tableItem.setSortDisabled(true);
+		this.tableItem.setSortEnabled(false);
 
 		// set column generator
 		for (final Object propertyId : this.columnGenerators.keySet()) {
@@ -484,7 +470,7 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, T>
 									.newResource("icons/16/arrow_up.png"));
 		}
 
-		this.tableItem.addListener(new Table.HeaderClickListener() {
+		this.tableItem.addHeaderClickListener(new Table.HeaderClickListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -533,13 +519,13 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, T>
 
 		if (this.getComponentCount() > 0) {
 			final Component component0 = this.getComponent(0);
-			if (component0 instanceof LazyLoadWrapper) {
-				this.replaceComponent(component0, tableLazyLoadContainer);
+			if (component0 instanceof Table) {
+				this.replaceComponent(component0, tableItem);
 			} else {
-				this.addComponent(tableLazyLoadContainer, 0);
+				this.addComponent(tableItem, 0);
 			}
 		} else {
-			this.addComponent(tableLazyLoadContainer, 0);
+			this.addComponent(tableItem, 0);
 		}
 
 	}

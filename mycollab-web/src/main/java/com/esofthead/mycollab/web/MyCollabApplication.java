@@ -236,6 +236,7 @@ public class MyCollabApplication extends UI {
 					+ PasswordEncryptHelper.encyptText(password));
 		}
 		cookie.setMaxAge(60 * 60 * 24 * 7);
+		VaadinService.getCurrentResponse().addCookie(cookie);
 	}
 
 	public void unsetRememberPassword() {

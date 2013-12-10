@@ -40,7 +40,6 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
-import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -178,9 +177,7 @@ public class BugDashboardViewImpl extends AbstractPageView implements
 		final SimpleProject project = CurrentProjectVariables.getProject();
 
 		final MyBugListWidget myBugListWidget = new MyBugListWidget();
-		final LazyLoadWrapper myBugsWidgetWrapper = new LazyLoadWrapper(
-				myBugListWidget);
-		this.leftColumn.addComponent(myBugsWidgetWrapper);
+		this.leftColumn.addComponent(myBugListWidget);
 		final BugSearchCriteria myBugsSearchCriteria = new BugSearchCriteria();
 		myBugsSearchCriteria
 				.setProjectId(new NumberSearchField(project.getId()));
@@ -194,9 +191,7 @@ public class BugDashboardViewImpl extends AbstractPageView implements
 		myBugListWidget.setSearchCriteria(myBugsSearchCriteria);
 
 		final DueBugWidget dueBugWidget = new DueBugWidget();
-		final LazyLoadWrapper dueBugWidgetWrapper = new LazyLoadWrapper(
-				dueBugWidget);
-		this.leftColumn.addComponent(dueBugWidgetWrapper);
+		this.leftColumn.addComponent(dueBugWidget);
 		final BugSearchCriteria dueDefectsCriteria = new BugSearchCriteria();
 		dueDefectsCriteria.setProjectId(new NumberSearchField(project.getId()));
 		dueDefectsCriteria.setDueDate(new DateTimeSearchField(SearchField.AND,
@@ -209,9 +204,7 @@ public class BugDashboardViewImpl extends AbstractPageView implements
 		dueBugWidget.setSearchCriteria(dueDefectsCriteria);
 
 		final RecentBugUpdateWidget updateBugWidget = new RecentBugUpdateWidget();
-		final LazyLoadWrapper updateBugWidgetWrapper = new LazyLoadWrapper(
-				updateBugWidget);
-		this.leftColumn.addComponent(updateBugWidgetWrapper);
+		this.leftColumn.addComponent(updateBugWidget);
 
 		// Unresolved by assignee
 		final UnresolvedBugsByAssigneeWidget2 unresolvedByAssigneeWidget = new UnresolvedBugsByAssigneeWidget2();
@@ -225,8 +218,7 @@ public class BugDashboardViewImpl extends AbstractPageView implements
 								BugStatusConstants.REOPENNED }));
 		unresolvedByAssigneeWidget
 				.setSearchCriteria(unresolvedByAssigneeSearchCriteria);
-		this.rightColumn.addComponent(new LazyLoadWrapper(
-				unresolvedByAssigneeWidget));
+		this.rightColumn.addComponent(unresolvedByAssigneeWidget);
 
 		// Unresolve by priority widget
 		final UnresolvedBugsByPriorityWidget2 unresolvedByPriorityWidget = new UnresolvedBugsByPriorityWidget2();
@@ -240,8 +232,7 @@ public class BugDashboardViewImpl extends AbstractPageView implements
 								BugStatusConstants.REOPENNED }));
 		unresolvedByPriorityWidget
 				.setSearchCriteria(unresolvedByPrioritySearchCriteria);
-		this.rightColumn.addComponent(new LazyLoadWrapper(
-				unresolvedByPriorityWidget));
+		this.rightColumn.addComponent(unresolvedByPriorityWidget);
 
 		// bug chart
 		final BugSearchCriteria recentDefectsCriteria = new BugSearchCriteria();

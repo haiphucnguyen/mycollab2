@@ -167,7 +167,6 @@
   <classpathentry kind="var" path="M2_REPO/org/vaadin/addon/easyuploads/7.0.1/easyuploads-7.0.1.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/vaadin/addons/contextmenu/4.2.1/contextmenu-4.2.1.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/vaadin/addon/vaadin-calendar/2.0.0/vaadin-calendar-2.0.0.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/vaadin/addons/lazyloadwrapper/0.1/lazyloadwrapper-0.1.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/lexaden/components/breadcrumb/1.7.3/breadcrumb-1.7.3.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/vaadin/vaadin-client-compiled/7.0.0/vaadin-client-compiled-7.0.0.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/vaadin/vaadin-themes/7.0.0/vaadin-themes-7.0.0.jar"/>

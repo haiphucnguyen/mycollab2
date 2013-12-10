@@ -44,7 +44,6 @@ import com.esofthead.mycollab.web.CustomLayoutLoader;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.event.LayoutEvents;
 import com.vaadin.event.LayoutEvents.LayoutClickEvent;
-import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
@@ -84,8 +83,7 @@ public final class MainView extends AbstractPageView {
 	public void addModule(final IModule module) {
 		ModuleHelper.setCurrentModule(module);
 		this.bodyLayout.removeAllComponents();
-		final LazyLoadWrapper comp = new LazyLoadWrapper(module.getWidget());
-		this.bodyLayout.addComponent(comp);
+		this.bodyLayout.addComponent(module.getWidget());
 
 		if (ModuleHelper.isCurrentCrmModule()) {
 			serviceMenu.setCaption("CRM");

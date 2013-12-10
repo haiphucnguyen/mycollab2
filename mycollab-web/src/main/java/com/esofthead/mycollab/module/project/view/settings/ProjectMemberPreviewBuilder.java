@@ -61,7 +61,6 @@ import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
-import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
@@ -649,8 +648,7 @@ public class ProjectMemberPreviewBuilder extends VerticalLayout {
 
 		private void displayActivityStream() {
 			this.bodyContent.removeAllComponents();
-			this.bodyContent.addComponent(new LazyLoadWrapper(
-					this.activityStreamList));
+			this.bodyContent.addComponent(this.activityStreamList);
 			ActivityStreamSearchCriteria searchCriteria = new ActivityStreamSearchCriteria();
 			searchCriteria.setModuleSet(new SetSearchField<String>(
 					SearchField.AND, new String[] { ModuleNameConstants.PRJ }));

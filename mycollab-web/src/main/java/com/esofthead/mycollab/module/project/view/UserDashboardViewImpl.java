@@ -41,7 +41,6 @@ import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
-import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -190,7 +189,7 @@ public class UserDashboardViewImpl extends AbstractPageView implements
 		this.taskStatusComponent = new TaskStatusComponent();
 		rightPanel.setWidth("565px");
 		rightPanel.addComponent(this.myProjectListComponent);
-		rightPanel.addComponent(new LazyLoadWrapper(this.taskStatusComponent));
+		rightPanel.addComponent(this.taskStatusComponent);
 
 		layout.addComponent(leftPanel);
 		layout.addComponent(rightPanel);

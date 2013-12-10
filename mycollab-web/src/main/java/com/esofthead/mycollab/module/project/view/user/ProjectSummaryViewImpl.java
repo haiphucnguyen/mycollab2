@@ -19,7 +19,6 @@ package com.esofthead.mycollab.module.project.view.user;
 import com.esofthead.mycollab.module.project.view.ProjectInformationComponent;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
-import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.VerticalLayout;
@@ -50,7 +49,7 @@ public class ProjectSummaryViewImpl extends AbstractPageView implements
 		final VerticalLayout leftPanel = new VerticalLayout();
 
 		this.activityPanel = new ProjectActivityStreamComponent();
-		leftPanel.addComponent(new LazyLoadWrapper(this.activityPanel));
+		leftPanel.addComponent(this.activityPanel);
 		layout.addComponent(leftPanel);
 
 		final VerticalLayout rightPanel = new VerticalLayout();
@@ -59,12 +58,12 @@ public class ProjectSummaryViewImpl extends AbstractPageView implements
 		layout.addComponent(rightPanel);
 
 		this.messageWidget = new ProjectMessageListComponent();
-		rightPanel.addComponent(new LazyLoadWrapper(this.messageWidget));
+		rightPanel.addComponent(this.messageWidget);
 
 		this.membersWidget = new ProjectMembersWidget();
 		this.highlightWidget = new ProjectTaskStatusComponent();
-		rightPanel.addComponent(new LazyLoadWrapper(this.membersWidget));
-		rightPanel.addComponent(new LazyLoadWrapper(this.highlightWidget));
+		rightPanel.addComponent(this.membersWidget);
+		rightPanel.addComponent(this.highlightWidget);
 	}
 
 	@Override

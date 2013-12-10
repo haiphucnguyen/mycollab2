@@ -46,7 +46,6 @@ import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
-import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -310,8 +309,7 @@ public class ComponentReadViewImpl extends AbstractPageView implements
 						ComponentReadViewImpl.this.component.getId()));
 
 				final BugSimpleDisplayWidget displayWidget = new BugSimpleDisplayWidget();
-				this.mainBottomLayout.addComponent(new LazyLoadWrapper(
-						displayWidget));
+				this.mainBottomLayout.addComponent(displayWidget);
 				displayWidget.setSearchCriteria(criteria);
 			}
 

@@ -40,7 +40,6 @@ import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.Separator;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
-import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
@@ -231,7 +230,7 @@ public class TaskGroupDisplayWidget
 							taskListService.updateWithSession(
 									TaskListDepot.this.taskList,
 									AppContext.getUsername());
-							final LazyLoadWrapper parentComp = (LazyLoadWrapper) TaskListDepot.this
+							final Component parentComp = TaskListDepot.this
 									.getParent();
 							((ComponentContainer) parentComp.getParent())
 									.removeComponent(parentComp);
@@ -278,7 +277,7 @@ public class TaskGroupDisplayWidget
 																		.getUsername(),
 																AppContext
 																		.getAccountId());
-												final LazyLoadWrapper parentComp = (LazyLoadWrapper) TaskListDepot.this
+												final Component parentComp = TaskListDepot.this
 														.getParent();
 												((ComponentContainer) parentComp
 														.getParent())

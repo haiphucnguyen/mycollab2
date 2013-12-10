@@ -38,7 +38,6 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.DefaultBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.web.AppContext;
-import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
@@ -111,7 +110,8 @@ public class ProjectTaskStatusComponent extends Depot {
 				new VerticalLayout());
 
 		taskList = new DefaultBeanPagedList<ProjectGenericTaskService, ProjectGenericTaskSearchCriteria, ProjectGenericTask>(
-				ApplicationContextUtil.getSpringBean(ProjectGenericTaskService.class),
+				ApplicationContextUtil
+						.getSpringBean(ProjectGenericTaskService.class),
 				new TaskRowDisplayHandler(), 10);
 		addStyleName("activity-panel");
 		((VerticalLayout) bodyContent).setMargin(false);
@@ -119,7 +119,7 @@ public class ProjectTaskStatusComponent extends Depot {
 
 	public void showProjectTasksByStatus() {
 		bodyContent.removeAllComponents();
-		bodyContent.addComponent(new LazyLoadWrapper(taskList));
+		bodyContent.addComponent(taskList);
 		final ProjectGenericTaskSearchCriteria searchCriteria = new ProjectGenericTaskSearchCriteria();
 		searchCriteria.setIsOpenned(new SearchField());
 		searchCriteria.setAssignUser(new StringSearchField(SearchField.AND,
