@@ -4,8 +4,8 @@ import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.MyCollabResource;
-import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.ui.Alignment;
+import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
@@ -16,11 +16,11 @@ public abstract class StandupReportFormLayoutFactory implements
 		IFormLayoutFactory {
 	private static final long serialVersionUID = 1L;
 
-	private LazyLoadWrapper whatTodayField;
+	private CustomComponent whatTodayField;
 
-	private LazyLoadWrapper whatYesterdayField;
+	private CustomComponent whatYesterdayField;
 
-	private LazyLoadWrapper whatProblemField;
+	private CustomComponent whatProblemField;
 
 	private final String title;
 
@@ -46,13 +46,13 @@ public abstract class StandupReportFormLayoutFactory implements
 				"What I did in the last day/week");
 		whatYesterdayLbl.setStyleName("h2");
 		layoutField.addComponent(whatYesterdayLbl);
-		this.whatYesterdayField = new LazyLoadWrapper();
+		this.whatYesterdayField = new CustomComponent();
 		layoutField.addComponent(this.whatYesterdayField);
 
 		final Label whatTodayLbl = new Label("What I will do today/week");
 		whatTodayLbl.setStyleName("h2");
 		layoutField.addComponent(whatTodayLbl);
-		this.whatTodayField = new LazyLoadWrapper();
+		this.whatTodayField = new CustomComponent();
 		layoutField.addComponent(this.whatTodayField);
 
 		final Label roadblockLbl = new Label(
@@ -60,7 +60,7 @@ public abstract class StandupReportFormLayoutFactory implements
 		roadblockLbl.addStyleName("h2");
 		roadblockLbl.addStyleName(UIConstants.WORD_WRAP);
 		layoutField.addComponent(roadblockLbl);
-		this.whatProblemField = new LazyLoadWrapper();
+		this.whatProblemField = new CustomComponent();
 		layoutField.addComponent(this.whatProblemField);
 
 		mainLayout.addComponent(layoutField);
@@ -101,13 +101,13 @@ public abstract class StandupReportFormLayoutFactory implements
 
 	@Override
 	public void attachField(final Object propertyId, final Field field) {
-		if (propertyId.equals("whatlastday")) {
-			this.whatYesterdayField.setLazyLoadComponent(field);
-		} else if (propertyId.equals("whattoday")) {
-			this.whatTodayField.setLazyLoadComponent(field);
-		} else if (propertyId.equals("whatproblem")) {
-			this.whatProblemField.setLazyLoadComponent(field);
-		}
+//		if (propertyId.equals("whatlastday")) {
+//			this.whatYesterdayField.setC(field);
+//		} else if (propertyId.equals("whattoday")) {
+//			this.whatTodayField.setLazyLoadComponent(field);
+//		} else if (propertyId.equals("whatproblem")) {
+//			this.whatProblemField.setLazyLoadComponent(field);
+//		}
 	}
 
 	protected abstract Layout createTopPanel();

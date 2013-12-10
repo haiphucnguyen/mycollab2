@@ -58,7 +58,7 @@ public class MainWindowContainer extends CssLayout {
 
 		// Read previously stored cookie value
 		if (isAutoLogin) {
-			Cookie nameCookie = MyCollabApplication
+			Cookie nameCookie = MyCollabApplication.getInstance()
 					.getCookieByName(MyCollabApplication.NAME_COOKIE);
 			if (nameCookie != null) {
 				String loginInfo = nameCookie.getValue();

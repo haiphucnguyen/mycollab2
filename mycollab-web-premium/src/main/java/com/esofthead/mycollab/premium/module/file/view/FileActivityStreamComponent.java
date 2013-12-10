@@ -8,7 +8,6 @@ import com.esofthead.mycollab.module.ecm.domain.criteria.ContentActivityLogSearc
 import com.esofthead.mycollab.module.file.domain.criteria.FileSearchCriteria;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.ui.Depot;
-import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.ui.VerticalLayout;
 
 /**
@@ -28,8 +27,7 @@ public class FileActivityStreamComponent extends Depot {
 
 	public void showContentFeeds() {
 		this.bodyContent.removeAllComponents();
-		this.bodyContent.addComponent(new LazyLoadWrapper(
-				this.activityStreamList));
+		this.bodyContent.addComponent(this.activityStreamList);
 		final ContentActivityLogSearchCriteria searchCriteria = new ContentActivityLogSearchCriteria();
 
 		this.activityStreamList.setSearchCriteria(searchCriteria);

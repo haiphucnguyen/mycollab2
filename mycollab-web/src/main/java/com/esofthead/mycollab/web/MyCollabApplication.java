@@ -247,7 +247,7 @@ public class MyCollabApplication extends UI {
 		}
 	}
 
-	public static Cookie getCookieByName(String name) {
+	public Cookie getCookieByName(String name) {
 		// Fetch all cookies from the request
 		Cookie[] cookies = VaadinService.getCurrentRequest().getCookies();
 

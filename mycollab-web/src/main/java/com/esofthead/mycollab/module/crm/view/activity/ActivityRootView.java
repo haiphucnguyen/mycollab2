@@ -123,10 +123,9 @@ public class ActivityRootView extends AbstractPageView {
 	}
 
 	public void gotoCalendar() {
-		com.vaadin.ui.Component calendarComp = activityTabs.selectTab(
-				LocalizationHelper
-						.getMessage(ActivityI18nEnum.CALENDAR_TAB_TITLE))
-				.getComponent();
+		com.vaadin.ui.Component calendarComp = activityTabs
+				.selectTab(LocalizationHelper
+						.getMessage(ActivityI18nEnum.CALENDAR_TAB_TITLE));
 
 		if (calendarComp != null) {
 			calendarPresenter.go(this, null);
@@ -145,15 +144,12 @@ public class ActivityRootView extends AbstractPageView {
 	}
 
 	public Component gotoView(String viewName) {
-		Tab selectedTab = activityTabs.selectTab(viewName);
-		return (selectedTab != null) ? selectedTab.getComponent() : null;
+		return activityTabs.selectTab(viewName);
 	}
 
 	public void gotoActivityList() {
-		Component activityList = activityTabs.selectTab(
-				LocalizationHelper
-						.getMessage(ActivityI18nEnum.ACTIVITY_LIST_TAB_TITLE))
-				.getComponent();
+		Component activityList = activityTabs.selectTab(LocalizationHelper
+				.getMessage(ActivityI18nEnum.ACTIVITY_LIST_TAB_TITLE));
 
 		if (activityList != null) {
 			EventSearchCriteria searchCriteria = new EventSearchCriteria();
