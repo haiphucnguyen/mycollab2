@@ -178,7 +178,8 @@ public class CaseSearchPanel extends
 				this.subjectField.setValue(value.getSubject().getValue());
 			}
 			if (value.getAccountName() != null) {
-				this.accountField.setValue(value.getAccountName().getValue());
+				// TODO: check set value again
+				// this.accountField.setValue(value.getAccountName().getValue());
 			}
 			if (value.getStatuses() != null) {
 				this.statusField.setValue(Arrays.asList((Object[]) value

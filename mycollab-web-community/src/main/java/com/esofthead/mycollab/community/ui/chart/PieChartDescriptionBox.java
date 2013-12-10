@@ -23,6 +23,8 @@ import java.util.Map;
 import org.jfree.data.general.DefaultPieDataset;
 
 import com.esofthead.mycollab.web.CustomLayoutLoader;
+import com.vaadin.shared.ui.MarginInfo;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -40,7 +42,8 @@ public class PieChartDescriptionBox {
 	public static ComponentContainer createLegendBox(
 			final PieChartWrapper pieChartHost,
 			final DefaultPieDataset pieDataSet) {
-		final CustomLayout boxWrapper = CustomLayoutLoader.createLayout("legendBox");
+		final CustomLayout boxWrapper = CustomLayoutLoader
+				.createLayout("legendBox");
 		final CssLayout mainLayout = new CssLayout();
 
 		mainLayout.setSizeUndefined();
@@ -48,7 +51,7 @@ public class PieChartDescriptionBox {
 
 		for (int i = 0; i < keys.size(); i++) {
 			final HorizontalLayout layout = new HorizontalLayout();
-			layout.setMargin(false, false, false, true);
+			layout.setMargin(new MarginInfo(false, false, false, true));
 			layout.addStyleName("inline-block");
 			final Comparable key = (Comparable) keys.get(i);
 			final String color = "<div style = \" width:8px;height:8px;border-radius:5px;background: #"
@@ -61,8 +64,8 @@ public class PieChartDescriptionBox {
 			final Button btnLink = new Button(
 					key
 							+ "("
-							+ String.valueOf(pieDataSet.getValue(key).intValue()) 
-							+ ")",
+							+ String.valueOf(pieDataSet.getValue(key)
+									.intValue()) + ")",
 					new Button.ClickListener() {
 						private static final long serialVersionUID = 1L;
 
@@ -92,4 +95,3 @@ public class PieChartDescriptionBox {
 		return boxWrapper;
 	}
 }
-

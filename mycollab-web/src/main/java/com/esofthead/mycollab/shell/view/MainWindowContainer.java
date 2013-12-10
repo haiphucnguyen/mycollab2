@@ -19,128 +19,107 @@ package com.esofthead.mycollab.shell.view;
 import java.util.Calendar;
 import java.util.Date;
 
+import javax.servlet.http.Cookie;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.esofthead.mycollab.configuration.PasswordEncryptHelper;
-import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.module.user.view.LoginPresenter;
 import com.esofthead.mycollab.module.user.view.LoginView;
 import com.esofthead.mycollab.shell.ShellController;
 import com.esofthead.mycollab.vaadin.mvp.ControllerRegistry;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
-import com.esofthead.mycollab.vaadin.mvp.PageView;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabApplication;
+import com.vaadin.server.Page;
+import com.vaadin.server.VaadinService;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Window;
 
-public class MainWindowContainer extends VerticalLayout implements PageView {
+public class MainWindowContainer extends VerticalLayout {
 
 	private static final long serialVersionUID = 1L;
 
 	private static final Logger log = LoggerFactory
 			.getLogger(MainWindowContainer.class);
 
+	private static final String NAME_COOKIE = "mycollab";
+
 	private boolean isAutoLogin;
 
 	private final Content content;
 
-	private final UriFragmentUtility urifu;
+//	private final UriFragmentUtility urifu;
 
 	public MainWindowContainer() {
 
-		urifu = new UriFragmentUtility();
-
-		urifu.addListener(new UriFragmentUtility.FragmentChangedListener() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void fragmentChanged(FragmentChangedEvent source) {
-				log.debug("Change fragement: "
-						+ source.getUriFragmentUtility().getFragment());
-				try {
-					String initialUrl = source.getUriFragmentUtility()
-							.getFragment();
-					if (AppContext.getSession() != null) {
-						FragmentNavigator.navigateByFragement(initialUrl);
-					} else {
-						((MyCollabApplication) AppContext.getApplication())
-								.setInitialUrl(initialUrl);
-					}
-				} catch (Exception e) {
-					log.error("Error while change segment", e);
-				}
-
-			}
-		});
+//		urifu = new UriFragmentUtility();
+//
+//		urifu.addListener(new UriFragmentUtility.FragmentChangedListener() {
+//			private static final long serialVersionUID = 1L;
+//
+//			@Override
+//			public void fragmentChanged(FragmentChangedEvent source) {
+//				log.debug("Change fragement: "
+//						+ source.getUriFragmentUtility().getFragment());
+//				try {
+//					String initialUrl = source.getUriFragmentUtility()
+//							.getFragment();
+//					if (AppContext.getSession() != null) {
+//						FragmentNavigator.navigateByFragement(initialUrl);
+//					} else {
+//						((MyCollabApplication) AppContext.getApplication())
+//								.setInitialUrl(initialUrl);
+//					}
+//				} catch (Exception e) {
+//					log.error("Error while change segment", e);
+//				}
+//
+//			}
+//		});
 
 		this.setCaption("MyCollab");
 		ControllerRegistry.addController(new ShellController(this));
 
 		this.setImmediate(true);
 		content = new Content();
-		this.setContent(content);
+//		this.setContent(content);
 		content.setSizeFull();
-		content.addComponent(urifu);
+//		content.addComponent(urifu);
 
-		log.debug("Initial fragement: " + urifu.getFragment());
+//		log.debug("Initial fragement: " + urifu.getFragment());
 
 		isAutoLogin = true;
 		setDefaultView();
 	}
 
-	public void setMainContent(ComponentContainer newContent) {
-		for (int i = content.getComponentCount() - 1; i >= 0; i--) {
-			Component component = content.getComponent(i);
-			if (!(component instanceof UriFragmentUtility)
-					&& !(component instanceof BrowserCookies)) {
-				content.removeComponent(component);
-			}
-		}
-		content.addComponent(newContent);
-	}
-
-	private BrowserCookies getCookieComponent() {
-		for (int i = 0; i < content.getComponentCount(); i++) {
-			Component component = content.getComponent(i);
-			if (component instanceof BrowserCookies) {
-				return ((BrowserCookies) component);
-			}
-		}
-
-		BrowserCookies cookies = new BrowserCookies();
-		content.addComponent(cookies);
-		return cookies;
-	}
-
 	public void unsetRememberPassword() {
-		Calendar cal = Calendar.getInstance();
-		cal.set(Calendar.YEAR, cal.get(Calendar.YEAR) - 3);
-		Date expiryDate = cal.getTime();
+		Cookie cookie = getCookieByName(NAME_COOKIE);
 
-		BrowserCookies cookies = getCookieComponent();
-		cookies.setCookie("loginInfo", "", expiryDate);
+		if (cookie != null) {
+			cookie.setValue("");
+		}
 	}
 
 	public void rememberPassword(String username, String password) {
 		// Remember password
-		Calendar cal = Calendar.getInstance();
-		cal.add(Calendar.DAY_OF_MONTH, 7);
-		Date expiryDate = cal.getTime();
-		BrowserCookies cookies = getCookieComponent();
 
-		cookies.setCookie("loginInfo",
-				username + "$" + PasswordEncryptHelper.encyptText(password),
-				expiryDate);
+		Cookie cookie = getCookieByName(NAME_COOKIE);
+		if (cookie == null) {
+			cookie = new Cookie(NAME_COOKIE, username + "$"
+					+ PasswordEncryptHelper.encyptText(password));
+		} else {
+			cookie.setValue(username + "$"
+					+ PasswordEncryptHelper.encyptText(password));
+		}
+		cookie.setMaxAge(60 * 60 * 24 * 7);
 	}
 
 	public void addFragement(String fragement) {
-		urifu.setFragment(fragement, false);
+		Page.getCurrent().setUriFragment(fragement, false);
 	}
 
 	private final void setDefaultView() {
@@ -148,34 +127,37 @@ public class MainWindowContainer extends VerticalLayout implements PageView {
 				.getPresenter(LoginPresenter.class);
 		LoginView loginView = presenter.getView();
 
-		BrowserCookies cookies = getCookieComponent();
-		cookies.addListener(new BrowserCookies.UpdateListener() {
-			@Override
-			public void cookiesUpdated(BrowserCookies bc) {
-				if (isAutoLogin) {
-					for (String name : bc.getCookieNames()) {
-						if (name.equals("loginInfo")) {
-							String loginInfo = bc.getCookie(name);
-							if (loginInfo != null) {
-								String[] loginParams = loginInfo.split("\\$");
-								if (loginParams.length == 2) {
-									presenter
-											.doLogin(
-													loginParams[0],
-													PasswordEncryptHelper
-															.decryptText(loginParams[1]),
-													false);
-								}
-							}
-						}
+		// Read previously stored cookie value
+		if (isAutoLogin) {
+			Cookie nameCookie = getCookieByName(NAME_COOKIE);
+			if (nameCookie != null) {
+				String loginInfo = nameCookie.getValue();
+				if (loginInfo != null) {
+					String[] loginParams = loginInfo.split("\\$");
+					if (loginParams.length == 2) {
+						presenter.doLogin(loginParams[0], PasswordEncryptHelper
+								.decryptText(loginParams[1]), false);
 					}
 				}
-
 			}
-		});
+		}
 
 		this.setStyleName("loginView");
-		this.setMainContent(loginView.getWidget());
+//		this.setMainContent(loginView.getWidget());
+	}
+
+	private Cookie getCookieByName(String name) {
+		// Fetch all cookies from the request
+		Cookie[] cookies = VaadinService.getCurrentRequest().getCookies();
+
+		// Iterate to find cookie by its name
+		for (Cookie cookie : cookies) {
+			if (name.equals(cookie.getName())) {
+				return cookie;
+			}
+		}
+
+		return null;
 	}
 
 	public boolean isAutoLogin() {
@@ -184,17 +166,6 @@ public class MainWindowContainer extends VerticalLayout implements PageView {
 
 	public void setAutoLogin(boolean isAutoLogin) {
 		this.isAutoLogin = isAutoLogin;
-	}
-
-	@Override
-	public ComponentContainer getWidget() {
-		return this;
-	}
-
-	@Override
-	public void addViewListener(
-			@SuppressWarnings("rawtypes") ApplicationEventListener listener) {
-		throw new UnsupportedOperationException("Not supported yet.");
 	}
 
 	private static class Content extends CssLayout {

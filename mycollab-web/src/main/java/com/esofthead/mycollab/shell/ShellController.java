@@ -56,15 +56,17 @@ public class ShellController implements IController {
 
 					@Override
 					public void handle(GotoMainPage event) {
-						MainViewPresenter mainViewPresenter = PresenterResolver
-								.getPresenter(MainViewPresenter.class);
-						MainView mainView = mainViewPresenter.getView();
-						((MainWindowContainer) container)
-								.setMainContent(mainView);
-
-						container.setStyleName("mainView");
-
-						mainViewPresenter.go(container, null);
+						// TODO: check go to main page
+						// MainViewPresenter mainViewPresenter =
+						// PresenterResolver
+						// .getPresenter(MainViewPresenter.class);
+						// MainView mainView = mainViewPresenter.getView();
+						// ((MainWindowContainer) container)
+						// .setMainContent(mainView);
+						//
+						// container.setStyleName("mainView");
+						//
+						// mainViewPresenter.go(container, null);
 					}
 				});
 
@@ -89,10 +91,11 @@ public class ShellController implements IController {
 
 						if (loginView.getParent() == null
 								|| loginView.getParent() == container) {
-							((MainWindowContainer) container)
-									.setAutoLogin(false);
-							((MainWindowContainer) container)
-									.setMainContent(loginView);
+							// TODO: implement logou function
+							// ((MainWindowContainer) container)
+							// .setAutoLogin(false);
+							// ((MainWindowContainer) container)
+							// .setMainContent(loginView);
 						} else {
 							presenter.go(container, null);
 						}

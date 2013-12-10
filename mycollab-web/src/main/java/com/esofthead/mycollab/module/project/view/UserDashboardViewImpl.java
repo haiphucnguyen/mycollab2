@@ -42,12 +42,14 @@ import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.Reindeer;
 
@@ -114,8 +116,7 @@ public class UserDashboardViewImpl extends AbstractPageView implements
 						@Override
 						public void buttonClick(final Button.ClickEvent event) {
 							final ProjectAddWindow projectNewWindow = new ProjectAddWindow();
-							UserDashboardViewImpl.this.getWindow().addWindow(
-									projectNewWindow);
+							UI.getCurrent().addWindow(projectNewWindow);
 						}
 					});
 			createProjectBtn.setIcon(MyCollabResource
@@ -134,7 +135,7 @@ public class UserDashboardViewImpl extends AbstractPageView implements
 		followingTicketsLink.setIcon(MyCollabResource
 				.newResource("icons/16/follow.png"));
 		followingTicketsLink.removeStyleName("wordWrap");
-		followingTicketsLink.addListener(new Button.ClickListener() {
+		followingTicketsLink.addClickListener(new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -148,7 +149,7 @@ public class UserDashboardViewImpl extends AbstractPageView implements
 		});
 
 		timeTrackingLink = new ButtonLink("Time Tracking");
-		timeTrackingLink.addListener(new Button.ClickListener() {
+		timeTrackingLink.addClickListener(new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -175,11 +176,11 @@ public class UserDashboardViewImpl extends AbstractPageView implements
 
 		final HorizontalLayout layout = new HorizontalLayout();
 		layout.setWidth("100%");
-		layout.setMargin(false, false, true, false);
+		layout.setMargin(new MarginInfo(false, false, true, false));
 		layout.setSpacing(true);
 
 		final VerticalLayout leftPanel = new VerticalLayout();
-		leftPanel.setMargin(false, true, false, false);
+		leftPanel.setMargin(new MarginInfo(false, true, false, false));
 		this.activityStreamComponent = new ActivityStreamComponent();
 		leftPanel.addComponent(this.activityStreamComponent);
 		leftPanel.setWidth("100%");

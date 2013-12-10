@@ -47,6 +47,7 @@ import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.table.AbstractPagedBeanTable;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
+import com.vaadin.server.FileDownloader;
 import com.vaadin.server.StreamResource;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
@@ -139,27 +140,19 @@ public class FollowingTicketViewImpl extends AbstractPageView implements
 		popupButtonsControl.setWidth("150px");
 		exportButtonControl.addComponent(popupButtonsControl);
 
-		Button exportPdfBtn = new Button("Pdf", new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void buttonClick(ClickEvent event) {
-				downloadExportStreamCommand(ReportExportType.PDF);
-			}
-		});
+		Button exportPdfBtn = new Button("Pdf");
+		FileDownloader pdfDownloader = new FileDownloader(
+				constructStreamResource(ReportExportType.PDF));
+		pdfDownloader.extend(exportPdfBtn);
 		exportPdfBtn.setIcon(MyCollabResource
 				.newResource("icons/16/filetypes/pdf.png"));
 		exportPdfBtn.setStyleName("link");
 		popupButtonsControl.addComponent(exportPdfBtn);
 
-		Button exportExcelBtn = new Button("Excel", new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void buttonClick(ClickEvent event) {
-				downloadExportStreamCommand(ReportExportType.EXCEL);
-			}
-		});
+		Button exportExcelBtn = new Button("Excel");
+		FileDownloader excelDownloader = new FileDownloader(
+				constructStreamResource(ReportExportType.EXCEL));
+		excelDownloader.extend(exportExcelBtn);
 		exportExcelBtn.setIcon(MyCollabResource
 				.newResource("icons/16/filetypes/excel.png"));
 		exportExcelBtn.setStyleName("link");
@@ -173,7 +166,7 @@ public class FollowingTicketViewImpl extends AbstractPageView implements
 		contentWrapper.addComponent(this.ticketTable);
 	}
 
-	private void downloadExportStreamCommand(ReportExportType exportType) {
+	private StreamResource constructStreamResource(ReportExportType exportType) {
 		ExportItemsStreamResource<FollowingTicket> exportResource = new SimpleGridExportItemsStreamResource.AllItems<MonitorSearchCriteria, FollowingTicket>(
 				"Following Tickets Report", new RpParameterBuilder(
 						ticketTable.getDisplayColumns()), exportType,
@@ -182,10 +175,8 @@ public class FollowingTicketViewImpl extends AbstractPageView implements
 				searchCriteria, FollowingTicket.class);
 
 		StreamResource res = new StreamResource(exportResource,
-				exportResource.getDefaultExportFileName(),
-				FollowingTicketViewImpl.this.getApplication());
-		FollowingTicketViewImpl.this.getWindow().open(res, "_blank");
-		exportButtonControl.setPopupVisible(false);
+				exportResource.getDefaultExportFileName());
+		return res;
 	}
 
 	@Override

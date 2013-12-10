@@ -50,6 +50,7 @@ import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
+import com.vaadin.server.FileDownloader;
 import com.vaadin.server.StreamResource;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.datefield.Resolution;
@@ -189,28 +190,19 @@ public class TimeTrackingSummaryViewImpl extends AbstractPageView implements
 		popupButtonsControl.setWidth("150px");
 		exportButtonControl.addComponent(popupButtonsControl);
 
-		Button exportPdfBtn = new Button("Pdf", new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void buttonClick(ClickEvent event) {
-				downloadExportStreamCommand(ReportExportType.PDF);
-
-			}
-		});
+		Button exportPdfBtn = new Button("Pdf");
+		FileDownloader pdfDownloader = new FileDownloader(
+				constructStreamResource(ReportExportType.PDF));
+		pdfDownloader.extend(exportPdfBtn);
 		exportPdfBtn.setIcon(MyCollabResource
 				.newResource("icons/16/filetypes/pdf.png"));
 		exportPdfBtn.setStyleName("link");
 		popupButtonsControl.addComponent(exportPdfBtn);
 
-		Button exportExcelBtn = new Button("Excel", new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void buttonClick(ClickEvent event) {
-				downloadExportStreamCommand(ReportExportType.EXCEL);
-			}
-		});
+		Button exportExcelBtn = new Button("Excel");
+		FileDownloader excelDownloader = new FileDownloader(
+				constructStreamResource(ReportExportType.EXCEL));
+		excelDownloader.extend(exportExcelBtn);
 		exportExcelBtn.setIcon(MyCollabResource
 				.newResource("icons/16/filetypes/excel.png"));
 		exportExcelBtn.setStyleName("link");
@@ -272,7 +264,7 @@ public class TimeTrackingSummaryViewImpl extends AbstractPageView implements
 		contentWrapper.addComponent(this.tableItem);
 	}
 
-	private void downloadExportStreamCommand(ReportExportType exportType) {
+	private StreamResource constructStreamResource(ReportExportType exportType) {
 		ExportItemsStreamResource<SimpleItemTimeLogging> stream = new SimpleGridExportItemsStreamResource.AllItems<ItemTimeLoggingSearchCriteria, SimpleItemTimeLogging>(
 				"Time Tracking Report", new RpParameterBuilder(
 						tableItem.getDisplayColumns()), exportType,
@@ -280,10 +272,8 @@ public class TimeTrackingSummaryViewImpl extends AbstractPageView implements
 						.getSpringBean(ItemTimeLoggingService.class),
 				searchCriteria, SimpleItemTimeLogging.class);
 		StreamResource res = new StreamResource(stream,
-				stream.getDefaultExportFileName(),
-				TimeTrackingSummaryViewImpl.this.getApplication());
-		TimeTrackingSummaryViewImpl.this.getWindow().open(res, "_blank");
-		exportButtonControl.setPopupVisible(false);
+				stream.getDefaultExportFileName());
+		return res;
 	}
 
 	@Override

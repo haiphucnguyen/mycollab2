@@ -75,8 +75,9 @@ public class LoginPresenter extends AbstractPresenter<LoginView> {
 				AppContext.getSubDomain(), false);
 
 		if (isRemmeberPassword) {
-			((MainWindowContainer) UI.getCurrent())
-					.rememberPassword(username, password);
+			//TODO: remember password
+			// ((MainWindowContainer) UI.getCurrent())
+			// .rememberPassword(username, password);
 		}
 
 		BillingAccountService billingAccountService = ApplicationContextUtil

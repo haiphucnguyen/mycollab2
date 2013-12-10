@@ -44,10 +44,11 @@ import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.Property;
 import com.vaadin.event.FieldEvents.TextChangeEvent;
 import com.vaadin.event.FieldEvents.TextChangeListener;
-import com.vaadin.server.Resource;
+import com.vaadin.server.FileDownloader;
 import com.vaadin.server.StreamResource;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.combobox.FilteringMode;
+import com.vaadin.shared.ui.datefield.Resolution;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -58,7 +59,6 @@ import com.vaadin.ui.DateField;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
-import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 @ViewComponent
@@ -153,27 +153,19 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements
 		popupButtonsControl.setWidth("150px");
 		exportButtonControl.addComponent(popupButtonsControl);
 
-		Button exportPdfBtn = new Button("Pdf", new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void buttonClick(ClickEvent event) {
-				downloadExportStreamCommand(ReportExportType.PDF);
-			}
-		});
+		Button exportPdfBtn = new Button("Pdf");
+		FileDownloader exportPdfDownloader = new FileDownloader(
+				constructStreamResource(ReportExportType.PDF));
+		exportPdfDownloader.extend(exportPdfBtn);
 		exportPdfBtn.setIcon(MyCollabResource
 				.newResource("icons/16/filetypes/pdf.png"));
 		exportPdfBtn.setStyleName("link");
 		popupButtonsControl.addComponent(exportPdfBtn);
 
-		Button exportExcelBtn = new Button("Excel", new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void buttonClick(ClickEvent event) {
-				downloadExportStreamCommand(ReportExportType.EXCEL);
-			}
-		});
+		Button exportExcelBtn = new Button("Excel");
+		FileDownloader excelDownloader = new FileDownloader(
+				constructStreamResource(ReportExportType.EXCEL));
+		excelDownloader.extend(exportExcelBtn);
 		exportExcelBtn.setIcon(MyCollabResource
 				.newResource("icons/16/filetypes/excel.png"));
 		exportExcelBtn.setStyleName("link");
@@ -226,7 +218,7 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements
 		this.addComponent(this.tableItem);
 	}
 
-	private void downloadExportStreamCommand(ReportExportType exportType) {
+	private StreamResource constructStreamResource(ReportExportType exportType) {
 		final String title = "Time of Project "
 				+ ((CurrentProjectVariables.getProject() != null && CurrentProjectVariables
 						.getProject().getName() != null) ? CurrentProjectVariables
@@ -236,11 +228,9 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements
 				ApplicationContextUtil
 						.getSpringBean(ItemTimeLoggingService.class),
 				TimeTrackingListViewImpl.this.itemTimeLogginSearchCriteria);
-		final Resource res = new StreamResource(exportStream,
-				exportStream.getDefaultExportFileName(),
-				AppContext.getApplication());
-		UI.getCurrent().open(res, "_blank");
-		exportButtonControl.setPopupVisible(false);
+		final StreamResource res = new StreamResource(exportStream,
+				exportStream.getDefaultExportFileName());
+		return res;
 	}
 
 	private void setTimeRange() {
@@ -304,7 +294,7 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements
 			final NumbericTextField hourField = new NumbericTextField();
 
 			final DateField dateField = new DateField();
-			dateField.setResolution(DateField.RESOLUTION_DAY);
+			dateField.setResolution(Resolution.DAY);
 			gridLayout.addComponent(dateField, "Date", 0, 0, "230px");
 			gridLayout.addComponent(hourField, "Hours", 1, 0, "230px");
 			gridLayout.addComponent(ticketComboBox, "Ticket", 2, 0);

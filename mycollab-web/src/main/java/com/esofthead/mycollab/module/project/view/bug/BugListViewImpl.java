@@ -32,17 +32,17 @@ import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.reporting.ReportExportType;
 import com.esofthead.mycollab.reporting.RpParameterBuilder;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.OnDemandFileDownloader;
+import com.esofthead.mycollab.vaadin.StreamResourceFactory;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
-import com.esofthead.mycollab.vaadin.ui.OnDemandFileDownloader;
 import com.esofthead.mycollab.vaadin.ui.SplitButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.web.MyCollabResource;
-import com.vaadin.server.FileDownloader;
 import com.vaadin.server.StreamResource;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Button;
@@ -166,88 +166,106 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
 		exportButtonControl.addComponent(popupButtonsControl);
 
 		Button exportPdfBtn = new Button("Pdf");
-		String title = "Bugs of Project "
-				+ ((CurrentProjectVariables.getProject() != null && CurrentProjectVariables
-						.getProject().getName() != null) ? CurrentProjectVariables
-						.getProject().getName() : "");
-		BugSearchCriteria searchCriteria = new BugSearchCriteria();
-		searchCriteria.setProjectId(new NumberSearchField(SearchField.AND,
-				CurrentProjectVariables.getProject().getId()));
 
-		StreamResource res = new StreamResource(
-				new SimpleGridExportItemsStreamResource.AllItems<BugSearchCriteria, SimpleBug>(
-						title, new RpParameterBuilder(tableItem
-								.getDisplayColumns()), ReportExportType.PDF,
-						ApplicationContextUtil.getSpringBean(BugService.class),
-						searchCriteria, SimpleBug.class), "export.pdf");
-		OnDemandFileDownloader fileDownloader = new OnDemandFileDownloader(res);
+		OnDemandFileDownloader fileDownloader = new OnDemandFileDownloader(
+				new StreamResourceFactory() {
+
+					@Override
+					public StreamResource getStreamResource() {
+						String title = "Bugs of Project "
+								+ ((CurrentProjectVariables.getProject() != null && CurrentProjectVariables
+										.getProject().getName() != null) ? CurrentProjectVariables
+										.getProject().getName() : "");
+						BugSearchCriteria searchCriteria = new BugSearchCriteria();
+						searchCriteria.setProjectId(new NumberSearchField(
+								SearchField.AND, CurrentProjectVariables
+										.getProject().getId()));
+
+						StreamResource res = new StreamResource(
+								new SimpleGridExportItemsStreamResource.AllItems<BugSearchCriteria, SimpleBug>(
+										title,
+										new RpParameterBuilder(tableItem
+												.getDisplayColumns()),
+										ReportExportType.PDF,
+										ApplicationContextUtil
+												.getSpringBean(BugService.class),
+										searchCriteria, SimpleBug.class),
+								"export.pdf");
+						return res;
+					}
+
+				});
 		fileDownloader.extend(exportPdfBtn);
 		exportPdfBtn.setIcon(MyCollabResource
 				.newResource("icons/16/filetypes/pdf.png"));
 		exportPdfBtn.setStyleName("link");
 		popupButtonsControl.addComponent(exportPdfBtn);
 
-		Button exportExcelBtn = new Button("Excel", new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
+		Button exportExcelBtn = new Button("Excel");
+		OnDemandFileDownloader excelDownloader = new OnDemandFileDownloader(
+				new StreamResourceFactory() {
 
-			@Override
-			public void buttonClick(ClickEvent event) {
-				String title = "Bugs of Project "
-						+ ((CurrentProjectVariables.getProject() != null && CurrentProjectVariables
-								.getProject().getName() != null) ? CurrentProjectVariables
-								.getProject().getName() : "");
-				BugSearchCriteria searchCriteria = new BugSearchCriteria();
-				searchCriteria.setProjectId(new NumberSearchField(
-						SearchField.AND, CurrentProjectVariables.getProject()
-								.getId()));
+					@Override
+					public StreamResource getStreamResource() {
+						String title = "Bugs of Project "
+								+ ((CurrentProjectVariables.getProject() != null && CurrentProjectVariables
+										.getProject().getName() != null) ? CurrentProjectVariables
+										.getProject().getName() : "");
+						BugSearchCriteria searchCriteria = new BugSearchCriteria();
+						searchCriteria.setProjectId(new NumberSearchField(
+								SearchField.AND, CurrentProjectVariables
+										.getProject().getId()));
 
-				StreamResource res = new StreamResource(
-						new SimpleGridExportItemsStreamResource.AllItems<BugSearchCriteria, SimpleBug>(
-								title, new RpParameterBuilder(tableItem
-										.getDisplayColumns()),
-								ReportExportType.EXCEL, ApplicationContextUtil
-										.getSpringBean(BugService.class),
-								searchCriteria, SimpleBug.class),
-						"export.xlsx", BugListViewImpl.this.getApplication());
-				BugListViewImpl.this.getWindow().open(res, "_blank");
-				exportButtonControl.setPopupVisible(false);
-
-			}
-		});
+						StreamResource res = new StreamResource(
+								new SimpleGridExportItemsStreamResource.AllItems<BugSearchCriteria, SimpleBug>(
+										title,
+										new RpParameterBuilder(tableItem
+												.getDisplayColumns()),
+										ReportExportType.EXCEL,
+										ApplicationContextUtil
+												.getSpringBean(BugService.class),
+										searchCriteria, SimpleBug.class),
+								"export.xlsx");
+						return res;
+					}
+				});
+		excelDownloader.extend(exportExcelBtn);
 		exportExcelBtn.setIcon(MyCollabResource
 				.newResource("icons/16/filetypes/excel.png"));
 		exportExcelBtn.setStyleName("link");
 		popupButtonsControl.addComponent(exportExcelBtn);
 
-		Button exportCsvBtn = new Button("CSV", new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
+		Button exportCsvBtn = new Button("CSV");
 
-			@Override
-			public void buttonClick(ClickEvent event) {
-				String title = "Bugs of Project "
-						+ ((CurrentProjectVariables.getProject() != null && CurrentProjectVariables
-								.getProject().getName() != null) ? CurrentProjectVariables
-								.getProject().getName() : "");
-				BugSearchCriteria searchCriteria = new BugSearchCriteria();
-				searchCriteria.setProjectId(new NumberSearchField(
-						SearchField.AND, CurrentProjectVariables.getProject()
-								.getId()));
+		OnDemandFileDownloader csvFileDownloader = new OnDemandFileDownloader(
+				new StreamResourceFactory() {
 
-				StreamResource res = new StreamResource(
-						new SimpleGridExportItemsStreamResource.AllItems<BugSearchCriteria, SimpleBug>(
-								title, new RpParameterBuilder(tableItem
-										.getDisplayColumns()),
-								ReportExportType.CSV, ApplicationContextUtil
-										.getSpringBean(BugService.class),
-								searchCriteria, SimpleBug.class), "export.csv",
-						BugListViewImpl.this.getApplication());
-				BugListViewImpl.this.getWindow().open(res, "_blank");
-				exportButtonControl.setPopupVisible(false);
+					@Override
+					public StreamResource getStreamResource() {
+						String title = "Bugs of Project "
+								+ ((CurrentProjectVariables.getProject() != null && CurrentProjectVariables
+										.getProject().getName() != null) ? CurrentProjectVariables
+										.getProject().getName() : "");
+						BugSearchCriteria searchCriteria = new BugSearchCriteria();
+						searchCriteria.setProjectId(new NumberSearchField(
+								SearchField.AND, CurrentProjectVariables
+										.getProject().getId()));
 
-			}
-		});
+						StreamResource res = new StreamResource(
+								new SimpleGridExportItemsStreamResource.AllItems<BugSearchCriteria, SimpleBug>(
+										title,
+										new RpParameterBuilder(tableItem
+												.getDisplayColumns()),
+										ReportExportType.CSV,
+										ApplicationContextUtil
+												.getSpringBean(BugService.class),
+										searchCriteria, SimpleBug.class),
+								"export.csv");
+						return res;
+					}
+				});
+		csvFileDownloader.extend(exportCsvBtn);
 
-		FileDownloader a = new FileDownloader(resource);
 		exportCsvBtn.setIcon(MyCollabResource
 				.newResource("icons/16/filetypes/csv.png"));
 		exportCsvBtn.setStyleName("link");

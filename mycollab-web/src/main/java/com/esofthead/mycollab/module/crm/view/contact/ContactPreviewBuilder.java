@@ -426,14 +426,16 @@ public abstract class ContactPreviewBuilder extends VerticalLayout {
 									Ezvcard.write(vcard)
 											.version(VCardVersion.V4_0)
 											.go(vCardFile);
-									ContactPreviewBuilder.this.getWindow()
-											.open(new FileStreamResource(
-													new FileInputStream(
-															vCardFile),
-													vCardFile.getName(),
-													ContactPreviewBuilder.this
-															.getApplication()),
-													"_blank");
+
+									// TODO: check download vcard
+									// ContactPreviewBuilder.this.getWindow()
+									// .open(new FileStreamResource(
+									// new FileInputStream(
+									// vCardFile),
+									// vCardFile.getName(),
+									// ContactPreviewBuilder.this
+									// .getApplication()),
+									// "_blank");
 								} catch (final IOException e) {
 									throw new MyCollabException(e);
 								}
@@ -533,10 +535,12 @@ public abstract class ContactPreviewBuilder extends VerticalLayout {
 
 			this.contactAddLayout
 					.addSelectedTabChangeListener(new SelectedTabChangeListener() {
-						
+
 						@Override
-						public void selectedTabChange(SelectedTabChangeEvent event) {
-							final Tab tab = (Tab)event.getTabSheet().getSelectedTab();
+						public void selectedTabChange(
+								SelectedTabChangeEvent event) {
+							final Tab tab = (Tab) event.getTabSheet()
+									.getSelectedTab();
 							final String caption = tab.getCaption();
 							if ("Contact Information".equals(caption)) {
 
@@ -547,7 +551,7 @@ public abstract class ContactPreviewBuilder extends VerticalLayout {
 										.addComponent(ReadView.this.associateOpportunityList);
 							}
 							ReadView.this.contactAddLayout.selectTab(caption);
-							
+
 						}
 					});
 		}

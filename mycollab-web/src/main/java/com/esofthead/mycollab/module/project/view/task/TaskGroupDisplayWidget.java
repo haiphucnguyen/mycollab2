@@ -45,6 +45,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 public class TaskGroupDisplayWidget
@@ -250,7 +251,7 @@ public class TaskGroupDisplayWidget
 							TaskListDepot.this.taskListActionControl
 									.setPopupVisible(false);
 							ConfirmDialogExt.show(
-									TaskListDepot.this.getWindow(),
+									UI.getCurrent(),
 									LocalizationHelper.getMessage(
 											GenericI18Enum.DELETE_DIALOG_TITLE,
 											SiteConfiguration.getSiteName()),

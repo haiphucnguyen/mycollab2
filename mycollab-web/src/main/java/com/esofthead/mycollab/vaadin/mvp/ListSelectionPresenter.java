@@ -183,113 +183,117 @@ public abstract class ListSelectionPresenter<V extends ListView<S, B>, S extends
 
 		@Override
 		public void onSelect(String id, String caption) {
-			if (TablePopupActionHandler.DELETE_ACTION.equals(id)) {
-				ConfirmDialogExt
-						.show(UI.getCurrent(),
-								LocalizationHelper.getMessage(
-										GenericI18Enum.DELETE_DIALOG_TITLE,
-										SiteConfiguration.getSiteName()),
-								LocalizationHelper
-										.getMessage(GenericI18Enum.DELETE_MULTIPLE_ITEMS_DIALOG_MESSAGE),
-								LocalizationHelper
-										.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
-								LocalizationHelper
-										.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
-								new ConfirmDialog.Listener() {
-									private static final long serialVersionUID = 1L;
-
-									@Override
-									public void onClose(ConfirmDialog dialog) {
-										if (dialog.isConfirmed()) {
-											presenter.deleteSelectedItems();
-										}
-									}
-								});
-
-			} else if (TablePopupActionHandler.EXPORT_CSV_ACTION.equals(id)) {
-				Resource res = null;
-				AbstractPagedBeanTable pagedBeanTable = ((ListView) presenter
-						.getView()).getPagedBeanTable();
-				if (presenter.isSelectAll) {
-					res = new StreamResource(
-							new SimpleGridExportItemsStreamResource.AllItems(
-									"",
-									new RpParameterBuilder(pagedBeanTable
-											.getDisplayColumns()),
-									ReportExportType.CSV,
-									presenter.getSearchService(),
-									presenter.searchCriteria,
-									getReportModelClassType()), "export.csv");
-				} else {
-
-					res = new StreamResource(
-							new SimpleGridExportItemsStreamResource.ListData(
-									"",
-									new RpParameterBuilder(pagedBeanTable
-											.getDisplayColumns()),
-									ReportExportType.CSV,
-									presenter.getSelectedItems(),
-									getReportModelClassType()), "export.csv");
-				}
-
-				presenter.view.getWidget().getWindow().open(res, "_blank");
-			} else if (TablePopupActionHandler.EXPORT_PDF_ACTION.equals(id)) {
-				Resource res = null;
-				AbstractPagedBeanTable pagedBeanTable = ((ListView) presenter
-						.getView()).getPagedBeanTable();
-				if (presenter.isSelectAll) {
-					res = new StreamResource(
-							new SimpleGridExportItemsStreamResource.AllItems(
-									getReportTitle(),
-									new RpParameterBuilder(pagedBeanTable
-											.getDisplayColumns()),
-									ReportExportType.PDF,
-									presenter.getSearchService(),
-									presenter.searchCriteria,
-									getReportModelClassType()), "export.pdf");
-				} else {
-
-					res = new StreamResource(
-							new SimpleGridExportItemsStreamResource.ListData(
-									getReportTitle(),
-									new RpParameterBuilder(pagedBeanTable
-											.getDisplayColumns()),
-									ReportExportType.PDF,
-									presenter.getSelectedItems(),
-									getReportModelClassType()), "export.pdf");
-				}
-
-				presenter.view.getWidget().getWindow().open(res, "_blank");
-			} else if (TablePopupActionHandler.EXPORT_EXCEL_ACTION.equals(id)) {
-				Resource res = null;
-				AbstractPagedBeanTable pagedBeanTable = ((ListView) presenter
-						.getView()).getPagedBeanTable();
-				if (presenter.isSelectAll) {
-					res = new StreamResource(
-							new SimpleGridExportItemsStreamResource.AllItems(
-									getReportTitle(),
-									new RpParameterBuilder(pagedBeanTable
-											.getDisplayColumns()),
-									ReportExportType.EXCEL,
-									presenter.getSearchService(),
-									presenter.searchCriteria,
-									getReportModelClassType()), "export.xlsx");
-				} else {
-
-					res = new StreamResource(
-							new SimpleGridExportItemsStreamResource.ListData(
-									getReportTitle(),
-									new RpParameterBuilder(pagedBeanTable
-											.getDisplayColumns()),
-									ReportExportType.EXCEL,
-									presenter.getSelectedItems(),
-									getReportModelClassType()), "export.xlsx");
-				}
-
-				presenter.view.getWidget().getWindow().open(res, "_blank");
-			} else {
-				onSelectExtra(id, caption);
-			}
+			// TODO: check select items
+			// if (TablePopupActionHandler.DELETE_ACTION.equals(id)) {
+			// ConfirmDialogExt
+			// .show(UI.getCurrent(),
+			// LocalizationHelper.getMessage(
+			// GenericI18Enum.DELETE_DIALOG_TITLE,
+			// SiteConfiguration.getSiteName()),
+			// LocalizationHelper
+			// .getMessage(GenericI18Enum.DELETE_MULTIPLE_ITEMS_DIALOG_MESSAGE),
+			// LocalizationHelper
+			// .getMessage(GenericI18Enum.BUTTON_YES_LABEL),
+			// LocalizationHelper
+			// .getMessage(GenericI18Enum.BUTTON_NO_LABEL),
+			// new ConfirmDialog.Listener() {
+			// private static final long serialVersionUID = 1L;
+			//
+			// @Override
+			// public void onClose(ConfirmDialog dialog) {
+			// if (dialog.isConfirmed()) {
+			// presenter.deleteSelectedItems();
+			// }
+			// }
+			// });
+			//
+			// } else if (TablePopupActionHandler.EXPORT_CSV_ACTION.equals(id))
+			// {
+			// Resource res = null;
+			// AbstractPagedBeanTable pagedBeanTable = ((ListView) presenter
+			// .getView()).getPagedBeanTable();
+			// if (presenter.isSelectAll) {
+			// res = new StreamResource(
+			// new SimpleGridExportItemsStreamResource.AllItems(
+			// "",
+			// new RpParameterBuilder(pagedBeanTable
+			// .getDisplayColumns()),
+			// ReportExportType.CSV,
+			// presenter.getSearchService(),
+			// presenter.searchCriteria,
+			// getReportModelClassType()), "export.csv");
+			// } else {
+			//
+			// res = new StreamResource(
+			// new SimpleGridExportItemsStreamResource.ListData(
+			// "",
+			// new RpParameterBuilder(pagedBeanTable
+			// .getDisplayColumns()),
+			// ReportExportType.CSV,
+			// presenter.getSelectedItems(),
+			// getReportModelClassType()), "export.csv");
+			// }
+			//
+			// presenter.view.getWidget().getWindow().open(res, "_blank");
+			// } else if (TablePopupActionHandler.EXPORT_PDF_ACTION.equals(id))
+			// {
+			// Resource res = null;
+			// AbstractPagedBeanTable pagedBeanTable = ((ListView) presenter
+			// .getView()).getPagedBeanTable();
+			// if (presenter.isSelectAll) {
+			// res = new StreamResource(
+			// new SimpleGridExportItemsStreamResource.AllItems(
+			// getReportTitle(),
+			// new RpParameterBuilder(pagedBeanTable
+			// .getDisplayColumns()),
+			// ReportExportType.PDF,
+			// presenter.getSearchService(),
+			// presenter.searchCriteria,
+			// getReportModelClassType()), "export.pdf");
+			// } else {
+			//
+			// res = new StreamResource(
+			// new SimpleGridExportItemsStreamResource.ListData(
+			// getReportTitle(),
+			// new RpParameterBuilder(pagedBeanTable
+			// .getDisplayColumns()),
+			// ReportExportType.PDF,
+			// presenter.getSelectedItems(),
+			// getReportModelClassType()), "export.pdf");
+			// }
+			//
+			// presenter.view.getWidget().getWindow().open(res, "_blank");
+			// } else if
+			// (TablePopupActionHandler.EXPORT_EXCEL_ACTION.equals(id)) {
+			// Resource res = null;
+			// AbstractPagedBeanTable pagedBeanTable = ((ListView) presenter
+			// .getView()).getPagedBeanTable();
+			// if (presenter.isSelectAll) {
+			// res = new StreamResource(
+			// new SimpleGridExportItemsStreamResource.AllItems(
+			// getReportTitle(),
+			// new RpParameterBuilder(pagedBeanTable
+			// .getDisplayColumns()),
+			// ReportExportType.EXCEL,
+			// presenter.getSearchService(),
+			// presenter.searchCriteria,
+			// getReportModelClassType()), "export.xlsx");
+			// } else {
+			//
+			// res = new StreamResource(
+			// new SimpleGridExportItemsStreamResource.ListData(
+			// getReportTitle(),
+			// new RpParameterBuilder(pagedBeanTable
+			// .getDisplayColumns()),
+			// ReportExportType.EXCEL,
+			// presenter.getSelectedItems(),
+			// getReportModelClassType()), "export.xlsx");
+			// }
+			//
+			// presenter.view.getWidget().getWindow().open(res, "_blank");
+			// } else {
+			// onSelectExtra(id, caption);
+			// }
 
 		}
 

@@ -286,19 +286,18 @@ public class ResourceHandlerComponent extends VerticalLayout {
 			public void buttonClick(ClickEvent event) {
 				if (selectedResourcesList != null
 						&& selectedResourcesList.size() > 0) {
+					// TODO: check download
 					com.vaadin.server.Resource downloadResource = StreamDownloadResourceFactory
 							.getStreamResourceSupportExtDrive(
 									selectedResourcesList,
 									itemResourceContainerLayout.isSearchAction);
-					UI.getCurrent().open(downloadResource, "_blank");
 				} else {
 					NotificationUtil
 							.showWarningNotification("Please choose at least one item to download.");
 				}
 			}
 		});
-		
-		
+
 		downloadBtn.setIcon(MyCollabResource
 				.newResource("icons/16/ecm/download.png"));
 		downloadBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
@@ -784,16 +783,15 @@ public class ResourceHandlerComponent extends VerticalLayout {
 
 						@Override
 						public void buttonClick(ClickEvent event) {
+							// TODO: check download
 							List<Resource> lstRes = new ArrayList<Resource>();
 							lstRes.add(res);
 							final com.vaadin.server.Resource downloadResource = StreamDownloadResourceFactory
 									.getStreamResourceSupportExtDrive(lstRes,
 											false);
-
-							UI.getCurrent().open(downloadResource, "_blank");
 						}
 					});
-			
+
 			downloadBtn.addStyleName("link");
 			filterBtnLayout.addComponent(downloadBtn);
 

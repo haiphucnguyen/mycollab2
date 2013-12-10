@@ -173,40 +173,40 @@ public class ProfilePhotoUploadViewImpl extends AbstractPageView implements
 		Panel currentPhotoBox = new Panel();
 		Resource resource = new ByteArrayImageResource(
 				ImageUtil.convertImageToByteArray(originalImage), "image/png");
-		CropField cropField = new CropField(resource);
-		cropField.setImmediate(true);
-		cropField.setSelectionAspectRatio(1.0f);
-		cropField.addListener(new ValueChangeListener() {
-
-			@Override
-			public void valueChange(ValueChangeEvent event) {
-				VCropSelection newSelection = (VCropSelection) event
-						.getProperty().getValue();
-				int x1 = newSelection.getXTopLeft();
-				int y1 = newSelection.getYTopLeft();
-				int x2 = newSelection.getXBottomRight();
-				int y2 = newSelection.getYBottomRight();
-				if (x2 > x1 && y2 > y1) {
-					BufferedImage subImage = originalImage.getSubimage(x1, y1,
-							(x2 - x1), (y2 - y1));
-					ByteArrayOutputStream outStream = new ByteArrayOutputStream();
-					try {
-						ImageIO.write(subImage, "png", outStream);
-						scaleImageData = outStream.toByteArray();
-						displayPreviewImage();
-					} catch (IOException e) {
-						log.error("Error while scale image: ", e);
-					}
-				}
-
-			}
-
-		});
+//		CropField cropField = new CropField(resource);
+//		cropField.setImmediate(true);
+//		cropField.setSelectionAspectRatio(1.0f);
+//		cropField.addListener(new ValueChangeListener() {
+//
+//			@Override
+//			public void valueChange(ValueChangeEvent event) {
+//				VCropSelection newSelection = (VCropSelection) event
+//						.getProperty().getValue();
+//				int x1 = newSelection.getXTopLeft();
+//				int y1 = newSelection.getYTopLeft();
+//				int x2 = newSelection.getXBottomRight();
+//				int y2 = newSelection.getYBottomRight();
+//				if (x2 > x1 && y2 > y1) {
+//					BufferedImage subImage = originalImage.getSubimage(x1, y1,
+//							(x2 - x1), (y2 - y1));
+//					ByteArrayOutputStream outStream = new ByteArrayOutputStream();
+//					try {
+//						ImageIO.write(subImage, "png", outStream);
+//						scaleImageData = outStream.toByteArray();
+//						displayPreviewImage();
+//					} catch (IOException e) {
+//						log.error("Error while scale image: ", e);
+//					}
+//				}
+//
+//			}
+//
+//		});
 		currentPhotoBox.setWidth("650px");
 		currentPhotoBox.setHeight("650px");
 		currentPhotoBox.addStyleName(UIConstants.PANEL_WITHOUT_BORDER);
 		currentPhotoBox.getContent().setSizeUndefined();
-		currentPhotoBox.addComponent(cropField);
+//		currentPhotoBox.addComponent(cropField);
 		((VerticalLayout) currentPhotoBox.getContent()).setMargin(false);
 
 		cropBox.addComponent(currentPhotoBox);

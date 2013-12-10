@@ -40,6 +40,7 @@ import com.esofthead.mycollab.vaadin.ui.SplitButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.MyCollabResource;
+import com.vaadin.server.FileDownloader;
 import com.vaadin.server.Resource;
 import com.vaadin.server.StreamResource;
 import com.vaadin.ui.Alignment;
@@ -215,27 +216,19 @@ public class TaskGroupDisplayViewImpl extends AbstractPageView implements
 		popupButtonsControl.setWidth("150px");
 		exportButtonControl.addComponent(popupButtonsControl);
 
-		Button exportPdfBtn = new Button("Pdf", new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void buttonClick(ClickEvent event) {
-				downloadExportStreamCommand(ReportExportType.PDF);
-			}
-		});
+		Button exportPdfBtn = new Button("Pdf");
+		FileDownloader pdfDownloader = new FileDownloader(
+				constructStreamResource(ReportExportType.PDF));
+		pdfDownloader.extend(exportPdfBtn);
 		exportPdfBtn.setIcon(MyCollabResource
 				.newResource("icons/16/filetypes/pdf.png"));
 		exportPdfBtn.setStyleName("link");
 		popupButtonsControl.addComponent(exportPdfBtn);
 
-		Button exportExcelBtn = new Button("Excel", new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void buttonClick(ClickEvent event) {
-				downloadExportStreamCommand(ReportExportType.EXCEL);
-			}
-		});
+		Button exportExcelBtn = new Button("Excel");
+		FileDownloader excelDownloader = new FileDownloader(
+				constructStreamResource(ReportExportType.EXCEL));
+		excelDownloader.extend(exportExcelBtn);
 		exportExcelBtn.setIcon(MyCollabResource
 				.newResource("icons/16/filetypes/excel.png"));
 		exportExcelBtn.setStyleName("link");
@@ -251,7 +244,7 @@ public class TaskGroupDisplayViewImpl extends AbstractPageView implements
 		this.addComponent(this.taskLists);
 	}
 
-	private void downloadExportStreamCommand(ReportExportType exportType) {
+	private StreamResource constructStreamResource(ReportExportType exportType) {
 		final String title = "Task report of Project "
 				+ ((CurrentProjectVariables.getProject() != null && CurrentProjectVariables
 						.getProject().getName() != null) ? CurrentProjectVariables
@@ -261,32 +254,28 @@ public class TaskGroupDisplayViewImpl extends AbstractPageView implements
 		tasklistSearchCriteria.setProjectId(new NumberSearchField(
 				SearchField.AND, CurrentProjectVariables.getProject().getId()));
 
-		Resource res = null;
+		StreamResource res = null;
 		if (exportType.equals(ReportExportType.PDF)) {
 			res = new StreamResource(new ExportTaskListStreamResource(title,
 					exportType,
 					ApplicationContextUtil
 							.getSpringBean(ProjectTaskListService.class),
-					tasklistSearchCriteria, null), "task_list.pdf",
-					TaskGroupDisplayViewImpl.this.getApplication());
+					tasklistSearchCriteria, null), "task_list.pdf");
 		} else if (exportType.equals(ReportExportType.CSV)) {
 			res = new StreamResource(new ExportTaskListStreamResource(title,
 					exportType,
 					ApplicationContextUtil
 							.getSpringBean(ProjectTaskListService.class),
-					tasklistSearchCriteria, null), "task_list.csv",
-					TaskGroupDisplayViewImpl.this.getApplication());
+					tasklistSearchCriteria, null), "task_list.csv");
 		} else {
 			res = new StreamResource(new ExportTaskListStreamResource(title,
 					exportType,
 					ApplicationContextUtil
 							.getSpringBean(ProjectTaskListService.class),
-					tasklistSearchCriteria, null), "task_list.xls",
-					TaskGroupDisplayViewImpl.this.getApplication());
+					tasklistSearchCriteria, null), "task_list.xls");
 		}
 
-		TaskGroupDisplayViewImpl.this.getWindow().open(res, "_blank");
-		exportButtonControl.setPopupVisible(false);
+		return res;
 	}
 
 	private TaskListSearchCriteria createBaseSearchCriteria() {

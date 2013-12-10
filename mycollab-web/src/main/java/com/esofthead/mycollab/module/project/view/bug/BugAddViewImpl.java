@@ -18,6 +18,8 @@ package com.esofthead.mycollab.module.project.view.bug;
 
 import java.util.List;
 
+import org.apache.lucene.document.NumericField;
+
 import com.esofthead.mycollab.module.file.AttachmentType;
 import com.esofthead.mycollab.module.project.ui.components.DefaultProjectFormViewFieldFactory.ProjectFormAttachmentUploadField;
 import com.esofthead.mycollab.module.project.view.milestone.MilestoneComboBox;
@@ -31,6 +33,7 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
+import com.esofthead.mycollab.vaadin.ui.NumberField;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.vaadin.data.Item;
 import com.vaadin.data.Property;
@@ -228,25 +231,12 @@ public class BugAddViewImpl extends AbstractPageView implements BugAddView {
 					return milestoneBox;
 				} else if (propertyId.equals("estimatetime")
 						|| (propertyId.equals("estimateremaintime"))) {
-					return new NumbericTextField();
+					TextField field = new TextField();
+					NumberField.extend(field);
+					return field;
 				}
 
 				return null;
-			}
-		}
-	}
-
-	private static class NumbericTextField extends TextField {
-		private static final long serialVersionUID = 1L;
-
-		@Override
-		protected void setValue(final Object newValue,
-				final boolean repaintIsNotNeeded) {
-			try {
-				final double d = Double.parseDouble((String) newValue);
-				super.setValue(d, repaintIsNotNeeded);
-			} catch (final Exception e) {
-				super.setValue(0, repaintIsNotNeeded);
 			}
 		}
 	}

@@ -80,6 +80,12 @@
             <version>${vaadinVersion}</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.vaadin</groupId>
+            <artifactId>vaadin-client</artifactId>
+            <version>${vaadinVersion}</version>
+        </dependency>
+
         <!-- VAADIN ADDONS -->
         <dependency>
             <groupId>org.vaadin.addons</groupId>
