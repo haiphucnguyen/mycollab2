@@ -42,31 +42,25 @@
         </dependency>
 
         <dependency>
-            <groupId>com.adobe.blazeds</groupId>
-            <artifactId>blazeds-core</artifactId>
-            <version>4.0.0.14931</version>
-        </dependency>
-        <dependency>
-            <groupId>com.adobe.blazeds</groupId>
-            <artifactId>blazeds-common</artifactId>
-            <version>4.0.0.14931</version>
-        </dependency>
-        <dependency>
-            <groupId>com.adobe.blazeds</groupId>
-            <artifactId>blazeds-proxy</artifactId>
-            <version>4.0.0.14931</version>
-        </dependency>
-        <dependency>
-            <groupId>com.adobe.blazeds</groupId>
-            <artifactId>blazeds-remoting</artifactId>
-            <version>4.0.0.14931</version>
+            <groupId>com.vaadin</groupId>
+            <artifactId>vaadin-client-compiler</artifactId>
+            <version>7.1.8</version>
+            <scope>provided</scope>
         </dependency>
 
         <!-- GWT dependency -->
-        <!-- <dependency> <groupId>com.google.gwt</groupId> <artifactId>gwt-user</artifactId> 
-            <version>${gwtversion}</version> <scope>provided</scope> </dependency> <dependency> 
-            <groupId>com.google.gwt</groupId> <artifactId>gwt-dev</artifactId> <version>${gwtversion}</version> 
-            <scope>provided</scope> </dependency> -->
+        <dependency>
+            <groupId>com.google.gwt</groupId>
+            <artifactId>gwt-user</artifactId>
+            <version>${gwtversion}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.gwt</groupId>
+            <artifactId>gwt-dev</artifactId>
+            <version>${gwtversion}</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
@@ -139,7 +133,14 @@
                     </execution>
                 </executions>
             </plugin>
-            <!-- END SNIPPET: assembly -->
+
+            <!-- <plugin> <groupId>org.codehaus.mojo</groupId> <artifactId>gwt-maven-plugin</artifactId> 
+                <version>${gwtversion}</version> <executions> <execution> <goals> <goal>resources</goal> 
+                <goal>compile</goal> </goals> </execution> </executions> </plugin> <plugin> 
+                <groupId>com.vaadin</groupId> <artifactId>vaadin-maven-plugin</artifactId> 
+                <version>${vaadinVersion}</version> <executions> <execution> <configuration> 
+                </configuration> <goals> <goal>update-widgetset</goal> </goals> </execution> 
+                </executions> </plugin> -->
         </plugins>
 
         <pluginManagement>
