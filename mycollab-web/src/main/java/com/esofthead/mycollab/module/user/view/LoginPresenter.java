@@ -32,7 +32,6 @@ import com.esofthead.mycollab.module.user.service.BillingAccountService;
 import com.esofthead.mycollab.module.user.service.UserPreferenceService;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.shell.events.ShellEvent;
-import com.esofthead.mycollab.shell.view.MainWindowContainer;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;

@@ -83,8 +83,7 @@ public class LoginViewImpl extends AbstractPageView implements LoginView {
 								LoginViewImpl.this, new String[] {
 										(String) usernameField.getValue(),
 										(String) passwordField.getValue(),
-										String.valueOf(rememberMe
-												.booleanValue()) }));
+										String.valueOf(rememberMe.getValue()) }));
 					} catch (MyCollabException e) {
 						LoginForm.this.setComponentError(new UserError(e
 								.getMessage()));

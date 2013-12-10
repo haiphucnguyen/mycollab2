@@ -28,6 +28,7 @@ import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.vaadin.ui.TimeZoneSelection;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.MyCollabApplication;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -167,8 +168,8 @@ public class BasicInfoChangeWindow extends Window {
 		this.user.setDateofbirth(this.birthdayField.getDate());
 		this.user.setTimezone(this.timeZoneField.getTimeZone().getId());
 
-		AppContext.removeVariable(AppContext.USER_TIMEZONE);
-		AppContext.putVariable(AppContext.USER_TIMEZONE, this.timeZoneField
+		MyCollabApplication.removeVariable(AppContext.USER_TIMEZONE);
+		MyCollabApplication.putVariable(AppContext.USER_TIMEZONE, this.timeZoneField
 				.getTimeZone().getTimezone());
 
 		final UserService userService = ApplicationContextUtil

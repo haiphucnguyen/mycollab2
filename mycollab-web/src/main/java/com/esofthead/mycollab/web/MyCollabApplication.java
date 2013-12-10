@@ -24,9 +24,10 @@ import org.slf4j.LoggerFactory;
 
 import com.esofthead.mycollab.cache.LocalCacheManager;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.configuration.SiteConfiguration;
+import com.esofthead.mycollab.core.DeploymentMode;
 import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
-import com.esofthead.mycollab.module.billing.SubDomainNotExistException;
 import com.esofthead.mycollab.shell.view.MainWindowContainer;
 import com.esofthead.mycollab.shell.view.NoSubDomainExistedWindow;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
@@ -36,6 +37,7 @@ import com.maxmind.geoip2.DatabaseReader.Builder;
 import com.vaadin.annotations.Theme;
 import com.vaadin.server.DefaultErrorHandler;
 import com.vaadin.server.VaadinRequest;
+import com.vaadin.server.VaadinServletRequest;
 import com.vaadin.ui.UI;
 
 /**
@@ -60,10 +62,7 @@ public class MyCollabApplication extends UI {
 	 */
 	private AppContext currentContext;
 
-	private String initialUrl = "";
 	private String initialSubDomain = "1";
-	private boolean isInitializeApp = false;
-	private Throwable currentThrowable;
 
 	/**
 	 * Cache to keep all variables in user session
@@ -90,18 +89,15 @@ public class MyCollabApplication extends UI {
 		log.debug("Init mycollab application {}", this.toString());
 		setInstance(this);
 		variables = LocalCacheManager.getCache(this.toString());
-		isInitializeApp = true;
 		currentContext = new AppContext(this);
+		postSetupApp(request);
 		try {
 			currentContext.initDomain(initialSubDomain);
 		} catch (Exception e) {
 			this.setContent(new NoSubDomainExistedWindow(initialSubDomain));
-			currentThrowable = e;
 			return;
 		}
 		this.setContent(new MainWindowContainer());
-
-		postSetupApp(request);
 
 		log.debug("Register default error handler");
 		UI.getCurrent().setErrorHandler(new DefaultErrorHandler() {
@@ -116,51 +112,22 @@ public class MyCollabApplication extends UI {
 							.getMessage(
 									GenericI18Enum.ERROR_USER_INPUT_MESSAGE,
 									invalidException.getMessage()));
-					currentThrowable = (invalidException instanceof SubDomainNotExistException) ? e
-							: null;
 				} else {
 					NotificationUtil.showErrorNotification(LocalizationHelper
 							.getMessage(GenericI18Enum.ERROR_USER_NOTICE_INFORMATION_MESSAGE));
-					currentThrowable = e;
 				}
+				log.error("Error", e);
 			}
 		});
 	}
 
 	private void postSetupApp(VaadinRequest request) {
-		// if (SiteConfiguration.getDeploymentMode() == DeploymentMode.SITE) {
-		// initialSubDomain = request.getServerName().split("\\.")[0];
-		// } else {
-		// initialSubDomain = request.getServerName();
-		// }
-		//
-		// String pathInfo = request.getPathInfo();
-		// if ("".equals(pathInfo) || ("/").equals(pathInfo)) {
-		// if (currentContext != null) {
-		// String urlParam = request.getParameter("url");
-		// if (urlParam != null && !urlParam.equals("")) {
-		// if (urlParam.startsWith("/")) {
-		// urlParam = urlParam.substring(1);
-		// }
-		// try {
-		// String encodeRedirectURL = response
-		// .encodeRedirectURL(request.getContextPath());
-		// log.debug("Forward to URL: " + encodeRedirectURL);
-		// initialUrl = urlParam;
-		// response.sendRedirect(encodeRedirectURL);
-		// } catch (IOException e) {
-		// log.error("Dispatch url error: " + initialUrl, e);
-		// }
-		// }
-		// } else {
-		// try {
-		// initialUrl = request.getParameter("url");
-		// response.sendRedirect(request.getContextPath() + "/");
-		// } catch (IOException e) {
-		// log.error("Dispatch url error: " + initialUrl, e);
-		// }
-		// }
-		// }
+		VaadinServletRequest servletRequest = (VaadinServletRequest) request;
+		if (SiteConfiguration.getDeploymentMode() == DeploymentMode.SITE) {
+			initialSubDomain = servletRequest.getServerName().split("\\.")[0];
+		} else {
+			initialSubDomain = servletRequest.getServerName();
+		}
 	}
 
 	public AppContext getSessionData() {
@@ -236,6 +203,32 @@ public class MyCollabApplication extends UI {
 		currentContext = null;
 	}
 
+	/**
+	 * 
+	 * @param key
+	 * @param value
+	 */
+	public static void putVariable(String key, Object value) {
+		getInstance().variables.put(key, value);
+	}
+
+	/**
+	 * 
+	 * @param key
+	 */
+	public static void removeVariable(String key) {
+		getInstance().variables.remove(key);
+	}
+
+	/**
+	 * 
+	 * @param key
+	 * @return
+	 */
+	public static Object getVariable(String key) {
+		return getInstance().variables.get(key);
+	}
+
 	private static Throwable getUserInvalidException(Throwable e) {
 		if (e instanceof UserInvalidInputException) {
 			return e;
@@ -244,13 +237,5 @@ public class MyCollabApplication extends UI {
 		} else {
 			return null;
 		}
-	}
-
-	public String getInitialUrl() {
-		return initialUrl;
-	}
-
-	public void setInitialUrl(String initialUrl) {
-		this.initialUrl = initialUrl;
 	}
 }

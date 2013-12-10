@@ -441,34 +441,6 @@ public class AppContext implements Serializable {
 
 	/**
 	 * 
-	 * @param key
-	 * @param value
-	 */
-	public static void putVariable(String key, Object value) {
-		MyCollabApplication.getInstance().variables.put(key, value);
-	}
-
-	/**
-	 * 
-	 * @param key
-	 * @return
-	 */
-	public static Object getVariable(String key) {
-		return MyCollabApplication.getInstance().variables.get(key);
-	}
-
-	/**
-	 * 
-	 * @param key
-	 */
-	public static void removeVariable(String key) {
-		if (getInstance() != null) {
-			MyCollabApplication.getInstance().variables.remove(key);
-		}
-	}
-
-	/**
-	 * 
 	 */
 	public static void clearSession() {
 		if (getInstance() != null) {
@@ -506,7 +478,7 @@ public class AppContext implements Serializable {
 	 */
 	public static String formatDateTime(Date date) {
 		return DateTimeUtils.formatDateTime(date,
-				(TimeZone) getVariable(USER_TIMEZONE));
+				(TimeZone) MyCollabApplication.getVariable(USER_TIMEZONE));
 	}
 
 	/**
@@ -516,7 +488,7 @@ public class AppContext implements Serializable {
 	 */
 	public static String formatDate(Date date) {
 		return DateTimeUtils.formatDate(date,
-				(TimeZone) getVariable(USER_TIMEZONE));
+				(TimeZone) MyCollabApplication.getVariable(USER_TIMEZONE));
 	}
 
 	/**

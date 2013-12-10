@@ -56,17 +56,14 @@ public class ShellController implements IController {
 
 					@Override
 					public void handle(GotoMainPage event) {
-						// TODO: check go to main page
-						// MainViewPresenter mainViewPresenter =
-						// PresenterResolver
-						// .getPresenter(MainViewPresenter.class);
-						// MainView mainView = mainViewPresenter.getView();
-						// ((MainWindowContainer) container)
-						// .setMainContent(mainView);
-						//
-						// container.setStyleName("mainView");
-						//
-						// mainViewPresenter.go(container, null);
+						MainViewPresenter mainViewPresenter = PresenterResolver
+								.getPresenter(MainViewPresenter.class);
+						MainView mainView = mainViewPresenter.getView();
+						((MainWindowContainer) container).setContent(mainView);
+
+						container.setStyleName("mainView");
+
+						mainViewPresenter.go(container, null);
 					}
 				});
 

@@ -46,6 +46,7 @@ import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.MyCollabApplication;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.UI;
 
@@ -134,7 +135,7 @@ public class TaskReadPresenter extends AbstractPresenter<TaskReadView> {
 								.getSpringBean(ProjectTaskService.class);
 
 						final TaskSearchCriteria criteria = new TaskSearchCriteria();
-						final SimpleProject project = (SimpleProject) AppContext
+						final SimpleProject project = (SimpleProject) MyCollabApplication
 								.getVariable("project");
 						criteria.setProjectid(new NumberSearchField(
 								SearchField.AND, project.getId()));
@@ -157,7 +158,7 @@ public class TaskReadPresenter extends AbstractPresenter<TaskReadView> {
 								.getSpringBean(ProjectTaskService.class);
 
 						final TaskSearchCriteria criteria = new TaskSearchCriteria();
-						final SimpleProject project = (SimpleProject) AppContext
+						final SimpleProject project = (SimpleProject) MyCollabApplication
 								.getVariable("project");
 						criteria.setProjectid(new NumberSearchField(
 								SearchField.AND, project.getId()));

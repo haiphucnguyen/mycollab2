@@ -16,9 +16,6 @@
  */
 package com.esofthead.mycollab.shell.view;
 
-import java.util.Calendar;
-import java.util.Date;
-
 import javax.servlet.http.Cookie;
 
 import org.slf4j.Logger;
@@ -30,16 +27,12 @@ import com.esofthead.mycollab.module.user.view.LoginView;
 import com.esofthead.mycollab.shell.ShellController;
 import com.esofthead.mycollab.vaadin.mvp.ControllerRegistry;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
-import com.esofthead.mycollab.web.AppContext;
-import com.esofthead.mycollab.web.MyCollabApplication;
 import com.vaadin.server.Page;
 import com.vaadin.server.VaadinService;
-import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.VerticalLayout;
 
-public class MainWindowContainer extends VerticalLayout {
+public class MainWindowContainer extends CssLayout {
 
 	private static final long serialVersionUID = 1L;
 
@@ -50,50 +43,47 @@ public class MainWindowContainer extends VerticalLayout {
 
 	private boolean isAutoLogin;
 
-	private final Content content;
-
-//	private final UriFragmentUtility urifu;
+	// private final UriFragmentUtility urifu;
 
 	public MainWindowContainer() {
 
-//		urifu = new UriFragmentUtility();
-//
-//		urifu.addListener(new UriFragmentUtility.FragmentChangedListener() {
-//			private static final long serialVersionUID = 1L;
-//
-//			@Override
-//			public void fragmentChanged(FragmentChangedEvent source) {
-//				log.debug("Change fragement: "
-//						+ source.getUriFragmentUtility().getFragment());
-//				try {
-//					String initialUrl = source.getUriFragmentUtility()
-//							.getFragment();
-//					if (AppContext.getSession() != null) {
-//						FragmentNavigator.navigateByFragement(initialUrl);
-//					} else {
-//						((MyCollabApplication) AppContext.getApplication())
-//								.setInitialUrl(initialUrl);
-//					}
-//				} catch (Exception e) {
-//					log.error("Error while change segment", e);
-//				}
-//
-//			}
-//		});
+		// urifu = new UriFragmentUtility();
+		//
+		// urifu.addListener(new UriFragmentUtility.FragmentChangedListener() {
+		// private static final long serialVersionUID = 1L;
+		//
+		// @Override
+		// public void fragmentChanged(FragmentChangedEvent source) {
+		// log.debug("Change fragement: "
+		// + source.getUriFragmentUtility().getFragment());
+		// try {
+		// String initialUrl = source.getUriFragmentUtility()
+		// .getFragment();
+		// if (AppContext.getSession() != null) {
+		// FragmentNavigator.navigateByFragement(initialUrl);
+		// } else {
+		// ((MyCollabApplication) AppContext.getApplication())
+		// .setInitialUrl(initialUrl);
+		// }
+		// } catch (Exception e) {
+		// log.error("Error while change segment", e);
+		// }
+		//
+		// }
+		// });
 
 		this.setCaption("MyCollab");
 		ControllerRegistry.addController(new ShellController(this));
 
 		this.setImmediate(true);
-		content = new Content();
-//		this.setContent(content);
-		content.setSizeFull();
-//		content.addComponent(urifu);
-
-//		log.debug("Initial fragement: " + urifu.getFragment());
 
 		isAutoLogin = true;
 		setDefaultView();
+	}
+
+	public void setContent(ComponentContainer container) {
+		this.removeAllComponents();
+		this.addComponent(container);
 	}
 
 	public void unsetRememberPassword() {
@@ -143,7 +133,7 @@ public class MainWindowContainer extends VerticalLayout {
 		}
 
 		this.setStyleName("loginView");
-//		this.setMainContent(loginView.getWidget());
+		this.setContent(loginView.getWidget());
 	}
 
 	private Cookie getCookieByName(String name) {
@@ -166,10 +156,5 @@ public class MainWindowContainer extends VerticalLayout {
 
 	public void setAutoLogin(boolean isAutoLogin) {
 		this.isAutoLogin = isAutoLogin;
-	}
-
-	private static class Content extends CssLayout {
-		private static final long serialVersionUID = 1L;
-
 	}
 }

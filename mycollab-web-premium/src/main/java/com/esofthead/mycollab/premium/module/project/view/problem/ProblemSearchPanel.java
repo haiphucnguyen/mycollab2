@@ -18,6 +18,7 @@ import com.esofthead.mycollab.vaadin.ui.Separator;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.MyCollabApplication;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -38,7 +39,7 @@ public class ProblemSearchPanel extends
 	protected ProblemSearchCriteria searchCriteria;
 
 	public ProblemSearchPanel() {
-		this.project = (SimpleProject) AppContext.getVariable("project");
+		this.project = (SimpleProject) MyCollabApplication.getVariable("project");
 	}
 
 	@Override

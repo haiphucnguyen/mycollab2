@@ -36,6 +36,7 @@ import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewPermission;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.MyCollabApplication;
 import com.vaadin.ui.ComponentContainer;
 
 /**
@@ -111,7 +112,7 @@ public class ProjectAddPresenter extends AbstractPresenter<ProjectAddView> {
 			projectService.saveWithSession(project, AppContext.getUsername());
 		} else {
 			projectService.updateWithSession(project, AppContext.getUsername());
-			AppContext.putVariable(ProjectContants.CURRENT_PROJECT, project);
+			MyCollabApplication.putVariable(ProjectContants.CURRENT_PROJECT, project);
 		}
 
 	}

@@ -23,7 +23,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.esofthead.mycollab.core.MyCollabException;
-import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.MyCollabApplication;
 
 /**
  * 
@@ -41,11 +41,11 @@ class ViewManagerImpl extends ViewManager {
 	protected <T extends CacheableComponent> T getViewInstance(
 			final Class<T> viewClass) {
 		try {
-			Map<Class<?>, Object> viewMap = (Map<Class<?>, Object>) AppContext
+			Map<Class<?>, Object> viewMap = (Map<Class<?>, Object>) MyCollabApplication
 					.getVariable(VIEW_MANAGER_VAL);
 			if (viewMap == null) {
 				viewMap = new HashMap<Class<?>, Object>();
-				AppContext.putVariable(VIEW_MANAGER_VAL, viewMap);
+				MyCollabApplication.putVariable(VIEW_MANAGER_VAL, viewMap);
 			}
 
 			T value = (T) viewMap.get(viewClass);

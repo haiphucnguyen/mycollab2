@@ -46,6 +46,7 @@ import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.MyCollabApplication;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.UI;
 
@@ -125,7 +126,7 @@ public class MilestoneReadPresenter extends
 						MilestoneService milestoneService = ApplicationContextUtil
 								.getSpringBean(MilestoneService.class);
 						MilestoneSearchCriteria criteria = new MilestoneSearchCriteria();
-						SimpleProject project = (SimpleProject) AppContext
+						SimpleProject project = (SimpleProject) MyCollabApplication
 								.getVariable("project");
 						criteria.setProjectId(new NumberSearchField(
 								SearchField.AND, project.getId()));
@@ -147,7 +148,7 @@ public class MilestoneReadPresenter extends
 						MilestoneService milestoneService = ApplicationContextUtil
 								.getSpringBean(MilestoneService.class);
 						MilestoneSearchCriteria criteria = new MilestoneSearchCriteria();
-						SimpleProject project = (SimpleProject) AppContext
+						SimpleProject project = (SimpleProject) MyCollabApplication
 								.getVariable("project");
 						criteria.setProjectId(new NumberSearchField(
 								SearchField.AND, project.getId()));

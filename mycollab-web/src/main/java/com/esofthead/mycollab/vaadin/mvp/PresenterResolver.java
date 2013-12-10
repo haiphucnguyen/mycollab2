@@ -25,7 +25,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.esofthead.mycollab.core.MyCollabException;
-import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.MyCollabApplication;
 
 public class PresenterResolver {
 
@@ -48,11 +48,11 @@ public class PresenterResolver {
 
 	@SuppressWarnings("unchecked")
 	public static <P extends IPresenter> P getPresenter(Class<P> presenterClass) {
-		Map<Class<?>, Object> presenterMap = (Map<Class<?>, Object>) AppContext
+		Map<Class<?>, Object> presenterMap = (Map<Class<?>, Object>) MyCollabApplication
 				.getVariable(PRESENTER_VAL);
 		if (presenterMap == null) {
 			presenterMap = new HashMap<Class<?>, Object>();
-			AppContext.putVariable(PRESENTER_VAL, presenterMap);
+			MyCollabApplication.putVariable(PRESENTER_VAL, presenterMap);
 		}
 
 		P value = (P) presenterMap.get(presenterClass);
