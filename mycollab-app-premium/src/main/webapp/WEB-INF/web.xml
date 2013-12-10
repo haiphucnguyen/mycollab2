@@ -8,10 +8,6 @@
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
 
-    <listener>
-        <listener-class>org.icepush.util.ExtensionRegistry</listener-class>
-    </listener>
-
     <filter>
         <filter-name>ExpiresFilter</filter-name>
         <filter-class>fr.xebia.servlet.filter.ExpiresFilter</filter-class>
