@@ -29,7 +29,7 @@ import org.apache.commons.beanutils.PropertyUtils;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public class DateComparisionValidator implements
 		ConstraintValidator<DateComparision, Object> {

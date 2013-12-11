@@ -119,7 +119,7 @@ public class AccountListViewImpl extends AbstractPageView implements
 								.canWrite(RolePermissionCollections.CRM_ACCOUNT));
 		this.tableActionControls.setVisible(false);
 
-		layout.addComponent(this.tableActionControls);
+//		layout.addComponent(this.tableActionControls);
 		layout.addComponent(this.selectedItemsNumberLabel);
 		layout.setComponentAlignment(this.selectedItemsNumberLabel,
 				Alignment.MIDDLE_CENTER);

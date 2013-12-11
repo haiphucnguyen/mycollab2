@@ -98,7 +98,7 @@ public class MeetingPreviewBuilder extends VerticalLayout {
 
 	/**
 	 * 
-	 * @author haiphucnguyen
+	 * @author MyCollab Ltd.
 	 * 
 	 */
 	public static class ReadView extends MeetingPreviewBuilder {
@@ -177,7 +177,7 @@ public class MeetingPreviewBuilder extends VerticalLayout {
 
 	/**
 	 * 
-	 * @author haiphucnguyen
+	 * @author MyCollab Ltd.
 	 * 
 	 */
 	public static class PrintView extends MeetingPreviewBuilder {

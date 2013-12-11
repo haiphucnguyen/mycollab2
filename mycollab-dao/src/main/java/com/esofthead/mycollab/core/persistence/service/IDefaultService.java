@@ -40,7 +40,7 @@ import com.esofthead.mycollab.core.cache.CacheKey;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  *
  * @param <K>
  * @param <T>

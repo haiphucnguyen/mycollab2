@@ -24,7 +24,7 @@ import com.esofthead.mycollab.common.domain.SimpleActivityStream;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public class ProjectActivityStream extends SimpleActivityStream {
 	private static final long serialVersionUID = 1L;

@@ -27,7 +27,7 @@ import com.vaadin.ui.Window;
 /**
  * Mass update
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  * 
  * @param <B>
  */

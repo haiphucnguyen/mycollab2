@@ -195,7 +195,7 @@ public class CallPreviewBuilder extends VerticalLayout {
 
 	/**
 	 * 
-	 * @author haiphucnguyen
+	 * @author MyCollab Ltd.
 	 * 
 	 */
 	public static class PrintView extends CallPreviewBuilder {

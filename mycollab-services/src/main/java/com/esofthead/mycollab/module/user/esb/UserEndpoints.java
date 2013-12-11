@@ -18,7 +18,7 @@ package com.esofthead.mycollab.module.user.esb;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  *
  */
 public class UserEndpoints {

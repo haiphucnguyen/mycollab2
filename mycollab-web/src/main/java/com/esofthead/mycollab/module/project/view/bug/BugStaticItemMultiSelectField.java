@@ -25,7 +25,7 @@ import com.esofthead.mycollab.module.project.ui.components.MultiSelectComp;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 @SuppressWarnings("serial")
 public class BugStaticItemMultiSelectField extends MultiSelectComp {

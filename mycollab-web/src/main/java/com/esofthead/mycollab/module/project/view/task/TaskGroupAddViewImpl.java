@@ -44,7 +44,7 @@ import com.vaadin.ui.TextField;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 @ViewComponent
 public class TaskGroupAddViewImpl extends AbstractPageView implements

@@ -32,7 +32,7 @@ import org.springframework.stereotype.Component;
 
 /**
  *
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 @Aspect
 @Component

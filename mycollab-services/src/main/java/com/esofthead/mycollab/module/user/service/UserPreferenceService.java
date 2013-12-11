@@ -27,7 +27,7 @@ import com.esofthead.mycollab.module.user.domain.UserPreference;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public interface UserPreferenceService extends
 		ICrudService<Integer, UserPreference> {

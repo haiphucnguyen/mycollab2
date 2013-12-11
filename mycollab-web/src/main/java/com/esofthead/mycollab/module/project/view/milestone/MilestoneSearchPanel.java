@@ -47,7 +47,7 @@ import com.vaadin.ui.themes.Reindeer;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public class MilestoneSearchPanel extends
 		GenericSearchPanel<MilestoneSearchCriteria> {

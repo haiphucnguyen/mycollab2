@@ -21,7 +21,7 @@ import com.esofthead.mycollab.core.MyCollabException;
 /**
  * Generic exception relate to MyCollab storage processing.
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  * 
  */
 public class ContentException extends MyCollabException {

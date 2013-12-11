@@ -18,7 +18,7 @@ package com.esofthead.mycollab.eventmanager;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  * 
  */
 public interface EventBusFactory {

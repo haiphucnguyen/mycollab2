@@ -41,7 +41,7 @@ import com.vaadin.ui.ComponentContainer;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public class TaskGroupAddPresenter extends AbstractPresenter<TaskGroupAddView> {
 	private static final long serialVersionUID = 1L;

@@ -26,7 +26,7 @@ import com.esofthead.mycollab.vaadin.mvp.IPreviewView;
 
 /**
  *
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public interface MessageReadView extends IPreviewView<SimpleMessage> {
 

@@ -25,7 +25,7 @@ import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
 
 /**
  *
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public class BugStatusComboBox  extends ValueComboBox {
 

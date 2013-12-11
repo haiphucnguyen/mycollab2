@@ -29,7 +29,7 @@ import com.vaadin.ui.Field;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  *
  */
 public class DefaultCustomFormViewFieldFactory extends DefaultFieldFactory {

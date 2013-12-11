@@ -25,8 +25,9 @@ import com.esofthead.mycollab.web.MyCollabApplication;
 
 /**
  * 
- * @author haiphucnguyen
- *
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
  */
 class EventBusFactoryImpl implements EventBusFactory {
 	private static Logger log = LoggerFactory
@@ -35,7 +36,8 @@ class EventBusFactoryImpl implements EventBusFactory {
 	private static final String EVENT_BUS_VAL = "eventBusVal";
 
 	public EventBus getInstance() {
-		EventBus eventBus = (EventBus) MyCollabApplication.getVariable(EVENT_BUS_VAL);
+		EventBus eventBus = (EventBus) MyCollabApplication
+				.getVariable(EVENT_BUS_VAL);
 		log.debug("Event bus {}", eventBus);
 		if (eventBus == null) {
 			eventBus = new EventBusImpl();

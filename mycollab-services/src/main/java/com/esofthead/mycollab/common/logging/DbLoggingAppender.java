@@ -30,7 +30,7 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public class DbLoggingAppender extends AppenderSkeleton {
 

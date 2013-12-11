@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public class PageActionChain {
 	private static Logger log = LoggerFactory.getLogger(PageActionChain.class);

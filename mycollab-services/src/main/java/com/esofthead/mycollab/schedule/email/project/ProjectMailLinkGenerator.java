@@ -28,7 +28,7 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  *
  */
 public class ProjectMailLinkGenerator extends GenericLinkUtils {

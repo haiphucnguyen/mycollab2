@@ -26,7 +26,7 @@ import com.esofthead.mycollab.vaadin.mvp.ListView;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public interface ProjectRoleListView extends
 		ListView<ProjectRoleSearchCriteria, SimpleProjectRole> {

@@ -33,7 +33,7 @@ import com.vaadin.server.FileResource;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public class StreamDownloadResource extends FileResource {
 	private static final long serialVersionUID = 1L;

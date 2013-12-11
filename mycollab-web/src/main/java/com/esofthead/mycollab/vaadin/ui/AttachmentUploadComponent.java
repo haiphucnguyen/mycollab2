@@ -26,7 +26,7 @@ import org.vaadin.easyuploads.MultiFileUploadExt;
 
 /**
  *
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public interface AttachmentUploadComponent {
 

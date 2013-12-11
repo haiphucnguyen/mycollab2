@@ -24,7 +24,7 @@ import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  * 
  */
 public abstract class ViewManager {

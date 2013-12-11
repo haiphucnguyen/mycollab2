@@ -23,7 +23,7 @@ import org.jfree.data.general.PieDataset;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public class JFreeChartLabelCustom implements PieSectionLabelGenerator {
 

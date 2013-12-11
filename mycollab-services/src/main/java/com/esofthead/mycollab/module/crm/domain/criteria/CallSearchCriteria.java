@@ -27,7 +27,7 @@ import com.esofthead.mycollab.core.arguments.SetSearchField;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public class CallSearchCriteria extends SearchCriteria {
 	private SetSearchField<String> assignUsers;

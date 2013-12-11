@@ -64,7 +64,7 @@ import com.vaadin.ui.UI;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public class BugTableDisplay extends
 		DefaultPagedBeanTable<BugService, BugSearchCriteria, SimpleBug>

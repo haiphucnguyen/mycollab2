@@ -58,7 +58,7 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 @Service
 public class ProjectMemberServiceImpl extends

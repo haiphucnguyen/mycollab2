@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  *
  */
 public class HistoryViewManager {

@@ -20,7 +20,7 @@ import java.util.List;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  * 
  * @param <T>
  */

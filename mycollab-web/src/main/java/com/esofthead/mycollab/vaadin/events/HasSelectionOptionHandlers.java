@@ -18,7 +18,7 @@ package com.esofthead.mycollab.vaadin.events;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  *
  */
 public interface HasSelectionOptionHandlers {

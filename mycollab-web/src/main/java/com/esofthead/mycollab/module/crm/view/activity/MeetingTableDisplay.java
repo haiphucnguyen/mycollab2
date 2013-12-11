@@ -40,7 +40,7 @@ import com.vaadin.ui.Table;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public class MeetingTableDisplay extends
 		DefaultPagedBeanTable<MeetingService, MeetingSearchCriteria, SimpleMeeting> {

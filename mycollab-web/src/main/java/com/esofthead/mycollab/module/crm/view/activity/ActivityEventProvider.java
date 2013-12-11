@@ -48,7 +48,7 @@ import com.vaadin.addon.calendar.event.CalendarEventProvider;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public class ActivityEventProvider implements CalendarEventProvider {
 	private static final long serialVersionUID = 1L;

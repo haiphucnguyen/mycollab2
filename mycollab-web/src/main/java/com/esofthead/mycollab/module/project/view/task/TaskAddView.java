@@ -27,7 +27,7 @@ import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.AttachmentUp
 
 /**
  *
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public interface TaskAddView extends IFormAddView<Task> {
 

@@ -57,7 +57,7 @@ import com.vaadin.ui.Window;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 @SuppressWarnings("serial")
 public class WontFixExplainWindow extends Window {

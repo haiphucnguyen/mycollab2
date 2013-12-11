@@ -27,7 +27,7 @@ import java.lang.annotation.Target;
 
 /**
  *
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(value = {ElementType.TYPE })

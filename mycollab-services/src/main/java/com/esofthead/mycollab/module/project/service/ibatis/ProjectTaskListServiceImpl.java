@@ -40,7 +40,7 @@ import com.esofthead.mycollab.module.project.service.ProjectTaskListService;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 @Service
 @Transactional

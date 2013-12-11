@@ -37,7 +37,7 @@ import com.esofthead.mycollab.module.project.service.ProjectGenericTaskService;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 @Service
 public class ProjectGenericTaskServiceImpl extends

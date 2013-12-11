@@ -45,7 +45,7 @@ import com.vaadin.ui.Label;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public class DueBugWidget extends BugDisplayWidget {
 	private static final long serialVersionUID = 1L;

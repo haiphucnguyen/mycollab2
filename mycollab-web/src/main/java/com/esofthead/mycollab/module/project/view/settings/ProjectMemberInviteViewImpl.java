@@ -71,7 +71,7 @@ import com.vaadin.ui.Layout;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 @ViewComponent
 public class ProjectMemberInviteViewImpl extends AbstractPageView implements

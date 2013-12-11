@@ -27,7 +27,7 @@ import com.esofthead.mycollab.vaadin.ui.HistoryLogComponent;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 @SuppressWarnings("serial")
 public class CampaignHistoryLogWindow extends HistoryLogWindow {

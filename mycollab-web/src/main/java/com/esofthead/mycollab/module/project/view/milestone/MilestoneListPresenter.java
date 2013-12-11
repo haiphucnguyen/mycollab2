@@ -39,7 +39,7 @@ import com.vaadin.ui.ComponentContainer;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public class MilestoneListPresenter extends
 		AbstractPresenter<MilestoneListView> implements

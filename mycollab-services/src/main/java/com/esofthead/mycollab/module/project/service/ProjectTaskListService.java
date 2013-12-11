@@ -31,7 +31,7 @@ import com.esofthead.mycollab.module.project.domain.criteria.TaskListSearchCrite
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public interface ProjectTaskListService extends
 		IDefaultService<Integer, TaskList, TaskListSearchCriteria> {

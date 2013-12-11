@@ -41,7 +41,7 @@ import com.vaadin.ui.Table;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public class CallTableDisplay extends
 		DefaultPagedBeanTable<CallService, CallSearchCriteria, SimpleCall> {

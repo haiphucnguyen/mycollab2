@@ -29,7 +29,7 @@ import com.esofthead.mycollab.vaadin.ui.HistoryLogComponent;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 @SuppressWarnings("serial")
 public class BugHistoryList extends HistoryLogComponent {

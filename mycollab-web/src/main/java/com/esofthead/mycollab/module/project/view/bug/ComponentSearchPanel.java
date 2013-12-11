@@ -48,7 +48,7 @@ import com.vaadin.ui.themes.Reindeer;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public class ComponentSearchPanel extends
 		GenericSearchPanel<ComponentSearchCriteria> {

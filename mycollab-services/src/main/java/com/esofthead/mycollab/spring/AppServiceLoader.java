@@ -27,7 +27,7 @@ import org.springframework.core.io.Resource;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  *
  */
 @Configuration

@@ -28,7 +28,7 @@ import java.lang.annotation.Target;
  * Annotation denote a method, or parameter is not presented in mobile generated
  * classes.
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  * 
  */
 @Target(value = { ElementType.METHOD, ElementType.TYPE })

@@ -30,12 +30,13 @@ import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.MyCollabApplication;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.UI;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public class MainViewPresenter extends AbstractPresenter<MainView> {
 	private static final long serialVersionUID = 1L;
@@ -50,7 +51,7 @@ public class MainViewPresenter extends AbstractPresenter<MainView> {
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		// if user type remember URL, instead of going to main page, to to his
 		// url
-		String url = UI.getCurrent().getPage().getUriFragment();
+		String url = MyCollabApplication.getInstance().getInitialUrl();
 		if (url != null && !url.equals("")) {
 			if (url.startsWith("/")) {
 				url = url.substring(1);

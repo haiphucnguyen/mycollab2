@@ -45,7 +45,7 @@ import com.vaadin.ui.UI;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  * 
  */
 @Theme("mycollab")
@@ -66,6 +66,7 @@ public class MyCollabApplication extends UI {
 	private AppContext currentContext;
 
 	private String initialSubDomain = "1";
+	private String initialUrl = "";
 
 	public static final String NAME_COOKIE = "mycollab";
 
@@ -88,6 +89,7 @@ public class MyCollabApplication extends UI {
 	@Override
 	protected void init(VaadinRequest request) {
 		log.debug("Init mycollab application {}", this.toString());
+		initialUrl = this.getPage().getUriFragment();
 		VaadinSession.getCurrent().setAttribute(CURRENT_APP, this);
 		currentContext = new AppContext(this);
 		postSetupApp(request);
@@ -189,6 +191,10 @@ public class MyCollabApplication extends UI {
 	// threadLocal.remove();
 	// }
 
+	public String getInitialUrl() {
+		return initialUrl;
+	}
+
 	@Override
 	public void close() {
 		super.close();
@@ -235,6 +241,7 @@ public class MyCollabApplication extends UI {
 			cookie.setValue(username + "$"
 					+ PasswordEncryptHelper.encyptText(password));
 		}
+		cookie.setPath("/");
 		cookie.setMaxAge(60 * 60 * 24 * 7);
 		VaadinService.getCurrentResponse().addCookie(cookie);
 	}
@@ -244,11 +251,14 @@ public class MyCollabApplication extends UI {
 
 		if (cookie != null) {
 			cookie.setValue("");
+			VaadinService.getCurrentResponse().addCookie(cookie);
 		}
 	}
 
 	public Cookie getCookieByName(String name) {
 		// Fetch all cookies from the request
+		VaadinRequest currentRequest = VaadinService.getCurrentRequest();
+		log.debug("Request path: " + currentRequest.getPathInfo());
 		Cookie[] cookies = VaadinService.getCurrentRequest().getCookies();
 
 		// Iterate to find cookie by its name

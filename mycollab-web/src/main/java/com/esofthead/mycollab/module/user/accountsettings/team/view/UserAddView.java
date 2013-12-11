@@ -29,7 +29,7 @@ import com.esofthead.mycollab.vaadin.mvp.IFormAddView;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public interface UserAddView extends IFormAddView<SimpleUser> {
 

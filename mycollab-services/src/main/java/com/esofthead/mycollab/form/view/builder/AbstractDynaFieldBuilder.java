@@ -20,7 +20,7 @@ import com.esofthead.mycollab.form.view.builder.type.AbstractDynaField;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  * 
  * @param <F>
  */

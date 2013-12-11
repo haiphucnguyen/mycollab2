@@ -20,7 +20,7 @@ import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  *
  */
 public interface SendingRelayEmailNotificationAction {

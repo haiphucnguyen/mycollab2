@@ -40,7 +40,7 @@ import com.esofthead.mycollab.core.utils.BeanUtility;
 
 /**
  *
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public class BitSearchField extends NumberSearchField {
     public static final BitSearchField TRUE = new BitSearchField(AND, 1);

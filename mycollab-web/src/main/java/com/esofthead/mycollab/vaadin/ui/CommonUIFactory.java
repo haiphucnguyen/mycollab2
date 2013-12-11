@@ -22,7 +22,7 @@ import com.vaadin.ui.Button;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  *
  */
 public class CommonUIFactory {

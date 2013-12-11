@@ -22,7 +22,7 @@ package com.esofthead.mycollab.module.project.domain;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public class SimpleMilestone extends Milestone {
 	private static final long serialVersionUID = 1L;

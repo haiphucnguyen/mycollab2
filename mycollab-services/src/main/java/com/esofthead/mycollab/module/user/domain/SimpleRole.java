@@ -27,7 +27,7 @@ import com.esofthead.mycollab.security.PermissionMap;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public class SimpleRole extends Role {
 	private static final long serialVersionUID = 1L;

@@ -80,7 +80,7 @@ import com.vaadin.ui.VerticalLayout;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 @ViewComponent
 public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent {

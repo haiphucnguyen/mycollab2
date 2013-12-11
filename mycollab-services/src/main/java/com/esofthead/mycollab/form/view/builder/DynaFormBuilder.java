@@ -20,7 +20,7 @@ import com.esofthead.mycollab.form.view.builder.type.DynaForm;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  *
  */
 public class DynaFormBuilder {

@@ -26,7 +26,7 @@ import com.esofthead.mycollab.security.PermissionMap;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public class SimpleProjectMember extends ProjectMember {
 	private static final long serialVersionUID = 1L;

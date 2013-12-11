@@ -50,7 +50,7 @@ import com.vaadin.ui.VerticalLayout;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public class AttachmentDisplayComponent extends VerticalLayout {
 	private static final long serialVersionUID = 1L;

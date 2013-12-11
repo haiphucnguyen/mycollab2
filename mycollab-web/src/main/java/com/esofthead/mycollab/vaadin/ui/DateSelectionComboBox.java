@@ -22,7 +22,7 @@ package com.esofthead.mycollab.vaadin.ui;
 
 /**
  *
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 @SuppressWarnings("serial")
 public class DateSelectionComboBox extends ValueComboBox{

@@ -22,7 +22,7 @@ import org.jasypt.util.text.BasicTextEncryptor;
 /**
  * Utility class to make encrypt and decrypt text
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  * 
  */
 public class PasswordEncryptHelper {

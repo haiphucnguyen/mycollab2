@@ -43,7 +43,7 @@ import com.vaadin.ui.ComponentContainer;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public class TaskGroupReorderPresenter extends
 		AbstractPresenter<TaskGroupReorderView> {

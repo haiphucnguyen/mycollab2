@@ -53,7 +53,7 @@ import com.esofthead.mycollab.core.utils.BeanUtility;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 @Aspect
 @Component

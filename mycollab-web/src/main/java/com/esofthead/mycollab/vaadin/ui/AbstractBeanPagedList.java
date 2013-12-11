@@ -40,7 +40,7 @@ import com.vaadin.ui.VerticalLayout;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public abstract class AbstractBeanPagedList<S extends SearchCriteria, T>
 		extends VerticalLayout implements HasPagableHandlers {

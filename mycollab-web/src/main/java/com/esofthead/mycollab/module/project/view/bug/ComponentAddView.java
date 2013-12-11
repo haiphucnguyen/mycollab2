@@ -26,7 +26,7 @@ import com.esofthead.mycollab.vaadin.mvp.IFormAddView;
 
 /**
  *
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public interface ComponentAddView extends IFormAddView<Component> {
 

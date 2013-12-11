@@ -20,7 +20,7 @@ import com.esofthead.mycollab.form.view.builder.type.DateDynaField;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  *
  */
 public class DateDynaFieldBuilder extends

@@ -20,7 +20,7 @@ import com.esofthead.mycollab.core.utils.JsonDeSerializer.Exclude;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  *
  */
 public class AbstractDynaField implements Comparable<AbstractDynaField> {

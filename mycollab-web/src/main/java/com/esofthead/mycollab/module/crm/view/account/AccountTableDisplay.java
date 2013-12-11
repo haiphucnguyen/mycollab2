@@ -56,7 +56,7 @@ import com.vaadin.ui.Table;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public class AccountTableDisplay
 		extends

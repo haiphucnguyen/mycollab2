@@ -22,7 +22,7 @@ package com.esofthead.mycollab.common;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public class ModuleNameConstants {
 	public static final String CRM = "Crm";

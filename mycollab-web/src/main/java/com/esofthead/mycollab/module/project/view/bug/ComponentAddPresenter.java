@@ -42,7 +42,7 @@ import com.vaadin.ui.ComponentContainer;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public class ComponentAddPresenter extends AbstractPresenter<ComponentAddView> {
 	private static final long serialVersionUID = 1L;

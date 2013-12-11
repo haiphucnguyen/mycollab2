@@ -52,7 +52,7 @@ import com.vaadin.ui.UI;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public class MilestoneReadPresenter extends
 		AbstractPresenter<MilestoneReadView> {

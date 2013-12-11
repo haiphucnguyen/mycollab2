@@ -27,7 +27,7 @@ import com.esofthead.mycollab.vaadin.mvp.PageView;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public interface MilestoneListView extends PageView {
 	void displayMilestones(List<SimpleMilestone> milestones);

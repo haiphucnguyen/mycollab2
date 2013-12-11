@@ -22,7 +22,7 @@ package com.esofthead.mycollab.vaadin.ui.table;
 
 /**
  *
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public interface IBeanTable {
     

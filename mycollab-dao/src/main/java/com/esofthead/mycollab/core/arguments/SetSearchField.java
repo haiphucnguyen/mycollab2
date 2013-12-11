@@ -37,7 +37,7 @@ import java.util.Collection;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  *
  * @param <T>
  */

@@ -53,7 +53,7 @@ import com.vaadin.ui.Window;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 @ViewComponent
 public class RoleReadViewImpl extends AbstractPageView implements RoleReadView {

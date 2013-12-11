@@ -28,7 +28,7 @@ import java.lang.annotation.Target;
  * This annotation denotes a method has data clean of cache with the key compose
  * by its arguments.
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  * 
  */
 @Inherited

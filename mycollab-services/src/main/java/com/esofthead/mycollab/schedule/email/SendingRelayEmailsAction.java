@@ -20,7 +20,7 @@ import com.esofthead.mycollab.common.domain.RelayEmailWithBLOBs;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  *
  */
 public interface SendingRelayEmailsAction {

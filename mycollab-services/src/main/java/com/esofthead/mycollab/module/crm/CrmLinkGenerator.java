@@ -20,7 +20,7 @@ import com.esofthead.mycollab.common.GenericLinkUtils;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  *
  */
 public class CrmLinkGenerator {

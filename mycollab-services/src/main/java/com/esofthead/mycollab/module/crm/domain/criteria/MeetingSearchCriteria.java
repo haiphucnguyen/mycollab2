@@ -28,7 +28,7 @@ import com.esofthead.mycollab.core.arguments.SetSearchField;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public class MeetingSearchCriteria extends SearchCriteria {
 

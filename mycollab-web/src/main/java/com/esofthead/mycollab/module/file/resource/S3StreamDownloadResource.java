@@ -34,7 +34,7 @@ import com.vaadin.util.FileTypeResolver;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public class S3StreamDownloadResource extends StreamResource {
 

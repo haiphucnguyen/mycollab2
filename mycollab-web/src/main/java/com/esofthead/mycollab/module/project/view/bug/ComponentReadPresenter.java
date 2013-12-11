@@ -46,7 +46,7 @@ import com.vaadin.ui.Window;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public class ComponentReadPresenter extends
 		AbstractPresenter<ComponentReadView> {

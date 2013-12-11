@@ -33,7 +33,7 @@ import com.vaadin.ui.ComponentContainer;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public class UserSettingPresenter extends AbstractPresenter<UserSettingView> {
 	private static final long serialVersionUID = 1L;

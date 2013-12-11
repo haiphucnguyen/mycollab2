@@ -25,7 +25,7 @@ package com.esofthead.mycollab.core;
  * password, invalid input. Note that MyCollab catch this type exception to
  * recognize user mistake
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public class UserInvalidInputException extends MyCollabException {
 	private static final long serialVersionUID = 1L;

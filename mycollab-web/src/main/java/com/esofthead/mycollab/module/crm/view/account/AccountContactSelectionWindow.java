@@ -35,7 +35,7 @@ import com.vaadin.ui.Button.ClickEvent;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 @SuppressWarnings("serial")
 public class AccountContactSelectionWindow extends

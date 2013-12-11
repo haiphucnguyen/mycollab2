@@ -34,7 +34,7 @@ import com.vaadin.ui.ComponentContainer;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public class UserPresenter extends AbstractPresenter<UserContainer> {
 	private static final long serialVersionUID = 1L;

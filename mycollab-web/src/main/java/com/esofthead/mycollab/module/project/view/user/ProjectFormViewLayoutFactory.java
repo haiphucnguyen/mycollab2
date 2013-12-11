@@ -32,7 +32,7 @@ import com.vaadin.ui.VerticalLayout;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public abstract class ProjectFormViewLayoutFactory implements
 		IFormLayoutFactory {

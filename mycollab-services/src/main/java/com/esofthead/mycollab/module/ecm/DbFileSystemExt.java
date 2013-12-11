@@ -24,7 +24,7 @@ import com.esofthead.mycollab.configuration.SiteConfiguration;
 /**
  * Db file system of mycollab jackrabbit stora
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  * 
  */
 public class DbFileSystemExt extends DbFileSystem {

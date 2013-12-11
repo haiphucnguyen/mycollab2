@@ -28,7 +28,7 @@ import com.vaadin.ui.ComponentContainer;
 
 /**
  *
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public class ForgotPasswordPresenter extends AbstractPresenter<ForgotPasswordView> {
 	private static final long serialVersionUID = 1L;

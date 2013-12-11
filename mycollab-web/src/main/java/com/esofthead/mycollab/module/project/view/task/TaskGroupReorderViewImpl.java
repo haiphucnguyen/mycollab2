@@ -55,7 +55,7 @@ import fi.jasoft.dragdroplayouts.events.VerticalLocationIs;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 @ViewComponent
 public class TaskGroupReorderViewImpl extends AbstractPageView implements

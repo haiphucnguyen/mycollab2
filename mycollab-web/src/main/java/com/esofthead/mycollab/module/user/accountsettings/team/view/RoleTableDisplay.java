@@ -39,7 +39,7 @@ import com.vaadin.ui.Table;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public class RoleTableDisplay extends
 		DefaultPagedBeanTable<RoleService, RoleSearchCriteria, SimpleRole> {

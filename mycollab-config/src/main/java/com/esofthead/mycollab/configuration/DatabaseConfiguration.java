@@ -19,7 +19,7 @@ package com.esofthead.mycollab.configuration;
 /**
  * Bean contains database configuration
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  * 
  */
 public class DatabaseConfiguration {

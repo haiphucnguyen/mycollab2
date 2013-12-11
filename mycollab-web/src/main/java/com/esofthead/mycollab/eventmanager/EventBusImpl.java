@@ -27,10 +27,11 @@ import org.slf4j.LoggerFactory;
 
 /**
  * 
- * @author haiphucnguyen
- * 
+ * @author MyCollab Ltd.
+ * @since 2.0
  */
 class EventBusImpl extends EventBus {
+	private static final long serialVersionUID = 1L;
 
 	private Map<Class<? extends ApplicationEvent>, Set<ApplicationEventListener<?>>> map = new HashMap<Class<? extends ApplicationEvent>, Set<ApplicationEventListener<?>>>();
 	private final Logger log = LoggerFactory.getLogger(EventBus.class);

@@ -43,7 +43,7 @@ import com.vaadin.ui.Window;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  * 
  */
 public abstract class CustomizedTableWindow extends Window {
