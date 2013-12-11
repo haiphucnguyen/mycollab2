@@ -56,6 +56,7 @@ public class MainWindowContainer extends CssLayout {
 				.getPresenter(LoginPresenter.class);
 		LoginView loginView = presenter.getView();
 		this.setStyleName("loginView");
+		this.setSizeFull();
 		this.setContent(loginView.getWidget());
 
 		// Read previously stored cookie value
@@ -73,9 +74,6 @@ public class MainWindowContainer extends CssLayout {
 				}
 			}
 		}
-		this.setStyleName("loginView");
-		this.setSizeFull();
-		this.setContent(loginView.getWidget());
 	}
 
 	public boolean isAutoLogin() {

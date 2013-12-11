@@ -59,16 +59,17 @@ import com.vaadin.ui.VerticalLayout;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 2.0
  * 
  * @param <S>
- * @param <T>
+ * @param <B>
  */
-public abstract class AbstractPagedBeanTable<S extends SearchCriteria, T>
-		extends VerticalLayout implements IPagedBeanTable<S, T> {
+public abstract class AbstractPagedBeanTable<S extends SearchCriteria, B>
+		extends VerticalLayout implements IPagedBeanTable<S, B> {
 	private static final long serialVersionUID = 1L;
 
 	protected int displayNumItems = SearchRequest.DEFAULT_NUMBER_SEARCH_ITEMS;
-	protected List<T> currentListData;
+	protected List<B> currentListData;
 
 	protected HorizontalLayout pageManagement;
 
@@ -85,10 +86,10 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, T>
 	protected CssLayout controlBarWrapper;
 
 	protected Map<Class<? extends ApplicationEvent>, Set<ApplicationEventListener<?>>> mapEventListener;
-	protected Set<SelectableItemHandler<T>> selectableHandlers;
+	protected Set<SelectableItemHandler<B>> selectableHandlers;
 	protected Set<PagableHandler> pagableHandlers;
 
-	protected final Class<T> type;
+	protected final Class<B> type;
 
 	private TableViewField requiredColumn;
 	private List<TableViewField> displayColumns;
@@ -96,17 +97,17 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, T>
 
 	protected final Map<Object, ColumnGenerator> columnGenerators = new HashMap<Object, Table.ColumnGenerator>();
 
-	public AbstractPagedBeanTable(Class<T> type,
+	public AbstractPagedBeanTable(Class<B> type,
 			List<TableViewField> displayColumns) {
 		this(type, null, displayColumns);
 	}
 
-	public AbstractPagedBeanTable(Class<T> type, TableViewField requiredColumn,
+	public AbstractPagedBeanTable(Class<B> type, TableViewField requiredColumn,
 			List<TableViewField> displayColumns) {
 		this(type, null, requiredColumn, displayColumns);
 	}
 
-	public AbstractPagedBeanTable(Class<T> type, String viewId,
+	public AbstractPagedBeanTable(Class<B> type, String viewId,
 			TableViewField requiredColumn, List<TableViewField> displayColumns) {
 		if (viewId != null) {
 			CustomViewStoreService customViewStoreService = ApplicationContextUtil
@@ -166,9 +167,9 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, T>
 	}
 
 	@Override
-	public void addSelectableItemHandler(final SelectableItemHandler<T> handler) {
+	public void addSelectableItemHandler(final SelectableItemHandler<B> handler) {
 		if (this.selectableHandlers == null) {
-			this.selectableHandlers = new HashSet<SelectableItemHandler<T>>();
+			this.selectableHandlers = new HashSet<SelectableItemHandler<B>>();
 		}
 		this.selectableHandlers.add(handler);
 	}
@@ -194,14 +195,14 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, T>
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<T> getCurrentDataList() {
-		final BeanItemContainer<T> containerDataSource = (BeanItemContainer<T>) this.tableItem
+	public List<B> getCurrentDataList() {
+		final BeanItemContainer<B> containerDataSource = (BeanItemContainer<B>) this.tableItem
 				.getContainerDataSource();
-		final Collection<T> itemIds = containerDataSource.getItemIds();
+		final Collection<B> itemIds = containerDataSource.getItemIds();
 		if (itemIds instanceof List) {
-			return (List<T>) itemIds;
+			return (List<B>) itemIds;
 		} else {
-			return new ArrayList<T>(itemIds);
+			return new ArrayList<B>(itemIds);
 		}
 	}
 
@@ -237,9 +238,9 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, T>
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public T getBeanByIndex(final Object itemId) {
+	public B getBeanByIndex(final Object itemId) {
 		final Container container = this.tableItem.getContainerDataSource();
-		final BeanItem<T> item = (BeanItem<T>) container.getItem(itemId);
+		final BeanItem<B> item = (BeanItem<B>) container.getItem(itemId);
 		return (item == null) ? null : item.getBean();
 	}
 
@@ -284,9 +285,9 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, T>
 		}
 	}
 
-	public void fireSelectItemEvent(final T item) {
+	public void fireSelectItemEvent(final B item) {
 		if (this.selectableHandlers != null) {
-			for (final SelectableItemHandler<T> handler : this.selectableHandlers) {
+			for (final SelectableItemHandler<B> handler : this.selectableHandlers) {
 				handler.onSelect(item);
 			}
 		}
@@ -425,7 +426,7 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, T>
 
 	abstract protected int queryTotalCount();
 
-	abstract protected List<T> queryCurrentData();
+	abstract protected List<B> queryCurrentData();
 
 	protected void doSearch() {
 		this.totalCount = this.queryTotalCount();
@@ -510,7 +511,7 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, T>
 			}
 		});
 
-		final BeanItemContainer<T> container = new BeanItemContainer<T>(
+		final BeanItemContainer<B> container = new BeanItemContainer<B>(
 				this.type, this.currentListData);
 		this.tableItem.setPageLength(0);
 		this.tableItem.setContainerDataSource(container);

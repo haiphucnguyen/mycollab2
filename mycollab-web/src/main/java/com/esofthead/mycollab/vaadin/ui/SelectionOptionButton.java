@@ -81,7 +81,7 @@ public class SelectionOptionButton extends SplitButton implements
 		final VerticalLayout selectContent = new VerticalLayout();
 		selectContent.setWidth("150px");
 
-		selectAllBtn = new Button("", new Button.ClickListener() {
+		selectAllBtn = new ButtonLink("", new Button.ClickListener() {
 			@Override
 			public void buttonClick(final ClickEvent event) {
 				isSelectAll = true;
@@ -90,10 +90,9 @@ public class SelectionOptionButton extends SplitButton implements
 				fireSelectAll();
 			}
 		});
-		selectAllBtn.setStyleName("link");
 		selectContent.addComponent(selectAllBtn);
 
-		selectThisPageBtn = new Button("", new Button.ClickListener() {
+		selectThisPageBtn = new ButtonLink("", new Button.ClickListener() {
 			@Override
 			public void buttonClick(final ClickEvent event) {
 				isSelectAll = false;
@@ -102,7 +101,6 @@ public class SelectionOptionButton extends SplitButton implements
 				fireSelectCurrentPage();
 			}
 		});
-		selectThisPageBtn.setStyleName("link");
 		selectContent.addComponent(selectThisPageBtn);
 
 		deSelectBtn = new ButtonLink("Deselect All",
@@ -115,7 +113,6 @@ public class SelectionOptionButton extends SplitButton implements
 						fireDeselect();
 					}
 				});
-		deSelectBtn.setStyleName("link");
 		selectContent.addComponent(deSelectBtn);
 		setContent(selectContent);
 	}

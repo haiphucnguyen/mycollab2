@@ -2,6 +2,7 @@ package com.esofthead.mycollab.vaadin.ui;
 
 import org.vaadin.hene.popupbutton.PopupButton;
 
+import com.vaadin.server.Resource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
@@ -33,6 +34,11 @@ public class SplitButton extends CustomComponent {
 		this.setCompositionRoot(contentLayout);
 	}
 
+	@Override
+	public void setIcon(Resource icon) {
+		parentButton.setIcon(icon);
+	}
+
 	public void addClickListener(SplitButtonClickListener listener) {
 
 	}
@@ -47,7 +53,7 @@ public class SplitButton extends CustomComponent {
 	}
 
 	public void setContent(ComponentContainer content) {
-
+		popupButton.setContent(content);
 	}
 
 	public void addComponent(Component component) {

@@ -32,7 +32,6 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.util.BeanItemContainer;
-import com.vaadin.ui.AbstractSelect;
 import com.vaadin.ui.AbstractSelect.ItemCaptionMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -44,6 +43,7 @@ import com.vaadin.ui.Window;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 2.0
  * 
  */
 public abstract class CustomizedTableWindow extends Window {
@@ -52,13 +52,13 @@ public abstract class CustomizedTableWindow extends Window {
 	private final ListBuilder listBuilder;
 
 	private CustomViewStoreService customViewStoreService;
-	private AbstractPagedBeanTable tableItem;
+	private AbstractPagedBeanTable<?, ?> tableItem;
 
 	protected String viewId;
 
 	public CustomizedTableWindow(final String viewId,
-			final AbstractPagedBeanTable table) {
-		super("Customize PageView");
+			final AbstractPagedBeanTable<?, ?> table) {
+		super("Customize View");
 		this.viewId = viewId;
 		this.setWidth("800px");
 		this.center();
@@ -67,15 +67,14 @@ public abstract class CustomizedTableWindow extends Window {
 		customViewStoreService = ApplicationContextUtil
 				.getSpringBean(CustomViewStoreService.class);
 
-		final VerticalLayout body = new VerticalLayout();
-		body.setSpacing(true);
-		body.setSizeFull();
-		this.setContent(body);
+		final VerticalLayout contentLayout = new VerticalLayout();
+		contentLayout.setSpacing(true);
+		this.setContent(contentLayout);
 
 		this.listBuilder = new ListBuilder();
 		this.listBuilder.setImmediate(true);
 		this.listBuilder.setLeftColumnCaption("Available Columns");
-		this.listBuilder.setRightColumnCaption("PageView Columns");
+		this.listBuilder.setRightColumnCaption("View Columns");
 		this.listBuilder.setWidth("100%");
 
 		this.listBuilder.setItemCaptionMode(ItemCaptionMode.PROPERTY);
@@ -84,7 +83,7 @@ public abstract class CustomizedTableWindow extends Window {
 				TableViewField.class, this.getAvailableColumns());
 		this.listBuilder.setContainerDataSource(container);
 		this.setSelectedViewColumns();
-		body.addComponent(this.listBuilder);
+		contentLayout.addComponent(this.listBuilder);
 
 		Button restoreLink = new Button("Restore to default",
 				new Button.ClickListener() {
@@ -117,8 +116,9 @@ public abstract class CustomizedTableWindow extends Window {
 					}
 				});
 		restoreLink.setStyleName("link");
-		body.addComponent(restoreLink);
-		body.setComponentAlignment(restoreLink, Alignment.MIDDLE_RIGHT);
+		contentLayout.addComponent(restoreLink);
+		contentLayout
+				.setComponentAlignment(restoreLink, Alignment.MIDDLE_RIGHT);
 
 		final HorizontalLayout buttonControls = new HorizontalLayout();
 		buttonControls.setSpacing(true);
@@ -162,8 +162,9 @@ public abstract class CustomizedTableWindow extends Window {
 		cancelBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		buttonControls.addComponent(cancelBtn);
 
-		body.addComponent(buttonControls);
-		body.setComponentAlignment(buttonControls, Alignment.MIDDLE_CENTER);
+		contentLayout.addComponent(buttonControls);
+		contentLayout.setComponentAlignment(buttonControls,
+				Alignment.MIDDLE_CENTER);
 	}
 
 	private void setSelectedViewColumns() {
