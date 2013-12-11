@@ -54,7 +54,6 @@ public class CrmToolbar extends CssLayout implements PageView {
 	private final PopupButton addBtn;
 
 	public CrmToolbar() {
-		this.setHeight("30px");
 		final NavigatorItemListener listener = new NavigatorItemListener();
 		final Button homeBtn = new Button(null, listener);
 		homeBtn.setStyleName("link");

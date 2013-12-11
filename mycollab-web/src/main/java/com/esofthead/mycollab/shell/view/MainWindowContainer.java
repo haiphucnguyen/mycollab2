@@ -73,6 +73,7 @@ public class MainWindowContainer extends CssLayout {
 		}
 
 		this.setStyleName("loginView");
+		this.setSizeFull();
 		this.setContent(loginView.getWidget());
 	}
 

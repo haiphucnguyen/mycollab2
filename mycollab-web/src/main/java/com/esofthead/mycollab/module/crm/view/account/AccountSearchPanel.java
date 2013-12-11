@@ -286,6 +286,7 @@ public class AccountSearchPanel extends
 		public ComponentContainer constructBody() {
 			final HorizontalLayout basicSearchBody = new HorizontalLayout();
 			basicSearchBody.setSpacing(false);
+			basicSearchBody.setMargin(true);
 			// basicSearchBody.addComponent(new Label("Name"));
 
 			this.nameField = this.createSeachSupportTextField(new TextField(),
@@ -385,6 +386,7 @@ public class AccountSearchPanel extends
 		final HorizontalLayout layout = new HorizontalLayout();
 		layout.setWidth("100%");
 		layout.setSpacing(true);
+		layout.setMargin(true);
 
 		final Embedded titleIcon = new Embedded();
 		titleIcon.setSource(MyCollabResource

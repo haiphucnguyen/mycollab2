@@ -83,7 +83,7 @@ public class CrmHomeViewImpl extends AbstractPageView implements CrmHomeView {
 		contentLayout.setExpandRatio(myAssignmentsLayout, 1.0f);
 
 		VerticalLayout streamsLayout = new VerticalLayout();
-		streamsLayout.setSizeFull();
+		streamsLayout.setSizeUndefined();
 		streamsLayout.setMargin(new MarginInfo(false, false, false, true));
 
 		salesDashboard = new SalesDashboardView();

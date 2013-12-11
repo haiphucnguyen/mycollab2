@@ -18,6 +18,7 @@ package com.esofthead.mycollab.vaadin.ui;
 
 import com.vaadin.event.LayoutEvents.LayoutClickEvent;
 import com.vaadin.event.LayoutEvents.LayoutClickListener;
+import com.vaadin.server.Sizeable;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
@@ -65,11 +66,15 @@ public class Depot extends VerticalLayout {
         } else {
             this.headerContent = new HorizontalLayout();
             ((HorizontalLayout) this.headerContent).setSpacing(true);
+            ((HorizontalLayout) this.headerContent).setMargin(true);
+            ((HorizontalLayout) this.headerContent).setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
             this.headerContent.setVisible(false);
         }
 
         this.headerContent.setStyleName("header-elements");
-        this.headerContent.setSizeUndefined();
+        this.headerContent.setWidth(Sizeable.SIZE_UNDEFINED, Sizeable.Unit.PIXELS);
+        this.headerContent.setHeight("100%");
+        //this.headerContent.setSizeUndefined();
 
         this.addComponent(this.header);
 
@@ -79,7 +84,7 @@ public class Depot extends VerticalLayout {
         this.headerLbl.setWidth("100%");
         headerLeft.addComponent(this.headerLbl);
         headerLeft.setStyleName("depot-title");
-        headerLeft.addListener(new LayoutClickListener() {
+        headerLeft.addLayoutClickListener(new LayoutClickListener() {
             private static final long serialVersionUID = 1L;
 
             @Override
