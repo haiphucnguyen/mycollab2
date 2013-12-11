@@ -60,6 +60,7 @@ public class UserSearchPanel extends GenericSearchPanel<UserSearchCriteria> {
 		final HorizontalLayout layout = new HorizontalLayout();
 		layout.setWidth("100%");
 		layout.setSpacing(true);
+		layout.setMargin(true);
 
 		final Label searchtitle = new Label("Users");
 		searchtitle.setStyleName(Reindeer.LABEL_H2);
@@ -108,6 +109,7 @@ public class UserSearchPanel extends GenericSearchPanel<UserSearchCriteria> {
 			final HorizontalLayout basicSearchBody = new HorizontalLayout();
 			basicSearchBody.addComponent(new Label("Name"));
 			basicSearchBody.setSpacing(true);
+			basicSearchBody.setMargin(true);
 
 			final HorizontalLayout searchComp = new HorizontalLayout();
 			searchComp.addStyleName("search-comp");
@@ -119,7 +121,7 @@ public class UserSearchPanel extends GenericSearchPanel<UserSearchCriteria> {
 			searchBtn.setStyleName("search-icon-button");
 			searchBtn.setIcon(MyCollabResource
 					.newResource("icons/16/search_white.png"));
-			searchBtn.addListener(new Button.ClickListener() {
+			searchBtn.addClickListener(new Button.ClickListener() {
 				private static final long serialVersionUID = 1L;
 
 				@Override

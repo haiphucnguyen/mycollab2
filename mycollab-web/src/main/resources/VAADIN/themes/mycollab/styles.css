@@ -686,8 +686,18 @@ input.v-textfield[type="text"],textarea.v-textarea,.v-filterselect {
 	border-bottom: 1px solid #a9a9a9;
 }
 
-.advSearchHeader .v-horizontallayout .v-horizontallayout-margin {
-	padding: 3px 5px 3px 15px;
+.advSearchHeader .v-horizontallayout.v-margin-top {
+	padding-top: 3px;
+}
+
+.advSearchHeader .v-horizontallayout.v-margin-right {
+	padding-right: 5px;
+}
+.advSearchHeader .v-horizontallayout.v-margin-bottom {
+	padding-bottom: 3px;
+}
+.advSearchHeader .v-horizontallayout.v-margin-left {
+	padding-left: 15px;
 }
 
 .advSearch .advSearchHeader .h2 {
@@ -735,10 +745,6 @@ input.v-textfield[type="text"],textarea.v-textarea,.v-filterselect {
 	background: url('icons/grad-light-top2.png') repeat-x 0 0 #e7e7e7;
 	border-radius: 3px 3px 0px 0px;
 	border-bottom: 1px solid #a9a9a9;
-}
-
-.basicSearchHeader .v-horizontallayout .v-horizontallayout-margin {
-	padding: 3px 5px 3px 15px;
 }
 
 .basicSearchHeader .v-horizontallayout.v-margin-top {
@@ -1587,15 +1593,21 @@ input.v-textfield-errorField {
 	color: gray;
 }
 
-.v-horizontallayout-projectinfo-footer .v-horizontallayout-margin {
-	padding: 5px 5px 5px 18px;
+.projectinfo-footer.v-margin-top {
+	padding-top: 5px;
+}
+.projectinfo-footer.v-margin-right {
+	padding-right: 5px;
+}
+.projectinfo-footer.v-margin-bottom {
+	padding-bottom: 5px;
+}
+.projectinfo-footer.v-margin-left {
+	padding-left: 18px;
 }
 
 .projectfeed-hdr-wrapper {
 	background-color: rgb(230, 230, 230);
-}
-
-.projectfeed-hdr-wrapper>.v-csslayout-margin {
 	padding: 8px 8px 10px 8px;
 	border-radius: 0px 0px 3px 3px;
 	border-width: 0px 1px 2px 1px;
@@ -2206,32 +2218,29 @@ input.v-textfield-errorField {
 /* End Tabsheet Styles */
 
 /* Activity Stream Channel */
-.popupContent .v-window-contents .v-lazyloadingwrapper>.v-verticallayout>div>div:first-child>div>div.activity-stream>.v-csslayout-margin
-	{
+.popupContent .v-window-contents .v-lazyloadingwrapper>.v-verticallayout>div>div:first-child>div>div.activity-stream
+{
 	border-width: 1px;
 }
 
 .activity-stream {
 	background-color: #F7F7F7;
-}
-
-.activity-stream.odd {
-	background-color: rgb(212, 223, 239);
-}
-
-.activity-stream>.v-csslayout-margin {
 	border-color: #a9a9a9;
 	border-width: 0px 1px 1px;
 	border-style: solid;
 	padding: 5px;
 }
 
-.v-tabsheet-tabsheetpanel .activity-panel .v-lazyloadingwrapper>.v-verticallayout>div>div:first-child .activity-stream>.v-csslayout-margin
-	{
+.activity-stream.odd {
+	background-color: rgb(212, 223, 239);
+}
+
+.v-tabsheet-tabsheetpanel .activity-panel .v-lazyloadingwrapper>.v-verticallayout>div>div:first-child .activity-stream
+{
 	border-width: 1px;
 }
 
-.stream-content>.v-csslayout-margin {
+.stream-content {
 	padding-top: 3px;
 }
 
@@ -4348,34 +4357,31 @@ div.v-ratingstars-bar {
 }
 
 /* My Project List */
-.myprojectlist .activity-stream>.v-csslayout-margin {
+.myprojectlist .activity-stream {
 	padding: 0px;
 }
 
-.myprojectlist .stream-content>.v-csslayout-margin {
+.myprojectlist .stream-content {
 	padding: 0px;
-}
-
-.myprojectlist .stream-content>.v-csslayout-margin>.v-csslayout-container>div
-	{
-	margin: 0px;
 }
 
 .myprojectlist .stream-content .projectlink-wrapper {
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-	box-sizing: border-box;
 	border-right: 1px solid rgb(169, 169, 169);
 	background-color: rgb(212, 223, 239);
-}
-
-.myprojectlist .stream-content .projectlink-wrapper>.v-csslayout-margin
-	{
 	padding: 5px 0px 5px 5px;
 }
 
-.project-status .v-verticallayout .v-verticallayout-margin {
-	padding: 8px 8px 8px 8px;
+.project-status .v-verticallayout.v-margin-top {
+	padding-top: 8px;
+}
+.project-status .v-verticallayout.v-margin-right {
+	padding-right: 8px;
+}
+.project-status .v-verticallayout.v-margin-bottom {
+	padding-bottom: 8px;
+}
+.project-status .v-verticallayout.v-margin-left {
+	padding-left: 8px;
 }
 
 .esofthead-progessbar {
@@ -4394,8 +4400,9 @@ div.v-ratingstars-bar {
 }
 
 .progressbar-status .v-label {
-	display: table-cell;
+	display: block;
 	vertical-align: middle;
+	text-align: center;
 }
 /* Confirm Dialog */
 .custom-dialog div.v-panel-content-light {
@@ -4782,7 +4789,7 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 }
 
 /* reponsive wrapper */
-.main-content-wrapper>.v-csslayout-margin {
+.main-content-wrapper {
 	padding: 0px 25px 12px;
 }
 

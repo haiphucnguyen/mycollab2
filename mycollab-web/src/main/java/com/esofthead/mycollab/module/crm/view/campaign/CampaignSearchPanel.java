@@ -56,6 +56,7 @@ import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.themes.Reindeer;
@@ -74,9 +75,9 @@ public class CampaignSearchPanel extends
 		final HorizontalLayout layout = new HorizontalLayout();
 		layout.setWidth("100%");
 		layout.setSpacing(true);
+		layout.setMargin(true);
 
-		final Embedded titleIcon = new Embedded();
-		titleIcon.setSource(MyCollabResource
+		final Image titleIcon = new Image(null, MyCollabResource
 				.newResource("icons/22/crm/campaign.png"));
 		layout.addComponent(titleIcon);
 		layout.setComponentAlignment(titleIcon, Alignment.MIDDLE_LEFT);
@@ -126,6 +127,7 @@ public class CampaignSearchPanel extends
 		public ComponentContainer constructBody() {
 			final HorizontalLayout layout = new HorizontalLayout();
 			layout.setSpacing(false);
+			layout.setMargin(true);
 			this.nameField = this.createSeachSupportTextField(new TextField(),
 					"NameFieldOfBasicSearch");
 
@@ -160,7 +162,7 @@ public class CampaignSearchPanel extends
 					LocalizationHelper.getMessage(GenericI18Enum.BUTTON_CLEAR));
 			cancelBtn.setStyleName(UIConstants.THEME_LINK);
 			cancelBtn.addStyleName("cancel-button");
-			cancelBtn.addListener(new Button.ClickListener() {
+			cancelBtn.addClickListener(new Button.ClickListener() {
 				@Override
 				public void buttonClick(final ClickEvent event) {
 					CampaignBasicSearchLayout.this.nameField.setValue("");
@@ -200,7 +202,7 @@ public class CampaignSearchPanel extends
 								(String) this.nameField.getValue()));
 			}
 
-			if (this.myItemCheckbox.booleanValue()) {
+			if (this.myItemCheckbox.getValue()) {
 				CampaignSearchPanel.this.searchCriteria
 						.setAssignUsers(new SetSearchField<String>(
 								SearchField.AND, new String[] { AppContext

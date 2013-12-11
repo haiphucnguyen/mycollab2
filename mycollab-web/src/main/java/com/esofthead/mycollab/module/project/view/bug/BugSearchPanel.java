@@ -53,6 +53,7 @@ import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.themes.Reindeer;
@@ -93,9 +94,9 @@ public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 		final HorizontalLayout layout = new HorizontalLayout();
 		layout.setWidth("100%");
 		layout.setSpacing(true);
+		layout.setMargin(true);
 
-		final Embedded titleIcon = new Embedded();
-		titleIcon.setSource(MyCollabResource
+		final Image titleIcon = new Image(null, MyCollabResource
 				.newResource("icons/24/project/bug.png"));
 		layout.addComponent(titleIcon);
 		layout.setComponentAlignment(titleIcon, Alignment.MIDDLE_LEFT);
@@ -153,6 +154,7 @@ public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 		public ComponentContainer constructBody() {
 			final HorizontalLayout basicSearchBody = new HorizontalLayout();
 			basicSearchBody.setSpacing(true);
+			basicSearchBody.setMargin(true);
 			basicSearchBody.addComponent(new Label("Name"));
 			this.nameField = new TextField();
 			this.nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
@@ -164,7 +166,7 @@ public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 
 			final Button searchBtn = new Button("Search");
 			searchBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
-			searchBtn.addListener(new Button.ClickListener() {
+			searchBtn.addClickListener(new Button.ClickListener() {
 				@Override
 				public void buttonClick(final ClickEvent event) {
 
@@ -177,7 +179,7 @@ public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 
 			final Button cancelBtn = new Button("Clear");
 			cancelBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
-			cancelBtn.addListener(new Button.ClickListener() {
+			cancelBtn.addClickListener(new Button.ClickListener() {
 				@Override
 				public void buttonClick(final ClickEvent event) {
 					BugBasicSearchLayout.this.nameField.setValue("");

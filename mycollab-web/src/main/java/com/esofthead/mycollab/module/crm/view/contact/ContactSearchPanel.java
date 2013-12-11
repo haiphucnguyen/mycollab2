@@ -51,6 +51,7 @@ import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.themes.Reindeer;
@@ -63,9 +64,9 @@ public class ContactSearchPanel extends
 		final HorizontalLayout layout = new HorizontalLayout();
 		layout.setWidth("100%");
 		layout.setSpacing(true);
+		layout.setMargin(true);
 
-		final Embedded titleIcon = new Embedded();
-		titleIcon.setSource(MyCollabResource
+		final Image titleIcon = new Image(null, MyCollabResource
 				.newResource("icons/22/crm/contact.png"));
 		layout.addComponent(titleIcon);
 		layout.setComponentAlignment(titleIcon, Alignment.MIDDLE_LEFT);
@@ -118,6 +119,7 @@ public class ContactSearchPanel extends
 		public ComponentContainer constructBody() {
 			final HorizontalLayout layout = new HorizontalLayout();
 			layout.setSpacing(false);
+			layout.setMargin(true);
 			// layout.addComponent(new Label("Name"));
 			this.nameField = this.createSeachSupportTextField(new TextField(),
 					"NameFieldOfBasicSearch");
@@ -130,7 +132,7 @@ public class ContactSearchPanel extends
 			searchBtn.setIcon(MyCollabResource
 					.newResource("icons/16/search_white.png"));
 
-			searchBtn.addListener(new Button.ClickListener() {
+			searchBtn.addClickListener(new Button.ClickListener() {
 				@Override
 				public void buttonClick(final ClickEvent event) {
 					ContactBasicSearchLayout.this.callSearchAction();
@@ -154,7 +156,7 @@ public class ContactSearchPanel extends
 					LocalizationHelper.getMessage(GenericI18Enum.BUTTON_CLEAR));
 			cancelBtn.setStyleName(UIConstants.THEME_LINK);
 			cancelBtn.addStyleName("cancel-button");
-			cancelBtn.addListener(new Button.ClickListener() {
+			cancelBtn.addClickListener(new Button.ClickListener() {
 				@Override
 				public void buttonClick(final ClickEvent event) {
 					ContactBasicSearchLayout.this.nameField.setValue("");
@@ -196,7 +198,7 @@ public class ContactSearchPanel extends
 								.trim()));
 			}
 
-			if (this.myItemCheckbox.booleanValue()) {
+			if (this.myItemCheckbox.getValue()) {
 				searchCriteria.setAssignUsers(new SetSearchField<String>(
 						SearchField.AND, new String[] { AppContext
 								.getUsername() }));

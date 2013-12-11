@@ -54,6 +54,7 @@ import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.themes.Reindeer;
@@ -72,9 +73,9 @@ public class OpportunitySearchPanel extends
 		final HorizontalLayout layout = new HorizontalLayout();
 		layout.setWidth("100%");
 		layout.setSpacing(true);
+		layout.setMargin(true);
 
-		final Embedded titleIcon = new Embedded();
-		titleIcon.setSource(MyCollabResource
+		final Image titleIcon = new Image(null, MyCollabResource
 				.newResource("icons/22/crm/opportunity.png"));
 		layout.addComponent(titleIcon);
 		layout.setComponentAlignment(titleIcon, Alignment.MIDDLE_LEFT);
@@ -127,6 +128,7 @@ public class OpportunitySearchPanel extends
 		public ComponentContainer constructBody() {
 			final HorizontalLayout layout = new HorizontalLayout();
 			layout.setSpacing(false);
+			layout.setMargin(true);
 
 			this.nameField = this.createSeachSupportTextField(new TextField(),
 					"NameFieldOfSearch");
@@ -139,7 +141,7 @@ public class OpportunitySearchPanel extends
 			searchBtn.setIcon(MyCollabResource
 					.newResource("icons/16/search_white.png"));
 
-			searchBtn.addListener(new Button.ClickListener() {
+			searchBtn.addClickListener(new Button.ClickListener() {
 				@Override
 				public void buttonClick(final ClickEvent event) {
 					OpportunityBasicSearchLayout.this.callSearchAction();
@@ -203,7 +205,7 @@ public class OpportunitySearchPanel extends
 										.getValue()).trim()));
 			}
 
-			if (this.myItemCheckbox.booleanValue()) {
+			if (this.myItemCheckbox.getValue()) {
 				OpportunitySearchPanel.this.searchCriteria
 						.setAssignUsers(new SetSearchField<String>(
 								SearchField.AND, new String[] { AppContext

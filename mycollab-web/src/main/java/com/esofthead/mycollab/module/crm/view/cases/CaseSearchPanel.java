@@ -51,6 +51,7 @@ import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.themes.Reindeer;
@@ -201,9 +202,9 @@ public class CaseSearchPanel extends
 		final HorizontalLayout layout = new HorizontalLayout();
 		layout.setWidth("100%");
 		layout.setSpacing(true);
+		layout.setMargin(true);
 
-		final Embedded titleIcon = new Embedded();
-		titleIcon.setSource(MyCollabResource
+		final Image titleIcon = new Image(null, MyCollabResource
 				.newResource("icons/22/crm/case.png"));
 		layout.addComponent(titleIcon);
 		layout.setComponentAlignment(titleIcon, Alignment.MIDDLE_LEFT);
@@ -256,6 +257,7 @@ public class CaseSearchPanel extends
 		public ComponentContainer constructBody() {
 			final HorizontalLayout basicSearchBody = new HorizontalLayout();
 			basicSearchBody.setSpacing(false);
+			basicSearchBody.setMargin(true);
 
 			this.subjectField = this.createSeachSupportTextField(
 					new TextField(), "subjectFieldName");
@@ -271,7 +273,7 @@ public class CaseSearchPanel extends
 			searchBtn.setIcon(MyCollabResource
 					.newResource("icons/16/search_white.png"));
 
-			searchBtn.addListener(new Button.ClickListener() {
+			searchBtn.addClickListener(new Button.ClickListener() {
 				@Override
 				public void buttonClick(final ClickEvent event) {
 					CaseBasicSearchLayout.this.callSearchAction();
@@ -339,7 +341,7 @@ public class CaseSearchPanel extends
 								((String) this.subjectField.getValue()).trim()));
 			}
 
-			if (this.myItemCheckbox.booleanValue()) {
+			if (this.myItemCheckbox.getValue()) {
 				CaseSearchPanel.this.searchCriteria
 						.setAssignUsers(new SetSearchField<String>(
 								SearchField.AND, new String[] { AppContext

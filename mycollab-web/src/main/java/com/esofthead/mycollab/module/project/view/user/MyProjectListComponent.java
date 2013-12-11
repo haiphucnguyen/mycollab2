@@ -44,6 +44,7 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
@@ -122,9 +123,7 @@ public class MyProjectListComponent extends Depot {
 															project.getId()))));
 						}
 					});
-			final Embedded projectIcon = new Embedded();
-			projectIcon.setSource(MyCollabResource
-					.newResource("icons/16/project/project.png"));
+			final Image projectIcon = new Image(null, MyCollabResource.newResource("icons/16/project/project.png"));
 			linkIconFix.addComponent(projectIcon);
 			linkIconFix.addComponent(projectLink);
 			linkIconFix.setExpandRatio(projectLink, 1.0f);
@@ -134,16 +133,16 @@ public class MyProjectListComponent extends Depot {
 
 			final VerticalLayout projectStatusLayout = new VerticalLayout();
 			projectStatusLayout.setSpacing(true);
+			projectStatusLayout.setMargin(true);
 
 			final HorizontalLayout taskStatus = new HorizontalLayout();
 			taskStatus.setWidth("100%");
 			taskStatus.setSpacing(true);
 			final Label taskLbl = new Label("Tasks :");
-			final Embedded taskIcon = new Embedded();
-			taskIcon.setSource(MyCollabResource
+			final Image taskIcon = new Image(null, MyCollabResource
 					.newResource("icons/16/project/task.png"));
 			taskStatus.addComponent(taskIcon);
-			taskLbl.setWidth("40px");
+			taskLbl.setWidth("45px");
 			taskStatus.addComponent(taskLbl);
 			final ProgressBar progressTask = new ProgressBar(
 					project.getNumTasks(), project.getNumOpenTasks());
@@ -156,11 +155,10 @@ public class MyProjectListComponent extends Depot {
 			bugStatus.setWidth("100%");
 			bugStatus.setSpacing(true);
 			final Label bugLbl = new Label("Bugs :");
-			final Embedded bugIcon = new Embedded();
-			bugIcon.setSource(MyCollabResource
+			final Image bugIcon = new Image(null, MyCollabResource
 					.newResource("icons/16/project/bug.png"));
 			bugStatus.addComponent(bugIcon);
-			bugLbl.setWidth("40px");
+			bugLbl.setWidth("45px");
 			bugStatus.addComponent(bugLbl);
 			final ProgressBar progressBug = new ProgressBar(
 					project.getNumBugs(), project.getNumOpenBugs());

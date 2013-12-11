@@ -75,6 +75,7 @@ public class MilestoneSearchPanel extends
 		HorizontalLayout layout = new HorizontalLayout();
 		layout.setWidth("100%");
 		layout.setSpacing(true);
+		layout.setMargin(true);
 
 		Label searchtitle = new Label("Search Milestones");
 		searchtitle.setStyleName(Reindeer.LABEL_H2);
@@ -121,6 +122,7 @@ public class MilestoneSearchPanel extends
 		public ComponentContainer constructBody() {
 			HorizontalLayout basicSearchBody = new HorizontalLayout();
 			basicSearchBody.setSpacing(true);
+			basicSearchBody.setMargin(true);
 			basicSearchBody.addComponent(new Label("Name"));
 			nameField = new TextField();
 			nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
