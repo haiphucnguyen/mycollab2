@@ -115,7 +115,7 @@ public abstract class AbstractAccountPreviewComp extends VerticalLayout {
 		return previewForm;
 	}
 
-	protected void initRelatedComponent() {
+	protected final void initRelatedComponents() {
 		associateContactList = new AccountContactListComp();
 		associateActivityList = new EventRelatedItemListComp(true);
 		associateOpportunityList = new AccountOpportunityListComp();
@@ -132,6 +132,5 @@ public abstract class AbstractAccountPreviewComp extends VerticalLayout {
 		previewForm.setBeanFormFieldFactory(new AccountReadFormFieldFactory(
 				previewForm));
 		previewForm.setBean(item);
-		displayNotes();
 	}
 }

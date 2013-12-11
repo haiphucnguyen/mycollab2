@@ -16,7 +16,7 @@ class AccountPrintComp extends AbstractAccountPreviewComp {
 
 	public AccountPrintComp() {
 		previewForm = new AdvancedPreviewBeanForm<SimpleAccount>();
-		initRelatedComponent();
+		initRelatedComponents();
 
 		this.addComponent(previewForm);
 	}

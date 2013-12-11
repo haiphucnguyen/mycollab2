@@ -89,7 +89,7 @@ public class TaskReadViewImpl extends AbstractPageView implements TaskReadView {
 		this.previewForm.setItemDataSource(new BeanItem<Task>(task));
 	}
 
-	private class PreviewForm extends TaskFormComponent {
+	private class PreviewForm extends TaskPreviewForm {
 		private static final long serialVersionUID = 1L;
 
 		class FormLayoutFactory extends TaskFormLayoutFactory {
