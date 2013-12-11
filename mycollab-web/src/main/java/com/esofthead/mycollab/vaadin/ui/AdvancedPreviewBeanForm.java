@@ -48,7 +48,7 @@ public class AdvancedPreviewBeanForm<B> extends GenericBeanForm<B> implements
 		handlers.add(handler);
 	}
 
-	protected void fireAssignForm(B bean) {
+	public void fireAssignForm(B bean) {
 		if (handlers != null) {
 			for (PreviewFormHandler<B> handler : handlers) {
 				handler.onAssign(bean);
@@ -56,7 +56,7 @@ public class AdvancedPreviewBeanForm<B> extends GenericBeanForm<B> implements
 		}
 	}
 
-	protected void fireEditForm(B bean) {
+	public void fireEditForm(B bean) {
 		if (handlers != null) {
 			for (PreviewFormHandler<B> handler : handlers) {
 				handler.onEdit(bean);
@@ -64,17 +64,17 @@ public class AdvancedPreviewBeanForm<B> extends GenericBeanForm<B> implements
 		}
 	}
 
-	protected void doPrint() {
+	public void doPrint() {
 		throw new MyCollabException(
 				"This method must be override by sub classes");
 	}
 
-	protected void showHistory() {
+	public void showHistory() {
 		throw new MyCollabException(
 				"This method must be override by sub classes");
 	}
 
-	protected void fireCancelForm(B bean) {
+	public void fireCancelForm(B bean) {
 		if (handlers != null) {
 			for (PreviewFormHandler<B> handler : handlers) {
 				handler.onCancel();
@@ -82,7 +82,7 @@ public class AdvancedPreviewBeanForm<B> extends GenericBeanForm<B> implements
 		}
 	}
 
-	protected void fireDeleteForm(B bean) {
+	public void fireDeleteForm(B bean) {
 		if (handlers != null) {
 			for (PreviewFormHandler<B> handler : handlers) {
 				handler.onDelete(bean);
@@ -90,7 +90,7 @@ public class AdvancedPreviewBeanForm<B> extends GenericBeanForm<B> implements
 		}
 	}
 
-	protected void fireCloneForm(B bean) {
+	public void fireCloneForm(B bean) {
 		if (handlers != null) {
 			for (PreviewFormHandler<B> handler : handlers) {
 				handler.onClone(bean);
@@ -98,7 +98,7 @@ public class AdvancedPreviewBeanForm<B> extends GenericBeanForm<B> implements
 		}
 	}
 
-	protected void fireGotoNextItem(B bean) {
+	public void fireGotoNextItem(B bean) {
 		if (handlers != null) {
 			for (PreviewFormHandler<B> handler : handlers) {
 				handler.gotoNext(bean);
@@ -106,7 +106,7 @@ public class AdvancedPreviewBeanForm<B> extends GenericBeanForm<B> implements
 		}
 	}
 
-	protected void fireGotoPrevious(B bean) {
+	public void fireGotoPrevious(B bean) {
 		if (handlers != null) {
 			for (PreviewFormHandler<B> handler : handlers) {
 				handler.gotoPrevious(bean);

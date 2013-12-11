@@ -21,12 +21,12 @@ import com.esofthead.mycollab.form.view.DynaFormLayout;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.MeetingWithBLOBs;
 import com.esofthead.mycollab.module.crm.domain.SimpleMeeting;
+import com.esofthead.mycollab.module.crm.ui.components.CrmPreviewFormControlsGenerator;
 import com.esofthead.mycollab.module.crm.ui.components.NoteListItems;
 import com.esofthead.mycollab.module.crm.ui.components.RelatedReadItemField;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
-import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator2;
 import com.esofthead.mycollab.vaadin.ui.ReadViewLayout;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.Item;
@@ -125,7 +125,7 @@ public class MeetingPreviewBuilder extends VerticalLayout {
 				}
 
 				@Override
-				protected void doPrint() {
+				public void doPrint() {
 					// Create a window that contains what you want to print
 					Window window = new Window("Window to Print");
 
@@ -142,7 +142,7 @@ public class MeetingPreviewBuilder extends VerticalLayout {
 				}
 
 				@Override
-				protected void showHistory() {
+				public void showHistory() {
 					MeetingHistoryLogWindow historyLog = new MeetingHistoryLogWindow(
 							ModuleNameConstants.CRM, CrmTypeConstants.MEETING,
 							meeting.getId());
@@ -150,7 +150,7 @@ public class MeetingPreviewBuilder extends VerticalLayout {
 				}
 			};
 
-			final Layout optionalActionControls = PreviewFormControlsGenerator2
+			final Layout optionalActionControls = CrmPreviewFormControlsGenerator
 					.createFormOptionalControls(previewForm,
 							RolePermissionCollections.CRM_MEETING);
 
@@ -158,7 +158,7 @@ public class MeetingPreviewBuilder extends VerticalLayout {
 
 			meetingInformation = new VerticalLayout();
 			meetingInformation.addStyleName("main-info");
-			final Layout actionControls = PreviewFormControlsGenerator2
+			final Layout actionControls = CrmPreviewFormControlsGenerator
 					.createFormControls(previewForm,
 							RolePermissionCollections.CRM_MEETING);
 			actionControls.addStyleName("control-buttons");

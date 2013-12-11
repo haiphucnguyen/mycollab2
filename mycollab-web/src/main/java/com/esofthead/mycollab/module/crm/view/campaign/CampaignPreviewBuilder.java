@@ -25,12 +25,12 @@ import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.CampaignWithBLOBs;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.domain.criteria.EventSearchCriteria;
+import com.esofthead.mycollab.module.crm.ui.components.CrmPreviewFormControlsGenerator;
 import com.esofthead.mycollab.module.crm.ui.components.NoteListItems;
 import com.esofthead.mycollab.module.crm.view.activity.EventRelatedItemListComp;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
-import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator2;
 import com.esofthead.mycollab.vaadin.ui.ReadViewLayout;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
@@ -184,7 +184,7 @@ public class CampaignPreviewBuilder extends VerticalLayout {
 				}
 
 				@Override
-				protected void doPrint() {
+				public void doPrint() {
 					// Create a window that contains what you want to print
 					Window window = new Window("Window to Print");
 
@@ -201,7 +201,7 @@ public class CampaignPreviewBuilder extends VerticalLayout {
 				}
 
 				@Override
-				protected void showHistory() {
+				public void showHistory() {
 					CampaignHistoryLogWindow historyLog = new CampaignHistoryLogWindow(
 							ModuleNameConstants.CRM, CrmTypeConstants.CAMPAIGN,
 							campaign.getId());
@@ -209,7 +209,7 @@ public class CampaignPreviewBuilder extends VerticalLayout {
 				}
 			};
 
-			final Layout optionalActionControls = PreviewFormControlsGenerator2
+			final Layout optionalActionControls = CrmPreviewFormControlsGenerator
 					.createFormOptionalControls(previewForm,
 							RolePermissionCollections.CRM_CAMPAIGN);
 			campaignAddLayout.addControlButtons(optionalActionControls);
@@ -218,7 +218,7 @@ public class CampaignPreviewBuilder extends VerticalLayout {
 
 			campaignInformationLayout.addStyleName("main-info");
 
-			final Layout actionControls = PreviewFormControlsGenerator2
+			final Layout actionControls = CrmPreviewFormControlsGenerator
 					.createFormControls(previewForm,
 							RolePermissionCollections.CRM_CAMPAIGN);
 			actionControls.addStyleName("control-buttons");

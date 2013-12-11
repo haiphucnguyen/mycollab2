@@ -248,7 +248,7 @@ public class ProjectMemberPreviewBuilder extends VerticalLayout {
 				}
 
 				@Override
-				protected void doPrint() {
+				public void doPrint() {
 					// Create a window that contains what you want to print
 					final Window window = new Window("Window to Print");
 
@@ -265,7 +265,7 @@ public class ProjectMemberPreviewBuilder extends VerticalLayout {
 				}
 
 				@Override
-				protected void showHistory() {
+				public void showHistory() {
 					final ProjectMemberHistoryLogWindow historyLog = new ProjectMemberHistoryLogWindow(
 							ModuleNameConstants.PRJ,
 							ProjectContants.PROJECT_MEMBER,

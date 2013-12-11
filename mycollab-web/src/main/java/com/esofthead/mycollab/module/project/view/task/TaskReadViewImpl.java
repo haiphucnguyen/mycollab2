@@ -55,6 +55,7 @@ import com.vaadin.ui.Window;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 2.0
  */
 @ViewComponent
 public class TaskReadViewImpl extends AbstractPageView implements TaskReadView {

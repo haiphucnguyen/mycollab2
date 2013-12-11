@@ -117,7 +117,7 @@ public class VersionReadViewImpl extends AbstractPageView implements
 		}
 
 		@Override
-		protected void doPrint() {
+		public void doPrint() {
 			// Create a window that contains what you want to print
 			final Window window = new Window("Window to Print");
 
@@ -134,7 +134,7 @@ public class VersionReadViewImpl extends AbstractPageView implements
 		}
 
 		@Override
-		protected void showHistory() {
+		public void showHistory() {
 			final VersionHistoryLogWindow historyLog = new VersionHistoryLogWindow(
 					ModuleNameConstants.PRJ, ProjectContants.BUG_VERSION,
 					VersionReadViewImpl.this.version.getId());

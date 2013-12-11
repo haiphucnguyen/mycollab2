@@ -76,15 +76,15 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
 
 	private void bind() {
 		view.getPreviewFormHandlers().addFormHandler(
-				new DefaultPreviewFormHandler<Account>() {
+				new DefaultPreviewFormHandler<SimpleAccount>() {
 					@Override
-					public void onEdit(Account data) {
+					public void onEdit(SimpleAccount data) {
 						EventBus.getInstance().fireEvent(
 								new AccountEvent.GotoEdit(this, data));
 					}
 
 					@Override
-					public void onDelete(final Account data) {
+					public void onDelete(final SimpleAccount data) {
 						ConfirmDialogExt.show(
 								UI.getCurrent(),
 								LocalizationHelper.getMessage(
@@ -118,7 +118,7 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
 					}
 
 					@Override
-					public void onClone(Account data) {
+					public void onClone(SimpleAccount data) {
 						Account cloneData = (Account) data.copy();
 						cloneData.setId(null);
 						EventBus.getInstance().fireEvent(
@@ -132,7 +132,7 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
 					}
 
 					@Override
-					public void gotoNext(Account data) {
+					public void gotoNext(SimpleAccount data) {
 						AccountService accountService = ApplicationContextUtil
 								.getSpringBean(AccountService.class);
 						AccountSearchCriteria criteria = new AccountSearchCriteria();
@@ -152,7 +152,7 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
 					}
 
 					@Override
-					public void gotoPrevious(Account data) {
+					public void gotoPrevious(SimpleAccount data) {
 						AccountService accountService = ApplicationContextUtil
 								.getSpringBean(AccountService.class);
 						AccountSearchCriteria criteria = new AccountSearchCriteria();

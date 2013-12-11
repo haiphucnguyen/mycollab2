@@ -20,12 +20,12 @@ import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.form.view.DynaFormLayout;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.SimpleTask;
+import com.esofthead.mycollab.module.crm.ui.components.CrmPreviewFormControlsGenerator;
 import com.esofthead.mycollab.module.crm.ui.components.NoteListItems;
 import com.esofthead.mycollab.module.crm.ui.components.RelatedReadItemField;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
-import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator2;
 import com.esofthead.mycollab.vaadin.ui.ReadViewLayout;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.Item;
@@ -120,7 +120,7 @@ public class AssignmentPreviewBuilder extends VerticalLayout {
 				}
 
 				@Override
-				protected void doPrint() {
+				public void doPrint() {
 					// Create a window that contains what you want to print
 					Window window = new Window("Window to Print");
 
@@ -137,7 +137,7 @@ public class AssignmentPreviewBuilder extends VerticalLayout {
 				}
 
 				@Override
-				protected void showHistory() {
+				public void showHistory() {
 					AssignmentHistoryLogWindow historyLog = new AssignmentHistoryLogWindow(
 							ModuleNameConstants.CRM, CrmTypeConstants.TASK,
 							task.getId());
@@ -145,7 +145,7 @@ public class AssignmentPreviewBuilder extends VerticalLayout {
 				}
 			};
 
-			final Layout optionalActionControls = PreviewFormControlsGenerator2
+			final Layout optionalActionControls = CrmPreviewFormControlsGenerator
 					.createFormOptionalControls(previewForm,
 							RolePermissionCollections.CRM_TASK);
 
@@ -154,7 +154,7 @@ public class AssignmentPreviewBuilder extends VerticalLayout {
 			assignmentInformation = new VerticalLayout();
 			assignmentInformation.addStyleName("main-info");
 
-			final Layout actionControls = PreviewFormControlsGenerator2
+			final Layout actionControls = CrmPreviewFormControlsGenerator
 					.createFormControls(previewForm,
 							RolePermissionCollections.CRM_TASK);
 			actionControls.addStyleName("control-buttons");

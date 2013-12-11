@@ -33,13 +33,13 @@ import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.criteria.EventSearchCriteria;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
+import com.esofthead.mycollab.module.crm.ui.components.CrmPreviewFormControlsGenerator;
 import com.esofthead.mycollab.module.crm.ui.components.NoteListItems;
 import com.esofthead.mycollab.module.crm.view.activity.EventRelatedItemListComp;
 import com.esofthead.mycollab.module.file.resource.FileStreamResource;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
-import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator2;
 import com.esofthead.mycollab.vaadin.ui.ReadViewLayout;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
@@ -478,7 +478,7 @@ public abstract class ContactPreviewBuilder extends VerticalLayout {
 				}
 
 				@Override
-				protected void doPrint() {
+				public void doPrint() {
 					// Create a window that contains what you want to print
 					final Window window = new Window("Window to Print");
 
@@ -495,7 +495,7 @@ public abstract class ContactPreviewBuilder extends VerticalLayout {
 				}
 
 				@Override
-				protected void showHistory() {
+				public void showHistory() {
 					final ContactHistoryLogWindow historyLog = new ContactHistoryLogWindow(
 							ModuleNameConstants.CRM, CrmTypeConstants.CONTACT,
 							ReadView.this.contact.getId());
@@ -503,7 +503,7 @@ public abstract class ContactPreviewBuilder extends VerticalLayout {
 				}
 			};
 
-			final Layout optionalActionControls = PreviewFormControlsGenerator2
+			final Layout optionalActionControls = CrmPreviewFormControlsGenerator
 					.createFormOptionalControls(this.previewForm,
 							RolePermissionCollections.CRM_CONTACT);
 
@@ -512,7 +512,7 @@ public abstract class ContactPreviewBuilder extends VerticalLayout {
 			this.contactInformation = new VerticalLayout();
 			this.contactInformation.addStyleName("main-info");
 
-			final Layout actionControls = PreviewFormControlsGenerator2
+			final Layout actionControls = CrmPreviewFormControlsGenerator
 					.createFormControls(this.previewForm,
 							RolePermissionCollections.CRM_CONTACT);
 			actionControls.addStyleName("control-buttons");

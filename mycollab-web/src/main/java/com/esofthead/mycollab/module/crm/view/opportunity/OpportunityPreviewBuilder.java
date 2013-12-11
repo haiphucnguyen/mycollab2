@@ -28,12 +28,12 @@ import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.domain.criteria.EventSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.module.crm.events.CampaignEvent;
+import com.esofthead.mycollab.module.crm.ui.components.CrmPreviewFormControlsGenerator;
 import com.esofthead.mycollab.module.crm.ui.components.NoteListItems;
 import com.esofthead.mycollab.module.crm.view.activity.EventRelatedItemListComp;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
-import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator2;
 import com.esofthead.mycollab.vaadin.ui.ReadViewLayout;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
@@ -146,7 +146,7 @@ public class OpportunityPreviewBuilder extends VerticalLayout {
 				}
 
 				@Override
-				protected void doPrint() {
+				public void doPrint() {
 					// Create a window that contains what you want to print
 					Window window = new Window("Window to Print");
 
@@ -163,7 +163,7 @@ public class OpportunityPreviewBuilder extends VerticalLayout {
 				}
 
 				@Override
-				protected void showHistory() {
+				public void showHistory() {
 					OpportunityHistoryLogWindow historyLog = new OpportunityHistoryLogWindow(
 							ModuleNameConstants.CRM,
 							CrmTypeConstants.OPPORTUNITY, opportunity.getId());
@@ -171,7 +171,7 @@ public class OpportunityPreviewBuilder extends VerticalLayout {
 				}
 			};
 
-			final Layout optionalActionControls = PreviewFormControlsGenerator2
+			final Layout optionalActionControls = CrmPreviewFormControlsGenerator
 					.createFormOptionalControls(previewForm,
 							RolePermissionCollections.CRM_OPPORTUNITY);
 
@@ -181,7 +181,7 @@ public class OpportunityPreviewBuilder extends VerticalLayout {
 
 			opportunityInformationLayout.addStyleName("main-info");
 
-			final Layout actionControls = PreviewFormControlsGenerator2
+			final Layout actionControls = CrmPreviewFormControlsGenerator
 					.createFormControls(previewForm,
 							RolePermissionCollections.CRM_OPPORTUNITY);
 			actionControls.addStyleName("control-buttons");

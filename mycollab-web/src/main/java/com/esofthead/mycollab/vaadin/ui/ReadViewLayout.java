@@ -31,7 +31,7 @@ public class ReadViewLayout extends CssLayout {
 	private final HorizontalLayout header;
 	private final Embedded iconEmbed;
 	private final Label titleLbl;
-	private final TabsheetDecor viewTab;
+	private TabsheetDecor viewTab;
 
 	public ReadViewLayout(final Resource icon) {
 		this.setSizeFull();
@@ -63,14 +63,9 @@ public class ReadViewLayout extends CssLayout {
 		this.header.addComponent(headerLeft);
 		this.header.setComponentAlignment(headerLeft, Alignment.TOP_LEFT);
 		this.header.setExpandRatio(headerLeft, 1.0f);
-
-		this.viewTab = new TabsheetDecor();
-		this.viewTab.setSizeUndefined();
-		this.header.addComponent(this.viewTab);
-		this.header
-				.setComponentAlignment(this.viewTab, Alignment.BOTTOM_CENTER);
 	}
 
+	@Deprecated
 	public void addControlButtons(final Component controlsBtn) {
 		if (this.header != null) {
 			this.header.addComponent(controlsBtn);
@@ -79,12 +74,14 @@ public class ReadViewLayout extends CssLayout {
 		}
 	}
 
+	@Deprecated
 	public void addTab(final Component content, final String caption) {
 		if (this.viewTab != null) {
 			this.viewTab.addTab(content, caption);
 		}
 	}
 
+	@Deprecated
 	public void addSelectedTabChangeListener(
 			final TabSheet.SelectedTabChangeListener listener) {
 		if (this.viewTab != null) {
@@ -92,6 +89,7 @@ public class ReadViewLayout extends CssLayout {
 		}
 	}
 
+	@Deprecated
 	public void selectTab(final String viewName) {
 		if (this.viewTab != null) {
 			viewTab.selectTab(viewName);

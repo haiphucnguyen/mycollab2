@@ -112,7 +112,7 @@ public class RiskReadViewImpl extends AbstractPageView implements RiskReadView {
 		}
 
 		@Override
-		protected void doPrint() {
+		public void doPrint() {
 			// Create a window that contains what you want to print
 			final Window window = new Window("Window to Print");
 
@@ -129,7 +129,7 @@ public class RiskReadViewImpl extends AbstractPageView implements RiskReadView {
 		}
 
 		@Override
-		protected void showHistory() {
+		public void showHistory() {
 			final RiskHistoryLogWindow historyLog = new RiskHistoryLogWindow(
 					ModuleNameConstants.PRJ, ProjectContants.RISK,
 					RiskReadViewImpl.this.risk.getId());

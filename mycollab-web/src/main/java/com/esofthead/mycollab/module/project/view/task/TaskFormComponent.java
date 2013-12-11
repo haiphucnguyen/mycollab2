@@ -130,12 +130,12 @@ public abstract class TaskFormComponent extends AdvancedPreviewBeanForm<Task> {
 	}
 
 	@Override
-	protected void doPrint() {
+	public void doPrint() {
 		this.taskDoPrint();
 	}
 
 	@Override
-	protected void showHistory() {
+	public void showHistory() {
 		this.taskShowHistory();
 	}
 

@@ -146,7 +146,7 @@ public class UserReadViewImpl extends AbstractPageView implements UserReadView {
 		}
 
 		@Override
-		protected void doPrint() {
+		public void doPrint() {
 			// Create a window that contains what you want to print
 			Window window = new Window("Window to Print");
 
@@ -163,7 +163,7 @@ public class UserReadViewImpl extends AbstractPageView implements UserReadView {
 		}
 
 		@Override
-		protected void showHistory() {
+		public void showHistory() {
 		}
 
 		class FormLayoutFactory extends ProfileFormLayoutFactory {

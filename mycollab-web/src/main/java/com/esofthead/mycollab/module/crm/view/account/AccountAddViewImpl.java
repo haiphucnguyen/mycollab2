@@ -26,6 +26,12 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Layout;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ *
+ */
 @ViewComponent
 public class AccountAddViewImpl extends AbstractPageView implements
 		AccountAddView {

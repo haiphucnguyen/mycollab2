@@ -26,12 +26,19 @@ import com.vaadin.ui.Field;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 
-public class AccountEditFormFieldFactory<B extends Account> extends
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 3.0
+ *
+ * @param <B>
+ */
+class AccountEditFormFieldFactory<B extends Account> extends
 		AbstractBeanFieldGroupFieldFactory<B> {
 
 	private static final long serialVersionUID = 1L;
 
-	public AccountEditFormFieldFactory(GenericBeanForm<B> form) {
+	AccountEditFormFieldFactory(GenericBeanForm<B> form) {
 		super(form);
 	}
 

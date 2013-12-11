@@ -136,7 +136,7 @@ public class RoleReadViewImpl extends AbstractPageView implements RoleReadView {
 		}
 
 		@Override
-		protected void doPrint() {
+		public void doPrint() {
 			// Create a window that contains what you want to print
 			final Window window = new Window("Window to Print");
 
@@ -153,7 +153,7 @@ public class RoleReadViewImpl extends AbstractPageView implements RoleReadView {
 		}
 
 		@Override
-		protected void showHistory() {
+		public void showHistory() {
 		}
 
 		class FormLayoutFactory extends RoleFormLayoutFactory {
