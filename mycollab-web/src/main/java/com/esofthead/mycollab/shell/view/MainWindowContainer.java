@@ -55,6 +55,8 @@ public class MainWindowContainer extends CssLayout {
 		final LoginPresenter presenter = PresenterResolver
 				.getPresenter(LoginPresenter.class);
 		LoginView loginView = presenter.getView();
+		this.setStyleName("loginView");
+		this.setContent(loginView.getWidget());
 
 		// Read previously stored cookie value
 		if (isAutoLogin) {
@@ -71,9 +73,6 @@ public class MainWindowContainer extends CssLayout {
 				}
 			}
 		}
-
-		this.setStyleName("loginView");
-		this.setContent(loginView.getWidget());
 	}
 
 	public boolean isAutoLogin() {
