@@ -32,6 +32,7 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.server.Sizeable;
 import com.vaadin.ui.AbstractSelect.ItemCaptionMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -60,6 +61,7 @@ public abstract class CustomizedTableWindow extends Window {
 			final AbstractPagedBeanTable<?, ?> table) {
 		super("Customize View");
 		this.viewId = viewId;
+		this.addStyleName("customize-table-window");
 		this.setWidth("800px");
 		this.center();
 
@@ -69,13 +71,15 @@ public abstract class CustomizedTableWindow extends Window {
 
 		final VerticalLayout contentLayout = new VerticalLayout();
 		contentLayout.setSpacing(true);
+		contentLayout.setMargin(true);
 		this.setContent(contentLayout);
 
 		this.listBuilder = new ListBuilder();
 		this.listBuilder.setImmediate(true);
+		this.listBuilder.setColumns(0);
 		this.listBuilder.setLeftColumnCaption("Available Columns");
 		this.listBuilder.setRightColumnCaption("View Columns");
-		this.listBuilder.setWidth("100%");
+		this.listBuilder.setWidth(100, Sizeable.Unit.PERCENTAGE);
 
 		this.listBuilder.setItemCaptionMode(ItemCaptionMode.PROPERTY);
 		this.listBuilder.setItemCaptionPropertyId("desc");

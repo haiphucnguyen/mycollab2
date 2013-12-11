@@ -98,6 +98,7 @@ public class UserLink extends Button {
 			super("User preview");
 			this.center();
 			this.setWidth("500px");
+			this.addStyleName("user-preview-window");
 			this.user = user;
 			constructBody();
 		}
@@ -105,6 +106,8 @@ public class UserLink extends Button {
 		private void constructBody() {
 			VerticalLayout layout = new VerticalLayout();
 			layout.setSpacing(true);
+			layout.setMargin(true);
+			
 			HorizontalLayout topLayout = new HorizontalLayout();
 			layout.addComponent(topLayout);
 
@@ -131,8 +134,9 @@ public class UserLink extends Button {
 													.getUsername()) }));
 				}
 			});
-			userFullLinkBtn.setWidth("300px");
+			userFullLinkBtn.setWidth("100%");
 			topLayout.addComponent(userFullLinkBtn);
+			topLayout.setExpandRatio(userFullLinkBtn, 1.0f);
 			// -----------------------------------
 			CssLayout mainBodyWapper = new CssLayout();
 			mainBodyWapper.addStyleName("border-box2-color");
