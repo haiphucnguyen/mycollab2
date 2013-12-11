@@ -35,7 +35,7 @@ import com.vaadin.ui.ComboBox;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public class ProjectTaskListComboBox extends ComboBox {
 

@@ -31,7 +31,7 @@ import com.esofthead.mycollab.module.mail.service.ExtMailService;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 @Service
 public class ExtMailServiceImpl extends AbstractMailService implements

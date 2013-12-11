@@ -45,7 +45,7 @@ import com.vaadin.ui.CssLayout;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 @SuppressWarnings("serial")
 @ViewComponent

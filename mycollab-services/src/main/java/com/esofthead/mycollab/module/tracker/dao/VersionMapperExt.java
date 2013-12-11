@@ -26,7 +26,7 @@ import com.esofthead.mycollab.module.tracker.domain.criteria.VersionSearchCriter
 
 /**
  *
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public interface VersionMapperExt extends ISearchableDAO<VersionSearchCriteria> {
 

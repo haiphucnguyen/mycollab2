@@ -28,7 +28,7 @@ import com.vaadin.server.Resource;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public class ProjectResources {
 

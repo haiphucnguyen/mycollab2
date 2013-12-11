@@ -34,7 +34,7 @@ import com.vaadin.ui.VerticalLayout;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public abstract class MilestoneFormLayoutFactory implements IFormLayoutFactory {
 	public static class MilestoneInformationLayout implements

@@ -35,7 +35,7 @@ import com.esofthead.mycollab.module.tracker.service.BugRelatedItemService;
 
 /**
  *
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 @Service
 public class BugRelatedItemServiceImpl implements BugRelatedItemService{

@@ -25,7 +25,7 @@ import java.lang.annotation.Target;
  * MyCollab cache is a distributed map with key and value. This annotation
  * denote a pameter of method is played as cache key.
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  * 
  */
 @Retention(value = RetentionPolicy.RUNTIME)

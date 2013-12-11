@@ -53,7 +53,7 @@ import com.vaadin.ui.UI;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public class ProjectMemberReadPresenter extends
 		AbstractPresenter<ProjectMemberReadView> {

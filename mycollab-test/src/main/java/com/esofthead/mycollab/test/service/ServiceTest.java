@@ -24,7 +24,7 @@ import org.springframework.test.context.ContextConfiguration;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 @ContextConfiguration(locations = {
 		"classpath:META-INF/spring/common-context.xml",

@@ -41,7 +41,7 @@ import com.vaadin.ui.ComponentContainer;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 @ViewPermission(permissionId = RolePermissionCollections.CREATE_NEW_PROJECT, impliedPermissionVal = BooleanPermissionFlag.TRUE)
 public class ProjectAddPresenter extends AbstractPresenter<ProjectAddView> {

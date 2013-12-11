@@ -29,7 +29,7 @@ import com.vaadin.ui.Embedded;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  * 
  */
 public class UserAvatarControlFactory {

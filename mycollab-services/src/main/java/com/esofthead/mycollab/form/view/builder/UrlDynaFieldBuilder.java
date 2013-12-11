@@ -20,7 +20,7 @@ import com.esofthead.mycollab.form.view.builder.type.UrlDynaField;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  * 
  */
 public class UrlDynaFieldBuilder extends AbstractDynaFieldBuilder<UrlDynaField> {

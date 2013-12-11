@@ -30,7 +30,7 @@ import com.esofthead.mycollab.core.arguments.SearchCriteria;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public abstract class PieChartWrapper<S extends SearchCriteria> extends
 		GenericChartWrapper<S> {

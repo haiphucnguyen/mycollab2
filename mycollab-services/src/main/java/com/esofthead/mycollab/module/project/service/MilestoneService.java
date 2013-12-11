@@ -29,7 +29,7 @@ import com.esofthead.mycollab.module.project.domain.criteria.MilestoneSearchCrit
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public interface MilestoneService extends
 		IDefaultService<Integer, Milestone, MilestoneSearchCriteria> {

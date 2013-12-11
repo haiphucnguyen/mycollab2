@@ -20,7 +20,7 @@ import com.esofthead.mycollab.core.arguments.SearchCriteria;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  *
  * @param <S>
  */

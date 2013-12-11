@@ -18,7 +18,7 @@ package com.esofthead.mycollab.vaadin.mvp;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  *
  * @param <T>
  */

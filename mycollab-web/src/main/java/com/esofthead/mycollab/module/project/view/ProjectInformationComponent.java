@@ -45,7 +45,7 @@ import com.vaadin.ui.VerticalLayout;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public class ProjectInformationComponent extends VerticalLayout {
 	private class BasicPreviewForm extends

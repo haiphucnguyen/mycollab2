@@ -59,7 +59,7 @@ import com.vaadin.ui.VerticalLayout;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public class CaseContactListComp extends
 		RelatedListComp<SimpleContact, ContactSearchCriteria> {

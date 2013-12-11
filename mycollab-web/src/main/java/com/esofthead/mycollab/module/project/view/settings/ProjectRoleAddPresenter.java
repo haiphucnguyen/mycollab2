@@ -41,7 +41,7 @@ import com.vaadin.ui.ComponentContainer;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public class ProjectRoleAddPresenter extends
 		AbstractPresenter<ProjectRoleAddView> {

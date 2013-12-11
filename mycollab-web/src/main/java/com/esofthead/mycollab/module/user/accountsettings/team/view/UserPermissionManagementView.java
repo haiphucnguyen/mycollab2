@@ -25,7 +25,7 @@ import com.vaadin.ui.Component;
 
 /**
  *
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public interface UserPermissionManagementView extends PageView {
 	Component gotoSubView(String name);

@@ -22,7 +22,7 @@ package com.esofthead.mycollab.common.ui.components;
 
 /**
  *
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public interface ReloadableComponent {
 	/**

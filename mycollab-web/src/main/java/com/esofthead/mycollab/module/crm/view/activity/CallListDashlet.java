@@ -46,7 +46,7 @@ import com.vaadin.ui.VerticalLayout;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 @SuppressWarnings("serial")
 public class CallListDashlet extends Depot {

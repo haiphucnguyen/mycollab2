@@ -43,7 +43,7 @@ import com.vaadin.ui.ComponentContainer;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 @ViewPermission(permissionId = RolePermissionCollections.ACCOUNT_USER, impliedPermissionVal = AccessPermissionFlag.READ_WRITE)
 public class UserAddPresenter extends AbstractPresenter<UserAddView> {

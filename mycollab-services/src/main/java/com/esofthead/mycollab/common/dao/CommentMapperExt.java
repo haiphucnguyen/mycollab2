@@ -25,7 +25,7 @@ import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 
 /**
  *
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public interface CommentMapperExt extends ISearchableDAO<CommentSearchCriteria> {
     

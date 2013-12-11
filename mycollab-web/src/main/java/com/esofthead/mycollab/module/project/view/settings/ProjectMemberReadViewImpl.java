@@ -29,7 +29,7 @@ import com.vaadin.shared.ui.MarginInfo;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 @ViewComponent
 public class ProjectMemberReadViewImpl extends AbstractPageView implements

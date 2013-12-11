@@ -32,7 +32,7 @@ import com.esofthead.mycollab.module.project.domain.criteria.ProjectGenericTaskS
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public interface ProjectGenericTaskMapper extends
 		ISearchableDAO<ProjectGenericTaskSearchCriteria> {

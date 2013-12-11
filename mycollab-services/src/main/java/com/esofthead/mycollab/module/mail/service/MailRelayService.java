@@ -24,7 +24,7 @@ import com.esofthead.mycollab.core.persistence.service.IService;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  *
  */
 @NotMobile

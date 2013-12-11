@@ -26,7 +26,7 @@ import com.esofthead.mycollab.core.arguments.StringSearchField;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public class AuditLogSearchCriteria extends SearchCriteria {
 	private StringSearchField module;

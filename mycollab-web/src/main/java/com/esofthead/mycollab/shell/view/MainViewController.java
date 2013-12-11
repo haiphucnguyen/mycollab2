@@ -37,7 +37,8 @@ import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 2.0
  */
 public class MainViewController implements IController {
 	private static final long serialVersionUID = 1L;

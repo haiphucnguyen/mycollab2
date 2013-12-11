@@ -27,7 +27,7 @@ import com.esofthead.mycollab.core.arguments.StringSearchField;
 
 /**
  *
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public class TaskListSearchCriteria extends SearchCriteria {
 

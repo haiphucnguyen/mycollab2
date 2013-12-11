@@ -33,7 +33,7 @@ import com.vaadin.ui.VerticalLayout;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public abstract class RelatedListComp<T, S extends SearchCriteria> extends
 		Depot implements IRelatedListHandlers<T> {

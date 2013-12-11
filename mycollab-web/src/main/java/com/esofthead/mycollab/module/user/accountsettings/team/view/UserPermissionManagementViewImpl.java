@@ -32,7 +32,7 @@ import com.vaadin.ui.TabSheet.Tab;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 @ViewComponent
 public class UserPermissionManagementViewImpl extends AbstractPageView

@@ -27,7 +27,7 @@ import com.esofthead.mycollab.vaadin.mvp.IPreviewView;
 
 /**
  *
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public interface TaskReadView extends IPreviewView<SimpleTask> {
     HasPreviewFormHandlers<Task> getPreviewFormHandlers();

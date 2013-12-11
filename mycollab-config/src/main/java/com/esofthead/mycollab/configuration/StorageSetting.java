@@ -18,7 +18,7 @@ package com.esofthead.mycollab.configuration;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  *
  */
 class StorageSetting {

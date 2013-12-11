@@ -34,7 +34,7 @@ import com.esofthead.mycollab.module.user.domain.SimpleUser;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public interface ProjectMemberService extends
 		IDefaultService<Integer, ProjectMember, ProjectMemberSearchCriteria> {

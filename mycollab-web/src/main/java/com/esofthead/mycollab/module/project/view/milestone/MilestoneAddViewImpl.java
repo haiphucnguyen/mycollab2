@@ -44,7 +44,7 @@ import com.vaadin.ui.TextField;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 @ViewComponent
 public class MilestoneAddViewImpl extends AbstractPageView implements

@@ -26,7 +26,7 @@ import com.esofthead.mycollab.module.project.domain.criteria.TaskListSearchCrite
 
 /**
  *
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public interface TaskListMapperExt extends ISearchableDAO<TaskListSearchCriteria>{
     SimpleTaskList findTaskListById(int taskListId);

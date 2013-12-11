@@ -24,7 +24,7 @@ import java.util.Set;
 
 /**
  *
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public abstract class AbstractRelatedListHandler<T> implements RelatedListHandler<T> {
 

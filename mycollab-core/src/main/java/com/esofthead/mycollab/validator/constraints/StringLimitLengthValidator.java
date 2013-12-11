@@ -21,7 +21,7 @@ import javax.validation.ConstraintValidatorContext;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  *
  */
 public class StringLimitLengthValidator implements

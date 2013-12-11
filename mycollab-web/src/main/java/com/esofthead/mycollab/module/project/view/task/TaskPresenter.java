@@ -32,7 +32,7 @@ import com.vaadin.ui.ComponentContainer;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public class TaskPresenter extends AbstractPresenter<TaskContainer> {
 	private static final long serialVersionUID = 1L;

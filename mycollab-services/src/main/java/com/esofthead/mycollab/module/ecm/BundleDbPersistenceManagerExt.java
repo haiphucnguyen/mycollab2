@@ -25,7 +25,7 @@ import com.esofthead.mycollab.configuration.SiteConfiguration;
 /**
  * Customize db persistence of jackrabbit
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  * 
  */
 public class BundleDbPersistenceManagerExt extends BundleDbPersistenceManager {

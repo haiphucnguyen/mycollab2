@@ -34,7 +34,7 @@ import com.esofthead.mycollab.web.AppContext;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 @SuppressWarnings("serial")
 public class ComponentMultiSelectField extends MultiSelectComp {

@@ -24,7 +24,7 @@ import com.esofthead.mycollab.vaadin.mvp.PageView;
 
 /**
  *
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public interface ForgotPasswordView extends PageView {
     

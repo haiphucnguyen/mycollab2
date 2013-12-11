@@ -45,7 +45,7 @@ import com.vaadin.ui.Window;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public class UserLink extends Button {
 	private static final long serialVersionUID = 1L;

@@ -32,7 +32,7 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 @SuppressWarnings("serial")
 public class VersionMultiSelectField extends MultiSelectComp {

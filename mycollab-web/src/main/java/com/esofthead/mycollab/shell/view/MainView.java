@@ -58,9 +58,15 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
-@SuppressWarnings("serial")
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
 @ViewComponent
 public final class MainView extends AbstractPageView {
+	private static final long serialVersionUID = 1L;
 
 	private final CssLayout bodyLayout;
 
@@ -108,6 +114,7 @@ public final class MainView extends AbstractPageView {
 		final Button sendFeedback = new Button("Feedback");
 		sendFeedback.setStyleName(UIConstants.THEME_ROUND_BUTTON);
 		sendFeedback.addClickListener(new ClickListener() {
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void buttonClick(final ClickEvent event) {
@@ -131,6 +138,8 @@ public final class MainView extends AbstractPageView {
 		vLayout.setWidth("200px");
 
 		final Button crmLink = new Button("CRM", new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void buttonClick(final ClickEvent event) {
 				serviceMenu.setPopupVisible(false);
@@ -144,6 +153,8 @@ public final class MainView extends AbstractPageView {
 
 		final Button prjLink = new Button("Projects",
 				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
 					@Override
 					public void buttonClick(final ClickEvent event) {
 						serviceMenu.setPopupVisible(false);
@@ -157,6 +168,8 @@ public final class MainView extends AbstractPageView {
 
 		final Button docLink = new Button("Documents",
 				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
 					@Override
 					public void buttonClick(final ClickEvent event) {
 						serviceMenu.setPopupVisible(false);
@@ -186,6 +199,7 @@ public final class MainView extends AbstractPageView {
 			informBox.setMargin(new MarginInfo(false, true, false, false));
 			informBox
 					.addLayoutClickListener(new LayoutEvents.LayoutClickListener() {
+						private static final long serialVersionUID = 1L;
 
 						@Override
 						public void layoutClick(LayoutClickEvent event) {
@@ -239,6 +253,8 @@ public final class MainView extends AbstractPageView {
 
 		final Button myProfileBtn = new Button("Profile",
 				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
 					@Override
 					public void buttonClick(final ClickEvent event) {
 						accountMenu.setPopupVisible(false);
@@ -252,6 +268,7 @@ public final class MainView extends AbstractPageView {
 
 		final Button myAccountBtn = new Button("Account",
 				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
 
 					@Override
 					public void buttonClick(final ClickEvent event) {
@@ -266,6 +283,7 @@ public final class MainView extends AbstractPageView {
 
 		final Button userMgtBtn = new Button("User Management",
 				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
 
 					@Override
 					public void buttonClick(final ClickEvent event) {
@@ -280,6 +298,8 @@ public final class MainView extends AbstractPageView {
 
 		final Button signoutBtn = new Button("Sign out",
 				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
 					@Override
 					public void buttonClick(final ClickEvent event) {
 						AppContext.getInstance().setSession(null, null, null);
@@ -301,8 +321,11 @@ public final class MainView extends AbstractPageView {
 	}
 
 	private static class UserAvatarComp extends CssLayout {
+		private static final long serialVersionUID = 1L;
+
 		public UserAvatarComp() {
 			addUserAvatar();
+
 			// add listener to listen the change avatar or user information to
 			// update top menu
 			EventBus.getInstance()

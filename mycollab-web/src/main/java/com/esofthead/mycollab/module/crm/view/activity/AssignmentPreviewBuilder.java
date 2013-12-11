@@ -172,7 +172,7 @@ public class AssignmentPreviewBuilder extends VerticalLayout {
 
 	/**
 	 * 
-	 * @author haiphucnguyen
+	 * @author MyCollab Ltd.
 	 * 
 	 */
 	public static class PrintView extends AssignmentPreviewBuilder {

@@ -41,7 +41,7 @@ import com.vaadin.ui.TextField;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 @SuppressWarnings("serial")
 @ViewComponent

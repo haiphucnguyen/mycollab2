@@ -22,7 +22,7 @@ package com.esofthead.mycollab.module.user.service;
 
 /**
  *
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public class UserTrackingService {
     

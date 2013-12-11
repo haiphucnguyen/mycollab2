@@ -31,7 +31,7 @@ import com.esofthead.mycollab.core.utils.DateTimeUtils;
  * Utility date in schedule email. It main objective is convert system date
  * value to the right time value associate with user timezone
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  * 
  */
 public class ScheduleUserTimeZoneUtils {

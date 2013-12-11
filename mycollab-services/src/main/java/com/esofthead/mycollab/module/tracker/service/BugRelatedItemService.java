@@ -28,7 +28,7 @@ import com.esofthead.mycollab.module.tracker.domain.Version;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public interface BugRelatedItemService extends IService {
 	

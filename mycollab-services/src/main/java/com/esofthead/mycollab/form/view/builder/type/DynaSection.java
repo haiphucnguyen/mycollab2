@@ -23,7 +23,7 @@ import com.esofthead.mycollab.core.MyCollabException;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  * 
  */
 public class DynaSection implements Comparable<DynaSection> {

@@ -59,7 +59,7 @@ import com.vaadin.ui.VerticalLayout;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public class ContactOpportunityListComp extends
 		RelatedListComp<SimpleOpportunity, OpportunitySearchCriteria> {

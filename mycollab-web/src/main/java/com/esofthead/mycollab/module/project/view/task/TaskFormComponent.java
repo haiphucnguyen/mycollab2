@@ -43,7 +43,7 @@ import com.vaadin.ui.Label;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public abstract class TaskFormComponent extends AdvancedPreviewBeanForm<Task> {
 	private static final long serialVersionUID = 1L;

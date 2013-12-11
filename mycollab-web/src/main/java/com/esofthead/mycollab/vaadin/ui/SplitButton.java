@@ -27,7 +27,7 @@ public class SplitButton extends CustomComponent {
 		this.parentButton = parentButton;
 		popupButton = new PopupButton();
 
-		contentLayout.addComponent(parentButton);
+		contentLayout.addComponent(this.parentButton);
 		contentLayout.addComponent(popupButton);
 
 		this.setCompositionRoot(contentLayout);

@@ -34,7 +34,7 @@ import com.vaadin.ui.ComponentContainer;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public class ProjectDashboardPresenter extends
 		AbstractPresenter<ProjectDashboardContainer> {

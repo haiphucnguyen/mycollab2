@@ -47,7 +47,7 @@ import com.esofthead.mycollab.core.utils.DateTimeUtils;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  * 
  */
 @MappedJdbcTypes(JdbcType.TIMESTAMP)

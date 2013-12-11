@@ -20,7 +20,7 @@ import com.esofthead.mycollab.form.view.builder.type.BooleanDynaField;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  *
  */
 public class BooleanDynaFieldBuilder extends

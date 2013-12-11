@@ -24,7 +24,7 @@ import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
 
 /**
  *
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public class TaskPercentageCompleteComboBox extends ValueComboBox {
     public TaskPercentageCompleteComboBox() {

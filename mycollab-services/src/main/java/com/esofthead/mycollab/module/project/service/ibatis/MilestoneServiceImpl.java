@@ -44,7 +44,7 @@ import com.esofthead.mycollab.schedule.email.project.ProjectMilestoneRelayEmailN
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 @Service
 @Transactional

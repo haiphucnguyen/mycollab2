@@ -26,7 +26,7 @@ import java.util.List;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public class SimpleTaskList extends TaskList {
     private static final long serialVersionUID = 1L;

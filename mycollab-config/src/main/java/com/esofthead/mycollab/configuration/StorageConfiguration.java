@@ -26,7 +26,7 @@ package com.esofthead.mycollab.configuration;
  * installation mode of MyCollab</li>
  * </ul>
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  * 
  */
 public interface StorageConfiguration {

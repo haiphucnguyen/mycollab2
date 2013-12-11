@@ -38,7 +38,7 @@ import com.vaadin.ui.PopupDateField;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 @SuppressWarnings("serial")
 public class DateSelectionField extends GridLayout {

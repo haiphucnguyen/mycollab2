@@ -18,7 +18,7 @@ package com.esofthead.mycollab.form.view.builder.type;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  * 
  */
 public class PhoneDynaField extends TextDynaField {

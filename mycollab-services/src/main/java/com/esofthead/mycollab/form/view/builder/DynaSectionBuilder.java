@@ -21,7 +21,7 @@ import com.esofthead.mycollab.form.view.builder.type.DynaSection.LayoutType;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  *
  */
 public class DynaSectionBuilder {

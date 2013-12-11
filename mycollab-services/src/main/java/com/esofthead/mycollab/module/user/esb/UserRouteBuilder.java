@@ -24,7 +24,7 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  *
  */
 @Component

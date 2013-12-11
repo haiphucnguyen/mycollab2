@@ -39,7 +39,7 @@ import org.apache.ibatis.annotations.Param;
 
 /**
  *
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  *
  * @param <K>
  * @param <T>

@@ -71,7 +71,7 @@ import com.vaadin.ui.VerticalLayout;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public class TaskTableDisplay extends
 		BeanTable<ProjectTaskService, TaskSearchCriteria, SimpleTask> {

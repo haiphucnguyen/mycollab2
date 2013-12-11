@@ -37,7 +37,7 @@ import com.vaadin.ui.ComponentContainer;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public class ProjectMemberListPresenter extends
 		AbstractPresenter<ProjectMemberListView> {

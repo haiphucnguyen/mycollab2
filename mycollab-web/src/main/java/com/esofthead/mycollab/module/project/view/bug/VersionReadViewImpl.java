@@ -61,7 +61,7 @@ import com.vaadin.ui.Window;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 @ViewComponent
 public class VersionReadViewImpl extends AbstractPageView implements

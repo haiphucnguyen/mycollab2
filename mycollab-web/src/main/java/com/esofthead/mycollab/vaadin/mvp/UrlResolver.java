@@ -30,7 +30,7 @@ import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  *
  */
 public abstract class UrlResolver {

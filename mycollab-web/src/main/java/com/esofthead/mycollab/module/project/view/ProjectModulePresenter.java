@@ -31,7 +31,7 @@ import com.vaadin.ui.ComponentContainer;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public class ProjectModulePresenter extends AbstractPresenter<ProjectModule> {
 	private static final long serialVersionUID = 1L;

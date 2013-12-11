@@ -21,7 +21,7 @@ import javax.validation.ConstraintValidatorContext;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  *
  */
 public class URLValidator implements ConstraintValidator<URL, String> {

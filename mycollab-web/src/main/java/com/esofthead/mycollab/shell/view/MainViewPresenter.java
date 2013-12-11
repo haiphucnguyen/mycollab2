@@ -35,7 +35,7 @@ import com.vaadin.ui.UI;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public class MainViewPresenter extends AbstractPresenter<MainView> {
 	private static final long serialVersionUID = 1L;

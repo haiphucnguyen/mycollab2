@@ -26,7 +26,7 @@ import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public interface AuditLogMapperExt extends
 		ISearchableDAO<AuditLogSearchCriteria> {

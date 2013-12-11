@@ -46,7 +46,7 @@ import com.vaadin.ui.themes.Reindeer;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public class UserSearchPanel extends GenericSearchPanel<UserSearchCriteria> {
 	private static final long serialVersionUID = 1L;

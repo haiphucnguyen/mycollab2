@@ -25,7 +25,7 @@ import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 @ViewComponent
 public class RoleContainer extends AbstractPageView {

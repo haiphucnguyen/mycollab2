@@ -47,7 +47,7 @@ import com.vaadin.ui.Table;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public class UserTableDisplay extends
 		DefaultPagedBeanTable<UserService, UserSearchCriteria, SimpleUser> {

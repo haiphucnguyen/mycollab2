@@ -36,7 +36,7 @@ import com.esofthead.mycollab.module.user.service.UserPreferenceService;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 @Service
 @Transactional

@@ -20,7 +20,7 @@ package com.esofthead.mycollab.core;
  * This exception occur when MyCollab can not find any resource (Document, User,
  * etc)
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  * 
  */
 public class ResourceNotFoundException extends MyCollabException {

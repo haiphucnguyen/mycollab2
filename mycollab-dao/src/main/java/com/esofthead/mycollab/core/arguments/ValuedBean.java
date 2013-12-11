@@ -20,7 +20,7 @@ import java.io.Serializable;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  * 
  */
 public class ValuedBean implements Cloneable, Serializable {

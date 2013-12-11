@@ -25,7 +25,7 @@ import com.esofthead.mycollab.vaadin.ui.KeyCaptionComboBox;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public class AccessPermissionComboBox extends KeyCaptionComboBox {
 	private static final long serialVersionUID = 1L;

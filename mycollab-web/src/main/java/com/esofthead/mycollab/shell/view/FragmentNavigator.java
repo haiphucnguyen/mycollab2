@@ -23,7 +23,7 @@ package com.esofthead.mycollab.shell.view;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public class FragmentNavigator {
 

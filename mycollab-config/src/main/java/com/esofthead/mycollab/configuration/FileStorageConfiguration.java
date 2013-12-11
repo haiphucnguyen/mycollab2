@@ -21,7 +21,7 @@ import java.io.File;
 /**
  * Configuration of file system storage mode
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  * 
  */
 public class FileStorageConfiguration implements StorageConfiguration {

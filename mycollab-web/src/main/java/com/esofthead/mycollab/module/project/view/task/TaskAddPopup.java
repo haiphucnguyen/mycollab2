@@ -59,7 +59,7 @@ import com.vaadin.ui.VerticalLayout;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public class TaskAddPopup extends CustomComponent {
 	private static final long serialVersionUID = 1L;

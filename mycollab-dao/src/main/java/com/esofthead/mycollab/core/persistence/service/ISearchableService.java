@@ -42,7 +42,7 @@ import com.esofthead.mycollab.core.cache.Cacheable;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  *
  * @param <S>
  */

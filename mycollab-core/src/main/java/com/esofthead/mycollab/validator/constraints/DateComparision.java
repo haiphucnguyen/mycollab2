@@ -34,7 +34,7 @@ import javax.validation.Payload;
 
 /**
  *
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 @Target({METHOD, FIELD, ANNOTATION_TYPE})
 @Retention(RUNTIME)

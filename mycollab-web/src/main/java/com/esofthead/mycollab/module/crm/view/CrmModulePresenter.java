@@ -31,7 +31,7 @@ import com.vaadin.ui.ComponentContainer;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public class CrmModulePresenter extends AbstractPresenter<CrmModule> {
 	private static final long serialVersionUID = 1L;

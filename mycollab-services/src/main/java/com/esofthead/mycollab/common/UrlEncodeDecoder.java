@@ -32,7 +32,7 @@ import com.esofthead.mycollab.core.MyCollabException;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public class UrlEncodeDecoder {
 	private static Logger log = LoggerFactory.getLogger(UrlEncodeDecoder.class);

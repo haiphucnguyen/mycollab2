@@ -24,7 +24,7 @@ import com.esofthead.mycollab.module.crm.ui.components.HistoryLogWindow;
 
 /**
  *
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 @SuppressWarnings("serial")
 public class ProjectMemberHistoryLogWindow extends HistoryLogWindow {

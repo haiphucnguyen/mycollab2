@@ -25,7 +25,7 @@ import com.vaadin.ui.TextField;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  *
  */
 public class DefaultEditFormFieldFactory extends DefaultFieldFactory {

@@ -39,7 +39,7 @@ import com.vaadin.ui.TextField;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 @ViewComponent
 public class VersionAddViewImpl extends AbstractPageView implements VersionAddView {

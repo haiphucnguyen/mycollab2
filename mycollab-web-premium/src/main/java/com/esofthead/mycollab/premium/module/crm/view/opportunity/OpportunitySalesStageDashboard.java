@@ -51,7 +51,7 @@ import com.vaadin.ui.CssLayout;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 @ViewComponent
 public class OpportunitySalesStageDashboard extends CssLayout implements IOpportunitySalesStageDashboard {

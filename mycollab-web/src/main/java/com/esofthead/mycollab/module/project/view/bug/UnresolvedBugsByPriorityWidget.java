@@ -38,7 +38,7 @@ import com.vaadin.ui.VerticalLayout;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public class UnresolvedBugsByPriorityWidget extends Depot {
 	private static final long serialVersionUID = 1L;

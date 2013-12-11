@@ -105,7 +105,7 @@ public class JsonDeSerializer {
 	/**
 	 * Annotation to exclude class parameter in serialization process
 	 * 
-	 * @author haiphucnguyen
+	 * @author MyCollab Ltd.
 	 * 
 	 */
 	@Retention(RetentionPolicy.RUNTIME)

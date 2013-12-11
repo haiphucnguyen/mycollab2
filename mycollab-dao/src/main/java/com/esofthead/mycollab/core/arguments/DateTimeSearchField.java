@@ -38,7 +38,7 @@ import com.esofthead.mycollab.core.utils.DateTimeUtils;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  *
  */
 public class DateTimeSearchField extends SearchField {

@@ -25,7 +25,7 @@ import org.apache.tika.mime.MediaType;
 /**
  * Utility class mainly used to detect mimetype of file upload to MyCollab
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  * 
  */
 public class MimeTypesUtil {

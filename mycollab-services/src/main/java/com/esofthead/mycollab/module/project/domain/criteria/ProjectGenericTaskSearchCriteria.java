@@ -27,7 +27,7 @@ import com.esofthead.mycollab.core.arguments.StringSearchField;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public class ProjectGenericTaskSearchCriteria extends SearchCriteria {
 	public static final String OPEN_STATUS = "Open";
