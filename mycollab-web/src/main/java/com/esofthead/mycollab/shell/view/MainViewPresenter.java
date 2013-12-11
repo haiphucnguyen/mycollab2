@@ -32,7 +32,6 @@ import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabApplication;
 import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.UI;
 
 /**
  * 

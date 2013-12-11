@@ -125,7 +125,7 @@ public class DynaFormLayout implements IFormLayoutFactory {
 						Alignment.MIDDLE_LEFT);
 			} else {
 				throw new MyCollabException(
-						"Does not support form layout except 1 or 2 columns");
+						"Does not support attachForm layout except 1 or 2 columns");
 			}
 
 			gridLayout.getLayout().setWidth("100%");

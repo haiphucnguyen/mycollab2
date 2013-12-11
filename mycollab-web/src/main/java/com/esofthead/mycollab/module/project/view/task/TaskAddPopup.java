@@ -84,7 +84,7 @@ public class TaskAddPopup extends CustomComponent {
 
 		this.task = new SimpleTask();
 		this.taskContainer = new TabSheet();
-		final TaskInformationLayout taskInformationLayout = new TaskInformationLayout();
+		final TaskInputForm taskInformationLayout = new TaskInputForm();
 		taskInformationLayout.setWidth("100%");
 		this.taskContainer.addTab(taskInformationLayout, LocalizationHelper
 				.getMessage(GenericI18Enum.INFORMATION_WINDOW_TITLE));
@@ -133,8 +133,7 @@ public class TaskAddPopup extends CustomComponent {
 						TaskAddPopup.this.task
 								.setNotes(TaskAddPopup.this.taskNoteComponent
 										.getNote());
-						if (taskInformationLayout
-								.validateForm(TaskAddPopup.this.task)) {
+						if (taskInformationLayout.validateForm()) {
 							taskService.saveWithSession(TaskAddPopup.this.task,
 									AppContext.getUsername());
 							TaskAddPopup.this.taskNoteComponent
@@ -158,10 +157,10 @@ public class TaskAddPopup extends CustomComponent {
 		this.setCompositionRoot(taskLayout);
 	}
 
-	private class TaskInformationLayout extends AdvancedEditBeanForm<Task> {
+	private class TaskInputForm extends AdvancedEditBeanForm<Task> {
 		private static final long serialVersionUID = 1L;
 
-		public TaskInformationLayout() {
+		public TaskInputForm() {
 			this.setFormLayoutFactory(new TaskLayout());
 			this.setFormFieldFactory(new EditFormFieldFactory());
 			this.setItemDataSource(new BeanItem<Task>(TaskAddPopup.this.task));

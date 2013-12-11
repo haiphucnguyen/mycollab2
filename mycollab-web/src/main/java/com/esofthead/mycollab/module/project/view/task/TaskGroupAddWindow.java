@@ -143,7 +143,7 @@ public class TaskGroupAddWindow extends Window {
 							@Override
 							public void buttonClick(final ClickEvent event) {
 								if (TaskGroupAddWindow.TaskListForm.this
-										.validateForm(TaskGroupAddWindow.this.taskList)) {
+										.validateForm()) {
 									TaskListFormLayoutFactory.this
 											.saveTaskList();
 									TaskGroupAddWindow.this.close();
@@ -162,7 +162,7 @@ public class TaskGroupAddWindow extends Window {
 							@Override
 							public void buttonClick(final ClickEvent event) {
 								if (TaskGroupAddWindow.TaskListForm.this
-										.validateForm(TaskGroupAddWindow.this.taskList)) {
+										.validateForm()) {
 									TaskListFormLayoutFactory.this
 											.saveTaskList();
 									TaskGroupAddWindow.this.taskList = new SimpleTaskList();

@@ -91,7 +91,7 @@ class ActiveSectionComp extends GenericSectionComp {
 					(originSection.getFieldCount() + 3) / 2);
 		} else {
 			throw new MyCollabException(
-					"Does not support form layout except 1 or 2 columns");
+					"Does not support attachForm layout except 1 or 2 columns");
 		}
 
 		dragLayout.setWidth("100%");

@@ -21,9 +21,9 @@ import java.io.Serializable;
 import com.vaadin.ui.ComponentContainer;
 
 /**
- * 
- *
  * @param <V>
+ * @author MyCollab Ltd
+ * @since 2.0
  */
 public interface IPresenter<V extends PageView> extends Serializable {
 

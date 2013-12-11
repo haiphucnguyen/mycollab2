@@ -19,33 +19,35 @@ package com.esofthead.mycollab.module.crm.view.account;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
-import com.esofthead.mycollab.vaadin.mvp.BeanItemCustomExt;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
-import com.vaadin.data.Item;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Layout;
 
 @ViewComponent
-public class AccountAddViewImpl extends AbstractPageView implements AccountAddView {
+public class AccountAddViewImpl extends AbstractPageView implements
+		AccountAddView {
 	private static final long serialVersionUID = 1L;
-	private final EditForm editForm;
+	private final AdvancedEditBeanForm<SimpleAccount> editForm;
 
 	private SimpleAccount account;
 
 	public AccountAddViewImpl() {
 		super();
-		this.editForm = new EditForm();
+		this.editForm = new AdvancedEditBeanForm<SimpleAccount>();
 		this.addComponent(this.editForm);
 	}
 
 	@Override
 	public void editItem(final SimpleAccount account) {
 		this.account = account;
-		this.editForm.setItemDataSource(new BeanItemCustomExt<SimpleAccount>(
-				account));
+		this.editForm.setFormLayoutFactory(new FormLayoutFactory());
+		this.editForm
+				.setBeanFormFieldFactory(new AccountEditFormFieldFactory<SimpleAccount>(
+						editForm));
+		this.editForm.setBean(account);
 	}
 
 	@Override
@@ -53,50 +55,35 @@ public class AccountAddViewImpl extends AbstractPageView implements AccountAddVi
 		return this.editForm;
 	}
 
-	private class EditForm extends AdvancedEditBeanForm<SimpleAccount> {
-
-		class FormLayoutFactory extends AccountFormLayoutFactory {
-
-			private static final long serialVersionUID = 1L;
-
-			public FormLayoutFactory() {
-				super(
-						(AccountAddViewImpl.this.account.getId() == null) ? "Create Account"
-								: AccountAddViewImpl.this.account
-										.getAccountname());
-			}
-
-			@Override
-			protected Layout createBottomPanel() {
-				return this.createButtonControls();
-			}
-
-			private Layout createButtonControls() {
-				final HorizontalLayout controlPanel = new HorizontalLayout();
-				final Layout controlButtons = (new EditFormControlsGenerator<SimpleAccount>(
-						EditForm.this)).createButtonControls();
-				controlButtons.setSizeUndefined();
-				controlPanel.addComponent(controlButtons);
-				controlPanel.setWidth("100%");
-				controlPanel.setComponentAlignment(controlButtons,
-						Alignment.MIDDLE_CENTER);
-				return controlPanel;
-			}
-
-			@Override
-			protected Layout createTopPanel() {
-				return this.createButtonControls();
-			}
-		}
+	class FormLayoutFactory extends AccountFormLayoutFactory {
 
 		private static final long serialVersionUID = 1L;
 
+		public FormLayoutFactory() {
+			super((account.getId() == null) ? "Create Account" : account
+					.getAccountname());
+		}
+
 		@Override
-		public void setItemDataSource(final Item newDataSource) {
-			this.setFormLayoutFactory(new FormLayoutFactory());
-			this.setFormFieldFactory(new AccountEditFormFieldFactory(
-					AccountAddViewImpl.this.account));
-			super.setItemDataSource(newDataSource);
+		protected Layout createBottomPanel() {
+			return this.createButtonControls();
+		}
+
+		private Layout createButtonControls() {
+			final HorizontalLayout controlPanel = new HorizontalLayout();
+			final Layout controlButtons = (new EditFormControlsGenerator<SimpleAccount>(
+					editForm)).createButtonControls();
+			controlButtons.setSizeUndefined();
+			controlPanel.addComponent(controlButtons);
+			controlPanel.setWidth("100%");
+			controlPanel.setComponentAlignment(controlButtons,
+					Alignment.MIDDLE_CENTER);
+			return controlPanel;
+		}
+
+		@Override
+		protected Layout createTopPanel() {
+			return this.createButtonControls();
 		}
 	}
 }

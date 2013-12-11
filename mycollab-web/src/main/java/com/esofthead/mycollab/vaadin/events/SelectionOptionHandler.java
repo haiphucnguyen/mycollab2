@@ -16,17 +16,19 @@
  */
 package com.esofthead.mycollab.vaadin.events;
 
+import java.io.Serializable;
+
 /**
  * 
  * @author MyCollab Ltd.
- *
+ * 
  */
-public interface SelectionOptionHandler {
+public interface SelectionOptionHandler extends Serializable {
 	/**
 	 * 
 	 */
 	void onSelectCurrentPage();
-	
+
 	/**
 	 * 
 	 */

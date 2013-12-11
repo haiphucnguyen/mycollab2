@@ -19,26 +19,24 @@ package com.esofthead.mycollab.module.crm.view.account;
 import com.esofthead.mycollab.module.crm.domain.Account;
 import com.esofthead.mycollab.module.crm.ui.components.IndustryComboBox;
 import com.esofthead.mycollab.module.user.ui.components.ActiveUserComboBox;
+import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.CountryComboBox;
-import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
-import com.vaadin.data.Item;
+import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 
-public class AccountEditFormFieldFactory extends DefaultEditFormFieldFactory {
+public class AccountEditFormFieldFactory<B extends Account> extends
+		AbstractBeanFieldGroupFieldFactory<B> {
 
 	private static final long serialVersionUID = 1L;
 
-	private Account account;
-
-	public AccountEditFormFieldFactory(Account account) {
-		this.account = account;
+	public AccountEditFormFieldFactory(GenericBeanForm<B> form) {
+		super(form);
 	}
 
 	@Override
-	protected Field onCreateField(Item item, Object propertyId,
-			com.vaadin.ui.Component uiContext) {
+	protected Field onCreateField(Object propertyId) {
 
 		if ("type".equals(propertyId)) {
 			AccountTypeComboBox accountTypeBox = new AccountTypeComboBox();
@@ -48,7 +46,7 @@ public class AccountEditFormFieldFactory extends DefaultEditFormFieldFactory {
 			return accountIndustryBox;
 		} else if ("assignuser".equals(propertyId)) {
 			ActiveUserComboBox userBox = new ActiveUserComboBox();
-			userBox.select(account.getAssignuser());
+			userBox.select(attachForm.getBean().getAssignuser());
 			return userBox;
 		} else if ("description".equals(propertyId)) {
 			TextArea textArea = new TextArea("", "");

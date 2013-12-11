@@ -20,29 +20,25 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.vaadin.dialogs.ConfirmDialog;
-
-import com.esofthead.mycollab.common.localization.GenericI18Enum;
-import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.ValuedBean;
 import com.esofthead.mycollab.core.persistence.service.ISearchableService;
-import com.esofthead.mycollab.core.utils.LocalizationHelper;
-import com.esofthead.mycollab.module.file.resource.SimpleGridExportItemsStreamResource;
-import com.esofthead.mycollab.reporting.ReportExportType;
-import com.esofthead.mycollab.reporting.RpParameterBuilder;
 import com.esofthead.mycollab.vaadin.events.PagableHandler;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.events.SelectableItemHandler;
 import com.esofthead.mycollab.vaadin.events.SelectionOptionHandler;
 import com.esofthead.mycollab.vaadin.events.TablePopupActionHandler;
-import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
-import com.esofthead.mycollab.vaadin.ui.table.AbstractPagedBeanTable;
-import com.vaadin.server.Resource;
-import com.vaadin.server.StreamResource;
 import com.vaadin.ui.CheckBox;
-import com.vaadin.ui.UI;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ * @param <V>
+ * @param <S>
+ * @param <B>
+ */
 public abstract class ListSelectionPresenter<V extends ListView<S, B>, S extends SearchCriteria, B extends ValuedBean>
 		extends AbstractPresenter<V> {
 	private static final long serialVersionUID = 1L;
@@ -79,6 +75,8 @@ public abstract class ListSelectionPresenter<V extends ListView<S, B>, S extends
 
 		view.getOptionSelectionHandlers().addSelectionOptionHandler(
 				new SelectionOptionHandler() {
+					private static final long serialVersionUID = 1L;
+
 					@Override
 					public void onSelectCurrentPage() {
 						isSelectAll = false;

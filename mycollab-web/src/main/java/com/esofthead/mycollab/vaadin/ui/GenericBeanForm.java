@@ -16,13 +16,12 @@
  */
 package com.esofthead.mycollab.vaadin.ui;
 
-import java.util.Collection;
-
 import com.vaadin.data.Item;
+import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Field;
-import com.vaadin.ui.Form;
+import com.vaadin.ui.FormFieldFactory;
 
-public class GenericForm extends Form {
+public class GenericBeanForm<B> extends CssLayout {
 
 	private static final long serialVersionUID = 1L;
 	public static String SAVE_ACTION = "Save";
@@ -32,31 +31,59 @@ public class GenericForm extends Form {
 	public static String CANCEL_ACTION = "Cancel";
 	public static String DELETE_ACTION = "Delete";
 	public static String CLONE_ACTION = "Clone";
-	
-	private IFormLayoutFactory factory;
 
-	public GenericForm() {
+	protected IFormLayoutFactory layoutFactory;
+	protected AbstractBeanFieldGroupFieldFactory<B> fieldFactory;
+
+	private B bean;
+
+	public GenericBeanForm() {
 		super();
 	}
 
-	public void setFormLayoutFactory(IFormLayoutFactory factory) {
-		this.factory = factory;
+	public GenericBeanForm(IFormLayoutFactory layoutFactory) {
+		setFormLayoutFactory(layoutFactory);
 	}
 
-	@Override
+	public void setFormLayoutFactory(IFormLayoutFactory layoutFactory) {
+		this.layoutFactory = layoutFactory;
+	}
+
+	public void setBeanFormFieldFactory(
+			AbstractBeanFieldGroupFieldFactory<B> fieldFactory) {
+		this.fieldFactory = fieldFactory;
+	}
+
+	public void setFormFieldFactory(FormFieldFactory fieldFactory) {
+	}
+
+	public B getBean() {
+		return bean;
+	}
+
+	public void setBean(B bean) {
+		this.bean = bean;
+
+		this.removeAllComponents();
+		this.addComponent(layoutFactory.getLayout());
+
+		if (fieldFactory == null) {
+			fieldFactory = new DefaultBeanFieldGroupFieldFactory<B>(this);
+		}
+
+		fieldFactory.setBean(bean);
+	}
+
+	public void commit() {
+		if (fieldFactory != null) {
+			fieldFactory.commit();
+		}
+	}
+
 	public void setItemDataSource(final Item newDataSource) {
-		this.setLayout(factory.getLayout());
-		super.setItemDataSource(newDataSource);
 	}
 
-	@Override
-	public void setItemDataSource(Item newDataSource, Collection<?> propertyIds) {
-		this.setLayout(factory.getLayout());
-		super.setItemDataSource(newDataSource, propertyIds);
-	}
-
-	@Override
 	protected void attachField(Object propertyId, Field field) {
-		factory.attachField(propertyId, field);
+		layoutFactory.attachField(propertyId, field);
 	}
 }

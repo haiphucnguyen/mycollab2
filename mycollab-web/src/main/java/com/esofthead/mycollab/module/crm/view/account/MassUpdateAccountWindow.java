@@ -70,8 +70,8 @@ public class MassUpdateAccountWindow extends MassUpdateWindow<Account> {
 		@Override
 		public void setItemDataSource(final Item newDataSource) {
 			this.setFormLayoutFactory(new MassUpdateAccountFormLayoutFactory());
-			this.setFormFieldFactory(new AccountEditFormFieldFactory(
-					MassUpdateAccountWindow.this.account));
+			this.setBeanFormFieldFactory(new AccountEditFormFieldFactory<Account>(
+					EditForm.this));
 			super.setItemDataSource(newDataSource);
 		}
 

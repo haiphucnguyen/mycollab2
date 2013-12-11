@@ -19,7 +19,6 @@ package com.esofthead.mycollab.vaadin.ui;
 import java.io.Serializable;
 
 import com.esofthead.mycollab.web.MyCollabResource;
-import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -48,19 +47,16 @@ public class EditFormControlsGenerator<T> implements Serializable {
 		layout.setStyleName("addNewControl");
 
 		if (isSaveBtnVisible) {
-			final Button saveBtn = new Button(GenericForm.SAVE_ACTION,
+			final Button saveBtn = new Button(GenericBeanForm.SAVE_ACTION,
 					new Button.ClickListener() {
 						private static final long serialVersionUID = 1L;
 
 						@Override
 						public void buttonClick(final ClickEvent event) {
-							@SuppressWarnings("unchecked")
-							final T item = ((BeanItem<T>) EditFormControlsGenerator.this.editForm
-									.getItemDataSource()).getBean();
 							if (EditFormControlsGenerator.this.editForm
-									.validateForm(item)) {
+									.validateForm()) {
 								EditFormControlsGenerator.this.editForm
-										.fireSaveForm(item);
+										.fireSaveForm();
 							}
 						}
 					});
@@ -72,19 +68,16 @@ public class EditFormControlsGenerator<T> implements Serializable {
 
 		if (isSaveAndNewBtnVisible) {
 			final Button saveAndNewBtn = new Button(
-					GenericForm.SAVE_AND_NEW_ACTION,
+					GenericBeanForm.SAVE_AND_NEW_ACTION,
 					new Button.ClickListener() {
 						private static final long serialVersionUID = 1L;
 
 						@Override
 						public void buttonClick(final ClickEvent event) {
-							@SuppressWarnings("unchecked")
-							final T item = ((BeanItem<T>) EditFormControlsGenerator.this.editForm
-									.getItemDataSource()).getBean();
 							if (EditFormControlsGenerator.this.editForm
-									.validateForm(item)) {
+									.validateForm()) {
 								EditFormControlsGenerator.this.editForm
-										.fireSaveAndNewForm(item);
+										.fireSaveAndNewForm();
 							}
 						}
 					});
@@ -96,7 +89,7 @@ public class EditFormControlsGenerator<T> implements Serializable {
 		}
 
 		if (isCancelBtnVisible) {
-			final Button cancelBtn = new Button(GenericForm.CANCEL_ACTION,
+			final Button cancelBtn = new Button(GenericBeanForm.CANCEL_ACTION,
 					new Button.ClickListener() {
 						private static final long serialVersionUID = 1L;
 

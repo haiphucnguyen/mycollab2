@@ -18,7 +18,6 @@ package com.esofthead.mycollab.vaadin.ui;
 
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.web.MyCollabResource;
-import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -56,8 +55,7 @@ public class ProjectPreviewFormControlsGenerator<T> {
 
 			@Override
 			public void buttonClick(final ClickEvent event) {
-				final T item = ((BeanItem<T>) previewForm.getItemDataSource())
-						.getBean();
+				final T item = previewForm.getBean();
 				previewForm.fireCancelForm(item);
 			}
 		});
@@ -72,15 +70,13 @@ public class ProjectPreviewFormControlsGenerator<T> {
 		editButtons.addStyleName("edit-btn");
 
 		if (haveAssignButton) {
-			assignBtn = new Button(GenericForm.ASSIGN_ACTION,
+			assignBtn = new Button(GenericBeanForm.ASSIGN_ACTION,
 					new Button.ClickListener() {
 						private static final long serialVersionUID = 1L;
 
 						@Override
 						public void buttonClick(final ClickEvent event) {
-							@SuppressWarnings("unchecked")
-							final T item = ((BeanItem<T>) previewForm
-									.getItemDataSource()).getBean();
+							final T item = previewForm.getBean();
 							previewForm.fireAssignForm(item);
 						}
 					});
@@ -91,15 +87,13 @@ public class ProjectPreviewFormControlsGenerator<T> {
 			editButtons.setComponentAlignment(assignBtn,
 					Alignment.MIDDLE_CENTER);
 		}
-		editBtn = new Button(GenericForm.EDIT_ACTION,
+		editBtn = new Button(GenericBeanForm.EDIT_ACTION,
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
 					public void buttonClick(final ClickEvent event) {
-						@SuppressWarnings("unchecked")
-						final T item = ((BeanItem<T>) previewForm
-								.getItemDataSource()).getBean();
+						final T item = previewForm.getBean();
 						previewForm.fireEditForm(item);
 					}
 				});
@@ -108,15 +102,13 @@ public class ProjectPreviewFormControlsGenerator<T> {
 		editButtons.addComponent(editBtn);
 		editButtons.setComponentAlignment(editBtn, Alignment.MIDDLE_CENTER);
 
-		deleteBtn = new Button(GenericForm.DELETE_ACTION,
+		deleteBtn = new Button(GenericBeanForm.DELETE_ACTION,
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
 					public void buttonClick(final ClickEvent event) {
-						@SuppressWarnings("unchecked")
-						final T item = ((BeanItem<T>) previewForm
-								.getItemDataSource()).getBean();
+						final T item = previewForm.getBean();
 						previewForm.fireDeleteForm(item);
 					}
 				});
@@ -125,15 +117,13 @@ public class ProjectPreviewFormControlsGenerator<T> {
 		editButtons.addComponent(deleteBtn);
 		editButtons.setComponentAlignment(deleteBtn, Alignment.MIDDLE_CENTER);
 
-		cloneBtn = new Button(GenericForm.CLONE_ACTION,
+		cloneBtn = new Button(GenericBeanForm.CLONE_ACTION,
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
 					public void buttonClick(final ClickEvent event) {
-						@SuppressWarnings("unchecked")
-						final T item = ((BeanItem<T>) previewForm
-								.getItemDataSource()).getBean();
+						final T item = previewForm.getBean();
 						previewForm.fireCloneForm(item);
 					}
 				});
@@ -151,8 +141,7 @@ public class ProjectPreviewFormControlsGenerator<T> {
 
 			@Override
 			public void buttonClick(final ClickEvent event) {
-				final T item = ((BeanItem<T>) previewForm.getItemDataSource())
-						.getBean();
+				final T item = previewForm.getBean();
 				previewForm.fireGotoPrevious(item);
 			}
 		});
@@ -169,8 +158,7 @@ public class ProjectPreviewFormControlsGenerator<T> {
 
 			@Override
 			public void buttonClick(final ClickEvent event) {
-				final T item = ((BeanItem<T>) previewForm.getItemDataSource())
-						.getBean();
+				final T item = previewForm.getBean();
 				previewForm.fireGotoNextItem(item);
 			}
 		});

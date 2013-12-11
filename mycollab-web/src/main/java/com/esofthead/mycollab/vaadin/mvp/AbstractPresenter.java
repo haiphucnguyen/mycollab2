@@ -27,9 +27,9 @@ import com.vaadin.ui.ComponentContainer;
 
 /**
  * 
- * @author MyCollab Ltd.
- * 
  * @param <V>
+ * @author MyCollab Ltd.
+ * @since 2.0
  */
 public abstract class AbstractPresenter<V extends PageView> implements
 		IPresenter<V> {
