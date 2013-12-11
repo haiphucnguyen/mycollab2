@@ -235,6 +235,7 @@ public class MyCollabApplication extends UI {
 			cookie.setValue(username + "$"
 					+ PasswordEncryptHelper.encyptText(password));
 		}
+		cookie.setPath("/");
 		cookie.setMaxAge(60 * 60 * 24 * 7);
 		VaadinService.getCurrentResponse().addCookie(cookie);
 	}
@@ -244,11 +245,14 @@ public class MyCollabApplication extends UI {
 
 		if (cookie != null) {
 			cookie.setValue("");
+			VaadinService.getCurrentResponse().addCookie(cookie);
 		}
 	}
 
 	public Cookie getCookieByName(String name) {
 		// Fetch all cookies from the request
+		VaadinRequest currentRequest = VaadinService.getCurrentRequest();
+		log.debug("Request path: " + currentRequest.getPathInfo());
 		Cookie[] cookies = VaadinService.getCurrentRequest().getCookies();
 
 		// Iterate to find cookie by its name
