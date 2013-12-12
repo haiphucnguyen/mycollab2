@@ -34,6 +34,7 @@ public class CrmPreviewFormControlsGenerator {
 
 		HorizontalLayout layout = new HorizontalLayout();
 		layout.setSpacing(true);
+		layout.setMargin(true);
 		layout.setWidth("100%");
 
 		backBtn = new Button(null, new Button.ClickListener() {

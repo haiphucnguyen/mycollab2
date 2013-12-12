@@ -42,7 +42,6 @@ public class EditFormControlsGenerator<T> implements Serializable {
 			final boolean isSaveAndNewBtnVisible,
 			final boolean isCancelBtnVisible) {
 		final HorizontalLayout layout = new HorizontalLayout();
-		layout.setMargin(true);
 		layout.setSpacing(true);
 		layout.setStyleName("addNewControl");
 

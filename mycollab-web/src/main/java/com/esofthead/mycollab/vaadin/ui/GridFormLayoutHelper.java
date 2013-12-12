@@ -160,6 +160,7 @@ public class GridFormLayoutHelper implements Serializable {
 			final HorizontalLayout captionWrapper = new HorizontalLayout();
 			captionWrapper.addComponent(l);
 			captionWrapper.setStyleName("gridform-caption");
+			captionWrapper.setMargin(true);
 			captionWrapper.setWidth(this.defaultCaptionWidth);
 			if (columns == 0) {
 				captionWrapper.addStyleName("first-col");
@@ -172,6 +173,7 @@ public class GridFormLayoutHelper implements Serializable {
 		}
 		final HorizontalLayout fieldWrapper = new HorizontalLayout();
 		fieldWrapper.setStyleName("gridform-field");
+		fieldWrapper.setMargin(true);
 		fieldWrapper.addComponent(field);
 		field.setCaption(null);
 		field.setWidth(width);
@@ -227,6 +229,7 @@ public class GridFormLayoutHelper implements Serializable {
 			captionWrapper.setWidth(this.defaultCaptionWidth);
 			captionWrapper.setHeight("100%");
 			captionWrapper.setStyleName("gridform-caption");
+			captionWrapper.setMargin(true);
 			if (columns == 0) {
 				captionWrapper.addStyleName("first-col");
 			}
@@ -241,6 +244,7 @@ public class GridFormLayoutHelper implements Serializable {
 		fieldWrapper.addComponent(field);
 		field.setWidth(width);
 		fieldWrapper.setWidth("100%");
+		fieldWrapper.setMargin(true);
 		if (rows == 0) {
 			fieldWrapper.addStyleName("first-row");
 		}
@@ -280,6 +284,7 @@ public class GridFormLayoutHelper implements Serializable {
 		captionWrapper.setComponentAlignment(fieldCaption, alignment);
 		captionWrapper.setWidth(defaultCaptionWidth);
 		captionWrapper.setHeight("100%");
+		captionWrapper.setMargin(true);
 		captionWrapper.setStyleName("gridform-caption");
 		if (columns == 0) {
 			captionWrapper.addStyleName("first-col");
@@ -294,6 +299,7 @@ public class GridFormLayoutHelper implements Serializable {
 		fieldWrapper.addComponent(fieldValue);
 		fieldValue.setWidth(fileValueWidth);
 		fieldWrapper.setWidth("100%");
+		fieldWrapper.setMargin(true);
 		if (rows == 0) {
 			fieldWrapper.addStyleName("first-row");
 		}
