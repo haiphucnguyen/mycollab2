@@ -95,8 +95,7 @@ public class EventSearchPanel extends GenericSearchPanel<EventSearchCriteria> {
 				});
 
 		final VerticalLayout btnControlsLayout = new VerticalLayout();
-		btnControlsLayout.setWidth("150px");
-		controlsBtn.addComponent(btnControlsLayout);
+		controlsBtn.setContent(btnControlsLayout);
 
 		final Button createMeetingBtn = new Button("Create Event",
 				new Button.ClickListener() {

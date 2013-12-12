@@ -62,7 +62,13 @@ public class SplitButton extends CustomComponent {
 		this.setCompositionRoot(contentLayout);
 	}
 
-	public void setHostIcon(Resource icon) {
+	@Override
+	public void setCaption(String caption) {
+		parentButton.setCaption(caption);
+	}
+
+	@Override
+	public void setIcon(Resource icon) {
 		parentButton.setIcon(icon);
 	}
 
@@ -73,10 +79,6 @@ public class SplitButton extends CustomComponent {
 
 	public void setContent(ComponentContainer content) {
 		popupButton.setContent(content);
-	}
-
-	public void addComponent(Component component) {
-
 	}
 
 	private static final Method SPLIT_BUTTON_CLICK_CHANGE_METHOD;

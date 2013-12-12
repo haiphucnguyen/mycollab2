@@ -213,8 +213,7 @@ public class TaskGroupDisplayViewImpl extends AbstractPageView implements
 				.newResource("icons/16/export.png"));
 
 		VerticalLayout popupButtonsControl = new VerticalLayout();
-		popupButtonsControl.setWidth("150px");
-		exportButtonControl.addComponent(popupButtonsControl);
+		exportButtonControl.setContent(popupButtonsControl);
 
 		Button exportPdfBtn = new Button("Pdf");
 		FileDownloader pdfDownloader = new FileDownloader(

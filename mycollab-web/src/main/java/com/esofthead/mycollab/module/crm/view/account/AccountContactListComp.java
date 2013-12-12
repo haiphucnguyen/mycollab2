@@ -105,7 +105,9 @@ public class AccountContactListComp extends
 				});
 		selectBtn.setIcon(MyCollabResource.newResource("icons/16/select.png"));
 		selectBtn.setStyleName("link");
-		controlsBtn.addComponent(selectBtn);
+		VerticalLayout buttonControlLayout = new VerticalLayout();
+		buttonControlLayout.addComponent(selectBtn);
+		controlsBtn.setContent(buttonControlLayout);
 
 		addHeaderElement(controlsBtn);
 

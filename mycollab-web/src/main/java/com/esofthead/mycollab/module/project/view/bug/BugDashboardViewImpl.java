@@ -156,7 +156,8 @@ public class BugDashboardViewImpl extends AbstractPageView implements
 		createVersionBtn.setEnabled(CurrentProjectVariables
 				.canWrite(ProjectRolePermissionCollections.VERSIONS));
 		btnControlsLayout.addComponent(createVersionBtn);
-		controlsBtn.addComponent(btnControlsLayout);
+
+		controlsBtn.setContent(btnControlsLayout);
 
 		headerTop.addComponent(header);
 		headerWrapper.addComponent(headerTop);

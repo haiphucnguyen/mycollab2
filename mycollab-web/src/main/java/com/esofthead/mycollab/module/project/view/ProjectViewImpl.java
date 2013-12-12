@@ -513,7 +513,7 @@ public class ProjectViewImpl extends AbstractPageView implements ProjectView {
 			popupButtonsControl.addComponent(deleteProjectBtn);
 		}
 
-		controlsBtn.addComponent(popupButtonsControl);
+		controlsBtn.setContent(popupButtonsControl);
 
 		topPanel.addComponent(controlsBtn);
 		topPanel.setComponentAlignment(controlsBtn, Alignment.MIDDLE_RIGHT);

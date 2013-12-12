@@ -162,8 +162,7 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
 				.newResource("icons/16/export.png"));
 
 		VerticalLayout popupButtonsControl = new VerticalLayout();
-		popupButtonsControl.setWidth("150px");
-		exportButtonControl.addComponent(popupButtonsControl);
+		exportButtonControl.setContent(popupButtonsControl);
 
 		Button exportPdfBtn = new Button("Pdf");
 
