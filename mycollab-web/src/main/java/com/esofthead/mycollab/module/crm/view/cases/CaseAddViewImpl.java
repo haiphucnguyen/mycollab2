@@ -16,82 +16,78 @@
  */
 package com.esofthead.mycollab.module.crm.view.cases;
 
-import com.esofthead.mycollab.module.crm.domain.CaseWithBLOBs;
+import com.esofthead.mycollab.module.crm.domain.SimpleCase;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
-import com.vaadin.data.Item;
-import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Layout;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
 @ViewComponent
 public class CaseAddViewImpl extends AbstractPageView implements CaseAddView {
 
-    private static final long serialVersionUID = 1L;
-    private EditForm editForm;
-    private CaseWithBLOBs cases;
+	private static final long serialVersionUID = 1L;
+	private AdvancedEditBeanForm<SimpleCase> editForm;
+	private SimpleCase cases;
 
-    public CaseAddViewImpl() {
-        super();
-        editForm = new EditForm();
-        this.addComponent(editForm);
-    }
+	public CaseAddViewImpl() {
+		super();
+		editForm = new AdvancedEditBeanForm<SimpleCase>();
+		this.addComponent(editForm);
+	}
 
-    @Override
-    public void editItem(CaseWithBLOBs cases) {
-        this.cases = cases;
-        editForm.setItemDataSource(new BeanItem<CaseWithBLOBs>(cases));
-    }
+	@Override
+	public void editItem(SimpleCase item) {
+		this.cases = item;
+		this.editForm.setFormLayoutFactory(new FormLayoutFactory());
+		this.editForm
+				.setBeanFormFieldFactory(new CaseEditFormFieldFactory<SimpleCase>(
+						editForm));
+		this.editForm.setBean(item);
+	}
 
-    private class EditForm extends AdvancedEditBeanForm<CaseWithBLOBs> {
+	@Override
+	public HasEditFormHandlers<SimpleCase> getEditFormHandlers() {
+		return editForm;
+	}
 
-        private static final long serialVersionUID = 1L;
+	class FormLayoutFactory extends CaseFormLayoutFactory {
 
-        @Override
-        public void setItemDataSource(Item newDataSource) {
-            this.setFormLayoutFactory(new FormLayoutFactory());
-            this.setFormFieldFactory(new CaseEditFormFieldFactory(cases));
-            super.setItemDataSource(newDataSource);
-        }
+		private static final long serialVersionUID = 1L;
 
-        class FormLayoutFactory extends CaseFormLayoutFactory {
+		public FormLayoutFactory() {
+			super((cases.getId() == null) ? "Create Case" : cases.getSubject());
+		}
 
-            private static final long serialVersionUID = 1L;
+		private Layout createButtonControls() {
+			final HorizontalLayout controlPanel = new HorizontalLayout();
+			final Layout controlButtons = (new EditFormControlsGenerator<SimpleCase>(
+					editForm)).createButtonControls();
+			controlButtons.setSizeUndefined();
+			controlPanel.addComponent(controlButtons);
+			controlPanel.setWidth("100%");
+			controlPanel.setComponentAlignment(controlButtons,
+					Alignment.MIDDLE_CENTER);
+			return controlPanel;
+		}
 
-            public FormLayoutFactory() {
-                super((cases.getId() == null) ? "Create Case" : cases.getSubject());
-            }
+		@Override
+		protected Layout createTopPanel() {
+			return createButtonControls();
+		}
 
-            private Layout createButtonControls() {
-            	final HorizontalLayout controlPanel = new HorizontalLayout();
-				final Layout controlButtons = (new EditFormControlsGenerator<CaseWithBLOBs>(
-						EditForm.this)).createButtonControls();
-				controlButtons.setSizeUndefined();
-				controlPanel.addComponent(controlButtons);
-				controlPanel.setWidth("100%");
-				controlPanel.setComponentAlignment(controlButtons,
-						Alignment.MIDDLE_CENTER);
-				return controlPanel;
-            }
-
-            @Override
-            protected Layout createTopPanel() {
-                return createButtonControls();
-            }
-
-            @Override
-            protected Layout createBottomPanel() {
-                return createButtonControls();
-            }
-        }
-    }
-
-    @Override
-    public HasEditFormHandlers<CaseWithBLOBs> getEditFormHandlers() {
-        return editForm;
-    }
+		@Override
+		protected Layout createBottomPanel() {
+			return createButtonControls();
+		}
+	}
 }

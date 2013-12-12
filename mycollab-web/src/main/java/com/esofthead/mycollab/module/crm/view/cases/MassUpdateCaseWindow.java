@@ -19,7 +19,6 @@ package com.esofthead.mycollab.module.crm.view.cases;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.crm.domain.CaseWithBLOBs;
-import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
@@ -65,14 +64,14 @@ public class MassUpdateCaseWindow extends MassUpdateWindow<CaseWithBLOBs> {
 		this.setContent(this.caseAddLayout);
 	}
 
-	private class EditForm extends AdvancedEditBeanForm<Contact> {
+	private class EditForm extends AdvancedEditBeanForm<CaseWithBLOBs> {
 		private static final long serialVersionUID = 1L;
 
 		@Override
 		public void setItemDataSource(final Item newDataSource) {
 			this.setFormLayoutFactory(new MassUpdateContactFormLayoutFactory());
-			this.setFormFieldFactory(new CaseEditFormFieldFactory(
-					MassUpdateCaseWindow.this.cases));
+			this.setBeanFormFieldFactory(new CaseEditFormFieldFactory(
+					EditForm.this));
 			super.setItemDataSource(newDataSource);
 		}
 
