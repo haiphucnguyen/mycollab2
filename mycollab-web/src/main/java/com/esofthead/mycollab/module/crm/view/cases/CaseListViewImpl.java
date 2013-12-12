@@ -129,6 +129,7 @@ public class CaseListViewImpl extends AbstractPageView implements CaseListView {
 		layoutWrapper.addComponent(layout);
 
 		this.selectOptionButton = new SelectionOptionButton(this.tableItem);
+		this.selectOptionButton.setSizeUndefined();
 		layout.addComponent(this.selectOptionButton);
 
 		final Button deleteBtn = new Button(

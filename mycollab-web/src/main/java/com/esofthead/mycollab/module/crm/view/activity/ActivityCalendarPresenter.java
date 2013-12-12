@@ -37,6 +37,8 @@ public class ActivityCalendarPresenter extends
 
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
+		ActivityRootView activityContainer = (ActivityRootView) container;
+		activityContainer.gotoView("Calendar");
 		AppContext.addFragment("crm/activity/calendar", "Activity Calendar");
 	}
 

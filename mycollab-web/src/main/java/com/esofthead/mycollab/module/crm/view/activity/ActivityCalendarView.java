@@ -24,6 +24,6 @@ import com.esofthead.mycollab.vaadin.mvp.PageView;
  * @since 2.0
  * 
  */
-public interface ActivityCalendarView extends PageView{
-
+public interface ActivityCalendarView extends PageView {
+	void displayCalendars();
 }

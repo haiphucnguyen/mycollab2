@@ -128,6 +128,7 @@ public class CampaignListViewImpl extends AbstractPageView implements
 		layoutWrapper.addComponent(layout);
 
 		this.selectOptionButton = new SelectionOptionButton(this.tableItem);
+		this.selectOptionButton.setSizeUndefined();
 		layout.addComponent(this.selectOptionButton);
 
 		final Button deleteBtn = new Button(
