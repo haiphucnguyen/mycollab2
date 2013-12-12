@@ -24,6 +24,12 @@ import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Layout;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
 public abstract class AssignmentFormLayoutFactory implements IFormLayoutFactory {
 
 	private static final long serialVersionUID = 1L;

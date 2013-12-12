@@ -1,7 +1,5 @@
 package com.esofthead.mycollab.vaadin.ui;
 
-import java.io.Serializable;
-
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.utils.ClassUtils;
 import com.vaadin.data.fieldgroup.FieldGroup;
@@ -19,7 +17,7 @@ import com.vaadin.ui.RichTextArea;
  * @param <B>
  */
 public abstract class AbstractBeanFieldGroupFieldFactory<B> implements
-		Serializable {
+		IBeanFieldGroupFieldFactory<B> {
 	private static final long serialVersionUID = 1L;
 	protected GenericBeanForm<B> attachForm;
 	protected FieldGroup fieldGroup;
@@ -30,6 +28,7 @@ public abstract class AbstractBeanFieldGroupFieldFactory<B> implements
 		this.fieldGroup.setBuffered(false);
 	}
 
+	@Override
 	public void setBean(B bean) {
 		fieldGroup.setItemDataSource(new BeanItem<B>(bean));
 		Class beanClass = bean.getClass();
@@ -39,6 +38,7 @@ public abstract class AbstractBeanFieldGroupFieldFactory<B> implements
 		}
 	}
 
+	@Override
 	public final void commit() {
 		try {
 			fieldGroup.commit();
@@ -47,6 +47,7 @@ public abstract class AbstractBeanFieldGroupFieldFactory<B> implements
 		}
 	}
 
+	@Override
 	public final Field bindField(Object propertyId) {
 		Field field = onCreateField(propertyId);
 		if (field == null) {

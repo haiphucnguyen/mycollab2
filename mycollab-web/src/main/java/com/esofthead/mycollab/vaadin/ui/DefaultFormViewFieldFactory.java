@@ -45,15 +45,15 @@ import com.vaadin.ui.VerticalLayout;
 /**
  * 
  * @author MyCollab Ltd.
- * 
+ * @since 2.0
  */
+@SuppressWarnings("unchecked")
 public class DefaultFormViewFieldFactory extends DefaultFieldFactory {
 	private static Logger log = LoggerFactory
 			.getLogger(DefaultFormViewFieldFactory.class);
 
 	private static final long serialVersionUID = 1L;
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public Field createField(final Item item, final Object propertyId,
 			final com.vaadin.ui.Component uiContext) {

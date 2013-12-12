@@ -1,7 +1,7 @@
 package com.esofthead.mycollab.module.crm.view.account;
 
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
-import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupFieldFactory;
+import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.UserLinkViewField;
 import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
@@ -14,7 +14,7 @@ import com.vaadin.ui.Field;
  * 
  */
 public class AccountReadFormFieldFactory extends
-		AbstractBeanFieldGroupFieldFactory<SimpleAccount> {
+		AbstractBeanFieldGroupViewFieldFactory<SimpleAccount> {
 	private static final long serialVersionUID = 1L;
 
 	public AccountReadFormFieldFactory(GenericBeanForm<SimpleAccount> form) {
@@ -36,6 +36,10 @@ public class AccountReadFormFieldFactory extends
 		}
 
 		return null;
+	}
+
+	@Override
+	public void commit() {
 	}
 
 }

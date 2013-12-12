@@ -33,7 +33,7 @@ public class GenericBeanForm<B> extends CssLayout {
 	public static String CLONE_ACTION = "Clone";
 
 	protected IFormLayoutFactory layoutFactory;
-	protected AbstractBeanFieldGroupFieldFactory<B> fieldFactory;
+	protected IBeanFieldGroupFieldFactory<B> fieldFactory;
 
 	private B bean;
 
@@ -50,7 +50,7 @@ public class GenericBeanForm<B> extends CssLayout {
 	}
 
 	public void setBeanFormFieldFactory(
-			AbstractBeanFieldGroupFieldFactory<B> fieldFactory) {
+			IBeanFieldGroupFieldFactory<B> fieldFactory) {
 		this.fieldFactory = fieldFactory;
 	}
 
