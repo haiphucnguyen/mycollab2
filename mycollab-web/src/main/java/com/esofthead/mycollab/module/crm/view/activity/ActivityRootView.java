@@ -28,7 +28,6 @@ import com.esofthead.mycollab.vaadin.ui.VerticalTabsheet;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
-import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
@@ -87,7 +86,7 @@ public class ActivityRootView extends AbstractPageView {
 		activityTabs.addTab(constructCalendarView(), "Calendar",
 				MyCollabResource.newResource("icons/22/crm/calendar.png"));
 
-		activityTabs.addTab(constructCalendarView(), "Activities List",
+		activityTabs.addTab(constructActivityListView(), "Activities List",
 				MyCollabResource.newResource("icons/22/crm/activitylist.png"));
 
 		activityTabs
@@ -135,17 +134,6 @@ public class ActivityRootView extends AbstractPageView {
 
 		if (calendarComp != null) {
 			calendarPresenter.go(this, null);
-		}
-	}
-
-	private static class MenuButton extends Button {
-		private static final long serialVersionUID = 1L;
-
-		public MenuButton(String caption, String iconResource) {
-			super(caption);
-			this.setIcon(MyCollabResource.newResource("icons/22/crm/"
-					+ iconResource));
-			this.setStyleName("link");
 		}
 	}
 

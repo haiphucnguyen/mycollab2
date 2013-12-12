@@ -35,6 +35,8 @@ import com.vaadin.ui.Button;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 2.0
+ *
  */
 @SuppressWarnings("serial")
 public class CaseContactSelectionWindow extends

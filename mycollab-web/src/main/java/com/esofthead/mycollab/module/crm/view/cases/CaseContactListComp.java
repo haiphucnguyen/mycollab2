@@ -60,6 +60,8 @@ import com.vaadin.ui.VerticalLayout;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 2.0
+ *
  */
 public class CaseContactListComp extends
 		RelatedListComp<SimpleContact, ContactSearchCriteria> {
