@@ -31,7 +31,7 @@ import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.Depot;
-import com.esofthead.mycollab.vaadin.ui.ProgressBar;
+import com.esofthead.mycollab.vaadin.ui.ProgressBarIndicator;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.vaadin.ui.Button;
@@ -101,7 +101,7 @@ public class UnresolvedBugsByAssigneeWidget2 extends Depot {
 				final BugAssigneeButton userLbl = new BugAssigneeButton(
 						assignUser, item.getExtraValue(), assignUserFullName);
 				assigneeLayout.addComponent(userLbl);
-				final ProgressBar indicator = new ProgressBar(totalCount,
+				final ProgressBarIndicator indicator = new ProgressBarIndicator(totalCount,
 						totalCount - item.getValue(), false);
 				indicator.setWidth("100%");
 				assigneeLayout.addComponent(indicator);

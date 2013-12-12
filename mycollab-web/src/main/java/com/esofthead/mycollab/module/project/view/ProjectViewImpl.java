@@ -166,95 +166,97 @@ public class ProjectViewImpl extends AbstractPageView implements ProjectView {
 
 		myProjectTab.addTab(constructProjectBugComponent(), "Bugs",
 				MyCollabResource.newResource("icons/22/project/menu_bug.png"));
-		
+
 		myProjectTab.addTab(constructProjectFileComponent(), "Files",
 				MyCollabResource.newResource("icons/22/project/menu_file.png"));
-		
+
 		myProjectTab.addTab(constructProjectRiskComponent(), "Risks",
 				MyCollabResource.newResource("icons/22/project/menu_risk.png"));
-		
+
 		myProjectTab.addTab(constructProjectProblemComponent(), "Problems",
-				MyCollabResource.newResource("icons/22/project/menu_problem.png"));
-		
+				MyCollabResource
+						.newResource("icons/22/project/menu_problem.png"));
+
 		myProjectTab.addTab(constructTimeTrackingComponent(), "Time",
 				MyCollabResource.newResource("icons/22/project/menu_time.png"));
-		
+
 		myProjectTab.addTab(constructProjectStandupMeeting(), "StandUp",
-				MyCollabResource.newResource("icons/22/project/menu_standup.png"));
-		
+				MyCollabResource
+						.newResource("icons/22/project/menu_standup.png"));
+
 		myProjectTab.addTab(constructProjectUsers(), "Users & Settings",
 				MyCollabResource.newResource("icons/22/project/menu_user.png"));
-		
 
-		myProjectTab.addSelectedTabChangeListener(new SelectedTabChangeListener() {
-			
-			@Override
-			public void selectedTabChange(SelectedTabChangeEvent event) {
-						Tab tab = (Tab)event.getTabSheet().getSelectedTab();
-				String caption = tab.getCaption();
-				if ("Messages".equals(caption)) {
-					messagePresenter.go(ProjectViewImpl.this, null);
-				} else if ("Phases".equals(caption)) {
-					MilestoneSearchCriteria searchCriteria = new MilestoneSearchCriteria();
-					searchCriteria.setProjectId(new NumberSearchField(
-							SearchField.AND, CurrentProjectVariables
-									.getProjectId()));
-					gotoMilestoneView(new MilestoneScreenData.Search(
-							searchCriteria));
-				} else if ("Tasks".equals(caption)) {
-					taskPresenter.go(ProjectViewImpl.this, null);
-				} else if ("Bugs".equals(caption)) {
-					gotoBugView(null);
-				} else if ("Risks".equals(caption)) {
-					RiskSearchCriteria searchCriteria = new RiskSearchCriteria();
-					searchCriteria.setProjectId(new NumberSearchField(
-							SearchField.AND, CurrentProjectVariables
-									.getProjectId()));
-					gotoRiskView(new RiskScreenData.Search(
-							searchCriteria));
-				} else if ("Files".equals(caption)) {
-					filePresenter.go(ProjectViewImpl.this,
-							new FileScreenData.GotoDashboard());
-				} else if ("Problems".equals(caption)) {
-					ProblemSearchCriteria searchCriteria = new ProblemSearchCriteria();
-					searchCriteria.setProjectId(new NumberSearchField(
-							SearchField.AND, CurrentProjectVariables
-									.getProjectId()));
-					problemPresenter
-							.go(ProjectViewImpl.this,
-									new ProblemScreenData.Search(
-											searchCriteria));
-				} else if ("Dashboard".equals(caption)) {
-					dashboardPresenter.go(ProjectViewImpl.this, null);
-				} else if ("Users & Settings".equals(caption)) {
-					ProjectMemberSearchCriteria criteria = new ProjectMemberSearchCriteria();
-					criteria.setProjectId(new NumberSearchField(
-							CurrentProjectVariables.getProjectId()));
-					criteria.setStatus(new StringSearchField(
-							ProjectMemberStatusConstants.ACTIVE));
-					gotoUsersAndGroup(new ProjectMemberScreenData.Search(
-							criteria));
-				} else if ("Time".equals(caption)) {
-					ItemTimeLoggingSearchCriteria searchCriteria = new ItemTimeLoggingSearchCriteria();
-					searchCriteria.setProjectId(new NumberSearchField(
-							CurrentProjectVariables.getProjectId()));
-					searchCriteria.setRangeDate(ItemTimeLoggingSearchCriteria
-							.getCurrentRangeDateOfWeekSearchField());
-					gotoTimeTrackingView(new TimeTrackingScreenData.Search(
-							searchCriteria));
-				} else if ("StandUp".equals(caption)) {
-					StandupReportSearchCriteria criteria = new StandupReportSearchCriteria();
-					criteria.setProjectId(new NumberSearchField(
-							CurrentProjectVariables.getProjectId()));
-					criteria.setOnDate(new DateSearchField(
-							SearchField.AND, new GregorianCalendar()
-									.getTime()));
-					standupPresenter.go(ProjectViewImpl.this,
-							new StandupScreenData.Search(criteria));
-				}
-				
-			}
-		});
+		myProjectTab
+				.addSelectedTabChangeListener(new SelectedTabChangeListener() {
+
+					@Override
+					public void selectedTabChange(SelectedTabChangeEvent event) {
+						Tab tab = ((VerticalTabsheet)event.getSource()).getSelectedTab();
+						String caption = tab.getCaption();
+						if ("Messages".equals(caption)) {
+							messagePresenter.go(ProjectViewImpl.this, null);
+						} else if ("Phases".equals(caption)) {
+							MilestoneSearchCriteria searchCriteria = new MilestoneSearchCriteria();
+							searchCriteria.setProjectId(new NumberSearchField(
+									SearchField.AND, CurrentProjectVariables
+											.getProjectId()));
+							gotoMilestoneView(new MilestoneScreenData.Search(
+									searchCriteria));
+						} else if ("Tasks".equals(caption)) {
+							taskPresenter.go(ProjectViewImpl.this, null);
+						} else if ("Bugs".equals(caption)) {
+							gotoBugView(null);
+						} else if ("Risks".equals(caption)) {
+							RiskSearchCriteria searchCriteria = new RiskSearchCriteria();
+							searchCriteria.setProjectId(new NumberSearchField(
+									SearchField.AND, CurrentProjectVariables
+											.getProjectId()));
+							gotoRiskView(new RiskScreenData.Search(
+									searchCriteria));
+						} else if ("Files".equals(caption)) {
+							filePresenter.go(ProjectViewImpl.this,
+									new FileScreenData.GotoDashboard());
+						} else if ("Problems".equals(caption)) {
+							ProblemSearchCriteria searchCriteria = new ProblemSearchCriteria();
+							searchCriteria.setProjectId(new NumberSearchField(
+									SearchField.AND, CurrentProjectVariables
+											.getProjectId()));
+							problemPresenter
+									.go(ProjectViewImpl.this,
+											new ProblemScreenData.Search(
+													searchCriteria));
+						} else if ("Dashboard".equals(caption)) {
+							dashboardPresenter.go(ProjectViewImpl.this, null);
+						} else if ("Users & Settings".equals(caption)) {
+							ProjectMemberSearchCriteria criteria = new ProjectMemberSearchCriteria();
+							criteria.setProjectId(new NumberSearchField(
+									CurrentProjectVariables.getProjectId()));
+							criteria.setStatus(new StringSearchField(
+									ProjectMemberStatusConstants.ACTIVE));
+							gotoUsersAndGroup(new ProjectMemberScreenData.Search(
+									criteria));
+						} else if ("Time".equals(caption)) {
+							ItemTimeLoggingSearchCriteria searchCriteria = new ItemTimeLoggingSearchCriteria();
+							searchCriteria.setProjectId(new NumberSearchField(
+									CurrentProjectVariables.getProjectId()));
+							searchCriteria.setRangeDate(ItemTimeLoggingSearchCriteria
+									.getCurrentRangeDateOfWeekSearchField());
+							gotoTimeTrackingView(new TimeTrackingScreenData.Search(
+									searchCriteria));
+						} else if ("StandUp".equals(caption)) {
+							StandupReportSearchCriteria criteria = new StandupReportSearchCriteria();
+							criteria.setProjectId(new NumberSearchField(
+									CurrentProjectVariables.getProjectId()));
+							criteria.setOnDate(new DateSearchField(
+									SearchField.AND, new GregorianCalendar()
+											.getTime()));
+							standupPresenter.go(ProjectViewImpl.this,
+									new StandupScreenData.Search(criteria));
+						}
+
+					}
+				});
 	}
 
 	@Override

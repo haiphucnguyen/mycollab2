@@ -80,8 +80,8 @@ public class TrackerContainer extends AbstractPageView {
 
 					@Override
 					public void selectedTabChange(SelectedTabChangeEvent event) {
-						final Tab tab = (Tab) event.getTabSheet()
-								.getSelectedTab();
+						final Tab tab = (Tab) ((TabsheetDecor) event
+								.getTabSheet()).getSelectedTabInfo();
 						final String caption = tab.getCaption();
 						final SimpleProject project = CurrentProjectVariables
 								.getProject();
@@ -106,7 +106,8 @@ public class TrackerContainer extends AbstractPageView {
 	}
 
 	public Component gotoSubView(final String name) {
-		final PageView component = (PageView) this.myProjectTab.selectTab(name);
+		final PageView component = (PageView) this.myProjectTab.selectTab(name)
+				.getComponent();
 		return component;
 	}
 }

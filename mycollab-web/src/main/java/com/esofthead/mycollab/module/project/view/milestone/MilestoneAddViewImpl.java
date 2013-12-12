@@ -29,7 +29,7 @@ import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormContainerHorizontalViewField;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
-import com.esofthead.mycollab.vaadin.ui.ProgressBar;
+import com.esofthead.mycollab.vaadin.ui.ProgressBarIndicator;
 import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.MyCollabResource;
@@ -147,7 +147,7 @@ public class MilestoneAddViewImpl extends AbstractPageView implements
 					final int numTasks = (MilestoneAddViewImpl.this.milestone instanceof SimpleMilestone) ? ((SimpleMilestone) MilestoneAddViewImpl.this.milestone)
 							.getNumTasks() : 0;
 
-					final ProgressBar progressTask = new ProgressBar(numTasks,
+					final ProgressBarIndicator progressTask = new ProgressBarIndicator(numTasks,
 							numOpenTask);
 					progressTask.setWidth("100%");
 					taskComp.addComponentField(progressTask);
@@ -159,7 +159,7 @@ public class MilestoneAddViewImpl extends AbstractPageView implements
 					final int numBugs = (MilestoneAddViewImpl.this.milestone instanceof SimpleMilestone) ? ((SimpleMilestone) MilestoneAddViewImpl.this.milestone)
 							.getNumBugs() : 0;
 
-					final ProgressBar progressBug = new ProgressBar(numBugs,
+					final ProgressBarIndicator progressBug = new ProgressBarIndicator(numBugs,
 							numOpenBugs);
 					progressBug.setWidth("100%");
 					bugComp.addComponentField(progressBug);

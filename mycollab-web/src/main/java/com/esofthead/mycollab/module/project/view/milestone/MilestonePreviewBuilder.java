@@ -27,7 +27,7 @@ import com.esofthead.mycollab.schedule.email.project.ProjectMilestoneRelayEmailN
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
-import com.esofthead.mycollab.vaadin.ui.ProgressBar;
+import com.esofthead.mycollab.vaadin.ui.ProgressBarIndicator;
 import com.esofthead.mycollab.vaadin.ui.ProjectPreviewFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.MyCollabResource;
@@ -116,7 +116,7 @@ public class MilestonePreviewBuilder extends VerticalLayout {
 			} else if (propertyId.equals("numOpenTasks")) {
 				final FormContainerHorizontalViewField taskComp = new FormContainerHorizontalViewField();
 
-				final ProgressBar progressTask = new ProgressBar(
+				final ProgressBarIndicator progressTask = new ProgressBarIndicator(
 						MilestonePreviewBuilder.this.milestone.getNumTasks(),
 						MilestonePreviewBuilder.this.milestone
 								.getNumOpenTasks());
@@ -126,7 +126,7 @@ public class MilestonePreviewBuilder extends VerticalLayout {
 			} else if (propertyId.equals("numOpenBugs")) {
 				final FormContainerHorizontalViewField bugComp = new FormContainerHorizontalViewField();
 
-				final ProgressBar progressBug = new ProgressBar(
+				final ProgressBarIndicator progressBug = new ProgressBarIndicator(
 						MilestonePreviewBuilder.this.milestone.getNumBugs(),
 						MilestonePreviewBuilder.this.milestone.getNumOpenBugs());
 				progressBug.setWidth("100%");

@@ -30,7 +30,7 @@ import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.Depot;
-import com.esofthead.mycollab.vaadin.ui.ProgressBar;
+import com.esofthead.mycollab.vaadin.ui.ProgressBarIndicator;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.HorizontalLayout;
@@ -80,7 +80,7 @@ public class UnresolvedBugsByPriorityWidget extends Depot {
 						userLbl.setStyleName("link");
 
 						priorityLayout.addComponent(userLbl);
-						final ProgressBar indicator = new ProgressBar(
+						final ProgressBarIndicator indicator = new ProgressBarIndicator(
 								totalCount, totalCount - item.getValue(), false);
 						indicator.setWidth("100%");
 						priorityLayout.addComponent(indicator);
@@ -99,7 +99,7 @@ public class UnresolvedBugsByPriorityWidget extends Depot {
 					userLbl.setWidth("110px");
 					userLbl.setStyleName("link");
 					priorityLayout.addComponent(userLbl);
-					final ProgressBar indicator = new ProgressBar(totalCount,
+					final ProgressBarIndicator indicator = new ProgressBarIndicator(totalCount,
 							totalCount, false);
 					indicator.setWidth("100%");
 					priorityLayout.addComponent(indicator);

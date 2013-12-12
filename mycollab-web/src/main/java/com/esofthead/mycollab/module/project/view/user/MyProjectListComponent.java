@@ -35,7 +35,7 @@ import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.vaadin.ui.BeanList;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.Depot;
-import com.esofthead.mycollab.vaadin.ui.ProgressBar;
+import com.esofthead.mycollab.vaadin.ui.ProgressBarIndicator;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Button;
@@ -144,7 +144,7 @@ public class MyProjectListComponent extends Depot {
 			taskStatus.addComponent(taskIcon);
 			taskLbl.setWidth("45px");
 			taskStatus.addComponent(taskLbl);
-			final ProgressBar progressTask = new ProgressBar(
+			final ProgressBarIndicator progressTask = new ProgressBarIndicator(
 					project.getNumTasks(), project.getNumOpenTasks());
 			progressTask.setWidth("100%");
 			taskStatus.addComponent(progressTask);
@@ -160,7 +160,7 @@ public class MyProjectListComponent extends Depot {
 			bugStatus.addComponent(bugIcon);
 			bugLbl.setWidth("45px");
 			bugStatus.addComponent(bugLbl);
-			final ProgressBar progressBug = new ProgressBar(
+			final ProgressBarIndicator progressBug = new ProgressBarIndicator(
 					project.getNumBugs(), project.getNumOpenBugs());
 			progressBug.setWidth("100%");
 			bugStatus.addComponent(progressBug);

@@ -33,7 +33,7 @@ import com.esofthead.mycollab.module.project.localization.TaskI18nEnum;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserLink;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
-import com.esofthead.mycollab.vaadin.ui.ProgressBar;
+import com.esofthead.mycollab.vaadin.ui.ProgressBarIndicator;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
@@ -224,14 +224,14 @@ public class MilestoneListViewImpl extends AbstractPageView implements
 				.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD), 0, 2,
 				Alignment.MIDDLE_LEFT);
 
-		final ProgressBar progressTask = new ProgressBar(
+		final ProgressBarIndicator progressTask = new ProgressBarIndicator(
 				milestone.getNumTasks(), milestone.getNumOpenTasks());
 		progressTask.setWidth("100%");
 
 		layoutHelper.addComponent(progressTask, "Tasks", 0, 3,
 				Alignment.MIDDLE_LEFT);
 
-		final ProgressBar progressBug = new ProgressBar(milestone.getNumBugs(),
+		final ProgressBarIndicator progressBug = new ProgressBarIndicator(milestone.getNumBugs(),
 				milestone.getNumOpenBugs());
 		progressBug.setWidth("100%");
 

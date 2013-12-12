@@ -6,16 +6,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.esofthead.mycollab.core.MyCollabException;
-import com.vaadin.event.EventRouter;
 import com.vaadin.server.ErrorMessage;
 import com.vaadin.server.Resource;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.TabSheet;
-import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.TabSheet.SelectedTabChangeEvent;
 import com.vaadin.ui.TabSheet.SelectedTabChangeListener;
 import com.vaadin.ui.TabSheet.Tab;
@@ -31,8 +30,6 @@ public class VerticalTabsheet extends CustomComponent {
 
 	private VerticalLayout tabNavigator;
 	private CssLayout tabContainer;
-
-	private EventRouter eventManager;
 
 	private Map<Button, Tab> compMap = new HashMap<Button, Tab>();
 
@@ -74,9 +71,7 @@ public class VerticalTabsheet extends CustomComponent {
 	}
 
 	private void fireTabChangeEvent(SelectedTabChangeEvent event) {
-		if (eventManager != null) {
-			eventManager.fireEvent(event);
-		}
+		this.fireEvent(event);
 	}
 
 	private static final Method SELECTED_TAB_CHANGE_METHOD;
@@ -94,11 +89,8 @@ public class VerticalTabsheet extends CustomComponent {
 
 	public void addSelectedTabChangeListener(
 			final TabSheet.SelectedTabChangeListener listener) {
-		if (eventManager == null) {
-			eventManager = new EventRouter();
-		}
 
-		eventManager.addListener(SelectedTabChangeEvent.class, listener,
+		this.addListener(SelectedTabChangeEvent.class, listener,
 				SELECTED_TAB_CHANGE_METHOD);
 	}
 

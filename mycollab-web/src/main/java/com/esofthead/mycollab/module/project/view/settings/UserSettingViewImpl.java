@@ -84,7 +84,8 @@ public class UserSettingViewImpl extends AbstractPageView implements
 
 					@Override
 					public void selectedTabChange(SelectedTabChangeEvent event) {
-						final Tab tab = (Tab)event.getTabSheet().getSelectedTab();
+						final Tab tab = ((TabsheetDecor) event.getTabSheet())
+								.getSelectedTabInfo();
 						final String caption = tab.getCaption();
 						final SimpleProject project = CurrentProjectVariables
 								.getProject();
@@ -118,7 +119,8 @@ public class UserSettingViewImpl extends AbstractPageView implements
 
 	@Override
 	public Component gotoSubView(final String name) {
-		final PageView component = (PageView) this.myProjectTab.selectTab(name);
+		final PageView component = (PageView) this.myProjectTab.selectTab(name)
+				.getComponent();
 		return component;
 	}
 }
