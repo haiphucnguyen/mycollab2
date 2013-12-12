@@ -53,7 +53,7 @@ public class SelectionOptionButton extends SplitButton implements
 		super();
 		this.selectableItemHandlers = selectableItemHandlers;
 		addStyleName(UIConstants.THEME_GRAY_LINK);
-		setIcon(SelectionOptionButton.unSelectIcon);
+		setHostIcon(SelectionOptionButton.unSelectIcon);
 
 		addClickListener(new SplitButtonClickListener() {
 			@Override
@@ -86,7 +86,7 @@ public class SelectionOptionButton extends SplitButton implements
 			public void buttonClick(final ClickEvent event) {
 				isSelectAll = true;
 				SelectionOptionButton.this
-						.setIcon(SelectionOptionButton.selectIcon);
+						.setHostIcon(SelectionOptionButton.selectIcon);
 				fireSelectAll();
 			}
 		});
@@ -97,7 +97,7 @@ public class SelectionOptionButton extends SplitButton implements
 			public void buttonClick(final ClickEvent event) {
 				isSelectAll = false;
 				SelectionOptionButton.this
-						.setIcon(SelectionOptionButton.selectIcon);
+						.setHostIcon(SelectionOptionButton.selectIcon);
 				fireSelectCurrentPage();
 			}
 		});
@@ -109,7 +109,7 @@ public class SelectionOptionButton extends SplitButton implements
 					public void buttonClick(final ClickEvent event) {
 						isSelectAll = false;
 						SelectionOptionButton.this
-								.setIcon(SelectionOptionButton.unSelectIcon);
+								.setHostIcon(SelectionOptionButton.unSelectIcon);
 						fireDeselect();
 					}
 				});
@@ -154,7 +154,7 @@ public class SelectionOptionButton extends SplitButton implements
 		isSelected = selected;
 		final Resource icon = (selected) ? SelectionOptionButton.selectIcon
 				: SelectionOptionButton.unSelectIcon;
-		SelectionOptionButton.this.setIcon(icon);
+		SelectionOptionButton.this.setHostIcon(icon);
 	}
 
 	private void toogleChangeOption() {
@@ -165,7 +165,7 @@ public class SelectionOptionButton extends SplitButton implements
 		isSelected = !isSelected;
 		final Resource icon = (isSelected) ? SelectionOptionButton.selectIcon
 				: SelectionOptionButton.unSelectIcon;
-		SelectionOptionButton.this.setIcon(icon);
+		this.setHostIcon(icon);
 
 		if (isSelected) {
 			fireSelectCurrentPage();

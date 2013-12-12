@@ -62,7 +62,7 @@ public abstract class CustomizedTableWindow extends Window {
 		super("Customize View");
 		this.viewId = viewId;
 		this.addStyleName("customize-table-window");
-		this.setWidth("800px");
+		this.setWidth("400px");
 		this.center();
 
 		this.tableItem = table;
@@ -88,6 +88,8 @@ public abstract class CustomizedTableWindow extends Window {
 		this.listBuilder.setContainerDataSource(container);
 		this.setSelectedViewColumns();
 		contentLayout.addComponent(this.listBuilder);
+		contentLayout.setComponentAlignment(listBuilder,
+				Alignment.MIDDLE_CENTER);
 
 		Button restoreLink = new Button("Restore to default",
 				new Button.ClickListener() {
