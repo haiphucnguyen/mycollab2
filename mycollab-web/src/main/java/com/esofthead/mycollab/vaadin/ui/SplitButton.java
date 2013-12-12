@@ -31,8 +31,11 @@ public class SplitButton extends CustomComponent {
 	}
 
 	public SplitButton(Button parentButton) {
+		this.setImmediate(true);
 		contentLayout = new HorizontalLayout();
+		contentLayout.setStyleName("splitbutton");
 		this.parentButton = parentButton;
+		this.parentButton.setImmediate(true);
 		this.parentButton.addClickListener(new ClickListener() {
 			private static final long serialVersionUID = 1L;
 
@@ -144,5 +147,13 @@ public class SplitButton extends CustomComponent {
 		public boolean isPopupVisible() {
 			return this.isVisible;
 		}
+	}
+	
+	@Override
+	public void addStyleName(String stylename) {
+		super.addStyleName(stylename);
+		
+		parentButton.addStyleName(stylename);
+		popupButton.addStyleName(stylename);
 	}
 }

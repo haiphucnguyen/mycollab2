@@ -58,7 +58,7 @@ public class SelectionOptionButton extends SplitButton implements
 		addClickListener(new SplitButtonClickListener() {
 			@Override
 			public void splitButtonClick(final SplitButtonClickEvent event) {
-				toogleChangeOption();
+				toggleChangeOption();
 			}
 		});
 
@@ -157,7 +157,7 @@ public class SelectionOptionButton extends SplitButton implements
 		SelectionOptionButton.this.setIcon(icon);
 	}
 
-	private void toogleChangeOption() {
+	private void toggleChangeOption() {
 		if (isSelectAll) {
 			return;
 		}

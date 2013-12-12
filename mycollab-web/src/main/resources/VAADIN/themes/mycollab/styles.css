@@ -133,10 +133,6 @@ div.v-button .v-button-link .link .v-button-buttonlinkcenter .buttonlinkcenter .
 	text-decoration: line-through;
 }
 
-.v-datefield-button {
-	height: 15px;
-}
-
 .wordWrap.v-label {
 	word-wrap: break-word;
 }
@@ -702,7 +698,7 @@ input.v-textfield[type="text"],textarea.v-textarea,.v-filterselect {
 
 .advSearch .advSearchHeader .h2 {
 	padding-top: 0px;
-	font-size: 12px;
+	font-size: 13px;
 }
 
 .advSearch .advSearchBody .v-label {
@@ -767,7 +763,7 @@ input.v-textfield[type="text"],textarea.v-textarea,.v-filterselect {
 
 .basicSearch .basicSearchHeader .h2 {
 	padding-top: 0px;
-	font-size: 12px;
+	font-size: 13px;
 }
 
 .basicSearch .basicSearchBody {
@@ -1187,7 +1183,7 @@ input.v-textfield-errorField {
 }
 
 .addViewLayout .addViewHeader .headerName {
-	font-size: 12px;
+	font-size: 13px;
 	font-weight: bold;
 /* 	margin-top: 3px; */
 	line-height: 20px !important;
@@ -2757,7 +2753,7 @@ div.v-splitbutton,div.v-splitbutton .v-button {
 
 .message-header .notification {
 	color: black;
-	font-size: 12px;
+	font-size: 13px;
 }
 
 .message-header .comment-count,.message-header .attachment-count {
@@ -2971,7 +2967,7 @@ div.v-splitbutton,div.v-splitbutton .v-button {
 
 /* Widget */
 .widget-row .metadata {
-	font-size: 12px;
+	font-size: 13px;
 	color: gray;
 }
 /* End Widget */
@@ -3644,12 +3640,12 @@ table.legendBox .legendBoxContent .v-csslayout-container>div {
 .member-block .member-email a {
 	color: gray;
 	text-decoration: none;
-	font-size: 12px;
+	font-size: 13px;
 }
 
 .member-role {
 	color: gray;
-	font-size: 12px;
+	font-size: 13px;
 }
 
 .v-label.is-admin {
@@ -3916,7 +3912,7 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 
 .readview-layout-body .h2 {
 	padding: 8px 0px 8px 18px;
-	font-size: 12px;
+	font-size: 13px;
 	border-bottom: 1px solid #a9a9a9;
 	color: rgb(69, 69, 69);
 }
@@ -3941,8 +3937,21 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 }
 
 .readview-layout-body .v-horizontallayout-gridform-caption .v-horizontallayout-margin,.readview-layout-body .v-horizontallayout-gridform-field .v-horizontallayout-margin
-	{
+{
 	padding: 8px 5px 8px 18px;
+}
+
+.readview-layout-body .v-horizontallayout-gridform-caption.v-margin-top {
+	padding-top: 5px;
+}
+.readview-layout-body .v-horizontallayout-gridform-caption.v-margin-right {
+	padding-right: 5px;
+}
+.readview-layout-body .v-horizontallayout-gridform-caption.v-margin-bottom {
+	padding-bottom: 5px;
+}
+.readview-layout-body .v-horizontallayout-gridform-caption.v-margin-left {
+	padding-left: 18px;
 }
 
 .readview-layout-body .v-horizontallayout-gridform-field .v-horizontallayout .v-horizontallayout-margin
@@ -3997,7 +4006,7 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 	color: rgb(69, 69, 69);
 	font-weight: bold;
 	padding: 8px 0px 8px 18px;
-	font-size: 12px;
+	font-size: 13px;
 	color: rgb(69, 69, 69);
 }
 
@@ -4047,7 +4056,7 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 
 .addview-layout-header .v-label-h1 {
 	padding: 0px 0px 15px 5px;
-	font-size: 12px;
+	font-size: 13px;
 	text-overflow: ellipsis;
 	overflow: hidden;
 	white-space: nowrap;
@@ -4096,13 +4105,13 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 }
 
 .addview-layout-body .v-horizontallayout-gridform-caption.v-margin-top {
-	padding-top: 8px;
+	padding-top: 5px;
 }
 .addview-layout-body .v-horizontallayout-gridform-caption.v-margin-right {
 	padding-right: 5px;
 }
 .addview-layout-body .v-horizontallayout-gridform-caption.v-margin-bottom {
-	padding-bottom: 8px;
+	padding-bottom: 5px;
 }
 .addview-layout-body .v-horizontallayout-gridform-caption.v-margin-left {
 	padding-left: 18px;
@@ -4722,7 +4731,7 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 }
 
 .pri-bott-block p {
-	font-size: 12px;
+	font-size: 13px;
 	color: #5f5c5c;
 	padding-bottom: 10px;
 	text-align: justify;
@@ -4850,7 +4859,7 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 	background: url('icons/grad-light-top.png') repeat-x left top
 		rgb(228, 228, 228);
 	border-bottom: 1px solid rgb(169, 169, 169);
-	font-size: 12px;
+	font-size: 13px;
 	color: rgb(68, 68, 68);
 	padding: 3px 10px;
 	-moz-box-sizing: border-box;
@@ -5320,3 +5329,41 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 .v-required-field-indicator {
     width: 4px;
 }
+/* new splitbutton */
+.splitbutton .bluebtn,.splitbutton .graybtn {
+	margin: 0px;
+	border-radius: 3px 0px 0px 3px;
+	padding: 3px 3px 3px 8px;
+}
+
+.v-ie .splitbutton .bluebtn,.v-ie .splitbutton .graybtn {
+	padding: 3px 3px 3px 8px;
+    box-sizing: border-box;
+}
+.v-ie .splitbutton .graybtn.v-popupbutton, .v-ie .splitbutton .bluebtn.v-popupbutton {
+    padding: 3px 7px 3px 2px;
+}
+
+.splitbutton .v-popupbutton.bluebtn,.splitbutton .v-popupbutton.graybtn
+	{
+	border-width: 1px 1px 1px 0px;
+	border-right: 1px solid #093768;
+	border-radius: 0px 3px 3px 0px;
+}
+
+.splitbutton .v-popupbutton.bluebtn,.splitbutton .v-popupbutton.bluebtn:active,.splitbutton .v-popupbutton.graybtn,.splitbutton .v-popupbutton.graybtn:active
+	{
+	padding: 3px 7px 3px 2px;
+}
+
+.v-ie7 .splitbutton .v-popupbutton.bluebtn,.v-ie7 .splitbutton .v-popupbutton.graybtn:active,.v-ie7 .splitbutton .v-popupbutton.graybtn,.v-ie7 .splitbutton .v-popupbutton.graybtn:active
+	{
+	padding: 3px 7px 3px 2px;
+}
+
+.splitbutton .v-popupbutton.bluebtn .v-popup-indicator,.splitbutton .v-popupbutton.graybtn .v-popup-indicator
+	{
+	background: url("icons/sprites.png") no-repeat scroll -5px -10px
+		transparent;
+}
+/* End new splitbutton */
