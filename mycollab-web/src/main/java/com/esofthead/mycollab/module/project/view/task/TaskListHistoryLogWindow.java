@@ -27,6 +27,7 @@ import com.esofthead.mycollab.module.crm.ui.components.HistoryLogWindow;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 2.0
  */
 @SuppressWarnings("serial")
 public class TaskListHistoryLogWindow extends HistoryLogWindow {

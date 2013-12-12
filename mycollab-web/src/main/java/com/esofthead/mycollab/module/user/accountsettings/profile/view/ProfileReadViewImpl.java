@@ -53,10 +53,17 @@ import com.vaadin.ui.Layout;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
-@SuppressWarnings("serial")
+
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ *
+ */
 @ViewComponent
 public class ProfileReadViewImpl extends AbstractPageView implements
 		ProfileReadView {
+	private static final long serialVersionUID = 1L;
 
 	public static final int MAX_UPLOAD_SIZE = 20 * 1024 * 1024;
 

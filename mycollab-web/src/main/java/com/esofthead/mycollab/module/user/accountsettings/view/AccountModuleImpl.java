@@ -36,10 +36,16 @@ import com.vaadin.ui.TabSheet.SelectedTabChangeEvent;
 import com.vaadin.ui.TabSheet.SelectedTabChangeListener;
 import com.vaadin.ui.TabSheet.Tab;
 
-@SuppressWarnings("serial")
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
 @ViewComponent
 public class AccountModuleImpl extends AbstractPageView implements
 		AccountModule {
+	private static final long serialVersionUID = 1L;
 
 	private final HorizontalLayout root;
 	private final VerticalTabsheet accountTab;
@@ -64,9 +70,9 @@ public class AccountModuleImpl extends AbstractPageView implements
 		final HorizontalLayout headerWrapper = new HorizontalLayout();
 		headerWrapper.setWidth("100%");
 		headerWrapper.setMargin(true);
-		
+
 		this.breadcrumb = ViewManager.getView(AccountSettingBreadcrumb.class);
-		
+
 		headerWrapper.addComponent(this.breadcrumb);
 		contentWrapper.addComponent(headerWrapper);
 
@@ -95,27 +101,27 @@ public class AccountModuleImpl extends AbstractPageView implements
 				"Billing",
 				MyCollabResource.newResource("icons/22/user/menu_account.png"));
 
-		this.accountTab.addTab(this.constructUserInformationComponent(),
+		this.accountTab.addTab(this.constructUserRoleComponent(),
 				"Users & Permissions",
 				MyCollabResource.newResource("icons/22/user/menu_team.png"));
 
 		this.accountTab
 				.addSelectedTabChangeListener(new SelectedTabChangeListener() {
+					private static final long serialVersionUID = 1L;
 
 					@Override
 					public void selectedTabChange(SelectedTabChangeEvent event) {
-						final Tab btn = ((VerticalTabsheet) event.getSource())
+						final Tab tab = ((VerticalTabsheet) event.getSource())
 								.getSelectedTab();
-						final String caption = btn.getCaption();
+						final String caption = tab.getCaption();
 						if ("User Information".equals(caption)) {
-							AccountModuleImpl.this.profilePresenter.go(
-									AccountModuleImpl.this, null);
+							profilePresenter.go(AccountModuleImpl.this, null);
 						} else if ("Billing".equals(caption)) {
 							billingPresenter.go(AccountModuleImpl.this,
 									new BillingScreenData.BillingSummary());
 						} else if ("Users & Permissions".equals(caption)) {
-							AccountModuleImpl.this.userPermissionPresenter.go(
-									AccountModuleImpl.this, null);
+							userPermissionPresenter.go(AccountModuleImpl.this,
+									null);
 						}
 
 					}
@@ -132,6 +138,12 @@ public class AccountModuleImpl extends AbstractPageView implements
 		this.profilePresenter = PresenterResolver
 				.getPresenter(ProfilePresenter.class);
 		return this.profilePresenter.getView();
+	}
+
+	private ComponentContainer constructUserRoleComponent() {
+		this.userPermissionPresenter = PresenterResolver
+				.getPresenter(UserPermissionManagementPresenter.class);
+		return this.userPermissionPresenter.getView();
 	}
 
 	@Override

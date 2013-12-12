@@ -34,6 +34,7 @@ import com.vaadin.ui.VerticalLayout;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 2.0
  */
 public abstract class RoleFormLayoutFactory implements IFormLayoutFactory {
 	private static final long serialVersionUID = 1L;

@@ -33,6 +33,7 @@ import com.vaadin.ui.TabSheet.Tab;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 2.0
  */
 @ViewComponent
 public class UserPermissionManagementViewImpl extends AbstractPageView
@@ -63,7 +64,8 @@ public class UserPermissionManagementViewImpl extends AbstractPageView
 
 			@Override
 			public void selectedTabChange(SelectedTabChangeEvent event) {
-				Tab tab = (Tab) event.getTabSheet().getSelectedTab();
+				Tab tab = (Tab) ((TabsheetDecor) event.getTabSheet())
+						.getSelectedTabInfo();
 				String caption = tab.getCaption();
 				if ("Users".equals(caption)) {
 					userPresenter.go(UserPermissionManagementViewImpl.this,

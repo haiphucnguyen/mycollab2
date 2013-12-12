@@ -139,15 +139,6 @@ public class ProjectViewImpl extends AbstractPageView implements ProjectView {
 		contentWrapper.addComponent(myProjectTab);
 	}
 
-	private static class MenuButton extends Button {
-		public MenuButton(String caption, String iconResource) {
-			super(caption);
-			this.setIcon(MyCollabResource.newResource("icons/22/project/"
-					+ iconResource));
-			this.setStyleName("link");
-		}
-	}
-
 	private void buildComponents() {
 		myProjectTab.addTab(constructProjectDashboardComponent(), "Dashboard",
 				MyCollabResource
@@ -192,7 +183,8 @@ public class ProjectViewImpl extends AbstractPageView implements ProjectView {
 
 					@Override
 					public void selectedTabChange(SelectedTabChangeEvent event) {
-						Tab tab = ((VerticalTabsheet)event.getSource()).getSelectedTab();
+						Tab tab = ((VerticalTabsheet) event.getSource())
+								.getSelectedTab();
 						String caption = tab.getCaption();
 						if ("Messages".equals(caption)) {
 							messagePresenter.go(ProjectViewImpl.this, null);
