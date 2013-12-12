@@ -19,10 +19,10 @@ package com.esofthead.mycollab.module.crm.view.lead;
 import com.esofthead.mycollab.module.crm.domain.Lead;
 import com.esofthead.mycollab.module.crm.ui.components.IndustryComboBox;
 import com.esofthead.mycollab.module.user.ui.components.ActiveUserComboBox;
+import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.CountryComboBox;
-import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
+import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
-import com.vaadin.data.Item;
 import com.vaadin.data.Property;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomField;
@@ -31,18 +31,23 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 
-public class LeadEditFormFieldFactory extends DefaultEditFormFieldFactory {
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ * @param <B>
+ */
+public class LeadEditFormFieldFactory<B extends Lead> extends
+		AbstractBeanFieldGroupFieldFactory<B> {
 	private static final long serialVersionUID = 1L;
 
-	private Lead lead;
-
-	public LeadEditFormFieldFactory(Lead lead) {
-		this.lead = lead;
+	public LeadEditFormFieldFactory(GenericBeanForm<B> form) {
+		super(form);
 	}
 
 	@Override
-	protected Field onCreateField(Item item, Object propertyId,
-			com.vaadin.ui.Component uiContext) {
+	protected Field onCreateField(Object propertyId) {
 		if (propertyId.equals("firstname")) {
 			return new LeadFirstNamePrefixField();
 		} else if (propertyId.equals("primcountry")
@@ -79,10 +84,6 @@ public class LeadEditFormFieldFactory extends DefaultEditFormFieldFactory {
 	class LeadFirstNamePrefixField extends CustomField<Lead> {
 		private static final long serialVersionUID = 1L;
 
-		public LeadFirstNamePrefixField() {
-
-		}
-
 		@Override
 		protected Component initContent() {
 			HorizontalLayout layout = new HorizontalLayout();
@@ -90,7 +91,7 @@ public class LeadEditFormFieldFactory extends DefaultEditFormFieldFactory {
 			layout.setSpacing(true);
 
 			final PrefixListSelect prefixSelect = new PrefixListSelect();
-			prefixSelect.setValue(lead.getPrefixname());
+			prefixSelect.setValue(attachForm.getBean().getPrefixname());
 			layout.addComponent(prefixSelect);
 
 			prefixSelect
@@ -99,7 +100,8 @@ public class LeadEditFormFieldFactory extends DefaultEditFormFieldFactory {
 
 						@Override
 						public void valueChange(Property.ValueChangeEvent event) {
-							lead.setPrefixname((String) prefixSelect.getValue());
+							attachForm.getBean().setPrefixname(
+									(String) prefixSelect.getValue());
 
 						}
 					});

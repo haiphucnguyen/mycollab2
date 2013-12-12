@@ -29,6 +29,7 @@ import com.esofthead.mycollab.module.crm.domain.ContactCase;
 import com.esofthead.mycollab.module.crm.domain.OpportunityContact;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.domain.SimpleCase;
+import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.events.ContactEvent;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
@@ -48,7 +49,6 @@ import com.esofthead.mycollab.vaadin.mvp.ViewState;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.Window;
 
 public class ContactAddPresenter extends CrmGenericPresenter<ContactAddView> {
 
@@ -61,9 +61,9 @@ public class ContactAddPresenter extends CrmGenericPresenter<ContactAddView> {
 
 	private void bind() {
 		view.getEditFormHandlers().addFormHandler(
-				new EditFormHandler<Contact>() {
+				new EditFormHandler<SimpleContact>() {
 					@Override
-					public void onSave(final Contact contact) {
+					public void onSave(final SimpleContact contact) {
 						saveContact(contact);
 						ViewState viewState = HistoryViewManager.back();
 
@@ -84,7 +84,7 @@ public class ContactAddPresenter extends CrmGenericPresenter<ContactAddView> {
 					}
 
 					@Override
-					public void onSaveAndNew(final Contact contact) {
+					public void onSaveAndNew(final SimpleContact contact) {
 						saveContact(contact);
 						EventBus.getInstance().fireEvent(
 								new ContactEvent.GotoAdd(this, null));
@@ -99,13 +99,13 @@ public class ContactAddPresenter extends CrmGenericPresenter<ContactAddView> {
 			crmToolbar.gotoItem(LocalizationHelper
 					.getMessage(CrmCommonI18nEnum.TOOLBAR_CONTACTS_HEADER));
 
-			Contact contact = null;
-			if (data.getParams() instanceof Contact) {
-				contact = (Contact) data.getParams();
+			SimpleContact contact = null;
+			if (data.getParams() instanceof SimpleContact) {
+				contact = (SimpleContact) data.getParams();
 			} else if (data.getParams() instanceof Integer) {
 				ContactService contactService = ApplicationContextUtil
 						.getSpringBean(ContactService.class);
-				contact = (Contact) contactService.findByPrimaryKey(
+				contact = (SimpleContact) contactService.findByPrimaryKey(
 						(Integer) data.getParams(), AppContext.getAccountId());
 				if (contact == null) {
 					NotificationUtil.showRecordNotExistNotification();

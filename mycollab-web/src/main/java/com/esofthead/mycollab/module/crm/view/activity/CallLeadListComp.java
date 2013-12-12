@@ -24,8 +24,10 @@ import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.vaadin.ui.VerticalLayout;
 
 /**
- *
+ * 
  * @author MyCollab Ltd.
+ * @since 2.0
+ * 
  */
 public class CallLeadListComp extends Depot {
 	private static final long serialVersionUID = 1L;

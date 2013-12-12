@@ -16,86 +16,81 @@
  */
 package com.esofthead.mycollab.module.crm.view.contact;
 
-import com.esofthead.mycollab.module.crm.domain.Contact;
+import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
-import com.vaadin.data.Item;
-import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Layout;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
 @ViewComponent
 public class ContactAddViewImpl extends AbstractPageView implements
-        ContactAddView {
+		ContactAddView {
 
-    private static final long serialVersionUID = 1L;
-    private EditForm editForm;
-    private Contact contact;
+	private static final long serialVersionUID = 1L;
+	private AdvancedEditBeanForm<SimpleContact> editForm;
+	private SimpleContact contact;
 
-    public ContactAddViewImpl() {
-        super();
-        editForm = new EditForm();
-        this.addComponent(editForm);
-    }
+	public ContactAddViewImpl() {
+		super();
+		editForm = new AdvancedEditBeanForm<SimpleContact>();
+		this.addComponent(editForm);
+	}
 
-    @Override
-    public void editItem(Contact item) {
-        this.contact = item;
-        if (editForm.isCheckToCopy) editForm.isCheckToCopy = false;
-        editForm.setItemDataSource(new BeanItem<Contact>(contact));
+	@Override
+	public void editItem(SimpleContact item) {
+		this.contact = item;
+		this.editForm.setFormLayoutFactory(new FormLayoutFactory());
+		this.editForm
+				.setBeanFormFieldFactory(new ContactEditFormFieldFactory<SimpleContact>(
+						editForm));
+		this.editForm.setBean(contact);
+	}
 
-    }
+	@Override
+	public HasEditFormHandlers<SimpleContact> getEditFormHandlers() {
+		return editForm;
+	}
 
-    @Override
-    public HasEditFormHandlers<Contact> getEditFormHandlers() {
-        return editForm;
-    }
+	class FormLayoutFactory extends ContactFormLayoutFactory {
 
-    private class EditForm extends AdvancedEditBeanForm<Contact> {
+		private static final long serialVersionUID = 1L;
 
-        private static final long serialVersionUID = 1L;
-        private boolean isCheckToCopy;
+		public FormLayoutFactory() {
+			super((contact.getId() == null) ? "Create Contact" : (contact
+					.getFirstname() + " " + contact.getLastname()));
+		}
 
-        @Override
-        public void setItemDataSource(Item newDataSource) {
-            this.setFormLayoutFactory(new FormLayoutFactory());
-            this.setFormFieldFactory(new ContactEditFormFieldFactory(contact));
-            super.setItemDataSource(newDataSource);
-        }
+		private Layout createButtonControls() {
+			final HorizontalLayout controlPanel = new HorizontalLayout();
+			final Layout controlButtons = (new EditFormControlsGenerator<SimpleContact>(
+					editForm)).createButtonControls();
+			controlButtons.setSizeUndefined();
+			controlPanel.addComponent(controlButtons);
+			controlPanel.setWidth("100%");
+			controlPanel.setMargin(true);
+			controlPanel.setComponentAlignment(controlButtons,
+					Alignment.MIDDLE_CENTER);
+			return controlPanel;
+		}
 
-        class FormLayoutFactory extends ContactFormLayoutFactory {
+		@Override
+		protected Layout createTopPanel() {
+			return createButtonControls();
+		}
 
-            private static final long serialVersionUID = 1L;
-
-            public FormLayoutFactory() {
-                super((contact.getId() == null) ? "Create Contact" : (contact.getFirstname() + " " + contact.getLastname()));
-            }
-
-            private Layout createButtonControls() {
-            	final HorizontalLayout controlPanel = new HorizontalLayout();
-				final Layout controlButtons = (new EditFormControlsGenerator<Contact>(
-						EditForm.this)).createButtonControls();
-				controlButtons.setSizeUndefined();
-				controlPanel.addComponent(controlButtons);
-				controlPanel.setWidth("100%");
-				controlPanel.setComponentAlignment(controlButtons,
-						Alignment.MIDDLE_CENTER);
-				return controlPanel;
-            }
-
-            @Override
-            protected Layout createTopPanel() {
-                return createButtonControls();
-            }
-
-            @Override
-            protected Layout createBottomPanel() {
-                return createButtonControls();
-            }
-        }
-    }
+		@Override
+		protected Layout createBottomPanel() {
+			return createButtonControls();
+		}
+	}
 }

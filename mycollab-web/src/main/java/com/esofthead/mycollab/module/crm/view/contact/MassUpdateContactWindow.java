@@ -70,8 +70,8 @@ public class MassUpdateContactWindow extends MassUpdateWindow<Contact> {
 		@Override
 		public void setItemDataSource(final Item newDataSource) {
 			this.setFormLayoutFactory(new MassUpdateContactFormLayoutFactory());
-			this.setFormFieldFactory(new ContactEditFormFieldFactory(
-					MassUpdateContactWindow.this.contact));
+			this.setBeanFormFieldFactory(new ContactEditFormFieldFactory<Contact>(
+					EditForm.this));
 			super.setItemDataSource(newDataSource);
 		}
 

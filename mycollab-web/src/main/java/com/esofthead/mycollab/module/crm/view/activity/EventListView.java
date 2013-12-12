@@ -20,6 +20,12 @@ import com.esofthead.mycollab.module.crm.domain.SimpleEvent;
 import com.esofthead.mycollab.module.crm.domain.criteria.EventSearchCriteria;
 import com.esofthead.mycollab.vaadin.mvp.ListView;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
 public interface EventListView extends
 		ListView<EventSearchCriteria, SimpleEvent> {
 }

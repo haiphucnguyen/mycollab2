@@ -29,6 +29,12 @@ import com.vaadin.ui.CustomField;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.PopupDateField;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
 public class DateTimePicker<B> extends CustomField {
 	private static final long serialVersionUID = 1L;
 

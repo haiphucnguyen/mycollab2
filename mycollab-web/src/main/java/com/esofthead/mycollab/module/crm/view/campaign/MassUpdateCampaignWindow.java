@@ -19,7 +19,6 @@ package com.esofthead.mycollab.module.crm.view.campaign;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.crm.domain.CampaignWithBLOBs;
-import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
@@ -66,14 +65,14 @@ public class MassUpdateCampaignWindow extends
 		this.setContent(this.campaginAddLayout);
 	}
 
-	private class EditForm extends AdvancedEditBeanForm<Contact> {
+	private class EditForm extends AdvancedEditBeanForm<CampaignWithBLOBs> {
 		private static final long serialVersionUID = 1L;
 
 		@Override
 		public void setItemDataSource(final Item newDataSource) {
 			this.setFormLayoutFactory(new MassUpdateContactFormLayoutFactory());
-			this.setFormFieldFactory(new CampaignEditFormFieldFactory(
-					MassUpdateCampaignWindow.this.campaign));
+			this.setBeanFormFieldFactory(new CampaignEditFormFieldFactory<CampaignWithBLOBs>(
+					EditForm.this));
 			super.setItemDataSource(newDataSource);
 		}
 

@@ -17,84 +17,81 @@
 package com.esofthead.mycollab.module.crm.view.campaign;
 
 import com.esofthead.mycollab.module.crm.domain.CampaignWithBLOBs;
+import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
-import com.esofthead.mycollab.vaadin.mvp.IFormAddView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
-import com.vaadin.data.Item;
-import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Layout;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
 @ViewComponent
 public class CampaignAddViewImpl extends AbstractPageView implements
-		IFormAddView<CampaignWithBLOBs>, CampaignAddView {
+		CampaignAddView {
 
 	private static final long serialVersionUID = 1L;
-	private EditForm editForm;
+	private AdvancedEditBeanForm<SimpleCampaign> editForm;
 	private CampaignWithBLOBs campaign;
 
 	public CampaignAddViewImpl() {
 		super();
-		editForm = new EditForm();
+		editForm = new AdvancedEditBeanForm<SimpleCampaign>();
 		this.addComponent(editForm);
 	}
 
 	@Override
-	public void editItem(CampaignWithBLOBs campaign) {
+	public void editItem(SimpleCampaign campaign) {
 		this.campaign = campaign;
-		editForm.setItemDataSource(new BeanItem<CampaignWithBLOBs>(campaign));
+		this.editForm.setFormLayoutFactory(new FormLayoutFactory());
+		this.editForm
+				.setBeanFormFieldFactory(new CampaignEditFormFieldFactory<SimpleCampaign>(
+						editForm));
+		this.editForm.setBean(campaign);
 	}
 
-	private class EditForm extends AdvancedEditBeanForm<CampaignWithBLOBs> {
+	class FormLayoutFactory extends CampaignFormLayoutFactory {
 
 		private static final long serialVersionUID = 1L;
 
-		@Override
-		public void setItemDataSource(Item newDataSource) {
-			this.setFormLayoutFactory(new FormLayoutFactory());
-			this.setFormFieldFactory(new CampaignEditFormFieldFactory(campaign));
-			super.setItemDataSource(newDataSource);
+		public FormLayoutFactory() {
+			super((campaign.getId() == null) ? "Create Campaign" : campaign
+					.getCampaignname());
 		}
 
-		class FormLayoutFactory extends CampaignFormLayoutFactory {
+		private HorizontalLayout createButtonControls() {
+			final HorizontalLayout controlPanel = new HorizontalLayout();
+			final Layout controlButtons = (new EditFormControlsGenerator<SimpleCampaign>(
+					editForm)).createButtonControls();
+			controlButtons.setSizeUndefined();
+			controlPanel.addComponent(controlButtons);
+			controlPanel.setWidth("100%");
+			controlPanel.setMargin(true);
+			controlPanel.setComponentAlignment(controlButtons,
+					Alignment.MIDDLE_CENTER);
+			return controlPanel;
+		}
 
-			private static final long serialVersionUID = 1L;
+		@Override
+		protected Layout createTopPanel() {
+			return createButtonControls();
+		}
 
-			public FormLayoutFactory() {
-				super((campaign.getId() == null) ? "Create Campaign" : campaign
-						.getCampaignname());
-			}
-
-			private HorizontalLayout createButtonControls() {
-				final HorizontalLayout controlPanel = new HorizontalLayout();
-				final Layout controlButtons = (new EditFormControlsGenerator<CampaignWithBLOBs>(
-						EditForm.this)).createButtonControls();
-				controlButtons.setSizeUndefined();
-				controlPanel.addComponent(controlButtons);
-				controlPanel.setWidth("100%");
-				controlPanel.setComponentAlignment(controlButtons,
-						Alignment.MIDDLE_CENTER);
-				return controlPanel;
-			}
-
-			@Override
-			protected Layout createTopPanel() {
-				return createButtonControls();
-			}
-
-			@Override
-			protected Layout createBottomPanel() {
-				return createButtonControls();
-			}
+		@Override
+		protected Layout createBottomPanel() {
+			return createButtonControls();
 		}
 	}
 
 	@Override
-	public HasEditFormHandlers<CampaignWithBLOBs> getEditFormHandlers() {
+	public HasEditFormHandlers<SimpleCampaign> getEditFormHandlers() {
 		return editForm;
 	}
 }

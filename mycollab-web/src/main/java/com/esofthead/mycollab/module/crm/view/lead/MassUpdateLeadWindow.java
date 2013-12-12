@@ -18,7 +18,6 @@ package com.esofthead.mycollab.module.crm.view.lead;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
-import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.module.crm.domain.Lead;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
@@ -34,6 +33,12 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
 public class MassUpdateLeadWindow extends MassUpdateWindow<Lead> {
 	private static final long serialVersionUID = 1L;
 	private final Lead lead;
@@ -64,14 +69,14 @@ public class MassUpdateLeadWindow extends MassUpdateWindow<Lead> {
 		this.setContent(this.leadAddLayout);
 	}
 
-	private class EditForm extends AdvancedEditBeanForm<Contact> {
+	private class EditForm extends AdvancedEditBeanForm<Lead> {
 		private static final long serialVersionUID = 1L;
 
 		@Override
 		public void setItemDataSource(final Item newDataSource) {
 			this.setFormLayoutFactory(new MassUpdateContactFormLayoutFactory());
-			this.setFormFieldFactory(new LeadEditFormFieldFactory(
-					MassUpdateLeadWindow.this.lead));
+			this.setBeanFormFieldFactory(new LeadEditFormFieldFactory<Lead>(
+					EditForm.this));
 			super.setItemDataSource(newDataSource);
 		}
 

@@ -41,6 +41,12 @@ import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.UI;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
 public class AssignmentReadPresenter extends
 		CrmGenericPresenter<AssignmentReadView> {
 

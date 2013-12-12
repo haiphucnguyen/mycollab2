@@ -38,6 +38,12 @@ import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.UI;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
 public class EventListPresenter extends
 		ListSelectionPresenter<EventListView, EventSearchCriteria, SimpleEvent> {
 	private static final long serialVersionUID = 1L;

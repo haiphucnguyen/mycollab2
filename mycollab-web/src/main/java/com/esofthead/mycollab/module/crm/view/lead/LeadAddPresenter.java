@@ -27,6 +27,7 @@ import com.esofthead.mycollab.module.crm.domain.CampaignLead;
 import com.esofthead.mycollab.module.crm.domain.Lead;
 import com.esofthead.mycollab.module.crm.domain.OpportunityLead;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
+import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.events.LeadEvent;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
@@ -57,33 +58,34 @@ public class LeadAddPresenter extends CrmGenericPresenter<LeadAddView> {
 	}
 
 	private void bind() {
-		view.getEditFormHandlers().addFormHandler(new EditFormHandler<Lead>() {
-			@Override
-			public void onSave(final Lead lead) {
-				saveLead(lead);
-				ViewState viewState = HistoryViewManager.back();
-				if (viewState instanceof NullViewState) {
-					EventBus.getInstance().fireEvent(
-							new LeadEvent.GotoList(this, null));
-				}
-			}
+		view.getEditFormHandlers().addFormHandler(
+				new EditFormHandler<SimpleLead>() {
+					@Override
+					public void onSave(final SimpleLead lead) {
+						saveLead(lead);
+						ViewState viewState = HistoryViewManager.back();
+						if (viewState instanceof NullViewState) {
+							EventBus.getInstance().fireEvent(
+									new LeadEvent.GotoList(this, null));
+						}
+					}
 
-			@Override
-			public void onCancel() {
-				ViewState viewState = HistoryViewManager.back();
-				if (viewState instanceof NullViewState) {
-					EventBus.getInstance().fireEvent(
-							new LeadEvent.GotoList(this, null));
-				}
-			}
+					@Override
+					public void onCancel() {
+						ViewState viewState = HistoryViewManager.back();
+						if (viewState instanceof NullViewState) {
+							EventBus.getInstance().fireEvent(
+									new LeadEvent.GotoList(this, null));
+						}
+					}
 
-			@Override
-			public void onSaveAndNew(final Lead lead) {
-				saveLead(lead);
-				EventBus.getInstance().fireEvent(
-						new LeadEvent.GotoAdd(this, null));
-			}
-		});
+					@Override
+					public void onSaveAndNew(final SimpleLead lead) {
+						saveLead(lead);
+						EventBus.getInstance().fireEvent(
+								new LeadEvent.GotoAdd(this, null));
+					}
+				});
 	}
 
 	@Override
@@ -93,14 +95,14 @@ public class LeadAddPresenter extends CrmGenericPresenter<LeadAddView> {
 			crmToolbar.gotoItem(LocalizationHelper
 					.getMessage(CrmCommonI18nEnum.TOOLBAR_LEADS_HEADER));
 
-			Lead lead = null;
+			SimpleLead lead = null;
 
-			if (data.getParams() instanceof Lead) {
-				lead = (Lead) data.getParams();
+			if (data.getParams() instanceof SimpleLead) {
+				lead = (SimpleLead) data.getParams();
 			} else if (data.getParams() instanceof Integer) {
 				LeadService leadService = ApplicationContextUtil
 						.getSpringBean(LeadService.class);
-				lead = (Lead) leadService.findByPrimaryKey(
+				lead = (SimpleLead) leadService.findById(
 						(Integer) data.getParams(), AppContext.getAccountId());
 				if (lead == null) {
 					NotificationUtil.showRecordNotExistNotification();

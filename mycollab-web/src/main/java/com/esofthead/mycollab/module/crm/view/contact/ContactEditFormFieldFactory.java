@@ -18,34 +18,31 @@ package com.esofthead.mycollab.module.crm.view.contact;
 
 import java.util.Date;
 
-import com.vaadin.ui.CustomField;
-
 import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.module.crm.view.account.AccountSelectionField;
 import com.esofthead.mycollab.module.crm.view.lead.LeadSourceComboBox;
 import com.esofthead.mycollab.module.user.ui.components.ActiveUserComboBox;
+import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.CountryComboBox;
 import com.esofthead.mycollab.vaadin.ui.DateComboboxSelectionField;
-import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.FieldSelection;
-import com.vaadin.data.Item;
+import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.vaadin.ui.Component;
+import com.vaadin.ui.CustomField;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 
-public class ContactEditFormFieldFactory extends DefaultEditFormFieldFactory {
+class ContactEditFormFieldFactory<B extends Contact> extends
+		AbstractBeanFieldGroupFieldFactory<B> {
 	private static final long serialVersionUID = 1L;
 
-	private Contact contact;
-
-	public ContactEditFormFieldFactory(Contact contact) {
-		this.contact = contact;
+	ContactEditFormFieldFactory(GenericBeanForm<B> form) {
+		super(form);
 	}
 
 	@Override
-	protected Field onCreateField(Item item, Object propertyId,
-			com.vaadin.ui.Component uiContext) {
+	protected Field onCreateField(Object propertyId) {
 
 		if (propertyId.equals("leadsource")) {
 			LeadSourceComboBox leadSource = new LeadSourceComboBox();
@@ -65,7 +62,7 @@ public class ContactEditFormFieldFactory extends DefaultEditFormFieldFactory {
 			return descArea;
 		} else if (propertyId.equals("assignuser")) {
 			ActiveUserComboBox userBox = new ActiveUserComboBox();
-			userBox.select(contact.getAssignuser());
+			userBox.select(attachForm.getBean().getAssignuser());
 			return userBox;
 		} else if (propertyId.equals("primcountry")
 				|| propertyId.equals("othercountry")) {
@@ -73,8 +70,8 @@ public class ContactEditFormFieldFactory extends DefaultEditFormFieldFactory {
 			return otherCountryComboBox;
 		} else if (propertyId.equals("birthday")) {
 			ContactBirthdayField birthdayField = new ContactBirthdayField();
-			if (contact.getBirthday() != null) {
-				birthdayField.setDate(contact.getBirthday());
+			if (attachForm.getBean().getBirthday() != null) {
+				birthdayField.setDate(attachForm.getBean().getBirthday());
 			}
 			return birthdayField;
 		}
@@ -101,7 +98,7 @@ public class ContactEditFormFieldFactory extends DefaultEditFormFieldFactory {
 
 		@Override
 		public void fireValueChange(Object data) {
-			contact.setBirthday((Date) data);
+			attachForm.getBean().setBirthday((Date) data);
 
 		}
 

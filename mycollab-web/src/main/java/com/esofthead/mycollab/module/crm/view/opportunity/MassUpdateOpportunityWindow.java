@@ -18,7 +18,6 @@ package com.esofthead.mycollab.module.crm.view.opportunity;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
-import com.esofthead.mycollab.module.crm.domain.Account;
 import com.esofthead.mycollab.module.crm.domain.Opportunity;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
@@ -66,14 +65,14 @@ public class MassUpdateOpportunityWindow extends MassUpdateWindow<Opportunity> {
 		this.setContent(this.opportunityAddLayout);
 	}
 
-	private class EditForm extends AdvancedEditBeanForm<Account> {
+	private class EditForm extends AdvancedEditBeanForm<Opportunity> {
 		private static final long serialVersionUID = 1L;
 
 		@Override
 		public void setItemDataSource(final Item newDataSource) {
 			this.setFormLayoutFactory(new MassUpdateAccountFormLayoutFactory());
-			this.setFormFieldFactory(new OpportunityEditFormFieldFactory(
-					MassUpdateOpportunityWindow.this.opportunity));
+			this.setBeanFormFieldFactory(new OpportunityEditFormFieldFactory<Opportunity>(
+					EditForm.this));
 			super.setItemDataSource(newDataSource);
 		}
 

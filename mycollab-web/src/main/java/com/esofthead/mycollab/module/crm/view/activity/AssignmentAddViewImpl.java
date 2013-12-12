@@ -42,6 +42,12 @@ import com.vaadin.ui.Layout;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
 @ViewComponent
 public class AssignmentAddViewImpl extends AbstractPageView implements
 		AssignmentAddView {

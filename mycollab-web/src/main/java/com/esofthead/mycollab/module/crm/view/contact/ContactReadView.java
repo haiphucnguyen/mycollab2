@@ -23,6 +23,12 @@ import com.esofthead.mycollab.module.crm.view.IRelatedListHandlers;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.IPreviewView;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ *
+ */
 public interface ContactReadView extends IPreviewView<SimpleContact> {
 
     HasPreviewFormHandlers<Contact> getPreviewFormHandlers();

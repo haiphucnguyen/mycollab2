@@ -21,6 +21,13 @@ import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.FormFieldFactory;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ * @param <B>
+ */
 public class GenericBeanForm<B> extends CssLayout {
 
 	private static final long serialVersionUID = 1L;
@@ -54,6 +61,7 @@ public class GenericBeanForm<B> extends CssLayout {
 		this.fieldFactory = fieldFactory;
 	}
 
+	@Deprecated
 	public void setFormFieldFactory(FormFieldFactory fieldFactory) {
 	}
 
@@ -80,6 +88,7 @@ public class GenericBeanForm<B> extends CssLayout {
 		}
 	}
 
+	@Deprecated
 	public void setItemDataSource(final Item newDataSource) {
 	}
 

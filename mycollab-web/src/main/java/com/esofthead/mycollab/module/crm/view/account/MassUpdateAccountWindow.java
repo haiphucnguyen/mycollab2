@@ -34,6 +34,12 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ *
+ */
 public class MassUpdateAccountWindow extends MassUpdateWindow<Account> {
 	private static final long serialVersionUID = 1L;
 
