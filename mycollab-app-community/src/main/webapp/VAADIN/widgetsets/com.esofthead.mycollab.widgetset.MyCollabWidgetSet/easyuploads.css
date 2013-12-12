@@ -8,6 +8,12 @@
 	height:40px
 }
 
+.v-multifileupload-dropzone .v-label {
+	text-align:center; 
+	width: 100%;
+}
+
+
 .v-multifileupload-uploads {
 	display:inline-block;
 	vertical-align: middle;
