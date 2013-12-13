@@ -45,6 +45,7 @@ public class NotificationUtil {
 	public static void showNotification(String caption, String description,
 			Type type) {
 		Notification warnNotif = new Notification(caption, description, type);
+		warnNotif.setHtmlContentAllowed(true);
 		warnNotif.setDelayMsec(3000);
 		warnNotif.show(Page.getCurrent());
 	}

@@ -27,6 +27,7 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomField;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Image;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 
@@ -36,8 +37,8 @@ public class AccountSelectionField extends CustomField<Account> implements
 
 	private TextField accountName;
 	private SimpleAccount account = new SimpleAccount();
-	private Embedded browseBtn;
-	private Embedded clearBtn;
+	private Image browseBtn;
+	private Image clearBtn;
 
 	public void clearValue() {
 		accountName.setValue("");
@@ -67,6 +68,7 @@ public class AccountSelectionField extends CustomField<Account> implements
 		HorizontalLayout layout = new HorizontalLayout();
 		layout.setSpacing(true);
 		layout.setWidth("100%");
+		layout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
 		accountName = new TextField();
 		accountName.setEnabled(true);
@@ -74,7 +76,7 @@ public class AccountSelectionField extends CustomField<Account> implements
 		layout.addComponent(accountName);
 		layout.setComponentAlignment(accountName, Alignment.MIDDLE_LEFT);
 
-		browseBtn = new Embedded(null,
+		browseBtn = new Image(null,
 				MyCollabResource.newResource("icons/16/browseItem.png"));
 		layout.addComponent(browseBtn);
 		layout.setComponentAlignment(browseBtn, Alignment.MIDDLE_LEFT);
@@ -89,7 +91,7 @@ public class AccountSelectionField extends CustomField<Account> implements
 			}
 		});
 
-		clearBtn = new Embedded(null,
+		clearBtn = new Image(null,
 				MyCollabResource.newResource("icons/16/clearItem.png"));
 
 		clearBtn.addClickListener(new MouseEvents.ClickListener() {
