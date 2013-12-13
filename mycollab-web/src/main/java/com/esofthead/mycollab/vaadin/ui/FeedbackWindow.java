@@ -31,6 +31,7 @@ import com.esofthead.mycollab.module.mail.FileEmailAttachmentSource;
 import com.esofthead.mycollab.module.mail.service.ExtMailService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.web.AppContext;
+import com.vaadin.server.Sizeable;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -54,8 +55,6 @@ public class FeedbackWindow extends Window {
 	}
 
 	private void initLayout() {
-		this.setWidth("600px");
-		this.setHeight("450px");
 		this.setCaption("Send us feedback for MyCollab ");
 		initUI();
 		center();
@@ -103,6 +102,9 @@ public class FeedbackWindow extends Window {
 		mainLayout.addComponent(subjectTextField, 1, 2);
 
 		final RichTextArea contentArea = new RichTextArea();
+		contentArea.setImmediate(true);
+		contentArea.setWidth(500, Sizeable.Unit.PIXELS);
+		contentArea.setHeight(200, Sizeable.Unit.PIXELS);
 		Label contentLbl = new Label("Your feedback: ");
 
 		mainLayout.addComponent(contentLbl, 0, 3);
@@ -118,7 +120,7 @@ public class FeedbackWindow extends Window {
 
 		MultiFileUploadExt uploadExt = new MultiFileUploadExt(attachments);
 
-		Panel attachedFilepanel = new Panel();
+		//Panel attachedFilepanel = new Panel();
 		VerticalLayout contentLayout = new VerticalLayout();
 		contentLayout.setHeight("80px");
 		contentLayout.setStyleName("noneBorder-panel");
@@ -127,12 +129,12 @@ public class FeedbackWindow extends Window {
 
 		contentLayout.addComponent(uploadExt);
 
-		attachedFilepanel.setContent(contentLayout);
+		//attachedFilepanel.setContent(contentLayout);
 
-		controlsLayout.addComponent(attachedFilepanel);
-		controlsLayout.setComponentAlignment(attachedFilepanel,
+		controlsLayout.addComponent(contentLayout);
+		controlsLayout.setComponentAlignment(contentLayout,
 				Alignment.BOTTOM_LEFT);
-		controlsLayout.setExpandRatio(attachedFilepanel, 1.0f);
+		controlsLayout.setExpandRatio(contentLayout, 1.0f);
 
 		controlsLayout.setSpacing(true);
 

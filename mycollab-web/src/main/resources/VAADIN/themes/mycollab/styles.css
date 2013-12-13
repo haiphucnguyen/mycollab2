@@ -64,7 +64,7 @@ a {
 
 .v-button .v-icon,.v-nativebutton .v-icon {
 	vertical-align: top;
-	margin: 0px 5px 0px 0px;
+	margin-left: 0px;
 }
 
 div.v-button-link {
