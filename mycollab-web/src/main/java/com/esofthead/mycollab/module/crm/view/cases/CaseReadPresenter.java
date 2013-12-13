@@ -31,7 +31,6 @@ import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.crm.CrmLinkGenerator;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.CallWithBLOBs;
-import com.esofthead.mycollab.module.crm.domain.CaseWithBLOBs;
 import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.module.crm.domain.ContactCase;
 import com.esofthead.mycollab.module.crm.domain.MeetingWithBLOBs;
@@ -70,15 +69,15 @@ public class CaseReadPresenter extends CrmGenericPresenter<CaseReadView> {
 
 	private void bind() {
 		view.getPreviewFormHandlers().addFormHandler(
-				new DefaultPreviewFormHandler<CaseWithBLOBs>() {
+				new DefaultPreviewFormHandler<SimpleCase>() {
 					@Override
-					public void onEdit(CaseWithBLOBs data) {
+					public void onEdit(SimpleCase data) {
 						EventBus.getInstance().fireEvent(
 								new CaseEvent.GotoEdit(this, data));
 					}
 
 					@Override
-					public void onDelete(final CaseWithBLOBs data) {
+					public void onDelete(final SimpleCase data) {
 						ConfirmDialogExt.show(
 								UI.getCurrent(),
 								LocalizationHelper.getMessage(
@@ -111,8 +110,8 @@ public class CaseReadPresenter extends CrmGenericPresenter<CaseReadView> {
 					}
 
 					@Override
-					public void onClone(CaseWithBLOBs data) {
-						CaseWithBLOBs cloneData = (CaseWithBLOBs) data.copy();
+					public void onClone(SimpleCase data) {
+						SimpleCase cloneData = (SimpleCase) data.copy();
 						cloneData.setId(null);
 						EventBus.getInstance().fireEvent(
 								new CaseEvent.GotoEdit(this, cloneData));
@@ -125,7 +124,7 @@ public class CaseReadPresenter extends CrmGenericPresenter<CaseReadView> {
 					}
 
 					@Override
-					public void gotoNext(CaseWithBLOBs data) {
+					public void gotoNext(SimpleCase data) {
 						CaseService caseService = ApplicationContextUtil
 								.getSpringBean(CaseService.class);
 						CaseSearchCriteria criteria = new CaseSearchCriteria();
@@ -144,7 +143,7 @@ public class CaseReadPresenter extends CrmGenericPresenter<CaseReadView> {
 					}
 
 					@Override
-					public void gotoPrevious(CaseWithBLOBs data) {
+					public void gotoPrevious(SimpleCase data) {
 						CaseService caseService = ApplicationContextUtil
 								.getSpringBean(CaseService.class);
 						CaseSearchCriteria criteria = new CaseSearchCriteria();
