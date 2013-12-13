@@ -1,13 +1,11 @@
 package com.esofthead.mycollab.module.crm.ui.components;
 
-import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout2;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.vaadin.server.Resource;
 import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
 
 /**
@@ -34,9 +32,7 @@ public abstract class AbstractPreviewItemComp<B> extends VerticalLayout {
 
 		VerticalLayout informationLayout = new VerticalLayout();
 		informationLayout.addStyleName("main-info");
-		final Layout actionControls = CrmPreviewFormControlsGenerator
-				.createFormButtonControls(previewForm,
-						RolePermissionCollections.CRM_ACCOUNT);
+		ComponentContainer actionControls = createButtonControls();
 		actionControls.addStyleName("control-buttons");
 		informationLayout.addComponent(actionControls);
 
