@@ -4907,6 +4907,9 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 .v-horizontallayout.border-box2-no-margin.file-topcontrols {
 	border-radius: 5px 5px 0px 0px;
 }
+.file-topcontrols .v-button.v-button-right {
+	border-right: none;
+}
 
 .v-horizontallayout.border-box2-no-margin.file-topcontrols .v-buttongroup .v-button.v-button-right
 	{

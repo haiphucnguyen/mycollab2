@@ -55,6 +55,7 @@ import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.Tree;
@@ -154,7 +155,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 		Button settingBtn = new Button();
 		settingBtn.setIcon(MyCollabResource
 				.newResource("icons/16/ecm/settings.png"));
-		settingBtn.addListener(new ClickListener() {
+		settingBtn.addClickListener(new ClickListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -180,8 +181,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 		HorizontalLayout connectDropboxLayout = new HorizontalLayout();
 		connectDropboxLayout.setSpacing(true);
 
-		final Embedded titleIcon = new Embedded();
-		titleIcon.setSource(MyCollabResource
+		final Image titleIcon = new Image(null, MyCollabResource
 				.newResource("icons/16/ecm/dropbox.png"));
 		connectDropboxLayout.addComponent(titleIcon);
 
@@ -356,7 +356,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 			}
 		});
 
-		this.menuTree.addListener(new ItemClickEvent.ItemClickListener() {
+		this.menuTree.addItemClickListener(new ItemClickEvent.ItemClickListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -376,6 +376,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 
 		Separator separator = new Separator();
 		separator.setHeight("100%");
+		separator.setWidth(SIZE_UNDEFINED, Sizeable.Unit.PIXELS);
 		mainView.addComponent(separator);
 		mainView.setComponentAlignment(separator, Alignment.TOP_LEFT);
 
@@ -574,9 +575,9 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 			final HorizontalLayout layout = new HorizontalLayout();
 			layout.setWidth("100%");
 			layout.setSpacing(true);
+			layout.setMargin(true);
 
-			final Embedded titleIcon = new Embedded();
-			titleIcon.setSource(MyCollabResource
+			final Image titleIcon = new Image(null, MyCollabResource
 					.newResource("icons/24/ecm/document_preview.png"));
 			layout.addComponent(titleIcon);
 			layout.setComponentAlignment(titleIcon, Alignment.MIDDLE_LEFT);
@@ -610,6 +611,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 			public ComponentContainer constructBody() {
 				basicSearchBody = new HorizontalLayout();
 				basicSearchBody.setSpacing(false);
+				basicSearchBody.setMargin(true);
 
 				this.nameField = this.createSeachSupportTextField(
 						new TextField(), "NameFieldOfBasicSearch");
@@ -666,7 +668,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 								.getMessage(GenericI18Enum.BUTTON_CLEAR));
 				cancelBtn.setStyleName(UIConstants.THEME_LINK);
 				cancelBtn.addStyleName("cancel-button");
-				cancelBtn.addListener(new Button.ClickListener() {
+				cancelBtn.addClickListener(new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
