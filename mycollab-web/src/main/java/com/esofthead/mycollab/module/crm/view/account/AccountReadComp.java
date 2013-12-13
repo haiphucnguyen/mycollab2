@@ -5,15 +5,12 @@ import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.ui.components.CrmPreviewFormControlsGenerator;
 import com.esofthead.mycollab.security.RolePermissionCollections;
-import com.esofthead.mycollab.vaadin.ui.AddViewLayout2;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.JavaScript;
-import com.vaadin.ui.Layout;
 import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.UI;
-import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
 /**
@@ -25,58 +22,8 @@ import com.vaadin.ui.Window;
 class AccountReadComp extends AbstractAccountPreviewComp {
 	private static final long serialVersionUID = 1L;
 
-	private AddViewLayout2 accountAddLayout;
-
-	public AccountReadComp() {
-		accountAddLayout = new AddViewLayout2("",
-				MyCollabResource.newResource("icons/22/crm/account.png"));
-		this.addComponent(accountAddLayout);
-
-		initRelatedComponents();
-
-		previewForm = new AdvancedPreviewBeanForm<SimpleAccount>() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void doPrint() {
-				// Create a window that contains what you want to print
-				final Window window = new Window("Window to Print");
-
-				final AbstractAccountPreviewComp printView = new AccountPrintComp();
-				printView.previewItem(account);
-				window.setContent(printView);
-
-				UI.getCurrent().addWindow(window);
-
-				// Print automatically when the window opens
-				JavaScript.getCurrent().execute(
-						"setTimeout(function() {"
-								+ "  print(); self.close();}, 0);");
-			}
-
-			@Override
-			public void showHistory() {
-				final AccountHistoryLogWindow historyLog = new AccountHistoryLogWindow(
-						ModuleNameConstants.CRM, CrmTypeConstants.ACCOUNT,
-						account.getId());
-				UI.getCurrent().addWindow(historyLog);
-			}
-		};
-
-		VerticalLayout accountInformation = new VerticalLayout();
-		accountInformation.addStyleName("main-info");
-		final Layout actionControls = CrmPreviewFormControlsGenerator
-				.createFormButtonControls(previewForm,
-						RolePermissionCollections.CRM_ACCOUNT);
-		actionControls.addStyleName("control-buttons");
-		accountInformation.addComponent(actionControls);
-
-		accountInformation.addComponent(previewForm);
-		accountAddLayout.addBody(accountInformation);
-		accountAddLayout.addBody(createBottomPanel());
-	}
-
-	private ComponentContainer createBottomPanel() {
+	@Override
+	protected ComponentContainer createBottomPanel() {
 		final TabSheet tabContainer = new TabSheet();
 		tabContainer.setWidth("100%");
 
@@ -96,16 +43,57 @@ class AccountReadComp extends AbstractAccountPreviewComp {
 	}
 
 	@Override
-	public void previewItem(SimpleAccount item) {
-		super.previewItem(item);
-		accountAddLayout.setTitle(item.getAccountname());
-
+	protected void onPreviewItem() {
 		displayNotes();
 		displayActivities();
-		associateContactList.displayContacts(account);
+		associateContactList.displayContacts(beanItem);
 		displayAssociateCaseList();
 		displayAssociateOpportunityList();
 		displayAssociateLeadList();
+	}
+
+	@Override
+	protected String initFormTitle() {
+		return beanItem.getAccountname();
+	}
+
+	@Override
+	protected AdvancedPreviewBeanForm<SimpleAccount> initPreviewForm() {
+		return new AdvancedPreviewBeanForm<SimpleAccount>() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void doPrint() {
+				// Create a window that contains what you want to print
+				final Window window = new Window("Window to Print");
+
+				final AbstractAccountPreviewComp printView = new AccountPrintComp();
+				printView.previewItem(beanItem);
+				window.setContent(printView);
+
+				UI.getCurrent().addWindow(window);
+
+				// Print automatically when the window opens
+				JavaScript.getCurrent().execute(
+						"setTimeout(function() {"
+								+ "  print(); self.close();}, 0);");
+			}
+
+			@Override
+			public void showHistory() {
+				final AccountHistoryLogWindow historyLog = new AccountHistoryLogWindow(
+						ModuleNameConstants.CRM, CrmTypeConstants.ACCOUNT,
+						beanItem.getId());
+				UI.getCurrent().addWindow(historyLog);
+			}
+		};
+	}
+
+	@Override
+	protected ComponentContainer createButtonControls() {
+		return CrmPreviewFormControlsGenerator.createFormButtonControls(
+				previewForm, RolePermissionCollections.CRM_ACCOUNT);
+
 	}
 
 }

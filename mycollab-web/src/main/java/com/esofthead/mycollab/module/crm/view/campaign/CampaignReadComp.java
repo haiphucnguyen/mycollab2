@@ -1,8 +1,8 @@
-package com.esofthead.mycollab.module.crm.view.contact;
+package com.esofthead.mycollab.module.crm.view.campaign;
 
 import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
-import com.esofthead.mycollab.module.crm.domain.SimpleContact;
+import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.ui.components.CrmPreviewFormControlsGenerator;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout2;
@@ -18,23 +18,23 @@ import com.vaadin.ui.Window;
 
 /**
  * 
- * @author MyCollab
+ * @author MyCollab Ltd.
  * @since 3.0
  * 
  */
-class ContactReadComp extends AbstractContactPreviewComp {
+class CampaignReadComp extends AbstractCampaignPreviewComp {
 	private static final long serialVersionUID = 1L;
 
-	private AddViewLayout2 contactAddLayout;
+	private AddViewLayout2 campaignLayout;
 
-	public ContactReadComp() {
-		contactAddLayout = new AddViewLayout2("",
-				MyCollabResource.newResource("icons/22/crm/contact.png"));
-		this.addComponent(contactAddLayout);
+	public CampaignReadComp() {
+		campaignLayout = new AddViewLayout2("",
+				MyCollabResource.newResource("icons/22/crm/account.png"));
+		this.addComponent(campaignLayout);
 
-		this.initRelatedComponent();
+		this.initRelatedComponents();
 
-		previewForm = new AdvancedPreviewBeanForm<SimpleContact>() {
+		previewForm = new AdvancedPreviewBeanForm<SimpleCampaign>() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -42,8 +42,8 @@ class ContactReadComp extends AbstractContactPreviewComp {
 				// Create a window that contains what you want to print
 				final Window window = new Window("Window to Print");
 
-				final ContactPrintComp printView = new ContactPrintComp();
-				printView.previewItem(contact);
+				final CampaignPrintComp printView = new CampaignPrintComp();
+				printView.previewItem(campaign);
 				window.setContent(printView);
 
 				UI.getCurrent().addWindow(window);
@@ -56,24 +56,24 @@ class ContactReadComp extends AbstractContactPreviewComp {
 
 			@Override
 			public void showHistory() {
-				final ContactHistoryLogWindow historyLog = new ContactHistoryLogWindow(
-						ModuleNameConstants.CRM, CrmTypeConstants.CONTACT,
-						contact.getId());
+				final CampaignHistoryLogWindow historyLog = new CampaignHistoryLogWindow(
+						ModuleNameConstants.CRM, CrmTypeConstants.CAMPAIGN,
+						campaign.getId());
 				UI.getCurrent().addWindow(historyLog);
 			}
 		};
 
-		VerticalLayout contactInformation = new VerticalLayout();
-		contactInformation.addStyleName("main-info");
+		VerticalLayout campaignInformation = new VerticalLayout();
+		campaignInformation.addStyleName("main-info");
 		final Layout actionControls = CrmPreviewFormControlsGenerator
 				.createFormButtonControls(previewForm,
-						RolePermissionCollections.CRM_CONTACT);
+						RolePermissionCollections.CRM_CAMPAIGN);
 		actionControls.addStyleName("control-buttons");
-		contactInformation.addComponent(actionControls);
+		campaignInformation.addComponent(actionControls);
 
-		contactInformation.addComponent(previewForm);
-		contactAddLayout.addBody(contactInformation);
-		contactAddLayout.addBody(createBottomPanel());
+		campaignInformation.addComponent(previewForm);
+		campaignLayout.addBody(campaignInformation);
+		campaignLayout.addBody(createBottomPanel());
 	}
 
 	private ComponentContainer createBottomPanel() {
@@ -82,16 +82,13 @@ class ContactReadComp extends AbstractContactPreviewComp {
 
 		tabContainer.addTab(this.noteListItems, "Notes",
 				MyCollabResource.newResource("icons/16/crm/note.png"));
-		tabContainer.addTab(this.associateActivityList, "Activities",
-				MyCollabResource.newResource("icons/16/crm/calendar.png"));
-		tabContainer.addTab(this.associateOpportunityList, "Opportunities",
-				MyCollabResource.newResource("icons/16/crm/opportunity.png"));
+		tabContainer.addTab(this.associateAccountList, "Notes",
+				MyCollabResource.newResource("icons/16/crm/account.png"));
+		tabContainer.addTab(this.associateContactList, "Contacts",
+				MyCollabResource.newResource("icons/16/crm/contact.png"));
+		tabContainer.addTab(this.associateLeadList, "Leads",
+				MyCollabResource.newResource("icons/16/crm/lead.png"));
 		return tabContainer;
 	}
 
-	@Override
-	public void previewItem(SimpleContact item) {
-		super.previewItem(item);
-		contactAddLayout.setTitle(item.getContactName());
-	}
 }
