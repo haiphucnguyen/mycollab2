@@ -39,6 +39,7 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
@@ -227,14 +228,17 @@ public class ProjectInformationComponent extends VerticalLayout {
 		this.prjDisplay = new BasicProjectInformation();
 		this.projectInfoHeader = new HorizontalLayout();
 		this.projectInfoHeader.setWidth("100%");
+		this.projectInfoHeader.setMargin(true);
+		this.projectInfoHeader.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 		this.projectInfoHeader.setStyleName(UIConstants.PROJECT_INFO_HEADER);
 		this.addComponent(this.projectInfoHeader);
 		this.addComponent(this.prjDisplay);
 
 		this.projectInfoFooter = new HorizontalLayout();
+		this.projectInfoFooter.setMargin(true);
 		this.projectInfoFooter.setStyleName(UIConstants.PROJECT_INFO_FOOTER);
 		final Button toggleBtn = new Button("More");
-		toggleBtn.addListener(new Button.ClickListener() {
+		toggleBtn.addClickListener(new Button.ClickListener() {
 
 			private static final long serialVersionUID = 1L;
 
@@ -267,8 +271,7 @@ public class ProjectInformationComponent extends VerticalLayout {
 
 		this.projectInfoHeader.removeAllComponents();
 		this.projectInfoHeader.setSpacing(true);
-		final Embedded icon = new Embedded();
-		icon.setSource(MyCollabResource
+		final Image icon = new Image(null, MyCollabResource
 				.newResource("icons/24/project/dashboard.png"));
 		final Label projectName = new Label(this.project.getName());
 		projectName.setStyleName(UIConstants.PROJECT_NAME);

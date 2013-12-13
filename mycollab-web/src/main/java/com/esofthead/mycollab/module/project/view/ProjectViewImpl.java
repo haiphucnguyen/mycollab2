@@ -119,8 +119,8 @@ public class ProjectViewImpl extends AbstractPageView implements ProjectView {
 
 		final CssLayout contentWrapper = new CssLayout();
 		contentWrapper.setStyleName("projectDashboardView");
-		contentWrapper.addStyleName("main-content-wrapper");
 		contentWrapper.setWidth("100%");
+		this.addStyleName("main-content-wrapper");
 		this.addComponent(contentWrapper);
 
 		breadCrumb = ViewManager.getView(ProjectBreadcrumb.class);
@@ -134,6 +134,12 @@ public class ProjectViewImpl extends AbstractPageView implements ProjectView {
 		root.setStyleName("menuContent");
 
 		myProjectTab = new VerticalTabsheet();
+		myProjectTab.setSizeFull();
+		myProjectTab.setNavigatorWidth("170px");
+		myProjectTab.setNavigatorStyleName("sidebar-menu");
+		myProjectTab.setContainerStyleName("tab-content");
+		myProjectTab.setHeight(null);
+		
 		root.setWidth("100%");
 		buildComponents();
 		contentWrapper.addComponent(myProjectTab);

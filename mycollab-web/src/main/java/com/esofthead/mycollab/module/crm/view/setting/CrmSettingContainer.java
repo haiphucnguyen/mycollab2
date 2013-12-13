@@ -45,12 +45,17 @@ public class CrmSettingContainer extends CssLayout implements PageView {
 		this.setWidth("100%");
 
 		final CssLayout contentWrapper = new CssLayout();
-		contentWrapper.setStyleName("projectDashboardView");
-		contentWrapper.addStyleName("main-content-wrapper");
+		contentWrapper.setStyleName("verticalTabView");
 		contentWrapper.setWidth("100%");
 		this.addComponent(contentWrapper);
 
 		settingTab = new VerticalTabsheet();
+		settingTab.setSizeFull();
+		settingTab.setNavigatorWidth("170px");
+		settingTab.setNavigatorStyleName("sidebar-menu");
+		settingTab.setContainerStyleName("tab-content");
+		settingTab.setHeight(null);
+		
 		buildComponents();
 		contentWrapper.addComponent(settingTab);
 	}
@@ -68,7 +73,7 @@ public class CrmSettingContainer extends CssLayout implements PageView {
 
 					@Override
 					public void selectedTabChange(SelectedTabChangeEvent event) {
-						Tab tab = (Tab) event.getTabSheet().getSelectedTab();
+						Tab tab = ((VerticalTabsheet) event.getSource()).getSelectedTab();
 						String caption = tab.getCaption();
 
 						if ("Notifications".equals(caption)) {

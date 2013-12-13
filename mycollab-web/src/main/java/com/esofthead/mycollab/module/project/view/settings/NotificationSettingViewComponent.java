@@ -30,6 +30,7 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
+import com.vaadin.server.Sizeable;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -78,6 +79,7 @@ public abstract class NotificationSettingViewComponent<B extends ValuedBean, S e
 
 		Label notificationLabel = new Label("Notification Levels");
 		notificationLabel.addStyleName("h2");
+		notificationLabel.setHeight(Sizeable.SIZE_UNDEFINED, Sizeable.Unit.PIXELS);
 		body.addComponent(notificationLabel);
 
 		List<String> options = Arrays
@@ -87,8 +89,10 @@ public abstract class NotificationSettingViewComponent<B extends ValuedBean, S e
 						"Minimal - We won't do any magic behind the scences to subscribe you to any items, you will only be notified about things you are currently assigned.",
 						"Full - You will be notified every things about your project." });
 		final OptionGroup optionGroup = new OptionGroup(null, options);
+		optionGroup.setHeight("100%");
 
 		body.addComponent(optionGroup);
+		body.setExpandRatio(optionGroup, 1.0f);
 		body.setComponentAlignment(optionGroup, Alignment.MIDDLE_LEFT);
 
 		try {
@@ -105,7 +109,7 @@ public abstract class NotificationSettingViewComponent<B extends ValuedBean, S e
 					}
 				}
 			}
-			optionGroup.addListener(new ValueChangeListener() {
+			optionGroup.addValueChangeListener(new ValueChangeListener() {
 				private static final long serialVersionUID = 1L;
 
 				@Override

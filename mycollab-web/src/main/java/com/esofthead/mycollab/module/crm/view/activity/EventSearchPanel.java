@@ -17,7 +17,6 @@
 package com.esofthead.mycollab.module.crm.view.activity;
 
 import com.esofthead.mycollab.vaadin.ui.SplitButton;
-
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchField;
@@ -37,6 +36,7 @@ import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
@@ -62,8 +62,9 @@ public class EventSearchPanel extends GenericSearchPanel<EventSearchCriteria> {
 		final HorizontalLayout layout = new HorizontalLayout();
 		layout.setWidth("100%");
 		layout.setSpacing(true);
+		layout.setMargin(true);
 
-		final Embedded iconComp = new Embedded();
+		final Image iconComp = new Image();
 		iconComp.setSource(MyCollabResource
 				.newResource("icons/22/crm/event.png"));
 		layout.addComponent(iconComp);
@@ -151,6 +152,7 @@ public class EventSearchPanel extends GenericSearchPanel<EventSearchCriteria> {
 		@Override
 		public ComponentContainer constructBody() {
 			final HorizontalLayout basicSearchBody = new HorizontalLayout();
+			basicSearchBody.setMargin(true);
 
 			this.nameField = new TextField();
 			this.nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
@@ -162,7 +164,7 @@ public class EventSearchPanel extends GenericSearchPanel<EventSearchCriteria> {
 			searchBtn.setIcon(MyCollabResource
 					.newResource("icons/16/search_white.png"));
 
-			searchBtn.addListener(new Button.ClickListener() {
+			searchBtn.addClickListener(new Button.ClickListener() {
 				@Override
 				public void buttonClick(final Button.ClickEvent event) {
 					EventBasicSearchLayout.this.callSearchAction();
@@ -183,7 +185,7 @@ public class EventSearchPanel extends GenericSearchPanel<EventSearchCriteria> {
 			final Button cancelBtn = new Button("Clear");
 			cancelBtn.setStyleName(UIConstants.THEME_LINK);
 			cancelBtn.addStyleName("cancel-button");
-			cancelBtn.addListener(new Button.ClickListener() {
+			cancelBtn.addClickListener(new Button.ClickListener() {
 				@Override
 				public void buttonClick(final Button.ClickEvent event) {
 					EventBasicSearchLayout.this.nameField.setValue("");

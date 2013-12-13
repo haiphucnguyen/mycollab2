@@ -1376,11 +1376,11 @@ input.v-textfield-errorField {
 	border-radius: 3px 3px 0px 0px;
 }
 
-.accountViewContainer .v-csslayout-sidebar-menu .v-csslayout-margin {
-	margin: 10px 0px;
+.accountViewContainer .sidebar-menu {
+	padding: 10px 0px;
 }
 
-.v-csslayout-account-dashboard>.v-csslayout-margin {
+.v-csslayout-account-dashboard {
 	border-color: #8f8f8f;
 	border-style: solid;
 	border-width: 1px 0px 0px 1px;
@@ -1399,7 +1399,7 @@ input.v-textfield-errorField {
 	margin: 20px auto;
 }
 
-.projectDashboardView>.v-csslayout-margin>.v-csslayout-container {
+.projectDashboardView {
 	background-color: #F3F3F3;
 	background-image: -webkit-gradient(linear, left top, left bottom, from(#F3F3F3),
 		to(#DDDDDD));
@@ -1413,9 +1413,6 @@ input.v-textfield-errorField {
 	border-bottom-right-radius: 0px;
 	border-bottom-left-radius: 5px;
 	border: 1px solid #8F8F8F;
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-	box-sizing: border-box;
 	overflow: hidden;
 }
 
@@ -1441,8 +1438,8 @@ input.v-textfield-errorField {
 	background: none;
 }
 
-.projectDashboardView .v-csslayout-sidebar-menu .v-csslayout-margin {
-	margin: 10px 0px;
+.projectDashboardView .sidebar-menu {
+	padding: 10px 0px;
 }
 
 .projectDashboardView .sidebar-menu .v-label.sectionHeader {
@@ -1485,7 +1482,7 @@ input.v-textfield-errorField {
 	padding: 0px;
 }
 
-.v-csslayout-project-dashboard>.v-csslayout-margin {
+.v-csslayout-project-dashboard {
 	border-color: #8f8f8f;
 	border-style: solid;
 	border-width: 0px 0px 0px 1px;
@@ -1525,7 +1522,7 @@ input.v-textfield-errorField {
 	height: 100%;
 }
 
-.v-csslayout-projectTabContent>.v-csslayout-margin {
+.v-csslayout-projectTabContent {
 	padding: 6px;
 	border-style: solid;
 	border-color: #8f8f8f;
@@ -1534,7 +1531,7 @@ input.v-textfield-errorField {
 	height: 100%;
 }
 
-.v-csslayout-projectTabContent.Milestones>.v-csslayout-margin {
+.v-csslayout-projectTabContent.Milestones {
 	padding: 10px 0px 0px;
 }
 
@@ -1576,9 +1573,17 @@ input.v-textfield-errorField {
 	border-radius: 3px 3px 0px 0px;
 }
 
-.v-horizontallayout-projectinfo-header .v-horizontallayout-margin
-	{
-	padding: 7px 10px 7px 18px;
+.projectinfo-header.v-margin-top {
+	padding-top: 7px;
+}
+.projectinfo-header.v-margin-right {
+	padding-right: 10px;
+}
+.projectinfo-header.v-margin-bottom {
+	padding-bottom: 7px;
+}
+.projectinfo-header.v-margin-left {
+	padding-left: 18px;
 }
 
 .v-horizontallayout-message-toppanel-header .v-horizontallayout-margin{
@@ -1882,19 +1887,7 @@ input.v-textfield-errorField {
 	background: -o-linear-gradient(top, #E6E6E6 0, #DDD 100%);
 	background: -ms-linear-gradient(top, #E6E6E6 0, #DDD 100%);
 	background: linear-gradient(to bottom, #E6E6E6 0, #DDD 100%);
-<<<<<<< HEAD
-	filter: progid:                                                 DXImageTransform.Microsoft.gradient(startColorstr='#E6E6E6',
-		endColorstr=                                                 '#DDD',
-		GradientType=           
-        
-        
-         
-            
-                 
-                          0);
-=======
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#E6E6E6',endColorstr='#DDD',GradientType=0);
->>>>>>> 3b0b6d50cd838066c23eb0e415d83e1856cdb17b
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
@@ -2021,64 +2014,7 @@ input.v-textfield-errorField {
 	background: -o-linear-gradient(top, #F8F8F8 0, #EEEEEE 100%);
 	background: -ms-linear-gradient(top, #F8F8F8 0, #EEEEEE 100%);
 	background: linear-gradient(to bottom, #F8F8F8 0, #EEEEEE 100%);
-<<<<<<< HEAD
-	filter: progid:                                                 DXImageTransform.Microsoft.gradient(startColorstr=
-		
-		
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-         
-           '#F8F8F8', endColorstr=    
-                                                    '#EEEEEE',
-		GradientType=    
-                               
-        
-        
-          
-            
-                  0);
-=======
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#F8F8F8', endColorstr='#EEEEEE',GradientType=0);
->>>>>>> 3b0b6d50cd838066c23eb0e415d83e1856cdb17b
 	border-right: 1px solid #CCC;
 	border-top: 1px solid #CCC;
 }
@@ -3341,11 +3277,8 @@ div.v-lazyloadingwrapper-loading {
 /* End Border Box */
 
 /* Border Box 2 */
-.v-csslayout.border-box2 {
+.border-box2 {
 	background-color: rgb(245, 245, 245);
-}
-
-.v-csslayout.border-box2>.v-csslayout-margin {
 	border: 1px solid rgb(169, 169, 169);
 }
 
@@ -5104,8 +5037,8 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 }
 
 /* Custom Field Settings Section */
-.crmContainer .projectDashboardView.main-content-wrapper>.v-csslayout-margin
-	{
+.crmContainer .verticalTabView
+{
 	padding: 0px;
 }
 
@@ -5213,19 +5146,20 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 	opacity: 0.8;
 }
 
+.eventLblcompleted .v-label, .eventLbloverdue .v-label, .eventLblfuture .v-label {
+	text-align: center;
+}
+
 .v-horizontallayout-eventLblcompleted {
 	background-color: #96D794;
-	text-align: center;
 }
 
 .v-horizontallayout-eventLbloverdue {
 	background-color: #EF8585;
-	text-align: center;
 }
 
 .v-horizontallayout-eventLblfuture {
 	background-color: #99C4DD;
-	text-align: center;
 }
 
 .v-calendar-event-eventoverdue-all-day {
@@ -5370,3 +5304,113 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 }
 /* End new splitbutton */
 
+/* VerticalTabsheet */
+.tab-content {
+	height: 100%;
+}
+
+.tab-content {
+	padding: 6px;
+	border-style: solid;
+	border-color: #8f8f8f;
+	border-width: 1px 0px 0px 1px;
+	background-color: #fff;
+	height: 100%;
+}
+
+.tab-content.Milestones {
+	padding: 10px 0px 0px;
+}
+
+.vertical-tabsheet .v-button-tab {
+	border: none;
+	background: none no-repeat 0 0 transparent;
+	border-radius: 0px;
+	padding: 4px 13px;
+}
+
+.vertical-tabsheet .v-button-tab>.v-button-wrap {
+	background: none no-repeat 0 0 transparent;
+	border-radius: 0px;
+	text-align: left;
+	border: none;
+}
+
+.vertical-tabsheet .v-button-tab.tab-selected>.v-button-wrap {
+	background: none no-repeat 0 0 rgb(40, 126, 206);
+}
+
+.vertical-tabsheet .v-button-tab>.v-button-wrap>.v-icon {
+	margin-right: 8px;
+}
+
+.vertical-tabsheet .v-button-tab>.v-button-wrap>.v-button-caption {
+	line-height: 24px;
+}
+/* End VerticalTabsheet */
+
+/* CRM Tabview */
+.verticalTabView {
+	margin: 20px auto;
+	background-color: #F3F3F3;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#F3F3F3),
+		to(#DDDDDD));
+	background-image: -webkit-linear-gradient(top, #F3F3F3, #DDDDDD);
+	background-image: -moz-linear-gradient(top, #F3F3F3, #DDDDDD);
+	background-image: -ms-linear-gradient(top, #F3F3F3, #DDDDDD);
+	background-image: -o-linear-gradient(top, #F3F3F3, #DDDDDD);
+	background-image: linear-gradient(top, #F3F3F3, #DDDDDD);
+	border-top-left-radius: 5px;
+	border-top-right-radius: 0px;
+	border-bottom-right-radius: 0px;
+	border-bottom-left-radius: 5px;
+	border: 1px solid #8F8F8F;
+	overflow: hidden;
+}
+.verticalTabView .sidebar-menu {
+	background: none;
+}
+
+.verticalTabView .sidebar-menu {
+	padding: 10px 0px;
+}
+
+.verticalTabView .sidebar-menu .v-label.sectionHeader {
+	font-size: 14px;
+	padding: 4px 15px;
+}
+
+.verticalTabView .sidebar-menu .v-nativebutton {
+	font-size: 14px;
+	padding: 0px;
+	margin: 3px 0px;
+}
+
+.verticalTabView .sidebar-menu .tab-selected {
+	background: none no-repeat scroll 0px 0px rgb(40, 126, 206);
+}
+
+.verticalTabView .v-nativebutton .v-nativebutton-caption {
+	padding: 5px 0px 4px 15px !important;
+	border-radius: 0px;
+	display: block;
+	text-align: left;
+	padding-left: 10px;
+	font-size: 13px;
+}
+
+.verticalTabView .v-nativebutton-tab-selected .v-nativebutton-caption, .verticalTabView .tab-selected .v-nativebutton-caption {
+	background: #287ECE;
+	font-weight: bold;
+	font-size: 15px;
+}
+
+/* OptionGroup */
+.v-radiobutton input[type="radio"] {
+	margin: 0px 3px;
+	vertical-align: middle;
+}
+.v-radiobutton label {
+	vertical-align: middle;
+	line-height: normal;
+}

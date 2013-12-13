@@ -3,6 +3,7 @@ package com.esofthead.mycollab.vaadin.ui;
 import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import com.esofthead.mycollab.core.MyCollabException;
@@ -36,14 +37,21 @@ public class VerticalTabsheet extends CustomComponent {
 	private Button selectedButton = null;
 	private Tab selectedComp = null;
 
+	private final String TABSHEET_STYLENAME = "vertical-tabsheet";
+	private final String TAB_STYLENAME = "tab";
+	private final String TAB_SELECTED_STYLENAME = "tab-selected";
+
 	public VerticalTabsheet() {
 		HorizontalLayout contentLayout = new HorizontalLayout();
 		tabNavigator = new VerticalLayout();
 		tabContainer = new CssLayout();
+		tabContainer.setWidth("100%");
 
 		contentLayout.addComponent(tabNavigator);
 		contentLayout.addComponent(tabContainer);
+		contentLayout.setExpandRatio(tabContainer, 1.0f);
 		this.setCompositionRoot(contentLayout);
+		this.setStyleName(TABSHEET_STYLENAME);
 	}
 
 	public void addTab(Component component, String caption, Resource resource) {
@@ -53,12 +61,19 @@ public class VerticalTabsheet extends CustomComponent {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
+				if (selectedButton == button)
+					return;
+
+				clearTabSelection();
 				selectedButton = button;
+				selectedButton.addStyleName(TAB_SELECTED_STYLENAME);
 				selectedComp = compMap.get(selectedButton);
 				fireTabChangeEvent(new SelectedTabChangeEvent(
 						VerticalTabsheet.this));
 			}
 		});
+		button.setStyleName(TAB_STYLENAME);
+		button.setWidth("100%");
 
 		button.setIcon(resource);
 		tabNavigator.addComponent(button);
@@ -100,6 +115,8 @@ public class VerticalTabsheet extends CustomComponent {
 			Tab tab = compMap.get(btn);
 			if (tab.getCaption().equals(viewName)) {
 				selectedButton = btn;
+				clearTabSelection();
+				selectedButton.addStyleName(TAB_SELECTED_STYLENAME);
 				selectedComp = tab;
 				tabContainer.removeAllComponents();
 				tabContainer.addComponent(tab.getComponent());
@@ -213,4 +230,49 @@ public class VerticalTabsheet extends CustomComponent {
 		}
 
 	}
+
+	@Override
+	public void setWidth(float width, Unit unit) {
+		super.setWidth(width, unit);
+
+		if (getCompositionRoot() != null)
+			getCompositionRoot().setWidth(width, unit);
+	}
+
+	public void setNavigatorWidth(String width) {
+		tabNavigator.setWidth(width);
+		Iterator<Component> i = tabNavigator.iterator();
+		while (i.hasNext()) {
+			Component childComponent = i.next();
+			childComponent.setWidth(width);
+		}
+	}
+
+	public void setNavigatorStyleName(String styleName) {
+		tabNavigator.setStyleName(styleName);
+	}
+
+	public void addNavigatorStyleName(String styleName) {
+		tabNavigator.addStyleName(styleName);
+	}
+
+	public void setContainerWidth(String width) {
+		tabContainer.setWidth(width);
+	}
+
+	public void setContainerStyleName(String styleName) {
+		tabContainer.setStyleName(styleName);
+	}
+
+	public void addContainerStyleName(String styleName) {
+		tabContainer.addStyleName(styleName);
+	}
+
+	private void clearTabSelection() {
+		Collection<Button> tabs = compMap.keySet();
+		for (Button btn : tabs) {
+			btn.removeStyleName(TAB_SELECTED_STYLENAME);
+		}
+	}
+
 }

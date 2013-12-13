@@ -56,11 +56,8 @@ public class ActivityRootView extends AbstractPageView {
 		super();
 		this.setSizeFull();
 
-		this.setWidth("100%");
-
 		final CssLayout contentWrapper = new CssLayout();
-		contentWrapper.setStyleName("projectDashboardView");
-		contentWrapper.addStyleName("main-content-wrapper");
+		contentWrapper.setStyleName("verticalTabView");
 		contentWrapper.setWidth("100%");
 		this.addComponent(contentWrapper);
 
@@ -69,14 +66,17 @@ public class ActivityRootView extends AbstractPageView {
 
 		activityTabs = new VerticalTabsheet();
 		activityTabs.setSizeFull();
+		activityTabs.setNavigatorWidth("170px");
+		activityTabs.setNavigatorStyleName("sidebar-menu");
+		activityTabs.setContainerStyleName("tab-content");
 		activityTabs.setHeight(null);
 
-		CssLayout menu = new CssLayout();
-		menu.setWidth("170px");
-		menu.setStyleName("sidebar-menu");
-		menu.addComponent(activityTabs);
+//		CssLayout menu = new CssLayout();
+//		menu.setWidth("170px");
+//		menu.setStyleName("sidebar-menu");
+//		menu.addComponent(activityTabs);
 
-		root.addComponent(menu);
+		root.addComponent(activityTabs);
 		root.setWidth("100%");
 		buildComponents();
 		contentWrapper.addComponent(root);
