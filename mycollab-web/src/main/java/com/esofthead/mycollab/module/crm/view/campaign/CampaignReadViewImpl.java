@@ -28,49 +28,49 @@ import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 
 @ViewComponent
 public class CampaignReadViewImpl extends AbstractPageView implements
-        CampaignReadView {
+		CampaignReadView {
 
-    private static final long serialVersionUID = 1L;
-    private CampaignPreviewBuilder campaignPreview;
+	private static final long serialVersionUID = 1L;
+	private CampaignReadComp campaignPreview;
 
-    public CampaignReadViewImpl() {
-        super();
-        campaignPreview = new CampaignPreviewBuilder.ReadView();
-        this.addComponent(campaignPreview);
-    }
+	public CampaignReadViewImpl() {
+		super();
+		campaignPreview = new CampaignReadComp();
+		this.addComponent(campaignPreview);
+	}
 
-    @Override
-    public void previewItem(SimpleCampaign campaign) {
-        campaignPreview.previewItem(campaign);
-    }
+	@Override
+	public void previewItem(SimpleCampaign campaign) {
+		campaignPreview.previewItem(campaign);
+	}
 
-    @Override
-    public HasPreviewFormHandlers<CampaignWithBLOBs> getPreviewFormHandlers() {
-        return campaignPreview.getPreviewForm();
-    }
+	@Override
+	public HasPreviewFormHandlers<SimpleCampaign> getPreviewFormHandlers() {
+		return campaignPreview.getPreviewForm();
+	}
 
-    @Override
-    public SimpleCampaign getItem() {
-        return campaignPreview.getCampaign();
-    }
+	@Override
+	public SimpleCampaign getItem() {
+		return campaignPreview.getCampaign();
+	}
 
-    @Override
-    public IRelatedListHandlers getRelatedActivityHandlers() {
-        return campaignPreview.getAssociateActivityList();
-    }
+	@Override
+	public IRelatedListHandlers getRelatedActivityHandlers() {
+		return campaignPreview.getAssociateActivityList();
+	}
 
-    @Override
-    public IRelatedListHandlers<SimpleAccount> getRelatedAccountHandlers() {
-        return campaignPreview.getAssociateAccountList();
-    }
+	@Override
+	public IRelatedListHandlers<SimpleAccount> getRelatedAccountHandlers() {
+		return campaignPreview.getAssociateAccountList();
+	}
 
-    @Override
-    public IRelatedListHandlers<SimpleContact> getRelatedContactHandlers() {
-        return campaignPreview.getAssociateContactList();
-    }
+	@Override
+	public IRelatedListHandlers<SimpleContact> getRelatedContactHandlers() {
+		return campaignPreview.getAssociateContactList();
+	}
 
-    @Override
-    public IRelatedListHandlers<SimpleLead> getRelatedLeadHandlers() {
-        return campaignPreview.getAssociateLeadList();
-    }
+	@Override
+	public IRelatedListHandlers<SimpleLead> getRelatedLeadHandlers() {
+		return campaignPreview.getAssociateLeadList();
+	}
 }

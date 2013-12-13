@@ -78,15 +78,15 @@ public class CampaignReadPresenter extends
 
 	private void bind() {
 		view.getPreviewFormHandlers().addFormHandler(
-				new DefaultPreviewFormHandler<CampaignWithBLOBs>() {
+				new DefaultPreviewFormHandler<SimpleCampaign>() {
 					@Override
-					public void onEdit(CampaignWithBLOBs data) {
+					public void onEdit(SimpleCampaign data) {
 						EventBus.getInstance().fireEvent(
 								new CampaignEvent.GotoEdit(this, data));
 					}
 
 					@Override
-					public void onDelete(final CampaignWithBLOBs data) {
+					public void onDelete(final SimpleCampaign data) {
 						ConfirmDialogExt.show(
 								UI.getCurrent(),
 								LocalizationHelper.getMessage(
@@ -119,9 +119,8 @@ public class CampaignReadPresenter extends
 					}
 
 					@Override
-					public void onClone(CampaignWithBLOBs data) {
-						CampaignWithBLOBs cloneData = (CampaignWithBLOBs) data
-								.copy();
+					public void onClone(SimpleCampaign data) {
+						SimpleCampaign cloneData = (SimpleCampaign) data.copy();
 						cloneData.setId(null);
 						EventBus.getInstance().fireEvent(
 								new CampaignEvent.GotoEdit(this, cloneData));
@@ -134,7 +133,7 @@ public class CampaignReadPresenter extends
 					}
 
 					@Override
-					public void gotoNext(CampaignWithBLOBs data) {
+					public void gotoNext(SimpleCampaign data) {
 						CampaignService contactService = ApplicationContextUtil
 								.getSpringBean(CampaignService.class);
 						CampaignSearchCriteria criteria = new CampaignSearchCriteria();
@@ -154,7 +153,7 @@ public class CampaignReadPresenter extends
 					}
 
 					@Override
-					public void gotoPrevious(CampaignWithBLOBs data) {
+					public void gotoPrevious(SimpleCampaign data) {
 						CampaignService contactService = ApplicationContextUtil
 								.getSpringBean(CampaignService.class);
 						CampaignSearchCriteria criteria = new CampaignSearchCriteria();

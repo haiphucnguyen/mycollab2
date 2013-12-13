@@ -8,11 +8,14 @@ import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.criteria.EventSearchCriteria;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
+import com.esofthead.mycollab.module.crm.ui.components.AbstractPreviewItemComp;
 import com.esofthead.mycollab.module.crm.ui.components.NoteListItems;
 import com.esofthead.mycollab.module.crm.view.activity.EventRelatedItemListComp;
+import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
+import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.web.AppContext;
-import com.vaadin.ui.VerticalLayout;
+import com.esofthead.mycollab.web.MyCollabResource;
 
 /**
  * 
@@ -20,32 +23,16 @@ import com.vaadin.ui.VerticalLayout;
  * @since 3.0
  * 
  */
-public class AbstractContactPreviewComp extends VerticalLayout {
+public abstract class AbstractContactPreviewComp extends
+		AbstractPreviewItemComp<SimpleContact> {
 	private static final long serialVersionUID = 1L;
 
-	protected AdvancedPreviewBeanForm<SimpleContact> previewForm;
-	protected SimpleContact contact;
 	protected ContactOpportunityListComp associateOpportunityList;
 	protected EventRelatedItemListComp associateActivityList;
 	protected NoteListItems noteListItems;
 
-	protected void initRelatedComponent() {
-		this.associateOpportunityList = new ContactOpportunityListComp();
-		this.associateActivityList = new EventRelatedItemListComp(true);
-		this.noteListItems = new NoteListItems("Notes");
-	}
-
-	public void previewItem(final SimpleContact item) {
-		this.contact = item;
-		previewForm.setFormLayoutFactory(new DynaFormLayout(
-				CrmTypeConstants.CONTACT, ContactDefaultDynaFormLayoutFactory
-						.getForm()));
-		previewForm.setBeanFormFieldFactory(new ContactReadFormFieldFactory(
-				previewForm));
-		previewForm.setBean(item);
-		this.displayNotes();
-		this.displayActivities();
-		this.displayAssociateOpportunityList();
+	public AbstractContactPreviewComp() {
+		super(MyCollabResource.newResource("icons/22/crm/contact.png"));
 	}
 
 	public ContactOpportunityListComp getAssociateOpportunityList() {
@@ -57,7 +44,7 @@ public class AbstractContactPreviewComp extends VerticalLayout {
 	}
 
 	public SimpleContact getContact() {
-		return this.contact;
+		return this.beanItem;
 	}
 
 	public AdvancedPreviewBeanForm<SimpleContact> getPreviewForm() {
@@ -66,7 +53,7 @@ public class AbstractContactPreviewComp extends VerticalLayout {
 
 	protected void displayNotes() {
 		this.noteListItems.showNotes(CrmTypeConstants.CONTACT,
-				this.contact.getId());
+				this.beanItem.getId());
 	}
 
 	protected void displayActivities() {
@@ -74,7 +61,7 @@ public class AbstractContactPreviewComp extends VerticalLayout {
 		criteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
 		criteria.setType(new StringSearchField(SearchField.AND,
 				CrmTypeConstants.CONTACT));
-		criteria.setTypeid(new NumberSearchField(this.contact.getId()));
+		criteria.setTypeid(new NumberSearchField(this.beanItem.getId()));
 		this.associateActivityList.setSearchCriteria(criteria);
 	}
 
@@ -83,8 +70,39 @@ public class AbstractContactPreviewComp extends VerticalLayout {
 		criteria.setSaccountid(new NumberSearchField(SearchField.AND,
 				AppContext.getAccountId()));
 		criteria.setContactId(new NumberSearchField(SearchField.AND,
-				this.contact.getId()));
-		this.associateOpportunityList.displayOpportunities(this.contact);
+				this.beanItem.getId()));
+		this.associateOpportunityList.displayOpportunities(this.beanItem);
+	}
+
+	@Override
+	protected void onPreviewItem() {
+		this.displayNotes();
+		this.displayActivities();
+		this.displayAssociateOpportunityList();
+	}
+
+	@Override
+	protected String initFormTitle() {
+		return beanItem.getContactName();
+	}
+
+	@Override
+	protected void initRelatedComponents() {
+		this.associateOpportunityList = new ContactOpportunityListComp();
+		this.associateActivityList = new EventRelatedItemListComp(true);
+		this.noteListItems = new NoteListItems("Notes");
+
+	}
+
+	@Override
+	protected IFormLayoutFactory initFormLayoutFactory() {
+		return new DynaFormLayout(CrmTypeConstants.CONTACT,
+				ContactDefaultDynaFormLayoutFactory.getForm());
+	}
+
+	@Override
+	protected AbstractBeanFieldGroupViewFieldFactory<SimpleContact> initBeanFormFieldFactory() {
+		return new ContactReadFormFieldFactory(previewForm);
 	}
 
 }

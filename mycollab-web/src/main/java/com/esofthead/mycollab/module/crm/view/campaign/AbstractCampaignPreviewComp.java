@@ -7,12 +7,14 @@ import com.esofthead.mycollab.form.view.DynaFormLayout;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.domain.criteria.EventSearchCriteria;
+import com.esofthead.mycollab.module.crm.ui.components.AbstractPreviewItemComp;
 import com.esofthead.mycollab.module.crm.ui.components.NoteListItems;
 import com.esofthead.mycollab.module.crm.view.activity.EventRelatedItemListComp;
-import com.esofthead.mycollab.module.crm.view.contact.ContactDefaultDynaFormLayoutFactory;
+import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
+import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.web.AppContext;
-import com.vaadin.ui.VerticalLayout;
+import com.esofthead.mycollab.web.MyCollabResource;
 
 /**
  * 
@@ -20,17 +22,21 @@ import com.vaadin.ui.VerticalLayout;
  * @since 3.0
  * 
  */
-class AbstractCampaignPreviewComp extends VerticalLayout {
+abstract class AbstractCampaignPreviewComp extends
+		AbstractPreviewItemComp<SimpleCampaign> {
 	private static final long serialVersionUID = 1L;
 
-	protected AdvancedPreviewBeanForm<SimpleCampaign> previewForm;
-	protected SimpleCampaign campaign;
 	protected CampaignAccountListComp associateAccountList;
 	protected CampaignContactListComp associateContactList;
 	protected CampaignLeadListComp associateLeadList;
 	protected EventRelatedItemListComp associateActivityList;
 	protected NoteListItems noteListItems;
 
+	public AbstractCampaignPreviewComp() {
+		super(MyCollabResource.newResource("icons/22/crm/campaign.png"));
+	}
+
+	@Override
 	protected void initRelatedComponents() {
 		associateAccountList = new CampaignAccountListComp();
 		associateContactList = new CampaignContactListComp();
@@ -39,18 +45,8 @@ class AbstractCampaignPreviewComp extends VerticalLayout {
 		noteListItems = new NoteListItems("Notes");
 	}
 
-	public void previewItem(SimpleCampaign campaign) {
-		this.campaign = campaign;
-		previewForm.setFormLayoutFactory(new DynaFormLayout(
-				CrmTypeConstants.CONTACT, ContactDefaultDynaFormLayoutFactory
-						.getForm()));
-		previewForm.setBeanFormFieldFactory(new CampaignReadFormFieldFactory(
-				previewForm));
-		previewForm.setBean(campaign);
-	}
-
 	protected void displayNotes() {
-		noteListItems.showNotes(CrmTypeConstants.CAMPAIGN, campaign.getId());
+		noteListItems.showNotes(CrmTypeConstants.CAMPAIGN, beanItem.getId());
 	}
 
 	protected void displayActivities() {
@@ -58,24 +54,24 @@ class AbstractCampaignPreviewComp extends VerticalLayout {
 		criteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
 		criteria.setType(new StringSearchField(SearchField.AND,
 				CrmTypeConstants.CAMPAIGN));
-		criteria.setTypeid(new NumberSearchField(campaign.getId()));
+		criteria.setTypeid(new NumberSearchField(beanItem.getId()));
 		associateActivityList.setSearchCriteria(criteria);
 	}
 
 	protected void displayAccounts() {
-		associateAccountList.displayAccounts(campaign);
+		associateAccountList.displayAccounts(beanItem);
 	}
 
 	protected void displayContacts() {
-		associateContactList.displayContacts(campaign);
+		associateContactList.displayContacts(beanItem);
 	}
 
 	protected void displayLeads() {
-		associateLeadList.displayLeads(campaign);
+		associateLeadList.displayLeads(beanItem);
 	}
 
 	public SimpleCampaign getCampaign() {
-		return campaign;
+		return beanItem;
 	}
 
 	public AdvancedPreviewBeanForm<SimpleCampaign> getPreviewForm() {
@@ -96,5 +92,29 @@ class AbstractCampaignPreviewComp extends VerticalLayout {
 
 	public CampaignLeadListComp getAssociateLeadList() {
 		return associateLeadList;
+	}
+
+	@Override
+	protected void onPreviewItem() {
+		displayActivities();
+		displayAccounts();
+		displayContacts();
+		displayLeads();
+	}
+
+	@Override
+	protected String initFormTitle() {
+		return beanItem.getCampaignname();
+	}
+
+	@Override
+	protected IFormLayoutFactory initFormLayoutFactory() {
+		return new DynaFormLayout(CrmTypeConstants.CAMPAIGN,
+				CampaignDefaultDynaFormLayoutFactory.getForm());
+	}
+
+	@Override
+	protected AbstractBeanFieldGroupViewFieldFactory<SimpleCampaign> initBeanFormFieldFactory() {
+		return new CampaignReadFormFieldFactory(previewForm);
 	}
 }

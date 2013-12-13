@@ -5,15 +5,12 @@ import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.ui.components.CrmPreviewFormControlsGenerator;
 import com.esofthead.mycollab.security.RolePermissionCollections;
-import com.esofthead.mycollab.vaadin.ui.AddViewLayout2;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.JavaScript;
-import com.vaadin.ui.Layout;
 import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.UI;
-import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
 /**
@@ -25,16 +22,9 @@ import com.vaadin.ui.Window;
 class CampaignReadComp extends AbstractCampaignPreviewComp {
 	private static final long serialVersionUID = 1L;
 
-	private AddViewLayout2 campaignLayout;
-
-	public CampaignReadComp() {
-		campaignLayout = new AddViewLayout2("",
-				MyCollabResource.newResource("icons/22/crm/account.png"));
-		this.addComponent(campaignLayout);
-
-		this.initRelatedComponents();
-
-		previewForm = new AdvancedPreviewBeanForm<SimpleCampaign>() {
+	@Override
+	protected AdvancedPreviewBeanForm<SimpleCampaign> initPreviewForm() {
+		return new AdvancedPreviewBeanForm<SimpleCampaign>() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -43,7 +33,7 @@ class CampaignReadComp extends AbstractCampaignPreviewComp {
 				final Window window = new Window("Window to Print");
 
 				final CampaignPrintComp printView = new CampaignPrintComp();
-				printView.previewItem(campaign);
+				printView.previewItem(beanItem);
 				window.setContent(printView);
 
 				UI.getCurrent().addWindow(window);
@@ -58,25 +48,20 @@ class CampaignReadComp extends AbstractCampaignPreviewComp {
 			public void showHistory() {
 				final CampaignHistoryLogWindow historyLog = new CampaignHistoryLogWindow(
 						ModuleNameConstants.CRM, CrmTypeConstants.CAMPAIGN,
-						campaign.getId());
+						beanItem.getId());
 				UI.getCurrent().addWindow(historyLog);
 			}
 		};
-
-		VerticalLayout campaignInformation = new VerticalLayout();
-		campaignInformation.addStyleName("main-info");
-		final Layout actionControls = CrmPreviewFormControlsGenerator
-				.createFormButtonControls(previewForm,
-						RolePermissionCollections.CRM_CAMPAIGN);
-		actionControls.addStyleName("control-buttons");
-		campaignInformation.addComponent(actionControls);
-
-		campaignInformation.addComponent(previewForm);
-		campaignLayout.addBody(campaignInformation);
-		campaignLayout.addBody(createBottomPanel());
 	}
 
-	private ComponentContainer createBottomPanel() {
+	@Override
+	protected ComponentContainer createButtonControls() {
+		return CrmPreviewFormControlsGenerator.createFormButtonControls(
+				previewForm, RolePermissionCollections.CRM_CAMPAIGN);
+	}
+
+	@Override
+	protected ComponentContainer createBottomPanel() {
 		final TabSheet tabContainer = new TabSheet();
 		tabContainer.setWidth("100%");
 
