@@ -80,12 +80,18 @@ class AccountReadComp extends AbstractAccountPreviewComp {
 		final TabSheet tabContainer = new TabSheet();
 		tabContainer.setWidth("100%");
 
-		tabContainer.addTab(noteListItems, "Notes");
-		tabContainer.addTab(associateContactList, "Contacts");
-		tabContainer.addTab(associateOpportunityList, "Opportunities");
-		tabContainer.addTab(associateLeadList, "Leads");
-		tabContainer.addTab(associateCaseList, "Cases");
-		tabContainer.addTab(associateActivityList, "Activities");
+		tabContainer.addTab(noteListItems, "Notes",
+				MyCollabResource.newResource("icons/16/crm/note.png"));
+		tabContainer.addTab(associateContactList, "Contacts",
+				MyCollabResource.newResource("icons/16/crm/contact.png"));
+		tabContainer.addTab(associateOpportunityList, "Opportunities",
+				MyCollabResource.newResource("icons/16/crm/opportunity.png"));
+		tabContainer.addTab(associateLeadList, "Leads",
+				MyCollabResource.newResource("icons/16/crm/lead.png"));
+		tabContainer.addTab(associateCaseList, "Cases",
+				MyCollabResource.newResource("icons/16/crm/case.png"));
+		tabContainer.addTab(associateActivityList, "Activities",
+				MyCollabResource.newResource("icons/16/crm/calendar.png"));
 		return tabContainer;
 	}
 
