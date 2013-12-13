@@ -53,11 +53,6 @@ class AccountReadComp extends AbstractAccountPreviewComp {
 	}
 
 	@Override
-	protected String initFormTitle() {
-		return beanItem.getAccountname();
-	}
-
-	@Override
 	protected AdvancedPreviewBeanForm<SimpleAccount> initPreviewForm() {
 		return new AdvancedPreviewBeanForm<SimpleAccount>() {
 			private static final long serialVersionUID = 1L;

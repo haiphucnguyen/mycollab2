@@ -133,7 +133,7 @@ public abstract class AbstractAccountPreviewComp extends
 	@Override
 	protected IFormLayoutFactory initFormLayoutFactory() {
 		return new DynaFormLayout(CrmTypeConstants.ACCOUNT,
-				AccountDefaultDynaFormFactory.getForm());
+				AccountDefaultDynaFormLayoutFactory.getForm());
 	}
 
 	@Override

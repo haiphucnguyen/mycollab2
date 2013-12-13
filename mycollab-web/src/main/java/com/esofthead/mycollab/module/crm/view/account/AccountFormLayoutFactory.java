@@ -54,7 +54,7 @@ public abstract class AccountFormLayoutFactory implements IFormLayoutFactory {
 		}
 
 		informationLayout = new DynaFormLayout(CrmTypeConstants.ACCOUNT,
-				AccountDefaultDynaFormFactory.getForm());
+				AccountDefaultDynaFormLayoutFactory.getForm());
 
 		accountAddLayout.addBody(informationLayout.getLayout());
 

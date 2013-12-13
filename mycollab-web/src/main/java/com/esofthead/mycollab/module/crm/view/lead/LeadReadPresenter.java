@@ -33,7 +33,6 @@ import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.CallWithBLOBs;
 import com.esofthead.mycollab.module.crm.domain.CampaignLead;
 import com.esofthead.mycollab.module.crm.domain.CampaignWithBLOBs;
-import com.esofthead.mycollab.module.crm.domain.Lead;
 import com.esofthead.mycollab.module.crm.domain.MeetingWithBLOBs;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
@@ -70,15 +69,15 @@ public class LeadReadPresenter extends CrmGenericPresenter<LeadReadView> {
 
 	private void bind() {
 		view.getPreviewFormHandlers().addFormHandler(
-				new DefaultPreviewFormHandler<Lead>() {
+				new DefaultPreviewFormHandler<SimpleLead>() {
 					@Override
-					public void onEdit(Lead data) {
+					public void onEdit(SimpleLead data) {
 						EventBus.getInstance().fireEvent(
 								new LeadEvent.GotoEdit(this, data));
 					}
 
 					@Override
-					public void onDelete(final Lead data) {
+					public void onDelete(final SimpleLead data) {
 						ConfirmDialogExt.show(
 								UI.getCurrent(),
 								LocalizationHelper.getMessage(
@@ -111,8 +110,8 @@ public class LeadReadPresenter extends CrmGenericPresenter<LeadReadView> {
 					}
 
 					@Override
-					public void onClone(Lead data) {
-						Lead cloneData = (Lead) data.copy();
+					public void onClone(SimpleLead data) {
+						SimpleLead cloneData = (SimpleLead) data.copy();
 						cloneData.setId(null);
 						EventBus.getInstance().fireEvent(
 								new LeadEvent.GotoEdit(this, cloneData));
@@ -125,7 +124,7 @@ public class LeadReadPresenter extends CrmGenericPresenter<LeadReadView> {
 					}
 
 					@Override
-					public void gotoNext(Lead data) {
+					public void gotoNext(SimpleLead data) {
 						LeadService contactService = ApplicationContextUtil
 								.getSpringBean(LeadService.class);
 						LeadSearchCriteria criteria = new LeadSearchCriteria();
@@ -145,7 +144,7 @@ public class LeadReadPresenter extends CrmGenericPresenter<LeadReadView> {
 					}
 
 					@Override
-					public void gotoPrevious(Lead data) {
+					public void gotoPrevious(SimpleLead data) {
 						LeadService contactService = ApplicationContextUtil
 								.getSpringBean(LeadService.class);
 						LeadSearchCriteria criteria = new LeadSearchCriteria();
