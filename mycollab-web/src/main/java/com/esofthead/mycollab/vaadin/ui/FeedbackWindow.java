@@ -56,7 +56,7 @@ public class FeedbackWindow extends Window {
 	private void initLayout() {
 		this.setWidth("600px");
 		this.setHeight("450px");
-		this.setCaption("Send us feedback for MyCollab ");
+		this.setCaption("Send us feedback for MyCollab");
 		initUI();
 		center();
 		this.setModal(true);

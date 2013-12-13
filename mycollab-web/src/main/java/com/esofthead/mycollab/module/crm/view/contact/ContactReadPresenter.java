@@ -69,15 +69,15 @@ public class ContactReadPresenter extends CrmGenericPresenter<ContactReadView> {
 
 	private void bind() {
 		view.getPreviewFormHandlers().addFormHandler(
-				new DefaultPreviewFormHandler<Contact>() {
+				new DefaultPreviewFormHandler<SimpleContact>() {
 					@Override
-					public void onEdit(Contact data) {
+					public void onEdit(SimpleContact data) {
 						EventBus.getInstance().fireEvent(
 								new ContactEvent.GotoEdit(this, data));
 					}
 
 					@Override
-					public void onDelete(final Contact data) {
+					public void onDelete(final SimpleContact data) {
 
 						ConfirmDialogExt.show(
 								UI.getCurrent(),
@@ -111,8 +111,8 @@ public class ContactReadPresenter extends CrmGenericPresenter<ContactReadView> {
 					}
 
 					@Override
-					public void onClone(Contact data) {
-						Contact cloneData = (Contact) data.copy();
+					public void onClone(SimpleContact data) {
+						SimpleContact cloneData = (SimpleContact) data.copy();
 						cloneData.setId(null);
 						EventBus.getInstance().fireEvent(
 								new ContactEvent.GotoEdit(this, cloneData));
@@ -125,7 +125,7 @@ public class ContactReadPresenter extends CrmGenericPresenter<ContactReadView> {
 					}
 
 					@Override
-					public void gotoNext(Contact data) {
+					public void gotoNext(SimpleContact data) {
 						ContactService contactService = ApplicationContextUtil
 								.getSpringBean(ContactService.class);
 						ContactSearchCriteria criteria = new ContactSearchCriteria();
@@ -145,7 +145,7 @@ public class ContactReadPresenter extends CrmGenericPresenter<ContactReadView> {
 					}
 
 					@Override
-					public void gotoPrevious(Contact data) {
+					public void gotoPrevious(SimpleContact data) {
 						ContactService contactService = ApplicationContextUtil
 								.getSpringBean(ContactService.class);
 						ContactSearchCriteria criteria = new ContactSearchCriteria();

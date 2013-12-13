@@ -1,9 +1,7 @@
 package com.esofthead.mycollab.vaadin.ui;
 
-import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.utils.ClassUtils;
 import com.vaadin.data.fieldgroup.FieldGroup;
-import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.AbstractTextField;
 import com.vaadin.ui.Field;
@@ -35,15 +33,6 @@ public abstract class AbstractBeanFieldGroupFieldFactory<B> implements
 		java.lang.reflect.Field[] fields = ClassUtils.getAllFields(beanClass);
 		for (java.lang.reflect.Field field : fields) {
 			bindField(field.getName());
-		}
-	}
-
-	@Override
-	public final void commit() {
-		try {
-			fieldGroup.commit();
-		} catch (CommitException e) {
-			throw new MyCollabException(e);
 		}
 	}
 

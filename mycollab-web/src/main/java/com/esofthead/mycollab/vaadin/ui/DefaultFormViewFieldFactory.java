@@ -142,6 +142,12 @@ public class DefaultFormViewFieldFactory extends DefaultFieldFactory {
 
 		private HorizontalLayout layout;
 
+		public FormContainerHorizontalViewField() {
+			layout = new HorizontalLayout();
+			layout.setWidth("100%");
+			layout.setSpacing(true);
+		}
+
 		public void addComponentField(final Component component) {
 			layout.addComponent(component);
 		}
@@ -157,9 +163,6 @@ public class DefaultFormViewFieldFactory extends DefaultFieldFactory {
 
 		@Override
 		protected Component initContent() {
-			layout = new HorizontalLayout();
-			layout.setWidth("100%");
-			layout.setSpacing(true);
 			return layout;
 		}
 	}

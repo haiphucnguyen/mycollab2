@@ -25,6 +25,13 @@ import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.VerticalLayout;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ * @param <S>
+ */
 public abstract class GenericChartWrapper<S extends SearchCriteria> extends
 		VerticalLayout {
 	private static final long serialVersionUID = 1L;

@@ -38,8 +38,4 @@ public class AccountReadFormFieldFactory extends
 		return null;
 	}
 
-	@Override
-	public void commit() {
-	}
-
 }
