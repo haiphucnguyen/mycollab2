@@ -13,10 +13,6 @@
         <listener-class>org.jboss.resteasy.plugins.spring.SpringContextLoaderListener</listener-class>
     </listener>
 
-    <listener>
-        <listener-class>org.icepush.util.ExtensionRegistry</listener-class>
-    </listener>
-
     <filter>
         <filter-name>ExpiresFilter</filter-name>
         <filter-class>fr.xebia.servlet.filter.ExpiresFilter</filter-class>
@@ -56,9 +52,10 @@
 
     <servlet>
         <servlet-name>MyCollabApplication</servlet-name>
-        <servlet-class>com.esofthead.mycollab.web.MyCollabServlet</servlet-class>
+        <servlet-class>com.vaadin.server.VaadinServlet</servlet-class>
         <init-param>
-            <param-name>application</param-name>
+            <description>Vaadin UI</description>
+            <param-name>UI</param-name>
             <param-value>com.esofthead.mycollab.web.MyCollabApplication</param-value>
         </init-param>
         <init-param>

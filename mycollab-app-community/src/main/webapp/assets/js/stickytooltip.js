@@ -210,7 +210,7 @@ function overIt(dateTimeTypeIdStr, type, typeId, url, sAccountId, siteURL, timeZ
 	});
 	if($("#"+idDIVserverdata).html()== ""){
 		$.ajax({
-		      type: 'POST',
+	          type:'POST',
 		      url: url,
 		      data : { type: type, typeId: typeId , sAccountId : sAccountId, siteURL: siteURL , timeZone: timeZone},
 		      success: function(data){

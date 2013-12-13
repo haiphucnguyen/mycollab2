@@ -27,13 +27,13 @@ import com.esofthead.mycollab.vaadin.mvp.IPreviewView;
  * 
  * @author MyCollab Ltd.
  * @since 2.0
- *
+ * 
  */
 public interface ContactReadView extends IPreviewView<SimpleContact> {
 
-    HasPreviewFormHandlers<Contact> getPreviewFormHandlers();
+	HasPreviewFormHandlers<SimpleContact> getPreviewFormHandlers();
 
-    IRelatedListHandlers getRelatedActivityHandlers();
-    
-    IRelatedListHandlers<SimpleOpportunity> getRelatedOpportunityHandlers();
+	IRelatedListHandlers getRelatedActivityHandlers();
+
+	IRelatedListHandlers<SimpleOpportunity> getRelatedOpportunityHandlers();
 }

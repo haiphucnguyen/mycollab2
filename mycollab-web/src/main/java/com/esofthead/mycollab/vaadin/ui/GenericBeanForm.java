@@ -82,12 +82,6 @@ public class GenericBeanForm<B> extends CssLayout {
 		fieldFactory.setBean(bean);
 	}
 
-	public void commit() {
-		if (fieldFactory != null) {
-			fieldFactory.commit();
-		}
-	}
-
 	@Deprecated
 	public void setItemDataSource(final Item newDataSource) {
 	}

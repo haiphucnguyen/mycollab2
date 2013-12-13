@@ -8,7 +8,6 @@ import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout2;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.web.MyCollabResource;
-import com.vaadin.data.Item;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.JavaScript;
 import com.vaadin.ui.Layout;
@@ -56,12 +55,6 @@ class AccountReadComp extends AbstractAccountPreviewComp {
 			}
 
 			@Override
-			public void setItemDataSource(final Item newDataSource) {
-				super.setItemDataSource(newDataSource);
-				accountAddLayout.setTitle(account.getAccountname());
-			}
-
-			@Override
 			public void showHistory() {
 				final AccountHistoryLogWindow historyLog = new AccountHistoryLogWindow(
 						ModuleNameConstants.CRM, CrmTypeConstants.ACCOUNT,
@@ -84,16 +77,16 @@ class AccountReadComp extends AbstractAccountPreviewComp {
 	}
 
 	private ComponentContainer createBottomPanel() {
-		final TabSheet tabTaskDetail = new TabSheet();
-		tabTaskDetail.setWidth("100%");
+		final TabSheet tabContainer = new TabSheet();
+		tabContainer.setWidth("100%");
 
-		tabTaskDetail.addTab(noteListItems, "Notes");
-		tabTaskDetail.addTab(associateContactList, "Contacts");
-		tabTaskDetail.addTab(associateOpportunityList, "Opportunities");
-		tabTaskDetail.addTab(associateLeadList, "Leads");
-		tabTaskDetail.addTab(associateCaseList, "Cases");
-		tabTaskDetail.addTab(associateActivityList, "Activities");
-		return tabTaskDetail;
+		tabContainer.addTab(noteListItems, "Notes");
+		tabContainer.addTab(associateContactList, "Contacts");
+		tabContainer.addTab(associateOpportunityList, "Opportunities");
+		tabContainer.addTab(associateLeadList, "Leads");
+		tabContainer.addTab(associateCaseList, "Cases");
+		tabContainer.addTab(associateActivityList, "Activities");
+		return tabContainer;
 	}
 
 	@Override

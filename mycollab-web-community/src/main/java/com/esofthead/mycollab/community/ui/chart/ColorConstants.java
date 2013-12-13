@@ -32,6 +32,12 @@
  */
 package com.esofthead.mycollab.community.ui.chart;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class ColorConstants {
 
 	public static final String BLACK = "000000";
@@ -55,5 +61,5 @@ public class ColorConstants {
 	public static final String BROWN = "987456";
 	public static final String LIVER = "674C47";
 	public static final String LION = "C19A6B";
-	
+
 }
