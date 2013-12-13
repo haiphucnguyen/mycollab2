@@ -1,8 +1,8 @@
-package com.esofthead.mycollab.module.crm.view.lead;
+package com.esofthead.mycollab.module.crm.view.opportunity;
 
 import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
-import com.esofthead.mycollab.module.crm.domain.SimpleLead;
+import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.ui.components.CrmPreviewFormControlsGenerator;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
@@ -19,12 +19,12 @@ import com.vaadin.ui.Window;
  * @since 3.0
  * 
  */
-class LeadReadComp extends AbstractLeadPreviewComp {
+class OpportunityReadComp extends AbstractOpportunityPreviewComp {
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	protected AdvancedPreviewBeanForm<SimpleLead> initPreviewForm() {
-		return new AdvancedPreviewBeanForm<SimpleLead>() {
+	protected AdvancedPreviewBeanForm<SimpleOpportunity> initPreviewForm() {
+		return new AdvancedPreviewBeanForm<SimpleOpportunity>() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -32,7 +32,7 @@ class LeadReadComp extends AbstractLeadPreviewComp {
 				// Create a window that contains what you want to print
 				Window window = new Window("Window to Print");
 
-				LeadPrintComp printView = new LeadPrintComp();
+				OpportunityPrintComp printView = new OpportunityPrintComp();
 				printView.previewItem(beanItem);
 				window.setContent(printView);
 
@@ -46,8 +46,8 @@ class LeadReadComp extends AbstractLeadPreviewComp {
 
 			@Override
 			public void showHistory() {
-				LeadHistoryLogWindow historyLog = new LeadHistoryLogWindow(
-						ModuleNameConstants.CRM, CrmTypeConstants.LEAD,
+				OpportunityHistoryLogWindow historyLog = new OpportunityHistoryLogWindow(
+						ModuleNameConstants.CRM, CrmTypeConstants.OPPORTUNITY,
 						beanItem.getId());
 				UI.getCurrent().addWindow(historyLog);
 			}
@@ -57,7 +57,7 @@ class LeadReadComp extends AbstractLeadPreviewComp {
 	@Override
 	protected ComponentContainer createButtonControls() {
 		return CrmPreviewFormControlsGenerator.createFormButtonControls(
-				previewForm, RolePermissionCollections.CRM_LEAD);
+				previewForm, RolePermissionCollections.CRM_OPPORTUNITY);
 	}
 
 	@Override
@@ -67,8 +67,10 @@ class LeadReadComp extends AbstractLeadPreviewComp {
 
 		tabContainer.addTab(noteListItems, "Notes",
 				MyCollabResource.newResource("icons/16/crm/note.png"));
-		tabContainer.addTab(associateCampaignList, "Campaigns",
-				MyCollabResource.newResource("icons/16/crm/campaign.png"));
+		tabContainer.addTab(associateContactList, "Contacts",
+				MyCollabResource.newResource("icons/16/crm/contact.png"));
+		tabContainer.addTab(associateLeadList, "Leads",
+				MyCollabResource.newResource("icons/16/crm/lead.png"));
 		tabContainer.addTab(associateActivityList, "Activities",
 				MyCollabResource.newResource("icons/16/crm/calendar.png"));
 

@@ -140,4 +140,14 @@ public abstract class AbstractAccountPreviewComp extends
 	protected AbstractBeanFieldGroupViewFieldFactory<SimpleAccount> initBeanFormFieldFactory() {
 		return new AccountReadFormFieldFactory(previewForm);
 	}
+
+	@Override
+	protected void onPreviewItem() {
+		displayNotes();
+		displayActivities();
+		associateContactList.displayContacts(beanItem);
+		displayAssociateCaseList();
+		displayAssociateOpportunityList();
+		displayAssociateLeadList();
+	}
 }

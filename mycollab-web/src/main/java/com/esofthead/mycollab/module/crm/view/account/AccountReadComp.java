@@ -43,16 +43,6 @@ class AccountReadComp extends AbstractAccountPreviewComp {
 	}
 
 	@Override
-	protected void onPreviewItem() {
-		displayNotes();
-		displayActivities();
-		associateContactList.displayContacts(beanItem);
-		displayAssociateCaseList();
-		displayAssociateOpportunityList();
-		displayAssociateLeadList();
-	}
-
-	@Override
 	protected AdvancedPreviewBeanForm<SimpleAccount> initPreviewForm() {
 		return new AdvancedPreviewBeanForm<SimpleAccount>() {
 			private static final long serialVersionUID = 1L;

@@ -1,6 +1,6 @@
-package com.esofthead.mycollab.module.crm.view.account;
+package com.esofthead.mycollab.module.crm.view.opportunity;
 
-import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
+import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.VerticalLayout;
@@ -11,12 +11,12 @@ import com.vaadin.ui.VerticalLayout;
  * @since 3.0
  * 
  */
-class AccountPrintComp extends AbstractAccountPreviewComp {
+class OpportunityPrintComp extends AbstractOpportunityPreviewComp {
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	protected AdvancedPreviewBeanForm<SimpleAccount> initPreviewForm() {
-		return new AdvancedPreviewBeanForm<SimpleAccount>();
+	protected AdvancedPreviewBeanForm<SimpleOpportunity> initPreviewForm() {
+		return new AdvancedPreviewBeanForm<SimpleOpportunity>();
 	}
 
 	@Override
@@ -26,14 +26,12 @@ class AccountPrintComp extends AbstractAccountPreviewComp {
 
 	@Override
 	protected ComponentContainer createBottomPanel() {
-		final VerticalLayout relatedItemsPanel = new VerticalLayout();
+		VerticalLayout relatedItemsPanel = new VerticalLayout();
 		relatedItemsPanel.setWidth("100%");
 
 		relatedItemsPanel.addComponent(noteListItems);
 		relatedItemsPanel.addComponent(associateActivityList);
 		relatedItemsPanel.addComponent(associateContactList);
-		relatedItemsPanel.addComponent(associateOpportunityList);
-		relatedItemsPanel.addComponent(associateCaseList);
 		relatedItemsPanel.addComponent(associateLeadList);
 
 		return relatedItemsPanel;
