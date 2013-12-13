@@ -34,7 +34,6 @@ import com.esofthead.mycollab.module.crm.domain.CallWithBLOBs;
 import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.module.crm.domain.Lead;
 import com.esofthead.mycollab.module.crm.domain.MeetingWithBLOBs;
-import com.esofthead.mycollab.module.crm.domain.Opportunity;
 import com.esofthead.mycollab.module.crm.domain.OpportunityContact;
 import com.esofthead.mycollab.module.crm.domain.OpportunityLead;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
@@ -74,15 +73,15 @@ public class OpportunityReadPresenter extends
 
 	private void bind() {
 		view.getPreviewFormHandlers().addFormHandler(
-				new DefaultPreviewFormHandler<Opportunity>() {
+				new DefaultPreviewFormHandler<SimpleOpportunity>() {
 					@Override
-					public void onEdit(Opportunity data) {
+					public void onEdit(SimpleOpportunity data) {
 						EventBus.getInstance().fireEvent(
 								new OpportunityEvent.GotoEdit(this, data));
 					}
 
 					@Override
-					public void onDelete(final Opportunity data) {
+					public void onDelete(final SimpleOpportunity data) {
 						ConfirmDialogExt.show(
 								UI.getCurrent(),
 								LocalizationHelper.getMessage(
@@ -116,8 +115,9 @@ public class OpportunityReadPresenter extends
 					}
 
 					@Override
-					public void onClone(Opportunity data) {
-						Opportunity cloneData = (Opportunity) data.copy();
+					public void onClone(SimpleOpportunity data) {
+						SimpleOpportunity cloneData = (SimpleOpportunity) data
+								.copy();
 						cloneData.setId(null);
 						EventBus.getInstance().fireEvent(
 								new OpportunityEvent.GotoEdit(this, cloneData));
@@ -130,7 +130,7 @@ public class OpportunityReadPresenter extends
 					}
 
 					@Override
-					public void gotoNext(Opportunity data) {
+					public void gotoNext(SimpleOpportunity data) {
 						OpportunityService opportunityService = ApplicationContextUtil
 								.getSpringBean(OpportunityService.class);
 						OpportunitySearchCriteria criteria = new OpportunitySearchCriteria();
@@ -152,7 +152,7 @@ public class OpportunityReadPresenter extends
 					}
 
 					@Override
-					public void gotoPrevious(Opportunity data) {
+					public void gotoPrevious(SimpleOpportunity data) {
 						OpportunityService opportunityService = ApplicationContextUtil
 								.getSpringBean(OpportunityService.class);
 						OpportunitySearchCriteria criteria = new OpportunitySearchCriteria();

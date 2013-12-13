@@ -1,8 +1,8 @@
-package com.esofthead.mycollab.module.crm.view.contact;
+package com.esofthead.mycollab.module.crm.view.campaign;
 
 import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
-import com.esofthead.mycollab.module.crm.domain.SimpleContact;
+import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.ui.components.CrmPreviewFormControlsGenerator;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
@@ -15,30 +15,16 @@ import com.vaadin.ui.Window;
 
 /**
  * 
- * @author MyCollab
+ * @author MyCollab Ltd.
  * @since 3.0
  * 
  */
-class ContactReadComp extends AbstractContactPreviewComp {
+class CampaignReadComp extends AbstractCampaignPreviewComp {
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	protected ComponentContainer createBottomPanel() {
-		final TabSheet tabContainer = new TabSheet();
-		tabContainer.setWidth("100%");
-
-		tabContainer.addTab(this.noteListItems, "Notes",
-				MyCollabResource.newResource("icons/16/crm/note.png"));
-		tabContainer.addTab(this.associateActivityList, "Activities",
-				MyCollabResource.newResource("icons/16/crm/calendar.png"));
-		tabContainer.addTab(this.associateOpportunityList, "Opportunities",
-				MyCollabResource.newResource("icons/16/crm/opportunity.png"));
-		return tabContainer;
-	}
-
-	@Override
-	protected AdvancedPreviewBeanForm<SimpleContact> initPreviewForm() {
-		return new AdvancedPreviewBeanForm<SimpleContact>() {
+	protected AdvancedPreviewBeanForm<SimpleCampaign> initPreviewForm() {
+		return new AdvancedPreviewBeanForm<SimpleCampaign>() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -46,7 +32,7 @@ class ContactReadComp extends AbstractContactPreviewComp {
 				// Create a window that contains what you want to print
 				final Window window = new Window("Window to Print");
 
-				final ContactPrintComp printView = new ContactPrintComp();
+				final CampaignPrintComp printView = new CampaignPrintComp();
 				printView.previewItem(beanItem);
 				window.setContent(printView);
 
@@ -60,8 +46,8 @@ class ContactReadComp extends AbstractContactPreviewComp {
 
 			@Override
 			public void showHistory() {
-				final ContactHistoryLogWindow historyLog = new ContactHistoryLogWindow(
-						ModuleNameConstants.CRM, CrmTypeConstants.CONTACT,
+				final CampaignHistoryLogWindow historyLog = new CampaignHistoryLogWindow(
+						ModuleNameConstants.CRM, CrmTypeConstants.CAMPAIGN,
 						beanItem.getId());
 				UI.getCurrent().addWindow(historyLog);
 			}
@@ -71,6 +57,23 @@ class ContactReadComp extends AbstractContactPreviewComp {
 	@Override
 	protected ComponentContainer createButtonControls() {
 		return CrmPreviewFormControlsGenerator.createFormButtonControls(
-				previewForm, RolePermissionCollections.CRM_CONTACT);
+				previewForm, RolePermissionCollections.CRM_CAMPAIGN);
 	}
+
+	@Override
+	protected ComponentContainer createBottomPanel() {
+		final TabSheet tabContainer = new TabSheet();
+		tabContainer.setWidth("100%");
+
+		tabContainer.addTab(this.noteListItems, "Notes",
+				MyCollabResource.newResource("icons/16/crm/note.png"));
+		tabContainer.addTab(this.associateAccountList, "Notes",
+				MyCollabResource.newResource("icons/16/crm/account.png"));
+		tabContainer.addTab(this.associateContactList, "Contacts",
+				MyCollabResource.newResource("icons/16/crm/contact.png"));
+		tabContainer.addTab(this.associateLeadList, "Leads",
+				MyCollabResource.newResource("icons/16/crm/lead.png"));
+		return tabContainer;
+	}
+
 }

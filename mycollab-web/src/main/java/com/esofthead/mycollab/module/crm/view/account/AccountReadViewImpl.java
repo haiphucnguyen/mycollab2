@@ -27,7 +27,7 @@ import com.esofthead.mycollab.vaadin.ui.ViewComponent;
  * 
  * @author MyCollab Ltd.
  * @since 2.0
- *
+ * 
  */
 @ViewComponent
 public class AccountReadViewImpl extends AbstractPageView implements
@@ -54,7 +54,7 @@ public class AccountReadViewImpl extends AbstractPageView implements
 
 	@Override
 	public SimpleAccount getItem() {
-		return accountPreview.getAccount();
+		return accountPreview.getBeanItem();
 	}
 
 	@Override

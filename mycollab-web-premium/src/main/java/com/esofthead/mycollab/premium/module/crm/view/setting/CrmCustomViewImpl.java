@@ -25,7 +25,7 @@ import com.esofthead.mycollab.form.service.MasterFormService;
 import com.esofthead.mycollab.form.view.builder.type.DynaForm;
 import com.esofthead.mycollab.form.view.builder.type.DynaSection;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
-import com.esofthead.mycollab.module.crm.view.account.AccountDefaultDynaFormFactory;
+import com.esofthead.mycollab.module.crm.view.account.AccountDefaultDynaFormLayoutFactory;
 import com.esofthead.mycollab.module.crm.view.activity.AssignmentDefaultFormLayoutFactory;
 import com.esofthead.mycollab.module.crm.view.activity.CallDefaultFormLayoutFactory;
 import com.esofthead.mycollab.module.crm.view.activity.MeetingDefaultFormLayoutFactory;
@@ -205,7 +205,7 @@ public class CrmCustomViewImpl extends AbstractPageView implements
 
 		if (form == null) {
 			if (CrmTypeConstants.ACCOUNT.equals(moduleName)) {
-				form = AccountDefaultDynaFormFactory.getForm();
+				form = AccountDefaultDynaFormLayoutFactory.getForm();
 			} else if (CrmTypeConstants.CONTACT.equals(moduleName)) {
 				form = ContactDefaultDynaFormLayoutFactory.getForm();
 			} else if (CrmTypeConstants.CAMPAIGN.equals(moduleName)) {

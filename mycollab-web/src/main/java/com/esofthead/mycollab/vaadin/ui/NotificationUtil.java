@@ -56,7 +56,7 @@ public class NotificationUtil {
 						.getMessage(GenericI18Enum.INFORMATION_WINDOW_TITLE),
 				LocalizationHelper
 						.getMessage(GenericI18Enum.INFORMATION_GOTO_LAST_RECORD),
-				Type.WARNING_MESSAGE);
+				Type.HUMANIZED_MESSAGE);
 	}
 
 	public static void showGotoFirstRecordNotification() {

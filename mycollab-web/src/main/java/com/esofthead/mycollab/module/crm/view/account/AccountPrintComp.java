@@ -2,7 +2,7 @@ package com.esofthead.mycollab.module.crm.view.account;
 
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
-import com.vaadin.ui.Layout;
+import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.VerticalLayout;
 
 /**
@@ -14,50 +14,29 @@ import com.vaadin.ui.VerticalLayout;
 class AccountPrintComp extends AbstractAccountPreviewComp {
 	private static final long serialVersionUID = 1L;
 
-	public AccountPrintComp() {
-		previewForm = new AdvancedPreviewBeanForm<SimpleAccount>();
-		initRelatedComponents();
-
-		this.addComponent(previewForm);
+	@Override
+	protected AdvancedPreviewBeanForm<SimpleAccount> initPreviewForm() {
+		return new AdvancedPreviewBeanForm<SimpleAccount>();
 	}
 
 	@Override
-	public void previewItem(SimpleAccount item) {
-		super.previewItem(item);
-		displayActivities();
-		associateContactList.displayContacts(account);
-		displayAssociateCaseList();
-		displayAssociateOpportunityList();
-		displayAssociateLeadList();
+	protected ComponentContainer createButtonControls() {
+		return null;
 	}
 
-	class FormLayoutFactory extends AccountFormLayoutFactory {
+	@Override
+	protected ComponentContainer createBottomPanel() {
+		final VerticalLayout relatedItemsPanel = new VerticalLayout();
+		relatedItemsPanel.setWidth("100%");
 
-		private static final long serialVersionUID = 1L;
+		relatedItemsPanel.addComponent(noteListItems);
+		relatedItemsPanel.addComponent(associateActivityList);
+		relatedItemsPanel.addComponent(associateContactList);
+		relatedItemsPanel.addComponent(associateOpportunityList);
+		relatedItemsPanel.addComponent(associateCaseList);
+		relatedItemsPanel.addComponent(associateLeadList);
 
-		public FormLayoutFactory() {
-			super(account.getAccountname());
-		}
-
-		@Override
-		protected Layout createBottomPanel() {
-			final VerticalLayout relatedItemsPanel = new VerticalLayout();
-			relatedItemsPanel.setWidth("100%");
-
-			relatedItemsPanel.addComponent(noteListItems);
-			relatedItemsPanel.addComponent(associateActivityList);
-			relatedItemsPanel.addComponent(associateContactList);
-			relatedItemsPanel.addComponent(associateOpportunityList);
-			relatedItemsPanel.addComponent(associateCaseList);
-			relatedItemsPanel.addComponent(associateLeadList);
-
-			return relatedItemsPanel;
-		}
-
-		@Override
-		protected Layout createTopPanel() {
-			return null;
-		}
+		return relatedItemsPanel;
 	}
 
 }

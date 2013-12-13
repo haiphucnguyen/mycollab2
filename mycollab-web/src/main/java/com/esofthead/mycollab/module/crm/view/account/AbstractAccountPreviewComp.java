@@ -29,23 +29,24 @@ import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.criteria.CaseSearchCriteria;
 import com.esofthead.mycollab.module.crm.domain.criteria.EventSearchCriteria;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
+import com.esofthead.mycollab.module.crm.ui.components.AbstractPreviewItemComp;
 import com.esofthead.mycollab.module.crm.ui.components.NoteListItems;
 import com.esofthead.mycollab.module.crm.view.activity.EventRelatedItemListComp;
+import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
+import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.web.AppContext;
-import com.vaadin.ui.VerticalLayout;
+import com.esofthead.mycollab.web.MyCollabResource;
 
 /**
  * 
  * @author MyCollab Ltd.
  * @since 3.0
  */
-public abstract class AbstractAccountPreviewComp extends VerticalLayout {
+public abstract class AbstractAccountPreviewComp extends
+		AbstractPreviewItemComp<SimpleAccount> {
+
 	private static final long serialVersionUID = 1L;
-
-	protected SimpleAccount account;
-
-	protected AdvancedPreviewBeanForm<SimpleAccount> previewForm;
 	protected AccountContactListComp associateContactList;
 	protected AccountOpportunityListComp associateOpportunityList;
 	protected AccountLeadListComp associateLeadList;
@@ -53,12 +54,16 @@ public abstract class AbstractAccountPreviewComp extends VerticalLayout {
 	protected EventRelatedItemListComp associateActivityList;
 	protected NoteListItems noteListItems;
 
+	public AbstractAccountPreviewComp() {
+		super(MyCollabResource.newResource("icons/22/crm/account.png"));
+	}
+
 	protected void displayActivities() {
 		final EventSearchCriteria criteria = new EventSearchCriteria();
 		criteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
 		criteria.setType(new StringSearchField(SearchField.AND,
 				CrmTypeConstants.ACCOUNT));
-		criteria.setTypeid(new NumberSearchField(account.getId()));
+		criteria.setTypeid(new NumberSearchField(beanItem.getId()));
 		associateActivityList.setSearchCriteria(criteria);
 	}
 
@@ -66,29 +71,25 @@ public abstract class AbstractAccountPreviewComp extends VerticalLayout {
 		final CaseSearchCriteria criteria = new CaseSearchCriteria();
 		criteria.setSaccountid(new NumberSearchField(SearchField.AND,
 				AppContext.getAccountId()));
-		criteria.setAccountId(new NumberSearchField(account.getId()));
+		criteria.setAccountId(new NumberSearchField(beanItem.getId()));
 		associateCaseList.setSearchCriteria(criteria);
 	}
 
 	protected void displayAssociateLeadList() {
-		associateLeadList.displayLeads(account);
+		associateLeadList.displayLeads(beanItem);
 	}
 
 	protected void displayAssociateOpportunityList() {
 		final OpportunitySearchCriteria criteria = new OpportunitySearchCriteria();
 		criteria.setSaccountid(new NumberSearchField(SearchField.AND,
 				AppContext.getAccountId()));
-		criteria.setAccountId(new NumberSearchField(SearchField.AND, account
+		criteria.setAccountId(new NumberSearchField(SearchField.AND, beanItem
 				.getId()));
 		associateOpportunityList.setSearchCriteria(criteria);
 	}
 
 	protected void displayNotes() {
-		noteListItems.showNotes(CrmTypeConstants.ACCOUNT, account.getId());
-	}
-
-	public SimpleAccount getAccount() {
-		return account;
+		noteListItems.showNotes(CrmTypeConstants.ACCOUNT, beanItem.getId());
 	}
 
 	public EventRelatedItemListComp getAssociateActivityList() {
@@ -115,6 +116,11 @@ public abstract class AbstractAccountPreviewComp extends VerticalLayout {
 		return previewForm;
 	}
 
+	@Override
+	protected String initFormTitle() {
+		return beanItem.getAccountname();
+	}
+
 	protected final void initRelatedComponents() {
 		associateContactList = new AccountContactListComp();
 		associateActivityList = new EventRelatedItemListComp(true);
@@ -124,13 +130,24 @@ public abstract class AbstractAccountPreviewComp extends VerticalLayout {
 		noteListItems = new NoteListItems("Notes");
 	}
 
-	public void previewItem(final SimpleAccount item) {
-		account = item;
-		previewForm.setFormLayoutFactory(new DynaFormLayout(
-				CrmTypeConstants.ACCOUNT, AccountDefaultDynaFormFactory
-						.getForm()));
-		previewForm.setBeanFormFieldFactory(new AccountReadFormFieldFactory(
-				previewForm));
-		previewForm.setBean(item);
+	@Override
+	protected IFormLayoutFactory initFormLayoutFactory() {
+		return new DynaFormLayout(CrmTypeConstants.ACCOUNT,
+				AccountDefaultDynaFormLayoutFactory.getForm());
+	}
+
+	@Override
+	protected AbstractBeanFieldGroupViewFieldFactory<SimpleAccount> initBeanFormFieldFactory() {
+		return new AccountReadFormFieldFactory(previewForm);
+	}
+
+	@Override
+	protected void onPreviewItem() {
+		displayNotes();
+		displayActivities();
+		associateContactList.displayContacts(beanItem);
+		displayAssociateCaseList();
+		displayAssociateOpportunityList();
+		displayAssociateLeadList();
 	}
 }
