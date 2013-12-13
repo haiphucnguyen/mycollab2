@@ -26,6 +26,7 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomField;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Image;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 
@@ -36,8 +37,8 @@ public class CampaignSelectionField extends CustomField<CampaignWithBLOBs>
 	private CampaignWithBLOBs campaign;
 
 	private TextField campaignName;
-	private Embedded browseBtn;
-	private Embedded clearBtn;
+	private Image browseBtn;
+	private Image clearBtn;
 
 	public void setCampaign(CampaignWithBLOBs campaign) {
 		this.campaign = campaign;
@@ -48,11 +49,12 @@ public class CampaignSelectionField extends CustomField<CampaignWithBLOBs>
 	protected Component initContent() {
 		HorizontalLayout layout = new HorizontalLayout();
 		layout.setSpacing(true);
+		layout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
 		campaignName = new TextField();
 		layout.addComponent(campaignName);
 
-		browseBtn = new Embedded(null,
+		browseBtn = new Image(null,
 				MyCollabResource.newResource("icons/16/browseItem.png"));
 		layout.addComponent(browseBtn);
 		layout.setComponentAlignment(browseBtn, Alignment.MIDDLE_LEFT);
@@ -69,7 +71,7 @@ public class CampaignSelectionField extends CustomField<CampaignWithBLOBs>
 			}
 		});
 
-		clearBtn = new Embedded(null,
+		clearBtn = new Image(null,
 				MyCollabResource.newResource("icons/16/clearItem.png"));
 		clearBtn.addClickListener(new MouseEvents.ClickListener() {
 
