@@ -16,29 +16,29 @@
  */
 package com.esofthead.mycollab.module.crm.view.activity;
 
+import com.esofthead.mycollab.form.view.DynaFormLayout;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.Task;
 import com.esofthead.mycollab.module.crm.service.ContactService;
+import com.esofthead.mycollab.module.crm.ui.components.AbstractEditItemComp;
 import com.esofthead.mycollab.module.crm.ui.components.RelatedEditItemField;
 import com.esofthead.mycollab.module.crm.view.CrmDataTypeFactory;
 import com.esofthead.mycollab.module.crm.view.contact.ContactSelectionField;
 import com.esofthead.mycollab.module.user.ui.components.ActiveUserComboBox;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
-import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
+import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
-import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
+import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
+import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
-import com.vaadin.data.Item;
-import com.vaadin.data.util.BeanItem;
-import com.vaadin.ui.Alignment;
+import com.esofthead.mycollab.web.MyCollabResource;
+import com.vaadin.server.Resource;
+import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Field;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Layout;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 
@@ -49,129 +49,103 @@ import com.vaadin.ui.TextField;
  * 
  */
 @ViewComponent
-public class AssignmentAddViewImpl extends AbstractPageView implements
+public class AssignmentAddViewImpl extends AbstractEditItemComp<Task> implements
 		AssignmentAddView {
-
 	private static final long serialVersionUID = 1L;
-	private EditForm editForm;
-	private Task task;
 
-	public AssignmentAddViewImpl() {
-		super();
-		editForm = new EditForm();
-		this.addComponent(editForm);
+	@Override
+	protected String initFormTitle() {
+		return (beanItem.getId() == null) ? "Create Assignment" : beanItem
+				.getSubject();
 	}
 
 	@Override
-	public void editItem(Task item) {
-		this.task = item;
-		editForm.setItemDataSource(new BeanItem<Task>(task));
+	protected Resource initFormIconResource() {
+		return MyCollabResource.newResource("icons/22/crm/task.png");
 	}
 
-	private class EditForm extends AdvancedEditBeanForm<Task> {
+	@Override
+	protected ComponentContainer createButtonControls() {
+		return new EditFormControlsGenerator<Task>(editForm)
+				.createButtonControls();
+	}
 
+	@Override
+	protected AdvancedEditBeanForm<Task> initPreviewForm() {
+		return new AdvancedEditBeanForm<Task>();
+	}
+
+	@Override
+	protected IFormLayoutFactory initFormLayoutFactory() {
+		return new DynaFormLayout(CrmTypeConstants.TASK,
+				AssignmentDefaultFormLayoutFactory.getForm());
+	}
+
+	@Override
+	protected AbstractBeanFieldGroupEditFieldFactory<Task> initBeanFormFieldFactory() {
+		return new AssignmentEditFormFieldFactory(editForm);
+	}
+
+	private class AssignmentEditFormFieldFactory extends
+			AbstractBeanFieldGroupEditFieldFactory<Task> {
 		private static final long serialVersionUID = 1L;
 
+		public AssignmentEditFormFieldFactory(GenericBeanForm<Task> form) {
+			super(form);
+		}
+
 		@Override
-		public void setItemDataSource(Item newDataSource) {
-			this.setFormLayoutFactory(new FormLayoutFactory());
-			this.setFormFieldFactory(new EditFormFieldFactory());
-			super.setItemDataSource(newDataSource);
-		}
-
-		private class FormLayoutFactory extends AssignmentFormLayoutFactory {
-
-			private static final long serialVersionUID = 1L;
-
-			public FormLayoutFactory() {
-				super((task.getId() == null) ? "Create Task" : task
-						.getSubject());
-			}
-
-			private Layout createButtonControls() {
-				final HorizontalLayout controlPanel = new HorizontalLayout();
-				final Layout controlButtons = (new EditFormControlsGenerator<Task>(
-						EditForm.this)).createButtonControls();
-				controlButtons.setSizeUndefined();
-				controlPanel.addComponent(controlButtons);
-				controlPanel.setWidth("100%");
-				controlPanel.setComponentAlignment(controlButtons,
-						Alignment.MIDDLE_CENTER);
-				return controlPanel;
-			}
-
-			@Override
-			protected Layout createTopPanel() {
-				return createButtonControls();
-			}
-
-			@Override
-			protected Layout createBottomPanel() {
-				return null;
-			}
-		}
-
-		private class EditFormFieldFactory extends DefaultEditFormFieldFactory {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected Field onCreateField(Item item, Object propertyId,
-					com.vaadin.ui.Component uiContext) {
-				if (propertyId.equals("startdate")) {
-					return new DateTimePicker<Task>("startdate", task);
-				} else if (propertyId.equals("duedate")) {
-					return new DateTimePicker<Task>("duedate", task);
-				} else if (propertyId.equals("status")) {
-					return new TaskStatusComboBox();
-				} else if (propertyId.equals("priority")) {
-					return new TaskPriorityComboBox();
-				} else if (propertyId.equals("description")) {
-					TextArea descArea = new TextArea();
-					descArea.setNullRepresentation("");
-					return descArea;
-				} else if (propertyId.equals("contactid")) {
-					ContactSelectionField field = new ContactSelectionField();
-					if (task.getContactid() != null) {
-						ContactService accountService = ApplicationContextUtil
-								.getSpringBean(ContactService.class);
-						SimpleContact contact = accountService.findById(
-								task.getContactid(), AppContext.getAccountId());
-						if (contact != null) {
-							field.setContact(contact);
-						}
+		protected Field onCreateField(Object propertyId) {
+			if (propertyId.equals("startdate")) {
+				return new DateTimePicker<Task>("startdate",
+						attachForm.getBean());
+			} else if (propertyId.equals("duedate")) {
+				return new DateTimePicker<Task>("duedate", attachForm.getBean());
+			} else if (propertyId.equals("status")) {
+				return new TaskStatusComboBox();
+			} else if (propertyId.equals("priority")) {
+				return new TaskPriorityComboBox();
+			} else if (propertyId.equals("description")) {
+				TextArea descArea = new TextArea();
+				descArea.setNullRepresentation("");
+				return descArea;
+			} else if (propertyId.equals("contactid")) {
+				ContactSelectionField field = new ContactSelectionField();
+				if (attachForm.getBean().getContactid() != null) {
+					ContactService accountService = ApplicationContextUtil
+							.getSpringBean(ContactService.class);
+					SimpleContact contact = accountService.findById(attachForm
+							.getBean().getContactid(), AppContext
+							.getAccountId());
+					if (contact != null) {
+						field.setContact(contact);
 					}
-					return field;
-				} else if (propertyId.equals("subject")) {
-					TextField tf = new TextField();
-					tf.setNullRepresentation("");
-					tf.setRequired(true);
-					tf.setRequiredError("Subject must not be null");
-					return tf;
-				} else if (propertyId.equals("type")) {
-					RelatedEditItemField field = new RelatedEditItemField(
-							new String[] { CrmTypeConstants.ACCOUNT,
-									CrmTypeConstants.CAMPAIGN,
-									CrmTypeConstants.CONTACT,
-									CrmTypeConstants.LEAD,
-									CrmTypeConstants.OPPORTUNITY,
-									CrmTypeConstants.CASE }, task);
-					field.setType(task.getType());
-
-					return field;
-				} else if (propertyId.equals("assignuser")) {
-					ActiveUserComboBox userBox = new ActiveUserComboBox();
-					userBox.select(task.getAssignuser());
-					return userBox;
 				}
-				return null;
-			}
-		}
-	}
+				return field;
+			} else if (propertyId.equals("subject")) {
+				TextField tf = new TextField();
+				tf.setNullRepresentation("");
+				tf.setRequired(true);
+				tf.setRequiredError("Subject must not be null");
+				return tf;
+			} else if (propertyId.equals("type")) {
+				RelatedEditItemField field = new RelatedEditItemField(
+						new String[] { CrmTypeConstants.ACCOUNT,
+								CrmTypeConstants.CAMPAIGN,
+								CrmTypeConstants.CONTACT,
+								CrmTypeConstants.LEAD,
+								CrmTypeConstants.OPPORTUNITY,
+								CrmTypeConstants.CASE }, attachForm.getBean());
+				// field.setType(attachForm.getBean().getType());
 
-	@Override
-	public HasEditFormHandlers<Task> getEditFormHandlers() {
-		return editForm;
+				return field;
+			} else if (propertyId.equals("assignuser")) {
+				ActiveUserComboBox userBox = new ActiveUserComboBox();
+				userBox.select(attachForm.getBean().getAssignuser());
+				return userBox;
+			}
+			return null;
+		}
 	}
 
 	class TaskPriorityComboBox extends ValueComboBox {

@@ -17,12 +17,20 @@
 package com.esofthead.mycollab.vaadin.mvp;
 
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
-import com.esofthead.mycollab.vaadin.events.HasPopupActionHandlers;
+import com.esofthead.mycollab.vaadin.events.HasMassItemActionHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
 import com.esofthead.mycollab.vaadin.ui.table.AbstractPagedBeanTable;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ * @param <S>
+ * @param <B>
+ */
 public interface ListView<S extends SearchCriteria, B> extends PageView {
 	void enableActionControls(int numOfSelectedItem);
 
@@ -32,7 +40,7 @@ public interface ListView<S extends SearchCriteria, B> extends PageView {
 
 	HasSelectionOptionHandlers getOptionSelectionHandlers();
 
-	HasPopupActionHandlers getPopupActionHandlers();
+	HasMassItemActionHandlers getPopupActionHandlers();
 
 	HasSelectableItemHandlers<B> getSelectableItemHandlers();
 

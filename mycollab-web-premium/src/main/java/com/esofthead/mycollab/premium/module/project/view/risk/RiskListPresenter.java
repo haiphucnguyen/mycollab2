@@ -13,7 +13,7 @@ import com.esofthead.mycollab.module.project.domain.criteria.RiskSearchCriteria;
 import com.esofthead.mycollab.module.project.service.RiskService;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.vaadin.events.TablePopupActionHandler;
+import com.esofthead.mycollab.vaadin.events.MassItemActionHandler;
 import com.esofthead.mycollab.vaadin.mvp.ListCommand;
 import com.esofthead.mycollab.vaadin.mvp.ListSelectionPresenter;
 import com.esofthead.mycollab.vaadin.mvp.MassUpdateCommand;
@@ -37,15 +37,15 @@ public class RiskListPresenter extends
 
 		riskService = ApplicationContextUtil.getSpringBean(RiskService.class);
 
-		view.getPopupActionHandlers().addPopupActionHandler(
+		view.getPopupActionHandlers().addMassItemActionHandler(
 				new DefaultPopupActionHandler(this) {
 
 					@Override
 					protected void onSelectExtra(String id, String caption) {
-						if (TablePopupActionHandler.MAIL_ACTION.equals(id)) {
+						if (MassItemActionHandler.MAIL_ACTION.equals(id)) {
 							UI.getCurrent().addWindow(new MailFormWindow());
 
-						} else if (TablePopupActionHandler.MASS_UPDATE_ACTION
+						} else if (MassItemActionHandler.MASS_UPDATE_ACTION
 								.equals(id)) {
 							MassUpdateRiskWindow massUpdateWindow = new MassUpdateRiskWindow(
 									"Mass Update Risk", RiskListPresenter.this);

@@ -33,7 +33,7 @@ import com.esofthead.mycollab.module.crm.view.CrmGenericListPresenter;
 import com.esofthead.mycollab.module.crm.view.CrmToolbar;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.vaadin.events.TablePopupActionHandler;
+import com.esofthead.mycollab.vaadin.events.MassItemActionHandler;
 import com.esofthead.mycollab.vaadin.mvp.MassUpdateCommand;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
@@ -54,12 +54,12 @@ public class CaseListPresenter extends
 		super(CaseListView.class);
 		caseService = ApplicationContextUtil.getSpringBean(CaseService.class);
 
-		view.getPopupActionHandlers().addPopupActionHandler(
+		view.getPopupActionHandlers().addMassItemActionHandler(
 				new DefaultPopupActionHandler(this) {
 
 					@Override
 					protected void onSelectExtra(String id, String caption) {
-						if (TablePopupActionHandler.MAIL_ACTION.equals(id)) {
+						if (MassItemActionHandler.MAIL_ACTION.equals(id)) {
 							if (isSelectAll) {
 								NotificationUtil
 										.showWarningNotification(LocalizationHelper
@@ -78,7 +78,7 @@ public class CaseListPresenter extends
 										new MailFormWindow(lstMail));
 							}
 
-						} else if (TablePopupActionHandler.MASS_UPDATE_ACTION
+						} else if (MassItemActionHandler.MASS_UPDATE_ACTION
 								.equals(id)) {
 							MassUpdateCaseWindow massUpdateWindow = new MassUpdateCaseWindow(
 									LocalizationHelper

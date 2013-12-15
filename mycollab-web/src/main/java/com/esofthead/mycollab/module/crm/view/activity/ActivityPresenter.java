@@ -27,11 +27,17 @@ import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.vaadin.ui.ComponentContainer;
 
-public class EventPresenter extends AbstractPresenter<EventContainer> {
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
+public class ActivityPresenter extends AbstractPresenter<ActivityContainer> {
 	private static final long serialVersionUID = 1L;
 
-	public EventPresenter() {
-		super(EventContainer.class);
+	public ActivityPresenter() {
+		super(ActivityContainer.class);
 	}
 
 	@Override
@@ -42,7 +48,7 @@ public class EventPresenter extends AbstractPresenter<EventContainer> {
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		ActivityRootView activityContainer = (ActivityRootView) container;
-		EventContainer eventContainer = (EventContainer) activityContainer
+		ActivityContainer eventContainer = (ActivityContainer) activityContainer
 				.gotoView(LocalizationHelper
 						.getMessage(ActivityI18nEnum.ACTIVITY_LIST_TAB_TITLE));
 
@@ -75,7 +81,7 @@ public class EventPresenter extends AbstractPresenter<EventContainer> {
 		} else if (data instanceof ActivityScreenData.GotoActivityList) {
 			// AppContext.addFragment("crm/activity/todo", "Activity To Do");
 			presenter = PresenterResolver
-					.getPresenter(EventListPresenter.class);
+					.getPresenter(ActivityListPresenter.class);
 		}
 
 		presenter.go(eventContainer, data);

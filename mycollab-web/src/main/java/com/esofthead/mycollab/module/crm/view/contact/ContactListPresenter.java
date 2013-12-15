@@ -55,7 +55,7 @@ public class ContactListPresenter
 		contactService = ApplicationContextUtil
 				.getSpringBean(ContactService.class);
 
-		view.getPopupActionHandlers().addPopupActionHandler(
+		view.getPopupActionHandlers().addMassItemActionHandler(
 				new DefaultPopupActionHandler(this) {
 
 					@Override

@@ -18,6 +18,12 @@ package com.esofthead.mycollab.vaadin.ui;
 
 import com.vaadin.ui.Label;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
 public class ProgressPercentageIndicator extends Label {
 	private static final long serialVersionUID = 1L;
 

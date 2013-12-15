@@ -54,7 +54,7 @@ public class OpportunityListPresenter
 		opportunityService = ApplicationContextUtil
 				.getSpringBean(OpportunityService.class);
 
-		view.getPopupActionHandlers().addPopupActionHandler(
+		view.getPopupActionHandlers().addMassItemActionHandler(
 				new DefaultPopupActionHandler(this) {
 
 					@Override

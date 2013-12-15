@@ -42,6 +42,8 @@ import com.vaadin.ui.VerticalLayout;
  *            search criteria
  * @param <T>
  *            bean item
+ * @author MyCollab Ltd.
+ * @since 2.0
  */
 public class BeanList<SearchService extends ISearchableService<S>, S extends SearchCriteria, T>
 		extends CustomComponent {

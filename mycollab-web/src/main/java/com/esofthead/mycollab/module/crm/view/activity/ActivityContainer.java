@@ -14,8 +14,19 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.vaadin.events;
+package com.esofthead.mycollab.module.crm.view.activity;
 
-public interface HasPopupActionHandlers {
-	void addPopupActionHandler(TablePopupActionHandler handler);
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
+import com.esofthead.mycollab.vaadin.ui.ViewComponent;
+
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
+@ViewComponent
+public class ActivityContainer extends AbstractPageView {
+	private static final long serialVersionUID = 1L;
+
 }

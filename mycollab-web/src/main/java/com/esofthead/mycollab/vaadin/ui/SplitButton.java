@@ -14,6 +14,12 @@ import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalLayout;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
 public class SplitButton extends CustomComponent {
 	private static final long serialVersionUID = 1L;
 
@@ -148,11 +154,11 @@ public class SplitButton extends CustomComponent {
 			return this.isVisible;
 		}
 	}
-	
+
 	@Override
 	public void addStyleName(String stylename) {
 		super.addStyleName(stylename);
-		
+
 		parentButton.addStyleName(stylename);
 		popupButton.addStyleName(stylename);
 	}

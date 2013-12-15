@@ -20,6 +20,9 @@ import java.io.Serializable;
 
 /**
  * Page handler of view list or table.
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
 public interface PagableHandler extends Serializable {
 	/**

@@ -21,7 +21,8 @@ import com.esofthead.mycollab.core.arguments.SearchCriteria;
 /**
  * 
  * @author MyCollab Ltd.
- *
+ * @since 1.0
+ * 
  * @param <S>
  */
 public interface SearchHandler<S extends SearchCriteria> {

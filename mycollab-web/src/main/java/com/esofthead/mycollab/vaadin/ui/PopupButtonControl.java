@@ -19,18 +19,18 @@ package com.esofthead.mycollab.vaadin.ui;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.esofthead.mycollab.vaadin.events.HasPopupActionHandlers;
-import com.esofthead.mycollab.vaadin.events.TablePopupActionHandler;
+import com.esofthead.mycollab.vaadin.events.HasMassItemActionHandlers;
+import com.esofthead.mycollab.vaadin.events.MassItemActionHandler;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.VerticalLayout;
 
 public class PopupButtonControl extends SplitButton implements
-		HasPopupActionHandlers {
+		HasMassItemActionHandlers {
 
 	private static final long serialVersionUID = 1L;
 	private VerticalLayout selectContent;
-	private Set<TablePopupActionHandler> handlers;
+	private Set<MassItemActionHandler> handlers;
 
 	public PopupButtonControl(final String id, final Button button) {
 		super();
@@ -88,16 +88,16 @@ public class PopupButtonControl extends SplitButton implements
 
 	private void changeOption(String id, String caption) {
 		if (handlers != null) {
-			for (TablePopupActionHandler handler : handlers) {
+			for (MassItemActionHandler handler : handlers) {
 				handler.onSelect(id, caption);
 			}
 		}
 	}
 
 	@Override
-	public void addPopupActionHandler(TablePopupActionHandler handler) {
+	public void addMassItemActionHandler(MassItemActionHandler handler) {
 		if (handlers == null) {
-			handlers = new HashSet<TablePopupActionHandler>();
+			handlers = new HashSet<MassItemActionHandler>();
 		}
 		handlers.add(handler);
 

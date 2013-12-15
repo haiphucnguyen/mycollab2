@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
 /**
  * 
  * @author MyCollab Ltd.
- *
+ * @since 1.0
  */
 public class HistoryViewManager {
 	private static Logger log = LoggerFactory

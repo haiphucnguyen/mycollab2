@@ -50,7 +50,7 @@ public class ActivityRootView extends AbstractPageView {
 	private final VerticalTabsheet activityTabs;
 
 	private ActivityCalendarPresenter calendarPresenter;
-	private EventPresenter eventPresenter;
+	private ActivityPresenter eventPresenter;
 
 	public ActivityRootView() {
 		super();
@@ -123,7 +123,7 @@ public class ActivityRootView extends AbstractPageView {
 	}
 
 	private ComponentContainer constructActivityListView() {
-		eventPresenter = PresenterResolver.getPresenter(EventPresenter.class);
+		eventPresenter = PresenterResolver.getPresenter(ActivityPresenter.class);
 		return eventPresenter.getView();
 	}
 

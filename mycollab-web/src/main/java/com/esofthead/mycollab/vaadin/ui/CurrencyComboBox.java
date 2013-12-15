@@ -23,12 +23,18 @@ import com.esofthead.mycollab.common.service.CurrencyService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.vaadin.ui.ComboBox;
 
-@SuppressWarnings("serial")
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
 public class CurrencyComboBox extends ComboBox {
+	private static final long serialVersionUID = 1L;
 
 	public CurrencyComboBox() {
 		super();
-		this.setItemCaptionMode(ITEM_CAPTION_MODE_EXPLICIT);
+		this.setItemCaptionMode(ItemCaptionMode.EXPLICIT);
 
 		CurrencyService currencyService = ApplicationContextUtil
 				.getSpringBean(CurrencyService.class);

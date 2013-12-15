@@ -32,7 +32,7 @@ import com.esofthead.mycollab.module.tracker.domain.SimpleComponent;
 import com.esofthead.mycollab.module.tracker.domain.criteria.ComponentSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.ComponentService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.vaadin.events.TablePopupActionHandler;
+import com.esofthead.mycollab.vaadin.events.MassItemActionHandler;
 import com.esofthead.mycollab.vaadin.mvp.ListSelectionPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
@@ -58,12 +58,12 @@ public class ComponentListPresenter
 		componentService = ApplicationContextUtil
 				.getSpringBean(ComponentService.class);
 
-		view.getPopupActionHandlers().addPopupActionHandler(
+		view.getPopupActionHandlers().addMassItemActionHandler(
 				new DefaultPopupActionHandler(this) {
 
 					@Override
 					protected void onSelectExtra(String id, String caption) {
-						if (TablePopupActionHandler.MAIL_ACTION.equals(id)) {
+						if (MassItemActionHandler.MAIL_ACTION.equals(id)) {
 							UI.getCurrent().addWindow(new MailFormWindow());
 						}
 

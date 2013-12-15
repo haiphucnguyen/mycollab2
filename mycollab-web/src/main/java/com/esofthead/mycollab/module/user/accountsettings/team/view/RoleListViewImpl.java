@@ -34,11 +34,11 @@ import com.esofthead.mycollab.module.user.domain.SimpleRole;
 import com.esofthead.mycollab.module.user.domain.criteria.RoleSearchCriteria;
 import com.esofthead.mycollab.module.user.events.RoleEvent;
 import com.esofthead.mycollab.security.RolePermissionCollections;
-import com.esofthead.mycollab.vaadin.events.HasPopupActionHandlers;
+import com.esofthead.mycollab.vaadin.events.HasMassItemActionHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
-import com.esofthead.mycollab.vaadin.events.TablePopupActionHandler;
+import com.esofthead.mycollab.vaadin.events.MassItemActionHandler;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -137,19 +137,19 @@ public class RoleListViewImpl extends AbstractPageView implements RoleListView {
 				.canAccess(RolePermissionCollections.ACCOUNT_ROLE));
 
 		this.tableActionControls = new PopupButtonControl(
-				TablePopupActionHandler.DELETE_ACTION, deleteBtn);
-		this.tableActionControls.addOptionItem(TablePopupActionHandler.MAIL_ACTION,
+				MassItemActionHandler.DELETE_ACTION, deleteBtn);
+		this.tableActionControls.addOptionItem(MassItemActionHandler.MAIL_ACTION,
 				LocalizationHelper.getMessage(GenericI18Enum.BUTTON_MAIL));
 		this.tableActionControls
-				.addOptionItem(TablePopupActionHandler.EXPORT_CSV_ACTION,
+				.addOptionItem(MassItemActionHandler.EXPORT_CSV_ACTION,
 						LocalizationHelper
 								.getMessage(GenericI18Enum.BUTTON_EXPORT_CSV));
 		this.tableActionControls
-				.addOptionItem(TablePopupActionHandler.EXPORT_PDF_ACTION,
+				.addOptionItem(MassItemActionHandler.EXPORT_PDF_ACTION,
 						LocalizationHelper
 								.getMessage(GenericI18Enum.BUTTON_EXPORT_PDF));
 		this.tableActionControls.addOptionItem(
-				TablePopupActionHandler.EXPORT_EXCEL_ACTION, LocalizationHelper
+				MassItemActionHandler.EXPORT_EXCEL_ACTION, LocalizationHelper
 						.getMessage(GenericI18Enum.BUTTON_EXPORT_EXCEL));
 
 		layout.addComponent(this.tableActionControls);
@@ -179,7 +179,7 @@ public class RoleListViewImpl extends AbstractPageView implements RoleListView {
 	}
 
 	@Override
-	public HasPopupActionHandlers getPopupActionHandlers() {
+	public HasMassItemActionHandlers getPopupActionHandlers() {
 		return this.tableActionControls;
 	}
 

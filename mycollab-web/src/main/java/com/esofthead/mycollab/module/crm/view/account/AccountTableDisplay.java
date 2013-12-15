@@ -57,11 +57,13 @@ import com.vaadin.ui.Table;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 2.0
  */
 public class AccountTableDisplay
 		extends
 		DefaultPagedBeanTable<AccountService, AccountSearchCriteria, SimpleAccount> {
 	private static final long serialVersionUID = 1L;
+
 	private static Logger log = LoggerFactory
 			.getLogger(AccountTableDisplay.class);
 

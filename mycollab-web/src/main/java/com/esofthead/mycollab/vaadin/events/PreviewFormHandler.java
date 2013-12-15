@@ -19,7 +19,8 @@ package com.esofthead.mycollab.vaadin.events;
 /**
  * 
  * @author MyCollab Ltd.
- *
+ * @since 1.0
+ * 
  * @param <T>
  */
 public interface PreviewFormHandler<T> {
@@ -28,40 +29,40 @@ public interface PreviewFormHandler<T> {
 	 * 
 	 * @param data
 	 */
-    void gotoNext(T data);
+	void gotoNext(T data);
 
-    /**
-     * 
-     * @param data
-     */
-    void gotoPrevious(T data);
-    
-    /**
-     * 
-     * @param data
-     */
-    void onAssign(T data);
+	/**
+	 * 
+	 * @param data
+	 */
+	void gotoPrevious(T data);
 
-    /**
-     * 
-     * @param data
-     */
-    void onEdit(T data);
+	/**
+	 * 
+	 * @param data
+	 */
+	void onAssign(T data);
 
-    /**
-     * 
-     * @param data
-     */
-    void onDelete(T data);
+	/**
+	 * 
+	 * @param data
+	 */
+	void onEdit(T data);
 
-    /**
-     * 
-     * @param data
-     */
-    void onClone(T data);
+	/**
+	 * 
+	 * @param data
+	 */
+	void onDelete(T data);
 
-    /**
+	/**
+	 * 
+	 * @param data
+	 */
+	void onClone(T data);
+
+	/**
      * 
      */
-    void onCancel();
+	void onCancel();
 }

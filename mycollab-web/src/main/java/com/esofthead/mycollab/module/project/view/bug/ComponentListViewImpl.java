@@ -39,11 +39,11 @@ import com.esofthead.mycollab.module.tracker.domain.criteria.ComponentSearchCrit
 import com.esofthead.mycollab.module.tracker.service.ComponentService;
 import com.esofthead.mycollab.module.user.UserLinkUtils;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.vaadin.events.HasPopupActionHandlers;
+import com.esofthead.mycollab.vaadin.events.HasMassItemActionHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
-import com.esofthead.mycollab.vaadin.events.TablePopupActionHandler;
+import com.esofthead.mycollab.vaadin.events.MassItemActionHandler;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.PopupButtonControl;
@@ -224,20 +224,20 @@ public class ComponentListViewImpl extends AbstractPageView implements
 				.canAccess(ProjectRolePermissionCollections.COMPONENTS));
 
 		this.tableActionControls = new PopupButtonControl(
-				TablePopupActionHandler.DELETE_ACTION, deleteBtn);
+				MassItemActionHandler.DELETE_ACTION, deleteBtn);
 		this.tableActionControls.addOptionItem(
-				TablePopupActionHandler.MAIL_ACTION,
+				MassItemActionHandler.MAIL_ACTION,
 				LocalizationHelper.getMessage(GenericI18Enum.BUTTON_MAIL));
 		this.tableActionControls
-				.addOptionItem(TablePopupActionHandler.EXPORT_CSV_ACTION,
+				.addOptionItem(MassItemActionHandler.EXPORT_CSV_ACTION,
 						LocalizationHelper
 								.getMessage(GenericI18Enum.BUTTON_EXPORT_CSV));
 		this.tableActionControls
-				.addOptionItem(TablePopupActionHandler.EXPORT_PDF_ACTION,
+				.addOptionItem(MassItemActionHandler.EXPORT_PDF_ACTION,
 						LocalizationHelper
 								.getMessage(GenericI18Enum.BUTTON_EXPORT_PDF));
 		this.tableActionControls.addOptionItem(
-				TablePopupActionHandler.EXPORT_EXCEL_ACTION, LocalizationHelper
+				MassItemActionHandler.EXPORT_EXCEL_ACTION, LocalizationHelper
 						.getMessage(GenericI18Enum.BUTTON_EXPORT_EXCEL));
 
 		layout.addComponent(this.tableActionControls);
@@ -267,7 +267,7 @@ public class ComponentListViewImpl extends AbstractPageView implements
 	}
 
 	@Override
-	public HasPopupActionHandlers getPopupActionHandlers() {
+	public HasMassItemActionHandlers getPopupActionHandlers() {
 		return this.tableActionControls;
 	}
 

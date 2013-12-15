@@ -31,11 +31,11 @@ import com.esofthead.mycollab.module.crm.events.ActivityEvent;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.crm.localization.TaskI18nEnum;
 import com.esofthead.mycollab.security.RolePermissionCollections;
-import com.esofthead.mycollab.vaadin.events.HasPopupActionHandlers;
+import com.esofthead.mycollab.vaadin.events.HasMassItemActionHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
-import com.esofthead.mycollab.vaadin.events.TablePopupActionHandler;
+import com.esofthead.mycollab.vaadin.events.MassItemActionHandler;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -52,21 +52,28 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
 @ViewComponent
-public class EventListViewImpl extends AbstractPageView implements EventListView {
+public class ActivityListViewImpl extends AbstractPageView implements
+		ActivityListView {
 
 	private static final long serialVersionUID = 1L;
-	private final EventSearchPanel eventSearchPanel;
+	private final ActivitySearchPanel eventSearchPanel;
 	private SelectionOptionButton selectOptionButton;
 	private EventTableDisplay tableItem;
 	private final VerticalLayout eventListLayout;
 	private PopupButtonControl tableActionControls;
 	private final Label selectedItemsNumberLabel = new Label();
 
-	public EventListViewImpl() {
+	public ActivityListViewImpl() {
 
 		this.setMargin(true);
-		this.eventSearchPanel = new EventSearchPanel();
+		this.eventSearchPanel = new ActivitySearchPanel();
 		this.addComponent(this.eventSearchPanel);
 
 		this.eventListLayout = new VerticalLayout();
@@ -152,19 +159,20 @@ public class EventListViewImpl extends AbstractPageView implements EventListView
 		deleteBtn.setEnabled(isDeleteEnable);
 
 		this.tableActionControls = new PopupButtonControl(
-				TablePopupActionHandler.DELETE_ACTION, deleteBtn);
-		this.tableActionControls.addOptionItem(TablePopupActionHandler.MAIL_ACTION,
+				MassItemActionHandler.DELETE_ACTION, deleteBtn);
+		this.tableActionControls.addOptionItem(
+				MassItemActionHandler.MAIL_ACTION,
 				LocalizationHelper.getMessage(GenericI18Enum.BUTTON_MAIL));
 		this.tableActionControls
-				.addOptionItem(TablePopupActionHandler.EXPORT_CSV_ACTION,
+				.addOptionItem(MassItemActionHandler.EXPORT_CSV_ACTION,
 						LocalizationHelper
 								.getMessage(GenericI18Enum.BUTTON_EXPORT_CSV));
 		this.tableActionControls
-				.addOptionItem(TablePopupActionHandler.EXPORT_PDF_ACTION,
+				.addOptionItem(MassItemActionHandler.EXPORT_PDF_ACTION,
 						LocalizationHelper
 								.getMessage(GenericI18Enum.BUTTON_EXPORT_PDF));
 		this.tableActionControls.addOptionItem(
-				TablePopupActionHandler.EXPORT_EXCEL_ACTION, LocalizationHelper
+				MassItemActionHandler.EXPORT_EXCEL_ACTION, LocalizationHelper
 						.getMessage(GenericI18Enum.BUTTON_EXPORT_EXCEL));
 		this.tableActionControls.setVisible(false);
 
@@ -196,7 +204,7 @@ public class EventListViewImpl extends AbstractPageView implements EventListView
 	}
 
 	@Override
-	public HasPopupActionHandlers getPopupActionHandlers() {
+	public HasMassItemActionHandlers getPopupActionHandlers() {
 		return this.tableActionControls;
 	}
 

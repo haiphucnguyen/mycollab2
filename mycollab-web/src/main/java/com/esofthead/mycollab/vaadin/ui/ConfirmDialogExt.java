@@ -21,6 +21,12 @@ import org.vaadin.dialogs.ConfirmDialog.Listener;
 
 import com.vaadin.ui.UI;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
 public class ConfirmDialogExt {
 	public static void show(UI parentWindow, String windowCaption,
 			String message, String okCaption, String cancelCaption,

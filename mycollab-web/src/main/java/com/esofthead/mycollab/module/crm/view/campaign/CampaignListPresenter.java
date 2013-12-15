@@ -54,7 +54,7 @@ public class CampaignListPresenter
 		campaignService = ApplicationContextUtil
 				.getSpringBean(CampaignService.class);
 
-		view.getPopupActionHandlers().addPopupActionHandler(
+		view.getPopupActionHandlers().addMassItemActionHandler(
 				new DefaultPopupActionHandler(this) {
 
 					@Override

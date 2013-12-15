@@ -14,14 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.vaadin.ui;
+package com.esofthead.mycollab.vaadin.events;
 
-import com.vaadin.ui.Window;
-
-public class GenericWindow extends Window {
-	private static final long serialVersionUID = 1L;
-	
-	public GenericWindow() {
-		super();
-	}
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
+public interface HasMassItemActionHandlers {
+	void addMassItemActionHandler(MassItemActionHandler handler);
 }

@@ -56,7 +56,7 @@ public class AccountListPresenter
 		accountService = ApplicationContextUtil
 				.getSpringBean(AccountService.class);
 
-		view.getPopupActionHandlers().addPopupActionHandler(
+		view.getPopupActionHandlers().addMassItemActionHandler(
 				new DefaultPopupActionHandler(this) {
 
 					@Override

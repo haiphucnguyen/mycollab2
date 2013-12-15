@@ -16,7 +16,6 @@
  */
 package com.esofthead.mycollab.module.crm.view.activity;
 
-import com.esofthead.mycollab.vaadin.ui.SplitButton;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchField;
@@ -26,6 +25,7 @@ import com.esofthead.mycollab.module.crm.events.ActivityEvent;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
 import com.esofthead.mycollab.vaadin.ui.Separator;
+import com.esofthead.mycollab.vaadin.ui.SplitButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
 import com.esofthead.mycollab.web.AppContext;
@@ -34,7 +34,6 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
@@ -42,7 +41,14 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.Reindeer;
 
-public class EventSearchPanel extends GenericSearchPanel<EventSearchCriteria> {
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
+public class ActivitySearchPanel extends
+		GenericSearchPanel<EventSearchCriteria> {
 
 	private static final long serialVersionUID = 1L;
 	protected EventSearchCriteria searchCriteria;
@@ -60,6 +66,7 @@ public class EventSearchPanel extends GenericSearchPanel<EventSearchCriteria> {
 
 	private HorizontalLayout createSearchTopPanel() {
 		final HorizontalLayout layout = new HorizontalLayout();
+		layout.setSizeUndefined();
 		layout.setWidth("100%");
 		layout.setSpacing(true);
 		layout.setMargin(true);
@@ -141,12 +148,12 @@ public class EventSearchPanel extends GenericSearchPanel<EventSearchCriteria> {
 
 		@SuppressWarnings("unchecked")
 		public EventBasicSearchLayout() {
-			super(EventSearchPanel.this);
+			super(ActivitySearchPanel.this);
 		}
 
 		@Override
 		public ComponentContainer constructHeader() {
-			return EventSearchPanel.this.createSearchTopPanel();
+			return ActivitySearchPanel.this.createSearchTopPanel();
 		}
 
 		@Override
@@ -198,11 +205,11 @@ public class EventSearchPanel extends GenericSearchPanel<EventSearchCriteria> {
 
 		@Override
 		protected SearchCriteria fillupSearchCriteria() {
-			EventSearchPanel.this.searchCriteria = new EventSearchCriteria();
-			EventSearchPanel.this.searchCriteria
+			ActivitySearchPanel.this.searchCriteria = new EventSearchCriteria();
+			ActivitySearchPanel.this.searchCriteria
 					.setSaccountid(new NumberSearchField(SearchField.AND,
 							AppContext.getAccountId()));
-			return EventSearchPanel.this.searchCriteria;
+			return ActivitySearchPanel.this.searchCriteria;
 		}
 	}
 }

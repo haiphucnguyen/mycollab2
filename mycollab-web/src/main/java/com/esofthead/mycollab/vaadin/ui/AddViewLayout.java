@@ -23,6 +23,12 @@ import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
 public class AddViewLayout extends CustomLayoutExt {
 
 	private static final long serialVersionUID = 1L;

@@ -21,6 +21,12 @@ import java.io.InputStream;
 
 import com.vaadin.server.StreamResource;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
 public class ByteArrayImageResource extends StreamResource {
 	private static final long serialVersionUID = 1L;
 

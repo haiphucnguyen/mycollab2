@@ -18,6 +18,12 @@ package org.vaadin.easyuploads;
 
 import java.io.File;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
 public class SingleFileUploadField extends UploadField {
 	private static final long serialVersionUID = 1L;
 

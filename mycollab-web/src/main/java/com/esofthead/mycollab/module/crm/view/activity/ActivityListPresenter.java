@@ -29,7 +29,7 @@ import com.esofthead.mycollab.module.crm.service.MeetingService;
 import com.esofthead.mycollab.module.crm.service.TaskService;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.vaadin.events.TablePopupActionHandler;
+import com.esofthead.mycollab.vaadin.events.MassItemActionHandler;
 import com.esofthead.mycollab.vaadin.mvp.ListSelectionPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.ui.MailFormWindow;
@@ -44,19 +44,19 @@ import com.vaadin.ui.UI;
  * @since 2.0
  * 
  */
-public class EventListPresenter extends
-		ListSelectionPresenter<EventListView, EventSearchCriteria, SimpleEvent> {
+public class ActivityListPresenter extends
+		ListSelectionPresenter<ActivityListView, EventSearchCriteria, SimpleEvent> {
 	private static final long serialVersionUID = 1L;
 
-	public EventListPresenter() {
-		super(EventListView.class);
+	public ActivityListPresenter() {
+		super(ActivityListView.class);
 
-		view.getPopupActionHandlers().addPopupActionHandler(
+		view.getPopupActionHandlers().addMassItemActionHandler(
 				new DefaultPopupActionHandler(this) {
 
 					@Override
 					protected void onSelectExtra(String id, String caption) {
-						if (TablePopupActionHandler.MAIL_ACTION.equals(id)) {
+						if (MassItemActionHandler.MAIL_ACTION.equals(id)) {
 							UI.getCurrent().addWindow(new MailFormWindow());
 						}
 					}

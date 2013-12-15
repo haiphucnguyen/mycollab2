@@ -30,6 +30,7 @@ import com.vaadin.ui.Embedded;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  * 
  */
 public class UserAvatarControlFactory {

@@ -42,6 +42,7 @@ import com.vaadin.ui.ComponentContainer;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 2.0
  */
 public class MilestoneAddPresenter extends AbstractPresenter<MilestoneAddView> {
 

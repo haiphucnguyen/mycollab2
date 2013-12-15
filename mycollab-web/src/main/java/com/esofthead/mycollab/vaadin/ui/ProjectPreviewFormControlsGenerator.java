@@ -23,6 +23,12 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.HorizontalLayout;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
 public class ProjectPreviewFormControlsGenerator<T> {
 
 	private final AdvancedPreviewBeanForm<T> previewForm;

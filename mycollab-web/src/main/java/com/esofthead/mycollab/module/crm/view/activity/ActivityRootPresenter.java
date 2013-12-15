@@ -67,7 +67,7 @@ public class ActivityRootPresenter extends
 				CallScreenData.Read.class, CallScreenData.Add.class,
 				CallScreenData.Edit.class,
 				ActivityScreenData.GotoActivityList.class)) {
-			presenter = PresenterResolver.getPresenter(EventPresenter.class);
+			presenter = PresenterResolver.getPresenter(ActivityPresenter.class);
 		} else {
 			presenter = PresenterResolver
 					.getPresenter(ActivityCalendarPresenter.class);

@@ -41,6 +41,8 @@ import com.vaadin.ui.VerticalLayout;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 2.0
+ * 
  */
 public abstract class AbstractBeanPagedList<S extends SearchCriteria, T>
 		extends VerticalLayout implements HasPagableHandlers {

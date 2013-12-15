@@ -30,6 +30,12 @@ import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.ListSelect;
 import com.vaadin.ui.TextField;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
 @SuppressWarnings("serial")
 public class GenericSearchPanel<S extends SearchCriteria> extends
 		CustomComponent implements HasSearchHandlers<S> {

@@ -18,6 +18,12 @@ package com.esofthead.mycollab.vaadin.ui;
 
 import org.vaadin.peter.buttongroup.ButtonGroup;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
 public class ToggleButtonGroup extends ButtonGroup {
 	private static final long serialVersionUID = 1L;
 

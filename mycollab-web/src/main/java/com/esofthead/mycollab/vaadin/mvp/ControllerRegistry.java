@@ -25,6 +25,12 @@ import org.slf4j.LoggerFactory;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabApplication;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class ControllerRegistry {
 	private static final String CONTROLLER_REGISTRY = "CONTROLLER_REGISTRY";
 
@@ -36,7 +42,8 @@ public class ControllerRegistry {
 				.getVariable(CONTROLLER_REGISTRY));
 		if (controllerList == null) {
 			controllerList = new ArrayList<IController>();
-			MyCollabApplication.putVariable(CONTROLLER_REGISTRY, controllerList);
+			MyCollabApplication
+					.putVariable(CONTROLLER_REGISTRY, controllerList);
 		}
 		controllerList.add(controler);
 		log.debug("Add controller {} to registry associates with context {}",

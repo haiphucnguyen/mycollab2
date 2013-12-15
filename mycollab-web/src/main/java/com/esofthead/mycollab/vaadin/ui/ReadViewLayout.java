@@ -25,6 +25,12 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TabSheet;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
 public class ReadViewLayout extends CssLayout {
 	private static final long serialVersionUID = 1L;
 

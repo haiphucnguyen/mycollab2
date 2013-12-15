@@ -8,6 +8,12 @@ import com.esofthead.mycollab.core.utils.ClassUtils;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormViewField;
 import com.vaadin.ui.Field;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
 public abstract class AbstractBeanFieldGroupViewFieldFactory<B> implements
 		IBeanFieldGroupFieldFactory<B> {
 	private static final long serialVersionUID = 1L;

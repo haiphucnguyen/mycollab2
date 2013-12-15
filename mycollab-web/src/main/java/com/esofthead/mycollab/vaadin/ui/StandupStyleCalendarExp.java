@@ -32,6 +32,12 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
 @SuppressWarnings("serial")
 public class StandupStyleCalendarExp extends VerticalLayout {
 	private List<Date> selectedDateList = new ArrayList<Date>();

@@ -30,6 +30,12 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.VerticalLayout;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
 public class SelectionOptionButton extends SplitButton implements
 		HasSelectionOptionHandlers {
 

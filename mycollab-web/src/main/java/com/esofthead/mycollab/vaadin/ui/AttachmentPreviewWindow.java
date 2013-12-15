@@ -18,8 +18,15 @@ package com.esofthead.mycollab.vaadin.ui;
 
 import com.vaadin.server.Resource;
 import com.vaadin.ui.Embedded;
+import com.vaadin.ui.Image;
 import com.vaadin.ui.Window;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
 public class AttachmentPreviewWindow extends Window {
 	private static final long serialVersionUID = 1L;
 
@@ -38,7 +45,7 @@ public class AttachmentPreviewWindow extends Window {
 	}
 
 	private void initUI() {
-		Embedded previewImage = new Embedded(null, this.previewResource);
+		Image previewImage = new Image(null, this.previewResource);
 		previewImage.setSizeUndefined();
 		this.setContent(previewImage);
 		this.setResizable(false);

@@ -48,11 +48,17 @@ import com.vaadin.event.MouseEvents.ClickEvent;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomField;
-import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Image;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
 public class RelatedEditItemField extends CustomField implements FieldSelection {
 
 	private static final long serialVersionUID = 1L;
@@ -64,8 +70,8 @@ public class RelatedEditItemField extends CustomField implements FieldSelection 
 	private String[] types;
 
 	private TextField itemField;
-	private Embedded browseBtn;
-	private Embedded clearBtn;
+	private Image browseBtn;
+	private Image clearBtn;
 
 	public RelatedEditItemField(String[] types, Object bean) {
 		this.bean = bean;
@@ -86,7 +92,7 @@ public class RelatedEditItemField extends CustomField implements FieldSelection 
 		layout.addComponent(itemField);
 		layout.setComponentAlignment(itemField, Alignment.MIDDLE_LEFT);
 
-		browseBtn = new Embedded(null,
+		browseBtn = new Image(null,
 				MyCollabResource.newResource("icons/16/browseItem.png"));
 		browseBtn.addClickListener(new MouseEvents.ClickListener() {
 			private static final long serialVersionUID = 1L;
@@ -133,7 +139,7 @@ public class RelatedEditItemField extends CustomField implements FieldSelection 
 		layout.addComponent(browseBtn);
 		layout.setComponentAlignment(browseBtn, Alignment.MIDDLE_LEFT);
 
-		clearBtn = new Embedded(null,
+		clearBtn = new Image(null,
 				MyCollabResource.newResource("icons/16/clearItem.png"));
 		clearBtn.addClickListener(new MouseEvents.ClickListener() {
 			private static final long serialVersionUID = 1L;

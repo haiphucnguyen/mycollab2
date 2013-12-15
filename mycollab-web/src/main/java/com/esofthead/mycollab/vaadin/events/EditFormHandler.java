@@ -17,10 +17,11 @@
 package com.esofthead.mycollab.vaadin.events;
 
 /**
+ * @param <T>
  * 
  * @author MyCollab Ltd.
- *
- * @param <T>
+ * @since 1.0
+ * 
  */
 public interface EditFormHandler<T> {
 	/**

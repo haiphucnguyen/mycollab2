@@ -21,12 +21,17 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
 public class AddViewLayout2 extends CssLayout {
 	private static final long serialVersionUID = 1L;
 
@@ -36,7 +41,6 @@ public class AddViewLayout2 extends CssLayout {
 	private final VerticalLayout body;
 
 	public AddViewLayout2(final String title, final Resource icon) {
-		// this.setSizeFull();
 		setStyleName("addview-layout");
 
 		header = new HorizontalLayout();

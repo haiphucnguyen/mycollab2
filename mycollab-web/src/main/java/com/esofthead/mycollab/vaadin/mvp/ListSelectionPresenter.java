@@ -27,7 +27,7 @@ import com.esofthead.mycollab.vaadin.events.PagableHandler;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.events.SelectableItemHandler;
 import com.esofthead.mycollab.vaadin.events.SelectionOptionHandler;
-import com.esofthead.mycollab.vaadin.events.TablePopupActionHandler;
+import com.esofthead.mycollab.vaadin.events.MassItemActionHandler;
 import com.vaadin.ui.CheckBox;
 
 /**
@@ -171,7 +171,7 @@ public abstract class ListSelectionPresenter<V extends ListView<S, B>, S extends
 	abstract protected void deleteSelectedItems();
 
 	public static abstract class DefaultPopupActionHandler implements
-			TablePopupActionHandler {
+			MassItemActionHandler {
 
 		private ListSelectionPresenter presenter;
 
@@ -182,7 +182,7 @@ public abstract class ListSelectionPresenter<V extends ListView<S, B>, S extends
 		@Override
 		public void onSelect(String id, String caption) {
 			// TODO: check select items
-			// if (TablePopupActionHandler.DELETE_ACTION.equals(id)) {
+			// if (MassItemActionHandler.DELETE_ACTION.equals(id)) {
 			// ConfirmDialogExt
 			// .show(UI.getCurrent(),
 			// LocalizationHelper.getMessage(
@@ -205,7 +205,7 @@ public abstract class ListSelectionPresenter<V extends ListView<S, B>, S extends
 			// }
 			// });
 			//
-			// } else if (TablePopupActionHandler.EXPORT_CSV_ACTION.equals(id))
+			// } else if (MassItemActionHandler.EXPORT_CSV_ACTION.equals(id))
 			// {
 			// Resource res = null;
 			// AbstractPagedBeanTable pagedBeanTable = ((ListView) presenter
@@ -233,7 +233,7 @@ public abstract class ListSelectionPresenter<V extends ListView<S, B>, S extends
 			// }
 			//
 			// presenter.view.getWidget().getWindow().open(res, "_blank");
-			// } else if (TablePopupActionHandler.EXPORT_PDF_ACTION.equals(id))
+			// } else if (MassItemActionHandler.EXPORT_PDF_ACTION.equals(id))
 			// {
 			// Resource res = null;
 			// AbstractPagedBeanTable pagedBeanTable = ((ListView) presenter
@@ -262,7 +262,7 @@ public abstract class ListSelectionPresenter<V extends ListView<S, B>, S extends
 			//
 			// presenter.view.getWidget().getWindow().open(res, "_blank");
 			// } else if
-			// (TablePopupActionHandler.EXPORT_EXCEL_ACTION.equals(id)) {
+			// (MassItemActionHandler.EXPORT_EXCEL_ACTION.equals(id)) {
 			// Resource res = null;
 			// AbstractPagedBeanTable pagedBeanTable = ((ListView) presenter
 			// .getView()).getPagedBeanTable();

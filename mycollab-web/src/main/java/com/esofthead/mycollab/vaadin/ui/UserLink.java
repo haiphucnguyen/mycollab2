@@ -46,6 +46,7 @@ import com.vaadin.ui.Window;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class UserLink extends Button {
 	private static final long serialVersionUID = 1L;
@@ -107,7 +108,7 @@ public class UserLink extends Button {
 			VerticalLayout layout = new VerticalLayout();
 			layout.setSpacing(true);
 			layout.setMargin(true);
-			
+
 			HorizontalLayout topLayout = new HorizontalLayout();
 			layout.addComponent(topLayout);
 

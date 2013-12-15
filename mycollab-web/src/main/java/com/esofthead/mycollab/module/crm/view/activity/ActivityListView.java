@@ -14,29 +14,18 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.vaadin.events;
+package com.esofthead.mycollab.module.crm.view.activity;
+
+import com.esofthead.mycollab.module.crm.domain.SimpleEvent;
+import com.esofthead.mycollab.module.crm.domain.criteria.EventSearchCriteria;
+import com.esofthead.mycollab.vaadin.mvp.ListView;
 
 /**
  * 
- * Popup action handler of table
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
  */
-public interface TablePopupActionHandler {
-	public static final String MAIL_ACTION = "mail";
-
-	public static final String EXPORT_CSV_ACTION = "exportCsv";
-
-	public static final String EXPORT_PDF_ACTION = "exportPdf";
-
-	public static final String EXPORT_EXCEL_ACTION = "exportExcel";
-
-	public static final String DELETE_ACTION = "delete";
-
-	public static final String MASS_UPDATE_ACTION = "massUpdate";
-
-	/**
-	 * 
-	 * @param id
-	 * @param caption
-	 */
-	void onSelect(String id, String caption);
+public interface ActivityListView extends
+		ListView<EventSearchCriteria, SimpleEvent> {
 }

@@ -25,13 +25,13 @@ import java.io.File;
 import org.vaadin.easyuploads.MultiFileUploadExt;
 
 /**
- *
+ * 
  * @author MyCollab Ltd.
+ * @since 2.0
  */
 public interface AttachmentUploadComponent {
 
-    void receiveFile(File file, String fileName,
-            String mimeType, long length);
-    
-    void registerMultiUpload(MultiFileUploadExt multiUpload);
+	void receiveFile(File file, String fileName, String mimeType, long length);
+
+	void registerMultiUpload(MultiFileUploadExt multiUpload);
 }

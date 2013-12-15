@@ -21,6 +21,12 @@ import org.vaadin.dialogs.DefaultConfirmDialogFactory;
 
 import com.vaadin.ui.Button;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
 public class ConfirmDialogFactory extends DefaultConfirmDialogFactory {
 	private static final long serialVersionUID = 1L;
 

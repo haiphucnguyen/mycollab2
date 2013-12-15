@@ -18,6 +18,12 @@ package com.esofthead.mycollab.vaadin.ui;
 
 import com.vaadin.ui.ComboBox;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @SuppressWarnings("serial")
 public class ValueComboBox extends ComboBox {
 

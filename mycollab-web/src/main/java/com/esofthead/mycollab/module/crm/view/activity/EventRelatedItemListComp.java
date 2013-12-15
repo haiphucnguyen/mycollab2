@@ -44,6 +44,7 @@ import com.vaadin.ui.VerticalLayout;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 2.0
  */
 public class EventRelatedItemListComp extends
 		RelatedListComp<SimpleEvent, EventSearchCriteria> {
@@ -66,6 +67,8 @@ public class EventRelatedItemListComp extends
 		if (allowCreateNew) {
 			final Button newTaskBtn = new Button("New Task",
 					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
 						@Override
 						public void buttonClick(final Button.ClickEvent event) {
 							fireNewRelatedItem("task");
@@ -80,6 +83,8 @@ public class EventRelatedItemListComp extends
 
 			final Button newCallBtn = new Button("New Call",
 					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
 						@Override
 						public void buttonClick(final Button.ClickEvent event) {
 							fireNewRelatedItem("call");

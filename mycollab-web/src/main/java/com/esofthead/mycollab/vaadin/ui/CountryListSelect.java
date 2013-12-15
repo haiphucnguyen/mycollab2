@@ -18,6 +18,12 @@ package com.esofthead.mycollab.vaadin.ui;
 
 import com.esofthead.mycollab.vaadin.ui.data.CountryValueFactory;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
 public class CountryListSelect extends ValueListSelect {
 	private static final long serialVersionUID = 1L;
 

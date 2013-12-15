@@ -2,6 +2,12 @@ package com.esofthead.mycollab.vaadin.ui;
 
 import com.vaadin.ui.TabSheet;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 3.0
+ * 
+ */
 public class TabsheetDecor extends TabSheet {
 	private static final long serialVersionUID = 1L;
 
