@@ -16,81 +16,60 @@
  */
 package com.esofthead.mycollab.module.crm.view.account;
 
+import com.esofthead.mycollab.form.view.DynaFormLayout;
+import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
-import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
-import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
+import com.esofthead.mycollab.module.crm.ui.components.AbstractEditItemComp;
+import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
+import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Layout;
+import com.esofthead.mycollab.web.MyCollabResource;
+import com.vaadin.server.Resource;
+import com.vaadin.ui.ComponentContainer;
 
 /**
  * 
  * @author MyCollab Ltd.
  * @since 2.0
- *
+ * 
  */
 @ViewComponent
-public class AccountAddViewImpl extends AbstractPageView implements
-		AccountAddView {
+public class AccountAddViewImpl extends AbstractEditItemComp<SimpleAccount>
+		implements AccountAddView {
 	private static final long serialVersionUID = 1L;
-	private final AdvancedEditBeanForm<SimpleAccount> editForm;
 
-	private SimpleAccount account;
-
-	public AccountAddViewImpl() {
-		super();
-		this.editForm = new AdvancedEditBeanForm<SimpleAccount>();
-		this.addComponent(this.editForm);
+	@Override
+	protected String initFormTitle() {
+		return (beanItem.getId() == null) ? "Create Account" : beanItem
+				.getAccountname();
 	}
 
 	@Override
-	public void editItem(final SimpleAccount account) {
-		this.account = account;
-		this.editForm.setFormLayoutFactory(new FormLayoutFactory());
-		this.editForm
-				.setBeanFormFieldFactory(new AccountEditFormFieldFactory<SimpleAccount>(
-						editForm));
-		this.editForm.setBean(account);
+	protected Resource initFormIconResource() {
+		return MyCollabResource.newResource("icons/22/crm/account.png");
 	}
 
 	@Override
-	public HasEditFormHandlers<SimpleAccount> getEditFormHandlers() {
-		return this.editForm;
+	protected ComponentContainer createButtonControls() {
+		return new EditFormControlsGenerator<SimpleAccount>(editForm)
+				.createButtonControls();
 	}
 
-	class FormLayoutFactory extends AccountFormLayoutFactory {
+	@Override
+	protected AdvancedEditBeanForm<SimpleAccount> initPreviewForm() {
+		return new AdvancedEditBeanForm<SimpleAccount>();
+	}
 
-		private static final long serialVersionUID = 1L;
+	@Override
+	protected IFormLayoutFactory initFormLayoutFactory() {
+		return new DynaFormLayout(CrmTypeConstants.ACCOUNT,
+				AccountDefaultDynaFormLayoutFactory.getForm());
+	}
 
-		public FormLayoutFactory() {
-			super((account.getId() == null) ? "Create Account" : account
-					.getAccountname());
-		}
-
-		@Override
-		protected Layout createBottomPanel() {
-			return this.createButtonControls();
-		}
-
-		private Layout createButtonControls() {
-			final HorizontalLayout controlPanel = new HorizontalLayout();
-			final Layout controlButtons = (new EditFormControlsGenerator<SimpleAccount>(
-					editForm)).createButtonControls();
-			controlButtons.setSizeUndefined();
-			controlPanel.addComponent(controlButtons);
-			controlPanel.setWidth("100%");
-			controlPanel.setMargin(true);
-			controlPanel.setComponentAlignment(controlButtons,
-					Alignment.MIDDLE_CENTER);
-			return controlPanel;
-		}
-
-		@Override
-		protected Layout createTopPanel() {
-			return this.createButtonControls();
-		}
+	@Override
+	protected AbstractBeanFieldGroupEditFieldFactory<SimpleAccount> initBeanFormFieldFactory() {
+		return new AccountEditFormFieldFactory<SimpleAccount>(editForm);
 	}
 }

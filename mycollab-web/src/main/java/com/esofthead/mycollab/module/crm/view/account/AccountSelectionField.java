@@ -23,9 +23,7 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.FieldSelection;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
-import com.vaadin.data.Buffered.SourceException;
 import com.vaadin.data.Property;
-import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.event.MouseEvents;
 import com.vaadin.event.MouseEvents.ClickEvent;
 import com.vaadin.ui.Alignment;
@@ -73,28 +71,6 @@ public class AccountSelectionField extends CustomField<Integer> implements
 		} else {
 			super.setPropertyDataSource(newDataSource);
 		}
-	}
-	
-	
-
-	@Override
-	public void commit() throws SourceException, InvalidValueException {
-		// TODO Auto-generated method stub
-		super.commit();
-	}
-	
-	
-
-	@Override
-	public void validate() throws InvalidValueException {
-		// TODO Auto-generated method stub
-		super.validate();
-	}
-
-	@Override
-	protected Integer getInternalValue() {
-		// TODO Auto-generated method stub
-		return super.getInternalValue();
 	}
 
 	private void setInternalAccount(SimpleAccount account) {

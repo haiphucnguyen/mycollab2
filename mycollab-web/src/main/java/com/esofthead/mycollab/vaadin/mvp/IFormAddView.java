@@ -16,16 +16,25 @@
  */
 package com.esofthead.mycollab.vaadin.mvp;
 
+import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
+
 /**
  * 
  * @author MyCollab Ltd.
- *
- * @param <T>
+ * @since 1.0
+ * 
+ * @param <B>
  */
-public interface IFormAddView<T> extends PageView {
+public interface IFormAddView<B> extends PageView {
 	/**
 	 * 
 	 * @param item
 	 */
-	void editItem(T item);
+	void editItem(B item);
+
+	/**
+	 * 
+	 * @return
+	 */
+	HasEditFormHandlers<B> getEditFormHandlers();
 }
