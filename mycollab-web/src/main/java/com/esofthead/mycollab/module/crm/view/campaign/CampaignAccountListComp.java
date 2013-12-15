@@ -68,7 +68,6 @@ public class CampaignAccountListComp extends
 	private CampaignWithBLOBs campaign;
 
 	public CampaignAccountListComp() {
-		super("Accounts");
 		initUI();
 	}
 
@@ -88,9 +87,6 @@ public class CampaignAccountListComp extends
 
 	@SuppressWarnings("serial")
 	private void initUI() {
-		VerticalLayout contentContainer = (VerticalLayout) bodyContent;
-		contentContainer.setSpacing(true);
-
 		final SplitButton controlsBtn = new SplitButton();
 		controlsBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_CONTACT));
@@ -129,7 +125,7 @@ public class CampaignAccountListComp extends
 
 		controlsBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_ACCOUNT));
-		addHeaderElement(controlsBtn);
+		this.addComponent(controlsBtn);
 
 		tableItem = new AccountTableDisplay(Arrays.asList(
 				AccountTableFieldDef.accountname,
@@ -223,7 +219,7 @@ public class CampaignAccountListComp extends
 				return controlLayout;
 			}
 		});
-		contentContainer.addComponent(tableItem);
+		this.addComponent(tableItem);
 
 	}
 

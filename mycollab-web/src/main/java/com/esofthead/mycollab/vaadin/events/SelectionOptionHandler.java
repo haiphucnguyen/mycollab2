@@ -21,6 +21,7 @@ import java.io.Serializable;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  * 
  */
 public interface SelectionOptionHandler extends Serializable {

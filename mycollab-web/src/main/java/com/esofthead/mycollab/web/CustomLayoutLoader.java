@@ -22,6 +22,8 @@ import com.vaadin.ui.CustomLayout;
 /**
  * Load custom layout by classpath
  * 
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class CustomLayoutLoader {
 	public static CustomLayout createLayout(String layoutId) {

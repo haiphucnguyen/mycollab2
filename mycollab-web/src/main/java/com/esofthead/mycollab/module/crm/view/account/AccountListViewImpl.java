@@ -30,6 +30,7 @@ import com.esofthead.mycollab.vaadin.ui.DefaultMassItemActionHandlersContainer;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.table.AbstractPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
+import com.esofthead.mycollab.web.MyCollabResource;
 
 /**
  * 
@@ -86,6 +87,23 @@ public class AccountListViewImpl extends
 
 	@Override
 	protected DefaultMassItemActionHandlersContainer createActionControls() {
-		return new DefaultMassItemActionHandlersContainer();
+		DefaultMassItemActionHandlersContainer container = new DefaultMassItemActionHandlersContainer();
+		container.addActionItem("mail",
+				MyCollabResource.newResource("icons/16/action/mail.png"),
+				"mail");
+		container.addActionItem("pdf",
+				MyCollabResource.newResource("icons/16/action/pdf.png"),
+				"export");
+		container.addActionItem("excel",
+				MyCollabResource.newResource("icons/16/action/excel.png"),
+				"export");
+		container.addActionItem("csv",
+				MyCollabResource.newResource("icons/16/action/csv.png"),
+				"export");
+
+		container.addActionItem("massupdate",
+				MyCollabResource.newResource("icons/16/action/massupdate.png"),
+				"update");
+		return container;
 	}
 }

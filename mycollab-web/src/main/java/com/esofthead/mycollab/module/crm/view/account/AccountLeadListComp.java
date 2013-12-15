@@ -62,8 +62,6 @@ public class AccountLeadListComp extends
 	private Account account;
 
 	public AccountLeadListComp() {
-		super("Leads");
-
 		initUI();
 	}
 
@@ -73,7 +71,6 @@ public class AccountLeadListComp extends
 	}
 
 	private void initUI() {
-		final VerticalLayout contentContainer = (VerticalLayout) bodyContent;
 
 		final SplitButton controlsBtn = new SplitButton();
 		controlsBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
@@ -115,7 +112,7 @@ public class AccountLeadListComp extends
 		buttonControlsLayout.addComponent(selectBtn);
 		controlsBtn.setContent(buttonControlsLayout);
 
-		addHeaderElement(controlsBtn);
+		this.addComponent(controlsBtn);
 
 		tableItem = new LeadTableDisplay(Arrays.asList(LeadTableFieldDef.name,
 				LeadTableFieldDef.status, LeadTableFieldDef.phoneoffice,
@@ -221,7 +218,7 @@ public class AccountLeadListComp extends
 			}
 		});
 
-		contentContainer.addComponent(tableItem);
+		this.addComponent(tableItem);
 	}
 
 	private void loadLeads() {

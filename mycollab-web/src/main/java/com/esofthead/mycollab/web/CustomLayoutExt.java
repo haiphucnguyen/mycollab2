@@ -21,6 +21,9 @@ import com.vaadin.ui.CustomLayout;
 /**
  * Dynamic load custom layout per classpath, not absolutely path
  * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
  */
 public class CustomLayoutExt extends CustomLayout {
 	private static final long serialVersionUID = 1L;

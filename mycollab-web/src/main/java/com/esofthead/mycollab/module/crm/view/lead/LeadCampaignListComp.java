@@ -69,7 +69,6 @@ public class LeadCampaignListComp extends
 	private Lead lead;
 
 	public LeadCampaignListComp() {
-		super("Campaigns");
 		initUI();
 	}
 
@@ -88,9 +87,6 @@ public class LeadCampaignListComp extends
 
 	@SuppressWarnings("serial")
 	private void initUI() {
-		VerticalLayout contentContainer = (VerticalLayout) bodyContent;
-		contentContainer.setSpacing(true);
-
 		final SplitButton controlsBtn = new SplitButton();
 		controlsBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_CONTACT));
@@ -129,7 +125,7 @@ public class LeadCampaignListComp extends
 
 		controlsBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_CAMPAIGN));
-		addHeaderElement(controlsBtn);
+		this.addComponent(controlsBtn);
 
 		tableItem = new CampaignTableDisplay(Arrays.asList(
 				CampaignTableFieldDef.campaignname,
@@ -222,7 +218,7 @@ public class LeadCampaignListComp extends
 				return controlLayout;
 			}
 		});
-		contentContainer.addComponent(tableItem);
+		this.addComponent(tableItem);
 
 	}
 

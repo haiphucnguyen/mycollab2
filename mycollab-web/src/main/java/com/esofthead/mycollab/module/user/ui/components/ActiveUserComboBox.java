@@ -31,6 +31,12 @@ import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComboBox;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
 public class ActiveUserComboBox extends ComboBox {
 
 	private static final long serialVersionUID = 1L;
@@ -38,15 +44,17 @@ public class ActiveUserComboBox extends ComboBox {
 	@SuppressWarnings("unchecked")
 	public ActiveUserComboBox() {
 		super();
-		this.setItemCaptionMode(ITEM_CAPTION_MODE_EXPLICIT);
+		this.setItemCaptionMode(ItemCaptionMode.EXPLICIT);
 
 		UserSearchCriteria criteria = new UserSearchCriteria();
 		criteria.setSaccountid(new NumberSearchField(SearchField.AND,
 				AppContext.getAccountId()));
-		criteria.setRegisterStatuses(new SetSearchField<String>(SearchField.AND,
+		criteria.setRegisterStatuses(new SetSearchField<String>(
+				SearchField.AND,
 				new String[] { RegisterStatusConstants.ACTIVE }));
 
-		UserService userService = ApplicationContextUtil.getSpringBean(UserService.class);
+		UserService userService = ApplicationContextUtil
+				.getSpringBean(UserService.class);
 		List<SimpleUser> userList = userService
 				.findPagableListByCriteria(new SearchRequest<UserSearchCriteria>(
 						criteria, 0, Integer.MAX_VALUE));
@@ -56,7 +64,7 @@ public class ActiveUserComboBox extends ComboBox {
 
 	public ActiveUserComboBox(List<SimpleUser> userList) {
 		super();
-		this.setItemCaptionMode(ITEM_CAPTION_MODE_EXPLICIT);
+		this.setItemCaptionMode(ItemCaptionMode.EXPLICIT);
 		loadUserList(userList);
 	}
 

@@ -442,7 +442,7 @@ public class DefaultFormViewFieldFactory extends DefaultFieldFactory {
 			if (value != null && (!value.equals(""))) {
 				label.setValue(value);
 			} else {
-				label.setValue("&nbsp;");
+				label.setValue("");
 			}
 
 			return label;

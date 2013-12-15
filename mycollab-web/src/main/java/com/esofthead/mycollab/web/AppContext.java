@@ -49,7 +49,6 @@ import com.esofthead.mycollab.module.user.service.UserPreferenceService;
 import com.esofthead.mycollab.security.PermissionMap;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.vaadin.server.Page;
-import com.vaadin.server.VaadinSession;
 
 /**
  * The core class that keep user session data while user login to MyCollab
@@ -57,6 +56,9 @@ import com.vaadin.server.VaadinSession;
  * every user, so in current thread you can use static methods of AppContext to
  * get current user without fearing it impacts to other user sessions logging in
  * MyCollab system.
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
  * 
  */
 public class AppContext implements Serializable {

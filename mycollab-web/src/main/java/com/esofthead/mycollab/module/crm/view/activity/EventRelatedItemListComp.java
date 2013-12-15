@@ -39,6 +39,7 @@ import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.VerticalLayout;
 
 /**
@@ -53,18 +54,16 @@ public class EventRelatedItemListComp extends
 	private final boolean allowCreateNew;
 
 	public EventRelatedItemListComp(final boolean allowCreateNew) {
-		super("Activities");
-
 		this.allowCreateNew = allowCreateNew;
 
 		initUI();
 	}
 
 	private void initUI() {
-		final VerticalLayout contentContainer = (VerticalLayout) bodyContent;
-		contentContainer.setSpacing(true);
 
 		if (allowCreateNew) {
+			HorizontalLayout buttonLayout = new HorizontalLayout();
+			buttonLayout.setSpacing(true);
 			final Button newTaskBtn = new Button("New Task",
 					new Button.ClickListener() {
 						private static final long serialVersionUID = 1L;
@@ -79,7 +78,7 @@ public class EventRelatedItemListComp extends
 			newTaskBtn.setEnabled(AppContext
 					.canWrite(RolePermissionCollections.CRM_TASK));
 			newTaskBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-			this.addHeaderElement(newTaskBtn);
+			buttonLayout.addComponent(newTaskBtn);
 
 			final Button newCallBtn = new Button("New Call",
 					new Button.ClickListener() {
@@ -95,7 +94,7 @@ public class EventRelatedItemListComp extends
 			newCallBtn.setEnabled(AppContext
 					.canWrite(RolePermissionCollections.CRM_CALL));
 			newCallBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
-			this.addHeaderElement(newCallBtn);
+			buttonLayout.addComponent(newCallBtn);
 
 			final Button newMeetingBtn = new Button("New Meeting",
 					new Button.ClickListener() {
@@ -111,7 +110,9 @@ public class EventRelatedItemListComp extends
 			newMeetingBtn.setEnabled(AppContext
 					.canWrite(RolePermissionCollections.CRM_MEETING));
 			newMeetingBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
-			this.addHeaderElement(newMeetingBtn);
+			buttonLayout.addComponent(newMeetingBtn);
+
+			this.addComponent(buttonLayout);
 		}
 
 		tableItem = new EventTableDisplay(Arrays.asList(
@@ -160,8 +161,7 @@ public class EventRelatedItemListComp extends
 					}
 				});
 
-		contentContainer.addComponent(tableItem);
-		contentContainer.setSpacing(false);
+		this.addComponent(tableItem);
 	}
 
 	@Override

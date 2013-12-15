@@ -60,6 +60,8 @@ import com.vaadin.ui.VerticalLayout;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
+ * 
  */
 public class CampaignContactListComp extends
 		RelatedListComp<SimpleContact, ContactSearchCriteria> {
@@ -68,7 +70,6 @@ public class CampaignContactListComp extends
 	private CampaignWithBLOBs campaign;
 
 	public CampaignContactListComp() {
-		super("Contacts");
 		initUI();
 	}
 
@@ -88,8 +89,6 @@ public class CampaignContactListComp extends
 
 	@SuppressWarnings("serial")
 	private void initUI() {
-		VerticalLayout contentContainer = (VerticalLayout) bodyContent;
-		contentContainer.setSpacing(true);
 
 		final SplitButton controlsBtn = new SplitButton();
 		controlsBtn.setEnabled(AppContext
@@ -129,7 +128,7 @@ public class CampaignContactListComp extends
 
 		controlsBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_CONTACT));
-		addHeaderElement(controlsBtn);
+		this.addComponent(controlsBtn);
 
 		tableItem = new ContactTableDisplay(Arrays.asList(
 				ContactTableFieldDef.name, ContactTableFieldDef.email,
@@ -223,7 +222,7 @@ public class CampaignContactListComp extends
 				return controlLayout;
 			}
 		});
-		contentContainer.addComponent(tableItem);
+		this.addComponent(tableItem);
 
 	}
 

@@ -19,10 +19,11 @@ package com.esofthead.mycollab.vaadin.events;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 
 /**
+ * @param <S>
  * 
  * @author MyCollab Ltd.
- *
- * @param <S>
+ * @since 1.0
+ * 
  */
 public interface HasSearchHandlers<S extends SearchCriteria> {
 	/**

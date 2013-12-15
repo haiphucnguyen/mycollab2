@@ -18,6 +18,12 @@ package com.esofthead.mycollab.shell.events;
 
 import com.esofthead.mycollab.eventmanager.ApplicationEvent;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @SuppressWarnings("serial")
 public class ShellEvent {
 

@@ -61,7 +61,6 @@ public class AccountContactListComp extends
 	private Account account;
 
 	public AccountContactListComp() {
-		super("Contacts");
 		initUI();
 	}
 
@@ -72,7 +71,6 @@ public class AccountContactListComp extends
 
 	@SuppressWarnings("serial")
 	private void initUI() {
-		final VerticalLayout contentContainer = (VerticalLayout) bodyContent;
 
 		final SplitButton controlsBtn = new SplitButton();
 		controlsBtn.setEnabled(AppContext
@@ -109,7 +107,7 @@ public class AccountContactListComp extends
 		buttonControlLayout.addComponent(selectBtn);
 		controlsBtn.setContent(buttonControlLayout);
 
-		addHeaderElement(controlsBtn);
+		this.addComponent(controlsBtn);
 
 		tableItem = new ContactTableDisplay(Arrays.asList(
 				ContactTableFieldDef.name, ContactTableFieldDef.title,
@@ -204,7 +202,7 @@ public class AccountContactListComp extends
 				return controlLayout;
 			}
 		});
-		contentContainer.addComponent(tableItem);
+		this.addComponent(tableItem);
 
 	}
 

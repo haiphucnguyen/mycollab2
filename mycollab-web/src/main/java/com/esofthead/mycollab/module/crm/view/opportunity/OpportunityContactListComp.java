@@ -60,6 +60,7 @@ import com.vaadin.ui.VerticalLayout;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class OpportunityContactListComp extends
 		RelatedListComp<SimpleContact, ContactSearchCriteria> {
@@ -68,7 +69,6 @@ public class OpportunityContactListComp extends
 	private Opportunity opportunity;
 
 	public OpportunityContactListComp() {
-		super("Contacts");
 		initUI();
 	}
 
@@ -88,9 +88,6 @@ public class OpportunityContactListComp extends
 
 	@SuppressWarnings("serial")
 	private void initUI() {
-		VerticalLayout contentContainer = (VerticalLayout) bodyContent;
-		contentContainer.setSpacing(true);
-
 		final SplitButton controlsBtn = new SplitButton();
 		controlsBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_CONTACT));
@@ -129,7 +126,7 @@ public class OpportunityContactListComp extends
 
 		controlsBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_CONTACT));
-		addHeaderElement(controlsBtn);
+		this.addComponent(controlsBtn);
 
 		tableItem = new ContactTableDisplay(Arrays.asList(
 				ContactTableFieldDef.name, ContactTableFieldDef.email,
@@ -224,7 +221,7 @@ public class OpportunityContactListComp extends
 				return controlLayout;
 			}
 		});
-		contentContainer.addComponent(tableItem);
+		this.addComponent(tableItem);
 
 	}
 

@@ -18,6 +18,13 @@ package com.esofthead.mycollab.vaadin.ui;
 
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ * @param <S>
+ */
 public abstract class DefaultGenericSearchPanel<S extends SearchCriteria>
 		extends GenericSearchPanel<S> {
 	private static final long serialVersionUID = 1L;

@@ -21,34 +21,35 @@
 package com.esofthead.mycollab.vaadin.events;
 
 /**
- *
+ * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class DefaultPreviewFormHandler<T> implements PreviewFormHandler<T> {
 
-    @Override
-    public void gotoNext(T data) {
-    }
+	@Override
+	public void gotoNext(T data) {
+	}
 
-    @Override
-    public void gotoPrevious(T data) {
-    }
+	@Override
+	public void gotoPrevious(T data) {
+	}
 
-    @Override
-    public void onEdit(T data) {
-    }
+	@Override
+	public void onEdit(T data) {
+	}
 
-    @Override
-    public void onDelete(T data) {
-    }
+	@Override
+	public void onDelete(T data) {
+	}
 
-    @Override
-    public void onClone(T data) {
-    }
+	@Override
+	public void onClone(T data) {
+	}
 
-    @Override
-    public void onCancel() {
-    }
+	@Override
+	public void onCancel() {
+	}
 
 	@Override
 	public void onAssign(T data) {

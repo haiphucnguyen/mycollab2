@@ -37,11 +37,11 @@ import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.VerticalLayout;
 
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class AccountCaseListComp extends
 		RelatedListComp<SimpleCase, CaseSearchCriteria> {
@@ -49,14 +49,10 @@ public class AccountCaseListComp extends
 	private static final long serialVersionUID = 1L;
 
 	public AccountCaseListComp() {
-		super("Cases");
-
 		initUI();
 	}
 
 	private void initUI() {
-		final VerticalLayout contentContainer = (VerticalLayout) bodyContent;
-
 		final Button newBtn = new Button("New Case",
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
@@ -71,7 +67,7 @@ public class AccountCaseListComp extends
 		newBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_CASE));
 
-		addHeaderElement(newBtn);
+		this.addComponent(newBtn);
 
 		tableItem = new CaseTableDisplay(Arrays.asList(
 				CaseTableFieldDef.subject, CaseTableFieldDef.priority,
@@ -99,7 +95,7 @@ public class AccountCaseListComp extends
 					}
 				});
 
-		contentContainer.addComponent(tableItem);
+		this.addComponent(tableItem);
 	}
 
 	@Override

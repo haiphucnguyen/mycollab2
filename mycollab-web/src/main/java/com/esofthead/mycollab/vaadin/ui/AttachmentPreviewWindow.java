@@ -17,7 +17,6 @@
 package com.esofthead.mycollab.vaadin.ui;
 
 import com.vaadin.server.Resource;
-import com.vaadin.ui.Embedded;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Window;
 

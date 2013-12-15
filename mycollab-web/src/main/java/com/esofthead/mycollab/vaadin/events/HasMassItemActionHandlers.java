@@ -23,5 +23,9 @@ package com.esofthead.mycollab.vaadin.events;
  * 
  */
 public interface HasMassItemActionHandlers {
+	/**
+	 * 
+	 * @param handler
+	 */
 	void addMassItemActionHandler(MassItemActionHandler handler);
 }

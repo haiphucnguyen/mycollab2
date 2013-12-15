@@ -68,7 +68,6 @@ public class CampaignLeadListComp extends
 	private CampaignWithBLOBs campaign;
 
 	public CampaignLeadListComp() {
-		super("Leads");
 		initUI();
 	}
 
@@ -88,9 +87,6 @@ public class CampaignLeadListComp extends
 
 	@SuppressWarnings("serial")
 	private void initUI() {
-		VerticalLayout contentContainer = (VerticalLayout) bodyContent;
-		contentContainer.setSpacing(true);
-
 		final SplitButton controlsBtn = new SplitButton();
 		controlsBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_CONTACT));
@@ -129,7 +125,7 @@ public class CampaignLeadListComp extends
 
 		controlsBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_LEAD));
-		addHeaderElement(controlsBtn);
+		this.addComponent(controlsBtn);
 
 		tableItem = new LeadTableDisplay(Arrays.asList(LeadTableFieldDef.name,
 				LeadTableFieldDef.status, LeadTableFieldDef.email,
@@ -220,7 +216,7 @@ public class CampaignLeadListComp extends
 				return controlLayout;
 			}
 		});
-		contentContainer.addComponent(tableItem);
+		this.addComponent(tableItem);
 
 	}
 

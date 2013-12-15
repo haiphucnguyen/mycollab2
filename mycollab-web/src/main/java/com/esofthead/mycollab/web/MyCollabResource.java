@@ -25,6 +25,7 @@ import com.vaadin.server.ThemeResource;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  * 
  */
 public abstract class MyCollabResource {

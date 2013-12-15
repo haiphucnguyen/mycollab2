@@ -27,25 +27,26 @@ import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.module.crm.view.IRelatedListHandlers;
 import com.esofthead.mycollab.module.crm.view.RelatedListHandler;
-import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable;
 import com.vaadin.ui.VerticalLayout;
 
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 public abstract class RelatedListComp<T, S extends SearchCriteria> extends
-		Depot implements IRelatedListHandlers<T> {
-	
+		VerticalLayout implements IRelatedListHandlers<T> {
+
 	private static final long serialVersionUID = 1L;
-	
+
 	protected Set<RelatedListHandler<T>> handlers;
 	protected IPagedBeanTable<S, T> tableItem;
 
-	public RelatedListComp(final String title) {
-		super(title, new VerticalLayout());
+	public RelatedListComp() {
 		this.setWidth("100%");
+		this.setMargin(true);
+		this.setSpacing(true);
 	}
 
 	@Override

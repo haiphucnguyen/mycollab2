@@ -24,7 +24,6 @@ import java.util.Arrays;
 import java.util.Set;
 
 import org.vaadin.dialogs.ConfirmDialog;
-import com.esofthead.mycollab.vaadin.ui.SplitButton;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
@@ -47,6 +46,7 @@ import com.esofthead.mycollab.module.crm.view.lead.LeadTableFieldDef;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
+import com.esofthead.mycollab.vaadin.ui.SplitButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.web.AppContext;
@@ -68,7 +68,6 @@ public class OpportunityLeadListComp extends
 	private Opportunity opportunity;
 
 	public OpportunityLeadListComp() {
-		super("Leads");
 		initUI();
 	}
 
@@ -88,9 +87,6 @@ public class OpportunityLeadListComp extends
 
 	@SuppressWarnings("serial")
 	private void initUI() {
-		VerticalLayout contentContainer = (VerticalLayout) bodyContent;
-		contentContainer.setSpacing(true);
-
 		final SplitButton controlsBtn = new SplitButton();
 		controlsBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_CONTACT));
@@ -129,7 +125,7 @@ public class OpportunityLeadListComp extends
 
 		controlsBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_LEAD));
-		addHeaderElement(controlsBtn);
+		this.addComponent(controlsBtn);
 
 		tableItem = new LeadTableDisplay(Arrays.asList(LeadTableFieldDef.name,
 				LeadTableFieldDef.status, LeadTableFieldDef.email,
@@ -221,7 +217,7 @@ public class OpportunityLeadListComp extends
 				return controlLayout;
 			}
 		});
-		contentContainer.addComponent(tableItem);
+		this.addComponent(tableItem);
 
 	}
 

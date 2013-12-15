@@ -34,21 +34,23 @@ import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.VerticalLayout;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class AccountOpportunityListComp extends
 		RelatedListComp<SimpleOpportunity, OpportunitySearchCriteria> {
 
 	private static final long serialVersionUID = 1L;
 
 	public AccountOpportunityListComp() {
-		super("Opportunities");
-
 		initUI();
 	}
 
 	private void initUI() {
-		final VerticalLayout contentContainer = (VerticalLayout) bodyContent;
 
 		final Button newBtn = new Button("New Opportunity",
 				new Button.ClickListener() {
@@ -64,7 +66,7 @@ public class AccountOpportunityListComp extends
 		newBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_OPPORTUNITY));
 
-		addHeaderElement(newBtn);
+		this.addComponent(newBtn);
 
 		tableItem = new OpportunityTableDisplay(Arrays.asList(
 				OpportunityTableFieldDef.opportunityName,
@@ -93,7 +95,7 @@ public class AccountOpportunityListComp extends
 					}
 				});
 
-		contentContainer.addComponent(tableItem);
+		this.addComponent(tableItem);
 	}
 
 	@Override
