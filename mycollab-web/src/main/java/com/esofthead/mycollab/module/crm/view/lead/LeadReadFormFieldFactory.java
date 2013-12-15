@@ -12,7 +12,13 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Field;
 
-public class LeadReadFormFieldFactory extends
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 3.0
+ * 
+ */
+class LeadReadFormFieldFactory extends
 		AbstractBeanFieldGroupViewFieldFactory<SimpleLead> {
 	private static final long serialVersionUID = 1L;
 

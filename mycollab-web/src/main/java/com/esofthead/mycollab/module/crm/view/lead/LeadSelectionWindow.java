@@ -22,6 +22,7 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.eventmanager.ApplicationEvent;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
+import com.esofthead.mycollab.module.crm.domain.Lead;
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
@@ -36,9 +37,9 @@ public class LeadSelectionWindow extends Window {
 	private static final long serialVersionUID = 1L;
 	private LeadSearchCriteria searchCriteria;
 	private LeadTableDisplay tableItem;
-	private FieldSelection fieldSelection;
+	private FieldSelection<Lead> fieldSelection;
 
-	public LeadSelectionWindow(FieldSelection fieldSelection) {
+	public LeadSelectionWindow(FieldSelection<Lead> fieldSelection) {
 		super("Lead Name Lookup");
 		this.setWidth("800px");
 		this.fieldSelection = fieldSelection;

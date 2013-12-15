@@ -16,15 +16,18 @@
  */
 package com.esofthead.mycollab.module.crm.view.lead;
 
+import com.esofthead.mycollab.form.view.DynaFormLayout;
+import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
-import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
-import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
+import com.esofthead.mycollab.module.crm.ui.components.AbstractEditItemComp;
+import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
+import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Layout;
+import com.esofthead.mycollab.web.MyCollabResource;
+import com.vaadin.server.Resource;
+import com.vaadin.ui.ComponentContainer;
 
 /**
  * 
@@ -33,62 +36,40 @@ import com.vaadin.ui.Layout;
  * 
  */
 @ViewComponent
-public class LeadAddViewImpl extends AbstractPageView implements LeadAddView {
-
+public class LeadAddViewImpl extends AbstractEditItemComp<SimpleLead> implements
+		LeadAddView {
 	private static final long serialVersionUID = 1L;
-	private AdvancedEditBeanForm<SimpleLead> editForm;
-	private SimpleLead lead;
 
-	public LeadAddViewImpl() {
-		super();
-		editForm = new AdvancedEditBeanForm<SimpleLead>();
-		this.addComponent(editForm);
+	@Override
+	protected String initFormTitle() {
+		return (beanItem.getId() == null) ? "Create Lead" : beanItem
+				.getLeadName();
 	}
 
 	@Override
-	public void editItem(SimpleLead item) {
-		this.lead = item;
-		this.editForm.setFormLayoutFactory(new FormLayoutFactory());
-		this.editForm
-				.setBeanFormFieldFactory(new LeadEditFormFieldFactory<SimpleLead>(
-						editForm));
-		this.editForm.setBean(lead);
+	protected Resource initFormIconResource() {
+		return MyCollabResource.newResource("icons/22/crm/lead.png");
 	}
 
 	@Override
-	public HasEditFormHandlers<SimpleLead> getEditFormHandlers() {
-		return editForm;
+	protected ComponentContainer createButtonControls() {
+		return new EditFormControlsGenerator<SimpleLead>(editForm)
+				.createButtonControls();
 	}
 
-	class FormLayoutFactory extends LeadFormLayoutFactory {
+	@Override
+	protected AdvancedEditBeanForm<SimpleLead> initPreviewForm() {
+		return new AdvancedEditBeanForm<SimpleLead>();
+	}
 
-		private static final long serialVersionUID = 1L;
+	@Override
+	protected IFormLayoutFactory initFormLayoutFactory() {
+		return new DynaFormLayout(CrmTypeConstants.LEAD,
+				LeadDefaultDynaFormLayoutFactory.getForm());
+	}
 
-		public FormLayoutFactory() {
-			super((lead.getId() == null) ? "Create Lead" : lead.getLastname());
-		}
-
-		private Layout createButtonControls() {
-			final HorizontalLayout controlPanel = new HorizontalLayout();
-			final Layout controlButtons = (new EditFormControlsGenerator<SimpleLead>(
-					editForm)).createButtonControls();
-			controlButtons.setSizeUndefined();
-			controlPanel.addComponent(controlButtons);
-			controlPanel.setWidth("100%");
-			controlPanel.setMargin(true);
-			controlPanel.setComponentAlignment(controlButtons,
-					Alignment.MIDDLE_CENTER);
-			return controlPanel;
-		}
-
-		@Override
-		protected Layout createTopPanel() {
-			return createButtonControls();
-		}
-
-		@Override
-		protected Layout createBottomPanel() {
-			return createButtonControls();
-		}
+	@Override
+	protected AbstractBeanFieldGroupEditFieldFactory<SimpleLead> initBeanFormFieldFactory() {
+		return new LeadEditFormFieldFactory<SimpleLead>(editForm);
 	}
 }

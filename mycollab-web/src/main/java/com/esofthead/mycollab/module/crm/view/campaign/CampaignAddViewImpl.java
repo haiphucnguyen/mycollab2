@@ -16,16 +16,18 @@
  */
 package com.esofthead.mycollab.module.crm.view.campaign;
 
-import com.esofthead.mycollab.module.crm.domain.CampaignWithBLOBs;
+import com.esofthead.mycollab.form.view.DynaFormLayout;
+import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
-import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
-import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
+import com.esofthead.mycollab.module.crm.ui.components.AbstractEditItemComp;
+import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
+import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Layout;
+import com.esofthead.mycollab.web.MyCollabResource;
+import com.vaadin.server.Resource;
+import com.vaadin.ui.ComponentContainer;
 
 /**
  * 
@@ -34,64 +36,40 @@ import com.vaadin.ui.Layout;
  * 
  */
 @ViewComponent
-public class CampaignAddViewImpl extends AbstractPageView implements
-		CampaignAddView {
-
+public class CampaignAddViewImpl extends AbstractEditItemComp<SimpleCampaign>
+		implements CampaignAddView {
 	private static final long serialVersionUID = 1L;
-	private AdvancedEditBeanForm<SimpleCampaign> editForm;
-	private CampaignWithBLOBs campaign;
 
-	public CampaignAddViewImpl() {
-		super();
-		editForm = new AdvancedEditBeanForm<SimpleCampaign>();
-		this.addComponent(editForm);
+	@Override
+	protected String initFormTitle() {
+		return (beanItem.getId() == null) ? "Create Campaign" : beanItem
+				.getCampaignname();
 	}
 
 	@Override
-	public void editItem(SimpleCampaign campaign) {
-		this.campaign = campaign;
-		this.editForm.setFormLayoutFactory(new FormLayoutFactory());
-		this.editForm
-				.setBeanFormFieldFactory(new CampaignEditFormFieldFactory<SimpleCampaign>(
-						editForm));
-		this.editForm.setBean(campaign);
-	}
-
-	class FormLayoutFactory extends CampaignFormLayoutFactory {
-
-		private static final long serialVersionUID = 1L;
-
-		public FormLayoutFactory() {
-			super((campaign.getId() == null) ? "Create Campaign" : campaign
-					.getCampaignname());
-		}
-
-		private HorizontalLayout createButtonControls() {
-			final HorizontalLayout controlPanel = new HorizontalLayout();
-			final Layout controlButtons = (new EditFormControlsGenerator<SimpleCampaign>(
-					editForm)).createButtonControls();
-			controlButtons.setSizeUndefined();
-			controlPanel.addComponent(controlButtons);
-			controlPanel.setWidth("100%");
-			controlPanel.setMargin(true);
-			controlPanel.setComponentAlignment(controlButtons,
-					Alignment.MIDDLE_CENTER);
-			return controlPanel;
-		}
-
-		@Override
-		protected Layout createTopPanel() {
-			return createButtonControls();
-		}
-
-		@Override
-		protected Layout createBottomPanel() {
-			return createButtonControls();
-		}
+	protected Resource initFormIconResource() {
+		return MyCollabResource.newResource("icons/22/crm/campaign.png");
 	}
 
 	@Override
-	public HasEditFormHandlers<SimpleCampaign> getEditFormHandlers() {
-		return editForm;
+	protected ComponentContainer createButtonControls() {
+		return new EditFormControlsGenerator<SimpleCampaign>(editForm)
+				.createButtonControls();
+	}
+
+	@Override
+	protected AdvancedEditBeanForm<SimpleCampaign> initPreviewForm() {
+		return new AdvancedEditBeanForm<SimpleCampaign>();
+	}
+
+	@Override
+	protected IFormLayoutFactory initFormLayoutFactory() {
+		return new DynaFormLayout(CrmTypeConstants.CAMPAIGN,
+				CampaignDefaultDynaFormLayoutFactory.getForm());
+	}
+
+	@Override
+	protected AbstractBeanFieldGroupEditFieldFactory<SimpleCampaign> initBeanFormFieldFactory() {
+		return new CampaignEditFormFieldFactory<SimpleCampaign>(editForm);
 	}
 }

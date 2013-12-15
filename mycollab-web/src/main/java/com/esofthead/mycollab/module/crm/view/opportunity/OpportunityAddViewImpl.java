@@ -16,15 +16,18 @@
  */
 package com.esofthead.mycollab.module.crm.view.opportunity;
 
+import com.esofthead.mycollab.form.view.DynaFormLayout;
+import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
-import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
-import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
+import com.esofthead.mycollab.module.crm.ui.components.AbstractEditItemComp;
+import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
+import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Layout;
+import com.esofthead.mycollab.web.MyCollabResource;
+import com.vaadin.server.Resource;
+import com.vaadin.ui.ComponentContainer;
 
 /**
  * 
@@ -33,65 +36,40 @@ import com.vaadin.ui.Layout;
  * 
  */
 @ViewComponent
-public class OpportunityAddViewImpl extends AbstractPageView implements
-		OpportunityAddView {
-
+public class OpportunityAddViewImpl extends
+		AbstractEditItemComp<SimpleOpportunity> implements OpportunityAddView {
 	private static final long serialVersionUID = 1L;
 
-	private AdvancedEditBeanForm<SimpleOpportunity> editForm;
-	private SimpleOpportunity opportunity;
-
-	public OpportunityAddViewImpl() {
-		super();
-		editForm = new AdvancedEditBeanForm<SimpleOpportunity>();
-		this.addComponent(editForm);
+	@Override
+	protected String initFormTitle() {
+		return (beanItem.getId() == null) ? "Create Opportunity" : beanItem
+				.getOpportunityname();
 	}
 
 	@Override
-	public void editItem(SimpleOpportunity item) {
-		this.opportunity = item;
-		this.editForm.setFormLayoutFactory(new FormLayoutFactory());
-		this.editForm
-				.setBeanFormFieldFactory(new OpportunityEditFormFieldFactory<SimpleOpportunity>(
-						editForm));
-		this.editForm.setBean(item);
+	protected Resource initFormIconResource() {
+		return MyCollabResource.newResource("icons/22/crm/opportunity.png");
 	}
 
 	@Override
-	public HasEditFormHandlers<SimpleOpportunity> getEditFormHandlers() {
-		return editForm;
+	protected ComponentContainer createButtonControls() {
+		return new EditFormControlsGenerator<SimpleOpportunity>(editForm)
+				.createButtonControls();
 	}
 
-	class FormLayoutFactory extends OpportunityFormLayoutFactory {
+	@Override
+	protected AdvancedEditBeanForm<SimpleOpportunity> initPreviewForm() {
+		return new AdvancedEditBeanForm<SimpleOpportunity>();
+	}
 
-		private static final long serialVersionUID = 1L;
+	@Override
+	protected IFormLayoutFactory initFormLayoutFactory() {
+		return new DynaFormLayout(CrmTypeConstants.OPPORTUNITY,
+				OpportunityDefaultDynaFormLayoutFactory.getForm());
+	}
 
-		public FormLayoutFactory() {
-			super((opportunity.getId() == null) ? "Create Opportunity"
-					: opportunity.getOpportunityname());
-		}
-
-		private Layout createButtonControls() {
-			final HorizontalLayout controlPanel = new HorizontalLayout();
-			final Layout controlButtons = (new EditFormControlsGenerator<SimpleOpportunity>(
-					editForm)).createButtonControls();
-			controlButtons.setSizeUndefined();
-			controlPanel.addComponent(controlButtons);
-			controlPanel.setWidth("100%");
-			controlPanel.setMargin(true);
-			controlPanel.setComponentAlignment(controlButtons,
-					Alignment.MIDDLE_CENTER);
-			return controlPanel;
-		}
-
-		@Override
-		protected Layout createTopPanel() {
-			return createButtonControls();
-		}
-
-		@Override
-		protected Layout createBottomPanel() {
-			return createButtonControls();
-		}
+	@Override
+	protected AbstractBeanFieldGroupEditFieldFactory<SimpleOpportunity> initBeanFormFieldFactory() {
+		return new OpportunityEditFormFieldFactory<SimpleOpportunity>(editForm);
 	}
 }

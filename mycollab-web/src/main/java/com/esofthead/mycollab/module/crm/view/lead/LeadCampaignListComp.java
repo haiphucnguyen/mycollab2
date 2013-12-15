@@ -60,6 +60,7 @@ import com.vaadin.ui.VerticalLayout;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class LeadCampaignListComp extends
 		RelatedListComp<SimpleCampaign, CampaignSearchCriteria> {

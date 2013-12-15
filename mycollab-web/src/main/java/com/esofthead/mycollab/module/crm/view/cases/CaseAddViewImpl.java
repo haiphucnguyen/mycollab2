@@ -16,15 +16,18 @@
  */
 package com.esofthead.mycollab.module.crm.view.cases;
 
+import com.esofthead.mycollab.form.view.DynaFormLayout;
+import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.SimpleCase;
-import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
-import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
+import com.esofthead.mycollab.module.crm.ui.components.AbstractEditItemComp;
+import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
+import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Layout;
+import com.esofthead.mycollab.web.MyCollabResource;
+import com.vaadin.server.Resource;
+import com.vaadin.ui.ComponentContainer;
 
 /**
  * 
@@ -33,62 +36,40 @@ import com.vaadin.ui.Layout;
  * 
  */
 @ViewComponent
-public class CaseAddViewImpl extends AbstractPageView implements CaseAddView {
-
+public class CaseAddViewImpl extends AbstractEditItemComp<SimpleCase> implements
+		CaseAddView {
 	private static final long serialVersionUID = 1L;
-	private AdvancedEditBeanForm<SimpleCase> editForm;
-	private SimpleCase cases;
 
-	public CaseAddViewImpl() {
-		super();
-		editForm = new AdvancedEditBeanForm<SimpleCase>();
-		this.addComponent(editForm);
+	@Override
+	protected String initFormTitle() {
+		return (beanItem.getId() == null) ? "Create Case" : beanItem
+				.getSubject();
 	}
 
 	@Override
-	public void editItem(SimpleCase item) {
-		this.cases = item;
-		this.editForm.setFormLayoutFactory(new FormLayoutFactory());
-		this.editForm
-				.setBeanFormFieldFactory(new CaseEditFormFieldFactory<SimpleCase>(
-						editForm));
-		this.editForm.setBean(item);
+	protected Resource initFormIconResource() {
+		return MyCollabResource.newResource("icons/22/crm/case.png");
 	}
 
 	@Override
-	public HasEditFormHandlers<SimpleCase> getEditFormHandlers() {
-		return editForm;
+	protected ComponentContainer createButtonControls() {
+		return new EditFormControlsGenerator<SimpleCase>(editForm)
+				.createButtonControls();
 	}
 
-	class FormLayoutFactory extends CaseFormLayoutFactory {
+	@Override
+	protected AdvancedEditBeanForm<SimpleCase> initPreviewForm() {
+		return new AdvancedEditBeanForm<SimpleCase>();
+	}
 
-		private static final long serialVersionUID = 1L;
+	@Override
+	protected IFormLayoutFactory initFormLayoutFactory() {
+		return new DynaFormLayout(CrmTypeConstants.CASE,
+				CasesDefaultFormLayoutFactory.getForm());
+	}
 
-		public FormLayoutFactory() {
-			super((cases.getId() == null) ? "Create Case" : cases.getSubject());
-		}
-
-		private Layout createButtonControls() {
-			final HorizontalLayout controlPanel = new HorizontalLayout();
-			final Layout controlButtons = (new EditFormControlsGenerator<SimpleCase>(
-					editForm)).createButtonControls();
-			controlButtons.setSizeUndefined();
-			controlPanel.addComponent(controlButtons);
-			controlPanel.setWidth("100%");
-			controlPanel.setMargin(true);
-			controlPanel.setComponentAlignment(controlButtons,
-					Alignment.MIDDLE_CENTER);
-			return controlPanel;
-		}
-
-		@Override
-		protected Layout createTopPanel() {
-			return createButtonControls();
-		}
-
-		@Override
-		protected Layout createBottomPanel() {
-			return createButtonControls();
-		}
+	@Override
+	protected AbstractBeanFieldGroupEditFieldFactory<SimpleCase> initBeanFormFieldFactory() {
+		return new CaseEditFormFieldFactory<SimpleCase>(editForm);
 	}
 }

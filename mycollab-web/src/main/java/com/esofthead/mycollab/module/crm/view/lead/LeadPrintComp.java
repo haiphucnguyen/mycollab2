@@ -11,7 +11,7 @@ import com.vaadin.ui.VerticalLayout;
  * @since 3.0
  * 
  */
-public class LeadPrintComp extends AbstractLeadPreviewComp {
+class LeadPrintComp extends AbstractLeadPreviewComp {
 	private static final long serialVersionUID = 1L;
 
 	@Override

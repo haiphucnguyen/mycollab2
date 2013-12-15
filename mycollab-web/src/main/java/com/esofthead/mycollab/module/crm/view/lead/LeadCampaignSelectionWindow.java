@@ -35,6 +35,7 @@ import com.vaadin.ui.Button;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 @SuppressWarnings("serial")
 public class LeadCampaignSelectionWindow extends
