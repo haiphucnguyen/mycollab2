@@ -50,6 +50,11 @@ public abstract class AbstractBeanFieldGroupViewFieldFactory<B> implements
 		return field;
 	}
 
+	@Override
+	public void commit() {
+
+	}
+
 	abstract protected Field onCreateField(Object propertyId);
 
 }

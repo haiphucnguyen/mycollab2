@@ -29,6 +29,7 @@ import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
+import com.esofthead.mycollab.module.crm.domain.Account;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
 import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
@@ -52,7 +53,6 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
@@ -283,7 +283,7 @@ public class OpportunitySearchPanel extends
 										.trim()));
 			}
 
-			final SimpleAccount account = this.accountField.getAccount();
+			final Account account = this.accountField.getAccount();
 			if (account.getId() != null) {
 				OpportunitySearchPanel.this.searchCriteria
 						.setAccountId(new NumberSearchField(SearchField.AND,
@@ -346,7 +346,7 @@ public class OpportunitySearchPanel extends
 				final SimpleAccount account = accountService.findById(
 						(Integer) value.getAccountId().getValue(),
 						AppContext.getAccountId());
-				this.accountField.setAccount(account);
+//				this.accountField.setAccount(account);
 			}
 			if (value.getNextStep() != null) {
 				this.nextStepField.setValue(value.getNextStep().getValue());

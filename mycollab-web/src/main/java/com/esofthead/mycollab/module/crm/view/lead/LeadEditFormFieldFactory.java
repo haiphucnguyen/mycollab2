@@ -19,7 +19,7 @@ package com.esofthead.mycollab.module.crm.view.lead;
 import com.esofthead.mycollab.module.crm.domain.Lead;
 import com.esofthead.mycollab.module.crm.ui.components.IndustryComboBox;
 import com.esofthead.mycollab.module.user.ui.components.ActiveUserComboBox;
-import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupFieldFactory;
+import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.CountryComboBox;
 import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
@@ -39,7 +39,7 @@ import com.vaadin.ui.TextField;
  * @param <B>
  */
 public class LeadEditFormFieldFactory<B extends Lead> extends
-		AbstractBeanFieldGroupFieldFactory<B> {
+		AbstractBeanFieldGroupEditFieldFactory<B> {
 	private static final long serialVersionUID = 1L;
 
 	public LeadEditFormFieldFactory(GenericBeanForm<B> form) {

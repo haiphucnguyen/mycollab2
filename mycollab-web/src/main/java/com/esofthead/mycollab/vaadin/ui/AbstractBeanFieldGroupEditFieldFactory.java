@@ -1,7 +1,9 @@
 package com.esofthead.mycollab.vaadin.ui;
 
+import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.utils.ClassUtils;
 import com.vaadin.data.fieldgroup.FieldGroup;
+import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.AbstractTextField;
 import com.vaadin.ui.Field;
@@ -14,16 +16,16 @@ import com.vaadin.ui.RichTextArea;
  * 
  * @param <B>
  */
-public abstract class AbstractBeanFieldGroupFieldFactory<B> implements
+public abstract class AbstractBeanFieldGroupEditFieldFactory<B> implements
 		IBeanFieldGroupFieldFactory<B> {
 	private static final long serialVersionUID = 1L;
 	protected GenericBeanForm<B> attachForm;
 	protected FieldGroup fieldGroup;
 
-	public AbstractBeanFieldGroupFieldFactory(GenericBeanForm<B> form) {
+	public AbstractBeanFieldGroupEditFieldFactory(GenericBeanForm<B> form) {
 		this.attachForm = form;
 		this.fieldGroup = new FieldGroup();
-		this.fieldGroup.setBuffered(false);
+		this.fieldGroup.setBuffered(true);
 	}
 
 	@Override
@@ -54,6 +56,15 @@ public abstract class AbstractBeanFieldGroupFieldFactory<B> implements
 		attachForm.attachField(propertyId, field);
 
 		return field;
+	}
+
+	@Override
+	public void commit() {
+		try {
+			fieldGroup.commit();
+		} catch (CommitException e) {
+			throw new MyCollabException(e);
+		}
 	}
 
 	abstract protected Field onCreateField(Object propertyId);

@@ -18,8 +18,14 @@ package com.esofthead.mycollab.module.crm.view.account;
 
 import com.esofthead.mycollab.module.crm.domain.Account;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
+import com.esofthead.mycollab.module.crm.service.AccountService;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.FieldSelection;
+import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
+import com.vaadin.data.Buffered.SourceException;
+import com.vaadin.data.Property;
+import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.event.MouseEvents;
 import com.vaadin.event.MouseEvents.ClickEvent;
 import com.vaadin.ui.Alignment;
@@ -30,36 +36,83 @@ import com.vaadin.ui.Image;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 
-@SuppressWarnings("serial")
-public class AccountSelectionField extends CustomField<Account> implements
-		FieldSelection {
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 
-	private TextField accountName;
-	private SimpleAccount account = new SimpleAccount();
+public class AccountSelectionField extends CustomField<Integer> implements
+		FieldSelection<Account> {
+	private static final long serialVersionUID = 1L;
+
+	private TextField accountName = new TextField();
+	private Account account = new Account();
 	private Image browseBtn;
 	private Image clearBtn;
 
 	public void clearValue() {
 		accountName.setValue("");
-		this.account = new SimpleAccount();
+		this.account = new Account();
 	}
 
-	public void setAccount(SimpleAccount account) {
+	@Override
+	public void setPropertyDataSource(Property newDataSource) {
+		Object value = newDataSource.getValue();
+		if (value instanceof Integer) {
+			AccountService accountService = ApplicationContextUtil
+					.getSpringBean(AccountService.class);
+			SimpleAccount account = accountService.findById((Integer) value,
+					AppContext.getAccountId());
+			if (account != null) {
+				setInternalAccount(account);
+			}
+
+			super.setPropertyDataSource(newDataSource);
+		} else {
+			super.setPropertyDataSource(newDataSource);
+		}
+	}
+	
+	
+
+	@Override
+	public void commit() throws SourceException, InvalidValueException {
+		// TODO Auto-generated method stub
+		super.commit();
+	}
+	
+	
+
+	@Override
+	public void validate() throws InvalidValueException {
+		// TODO Auto-generated method stub
+		super.validate();
+	}
+
+	@Override
+	protected Integer getInternalValue() {
+		// TODO Auto-generated method stub
+		return super.getInternalValue();
+	}
+
+	private void setInternalAccount(SimpleAccount account) {
 		this.account = account;
 		accountName.setValue(account.getAccountname());
 	}
 
-	public SimpleAccount getAccount() {
+	public Account getAccount() {
 		return account;
 	}
 
 	@Override
-	public void fireValueChange(Object data) {
-		account = (SimpleAccount) data;
+	public void fireValueChange(Account data) {
+		account = (Account) data;
 		if (account != null) {
 			accountName.setValue(account.getAccountname());
+			setInternalValue(account.getId());
 		}
-
 	}
 
 	@Override
@@ -69,7 +122,6 @@ public class AccountSelectionField extends CustomField<Account> implements
 		layout.setWidth("100%");
 		layout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
-		accountName = new TextField();
 		accountName.setEnabled(true);
 		accountName.setWidth("100%");
 		layout.addComponent(accountName);
@@ -81,6 +133,8 @@ public class AccountSelectionField extends CustomField<Account> implements
 		layout.setComponentAlignment(browseBtn, Alignment.MIDDLE_LEFT);
 
 		browseBtn.addClickListener(new MouseEvents.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void click(ClickEvent event) {
 				AccountSelectionWindow accountWindow = new AccountSelectionWindow(
@@ -94,6 +148,8 @@ public class AccountSelectionField extends CustomField<Account> implements
 				MyCollabResource.newResource("icons/16/clearItem.png"));
 
 		clearBtn.addClickListener(new MouseEvents.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void click(ClickEvent event) {
 				clearValue();
@@ -108,7 +164,7 @@ public class AccountSelectionField extends CustomField<Account> implements
 	}
 
 	@Override
-	public Class<? extends Account> getType() {
-		return Account.class;
+	public Class<Integer> getType() {
+		return Integer.class;
 	}
 }

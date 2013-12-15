@@ -75,6 +75,7 @@ public class CaseAddViewImpl extends AbstractPageView implements CaseAddView {
 			controlButtons.setSizeUndefined();
 			controlPanel.addComponent(controlButtons);
 			controlPanel.setWidth("100%");
+			controlPanel.setMargin(true);
 			controlPanel.setComponentAlignment(controlButtons,
 					Alignment.MIDDLE_CENTER);
 			return controlPanel;

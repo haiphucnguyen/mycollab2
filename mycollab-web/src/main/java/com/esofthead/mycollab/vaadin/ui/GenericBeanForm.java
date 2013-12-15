@@ -16,6 +16,7 @@
  */
 package com.esofthead.mycollab.vaadin.ui;
 
+import com.esofthead.mycollab.core.MyCollabException;
 import com.vaadin.data.Item;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Field;
@@ -24,7 +25,7 @@ import com.vaadin.ui.FormFieldFactory;
 /**
  * 
  * @author MyCollab Ltd.
- * @since 2.0
+ * @since 3.0
  * 
  * @param <B>
  */
@@ -76,7 +77,7 @@ public class GenericBeanForm<B> extends CssLayout {
 		this.addComponent(layoutFactory.getLayout());
 
 		if (fieldFactory == null) {
-			fieldFactory = new DefaultBeanFieldGroupFieldFactory<B>(this);
+			throw new MyCollabException("Field factory must be set");
 		}
 
 		fieldFactory.setBean(bean);

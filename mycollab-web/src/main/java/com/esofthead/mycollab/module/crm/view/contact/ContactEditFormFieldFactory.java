@@ -22,7 +22,7 @@ import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.module.crm.view.account.AccountSelectionField;
 import com.esofthead.mycollab.module.crm.view.lead.LeadSourceComboBox;
 import com.esofthead.mycollab.module.user.ui.components.ActiveUserComboBox;
-import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupFieldFactory;
+import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.CountryComboBox;
 import com.esofthead.mycollab.vaadin.ui.DateComboboxSelectionField;
 import com.esofthead.mycollab.vaadin.ui.FieldSelection;
@@ -34,7 +34,7 @@ import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 
 class ContactEditFormFieldFactory<B extends Contact> extends
-		AbstractBeanFieldGroupFieldFactory<B> {
+		AbstractBeanFieldGroupEditFieldFactory<B> {
 	private static final long serialVersionUID = 1L;
 
 	ContactEditFormFieldFactory(GenericBeanForm<B> form) {

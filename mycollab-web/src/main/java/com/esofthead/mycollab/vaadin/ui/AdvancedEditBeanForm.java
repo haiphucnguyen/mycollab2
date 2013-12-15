@@ -108,6 +108,7 @@ public class AdvancedEditBeanForm<B> extends GenericBeanForm<B> implements
 	}
 
 	protected void fireSaveForm() {
+		fieldFactory.commit();
 		if (editFormHandlers != null) {
 			for (EditFormHandler<B> editFormHandler : editFormHandlers) {
 				editFormHandler.onSave(this.getBean());

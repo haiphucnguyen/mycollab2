@@ -17,16 +17,13 @@
 package com.esofthead.mycollab.module.crm.view.opportunity;
 
 import com.esofthead.mycollab.module.crm.domain.Opportunity;
-import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
-import com.esofthead.mycollab.module.crm.service.AccountService;
 import com.esofthead.mycollab.module.crm.service.CampaignService;
-import com.esofthead.mycollab.module.crm.view.account.AccountSelectionField;
 import com.esofthead.mycollab.module.crm.view.campaign.CampaignSelectionField;
 import com.esofthead.mycollab.module.crm.view.lead.LeadSourceComboBox;
 import com.esofthead.mycollab.module.user.ui.components.ActiveUserComboBox;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupFieldFactory;
+import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.CurrencyComboBox;
 import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.esofthead.mycollab.web.AppContext;
@@ -35,7 +32,7 @@ import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 
 public class OpportunityEditFormFieldFactory<B extends Opportunity> extends
-		AbstractBeanFieldGroupFieldFactory<B> {
+		AbstractBeanFieldGroupEditFieldFactory<B> {
 	private static final long serialVersionUID = 1L;
 
 	public OpportunityEditFormFieldFactory(GenericBeanForm<B> form) {
@@ -59,18 +56,18 @@ public class OpportunityEditFormFieldFactory<B extends Opportunity> extends
 			}
 			return campaignField;
 		} else if (propertyId.equals("accountid")) {
-			AccountSelectionField accountField = new AccountSelectionField();
-			accountField.setRequired(true);
-			if (opportunity.getAccountid() != null) {
-				AccountService accountService = ApplicationContextUtil
-						.getSpringBean(AccountService.class);
-				SimpleAccount account = accountService.findById(
-						opportunity.getAccountid(), AppContext.getAccountId());
-				if (account != null) {
-					accountField.setAccount(account);
-				}
-			}
-			return accountField;
+//			AccountSelectionField accountField = new AccountSelectionField();
+//			accountField.setRequired(true);
+//			if (opportunity.getAccountid() != null) {
+//				AccountService accountService = ApplicationContextUtil
+//						.getSpringBean(AccountService.class);
+//				SimpleAccount account = accountService.findById(
+//						opportunity.getAccountid(), AppContext.getAccountId());
+//				if (account != null) {
+//					accountField.setAccount(account);
+//				}
+//			}
+//			return accountField;
 		} else if (propertyId.equals("opportunityname")) {
 			TextField tf = new TextField();
 			tf.setNullRepresentation("");
