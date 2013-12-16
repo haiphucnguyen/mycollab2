@@ -69,7 +69,7 @@ public class ContactListPresenter
 					}
 
 					@Override
-					protected void onSelectExtra(String id, String caption) {
+					protected void onSelectExtra(String id) {
 						if ("mail".equals(id)) {
 							if (isSelectAll) {
 								NotificationUtil

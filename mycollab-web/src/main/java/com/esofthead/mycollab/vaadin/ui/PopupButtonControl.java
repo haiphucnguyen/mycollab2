@@ -56,7 +56,7 @@ public class PopupButtonControl extends SplitButton implements
 
 			@Override
 			public void splitButtonClick(SplitButtonClickEvent event) {
-				changeOption(id, defaultName);
+				changeOption(id);
 				PopupButtonControl.this.setPopupVisible(false);
 			}
 		});
@@ -67,29 +67,29 @@ public class PopupButtonControl extends SplitButton implements
 	}
 
 	public void addOptionItem(final String id, final String name) {
-        this.addOptionItem(id, name, true);
-    }
+		this.addOptionItem(id, name, true);
+	}
 
-    public void addOptionItem(final String id, final String name,
-            final boolean isEnable) {
-        final Button optionBtn = new Button(name, new Button.ClickListener() {
-            private static final long serialVersionUID = 1L;
+	public void addOptionItem(final String id, final String name,
+			final boolean isEnable) {
+		final Button optionBtn = new Button(name, new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
 
-            @Override
-            public void buttonClick(final ClickEvent event) {
-                changeOption(id, name);
-                PopupButtonControl.this.setPopupVisible(false);
-            }
-        });
-        optionBtn.addStyleName("link");
-        optionBtn.setEnabled(isEnable);
-        selectContent.addComponent(optionBtn);
-    }
+			@Override
+			public void buttonClick(final ClickEvent event) {
+				changeOption(id);
+				PopupButtonControl.this.setPopupVisible(false);
+			}
+		});
+		optionBtn.addStyleName("link");
+		optionBtn.setEnabled(isEnable);
+		selectContent.addComponent(optionBtn);
+	}
 
-	private void changeOption(String id, String caption) {
+	private void changeOption(String id) {
 		if (handlers != null) {
 			for (MassItemActionHandler handler : handlers) {
-				handler.onSelect(id, caption);
+				handler.onSelect(id);
 			}
 		}
 	}

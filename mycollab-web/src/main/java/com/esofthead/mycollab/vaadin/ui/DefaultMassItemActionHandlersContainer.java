@@ -36,7 +36,7 @@ public class DefaultMassItemActionHandlersContainer extends HorizontalLayout
 
 	public void addActionItem(String id, Resource resource, String groupId) {
 		ButtonGroup group = groupMap.get(groupId);
-		
+
 		if (group == null) {
 			group = new ButtonGroup();
 			groupMap.put(groupId, group);
@@ -57,6 +57,14 @@ public class DefaultMassItemActionHandlersContainer extends HorizontalLayout
 		optionBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
 		group.addButton(optionBtn);
 
+	}
+
+	private void changeOption(String id) {
+		if (handlers != null) {
+			for (MassItemActionHandler handler : handlers) {
+				handler.onSelect(id);
+			}
+		}
 	}
 
 	@Override

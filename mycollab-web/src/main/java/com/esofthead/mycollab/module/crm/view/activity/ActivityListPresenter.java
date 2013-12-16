@@ -44,7 +44,8 @@ import com.vaadin.ui.UI;
  * @since 2.0
  * 
  */
-public class ActivityListPresenter extends
+public class ActivityListPresenter
+		extends
 		ListSelectionPresenter<ActivityListView, EventSearchCriteria, SimpleEvent> {
 	private static final long serialVersionUID = 1L;
 
@@ -55,7 +56,7 @@ public class ActivityListPresenter extends
 				new DefaultPopupActionHandler(this) {
 
 					@Override
-					protected void onSelectExtra(String id, String caption) {
+					protected void onSelectExtra(String id) {
 						if (MassItemActionHandler.MAIL_ACTION.equals(id)) {
 							UI.getCurrent().addWindow(new MailFormWindow());
 						}

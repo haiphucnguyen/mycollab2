@@ -24,9 +24,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.persistence.service.ISearchableService;
-import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.user.accountsettings.view.AccountSettingBreadcrumb;
 import com.esofthead.mycollab.module.user.domain.Role;
 import com.esofthead.mycollab.module.user.domain.SimpleRole;
@@ -65,7 +63,7 @@ public class RoleListPresenter extends
 				new DefaultPopupActionHandler(this) {
 
 					@Override
-					protected void onSelectExtra(String id, String caption) {
+					protected void onSelectExtra(String id) {
 						if (MassItemActionHandler.MAIL_ACTION.equals(id)) {
 							UI.getCurrent().addWindow(new MailFormWindow());
 						}

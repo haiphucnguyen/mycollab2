@@ -42,7 +42,7 @@ public class ProblemListPresenter
 				new DefaultPopupActionHandler(this) {
 
 					@Override
-					protected void onSelectExtra(String id, String caption) {
+					protected void onSelectExtra(String id) {
 						if (MassItemActionHandler.MAIL_ACTION.equals(id)) {
 							UI.getCurrent().addWindow(new MailFormWindow());
 						} else if (MassItemActionHandler.MASS_UPDATE_ACTION

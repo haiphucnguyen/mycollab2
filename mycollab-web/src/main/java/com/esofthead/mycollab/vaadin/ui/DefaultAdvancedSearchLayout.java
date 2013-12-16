@@ -260,7 +260,7 @@ public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
 		tableActionControls
 				.addMassItemActionHandler(new MassItemActionHandler() {
 					@Override
-					public void onSelect(String id, String caption) {
+					public void onSelect(String id) {
 						if ("delete".equals(id)) {
 							ConfirmDialogExt.show(
 									UI.getCurrent(),

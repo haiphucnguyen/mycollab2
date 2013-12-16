@@ -58,7 +58,7 @@ public class CaseListPresenter extends
 				new DefaultPopupActionHandler(this) {
 
 					@Override
-					protected void onSelectExtra(String id, String caption) {
+					protected void onSelectExtra(String id) {
 						if (MassItemActionHandler.MAIL_ACTION.equals(id)) {
 							if (isSelectAll) {
 								NotificationUtil

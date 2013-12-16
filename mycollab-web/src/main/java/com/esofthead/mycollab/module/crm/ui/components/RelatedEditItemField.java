@@ -43,6 +43,7 @@ import com.esofthead.mycollab.vaadin.ui.FieldSelection;
 import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
+import com.vaadin.data.Property;
 import com.vaadin.event.MouseEvents;
 import com.vaadin.event.MouseEvents.ClickEvent;
 import com.vaadin.ui.Alignment;
@@ -59,7 +60,8 @@ import com.vaadin.ui.UI;
  * @since 2.0
  * 
  */
-public class RelatedEditItemField extends CustomField implements FieldSelection {
+public class RelatedEditItemField extends CustomField<String> implements
+		FieldSelection {
 
 	private static final long serialVersionUID = 1L;
 	private static Logger log = LoggerFactory
@@ -76,7 +78,6 @@ public class RelatedEditItemField extends CustomField implements FieldSelection 
 	public RelatedEditItemField(String[] types, Object bean) {
 		this.bean = bean;
 		this.types = types;
-
 	}
 
 	@Override
@@ -164,8 +165,19 @@ public class RelatedEditItemField extends CustomField implements FieldSelection 
 	}
 
 	@Override
-	public Class<?> getType() {
-		return (new String[2]).getClass();
+	public void setPropertyDataSource(Property newDataSource) {
+		Object value = newDataSource.getValue();
+		if (value instanceof String) {
+			setType((String) value);
+			super.setPropertyDataSource(newDataSource);
+		} else {
+			super.setPropertyDataSource(newDataSource);
+		}
+	}
+
+	@Override
+	public Class<String> getType() {
+		return String.class;
 	}
 
 	private class RelatedItemComboBox extends ValueComboBox {

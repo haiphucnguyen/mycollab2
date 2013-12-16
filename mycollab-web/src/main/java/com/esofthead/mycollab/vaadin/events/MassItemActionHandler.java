@@ -39,7 +39,6 @@ public interface MassItemActionHandler {
 	/**
 	 * 
 	 * @param id
-	 * @param caption
 	 */
-	void onSelect(String id, String caption);
+	void onSelect(String id);
 }

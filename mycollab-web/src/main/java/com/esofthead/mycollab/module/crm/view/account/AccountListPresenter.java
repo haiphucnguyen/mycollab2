@@ -42,6 +42,12 @@ import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.UI;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
 public class AccountListPresenter
 		extends
 		CrmGenericListPresenter<AccountListView, AccountSearchCriteria, SimpleAccount>
@@ -70,7 +76,7 @@ public class AccountListPresenter
 					}
 
 					@Override
-					protected void onSelectExtra(String id, String caption) {
+					protected void onSelectExtra(String id) {
 						if ("mail".equals(id)) {
 							if (isSelectAll) {
 								NotificationUtil

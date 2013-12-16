@@ -58,7 +58,7 @@ public class OpportunityListPresenter
 				new DefaultPopupActionHandler(this) {
 
 					@Override
-					protected void onSelectExtra(String id, String caption) {
+					protected void onSelectExtra(String id) {
 						if ("mail".equals(id)) {
 							UI.getCurrent().addWindow(new MailFormWindow());
 						} else if ("massUpdate".equals(id)) {
