@@ -1586,8 +1586,17 @@ input.v-textfield-errorField {
 	padding-left: 18px;
 }
 
-.v-horizontallayout-message-toppanel-header .v-horizontallayout-margin{
-	padding : 3px 10px 2px 18px;
+.message-toppanel-header.v-margin-top {
+	padding-top : 3px;
+}
+.message-toppanel-header.v-margin-right {
+	padding-right : 10px;
+}
+.message-toppanel-header.v-margin-bottom {
+	padding-bottom : 2px;
+}
+.message-toppanel-header.v-margin-left {
+	padding-left : 18px;
 }
 
 .projectinfo-header .project-name {
@@ -2607,8 +2616,8 @@ div.v-splitbutton,div.v-splitbutton .v-button {
 	margin: 5px 0px;
 }
 
-.comment-list-wrapper {
-	padding: 0px 0px 0px 58px;
+.comment-list-wrapper.v-margin-left {
+	padding-left: 58px;
 }
 
 .message .message-container {
@@ -2623,11 +2632,9 @@ div.v-splitbutton,div.v-splitbutton .v-button {
 	padding: 10px;
 	border: 2px solid #a9a9a9;
 	border-radius: 5px;
-	/*margin-left: 10px;*/
+	/* margin-left: 10px; */
 	position: relative;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
+	overflow: visible;
 }
 
 .v-ie7 .message .message-container {
@@ -5441,4 +5448,8 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 /* Entity Import Window */
 .entity-import-window .v-label-h3 {
 	margin: 0px;
+}
+/* Bean List fix */
+.bean-list .v-verticallayout {
+	display: block;
 }

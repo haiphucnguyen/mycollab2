@@ -63,6 +63,7 @@ import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.event.FieldEvents.TextChangeEvent;
 import com.vaadin.event.FieldEvents.TextChangeListener;
+import com.vaadin.server.Sizeable;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.AbstractTextField.TextChangeEventMode;
 import com.vaadin.ui.Alignment;
@@ -73,6 +74,7 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.TextField;
@@ -400,12 +402,11 @@ public class MessageListViewImpl extends AbstractPageView implements
 			this.messagePanelBody = new HorizontalLayout();
 			final Label headerLbl = new Label("Messages");
 			headerLbl.setStyleName("h2");
-			final Embedded icon = new Embedded();
-			icon.setSource(MyCollabResource
+			final Image icon = new Image(null, MyCollabResource
 					.newResource("icons/24/project/message.png"));
 			final HorizontalLayout layoutHeader = new HorizontalLayout();
 			layoutHeader.setStyleName("message-toppanel-header");
-			layoutHeader.setHeight("30px");
+			layoutHeader.setMargin(true);
 			layoutHeader.addComponent(icon);
 			layoutHeader.addComponent(headerLbl);
 			layoutHeader.setExpandRatio(headerLbl, 1.0f);
@@ -417,6 +418,7 @@ public class MessageListViewImpl extends AbstractPageView implements
 			this.messageSearchPanel.setWidth("320px");
 			this.messagePanelBody.setStyleName("message-toppanel-body");
 			this.messagePanelBody.setWidth("100%");
+			this.messagePanelBody.setMargin(true);
 			this.addComponent(this.messagePanelBody);
 
 			this.createBasicLayout();
@@ -436,7 +438,7 @@ public class MessageListViewImpl extends AbstractPageView implements
 			final HorizontalLayout titleLayout = new HorizontalLayout();
 			titleLayout.setSpacing(true);
 			final Label titleLbl = new Label("Title: ");
-			titleLbl.setWidth("100%");
+			titleLbl.setWidth(SIZE_UNDEFINED, Sizeable.Unit.PIXELS);
 
 			titleField.setWidth("100%");
 			titleField.setNullRepresentation("");
@@ -446,14 +448,16 @@ public class MessageListViewImpl extends AbstractPageView implements
 			titleLayout.addComponent(titleLbl);
 			titleLayout.addComponent(titleField);
 			titleLayout.setExpandRatio(titleField, 1.0f);
-			titleLayout.setSizeFull();
+			titleLayout.setWidth("100%");
 
 			addMessageWrapper.addComponent(titleLayout);
 			addMessageWrapper.setComponentAlignment(titleLayout,
 					Alignment.MIDDLE_LEFT);
 
 			ckEditorTextField.setWidth("100%");
+			ckEditorTextField.setHeight("200px");
 			addMessageWrapper.addComponent(ckEditorTextField);
+			addMessageWrapper.setExpandRatio(ckEditorTextField, 1.0f);
 			addMessageWrapper.addComponent(attachments);
 			addMessageWrapper.setComponentAlignment(ckEditorTextField,
 					Alignment.MIDDLE_CENTER);

@@ -74,6 +74,7 @@ public class CommentInput extends VerticalLayout {
 
 		commentArea = new RichTextArea();
 		commentArea.setWidth("100%");
+		commentArea.setHeight("200px");
 
 		final AttachmentPanel attachments = new AttachmentPanel();
 

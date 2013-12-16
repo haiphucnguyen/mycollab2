@@ -61,6 +61,7 @@ import com.esofthead.mycollab.vaadin.ui.UrlDetectableLabel;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -71,7 +72,7 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.VerticalLayout;
 
-public class NoteListItems extends Depot {
+public class NoteListItems extends VerticalLayout {
 
 	private class NoteEditor extends VerticalLayout {
 
@@ -88,6 +89,7 @@ public class NoteListItems extends Depot {
 
 			noteArea = new RichTextArea();
 			noteArea.setWidth("100%");
+			noteArea.setHeight("200px");
 			this.addComponent(noteArea);
 			this.addComponent(attachments);
 
@@ -238,6 +240,7 @@ public class NoteListItems extends Depot {
 		private Component constructNoteHeader(final SimpleNote note) {
 			final HorizontalLayout layout = new HorizontalLayout();
 			layout.setStyleName("message");
+			layout.setSpacing(true);
 			layout.setWidth("100%");
 			layout.addComponent(UserAvatarControlFactory
 					.createUserAvatarButtonLink(note.getCreatedUserAvatarId(),
@@ -324,8 +327,9 @@ public class NoteListItems extends Depot {
 		public Component generateRow(final SimpleNote note, final int rowIndex) {
 			this.note = note;
 
-			CssLayout commentListWrapper = new CssLayout();
+			VerticalLayout commentListWrapper = new VerticalLayout();
 			commentListWrapper.setWidth("100%");
+			commentListWrapper.setMargin(new MarginInfo(false, false, false, true));
 			commentListWrapper.addStyleName("comment-list-wrapper");
 
 			noteContentLayout = new VerticalLayout();
@@ -369,7 +373,7 @@ public class NoteListItems extends Depot {
 
 	public NoteListItems(final String title, final String type,
 			final Integer typeid) {
-		super(title, new VerticalLayout(), "100%");
+		super();
 		this.setWidth("100%");
 		this.setMargin(false);
 		addStyleName("note-list");
@@ -382,10 +386,9 @@ public class NoteListItems extends Depot {
 	}
 
 	private void addCreateBtn() {
-		final VerticalLayout contentContainer = (VerticalLayout) bodyContent;
-		final Component component = contentContainer.getComponent(0);
+		final Component component = this.getComponent(0);
 		if (component instanceof NoteEditor) {
-			contentContainer.replaceComponent(component, createBtn);
+			this.replaceComponent(component, createBtn);
 		}
 	}
 
@@ -400,22 +403,21 @@ public class NoteListItems extends Depot {
 	}
 
 	private void initUI() {
-		final VerticalLayout contentContainer = (VerticalLayout) bodyContent;
-		contentContainer.setMargin(true);
-		contentContainer.setSpacing(true);
+		this.setSpacing(true);
+		this.setMargin(new MarginInfo(true, true, false, true));
 		createBtn = new Button("New Note", new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void buttonClick(final ClickEvent event) {
-				contentContainer.replaceComponent(createBtn, new NoteEditor());
+				NoteListItems.this.replaceComponent(createBtn, new NoteEditor());
 			}
 		});
 
 		createBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		createBtn.setIcon(MyCollabResource
 				.newResource("icons/16/addRecord.png"));
-		contentContainer.addComponent(createBtn);
+		this.addComponent(createBtn);
 
 		noteList = new BeanList<NoteService, NoteSearchCriteria, SimpleNote>(
 				noteService, NoteRowDisplayHandler.class);
@@ -423,7 +425,7 @@ public class NoteListItems extends Depot {
 		noteList.setStyleName("noteList");
 
 		noteListContainer = new VerticalLayout();
-		contentContainer.addComponent(noteListContainer);
+		this.addComponent(noteListContainer);
 		displayNotes();
 	}
 

@@ -73,6 +73,7 @@ public class BeanList<SearchService extends ISearchableService<S>, S extends Sea
 
 		this.contentLayout = contentLayout;
 		this.setCompositionRoot(contentLayout);
+		this.setStyleName("bean-list");
 	}
 
 	public BeanList(SearchService searchService,
