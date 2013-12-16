@@ -841,7 +841,7 @@ input.v-textfield-pagedtable-pagefield {
 
 .basicSearch .basicSearchBody .v-button-link.cancel-button {
 	color: rgb(69, 69, 69);
-	padding: 0px 3px;
+	padding: 0px;
 	text-align: center;
 }
 
@@ -4147,11 +4147,11 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 /* End Richtext Editor */
 
 /* The New GridLayout */
-.colored-gridlayout .v-gridlayout-margin {
+.colored-gridlayout {
 	border-bottom: 1px solid #a9a9a9;
 }
 
-.task-list .colored-gridlayout .v-gridlayout-margin {
+.task-list .colored-gridlayout {
 	border-width: 0px 1px 1px 1px;
 	border-style: solid;
 	border-color: rgb(169, 169, 169);
@@ -4170,17 +4170,29 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 	border-color: rgb(169, 169, 169);
 }
 
-.colored-gridlayout .v-gridlayout-margin .v-csslayout>.v-csslayout-margin
-	{
+.colored-gridlayout .v-csslayout
+{
 	padding: 8px 5px 8px 18px;
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-	box-sizing: border-box;
 }
 
-.colored-gridlayout .v-horizontallayout-gridform-caption .v-horizontallayout-margin,.colored-gridlayout .v-horizontallayout-gridform-field .v-horizontallayout-margin
-	{
-	padding: 8px 5px 8px 18px;
+.colored-gridlayout .gridform-caption.v-margin-top, .colored-gridlayout .gridform-field.v-margin-top
+{
+	padding-top: 5px;
+}
+
+.colored-gridlayout .gridform-caption.v-margin-right, .colored-gridlayout .gridform-field.v-margin-right
+{
+	padding-right: 5px;
+}
+
+.colored-gridlayout .gridform-caption.v-margin-bottom, .colored-gridlayout .gridform-field.v-margin-bottom
+{
+	padding-bottom: 5px;
+}
+
+.colored-gridlayout .gridform-caption.v-margin-left, .colored-gridlayout .gridform-field.v-margin-left
+{
+	padding-left: 18px;
 }
 
 .colored-gridlayout .gridform-field .v-horizontallayout .v-horizontallayout-margin
@@ -4193,33 +4205,27 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 	padding: 0px;
 }
 
-.colored-gridlayout .v-gridlayout-margin .gridform-caption {
+.colored-gridlayout .gridform-caption {
 	background-color: rgb(212, 223, 239);
 	border-left: 1px solid #a9a9a9;
 	border-right: 1px solid #c8c8c8;
 }
 
-.colored-gridlayout .v-gridlayout-margin .gridform-caption.first-col {
+.colored-gridlayout .gridform-caption.first-col {
 	border-left: none;
 }
 
-.colored-gridlayout .v-gridlayout-margin>div>div>div>div {
+.colored-gridlayout > div > div {
 	border-top: 1px solid #c8c8c8;
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-	box-sizing: border-box;
 }
 
-.colored-gridlayout .v-gridlayout-margin>div>div>div>div.first-row {
+.colored-gridlayout > div > div.first-row {
 	border-top: none;
 }
 /* End The New GridLayout */
 
 /* Bug Dashboard */
 .bugdashboard-header {
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-	box-sizing: border-box;
 	border: 1px solid rgb(169, 169, 169);
 	border-radius: 3px 3px 0px 0px;
 	background: url("icons/grad-light-top2.png") repeat-x left top
@@ -4229,15 +4235,12 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 .bugdashboard-header-top {
 	border-radius: 3px 3px 0px 0px;
 	background-color: rgb(228, 228, 228);
-}
-
-.bugdashboard-header-top>.v-csslayout-margin {
 	padding: 2px 10px 5px 10px;
 	border-bottom: 1px solid rgb(169, 169, 169);
 }
 
 /* Task Group */
-.taskgroup-header>.v-csslayout-margin {
+.taskgroup-header {
 	padding: 7px 10px 7px 18px;
 	border: 1px solid rgb(169, 169, 169);
 	border-radius: 3px;
@@ -4432,9 +4435,7 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 
 .v-label.separator {
 	border-right: 1px solid rgb(169, 169, 169);
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-	box-sizing: border-box;
+	padding-left: 3px;
 	margin-right: 3px;
 }
 
@@ -5452,4 +5453,12 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 /* Bean List fix */
 .bean-list .v-verticallayout {
 	display: block;
+}
+/* H2 Style 2 */
+.h2-style2 {
+	padding: 8px 0px 8px 18px;
+	font-size: 13px;
+	border-bottom: 1px solid #a9a9a9;
+	color: rgb(69, 69, 69);
+	font-weight: bold;
 }

@@ -1,7 +1,7 @@
 package com.esofthead.mycollab.vaadin.ui;
 
 import com.vaadin.ui.Component;
-import com.vaadin.ui.CssLayout;
+import com.vaadin.ui.VerticalLayout;
 
 /**
  * 
@@ -9,21 +9,15 @@ import com.vaadin.ui.CssLayout;
  * @since 2.0
  * 
  */
-public class MassUpdateLayout extends CssLayout {
+public class MassUpdateLayout extends VerticalLayout {
 	private static final long serialVersionUID = 1L;
-	private final CssLayout body;
 
 	public MassUpdateLayout() {
-		this.setSizeFull();
-		this.setStyleName("readview-layout");
-
-		this.body = new CssLayout();
-		this.body.setStyleName("readview-layout-body");
-		this.body.setSizeFull();
-		this.addComponent(this.body);
+		this.setWidth("100%");
+		this.setStyleName("massupdate-layout");
 	}
 
 	public void addBody(final Component content) {
-		this.body.addComponent(content);
+		this.addComponent(content);
 	}
 }
