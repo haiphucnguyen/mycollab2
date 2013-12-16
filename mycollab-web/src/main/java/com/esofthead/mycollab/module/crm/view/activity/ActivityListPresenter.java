@@ -30,6 +30,7 @@ import com.esofthead.mycollab.module.crm.service.TaskService;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.MassItemActionHandler;
+import com.esofthead.mycollab.vaadin.mvp.DefaultMassEditActionHandler;
 import com.esofthead.mycollab.vaadin.mvp.ListSelectionPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.ui.MailFormWindow;
@@ -53,7 +54,7 @@ public class ActivityListPresenter
 		super(ActivityListView.class);
 
 		view.getPopupActionHandlers().addMassItemActionHandler(
-				new DefaultPopupActionHandler(this) {
+				new DefaultMassEditActionHandler(this) {
 
 					@Override
 					protected void onSelectExtra(String id) {

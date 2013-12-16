@@ -34,6 +34,7 @@ import com.esofthead.mycollab.module.crm.view.CrmToolbar;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.MassItemActionHandler;
+import com.esofthead.mycollab.vaadin.mvp.DefaultMassEditActionHandler;
 import com.esofthead.mycollab.vaadin.mvp.MassUpdateCommand;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
@@ -43,6 +44,12 @@ import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.UI;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class CaseListPresenter extends
 		CrmGenericListPresenter<CaseListView, CaseSearchCriteria, SimpleCase>
 		implements MassUpdateCommand<CaseWithBLOBs> {
@@ -55,7 +62,7 @@ public class CaseListPresenter extends
 		caseService = ApplicationContextUtil.getSpringBean(CaseService.class);
 
 		view.getPopupActionHandlers().addMassItemActionHandler(
-				new DefaultPopupActionHandler(this) {
+				new DefaultMassEditActionHandler(this) {
 
 					@Override
 					protected void onSelectExtra(String id) {
@@ -97,7 +104,7 @@ public class CaseListPresenter extends
 					}
 
 					@Override
-					protected Class getReportModelClassType() {
+					protected Class<SimpleCase> getReportModelClassType() {
 						return SimpleCase.class;
 					}
 				});

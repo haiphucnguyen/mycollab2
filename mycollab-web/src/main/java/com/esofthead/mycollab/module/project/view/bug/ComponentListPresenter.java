@@ -33,6 +33,7 @@ import com.esofthead.mycollab.module.tracker.domain.criteria.ComponentSearchCrit
 import com.esofthead.mycollab.module.tracker.service.ComponentService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.MassItemActionHandler;
+import com.esofthead.mycollab.vaadin.mvp.DefaultMassEditActionHandler;
 import com.esofthead.mycollab.vaadin.mvp.ListSelectionPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
@@ -59,7 +60,7 @@ public class ComponentListPresenter
 				.getSpringBean(ComponentService.class);
 
 		view.getPopupActionHandlers().addMassItemActionHandler(
-				new DefaultPopupActionHandler(this) {
+				new DefaultMassEditActionHandler(this) {
 
 					@Override
 					protected void onSelectExtra(String id) {

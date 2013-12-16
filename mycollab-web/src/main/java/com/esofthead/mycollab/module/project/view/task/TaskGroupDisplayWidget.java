@@ -47,6 +47,12 @@ import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
 public class TaskGroupDisplayWidget
 		extends
 		BeanList<ProjectTaskListService, TaskListSearchCriteria, SimpleTaskList> {

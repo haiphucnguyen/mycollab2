@@ -37,6 +37,12 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.TextField;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @SuppressWarnings("serial")
 public class OpportunitySimpleSearchPanel extends
 		GenericSearchPanel<OpportunitySearchCriteria> {

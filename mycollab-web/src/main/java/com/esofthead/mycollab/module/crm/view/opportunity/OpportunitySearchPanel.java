@@ -59,6 +59,12 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.themes.Reindeer;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @SuppressWarnings("serial")
 public class OpportunitySearchPanel extends
 		DefaultGenericSearchPanel<OpportunitySearchCriteria> {
@@ -75,8 +81,8 @@ public class OpportunitySearchPanel extends
 		layout.setSpacing(true);
 		layout.setMargin(true);
 
-		final Image titleIcon = new Image(null, MyCollabResource
-				.newResource("icons/22/crm/opportunity.png"));
+		final Image titleIcon = new Image(null,
+				MyCollabResource.newResource("icons/22/crm/opportunity.png"));
 		layout.addComponent(titleIcon);
 		layout.setComponentAlignment(titleIcon, Alignment.MIDDLE_LEFT);
 
@@ -244,7 +250,8 @@ public class OpportunitySearchPanel extends
 			GridFormLayoutHelper gridLayout = new GridFormLayoutHelper(3, 3,
 					"100%", "90px");
 			gridLayout.getLayout().setWidth("100%");
-			gridLayout.getLayout().setMargin(new MarginInfo(true, true, true, false));
+			gridLayout.getLayout().setMargin(
+					new MarginInfo(true, true, true, false));
 
 			this.opportunityNameField = (TextField) gridLayout.addComponent(
 					new TextField(), "Name", 0, 0);
@@ -346,7 +353,7 @@ public class OpportunitySearchPanel extends
 				final SimpleAccount account = accountService.findById(
 						(Integer) value.getAccountId().getValue(),
 						AppContext.getAccountId());
-//				this.accountField.setAccount(account);
+				// this.accountField.setAccount(account);
 			}
 			if (value.getNextStep() != null) {
 				this.nextStepField.setValue(value.getNextStep().getValue());

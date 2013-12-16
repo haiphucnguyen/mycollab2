@@ -22,6 +22,12 @@ import com.esofthead.mycollab.module.crm.domain.Account;
 import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
 import com.esofthead.mycollab.module.crm.view.CrmUrlResolver;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class OpportunityUrlResolver extends CrmUrlResolver {
 	public OpportunityUrlResolver() {
 		this.addSubResolver("list", new OpportunityListUrlResolver());

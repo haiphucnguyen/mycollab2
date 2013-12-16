@@ -61,6 +61,7 @@ import com.vaadin.ui.Table;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 @SuppressWarnings("serial")
 public class OpportunityTableDisplay
