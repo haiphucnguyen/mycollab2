@@ -20,6 +20,11 @@ import com.esofthead.mycollab.community.view.NotPresentedView;
 import com.esofthead.mycollab.module.project.view.standup.IStandupContainer;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ */
 @ViewComponent
 public class StandupContainer extends NotPresentedView implements
 		IStandupContainer {

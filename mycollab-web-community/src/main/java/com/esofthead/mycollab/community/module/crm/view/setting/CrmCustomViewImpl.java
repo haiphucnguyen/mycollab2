@@ -23,6 +23,11 @@ import com.esofthead.mycollab.form.view.builder.type.DynaSection;
 import com.esofthead.mycollab.module.crm.view.setting.ICrmCustomView;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ */
 @ViewComponent
 public class CrmCustomViewImpl extends NotPresentedView implements
 		ICrmCustomView {

@@ -71,6 +71,12 @@ import com.vaadin.ui.Layout;
 import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.UI;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @ViewComponent
 public class BugReadViewImpl extends AbstractPageView implements BugReadView,
 		IBugCallbackStatusComp {

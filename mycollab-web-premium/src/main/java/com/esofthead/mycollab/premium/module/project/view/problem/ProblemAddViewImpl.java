@@ -16,6 +16,11 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Layout;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ */
 @ViewComponent
 public class ProblemAddViewImpl extends AbstractPageView implements ProblemAddView,
 		IFormAddView<Problem> {

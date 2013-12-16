@@ -24,6 +24,11 @@ import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ */
 public class CrmCustomViewPresenter extends AbstractPresenter<ICrmCustomView>
 		implements ICrmCustomViewPresenter {
 	private static final long serialVersionUID = 1L;

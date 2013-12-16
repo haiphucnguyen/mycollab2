@@ -39,6 +39,11 @@ import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ */
 @ViewComponent
 public class OpportunitySalesStageDashboard extends
 		PieChartWrapper<OpportunitySearchCriteria> implements

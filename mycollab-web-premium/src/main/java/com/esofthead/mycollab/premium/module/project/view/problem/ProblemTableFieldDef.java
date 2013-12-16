@@ -6,6 +6,11 @@ import com.esofthead.mycollab.module.project.localization.ProblemI18nEnum;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ */
 public interface ProblemTableFieldDef {
 
 	public static TableViewField selected = new TableViewField("", "selected",

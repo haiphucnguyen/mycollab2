@@ -34,6 +34,11 @@ import com.vaadin.ui.CustomLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ */
 @SuppressWarnings("rawtypes")
 public class PieChartDescriptionBox {
 
