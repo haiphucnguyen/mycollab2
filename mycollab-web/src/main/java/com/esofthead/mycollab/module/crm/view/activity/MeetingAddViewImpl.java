@@ -16,128 +16,115 @@
  */
 package com.esofthead.mycollab.module.crm.view.activity;
 
+import com.esofthead.mycollab.form.view.DynaFormLayout;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.MeetingWithBLOBs;
+import com.esofthead.mycollab.module.crm.ui.components.AbstractEditItemComp;
 import com.esofthead.mycollab.module.crm.ui.components.RelatedEditItemField;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
-import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
+import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
-import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
+import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
+import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
-import com.vaadin.data.Item;
-import com.vaadin.data.util.BeanItem;
-import com.vaadin.ui.Alignment;
+import com.esofthead.mycollab.web.MyCollabResource;
+import com.vaadin.server.Resource;
+import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Field;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Layout;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
 @ViewComponent
-public class MeetingAddViewImpl extends AbstractPageView implements
-		MeetingAddView {
+public class MeetingAddViewImpl extends AbstractEditItemComp<MeetingWithBLOBs>
+		implements MeetingAddView {
 
 	private static final long serialVersionUID = 1L;
-	private EditForm editForm;
-	private MeetingWithBLOBs meeting;
 
-	public MeetingAddViewImpl() {
-		super();
-		editForm = new EditForm();
-		this.addComponent(editForm);
+	@Override
+	protected String initFormTitle() {
+		return (beanItem.getId() == null) ? "Create Event" : beanItem
+				.getSubject();
 	}
 
 	@Override
-	public void editItem(MeetingWithBLOBs item) {
-		this.meeting = item;
-		editForm.setItemDataSource(new BeanItem<MeetingWithBLOBs>(meeting));
+	protected Resource initFormIconResource() {
+		return MyCollabResource.newResource("icons/22/crm/meeting.png");
 	}
 
-	private class EditForm extends AdvancedEditBeanForm<MeetingWithBLOBs> {
+	@Override
+	protected ComponentContainer createButtonControls() {
+		return new EditFormControlsGenerator<MeetingWithBLOBs>(editForm)
+				.createButtonControls();
+	}
+
+	@Override
+	protected AdvancedEditBeanForm<MeetingWithBLOBs> initPreviewForm() {
+		return new AdvancedEditBeanForm<MeetingWithBLOBs>();
+	}
+
+	@Override
+	protected IFormLayoutFactory initFormLayoutFactory() {
+		return new DynaFormLayout(CrmTypeConstants.MEETING,
+				MeetingDefaultFormLayoutFactory.getForm());
+	}
+
+	@Override
+	protected AbstractBeanFieldGroupEditFieldFactory<MeetingWithBLOBs> initBeanFormFieldFactory() {
+		return new MeetingEditFormFieldFactory(editForm);
+	}
+
+	private class MeetingEditFormFieldFactory extends
+			AbstractBeanFieldGroupEditFieldFactory<MeetingWithBLOBs> {
+
+		public MeetingEditFormFieldFactory(
+				GenericBeanForm<MeetingWithBLOBs> form) {
+			super(form);
+		}
 
 		private static final long serialVersionUID = 1L;
 
 		@Override
-		public void setItemDataSource(Item newDataSource) {
-			this.setFormLayoutFactory(new FormLayoutFactory());
-			this.setFormFieldFactory(new EditFormFieldFactory());
-			super.setItemDataSource(newDataSource);
-		}
-
-		private class FormLayoutFactory extends MeetingFormLayoutFactory {
-
-			private static final long serialVersionUID = 1L;
-
-			public FormLayoutFactory() {
-				super((meeting.getId() == null) ? "Create Event" : meeting
-						.getSubject());
-			}
-
-			private Layout createButtonControls() {
-				final HorizontalLayout controlPanel = new HorizontalLayout();
-				final Layout controlButtons = (new EditFormControlsGenerator<MeetingWithBLOBs>(
-						EditForm.this)).createButtonControls();
-				controlButtons.setSizeUndefined();
-				controlPanel.addComponent(controlButtons);
-				controlPanel.setWidth("100%");
-				controlPanel.setComponentAlignment(controlButtons,
-						Alignment.MIDDLE_CENTER);
-				return controlPanel;
-			}
-
-			@Override
-			protected Layout createTopPanel() {
-				return createButtonControls();
-			}
-
-			@Override
-			protected Layout createBottomPanel() {
+		protected Field<?> onCreateField(Object propertyId) {
+			if (propertyId.equals("subject")) {
+				TextField tf = new TextField();
+				tf.setNullRepresentation("");
+				tf.setRequired(true);
+				tf.setRequiredError("Subject must not be null");
+				return tf;
+			} else if (propertyId.equals("status")) {
+				return new MeetingStatusComboBox();
+			} else if (propertyId.equals("startdate")) {
+				return new DateTimePicker<MeetingWithBLOBs>("startdate",
+						attachForm.getBean());
+			} else if (propertyId.equals("enddate")) {
+				return new DateTimePicker<MeetingWithBLOBs>("enddate",
+						attachForm.getBean());
+			} else if (propertyId.equals("description")) {
+				TextArea descArea = new TextArea();
+				descArea.setNullRepresentation("");
+				return descArea;
+			} else if (propertyId.equals("type")) {
+				RelatedEditItemField field = new RelatedEditItemField(
+						new String[] { CrmTypeConstants.ACCOUNT,
+								CrmTypeConstants.CAMPAIGN,
+								CrmTypeConstants.CONTACT,
+								CrmTypeConstants.LEAD,
+								CrmTypeConstants.OPPORTUNITY,
+								CrmTypeConstants.CASE }, attachForm.getBean());
+//				field.setType(attachForm.getBean().getType());
+				return field;
+			} else if (propertyId.equals("isrecurrence")) {
 				return null;
 			}
-		}
-
-		private class EditFormFieldFactory extends DefaultEditFormFieldFactory {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected Field onCreateField(Item item, Object propertyId,
-					com.vaadin.ui.Component uiContext) {
-				if (propertyId.equals("subject")) {
-					TextField tf = new TextField();
-					tf.setNullRepresentation("");
-					tf.setRequired(true);
-					tf.setRequiredError("Subject must not be null");
-					return tf;
-				} else if (propertyId.equals("status")) {
-					return new MeetingStatusComboBox();
-				} else if (propertyId.equals("startdate")) {
-					return new DateTimePicker<MeetingWithBLOBs>("startdate",
-							meeting);
-				} else if (propertyId.equals("enddate")) {
-					return new DateTimePicker<MeetingWithBLOBs>("enddate",
-							meeting);
-				} else if (propertyId.equals("description")) {
-					TextArea descArea = new TextArea();
-					descArea.setNullRepresentation("");
-					return descArea;
-				} else if (propertyId.equals("type")) {
-					RelatedEditItemField field = new RelatedEditItemField(
-							new String[] { CrmTypeConstants.ACCOUNT,
-									CrmTypeConstants.CAMPAIGN,
-									CrmTypeConstants.CONTACT,
-									CrmTypeConstants.LEAD,
-									CrmTypeConstants.OPPORTUNITY,
-									CrmTypeConstants.CASE }, meeting);
-					field.setType(meeting.getType());
-					return field;
-				} else if (propertyId.equals("isrecurrence")) {
-					return null;
-				}
-				return null;
-			}
+			return null;
 		}
 	}
 

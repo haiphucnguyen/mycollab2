@@ -22,7 +22,7 @@ public class AccountReadFormFieldFactory extends
 	}
 
 	@Override
-	protected Field onCreateField(Object propertyId) {
+	protected Field<?> onCreateField(Object propertyId) {
 		if (propertyId.equals("email")) {
 			return new DefaultFormViewFieldFactory.FormEmailLinkViewField(
 					attachForm.getBean().getEmail());
