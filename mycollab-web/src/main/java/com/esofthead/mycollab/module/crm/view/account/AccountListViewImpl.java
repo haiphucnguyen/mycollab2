@@ -25,13 +25,19 @@ import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.module.crm.ui.components.AbstractListItemComp;
+import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.events.MassItemActionHandler;
 import com.esofthead.mycollab.vaadin.ui.DefaultGenericSearchPanel;
 import com.esofthead.mycollab.vaadin.ui.DefaultMassItemActionHandlersContainer;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.table.AbstractPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
+import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.UI;
 
 /**
  * 
@@ -113,5 +119,43 @@ public class AccountListViewImpl extends
 				MyCollabResource.newResource("icons/16/action/massupdate.png"),
 				"update");
 		return container;
+	}
+
+	@Override
+	protected void buildExtraControls() {
+		Button customizeViewBtn = new Button("", new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				UI.getCurrent().addWindow(
+						new AccountListCustomizeWindow(
+								AccountListView.VIEW_DEF_ID,
+								(AccountTableDisplay) tableItem));
+
+			}
+		});
+		customizeViewBtn.setIcon(MyCollabResource
+				.newResource("icons/16/customize.png"));
+		customizeViewBtn.setDescription("Layout Options");
+		customizeViewBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
+		this.addExtraComponent(customizeViewBtn);
+
+		Button importBtn = new Button("", new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				AccountImportWindow accountImportWindow = new AccountImportWindow();
+				UI.getCurrent().addWindow(accountImportWindow);
+			}
+		});
+		importBtn.setDescription("Import");
+		importBtn.setIcon(MyCollabResource.newResource("icons/16/import.png"));
+		importBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
+		importBtn.setEnabled(AppContext
+				.canWrite(RolePermissionCollections.CRM_ACCOUNT));
+		this.addExtraComponent(importBtn);
+
 	}
 }
