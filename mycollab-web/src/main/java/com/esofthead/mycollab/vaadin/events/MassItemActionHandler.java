@@ -16,6 +16,8 @@
  */
 package com.esofthead.mycollab.vaadin.events;
 
+import com.vaadin.server.StreamResource;
+
 /**
  * Popup action handler of table
  * 
@@ -41,4 +43,11 @@ public interface MassItemActionHandler {
 	 * @param id
 	 */
 	void onSelect(String id);
+
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
+	StreamResource buildStreamResource(String id);
 }

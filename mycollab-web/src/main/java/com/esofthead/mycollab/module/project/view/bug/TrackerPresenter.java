@@ -30,6 +30,12 @@ import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.vaadin.ui.ComponentContainer;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class TrackerPresenter extends AbstractPresenter<TrackerContainer> {
 
 	private static final long serialVersionUID = 1L;

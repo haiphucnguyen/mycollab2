@@ -8,8 +8,6 @@ import java.util.Set;
 
 import org.vaadin.peter.buttongroup.ButtonGroup;
 
-import com.esofthead.mycollab.core.MyCollabException;
-import com.esofthead.mycollab.vaadin.StreamResourceFactory;
 import com.esofthead.mycollab.vaadin.events.HasMassItemActionHandlers;
 import com.esofthead.mycollab.vaadin.events.MassItemActionHandler;
 import com.vaadin.server.FileDownloader;
@@ -17,8 +15,8 @@ import com.vaadin.server.Resource;
 import com.vaadin.server.StreamResource;
 import com.vaadin.server.StreamResource.StreamSource;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.HorizontalLayout;
 
 /**
  * 
@@ -74,14 +72,7 @@ public class DefaultMassItemActionHandlersContainer extends HorizontalLayout
 		}
 		group.addStyleName(UIConstants.THEME_GRAY_LINK);
 
-		Button optionBtn = new Button(null, new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void buttonClick(ClickEvent event) {
-				changeOption(id);
-			}
-		});
+		Button optionBtn = new Button(null);
 
 		FileDownloader fileDownler = new FileDownloader(new StreamResource(
 				new LazyStreamSource(id), "test.pdf"));
@@ -109,12 +100,21 @@ public class DefaultMassItemActionHandlersContainer extends HorizontalLayout
 
 		@Override
 		public InputStream getStream() {
-			return buildStreamResource(id);
+			return buildStreamResource(id).getStreamSource().getStream();
 		}
 	}
 
-	protected InputStream buildStreamResource(String id) {
-		throw new MyCollabException("It must be implemented by sub class");
+	protected StreamResource buildStreamResource(String id) {
+		if (handlers != null) {
+			for (MassItemActionHandler handler : handlers) {
+				StreamResource streamResource = handler.buildStreamResource(id);
+				if (streamResource != null) {
+					return streamResource;
+				}
+			}
+		}
+
+		return null;
 	}
 
 	@Override

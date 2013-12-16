@@ -19,13 +19,13 @@ package com.esofthead.mycollab.vaadin.ui;
 import java.util.List;
 
 import org.vaadin.dialogs.ConfirmDialog;
-import com.esofthead.mycollab.vaadin.ui.PopupButtonControl;
 
 import com.esofthead.mycollab.common.domain.SaveSearchResultWithBLOBs;
 import com.esofthead.mycollab.common.domain.criteria.SaveSearchResultCriteria;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.common.service.SaveSearchResultService;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
+import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
@@ -38,6 +38,7 @@ import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel.SearchLayout;
 import com.esofthead.mycollab.web.AppContext;
 import com.google.gson.reflect.TypeToken;
 import com.vaadin.data.util.BeanContainer;
+import com.vaadin.server.StreamResource;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -51,6 +52,13 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ * @param <S>
+ */
 @SuppressWarnings("serial")
 public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
 		extends SearchLayout<S> {
@@ -309,7 +317,7 @@ public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
 									tableActionControls, saveBtn);
 							saveSearchControls.replaceComponent(
 									saveResultComboBox, saveSearchValue);
-							cancelBtn.addListener(new ClickListener() {
+							cancelBtn.addClickListener(new ClickListener() {
 								@Override
 								public void buttonClick(ClickEvent event) {
 									saveSearchControls
@@ -325,6 +333,12 @@ public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
 							});
 							saveSearchControls.addComponent(cancelBtn);
 						}
+					}
+
+					@Override
+					public StreamResource buildStreamResource(String id) {
+						throw new MyCollabException(
+								"Does not support download feature");
 					}
 				});
 

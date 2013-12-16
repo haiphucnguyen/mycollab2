@@ -41,6 +41,13 @@ import com.esofthead.mycollab.reporting.ReportExportType;
 import com.esofthead.mycollab.reporting.Templates;
 import com.vaadin.server.StreamResource;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ * @param <T>
+ */
 public abstract class ExportItemsStreamResource<T> implements
 		StreamResource.StreamSource {
 	private static final long serialVersionUID = 1L;

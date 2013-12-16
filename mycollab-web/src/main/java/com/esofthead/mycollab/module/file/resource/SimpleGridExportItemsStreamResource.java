@@ -39,6 +39,13 @@ import com.esofthead.mycollab.reporting.RpParameterBuilder;
 import com.esofthead.mycollab.reporting.SimpleColumnComponentBuilderMap;
 import com.esofthead.mycollab.reporting.TableViewFieldDecorator;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ * @param <T>
+ */
 public abstract class SimpleGridExportItemsStreamResource<T> extends
 		ExportItemsStreamResource<T> {
 	private static final long serialVersionUID = 1L;
@@ -63,6 +70,10 @@ public abstract class SimpleGridExportItemsStreamResource<T> extends
 		// Add field of report
 		Field[] clsFields = ClassUtils.getAllFields(classType);
 		for (Field objField : clsFields) {
+			if ("selected".equals(objField.getName())
+					|| "extraData".equals(objField.getName())) {
+				continue;
+			}
 			DRIDataType<Object, ? extends Object> jrType = DRIDataTypeFactory
 					.detectType(objField.getType().getName());
 			reportBuilder.addField(objField.getName(), jrType);

@@ -11,7 +11,6 @@ import com.esofthead.mycollab.reporting.RpParameterBuilder;
 import com.esofthead.mycollab.vaadin.events.MassItemActionHandler;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.table.AbstractPagedBeanTable;
-import com.vaadin.server.Resource;
 import com.vaadin.server.StreamResource;
 import com.vaadin.ui.UI;
 
@@ -54,9 +53,16 @@ public abstract class DefaultMassEditActionHandler implements
 									}
 								}
 							});
+		} else {
+			onSelectExtra(id);
+		}
 
-		} else if (MassItemActionHandler.EXPORT_CSV_ACTION.equals(id)) {
-			Resource res = null;
+	}
+
+	@Override
+	public StreamResource buildStreamResource(String id) {
+		StreamResource res = null;
+		if (MassItemActionHandler.EXPORT_CSV_ACTION.equals(id)) {
 			AbstractPagedBeanTable pagedBeanTable = ((ListView) presenter
 					.getView()).getPagedBeanTable();
 			if (presenter.isSelectAll) {
@@ -69,7 +75,6 @@ public abstract class DefaultMassEditActionHandler implements
 								presenter.searchCriteria,
 								getReportModelClassType()), "export.csv");
 			} else {
-
 				res = new StreamResource(
 						new SimpleGridExportItemsStreamResource.ListData("",
 								new RpParameterBuilder(pagedBeanTable
@@ -78,10 +83,7 @@ public abstract class DefaultMassEditActionHandler implements
 								presenter.getSelectedItems(),
 								getReportModelClassType()), "export.csv");
 			}
-
-			// presenter.view.getWidget().getWindow().open(res, "_blank");
 		} else if (MassItemActionHandler.EXPORT_PDF_ACTION.equals(id)) {
-			Resource res = null;
 			AbstractPagedBeanTable pagedBeanTable = ((ListView) presenter
 					.getView()).getPagedBeanTable();
 			if (presenter.isSelectAll) {
@@ -94,7 +96,6 @@ public abstract class DefaultMassEditActionHandler implements
 								presenter.searchCriteria,
 								getReportModelClassType()), "export.pdf");
 			} else {
-
 				res = new StreamResource(
 						new SimpleGridExportItemsStreamResource.ListData(
 								getReportTitle(), new RpParameterBuilder(
@@ -103,10 +104,7 @@ public abstract class DefaultMassEditActionHandler implements
 								presenter.getSelectedItems(),
 								getReportModelClassType()), "export.pdf");
 			}
-
-			// presenter.view.getWidget().getWindow().open(res, "_blank");
 		} else if (MassItemActionHandler.EXPORT_EXCEL_ACTION.equals(id)) {
-			Resource res = null;
 			AbstractPagedBeanTable pagedBeanTable = ((ListView) presenter
 					.getView()).getPagedBeanTable();
 			if (presenter.isSelectAll) {
@@ -128,12 +126,9 @@ public abstract class DefaultMassEditActionHandler implements
 								presenter.getSelectedItems(),
 								getReportModelClassType()), "export.xlsx");
 			}
-
-			// presenter.view.getWidget().getWindow().open(res, "_blank");
-		} else {
-			onSelectExtra(id);
 		}
 
+		return res;
 	}
 
 	protected abstract void onSelectExtra(String id);

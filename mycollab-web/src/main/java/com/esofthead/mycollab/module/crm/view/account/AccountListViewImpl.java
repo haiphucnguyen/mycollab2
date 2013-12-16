@@ -96,13 +96,16 @@ public class AccountListViewImpl extends
 		container.addActionItem(MassItemActionHandler.MAIL_ACTION,
 				MyCollabResource.newResource("icons/16/action/mail.png"),
 				"mail");
-		container.addActionItem(MassItemActionHandler.EXPORT_PDF_ACTION,
+		container.addDownloadActionItem(
+				MassItemActionHandler.EXPORT_PDF_ACTION,
 				MyCollabResource.newResource("icons/16/action/pdf.png"),
 				"export");
-		container.addActionItem(MassItemActionHandler.EXPORT_EXCEL_ACTION,
+		container.addDownloadActionItem(
+				MassItemActionHandler.EXPORT_EXCEL_ACTION,
 				MyCollabResource.newResource("icons/16/action/excel.png"),
 				"export");
-		container.addActionItem(MassItemActionHandler.EXPORT_CSV_ACTION,
+		container.addDownloadActionItem(
+				MassItemActionHandler.EXPORT_CSV_ACTION,
 				MyCollabResource.newResource("icons/16/action/csv.png"),
 				"export");
 
