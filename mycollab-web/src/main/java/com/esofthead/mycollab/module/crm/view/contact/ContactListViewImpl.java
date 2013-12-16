@@ -18,10 +18,6 @@ package com.esofthead.mycollab.module.crm.view.contact;
 
 import java.util.Arrays;
 
-import com.esofthead.mycollab.vaadin.ui.PopupButtonControl;
-
-import com.esofthead.mycollab.common.localization.GenericI18Enum;
-import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.eventmanager.ApplicationEvent;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBus;
@@ -29,30 +25,20 @@ import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.module.crm.events.ContactEvent;
-import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
+import com.esofthead.mycollab.module.crm.ui.components.AbstractListItemComp;
 import com.esofthead.mycollab.security.RolePermissionCollections;
-import com.esofthead.mycollab.vaadin.events.HasMassItemActionHandlers;
-import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
-import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
-import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
 import com.esofthead.mycollab.vaadin.events.MassItemActionHandler;
-import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
-import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
+import com.esofthead.mycollab.vaadin.ui.DefaultGenericSearchPanel;
+import com.esofthead.mycollab.vaadin.ui.DefaultMassItemActionHandlersContainer;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.table.AbstractPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
-import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
-import com.vaadin.ui.VerticalLayout;
 
 /**
  * 
@@ -61,41 +47,66 @@ import com.vaadin.ui.VerticalLayout;
  * 
  */
 @ViewComponent
-public class ContactListViewImpl extends AbstractPageView implements
+public class ContactListViewImpl extends
+		AbstractListItemComp<ContactSearchCriteria, SimpleContact> implements
 		ContactListView {
 
 	private static final long serialVersionUID = 1L;
-	private final ContactSearchPanel contactSearchPanel;
-	private SelectionOptionButton selectOptionButton;
-	private ContactTableDisplay tableItem;
-	private final VerticalLayout contactListLayout;
-	private PopupButtonControl tableActionControls;
-	private final Label selectedItemsNumberLabel = new Label();
-	private ContactImportWindow contactImportWindow;
 
-	public ContactListViewImpl() {
+	@Override
+	protected void buildExtraControls() {
+		Button customizeViewBtn = new Button("", new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
 
-		this.contactSearchPanel = new ContactSearchPanel();
-		this.addComponent(this.contactSearchPanel);
+			@Override
+			public void buttonClick(ClickEvent event) {
+				UI.getCurrent().addWindow(
+						new ContactListCustomizeWindow(
+								ContactListView.VIEW_DEF_ID, tableItem));
 
-		this.contactListLayout = new VerticalLayout();
-		this.addComponent(this.contactListLayout);
+			}
+		});
+		customizeViewBtn.setIcon(MyCollabResource
+				.newResource("icons/16/customize.png"));
+		customizeViewBtn.setDescription("Layout Options");
+		customizeViewBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
+		this.addExtraComponent(customizeViewBtn);
 
-		this.generateDisplayTable();
+		Button importBtn = new Button("", new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				UI.getCurrent().addWindow(new ContactImportWindow());
+			}
+		});
+		importBtn.setDescription("Import");
+		importBtn.setIcon(MyCollabResource.newResource("icons/16/import.png"));
+		importBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
+		importBtn.setEnabled(AppContext
+				.canWrite(RolePermissionCollections.CRM_CONTACT));
+		this.addExtraComponent(importBtn);
 	}
 
-	@SuppressWarnings("serial")
-	private void generateDisplayTable() {
+	@Override
+	protected DefaultGenericSearchPanel<ContactSearchCriteria> createSearchPanel() {
+		return new ContactSearchPanel();
+	}
 
-		this.tableItem = new ContactTableDisplay(ContactListView.VIEW_DEF_ID,
-				ContactTableFieldDef.selected, Arrays.asList(
-						ContactTableFieldDef.name, ContactTableFieldDef.title,
+	@Override
+	protected AbstractPagedBeanTable<ContactSearchCriteria, SimpleContact> createBeanTable() {
+		ContactTableDisplay contactTableDisplay = new ContactTableDisplay(
+				ContactListView.VIEW_DEF_ID, ContactTableFieldDef.selected,
+				Arrays.asList(ContactTableFieldDef.name,
+						ContactTableFieldDef.title,
 						ContactTableFieldDef.account,
 						ContactTableFieldDef.email,
 						ContactTableFieldDef.phoneOffice));
 
-		this.tableItem
+		contactTableDisplay
 				.addTableListener(new ApplicationEventListener<TableClickEvent>() {
+					private static final long serialVersionUID = 1L;
+
 					@Override
 					public Class<? extends ApplicationEvent> getEventType() {
 						return TableClickEvent.class;
@@ -118,141 +129,35 @@ public class ContactListViewImpl extends AbstractPageView implements
 						}
 					}
 				});
-
-		this.contactListLayout
-				.addComponent(this.constructTableActionControls());
-		this.contactListLayout.addComponent(this.tableItem);
+		return contactTableDisplay;
 	}
 
 	@Override
-	public HasSearchHandlers<ContactSearchCriteria> getSearchHandlers() {
-		return this.contactSearchPanel;
-	}
+	protected DefaultMassItemActionHandlersContainer createActionControls() {
+		DefaultMassItemActionHandlersContainer container = new DefaultMassItemActionHandlersContainer();
+		container.addActionItem(MassItemActionHandler.DELETE_ACTION,
+				MyCollabResource.newResource("icons/16/action/delete.png"),
+				"delete");
 
-	private ComponentContainer constructTableActionControls() {
-		final CssLayout layoutWrapper = new CssLayout();
-		layoutWrapper.setWidth("100%");
-		final HorizontalLayout layout = new HorizontalLayout();
-		layout.setSpacing(true);
-		layout.setWidth("100%");
-		layoutWrapper.addStyleName(UIConstants.TABLE_ACTION_CONTROLS);
-		layoutWrapper.addComponent(layout);
+		container.addActionItem(MassItemActionHandler.MAIL_ACTION,
+				MyCollabResource.newResource("icons/16/action/mail.png"),
+				"mail");
+		container.addDownloadActionItem(
+				MassItemActionHandler.EXPORT_PDF_ACTION,
+				MyCollabResource.newResource("icons/16/action/pdf.png"),
+				"export");
+		container.addDownloadActionItem(
+				MassItemActionHandler.EXPORT_EXCEL_ACTION,
+				MyCollabResource.newResource("icons/16/action/excel.png"),
+				"export");
+		container.addDownloadActionItem(
+				MassItemActionHandler.EXPORT_CSV_ACTION,
+				MyCollabResource.newResource("icons/16/action/csv.png"),
+				"export");
 
-		this.selectOptionButton = new SelectionOptionButton(this.tableItem);
-		this.selectOptionButton.setSizeUndefined();
-		layout.addComponent(this.selectOptionButton);
-
-		final Button deleteBtn = new Button(
-				LocalizationHelper.getMessage(GenericI18Enum.BUTTON_DELETE));
-		deleteBtn.setEnabled(AppContext
-				.canAccess(RolePermissionCollections.CRM_CONTACT));
-
-		this.tableActionControls = new PopupButtonControl(
-				MassItemActionHandler.DELETE_ACTION, deleteBtn);
-		this.tableActionControls.addOptionItem(
-				MassItemActionHandler.MAIL_ACTION,
-				LocalizationHelper.getMessage(GenericI18Enum.BUTTON_MAIL));
-		this.tableActionControls
-				.addOptionItem(MassItemActionHandler.EXPORT_CSV_ACTION,
-						LocalizationHelper
-								.getMessage(GenericI18Enum.BUTTON_EXPORT_CSV));
-		this.tableActionControls
-				.addOptionItem(MassItemActionHandler.EXPORT_PDF_ACTION,
-						LocalizationHelper
-								.getMessage(GenericI18Enum.BUTTON_EXPORT_PDF));
-		this.tableActionControls.addOptionItem(
-				MassItemActionHandler.EXPORT_EXCEL_ACTION, LocalizationHelper
-						.getMessage(GenericI18Enum.BUTTON_EXPORT_EXCEL));
-
-		this.tableActionControls
-				.addOptionItem(
-						MassItemActionHandler.MASS_UPDATE_ACTION,
-						LocalizationHelper
-								.getMessage(GenericI18Enum.BUTTON_MASSUPDATE),
-						AppContext
-								.canWrite(RolePermissionCollections.CRM_CONTACT));
-
-		this.tableActionControls.setVisible(false);
-
-		layout.addComponent(this.tableActionControls);
-		layout.addComponent(this.selectedItemsNumberLabel);
-		layout.setExpandRatio(this.selectedItemsNumberLabel, 1.0f);
-		layout.setComponentAlignment(this.selectedItemsNumberLabel,
-				Alignment.MIDDLE_CENTER);
-
-		HorizontalLayout buttonControls = new HorizontalLayout();
-		buttonControls.setSpacing(true);
-		layout.addComponent(buttonControls);
-
-		Button customizeViewBtn = new Button("", new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void buttonClick(ClickEvent event) {
-				UI.getCurrent().addWindow(
-						new ContactListCustomizeWindow(
-								ContactListView.VIEW_DEF_ID, tableItem));
-
-			}
-		});
-		customizeViewBtn.setIcon(MyCollabResource
-				.newResource("icons/16/customize.png"));
-		customizeViewBtn.setDescription("Layout Options");
-		customizeViewBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
-		buttonControls.addComponent(customizeViewBtn);
-
-		Button importBtn = new Button("", new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void buttonClick(ClickEvent event) {
-				contactImportWindow = new ContactImportWindow();
-				UI.getCurrent().addWindow(contactImportWindow);
-			}
-		});
-		importBtn.setDescription("Import");
-		importBtn.setIcon(MyCollabResource.newResource("icons/16/import.png"));
-		importBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
-		importBtn.setEnabled(AppContext
-				.canWrite(RolePermissionCollections.CRM_CONTACT));
-
-		buttonControls.addComponent(importBtn);
-
-		return layoutWrapper;
-	}
-
-	@Override
-	public void enableActionControls(final int numOfSelectedItems) {
-		this.tableActionControls.setVisible(true);
-		this.selectedItemsNumberLabel.setValue(LocalizationHelper
-				.getMessage(CrmCommonI18nEnum.TABLE_SELECTED_ITEM_TITLE,
-						numOfSelectedItems));
-	}
-
-	@Override
-	public void disableActionControls() {
-		this.tableActionControls.setVisible(false);
-		this.selectOptionButton.setSelectedChecbox(false);
-		this.selectedItemsNumberLabel.setValue("");
-	}
-
-	@Override
-	public HasSelectionOptionHandlers getOptionSelectionHandlers() {
-		return this.selectOptionButton;
-	}
-
-	@Override
-	public HasMassItemActionHandlers getPopupActionHandlers() {
-		return this.tableActionControls;
-	}
-
-	@Override
-	public HasSelectableItemHandlers<SimpleContact> getSelectableItemHandlers() {
-		return this.tableItem;
-	}
-
-	@Override
-	public AbstractPagedBeanTable<ContactSearchCriteria, SimpleContact> getPagedBeanTable() {
-		return this.tableItem;
+		container.addActionItem(MassItemActionHandler.MASS_UPDATE_ACTION,
+				MyCollabResource.newResource("icons/16/action/massupdate.png"),
+				"update");
+		return container;
 	}
 }
