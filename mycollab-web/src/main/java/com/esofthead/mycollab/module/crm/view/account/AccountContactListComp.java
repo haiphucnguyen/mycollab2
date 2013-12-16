@@ -54,6 +54,12 @@ import com.vaadin.ui.Table.ColumnGenerator;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
 public class AccountContactListComp extends
 		RelatedListComp<SimpleContact, ContactSearchCriteria> {
 

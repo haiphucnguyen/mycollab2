@@ -6,10 +6,10 @@ import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.ui.components.CrmPreviewFormControlsGenerator;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
+import com.esofthead.mycollab.vaadin.ui.TabsheetLazyLoadComp;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.JavaScript;
-import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.Window;
 
@@ -24,7 +24,7 @@ class AccountReadComp extends AbstractAccountPreviewComp {
 
 	@Override
 	protected ComponentContainer createBottomPanel() {
-		final TabSheet tabContainer = new TabSheet();
+		final TabsheetLazyLoadComp tabContainer = new TabsheetLazyLoadComp();
 		tabContainer.setWidth("100%");
 
 		tabContainer.addTab(noteListItems, "Notes",

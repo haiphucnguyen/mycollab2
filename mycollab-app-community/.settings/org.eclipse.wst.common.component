@@ -232,12 +232,6 @@
     <dependent-module archiveName="jta-1.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/javax/transaction/jta/1.1/jta-1.1.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="spring-flex-core-1.5.2.RELEASE.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/springframework/flex/spring-flex-core/1.5.2.RELEASE/spring-flex-core-1.5.2.RELEASE.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="cglib-nodep-2.1_3.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/cglib/cglib-nodep/2.1_3/cglib-nodep-2.1_3.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
     <dependent-module archiveName="mycollab-migration.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mycollab-migration/mycollab-migration">
       <dependency-type>uses</dependency-type>
     </dependent-module>
@@ -319,7 +313,7 @@
     <dependent-module archiveName="hibernate-validator-4.3.0.Final.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/hibernate/hibernate-validator/4.3.0.Final/hibernate-validator-4.3.0.Final.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="dropbox-core-sdk-1.7.5.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/dropbox/core/dropbox-core-sdk/1.7.5/dropbox-core-sdk-1.7.5.jar">
+    <dependent-module archiveName="dropbox-core-sdk-1.7.6.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/dropbox/core/dropbox-core-sdk/1.7.6/dropbox-core-sdk-1.7.6.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="bonecp-0.8.0.RELEASE.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/jolbox/bonecp/0.8.0.RELEASE/bonecp-0.8.0.RELEASE.jar">
@@ -391,16 +385,16 @@
     <dependent-module archiveName="c3p0-0.9.1.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/c3p0/c3p0/0.9.1.1/c3p0-0.9.1.1.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="vaadin-server-7.1.8.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/vaadin/vaadin-server/7.1.8/vaadin-server-7.1.8.jar">
+    <dependent-module archiveName="vaadin-server-7.1.9.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/vaadin/vaadin-server/7.1.9/vaadin-server-7.1.9.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="vaadin-shared-7.1.8.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/vaadin/vaadin-shared/7.1.8/vaadin-shared-7.1.8.jar">
+    <dependent-module archiveName="vaadin-shared-7.1.9.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/vaadin/vaadin-shared/7.1.9/vaadin-shared-7.1.9.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="vaadin-shared-deps-1.0.2.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/vaadin/vaadin-shared-deps/1.0.2/vaadin-shared-deps-1.0.2.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="vaadin-theme-compiler-7.1.8.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/vaadin/vaadin-theme-compiler/7.1.8/vaadin-theme-compiler-7.1.8.jar">
+    <dependent-module archiveName="vaadin-theme-compiler-7.1.9.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/vaadin/vaadin-theme-compiler/7.1.9/vaadin-theme-compiler-7.1.9.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="commons-jexl-2.1.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/apache/commons/commons-jexl/2.1.1/commons-jexl-2.1.1.jar">
@@ -415,7 +409,7 @@
     <dependent-module archiveName="commons-cli-1.2.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/commons-cli/commons-cli/1.2/commons-cli-1.2.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="vaadin-client-7.1.8.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/vaadin/vaadin-client/7.1.8/vaadin-client-7.1.8.jar">
+    <dependent-module archiveName="vaadin-client-7.1.9.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/vaadin/vaadin-client/7.1.9/vaadin-client-7.1.9.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="validation-api-1.0.0.GA-sources.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/javax/validation/validation-api/1.0.0.GA/validation-api-1.0.0.GA-sources.jar">
@@ -448,9 +442,6 @@
     <dependent-module archiveName="vaadin-calendar-2.0.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/vaadin/addon/vaadin-calendar/2.0.0/vaadin-calendar-2.0.0.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="lazyloadwrapper-0.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/vaadin/addons/lazyloadwrapper/0.1/lazyloadwrapper-0.1.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
     <dependent-module archiveName="breadcrumb-1.7.3.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/lexaden/components/breadcrumb/1.7.3/breadcrumb-1.7.3.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
@@ -463,13 +454,7 @@
     <dependent-module archiveName="listbuilder-0.7.3.v7.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/vaadin/addons/listbuilder/0.7.3.v7/listbuilder-0.7.3.v7.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="ckeditor-wrapper-for-vaadin-7.8.8.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/vaadin/addons/ckeditor-wrapper-for-vaadin/7.8.8/ckeditor-wrapper-for-vaadin-7.8.8.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
     <dependent-module archiveName="confirmdialog-2.0.4.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/vaadin/addon/confirmdialog/2.0.4/confirmdialog-2.0.4.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="multibutton-3.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/vaadin/addons/multibutton/3.0/multibutton-3.0.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="reflections-0.9.9-RC1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/reflections/reflections/0.9.9-RC1/reflections-0.9.9-RC1.jar">
