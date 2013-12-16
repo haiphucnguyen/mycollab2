@@ -25,6 +25,7 @@ import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.module.crm.ui.components.AbstractListItemComp;
+import com.esofthead.mycollab.vaadin.events.MassItemActionHandler;
 import com.esofthead.mycollab.vaadin.ui.DefaultGenericSearchPanel;
 import com.esofthead.mycollab.vaadin.ui.DefaultMassItemActionHandlersContainer;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
@@ -88,20 +89,24 @@ public class AccountListViewImpl extends
 	@Override
 	protected DefaultMassItemActionHandlersContainer createActionControls() {
 		DefaultMassItemActionHandlersContainer container = new DefaultMassItemActionHandlersContainer();
-		container.addActionItem("mail",
+		container.addActionItem(MassItemActionHandler.DELETE_ACTION,
+				MyCollabResource.newResource("icons/16/action/delete.png"),
+				"delete");
+
+		container.addActionItem(MassItemActionHandler.MAIL_ACTION,
 				MyCollabResource.newResource("icons/16/action/mail.png"),
 				"mail");
-		container.addActionItem("pdf",
+		container.addActionItem(MassItemActionHandler.EXPORT_PDF_ACTION,
 				MyCollabResource.newResource("icons/16/action/pdf.png"),
 				"export");
-		container.addActionItem("excel",
+		container.addActionItem(MassItemActionHandler.EXPORT_EXCEL_ACTION,
 				MyCollabResource.newResource("icons/16/action/excel.png"),
 				"export");
-		container.addActionItem("csv",
+		container.addActionItem(MassItemActionHandler.EXPORT_CSV_ACTION,
 				MyCollabResource.newResource("icons/16/action/csv.png"),
 				"export");
 
-		container.addActionItem("massupdate",
+		container.addActionItem(MassItemActionHandler.MASS_UPDATE_ACTION,
 				MyCollabResource.newResource("icons/16/action/massupdate.png"),
 				"update");
 		return container;

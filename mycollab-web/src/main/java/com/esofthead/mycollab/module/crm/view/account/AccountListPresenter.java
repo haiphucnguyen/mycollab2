@@ -33,6 +33,7 @@ import com.esofthead.mycollab.module.crm.view.CrmGenericListPresenter;
 import com.esofthead.mycollab.module.crm.view.CrmToolbar;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.events.MassItemActionHandler;
 import com.esofthead.mycollab.vaadin.mvp.MassUpdateCommand;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
@@ -66,7 +67,7 @@ public class AccountListPresenter
 				new DefaultPopupActionHandler(this) {
 
 					@Override
-					protected Class getReportModelClassType() {
+					protected Class<SimpleAccount> getReportModelClassType() {
 						return SimpleAccount.class;
 					}
 
@@ -77,7 +78,7 @@ public class AccountListPresenter
 
 					@Override
 					protected void onSelectExtra(String id) {
-						if ("mail".equals(id)) {
+						if (MassItemActionHandler.MAIL_ACTION.equals(id)) {
 							if (isSelectAll) {
 								NotificationUtil
 										.showWarningNotification(LocalizationHelper
@@ -96,7 +97,8 @@ public class AccountListPresenter
 								UI.getCurrent().addWindow(
 										new MailFormWindow(lstMail));
 							}
-						} else if ("massUpdate".equals(id)) {
+						} else if (MassItemActionHandler.MASS_UPDATE_ACTION
+								.equals(id)) {
 							MassUpdateAccountWindow massUpdateWindow = new MassUpdateAccountWindow(
 									LocalizationHelper
 											.getMessage(

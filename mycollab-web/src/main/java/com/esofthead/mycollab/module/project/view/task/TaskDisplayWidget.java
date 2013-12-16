@@ -36,8 +36,9 @@ public class TaskDisplayWidget extends
 	private static final long serialVersionUID = 1L;
 
 	public TaskDisplayWidget() {
-		super(null, ApplicationContextUtil.getSpringBean(ProjectTaskService.class),
-				TaskRowDisplayHandler.class, false);
+		super(null, ApplicationContextUtil
+				.getSpringBean(ProjectTaskService.class),
+				TaskRowDisplayHandler.class);
 	}
 
 	public static class TaskRowDisplayHandler implements

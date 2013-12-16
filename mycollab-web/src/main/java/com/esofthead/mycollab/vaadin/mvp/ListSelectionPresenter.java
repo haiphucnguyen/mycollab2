@@ -194,7 +194,6 @@ public abstract class ListSelectionPresenter<V extends ListView<S, B>, S extends
 
 		@Override
 		public void onSelect(String id) {
-			// TODO: check select items
 			if (MassItemActionHandler.DELETE_ACTION.equals(id)) {
 				ConfirmDialogExt
 						.show(UI.getCurrent(),

@@ -66,14 +66,6 @@ public class BeanList<SearchService extends ISearchableService<S>, S extends Sea
 
 	public BeanList(Object parentComponent, SearchService searchService,
 			Class<? extends RowDisplayHandler<T>> rowDisplayHandler,
-			boolean isLazyLoadComponent) {
-		this(parentComponent, searchService, rowDisplayHandler,
-				new VerticalLayout());
-
-	}
-
-	public BeanList(Object parentComponent, SearchService searchService,
-			Class<? extends RowDisplayHandler<T>> rowDisplayHandler,
 			VerticalLayout contentLayout) {
 		this.parentComponent = parentComponent;
 		this.searchService = searchService;
@@ -86,12 +78,6 @@ public class BeanList<SearchService extends ISearchableService<S>, S extends Sea
 	public BeanList(SearchService searchService,
 			Class<? extends RowDisplayHandler<T>> rowDisplayHandler) {
 		this(null, searchService, rowDisplayHandler);
-	}
-
-	public BeanList(SearchService searchService,
-			Class<? extends RowDisplayHandler<T>> rowDisplayHandler,
-			boolean isLazyLoadComponent) {
-		this(null, searchService, rowDisplayHandler, isLazyLoadComponent);
 	}
 
 	public void setDisplayEmptyListText(boolean isDisplayEmptyListText) {

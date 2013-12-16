@@ -34,7 +34,7 @@ public class DefaultMassItemActionHandlersContainer extends HorizontalLayout
 		this.setSpacing(true);
 	}
 
-	public void addActionItem(String id, Resource resource, String groupId) {
+	public void addActionItem(final String id, Resource resource, String groupId) {
 		ButtonGroup group = groupMap.get(groupId);
 
 		if (group == null) {
@@ -49,7 +49,7 @@ public class DefaultMassItemActionHandlersContainer extends HorizontalLayout
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				// TODO Auto-generated method stub
+				changeOption(id);
 
 			}
 		});

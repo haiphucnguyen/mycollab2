@@ -31,13 +31,19 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class BugSimpleDisplayWidget extends
 		BeanList<BugService, BugSearchCriteria, SimpleBug> {
 	private static final long serialVersionUID = 1L;
 
 	public BugSimpleDisplayWidget() {
 		super(null, ApplicationContextUtil.getSpringBean(BugService.class),
-				TaskRowDisplayHandler.class, false);
+				TaskRowDisplayHandler.class);
 	}
 
 	public static class TaskRowDisplayHandler implements
@@ -63,7 +69,7 @@ public class BugSimpleDisplayWidget extends
 				bugLink.addStyleName(UIConstants.LINK_OVERDUE);
 			}
 			layout.addComponent(bugLink);
-			
+
 			Label bugSummary = new Label(bug.getSummary());
 			layout.addComponent(bugSummary);
 			layout.setComponentAlignment(bugSummary, Alignment.MIDDLE_LEFT);
