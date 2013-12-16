@@ -3,6 +3,12 @@ package com.esofthead.mycollab.vaadin.ui;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
 public class MassUpdateLayout extends CssLayout {
 	private static final long serialVersionUID = 1L;
 	private final CssLayout body;

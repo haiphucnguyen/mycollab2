@@ -47,7 +47,7 @@ public class LeadEditFormFieldFactory<B extends Lead> extends
 	}
 
 	@Override
-	protected Field onCreateField(Object propertyId) {
+	protected Field<?> onCreateField(Object propertyId) {
 		if (propertyId.equals("firstname")) {
 			return new LeadFirstNamePrefixField();
 		} else if (propertyId.equals("primcountry")

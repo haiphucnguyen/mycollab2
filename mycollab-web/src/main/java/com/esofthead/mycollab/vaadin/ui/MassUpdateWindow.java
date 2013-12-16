@@ -17,40 +17,64 @@
 package com.esofthead.mycollab.vaadin.ui;
 
 import com.esofthead.mycollab.vaadin.mvp.MassUpdateCommand;
+import com.vaadin.server.Resource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
 /**
  * Mass update
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  * 
  * @param <B>
  */
 public abstract class MassUpdateWindow<B> extends Window {
 	private static final long serialVersionUID = 1L;
 
-	private MassUpdateCommand<B> massUpdateCommand;
+	protected B beanItem;
+	protected AdvancedEditBeanForm<B> updateForm;
+	protected MassUpdateLayout contentLayout;
 
-	private VerticalLayout layout;
-	private Button updateBtn, closeBtn;
+	protected MassUpdateCommand<B> massUpdateCommand;
 
-	public MassUpdateWindow(String title,
-			MassUpdateCommand<B> massUpdatePresenter) {
+	protected Button updateBtn, closeBtn;
+
+	public MassUpdateWindow(String title, Resource iconResource,
+			B initialValue, MassUpdateCommand<B> massUpdatePresenter) {
 		super(title);
-		center();
-
+		this.setWidth("1000px");
 		this.massUpdateCommand = massUpdatePresenter;
+		this.beanItem = initialValue;
+		this.setIcon(iconResource);
+
+		this.contentLayout = new MassUpdateLayout();
+		this.updateForm = new AdvancedEditBeanForm<B>();
+
+		this.contentLayout.addBody(this.updateForm);
+
+		this.setContent(this.contentLayout);
+
+		updateForm.setFormLayoutFactory(buildFormLayoutFactory());
+		updateForm.setBeanFormFieldFactory(initBeanFormFieldFactory());
+		updateForm.setBean(beanItem);
+
+		center();
 	}
 
-	abstract protected B getItem();
+	protected B getItem() {
+		return beanItem;
+	}
 
-	public VerticalLayout getLayout() {
-		layout = new VerticalLayout();
+	abstract protected IFormLayoutFactory buildFormLayoutFactory();
+
+	abstract protected AbstractBeanFieldGroupEditFieldFactory<B> initBeanFormFieldFactory();
+
+	protected ComponentContainer buildButtonControls() {
 
 		HorizontalLayout controlsLayout = new HorizontalLayout();
 		controlsLayout.setMargin(true);
@@ -82,10 +106,7 @@ public abstract class MassUpdateWindow<B> extends Window {
 		closeBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		controlsLayout.addComponent(closeBtn);
 		controlsLayout.setComponentAlignment(closeBtn, Alignment.MIDDLE_CENTER);
-
-		layout.addComponent(controlsLayout);
-		layout.setComponentAlignment(controlsLayout, Alignment.BOTTOM_CENTER);
-		return layout;
+		return controlsLayout;
 	}
 
 }
