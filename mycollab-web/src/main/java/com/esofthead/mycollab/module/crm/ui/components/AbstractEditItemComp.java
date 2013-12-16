@@ -77,7 +77,7 @@ public abstract class AbstractEditItemComp<B> extends AbstractPageView
 		}
 
 		@Override
-		public void attachField(Object propertyId, Field field) {
+		public void attachField(Object propertyId, Field<?> field) {
 			informationLayout.attachField(propertyId, field);
 		}
 	}

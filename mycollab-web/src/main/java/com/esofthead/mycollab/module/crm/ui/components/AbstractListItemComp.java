@@ -19,6 +19,7 @@ import com.esofthead.mycollab.vaadin.ui.table.AbstractPagedBeanTable;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
@@ -36,10 +37,13 @@ public abstract class AbstractListItemComp<S extends SearchCriteria, B> extends
 
 	protected VerticalLayout contentLayout;
 	protected DefaultGenericSearchPanel<S> searchPanel;
-	private AbstractPagedBeanTable<S, B> tableItem;
+	protected AbstractPagedBeanTable<S, B> tableItem;
+
 	protected Label selectedItemsNumberLabel = new Label();
+
 	protected SelectionOptionButton selectOptionButton;
-	private DefaultMassItemActionHandlersContainer tableActionControls;
+	protected DefaultMassItemActionHandlersContainer tableActionControls;
+	protected HorizontalLayout extraControlsLayout;
 
 	public AbstractListItemComp() {
 		this.searchPanel = createSearchPanel();
@@ -75,12 +79,20 @@ public abstract class AbstractListItemComp<S extends SearchCriteria, B> extends
 		layout.addComponent(this.tableActionControls);
 		layout.addComponent(this.selectedItemsNumberLabel);
 		layout.setComponentAlignment(this.selectedItemsNumberLabel,
-				Alignment.MIDDLE_CENTER);
+				Alignment.MIDDLE_LEFT);
 
 		layout.setExpandRatio(this.selectedItemsNumberLabel, 1.0f);
 
+		extraControlsLayout = new HorizontalLayout();
+		extraControlsLayout.setSpacing(true);
+		layout.addComponent(extraControlsLayout);
+		layout.setComponentAlignment(this.extraControlsLayout,
+				Alignment.MIDDLE_RIGHT);
+
 		contentLayout.addComponent(layoutWrapper);
 		contentLayout.addComponent(this.tableItem);
+
+		buildExtraControls();
 	}
 
 	public void disableActionControls() {
@@ -94,6 +106,10 @@ public abstract class AbstractListItemComp<S extends SearchCriteria, B> extends
 		this.selectedItemsNumberLabel.setValue(LocalizationHelper
 				.getMessage(CrmCommonI18nEnum.TABLE_SELECTED_ITEM_TITLE,
 						numOfSelectedItems));
+	}
+
+	public void addExtraComponent(Component component) {
+		extraControlsLayout.addComponent(component);
 	}
 
 	@Override
@@ -120,6 +136,8 @@ public abstract class AbstractListItemComp<S extends SearchCriteria, B> extends
 	public HasSelectableItemHandlers<B> getSelectableItemHandlers() {
 		return this.tableItem;
 	}
+
+	abstract protected void buildExtraControls();
 
 	abstract protected DefaultGenericSearchPanel<S> createSearchPanel();
 

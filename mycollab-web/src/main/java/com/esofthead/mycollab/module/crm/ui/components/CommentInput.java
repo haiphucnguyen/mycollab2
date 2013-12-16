@@ -44,6 +44,7 @@ import com.vaadin.ui.VerticalLayout;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class CommentInput extends VerticalLayout {
 	private static final long serialVersionUID = 1L;
