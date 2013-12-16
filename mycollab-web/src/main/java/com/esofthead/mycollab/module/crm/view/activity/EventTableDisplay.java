@@ -57,6 +57,7 @@ import com.vaadin.ui.Table;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 2.0
  */
 public class EventTableDisplay extends
 		DefaultPagedBeanTable<EventService, EventSearchCriteria, SimpleEvent> {

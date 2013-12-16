@@ -16,8 +16,8 @@
  */
 package com.esofthead.mycollab.module.crm.view.contact;
 
-import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
+import com.esofthead.mycollab.module.crm.domain.SimpleEvent;
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.view.IRelatedListHandlers;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
@@ -33,7 +33,7 @@ public interface ContactReadView extends IPreviewView<SimpleContact> {
 
 	HasPreviewFormHandlers<SimpleContact> getPreviewFormHandlers();
 
-	IRelatedListHandlers getRelatedActivityHandlers();
+	IRelatedListHandlers<SimpleEvent> getRelatedActivityHandlers();
 
 	IRelatedListHandlers<SimpleOpportunity> getRelatedOpportunityHandlers();
 }

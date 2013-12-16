@@ -30,13 +30,13 @@ import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.crm.CrmLinkGenerator;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
-import com.esofthead.mycollab.module.crm.domain.CallWithBLOBs;
 import com.esofthead.mycollab.module.crm.domain.CampaignLead;
-import com.esofthead.mycollab.module.crm.domain.CampaignWithBLOBs;
-import com.esofthead.mycollab.module.crm.domain.MeetingWithBLOBs;
+import com.esofthead.mycollab.module.crm.domain.SimpleCall;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
+import com.esofthead.mycollab.module.crm.domain.SimpleEvent;
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
-import com.esofthead.mycollab.module.crm.domain.Task;
+import com.esofthead.mycollab.module.crm.domain.SimpleMeeting;
+import com.esofthead.mycollab.module.crm.domain.SimpleTask;
 import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.ActivityEvent;
 import com.esofthead.mycollab.module.crm.events.CampaignEvent;
@@ -58,6 +58,12 @@ import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.UI;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class LeadReadPresenter extends CrmGenericPresenter<LeadReadView> {
 
 	private static final long serialVersionUID = 1L;
@@ -164,25 +170,25 @@ public class LeadReadPresenter extends CrmGenericPresenter<LeadReadView> {
 				});
 
 		view.getRelatedActivityHandlers().addRelatedListHandler(
-				new AbstractRelatedListHandler() {
+				new AbstractRelatedListHandler<SimpleEvent>() {
 					@Override
 					public void createNewRelatedItem(String itemId) {
 						if (itemId.equals("task")) {
-							Task task = new Task();
+							SimpleTask task = new SimpleTask();
 							task.setType(CrmTypeConstants.LEAD);
 							task.setTypeid(view.getItem().getId());
 							EventBus.getInstance().fireEvent(
 									new ActivityEvent.TaskEdit(
 											LeadReadPresenter.this, task));
 						} else if (itemId.equals("meeting")) {
-							MeetingWithBLOBs meeting = new MeetingWithBLOBs();
+							SimpleMeeting meeting = new SimpleMeeting();
 							meeting.setType(CrmTypeConstants.LEAD);
 							meeting.setTypeid(view.getItem().getId());
 							EventBus.getInstance().fireEvent(
 									new ActivityEvent.MeetingEdit(
 											LeadReadPresenter.this, meeting));
 						} else if (itemId.equals("call")) {
-							CallWithBLOBs call = new CallWithBLOBs();
+							SimpleCall call = new SimpleCall();
 							call.setType(CrmTypeConstants.LEAD);
 							call.setTypeid(view.getItem().getId());
 							EventBus.getInstance().fireEvent(
@@ -196,7 +202,7 @@ public class LeadReadPresenter extends CrmGenericPresenter<LeadReadView> {
 				new AbstractRelatedListHandler<SimpleCampaign>() {
 					@Override
 					public void createNewRelatedItem(String itemId) {
-						CampaignWithBLOBs campaign = new CampaignWithBLOBs();
+						SimpleCampaign campaign = new SimpleCampaign();
 						campaign.setExtraData(view.getItem());
 						EventBus.getInstance().fireEvent(
 								new CampaignEvent.GotoEdit(

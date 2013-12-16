@@ -30,16 +30,15 @@ import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.crm.CrmLinkGenerator;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
-import com.esofthead.mycollab.module.crm.domain.CallWithBLOBs;
-import com.esofthead.mycollab.module.crm.domain.Contact;
-import com.esofthead.mycollab.module.crm.domain.Lead;
-import com.esofthead.mycollab.module.crm.domain.MeetingWithBLOBs;
 import com.esofthead.mycollab.module.crm.domain.OpportunityContact;
 import com.esofthead.mycollab.module.crm.domain.OpportunityLead;
+import com.esofthead.mycollab.module.crm.domain.SimpleCall;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
+import com.esofthead.mycollab.module.crm.domain.SimpleEvent;
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
+import com.esofthead.mycollab.module.crm.domain.SimpleMeeting;
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
-import com.esofthead.mycollab.module.crm.domain.Task;
+import com.esofthead.mycollab.module.crm.domain.SimpleTask;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
 import com.esofthead.mycollab.module.crm.events.ActivityEvent;
 import com.esofthead.mycollab.module.crm.events.ContactEvent;
@@ -61,6 +60,12 @@ import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.UI;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class OpportunityReadPresenter extends
 		CrmGenericPresenter<OpportunityReadView> {
 
@@ -174,11 +179,11 @@ public class OpportunityReadPresenter extends
 				});
 
 		view.getRelatedActivityHandlers().addRelatedListHandler(
-				new AbstractRelatedListHandler() {
+				new AbstractRelatedListHandler<SimpleEvent>() {
 					@Override
 					public void createNewRelatedItem(String itemId) {
 						if (itemId.equals("task")) {
-							Task task = new Task();
+							SimpleTask task = new SimpleTask();
 							task.setType(CrmTypeConstants.OPPORTUNITY);
 							task.setTypeid(view.getItem().getId());
 							EventBus.getInstance()
@@ -187,7 +192,7 @@ public class OpportunityReadPresenter extends
 													OpportunityReadPresenter.this,
 													task));
 						} else if (itemId.equals("meeting")) {
-							MeetingWithBLOBs meeting = new MeetingWithBLOBs();
+							SimpleMeeting meeting = new SimpleMeeting();
 							meeting.setType(CrmTypeConstants.OPPORTUNITY);
 							meeting.setTypeid(view.getItem().getId());
 							EventBus.getInstance().fireEvent(
@@ -195,7 +200,7 @@ public class OpportunityReadPresenter extends
 											OpportunityReadPresenter.this,
 											meeting));
 						} else if (itemId.equals("call")) {
-							CallWithBLOBs call = new CallWithBLOBs();
+							SimpleCall call = new SimpleCall();
 							call.setType(CrmTypeConstants.OPPORTUNITY);
 							call.setTypeid(view.getItem().getId());
 							EventBus.getInstance()
@@ -212,7 +217,7 @@ public class OpportunityReadPresenter extends
 
 					@Override
 					public void createNewRelatedItem(String itemId) {
-						Contact contact = new Contact();
+						SimpleContact contact = new SimpleContact();
 						contact.setExtraData(view.getItem());
 						EventBus.getInstance()
 								.fireEvent(
@@ -248,7 +253,7 @@ public class OpportunityReadPresenter extends
 				new AbstractRelatedListHandler<SimpleLead>() {
 					@Override
 					public void createNewRelatedItem(String itemId) {
-						Lead lead = new Lead();
+						SimpleLead lead = new SimpleLead();
 						lead.setExtraData(view.getItem());
 						EventBus.getInstance().fireEvent(
 								new LeadEvent.GotoEdit(

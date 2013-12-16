@@ -17,6 +17,7 @@
 package com.esofthead.mycollab.module.crm.view.lead;
 
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
+import com.esofthead.mycollab.module.crm.domain.SimpleEvent;
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.module.crm.view.IRelatedListHandlers;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
@@ -32,7 +33,7 @@ public interface LeadReadView extends IPreviewView<SimpleLead> {
 
 	HasPreviewFormHandlers<SimpleLead> getPreviewFormHandlers();
 
-	IRelatedListHandlers getRelatedActivityHandlers();
+	IRelatedListHandlers<SimpleEvent> getRelatedActivityHandlers();
 
 	IRelatedListHandlers<SimpleCampaign> getRelatedCampaignHandlers();
 }

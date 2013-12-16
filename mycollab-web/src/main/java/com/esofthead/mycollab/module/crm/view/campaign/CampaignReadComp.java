@@ -67,7 +67,7 @@ class CampaignReadComp extends AbstractCampaignPreviewComp {
 
 		tabContainer.addTab(this.noteListItems, "Notes",
 				MyCollabResource.newResource("icons/16/crm/note.png"));
-		tabContainer.addTab(this.associateAccountList, "Notes",
+		tabContainer.addTab(this.associateAccountList, "Accounts",
 				MyCollabResource.newResource("icons/16/crm/account.png"));
 		tabContainer.addTab(this.associateContactList, "Contacts",
 				MyCollabResource.newResource("icons/16/crm/contact.png"));

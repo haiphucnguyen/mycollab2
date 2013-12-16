@@ -32,6 +32,10 @@ public abstract class AbstractBeanFieldGroupViewFieldFactory<B> implements
 		Class beanClass = bean.getClass();
 		java.lang.reflect.Field[] fields = ClassUtils.getAllFields(beanClass);
 		for (java.lang.reflect.Field field : fields) {
+			if ("selected".equals(field.getName())
+					|| "extraData".equals(field.getName())) {
+				continue;
+			}
 			bindField(field.getName());
 		}
 	}

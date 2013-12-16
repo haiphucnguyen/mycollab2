@@ -42,7 +42,7 @@ class ContactEditFormFieldFactory<B extends Contact> extends
 	}
 
 	@Override
-	protected Field onCreateField(Object propertyId) {
+	protected Field<?> onCreateField(Object propertyId) {
 
 		if (propertyId.equals("leadsource")) {
 			LeadSourceComboBox leadSource = new LeadSourceComboBox();
