@@ -57,7 +57,6 @@ import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.ui.AbstractSelect;
 import com.vaadin.ui.AbstractSelect.ItemCaptionMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -93,6 +92,7 @@ public abstract class EntityImportWindow<E> extends Window {
 		super(title);
 		center();
 		this.setWidth("1000px");
+		this.setStyleName("entity-import-window");
 		this.isSupportVCard = isSupportVCard;
 		this.services = service;
 		this.cls = cls;
@@ -117,6 +117,7 @@ public abstract class EntityImportWindow<E> extends Window {
 		public FileConfigurationLayout() {
 			final VerticalLayout layout = new VerticalLayout();
 			layout.setWidth("100%");
+			layout.setMargin(true);
 			layout.setSpacing(true);
 
 			final HorizontalLayout informationLayout = new HorizontalLayout();
@@ -326,22 +327,25 @@ public abstract class EntityImportWindow<E> extends Window {
 			bodyLayoutWapper.setWidth("100%");
 
 			final HorizontalLayout bodyLayout = new HorizontalLayout();
-
-			HorizontalLayout titleHorizontal = new HorizontalLayout();
+			bodyLayout.setSpacing(true);
+			bodyLayout.setMargin(true);
+			
 			Label title = new Label("Step 2:");
 			title.addStyleName("h3");
-			UiUtils.addComponent(titleHorizontal, title, Alignment.TOP_LEFT);
-			bodyLayout.addComponent(titleHorizontal);
+			UiUtils.addComponent(bodyLayout, title, Alignment.TOP_LEFT);
 
 			VerticalLayout informationLayout = new VerticalLayout();
+			informationLayout.setSpacing(true);
+			informationLayout.setWidth("100%");
 
-			GridFormLayoutHelper gridLayout = new GridFormLayoutHelper(1, 5,
+			GridFormLayoutHelper gridLayout = new GridFormLayoutHelper(1, 4,
 					"100%", "200px", Alignment.MIDDLE_LEFT);
 
 			gridLayout.getLayout().setSpacing(true);
-			gridLayout.getLayout().setMargin(true);
+			gridLayout.getLayout().setMargin(false);
+			gridLayout.getLayout().setWidth("100%");
 
-			gridLayout.addComponent(new Label(), "Specify Format", 0, 0);
+			informationLayout.addComponent(new Label("Specify Format"));
 
 			@SuppressWarnings("rawtypes")
 			BeanItemContainer<String> fileformatType = new BeanItemContainer(
@@ -349,6 +353,7 @@ public abstract class EntityImportWindow<E> extends Window {
 
 			fileformatComboBox = new ComboBox();
 			fileformatComboBox.setContainerDataSource(fileformatType);
+			fileformatComboBox.setNullSelectionAllowed(false);
 			fileformatComboBox
 					.setItemCaptionMode(ItemCaptionMode.EXPLICIT_DEFAULTS_ID);
 			fileformatComboBox.setValue("VCard");
@@ -362,26 +367,26 @@ public abstract class EntityImportWindow<E> extends Window {
 					fileformatComboBox.setValue("VCard");
 			}
 
-			gridLayout.addComponent(fileformatComboBox, "File Type", 0, 1);
+			gridLayout.addComponent(fileformatComboBox, "File Type", 0, 0);
 
 			ComboBox encodingCombobox = new ComboBox();
 			encodingCombobox
-					.setItemCaptionMode(AbstractSelect.ITEM_CAPTION_MODE_EXPLICIT_DEFAULTS_ID);
+					.setItemCaptionMode(ItemCaptionMode.EXPLICIT_DEFAULTS_ID);
 			encodingCombobox.addItem("UTF-8");
 			encodingCombobox.setValue("UTF-8");
 			encodingCombobox.setEnabled(false);
 			gridLayout.addComponent(encodingCombobox, "Character Encoding", 0,
-					2);
+					1);
 
 			ComboBox delimiterComboBox = new ComboBox();
 			delimiterComboBox
-					.setItemCaptionMode(AbstractSelect.ITEM_CAPTION_MODE_EXPLICIT_DEFAULTS_ID);
+					.setItemCaptionMode(ItemCaptionMode.EXPLICIT_DEFAULTS_ID);
 			delimiterComboBox.addItem(",(comma)");
 			delimiterComboBox.addItem("#,(sharp)");
 
 			delimiterComboBox.setValue(",(comma)");
 			delimiterComboBox.setEnabled(false);
-			gridLayout.addComponent(delimiterComboBox, "Delimiter", 0, 3);
+			gridLayout.addComponent(delimiterComboBox, "Delimiter", 0, 2);
 
 			HorizontalLayout checkboxHorizontalLayout = new HorizontalLayout();
 			hasHeaderCheckBox = new CheckBox();
@@ -392,11 +397,11 @@ public abstract class EntityImportWindow<E> extends Window {
 			checkboxHorizontalLayout.addComponent(checkboxMessageLabel);
 
 			gridLayout.addComponent(checkboxHorizontalLayout, "Has header", 0,
-					4);
+					3);
 			informationLayout.addComponent(gridLayout.getLayout());
-
-			bodyLayout.addComponent(titleHorizontal);
+			
 			bodyLayout.addComponent(informationLayout);
+			bodyLayout.setExpandRatio(informationLayout, 1.0f);
 
 			bodyLayoutWapper.addComponent(bodyLayout);
 			return bodyLayoutWapper;
@@ -410,19 +415,19 @@ public abstract class EntityImportWindow<E> extends Window {
 
 			final HorizontalLayout bodyLayout = new HorizontalLayout();
 			bodyLayout.setSpacing(true);
+			bodyLayout.setMargin(true);
 			bodyLayout.setHeight("100%");
-
-			HorizontalLayout titleHorizontalLayout = new HorizontalLayout();
+			
 			Label title = new Label("Step 1:");
 			title.addStyleName("h3");
 
-			UiUtils.addComponent(titleHorizontalLayout, title,
+			UiUtils.addComponent(bodyLayout, title,
 					Alignment.TOP_LEFT);
-			bodyLayout.addComponent(titleHorizontalLayout);
 
 			uploadFieldVerticalLayout = new VerticalLayout();
 			uploadFieldVerticalLayout.setSpacing(true);
-			uploadFieldVerticalLayout.setMargin(true);
+			uploadFieldVerticalLayout.setMargin(false);
+			uploadFieldVerticalLayout.setWidth("100%");
 
 			uploadFieldVerticalLayout.addComponent(new Label("Select File"));
 
@@ -451,8 +456,9 @@ public abstract class EntityImportWindow<E> extends Window {
 			uploadFieldVerticalLayout.addComponent(new Label(
 					fileTypeSupportString));
 
-			bodyLayout.addComponent(titleHorizontalLayout);
 			bodyLayout.addComponent(uploadFieldVerticalLayout);
+			bodyLayout.setExpandRatio(uploadFieldVerticalLayout, 1.0f);
+			
 			bodyLayoutWapper.addComponent(bodyLayout);
 
 			return bodyLayoutWapper;
@@ -545,7 +551,7 @@ public abstract class EntityImportWindow<E> extends Window {
 									.getComponent(1, i + 1);
 							if (componentOnGrid instanceof HorizontalLayout) {
 								Iterator<Component> lstComponentOnGrid = ((HorizontalLayout) componentOnGrid)
-										.getComponentIterator();
+										.iterator();
 								Component compent = lstComponentOnGrid.next();
 								if (compent instanceof CSVBeanFieldComboBox) {
 									ImportFieldDef importFieldDef = new ImportFieldDef(

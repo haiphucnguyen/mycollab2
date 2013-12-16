@@ -2554,7 +2554,7 @@ div.v-splitbutton,div.v-splitbutton .v-button {
 	background: none no-repeat 0 0 transparent;
 }
 
-.usergroup-view .colored-gridlayout .v-gridlayout-margin .gridform-field .v-csslayout>.v-csslayout-margin
+.usergroup-view .colored-gridlayout .gridform-field .v-csslayout
 	{
 	padding: 3px 2px 2px;
 }
@@ -2566,8 +2566,17 @@ div.v-splitbutton,div.v-splitbutton .v-button {
 	border-radius: 3px 3px 0px 0px;
 }
 
-.v-horizontallayout-message-toppanel-body .v-horizontallayout-margin {
-	padding: 7px 5px 7px 18px;
+.message-toppanel-body.v-margin-top {
+	padding-top: 7px;
+}
+.message-toppanel-body.v-margin-right {
+	padding-right: 5px;
+}
+.message-toppanel-body.v-margin-bottom {
+	padding-bottom: 7px;
+}
+.message-toppanel-body.v-margin-left {
+	padding-left: 18px;
 }
 
 .v-horizontallayout-message-search .v-horizontallayout-margin {
@@ -2578,12 +2587,9 @@ div.v-splitbutton,div.v-splitbutton .v-button {
 	border-radius: 3px 0px 0px 3px;
 }
 
-.message-list .v-csslayout-beanlist-content>.v-csslayout-margin {
+.message-list .beanlist-content {
 	padding: 5px 15px;
 	background: none no-repeat left top rgb(229, 239, 240);
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-	box-sizing: border-box;
 	border-width: 0px 1px 1px;
 	border-style: solid;
 	border-color: #a9a9a9;
@@ -2601,7 +2607,7 @@ div.v-splitbutton,div.v-splitbutton .v-button {
 	margin: 5px 0px;
 }
 
-.comment-list-wrapper>.v-csslayout-margin {
+.comment-list-wrapper {
 	padding: 0px 0px 0px 58px;
 }
 
@@ -2612,7 +2618,7 @@ div.v-splitbutton,div.v-splitbutton .v-button {
     box-sizing: border-box;
 }
 
-.message .message-container>.v-csslayout-margin {
+.message .message-container {
 	background-color: #fff;
 	padding: 10px;
 	border: 2px solid #a9a9a9;
@@ -2624,11 +2630,11 @@ div.v-splitbutton,div.v-splitbutton .v-button {
     box-sizing: border-box;
 }
 
-.v-ie7 .message .message-container>.v-csslayout-margin {
+.v-ie7 .message .message-container {
 	margin-left: 0px;
 }
 
-.message .message-container>.v-csslayout-margin:before {
+.message .message-container:before {
 	content: "";
 	position: absolute;
 	border-style: solid;
@@ -2642,7 +2648,7 @@ div.v-splitbutton,div.v-splitbutton .v-button {
 	border-radius: 0px;
 }
 
-.message .message-container>.v-csslayout-margin:after {
+.message .message-container:after {
 	content: "";
 	position: absolute;
 	border-style: solid;
@@ -2655,11 +2661,11 @@ div.v-splitbutton,div.v-splitbutton .v-button {
 	border-radius: 0px;
 }
 
-.message.important-message .message-container>.v-csslayout-margin {
+.message.important-message .message-container {
 	border-color: #045c8e;
 }
 
-.message.important-message .message-container>.v-csslayout-margin:before
+.message.important-message .message-container:before
 	{
 	border-color: transparent #045c8e;
 }
@@ -2733,6 +2739,11 @@ div.v-splitbutton,div.v-splitbutton .v-button {
 	border-color: rgb(169, 169, 169);
 	background: url("icons/grad-dark-bottom.png") repeat-x left bottom
 		rgb(208, 115, 20);
+}
+
+.v-buttongroup .v-button.graybtn {
+	background-color: rgb(178, 178, 178);
+	border-color: rgb(78, 78, 78);
 }
 
 .v-buttongroup .v-button-left {
@@ -3869,11 +3880,6 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
-}
-
-.readview-layout-body .v-horizontallayout-gridform-caption .v-horizontallayout-margin,.readview-layout-body .v-horizontallayout-gridform-field .v-horizontallayout-margin
-{
-	padding: 8px 5px 8px 18px;
 }
 
 .readview-layout-body .v-horizontallayout-gridform-caption.v-margin-top {
@@ -5416,4 +5422,23 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 .v-radiobutton label {
 	vertical-align: middle;
 	line-height: normal;
+}
+
+/* Normal Gridlayout */
+.gridform-caption.v-margin-top, .gridform-field.v-margin-top {
+	padding-top: 0px;
+}
+.gridform-caption.v-margin-right, .gridform-field.v-margin-right {
+	padding-right: 0px;
+}
+.gridform-caption.v-margin-bottom, .gridform-field.v-margin-bottom {
+	padding-bottom: 0px;
+}
+.gridform-caption.v-margin-left, .gridform-field.v-margin-left {
+	padding-left: 0px;
+}
+
+/* Entity Import Window */
+.entity-import-window .v-label-h3 {
+	margin: 0px;
 }

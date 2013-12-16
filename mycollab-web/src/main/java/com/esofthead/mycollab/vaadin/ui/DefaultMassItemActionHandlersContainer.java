@@ -36,11 +36,13 @@ public class DefaultMassItemActionHandlersContainer extends HorizontalLayout
 
 	public void addActionItem(String id, Resource resource, String groupId) {
 		ButtonGroup group = groupMap.get(groupId);
+		
 		if (group == null) {
 			group = new ButtonGroup();
 			groupMap.put(groupId, group);
 			this.addComponent(group);
 		}
+		group.addStyleName(UIConstants.THEME_GRAY_LINK);
 
 		Button optionBtn = new Button(null, new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
@@ -52,6 +54,7 @@ public class DefaultMassItemActionHandlersContainer extends HorizontalLayout
 			}
 		});
 		optionBtn.setIcon(resource);
+		optionBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
 		group.addButton(optionBtn);
 
 	}
