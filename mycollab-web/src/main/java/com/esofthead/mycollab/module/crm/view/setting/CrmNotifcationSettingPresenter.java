@@ -39,7 +39,7 @@ public class CrmNotifcationSettingPresenter extends
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		CrmSettingContainer settingContainer = (CrmSettingContainer) container;
-		settingContainer.gotoSubView("Notification");
+		settingContainer.gotoSubView("Notifications");
 
 		CrmToolbar crmToolbar = ViewManager.getView(CrmToolbar.class);
 		crmToolbar.gotoItem(LocalizationHelper

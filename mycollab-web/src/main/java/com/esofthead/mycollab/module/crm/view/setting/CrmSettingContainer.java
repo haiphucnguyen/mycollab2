@@ -55,7 +55,7 @@ public class CrmSettingContainer extends CssLayout implements PageView {
 		settingTab.setNavigatorStyleName("sidebar-menu");
 		settingTab.setContainerStyleName("tab-content");
 		settingTab.setHeight(null);
-		
+
 		buildComponents();
 		contentWrapper.addComponent(settingTab);
 	}
@@ -64,7 +64,7 @@ public class CrmSettingContainer extends CssLayout implements PageView {
 		settingTab.addTab(constructNotificationSettingView(), "Notifications",
 				MyCollabResource.newResource("icons/22/crm/notification.png"));
 
-		settingTab.addTab(constructNotificationSettingView(), "Custom Layouts",
+		settingTab.addTab(constructCustomLayoutView(), "Custom Layouts",
 				MyCollabResource.newResource("icons/22/crm/layout.png"));
 
 		settingTab
@@ -73,7 +73,8 @@ public class CrmSettingContainer extends CssLayout implements PageView {
 
 					@Override
 					public void selectedTabChange(SelectedTabChangeEvent event) {
-						Tab tab = ((VerticalTabsheet) event.getSource()).getSelectedTab();
+						Tab tab = ((VerticalTabsheet) event.getSource())
+								.getSelectedTab();
 						String caption = tab.getCaption();
 
 						if ("Notifications".equals(caption)) {
@@ -92,6 +93,12 @@ public class CrmSettingContainer extends CssLayout implements PageView {
 		notificationPresenter = PresenterResolver
 				.getPresenter(CrmNotifcationSettingPresenter.class);
 		return notificationPresenter.getView();
+	}
+
+	private Component constructCustomLayoutView() {
+		customViewPresenter = PresenterResolver
+				.getPresenter(ICrmCustomViewPresenter.class);
+		return customViewPresenter.getView();
 	}
 
 	@Override
