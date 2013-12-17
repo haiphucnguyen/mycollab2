@@ -29,6 +29,7 @@ import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 @ViewComponent
 public class MilestoneReadViewImpl extends AbstractPageView implements
