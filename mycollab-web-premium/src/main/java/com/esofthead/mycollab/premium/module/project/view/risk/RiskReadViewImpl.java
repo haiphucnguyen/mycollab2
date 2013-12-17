@@ -141,17 +141,14 @@ public class RiskReadViewImpl extends AbstractPageView implements RiskReadView {
 			private static final long serialVersionUID = 1L;
 
 			public FormLayoutFactory() {
-				super(RiskReadViewImpl.this.risk.getRiskname());
 			}
 
-			@Override
 			protected Layout createTopPanel() {
 				return (new ProjectPreviewFormControlsGenerator<SimpleRisk>(
 						PreviewForm.this))
 						.createButtonControls(ProjectRolePermissionCollections.RISKS);
 			}
 
-			@Override
 			protected Layout createBottomPanel() {
 				final CommentListDepot commentList = new CommentListDepot(
 						CommentType.PRJ_RISK,
@@ -228,16 +225,10 @@ public class RiskReadViewImpl extends AbstractPageView implements RiskReadView {
 
 			private static final long serialVersionUID = 1L;
 
-			public FormLayoutFactory() {
-				super(PrintView.this.risk.getRiskname());
-			}
-
-			@Override
 			protected Layout createTopPanel() {
 				return new HorizontalLayout();
 			}
 
-			@Override
 			protected Layout createBottomPanel() {
 				return new CommentListDepot(CommentType.PRJ_RISK,
 						PrintView.this.risk.getId(),
