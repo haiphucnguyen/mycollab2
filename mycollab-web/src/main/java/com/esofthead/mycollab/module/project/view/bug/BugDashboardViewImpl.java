@@ -40,6 +40,7 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
+import com.vaadin.server.Sizeable;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -47,6 +48,7 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
@@ -93,16 +95,15 @@ public class BugDashboardViewImpl extends AbstractPageView implements
 		headerWrapper.removeAllComponents();
 		final CssLayout headerTop = new CssLayout();
 		headerTop.setWidth("100%");
-		headerTop.setHeight("30px");
 		headerTop.addStyleName("bugdashboard-header-top");
 		final HorizontalLayout header = new HorizontalLayout();
 		header.setWidth("100%");
+		header.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
 		final Label title = new Label(
 				LocalizationHelper.getMessage(BugI18nEnum.BUG_DASHBOARD_TITLE));
 		title.setStyleName("h2");
-		final Embedded icon = new Embedded();
-		icon.setSource(MyCollabResource.newResource("icons/24/project/bug.png"));
+		final Image icon = new Image(null, MyCollabResource.newResource("icons/24/project/bug.png"));
 		header.addComponent(icon);
 		header.addComponent(title);
 		header.setExpandRatio(title, 1.0f);
@@ -124,6 +125,7 @@ public class BugDashboardViewImpl extends AbstractPageView implements
 		final SplitButton controlsBtn = new SplitButton(createBugBtn);
 		controlsBtn.addStyleName(UIConstants.SPLIT_BUTTON);
 		controlsBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
+		controlsBtn.setWidth(SIZE_UNDEFINED, Sizeable.Unit.PIXELS);
 
 		final VerticalLayout btnControlsLayout = new VerticalLayout();
 		btnControlsLayout.setWidth("150px");

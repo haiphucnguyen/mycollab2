@@ -1220,7 +1220,7 @@ input.v-textfield-errorField {
 	border-width: 0px 0px 1px 0px;
 }
 
-.addViewLayout .addViewBottomControls .depotComp.collapsed .header-wrapper>.v-csslayout-margin
+.addViewLayout .addViewBottomControls .depotComp.collapsed .header-wrapper
 	{
 	border-width: 0px 0px 1px 0px;
 }
@@ -1323,7 +1323,7 @@ input.v-textfield-errorField {
 	border-color: rgb(169, 169, 169);
 }
 
-.accountViewContainer .userInfoContainer .addViewBody .info-block-header>.v-csslayout-margin
+.accountViewContainer .userInfoContainer .addViewBody .info-block-header
 	{
 	padding: 8px 0px 8px 18px;
 }
@@ -1420,6 +1420,9 @@ input.v-textfield-errorField {
 	padding: 0px;
 	font-weight: normal;
 	font-size: 20px;
+}
+.projectDashboardView .vertical-tabsheet .tab-content {
+	min-height: 372px;
 }
 
 .projectDashboardView .sidebar-menu {
@@ -1722,13 +1725,10 @@ input.v-textfield-errorField {
 }
 
 .depotComp .v-csslayout-header-wrapper {
-	padding: 5px 10px 5px 5px;
+	padding: 2px 10px 3px 5px;
 }
 
 .depotComp .depotHeader {
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-	box-sizing: border-box;
 	border-width: 1px;
 	border-style: solid;
 	border-color: #a9a9a9;
@@ -1809,6 +1809,7 @@ input.v-textfield-errorField {
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
+	display: block;
 }
 
 .depotComp .depotContent.empty {
@@ -1830,8 +1831,17 @@ input.v-textfield-errorField {
 	background-color: rgb(245, 245, 245);
 }
 
-.depotContent.bordered .v-verticallayout-margin {
-	padding: 5px;
+.depotContent.bordered.v-margin-top {
+	padding-top: 5px;
+}
+.depotContent.bordered.v-margin-right {
+	padding-right: 5px;
+}
+.depotContent.bordered.v-margin-bottom {
+	padding-bottom: 5px;
+}
+.depotContent.bordered.v-margin-left {
+	padding-left: 5px;
 }
 
 .addViewLayout .depotContent .v-button-link {
@@ -1839,18 +1849,25 @@ input.v-textfield-errorField {
 }
 
 .bug-list .widget-footer {
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-	box-sizing: border-box;
 	background-color: rgb(245, 245, 245);
 	border-color: rgb(169, 169, 169);
 	border-style: solid;
 	border-width: 0px 1px 1px 1px;
 }
 
-.bug-list .widget-footer .v-verticallayout-margin {
-	padding: 5px;
+.bug-list .widget-footer.v-margin-top {
+	padding-top: 5px;
 }
+.bug-list .widget-footer.v-margin-right {
+	padding-right: 5px;
+}
+.bug-list .widget-footer.v-margin-bottom {
+	padding-bottom: 5px;
+}
+.bug-list .widget-footer.v-margin-left {
+	padding-left: 5px;
+}
+
 /* End Depot */
 
 /* Activity Tabs */
@@ -2936,7 +2953,7 @@ div.v-splitbutton,div.v-splitbutton .v-button {
 	font-weight: bold
 }
 
-.widget-row>.v-csslayout-margin {
+.widget-row {
 	background-color: rgb(247, 247, 247);
 	border-width: 0px 1px 1px 1px;
 	border-style: solid;
@@ -2944,7 +2961,7 @@ div.v-splitbutton,div.v-splitbutton .v-button {
 	padding: 3px 5px 0px;
 }
 
-.widget-row.odd>.v-csslayout-margin {
+.widget-row.odd {
 	background-color: rgb(212, 223, 239);
 }
 /* End Bug Widget */
@@ -3929,8 +3946,8 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 	margin-top: 0px;
 }
 
-.readview-layout-body .main-info .depotComp .v-csslayout-header-wrapper>.v-csslayout-margin
-	{
+.readview-layout-body .main-info .depotComp .v-csslayout-header-wrapper
+{
 	padding: 0px 5px 0px 0px;
 	border-width: 0px;
 	border-style: solid;
@@ -4245,8 +4262,7 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 .bugdashboard-header-top {
 	border-radius: 3px 3px 0px 0px;
 	background-color: rgb(228, 228, 228);
-	padding: 2px 10px 5px 10px;
-	border-bottom: 1px solid rgb(169, 169, 169);
+	padding: 2px 10px;
 }
 
 /* Task Group */
@@ -4475,14 +4491,11 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 }
 
 /* Generic Component */
-.v-csslayout-component-header>.v-csslayout-margin {
+.v-csslayout-component-header {
 	font-size: 13px;
 	border-width: 1px 1px 0px;
 	border-style: solid;
 	border-color: #a9a9a9;
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-	box-sizing: border-box;
 	background: url('icons/grad-light-top2.png') repeat-x left top
 		rgb(229, 229, 229);
 	border-radius: 3px 3px 0px 0px;
@@ -5474,4 +5487,44 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 	border-bottom: 1px solid #a9a9a9;
 	color: rgb(69, 69, 69);
 	font-weight: bold;
+}
+/* Tabsheet style 3 */
+.tab-style3 .v-tabsheet-tabs {
+	background: none;
+}
+.tab-style3 .v-tabsheet-tabitem {
+	background: url("icons/border-bottom2.png") repeat-x scroll left bottom transparent;
+	border: none;
+	position: relative;
+}
+.tab-style3 .v-tabsheet-tabitem .v-caption .v-captiontext {
+	font-size: 13px;
+	text-shadow: none;
+	color: rgb(145, 142, 142);
+}
+.tab-style3 .v-tabsheet-tabitem:hover .v-caption .v-captiontext {
+	color: rgb(94, 94, 94);
+} 
+.tab-style3 .v-tabsheet-tabitemcell.v-tabsheet-tabitemcell-selected {
+	background: none;
+}
+.tab-style3 .v-tabsheet-tabitem-selected .v-caption .v-captiontext, .tab-style3 .v-tabsheet-tabitem-selected:hover .v-caption .v-captiontext {
+	color: rgb(40, 126, 206);
+	font-size: 14px;
+}
+.tab-style3 .v-tabsheet-tabitem-selected:after {
+	content: " ";
+	display: block;
+	width: 100%;
+	height: 2px;
+	background: #2E9DFF;
+	position: absolute;
+	bottom: 0px;
+	left: 0px;
+}
+.tab-style3 .v-tabsheet-spacertd div {
+	border-bottom: none;
+}
+.tab-style3 .v-tabsheet-content {
+	background: none;
 }

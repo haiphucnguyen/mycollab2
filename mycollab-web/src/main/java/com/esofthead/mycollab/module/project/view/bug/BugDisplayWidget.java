@@ -78,6 +78,7 @@ public abstract class BugDisplayWidget extends Depot {
 			final VerticalLayout widgetFooter = new VerticalLayout();
 			widgetFooter.addStyleName("widget-footer");
 			widgetFooter.setWidth("100%");
+			widgetFooter.setMargin(true);
 			widgetFooter.addComponent(moreBtn);
 			widgetFooter.setComponentAlignment(moreBtn, Alignment.TOP_RIGHT);
 			bodyContent.addComponent(widgetFooter);

@@ -49,6 +49,7 @@ public class UnresolvedBugsByPriorityWidget2 extends Depot {
 				new VerticalLayout());
 		this.setContentBorder(true);
 		((VerticalLayout) this.bodyContent).setSpacing(true);
+		((VerticalLayout) this.bodyContent).setMargin(true);
 	}
 
 	public void setSearchCriteria(final BugSearchCriteria searchCriteria) {

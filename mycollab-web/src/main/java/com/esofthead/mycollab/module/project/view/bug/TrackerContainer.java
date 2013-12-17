@@ -26,6 +26,7 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.PageView;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.ui.TabsheetDecor;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.TabSheet.SelectedTabChangeEvent;
@@ -50,6 +51,7 @@ public class TrackerContainer extends AbstractPageView {
 	public TrackerContainer() {
 
 		this.myProjectTab = new TabsheetDecor();
+		this.myProjectTab.setStyleName("tab-style3");
 		this.addComponent(myProjectTab);
 		this.setWidth("100%");
 		this.setMargin(true);
