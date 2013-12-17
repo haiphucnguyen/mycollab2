@@ -65,6 +65,7 @@ public class MassUpdateLeadWindow extends MassUpdateWindow<Lead> {
 		@Override
 		public Layout getLayout() {
 			final VerticalLayout formLayout = new VerticalLayout();
+			formLayout.setDefaultComponentAlignment(Alignment.TOP_CENTER);
 
 			final Label organizationHeader = new Label("Contact Information");
 			organizationHeader.setStyleName(UIConstants.H2_STYLE2);

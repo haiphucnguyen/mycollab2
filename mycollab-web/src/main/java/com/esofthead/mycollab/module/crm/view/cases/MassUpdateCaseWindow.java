@@ -65,6 +65,7 @@ public class MassUpdateCaseWindow extends MassUpdateWindow<CaseWithBLOBs> {
 		@Override
 		public Layout getLayout() {
 			final VerticalLayout formLayout = new VerticalLayout();
+			formLayout.setDefaultComponentAlignment(Alignment.TOP_CENTER);
 
 			final Label organizationHeader = new Label("Case Information");
 			organizationHeader.setStyleName(UIConstants.H2_STYLE2);

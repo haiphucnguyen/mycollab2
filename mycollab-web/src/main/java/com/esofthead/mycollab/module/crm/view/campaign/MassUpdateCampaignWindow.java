@@ -67,6 +67,7 @@ public class MassUpdateCampaignWindow extends
 		@Override
 		public Layout getLayout() {
 			final VerticalLayout formLayout = new VerticalLayout();
+			formLayout.setDefaultComponentAlignment(Alignment.TOP_CENTER);
 
 			final Label organizationHeader = new Label("Campaign Information");
 			organizationHeader.setStyleName(UIConstants.H2_STYLE2);

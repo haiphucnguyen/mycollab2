@@ -16,12 +16,17 @@
  */
 package com.esofthead.mycollab.module.crm.view.activity;
 
-import com.esofthead.mycollab.module.crm.domain.MeetingWithBLOBs;
 import com.esofthead.mycollab.module.crm.domain.SimpleMeeting;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.IPreviewView;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public interface MeetingReadView extends IPreviewView<SimpleMeeting> {
-	HasPreviewFormHandlers<MeetingWithBLOBs> getPreviewFormHandlers();
+	HasPreviewFormHandlers<SimpleMeeting> getPreviewFormHandlers();
 
 }

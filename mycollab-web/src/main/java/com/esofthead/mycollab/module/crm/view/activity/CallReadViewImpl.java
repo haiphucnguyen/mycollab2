@@ -32,18 +32,12 @@ public class CallReadViewImpl extends AbstractPageView implements CallReadView {
 
 	private static final long serialVersionUID = 1L;
 
-	private CallPreviewBuilder callPreview;
+	private CallReadComp callPreview;
 
 	public CallReadViewImpl() {
 		super();
-		callPreview = new CallPreviewBuilder.ReadView();
+		callPreview = new CallReadComp();
 		this.addComponent(callPreview);
-	}
-
-	@Override
-	public void previewItem(SimpleCall call) {
-		callPreview.call = call;
-		callPreview.previewItem(call);
 	}
 
 	@Override
@@ -53,6 +47,12 @@ public class CallReadViewImpl extends AbstractPageView implements CallReadView {
 
 	@Override
 	public SimpleCall getItem() {
-		return callPreview.getCall();
+		return callPreview.getBeanItem();
+	}
+
+	@Override
+	public void previewItem(SimpleCall item) {
+		callPreview.previewItem(item);
+
 	}
 }

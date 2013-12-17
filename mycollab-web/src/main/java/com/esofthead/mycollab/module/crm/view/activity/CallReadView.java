@@ -20,7 +20,13 @@ import com.esofthead.mycollab.module.crm.domain.SimpleCall;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.IPreviewView;
 
-public interface CallReadView  extends IPreviewView<SimpleCall> {
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
+public interface CallReadView extends IPreviewView<SimpleCall> {
 	HasPreviewFormHandlers<SimpleCall> getPreviewFormHandlers();
 
 }

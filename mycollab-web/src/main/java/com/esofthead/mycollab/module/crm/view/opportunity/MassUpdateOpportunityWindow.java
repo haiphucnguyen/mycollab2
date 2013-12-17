@@ -66,6 +66,7 @@ public class MassUpdateOpportunityWindow extends MassUpdateWindow<Opportunity> {
 		@Override
 		public Layout getLayout() {
 			final VerticalLayout formLayout = new VerticalLayout();
+			formLayout.setDefaultComponentAlignment(Alignment.TOP_CENTER);
 
 			final Label organizationHeader = new Label("Account Information");
 			organizationHeader.setStyleName(UIConstants.H2_STYLE2);

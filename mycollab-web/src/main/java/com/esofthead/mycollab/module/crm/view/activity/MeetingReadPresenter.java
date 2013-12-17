@@ -52,15 +52,15 @@ public class MeetingReadPresenter extends CrmGenericPresenter<MeetingReadView> {
 
 	private void bind() {
 		view.getPreviewFormHandlers().addFormHandler(
-				new DefaultPreviewFormHandler<MeetingWithBLOBs>() {
+				new DefaultPreviewFormHandler<SimpleMeeting>() {
 					@Override
-					public void onEdit(MeetingWithBLOBs data) {
+					public void onEdit(SimpleMeeting data) {
 						EventBus.getInstance().fireEvent(
 								new ActivityEvent.MeetingEdit(this, data));
 					}
 
 					@Override
-					public void onDelete(final MeetingWithBLOBs data) {
+					public void onDelete(final SimpleMeeting data) {
 						ConfirmDialogExt.show(
 								UI.getCurrent(),
 								LocalizationHelper.getMessage(
@@ -94,7 +94,7 @@ public class MeetingReadPresenter extends CrmGenericPresenter<MeetingReadView> {
 					}
 
 					@Override
-					public void onClone(MeetingWithBLOBs data) {
+					public void onClone(SimpleMeeting data) {
 						MeetingWithBLOBs cloneData = (MeetingWithBLOBs) data
 								.copy();
 						cloneData.setId(null);
@@ -109,7 +109,7 @@ public class MeetingReadPresenter extends CrmGenericPresenter<MeetingReadView> {
 					}
 
 					@Override
-					public void gotoNext(MeetingWithBLOBs data) {
+					public void gotoNext(SimpleMeeting data) {
 						MeetingService accountService = ApplicationContextUtil
 								.getSpringBean(MeetingService.class);
 						MeetingSearchCriteria criteria = new MeetingSearchCriteria();
@@ -131,7 +131,7 @@ public class MeetingReadPresenter extends CrmGenericPresenter<MeetingReadView> {
 					}
 
 					@Override
-					public void gotoPrevious(MeetingWithBLOBs data) {
+					public void gotoPrevious(SimpleMeeting data) {
 						MeetingService accountService = ApplicationContextUtil
 								.getSpringBean(MeetingService.class);
 						MeetingSearchCriteria criteria = new MeetingSearchCriteria();
