@@ -43,7 +43,7 @@ import com.esofthead.mycollab.web.MyCollabResource;
  * @author MyCollab Ltd.
  * @since 3.0
  */
-public abstract class AbstractAccountPreviewComp extends
+abstract class AbstractAccountPreviewComp extends
 		AbstractPreviewItemComp<SimpleAccount> {
 
 	private static final long serialVersionUID = 1L;

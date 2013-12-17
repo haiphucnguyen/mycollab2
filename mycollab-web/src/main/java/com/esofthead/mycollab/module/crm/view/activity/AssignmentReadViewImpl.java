@@ -31,18 +31,17 @@ import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 public class AssignmentReadViewImpl extends AbstractPageView implements
 		AssignmentReadView {
 	private static final long serialVersionUID = 1L;
-	
-	private AssignmentPreviewBuilder assignmentPreview;
+
+	private AssignmentReadComp assignmentPreview;
 
 	public AssignmentReadViewImpl() {
 		super();
-		assignmentPreview = new AssignmentPreviewBuilder.ReadView();
+		assignmentPreview = new AssignmentReadComp();
 		this.addComponent(assignmentPreview);
 	}
 
 	@Override
 	public void previewItem(SimpleTask task) {
-		assignmentPreview.task = task;
 		assignmentPreview.previewItem(task);
 	}
 
@@ -53,6 +52,6 @@ public class AssignmentReadViewImpl extends AbstractPageView implements
 
 	@Override
 	public SimpleTask getItem() {
-		return assignmentPreview.getAssignment();
+		return assignmentPreview.getBeanItem();
 	}
 }

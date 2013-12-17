@@ -58,6 +58,10 @@ public abstract class AbstractPreviewItemComp<B> extends VerticalLayout {
 		return beanItem;
 	}
 
+	public AdvancedPreviewBeanForm<B> getPreviewForm() {
+		return previewForm;
+	}
+
 	abstract protected void onPreviewItem();
 
 	abstract protected String initFormTitle();
