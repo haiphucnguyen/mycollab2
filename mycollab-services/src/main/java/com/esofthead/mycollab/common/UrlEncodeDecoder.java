@@ -33,6 +33,7 @@ import com.esofthead.mycollab.core.MyCollabException;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class UrlEncodeDecoder {
 	private static Logger log = LoggerFactory.getLogger(UrlEncodeDecoder.class);
@@ -44,6 +45,9 @@ public class UrlEncodeDecoder {
 	 */
 	public static String encode(String str) {
 		try {
+			if (str == null) {
+				return "";
+			}
 			return URLEncoder.encode(
 					new String(
 							Base64.encodeBase64URLSafe(str.getBytes("UTF-8")),

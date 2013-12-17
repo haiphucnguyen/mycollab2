@@ -44,7 +44,7 @@ import com.esofthead.mycollab.vaadin.ui.CountryComboBox;
 import com.esofthead.mycollab.vaadin.ui.DateComboboxSelectionField;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
-import com.esofthead.mycollab.vaadin.ui.TimeZoneSelection;
+import com.esofthead.mycollab.vaadin.ui.TimeZoneSelectionField;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
@@ -71,7 +71,7 @@ public class UserAddViewImpl extends AbstractPageView implements UserAddView {
 	private UserAddViewImpl.AdvanceEditForm advanceEditForm;
 	private SimpleUser user;
 	private DateComboboxSelectionField cboDateBirthday;
-	private TimeZoneSelection cboTimezone;
+	private TimeZoneSelectionField cboTimezone;
 
 	public UserAddViewImpl() {
 		super();
@@ -267,7 +267,7 @@ public class UserAddViewImpl extends AbstractPageView implements UserAddView {
 					}
 					return UserAddViewImpl.this.cboDateBirthday;
 				} else if (propertyId.equals("timezone")) {
-					UserAddViewImpl.this.cboTimezone = new TimeZoneSelection();
+					UserAddViewImpl.this.cboTimezone = new TimeZoneSelectionField();
 					if (UserAddViewImpl.this.user.getTimezone() != null) {
 						UserAddViewImpl.this.cboTimezone
 								.setTimeZone(TimezoneMapper

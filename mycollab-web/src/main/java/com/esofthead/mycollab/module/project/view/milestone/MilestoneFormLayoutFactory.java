@@ -37,6 +37,46 @@ import com.vaadin.ui.VerticalLayout;
  * @author MyCollab Ltd.
  */
 public abstract class MilestoneFormLayoutFactory implements IFormLayoutFactory {
+	private static final long serialVersionUID = 1L;
+	private final String title;
+
+	private MilestoneInformationLayout milestoneInformationLayout;
+
+	public MilestoneFormLayoutFactory(final String title) {
+		this.title = title;
+	}
+
+	@Override
+	public void attachField(final Object propertyId, final Field field) {
+		this.milestoneInformationLayout.attachField(propertyId, field);
+	}
+
+	protected abstract Layout createBottomPanel();
+
+	protected abstract Layout createTopPanel();
+
+	@Override
+	public Layout getLayout() {
+		final AddViewLayout milestoneAddLayout = new AddViewLayout(this.title,
+				MyCollabResource.newResource("icons/24/project/phase.png"));
+
+		final Layout topLayout = this.createTopPanel();
+		if (topLayout != null) {
+			milestoneAddLayout.addTopControls(topLayout);
+		}
+
+		this.milestoneInformationLayout = new MilestoneInformationLayout();
+
+		final Layout bottomLayout = this.createBottomPanel();
+		if (bottomLayout != null) {
+			milestoneAddLayout.addBottomControls(bottomLayout);
+		}
+
+		milestoneAddLayout.addBody(this.milestoneInformationLayout.getLayout());
+
+		return milestoneAddLayout;
+	}
+
 	public static class MilestoneInformationLayout implements
 			IFormLayoutFactory {
 		private static final long serialVersionUID = 1L;
@@ -87,45 +127,5 @@ public abstract class MilestoneFormLayoutFactory implements IFormLayoutFactory {
 			return layout;
 		}
 
-	}
-
-	private static final long serialVersionUID = 1L;
-	private final String title;
-
-	private MilestoneInformationLayout milestoneInformationLayout;
-
-	public MilestoneFormLayoutFactory(final String title) {
-		this.title = title;
-	}
-
-	@Override
-	public void attachField(final Object propertyId, final Field field) {
-		this.milestoneInformationLayout.attachField(propertyId, field);
-	}
-
-	protected abstract Layout createBottomPanel();
-
-	protected abstract Layout createTopPanel();
-
-	@Override
-	public Layout getLayout() {
-		final AddViewLayout milestoneAddLayout = new AddViewLayout(this.title,
-				MyCollabResource.newResource("icons/24/project/phase.png"));
-
-		final Layout topLayout = this.createTopPanel();
-		if (topLayout != null) {
-			milestoneAddLayout.addTopControls(topLayout);
-		}
-
-		this.milestoneInformationLayout = new MilestoneInformationLayout();
-
-		final Layout bottomLayout = this.createBottomPanel();
-		if (bottomLayout != null) {
-			milestoneAddLayout.addBottomControls(bottomLayout);
-		}
-
-		milestoneAddLayout.addBody(this.milestoneInformationLayout.getLayout());
-
-		return milestoneAddLayout;
 	}
 }

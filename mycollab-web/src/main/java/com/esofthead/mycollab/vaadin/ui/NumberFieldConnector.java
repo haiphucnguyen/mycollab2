@@ -9,6 +9,12 @@ import com.vaadin.client.extensions.AbstractExtensionConnector;
 import com.vaadin.client.ui.VTextField;
 import com.vaadin.shared.ui.Connect;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 3.0
+ * 
+ */
 @Connect(NumberField.class)
 public class NumberFieldConnector extends AbstractExtensionConnector {
 	private static final long serialVersionUID = -737765038361894693L;

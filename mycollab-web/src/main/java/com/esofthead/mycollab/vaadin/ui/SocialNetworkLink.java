@@ -19,6 +19,12 @@ package com.esofthead.mycollab.vaadin.ui;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.ui.Link;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
 @SuppressWarnings("serial")
 public class SocialNetworkLink extends Link {
 

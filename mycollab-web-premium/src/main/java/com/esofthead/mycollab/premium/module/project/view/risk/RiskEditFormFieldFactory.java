@@ -4,35 +4,43 @@ import org.vaadin.teemu.ratingstars.RatingStars;
 
 import com.esofthead.mycollab.module.project.domain.Risk;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberComboBox;
-import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
+import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
+import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
 import com.esofthead.mycollab.web.AppContext;
-import com.vaadin.data.Item;
 import com.vaadin.data.Property;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.TextField;
 
-public class RiskEditFormFieldFactory extends DefaultEditFormFieldFactory {
-	private static final long serialVersionUID = 1L;
-	private Risk risk;
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ * @param <B>
+ */
+public class RiskEditFormFieldFactory<B extends Risk> extends
+		AbstractBeanFieldGroupEditFieldFactory<B> {
 
-	public RiskEditFormFieldFactory(Risk risk) {
-		this.risk = risk;
+	private static final long serialVersionUID = 1L;
+
+	RiskEditFormFieldFactory(GenericBeanForm<B> form) {
+		super(form);
 	}
 
 	@Override
-	protected Field onCreateField(final Item item, final Object propertyId,
-			final com.vaadin.ui.Component uiContext) {
+	protected Field<?> onCreateField(Object propertyId) {
+		Risk risk = attachForm.getBean();
 		if (propertyId.equals("description")) {
-			final RichTextArea risk = new RichTextArea();
-			risk.setRequired(true);
-			risk.setNullRepresentation("");
-			risk.setRequiredError("Please enter a Desciption");
-			return risk;
+			final RichTextArea desc = new RichTextArea();
+			desc.setRequired(true);
+			desc.setNullRepresentation("");
+			desc.setRequiredError("Please enter a Desciption");
+			return desc;
 		} else if (propertyId.equals("raisedbyuser")) {
-			if (this.risk.getRaisedbyuser() == null) {
-				this.risk.setRaisedbyuser(AppContext.getUsername());
+			if (risk.getRaisedbyuser() == null) {
+				risk.setRaisedbyuser(AppContext.getUsername());
 			}
 			return new ProjectMemberComboBox();
 		} else if (propertyId.equals("assigntouser")) {
@@ -40,21 +48,21 @@ public class RiskEditFormFieldFactory extends DefaultEditFormFieldFactory {
 		} else if (propertyId.equals("response")) {
 			return new RichTextArea();
 		} else if (propertyId.equals("consequence")) {
-			if (this.risk.getConsequence() == null) {
-				this.risk.setConsequence("Marginal");
+			if (risk.getConsequence() == null) {
+				risk.setConsequence("Marginal");
 			}
 			final ValueComboBox box = new ValueComboBox(false, "Catastrophic",
 					"Critical", "Marginal", "Negligible");
 			return box;
 		} else if (propertyId.equals("probalitity")) {
-			if (this.risk.getProbalitity() == null) {
-				this.risk.setProbalitity("Possible");
+			if (risk.getProbalitity() == null) {
+				risk.setProbalitity("Possible");
 			}
 			final ValueComboBox box = new ValueComboBox(false, "Certain",
 					"Likely", "Possible", "Unlikely", "Rare");
 			return box;
 		} else if (propertyId.equals("status")) {
-			if (this.risk.getStatus() == null) {
+			if (risk.getStatus() == null) {
 				risk.setStatus("Open");
 			}
 			final ValueComboBox box = new ValueComboBox(false, "Open", "Closed");

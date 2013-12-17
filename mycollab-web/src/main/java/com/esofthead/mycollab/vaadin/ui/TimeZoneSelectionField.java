@@ -26,8 +26,14 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomField;
 import com.vaadin.ui.VerticalLayout;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @SuppressWarnings("serial")
-public class TimeZoneSelection extends CustomField {
+public class TimeZoneSelectionField extends CustomField {
 
 	private ValueComboBox comboArea;
 	private ValueComboBox comboTimezone;

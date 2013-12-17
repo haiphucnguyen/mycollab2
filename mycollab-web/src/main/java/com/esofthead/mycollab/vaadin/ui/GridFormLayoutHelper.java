@@ -26,6 +26,12 @@ import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class GridFormLayoutHelper implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -156,7 +162,7 @@ public class GridFormLayoutHelper implements Serializable {
 			final String width, final Alignment alignment) {
 		if (caption != null) {
 			final Label l = new Label(caption + ":");
-			//l.setHeight("100%");
+			// l.setHeight("100%");
 			final HorizontalLayout captionWrapper = new HorizontalLayout();
 			captionWrapper.addComponent(l);
 			captionWrapper.setStyleName("gridform-caption");
@@ -190,13 +196,6 @@ public class GridFormLayoutHelper implements Serializable {
 
 	public Component addComponent(final Component field, final String caption,
 			final int columns, final int rows, final int colspan,
-			final String width, final String height) {
-		return this.addComponent(field, caption, columns, rows, colspan, width,
-				height, this.captionAlignment);
-	}
-
-	public Component addComponent(final Component field, final String caption,
-			final int columns, final int rows, final int colspan,
 			final String width, final String height, final Alignment alignment) {
 		final Label l = new Label(caption + ":");
 		l.setSizeUndefined();
@@ -222,7 +221,7 @@ public class GridFormLayoutHelper implements Serializable {
 			final Alignment alignment) {
 		if (caption != null) {
 			final Label l = new Label(caption + ":");
-			//l.setHeight("100%");
+			// l.setHeight("100%");
 			final HorizontalLayout captionWrapper = new HorizontalLayout();
 			captionWrapper.addComponent(l);
 			captionWrapper.setComponentAlignment(l, alignment);

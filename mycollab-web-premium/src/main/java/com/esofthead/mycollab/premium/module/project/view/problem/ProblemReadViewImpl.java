@@ -141,18 +141,14 @@ public class ProblemReadViewImpl extends AbstractPageView implements
 
 			private static final long serialVersionUID = 1L;
 
-			public FormLayoutFactory() {
-				super(ProblemReadViewImpl.this.problem.getIssuename());
-			}
-
-			@Override
+			
 			protected Layout createTopPanel() {
 				return (new ProjectPreviewFormControlsGenerator<Problem>(
 						PreviewForm.this))
 						.createButtonControls(ProjectRolePermissionCollections.PROBLEMS);
 			}
 
-			@Override
+			
 			protected Layout createBottomPanel() {
 				final CommentListDepot commentList = new CommentListDepot(
 						CommentType.PRJ_PROBLEM,
@@ -229,16 +225,12 @@ public class ProblemReadViewImpl extends AbstractPageView implements
 
 			private static final long serialVersionUID = 1L;
 
-			public FormLayoutFactory() {
-				super(PrintView.this.problem.getIssuename());
-			}
-
-			@Override
+			
 			protected Layout createTopPanel() {
 				return new HorizontalLayout();
 			}
 
-			@Override
+			
 			protected Layout createBottomPanel() {
 				return new CommentListDepot(CommentType.PRJ_PROBLEM,
 						PrintView.this.problem.getId(),
