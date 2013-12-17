@@ -23,6 +23,7 @@ import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.MassUpdateWindow;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Field;
@@ -66,9 +67,10 @@ public class MassUpdateCampaignWindow extends
 		@Override
 		public Layout getLayout() {
 			final VerticalLayout formLayout = new VerticalLayout();
+			formLayout.setDefaultComponentAlignment(Alignment.TOP_CENTER);
 
 			final Label organizationHeader = new Label("Campaign Information");
-			organizationHeader.setStyleName("h2");
+			organizationHeader.setStyleName(UIConstants.H2_STYLE2);
 			formLayout.addComponent(organizationHeader);
 
 			this.informationLayout = new GridFormLayoutHelper(2, 6, "100%",
@@ -84,7 +86,7 @@ public class MassUpdateCampaignWindow extends
 			this.campaignGoal = new GridFormLayoutHelper(2, 6, "100%", "167px",
 					Alignment.MIDDLE_LEFT);
 			final Label campaignMoreInfo = new Label("Campaign Goal");
-			campaignMoreInfo.setStyleName("h2");
+			campaignMoreInfo.setStyleName(UIConstants.H2_STYLE2);
 			formLayout.addComponent(campaignMoreInfo);
 			this.campaignGoal.getLayout().setWidth("100%");
 			this.campaignGoal.getLayout().setMargin(false);
