@@ -53,7 +53,9 @@ public class ProjectPreviewFormControlsGenerator<T> {
 
 	public HorizontalLayout createButtonControls(final String permissionItem) {
 		layout = new HorizontalLayout();
+		layout.setStyleName("control-buttons");
 		layout.setSpacing(true);
+		layout.setMargin(true);
 		layout.setWidth("100%");
 
 		backBtn = new Button(null, new Button.ClickListener() {

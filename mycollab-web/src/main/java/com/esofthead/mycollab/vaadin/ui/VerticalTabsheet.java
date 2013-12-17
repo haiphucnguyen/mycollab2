@@ -61,13 +61,12 @@ public class VerticalTabsheet extends CustomComponent {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				if (selectedButton == button)
-					return;
-
-				clearTabSelection();
-				selectedButton = button;
-				selectedButton.addStyleName(TAB_SELECTED_STYLENAME);
-				selectedComp = compMap.get(selectedButton);
+				if (selectedButton != button) {
+					clearTabSelection();
+					selectedButton = button;
+					selectedButton.addStyleName(TAB_SELECTED_STYLENAME);
+					selectedComp = compMap.get(selectedButton);
+				}
 				fireTabChangeEvent(new SelectedTabChangeEvent(
 						VerticalTabsheet.this));
 			}

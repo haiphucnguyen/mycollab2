@@ -23,6 +23,7 @@ import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.MassUpdateWindow;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Field;
@@ -67,7 +68,7 @@ public class MassUpdateOpportunityWindow extends MassUpdateWindow<Opportunity> {
 			final VerticalLayout formLayout = new VerticalLayout();
 
 			final Label organizationHeader = new Label("Account Information");
-			organizationHeader.setStyleName("h2");
+			organizationHeader.setStyleName(UIConstants.H2_STYLE2);
 			formLayout.addComponent(organizationHeader);
 
 			this.informationLayout = new GridFormLayoutHelper(2, 6, "100%",

@@ -75,6 +75,7 @@ public class TaskAddPopup extends CustomComponent {
 
 		final VerticalLayout popupHeader = new VerticalLayout();
 		popupHeader.setWidth("100%");
+		popupHeader.setMargin(true);
 		popupHeader.addStyleName("popup-header");
 
 		final Label titleLbl = new Label("Add New Task");

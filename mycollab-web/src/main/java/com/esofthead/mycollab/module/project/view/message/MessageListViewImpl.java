@@ -154,6 +154,7 @@ public class MessageListViewImpl extends AbstractPageView implements
 				final int rowIndex) {
 			final HorizontalLayout messageLayout = new HorizontalLayout();
 			messageLayout.setStyleName("message");
+			messageLayout.setSpacing(true);
 			if (message.getIsstick() != null && message.getIsstick()) {
 				messageLayout.addStyleName("important-message");
 			}

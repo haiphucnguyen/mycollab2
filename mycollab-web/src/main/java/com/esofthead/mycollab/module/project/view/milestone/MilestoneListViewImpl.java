@@ -48,6 +48,7 @@ import com.vaadin.ui.CustomLayout;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
@@ -76,8 +77,7 @@ public class MilestoneListViewImpl extends AbstractPageView implements
 		final Label titleLbl = new Label("Phases");
 		titleLbl.addStyleName("h2");
 		header.setWidth("100%");
-		final Embedded icon = new Embedded();
-		icon.setSource(MyCollabResource
+		final Image icon = new Image(null, MyCollabResource
 				.newResource("icons/24/project/phase.png"));
 		header.addComponent(icon);
 		header.setComponentAlignment(icon, Alignment.MIDDLE_LEFT);
@@ -113,7 +113,7 @@ public class MilestoneListViewImpl extends AbstractPageView implements
 
 		final HorizontalLayout closedHeaderLayout = new HorizontalLayout();
 		closedHeaderLayout.setSpacing(true);
-		final Embedded embeddClosed = new Embedded(null,
+		final Image embeddClosed = new Image(null,
 				MyCollabResource
 						.newResource("icons/16/project/phase_closed.png"));
 		closedHeaderLayout.addComponent(embeddClosed);
@@ -132,7 +132,7 @@ public class MilestoneListViewImpl extends AbstractPageView implements
 
 		final HorizontalLayout inProgressHeaderLayout = new HorizontalLayout();
 		inProgressHeaderLayout.setSpacing(true);
-		final Embedded embeddInProgress = new Embedded(null,
+		final Image embeddInProgress = new Image(null,
 				MyCollabResource
 						.newResource("icons/16/project/phase_progress.png"));
 		inProgressHeaderLayout.addComponent(embeddInProgress);
@@ -152,7 +152,7 @@ public class MilestoneListViewImpl extends AbstractPageView implements
 
 		final HorizontalLayout futureHeaderLayout = new HorizontalLayout();
 		futureHeaderLayout.setSpacing(true);
-		final Embedded embeddFuture = new Embedded(null,
+		final Image embeddFuture = new Image(null,
 				MyCollabResource
 						.newResource("icons/16/project/phase_future.png"));
 		futureHeaderLayout.addComponent(embeddFuture);
@@ -205,7 +205,7 @@ public class MilestoneListViewImpl extends AbstractPageView implements
 		layout.addComponent(spacing);
 
 		final GridFormLayoutHelper layoutHelper = new GridFormLayoutHelper(1,
-				5, "100%", "60px");
+				5, "100%", "80px");
 		layoutHelper.addComponent(
 				new Label(AppContext.formatDate(milestone.getStartdate(),
 						"<<Not Set>>")), "Start Date", 0, 0,
