@@ -712,6 +712,10 @@ input.v-textfield-pagedtable-pagefield {
 	padding: 20px 0px 5px;
 }
 
+.advSearch .advSearchFooterContainer .advSearchFooter {
+	text-align: center;
+}
+
 .advSearch .advSearchFooterContainer .advSearchFooter div:first-child {
 	margin: 0px auto;
 }
@@ -3597,6 +3601,11 @@ table.legendBox .legendBoxContent .v-csslayout-container>div {
 	vertical-align: top;
 	width: 290px;
 	margin-right: 11px;
+	border-width: 1px 1px 2px;
+	border-radius: 3px;
+	border-style: solid;
+	padding: 10px 10px 3px;
+	border-color: #bebebe;
 }
 
 .member-block div.v-button-link .v-button-wrap .v-button-caption {
@@ -3623,13 +3632,6 @@ table.legendBox .legendBoxContent .v-csslayout-container>div {
 	color: #b00000;
 }
 
-.member-block>.v-csslayout-margin {
-	border-width: 1px 1px 2px;
-	border-radius: 3px;
-	border-style: solid;
-	padding: 10px 10px 3px;
-	border-color: #bebebe;
-}
 /* End Project Member Block */
 
 /* Label complete */

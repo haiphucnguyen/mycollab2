@@ -46,6 +46,7 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
+import com.vaadin.server.Sizeable;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -270,8 +271,11 @@ public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 			this.summaryField = new CheckBox("Summary", true);
 			this.descriptionField = new CheckBox("Description", true);
 			layoutCheckbox.addComponent(this.nameField);
+			layoutCheckbox.setExpandRatio(this.nameField, 2.0f);
 			layoutCheckbox.addComponent(this.summaryField);
+			layoutCheckbox.setExpandRatio(this.summaryField, 1.0f);
 			layoutCheckbox.addComponent(this.descriptionField);
+			layoutCheckbox.setExpandRatio(this.descriptionField, 1.0f);
 
 			this.updateDateField = (DateSelectionField) gridLayout
 					.addComponent(new DateSelectionField(dateFieldWidth),

@@ -156,8 +156,8 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
 			}
 		});
 		exportButtonControl = new SplitButton(exportBtn);
-		exportButtonControl.setStyleName(UIConstants.THEME_GRAY_LINK);
-		exportButtonControl.addStyleName(UIConstants.SPLIT_BUTTON);
+		exportButtonControl.addStyleName(UIConstants.THEME_GRAY_LINK);
+		//exportButtonControl.addStyleName(UIConstants.SPLIT_BUTTON);
 		exportButtonControl.setIcon(MyCollabResource
 				.newResource("icons/16/export.png"));
 

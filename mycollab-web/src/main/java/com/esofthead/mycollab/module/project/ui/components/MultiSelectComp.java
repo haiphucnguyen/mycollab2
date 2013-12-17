@@ -23,6 +23,7 @@ import java.util.List;
 import org.apache.commons.beanutils.PropertyUtils;
 
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.vaadin.server.Sizeable;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -97,7 +98,7 @@ public abstract class MultiSelectComp extends CustomField {
 		this.componentPopupSelection.setWidth("25px");
 
 		CssLayout btnWrapper = new CssLayout();
-		btnWrapper.setWidth("100%");
+		btnWrapper.setWidth(SIZE_UNDEFINED, Sizeable.Unit.PIXELS);
 		btnWrapper.addStyleName(UIConstants.SELECT_BG);
 		btnWrapper.addComponent(componentPopupSelection);
 

@@ -58,6 +58,7 @@ public class UserSettingViewImpl extends AbstractPageView implements
 		this.setWidth("100%");
 		this.setMargin(true);
 		this.myProjectTab = new TabsheetDecor();
+		this.myProjectTab.setStyleName("tab-style3");
 
 		this.addComponent(myProjectTab);
 

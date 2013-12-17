@@ -18,8 +18,10 @@ package com.esofthead.mycollab.vaadin.ui;
 
 import java.io.Serializable;
 
+import com.vaadin.server.Sizeable;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
+import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.GridLayout;
@@ -146,7 +148,13 @@ public class GridFormLayoutHelper implements Serializable {
 				+ colspan - 1) + 1, rows + rowspan);
 		this.layout.setColumnExpandRatio(2 * columns + 1, 1.0f);
 		field.setCaption(null);
-		field.setWidth("100%");
+		
+		//Set combobox fields undefined width
+		if(field instanceof ComboBox)
+			field.setWidth(Sizeable.SIZE_UNDEFINED, Sizeable.Unit.PIXELS);
+		else
+			field.setWidth("100%");
+		
 		return field;
 	}
 
@@ -182,8 +190,13 @@ public class GridFormLayoutHelper implements Serializable {
 		fieldWrapper.setMargin(true);
 		fieldWrapper.addComponent(field);
 		field.setCaption(null);
-		field.setWidth(width);
-		// field.setHeight("100%");
+		
+		//Set combobox fields undefined width
+		if(field instanceof ComboBox)
+			field.setWidth(Sizeable.SIZE_UNDEFINED, Sizeable.Unit.PIXELS);
+		else
+			field.setWidth(width);
+		
 		fieldWrapper.setWidth("100%");
 		if (rows == 0) {
 			fieldWrapper.addStyleName("first-row");
@@ -241,7 +254,13 @@ public class GridFormLayoutHelper implements Serializable {
 		fieldWrapper.setStyleName("gridform-field");
 		field.setCaption(null);
 		fieldWrapper.addComponent(field);
-		field.setWidth(width);
+		
+		//Set combobox fields undefined width
+		if(field instanceof ComboBox)
+			field.setWidth(Sizeable.SIZE_UNDEFINED, Sizeable.Unit.PIXELS);
+		else
+			field.setWidth(width);
+		
 		fieldWrapper.setWidth("100%");
 		fieldWrapper.setMargin(true);
 		if (rows == 0) {
@@ -276,7 +295,7 @@ public class GridFormLayoutHelper implements Serializable {
 	}
 
 	public Component addComponent(Component fieldValue, Component fieldCaption,
-			String defaultCaptionWidth, String fileValueWidth, int columns,
+			String defaultCaptionWidth, String fieldValueWidth, int columns,
 			int rows, Alignment alignment) {
 		final HorizontalLayout captionWrapper = new HorizontalLayout();
 		captionWrapper.addComponent(fieldCaption);
@@ -296,7 +315,13 @@ public class GridFormLayoutHelper implements Serializable {
 		fieldWrapper.setStyleName("gridform-field");
 		fieldValue.setCaption(null);
 		fieldWrapper.addComponent(fieldValue);
-		fieldValue.setWidth(fileValueWidth);
+		
+		//Set combobox fields undefined width
+		if(fieldValue instanceof ComboBox)
+			fieldValue.setWidth(Sizeable.SIZE_UNDEFINED, Sizeable.Unit.PIXELS);
+		else
+			fieldValue.setWidth(fieldValueWidth);
+		
 		fieldWrapper.setWidth("100%");
 		fieldWrapper.setMargin(true);
 		if (rows == 0) {
