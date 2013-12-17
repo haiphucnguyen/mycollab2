@@ -25,7 +25,7 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.DateComboboxSelectionField;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
-import com.esofthead.mycollab.vaadin.ui.TimeZoneSelection;
+import com.esofthead.mycollab.vaadin.ui.TimeZoneSelectionField;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabApplication;
@@ -46,7 +46,7 @@ public class BasicInfoChangeWindow extends Window {
 	private TextField txtLastName;
 	private TextField txtEmail;
 	private DateComboboxSelectionField birthdayField;
-	private TimeZoneSelection timeZoneField;
+	private TimeZoneSelectionField timeZoneField;
 
 	private final User user;
 
@@ -81,8 +81,8 @@ public class BasicInfoChangeWindow extends Window {
 						3);
 		this.birthdayField.setDate(this.user.getDateofbirth());
 
-		this.timeZoneField = (TimeZoneSelection) passInfo.addComponent(
-				new TimeZoneSelection(), "TimeZone", 0, 4);
+		this.timeZoneField = (TimeZoneSelectionField) passInfo.addComponent(
+				new TimeZoneSelectionField(), "TimeZone", 0, 4);
 		this.timeZoneField.setTimeZone(TimezoneMapper.getTimezone(this.user
 				.getTimezone()));
 

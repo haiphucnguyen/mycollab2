@@ -25,6 +25,12 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.VerticalLayout;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 3.0
+ * 
+ */
 public class PopupButtonControl extends SplitButton implements
 		HasMassItemActionHandlers {
 

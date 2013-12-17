@@ -55,7 +55,7 @@ public class ValueComboBox extends ComboBox {
 	}
 
 	public final void loadData(String... values) {
-		this.setItemCaptionMode(ITEM_CAPTION_MODE_EXPLICIT_DEFAULTS_ID);
+		this.setItemCaptionMode(ItemCaptionMode.EXPLICIT_DEFAULTS_ID);
 
 		for (int i = 0; i < values.length; i++) {
 			this.addItem(values[i]);
@@ -65,7 +65,7 @@ public class ValueComboBox extends ComboBox {
 	}
 
 	public final void loadData(Number... values) {
-		this.setItemCaptionMode(ITEM_CAPTION_MODE_EXPLICIT_DEFAULTS_ID);
+		this.setItemCaptionMode(ItemCaptionMode.EXPLICIT_DEFAULTS_ID);
 
 		for (int i = 0; i < values.length; i++) {
 			this.addItem(values[i]);
