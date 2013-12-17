@@ -2,32 +2,27 @@ package com.esofthead.mycollab.premium.module.project.view.problem;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
-import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
-import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
 
-public abstract class ProblemFormLayoutFactory implements IFormLayoutFactory {
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
+public class ProblemFormLayoutFactory implements IFormLayoutFactory {
 
 	private static final long serialVersionUID = 1L;
 	private GridFormLayoutHelper informationLayout;
-	private final String title;
-
-	public ProblemFormLayoutFactory(final String title) {
-		this.title = title;
-	}
 
 	@Override
 	public Layout getLayout() {
-		final AddViewLayout accountAddLayout = new AddViewLayout(this.title,
-				MyCollabResource.newResource("icons/24/project/problem.png"));
-
-		accountAddLayout.addTopControls(this.createTopPanel());
 
 		final VerticalLayout layout = new VerticalLayout();
 
@@ -44,15 +39,11 @@ public abstract class ProblemFormLayoutFactory implements IFormLayoutFactory {
 		layout.setComponentAlignment(this.informationLayout.getLayout(),
 				Alignment.BOTTOM_CENTER);
 
-		accountAddLayout.addBottomControls(this.createBottomPanel());
-
-		accountAddLayout.addBody(layout);
-
-		return accountAddLayout;
+		return layout;
 	}
 
 	@Override
-	public void attachField(final Object propertyId, final Field field) {
+	public void attachField(final Object propertyId, final Field<?> field) {
 		if (propertyId.equals("issuename")) {
 			this.informationLayout.addComponent(field, "Name", 0, 0, 2, "100%");
 		} else if (propertyId.equals("description")) {
@@ -80,8 +71,4 @@ public abstract class ProblemFormLayoutFactory implements IFormLayoutFactory {
 					"100%");
 		}
 	}
-
-	protected abstract Layout createTopPanel();
-
-	protected abstract Layout createBottomPanel();
 }

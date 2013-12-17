@@ -4,51 +4,57 @@ import org.vaadin.teemu.ratingstars.RatingStars;
 
 import com.esofthead.mycollab.module.project.domain.Problem;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberComboBox;
-import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
+import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
+import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
 import com.esofthead.mycollab.web.AppContext;
-import com.vaadin.data.Item;
 import com.vaadin.data.Property;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.TextField;
 
-public class ProblemEditFormFieldFactory extends DefaultEditFormFieldFactory {
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ * @param <B>
+ */
+public class ProblemEditFormFieldFactory<B extends Problem> extends
+AbstractBeanFieldGroupEditFieldFactory<B> {
 	private static final long serialVersionUID = 1L;
-	private Problem problem;
 
-	public ProblemEditFormFieldFactory(Problem problem) {
-		this.problem = problem;
+	public ProblemEditFormFieldFactory(GenericBeanForm<B> form) {
+		super(form);
 	}
 
 	@Override
-	protected Field onCreateField(final Item item, final Object propertyId,
-			final com.vaadin.ui.Component uiContext) {
-
+	protected Field<?> onCreateField(Object propertyId) {
+		Problem problem = attachForm.getBean();
 		if (propertyId.equals("description")) {
-			final RichTextArea risk = new RichTextArea();
-			risk.setRequired(true);
-			risk.setNullRepresentation("");
-			risk.setRequiredError("Please enter a Desciption");
-			return risk;
+			final RichTextArea desc = new RichTextArea();
+			desc.setRequired(true);
+			desc.setNullRepresentation("");
+			desc.setRequiredError("Please enter a Desciption");
+			return desc;
 		} else if (propertyId.equals("raisedbyuser")) {
-			if (this.problem.getRaisedbyuser() == null) {
-				this.problem.setRaisedbyuser(AppContext.getUsername());
+			if (problem.getRaisedbyuser() == null) {
+				problem.setRaisedbyuser(AppContext.getUsername());
 			}
 			return new ProjectMemberComboBox();
 		} else if (propertyId.equals("type")) {
 		} else if (propertyId.equals("assigntouser")) {
 			return new ProjectMemberComboBox();
 		} else if (propertyId.equals("priority")) {
-			if (this.problem.getPriority() == null) {
-				this.problem.setPriority("Medium");
+			if (problem.getPriority() == null) {
+				problem.setPriority("Medium");
 			}
 			final ValueComboBox box = new ValueComboBox(false, "High",
 					"Medium", "Low");
 			return box;
 		} else if (propertyId.equals("status")) {
-			if (this.problem.getStatus() == null) {
-				this.problem.setStatus("Open");
+			if (problem.getStatus() == null) {
+				problem.setStatus("Open");
 			}
 			final ValueComboBox box = new ValueComboBox(false, "Open", "Closed");
 			return box;

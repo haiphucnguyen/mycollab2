@@ -3,7 +3,6 @@ package com.esofthead.mycollab.premium.module.project.view.risk;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.esofthead.mycollab.module.project.domain.Milestone;
 import com.esofthead.mycollab.module.project.domain.Risk;
 import com.esofthead.mycollab.module.project.ui.components.AbstractEditItemComp;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
@@ -39,23 +38,6 @@ public class RiskAddViewImpl extends AbstractEditItemComp<Risk> implements
 		RiskAddViewImpl.getValueCaptions().put(3, "OK");
 		RiskAddViewImpl.getValueCaptions().put(4, "Good");
 		RiskAddViewImpl.getValueCaptions().put(5, "Excellent");
-	}
-
-	class FormLayoutFactory extends RiskFormLayoutFactory {
-
-		private static final long serialVersionUID = 1L;
-
-		private Layout createButtonControls() {
-			final HorizontalLayout controlPanel = new HorizontalLayout();
-			final Layout controlButtons = (new EditFormControlsGenerator<Risk>(
-					editForm)).createButtonControls();
-			controlButtons.setSizeUndefined();
-			controlPanel.addComponent(controlButtons);
-			controlPanel.setWidth("100%");
-			controlPanel.setComponentAlignment(controlButtons,
-					Alignment.MIDDLE_CENTER);
-			return controlPanel;
-		}
 	}
 
 	public static Map<Integer, String> getValueCaptions() {

@@ -45,6 +45,9 @@ public class UrlEncodeDecoder {
 	 */
 	public static String encode(String str) {
 		try {
+			if (str == null) {
+				return "";
+			}
 			return URLEncoder.encode(
 					new String(
 							Base64.encodeBase64URLSafe(str.getBytes("UTF-8")),
