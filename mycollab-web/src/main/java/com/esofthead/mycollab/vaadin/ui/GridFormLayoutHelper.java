@@ -18,6 +18,7 @@ package com.esofthead.mycollab.vaadin.ui;
 
 import java.io.Serializable;
 
+import com.esofthead.mycollab.module.user.ui.components.ActiveUserComboBox;
 import com.vaadin.server.Sizeable;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
@@ -150,7 +151,7 @@ public class GridFormLayoutHelper implements Serializable {
 		field.setCaption(null);
 		
 		//Set combobox fields undefined width
-		if(field instanceof ComboBox)
+		if(field instanceof ActiveUserComboBox)
 			field.setWidth(Sizeable.SIZE_UNDEFINED, Sizeable.Unit.PIXELS);
 		else
 			field.setWidth("100%");
@@ -192,7 +193,7 @@ public class GridFormLayoutHelper implements Serializable {
 		field.setCaption(null);
 		
 		//Set combobox fields undefined width
-		if(field instanceof ComboBox)
+		if(field instanceof ActiveUserComboBox)
 			field.setWidth(Sizeable.SIZE_UNDEFINED, Sizeable.Unit.PIXELS);
 		else
 			field.setWidth(width);
@@ -256,7 +257,7 @@ public class GridFormLayoutHelper implements Serializable {
 		fieldWrapper.addComponent(field);
 		
 		//Set combobox fields undefined width
-		if(field instanceof ComboBox)
+		if(field instanceof ActiveUserComboBox)
 			field.setWidth(Sizeable.SIZE_UNDEFINED, Sizeable.Unit.PIXELS);
 		else
 			field.setWidth(width);
@@ -280,7 +281,13 @@ public class GridFormLayoutHelper implements Serializable {
 			this.layout.setComponentAlignment(l, this.captionAlignment);
 		}
 		field.setCaption(null);
-		field.setWidth(fieldControlWidth);
+		
+		//Set combobox fields undefined width
+		if(field instanceof ActiveUserComboBox)
+			field.setWidth(Sizeable.SIZE_UNDEFINED, Sizeable.Unit.PIXELS);
+		else
+			field.setWidth(fieldControlWidth);
+		
 		this.layout.addComponent(field, 2 * columns + 1, rows);
 		this.layout.setColumnExpandRatio(2 * columns + 1, 1.0f);
 		return field;

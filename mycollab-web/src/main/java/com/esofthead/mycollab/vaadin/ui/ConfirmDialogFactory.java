@@ -36,8 +36,6 @@ public class ConfirmDialogFactory extends DefaultConfirmDialogFactory {
 		final ConfirmDialog d = super.create(caption, message, okCaption,
 				cancelCaption);
 
-		d.setHeight("100%");
-
 		d.getContent().setStyleName("custom-dialog");
 
 		final Button ok = d.getOkButton();
