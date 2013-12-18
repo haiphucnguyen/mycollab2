@@ -23,7 +23,6 @@ public class ProblemFormLayoutFactory implements IFormLayoutFactory {
 
 	@Override
 	public Layout getLayout() {
-
 		final VerticalLayout layout = new VerticalLayout();
 
 		final Label organizationHeader = new Label("Problem Information");

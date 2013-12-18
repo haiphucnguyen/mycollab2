@@ -10,7 +10,6 @@ import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
-import com.esofthead.mycollab.module.project.domain.Problem;
 import com.esofthead.mycollab.module.project.domain.SimpleProblem;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.ProblemSearchCriteria;
@@ -40,15 +39,15 @@ public class ProblemReadPresenter extends AbstractPresenter<ProblemReadView> {
 
 	private void bind() {
 		view.getPreviewFormHandlers().addFormHandler(
-				new DefaultPreviewFormHandler<Problem>() {
+				new DefaultPreviewFormHandler<SimpleProblem>() {
 					@Override
-					public void onEdit(Problem data) {
+					public void onEdit(SimpleProblem data) {
 						EventBus.getInstance().fireEvent(
 								new ProblemEvent.GotoEdit(this, data));
 					}
 
 					@Override
-					public void onDelete(final Problem data) {
+					public void onDelete(final SimpleProblem data) {
 						ConfirmDialogExt.show(
 								UI.getCurrent(),
 								LocalizationHelper.getMessage(
@@ -81,8 +80,8 @@ public class ProblemReadPresenter extends AbstractPresenter<ProblemReadView> {
 					}
 
 					@Override
-					public void onClone(Problem data) {
-						Problem cloneData = (Problem) data.copy();
+					public void onClone(SimpleProblem data) {
+						SimpleProblem cloneData = (SimpleProblem) data.copy();
 						cloneData.setId(null);
 						EventBus.getInstance().fireEvent(
 								new ProblemEvent.GotoEdit(this, cloneData));
@@ -95,7 +94,7 @@ public class ProblemReadPresenter extends AbstractPresenter<ProblemReadView> {
 					}
 
 					@Override
-					public void gotoNext(Problem data) {
+					public void gotoNext(SimpleProblem data) {
 						ProblemService problemService = ApplicationContextUtil
 								.getSpringBean(ProblemService.class);
 						ProblemSearchCriteria criteria = new ProblemSearchCriteria();
@@ -117,7 +116,7 @@ public class ProblemReadPresenter extends AbstractPresenter<ProblemReadView> {
 					}
 
 					@Override
-					public void gotoPrevious(Problem data) {
+					public void gotoPrevious(SimpleProblem data) {
 						ProblemService problemService = ApplicationContextUtil
 								.getSpringBean(ProblemService.class);
 						ProblemSearchCriteria criteria = new ProblemSearchCriteria();
