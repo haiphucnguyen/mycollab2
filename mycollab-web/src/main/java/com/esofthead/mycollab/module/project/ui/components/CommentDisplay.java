@@ -58,6 +58,7 @@ public class CommentDisplay extends VerticalLayout implements
 
 	public CommentDisplay(
 			final CommentType type,
+			final Integer extraTypeId,
 			final boolean isDisplayCommentInput,
 			final boolean isSendingRelayEmail,
 			final Class<? extends SendingRelayEmailNotificationAction> emailHandler) {
@@ -65,8 +66,8 @@ public class CommentDisplay extends VerticalLayout implements
 		this.type = type;
 
 		if (isDisplayCommentInput) {
-			commentBox = new ProjectCommentInput(this, type, false,
-					isSendingRelayEmail, emailHandler);
+			commentBox = new ProjectCommentInput(this, type, extraTypeId,
+					false, isSendingRelayEmail, emailHandler);
 			this.addComponent(commentBox);
 		}
 

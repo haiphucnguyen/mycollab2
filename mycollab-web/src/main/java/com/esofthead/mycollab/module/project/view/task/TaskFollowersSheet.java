@@ -33,6 +33,12 @@ import com.esofthead.mycollab.schedule.email.project.ProjectTaskRelayEmailNotifi
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.web.AppContext;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @SuppressWarnings("serial")
 public class TaskFollowersSheet extends CompFollowersSheet<SimpleTask> {
 

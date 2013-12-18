@@ -37,6 +37,7 @@ import com.vaadin.ui.VerticalLayout;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 public abstract class TaskGroupFormLayoutFactory implements IFormLayoutFactory {
 	private static final long serialVersionUID = 1L;

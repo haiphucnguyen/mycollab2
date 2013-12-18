@@ -152,10 +152,11 @@ public class ProjectCommentInput extends VerticalLayout {
 	ProjectCommentInput(
 			final ReloadableComponent component,
 			final CommentType typeVal,
+			final Integer extraTypeId,
 			final boolean cancelButtonEnable,
 			final boolean isSendingEmailRelay,
 			final Class<? extends SendingRelayEmailNotificationAction> emailHandler) {
-		this(component, typeVal, null, null, cancelButtonEnable,
+		this(component, typeVal, null, extraTypeId, cancelButtonEnable,
 				isSendingEmailRelay, emailHandler);
 	}
 

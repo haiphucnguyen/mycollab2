@@ -68,8 +68,8 @@ public class CommentListDepot extends Depot {
 			final boolean isDisplayCommentInput,
 			final boolean isSendingRelayEmail,
 			final Class<? extends SendingRelayEmailNotificationAction> emailHandler) {
-		super("Comments", new CommentDisplay(type, isDisplayCommentInput,
-				isSendingRelayEmail, emailHandler));
+		super("Comments", new CommentDisplay(type, extraTypeId,
+				isDisplayCommentInput, isSendingRelayEmail, emailHandler));
 		this.setWidth("900px");
 		addStyleName("comment-list");
 		commentListBox = (CommentDisplay) bodyContent;

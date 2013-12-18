@@ -63,6 +63,7 @@ import com.vaadin.ui.Window;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 @ViewComponent
 public class TaskGroupReadViewImpl extends AbstractPageView implements

@@ -22,7 +22,6 @@ package com.esofthead.mycollab.module.project.view.milestone;
 
 import com.esofthead.mycollab.module.project.domain.Milestone;
 import com.esofthead.mycollab.module.project.ui.components.AbstractEditItemComp;
-import com.esofthead.mycollab.module.project.view.milestone.MilestoneFormLayoutFactory.MilestoneInformationLayout;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
@@ -78,7 +77,7 @@ public class MilestoneAddViewImpl extends AbstractEditItemComp<Milestone>
 
 	@Override
 	protected IFormLayoutFactory initFormLayoutFactory() {
-		return new MilestoneInformationLayout();
+		return new MilestoneFormLayoutFactory();
 	}
 
 	@Override

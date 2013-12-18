@@ -31,7 +31,6 @@ import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
-import com.esofthead.mycollab.module.project.domain.Milestone;
 import com.esofthead.mycollab.module.project.domain.SimpleMilestone;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.MilestoneSearchCriteria;
@@ -53,6 +52,7 @@ import com.vaadin.ui.UI;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class MilestoneReadPresenter extends
 		AbstractPresenter<MilestoneReadView> {
@@ -66,15 +66,15 @@ public class MilestoneReadPresenter extends
 
 	private void bind() {
 		view.getPreviewFormHandlers().addFormHandler(
-				new DefaultPreviewFormHandler<Milestone>() {
+				new DefaultPreviewFormHandler<SimpleMilestone>() {
 					@Override
-					public void onEdit(Milestone data) {
+					public void onEdit(SimpleMilestone data) {
 						EventBus.getInstance().fireEvent(
 								new MilestoneEvent.GotoEdit(this, data));
 					}
 
 					@Override
-					public void onDelete(final Milestone data) {
+					public void onDelete(final SimpleMilestone data) {
 						ConfirmDialogExt.show(
 								UI.getCurrent(),
 								LocalizationHelper.getMessage(
@@ -108,8 +108,9 @@ public class MilestoneReadPresenter extends
 					}
 
 					@Override
-					public void onClone(Milestone data) {
-						Milestone cloneData = (Milestone) data.copy();
+					public void onClone(SimpleMilestone data) {
+						SimpleMilestone cloneData = (SimpleMilestone) data
+								.copy();
 						cloneData.setId(null);
 						EventBus.getInstance().fireEvent(
 								new MilestoneEvent.GotoEdit(this, cloneData));
@@ -122,7 +123,7 @@ public class MilestoneReadPresenter extends
 					}
 
 					@Override
-					public void gotoNext(Milestone data) {
+					public void gotoNext(SimpleMilestone data) {
 						MilestoneService milestoneService = ApplicationContextUtil
 								.getSpringBean(MilestoneService.class);
 						MilestoneSearchCriteria criteria = new MilestoneSearchCriteria();
@@ -144,7 +145,7 @@ public class MilestoneReadPresenter extends
 					}
 
 					@Override
-					public void gotoPrevious(Milestone data) {
+					public void gotoPrevious(SimpleMilestone data) {
 						MilestoneService milestoneService = ApplicationContextUtil
 								.getSpringBean(MilestoneService.class);
 						MilestoneSearchCriteria criteria = new MilestoneSearchCriteria();
