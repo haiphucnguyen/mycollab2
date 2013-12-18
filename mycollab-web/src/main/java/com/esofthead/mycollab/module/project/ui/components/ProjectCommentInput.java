@@ -42,6 +42,7 @@ import com.vaadin.ui.VerticalLayout;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class ProjectCommentInput extends VerticalLayout {
 	private static final long serialVersionUID = 1L;
@@ -50,6 +51,7 @@ public class ProjectCommentInput extends VerticalLayout {
 	private Integer typeid;
 	private Integer extraTypeId;
 
+	@Deprecated
 	ProjectCommentInput(
 			final ReloadableComponent component,
 			final CommentType typeVal,
@@ -145,6 +147,16 @@ public class ProjectCommentInput extends VerticalLayout {
 		this.addComponent(commentArea);
 		this.addComponent(attachments);
 		this.addComponent(controlsLayout);
+	}
+
+	ProjectCommentInput(
+			final ReloadableComponent component,
+			final CommentType typeVal,
+			final boolean cancelButtonEnable,
+			final boolean isSendingEmailRelay,
+			final Class<? extends SendingRelayEmailNotificationAction> emailHandler) {
+		this(component, typeVal, null, null, cancelButtonEnable,
+				isSendingEmailRelay, emailHandler);
 	}
 
 	void setTypeAndId(final CommentType type, final int typeid) {

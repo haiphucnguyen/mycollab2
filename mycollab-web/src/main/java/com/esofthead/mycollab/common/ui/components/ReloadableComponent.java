@@ -21,17 +21,18 @@
 package com.esofthead.mycollab.common.ui.components;
 
 /**
- *
+ * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 public interface ReloadableComponent {
 	/**
 	 * 
 	 */
-    void cancel();
-    
-    /**
+	void cancel();
+
+	/**
      * 
      */
-    void reload();
+	void reload();
 }

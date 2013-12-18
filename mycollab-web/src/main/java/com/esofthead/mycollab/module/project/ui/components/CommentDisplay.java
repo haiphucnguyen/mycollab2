@@ -29,6 +29,7 @@ public class CommentDisplay extends VerticalLayout implements
 	private Integer numComments;
 	private ProjectCommentInput commentBox;
 
+	@Deprecated
 	public CommentDisplay(
 			final CommentType type,
 			final Integer typeid,
@@ -43,6 +44,29 @@ public class CommentDisplay extends VerticalLayout implements
 		if (isDisplayCommentInput) {
 			commentBox = new ProjectCommentInput(this, type, typeid,
 					extraTypeId, false, isSendingRelayEmail, emailHandler);
+			this.addComponent(commentBox);
+		}
+
+		commentList = new BeanList<CommentService, CommentSearchCriteria, SimpleComment>(
+				ApplicationContextUtil.getSpringBean(CommentService.class),
+				CommentRowDisplayHandler.class);
+		commentList.setDisplayEmptyListText(false);
+		this.addComponent(commentList);
+
+		displayCommentList();
+	}
+
+	public CommentDisplay(
+			final CommentType type,
+			final boolean isDisplayCommentInput,
+			final boolean isSendingRelayEmail,
+			final Class<? extends SendingRelayEmailNotificationAction> emailHandler) {
+		setSpacing(true);
+		this.type = type;
+
+		if (isDisplayCommentInput) {
+			commentBox = new ProjectCommentInput(this, type, false,
+					isSendingRelayEmail, emailHandler);
 			this.addComponent(commentBox);
 		}
 

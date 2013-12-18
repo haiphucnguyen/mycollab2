@@ -4,9 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.esofthead.mycollab.module.project.domain.Problem;
-import com.esofthead.mycollab.module.project.domain.Risk;
 import com.esofthead.mycollab.module.project.ui.components.AbstractEditItemComp;
-import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.IFormAddView;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
@@ -14,8 +12,6 @@ import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.MyCollabResource;
-import com.vaadin.data.Item;
-import com.vaadin.data.util.BeanItem;
 import com.vaadin.server.Resource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.ComponentContainer;
@@ -63,6 +59,7 @@ public class ProblemAddViewImpl extends AbstractEditItemComp<Problem> implements
 	@Override
 	protected ComponentContainer createButtonControls() {
 		final HorizontalLayout controlPanel = new HorizontalLayout();
+		controlPanel.setMargin(true);
 		final Layout controlButtons = (new EditFormControlsGenerator<Problem>(
 				editForm)).createButtonControls();
 		controlButtons.setSizeUndefined();

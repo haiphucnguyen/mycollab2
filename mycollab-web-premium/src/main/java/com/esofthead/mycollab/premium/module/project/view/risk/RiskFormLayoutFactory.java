@@ -10,6 +10,12 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
 public class RiskFormLayoutFactory implements IFormLayoutFactory {
 
 	private static final long serialVersionUID = 1L;
@@ -17,7 +23,6 @@ public class RiskFormLayoutFactory implements IFormLayoutFactory {
 
 	@Override
 	public Layout getLayout() {
-
 		final VerticalLayout layout = new VerticalLayout();
 
 		final Label organizationHeader = new Label("Risk Information");
@@ -36,7 +41,7 @@ public class RiskFormLayoutFactory implements IFormLayoutFactory {
 	}
 
 	@Override
-	public void attachField(final Object propertyId, final Field field) {
+	public void attachField(final Object propertyId, final Field<?> field) {
 		if (propertyId.equals("riskname")) {
 			this.informationLayout.addComponent(field, "Name", 0, 0, 2, "100%");
 		} else if (propertyId.equals("description")) {

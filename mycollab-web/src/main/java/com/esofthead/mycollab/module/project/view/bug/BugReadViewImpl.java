@@ -87,7 +87,8 @@ public class BugReadViewImpl extends AbstractPageView implements BugReadView,
 			private GridFormLayoutHelper informationLayout;
 
 			@Override
-			public void attachField(final Object propertyId, final Field field) {
+			public void attachField(final Object propertyId,
+					final Field<?> field) {
 				if (propertyId.equals("summary")) {
 					this.informationLayout.addComponent(field, "Summary", 0, 0,
 							2, "100%");
