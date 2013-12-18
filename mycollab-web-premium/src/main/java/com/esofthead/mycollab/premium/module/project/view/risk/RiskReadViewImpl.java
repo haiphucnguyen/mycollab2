@@ -1,240 +1,41 @@
 package com.esofthead.mycollab.premium.module.project.view.risk;
 
-import org.vaadin.teemu.ratingstars.RatingStars;
-
-import com.esofthead.mycollab.common.CommentType;
-import com.esofthead.mycollab.common.ModuleNameConstants;
-import com.esofthead.mycollab.module.project.CurrentProjectVariables;
-import com.esofthead.mycollab.module.project.ProjectContants;
-import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleRisk;
-import com.esofthead.mycollab.module.project.ui.components.CommentListDepot;
-import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserFormLinkField;
-import com.esofthead.mycollab.schedule.email.project.ProjectRiskRelayEmailNotificationAction;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
-import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
-import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
-import com.esofthead.mycollab.vaadin.ui.ProjectPreviewFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
-import com.esofthead.mycollab.web.AppContext;
-import com.vaadin.data.Item;
-import com.vaadin.data.util.BeanItem;
-import com.vaadin.ui.Component;
-import com.vaadin.ui.Field;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.JavaScript;
-import com.vaadin.ui.Layout;
-import com.vaadin.ui.UI;
-import com.vaadin.ui.Window;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @ViewComponent
 public class RiskReadViewImpl extends AbstractPageView implements RiskReadView {
 
 	private static final long serialVersionUID = 1L;
-	protected SimpleRisk risk;
-	protected AdvancedPreviewBeanForm<SimpleRisk> previewForm;
+
+	private RiskReadComp riskReadComp;
 
 	public RiskReadViewImpl() {
 		super();
-		this.setMargin(true);
-		this.previewForm = new PreviewForm();
-		this.addComponent(this.previewForm);
-	}
-
-	@Override
-	public void previewItem(final SimpleRisk item) {
-		this.risk = item;
-		this.previewForm.setItemDataSource(new BeanItem<SimpleRisk>(item));
+		riskReadComp = new RiskReadComp();
+		this.addComponent(riskReadComp);
 	}
 
 	@Override
 	public SimpleRisk getItem() {
-		return this.risk;
+		return riskReadComp.getBeanItem();
+	}
+
+	@Override
+	public void previewItem(SimpleRisk item) {
+		riskReadComp.previewItem(item);
 	}
 
 	@Override
 	public HasPreviewFormHandlers<SimpleRisk> getPreviewFormHandlers() {
-		return this.previewForm;
-	}
-
-	private class PreviewForm extends AdvancedPreviewBeanForm<SimpleRisk> {
-
-		private static final long serialVersionUID = 1L;
-
-		@Override
-		public void setItemDataSource(final Item newDataSource) {
-			this.setFormLayoutFactory(new FormLayoutFactory());
-			this.setFormFieldFactory(new DefaultFormViewFieldFactory() {
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				protected Field onCreateField(final Item item,
-						final Object propertyId, final Component uiContext) {
-					if (propertyId.equals("description")) {
-						return new FormDetectAndDisplayUrlViewField(
-								RiskReadViewImpl.this.risk.getDescription());
-					} else if (propertyId.equals("level")) {
-						final RatingStars tinyRs = new RatingStars();
-						tinyRs.setValue(RiskReadViewImpl.this.risk.getLevel());
-						tinyRs.setReadOnly(true);
-						return tinyRs;
-					} else if (propertyId.equals("status")) {
-						return new FormViewField(RiskReadViewImpl.this.risk
-								.getStatus());
-					} else if (propertyId.equals("datedue")) {
-						return new FormViewField(AppContext
-								.formatDate(RiskReadViewImpl.this.risk
-										.getDatedue()));
-					} else if (propertyId.equals("raisedbyuser")) {
-						return new ProjectUserFormLinkField(
-								RiskReadViewImpl.this.risk.getRaisedbyuser(),
-								RiskReadViewImpl.this.risk
-										.getRaisedByUserAvatarId(),
-								RiskReadViewImpl.this.risk
-										.getRaisedByUserFullName());
-					} else if (propertyId.equals("response")) {
-						return new FormDetectAndDisplayUrlViewField(
-								RiskReadViewImpl.this.risk.getResponse());
-					} else if (propertyId.equals("assigntouser")) {
-						return new ProjectUserFormLinkField(
-								RiskReadViewImpl.this.risk.getAssigntouser(),
-								RiskReadViewImpl.this.risk
-										.getAssignToUserAvatarId(),
-								RiskReadViewImpl.this.risk
-										.getAssignedToUserFullName());
-					}
-
-					return null;
-				}
-			});
-			super.setItemDataSource(newDataSource);
-		}
-
-		@Override
-		public void doPrint() {
-			// Create a window that contains what you want to print
-			final Window window = new Window("Window to Print");
-
-			final RiskReadViewImpl printView = new RiskReadViewImpl.PrintView();
-			printView.previewItem(RiskReadViewImpl.this.risk);
-			window.setContent(printView);
-
-			UI.getCurrent().addWindow(window);
-
-			// Print automatically when the window opens
-			JavaScript.getCurrent().execute(
-					"setTimeout(function() {"
-							+ "  print(); self.close();}, 0);");
-		}
-
-		@Override
-		public void showHistory() {
-			final RiskHistoryLogWindow historyLog = new RiskHistoryLogWindow(
-					ModuleNameConstants.PRJ, ProjectContants.RISK,
-					RiskReadViewImpl.this.risk.getId());
-			UI.getCurrent().addWindow(historyLog);
-		}
-
-		class FormLayoutFactory extends RiskFormLayoutFactory {
-
-			private static final long serialVersionUID = 1L;
-
-			public FormLayoutFactory() {
-			}
-
-			protected Layout createTopPanel() {
-				return (new ProjectPreviewFormControlsGenerator<SimpleRisk>(
-						PreviewForm.this))
-						.createButtonControls(ProjectRolePermissionCollections.RISKS);
-			}
-
-			protected Layout createBottomPanel() {
-				final CommentListDepot commentList = new CommentListDepot(
-						CommentType.PRJ_RISK,
-						RiskReadViewImpl.this.risk.getId(),
-						CurrentProjectVariables.getProjectId(), true, true,
-						ProjectRiskRelayEmailNotificationAction.class);
-				commentList.setWidth("100%");
-				return commentList;
-			}
-		}
-	}
-
-	@SuppressWarnings("serial")
-	public static class PrintView extends RiskReadViewImpl {
-
-		public PrintView() {
-			this.previewForm = new AdvancedPreviewBeanForm<SimpleRisk>() {
-				@Override
-				public void setItemDataSource(final Item newDataSource) {
-					this.setFormLayoutFactory(new RiskReadViewImpl.PrintView.FormLayoutFactory());
-					this.setFormFieldFactory(new DefaultFormViewFieldFactory() {
-						private static final long serialVersionUID = 1L;
-
-						@Override
-						protected Field onCreateField(final Item item,
-								final Object propertyId,
-								final Component uiContext) {
-
-							if (propertyId.equals("description")) {
-								return new FormDetectAndDisplayUrlViewField(
-										PrintView.this.risk.getDescription());
-							} else if (propertyId.equals("level")) {
-								final RatingStars tinyRs = new RatingStars();
-								tinyRs.setValue(PrintView.this.risk.getLevel());
-								tinyRs.setReadOnly(true);
-								return tinyRs;
-							} else if (propertyId.equals("status")) {
-								return new FormViewField(PrintView.this.risk
-										.getStatus());
-							} else if (propertyId.equals("datedue")) {
-								return new FormViewField(AppContext
-										.formatDate(PrintView.this.risk
-												.getDatedue()));
-							} else if (propertyId.equals("raisedbyuser")) {
-								return new ProjectUserFormLinkField(
-										PrintView.this.risk.getRaisedbyuser(),
-										PrintView.this.risk
-												.getRaisedByUserAvatarId(),
-										PrintView.this.risk
-												.getRaisedByUserFullName());
-							} else if (propertyId.equals("assigntouser")) {
-								return new ProjectUserFormLinkField(
-										PrintView.this.risk.getAssigntouser(),
-										PrintView.this.risk
-												.getAssignToUserAvatarId(),
-										PrintView.this.risk
-												.getAssignedToUserFullName());
-							} else if (propertyId.equals("response")) {
-								return new FormDetectAndDisplayUrlViewField(
-										PrintView.this.risk.getResponse());
-							}
-
-							return null;
-						}
-					});
-					super.setItemDataSource(newDataSource);
-				}
-			};
-
-			this.addComponent(this.previewForm);
-		}
-
-		class FormLayoutFactory extends RiskFormLayoutFactory {
-
-			private static final long serialVersionUID = 1L;
-
-			protected Layout createTopPanel() {
-				return new HorizontalLayout();
-			}
-
-			protected Layout createBottomPanel() {
-				return new CommentListDepot(CommentType.PRJ_RISK,
-						PrintView.this.risk.getId(),
-						CurrentProjectVariables.getProjectId(), false, true,
-						ProjectRiskRelayEmailNotificationAction.class);
-			}
-		}
+		return riskReadComp.getPreviewForm();
 	}
 }

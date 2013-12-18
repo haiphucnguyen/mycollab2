@@ -42,6 +42,11 @@ public abstract class AbstractPreviewItemComp<B> extends VerticalLayout {
 
 		informationLayout.addComponent(previewForm);
 		previewLayout.addBody(informationLayout);
+
+		ComponentContainer bottomPanel = createBottomPanel();
+		if (bottomPanel != null) {
+			informationLayout.addComponent(bottomPanel);
+		}
 	}
 
 	public void previewItem(final B item) {
@@ -53,6 +58,14 @@ public abstract class AbstractPreviewItemComp<B> extends VerticalLayout {
 		previewForm.setBean(item);
 
 		onPreviewItem();
+	}
+
+	public B getBeanItem() {
+		return beanItem;
+	}
+
+	public AdvancedPreviewBeanForm<B> getPreviewForm() {
+		return previewForm;
 	}
 
 	abstract protected void onPreviewItem();
