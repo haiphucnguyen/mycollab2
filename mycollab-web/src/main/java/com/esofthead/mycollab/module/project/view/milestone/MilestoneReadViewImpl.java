@@ -36,11 +36,11 @@ public class MilestoneReadViewImpl extends AbstractPageView implements
 		MilestoneReadView {
 
 	private static final long serialVersionUID = 1L;
-	private final MilestonePreviewBuilder.ReadView milestonePreview;
+	private final MilestoneReadComp milestonePreview;
 
 	public MilestoneReadViewImpl() {
 		super();
-		this.milestonePreview = new MilestonePreviewBuilder.ReadView();
+		this.milestonePreview = new MilestoneReadComp();
 		this.addComponent(this.milestonePreview);
 		this.setMargin(true);
 	}
@@ -52,11 +52,11 @@ public class MilestoneReadViewImpl extends AbstractPageView implements
 
 	@Override
 	public SimpleMilestone getItem() {
-		return this.milestonePreview.getMilestone();
+		return this.milestonePreview.getBeanItem();
 	}
 
 	@Override
-	public HasPreviewFormHandlers<Milestone> getPreviewFormHandlers() {
+	public HasPreviewFormHandlers<SimpleMilestone> getPreviewFormHandlers() {
 		return this.milestonePreview.getPreviewForm();
 	}
 }
