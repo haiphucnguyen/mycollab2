@@ -47,6 +47,7 @@ public class CommentRowDisplayHandler implements
 		HorizontalLayout layout = new HorizontalLayout();
 		layout.setStyleName("message");
 		layout.setWidth("100%");
+		layout.setSpacing(true);
 		layout.addComponent(UserAvatarControlFactory
 				.createUserAvatarButtonLink(comment.getOwnerAvatarId(),
 						comment.getOwnerFullName()));

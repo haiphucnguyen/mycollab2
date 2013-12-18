@@ -114,7 +114,6 @@ public class DateTimePicker<B> extends CustomField {
 	@Override
 	protected Component initContent() {
 		HorizontalLayout layout = new HorizontalLayout();
-		layout.setMargin(true);
 		layout.setSpacing(true);
 		long min = 0, hrs = 0;
 		String timeFormat = "AM";

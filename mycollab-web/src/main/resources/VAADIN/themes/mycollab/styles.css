@@ -5313,12 +5313,11 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 .splitbutton .bluebtn,.splitbutton .graybtn {
 	margin: 0px;
 	border-radius: 3px 0px 0px 3px;
-	padding: 3px 3px 3px 8px;
+	padding: 3px 6px 3px 8px;
 }
 
 .v-ie .splitbutton .bluebtn,.v-ie .splitbutton .graybtn {
-	padding: 3px 3px 3px 8px;
-    box-sizing: border-box;
+	padding: 3px 6px 3px 8px;
 }
 .v-ie .splitbutton .graybtn.v-popupbutton, .v-ie .splitbutton .bluebtn.v-popupbutton {
     padding: 3px 7px 3px 2px;
