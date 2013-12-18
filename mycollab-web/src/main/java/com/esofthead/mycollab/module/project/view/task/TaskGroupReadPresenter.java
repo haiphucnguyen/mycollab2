@@ -46,6 +46,7 @@ import com.vaadin.ui.UI;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 @SuppressWarnings("serial")
 public class TaskGroupReadPresenter extends
