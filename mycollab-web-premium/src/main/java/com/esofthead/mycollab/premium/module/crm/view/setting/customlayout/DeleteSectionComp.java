@@ -49,6 +49,7 @@ class DeleteSectionComp extends GenericSectionComp {
         super(section);
 
         this.addStyleName("deleteSection");
+        this.setWidth("450px");
 
         CssLayout headerWrapper = new CssLayout();
         headerWrapper.addStyleName("header-wrapper");

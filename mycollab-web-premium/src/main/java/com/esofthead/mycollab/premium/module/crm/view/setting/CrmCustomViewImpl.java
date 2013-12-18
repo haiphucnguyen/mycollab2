@@ -78,6 +78,7 @@ public class CrmCustomViewImpl extends AbstractPageView implements
 		headerLbl = new Label();
 		HorizontalLayout headerTitle = new HorizontalLayout();
 		headerTitle.setWidth("100%");
+		headerTitle.setMargin(true);
 		headerTitle.addStyleName("headerTitle");
 		headerTitle.addComponent(headerLbl);
 		headerTitle.setComponentAlignment(headerLbl, Alignment.MIDDLE_LEFT);

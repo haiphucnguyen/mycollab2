@@ -41,6 +41,7 @@ import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.web.AppContext;
+import com.vaadin.server.Sizeable;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
@@ -91,11 +92,18 @@ public class HistoryLogComponent extends VerticalLayout {
 				this,
 				ApplicationContextUtil.getSpringBean(AuditLogService.class),
 				HistoryLogRowDisplay.class);
+		this.setWidth("100%");
+		this.setHeight(Sizeable.SIZE_UNDEFINED, Sizeable.Unit.PIXELS);
+		this.setMargin(true);
+		this.setStyleName("historylog-component");
+		
 		this.addComponent(logTable);
 	}
 
 	@Override
 	public void attach() {
+		super.attach();
+		
 		AuditLogSearchCriteria criteria = new AuditLogSearchCriteria();
 		criteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
 		criteria.setModule(new StringSearchField(module));

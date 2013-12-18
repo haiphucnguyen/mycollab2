@@ -71,7 +71,7 @@ class ActiveFormSectionArea extends DDVerticalLayout {
 					if (srcIndex != destIndex) {
 						ActiveFormSectionArea.this.replaceComponent(srcComp,
 								overComp);
-						ActiveFormSectionArea.this.requestRepaintAll();
+						ActiveFormSectionArea.this.getState();
 					}
 				}
 				log.debug("Target {}", event.getTargetDetails());

@@ -5072,8 +5072,17 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 	font-style: italic;
 }
 
-.CrmCustomViewHeader .headerTitle .v-horizontallayout-margin {
-	padding: 4px 10px 4px 15px;
+.CrmCustomViewHeader .headerTitle.v-margin-top {
+	padding-top: 4px;
+}
+.CrmCustomViewHeader .headerTitle.v-margin-right {
+	padding-right: 10px;
+}
+.CrmCustomViewHeader .headerTitle.v-margin-bottom {
+	padding-bottom: 4px;
+}
+.CrmCustomViewHeader .headerTitle.v-margin-left {
+	padding-left: 15px;
 }
 
 .CrmCustomViewHeader .headerTitle .control-buttons .v-horizontallayout-margin
@@ -5087,25 +5096,15 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 	padding: 0px;
 }
 
-.v-verticallayout-customFieldSection {
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-	box-sizing: border-box;
+.customFieldSection {
 	background-color: rgb(247, 247, 247);
 	border: 1px solid rgb(157, 157, 157);
 }
 
-.v-verticallayout-customFieldSection .header-wrapper {
+.customFieldSection .header-wrapper {
 	background-color: rgb(225, 225, 225);
 	color: rgb(112, 112, 112);
 	border-bottom: 1px solid rgb(157, 157, 157);
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-	box-sizing: border-box;
-}
-
-.v-verticallayout-customFieldSection .header-wrapper>.v-csslayout-margin
-	{
 	padding: 7px 5px 7px 15px;
 }
 
@@ -5119,7 +5118,7 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 	opacity: 0.6;
 }
 
-.v-csslayout.customFieldComponent>.v-csslayout-margin {
+.customFieldComponent {
 	padding: 8px 5px 8px 25px;
 	background: url('icons/16/symbol.png') no-repeat 5px 8px
 		rgb(231, 231, 231);
@@ -5132,7 +5131,7 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 	color: rgb(255, 60, 31);
 }
 
-.v-csslayout.customFieldComponent.emptyField>.v-csslayout-margin {
+.customFieldComponent.emptyField {
 	background: none no-repeat 0 0 transparent;
 	border: 1px dashed rgb(177, 177, 177);
 	border-radius: 5px;
@@ -5529,4 +5528,9 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 }
 .tab-style3 .v-tabsheet-content {
 	background: none;
+}
+
+/* History Log Component */
+.historylog-component .bean-list {
+	border-top: 1px solid #a9a9a9;
 }

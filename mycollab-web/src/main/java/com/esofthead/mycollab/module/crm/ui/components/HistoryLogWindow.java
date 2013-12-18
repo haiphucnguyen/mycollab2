@@ -38,12 +38,10 @@ public class HistoryLogWindow extends Window {
 			final int typeid) {
 		super("Change Log");
 
-		VerticalLayout contentLayout = new VerticalLayout();
-		contentLayout.setWidth("700px");
+		this.setWidth("700px");
 
 		this.historyLogComponent = new HistoryLogComponent(module, type, typeid);
-		contentLayout.addComponent(this.historyLogComponent);
-		this.setContent(contentLayout);
+		this.setContent(historyLogComponent);
 		this.center();
 	}
 
