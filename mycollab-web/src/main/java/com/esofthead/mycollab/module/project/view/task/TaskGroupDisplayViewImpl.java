@@ -208,7 +208,6 @@ public class TaskGroupDisplayViewImpl extends AbstractPageView implements
 		});
 		exportButtonControl = new SplitButton(exportBtn);
 		exportButtonControl.setStyleName(UIConstants.THEME_BLUE_LINK);
-		exportButtonControl.addStyleName(UIConstants.SPLIT_BUTTON);
 		exportButtonControl.setIcon(MyCollabResource
 				.newResource("icons/16/export.png"));
 

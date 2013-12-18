@@ -123,7 +123,6 @@ public class BugDashboardViewImpl extends AbstractPageView implements
 				.canWrite(ProjectRolePermissionCollections.BUGS));
 
 		final SplitButton controlsBtn = new SplitButton(createBugBtn);
-		controlsBtn.addStyleName(UIConstants.SPLIT_BUTTON);
 		controlsBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
 		controlsBtn.setWidth(SIZE_UNDEFINED, Sizeable.Unit.PIXELS);
 

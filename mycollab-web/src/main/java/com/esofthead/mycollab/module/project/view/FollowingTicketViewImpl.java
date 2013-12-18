@@ -131,8 +131,7 @@ public class FollowingTicketViewImpl extends AbstractPageView implements
 			}
 		});
 		exportButtonControl = new SplitButton(exportBtn);
-		exportButtonControl.setStyleName(UIConstants.THEME_GRAY_LINK);
-		exportButtonControl.addStyleName(UIConstants.SPLIT_BUTTON);
+		exportButtonControl.addStyleName(UIConstants.THEME_GRAY_LINK);
 		exportButtonControl.setIcon(MyCollabResource
 				.newResource("icons/16/export.png"));
 

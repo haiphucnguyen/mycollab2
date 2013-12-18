@@ -371,7 +371,6 @@ public class ProjectViewImpl extends AbstractPageView implements ProjectView {
 					}
 				});
 		controlsBtn = new SplitButton(quickActionBtn);
-		controlsBtn.addStyleName(UIConstants.SPLIT_BUTTON);
 		controlsBtn.setIcon(MyCollabResource
 				.newResource("icons/16/project/quick_action.png"));
 

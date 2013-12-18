@@ -82,10 +82,10 @@ public class ActivitySearchPanel extends
 		layout.setExpandRatio(searchtitle, 1.0f);
 
 		final SplitButton controlsBtn = new SplitButton();
+		controlsBtn.setSizeUndefined();
 		controlsBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_CALL)
 				|| AppContext.canWrite(RolePermissionCollections.CRM_MEETING));
-		controlsBtn.addStyleName(UIConstants.SPLIT_BUTTON);
 		controlsBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
 		controlsBtn.setIcon(MyCollabResource
 				.newResource("icons/16/addRecord.png"));
