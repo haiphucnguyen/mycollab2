@@ -47,7 +47,6 @@ public class AccountModuleImpl extends AbstractPageView implements
 		AccountModule {
 	private static final long serialVersionUID = 1L;
 
-	private final HorizontalLayout root;
 	private final VerticalTabsheet accountTab;
 
 	private ProfilePresenter profilePresenter;
@@ -64,7 +63,7 @@ public class AccountModuleImpl extends AbstractPageView implements
 		final CssLayout contentWrapper = new CssLayout();
 		contentWrapper.setWidth("100%");
 		contentWrapper.setStyleName("accountViewContainer");
-		contentWrapper.addStyleName("main-content-wrapper");
+		this.addStyleName("main-content-wrapper");
 		this.addComponent(contentWrapper);
 
 		final HorizontalLayout headerWrapper = new HorizontalLayout();
@@ -76,19 +75,15 @@ public class AccountModuleImpl extends AbstractPageView implements
 		headerWrapper.addComponent(this.breadcrumb);
 		contentWrapper.addComponent(headerWrapper);
 
-		this.root = new HorizontalLayout();
-		this.root.setStyleName("menuContent");
-		this.root.setWidth("100%");
-
 		this.accountTab = new VerticalTabsheet();
-		this.accountTab.setSizeFull();
-		this.accountTab.setHeight(null);
-
-		this.root.addComponent(this.accountTab);
+		this.accountTab.setWidth("100%");
+		this.accountTab.setNavigatorWidth("200px");
+		this.accountTab.setNavigatorStyleName("sidebar-menu");
+		this.accountTab.setContainerStyleName("tab-content");
 
 		this.buildComponents();
 
-		contentWrapper.addComponent(this.root);
+		contentWrapper.addComponent(this.accountTab);
 		this.addComponent(contentWrapper);
 	}
 

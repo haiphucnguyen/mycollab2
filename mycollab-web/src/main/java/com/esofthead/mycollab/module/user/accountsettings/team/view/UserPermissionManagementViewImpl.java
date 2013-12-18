@@ -46,6 +46,7 @@ public class UserPermissionManagementViewImpl extends AbstractPageView
 	public UserPermissionManagementViewImpl() {
 		this.setMargin(true);
 		groupTab = new TabsheetDecor();
+		groupTab.setStyleName("tab-style3");
 
 		this.addComponent(groupTab);
 

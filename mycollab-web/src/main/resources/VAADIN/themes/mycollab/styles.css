@@ -1246,9 +1246,6 @@ input.v-textfield-errorField {
 /* Account Settings */
 .accountViewContainer {
 	margin: 20px 0px;
-}
-
-.accountViewContainer>.v-csslayout-margin>.v-csslayout-container {
 	background-color: #F3F3F3;
 	background-image: -webkit-gradient(linear, left top, left bottom, from(#F3F3F3),
 		to(#DDDDDD));
@@ -3599,7 +3596,7 @@ table.legendBox .legendBoxContent .v-csslayout-container>div {
 /* End Pie Chart Legend Box */
 
 /* Project Member Block */
-.member-block {
+div.v-csslayout.member-block {
 	display: inline-block;
 	background-color: #f7f7f7;
 	margin-bottom: 15px;

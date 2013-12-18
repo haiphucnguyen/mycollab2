@@ -97,7 +97,6 @@ import com.vaadin.ui.VerticalLayout;
 public class ProjectViewImpl extends AbstractPageView implements ProjectView {
 
 	private static Logger log = LoggerFactory.getLogger(ProjectViewImpl.class);
-	private final HorizontalLayout root;
 	private final VerticalTabsheet myProjectTab;
 	private final HorizontalLayout topPanel;
 	private ProjectDashboardPresenter dashboardPresenter;
@@ -130,9 +129,6 @@ public class ProjectViewImpl extends AbstractPageView implements ProjectView {
 		topPanel.setMargin(true);
 		contentWrapper.addComponent(topPanel);
 
-		root = new HorizontalLayout();
-		root.setStyleName("menuContent");
-
 		myProjectTab = new VerticalTabsheet();
 		myProjectTab.setSizeFull();
 		myProjectTab.setNavigatorWidth("170px");
@@ -140,7 +136,6 @@ public class ProjectViewImpl extends AbstractPageView implements ProjectView {
 		myProjectTab.setContainerStyleName("tab-content");
 		myProjectTab.setHeight(null);
 		
-		root.setWidth("100%");
 		buildComponents();
 		contentWrapper.addComponent(myProjectTab);
 	}
