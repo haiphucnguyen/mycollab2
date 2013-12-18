@@ -3077,14 +3077,20 @@ div.v-lazyloadingwrapper-loading {
 /* End Mail Panel */
 
 /* Progress Indicator */
-.v-progressindicator-wrapper {
+.v-progressbar-wrapper {
 	height: 18px;
 	background: none no-repeat 0 0 rgb(245, 245, 245);
+	border: 1px solid rgb(161, 161, 161);
 }
 
-.v-progressindicator-indicator {
+.v-progressbar-indicator {
 	height: 18px;
-	background: none no-repeat 0 0 rgb(169, 193, 229);
+	border-radius: 2px;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	background: url(img/grad-light-top.png) repeat-x 0 0 rgb(169, 193, 229);
+	margin: -1px;
+	border: 1px solid rgb(45, 107, 165);
 }
 /* End Progress Indicator */
 
@@ -4415,6 +4421,7 @@ div.v-ratingstars-bar {
 	display: block;
 	vertical-align: middle;
 	text-align: center;
+	line-height: 20px;
 }
 /* Confirm Dialog */
 .custom-dialog div.v-panel-content-light {
