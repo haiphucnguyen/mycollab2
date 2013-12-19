@@ -32,52 +32,56 @@
  */
 package com.esofthead.mycollab.core.arguments;
 
+import java.io.Serializable;
+
 /**
  * 
  * @author MyCollab Ltd.
- *
+ * 
  * @param <S>
  */
-public class SearchRequest<S extends SearchCriteria> {
-    public static int DEFAULT_NUMBER_SEARCH_ITEMS = 25;
+public class SearchRequest<S extends SearchCriteria> implements Serializable {
+	private static final long serialVersionUID = 1L;
 
-    private S searchCriteria;
+	public static int DEFAULT_NUMBER_SEARCH_ITEMS = 25;
 
-    private int currentPage = 1;
+	private S searchCriteria;
 
-    private int numberOfItems = 1;
+	private int currentPage = 1;
 
-    public SearchRequest() {
-        this(null, 1, 1);
-    }
+	private int numberOfItems = 1;
 
-    public SearchRequest(S searchCriteria, int currentPage, int numberOfItems) {
-        this.searchCriteria = searchCriteria;
-        this.currentPage = currentPage;
-        this.numberOfItems = numberOfItems;
-    }
+	public SearchRequest() {
+		this(null, 1, 1);
+	}
 
-    public S getSearchCriteria() {
-        return searchCriteria;
-    }
+	public SearchRequest(S searchCriteria, int currentPage, int numberOfItems) {
+		this.searchCriteria = searchCriteria;
+		this.currentPage = currentPage;
+		this.numberOfItems = numberOfItems;
+	}
 
-    public void setSearchCriteria(S searchCriteria) {
-        this.searchCriteria = searchCriteria;
-    }
+	public S getSearchCriteria() {
+		return searchCriteria;
+	}
 
-    public int getCurrentPage() {
-        return currentPage;
-    }
+	public void setSearchCriteria(S searchCriteria) {
+		this.searchCriteria = searchCriteria;
+	}
 
-    public void setCurrentPage(int currentPage) {
-        this.currentPage = currentPage;
-    }
+	public int getCurrentPage() {
+		return currentPage;
+	}
 
-    public int getNumberOfItems() {
-        return numberOfItems;
-    }
+	public void setCurrentPage(int currentPage) {
+		this.currentPage = currentPage;
+	}
 
-    public void setNumberOfItems(int numberOfItems) {
-        this.numberOfItems = numberOfItems;
-    }
+	public int getNumberOfItems() {
+		return numberOfItems;
+	}
+
+	public void setNumberOfItems(int numberOfItems) {
+		this.numberOfItems = numberOfItems;
+	}
 }

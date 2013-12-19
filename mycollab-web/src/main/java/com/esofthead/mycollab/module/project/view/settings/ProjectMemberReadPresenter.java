@@ -66,15 +66,15 @@ public class ProjectMemberReadPresenter extends
 
 	private void bind() {
 		view.getPreviewFormHandlers().addFormHandler(
-				new DefaultPreviewFormHandler<ProjectMember>() {
+				new DefaultPreviewFormHandler<SimpleProjectMember>() {
 					@Override
-					public void onEdit(ProjectMember data) {
+					public void onEdit(SimpleProjectMember data) {
 						EventBus.getInstance().fireEvent(
 								new ProjectMemberEvent.GotoEdit(this, data));
 					}
 
 					@Override
-					public void onDelete(final ProjectMember data) {
+					public void onDelete(final SimpleProjectMember data) {
 
 						ConfirmDialogExt.show(
 								UI.getCurrent(),
@@ -109,8 +109,9 @@ public class ProjectMemberReadPresenter extends
 					}
 
 					@Override
-					public void onClone(ProjectMember data) {
-						ProjectMember cloneData = (ProjectMember) data.copy();
+					public void onClone(SimpleProjectMember data) {
+						SimpleProjectMember cloneData = (SimpleProjectMember) data
+								.copy();
 						cloneData.setId(null);
 						EventBus.getInstance()
 								.fireEvent(
@@ -125,7 +126,7 @@ public class ProjectMemberReadPresenter extends
 					}
 
 					@Override
-					public void gotoNext(ProjectMember data) {
+					public void gotoNext(SimpleProjectMember data) {
 						ProjectMemberService projectMemberService = ApplicationContextUtil
 								.getSpringBean(ProjectMemberService.class);
 						ProjectMemberSearchCriteria criteria = new ProjectMemberSearchCriteria();
@@ -153,7 +154,7 @@ public class ProjectMemberReadPresenter extends
 					}
 
 					@Override
-					public void gotoPrevious(ProjectMember data) {
+					public void gotoPrevious(SimpleProjectMember data) {
 						ProjectMemberService projectMemberService = ApplicationContextUtil
 								.getSpringBean(ProjectMemberService.class);
 						ProjectMemberSearchCriteria criteria = new ProjectMemberSearchCriteria();

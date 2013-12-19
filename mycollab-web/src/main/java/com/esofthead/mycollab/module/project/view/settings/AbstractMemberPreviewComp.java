@@ -1,19 +1,3 @@
-/**
- * This file is part of mycollab-web.
- *
- * mycollab-web is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-web is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.esofthead.mycollab.module.project.view.settings;
 
 import java.util.Arrays;
@@ -31,10 +15,7 @@ import com.esofthead.mycollab.eventmanager.ApplicationEvent;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
-import com.esofthead.mycollab.module.project.ProjectContants;
-import com.esofthead.mycollab.module.project.ProjectMemberStatusConstants;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
-import com.esofthead.mycollab.module.project.domain.ProjectMember;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.criteria.StandupReportSearchCriteria;
@@ -43,6 +24,7 @@ import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.project.events.ProjectRoleEvent;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.localization.TaskI18nEnum;
+import com.esofthead.mycollab.module.project.ui.components.AbstractPreviewItemComp;
 import com.esofthead.mycollab.module.project.view.bug.BugTableDisplay;
 import com.esofthead.mycollab.module.project.view.bug.BugTableFieldDef;
 import com.esofthead.mycollab.module.project.view.standup.StandupReportListDisplay;
@@ -51,60 +33,95 @@ import com.esofthead.mycollab.module.project.view.user.ProjectActivityStreamPage
 import com.esofthead.mycollab.module.tracker.BugStatusConstants;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
-import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
+import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
+import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormLinkViewField;
+import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.UserLinkViewField;
 import com.esofthead.mycollab.vaadin.ui.Depot;
-import com.esofthead.mycollab.vaadin.ui.ProjectPreviewFormControlsGenerator;
-import com.esofthead.mycollab.vaadin.ui.ReadViewLayout;
-import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
+import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
+import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.web.AppContext;
-import com.vaadin.data.Item;
-import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.JavaScript;
-import com.vaadin.ui.Layout;
-import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Window;
 
-public class ProjectMemberPreviewBuilder extends VerticalLayout {
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 3.0
+ * 
+ */
+abstract class AbstractMemberPreviewComp extends
+		AbstractPreviewItemComp<SimpleProjectMember> {
 	private static final long serialVersionUID = 1L;
-	protected SimpleProjectMember projectMember;
-	protected AdvancedPreviewBeanForm<ProjectMember> previewForm;
 
-	public void previewItem(final SimpleProjectMember item) {
-		this.projectMember = item;
-		this.previewForm.setItemDataSource(new BeanItem<ProjectMember>(
-				this.projectMember));
+	protected UserActivityStreamDepot userActivityComp;
+
+	protected UserTaskDepot userTaskComp;
+
+	protected UserBugDepot userBugComp;
+
+	protected UserStandupReportDepot standupComp;
+
+	public AbstractMemberPreviewComp() {
+		super(null);
+		// super(UserAvatarControlFactory.createAvatarResource(
+		// PrintView.this.projectMember
+		// .getMemberAvatarId(), 24));
 	}
 
-	public SimpleProjectMember getProjectMember() {
-		return this.projectMember;
+	@Override
+	protected void initRelatedComponents() {
+		userActivityComp = new UserActivityStreamDepot();
+		userTaskComp = new UserTaskDepot();
+		userBugComp = new UserBugDepot();
+		standupComp = new UserStandupReportDepot();
+
 	}
 
-	public AdvancedPreviewBeanForm<ProjectMember> getPreviewForm() {
-		return this.previewForm;
+	@Override
+	protected void onPreviewItem() {
+		userActivityComp.displayActivityStream();
+		userTaskComp.displayActiveTasksOnly();
+		userBugComp.displayOpenBugs();
+		standupComp.displayStandupReports();
+	}
+
+	@Override
+	protected String initFormTitle() {
+		return beanItem.getMemberFullName();
+	}
+
+	@Override
+	protected IFormLayoutFactory initFormLayoutFactory() {
+		return new ProjectMemberFormLayoutFactory();
+	}
+
+	@Override
+	protected AbstractBeanFieldGroupViewFieldFactory<SimpleProjectMember> initBeanFormFieldFactory() {
+		return new ProjectMemberFormFieldFactory(previewForm);
 	}
 
 	protected class ProjectMemberFormFieldFactory extends
-			DefaultFormViewFieldFactory {
+			AbstractBeanFieldGroupViewFieldFactory<SimpleProjectMember> {
+
 		private static final long serialVersionUID = 1L;
 
+		public ProjectMemberFormFieldFactory(
+				GenericBeanForm<SimpleProjectMember> form) {
+			super(form);
+		}
+
 		@Override
-		protected Field onCreateField(final Item item, final Object propertyId,
-				final Component uiContext) {
+		protected Field<?> onCreateField(final Object propertyId) {
 			if (propertyId.equals("isadmin")) {
-				if (ProjectMemberPreviewBuilder.this.projectMember.getIsadmin() != null
-						&& ProjectMemberPreviewBuilder.this.projectMember
-								.getIsadmin() == Boolean.FALSE) {
+				if (attachForm.getBean().getIsadmin() != null
+						&& (attachForm.getBean().getIsadmin() == Boolean.FALSE)) {
 					FormLinkViewField roleLink = new FormLinkViewField(
-							ProjectMemberPreviewBuilder.this.projectMember
-									.getRoleName(),
+							attachForm.getBean().getRoleName(),
 							new Button.ClickListener() {
 								private static final long serialVersionUID = 1L;
 
@@ -114,7 +131,8 @@ public class ProjectMemberPreviewBuilder extends VerticalLayout {
 											.fireEvent(
 													new ProjectRoleEvent.GotoRead(
 															ProjectMemberFormFieldFactory.this,
-															projectMember
+															attachForm
+																	.getBean()
 																	.getProjectroleid()));
 								}
 							});
@@ -125,167 +143,11 @@ public class ProjectMemberPreviewBuilder extends VerticalLayout {
 				}
 			} else if (propertyId.equals("username")) {
 				return new UserLinkViewField(
-						ProjectMemberPreviewBuilder.this.projectMember
-								.getUsername(),
-						ProjectMemberPreviewBuilder.this.projectMember
-								.getMemberAvatarId(),
-						ProjectMemberPreviewBuilder.this.projectMember
-								.getMemberFullName());
+						attachForm.getBean().getUsername(), attachForm
+								.getBean().getMemberAvatarId(), attachForm
+								.getBean().getMemberFullName());
 			}
 			return null;
-		}
-	}
-
-	public static class PrintView extends ProjectMemberPreviewBuilder {
-		private static final long serialVersionUID = 1L;
-
-		public PrintView() {
-			this.previewForm = new AdvancedPreviewBeanForm<ProjectMember>() {
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public void setItemDataSource(final Item newDataSource) {
-					this.setFormLayoutFactory(new FormLayoutFactory());
-					this.setFormFieldFactory(new ProjectMemberFormFieldFactory());
-					super.setItemDataSource(newDataSource);
-				}
-			};
-
-			this.addComponent(this.previewForm);
-		}
-
-		class FormLayoutFactory extends ProjectMemberFormLayoutFactory {
-
-			private static final long serialVersionUID = 1L;
-
-			public FormLayoutFactory() {
-				super(PrintView.this.projectMember.getMemberFullName(),
-						UserAvatarControlFactory.createAvatarResource(
-								PrintView.this.projectMember
-										.getMemberAvatarId(), 24));
-			}
-
-			@Override
-			protected Layout createTopPanel() {
-				return null;
-			}
-
-			@Override
-			protected Layout createBottomPanel() {
-				final VerticalLayout relatedItemsPanel = new VerticalLayout();
-				relatedItemsPanel.addComponent(new UserTaskDepot());
-				relatedItemsPanel.addComponent(new UserBugDepot());
-				return relatedItemsPanel;
-			}
-		}
-	}
-
-	public static class ReadView extends ProjectMemberPreviewBuilder {
-		private static final long serialVersionUID = 1L;
-
-		private final ReadViewLayout projectMemberReadViewLayout;
-		private final VerticalLayout assignmentViewLayout;
-		private final VerticalLayout standupReportViewLayout;
-		private final VerticalLayout basicInformationLayout;
-
-		public ReadView() {
-			this.basicInformationLayout = new VerticalLayout();
-
-			this.projectMemberReadViewLayout = new ReadViewLayout(null);
-			this.projectMemberReadViewLayout
-					.addStyleName("project-member-readview");
-			this.addComponent(this.projectMemberReadViewLayout);
-
-			this.standupReportViewLayout = new VerticalLayout();
-			this.assignmentViewLayout = new VerticalLayout();
-
-			this.previewForm = new AdvancedPreviewBeanForm<ProjectMember>() {
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public void setItemDataSource(final Item newDataSource) {
-					this.setFormLayoutFactory(new ProjectMemberFormLayoutFactory.ProjectMemberInformationLayout());
-					this.setFormFieldFactory(new ProjectMemberFormFieldFactory());
-					super.setItemDataSource(newDataSource);
-
-					String formTitle = (ProjectMemberStatusConstants.INACTIVE
-							.equals(projectMember.getStatus())) ? (projectMember
-							.getMemberFullName() + " (In active)")
-							: projectMember.getMemberFullName();
-					ReadView.this.projectMemberReadViewLayout
-							.setTitle(formTitle);
-					ReadView.this.projectMemberReadViewLayout
-							.setTitleIcon(UserAvatarControlFactory
-									.createAvatarResource(
-											projectMember.getMemberAvatarId(),
-											24));
-					ReadView.this.standupReportViewLayout.removeAllComponents();
-					ReadView.this.assignmentViewLayout.removeAllComponents();
-					ReadView.this.basicInformationLayout.removeAllComponents();
-					ReadView.this.standupReportViewLayout
-							.addComponent(new UserStandupReportDepot());
-
-					ProjectPreviewFormControlsGenerator<ProjectMember> previewForm = new ProjectPreviewFormControlsGenerator<ProjectMember>(
-							ReadView.this.previewForm);
-					previewForm
-							.createButtonControls(ProjectRolePermissionCollections.USERS);
-
-					final HorizontalLayout controlButtons = previewForm
-							.getLayoutWithRemoveCloneBtn();
-
-					controlButtons.addStyleName("control-buttons");
-					controlButtons.setMargin(true);
-					ReadView.this.basicInformationLayout
-							.addComponent(controlButtons);
-					ReadView.this.basicInformationLayout
-							.addComponent(ReadView.this.previewForm);
-					ReadView.this.basicInformationLayout
-							.addComponent(new UserActivityStreamDepot());
-					ReadView.this.assignmentViewLayout
-							.addComponent(new UserTaskDepot());
-					ReadView.this.assignmentViewLayout
-							.addComponent(new UserBugDepot());
-				}
-
-				@Override
-				public void doPrint() {
-					// Create a window that contains what you want to print
-					final Window window = new Window("Window to Print");
-
-					final ProjectMemberPreviewBuilder printView = new ProjectMemberPreviewBuilder.PrintView();
-					printView.previewItem(ReadView.this.projectMember);
-					window.setContent(printView);
-
-					UI.getCurrent().addWindow(window);
-
-					// Print automatically when the window opens
-					JavaScript.getCurrent().execute(
-							"setTimeout(function() {"
-									+ "  print(); self.close();}, 0);");
-				}
-
-				@Override
-				public void showHistory() {
-					final ProjectMemberHistoryLogWindow historyLog = new ProjectMemberHistoryLogWindow(
-							ModuleNameConstants.PRJ,
-							ProjectContants.PROJECT_MEMBER,
-							ReadView.this.projectMember.getId());
-					UI.getCurrent().addWindow(historyLog);
-				}
-
-			};
-
-			this.basicInformationLayout.addStyleName("main-info");
-
-			this.projectMemberReadViewLayout.addTab(
-					this.basicInformationLayout, "Basic Information");
-
-			this.projectMemberReadViewLayout.addTab(
-					this.standupReportViewLayout, "Standup Reports");
-
-			this.projectMemberReadViewLayout.addTab(this.assignmentViewLayout,
-					"Assignments");
-
 		}
 	}
 
@@ -328,11 +190,10 @@ public class ProjectMemberPreviewBuilder extends VerticalLayout {
 							final SimpleTask task = (SimpleTask) event
 									.getData();
 							if ("taskname".equals(event.getFieldName())) {
-								EventBus.getInstance()
-										.fireEvent(
-												new TaskEvent.GotoRead(
-														ProjectMemberPreviewBuilder.this,
-														task.getId()));
+								EventBus.getInstance().fireEvent(
+										new TaskEvent.GotoRead(
+												AbstractMemberPreviewComp.this,
+												task.getId()));
 							} else if ("closeTask".equals(event.getFieldName())
 									|| "reopenTask".equals(event.getFieldName())
 									|| "pendingTask".equals(event
@@ -348,7 +209,6 @@ public class ProjectMemberPreviewBuilder extends VerticalLayout {
 
 			this.bodyContent.addComponent(this.taskDisplay);
 			this.initHeader();
-			this.displayActiveTasksOnly();
 		}
 
 		private void initHeader() {
@@ -434,13 +294,12 @@ public class ProjectMemberPreviewBuilder extends VerticalLayout {
 			final TaskSearchCriteria criteria = new TaskSearchCriteria();
 			criteria.setProjectid(new NumberSearchField(CurrentProjectVariables
 					.getProjectId()));
-			criteria.setAssignUser(new StringSearchField(
-					ProjectMemberPreviewBuilder.this.projectMember
-							.getUsername()));
+			criteria.setAssignUser(new StringSearchField(previewForm.getBean()
+					.getUsername()));
 			return criteria;
 		}
 
-		private void displayActiveTasksOnly() {
+		public void displayActiveTasksOnly() {
 			this.taskSearchCriteria = this.createBaseSearchCriteria();
 			this.taskSearchCriteria.setStatuses(new SetSearchField<String>(
 					SearchField.AND, new String[] { "Open" }));
@@ -497,11 +356,10 @@ public class ProjectMemberPreviewBuilder extends VerticalLayout {
 						public void handle(final TableClickEvent event) {
 							final SimpleBug bug = (SimpleBug) event.getData();
 							if ("summary".equals(event.getFieldName())) {
-								EventBus.getInstance()
-										.fireEvent(
-												new BugEvent.GotoRead(
-														ProjectMemberPreviewBuilder.this,
-														bug.getId()));
+								EventBus.getInstance().fireEvent(
+										new BugEvent.GotoRead(
+												AbstractMemberPreviewComp.this,
+												bug.getId()));
 							}
 						}
 					});
@@ -509,8 +367,6 @@ public class ProjectMemberPreviewBuilder extends VerticalLayout {
 			this.bodyContent.addComponent(this.bugDisplay);
 
 			this.initHeader();
-
-			this.displayOpenBugs();
 		}
 
 		private void initHeader() {
@@ -586,13 +442,12 @@ public class ProjectMemberPreviewBuilder extends VerticalLayout {
 			final BugSearchCriteria criteria = new BugSearchCriteria();
 			criteria.setProjectId(new NumberSearchField(CurrentProjectVariables
 					.getProjectId()));
-			criteria.setAssignuser(new StringSearchField(
-					ProjectMemberPreviewBuilder.this.projectMember
-							.getUsername()));
+			criteria.setAssignuser(new StringSearchField(previewForm.getBean()
+					.getUsername()));
 			return criteria;
 		}
 
-		private void displayOpenBugs() {
+		public void displayOpenBugs() {
 			final BugSearchCriteria criteria = this.createBugSearchCriteria();
 			criteria.setStatuses(new SetSearchField<String>(SearchField.AND,
 					new String[] { BugStatusConstants.INPROGRESS,
@@ -619,18 +474,22 @@ public class ProjectMemberPreviewBuilder extends VerticalLayout {
 	protected class UserStandupReportDepot extends VerticalLayout {
 		private static final long serialVersionUID = 1L;
 
+		private StandupReportListDisplay standupReportListDisplay;
+
 		public UserStandupReportDepot() {
 			super();
 
-			final StandupReportListDisplay standupReportListDisplay = new StandupReportListDisplay();
+			standupReportListDisplay = new StandupReportListDisplay();
+			this.addComponent(standupReportListDisplay);
+		}
+
+		public void displayStandupReports() {
 			final StandupReportSearchCriteria searchCriteria = new StandupReportSearchCriteria();
 			searchCriteria.setProjectId(new NumberSearchField(
 					CurrentProjectVariables.getProjectId()));
-			searchCriteria.setLogBy(new StringSearchField(
-					ProjectMemberPreviewBuilder.this.projectMember
-							.getUsername()));
+			searchCriteria.setLogBy(new StringSearchField(previewForm.getBean()
+					.getUsername()));
 			standupReportListDisplay.setSearchCriteria(searchCriteria);
-			this.addComponent(standupReportListDisplay);
 		}
 	}
 
@@ -643,17 +502,16 @@ public class ProjectMemberPreviewBuilder extends VerticalLayout {
 			super("User Feeds", new VerticalLayout());
 
 			activityStreamList = new ProjectActivityStreamPagedList();
-			displayActivityStream();
 		}
 
-		private void displayActivityStream() {
+		public void displayActivityStream() {
 			this.bodyContent.removeAllComponents();
 			this.bodyContent.addComponent(this.activityStreamList);
 			ActivityStreamSearchCriteria searchCriteria = new ActivityStreamSearchCriteria();
 			searchCriteria.setModuleSet(new SetSearchField<String>(
 					SearchField.AND, new String[] { ModuleNameConstants.PRJ }));
 			searchCriteria.setCreatedUser(new StringSearchField(
-					SearchField.AND, projectMember.getUsername()));
+					SearchField.AND, previewForm.getBean().getUsername()));
 			searchCriteria.setExtraTypeIds(new SetSearchField<Integer>(
 					CurrentProjectVariables.getProjectId()));
 			searchCriteria.setSaccountid(new NumberSearchField(AppContext
