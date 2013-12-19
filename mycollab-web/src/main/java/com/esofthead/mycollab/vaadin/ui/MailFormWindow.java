@@ -122,6 +122,8 @@ public class MailFormWindow extends Window {
 		layout.setComponentAlignment(lbTitle, Alignment.MIDDLE_RIGHT);
 		layout.addComponent(component);
 		layout.setComponentAlignment(component, Alignment.MIDDLE_LEFT);
+		layout.setWidth("100%");
+		layout.setExpandRatio(component, 1.0f);
 		return layout;
 	}
 
@@ -137,7 +139,8 @@ public class MailFormWindow extends Window {
 
 		inputLayout = new GridLayout(3, 4);
 		inputLayout.setSpacing(true);
-		inputLayout.setSizeUndefined();
+		inputLayout.setWidth("100%");
+		inputLayout.setColumnExpandRatio(0, 1.0f);
 
 		inputPanel.addComponent(inputLayout);
 

@@ -2574,7 +2574,7 @@ div.v-splitbutton,div.v-splitbutton .v-button {
 	height: 18px;
 	background: url("icons/grad-dark-bottom.png") repeat-x left bottom
 		#394754;
-	border-radius: 8px;
+	border-radius: 10px;
 }
 
 .v-customcomponent-tokenfield.tokenfield .v-filterselect {
