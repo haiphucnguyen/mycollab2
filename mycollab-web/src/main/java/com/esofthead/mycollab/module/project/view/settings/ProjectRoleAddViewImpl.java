@@ -93,7 +93,7 @@ public class ProjectRoleAddViewImpl extends AbstractPageView implements
 			private static final long serialVersionUID = 1L;
 
 			public FormLayoutFactory() {
-				super("Create Role");
+				
 			}
 
 			private Layout createButtonControls() {
@@ -108,12 +108,12 @@ public class ProjectRoleAddViewImpl extends AbstractPageView implements
 				return controlPanel;
 			}
 
-			@Override
+			
 			protected Layout createTopPanel() {
 				return this.createButtonControls();
 			}
 
-			@Override
+			
 			protected Layout createBottomPanel() {
 				final VerticalLayout permissionsPanel = new VerticalLayout();
 				final Label organizationHeader = new Label("Permissions");
