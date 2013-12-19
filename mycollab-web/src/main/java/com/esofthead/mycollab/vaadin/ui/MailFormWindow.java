@@ -27,6 +27,7 @@ import com.esofthead.mycollab.module.mail.FileEmailAttachmentSource;
 import com.esofthead.mycollab.module.mail.service.ExtMailService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.web.AppContext;
+import com.vaadin.server.Sizeable;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -78,7 +79,7 @@ public class MailFormWindow extends Window {
 
 	private void initLayout() {
 		this.setWidth("830px");
-		this.setHeight("510px");
+		this.setHeight(Sizeable.SIZE_UNDEFINED, Sizeable.Unit.PIXELS);
 		initUI();
 		center();
 		this.setModal(true);
@@ -171,7 +172,7 @@ public class MailFormWindow extends Window {
 
 		final TextField subject = new TextField();
 		subject.setRequired(true);
-		subject.setWidth("550px");
+		subject.setWidth("100%");
 		subjectField = createTextFieldMail("Subject:", subject);
 		inputLayout.addComponent(subjectField, 0, 1);
 
@@ -182,6 +183,7 @@ public class MailFormWindow extends Window {
 
 		final RichTextArea noteArea = new RichTextArea();
 		noteArea.setWidth("100%");
+		noteArea.setHeight("200px");
 		mainLayout.addComponent(noteArea, 0, 1);
 		mainLayout.setComponentAlignment(noteArea, Alignment.MIDDLE_CENTER);
 
@@ -193,15 +195,8 @@ public class MailFormWindow extends Window {
 
 		MultiFileUploadExt uploadExt = new MultiFileUploadExt(attachments);
 
-		Panel attachedFilepanel = new Panel();
-		VerticalLayout contentLayout = new VerticalLayout();
-		contentLayout.setStyleName("noneBorder-panel");
-		contentLayout.addComponent(attachments);
-		contentLayout.addComponent(uploadExt);
-		attachedFilepanel.setContent(contentLayout);
-
-		controlsLayout.addComponent(attachedFilepanel);
-		controlsLayout.setExpandRatio(attachedFilepanel, 1.0f);
+		controlsLayout.addComponent(uploadExt);
+		controlsLayout.setExpandRatio(uploadExt, 1.0f);
 
 		controlsLayout.setSpacing(true);
 
@@ -300,6 +295,10 @@ public class MailFormWindow extends Window {
 				inputLayout.addComponent(btnLinkBcc, 1, 1);
 				inputLayout.addComponent(btnLinkCc, 2, 1);
 				inputLayout.addComponent(subjectField, 0, 2);
+			} else {
+				inputLayout.addComponent(btnLinkBcc, 1, 0);
+				inputLayout.addComponent(btnLinkCc, 2, 0);
+				inputLayout.addComponent(subjectField, 0, 1);
 			}
 		}
 
@@ -351,6 +350,10 @@ public class MailFormWindow extends Window {
 				inputLayout.addComponent(btnLinkCc, 1, 1);
 				inputLayout.addComponent(btnLinkBcc, 2, 1);
 				inputLayout.addComponent(subjectField, 0, 2);
+			} else {
+				inputLayout.addComponent(btnLinkBcc, 1, 0);
+				inputLayout.addComponent(btnLinkCc, 2, 0);
+				inputLayout.addComponent(subjectField, 0, 1);
 			}
 		}
 		inputLayout.setComponentAlignment(btnLinkBcc, Alignment.MIDDLE_CENTER);
