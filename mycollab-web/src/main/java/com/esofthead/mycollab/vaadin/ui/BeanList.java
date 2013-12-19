@@ -154,8 +154,10 @@ public class BeanList<SearchService extends ISearchableService<S>, S extends Sea
 				int i = 0;
 				for (T item : currentListData) {
 					RowDisplayHandler<T> rowHandler = constructRowndisplayHandler();
+					log.debug("Row handler {} index {}", rowHandler, i);
 
 					Component row = rowHandler.generateRow(item, i);
+					log.debug("Generated row {} index {}", row, i);
 					if (row != null) {
 						contentLayout.addComponent(row);
 					}

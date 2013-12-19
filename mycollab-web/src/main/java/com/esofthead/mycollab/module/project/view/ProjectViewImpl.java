@@ -75,7 +75,6 @@ import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.SplitButton;
-import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.VerticalTabsheet;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
@@ -92,6 +91,12 @@ import com.vaadin.ui.TabSheet.Tab;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @SuppressWarnings("serial")
 @ViewComponent
 public class ProjectViewImpl extends AbstractPageView implements ProjectView {
@@ -135,7 +140,7 @@ public class ProjectViewImpl extends AbstractPageView implements ProjectView {
 		myProjectTab.setNavigatorStyleName("sidebar-menu");
 		myProjectTab.setContainerStyleName("tab-content");
 		myProjectTab.setHeight(null);
-		
+
 		buildComponents();
 		contentWrapper.addComponent(myProjectTab);
 	}

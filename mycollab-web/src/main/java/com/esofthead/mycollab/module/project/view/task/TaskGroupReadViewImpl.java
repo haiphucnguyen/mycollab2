@@ -32,7 +32,6 @@ import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
-import com.esofthead.mycollab.module.project.domain.TaskList;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.project.events.MilestoneEvent;
 import com.esofthead.mycollab.module.project.ui.components.CommentListDepot;
@@ -47,7 +46,6 @@ import com.esofthead.mycollab.vaadin.ui.ProjectPreviewFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.vaadin.data.Item;
-import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
@@ -83,7 +81,7 @@ public class TaskGroupReadViewImpl extends AbstractPageView implements
 	@Override
 	public void previewItem(final SimpleTaskList taskList) {
 		this.taskList = taskList;
-		this.previewForm.setItemDataSource(new BeanItem<TaskList>(taskList));
+//		this.previewForm.setItemDataSource(new BeanItem<TaskList>(taskList));
 	}
 
 	@Override

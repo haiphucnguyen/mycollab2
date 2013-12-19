@@ -44,6 +44,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
@@ -79,7 +80,7 @@ public class TaskGroupDisplayWidget
 		private final SimpleTaskList taskList;
 		private PopupButton taskListFilterControl;
 		private PopupButton taskListActionControl;
-		private final TaskDisplayComponent taskDisplayComponent;
+		private TaskDisplayComponent taskDisplayComponent;
 
 		public TaskListDepot(final SimpleTaskList taskListParam) {
 			super(taskListParam.getName(), null, new TaskDisplayComponent(
