@@ -124,6 +124,7 @@ public class MessageReadViewImpl extends AbstractPageView implements
 			HorizontalLayout messageLayout = new HorizontalLayout();
 			messageLayout.setStyleName("message");
 			messageLayout.setWidth("100%");
+			messageLayout.setSpacing(true);
 			messageLayout.addComponent(UserAvatarControlFactory
 					.createUserAvatarButtonLink(
 							message.getPostedUserAvatarId(),

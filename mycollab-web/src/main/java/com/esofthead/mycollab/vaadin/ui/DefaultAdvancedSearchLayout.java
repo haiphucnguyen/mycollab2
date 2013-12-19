@@ -40,6 +40,7 @@ import com.google.gson.reflect.TypeToken;
 import com.vaadin.data.util.BeanContainer;
 import com.vaadin.server.StreamResource;
 import com.vaadin.shared.ui.MarginInfo;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -353,12 +354,16 @@ public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
 		// ------Define & contruct TopfooterLayout ------------------------
 		HorizontalLayout topfooterLayout = new HorizontalLayout();
 		topfooterLayout.setWidth("100%");
+		
+		Label spaceLbl = new Label("&nbsp;", ContentMode.HTML);
+		topfooterLayout.addComponent(spaceLbl);
+		topfooterLayout.setExpandRatio(spaceLbl, 1.0f);
 
 		HorizontalLayout buttonControls = createButtonControls();
 		UiUtils.addComponent(topfooterLayout, buttonControls,
-				Alignment.MIDDLE_RIGHT);
+				Alignment.MIDDLE_CENTER);
 		buttonControls.setMargin(new MarginInfo(false, true, false, false));
-		topfooterLayout.setExpandRatio(buttonControls, 3.0f);
+		topfooterLayout.setExpandRatio(buttonControls, 1.0f);
 
 		saveSearchControls = createSaveSearchControls();
 		saveSearchControls.setSpacing(true);

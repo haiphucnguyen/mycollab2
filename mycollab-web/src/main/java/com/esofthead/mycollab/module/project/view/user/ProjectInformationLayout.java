@@ -76,16 +76,13 @@ public class ProjectInformationLayout implements IFormLayoutFactory {
 
 	@Override
 	public Layout getLayout() {
-		final VerticalLayout layout = new VerticalLayout();
-		layout.addStyleName("colored-gridlayout");
 
 		this.moreInfoLayout = new GridFormLayoutHelper(2, 6, "100%", "167px",
 				Alignment.MIDDLE_LEFT);
 		this.moreInfoLayout.getLayout().setWidth("100%");
 		this.moreInfoLayout.getLayout().setMargin(false);
-		layout.addComponent(this.moreInfoLayout.getLayout());
-		layout.setComponentAlignment(this.moreInfoLayout.getLayout(),
-				Alignment.BOTTOM_CENTER);
-		return layout;
+		this.moreInfoLayout.getLayout().addStyleName("colored-gridlayout");
+		
+		return this.moreInfoLayout.getLayout();
 	}
 }

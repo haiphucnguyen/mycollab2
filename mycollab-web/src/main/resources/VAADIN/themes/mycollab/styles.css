@@ -5493,30 +5493,30 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 	font-weight: bold;
 }
 /* Tabsheet style 3 */
-.tab-style3 .v-tabsheet-tabs {
+.tab-style3 > .v-tabsheet-tabcontainer > .v-tabsheet-tabs {
 	background: none;
 }
-.tab-style3 .v-tabsheet-tabitem {
+.tab-style3 > .v-tabsheet-tabcontainer > .v-tabsheet-tabs > tbody > tr > .v-tabsheet-tabitemcell > .v-tabsheet-tabitem {
 	background: url("icons/border-bottom2.png") repeat-x scroll left bottom transparent;
 	border: none;
 	position: relative;
 }
-.tab-style3 .v-tabsheet-tabitem .v-caption .v-captiontext {
+.tab-style3 > .v-tabsheet-tabcontainer > .v-tabsheet-tabs > tbody > tr > .v-tabsheet-tabitemcell > .v-tabsheet-tabitem .v-caption .v-captiontext {
 	font-size: 13px;
 	text-shadow: none;
 	color: rgb(145, 142, 142);
 }
-.tab-style3 .v-tabsheet-tabitem:hover .v-caption .v-captiontext {
+.tab-style3 > .v-tabsheet-tabcontainer > .v-tabsheet-tabs > tbody > tr > .v-tabsheet-tabitemcell > .v-tabsheet-tabitem:hover .v-caption .v-captiontext {
 	color: rgb(94, 94, 94);
 } 
-.tab-style3 .v-tabsheet-tabitemcell.v-tabsheet-tabitemcell-selected {
+.tab-style3 > .v-tabsheet-tabcontainer > .v-tabsheet-tabs > tbody > tr > .v-tabsheet-tabitemcell.v-tabsheet-tabitemcell-selected {
 	background: none;
 }
-.tab-style3 .v-tabsheet-tabitem-selected .v-caption .v-captiontext, .tab-style3 .v-tabsheet-tabitem-selected:hover .v-caption .v-captiontext {
+.tab-style3 > .v-tabsheet-tabcontainer > .v-tabsheet-tabs > tbody > tr > .v-tabsheet-tabitemcell > .v-tabsheet-tabitem-selected .v-caption .v-captiontext, .tab-style3 > .v-tabsheet-tabcontainer > .v-tabsheet-tabs > tr > .v-tabsheet-tabitemcell > .v-tabsheet-tabitem-selected:hover .v-caption .v-captiontext {
 	color: rgb(40, 126, 206);
 	font-size: 14px;
 }
-.tab-style3 .v-tabsheet-tabitem-selected:after {
+.tab-style3 > .v-tabsheet-tabcontainer > .v-tabsheet-tabs > tbody > tr > .v-tabsheet-tabitemcell > .v-tabsheet-tabitem-selected:after {
 	content: " ";
 	display: block;
 	width: 100%;
@@ -5526,10 +5526,10 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 	bottom: 0px;
 	left: 0px;
 }
-.tab-style3 .v-tabsheet-spacertd div {
+.tab-style3 > .v-tabsheet-tabcontainer > .v-tabsheet-tabs > tbody > tr > .v-tabsheet-spacertd div {
 	border-bottom: none;
 }
-.tab-style3 .v-tabsheet-content {
+.tab-style3 > .v-tabsheet-content {
 	background: none;
 }
 
