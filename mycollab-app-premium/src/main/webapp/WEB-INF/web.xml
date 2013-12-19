@@ -46,7 +46,7 @@
 
     <servlet>
         <servlet-name>MyCollabApplication</servlet-name>
-        <servlet-class>com.vaadin.server.VaadinServlet</servlet-class>
+        <servlet-class>com.esofthead.mycollab.web.MyCollabServlet</servlet-class>
         <init-param>
             <description>Vaadin UI</description>
             <param-name>UI</param-name>

@@ -42,12 +42,17 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class MyProjectListComponent extends Depot {
 	private static final long serialVersionUID = 1L;
 
@@ -123,7 +128,9 @@ public class MyProjectListComponent extends Depot {
 															project.getId()))));
 						}
 					});
-			final Image projectIcon = new Image(null, MyCollabResource.newResource("icons/16/project/project.png"));
+			final Image projectIcon = new Image(null,
+					MyCollabResource
+							.newResource("icons/16/project/project.png"));
 			linkIconFix.addComponent(projectIcon);
 			linkIconFix.addComponent(projectLink);
 			linkIconFix.setExpandRatio(projectLink, 1.0f);
@@ -139,8 +146,8 @@ public class MyProjectListComponent extends Depot {
 			taskStatus.setWidth("100%");
 			taskStatus.setSpacing(true);
 			final Label taskLbl = new Label("Tasks :");
-			final Image taskIcon = new Image(null, MyCollabResource
-					.newResource("icons/16/project/task.png"));
+			final Image taskIcon = new Image(null,
+					MyCollabResource.newResource("icons/16/project/task.png"));
 			taskStatus.addComponent(taskIcon);
 			taskLbl.setWidth("45px");
 			taskStatus.addComponent(taskLbl);
@@ -155,8 +162,8 @@ public class MyProjectListComponent extends Depot {
 			bugStatus.setWidth("100%");
 			bugStatus.setSpacing(true);
 			final Label bugLbl = new Label("Bugs :");
-			final Image bugIcon = new Image(null, MyCollabResource
-					.newResource("icons/16/project/bug.png"));
+			final Image bugIcon = new Image(null,
+					MyCollabResource.newResource("icons/16/project/bug.png"));
 			bugStatus.addComponent(bugIcon);
 			bugLbl.setWidth("45px");
 			bugStatus.addComponent(bugLbl);
