@@ -266,6 +266,7 @@ public class ProjectInformationComponent extends VerticalLayout {
 							return null;
 						}
 					});
+			this.previewForm.setBean(ProjectInformationComponent.this.project);
 		}
 	}
 
