@@ -57,6 +57,7 @@ public class StandupStyleCalendarExp extends VerticalLayout {
 		styleCalendar.setRenderHeader(false);
 		styleCalendar.setRenderWeekNumbers(false);
 		styleCalendar.setImmediate(true);
+		styleCalendar.setWidth("100%");
 		setDateOptionsGenerator();
 
 		btnShowNextYear = new Button();
