@@ -24,6 +24,7 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.themes.Reindeer;
 
@@ -48,9 +49,9 @@ public class ItemTimeLoggingSearchPanel extends
 		final HorizontalLayout layout = new HorizontalLayout();
 		layout.setWidth("100%");
 		layout.setSpacing(true);
+		layout.setMargin(true);
 
-		final Embedded titleIcon = new Embedded();
-		titleIcon.setSource(MyCollabResource
+		final Image titleIcon = new Image(null, MyCollabResource
 				.newResource("icons/24/project/time.png"));
 		layout.addComponent(titleIcon);
 

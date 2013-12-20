@@ -79,6 +79,7 @@ import com.esofthead.mycollab.vaadin.ui.VerticalTabsheet;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
+import com.vaadin.server.Sizeable;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -362,7 +363,7 @@ public class ProjectViewImpl extends AbstractPageView implements ProjectView {
 		topPanel.removeAllComponents();
 
 		topPanel.addComponent(breadCrumb);
-		topPanel.setComponentAlignment(breadCrumb, Alignment.BOTTOM_CENTER);
+		topPanel.setComponentAlignment(breadCrumb, Alignment.MIDDLE_LEFT);
 		topPanel.setExpandRatio(breadCrumb, 1.0f);
 
 		breadCrumb.setProject(project);
@@ -519,6 +520,7 @@ public class ProjectViewImpl extends AbstractPageView implements ProjectView {
 		}
 
 		controlsBtn.setContent(popupButtonsControl);
+		controlsBtn.setWidth(Sizeable.SIZE_UNDEFINED, Sizeable.Unit.PIXELS);
 
 		topPanel.addComponent(controlsBtn);
 		topPanel.setComponentAlignment(controlsBtn, Alignment.MIDDLE_RIGHT);
