@@ -192,7 +192,7 @@ public class GridFormLayoutHelper implements Serializable {
 		field.setCaption(null);
 		
 		//Set combobox fields undefined width
-		if(field instanceof ActiveUserComboBox)
+		if(field instanceof ComboBox)
 			field.setWidth(Sizeable.SIZE_UNDEFINED, Sizeable.Unit.PIXELS);
 		else
 			field.setWidth(width);
