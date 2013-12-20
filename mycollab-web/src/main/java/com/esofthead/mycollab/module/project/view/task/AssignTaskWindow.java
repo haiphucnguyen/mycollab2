@@ -33,16 +33,14 @@ import com.esofthead.mycollab.module.project.domain.Task;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberComboBox;
-import com.esofthead.mycollab.module.tracker.domain.BugWithBLOBs;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
-import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
+import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
-import com.vaadin.data.Item;
-import com.vaadin.data.util.BeanItem;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -56,6 +54,7 @@ import com.vaadin.ui.Window;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class AssignTaskWindow extends Window {
 	private static final long serialVersionUID = 1L;
@@ -73,21 +72,21 @@ public class AssignTaskWindow extends Window {
 		this.setWidth("750px");
 		editForm = new EditForm();
 		contentLayout.addComponent(editForm);
-		editForm.setItemDataSource(new BeanItem<Task>(task));
+		editForm.setBean(task);
 
 		center();
 	}
 
-	private class EditForm extends AdvancedEditBeanForm<BugWithBLOBs> {
+	private class EditForm extends AdvancedEditBeanForm<Task> {
 
 		private static final long serialVersionUID = 1L;
 		private RichTextArea commentArea;
 
 		@Override
-		public void setItemDataSource(Item newDataSource) {
+		public void setBean(Task newDataSource) {
 			this.setFormLayoutFactory(new FormLayoutFactory());
-			this.setFormFieldFactory(new EditFormFieldFactory());
-			super.setItemDataSource(newDataSource);
+			this.setBeanFormFieldFactory(new EditFormFieldFactory(EditForm.this));
+			super.setBean(newDataSource);
 		}
 
 		class FormLayoutFactory implements IFormLayoutFactory {
@@ -183,7 +182,7 @@ public class AssignTaskWindow extends Window {
 			}
 
 			@Override
-			public void attachField(Object propertyId, Field field) {
+			public void attachField(Object propertyId, Field<?> field) {
 				if (propertyId.equals("assignuser")) {
 					informationLayout.addComponent(field, LocalizationHelper
 							.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD), 0,
@@ -195,13 +194,16 @@ public class AssignTaskWindow extends Window {
 			}
 		}
 
-		private class EditFormFieldFactory extends DefaultEditFormFieldFactory {
-
+		private class EditFormFieldFactory extends
+				AbstractBeanFieldGroupEditFieldFactory<Task> {
 			private static final long serialVersionUID = 1L;
 
+			public EditFormFieldFactory(GenericBeanForm<Task> form) {
+				super(form);
+			}
+
 			@Override
-			protected Field onCreateField(Item item, Object propertyId,
-					com.vaadin.ui.Component uiContext) {
+			protected Field<?> onCreateField(Object propertyId) {
 				if (propertyId.equals("assignuser")) {
 					return new ProjectMemberComboBox();
 				} else if (propertyId.equals("comment")) {

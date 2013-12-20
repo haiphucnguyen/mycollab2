@@ -31,29 +31,24 @@ import com.esofthead.mycollab.security.PermissionMap;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
+import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
-import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
-import com.vaadin.data.Item;
-import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.JavaScript;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
-import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Window;
 
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 @ViewComponent
 public class RoleReadViewImpl extends AbstractPageView implements RoleReadView {
@@ -64,14 +59,24 @@ public class RoleReadViewImpl extends AbstractPageView implements RoleReadView {
 
 	public RoleReadViewImpl() {
 		super();
-		this.previewForm = new PreviewForm();
+		this.previewForm = new AdvancedPreviewBeanForm<Role>();
 		this.addComponent(this.previewForm);
 	}
 
 	@Override
 	public void previewItem(final SimpleRole role) {
 		this.role = role;
-		this.previewForm.setItemDataSource(new BeanItem<Role>(role));
+		this.previewForm.setFormLayoutFactory(new FormLayoutFactory());
+		this.previewForm
+				.setBeanFormFieldFactory(new AbstractBeanFieldGroupViewFieldFactory<Role>(
+						previewForm) {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					protected Field<?> onCreateField(Object propertyId) {
+						return null;
+					}
+				});
 	}
 
 	@Override
@@ -116,170 +121,60 @@ public class RoleReadViewImpl extends AbstractPageView implements RoleReadView {
 		return component;
 	}
 
-	private class PreviewForm extends AdvancedPreviewBeanForm<Role> {
-
-		private static final long serialVersionUID = 1L;
-
-		@Override
-		public void setItemDataSource(final Item newDataSource) {
-			this.setFormLayoutFactory(new RoleReadViewImpl.PreviewForm.FormLayoutFactory());
-			this.setFormFieldFactory(new DefaultFormViewFieldFactory() {
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				protected Field onCreateField(final Item item,
-						final Object propertyId, final Component uiContext) {
-					return null;
-				}
-			});
-			super.setItemDataSource(newDataSource);
-		}
-
-		@Override
-		public void doPrint() {
-			// Create a window that contains what you want to print
-			final Window window = new Window("Window to Print");
-
-			final RoleReadViewImpl printView = new RoleReadViewImpl.PrintView();
-			printView.previewItem(RoleReadViewImpl.this.role);
-			window.setContent(printView);
-
-			UI.getCurrent().addWindow(window);
-
-			// Print automatically when the window opens
-			JavaScript.getCurrent().execute(
-					"setTimeout(function() {"
-							+ "  print(); self.close();}, 0);");
-		}
-
-		@Override
-		public void showHistory() {
-		}
-
-		class FormLayoutFactory extends RoleFormLayoutFactory {
-
-			private static final long serialVersionUID = 1L;
-
-			public FormLayoutFactory() {
-				super(RoleReadViewImpl.this.role.getRolename());
-			}
-
-			@Override
-			protected Layout createTopPanel() {
-				PreviewFormControlsGenerator<Role> buttonControls = new PreviewFormControlsGenerator<Role>(
-						PreviewForm.this);
-				HorizontalLayout layout = buttonControls
-						.createButtonControls(RolePermissionCollections.ACCOUNT_ROLE);
-				if (role.getIssystemrole() != null
-						&& role.getIssystemrole() == Boolean.TRUE) {
-					buttonControls.setDeleteButtonVisible(false);
-				}
-				return layout;
-			}
-
-			@Override
-			protected Layout createBottomPanel() {
-				final VerticalLayout permissionsPanel = new VerticalLayout();
-				final Label organizationHeader = new Label("Permissions");
-				organizationHeader.setStyleName("h2");
-				permissionsPanel.addComponent(organizationHeader);
-
-				final PermissionMap permissionMap = RoleReadViewImpl.this.role
-						.getPermissionMap();
-
-				permissionsPanel.addComponent(constructPermissionSectionView(
-						"Project", permissionMap,
-						RolePermissionCollections.PROJECT_PERMISSION_ARR));
-
-				permissionsPanel.addComponent(constructPermissionSectionView(
-						"Customer Management", permissionMap,
-						RolePermissionCollections.CRM_PERMISSIONS_ARR));
-
-				permissionsPanel.addComponent(constructPermissionSectionView(
-						"Document", permissionMap,
-						RolePermissionCollections.DOCUMENT_PERMISSION_ARR));
-
-				permissionsPanel.addComponent(constructPermissionSectionView(
-						"Account Management", permissionMap,
-						RolePermissionCollections.ACCOUNT_PERMISSION_ARR));
-
-				return permissionsPanel;
-			}
-
-		}
-	}
-
-	@SuppressWarnings("serial")
-	public static class PrintView extends RoleReadViewImpl {
-
-		public PrintView() {
-			this.previewForm = new AdvancedPreviewBeanForm<Role>() {
-				@Override
-				public void setItemDataSource(final Item newDataSource) {
-					this.setFormLayoutFactory(new FormLayoutFactory());
-					this.setFormFieldFactory(new DefaultFormViewFieldFactory() {
-						private static final long serialVersionUID = 1L;
-
-						@Override
-						protected Field onCreateField(final Item item,
-								final Object propertyId,
-								final Component uiContext) {
-							return null;
-						}
-					});
-					super.setItemDataSource(newDataSource);
-				}
-			};
-
-			this.addComponent(this.previewForm);
-		}
-
-		class FormLayoutFactory extends RoleFormLayoutFactory {
-
-			private static final long serialVersionUID = 1L;
-
-			public FormLayoutFactory() {
-				super(PrintView.this.role.getRolename());
-			}
-
-			@Override
-			protected Layout createTopPanel() {
-				return new VerticalLayout();
-			}
-
-			@Override
-			protected Layout createBottomPanel() {
-				final VerticalLayout permissionsPanel = new VerticalLayout();
-				final Label organizationHeader = new Label("Permissions");
-				organizationHeader.setStyleName("h2");
-				permissionsPanel.addComponent(organizationHeader);
-
-				final PermissionMap permissionMap = PrintView.this.role
-						.getPermissionMap();
-
-				permissionsPanel.addComponent(constructPermissionSectionView(
-						"Project", permissionMap,
-						RolePermissionCollections.PROJECT_PERMISSION_ARR));
-
-				permissionsPanel.addComponent(constructPermissionSectionView(
-						"Customer Management", permissionMap,
-						RolePermissionCollections.CRM_PERMISSIONS_ARR));
-
-				permissionsPanel.addComponent(constructPermissionSectionView(
-						"Document", permissionMap,
-						RolePermissionCollections.DOCUMENT_PERMISSION_ARR));
-
-				permissionsPanel.addComponent(constructPermissionSectionView(
-						"Account Management", permissionMap,
-						RolePermissionCollections.ACCOUNT_PERMISSION_ARR));
-
-				return permissionsPanel;
-			}
-		}
-	}
-
 	@Override
 	public SimpleRole getItem() {
 		return this.role;
+	}
+
+	class FormLayoutFactory extends RoleFormLayoutFactory {
+
+		private static final long serialVersionUID = 1L;
+
+		public FormLayoutFactory() {
+			super(RoleReadViewImpl.this.role.getRolename());
+		}
+
+		@Override
+		protected Layout createTopPanel() {
+			PreviewFormControlsGenerator<Role> buttonControls = new PreviewFormControlsGenerator<Role>(
+					previewForm);
+			HorizontalLayout layout = buttonControls
+					.createButtonControls(RolePermissionCollections.ACCOUNT_ROLE);
+			if (role.getIssystemrole() != null
+					&& role.getIssystemrole() == Boolean.TRUE) {
+				buttonControls.setDeleteButtonVisible(false);
+			}
+			return layout;
+		}
+
+		@Override
+		protected Layout createBottomPanel() {
+			final VerticalLayout permissionsPanel = new VerticalLayout();
+			final Label organizationHeader = new Label("Permissions");
+			organizationHeader.setStyleName("h2");
+			permissionsPanel.addComponent(organizationHeader);
+
+			final PermissionMap permissionMap = RoleReadViewImpl.this.role
+					.getPermissionMap();
+
+			permissionsPanel.addComponent(constructPermissionSectionView(
+					"Project", permissionMap,
+					RolePermissionCollections.PROJECT_PERMISSION_ARR));
+
+			permissionsPanel.addComponent(constructPermissionSectionView(
+					"Customer Management", permissionMap,
+					RolePermissionCollections.CRM_PERMISSIONS_ARR));
+
+			permissionsPanel.addComponent(constructPermissionSectionView(
+					"Document", permissionMap,
+					RolePermissionCollections.DOCUMENT_PERMISSION_ARR));
+
+			permissionsPanel.addComponent(constructPermissionSectionView(
+					"Account Management", permissionMap,
+					RolePermissionCollections.ACCOUNT_PERMISSION_ARR));
+
+			return permissionsPanel;
+		}
+
 	}
 }

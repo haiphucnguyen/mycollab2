@@ -29,17 +29,17 @@ import com.esofthead.mycollab.module.user.accountsettings.localization.UserI18nE
 import com.esofthead.mycollab.module.user.accountsettings.view.events.ProfileEvent;
 import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
+import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
+import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
-import com.vaadin.data.Item;
-import com.vaadin.data.util.BeanItem;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -53,12 +53,11 @@ import com.vaadin.ui.Layout;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
-
 /**
  * 
  * @author MyCollab Ltd.
  * @since 2.0
- *
+ * 
  */
 @ViewComponent
 public class ProfileReadViewImpl extends AbstractPageView implements
@@ -103,6 +102,7 @@ public class ProfileReadViewImpl extends AbstractPageView implements
 				LocalizationHelper
 						.getMessage(UserI18nEnum.BUTTON_CHANGE_PASSWORD),
 				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
 
 					@Override
 					public void buttonClick(final ClickEvent event) {
@@ -127,6 +127,8 @@ public class ProfileReadViewImpl extends AbstractPageView implements
 		this.userAvatar.addComponent(avatarAndPass);
 
 		final UploadField avatarUploadField = new UploadField() {
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			protected void updateDisplay() {
 				byte[] imageData = (byte[]) this.getValue();
@@ -167,13 +169,15 @@ public class ProfileReadViewImpl extends AbstractPageView implements
 		}
 
 		@Override
-		public void setItemDataSource(final Item newDataSource) {
+		public void setBean(final User newDataSource) {
 			this.setFormLayoutFactory(new FormLayoutFactory());
-			this.setFormFieldFactory(new PreviewFormFieldFactory());
-			super.setItemDataSource(newDataSource);
+			this.setBeanFormFieldFactory(new PreviewFormFieldFactory(
+					PreviewForm.this));
+			super.setBean(newDataSource);
 		}
 
 		private class FormLayoutFactory implements IFormLayoutFactory {
+			private static final long serialVersionUID = 1L;
 
 			protected GridFormLayoutHelper basicInformation;
 
@@ -246,6 +250,7 @@ public class ProfileReadViewImpl extends AbstractPageView implements
 						LocalizationHelper
 								.getMessage(GenericI18Enum.BUTTON_EDIT_LABEL),
 						new Button.ClickListener() {
+							private static final long serialVersionUID = 1L;
 
 							@Override
 							public void buttonClick(final ClickEvent event) {
@@ -263,6 +268,7 @@ public class ProfileReadViewImpl extends AbstractPageView implements
 						LocalizationHelper
 								.getMessage(GenericI18Enum.BUTTON_EDIT_LABEL),
 						new Button.ClickListener() {
+							private static final long serialVersionUID = 1L;
 
 							@Override
 							public void buttonClick(final ClickEvent event) {
@@ -280,6 +286,7 @@ public class ProfileReadViewImpl extends AbstractPageView implements
 						LocalizationHelper
 								.getMessage(GenericI18Enum.BUTTON_EDIT_LABEL),
 						new Button.ClickListener() {
+							private static final long serialVersionUID = 1L;
 
 							@Override
 							public void buttonClick(final ClickEvent event) {
@@ -296,7 +303,8 @@ public class ProfileReadViewImpl extends AbstractPageView implements
 			}
 
 			@Override
-			public void attachField(final Object propertyId, final Field field) {
+			public void attachField(final Object propertyId,
+					final Field<?> field) {
 				if (propertyId.equals("firstname")) {
 					this.basicInformation.addComponent(field, "First Name", 0,
 							0);
@@ -337,12 +345,15 @@ public class ProfileReadViewImpl extends AbstractPageView implements
 		}
 
 		private class PreviewFormFieldFactory extends
-				DefaultFormViewFieldFactory {
+				AbstractBeanFieldGroupViewFieldFactory<User> {
+			private static final long serialVersionUID = 1L;
+
+			public PreviewFormFieldFactory(GenericBeanForm<User> form) {
+				super(form);
+			}
 
 			@Override
-			protected Field onCreateField(final Item item,
-					final Object propertyId,
-					final com.vaadin.ui.Component uiContext) {
+			protected Field<?> onCreateField(final Object propertyId) {
 				String value = "";
 
 				if (propertyId.equals("email")) {
@@ -386,7 +397,7 @@ public class ProfileReadViewImpl extends AbstractPageView implements
 	@Override
 	public void previewItem(final User user) {
 		this.formItem.setUser(user);
-		this.formItem.setItemDataSource(new BeanItem<User>(user));
+		this.formItem.setBean(user);
 		this.displayUserAvatar();
 	}
 

@@ -20,16 +20,20 @@
  */
 package com.esofthead.mycollab.module.project.view.bug;
 
+import com.esofthead.mycollab.module.project.ui.components.AbstractEditItemComp;
 import com.esofthead.mycollab.module.tracker.domain.Version;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
-import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
+import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
-import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
+import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
+import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
-import com.vaadin.data.Item;
-import com.vaadin.data.util.BeanItem;
+import com.esofthead.mycollab.web.MyCollabResource;
+import com.vaadin.server.Resource;
+import com.vaadin.shared.ui.datefield.Resolution;
 import com.vaadin.ui.Alignment;
+import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
@@ -40,100 +44,85 @@ import com.vaadin.ui.TextField;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 @ViewComponent
-public class VersionAddViewImpl extends AbstractPageView implements VersionAddView {
+public class VersionAddViewImpl extends AbstractEditItemComp<Version> implements
+		VersionAddView {
 	private static final long serialVersionUID = 1L;
-	private final EditForm editForm;
-	private Version version;
-
-	public VersionAddViewImpl() {
-		super();
-		this.editForm = new EditForm();
-		this.addComponent(this.editForm);
-		this.setMargin(true);
-	}
-
-	@Override
-	public void editItem(final Version item) {
-		this.version = item;
-		this.editForm.setItemDataSource(new BeanItem<Version>(this.version));
-	}
-
-	private class EditForm extends AdvancedEditBeanForm<Version> {
-
-		private static final long serialVersionUID = 1L;
-
-		@Override
-		public void setItemDataSource(final Item newDataSource) {
-			this.setFormLayoutFactory(new FormLayoutFactory());
-			this.setFormFieldFactory(new EditFormFieldFactory());
-			super.setItemDataSource(newDataSource);
-		}
-
-		private class FormLayoutFactory extends VersionFormLayoutFactory {
-
-			private static final long serialVersionUID = 1L;
-
-			public FormLayoutFactory() {
-				super("Create Version");
-			}
-
-			private Layout createButtonControls() {
-				final HorizontalLayout controlPanel = new HorizontalLayout();
-				final Layout controlButtons = (new EditFormControlsGenerator<Version>(
-						EditForm.this)).createButtonControls();
-				controlButtons.setSizeUndefined();
-				controlPanel.addComponent(controlButtons);
-				controlPanel.setWidth("100%");
-				controlPanel.setComponentAlignment(controlButtons,
-						Alignment.MIDDLE_CENTER);
-				return controlPanel;
-			}
-
-			@Override
-			protected Layout createTopPanel() {
-				return this.createButtonControls();
-			}
-
-			@Override
-			protected Layout createBottomPanel() {
-				return this.createButtonControls();
-			}
-		}
-
-		private class EditFormFieldFactory extends DefaultEditFormFieldFactory {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected Field onCreateField(final Item item,
-					final Object propertyId,
-					final com.vaadin.ui.Component uiContext) {
-
-				if (propertyId.equals("versionname")) {
-					final TextField tf = new TextField();
-					tf.setNullRepresentation("");
-					tf.setRequired(true);
-					tf.setRequiredError("Please enter a Version Name");
-					return tf;
-				} else if (propertyId.equals("description")) {
-					final TextArea field = new TextArea("", "");
-					field.setNullRepresentation("");
-					return field;
-				} else if (propertyId.equals("duedate")) {
-					final DateField dateField = new DateField();
-					dateField.setResolution(DateField.RESOLUTION_DAY);
-					return dateField;
-				}
-
-				return null;
-			}
-		}
-	}
 
 	@Override
 	public HasEditFormHandlers<Version> getEditFormHandlers() {
 		return this.editForm;
+	}
+
+	@Override
+	protected String initFormTitle() {
+		return (beanItem.getId() == null) ? "Create Version" : beanItem
+				.getVersionname();
+	}
+
+	@Override
+	protected Resource initFormIconResource() {
+		return MyCollabResource.newResource("icons/22/project/version.png");
+	}
+
+	@Override
+	protected ComponentContainer createButtonControls() {
+		final HorizontalLayout controlPanel = new HorizontalLayout();
+		final Layout controlButtons = (new EditFormControlsGenerator<Version>(
+				editForm)).createButtonControls();
+		controlButtons.setSizeUndefined();
+		controlPanel.addComponent(controlButtons);
+		controlPanel.setWidth("100%");
+		controlPanel.setComponentAlignment(controlButtons,
+				Alignment.MIDDLE_CENTER);
+		return controlPanel;
+	}
+
+	@Override
+	protected AdvancedEditBeanForm<Version> initPreviewForm() {
+		return new AdvancedEditBeanForm<Version>();
+	}
+
+	@Override
+	protected IFormLayoutFactory initFormLayoutFactory() {
+		return new VersionFormLayoutFactory();
+	}
+
+	@Override
+	protected AbstractBeanFieldGroupEditFieldFactory<Version> initBeanFormFieldFactory() {
+		return new EditFormFieldFactory(editForm);
+	}
+
+	private class EditFormFieldFactory extends
+			AbstractBeanFieldGroupEditFieldFactory<Version> {
+		private static final long serialVersionUID = 1L;
+
+		public EditFormFieldFactory(GenericBeanForm<Version> form) {
+			super(form);
+		}
+
+		@Override
+		protected Field<?> onCreateField(final Object propertyId) {
+
+			if (propertyId.equals("versionname")) {
+				final TextField tf = new TextField();
+				tf.setNullRepresentation("");
+				tf.setRequired(true);
+				tf.setRequiredError("Please enter a Version Name");
+				return tf;
+			} else if (propertyId.equals("description")) {
+				final TextArea field = new TextArea("", "");
+				field.setNullRepresentation("");
+				return field;
+			} else if (propertyId.equals("duedate")) {
+				final DateField dateField = new DateField();
+				dateField.setResolution(Resolution.DAY);
+				return dateField;
+			}
+
+			return null;
+		}
 	}
 }

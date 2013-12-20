@@ -17,10 +17,8 @@
 package com.esofthead.mycollab.vaadin.ui;
 
 import com.esofthead.mycollab.core.MyCollabException;
-import com.vaadin.data.Item;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Field;
-import com.vaadin.ui.FormFieldFactory;
 
 /**
  * 
@@ -62,10 +60,6 @@ public class GenericBeanForm<B> extends CssLayout {
 		this.fieldFactory = fieldFactory;
 	}
 
-	@Deprecated
-	public void setFormFieldFactory(FormFieldFactory fieldFactory) {
-	}
-
 	public B getBean() {
 		return bean;
 	}
@@ -83,11 +77,7 @@ public class GenericBeanForm<B> extends CssLayout {
 		fieldFactory.setBean(bean);
 	}
 
-	@Deprecated
-	public void setItemDataSource(final Item newDataSource) {
-	}
-
-	protected void attachField(Object propertyId, Field field) {
+	protected void attachField(Object propertyId, Field<?> field) {
 		layoutFactory.attachField(propertyId, field);
 	}
 }

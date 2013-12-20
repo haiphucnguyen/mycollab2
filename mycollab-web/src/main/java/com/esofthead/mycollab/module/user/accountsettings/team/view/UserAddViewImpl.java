@@ -22,8 +22,6 @@ package com.esofthead.mycollab.module.user.accountsettings.team.view;
 
 import java.util.Date;
 
-import com.vaadin.ui.CustomField;
-
 import com.esofthead.mycollab.core.utils.TimezoneMapper;
 import com.esofthead.mycollab.core.utils.TimezoneMapper.TimezoneExt;
 import com.esofthead.mycollab.eventmanager.EventBus;
@@ -39,22 +37,22 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.HistoryViewManager;
 import com.esofthead.mycollab.vaadin.mvp.NullViewState;
 import com.esofthead.mycollab.vaadin.mvp.ViewState;
+import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.CountryComboBox;
 import com.esofthead.mycollab.vaadin.ui.DateComboboxSelectionField;
-import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
+import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.esofthead.mycollab.vaadin.ui.TimeZoneSelectionField;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
-import com.vaadin.data.Item;
 import com.vaadin.data.Property;
-import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
+import com.vaadin.ui.CustomField;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Layout;
@@ -63,19 +61,20 @@ import com.vaadin.ui.TextField;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 @ViewComponent
 public class UserAddViewImpl extends AbstractPageView implements UserAddView {
 
 	private static final long serialVersionUID = 1L;
-	private UserAddViewImpl.AdvanceEditForm advanceEditForm;
+	private UserAddViewImpl.AdvancedEditUserForm advanceEditForm;
 	private SimpleUser user;
 	private DateComboboxSelectionField cboDateBirthday;
 	private TimeZoneSelectionField cboTimezone;
 
 	public UserAddViewImpl() {
 		super();
-		this.advanceEditForm = new UserAddViewImpl.AdvanceEditForm(true);
+		this.advanceEditForm = new UserAddViewImpl.AdvancedEditUserForm(true);
 		this.addComponent(this.advanceEditForm);
 	}
 
@@ -89,8 +88,7 @@ public class UserAddViewImpl extends AbstractPageView implements UserAddView {
 			this.user.setLastname(" ");
 			this.user.setFirstname(" ");
 		}
-		this.advanceEditForm.setItemDataSource(new BeanItem<SimpleUser>(
-				this.user));
+		this.advanceEditForm.setBean(this.user);
 	}
 
 	@Override
@@ -103,13 +101,13 @@ public class UserAddViewImpl extends AbstractPageView implements UserAddView {
 		return this.cboTimezone.getTimeZone();
 	}
 
-	public class AdvanceEditForm extends AdvancedEditBeanForm<SimpleUser> {
+	public class AdvancedEditUserForm extends AdvancedEditBeanForm<SimpleUser> {
 
 		private static final long serialVersionUID = 1L;
 		private Button moreInfoBtn;
 		private Boolean isLoadEdit;
 
-		public AdvanceEditForm(Boolean isLoadEdit) {
+		public AdvancedEditUserForm(Boolean isLoadEdit) {
 			this.isLoadEdit = isLoadEdit;
 		}
 
@@ -118,11 +116,12 @@ public class UserAddViewImpl extends AbstractPageView implements UserAddView {
 		}
 
 		@Override
-		public void setItemDataSource(final Item newDataSource) {
-			this.setFormLayoutFactory(new UserAddViewImpl.AdvanceEditForm.FormLayoutFactory(
+		public void setBean(final SimpleUser newDataSource) {
+			this.setFormLayoutFactory(new UserAddViewImpl.AdvancedEditUserForm.FormLayoutFactory(
 					isLoadEdit));
-			this.setFormFieldFactory(new UserAddViewImpl.AdvanceEditForm.EditFormFieldFactory());
-			super.setItemDataSource(newDataSource);
+			this.setBeanFormFieldFactory(new EditFormFieldFactory(
+					advanceEditForm));
+			super.setBean(newDataSource);
 		}
 
 		private class FormLayoutFactory extends ProfileFormLayoutFactory {
@@ -143,7 +142,7 @@ public class UserAddViewImpl extends AbstractPageView implements UserAddView {
 			private Layout createButtonControls() {
 				final HorizontalLayout controlPanel = new HorizontalLayout();
 				final Layout controlButtons = (new EditFormControlsGenerator<SimpleUser>(
-						UserAddViewImpl.AdvanceEditForm.this))
+						UserAddViewImpl.AdvancedEditUserForm.this))
 						.createButtonControls();
 				controlButtons.setSizeUndefined();
 				controlPanel.addComponent(controlButtons);
@@ -171,7 +170,7 @@ public class UserAddViewImpl extends AbstractPageView implements UserAddView {
 								@Override
 								public void buttonClick(ClickEvent event) {
 									UserAddViewImpl.this.user = new SimpleUser();
-									UserAddViewImpl.this.advanceEditForm = new UserAddViewImpl.AdvanceEditForm(
+									UserAddViewImpl.this.advanceEditForm = new UserAddViewImpl.AdvancedEditUserForm(
 											true);
 									advanceEditForm
 											.addFormHandler(new EditFormHandler<SimpleUser>() {
@@ -215,8 +214,7 @@ public class UserAddViewImpl extends AbstractPageView implements UserAddView {
 												}
 											});
 									UserAddViewImpl.this.advanceEditForm
-											.setItemDataSource(new BeanItem<SimpleUser>(
-													UserAddViewImpl.this.user));
+											.setBean(UserAddViewImpl.this.user);
 									UserAddViewImpl.this.removeAllComponents();
 									UserAddViewImpl.this
 											.addComponent(advanceEditForm);
@@ -233,14 +231,16 @@ public class UserAddViewImpl extends AbstractPageView implements UserAddView {
 			}
 		}
 
-		private class EditFormFieldFactory extends DefaultEditFormFieldFactory {
-
+		private class EditFormFieldFactory extends
+				AbstractBeanFieldGroupEditFieldFactory<SimpleUser> {
 			private static final long serialVersionUID = 1L;
 
+			public EditFormFieldFactory(GenericBeanForm<SimpleUser> form) {
+				super(form);
+			}
+
 			@Override
-			protected Field onCreateField(final Item item,
-					final Object propertyId,
-					final com.vaadin.ui.Component uiContext) {
+			protected Field<?> onCreateField(final Object propertyId) {
 
 				if (propertyId.equals("roleid")) {
 					AdminRoleSelectionField roleSelectionField = new AdminRoleSelectionField();

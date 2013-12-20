@@ -32,14 +32,13 @@ import com.esofthead.mycollab.module.project.service.ProjectTaskListService;
 import com.esofthead.mycollab.module.project.view.milestone.MilestoneComboBox;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberComboBox;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
-import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
+import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
-import com.vaadin.data.Item;
-import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -60,7 +59,7 @@ public class TaskGroupAddWindow extends Window {
 	private static final long serialVersionUID = 1L;
 	private final TaskGroupDisplayView taskView;
 	private SimpleTaskList taskList;
-	private TaskGroupAddWindow.TaskListForm taskListForm;
+	private TaskListForm taskListForm;
 
 	public TaskGroupAddWindow(final TaskGroupDisplayView taskView,
 			final SimpleTaskList taskList) {
@@ -80,8 +79,8 @@ public class TaskGroupAddWindow extends Window {
 
 	private void initUI() {
 		this.setWidth("800px");
-		this.taskListForm = new TaskGroupAddWindow.TaskListForm();
-		this.taskListForm.setItemDataSource(new BeanItem(this.taskList));
+		this.taskListForm = new TaskListForm();
+		this.taskListForm.setBean(this.taskList);
 		this.setContent(this.taskListForm);
 		((VerticalLayout) this.getContent()).setMargin(false);
 
@@ -96,10 +95,11 @@ public class TaskGroupAddWindow extends Window {
 		private static final long serialVersionUID = 1L;
 
 		@Override
-		public void setItemDataSource(final Item newDataSource) {
-			this.setFormLayoutFactory(new TaskGroupAddWindow.TaskListForm.TaskListFormLayoutFactory());
-			this.setFormFieldFactory(new TaskGroupAddWindow.TaskListForm.EditFormFieldFactory());
-			super.setItemDataSource(newDataSource);
+		public void setBean(final TaskList newDataSource) {
+			this.setFormLayoutFactory(new TaskListFormLayoutFactory());
+			this.setBeanFormFieldFactory(new EditFormFieldFactory(
+					TaskListForm.this));
+			super.setBean(newDataSource);
 		}
 
 		private class TaskListFormLayoutFactory implements IFormLayoutFactory {
@@ -235,14 +235,17 @@ public class TaskGroupAddWindow extends Window {
 			}
 		}
 
-		private class EditFormFieldFactory extends DefaultEditFormFieldFactory {
+		private class EditFormFieldFactory extends
+				AbstractBeanFieldGroupEditFieldFactory<TaskList> {
 
 			private static final long serialVersionUID = 1L;
 
+			public EditFormFieldFactory(GenericBeanForm<TaskList> form) {
+				super(form);
+			}
+
 			@Override
-			protected Field onCreateField(final Item item,
-					final Object propertyId,
-					final com.vaadin.ui.Component uiContext) {
+			protected Field<?> onCreateField(final Object propertyId) {
 				if (propertyId.equals("description")) {
 					final TextArea area = new TextArea();
 					area.setNullRepresentation("");
