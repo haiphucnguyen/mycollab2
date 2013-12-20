@@ -9,9 +9,7 @@ import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.TabsheetLazyLoadComp;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.JavaScript;
 import com.vaadin.ui.UI;
-import com.vaadin.ui.Window;
 
 /**
  * 
@@ -46,23 +44,6 @@ class AccountReadComp extends AbstractAccountPreviewComp {
 	protected AdvancedPreviewBeanForm<SimpleAccount> initPreviewForm() {
 		return new AdvancedPreviewBeanForm<SimpleAccount>() {
 			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void doPrint() {
-				// Create a window that contains what you want to print
-				final Window window = new Window("Window to Print");
-
-				final AbstractAccountPreviewComp printView = new AccountPrintComp();
-				printView.previewItem(beanItem);
-				window.setContent(printView);
-
-				UI.getCurrent().addWindow(window);
-
-				// Print automatically when the window opens
-				JavaScript.getCurrent().execute(
-						"setTimeout(function() {"
-								+ "  print(); self.close();}, 0);");
-			}
 
 			@Override
 			public void showHistory() {

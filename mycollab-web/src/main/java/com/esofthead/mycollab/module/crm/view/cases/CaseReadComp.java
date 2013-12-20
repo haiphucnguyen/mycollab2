@@ -9,10 +9,8 @@ import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.JavaScript;
 import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.UI;
-import com.vaadin.ui.Window;
 
 /**
  * 
@@ -27,23 +25,6 @@ class CaseReadComp extends AbstractCasePreviewComp {
 	protected AdvancedPreviewBeanForm<SimpleCase> initPreviewForm() {
 		return new AdvancedPreviewBeanForm<SimpleCase>() {
 			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void doPrint() {
-				// Create a window that contains what you want to print
-				Window window = new Window("Window to Print");
-
-				CasePrintComp printView = new CasePrintComp();
-				printView.previewItem(beanItem);
-				window.setContent(printView);
-
-				UI.getCurrent().addWindow(window);
-
-				// Print automatically when the window opens
-				JavaScript.getCurrent().execute(
-						"setTimeout(function() {"
-								+ "  print(); self.close();}, 0);");
-			}
 
 			@Override
 			public void showHistory() {

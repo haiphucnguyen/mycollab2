@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.vaadin.ui;
 
 import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.core.arguments.NotBindable;
 import com.esofthead.mycollab.core.utils.ClassUtils;
 import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
@@ -34,8 +35,7 @@ public abstract class AbstractBeanFieldGroupEditFieldFactory<B> implements
 		Class<?> beanClass = bean.getClass();
 		java.lang.reflect.Field[] fields = ClassUtils.getAllFields(beanClass);
 		for (java.lang.reflect.Field field : fields) {
-			if ("selected".equals(field.getName())
-					|| "extraData".equals(field.getName())) {
+			if (field.getAnnotation(NotBindable.class) != null) {
 				continue;
 			}
 			bindField(field.getName());

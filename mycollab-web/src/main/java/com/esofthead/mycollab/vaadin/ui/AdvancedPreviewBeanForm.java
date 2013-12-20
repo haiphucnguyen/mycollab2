@@ -27,7 +27,7 @@ import com.esofthead.mycollab.vaadin.events.PreviewFormHandler;
  * 
  * @param <B>
  * @author MyCollab Ltd
- * @since 2.0
+ * @since 1.0
  */
 public class AdvancedPreviewBeanForm<B> extends GenericBeanForm<B> implements
 		HasPreviewFormHandlers<B> {
@@ -62,11 +62,6 @@ public class AdvancedPreviewBeanForm<B> extends GenericBeanForm<B> implements
 				handler.onEdit(bean);
 			}
 		}
-	}
-
-	public void doPrint() {
-		throw new MyCollabException(
-				"This method must be override by sub classes");
 	}
 
 	public void showHistory() {

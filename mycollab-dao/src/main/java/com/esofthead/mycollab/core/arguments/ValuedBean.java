@@ -21,14 +21,17 @@ import java.io.Serializable;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  * 
  */
 public class ValuedBean implements Cloneable, Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
+	@NotBindable
 	private boolean selected = false;
-	
+
+	@NotBindable
 	private Object extraData;
 
 	public Object getExtraData() {

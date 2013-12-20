@@ -7,9 +7,7 @@ import com.esofthead.mycollab.module.project.domain.SimpleProblem;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.ProjectPreviewFormControlsGenerator;
 import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.JavaScript;
 import com.vaadin.ui.UI;
-import com.vaadin.ui.Window;
 
 /**
  * 
@@ -24,23 +22,6 @@ class ProblemReadComp extends AbstractProblemPreviewComp {
 	protected AdvancedPreviewBeanForm<SimpleProblem> initPreviewForm() {
 		return new AdvancedPreviewBeanForm<SimpleProblem>() {
 			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void doPrint() {
-				// Create a window that contains what you want to print
-				final Window window = new Window("Window to Print");
-
-				final ProblemPrintComp printView = new ProblemPrintComp();
-				printView.previewItem(beanItem);
-				window.setContent(printView);
-
-				UI.getCurrent().addWindow(window);
-
-				// Print automatically when the window opens
-				JavaScript.getCurrent().execute(
-						"setTimeout(function() {"
-								+ "  print(); self.close();}, 0);");
-			}
 
 			@Override
 			public void showHistory() {

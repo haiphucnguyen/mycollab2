@@ -38,7 +38,8 @@ import java.util.Collection;
 /**
  * 
  * @author MyCollab Ltd.
- *
+ * @since 1.0
+ * 
  * @param <T>
  */
 public class SetSearchField<T> extends SearchField {

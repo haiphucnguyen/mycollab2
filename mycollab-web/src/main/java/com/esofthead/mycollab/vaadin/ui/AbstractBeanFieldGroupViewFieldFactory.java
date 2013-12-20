@@ -4,6 +4,7 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.esofthead.mycollab.core.arguments.NotBindable;
 import com.esofthead.mycollab.core.utils.ClassUtils;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormViewField;
 import com.vaadin.ui.Field;
@@ -32,8 +33,7 @@ public abstract class AbstractBeanFieldGroupViewFieldFactory<B> implements
 		Class<?> beanClass = bean.getClass();
 		java.lang.reflect.Field[] fields = ClassUtils.getAllFields(beanClass);
 		for (java.lang.reflect.Field field : fields) {
-			if ("selected".equals(field.getName())
-					|| "extraData".equals(field.getName())) {
+			if (field.getAnnotation(NotBindable.class) != null) {
 				continue;
 			}
 			bindField(field.getName());

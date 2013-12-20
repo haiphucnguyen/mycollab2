@@ -39,7 +39,6 @@ public class ProjectPreviewFormControlsGenerator<T> {
 	private Button previousItem;
 	private Button nextItemBtn;
 	private Button historyBtn;
-	private Button printBtn;
 	private Button assignBtn;
 	private boolean haveAssignButton;
 	private HorizontalLayout editButtons;
@@ -191,21 +190,6 @@ public class ProjectPreviewFormControlsGenerator<T> {
 		layout.addComponent(historyBtn);
 		layout.setComponentAlignment(historyBtn, Alignment.MIDDLE_RIGHT);
 
-		printBtn = new Button(null, new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void buttonClick(final ClickEvent event) {
-				previewForm.doPrint();
-			}
-		});
-
-		printBtn.setIcon(MyCollabResource.newResource("icons/16/print.png"));
-		printBtn.setStyleName("link");
-		printBtn.setDescription("Print this page");
-		layout.addComponent(printBtn);
-		layout.setComponentAlignment(printBtn, Alignment.MIDDLE_RIGHT);
-
 		if (permissionItem != null) {
 			final boolean canRead = CurrentProjectVariables
 					.canRead(permissionItem);
@@ -222,7 +206,6 @@ public class ProjectPreviewFormControlsGenerator<T> {
 			editBtn.setEnabled(canWrite);
 			cloneBtn.setEnabled(canWrite);
 			deleteBtn.setEnabled(canAccess);
-			printBtn.setEnabled(canRead);
 			historyBtn.setEnabled(canRead);
 		}
 		return layout;

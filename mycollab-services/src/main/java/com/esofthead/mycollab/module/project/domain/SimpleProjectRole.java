@@ -19,8 +19,15 @@ package com.esofthead.mycollab.module.project.domain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.esofthead.mycollab.core.arguments.NotBindable;
 import com.esofthead.mycollab.security.PermissionMap;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class SimpleProjectRole extends ProjectRole {
 	private static final long serialVersionUID = 1L;
 
@@ -28,6 +35,8 @@ public class SimpleProjectRole extends ProjectRole {
 			.getLogger(SimpleProjectRole.class);
 
 	private String permissionVal;
+
+	@NotBindable
 	private PermissionMap permissionMap;
 
 	public String getPermissionVal() {

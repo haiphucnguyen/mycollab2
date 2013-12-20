@@ -142,12 +142,8 @@ public class UserReadViewImpl extends AbstractPageView implements UserReadView {
 		}
 
 		@Override
-		public void doPrint() {
-			// TODO: inform not support feature right now
-		}
-
-		@Override
 		public void showHistory() {
+			// TODO: show user edit history
 		}
 
 		class FormLayoutFactory extends ProfileFormLayoutFactory {
