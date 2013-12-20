@@ -41,7 +41,7 @@ public class ProjectRoleReadViewImpl extends AbstractPageView implements
 
 	public ProjectRoleReadViewImpl() {
 		super();
-		this.setMargin(new MarginInfo(false, false, true, false));
+		this.setMargin(new MarginInfo(true, false, true, false));
 		this.roleReadComp = new ProjectRoleReadComp();
 		this.addComponent(this.roleReadComp);
 	}
