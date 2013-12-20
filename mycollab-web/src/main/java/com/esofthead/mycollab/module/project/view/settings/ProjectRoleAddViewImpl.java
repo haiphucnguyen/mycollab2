@@ -29,7 +29,6 @@ import com.esofthead.mycollab.module.project.domain.SimpleProjectRole;
 import com.esofthead.mycollab.module.project.ui.components.AbstractEditItemComp;
 import com.esofthead.mycollab.module.user.view.component.AccessPermissionComboBox;
 import com.esofthead.mycollab.security.PermissionMap;
-import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
@@ -61,16 +60,6 @@ public class ProjectRoleAddViewImpl extends AbstractEditItemComp<ProjectRole>
 	private final Map<String, AccessPermissionComboBox> permissionControlsMap = new HashMap<String, AccessPermissionComboBox>();
 
 	@Override
-	public void editItem(final ProjectRole item) {
-		editForm.setBean(item);
-	}
-
-	@Override
-	public HasEditFormHandlers<ProjectRole> getEditFormHandlers() {
-		return this.editForm;
-	}
-
-	@Override
 	protected String initFormTitle() {
 		return (beanItem.getId() == null) ? "Create Role" : beanItem
 				.getRolename();
@@ -89,6 +78,7 @@ public class ProjectRoleAddViewImpl extends AbstractEditItemComp<ProjectRole>
 		controlButtons.setSizeUndefined();
 		controlPanel.addComponent(controlButtons);
 		controlPanel.setWidth("100%");
+		controlPanel.setMargin(true);
 		controlPanel.setComponentAlignment(controlButtons,
 				Alignment.MIDDLE_CENTER);
 		return controlPanel;

@@ -18,11 +18,13 @@ package com.esofthead.mycollab.module.file.service;
 
 import java.awt.image.BufferedImage;
 
-import com.esofthead.mycollab.core.dist.NotMobile;
 import com.esofthead.mycollab.core.persistence.service.IService;
 
 /**
  * User avatar service which is responsible of uploading and getting avatar
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
  * 
  */
 public interface UserAvatarService extends IService {
@@ -45,6 +47,5 @@ public interface UserAvatarService extends IService {
 	 *            stream to avoid overlap or caching old avatar of system.
 	 * @return
 	 */
-	@NotMobile
 	String uploadAvatar(BufferedImage image, String username, String avatarId);
 }

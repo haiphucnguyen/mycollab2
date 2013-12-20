@@ -104,8 +104,20 @@ public class ComponentReadViewImpl extends
 
 	@Override
 	protected AbstractBeanFieldGroupViewFieldFactory<SimpleComponent> initBeanFormFieldFactory() {
-		// TODO Auto-generated method stub
-		return null;
+		return new AbstractBeanFieldGroupViewFieldFactory<SimpleComponent>(
+				previewForm) {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected Field<?> onCreateField(final Object propertyId) {
+				if (propertyId.equals("userlead")) {
+					return new ProjectUserFormLinkField(beanItem.getUserlead(),
+							beanItem.getUserLeadAvatarId(),
+							beanItem.getUserLeadFullName());
+				}
+				return null;
+			}
+		};
 	}
 
 	@Override

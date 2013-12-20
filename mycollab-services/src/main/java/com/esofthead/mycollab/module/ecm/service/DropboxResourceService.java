@@ -16,9 +16,12 @@
  */
 package com.esofthead.mycollab.module.ecm.service;
 
-import com.esofthead.mycollab.core.dist.NotMobile;
-
-@NotMobile
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public interface DropboxResourceService extends ExternalResourceService {
 
 }

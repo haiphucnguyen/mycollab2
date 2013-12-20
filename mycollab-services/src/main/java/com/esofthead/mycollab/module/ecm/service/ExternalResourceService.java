@@ -19,7 +19,6 @@ package com.esofthead.mycollab.module.ecm.service;
 import java.io.InputStream;
 import java.util.List;
 
-import com.esofthead.mycollab.core.dist.NotMobile;
 import com.esofthead.mycollab.core.persistence.service.IService;
 import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.module.ecm.domain.ExternalDrive;
@@ -27,7 +26,12 @@ import com.esofthead.mycollab.module.ecm.domain.ExternalFolder;
 import com.esofthead.mycollab.module.ecm.domain.Folder;
 import com.esofthead.mycollab.module.ecm.domain.Resource;
 
-@NotMobile
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public interface ExternalResourceService extends IService {
 	/**
 	 * 
