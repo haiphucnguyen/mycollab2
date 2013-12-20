@@ -18,6 +18,12 @@ package com.esofthead.mycollab.module.project.view.bug;
 
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public interface IBugReportDisplayContainer {
 	void displayBugReports();
 

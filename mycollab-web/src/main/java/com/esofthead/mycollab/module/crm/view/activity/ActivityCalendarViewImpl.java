@@ -36,9 +36,10 @@ import com.esofthead.mycollab.module.crm.view.activity.ActivityEventProvider.Crm
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
+import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
-import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
+import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.vaadin.ui.StandupStyleCalendarExp;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -66,10 +67,8 @@ import com.vaadin.addon.calendar.ui.handler.BasicBackwardHandler;
 import com.vaadin.addon.calendar.ui.handler.BasicDateClickHandler;
 import com.vaadin.addon.calendar.ui.handler.BasicForwardHandler;
 import com.vaadin.addon.calendar.ui.handler.BasicWeekClickHandler;
-import com.vaadin.data.Item;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
-import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -418,7 +417,7 @@ public class ActivityCalendarViewImpl extends AbstractPageView implements
 			VerticalLayout contentLayout = new VerticalLayout();
 			this.setContent(contentLayout);
 			editForm = new EditForm();
-			editForm.setItemDataSource(new BeanItem<MeetingWithBLOBs>(meeting));
+			editForm.setBean(meeting);
 			contentLayout.addComponent(editForm);
 		}
 
@@ -427,10 +426,11 @@ public class ActivityCalendarViewImpl extends AbstractPageView implements
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void setItemDataSource(Item newDataSource) {
+			public void setBean(MeetingWithBLOBs newDataSource) {
 				this.setFormLayoutFactory(new FormLayoutFactory());
-				this.setFormFieldFactory(new EditFormFieldFactory());
-				super.setItemDataSource(newDataSource);
+				this.setBeanFormFieldFactory(new EditFormFieldFactory(
+						EditForm.this));
+				super.setBean(newDataSource);
 			}
 
 			private class FormLayoutFactory extends MeetingFormLayoutFactory {
@@ -508,13 +508,16 @@ public class ActivityCalendarViewImpl extends AbstractPageView implements
 			}
 
 			private class EditFormFieldFactory extends
-					DefaultEditFormFieldFactory {
-
+					AbstractBeanFieldGroupEditFieldFactory<MeetingWithBLOBs> {
 				private static final long serialVersionUID = 1L;
 
+				public EditFormFieldFactory(
+						GenericBeanForm<MeetingWithBLOBs> form) {
+					super(form);
+				}
+
 				@Override
-				protected Field onCreateField(Item item, Object propertyId,
-						com.vaadin.ui.Component uiContext) {
+				protected Field<?> onCreateField(Object propertyId) {
 					if (propertyId.equals("subject")) {
 						TextField tf = new TextField();
 						tf.setNullRepresentation("");
@@ -866,6 +869,6 @@ public class ActivityCalendarViewImpl extends AbstractPageView implements
 	@Override
 	public void displayCalendars() {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

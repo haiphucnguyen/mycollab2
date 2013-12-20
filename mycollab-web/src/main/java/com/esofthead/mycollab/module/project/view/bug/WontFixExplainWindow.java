@@ -35,15 +35,14 @@ import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.service.BugRelatedItemService;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
-import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
+import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
-import com.vaadin.data.Item;
-import com.vaadin.data.util.BeanItem;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -58,6 +57,7 @@ import com.vaadin.ui.Window;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 @SuppressWarnings("serial")
 public class WontFixExplainWindow extends Window {
@@ -78,7 +78,7 @@ public class WontFixExplainWindow extends Window {
 		contentLayout.setMargin(new MarginInfo(false, false, true, false));
 		this.editForm = new EditForm();
 		contentLayout.addComponent(this.editForm);
-		this.editForm.setItemDataSource(new BeanItem<SimpleBug>(bug));
+		this.editForm.setBean(bug);
 		this.setContent(contentLayout);
 		this.center();
 	}
@@ -89,10 +89,10 @@ public class WontFixExplainWindow extends Window {
 		private RichTextArea commentArea;
 
 		@Override
-		public void setItemDataSource(final Item newDataSource) {
+		public void setBean(final BugWithBLOBs newDataSource) {
 			this.setFormLayoutFactory(new FormLayoutFactory());
-			this.setFormFieldFactory(new EditFormFieldFactory());
-			super.setItemDataSource(newDataSource);
+			this.setBeanFormFieldFactory(new EditFormFieldFactory(EditForm.this));
+			super.setBean(newDataSource);
 		}
 
 		class FormLayoutFactory implements IFormLayoutFactory {
@@ -202,7 +202,8 @@ public class WontFixExplainWindow extends Window {
 			}
 
 			@Override
-			public void attachField(final Object propertyId, final Field field) {
+			public void attachField(final Object propertyId,
+					final Field<?> field) {
 				if (propertyId.equals("resolution")) {
 					this.informationLayout.addComponent(field, "Resolution", 0,
 							0);
@@ -223,14 +224,16 @@ public class WontFixExplainWindow extends Window {
 			}
 		}
 
-		private class EditFormFieldFactory extends DefaultEditFormFieldFactory {
-
+		private class EditFormFieldFactory extends
+				AbstractBeanFieldGroupEditFieldFactory<BugWithBLOBs> {
 			private static final long serialVersionUID = 1L;
 
+			public EditFormFieldFactory(GenericBeanForm<BugWithBLOBs> form) {
+				super(form);
+			}
+
 			@Override
-			protected Field onCreateField(final Item item,
-					final Object propertyId,
-					final com.vaadin.ui.Component uiContext) {
+			protected Field<?> onCreateField(final Object propertyId) {
 				if (propertyId.equals("resolution")) {
 					return BugResolutionComboBox.getInstanceForWontFixWindow();
 				} else if (propertyId.equals("assignuser")) {

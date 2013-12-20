@@ -33,14 +33,13 @@ import com.esofthead.mycollab.module.tracker.domain.BugWithBLOBs;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
-import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
+import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
-import com.vaadin.data.Item;
-import com.vaadin.data.util.BeanItem;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -54,6 +53,7 @@ import com.vaadin.ui.Window;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class AssignBugWindow extends Window {
 	private static final long serialVersionUID = 1L;
@@ -71,7 +71,7 @@ public class AssignBugWindow extends Window {
 		contentLayout.setWidth("750px");
 		this.editForm = new EditForm();
 		contentLayout.addComponent(this.editForm);
-		this.editForm.setItemDataSource(new BeanItem<SimpleBug>(bug));
+		this.editForm.setBean(bug);
 		contentLayout.setMargin(new MarginInfo(false, false, true, false));
 
 		this.setContent(contentLayout);
@@ -84,10 +84,10 @@ public class AssignBugWindow extends Window {
 		private RichTextArea commentArea;
 
 		@Override
-		public void setItemDataSource(final Item newDataSource) {
+		public void setBean(final BugWithBLOBs item) {
 			this.setFormLayoutFactory(new FormLayoutFactory());
-			this.setFormFieldFactory(new EditFormFieldFactory());
-			super.setItemDataSource(newDataSource);
+			this.setBeanFormFieldFactory(new EditFormFieldFactory(EditForm.this));
+			super.setBean(item);
 		}
 
 		class FormLayoutFactory implements IFormLayoutFactory {
@@ -201,14 +201,16 @@ public class AssignBugWindow extends Window {
 			}
 		}
 
-		private class EditFormFieldFactory extends DefaultEditFormFieldFactory {
-
+		private class EditFormFieldFactory extends
+				AbstractBeanFieldGroupEditFieldFactory<BugWithBLOBs> {
 			private static final long serialVersionUID = 1L;
 
+			public EditFormFieldFactory(GenericBeanForm<BugWithBLOBs> form) {
+				super(form);
+			}
+
 			@Override
-			protected Field onCreateField(final Item item,
-					final Object propertyId,
-					final com.vaadin.ui.Component uiContext) {
+			protected Field<?> onCreateField(final Object propertyId) {
 				if (propertyId.equals("assignuser")) {
 					return new ProjectMemberComboBox();
 				} else if (propertyId.equals("comment")) {

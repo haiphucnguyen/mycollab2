@@ -20,17 +20,20 @@
  */
 package com.esofthead.mycollab.module.project.view.bug;
 
+import com.esofthead.mycollab.module.project.ui.components.AbstractEditItemComp;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberComboBox;
 import com.esofthead.mycollab.module.tracker.domain.Component;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
-import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
+import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
-import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
+import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
+import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
-import com.vaadin.data.Item;
-import com.vaadin.data.util.BeanItem;
+import com.esofthead.mycollab.web.MyCollabResource;
+import com.vaadin.server.Resource;
 import com.vaadin.ui.Alignment;
+import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Layout;
@@ -40,103 +43,86 @@ import com.vaadin.ui.TextField;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 @ViewComponent
-public class ComponentAddViewImpl extends AbstractPageView implements
-		ComponentAddView {
+public class ComponentAddViewImpl extends AbstractEditItemComp<Component>
+		implements ComponentAddView {
 
 	private static final long serialVersionUID = 1L;
-	private final EditForm editForm;
-	private Component component;
 
-	public ComponentAddViewImpl() {
-		super();
-		this.editForm = new EditForm();
-		this.addComponent(this.editForm);
-		this.setMargin(true);
+	@Override
+	protected String initFormTitle() {
+		return (beanItem.getId() == null) ? "Create Component" : beanItem
+				.getComponentname();
 	}
 
 	@Override
-	public void editItem(final Component item) {
-		this.component = item;
-		this.editForm
-				.setItemDataSource(new BeanItem<Component>(this.component));
+	protected Resource initFormIconResource() {
+		return MyCollabResource.newResource("icons/22/project/menu_bug.png");
 	}
 
-	private class EditForm extends AdvancedEditBeanForm<Component> {
+	@Override
+	protected ComponentContainer createButtonControls() {
+		final HorizontalLayout controlPanel = new HorizontalLayout();
+		final Layout controlButtons = (new EditFormControlsGenerator<Component>(
+				editForm)).createButtonControls();
+		controlButtons.setSizeUndefined();
+		controlPanel.addComponent(controlButtons);
+		controlPanel.setWidth("100%");
+		controlPanel.setComponentAlignment(controlButtons,
+				Alignment.MIDDLE_CENTER);
+		return controlPanel;
+	}
 
-		private static final long serialVersionUID = 1L;
+	@Override
+	protected AdvancedEditBeanForm<Component> initPreviewForm() {
+		return new AdvancedEditBeanForm<Component>();
+	}
 
-		@Override
-		public void setItemDataSource(final Item newDataSource) {
-			this.setFormLayoutFactory(new FormLayoutFactory());
-			this.setFormFieldFactory(new EditFormFieldFactory());
-			super.setItemDataSource(newDataSource);
-		}
+	@Override
+	protected IFormLayoutFactory initFormLayoutFactory() {
+		return new ComponentFormLayoutFactory();
+	}
 
-		private class FormLayoutFactory extends ComponentFormLayoutFactory {
-
-			private static final long serialVersionUID = 1L;
-
-			public FormLayoutFactory() {
-				super("Create Component");
-			}
-
-			private Layout createButtonControls() {
-				final HorizontalLayout controlPanel = new HorizontalLayout();
-				final Layout controlButtons = (new EditFormControlsGenerator<Component>(
-						EditForm.this)).createButtonControls();
-				controlButtons.setSizeUndefined();
-				controlPanel.addComponent(controlButtons);
-				controlPanel.setWidth("100%");
-				controlPanel.setComponentAlignment(controlButtons,
-						Alignment.MIDDLE_CENTER);
-				return controlPanel;
-			}
-
-			@Override
-			protected Layout createTopPanel() {
-				return this.createButtonControls();
-			}
-
-			@Override
-			protected Layout createBottomPanel() {
-				return this.createButtonControls();
-			}
-		}
-
-		private class EditFormFieldFactory extends DefaultEditFormFieldFactory {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected Field onCreateField(final Item item,
-					final Object propertyId,
-					final com.vaadin.ui.Component uiContext) {
-
-				if (propertyId.equals("componentname")) {
-					final TextField tf = new TextField();
-					tf.setNullRepresentation("");
-					tf.setRequired(true);
-					tf.setRequiredError("Please enter a Component Name");
-					return tf;
-				} else if (propertyId.equals("description")) {
-					final TextArea field = new TextArea("", "");
-					field.setNullRepresentation("");
-					return field;
-				} else if (propertyId.equals("userlead")) {
-					final ProjectMemberComboBox userBox = new ProjectMemberComboBox();
-					return userBox;
-				}
-
-				return null;
-			}
-		}
+	@Override
+	protected AbstractBeanFieldGroupEditFieldFactory<Component> initBeanFormFieldFactory() {
+		return new EditFormFieldFactory(editForm);
 	}
 
 	@Override
 	public HasEditFormHandlers<Component> getEditFormHandlers() {
 		return this.editForm;
+	}
+
+	private class EditFormFieldFactory extends
+			AbstractBeanFieldGroupEditFieldFactory<Component> {
+		private static final long serialVersionUID = 1L;
+
+		public EditFormFieldFactory(GenericBeanForm<Component> form) {
+			super(form);
+		}
+
+		@Override
+		protected Field<?> onCreateField(final Object propertyId) {
+
+			if (propertyId.equals("componentname")) {
+				final TextField tf = new TextField();
+				tf.setNullRepresentation("");
+				tf.setRequired(true);
+				tf.setRequiredError("Please enter a Component Name");
+				return tf;
+			} else if (propertyId.equals("description")) {
+				final TextArea field = new TextArea("", "");
+				field.setNullRepresentation("");
+				return field;
+			} else if (propertyId.equals("userlead")) {
+				final ProjectMemberComboBox userBox = new ProjectMemberComboBox();
+				return userBox;
+			}
+
+			return null;
+		}
 	}
 
 }

@@ -5,105 +5,102 @@ import java.util.GregorianCalendar;
 import com.esofthead.mycollab.module.project.domain.StandupReportWithBLOBs;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
+import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
-import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
+import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
-import com.vaadin.data.Item;
-import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.RichTextArea;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @ViewComponent
-public class StandupAddViewImpl extends AbstractPageView implements StandupAddView {
+public class StandupAddViewImpl extends AbstractPageView implements
+		StandupAddView {
 
-    private static final long serialVersionUID = 1L;
-    private final EditForm editForm;
+	private static final long serialVersionUID = 1L;
+	private final AdvancedEditBeanForm<StandupReportWithBLOBs> editForm;
 
-    public StandupAddViewImpl() {
-        super();
-        this.setMargin(true);
-        this.editForm = new EditForm();
-        this.addComponent(this.editForm);
-    }
+	public StandupAddViewImpl() {
+		super();
+		this.setMargin(true);
+		this.editForm = new AdvancedEditBeanForm<StandupReportWithBLOBs>();
+		this.addComponent(this.editForm);
+	}
 
-    @Override
-    public void editItem(final StandupReportWithBLOBs StandupReport) {
-        this.editForm.setItemDataSource(new BeanItem<StandupReportWithBLOBs>(
-                StandupReport));
-    }
+	@Override
+	public void editItem(final StandupReportWithBLOBs standupReport) {
+		this.editForm.setFormLayoutFactory(new FormLayoutFactory());
+		this.editForm
+				.setBeanFormFieldFactory(new EditFormFieldFactory(editForm));
+		this.editForm.setBean(standupReport);
+	}
 
-    private class EditForm extends AdvancedEditBeanForm<StandupReportWithBLOBs> {
+	private class EditFormFieldFactory extends
+			AbstractBeanFieldGroupEditFieldFactory<StandupReportWithBLOBs> {
+		private static final long serialVersionUID = 1L;
 
-        private static final long serialVersionUID = 1L;
+		public EditFormFieldFactory(GenericBeanForm<StandupReportWithBLOBs> form) {
+			super(form);
+		}
 
-        @Override
-        public void setItemDataSource(final Item newDataSource) {
-            this.setFormLayoutFactory(new FormLayoutFactory());
-            this.setFormFieldFactory(new EditFormFieldFactory());
-            super.setItemDataSource(newDataSource);
-        }
+		@Override
+		protected Field<?> onCreateField(final Object propertyId) {
+			if (propertyId.equals("whatlastday")
+					|| propertyId.equals("whattoday")
+					|| propertyId.equals("whatproblem")) {
+				final RichTextArea richText = new RichTextArea();
+				richText.setWidth("100%");
+				return richText;
+			}
+			return null;
+		}
+	}
 
-        class FormLayoutFactory extends StandupReportFormLayoutFactory {
+	class FormLayoutFactory extends StandupReportFormLayoutFactory {
 
-            private static final long serialVersionUID = 1L;
+		private static final long serialVersionUID = 1L;
 
-            public FormLayoutFactory() {
-                super("Create Standup Report for "
-                        + AppContext.formatDate(new GregorianCalendar()
-                                .getTime()));
-            }
+		public FormLayoutFactory() {
+			super("Create Standup Report for "
+					+ AppContext.formatDate(new GregorianCalendar().getTime()));
+		}
 
-            private Layout createButtonControls() {
-                final HorizontalLayout controlPanel = new HorizontalLayout();
-                final Layout controlButtons = (new EditFormControlsGenerator<StandupReportWithBLOBs>(
-                        EditForm.this)).createButtonControls(true, false, true);
-                controlButtons.setSizeUndefined();
-                controlPanel.addComponent(controlButtons);
-                controlPanel.setWidth("100%");
-                controlPanel.setComponentAlignment(controlButtons,
-                        Alignment.MIDDLE_CENTER);
-                return controlPanel;
-            }
+		private Layout createButtonControls() {
+			final HorizontalLayout controlPanel = new HorizontalLayout();
+			final Layout controlButtons = (new EditFormControlsGenerator<StandupReportWithBLOBs>(
+					editForm)).createButtonControls(true, false, true);
+			controlButtons.setSizeUndefined();
+			controlPanel.addComponent(controlButtons);
+			controlPanel.setWidth("100%");
+			controlPanel.setComponentAlignment(controlButtons,
+					Alignment.MIDDLE_CENTER);
+			return controlPanel;
+		}
 
-            @Override
-            protected Layout createTopPanel() {
-                return this.createButtonControls();
-            }
+		@Override
+		protected Layout createTopPanel() {
+			return this.createButtonControls();
+		}
 
-            @Override
-            protected Layout createBottomPanel() {
-                return this.createButtonControls();
-            }
-        }
+		@Override
+		protected Layout createBottomPanel() {
+			return this.createButtonControls();
+		}
+	}
 
-        private class EditFormFieldFactory extends DefaultEditFormFieldFactory {
-
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            protected Field onCreateField(final Item item,
-                    final Object propertyId,
-                    final com.vaadin.ui.Component uiContext) {
-                if (propertyId.equals("whatlastday")
-                        || propertyId.equals("whattoday")
-                        || propertyId.equals("whatproblem")) {
-                    final RichTextArea richText = new RichTextArea();
-                    richText.setWidth("100%");
-                    return richText;
-                }
-                return null;
-            }
-        }
-    }
-
-    @Override
-    public HasEditFormHandlers<StandupReportWithBLOBs> getEditFormHandlers() {
-        return this.editForm;
-    }
+	@Override
+	public HasEditFormHandlers<StandupReportWithBLOBs> getEditFormHandlers() {
+		return this.editForm;
+	}
 
 }

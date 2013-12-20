@@ -29,7 +29,7 @@ public abstract class AbstractBeanFieldGroupViewFieldFactory<B> implements
 
 	@Override
 	public void setBean(B bean) {
-		Class beanClass = bean.getClass();
+		Class<?> beanClass = bean.getClass();
 		java.lang.reflect.Field[] fields = ClassUtils.getAllFields(beanClass);
 		for (java.lang.reflect.Field field : fields) {
 			if ("selected".equals(field.getName())
@@ -41,8 +41,8 @@ public abstract class AbstractBeanFieldGroupViewFieldFactory<B> implements
 	}
 
 	@Override
-	public final Field bindField(Object propertyId) {
-		Field field = onCreateField(propertyId);
+	public final Field<?> bindField(Object propertyId) {
+		Field<?> field = onCreateField(propertyId);
 		if (field == null) {
 
 			try {
@@ -65,6 +65,6 @@ public abstract class AbstractBeanFieldGroupViewFieldFactory<B> implements
 
 	}
 
-	abstract protected Field onCreateField(Object propertyId);
+	abstract protected Field<?> onCreateField(Object propertyId);
 
 }

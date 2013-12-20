@@ -26,14 +26,13 @@ import com.esofthead.mycollab.module.project.ui.components.ProjectMilestoneCombo
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberComboBox;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
+import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
-import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormContainerHorizontalViewField;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
+import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.esofthead.mycollab.vaadin.ui.ProgressPercentageIndicator;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
-import com.vaadin.data.Item;
-import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
@@ -64,7 +63,7 @@ public class TaskGroupAddViewImpl extends AbstractPageView implements
 	@Override
 	public void editItem(final TaskList item) {
 		this.taskList = item;
-		this.editForm.setItemDataSource(new BeanItem<TaskList>(this.taskList));
+		this.editForm.setBean(this.taskList);
 	}
 
 	private class EditForm extends AdvancedEditBeanForm<TaskList> {
@@ -72,10 +71,10 @@ public class TaskGroupAddViewImpl extends AbstractPageView implements
 		private static final long serialVersionUID = 1L;
 
 		@Override
-		public void setItemDataSource(final Item newDataSource) {
+		public void setBean(final TaskList newDataSource) {
 			this.setFormLayoutFactory(new FormLayoutFactory());
-			this.setFormFieldFactory(new EditFormFieldFactory());
-			super.setItemDataSource(newDataSource);
+			this.setBeanFormFieldFactory(new EditFormFieldFactory(EditForm.this));
+			super.setBean(newDataSource);
 		}
 
 		private class FormLayoutFactory extends TaskGroupFormLayoutFactory {
@@ -111,14 +110,16 @@ public class TaskGroupAddViewImpl extends AbstractPageView implements
 			}
 		}
 
-		private class EditFormFieldFactory extends DefaultEditFormFieldFactory {
-
+		private class EditFormFieldFactory extends
+				AbstractBeanFieldGroupEditFieldFactory<TaskList> {
 			private static final long serialVersionUID = 1L;
 
+			public EditFormFieldFactory(GenericBeanForm<TaskList> form) {
+				super(form);
+			}
+
 			@Override
-			protected Field onCreateField(final Item item,
-					final Object propertyId,
-					final com.vaadin.ui.Component uiContext) {
+			protected Field<?> onCreateField(Object propertyId) {
 				if ("owner".equals(propertyId)) {
 					return new ProjectMemberComboBox();
 				} else if ("milestoneid".equals(propertyId)) {

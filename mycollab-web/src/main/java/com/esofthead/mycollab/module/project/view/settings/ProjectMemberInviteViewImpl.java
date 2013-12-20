@@ -41,9 +41,11 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.HistoryViewManager;
 import com.esofthead.mycollab.vaadin.mvp.NullViewState;
 import com.esofthead.mycollab.vaadin.mvp.ViewState;
+import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
+import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
@@ -99,7 +101,8 @@ public class ProjectMemberInviteViewImpl extends AbstractPageView implements
 		item = new PropertysetItem();
 		item.addItemProperty("inviteEmails", new ObjectProperty(inviteEmails));
 		item.addItemProperty("roleId", new ObjectProperty(roleId));
-		this.editForm.setItemDataSource(item);
+		// this.editForm.setBean(item);
+		// TODO: re-implement this feature
 	}
 
 	private class InviteMembersForm extends AdvancedEditBeanForm<ProjectMember> {
@@ -107,10 +110,11 @@ public class ProjectMemberInviteViewImpl extends AbstractPageView implements
 		private static final long serialVersionUID = 1L;
 
 		@Override
-		public void setItemDataSource(final Item newDataSource) {
+		public void setBean(final ProjectMember newDataSource) {
 			this.setFormLayoutFactory(new FormLayoutFactory());
-			this.setFormFieldFactory(new EditFormFieldFactory());
-			super.setItemDataSource(newDataSource);
+			this.setBeanFormFieldFactory(new EditFormFieldFactory(
+					InviteMembersForm.this));
+			super.setBean(newDataSource);
 		}
 
 		private class FormLayoutFactory implements IFormLayoutFactory {
@@ -187,7 +191,7 @@ public class ProjectMemberInviteViewImpl extends AbstractPageView implements
 			}
 
 			@Override
-			public void attachField(Object propertyId, Field field) {
+			public void attachField(Object propertyId, Field<?> field) {
 				if (propertyId.equals("inviteEmails")) {
 					this.informationLayout.addComponent(field, "User emails",
 							0, 0);
@@ -198,14 +202,16 @@ public class ProjectMemberInviteViewImpl extends AbstractPageView implements
 			}
 		}
 
-		private class EditFormFieldFactory extends DefaultEditFormFieldFactory {
-
+		private class EditFormFieldFactory extends
+				AbstractBeanFieldGroupEditFieldFactory<ProjectMember> {
 			private static final long serialVersionUID = 1L;
 
+			public EditFormFieldFactory(GenericBeanForm<ProjectMember> form) {
+				super(form);
+			}
+
 			@Override
-			protected Field onCreateField(final Item item,
-					final Object propertyId,
-					final com.vaadin.ui.Component uiContext) {
+			protected Field<?> onCreateField(final Object propertyId) {
 
 				if (propertyId.equals("inviteEmails")) {
 					final UserComboBoxWithInviteBtnCustomField userBoxCustomField = new UserComboBoxWithInviteBtnCustomField();

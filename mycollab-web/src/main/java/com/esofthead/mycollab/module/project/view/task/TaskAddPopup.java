@@ -34,16 +34,15 @@ import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.project.ui.components.TaskPercentageCompleteComboBox;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberComboBox;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.AttachmentPanel;
-import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
+import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
-import com.vaadin.data.Item;
-import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -164,8 +163,9 @@ public class TaskAddPopup extends CustomComponent {
 
 		public TaskInputForm() {
 			this.setFormLayoutFactory(new TaskLayout());
-			this.setFormFieldFactory(new EditFormFieldFactory());
-			this.setItemDataSource(new BeanItem<Task>(TaskAddPopup.this.task));
+			this.setBeanFormFieldFactory(new EditFormFieldFactory(
+					TaskInputForm.this));
+			this.setBean(TaskAddPopup.this.task);
 		}
 	}
 
@@ -187,7 +187,7 @@ public class TaskAddPopup extends CustomComponent {
 		}
 
 		@Override
-		public void attachField(final Object propertyId, final Field field) {
+		public void attachField(final Object propertyId, final Field<?> field) {
 			if (propertyId.equals("taskname")) {
 				this.informationLayout.addComponent(field, "Task Name", 0, 0,
 						2, "100%");
@@ -248,13 +248,16 @@ public class TaskAddPopup extends CustomComponent {
 		}
 	}
 
-	private class EditFormFieldFactory extends DefaultEditFormFieldFactory {
-
+	private class EditFormFieldFactory extends
+			AbstractBeanFieldGroupEditFieldFactory<Task> {
 		private static final long serialVersionUID = 1L;
 
+		public EditFormFieldFactory(GenericBeanForm<Task> form) {
+			super(form);
+		}
+
 		@Override
-		protected Field onCreateField(final Item item, final Object propertyId,
-				final com.vaadin.ui.Component uiContext) {
+		protected Field<?> onCreateField(final Object propertyId) {
 			if (propertyId.equals("assignuser")) {
 				return new ProjectMemberComboBox();
 			} else if (propertyId.equals("taskname")) {

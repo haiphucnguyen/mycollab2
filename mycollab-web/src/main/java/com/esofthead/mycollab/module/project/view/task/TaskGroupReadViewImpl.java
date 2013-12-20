@@ -38,25 +38,24 @@ import com.esofthead.mycollab.module.project.ui.components.CommentListDepot;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserFormLinkField;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
+import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
-import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
+import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormContainerHorizontalViewField;
+import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormDetectAndDisplayUrlViewField;
+import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormLinkViewField;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.ProgressPercentageIndicator;
 import com.esofthead.mycollab.vaadin.ui.ProjectPreviewFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
-import com.vaadin.data.Item;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.JavaScript;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Window;
 
 /**
  * 
@@ -81,7 +80,7 @@ public class TaskGroupReadViewImpl extends AbstractPageView implements
 	@Override
 	public void previewItem(final SimpleTaskList taskList) {
 		this.taskList = taskList;
-//		this.previewForm.setItemDataSource(new BeanItem<TaskList>(taskList));
+		this.previewForm.setBean(taskList);
 	}
 
 	@Override
@@ -94,14 +93,14 @@ public class TaskGroupReadViewImpl extends AbstractPageView implements
 		private static final long serialVersionUID = 1L;
 
 		@Override
-		public void setItemDataSource(final Item newDataSource) {
+		public void setBean(final SimpleTaskList newDataSource) {
 			this.setFormLayoutFactory(new FormLayoutFactory());
-			this.setFormFieldFactory(new DefaultFormViewFieldFactory() {
+			this.setBeanFormFieldFactory(new AbstractBeanFieldGroupViewFieldFactory<SimpleTaskList>(
+					PreviewForm.this) {
 				private static final long serialVersionUID = 1L;
 
 				@Override
-				protected Field onCreateField(final Item item,
-						final Object propertyId, final Component uiContext) {
+				protected Field<?> onCreateField(final Object propertyId) {
 
 					if (propertyId.equals("milestoneid")) {
 						return new FormLinkViewField(
@@ -154,23 +153,8 @@ public class TaskGroupReadViewImpl extends AbstractPageView implements
 					return null;
 				}
 			});
-			super.setItemDataSource(newDataSource);
+			super.setBean(newDataSource);
 
-		}
-
-		@Override
-		public void doPrint() {
-			// Create a window that contains what you want to print
-			final Window window = new Window("Window to Print");
-
-			final TaskGroupReadViewImpl printView = new TaskGroupReadViewImpl.PrintView();
-			printView.previewItem(TaskGroupReadViewImpl.this.taskList);
-			window.setContent(printView);
-
-			// Print automatically when the window opens
-			JavaScript.getCurrent().execute(
-					"setTimeout(function() {"
-							+ "  print(); self.close();}, 0);");
 		}
 
 		@Override
@@ -209,106 +193,6 @@ public class TaskGroupReadViewImpl extends AbstractPageView implements
 						CurrentProjectVariables.getProjectId(), true, true);
 				commentList.setWidth("100%");
 				relatedItemsPanel.addComponent(commentList);
-				relatedItemsPanel.addComponent(new TaskDepot());
-				return relatedItemsPanel;
-			}
-		}
-	}
-
-	@SuppressWarnings("serial")
-	public static class PrintView extends TaskGroupReadViewImpl {
-
-		public PrintView() {
-			this.previewForm = new AdvancedPreviewBeanForm<SimpleTaskList>() {
-				@Override
-				public void setItemDataSource(final Item newDataSource) {
-					this.setFormLayoutFactory(new FormLayoutFactory());
-					this.setFormFieldFactory(new DefaultFormViewFieldFactory() {
-						private static final long serialVersionUID = 1L;
-
-						@Override
-						protected Field onCreateField(final Item item,
-								final Object propertyId,
-								final Component uiContext) {
-
-							if (propertyId.equals("milestoneid")) {
-								return new FormLinkViewField(
-										PrintView.this.taskList
-												.getMilestoneName(),
-										new Button.ClickListener() {
-											private static final long serialVersionUID = 1L;
-
-											@Override
-											public void buttonClick(
-													final ClickEvent event) {
-												EventBus.getInstance()
-														.fireEvent(
-																new MilestoneEvent.GotoRead(
-																		this,
-																		PrintView.this.taskList
-																				.getMilestoneid()));
-											}
-										});
-							} else if (propertyId.equals("owner")) {
-								return new ProjectUserFormLinkField(
-										PrintView.this.taskList.getOwner(),
-										PrintView.this.taskList
-												.getOwnerAvatarId(),
-										PrintView.this.taskList
-												.getOwnerFullName());
-							} else if (propertyId.equals("percentageComplete")) {
-								final FormContainerHorizontalViewField fieldContainer = new FormContainerHorizontalViewField();
-								final ProgressPercentageIndicator progressField = new ProgressPercentageIndicator(
-										PrintView.this.taskList
-												.getPercentageComplete());
-								fieldContainer.addComponentField(progressField);
-								return fieldContainer;
-							} else if (propertyId.equals("description")) {
-								return new FormDetectAndDisplayUrlViewField(
-										PrintView.this.taskList
-												.getDescription());
-							} else if (propertyId.equals("numOpenTasks")) {
-								final FormContainerHorizontalViewField fieldContainer = new FormContainerHorizontalViewField();
-								final Label numTaskLbl = new Label("("
-										+ PrintView.this.taskList
-												.getNumOpenTasks()
-										+ "/"
-										+ PrintView.this.taskList
-												.getNumAllTasks() + ")");
-								fieldContainer.addComponentField(numTaskLbl);
-								return fieldContainer;
-							}
-
-							return null;
-						}
-					});
-					super.setItemDataSource(newDataSource);
-				}
-			};
-
-			this.addComponent(this.previewForm);
-		}
-
-		class FormLayoutFactory extends TaskGroupFormLayoutFactory {
-
-			private static final long serialVersionUID = 1L;
-
-			public FormLayoutFactory() {
-				super(PrintView.this.taskList.getName());
-			}
-
-			@Override
-			protected Layout createTopPanel() {
-				return new HorizontalLayout();
-			}
-
-			@Override
-			protected Layout createBottomPanel() {
-				final VerticalLayout relatedItemsPanel = new VerticalLayout();
-				relatedItemsPanel.addComponent(new CommentListDepot(
-						CommentType.PRJ_TASK_LIST, PrintView.this.taskList
-								.getId(), CurrentProjectVariables
-								.getProjectId(), false, false));
 				relatedItemsPanel.addComponent(new TaskDepot());
 				return relatedItemsPanel;
 			}
