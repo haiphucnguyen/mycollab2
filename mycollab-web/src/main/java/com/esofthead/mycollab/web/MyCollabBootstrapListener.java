@@ -17,8 +17,6 @@ public class MyCollabBootstrapListener implements BootstrapListener {
 
 	@Override
 	public void modifyBootstrapFragment(BootstrapFragmentResponse response) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
