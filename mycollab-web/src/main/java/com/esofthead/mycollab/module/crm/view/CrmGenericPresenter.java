@@ -32,6 +32,6 @@ public class CrmGenericPresenter<V extends PageView> extends AbstractPresenter<V
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
         CrmModule crmModule = (CrmModule) container;
-        crmModule.addView(view);
+        crmModule.addView(cacheableView);
     }
 }

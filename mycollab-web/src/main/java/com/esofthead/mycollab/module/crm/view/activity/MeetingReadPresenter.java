@@ -51,7 +51,7 @@ public class MeetingReadPresenter extends CrmGenericPresenter<MeetingReadView> {
 	}
 
 	private void bind() {
-		view.getPreviewFormHandlers().addFormHandler(
+		cacheableView.getPreviewFormHandlers().addFormHandler(
 				new DefaultPreviewFormHandler<SimpleMeeting>() {
 					@Override
 					public void onEdit(SimpleMeeting data) {
@@ -171,9 +171,9 @@ public class MeetingReadPresenter extends CrmGenericPresenter<MeetingReadView> {
 			}
 
 			container.removeAllComponents();
-			container.addComponent(view.getWidget());
+			container.addComponent(cacheableView.getWidget());
 
-			view.previewItem(meeting);
+			cacheableView.previewItem(meeting);
 
 			AppContext.addFragment(CrmLinkGenerator
 					.generateMeetingPreviewLink(meeting.getId()),

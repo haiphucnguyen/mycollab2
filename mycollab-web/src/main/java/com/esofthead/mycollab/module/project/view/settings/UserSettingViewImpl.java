@@ -68,15 +68,15 @@ public class UserSettingViewImpl extends AbstractPageView implements
 	private void buildComponents() {
 		this.userPresenter = PresenterResolver
 				.getPresenter(ProjectUserPresenter.class);
-		this.myProjectTab.addTab(this.userPresenter.getView(), "Users");
+		this.myProjectTab.addTab(this.userPresenter.initView(), "Users");
 
 		this.rolePresenter = PresenterResolver
 				.getPresenter(ProjectRolePresenter.class);
-		this.myProjectTab.addTab(this.rolePresenter.getView(), "Roles");
+		this.myProjectTab.addTab(this.rolePresenter.initView(), "Roles");
 
 		this.notificationSettingPresenter = PresenterResolver
 				.getPresenter(ProjectNotificationSettingPresenter.class);
-		this.myProjectTab.addTab(this.notificationSettingPresenter.getView(),
+		this.myProjectTab.addTab(this.notificationSettingPresenter.initView(),
 				"Notification Settings");
 
 		this.myProjectTab

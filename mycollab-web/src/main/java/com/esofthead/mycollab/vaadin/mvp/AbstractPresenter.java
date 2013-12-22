@@ -37,15 +37,20 @@ public abstract class AbstractPresenter<V extends PageView> implements
 	private static final long serialVersionUID = 1L;
 	private static Logger log = LoggerFactory
 			.getLogger(AbstractPresenter.class);
-	protected V view;
+
+	protected Class<V> viewClass;
+	protected V cacheableView;
 
 	public AbstractPresenter(Class<V> viewClass) {
-		view = ViewManager.getView(viewClass);
+		this.viewClass = viewClass;
 	}
 
 	@Override
-	public V getView() {
-		return view;
+	public V initView() {
+		if (cacheableView == null) {
+			cacheableView = ViewManager.getView(viewClass);
+		}
+		return cacheableView;
 	}
 
 	@Override
@@ -56,7 +61,7 @@ public abstract class AbstractPresenter<V extends PageView> implements
 	@Override
 	public void go(ComponentContainer container, ScreenData<?> data,
 			boolean isHistoryTrack) {
-		log.debug("Go to view: " + view);
+		log.debug("Go to cacheableView: " + cacheableView);
 		if (isHistoryTrack) {
 			ViewState state = new ViewState(container, this, data);
 			if (log.isDebugEnabled()) {

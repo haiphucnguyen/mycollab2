@@ -92,13 +92,13 @@ public class CrmSettingContainer extends CssLayout implements PageView {
 	private Component constructNotificationSettingView() {
 		notificationPresenter = PresenterResolver
 				.getPresenter(CrmNotifcationSettingPresenter.class);
-		return notificationPresenter.getView();
+		return notificationPresenter.initView();
 	}
 
 	private Component constructCustomLayoutView() {
 		customViewPresenter = PresenterResolver
 				.getPresenter(ICrmCustomViewPresenter.class);
-		return customViewPresenter.getView();
+		return customViewPresenter.initView();
 	}
 
 	@Override

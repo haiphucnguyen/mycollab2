@@ -40,11 +40,11 @@ public class AccountModulePresenter extends AbstractPresenter<AccountModule> {
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		MainView mainView = (MainView) container;
-		mainView.addModule(view);
+		mainView.addModule(cacheableView);
 
 		String[] params = (String[]) data.getParams();
 		if (params == null || params.length == 0) {
-			view.gotoUserProfilePage();
+			cacheableView.gotoUserProfilePage();
 		} else {
 			FragmentNavigator.shellUrlResolver.getSubResolver("account")
 					.handle(params);

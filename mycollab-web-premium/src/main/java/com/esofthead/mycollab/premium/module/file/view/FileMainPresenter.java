@@ -22,8 +22,8 @@ public class FileMainPresenter extends AbstractPresenter<FileMainView> {
 		FileModule fileModule = (FileModule) container;
 		fileModule.removeAllComponents();
 
-		fileModule.addComponent(view);
-		view.display();
+		fileModule.addComponent(cacheableView);
+		cacheableView.display();
 
 		AppContext.addFragment("document/list", "Documents");
 	}

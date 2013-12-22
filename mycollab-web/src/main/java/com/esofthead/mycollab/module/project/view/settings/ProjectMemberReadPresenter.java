@@ -65,7 +65,7 @@ public class ProjectMemberReadPresenter extends
 	}
 
 	private void bind() {
-		view.getPreviewFormHandlers().addFormHandler(
+		cacheableView.getPreviewFormHandlers().addFormHandler(
 				new DefaultPreviewFormHandler<SimpleProjectMember>() {
 					@Override
 					public void onEdit(SimpleProjectMember data) {
@@ -201,8 +201,8 @@ public class ProjectMemberReadPresenter extends
 			if (prjMember != null) {
 				ProjectUserContainer userGroupContainer = (ProjectUserContainer) container;
 				userGroupContainer.removeAllComponents();
-				userGroupContainer.addComponent(view.getWidget());
-				view.previewItem(prjMember);
+				userGroupContainer.addComponent(cacheableView.getWidget());
+				cacheableView.previewItem(prjMember);
 				ProjectBreadcrumb breadCrumb = ViewManager
 						.getView(ProjectBreadcrumb.class);
 				breadCrumb.gotoUserRead(prjMember);

@@ -45,7 +45,7 @@ public class ProjectUserPresenter extends
 
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
-		view.removeAllComponents();
+		cacheableView.removeAllComponents();
 
 		AbstractPresenter<?> presenter = null;
 
@@ -69,6 +69,6 @@ public class ProjectUserPresenter extends
 					.getPresenter(ProjectMemberListPresenter.class);
 		}
 
-		presenter.go(view, data);
+		presenter.go(cacheableView, data);
 	}
 }

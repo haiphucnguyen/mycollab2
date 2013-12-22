@@ -53,7 +53,7 @@ public class ActivityListPresenter
 	public ActivityListPresenter() {
 		super(ActivityListView.class);
 
-		view.getPopupActionHandlers().addMassItemActionHandler(
+		cacheableView.getPopupActionHandlers().addMassItemActionHandler(
 				new DefaultMassEditActionHandler(this) {
 
 					@Override
@@ -82,7 +82,7 @@ public class ActivityListPresenter
 				|| AppContext.canRead(RolePermissionCollections.CRM_CALL)) {
 
 			container.removeAllComponents();
-			container.addComponent(view.getWidget());
+			container.addComponent(cacheableView.getWidget());
 
 			doSearch((EventSearchCriteria) data.getParams());
 			AppContext.addFragment("crm/activity/todo", "Activity To Do");
@@ -97,7 +97,7 @@ public class ActivityListPresenter
 
 	@Override
 	protected void deleteSelectedItems() {
-		Collection<SimpleEvent> currentDataList = view.getPagedBeanTable()
+		Collection<SimpleEvent> currentDataList = cacheableView.getPagedBeanTable()
 				.getCurrentDataList();
 		List<Integer> keyListCall = new ArrayList<Integer>();
 		List<Integer> keyListMeeting = new ArrayList<Integer>();

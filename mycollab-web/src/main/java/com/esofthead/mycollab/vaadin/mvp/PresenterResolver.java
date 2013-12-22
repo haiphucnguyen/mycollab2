@@ -27,6 +27,12 @@ import org.slf4j.LoggerFactory;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.web.MyCollabApplication;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class PresenterResolver {
 
 	private static final String PRESENTER_VAL = "presenterMap";

@@ -52,7 +52,7 @@ public class TaskPresenter extends AbstractPresenter<TaskContainer> {
 		ProjectView projectViewContainer = (ProjectView) container;
 		projectViewContainer.gotoSubView("Tasks");
 
-		view.removeAllComponents();
+		cacheableView.removeAllComponents();
 
 		AbstractPresenter presenter = null;
 
@@ -78,7 +78,7 @@ public class TaskPresenter extends AbstractPresenter<TaskContainer> {
 					.getPresenter(TaskGroupDisplayPresenter.class);
 		}
 
-		presenter.go(view, data);
+		presenter.go(cacheableView, data);
 	}
 
 	@Override

@@ -56,9 +56,9 @@ public class ProjectAddPresenter extends AbstractPresenter<ProjectAddView> {
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		ComponentContainer projectContainer = (ComponentContainer) container;
 		projectContainer.removeAllComponents();
-		projectContainer.addComponent(view.getWidget());
+		projectContainer.addComponent(cacheableView.getWidget());
 		Project project = (Project) data.getParams();
-		view.editItem(project);
+		cacheableView.editItem(project);
 
 		if (project.getId() == null) {
 			AppContext.addFragment("project/add", "New Project");
@@ -66,7 +66,7 @@ public class ProjectAddPresenter extends AbstractPresenter<ProjectAddView> {
 	}
 
 	private void bind() {
-		view.getEditFormHandlers().addFormHandler(
+		cacheableView.getEditFormHandlers().addFormHandler(
 				new EditFormHandler<Project>() {
 					@Override
 					public void onSave(final Project project) {
@@ -74,13 +74,13 @@ public class ProjectAddPresenter extends AbstractPresenter<ProjectAddView> {
 						EventBus.getInstance().fireEvent(
 								new ProjectEvent.GotoMyProject(this,
 										new PageActionChain(
-												new ProjectScreenData.Goto(view
+												new ProjectScreenData.Goto(cacheableView
 														.getItem().getId()))));
 					}
 
 					@Override
 					public void onCancel() {
-						if (view.getItem().getId() == null) {
+						if (cacheableView.getItem().getId() == null) {
 							EventBus.getInstance().fireEvent(
 									new ShellEvent.GotoProjectModule(
 											ProjectAddPresenter.this, null));
@@ -91,7 +91,7 @@ public class ProjectAddPresenter extends AbstractPresenter<ProjectAddView> {
 													this,
 													new PageActionChain(
 															new ProjectScreenData.Goto(
-																	view.getItem()
+																	cacheableView.getItem()
 																			.getId()))));
 						}
 					}

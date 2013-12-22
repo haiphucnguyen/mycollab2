@@ -48,7 +48,7 @@ public class ProjectMemberEditPresenter extends
 	}
 
 	private void bind() {
-		view.getEditFormHandlers().addFormHandler(
+		cacheableView.getEditFormHandlers().addFormHandler(
 				new EditFormHandler<ProjectMember>() {
 					@Override
 					public void onSave(final ProjectMember projectMember) {
@@ -86,10 +86,10 @@ public class ProjectMemberEditPresenter extends
 				.canWrite(ProjectRolePermissionCollections.USERS)) {
 			ProjectUserContainer userGroupContainer = (ProjectUserContainer) container;
 			userGroupContainer.removeAllComponents();
-			userGroupContainer.addComponent(view.getWidget());
+			userGroupContainer.addComponent(cacheableView.getWidget());
 
 			ProjectMember member = (ProjectMember) data.getParams();
-			view.editItem(member);
+			cacheableView.editItem(member);
 
 			ProjectBreadcrumb breadcrumb = ViewManager
 					.getView(ProjectBreadcrumb.class);

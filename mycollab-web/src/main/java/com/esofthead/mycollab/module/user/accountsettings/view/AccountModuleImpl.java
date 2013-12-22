@@ -126,19 +126,19 @@ public class AccountModuleImpl extends AbstractPageView implements
 	private ComponentContainer constructAccountSettingsComponent() {
 		this.billingPresenter = PresenterResolver
 				.getPresenter(IBillingPresenter.class);
-		return this.billingPresenter.getView();
+		return this.billingPresenter.initView();
 	}
 
 	private ComponentContainer constructUserInformationComponent() {
 		this.profilePresenter = PresenterResolver
 				.getPresenter(ProfilePresenter.class);
-		return this.profilePresenter.getView();
+		return this.profilePresenter.initView();
 	}
 
 	private ComponentContainer constructUserRoleComponent() {
 		this.userPermissionPresenter = PresenterResolver
 				.getPresenter(UserPermissionManagementPresenter.class);
-		return this.userPermissionPresenter.getView();
+		return this.userPermissionPresenter.initView();
 	}
 
 	@Override

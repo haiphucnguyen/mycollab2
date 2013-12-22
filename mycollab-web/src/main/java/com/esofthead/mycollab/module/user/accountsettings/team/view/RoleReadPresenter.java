@@ -60,7 +60,7 @@ public class RoleReadPresenter extends AbstractPresenter<RoleReadView> {
 	}
 
 	private void bind() {
-		view.getPreviewFormHandlers().addFormHandler(
+		cacheableView.getPreviewFormHandlers().addFormHandler(
 				new DefaultPreviewFormHandler<Role>() {
 					@Override
 					public void onEdit(Role data) {
@@ -128,8 +128,8 @@ public class RoleReadPresenter extends AbstractPresenter<RoleReadView> {
 			if (role != null) {
 				RoleContainer roleContainer = (RoleContainer) container;
 				roleContainer.removeAllComponents();
-				roleContainer.addComponent(view.getWidget());
-				view.previewItem(role);
+				roleContainer.addComponent(cacheableView.getWidget());
+				cacheableView.previewItem(role);
 
 				AccountSettingBreadcrumb breadcrumb = ViewManager
 						.getView(AccountSettingBreadcrumb.class);

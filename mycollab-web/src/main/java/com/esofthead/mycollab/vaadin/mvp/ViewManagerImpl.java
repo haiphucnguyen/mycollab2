@@ -50,7 +50,7 @@ class ViewManagerImpl extends ViewManager {
 
 			T value = (T) viewMap.get(viewClass);
 			if (value != null) {
-				log.debug("Get implementation of view " + viewClass.getName()
+				log.debug("Get implementation of cacheableView " + viewClass.getName()
 						+ " is " + value.getClass().getName());
 				return value;
 			} else {
@@ -59,7 +59,7 @@ class ViewManagerImpl extends ViewManager {
 
 						value = (T) classInstance.newInstance();
 						viewMap.put(viewClass, value);
-						log.debug("Get implementation of view "
+						log.debug("Get implementation of cacheableView "
 								+ viewClass.getName() + " is "
 								+ value.getClass().getName());
 						return value;
@@ -67,11 +67,11 @@ class ViewManagerImpl extends ViewManager {
 				}
 
 				throw new MyCollabException(
-						"Can not find implementation of view class: "
+						"Can not find implementation of cacheableView class: "
 								+ viewClass.getName());
 			}
 		} catch (Throwable e) {
-			throw new MyCollabException("Can not create view class: "
+			throw new MyCollabException("Can not create cacheableView class: "
 					+ viewClass.getName(), e);
 		}
 	}

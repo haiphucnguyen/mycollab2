@@ -17,9 +17,9 @@ public class FileDashboardPresenter extends AbstractPresenter<FileDashboardView>
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		FileContainer projectViewContainer = (FileContainer) container;
 		projectViewContainer.removeAllComponents();
-		projectViewContainer.addComponent(view);
+		projectViewContainer.addComponent(cacheableView);
 
-		view.displayProjectFiles();
+		cacheableView.displayProjectFiles();
 
 		ProjectBreadcrumb breadcrumb = ViewManager
 				.getView(ProjectBreadcrumb.class);

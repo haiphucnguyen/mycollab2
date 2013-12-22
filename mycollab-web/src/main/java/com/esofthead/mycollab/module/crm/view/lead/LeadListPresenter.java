@@ -55,7 +55,7 @@ public class LeadListPresenter extends
 		super(LeadListView.class);
 		leadService = ApplicationContextUtil.getSpringBean(LeadService.class);
 
-		view.getPopupActionHandlers().addMassItemActionHandler(
+		cacheableView.getPopupActionHandlers().addMassItemActionHandler(
 				new DefaultMassEditActionHandler(this) {
 
 					@Override
@@ -68,7 +68,7 @@ public class LeadListPresenter extends
 							} else {
 								List<String> lstMail = new ArrayList<String>();
 
-								List<SimpleLead> tableData = view
+								List<SimpleLead> tableData = cacheableView
 										.getPagedBeanTable()
 										.getCurrentDataList();
 								for (SimpleLead item : tableData) {
@@ -128,7 +128,7 @@ public class LeadListPresenter extends
 	@Override
 	protected void deleteSelectedItems() {
 		if (!isSelectAll) {
-			Collection<SimpleLead> currentDataList = view.getPagedBeanTable()
+			Collection<SimpleLead> currentDataList = cacheableView.getPagedBeanTable()
 					.getCurrentDataList();
 			List<Integer> keyList = new ArrayList<Integer>();
 			for (SimpleLead item : currentDataList) {
@@ -153,7 +153,7 @@ public class LeadListPresenter extends
 	@Override
 	public void massUpdate(Lead value) {
 		if (!isSelectAll) {
-			Collection<SimpleLead> currentDataList = view.getPagedBeanTable()
+			Collection<SimpleLead> currentDataList = cacheableView.getPagedBeanTable()
 					.getCurrentDataList();
 			List<Integer> keyList = new ArrayList<Integer>();
 			for (SimpleLead item : currentDataList) {

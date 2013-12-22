@@ -23,7 +23,7 @@ public class FilePresenter extends AbstractPresenter<IFileContainer> implements
 		ProjectView projectViewContainer = (ProjectView) container;
 		projectViewContainer.gotoSubView("Files");
 
-		view.removeAllComponents();
+		cacheableView.removeAllComponents();
 		AbstractPresenter presenter = null;
 
 		if (data instanceof FileScreenData.GotoDashboard) {
@@ -36,7 +36,7 @@ public class FilePresenter extends AbstractPresenter<IFileContainer> implements
 			throw new MyCollabException("No support screen data " + data);
 		}
 
-		presenter.go(view, data);
+		presenter.go(cacheableView, data);
 	}
 
 }

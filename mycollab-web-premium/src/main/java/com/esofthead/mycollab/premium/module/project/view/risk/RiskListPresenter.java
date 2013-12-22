@@ -38,7 +38,7 @@ public class RiskListPresenter extends
 
 		riskService = ApplicationContextUtil.getSpringBean(RiskService.class);
 
-		view.getPopupActionHandlers().addMassItemActionHandler(
+		cacheableView.getPopupActionHandlers().addMassItemActionHandler(
 				new DefaultMassEditActionHandler(this) {
 
 					@Override
@@ -73,7 +73,7 @@ public class RiskListPresenter extends
 				.canRead(ProjectRolePermissionCollections.RISKS)) {
 			RiskContainer riskContainer = (RiskContainer) container;
 			riskContainer.removeAllComponents();
-			riskContainer.addComponent(view.getWidget());
+			riskContainer.addComponent(cacheableView.getWidget());
 			doSearch((RiskSearchCriteria) data.getParams());
 
 			ProjectBreadcrumb breadCrumb = ViewManager
@@ -87,7 +87,7 @@ public class RiskListPresenter extends
 	@Override
 	protected void deleteSelectedItems() {
 		if (!isSelectAll) {
-			Collection<SimpleRisk> currentDataList = view.getPagedBeanTable()
+			Collection<SimpleRisk> currentDataList = cacheableView.getPagedBeanTable()
 					.getCurrentDataList();
 			List<Integer> keyList = new ArrayList<Integer>();
 			for (SimpleRisk item : currentDataList) {
@@ -113,7 +113,7 @@ public class RiskListPresenter extends
 	@Override
 	public void massUpdate(Risk value) {
 		if (!isSelectAll) {
-			Collection<SimpleRisk> currentDataList = view.getPagedBeanTable()
+			Collection<SimpleRisk> currentDataList = cacheableView.getPagedBeanTable()
 					.getCurrentDataList();
 			List<Integer> keyList = new ArrayList<Integer>();
 			for (SimpleRisk item : currentDataList) {

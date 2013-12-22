@@ -20,7 +20,7 @@ public class StandupListPresenter extends AbstractPresenter<StandupListView>
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		StandupContainer standupContainer = (StandupContainer) container;
 		standupContainer.removeAllComponents();
-		standupContainer.addComponent(view.getWidget());
+		standupContainer.addComponent(cacheableView.getWidget());
 		doSearch((StandupReportSearchCriteria) data.getParams());
 
 		ProjectBreadcrumb breadCrumb = ViewManager
@@ -29,7 +29,7 @@ public class StandupListPresenter extends AbstractPresenter<StandupListView>
 	}
 
 	public void doSearch(StandupReportSearchCriteria searchCriteria) {
-		view.setSearchCriteria(searchCriteria);
+		cacheableView.setSearchCriteria(searchCriteria);
 	}
 
 }

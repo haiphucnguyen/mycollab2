@@ -30,7 +30,7 @@ public class StandupPresenter extends AbstractPresenter<IStandupContainer>
 		ProjectView projectViewContainer = (ProjectView) container;
 		projectViewContainer.gotoSubView("StandUp");
 
-		view.removeAllComponents();
+		cacheableView.removeAllComponents();
 
 		AbstractPresenter presenter;
 
@@ -54,7 +54,7 @@ public class StandupPresenter extends AbstractPresenter<IStandupContainer>
 					.getPresenter(StandupAdvertisementPresenter.class);
 		}
 
-		presenter.go(view, data);
+		presenter.go(cacheableView, data);
 	}
 
 	@Override

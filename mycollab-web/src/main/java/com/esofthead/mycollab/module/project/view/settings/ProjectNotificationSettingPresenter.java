@@ -50,6 +50,6 @@ public class ProjectNotificationSettingPresenter extends
 		ProjectBreadcrumb breadCrumb = ViewManager
 				.getView(ProjectBreadcrumb.class);
 		breadCrumb.gotoNotificationSetting(notification);
-		view.showNotificationSettings(notification);
+		cacheableView.showNotificationSettings(notification);
 	}
 }

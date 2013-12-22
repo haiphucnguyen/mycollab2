@@ -29,6 +29,12 @@ import com.vaadin.server.Page;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class MainWindowContainer extends CssLayout {
 
 	private static final long serialVersionUID = 1L;
@@ -54,7 +60,7 @@ public class MainWindowContainer extends CssLayout {
 	private final void setDefaultView() {
 		final LoginPresenter presenter = PresenterResolver
 				.getPresenter(LoginPresenter.class);
-		LoginView loginView = presenter.getView();
+		LoginView loginView = presenter.initView();
 		this.setStyleName("loginView");
 		this.setSizeFull();
 		this.setContent(loginView.getWidget());

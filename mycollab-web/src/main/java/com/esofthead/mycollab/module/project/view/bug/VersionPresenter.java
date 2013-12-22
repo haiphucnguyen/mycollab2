@@ -43,7 +43,7 @@ public class VersionPresenter extends AbstractPresenter<VersionContainer> {
 		TrackerContainer trackerContainer = (TrackerContainer) container;
 		trackerContainer.gotoSubView("Versions");
 
-		view.removeAllComponents();
+		cacheableView.removeAllComponents();
 
 		AbstractPresenter<?> presenter = null;
 
@@ -70,7 +70,7 @@ public class VersionPresenter extends AbstractPresenter<VersionContainer> {
 			throw new MyCollabException("Do not support screen data");
 		}
 
-		presenter.go(view, data);
+		presenter.go(cacheableView, data);
 
 	}
 

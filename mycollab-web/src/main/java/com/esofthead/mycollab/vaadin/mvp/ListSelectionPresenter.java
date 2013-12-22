@@ -20,28 +20,14 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.vaadin.dialogs.ConfirmDialog;
-
-import com.esofthead.mycollab.common.localization.GenericI18Enum;
-import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.ValuedBean;
 import com.esofthead.mycollab.core.persistence.service.ISearchableService;
-import com.esofthead.mycollab.core.utils.LocalizationHelper;
-import com.esofthead.mycollab.module.file.resource.SimpleGridExportItemsStreamResource;
-import com.esofthead.mycollab.reporting.ReportExportType;
-import com.esofthead.mycollab.reporting.RpParameterBuilder;
-import com.esofthead.mycollab.vaadin.events.MassItemActionHandler;
 import com.esofthead.mycollab.vaadin.events.PagableHandler;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.events.SelectableItemHandler;
 import com.esofthead.mycollab.vaadin.events.SelectionOptionHandler;
-import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
-import com.esofthead.mycollab.vaadin.ui.table.AbstractPagedBeanTable;
-import com.vaadin.server.Resource;
-import com.vaadin.server.StreamResource;
 import com.vaadin.ui.CheckBox;
-import com.vaadin.ui.UI;
 
 /**
  * 
@@ -62,14 +48,14 @@ public abstract class ListSelectionPresenter<V extends ListView<S, B>, S extends
 	public ListSelectionPresenter(Class<V> viewClass) {
 		super(viewClass);
 
-		view.getSearchHandlers().addSearchHandler(new SearchHandler<S>() {
+		cacheableView.getSearchHandlers().addSearchHandler(new SearchHandler<S>() {
 			@Override
 			public void onSearch(S criteria) {
 				doSearch(criteria);
 			}
 		});
 
-		view.getPagedBeanTable().addPagableHandler(new PagableHandler() {
+		cacheableView.getPagedBeanTable().addPagableHandler(new PagableHandler() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -86,7 +72,7 @@ public abstract class ListSelectionPresenter<V extends ListView<S, B>, S extends
 			}
 		});
 
-		view.getOptionSelectionHandlers().addSelectionOptionHandler(
+		cacheableView.getOptionSelectionHandlers().addSelectionOptionHandler(
 				new SelectionOptionHandler() {
 					private static final long serialVersionUID = 1L;
 
@@ -100,7 +86,7 @@ public abstract class ListSelectionPresenter<V extends ListView<S, B>, S extends
 
 					@Override
 					public void onDeSelect() {
-						Collection<B> currentDataList = view
+						Collection<B> currentDataList = cacheableView
 								.getPagedBeanTable().getCurrentDataList();
 						isSelectAll = false;
 						for (B item : currentDataList) {
@@ -122,7 +108,7 @@ public abstract class ListSelectionPresenter<V extends ListView<S, B>, S extends
 					}
 				});
 
-		view.getSelectableItemHandlers().addSelectableItemHandler(
+		cacheableView.getSelectableItemHandlers().addSelectableItemHandler(
 				new SelectableItemHandler<B>() {
 					@Override
 					public void onSelect(B item) {
@@ -135,7 +121,7 @@ public abstract class ListSelectionPresenter<V extends ListView<S, B>, S extends
 	}
 
 	protected void selectAllItemsInCurrentPage() {
-		Collection<B> currentDataList = view.getPagedBeanTable()
+		Collection<B> currentDataList = cacheableView.getPagedBeanTable()
 				.getCurrentDataList();
 		for (B item : currentDataList) {
 			item.setSelected(true);
@@ -146,12 +132,12 @@ public abstract class ListSelectionPresenter<V extends ListView<S, B>, S extends
 
 	public void doSearch(S searchCriteria) {
 		this.searchCriteria = searchCriteria;
-		view.getPagedBeanTable().setSearchCriteria(searchCriteria);
+		cacheableView.getPagedBeanTable().setSearchCriteria(searchCriteria);
 		checkWhetherEnableTableActionControl();
 	}
 
 	protected void checkWhetherEnableTableActionControl() {
-		Collection<B> currentDataList = view.getPagedBeanTable()
+		Collection<B> currentDataList = cacheableView.getPagedBeanTable()
 				.getCurrentDataList();
 		int countItems = 0;
 		for (B item : currentDataList) {
@@ -160,15 +146,15 @@ public abstract class ListSelectionPresenter<V extends ListView<S, B>, S extends
 			}
 		}
 		if (countItems > 0) {
-			view.enableActionControls(countItems);
+			cacheableView.enableActionControls(countItems);
 		} else {
-			view.disableActionControls();
+			cacheableView.disableActionControls();
 		}
 	}
 
 	protected List<B> getSelectedItems() {
 		List<B> items = new ArrayList<B>();
-		Collection<B> currentDataList = view.getPagedBeanTable()
+		Collection<B> currentDataList = cacheableView.getPagedBeanTable()
 				.getCurrentDataList();
 		for (B item : currentDataList) {
 			if (item.isSelected()) {

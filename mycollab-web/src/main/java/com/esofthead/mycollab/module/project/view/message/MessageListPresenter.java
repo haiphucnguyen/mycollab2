@@ -44,7 +44,7 @@ public class MessageListPresenter extends AbstractPresenter<MessageListView>
     }
 
     private void bind() {
-        view.getEditFormHandlers().addFormHandler(
+        cacheableView.getEditFormHandlers().addFormHandler(
                 new EditFormHandler<Message>() {
                     @Override
                     public void onSaveAndNew(Message bean) {
@@ -77,7 +77,7 @@ public class MessageListPresenter extends AbstractPresenter<MessageListView>
 
             MessageContainer messageContainer = (MessageContainer) container;
             messageContainer.removeAllComponents();
-            messageContainer.addComponent(view.getWidget());
+            messageContainer.addComponent(cacheableView.getWidget());
             doSearch((MessageSearchCriteria) data.getParams());
         } else {
             NotificationUtil.showMessagePermissionAlert();
@@ -87,6 +87,6 @@ public class MessageListPresenter extends AbstractPresenter<MessageListView>
     @Override
     public void doSearch(MessageSearchCriteria searchCriteria) {
         this.searchCriteria = searchCriteria;
-        view.setCriteria(searchCriteria);
+        cacheableView.setCriteria(searchCriteria);
     }
 }

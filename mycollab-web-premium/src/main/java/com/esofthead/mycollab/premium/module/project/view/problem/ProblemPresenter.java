@@ -30,7 +30,7 @@ public class ProblemPresenter extends AbstractPresenter<IProblemContainer>
 		ProjectView projectViewContainer = (ProjectView) container;
 		projectViewContainer.gotoSubView("Problems");
 
-		view.removeAllComponents();
+		cacheableView.removeAllComponents();
 
 		AbstractPresenter presenter;
 
@@ -48,7 +48,7 @@ public class ProblemPresenter extends AbstractPresenter<IProblemContainer>
 			throw new MyCollabException("Do not support screen data " + data);
 		}
 
-		presenter.go(view, data);
+		presenter.go(cacheableView, data);
 	}
 
 	@Override

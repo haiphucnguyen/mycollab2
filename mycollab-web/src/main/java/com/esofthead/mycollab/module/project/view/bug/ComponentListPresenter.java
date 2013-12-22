@@ -59,7 +59,7 @@ public class ComponentListPresenter
 		componentService = ApplicationContextUtil
 				.getSpringBean(ComponentService.class);
 
-		view.getPopupActionHandlers().addMassItemActionHandler(
+		cacheableView.getPopupActionHandlers().addMassItemActionHandler(
 				new DefaultMassEditActionHandler(this) {
 
 					@Override
@@ -89,7 +89,7 @@ public class ComponentListPresenter
 				.canRead(ProjectRolePermissionCollections.COMPONENTS)) {
 			ComponentContainer trackerContainer = (ComponentContainer) container;
 			trackerContainer.removeAllComponents();
-			trackerContainer.addComponent(view.getWidget());
+			trackerContainer.addComponent(cacheableView.getWidget());
 
 			doSearch((ComponentSearchCriteria) data.getParams());
 
@@ -104,7 +104,7 @@ public class ComponentListPresenter
 	@Override
 	protected void deleteSelectedItems() {
 		if (!isSelectAll) {
-			Collection<SimpleComponent> currentDataList = view
+			Collection<SimpleComponent> currentDataList = cacheableView
 					.getPagedBeanTable().getCurrentDataList();
 			List<Integer> keyList = new ArrayList<Integer>();
 			for (SimpleComponent item : currentDataList) {

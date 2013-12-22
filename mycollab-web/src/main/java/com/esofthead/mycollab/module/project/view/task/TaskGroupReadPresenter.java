@@ -58,7 +58,7 @@ public class TaskGroupReadPresenter extends
 	}
 
 	private void bind() {
-		view.getPreviewFormHandlers().addFormHandler(
+		cacheableView.getPreviewFormHandlers().addFormHandler(
 				new DefaultPreviewFormHandler<SimpleTaskList>() {
 
 					@Override
@@ -154,14 +154,14 @@ public class TaskGroupReadPresenter extends
 			TaskContainer taskContainer = (TaskContainer) container;
 			taskContainer.removeAllComponents();
 
-			taskContainer.addComponent(view.getWidget());
+			taskContainer.addComponent(cacheableView.getWidget());
 
 			if (data.getParams() instanceof Integer) {
 				ProjectTaskListService taskService = ApplicationContextUtil
 						.getSpringBean(ProjectTaskListService.class);
 				SimpleTaskList taskgroup = taskService.findById(
 						(Integer) data.getParams(), AppContext.getAccountId());
-				view.previewItem(taskgroup);
+				cacheableView.previewItem(taskgroup);
 
 				ProjectBreadcrumb breadCrumb = ViewManager
 						.getView(ProjectBreadcrumb.class);

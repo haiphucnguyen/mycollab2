@@ -51,7 +51,7 @@ public class LoginPresenter extends AbstractPresenter<LoginView> {
 	}
 
 	private void bind() {
-		view.addViewListener(new ApplicationEventListener<UserEvent.PlainLogin>() {
+		cacheableView.addViewListener(new ApplicationEventListener<UserEvent.PlainLogin>() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -104,7 +104,7 @@ public class LoginPresenter extends AbstractPresenter<LoginView> {
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		container.removeAllComponents();
-		container.addComponent(view.getWidget());
+		container.addComponent(cacheableView.getWidget());
 
 		AppContext.addFragment("user/login", "Login Page");
 	}

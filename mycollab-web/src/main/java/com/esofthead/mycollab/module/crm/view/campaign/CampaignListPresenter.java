@@ -55,7 +55,7 @@ public class CampaignListPresenter
 		campaignService = ApplicationContextUtil
 				.getSpringBean(CampaignService.class);
 
-		view.getPopupActionHandlers().addMassItemActionHandler(
+		cacheableView.getPopupActionHandlers().addMassItemActionHandler(
 				new DefaultMassEditActionHandler(this) {
 
 					@Override
@@ -107,7 +107,7 @@ public class CampaignListPresenter
 	@Override
 	protected void deleteSelectedItems() {
 		if (!isSelectAll) {
-			Collection<SimpleCampaign> currentDataList = view
+			Collection<SimpleCampaign> currentDataList = cacheableView
 					.getPagedBeanTable().getCurrentDataList();
 			List<Integer> keyList = new ArrayList<Integer>();
 			for (SimpleCampaign item : currentDataList) {
@@ -132,7 +132,7 @@ public class CampaignListPresenter
 	@Override
 	public void massUpdate(CampaignWithBLOBs value) {
 		if (!isSelectAll) {
-			Collection<SimpleCampaign> currentDataList = view
+			Collection<SimpleCampaign> currentDataList = cacheableView
 					.getPagedBeanTable().getCurrentDataList();
 			List<Integer> keyList = new ArrayList<Integer>();
 			for (SimpleCampaign item : currentDataList) {

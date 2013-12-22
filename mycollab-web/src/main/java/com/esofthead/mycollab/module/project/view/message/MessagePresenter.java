@@ -51,23 +51,23 @@ public class MessagePresenter extends AbstractPresenter<MessageContainer> {
 			ProjectView projectViewContainer = (ProjectView) container;
 			projectViewContainer.gotoSubView("Messages");
 
-			view.removeAllComponents();
+			cacheableView.removeAllComponents();
 
 			if (data instanceof MessageScreenData.Read) {
 				MessageReadPresenter presenter = PresenterResolver
 						.getPresenter(MessageReadPresenter.class);
-				presenter.go(view, data);
+				presenter.go(cacheableView, data);
 			} else if (data instanceof MessageScreenData.Search) {
 				MessageListPresenter presenter = PresenterResolver
 						.getPresenter(MessageListPresenter.class);
-				presenter.go(view, data);
+				presenter.go(cacheableView, data);
 			} else if (data == null) {
 				MessageSearchCriteria searchCriteria = new MessageSearchCriteria();
 				searchCriteria.setProjectids(new SetSearchField<Integer>(
 						CurrentProjectVariables.getProjectId()));
 				MessageListPresenter presenter = PresenterResolver
 						.getPresenter(MessageListPresenter.class);
-				presenter.go(view,
+				presenter.go(cacheableView,
 						new ScreenData.Preview<MessageSearchCriteria>(
 								searchCriteria));
 			}

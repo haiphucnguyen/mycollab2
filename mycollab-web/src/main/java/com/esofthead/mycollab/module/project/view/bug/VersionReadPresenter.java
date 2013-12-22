@@ -57,7 +57,7 @@ public class VersionReadPresenter extends AbstractPresenter<VersionReadView> {
 	}
 
 	private void bind() {
-		view.getPreviewFormHandlers().addFormHandler(
+		cacheableView.getPreviewFormHandlers().addFormHandler(
 				new DefaultPreviewFormHandler<Version>() {
 					@Override
 					public void onEdit(Version data) {
@@ -145,8 +145,8 @@ public class VersionReadPresenter extends AbstractPresenter<VersionReadView> {
 				if (version != null) {
 					VersionContainer versionContainer = (VersionContainer) container;
 					versionContainer.removeAllComponents();
-					versionContainer.addComponent(view.getWidget());
-					view.previewItem(version);
+					versionContainer.addComponent(cacheableView.getWidget());
+					cacheableView.previewItem(version);
 
 					ProjectBreadcrumb breadcrumb = ViewManager
 							.getView(ProjectBreadcrumb.class);

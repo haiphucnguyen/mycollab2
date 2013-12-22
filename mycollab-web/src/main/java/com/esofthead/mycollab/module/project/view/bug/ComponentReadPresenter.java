@@ -57,7 +57,7 @@ public class ComponentReadPresenter extends
 	}
 
 	private void bind() {
-		view.getPreviewFormHandlers().addFormHandler(
+		cacheableView.getPreviewFormHandlers().addFormHandler(
 				new DefaultPreviewFormHandler<SimpleComponent>() {
 					@Override
 					public void onEdit(SimpleComponent data) {
@@ -151,8 +151,8 @@ public class ComponentReadPresenter extends
 				if (component != null) {
 					ComponentContainer componentContainer = (ComponentContainer) container;
 					componentContainer.removeAllComponents();
-					componentContainer.addComponent(view.getWidget());
-					view.previewItem(component);
+					componentContainer.addComponent(cacheableView.getWidget());
+					cacheableView.previewItem(component);
 
 					ProjectBreadcrumb breadcrumb = ViewManager
 							.getView(ProjectBreadcrumb.class);

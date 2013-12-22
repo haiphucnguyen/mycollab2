@@ -38,7 +38,7 @@ public class ProblemReadPresenter extends AbstractPresenter<ProblemReadView> {
 	}
 
 	private void bind() {
-		view.getPreviewFormHandlers().addFormHandler(
+		cacheableView.getPreviewFormHandlers().addFormHandler(
 				new DefaultPreviewFormHandler<SimpleProblem>() {
 					@Override
 					public void onEdit(SimpleProblem data) {
@@ -150,8 +150,8 @@ public class ProblemReadPresenter extends AbstractPresenter<ProblemReadView> {
 				if (problem != null) {
 					ProblemContainer problemContainer = (ProblemContainer) container;
 					problemContainer.removeAllComponents();
-					problemContainer.addComponent(view.getWidget());
-					view.previewItem(problem);
+					problemContainer.addComponent(cacheableView.getWidget());
+					cacheableView.previewItem(problem);
 
 					ProjectBreadcrumb breadcrumb = ViewManager
 							.getView(ProjectBreadcrumb.class);

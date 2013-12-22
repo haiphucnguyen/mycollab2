@@ -16,6 +16,6 @@ public class StandupAdvertisementPresenter extends
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		StandupContainer standupContainer = (StandupContainer) container;
 		standupContainer.removeAllComponents();
-		standupContainer.addComponent(view.getWidget());
+		standupContainer.addComponent(cacheableView.getWidget());
 	}
 }

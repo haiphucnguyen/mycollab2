@@ -74,7 +74,7 @@ public class LeadReadPresenter extends CrmGenericPresenter<LeadReadView> {
 	}
 
 	private void bind() {
-		view.getPreviewFormHandlers().addFormHandler(
+		cacheableView.getPreviewFormHandlers().addFormHandler(
 				new DefaultPreviewFormHandler<SimpleLead>() {
 					@Override
 					public void onEdit(SimpleLead data) {
@@ -169,28 +169,28 @@ public class LeadReadPresenter extends CrmGenericPresenter<LeadReadView> {
 					}
 				});
 
-		view.getRelatedActivityHandlers().addRelatedListHandler(
+		cacheableView.getRelatedActivityHandlers().addRelatedListHandler(
 				new AbstractRelatedListHandler<SimpleEvent>() {
 					@Override
 					public void createNewRelatedItem(String itemId) {
 						if (itemId.equals("task")) {
 							SimpleTask task = new SimpleTask();
 							task.setType(CrmTypeConstants.LEAD);
-							task.setTypeid(view.getItem().getId());
+							task.setTypeid(cacheableView.getItem().getId());
 							EventBus.getInstance().fireEvent(
 									new ActivityEvent.TaskEdit(
 											LeadReadPresenter.this, task));
 						} else if (itemId.equals("meeting")) {
 							SimpleMeeting meeting = new SimpleMeeting();
 							meeting.setType(CrmTypeConstants.LEAD);
-							meeting.setTypeid(view.getItem().getId());
+							meeting.setTypeid(cacheableView.getItem().getId());
 							EventBus.getInstance().fireEvent(
 									new ActivityEvent.MeetingEdit(
 											LeadReadPresenter.this, meeting));
 						} else if (itemId.equals("call")) {
 							SimpleCall call = new SimpleCall();
 							call.setType(CrmTypeConstants.LEAD);
-							call.setTypeid(view.getItem().getId());
+							call.setTypeid(cacheableView.getItem().getId());
 							EventBus.getInstance().fireEvent(
 									new ActivityEvent.CallEdit(
 											LeadReadPresenter.this, call));
@@ -198,12 +198,12 @@ public class LeadReadPresenter extends CrmGenericPresenter<LeadReadView> {
 					}
 				});
 
-		view.getRelatedCampaignHandlers().addRelatedListHandler(
+		cacheableView.getRelatedCampaignHandlers().addRelatedListHandler(
 				new AbstractRelatedListHandler<SimpleCampaign>() {
 					@Override
 					public void createNewRelatedItem(String itemId) {
 						SimpleCampaign campaign = new SimpleCampaign();
-						campaign.setExtraData(view.getItem());
+						campaign.setExtraData(cacheableView.getItem());
 						EventBus.getInstance().fireEvent(
 								new CampaignEvent.GotoEdit(
 										LeadReadPresenter.this, campaign));
@@ -212,7 +212,7 @@ public class LeadReadPresenter extends CrmGenericPresenter<LeadReadView> {
 					@Override
 					public void selectAssociateItems(Set<SimpleCampaign> items) {
 						if (!items.isEmpty()) {
-							SimpleLead lead = view.getItem();
+							SimpleLead lead = cacheableView.getItem();
 							List<CampaignLead> associateCampaigns = new ArrayList<CampaignLead>();
 							for (SimpleCampaign campaign : items) {
 								CampaignLead associateCampaign = new CampaignLead();
@@ -249,7 +249,7 @@ public class LeadReadPresenter extends CrmGenericPresenter<LeadReadView> {
 						(Integer) data.getParams(), AppContext.getAccountId());
 				if (lead != null) {
 					super.onGo(container, data);
-					view.previewItem(lead);
+					cacheableView.previewItem(lead);
 
 					AppContext.addFragment(CrmLinkGenerator
 							.generateLeadPreviewLink(lead.getId()),

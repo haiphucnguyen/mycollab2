@@ -56,10 +56,10 @@ public class HistoryViewManager {
 			history.remove(history.size() - 1);
 			history.remove(history.size() - 1);
 
-			if (viewState.getPresenter().getView() instanceof IModule) {
+			if (viewState.getPresenter().initView() instanceof IModule) {
 				return new NullViewState();
 			} else {
-				log.debug("Back to view: " + viewState.getPresenter());
+				log.debug("Back to cacheableView: " + viewState.getPresenter());
 
 				viewState.getPresenter().go(viewState.getContainer(),
 						viewState.getParams());

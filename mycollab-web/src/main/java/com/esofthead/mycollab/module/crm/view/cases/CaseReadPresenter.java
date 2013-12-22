@@ -74,7 +74,7 @@ public class CaseReadPresenter extends CrmGenericPresenter<CaseReadView> {
 	}
 
 	private void bind() {
-		view.getPreviewFormHandlers().addFormHandler(
+		cacheableView.getPreviewFormHandlers().addFormHandler(
 				new DefaultPreviewFormHandler<SimpleCase>() {
 					@Override
 					public void onEdit(SimpleCase data) {
@@ -168,28 +168,28 @@ public class CaseReadPresenter extends CrmGenericPresenter<CaseReadView> {
 					}
 				});
 
-		view.getRelatedActivityHandlers().addRelatedListHandler(
+		cacheableView.getRelatedActivityHandlers().addRelatedListHandler(
 				new AbstractRelatedListHandler<SimpleEvent>() {
 					@Override
 					public void createNewRelatedItem(String itemId) {
 						if (itemId.equals("task")) {
 							SimpleTask task = new SimpleTask();
 							task.setType(CrmTypeConstants.CASE);
-							task.setTypeid(view.getItem().getId());
+							task.setTypeid(cacheableView.getItem().getId());
 							EventBus.getInstance().fireEvent(
 									new ActivityEvent.TaskEdit(
 											CaseReadPresenter.this, task));
 						} else if (itemId.equals("meeting")) {
 							SimpleMeeting meeting = new SimpleMeeting();
 							meeting.setType(CrmTypeConstants.CASE);
-							meeting.setTypeid(view.getItem().getId());
+							meeting.setTypeid(cacheableView.getItem().getId());
 							EventBus.getInstance().fireEvent(
 									new ActivityEvent.MeetingEdit(
 											CaseReadPresenter.this, meeting));
 						} else if (itemId.equals("call")) {
 							SimpleCall call = new SimpleCall();
 							call.setType(CrmTypeConstants.CASE);
-							call.setTypeid(view.getItem().getId());
+							call.setTypeid(cacheableView.getItem().getId());
 							EventBus.getInstance().fireEvent(
 									new ActivityEvent.CallEdit(
 											CaseReadPresenter.this, call));
@@ -197,12 +197,12 @@ public class CaseReadPresenter extends CrmGenericPresenter<CaseReadView> {
 					}
 				});
 
-		view.getRelatedContactHandlers().addRelatedListHandler(
+		cacheableView.getRelatedContactHandlers().addRelatedListHandler(
 				new AbstractRelatedListHandler<SimpleContact>() {
 					@Override
 					public void createNewRelatedItem(String itemId) {
 						SimpleContact contact = new SimpleContact();
-						contact.setExtraData(view.getItem());
+						contact.setExtraData(cacheableView.getItem());
 						EventBus.getInstance().fireEvent(
 								new ContactEvent.GotoEdit(
 										CaseReadPresenter.this, contact));
@@ -211,7 +211,7 @@ public class CaseReadPresenter extends CrmGenericPresenter<CaseReadView> {
 					@Override
 					public void selectAssociateItems(Set<SimpleContact> items) {
 						List<ContactCase> associateContacts = new ArrayList<ContactCase>();
-						SimpleCase cases = view.getItem();
+						SimpleCase cases = cacheableView.getItem();
 						for (SimpleContact contact : items) {
 							ContactCase associateContact = new ContactCase();
 							associateContact.setCaseid(cases.getId());
@@ -228,7 +228,7 @@ public class CaseReadPresenter extends CrmGenericPresenter<CaseReadView> {
 						contactService.saveContactCaseRelationship(
 								associateContacts, AppContext.getAccountId());
 
-						view.getRelatedContactHandlers().refresh();
+						cacheableView.getRelatedContactHandlers().refresh();
 					}
 				});
 	}
@@ -247,7 +247,7 @@ public class CaseReadPresenter extends CrmGenericPresenter<CaseReadView> {
 						(Integer) data.getParams(), AppContext.getAccountId());
 				if (cases != null) {
 					super.onGo(container, data);
-					view.previewItem(cases);
+					cacheableView.previewItem(cases);
 
 					AppContext.addFragment(CrmLinkGenerator
 							.generateCasePreviewLink(cases.getId()),

@@ -33,8 +33,8 @@ public class ProfilePhotoUploadPresenter extends
 		ProfileContainer profileContainer = (ProfileContainer) container;
 		profileContainer.removeAllComponents();
 
-		profileContainer.addComponent(view.getWidget());
-		view.editPhoto((byte[])data.getParams());
+		profileContainer.addComponent(cacheableView.getWidget());
+		cacheableView.editPhoto((byte[])data.getParams());
 	}
 
 }

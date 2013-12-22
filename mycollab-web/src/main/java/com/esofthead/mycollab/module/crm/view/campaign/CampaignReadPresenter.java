@@ -80,7 +80,7 @@ public class CampaignReadPresenter extends
 	}
 
 	private void bind() {
-		view.getPreviewFormHandlers().addFormHandler(
+		cacheableView.getPreviewFormHandlers().addFormHandler(
 				new DefaultPreviewFormHandler<SimpleCampaign>() {
 					@Override
 					public void onEdit(SimpleCampaign data) {
@@ -175,21 +175,21 @@ public class CampaignReadPresenter extends
 					}
 				});
 
-		view.getRelatedActivityHandlers().addRelatedListHandler(
+		cacheableView.getRelatedActivityHandlers().addRelatedListHandler(
 				new AbstractRelatedListHandler<SimpleEvent>() {
 					@Override
 					public void createNewRelatedItem(String itemId) {
 						if (itemId.equals("task")) {
 							SimpleTask task = new SimpleTask();
 							task.setType(CrmTypeConstants.CAMPAIGN);
-							task.setTypeid(view.getItem().getId());
+							task.setTypeid(cacheableView.getItem().getId());
 							EventBus.getInstance().fireEvent(
 									new ActivityEvent.TaskEdit(
 											CampaignReadPresenter.this, task));
 						} else if (itemId.equals("meeting")) {
 							SimpleMeeting meeting = new SimpleMeeting();
 							meeting.setType(CrmTypeConstants.CAMPAIGN);
-							meeting.setTypeid(view.getItem().getId());
+							meeting.setTypeid(cacheableView.getItem().getId());
 							EventBus.getInstance()
 									.fireEvent(
 											new ActivityEvent.MeetingEdit(
@@ -198,7 +198,7 @@ public class CampaignReadPresenter extends
 						} else if (itemId.equals("call")) {
 							SimpleCall call = new SimpleCall();
 							call.setType(CrmTypeConstants.CAMPAIGN);
-							call.setTypeid(view.getItem().getId());
+							call.setTypeid(cacheableView.getItem().getId());
 							EventBus.getInstance().fireEvent(
 									new ActivityEvent.CallEdit(
 											CampaignReadPresenter.this, call));
@@ -206,12 +206,12 @@ public class CampaignReadPresenter extends
 					}
 				});
 
-		view.getRelatedAccountHandlers().addRelatedListHandler(
+		cacheableView.getRelatedAccountHandlers().addRelatedListHandler(
 				new AbstractRelatedListHandler<SimpleAccount>() {
 					@Override
 					public void createNewRelatedItem(String itemId) {
 						SimpleAccount account = new SimpleAccount();
-						account.setExtraData(view.getItem());
+						account.setExtraData(cacheableView.getItem());
 						EventBus.getInstance().fireEvent(
 								new AccountEvent.GotoEdit(
 										CampaignReadPresenter.this, account));
@@ -221,7 +221,7 @@ public class CampaignReadPresenter extends
 					@Override
 					public void selectAssociateItems(Set<SimpleAccount> items) {
 						if (items.size() > 0) {
-							SimpleCampaign campaign = view.getItem();
+							SimpleCampaign campaign = cacheableView.getItem();
 							List<CampaignAccount> associateAccounts = new ArrayList<CampaignAccount>();
 							for (SimpleAccount account : items) {
 								CampaignAccount assoAccount = new CampaignAccount();
@@ -239,18 +239,18 @@ public class CampaignReadPresenter extends
 									associateAccounts,
 									AppContext.getAccountId());
 
-							view.getRelatedAccountHandlers().refresh();
+							cacheableView.getRelatedAccountHandlers().refresh();
 						}
 					}
 				});
 
-		view.getRelatedContactHandlers().addRelatedListHandler(
+		cacheableView.getRelatedContactHandlers().addRelatedListHandler(
 				new AbstractRelatedListHandler<SimpleContact>() {
 
 					@Override
 					public void createNewRelatedItem(String itemId) {
 						SimpleContact contact = new SimpleContact();
-						contact.setExtraData(view.getItem());
+						contact.setExtraData(cacheableView.getItem());
 						EventBus.getInstance().fireEvent(
 								new ContactEvent.GotoEdit(
 										CampaignReadPresenter.this, contact));
@@ -259,7 +259,7 @@ public class CampaignReadPresenter extends
 					@Override
 					public void selectAssociateItems(Set<SimpleContact> items) {
 						if (items.size() > 0) {
-							SimpleCampaign campaign = view.getItem();
+							SimpleCampaign campaign = cacheableView.getItem();
 							List<CampaignContact> associateContacts = new ArrayList<CampaignContact>();
 							for (SimpleContact contact : items) {
 								CampaignContact associateContact = new CampaignContact();
@@ -277,17 +277,17 @@ public class CampaignReadPresenter extends
 									associateContacts,
 									AppContext.getAccountId());
 
-							view.getRelatedContactHandlers().refresh();
+							cacheableView.getRelatedContactHandlers().refresh();
 						}
 					}
 				});
 
-		view.getRelatedLeadHandlers().addRelatedListHandler(
+		cacheableView.getRelatedLeadHandlers().addRelatedListHandler(
 				new AbstractRelatedListHandler<SimpleLead>() {
 					@Override
 					public void createNewRelatedItem(String itemId) {
 						SimpleLead lead = new SimpleLead();
-						lead.setExtraData(view.getItem());
+						lead.setExtraData(cacheableView.getItem());
 						EventBus.getInstance().fireEvent(
 								new LeadEvent.GotoEdit(
 										CampaignReadPresenter.this, lead));
@@ -296,7 +296,7 @@ public class CampaignReadPresenter extends
 					@Override
 					public void selectAssociateItems(Set<SimpleLead> items) {
 						if (items.size() > 0) {
-							SimpleCampaign campaign = view.getItem();
+							SimpleCampaign campaign = cacheableView.getItem();
 							List<CampaignLead> associateLeads = new ArrayList<CampaignLead>();
 							for (SimpleLead lead : items) {
 								CampaignLead associateLead = new CampaignLead();
@@ -313,7 +313,7 @@ public class CampaignReadPresenter extends
 							campaignService.saveCampaignLeadRelationship(
 									associateLeads, AppContext.getAccountId());
 
-							view.getRelatedLeadHandlers().refresh();
+							cacheableView.getRelatedLeadHandlers().refresh();
 						}
 					}
 				});
@@ -334,7 +334,7 @@ public class CampaignReadPresenter extends
 						(Integer) data.getParams(), AppContext.getAccountId());
 				if (campaign != null) {
 					super.onGo(container, data);
-					view.previewItem(campaign);
+					cacheableView.previewItem(campaign);
 					AppContext.addFragment(CrmLinkGenerator
 							.generateCampaignPreviewLink(campaign.getId()),
 							LocalizationHelper.getMessage(

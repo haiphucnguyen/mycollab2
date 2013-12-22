@@ -297,64 +297,64 @@ public class ProjectViewImpl extends AbstractPageView implements ProjectView {
 	private Component constructProjectDashboardComponent() {
 		dashboardPresenter = PresenterResolver
 				.getPresenter(ProjectDashboardPresenter.class);
-		return dashboardPresenter.getView();
+		return dashboardPresenter.initView();
 	}
 
 	private Component constructProjectUsers() {
 		userPresenter = PresenterResolver
 				.getPresenter(UserSettingPresenter.class);
-		return userPresenter.getView();
+		return userPresenter.initView();
 	}
 
 	private Component constructProjectMessageComponent() {
 		messagePresenter = PresenterResolver
 				.getPresenter(MessagePresenter.class);
-		return messagePresenter.getView();
+		return messagePresenter.initView();
 	}
 
 	private Component constructProjectMilestoneComponent() {
 		milestonesPresenter = PresenterResolver
 				.getPresenter(MilestonePresenter.class);
-		return milestonesPresenter.getView();
+		return milestonesPresenter.initView();
 	}
 
 	private Component constructProjectRiskComponent() {
 		riskPresenter = PresenterResolver.getPresenter(IRiskPresenter.class);
-		return riskPresenter.getView();
+		return riskPresenter.initView();
 	}
 
 	private Component constructProjectProblemComponent() {
 		problemPresenter = PresenterResolver
 				.getPresenter(IProblemPresenter.class);
-		return problemPresenter.getView();
+		return problemPresenter.initView();
 	}
 
 	private Component constructTimeTrackingComponent() {
 		timePresenter = PresenterResolver
 				.getPresenter(ITimeTrackingPresenter.class);
-		return timePresenter.getView();
+		return timePresenter.initView();
 	}
 
 	private Component constructProjectStandupMeeting() {
 		standupPresenter = PresenterResolver
 				.getPresenter(IStandupPresenter.class);
-		return standupPresenter.getView();
+		return standupPresenter.initView();
 	}
 
 	private Component constructTaskDashboardComponent() {
 		taskPresenter = PresenterResolver.getPresenter(TaskPresenter.class);
-		return taskPresenter.getView();
+		return taskPresenter.initView();
 	}
 
 	private Component constructProjectBugComponent() {
 		trackerPresenter = PresenterResolver
 				.getPresenter(TrackerPresenter.class);
-		return trackerPresenter.getView();
+		return trackerPresenter.initView();
 	}
 
 	private Component constructProjectFileComponent() {
 		filePresenter = PresenterResolver.getPresenter(IFilePresenter.class);
-		return filePresenter.getView();
+		return filePresenter.initView();
 	}
 
 	@Override
@@ -528,7 +528,7 @@ public class ProjectViewImpl extends AbstractPageView implements ProjectView {
 
 	@Override
 	public Component gotoSubView(String name) {
-		log.debug("Project: Go to tab view name " + name);
+		log.debug("Project: Go to tab cacheableView name " + name);
 		PageView component = (PageView) myProjectTab.selectTab(name);
 		return component;
 	}

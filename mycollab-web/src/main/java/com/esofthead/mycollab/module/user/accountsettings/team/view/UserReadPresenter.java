@@ -60,7 +60,7 @@ public class UserReadPresenter extends AbstractPresenter<UserReadView> {
 	}
 
 	private void bind() {
-		view.getPreviewFormHandlers().addFormHandler(
+		cacheableView.getPreviewFormHandlers().addFormHandler(
 				new DefaultPreviewFormHandler<User>() {
 					@Override
 					public void onEdit(User data) {
@@ -129,8 +129,8 @@ public class UserReadPresenter extends AbstractPresenter<UserReadView> {
 			if (user != null) {
 				UserContainer userContainer = (UserContainer) container;
 				userContainer.removeAllComponents();
-				userContainer.addComponent(view.getWidget());
-				view.previewItem(user);
+				userContainer.addComponent(cacheableView.getWidget());
+				cacheableView.previewItem(user);
 
 				AccountSettingBreadcrumb breadcrumb = ViewManager
 						.getView(AccountSettingBreadcrumb.class);

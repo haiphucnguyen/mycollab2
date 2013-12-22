@@ -55,7 +55,7 @@ public class AccountAddPresenter extends CrmGenericPresenter<AccountAddView> {
 	}
 
 	private void bind() {
-		view.getEditFormHandlers().addFormHandler(
+		cacheableView.getEditFormHandlers().addFormHandler(
 				new EditFormHandler<SimpleAccount>() {
 					@Override
 					public void onSave(final SimpleAccount account) {
@@ -107,7 +107,7 @@ public class AccountAddPresenter extends CrmGenericPresenter<AccountAddView> {
 			}
 
 			super.onGo(container, data);
-			view.editItem(account);
+			cacheableView.editItem(account);
 			if (account.getId() == null) {
 				AppContext.addFragment("crm/account/add", LocalizationHelper
 						.getMessage(GenericI18Enum.BROWSER_ADD_ITEM_TITLE,

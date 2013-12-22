@@ -49,7 +49,7 @@ public class CallAddPresenter extends CrmGenericPresenter<CallAddView> {
 	public CallAddPresenter() {
 		super(CallAddView.class);
 
-		view.getEditFormHandlers().addFormHandler(
+		cacheableView.getEditFormHandlers().addFormHandler(
 				new EditFormHandler<CallWithBLOBs>() {
 					@Override
 					public void onSave(final CallWithBLOBs item) {
@@ -100,9 +100,9 @@ public class CallAddPresenter extends CrmGenericPresenter<CallAddView> {
 			}
 
 			container.removeAllComponents();
-			container.addComponent(view.getWidget());
+			container.addComponent(cacheableView.getWidget());
 
-			view.editItem(call);
+			cacheableView.editItem(call);
 
 			if (call.getId() == null) {
 				AppContext.addFragment("crm/activity/call/add/",

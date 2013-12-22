@@ -45,10 +45,10 @@ public class ProblemAddPresenter extends AbstractPresenter<ProblemAddView> {
 				.canWrite(ProjectRolePermissionCollections.PROBLEMS)) {
 			ProblemContainer problemContainer = (ProblemContainer) container;
 			problemContainer.removeAllComponents();
-			problemContainer.addComponent(view.getWidget());
+			problemContainer.addComponent(cacheableView.getWidget());
 
 			Problem problem = (Problem) data.getParams();
-			view.editItem(problem);
+			cacheableView.editItem(problem);
 
 			ProjectBreadcrumb breadcrumb = ViewManager
 					.getView(ProjectBreadcrumb.class);
@@ -63,7 +63,7 @@ public class ProblemAddPresenter extends AbstractPresenter<ProblemAddView> {
 	}
 
 	private void bind() {
-		view.getEditFormHandlers().addFormHandler(
+		cacheableView.getEditFormHandlers().addFormHandler(
 				new EditFormHandler<Problem>() {
 					@Override
 					public void onSave(final Problem problem) {

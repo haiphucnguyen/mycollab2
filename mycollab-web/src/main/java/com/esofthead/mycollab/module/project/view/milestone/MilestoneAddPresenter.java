@@ -59,10 +59,10 @@ public class MilestoneAddPresenter extends AbstractPresenter<MilestoneAddView> {
 				.canWrite(ProjectRolePermissionCollections.MILESTONES)) {
 			MilestoneContainer milestoneContainer = (MilestoneContainer) container;
 			milestoneContainer.removeAllComponents();
-			milestoneContainer.addComponent(view.getWidget());
+			milestoneContainer.addComponent(cacheableView.getWidget());
 
 			Milestone milestone = (Milestone) data.getParams();
-			view.editItem(milestone);
+			cacheableView.editItem(milestone);
 
 			ProjectBreadcrumb breadcrumb = ViewManager
 					.getView(ProjectBreadcrumb.class);
@@ -77,7 +77,7 @@ public class MilestoneAddPresenter extends AbstractPresenter<MilestoneAddView> {
 	}
 
 	private void bind() {
-		view.getEditFormHandlers().addFormHandler(
+		cacheableView.getEditFormHandlers().addFormHandler(
 				new EditFormHandler<Milestone>() {
 					@Override
 					public void onSave(final Milestone milestone) {

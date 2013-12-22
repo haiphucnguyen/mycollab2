@@ -60,7 +60,7 @@ public class RoleListPresenter extends
 		super(RoleListView.class);
 		roleService = ApplicationContextUtil.getSpringBean(RoleService.class);
 
-		view.getPopupActionHandlers().addMassItemActionHandler(
+		cacheableView.getPopupActionHandlers().addMassItemActionHandler(
 				new DefaultMassEditActionHandler(this) {
 
 					@Override
@@ -86,7 +86,7 @@ public class RoleListPresenter extends
 	@Override
 	protected void deleteSelectedItems() {
 		if (!isSelectAll) {
-			Collection<SimpleRole> currentDataList = view.getPagedBeanTable()
+			Collection<SimpleRole> currentDataList = cacheableView.getPagedBeanTable()
 					.getCurrentDataList();
 			List<Integer> keyList = new ArrayList<Integer>();
 			for (Role item : currentDataList) {
@@ -120,7 +120,7 @@ public class RoleListPresenter extends
 		if (AppContext.canRead(RolePermissionCollections.ACCOUNT_ROLE)) {
 			RoleContainer roleContainer = (RoleContainer) container;
 			roleContainer.removeAllComponents();
-			roleContainer.addComponent(view.getWidget());
+			roleContainer.addComponent(cacheableView.getWidget());
 			RoleSearchCriteria roleSearchCriteria = (RoleSearchCriteria) data
 					.getParams();
 			doSearch(roleSearchCriteria);

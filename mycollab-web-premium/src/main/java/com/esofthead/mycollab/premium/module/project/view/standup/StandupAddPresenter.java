@@ -29,7 +29,7 @@ public class StandupAddPresenter extends AbstractPresenter<StandupAddView> {
 	}
 
 	private void bind() {
-		view.getEditFormHandlers().addFormHandler(
+		cacheableView.getEditFormHandlers().addFormHandler(
 				new EditFormHandler<StandupReportWithBLOBs>() {
 					@Override
 					public void onSave(
@@ -82,10 +82,10 @@ public class StandupAddPresenter extends AbstractPresenter<StandupAddView> {
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		StandupContainer standupContainer = (StandupContainer) container;
 		standupContainer.removeAllComponents();
-		standupContainer.addComponent(view.getWidget());
+		standupContainer.addComponent(cacheableView.getWidget());
 		StandupReportWithBLOBs standupReport = (StandupReportWithBLOBs) data
 				.getParams();
-		view.editItem(standupReport);
+		cacheableView.editItem(standupReport);
 
 		ProjectBreadcrumb breadCrumb = ViewManager
 				.getView(ProjectBreadcrumb.class);

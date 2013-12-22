@@ -51,7 +51,7 @@ public class MessageReadPresenter extends AbstractPresenter<MessageReadView> {
     }
 
     protected void bind() {
-        view.getPreviewFormHandlers().addFormHandler(
+        cacheableView.getPreviewFormHandlers().addFormHandler(
                 new PreviewFormHandler<SimpleMessage>() {
 
                     @Override
@@ -92,14 +92,14 @@ public class MessageReadPresenter extends AbstractPresenter<MessageReadView> {
                 .canRead(ProjectRolePermissionCollections.MESSAGES)) {
             MessageContainer messageContainer = (MessageContainer) container;
             messageContainer.removeAllComponents();
-            messageContainer.addComponent(view.getWidget());
+            messageContainer.addComponent(cacheableView.getWidget());
 
             if (data.getParams() instanceof Integer) {
                 MessageService messageService = ApplicationContextUtil
                         .getSpringBean(MessageService.class);
                 SimpleMessage message = messageService.findMessageById(
                         (Integer) data.getParams(), AppContext.getAccountId());
-                view.previewItem(message);
+                cacheableView.previewItem(message);
 
                 ProjectBreadcrumb breadCrumb = ViewManager
                         .getView(ProjectBreadcrumb.class);

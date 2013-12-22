@@ -56,7 +56,7 @@ public class OpportunityAddPresenter extends
 	}
 
 	private void bind() {
-		view.getEditFormHandlers().addFormHandler(
+		cacheableView.getEditFormHandlers().addFormHandler(
 				new EditFormHandler<SimpleOpportunity>() {
 					@Override
 					public void onSave(final SimpleOpportunity item) {
@@ -107,7 +107,7 @@ public class OpportunityAddPresenter extends
 				}
 			}
 			super.onGo(container, data);
-			view.editItem(opportunity);
+			cacheableView.editItem(opportunity);
 
 			if (opportunity.getId() == null) {
 				AppContext.addFragment("crm/opportunity/add",

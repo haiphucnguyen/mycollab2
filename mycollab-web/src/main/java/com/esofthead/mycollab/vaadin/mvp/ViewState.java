@@ -18,6 +18,12 @@ package com.esofthead.mycollab.vaadin.mvp;
 
 import com.vaadin.ui.ComponentContainer;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class ViewState {
 	private ComponentContainer container;
 	private IPresenter presenter;

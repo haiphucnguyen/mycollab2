@@ -51,7 +51,7 @@ public class CallReadPresenter extends CrmGenericPresenter<CallReadView> {
 	}
 
 	private void bind() {
-		view.getPreviewFormHandlers().addFormHandler(
+		cacheableView.getPreviewFormHandlers().addFormHandler(
 				new DefaultPreviewFormHandler<SimpleCall>() {
 					@Override
 					public void onEdit(SimpleCall data) {
@@ -165,9 +165,9 @@ public class CallReadPresenter extends CrmGenericPresenter<CallReadView> {
 			}
 
 			container.removeAllComponents();
-			container.addComponent(view.getWidget());
+			container.addComponent(cacheableView.getWidget());
 
-			view.previewItem(call);
+			cacheableView.previewItem(call);
 			AppContext.addFragment(CrmLinkGenerator
 					.generateCallPreviewLink(call.getId()), LocalizationHelper
 					.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,

@@ -64,7 +64,7 @@ public class AccountListPresenter
 		accountService = ApplicationContextUtil
 				.getSpringBean(AccountService.class);
 
-		view.getPopupActionHandlers().addMassItemActionHandler(
+		cacheableView.getPopupActionHandlers().addMassItemActionHandler(
 				new DefaultMassEditActionHandler(this) {
 
 					@Override
@@ -86,7 +86,7 @@ public class AccountListPresenter
 												.getMessage(WebExceptionI18nEnum.NOT_SUPPORT_SENDING_EMAIL_TO_ALL_USERS));
 							} else {
 								List<String> lstMail = new ArrayList<String>();
-								List<SimpleAccount> tableData = view
+								List<SimpleAccount> tableData = cacheableView
 										.getPagedBeanTable()
 										.getCurrentDataList();
 								for (SimpleAccount item : tableData) {
@@ -116,7 +116,7 @@ public class AccountListPresenter
 	@Override
 	protected void deleteSelectedItems() {
 		if (!isSelectAll) {
-			Collection<SimpleAccount> currentDataList = view
+			Collection<SimpleAccount> currentDataList = cacheableView
 					.getPagedBeanTable().getCurrentDataList();
 			List<Integer> keyList = new ArrayList<Integer>();
 			for (SimpleAccount item : currentDataList) {
@@ -159,7 +159,7 @@ public class AccountListPresenter
 	@Override
 	public void massUpdate(Account value) {
 		if (!isSelectAll) {
-			Collection<SimpleAccount> currentDataList = view
+			Collection<SimpleAccount> currentDataList = cacheableView
 					.getPagedBeanTable().getCurrentDataList();
 			List<Integer> keyList = new ArrayList<Integer>();
 			for (SimpleAccount item : currentDataList) {

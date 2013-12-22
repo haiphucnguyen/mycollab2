@@ -55,7 +55,7 @@ public class OpportunityListPresenter
 		opportunityService = ApplicationContextUtil
 				.getSpringBean(OpportunityService.class);
 
-		view.getPopupActionHandlers().addMassItemActionHandler(
+		cacheableView.getPopupActionHandlers().addMassItemActionHandler(
 				new DefaultMassEditActionHandler(this) {
 
 					@Override
@@ -107,7 +107,7 @@ public class OpportunityListPresenter
 	@Override
 	protected void deleteSelectedItems() {
 		if (!isSelectAll) {
-			Collection<SimpleOpportunity> currentDataList = view
+			Collection<SimpleOpportunity> currentDataList = cacheableView
 					.getPagedBeanTable().getCurrentDataList();
 			List<Integer> keyList = new ArrayList<Integer>();
 			for (SimpleOpportunity item : currentDataList) {
@@ -132,7 +132,7 @@ public class OpportunityListPresenter
 	@Override
 	public void massUpdate(Opportunity value) {
 		if (!isSelectAll) {
-			Collection<SimpleOpportunity> currentDataList = view
+			Collection<SimpleOpportunity> currentDataList = cacheableView
 					.getPagedBeanTable().getCurrentDataList();
 			List<Integer> keyList = new ArrayList<Integer>();
 			for (SimpleOpportunity item : currentDataList) {

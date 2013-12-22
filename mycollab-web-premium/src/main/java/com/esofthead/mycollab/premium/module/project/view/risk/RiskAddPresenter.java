@@ -40,9 +40,9 @@ public class RiskAddPresenter extends AbstractPresenter<RiskAddView> {
 				.canWrite(ProjectRolePermissionCollections.RISKS)) {
 			RiskContainer riskContainer = (RiskContainer) container;
 			riskContainer.removeAllComponents();
-			riskContainer.addComponent(view.getWidget());
+			riskContainer.addComponent(cacheableView.getWidget());
 			Risk risk = (Risk) data.getParams();
-			view.editItem(risk);
+			cacheableView.editItem(risk);
 
 			ProjectBreadcrumb breadCrumb = ViewManager
 					.getView(ProjectBreadcrumb.class);
@@ -57,7 +57,7 @@ public class RiskAddPresenter extends AbstractPresenter<RiskAddView> {
 	}
 
 	private void bind() {
-		view.getEditFormHandlers().addFormHandler(new EditFormHandler<Risk>() {
+		cacheableView.getEditFormHandlers().addFormHandler(new EditFormHandler<Risk>() {
 			@Override
 			public void onSave(final Risk risk) {
 				saveRisk(risk);

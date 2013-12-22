@@ -59,7 +59,7 @@ public class ShellController implements IController {
 					public void handle(GotoMainPage event) {
 						MainViewPresenter mainViewPresenter = PresenterResolver
 								.getPresenter(MainViewPresenter.class);
-						MainView mainView = mainViewPresenter.getView();
+						MainView mainView = mainViewPresenter.initView();
 						((MainWindowContainer) container).setContent(mainView);
 
 						container.setStyleName("mainView");
@@ -81,7 +81,7 @@ public class ShellController implements IController {
 					public void handle(LogOut event) {
 						LoginPresenter presenter = PresenterResolver
 								.getPresenter(LoginPresenter.class);
-						LoginView loginView = presenter.getView();
+						LoginView loginView = presenter.initView();
 						MyCollabApplication.getInstance()
 								.unsetRememberPassword();
 

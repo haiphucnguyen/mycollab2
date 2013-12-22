@@ -39,7 +39,7 @@ public class ProblemListPresenter
 		problemService = ApplicationContextUtil
 				.getSpringBean(ProblemService.class);
 
-		view.getPopupActionHandlers().addMassItemActionHandler(
+		cacheableView.getPopupActionHandlers().addMassItemActionHandler(
 				new DefaultMassEditActionHandler(this) {
 
 					@Override
@@ -74,7 +74,7 @@ public class ProblemListPresenter
 				.canRead(ProjectRolePermissionCollections.PROBLEMS)) {
 			ProblemContainer problemContainer = (ProblemContainer) container;
 			problemContainer.removeAllComponents();
-			problemContainer.addComponent(view.getWidget());
+			problemContainer.addComponent(cacheableView.getWidget());
 
 			doSearch((ProblemSearchCriteria) data.getParams());
 
@@ -89,7 +89,7 @@ public class ProblemListPresenter
 	@Override
 	protected void deleteSelectedItems() {
 		if (!isSelectAll) {
-			Collection<SimpleProblem> currentDataList = view
+			Collection<SimpleProblem> currentDataList = cacheableView
 					.getPagedBeanTable().getCurrentDataList();
 			List<Integer> keyList = new ArrayList<Integer>();
 			for (SimpleProblem item : currentDataList) {
@@ -115,7 +115,7 @@ public class ProblemListPresenter
 	@Override
 	public void massUpdate(Problem value) {
 		if (!isSelectAll) {
-			Collection<SimpleProblem> currentDataList = view
+			Collection<SimpleProblem> currentDataList = cacheableView
 					.getPagedBeanTable().getCurrentDataList();
 			List<Integer> keyList = new ArrayList<Integer>();
 			for (SimpleProblem item : currentDataList) {

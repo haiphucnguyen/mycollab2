@@ -58,7 +58,7 @@ public class BeanTable<SearchService extends ISearchableService<S>, S extends Se
 		this.typeClass = typeClass;
 		this.visibleColumns = visibleColumns;
 		this.columnHeaders = columnHeaders;
-		this.setStyleName("list-view");
+		this.setStyleName("list-cacheableView");
 	}
 
 	public void setSearchCriteria(S searchCriteria) {

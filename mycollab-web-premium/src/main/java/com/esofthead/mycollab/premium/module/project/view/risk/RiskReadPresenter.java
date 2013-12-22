@@ -41,7 +41,7 @@ public class RiskReadPresenter extends AbstractPresenter<RiskReadView> {
 	}
 
 	private void bind() {
-		view.getPreviewFormHandlers().addFormHandler(
+		cacheableView.getPreviewFormHandlers().addFormHandler(
 				new DefaultPreviewFormHandler<SimpleRisk>() {
 					@Override
 					public void onEdit(SimpleRisk data) {
@@ -153,8 +153,8 @@ public class RiskReadPresenter extends AbstractPresenter<RiskReadView> {
 				if (risk != null) {
 					RiskContainer riskContainer = (RiskContainer) container;
 					riskContainer.removeAllComponents();
-					riskContainer.addComponent(view.getWidget());
-					view.previewItem(risk);
+					riskContainer.addComponent(cacheableView.getWidget());
+					cacheableView.previewItem(risk);
 
 					ProjectBreadcrumb breadCrumb = ViewManager
 							.getView(ProjectBreadcrumb.class);

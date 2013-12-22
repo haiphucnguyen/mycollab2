@@ -56,7 +56,7 @@ public class ContactListPresenter
 		contactService = ApplicationContextUtil
 				.getSpringBean(ContactService.class);
 
-		view.getPopupActionHandlers().addMassItemActionHandler(
+		cacheableView.getPopupActionHandlers().addMassItemActionHandler(
 				new DefaultMassEditActionHandler(this) {
 
 					@Override
@@ -79,7 +79,7 @@ public class ContactListPresenter
 
 							} else {
 								List<String> lstMail = new ArrayList<String>();
-								List<SimpleContact> tableData = view
+								List<SimpleContact> tableData = cacheableView
 										.getPagedBeanTable()
 										.getCurrentDataList();
 								for (SimpleContact item : tableData) {
@@ -126,7 +126,7 @@ public class ContactListPresenter
 	@Override
 	protected void deleteSelectedItems() {
 		if (!isSelectAll) {
-			Collection<SimpleContact> currentDataList = view
+			Collection<SimpleContact> currentDataList = cacheableView
 					.getPagedBeanTable().getCurrentDataList();
 			List<Integer> keyList = new ArrayList<Integer>();
 			for (SimpleContact item : currentDataList) {
@@ -151,7 +151,7 @@ public class ContactListPresenter
 	@Override
 	public void massUpdate(Contact value) {
 		if (!isSelectAll) {
-			Collection<SimpleContact> currentDataList = view
+			Collection<SimpleContact> currentDataList = cacheableView
 					.getPagedBeanTable().getCurrentDataList();
 			List<Integer> keyList = new ArrayList<Integer>();
 			for (SimpleContact item : currentDataList) {

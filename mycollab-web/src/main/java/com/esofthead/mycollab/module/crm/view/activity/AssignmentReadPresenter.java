@@ -58,7 +58,7 @@ public class AssignmentReadPresenter extends
 	}
 
 	private void bind() {
-		view.getPreviewFormHandlers().addFormHandler(
+		cacheableView.getPreviewFormHandlers().addFormHandler(
 				new DefaultPreviewFormHandler<SimpleTask>() {
 					@Override
 					public void onEdit(SimpleTask data) {
@@ -172,8 +172,8 @@ public class AssignmentReadPresenter extends
 			}
 
 			container.removeAllComponents();
-			container.addComponent(view.getWidget());
-			view.previewItem(task);
+			container.addComponent(cacheableView.getWidget());
+			cacheableView.previewItem(task);
 			AppContext.addFragment(CrmLinkGenerator
 					.generateTaskPreviewLink(task.getId()), LocalizationHelper
 					.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,

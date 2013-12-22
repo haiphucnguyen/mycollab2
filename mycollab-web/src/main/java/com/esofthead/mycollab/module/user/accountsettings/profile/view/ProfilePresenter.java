@@ -51,7 +51,7 @@ public class ProfilePresenter extends AbstractPresenter<ProfileContainer> {
 					.getPresenter(ProfilePhotoUploadPresenter.class);
 		}
 
-		presenter.go(view.getWidget(), data);
+		presenter.go(cacheableView.getWidget(), data);
 	}
 
 }

@@ -50,7 +50,7 @@ public class ProjectRoleAddPresenter extends
 	public ProjectRoleAddPresenter() {
 		super(ProjectRoleAddView.class);
 
-		view.getEditFormHandlers().addFormHandler(
+		cacheableView.getEditFormHandlers().addFormHandler(
 				new EditFormHandler<ProjectRole>() {
 					@Override
 					public void onSave(final ProjectRole item) {
@@ -95,7 +95,7 @@ public class ProjectRoleAddPresenter extends
 		}
 
 		roleService.savePermission(project.getId(), item.getId(),
-				view.getPermissionMap(), AppContext.getAccountId());
+				cacheableView.getPermissionMap(), AppContext.getAccountId());
 
 	}
 
@@ -103,11 +103,11 @@ public class ProjectRoleAddPresenter extends
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		ProjectRoleContainer roleContainer = (ProjectRoleContainer) container;
 		roleContainer.removeAllComponents();
-		roleContainer.addComponent(view.getWidget());
+		roleContainer.addComponent(cacheableView.getWidget());
 
 		ProjectRole role = (ProjectRole) data.getParams();
 
-		view.editItem(role);
+		cacheableView.editItem(role);
 		ProjectBreadcrumb breadcrumb = ViewManager
 				.getView(ProjectBreadcrumb.class);
 		if (role.getId() == null) {

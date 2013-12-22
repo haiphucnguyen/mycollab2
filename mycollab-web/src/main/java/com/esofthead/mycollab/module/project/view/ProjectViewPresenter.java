@@ -70,8 +70,8 @@ public class ProjectViewPresenter extends AbstractPresenter<ProjectView> {
 	public void onGo(ComponentContainer container, ScreenData<?> data) {
 		ProjectModule prjContainer = (ProjectModule) container;
 		prjContainer.removeAllComponents();
-		prjContainer.addComponent((Component) view);
-		prjContainer.setComponentAlignment((Component) view,
+		prjContainer.addComponent((Component) cacheableView);
+		prjContainer.setComponentAlignment((Component) cacheableView,
 				Alignment.TOP_CENTER);
 
 		if (data.getParams() instanceof Integer) {
@@ -89,7 +89,7 @@ public class ProjectViewPresenter extends AbstractPresenter<ProjectView> {
 					NotificationUtil.showRecordNotExistNotification();
 				} else {
 					CurrentProjectVariables.setProject(project);
-					view.constructProjectHeaderPanel(project, null);
+					cacheableView.constructProjectHeaderPanel(project, null);
 
 				}
 			}
@@ -101,7 +101,7 @@ public class ProjectViewPresenter extends AbstractPresenter<ProjectView> {
 	protected void onDefaultStopChain() {
 		ProjectDashboardPresenter presenter = PresenterResolver
 				.getPresenter(ProjectDashboardPresenter.class);
-		presenter.go(this.view, null);
+		presenter.go(this.cacheableView, null);
 	}
 
 	@Override
@@ -168,6 +168,6 @@ public class ProjectViewPresenter extends AbstractPresenter<ProjectView> {
 					"Not support page action chain " + pageAction);
 		}
 
-		presenter.handleChain(view, pageActionChain);
+		presenter.handleChain(cacheableView, pageActionChain);
 	}
 }

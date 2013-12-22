@@ -60,7 +60,7 @@ public class ContactAddPresenter extends CrmGenericPresenter<ContactAddView> {
 	}
 
 	private void bind() {
-		view.getEditFormHandlers().addFormHandler(
+		cacheableView.getEditFormHandlers().addFormHandler(
 				new EditFormHandler<SimpleContact>() {
 					@Override
 					public void onSave(final SimpleContact contact) {
@@ -113,7 +113,7 @@ public class ContactAddPresenter extends CrmGenericPresenter<ContactAddView> {
 				}
 			}
 			super.onGo(container, data);
-			view.editItem(contact);
+			cacheableView.editItem(contact);
 
 			if (contact.getId() == null) {
 				AppContext.addFragment("crm/contact/add", LocalizationHelper

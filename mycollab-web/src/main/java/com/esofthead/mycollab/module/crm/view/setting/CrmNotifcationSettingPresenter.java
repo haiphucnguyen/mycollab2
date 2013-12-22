@@ -49,7 +49,7 @@ public class CrmNotifcationSettingPresenter extends
 				.getSpringBean(CrmNotificationSettingService.class);
 		CrmNotificationSetting setting = service.findNotification(
 				AppContext.getUsername(), AppContext.getAccountId());
-		view.showNotificationSettings(setting);
+		cacheableView.showNotificationSettings(setting);
 
 		AppContext.addFragment("crm/setting/notification",
 				"Notification Settings");

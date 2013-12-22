@@ -34,7 +34,7 @@ public abstract class CrmGenericListPresenter<V extends ListView<S, B>, S extend
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		CrmModule crmModule = (CrmModule) container;
-		crmModule.addView(view);
+		crmModule.addView(cacheableView);
 	}
 
 }

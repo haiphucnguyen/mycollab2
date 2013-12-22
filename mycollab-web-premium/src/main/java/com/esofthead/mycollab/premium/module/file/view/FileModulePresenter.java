@@ -22,11 +22,11 @@ public class FileModulePresenter extends AbstractPresenter<IFileModule>
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		MainView mainView = (MainView) container;
-		mainView.addModule((IModule) view);
+		mainView.addModule((IModule) cacheableView);
 
 		FileMainPresenter mainPresenter = PresenterResolver
 				.getPresenter(FileMainPresenter.class);
-		mainPresenter.go(view, null);
+		mainPresenter.go(cacheableView, null);
 
 		AppContext.getInstance()
 				.updateLastModuleVisit(ModuleNameConstants.FILE);

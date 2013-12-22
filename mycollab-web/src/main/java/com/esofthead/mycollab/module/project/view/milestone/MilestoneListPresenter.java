@@ -56,7 +56,7 @@ public class MilestoneListPresenter extends
 				.canRead(ProjectRolePermissionCollections.MILESTONES)) {
 			MilestoneContainer milestoneContainer = (MilestoneContainer) container;
 			milestoneContainer.removeAllComponents();
-			milestoneContainer.addComponent(view.getWidget());
+			milestoneContainer.addComponent(cacheableView.getWidget());
 			doSearch((MilestoneSearchCriteria) data.getParams());
 
 			ProjectBreadcrumb breadcrumb = ViewManager
@@ -74,7 +74,7 @@ public class MilestoneListPresenter extends
 		List<SimpleMilestone> milestones = milestoneService
 				.findPagableListByCriteria(new SearchRequest<MilestoneSearchCriteria>(
 						searchCriteria, 0, Integer.MAX_VALUE));
-		view.displayMilestones(milestones);
+		cacheableView.displayMilestones(milestones);
 	}
 
 }

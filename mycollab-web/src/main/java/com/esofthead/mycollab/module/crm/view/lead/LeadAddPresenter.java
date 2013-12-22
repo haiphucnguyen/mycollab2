@@ -58,7 +58,7 @@ public class LeadAddPresenter extends CrmGenericPresenter<LeadAddView> {
 	}
 
 	private void bind() {
-		view.getEditFormHandlers().addFormHandler(
+		cacheableView.getEditFormHandlers().addFormHandler(
 				new EditFormHandler<SimpleLead>() {
 					@Override
 					public void onSave(final SimpleLead lead) {
@@ -111,7 +111,7 @@ public class LeadAddPresenter extends CrmGenericPresenter<LeadAddView> {
 			}
 
 			super.onGo(container, data);
-			view.editItem(lead);
+			cacheableView.editItem(lead);
 
 			if (lead.getId() == null) {
 				AppContext.addFragment("crm/lead/add", LocalizationHelper

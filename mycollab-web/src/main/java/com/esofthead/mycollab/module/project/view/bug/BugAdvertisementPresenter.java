@@ -32,7 +32,7 @@ public class BugAdvertisementPresenter extends
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		TrackerContainer trackerContainer = (TrackerContainer) container;
 		trackerContainer.removeAllComponents();
-		trackerContainer.addComponent(view.getWidget());
+		trackerContainer.addComponent(cacheableView.getWidget());
 	}
 
 }

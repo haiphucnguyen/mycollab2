@@ -43,11 +43,11 @@ public class ProjectModulePresenter extends AbstractPresenter<ProjectModule> {
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		MainView mainView = (MainView) container;
-		mainView.addModule((IModule) view);
+		mainView.addModule((IModule) cacheableView);
 
 		String[] params = (String[]) data.getParams();
 		if (params == null || params.length == 0) {
-			view.gotoProjectPage();
+			cacheableView.gotoProjectPage();
 			AppContext.addFragment("project", "Project");
 		} else {
 			FragmentNavigator.shellUrlResolver.getSubResolver("project")

@@ -42,7 +42,7 @@ public class ForgotPasswordPresenter extends AbstractPresenter<ForgotPasswordVie
         MainWindowContainer windowContainer = (MainWindowContainer) container;
         windowContainer.removeAllComponents();
 
-        windowContainer.addComponent(view.getWidget());
+        windowContainer.addComponent(cacheableView.getWidget());
         
         AppContext.addFragment("user/forgotpassword", "Forgot Password");
     }

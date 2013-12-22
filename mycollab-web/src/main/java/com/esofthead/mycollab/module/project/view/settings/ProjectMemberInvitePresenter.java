@@ -57,7 +57,7 @@ public class ProjectMemberInvitePresenter extends
 	}
 
 	private void bind() {
-		view.addViewListener(new ApplicationEventListener<ProjectMemberEvent.InviteProjectMembers>() {
+		cacheableView.addViewListener(new ApplicationEventListener<ProjectMemberEvent.InviteProjectMembers>() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -91,9 +91,9 @@ public class ProjectMemberInvitePresenter extends
 				.canWrite(ProjectRolePermissionCollections.USERS)) {
 			ProjectUserContainer userGroupContainer = (ProjectUserContainer) container;
 			userGroupContainer.removeAllComponents();
-			userGroupContainer.addComponent(view.getWidget());
+			userGroupContainer.addComponent(cacheableView.getWidget());
 
-			view.display();
+			cacheableView.display();
 
 			ProjectBreadcrumb breadcrumb = ViewManager
 					.getView(ProjectBreadcrumb.class);

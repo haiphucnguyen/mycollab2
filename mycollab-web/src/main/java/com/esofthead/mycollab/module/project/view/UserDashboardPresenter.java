@@ -41,8 +41,8 @@ public class UserDashboardPresenter extends AbstractPresenter<UserDashboardView>
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
         ProjectModule prjContainer = (ProjectModule) container;
         prjContainer.removeAllComponents();
-        prjContainer.addComponent((Component) view);
-        prjContainer.setComponentAlignment(view, Alignment.TOP_CENTER);
-        view.display();
+        prjContainer.addComponent((Component) cacheableView);
+        prjContainer.setComponentAlignment(cacheableView, Alignment.TOP_CENTER);
+        cacheableView.display();
     }
 }

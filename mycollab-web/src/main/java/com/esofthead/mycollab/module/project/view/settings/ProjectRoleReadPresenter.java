@@ -55,7 +55,7 @@ public class ProjectRoleReadPresenter extends
 	}
 
 	private void bind() {
-		view.getPreviewFormHandlers().addFormHandler(
+		cacheableView.getPreviewFormHandlers().addFormHandler(
 				new DefaultPreviewFormHandler<SimpleProjectRole>() {
 					@Override
 					public void onEdit(SimpleProjectRole data) {
@@ -152,8 +152,8 @@ public class ProjectRoleReadPresenter extends
 				return;
 			} else {
 				roleContainer.removeAllComponents();
-				roleContainer.addComponent(view.getWidget());
-				view.previewItem(role);
+				roleContainer.addComponent(cacheableView.getWidget());
+				cacheableView.previewItem(role);
 
 				ProjectBreadcrumb breadCrumb = ViewManager
 						.getView(ProjectBreadcrumb.class);

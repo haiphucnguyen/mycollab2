@@ -140,7 +140,7 @@ public abstract class CustomizedTableWindow extends Window {
 						table.setTableViewFieldCollection(selectedColumns);
 						CustomizedTableWindow.this.close();
 
-						// Save custom table view def
+						// Save custom table cacheableView def
 						CustomViewStore viewDef = new CustomViewStore();
 						viewDef.setSaccountid(AppContext.getAccountId());
 						viewDef.setCreateduser(AppContext.getUsername());

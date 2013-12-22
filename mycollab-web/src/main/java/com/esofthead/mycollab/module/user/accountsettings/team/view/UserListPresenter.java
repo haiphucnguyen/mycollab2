@@ -50,7 +50,7 @@ public class UserListPresenter extends AbstractPresenter<UserListView> {
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		UserContainer userContainer = (UserContainer) container;
 		userContainer.removeAllComponents();
-		userContainer.addComponent(view.getWidget());
+		userContainer.addComponent(cacheableView.getWidget());
 
 		UserSearchCriteria criteria = null;
 		if (data == null) {
@@ -63,7 +63,7 @@ public class UserListPresenter extends AbstractPresenter<UserListView> {
 			criteria = (UserSearchCriteria) data.getParams();
 		}
 
-		view.setSearchCriteria(criteria);
+		cacheableView.setSearchCriteria(criteria);
 
 		AccountSettingBreadcrumb breadcrumb = ViewManager
 				.getView(AccountSettingBreadcrumb.class);

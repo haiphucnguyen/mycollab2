@@ -64,7 +64,7 @@ public class TaskReadPresenter extends AbstractPresenter<TaskReadView> {
 	}
 
 	private void bind() {
-		this.view.getPreviewFormHandlers().addFormHandler(
+		this.cacheableView.getPreviewFormHandlers().addFormHandler(
 				new DefaultPreviewFormHandler<Task>() {
 
 					@Override
@@ -184,13 +184,13 @@ public class TaskReadPresenter extends AbstractPresenter<TaskReadView> {
 			final TaskContainer taskContainer = (TaskContainer) container;
 			taskContainer.removeAllComponents();
 
-			taskContainer.addComponent(this.view.getWidget());
+			taskContainer.addComponent(this.cacheableView.getWidget());
 			if (data.getParams() instanceof Integer) {
 				final ProjectTaskService taskService = ApplicationContextUtil
 						.getSpringBean(ProjectTaskService.class);
 				final SimpleTask task = taskService.findById(
 						(Integer) data.getParams(), AppContext.getAccountId());
-				this.view.previewItem(task);
+				this.cacheableView.previewItem(task);
 
 				final ProjectBreadcrumb breadCrumb = ViewManager
 						.getView(ProjectBreadcrumb.class);

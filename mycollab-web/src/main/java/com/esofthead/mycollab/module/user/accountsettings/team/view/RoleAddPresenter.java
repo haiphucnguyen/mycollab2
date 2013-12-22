@@ -53,7 +53,7 @@ public class RoleAddPresenter extends AbstractPresenter<RoleAddView> {
 	public RoleAddPresenter() {
 		super(RoleAddView.class);
 
-		view.getEditFormHandlers().addFormHandler(new EditFormHandler<Role>() {
+		cacheableView.getEditFormHandlers().addFormHandler(new EditFormHandler<Role>() {
 			@Override
 			public void onSave(final Role item) {
 				save(item);
@@ -93,7 +93,7 @@ public class RoleAddPresenter extends AbstractPresenter<RoleAddView> {
 			roleService.updateWithSession(item, AppContext.getUsername());
 		}
 
-		roleService.savePermission(item.getId(), view.getPermissionMap(),
+		roleService.savePermission(item.getId(), cacheableView.getPermissionMap(),
 				item.getSaccountid());
 
 	}
@@ -104,10 +104,10 @@ public class RoleAddPresenter extends AbstractPresenter<RoleAddView> {
 				.canWrite(ProjectRolePermissionCollections.ROLES)) {
 			RoleContainer roleContainer = (RoleContainer) container;
 			roleContainer.removeAllComponents();
-			roleContainer.addComponent(view.getWidget());
+			roleContainer.addComponent(cacheableView.getWidget());
 
 			Role role = (Role) data.getParams();
-			view.editItem(role);
+			cacheableView.editItem(role);
 
 			AccountSettingBreadcrumb breadcrumb = ViewManager
 					.getView(AccountSettingBreadcrumb.class);

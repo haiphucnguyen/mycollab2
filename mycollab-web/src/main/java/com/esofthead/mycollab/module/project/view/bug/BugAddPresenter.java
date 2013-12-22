@@ -56,10 +56,10 @@ public class BugAddPresenter extends AbstractPresenter<BugAddView> {
 				.canWrite(ProjectRolePermissionCollections.BUGS)) {
 			BugContainer bugContainer = (BugContainer) container;
 			bugContainer.removeAllComponents();
-			bugContainer.addComponent(view.getWidget());
+			bugContainer.addComponent(cacheableView.getWidget());
 
 			SimpleBug bug = (SimpleBug) data.getParams();
-			view.editItem(bug);
+			cacheableView.editItem(bug);
 
 			ProjectBreadcrumb breadcrumb = ViewManager
 					.getView(ProjectBreadcrumb.class);
@@ -74,7 +74,7 @@ public class BugAddPresenter extends AbstractPresenter<BugAddView> {
 	}
 
 	private void bind() {
-		view.getEditFormHandlers().addFormHandler(
+		cacheableView.getEditFormHandlers().addFormHandler(
 				new EditFormHandler<SimpleBug>() {
 					@Override
 					public void onSave(final SimpleBug bug) {
@@ -115,7 +115,7 @@ public class BugAddPresenter extends AbstractPresenter<BugAddView> {
 			bug.setSaccountid(AppContext.getAccountId());
 			int bugId = bugService.saveWithSession(bug,
 					AppContext.getUsername());
-			ProjectFormAttachmentUploadField uploadField = view
+			ProjectFormAttachmentUploadField uploadField = cacheableView
 					.getAttachUploadField();
 			uploadField.saveContentsToRepo(bug.getProjectid(),
 					AttachmentType.PROJECT_BUG_TYPE, bugId);
@@ -124,16 +124,16 @@ public class BugAddPresenter extends AbstractPresenter<BugAddView> {
 			BugRelatedItemService bugRelatedItemService = ApplicationContextUtil
 					.getSpringBean(BugRelatedItemService.class);
 			bugRelatedItemService.saveAffectedVersionsOfBug(bugId,
-					view.getAffectedVersions());
+					cacheableView.getAffectedVersions());
 			bugRelatedItemService.saveFixedVersionsOfBug(bugId,
-					view.getFixedVersion());
+					cacheableView.getFixedVersion());
 			bugRelatedItemService.saveComponentsOfBug(bugId,
-					view.getComponents());
+					cacheableView.getComponents());
 			CacheUtils.cleanCache(AppContext.getAccountId(),
 					BugService.class.getName());
 		} else {
 			bugService.updateWithSession(bug, AppContext.getUsername());
-			ProjectFormAttachmentUploadField uploadField = view
+			ProjectFormAttachmentUploadField uploadField = cacheableView
 					.getAttachUploadField();
 			uploadField.saveContentsToRepo(bug.getProjectid(),
 					AttachmentType.PROJECT_BUG_TYPE, bug.getId());
@@ -142,11 +142,11 @@ public class BugAddPresenter extends AbstractPresenter<BugAddView> {
 			BugRelatedItemService bugRelatedItemService = ApplicationContextUtil
 					.getSpringBean(BugRelatedItemService.class);
 			bugRelatedItemService.updateAfftedVersionsOfBug(bugId,
-					view.getAffectedVersions());
+					cacheableView.getAffectedVersions());
 			bugRelatedItemService.updateFixedVersionsOfBug(bugId,
-					view.getFixedVersion());
+					cacheableView.getFixedVersion());
 			bugRelatedItemService.updateComponentsOfBug(bugId,
-					view.getComponents());
+					cacheableView.getComponents());
 			CacheUtils.cleanCache(AppContext.getAccountId(),
 					BugService.class.getName());
 		}

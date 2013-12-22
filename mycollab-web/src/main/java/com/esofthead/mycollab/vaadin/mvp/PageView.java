@@ -20,6 +20,12 @@ import com.esofthead.mycollab.eventmanager.ApplicationEvent;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.vaadin.ui.ComponentContainer;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public interface PageView extends ComponentContainer, CacheableComponent {
 
 	ComponentContainer getWidget();
