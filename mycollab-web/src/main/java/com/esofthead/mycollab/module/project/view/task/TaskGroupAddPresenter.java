@@ -50,7 +50,7 @@ public class TaskGroupAddPresenter extends AbstractPresenter<TaskGroupAddView> {
 	public TaskGroupAddPresenter() {
 		super(TaskGroupAddView.class);
 
-		cacheableView.getEditFormHandlers().addFormHandler(
+		view.getEditFormHandlers().addFormHandler(
 				new EditFormHandler<TaskList>() {
 					@Override
 					public void onSave(final TaskList item) {
@@ -89,9 +89,9 @@ public class TaskGroupAddPresenter extends AbstractPresenter<TaskGroupAddView> {
 			TaskContainer taskContainer = (TaskContainer) container;
 			taskContainer.removeAllComponents();
 
-			taskContainer.addComponent(cacheableView.getWidget());
+			taskContainer.addComponent(view.getWidget());
 			TaskList taskList = (TaskList) data.getParams();
-			cacheableView.editItem(taskList);
+			view.editItem(taskList);
 
 			ProjectBreadcrumb breadCrumb = ViewManager
 					.getView(ProjectBreadcrumb.class);

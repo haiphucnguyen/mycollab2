@@ -45,6 +45,12 @@ import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class OpportunityAddPresenter extends
 		CrmGenericPresenter<OpportunityAddView> {
 
@@ -52,11 +58,11 @@ public class OpportunityAddPresenter extends
 
 	public OpportunityAddPresenter() {
 		super(OpportunityAddView.class);
-		bind();
 	}
 
-	private void bind() {
-		cacheableView.getEditFormHandlers().addFormHandler(
+	@Override
+	protected void postInitView() {
+		view.getEditFormHandlers().addFormHandler(
 				new EditFormHandler<SimpleOpportunity>() {
 					@Override
 					public void onSave(final SimpleOpportunity item) {
@@ -107,7 +113,7 @@ public class OpportunityAddPresenter extends
 				}
 			}
 			super.onGo(container, data);
-			cacheableView.editItem(opportunity);
+			view.editItem(opportunity);
 
 			if (opportunity.getId() == null) {
 				AppContext.addFragment("crm/opportunity/add",

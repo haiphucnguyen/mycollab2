@@ -18,10 +18,10 @@ public class FileSearchResultPresenter extends
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		FileContainer projectViewContainer = (FileContainer) container;
 		projectViewContainer.removeAllComponents();
-		projectViewContainer.addComponent(cacheableView);
+		projectViewContainer.addComponent(view);
 
 		FileSearchCriteria params = (FileSearchCriteria) data.getParams();
-		cacheableView.displaySearchResult(params);
+		view.displaySearchResult(params);
 	}
 
 }

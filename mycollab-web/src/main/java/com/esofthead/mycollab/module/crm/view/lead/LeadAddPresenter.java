@@ -48,17 +48,23 @@ import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class LeadAddPresenter extends CrmGenericPresenter<LeadAddView> {
 
 	private static final long serialVersionUID = 1L;
 
 	public LeadAddPresenter() {
 		super(LeadAddView.class);
-		bind();
 	}
 
-	private void bind() {
-		cacheableView.getEditFormHandlers().addFormHandler(
+	@Override
+	protected void postInitView() {
+		view.getEditFormHandlers().addFormHandler(
 				new EditFormHandler<SimpleLead>() {
 					@Override
 					public void onSave(final SimpleLead lead) {
@@ -111,7 +117,7 @@ public class LeadAddPresenter extends CrmGenericPresenter<LeadAddView> {
 			}
 
 			super.onGo(container, data);
-			cacheableView.editItem(lead);
+			view.editItem(lead);
 
 			if (lead.getId() == null) {
 				AppContext.addFragment("crm/lead/add", LocalizationHelper

@@ -30,7 +30,7 @@ public class StandupReadPresenter extends AbstractPresenter<StandupReadView> {
 			if (standupReport != null) {
 				StandupContainer standupContainer = (StandupContainer) container;
 				standupContainer.removeAllComponents();
-				standupContainer.addComponent(cacheableView.getWidget());
+				standupContainer.addComponent(view.getWidget());
 			} else {
 				NotificationUtil.showRecordNotExistNotification();
 				return;

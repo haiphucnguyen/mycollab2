@@ -42,7 +42,7 @@ public class MeetingAddPresenter extends CrmGenericPresenter<MeetingAddView> {
 	public MeetingAddPresenter() {
 		super(MeetingAddView.class);
 
-		cacheableView.getEditFormHandlers().addFormHandler(
+		view.getEditFormHandlers().addFormHandler(
 				new EditFormHandler<MeetingWithBLOBs>() {
 					@Override
 					public void onSave(final MeetingWithBLOBs item) {
@@ -90,9 +90,9 @@ public class MeetingAddPresenter extends CrmGenericPresenter<MeetingAddView> {
 			}
 
 			container.removeAllComponents();
-			container.addComponent(cacheableView.getWidget());
+			container.addComponent(view.getWidget());
 
-			cacheableView.editItem(meeting);
+			view.editItem(meeting);
 
 			if (meeting.getId() == null) {
 				AppContext.addFragment("crm/activity/meeting/add/",

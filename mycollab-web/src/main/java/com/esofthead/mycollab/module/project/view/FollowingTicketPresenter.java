@@ -36,8 +36,8 @@ public class FollowingTicketPresenter extends
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		ProjectModule prjContainer = (ProjectModule) container;
 		prjContainer.removeAllComponents();
-		prjContainer.addComponent((Component) cacheableView);
-		prjContainer.setComponentAlignment(cacheableView, Alignment.TOP_CENTER);
-		cacheableView.displayFollowingTicket((List<Integer>) data.getParams());
+		prjContainer.addComponent((Component) view);
+		prjContainer.setComponentAlignment(view, Alignment.TOP_CENTER);
+		view.displayFollowingTicket((List<Integer>) data.getParams());
 	}
 }

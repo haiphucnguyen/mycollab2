@@ -70,6 +70,6 @@ public class UserPermissionManagementPresenter extends
 					+ BeanUtility.printBeanObj(data));
 		}
 
-		presenter.go(cacheableView.getWidget(), data);
+		presenter.go(view.getWidget(), data);
 	}
 }

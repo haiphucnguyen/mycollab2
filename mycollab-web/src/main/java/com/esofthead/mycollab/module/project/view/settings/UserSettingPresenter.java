@@ -56,7 +56,7 @@ public class UserSettingPresenter extends AbstractPresenter<UserSettingView> {
 		if (ClassUtils.instanceOf(data, ProjectRoleScreenData.Search.class,
 				ProjectRoleScreenData.Add.class,
 				ProjectRoleScreenData.Read.class)) {
-			cacheableView.gotoSubView("Roles");
+			view.gotoSubView("Roles");
 			presenter = PresenterResolver
 					.getPresenter(ProjectRolePresenter.class);
 		} else if (ClassUtils.instanceOf(data,
@@ -64,18 +64,18 @@ public class UserSettingPresenter extends AbstractPresenter<UserSettingView> {
 				ProjectMemberScreenData.Search.class,
 				ProjectMemberScreenData.Add.class,
 				ProjectMemberScreenData.InviteProjectMembers.class)) {
-			cacheableView.gotoSubView("Users");
+			view.gotoSubView("Users");
 			presenter = PresenterResolver
 					.getPresenter(ProjectUserPresenter.class);
 		} else if (ClassUtils.instanceOf(data,
 				ProjectSettingScreenData.ViewNotification.class)) {
-			cacheableView.gotoSubView("Notification Settings");
+			view.gotoSubView("Notification Settings");
 			presenter = PresenterResolver
 					.getPresenter(ProjectNotificationSettingPresenter.class);
 		} else {
 			throw new MyCollabException("No support screen data: " + data);
 		}
 
-		presenter.go(cacheableView, data);
+		presenter.go(view, data);
 	}
 }

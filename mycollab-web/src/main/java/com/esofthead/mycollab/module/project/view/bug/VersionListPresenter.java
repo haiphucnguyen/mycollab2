@@ -61,7 +61,7 @@ public class VersionListPresenter
 		versionService = ApplicationContextUtil
 				.getSpringBean(VersionService.class);
 
-		cacheableView.getPopupActionHandlers().addMassItemActionHandler(
+		view.getPopupActionHandlers().addMassItemActionHandler(
 				new DefaultMassEditActionHandler(this) {
 
 					@Override
@@ -89,7 +89,7 @@ public class VersionListPresenter
 				.canRead(ProjectRolePermissionCollections.VERSIONS)) {
 			VersionContainer versionContainer = (VersionContainer) container;
 			versionContainer.removeAllComponents();
-			versionContainer.addComponent(cacheableView.getWidget());
+			versionContainer.addComponent(view.getWidget());
 
 			doSearch((VersionSearchCriteria) data.getParams());
 
@@ -104,7 +104,7 @@ public class VersionListPresenter
 	@Override
 	protected void deleteSelectedItems() {
 		if (!isSelectAll) {
-			Collection<SimpleVersion> currentDataList = cacheableView
+			Collection<SimpleVersion> currentDataList = view
 					.getPagedBeanTable().getCurrentDataList();
 			List<Integer> keyList = new ArrayList<Integer>();
 			for (Version item : currentDataList) {

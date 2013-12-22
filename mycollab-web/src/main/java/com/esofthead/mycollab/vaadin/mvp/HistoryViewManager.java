@@ -59,7 +59,7 @@ public class HistoryViewManager {
 			if (viewState.getPresenter().initView() instanceof IModule) {
 				return new NullViewState();
 			} else {
-				log.debug("Back to cacheableView: " + viewState.getPresenter());
+				log.debug("Back to view: " + viewState.getPresenter());
 
 				viewState.getPresenter().go(viewState.getContainer(),
 						viewState.getParams());

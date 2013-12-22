@@ -19,14 +19,14 @@ package com.esofthead.mycollab.vaadin.events;
 import java.io.Serializable;
 
 /**
- * Page handler of cacheableView list or table.
+ * Page handler of view list or table.
  * 
  * @author MyCollab Ltd.
  * @since 1.0
  */
 public interface PagableHandler extends Serializable {
 	/**
-	 * Move current cacheableView to new page
+	 * Move current view to new page
 	 * 
 	 * @param newPageNumber
 	 */

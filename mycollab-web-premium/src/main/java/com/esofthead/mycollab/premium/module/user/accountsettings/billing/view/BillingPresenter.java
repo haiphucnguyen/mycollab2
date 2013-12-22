@@ -57,7 +57,7 @@ public class BillingPresenter extends AbstractPresenter<IBillingContainer>
 			throw new MyCollabException("Do not support screen data " + data);
 		}
 
-		presenter.go(cacheableView.getWidget(), data);
+		presenter.go(view.getWidget(), data);
 	}
 
 }

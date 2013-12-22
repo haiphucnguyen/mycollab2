@@ -49,7 +49,7 @@ public class VersionAddPresenter extends AbstractPresenter<VersionAddView> {
 	public VersionAddPresenter() {
 		super(VersionAddView.class);
 
-		cacheableView.getEditFormHandlers().addFormHandler(
+		view.getEditFormHandlers().addFormHandler(
 				new EditFormHandler<Version>() {
 					@Override
 					public void onSave(final Version item) {
@@ -97,10 +97,10 @@ public class VersionAddPresenter extends AbstractPresenter<VersionAddView> {
 		if (CurrentProjectVariables
 				.canWrite(ProjectRolePermissionCollections.VERSIONS)) {
 			VersionContainer versionContainer = (VersionContainer) container;
-			versionContainer.addComponent(cacheableView.getWidget());
+			versionContainer.addComponent(view.getWidget());
 
 			Version version = (Version) data.getParams();
-			cacheableView.editItem(version);
+			view.editItem(version);
 
 			ProjectBreadcrumb breadcrumb = ViewManager
 					.getView(ProjectBreadcrumb.class);

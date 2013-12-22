@@ -19,8 +19,8 @@ public class TimeTrackingListPresenter extends
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		TimeTrackingContainer timeContainer = (TimeTrackingContainer) container;
 		timeContainer.removeAllComponents();
-		timeContainer.addComponent(cacheableView.getWidget());
-		cacheableView.setSearchCriteria((ItemTimeLoggingSearchCriteria) data.getParams());
+		timeContainer.addComponent(view.getWidget());
+		view.setSearchCriteria((ItemTimeLoggingSearchCriteria) data.getParams());
 
 		ProjectBreadcrumb breadCrumb = ViewManager
 				.getView(ProjectBreadcrumb.class);

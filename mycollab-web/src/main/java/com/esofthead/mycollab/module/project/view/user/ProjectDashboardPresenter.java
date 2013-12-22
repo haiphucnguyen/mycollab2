@@ -54,7 +54,7 @@ public class ProjectDashboardPresenter extends
 		ProjectView projectViewContainer = (ProjectView) container;
 		projectViewContainer.gotoSubView("Dashboard");
 
-		cacheableView.removeAllComponents();
+		view.removeAllComponents();
 
 		ProjectBreadcrumb breadcrumb = ViewManager
 				.getView(ProjectBreadcrumb.class);
@@ -64,7 +64,7 @@ public class ProjectDashboardPresenter extends
 					.canWrite(ProjectRolePermissionCollections.PROJECT)) {
 				ProjectAddPresenter presenter = PresenterResolver
 						.getPresenter(ProjectAddPresenter.class);
-				presenter.go(cacheableView, data);
+				presenter.go(view, data);
 				breadcrumb.gotoProjectEdit();
 			} else {
 				NotificationUtil.showMessagePermissionAlert();
@@ -74,7 +74,7 @@ public class ProjectDashboardPresenter extends
 					.canRead(ProjectRolePermissionCollections.PROJECT)) {
 				ProjectSummaryPresenter presenter = PresenterResolver
 						.getPresenter(ProjectSummaryPresenter.class);
-				presenter.go(cacheableView, data);
+				presenter.go(view, data);
 				breadcrumb.gotoProjectDashboard();
 			} else {
 				NotificationUtil.showMessagePermissionAlert();

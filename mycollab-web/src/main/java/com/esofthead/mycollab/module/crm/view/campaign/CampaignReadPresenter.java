@@ -76,11 +76,11 @@ public class CampaignReadPresenter extends
 
 	public CampaignReadPresenter() {
 		super(CampaignReadView.class);
-		bind();
 	}
 
-	private void bind() {
-		cacheableView.getPreviewFormHandlers().addFormHandler(
+	@Override
+	protected void postInitView() {
+		view.getPreviewFormHandlers().addFormHandler(
 				new DefaultPreviewFormHandler<SimpleCampaign>() {
 					@Override
 					public void onEdit(SimpleCampaign data) {
@@ -175,21 +175,21 @@ public class CampaignReadPresenter extends
 					}
 				});
 
-		cacheableView.getRelatedActivityHandlers().addRelatedListHandler(
+		view.getRelatedActivityHandlers().addRelatedListHandler(
 				new AbstractRelatedListHandler<SimpleEvent>() {
 					@Override
 					public void createNewRelatedItem(String itemId) {
 						if (itemId.equals("task")) {
 							SimpleTask task = new SimpleTask();
 							task.setType(CrmTypeConstants.CAMPAIGN);
-							task.setTypeid(cacheableView.getItem().getId());
+							task.setTypeid(view.getItem().getId());
 							EventBus.getInstance().fireEvent(
 									new ActivityEvent.TaskEdit(
 											CampaignReadPresenter.this, task));
 						} else if (itemId.equals("meeting")) {
 							SimpleMeeting meeting = new SimpleMeeting();
 							meeting.setType(CrmTypeConstants.CAMPAIGN);
-							meeting.setTypeid(cacheableView.getItem().getId());
+							meeting.setTypeid(view.getItem().getId());
 							EventBus.getInstance()
 									.fireEvent(
 											new ActivityEvent.MeetingEdit(
@@ -198,7 +198,7 @@ public class CampaignReadPresenter extends
 						} else if (itemId.equals("call")) {
 							SimpleCall call = new SimpleCall();
 							call.setType(CrmTypeConstants.CAMPAIGN);
-							call.setTypeid(cacheableView.getItem().getId());
+							call.setTypeid(view.getItem().getId());
 							EventBus.getInstance().fireEvent(
 									new ActivityEvent.CallEdit(
 											CampaignReadPresenter.this, call));
@@ -206,12 +206,12 @@ public class CampaignReadPresenter extends
 					}
 				});
 
-		cacheableView.getRelatedAccountHandlers().addRelatedListHandler(
+		view.getRelatedAccountHandlers().addRelatedListHandler(
 				new AbstractRelatedListHandler<SimpleAccount>() {
 					@Override
 					public void createNewRelatedItem(String itemId) {
 						SimpleAccount account = new SimpleAccount();
-						account.setExtraData(cacheableView.getItem());
+						account.setExtraData(view.getItem());
 						EventBus.getInstance().fireEvent(
 								new AccountEvent.GotoEdit(
 										CampaignReadPresenter.this, account));
@@ -221,7 +221,7 @@ public class CampaignReadPresenter extends
 					@Override
 					public void selectAssociateItems(Set<SimpleAccount> items) {
 						if (items.size() > 0) {
-							SimpleCampaign campaign = cacheableView.getItem();
+							SimpleCampaign campaign = view.getItem();
 							List<CampaignAccount> associateAccounts = new ArrayList<CampaignAccount>();
 							for (SimpleAccount account : items) {
 								CampaignAccount assoAccount = new CampaignAccount();
@@ -239,18 +239,18 @@ public class CampaignReadPresenter extends
 									associateAccounts,
 									AppContext.getAccountId());
 
-							cacheableView.getRelatedAccountHandlers().refresh();
+							view.getRelatedAccountHandlers().refresh();
 						}
 					}
 				});
 
-		cacheableView.getRelatedContactHandlers().addRelatedListHandler(
+		view.getRelatedContactHandlers().addRelatedListHandler(
 				new AbstractRelatedListHandler<SimpleContact>() {
 
 					@Override
 					public void createNewRelatedItem(String itemId) {
 						SimpleContact contact = new SimpleContact();
-						contact.setExtraData(cacheableView.getItem());
+						contact.setExtraData(view.getItem());
 						EventBus.getInstance().fireEvent(
 								new ContactEvent.GotoEdit(
 										CampaignReadPresenter.this, contact));
@@ -259,7 +259,7 @@ public class CampaignReadPresenter extends
 					@Override
 					public void selectAssociateItems(Set<SimpleContact> items) {
 						if (items.size() > 0) {
-							SimpleCampaign campaign = cacheableView.getItem();
+							SimpleCampaign campaign = view.getItem();
 							List<CampaignContact> associateContacts = new ArrayList<CampaignContact>();
 							for (SimpleContact contact : items) {
 								CampaignContact associateContact = new CampaignContact();
@@ -277,17 +277,17 @@ public class CampaignReadPresenter extends
 									associateContacts,
 									AppContext.getAccountId());
 
-							cacheableView.getRelatedContactHandlers().refresh();
+							view.getRelatedContactHandlers().refresh();
 						}
 					}
 				});
 
-		cacheableView.getRelatedLeadHandlers().addRelatedListHandler(
+		view.getRelatedLeadHandlers().addRelatedListHandler(
 				new AbstractRelatedListHandler<SimpleLead>() {
 					@Override
 					public void createNewRelatedItem(String itemId) {
 						SimpleLead lead = new SimpleLead();
-						lead.setExtraData(cacheableView.getItem());
+						lead.setExtraData(view.getItem());
 						EventBus.getInstance().fireEvent(
 								new LeadEvent.GotoEdit(
 										CampaignReadPresenter.this, lead));
@@ -296,7 +296,7 @@ public class CampaignReadPresenter extends
 					@Override
 					public void selectAssociateItems(Set<SimpleLead> items) {
 						if (items.size() > 0) {
-							SimpleCampaign campaign = cacheableView.getItem();
+							SimpleCampaign campaign = view.getItem();
 							List<CampaignLead> associateLeads = new ArrayList<CampaignLead>();
 							for (SimpleLead lead : items) {
 								CampaignLead associateLead = new CampaignLead();
@@ -313,7 +313,7 @@ public class CampaignReadPresenter extends
 							campaignService.saveCampaignLeadRelationship(
 									associateLeads, AppContext.getAccountId());
 
-							cacheableView.getRelatedLeadHandlers().refresh();
+							view.getRelatedLeadHandlers().refresh();
 						}
 					}
 				});
@@ -334,7 +334,7 @@ public class CampaignReadPresenter extends
 						(Integer) data.getParams(), AppContext.getAccountId());
 				if (campaign != null) {
 					super.onGo(container, data);
-					cacheableView.previewItem(campaign);
+					view.previewItem(campaign);
 					AppContext.addFragment(CrmLinkGenerator
 							.generateCampaignPreviewLink(campaign.getId()),
 							LocalizationHelper.getMessage(

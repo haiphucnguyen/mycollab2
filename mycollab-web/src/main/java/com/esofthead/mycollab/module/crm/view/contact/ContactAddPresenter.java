@@ -50,17 +50,23 @@ import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class ContactAddPresenter extends CrmGenericPresenter<ContactAddView> {
 
 	private static final long serialVersionUID = 1L;
 
 	public ContactAddPresenter() {
 		super(ContactAddView.class);
-		bind();
 	}
 
-	private void bind() {
-		cacheableView.getEditFormHandlers().addFormHandler(
+	@Override
+	protected void postInitView() {
+		view.getEditFormHandlers().addFormHandler(
 				new EditFormHandler<SimpleContact>() {
 					@Override
 					public void onSave(final SimpleContact contact) {
@@ -113,7 +119,7 @@ public class ContactAddPresenter extends CrmGenericPresenter<ContactAddView> {
 				}
 			}
 			super.onGo(container, data);
-			cacheableView.editItem(contact);
+			view.editItem(contact);
 
 			if (contact.getId() == null) {
 				AppContext.addFragment("crm/contact/add", LocalizationHelper

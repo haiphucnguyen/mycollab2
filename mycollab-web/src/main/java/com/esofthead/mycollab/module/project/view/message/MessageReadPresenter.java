@@ -40,75 +40,76 @@ import com.vaadin.ui.ComponentContainer;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 
 public class MessageReadPresenter extends AbstractPresenter<MessageReadView> {
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    public MessageReadPresenter() {
-        super(MessageReadView.class);
-        bind();
-    }
+	public MessageReadPresenter() {
+		super(MessageReadView.class);
+	}
 
-    protected void bind() {
-        cacheableView.getPreviewFormHandlers().addFormHandler(
-                new PreviewFormHandler<SimpleMessage>() {
+	@Override
+	protected void postInitView() {
+		view.getPreviewFormHandlers().addFormHandler(
+				new PreviewFormHandler<SimpleMessage>() {
 
-                    @Override
-                    public void onEdit(SimpleMessage data) {
-                    }
+					@Override
+					public void onEdit(SimpleMessage data) {
+					}
 
-                    @Override
-                    public void onDelete(SimpleMessage data) {
-                    }
+					@Override
+					public void onDelete(SimpleMessage data) {
+					}
 
-                    @Override
-                    public void onClone(SimpleMessage data) {
-                    }
+					@Override
+					public void onClone(SimpleMessage data) {
+					}
 
-                    @Override
-                    public void onCancel() {
-                        EventBus.getInstance().fireEvent(
-                                new MessageEvent.GotoList(this, null));
-                    }
+					@Override
+					public void onCancel() {
+						EventBus.getInstance().fireEvent(
+								new MessageEvent.GotoList(this, null));
+					}
 
-                    @Override
-                    public void onAssign(SimpleMessage data) {
-                    }
+					@Override
+					public void onAssign(SimpleMessage data) {
+					}
 
-                    @Override
-                    public void gotoPrevious(SimpleMessage data) {
-                    }
+					@Override
+					public void gotoPrevious(SimpleMessage data) {
+					}
 
-                    @Override
-                    public void gotoNext(SimpleMessage data) {
-                    }
-                });
-    }
+					@Override
+					public void gotoNext(SimpleMessage data) {
+					}
+				});
+	}
 
-    @Override
-    protected void onGo(ComponentContainer container, ScreenData<?> data) {
-        if (CurrentProjectVariables
-                .canRead(ProjectRolePermissionCollections.MESSAGES)) {
-            MessageContainer messageContainer = (MessageContainer) container;
-            messageContainer.removeAllComponents();
-            messageContainer.addComponent(cacheableView.getWidget());
+	@Override
+	protected void onGo(ComponentContainer container, ScreenData<?> data) {
+		if (CurrentProjectVariables
+				.canRead(ProjectRolePermissionCollections.MESSAGES)) {
+			MessageContainer messageContainer = (MessageContainer) container;
+			messageContainer.removeAllComponents();
+			messageContainer.addComponent(view.getWidget());
 
-            if (data.getParams() instanceof Integer) {
-                MessageService messageService = ApplicationContextUtil
-                        .getSpringBean(MessageService.class);
-                SimpleMessage message = messageService.findMessageById(
-                        (Integer) data.getParams(), AppContext.getAccountId());
-                cacheableView.previewItem(message);
+			if (data.getParams() instanceof Integer) {
+				MessageService messageService = ApplicationContextUtil
+						.getSpringBean(MessageService.class);
+				SimpleMessage message = messageService.findMessageById(
+						(Integer) data.getParams(), AppContext.getAccountId());
+				view.previewItem(message);
 
-                ProjectBreadcrumb breadCrumb = ViewManager
-                        .getView(ProjectBreadcrumb.class);
-                breadCrumb.gotoMessage(message);
-            } else {
-                throw new MyCollabException("Unhanddle this case yet");
-            }
-        } else {
-            NotificationUtil.showMessagePermissionAlert();
-        }
-    }
+				ProjectBreadcrumb breadCrumb = ViewManager
+						.getView(ProjectBreadcrumb.class);
+				breadCrumb.gotoMessage(message);
+			} else {
+				throw new MyCollabException("Unhanddle this case yet");
+			}
+		} else {
+			NotificationUtil.showMessagePermissionAlert();
+		}
+	}
 }

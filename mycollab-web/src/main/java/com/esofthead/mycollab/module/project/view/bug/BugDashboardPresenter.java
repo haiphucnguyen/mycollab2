@@ -35,7 +35,7 @@ public class BugDashboardPresenter extends AbstractPresenter<BugDashboardView> {
 		TrackerContainer trackerContainer = (TrackerContainer) container;
 		trackerContainer.gotoSubView("Dashboard");
 
-		cacheableView.displayDashboard();
+		view.displayDashboard();
 
 		ProjectBreadcrumb breadcrumb = ViewManager
 				.getView(ProjectBreadcrumb.class);

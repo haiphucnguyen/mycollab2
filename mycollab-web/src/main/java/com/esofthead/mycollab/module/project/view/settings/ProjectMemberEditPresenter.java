@@ -37,18 +37,23 @@ import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class ProjectMemberEditPresenter extends
 		AbstractPresenter<ProjectMemberEditView> {
 	private static final long serialVersionUID = 1L;
 
 	public ProjectMemberEditPresenter() {
 		super(ProjectMemberEditView.class);
-
-		bind();
 	}
 
-	private void bind() {
-		cacheableView.getEditFormHandlers().addFormHandler(
+	@Override
+	protected void postInitView() {
+		view.getEditFormHandlers().addFormHandler(
 				new EditFormHandler<ProjectMember>() {
 					@Override
 					public void onSave(final ProjectMember projectMember) {
@@ -75,7 +80,7 @@ public class ProjectMemberEditPresenter extends
 
 					@Override
 					public void onSaveAndNew(final ProjectMember projectMember) {
-					
+
 					}
 				});
 	}
@@ -86,10 +91,10 @@ public class ProjectMemberEditPresenter extends
 				.canWrite(ProjectRolePermissionCollections.USERS)) {
 			ProjectUserContainer userGroupContainer = (ProjectUserContainer) container;
 			userGroupContainer.removeAllComponents();
-			userGroupContainer.addComponent(cacheableView.getWidget());
+			userGroupContainer.addComponent(view.getWidget());
 
 			ProjectMember member = (ProjectMember) data.getParams();
-			cacheableView.editItem(member);
+			view.editItem(member);
 
 			ProjectBreadcrumb breadcrumb = ViewManager
 					.getView(ProjectBreadcrumb.class);

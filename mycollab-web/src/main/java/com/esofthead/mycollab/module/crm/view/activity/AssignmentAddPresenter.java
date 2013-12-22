@@ -48,7 +48,7 @@ public class AssignmentAddPresenter extends
 	public AssignmentAddPresenter() {
 		super(AssignmentAddView.class);
 
-		cacheableView.getEditFormHandlers().addFormHandler(new EditFormHandler<Task>() {
+		view.getEditFormHandlers().addFormHandler(new EditFormHandler<Task>() {
 			@Override
 			public void onSave(final Task item) {
 				save(item);
@@ -98,8 +98,8 @@ public class AssignmentAddPresenter extends
 			}
 
 			container.removeAllComponents();
-			container.addComponent(cacheableView.getWidget());
-			cacheableView.editItem(task);
+			container.addComponent(view.getWidget());
+			view.editItem(task);
 
 			if (task.getId() == null) {
 				AppContext.addFragment("crm/activity/task/add/",

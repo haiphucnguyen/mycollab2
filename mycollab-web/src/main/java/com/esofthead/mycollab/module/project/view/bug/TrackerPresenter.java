@@ -87,7 +87,7 @@ public class TrackerPresenter extends AbstractPresenter<TrackerContainer> {
 					.getPresenter(BugAdvertisementPresenter.class);
 		}
 
-		presenter.go(cacheableView, data);
+		presenter.go(view, data);
 	}
 
 	@Override

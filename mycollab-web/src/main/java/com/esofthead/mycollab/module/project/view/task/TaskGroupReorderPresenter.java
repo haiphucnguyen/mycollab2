@@ -85,8 +85,8 @@ public class TaskGroupReorderPresenter extends
 			TaskContainer taskContainer = (TaskContainer) container;
 			taskContainer.removeAllComponents();
 
-			taskContainer.addComponent(cacheableView.getWidget());
-			cacheableView.displayTaskLists();
+			taskContainer.addComponent(view.getWidget());
+			view.displayTaskLists();
 
 			ProjectBreadcrumb breadCrumb = ViewManager
 					.getView(ProjectBreadcrumb.class);

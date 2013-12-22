@@ -39,7 +39,7 @@ public abstract class AbstractPresenter<V extends PageView> implements
 			.getLogger(AbstractPresenter.class);
 
 	protected Class<V> viewClass;
-	protected V cacheableView;
+	protected V view;
 
 	public AbstractPresenter(Class<V> viewClass) {
 		this.viewClass = viewClass;
@@ -47,10 +47,14 @@ public abstract class AbstractPresenter<V extends PageView> implements
 
 	@Override
 	public V initView() {
-		if (cacheableView == null) {
-			cacheableView = ViewManager.getView(viewClass);
+		if (view == null) {
+			view = ViewManager.getView(viewClass);
+			postInitView();
 		}
-		return cacheableView;
+		return view;
+	}
+
+	protected void postInitView() {
 	}
 
 	@Override
@@ -61,7 +65,8 @@ public abstract class AbstractPresenter<V extends PageView> implements
 	@Override
 	public void go(ComponentContainer container, ScreenData<?> data,
 			boolean isHistoryTrack) {
-		log.debug("Go to cacheableView: " + cacheableView);
+		initView();
+		log.debug("Go to view: " + view);
 		if (isHistoryTrack) {
 			ViewState state = new ViewState(container, this, data);
 			if (log.isDebugEnabled()) {

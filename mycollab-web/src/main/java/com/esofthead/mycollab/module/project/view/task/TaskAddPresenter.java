@@ -53,7 +53,7 @@ public class TaskAddPresenter extends AbstractPresenter<TaskAddView> {
 	public TaskAddPresenter() {
 		super(TaskAddView.class);
 
-		cacheableView.getEditFormHandlers().addFormHandler(new EditFormHandler<Task>() {
+		view.getEditFormHandlers().addFormHandler(new EditFormHandler<Task>() {
 			@Override
 			public void onSave(final Task item) {
 				save(item);
@@ -89,10 +89,10 @@ public class TaskAddPresenter extends AbstractPresenter<TaskAddView> {
 			TaskContainer taskContainer = (TaskContainer) container;
 			taskContainer.removeAllComponents();
 
-			taskContainer.addComponent(cacheableView.getWidget());
+			taskContainer.addComponent(view.getWidget());
 
 			Task task = (Task) data.getParams();
-			cacheableView.editItem(task);
+			view.editItem(task);
 
 			ProjectBreadcrumb breadCrumb = ViewManager
 					.getView(ProjectBreadcrumb.class);
@@ -123,14 +123,14 @@ public class TaskAddPresenter extends AbstractPresenter<TaskAddView> {
 		if (item.getId() == null) {
 			int taskId = taskService.saveWithSession(item,
 					AppContext.getUsername());
-			AttachmentUploadField uploadField = cacheableView.getAttachUploadField();
+			AttachmentUploadField uploadField = view.getAttachUploadField();
 			String attachPath = AttachmentUtils.getProjectTaskAttachmentPath(
 					AppContext.getAccountId(),
 					CurrentProjectVariables.getProjectId(), taskId);
 			uploadField.saveContentsToRepo(attachPath);
 		} else {
 			taskService.updateWithSession(item, AppContext.getUsername());
-			AttachmentUploadField uploadField = cacheableView.getAttachUploadField();
+			AttachmentUploadField uploadField = view.getAttachUploadField();
 			String attachPath = AttachmentUtils.getProjectTaskAttachmentPath(
 					AppContext.getAccountId(),
 					CurrentProjectVariables.getProjectId(), item.getId());

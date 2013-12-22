@@ -73,7 +73,7 @@ public class ActivityRootPresenter extends
 					.getPresenter(ActivityCalendarPresenter.class);
 		}
 
-		presenter.go(cacheableView.getWidget(), data);
+		presenter.go(view.getWidget(), data);
 	}
 
 }

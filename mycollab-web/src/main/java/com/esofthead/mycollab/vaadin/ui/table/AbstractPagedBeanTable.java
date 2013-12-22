@@ -132,7 +132,7 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, B>
 		this.requiredColumn = requiredColumn;
 		this.type = type;
 
-		this.setStyleName("list-cacheableView");
+		this.setStyleName("list-view");
 	}
 
 	public void setTableViewFieldCollection(List<TableViewField> viewFields) {

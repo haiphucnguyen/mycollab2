@@ -29,19 +29,24 @@ import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabApplication;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.UI;
-import com.vaadin.ui.Window;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class RiskReadPresenter extends AbstractPresenter<RiskReadView> {
 
 	private static final long serialVersionUID = 1L;
 
 	public RiskReadPresenter() {
 		super(RiskReadView.class);
-		bind();
 	}
 
-	private void bind() {
-		cacheableView.getPreviewFormHandlers().addFormHandler(
+	@Override
+	protected void postInitView() {
+		view.getPreviewFormHandlers().addFormHandler(
 				new DefaultPreviewFormHandler<SimpleRisk>() {
 					@Override
 					public void onEdit(SimpleRisk data) {
@@ -153,8 +158,8 @@ public class RiskReadPresenter extends AbstractPresenter<RiskReadView> {
 				if (risk != null) {
 					RiskContainer riskContainer = (RiskContainer) container;
 					riskContainer.removeAllComponents();
-					riskContainer.addComponent(cacheableView.getWidget());
-					cacheableView.previewItem(risk);
+					riskContainer.addComponent(view.getWidget());
+					view.previewItem(risk);
 
 					ProjectBreadcrumb breadCrumb = ViewManager
 							.getView(ProjectBreadcrumb.class);

@@ -42,6 +42,12 @@ import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.UI;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class OpportunityListPresenter
 		extends
 		CrmGenericListPresenter<OpportunityListView, OpportunitySearchCriteria, SimpleOpportunity>
@@ -52,10 +58,14 @@ public class OpportunityListPresenter
 
 	public OpportunityListPresenter() {
 		super(OpportunityListView.class);
+	}
+
+	@Override
+	protected void postInitView() {
 		opportunityService = ApplicationContextUtil
 				.getSpringBean(OpportunityService.class);
 
-		cacheableView.getPopupActionHandlers().addMassItemActionHandler(
+		view.getPopupActionHandlers().addMassItemActionHandler(
 				new DefaultMassEditActionHandler(this) {
 
 					@Override
@@ -107,7 +117,7 @@ public class OpportunityListPresenter
 	@Override
 	protected void deleteSelectedItems() {
 		if (!isSelectAll) {
-			Collection<SimpleOpportunity> currentDataList = cacheableView
+			Collection<SimpleOpportunity> currentDataList = view
 					.getPagedBeanTable().getCurrentDataList();
 			List<Integer> keyList = new ArrayList<Integer>();
 			for (SimpleOpportunity item : currentDataList) {
@@ -132,7 +142,7 @@ public class OpportunityListPresenter
 	@Override
 	public void massUpdate(Opportunity value) {
 		if (!isSelectAll) {
-			Collection<SimpleOpportunity> currentDataList = cacheableView
+			Collection<SimpleOpportunity> currentDataList = view
 					.getPagedBeanTable().getCurrentDataList();
 			List<Integer> keyList = new ArrayList<Integer>();
 			for (SimpleOpportunity item : currentDataList) {

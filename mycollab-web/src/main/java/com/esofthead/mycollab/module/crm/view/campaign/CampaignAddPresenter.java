@@ -56,11 +56,11 @@ public class CampaignAddPresenter extends CrmGenericPresenter<CampaignAddView> {
 
 	public CampaignAddPresenter() {
 		super(CampaignAddView.class);
-		bind();
 	}
 
-	private void bind() {
-		cacheableView.getEditFormHandlers().addFormHandler(
+	@Override
+	protected void postInitView() {
+		view.getEditFormHandlers().addFormHandler(
 				new EditFormHandler<SimpleCampaign>() {
 					@Override
 					public void onSave(final SimpleCampaign campaign) {
@@ -112,7 +112,7 @@ public class CampaignAddPresenter extends CrmGenericPresenter<CampaignAddView> {
 			}
 
 			super.onGo(container, data);
-			cacheableView.editItem(campaign);
+			view.editItem(campaign);
 
 			if (campaign.getId() == null) {
 				AppContext.addFragment("crm/campaign/add", LocalizationHelper

@@ -61,11 +61,11 @@ public class MilestoneReadPresenter extends
 
 	public MilestoneReadPresenter() {
 		super(MilestoneReadView.class);
-		bind();
 	}
 
-	private void bind() {
-		cacheableView.getPreviewFormHandlers().addFormHandler(
+	@Override
+	protected void postInitView() {
+		view.getPreviewFormHandlers().addFormHandler(
 				new DefaultPreviewFormHandler<SimpleMilestone>() {
 					@Override
 					public void onEdit(SimpleMilestone data) {
@@ -179,8 +179,8 @@ public class MilestoneReadPresenter extends
 				if (milestone != null) {
 					MilestoneContainer milestoneContainer = (MilestoneContainer) container;
 					milestoneContainer.removeAllComponents();
-					milestoneContainer.addComponent(cacheableView.getWidget());
-					cacheableView.previewItem(milestone);
+					milestoneContainer.addComponent(view.getWidget());
+					view.previewItem(milestone);
 
 					ProjectBreadcrumb breadcrumb = ViewManager
 							.getView(ProjectBreadcrumb.class);

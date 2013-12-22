@@ -36,9 +36,9 @@ public class ProfileReadPresenter extends AbstractPresenter<ProfileReadView> {
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		ProfileContainer profileContainer = (ProfileContainer) container;
 		profileContainer.removeAllComponents();
-		profileContainer.addComponent(cacheableView.getWidget());
+		profileContainer.addComponent(view.getWidget());
 		User currentUser = AppContext.getSession();
-		cacheableView.previewItem(currentUser);
+		view.previewItem(currentUser);
 
 		AccountSettingBreadcrumb breadcrumb = ViewManager
 				.getView(AccountSettingBreadcrumb.class);

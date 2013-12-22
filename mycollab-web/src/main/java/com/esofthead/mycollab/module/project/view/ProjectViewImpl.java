@@ -528,7 +528,7 @@ public class ProjectViewImpl extends AbstractPageView implements ProjectView {
 
 	@Override
 	public Component gotoSubView(String name) {
-		log.debug("Project: Go to tab cacheableView name " + name);
+		log.debug("Project: Go to tab view name " + name);
 		PageView component = (PageView) myProjectTab.selectTab(name);
 		return component;
 	}

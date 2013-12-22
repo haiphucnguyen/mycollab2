@@ -42,6 +42,7 @@ import com.vaadin.ui.ComponentContainer;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 @ViewPermission(permissionId = RolePermissionCollections.CREATE_NEW_PROJECT, impliedPermissionVal = BooleanPermissionFlag.TRUE)
 public class ProjectAddPresenter extends AbstractPresenter<ProjectAddView> {
@@ -49,24 +50,11 @@ public class ProjectAddPresenter extends AbstractPresenter<ProjectAddView> {
 
 	public ProjectAddPresenter() {
 		super(ProjectAddView.class);
-		bind();
 	}
 
 	@Override
-	protected void onGo(ComponentContainer container, ScreenData<?> data) {
-		ComponentContainer projectContainer = (ComponentContainer) container;
-		projectContainer.removeAllComponents();
-		projectContainer.addComponent(cacheableView.getWidget());
-		Project project = (Project) data.getParams();
-		cacheableView.editItem(project);
-
-		if (project.getId() == null) {
-			AppContext.addFragment("project/add", "New Project");
-		}
-	}
-
-	private void bind() {
-		cacheableView.getEditFormHandlers().addFormHandler(
+	protected void postInitView() {
+		view.getEditFormHandlers().addFormHandler(
 				new EditFormHandler<Project>() {
 					@Override
 					public void onSave(final Project project) {
@@ -74,13 +62,13 @@ public class ProjectAddPresenter extends AbstractPresenter<ProjectAddView> {
 						EventBus.getInstance().fireEvent(
 								new ProjectEvent.GotoMyProject(this,
 										new PageActionChain(
-												new ProjectScreenData.Goto(cacheableView
+												new ProjectScreenData.Goto(view
 														.getItem().getId()))));
 					}
 
 					@Override
 					public void onCancel() {
-						if (cacheableView.getItem().getId() == null) {
+						if (view.getItem().getId() == null) {
 							EventBus.getInstance().fireEvent(
 									new ShellEvent.GotoProjectModule(
 											ProjectAddPresenter.this, null));
@@ -91,7 +79,7 @@ public class ProjectAddPresenter extends AbstractPresenter<ProjectAddView> {
 													this,
 													new PageActionChain(
 															new ProjectScreenData.Goto(
-																	cacheableView.getItem()
+																	view.getItem()
 																			.getId()))));
 						}
 					}
@@ -103,6 +91,19 @@ public class ProjectAddPresenter extends AbstractPresenter<ProjectAddView> {
 				});
 	}
 
+	@Override
+	protected void onGo(ComponentContainer container, ScreenData<?> data) {
+		ComponentContainer projectContainer = (ComponentContainer) container;
+		projectContainer.removeAllComponents();
+		projectContainer.addComponent(view.getWidget());
+		Project project = (Project) data.getParams();
+		view.editItem(project);
+
+		if (project.getId() == null) {
+			AppContext.addFragment("project/add", "New Project");
+		}
+	}
+
 	public void saveProject(Project project) {
 		ProjectService projectService = ApplicationContextUtil
 				.getSpringBean(ProjectService.class);
@@ -112,7 +113,8 @@ public class ProjectAddPresenter extends AbstractPresenter<ProjectAddView> {
 			projectService.saveWithSession(project, AppContext.getUsername());
 		} else {
 			projectService.updateWithSession(project, AppContext.getUsername());
-			MyCollabApplication.putVariable(ProjectContants.CURRENT_PROJECT, project);
+			MyCollabApplication.putVariable(ProjectContants.CURRENT_PROJECT,
+					project);
 		}
 
 	}

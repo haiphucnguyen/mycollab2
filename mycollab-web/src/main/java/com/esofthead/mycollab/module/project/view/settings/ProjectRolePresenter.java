@@ -61,6 +61,6 @@ public class ProjectRolePresenter extends
 			throw new MyCollabException("Can not handle data " + data);
 		}
 
-		presenter.go(cacheableView, data);
+		presenter.go(view, data);
 	}
 }

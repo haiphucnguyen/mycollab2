@@ -58,23 +58,23 @@ public class MilestonePresenter extends AbstractPresenter<MilestoneContainer> {
 
 		AbstractPresenter presenter = null;
 		if (data instanceof MilestoneScreenData.Search) {
-			log.debug("Go to milestone list cacheableView");
+			log.debug("Go to milestone list view");
 			presenter = PresenterResolver
 					.getPresenter(MilestoneListPresenter.class);
 		} else if (data instanceof MilestoneScreenData.Add
 				|| data instanceof MilestoneScreenData.Edit) {
-			log.debug("Go to milestone add cacheableView");
+			log.debug("Go to milestone add view");
 			presenter = PresenterResolver
 					.getPresenter(MilestoneAddPresenter.class);
 		} else if (data instanceof MilestoneScreenData.Read) {
-			log.debug("Go to milestone preview cacheableView");
+			log.debug("Go to milestone preview view");
 			presenter = PresenterResolver
 					.getPresenter(MilestoneReadPresenter.class);
 		} else {
 			throw new MyCollabException("Do not support screen data " + data);
 		}
 
-		presenter.go(cacheableView, data);
+		presenter.go(view, data);
 	}
 
 	@Override

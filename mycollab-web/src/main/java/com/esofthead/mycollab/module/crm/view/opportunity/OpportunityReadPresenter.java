@@ -73,11 +73,11 @@ public class OpportunityReadPresenter extends
 
 	public OpportunityReadPresenter() {
 		super(OpportunityReadView.class);
-		bind();
 	}
 
-	private void bind() {
-		cacheableView.getPreviewFormHandlers().addFormHandler(
+	@Override
+	protected void postInitView() {
+		view.getPreviewFormHandlers().addFormHandler(
 				new DefaultPreviewFormHandler<SimpleOpportunity>() {
 					@Override
 					public void onEdit(SimpleOpportunity data) {
@@ -178,14 +178,14 @@ public class OpportunityReadPresenter extends
 					}
 				});
 
-		cacheableView.getRelatedActivityHandlers().addRelatedListHandler(
+		view.getRelatedActivityHandlers().addRelatedListHandler(
 				new AbstractRelatedListHandler<SimpleEvent>() {
 					@Override
 					public void createNewRelatedItem(String itemId) {
 						if (itemId.equals("task")) {
 							SimpleTask task = new SimpleTask();
 							task.setType(CrmTypeConstants.OPPORTUNITY);
-							task.setTypeid(cacheableView.getItem().getId());
+							task.setTypeid(view.getItem().getId());
 							EventBus.getInstance()
 									.fireEvent(
 											new ActivityEvent.TaskEdit(
@@ -194,7 +194,7 @@ public class OpportunityReadPresenter extends
 						} else if (itemId.equals("meeting")) {
 							SimpleMeeting meeting = new SimpleMeeting();
 							meeting.setType(CrmTypeConstants.OPPORTUNITY);
-							meeting.setTypeid(cacheableView.getItem().getId());
+							meeting.setTypeid(view.getItem().getId());
 							EventBus.getInstance().fireEvent(
 									new ActivityEvent.MeetingEdit(
 											OpportunityReadPresenter.this,
@@ -202,7 +202,7 @@ public class OpportunityReadPresenter extends
 						} else if (itemId.equals("call")) {
 							SimpleCall call = new SimpleCall();
 							call.setType(CrmTypeConstants.OPPORTUNITY);
-							call.setTypeid(cacheableView.getItem().getId());
+							call.setTypeid(view.getItem().getId());
 							EventBus.getInstance()
 									.fireEvent(
 											new ActivityEvent.CallEdit(
@@ -212,13 +212,13 @@ public class OpportunityReadPresenter extends
 					}
 				});
 
-		cacheableView.getRelatedContactHandlers().addRelatedListHandler(
+		view.getRelatedContactHandlers().addRelatedListHandler(
 				new AbstractRelatedListHandler<SimpleContact>() {
 
 					@Override
 					public void createNewRelatedItem(String itemId) {
 						SimpleContact contact = new SimpleContact();
-						contact.setExtraData(cacheableView.getItem());
+						contact.setExtraData(view.getItem());
 						EventBus.getInstance()
 								.fireEvent(
 										new ContactEvent.GotoEdit(
@@ -229,7 +229,7 @@ public class OpportunityReadPresenter extends
 					@Override
 					public void selectAssociateItems(Set<SimpleContact> items) {
 						List<OpportunityContact> associateContacts = new ArrayList<OpportunityContact>();
-						SimpleOpportunity opportunity = cacheableView.getItem();
+						SimpleOpportunity opportunity = view.getItem();
 						for (SimpleContact contact : items) {
 							OpportunityContact associateContact = new OpportunityContact();
 							associateContact.setContactid(contact.getId());
@@ -245,16 +245,16 @@ public class OpportunityReadPresenter extends
 								.getSpringBean(OpportunityService.class);
 						opportunityService.saveOpportunityContactRelationship(
 								associateContacts, AppContext.getAccountId());
-						cacheableView.getRelatedContactHandlers().refresh();
+						view.getRelatedContactHandlers().refresh();
 					}
 				});
 
-		cacheableView.getRelatedLeadHandlers().addRelatedListHandler(
+		view.getRelatedLeadHandlers().addRelatedListHandler(
 				new AbstractRelatedListHandler<SimpleLead>() {
 					@Override
 					public void createNewRelatedItem(String itemId) {
 						SimpleLead lead = new SimpleLead();
-						lead.setExtraData(cacheableView.getItem());
+						lead.setExtraData(view.getItem());
 						EventBus.getInstance().fireEvent(
 								new LeadEvent.GotoEdit(
 										OpportunityReadPresenter.this, lead));
@@ -262,7 +262,7 @@ public class OpportunityReadPresenter extends
 
 					@Override
 					public void selectAssociateItems(Set<SimpleLead> items) {
-						SimpleOpportunity opportunity = cacheableView.getItem();
+						SimpleOpportunity opportunity = view.getItem();
 						List<OpportunityLead> associateLeads = new ArrayList<OpportunityLead>();
 						for (SimpleLead lead : items) {
 							OpportunityLead associateLead = new OpportunityLead();
@@ -278,7 +278,7 @@ public class OpportunityReadPresenter extends
 								.getSpringBean(OpportunityService.class);
 						opportunityService.saveOpportunityLeadRelationship(
 								associateLeads, AppContext.getAccountId());
-						cacheableView.getRelatedLeadHandlers().refresh();
+						view.getRelatedLeadHandlers().refresh();
 					}
 				});
 	}
@@ -297,7 +297,7 @@ public class OpportunityReadPresenter extends
 						(Integer) data.getParams(), AppContext.getAccountId());
 				if (opportunity != null) {
 					super.onGo(container, data);
-					cacheableView.previewItem(opportunity);
+					view.previewItem(opportunity);
 
 					AppContext.addFragment(
 							CrmLinkGenerator

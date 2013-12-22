@@ -212,7 +212,7 @@ public class StandupListViewImpl extends AbstractPageView implements
 
 		headerLeft.addComponent(this.titleLbl);
 
-		this.dateChooser = new PopupButton("Choose date to cacheableView reports");
+		this.dateChooser = new PopupButton("Choose date to view reports");
 		this.dateChooser.setContent(this.standupCalendar);
 		headerLeft.addComponent(this.dateChooser);
 		headerLeft.setComponentAlignment(this.dateChooser,

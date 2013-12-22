@@ -39,6 +39,12 @@ import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabApplication;
 import com.vaadin.ui.ComponentContainer;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class LoginPresenter extends AbstractPresenter<LoginView> {
 
 	private static final long serialVersionUID = 1L;
@@ -47,11 +53,11 @@ public class LoginPresenter extends AbstractPresenter<LoginView> {
 
 	public LoginPresenter() {
 		super(LoginView.class);
-		bind();
 	}
 
-	private void bind() {
-		cacheableView.addViewListener(new ApplicationEventListener<UserEvent.PlainLogin>() {
+	@Override
+	protected void postInitView() {
+		view.addViewListener(new ApplicationEventListener<UserEvent.PlainLogin>() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -104,7 +110,7 @@ public class LoginPresenter extends AbstractPresenter<LoginView> {
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		container.removeAllComponents();
-		container.addComponent(cacheableView.getWidget());
+		container.addComponent(view.getWidget());
 
 		AppContext.addFragment("user/login", "Login Page");
 	}

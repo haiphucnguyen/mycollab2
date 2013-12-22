@@ -43,6 +43,7 @@ import com.vaadin.ui.ComponentContainer;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class ProjectRoleReadPresenter extends
 		AbstractPresenter<ProjectRoleReadView> {
@@ -50,12 +51,11 @@ public class ProjectRoleReadPresenter extends
 
 	public ProjectRoleReadPresenter() {
 		super(ProjectRoleReadView.class);
-
-		bind();
 	}
 
-	private void bind() {
-		cacheableView.getPreviewFormHandlers().addFormHandler(
+	@Override
+	protected void postInitView() {
+		view.getPreviewFormHandlers().addFormHandler(
 				new DefaultPreviewFormHandler<SimpleProjectRole>() {
 					@Override
 					public void onEdit(SimpleProjectRole data) {
@@ -152,8 +152,8 @@ public class ProjectRoleReadPresenter extends
 				return;
 			} else {
 				roleContainer.removeAllComponents();
-				roleContainer.addComponent(cacheableView.getWidget());
-				cacheableView.previewItem(role);
+				roleContainer.addComponent(view.getWidget());
+				view.previewItem(role);
 
 				ProjectBreadcrumb breadCrumb = ViewManager
 						.getView(ProjectBreadcrumb.class);

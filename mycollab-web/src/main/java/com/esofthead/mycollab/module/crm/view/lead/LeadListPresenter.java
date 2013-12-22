@@ -44,6 +44,12 @@ import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.UI;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class LeadListPresenter extends
 		CrmGenericListPresenter<LeadListView, LeadSearchCriteria, SimpleLead>
 		implements MassUpdateCommand<Lead> {
@@ -53,9 +59,13 @@ public class LeadListPresenter extends
 
 	public LeadListPresenter() {
 		super(LeadListView.class);
+	}
+
+	@Override
+	protected void postInitView() {
 		leadService = ApplicationContextUtil.getSpringBean(LeadService.class);
 
-		cacheableView.getPopupActionHandlers().addMassItemActionHandler(
+		view.getPopupActionHandlers().addMassItemActionHandler(
 				new DefaultMassEditActionHandler(this) {
 
 					@Override
@@ -68,7 +78,7 @@ public class LeadListPresenter extends
 							} else {
 								List<String> lstMail = new ArrayList<String>();
 
-								List<SimpleLead> tableData = cacheableView
+								List<SimpleLead> tableData = view
 										.getPagedBeanTable()
 										.getCurrentDataList();
 								for (SimpleLead item : tableData) {
@@ -128,7 +138,7 @@ public class LeadListPresenter extends
 	@Override
 	protected void deleteSelectedItems() {
 		if (!isSelectAll) {
-			Collection<SimpleLead> currentDataList = cacheableView.getPagedBeanTable()
+			Collection<SimpleLead> currentDataList = view.getPagedBeanTable()
 					.getCurrentDataList();
 			List<Integer> keyList = new ArrayList<Integer>();
 			for (SimpleLead item : currentDataList) {
@@ -153,7 +163,7 @@ public class LeadListPresenter extends
 	@Override
 	public void massUpdate(Lead value) {
 		if (!isSelectAll) {
-			Collection<SimpleLead> currentDataList = cacheableView.getPagedBeanTable()
+			Collection<SimpleLead> currentDataList = view.getPagedBeanTable()
 					.getCurrentDataList();
 			List<Integer> keyList = new ArrayList<Integer>();
 			for (SimpleLead item : currentDataList) {

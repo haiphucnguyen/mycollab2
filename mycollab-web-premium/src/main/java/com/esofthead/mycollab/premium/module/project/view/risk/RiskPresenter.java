@@ -34,23 +34,23 @@ public class RiskPresenter extends AbstractPresenter<IRiskContainer> implements
 		ProjectView projectViewContainer = (ProjectView) container;
 		projectViewContainer.gotoSubView("Risks");
 
-		cacheableView.removeAllComponents();
+		view.removeAllComponents();
 		AbstractPresenter presenter = null;
 
 		if (data instanceof RiskScreenData.Search) {
 			presenter = PresenterResolver.getPresenter(RiskListPresenter.class);
 		} else if (data instanceof RiskScreenData.Add
 				|| data instanceof RiskScreenData.Edit) {
-			log.debug("Go to projectMember add cacheableView");
+			log.debug("Go to projectMember add view");
 			presenter = PresenterResolver.getPresenter(RiskAddPresenter.class);
 		} else if (data instanceof RiskScreenData.Read) {
-			log.debug("Go to projectMember preview cacheableView");
+			log.debug("Go to projectMember preview view");
 			presenter = PresenterResolver.getPresenter(RiskReadPresenter.class);
 		} else {
 			throw new MyCollabException("No support screen data " + data);
 		}
 
-		presenter.go(cacheableView, data);
+		presenter.go(view, data);
 	}
 
 	@Override

@@ -59,9 +59,13 @@ public class CaseListPresenter extends
 
 	public CaseListPresenter() {
 		super(CaseListView.class);
+	}
+
+	@Override
+	protected void postInitView() {
 		caseService = ApplicationContextUtil.getSpringBean(CaseService.class);
 
-		cacheableView.getPopupActionHandlers().addMassItemActionHandler(
+		view.getPopupActionHandlers().addMassItemActionHandler(
 				new DefaultMassEditActionHandler(this) {
 
 					@Override
@@ -73,7 +77,7 @@ public class CaseListPresenter extends
 												.getMessage(WebExceptionI18nEnum.NOT_SUPPORT_SENDING_EMAIL_TO_ALL_USERS));
 							} else {
 								List<String> lstMail = new ArrayList<String>();
-								List<SimpleCase> tableData = cacheableView
+								List<SimpleCase> tableData = view
 										.getPagedBeanTable()
 										.getCurrentDataList();
 								for (SimpleCase item : tableData) {
@@ -131,14 +135,14 @@ public class CaseListPresenter extends
 	@Override
 	public void doSearch(CaseSearchCriteria searchCriteria) {
 		this.searchCriteria = searchCriteria;
-		cacheableView.getPagedBeanTable().setSearchCriteria(searchCriteria);
+		view.getPagedBeanTable().setSearchCriteria(searchCriteria);
 		checkWhetherEnableTableActionControl();
 	}
 
 	@Override
 	protected void deleteSelectedItems() {
 		if (!isSelectAll) {
-			Collection<SimpleCase> currentDataList = cacheableView.getPagedBeanTable()
+			Collection<SimpleCase> currentDataList = view.getPagedBeanTable()
 					.getCurrentDataList();
 			List<Integer> keyList = new ArrayList<Integer>();
 			for (SimpleCase item : currentDataList) {
@@ -164,7 +168,7 @@ public class CaseListPresenter extends
 	@Override
 	public void massUpdate(CaseWithBLOBs value) {
 		if (!isSelectAll) {
-			Collection<SimpleCase> currentDataList = cacheableView.getPagedBeanTable()
+			Collection<SimpleCase> currentDataList = view.getPagedBeanTable()
 					.getCurrentDataList();
 			List<Integer> keyList = new ArrayList<Integer>();
 			for (SimpleCase item : currentDataList) {

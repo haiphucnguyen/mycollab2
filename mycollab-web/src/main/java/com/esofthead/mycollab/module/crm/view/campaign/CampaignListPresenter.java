@@ -42,6 +42,12 @@ import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.UI;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class CampaignListPresenter
 		extends
 		CrmGenericListPresenter<CampaignListView, CampaignSearchCriteria, SimpleCampaign>
@@ -52,10 +58,14 @@ public class CampaignListPresenter
 
 	public CampaignListPresenter() {
 		super(CampaignListView.class);
+	}
+
+	@Override
+	protected void postInitView() {
 		campaignService = ApplicationContextUtil
 				.getSpringBean(CampaignService.class);
 
-		cacheableView.getPopupActionHandlers().addMassItemActionHandler(
+		view.getPopupActionHandlers().addMassItemActionHandler(
 				new DefaultMassEditActionHandler(this) {
 
 					@Override
@@ -80,7 +90,7 @@ public class CampaignListPresenter
 					}
 
 					@Override
-					protected Class getReportModelClassType() {
+					protected Class<?> getReportModelClassType() {
 						return SimpleCampaign.class;
 					}
 				});
@@ -107,7 +117,7 @@ public class CampaignListPresenter
 	@Override
 	protected void deleteSelectedItems() {
 		if (!isSelectAll) {
-			Collection<SimpleCampaign> currentDataList = cacheableView
+			Collection<SimpleCampaign> currentDataList = view
 					.getPagedBeanTable().getCurrentDataList();
 			List<Integer> keyList = new ArrayList<Integer>();
 			for (SimpleCampaign item : currentDataList) {
@@ -132,7 +142,7 @@ public class CampaignListPresenter
 	@Override
 	public void massUpdate(CampaignWithBLOBs value) {
 		if (!isSelectAll) {
-			Collection<SimpleCampaign> currentDataList = cacheableView
+			Collection<SimpleCampaign> currentDataList = view
 					.getPagedBeanTable().getCurrentDataList();
 			List<Integer> keyList = new ArrayList<Integer>();
 			for (SimpleCampaign item : currentDataList) {

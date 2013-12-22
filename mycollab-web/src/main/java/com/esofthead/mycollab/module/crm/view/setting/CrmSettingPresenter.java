@@ -39,7 +39,7 @@ public class CrmSettingPresenter extends
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		IPresenter presenter = null;
 		CrmModule crmModule = (CrmModule) container;
-		crmModule.addView(cacheableView);
+		crmModule.addView(view);
 
 		if (ClassUtils.instanceOf(data,
 				NotificationSettingScreenData.Read.class)) {
@@ -52,6 +52,6 @@ public class CrmSettingPresenter extends
 			throw new MyCollabException("Do not support screen data " + data);
 		}
 
-		presenter.go(cacheableView, data);
+		presenter.go(view, data);
 	}
 }

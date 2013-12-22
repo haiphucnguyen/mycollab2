@@ -51,11 +51,11 @@ public class CaseAddPresenter extends CrmGenericPresenter<CaseAddView> {
 
 	public CaseAddPresenter() {
 		super(CaseAddView.class);
-		bind();
 	}
 
-	private void bind() {
-		cacheableView.getEditFormHandlers().addFormHandler(
+	@Override
+	protected void postInitView() {
+		view.getEditFormHandlers().addFormHandler(
 				new EditFormHandler<SimpleCase>() {
 					@Override
 					public void onSave(final SimpleCase cases) {
@@ -106,7 +106,7 @@ public class CaseAddPresenter extends CrmGenericPresenter<CaseAddView> {
 				}
 			}
 			super.onGo(container, data);
-			cacheableView.editItem(cases);
+			view.editItem(cases);
 
 			if (cases.getId() == null) {
 				AppContext.addFragment("crm/cases/add", LocalizationHelper

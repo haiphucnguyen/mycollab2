@@ -109,7 +109,7 @@ public class MilestoneListViewImpl extends AbstractPageView implements
 		final CustomLayout bodyContent = CustomLayoutLoader
 				.createLayout("milestoneView");
 		bodyContent.setWidth("100%");
-		bodyContent.setStyleName("milestone-cacheableView");
+		bodyContent.setStyleName("milestone-view");
 
 		final HorizontalLayout closedHeaderLayout = new HorizontalLayout();
 		closedHeaderLayout.setSpacing(true);

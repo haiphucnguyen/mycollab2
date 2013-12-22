@@ -53,8 +53,8 @@ public class BugReadPresenter extends AbstractPresenter<BugReadView> {
 				if (bug != null) {
 					BugContainer bugContainer = (BugContainer) container;
 					bugContainer.removeAllComponents();
-					bugContainer.addComponent(cacheableView.getWidget());
-					cacheableView.previewItem(bug);
+					bugContainer.addComponent(view.getWidget());
+					view.previewItem(bug);
 
 					ProjectBreadcrumb breadcrumb = ViewManager
 							.getView(ProjectBreadcrumb.class);

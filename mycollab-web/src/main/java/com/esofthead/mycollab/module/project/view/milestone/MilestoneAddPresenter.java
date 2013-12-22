@@ -50,34 +50,11 @@ public class MilestoneAddPresenter extends AbstractPresenter<MilestoneAddView> {
 
 	public MilestoneAddPresenter() {
 		super(MilestoneAddView.class);
-		bind();
 	}
 
 	@Override
-	protected void onGo(ComponentContainer container, ScreenData<?> data) {
-		if (CurrentProjectVariables
-				.canWrite(ProjectRolePermissionCollections.MILESTONES)) {
-			MilestoneContainer milestoneContainer = (MilestoneContainer) container;
-			milestoneContainer.removeAllComponents();
-			milestoneContainer.addComponent(cacheableView.getWidget());
-
-			Milestone milestone = (Milestone) data.getParams();
-			cacheableView.editItem(milestone);
-
-			ProjectBreadcrumb breadcrumb = ViewManager
-					.getView(ProjectBreadcrumb.class);
-			if (milestone.getId() == null) {
-				breadcrumb.gotoMilestoneAdd();
-			} else {
-				breadcrumb.gotoMilestoneEdit(milestone);
-			}
-		} else {
-			NotificationUtil.showMessagePermissionAlert();
-		}
-	}
-
-	private void bind() {
-		cacheableView.getEditFormHandlers().addFormHandler(
+	protected void postInitView() {
+		view.getEditFormHandlers().addFormHandler(
 				new EditFormHandler<Milestone>() {
 					@Override
 					public void onSave(final Milestone milestone) {
@@ -105,6 +82,29 @@ public class MilestoneAddPresenter extends AbstractPresenter<MilestoneAddView> {
 								new MilestoneEvent.GotoAdd(this, null));
 					}
 				});
+	}
+
+	@Override
+	protected void onGo(ComponentContainer container, ScreenData<?> data) {
+		if (CurrentProjectVariables
+				.canWrite(ProjectRolePermissionCollections.MILESTONES)) {
+			MilestoneContainer milestoneContainer = (MilestoneContainer) container;
+			milestoneContainer.removeAllComponents();
+			milestoneContainer.addComponent(view.getWidget());
+
+			Milestone milestone = (Milestone) data.getParams();
+			view.editItem(milestone);
+
+			ProjectBreadcrumb breadcrumb = ViewManager
+					.getView(ProjectBreadcrumb.class);
+			if (milestone.getId() == null) {
+				breadcrumb.gotoMilestoneAdd();
+			} else {
+				breadcrumb.gotoMilestoneEdit(milestone);
+			}
+		} else {
+			NotificationUtil.showMessagePermissionAlert();
+		}
 	}
 
 	public void saveMilestone(Milestone milestone) {

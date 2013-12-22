@@ -50,7 +50,7 @@ public class ComponentAddPresenter extends AbstractPresenter<ComponentAddView> {
 	public ComponentAddPresenter() {
 		super(ComponentAddView.class);
 
-		cacheableView.getEditFormHandlers().addFormHandler(
+		view.getEditFormHandlers().addFormHandler(
 				new EditFormHandler<Component>() {
 					@Override
 					public void onSave(final Component item) {
@@ -103,10 +103,10 @@ public class ComponentAddPresenter extends AbstractPresenter<ComponentAddView> {
 				.canWrite(ProjectRolePermissionCollections.COMPONENTS)) {
 			com.esofthead.mycollab.module.project.view.bug.ComponentContainer componentContainer = (com.esofthead.mycollab.module.project.view.bug.ComponentContainer) container;
 			componentContainer.removeAllComponents();
-			componentContainer.addComponent(cacheableView.getWidget());
+			componentContainer.addComponent(view.getWidget());
 
 			Component component = (Component) data.getParams();
-			cacheableView.editItem(component);
+			view.editItem(component);
 
 			ProjectBreadcrumb breadcrumb = ViewManager
 					.getView(ProjectBreadcrumb.class);

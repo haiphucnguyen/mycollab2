@@ -41,17 +41,23 @@ import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.UI;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class CallReadPresenter extends CrmGenericPresenter<CallReadView> {
 
 	private static final long serialVersionUID = 1L;
 
 	public CallReadPresenter() {
 		super(CallReadView.class);
-		bind();
 	}
 
-	private void bind() {
-		cacheableView.getPreviewFormHandlers().addFormHandler(
+	@Override
+	protected void postInitView() {
+		view.getPreviewFormHandlers().addFormHandler(
 				new DefaultPreviewFormHandler<SimpleCall>() {
 					@Override
 					public void onEdit(SimpleCall data) {
@@ -165,9 +171,9 @@ public class CallReadPresenter extends CrmGenericPresenter<CallReadView> {
 			}
 
 			container.removeAllComponents();
-			container.addComponent(cacheableView.getWidget());
+			container.addComponent(view.getWidget());
 
-			cacheableView.previewItem(call);
+			view.previewItem(call);
 			AppContext.addFragment(CrmLinkGenerator
 					.generateCallPreviewLink(call.getId()), LocalizationHelper
 					.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,

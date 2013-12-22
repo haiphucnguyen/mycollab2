@@ -54,7 +54,7 @@ public class ProjectMemberListPresenter extends
 				.canRead(ProjectRolePermissionCollections.USERS)) {
 			ProjectUserContainer userGroupContainer = (ProjectUserContainer) container;
 			userGroupContainer.removeAllComponents();
-			userGroupContainer.addComponent(cacheableView.getWidget());
+			userGroupContainer.addComponent(view.getWidget());
 			ProjectMemberSearchCriteria criteria = null;
 			if (data == null) {
 				criteria = new ProjectMemberSearchCriteria();
@@ -68,7 +68,7 @@ public class ProjectMemberListPresenter extends
 				criteria = (ProjectMemberSearchCriteria) data.getParams();
 			}
 
-			cacheableView.setSearchCriteria(criteria);
+			view.setSearchCriteria(criteria);
 
 			ProjectBreadcrumb breadCrumb = ViewManager
 					.getView(ProjectBreadcrumb.class);

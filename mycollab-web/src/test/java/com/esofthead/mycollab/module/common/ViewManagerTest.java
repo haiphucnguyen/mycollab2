@@ -25,8 +25,8 @@ public class ViewManagerTest {
 
 	@Test
 	public void testGetViewClassSuccess() {
-		// SomeView cacheableView = ViewManager.getView(SomeView.class);
-		// Assert.assertEquals(SomeViewImpl.class, cacheableView.getClass());
+		// SomeView view = ViewManager.getView(SomeView.class);
+		// Assert.assertEquals(SomeViewImpl.class, view.getClass());
 	}
 
 	@Test(expected = RuntimeException.class)

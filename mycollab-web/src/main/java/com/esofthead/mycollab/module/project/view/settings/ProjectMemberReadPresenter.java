@@ -32,7 +32,6 @@ import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectMemberStatusConstants;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
-import com.esofthead.mycollab.module.project.domain.ProjectMember;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectMemberSearchCriteria;
@@ -54,6 +53,7 @@ import com.vaadin.ui.UI;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class ProjectMemberReadPresenter extends
 		AbstractPresenter<ProjectMemberReadView> {
@@ -61,11 +61,11 @@ public class ProjectMemberReadPresenter extends
 
 	public ProjectMemberReadPresenter() {
 		super(ProjectMemberReadView.class);
-		bind();
 	}
 
-	private void bind() {
-		cacheableView.getPreviewFormHandlers().addFormHandler(
+	@Override
+	protected void postInitView() {
+		view.getPreviewFormHandlers().addFormHandler(
 				new DefaultPreviewFormHandler<SimpleProjectMember>() {
 					@Override
 					public void onEdit(SimpleProjectMember data) {
@@ -201,8 +201,8 @@ public class ProjectMemberReadPresenter extends
 			if (prjMember != null) {
 				ProjectUserContainer userGroupContainer = (ProjectUserContainer) container;
 				userGroupContainer.removeAllComponents();
-				userGroupContainer.addComponent(cacheableView.getWidget());
-				cacheableView.previewItem(prjMember);
+				userGroupContainer.addComponent(view.getWidget());
+				view.previewItem(prjMember);
 				ProjectBreadcrumb breadCrumb = ViewManager
 						.getView(ProjectBreadcrumb.class);
 				breadCrumb.gotoUserRead(prjMember);

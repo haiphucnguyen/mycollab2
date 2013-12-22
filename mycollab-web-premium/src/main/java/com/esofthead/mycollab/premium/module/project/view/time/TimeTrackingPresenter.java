@@ -24,7 +24,7 @@ public class TimeTrackingPresenter extends
 		ProjectView projectViewContainer = (ProjectView) container;
 		projectViewContainer.gotoSubView("Time");
 
-		cacheableView.removeAllComponents();
+		view.removeAllComponents();
 		AbstractPresenter presenter = null;
 
 		if (data instanceof TimeTrackingScreenData.Search) {
@@ -34,6 +34,6 @@ public class TimeTrackingPresenter extends
 			throw new MyCollabException("No support screen data " + data);
 		}
 
-		presenter.go(cacheableView, data);
+		presenter.go(view, data);
 	}
 }

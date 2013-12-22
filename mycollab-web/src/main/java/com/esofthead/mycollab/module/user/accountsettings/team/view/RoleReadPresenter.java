@@ -48,6 +48,7 @@ import com.vaadin.ui.UI;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 @ViewPermission(permissionId = RolePermissionCollections.ACCOUNT_ROLE, impliedPermissionVal = AccessPermissionFlag.READ_ONLY)
 public class RoleReadPresenter extends AbstractPresenter<RoleReadView> {
@@ -55,12 +56,11 @@ public class RoleReadPresenter extends AbstractPresenter<RoleReadView> {
 
 	public RoleReadPresenter() {
 		super(RoleReadView.class);
-
-		bind();
 	}
 
-	private void bind() {
-		cacheableView.getPreviewFormHandlers().addFormHandler(
+	@Override
+	protected void postInitView() {
+		view.getPreviewFormHandlers().addFormHandler(
 				new DefaultPreviewFormHandler<Role>() {
 					@Override
 					public void onEdit(Role data) {
@@ -128,8 +128,8 @@ public class RoleReadPresenter extends AbstractPresenter<RoleReadView> {
 			if (role != null) {
 				RoleContainer roleContainer = (RoleContainer) container;
 				roleContainer.removeAllComponents();
-				roleContainer.addComponent(cacheableView.getWidget());
-				cacheableView.previewItem(role);
+				roleContainer.addComponent(view.getWidget());
+				view.previewItem(role);
 
 				AccountSettingBreadcrumb breadcrumb = ViewManager
 						.getView(AccountSettingBreadcrumb.class);

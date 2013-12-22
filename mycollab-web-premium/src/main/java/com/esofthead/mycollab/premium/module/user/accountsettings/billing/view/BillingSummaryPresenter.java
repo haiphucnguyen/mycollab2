@@ -39,9 +39,9 @@ public class BillingSummaryPresenter extends
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		IBillingContainer accountContainer = (IBillingContainer) container;
 		accountContainer.removeAllComponents();
-		accountContainer.addComponent(cacheableView.getWidget());
+		accountContainer.addComponent(view.getWidget());
 
-		cacheableView.loadCurrentPlan();
+		view.loadCurrentPlan();
 		AccountSettingBreadcrumb breadcrumb = ViewManager
 				.getView(AccountSettingBreadcrumb.class);
 		breadcrumb.gotoBillingPage();

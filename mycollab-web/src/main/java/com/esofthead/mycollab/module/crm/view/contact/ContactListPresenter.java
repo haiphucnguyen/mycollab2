@@ -43,6 +43,12 @@ import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.UI;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class ContactListPresenter
 		extends
 		CrmGenericListPresenter<ContactListView, ContactSearchCriteria, SimpleContact>
@@ -53,10 +59,14 @@ public class ContactListPresenter
 
 	public ContactListPresenter() {
 		super(ContactListView.class);
+	}
+
+	@Override
+	protected void postInitView() {
 		contactService = ApplicationContextUtil
 				.getSpringBean(ContactService.class);
 
-		cacheableView.getPopupActionHandlers().addMassItemActionHandler(
+		view.getPopupActionHandlers().addMassItemActionHandler(
 				new DefaultMassEditActionHandler(this) {
 
 					@Override
@@ -79,7 +89,7 @@ public class ContactListPresenter
 
 							} else {
 								List<String> lstMail = new ArrayList<String>();
-								List<SimpleContact> tableData = cacheableView
+								List<SimpleContact> tableData = view
 										.getPagedBeanTable()
 										.getCurrentDataList();
 								for (SimpleContact item : tableData) {
@@ -126,7 +136,7 @@ public class ContactListPresenter
 	@Override
 	protected void deleteSelectedItems() {
 		if (!isSelectAll) {
-			Collection<SimpleContact> currentDataList = cacheableView
+			Collection<SimpleContact> currentDataList = view
 					.getPagedBeanTable().getCurrentDataList();
 			List<Integer> keyList = new ArrayList<Integer>();
 			for (SimpleContact item : currentDataList) {
@@ -151,7 +161,7 @@ public class ContactListPresenter
 	@Override
 	public void massUpdate(Contact value) {
 		if (!isSelectAll) {
-			Collection<SimpleContact> currentDataList = cacheableView
+			Collection<SimpleContact> currentDataList = view
 					.getPagedBeanTable().getCurrentDataList();
 			List<Integer> keyList = new ArrayList<Integer>();
 			for (SimpleContact item : currentDataList) {

@@ -44,7 +44,7 @@ public class FileSearchResultPresenter extends
 					.getMessage(CrmCommonI18nEnum.TOOLBAR_DOCUMENT_HEADER));
 
 			super.onGo(container, data);
-			cacheableView.displaySearchResult((FileSearchCriteria) data.getParams());
+			view.displaySearchResult((FileSearchCriteria) data.getParams());
 		} else {
 			NotificationUtil.showMessagePermissionAlert();
 		}

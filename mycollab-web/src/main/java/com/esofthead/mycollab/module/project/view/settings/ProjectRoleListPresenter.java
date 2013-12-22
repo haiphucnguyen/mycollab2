@@ -59,7 +59,7 @@ public class ProjectRoleListPresenter
 		projectRoleService = ApplicationContextUtil
 				.getSpringBean(ProjectRoleService.class);
 
-		cacheableView.getPopupActionHandlers().addMassItemActionHandler(
+		view.getPopupActionHandlers().addMassItemActionHandler(
 				new DefaultMassEditActionHandler(this) {
 
 					@Override
@@ -84,7 +84,7 @@ public class ProjectRoleListPresenter
 	@Override
 	protected void deleteSelectedItems() {
 		if (!isSelectAll) {
-			Collection<SimpleProjectRole> currentDataList = cacheableView
+			Collection<SimpleProjectRole> currentDataList = view
 					.getPagedBeanTable().getCurrentDataList();
 			List<Integer> keyList = new ArrayList<Integer>();
 			for (ProjectRole item : currentDataList) {
@@ -118,7 +118,7 @@ public class ProjectRoleListPresenter
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		ProjectRoleContainer roleContainer = (ProjectRoleContainer) container;
 		roleContainer.removeAllComponents();
-		roleContainer.addComponent(cacheableView.getWidget());
+		roleContainer.addComponent(view.getWidget());
 		doSearch((ProjectRoleSearchCriteria) data.getParams());
 
 		ProjectBreadcrumb breadCrumb = ViewManager

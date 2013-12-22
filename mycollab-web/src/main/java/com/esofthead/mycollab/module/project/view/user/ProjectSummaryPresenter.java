@@ -31,7 +31,7 @@ public class ProjectSummaryPresenter extends AbstractPresenter<ProjectSummaryVie
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
         ProjectDashboardContainer projectViewContainer = (ProjectDashboardContainer) container;
         projectViewContainer.removeAllComponents();
-        projectViewContainer.addComponent(cacheableView.getWidget());
-        cacheableView.displayDashboard();
+        projectViewContainer.addComponent(view.getWidget());
+        view.displayDashboard();
     }
 }

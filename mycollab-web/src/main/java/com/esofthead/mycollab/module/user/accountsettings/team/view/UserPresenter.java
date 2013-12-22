@@ -63,21 +63,21 @@ public class UserPresenter extends AbstractPresenter<UserContainer> {
 			criteria.setRegisterStatuses(new SetSearchField<String>(
 					SearchField.AND,
 					new String[] { RegisterStatusConstants.ACTIVE }));
-			listPresenter.go(cacheableView.getWidget(),
+			listPresenter.go(view.getWidget(),
 					new ScreenData.Search<UserSearchCriteria>(criteria));
 		} else if (data instanceof UserScreenData.Read) {
 			UserReadPresenter presenter = PresenterResolver
 					.getPresenter(UserReadPresenter.class);
-			presenter.go(cacheableView.getWidget(), data);
+			presenter.go(view.getWidget(), data);
 		} else if (data instanceof UserScreenData.Search) {
 			UserListPresenter presenter = PresenterResolver
 					.getPresenter(UserListPresenter.class);
-			presenter.go(cacheableView.getWidget(), data);
+			presenter.go(view.getWidget(), data);
 		} else if (data instanceof UserScreenData.Add
 				|| data instanceof UserScreenData.Edit) {
 			UserAddPresenter presenter = PresenterResolver
 					.getPresenter(UserAddPresenter.class);
-			presenter.go(cacheableView.getWidget(), data);
+			presenter.go(view.getWidget(), data);
 		}
 	}
 }

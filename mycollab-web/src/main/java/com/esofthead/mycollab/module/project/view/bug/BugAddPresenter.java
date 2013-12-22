@@ -41,40 +41,23 @@ import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class BugAddPresenter extends AbstractPresenter<BugAddView> {
 
 	private static final long serialVersionUID = 1L;
 
 	public BugAddPresenter() {
 		super(BugAddView.class);
-		bind();
 	}
 
 	@Override
-	protected void onGo(ComponentContainer container, ScreenData<?> data) {
-		if (CurrentProjectVariables
-				.canWrite(ProjectRolePermissionCollections.BUGS)) {
-			BugContainer bugContainer = (BugContainer) container;
-			bugContainer.removeAllComponents();
-			bugContainer.addComponent(cacheableView.getWidget());
-
-			SimpleBug bug = (SimpleBug) data.getParams();
-			cacheableView.editItem(bug);
-
-			ProjectBreadcrumb breadcrumb = ViewManager
-					.getView(ProjectBreadcrumb.class);
-			if (bug.getId() == null) {
-				breadcrumb.gotoBugAdd();
-			} else {
-				breadcrumb.gotoBugEdit(bug);
-			}
-		} else {
-			NotificationUtil.showMessagePermissionAlert();
-		}
-	}
-
-	private void bind() {
-		cacheableView.getEditFormHandlers().addFormHandler(
+	protected void postInitView() {
+		view.getEditFormHandlers().addFormHandler(
 				new EditFormHandler<SimpleBug>() {
 					@Override
 					public void onSave(final SimpleBug bug) {
@@ -104,8 +87,32 @@ public class BugAddPresenter extends AbstractPresenter<BugAddView> {
 				});
 	}
 
+	@Override
+	protected void onGo(ComponentContainer container, ScreenData<?> data) {
+		if (CurrentProjectVariables
+				.canWrite(ProjectRolePermissionCollections.BUGS)) {
+			BugContainer bugContainer = (BugContainer) container;
+			bugContainer.removeAllComponents();
+			bugContainer.addComponent(view.getWidget());
+
+			SimpleBug bug = (SimpleBug) data.getParams();
+			view.editItem(bug);
+
+			ProjectBreadcrumb breadcrumb = ViewManager
+					.getView(ProjectBreadcrumb.class);
+			if (bug.getId() == null) {
+				breadcrumb.gotoBugAdd();
+			} else {
+				breadcrumb.gotoBugEdit(bug);
+			}
+		} else {
+			NotificationUtil.showMessagePermissionAlert();
+		}
+	}
+
 	public void saveBug(SimpleBug bug) {
-		BugService bugService = ApplicationContextUtil.getSpringBean(BugService.class);
+		BugService bugService = ApplicationContextUtil
+				.getSpringBean(BugService.class);
 		bug.setProjectid(CurrentProjectVariables.getProjectId());
 		bug.setSaccountid(AppContext.getAccountId());
 		if (bug.getId() == null) {
@@ -115,7 +122,7 @@ public class BugAddPresenter extends AbstractPresenter<BugAddView> {
 			bug.setSaccountid(AppContext.getAccountId());
 			int bugId = bugService.saveWithSession(bug,
 					AppContext.getUsername());
-			ProjectFormAttachmentUploadField uploadField = cacheableView
+			ProjectFormAttachmentUploadField uploadField = view
 					.getAttachUploadField();
 			uploadField.saveContentsToRepo(bug.getProjectid(),
 					AttachmentType.PROJECT_BUG_TYPE, bugId);
@@ -124,16 +131,16 @@ public class BugAddPresenter extends AbstractPresenter<BugAddView> {
 			BugRelatedItemService bugRelatedItemService = ApplicationContextUtil
 					.getSpringBean(BugRelatedItemService.class);
 			bugRelatedItemService.saveAffectedVersionsOfBug(bugId,
-					cacheableView.getAffectedVersions());
+					view.getAffectedVersions());
 			bugRelatedItemService.saveFixedVersionsOfBug(bugId,
-					cacheableView.getFixedVersion());
+					view.getFixedVersion());
 			bugRelatedItemService.saveComponentsOfBug(bugId,
-					cacheableView.getComponents());
+					view.getComponents());
 			CacheUtils.cleanCache(AppContext.getAccountId(),
 					BugService.class.getName());
 		} else {
 			bugService.updateWithSession(bug, AppContext.getUsername());
-			ProjectFormAttachmentUploadField uploadField = cacheableView
+			ProjectFormAttachmentUploadField uploadField = view
 					.getAttachUploadField();
 			uploadField.saveContentsToRepo(bug.getProjectid(),
 					AttachmentType.PROJECT_BUG_TYPE, bug.getId());
@@ -142,11 +149,11 @@ public class BugAddPresenter extends AbstractPresenter<BugAddView> {
 			BugRelatedItemService bugRelatedItemService = ApplicationContextUtil
 					.getSpringBean(BugRelatedItemService.class);
 			bugRelatedItemService.updateAfftedVersionsOfBug(bugId,
-					cacheableView.getAffectedVersions());
+					view.getAffectedVersions());
 			bugRelatedItemService.updateFixedVersionsOfBug(bugId,
-					cacheableView.getFixedVersion());
+					view.getFixedVersion());
 			bugRelatedItemService.updateComponentsOfBug(bugId,
-					cacheableView.getComponents());
+					view.getComponents());
 			CacheUtils.cleanCache(AppContext.getAccountId(),
 					BugService.class.getName());
 		}

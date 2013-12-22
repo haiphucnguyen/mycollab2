@@ -52,7 +52,7 @@ public class UserAddPresenter extends AbstractPresenter<UserAddView> {
 	public UserAddPresenter() {
 		super(UserAddView.class);
 
-		cacheableView.getEditFormHandlers().addFormHandler(
+		view.getEditFormHandlers().addFormHandler(
 				new EditFormHandler<SimpleUser>() {
 					@Override
 					public void onSave(final SimpleUser item) {
@@ -88,8 +88,8 @@ public class UserAddPresenter extends AbstractPresenter<UserAddView> {
 
 		item.setAccountId(AppContext.getAccountId());
 
-		item.setDateofbirth(cacheableView.getBirthday());
-		item.setTimezone(cacheableView.getTimezone().getId());
+		item.setDateofbirth(view.getBirthday());
+		item.setTimezone(view.getTimezone().getId());
 		if (item.getStatus() == null) {
 			item.setStatus(UserStatusConstants.EMAIL_NOT_VERIFIED);
 		}
@@ -107,7 +107,7 @@ public class UserAddPresenter extends AbstractPresenter<UserAddView> {
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		UserContainer userContainer = (UserContainer) container;
 		userContainer.removeAllComponents();
-		userContainer.addComponent(cacheableView.getWidget());
+		userContainer.addComponent(view.getWidget());
 
 		SimpleUser user = (SimpleUser) data.getParams();
 		if (data instanceof UserScreenData.Add) {
@@ -115,7 +115,7 @@ public class UserAddPresenter extends AbstractPresenter<UserAddView> {
 		} else {
 			user.setIsLoadEdit(true);
 		}
-		cacheableView.editItem(user);
+		view.editItem(user);
 
 		AccountSettingBreadcrumb breadcrumb = ViewManager
 				.getView(AccountSettingBreadcrumb.class);

@@ -35,6 +35,12 @@ import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class BugListPresenter extends AbstractPresenter<BugListView> implements
 		ListCommand<BugSearchCriteria> {
 
@@ -44,8 +50,11 @@ public class BugListPresenter extends AbstractPresenter<BugListView> implements
 
 	public BugListPresenter() {
 		super(BugListView.class);
+	}
 
-		cacheableView.getPagedBeanTable().addPagableHandler(new PagableHandler() {
+	@Override
+	protected void postInitView() {
+		view.getPagedBeanTable().addPagableHandler(new PagableHandler() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -62,7 +71,7 @@ public class BugListPresenter extends AbstractPresenter<BugListView> implements
 			}
 		});
 
-		cacheableView.getSearchHandlers().addSearchHandler(
+		view.getSearchHandlers().addSearchHandler(
 				new SearchHandler<BugSearchCriteria>() {
 					@Override
 					public void onSearch(BugSearchCriteria criteria) {
@@ -70,7 +79,7 @@ public class BugListPresenter extends AbstractPresenter<BugListView> implements
 					}
 				});
 
-		cacheableView.getSelectableItemHandlers().addSelectableItemHandler(
+		view.getSelectableItemHandlers().addSelectableItemHandler(
 				new SelectableItemHandler<SimpleBug>() {
 					@Override
 					public void onSelect(SimpleBug item) {
@@ -83,7 +92,7 @@ public class BugListPresenter extends AbstractPresenter<BugListView> implements
 	}
 
 	private void selectAllItemsInCurrentPage() {
-		Collection<SimpleBug> currentDataList = cacheableView.getPagedBeanTable()
+		Collection<SimpleBug> currentDataList = view.getPagedBeanTable()
 				.getCurrentDataList();
 		for (SimpleBug item : currentDataList) {
 			item.setSelected(true);
@@ -93,7 +102,7 @@ public class BugListPresenter extends AbstractPresenter<BugListView> implements
 	}
 
 	private void checkWhetherEnableTableActionControl() {
-		Collection<SimpleBug> currentDataList = cacheableView.getPagedBeanTable()
+		Collection<SimpleBug> currentDataList = view.getPagedBeanTable()
 				.getCurrentDataList();
 		int countItems = 0;
 		for (SimpleBug item : currentDataList) {
@@ -109,11 +118,11 @@ public class BugListPresenter extends AbstractPresenter<BugListView> implements
 				.canRead(ProjectRolePermissionCollections.BUGS)) {
 			BugContainer trackerContainer = (BugContainer) container;
 			trackerContainer.removeAllComponents();
-			trackerContainer.addComponent(cacheableView.getWidget());
+			trackerContainer.addComponent(view.getWidget());
 
 			BugSearchParameter param = (BugSearchParameter) data.getParams();
 
-			cacheableView.setTitle(param.getScreenTitle());
+			view.setTitle(param.getScreenTitle());
 			doSearch(param.getSearchCriteria());
 
 			ProjectBreadcrumb breadcrumb = ViewManager
@@ -126,7 +135,7 @@ public class BugListPresenter extends AbstractPresenter<BugListView> implements
 
 	@Override
 	public void doSearch(BugSearchCriteria searchCriteria) {
-		cacheableView.getPagedBeanTable().setSearchCriteria(searchCriteria);
+		view.getPagedBeanTable().setSearchCriteria(searchCriteria);
 		checkWhetherEnableTableActionControl();
 	}
 }

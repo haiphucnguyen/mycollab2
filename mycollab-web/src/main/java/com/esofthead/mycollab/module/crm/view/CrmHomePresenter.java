@@ -32,7 +32,7 @@ public class CrmHomePresenter extends CrmGenericPresenter<CrmHomeView> {
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		super.onGo(container, data);
 
-		cacheableView.displayDashboard();
+		view.displayDashboard();
 		AppContext.addFragment("crm/dashboard", "Customer Dashboard");
 	}
 

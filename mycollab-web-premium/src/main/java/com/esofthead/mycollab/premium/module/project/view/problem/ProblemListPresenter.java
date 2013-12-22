@@ -25,6 +25,12 @@ import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.UI;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class ProblemListPresenter
 		extends
 		ListSelectionPresenter<ProblemListView, ProblemSearchCriteria, SimpleProblem>
@@ -35,11 +41,14 @@ public class ProblemListPresenter
 
 	public ProblemListPresenter() {
 		super(ProblemListView.class);
+	}
 
+	@Override
+	protected void postInitView() {
 		problemService = ApplicationContextUtil
 				.getSpringBean(ProblemService.class);
 
-		cacheableView.getPopupActionHandlers().addMassItemActionHandler(
+		view.getPopupActionHandlers().addMassItemActionHandler(
 				new DefaultMassEditActionHandler(this) {
 
 					@Override
@@ -74,7 +83,7 @@ public class ProblemListPresenter
 				.canRead(ProjectRolePermissionCollections.PROBLEMS)) {
 			ProblemContainer problemContainer = (ProblemContainer) container;
 			problemContainer.removeAllComponents();
-			problemContainer.addComponent(cacheableView.getWidget());
+			problemContainer.addComponent(view.getWidget());
 
 			doSearch((ProblemSearchCriteria) data.getParams());
 
@@ -89,7 +98,7 @@ public class ProblemListPresenter
 	@Override
 	protected void deleteSelectedItems() {
 		if (!isSelectAll) {
-			Collection<SimpleProblem> currentDataList = cacheableView
+			Collection<SimpleProblem> currentDataList = view
 					.getPagedBeanTable().getCurrentDataList();
 			List<Integer> keyList = new ArrayList<Integer>();
 			for (SimpleProblem item : currentDataList) {
@@ -115,7 +124,7 @@ public class ProblemListPresenter
 	@Override
 	public void massUpdate(Problem value) {
 		if (!isSelectAll) {
-			Collection<SimpleProblem> currentDataList = cacheableView
+			Collection<SimpleProblem> currentDataList = view
 					.getPagedBeanTable().getCurrentDataList();
 			List<Integer> keyList = new ArrayList<Integer>();
 			for (SimpleProblem item : currentDataList) {

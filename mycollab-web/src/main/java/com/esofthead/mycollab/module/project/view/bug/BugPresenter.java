@@ -44,7 +44,7 @@ public class BugPresenter extends AbstractPresenter<BugContainer> {
 		TrackerContainer trackerContainer = (TrackerContainer) container;
 		trackerContainer.gotoSubView("Bugs");
 
-		cacheableView.removeAllComponents();
+		view.removeAllComponents();
 
 		AbstractPresenter<?> presenter = null;
 
@@ -66,7 +66,7 @@ public class BugPresenter extends AbstractPresenter<BugContainer> {
 			throw new MyCollabException("Do not support screen data");
 		}
 
-		presenter.go(cacheableView, data);
+		presenter.go(view, data);
 	}
 
 }

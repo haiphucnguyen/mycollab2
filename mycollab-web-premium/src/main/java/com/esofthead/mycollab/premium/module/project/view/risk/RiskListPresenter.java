@@ -26,6 +26,12 @@ import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.UI;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class RiskListPresenter extends
 		ListSelectionPresenter<RiskListView, RiskSearchCriteria, SimpleRisk>
 		implements ListCommand<RiskSearchCriteria>, MassUpdateCommand<Risk> {
@@ -35,10 +41,13 @@ public class RiskListPresenter extends
 
 	public RiskListPresenter() {
 		super(RiskListView.class);
+	}
 
+	@Override
+	protected void postInitView() {
 		riskService = ApplicationContextUtil.getSpringBean(RiskService.class);
 
-		cacheableView.getPopupActionHandlers().addMassItemActionHandler(
+		view.getPopupActionHandlers().addMassItemActionHandler(
 				new DefaultMassEditActionHandler(this) {
 
 					@Override
@@ -73,7 +82,7 @@ public class RiskListPresenter extends
 				.canRead(ProjectRolePermissionCollections.RISKS)) {
 			RiskContainer riskContainer = (RiskContainer) container;
 			riskContainer.removeAllComponents();
-			riskContainer.addComponent(cacheableView.getWidget());
+			riskContainer.addComponent(view.getWidget());
 			doSearch((RiskSearchCriteria) data.getParams());
 
 			ProjectBreadcrumb breadCrumb = ViewManager
@@ -87,7 +96,7 @@ public class RiskListPresenter extends
 	@Override
 	protected void deleteSelectedItems() {
 		if (!isSelectAll) {
-			Collection<SimpleRisk> currentDataList = cacheableView.getPagedBeanTable()
+			Collection<SimpleRisk> currentDataList = view.getPagedBeanTable()
 					.getCurrentDataList();
 			List<Integer> keyList = new ArrayList<Integer>();
 			for (SimpleRisk item : currentDataList) {
@@ -113,7 +122,7 @@ public class RiskListPresenter extends
 	@Override
 	public void massUpdate(Risk value) {
 		if (!isSelectAll) {
-			Collection<SimpleRisk> currentDataList = cacheableView.getPagedBeanTable()
+			Collection<SimpleRisk> currentDataList = view.getPagedBeanTable()
 					.getCurrentDataList();
 			List<Integer> keyList = new ArrayList<Integer>();
 			for (SimpleRisk item : currentDataList) {

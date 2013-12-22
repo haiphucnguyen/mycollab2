@@ -46,6 +46,7 @@ import com.vaadin.ui.ComponentContainer;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class ProjectMemberInvitePresenter extends
 		AbstractPresenter<ProjectMemberInviteView> {
@@ -53,11 +54,11 @@ public class ProjectMemberInvitePresenter extends
 
 	public ProjectMemberInvitePresenter() {
 		super(ProjectMemberInviteView.class);
-		bind();
 	}
 
-	private void bind() {
-		cacheableView.addViewListener(new ApplicationEventListener<ProjectMemberEvent.InviteProjectMembers>() {
+	@Override
+	protected void postInitView() {
+		view.addViewListener(new ApplicationEventListener<ProjectMemberEvent.InviteProjectMembers>() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -91,9 +92,9 @@ public class ProjectMemberInvitePresenter extends
 				.canWrite(ProjectRolePermissionCollections.USERS)) {
 			ProjectUserContainer userGroupContainer = (ProjectUserContainer) container;
 			userGroupContainer.removeAllComponents();
-			userGroupContainer.addComponent(cacheableView.getWidget());
+			userGroupContainer.addComponent(view.getWidget());
 
-			cacheableView.display();
+			view.display();
 
 			ProjectBreadcrumb breadcrumb = ViewManager
 					.getView(ProjectBreadcrumb.class);

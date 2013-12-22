@@ -40,7 +40,7 @@ public class CrmCustomViewPresenter extends CrmGenericPresenter<ICrmCustomView>
 
 		AppContext.addFragment("crm/setting/customlayout", "Custom Layouts");
 
-		cacheableView.display(CrmTypeConstants.ACCOUNT);
+		view.display(CrmTypeConstants.ACCOUNT);
 	}
 
 }

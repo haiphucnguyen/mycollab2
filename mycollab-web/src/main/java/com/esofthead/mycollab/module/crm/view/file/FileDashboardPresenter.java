@@ -43,7 +43,7 @@ public class FileDashboardPresenter extends
 					.getMessage(CrmCommonI18nEnum.TOOLBAR_DOCUMENT_HEADER));
 
 			super.onGo(container, data);
-			cacheableView.displayFiles();
+			view.displayFiles();
 			AppContext.addFragment("crm/file/dashboard", "Customer: File Dashboard");
 		} else {
 			NotificationUtil.showMessagePermissionAlert();

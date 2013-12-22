@@ -28,17 +28,23 @@ import com.esofthead.mycollab.web.MyCollabApplication;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.UI;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class ProblemReadPresenter extends AbstractPresenter<ProblemReadView> {
 
 	private static final long serialVersionUID = 1L;
 
 	public ProblemReadPresenter() {
 		super(ProblemReadView.class);
-		bind();
 	}
 
-	private void bind() {
-		cacheableView.getPreviewFormHandlers().addFormHandler(
+	@Override
+	protected void postInitView() {
+		view.getPreviewFormHandlers().addFormHandler(
 				new DefaultPreviewFormHandler<SimpleProblem>() {
 					@Override
 					public void onEdit(SimpleProblem data) {
@@ -150,8 +156,8 @@ public class ProblemReadPresenter extends AbstractPresenter<ProblemReadView> {
 				if (problem != null) {
 					ProblemContainer problemContainer = (ProblemContainer) container;
 					problemContainer.removeAllComponents();
-					problemContainer.addComponent(cacheableView.getWidget());
-					cacheableView.previewItem(problem);
+					problemContainer.addComponent(view.getWidget());
+					view.previewItem(problem);
 
 					ProjectBreadcrumb breadcrumb = ViewManager
 							.getView(ProjectBreadcrumb.class);

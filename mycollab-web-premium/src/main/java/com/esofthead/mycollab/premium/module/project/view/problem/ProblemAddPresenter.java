@@ -1,14 +1,11 @@
 package com.esofthead.mycollab.premium.module.project.view.problem;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.Problem;
 import com.esofthead.mycollab.module.project.events.ProblemEvent;
 import com.esofthead.mycollab.module.project.service.ProblemService;
-import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
@@ -31,12 +28,8 @@ public class ProblemAddPresenter extends AbstractPresenter<ProblemAddView> {
 
 	private static final long serialVersionUID = 1L;
 
-	@Autowired
-	private ProjectMemberService projectMemberService;
-
 	public ProblemAddPresenter() {
 		super(ProblemAddView.class);
-		bind();
 	}
 
 	@Override
@@ -45,10 +38,10 @@ public class ProblemAddPresenter extends AbstractPresenter<ProblemAddView> {
 				.canWrite(ProjectRolePermissionCollections.PROBLEMS)) {
 			ProblemContainer problemContainer = (ProblemContainer) container;
 			problemContainer.removeAllComponents();
-			problemContainer.addComponent(cacheableView.getWidget());
+			problemContainer.addComponent(view.getWidget());
 
 			Problem problem = (Problem) data.getParams();
-			cacheableView.editItem(problem);
+			view.editItem(problem);
 
 			ProjectBreadcrumb breadcrumb = ViewManager
 					.getView(ProjectBreadcrumb.class);
@@ -62,8 +55,9 @@ public class ProblemAddPresenter extends AbstractPresenter<ProblemAddView> {
 		}
 	}
 
-	private void bind() {
-		cacheableView.getEditFormHandlers().addFormHandler(
+	@Override
+	protected void postInitView() {
+		view.getEditFormHandlers().addFormHandler(
 				new EditFormHandler<Problem>() {
 					@Override
 					public void onSave(final Problem problem) {
