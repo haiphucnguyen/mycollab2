@@ -52,7 +52,10 @@ public class TaskAddPresenter extends AbstractPresenter<TaskAddView> {
 
 	public TaskAddPresenter() {
 		super(TaskAddView.class);
+	}
 
+	@Override
+	protected void postInitView() {
 		view.getEditFormHandlers().addFormHandler(new EditFormHandler<Task>() {
 			@Override
 			public void onSave(final Task item) {

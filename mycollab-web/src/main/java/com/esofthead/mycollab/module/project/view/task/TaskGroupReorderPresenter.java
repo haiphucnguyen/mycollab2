@@ -44,6 +44,7 @@ import com.vaadin.ui.ComponentContainer;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class TaskGroupReorderPresenter extends
 		AbstractPresenter<TaskGroupReorderView> {
@@ -51,7 +52,10 @@ public class TaskGroupReorderPresenter extends
 
 	public TaskGroupReorderPresenter() {
 		super(TaskGroupReorderView.class);
+	}
 
+	@Override
+	protected void postInitView() {
 		EventBus.getInstance()
 				.addListener(
 						new ApplicationEventListener<TaskListEvent.SaveReoderTaskList>() {

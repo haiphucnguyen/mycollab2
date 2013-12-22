@@ -47,6 +47,7 @@ import com.vaadin.ui.UI;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class ProjectRoleListPresenter
 		extends
@@ -56,6 +57,10 @@ public class ProjectRoleListPresenter
 
 	public ProjectRoleListPresenter() {
 		super(ProjectRoleListView.class);
+	}
+
+	@Override
+	protected void postInitView() {
 		projectRoleService = ApplicationContextUtil
 				.getSpringBean(ProjectRoleService.class);
 

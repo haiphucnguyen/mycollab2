@@ -42,13 +42,17 @@ import com.vaadin.ui.ComponentContainer;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class VersionAddPresenter extends AbstractPresenter<VersionAddView> {
 	private static final long serialVersionUID = 1L;
 
 	public VersionAddPresenter() {
 		super(VersionAddView.class);
+	}
 
+	@Override
+	protected void postInitView() {
 		view.getEditFormHandlers().addFormHandler(
 				new EditFormHandler<Version>() {
 					@Override

@@ -45,6 +45,7 @@ import com.vaadin.ui.UI;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class ComponentListPresenter
 		extends
@@ -55,7 +56,10 @@ public class ComponentListPresenter
 
 	public ComponentListPresenter() {
 		super(ComponentListView.class);
+	}
 
+	@Override
+	protected void postInitView() {
 		componentService = ApplicationContextUtil
 				.getSpringBean(ComponentService.class);
 

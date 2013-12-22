@@ -49,7 +49,10 @@ public class TaskGroupAddPresenter extends AbstractPresenter<TaskGroupAddView> {
 
 	public TaskGroupAddPresenter() {
 		super(TaskGroupAddView.class);
+	}
 
+	@Override
+	protected void postInitView() {
 		view.getEditFormHandlers().addFormHandler(
 				new EditFormHandler<TaskList>() {
 					@Override

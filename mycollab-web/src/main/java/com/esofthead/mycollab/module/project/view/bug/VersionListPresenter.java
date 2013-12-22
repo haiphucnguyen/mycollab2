@@ -47,6 +47,7 @@ import com.vaadin.ui.UI;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class VersionListPresenter
 		extends
@@ -57,7 +58,10 @@ public class VersionListPresenter
 
 	public VersionListPresenter() {
 		super(VersionListView.class);
+	}
 
+	@Override
+	protected void postInitView() {
 		versionService = ApplicationContextUtil
 				.getSpringBean(VersionService.class);
 
