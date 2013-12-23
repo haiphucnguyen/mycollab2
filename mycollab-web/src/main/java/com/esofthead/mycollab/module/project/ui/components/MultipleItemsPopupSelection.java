@@ -21,8 +21,14 @@ import org.vaadin.hene.popupbutton.PopupButton;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.VerticalLayout;
 
-@SuppressWarnings("serial")
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class MultipleItemsPopupSelection extends PopupButton {
+	private static final long serialVersionUID = 1L;
 
 	private VerticalLayout contentLayout;
 
@@ -31,7 +37,6 @@ public class MultipleItemsPopupSelection extends PopupButton {
 		contentLayout.setHeight("200px");
 		contentLayout.setWidth("300px");
 		this.setContent(contentLayout);
-
 	}
 
 	public void addItemComponent(Component itemName) {

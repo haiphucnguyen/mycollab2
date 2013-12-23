@@ -27,7 +27,8 @@ public interface ContactTableFieldDef {
 	public static TableViewField selected = new TableViewField("", "selected",
 			UIConstants.TABLE_CONTROL_WIDTH);
 
-	public static TableViewField action = new TableViewField("", "id");
+	public static TableViewField action = new TableViewField("", "id",
+			UIConstants.TABLE_ACTION_CONTROL_WIDTH);
 
 	public static TableViewField name = new TableViewField(
 			LocalizationHelper.getMessage(ContactI18nEnum.FORM_NAME),

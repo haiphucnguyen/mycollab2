@@ -20,8 +20,15 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import com.esofthead.mycollab.core.arguments.NotBindable;
 import com.esofthead.mycollab.module.tracker.BugStatusConstants;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class SimpleBug extends BugWithBLOBs {
 
 	private static final long serialVersionUID = 1L;
@@ -30,9 +37,16 @@ public class SimpleBug extends BugWithBLOBs {
 	private String assignUserAvatarId;
 	private String assignuserFullName;
 	private String projectname;
+
+	@NotBindable
 	private List<Version> affectedVersions;
+
+	@NotBindable
 	private List<Version> fixedVersions;
+
+	@NotBindable
 	private List<Component> components;
+
 	private String comment;
 	private String milestoneName;
 

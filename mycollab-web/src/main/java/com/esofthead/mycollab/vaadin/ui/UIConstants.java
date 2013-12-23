@@ -33,6 +33,7 @@ public class UIConstants {
 	public static final String DEFAULT_2XCONTROL_HEIGHT = "400px";
 	public static final String H2_STYLE2 = "h2-style2";
 	public static final int TABLE_CONTROL_WIDTH = 22;
+	public static final int TABLE_ACTION_CONTROL_WIDTH = 40;
 	public static final int TABLE_S_LABEL_WIDTH = 80;
 	public static final int TABLE_M_LABEL_WIDTH = 120;
 	public static final int TABLE_X_LABEL_WIDTH = 160;

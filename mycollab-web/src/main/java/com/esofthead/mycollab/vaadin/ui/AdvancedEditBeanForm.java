@@ -16,9 +16,12 @@
  */
 package com.esofthead.mycollab.vaadin.ui;
 
+import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
+import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
@@ -26,6 +29,7 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
+import com.esofthead.mycollab.validator.constraints.DateComparision;
 
 /**
  * Generic attachForm with java bean as datasource. It includes validation
@@ -93,8 +97,7 @@ public class AdvancedEditBeanForm<B> extends GenericBeanForm<B> implements
 		//
 		// return false;
 		// }
-		//
-		// return true;
+
 		return true;
 	}
 

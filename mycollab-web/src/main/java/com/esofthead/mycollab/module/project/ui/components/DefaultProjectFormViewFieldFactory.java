@@ -29,7 +29,14 @@ import com.vaadin.ui.CustomField;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class DefaultProjectFormViewFieldFactory {
+
 	public static class ProjectFormAttachmentDisplayField extends CustomField {
 		private static final long serialVersionUID = 1L;
 
