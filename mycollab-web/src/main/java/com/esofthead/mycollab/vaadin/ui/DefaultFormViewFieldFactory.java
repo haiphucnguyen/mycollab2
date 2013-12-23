@@ -20,22 +20,18 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import org.apache.commons.beanutils.BeanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vaadin.easyuploads.MultiFileUploadExt;
 
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.web.AppContext;
-import com.vaadin.data.Item;
-import com.vaadin.data.util.BeanItem;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.CustomField;
-import com.vaadin.ui.DefaultFieldFactory;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
@@ -48,40 +44,11 @@ import com.vaadin.ui.VerticalLayout;
  * @since 2.0
  */
 @SuppressWarnings("unchecked")
-public class DefaultFormViewFieldFactory extends DefaultFieldFactory {
+public class DefaultFormViewFieldFactory {
 	private static Logger log = LoggerFactory
 			.getLogger(DefaultFormViewFieldFactory.class);
 
-	private static final long serialVersionUID = 1L;
-
-	@Override
-	public Field createField(final Item item, final Object propertyId,
-			final com.vaadin.ui.Component uiContext) {
-
-		Field field = onCreateField(item, propertyId, uiContext);
-		if (field == null) {
-			final Object bean = ((BeanItem<Object>) item).getBean();
-
-			try {
-				final String propertyValue = BeanUtils.getProperty(bean,
-						(String) propertyId);
-				field = new FormViewField(propertyValue);
-			} catch (final Exception e) {
-				log.error("Error while get field value", e);
-				field = new FormViewField("Error");
-			}
-		}
-
-		return field;
-	}
-
-	protected Field onCreateField(final Item item, final Object propertyId,
-			final com.vaadin.ui.Component uiContext) {
-		return null;
-	}
-
 	public static interface AttachmentUploadField extends Field {
-
 		void saveContentsToRepo(String attachmentPath);
 	}
 

@@ -624,6 +624,8 @@ public class BugReadViewImpl extends AbstractPageView implements BugReadView,
 						componentContainer
 								.setStyleName(UIConstants.FORM_CONTAINER_VIEW);
 						return componentContainer;
+					} else {
+						return new FormViewField("");
 					}
 				} else if (propertyId.equals("affectedVersions")) {
 					final List<Version> affectedVersions = BugReadViewImpl.this.bug
@@ -651,6 +653,8 @@ public class BugReadViewImpl extends AbstractPageView implements BugReadView,
 							versionLink.setStyleName("link");
 						}
 						return componentContainer;
+					} else {
+						return new FormViewField("");
 					}
 				} else if (propertyId.equals("fixedVersions")) {
 					final List<Version> fixedVersions = BugReadViewImpl.this.bug
@@ -678,6 +682,8 @@ public class BugReadViewImpl extends AbstractPageView implements BugReadView,
 							versionLink.setStyleName("link");
 						}
 						return componentContainer;
+					} else {
+						return new FormViewField("");
 					}
 
 				} else if (propertyId.equals("milestoneName")) {
