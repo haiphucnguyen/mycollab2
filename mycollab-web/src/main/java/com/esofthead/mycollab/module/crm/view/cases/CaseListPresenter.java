@@ -63,6 +63,8 @@ public class CaseListPresenter extends
 
 	@Override
 	protected void postInitView() {
+		super.postInitView();
+
 		caseService = ApplicationContextUtil.getSpringBean(CaseService.class);
 
 		view.getPopupActionHandlers().addMassItemActionHandler(

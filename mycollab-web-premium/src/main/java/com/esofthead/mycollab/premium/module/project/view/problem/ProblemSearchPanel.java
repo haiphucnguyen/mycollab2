@@ -44,7 +44,8 @@ public class ProblemSearchPanel extends
 	protected ProblemSearchCriteria searchCriteria;
 
 	public ProblemSearchPanel() {
-		this.project = (SimpleProject) MyCollabApplication.getVariable("project");
+		this.project = (SimpleProject) MyCollabApplication
+				.getVariable("project");
 	}
 
 	@Override
@@ -133,7 +134,8 @@ public class ProblemSearchPanel extends
 			searchBtn.setStyleName("search-icon-button");
 			searchBtn.setIcon(MyCollabResource
 					.newResource("icons/16/search_white.png"));
-			searchBtn.addListener(new Button.ClickListener() {
+
+			searchBtn.addClickListener(new Button.ClickListener() {
 				private static final long serialVersionUID = 1L;
 
 				@Override
@@ -157,7 +159,7 @@ public class ProblemSearchPanel extends
 					LocalizationHelper.getMessage(GenericI18Enum.BUTTON_CLEAR));
 			cancelBtn.setStyleName(UIConstants.THEME_LINK);
 			cancelBtn.addStyleName("cancel-button");
-			cancelBtn.addListener(new Button.ClickListener() {
+			cancelBtn.addClickListener(new Button.ClickListener() {
 				private static final long serialVersionUID = 1L;
 
 				@Override
@@ -181,7 +183,7 @@ public class ProblemSearchPanel extends
 					.setProblemname(new StringSearchField(this.nameField
 							.getValue().toString().trim()));
 
-			if (this.myItemCheckbox.booleanValue()) {
+			if (this.myItemCheckbox.getValue()) {
 				ProblemSearchPanel.this.searchCriteria
 						.setAssignToUser(new StringSearchField(SearchField.AND,
 								AppContext.getUsername()));

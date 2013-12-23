@@ -48,6 +48,8 @@ import com.vaadin.ui.Table;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
+ * 
  */
 public class UserTableDisplay extends
 		DefaultPagedBeanTable<UserService, UserSearchCriteria, SimpleUser> {
@@ -94,7 +96,7 @@ public class UserTableDisplay extends
 				UserLink b = new UserLink(user.getUsername(), user
 						.getAvatarid(), user.getDisplayName(), false);
 
-				b.addListener(new Button.ClickListener() {
+				b.addClickListener(new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
 					@Override

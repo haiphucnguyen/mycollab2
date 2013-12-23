@@ -63,6 +63,7 @@ public class LeadListPresenter extends
 
 	@Override
 	protected void postInitView() {
+		super.postInitView();
 		leadService = ApplicationContextUtil.getSpringBean(LeadService.class);
 
 		view.getPopupActionHandlers().addMassItemActionHandler(
@@ -111,7 +112,7 @@ public class LeadListPresenter extends
 					}
 
 					@Override
-					protected Class getReportModelClassType() {
+					protected Class<?> getReportModelClassType() {
 						return SimpleLead.class;
 					}
 				});

@@ -62,6 +62,8 @@ public class OpportunityListPresenter
 
 	@Override
 	protected void postInitView() {
+		super.postInitView();
+
 		opportunityService = ApplicationContextUtil
 				.getSpringBean(OpportunityService.class);
 
@@ -90,7 +92,7 @@ public class OpportunityListPresenter
 					}
 
 					@Override
-					protected Class getReportModelClassType() {
+					protected Class<?> getReportModelClassType() {
 						return SimpleOpportunity.class;
 					}
 				});

@@ -34,6 +34,12 @@ import com.esofthead.mycollab.module.crm.service.ContactService;
 import com.esofthead.mycollab.module.crm.ui.components.EntityImportWindow;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class ContactImportWindow extends EntityImportWindow<Contact> {
 	private static final long serialVersionUID = 1L;
 

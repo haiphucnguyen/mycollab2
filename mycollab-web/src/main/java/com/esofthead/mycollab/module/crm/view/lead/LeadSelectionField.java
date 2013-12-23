@@ -30,6 +30,12 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class LeadSelectionField extends CustomField<Lead> implements
 		FieldSelection {
 	private static final long serialVersionUID = 1L;

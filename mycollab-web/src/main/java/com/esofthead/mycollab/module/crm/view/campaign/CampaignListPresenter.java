@@ -62,6 +62,7 @@ public class CampaignListPresenter
 
 	@Override
 	protected void postInitView() {
+		super.postInitView();
 		campaignService = ApplicationContextUtil
 				.getSpringBean(CampaignService.class);
 

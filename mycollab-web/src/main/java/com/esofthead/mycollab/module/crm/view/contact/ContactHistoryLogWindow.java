@@ -22,6 +22,12 @@ import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.crm.ui.components.HistoryLogWindow;
 import com.esofthead.mycollab.vaadin.ui.HistoryLogComponent;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @SuppressWarnings("serial")
 public class ContactHistoryLogWindow extends HistoryLogWindow {
 

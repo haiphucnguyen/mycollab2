@@ -37,9 +37,15 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.TextField;
 
-@SuppressWarnings("serial")
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class LeadSimpleSearchPanel extends
 		GenericSearchPanel<LeadSearchCriteria> {
+	private static final long serialVersionUID = 1L;
 
 	private LeadSearchCriteria searchCriteria;
 	private TextField textValueField;
@@ -67,7 +73,8 @@ public class LeadSimpleSearchPanel extends
 								.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD) });
 		group.select("Name");
 		group.setImmediate(true);
-		group.addListener(new Property.ValueChangeListener() {
+		group.addValueChangeListener(new Property.ValueChangeListener() {
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void valueChange(ValueChangeEvent event) {
@@ -92,7 +99,8 @@ public class LeadSimpleSearchPanel extends
 
 		Button searchBtn = new Button("Search");
 		searchBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-		searchBtn.addListener(new Button.ClickListener() {
+		searchBtn.addClickListener(new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void buttonClick(ClickEvent event) {

@@ -29,16 +29,17 @@ import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.vaadin.data.Property;
 import com.vaadin.data.Property.ValueChangeEvent;
-import com.vaadin.server.Sizeable;
-import com.vaadin.ui.AbstractSelect.Filtering;
+import com.vaadin.shared.ui.combobox.FilteringMode;
+import com.vaadin.shared.ui.datefield.Resolution;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.PopupDateField;
 
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
+ * 
  */
 @SuppressWarnings("serial")
 public class DateSelectionField extends GridLayout {
@@ -81,22 +82,24 @@ public class DateSelectionField extends GridLayout {
 		setDateWidth(120);
 		this.setSpacing(true);
 		dateSelectionBox = new DateSelectionComboBox();
-		dateSelectionBox.setFilteringMode(Filtering.FILTERINGMODE_OFF);
+		dateSelectionBox.setFilteringMode(FilteringMode.OFF);
 		dateSelectionBox.setImmediate(true);
 
-		dateStart.setResolution(PopupDateField.RESOLUTION_DAY);
-		dateEnd.setResolution(PopupDateField.RESOLUTION_DAY);
+		dateStart.setResolution(Resolution.DAY);
+		dateEnd.setResolution(Resolution.DAY);
 
-		dateSelectionBox.addListener(new Property.ValueChangeListener() {
+		dateSelectionBox
+				.addValueChangeListener(new Property.ValueChangeListener() {
 
-			@Override
-			public void valueChange(ValueChangeEvent event) {
-				String filterStr = (String) event.getProperty().getValue();
-				filterStr = (filterStr != null) ? filterStr : "";
+					@Override
+					public void valueChange(ValueChangeEvent event) {
+						String filterStr = (String) event.getProperty()
+								.getValue();
+						filterStr = (filterStr != null) ? filterStr : "";
 
-				setComponentByValue(filterStr);
-			}
-		});
+						setComponentByValue(filterStr);
+					}
+				});
 		this.addComponent(dateSelectionBox, 0, 0);
 	}
 
@@ -251,8 +254,8 @@ public class DateSelectionField extends GridLayout {
 	}
 
 	private void setDateWidth(float width) {
-		dateStart.setWidth(width, Sizeable.UNITS_PIXELS);
-		dateEnd.setWidth(width, Sizeable.UNITS_PIXELS);
+		dateStart.setWidth(width, Unit.PIXELS);
+		dateEnd.setWidth(width, Unit.PIXELS);
 	}
 
 	public void addRangeDate() {

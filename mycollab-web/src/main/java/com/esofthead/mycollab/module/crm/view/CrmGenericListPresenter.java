@@ -23,6 +23,15 @@ import com.esofthead.mycollab.vaadin.mvp.ListView;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.vaadin.ui.ComponentContainer;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ * @param <V>
+ * @param <S>
+ * @param <B>
+ */
 public abstract class CrmGenericListPresenter<V extends ListView<S, B>, S extends SearchCriteria, B extends ValuedBean>
 		extends ListSelectionPresenter<V, S, B> {
 	private static final long serialVersionUID = 1L;

@@ -63,6 +63,7 @@ public class ContactListPresenter
 
 	@Override
 	protected void postInitView() {
+		super.postInitView();
 		contactService = ApplicationContextUtil
 				.getSpringBean(ContactService.class);
 

@@ -59,6 +59,8 @@ import com.vaadin.ui.VerticalLayout;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
+ * 
  */
 public class TaskStatusComponent extends Depot {
 	private static final long serialVersionUID = 1L;
@@ -87,7 +89,7 @@ public class TaskStatusComponent extends Depot {
 		this.bodyContent.addComponent(taskTree);
 		taskTree.setSizeFull();
 
-		taskTree.addListener(new Tree.ExpandListener() {
+		taskTree.addExpandListener(new Tree.ExpandListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override

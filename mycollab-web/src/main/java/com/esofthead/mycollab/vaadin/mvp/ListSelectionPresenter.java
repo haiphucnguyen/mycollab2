@@ -32,7 +32,7 @@ import com.esofthead.mycollab.vaadin.ui.CheckBoxDecor;
 /**
  * 
  * @author MyCollab Ltd.
- * @since 2.0
+ * @since 1.0
  * 
  * @param <V>
  * @param <S>
@@ -94,7 +94,8 @@ public abstract class ListSelectionPresenter<V extends ListView<S, B>, S extends
 						isSelectAll = false;
 						for (B item : currentDataList) {
 							item.setSelected(false);
-							CheckBoxDecor checkBox = (CheckBoxDecor) item.getExtraData();
+							CheckBoxDecor checkBox = (CheckBoxDecor) item
+									.getExtraData();
 							checkBox.setValueWithoutNotifyListeners(false);
 						}
 
@@ -127,7 +128,6 @@ public abstract class ListSelectionPresenter<V extends ListView<S, B>, S extends
 		Collection<B> currentDataList = view.getPagedBeanTable()
 				.getCurrentDataList();
 		for (B item : currentDataList) {
-			System.out.println("ITEM CHANGED: " + item + "---" + item.isSelected());
 			item.setSelected(true);
 			CheckBoxDecor checkBox = (CheckBoxDecor) item.getExtraData();
 			checkBox.setValueWithoutNotifyListeners(true);
@@ -145,7 +145,6 @@ public abstract class ListSelectionPresenter<V extends ListView<S, B>, S extends
 				.getCurrentDataList();
 		int countItems = 0;
 		for (B item : currentDataList) {
-			System.out.println("ITEM: " + item + "---" + item.isSelected());
 			if (item.isSelected()) {
 				countItems++;
 			}

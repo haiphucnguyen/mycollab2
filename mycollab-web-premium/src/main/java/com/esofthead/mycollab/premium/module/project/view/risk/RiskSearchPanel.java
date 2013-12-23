@@ -25,13 +25,18 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.themes.Reindeer;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class RiskSearchPanel extends GenericSearchPanel<RiskSearchCriteria> {
 
 	private static final long serialVersionUID = 1L;
@@ -39,7 +44,8 @@ public class RiskSearchPanel extends GenericSearchPanel<RiskSearchCriteria> {
 	protected RiskSearchCriteria searchCriteria;
 
 	public RiskSearchPanel() {
-		this.project = (SimpleProject) MyCollabApplication.getVariable("project");
+		this.project = (SimpleProject) MyCollabApplication
+				.getVariable("project");
 	}
 
 	@Override
@@ -59,8 +65,8 @@ public class RiskSearchPanel extends GenericSearchPanel<RiskSearchCriteria> {
 		layout.setSpacing(true);
 		layout.setMargin(true);
 
-		final Image titleIcon = new Image(null, MyCollabResource
-				.newResource("icons/24/project/risk.png"));
+		final Image titleIcon = new Image(null,
+				MyCollabResource.newResource("icons/24/project/risk.png"));
 		layout.addComponent(titleIcon);
 		layout.setComponentAlignment(titleIcon, Alignment.MIDDLE_LEFT);
 
@@ -126,7 +132,7 @@ public class RiskSearchPanel extends GenericSearchPanel<RiskSearchCriteria> {
 			searchBtn.setStyleName("search-icon-button");
 			searchBtn.setIcon(MyCollabResource
 					.newResource("icons/16/search_white.png"));
-			searchBtn.addListener(new Button.ClickListener() {
+			searchBtn.addClickListener(new Button.ClickListener() {
 				private static final long serialVersionUID = 1L;
 
 				@Override
@@ -150,7 +156,7 @@ public class RiskSearchPanel extends GenericSearchPanel<RiskSearchCriteria> {
 					LocalizationHelper.getMessage(GenericI18Enum.BUTTON_CLEAR));
 			cancelBtn.setStyleName(UIConstants.THEME_LINK);
 			cancelBtn.addStyleName("cancel-button");
-			cancelBtn.addListener(new Button.ClickListener() {
+			cancelBtn.addClickListener(new Button.ClickListener() {
 				private static final long serialVersionUID = 1L;
 
 				@Override
@@ -173,7 +179,7 @@ public class RiskSearchPanel extends GenericSearchPanel<RiskSearchCriteria> {
 					.setRiskname(new StringSearchField(this.nameField
 							.getValue().toString().trim()));
 
-			if (this.myItemCheckbox.booleanValue()) {
+			if (this.myItemCheckbox.getValue()) {
 				RiskSearchPanel.this.searchCriteria
 						.setAssignToUser(new StringSearchField(SearchField.AND,
 								AppContext.getUsername()));

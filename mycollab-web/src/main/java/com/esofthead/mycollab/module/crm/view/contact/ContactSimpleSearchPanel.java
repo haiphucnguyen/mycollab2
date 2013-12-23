@@ -37,6 +37,12 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.TextField;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @SuppressWarnings("serial")
 public class ContactSimpleSearchPanel extends
 		GenericSearchPanel<ContactSearchCriteria> {
@@ -67,7 +73,7 @@ public class ContactSimpleSearchPanel extends
 								.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD) });
 		group.select("Name");
 		group.setImmediate(true);
-		group.addListener(new Property.ValueChangeListener() {
+		group.addValueChangeListener(new Property.ValueChangeListener() {
 			@Override
 			public void valueChange(ValueChangeEvent event) {
 				removeComponents();
@@ -91,7 +97,7 @@ public class ContactSimpleSearchPanel extends
 
 		Button searchBtn = new Button("Search");
 		searchBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-		searchBtn.addListener(new Button.ClickListener() {
+		searchBtn.addClickListener(new Button.ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				searchCriteria = new ContactSearchCriteria();
