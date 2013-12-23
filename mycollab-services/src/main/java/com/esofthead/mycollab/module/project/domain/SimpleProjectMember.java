@@ -19,11 +19,13 @@ package com.esofthead.mycollab.module.project.domain;
 
 import java.util.Date;
 
+import com.esofthead.mycollab.core.arguments.NotBindable;
 import com.esofthead.mycollab.security.PermissionMap;
 
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class SimpleProjectMember extends ProjectMember {
 	private static final long serialVersionUID = 1L;
@@ -33,8 +35,10 @@ public class SimpleProjectMember extends ProjectMember {
 	private String memberFullName;
 
 	private String roleName;
+
 	private int projectRoleId;
 
+	@NotBindable
 	private PermissionMap permissionMaps;
 
 	private int numOpenTasks;
@@ -44,8 +48,6 @@ public class SimpleProjectMember extends ProjectMember {
 	private String projectName;
 
 	private String email;
-
-	private int sAccountId;
 
 	private Date lastAccessTime;
 
