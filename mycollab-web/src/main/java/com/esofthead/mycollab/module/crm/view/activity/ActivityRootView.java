@@ -19,7 +19,7 @@ package com.esofthead.mycollab.module.crm.view.activity;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
-import com.esofthead.mycollab.module.crm.domain.criteria.EventSearchCriteria;
+import com.esofthead.mycollab.module.crm.domain.criteria.ActivitySearchCriteria;
 import com.esofthead.mycollab.module.crm.localization.ActivityI18nEnum;
 import com.esofthead.mycollab.module.crm.view.parameters.ActivityScreenData;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
@@ -71,11 +71,6 @@ public class ActivityRootView extends AbstractPageView {
 		activityTabs.setContainerStyleName("tab-content");
 		activityTabs.setHeight(null);
 
-//		CssLayout menu = new CssLayout();
-//		menu.setWidth("170px");
-//		menu.setStyleName("sidebar-menu");
-//		menu.addComponent(activityTabs);
-
 		root.addComponent(activityTabs);
 		root.setWidth("100%");
 		buildComponents();
@@ -103,7 +98,7 @@ public class ActivityRootView extends AbstractPageView {
 							calendarPresenter.go(ActivityRootView.this,
 									new ActivityScreenData.GotoCalendar());
 						} else if ("Activities List".equals(caption)) {
-							EventSearchCriteria criteria = new EventSearchCriteria();
+							ActivitySearchCriteria criteria = new ActivitySearchCriteria();
 							criteria.setSaccountid(new NumberSearchField(
 									AppContext.getAccountId()));
 							eventPresenter.go(ActivityRootView.this,
@@ -118,12 +113,14 @@ public class ActivityRootView extends AbstractPageView {
 	private ComponentContainer constructCalendarView() {
 		calendarPresenter = PresenterResolver
 				.getPresenter(ActivityCalendarPresenter.class);
-		ActivityCalendarView activityCalendarView = calendarPresenter.initView();
+		ActivityCalendarView activityCalendarView = calendarPresenter
+				.initView();
 		return activityCalendarView;
 	}
 
 	private ComponentContainer constructActivityListView() {
-		eventPresenter = PresenterResolver.getPresenter(ActivityPresenter.class);
+		eventPresenter = PresenterResolver
+				.getPresenter(ActivityPresenter.class);
 		return eventPresenter.initView();
 	}
 
@@ -146,7 +143,7 @@ public class ActivityRootView extends AbstractPageView {
 				.getMessage(ActivityI18nEnum.ACTIVITY_LIST_TAB_TITLE));
 
 		if (activityList != null) {
-			EventSearchCriteria searchCriteria = new EventSearchCriteria();
+			ActivitySearchCriteria searchCriteria = new ActivitySearchCriteria();
 			searchCriteria.setSaccountid(new NumberSearchField(SearchField.AND,
 					AppContext.getAccountId()));
 			eventPresenter.go(this, new ActivityScreenData.GotoActivityList(

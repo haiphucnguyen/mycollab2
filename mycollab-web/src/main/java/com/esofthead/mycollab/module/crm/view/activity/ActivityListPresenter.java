@@ -21,8 +21,8 @@ import java.util.Collection;
 import java.util.List;
 
 import com.esofthead.mycollab.core.persistence.service.ISearchableService;
-import com.esofthead.mycollab.module.crm.domain.SimpleEvent;
-import com.esofthead.mycollab.module.crm.domain.criteria.EventSearchCriteria;
+import com.esofthead.mycollab.module.crm.domain.SimpleActivity;
+import com.esofthead.mycollab.module.crm.domain.criteria.ActivitySearchCriteria;
 import com.esofthead.mycollab.module.crm.service.CallService;
 import com.esofthead.mycollab.module.crm.service.EventService;
 import com.esofthead.mycollab.module.crm.service.MeetingService;
@@ -47,7 +47,7 @@ import com.vaadin.ui.UI;
  */
 public class ActivityListPresenter
 		extends
-		ListSelectionPresenter<ActivityListView, EventSearchCriteria, SimpleEvent> {
+		ListSelectionPresenter<ActivityListView, ActivitySearchCriteria, SimpleActivity> {
 	private static final long serialVersionUID = 1L;
 
 	public ActivityListPresenter() {
@@ -56,6 +56,8 @@ public class ActivityListPresenter
 
 	@Override
 	protected void postInitView() {
+		super.postInitView();
+
 		view.getPopupActionHandlers().addMassItemActionHandler(
 				new DefaultMassEditActionHandler(this) {
 
@@ -72,8 +74,8 @@ public class ActivityListPresenter
 					}
 
 					@Override
-					protected Class getReportModelClassType() {
-						return SimpleEvent.class;
+					protected Class<?> getReportModelClassType() {
+						return SimpleActivity.class;
 					}
 				});
 	}
@@ -87,7 +89,7 @@ public class ActivityListPresenter
 			container.removeAllComponents();
 			container.addComponent(view.getWidget());
 
-			doSearch((EventSearchCriteria) data.getParams());
+			doSearch((ActivitySearchCriteria) data.getParams());
 			AppContext.addFragment("crm/activity/todo", "Activity To Do");
 		} else {
 			NotificationUtil.showMessagePermissionAlert();
@@ -100,13 +102,13 @@ public class ActivityListPresenter
 
 	@Override
 	protected void deleteSelectedItems() {
-		Collection<SimpleEvent> currentDataList = view.getPagedBeanTable()
+		Collection<SimpleActivity> currentDataList = view.getPagedBeanTable()
 				.getCurrentDataList();
 		List<Integer> keyListCall = new ArrayList<Integer>();
 		List<Integer> keyListMeeting = new ArrayList<Integer>();
 		List<Integer> keyListTask = new ArrayList<Integer>();
 		if (!isSelectAll) {
-			for (SimpleEvent item : currentDataList) {
+			for (SimpleActivity item : currentDataList) {
 				if (item.isSelected()) {
 					if (item.getEventType().equals(CALL)) {
 						keyListCall.add(item.getId());
@@ -118,7 +120,7 @@ public class ActivityListPresenter
 				}
 			}
 		} else {
-			for (SimpleEvent item : currentDataList) {
+			for (SimpleActivity item : currentDataList) {
 				if (item.getEventType().equals(CALL)) {
 					keyListCall.add(item.getId());
 				} else if (item.getEventType().equals(MEETING)) {
@@ -154,7 +156,7 @@ public class ActivityListPresenter
 	}
 
 	@Override
-	public ISearchableService<EventSearchCriteria> getSearchService() {
+	public ISearchableService<ActivitySearchCriteria> getSearchService() {
 		return ApplicationContextUtil.getSpringBean(EventService.class);
 	}
 

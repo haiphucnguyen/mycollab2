@@ -34,7 +34,7 @@ import com.esofthead.mycollab.module.crm.domain.OpportunityContact;
 import com.esofthead.mycollab.module.crm.domain.OpportunityLead;
 import com.esofthead.mycollab.module.crm.domain.SimpleCall;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
-import com.esofthead.mycollab.module.crm.domain.SimpleEvent;
+import com.esofthead.mycollab.module.crm.domain.SimpleActivity;
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.module.crm.domain.SimpleMeeting;
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
@@ -179,7 +179,7 @@ public class OpportunityReadPresenter extends
 				});
 
 		view.getRelatedActivityHandlers().addRelatedListHandler(
-				new AbstractRelatedListHandler<SimpleEvent>() {
+				new AbstractRelatedListHandler<SimpleActivity>() {
 					@Override
 					public void createNewRelatedItem(String itemId) {
 						if (itemId.equals("task")) {

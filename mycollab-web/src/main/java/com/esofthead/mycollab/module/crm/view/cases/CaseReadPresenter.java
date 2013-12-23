@@ -34,7 +34,7 @@ import com.esofthead.mycollab.module.crm.domain.ContactCase;
 import com.esofthead.mycollab.module.crm.domain.SimpleCall;
 import com.esofthead.mycollab.module.crm.domain.SimpleCase;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
-import com.esofthead.mycollab.module.crm.domain.SimpleEvent;
+import com.esofthead.mycollab.module.crm.domain.SimpleActivity;
 import com.esofthead.mycollab.module.crm.domain.SimpleMeeting;
 import com.esofthead.mycollab.module.crm.domain.SimpleTask;
 import com.esofthead.mycollab.module.crm.domain.criteria.CaseSearchCriteria;
@@ -169,7 +169,7 @@ public class CaseReadPresenter extends CrmGenericPresenter<CaseReadView> {
 				});
 
 		view.getRelatedActivityHandlers().addRelatedListHandler(
-				new AbstractRelatedListHandler<SimpleEvent>() {
+				new AbstractRelatedListHandler<SimpleActivity>() {
 					@Override
 					public void createNewRelatedItem(String itemId) {
 						if (itemId.equals("task")) {

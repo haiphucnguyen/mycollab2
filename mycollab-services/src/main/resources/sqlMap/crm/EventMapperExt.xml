@@ -4,7 +4,7 @@
 
 
 	<resultMap id="SimpleEventResult"
-		type="com.esofthead.mycollab.module.crm.domain.SimpleEvent">
+		type="com.esofthead.mycollab.module.crm.domain.SimpleActivity">
 
 		<result column="id" jdbcType="INTEGER" property="id" />
 

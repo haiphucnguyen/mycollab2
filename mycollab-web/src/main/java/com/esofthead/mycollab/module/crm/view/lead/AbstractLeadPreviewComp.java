@@ -6,10 +6,10 @@ import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.form.view.DynaFormLayout;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
-import com.esofthead.mycollab.module.crm.domain.criteria.EventSearchCriteria;
+import com.esofthead.mycollab.module.crm.domain.criteria.ActivitySearchCriteria;
 import com.esofthead.mycollab.module.crm.ui.components.AbstractPreviewItemComp;
 import com.esofthead.mycollab.module.crm.ui.components.NoteListItems;
-import com.esofthead.mycollab.module.crm.view.activity.EventRelatedItemListComp;
+import com.esofthead.mycollab.module.crm.view.activity.ActivityRelatedItemListComp;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
@@ -27,7 +27,7 @@ abstract class AbstractLeadPreviewComp extends
 	private static final long serialVersionUID = 1L;
 
 	protected LeadCampaignListComp associateCampaignList;
-	protected EventRelatedItemListComp associateActivityList;
+	protected ActivityRelatedItemListComp associateActivityList;
 	protected NoteListItems noteListItems;
 
 	public AbstractLeadPreviewComp() {
@@ -50,7 +50,7 @@ abstract class AbstractLeadPreviewComp extends
 	protected void initRelatedComponents() {
 		associateCampaignList = new LeadCampaignListComp();
 		noteListItems = new NoteListItems("Notes");
-		associateActivityList = new EventRelatedItemListComp(true);
+		associateActivityList = new ActivityRelatedItemListComp(true);
 	}
 
 	@Override
@@ -73,7 +73,7 @@ abstract class AbstractLeadPreviewComp extends
 	}
 
 	protected void displayActivities() {
-		EventSearchCriteria criteria = new EventSearchCriteria();
+		ActivitySearchCriteria criteria = new ActivitySearchCriteria();
 		criteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
 		criteria.setType(new StringSearchField(SearchField.AND,
 				CrmTypeConstants.LEAD));
@@ -81,7 +81,7 @@ abstract class AbstractLeadPreviewComp extends
 		associateActivityList.setSearchCriteria(criteria);
 	}
 
-	public EventRelatedItemListComp getAssociateActivityList() {
+	public ActivityRelatedItemListComp getAssociateActivityList() {
 		return associateActivityList;
 	}
 

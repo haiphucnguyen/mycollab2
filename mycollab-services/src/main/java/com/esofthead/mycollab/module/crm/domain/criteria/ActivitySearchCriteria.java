@@ -22,7 +22,7 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 
-public class EventSearchCriteria extends SearchCriteria {
+public class ActivitySearchCriteria extends SearchCriteria {
 	private StringSearchField subject;
 	private StringSearchField assignUser;
 	private DateTimeSearchField startDate;

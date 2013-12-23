@@ -20,7 +20,7 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.eventmanager.EventBus;
-import com.esofthead.mycollab.module.crm.domain.criteria.EventSearchCriteria;
+import com.esofthead.mycollab.module.crm.domain.criteria.ActivitySearchCriteria;
 import com.esofthead.mycollab.module.crm.events.ActivityEvent;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
@@ -48,10 +48,10 @@ import com.vaadin.ui.themes.Reindeer;
  * 
  */
 public class ActivitySearchPanel extends
-		GenericSearchPanel<EventSearchCriteria> {
+		GenericSearchPanel<ActivitySearchCriteria> {
 
 	private static final long serialVersionUID = 1L;
-	protected EventSearchCriteria searchCriteria;
+	protected ActivitySearchCriteria searchCriteria;
 
 	@Override
 	public void attach() {
@@ -205,7 +205,7 @@ public class ActivitySearchPanel extends
 
 		@Override
 		protected SearchCriteria fillupSearchCriteria() {
-			ActivitySearchPanel.this.searchCriteria = new EventSearchCriteria();
+			ActivitySearchPanel.this.searchCriteria = new ActivitySearchCriteria();
 			ActivitySearchPanel.this.searchCriteria
 					.setSaccountid(new NumberSearchField(SearchField.AND,
 							AppContext.getAccountId()));

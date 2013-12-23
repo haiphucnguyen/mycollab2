@@ -40,7 +40,7 @@ import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
 import com.esofthead.mycollab.module.crm.domain.criteria.CaseSearchCriteria;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
-import com.esofthead.mycollab.module.crm.domain.criteria.EventSearchCriteria;
+import com.esofthead.mycollab.module.crm.domain.criteria.ActivitySearchCriteria;
 import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
@@ -237,7 +237,7 @@ public class CrmController implements IController {
 					public void handle(GotoTodoList event) {
 						ActivityRootPresenter presenter = PresenterResolver
 								.getPresenter(ActivityRootPresenter.class);
-						EventSearchCriteria searchCriteria = new EventSearchCriteria();
+						ActivitySearchCriteria searchCriteria = new ActivitySearchCriteria();
 						searchCriteria.setSaccountid(new NumberSearchField(
 								SearchField.AND, AppContext.getAccountId()));
 						presenter.go(container,

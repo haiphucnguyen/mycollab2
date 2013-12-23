@@ -30,7 +30,7 @@ import com.esofthead.mycollab.core.arguments.DateTimeSearchField;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
-import com.esofthead.mycollab.module.crm.domain.criteria.EventSearchCriteria;
+import com.esofthead.mycollab.module.crm.domain.criteria.ActivitySearchCriteria;
 import com.esofthead.mycollab.test.DataSet;
 import com.esofthead.mycollab.test.MyCollabClassRunner;
 import com.esofthead.mycollab.test.service.ServiceTest;
@@ -47,7 +47,7 @@ public class EventServiceTest extends ServiceTest {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date startDate = format.parse("2012-11-11 00:00:00");
 		Date endDate = format.parse("2012-11-15 00:00:00");
-		EventSearchCriteria criteria = new EventSearchCriteria();
+		ActivitySearchCriteria criteria = new ActivitySearchCriteria();
 		criteria.setStartDate(new DateTimeSearchField(SearchField.AND,
 				DateTimeSearchField.GREATERTHANEQUAL, startDate));
 		criteria.setEndDate(new DateTimeSearchField(SearchField.AND,
@@ -55,7 +55,7 @@ public class EventServiceTest extends ServiceTest {
 		criteria.setSaccountid(new NumberSearchField(1));
 
 		List list = eventService
-				.findPagableListByCriteria(new SearchRequest<EventSearchCriteria>(
+				.findPagableListByCriteria(new SearchRequest<ActivitySearchCriteria>(
 						criteria, 0, Integer.MAX_VALUE));
 		Assert.assertEquals(1, list.size());
 

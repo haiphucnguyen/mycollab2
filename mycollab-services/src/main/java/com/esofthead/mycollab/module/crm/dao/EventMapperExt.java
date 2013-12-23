@@ -19,15 +19,15 @@ package com.esofthead.mycollab.module.crm.dao;
 import org.apache.ibatis.annotations.Param;
 
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
-import com.esofthead.mycollab.module.crm.domain.criteria.EventSearchCriteria;
+import com.esofthead.mycollab.module.crm.domain.criteria.ActivitySearchCriteria;
 
-public interface EventMapperExt extends ISearchableDAO<EventSearchCriteria> {
+public interface EventMapperExt extends ISearchableDAO<ActivitySearchCriteria> {
 	int getTotalCountFromTask(
-			@Param("searchCriteria") EventSearchCriteria criteria);
+			@Param("searchCriteria") ActivitySearchCriteria criteria);
 
 	int getTotalCountFromCall(
-			@Param("searchCriteria") EventSearchCriteria criteria);
+			@Param("searchCriteria") ActivitySearchCriteria criteria);
 
 	int getTotalCountFromMeeting(
-			@Param("searchCriteria") EventSearchCriteria criteria);
+			@Param("searchCriteria") ActivitySearchCriteria criteria);
 }

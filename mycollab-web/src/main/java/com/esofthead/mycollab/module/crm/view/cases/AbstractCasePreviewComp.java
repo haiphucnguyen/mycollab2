@@ -6,10 +6,10 @@ import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.form.view.DynaFormLayout;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.SimpleCase;
-import com.esofthead.mycollab.module.crm.domain.criteria.EventSearchCriteria;
+import com.esofthead.mycollab.module.crm.domain.criteria.ActivitySearchCriteria;
 import com.esofthead.mycollab.module.crm.ui.components.AbstractPreviewItemComp;
 import com.esofthead.mycollab.module.crm.ui.components.NoteListItems;
-import com.esofthead.mycollab.module.crm.view.activity.EventRelatedItemListComp;
+import com.esofthead.mycollab.module.crm.view.activity.ActivityRelatedItemListComp;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
@@ -28,7 +28,7 @@ abstract class AbstractCasePreviewComp extends
 
 	protected CaseContactListComp associateContactList;
 	protected NoteListItems noteListItems;
-	protected EventRelatedItemListComp associateActivityList;
+	protected ActivityRelatedItemListComp associateActivityList;
 
 	public AbstractCasePreviewComp() {
 		super(MyCollabResource.newResource("icons/22/crm/case.png"));
@@ -49,7 +49,7 @@ abstract class AbstractCasePreviewComp extends
 	@Override
 	protected void initRelatedComponents() {
 		associateContactList = new CaseContactListComp();
-		associateActivityList = new EventRelatedItemListComp(true);
+		associateActivityList = new ActivityRelatedItemListComp(true);
 		noteListItems = new NoteListItems("Notes");
 	}
 
@@ -69,7 +69,7 @@ abstract class AbstractCasePreviewComp extends
 	}
 
 	protected void displayActivities() {
-		EventSearchCriteria criteria = new EventSearchCriteria();
+		ActivitySearchCriteria criteria = new ActivitySearchCriteria();
 		criteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
 		criteria.setType(new StringSearchField(SearchField.AND,
 				CrmTypeConstants.CASE));
@@ -81,7 +81,7 @@ abstract class AbstractCasePreviewComp extends
 		associateContactList.displayContacts(beanItem);
 	}
 
-	public EventRelatedItemListComp getAssociateActivityList() {
+	public ActivityRelatedItemListComp getAssociateActivityList() {
 		return associateActivityList;
 	}
 

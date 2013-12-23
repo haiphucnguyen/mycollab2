@@ -6,10 +6,10 @@ import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.form.view.DynaFormLayout;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
-import com.esofthead.mycollab.module.crm.domain.criteria.EventSearchCriteria;
+import com.esofthead.mycollab.module.crm.domain.criteria.ActivitySearchCriteria;
 import com.esofthead.mycollab.module.crm.ui.components.AbstractPreviewItemComp;
 import com.esofthead.mycollab.module.crm.ui.components.NoteListItems;
-import com.esofthead.mycollab.module.crm.view.activity.EventRelatedItemListComp;
+import com.esofthead.mycollab.module.crm.view.activity.ActivityRelatedItemListComp;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
@@ -29,7 +29,7 @@ abstract class AbstractCampaignPreviewComp extends
 	protected CampaignAccountListComp associateAccountList;
 	protected CampaignContactListComp associateContactList;
 	protected CampaignLeadListComp associateLeadList;
-	protected EventRelatedItemListComp associateActivityList;
+	protected ActivityRelatedItemListComp associateActivityList;
 	protected NoteListItems noteListItems;
 
 	public AbstractCampaignPreviewComp() {
@@ -41,7 +41,7 @@ abstract class AbstractCampaignPreviewComp extends
 		associateAccountList = new CampaignAccountListComp();
 		associateContactList = new CampaignContactListComp();
 		associateLeadList = new CampaignLeadListComp();
-		associateActivityList = new EventRelatedItemListComp(true);
+		associateActivityList = new ActivityRelatedItemListComp(true);
 		noteListItems = new NoteListItems("Notes");
 	}
 
@@ -50,7 +50,7 @@ abstract class AbstractCampaignPreviewComp extends
 	}
 
 	protected void displayActivities() {
-		EventSearchCriteria criteria = new EventSearchCriteria();
+		ActivitySearchCriteria criteria = new ActivitySearchCriteria();
 		criteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
 		criteria.setType(new StringSearchField(SearchField.AND,
 				CrmTypeConstants.CAMPAIGN));
@@ -78,7 +78,7 @@ abstract class AbstractCampaignPreviewComp extends
 		return previewForm;
 	}
 
-	public EventRelatedItemListComp getAssociateActivityList() {
+	public ActivityRelatedItemListComp getAssociateActivityList() {
 		return associateActivityList;
 	}
 

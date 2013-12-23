@@ -23,8 +23,8 @@ import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.eventmanager.ApplicationEvent;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBus;
-import com.esofthead.mycollab.module.crm.domain.SimpleEvent;
-import com.esofthead.mycollab.module.crm.domain.criteria.EventSearchCriteria;
+import com.esofthead.mycollab.module.crm.domain.SimpleActivity;
+import com.esofthead.mycollab.module.crm.domain.criteria.ActivitySearchCriteria;
 import com.esofthead.mycollab.module.crm.events.ActivityEvent;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.crm.localization.TaskI18nEnum;
@@ -43,13 +43,13 @@ import com.vaadin.ui.HorizontalLayout;
  * @author MyCollab Ltd.
  * @since 2.0
  */
-public class EventRelatedItemListComp extends
-		RelatedListComp<SimpleEvent, EventSearchCriteria> {
+public class ActivityRelatedItemListComp extends
+		RelatedListComp<SimpleActivity, ActivitySearchCriteria> {
 	private static final long serialVersionUID = 1L;
 
 	private final boolean allowCreateNew;
 
-	public EventRelatedItemListComp(final boolean allowCreateNew) {
+	public ActivityRelatedItemListComp(final boolean allowCreateNew) {
 		this.allowCreateNew = allowCreateNew;
 
 		initUI();
@@ -111,7 +111,7 @@ public class EventRelatedItemListComp extends
 			this.addComponent(buttonLayout);
 		}
 
-		tableItem = new EventTableDisplay(Arrays.asList(
+		tableItem = new ActivityTableDisplay(Arrays.asList(
 				new TableViewField(LocalizationHelper
 						.getMessage(TaskI18nEnum.TABLE_SUBJECT_HEADER),
 						"subject", UIConstants.TABLE_EX_LABEL_WIDTH),
@@ -139,7 +139,7 @@ public class EventRelatedItemListComp extends
 
 					@Override
 					public void handle(final TableClickEvent event) {
-						final SimpleEvent simpleEvent = (SimpleEvent) event
+						final SimpleActivity simpleEvent = (SimpleActivity) event
 								.getData();
 						if ("Task".equals(simpleEvent.getEventType())) {
 							EventBus.getInstance().fireEvent(

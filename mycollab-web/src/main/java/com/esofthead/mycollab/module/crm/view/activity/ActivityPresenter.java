@@ -79,7 +79,6 @@ public class ActivityPresenter extends AbstractPresenter<ActivityContainer> {
 		} else if (data instanceof CallScreenData.Read) {
 			presenter = PresenterResolver.getPresenter(CallReadPresenter.class);
 		} else if (data instanceof ActivityScreenData.GotoActivityList) {
-			// AppContext.addFragment("crm/activity/todo", "Activity To Do");
 			presenter = PresenterResolver
 					.getPresenter(ActivityListPresenter.class);
 		}

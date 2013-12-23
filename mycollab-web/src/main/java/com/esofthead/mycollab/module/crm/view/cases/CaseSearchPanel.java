@@ -55,6 +55,12 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.themes.Reindeer;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class CaseSearchPanel extends
 		DefaultGenericSearchPanel<CaseSearchCriteria> {
 

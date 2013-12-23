@@ -26,12 +26,13 @@ import org.slf4j.LoggerFactory;
 
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.crm.CrmLinkGenerator;
-import com.esofthead.mycollab.module.crm.domain.SimpleEvent;
-import com.esofthead.mycollab.module.crm.domain.criteria.EventSearchCriteria;
+import com.esofthead.mycollab.module.crm.domain.SimpleActivity;
+import com.esofthead.mycollab.module.crm.domain.criteria.ActivitySearchCriteria;
 import com.esofthead.mycollab.module.crm.service.EventService;
 import com.esofthead.mycollab.module.user.UserLinkUtils;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
+import com.esofthead.mycollab.vaadin.ui.CheckBoxDecor;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.vaadin.ui.table.DefaultPagedBeanTable;
@@ -47,7 +48,6 @@ import com.hp.gagawa.java.elements.Tr;
 import com.vaadin.data.Property;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
 
@@ -56,20 +56,22 @@ import com.vaadin.ui.Table;
  * @author MyCollab Ltd.
  * @since 2.0
  */
-public class EventTableDisplay extends
-		DefaultPagedBeanTable<EventService, EventSearchCriteria, SimpleEvent> {
+public class ActivityTableDisplay
+		extends
+		DefaultPagedBeanTable<EventService, ActivitySearchCriteria, SimpleActivity> {
 	private static final long serialVersionUID = 1L;
-	private static Logger log = LoggerFactory
-			.getLogger(EventTableDisplay.class);
 
-	public EventTableDisplay(List<TableViewField> displayColumns) {
+	private static Logger log = LoggerFactory
+			.getLogger(ActivityTableDisplay.class);
+
+	public ActivityTableDisplay(List<TableViewField> displayColumns) {
 		this(null, displayColumns);
 	}
 
-	public EventTableDisplay(TableViewField requireColumn,
+	public ActivityTableDisplay(TableViewField requireColumn,
 			List<TableViewField> displayColumns) {
 		super(ApplicationContextUtil.getSpringBean(EventService.class),
-				SimpleEvent.class, requireColumn, displayColumns);
+				SimpleActivity.class, requireColumn, displayColumns);
 
 		this.addGeneratedColumn("selected", new Table.ColumnGenerator() {
 			private static final long serialVersionUID = 1L;
@@ -77,20 +79,21 @@ public class EventTableDisplay extends
 			@Override
 			public Object generateCell(final Table source, final Object itemId,
 					Object columnId) {
-				final CheckBox cb = new CheckBox("", false);
+				final CheckBoxDecor cb = new CheckBoxDecor("", false);
 				cb.setImmediate(true);
 				cb.addValueChangeListener(new Property.ValueChangeListener() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
 					public void valueChange(ValueChangeEvent event) {
-						SimpleEvent simpleEvent = EventTableDisplay.this
+						SimpleActivity simpleEvent = ActivityTableDisplay.this
 								.getBeanByIndex(itemId);
-						EventTableDisplay.this.fireSelectItemEvent(simpleEvent);
+						ActivityTableDisplay.this
+								.fireSelectItemEvent(simpleEvent);
 					}
 				});
 
-				SimpleEvent simpleEvent = EventTableDisplay.this
+				SimpleActivity simpleEvent = ActivityTableDisplay.this
 						.getBeanByIndex(itemId);
 				simpleEvent.setExtraData(cb);
 				return cb;
@@ -104,7 +107,7 @@ public class EventTableDisplay extends
 			public com.vaadin.ui.Component generateCell(Table source,
 					Object itemId, Object columnId) {
 
-				final SimpleEvent event = EventTableDisplay.this
+				final SimpleActivity event = ActivityTableDisplay.this
 						.getBeanByIndex(itemId);
 				Label l = new Label();
 				l.setValue(AppContext.formatDateTime(event.getStartDate()));
@@ -118,7 +121,7 @@ public class EventTableDisplay extends
 			@Override
 			public com.vaadin.ui.Component generateCell(Table source,
 					Object itemId, Object columnId) {
-				final SimpleEvent event = EventTableDisplay.this
+				final SimpleActivity event = ActivityTableDisplay.this
 						.getBeanByIndex(itemId);
 				Label l = new Label();
 				l.setValue(AppContext.formatDateTime(event.getEndDate()));
@@ -132,7 +135,7 @@ public class EventTableDisplay extends
 			@Override
 			public com.vaadin.ui.Component generateCell(Table source,
 					final Object itemId, Object columnId) {
-				final SimpleEvent simpleEvent = EventTableDisplay.this
+				final SimpleActivity simpleEvent = ActivityTableDisplay.this
 						.getBeanByIndex(itemId);
 				ButtonLink b = new ButtonLink(simpleEvent.getSubject(),
 						new Button.ClickListener() {
@@ -141,7 +144,7 @@ public class EventTableDisplay extends
 							@Override
 							public void buttonClick(Button.ClickEvent event) {
 								fireTableEvent(new TableClickEvent(
-										EventTableDisplay.this, simpleEvent,
+										ActivityTableDisplay.this, simpleEvent,
 										"subject"));
 							}
 						});
@@ -162,7 +165,7 @@ public class EventTableDisplay extends
 		});
 	}
 
-	private String generateToolTip(SimpleEvent event) {
+	private String generateToolTip(SimpleActivity event) {
 		try {
 			if (event.getEventType().equals("Event")) {
 				return generateToolTipMeeting(event);
@@ -177,7 +180,7 @@ public class EventTableDisplay extends
 		}
 	}
 
-	private String generateToolTipMeeting(SimpleEvent meeting) {
+	private String generateToolTipMeeting(SimpleActivity meeting) {
 		try {
 			Div div = new Div();
 			H3 eventName = new H3();
@@ -254,7 +257,7 @@ public class EventTableDisplay extends
 		}
 	}
 
-	private String generateToolTipCall(SimpleEvent call) {
+	private String generateToolTipCall(SimpleActivity call) {
 		try {
 			Div div = new Div();
 			H3 callName = new H3();
@@ -346,7 +349,7 @@ public class EventTableDisplay extends
 		}
 	}
 
-	private String generateToolTipTask(SimpleEvent event) {
+	private String generateToolTipTask(SimpleActivity event) {
 		try {
 			Div div = new Div();
 			H3 eventName = new H3();

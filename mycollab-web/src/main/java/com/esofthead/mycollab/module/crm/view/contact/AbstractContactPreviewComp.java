@@ -6,11 +6,11 @@ import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.form.view.DynaFormLayout;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
-import com.esofthead.mycollab.module.crm.domain.criteria.EventSearchCriteria;
+import com.esofthead.mycollab.module.crm.domain.criteria.ActivitySearchCriteria;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
 import com.esofthead.mycollab.module.crm.ui.components.AbstractPreviewItemComp;
 import com.esofthead.mycollab.module.crm.ui.components.NoteListItems;
-import com.esofthead.mycollab.module.crm.view.activity.EventRelatedItemListComp;
+import com.esofthead.mycollab.module.crm.view.activity.ActivityRelatedItemListComp;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
@@ -28,7 +28,7 @@ public abstract class AbstractContactPreviewComp extends
 	private static final long serialVersionUID = 1L;
 
 	protected ContactOpportunityListComp associateOpportunityList;
-	protected EventRelatedItemListComp associateActivityList;
+	protected ActivityRelatedItemListComp associateActivityList;
 	protected NoteListItems noteListItems;
 
 	public AbstractContactPreviewComp() {
@@ -39,7 +39,7 @@ public abstract class AbstractContactPreviewComp extends
 		return this.associateOpportunityList;
 	}
 
-	public EventRelatedItemListComp getAssociateActivityList() {
+	public ActivityRelatedItemListComp getAssociateActivityList() {
 		return this.associateActivityList;
 	}
 
@@ -57,7 +57,7 @@ public abstract class AbstractContactPreviewComp extends
 	}
 
 	protected void displayActivities() {
-		final EventSearchCriteria criteria = new EventSearchCriteria();
+		final ActivitySearchCriteria criteria = new ActivitySearchCriteria();
 		criteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
 		criteria.setType(new StringSearchField(SearchField.AND,
 				CrmTypeConstants.CONTACT));
@@ -89,7 +89,7 @@ public abstract class AbstractContactPreviewComp extends
 	@Override
 	protected void initRelatedComponents() {
 		this.associateOpportunityList = new ContactOpportunityListComp();
-		this.associateActivityList = new EventRelatedItemListComp(true);
+		this.associateActivityList = new ActivityRelatedItemListComp(true);
 		this.noteListItems = new NoteListItems("Notes");
 
 	}

@@ -17,7 +17,7 @@
 package com.esofthead.mycollab.module.crm.view.opportunity;
 
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
-import com.esofthead.mycollab.module.crm.domain.SimpleEvent;
+import com.esofthead.mycollab.module.crm.domain.SimpleActivity;
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.view.IRelatedListHandlers;
@@ -34,7 +34,7 @@ public interface OpportunityReadView extends IPreviewView<SimpleOpportunity> {
 
 	HasPreviewFormHandlers<SimpleOpportunity> getPreviewFormHandlers();
 
-	IRelatedListHandlers<SimpleEvent> getRelatedActivityHandlers();
+	IRelatedListHandlers<SimpleActivity> getRelatedActivityHandlers();
 
 	IRelatedListHandlers<SimpleContact> getRelatedContactHandlers();
 

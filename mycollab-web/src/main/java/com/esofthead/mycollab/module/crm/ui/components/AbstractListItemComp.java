@@ -11,8 +11,8 @@ import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ListView;
-import com.esofthead.mycollab.vaadin.ui.DefaultGenericSearchPanel;
 import com.esofthead.mycollab.vaadin.ui.DefaultMassItemActionHandlersContainer;
+import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
 import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.AbstractPagedBeanTable;
@@ -36,7 +36,7 @@ public abstract class AbstractListItemComp<S extends SearchCriteria, B> extends
 	private static final long serialVersionUID = 1L;
 
 	protected VerticalLayout contentLayout;
-	protected DefaultGenericSearchPanel<S> searchPanel;
+	protected GenericSearchPanel<S> searchPanel;
 	protected AbstractPagedBeanTable<S, B> tableItem;
 
 	protected Label selectedItemsNumberLabel = new Label();
@@ -139,7 +139,7 @@ public abstract class AbstractListItemComp<S extends SearchCriteria, B> extends
 
 	abstract protected void buildExtraControls();
 
-	abstract protected DefaultGenericSearchPanel<S> createSearchPanel();
+	abstract protected GenericSearchPanel<S> createSearchPanel();
 
 	abstract protected AbstractPagedBeanTable<S, B> createBeanTable();
 

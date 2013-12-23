@@ -24,11 +24,11 @@ import com.esofthead.mycollab.form.view.DynaFormLayout;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.criteria.CaseSearchCriteria;
-import com.esofthead.mycollab.module.crm.domain.criteria.EventSearchCriteria;
+import com.esofthead.mycollab.module.crm.domain.criteria.ActivitySearchCriteria;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
 import com.esofthead.mycollab.module.crm.ui.components.AbstractPreviewItemComp;
 import com.esofthead.mycollab.module.crm.ui.components.NoteListItems;
-import com.esofthead.mycollab.module.crm.view.activity.EventRelatedItemListComp;
+import com.esofthead.mycollab.module.crm.view.activity.ActivityRelatedItemListComp;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
@@ -48,7 +48,7 @@ abstract class AbstractAccountPreviewComp extends
 	protected AccountOpportunityListComp associateOpportunityList;
 	protected AccountLeadListComp associateLeadList;
 	protected AccountCaseListComp associateCaseList;
-	protected EventRelatedItemListComp associateActivityList;
+	protected ActivityRelatedItemListComp associateActivityList;
 	protected NoteListItems noteListItems;
 
 	public AbstractAccountPreviewComp() {
@@ -56,7 +56,7 @@ abstract class AbstractAccountPreviewComp extends
 	}
 
 	protected void displayActivities() {
-		final EventSearchCriteria criteria = new EventSearchCriteria();
+		final ActivitySearchCriteria criteria = new ActivitySearchCriteria();
 		criteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
 		criteria.setType(new StringSearchField(SearchField.AND,
 				CrmTypeConstants.ACCOUNT));
@@ -89,7 +89,7 @@ abstract class AbstractAccountPreviewComp extends
 		noteListItems.showNotes(CrmTypeConstants.ACCOUNT, beanItem.getId());
 	}
 
-	public EventRelatedItemListComp getAssociateActivityList() {
+	public ActivityRelatedItemListComp getAssociateActivityList() {
 		return associateActivityList;
 	}
 
@@ -120,7 +120,7 @@ abstract class AbstractAccountPreviewComp extends
 
 	protected final void initRelatedComponents() {
 		associateContactList = new AccountContactListComp();
-		associateActivityList = new EventRelatedItemListComp(true);
+		associateActivityList = new ActivityRelatedItemListComp(true);
 		associateOpportunityList = new AccountOpportunityListComp();
 		associateLeadList = new AccountLeadListComp();
 		associateCaseList = new AccountCaseListComp();
