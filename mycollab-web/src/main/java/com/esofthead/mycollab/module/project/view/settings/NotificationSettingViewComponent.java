@@ -67,7 +67,6 @@ public abstract class NotificationSettingViewComponent<B extends ValuedBean, S e
 	private void constructBody() {
 		this.setWidth("100%");
 		this.setHeight("220px");
-		this.setMargin(true);
 		this.setSpacing(true);
 
 		mainLayout = new CssLayout();

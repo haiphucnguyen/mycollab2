@@ -23,6 +23,7 @@ import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Component;
+import com.vaadin.ui.DateField;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
@@ -150,7 +151,7 @@ public class GridFormLayoutHelper implements Serializable {
 		field.setCaption(null);
 		
 		//Set combobox fields undefined width
-		if(field instanceof ComboBox)
+		if(field instanceof ComboBox || field instanceof DateField)
 			field.setWidth(Sizeable.SIZE_UNDEFINED, Sizeable.Unit.PIXELS);
 		else
 			field.setWidth("100%");
@@ -192,7 +193,7 @@ public class GridFormLayoutHelper implements Serializable {
 		field.setCaption(null);
 		
 		//Set combobox fields undefined width
-		if(field instanceof ComboBox)
+		if(field instanceof ComboBox || field instanceof DateField)
 			field.setWidth(Sizeable.SIZE_UNDEFINED, Sizeable.Unit.PIXELS);
 		else
 			field.setWidth(width);
@@ -256,7 +257,7 @@ public class GridFormLayoutHelper implements Serializable {
 		fieldWrapper.addComponent(field);
 		
 		//Set combobox fields undefined width
-		if(field instanceof ComboBox)
+		if(field instanceof ComboBox || field instanceof DateField)
 			field.setWidth(Sizeable.SIZE_UNDEFINED, Sizeable.Unit.PIXELS);
 		else
 			field.setWidth(width);
@@ -282,7 +283,7 @@ public class GridFormLayoutHelper implements Serializable {
 		field.setCaption(null);
 		
 		//Set combobox fields undefined width
-		if(field instanceof ComboBox)
+		if(field instanceof ComboBox || field instanceof DateField)
 			field.setWidth(Sizeable.SIZE_UNDEFINED, Sizeable.Unit.PIXELS);
 		else
 			field.setWidth(fieldControlWidth);
@@ -323,7 +324,7 @@ public class GridFormLayoutHelper implements Serializable {
 		fieldWrapper.addComponent(fieldValue);
 		
 		//Set combobox fields undefined width
-		if(fieldValue instanceof ComboBox)
+		if(fieldValue instanceof ComboBox || fieldValue instanceof DateField)
 			fieldValue.setWidth(Sizeable.SIZE_UNDEFINED, Sizeable.Unit.PIXELS);
 		else
 			fieldValue.setWidth(fieldValueWidth);

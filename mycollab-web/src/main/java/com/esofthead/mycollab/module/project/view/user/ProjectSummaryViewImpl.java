@@ -36,7 +36,6 @@ public class ProjectSummaryViewImpl extends AbstractPageView implements
 
 	public ProjectSummaryViewImpl() {
 		this.setSpacing(true);
-		this.setMargin(true);
 
 		this.prjView = new ProjectInformationComponent();
 		this.addComponent(this.prjView);

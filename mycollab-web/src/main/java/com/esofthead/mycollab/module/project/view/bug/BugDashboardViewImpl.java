@@ -61,7 +61,7 @@ public class BugDashboardViewImpl extends AbstractPageView implements
 
 	public BugDashboardViewImpl() {
 		super();
-		this.setMargin(true);
+		this.setMargin(new MarginInfo(true, false, false, false));
 		this.initUI();
 	}
 

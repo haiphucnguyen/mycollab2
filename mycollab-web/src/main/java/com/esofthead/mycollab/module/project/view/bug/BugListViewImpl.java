@@ -64,8 +64,9 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
 	private SplitButton exportButtonControl;
 
 	public BugListViewImpl() {
-		this.setMargin(new MarginInfo(false, true, true, true));
-
+		
+		this.setMargin(new MarginInfo(true, false, false, false));
+		
 		this.bugSearchPanel = new BugSearchPanel();
 		this.addComponent(this.bugSearchPanel);
 

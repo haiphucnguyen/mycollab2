@@ -37,6 +37,7 @@ import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.Property;
 import com.vaadin.server.Resource;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Field;
@@ -63,6 +64,10 @@ public class BugAddViewImpl extends AbstractEditItemComp<SimpleBug> implements
 	private VersionMultiSelectField affectedVersionSelect;
 	private VersionMultiSelectField fixedVersionSelect;
 
+	public BugAddViewImpl() {
+		this.setMargin(new MarginInfo(true, false, false, false));
+	}
+	
 	@Override
 	public ProjectFormAttachmentUploadField getAttachUploadField() {
 		return this.attachmentUploadField;

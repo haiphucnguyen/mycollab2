@@ -46,6 +46,7 @@ import com.esofthead.mycollab.vaadin.ui.table.DefaultPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 import com.vaadin.data.Property;
 import com.vaadin.data.Property.ValueChangeListener;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CheckBox;
@@ -74,6 +75,8 @@ public class ProjectRoleListViewImpl extends AbstractPageView implements
 	private final Label selectedItemsNumberLabel = new Label();
 
 	public ProjectRoleListViewImpl() {
+		
+		this.setMargin(new MarginInfo(true, false, false, false));
 
 		this.searchPanel = new ProjectRoleSearchPanel();
 		this.addComponent(this.searchPanel);

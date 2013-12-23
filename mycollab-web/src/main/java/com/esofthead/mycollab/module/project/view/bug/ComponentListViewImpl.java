@@ -90,7 +90,8 @@ public class ComponentListViewImpl extends AbstractPageView implements
 	private final Label selectedItemsNumberLabel = new Label();
 
 	public ComponentListViewImpl() {
-		this.setMargin(new MarginInfo(false, true, true, true));
+		
+		this.setMargin(new MarginInfo(true, false, false, false));
 
 		this.componentSearchPanel = new ComponentSearchPanel();
 		this.addComponent(this.componentSearchPanel);

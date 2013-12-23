@@ -54,7 +54,6 @@ public class MilestoneBugListComp extends VerticalLayout implements
 
 	private void constructHeader() {
 		final HorizontalLayout header = new HorizontalLayout();
-		header.setMargin(new MarginInfo(true, false, false, false));
 		header.setSpacing(true);
 		header.setWidth("100%");
 		final Label taskGroupSelection = new Label("Related Bugs");
@@ -159,7 +158,7 @@ public class MilestoneBugListComp extends VerticalLayout implements
 		BugChartComponent bugChartComponent = null;
 		bugChartComponent = new BugChartComponent(chartSearchCriteria, 400, 200);
 		rightColumn.addComponent(bugChartComponent);
-		rightColumn.setWidth("410px");
+		rightColumn.setWidth("400px");
 
 		this.addComponent(bodyLayout);
 	}

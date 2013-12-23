@@ -66,7 +66,6 @@ public class MilestoneListViewImpl extends AbstractPageView implements
 	private final Button createBtn;
 
 	public MilestoneListViewImpl() {
-		this.setMargin(true);
 		final CssLayout headerWrapper = new CssLayout();
 		headerWrapper.setWidth("100%");
 		headerWrapper.addStyleName("milestonelist-header");

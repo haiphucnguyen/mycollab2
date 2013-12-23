@@ -78,7 +78,6 @@ public class MessageReadViewImpl extends AbstractPageView implements
 
 	public MessageReadViewImpl() {
 		super();
-		this.setMargin(new MarginInfo(false, true, true, true));
 		previewForm = new AdvancedPreviewBeanForm<SimpleMessage>();
 		this.addComponent(previewForm);
 	}

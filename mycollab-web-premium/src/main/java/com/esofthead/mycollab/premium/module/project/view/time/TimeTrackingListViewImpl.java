@@ -79,7 +79,6 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements
 	private boolean isNeedConstructLayout;
 
 	public TimeTrackingListViewImpl() {
-		this.setMargin(new MarginInfo(false, true, true, true));
 
 		this.itemTimeLoggingService = ApplicationContextUtil
 				.getSpringBean(ItemTimeLoggingService.class);

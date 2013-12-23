@@ -54,7 +54,6 @@ public class TrackerContainer extends AbstractPageView {
 		this.myProjectTab.setStyleName("tab-style3");
 		this.addComponent(myProjectTab);
 		this.setWidth("100%");
-		this.setMargin(true);
 		this.buildComponents();
 	}
 

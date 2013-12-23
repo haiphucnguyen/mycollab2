@@ -32,7 +32,6 @@ public class StandupAddViewImpl extends AbstractPageView implements
 
 	public StandupAddViewImpl() {
 		super();
-		this.setMargin(true);
 		this.editForm = new AdvancedEditBeanForm<StandupReportWithBLOBs>();
 		this.addComponent(this.editForm);
 	}

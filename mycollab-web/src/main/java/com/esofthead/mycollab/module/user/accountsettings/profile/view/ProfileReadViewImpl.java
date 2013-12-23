@@ -76,7 +76,6 @@ public class ProfileReadViewImpl extends AbstractPageView implements
 		this.viewLayout.setWidth("100%");
 		this.viewLayout.setSpacing(true);
 		this.setStyleName("userInfoContainer");
-		this.setMargin(true);
 		this.userAvatar = new VerticalLayout();
 		this.userAvatar.setWidth("100%");
 		this.userAvatar.setSpacing(true);

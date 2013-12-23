@@ -73,7 +73,6 @@ public class ProblemListViewImpl extends AbstractPageView implements
 			.getLogger(ProblemListViewImpl.class);
 
 	public ProblemListViewImpl() {
-		this.setMargin(new MarginInfo(false, true, true, true));
 
 		this.problemSearchPanel = new ProblemSearchPanel();
 		this.addComponent(this.problemSearchPanel);

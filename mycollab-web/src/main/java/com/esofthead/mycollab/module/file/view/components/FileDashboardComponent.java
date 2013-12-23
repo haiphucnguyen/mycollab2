@@ -76,7 +76,6 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 	public FileDashboardComponent() {
 		this.setWidth("100%");
 		this.setSpacing(true);
-		this.setMargin(new MarginInfo(false, true, true, true));
 		this.resourceService = ApplicationContextUtil
 				.getSpringBean(ResourceService.class);
 		this.fileSearchPanel = new FileSearchPanel(null);

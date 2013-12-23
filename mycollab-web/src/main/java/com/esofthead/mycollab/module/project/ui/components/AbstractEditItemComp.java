@@ -30,7 +30,7 @@ public abstract class AbstractEditItemComp<B> extends AbstractPageView
 		super();
 		this.editForm = new AdvancedEditBeanForm<B>();
 		this.addComponent(this.editForm);
-		this.setMargin(true);
+		this.setMargin(false);
 	}
 
 	@Override

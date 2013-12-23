@@ -674,7 +674,7 @@ input.v-textfield-pagedtable-pagefield {
 /* Advanced Search Template */
 .advSearch {
 	background-color: #F5F5F5;
-	margin: 10px 0px 0px;
+	/* margin: 10px 0px 0px; */
 	border-top-left-radius: 3px;
 	border-top-right-radius: 3px;
 	border-bottom-right-radius: 0px;
@@ -739,7 +739,7 @@ input.v-textfield-pagedtable-pagefield {
 	background-image: -o-linear-gradient(top, #F3F3F3, #DDDDDD);
 	background-image: linear-gradient(top, #F3F3F3, #DDDDDD);
 	background-color: #F3F3F3;
-	margin: 10px 0px 0px;
+	/* margin: 10px 0px 0px; */
 	border-top-left-radius: 3px;
 	border-top-right-radius: 3px;
 	border-bottom-right-radius: 0px;
@@ -1219,14 +1219,14 @@ input.v-textfield-errorField {
 	margin-bottom: 0px;
 }
 
-.addViewLayout .addViewBottomControls .depotComp {
+/* .addViewLayout .addViewBottomControls .depotComp {
 	margin: 0px;
-}
+} */
 
-.addViewLayout .addViewBottomControls .depotComp .depotHeader {
+/* .addViewLayout .addViewBottomControls .depotComp .depotHeader {
 	border-radius: 0px;
 	border-width: 0px 0px 1px 0px;
-}
+} */
 
 .addViewLayout .addViewBottomControls .depotComp.collapsed .header-wrapper
 	{
@@ -3369,11 +3369,14 @@ div.v-lazyloadingwrapper-loading {
 	color: rgb(34, 34, 34);
 }
 /* End H2 Popup Button */
+
+/* Main body */
 .main-body {
-	overflow-y: auto;
+	overflow-y: scroll; /*CSS fix for Vaadin 7 */
 	background-color: #FFFFFF;
 	position: relative;
 }
+
 /* Footer */
 .footer {
 	width: 100%;
@@ -3993,7 +3996,7 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 
 /* New AddViewLayout */
 .v-csslayout-addview-layout {
-	margin-top: 10px;
+	/* margin-top: 10px; */
 	border: 1px solid #a9a9a9;
 	background-color: #f5f5f5;
 	border-radius: 3px 3px 0px 0px;
@@ -5099,6 +5102,7 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 .crmContainer .verticalTabView
 {
 	padding: 0px;
+	margin: 0px auto;
 }
 
 .customFieldSection {
@@ -5367,11 +5371,7 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 
 /* VerticalTabsheet */
 .tab-content {
-	height: 100%;
-}
-
-.tab-content {
-	padding: 6px;
+	padding: 12px;
 	border-style: solid;
 	border-color: #8f8f8f;
 	border-width: 1px 0px 0px 1px;
@@ -5545,6 +5545,10 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 }
 .tab-style3 > .v-tabsheet-content {
 	background: none;
+}
+
+.tab-style3 > .v-tabsheet-content > .v-tabsheet-tabsheetpanel {
+	padding-top: 12px;
 }
 
 /* History Log Component */

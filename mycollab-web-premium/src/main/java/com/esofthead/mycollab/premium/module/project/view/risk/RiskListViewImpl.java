@@ -72,7 +72,6 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
 	private static Logger log = LoggerFactory.getLogger(RiskListViewImpl.class);
 
 	public RiskListViewImpl() {
-		this.setMargin(new MarginInfo(false, true, true, true));
 
 		this.riskSearchPanel = new RiskSearchPanel();
 		this.addComponent(this.riskSearchPanel);

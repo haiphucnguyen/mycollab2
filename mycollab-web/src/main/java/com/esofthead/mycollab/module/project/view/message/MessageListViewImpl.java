@@ -96,7 +96,6 @@ public class MessageListViewImpl extends AbstractPageView implements
 
 	public MessageListViewImpl() {
 		super();
-		this.setMargin(true);
 		this.setWidth("100%");
 		this.topMessagePanel = new TopMessagePanel();
 		this.topMessagePanel.setWidth("100%");

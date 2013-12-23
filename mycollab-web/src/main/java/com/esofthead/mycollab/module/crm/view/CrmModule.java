@@ -25,6 +25,7 @@ import com.esofthead.mycollab.vaadin.mvp.PageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.CustomLayoutLoader;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.CustomLayout;
 import com.vaadin.ui.VerticalLayout;
@@ -49,6 +50,8 @@ public class CrmModule extends AbstractPageView implements IModule {
 		container.addComponent(toolbar, "crmToolbar");
 
 		currentView = new VerticalLayout();
+		currentView.setMargin(new MarginInfo(true, false, false, false));
+		
 		container.addComponent(currentView, "currentView");
 		this.addComponent(container);
 		this.setComponentAlignment(container, Alignment.MIDDLE_CENTER);
