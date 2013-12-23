@@ -55,7 +55,6 @@ import com.esofthead.mycollab.vaadin.ui.AttachmentDisplayComponent;
 import com.esofthead.mycollab.vaadin.ui.AttachmentPanel;
 import com.esofthead.mycollab.vaadin.ui.BeanList;
 import com.esofthead.mycollab.vaadin.ui.BeanList.RowDisplayHandler;
-import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UrlDetectableLabel;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
@@ -72,6 +71,12 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.VerticalLayout;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class NoteListItems extends VerticalLayout {
 
 	private class NoteEditor extends VerticalLayout {
@@ -217,6 +222,7 @@ public class NoteListItems extends VerticalLayout {
 
 	public static class NoteRowDisplayHandler implements
 			RowDisplayHandler<SimpleNote>, ReloadableComponent {
+		private static final long serialVersionUID = 1L;
 
 		private VerticalLayout noteContentLayout;
 		private BeanList<CommentService, CommentSearchCriteria, SimpleComment> commentList;
@@ -329,7 +335,8 @@ public class NoteListItems extends VerticalLayout {
 
 			VerticalLayout commentListWrapper = new VerticalLayout();
 			commentListWrapper.setWidth("100%");
-			commentListWrapper.setMargin(new MarginInfo(false, false, false, true));
+			commentListWrapper.setMargin(new MarginInfo(false, false, false,
+					true));
 			commentListWrapper.addStyleName("comment-list-wrapper");
 
 			noteContentLayout = new VerticalLayout();
@@ -410,7 +417,8 @@ public class NoteListItems extends VerticalLayout {
 
 			@Override
 			public void buttonClick(final ClickEvent event) {
-				NoteListItems.this.replaceComponent(createBtn, new NoteEditor());
+				NoteListItems.this
+						.replaceComponent(createBtn, new NoteEditor());
 			}
 		});
 

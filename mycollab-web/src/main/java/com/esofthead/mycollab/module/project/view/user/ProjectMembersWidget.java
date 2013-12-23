@@ -38,6 +38,7 @@ import com.vaadin.ui.VerticalLayout;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class ProjectMembersWidget extends Depot {
 	private static final long serialVersionUID = 1L;
@@ -68,6 +69,7 @@ public class ProjectMembersWidget extends Depot {
 
 	public static class MemberRowDisplayHandler implements
 			BeanList.RowDisplayHandler<SimpleProjectMember> {
+		private static final long serialVersionUID = 1L;
 
 		@Override
 		public Component generateRow(SimpleProjectMember member, int rowIndex) {

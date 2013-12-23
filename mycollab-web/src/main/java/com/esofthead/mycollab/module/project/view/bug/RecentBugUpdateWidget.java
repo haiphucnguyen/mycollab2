@@ -43,6 +43,7 @@ import com.vaadin.ui.Label;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class RecentBugUpdateWidget extends BugDisplayWidget {
 	private static final long serialVersionUID = 1L;
@@ -60,6 +61,7 @@ public class RecentBugUpdateWidget extends BugDisplayWidget {
 
 	public static class RecentBugRowDisplayHandler implements
 			BeanList.RowDisplayHandler<SimpleBug> {
+		private static final long serialVersionUID = 1L;
 
 		@Override
 		public Component generateRow(final SimpleBug bug, final int rowIndex) {

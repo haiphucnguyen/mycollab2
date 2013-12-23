@@ -42,6 +42,7 @@ import com.vaadin.ui.ProgressIndicator;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class MultiFileUploadExt extends CssLayout implements DropHandler {
 	private static final long serialVersionUID = 1L;

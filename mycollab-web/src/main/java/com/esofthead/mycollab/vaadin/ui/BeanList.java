@@ -16,6 +16,7 @@
  */
 package com.esofthead.mycollab.vaadin.ui;
 
+import java.io.Serializable;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
 import java.util.List;
@@ -176,7 +177,7 @@ public class BeanList<SearchService extends ISearchableService<S>, S extends Sea
 				&& (contentLayout.getComponentCount() > 0);
 	}
 
-	public static interface RowDisplayHandler<T> {
+	public static interface RowDisplayHandler<T> extends Serializable {
 
 		Component generateRow(T obj, int rowIndex);
 	}

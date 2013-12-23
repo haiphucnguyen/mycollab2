@@ -34,6 +34,12 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.VerticalLayout;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public abstract class BugDisplayWidget extends Depot {
 
 	private static final long serialVersionUID = 1L;
@@ -49,10 +55,11 @@ public abstract class BugDisplayWidget extends Depot {
 		super(title, new VerticalLayout());
 
 		dataList = new BeanList<BugService, BugSearchCriteria, SimpleBug>(
-				ApplicationContextUtil.getSpringBean(BugService.class), rowDisplayHandler);
+				ApplicationContextUtil.getSpringBean(BugService.class),
+				rowDisplayHandler);
 		bodyContent.addComponent(dataList);
 		bodyContent.setStyleName(UIConstants.BUG_LIST);
-		
+
 	}
 
 	protected abstract BugSearchParameter constructMoreDisplayFilter();

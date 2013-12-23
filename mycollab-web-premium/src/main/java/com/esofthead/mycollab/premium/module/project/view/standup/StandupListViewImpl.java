@@ -41,6 +41,12 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @ViewComponent
 public class StandupListViewImpl extends AbstractPageView implements
 		StandupListView {
@@ -245,6 +251,7 @@ public class StandupListViewImpl extends AbstractPageView implements
 
 	public static class StandupReportRowDisplay implements
 			RowDisplayHandler<SimpleStandupReport> {
+		private static final long serialVersionUID = 1L;
 
 		@Override
 		public Component generateRow(final SimpleStandupReport obj,

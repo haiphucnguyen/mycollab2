@@ -39,6 +39,12 @@ import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class MyBugListWidget extends BugDisplayWidget {
 	private static final long serialVersionUID = 1L;
 
@@ -49,6 +55,7 @@ public class MyBugListWidget extends BugDisplayWidget {
 
 	public static class MyBugRowDisplayHandler implements
 			BeanList.RowDisplayHandler<SimpleBug> {
+		private static final long serialVersionUID = 1L;
 
 		@Override
 		public Component generateRow(final SimpleBug bug, int rowIndex) {

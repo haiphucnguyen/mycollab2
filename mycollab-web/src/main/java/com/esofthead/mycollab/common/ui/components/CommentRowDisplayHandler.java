@@ -35,9 +35,11 @@ import com.vaadin.ui.VerticalLayout;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class CommentRowDisplayHandler implements
 		BeanList.RowDisplayHandler<SimpleComment> {
+	private static final long serialVersionUID = 1L;
 
 	@Override
 	public Component generateRow(SimpleComment comment, int rowIndex) {

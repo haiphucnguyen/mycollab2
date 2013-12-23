@@ -49,6 +49,7 @@ public class TaskDisplayWidget extends
 
 	public static class TaskRowDisplayHandler implements
 			BeanList.RowDisplayHandler<SimpleTask> {
+		private static final long serialVersionUID = 1L;
 
 		@Override
 		public Component generateRow(final SimpleTask task, int rowIndex) {

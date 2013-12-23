@@ -53,6 +53,7 @@ import fi.jasoft.dragdroplayouts.events.VerticalLocationIs;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 @ViewComponent
 public class TaskGroupReorderViewImpl extends AbstractPageView implements
@@ -183,6 +184,7 @@ public class TaskGroupReorderViewImpl extends AbstractPageView implements
 
 	public static class TaskListRowDisplayHandler implements
 			BeanList.RowDisplayHandler<SimpleTaskList> {
+		private static final long serialVersionUID = 1L;
 
 		@Override
 		public Component generateRow(SimpleTaskList taskList, int rowIndex) {
