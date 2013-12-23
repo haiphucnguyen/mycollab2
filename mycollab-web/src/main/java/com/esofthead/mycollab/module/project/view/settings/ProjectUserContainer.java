@@ -24,11 +24,12 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 
 /**
- *
+ * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 @ViewComponent
 public class ProjectUserContainer extends AbstractPageView {
 	private static final long serialVersionUID = 1L;
-    
+
 }

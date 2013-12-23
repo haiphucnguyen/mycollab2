@@ -19,6 +19,12 @@ package com.esofthead.mycollab.module.project.view.settings;
 import com.esofthead.mycollab.module.project.domain.ProjectNotificationSetting;
 import com.esofthead.mycollab.vaadin.mvp.PageView;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
 public interface ProjectNotificationSettingView extends PageView {
 
 	void showNotificationSettings(ProjectNotificationSetting notification);

@@ -42,6 +42,7 @@ import com.vaadin.ui.ComponentContainer;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class ProjectRoleAddPresenter extends
 		AbstractPresenter<ProjectRoleAddView> {
@@ -49,7 +50,10 @@ public class ProjectRoleAddPresenter extends
 
 	public ProjectRoleAddPresenter() {
 		super(ProjectRoleAddView.class);
+	}
 
+	@Override
+	protected void postInitView() {
 		view.getEditFormHandlers().addFormHandler(
 				new EditFormHandler<ProjectRole>() {
 					@Override

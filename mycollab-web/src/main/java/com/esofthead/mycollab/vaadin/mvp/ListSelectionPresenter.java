@@ -27,7 +27,7 @@ import com.esofthead.mycollab.vaadin.events.PagableHandler;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.events.SelectableItemHandler;
 import com.esofthead.mycollab.vaadin.events.SelectionOptionHandler;
-import com.vaadin.ui.CheckBox;
+import com.esofthead.mycollab.vaadin.ui.CheckBoxDecor;
 
 /**
  * 
@@ -94,8 +94,8 @@ public abstract class ListSelectionPresenter<V extends ListView<S, B>, S extends
 						isSelectAll = false;
 						for (B item : currentDataList) {
 							item.setSelected(false);
-							CheckBox checkBox = (CheckBox) item.getExtraData();
-							checkBox.setValue(false);
+							CheckBoxDecor checkBox = (CheckBoxDecor) item.getExtraData();
+							checkBox.setValueWithoutNotifyListeners(false);
 						}
 
 						checkWhetherEnableTableActionControl();
@@ -127,9 +127,10 @@ public abstract class ListSelectionPresenter<V extends ListView<S, B>, S extends
 		Collection<B> currentDataList = view.getPagedBeanTable()
 				.getCurrentDataList();
 		for (B item : currentDataList) {
+			System.out.println("ITEM CHANGED: " + item + "---" + item.isSelected());
 			item.setSelected(true);
-			CheckBox checkBox = (CheckBox) item.getExtraData();
-			checkBox.setValue(true);
+			CheckBoxDecor checkBox = (CheckBoxDecor) item.getExtraData();
+			checkBox.setValueWithoutNotifyListeners(true);
 		}
 	}
 
@@ -144,6 +145,7 @@ public abstract class ListSelectionPresenter<V extends ListView<S, B>, S extends
 				.getCurrentDataList();
 		int countItems = 0;
 		for (B item : currentDataList) {
+			System.out.println("ITEM: " + item + "---" + item.isSelected());
 			if (item.isSelected()) {
 				countItems++;
 			}

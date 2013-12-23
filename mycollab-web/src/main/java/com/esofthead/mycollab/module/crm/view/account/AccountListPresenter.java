@@ -65,6 +65,7 @@ public class AccountListPresenter
 
 	@Override
 	protected void postInitView() {
+		super.postInitView();
 		accountService = ApplicationContextUtil
 				.getSpringBean(AccountService.class);
 

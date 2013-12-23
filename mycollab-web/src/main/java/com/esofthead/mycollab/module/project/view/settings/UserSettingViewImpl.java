@@ -42,6 +42,7 @@ import com.vaadin.ui.TabSheet.Tab;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 @ViewComponent
 public class UserSettingViewImpl extends AbstractPageView implements

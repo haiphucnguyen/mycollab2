@@ -23,7 +23,7 @@ public class CampaignReadFormFieldFactory extends
 	}
 
 	@Override
-	protected Field onCreateField(Object propertyId) {
+	protected Field<?> onCreateField(Object propertyId) {
 		SimpleCampaign campaign = attachForm.getBean();
 
 		if (propertyId.equals("assignuser")) {

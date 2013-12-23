@@ -77,6 +77,7 @@ public class VersionAddViewImpl extends AbstractEditItemComp<Version> implements
 		controlPanel.setWidth("100%");
 		controlPanel.setComponentAlignment(controlButtons,
 				Alignment.MIDDLE_CENTER);
+		controlPanel.setMargin(true);
 		return controlPanel;
 	}
 

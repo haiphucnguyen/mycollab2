@@ -28,6 +28,12 @@ import com.esofthead.mycollab.module.project.view.parameters.ProjectMemberScreen
 import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class UserUrlResolver extends ProjectUrlResolver {
 
 	public UserUrlResolver() {

@@ -75,7 +75,7 @@ public class ContactListPresenter
 					}
 
 					@Override
-					protected Class getReportModelClassType() {
+					protected Class<?> getReportModelClassType() {
 						return SimpleContact.class;
 					}
 

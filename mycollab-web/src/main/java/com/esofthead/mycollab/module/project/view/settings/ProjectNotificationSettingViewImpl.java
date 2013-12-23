@@ -22,9 +22,15 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
 @ViewComponent
-public class ProjectNotificationSettingViewImpl extends AbstractPageView implements
-		ProjectNotificationSettingView {
+public class ProjectNotificationSettingViewImpl extends AbstractPageView
+		implements ProjectNotificationSettingView {
 	private static final long serialVersionUID = 1L;
 	private NotificationSettingViewComponent<ProjectNotificationSetting, ProjectNotificationSettingService> component;
 

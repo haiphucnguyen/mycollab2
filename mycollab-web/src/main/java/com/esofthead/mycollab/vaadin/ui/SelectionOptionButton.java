@@ -42,13 +42,17 @@ public class SelectionOptionButton extends SplitButton implements
 	private static final long serialVersionUID = 1L;
 	private boolean isSelectAll = false;
 	private boolean isSelected = false;
+
 	@SuppressWarnings("rawtypes")
 	private final HasSelectableItemHandlers selectableItemHandlers;
+
 	private static Resource selectIcon = MyCollabResource
 			.newResource("icons/16/checkbox.png");
 	private static Resource unSelectIcon = MyCollabResource
 			.newResource("icons/16/checkbox_empty.png");
+
 	private Set<SelectionOptionHandler> handlers;
+
 	private final Button selectAllBtn;
 	private final Button selectThisPageBtn;
 	private final Button deSelectBtn;

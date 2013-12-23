@@ -23,15 +23,17 @@ package com.esofthead.mycollab.module.project.view.settings;
 import com.esofthead.mycollab.module.crm.ui.components.HistoryLogWindow;
 
 /**
- *
+ * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
-@SuppressWarnings("serial")
 public class ProjectMemberHistoryLogWindow extends HistoryLogWindow {
-    public ProjectMemberHistoryLogWindow(String module, String type, int typeid) {
-        super(module, type, typeid);
-        
-        this.generateFieldDisplayHandler("username", "User");
-        this.generateFieldDisplayHandler("isadmin", "Is Admin");
-    }
+	private static final long serialVersionUID = 1L;
+
+	public ProjectMemberHistoryLogWindow(String module, String type, int typeid) {
+		super(module, type, typeid);
+
+		this.generateFieldDisplayHandler("username", "User");
+		this.generateFieldDisplayHandler("isadmin", "Is Admin");
+	}
 }

@@ -28,6 +28,7 @@ import com.esofthead.mycollab.web.MyCollabApplication;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  * 
  */
 class ViewManagerImpl extends ViewManager {

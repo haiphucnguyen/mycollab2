@@ -31,6 +31,12 @@ import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class ContactSelectionWindow extends Window {
 
 	private static final long serialVersionUID = 1L;

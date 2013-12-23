@@ -26,6 +26,7 @@ import com.vaadin.ui.Component;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 public interface UserSettingView extends PageView {
 	Component gotoSubView(String name);

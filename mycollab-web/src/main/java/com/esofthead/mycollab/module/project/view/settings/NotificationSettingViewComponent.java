@@ -40,6 +40,14 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.OptionGroup;
 import com.vaadin.ui.VerticalLayout;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ * @param <B>
+ * @param <S>
+ */
 public abstract class NotificationSettingViewComponent<B extends ValuedBean, S extends ICrudService>
 		extends VerticalLayout {
 	private static final long serialVersionUID = 1L;
@@ -79,7 +87,8 @@ public abstract class NotificationSettingViewComponent<B extends ValuedBean, S e
 
 		Label notificationLabel = new Label("Notification Levels");
 		notificationLabel.addStyleName("h2");
-		notificationLabel.setHeight(Sizeable.SIZE_UNDEFINED, Sizeable.Unit.PIXELS);
+		notificationLabel.setHeight(Sizeable.SIZE_UNDEFINED,
+				Sizeable.Unit.PIXELS);
 		body.addComponent(notificationLabel);
 
 		List<String> options = Arrays

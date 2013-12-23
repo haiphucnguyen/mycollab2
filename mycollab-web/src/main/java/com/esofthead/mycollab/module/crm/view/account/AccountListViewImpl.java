@@ -42,7 +42,7 @@ import com.vaadin.ui.UI;
 /**
  * 
  * @author MyCollab Ltd.
- * @since 2.0
+ * @since 1.0
  * 
  */
 @ViewComponent

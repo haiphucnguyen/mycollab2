@@ -17,7 +17,6 @@
 package com.esofthead.mycollab.vaadin.ui.table;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -193,17 +192,18 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, B>
 
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<B> getCurrentDataList() {
-		final BeanItemContainer<B> containerDataSource = (BeanItemContainer<B>) this.tableItem
-				.getContainerDataSource();
-		final Collection<B> itemIds = containerDataSource.getItemIds();
-		if (itemIds instanceof List) {
-			return (List<B>) itemIds;
-		} else {
-			return new ArrayList<B>(itemIds);
-		}
+		// final BeanItemContainer<B> containerDataSource =
+		// (BeanItemContainer<B>) this.tableItem
+		// .getContainerDataSource();
+		// final Collection<B> itemIds = containerDataSource.getItemIds();
+		// if (itemIds instanceof List) {
+		// return (List<B>) itemIds;
+		// } else {
+		// return new ArrayList<B>(itemIds);
+		// }
+		return currentListData;
 	}
 
 	@Override
