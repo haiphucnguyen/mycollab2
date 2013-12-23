@@ -46,7 +46,6 @@ import com.vaadin.event.FieldEvents.TextChangeEvent;
 import com.vaadin.event.FieldEvents.TextChangeListener;
 import com.vaadin.server.FileDownloader;
 import com.vaadin.server.StreamResource;
-import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.combobox.FilteringMode;
 import com.vaadin.shared.ui.datefield.Resolution;
 import com.vaadin.shared.ui.label.ContentMode;
@@ -227,7 +226,8 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements
 						.getSpringBean(ItemTimeLoggingService.class),
 				TimeTrackingListViewImpl.this.itemTimeLogginSearchCriteria);
 		final StreamResource res = new StreamResource(exportStream,
-				exportStream.getDefaultExportFileName());
+				ExportTimeLoggingStreamResource
+						.getDefaultExportFileName(exportType));
 		return res;
 	}
 

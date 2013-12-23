@@ -67,16 +67,15 @@ public abstract class ExportItemsStreamResource<T> implements
 		this.outputForm = outputForm;
 	}
 
-	public String getDefaultExportFileName() {
-		if (outputForm == ReportExportType.PDF) {
+	public static String getDefaultExportFileName(ReportExportType type) {
+		if (type == ReportExportType.PDF) {
 			return "export.pdf";
-		} else if (outputForm == ReportExportType.CSV) {
+		} else if (type == ReportExportType.CSV) {
 			return "export.csv";
-		} else if (outputForm == ReportExportType.EXCEL) {
+		} else if (type == ReportExportType.EXCEL) {
 			return "export.xlsx";
 		} else {
-			throw new MyCollabException("Do not support report output "
-					+ outputForm);
+			throw new MyCollabException("Do not support report output " + type);
 		}
 	}
 

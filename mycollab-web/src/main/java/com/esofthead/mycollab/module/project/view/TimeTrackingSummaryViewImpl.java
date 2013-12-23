@@ -29,6 +29,7 @@ import com.esofthead.mycollab.eventmanager.ApplicationEvent;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.file.resource.ExportItemsStreamResource;
+import com.esofthead.mycollab.module.file.resource.LazyStreamSource;
 import com.esofthead.mycollab.module.file.resource.SimpleGridExportItemsStreamResource;
 import com.esofthead.mycollab.module.project.domain.SimpleItemTimeLogging;
 import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
@@ -52,6 +53,7 @@ import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.server.FileDownloader;
 import com.vaadin.server.StreamResource;
+import com.vaadin.server.StreamResource.StreamSource;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.datefield.Resolution;
 import com.vaadin.ui.Alignment;
@@ -64,6 +66,12 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.PopupDateField;
 import com.vaadin.ui.VerticalLayout;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @ViewComponent
 public class TimeTrackingSummaryViewImpl extends AbstractPageView implements
 		TimeTrackingSummaryView {
@@ -262,15 +270,23 @@ public class TimeTrackingSummaryViewImpl extends AbstractPageView implements
 		contentWrapper.addComponent(this.tableItem);
 	}
 
-	private StreamResource constructStreamResource(ReportExportType exportType) {
-		ExportItemsStreamResource<SimpleItemTimeLogging> stream = new SimpleGridExportItemsStreamResource.AllItems<ItemTimeLoggingSearchCriteria, SimpleItemTimeLogging>(
-				"Time Tracking Report", new RpParameterBuilder(
-						tableItem.getDisplayColumns()), exportType,
-				ApplicationContextUtil
-						.getSpringBean(ItemTimeLoggingService.class),
-				searchCriteria, SimpleItemTimeLogging.class);
-		StreamResource res = new StreamResource(stream,
-				stream.getDefaultExportFileName());
+	private StreamResource constructStreamResource(
+			final ReportExportType exportType) {
+		LazyStreamSource streamSource = new LazyStreamSource() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected StreamSource buildStreamSource() {
+				return new SimpleGridExportItemsStreamResource.AllItems<ItemTimeLoggingSearchCriteria, SimpleItemTimeLogging>(
+						"Time Tracking Report", new RpParameterBuilder(
+								tableItem.getDisplayColumns()), exportType,
+						ApplicationContextUtil
+								.getSpringBean(ItemTimeLoggingService.class),
+						searchCriteria, SimpleItemTimeLogging.class);
+			}
+		};
+		StreamResource res = new StreamResource(streamSource,
+				ExportItemsStreamResource.getDefaultExportFileName(exportType));
 		return res;
 	}
 

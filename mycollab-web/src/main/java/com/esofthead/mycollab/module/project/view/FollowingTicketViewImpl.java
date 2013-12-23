@@ -25,6 +25,7 @@ import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.file.resource.ExportItemsStreamResource;
+import com.esofthead.mycollab.module.file.resource.LazyStreamSource;
 import com.esofthead.mycollab.module.file.resource.SimpleGridExportItemsStreamResource;
 import com.esofthead.mycollab.module.project.domain.FollowingTicket;
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
@@ -49,6 +50,7 @@ import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.server.FileDownloader;
 import com.vaadin.server.StreamResource;
+import com.vaadin.server.StreamResource.StreamSource;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -164,16 +166,26 @@ public class FollowingTicketViewImpl extends AbstractPageView implements
 		contentWrapper.addComponent(this.ticketTable);
 	}
 
-	private StreamResource constructStreamResource(ReportExportType exportType) {
-		ExportItemsStreamResource<FollowingTicket> exportResource = new SimpleGridExportItemsStreamResource.AllItems<MonitorSearchCriteria, FollowingTicket>(
-				"Following Tickets Report", new RpParameterBuilder(
-						ticketTable.getDisplayColumns()), exportType,
-				ApplicationContextUtil
-						.getSpringBean(ProjectFollowingTicketService.class),
-				searchCriteria, FollowingTicket.class);
+	private StreamResource constructStreamResource(
+			final ReportExportType exportType) {
 
-		StreamResource res = new StreamResource(exportResource,
-				exportResource.getDefaultExportFileName());
+		LazyStreamSource streamSource = new LazyStreamSource() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected StreamSource buildStreamSource() {
+				return new SimpleGridExportItemsStreamResource.AllItems<MonitorSearchCriteria, FollowingTicket>(
+						"Following Tickets Report",
+						new RpParameterBuilder(ticketTable.getDisplayColumns()),
+						exportType,
+						ApplicationContextUtil
+								.getSpringBean(ProjectFollowingTicketService.class),
+						searchCriteria, FollowingTicket.class);
+			}
+		};
+
+		StreamResource res = new StreamResource(streamSource,
+				ExportItemsStreamResource.getDefaultExportFileName(exportType));
 		return res;
 	}
 

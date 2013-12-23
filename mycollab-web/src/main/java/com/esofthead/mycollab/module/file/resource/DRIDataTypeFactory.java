@@ -25,6 +25,12 @@ import org.apache.commons.lang3.Validate;
 
 import com.esofthead.mycollab.common.domain.Currency;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class DRIDataTypeFactory {
 	private static final CurrencyType currencyType = new CurrencyType();
 

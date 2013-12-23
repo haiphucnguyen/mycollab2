@@ -40,6 +40,12 @@ import com.esofthead.mycollab.module.ecm.service.ResourceService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.vaadin.server.StreamResource;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class StreamDownloadResourceSupportExtDrive implements
 		StreamResource.StreamSource {
 	private static final long serialVersionUID = 1L;

@@ -28,6 +28,12 @@ import com.vaadin.server.FileResource;
 import com.vaadin.server.Resource;
 import com.vaadin.server.StreamResource;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class StreamDownloadResourceFactory {
 
 	public static Resource getStreamResource(String documentPath) {
