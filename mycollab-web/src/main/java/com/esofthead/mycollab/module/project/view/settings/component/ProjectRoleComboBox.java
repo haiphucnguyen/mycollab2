@@ -30,6 +30,12 @@ import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.util.BeanContainer;
 import com.vaadin.ui.ComboBox;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class ProjectRoleComboBox extends ComboBox {
 
 	private static final long serialVersionUID = 1L;
@@ -40,7 +46,7 @@ public class ProjectRoleComboBox extends ComboBox {
 	public ProjectRoleComboBox() {
 		super();
 		this.setImmediate(true);
-		this.setItemCaptionMode(ITEM_CAPTION_MODE_PROPERTY);
+		this.setItemCaptionMode(ItemCaptionMode.PROPERTY);
 
 		ProjectRoleSearchCriteria criteria = new ProjectRoleSearchCriteria();
 		criteria.setSaccountid(new NumberSearchField(SearchField.AND,

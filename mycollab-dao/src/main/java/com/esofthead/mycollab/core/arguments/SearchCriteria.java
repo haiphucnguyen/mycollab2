@@ -32,12 +32,17 @@
  */
 package com.esofthead.mycollab.core.arguments;
 
+import java.io.Serializable;
+
 /**
  * 
  * @author MyCollab Ltd.
- *
+ * @since 1.0
+ * 
  */
-public abstract class SearchCriteria {
+public abstract class SearchCriteria implements Serializable {
+	private static final long serialVersionUID = 1L;
+
 	public static String ASC = "ASC";
 
 	public static String DESC = "DESC";

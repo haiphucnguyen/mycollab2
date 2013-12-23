@@ -33,6 +33,7 @@ import com.vaadin.ui.ComboBox;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class ProjectTaskListComboBox extends ComboBox {
 
@@ -41,7 +42,7 @@ public class ProjectTaskListComboBox extends ComboBox {
 	@SuppressWarnings("unchecked")
 	public ProjectTaskListComboBox() {
 		super();
-		this.setItemCaptionMode(ITEM_CAPTION_MODE_PROPERTY);
+		this.setItemCaptionMode(ItemCaptionMode.PROPERTY);
 
 		TaskListSearchCriteria criteria = new TaskListSearchCriteria();
 		criteria.setProjectId(new NumberSearchField(SearchField.AND,

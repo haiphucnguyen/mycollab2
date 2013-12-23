@@ -16,6 +16,8 @@
  */
 package com.esofthead.mycollab.vaadin.events;
 
+import java.io.Serializable;
+
 /**
  * @param <T>
  * 
@@ -23,7 +25,7 @@ package com.esofthead.mycollab.vaadin.events;
  * @since 1.0
  * 
  */
-public interface EditFormHandler<T> {
+public interface EditFormHandler<T> extends Serializable {
 	/**
 	 * 
 	 * @param bean

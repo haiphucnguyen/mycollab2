@@ -28,12 +28,18 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.vaadin.data.util.BeanContainer;
 import com.vaadin.ui.ListSelect;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public @SuppressWarnings("serial")
 class ProjectMemberListSelect extends ListSelect {
 
 	public ProjectMemberListSelect() {
 		super("username");
-		this.setItemCaptionMode(ITEM_CAPTION_MODE_PROPERTY);
+		this.setItemCaptionMode(ItemCaptionMode.PROPERTY);
 		this.setMultiSelect(true);
 
 		ProjectMemberSearchCriteria criteria = new ProjectMemberSearchCriteria();

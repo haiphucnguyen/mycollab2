@@ -23,11 +23,11 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Layout;
-import com.vaadin.ui.VerticalLayout;
 
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class ProjectInformationLayout implements IFormLayoutFactory {
 	private static final long serialVersionUID = 1L;
@@ -79,7 +79,7 @@ public class ProjectInformationLayout implements IFormLayoutFactory {
 		this.moreInfoLayout.getLayout().setWidth("100%");
 		this.moreInfoLayout.getLayout().setMargin(false);
 		this.moreInfoLayout.getLayout().addStyleName("colored-gridlayout");
-		
+
 		return this.moreInfoLayout.getLayout();
 	}
 }

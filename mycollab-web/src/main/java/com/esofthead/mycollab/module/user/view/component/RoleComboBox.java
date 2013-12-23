@@ -30,6 +30,7 @@ import com.vaadin.ui.ComboBox;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class RoleComboBox extends ComboBox {
 
@@ -39,11 +40,12 @@ public class RoleComboBox extends ComboBox {
 	public RoleComboBox() {
 		super();
 		this.setNullSelectionAllowed(false);
-		this.setItemCaptionMode(ITEM_CAPTION_MODE_PROPERTY);
+		this.setItemCaptionMode(ItemCaptionMode.PROPERTY);
 
 		RoleSearchCriteria criteria = new RoleSearchCriteria();
 
-		RoleService roleService = ApplicationContextUtil.getSpringBean(RoleService.class);
+		RoleService roleService = ApplicationContextUtil
+				.getSpringBean(RoleService.class);
 		List<SimpleRole> roleList = roleService
 				.findPagableListByCriteria(new SearchRequest<RoleSearchCriteria>(
 						criteria, 0, Integer.MAX_VALUE));

@@ -33,6 +33,7 @@ import com.vaadin.ui.ComboBox;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class ProjectMilestoneComboBox extends ComboBox {
 
@@ -41,7 +42,7 @@ public class ProjectMilestoneComboBox extends ComboBox {
 	@SuppressWarnings("unchecked")
 	public ProjectMilestoneComboBox() {
 		super();
-		this.setItemCaptionMode(ITEM_CAPTION_MODE_PROPERTY);
+		this.setItemCaptionMode(ItemCaptionMode.PROPERTY);
 
 		MilestoneSearchCriteria criteria = new MilestoneSearchCriteria();
 		criteria.setProjectId(new NumberSearchField(SearchField.AND,
