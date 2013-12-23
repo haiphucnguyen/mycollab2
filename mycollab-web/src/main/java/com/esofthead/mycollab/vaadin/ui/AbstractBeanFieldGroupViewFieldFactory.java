@@ -33,31 +33,26 @@ public abstract class AbstractBeanFieldGroupViewFieldFactory<B> implements
 		Class<?> beanClass = bean.getClass();
 		java.lang.reflect.Field[] fields = ClassUtils.getAllFields(beanClass);
 		for (java.lang.reflect.Field field : fields) {
-			if (field.getAnnotation(NotBindable.class) != null) {
-				continue;
+			Field<?> formField = onCreateField(field.getName());
+			if (formField != null) {
+				attachForm.attachField(field.getName(), formField);
+			} else {
+				if (field.getAnnotation(NotBindable.class) != null) {
+					continue;
+				} else {
+					try {
+						final String propertyValue = BeanUtils.getProperty(
+								attachForm.getBean(), field.getName());
+						formField = new FormViewField(propertyValue);
+					} catch (Exception e) {
+						log.error("Error while get field value", e);
+						formField = new FormViewField("Error");
+					}
+
+					attachForm.attachField(field.getName(), formField);
+				}
 			}
-			bindField(field.getName());
 		}
-	}
-
-	@Override
-	public final Field<?> bindField(Object propertyId) {
-		Field<?> field = onCreateField(propertyId);
-		if (field == null) {
-
-			try {
-				final String propertyValue = BeanUtils.getProperty(
-						attachForm.getBean(), (String) propertyId);
-				field = new FormViewField(propertyValue);
-			} catch (final Exception e) {
-				log.error("Error while get field value", e);
-				field = new FormViewField("Error");
-			}
-		}
-
-		attachForm.attachField(propertyId, field);
-
-		return field;
 	}
 
 	@Override

@@ -73,6 +73,10 @@ public class DefaultProjectFormViewFieldFactory {
 		private static final long serialVersionUID = 1L;
 		private MultiFileUploadExt uploadExt;
 		private AttachmentPanel attachmentPanel;
+		
+		public ProjectFormAttachmentUploadField() {
+			attachmentPanel = new AttachmentPanel();
+		}
 
 		public void getAttachments(int projectId, AttachmentType type,
 				int typeid) {
@@ -98,7 +102,6 @@ public class DefaultProjectFormViewFieldFactory {
 		@Override
 		protected Component initContent() {
 			final VerticalLayout layout = new VerticalLayout();
-			attachmentPanel = new AttachmentPanel();
 			uploadExt = new MultiFileUploadExt(attachmentPanel);
 			layout.addComponent(attachmentPanel);
 			layout.addComponent(uploadExt);

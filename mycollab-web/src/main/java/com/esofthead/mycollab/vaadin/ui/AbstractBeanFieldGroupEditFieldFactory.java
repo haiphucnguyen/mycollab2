@@ -35,31 +35,25 @@ public abstract class AbstractBeanFieldGroupEditFieldFactory<B> implements
 		Class<?> beanClass = bean.getClass();
 		java.lang.reflect.Field[] fields = ClassUtils.getAllFields(beanClass);
 		for (java.lang.reflect.Field field : fields) {
-			if (field.getAnnotation(NotBindable.class) != null) {
-				continue;
+			Field<?> formField = onCreateField(field.getName());
+			if (formField == null) {
+				if (field.getAnnotation(NotBindable.class) != null) {
+					continue;
+				} else {
+					formField = fieldGroup.buildAndBind(field.getName());
+				}
+			} else {
+				fieldGroup.bind(formField, field.getName());
 			}
-			bindField(field.getName());
+
+			if (formField instanceof AbstractTextField) {
+				((AbstractTextField) formField).setNullRepresentation("");
+			} else if (formField instanceof RichTextArea) {
+				((RichTextArea) formField).setNullRepresentation("");
+			}
+
+			attachForm.attachField(field.getName(), formField);
 		}
-	}
-
-	@Override
-	public final Field<?> bindField(Object propertyId) {
-		Field<?> field = onCreateField(propertyId);
-		if (field == null) {
-			field = fieldGroup.buildAndBind(propertyId);
-		} else {
-			fieldGroup.bind(field, propertyId);
-		}
-
-		if (field instanceof AbstractTextField) {
-			((AbstractTextField) field).setNullRepresentation("");
-		} else if (field instanceof RichTextArea) {
-			((RichTextArea) field).setNullRepresentation("");
-		}
-
-		attachForm.attachField(propertyId, field);
-
-		return field;
 	}
 
 	@Override

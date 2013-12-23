@@ -2,8 +2,6 @@ package com.esofthead.mycollab.vaadin.ui;
 
 import java.io.Serializable;
 
-import com.vaadin.ui.Field;
-
 /**
  * 
  * @author MyCollab Ltd.
@@ -14,8 +12,6 @@ import com.vaadin.ui.Field;
 public interface IBeanFieldGroupFieldFactory<B> extends Serializable {
 
 	void setBean(B bean);
-
-	Field<?> bindField(Object propertyId);
 
 	void commit();
 }

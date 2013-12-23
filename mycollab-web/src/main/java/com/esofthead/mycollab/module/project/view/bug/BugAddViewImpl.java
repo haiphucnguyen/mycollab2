@@ -124,32 +124,29 @@ public class BugAddViewImpl extends AbstractEditItemComp<SimpleBug> implements
 				}
 				return new BugSeverityComboBox();
 			} else if (propertyId.equals("components")) {
-				BugAddViewImpl.this.componentSelect = new ComponentMultiSelectField(
-						"100%");
+				componentSelect = new ComponentMultiSelectField("100%");
 				if (beanItem.getComponents() != null
 						&& beanItem.getComponents().size() > 0) {
 					BugAddViewImpl.this.componentSelect
 							.setSelectedItems(beanItem.getComponents());
 				}
-				return BugAddViewImpl.this.componentSelect;
+				return componentSelect;
 			} else if (propertyId.equals("affectedVersions")) {
-				BugAddViewImpl.this.affectedVersionSelect = new VersionMultiSelectField(
-						"100%");
+				affectedVersionSelect = new VersionMultiSelectField("100%");
 				if (beanItem.getAffectedVersions() != null
 						&& beanItem.getAffectedVersions().size() > 0) {
 					BugAddViewImpl.this.affectedVersionSelect
 							.setSelectedItems(beanItem.getAffectedVersions());
 				}
-				return BugAddViewImpl.this.affectedVersionSelect;
+				return affectedVersionSelect;
 			} else if (propertyId.equals("fixedVersions")) {
-				BugAddViewImpl.this.fixedVersionSelect = new VersionMultiSelectField(
-						"100%");
+				fixedVersionSelect = new VersionMultiSelectField("100%");
 				if (beanItem.getFixedVersions() != null
 						&& beanItem.getFixedVersions().size() > 0) {
-					BugAddViewImpl.this.fixedVersionSelect
-							.setSelectedItems(beanItem.getFixedVersions());
+					fixedVersionSelect.setSelectedItems(beanItem
+							.getFixedVersions());
 				}
-				return BugAddViewImpl.this.fixedVersionSelect;
+				return fixedVersionSelect;
 			} else if (propertyId.equals("summary")) {
 				final TextField tf = new TextField();
 				tf.setNullRepresentation("");
