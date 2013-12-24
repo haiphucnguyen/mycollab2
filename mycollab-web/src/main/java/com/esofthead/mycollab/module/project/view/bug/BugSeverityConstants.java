@@ -16,6 +16,12 @@
  */
 package com.esofthead.mycollab.module.project.view.bug;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class BugSeverityConstants {
 
 	public static final String CRITICAL_IMG = "icons/12/severity_critical.png";

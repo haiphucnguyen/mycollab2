@@ -27,6 +27,7 @@ import com.vaadin.ui.ComponentContainer;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class RolePresenter extends AbstractPresenter<RoleContainer> {
 	private static final long serialVersionUID = 1L;

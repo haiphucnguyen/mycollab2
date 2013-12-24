@@ -22,20 +22,21 @@ import com.vaadin.ui.ComboBox;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class BugRelationComboBox extends ComboBox {
 
 	private static final long serialVersionUID = 1L;
 
 	public BugRelationComboBox() {
-		this.setItemCaptionMode(ITEM_CAPTION_MODE_EXPLICIT_DEFAULTS_ID);
+		this.setItemCaptionMode(ItemCaptionMode.EXPLICIT_DEFAULTS_ID);
 		this.addItem(BugRelationConstants.PARENT);
 		this.addItem(BugRelationConstants.CHILD);
 		this.addItem(BugRelationConstants.RELATED);
 		this.addItem(BugRelationConstants.DUPLICATED);
 		this.addItem(BugRelationConstants.BEFORE);
 		this.addItem(BugRelationConstants.AFTER);
-		
+
 		this.setNullSelectionAllowed(false);
 		this.select(BugRelationConstants.PARENT);
 	}

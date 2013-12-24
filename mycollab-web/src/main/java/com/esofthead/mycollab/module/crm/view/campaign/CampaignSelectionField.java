@@ -24,12 +24,17 @@ import com.vaadin.event.MouseEvents.ClickEvent;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomField;
-import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @SuppressWarnings("serial")
 public class CampaignSelectionField extends CustomField<CampaignWithBLOBs>
 		implements FieldSelection<CampaignWithBLOBs> {

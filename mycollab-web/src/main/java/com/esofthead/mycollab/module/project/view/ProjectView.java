@@ -22,6 +22,12 @@ import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.PageView;
 import com.vaadin.ui.Component;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public interface ProjectView extends PageView {
 
     void constructProjectHeaderPanel(SimpleProject project, PageActionChain pageActionChain);

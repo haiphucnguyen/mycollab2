@@ -19,16 +19,16 @@ package com.esofthead.mycollab.module.project.view.bug;
 
 import com.esofthead.mycollab.module.project.ui.components.MultiSelectComp;
 
-
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 @SuppressWarnings("serial")
 public class BugStaticItemMultiSelectField extends MultiSelectComp {
 
 	private String[] arrItemData;
-	
+
 	public BugStaticItemMultiSelectField(String[] arrItemData, String width) {
 		super("", width);
 		this.arrItemData = arrItemData;

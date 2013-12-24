@@ -37,7 +37,6 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
@@ -47,6 +46,7 @@ import com.vaadin.ui.themes.Reindeer;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class VersionSearchPanel extends
 		GenericSearchPanel<VersionSearchCriteria> {
@@ -76,8 +76,8 @@ public class VersionSearchPanel extends
 		layout.setSpacing(true);
 		layout.setMargin(true);
 
-		final Image titleIcon = new Image(null, MyCollabResource
-				.newResource("icons/24/project/version.png"));
+		final Image titleIcon = new Image(null,
+				MyCollabResource.newResource("icons/24/project/version.png"));
 		layout.addComponent(titleIcon);
 		layout.setComponentAlignment(titleIcon, Alignment.MIDDLE_LEFT);
 

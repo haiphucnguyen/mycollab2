@@ -16,6 +16,12 @@
  */
 package com.esofthead.mycollab.module.project.view.bug;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class BugRelationConstants {
 
 	public static final String PARENT = "Parent";

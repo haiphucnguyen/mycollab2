@@ -59,6 +59,8 @@ public class BugAddPresenter extends AbstractPresenter<BugAddView> {
 	protected void postInitView() {
 		view.getEditFormHandlers().addFormHandler(
 				new EditFormHandler<SimpleBug>() {
+					private static final long serialVersionUID = 1L;
+
 					@Override
 					public void onSave(final SimpleBug bug) {
 						saveBug(bug);

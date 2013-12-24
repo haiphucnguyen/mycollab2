@@ -42,6 +42,7 @@ import com.vaadin.ui.ComponentContainer;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 @ViewPermission(permissionId = RolePermissionCollections.ACCOUNT_ROLE, impliedPermissionVal = AccessPermissionFlag.READ_WRITE)
 public class RoleAddPresenter extends AbstractPresenter<RoleAddView> {
@@ -49,8 +50,13 @@ public class RoleAddPresenter extends AbstractPresenter<RoleAddView> {
 
 	public RoleAddPresenter() {
 		super(RoleAddView.class);
+	}
 
+	@Override
+	protected void postInitView() {
 		view.getEditFormHandlers().addFormHandler(new EditFormHandler<Role>() {
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void onSave(final Role item) {
 				save(item);

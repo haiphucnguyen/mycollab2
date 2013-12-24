@@ -52,6 +52,8 @@ public class VersionAddPresenter extends AbstractPresenter<VersionAddView> {
 	protected void postInitView() {
 		view.getEditFormHandlers().addFormHandler(
 				new EditFormHandler<Version>() {
+					private static final long serialVersionUID = 1L;
+
 					@Override
 					public void onSave(final Version item) {
 						save(item);

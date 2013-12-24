@@ -33,6 +33,12 @@ import com.hp.gagawa.java.elements.Img;
 import com.hp.gagawa.java.elements.Td;
 import com.hp.gagawa.java.elements.Tr;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class BugToolTipGenerator {
 	private static Logger log = LoggerFactory
 			.getLogger(BugToolTipGenerator.class);

@@ -23,6 +23,7 @@ import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class BugResolutionComboBox extends ValueComboBox {
 	private static final long serialVersionUID = 1L;

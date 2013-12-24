@@ -78,7 +78,7 @@ public class VersionListPresenter
 					}
 
 					@Override
-					protected Class getReportModelClassType() {
+					protected Class<?> getReportModelClassType() {
 						return SimpleVersion.class;
 					}
 				});

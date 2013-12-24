@@ -264,7 +264,7 @@ public class ProjectViewImpl extends AbstractPageView implements ProjectView {
 	}
 
 	@Override
-	public void gotoTaskList(ScreenData data) {
+	public void gotoTaskList(ScreenData<?> data) {
 		taskPresenter.go(ProjectViewImpl.this, data);
 	}
 
@@ -274,7 +274,7 @@ public class ProjectViewImpl extends AbstractPageView implements ProjectView {
 		riskPresenter.go(ProjectViewImpl.this, data);
 	}
 
-	public void gotoTimeTrackingView(ScreenData data) {
+	public void gotoTimeTrackingView(ScreenData<?> data) {
 		timePresenter.go(ProjectViewImpl.this, data);
 	}
 
@@ -285,7 +285,7 @@ public class ProjectViewImpl extends AbstractPageView implements ProjectView {
 	}
 
 	@Override
-	public void gotoMilestoneView(ScreenData data) {
+	public void gotoMilestoneView(ScreenData<?> data) {
 		milestonesPresenter.go(ProjectViewImpl.this, data);
 	}
 

@@ -38,6 +38,12 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.VerticalLayout;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class UnresolvedBugsByAssigneeWidget2 extends Depot {
 	class BugAssigneeButton extends Button {
 		private static final long serialVersionUID = 1L;

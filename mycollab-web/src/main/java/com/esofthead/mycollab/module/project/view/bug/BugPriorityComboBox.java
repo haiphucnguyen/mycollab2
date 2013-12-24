@@ -21,13 +21,19 @@ import com.vaadin.data.util.IndexedContainer;
 import com.vaadin.server.Resource;
 import com.vaadin.ui.ComboBox;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class BugPriorityComboBox extends ComboBox {
 
 	private static final long serialVersionUID = 1L;
 
 	public BugPriorityComboBox() {
 
-		this.setItemCaptionMode(ITEM_CAPTION_MODE_EXPLICIT_DEFAULTS_ID);
+		this.setItemCaptionMode(ItemCaptionMode.EXPLICIT_DEFAULTS_ID);
 
 		IndexedContainer ic = new IndexedContainer();
 		ic.addItem(BugPriorityStatusConstants.PRIORITY_BLOCKER);

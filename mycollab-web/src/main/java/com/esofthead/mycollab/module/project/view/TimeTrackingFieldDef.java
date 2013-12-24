@@ -19,6 +19,12 @@ package com.esofthead.mycollab.module.project.view;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class TimeTrackingFieldDef {
 	public static TableViewField summary = new TableViewField("Summary",
 			"summary", UIConstants.TABLE_EX_LABEL_WIDTH);

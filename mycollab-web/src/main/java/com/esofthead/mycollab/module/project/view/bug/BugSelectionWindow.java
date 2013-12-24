@@ -35,6 +35,12 @@ import com.vaadin.ui.Table;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class BugSelectionWindow extends Window {
 
 	private static final long serialVersionUID = 1L;

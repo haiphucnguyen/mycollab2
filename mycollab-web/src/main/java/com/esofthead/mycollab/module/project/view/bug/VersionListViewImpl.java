@@ -72,6 +72,7 @@ import com.vaadin.ui.VerticalLayout;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 @ViewComponent
 public class VersionListViewImpl extends AbstractPageView implements
@@ -89,7 +90,7 @@ public class VersionListViewImpl extends AbstractPageView implements
 	private final Label selectedItemsNumberLabel = new Label();
 
 	public VersionListViewImpl() {
-		
+
 		this.setMargin(new MarginInfo(true, false, false, false));
 
 		this.componentSearchPanel = new VersionSearchPanel();

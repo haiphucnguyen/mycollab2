@@ -83,16 +83,12 @@ public class StandupAddViewImpl extends AbstractPageView implements
 			controlPanel.setWidth("100%");
 			controlPanel.setComponentAlignment(controlButtons,
 					Alignment.MIDDLE_CENTER);
+			controlPanel.setMargin(true);
 			return controlPanel;
 		}
 
 		@Override
 		protected Layout createTopPanel() {
-			return this.createButtonControls();
-		}
-
-		@Override
-		protected Layout createBottomPanel() {
 			return this.createButtonControls();
 		}
 	}

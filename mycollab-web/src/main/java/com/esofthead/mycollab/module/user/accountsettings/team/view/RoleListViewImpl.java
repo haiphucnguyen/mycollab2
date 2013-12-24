@@ -55,6 +55,7 @@ import com.vaadin.ui.VerticalLayout;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 @ViewComponent
 public class RoleListViewImpl extends AbstractPageView implements RoleListView {
@@ -135,7 +136,8 @@ public class RoleListViewImpl extends AbstractPageView implements RoleListView {
 
 		this.tableActionControls = new PopupButtonControl(
 				MassItemActionHandler.DELETE_ACTION, deleteBtn);
-		this.tableActionControls.addOptionItem(MassItemActionHandler.MAIL_ACTION,
+		this.tableActionControls.addOptionItem(
+				MassItemActionHandler.MAIL_ACTION,
 				LocalizationHelper.getMessage(GenericI18Enum.BUTTON_MAIL));
 		this.tableActionControls
 				.addOptionItem(MassItemActionHandler.EXPORT_CSV_ACTION,

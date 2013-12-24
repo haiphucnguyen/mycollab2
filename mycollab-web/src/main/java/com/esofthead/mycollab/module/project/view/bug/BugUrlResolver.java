@@ -28,6 +28,12 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.web.AppContext;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class BugUrlResolver extends ProjectUrlResolver {
 	public BugUrlResolver() {
 		this.addSubResolver("dashboard", new DashboardUrlResolver());

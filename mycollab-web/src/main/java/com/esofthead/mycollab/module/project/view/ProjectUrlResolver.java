@@ -37,6 +37,12 @@ import com.esofthead.mycollab.vaadin.mvp.ModuleHelper;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.vaadin.mvp.UrlResolver;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class ProjectUrlResolver extends UrlResolver {
 	public UrlResolver build() {
 		this.addSubResolver("dashboard", new ProjectPageUrlResolver());

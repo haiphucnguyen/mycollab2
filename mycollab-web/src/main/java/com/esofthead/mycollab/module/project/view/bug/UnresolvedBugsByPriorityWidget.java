@@ -36,6 +36,7 @@ import com.vaadin.ui.VerticalLayout;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class UnresolvedBugsByPriorityWidget extends Depot {
 	private static final long serialVersionUID = 1L;
@@ -97,8 +98,8 @@ public class UnresolvedBugsByPriorityWidget extends Depot {
 					userLbl.setWidth("110px");
 					userLbl.setStyleName("link");
 					priorityLayout.addComponent(userLbl);
-					final ProgressBarIndicator indicator = new ProgressBarIndicator(totalCount,
-							totalCount, false);
+					final ProgressBarIndicator indicator = new ProgressBarIndicator(
+							totalCount, totalCount, false);
 					indicator.setWidth("100%");
 					priorityLayout.addComponent(indicator);
 					priorityLayout.setExpandRatio(indicator, 1.0f);
