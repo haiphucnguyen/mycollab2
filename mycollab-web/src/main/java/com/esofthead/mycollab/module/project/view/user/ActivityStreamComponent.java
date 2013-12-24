@@ -54,6 +54,7 @@ import com.vaadin.ui.VerticalLayout;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class ActivityStreamComponent extends Depot {
 

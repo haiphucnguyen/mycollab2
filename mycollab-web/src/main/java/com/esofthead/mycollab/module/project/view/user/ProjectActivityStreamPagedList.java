@@ -22,8 +22,6 @@ import java.util.List;
 import java.util.UUID;
 
 import org.apache.commons.lang3.time.DateUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.esofthead.mycollab.common.ActivityStreamConstants;
 import com.esofthead.mycollab.common.domain.SimpleActivityStream;
@@ -44,13 +42,16 @@ import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Label;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class ProjectActivityStreamPagedList
 		extends
 		AbstractBeanPagedList<ActivityStreamSearchCriteria, ProjectActivityStream> {
 	private static final long serialVersionUID = 1L;
-
-	private static Logger log = LoggerFactory
-			.getLogger(ProjectActivityStreamPagedList.class);
 
 	private final ActivityStreamService activityStreamService;
 
@@ -171,7 +172,6 @@ public class ProjectActivityStreamPagedList
 									arg13, arg14, arg15, arg16, arg17, arg18,
 									arg19, arg20, arg21, arg22, arg23, arg24,
 									arg25, arg26);
-					log.debug("CONTENT: " + content);
 					if (activityStream.getAssoAuditLog() != null) {
 						content += ProjectActivityStreamGenerator
 								.generatorDetailChangeOfActivity(activityStream);

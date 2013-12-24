@@ -44,6 +44,7 @@ import com.vaadin.ui.VerticalLayout;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class ProjectTaskStatusComponent extends Depot {
 	public static class TaskRowDisplayHandler implements

@@ -53,6 +53,8 @@ public class ProjectAddPresenter extends AbstractPresenter<ProjectAddView> {
 	protected void postInitView() {
 		view.getEditFormHandlers().addFormHandler(
 				new EditFormHandler<Project>() {
+					private static final long serialVersionUID = 1L;
+
 					@Override
 					public void onSave(final Project project) {
 						saveProject(project);

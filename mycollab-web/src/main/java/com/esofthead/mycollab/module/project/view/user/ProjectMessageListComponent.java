@@ -37,6 +37,12 @@ import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class ProjectMessageListComponent extends Depot {
 	public static class MessageRowDisplayHandler implements
 			DefaultBeanPagedList.RowDisplayHandler<SimpleMessage> {

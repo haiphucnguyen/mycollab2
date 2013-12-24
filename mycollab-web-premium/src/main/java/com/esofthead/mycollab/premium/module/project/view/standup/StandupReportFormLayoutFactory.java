@@ -5,6 +5,7 @@ import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
@@ -12,15 +13,21 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public abstract class StandupReportFormLayoutFactory implements
 		IFormLayoutFactory {
 	private static final long serialVersionUID = 1L;
 
-	private CustomComponent whatTodayField;
+	private StandupCustomField whatTodayField;
 
-	private CustomComponent whatYesterdayField;
+	private StandupCustomField whatYesterdayField;
 
-	private CustomComponent whatProblemField;
+	private StandupCustomField whatProblemField;
 
 	private final String title;
 
@@ -46,13 +53,13 @@ public abstract class StandupReportFormLayoutFactory implements
 				"What I did in the last day/week");
 		whatYesterdayLbl.setStyleName("h2");
 		layoutField.addComponent(whatYesterdayLbl);
-		this.whatYesterdayField = new CustomComponent();
+		this.whatYesterdayField = new StandupCustomField();
 		layoutField.addComponent(this.whatYesterdayField);
 
 		final Label whatTodayLbl = new Label("What I will do today/week");
 		whatTodayLbl.setStyleName("h2");
 		layoutField.addComponent(whatTodayLbl);
-		this.whatTodayField = new CustomComponent();
+		this.whatTodayField = new StandupCustomField();
 		layoutField.addComponent(this.whatTodayField);
 
 		final Label roadblockLbl = new Label(
@@ -60,7 +67,7 @@ public abstract class StandupReportFormLayoutFactory implements
 		roadblockLbl.addStyleName("h2");
 		roadblockLbl.addStyleName(UIConstants.WORD_WRAP);
 		layoutField.addComponent(roadblockLbl);
-		this.whatProblemField = new CustomComponent();
+		this.whatProblemField = new StandupCustomField();
 		layoutField.addComponent(this.whatProblemField);
 
 		mainLayout.addComponent(layoutField);
@@ -94,23 +101,26 @@ public abstract class StandupReportFormLayoutFactory implements
 
 		reportAddLayout.addBody(mainLayout);
 
-		reportAddLayout.addBottomControls(this.createBottomPanel());
-
 		return reportAddLayout;
 	}
 
 	@Override
-	public void attachField(final Object propertyId, final Field field) {
-//		if (propertyId.equals("whatlastday")) {
-//			this.whatYesterdayField.setC(field);
-//		} else if (propertyId.equals("whattoday")) {
-//			this.whatTodayField.setLazyLoadComponent(field);
-//		} else if (propertyId.equals("whatproblem")) {
-//			this.whatProblemField.setLazyLoadComponent(field);
-//		}
+	public void attachField(final Object propertyId, final Field<?> field) {
+		if (propertyId.equals("whatlastday")) {
+			this.whatYesterdayField.setContentComp(field);
+		} else if (propertyId.equals("whattoday")) {
+			this.whatTodayField.setContentComp(field);
+		} else if (propertyId.equals("whatproblem")) {
+			this.whatProblemField.setContentComp(field);
+		}
 	}
 
 	protected abstract Layout createTopPanel();
 
-	protected abstract Layout createBottomPanel();
+	private static class StandupCustomField extends CustomComponent {
+
+		public void setContentComp(Component comp) {
+			this.setCompositionRoot(comp);
+		}
+	}
 }
