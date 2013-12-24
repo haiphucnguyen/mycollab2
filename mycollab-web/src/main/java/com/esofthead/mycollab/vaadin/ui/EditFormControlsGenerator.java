@@ -24,6 +24,12 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.HorizontalLayout;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class EditFormControlsGenerator<T> implements Serializable {
 
 	private static final long serialVersionUID = 1L;

@@ -36,6 +36,7 @@ import com.vaadin.ui.VerticalLayout;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class UnresolvedBugsByAssigneeWidget extends Depot {
 	private static final long serialVersionUID = 1L;
@@ -73,8 +74,8 @@ public class UnresolvedBugsByAssigneeWidget extends Depot {
 				final BugAssigneeButton userLbl = new BugAssigneeButton(
 						assignUser, item.getExtraValue(), assignUserFullName);
 				assigneeLayout.addComponent(userLbl);
-				final ProgressBarIndicator indicator = new ProgressBarIndicator(totalCount,
-						totalCount - item.getValue(), false);
+				final ProgressBarIndicator indicator = new ProgressBarIndicator(
+						totalCount, totalCount - item.getValue(), false);
 				indicator.setWidth("100%");
 				assigneeLayout.addComponent(indicator);
 				assigneeLayout.setExpandRatio(indicator, 1.0f);

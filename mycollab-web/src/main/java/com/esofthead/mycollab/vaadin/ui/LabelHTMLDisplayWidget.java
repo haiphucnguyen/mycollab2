@@ -23,6 +23,12 @@ import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @SuppressWarnings("serial")
 public class LabelHTMLDisplayWidget extends HorizontalLayout implements
 		LayoutClickListener {

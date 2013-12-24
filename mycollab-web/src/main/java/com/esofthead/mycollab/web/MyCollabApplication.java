@@ -16,8 +16,6 @@
  */
 package com.esofthead.mycollab.web;
 
-import java.io.InputStream;
-
 import javax.servlet.http.Cookie;
 
 import org.slf4j.Logger;
@@ -29,14 +27,14 @@ import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.DeploymentMode;
 import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.shell.view.FragmentNavigator;
 import com.esofthead.mycollab.shell.view.MainWindowContainer;
 import com.esofthead.mycollab.shell.view.NoSubDomainExistedWindow;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
-import com.maxmind.db.Reader.FileMode;
-import com.maxmind.geoip2.DatabaseReader;
-import com.maxmind.geoip2.DatabaseReader.Builder;
 import com.vaadin.annotations.Theme;
 import com.vaadin.server.DefaultErrorHandler;
+import com.vaadin.server.Page.UriFragmentChangedEvent;
+import com.vaadin.server.Page.UriFragmentChangedListener;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinService;
 import com.vaadin.server.VaadinServletRequest;
@@ -59,7 +57,7 @@ public class MyCollabApplication extends UI {
 	private static Logger log = LoggerFactory
 			.getLogger(MyCollabApplication.class);
 
-	private static DatabaseReader reader = null;
+	// private static DatabaseReader reader = null;
 
 	/**
 	 * Context of current logged in user
@@ -71,17 +69,16 @@ public class MyCollabApplication extends UI {
 
 	public static final String NAME_COOKIE = "mycollab";
 
-	static {
-		try {
-			InputStream geoStream = MyCollabApplication.class.getClassLoader()
-					.getResourceAsStream("GeoLite2-City.mmdb");
-			reader = new Builder(geoStream).fileMode(FileMode.MEMORY).build();
-		} catch (Exception e) {
-			log.error("Can not read geo database file", e);
-		}
-	}
+	// static {
+	// try {
+	// InputStream geoStream = MyCollabApplication.class.getClassLoader()
+	// .getResourceAsStream("GeoLite2-City.mmdb");
+	// reader = new Builder(geoStream).fileMode(FileMode.MEMORY).build();
+	// } catch (Exception e) {
+	// log.error("Can not read geo database file", e);
+	// }
+	// }
 
-	// @return the current application instance
 	public static MyCollabApplication getInstance() {
 		return (MyCollabApplication) VaadinSession.getCurrent().getAttribute(
 				CURRENT_APP);
@@ -122,6 +119,21 @@ public class MyCollabApplication extends UI {
 				log.error("Error", e);
 			}
 		});
+
+		getPage().addUriFragmentChangedListener(
+				new UriFragmentChangedListener() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void uriFragmentChanged(UriFragmentChangedEvent event) {
+						enter(event.getUriFragment());
+
+					}
+				});
+	}
+
+	private void enter(String uriFragement) {
+		FragmentNavigator.navigateByFragement(uriFragement);
 	}
 
 	private void postSetupApp(VaadinRequest request) {
@@ -232,7 +244,6 @@ public class MyCollabApplication extends UI {
 	}
 
 	public void rememberPassword(String username, String password) {
-		// Remember password
 
 		Cookie cookie = getCookieByName(MyCollabApplication.NAME_COOKIE);
 		if (cookie == null) {
@@ -257,9 +268,6 @@ public class MyCollabApplication extends UI {
 	}
 
 	public Cookie getCookieByName(String name) {
-		// Fetch all cookies from the request
-		VaadinRequest currentRequest = VaadinService.getCurrentRequest();
-		log.debug("Request path: " + currentRequest.getPathInfo());
 		Cookie[] cookies = VaadinService.getCurrentRequest().getCookies();
 
 		// Iterate to find cookie by its name

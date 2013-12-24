@@ -130,7 +130,8 @@ public class VerticalTabsheet extends CustomComponent {
 	}
 
 	public static class TabImpl implements Tab {
-
+		private static final long serialVersionUID = 1L;
+		
 		private String caption;
 		private Component component;
 

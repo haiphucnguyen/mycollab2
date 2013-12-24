@@ -21,17 +21,18 @@ import com.esofthead.mycollab.module.project.ProjectDataTypeFactory;
 import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
 
 /**
- *
+ * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
-public class BugStatusComboBox  extends ValueComboBox {
+public class BugStatusComboBox extends ValueComboBox {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    public BugStatusComboBox() {
-        super();
-        setCaption(null);
-        loadData(ProjectDataTypeFactory.getBugStatusList());
-    }
-    
+	public BugStatusComboBox() {
+		super();
+		setCaption(null);
+		loadData(ProjectDataTypeFactory.getBugStatusList());
+	}
+
 }

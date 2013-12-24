@@ -30,6 +30,7 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 @SuppressWarnings("serial")
 public class VersionMultiSelectField extends MultiSelectComp {

@@ -24,6 +24,7 @@ import com.esofthead.mycollab.vaadin.mvp.ListView;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 public interface VersionListView extends
 		ListView<VersionSearchCriteria, SimpleVersion> {

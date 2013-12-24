@@ -19,6 +19,12 @@ package com.esofthead.mycollab.vaadin.ui;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.ui.Link;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class EmailLink extends Link {
 	private static final long serialVersionUID = 1L;
 

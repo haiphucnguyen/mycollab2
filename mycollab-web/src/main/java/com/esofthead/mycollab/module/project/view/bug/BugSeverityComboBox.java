@@ -25,6 +25,7 @@ import com.vaadin.ui.ComboBox;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class BugSeverityComboBox extends ComboBox {
 

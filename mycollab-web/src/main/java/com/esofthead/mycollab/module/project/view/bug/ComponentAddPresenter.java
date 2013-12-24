@@ -53,6 +53,8 @@ public class ComponentAddPresenter extends AbstractPresenter<ComponentAddView> {
 	protected void postInitView() {
 		view.getEditFormHandlers().addFormHandler(
 				new EditFormHandler<Component>() {
+					private static final long serialVersionUID = 1L;
+
 					@Override
 					public void onSave(final Component item) {
 						save(item);

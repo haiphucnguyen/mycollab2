@@ -21,6 +21,12 @@ import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class FollowingTicketFieldDef {
 	public static TableViewField summary = new TableViewField("Summary",
 			"summary", UIConstants.TABLE_EX_LABEL_WIDTH);

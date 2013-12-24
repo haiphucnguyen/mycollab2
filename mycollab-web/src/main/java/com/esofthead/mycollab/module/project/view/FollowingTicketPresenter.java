@@ -24,6 +24,12 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class FollowingTicketPresenter extends
 		AbstractPresenter<FollowingTicketView> {
 	private static final long serialVersionUID = 1L;

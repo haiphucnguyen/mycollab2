@@ -158,10 +158,9 @@ public class BeanList<SearchService extends ISearchableService<S>, S extends Sea
 					log.debug("Row handler {} index {}", rowHandler, i);
 
 					Component row = rowHandler.generateRow(item, i);
-					row.setWidth("100%");
-					
 					log.debug("Generated row {} index {}", row, i);
 					if (row != null) {
+						row.setWidth("100%");
 						contentLayout.addComponent(row);
 					}
 
