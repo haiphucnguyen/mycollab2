@@ -1,0 +1,14 @@
+#content {
+width: 100%;
+}
+
+#content_left {
+	float:none;
+	margin: 0 auto;
+}
+#content_right {
+	width:100%;
+}
+#error_excuse {
+	padding: 0 20px;
+}

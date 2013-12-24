@@ -8,6 +8,29 @@ _gaq.push(['_trackPageview']);
 	var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 })();
 
+$(document).ready(function() {
+	$('#bt-main-menu').click(function(){
+		if ($(this).hasClass('active'))
+		{
+			$(this).removeClass('active');
+			$('.header-mid ul').removeClass('active');
+		}
+		else
+		{
+			$(this).addClass('active');
+			$('.header-mid ul').addClass('active');
+		}
+	});
+	
+	$("#livechat-compact > .livechat-title").click(function(){
+       $("#livechat-full").css("visibility", "visible");
+   });
+
+   $("#livechat-full > .livechat-title").click(function(){
+       $("#livechat-full").css("visibility", "hidden");
+   });
+});
+
 //$(document).ready(function(){
 //	// Footer position
 //	var window_height = $(window).height();

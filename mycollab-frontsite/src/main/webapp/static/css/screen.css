@@ -1,6 +1,8 @@
 /**************************/
 /*        CSS reset       */
 /**************************/
+
+
 @import url(https://fonts.googleapis.com/css?family=Monda:400,700);
 
 @font-face {
@@ -692,6 +694,11 @@ h1, h2, h3, h4, h5, h6 {
 	background-color: #77bae0;
 	color: #fff;
 }
+
+#bt-main-menu {
+	visibility:hidden;
+}
+
 /* End Header style */
 
 /* Footer style */
@@ -712,6 +719,7 @@ h1, h2, h3, h4, h5, h6 {
 	color: #FFF;
 	font-size: 12px;
 	display: inline-block;
+	float:left;
 }
 
 .footer-copyright a {
@@ -1640,6 +1648,15 @@ h1, h2, h3, h4, h5, h6 {
 	text-align: center;
 }
 
+  
+/* rslides   */
+.rslides {
+	display:none;
+}
+.centered-btns_nav, .centered-btns_tabs {
+	display:none;
+}
+
 .nivoSlider {
 	position: relative;
 	background: #fff url(../images/slides/loading.gif) no-repeat 50% 50%;
@@ -2211,6 +2228,9 @@ a.nivo-prevNav {
 	margin-top: 10px;
 }
 
+.free-trial-cnt-3 {
+	display:none;
+}
 .free-trial p {
 	color: #FFF;
 	background-color: #2B97D7;
@@ -2715,6 +2735,8 @@ a.nivo-prevNav {
 	font-family: 'Monda';
 }
 
+
+
 .term-block p {
 	padding-bottom: 10px;
 	font-size: 14px;
@@ -2763,4 +2785,61 @@ a.nivo-prevNav {
 	color: red;
 	font-size: 14px;
 	font-family: "Monda", Arial, sans-serif;
+}
+
+/* Live Support */
+#livechat-compact {
+    position: fixed;
+    bottom: 0px;
+    right: 50px;
+    width: 320px;
+    z-index: 998;
+}
+#livechat-full {
+    position: fixed;
+    bottom: 0px;
+    right: 50px;
+    z-index: 999;
+    visibility: hidden;
+}
+.livechat-title {
+    display: block;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 5px 20px;
+    background-color: rgb(241, 174, 40);
+    border-radius: 10px 10px 0px 0px;
+    cursor: pointer;
+    color: rgb(255, 255, 255);
+    background-image: url('../images/toggle_chat.png');
+    background-repeat: no-repeat;
+    background-position: right top;
+}
+#livechat-compact .livechat-title {
+    background-position: right -35px;
+}
+#livechat-content {
+    float: left;
+    border-width: 0px 5px;
+    border-style: solid;
+    border-color: rgb(241, 174, 40);
+}
+
+/* mobile persistence modules */
+#tour-navigator-mobile {
+	display:none;
+}
+
+.pri-mid-right-mobile {
+	display:none;
+}
+
+
+.jcarousel ul li {
+	display:inline-block;
+}
+
+.jcarousel-pagination {
+	display:none;
 }
