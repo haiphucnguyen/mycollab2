@@ -62,6 +62,8 @@ public class CampaignAddPresenter extends CrmGenericPresenter<CampaignAddView> {
 	protected void postInitView() {
 		view.getEditFormHandlers().addFormHandler(
 				new EditFormHandler<SimpleCampaign>() {
+					private static final long serialVersionUID = 1L;
+
 					@Override
 					public void onSave(final SimpleCampaign campaign) {
 						saveCampaign(campaign);

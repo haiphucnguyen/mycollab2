@@ -48,9 +48,14 @@ public class CallAddPresenter extends CrmGenericPresenter<CallAddView> {
 
 	public CallAddPresenter() {
 		super(CallAddView.class);
+	}
 
+	@Override
+	protected void postInitView() {
 		view.getEditFormHandlers().addFormHandler(
 				new EditFormHandler<CallWithBLOBs>() {
+					private static final long serialVersionUID = 1L;
+
 					@Override
 					public void onSave(final CallWithBLOBs item) {
 						save(item);
