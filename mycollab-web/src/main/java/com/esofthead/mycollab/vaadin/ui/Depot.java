@@ -91,10 +91,10 @@ public class Depot extends VerticalLayout {
             public void layoutClick(final LayoutClickEvent event) {
                 Depot.this.isOpenned = !Depot.this.isOpenned;
                 if (Depot.this.isOpenned) {
-                    Depot.this.bodyContent.setHeight("100%");
+                	Depot.this.bodyContent.setVisible(true);
                     Depot.this.removeStyleName("collapsed");
                 } else {
-                    Depot.this.bodyContent.setHeight("0px");
+                    Depot.this.bodyContent.setVisible(false);
                     Depot.this.addStyleName("collapsed");
                 }
             }

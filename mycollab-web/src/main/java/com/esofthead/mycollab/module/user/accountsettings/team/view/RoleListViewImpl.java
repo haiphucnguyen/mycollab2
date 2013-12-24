@@ -20,7 +20,6 @@ package com.esofthead.mycollab.module.user.accountsettings.team.view;
 import java.util.Arrays;
 
 import com.esofthead.mycollab.vaadin.ui.PopupButtonControl;
-
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.eventmanager.ApplicationEvent;
@@ -44,6 +43,7 @@ import com.esofthead.mycollab.vaadin.ui.table.AbstractPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 import com.esofthead.mycollab.web.AppContext;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.ComponentContainer;
@@ -69,6 +69,8 @@ public class RoleListViewImpl extends AbstractPageView implements RoleListView {
 	private final Label selectedItemsNumberLabel = new Label();
 
 	public RoleListViewImpl() {
+		
+		this.setMargin(new MarginInfo(true, false, false, false));
 
 		this.searchPanel = new RoleSearchPanel();
 		this.addComponent(this.searchPanel);

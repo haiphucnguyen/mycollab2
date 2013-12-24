@@ -38,6 +38,7 @@ import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.KeyCaptionComboBox;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
@@ -61,8 +62,11 @@ public class RoleAddViewImpl extends AbstractPageView implements RoleAddView {
 
 	public RoleAddViewImpl() {
 		super();
+		
+		this.setMargin(new MarginInfo(true, false, false, false));
 		this.editForm = new EditForm();
 		this.addComponent(this.editForm);
+		this.addStyleName("accountsettings-role");
 	}
 
 	@Override
@@ -105,6 +109,8 @@ public class RoleAddViewImpl extends AbstractPageView implements RoleAddView {
 				controlPanel.setWidth("100%");
 				controlPanel.setComponentAlignment(controlButtons,
 						Alignment.MIDDLE_CENTER);
+				controlPanel.setMargin(true);
+				controlPanel.addStyleName("control-buttons");
 				return controlPanel;
 			}
 
@@ -117,7 +123,7 @@ public class RoleAddViewImpl extends AbstractPageView implements RoleAddView {
 			protected Layout createBottomPanel() {
 				final VerticalLayout permissionsPanel = new VerticalLayout();
 				final Label organizationHeader = new Label("Permissions");
-				organizationHeader.setStyleName("h2");
+				organizationHeader.setStyleName(UIConstants.H2_STYLE2);
 				permissionsPanel.addComponent(organizationHeader);
 
 				PermissionMap perMap;

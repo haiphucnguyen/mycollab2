@@ -5544,3 +5544,8 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 .historylog-component .bean-list {
 	border-top: 1px solid #a9a9a9;
 }
+
+/* Account Settings - Role's depot header fix */
+.accountsettings-role .addViewBottomControls .depotComp .depotHeader {
+	border-width: 1px 0px;
+}
