@@ -50,6 +50,7 @@ public class UnresolvedBugsByPriorityWidget extends Depot {
 		this.componentLayout = componentLayout;
 		this.setContentBorder(true);
 		((VerticalLayout) this.bodyContent).setSpacing(true);
+		((VerticalLayout) this.bodyContent).setMargin(true);
 	}
 
 	public void setSearchCriteria(final BugSearchCriteria searchCriteria) {

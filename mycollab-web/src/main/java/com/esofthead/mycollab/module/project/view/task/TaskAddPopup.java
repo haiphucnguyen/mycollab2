@@ -172,7 +172,7 @@ public class TaskAddPopup extends CustomComponent {
 
 		@Override
 		public Layout getLayout() {
-			this.informationLayout = new GridFormLayoutHelper(2, 5);
+			this.informationLayout = new GridFormLayoutHelper(2, 5, "100%", "180px", Alignment.MIDDLE_LEFT);
 
 			final VerticalLayout layout = new VerticalLayout();
 			this.informationLayout.getLayout().addStyleName(

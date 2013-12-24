@@ -52,6 +52,7 @@ import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.server.FileDownloader;
+import com.vaadin.server.Sizeable;
 import com.vaadin.server.StreamResource;
 import com.vaadin.server.StreamResource.StreamSource;
 import com.vaadin.shared.ui.MarginInfo;
@@ -189,6 +190,7 @@ public class TimeTrackingSummaryViewImpl extends AbstractPageView implements
 			}
 		});
 		exportButtonControl = new SplitButton(exportBtn);
+		exportButtonControl.setWidth(Sizeable.SIZE_UNDEFINED, Sizeable.Unit.PIXELS);
 		exportButtonControl.addStyleName(UIConstants.THEME_GRAY_LINK);
 		exportButtonControl.setIcon(MyCollabResource
 				.newResource("icons/16/export.png"));

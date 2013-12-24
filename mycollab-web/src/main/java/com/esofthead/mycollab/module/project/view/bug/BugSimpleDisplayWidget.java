@@ -24,6 +24,7 @@ import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.BeanList;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.vaadin.server.Sizeable;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -64,6 +65,7 @@ public class BugSimpleDisplayWidget extends
 						}
 					});
 			bugLink.setStyleName("link");
+			bugLink.setWidth(Sizeable.SIZE_UNDEFINED, Sizeable.Unit.PIXELS);
 			if (bug.isCompleted()) {
 				bugLink.addStyleName(UIConstants.LINK_COMPLETED);
 			} else if (bug.isOverdue()) {
@@ -74,6 +76,7 @@ public class BugSimpleDisplayWidget extends
 			Label bugSummary = new Label(bug.getSummary());
 			layout.addComponent(bugSummary);
 			layout.setComponentAlignment(bugSummary, Alignment.MIDDLE_LEFT);
+			layout.setExpandRatio(bugSummary, 1.0f);
 			return layout;
 		}
 	}

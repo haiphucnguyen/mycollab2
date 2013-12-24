@@ -30,8 +30,10 @@ import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.persistence.service.ISearchableService;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
+import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
 
 /**
@@ -56,24 +58,30 @@ public class BeanList<SearchService extends ISearchableService<S>, S extends Sea
 
 	private Object parentComponent;
 	private Class<? extends RowDisplayHandler<T>> rowDisplayHandler;
-	private VerticalLayout contentLayout;
+	private Layout contentLayout;
 	private boolean isDisplayEmptyListText = true;
 
 	public BeanList(Object parentComponent, SearchService searchService,
 			Class<? extends RowDisplayHandler<T>> rowDisplayHandler) {
-		this(parentComponent, searchService, rowDisplayHandler,
-				new VerticalLayout());
+		this(parentComponent, searchService, rowDisplayHandler, null);
 	}
 
 	public BeanList(Object parentComponent, SearchService searchService,
-			Class<? extends RowDisplayHandler<T>> rowDisplayHandler,
-			VerticalLayout contentLayout) {
+			Class<? extends RowDisplayHandler<T>> rowDisplayHandler, Layout contentLayout) {
 		this.parentComponent = parentComponent;
 		this.searchService = searchService;
 		this.rowDisplayHandler = rowDisplayHandler;
 
-		this.contentLayout = contentLayout;
-		this.setCompositionRoot(contentLayout);
+		if(contentLayout != null) {
+			this.contentLayout = contentLayout;
+			
+		} else {
+			this.contentLayout = new CssLayout();
+			this.contentLayout.setWidth("100%");
+		}
+		
+		this.setCompositionRoot(this.contentLayout);
+		
 		this.setStyleName("bean-list");
 	}
 
@@ -84,14 +92,6 @@ public class BeanList<SearchService extends ISearchableService<S>, S extends Sea
 
 	public void setDisplayEmptyListText(boolean isDisplayEmptyListText) {
 		this.isDisplayEmptyListText = isDisplayEmptyListText;
-	}
-
-	public void insertItemOnTop(T item) {
-		RowDisplayHandler<T> rowHandler = constructRowndisplayHandler();
-		Component row = rowHandler.generateRow(item, 0);
-		if (row != null && contentLayout != null) {
-			contentLayout.addComponent(row, 0);
-		}
 	}
 
 	public void insetItemOnBottom(T item) {
@@ -158,6 +158,8 @@ public class BeanList<SearchService extends ISearchableService<S>, S extends Sea
 					log.debug("Row handler {} index {}", rowHandler, i);
 
 					Component row = rowHandler.generateRow(item, i);
+					row.setWidth("100%");
+					
 					log.debug("Generated row {} index {}", row, i);
 					if (row != null) {
 						contentLayout.addComponent(row);

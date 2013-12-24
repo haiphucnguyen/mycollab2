@@ -49,6 +49,7 @@ import com.esofthead.mycollab.vaadin.ui.table.AbstractPagedBeanTable;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.server.FileDownloader;
+import com.vaadin.server.Sizeable;
 import com.vaadin.server.StreamResource;
 import com.vaadin.server.StreamResource.StreamSource;
 import com.vaadin.shared.ui.MarginInfo;
@@ -58,6 +59,7 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.Table.ColumnGenerator;
@@ -89,8 +91,7 @@ public class FollowingTicketViewImpl extends AbstractPageView implements
 		header.setWidth("100%");
 		header.setSpacing(true);
 
-		final Embedded timeIcon = new Embedded();
-		timeIcon.setSource(MyCollabResource.newResource("icons/24/follow.png"));
+		final Image timeIcon = new Image(null, MyCollabResource.newResource("icons/24/follow.png"));
 		header.addComponent(timeIcon);
 
 		final Label layoutHeader = new Label("Your Following Tickets");
@@ -133,6 +134,7 @@ public class FollowingTicketViewImpl extends AbstractPageView implements
 			}
 		});
 		exportButtonControl = new SplitButton(exportBtn);
+		exportButtonControl.setWidth(Sizeable.SIZE_UNDEFINED, Sizeable.Unit.PIXELS);
 		exportButtonControl.addStyleName(UIConstants.THEME_GRAY_LINK);
 		exportButtonControl.setIcon(MyCollabResource
 				.newResource("icons/16/export.png"));

@@ -64,6 +64,7 @@ import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.server.Resource;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -94,6 +95,8 @@ public class BugReadViewImpl extends AbstractPageView implements BugReadView,
 
 	public BugReadViewImpl() {
 		super();
+		
+		this.setMargin(new MarginInfo(true, false, false, false));
 
 		this.previewForm = new BugPreviewForm();
 		this.addComponent(this.previewForm);

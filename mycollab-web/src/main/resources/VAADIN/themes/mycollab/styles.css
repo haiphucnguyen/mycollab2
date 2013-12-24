@@ -1237,14 +1237,6 @@ input.v-textfield-errorField {
 	border-width: 0px 0px 1px 0px;
 }
 
-.addViewLayout .addViewBottomControls .depotComp .taskdisplay-component .v-table-header-wrap,.addViewLayout .addViewBottomControls .depotComp .taskdisplay-component .v-table-body
-	{
-	border-width: 1px 0px 1px 0px;
-}
-
-.addViewLayout .addViewBottomControls .depotComp .task-list-footer {
-	border-width: 0px;
-}
 /* End Add View Styles */
 
 /* Account Settings */
@@ -4317,7 +4309,7 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 	padding-bottom: 0px;
 }
 
-.task-list .taskadd-popup .colored-gridlayout .v-gridlayout-margin {
+.task-list .taskadd-popup .colored-gridlayout {
 	border: none;
 }
 
