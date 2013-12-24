@@ -59,6 +59,7 @@ public class RiskAddViewImpl extends AbstractEditItemComp<Risk> implements
 	protected ComponentContainer createButtonControls() {
 		final HorizontalLayout controlPanel = new HorizontalLayout();
 		controlPanel.setMargin(true);
+		controlPanel.addStyleName("control-buttons");
 		final Layout controlButtons = (new EditFormControlsGenerator<Risk>(
 				editForm)).createButtonControls();
 		controlButtons.setSizeUndefined();

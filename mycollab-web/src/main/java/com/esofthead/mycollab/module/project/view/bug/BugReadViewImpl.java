@@ -415,6 +415,7 @@ public class BugReadViewImpl extends AbstractPageView implements BugReadView,
 				final HorizontalLayout topPanel = new HorizontalLayout();
 				topPanel.setSpacing(false);
 				topPanel.setMargin(true);
+				topPanel.addStyleName("control-buttons");
 				topPanel.setWidth("100%");
 
 				final HorizontalLayout buttonControls = new HorizontalLayout();

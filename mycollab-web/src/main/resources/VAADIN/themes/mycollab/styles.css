@@ -1299,15 +1299,17 @@ input.v-textfield-errorField {
 	border-color: rgb(169, 169, 169);
 	border-width: 0px 0px 1px 0px;
 	border-style: solid;
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-	box-sizing: border-box;
+	padding: 8px 0px 8px 18px;
 }
 
 .accountViewContainer .userInfoContainer .addViewBody .info-block-header .h2
 	{
 	border: none;
 	padding: 0px;
+}
+
+.accountViewContainer .userInfoContainer .addViewBody .info-block-header .v-button {
+	vertical-align: middle;
 }
 
 .account-dashboard .addViewLayout .depot-title .v-label-h2 {
@@ -1318,11 +1320,6 @@ input.v-textfield-errorField {
 	border-width: 0px 0px 1px 0px;
 	border-style: solid;
 	border-color: rgb(169, 169, 169);
-}
-
-.accountViewContainer .userInfoContainer .addViewBody .info-block-header
-	{
-	padding: 8px 0px 8px 18px;
 }
 
 .accountViewContainer .userInfoContainer .addViewBody .info-block-header>.v-csslayout-margin>.v-csslayout-container>div
@@ -5518,7 +5515,7 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 .tab-style3 > .v-tabsheet-tabcontainer > .v-tabsheet-tabs > tbody > tr > .v-tabsheet-tabitemcell.v-tabsheet-tabitemcell-selected {
 	background: none;
 }
-.tab-style3 > .v-tabsheet-tabcontainer > .v-tabsheet-tabs > tbody > tr > .v-tabsheet-tabitemcell > .v-tabsheet-tabitem-selected .v-caption .v-captiontext, .tab-style3 > .v-tabsheet-tabcontainer > .v-tabsheet-tabs > tr > .v-tabsheet-tabitemcell > .v-tabsheet-tabitem-selected:hover .v-caption .v-captiontext {
+.tab-style3 > .v-tabsheet-tabcontainer > .v-tabsheet-tabs > tbody > tr > .v-tabsheet-tabitemcell > .v-tabsheet-tabitem.v-tabsheet-tabitem-selected .v-caption .v-captiontext, .tab-style3 > .v-tabsheet-tabcontainer > .v-tabsheet-tabs > tr > .v-tabsheet-tabitemcell > .v-tabsheet-tabitem.v-tabsheet-tabitem-selected:hover .v-caption .v-captiontext {
 	color: rgb(40, 126, 206);
 	font-size: 14px;
 }

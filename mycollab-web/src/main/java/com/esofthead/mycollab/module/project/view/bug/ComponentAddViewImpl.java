@@ -29,6 +29,7 @@ import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.server.Resource;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Field;
@@ -47,6 +48,10 @@ public class ComponentAddViewImpl extends AbstractEditItemComp<Component>
 		implements ComponentAddView {
 
 	private static final long serialVersionUID = 1L;
+	
+	public ComponentAddViewImpl() {
+		this.setMargin(new MarginInfo(true, false, false, false));
+	}
 
 	@Override
 	protected String initFormTitle() {
@@ -70,6 +75,7 @@ public class ComponentAddViewImpl extends AbstractEditItemComp<Component>
 		controlPanel.setMargin(true);
 		controlPanel.setComponentAlignment(controlButtons,
 				Alignment.MIDDLE_CENTER);
+		controlPanel.addStyleName("control-buttons");
 		return controlPanel;
 	}
 

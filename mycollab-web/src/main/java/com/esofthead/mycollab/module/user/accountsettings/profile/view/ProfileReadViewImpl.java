@@ -40,6 +40,7 @@ import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
+import com.vaadin.server.Sizeable;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -201,6 +202,7 @@ public class ProfileReadViewImpl extends AbstractPageView implements
 				final Label basicInformationHeaderLbl = new Label(
 						"Basic Information");
 				basicInformationHeaderLbl.setStyleName("h2");
+				basicInformationHeaderLbl.setWidth(Sizeable.SIZE_UNDEFINED, Sizeable.Unit.PIXELS);
 				basicInformationHeader.addComponent(basicInformationHeaderLbl);
 
 				final CssLayout contactInformationHeader = new CssLayout();
@@ -209,7 +211,7 @@ public class ProfileReadViewImpl extends AbstractPageView implements
 				final Label contactInformationHeaderLbl = new Label(
 						"Contact Information");
 				contactInformationHeaderLbl.setStyleName("h2");
-				contactInformationHeaderLbl.setWidth("100%");
+				contactInformationHeaderLbl.setWidth(Sizeable.SIZE_UNDEFINED, Sizeable.Unit.PIXELS);
 				contactInformationHeader
 						.addComponent(contactInformationHeaderLbl);
 
@@ -219,7 +221,7 @@ public class ProfileReadViewImpl extends AbstractPageView implements
 				final Label advanceInfoHeaderLbl = new Label(
 						"Advanced Information");
 				advanceInfoHeaderLbl.setStyleName("h2");
-				advanceInfoHeaderLbl.setWidth("100%");
+				advanceInfoHeaderLbl.setWidth(Sizeable.SIZE_UNDEFINED, Sizeable.Unit.PIXELS);
 				advanceInfoHeader.addComponent(advanceInfoHeaderLbl);
 
 				this.basicInformation = new GridFormLayoutHelper(1, 6, "100%",

@@ -28,6 +28,7 @@ import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.server.Resource;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.datefield.Resolution;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.ComponentContainer;
@@ -48,6 +49,10 @@ public class VersionAddViewImpl extends AbstractEditItemComp<Version> implements
 		VersionAddView {
 	private static final long serialVersionUID = 1L;
 
+	public VersionAddViewImpl() {
+		this.setMargin(new MarginInfo(true, false, false, false));
+	}
+	
 	@Override
 	public HasEditFormHandlers<Version> getEditFormHandlers() {
 		return this.editForm;
@@ -75,6 +80,7 @@ public class VersionAddViewImpl extends AbstractEditItemComp<Version> implements
 		controlPanel.setComponentAlignment(controlButtons,
 				Alignment.MIDDLE_CENTER);
 		controlPanel.setMargin(true);
+		controlPanel.addStyleName("control-buttons");
 		return controlPanel;
 	}
 

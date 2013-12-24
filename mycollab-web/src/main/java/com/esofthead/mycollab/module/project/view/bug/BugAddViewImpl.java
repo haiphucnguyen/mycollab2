@@ -204,6 +204,7 @@ public class BugAddViewImpl extends AbstractEditItemComp<SimpleBug> implements
 	protected ComponentContainer createButtonControls() {
 		final HorizontalLayout controlPanel = new HorizontalLayout();
 		controlPanel.setMargin(true);
+		controlPanel.addStyleName("control-buttons");
 		final Layout controlButtons = (new EditFormControlsGenerator<SimpleBug>(
 				editForm)).createButtonControls();
 		controlButtons.setSizeUndefined();

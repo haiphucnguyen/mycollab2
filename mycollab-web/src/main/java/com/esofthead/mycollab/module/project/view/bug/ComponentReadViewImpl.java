@@ -33,6 +33,7 @@ import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.ProjectPreviewFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.MyCollabResource;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
@@ -51,6 +52,8 @@ public class ComponentReadViewImpl extends
 
 	public ComponentReadViewImpl() {
 		super(MyCollabResource.newResource("icons/22/project/component.png"));
+		
+		this.setMargin(new MarginInfo(true, false, false, false));
 	}
 
 	@Override

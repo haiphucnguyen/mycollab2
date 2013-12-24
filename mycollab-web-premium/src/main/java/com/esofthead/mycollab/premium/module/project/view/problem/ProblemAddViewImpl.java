@@ -60,6 +60,7 @@ public class ProblemAddViewImpl extends AbstractEditItemComp<Problem> implements
 	protected ComponentContainer createButtonControls() {
 		final HorizontalLayout controlPanel = new HorizontalLayout();
 		controlPanel.setMargin(true);
+		controlPanel.addStyleName("control-buttons");
 		final Layout controlButtons = (new EditFormControlsGenerator<Problem>(
 				editForm)).createButtonControls();
 		controlButtons.setSizeUndefined();
