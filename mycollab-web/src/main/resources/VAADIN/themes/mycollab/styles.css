@@ -3564,7 +3564,7 @@ table.legendBox {
 	border-spacing: 0px;
 	border-collapse: collapse;
 	width: 100%;
-	border: 1px solid #a9a9a9;
+	border-top: 1px solid #a9a9a9;
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
@@ -3575,13 +3575,13 @@ table.legendBox .legendBoxContent {
 	background: rgb(245, 245, 245);
 }
 
-table.legendBox .legendBoxContent .v-csslayout-container>div {
+table.legendBox .legendBoxContent .v-csslayout > div {
 	display: inline-block;
 	zoom: 1;
 	*display: inline;
 }
 
-.chart-wrapper>.v-csslayout-margin {
+.chart-wrapper {
 	border-width: 0px 1px 1px 1px;
 	border-color: #a9a9a9;
 	-moz-box-sizing: border-box;
