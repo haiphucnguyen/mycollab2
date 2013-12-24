@@ -4,8 +4,6 @@
 <wicket:head>
 	<script type="text/javascript"
 		src="static/js/jquery.nivo.slider.pack.js"></script>
-		<script type="text/javascript"
-		src="static/js/responsiveslides.min.js"></script>
 	<script type="text/javascript" src="static/js/home.js"></script>
 </wicket:head>
 </head>
@@ -14,35 +12,6 @@
 		<div id="banner" class="hidden"></div>
 		<div id="home-content">
 			<div class="home-banner">
-				
-			 <div class="slider-wrapper theme-default home-banner-right">
-					<ul class="rslides">
-						<li><img alt="MyCollab Screenshot 1" src="static/images/slides/macbook_1.png" /></li>
-						<li><img alt="MyCollab Screenshot 2" src="static/images/slides/macbook_2.png" /></li>
-						<li><img alt="MyCollab Screenshot 3" src="static/images/slides/macbook_3.png" /></li>
-						<li><img alt="MyCollab Screenshot 4" src="static/images/slides/macbook_4.png" /></li>
-						<li><img alt="MyCollab Screenshot 5" src="static/images/slides/macbook_5.png" /></li>
-						<li><img alt="MyCollab Screenshot 6" src="static/images/slides/macbook_6.png" /></li>
-						<li><img alt="MyCollab Screenshot 7" src="static/images/slides/macbook_7.png" /></li>
-					</ul>
-					<div id="slider" class="">
-						<img alt="MyCollab Screenshot 1"
-							src="static/images/slides/gray.png" width="400"
-							data-src="static/images/slides/macbook_1.png" /> <img
-							alt="MyCollab Screenshot 2"
-							data-src="static/images/slides/macbook_2.png" width="400" height="300"/> <img
-							alt="MyCollab Screenshot 3"
-							data-src="static/images/slides/macbook_3.png" width="400" /> <img
-							alt="MyCollab Screenshot 4"
-							data-src="static/images/slides/macbook_4.png" width="400" /> <img
-							alt="MyCollab Screenshot 5"
-							data-src="static/images/slides/macbook_5.png" width="400" /> <img
-							alt="MyCollab Screenshot 6"
-							data-src="static/images/slides/macbook_6.png" width="400" /> <img
-							alt="MyCollab Screenshot 7"
-							data-src="static/images/slides/macbook_7.png" width="400" />
-					</div>
-				</div> 
 				<div class="home-banner-left">
 					<div class="home-banner-left-1">
 						<h1>Online collaboration. Managing your office jobs on cloud</h1>
@@ -57,7 +26,25 @@
 							href="pricing.php">Try MyCollab for Free</a>
 					</div>
 				</div>
-				
+				<div class="slider-wrapper theme-default home-banner-right">
+					<div id="slider" class="">
+						<img alt="MyCollab Screenshot 1"
+							src="static/images/slides/gray.png"
+							data-src="static/images/slides/macbook_1.png" /> <img
+							alt="MyCollab Screenshot 2"
+							data-src="static/images/slides/macbook_2.png" /> <img
+							alt="MyCollab Screenshot 3"
+							data-src="static/images/slides/macbook_3.png" /> <img
+							alt="MyCollab Screenshot 4"
+							data-src="static/images/slides/macbook_4.png" /> <img
+							alt="MyCollab Screenshot 5"
+							data-src="static/images/slides/macbook_5.png" /> <img
+							alt="MyCollab Screenshot 6"
+							data-src="static/images/slides/macbook_6.png" /> <img
+							alt="MyCollab Screenshot 7"
+							data-src="static/images/slides/macbook_7.png" />
+					</div>
+				</div>
 			</div>
 		</div>
 		<div class="home-box2">
@@ -124,7 +111,9 @@
 				</div>
 			</div>
 			<div class="home-mobile">
-				
+				<p>
+					<img alt="mycollab mobile" src="static/images/home_mobile.png" />
+				</p>
 				<div class="home-mobile-info">
 					<h1>Take your projects with you anywhere!</h1>
 					<p>Free apps for iPhone and Android allow you to keep track of
@@ -132,9 +121,6 @@
 						discuss work with your teammates wherever you are!</p>
 					<h2>...Coming soon in Q4/2013...</h2>
 				</div>
-				<p>
-					<img alt="mycollab mobile" src="static/images/home_mobile.png" />
-				</p>
 				<div class="clear"></div>
 			</div>
 		</div>

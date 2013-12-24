@@ -3,15 +3,29 @@
 <head>
 	<wicket:head>
 		<script type="text/javascript" src="../static/js/jquery.nivo.slider.pack.js"></script>
+		<script type="text/javascript" src="../static/js/responsiveslides.min.js"></script>
 		<script type="text/javascript" src="../static/js/tour.js"></script>
 	</wicket:head>
 </head>
 <body>
 	<wicket:extend>
 		<div id="banner" class="hidden"></div>
-		
+		<div id="tour-navigator-mobile">
+			<a class="left-tour-nav" ></a>
+			<span>Team Management</span>
+			<a class="right-tour-nav" ></a>
+		</div>
 		<div id="tour-content">
 			<div class="tour-top">
+				<div class="free-trial-cnt-3">
+					<div class="free-trial">
+						<h2>FREE TRIAL</h2>
+						<p>
+							30-DAY<br /> <span>At No Risk</span>
+						</p>
+						<p class="tour-arrow"></p>
+					</div>
+				</div>
 				<div class="free-trial-cnt-1">
 					<div class="free-trial">
 						<h2>FREE TRIAL</h2>
@@ -58,6 +72,12 @@
 						<div class="tour-two-coll">
 							<div class="tour-row">
 								<div class="slider-wrapper theme-default tour-slide-2">
+									<ul class="rslides">
+										<li><img alt="macbok 1" src="../static/images/tour/officeApp/slide_1.png"/>
+											</li>
+										<li><img
+											alt="macbok 2" src="../static/images/tour/officeApp/slide_1.png" /></li>
+									</ul>
 									<div id="slider" class="">
 										<img alt="macbok 1" src="../static/images/tour/officeApp/slide_1.png"
 											data-src="../static/images/tour/officeApp/slide_1.png" /> <img

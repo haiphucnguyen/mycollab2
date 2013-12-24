@@ -17,6 +17,8 @@ public class SiteConfiguration {
 
 	private String siteUrl;
 
+    private String chatUrl;
+
 	private DeploymentMode deploymentMode;
 
 	static {
@@ -29,6 +31,7 @@ public class SiteConfiguration {
 			appInstance.apiUrl = properties.getProperty(API_URL);
 			appInstance.appUrl = properties.getProperty("app.url");
 			appInstance.siteUrl = properties.getProperty("site.url");
+            appInstance.chatUrl = properties.getProperty("chat.url");
 
 			// load Deployment Mode
 			String runningMode = properties.getProperty("running.mode");
@@ -53,6 +56,10 @@ public class SiteConfiguration {
 	public static String getSiteUrl() {
 		return appInstance.siteUrl;
 	}
+
+    public static String getChatUrl() {
+        return appInstance.chatUrl;
+    }
 
 	public static DeploymentMode getDeploymentMode() {
 		return appInstance.deploymentMode;
