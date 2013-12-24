@@ -45,6 +45,7 @@ import com.vaadin.ui.UI;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 @ViewPermission(permissionId = RolePermissionCollections.ACCOUNT_ROLE, impliedPermissionVal = AccessPermissionFlag.READ_ONLY)
 public class RoleListPresenter extends
@@ -56,6 +57,11 @@ public class RoleListPresenter extends
 	public RoleListPresenter() {
 		super(RoleListView.class);
 		roleService = ApplicationContextUtil.getSpringBean(RoleService.class);
+	}
+
+	@Override
+	protected void postInitView() {
+		super.postInitView();
 
 		view.getPopupActionHandlers().addMassItemActionHandler(
 				new DefaultMassEditActionHandler(this) {
@@ -74,7 +80,7 @@ public class RoleListPresenter extends
 					}
 
 					@Override
-					protected Class getReportModelClassType() {
+					protected Class<?> getReportModelClassType() {
 						return SimpleRole.class;
 					}
 				});

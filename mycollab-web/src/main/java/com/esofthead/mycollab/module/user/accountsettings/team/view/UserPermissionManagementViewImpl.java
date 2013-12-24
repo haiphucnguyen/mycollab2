@@ -41,7 +41,7 @@ public class UserPermissionManagementViewImpl extends AbstractPageView
 	private RolePresenter rolePresenter;
 
 	public UserPermissionManagementViewImpl() {
-		
+		groupTab = new TabsheetDecor();
 		groupTab.setStyleName("tab-style3");
 
 		this.addComponent(groupTab);
