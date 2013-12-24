@@ -42,7 +42,7 @@ public class CampaignEditFormFieldFactory<B extends CampaignWithBLOBs> extends
 	}
 
 	@Override
-	protected Field onCreateField(Object propertyId) {
+	protected Field<?> onCreateField(Object propertyId) {
 
 		if ("type".equals(propertyId)) {
 			CampaignTypeComboBox typeCombo = new CampaignTypeComboBox();

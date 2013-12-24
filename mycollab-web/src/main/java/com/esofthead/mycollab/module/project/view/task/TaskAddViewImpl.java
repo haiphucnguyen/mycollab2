@@ -102,6 +102,7 @@ public class TaskAddViewImpl extends AbstractPageView implements TaskAddView {
 				controlPanel.setWidth("100%");
 				controlPanel.setComponentAlignment(controlButtons,
 						Alignment.MIDDLE_CENTER);
+				controlPanel.setMargin(true);
 				return controlPanel;
 			}
 
@@ -112,7 +113,7 @@ public class TaskAddViewImpl extends AbstractPageView implements TaskAddView {
 
 			@Override
 			protected Layout createBottomPanel() {
-				return this.createButtonControls();
+				return null;
 			}
 		}
 

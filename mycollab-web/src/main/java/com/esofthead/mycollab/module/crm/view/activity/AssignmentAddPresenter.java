@@ -47,7 +47,10 @@ public class AssignmentAddPresenter extends
 
 	public AssignmentAddPresenter() {
 		super(AssignmentAddView.class);
+	}
 
+	@Override
+	protected void postInitView() {
 		view.getEditFormHandlers().addFormHandler(new EditFormHandler<Task>() {
 			private static final long serialVersionUID = 1L;
 

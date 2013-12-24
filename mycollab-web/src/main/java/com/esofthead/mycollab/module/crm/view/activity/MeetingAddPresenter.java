@@ -35,15 +35,26 @@ import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class MeetingAddPresenter extends CrmGenericPresenter<MeetingAddView> {
 
 	private static final long serialVersionUID = 1L;
 
 	public MeetingAddPresenter() {
 		super(MeetingAddView.class);
+	}
 
+	@Override
+	protected void postInitView() {
 		view.getEditFormHandlers().addFormHandler(
 				new EditFormHandler<MeetingWithBLOBs>() {
+					private static final long serialVersionUID = 1L;
+
 					@Override
 					public void onSave(final MeetingWithBLOBs item) {
 						save(item);

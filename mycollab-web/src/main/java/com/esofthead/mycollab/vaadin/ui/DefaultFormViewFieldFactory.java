@@ -45,8 +45,6 @@ import com.vaadin.ui.VerticalLayout;
  */
 @SuppressWarnings("unchecked")
 public class DefaultFormViewFieldFactory {
-	private static Logger log = LoggerFactory
-			.getLogger(DefaultFormViewFieldFactory.class);
 
 	public static interface AttachmentUploadField extends Field {
 		void saveContentsToRepo(String attachmentPath);
@@ -57,6 +55,10 @@ public class DefaultFormViewFieldFactory {
 		private static final long serialVersionUID = 1L;
 		private MultiFileUploadExt uploadExt;
 		private AttachmentPanel attachmentPanel;
+
+		public FormAttachmentUploadField() {
+			attachmentPanel = new AttachmentPanel();
+		}
 
 		public void getAttachments(String attachmentPath) {
 			attachmentPanel.getAttachments(attachmentPath);
@@ -75,7 +77,6 @@ public class DefaultFormViewFieldFactory {
 		@Override
 		protected Component initContent() {
 			final VerticalLayout layout = new VerticalLayout();
-			attachmentPanel = new AttachmentPanel();
 			uploadExt = new MultiFileUploadExt(attachmentPanel);
 			layout.addComponent(attachmentPanel);
 			layout.addComponent(uploadExt);
