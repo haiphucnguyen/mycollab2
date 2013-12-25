@@ -68,6 +68,8 @@ public class ContactAddPresenter extends CrmGenericPresenter<ContactAddView> {
 	protected void postInitView() {
 		view.getEditFormHandlers().addFormHandler(
 				new EditFormHandler<SimpleContact>() {
+					private static final long serialVersionUID = 1L;
+
 					@Override
 					public void onSave(final SimpleContact contact) {
 						saveContact(contact);
@@ -111,7 +113,7 @@ public class ContactAddPresenter extends CrmGenericPresenter<ContactAddView> {
 			} else if (data.getParams() instanceof Integer) {
 				ContactService contactService = ApplicationContextUtil
 						.getSpringBean(ContactService.class);
-				contact = (SimpleContact) contactService.findByPrimaryKey(
+				contact = (SimpleContact) contactService.findById(
 						(Integer) data.getParams(), AppContext.getAccountId());
 				if (contact == null) {
 					NotificationUtil.showRecordNotExistNotification();

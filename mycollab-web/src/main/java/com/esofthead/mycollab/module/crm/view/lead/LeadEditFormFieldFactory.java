@@ -20,12 +20,12 @@ import com.esofthead.mycollab.module.crm.domain.Lead;
 import com.esofthead.mycollab.module.crm.ui.components.IndustryComboBox;
 import com.esofthead.mycollab.module.user.ui.components.ActiveUserComboBox;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
+import com.esofthead.mycollab.vaadin.ui.CompoundCustomField;
 import com.esofthead.mycollab.vaadin.ui.CountryComboBox;
 import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
 import com.vaadin.data.Property;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.CustomField;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.TextArea;
@@ -38,18 +38,22 @@ import com.vaadin.ui.TextField;
  * 
  * @param <B>
  */
-public class LeadEditFormFieldFactory<B extends Lead> extends
+class LeadEditFormFieldFactory<B extends Lead> extends
 		AbstractBeanFieldGroupEditFieldFactory<B> {
 	private static final long serialVersionUID = 1L;
 
+	private LeadFirstNamePrefixField firstNamePrefixField;
+
 	public LeadEditFormFieldFactory(GenericBeanForm<B> form) {
 		super(form);
+
+		firstNamePrefixField = new LeadFirstNamePrefixField();
 	}
 
 	@Override
 	protected Field<?> onCreateField(Object propertyId) {
-		if (propertyId.equals("firstname")) {
-			return new LeadFirstNamePrefixField();
+		if (propertyId.equals("firstname") || propertyId.equals("prefixname")) {
+			return firstNamePrefixField;
 		} else if (propertyId.equals("primcountry")
 				|| propertyId.equals("othercountry")) {
 			CountryComboBox otherCountryComboBox = new CountryComboBox();
@@ -81,7 +85,7 @@ public class LeadEditFormFieldFactory<B extends Lead> extends
 		return null;
 	}
 
-	class LeadFirstNamePrefixField extends CustomField<Lead> {
+	class LeadFirstNamePrefixField extends CompoundCustomField<Lead> {
 		private static final long serialVersionUID = 1L;
 
 		@Override
@@ -108,8 +112,13 @@ public class LeadEditFormFieldFactory<B extends Lead> extends
 
 			TextField firstnameTxtField = new TextField();
 			firstnameTxtField.setWidth("100%");
+			firstnameTxtField.setNullRepresentation("");
 			layout.addComponent(firstnameTxtField);
 			layout.setExpandRatio(firstnameTxtField, 1.0f);
+
+			// binding field group
+			fieldGroup.bind(prefixSelect, "prefixname");
+			fieldGroup.bind(firstnameTxtField, "firstname");
 
 			return layout;
 		}

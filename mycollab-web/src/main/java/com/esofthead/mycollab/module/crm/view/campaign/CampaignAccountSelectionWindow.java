@@ -32,6 +32,7 @@ import com.vaadin.ui.Button;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class CampaignAccountSelectionWindow extends
 		RelatedItemSelectionWindow<SimpleAccount, AccountSearchCriteria> {

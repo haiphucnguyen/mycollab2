@@ -23,11 +23,18 @@ import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public interface CampaignTableFieldDef {
 	public static TableViewField selected = new TableViewField("", "selected",
 			UIConstants.TABLE_CONTROL_WIDTH);
 
-	public static TableViewField action = new TableViewField("", "id");
+	public static TableViewField action = new TableViewField("", "id",
+			UIConstants.TABLE_ACTION_CONTROL_WIDTH);
 
 	public static TableViewField actualcost = new TableViewField(
 			LocalizationHelper.getMessage(CampaignI18nEnum.FORM_ACTUAL_COST),

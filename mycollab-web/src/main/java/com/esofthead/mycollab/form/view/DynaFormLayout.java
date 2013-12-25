@@ -41,7 +41,8 @@ import com.vaadin.ui.VerticalLayout;
 /**
  * 
  * @author MyCollab Ltd.
- *
+ * @since 2.0
+ * 
  */
 public class DynaFormLayout implements IFormLayoutFactory {
 	private static final long serialVersionUID = 1L;
@@ -131,7 +132,7 @@ public class DynaFormLayout implements IFormLayoutFactory {
 			gridLayout.getLayout().setWidth("100%");
 			gridLayout.getLayout().setMargin(false);
 			gridLayout.getLayout().setSpacing(false);
-            gridLayout.getLayout().addStyleName("colored-gridlayout");
+			gridLayout.getLayout().addStyleName("colored-gridlayout");
 			layout.addComponent(gridLayout.getLayout());
 
 			sectionMappings.put(section, gridLayout);
@@ -140,7 +141,7 @@ public class DynaFormLayout implements IFormLayoutFactory {
 	}
 
 	@Override
-	public void attachField(Object propertyId, Field field) {
+	public void attachField(Object propertyId, Field<?> field) {
 		AbstractDynaField dynaField = fieldMappings.get(propertyId);
 		if (dynaField != null) {
 			log.debug("Attach prop {}", propertyId);

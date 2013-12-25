@@ -257,11 +257,6 @@ public class UserAddViewImpl extends AbstractPageView implements UserAddView {
 					return tf;
 				} else if (propertyId.equals("dateofbirth")) {
 					UserAddViewImpl.this.cboDateBirthday = new DateComboboxSelectionField();
-					if (UserAddViewImpl.this.user.getDateofbirth() != null) {
-						UserAddViewImpl.this.cboDateBirthday
-								.setDate(UserAddViewImpl.this.user
-										.getDateofbirth());
-					}
 					return UserAddViewImpl.this.cboDateBirthday;
 				} else if (propertyId.equals("timezone")) {
 					UserAddViewImpl.this.cboTimezone = new TimeZoneSelectionField();

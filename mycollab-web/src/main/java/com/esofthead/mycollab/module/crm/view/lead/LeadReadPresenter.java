@@ -230,6 +230,7 @@ public class LeadReadPresenter extends CrmGenericPresenter<LeadReadView> {
 							campaignService.saveCampaignLeadRelationship(
 									associateCampaigns,
 									AppContext.getAccountId());
+							view.getRelatedCampaignHandlers().refresh();
 						}
 					}
 				});

@@ -43,7 +43,9 @@ public abstract class AbstractBeanFieldGroupEditFieldFactory<B> implements
 					formField = fieldGroup.buildAndBind(field.getName());
 				}
 			} else {
-				fieldGroup.bind(formField, field.getName());
+				if (!(formField instanceof CompoundCustomField)) {
+					fieldGroup.bind(formField, field.getName());
+				}
 			}
 
 			if (formField instanceof AbstractTextField) {
