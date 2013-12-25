@@ -16,8 +16,6 @@
  */
 package com.esofthead.mycollab.module.crm.view.contact;
 
-import java.util.Date;
-
 import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.module.crm.view.account.AccountSelectionField;
 import com.esofthead.mycollab.module.crm.view.lead.LeadSourceComboBox;
@@ -25,14 +23,18 @@ import com.esofthead.mycollab.module.user.ui.components.ActiveUserComboBox;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.CountryComboBox;
 import com.esofthead.mycollab.vaadin.ui.DateComboboxSelectionField;
-import com.esofthead.mycollab.vaadin.ui.FieldSelection;
 import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
-import com.vaadin.ui.Component;
-import com.vaadin.ui.CustomField;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ * @param <B>
+ */
 class ContactEditFormFieldFactory<B extends Contact> extends
 		AbstractBeanFieldGroupEditFieldFactory<B> {
 	private static final long serialVersionUID = 1L;
@@ -69,43 +71,8 @@ class ContactEditFormFieldFactory<B extends Contact> extends
 			CountryComboBox otherCountryComboBox = new CountryComboBox();
 			return otherCountryComboBox;
 		} else if (propertyId.equals("birthday")) {
-			ContactBirthdayField birthdayField = new ContactBirthdayField();
-			if (attachForm.getBean().getBirthday() != null) {
-				birthdayField.setDate(attachForm.getBean().getBirthday());
-			}
-			return birthdayField;
+			return new DateComboboxSelectionField();
 		}
 		return null;
-	}
-
-	private class ContactBirthdayField extends CustomField<Date> implements
-			FieldSelection {
-		private static final long serialVersionUID = 1L;
-		private DateComboboxSelectionField dateSelection;
-
-		@Override
-		public Class<Date> getType() {
-			return Date.class;
-		}
-
-		public Date getValue() {
-			return dateSelection.getDate();
-		}
-
-		public void setDate(Date date) {
-			dateSelection.setDate(date);
-		}
-
-		@Override
-		public void fireValueChange(Object data) {
-			attachForm.getBean().setBirthday((Date) data);
-
-		}
-
-		@Override
-		protected Component initContent() {
-			this.dateSelection = new DateComboboxSelectionField(this);
-			return dateSelection;
-		}
 	}
 }

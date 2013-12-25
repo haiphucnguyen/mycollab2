@@ -27,7 +27,7 @@ class LeadReadFormFieldFactory extends
 	}
 
 	@Override
-	protected Field onCreateField(Object propertyId) {
+	protected Field<?> onCreateField(Object propertyId) {
 		SimpleLead lead = attachForm.getBean();
 		if (propertyId.equals("firstname")) {
 			if (lead.getPrefixname() == null) {
