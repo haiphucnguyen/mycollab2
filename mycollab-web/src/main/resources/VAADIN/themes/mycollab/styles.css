@@ -5223,12 +5223,28 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 	border-color: #ABABAB;
 }
 
-.v-horizontallayout-eventdatepicker {
+.eventdatepicker {
 	border: 1px solid #093768;
 	border-radius: 3px;
 	color: #FFFFFF;
 	padding: 3px 13px;
 	text-shadow: 1px 1px 0 #000000;
+}
+
+.eventdatepicker.v-margin-top {
+	padding-top: 3px;
+}
+
+.eventdatepicker.v-margin-right {
+	padding-right: 10px;
+}
+
+.eventdatepicker.v-margin-bottom {
+	padding-bottom: 3px;
+}
+
+.eventdatepicker.v-margin-left {
+	padding-left: 10px;
 }
 
 /* Create Custome Field Window */

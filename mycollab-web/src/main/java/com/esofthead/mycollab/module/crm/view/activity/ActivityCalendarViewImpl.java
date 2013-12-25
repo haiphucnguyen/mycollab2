@@ -160,8 +160,8 @@ public class ActivityCalendarViewImpl extends AbstractPageView implements
 
 		HorizontalLayout horizontalWapper = new HorizontalLayout();
 		horizontalWapper.addStyleName("eventdatepicker");
+		horizontalWapper.setMargin(true);
 		this.dateChooser = new PopupButton("");
-		this.dateChooser.setWidth("110px");
 		this.dateChooser.setContent(datePicker);
 		dateChooser.setStyleName(UIConstants.THEME_LINK);
 		dateChooser.addStyleName("buttonlinkcenter");
