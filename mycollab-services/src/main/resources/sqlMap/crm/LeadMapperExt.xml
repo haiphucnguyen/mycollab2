@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.esofthead.mycollab.module.crm.dao.LeadMapperExt">
-    
+
     <resultMap
         extends="com.esofthead.mycollab.module.crm.dao.LeadMapper.ResultMapWithBLOBs"
         id="SimpleLeadResult" type="com.esofthead.mycollab.module.crm.domain.SimpleLead">
@@ -14,6 +14,8 @@
 
         <result column="campaignName" jdbcType="VARCHAR"
             property="campaignName" />
+
+        <result column="leadName" jdbcType="VARCHAR" property="leadName" />
     </resultMap>
 
     <sql id="querySearchCriteria">
@@ -288,7 +290,8 @@
     <sql id="orderStatement">
         ORDER BY
         <if test="searchCriteria.orderByField != null">${searchCriteria.orderByField}
-            ${searchCriteria.sortDirection}, </if>
+            ${searchCriteria.sortDirection},
+        </if>
         <![CDATA[
             m_crm_lead.lastUpdatedTime DESC
         ]]>

@@ -43,7 +43,7 @@ class AccountEditFormFieldFactory<B extends Account> extends
 	}
 
 	@Override
-	protected Field onCreateField(Object propertyId) {
+	protected Field<?> onCreateField(Object propertyId) {
 
 		if ("type".equals(propertyId)) {
 			AccountTypeComboBox accountTypeBox = new AccountTypeComboBox();

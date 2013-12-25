@@ -16,6 +16,11 @@
  */
 package com.esofthead.mycollab.module.project.domain;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ */
 public class SimpleStandupReport extends StandupReportWithBLOBs {
 	private static final long serialVersionUID = 1L;
 

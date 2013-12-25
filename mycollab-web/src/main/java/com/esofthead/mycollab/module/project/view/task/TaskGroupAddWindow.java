@@ -58,6 +58,10 @@ public class TaskGroupAddWindow extends Window {
 	private SimpleTaskList taskList;
 	private TaskListForm taskListForm;
 
+	public TaskGroupAddWindow(final TaskGroupDisplayView taskView) {
+		this(taskView, new SimpleTaskList());
+	}
+
 	public TaskGroupAddWindow(final TaskGroupDisplayView taskView,
 			final SimpleTaskList taskList) {
 		super(LocalizationHelper.getMessage(TaskI18nEnum.NEW_TASKGROUP_TITLE));
@@ -66,20 +70,11 @@ public class TaskGroupAddWindow extends Window {
 		this.initUI();
 	}
 
-	public TaskGroupAddWindow(final TaskGroupDisplayView taskView) {
-		super(LocalizationHelper.getMessage(TaskI18nEnum.NEW_TASKGROUP_TITLE));
-		this.taskList = new SimpleTaskList();
-		this.taskView = taskView;
-
-		this.initUI();
-	}
-
 	private void initUI() {
 		this.setWidth("800px");
 		this.taskListForm = new TaskListForm();
 		this.taskListForm.setBean(this.taskList);
 		this.setContent(this.taskListForm);
-		((VerticalLayout) this.getContent()).setMargin(false);
 
 		this.center();
 	}
@@ -211,7 +206,8 @@ public class TaskGroupAddWindow extends Window {
 			}
 
 			@Override
-			public void attachField(final Object propertyId, final Field<?> field) {
+			public void attachField(final Object propertyId,
+					final Field<?> field) {
 				if (propertyId.equals("name")) {
 					this.informationLayout.addComponent(field, "Name", 0, 0, 2,
 							"100%");
