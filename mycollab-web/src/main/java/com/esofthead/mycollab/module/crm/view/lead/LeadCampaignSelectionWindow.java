@@ -46,11 +46,11 @@ public class LeadCampaignSelectionWindow extends
 
 	@Override
 	protected void initUI() {
-		tableItem = new CampaignTableDisplay(Arrays.asList(
-				CampaignTableFieldDef.selected,
-				CampaignTableFieldDef.campaignname,
-				CampaignTableFieldDef.status, CampaignTableFieldDef.type,
-				CampaignTableFieldDef.endDate));
+		tableItem = new CampaignTableDisplay(CampaignTableFieldDef.selected,
+				Arrays.asList(CampaignTableFieldDef.campaignname,
+						CampaignTableFieldDef.status,
+						CampaignTableFieldDef.type,
+						CampaignTableFieldDef.endDate));
 
 		Button selectBtn = new Button("Select", new Button.ClickListener() {
 

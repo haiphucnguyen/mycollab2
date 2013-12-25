@@ -22,6 +22,7 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.eventmanager.ApplicationEvent;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
+import com.esofthead.mycollab.module.crm.domain.CampaignWithBLOBs;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
@@ -42,9 +43,10 @@ public class CampaignSelectionWindow extends Window {
 	private static final long serialVersionUID = 1L;
 	private CampaignSearchCriteria searchCriteria;
 	private CampaignTableDisplay tableItem;
-	private FieldSelection fieldSelection;
+	private FieldSelection<CampaignWithBLOBs> fieldSelection;
 
-	public CampaignSelectionWindow(FieldSelection fieldSelection) {
+	public CampaignSelectionWindow(
+			FieldSelection<CampaignWithBLOBs> fieldSelection) {
 		super("Campaign Name Lookup");
 		this.setWidth("800px");
 		this.fieldSelection = fieldSelection;

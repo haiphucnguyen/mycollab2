@@ -77,8 +77,9 @@ public class CampaignSelectionField extends CustomField<Integer> implements
 	protected Component initContent() {
 		HorizontalLayout layout = new HorizontalLayout();
 		layout.setSpacing(true);
-		layout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 		layout.setWidth("100%");
+		layout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
+		campaignName.setWidth("100%");
 		layout.addComponent(campaignName);
 
 		browseBtn = new Image(null,
@@ -111,6 +112,7 @@ public class CampaignSelectionField extends CustomField<Integer> implements
 		layout.addComponent(clearBtn);
 		layout.setComponentAlignment(clearBtn, Alignment.MIDDLE_LEFT);
 
+		layout.setExpandRatio(campaignName, 1.0f);
 		return layout;
 	}
 

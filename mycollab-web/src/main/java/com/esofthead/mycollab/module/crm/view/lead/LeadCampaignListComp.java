@@ -192,7 +192,7 @@ public class LeadCampaignListComp extends
 											CampaignService campaignService = ApplicationContextUtil
 													.getSpringBean(CampaignService.class);
 											CampaignLead associateLead = new CampaignLead();
-											associateLead.setLeadid(campaign
+											associateLead.setLeadid(lead
 													.getId());
 											associateLead
 													.setCampaignid(campaign
