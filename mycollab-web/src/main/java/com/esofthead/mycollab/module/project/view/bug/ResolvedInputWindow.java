@@ -75,6 +75,7 @@ public class ResolvedInputWindow extends Window {
 		this.editForm.setBean(bug);
 
 		contentLayout.setMargin(new MarginInfo(false, false, true, false));
+		this.setContent(contentLayout);
 		this.center();
 	}
 

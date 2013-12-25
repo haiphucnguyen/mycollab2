@@ -70,6 +70,8 @@ public class AssignTaskWindow extends Window {
 		editForm = new EditForm();
 		contentLayout.addComponent(editForm);
 		editForm.setBean(task);
+		
+		this.setContent(contentLayout);
 
 		center();
 	}

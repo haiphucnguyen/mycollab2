@@ -106,7 +106,7 @@ public class ApproveInputWindow extends Window {
 
 				final HorizontalLayout controlsBtn = new HorizontalLayout();
 				controlsBtn.setSpacing(true);
-				controlsBtn.setMargin(new MarginInfo(true, false, true, false));
+				controlsBtn.setMargin(new MarginInfo(true, true, true, false));
 				layout.addComponent(controlsBtn);
 
 				final Button cancelBtn = new Button(

@@ -1711,11 +1711,8 @@ input.v-textfield-errorField {
 /*End wizard*/
 
 /* Depot */
-.depotComp {
-	margin-top: 20px;
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-	box-sizing: border-box;
+.depotComp.v-margin-top {
+	padding-top: 20px;
 }
 
 .depotComp .v-csslayout-header-wrapper {
