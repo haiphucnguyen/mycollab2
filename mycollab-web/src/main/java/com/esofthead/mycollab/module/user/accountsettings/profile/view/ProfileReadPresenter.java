@@ -24,6 +24,12 @@ import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class ProfileReadPresenter extends AbstractPresenter<ProfileReadView> {
 
 	private static final long serialVersionUID = 1L;

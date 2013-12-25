@@ -85,6 +85,8 @@ public abstract class MultiSelectComp extends CustomField {
 		this.componentPopupSelection = new MultipleItemsPopupSelection();
 		this.componentPopupSelection
 				.addClickListener(new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
 					@Override
 					public void buttonClick(final ClickEvent event) {
 						MultiSelectComp.this.initData();

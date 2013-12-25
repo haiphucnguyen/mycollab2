@@ -70,7 +70,7 @@ public class TaskDisplayComponent extends CssLayout {
 	private GridFormLayoutHelper layoutHelper;
 
 	private SimpleTaskList taskList;
-	private final boolean isDisplayTaskListInfo;
+	private boolean isDisplayTaskListInfo;
 
 	public TaskDisplayComponent(final SimpleTaskList taskList,
 			final boolean isDisplayTaskListInfo) {

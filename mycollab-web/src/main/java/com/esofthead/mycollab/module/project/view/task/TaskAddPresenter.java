@@ -54,6 +54,8 @@ public class TaskAddPresenter extends AbstractPresenter<TaskAddView> {
 	@Override
 	protected void postInitView() {
 		view.getEditFormHandlers().addFormHandler(new EditFormHandler<Task>() {
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void onSave(final Task item) {
 				save(item);

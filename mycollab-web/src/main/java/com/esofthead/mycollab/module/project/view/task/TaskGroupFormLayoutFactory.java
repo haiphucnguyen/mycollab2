@@ -76,7 +76,7 @@ public abstract class TaskGroupFormLayoutFactory implements IFormLayoutFactory {
 	}
 
 	@Override
-	public void attachField(final Object propertyId, final Field field) {
+	public void attachField(final Object propertyId, final Field<?> field) {
 		this.informationLayout.attachField(propertyId, field);
 	}
 
@@ -105,7 +105,7 @@ public abstract class TaskGroupFormLayoutFactory implements IFormLayoutFactory {
 		}
 
 		@Override
-		public void attachField(final Object propertyId, final Field field) {
+		public void attachField(final Object propertyId, final Field<?> field) {
 			if (propertyId.equals("name")) {
 				this.informationLayout.addComponent(field, "Name", 0, 0, 2,
 						"100%");

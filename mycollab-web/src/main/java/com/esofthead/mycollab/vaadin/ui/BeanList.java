@@ -53,7 +53,7 @@ public class BeanList<SearchService extends ISearchableService<S>, S extends Sea
 
 	private static Logger log = LoggerFactory.getLogger(BeanList.class);
 	private static final long serialVersionUID = 1L;
-	
+
 	protected SearchService searchService;
 
 	private Object parentComponent;
@@ -67,21 +67,22 @@ public class BeanList<SearchService extends ISearchableService<S>, S extends Sea
 	}
 
 	public BeanList(Object parentComponent, SearchService searchService,
-			Class<? extends RowDisplayHandler<T>> rowDisplayHandler, Layout contentLayout) {
+			Class<? extends RowDisplayHandler<T>> rowDisplayHandler,
+			Layout contentLayout) {
 		this.parentComponent = parentComponent;
 		this.searchService = searchService;
 		this.rowDisplayHandler = rowDisplayHandler;
 
-		if(contentLayout != null) {
+		if (contentLayout != null) {
 			this.contentLayout = contentLayout;
-			
+
 		} else {
 			this.contentLayout = new CssLayout();
 			this.contentLayout.setWidth("100%");
 		}
-		
+
 		this.setCompositionRoot(this.contentLayout);
-		
+
 		this.setStyleName("bean-list");
 	}
 
@@ -155,10 +156,8 @@ public class BeanList<SearchService extends ISearchableService<S>, S extends Sea
 				int i = 0;
 				for (T item : currentListData) {
 					RowDisplayHandler<T> rowHandler = constructRowndisplayHandler();
-					log.debug("Row handler {} index {}", rowHandler, i);
 
 					Component row = rowHandler.generateRow(item, i);
-					log.debug("Generated row {} index {}", row, i);
 					if (row != null) {
 						row.setWidth("100%");
 						contentLayout.addComponent(row);
@@ -171,11 +170,6 @@ public class BeanList<SearchService extends ISearchableService<S>, S extends Sea
 		} catch (Exception e) {
 			log.error("Error while generate column display", e);
 		}
-	}
-
-	public boolean isEmpty() {
-		return (contentLayout != null)
-				&& (contentLayout.getComponentCount() > 0);
 	}
 
 	public static interface RowDisplayHandler<T> extends Serializable {

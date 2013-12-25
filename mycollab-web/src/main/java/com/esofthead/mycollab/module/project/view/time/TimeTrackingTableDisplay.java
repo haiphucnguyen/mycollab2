@@ -39,13 +39,20 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.Table.ColumnGenerator;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class TimeTrackingTableDisplay
 		extends
 		DefaultPagedBeanTable<ItemTimeLoggingService, ItemTimeLoggingSearchCriteria, SimpleItemTimeLogging> {
 	private static final long serialVersionUID = 1L;
 
 	public TimeTrackingTableDisplay(List<TableViewField> displayColumns) {
-		super(ApplicationContextUtil.getSpringBean(ItemTimeLoggingService.class),
+		super(ApplicationContextUtil
+				.getSpringBean(ItemTimeLoggingService.class),
 				SimpleItemTimeLogging.class, displayColumns);
 
 		this.addGeneratedColumn("logUserFullName", new Table.ColumnGenerator() {
@@ -92,8 +99,10 @@ public class TimeTrackingTableDisplay
 					timeTrackingLink.setIcon(MyCollabResource
 							.newResource("icons/16/project/bug.png"));
 
-					if (BugStatusConstants.VERIFIED.equals(itemLogging.getStatus())) {
-						timeTrackingLink.addStyleName(UIConstants.LINK_COMPLETED);
+					if (BugStatusConstants.VERIFIED.equals(itemLogging
+							.getStatus())) {
+						timeTrackingLink
+								.addStyleName(UIConstants.LINK_COMPLETED);
 					} else if (itemLogging.getDueDate() != null
 							&& (itemLogging.getDueDate()
 									.before(new GregorianCalendar().getTime()))) {
@@ -119,15 +128,18 @@ public class TimeTrackingTableDisplay
 
 					if (itemLogging.getPercentageComplete() != null
 							&& 100d == itemLogging.getPercentageComplete()) {
-						timeTrackingLink.addStyleName(UIConstants.LINK_COMPLETED);
+						timeTrackingLink
+								.addStyleName(UIConstants.LINK_COMPLETED);
 					} else {
 						if ("Pending".equals(itemLogging.getStatus())) {
-							timeTrackingLink.addStyleName(UIConstants.LINK_PENDING);
+							timeTrackingLink
+									.addStyleName(UIConstants.LINK_PENDING);
 						} else if (itemLogging.getDueDate() != null
 								&& (itemLogging.getDueDate()
 										.before(new GregorianCalendar()
 												.getTime()))) {
-							timeTrackingLink.addStyleName(UIConstants.LINK_OVERDUE);
+							timeTrackingLink
+									.addStyleName(UIConstants.LINK_OVERDUE);
 						}
 					}
 				}

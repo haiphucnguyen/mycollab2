@@ -33,6 +33,7 @@ import com.vaadin.ui.VerticalLayout;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 @SuppressWarnings("serial")
 public abstract class UserFormLayoutFactory implements IFormLayoutFactory {
@@ -81,7 +82,7 @@ public abstract class UserFormLayoutFactory implements IFormLayoutFactory {
 	protected abstract Layout createBottomPanel();
 
 	@Override
-	public void attachField(final Object propertyId, final Field field) {
+	public void attachField(final Object propertyId, final Field<?> field) {
 		this.userInformationLayout.attachField(propertyId, field);
 	}
 
@@ -108,7 +109,7 @@ public abstract class UserFormLayoutFactory implements IFormLayoutFactory {
 		}
 
 		@Override
-		public void attachField(final Object propertyId, final Field field) {
+		public void attachField(final Object propertyId, final Field<?> field) {
 			if (propertyId.equals("firstname")) {
 				this.informationLayout.addComponent(field, "First Name", 0, 0);
 			} else if (propertyId.equals("lastname")) {

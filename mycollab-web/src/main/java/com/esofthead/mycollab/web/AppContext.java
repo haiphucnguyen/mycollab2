@@ -546,7 +546,7 @@ public class AppContext implements Serializable {
 	 * @param windowTitle
 	 */
 	public static void addFragment(String fragement, String windowTitle) {
-		Page.getCurrent().setUriFragment(fragement);
+		Page.getCurrent().setUriFragment(fragement, false);
 		Page.getCurrent().setTitle(
 				StringUtils.subString(windowTitle, 150) + " [MyCollab]");
 	}

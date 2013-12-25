@@ -51,7 +51,7 @@ public class TaskPresenter extends AbstractPresenter<TaskContainer> {
 
 		view.removeAllComponents();
 
-		AbstractPresenter presenter = null;
+		AbstractPresenter<?> presenter = null;
 
 		if (data instanceof TaskScreenData.Read) {
 			presenter = PresenterResolver.getPresenter(TaskReadPresenter.class);
@@ -82,7 +82,7 @@ public class TaskPresenter extends AbstractPresenter<TaskContainer> {
 	public void handleChain(ComponentContainer container,
 			PageActionChain pageActionChain) {
 
-		ScreenData pageAction = pageActionChain.peek();
+		ScreenData<?> pageAction = pageActionChain.peek();
 		onGo(container, pageAction);
 	}
 }

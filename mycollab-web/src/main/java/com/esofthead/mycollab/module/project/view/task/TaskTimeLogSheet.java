@@ -29,6 +29,12 @@ import com.esofthead.mycollab.module.project.ui.components.CompTimeLogSheet;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.web.AppContext;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @SuppressWarnings("serial")
 public class TaskTimeLogSheet extends CompTimeLogSheet<SimpleTask> {
 

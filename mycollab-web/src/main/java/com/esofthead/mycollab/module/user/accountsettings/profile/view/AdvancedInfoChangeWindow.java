@@ -35,6 +35,12 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @SuppressWarnings("serial")
 public class AdvancedInfoChangeWindow extends Window {
 
@@ -47,7 +53,6 @@ public class AdvancedInfoChangeWindow extends Window {
 	public AdvancedInfoChangeWindow(final User user) {
 		this.user = user;
 		this.setWidth("450px");
-		// this.setHeight("250px");
 		this.initUI();
 		this.center();
 		this.setCaption("Change your advanced information");

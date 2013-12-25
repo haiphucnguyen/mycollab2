@@ -52,6 +52,8 @@ public class TaskGroupAddPresenter extends AbstractPresenter<TaskGroupAddView> {
 	protected void postInitView() {
 		view.getEditFormHandlers().addFormHandler(
 				new EditFormHandler<TaskList>() {
+					private static final long serialVersionUID = 1L;
+
 					@Override
 					public void onSave(final TaskList item) {
 						save(item);
