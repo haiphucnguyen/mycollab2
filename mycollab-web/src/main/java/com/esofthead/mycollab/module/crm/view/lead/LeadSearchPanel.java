@@ -249,14 +249,6 @@ public class LeadSearchPanel extends
 			gridLayout.getLayout().setMargin(
 					new MarginInfo(true, true, true, false));
 
-			// if (ScreenSize.hasSupport1024Pixels()) {
-			// gridLayout = new GridFormLayoutHelper(3, 4,
-			// UIConstants.DEFAULT_CONTROL_WIDTH_1024_RESOLUTION,
-			// "90px");
-			// } else if (ScreenSize.hasSupport1280Pixels()) {
-			// gridLayout = new GridFormLayoutHelper(3, 4, "90px");
-			// }
-
 			this.firstnameField = (TextField) gridLayout.addComponent(
 					new TextField(), "First Name", 0, 0);
 			this.lastnameField = (TextField) gridLayout.addComponent(
