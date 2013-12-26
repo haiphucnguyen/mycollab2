@@ -48,6 +48,13 @@ import com.vaadin.ui.Table.ColumnGenerator;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ * @param <V>
+ */
 @SuppressWarnings("serial")
 public abstract class CompTimeLogSheet<V extends ValuedBean> extends
 		HorizontalLayout {

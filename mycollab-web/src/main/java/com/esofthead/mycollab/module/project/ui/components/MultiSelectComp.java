@@ -21,7 +21,9 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.apache.commons.beanutils.PropertyUtils;
+import org.vaadin.hene.popupbutton.PopupButton;
 
+import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.server.Sizeable;
 import com.vaadin.ui.Alignment;
@@ -33,6 +35,7 @@ import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.CustomField;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.VerticalLayout;
 
 /**
  * 
@@ -43,13 +46,13 @@ import com.vaadin.ui.TextField;
 public abstract class MultiSelectComp extends CustomField {
 
 	private TextField componentsDisplay;
-	private MultipleItemsPopupSelection componentPopupSelection;
+	protected PopupButton componentPopupSelection;
 
 	private String displayName;
 	private String widthVal;
 
 	protected boolean isClicked = false;
-	protected HashMap<String, CheckBox> componentPoupMap = new HashMap<String, CheckBox>();
+	protected HashMap<String, CheckBox> componentList = new HashMap<String, CheckBox>();
 
 	@SuppressWarnings("rawtypes")
 	protected List selectedItemsList = new ArrayList();
@@ -82,7 +85,7 @@ public abstract class MultiSelectComp extends CustomField {
 		this.componentsDisplay.addStyleName("noBorderRight");
 		this.componentsDisplay.setWidth("100%");
 
-		this.componentPopupSelection = new MultipleItemsPopupSelection();
+		this.componentPopupSelection = new PopupButton();
 		this.componentPopupSelection
 				.addClickListener(new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
@@ -127,7 +130,7 @@ public abstract class MultiSelectComp extends CustomField {
 		this.componentsDisplay.setValue("");
 		this.componentsDisplay.setReadOnly(true);
 
-		for (final CheckBox chk : this.componentPoupMap.values()) {
+		for (final CheckBox chk : this.componentList.values()) {
 			chk.setValue(false);
 		}
 	}
@@ -147,9 +150,12 @@ public abstract class MultiSelectComp extends CustomField {
 			} else {
 				itemName = (String) this.dataList.get(i);
 			}
+
 			final CheckBox chkItem = new CheckBox(itemName);
 			chkItem.setImmediate(true);
 			chkItem.addValueChangeListener(new ValueChangeListener() {
+				private static final long serialVersionUID = 1L;
+
 				@Override
 				public void valueChange(
 						final com.vaadin.data.Property.ValueChangeEvent event) {
@@ -164,8 +170,9 @@ public abstract class MultiSelectComp extends CustomField {
 									.getProperty(itemObj,
 											MultiSelectComp.this.displayName);
 						} catch (final Exception e) {
-							e.printStackTrace();
+							throw new MyCollabException(e);
 						}
+
 						if (itemObj != null) {
 							if (MultiSelectComp.this.isClicked) {
 								MultiSelectComp.this
@@ -199,11 +206,18 @@ public abstract class MultiSelectComp extends CustomField {
 					}
 				}
 			});
-			if (!this.componentPoupMap.containsKey(chkItem.getCaption())) {
-				this.componentPoupMap.put(chkItem.getCaption(), chkItem);
-				this.addItemToComponent(chkItem);
+
+			if (!this.componentList.containsKey(chkItem.getCaption())) {
+				this.componentList.put(chkItem.getCaption(), chkItem);
 			}
 		}
+
+		VerticalLayout popupContent = new VerticalLayout();
+		for (final CheckBox chk : this.componentList.values()) {
+			popupContent.addComponent(chk);
+		}
+		componentPopupSelection.setContent(popupContent);
+
 	}
 
 	protected void removeElementSelectedListByName(final String name) {
@@ -256,15 +270,11 @@ public abstract class MultiSelectComp extends CustomField {
 				objDisplayName = (String) this.selectedItemsList.get(i);
 			}
 
-			if (this.componentPoupMap.containsKey(objDisplayName)) {
-				final CheckBox chk = this.componentPoupMap.get(objDisplayName);
+			if (this.componentList.containsKey(objDisplayName)) {
+				final CheckBox chk = this.componentList.get(objDisplayName);
 				chk.setValue(true);
 			}
 		}
-	}
-
-	protected void addItemToComponent(final Component comp) {
-		this.componentPopupSelection.addItemComponent(comp);
 	}
 
 	public List getDataList() {

@@ -180,9 +180,15 @@ public class DefaultFormViewFieldFactory {
 		}
 	}
 
-	public static class FormContainerViewField extends CustomField {
+	public static class FormContainerViewField extends CustomField<Object> {
 		private static final long serialVersionUID = 1L;
 		private CssLayout layout;
+
+		public FormContainerViewField() {
+			layout = new CssLayout();
+			layout.setWidth("100%");
+			layout.setStyleName(UIConstants.FORM_CONTAINER_VIEW);
+		}
 
 		public void addComponentField(final Component component) {
 			layout.addComponent(component);
@@ -195,9 +201,6 @@ public class DefaultFormViewFieldFactory {
 
 		@Override
 		protected Component initContent() {
-			layout = new CssLayout();
-			layout.setWidth("100%");
-			layout.setStyleName(UIConstants.FORM_CONTAINER_VIEW);
 			return layout;
 		}
 	}

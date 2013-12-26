@@ -28,11 +28,17 @@ import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.project.ui.components.MultiSelectComp;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
-import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.ui.CheckBox;
+import com.vaadin.ui.VerticalLayout;
 
-@SuppressWarnings("serial")
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class ProjectMemberMultiSelectField extends MultiSelectComp {
+	private static final long serialVersionUID = 1L;
 
 	private static String displayName = "memberFullName";
 
@@ -124,11 +130,16 @@ public class ProjectMemberMultiSelectField extends MultiSelectComp {
 					}
 				}
 			});
-			if (!componentPoupMap.containsKey(chkItem.getCaption())) {
-				componentPoupMap.put(chkItem.getCaption(), chkItem);
-				addItemToComponent(chkItem);
+			if (!componentList.containsKey(chkItem.getCaption())) {
+				componentList.put(chkItem.getCaption(), chkItem);
 			}
 		}
+
+		VerticalLayout popupContent = new VerticalLayout();
+		for (final CheckBox chk : this.componentList.values()) {
+			popupContent.addComponent(chk);
+		}
+		componentPopupSelection.setContent(popupContent);
 	}
 
 }
