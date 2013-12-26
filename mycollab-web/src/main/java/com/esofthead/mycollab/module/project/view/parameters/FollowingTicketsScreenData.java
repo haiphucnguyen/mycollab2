@@ -20,6 +20,12 @@ import java.util.List;
 
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ *
+ */
 public class FollowingTicketsScreenData {
 	public static class GotoMyFollowingItems extends ScreenData<List<Integer>> {
 

@@ -64,6 +64,7 @@ import com.vaadin.ui.VerticalLayout;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 @ViewComponent
 public class ProjectMemberListViewImpl extends AbstractPageView implements

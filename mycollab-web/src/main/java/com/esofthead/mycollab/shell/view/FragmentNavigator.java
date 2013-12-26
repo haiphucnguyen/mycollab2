@@ -17,10 +17,10 @@
 
 package com.esofthead.mycollab.shell.view;
 
-
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class FragmentNavigator {
 

@@ -39,6 +39,12 @@ import com.esofthead.mycollab.module.user.dao.UserAccountInvitationMapper;
 import com.esofthead.mycollab.module.user.dao.UserAccountInvitationMapperExt;
 import com.esofthead.mycollab.module.user.domain.SimpleUserAccountInvitation;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @Component
 @Scope(value = BeanDefinition.SCOPE_PROTOTYPE)
 public class SendUserInvitationEmailJob extends QuartzJobBean {

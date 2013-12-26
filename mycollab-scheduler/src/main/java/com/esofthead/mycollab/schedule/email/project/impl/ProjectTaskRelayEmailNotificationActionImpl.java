@@ -41,6 +41,12 @@ import com.esofthead.mycollab.schedule.email.project.ProjectMailLinkGenerator;
 import com.esofthead.mycollab.schedule.email.project.ProjectTaskRelayEmailNotificationAction;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @Service
 public class ProjectTaskRelayEmailNotificationActionImpl extends
 		SendMailToFollowersAction implements

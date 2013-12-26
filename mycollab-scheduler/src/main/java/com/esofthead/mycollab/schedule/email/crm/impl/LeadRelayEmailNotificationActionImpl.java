@@ -36,6 +36,12 @@ import com.esofthead.mycollab.module.user.UserLinkUtils;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.schedule.email.crm.LeadRelayEmailNotificationAction;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @Component
 public class LeadRelayEmailNotificationActionImpl extends
 		CrmDefaultSendingRelayEmailAction implements

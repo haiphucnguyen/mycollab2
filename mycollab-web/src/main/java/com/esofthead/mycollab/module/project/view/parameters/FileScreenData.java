@@ -19,6 +19,12 @@ package com.esofthead.mycollab.module.project.view.parameters;
 import com.esofthead.mycollab.module.file.domain.criteria.FileSearchCriteria;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ *
+ */
 public class FileScreenData {
 
 	public static class GotoDashboard extends ScreenData {

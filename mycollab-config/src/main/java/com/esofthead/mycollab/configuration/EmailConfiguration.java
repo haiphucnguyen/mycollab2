@@ -20,6 +20,7 @@ package com.esofthead.mycollab.configuration;
  * Email configuration of MyCollab
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  * 
  */
 public class EmailConfiguration {

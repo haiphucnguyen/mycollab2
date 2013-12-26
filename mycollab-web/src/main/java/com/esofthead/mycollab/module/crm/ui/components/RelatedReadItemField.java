@@ -46,6 +46,12 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomField;
 import com.vaadin.ui.Label;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class RelatedReadItemField extends CustomField {
 	private static final long serialVersionUID = 1L;
 

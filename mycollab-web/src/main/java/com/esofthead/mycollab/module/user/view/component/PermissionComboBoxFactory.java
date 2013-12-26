@@ -22,6 +22,12 @@ import com.esofthead.mycollab.security.BooleanPermissionFlag;
 import com.esofthead.mycollab.security.PermissionFlag;
 import com.esofthead.mycollab.vaadin.ui.KeyCaptionComboBox;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class PermissionComboBoxFactory {
 	public static KeyCaptionComboBox createPermissionSelection(
 			Class<? extends PermissionFlag> flag) {

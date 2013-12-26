@@ -20,6 +20,12 @@ import net.sf.dynamicreports.report.builder.component.ComponentBuilder;
 import net.sf.dynamicreports.report.builder.component.HorizontalListBuilder;
 import net.sf.dynamicreports.report.definition.expression.DRIExpression;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class BugCustomLinkRenderer implements
 		ColumnFieldComponentBuilder<HorizontalListBuilder> {
 

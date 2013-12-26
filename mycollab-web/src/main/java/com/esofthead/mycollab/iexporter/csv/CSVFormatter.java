@@ -16,6 +16,12 @@
  */
 package com.esofthead.mycollab.iexporter.csv;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public interface CSVFormatter<T> {
 	T format(String value);
 }

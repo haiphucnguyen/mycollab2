@@ -21,6 +21,12 @@ import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class UserScreenData {
 	public static class Read extends ScreenData<String> {
 

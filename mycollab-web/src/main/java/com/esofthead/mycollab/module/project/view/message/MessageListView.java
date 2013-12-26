@@ -21,6 +21,12 @@ import com.esofthead.mycollab.module.project.domain.criteria.MessageSearchCriter
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.PageView;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ *
+ */
 public interface MessageListView extends PageView {
 	void setCriteria(MessageSearchCriteria criteria);
 	

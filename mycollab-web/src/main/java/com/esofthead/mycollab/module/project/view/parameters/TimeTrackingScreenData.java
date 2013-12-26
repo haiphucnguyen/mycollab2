@@ -19,6 +19,12 @@ package com.esofthead.mycollab.module.project.view.parameters;
 import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ *
+ */
 public class TimeTrackingScreenData {
 	public static class Search extends
 			ScreenData<ItemTimeLoggingSearchCriteria> {

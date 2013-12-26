@@ -20,6 +20,12 @@ import com.esofthead.mycollab.module.tracker.domain.Component;
 import com.esofthead.mycollab.module.tracker.domain.criteria.ComponentSearchCriteria;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ *
+ */
 public class ComponentScreenData {
 	public static class Read extends ScreenData<Integer> {
 

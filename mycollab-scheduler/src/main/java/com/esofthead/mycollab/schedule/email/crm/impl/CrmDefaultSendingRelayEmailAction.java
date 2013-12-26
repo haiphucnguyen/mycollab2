@@ -46,6 +46,12 @@ import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.schedule.email.SendingRelayEmailNotificationAction;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public abstract class CrmDefaultSendingRelayEmailAction<B extends ValuedBean>
 		implements SendingRelayEmailNotificationAction {
 

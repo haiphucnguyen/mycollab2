@@ -19,6 +19,12 @@ package com.esofthead.mycollab.module.project.view.parameters;
 import com.esofthead.mycollab.module.project.domain.criteria.MessageSearchCriteria;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ *
+ */
 public class MessageScreenData {
 	public static class Read extends ScreenData<Integer> {
 

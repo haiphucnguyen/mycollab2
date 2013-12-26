@@ -27,6 +27,7 @@ package com.esofthead.mycollab.configuration;
  * </ul>
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  * 
  */
 public interface StorageConfiguration {

@@ -35,6 +35,12 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.web.AppContext;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ *
+ */
 public class StandupUrlResolver extends ProjectUrlResolver {
 	public StandupUrlResolver() {
 		this.addSubResolver("list", new ListUrlResolver());

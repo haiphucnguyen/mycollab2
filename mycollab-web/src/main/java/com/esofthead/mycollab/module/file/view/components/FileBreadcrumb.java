@@ -35,6 +35,12 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ *
+ */
 @ViewComponent
 public class FileBreadcrumb extends Breadcrumb implements CacheableComponent,
 		HasSearchHandlers<FileSearchCriteria> {

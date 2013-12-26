@@ -23,6 +23,12 @@ import com.esofthead.mycollab.core.cache.CacheKey;
 import com.esofthead.mycollab.core.cache.Cacheable;
 import com.esofthead.mycollab.core.utils.BeanUtility;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @Aspect
 @Component
 @Configurable
@@ -33,7 +39,7 @@ public class L2CacheAspect {
 	public Object cacheGet(ProceedingJoinPoint pjp) throws Throwable {
 
 		Advised advised = (Advised) pjp.getThis();
-		Class cls = advised.getTargetSource().getTargetClass();
+		Class<?> cls = advised.getTargetSource().getTargetClass();
 		if (CacheServiceIgnoreList.isInBlackList(CacheUtils
 				.getEnclosingServiceInterface(cls))) {
 			return pjp.proceed();

@@ -37,6 +37,12 @@ import com.esofthead.mycollab.module.mail.NullMailer;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @Component
 @Scope(value = BeanDefinition.SCOPE_PROTOTYPE)
 public class SendingErrorReportEmailJob extends QuartzJobBean {

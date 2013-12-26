@@ -62,6 +62,7 @@ import com.vaadin.ui.VerticalLayout;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 @ViewComponent
 public class UserListViewImpl extends AbstractPageView implements UserListView {
