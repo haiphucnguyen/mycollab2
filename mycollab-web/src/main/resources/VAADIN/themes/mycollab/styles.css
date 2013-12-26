@@ -3220,17 +3220,11 @@ div.v-lazyloadingwrapper-loading {
 
 .report-row-block {
 	height: 100%;
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-	box-sizing: border-box;
+	padding: 5px 8px 0px;
 }
 
 .report-row-block.special-col {
 	
-}
-
-.report-row-block>.v-csslayout-margin {
-	padding: 5px 8px 0px;
 }
 
 .addViewLayout .standup-edit-layout .h2 {
@@ -5580,4 +5574,34 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 /* Account Settings - Role's depot header fix */
 .accountsettings-role .addViewBottomControls .depotComp .depotHeader {
 	border-width: 1px 0px;
+}
+
+/* Project Member Read View */
+.projectmember-view .v-tabsheet-content {
+	padding-bottom: 0px;
+}
+
+.projectmember-view .v-tabsheet-content .date-wrapper, .projectmember-view .v-tabsheet-content .stream-wrapper {
+	border-width: 0px 0px 1px;
+}
+.projectmember-view .v-tabsheet-content .listControl {
+ 	border-width: 0px;
+ }
+.projectmember-view .v-tabsheet-content .v-table-header-wrap, .projectmember-view .v-tabsheet-content .v-table-body-wrapper {
+ 	border-width: 1px 0px 0px;
+ }
+.projectmember-view .v-tabsheet-content .comp-header.v-margin-top {
+	padding-top: 3px;
+}
+
+.projectmember-view .v-tabsheet-content .comp-header.v-margin-right {
+	padding-right: 5px;
+}
+
+.projectmember-view .v-tabsheet-content .comp-header.v-margin-bottom {
+	padding-bottom: 3px;
+}
+
+.projectmember-view .v-tabsheet-content .comp-header.v-margin-left{
+	padding-left: 5px;
 }

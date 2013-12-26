@@ -42,6 +42,7 @@ import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.web.AppContext;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Field;
@@ -58,11 +59,11 @@ abstract class AbstractMemberPreviewComp extends
 		AbstractPreviewItemComp<SimpleProjectMember> {
 	private static final long serialVersionUID = 1L;
 
-	protected UserActivityStreamDepot userActivityComp;
+	protected UserActivityStream userActivityComp;
 
-	protected UserTaskDepot userTaskComp;
+	protected UserTaskComp userTaskComp;
 
-	protected UserBugDepot userBugComp;
+	protected UserBugComp userBugComp;
 
 	protected UserStandupReportDepot standupComp;
 
@@ -75,9 +76,9 @@ abstract class AbstractMemberPreviewComp extends
 
 	@Override
 	protected void initRelatedComponents() {
-		userActivityComp = new UserActivityStreamDepot();
-		userTaskComp = new UserTaskDepot();
-		userBugComp = new UserBugDepot();
+		userActivityComp = new UserActivityStream();
+		userTaskComp = new UserTaskComp();
+		userBugComp = new UserBugComp();
 		standupComp = new UserStandupReportDepot();
 
 	}
@@ -151,7 +152,7 @@ abstract class AbstractMemberPreviewComp extends
 		}
 	}
 
-	protected class UserTaskDepot extends Depot {
+	protected class UserTaskComp extends VerticalLayout {
 		private static final long serialVersionUID = 1L;
 
 		private PopupButton taskListFilterControl;
@@ -159,8 +160,8 @@ abstract class AbstractMemberPreviewComp extends
 
 		private TaskSearchCriteria taskSearchCriteria;
 
-		public UserTaskDepot() {
-			super("Tasks", new HorizontalLayout(), new VerticalLayout());
+		public UserTaskComp() {
+			super();
 
 			this.taskDisplay = new TaskTableDisplay(
 					new String[] { "id", "taskname", "startdate", "deadline",
@@ -201,19 +202,20 @@ abstract class AbstractMemberPreviewComp extends
 									|| "reopenTask".equals(event.getFieldName())
 									|| "deleteTask".equals(event.getFieldName())) {
 
-								UserTaskDepot.this.taskDisplay
-										.setSearchCriteria(UserTaskDepot.this.taskSearchCriteria);
+								UserTaskComp.this.taskDisplay
+										.setSearchCriteria(UserTaskComp.this.taskSearchCriteria);
 							}
 						}
 					});
 
-			this.bodyContent.addComponent(this.taskDisplay);
 			this.initHeader();
+			this.addComponent(this.taskDisplay);
 		}
 
 		private void initHeader() {
-			final HorizontalLayout headerLayout = (HorizontalLayout) this.headerContent;
-			headerLayout.setSpacing(true);
+			final HorizontalLayout headerLayout = new HorizontalLayout();
+			headerLayout.setMargin(true);
+			headerLayout.setStyleName("comp-header");
 
 			this.taskListFilterControl = new PopupButton("Active Tasks");
 			this.taskListFilterControl.addStyleName("link");
@@ -229,11 +231,11 @@ abstract class AbstractMemberPreviewComp extends
 
 						@Override
 						public void buttonClick(final ClickEvent event) {
-							UserTaskDepot.this.taskListFilterControl
+							UserTaskComp.this.taskListFilterControl
 									.setPopupVisible(false);
-							UserTaskDepot.this.taskListFilterControl
+							UserTaskComp.this.taskListFilterControl
 									.setCaption("All Tasks");
-							UserTaskDepot.this.displayAllTasks();
+							UserTaskComp.this.displayAllTasks();
 						}
 					});
 			allTasksFilterBtn.setStyleName("link");
@@ -245,11 +247,11 @@ abstract class AbstractMemberPreviewComp extends
 
 						@Override
 						public void buttonClick(final ClickEvent event) {
-							UserTaskDepot.this.taskListFilterControl
+							UserTaskComp.this.taskListFilterControl
 									.setPopupVisible(false);
-							UserTaskDepot.this.taskListFilterControl
+							UserTaskComp.this.taskListFilterControl
 									.setCaption("Active Tasks");
-							UserTaskDepot.this.displayActiveTasksOnly();
+							UserTaskComp.this.displayActiveTasksOnly();
 						}
 					});
 			activeTasksFilterBtn.setStyleName("link");
@@ -261,11 +263,11 @@ abstract class AbstractMemberPreviewComp extends
 
 						@Override
 						public void buttonClick(final ClickEvent event) {
-							UserTaskDepot.this.taskListFilterControl
+							UserTaskComp.this.taskListFilterControl
 									.setPopupVisible(false);
-							UserTaskDepot.this.taskListFilterControl
+							UserTaskComp.this.taskListFilterControl
 									.setCaption("Pending Tasks");
-							UserTaskDepot.this.displayPendingTasksOnly();
+							UserTaskComp.this.displayPendingTasksOnly();
 						}
 					});
 			pendingTasksFilterBtn.setStyleName("link");
@@ -277,17 +279,18 @@ abstract class AbstractMemberPreviewComp extends
 
 						@Override
 						public void buttonClick(final ClickEvent event) {
-							UserTaskDepot.this.taskListFilterControl
+							UserTaskComp.this.taskListFilterControl
 									.setCaption("Archived Tasks");
-							UserTaskDepot.this.taskListFilterControl
+							UserTaskComp.this.taskListFilterControl
 									.setPopupVisible(false);
-							UserTaskDepot.this.displayInActiveTasks();
+							UserTaskComp.this.displayInActiveTasks();
 						}
 					});
 			archievedTasksFilterBtn.setStyleName("link");
 			filterBtnLayout.addComponent(archievedTasksFilterBtn);
 			this.taskListFilterControl.setContent(filterBtnLayout);
 			headerLayout.addComponent(this.taskListFilterControl);
+			this.addComponent(headerLayout);
 		}
 
 		private TaskSearchCriteria createBaseSearchCriteria() {
@@ -329,13 +332,13 @@ abstract class AbstractMemberPreviewComp extends
 		}
 	}
 
-	protected class UserBugDepot extends Depot {
+	protected class UserBugComp extends VerticalLayout {
 		private static final long serialVersionUID = 1L;
 		private PopupButton bugActionControl;
 		private BugTableDisplay bugDisplay;
 
-		public UserBugDepot() {
-			super("Bugs", new HorizontalLayout(), new VerticalLayout());
+		public UserBugComp() {
+			super();
 
 			this.bugDisplay = new BugTableDisplay(BugTableFieldDef.action,
 					Arrays.asList(BugTableFieldDef.summary,
@@ -363,15 +366,16 @@ abstract class AbstractMemberPreviewComp extends
 							}
 						}
 					});
-
-			this.bodyContent.addComponent(this.bugDisplay);
-
+			
 			this.initHeader();
+
+			this.addComponent(this.bugDisplay);			
 		}
 
 		private void initHeader() {
-			final HorizontalLayout headerLayout = (HorizontalLayout) this.headerContent;
-			headerLayout.setSpacing(true);
+			final HorizontalLayout headerLayout = new HorizontalLayout();
+			headerLayout.setMargin(true);
+			headerLayout.setStyleName("comp-header");
 
 			this.bugActionControl = new PopupButton("Open Bugs");
 			this.bugActionControl.addStyleName("link");
@@ -389,11 +393,11 @@ abstract class AbstractMemberPreviewComp extends
 
 						@Override
 						public void buttonClick(final ClickEvent event) {
-							UserBugDepot.this.bugActionControl
+							UserBugComp.this.bugActionControl
 									.setPopupVisible(false);
-							UserBugDepot.this.bugActionControl
+							UserBugComp.this.bugActionControl
 									.setCaption("Open Bugs");
-							UserBugDepot.this.displayOpenBugs();
+							UserBugComp.this.displayOpenBugs();
 						}
 					});
 			openBugBtn.setEnabled(CurrentProjectVariables
@@ -407,11 +411,11 @@ abstract class AbstractMemberPreviewComp extends
 
 						@Override
 						public void buttonClick(final ClickEvent event) {
-							UserBugDepot.this.bugActionControl
+							UserBugComp.this.bugActionControl
 									.setPopupVisible(false);
-							UserBugDepot.this.bugActionControl
+							UserBugComp.this.bugActionControl
 									.setCaption("Resolved Bugs");
-							UserBugDepot.this.displayResolvedBugs();
+							UserBugComp.this.displayResolvedBugs();
 						}
 					});
 			pendingBugBtn.setEnabled(CurrentProjectVariables
@@ -425,17 +429,18 @@ abstract class AbstractMemberPreviewComp extends
 
 						@Override
 						public void buttonClick(final ClickEvent event) {
-							UserBugDepot.this.bugActionControl
+							UserBugComp.this.bugActionControl
 									.setPopupVisible(false);
-							UserBugDepot.this.bugActionControl
+							UserBugComp.this.bugActionControl
 									.setCaption("Verified Bugs");
-							UserBugDepot.this.displayClosedBugs();
+							UserBugComp.this.displayClosedBugs();
 						}
 					});
 			closeBugBtn.setEnabled(CurrentProjectVariables
 					.canWrite(ProjectRolePermissionCollections.BUGS));
 			closeBugBtn.setStyleName("link");
 			actionBtnLayout.addComponent(closeBugBtn);
+			this.addComponent(headerLayout);
 		}
 
 		private BugSearchCriteria createBugSearchCriteria() {
@@ -493,20 +498,20 @@ abstract class AbstractMemberPreviewComp extends
 		}
 	}
 
-	protected class UserActivityStreamDepot extends Depot {
+	protected class UserActivityStream extends VerticalLayout {
 		private static final long serialVersionUID = 1L;
 
 		private ProjectActivityStreamPagedList activityStreamList;
 
-		public UserActivityStreamDepot() {
-			super("User Feeds", new VerticalLayout());
+		public UserActivityStream() {
+			super();
 
 			activityStreamList = new ProjectActivityStreamPagedList();
 		}
 
 		public void displayActivityStream() {
-			this.bodyContent.removeAllComponents();
-			this.bodyContent.addComponent(this.activityStreamList);
+			this.removeAllComponents();
+			this.addComponent(this.activityStreamList);
 			ActivityStreamSearchCriteria searchCriteria = new ActivityStreamSearchCriteria();
 			searchCriteria.setModuleSet(new SetSearchField<String>(
 					SearchField.AND, new String[] { ModuleNameConstants.PRJ }));

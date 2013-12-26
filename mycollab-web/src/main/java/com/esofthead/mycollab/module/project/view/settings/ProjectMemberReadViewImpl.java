@@ -37,6 +37,7 @@ public class ProjectMemberReadViewImpl extends AbstractPageView implements
 
 	public ProjectMemberReadViewImpl() {
 		super();
+		this.setStyleName("projectmember-view");
 		this.setMargin(new MarginInfo(true, false, false, false));
 		this.projectMemberPreview = new ProjectMemberReadComp();
 		this.addComponent(this.projectMemberPreview);
