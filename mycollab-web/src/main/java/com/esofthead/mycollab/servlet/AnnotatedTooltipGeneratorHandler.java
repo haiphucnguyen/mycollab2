@@ -80,6 +80,12 @@ import com.hp.gagawa.java.elements.Img;
 import com.hp.gagawa.java.elements.Td;
 import com.hp.gagawa.java.elements.Tr;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @Component("tooltipGeneratorServlet")
 public class AnnotatedTooltipGeneratorHandler extends GenericServlet {
 	private static Logger log = LoggerFactory

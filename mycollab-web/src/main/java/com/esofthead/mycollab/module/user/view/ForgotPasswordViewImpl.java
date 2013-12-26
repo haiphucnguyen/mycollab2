@@ -40,6 +40,7 @@ import com.vaadin.ui.TextField;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 @ViewComponent
 public class ForgotPasswordViewImpl extends AbstractPageView implements

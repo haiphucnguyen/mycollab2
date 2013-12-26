@@ -39,6 +39,12 @@ import com.vaadin.ui.Link;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @ViewComponent
 public class LoginViewImpl extends AbstractPageView implements LoginView {
 

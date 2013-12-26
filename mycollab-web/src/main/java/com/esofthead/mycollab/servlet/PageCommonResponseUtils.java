@@ -31,6 +31,12 @@ import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.template.velocity.TemplateContext;
 import com.esofthead.template.velocity.TemplateEngine;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class PageCommonResponseUtils {
 	public static void responsePage404(HttpServletResponse response)
 			throws IOException {
