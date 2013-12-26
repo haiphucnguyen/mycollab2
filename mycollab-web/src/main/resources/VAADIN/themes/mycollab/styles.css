@@ -562,25 +562,41 @@ input.v-textfield-pagedtable-pagefield {
 	float: left;
 }
 
-.serviceMenu {
-	float: left;
-	padding: 12px 14px;
+.service-menu {
+	padding: 8px 12px;
 	background: none !important;
 	border: none;
 	text-shadow: none;
 }
 
-.serviceMenu .v-button-wrap {
+.service-menu .v-button-wrap {
 	padding: 0px;
 }
 
-#topNavigation .serviceMenu .v-button-caption {
+.service-menu.v-buttongroup .v-button.v-button-left, .service-menu.v-buttongroup .v-button.v-button-middle, .service-menu.v-buttongroup .v-button.v-button-right, #topNavigation .service-menu.v-buttongroup .v-button:focus {
+	background: none;
+}
+
+#topNavigation .service-menu.v-buttongroup .v-button.selected {
+	background: none no-repeat 0 0 #E4E4E4;
+	border-radius: 3px 3px 3px 3px;
+}
+
+#topNavigation .service-menu.v-buttongroup .v-button.selected .v-button-caption {
+	color: #575757;
+}
+
+.service-menu.v-buttongroup .v-button.v-button-right {
+	border-left: none;
+}
+
+#topNavigation .service-menu .v-button-caption {
 	font-weight: bold;
-	font-size: 14px;
+	font-size: 13px;
 	padding: 0 6px 0 3px;
-	text-shadow: 1px 1px 0px #6b6b6b;
+	/* text-shadow: 1px 1px 0px #6b6b6b;
 	filter: progid:DXImageTransform.Microsoft.Shadow(color=#6B6B6B,
-		direction=45);
+		direction=45); */
 }
 
 #topNavigation .v-button-wrap,#topNavigation .v-button:active .v-button-wrap

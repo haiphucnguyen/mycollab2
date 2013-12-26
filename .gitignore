@@ -160,3 +160,5 @@ mycollab-jetty-session-premium/pom.xml.versionsBackup
 mycollab-services-ondemand/pom.xml.versionsBackup
 mycollab-web-premium/pom.xml.versionsBackup
 extras/vaadin/addons/ckeditor/bin/target/classes/.gitignore
+.idea/
+*.iml

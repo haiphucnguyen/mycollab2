@@ -19,6 +19,7 @@ package com.esofthead.mycollab.shell.view;
 import java.util.Date;
 
 import org.vaadin.hene.popupbutton.PopupButton;
+import org.vaadin.peter.buttongroup.ButtonGroup;
 
 import com.esofthead.mycollab.eventmanager.ApplicationEvent;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
@@ -36,6 +37,7 @@ import com.esofthead.mycollab.vaadin.mvp.ControllerRegistry;
 import com.esofthead.mycollab.vaadin.mvp.IModule;
 import com.esofthead.mycollab.vaadin.mvp.ModuleHelper;
 import com.esofthead.mycollab.vaadin.ui.FeedbackWindow;
+import com.esofthead.mycollab.vaadin.ui.ServiceMenu;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
@@ -70,7 +72,8 @@ public final class MainView extends AbstractPageView {
 
 	private final CssLayout bodyLayout;
 
-	private PopupButton serviceMenu;
+	//private PopupButton serviceMenu;
+	private ServiceMenu serviceMenu;
 
 	public MainView() {
 		this.setSizeFull();
@@ -92,21 +95,24 @@ public final class MainView extends AbstractPageView {
 		this.bodyLayout.addComponent(module.getWidget());
 
 		if (ModuleHelper.isCurrentCrmModule()) {
-			serviceMenu.setCaption("CRM");
+			/*serviceMenu.setCaption("CRM");
 			serviceMenu.setIcon(MyCollabResource
-					.newResource("icons/16/customer_gray.png"));
+					.newResource("icons/16/customer_gray.png"));*/
+			serviceMenu.selectService(0);
 		} else if (ModuleHelper.isCurrentProjectModule()) {
-			serviceMenu.setCaption("Projects");
+			/*serviceMenu.setCaption("Projects");
 			serviceMenu.setIcon(MyCollabResource
-					.newResource("icons/16/project_gray.png"));
+					.newResource("icons/16/project_gray.png"));*/
+			serviceMenu.selectService(1);
 		} else if (ModuleHelper.isCurrentFileModule()) {
-			serviceMenu.setCaption("Documents");
+			/*serviceMenu.setCaption("Documents");
 			serviceMenu.setIcon(MyCollabResource
-					.newResource("icons/16/document_gray.png"));
-		} else {
+					.newResource("icons/16/document_gray.png"));*/
+			serviceMenu.selectService(2);
+		} /*else {
 			serviceMenu.setCaption("Services");
 			serviceMenu.setIcon(null);
-		}
+		}*/
 	}
 
 	private CustomLayout createFooter() {
@@ -131,57 +137,44 @@ public final class MainView extends AbstractPageView {
 		layout.setStyleName("topNavigation");
 		layout.setHeight("40px");
 		layout.setWidth("100%");
-		serviceMenu = new PopupButton("Services");
-		serviceMenu.setStyleName("serviceMenu");
+		//serviceMenu = new PopupButton("Services");
+		serviceMenu = new ServiceMenu();
 		serviceMenu.addStyleName("topNavPopup");
-		final VerticalLayout vLayout = new VerticalLayout();
-		vLayout.setWidth("200px");
 
-		final Button crmLink = new Button("CRM", new Button.ClickListener() {
+		serviceMenu.addService("CRM", MyCollabResource.newResource("icons/16/customer.png"), new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void buttonClick(final ClickEvent event) {
-				serviceMenu.setPopupVisible(false);
+				//serviceMenu.setPopupVisible(false);
 				EventBus.getInstance().fireEvent(
 						new ShellEvent.GotoCrmModule(this, null));
 			}
 		});
-		crmLink.setIcon(MyCollabResource.newResource("icons/16/customer.png"));
-		crmLink.setStyleName("link");
-		vLayout.addComponent(crmLink);
 
-		final Button prjLink = new Button("Projects",
-				new Button.ClickListener() {
+		serviceMenu.addService("Projects", MyCollabResource.newResource("icons/16/project.png"), new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
 					public void buttonClick(final ClickEvent event) {
-						serviceMenu.setPopupVisible(false);
+						//serviceMenu.setPopupVisible(false);
 						EventBus.getInstance().fireEvent(
 								new ShellEvent.GotoProjectModule(this, null));
 					}
 				});
-		prjLink.setStyleName("link");
-		prjLink.setIcon(MyCollabResource.newResource("icons/16/project.png"));
-		vLayout.addComponent(prjLink);
 
-		final Button docLink = new Button("Documents",
-				new Button.ClickListener() {
+		serviceMenu.addService("Documents", MyCollabResource.newResource("icons/16/document.png"), new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
 					public void buttonClick(final ClickEvent event) {
-						serviceMenu.setPopupVisible(false);
+						//serviceMenu.setPopupVisible(false);
 						EventBus.getInstance().fireEvent(
 								new ShellEvent.GotoFileModule(this, null));
 					}
 				});
-		docLink.setStyleName("link");
-		docLink.setIcon(MyCollabResource.newResource("icons/16/document.png"));
-		vLayout.addComponent(docLink);
 
-		serviceMenu.setContent(vLayout);
+		//serviceMenu.setContent(vLayout);
 		layout.addComponent(serviceMenu, "serviceMenu");
 
 		final HorizontalLayout accountLayout = new HorizontalLayout();
