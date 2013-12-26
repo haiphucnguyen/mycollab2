@@ -30,6 +30,7 @@ import com.esofthead.mycollab.core.MyCollabException;
  * mycollab.properties read at system started.
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  * 
  */
 public class ApplicationProperties {

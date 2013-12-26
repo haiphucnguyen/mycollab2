@@ -34,6 +34,12 @@ import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.servlet.GenericServlet;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @Component("userconfirmsignupServlet")
 public class AnnotatedUserSignUpConfirmEmailActionHandler extends GenericServlet {
 

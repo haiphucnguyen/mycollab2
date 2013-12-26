@@ -21,6 +21,7 @@ package com.esofthead.mycollab.configuration;
  * in this bean.
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  * 
  */
 public class SharingOptions {

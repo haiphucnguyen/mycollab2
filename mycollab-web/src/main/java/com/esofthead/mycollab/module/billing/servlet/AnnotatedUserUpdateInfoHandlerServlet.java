@@ -41,6 +41,12 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.utils.InvalidPasswordException;
 import com.esofthead.mycollab.utils.PasswordCheckerUtil;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @Component("updateUserInfoServlet")
 public class AnnotatedUserUpdateInfoHandlerServlet extends GenericServlet {
 	private static Logger log = LoggerFactory

@@ -18,6 +18,12 @@ package com.esofthead.mycollab.module.user.accountsettings.view.events;
 
 import com.esofthead.mycollab.eventmanager.ApplicationEvent;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class AccountBillingEvent {
 	
 	public static class CancelAccount extends ApplicationEvent {

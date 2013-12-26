@@ -38,12 +38,17 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.Panel;
 import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class FeedbackWindow extends Window {
 	private static final long serialVersionUID = 1L;
 	private TextField emailTextField;
@@ -120,7 +125,7 @@ public class FeedbackWindow extends Window {
 
 		MultiFileUploadExt uploadExt = new MultiFileUploadExt(attachments);
 
-		//Panel attachedFilepanel = new Panel();
+		// Panel attachedFilepanel = new Panel();
 		VerticalLayout contentLayout = new VerticalLayout();
 		contentLayout.setHeight("80px");
 		contentLayout.setStyleName("noneBorder-panel");
@@ -129,7 +134,7 @@ public class FeedbackWindow extends Window {
 
 		contentLayout.addComponent(uploadExt);
 
-		//attachedFilepanel.setContent(contentLayout);
+		// attachedFilepanel.setContent(contentLayout);
 
 		controlsLayout.addComponent(contentLayout);
 		controlsLayout.setComponentAlignment(contentLayout,

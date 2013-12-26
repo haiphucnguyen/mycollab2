@@ -19,7 +19,13 @@ package com.esofthead.mycollab.module.crm.view.account;
 import com.esofthead.mycollab.module.crm.view.CrmDataTypeFactory;
 import com.esofthead.mycollab.vaadin.ui.ValueListSelect;
 
-public class AccountTypeListSelect  extends ValueListSelect {
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
+public class AccountTypeListSelect extends ValueListSelect {
 	private static final long serialVersionUID = 1L;
 
 	public AccountTypeListSelect() {

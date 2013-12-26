@@ -23,6 +23,12 @@ import net.sf.dynamicreports.report.definition.expression.DRIExpression;
 
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class RpParameterBuilder {
 	private List<TableViewFieldDecorator> viewFields;
 

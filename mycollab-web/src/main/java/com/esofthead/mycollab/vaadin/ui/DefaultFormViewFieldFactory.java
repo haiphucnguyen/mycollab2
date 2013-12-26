@@ -20,8 +20,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.vaadin.easyuploads.MultiFileUploadExt;
 
 import com.esofthead.mycollab.core.utils.StringUtils;
@@ -43,7 +41,6 @@ import com.vaadin.ui.VerticalLayout;
  * @author MyCollab Ltd.
  * @since 2.0
  */
-@SuppressWarnings("unchecked")
 public class DefaultFormViewFieldFactory {
 
 	public static interface AttachmentUploadField extends Field {
@@ -135,7 +132,7 @@ public class DefaultFormViewFieldFactory {
 		}
 	}
 
-	public static class DateFieldWithUserTimeZone extends CustomField {
+	public static class DateFieldWithUserTimeZone extends CustomField<String> {
 		private static final long serialVersionUID = 1L;
 
 		private static String DATE_FORMAT = "MM/dd/yyyy";
@@ -233,7 +230,7 @@ public class DefaultFormViewFieldFactory {
 		}
 	}
 
-	public static class FormEmailLinkViewField extends CustomField {
+	public static class FormEmailLinkViewField extends CustomField<String> {
 
 		private static final long serialVersionUID = 1L;
 
@@ -244,7 +241,7 @@ public class DefaultFormViewFieldFactory {
 		}
 
 		@Override
-		public Class<?> getType() {
+		public Class<String> getType() {
 			return String.class;
 		}
 
@@ -256,7 +253,7 @@ public class DefaultFormViewFieldFactory {
 		}
 	}
 
-	public static class FormLinkViewField extends CustomField {
+	public static class FormLinkViewField extends CustomField<String> {
 
 		private static final long serialVersionUID = 1L;
 
@@ -269,7 +266,7 @@ public class DefaultFormViewFieldFactory {
 		}
 
 		@Override
-		public Class<?> getType() {
+		public Class<String> getType() {
 			return String.class;
 		}
 
@@ -316,7 +313,7 @@ public class DefaultFormViewFieldFactory {
 		}
 	}
 
-	public static class FormUrlLinkViewField extends CustomField {
+	public static class FormUrlLinkViewField extends CustomField<String> {
 
 		private static final long serialVersionUID = 1L;
 
@@ -327,7 +324,7 @@ public class DefaultFormViewFieldFactory {
 		}
 
 		@Override
-		public Class<?> getType() {
+		public Class<String> getType() {
 			return String.class;
 		}
 
@@ -346,7 +343,8 @@ public class DefaultFormViewFieldFactory {
 		}
 	}
 
-	public static class FormUrlSocialNetworkLinkViewField extends CustomField {
+	public static class FormUrlSocialNetworkLinkViewField extends
+			CustomField<String> {
 
 		private static final long serialVersionUID = 1L;
 
@@ -360,7 +358,7 @@ public class DefaultFormViewFieldFactory {
 		}
 
 		@Override
-		public Class<?> getType() {
+		public Class<String> getType() {
 			return String.class;
 		}
 

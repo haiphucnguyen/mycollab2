@@ -16,6 +16,13 @@
  */
 package com.esofthead.mycollab.vaadin.ui;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ * @param <B>
+ */
 public interface FieldSelection<B> {
 	void fireValueChange(B data);
 }

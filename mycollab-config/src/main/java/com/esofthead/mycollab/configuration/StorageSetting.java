@@ -19,7 +19,8 @@ package com.esofthead.mycollab.configuration;
 /**
  * 
  * @author MyCollab Ltd.
- *
+ * @since 1.0
+ * 
  */
 class StorageSetting {
 	public static final String FILE_STORAGE_SYSTEM = "file";

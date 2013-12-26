@@ -23,6 +23,9 @@ import com.esofthead.mycollab.core.DeploymentMode;
 /**
  * Utility class read mycollab system properties when system starts
  * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
  */
 public class SiteConfiguration {
 	private static SiteConfiguration instance;

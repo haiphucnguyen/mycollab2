@@ -25,6 +25,12 @@ import com.esofthead.mycollab.module.user.service.RoleService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.web.AppContext;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class RoleUrlResolver extends AccountUrlResolver {
 	public RoleUrlResolver() {
 		this.addSubResolver("list", new ListUrlResolver());

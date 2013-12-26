@@ -23,6 +23,12 @@ import java.util.Date;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.web.AppContext;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class CSVDateFormatter implements CSVFormatter<Date> {
 
 	@Override

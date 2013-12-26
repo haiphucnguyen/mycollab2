@@ -17,6 +17,12 @@ import com.esofthead.mycollab.module.tracker.service.BugRelatedItemService;
 import com.esofthead.mycollab.module.tracker.service.RelatedBugService;
 import com.esofthead.mycollab.module.user.service.UserService;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class CacheServiceIgnoreList {
 	static List<Class> blacklistCls = Arrays.asList(new Class[] {
 			UserService.class, RelayEmailNotificationService.class,
@@ -27,7 +33,7 @@ public class CacheServiceIgnoreList {
 			ContentActivityLogService.class, ExternalDriveService.class,
 			ResourceMover.class });
 
-	static boolean isInBlackList(Class cls) {
+	static boolean isInBlackList(Class<?> cls) {
 		return blacklistCls.contains(cls);
 	}
 }

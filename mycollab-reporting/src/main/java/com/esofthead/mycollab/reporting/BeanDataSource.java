@@ -25,6 +25,12 @@ import net.sf.jasperreports.engine.JRField;
 
 import org.apache.commons.beanutils.PropertyUtils;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class BeanDataSource<T> implements JRDataSource {
 
 	private List<T> data;

@@ -18,6 +18,12 @@ package com.esofthead.mycollab.module.user.accountsettings.view.parameters;
 
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class ProfileScreenData {
 	public static class UploadPhoto extends ScreenData<byte[]> {
 

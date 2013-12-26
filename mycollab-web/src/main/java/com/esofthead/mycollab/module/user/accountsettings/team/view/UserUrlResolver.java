@@ -25,6 +25,12 @@ import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.web.AppContext;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class UserUrlResolver extends AccountUrlResolver {
 	public UserUrlResolver() {
 		this.addSubResolver("list", new ListUrlResolver());

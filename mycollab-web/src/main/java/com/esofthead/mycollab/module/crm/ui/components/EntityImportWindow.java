@@ -75,6 +75,12 @@ import com.vaadin.ui.Window;
 import ezvcard.Ezvcard;
 import ezvcard.VCard;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public abstract class EntityImportWindow<E> extends Window {
 	private static final long serialVersionUID = 1L;
 

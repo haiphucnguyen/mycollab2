@@ -43,6 +43,12 @@ import com.esofthead.mycollab.schedule.email.project.BugRelayEmailNotificationAc
 import com.esofthead.mycollab.schedule.email.project.ProjectMailLinkGenerator;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @Component
 public class BugRelayEmailNotificationActionImpl extends
 		SendMailToFollowersAction implements BugRelayEmailNotificationAction {

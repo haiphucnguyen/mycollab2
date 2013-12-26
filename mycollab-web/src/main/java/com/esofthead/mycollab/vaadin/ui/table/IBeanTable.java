@@ -18,9 +18,10 @@
 package com.esofthead.mycollab.vaadin.ui.table;
 
 /**
- *
+ * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 public interface IBeanTable {
-    
+
 }

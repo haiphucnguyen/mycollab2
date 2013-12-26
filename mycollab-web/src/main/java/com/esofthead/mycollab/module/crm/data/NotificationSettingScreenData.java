@@ -18,6 +18,12 @@ package com.esofthead.mycollab.module.crm.data;
 
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class NotificationSettingScreenData {
 	public static class Read extends ScreenData<Object> {
 

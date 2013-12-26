@@ -19,6 +19,12 @@ package com.esofthead.mycollab.reporting;
 import net.sf.dynamicreports.report.builder.component.ComponentBuilder;
 import net.sf.dynamicreports.report.definition.expression.DRIExpression;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public interface ColumnFieldComponentBuilder<T> {
 	String getFieldName();
 

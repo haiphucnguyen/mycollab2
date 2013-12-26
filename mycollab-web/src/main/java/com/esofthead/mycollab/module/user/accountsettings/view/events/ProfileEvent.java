@@ -18,22 +18,32 @@ package com.esofthead.mycollab.module.user.accountsettings.view.events;
 
 import com.esofthead.mycollab.eventmanager.ApplicationEvent;
 
-@SuppressWarnings("serial")
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class ProfileEvent {
 	
 	public static class GotoProfileView extends ApplicationEvent {
+		private static final long serialVersionUID = 1L;
+
 		public GotoProfileView(Object source, Object data) {
 			super(source, data);
 		}
 	}
 	
 	public static class GotoProfileEdit extends ApplicationEvent {
+		private static final long serialVersionUID = 1L;
+		
 		public GotoProfileEdit(Object source, Object data) {
 			super(source, data);
 		}
 	}
 
 	public static class GotoUploadPhoto extends ApplicationEvent {
+		private static final long serialVersionUID = 1L;
 
 		public GotoUploadPhoto(Object source, Object data) {
 			super(source, data);
