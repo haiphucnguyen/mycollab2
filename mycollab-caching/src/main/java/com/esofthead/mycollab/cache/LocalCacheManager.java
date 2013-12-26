@@ -26,6 +26,12 @@ import org.infinispan.manager.DefaultCacheManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class LocalCacheManager {
 	private static Logger log = LoggerFactory
 			.getLogger(LocalCacheManager.class);

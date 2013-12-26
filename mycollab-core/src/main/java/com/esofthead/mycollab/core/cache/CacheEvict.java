@@ -29,11 +29,12 @@ import java.lang.annotation.Target;
  * by its arguments.
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  * 
  */
 @Inherited
 @Retention(RetentionPolicy.RUNTIME)
 @Target(value = { ElementType.METHOD })
 public @interface CacheEvict {
-	Class[] serviceMap() default {};
+	Class<?>[] serviceMap() default {};
 }

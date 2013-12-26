@@ -24,6 +24,12 @@ import com.esofthead.mycollab.core.persistence.service.IService;
 import com.esofthead.mycollab.core.utils.ClassUtils;
 import com.esofthead.mycollab.core.utils.JsonDeSerializer;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class CacheUtils {
 	private static Logger log = LoggerFactory.getLogger(CacheUtils.class);
 
@@ -31,12 +37,12 @@ public class CacheUtils {
 		return JsonDeSerializer.toJson(args);
 	}
 
-	public static String getCachePrefix(Class serviceClass, Integer accountId) {
+	public static String getCachePrefix(Class<?> serviceClass, Integer accountId) {
 		return String.format("%s-%d",
 				getEnclosingServiceInterfaceName(serviceClass), accountId);
 	}
 
-	public static Class getEnclosingServiceInterface(Class serviceClass) {
+	public static Class<?> getEnclosingServiceInterface(Class<?> serviceClass) {
 		Class<?> cls = ClassUtils.getInterfaceInstanceOf(serviceClass,
 				IService.class);
 		if (cls == null) {
@@ -48,7 +54,7 @@ public class CacheUtils {
 		return cls;
 	}
 
-	public static String getEnclosingServiceInterfaceName(Class serviceClass) {
+	public static String getEnclosingServiceInterfaceName(Class<?> serviceClass) {
 		return getEnclosingServiceInterface(serviceClass).getName();
 	}
 
@@ -57,8 +63,8 @@ public class CacheUtils {
 		LocalCacheManager.removeCacheItems(accountId.toString(), prefixKey);
 	}
 
-	public static void cleanCaches(Integer accountId, Class... classes) {
-		for (Class prefKey : classes) {
+	public static void cleanCaches(Integer accountId, Class<?>... classes) {
+		for (Class<?> prefKey : classes) {
 			cleanCache(accountId, prefKey.getName());
 		}
 	}

@@ -30,6 +30,7 @@ import java.lang.annotation.Target;
  * user account
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  * 
  */
 @Retention(value = RetentionPolicy.RUNTIME)
