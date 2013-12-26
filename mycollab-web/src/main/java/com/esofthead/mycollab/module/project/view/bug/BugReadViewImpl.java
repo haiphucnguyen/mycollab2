@@ -95,7 +95,7 @@ public class BugReadViewImpl extends AbstractPageView implements BugReadView,
 
 	public BugReadViewImpl() {
 		super();
-		
+
 		this.setMargin(new MarginInfo(true, false, false, false));
 
 		this.previewForm = new BugPreviewForm();
@@ -267,7 +267,9 @@ public class BugReadViewImpl extends AbstractPageView implements BugReadView,
 
 	private class BugPreviewForm extends AdvancedPreviewBeanForm<SimpleBug> {
 		private static final long serialVersionUID = 1L;
+
 		private BugHistoryList historyList;
+
 		private BugFollowersSheet bugFollowersList;
 
 		private BugTimeLogSheet bugTimeLogList;
@@ -354,26 +356,37 @@ public class BugReadViewImpl extends AbstractPageView implements BugReadView,
 						CurrentProjectVariables.getProjectId(), true, true,
 						BugRelayEmailNotificationAction.class);
 				commentList.setMargin(true);
-				tabBugDetail.addTab(commentList, "Comments");
+				tabBugDetail.addTab(commentList, "Comments", MyCollabResource
+						.newResource("icons/16/project/gray/comment.png"));
 
 				BugPreviewForm.this.historyList = new BugHistoryList(
 						BugReadViewImpl.this.bug.getId());
 				BugPreviewForm.this.historyList.setMargin(true);
-				tabBugDetail.addTab(BugPreviewForm.this.historyList, "History");
+				tabBugDetail
+						.addTab(BugPreviewForm.this.historyList,
+								"History",
+								MyCollabResource
+										.newResource("icons/16/project/gray/history.png"));
 
 				BugPreviewForm.this.bugRelatedField = new BugRelatedField(
 						BugReadViewImpl.this.bug);
 				tabBugDetail.addTab(BugPreviewForm.this.bugRelatedField,
-						"Related Bugs");
+						"Related Bugs", MyCollabResource
+								.newResource("icons/16/project/gray/bug.png"));
 
 				BugPreviewForm.this.bugFollowersList = new BugFollowersSheet(
 						BugReadViewImpl.this.bug);
-				tabBugDetail.addTab(BugPreviewForm.this.bugFollowersList,
-						"Followers");
+				tabBugDetail
+						.addTab(BugPreviewForm.this.bugFollowersList,
+								"Followers",
+								MyCollabResource
+										.newResource("icons/16/project/gray/follow.png"));
 
 				BugPreviewForm.this.bugTimeLogList = new BugTimeLogSheet(
 						BugReadViewImpl.this.bug);
-				tabBugDetail.addTab(BugPreviewForm.this.bugTimeLogList, "Time");
+				tabBugDetail.addTab(BugPreviewForm.this.bugTimeLogList, "Time",
+						MyCollabResource
+								.newResource("icons/16/project/gray/time.png"));
 				return tabBugDetail;
 			}
 

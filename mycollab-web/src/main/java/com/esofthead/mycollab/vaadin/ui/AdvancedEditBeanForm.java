@@ -55,7 +55,7 @@ public class AdvancedEditBeanForm<B> extends GenericBeanForm<B> implements
 	 *         attachForm
 	 */
 	public boolean validateForm() {
-
+		fieldFactory.commit();
 		// for (Object propertyId : this.getItemPropertyIds()) {
 		// this.getField(propertyId).removeStyleName("errorField");
 		// }
@@ -107,7 +107,6 @@ public class AdvancedEditBeanForm<B> extends GenericBeanForm<B> implements
 	}
 
 	public void fireSaveForm() {
-		fieldFactory.commit();
 		if (editFormHandlers != null) {
 			for (EditFormHandler<B> editFormHandler : editFormHandlers) {
 				editFormHandler.onSave(this.getBean());

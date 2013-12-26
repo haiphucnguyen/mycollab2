@@ -46,6 +46,7 @@ import com.esofthead.mycollab.vaadin.ui.ProjectPreviewFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.server.Resource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -100,7 +101,8 @@ public class TaskReadViewImpl extends AbstractPageView implements TaskReadView {
 		@Override
 		public void setBean(Task bean) {
 			this.setFormLayoutFactory(new FormLayoutFactory());
-			this.setBeanFormFieldFactory(new ReadFormFieldFactory(PreviewForm.this));
+			this.setBeanFormFieldFactory(new ReadFormFieldFactory(
+					PreviewForm.this));
 			super.setBean(bean);
 		}
 
@@ -149,20 +151,24 @@ public class TaskReadViewImpl extends AbstractPageView implements TaskReadView {
 					CurrentProjectVariables.getProjectId(), true, true,
 					ProjectTaskRelayEmailNotificationAction.class);
 			commentList.setMargin(true);
-			tabTaskDetail.addTab(commentList, "Comments");
+			tabTaskDetail.addTab(commentList, "Comments", MyCollabResource
+					.newResource("icons/16/project/gray/comment.png"));
 
 			final TaskHistoryList historyList = new TaskHistoryList(
 					TaskReadViewImpl.this.task.getId());
 			historyList.setMargin(true);
-			tabTaskDetail.addTab(historyList, "History");
+			tabTaskDetail.addTab(historyList, "History", MyCollabResource
+					.newResource("icons/16/project/gray/history.png"));
 
 			final TaskFollowersSheet followerSheet = new TaskFollowersSheet(
 					TaskReadViewImpl.this.task);
-			tabTaskDetail.addTab(followerSheet, "Follower");
+			tabTaskDetail.addTab(followerSheet, "Follower", MyCollabResource
+					.newResource("icons/16/project/gray/follow.png"));
 
 			final TaskTimeLogSheet timesheet = new TaskTimeLogSheet(
 					TaskReadViewImpl.this.task);
-			tabTaskDetail.addTab(timesheet, "Time");
+			tabTaskDetail.addTab(timesheet, "Time", MyCollabResource
+					.newResource("icons/16/project/gray/time.png"));
 
 			return tabTaskDetail;
 		}

@@ -42,11 +42,12 @@ class MilestoneReadComp extends AbstractMilestonePreviewComp {
 		tabContainer.setWidth("100%");
 
 		tabContainer.addTab(this.associateCommentListComp, "Comments",
-				MyCollabResource.newResource("icons/16/project/milestone.png"));
+				MyCollabResource
+						.newResource("icons/16/project/gray/comment.png"));
 		tabContainer.addTab(this.associateTaskGroupListComp, "Related Task",
-				MyCollabResource.newResource("icons/16/project/task.png"));
+				MyCollabResource.newResource("icons/16/project/gray/task.png"));
 		tabContainer.addTab(this.associateBugListComp, "Related Bugs",
-				MyCollabResource.newResource("icons/16/project/bug.png"));
+				MyCollabResource.newResource("icons/16/project/gray/bug.png"));
 
 		return tabContainer;
 	}

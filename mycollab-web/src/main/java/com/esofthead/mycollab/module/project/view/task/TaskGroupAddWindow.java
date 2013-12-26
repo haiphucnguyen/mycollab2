@@ -137,6 +137,7 @@ public class TaskGroupAddWindow extends Window {
 							public void buttonClick(final ClickEvent event) {
 								if (TaskGroupAddWindow.TaskListForm.this
 										.validateForm()) {
+									TaskListForm.this.fieldFactory.commit();
 									TaskListFormLayoutFactory.this
 											.saveTaskList();
 									TaskGroupAddWindow.this.close();
@@ -156,6 +157,7 @@ public class TaskGroupAddWindow extends Window {
 							public void buttonClick(final ClickEvent event) {
 								if (TaskGroupAddWindow.TaskListForm.this
 										.validateForm()) {
+									TaskListForm.this.fieldFactory.commit();
 									TaskListFormLayoutFactory.this
 											.saveTaskList();
 									TaskGroupAddWindow.this.taskList = new SimpleTaskList();

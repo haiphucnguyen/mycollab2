@@ -82,9 +82,9 @@ public class TaskAddPopup extends CustomComponent {
 
 		this.task = new SimpleTask();
 		this.taskContainer = new TabSheet();
-		final TaskInputForm taskInformationLayout = new TaskInputForm();
-		taskInformationLayout.setWidth("100%");
-		this.taskContainer.addTab(taskInformationLayout, LocalizationHelper
+		final TaskInputForm taskInputForm = new TaskInputForm();
+		taskInputForm.setWidth("100%");
+		this.taskContainer.addTab(taskInputForm, LocalizationHelper
 				.getMessage(GenericI18Enum.INFORMATION_WINDOW_TITLE));
 
 		this.taskNoteComponent = new TaskNoteLayout();
@@ -119,26 +119,20 @@ public class TaskAddPopup extends CustomComponent {
 
 					@Override
 					public void buttonClick(final ClickEvent event) {
-						final ProjectTaskService taskService = ApplicationContextUtil
-								.getSpringBean(ProjectTaskService.class);
+						if (taskInputForm.validateForm()) {
+							final ProjectTaskService taskService = ApplicationContextUtil
+									.getSpringBean(ProjectTaskService.class);
 
-						TaskAddPopup.this.task.setTasklistid(taskList.getId());
-						TaskAddPopup.this.task
-								.setProjectid(CurrentProjectVariables
-										.getProjectId());
-						TaskAddPopup.this.task.setSaccountid(AppContext
-								.getAccountId());
-						TaskAddPopup.this.task
-								.setNotes(TaskAddPopup.this.taskNoteComponent
-										.getNote());
-						if (taskInformationLayout.validateForm()) {
-							taskService.saveWithSession(TaskAddPopup.this.task,
+							task.setTasklistid(taskList.getId());
+							task.setProjectid(CurrentProjectVariables
+									.getProjectId());
+							task.setSaccountid(AppContext.getAccountId());
+							task.setNotes(taskNoteComponent.getNote());
+
+							taskService.saveWithSession(task,
 									AppContext.getUsername());
-							TaskAddPopup.this.taskNoteComponent
-									.saveContentsToRepo(TaskAddPopup.this.task
-											.getId());
-							taskDisplayComp
-									.saveTaskSuccess(TaskAddPopup.this.task);
+							taskNoteComponent.saveContentsToRepo(task.getId());
+							taskDisplayComp.saveTaskSuccess(task);
 							taskDisplayComp.closeTaskAdd();
 						}
 					}
@@ -162,7 +156,7 @@ public class TaskAddPopup extends CustomComponent {
 			this.setFormLayoutFactory(new TaskLayout());
 			this.setBeanFormFieldFactory(new EditFormFieldFactory(
 					TaskInputForm.this));
-			this.setBean(TaskAddPopup.this.task);
+			this.setBean(task);
 		}
 	}
 
@@ -172,7 +166,8 @@ public class TaskAddPopup extends CustomComponent {
 
 		@Override
 		public Layout getLayout() {
-			this.informationLayout = new GridFormLayoutHelper(2, 5, "100%", "180px", Alignment.MIDDLE_LEFT);
+			this.informationLayout = new GridFormLayoutHelper(2, 5, "100%",
+					"180px", Alignment.MIDDLE_LEFT);
 
 			final VerticalLayout layout = new VerticalLayout();
 			this.informationLayout.getLayout().addStyleName(
@@ -264,15 +259,14 @@ public class TaskAddPopup extends CustomComponent {
 				tf.setRequiredError("Please enter a Task Name");
 				return tf;
 			} else if (propertyId.equals("percentagecomplete")) {
-				if (TaskAddPopup.this.task.getPercentagecomplete() == null) {
-					TaskAddPopup.this.task.setPercentagecomplete(0d);
+				if (task.getPercentagecomplete() == null) {
+					task.setPercentagecomplete(0d);
 				}
 
 				return new TaskPercentageCompleteComboBox();
 			} else if ("priority".equals(propertyId)) {
-				if (TaskAddPopup.this.task.getPriority() == null) {
-					TaskAddPopup.this.task
-							.setPriority(TaskPriorityComboBox.PRIORITY_MEDIUM);
+				if (task.getPriority() == null) {
+					task.setPriority(TaskPriorityComboBox.PRIORITY_MEDIUM);
 				}
 				return new TaskPriorityComboBox();
 			}
