@@ -45,6 +45,12 @@ import com.esofthead.mycollab.module.ecm.StorageNames;
 import com.esofthead.mycollab.module.file.CloudDriveInfo;
 import com.esofthead.mycollab.module.file.events.CloudDriveOAuthCallbackEvent;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ *
+ */
 @Component("dropboxAuthServlet")
 public class AnnotatedDropboxAuthServlet implements HttpRequestHandler {
 	private static Logger log = LoggerFactory

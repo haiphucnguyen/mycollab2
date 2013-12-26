@@ -25,6 +25,12 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.HttpRequestHandler;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ *
+ */
 @Component("ggDriveAuthServlet")
 public class AnnotatedGGDriveAuthServlet implements HttpRequestHandler {
 

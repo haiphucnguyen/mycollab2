@@ -81,6 +81,12 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ *
+ */
 @ViewComponent
 public class MessageListViewImpl extends AbstractPageView implements
 		MessageListView, HasEditFormHandlers<Message> {

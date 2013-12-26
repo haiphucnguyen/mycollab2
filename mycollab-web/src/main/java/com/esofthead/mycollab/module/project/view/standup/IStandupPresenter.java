@@ -18,6 +18,12 @@ package com.esofthead.mycollab.module.project.view.standup;
 
 import com.esofthead.mycollab.vaadin.mvp.IPresenter;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ *
+ */
 public interface IStandupPresenter extends IPresenter<IStandupContainer> {
 
 }

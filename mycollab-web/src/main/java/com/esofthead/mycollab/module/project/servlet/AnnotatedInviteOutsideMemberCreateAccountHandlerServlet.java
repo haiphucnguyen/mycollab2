@@ -34,6 +34,12 @@ import com.esofthead.mycollab.servlet.GenericServlet;
 import com.esofthead.mycollab.utils.InvalidPasswordException;
 import com.esofthead.mycollab.utils.PasswordCheckerUtil;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ *
+ */
 @Component("acceptMemberInvitationCreateAccountServlet")
 public class AnnotatedInviteOutsideMemberCreateAccountHandlerServlet extends
 		GenericServlet {

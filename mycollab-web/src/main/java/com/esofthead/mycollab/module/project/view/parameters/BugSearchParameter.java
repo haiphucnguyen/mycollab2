@@ -18,6 +18,12 @@ package com.esofthead.mycollab.module.project.view.parameters;
 
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ *
+ */
 public class BugSearchParameter {
 	private BugSearchCriteria searchCriteria;
 

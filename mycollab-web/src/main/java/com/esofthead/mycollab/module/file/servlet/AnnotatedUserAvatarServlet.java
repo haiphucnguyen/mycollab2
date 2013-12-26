@@ -37,6 +37,12 @@ import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.file.service.ContentService;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ *
+ */
 @Component("userAvatarFSServlet")
 public class AnnotatedUserAvatarServlet implements HttpRequestHandler {
 

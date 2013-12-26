@@ -18,6 +18,12 @@ package com.esofthead.mycollab.module.project.view.parameters;
 
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ *
+ */
 public class ProjectSettingScreenData {
 	public static class ViewNotification extends ScreenData {
 

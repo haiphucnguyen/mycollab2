@@ -55,6 +55,12 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ *
+ */
 public abstract class FileSearchResultComponent extends VerticalLayout {
 	private static final long serialVersionUID = 1L;
 

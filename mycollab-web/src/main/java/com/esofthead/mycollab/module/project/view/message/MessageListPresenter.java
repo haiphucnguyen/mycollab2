@@ -52,6 +52,8 @@ public class MessageListPresenter extends AbstractPresenter<MessageListView>
 	protected void postInitView() {
 		view.getEditFormHandlers().addFormHandler(
 				new EditFormHandler<Message>() {
+					private static final long serialVersionUID = 1L;
+
 					@Override
 					public void onSaveAndNew(Message bean) {
 						// do nothing
