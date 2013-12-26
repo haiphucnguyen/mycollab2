@@ -26,7 +26,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.esofthead.mycollab.common.domain.GroupItem;
-import com.esofthead.mycollab.core.arguments.DateTimeSearchField;
+import com.esofthead.mycollab.core.arguments.DateSearchField;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
@@ -155,7 +155,7 @@ public class BugServiceTest extends ServiceTest {
 		date.set(Calendar.MONTH, 0);
 		date.set(Calendar.DAY_OF_MONTH, 2);
 
-		criteria.setUpdatedDate(new DateTimeSearchField(SearchField.AND, date
+		criteria.setUpdatedDate(new DateSearchField(SearchField.AND, date
 				.getTime()));
 		Assert.assertEquals(0, bugService.getTotalCount(criteria));
 		Assert.assertEquals(

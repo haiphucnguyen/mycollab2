@@ -39,21 +39,49 @@ import com.esofthead.mycollab.core.utils.DateTimeUtils;
 /**
  * 
  * @author MyCollab Ltd.
- *
+ * @since 1.0
+ * 
  */
-public class DateSearchField extends DateTimeSearchField {
+public class DateSearchField extends SearchField {
+
+	public static String LESSTHAN = "<";
+	public static String LESSTHANEQUAL = "<=";
+	public static String GREATERTHAN = ">";
+	public static String GREATERTHANEQUAL = ">=";
+	public static String EQUAL = "=";
+	public static String NOTEQUAL = "<>";
+
+	protected Date value;
+	protected String comparision;
 
 	public DateSearchField() {
 		this(AND, null, null);
 	}
 
 	public DateSearchField(String oper, Date value) {
-		super(oper, DateTimeUtils.trimHMSOfDate(DateTimeUtils
-				.convertTimeFromSystemTimezoneToUTC(value.getTime())));
+		this(oper, DateTimeSearchField.LESSTHAN, value);
 	}
 
 	public DateSearchField(String oper, String comparision, Date value) {
-		super(oper, comparision, DateTimeUtils.trimHMSOfDate(DateTimeUtils
-				.convertTimeFromSystemTimezoneToUTC(value.getTime())));
+		this.operation = oper;
+		this.comparision = comparision;
+		this.value = DateTimeUtils.trimHMSOfDate(DateTimeUtils
+				.convertTimeFromSystemTimezoneToUTC(value.getTime()));
+	}
+
+	public Date getValue() {
+		return value;
+	}
+
+	public void setValue(Date value) {
+		this.value = value;
+	}
+
+	public String getComparision() {
+		return comparision;
+	}
+
+	public void setComparision(String comparision) {
+		this.comparision = comparision;
 	}
 }

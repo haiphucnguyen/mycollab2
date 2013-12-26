@@ -39,7 +39,8 @@ import com.esofthead.mycollab.core.utils.DateTimeUtils;
 /**
  * 
  * @author MyCollab Ltd.
- *
+ * @since 1.0
+ * 
  */
 public class DateTimeSearchField extends SearchField {
 
@@ -50,8 +51,8 @@ public class DateTimeSearchField extends SearchField {
 	public static String EQUAL = "=";
 	public static String NOTEQUAL = "<>";
 
-	private Date value;
-	private String comparision;
+	protected Date value;
+	protected String comparision;
 
 	public DateTimeSearchField() {
 		this(AND, null);

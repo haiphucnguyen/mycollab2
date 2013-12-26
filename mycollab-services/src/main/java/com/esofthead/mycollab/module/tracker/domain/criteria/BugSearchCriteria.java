@@ -16,32 +16,40 @@
  */
 package com.esofthead.mycollab.module.tracker.domain.criteria;
 
-import com.esofthead.mycollab.core.arguments.DateTimeSearchField;
+import com.esofthead.mycollab.core.arguments.DateSearchField;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.RangeDateTimeSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class BugSearchCriteria extends SearchCriteria {
+	private static final long serialVersionUID = 1L;
+
 	private StringSearchField assignuser;
 
 	private StringSearchField loguser;
 
-	private DateTimeSearchField updatedDate;
-	
+	private DateSearchField updatedDate;
+
 	private RangeDateTimeSearchField updatedDateRange;
-	
-	private DateTimeSearchField dueDate;
-	
+
+	private DateSearchField dueDate;
+
 	private RangeDateTimeSearchField dueDateRange;
-	
-	private DateTimeSearchField resolvedDate;
-	
+
+	private DateSearchField resolvedDate;
+
 	private RangeDateTimeSearchField resolvedDateRange;
 
 	private StringSearchField summary;
-	
+
 	private StringSearchField description;
 
 	private StringSearchField detail;
@@ -55,9 +63,9 @@ public class BugSearchCriteria extends SearchCriteria {
 	private SetSearchField<Integer> affectedversionids;
 
 	private SetSearchField<Integer> fixedversionids;
-	
+
 	private SetSearchField<Integer> versionids;
-	
+
 	private SetSearchField<Integer> milestoneIds;
 
 	private SetSearchField<String> priorities;
@@ -65,13 +73,13 @@ public class BugSearchCriteria extends SearchCriteria {
 	private SetSearchField<String> severities;
 
 	private SetSearchField<String> statuses;
-	
+
 	private NumberSearchField projectId;
-	
+
 	public static String AFFVERSION = "AffVersion";
 	public static String FIXVERSION = "FixVersion";
 	public static String COMPONENT = "Component";
-	
+
 	public StringSearchField getAssignuser() {
 		return assignuser;
 	}
@@ -152,12 +160,20 @@ public class BugSearchCriteria extends SearchCriteria {
 		this.versionids = versionids;
 	}
 
-	public DateTimeSearchField getUpdatedDate() {
+	public DateSearchField getUpdatedDate() {
 		return updatedDate;
 	}
 
-	public void setUpdatedDate(DateTimeSearchField updatedDate) {
+	public void setUpdatedDate(DateSearchField updatedDate) {
 		this.updatedDate = updatedDate;
+	}
+
+	public DateSearchField getResolvedDate() {
+		return resolvedDate;
+	}
+
+	public void setResolvedDate(DateSearchField resolvedDate) {
+		this.resolvedDate = resolvedDate;
 	}
 
 	public RangeDateTimeSearchField getUpdatedDateRange() {
@@ -168,11 +184,11 @@ public class BugSearchCriteria extends SearchCriteria {
 		this.updatedDateRange = updatedDateRange;
 	}
 
-	public DateTimeSearchField getDueDate() {
+	public DateSearchField getDueDate() {
 		return dueDate;
 	}
 
-	public void setDueDate(DateTimeSearchField dueDate) {
+	public void setDueDate(DateSearchField dueDate) {
 		this.dueDate = dueDate;
 	}
 
@@ -182,14 +198,6 @@ public class BugSearchCriteria extends SearchCriteria {
 
 	public void setDueDateRange(RangeDateTimeSearchField dueDateRange) {
 		this.dueDateRange = dueDateRange;
-	}
-
-	public DateTimeSearchField getResolvedDate() {
-		return resolvedDate;
-	}
-
-	public void setResolvedDate(DateTimeSearchField resolvedDate) {
-		this.resolvedDate = resolvedDate;
 	}
 
 	public RangeDateTimeSearchField getResolvedDateRange() {

@@ -21,7 +21,6 @@ import java.util.Collection;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.DateSearchField;
-import com.esofthead.mycollab.core.arguments.DateTimeSearchField;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.RangeDateSearchField;
 import com.esofthead.mycollab.core.arguments.RangeDateTimeSearchField;
@@ -338,22 +337,22 @@ public class CampaignSearchPanel extends
 			this.assignUserField.setValue(null);
 		}
 
-		private void loadDateTimeField(final DateTimeSearchField dateField,
+		private void loadDateTimeField(final DateSearchField dateField,
 				final DateSelectionField selectDateField) {
 			if (dateField.getComparision().equals(
-					DateTimeSearchField.GREATERTHAN)) {
+					DateSearchField.GREATERTHAN)) {
 				selectDateField.getDateSelectionBox().setValue(
 						DateSelectionComboBox.AFTER);
 			} else if (dateField.getComparision().equals(
-					DateTimeSearchField.EQUAL)) {
+					DateSearchField.EQUAL)) {
 				selectDateField.getDateSelectionBox().setValue(
 						DateSelectionComboBox.EQUAL);
 			} else if (dateField.getComparision().equals(
-					DateTimeSearchField.LESSTHAN)) {
+					DateSearchField.LESSTHAN)) {
 				selectDateField.getDateSelectionBox().setValue(
 						DateSelectionComboBox.BEFORE);
 			} else if (dateField.getComparision().equals(
-					DateTimeSearchField.NOTEQUAL)) {
+					DateSearchField.NOTEQUAL)) {
 				selectDateField.getDateSelectionBox().setValue(
 						DateSelectionComboBox.NOTON);
 			}
