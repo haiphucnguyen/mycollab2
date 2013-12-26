@@ -20,6 +20,12 @@ import com.esofthead.mycollab.module.project.view.bug.BugPriorityStatusConstants
 import com.esofthead.mycollab.module.tracker.BugResolutionConstants;
 import com.esofthead.mycollab.module.tracker.BugStatusConstants;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class ProjectDataTypeFactory {
 
 	public static final String PROJECT_STATUS_OPEN = "Open";

@@ -20,11 +20,14 @@ package com.esofthead.mycollab.module.project.ui.components;
 import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
 
 /**
- *
+ * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class TaskPercentageCompleteComboBox extends ValueComboBox {
-    public TaskPercentageCompleteComboBox() {
-        super(false, 0d, 10d, 20d, 30d, 40d, 50d, 60d, 70d, 80d, 90d, 100d);
-    }
+	private static final long serialVersionUID = 1L;
+
+	public TaskPercentageCompleteComboBox() {
+		super(false, 0d, 10d, 20d, 30d, 40d, 50d, 60d, 70d, 80d, 90d, 100d);
+	}
 }

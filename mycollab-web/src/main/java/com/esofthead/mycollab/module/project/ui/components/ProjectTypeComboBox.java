@@ -19,6 +19,12 @@ package com.esofthead.mycollab.module.project.ui.components;
 import com.esofthead.mycollab.module.project.ProjectDataTypeFactory;
 import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @SuppressWarnings("serial")
 public class ProjectTypeComboBox extends ValueComboBox {
 

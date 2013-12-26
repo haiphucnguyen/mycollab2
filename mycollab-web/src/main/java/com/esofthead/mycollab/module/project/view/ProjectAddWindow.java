@@ -96,8 +96,8 @@ public class ProjectAddWindow extends Window {
 				final ProjectStatusComboBox projectCombo = new ProjectStatusComboBox();
 				projectCombo.setRequired(true);
 				projectCombo.setRequiredError("Please enter a project status");
-				if (ProjectAddWindow.this.project.getProjectstatus() == null) {
-					ProjectAddWindow.this.project.setProjectstatus("Open");
+				if (project.getProjectstatus() == null) {
+					project.setProjectstatus("Open");
 				}
 				return projectCombo;
 			} else if (propertyId.equals("shortname")) {
@@ -150,22 +150,19 @@ public class ProjectAddWindow extends Window {
 
 						@Override
 						public void buttonClick(final ClickEvent event) {
+							editForm.fireSaveForm();
 							final ProjectService projectService = ApplicationContextUtil
 									.getSpringBean(ProjectService.class);
-							ProjectAddWindow.this.project
-									.setSaccountid(AppContext.getAccountId());
+							project.setSaccountid(AppContext.getAccountId());
 							projectService.saveWithSession(
 									ProjectAddWindow.this.project,
 									AppContext.getUsername());
 
-							EventBus.getInstance()
-									.fireEvent(
-											new ProjectEvent.GotoMyProject(
-													this,
-													new PageActionChain(
-															new ProjectScreenData.Goto(
-																	ProjectAddWindow.this.project
-																			.getId()))));
+							EventBus.getInstance().fireEvent(
+									new ProjectEvent.GotoMyProject(this,
+											new PageActionChain(
+													new ProjectScreenData.Goto(
+															project.getId()))));
 							ProjectAddWindow.this.close();
 						}
 

@@ -106,7 +106,7 @@ public class AdvancedEditBeanForm<B> extends GenericBeanForm<B> implements
 		editFormHandlers.add(editFormHandler);
 	}
 
-	protected void fireSaveForm() {
+	public void fireSaveForm() {
 		fieldFactory.commit();
 		if (editFormHandlers != null) {
 			for (EditFormHandler<B> editFormHandler : editFormHandlers) {
@@ -115,7 +115,7 @@ public class AdvancedEditBeanForm<B> extends GenericBeanForm<B> implements
 		}
 	}
 
-	protected void fireSaveAndNewForm() {
+	public void fireSaveAndNewForm() {
 		if (editFormHandlers != null) {
 			for (EditFormHandler<B> editFormHandler : editFormHandlers) {
 				editFormHandler.onSaveAndNew(this.getBean());
@@ -123,7 +123,7 @@ public class AdvancedEditBeanForm<B> extends GenericBeanForm<B> implements
 		}
 	}
 
-	protected void fireCancelForm() {
+	public void fireCancelForm() {
 		if (editFormHandlers != null) {
 			for (EditFormHandler<B> editFormHandler : editFormHandlers) {
 				editFormHandler.onCancel();
