@@ -17,6 +17,8 @@
 
 package com.esofthead.mycollab.module.project.view.bug;
 
+import java.util.Arrays;
+
 import com.esofthead.mycollab.module.project.ui.components.MultiSelectComp;
 
 /**
@@ -24,21 +26,10 @@ import com.esofthead.mycollab.module.project.ui.components.MultiSelectComp;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-@SuppressWarnings("serial")
-public class BugStaticItemMultiSelectField extends MultiSelectComp {
-
-	private String[] arrItemData;
+public class BugStaticItemMultiSelectField extends MultiSelectComp<String> {
+	private static final long serialVersionUID = 1L;
 
 	public BugStaticItemMultiSelectField(String[] arrItemData, String width) {
-		super("", width);
-		this.arrItemData = arrItemData;
-	}
-
-	@Override
-	protected void initData() {
-		for (int i = 0; i < arrItemData.length; i++) {
-			dataList.add(arrItemData[i]);
-		}
-
+		super("", Arrays.asList(arrItemData));
 	}
 }

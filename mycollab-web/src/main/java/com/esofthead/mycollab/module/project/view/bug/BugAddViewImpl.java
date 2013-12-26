@@ -129,28 +129,13 @@ public class BugAddViewImpl extends AbstractEditItemComp<SimpleBug> implements
 				}
 				return new BugSeverityComboBox();
 			} else if (propertyId.equals("components")) {
-				componentSelect = new ComponentMultiSelectField("100%");
-				if (beanItem.getComponents() != null
-						&& beanItem.getComponents().size() > 0) {
-					BugAddViewImpl.this.componentSelect
-							.setSelectedItems(beanItem.getComponents());
-				}
+				componentSelect = new ComponentMultiSelectField();
 				return componentSelect;
 			} else if (propertyId.equals("affectedVersions")) {
-				affectedVersionSelect = new VersionMultiSelectField("100%");
-				if (beanItem.getAffectedVersions() != null
-						&& beanItem.getAffectedVersions().size() > 0) {
-					BugAddViewImpl.this.affectedVersionSelect
-							.setSelectedItems(beanItem.getAffectedVersions());
-				}
+				affectedVersionSelect = new VersionMultiSelectField();
 				return affectedVersionSelect;
 			} else if (propertyId.equals("fixedVersions")) {
-				fixedVersionSelect = new VersionMultiSelectField("100%");
-				if (beanItem.getFixedVersions() != null
-						&& beanItem.getFixedVersions().size() > 0) {
-					fixedVersionSelect.setSelectedItems(beanItem
-							.getFixedVersions());
-				}
+				fixedVersionSelect = new VersionMultiSelectField();
 				return fixedVersionSelect;
 			} else if (propertyId.equals("summary")) {
 				final TextField tf = new TextField();

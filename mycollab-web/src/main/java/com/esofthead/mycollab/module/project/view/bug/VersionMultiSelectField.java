@@ -17,15 +17,20 @@
 
 package com.esofthead.mycollab.module.project.view.bug;
 
+import java.util.List;
+
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ui.components.MultiSelectComp;
+import com.esofthead.mycollab.module.tracker.domain.Version;
 import com.esofthead.mycollab.module.tracker.domain.criteria.VersionSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.VersionService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.ui.CompoundCustomField;
+import com.vaadin.ui.Component;
 
 /**
  * 
@@ -33,18 +38,12 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
  * @since 1.0
  */
 @SuppressWarnings("serial")
-public class VersionMultiSelectField extends MultiSelectComp {
+public class VersionMultiSelectField extends CompoundCustomField {
 
-	public VersionMultiSelectField() {
-		super("versionname");
-	}
-
-	public VersionMultiSelectField(String width) {
-		super("versionname", width);
-	}
+	private MultiSelectComp<Version> versionSelection;
 
 	@Override
-	protected void initData() {
+	protected Component initContent() {
 		VersionSearchCriteria searchCriteria = new VersionSearchCriteria();
 		searchCriteria.setStatus(new StringSearchField("Open"));
 
@@ -53,9 +52,20 @@ public class VersionMultiSelectField extends MultiSelectComp {
 
 		VersionService versionService = ApplicationContextUtil
 				.getSpringBean(VersionService.class);
-		dataList = versionService
+		List versions = versionService
 				.findPagableListByCriteria(new SearchRequest<VersionSearchCriteria>(
 						searchCriteria, 0, Integer.MAX_VALUE));
 
+		versionSelection = new MultiSelectComp<Version>("versionname", versions);
+		return versionSelection;
+	}
+
+	public List<Version> getSelectedItems() {
+		return versionSelection.getSelectedItems();
+	}
+
+	@Override
+	public Class getType() {
+		return Object.class;
 	}
 }

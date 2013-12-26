@@ -230,13 +230,8 @@ public class ReOpenWindow extends Window {
 				} else if (propertyId.equals("assignuser")) {
 					return new ProjectMemberComboBox();
 				} else if (propertyId.equals("fixedVersions")) {
-					ReOpenWindow.this.fixedVersionSelect = new VersionMultiSelectField(
-							"227px");
-					if (ReOpenWindow.this.bug.getFixedVersions().size() > 0) {
-						ReOpenWindow.this.fixedVersionSelect
-								.setSelectedItems(ReOpenWindow.this.bug
-										.getFixedVersions());
-					}
+					ReOpenWindow.this.fixedVersionSelect = new VersionMultiSelectField();
+
 					return ReOpenWindow.this.fixedVersionSelect;
 				} else if (propertyId.equals("comment")) {
 					EditForm.this.commentArea = new RichTextArea();

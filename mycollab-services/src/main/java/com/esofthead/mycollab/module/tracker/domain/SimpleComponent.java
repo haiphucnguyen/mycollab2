@@ -16,6 +16,12 @@
  */
 package com.esofthead.mycollab.module.tracker.domain;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class SimpleComponent extends Component {
 	private static final long serialVersionUID = 1L;
 

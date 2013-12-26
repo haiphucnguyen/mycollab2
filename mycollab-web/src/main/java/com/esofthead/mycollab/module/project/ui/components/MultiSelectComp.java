@@ -17,14 +17,14 @@
 package com.esofthead.mycollab.module.project.ui.components;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.vaadin.hene.popupbutton.PopupButton;
 
-import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.server.Sizeable;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -32,7 +32,7 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.CustomField;
+import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
@@ -43,37 +43,26 @@ import com.vaadin.ui.VerticalLayout;
  * @since 1.0
  * 
  */
-public abstract class MultiSelectComp extends CustomField {
+public class MultiSelectComp<T> extends CustomComponent {
+	private static final long serialVersionUID = 1L;
 
-	private TextField componentsDisplay;
+	protected TextField componentsDisplay;
 	protected PopupButton componentPopupSelection;
 
-	private String displayName;
+	private String propertyDisplayField;
 	private String widthVal;
 
-	protected boolean isClicked = false;
-	protected HashMap<String, CheckBox> componentList = new HashMap<String, CheckBox>();
+	protected List<T> selectedItems = new ArrayList<T>();
 
-	@SuppressWarnings("rawtypes")
-	protected List selectedItemsList = new ArrayList();
+	protected List<T> items = new ArrayList<T>();
 
-	@SuppressWarnings("rawtypes")
-	protected List dataList = new ArrayList();
+	public MultiSelectComp(final String displayName, List<T> items) {
+		this.propertyDisplayField = displayName;
+		this.items = items;
 
-	public MultiSelectComp() {
-		this("", "195px");
+		this.setCompositionRoot(initContent());
 	}
 
-	public MultiSelectComp(String displayName, String width) {
-		this.displayName = displayName;
-		this.widthVal = width;
-	}
-
-	public MultiSelectComp(final String displayName) {
-		this(displayName, "195px");
-	}
-
-	@Override
 	protected Component initContent() {
 		this.setWidth("100%");
 		final HorizontalLayout content = new HorizontalLayout();
@@ -92,10 +81,7 @@ public abstract class MultiSelectComp extends CustomField {
 
 					@Override
 					public void buttonClick(final ClickEvent event) {
-						MultiSelectComp.this.initData();
-						MultiSelectComp.this.createItemPopup();
-						MultiSelectComp.this.setSelectedComponentsDisplay();
-						MultiSelectComp.this.isClicked = true;
+						MultiSelectComp.this.initContentPopup();
 					}
 				});
 
@@ -122,37 +108,29 @@ public abstract class MultiSelectComp extends CustomField {
 	}
 
 	public void resetComp() {
-		for (int i = 0; i < this.selectedItemsList.size(); i++) {
-			this.selectedItemsList.remove(i);
-		}
+		selectedItems.clear();
 
 		this.componentsDisplay.setReadOnly(false);
 		this.componentsDisplay.setValue("");
 		this.componentsDisplay.setReadOnly(true);
 
-		for (final CheckBox chk : this.componentList.values()) {
-			chk.setValue(false);
+		VerticalLayout layout = (VerticalLayout) componentPopupSelection
+				.getContent();
+
+		Iterator<Component> iterator = layout.iterator();
+		while (iterator.hasNext()) {
+			CheckBox checkBox = (CheckBox) iterator.next();
+			checkBox.setValue(false);
 		}
 	}
 
-	protected void createItemPopup() {
-		for (int i = 0; i < this.dataList.size(); i++) {
+	private void initContentPopup() {
+		VerticalLayout popupContent = new VerticalLayout();
+		for (final T item : items) {
 
-			final Object itemComp = this.dataList.get(i);
-			String itemName = "";
-			if (this.displayName != "") {
-				try {
-					itemName = (String) PropertyUtils.getProperty(itemComp,
-							this.displayName);
-				} catch (final Exception e) {
-					e.printStackTrace();
-				}
-			} else {
-				itemName = (String) this.dataList.get(i);
-			}
-
-			final CheckBox chkItem = new CheckBox(itemName);
+			final ItemSelectionComp chkItem = new ItemSelectionComp(item);
 			chkItem.setImmediate(true);
+
 			chkItem.addValueChangeListener(new ValueChangeListener() {
 				private static final long serialVersionUID = 1L;
 
@@ -160,155 +138,49 @@ public abstract class MultiSelectComp extends CustomField {
 				public void valueChange(
 						final com.vaadin.data.Property.ValueChangeEvent event) {
 					final Boolean value = (Boolean) chkItem.getValue();
-					String objDisplayName = "";
-					if (MultiSelectComp.this.displayName != "") {
-						final Object itemObj = MultiSelectComp.this
-								.getElementInDataListByName(chkItem
-										.getCaption());
-						try {
-							objDisplayName = (String) PropertyUtils
-									.getProperty(itemObj,
-											MultiSelectComp.this.displayName);
-						} catch (final Exception e) {
-							throw new MyCollabException(e);
-						}
 
-						if (itemObj != null) {
-							if (MultiSelectComp.this.isClicked) {
-								MultiSelectComp.this
-										.removeElementSelectedListByName(objDisplayName);
-								if (value) {
-									if (!MultiSelectComp.this.selectedItemsList
-											.contains(itemObj)) {
-										MultiSelectComp.this.selectedItemsList
-												.add(itemObj);
-									}
-								}
-								MultiSelectComp.this
-										.setSelectedItems(MultiSelectComp.this.selectedItemsList);
-							}
-						}
+					if (value) {
+						selectedItems.add(item);
 					} else {
-						if (MultiSelectComp.this.isClicked) {
-							if (value) {
-								if (!MultiSelectComp.this.selectedItemsList
-										.contains(chkItem.getCaption())) {
-									MultiSelectComp.this.selectedItemsList
-											.add(chkItem.getCaption());
-								}
-							} else {
-								MultiSelectComp.this.selectedItemsList
-										.remove(chkItem.getCaption());
-							}
-							MultiSelectComp.this
-									.setSelectedItems(MultiSelectComp.this.selectedItemsList);
-						}
+						selectedItems.remove(item);
 					}
 				}
 			});
-
-			if (!this.componentList.containsKey(chkItem.getCaption())) {
-				this.componentList.put(chkItem.getCaption(), chkItem);
-			}
+			popupContent.addComponent(chkItem);
 		}
 
-		VerticalLayout popupContent = new VerticalLayout();
-		for (final CheckBox chk : this.componentList.values()) {
-			popupContent.addComponent(chk);
-		}
 		componentPopupSelection.setContent(popupContent);
 
 	}
 
-	protected void removeElementSelectedListByName(final String name) {
-
-		for (int i = 0; i < this.selectedItemsList.size(); i++) {
-			final Object item = this.selectedItemsList.get(i);
-			String itemName = "";
-			try {
-				itemName = (String) PropertyUtils.getProperty(item,
-						this.displayName);
-			} catch (final Exception e) {
-				e.printStackTrace();
-			}
-			if (itemName.equals(name)) {
-				this.selectedItemsList.remove(i);
-				return;
-			}
-		}
-	}
-
-	public Object getElementInDataListByName(final String name) {
-		for (final Object item : this.dataList) {
-			String itemName = "";
-			try {
-				itemName = (String) PropertyUtils.getProperty(item,
-						this.displayName);
-			} catch (final Exception e) {
-				e.printStackTrace();
-			}
-			if (itemName.equals(name)) {
-				return item;
-			}
-		}
-		return null;
-	}
-
-	protected void setSelectedComponentsDisplay() {
-		for (int i = 0; i < this.selectedItemsList.size(); i++) {
-			final Object itemObj = this.selectedItemsList.get(i);
-
-			String objDisplayName = "";
-			if (this.displayName != "") {
-				try {
-					objDisplayName = (String) PropertyUtils.getProperty(
-							itemObj, this.displayName);
-				} catch (final Exception e) {
-					e.printStackTrace();
-				}
-			} else {
-				objDisplayName = (String) this.selectedItemsList.get(i);
-			}
-
-			if (this.componentList.containsKey(objDisplayName)) {
-				final CheckBox chk = this.componentList.get(objDisplayName);
-				chk.setValue(true);
-			}
-		}
-	}
-
-	public List getDataList() {
-		return this.dataList;
-	}
-
-	public void setSelectedItems(final List items) {
-		this.selectedItemsList = items;
+	public void setSelectedItems(final List<T> selectedItems) {
+		this.selectedItems = selectedItems;
 		this.componentsDisplay.setReadOnly(false);
 		this.componentsDisplay.setValue(this.getDisplaySelectedItemsString());
 		this.componentsDisplay.setReadOnly(true);
 	}
 
-	public List getSelectedItems() {
-		return this.selectedItemsList;
+	public List<T> getSelectedItems() {
+		return this.selectedItems;
 	}
 
 	protected String getDisplaySelectedItemsString() {
 		final StringBuilder str = new StringBuilder();
-		for (int i = 0; i < this.selectedItemsList.size(); i++) {
-			final Object itemObj = this.selectedItemsList.get(i);
+		for (int i = 0; i < this.selectedItems.size(); i++) {
+			final Object itemObj = this.selectedItems.get(i);
 
 			String objDisplayName = "";
-			if (this.displayName != "") {
+			if (this.propertyDisplayField != "") {
 				try {
 					objDisplayName = (String) PropertyUtils.getProperty(
-							itemObj, this.displayName);
+							itemObj, this.propertyDisplayField);
 				} catch (final Exception e) {
 					e.printStackTrace();
 				}
 			} else {
-				objDisplayName = (String) this.selectedItemsList.get(i);
+				objDisplayName = (String) this.selectedItems.get(i);
 			}
-			if (i == this.selectedItemsList.size() - 1) {
+			if (i == this.selectedItems.size() - 1) {
 				str.append(objDisplayName);
 			} else {
 				str.append(objDisplayName + ", ");
@@ -317,10 +189,28 @@ public abstract class MultiSelectComp extends CustomField {
 		return str.toString();
 	}
 
-	abstract protected void initData();
+	class ItemSelectionComp extends CheckBox {
+		private static final long serialVersionUID = 1L;
 
-	@Override
-	public Class<?> getType() {
-		return Object.class;
+		private T item;
+
+		public ItemSelectionComp(T item) {
+			super();
+			this.item = item;
+
+			String itemName = "";
+			if (propertyDisplayField != "") {
+				try {
+					itemName = (String) PropertyUtils.getProperty(item,
+							propertyDisplayField);
+				} catch (final Exception e) {
+					e.printStackTrace();
+				}
+			} else {
+				itemName = (String) item.toString();
+			}
+			this.setCaption(itemName);
+		}
+
 	}
 }

@@ -16,6 +16,8 @@
  */
 package com.esofthead.mycollab.module.project.view.settings.component;
 
+import java.util.List;
+
 import org.apache.commons.beanutils.PropertyUtils;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
@@ -29,7 +31,6 @@ import com.esofthead.mycollab.module.project.ui.components.MultiSelectComp;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.vaadin.ui.CheckBox;
-import com.vaadin.ui.VerticalLayout;
 
 /**
  * 
@@ -38,108 +39,56 @@ import com.vaadin.ui.VerticalLayout;
  * 
  */
 public class ProjectMemberMultiSelectField extends MultiSelectComp {
+	public ProjectMemberMultiSelectField() {
+		super(displayName, null);
+		// TODO Auto-generated constructor stub
+	}
+
 	private static final long serialVersionUID = 1L;
 
 	private static String displayName = "memberFullName";
 
-	public ProjectMemberMultiSelectField() {
-		super(displayName);
-	}
-
-	public ProjectMemberMultiSelectField(String width) {
-		super(displayName, width);
-	}
-
-	@Override
-	protected void initData() {
-		ProjectMemberSearchCriteria criteria = new ProjectMemberSearchCriteria();
-		criteria.setProjectId(new NumberSearchField(CurrentProjectVariables
-				.getProjectId()));
-		criteria.setStatus(new StringSearchField(
-				ProjectMemberStatusConstants.ACTIVE));
-
-		ProjectMemberService userService = ApplicationContextUtil
-				.getSpringBean(ProjectMemberService.class);
-		dataList = userService
-				.findPagableListByCriteria(new SearchRequest<ProjectMemberSearchCriteria>(
-						criteria, 0, Integer.MAX_VALUE));
-	}
-
-	@Override
-	protected void createItemPopup() {
-		for (int i = 0; i < dataList.size(); i++) {
-
-			Object itemComp = dataList.get(i);
-			String itemName = "";
-			String username = "";
-			String userAvatarId = "";
-
-			try {
-				itemName = (String) PropertyUtils.getProperty(itemComp,
-						displayName);
-				username = (String) PropertyUtils.getProperty(itemComp,
-						"username");
-				userAvatarId = (String) PropertyUtils.getProperty(itemComp,
-						"memberAvatarId");
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-
-			final CheckBox chkItem = new CheckBox(itemName);
-			chkItem.setImmediate(true);
-			chkItem.setIcon(UserAvatarControlFactory.createAvatarResource(
-					userAvatarId, 16));
-			chkItem.addValueChangeListener(new ValueChangeListener() {
-				@Override
-				public void valueChange(
-						com.vaadin.data.Property.ValueChangeEvent event) {
-					Boolean value = (Boolean) chkItem.getValue();
-					String objDisplayName = "";
-					if (displayName != "") {
-						Object itemObj = getElementInDataListByName(chkItem
-								.getCaption());
-						try {
-							objDisplayName = (String) PropertyUtils
-									.getProperty(itemObj, displayName);
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-						if (itemObj != null) {
-							if (isClicked) {
-								removeElementSelectedListByName(objDisplayName);
-								if (value) {
-									if (!selectedItemsList.contains(itemObj)) {
-										selectedItemsList.add(itemObj);
-									}
-								}
-								setSelectedItems(selectedItemsList);
-							}
-						}
-					} else {
-						if (isClicked) {
-							if (value) {
-								if (!selectedItemsList.contains(chkItem
-										.getCaption())) {
-									selectedItemsList.add(chkItem.getCaption());
-								}
-							} else {
-								selectedItemsList.remove(chkItem.getCaption());
-							}
-							setSelectedItems(selectedItemsList);
-						}
-					}
-				}
-			});
-			if (!componentList.containsKey(chkItem.getCaption())) {
-				componentList.put(chkItem.getCaption(), chkItem);
-			}
-		}
-
-		VerticalLayout popupContent = new VerticalLayout();
-		for (final CheckBox chk : this.componentList.values()) {
-			popupContent.addComponent(chk);
-		}
-		componentPopupSelection.setContent(popupContent);
-	}
+//	@Override
+//	protected void initData() {
+//		ProjectMemberSearchCriteria criteria = new ProjectMemberSearchCriteria();
+//		criteria.setProjectId(new NumberSearchField(CurrentProjectVariables
+//				.getProjectId()));
+//		criteria.setStatus(new StringSearchField(
+//				ProjectMemberStatusConstants.ACTIVE));
+//
+//		ProjectMemberService userService = ApplicationContextUtil
+//				.getSpringBean(ProjectMemberService.class);
+//		items = userService
+//				.findPagableListByCriteria(new SearchRequest<ProjectMemberSearchCriteria>(
+//						criteria, 0, Integer.MAX_VALUE));
+//	}
+//
+//	@Override
+//	protected void createItemPopup() {
+//		for (int i = 0; i < items.size(); i++) {
+//
+//			Object itemComp = items.get(i);
+//			String itemName = "";
+//			String username = "";
+//			String userAvatarId = "";
+//
+//			try {
+//				itemName = (String) PropertyUtils.getProperty(itemComp,
+//						displayName);
+//				username = (String) PropertyUtils.getProperty(itemComp,
+//						"username");
+//				userAvatarId = (String) PropertyUtils.getProperty(itemComp,
+//						"memberAvatarId");
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
+//
+//			final CheckBox chkItem = new CheckBox(itemName);
+//			chkItem.setImmediate(true);
+//			chkItem.setIcon(UserAvatarControlFactory.createAvatarResource(
+//					userAvatarId, 16));
+//			
+//		}
+//	}
 
 }

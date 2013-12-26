@@ -17,34 +17,32 @@
 
 package com.esofthead.mycollab.module.project.view.bug;
 
+import java.util.List;
+
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ui.components.MultiSelectComp;
+import com.esofthead.mycollab.module.tracker.domain.Component;
 import com.esofthead.mycollab.module.tracker.domain.criteria.ComponentSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.ComponentService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.ui.CompoundCustomField;
 
 /**
  * 
  * @author MyCollab Ltd.
  * @since 1.0
  */
-@SuppressWarnings("serial")
-public class ComponentMultiSelectField extends MultiSelectComp {
+public class ComponentMultiSelectField extends CompoundCustomField {
+	private static final long serialVersionUID = 1L;
 
-	public ComponentMultiSelectField() {
-		super("componentname");
-	}
-
-	public ComponentMultiSelectField(String width) {
-		super("componentname", width);
-	}
+	private MultiSelectComp<Component> componentSelection;
 
 	@Override
-	protected void initData() {
+	protected com.vaadin.ui.Component initContent() {
 		ComponentSearchCriteria searchCriteria = new ComponentSearchCriteria();
 		searchCriteria.setStatus(new StringSearchField("Open"));
 
@@ -53,9 +51,22 @@ public class ComponentMultiSelectField extends MultiSelectComp {
 
 		ComponentService componentService = ApplicationContextUtil
 				.getSpringBean(ComponentService.class);
-		dataList = componentService
+
+		List<Component> components = (List<Component>) componentService
 				.findPagableListByCriteria(new SearchRequest<ComponentSearchCriteria>(
 						searchCriteria, 0, Integer.MAX_VALUE));
 
+		componentSelection = new MultiSelectComp<Component>("componentname",
+				components);
+		return componentSelection;
+	}
+
+	public List<Component> getSelectedItems() {
+		return componentSelection.getSelectedItems();
+	}
+
+	@Override
+	public Class<?> getType() {
+		return Object.class;
 	}
 }

@@ -101,8 +101,8 @@ public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 		layout.setSpacing(true);
 		layout.setMargin(true);
 
-		final Image titleIcon = new Image(null, MyCollabResource
-				.newResource("icons/24/project/bug.png"));
+		final Image titleIcon = new Image(null,
+				MyCollabResource.newResource("icons/24/project/bug.png"));
 		layout.addComponent(titleIcon);
 		layout.setComponentAlignment(titleIcon, Alignment.MIDDLE_LEFT);
 
@@ -296,16 +296,19 @@ public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 			this.resolveDateField.setDateFormat(AppContext.getDateFormat());
 
 			this.componentField = (ComponentMultiSelectField) gridLayout
-					.addComponent(new ComponentMultiSelectField(
-							componentFieldWidth), "Component", 1, 2);
+					.addComponent(new ComponentMultiSelectField(), "Component",
+							1, 2);
+			this.componentField.setWidth(componentFieldWidth);
 
 			this.affectedVersionField = (VersionMultiSelectField) gridLayout
-					.addComponent(new VersionMultiSelectField(
-							componentFieldWidth), "Affected Version", 1, 1);
+					.addComponent(new VersionMultiSelectField(),
+							"Affected Version", 1, 1);
+			this.affectedVersionField.setWidth(componentFieldWidth);
 
 			this.fixedVersionField = (VersionMultiSelectField) gridLayout
-					.addComponent(new VersionMultiSelectField(
-							componentFieldWidth), "Fixed Version", 1, 3);
+					.addComponent(new VersionMultiSelectField(),
+							"Fixed Version", 1, 3);
+			fixedVersionField.setWidth(componentFieldWidth);
 
 			this.priorityField = (BugStaticItemMultiSelectField) gridLayout
 					.addComponent(new BugStaticItemMultiSelectField(
@@ -360,12 +363,13 @@ public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 									.resetComp();
 							BugAdvancedSearchLayout.this.resolutionField
 									.resetComp();
-							BugAdvancedSearchLayout.this.affectedVersionField
-									.resetComp();
-							BugAdvancedSearchLayout.this.componentField
-									.resetComp();
-							BugAdvancedSearchLayout.this.fixedVersionField
-									.resetComp();
+							//TODO: 
+//							BugAdvancedSearchLayout.this.affectedVersionField
+//									.resetComp();
+//							BugAdvancedSearchLayout.this.componentField
+//									.resetComp();
+//							BugAdvancedSearchLayout.this.fixedVersionField
+//									.resetComp();
 							BugAdvancedSearchLayout.this.statusField
 									.resetComp();
 							BugAdvancedSearchLayout.this.severityField

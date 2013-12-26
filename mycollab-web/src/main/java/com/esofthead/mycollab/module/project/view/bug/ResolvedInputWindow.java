@@ -238,13 +238,7 @@ public class ResolvedInputWindow extends Window {
 									.getLogby());
 					return new ProjectMemberComboBox();
 				} else if (propertyId.equals("fixedVersions")) {
-					ResolvedInputWindow.this.fixedVersionSelect = new VersionMultiSelectField(
-							"227px");
-					if (ResolvedInputWindow.this.bug.getFixedVersions().size() > 0) {
-						ResolvedInputWindow.this.fixedVersionSelect
-								.setSelectedItems(ResolvedInputWindow.this.bug
-										.getFixedVersions());
-					}
+					ResolvedInputWindow.this.fixedVersionSelect = new VersionMultiSelectField();
 					return ResolvedInputWindow.this.fixedVersionSelect;
 				} else if (propertyId.equals("comment")) {
 					EditForm.this.commentArea = new RichTextArea();

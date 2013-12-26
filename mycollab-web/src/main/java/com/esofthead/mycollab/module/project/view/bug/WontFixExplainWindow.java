@@ -236,13 +236,7 @@ public class WontFixExplainWindow extends Window {
 				} else if (propertyId.equals("assignuser")) {
 					return new ProjectMemberComboBox();
 				} else if (propertyId.equals("fixedVersions")) {
-					WontFixExplainWindow.this.fixedVersionSelect = new VersionMultiSelectField(
-							"227px");
-					if (WontFixExplainWindow.this.bug.getFixedVersions().size() > 0) {
-						WontFixExplainWindow.this.fixedVersionSelect
-								.setSelectedItems(WontFixExplainWindow.this.bug
-										.getFixedVersions());
-					}
+					WontFixExplainWindow.this.fixedVersionSelect = new VersionMultiSelectField();
 					return WontFixExplainWindow.this.fixedVersionSelect;
 				} else if (propertyId.equals("comment")) {
 					EditForm.this.commentArea = new RichTextArea();
