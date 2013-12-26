@@ -58,8 +58,8 @@
 
         <if test="searchCriteria.saccountid != null">
             <![CDATA[${searchCriteria.saccountid.operation}
-                SELECT COUNT(*) FROM m_prj_project, s_user_account
-                WHERE m_prj_project.sAccountId=#{searchCriteria.saccountid.value,javaType=INTEGER}
+                (SELECT COUNT(*) FROM m_prj_project
+                WHERE m_prj_project.sAccountId=#{searchCriteria.saccountid.value,javaType=INTEGER} AND m_prj_member.projectId=m_prj_project.id ) > 0
             ]]>
         </if>
     </sql>
@@ -185,7 +185,7 @@
         <trim prefix="WHERE" prefixOverrides="AND | OR ">
             1=1
             <include
-                refid="com.esofthead.mycollab.module.project.dao.ProjectMemberMapperExt.querySearchCriteria" />
+                refid="com.esofthead.mycollab.module.project.dao.ProjectMemberMapperExt.queryTotalCountSearchCriteria" />
         </trim>
     </select>
 
@@ -196,7 +196,7 @@
         <trim prefix="WHERE" prefixOverrides="AND | OR ">
             1=1
             <include
-                refid="com.esofthead.mycollab.module.project.dao.ProjectMemberMapperExt.querySearchCriteria" />
+                refid="com.esofthead.mycollab.module.project.dao.ProjectMemberMapperExt.queryTotalCountSearchCriteria" />
         </trim>
     </select>
 </mapper>    

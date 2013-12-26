@@ -19,11 +19,17 @@ package com.esofthead.mycollab.core;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class ThreadExceptionHandler implements Thread.UncaughtExceptionHandler {
 
-	private Logger logger = LoggerFactory.getLogger(ThreadExceptionHandler.class);
-	
+	private Logger logger = LoggerFactory
+			.getLogger(ThreadExceptionHandler.class);
+
 	@Override
 	public void uncaughtException(Thread t, Throwable e) {
 		logger.error("Exception when run thread: " + t.getName()

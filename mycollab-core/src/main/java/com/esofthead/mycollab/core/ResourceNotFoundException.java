@@ -21,7 +21,7 @@ package com.esofthead.mycollab.core;
  * etc)
  * 
  * @author MyCollab Ltd.
- * 
+ * @since 1.0
  */
 public class ResourceNotFoundException extends MyCollabException {
 	private static final long serialVersionUID = 1L;

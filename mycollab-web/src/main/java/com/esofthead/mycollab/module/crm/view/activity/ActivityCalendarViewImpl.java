@@ -121,38 +121,35 @@ public class ActivityCalendarViewImpl extends AbstractPageView implements
 		this.addComponent(actionPanel);
 
 		groupViewBtn = new ButtonGroup();
-		monthViewBtn = new Button("Monthly PageView",
-				new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
+		monthViewBtn = new Button("Monthly", new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
 
-					@Override
-					public void buttonClick(ClickEvent event) {
-						calendarComponent.switchToMonthView(new Date(), true);
-						monthViewBtn.addStyleName("selected-style");
-						initLabelCaption();
-					}
-				});
+			@Override
+			public void buttonClick(ClickEvent event) {
+				calendarComponent.switchToMonthView(new Date(), true);
+				monthViewBtn.addStyleName("selected-style");
+				initLabelCaption();
+			}
+		});
 
 		groupViewBtn.addButton(monthViewBtn);
-		Button weekViewBtn = new Button("Weekly PageView",
-				new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
+		Button weekViewBtn = new Button("Weekly", new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
 
-					@Override
-					public void buttonClick(ClickEvent event) {
-						calendarComponent.switchToWeekView(new Date());
-					}
-				});
+			@Override
+			public void buttonClick(ClickEvent event) {
+				calendarComponent.switchToWeekView(new Date());
+			}
+		});
 		groupViewBtn.addButton(weekViewBtn);
-		Button dailyViewBtn = new Button("Daily PageView",
-				new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
+		Button dailyViewBtn = new Button("Daily", new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
 
-					@Override
-					public void buttonClick(ClickEvent event) {
-						calendarComponent.switchToDateView(new Date());
-					}
-				});
+			@Override
+			public void buttonClick(ClickEvent event) {
+				calendarComponent.switchToDateView(new Date());
+			}
+		});
 		groupViewBtn.addButton(dailyViewBtn);
 
 		actionPanel.addComponent(groupViewBtn);
@@ -257,7 +254,7 @@ public class ActivityCalendarViewImpl extends AbstractPageView implements
 		this.setComponentAlignment(noteInfoLayout, Alignment.MIDDLE_CENTER);
 	}
 
-	public void updateLabelCaption(Date date) {
+	private void updateLabelCaption(Date date) {
 		switch (calendarComponent.viewMode) {
 		case MONTH:
 			GregorianCalendar calendar = new GregorianCalendar();
