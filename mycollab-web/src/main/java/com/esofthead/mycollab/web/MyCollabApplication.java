@@ -87,20 +87,8 @@ public class MyCollabApplication extends UI {
 	@Override
 	protected void init(VaadinRequest request) {
 		log.debug("Init mycollab application {}", this.toString());
-		initialUrl = this.getPage().getUriFragment();
-		VaadinSession.getCurrent().setAttribute(CURRENT_APP, this);
-		currentContext = new AppContext(this);
-		postSetupApp(request);
-		try {
-			currentContext.initDomain(initialSubDomain);
-		} catch (Exception e) {
-			this.setContent(new NoSubDomainExistedWindow(initialSubDomain));
-			return;
-		}
-		this.setContent(new MainWindowContainer());
-
 		log.debug("Register default error handler");
-		UI.getCurrent().setErrorHandler(new DefaultErrorHandler() {
+		VaadinSession.getCurrent().setErrorHandler(new DefaultErrorHandler() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -119,6 +107,18 @@ public class MyCollabApplication extends UI {
 				log.error("Error", e);
 			}
 		});
+
+		initialUrl = this.getPage().getUriFragment();
+		VaadinSession.getCurrent().setAttribute(CURRENT_APP, this);
+		currentContext = new AppContext(this);
+		postSetupApp(request);
+		try {
+			currentContext.initDomain(initialSubDomain);
+		} catch (Exception e) {
+			this.setContent(new NoSubDomainExistedWindow(initialSubDomain));
+			return;
+		}
+		this.setContent(new MainWindowContainer());
 
 		getPage().addUriFragmentChangedListener(
 				new UriFragmentChangedListener() {

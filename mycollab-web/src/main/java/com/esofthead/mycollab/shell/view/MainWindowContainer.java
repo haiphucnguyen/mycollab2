@@ -74,8 +74,16 @@ public class MainWindowContainer extends CssLayout {
 				if (loginInfo != null) {
 					String[] loginParams = loginInfo.split("\\$");
 					if (loginParams.length == 2) {
-						presenter.doLogin(loginParams[0], PasswordEncryptHelper
-								.decryptText(loginParams[1]), false);
+						try {
+							presenter
+									.doLogin(
+											loginParams[0],
+											PasswordEncryptHelper
+													.decryptText(loginParams[1]),
+											false);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
 					}
 				}
 			}

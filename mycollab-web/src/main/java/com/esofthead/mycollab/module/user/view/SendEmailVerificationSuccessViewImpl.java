@@ -19,6 +19,12 @@ package com.esofthead.mycollab.module.user.view;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @ViewComponent
 public class SendEmailVerificationSuccessViewImpl extends AbstractPageView
 		implements SendEmailVerificationSuccessView {
