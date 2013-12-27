@@ -16,15 +16,20 @@
  */
 package com.esofthead.mycollab.module.project.view.bug;
 
-import com.esofthead.mycollab.module.crm.ui.components.HistoryLogWindow;
 import com.esofthead.mycollab.vaadin.ui.HistoryLogComponent;
 
-@SuppressWarnings("serial")
-public class VersionHistoryLogWindow extends HistoryLogWindow {
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
+public class VersionHistoryLogList extends HistoryLogComponent {
+	private static final long serialVersionUID = 1L;
 
-	public VersionHistoryLogWindow(String module, String type, int typeid) {
-		super(module, type, typeid);
-		
+	public VersionHistoryLogList(String module, String type) {
+		super(module, type);
+
 		this.generateFieldDisplayHandler("versionname", "Version Name");
 		this.generateFieldDisplayHandler("description", "Description");
 		this.generateFieldDisplayHandler("duedate", "Due Date",

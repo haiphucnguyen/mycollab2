@@ -32,6 +32,8 @@ import com.esofthead.mycollab.module.project.view.settings.component.ProjectUser
 import com.esofthead.mycollab.module.tracker.BugStatusConstants;
 import com.esofthead.mycollab.module.tracker.domain.SimpleComponent;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
+import com.esofthead.mycollab.module.tracker.service.ComponentService;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
@@ -42,6 +44,7 @@ import com.esofthead.mycollab.vaadin.ui.TabsheetLazyLoadComp;
 import com.esofthead.mycollab.vaadin.ui.ToggleButtonGroup;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
+import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
@@ -66,6 +69,8 @@ public class ComponentReadViewImpl extends
 
 	private RelatedBugComp relatedBugComp;
 	private ComponentHistoryLogList historyLogList;
+	private Button quickActionStatusBtn;
+	private ProjectPreviewFormControlsGenerator<SimpleComponent> componentPreviewForm;
 
 	public ComponentReadViewImpl() {
 		super(MyCollabResource.newResource("icons/22/project/component.png"));
@@ -106,6 +111,20 @@ public class ComponentReadViewImpl extends
 		relatedBugComp.displayBugReports();
 
 		historyLogList.loadHistory(beanItem.getId());
+
+		if (beanItem.getStatus() == null || beanItem.getStatus().equals("Open")) {
+			removeLayoutStyleName(UIConstants.LINK_COMPLETED);
+			quickActionStatusBtn.setCaption("Close");
+			quickActionStatusBtn.setIcon(MyCollabResource
+					.newResource("icons/16/project/closeTask.png"));
+		} else {
+			addLayoutStyleName(UIConstants.LINK_COMPLETED);
+			quickActionStatusBtn.setCaption("ReOpen");
+			quickActionStatusBtn.setIcon(MyCollabResource
+					.newResource("icons/16/project/reopenTask.png"));
+
+		}
+
 	}
 
 	@Override
@@ -133,11 +152,42 @@ public class ComponentReadViewImpl extends
 
 	@Override
 	protected ComponentContainer createButtonControls() {
-		ProjectPreviewFormControlsGenerator<SimpleComponent> componentPreviewForm = new ProjectPreviewFormControlsGenerator<SimpleComponent>(
+		componentPreviewForm = new ProjectPreviewFormControlsGenerator<SimpleComponent>(
 				previewForm);
 		final HorizontalLayout topPanel = componentPreviewForm
 				.createButtonControls(ProjectRolePermissionCollections.COMPONENTS);
+		quickActionStatusBtn = new Button("", new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
 
+			@Override
+			public void buttonClick(ClickEvent event) {
+				if (beanItem.getStatus() != null
+						&& beanItem.getStatus().equals("Close")) {
+					beanItem.setStatus("Open");
+					ComponentReadViewImpl.this
+							.removeLayoutStyleName(UIConstants.LINK_COMPLETED);
+					quickActionStatusBtn.setCaption("Close");
+					quickActionStatusBtn.setIcon(MyCollabResource
+							.newResource("icons/16/project/closeTask.png"));
+				} else {
+					beanItem.setStatus("Close");
+
+					ComponentReadViewImpl.this
+							.addLayoutStyleName(UIConstants.LINK_COMPLETED);
+					quickActionStatusBtn.setCaption("ReOpen");
+					quickActionStatusBtn.setIcon(MyCollabResource
+							.newResource("icons/16/project/reopenTask.png"));
+				}
+
+				ComponentService service = ApplicationContextUtil
+						.getSpringBean(ComponentService.class);
+				service.updateWithSession(beanItem, AppContext.getUsername());
+
+			}
+		});
+
+		quickActionStatusBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		componentPreviewForm.insertToControlBlock(quickActionStatusBtn);
 		return topPanel;
 	}
 
