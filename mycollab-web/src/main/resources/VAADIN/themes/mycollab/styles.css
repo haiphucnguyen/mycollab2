@@ -4195,6 +4195,11 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 .v-richtextarea .gwt-RichTextToolbar .gwt-ListBox {
 	margin-right: 3px;
 }
+
+/* Mac OS native select fix */
+.v-mac .v-richtextarea .gwt-RichTextToolbar .gwt-ListBox:first-child {
+    margin-left: 2px;
+}
 /* End Richtext Editor */
 
 /* The New GridLayout */
@@ -4348,7 +4353,7 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
     border-width: 1px 0px 0px;
 }
 .v-tabsheet-content .task-list .v-csslayout-comp-header {
-    padding: 3px 5px;
+    padding: 5px;
 }
 
 /* User Group */
@@ -5622,7 +5627,7 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
  	border-width: 1px 0px 0px;
 }
 .projectmember-view .v-tabsheet-content .comp-header.v-margin-top {
-	padding-top: 3px;
+	padding-top: 5px;
 }
 
 .projectmember-view .v-tabsheet-content .comp-header.v-margin-right {
@@ -5630,7 +5635,7 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 }
 
 .projectmember-view .v-tabsheet-content .comp-header.v-margin-bottom {
-	padding-bottom: 3px;
+	padding-bottom: 5px;
 }
 
 .projectmember-view .v-tabsheet-content .comp-header.v-margin-left{
