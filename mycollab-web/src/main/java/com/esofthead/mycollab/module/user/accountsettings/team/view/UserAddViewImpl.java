@@ -45,6 +45,7 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Property;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -71,6 +72,9 @@ public class UserAddViewImpl extends AbstractPageView implements UserAddView {
 
 	public UserAddViewImpl() {
 		super();
+		
+		this.setMargin(new MarginInfo(true, false, false, false));
+		
 		this.advanceEditForm = new UserAddViewImpl.AdvancedEditUserForm(true);
 		this.addComponent(this.advanceEditForm);
 	}
