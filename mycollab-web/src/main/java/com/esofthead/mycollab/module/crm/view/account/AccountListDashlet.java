@@ -40,6 +40,7 @@ import com.vaadin.ui.VerticalLayout;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class AccountListDashlet extends Depot {
 	private static final long serialVersionUID = 1L;

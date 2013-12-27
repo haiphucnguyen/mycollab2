@@ -63,6 +63,8 @@ public class AccountAddPresenter extends CrmGenericPresenter<AccountAddView> {
 	protected void postInitView() {
 		view.getEditFormHandlers().addFormHandler(
 				new EditFormHandler<SimpleAccount>() {
+					private static final long serialVersionUID = 1L;
+
 					@Override
 					public void onSave(final SimpleAccount account) {
 						saveAccount(account);

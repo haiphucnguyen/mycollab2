@@ -57,8 +57,6 @@ public class MyCollabApplication extends UI {
 	private static Logger log = LoggerFactory
 			.getLogger(MyCollabApplication.class);
 
-	// private static DatabaseReader reader = null;
-
 	/**
 	 * Context of current logged in user
 	 */
@@ -68,16 +66,6 @@ public class MyCollabApplication extends UI {
 	private String initialUrl = "";
 
 	public static final String NAME_COOKIE = "mycollab";
-
-	// static {
-	// try {
-	// InputStream geoStream = MyCollabApplication.class.getClassLoader()
-	// .getResourceAsStream("GeoLite2-City.mmdb");
-	// reader = new Builder(geoStream).fileMode(FileMode.MEMORY).build();
-	// } catch (Exception e) {
-	// log.error("Can not read geo database file", e);
-	// }
-	// }
 
 	public static MyCollabApplication getInstance() {
 		return (MyCollabApplication) VaadinSession.getCurrent().getAttribute(
@@ -148,61 +136,6 @@ public class MyCollabApplication extends UI {
 	public AppContext getSessionData() {
 		return currentContext;
 	}
-
-	// @Override
-	// public void onRequestEnd(HttpServletRequest request,
-	// HttpServletResponse response) {
-	// if (currentContext != null) {
-	// currentContext.transactionEnd();
-	// }
-	//
-	// if (currentThrowable != null) {
-	// String errorMsg =
-	// "An uncaught exception occurred with username %s, in account %d, useragent %s, ip %s and country code %s ";
-	// try {
-	// String username = AppContext.getUsername();
-	// Integer accountId = AppContext.getAccountId();
-	// AbstractWebApplicationContext webContext =
-	// (AbstractWebApplicationContext) this
-	// .getContext();
-	//
-	// StringBuffer userinfo = new StringBuffer("Request Headers: ")
-	// .append(" - ");
-	//
-	// Enumeration<String> headerNames = request.getHeaderNames();
-	// while (headerNames.hasMoreElements()) {
-	// String headerName = headerNames.nextElement();
-	// String headerVal = request.getHeader(headerName);
-	// userinfo.append(headerName).append("=").append(headerVal)
-	// .append(", ");
-	// }
-	//
-	// String ipaddress = webContext.getBrowser().getAddress();
-	// String countryCode = "<no defined>";
-	// InetAddress address = InetAddress.getByName(ipaddress);
-	// if (address != null && reader != null) {
-	// try {
-	// countryCode = reader.country(address).getCountry()
-	// .getName();
-	// } catch (Exception e2) {
-	// log.error("Can not read country code", e2);
-	// }
-	// }
-	//
-	// errorMsg = String.format(errorMsg, username, accountId,
-	// userinfo.toString(), ipaddress, countryCode);
-	//
-	// } catch (Exception e1) {
-	// log.error("Error while generating issue", e1);
-	// errorMsg = "An uncaught exception occurred ";
-	// }
-	//
-	// log.error(errorMsg, currentThrowable);
-	// currentThrowable = null;
-	// }
-	//
-	// threadLocal.remove();
-	// }
 
 	public String getInitialUrl() {
 		return initialUrl;

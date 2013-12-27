@@ -77,7 +77,7 @@ public class ComponentListPresenter
 					}
 
 					@Override
-					protected Class getReportModelClassType() {
+					protected Class<?> getReportModelClassType() {
 						return SimpleComponent.class;
 					}
 				});

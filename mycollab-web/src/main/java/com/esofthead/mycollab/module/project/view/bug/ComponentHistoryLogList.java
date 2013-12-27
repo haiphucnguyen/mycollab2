@@ -33,6 +33,7 @@ public class ComponentHistoryLogList extends HistoryLogComponent {
 		this.generateFieldDisplayHandler("componentname", "Component Name");
 		this.generateFieldDisplayHandler("description", "Description");
 		this.generateFieldDisplayHandler("userlead", "Lead");
+		this.generateFieldDisplayHandler("status", "Status");
 	}
 
 }
