@@ -16,6 +16,7 @@
  */
 package com.esofthead.mycollab.module.project.view.task;
 
+import com.vaadin.ui.*;
 import org.vaadin.hene.popupbutton.PopupButton;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
@@ -40,14 +41,7 @@ import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.server.FileDownloader;
 import com.vaadin.server.StreamResource;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.Embedded;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.UI;
-import com.vaadin.ui.VerticalLayout;
 
 /**
  * 
@@ -88,8 +82,7 @@ public class TaskGroupDisplayViewImpl extends AbstractPageView implements
 				.canRead(ProjectRolePermissionCollections.TASKS));
 		this.taskGroupSelection.addStyleName("link");
 		this.taskGroupSelection.addStyleName("h2");
-		final Embedded icon = new Embedded();
-		icon.setSource(MyCollabResource
+		final Image icon = new Image(null, MyCollabResource
 				.newResource("icons/24/project/task.png"));
 		header.addComponent(icon);
 		header.addComponent(this.taskGroupSelection);

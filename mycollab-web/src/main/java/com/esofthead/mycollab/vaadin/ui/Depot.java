@@ -75,8 +75,8 @@ public class Depot extends VerticalLayout {
 
         this.headerContent.setStyleName("header-elements");
         this.headerContent.setWidth(Sizeable.SIZE_UNDEFINED, Sizeable.Unit.PIXELS);
-        this.headerContent.setHeight("100%");
-        //this.headerContent.setSizeUndefined();
+        //this.headerContent.setHeight("100%");
+        this.headerContent.setSizeUndefined();
 
         this.addComponent(this.header);
 
