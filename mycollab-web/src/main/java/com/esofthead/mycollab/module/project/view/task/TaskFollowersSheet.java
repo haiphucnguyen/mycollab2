@@ -39,8 +39,8 @@ import com.esofthead.mycollab.web.AppContext;
  * @since 1.0
  * 
  */
-@SuppressWarnings("serial")
 public class TaskFollowersSheet extends CompFollowersSheet<SimpleTask> {
+	private static final long serialVersionUID = 1L;
 
 	protected TaskFollowersSheet(SimpleTask task) {
 		super(task);

@@ -31,7 +31,7 @@ import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.project.events.MilestoneEvent;
-import com.esofthead.mycollab.module.project.ui.components.CommentListDepot;
+import com.esofthead.mycollab.module.project.ui.components.CommentDisplay;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserFormLinkField;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
@@ -40,15 +40,16 @@ import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormContainerHorizontalViewField;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormDetectAndDisplayUrlViewField;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormLinkViewField;
-import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.ProgressPercentageIndicator;
 import com.esofthead.mycollab.vaadin.ui.ProjectPreviewFormControlsGenerator;
+import com.esofthead.mycollab.vaadin.ui.TabsheetLazyLoadComp;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Field;
-import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.UI;
@@ -182,37 +183,39 @@ public class TaskGroupReadViewImpl extends AbstractPageView implements
 			}
 
 			@Override
-			protected Layout createBottomPanel() {
-				final VerticalLayout relatedItemsPanel = new VerticalLayout();
-				final CommentListDepot commentList = new CommentListDepot(
+			protected ComponentContainer createBottomPanel() {
+				final TabsheetLazyLoadComp tabContainer = new TabsheetLazyLoadComp();
+				tabContainer.setWidth("100%");
+				final CommentDisplay commentList = new CommentDisplay(
 						CommentType.PRJ_TASK_LIST,
-						TaskGroupReadViewImpl.this.taskList.getId(),
-						CurrentProjectVariables.getProjectId(), true, true);
+						CurrentProjectVariables.getProjectId(), true, true,
+						null);
 				commentList.setWidth("100%");
-				relatedItemsPanel.addComponent(commentList);
-				relatedItemsPanel.addComponent(new TaskDepot());
-				return relatedItemsPanel;
+
+				tabContainer.addTab(commentList, "Comments", MyCollabResource
+						.newResource("icons/16/project/gray/comment.png"));
+				tabContainer.addTab(new TaskDisplayTab(), "Tasks",
+						MyCollabResource
+								.newResource("icons/16/project/gray/task.png"));
+				return tabContainer;
 			}
 		}
 	}
 
-	@SuppressWarnings("serial")
-	public class TaskDepot extends Depot {
-
+	class TaskDisplayTab extends VerticalLayout {
+		private static final long serialVersionUID = 1L;
 		private final TaskDisplayComponent taskDisplayComponent;
 
-		public TaskDepot() {
-			super("Tasks", new HorizontalLayout(), new TaskDisplayComponent(
-					TaskGroupReadViewImpl.this.taskList, false));
+		public TaskDisplayTab() {
 			this.addStyleName("task-list");
 			this.initHeader();
-			this.taskDisplayComponent = (TaskDisplayComponent) this.bodyContent;
+			this.taskDisplayComponent = new TaskDisplayComponent(
+					TaskGroupReadViewImpl.this.taskList, false);
+
+			this.addComponent(taskDisplayComponent);
 		}
 
 		private void initHeader() {
-			final HorizontalLayout headerLayout = (HorizontalLayout) this.headerContent;
-			headerLayout.setSpacing(true);
-
 			final PopupButton taskListFilterControl;
 			taskListFilterControl = new PopupButton("Active Tasks");
 			taskListFilterControl.setWidth("120px");
@@ -225,11 +228,13 @@ public class TaskGroupReadViewImpl extends AbstractPageView implements
 
 			final Button allTasksFilterBtn = new Button("All Tasks",
 					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
 						@Override
 						public void buttonClick(final ClickEvent event) {
 							taskListFilterControl.setPopupVisible(false);
 							taskListFilterControl.setCaption("All Tasks");
-							TaskDepot.this.displayAllTasks();
+							TaskDisplayTab.this.displayAllTasks();
 						}
 					});
 			allTasksFilterBtn.setStyleName("link");
@@ -237,11 +242,13 @@ public class TaskGroupReadViewImpl extends AbstractPageView implements
 
 			final Button activeTasksFilterBtn = new Button("Active Tasks Only",
 					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
 						@Override
 						public void buttonClick(final ClickEvent event) {
 							taskListFilterControl.setPopupVisible(false);
 							taskListFilterControl.setCaption("Active Tasks");
-							TaskDepot.this.displayActiveTasksOnly();
+							TaskDisplayTab.this.displayActiveTasksOnly();
 						}
 					});
 			activeTasksFilterBtn.setStyleName("link");
@@ -249,17 +256,19 @@ public class TaskGroupReadViewImpl extends AbstractPageView implements
 
 			final Button archievedTasksFilterBtn = new Button(
 					"Archieved Tasks Only", new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
 						@Override
 						public void buttonClick(final ClickEvent event) {
 							taskListFilterControl.setCaption("Archieved Tasks");
 							taskListFilterControl.setPopupVisible(false);
-							TaskDepot.this.displayInActiveTasks();
+							TaskDisplayTab.this.displayInActiveTasks();
 						}
 					});
 			archievedTasksFilterBtn.setStyleName("link");
 			filterBtnLayout.addComponent(archievedTasksFilterBtn);
 			taskListFilterControl.setContent(filterBtnLayout);
-			headerLayout.addComponent(taskListFilterControl);
+			this.addComponent(taskListFilterControl);
 		}
 
 		private TaskSearchCriteria createBaseSearchCriteria() {

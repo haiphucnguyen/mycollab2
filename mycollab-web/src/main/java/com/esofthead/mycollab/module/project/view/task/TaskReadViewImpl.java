@@ -43,6 +43,7 @@ import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormContaine
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormDetectAndDisplayUrlViewField;
 import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.esofthead.mycollab.vaadin.ui.ProjectPreviewFormControlsGenerator;
+import com.esofthead.mycollab.vaadin.ui.TabsheetLazyLoadComp;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
@@ -55,7 +56,6 @@ import com.vaadin.ui.Embedded;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.UI;
 
 /**
@@ -143,7 +143,7 @@ public class TaskReadViewImpl extends AbstractPageView implements TaskReadView {
 
 		@Override
 		protected ComponentContainer createBottomPanel() {
-			final TabSheet tabTaskDetail = new TabSheet();
+			final TabsheetLazyLoadComp tabTaskDetail = new TabsheetLazyLoadComp();
 			tabTaskDetail.setWidth("100%");
 
 			final CommentDisplay commentList = new CommentDisplay(

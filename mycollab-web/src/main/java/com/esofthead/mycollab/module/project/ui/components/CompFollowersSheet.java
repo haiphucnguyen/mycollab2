@@ -70,14 +70,6 @@ public abstract class CompFollowersSheet<V extends ValuedBean> extends
 		initUI();
 	}
 
-	protected abstract void loadMonitorItems();
-
-	protected abstract boolean saveMonitorItem(String username);
-
-	protected abstract void saveRelayNotification();
-
-	protected abstract boolean isEnableAdd();
-
 	private void initUI() {
 		Label lbInstruct = new Label(
 				"Add people from your team or external to follow bug activity");
@@ -294,5 +286,13 @@ public abstract class CompFollowersSheet<V extends ValuedBean> extends
 			followBtn.setDescription("Follow");
 		}
 	}
+
+	protected abstract void loadMonitorItems();
+
+	protected abstract boolean saveMonitorItem(String username);
+
+	protected abstract void saveRelayNotification();
+
+	protected abstract boolean isEnableAdd();
 
 }

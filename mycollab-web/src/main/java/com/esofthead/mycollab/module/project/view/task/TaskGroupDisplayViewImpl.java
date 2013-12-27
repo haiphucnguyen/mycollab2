@@ -48,10 +48,10 @@ import com.vaadin.ui.Button.ClickEvent;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-@SuppressWarnings("serial")
 @ViewComponent
 public class TaskGroupDisplayViewImpl extends AbstractPageView implements
 		TaskGroupDisplayView {
+	private static final long serialVersionUID = 1L;
 
 	private PopupButton taskGroupSelection;
 	private TaskGroupDisplayWidget taskLists;
@@ -82,8 +82,8 @@ public class TaskGroupDisplayViewImpl extends AbstractPageView implements
 				.canRead(ProjectRolePermissionCollections.TASKS));
 		this.taskGroupSelection.addStyleName("link");
 		this.taskGroupSelection.addStyleName("h2");
-		final Image icon = new Image(null, MyCollabResource
-				.newResource("icons/24/project/task.png"));
+		final Image icon = new Image(null,
+				MyCollabResource.newResource("icons/24/project/task.png"));
 		header.addComponent(icon);
 		header.addComponent(this.taskGroupSelection);
 		header.setExpandRatio(this.taskGroupSelection, 1.0f);
@@ -156,6 +156,8 @@ public class TaskGroupDisplayViewImpl extends AbstractPageView implements
 				LocalizationHelper
 						.getMessage(TaskI18nEnum.NEW_TASKGROUP_ACTION),
 				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
 					@Override
 					public void buttonClick(final ClickEvent event) {
 						final TaskGroupAddWindow taskListWindow = new TaskGroupAddWindow(
@@ -174,6 +176,8 @@ public class TaskGroupDisplayViewImpl extends AbstractPageView implements
 		header.setComponentAlignment(newTaskListBtn, Alignment.MIDDLE_RIGHT);
 
 		this.reOrderBtn = new Button(null, new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void buttonClick(final ClickEvent event) {
 				EventBus.getInstance().fireEvent(

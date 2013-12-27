@@ -27,6 +27,7 @@ import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Alignment;
+import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
@@ -48,27 +49,27 @@ public abstract class TaskGroupFormLayoutFactory implements IFormLayoutFactory {
 
 	@Override
 	public Layout getLayout() {
-		final AddViewLayout accountAddLayout = new AddViewLayout(this.title,
+		final AddViewLayout taskgroupAddLayout = new AddViewLayout(this.title,
 				MyCollabResource.newResource("icons/24/project/task.png"));
 
 		for (int i = 0; i < this.lstStyleTitle.size(); i++) {
-			accountAddLayout.addTitleStyleName(this.lstStyleTitle.get(i));
+			taskgroupAddLayout.addTitleStyleName(this.lstStyleTitle.get(i));
 		}
 
 		final Layout topPanel = this.createTopPanel();
 		if (topPanel != null) {
-			accountAddLayout.addTopControls(topPanel);
+			taskgroupAddLayout.addTopControls(topPanel);
 		}
 
 		this.informationLayout = new TaskListInformationLayout();
-		accountAddLayout.addBody(this.informationLayout.getLayout());
+		taskgroupAddLayout.addBody(this.informationLayout.getLayout());
 
-		final Layout bottomPanel = this.createBottomPanel();
+		final ComponentContainer bottomPanel = this.createBottomPanel();
 		if (bottomPanel != null) {
-			accountAddLayout.addBottomControls(bottomPanel);
+			taskgroupAddLayout.addBottomControls(bottomPanel);
 		}
 
-		return accountAddLayout;
+		return taskgroupAddLayout;
 	}
 
 	protected void addTitleStyle(final String styleName) {
@@ -82,7 +83,7 @@ public abstract class TaskGroupFormLayoutFactory implements IFormLayoutFactory {
 
 	protected abstract Layout createTopPanel();
 
-	protected abstract Layout createBottomPanel();
+	protected abstract ComponentContainer createBottomPanel();
 
 	@SuppressWarnings("serial")
 	public static class TaskListInformationLayout implements IFormLayoutFactory {
