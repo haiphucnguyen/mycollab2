@@ -33,7 +33,7 @@ public class TaskHistoryList extends HistoryLogComponent {
 	private static final long serialVersionUID = 1L;
 
 	public TaskHistoryList(int taskId) {
-		super(ModuleNameConstants.PRJ, ProjectContants.TASK, taskId);
+		super(ModuleNameConstants.PRJ, ProjectContants.TASK);
 		this.addStyleName("activity-panel");
 
 		this.generateFieldDisplayHandler("taskname", "Task Name");

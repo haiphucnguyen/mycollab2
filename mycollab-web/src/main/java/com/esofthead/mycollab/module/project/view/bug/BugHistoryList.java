@@ -32,7 +32,7 @@ import com.esofthead.mycollab.vaadin.ui.HistoryLogComponent;
 public class BugHistoryList extends HistoryLogComponent {
 
 	public BugHistoryList(int bugId) {
-		super(ModuleNameConstants.PRJ, ProjectContants.BUG, bugId);
+		super(ModuleNameConstants.PRJ, ProjectContants.BUG);
 		this.addStyleName("activity-panel");
 
 		this.generateFieldDisplayHandler("description", "Description");

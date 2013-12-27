@@ -53,8 +53,9 @@ import com.vaadin.ui.VerticalLayout;
  * @author MyCollab Ltd.
  * @since 2.0
  */
-@SuppressWarnings("serial")
 public class HistoryLogComponent extends VerticalLayout {
+	private static final long serialVersionUID = 1L;
+
 	private static Logger log = LoggerFactory
 			.getLogger(HistoryLogComponent.class);
 
@@ -78,12 +79,10 @@ public class HistoryLogComponent extends VerticalLayout {
 	protected Map<String, FieldDisplayHandler> fieldsFormat = new HashMap<String, FieldDisplayHandler>();
 	private String module;
 	private String type;
-	private int typeid;
 
-	public HistoryLogComponent(String module, String type, int typeid) {
+	public HistoryLogComponent(String module, String type) {
 		this.module = module;
 		this.type = type;
-		this.typeid = typeid;
 
 		logTable = new BeanList<AuditLogService, AuditLogSearchCriteria, SimpleAuditLog>(
 				this,
@@ -93,14 +92,11 @@ public class HistoryLogComponent extends VerticalLayout {
 		this.setHeight(Sizeable.SIZE_UNDEFINED, Sizeable.Unit.PIXELS);
 		this.setMargin(true);
 		this.setStyleName("historylog-component");
-		
+
 		this.addComponent(logTable);
 	}
 
-	@Override
-	public void attach() {
-		super.attach();
-		
+	public void loadHistory(int typeid) {
 		AuditLogSearchCriteria criteria = new AuditLogSearchCriteria();
 		criteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
 		criteria.setModule(new StringSearchField(module));

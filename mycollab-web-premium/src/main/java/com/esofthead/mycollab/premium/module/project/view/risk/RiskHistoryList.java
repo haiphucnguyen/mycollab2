@@ -2,14 +2,19 @@ package com.esofthead.mycollab.premium.module.project.view.risk;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
-import com.esofthead.mycollab.module.crm.ui.components.HistoryLogWindow;
 import com.esofthead.mycollab.vaadin.ui.HistoryLogComponent;
 
-@SuppressWarnings("serial")
-public class RiskHistoryLogWindow extends HistoryLogWindow {
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
+public class RiskHistoryList extends HistoryLogComponent {
+	private static final long serialVersionUID = 1L;
 
-	public RiskHistoryLogWindow(String module, String type, int typeid) {
-		super(module, type, typeid);
+	public RiskHistoryList(String module, String type) {
+		super(module, type);
 
 		this.generateFieldDisplayHandler("riskname", "Name");
 		this.generateFieldDisplayHandler("description", "Description");

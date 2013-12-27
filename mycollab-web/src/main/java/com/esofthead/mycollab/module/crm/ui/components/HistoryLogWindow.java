@@ -18,7 +18,6 @@
 package com.esofthead.mycollab.module.crm.ui.components;
 
 import com.esofthead.mycollab.vaadin.ui.HistoryLogComponent;
-import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
 /**
@@ -37,8 +36,9 @@ public class HistoryLogWindow extends Window {
 
 		this.setWidth("700px");
 
-		this.historyLogComponent = new HistoryLogComponent(module, type, typeid);
+		this.historyLogComponent = new HistoryLogComponent(module, type);
 		this.setContent(historyLogComponent);
+		historyLogComponent.loadHistory(typeid);
 		this.center();
 	}
 
