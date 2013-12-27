@@ -29,21 +29,20 @@ import com.esofthead.mycollab.module.tracker.domain.Version;
 import com.esofthead.mycollab.module.tracker.domain.criteria.VersionSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.VersionService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.vaadin.ui.CompoundCustomField;
+import com.vaadin.data.Property;
 import com.vaadin.ui.Component;
+import com.vaadin.ui.CustomField;
 
 /**
  * 
  * @author MyCollab Ltd.
  * @since 1.0
  */
-@SuppressWarnings("serial")
-public class VersionMultiSelectField extends CompoundCustomField {
+public class VersionMultiSelectField extends CustomField {
 
 	private MultiSelectComp<Version> versionSelection;
-
-	@Override
-	protected Component initContent() {
+	
+	public VersionMultiSelectField() {
 		VersionSearchCriteria searchCriteria = new VersionSearchCriteria();
 		searchCriteria.setStatus(new StringSearchField("Open"));
 
@@ -57,7 +56,20 @@ public class VersionMultiSelectField extends CompoundCustomField {
 						searchCriteria, 0, Integer.MAX_VALUE));
 
 		versionSelection = new MultiSelectComp<Version>("versionname", versions);
+	}
+
+	@Override
+	protected Component initContent() {
 		return versionSelection;
+	}
+	
+	@Override
+	public void setPropertyDataSource(Property newDataSource) {
+		List<Version> versions = (List<Version>) newDataSource.getValue();
+		if (versions != null) {
+			versionSelection.setSelectedItems(versions);
+		}
+		super.setPropertyDataSource(newDataSource);
 	}
 
 	public List<Version> getSelectedItems() {

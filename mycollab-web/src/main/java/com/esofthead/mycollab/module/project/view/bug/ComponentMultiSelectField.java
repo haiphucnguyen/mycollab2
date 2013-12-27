@@ -31,19 +31,19 @@ import com.esofthead.mycollab.module.tracker.service.ComponentService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.CompoundCustomField;
 import com.vaadin.data.Property;
+import com.vaadin.ui.CustomField;
 
 /**
  * 
  * @author MyCollab Ltd.
  * @since 1.0
  */
-public class ComponentMultiSelectField extends CompoundCustomField {
+public class ComponentMultiSelectField extends CustomField {
 	private static final long serialVersionUID = 1L;
 
 	private MultiSelectComp<Component> componentSelection;
 
-	@Override
-	protected com.vaadin.ui.Component initContent() {
+	public ComponentMultiSelectField() {
 		ComponentSearchCriteria searchCriteria = new ComponentSearchCriteria();
 		searchCriteria.setStatus(new StringSearchField("Open"));
 
@@ -59,16 +59,22 @@ public class ComponentMultiSelectField extends CompoundCustomField {
 
 		componentSelection = new MultiSelectComp<Component>("componentname",
 				components);
+	}
+
+	@Override
+	protected com.vaadin.ui.Component initContent() {
+
 		return componentSelection;
 	}
 
 	@Override
 	public void setPropertyDataSource(Property newDataSource) {
-		// TODO Auto-generated method stub
+		List<Component> components = (List<Component>) newDataSource.getValue();
+		if (components != null) {
+			componentSelection.setSelectedItems(components);
+		}
 		super.setPropertyDataSource(newDataSource);
 	}
-
-
 
 	public List<Component> getSelectedItems() {
 		return componentSelection.getSelectedItems();

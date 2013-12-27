@@ -139,7 +139,7 @@ public class MultiSelectComp<T> extends CustomComponent {
 						final com.vaadin.data.Property.ValueChangeEvent event) {
 					final Boolean value = (Boolean) chkItem.getValue();
 
-					if (value) {
+					if (value && !selectedItems.contains(item)) {
 						selectedItems.add(item);
 					} else {
 						selectedItems.remove(item);
@@ -159,6 +159,44 @@ public class MultiSelectComp<T> extends CustomComponent {
 		this.componentsDisplay.setReadOnly(false);
 		this.componentsDisplay.setValue(this.getDisplaySelectedItemsString());
 		this.componentsDisplay.setReadOnly(true);
+	}
+
+	public void setSelectedItems(List<T> selectedValues) {
+		selectedItems.clear();
+
+		if (selectedValues != null) {
+			for (T item : selectedValues) {
+				for (T oriItem : items) {
+					if (compareVal(item, oriItem)) {
+						selectedItems.add(oriItem);
+					}
+				}
+			}
+		}
+
+		displaySelectedItems();
+	}
+
+	private boolean compareVal(T value1, T value2) {
+		if (value1 == null && value2 == null) {
+			return true;
+		} else if (value1 == null || value2 == null) {
+			return false;
+		} else {
+			if (this.propertyDisplayField != "") {
+				try {
+					Integer field1 = (Integer) PropertyUtils.getProperty(
+							value1, "id");
+					Integer field2 = (Integer) PropertyUtils.getProperty(
+							value2, "id");
+					return field1.equals(field2);
+				} catch (final Exception e) {
+					return false;
+				}
+			} else {
+				return value1.equals(value2);
+			}
+		}
 	}
 
 	public List<T> getSelectedItems() {
