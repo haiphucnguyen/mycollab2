@@ -1216,15 +1216,12 @@ input.v-textfield-errorField {
 	padding-top:2px;
 }
 
-.addViewLayout .h2 {
-	/*  width: 500px !important; */
-	
-}
-
 .addViewLayout .v-label-h2 {
-	border-bottom: 1px solid #B7B7B7;
-	color: #5E5E5E;
 	text-shadow: #F0F0F0 0 1px 0;
+	padding: 8px 0px 8px 18px;
+	font-size: 13px;
+	border-bottom: 1px solid #a9a9a9;
+	color: rgb(69, 69, 69);
 }
 
 .preview .addViewLayout .addViewBody {

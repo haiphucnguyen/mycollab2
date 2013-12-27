@@ -35,6 +35,7 @@ import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormViewFiel
 import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Field;
@@ -55,6 +56,9 @@ public class UserReadViewImpl extends AbstractPageView implements UserReadView {
 
 	public UserReadViewImpl() {
 		super();
+		
+		this.setMargin(new MarginInfo(true, false, false, false));
+		
 		previewForm = new PreviewForm();
 		this.addComponent(previewForm);
 	}
