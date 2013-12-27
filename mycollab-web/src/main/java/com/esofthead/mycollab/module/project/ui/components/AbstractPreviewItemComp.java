@@ -66,11 +66,11 @@ public abstract class AbstractPreviewItemComp<B> extends VerticalLayout {
 	}
 
 	protected void addLayoutStyleName(String styleName) {
-		previewLayout.addStyleName(styleName);
+		previewLayout.addTitleStyleName(styleName);
 	}
 
 	protected void removeLayoutStyleName(String styleName) {
-		previewLayout.removeStyleName(styleName);
+		previewLayout.removeTitleStyleName(styleName);
 	}
 
 	abstract protected void onPreviewItem();

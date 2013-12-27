@@ -3077,6 +3077,7 @@ div.v-window-header {
 	background: url("icons/grad-dark-bottom.png") repeat-x scroll left
 		bottom rgb(57, 71, 84);
 	padding: 0px 7px 1px;
+	margin-right: 2px;
 }
 
 .form-container .v-csslayout .v-button-link .v-button-caption {
