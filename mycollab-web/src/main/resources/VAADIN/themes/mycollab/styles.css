@@ -1836,6 +1836,10 @@ input.v-textfield-errorField {
 	padding-left: 30px;
 }
 
+.depotComp .v-customcomponent, .depotComp .v-verticallayout {
+    display: block;
+}
+
 .depotContent.bordered {
 	border-color: rgb(169, 169, 169);
 	border-style: solid;
@@ -2125,7 +2129,6 @@ input.v-textfield-errorField {
 .v-tabsheet-content {
 	background-color: rgb(245, 245, 245);
 	border: none;
-	padding-bottom: 10px;
 }
 
 .v-tabsheet-tabitem .v-caption {
@@ -2649,6 +2652,10 @@ div.v-splitbutton,div.v-splitbutton .v-button {
 	padding-left: 58px;
 }
 
+.message .message-container .v-verticallayout {
+    display: block;
+}
+
 .message .message-container {
     padding-left: 10px;
     -moz-box-sizing: border-box;
@@ -2747,6 +2754,11 @@ div.v-splitbutton,div.v-splitbutton .v-button {
 .message-body p {
 	margin: 4px 0px;
 	color: gray;
+}
+
+.messageread-bottompanel {
+    border: 1px solid rgb(169, 169, 169);
+    background: none no-repeat 0 0 rgb(229, 239, 240);
 }
 
 .comment-list .depotContent {
@@ -2955,7 +2967,7 @@ div.v-button-link.xbreadcrumbbutton .v-button-wrap {
 
 /* Widget */
 .widget-row .metadata {
-	font-size: 13px;
+	font-size: 12px;
 	color: gray;
 }
 /* End Widget */
@@ -3277,23 +3289,24 @@ div.v-lazyloadingwrapper-loading {
 	margin: 0px;
 }
 
-.standupreport-list-content .depotComp .header-wrapper {
+.standupreport-list-content .depotComp .depotHeader {
 	background-color: rgb(245, 245, 245);
-}
-
-.standupreport-list-content .depotComp .v-csslayout-header-wrapper>.v-csslayout-margin
-	{
 	border-width: 1px 0px 1px 0px;
 }
 
-.standupreport-list-content .depotComp.first-report .v-csslayout-header-wrapper>.v-csslayout-margin
-	{
+.standupreport-list-content .depotComp.first-report .depotHeader
+{
 	border-width: 0px 0px 1px 0px;
 }
 
-.standupreport-list-content .depotComp .depotContent .v-verticallayout-margin
-	{
-	padding: 10px 0px 0px 10px;
+.standupreport-list-content .depotComp .depotContent.v-margin-top
+{
+	padding-top: 10px;
+}
+
+.standupreport-list-content .depotComp .depotContent.v-margin-left
+{
+	padding-left: 10px;
 }
 /* End StandUp Report List */
 
@@ -3311,9 +3324,6 @@ div.v-lazyloadingwrapper-loading {
 .v-csslayout.border-box {
 	max-width: 400px;
 	margin: 0 auto;
-}
-
-.v-csslayout.border-box>.v-csslayout-margin {
 	border: 1px solid #a9a9a9;
 	padding-right: 5px;
 }
@@ -3500,7 +3510,7 @@ div.v-lazyloadingwrapper-loading {
 /* Stand Up List View */
 .v-label.standup-row-content {
 	padding: 10px 0px 10px 20px;
-	font-size: 13px
+	font-size: 12px
 }
 
 .v-label.standup-row-content ul {
@@ -3608,7 +3618,7 @@ div.v-csslayout.member-block {
 	display: inline-block;
 	background-color: #f7f7f7;
 	margin-bottom: 15px;
-	font-size: 13px;
+	font-size: 12px;
 	vertical-align: top;
 	width: 290px;
 	margin-right: 11px;
@@ -3631,12 +3641,12 @@ div.v-csslayout.member-block {
 .member-block .member-email a {
 	color: gray;
 	text-decoration: none;
-	font-size: 13px;
+	font-size: 12px;
 }
 
 .member-role {
 	color: gray;
-	font-size: 13px;
+	font-size: 12px;
 }
 
 .v-label.is-admin {
@@ -3683,7 +3693,7 @@ div.v-csslayout.member-block {
 }
 
 .milestone-view-header .v-label {
-	font-size: 13px;
+	font-size: 12px;
 	text-shadow: 0px 1px 0px rgb(240, 240, 240);
 	font-weight: bold;
 }
@@ -4197,9 +4207,9 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 	border-color: rgb(169, 169, 169);
 }
 
-.task-list {
+/*.task-list {
 	background-color: rgb(245, 245, 245);
-}
+}*/
 
 .task-list-footer {
 	-moz-box-sizing: border-box;
@@ -4323,6 +4333,21 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 
 .task-list .taskadd-popup .colored-gridlayout {
 	border: none;
+}
+
+.taskdisplay-component {
+    background-color: rgb(245, 245, 245);
+}
+
+.v-tabsheet-content .task-list .task-list-footer {
+    border-width: 1px 0px 0px;
+}
+
+.v-tabsheet-content .task-list .v-table-header-wrap, .v-tabsheet-content .task-list .v-table-body-wrapper {
+    border-width: 1px 0px 0px;
+}
+.v-tabsheet-content .task-list .v-csslayout-comp-header {
+    padding: 3px 5px;
 }
 
 /* User Group */
@@ -4720,7 +4745,7 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 }
 
 .pri-bott-block p {
-	font-size: 13px;
+	font-size: 12px;
 	color: #5f5c5c;
 	padding-bottom: 10px;
 	text-align: justify;
@@ -5477,13 +5502,13 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 	display: block;
 	text-align: left;
 	padding-left: 10px;
-	font-size: 13px;
+	font-size: 12px;
 }
 
 .verticalTabView .v-nativebutton-tab-selected .v-nativebutton-caption, .verticalTabView .tab-selected .v-nativebutton-caption {
 	background: #287ECE;
 	font-weight: bold;
-	font-size: 15px;
+	font-size: 12px;
 }
 
 /* OptionGroup */
@@ -5591,10 +5616,10 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 }
 .projectmember-view .v-tabsheet-content .listControl {
  	border-width: 0px;
- }
+}
 .projectmember-view .v-tabsheet-content .v-table-header-wrap, .projectmember-view .v-tabsheet-content .v-table-body-wrapper {
  	border-width: 1px 0px 0px;
- }
+}
 .projectmember-view .v-tabsheet-content .comp-header.v-margin-top {
 	padding-top: 3px;
 }
@@ -5609,4 +5634,9 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 
 .projectmember-view .v-tabsheet-content .comp-header.v-margin-left{
 	padding-left: 5px;
+}
+
+/* Comment Display */
+.comment-display .v-verticallayout, .comment-display .v-customcomponent {
+    display: block;
 }

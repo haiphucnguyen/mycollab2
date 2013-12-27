@@ -37,6 +37,7 @@ public class CommentDisplay extends VerticalLayout implements
 			final Class<? extends SendingRelayEmailNotificationAction> emailHandler) {
 		setSpacing(true);
 		this.type = type;
+        this.setStyleName("comment-display");
 
 		if (isDisplayCommentInput) {
 			commentBox = new ProjectCommentInput(this, type, extraTypeId,

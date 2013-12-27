@@ -126,7 +126,7 @@ public class TaskGroupAddWindow extends Window {
 				final HorizontalLayout layout = new HorizontalLayout();
 				layout.setSpacing(true);
 				layout.setMargin(true);
-				layout.setStyleName("addNewControl");
+				layout.setStyleName("control-buttons");
 				final Button saveBtn = new Button(
 						LocalizationHelper
 								.getMessage(GenericI18Enum.BUTTON_SAVE_LABEL),

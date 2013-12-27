@@ -37,6 +37,7 @@ public class DateRangeField extends CustomField {
 	@Override
 	protected Component initContent() {
 		HorizontalLayout container = new HorizontalLayout();
+        container.setSpacing(true);
 		dateStart.setCaption("From: ");
 		dateEnd.setCaption("To: ");
 

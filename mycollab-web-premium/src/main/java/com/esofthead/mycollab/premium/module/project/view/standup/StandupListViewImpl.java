@@ -3,6 +3,7 @@ package com.esofthead.mycollab.premium.module.project.view.standup;
 import java.util.Date;
 import java.util.List;
 
+import com.vaadin.shared.ui.MarginInfo;
 import org.vaadin.hene.popupbutton.PopupButton;
 
 import com.esofthead.mycollab.common.domain.GroupItem;
@@ -271,6 +272,8 @@ public class StandupListViewImpl extends AbstractPageView implements
 		public StandupReportDepot(final SimpleStandupReport report) {
 			super("", new VerticalLayout());
 
+            this.setMargin(false);
+
 			String userLbl = "<img src=\"%s\" alt=\" \"/>&nbsp; %s";
 			this.getHeaderLbl().setValue(
 					String.format(
@@ -280,6 +283,7 @@ public class StandupListViewImpl extends AbstractPageView implements
 							report.getLogByFullName()));
 			this.getHeaderLbl().setContentMode(ContentMode.HTML);
 			((VerticalLayout) this.bodyContent).setSpacing(true);
+            ((VerticalLayout) this.bodyContent).setMargin(new MarginInfo(true, false, false, true));
 			final Label whatYesterdayLbl = new Label(
 					"What I did in the last day/week");
 			whatYesterdayLbl.setStyleName("h2");

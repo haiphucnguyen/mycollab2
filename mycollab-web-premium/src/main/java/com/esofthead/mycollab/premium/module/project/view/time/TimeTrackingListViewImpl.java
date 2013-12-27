@@ -74,7 +74,6 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements
 
 	private final Label lbTimeRange;
 	private EntryComponentLayout entryComponentLayout;
-	private HorizontalLayout addEntryLayoutWapper;
 	private boolean isNeedConstructLayout;
 
 	public TimeTrackingListViewImpl() {
@@ -108,8 +107,6 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements
 				Alignment.MIDDLE_LEFT);
 		headerLayout.setExpandRatio(this.lbTimeRange, 1.0f);
 
-		addEntryLayoutWapper = new HorizontalLayout();
-		addEntryLayoutWapper.setWidth("100%");
 		isNeedConstructLayout = true;
 		Button addNewEntryBtn = new Button("Add Entry",
 				new Button.ClickListener() {
@@ -120,8 +117,9 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements
 						if (isNeedConstructLayout) {
 							isNeedConstructLayout = false;
 							entryComponentLayout = new EntryComponentLayout();
-							addEntryLayoutWapper
-									.addComponent(entryComponentLayout);
+                            int index = TimeTrackingListViewImpl.this.getComponentIndex(headerWrapper) + 1;
+							TimeTrackingListViewImpl.this
+									.addComponent(entryComponentLayout, index);
 						}
 					}
 				});
@@ -172,7 +170,6 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements
 		headerLayout.setComponentAlignment(this.exportButtonControl,
 				Alignment.MIDDLE_RIGHT);
 		this.addComponent(headerWrapper);
-		this.addComponent(addEntryLayoutWapper);
 
 		this.tableItem = new TimeTrackingTableDisplay(Arrays.asList(
 				new TableViewField("Summary", "summary",
@@ -314,7 +311,7 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements
 				@Override
 				public void buttonClick(ClickEvent event) {
 					TimeTrackingListViewImpl.this.isNeedConstructLayout = true;
-					addEntryLayoutWapper.removeAllComponents();
+					TimeTrackingListViewImpl.this.removeComponent(entryComponentLayout);
 				}
 			});
 			cancelBtn.addStyleName(UIConstants.THEME_LINK);
@@ -357,7 +354,7 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements
 								.saveWithSession(item, AppContext.getUsername());
 
 						TimeTrackingListViewImpl.this.isNeedConstructLayout = true;
-						addEntryLayoutWapper.removeAllComponents();
+                        TimeTrackingListViewImpl.this.removeComponent(entryComponentLayout);
 						setSearchCriteria(itemTimeLogginSearchCriteria);
 					} catch (Exception e) {
 						throw new MyCollabException(e);

@@ -19,6 +19,7 @@ package com.esofthead.mycollab.module.project.view.message;
 
 import java.util.List;
 
+import com.esofthead.mycollab.vaadin.ui.*;
 import org.vaadin.dialogs.ConfirmDialog;
 
 import com.esofthead.mycollab.common.CommentType;
@@ -41,12 +42,6 @@ import com.esofthead.mycollab.schedule.email.project.MessageRelayEmailNotificati
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
-import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
-import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
-import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
-import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
-import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
-import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.shared.ui.label.ContentMode;
@@ -115,6 +110,7 @@ public class MessageReadViewImpl extends AbstractPageView implements
 		@Override
 		public Layout getLayout() {
 			VerticalLayout messageAddLayout = new VerticalLayout();
+            messageAddLayout.setSpacing(true);
 
 			HorizontalLayout messageLayout = new HorizontalLayout();
 			messageLayout.setStyleName("message");
@@ -251,6 +247,10 @@ public class MessageReadViewImpl extends AbstractPageView implements
 
 		protected Layout createBottomPanel() {
 			VerticalLayout bottomPanel = new VerticalLayout();
+            bottomPanel.setMargin(true);
+            bottomPanel.setWidth("900px");
+            bottomPanel.setStyleName("messageread-bottompanel");
+
 			CommentDisplay commentDisplay = new CommentDisplay(
 					CommentType.PRJ_MESSAGE,
 					CurrentProjectVariables.getProjectId(), true, true,

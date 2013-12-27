@@ -93,6 +93,8 @@ public class TaskGroupAddViewImpl extends AbstractPageView implements
 				controlPanel.setWidth("100%");
 				controlPanel.setComponentAlignment(controlButtons,
 						Alignment.MIDDLE_CENTER);
+                controlPanel.setMargin(true);
+                controlPanel.setStyleName("control-buttons");
 				return controlPanel;
 			}
 
