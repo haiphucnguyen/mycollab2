@@ -65,6 +65,14 @@ public abstract class AbstractPreviewItemComp<B> extends VerticalLayout {
 		return previewForm;
 	}
 
+	protected void addLayoutStyleName(String styleName) {
+		previewLayout.addStyleName(styleName);
+	}
+
+	protected void removeLayoutStyleName(String styleName) {
+		previewLayout.removeStyleName(styleName);
+	}
+
 	abstract protected void onPreviewItem();
 
 	abstract protected String initFormTitle();

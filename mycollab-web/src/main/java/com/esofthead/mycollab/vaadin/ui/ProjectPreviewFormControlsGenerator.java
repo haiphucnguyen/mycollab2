@@ -39,7 +39,7 @@ public class ProjectPreviewFormControlsGenerator<T> {
 	private Button previousItem;
 	private Button nextItemBtn;
 	private Button historyBtn;
-	
+
 	private Button assignBtn;
 	private boolean haveAssignButton;
 
@@ -211,6 +211,10 @@ public class ProjectPreviewFormControlsGenerator<T> {
 			historyBtn.setEnabled(canRead);
 		}
 		return layout;
+	}
+
+	public void insertToControlBlock(Button button) {
+		editButtons.addComponent(button, 0);
 	}
 
 	public HorizontalLayout createButtonControls(final String permissionItem,
