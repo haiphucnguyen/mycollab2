@@ -10,6 +10,12 @@ import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.ui.BrowserFrame;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @ViewComponent
 public class StandupAdvertisementViewImpl extends AbstractPageView implements
 		StandupAdvertisementView {

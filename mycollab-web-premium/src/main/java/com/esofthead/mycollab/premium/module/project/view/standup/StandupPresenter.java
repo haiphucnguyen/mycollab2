@@ -12,6 +12,12 @@ import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.vaadin.ui.ComponentContainer;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class StandupPresenter extends AbstractPresenter<IStandupContainer>
 		implements IStandupPresenter {
 	private static final long serialVersionUID = 1L;

@@ -36,6 +36,8 @@ public class RiskAddPresenter extends AbstractPresenter<RiskAddView> {
 	@Override
 	protected void postInitView() {
 		view.getEditFormHandlers().addFormHandler(new EditFormHandler<Risk>() {
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void onSave(final Risk risk) {
 				saveRisk(risk);

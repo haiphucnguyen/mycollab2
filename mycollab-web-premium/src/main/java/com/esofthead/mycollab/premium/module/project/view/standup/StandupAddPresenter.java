@@ -37,6 +37,8 @@ public class StandupAddPresenter extends AbstractPresenter<StandupAddView> {
 	protected void postInitView() {
 		view.getEditFormHandlers().addFormHandler(
 				new EditFormHandler<StandupReportWithBLOBs>() {
+					private static final long serialVersionUID = 1L;
+
 					@Override
 					public void onSave(
 							final StandupReportWithBLOBs standupReport) {

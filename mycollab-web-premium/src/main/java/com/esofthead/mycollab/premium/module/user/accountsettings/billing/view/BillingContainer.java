@@ -20,6 +20,12 @@ import com.esofthead.mycollab.module.user.accountsettings.billing.view.IBillingC
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @ViewComponent
 public class BillingContainer extends AbstractPageView implements IBillingContainer {
 	private static final long serialVersionUID = 1L;

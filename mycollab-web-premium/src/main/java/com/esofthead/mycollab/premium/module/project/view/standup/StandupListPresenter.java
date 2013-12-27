@@ -8,6 +8,12 @@ import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.vaadin.ui.ComponentContainer;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class StandupListPresenter extends AbstractPresenter<StandupListView>
 		implements ListCommand<StandupReportSearchCriteria> {
 	private static final long serialVersionUID = 1L;
