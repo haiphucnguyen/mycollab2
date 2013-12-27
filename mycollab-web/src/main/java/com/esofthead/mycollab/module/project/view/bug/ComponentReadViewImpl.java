@@ -18,26 +18,40 @@
 package com.esofthead.mycollab.module.project.view.bug;
 
 import com.esofthead.mycollab.common.ModuleNameConstants;
+import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.SearchField;
+import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.eventmanager.ApplicationEvent;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
+import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.ui.components.AbstractPreviewItemComp;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserFormLinkField;
+import com.esofthead.mycollab.module.tracker.BugStatusConstants;
 import com.esofthead.mycollab.module.tracker.domain.SimpleComponent;
+import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.ProjectPreviewFormControlsGenerator;
+import com.esofthead.mycollab.vaadin.ui.TabsheetLazyLoadComp;
+import com.esofthead.mycollab.vaadin.ui.ToggleButtonGroup;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.shared.ui.MarginInfo;
+import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.UI;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.VerticalLayout;
 
 /**
  * 
@@ -50,9 +64,12 @@ public class ComponentReadViewImpl extends
 
 	private static final long serialVersionUID = 1L;
 
+	private RelatedBugComp relatedBugComp;
+	private ComponentHistoryLogList historyLogList;
+
 	public ComponentReadViewImpl() {
 		super(MyCollabResource.newResource("icons/22/project/component.png"));
-		
+
 		this.setMargin(new MarginInfo(true, false, false, false));
 	}
 
@@ -78,28 +95,22 @@ public class ComponentReadViewImpl extends
 
 	@Override
 	protected void initRelatedComponents() {
-		// TODO Auto-generated method stub
+		relatedBugComp = new RelatedBugComp();
 
+		historyLogList = new ComponentHistoryLogList(ModuleNameConstants.PRJ,
+				ProjectContants.BUG_COMPONENT);
 	}
 
 	@Override
 	protected void onPreviewItem() {
+		relatedBugComp.displayBugReports();
 
+		historyLogList.loadHistory(beanItem.getId());
 	}
 
 	@Override
 	protected AdvancedPreviewBeanForm<SimpleComponent> initPreviewForm() {
-		return new AdvancedPreviewBeanForm<SimpleComponent>() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void showHistory() {
-				final ComponentHistoryLogWindow historyLog = new ComponentHistoryLogWindow(
-						ModuleNameConstants.PRJ, ProjectContants.BUG_COMPONENT,
-						beanItem.getId());
-				UI.getCurrent().addWindow(historyLog);
-			}
-		};
+		return new AdvancedPreviewBeanForm<SimpleComponent>();
 	}
 
 	@Override
@@ -132,8 +143,186 @@ public class ComponentReadViewImpl extends
 
 	@Override
 	protected ComponentContainer createBottomPanel() {
-		// TODO Auto-generated method stub
-		return null;
+		final TabsheetLazyLoadComp tabContainer = new TabsheetLazyLoadComp();
+		tabContainer.setWidth("100%");
+
+		tabContainer.addTab(relatedBugComp, "Related Bugs",
+				MyCollabResource.newResource("icons/16/project/gray/bug.png"));
+		tabContainer.addTab(historyLogList, "History", MyCollabResource
+				.newResource("icons/16/project/gray/history.png"));
+		return tabContainer;
+	}
+
+	private class RelatedBugComp extends VerticalLayout implements
+			IBugReportDisplayContainer {
+		private static final long serialVersionUID = 1L;
+
+		private HorizontalLayout bottomLayout;
+
+		public RelatedBugComp() {
+			final HorizontalLayout header = new HorizontalLayout();
+			header.setMargin(new MarginInfo(true, true, true, false));
+			header.setSpacing(true);
+			header.setWidth("100%");
+			header.addStyleName("relatedbug-comp-header");
+			final Label taskGroupSelection = new Label("");
+			taskGroupSelection.addStyleName("h2");
+			taskGroupSelection.addStyleName(UIConstants.THEME_NO_BORDER);
+			header.addComponent(taskGroupSelection);
+			header.setExpandRatio(taskGroupSelection, 1.0f);
+			header.setComponentAlignment(taskGroupSelection,
+					Alignment.MIDDLE_LEFT);
+
+			ToggleButtonGroup viewGroup = new ToggleButtonGroup();
+
+			final Button simpleDisplay = new Button(null,
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void buttonClick(final ClickEvent event) {
+							displaySimpleView();
+						}
+					});
+			simpleDisplay.setIcon(MyCollabResource
+					.newResource("icons/16/project/list_display.png"));
+
+			viewGroup.addButton(simpleDisplay);
+
+			final Button advanceDisplay = new Button(null,
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void buttonClick(final ClickEvent event) {
+							displayAdvancedView();
+						}
+					});
+			advanceDisplay.setIcon(MyCollabResource
+					.newResource("icons/16/project/bug_advanced_display.png"));
+			viewGroup.addButton(advanceDisplay);
+			header.addComponent(viewGroup);
+			header.setComponentAlignment(viewGroup, Alignment.MIDDLE_RIGHT);
+
+			this.addComponent(header);
+
+			this.bottomLayout = new HorizontalLayout();
+			this.bottomLayout.setSpacing(true);
+			this.bottomLayout.setWidth("100%");
+			this.bottomLayout
+					.setMargin(new MarginInfo(false, true, false, true));
+
+			advanceDisplay.addStyleName("selected");
+
+		}
+
+		private void displaySimpleView() {
+			if (this.getComponentCount() > 1) {
+				this.removeComponent(this.getComponent(1));
+			}
+
+			final BugSearchCriteria criteria = new BugSearchCriteria();
+			criteria.setProjectId(new NumberSearchField(CurrentProjectVariables
+					.getProjectId()));
+			criteria.setComponentids(new SetSearchField<Integer>(beanItem
+					.getId()));
+
+			final BugSimpleDisplayWidget displayWidget = new BugSimpleDisplayWidget();
+			this.addComponent(displayWidget);
+			displayWidget.setSearchCriteria(criteria);
+		}
+
+		private void displayAdvancedView() {
+			if (this.getComponentCount() > 1) {
+				this.removeComponent(this.getComponent(1));
+			}
+
+			this.addComponent(this.bottomLayout);
+
+			this.bottomLayout.removeAllComponents();
+
+			final SimpleProject project = CurrentProjectVariables.getProject();
+
+			final VerticalLayout leftColumn = new VerticalLayout();
+			leftColumn.setSpacing(true);
+			leftColumn.setWidth("100%");
+
+			this.bottomLayout.addComponent(leftColumn);
+			this.bottomLayout.setExpandRatio(leftColumn, 1.0f);
+			final UnresolvedBugsByPriorityWidget unresolvedBugWidget = new UnresolvedBugsByPriorityWidget(
+					this);
+			leftColumn.addComponent(unresolvedBugWidget);
+			leftColumn.setComponentAlignment(unresolvedBugWidget,
+					Alignment.MIDDLE_CENTER);
+
+			final BugSearchCriteria unresolvedByPrioritySearchCriteria = new BugSearchCriteria();
+			unresolvedByPrioritySearchCriteria
+					.setProjectId(new NumberSearchField(project.getId()));
+			unresolvedByPrioritySearchCriteria
+					.setComponentids(new SetSearchField<Integer>(beanItem
+							.getId()));
+			unresolvedByPrioritySearchCriteria
+					.setStatuses(new SetSearchField<String>(SearchField.AND,
+							new String[] { BugStatusConstants.INPROGRESS,
+									BugStatusConstants.OPEN,
+									BugStatusConstants.REOPENNED }));
+			unresolvedBugWidget
+					.setSearchCriteria(unresolvedByPrioritySearchCriteria);
+
+			final UnresolvedBugsByAssigneeWidget unresolvedByAssigneeWidget = new UnresolvedBugsByAssigneeWidget(
+					this);
+			leftColumn.addComponent(unresolvedByAssigneeWidget);
+			leftColumn.setComponentAlignment(unresolvedByAssigneeWidget,
+					Alignment.MIDDLE_CENTER);
+
+			final BugSearchCriteria unresolvedByAssigneeSearchCriteria = new BugSearchCriteria();
+			unresolvedByAssigneeSearchCriteria
+					.setProjectId(new NumberSearchField(project.getId()));
+			unresolvedByAssigneeSearchCriteria
+					.setComponentids(new SetSearchField<Integer>(beanItem
+							.getId()));
+			unresolvedByAssigneeSearchCriteria
+					.setStatuses(new SetSearchField<String>(SearchField.AND,
+							new String[] { BugStatusConstants.INPROGRESS,
+									BugStatusConstants.OPEN,
+									BugStatusConstants.REOPENNED }));
+			unresolvedByAssigneeWidget
+					.setSearchCriteria(unresolvedByAssigneeSearchCriteria);
+
+			final VerticalLayout rightColumn = new VerticalLayout();
+			rightColumn.setMargin(new MarginInfo(false, false, false, true));
+			this.bottomLayout.addComponent(rightColumn);
+
+			final BugSearchCriteria chartSearchCriteria = new BugSearchCriteria();
+			chartSearchCriteria.setProjectId(new NumberSearchField(
+					CurrentProjectVariables.getProjectId()));
+			chartSearchCriteria.setComponentids(new SetSearchField<Integer>(
+					beanItem.getId()));
+
+			BugChartComponent bugChartComponent = null;
+			bugChartComponent = new BugChartComponent(chartSearchCriteria, 400,
+					200);
+			rightColumn.addComponent(bugChartComponent);
+			rightColumn.setWidth("410px");
+
+		}
+
+		@Override
+		public void displayBugReports() {
+			this.displayAdvancedView();
+		}
+
+		@Override
+		public void displayBugListWidget(final String title,
+				final BugSearchCriteria criteria) {
+			this.bottomLayout.removeAllComponents();
+			final BugListWidget bugListWidget = new BugListWidget(title
+					+ " Bug List", "Back to component dashboard", criteria,
+					this);
+			bugListWidget.setWidth("100%");
+			this.bottomLayout.addComponent(bugListWidget);
+		}
+
 	}
 
 	protected class ComponentFormFieldLayout extends

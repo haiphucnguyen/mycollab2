@@ -52,7 +52,7 @@ public class VersionReadViewImpl extends AbstractPreviewItemComp<Version>
 
 	public VersionReadViewImpl() {
 		super(MyCollabResource.newResource("icons/22/project/version.png"));
-		
+
 		this.setMargin(new MarginInfo(true, false, false, false));
 	}
 
@@ -321,7 +321,6 @@ public class VersionReadViewImpl extends AbstractPreviewItemComp<Version>
 	@Override
 	public void addViewListener(
 			ApplicationEventListener<? extends ApplicationEvent> listener) {
-		// TODO Auto-generated method stub
 
 	}
 
