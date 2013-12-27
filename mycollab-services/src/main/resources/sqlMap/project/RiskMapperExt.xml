@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.esofthead.mycollab.module.project.dao.RiskMapperExt">
-    
+
     <resultMap
         extends="com.esofthead.mycollab.module.project.dao.RiskMapper.ResultMapWithBLOBs"
         id="RiskResult" type="com.esofthead.mycollab.module.project.domain.SimpleRisk">
@@ -61,7 +61,7 @@
           SELECT m_prj_risk.id, m_prj_risk.riskname, m_prj_risk.description, m_prj_risk.projectid, m_prj_risk.raisedbyuser, 
                  m_prj_risk.assigntouser, m_prj_risk.consequence, m_prj_risk.probalitity, m_prj_risk.status, m_prj_risk.dateraised, 
                  m_prj_risk.datedue, m_prj_risk.response, m_prj_risk.resolution, m_prj_risk.level,
-                 m_prj_risk.source, m_prj_risk.createdTime, m_prj_risk.lastUpdatedTime, m_prj_risk.type, m_prj_risk.typeid,
+                 m_prj_risk.source, m_prj_risk.createdTime, m_prj_risk.lastUpdatedTime, m_prj_risk.type, m_prj_risk.typeid,  m_prj_risk.sAccountId,
                  raisedUser.avatarId AS raisedByUserAvatarId,
                  concat(raisedUser.firstname, ' ', LTRIM(concat(IFNULL(raisedUser.middlename, ''), ' ')), raisedUser.lastname) AS raisedByUserFullName,
                  assignedUser.avatarId AS assignToUserAvatarId,

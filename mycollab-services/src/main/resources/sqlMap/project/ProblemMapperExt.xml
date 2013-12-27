@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.esofthead.mycollab.module.project.dao.ProblemMapperExt">
-    
+
     <resultMap id="ProblemResult"
         extends="com.esofthead.mycollab.module.project.dao.ProblemMapper.ResultMapWithBLOBs"
         type="com.esofthead.mycollab.module.project.domain.SimpleProblem">
@@ -63,6 +63,7 @@
                  m_prj_problem.actualstartdate, m_prj_problem.actualenddate, 
                  m_prj_problem.createdTime, m_prj_problem.lastUpdatedTime, m_prj_problem.type, m_prj_problem.typeid,
                  m_prj_problem.level, m_prj_problem.resolution, m_prj_problem.problemsource, m_prj_problem.state,
+                 m_prj_problem.sAccountId,
                  raisedUser.avatarId AS raisedByUserAvatarId,
                  concat(raisedUser.firstname, ' ', LTRIM(concat(IFNULL(raisedUser.middlename, ''), ' ')), raisedUser.lastname) AS raisedByUserFullName,
                  assignedUser.avatarId AS assignUserAvatarId,
