@@ -35,7 +35,7 @@ import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleMessage;
 import com.esofthead.mycollab.module.project.service.MessageService;
-import com.esofthead.mycollab.module.project.ui.components.CommentListDepot;
+import com.esofthead.mycollab.module.project.ui.components.CommentDisplay;
 import com.esofthead.mycollab.module.project.ui.components.ProjectAttachmentDisplayComponentFactory;
 import com.esofthead.mycollab.schedule.email.project.MessageRelayEmailNotificationAction;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
@@ -251,10 +251,12 @@ public class MessageReadViewImpl extends AbstractPageView implements
 
 		protected Layout createBottomPanel() {
 			VerticalLayout bottomPanel = new VerticalLayout();
-			bottomPanel.addComponent(new CommentListDepot(
-					CommentType.PRJ_MESSAGE, message.getId(),
+			CommentDisplay commentDisplay = new CommentDisplay(
+					CommentType.PRJ_MESSAGE,
 					CurrentProjectVariables.getProjectId(), true, true,
-					MessageRelayEmailNotificationAction.class));
+					MessageRelayEmailNotificationAction.class);
+			commentDisplay.loadComments(message.getId());
+			bottomPanel.addComponent(commentDisplay);
 			return bottomPanel;
 		}
 
