@@ -147,7 +147,7 @@ public class TaskReadViewImpl extends AbstractPageView implements TaskReadView {
 			tabTaskDetail.setWidth("100%");
 
 			final CommentDisplay commentList = new CommentDisplay(
-					CommentType.PRJ_TASK, TaskReadViewImpl.this.task.getId(),
+					CommentType.PRJ_TASK,
 					CurrentProjectVariables.getProjectId(), true, true,
 					ProjectTaskRelayEmailNotificationAction.class);
 			commentList.setMargin(true);

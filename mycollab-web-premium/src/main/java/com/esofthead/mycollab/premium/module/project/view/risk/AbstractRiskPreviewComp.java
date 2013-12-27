@@ -50,7 +50,7 @@ abstract class AbstractRiskPreviewComp extends
 
 	@Override
 	protected void onPreviewItem() {
-		commentList.loadComments(CommentType.PRJ_RISK, beanItem.getId());
+		commentList.loadComments(beanItem.getId());
 	}
 
 	@Override

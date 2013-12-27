@@ -30,6 +30,7 @@ import com.esofthead.mycollab.module.tracker.domain.criteria.ComponentSearchCrit
 import com.esofthead.mycollab.module.tracker.service.ComponentService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.CompoundCustomField;
+import com.vaadin.data.Property;
 
 /**
  * 
@@ -60,6 +61,14 @@ public class ComponentMultiSelectField extends CompoundCustomField {
 				components);
 		return componentSelection;
 	}
+
+	@Override
+	public void setPropertyDataSource(Property newDataSource) {
+		// TODO Auto-generated method stub
+		super.setPropertyDataSource(newDataSource);
+	}
+
+
 
 	public List<Component> getSelectedItems() {
 		return componentSelection.getSelectedItems();

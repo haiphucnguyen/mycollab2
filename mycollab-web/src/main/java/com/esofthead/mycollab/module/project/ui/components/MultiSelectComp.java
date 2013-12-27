@@ -144,6 +144,8 @@ public class MultiSelectComp<T> extends CustomComponent {
 					} else {
 						selectedItems.remove(item);
 					}
+
+					displaySelectedItems();
 				}
 			});
 			popupContent.addComponent(chkItem);
@@ -153,8 +155,7 @@ public class MultiSelectComp<T> extends CustomComponent {
 
 	}
 
-	public void setSelectedItems(final List<T> selectedItems) {
-		this.selectedItems = selectedItems;
+	private void displaySelectedItems() {
 		this.componentsDisplay.setReadOnly(false);
 		this.componentsDisplay.setValue(this.getDisplaySelectedItemsString());
 		this.componentsDisplay.setReadOnly(true);

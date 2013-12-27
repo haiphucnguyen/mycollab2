@@ -352,7 +352,7 @@ public class BugReadViewImpl extends AbstractPageView implements BugReadView,
 				tabBugDetail.setWidth("100%");
 
 				final CommentDisplay commentList = new CommentDisplay(
-						CommentType.PRJ_BUG, BugReadViewImpl.this.bug.getId(),
+						CommentType.PRJ_BUG,
 						CurrentProjectVariables.getProjectId(), true, true,
 						BugRelayEmailNotificationAction.class);
 				commentList.setMargin(true);

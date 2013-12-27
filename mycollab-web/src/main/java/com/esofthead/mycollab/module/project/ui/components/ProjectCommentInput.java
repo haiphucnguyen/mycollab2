@@ -47,25 +47,23 @@ import com.vaadin.ui.VerticalLayout;
 public class ProjectCommentInput extends VerticalLayout {
 	private static final long serialVersionUID = 1L;
 	private final RichTextArea commentArea;
+
 	private CommentType type;
 	private Integer typeid;
 	private Integer extraTypeId;
 
-	@Deprecated
 	ProjectCommentInput(
 			final ReloadableComponent component,
 			final CommentType typeVal,
-			final Integer typeidVal,
 			final Integer extraTypeIdVal,
 			final boolean cancelButtonEnable,
 			final boolean isSendingEmailRelay,
 			final Class<? extends SendingRelayEmailNotificationAction> emailHandler) {
 		this.setWidth("600px");
-		setSpacing(true);
+		this.setSpacing(true);
 		this.setMargin(true);
 
 		type = typeVal;
-		typeid = typeidVal;
 		extraTypeId = extraTypeIdVal;
 
 		commentArea = new RichTextArea();
@@ -149,19 +147,7 @@ public class ProjectCommentInput extends VerticalLayout {
 		this.addComponent(controlsLayout);
 	}
 
-	ProjectCommentInput(
-			final ReloadableComponent component,
-			final CommentType typeVal,
-			final Integer extraTypeId,
-			final boolean cancelButtonEnable,
-			final boolean isSendingEmailRelay,
-			final Class<? extends SendingRelayEmailNotificationAction> emailHandler) {
-		this(component, typeVal, null, extraTypeId, cancelButtonEnable,
-				isSendingEmailRelay, emailHandler);
-	}
-
-	void setTypeAndId(final CommentType type, final int typeid) {
-		this.type = type;
+	void setTypeAndId(final int typeid) {
 		this.typeid = typeid;
 	}
 }

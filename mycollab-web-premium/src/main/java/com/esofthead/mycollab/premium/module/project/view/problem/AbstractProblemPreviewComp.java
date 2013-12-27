@@ -45,7 +45,7 @@ abstract class AbstractProblemPreviewComp extends
 
 	@Override
 	protected void onPreviewItem() {
-		commentList.loadComments(CommentType.PRJ_PROBLEM, beanItem.getId());
+		commentList.loadComments(beanItem.getId());
 	}
 
 	@Override

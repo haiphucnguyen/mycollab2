@@ -183,7 +183,8 @@ public class AssignBugWindow extends Window {
 			}
 
 			@Override
-			public void attachField(final Object propertyId, final Field field) {
+			public void attachField(final Object propertyId,
+					final Field<?> field) {
 				if (propertyId.equals("assignuser")) {
 					this.informationLayout
 							.addComponent(

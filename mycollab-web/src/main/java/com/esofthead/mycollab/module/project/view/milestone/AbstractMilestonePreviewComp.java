@@ -74,8 +74,7 @@ abstract class AbstractMilestonePreviewComp extends
 	}
 
 	protected void displayComments() {
-		this.associateCommentListComp.loadComments(CommentType.PRJ_MILESTONE,
-				this.beanItem.getId());
+		this.associateCommentListComp.loadComments(this.beanItem.getId());
 	}
 
 	protected void displayTaskGroups() {

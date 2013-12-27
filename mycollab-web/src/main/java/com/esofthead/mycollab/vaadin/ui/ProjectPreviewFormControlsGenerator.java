@@ -39,8 +39,10 @@ public class ProjectPreviewFormControlsGenerator<T> {
 	private Button previousItem;
 	private Button nextItemBtn;
 	private Button historyBtn;
+	
 	private Button assignBtn;
 	private boolean haveAssignButton;
+
 	private HorizontalLayout editButtons;
 	private HorizontalLayout layout;
 
@@ -208,11 +210,6 @@ public class ProjectPreviewFormControlsGenerator<T> {
 			deleteBtn.setEnabled(canAccess);
 			historyBtn.setEnabled(canRead);
 		}
-		return layout;
-	}
-
-	public HorizontalLayout getLayoutWithRemoveCloneBtn() {
-		editButtons.removeComponent(cloneBtn);
 		return layout;
 	}
 

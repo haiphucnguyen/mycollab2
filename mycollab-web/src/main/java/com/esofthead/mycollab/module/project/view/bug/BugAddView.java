@@ -25,6 +25,12 @@ import com.esofthead.mycollab.module.tracker.domain.Version;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.IFormAddView;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public interface BugAddView extends IFormAddView<SimpleBug> {
 
     HasEditFormHandlers<SimpleBug> getEditFormHandlers();

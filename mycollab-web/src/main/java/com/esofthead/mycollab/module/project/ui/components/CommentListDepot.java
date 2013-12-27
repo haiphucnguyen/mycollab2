@@ -34,7 +34,7 @@ public class CommentListDepot extends Depot {
 	public CommentListDepot(final CommentType type, final Integer typeid,
 			final Integer extraTypeId, final boolean isDisplayCommentInput,
 			final boolean isSendingRelayEmail) {
-		super("Comments", new CommentDisplay(type, typeid, extraTypeId,
+		super("Comments", new CommentDisplay(type, extraTypeId,
 				isDisplayCommentInput, isSendingRelayEmail, null));
 		this.setWidth("900px");
 		addStyleName("comment-list");
@@ -50,7 +50,7 @@ public class CommentListDepot extends Depot {
 			final boolean isDisplayCommentInput,
 			final boolean isSendingRelayEmail,
 			final Class<? extends SendingRelayEmailNotificationAction> emailHandler) {
-		super("Comments", new CommentDisplay(type, typeid, extraTypeId,
+		super("Comments", new CommentDisplay(type, extraTypeId,
 				isDisplayCommentInput, isSendingRelayEmail, emailHandler));
 		this.setWidth("900px");
 		addStyleName("comment-list");
@@ -73,8 +73,8 @@ public class CommentListDepot extends Depot {
 		commentListBox.setMargin(true);
 	}
 
-	public void loadComments(final CommentType type, final int typeid) {
-		commentListBox.loadComments(type, typeid);
+	public void loadComments(final int typeid) {
+		commentListBox.loadComments(typeid);
 		setTitle("Comments(" + commentListBox.getNumComments() + ")");
 	}
 }

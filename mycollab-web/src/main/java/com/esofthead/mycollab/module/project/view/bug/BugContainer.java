@@ -19,6 +19,12 @@ package com.esofthead.mycollab.module.project.view.bug;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @ViewComponent
 public class BugContainer extends AbstractPageView {
 	private static final long serialVersionUID = 1L;
