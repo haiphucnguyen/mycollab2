@@ -50,6 +50,7 @@ import com.vaadin.ui.UI;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class TaskReadPresenter extends AbstractPresenter<TaskReadView> {
 
@@ -62,21 +63,21 @@ public class TaskReadPresenter extends AbstractPresenter<TaskReadView> {
 	@Override
 	protected void postInitView() {
 		this.view.getPreviewFormHandlers().addFormHandler(
-				new DefaultPreviewFormHandler<Task>() {
+				new DefaultPreviewFormHandler<SimpleTask>() {
 
 					@Override
-					public void onAssign(final Task data) {
+					public void onAssign(final SimpleTask data) {
 						UI.getCurrent().addWindow(new AssignTaskWindow(data));
 					}
 
 					@Override
-					public void onEdit(final Task data) {
+					public void onEdit(final SimpleTask data) {
 						EventBus.getInstance().fireEvent(
 								new TaskEvent.GotoEdit(this, data));
 					}
 
 					@Override
-					public void onDelete(final Task data) {
+					public void onDelete(final SimpleTask data) {
 						ConfirmDialogExt.show(
 								UI.getCurrent(),
 								LocalizationHelper.getMessage(
@@ -111,7 +112,7 @@ public class TaskReadPresenter extends AbstractPresenter<TaskReadView> {
 					}
 
 					@Override
-					public void onClone(final Task data) {
+					public void onClone(final SimpleTask data) {
 						final Task cloneData = (Task) data.copy();
 						cloneData.setId(null);
 						EventBus.getInstance().fireEvent(
@@ -127,7 +128,7 @@ public class TaskReadPresenter extends AbstractPresenter<TaskReadView> {
 					}
 
 					@Override
-					public void gotoNext(final Task data) {
+					public void gotoNext(final SimpleTask data) {
 						final ProjectTaskService taskService = ApplicationContextUtil
 								.getSpringBean(ProjectTaskService.class);
 
@@ -150,7 +151,7 @@ public class TaskReadPresenter extends AbstractPresenter<TaskReadView> {
 					}
 
 					@Override
-					public void gotoPrevious(final Task data) {
+					public void gotoPrevious(final SimpleTask data) {
 						final ProjectTaskService taskService = ApplicationContextUtil
 								.getSpringBean(ProjectTaskService.class);
 

@@ -31,6 +31,7 @@ public class VersionHistoryLogList extends HistoryLogComponent {
 		super(module, type);
 
 		this.generateFieldDisplayHandler("versionname", "Version Name");
+		this.generateFieldDisplayHandler("status", "Status");
 		this.generateFieldDisplayHandler("description", "Description");
 		this.generateFieldDisplayHandler("duedate", "Due Date",
 				HistoryLogComponent.DATE_FIELD);

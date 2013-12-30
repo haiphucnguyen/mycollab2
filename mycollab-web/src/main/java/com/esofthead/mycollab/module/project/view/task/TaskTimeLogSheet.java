@@ -35,8 +35,8 @@ import com.esofthead.mycollab.web.AppContext;
  * @since 1.0
  * 
  */
-@SuppressWarnings("serial")
 public class TaskTimeLogSheet extends CompTimeLogSheet<SimpleTask> {
+	private static final long serialVersionUID = 1L;
 
 	protected TaskTimeLogSheet(SimpleTask bean) {
 		super(bean);

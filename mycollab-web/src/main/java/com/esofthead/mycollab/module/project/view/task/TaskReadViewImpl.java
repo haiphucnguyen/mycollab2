@@ -20,28 +20,28 @@ package com.esofthead.mycollab.module.project.view.task;
 import java.util.GregorianCalendar;
 
 import com.esofthead.mycollab.common.CommentType;
-import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.core.utils.StringUtils;
+import com.esofthead.mycollab.eventmanager.ApplicationEvent;
+import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.file.AttachmentType;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
-import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
-import com.esofthead.mycollab.module.project.domain.Task;
 import com.esofthead.mycollab.module.project.events.TaskListEvent;
+import com.esofthead.mycollab.module.project.ui.components.AbstractPreviewItemComp;
 import com.esofthead.mycollab.module.project.ui.components.CommentDisplay;
 import com.esofthead.mycollab.module.project.ui.components.DefaultProjectFormViewFieldFactory.ProjectFormAttachmentDisplayField;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserFormLinkField;
 import com.esofthead.mycollab.schedule.email.project.ProjectTaskRelayEmailNotificationAction;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
-import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormContainerHorizontalViewField;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormDetectAndDisplayUrlViewField;
 import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
+import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.ProjectPreviewFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.TabsheetLazyLoadComp;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -49,6 +49,7 @@ import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.server.Resource;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.ComponentContainer;
@@ -56,7 +57,6 @@ import com.vaadin.ui.Embedded;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.UI;
 
 /**
  * 
@@ -64,132 +64,138 @@ import com.vaadin.ui.UI;
  * @since 2.0
  */
 @ViewComponent
-public class TaskReadViewImpl extends AbstractPageView implements TaskReadView {
+public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask>
+		implements TaskReadView {
 
 	private static final long serialVersionUID = 1L;
 
-	protected AdvancedPreviewBeanForm<Task> previewForm;
+	private CommentDisplay commentList;
 
-	protected SimpleTask task;
+	private TaskHistoryList historyList;
+
+	private TaskFollowersSheet followerSheet;
+
+	private TaskTimeLogSheet timesheet;
 
 	public TaskReadViewImpl() {
-		super();
-		this.previewForm = new PreviewForm();
-		this.addComponent(this.previewForm);
-		this.setMargin(true);
+		super(MyCollabResource.newResource("icons/22/project/menu_task.png"));
+
+		this.setMargin(new MarginInfo(true, false, false, false));
 	}
 
 	@Override
 	public SimpleTask getItem() {
-		return this.task;
+		return beanItem;
 	}
 
 	@Override
-	public HasPreviewFormHandlers<Task> getPreviewFormHandlers() {
+	public ComponentContainer getWidget() {
+		return this;
+	}
+
+	@Override
+	public void addViewListener(
+			ApplicationEventListener<? extends ApplicationEvent> listener) {
+
+	}
+
+	@Override
+	public HasPreviewFormHandlers<SimpleTask> getPreviewFormHandlers() {
 		return this.previewForm;
 	}
 
 	@Override
-	public void previewItem(final SimpleTask task) {
-		this.task = task;
-		this.previewForm.setBean(task);
+	protected void initRelatedComponents() {
+		commentList = new CommentDisplay(CommentType.PRJ_TASK,
+				CurrentProjectVariables.getProjectId(), true, true,
+				ProjectTaskRelayEmailNotificationAction.class);
+		commentList.setMargin(true);
+
+		historyList = new TaskHistoryList();
+		historyList.setMargin(true);
+
+		followerSheet = new TaskFollowersSheet(beanItem);
 	}
 
-	private class PreviewForm extends AdvancedPreviewBeanForm<Task> {
-		private static final long serialVersionUID = 1L;
+	@Override
+	protected void onPreviewItem() {
 
-		@Override
-		public void setBean(Task bean) {
-			this.setFormLayoutFactory(new FormLayoutFactory());
-			this.setBeanFormFieldFactory(new ReadFormFieldFactory(
-					PreviewForm.this));
-			super.setBean(bean);
-		}
-
-		@Override
-		public void showHistory() {
-			final TaskHistoryLogWindow historyLog = new TaskHistoryLogWindow(
-					ModuleNameConstants.PRJ, ProjectContants.TASK,
-					TaskReadViewImpl.this.task.getId());
-			UI.getCurrent().addWindow(historyLog);
-		}
-	}
-
-	class FormLayoutFactory extends TaskFormLayoutFactory {
-		private static final long serialVersionUID = 1L;
-
-		public FormLayoutFactory() {
-			super(TaskReadViewImpl.this.task.getTaskname());
-
-			if (TaskReadViewImpl.this.task.getPercentagecomplete() != null
-					&& 100d == TaskReadViewImpl.this.task
-							.getPercentagecomplete()) {
-				this.addTitleStyle(UIConstants.LINK_COMPLETED);
-			} else {
-				if ("Pending".equals(TaskReadViewImpl.this.task.getStatus())) {
-					this.addTitleStyle(UIConstants.LINK_PENDING);
-				} else if ((TaskReadViewImpl.this.task.getEnddate() != null && (TaskReadViewImpl.this.task
-						.getEnddate().before(new GregorianCalendar().getTime())))
-						|| (TaskReadViewImpl.this.task.getActualenddate() != null && (TaskReadViewImpl.this.task
-								.getActualenddate()
-								.before(new GregorianCalendar().getTime())))
-						|| (TaskReadViewImpl.this.task.getDeadline() != null && (TaskReadViewImpl.this.task
-								.getDeadline().before(new GregorianCalendar()
-								.getTime())))) {
-					this.addTitleStyle(UIConstants.LINK_OVERDUE);
-				}
+		if (beanItem.getPercentagecomplete() != null
+				&& 100d == beanItem.getPercentagecomplete()) {
+			addLayoutStyleName(UIConstants.LINK_COMPLETED);
+		} else {
+			if ("Pending".equals(beanItem.getStatus())) {
+				addLayoutStyleName(UIConstants.LINK_PENDING);
+			} else if ((beanItem.getEnddate() != null && (beanItem.getEnddate()
+					.before(new GregorianCalendar().getTime())))
+					|| (beanItem.getActualenddate() != null && (beanItem
+							.getActualenddate().before(new GregorianCalendar()
+							.getTime())))
+					|| (beanItem.getDeadline() != null && (beanItem
+							.getDeadline().before(new GregorianCalendar()
+							.getTime())))) {
+				addLayoutStyleName(UIConstants.LINK_OVERDUE);
 			}
 		}
 
-		@Override
-		protected ComponentContainer createBottomPanel() {
-			final TabsheetLazyLoadComp tabTaskDetail = new TabsheetLazyLoadComp();
-			tabTaskDetail.setWidth("100%");
+	}
 
-			final CommentDisplay commentList = new CommentDisplay(
-					CommentType.PRJ_TASK,
-					CurrentProjectVariables.getProjectId(), true, true,
-					ProjectTaskRelayEmailNotificationAction.class);
-			commentList.setMargin(true);
-			tabTaskDetail.addTab(commentList, "Comments", MyCollabResource
-					.newResource("icons/16/project/gray/comment.png"));
+	@Override
+	protected String initFormTitle() {
+		return beanItem.getTaskname();
+	}
 
-			final TaskHistoryList historyList = new TaskHistoryList(
-					TaskReadViewImpl.this.task.getId());
-			historyList.setMargin(true);
-			tabTaskDetail.addTab(historyList, "History", MyCollabResource
-					.newResource("icons/16/project/gray/history.png"));
+	@Override
+	protected AdvancedPreviewBeanForm<SimpleTask> initPreviewForm() {
+		return new AdvancedPreviewBeanForm<SimpleTask>();
+	}
 
-			final TaskFollowersSheet followerSheet = new TaskFollowersSheet(
-					TaskReadViewImpl.this.task);
-			tabTaskDetail.addTab(followerSheet, "Follower", MyCollabResource
-					.newResource("icons/16/project/gray/follow.png"));
+	@Override
+	protected IFormLayoutFactory initFormLayoutFactory() {
+		return new TaskFormLayoutFactory();
+	}
 
-			final TaskTimeLogSheet timesheet = new TaskTimeLogSheet(
-					TaskReadViewImpl.this.task);
-			tabTaskDetail.addTab(timesheet, "Time", MyCollabResource
-					.newResource("icons/16/project/gray/time.png"));
+	@Override
+	protected AbstractBeanFieldGroupViewFieldFactory<SimpleTask> initBeanFormFieldFactory() {
+		return new ReadFormFieldFactory(previewForm);
+	}
 
-			return tabTaskDetail;
-		}
+	@Override
+	protected ComponentContainer createButtonControls() {
+		ProjectPreviewFormControlsGenerator<SimpleTask> taskPreviewForm = new ProjectPreviewFormControlsGenerator<SimpleTask>(
+				previewForm);
+		final HorizontalLayout topPanel = taskPreviewForm.createButtonControls(
+				ProjectRolePermissionCollections.TASKS, true);
+		topPanel.setMargin(true);
+		return topPanel;
+	}
 
-		@Override
-		protected ComponentContainer createTopPanel() {
-			ProjectPreviewFormControlsGenerator<Task> taskPreviewForm = new ProjectPreviewFormControlsGenerator<Task>(
-					previewForm);
-			final HorizontalLayout topPanel = taskPreviewForm
-					.createButtonControls(
-							ProjectRolePermissionCollections.TASKS, true);
-			topPanel.setMargin(true);
-			return topPanel;
-		}
+	@Override
+	protected ComponentContainer createBottomPanel() {
+		final TabsheetLazyLoadComp tabTaskDetail = new TabsheetLazyLoadComp();
+		tabTaskDetail.setWidth("100%");
+
+		tabTaskDetail.addTab(commentList, "Comments", MyCollabResource
+				.newResource("icons/16/project/gray/comment.png"));
+
+		tabTaskDetail.addTab(historyList, "History", MyCollabResource
+				.newResource("icons/16/project/gray/history.png"));
+
+		tabTaskDetail.addTab(followerSheet, "Follower", MyCollabResource
+				.newResource("icons/16/project/gray/follow.png"));
+
+		final TaskTimeLogSheet timesheet = new TaskTimeLogSheet(beanItem);
+		tabTaskDetail.addTab(timesheet, "Time",
+				MyCollabResource.newResource("icons/16/project/gray/time.png"));
+
+		return tabTaskDetail;
 	}
 
 	private class ReadFormFieldFactory extends
-			AbstractBeanFieldGroupViewFieldFactory<Task> {
+			AbstractBeanFieldGroupViewFieldFactory<SimpleTask> {
 		private static final long serialVersionUID = 1L;
 
-		public ReadFormFieldFactory(GenericBeanForm<Task> form) {
+		public ReadFormFieldFactory(GenericBeanForm<SimpleTask> form) {
 			super(form);
 		}
 
@@ -197,51 +203,51 @@ public class TaskReadViewImpl extends AbstractPageView implements TaskReadView {
 		protected Field<?> onCreateField(final Object propertyId) {
 
 			if (propertyId.equals("assignuser")) {
-				return new ProjectUserFormLinkField(task.getAssignuser(),
-						task.getAssignUserAvatarId(),
-						task.getAssignUserFullName());
+				return new ProjectUserFormLinkField(beanItem.getAssignuser(),
+						beanItem.getAssignUserAvatarId(),
+						beanItem.getAssignUserFullName());
 			} else if (propertyId.equals("taskListName")) {
 				return new DefaultFormViewFieldFactory.FormViewField(
-						task.getTaskListName());
+						beanItem.getTaskListName());
 			} else if (propertyId.equals("startdate")) {
 				return new DefaultFormViewFieldFactory.FormViewField(
-						AppContext.formatDate(task.getStartdate()));
+						AppContext.formatDate(beanItem.getStartdate()));
 			} else if (propertyId.equals("enddate")) {
 				return new DefaultFormViewFieldFactory.FormViewField(
-						AppContext.formatDate(task.getEnddate()));
+						AppContext.formatDate(beanItem.getEnddate()));
 			} else if (propertyId.equals("actualstartdate")) {
 				return new DefaultFormViewFieldFactory.FormViewField(
-						AppContext.formatDate(task.getActualstartdate()));
+						AppContext.formatDate(beanItem.getActualstartdate()));
 			} else if (propertyId.equals("actualenddate")) {
 				return new DefaultFormViewFieldFactory.FormViewField(
-						AppContext.formatDate(task.getActualenddate()));
+						AppContext.formatDate(beanItem.getActualenddate()));
 			} else if (propertyId.equals("deadline")) {
 				return new DefaultFormViewFieldFactory.FormViewField(
-						AppContext.formatDate(task.getDeadline()));
+						AppContext.formatDate(beanItem.getDeadline()));
 			} else if (propertyId.equals("tasklistid")) {
 				return new DefaultFormViewFieldFactory.FormLinkViewField(
-						task.getTaskListName(), new Button.ClickListener() {
+						beanItem.getTaskListName(), new Button.ClickListener() {
 							private static final long serialVersionUID = 1L;
 
 							@Override
 							public void buttonClick(
 									final Button.ClickEvent event) {
 								EventBus.getInstance().fireEvent(
-										new TaskListEvent.GotoRead(this, task
-												.getTasklistid()));
+										new TaskListEvent.GotoRead(this,
+												beanItem.getTasklistid()));
 							}
 						});
 			} else if (propertyId.equals("id")) {
 				return new ProjectFormAttachmentDisplayField(
-						task.getProjectid(), AttachmentType.PROJECT_TASK_TYPE,
-						task.getId());
+						beanItem.getProjectid(),
+						AttachmentType.PROJECT_TASK_TYPE, beanItem.getId());
 			} else if (propertyId.equals("priority")) {
-				if (StringUtils.isNotNullOrEmpty(task.getPriority())) {
+				if (StringUtils.isNotNullOrEmpty(beanItem.getPriority())) {
 					final Resource iconPriority = TaskPriorityComboBox
-							.getIconResourceByPriority(task.getPriority());
+							.getIconResourceByPriority(beanItem.getPriority());
 					final Embedded iconEmbedded = new Embedded(null,
 							iconPriority);
-					final Label lbPriority = new Label(task.getPriority());
+					final Label lbPriority = new Label(beanItem.getPriority());
 
 					final FormContainerHorizontalViewField containerField = new FormContainerHorizontalViewField();
 					containerField.addComponentField(iconEmbedded);
@@ -253,7 +259,7 @@ public class TaskReadViewImpl extends AbstractPageView implements TaskReadView {
 					return containerField;
 				}
 			} else if (propertyId.equals("notes")) {
-				return new FormDetectAndDisplayUrlViewField(task.getNotes());
+				return new FormDetectAndDisplayUrlViewField(beanItem.getNotes());
 			}
 			return null;
 		}

@@ -32,7 +32,7 @@ import com.esofthead.mycollab.vaadin.ui.HistoryLogComponent;
 public class TaskHistoryList extends HistoryLogComponent {
 	private static final long serialVersionUID = 1L;
 
-	public TaskHistoryList(int taskId) {
+	public TaskHistoryList() {
 		super(ModuleNameConstants.PRJ, ProjectContants.TASK);
 		this.addStyleName("activity-panel");
 

@@ -55,9 +55,9 @@ import com.vaadin.ui.VerticalLayout;
  * 
  * @param <V>
  */
-@SuppressWarnings("serial")
 public abstract class CompTimeLogSheet<V extends ValuedBean> extends
 		HorizontalLayout {
+	private static final long serialVersionUID = 1L;
 
 	protected DefaultPagedBeanTable<ItemTimeLoggingService, ItemTimeLoggingSearchCriteria, SimpleItemTimeLogging> tableItem;
 	protected ItemTimeLoggingService itemTimeLoggingService;
@@ -110,6 +110,7 @@ public abstract class CompTimeLogSheet<V extends ValuedBean> extends
 	}
 
 	private class AddTimeInvest extends VerticalLayout {
+		private static final long serialVersionUID = 1L;
 
 		public Label lbTimeTotal;
 
@@ -144,6 +145,7 @@ public abstract class CompTimeLogSheet<V extends ValuedBean> extends
 
 			CompTimeLogSheet.this.btnAdd = new Button("Add",
 					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
 
 						@Override
 						public void buttonClick(final ClickEvent event) {
@@ -256,6 +258,8 @@ public abstract class CompTimeLogSheet<V extends ValuedBean> extends
 									.getBeanByIndex(itemId);
 							final Button deleteBtn = new Button(null,
 									new Button.ClickListener() {
+										private static final long serialVersionUID = 1L;
+
 										@Override
 										public void buttonClick(
 												final ClickEvent event) {
@@ -327,7 +331,7 @@ public abstract class CompTimeLogSheet<V extends ValuedBean> extends
 			double total = 0;
 			final ItemTimeLoggingSearchCriteria searchCriteria = CompTimeLogSheet.this
 					.getItemSearchCriteria();
-			final List<SimpleItemTimeLogging> listTime = CompTimeLogSheet.this.itemTimeLoggingService
+			final List<SimpleItemTimeLogging> listTime = itemTimeLoggingService
 					.findPagableListByCriteria(new SearchRequest<ItemTimeLoggingSearchCriteria>(
 							searchCriteria, 0, Integer.MAX_VALUE));
 			for (final SimpleItemTimeLogging simpleItemTimeLogging : listTime) {
@@ -344,6 +348,7 @@ public abstract class CompTimeLogSheet<V extends ValuedBean> extends
 	}
 
 	private class UpdateTimeRemain extends VerticalLayout {
+		private static final long serialVersionUID = 1L;
 
 		public NumbericTextField numberField;
 
@@ -380,6 +385,7 @@ public abstract class CompTimeLogSheet<V extends ValuedBean> extends
 
 			CompTimeLogSheet.this.btnAdd = new Button("Update",
 					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
 
 						@Override
 						public void buttonClick(final ClickEvent event) {

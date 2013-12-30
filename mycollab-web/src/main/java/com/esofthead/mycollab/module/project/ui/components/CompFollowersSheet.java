@@ -48,10 +48,17 @@ import com.vaadin.ui.Table.ColumnGenerator;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
-@SuppressWarnings("serial")
+/**
+ * 
+ * @author NyCollab Ltd.
+ * @since 1.0
+ * 
+ * @param <V>
+ */
 public abstract class CompFollowersSheet<V extends ValuedBean> extends
 		VerticalLayout {
-
+	private static final long serialVersionUID = 1L;
+	
 	protected DefaultPagedBeanTable<MonitorItemService, MonitorSearchCriteria, SimpleMonitorItem> tableItem;
 	protected MonitorItemService monitorItemService;
 	protected V bean;
@@ -83,6 +90,7 @@ public abstract class CompFollowersSheet<V extends ValuedBean> extends
 		layoutAdd.setComponentAlignment(memberSelection, Alignment.MIDDLE_LEFT);
 
 		btnSave = new Button("Add", new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void buttonClick(ClickEvent event) {
@@ -145,6 +153,7 @@ public abstract class CompFollowersSheet<V extends ValuedBean> extends
 		followBtn.setCaption("Follow by Me");
 		followBtn.setDescription("Follow");
 		followBtn.addClickListener(new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void buttonClick(ClickEvent event) {
@@ -213,6 +222,8 @@ public abstract class CompFollowersSheet<V extends ValuedBean> extends
 		});
 
 		tableItem.addGeneratedColumn("id", new ColumnGenerator() {
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public Object generateCell(Table source, Object itemId,
 					Object columnId) {
@@ -220,6 +231,8 @@ public abstract class CompFollowersSheet<V extends ValuedBean> extends
 						.getBeanByIndex(itemId);
 
 				Button deleteBtn = new Button(null, new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
 					@Override
 					public void buttonClick(ClickEvent event) {
 						ConfirmDialog.show(
