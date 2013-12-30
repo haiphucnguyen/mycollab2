@@ -17,8 +17,6 @@
 
 package com.esofthead.mycollab.module.project.view.task;
 
-import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.ui.*;
 import org.vaadin.hene.popupbutton.PopupButton;
 
 import com.esofthead.mycollab.common.CommentType;
@@ -48,7 +46,15 @@ import com.esofthead.mycollab.vaadin.ui.TabsheetLazyLoadComp;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.MyCollabResource;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.CssLayout;
+import com.vaadin.ui.Field;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.Layout;
+import com.vaadin.ui.UI;
+import com.vaadin.ui.VerticalLayout;
 
 /**
  * 
@@ -152,10 +158,10 @@ public class TaskGroupReadViewImpl extends AbstractPageView implements
 
 		@Override
 		public void showHistory() {
-			final TaskListHistoryLogWindow historyLog = new TaskListHistoryLogWindow(
-					ModuleNameConstants.PRJ, ProjectContants.TASK_LIST,
-					TaskGroupReadViewImpl.this.taskList.getId());
-			UI.getCurrent().addWindow(historyLog);
+//			final TaskListHistoryLogWindow historyLog = new TaskListHistoryLogWindow(
+//					ModuleNameConstants.PRJ, ProjectContants.TASK_LIST,
+//					TaskGroupReadViewImpl.this.taskList.getId());
+//			UI.getCurrent().addWindow(historyLog);
 		}
 
 		class FormLayoutFactory extends TaskGroupFormLayoutFactory {

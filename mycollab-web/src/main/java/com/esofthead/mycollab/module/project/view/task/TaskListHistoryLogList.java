@@ -19,17 +19,18 @@ package com.esofthead.mycollab.module.project.view.task;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
-import com.esofthead.mycollab.module.crm.ui.components.HistoryLogWindow;
+import com.esofthead.mycollab.vaadin.ui.HistoryLogComponent;
 
 /**
  * 
  * @author MyCollab Ltd.
  * @since 2.0
  */
-@SuppressWarnings("serial")
-public class TaskListHistoryLogWindow extends HistoryLogWindow {
-	public TaskListHistoryLogWindow(String module, String type, int typeid) {
-		super(module, type, typeid);
+public class TaskListHistoryLogList extends HistoryLogComponent {
+	private static final long serialVersionUID = 1L;
+
+	public TaskListHistoryLogList(String module, String type) {
+		super(module, type);
 
 		this.generateFieldDisplayHandler("name", "Name");
 		this.generateFieldDisplayHandler("description", "Description");
