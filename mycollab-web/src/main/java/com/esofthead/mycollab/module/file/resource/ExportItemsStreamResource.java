@@ -93,9 +93,6 @@ public abstract class ExportItemsStreamResource<T> implements
 		}
 
 		Thread threadExport = new MyCollabThread(new Runnable() {
-			/**
-			 * @see java.lang.Runnable#run()
-			 */
 			@Override
 			public void run() {
 				try {
@@ -126,6 +123,12 @@ public abstract class ExportItemsStreamResource<T> implements
 				} catch (Exception e) {
 					log.error("Exception while generating report ", e);
 					throw new MyCollabException(e);
+				} finally {
+					try {
+						outStream.close();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
 				}
 			}
 		});

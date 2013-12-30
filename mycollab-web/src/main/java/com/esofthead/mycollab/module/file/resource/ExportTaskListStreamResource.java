@@ -76,10 +76,12 @@ public class ExportTaskListStreamResource<T, S extends SearchCriteria> extends
 		ExportItemsStreamResource<SimpleTaskList> {
 	private static final long serialVersionUID = 1L;
 
-	private ISearchableService searchService;
-	private S searchCriteria;
 	private static Logger log = LoggerFactory
 			.getLogger(ExportTaskListStreamResource.class);
+
+	private ISearchableService searchService;
+	private S searchCriteria;
+
 	protected RpParameterBuilder parameters;
 
 	public ExportTaskListStreamResource(String reportTitle,
