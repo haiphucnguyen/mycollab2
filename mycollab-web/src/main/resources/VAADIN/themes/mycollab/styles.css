@@ -2878,6 +2878,9 @@ div.v-splitbutton,div.v-splitbutton .v-button {
 /* End Button Group */
 
 /* Multifiles Upload */
+.v-multifileupload-ext .v-verticallayout {
+    display: block;
+}
 .v-multifileupload-uploads .v-upload .v-button {
 	border: none;
 	background: url("icons/16/attachment.png") no-repeat center left
@@ -4511,6 +4514,10 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 	border-right: 1px solid rgb(169, 169, 169);
 	padding-left: 3px;
 	margin-right: 3px;
+}
+
+.v-label-hr {
+    display: block;
 }
 
 .v-label-hr>hr {

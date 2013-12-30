@@ -163,7 +163,7 @@ public class ResourceHandlerComponent extends VerticalLayout {
 
 		// Construct controllGroupBtn
 		controllGroupBtn = new HorizontalLayout();
-		controllGroupBtn.setMargin(new MarginInfo(true, false, false, true));
+		controllGroupBtn.setMargin(new MarginInfo(false, false, false, true));
 		controllGroupBtn.setSpacing(true);
 
 		selectAllBtn = new Button();
@@ -1038,6 +1038,7 @@ public class ResourceHandlerComponent extends VerticalLayout {
 			this.center();
 
 			VerticalLayout contentLayout = new VerticalLayout();
+            contentLayout.setMargin(true);
 			this.setContent(contentLayout);
 
 			final HorizontalLayout fileLayout = new HorizontalLayout();

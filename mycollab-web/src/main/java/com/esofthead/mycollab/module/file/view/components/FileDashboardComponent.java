@@ -403,6 +403,7 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 		private void constructBody() {
 			VerticalLayout contentLayout = new VerticalLayout();
 			contentLayout.setSpacing(true);
+            contentLayout.setMargin(true);
 			this.setContent(contentLayout);
 
 			final HorizontalLayout resourceContainer = new HorizontalLayout();

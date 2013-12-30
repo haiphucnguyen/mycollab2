@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.vaadin.shared.ui.MarginInfo;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.hene.popupbutton.PopupButton;
 import org.vaadin.peter.buttongroup.ButtonGroup;
@@ -111,7 +112,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 		mainView.setWidth("100%");
 
 		final HorizontalLayout menuBarContainerHorizontalLayout = new HorizontalLayout();
-		menuBarContainerHorizontalLayout.setMargin(true);
+		menuBarContainerHorizontalLayout.setMargin(new MarginInfo(false, true, true, true));
 
 		final VerticalLayout menuLayout = new VerticalLayout();
 		menuLayout.setSpacing(true);
@@ -238,7 +239,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 		usedVolumeInfo.setWidth("100%");
 		topControlMenuWrapper.addComponent(usedVolumeInfo);
 		topControlMenuWrapper.setComponentAlignment(usedVolumeInfo,
-				Alignment.MIDDLE_CENTER);
+				Alignment.TOP_CENTER);
 
 		menuLayout.addComponent(topControlMenuWrapper);
 
