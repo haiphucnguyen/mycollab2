@@ -16,18 +16,9 @@
  */
 package com.esofthead.mycollab.vaadin.ui;
 
-import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.Validator;
-
-import com.esofthead.mycollab.validator.constraints.DateComparision;
-import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
-
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 
