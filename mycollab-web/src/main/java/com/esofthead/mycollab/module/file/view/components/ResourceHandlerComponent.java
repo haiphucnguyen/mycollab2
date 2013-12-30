@@ -25,8 +25,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.jfree.util.Log;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.easyuploads.MultiFileUploadExt;
 import org.vaadin.hene.popupbutton.PopupButton;
@@ -89,13 +87,10 @@ import com.vaadin.ui.Window;
  * 
  * @author MyCollab Ltd.
  * @since 1.0
- *
+ * 
  */
 public class ResourceHandlerComponent extends VerticalLayout {
 	private static final long serialVersionUID = 1L;
-
-	private static Logger log = LoggerFactory
-			.getLogger(ResourceHandlerComponent.class);
 
 	private HorizontalLayout controllGroupBtn;
 	private Button deleteBtn;

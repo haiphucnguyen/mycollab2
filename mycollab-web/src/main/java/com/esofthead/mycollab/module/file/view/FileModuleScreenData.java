@@ -18,6 +18,12 @@ package com.esofthead.mycollab.module.file.view;
 
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class FileModuleScreenData {
 	public static class GotoModule extends ScreenData<String[]> {
 		public GotoModule(String... params) {

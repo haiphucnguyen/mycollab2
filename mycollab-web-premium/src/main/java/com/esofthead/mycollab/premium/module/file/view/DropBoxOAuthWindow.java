@@ -7,7 +7,6 @@ import javax.servlet.http.HttpSession;
 import org.infinispan.api.BasicCache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.context.WebApplicationContext;
 
 import com.dropbox.core.DbxAppInfo;
 import com.dropbox.core.DbxRequestConfig;
@@ -17,11 +16,16 @@ import com.dropbox.core.DbxWebAuth;
 import com.esofthead.mycollab.cache.LocalCacheManager;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.module.ecm.StorageNames;
-import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabApplication;
 import com.vaadin.server.VaadinService;
 import com.vaadin.server.WrappedSession;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public abstract class DropBoxOAuthWindow extends
 		CloudDriveIntegrationOAuthWindow {
 	private static final long serialVersionUID = 1L;

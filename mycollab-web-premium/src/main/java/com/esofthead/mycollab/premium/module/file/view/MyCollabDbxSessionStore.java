@@ -4,6 +4,12 @@ import javax.servlet.http.HttpSession;
 
 import com.dropbox.core.DbxSessionStore;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class MyCollabDbxSessionStore implements DbxSessionStore {
 
 	private HttpSession session;

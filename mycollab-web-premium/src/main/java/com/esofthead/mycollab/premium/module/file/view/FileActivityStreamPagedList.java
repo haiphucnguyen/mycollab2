@@ -33,6 +33,12 @@ import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class FileActivityStreamPagedList
 		extends
 		AbstractBeanPagedList<ContentActivityLogSearchCriteria, SimpleContentActivityLog>

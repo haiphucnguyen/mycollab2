@@ -9,6 +9,12 @@ import com.esofthead.mycollab.vaadin.mvp.ViewPermission;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @ViewPermission(permissionId = RolePermissionCollections.PUBLIC_DOCUMENT_ACCESS, impliedPermissionVal = AccessPermissionFlag.READ_ONLY)
 public class FileMainPresenter extends AbstractPresenter<FileMainView> {
 	private static final long serialVersionUID = 1L;

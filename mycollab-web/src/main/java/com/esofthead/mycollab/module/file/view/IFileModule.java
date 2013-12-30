@@ -18,6 +18,12 @@ package com.esofthead.mycollab.module.file.view;
 
 import com.esofthead.mycollab.vaadin.mvp.IModule;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public interface IFileModule extends IModule {
 
 }

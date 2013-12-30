@@ -22,6 +22,12 @@ import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.vaadin.mvp.ModuleHelper;
 import com.esofthead.mycollab.vaadin.mvp.UrlResolver;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class FileUrlResolver extends UrlResolver {
 
 	public UrlResolver build() {

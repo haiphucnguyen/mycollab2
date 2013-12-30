@@ -1,4 +1,3 @@
-
 package com.esofthead.mycollab.premium.module.file.view;
 
 import com.esofthead.mycollab.module.ecm.domain.criteria.ContentActivityLogSearchCriteria;
@@ -10,6 +9,7 @@ import com.vaadin.ui.VerticalLayout;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class FileActivityStreamComponent extends Depot {
 	private static final long serialVersionUID = 1L;
