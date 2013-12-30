@@ -43,9 +43,9 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
-import com.vaadin.ui.UI;
 import com.vaadin.ui.Table.ColumnGenerator;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 /**
@@ -78,6 +78,10 @@ public abstract class CompTimeLogSheet<V extends ValuedBean> extends
 		this.initUI();
 	}
 
+	public void setBean(V bean) {
+		this.bean = bean;
+	}
+
 	private void initUI() {
 
 		this.investTimeLayout = this.new AddTimeInvest();
@@ -87,6 +91,11 @@ public abstract class CompTimeLogSheet<V extends ValuedBean> extends
 		this.addComponent(this.updateTimeRemainLayout);
 		this.setExpandRatio(this.updateTimeRemainLayout, 1);
 		this.setWidth("100%");
+	}
+
+	public void loadTimeValue() {
+		investTimeLayout.loadTimeInvestItem();
+		updateTimeRemainLayout.setUpdateTimeValue();
 	}
 
 	protected double getInvestValue() {
@@ -316,8 +325,6 @@ public abstract class CompTimeLogSheet<V extends ValuedBean> extends
 			CompTimeLogSheet.this.tableItem.setWidth("100%");
 
 			this.addComponent(CompTimeLogSheet.this.tableItem);
-			this.loadTimeInvestItem();
-			this.setTotalTimeValue();
 		}
 
 		private void loadTimeInvestItem() {
@@ -422,7 +429,6 @@ public abstract class CompTimeLogSheet<V extends ValuedBean> extends
 			addLayout.addComponent(lbIntructAdd);
 			addLayout
 					.setComponentAlignment(lbIntructAdd, Alignment.MIDDLE_LEFT);
-			this.setUpdateTimeValue();
 		}
 
 		public void setUpdateTimeValue() {

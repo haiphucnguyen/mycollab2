@@ -58,7 +58,7 @@ import com.vaadin.ui.VerticalLayout;
 public abstract class CompFollowersSheet<V extends ValuedBean> extends
 		VerticalLayout {
 	private static final long serialVersionUID = 1L;
-	
+
 	protected DefaultPagedBeanTable<MonitorItemService, MonitorSearchCriteria, SimpleMonitorItem> tableItem;
 	protected MonitorItemService monitorItemService;
 	protected V bean;
@@ -75,6 +75,10 @@ public abstract class CompFollowersSheet<V extends ValuedBean> extends
 				.getSpringBean(MonitorItemService.class);
 
 		initUI();
+	}
+
+	public void setBean(V bean) {
+		this.bean = bean;
 	}
 
 	private void initUI() {
@@ -252,7 +256,7 @@ public abstract class CompFollowersSheet<V extends ValuedBean> extends
 													AppContext.getUsername(),
 													AppContext.getAccountId());
 											CompFollowersSheet.this
-													.loadMonitorItems();
+													.displayMonitorItems();
 										}
 									}
 								});
@@ -282,7 +286,9 @@ public abstract class CompFollowersSheet<V extends ValuedBean> extends
 		tableItem.setWidth("100%");
 
 		this.addComponent(tableItem);
+	}
 
+	public void displayMonitorItems() {
 		loadMonitorItems();
 
 		for (SimpleMonitorItem monitorItem : tableItem.getCurrentDataList()) {

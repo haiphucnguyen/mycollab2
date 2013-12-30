@@ -29,11 +29,13 @@ import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.events.TaskListEvent;
+import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.project.ui.components.AbstractPreviewItemComp;
 import com.esofthead.mycollab.module.project.ui.components.CommentDisplay;
 import com.esofthead.mycollab.module.project.ui.components.DefaultProjectFormViewFieldFactory.ProjectFormAttachmentDisplayField;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserFormLinkField;
 import com.esofthead.mycollab.schedule.email.project.ProjectTaskRelayEmailNotificationAction;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
@@ -52,6 +54,7 @@ import com.vaadin.server.Resource;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.Field;
@@ -76,6 +79,8 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask>
 	private TaskFollowersSheet followerSheet;
 
 	private TaskTimeLogSheet timesheet;
+
+	private Button quickActionStatusBtn;
 
 	public TaskReadViewImpl() {
 		super(MyCollabResource.newResource("icons/22/project/menu_task.png"));
@@ -115,6 +120,7 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask>
 		historyList.setMargin(true);
 
 		followerSheet = new TaskFollowersSheet(beanItem);
+		timesheet = new TaskTimeLogSheet(beanItem);
 	}
 
 	@Override
@@ -138,6 +144,26 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask>
 			}
 		}
 
+		if (beanItem.getStatus() == null || beanItem.getStatus().equals("Open")) {
+			quickActionStatusBtn.setCaption("Close");
+			quickActionStatusBtn.setIcon(MyCollabResource
+					.newResource("icons/16/project/closeTask.png"));
+		} else {
+			quickActionStatusBtn.setCaption("ReOpen");
+			quickActionStatusBtn.setIcon(MyCollabResource
+					.newResource("icons/16/project/reopenTask.png"));
+
+		}
+
+		commentList.loadComments(beanItem.getId());
+
+		historyList.loadHistory(beanItem.getId());
+
+		followerSheet.setBean(beanItem);
+		followerSheet.displayMonitorItems();
+
+		timesheet.setBean(beanItem);
+		timesheet.loadTimeValue();
 	}
 
 	@Override
@@ -167,6 +193,40 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask>
 		final HorizontalLayout topPanel = taskPreviewForm.createButtonControls(
 				ProjectRolePermissionCollections.TASKS, true);
 		topPanel.setMargin(true);
+
+		quickActionStatusBtn = new Button("", new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				if (beanItem.getStatus() != null
+						&& beanItem.getStatus().equals("Close")) {
+					beanItem.setStatus("Open");
+					TaskReadViewImpl.this
+							.removeLayoutStyleName(UIConstants.LINK_COMPLETED);
+					quickActionStatusBtn.setCaption("Close");
+					quickActionStatusBtn.setIcon(MyCollabResource
+							.newResource("icons/16/project/closeTask.png"));
+				} else {
+					beanItem.setStatus("Close");
+
+					TaskReadViewImpl.this
+							.addLayoutStyleName(UIConstants.LINK_COMPLETED);
+					quickActionStatusBtn.setCaption("ReOpen");
+					quickActionStatusBtn.setIcon(MyCollabResource
+							.newResource("icons/16/project/reopenTask.png"));
+				}
+
+				ProjectTaskService service = ApplicationContextUtil
+						.getSpringBean(ProjectTaskService.class);
+				service.updateWithSession(beanItem, AppContext.getUsername());
+
+			}
+		});
+
+		quickActionStatusBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		taskPreviewForm.insertToControlBlock(quickActionStatusBtn);
+
 		return topPanel;
 	}
 
@@ -184,7 +244,6 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask>
 		tabTaskDetail.addTab(followerSheet, "Follower", MyCollabResource
 				.newResource("icons/16/project/gray/follow.png"));
 
-		final TaskTimeLogSheet timesheet = new TaskTimeLogSheet(beanItem);
 		tabTaskDetail.addTab(timesheet, "Time",
 				MyCollabResource.newResource("icons/16/project/gray/time.png"));
 
