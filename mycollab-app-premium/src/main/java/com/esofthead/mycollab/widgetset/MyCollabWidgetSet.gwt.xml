@@ -70,4 +70,6 @@
     
 
     
+
+    <inherits name="com.esofthead.vaadin.cropField.WidgetSet" />
 </module>

@@ -268,7 +268,7 @@
     <dependent-module archiveName="jcr-2.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/javax/jcr/jcr/2.0/jcr-2.0.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="jackrabbit-core-2.6.4.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/apache/jackrabbit/jackrabbit-core/2.6.4/jackrabbit-core-2.6.4.jar">
+    <dependent-module archiveName="jackrabbit-core-2.6.5.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/apache/jackrabbit/jackrabbit-core/2.6.5/jackrabbit-core-2.6.5.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="concurrent-1.3.4.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/concurrent/concurrent/1.3.4/concurrent-1.3.4.jar">
@@ -280,16 +280,16 @@
     <dependent-module archiveName="commons-pool-1.5.4.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/commons-pool/commons-pool/1.5.4/commons-pool-1.5.4.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="jackrabbit-api-2.6.4.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/apache/jackrabbit/jackrabbit-api/2.6.4/jackrabbit-api-2.6.4.jar">
+    <dependent-module archiveName="jackrabbit-api-2.6.5.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/apache/jackrabbit/jackrabbit-api/2.6.5/jackrabbit-api-2.6.5.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="jackrabbit-jcr-commons-2.6.4.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/apache/jackrabbit/jackrabbit-jcr-commons/2.6.4/jackrabbit-jcr-commons-2.6.4.jar">
+    <dependent-module archiveName="jackrabbit-jcr-commons-2.6.5.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/apache/jackrabbit/jackrabbit-jcr-commons/2.6.5/jackrabbit-jcr-commons-2.6.5.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="jackrabbit-spi-commons-2.6.4.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/apache/jackrabbit/jackrabbit-spi-commons/2.6.4/jackrabbit-spi-commons-2.6.4.jar">
+    <dependent-module archiveName="jackrabbit-spi-commons-2.6.5.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/apache/jackrabbit/jackrabbit-spi-commons/2.6.5/jackrabbit-spi-commons-2.6.5.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="jackrabbit-spi-2.6.4.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/apache/jackrabbit/jackrabbit-spi/2.6.4/jackrabbit-spi-2.6.4.jar">
+    <dependent-module archiveName="jackrabbit-spi-2.6.5.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/apache/jackrabbit/jackrabbit-spi/2.6.5/jackrabbit-spi-2.6.5.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="tika-core-1.3.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/apache/tika/tika-core/1.3/tika-core-1.3.jar">
@@ -500,6 +500,9 @@
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="confirmdialog-2.0.4.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/vaadin/addon/confirmdialog/2.0.4/confirmdialog-2.0.4.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="cropField-1.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/esofthead/vaadin/cropField/1.0-SNAPSHOT/cropField-1.0-SNAPSHOT.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="reflections-0.9.9-RC1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/reflections/reflections/0.9.9-RC1/reflections-0.9.9-RC1.jar">
