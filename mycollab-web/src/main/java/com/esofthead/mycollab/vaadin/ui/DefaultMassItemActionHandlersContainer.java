@@ -62,7 +62,7 @@ public class DefaultMassItemActionHandlersContainer extends HorizontalLayout
 	}
 
 	public void addDownloadActionItem(final String id, Resource resource,
-			String groupId) {
+			String groupId, String downloadFileName) {
 		ButtonGroup group = groupMap.get(groupId);
 
 		if (group == null) {
@@ -75,7 +75,7 @@ public class DefaultMassItemActionHandlersContainer extends HorizontalLayout
 		Button optionBtn = new Button(null);
 
 		FileDownloader fileDownler = new FileDownloader(new StreamResource(
-				new LazyStreamSource(id), "test.pdf"));
+				new LazyStreamSource(id), downloadFileName));
 		fileDownler.extend(optionBtn);
 		optionBtn.setIcon(resource);
 		optionBtn.addStyleName(UIConstants.THEME_GRAY_LINK);

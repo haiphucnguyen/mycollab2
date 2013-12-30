@@ -105,15 +105,15 @@ public class AccountListViewImpl extends
 		container.addDownloadActionItem(
 				MassItemActionHandler.EXPORT_PDF_ACTION,
 				MyCollabResource.newResource("icons/16/action/pdf.png"),
-				"export");
+				"export", "export.pdf");
 		container.addDownloadActionItem(
 				MassItemActionHandler.EXPORT_EXCEL_ACTION,
 				MyCollabResource.newResource("icons/16/action/excel.png"),
-				"export");
+				"export", "export.xlsx");
 		container.addDownloadActionItem(
 				MassItemActionHandler.EXPORT_CSV_ACTION,
 				MyCollabResource.newResource("icons/16/action/csv.png"),
-				"export");
+				"export", "export.csv");
 
 		container.addActionItem(MassItemActionHandler.MASS_UPDATE_ACTION,
 				MyCollabResource.newResource("icons/16/action/massupdate.png"),

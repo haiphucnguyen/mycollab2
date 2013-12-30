@@ -106,6 +106,7 @@ public abstract class ExportItemsStreamResource<T> implements
 					} else if (outputForm == ReportExportType.CSV) {
 						JasperCsvExporterBuilder csvExporter = export
 								.csvExporter(outStream);
+						reportBuilder.ignorePageWidth();
 						reportBuilder.toCsv(csvExporter);
 					} else if (outputForm == ReportExportType.EXCEL) {
 						JasperXlsxExporterBuilder xlsExporter = export
