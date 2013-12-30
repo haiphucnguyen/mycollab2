@@ -59,7 +59,7 @@ public class BugAddFormLayoutFactory implements IFormLayoutFactory {
 	}
 
 	@Override
-	public void attachField(final Object propertyId, final Field<?> field) {
+	public boolean attachField(final Object propertyId, final Field<?> field) {
 		if (propertyId.equals("summary")) {
 			this.informationLayout.addComponent(field, "Summary", 0, 0, 2,
 					"100%");
@@ -96,7 +96,11 @@ public class BugAddFormLayoutFactory implements IFormLayoutFactory {
 		} else if (propertyId.equals("milestoneid")) {
 			this.informationLayout.addComponent(field, LocalizationHelper
 					.getMessage(TaskI18nEnum.FORM_PHASE_FIELD), 1, 4);
+		} else {
+			return false;
 		}
+
+		return true;
 
 	}
 }

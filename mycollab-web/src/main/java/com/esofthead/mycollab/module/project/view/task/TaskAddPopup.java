@@ -179,7 +179,7 @@ public class TaskAddPopup extends CustomComponent {
 		}
 
 		@Override
-		public void attachField(final Object propertyId, final Field<?> field) {
+		public boolean attachField(final Object propertyId, final Field<?> field) {
 			if (propertyId.equals("taskname")) {
 				this.informationLayout.addComponent(field, "Task Name", 0, 0,
 						2, "100%");
@@ -202,7 +202,11 @@ public class TaskAddPopup extends CustomComponent {
 						.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD), 0, 4);
 			} else if (propertyId.equals("percentagecomplete")) {
 				this.informationLayout.addComponent(field, "Complete(%)", 1, 4);
+			} else {
+				return false;
 			}
+
+			return true;
 		}
 	}
 

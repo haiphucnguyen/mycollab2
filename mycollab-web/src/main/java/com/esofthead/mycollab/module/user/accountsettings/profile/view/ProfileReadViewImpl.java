@@ -202,7 +202,8 @@ public class ProfileReadViewImpl extends AbstractPageView implements
 				final Label basicInformationHeaderLbl = new Label(
 						"Basic Information");
 				basicInformationHeaderLbl.setStyleName("h2");
-				basicInformationHeaderLbl.setWidth(Sizeable.SIZE_UNDEFINED, Sizeable.Unit.PIXELS);
+				basicInformationHeaderLbl.setWidth(Sizeable.SIZE_UNDEFINED,
+						Sizeable.Unit.PIXELS);
 				basicInformationHeader.addComponent(basicInformationHeaderLbl);
 
 				final CssLayout contactInformationHeader = new CssLayout();
@@ -211,7 +212,8 @@ public class ProfileReadViewImpl extends AbstractPageView implements
 				final Label contactInformationHeaderLbl = new Label(
 						"Contact Information");
 				contactInformationHeaderLbl.setStyleName("h2");
-				contactInformationHeaderLbl.setWidth(Sizeable.SIZE_UNDEFINED, Sizeable.Unit.PIXELS);
+				contactInformationHeaderLbl.setWidth(Sizeable.SIZE_UNDEFINED,
+						Sizeable.Unit.PIXELS);
 				contactInformationHeader
 						.addComponent(contactInformationHeaderLbl);
 
@@ -221,7 +223,8 @@ public class ProfileReadViewImpl extends AbstractPageView implements
 				final Label advanceInfoHeaderLbl = new Label(
 						"Advanced Information");
 				advanceInfoHeaderLbl.setStyleName("h2");
-				advanceInfoHeaderLbl.setWidth(Sizeable.SIZE_UNDEFINED, Sizeable.Unit.PIXELS);
+				advanceInfoHeaderLbl.setWidth(Sizeable.SIZE_UNDEFINED,
+						Sizeable.Unit.PIXELS);
 				advanceInfoHeader.addComponent(advanceInfoHeaderLbl);
 
 				this.basicInformation = new GridFormLayoutHelper(1, 6, "100%",
@@ -304,7 +307,7 @@ public class ProfileReadViewImpl extends AbstractPageView implements
 			}
 
 			@Override
-			public void attachField(final Object propertyId,
+			public boolean attachField(final Object propertyId,
 					final Field<?> field) {
 				if (propertyId.equals("firstname")) {
 					this.basicInformation.addComponent(field, "First Name", 0,
@@ -341,7 +344,11 @@ public class ProfileReadViewImpl extends AbstractPageView implements
 							.addComponent(field, "Twitter", 0, 3);
 				} else if (propertyId.equals("skypecontact")) {
 					this.contactInformation.addComponent(field, "Skype", 0, 4);
+				} else {
+					return false;
 				}
+
+				return true;
 			}
 		}
 

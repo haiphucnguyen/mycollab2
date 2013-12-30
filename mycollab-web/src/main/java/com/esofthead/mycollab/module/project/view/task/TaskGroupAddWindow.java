@@ -208,7 +208,7 @@ public class TaskGroupAddWindow extends Window {
 			}
 
 			@Override
-			public void attachField(final Object propertyId,
+			public boolean attachField(final Object propertyId,
 					final Field<?> field) {
 				if (propertyId.equals("name")) {
 					this.informationLayout.addComponent(field, "Name", 0, 0, 2,
@@ -226,7 +226,11 @@ public class TaskGroupAddWindow extends Window {
 				} else if (propertyId.equals("milestoneid")) {
 					this.informationLayout.addComponent(field,
 							"Related Milestone", 1, 2);
+				} else {
+					return false;
 				}
+
+				return true;
 			}
 		}
 

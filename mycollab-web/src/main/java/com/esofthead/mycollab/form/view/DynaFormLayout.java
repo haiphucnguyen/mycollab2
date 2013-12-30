@@ -141,7 +141,7 @@ public class DynaFormLayout implements IFormLayoutFactory {
 	}
 
 	@Override
-	public void attachField(Object propertyId, Field<?> field) {
+	public boolean attachField(Object propertyId, Field<?> field) {
 		AbstractDynaField dynaField = fieldMappings.get(propertyId);
 		if (dynaField != null) {
 			log.debug("Attach prop {}", propertyId);
@@ -169,6 +169,10 @@ public class DynaFormLayout implements IFormLayoutFactory {
 						dynaField.getFieldIndex() / 2);
 			}
 
+			return true;
+
 		}
+
+		return false;
 	}
 }

@@ -110,7 +110,7 @@ public class MessageReadViewImpl extends AbstractPageView implements
 		@Override
 		public Layout getLayout() {
 			VerticalLayout messageAddLayout = new VerticalLayout();
-            messageAddLayout.setSpacing(true);
+			messageAddLayout.setSpacing(true);
 
 			HorizontalLayout messageLayout = new HorizontalLayout();
 			messageLayout.setStyleName("message");
@@ -247,9 +247,9 @@ public class MessageReadViewImpl extends AbstractPageView implements
 
 		protected Layout createBottomPanel() {
 			VerticalLayout bottomPanel = new VerticalLayout();
-            bottomPanel.setMargin(true);
-            bottomPanel.setWidth("900px");
-            bottomPanel.setStyleName("messageread-bottompanel");
+			bottomPanel.setMargin(true);
+			bottomPanel.setWidth("900px");
+			bottomPanel.setStyleName("messageread-bottompanel");
 
 			CommentDisplay commentDisplay = new CommentDisplay(
 					CommentType.PRJ_MESSAGE,
@@ -261,7 +261,8 @@ public class MessageReadViewImpl extends AbstractPageView implements
 		}
 
 		@Override
-		public void attachField(Object propertyId, Field<?> field) {
+		public boolean attachField(Object propertyId, Field<?> field) {
+			return false;
 		}
 	}
 }

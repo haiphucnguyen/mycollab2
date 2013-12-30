@@ -186,13 +186,17 @@ public class ProjectMemberInviteViewImpl extends AbstractPageView implements
 			}
 
 			@Override
-			public void attachField(Object propertyId, Field<?> field) {
+			public boolean attachField(Object propertyId, Field<?> field) {
 				if (propertyId.equals("inviteEmails")) {
 					this.informationLayout.addComponent(field, "User emails",
 							0, 0);
 				} else if (propertyId.equals("roleId")) {
 					this.informationLayout.addComponent(field, "Role", 0, 1);
+				} else {
+					return false;
 				}
+
+				return true;
 
 			}
 		}

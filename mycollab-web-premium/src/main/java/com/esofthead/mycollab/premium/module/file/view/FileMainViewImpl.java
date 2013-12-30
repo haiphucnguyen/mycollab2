@@ -87,11 +87,12 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 	private FilterPanel filterPanel;
 	private final Button switchViewBtn;
 
+	private SettingConnectionDrive settingConnectionDrive;
+	private final VerticalLayout mainBodyResourceLayout;
+
 	private final ResourceService resourceService;
 	private final ExternalDriveService externalDriveService;
 	private final ExternalResourceService externalResourceService;
-	private SettingConnectionDrive settingConnectionDrive;
-	private final VerticalLayout mainBodyResourceLayout;
 
 	public FileMainViewImpl() {
 		resourceService = ApplicationContextUtil
@@ -186,8 +187,8 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 		HorizontalLayout connectDropboxLayout = new HorizontalLayout();
 		connectDropboxLayout.setSpacing(true);
 
-		final Image titleIcon = new Image(null, MyCollabResource
-				.newResource("icons/16/ecm/dropbox.png"));
+		final Image titleIcon = new Image(null,
+				MyCollabResource.newResource("icons/16/ecm/dropbox.png"));
 		connectDropboxLayout.addComponent(titleIcon);
 
 		Button uploadDropboxBtn = new Button("Connect Dropbox",
@@ -361,19 +362,20 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 			}
 		});
 
-		this.menuTree.addItemClickListener(new ItemClickEvent.ItemClickListener() {
-			private static final long serialVersionUID = 1L;
+		this.menuTree
+				.addItemClickListener(new ItemClickEvent.ItemClickListener() {
+					private static final long serialVersionUID = 1L;
 
-			@Override
-			public void itemClick(final ItemClickEvent event) {
-				final Folder item = (Folder) event.getItemId();
-				if (item instanceof ExternalFolder) {
-					gotoFileMainViewPage(item, false);
-				} else {
-					gotoFileMainViewPage(item, true);
-				}
-			}
-		});
+					@Override
+					public void itemClick(final ItemClickEvent event) {
+						final Folder item = (Folder) event.getItemId();
+						if (item instanceof ExternalFolder) {
+							gotoFileMainViewPage(item, false);
+						} else {
+							gotoFileMainViewPage(item, true);
+						}
+					}
+				});
 
 		mainView.addComponent(menuBarContainerHorizontalLayout);
 		mainView.setComponentAlignment(menuBarContainerHorizontalLayout,
@@ -582,8 +584,9 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 			layout.setSpacing(true);
 			layout.setMargin(true);
 
-			final Image titleIcon = new Image(null, MyCollabResource
-					.newResource("icons/24/ecm/document_preview.png"));
+			final Image titleIcon = new Image(null,
+					MyCollabResource
+							.newResource("icons/24/ecm/document_preview.png"));
 			layout.addComponent(titleIcon);
 			layout.setComponentAlignment(titleIcon, Alignment.MIDDLE_LEFT);
 

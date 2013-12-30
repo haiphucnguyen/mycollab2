@@ -42,7 +42,7 @@ public class ProblemFormLayoutFactory implements IFormLayoutFactory {
 	}
 
 	@Override
-	public void attachField(final Object propertyId, final Field<?> field) {
+	public boolean attachField(final Object propertyId, final Field<?> field) {
 		if (propertyId.equals("issuename")) {
 			this.informationLayout.addComponent(field, "Name", 0, 0, 2, "100%");
 		} else if (propertyId.equals("description")) {
@@ -68,6 +68,10 @@ public class ProblemFormLayoutFactory implements IFormLayoutFactory {
 		} else if (propertyId.equals("resolution")) {
 			this.informationLayout.addComponent(field, "Resolution", 0, 6, 2,
 					"100%");
+		} else {
+			return false;
 		}
+
+		return true;
 	}
 }

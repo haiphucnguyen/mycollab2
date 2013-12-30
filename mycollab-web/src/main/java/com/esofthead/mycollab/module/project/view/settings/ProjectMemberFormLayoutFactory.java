@@ -52,11 +52,15 @@ public class ProjectMemberFormLayoutFactory implements IFormLayoutFactory {
 	}
 
 	@Override
-	public void attachField(final Object propertyId, final Field<?> field) {
+	public boolean attachField(final Object propertyId, final Field<?> field) {
 		if (propertyId.equals("username")) {
 			this.informationLayout.addComponent(field, "User", 0, 0);
 		} else if (propertyId.equals("isadmin")) {
 			this.informationLayout.addComponent(field, "Role", 0, 1);
+		} else {
+			return false;
 		}
+
+		return true;
 	}
 }

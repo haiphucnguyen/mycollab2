@@ -55,7 +55,7 @@ public class TaskFormLayoutFactory implements IFormLayoutFactory {
 	}
 
 	@Override
-	public void attachField(final Object propertyId, final Field<?> field) {
+	public boolean attachField(final Object propertyId, final Field<?> field) {
 		if (propertyId.equals("taskname")) {
 			this.informationLayout.addComponent(field, "Task Name", 0, 0, 2,
 					"100%");
@@ -88,7 +88,11 @@ public class TaskFormLayoutFactory implements IFormLayoutFactory {
 		} else if (propertyId.equals("id")) {
 			this.informationLayout.addComponent(field, "Attachments", 0, 7, 2,
 					"100%");
+		} else {
+			return false;
 		}
+
+		return true;
 	}
 
 	public void setPercent(String labelPercent) {

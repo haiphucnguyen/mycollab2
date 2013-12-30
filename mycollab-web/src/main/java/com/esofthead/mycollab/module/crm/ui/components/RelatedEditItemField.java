@@ -39,6 +39,7 @@ import com.esofthead.mycollab.module.crm.view.contact.ContactSelectionWindow;
 import com.esofthead.mycollab.module.crm.view.lead.LeadSelectionWindow;
 import com.esofthead.mycollab.module.crm.view.opportunity.OpportunitySelectionWindow;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.ui.CompoundCustomField;
 import com.esofthead.mycollab.vaadin.ui.FieldSelection;
 import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
 import com.esofthead.mycollab.web.AppContext;
@@ -48,7 +49,6 @@ import com.vaadin.event.MouseEvents;
 import com.vaadin.event.MouseEvents.ClickEvent;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.CustomField;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.TextField;
@@ -60,7 +60,7 @@ import com.vaadin.ui.UI;
  * @since 2.0
  * 
  */
-public class RelatedEditItemField extends CustomField<String> implements
+public class RelatedEditItemField extends CompoundCustomField<String> implements
 		FieldSelection {
 
 	private static final long serialVersionUID = 1L;

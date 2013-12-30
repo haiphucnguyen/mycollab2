@@ -30,5 +30,5 @@ import com.vaadin.ui.Layout;
 public interface IFormLayoutFactory extends Serializable {
 	Layout getLayout();
 
-	void attachField(Object propertyId, Field<?> field);
+	boolean attachField(Object propertyId, Field<?> field);
 }

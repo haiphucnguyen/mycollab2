@@ -69,8 +69,8 @@ public abstract class RoleFormLayoutFactory implements IFormLayoutFactory {
 	protected abstract Layout createBottomPanel();
 
 	@Override
-	public void attachField(final Object propertyId, final Field<?> field) {
-		this.userInformationLayout.attachField(propertyId, field);
+	public boolean attachField(final Object propertyId, final Field<?> field) {
+		return this.userInformationLayout.attachField(propertyId, field);
 	}
 
 	public static class RoleInformationLayout implements IFormLayoutFactory {
@@ -96,12 +96,16 @@ public abstract class RoleFormLayoutFactory implements IFormLayoutFactory {
 		}
 
 		@Override
-		public void attachField(final Object propertyId, final Field<?> field) {
+		public boolean attachField(final Object propertyId, final Field<?> field) {
 			if (propertyId.equals("rolename")) {
 				this.informationLayout.addComponent(field, "Role Name", 0, 0);
 			} else if (propertyId.equals("description")) {
 				this.informationLayout.addComponent(field, "Description", 0, 1);
+			} else {
+				return false;
 			}
+
+			return true;
 		}
 	}
 }

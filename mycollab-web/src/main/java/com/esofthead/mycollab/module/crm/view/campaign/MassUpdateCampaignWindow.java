@@ -100,25 +100,25 @@ public class MassUpdateCampaignWindow extends
 		}
 
 		@Override
-		public void attachField(final Object propertyId, final Field<?> field) {
+		public boolean attachField(final Object propertyId, final Field<?> field) {
 
-			this.informationLayout.addComponent(
-					propertyId.equals("assignuser"), field, LocalizationHelper
-							.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD), 0,
-					0);
-
-			this.informationLayout.addComponent(propertyId.equals("status"),
-					field, "Status", 1, 0);
-
-			if (propertyId.equals("type")) {
+			if (propertyId.equals("assignuser")) {
+				this.informationLayout.addComponent(field, LocalizationHelper
+						.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD), 0, 0);
+			}
+			if (propertyId.equals("status")) {
+				this.informationLayout.addComponent(field, "Status", 1, 0);
+			} else if (propertyId.equals("type")) {
 				this.informationLayout.addComponent(field, "Type", 0, 1, 2,
 						"297px", Alignment.TOP_LEFT);
-			}
-
-			if (propertyId.equals("currencyid")) {
+			} else if (propertyId.equals("currencyid")) {
 				this.campaignGoal
 						.addComponent(field, "Currency", 0, 0, "297px");
+			} else {
+				return false;
 			}
+
+			return true;
 
 		}
 	}

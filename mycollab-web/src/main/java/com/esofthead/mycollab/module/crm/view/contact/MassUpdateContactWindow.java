@@ -99,7 +99,7 @@ public class MassUpdateContactWindow extends MassUpdateWindow<Contact> {
 		}
 
 		@Override
-		public void attachField(final Object propertyId, final Field<?> field) {
+		public boolean attachField(final Object propertyId, final Field<?> field) {
 			if (propertyId.equals("accountid")) {
 				this.informationLayout.addComponent(field, "Account", 0, 0);
 			} else if (propertyId.equals("title")) {
@@ -130,7 +130,11 @@ public class MassUpdateContactWindow extends MassUpdateWindow<Contact> {
 						3);
 			} else if (propertyId.equals("othercountry")) {
 				this.addressLayout.addComponent(field, "Other Country", 1, 3);
+			} else {
+				return false;
 			}
+
+			return true;
 		}
 	}
 }

@@ -53,7 +53,7 @@ public class ComponentFormLayoutFactory implements IFormLayoutFactory {
 	}
 
 	@Override
-	public void attachField(final Object propertyId, final Field<?> field) {
+	public boolean attachField(final Object propertyId, final Field<?> field) {
 		if (propertyId.equals("componentname")) {
 			this.gridFormLayout.addComponent(field, "Component Name", 0, 0, 2,
 					"100%");
@@ -62,7 +62,11 @@ public class ComponentFormLayoutFactory implements IFormLayoutFactory {
 					"100%");
 		} else if (propertyId.equals("userlead")) {
 			this.gridFormLayout.addComponent(field, "Lead", 0, 2);
+		} else {
+			return false;
 		}
+
+		return true;
 	}
 
 }

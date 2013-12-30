@@ -100,64 +100,56 @@ public class MassUpdateAccountWindow extends MassUpdateWindow<Account> {
 		}
 
 		@Override
-		public void attachField(final Object propertyId, final Field<?> field) {
-			this.informationLayout.addComponent(propertyId.equals("industry"),
-					field, LocalizationHelper
-							.getMessage(AccountI18nEnum.FORM_INDUSTRY), 0, 0);
+		public boolean attachField(final Object propertyId, final Field<?> field) {
+			if (propertyId.equals("industry")) {
+				this.informationLayout.addComponent(field, LocalizationHelper
+						.getMessage(AccountI18nEnum.FORM_INDUSTRY), 0, 0);
+			} else if (propertyId.equals("type")) {
+				this.informationLayout.addComponent(field, LocalizationHelper
+						.getMessage(AccountI18nEnum.FORM_TYPE), 1, 0);
+			} else if (propertyId.equals("ownership")) {
+				this.informationLayout.addComponent(field, LocalizationHelper
+						.getMessage(AccountI18nEnum.FORM_OWNERSHIP), 0, 1);
+			} else if (propertyId.equals("assignuser")) {
+				this.informationLayout.addComponent(field, LocalizationHelper
+						.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD), 1, 1);
+			} else if (propertyId.equals("city")) {
+				this.addressLayout.addComponent(field, LocalizationHelper
+						.getMessage(AccountI18nEnum.FORM_BILLING_CITY), 0, 0);
+			} else if (propertyId.equals("shippingcity")) {
+				this.addressLayout.addComponent(field, LocalizationHelper
+						.getMessage(AccountI18nEnum.FORM_SHIPPING_CITY), 1, 0);
+			} else if (propertyId.equals("state")) {
+				this.addressLayout.addComponent(field, LocalizationHelper
+						.getMessage(AccountI18nEnum.FORM_BILLING_STATE), 0, 1);
+			} else if (propertyId.equals("postalcode")) {
+				this.addressLayout.addComponent(field, LocalizationHelper
+						.getMessage(AccountI18nEnum.FORM_BILLING_POSTAL_CODE),
+						1, 1);
+			} else if (propertyId.equals("billingcountry")) {
+				this.addressLayout
+						.addComponent(
+								field,
+								LocalizationHelper
+										.getMessage(AccountI18nEnum.FORM_BILLING_COUNTRY),
+								0, 2);
+			} else if (propertyId.equals("shippingcountry")) {
+				this.addressLayout.addComponent(field, LocalizationHelper
+						.getMessage(AccountI18nEnum.FORM_SHIPPING_COUNTRY), 1,
+						2);
+			} else if (propertyId.equals("shippingstate")) {
+				this.addressLayout.addComponent(field, LocalizationHelper
+						.getMessage(AccountI18nEnum.FORM_SHIPPING_STATE), 0, 3);
+			} else if (propertyId.equals("shippingpostalcode")) {
+				this.addressLayout.addComponent(field, LocalizationHelper
+						.getMessage(AccountI18nEnum.FORM_SHIPPING_POSTAL_CODE),
+						1, 3);
+			} else {
+				return false;
+			}
 
-			this.informationLayout.addComponent(propertyId.equals("type"),
-					field,
-					LocalizationHelper.getMessage(AccountI18nEnum.FORM_TYPE),
-					1, 0);
-			this.informationLayout.addComponent(propertyId.equals("ownership"),
-					field, LocalizationHelper
-							.getMessage(AccountI18nEnum.FORM_OWNERSHIP), 0, 1);
+			return true;
 
-			this.informationLayout.addComponent(
-					propertyId.equals("assignuser"), field, LocalizationHelper
-							.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD), 1,
-					1);
-
-			this.addressLayout.addComponent(propertyId.equals("city"), field,
-					LocalizationHelper
-							.getMessage(AccountI18nEnum.FORM_BILLING_CITY), 0,
-					0);
-
-			this.addressLayout.addComponent(propertyId.equals("shippingcity"),
-					field, LocalizationHelper
-							.getMessage(AccountI18nEnum.FORM_SHIPPING_CITY), 1,
-					0);
-
-			this.addressLayout.addComponent(propertyId.equals("state"), field,
-					LocalizationHelper
-							.getMessage(AccountI18nEnum.FORM_BILLING_STATE), 0,
-					1);
-
-			this.addressLayout
-					.addComponent(
-							propertyId.equals("postalcode"),
-							field,
-							LocalizationHelper
-									.getMessage(AccountI18nEnum.FORM_BILLING_POSTAL_CODE),
-							1, 1);
-
-			this.addressLayout.addComponent(
-					propertyId.equals("billingcountry"), field,
-					LocalizationHelper
-							.getMessage(AccountI18nEnum.FORM_BILLING_COUNTRY),
-					0, 2);
-			this.addressLayout.addComponent(propertyId
-					.equals("shippingcountry"), field, LocalizationHelper
-					.getMessage(AccountI18nEnum.FORM_SHIPPING_COUNTRY), 1, 2);
-
-			this.addressLayout.addComponent(propertyId.equals("shippingstate"),
-					field, LocalizationHelper
-							.getMessage(AccountI18nEnum.FORM_SHIPPING_STATE),
-					0, 3);
-			this.addressLayout.addComponent(propertyId
-					.equals("shippingpostalcode"), field, LocalizationHelper
-					.getMessage(AccountI18nEnum.FORM_SHIPPING_POSTAL_CODE), 1,
-					3);
 		}
 	}
 }

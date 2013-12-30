@@ -34,7 +34,7 @@ public class ProjectInformationLayout implements IFormLayoutFactory {
 	private GridFormLayoutHelper moreInfoLayout;
 
 	@Override
-	public void attachField(final Object propertyId, final Field<?> field) {
+	public boolean attachField(final Object propertyId, final Field<?> field) {
 		if (propertyId.equals("homepage")) {
 			this.moreInfoLayout.addComponent(field, "Home Page", 0, 0,
 					Alignment.TOP_LEFT);
@@ -68,7 +68,11 @@ public class ProjectInformationLayout implements IFormLayoutFactory {
 		} else if (propertyId.equals("description")) {
 			this.moreInfoLayout.addComponent(field, "Description", 0, 5, 2,
 					UIConstants.DEFAULT_2XCONTROL_WIDTH, Alignment.TOP_LEFT);
+		} else {
+			return false;
 		}
+
+		return true;
 	}
 
 	@Override

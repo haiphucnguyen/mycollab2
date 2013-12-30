@@ -70,7 +70,7 @@ public class AssignTaskWindow extends Window {
 		editForm = new EditForm();
 		contentLayout.addComponent(editForm);
 		editForm.setBean(task);
-		
+
 		this.setContent(contentLayout);
 
 		center();
@@ -181,7 +181,7 @@ public class AssignTaskWindow extends Window {
 			}
 
 			@Override
-			public void attachField(Object propertyId, Field<?> field) {
+			public boolean attachField(Object propertyId, Field<?> field) {
 				if (propertyId.equals("assignuser")) {
 					informationLayout.addComponent(field, LocalizationHelper
 							.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD), 0,
@@ -189,7 +189,11 @@ public class AssignTaskWindow extends Window {
 				} else if (propertyId.equals("comment")) {
 					informationLayout.addComponent(field, "Comments", 0, 1, 2,
 							"100%", Alignment.MIDDLE_LEFT);
+				} else {
+					return false;
 				}
+
+				return true;
 			}
 		}
 

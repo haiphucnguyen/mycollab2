@@ -185,7 +185,7 @@ public class ApproveInputWindow extends Window {
 			}
 
 			@Override
-			public void attachField(final Object propertyId,
+			public boolean attachField(final Object propertyId,
 					final Field<?> field) {
 				if (propertyId.equals("assignuser")) {
 					this.informationLayout
@@ -197,7 +197,11 @@ public class ApproveInputWindow extends Window {
 				} else if (propertyId.equals("comment")) {
 					this.informationLayout.addComponent(field, "Comments", 0,
 							1, 2, "100%", Alignment.MIDDLE_LEFT);
+				} else {
+					return false;
 				}
+
+				return true;
 			}
 		}
 

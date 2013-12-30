@@ -179,7 +179,7 @@ public class AssignTaskGroupWindow extends Window {
 			}
 
 			@Override
-			public void attachField(Object propertyId, Field<?> field) {
+			public boolean attachField(Object propertyId, Field<?> field) {
 				if (propertyId.equals("owner")) {
 					informationLayout.addComponent(field, LocalizationHelper
 							.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD), 0,
@@ -187,7 +187,11 @@ public class AssignTaskGroupWindow extends Window {
 				} else if (propertyId.equals("comment")) {
 					informationLayout.addComponent(field, "Comment", 0, 1, 2,
 							"100%");
+				} else {
+					return false;
 				}
+
+				return true;
 			}
 		}
 

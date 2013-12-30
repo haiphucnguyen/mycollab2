@@ -196,7 +196,7 @@ public class ProjectAddWindow extends Window {
 		}
 
 		@Override
-		public void attachField(final Object propertyId, final Field<?> field) {
+		public boolean attachField(final Object propertyId, final Field<?> field) {
 			if (propertyId.equals("name")) {
 				this.informationLayout
 						.addComponent(field, "Project Name", 0, 0);
@@ -215,7 +215,11 @@ public class ProjectAddWindow extends Window {
 			} else if (propertyId.equals("description")) {
 				this.informationLayout.addComponent(field, "Description", 0, 3,
 						2, "100%", Alignment.MIDDLE_LEFT);
+			} else {
+				return false;
 			}
+
+			return true;
 
 		}
 	}

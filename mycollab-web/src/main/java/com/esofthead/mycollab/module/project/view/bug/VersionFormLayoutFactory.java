@@ -46,7 +46,7 @@ public class VersionFormLayoutFactory implements IFormLayoutFactory {
 	}
 
 	@Override
-	public void attachField(final Object propertyId, final Field<?> field) {
+	public boolean attachField(final Object propertyId, final Field<?> field) {
 		if (propertyId.equals("versionname")) {
 			this.informationLayout.addComponent(field, "Version Name", 0, 0, 2,
 					"100%");
@@ -55,6 +55,10 @@ public class VersionFormLayoutFactory implements IFormLayoutFactory {
 					"100%");
 		} else if (propertyId.equals("duedate")) {
 			this.informationLayout.addComponent(field, "Due Date", 0, 2);
+		} else {
+			return false;
 		}
+
+		return true;
 	}
 }

@@ -101,44 +101,44 @@ public class MassUpdateLeadWindow extends MassUpdateWindow<Lead> {
 		// primary/other city, primary/other state, primary/other postal
 		// code, primary/other country
 		@Override
-		public void attachField(final Object propertyId, final Field<?> field) {
+		public boolean attachField(final Object propertyId, final Field<?> field) {
 
-			this.informationLayout.addComponent(propertyId.equals("title"),
-					field, "Title", 0, 0);
-			this.informationLayout.addComponent(
-					propertyId.equals("accountname"), field, "Account Name", 1,
-					0);
-			this.informationLayout.addComponent(propertyId.equals("source"),
-					field, "Lead Source", 0, 1);
-			this.informationLayout.addComponent(propertyId.equals("industry"),
-					field, "Industry", 1, 1);
+			if (propertyId.equals("title")) {
+				this.informationLayout.addComponent(field, "Title", 0, 0);
+			} else if (propertyId.equals("accountname")) {
+				this.informationLayout
+						.addComponent(field, "Account Name", 1, 0);
+			} else if (propertyId.equals("source")) {
+				this.informationLayout.addComponent(field, "Lead Source", 0, 1);
+			} else if (propertyId.equals("industry")) {
+				this.informationLayout.addComponent(field, "Industry", 1, 1);
+			} else if (propertyId.equals("status")) {
+				this.informationLayout.addComponent(field, "Status", 0, 2);
+			} else if (propertyId.equals("assignuser")) {
+				this.informationLayout.addComponent(field, LocalizationHelper
+						.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD), 1, 2);
+			} else if (propertyId.equals("primcity")) {
+				this.addressLayout.addComponent(field, "City", 0, 0);
+			} else if (propertyId.equals("primstate")) {
+				this.addressLayout.addComponent(field, "State", 1, 0);
+			} else if (propertyId.equals("primpostalcode")) {
+				this.addressLayout.addComponent(field, "Postal Code", 0, 1);
+			} else if (propertyId.equals("primcountry")) {
+				this.addressLayout.addComponent(field, "Country", 1, 1);
+			} else if (propertyId.equals("othercity")) {
+				this.addressLayout.addComponent(field, "Other City", 0, 2);
+			} else if (propertyId.equals("otherstate")) {
+				this.addressLayout.addComponent(field, "Other State", 1, 2);
+			} else if (propertyId.equals("otherpostalcode")) {
+				this.addressLayout.addComponent(field, "Other Postal Code", 0,
+						3);
+			} else if (propertyId.equals("othercountry")) {
+				this.addressLayout.addComponent(field, "Other Country", 1, 3);
+			} else {
+				return false;
+			}
 
-			this.informationLayout.addComponent(propertyId.equals("status"),
-					field, "Status", 0, 2);
-			this.informationLayout.addComponent(
-					propertyId.equals("assignuser"), field, LocalizationHelper
-							.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD), 1,
-					2);
-
-			this.addressLayout.addComponent(propertyId.equals("primcity"),
-					field, "City", 0, 0);
-			this.addressLayout.addComponent(propertyId.equals("primstate"),
-					field, "State", 1, 0);
-			this.addressLayout.addComponent(
-					propertyId.equals("primpostalcode"), field, "Postal Code",
-					0, 1);
-			this.addressLayout.addComponent(propertyId.equals("primcountry"),
-					field, "Country", 1, 1);
-
-			this.addressLayout.addComponent(propertyId.equals("othercity"),
-					field, "Other City", 0, 2);
-			this.addressLayout.addComponent(propertyId.equals("otherstate"),
-					field, "Other State", 1, 2);
-			this.addressLayout.addComponent(
-					propertyId.equals("otherpostalcode"), field,
-					"Other Postal Code", 0, 3);
-			this.addressLayout.addComponent(propertyId.equals("othercountry"),
-					field, "Other Country", 1, 3);
+			return true;
 		}
 	}
 }

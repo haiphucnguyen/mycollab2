@@ -88,7 +88,7 @@ public class MassUpdateCaseWindow extends MassUpdateWindow<CaseWithBLOBs> {
 
 		// priority, status, account name, origin, type, reason, assignuser
 		@Override
-		public void attachField(final Object propertyId, final Field<?> field) {
+		public boolean attachField(final Object propertyId, final Field<?> field) {
 			if (propertyId.equals("priority")) {
 				this.informationLayout.addComponent(field, "Priority", 0, 0);
 			} else if (propertyId.equals("status")) {
@@ -106,7 +106,11 @@ public class MassUpdateCaseWindow extends MassUpdateWindow<CaseWithBLOBs> {
 				this.informationLayout.addComponent(field, LocalizationHelper
 						.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD), 0, 3,
 						2, "297px", Alignment.TOP_LEFT);
+			} else {
+				return false;
 			}
+
+			return true;
 		}
 	}
 }

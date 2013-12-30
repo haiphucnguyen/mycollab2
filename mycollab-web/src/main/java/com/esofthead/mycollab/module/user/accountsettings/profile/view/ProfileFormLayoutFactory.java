@@ -87,8 +87,8 @@ public abstract class ProfileFormLayoutFactory implements IFormLayoutFactory {
 	protected abstract Layout createBottomPanel();
 
 	@Override
-	public void attachField(final Object propertyId, final Field field) {
-		this.userInformationLayout.attachField(propertyId, field);
+	public boolean attachField(final Object propertyId, final Field<?> field) {
+		return this.userInformationLayout.attachField(propertyId, field);
 	}
 
 	public static class UserInformationLayout implements IFormLayoutFactory {
@@ -151,7 +151,7 @@ public abstract class ProfileFormLayoutFactory implements IFormLayoutFactory {
 		}
 
 		@Override
-		public void attachField(final Object propertyId, final Field field) {
+		public boolean attachField(final Object propertyId, final Field field) {
 			if (!ProfileFormLayoutFactory.isLoadEdit) {
 				if (propertyId.equals("email")) {
 					userInformationLayout.getBasicInformationLayout()
@@ -159,7 +159,11 @@ public abstract class ProfileFormLayoutFactory implements IFormLayoutFactory {
 				} else if (propertyId.equals("roleid")) {
 					userInformationLayout.getBasicInformationLayout()
 							.addComponent(field, "Role", 1, 0);
+				} else {
+					return false;
 				}
+
+				return true;
 			} else {
 				if (propertyId.equals("firstname")) {
 					this.basicInformationLayout.addComponent(field,
@@ -206,7 +210,11 @@ public abstract class ProfileFormLayoutFactory implements IFormLayoutFactory {
 				} else if (propertyId.equals("skypecontact")) {
 					this.contactInformationLayout.addComponent(field, "Skype",
 							0, 2, 2, "262px", Alignment.MIDDLE_LEFT);
+				} else {
+					return false;
 				}
+
+				return true;
 			}
 		}
 
@@ -234,14 +242,19 @@ public abstract class ProfileFormLayoutFactory implements IFormLayoutFactory {
 			}
 
 			@Override
-			public void attachField(final Object propertyId, final Field field) {
+			public boolean attachField(final Object propertyId,
+					final Field<?> field) {
 				if (propertyId.equals("email")) {
 					this.basicInformationLayout.addComponent(field, "Email", 0,
 							0, "167px");
 				} else if (propertyId.equals("roleid")) {
 					this.basicInformationLayout.addComponent(field, "Role", 1,
 							0);
+				} else {
+					return false;
 				}
+
+				return true;
 			}
 
 			public GridFormLayoutHelper getBasicInformationLayout() {

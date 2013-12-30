@@ -77,8 +77,8 @@ public abstract class TaskGroupFormLayoutFactory implements IFormLayoutFactory {
 	}
 
 	@Override
-	public void attachField(final Object propertyId, final Field<?> field) {
-		this.informationLayout.attachField(propertyId, field);
+	public boolean attachField(final Object propertyId, final Field<?> field) {
+		return this.informationLayout.attachField(propertyId, field);
 	}
 
 	protected abstract Layout createTopPanel();
@@ -106,7 +106,7 @@ public abstract class TaskGroupFormLayoutFactory implements IFormLayoutFactory {
 		}
 
 		@Override
-		public void attachField(final Object propertyId, final Field<?> field) {
+		public boolean attachField(final Object propertyId, final Field<?> field) {
 			if (propertyId.equals("name")) {
 				this.informationLayout.addComponent(field, "Name", 0, 0, 2,
 						"100%");
@@ -124,7 +124,11 @@ public abstract class TaskGroupFormLayoutFactory implements IFormLayoutFactory {
 			} else if (propertyId.equals("numOpenTasks")) {
 				this.informationLayout.addComponent(field,
 						"Number of open tasks", 1, 3);
+			} else {
+				return false;
 			}
+
+			return true;
 		}
 	}
 }
