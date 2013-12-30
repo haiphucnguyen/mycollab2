@@ -16,6 +16,7 @@
  */
 package com.esofthead.mycollab.module.project.view.task;
 
+import com.vaadin.server.Sizeable;
 import com.vaadin.ui.*;
 import org.vaadin.hene.popupbutton.PopupButton;
 
@@ -205,12 +206,13 @@ public class TaskGroupDisplayViewImpl extends AbstractPageView implements
 			}
 		});
 		exportButtonControl = new SplitButton(exportBtn);
-		exportButtonControl.setStyleName(UIConstants.THEME_BLUE_LINK);
+		exportButtonControl.addStyleName(UIConstants.THEME_BLUE_LINK);
 		exportButtonControl.setIcon(MyCollabResource
 				.newResource("icons/16/export.png"));
 
 		VerticalLayout popupButtonsControl = new VerticalLayout();
 		exportButtonControl.setContent(popupButtonsControl);
+        exportButtonControl.setWidth(Sizeable.SIZE_UNDEFINED, Unit.PIXELS);
 
 		Button exportPdfBtn = new Button("Pdf");
 		FileDownloader pdfDownloader = new FileDownloader(

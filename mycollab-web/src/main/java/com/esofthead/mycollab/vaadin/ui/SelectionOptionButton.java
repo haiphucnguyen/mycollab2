@@ -98,6 +98,7 @@ public class SelectionOptionButton extends SplitButton implements
 				SelectionOptionButton.this
 						.setIcon(SelectionOptionButton.selectIcon);
 				fireSelectAll();
+                SelectionOptionButton.this.setPopupVisible(false);
 			}
 		});
 		selectContent.addComponent(selectAllBtn);
@@ -109,6 +110,7 @@ public class SelectionOptionButton extends SplitButton implements
 				SelectionOptionButton.this
 						.setIcon(SelectionOptionButton.selectIcon);
 				fireSelectCurrentPage();
+                SelectionOptionButton.this.setPopupVisible(false);
 			}
 		});
 		selectContent.addComponent(selectThisPageBtn);
@@ -121,6 +123,7 @@ public class SelectionOptionButton extends SplitButton implements
 						SelectionOptionButton.this
 								.setIcon(SelectionOptionButton.unSelectIcon);
 						fireDeselect();
+                        SelectionOptionButton.this.setPopupVisible(false);
 					}
 				});
 		selectContent.addComponent(deSelectBtn);

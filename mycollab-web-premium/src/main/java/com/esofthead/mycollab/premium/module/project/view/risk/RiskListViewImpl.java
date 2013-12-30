@@ -3,6 +3,7 @@ package com.esofthead.mycollab.premium.module.project.view.risk;
 import java.util.Arrays;
 import java.util.GregorianCalendar;
 
+import com.vaadin.server.Sizeable;
 import org.jsoup.Jsoup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -243,6 +244,7 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
 		layoutWrapper.addComponent(layout);
 
 		this.selectOptionButton = new SelectionOptionButton(this.tableItem);
+        this.selectOptionButton.setWidth(Sizeable.SIZE_UNDEFINED, Unit.PIXELS);
 		layout.addComponent(this.selectOptionButton);
 
 		final Button deleteBtn = new Button(
@@ -273,8 +275,11 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
 								.getMessage(GenericI18Enum.BUTTON_MASSUPDATE),
 						CurrentProjectVariables
 								.canWrite(ProjectRolePermissionCollections.RISKS));
+        this.tableActionControls.setVisible(false);
+        this.tableActionControls.setWidth(Sizeable.SIZE_UNDEFINED, Unit.PIXELS);
 
 		layout.addComponent(this.tableActionControls);
+        this.selectedItemsNumberLabel.setWidth("100%");
 		layout.addComponent(this.selectedItemsNumberLabel);
 		layout.setComponentAlignment(this.selectedItemsNumberLabel,
 				Alignment.MIDDLE_CENTER);

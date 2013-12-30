@@ -3,6 +3,7 @@ package com.esofthead.mycollab.premium.module.project.view.problem;
 import java.util.Arrays;
 import java.util.GregorianCalendar;
 
+import com.vaadin.server.Sizeable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vaadin.teemu.ratingstars.RatingStars;
@@ -242,6 +243,7 @@ public class ProblemListViewImpl extends AbstractPageView implements
 		layoutWrapper.addComponent(layout);
 
 		this.selectOptionButton = new SelectionOptionButton(this.tableItem);
+        this.selectOptionButton.setWidth(Sizeable.SIZE_UNDEFINED, Unit.PIXELS);
 		layout.addComponent(this.selectOptionButton);
 
 		final Button deleteBtn = new Button(
@@ -273,8 +275,10 @@ public class ProblemListViewImpl extends AbstractPageView implements
 						CurrentProjectVariables
 								.canWrite(ProjectRolePermissionCollections.PROBLEMS));
 		this.tableActionControls.setVisible(false);
+        this.tableActionControls.setWidth(Sizeable.SIZE_UNDEFINED, Unit.PIXELS);
 
 		layout.addComponent(this.tableActionControls);
+        this.selectedItemsNumberLabel.setWidth("100%");
 		layout.addComponent(this.selectedItemsNumberLabel);
 		layout.setComponentAlignment(this.selectedItemsNumberLabel,
 				Alignment.MIDDLE_CENTER);
