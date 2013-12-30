@@ -46,6 +46,7 @@ import com.vaadin.ui.themes.Reindeer;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class ComponentSearchPanel extends
 		GenericSearchPanel<ComponentSearchCriteria> {
@@ -75,8 +76,8 @@ public class ComponentSearchPanel extends
 		layout.setSpacing(true);
 		layout.setMargin(true);
 
-		final Image titleIcon = new Image(null, MyCollabResource
-				.newResource("icons/24/project/component.png"));
+		final Image titleIcon = new Image(null,
+				MyCollabResource.newResource("icons/24/project/component.png"));
 		layout.addComponent(titleIcon);
 		layout.setComponentAlignment(titleIcon, Alignment.MIDDLE_LEFT);
 

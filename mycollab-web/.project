@@ -15,6 +15,7 @@
     <project>mycollab-scheduler</project>
     <project>mycollab-test</project>
     <project>mycollab-server-runner</project>
+    <project>mycollab-mobile</project>
   </projects>
   <buildSpec>
     <buildCommand>
