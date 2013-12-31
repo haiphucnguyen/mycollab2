@@ -1,10 +1,99 @@
-@import "../reindeer/reindeer.scss";
 
 /* This contains all of your theme.*/
 /* If somebody wants to extend the theme she will include this mixin. */
-@mixin mycollab-mobile {
-  /* Include all the styles from the reindeer theme */
-  @include reindeer;
+.v-app {
+    font: 12px Arial,Verdana,Helvetica,sans-serif;
+}
+.v-app,
+.v-window,
+.v-popupview-popup,
+.v-app input,
+.v-app button,
+.v-app textarea,
+.v-window input,
+.v-window button,
+.v-window textarea,
+.v-popupview-popup input,
+.v-popupview-popup button,
+.v-popupview-popup textarea,
+.v-filterselect-suggestpopup,
+.v-datefield-popup,
+.v-datefield-calendarpanel-header button,
+.v-contextmenu,
+.v-Notification,
+.v-menubar-submenu,
+.v-table-header-drag,
+.v-filterselect-select-button .v-filterselect-input,
+.v-drag-element,
+.v-label,
+div.v-widget {
+	font-size: 12px;
+}
 
-  /* Insert your theme rules here */
+input {
+    box-shadow: none;
+}
+
+.v-generated-body {
+    background: none repeat scroll 0% 0% rgb(245, 245, 245);
+}
+
+@mixin mycollab-mobile {
+    /* Include all the styles from the reindeer theme */
+
+    .login-view {
+        overflow: auto;
+
+        .content-wrapper {
+            margin: 0 auto;
+            display: block;
+
+            .intro-text {
+                text-align: center;
+            }
+        }
+
+        .v-textfield {
+            padding: 15px 5px;
+            border: 1px solid #c7c7c7;
+            font-size: 15px;
+            color: #c7c7c7;
+        }
+    }
+
+    .v-button {
+        line-height: normal;
+        box-shadow: none;
+        padding: 0px;
+    }
+
+    .v-button.big-btn {
+        font-size: 15px;
+
+        .v-button-wrap {
+            padding: 15px 0px;
+
+            .v-button-caption {
+                font-size: 15px;
+            }
+        }
+    }
+
+    .v-button.blue {
+        background-color: #49a3e1;
+        border: 1px solid #226899;
+
+        .v-button-caption {
+            color: white;
+        }
+    }
+
+    .v-button.gray {
+        background-color: #9b9b9b;
+        border: 1px solid #616161;
+
+        .v-button-caption {
+            color: white;
+        }
+    }
 }
