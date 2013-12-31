@@ -29,18 +29,18 @@ import java.util.Set;
 public abstract class AbstractBeanFieldGroupEditFieldFactory<B> implements
 		IBeanFieldGroupFieldFactory<B>, CommitHandler {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 	protected GenericBeanForm<B> attachForm;
 	protected FieldGroup fieldGroup;
-    private final Validator validation;
+	private final Validator validation;
 
 	public AbstractBeanFieldGroupEditFieldFactory(GenericBeanForm<B> form) {
 		this.attachForm = form;
 		this.fieldGroup = new FieldGroup();
 		this.fieldGroup.setBuffered(true);
-        this.fieldGroup.addCommitHandler(this);
-        validation = ApplicationContextUtil
-                .getSpringBean(LocalValidatorFactoryBean.class);
+		this.fieldGroup.addCommitHandler(this);
+		validation = ApplicationContextUtil
+				.getSpringBean(LocalValidatorFactoryBean.class);
 	}
 
 	@Override
@@ -77,56 +77,63 @@ public abstract class AbstractBeanFieldGroupEditFieldFactory<B> implements
 	public void commit() {
 		try {
 			fieldGroup.commit();
-            attachForm.setValid(true);
+			attachForm.setValid(true);
 		} catch (CommitException e) {
-            attachForm.setValid(false);
-        } catch (Exception e) {
+			e.printStackTrace();
+			attachForm.setValid(false);
+		} catch (Exception e) {
 			throw new MyCollabException(e);
 		}
 	}
 
-    @Override
-    public void preCommit(FieldGroup.CommitEvent commitEvent) throws CommitException {
+	@Override
+	public void preCommit(FieldGroup.CommitEvent commitEvent)
+			throws CommitException {
 
-    }
+	}
 
-    @Override
-    public void postCommit(FieldGroup.CommitEvent commitEvent) throws CommitException {
-        for (Object propertyId : fieldGroup.getBoundPropertyIds()) {
-            fieldGroup.getField(propertyId).removeStyleName("errorField");
-        }
-        Set<ConstraintViolation<B>> violations = validation.validate(attachForm.getBean());
-        if (violations.size() > 0) {
-            StringBuilder errorMsg = new StringBuilder();
+	@Override
+	public void postCommit(FieldGroup.CommitEvent commitEvent)
+			throws CommitException {
+		for (Object propertyId : fieldGroup.getBoundPropertyIds()) {
+			fieldGroup.getField(propertyId).removeStyleName("errorField");
+		}
+		Set<ConstraintViolation<B>> violations = validation.validate(attachForm
+				.getBean());
+		if (violations.size() > 0) {
+			StringBuilder errorMsg = new StringBuilder();
 
-            for (@SuppressWarnings("rawtypes")
-            ConstraintViolation violation : violations) {
-                errorMsg.append(violation.getMessage()).append("<br/>");
+			for (@SuppressWarnings("rawtypes")
+			ConstraintViolation violation : violations) {
+				errorMsg.append(violation.getMessage()).append("<br/>");
 
-                if (violation.getPropertyPath() != null
-                        && !violation.getPropertyPath().toString().equals("")) {
-                    fieldGroup.getField(violation.getPropertyPath().toString()).addStyleName("errorField");
-                } else {
-                    Annotation validateAnno = violation
-                            .getConstraintDescriptor().getAnnotation();
-                    if (validateAnno instanceof DateComparision) {
-                        String firstDateField = ((DateComparision) validateAnno)
-                                .firstDateField();
-                        String lastDateField = ((DateComparision) validateAnno)
-                                .lastDateField();
+				if (violation.getPropertyPath() != null
+						&& !violation.getPropertyPath().toString().equals("")) {
+					fieldGroup.getField(violation.getPropertyPath().toString())
+							.addStyleName("errorField");
+				} else {
+					Annotation validateAnno = violation
+							.getConstraintDescriptor().getAnnotation();
+					if (validateAnno instanceof DateComparision) {
+						String firstDateField = ((DateComparision) validateAnno)
+								.firstDateField();
+						String lastDateField = ((DateComparision) validateAnno)
+								.lastDateField();
 
-                        fieldGroup.getField(firstDateField).addStyleName("errorField");
-                        fieldGroup.getField(lastDateField).addStyleName("errorField");
-                    }
-                }
+						fieldGroup.getField(firstDateField).addStyleName(
+								"errorField");
+						fieldGroup.getField(lastDateField).addStyleName(
+								"errorField");
+					}
+				}
 
-            }
+			}
 
-            NotificationUtil.showErrorNotification(errorMsg.toString());
-            attachForm.setValid(false);
-            throw new CommitException(errorMsg.toString());
-        }
-    }
+			NotificationUtil.showErrorNotification(errorMsg.toString());
+			attachForm.setValid(false);
+			throw new CommitException(errorMsg.toString());
+		}
+	}
 
 	abstract protected Field<?> onCreateField(Object propertyId);
 }
