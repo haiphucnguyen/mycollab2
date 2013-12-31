@@ -23,6 +23,8 @@ import org.apache.commons.beanutils.PropertyUtils;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
+import com.vaadin.data.Buffered.SourceException;
+import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.shared.ui.datefield.Resolution;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomField;
@@ -35,7 +37,7 @@ import com.vaadin.ui.PopupDateField;
  * @since 2.0
  * 
  */
-public class DateTimePicker<B> extends CustomField {
+public class DateTimePicker<B> extends CustomField<Date> {
 	private static final long serialVersionUID = 1L;
 
 	public static final long ONE_MINUTE_IN_MILLIS = 60000;
@@ -64,6 +66,13 @@ public class DateTimePicker<B> extends CustomField {
 					* ONE_MINUTE_IN_MILLIS;
 		}
 		return allMinus;
+	}
+
+	@Override
+	public void commit() throws SourceException, InvalidValueException {
+		Date internalValue = getValue();
+		super.setInternalValue(internalValue);
+		super.commit();
 	}
 
 	@Override

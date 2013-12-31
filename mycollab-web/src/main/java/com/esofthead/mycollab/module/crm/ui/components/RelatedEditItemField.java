@@ -153,7 +153,7 @@ public class RelatedEditItemField extends CompoundCustomField<String> implements
 					PropertyUtils.setProperty(RelatedEditItemField.this.bean,
 							"typeid", null);
 				} catch (Exception e) {
-					e.printStackTrace();
+					log.error("Error while saving type", e);
 				}
 			}
 		});

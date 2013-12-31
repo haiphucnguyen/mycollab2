@@ -53,6 +53,8 @@ public class AssignmentAddViewImpl extends AbstractEditItemComp<Task> implements
 		AssignmentAddView {
 	private static final long serialVersionUID = 1L;
 
+	private RelatedEditItemField relatedField;
+
 	@Override
 	protected String initFormTitle() {
 		return (beanItem.getId() == null) ? "Create Assignment" : beanItem
@@ -92,6 +94,12 @@ public class AssignmentAddViewImpl extends AbstractEditItemComp<Task> implements
 
 		public AssignmentEditFormFieldFactory(GenericBeanForm<Task> form) {
 			super(form);
+
+			relatedField = new RelatedEditItemField(new String[] {
+					CrmTypeConstants.ACCOUNT, CrmTypeConstants.CAMPAIGN,
+					CrmTypeConstants.CONTACT, CrmTypeConstants.LEAD,
+					CrmTypeConstants.OPPORTUNITY, CrmTypeConstants.CASE },
+					attachForm.getBean());
 		}
 
 		@Override
@@ -128,17 +136,8 @@ public class AssignmentAddViewImpl extends AbstractEditItemComp<Task> implements
 				tf.setRequired(true);
 				tf.setRequiredError("Subject must not be null");
 				return tf;
-			} else if (propertyId.equals("type")) {
-				RelatedEditItemField field = new RelatedEditItemField(
-						new String[] { CrmTypeConstants.ACCOUNT,
-								CrmTypeConstants.CAMPAIGN,
-								CrmTypeConstants.CONTACT,
-								CrmTypeConstants.LEAD,
-								CrmTypeConstants.OPPORTUNITY,
-								CrmTypeConstants.CASE }, attachForm.getBean());
-				// field.setType(attachForm.getBean().getType());
-
-				return field;
+			} else if (propertyId.equals("type") || propertyId.equals("typeid")) {
+				return relatedField;
 			} else if (propertyId.equals("assignuser")) {
 				ActiveUserComboBox userBox = new ActiveUserComboBox();
 				userBox.select(attachForm.getBean().getAssignuser());
