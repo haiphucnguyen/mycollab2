@@ -18,7 +18,7 @@ public class MyCollabUIProvider extends UIProvider {
 	public Class<? extends UI> getUIClass(UIClassSelectionEvent event) {
 		String userAgent = event.getRequest().getHeader("user-agent")
 				.toLowerCase();
-		if (userAgent.contains("webkit")) {
+		if (userAgent.contains("mobile")) {
 			return MobileUI.class;
 		} else {
 			return MyCollabApplication.class;

@@ -1,7 +1,8 @@
 package com.esofthead.mycollab.mobile;
 
+import com.vaadin.addon.touchkit.ui.NavigationManager;
+import com.vaadin.annotations.Theme;
 import com.vaadin.server.VaadinRequest;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
 
 /**
@@ -10,13 +11,15 @@ import com.vaadin.ui.UI;
  * @since 3.0
  * 
  */
+@Theme("mycollab-mobile")
 public class MobileUI extends UI {
 	private static final long serialVersionUID = 1L;
 
 	@Override
 	protected void init(VaadinRequest request) {
-		Label l = new Label("A");
-		this.setContent(l);
+        NavigationManager manager = new NavigationManager(new LoginView());
+
+        setContent(manager);
 	}
 
 }
