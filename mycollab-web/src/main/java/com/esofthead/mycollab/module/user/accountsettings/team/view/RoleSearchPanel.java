@@ -41,6 +41,7 @@ import com.vaadin.ui.themes.Reindeer;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class RoleSearchPanel extends GenericSearchPanel<RoleSearchCriteria> {
 	private static final long serialVersionUID = 1L;

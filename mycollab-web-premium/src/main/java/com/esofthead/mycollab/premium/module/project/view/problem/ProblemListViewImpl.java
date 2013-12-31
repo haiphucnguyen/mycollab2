@@ -3,7 +3,6 @@ package com.esofthead.mycollab.premium.module.project.view.problem;
 import java.util.Arrays;
 import java.util.GregorianCalendar;
 
-import com.vaadin.server.Sizeable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vaadin.teemu.ratingstars.RatingStars;
@@ -28,7 +27,8 @@ import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
 import com.esofthead.mycollab.vaadin.events.MassItemActionHandler;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
-import com.esofthead.mycollab.vaadin.ui.PopupButtonControl;
+import com.esofthead.mycollab.vaadin.ui.CheckBoxDecor;
+import com.esofthead.mycollab.vaadin.ui.DefaultMassItemActionHandlersContainer;
 import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
@@ -45,11 +45,10 @@ import com.hp.gagawa.java.elements.Td;
 import com.hp.gagawa.java.elements.Tr;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
-import com.vaadin.shared.ui.MarginInfo;
+import com.vaadin.server.Sizeable;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
@@ -59,6 +58,12 @@ import com.vaadin.ui.Table.ColumnGenerator;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @ViewComponent
 public class ProblemListViewImpl extends AbstractPageView implements
 		ProblemListView {
@@ -68,7 +73,7 @@ public class ProblemListViewImpl extends AbstractPageView implements
 	private SelectionOptionButton selectOptionButton;
 	private DefaultPagedBeanTable<ProblemService, ProblemSearchCriteria, SimpleProblem> tableItem;
 	private final VerticalLayout problemListLayout;
-	private PopupButtonControl tableActionControls;
+	private DefaultMassItemActionHandlersContainer tableActionControls;
 	private final Label selectedItemsNumberLabel = new Label();
 	private static Logger log = LoggerFactory
 			.getLogger(ProblemListViewImpl.class);
@@ -100,7 +105,7 @@ public class ProblemListViewImpl extends AbstractPageView implements
 			@Override
 			public Object generateCell(final Table source, final Object itemId,
 					final Object columnId) {
-				final CheckBox cb = new CheckBox("", false);
+				final CheckBoxDecor cb = new CheckBoxDecor("", false);
 				cb.setImmediate(true);
 				cb.addValueChangeListener(new ValueChangeListener() {
 					private static final long serialVersionUID = 1L;
@@ -243,7 +248,7 @@ public class ProblemListViewImpl extends AbstractPageView implements
 		layoutWrapper.addComponent(layout);
 
 		this.selectOptionButton = new SelectionOptionButton(this.tableItem);
-        this.selectOptionButton.setWidth(Sizeable.SIZE_UNDEFINED, Unit.PIXELS);
+		this.selectOptionButton.setWidth(Sizeable.SIZE_UNDEFINED, Unit.PIXELS);
 		layout.addComponent(this.selectOptionButton);
 
 		final Button deleteBtn = new Button(
@@ -251,34 +256,37 @@ public class ProblemListViewImpl extends AbstractPageView implements
 		deleteBtn.setEnabled(CurrentProjectVariables
 				.canAccess(ProjectRolePermissionCollections.PROBLEMS));
 
-		this.tableActionControls = new PopupButtonControl(
-				MassItemActionHandler.DELETE_ACTION, deleteBtn);
-		this.tableActionControls.addOptionItem(
-				MassItemActionHandler.MAIL_ACTION,
-				LocalizationHelper.getMessage(GenericI18Enum.BUTTON_MAIL));
-		this.tableActionControls
-				.addOptionItem(MassItemActionHandler.EXPORT_CSV_ACTION,
-						LocalizationHelper
-								.getMessage(GenericI18Enum.BUTTON_EXPORT_CSV));
-		this.tableActionControls
-				.addOptionItem(MassItemActionHandler.EXPORT_PDF_ACTION,
-						LocalizationHelper
-								.getMessage(GenericI18Enum.BUTTON_EXPORT_PDF));
-		this.tableActionControls.addOptionItem(
-				MassItemActionHandler.EXPORT_EXCEL_ACTION, LocalizationHelper
-						.getMessage(GenericI18Enum.BUTTON_EXPORT_EXCEL));
-		this.tableActionControls
-				.addOptionItem(
-						MassItemActionHandler.MASS_UPDATE_ACTION,
-						LocalizationHelper
-								.getMessage(GenericI18Enum.BUTTON_MASSUPDATE),
-						CurrentProjectVariables
-								.canWrite(ProjectRolePermissionCollections.PROBLEMS));
+		this.tableActionControls = new DefaultMassItemActionHandlersContainer();
+		tableActionControls.addActionItem(MassItemActionHandler.DELETE_ACTION,
+				MyCollabResource.newResource("icons/16/action/delete.png"),
+				"delete");
+
+		tableActionControls.addActionItem(MassItemActionHandler.MAIL_ACTION,
+				MyCollabResource.newResource("icons/16/action/mail.png"),
+				"mail");
+		tableActionControls.addDownloadActionItem(
+				MassItemActionHandler.EXPORT_PDF_ACTION,
+				MyCollabResource.newResource("icons/16/action/pdf.png"),
+				"export", "export.pdf");
+		tableActionControls.addDownloadActionItem(
+				MassItemActionHandler.EXPORT_EXCEL_ACTION,
+				MyCollabResource.newResource("icons/16/action/excel.png"),
+				"export", "export.xlsx");
+		tableActionControls.addDownloadActionItem(
+				MassItemActionHandler.EXPORT_CSV_ACTION,
+				MyCollabResource.newResource("icons/16/action/csv.png"),
+				"export", "export.csv");
+
+		tableActionControls.addActionItem(
+				MassItemActionHandler.MASS_UPDATE_ACTION,
+				MyCollabResource.newResource("icons/16/action/massupdate.png"),
+				"update");
+
 		this.tableActionControls.setVisible(false);
-        this.tableActionControls.setWidth(Sizeable.SIZE_UNDEFINED, Unit.PIXELS);
+		this.tableActionControls.setWidth(Sizeable.SIZE_UNDEFINED, Unit.PIXELS);
 
 		layout.addComponent(this.tableActionControls);
-        this.selectedItemsNumberLabel.setWidth("100%");
+		this.selectedItemsNumberLabel.setWidth("100%");
 		layout.addComponent(this.selectedItemsNumberLabel);
 		layout.setComponentAlignment(this.selectedItemsNumberLabel,
 				Alignment.MIDDLE_CENTER);
