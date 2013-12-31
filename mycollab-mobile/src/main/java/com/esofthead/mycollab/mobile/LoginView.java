@@ -42,18 +42,22 @@ public class LoginView extends CssLayout {
         CssLayout welcomeTextWrapper = new CssLayout();
         welcomeTextWrapper.setStyleName("welcometext-wrapper");
         welcomeTextWrapper.setWidth("100%");
+        welcomeTextWrapper.setHeight("15px");
         Label welcomeText = new Label("Welcome Back!");
+        welcomeText.setWidth("150px");
         welcomeTextWrapper.addComponent(welcomeText);
         contentLayout.addComponent(welcomeTextWrapper);
 
         EmailField emailField = new EmailField();
         emailField.setWidth("100%");
         emailField.setInputPrompt("E-mail Address");
+        emailField.setStyleName("email-input");
         contentLayout.addComponent(emailField);
 
         PasswordField pwdField = new PasswordField();
         pwdField.setWidth("100%");
         pwdField.setInputPrompt("Password");
+        pwdField.setStyleName("password-input");
         contentLayout.addComponent(pwdField);
 
         Button signInBtn = new Button("Sign In");
