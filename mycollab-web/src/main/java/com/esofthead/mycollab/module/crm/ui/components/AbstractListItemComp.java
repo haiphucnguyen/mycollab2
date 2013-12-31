@@ -95,12 +95,14 @@ public abstract class AbstractListItemComp<S extends SearchCriteria, B> extends
 		buildExtraControls();
 	}
 
+	@Override
 	public void disableActionControls() {
 		this.tableActionControls.setVisible(false);
 		this.selectOptionButton.setSelectedChecbox(false);
 		this.selectedItemsNumberLabel.setValue("");
 	}
 
+	@Override
 	public void enableActionControls(final int numOfSelectedItems) {
 		this.tableActionControls.setVisible(true);
 		this.selectedItemsNumberLabel.setValue(LocalizationHelper

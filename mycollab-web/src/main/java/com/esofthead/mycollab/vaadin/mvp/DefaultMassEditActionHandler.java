@@ -133,7 +133,7 @@ public abstract class DefaultMassEditActionHandler implements
 
 	protected abstract void onSelectExtra(String id);
 
-	protected abstract Class getReportModelClassType();
+	protected abstract Class<?> getReportModelClassType();
 
 	protected abstract String getReportTitle();
 }

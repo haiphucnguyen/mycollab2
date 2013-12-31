@@ -45,6 +45,8 @@ public class ProblemListPresenter
 
 	@Override
 	protected void postInitView() {
+		super.postInitView();
+
 		problemService = ApplicationContextUtil
 				.getSpringBean(ProblemService.class);
 
@@ -71,7 +73,7 @@ public class ProblemListPresenter
 					}
 
 					@Override
-					protected Class getReportModelClassType() {
+					protected Class<?> getReportModelClassType() {
 						return SimpleProblem.class;
 					}
 				});

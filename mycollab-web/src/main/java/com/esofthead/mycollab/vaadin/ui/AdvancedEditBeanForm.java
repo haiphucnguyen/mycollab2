@@ -35,12 +35,7 @@ public class AdvancedEditBeanForm<B> extends GenericBeanForm<B> implements
 		HasEditFormHandlers<B> {
 	private static final long serialVersionUID = 1L;
 
-
 	private List<EditFormHandler<B>> editFormHandlers;
-
-	public AdvancedEditBeanForm() {
-
-	}
 
 	/**
 	 * Validate attachForm against data
@@ -50,7 +45,7 @@ public class AdvancedEditBeanForm<B> extends GenericBeanForm<B> implements
 	 */
 	public boolean validateForm() {
 		fieldFactory.commit();
-        return isValid();
+		return isValid();
 	}
 
 	@Override

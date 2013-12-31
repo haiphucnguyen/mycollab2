@@ -45,6 +45,8 @@ public class RiskListPresenter extends
 
 	@Override
 	protected void postInitView() {
+		super.postInitView();
+
 		riskService = ApplicationContextUtil.getSpringBean(RiskService.class);
 
 		view.getPopupActionHandlers().addMassItemActionHandler(
@@ -70,7 +72,7 @@ public class RiskListPresenter extends
 					}
 
 					@Override
-					protected Class getReportModelClassType() {
+					protected Class<?> getReportModelClassType() {
 						return SimpleRisk.class;
 					}
 				});
