@@ -79,8 +79,8 @@ public abstract class AbstractBeanFieldGroupEditFieldFactory<B> implements
 			fieldGroup.commit();
 			attachForm.setValid(true);
 		} catch (CommitException e) {
-			e.printStackTrace();
 			attachForm.setValid(false);
+			NotificationUtil.showErrorNotification(e.getCause().getMessage());
 		} catch (Exception e) {
 			throw new MyCollabException(e);
 		}
@@ -89,15 +89,28 @@ public abstract class AbstractBeanFieldGroupEditFieldFactory<B> implements
 	@Override
 	public void preCommit(FieldGroup.CommitEvent commitEvent)
 			throws CommitException {
-
+		for (Object propertyId : fieldGroup.getBoundPropertyIds()) {
+			fieldGroup.getField(propertyId).removeStyleName("errorField");
+		}
+		StringBuilder errorMsg = new StringBuilder();
+		int violationCount = 0;
+		for (Field<?> f : commitEvent.getFieldBinder().getFields()) {
+			try {
+				f.validate();
+			} catch (com.vaadin.data.Validator.InvalidValueException e) {
+				violationCount++;
+				errorMsg.append(e.getHtmlMessage()).append("<br/>");
+				f.addStyleName("errorField");
+			}
+		}
+		if (violationCount > 0) {
+			throw new CommitException(errorMsg.toString());
+		}
 	}
 
 	@Override
 	public void postCommit(FieldGroup.CommitEvent commitEvent)
 			throws CommitException {
-		for (Object propertyId : fieldGroup.getBoundPropertyIds()) {
-			fieldGroup.getField(propertyId).removeStyleName("errorField");
-		}
 		Set<ConstraintViolation<B>> violations = validation.validate(attachForm
 				.getBean());
 		if (violations.size() > 0) {
@@ -128,9 +141,6 @@ public abstract class AbstractBeanFieldGroupEditFieldFactory<B> implements
 				}
 
 			}
-
-			NotificationUtil.showErrorNotification(errorMsg.toString());
-			attachForm.setValid(false);
 			throw new CommitException(errorMsg.toString());
 		}
 	}
