@@ -1,0 +1,42 @@
+@mixin common {
+    .v-app {
+        font: 12px Arial,Verdana,Helvetica,sans-serif;
+    }
+    .v-app,
+    .v-window,
+    .v-popupview-popup,
+    .v-app input,
+    .v-app button,
+    .v-app textarea,
+    .v-window input,
+    .v-window button,
+    .v-window textarea,
+    .v-popupview-popup input,
+    .v-popupview-popup button,
+    .v-popupview-popup textarea,
+    .v-filterselect-suggestpopup,
+    .v-datefield-popup,
+    .v-datefield-calendarpanel-header button,
+    .v-contextmenu,
+    .v-Notification,
+    .v-menubar-submenu,
+    .v-table-header-drag,
+    .v-filterselect-select-button .v-filterselect-input,
+    .v-drag-element,
+    .v-label,
+    div.v-widget {
+        font-size: 12px;
+    }
+
+    input {
+        box-shadow: none;
+    }
+
+    .v-generated-body {
+        background: none repeat scroll 0% 0% rgb(245, 245, 245);
+    }
+
+    div.v-vertical > .v-spacing, div.v-vertical > .v-expand > .v-spacing {
+        display: inline-block;
+    }
+}
