@@ -24,6 +24,7 @@ import com.esofthead.mycollab.module.crm.ui.components.RelatedEditItemField;
 import com.esofthead.mycollab.module.user.ui.components.ActiveUserComboBox;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
+import com.esofthead.mycollab.vaadin.ui.DummyCustomField;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
@@ -131,8 +132,9 @@ public class CallAddViewImpl extends AbstractEditItemComp<CallWithBLOBs>
 								CrmTypeConstants.LEAD,
 								CrmTypeConstants.OPPORTUNITY,
 								CrmTypeConstants.CASE }, attachForm.getBean());
-//				field.setType(attachForm.getBean().getType());
 				return field;
+			} else if (propertyId.equals("typeid")) {
+				return new DummyCustomField<String>();
 			} else if (propertyId.equals("startdate")) {
 				return new DateTimePicker<CallWithBLOBs>("startdate",
 						attachForm.getBean());

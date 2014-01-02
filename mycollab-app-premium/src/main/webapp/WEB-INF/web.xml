@@ -41,24 +41,16 @@
         <description>
         Vaadin production mode</description>
         <param-name>productionMode</param-name>
-        <param-value>true</param-value>
+        <param-value>false</param-value>
     </context-param>
 
     <servlet>
         <servlet-name>MyCollabApplication</servlet-name>
         <servlet-class>com.esofthead.mycollab.web.MyCollabServlet</servlet-class>
-        <!-- 
-        <init-param>
-            <description>Vaadin UI</description>
-            <param-name>UI</param-name>
-            <param-value>com.esofthead.mycollab.web.MyCollabApplication</param-value>
-        </init-param>
-
-        <init-param>
-            <param-name>widgetset</param-name>
-            <param-value>com.esofthead.mycollab.widgetset.MyCollabWidgetSet</param-value>
-        </init-param>
-        -->
+        <!-- <init-param> <description>Vaadin UI</description> <param-name>UI</param-name> 
+            <param-value>com.esofthead.mycollab.web.MyCollabApplication</param-value> 
+            </init-param> <init-param> <param-name>widgetset</param-name> <param-value>com.esofthead.mycollab.widgetset.MyCollabWidgetSet</param-value> 
+            </init-param> -->
     </servlet>
 
     <servlet-mapping>
@@ -302,6 +294,11 @@
         <servlet-name>appExceptionHandlerServlet</servlet-name>
         <url-pattern>/error</url-pattern>
     </servlet-mapping>
+
+    <mime-mapping>
+        <extension>manifest</extension>
+        <mime-type>text/cache-manifest</mime-type>
+    </mime-mapping>
 
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>

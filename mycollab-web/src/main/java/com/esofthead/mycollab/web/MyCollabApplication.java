@@ -31,6 +31,7 @@ import com.esofthead.mycollab.shell.view.FragmentNavigator;
 import com.esofthead.mycollab.shell.view.MainWindowContainer;
 import com.esofthead.mycollab.shell.view.NoSubDomainExistedWindow;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
+import com.vaadin.addon.touchkit.extensions.OfflineMode;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Widgetset;
 import com.vaadin.server.DefaultErrorHandler;
@@ -76,6 +77,7 @@ public class MyCollabApplication extends UI {
 
 	@Override
 	protected void init(VaadinRequest request) {
+
 		log.debug("Init mycollab application {}", this.toString());
 		log.debug("Register default error handler");
 		VaadinSession.getCurrent().setErrorHandler(new DefaultErrorHandler() {

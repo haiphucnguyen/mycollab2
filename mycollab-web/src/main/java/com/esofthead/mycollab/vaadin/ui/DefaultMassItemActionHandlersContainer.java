@@ -120,7 +120,7 @@ public class DefaultMassItemActionHandlersContainer extends HorizontalLayout
 	@Override
 	public void addMassItemActionHandler(MassItemActionHandler handler) {
 		if (handlers == null) {
-			handlers = new HashSet<MassItemActionHandler>();
+			handlers = new HashSet<>();
 		}
 		handlers.add(handler);
 

@@ -39,7 +39,6 @@ import com.esofthead.mycollab.module.crm.view.contact.ContactSelectionWindow;
 import com.esofthead.mycollab.module.crm.view.lead.LeadSelectionWindow;
 import com.esofthead.mycollab.module.crm.view.opportunity.OpportunitySelectionWindow;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.vaadin.ui.CompoundCustomField;
 import com.esofthead.mycollab.vaadin.ui.FieldSelection;
 import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
 import com.esofthead.mycollab.web.AppContext;
@@ -49,6 +48,7 @@ import com.vaadin.event.MouseEvents;
 import com.vaadin.event.MouseEvents.ClickEvent;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
+import com.vaadin.ui.CustomField;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.TextField;
@@ -60,7 +60,7 @@ import com.vaadin.ui.UI;
  * @since 2.0
  * 
  */
-public class RelatedEditItemField extends CompoundCustomField<String> implements
+public class RelatedEditItemField extends CustomField<String> implements
 		FieldSelection {
 
 	private static final long serialVersionUID = 1L;
@@ -78,21 +78,11 @@ public class RelatedEditItemField extends CompoundCustomField<String> implements
 	public RelatedEditItemField(String[] types, Object bean) {
 		this.bean = bean;
 		this.types = types;
-	}
-
-	@Override
-	protected Component initContent() {
-		HorizontalLayout layout = new HorizontalLayout();
-		layout.setSpacing(true);
-
+		
 		relatedItemComboBox = new RelatedItemComboBox(types);
-		layout.addComponent(relatedItemComboBox);
-
 		itemField = new TextField();
 		itemField.setEnabled(true);
-		layout.addComponent(itemField);
-		layout.setComponentAlignment(itemField, Alignment.MIDDLE_LEFT);
-
+		
 		browseBtn = new Image(null,
 				MyCollabResource.newResource("icons/16/browseItem.png"));
 		browseBtn.addClickListener(new MouseEvents.ClickListener() {
@@ -136,10 +126,7 @@ public class RelatedEditItemField extends CompoundCustomField<String> implements
 				}
 			}
 		});
-
-		layout.addComponent(browseBtn);
-		layout.setComponentAlignment(browseBtn, Alignment.MIDDLE_LEFT);
-
+		
 		clearBtn = new Image(null,
 				MyCollabResource.newResource("icons/16/clearItem.png"));
 		clearBtn.addClickListener(new MouseEvents.ClickListener() {
@@ -157,11 +144,30 @@ public class RelatedEditItemField extends CompoundCustomField<String> implements
 				}
 			}
 		});
+	}
+
+	@Override
+	protected Component initContent() {
+		HorizontalLayout layout = new HorizontalLayout();
+		layout.setSpacing(true);
+		
+		layout.addComponent(relatedItemComboBox);
+		
+		layout.addComponent(itemField);
+		layout.setComponentAlignment(itemField, Alignment.MIDDLE_LEFT);
+
+		layout.addComponent(browseBtn);
+		layout.setComponentAlignment(browseBtn, Alignment.MIDDLE_LEFT);
 
 		layout.addComponent(clearBtn);
 		layout.setComponentAlignment(clearBtn, Alignment.MIDDLE_LEFT);
 
 		return layout;
+	}
+
+	@Override
+	public Class<String> getType() {
+		return String.class;
 	}
 
 	@Override
@@ -172,23 +178,6 @@ public class RelatedEditItemField extends CompoundCustomField<String> implements
 			super.setPropertyDataSource(newDataSource);
 		} else {
 			super.setPropertyDataSource(newDataSource);
-		}
-	}
-
-	@Override
-	public Class<String> getType() {
-		return String.class;
-	}
-
-	private class RelatedItemComboBox extends ValueComboBox {
-
-		private static final long serialVersionUID = 1L;
-
-		public RelatedItemComboBox(String[] types) {
-			super();
-			setCaption(null);
-			this.setWidth("100px");
-			this.loadData(types);
 		}
 	}
 
@@ -292,6 +281,18 @@ public class RelatedEditItemField extends CompoundCustomField<String> implements
 			}
 		} catch (Exception e) {
 			log.error("Error when fire value", e);
+		}
+	}
+
+	private class RelatedItemComboBox extends ValueComboBox {
+
+		private static final long serialVersionUID = 1L;
+
+		public RelatedItemComboBox(String[] types) {
+			super();
+			setCaption(null);
+			this.setWidth("100px");
+			this.loadData(types);
 		}
 	}
 }
