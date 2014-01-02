@@ -28,8 +28,8 @@ class CampaignReadComp extends AbstractCampaignPreviewComp {
 			@Override
 			public void showHistory() {
 				final CampaignHistoryLogWindow historyLog = new CampaignHistoryLogWindow(
-						ModuleNameConstants.CRM, CrmTypeConstants.CAMPAIGN,
-						beanItem.getId());
+						ModuleNameConstants.CRM, CrmTypeConstants.CAMPAIGN);
+				historyLog.loadHistory(beanItem.getId());
 				UI.getCurrent().addWindow(historyLog);
 			}
 		};

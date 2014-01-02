@@ -28,8 +28,8 @@ public class MeetingReadComp extends AbstractMeetingPreviewComp {
 			@Override
 			public void showHistory() {
 				final MeetingHistoryLogWindow historyLog = new MeetingHistoryLogWindow(
-						ModuleNameConstants.CRM, CrmTypeConstants.MEETING,
-						beanItem.getId());
+						ModuleNameConstants.CRM, CrmTypeConstants.MEETING);
+				historyLog.loadHistory(beanItem.getId());
 				UI.getCurrent().addWindow(historyLog);
 			}
 		};

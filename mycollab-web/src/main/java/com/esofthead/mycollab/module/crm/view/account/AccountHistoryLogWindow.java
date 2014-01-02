@@ -26,10 +26,11 @@ import com.esofthead.mycollab.module.crm.ui.components.HistoryLogWindow;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-@SuppressWarnings("serial")
-public class AccountHistoryLogWindow extends HistoryLogWindow {
+class AccountHistoryLogWindow extends HistoryLogWindow {
+	private static final long serialVersionUID = 1L;
+
 	public AccountHistoryLogWindow(String module, String type, int typeid) {
-		super(module, type, typeid);
+		super(module, type);
 
 		this.generateFieldDisplayHandler("accountname", "Account Name");
 		this.generateFieldDisplayHandler("phoneoffice", LocalizationHelper

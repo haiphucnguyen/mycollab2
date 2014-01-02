@@ -28,8 +28,8 @@ class CallReadComp extends AbstractCallPreviewComp {
 			@Override
 			public void showHistory() {
 				final CallHistoryLogWindow historyLog = new CallHistoryLogWindow(
-						ModuleNameConstants.CRM, CrmTypeConstants.CALL,
-						beanItem.getId());
+						ModuleNameConstants.CRM, CrmTypeConstants.CALL);
+				historyLog.loadHistory(beanItem.getId());
 				UI.getCurrent().addWindow(historyLog);
 			}
 		};

@@ -21,11 +21,18 @@ import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.crm.ui.components.HistoryLogWindow;
 import com.esofthead.mycollab.vaadin.ui.HistoryLogComponent;
 
-@SuppressWarnings("serial")
-public class OpportunityHistoryLogWindow extends HistoryLogWindow {
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
+class OpportunityHistoryLogWindow extends HistoryLogWindow {
+	private static final long serialVersionUID = 1L;
 
-	public OpportunityHistoryLogWindow(String module, String type, int typeid) {
-		super(module, type, typeid);
+	public OpportunityHistoryLogWindow(String module, String type) {
+		super(module, type);
+
 		this.generateFieldDisplayHandler("opportunityname", "Opportunity Name");
 		this.generateFieldDisplayHandler("currencyid", "Currency",
 				HistoryLogComponent.CURRENCY_FIELD);

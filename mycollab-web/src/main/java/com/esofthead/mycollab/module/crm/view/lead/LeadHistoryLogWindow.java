@@ -20,11 +20,18 @@ import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.crm.ui.components.HistoryLogWindow;
 
-@SuppressWarnings("serial")
-public class LeadHistoryLogWindow extends HistoryLogWindow {
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
+class LeadHistoryLogWindow extends HistoryLogWindow {
+	private static final long serialVersionUID = 1L;
 
-	public LeadHistoryLogWindow(String module, String type, int typeid) {
-		super(module, type, typeid);
+	public LeadHistoryLogWindow(String module, String type) {
+		super(module, type);
+
 		this.generateFieldDisplayHandler("prefixname", "Prefix name");
 		this.generateFieldDisplayHandler("firstname", "First name");
 		this.generateFieldDisplayHandler("lastname", "Last Name");

@@ -28,8 +28,8 @@ class AssignmentReadComp extends AbstractAssignmentPreviewComp {
 			@Override
 			public void showHistory() {
 				final AssignmentHistoryLogWindow historyLog = new AssignmentHistoryLogWindow(
-						ModuleNameConstants.CRM, CrmTypeConstants.TASK,
-						beanItem.getId());
+						ModuleNameConstants.CRM, CrmTypeConstants.TASK);
+				historyLog.loadHistory(beanItem.getId());
 				UI.getCurrent().addWindow(historyLog);
 			}
 		};

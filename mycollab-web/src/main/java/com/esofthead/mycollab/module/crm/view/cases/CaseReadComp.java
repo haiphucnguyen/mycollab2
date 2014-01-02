@@ -4,7 +4,6 @@ import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.SimpleCase;
 import com.esofthead.mycollab.module.crm.ui.components.CrmPreviewFormControlsGenerator;
-import com.esofthead.mycollab.module.crm.view.account.AccountHistoryLogWindow;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.web.MyCollabResource;
@@ -28,9 +27,9 @@ class CaseReadComp extends AbstractCasePreviewComp {
 
 			@Override
 			public void showHistory() {
-				AccountHistoryLogWindow historyLog = new AccountHistoryLogWindow(
-						ModuleNameConstants.CRM, CrmTypeConstants.CASE,
-						beanItem.getId());
+				CaseHistoryLogWindow historyLog = new CaseHistoryLogWindow(
+						ModuleNameConstants.CRM, CrmTypeConstants.CASE);
+				historyLog.loadHistory(beanItem.getId());
 				UI.getCurrent().addWindow(historyLog);
 			}
 		};

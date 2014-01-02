@@ -28,8 +28,8 @@ class OpportunityReadComp extends AbstractOpportunityPreviewComp {
 			@Override
 			public void showHistory() {
 				OpportunityHistoryLogWindow historyLog = new OpportunityHistoryLogWindow(
-						ModuleNameConstants.CRM, CrmTypeConstants.OPPORTUNITY,
-						beanItem.getId());
+						ModuleNameConstants.CRM, CrmTypeConstants.OPPORTUNITY);
+				historyLog.loadHistory(beanItem.getId());
 				UI.getCurrent().addWindow(historyLog);
 			}
 		};

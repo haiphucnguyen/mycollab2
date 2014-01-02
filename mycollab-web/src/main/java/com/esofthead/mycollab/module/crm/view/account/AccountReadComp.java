@@ -50,6 +50,7 @@ class AccountReadComp extends AbstractAccountPreviewComp {
 				final AccountHistoryLogWindow historyLog = new AccountHistoryLogWindow(
 						ModuleNameConstants.CRM, CrmTypeConstants.ACCOUNT,
 						beanItem.getId());
+				historyLog.loadHistory(beanItem.getId());
 				UI.getCurrent().addWindow(historyLog);
 			}
 		};

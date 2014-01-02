@@ -42,8 +42,8 @@ class ContactReadComp extends AbstractContactPreviewComp {
 			@Override
 			public void showHistory() {
 				final ContactHistoryLogWindow historyLog = new ContactHistoryLogWindow(
-						ModuleNameConstants.CRM, CrmTypeConstants.CONTACT,
-						beanItem.getId());
+						ModuleNameConstants.CRM, CrmTypeConstants.CONTACT);
+				historyLog.loadHistory(beanItem.getId());
 				UI.getCurrent().addWindow(historyLog);
 			}
 		};

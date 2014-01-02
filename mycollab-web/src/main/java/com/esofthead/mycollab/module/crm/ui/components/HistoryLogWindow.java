@@ -25,21 +25,23 @@ import com.vaadin.ui.Window;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-@SuppressWarnings("serial")
 public class HistoryLogWindow extends Window {
+	private static final long serialVersionUID = 1L;
 
 	private final HistoryLogComponent historyLogComponent;
 
-	public HistoryLogWindow(final String module, final String type,
-			final int typeid) {
+	public HistoryLogWindow(final String module, final String type) {
 		super("Change Log");
 
 		this.setWidth("700px");
 
 		this.historyLogComponent = new HistoryLogComponent(module, type);
 		this.setContent(historyLogComponent);
-		historyLogComponent.loadHistory(typeid);
 		this.center();
+	}
+
+	public void loadHistory(int typeid) {
+		historyLogComponent.loadHistory(typeid);
 	}
 
 	public void generateFieldDisplayHandler(final String fieldname,

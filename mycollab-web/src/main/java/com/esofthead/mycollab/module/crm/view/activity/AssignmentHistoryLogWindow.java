@@ -26,11 +26,11 @@ import com.esofthead.mycollab.module.crm.ui.components.HistoryLogWindow;
  * @since 2.0
  * 
  */
-public class AssignmentHistoryLogWindow extends HistoryLogWindow {
+class AssignmentHistoryLogWindow extends HistoryLogWindow {
 	private static final long serialVersionUID = 1L;
 
-	public AssignmentHistoryLogWindow(String module, String type, int typeid) {
-		super(module, type, typeid);
+	public AssignmentHistoryLogWindow(String module, String type) {
+		super(module, type);
 
 		this.generateFieldDisplayHandler("subject", "Subject");
 		this.generateFieldDisplayHandler("startdate", "Start Date");

@@ -27,9 +27,8 @@ class ProjectMemberReadComp extends AbstractMemberPreviewComp {
 			@Override
 			public void showHistory() {
 				final ProjectMemberHistoryLogWindow historyLog = new ProjectMemberHistoryLogWindow(
-						ModuleNameConstants.PRJ,
-						ProjectContants.PROJECT_MEMBER, previewForm.getBean()
-								.getId());
+						ModuleNameConstants.PRJ, ProjectContants.PROJECT_MEMBER);
+				historyLog.loadHistory(previewForm.getBean().getId());
 				UI.getCurrent().addWindow(historyLog);
 			}
 		};

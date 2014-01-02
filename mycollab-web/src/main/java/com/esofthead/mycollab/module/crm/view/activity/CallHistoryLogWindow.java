@@ -27,11 +27,11 @@ import com.esofthead.mycollab.vaadin.ui.HistoryLogComponent;
  * @since 2.0
  * 
  */
-public class CallHistoryLogWindow extends HistoryLogWindow {
+class CallHistoryLogWindow extends HistoryLogWindow {
 	private static final long serialVersionUID = 1L;
 
-	public CallHistoryLogWindow(String module, String type, int typeid) {
-		super(module, type, typeid);
+	public CallHistoryLogWindow(String module, String type) {
+		super(module, type);
 
 		this.generateFieldDisplayHandler("subject", "Subject");
 		this.generateFieldDisplayHandler("startdate", "Start Date",

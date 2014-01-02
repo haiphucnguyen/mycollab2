@@ -21,11 +21,17 @@ import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.crm.ui.components.HistoryLogWindow;
 import com.esofthead.mycollab.vaadin.ui.HistoryLogComponent;
 
-@SuppressWarnings("serial")
-public class MilestoneHistoryLogWindow extends HistoryLogWindow {
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
+class MilestoneHistoryLogWindow extends HistoryLogWindow {
+	private static final long serialVersionUID = 1L;
 
-	public MilestoneHistoryLogWindow(String module, String type, int typeid) {
-		super(module, type, typeid);
+	public MilestoneHistoryLogWindow(String module, String type) {
+		super(module, type);
 
 		this.generateFieldDisplayHandler("name", "Name");
 		this.generateFieldDisplayHandler("owner", LocalizationHelper

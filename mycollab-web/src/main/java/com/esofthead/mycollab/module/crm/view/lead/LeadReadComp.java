@@ -28,8 +28,8 @@ class LeadReadComp extends AbstractLeadPreviewComp {
 			@Override
 			public void showHistory() {
 				LeadHistoryLogWindow historyLog = new LeadHistoryLogWindow(
-						ModuleNameConstants.CRM, CrmTypeConstants.LEAD,
-						beanItem.getId());
+						ModuleNameConstants.CRM, CrmTypeConstants.LEAD);
+				historyLog.loadHistory(beanItem.getId());
 				UI.getCurrent().addWindow(historyLog);
 			}
 		};

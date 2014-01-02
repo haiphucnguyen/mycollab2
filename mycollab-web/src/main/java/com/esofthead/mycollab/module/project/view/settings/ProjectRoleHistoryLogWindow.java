@@ -24,11 +24,11 @@ import com.esofthead.mycollab.module.crm.ui.components.HistoryLogWindow;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-public class ProjectRoleHistoryLogWindow extends HistoryLogWindow {
+class ProjectRoleHistoryLogWindow extends HistoryLogWindow {
 	private static final long serialVersionUID = 1L;
 
-	public ProjectRoleHistoryLogWindow(String module, String type, int typeid) {
-		super(module, type, typeid);
+	public ProjectRoleHistoryLogWindow(String module, String type) {
+		super(module, type);
 
 		this.generateFieldDisplayHandler("rolename", "Role Name");
 		this.generateFieldDisplayHandler("description", "Description");

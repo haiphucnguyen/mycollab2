@@ -44,8 +44,8 @@ class ProjectRoleReadComp extends AbstractPreviewItemComp<SimpleProjectRole> {
 			@Override
 			public void showHistory() {
 				final ProjectRoleHistoryLogWindow historyLog = new ProjectRoleHistoryLogWindow(
-						ModuleNameConstants.PRJ, ProjectContants.PROJECT_ROLE,
-						previewForm.getBean().getId());
+						ModuleNameConstants.PRJ, ProjectContants.PROJECT_ROLE);
+				historyLog.loadHistory(previewForm.getBean().getId());
 				UI.getCurrent().addWindow(historyLog);
 			}
 		};

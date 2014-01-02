@@ -28,11 +28,12 @@ import com.esofthead.mycollab.vaadin.ui.HistoryLogComponent;
  * @since 1.0
  * 
  */
-@SuppressWarnings("serial")
-public class ContactHistoryLogWindow extends HistoryLogWindow {
+class ContactHistoryLogWindow extends HistoryLogWindow {
+	private static final long serialVersionUID = 1L;
 
-	public ContactHistoryLogWindow(String module, String type, int typeid) {
-		super(module, type, typeid);
+	public ContactHistoryLogWindow(String module, String type) {
+		super(module, type);
+
 		this.generateFieldDisplayHandler("firstname", "First Name");
 		this.generateFieldDisplayHandler("lastname", "Last Name");
 		this.generateFieldDisplayHandler("accountId", "Account");
