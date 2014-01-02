@@ -1,5 +1,8 @@
 package com.esofthead.mycollab.mobile.module.user.ui;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.mobile.UIConstants;
 import com.esofthead.mycollab.module.user.domain.SimpleBillingAccount;
@@ -11,6 +14,7 @@ import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractMobileView;
+import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.vaadin.addon.touchkit.ui.EmailField;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Alignment;
@@ -20,13 +24,12 @@ import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.VerticalLayout;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * @author MyCollab Ltd.
  * @since 3.0
  */
+@ViewComponent
 public class LoginViewImpl extends AbstractMobileView implements LoginView {
 	private static final long serialVersionUID = 1L;
 
@@ -101,7 +104,7 @@ public class LoginViewImpl extends AbstractMobileView implements LoginView {
 		this.addComponent(contentLayout);
 	}
 
-	public void doLogin(String username, String password) {
+	private void doLogin(String username, String password) {
 		UserService userService = ApplicationContextUtil
 				.getSpringBean(UserService.class);
 		SimpleUser user = userService.authentication(username, password,

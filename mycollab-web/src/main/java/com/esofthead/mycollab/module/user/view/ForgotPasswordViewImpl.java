@@ -33,8 +33,8 @@ import com.esofthead.mycollab.web.CustomLayoutLoader;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.CustomLayout;
-import com.vaadin.ui.Form;
 import com.vaadin.ui.TextField;
 
 /**
@@ -51,7 +51,7 @@ public class ForgotPasswordViewImpl extends AbstractPageView implements
 		this.addComponent(new ForgotPwdForm());
 	}
 
-	private class ForgotPwdForm extends Form {
+	private class ForgotPwdForm extends CustomComponent {
 		private static final long serialVersionUID = 1L;
 		private final TextField nameOrEmailField;
 
@@ -122,7 +122,7 @@ public class ForgotPasswordViewImpl extends AbstractPageView implements
 			});
 			customLayout.addComponent(memoBackBtn, "forgotLink");
 
-			this.setLayout(customLayout);
+			this.setCompositionRoot(customLayout);
 		}
 	}
 }

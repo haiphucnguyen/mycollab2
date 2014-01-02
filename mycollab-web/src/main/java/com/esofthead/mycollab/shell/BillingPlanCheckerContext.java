@@ -20,6 +20,12 @@ import com.esofthead.mycollab.module.billing.BillingPlanChecker;
 import com.esofthead.mycollab.module.user.domain.SimpleBillingAccount;
 import com.esofthead.mycollab.vaadin.AppContext;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class BillingPlanCheckerContext {
 	public static boolean isBugComponentEnable() {
 		SimpleBillingAccount billingAccount = AppContext.getBillingAccount();

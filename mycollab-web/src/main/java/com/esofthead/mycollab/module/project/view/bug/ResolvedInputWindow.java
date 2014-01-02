@@ -55,8 +55,9 @@ import com.vaadin.ui.Window;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-@SuppressWarnings("serial")
 public class ResolvedInputWindow extends Window {
+	private static final long serialVersionUID = 1L;
+	
 	private final SimpleBug bug;
 	private final EditForm editForm;
 	private VersionMultiSelectField fixedVersionSelect;
@@ -116,6 +117,8 @@ public class ResolvedInputWindow extends Window {
 						LocalizationHelper
 								.getMessage(GenericI18Enum.BUTTON_CANCEL_LABEL),
 						new Button.ClickListener() {
+							private static final long serialVersionUID = 1L;
+
 							@Override
 							public void buttonClick(
 									final Button.ClickEvent event) {
@@ -129,6 +132,8 @@ public class ResolvedInputWindow extends Window {
 
 				final Button wonFixBtn = new Button("Resolved",
 						new Button.ClickListener() {
+							private static final long serialVersionUID = 1L;
+
 							@SuppressWarnings("unchecked")
 							@Override
 							public void buttonClick(

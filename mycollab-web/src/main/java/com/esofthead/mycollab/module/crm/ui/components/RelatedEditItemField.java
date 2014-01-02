@@ -69,7 +69,6 @@ public class RelatedEditItemField extends CustomField<String> implements
 
 	private RelatedItemComboBox relatedItemComboBox;
 	private Object bean;
-	private String[] types;
 
 	private TextField itemField;
 	private Image browseBtn;
@@ -77,12 +76,11 @@ public class RelatedEditItemField extends CustomField<String> implements
 
 	public RelatedEditItemField(String[] types, Object bean) {
 		this.bean = bean;
-		this.types = types;
-		
+
 		relatedItemComboBox = new RelatedItemComboBox(types);
 		itemField = new TextField();
 		itemField.setEnabled(true);
-		
+
 		browseBtn = new Image(null,
 				MyCollabResource.newResource("icons/16/browseItem.png"));
 		browseBtn.addClickListener(new MouseEvents.ClickListener() {
@@ -126,7 +124,7 @@ public class RelatedEditItemField extends CustomField<String> implements
 				}
 			}
 		});
-		
+
 		clearBtn = new Image(null,
 				MyCollabResource.newResource("icons/16/clearItem.png"));
 		clearBtn.addClickListener(new MouseEvents.ClickListener() {
@@ -150,9 +148,9 @@ public class RelatedEditItemField extends CustomField<String> implements
 	protected Component initContent() {
 		HorizontalLayout layout = new HorizontalLayout();
 		layout.setSpacing(true);
-		
+
 		layout.addComponent(relatedItemComboBox);
-		
+
 		layout.addComponent(itemField);
 		layout.setComponentAlignment(itemField, Alignment.MIDDLE_LEFT);
 

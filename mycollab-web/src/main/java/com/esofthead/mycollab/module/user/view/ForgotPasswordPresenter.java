@@ -24,23 +24,25 @@ import com.esofthead.mycollab.vaadin.ui.AbstractPresenter;
 import com.vaadin.ui.ComponentContainer;
 
 /**
- *
+ * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
-public class ForgotPasswordPresenter extends AbstractPresenter<ForgotPasswordView> {
+public class ForgotPasswordPresenter extends
+		AbstractPresenter<ForgotPasswordView> {
 	private static final long serialVersionUID = 1L;
 
 	public ForgotPasswordPresenter() {
-        super(ForgotPasswordView.class);
-    }
+		super(ForgotPasswordView.class);
+	}
 
-    @Override
-    protected void onGo(ComponentContainer container, ScreenData<?> data) {
-        MainWindowContainer windowContainer = (MainWindowContainer) container;
-        windowContainer.removeAllComponents();
+	@Override
+	protected void onGo(ComponentContainer container, ScreenData<?> data) {
+		MainWindowContainer windowContainer = (MainWindowContainer) container;
+		windowContainer.removeAllComponents();
 
-        windowContainer.addComponent(view.getWidget());
-        
-        AppContext.addFragment("user/forgotpassword", "Forgot Password");
-    }
+		windowContainer.addComponent(view.getWidget());
+
+		AppContext.addFragment("user/forgotpassword", "Forgot Password");
+	}
 }

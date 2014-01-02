@@ -38,7 +38,7 @@ import com.vaadin.ui.ComponentContainer;
 /**
  * 
  * @author MyCollab Ltd.
- * @since 1.0
+ * @since 3.0
  * 
  */
 public class LoginPresenter extends AbstractPresenter<LoginView> {

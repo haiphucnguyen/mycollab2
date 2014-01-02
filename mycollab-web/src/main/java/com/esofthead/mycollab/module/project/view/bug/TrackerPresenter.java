@@ -54,7 +54,7 @@ public class TrackerPresenter extends AbstractPresenter<TrackerContainer> {
 		ProjectView projectViewContainer = (ProjectView) container;
 		projectViewContainer.gotoSubView("Bugs");
 
-		IPresenter presenter = null;
+		IPresenter<?> presenter = null;
 
 		if (BillingPlanCheckerContext.isBugComponentEnable()) {
 			if (ClassUtils.instanceOf(data, BugScreenData.Search.class,
@@ -94,7 +94,7 @@ public class TrackerPresenter extends AbstractPresenter<TrackerContainer> {
 	public void handleChain(ComponentContainer container,
 			PageActionChain pageActionChain) {
 
-		ScreenData pageAction = pageActionChain.pop();
+		ScreenData<?> pageAction = pageActionChain.pop();
 		onGo(container, pageAction);
 	}
 

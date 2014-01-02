@@ -34,6 +34,12 @@ import com.esofthead.mycollab.vaadin.mvp.IController;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.web.DesktopApplication;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class ShellController implements IController {
 
 	private static final long serialVersionUID = 1L;

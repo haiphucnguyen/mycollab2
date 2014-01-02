@@ -33,8 +33,8 @@ import com.vaadin.server.UserError;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CheckBox;
+import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.CustomLayout;
-import com.vaadin.ui.Form;
 import com.vaadin.ui.Link;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
@@ -54,7 +54,7 @@ public class LoginViewImpl extends AbstractPageView implements LoginView {
 		this.addComponent(new LoginForm());
 	}
 
-	public class LoginForm extends Form {
+	class LoginForm extends CustomComponent {
 
 		private static final long serialVersionUID = 1L;
 		private final TextField usernameField;
@@ -132,7 +132,7 @@ public class LoginViewImpl extends AbstractPageView implements LoginView {
 				GenericServerRunner.isFirstTimeRunner = false;
 			}
 
-			this.setLayout(custom);
+			this.setCompositionRoot(custom);
 			this.setHeight("100%");
 		}
 	}

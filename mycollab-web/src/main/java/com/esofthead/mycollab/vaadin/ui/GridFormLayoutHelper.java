@@ -74,17 +74,7 @@ public class GridFormLayoutHelper implements Serializable {
 		this.layout.setRowExpandRatio(0, 0);
 	}
 
-	public Component addComponent(final boolean condition, final Field field,
-			final String caption, final int columns, final int rows) {
-		if (condition) {
-			return this.addComponent(field, caption, columns, rows,
-					this.fieldControlWidth);
-		} else {
-			return null;
-		}
-	}
-
-	public Component addComponent(final boolean condition, final Field field,
+	public Component addComponent(final boolean condition, final Field<?> field,
 			final String caption, final int columns, final int rows,
 			final Alignment alignment) {
 		if (condition) {

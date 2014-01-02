@@ -45,6 +45,7 @@ import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.esofthead.mycollab.vaadin.ui.TimeZoneSelectionField;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.data.Property;
+import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -72,9 +73,9 @@ public class UserAddViewImpl extends AbstractPageView implements UserAddView {
 
 	public UserAddViewImpl() {
 		super();
-		
+
 		this.setMargin(new MarginInfo(true, false, false, false));
-		
+
 		this.advanceEditForm = new UserAddViewImpl.AdvancedEditUserForm(true);
 		this.addComponent(this.advanceEditForm);
 	}
@@ -175,6 +176,8 @@ public class UserAddViewImpl extends AbstractPageView implements UserAddView {
 											true);
 									advanceEditForm
 											.addFormHandler(new EditFormHandler<SimpleUser>() {
+												private static final long serialVersionUID = 1L;
+
 												@Override
 												public void onSave(
 														final SimpleUser item) {
@@ -245,11 +248,6 @@ public class UserAddViewImpl extends AbstractPageView implements UserAddView {
 
 				if (propertyId.equals("roleid")) {
 					AdminRoleSelectionField roleSelectionField = new AdminRoleSelectionField();
-					if (user.getRoleid() != null) {
-						roleSelectionField.setRoleId(user.getRoleid());
-					} else {
-						roleSelectionField.setRoleId(-1);
-					}
 					return roleSelectionField;
 				} else if (propertyId.equals("firstname")
 						|| propertyId.equals("lastname")
@@ -298,40 +296,12 @@ public class UserAddViewImpl extends AbstractPageView implements UserAddView {
 			}
 		}
 
-		private class AdminRoleSelectionField extends CustomField {
+		private class AdminRoleSelectionField extends CustomField<Integer> {
 			private static final long serialVersionUID = 1L;
 
 			private RoleComboBox roleBox;
 
-			public void setRoleId(int roleId) {
-				roleBox.setValue(roleId);
-			}
-
-			public Object getValue() {
-				Integer roleId = (Integer) AdminRoleSelectionField.this.roleBox
-						.getValue();
-				Boolean resultVal = null;
-				if (roleId == -1) {
-					UserAddViewImpl.this.user.setIsAccountOwner(Boolean.TRUE);
-					UserAddViewImpl.this.user.setRoleid(null);
-					resultVal = Boolean.TRUE;
-				} else {
-					UserAddViewImpl.this.user
-							.setRoleid((Integer) AdminRoleSelectionField.this.roleBox
-									.getValue());
-					UserAddViewImpl.this.user.setIsAccountOwner(Boolean.FALSE);
-					resultVal = Boolean.FALSE;
-				}
-				return resultVal;
-			}
-
-			@Override
-			public Class<Integer> getType() {
-				return Integer.class;
-			}
-
-			@Override
-			protected Component initContent() {
+			public AdminRoleSelectionField() {
 				roleBox = new RoleComboBox();
 				this.roleBox
 						.addValueChangeListener(new Property.ValueChangeListener() {
@@ -344,6 +314,36 @@ public class UserAddViewImpl extends AbstractPageView implements UserAddView {
 
 							}
 						});
+			}
+
+			@Override
+			public void setPropertyDataSource(Property newDataSource) {
+				Object value = newDataSource.getValue();
+				if (value instanceof Integer) {
+					roleBox.setValue((Integer) value);
+				}
+				super.setPropertyDataSource(newDataSource);
+			}
+
+			@Override
+			public void commit() throws SourceException, InvalidValueException {
+				Integer roleId = (Integer) roleBox.getValue();
+				if (roleId == -1) {
+					UserAddViewImpl.this.user.setIsAccountOwner(Boolean.TRUE);
+				} else {
+					UserAddViewImpl.this.user.setIsAccountOwner(Boolean.FALSE);
+				}
+
+				super.commit();
+			}
+
+			@Override
+			public Class<Integer> getType() {
+				return Integer.class;
+			}
+
+			@Override
+			protected Component initContent() {
 				return roleBox;
 			}
 		}

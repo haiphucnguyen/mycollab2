@@ -128,7 +128,7 @@ public class BasicInfoChangeWindow extends Window {
 		hlayoutControls.setComponentAlignment(cancelBtn,
 				Alignment.MIDDLE_CENTER);
 
-		final Button sendBtn = new Button("Save", new Button.ClickListener() {
+		final Button saveBtn = new Button("Save", new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -136,9 +136,9 @@ public class BasicInfoChangeWindow extends Window {
 				BasicInfoChangeWindow.this.changeUserInfo();
 			}
 		});
-		sendBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-		hlayoutControls.addComponent(sendBtn);
-		hlayoutControls.setComponentAlignment(sendBtn, Alignment.MIDDLE_CENTER);
+		saveBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		hlayoutControls.addComponent(saveBtn);
+		hlayoutControls.setComponentAlignment(saveBtn, Alignment.MIDDLE_CENTER);
 
 		mainLayout.addComponent(hlayoutControls);
 		mainLayout.setComponentAlignment(hlayoutControls,

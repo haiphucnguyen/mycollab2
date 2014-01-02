@@ -1,40 +1,41 @@
-package com.esofthead.mycollab.mobile;
+package com.esofthead.mycollab.mobile.shell;
 
 import com.esofthead.mycollab.eventmanager.ApplicationEvent;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBus;
-import com.esofthead.mycollab.mobile.module.user.event.UserEvent;
+import com.esofthead.mycollab.mobile.shell.events.ShellEvent;
+import com.esofthead.mycollab.mobile.shell.events.ShellEvent.GotoMainPage;
 import com.esofthead.mycollab.vaadin.mvp.IController;
-import com.vaadin.addon.touchkit.ui.NavigationManager;
 
 /**
+ * 
  * @author MyCollab Ltd.
  * @since 3.0
+ * 
  */
 public class ShellController implements IController {
 	private static final long serialVersionUID = 1L;
-	private final NavigationManager mainNav;
 
-	public ShellController(NavigationManager mainNavigation) {
-		this.mainNav = mainNavigation;
-
+	public ShellController() {
 		bind();
 	}
 
 	private void bind() {
 		EventBus.getInstance().addListener(
-				new ApplicationEventListener<UserEvent.PlainLogin>() {
+				new ApplicationEventListener<ShellEvent.GotoMainPage>() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
 					public Class<? extends ApplicationEvent> getEventType() {
-						return UserEvent.PlainLogin.class;
+						return ShellEvent.GotoMainPage.class;
 					}
 
 					@Override
-					public void handle(UserEvent.PlainLogin event) {
+					public void handle(GotoMainPage event) {
+						// TODO Auto-generated method stub
 
 					}
+
 				});
 	}
 }
