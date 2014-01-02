@@ -24,6 +24,7 @@ import com.esofthead.mycollab.vaadin.mvp.ListView;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 public interface ComponentListView extends
 		ListView<ComponentSearchCriteria, SimpleComponent> {

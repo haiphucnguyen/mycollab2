@@ -53,6 +53,8 @@ public class MilestoneAddPresenter extends AbstractPresenter<MilestoneAddView> {
 	protected void postInitView() {
 		view.getEditFormHandlers().addFormHandler(
 				new EditFormHandler<Milestone>() {
+					private static final long serialVersionUID = 1L;
+
 					@Override
 					public void onSave(final Milestone milestone) {
 						saveMilestone(milestone);

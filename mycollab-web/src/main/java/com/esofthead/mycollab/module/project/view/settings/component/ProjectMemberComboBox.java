@@ -28,16 +28,32 @@ import com.esofthead.mycollab.module.project.domain.criteria.ProjectMemberSearch
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
+import com.vaadin.data.Buffered.SourceException;
+import com.vaadin.data.Validator.InvalidValueException;
+import com.vaadin.ui.AbstractSelect.ItemCaptionMode;
 import com.vaadin.ui.ComboBox;
+import com.vaadin.ui.Component;
+import com.vaadin.ui.CustomField;
 
-public class ProjectMemberComboBox extends ComboBox {
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
+public class ProjectMemberComboBox extends CustomField<String> {
 
 	private static final long serialVersionUID = 1L;
+
+	private ComboBox userSelectionBox;
 
 	@SuppressWarnings("unchecked")
 	public ProjectMemberComboBox() {
 		super();
-		this.setItemCaptionMode(ITEM_CAPTION_MODE_EXPLICIT);
+
+		userSelectionBox = new ComboBox();
+		userSelectionBox.setItemCaptionMode(ItemCaptionMode.EXPLICIT);
+		userSelectionBox.setNullSelectionAllowed(false);
 
 		ProjectMemberSearchCriteria criteria = new ProjectMemberSearchCriteria();
 		criteria.setProjectId(new NumberSearchField(CurrentProjectVariables
@@ -51,25 +67,35 @@ public class ProjectMemberComboBox extends ComboBox {
 				.findPagableListByCriteria(new SearchRequest<ProjectMemberSearchCriteria>(
 						criteria, 0, Integer.MAX_VALUE));
 		loadUserList(memberList);
-		this.setNullSelectionAllowed(false);
-	}
-
-	public ProjectMemberComboBox(List<SimpleProjectMember> userList) {
-		super();
-		this.setItemCaptionMode(ITEM_CAPTION_MODE_EXPLICIT);
-		loadUserList(userList);
 	}
 
 	private void loadUserList(List<SimpleProjectMember> memberList) {
 
 		for (SimpleProjectMember member : memberList) {
-			this.addItem(member.getUsername());
-			this.setItemCaption(member.getUsername(), member.getDisplayName());
-			this.setItemIcon(
+			userSelectionBox.addItem(member.getUsername());
+			userSelectionBox.setItemCaption(member.getUsername(),
+					member.getDisplayName());
+			userSelectionBox.setItemIcon(
 					member.getUsername(),
 					UserAvatarControlFactory.createAvatarResource(
 							member.getMemberAvatarId(), 16));
 		}
+	}
+
+	@Override
+	public void commit() throws SourceException, InvalidValueException {
+		this.setInternalValue((String) userSelectionBox.getValue());
+		super.commit();
+	}
+
+	@Override
+	protected Component initContent() {
+		return userSelectionBox;
+	}
+
+	@Override
+	public Class<? extends String> getType() {
+		return String.class;
 	}
 
 }

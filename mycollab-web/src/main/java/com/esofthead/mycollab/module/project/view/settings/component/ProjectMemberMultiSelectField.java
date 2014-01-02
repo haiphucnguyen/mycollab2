@@ -16,21 +16,7 @@
  */
 package com.esofthead.mycollab.module.project.view.settings.component;
 
-import java.util.List;
-
-import org.apache.commons.beanutils.PropertyUtils;
-
-import com.esofthead.mycollab.core.arguments.NumberSearchField;
-import com.esofthead.mycollab.core.arguments.SearchRequest;
-import com.esofthead.mycollab.core.arguments.StringSearchField;
-import com.esofthead.mycollab.module.project.CurrentProjectVariables;
-import com.esofthead.mycollab.module.project.ProjectMemberStatusConstants;
-import com.esofthead.mycollab.module.project.domain.criteria.ProjectMemberSearchCriteria;
-import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.project.ui.components.MultiSelectComp;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
-import com.vaadin.ui.CheckBox;
 
 /**
  * 

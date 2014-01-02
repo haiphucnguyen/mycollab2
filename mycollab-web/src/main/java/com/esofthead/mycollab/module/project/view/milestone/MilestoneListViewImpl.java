@@ -42,7 +42,6 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.CustomLayout;
-import com.vaadin.ui.Embedded;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
@@ -52,6 +51,7 @@ import com.vaadin.ui.VerticalLayout;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 @ViewComponent
 public class MilestoneListViewImpl extends AbstractPageView implements
@@ -73,8 +73,8 @@ public class MilestoneListViewImpl extends AbstractPageView implements
 		final Label titleLbl = new Label("Phases");
 		titleLbl.addStyleName("h2");
 		header.setWidth("100%");
-		final Image icon = new Image(null, MyCollabResource
-				.newResource("icons/24/project/phase.png"));
+		final Image icon = new Image(null,
+				MyCollabResource.newResource("icons/24/project/phase.png"));
 		header.addComponent(icon);
 		header.setComponentAlignment(icon, Alignment.MIDDLE_LEFT);
 		header.addComponent(titleLbl);
@@ -227,8 +227,8 @@ public class MilestoneListViewImpl extends AbstractPageView implements
 		layoutHelper.addComponent(progressTask, "Tasks", 0, 3,
 				Alignment.MIDDLE_LEFT);
 
-		final ProgressBarIndicator progressBug = new ProgressBarIndicator(milestone.getNumBugs(),
-				milestone.getNumOpenBugs());
+		final ProgressBarIndicator progressBug = new ProgressBarIndicator(
+				milestone.getNumBugs(), milestone.getNumOpenBugs());
 		progressBug.setWidth("100%");
 
 		layoutHelper.addComponent(progressBug, "Bugs", 0, 4,

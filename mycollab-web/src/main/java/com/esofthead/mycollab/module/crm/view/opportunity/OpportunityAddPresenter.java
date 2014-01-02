@@ -64,6 +64,8 @@ public class OpportunityAddPresenter extends
 	protected void postInitView() {
 		view.getEditFormHandlers().addFormHandler(
 				new EditFormHandler<SimpleOpportunity>() {
+					private static final long serialVersionUID = 1L;
+
 					@Override
 					public void onSave(final SimpleOpportunity item) {
 						saveOpportunity(item);
