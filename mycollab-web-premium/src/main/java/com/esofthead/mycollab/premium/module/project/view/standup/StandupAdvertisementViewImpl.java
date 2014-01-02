@@ -4,9 +4,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
-import com.esofthead.mycollab.vaadin.ui.ViewComponent;
-import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.ui.BrowserFrame;
 

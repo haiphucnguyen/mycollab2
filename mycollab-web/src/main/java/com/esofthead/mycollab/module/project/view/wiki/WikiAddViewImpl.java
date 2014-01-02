@@ -17,7 +17,7 @@
 package com.esofthead.mycollab.module.project.view.wiki;
 
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
-import com.esofthead.mycollab.vaadin.ui.ViewComponent;
+import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 
 @ViewComponent
 public class WikiAddViewImpl extends AbstractPageView implements WikiAddView {

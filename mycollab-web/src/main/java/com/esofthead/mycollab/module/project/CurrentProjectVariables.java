@@ -31,8 +31,7 @@ import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.security.PermissionMap;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.web.AppContext;
-import com.esofthead.mycollab.web.MyCollabApplication;
+import com.esofthead.mycollab.vaadin.AppContext;
 
 /**
  * 
@@ -45,13 +44,12 @@ public class CurrentProjectVariables {
 			.getLogger(CurrentProjectVariables.class);
 
 	public static SimpleProject getProject() {
-		return (SimpleProject) MyCollabApplication
+		return (SimpleProject) AppContext
 				.getVariable(ProjectContants.CURRENT_PROJECT);
 	}
 
 	public static void setProject(SimpleProject project) {
-		MyCollabApplication.putVariable(ProjectContants.CURRENT_PROJECT,
-				project);
+		AppContext.putVariable(ProjectContants.CURRENT_PROJECT, project);
 
 		// get member permission
 		ProjectMemberService prjMemberService = ApplicationContextUtil
@@ -80,7 +78,7 @@ public class CurrentProjectVariables {
 				}
 			}
 
-			MyCollabApplication.putVariable(ProjectContants.PROJECT_MEMBER,
+			AppContext.putVariable(ProjectContants.PROJECT_MEMBER,
 					prjMember);
 		} else if (!AppContext.isAdmin()) {
 			throw new MyCollabException("You are not belong to this project");
@@ -88,7 +86,7 @@ public class CurrentProjectVariables {
 	}
 
 	private static SimpleProjectMember getProjectMember() {
-		return (SimpleProjectMember) MyCollabApplication
+		return (SimpleProjectMember) AppContext
 				.getVariable(ProjectContants.PROJECT_MEMBER);
 	}
 
@@ -96,7 +94,7 @@ public class CurrentProjectVariables {
 		if (AppContext.isAdmin()) {
 			return true;
 		}
-		ProjectMember member = (ProjectMember) MyCollabApplication
+		ProjectMember member = (ProjectMember) AppContext
 				.getVariable(ProjectContants.PROJECT_MEMBER);
 		if (member != null && member.getIsadmin() != null) {
 			return member.getIsadmin();

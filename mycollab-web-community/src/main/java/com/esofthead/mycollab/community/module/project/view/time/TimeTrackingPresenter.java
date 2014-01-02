@@ -19,8 +19,8 @@ package com.esofthead.mycollab.community.module.project.view.time;
 import com.esofthead.mycollab.module.project.view.ProjectView;
 import com.esofthead.mycollab.module.project.view.time.ITimeTrackingContainer;
 import com.esofthead.mycollab.module.project.view.time.ITimeTrackingPresenter;
-import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
+import com.esofthead.mycollab.vaadin.ui.AbstractPresenter;
 import com.vaadin.ui.ComponentContainer;
 
 /**

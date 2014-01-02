@@ -46,9 +46,9 @@
 
     <servlet>
         <servlet-name>MyCollabApplication</servlet-name>
-        <servlet-class>com.esofthead.mycollab.web.MyCollabServlet</servlet-class>
+        <servlet-class>com.esofthead.mycollab.vaadin.MyCollabServlet</servlet-class>
         <!-- <init-param> <description>Vaadin UI</description> <param-name>UI</param-name> 
-            <param-value>com.esofthead.mycollab.web.MyCollabApplication</param-value> 
+            <param-value>com.esofthead.mycollab.web.DesktopApplication</param-value> 
             </init-param> <init-param> <param-name>widgetset</param-name> <param-value>com.esofthead.mycollab.widgetset.MyCollabWidgetSet</param-value> 
             </init-param> -->
     </servlet>

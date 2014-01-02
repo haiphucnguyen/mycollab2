@@ -39,11 +39,11 @@ import com.esofthead.mycollab.premium.module.crm.view.setting.customlayout.Creat
 import com.esofthead.mycollab.premium.module.crm.view.setting.customlayout.CreateSectionWindow;
 import com.esofthead.mycollab.premium.module.crm.view.setting.customlayout.CustomLayoutDDComp;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
+import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
-import com.esofthead.mycollab.vaadin.ui.ViewComponent;
-import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.Property;
 import com.vaadin.shared.ui.MarginInfo;

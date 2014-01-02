@@ -27,10 +27,10 @@ import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectRoleSearchCriteria;
 import com.esofthead.mycollab.module.project.events.ProjectRoleEvent;
 import com.esofthead.mycollab.module.project.localization.PeopleI18nEnum;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
-import com.esofthead.mycollab.web.MyCollabApplication;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -41,6 +41,12 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.themes.Reindeer;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class ProjectRoleSearchPanel extends
 		GenericSearchPanel<ProjectRoleSearchCriteria> {
 	private static final long serialVersionUID = 1L;
@@ -48,7 +54,7 @@ public class ProjectRoleSearchPanel extends
 	protected ProjectRoleSearchCriteria searchCriteria;
 
 	public ProjectRoleSearchPanel() {
-		this.project = (SimpleProject) MyCollabApplication.getVariable("project");
+		this.project = (SimpleProject) AppContext.getVariable("project");
 	}
 
 	@Override

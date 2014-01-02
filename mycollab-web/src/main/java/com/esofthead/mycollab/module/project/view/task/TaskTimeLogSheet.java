@@ -27,7 +27,7 @@ import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSear
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.project.ui.components.CompTimeLogSheet;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.vaadin.AppContext;
 
 /**
  * 

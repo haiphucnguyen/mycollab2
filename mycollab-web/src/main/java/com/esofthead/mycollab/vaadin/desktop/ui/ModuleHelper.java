@@ -14,23 +14,24 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.vaadin.mvp;
+package com.esofthead.mycollab.vaadin.desktop.ui;
 
 import com.esofthead.mycollab.module.crm.view.CrmModule;
 import com.esofthead.mycollab.module.file.view.IFileModule;
 import com.esofthead.mycollab.module.project.view.ProjectModule;
 import com.esofthead.mycollab.module.user.accountsettings.view.AccountModule;
-import com.esofthead.mycollab.web.MyCollabApplication;
+import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.mvp.IModule;
 
 public class ModuleHelper {
 	public static final String CURRENT_MODULE = "currentModule";
 
 	public static void setCurrentModule(IModule module) {
-		MyCollabApplication.putVariable(CURRENT_MODULE, module);
+		AppContext.putVariable(CURRENT_MODULE, module);
 	}
 
 	public static IModule getCurrentModule() {
-		return (IModule) MyCollabApplication.getVariable(CURRENT_MODULE);
+		return (IModule) AppContext.getVariable(CURRENT_MODULE);
 	}
 
 	public static boolean isCurrentProjectModule() {

@@ -18,9 +18,9 @@
 package com.esofthead.mycollab.module.project.view.settings;
 
 import com.esofthead.mycollab.module.project.view.parameters.ProjectMemberScreenData;
-import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
+import com.esofthead.mycollab.vaadin.ui.AbstractPresenter;
 import com.vaadin.ui.ComponentContainer;
 
 /**

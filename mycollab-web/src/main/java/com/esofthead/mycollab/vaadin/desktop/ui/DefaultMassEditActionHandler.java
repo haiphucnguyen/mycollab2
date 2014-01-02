@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.vaadin.mvp;
+package com.esofthead.mycollab.vaadin.desktop.ui;
 
 import org.vaadin.dialogs.ConfirmDialog;
 

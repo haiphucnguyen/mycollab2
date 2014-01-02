@@ -30,8 +30,8 @@ import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.shell.view.FragmentNavigator;
 import com.esofthead.mycollab.shell.view.MainWindowContainer;
 import com.esofthead.mycollab.shell.view.NoSubDomainExistedWindow;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
-import com.vaadin.addon.touchkit.extensions.OfflineMode;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Widgetset;
 import com.vaadin.server.DefaultErrorHandler;
@@ -51,14 +51,14 @@ import com.vaadin.ui.UI;
  */
 @Theme("mycollab")
 @Widgetset("com.esofthead.mycollab.widgetset.MyCollabWidgetSet")
-public class MyCollabApplication extends UI {
+public class DesktopApplication extends UI {
 
 	private static final long serialVersionUID = 1L;
 
 	private static final String CURRENT_APP = "currentApp";
 
 	private static Logger log = LoggerFactory
-			.getLogger(MyCollabApplication.class);
+			.getLogger(DesktopApplication.class);
 
 	/**
 	 * Context of current logged in user
@@ -70,8 +70,8 @@ public class MyCollabApplication extends UI {
 
 	public static final String NAME_COOKIE = "mycollab";
 
-	public static MyCollabApplication getInstance() {
-		return (MyCollabApplication) VaadinSession.getCurrent().getAttribute(
+	public static DesktopApplication getInstance() {
+		return (DesktopApplication) VaadinSession.getCurrent().getAttribute(
 				CURRENT_APP);
 	}
 
@@ -102,7 +102,7 @@ public class MyCollabApplication extends UI {
 
 		initialUrl = this.getPage().getUriFragment();
 		VaadinSession.getCurrent().setAttribute(CURRENT_APP, this);
-		currentContext = new AppContext(this);
+		currentContext = new AppContext();
 		postSetupApp(request);
 		try {
 			currentContext.initDomain(initialSubDomain);
@@ -154,37 +154,11 @@ public class MyCollabApplication extends UI {
 		VaadinSession.getCurrent().close();
 	}
 
-	/**
-	 * 
-	 * @param key
-	 * @param value
-	 */
-	public static void putVariable(String key, Object value) {
-		VaadinSession.getCurrent().setAttribute(key, value);
-	}
-
-	/**
-	 * 
-	 * @param key
-	 */
-	public static void removeVariable(String key) {
-		VaadinSession.getCurrent().setAttribute(key, null);
-	}
-
-	/**
-	 * 
-	 * @param key
-	 * @return
-	 */
-	public static Object getVariable(String key) {
-		return VaadinSession.getCurrent().getAttribute(key);
-	}
-
 	public void rememberPassword(String username, String password) {
 
-		Cookie cookie = getCookieByName(MyCollabApplication.NAME_COOKIE);
+		Cookie cookie = getCookieByName(DesktopApplication.NAME_COOKIE);
 		if (cookie == null) {
-			cookie = new Cookie(MyCollabApplication.NAME_COOKIE, username + "$"
+			cookie = new Cookie(DesktopApplication.NAME_COOKIE, username + "$"
 					+ PasswordEncryptHelper.encyptText(password));
 		} else {
 			cookie.setValue(username + "$"
@@ -196,7 +170,7 @@ public class MyCollabApplication extends UI {
 	}
 
 	public void unsetRememberPassword() {
-		Cookie cookie = getCookieByName(MyCollabApplication.NAME_COOKIE);
+		Cookie cookie = getCookieByName(DesktopApplication.NAME_COOKIE);
 
 		if (cookie != null) {
 			cookie.setValue("");

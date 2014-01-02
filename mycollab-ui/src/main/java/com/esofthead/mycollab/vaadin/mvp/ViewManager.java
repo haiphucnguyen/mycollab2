@@ -20,8 +20,6 @@ import java.util.Set;
 
 import org.reflections.Reflections;
 
-import com.esofthead.mycollab.vaadin.ui.ViewComponent;
-
 /**
  * 
  * @author MyCollab Ltd.

@@ -28,11 +28,11 @@ import com.esofthead.mycollab.shell.events.ShellEvent.LogOut;
 import com.esofthead.mycollab.shell.view.MainView;
 import com.esofthead.mycollab.shell.view.MainViewPresenter;
 import com.esofthead.mycollab.shell.view.MainWindowContainer;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ControllerRegistry;
 import com.esofthead.mycollab.vaadin.mvp.IController;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
-import com.esofthead.mycollab.web.AppContext;
-import com.esofthead.mycollab.web.MyCollabApplication;
+import com.esofthead.mycollab.web.DesktopApplication;
 
 public class ShellController implements IController {
 
@@ -82,7 +82,7 @@ public class ShellController implements IController {
 						LoginPresenter presenter = PresenterResolver
 								.getPresenter(LoginPresenter.class);
 						LoginView loginView = presenter.initView();
-						MyCollabApplication.getInstance()
+						DesktopApplication.getInstance()
 								.unsetRememberPassword();
 
 						container.setStyleName("loginView");

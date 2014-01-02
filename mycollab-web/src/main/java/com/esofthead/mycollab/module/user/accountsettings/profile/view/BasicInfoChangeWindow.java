@@ -22,13 +22,12 @@ import com.esofthead.mycollab.module.user.accountsettings.view.events.ProfileEve
 import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.DateComboboxSelectionField;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.vaadin.ui.TimeZoneSelectionField;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.web.AppContext;
-import com.esofthead.mycollab.web.MyCollabApplication;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -174,8 +173,8 @@ public class BasicInfoChangeWindow extends Window {
 		this.user.setDateofbirth(this.birthdayField.getDate());
 		this.user.setTimezone(this.timeZoneField.getTimeZone().getId());
 
-		MyCollabApplication.removeVariable(AppContext.USER_TIMEZONE);
-		MyCollabApplication.putVariable(AppContext.USER_TIMEZONE, this.timeZoneField
+		AppContext.removeVariable(AppContext.USER_TIMEZONE);
+		AppContext.putVariable(AppContext.USER_TIMEZONE, this.timeZoneField
 				.getTimeZone().getTimezone());
 
 		final UserService userService = ApplicationContextUtil

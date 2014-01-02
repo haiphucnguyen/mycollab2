@@ -17,7 +17,7 @@
 package com.esofthead.mycollab.module.common.view;
 
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
-import com.esofthead.mycollab.vaadin.ui.ViewComponent;
+import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 
 @ViewComponent
 public class SomeViewImpl extends AbstractPageView implements SomeView {

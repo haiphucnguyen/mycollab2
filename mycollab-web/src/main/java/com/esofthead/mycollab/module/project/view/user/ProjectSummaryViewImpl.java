@@ -18,7 +18,7 @@ package com.esofthead.mycollab.module.project.view.user;
 
 import com.esofthead.mycollab.module.project.view.ProjectInformationComponent;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
-import com.esofthead.mycollab.vaadin.ui.ViewComponent;
+import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.VerticalLayout;

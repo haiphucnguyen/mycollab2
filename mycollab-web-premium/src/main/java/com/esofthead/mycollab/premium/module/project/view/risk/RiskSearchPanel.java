@@ -13,12 +13,11 @@ import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.RiskSearchCriteria;
 import com.esofthead.mycollab.module.project.events.RiskEvent;
 import com.esofthead.mycollab.module.project.localization.RiskI18nEnum;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
 import com.esofthead.mycollab.vaadin.ui.Separator;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
-import com.esofthead.mycollab.web.AppContext;
-import com.esofthead.mycollab.web.MyCollabApplication;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -44,8 +43,7 @@ public class RiskSearchPanel extends GenericSearchPanel<RiskSearchCriteria> {
 	protected RiskSearchCriteria searchCriteria;
 
 	public RiskSearchPanel() {
-		this.project = (SimpleProject) MyCollabApplication
-				.getVariable("project");
+		this.project = (SimpleProject) AppContext.getVariable("project");
 	}
 
 	@Override

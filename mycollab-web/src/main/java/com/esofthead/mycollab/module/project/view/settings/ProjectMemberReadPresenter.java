@@ -36,14 +36,13 @@ import com.esofthead.mycollab.module.project.events.ProjectMemberEvent;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.DefaultPreviewFormHandler;
-import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
+import com.esofthead.mycollab.vaadin.ui.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
-import com.esofthead.mycollab.web.AppContext;
-import com.esofthead.mycollab.web.MyCollabApplication;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.UI;
 
@@ -127,7 +126,7 @@ public class ProjectMemberReadPresenter extends
 						ProjectMemberService projectMemberService = ApplicationContextUtil
 								.getSpringBean(ProjectMemberService.class);
 						ProjectMemberSearchCriteria criteria = new ProjectMemberSearchCriteria();
-						SimpleProject project = (SimpleProject) MyCollabApplication
+						SimpleProject project = (SimpleProject) AppContext
 								.getVariable("project");
 						criteria.setProjectId(new NumberSearchField(
 								SearchField.AND, project.getId()));
@@ -155,7 +154,7 @@ public class ProjectMemberReadPresenter extends
 						ProjectMemberService projectMemberService = ApplicationContextUtil
 								.getSpringBean(ProjectMemberService.class);
 						ProjectMemberSearchCriteria criteria = new ProjectMemberSearchCriteria();
-						SimpleProject project = (SimpleProject) MyCollabApplication
+						SimpleProject project = (SimpleProject) AppContext
 								.getVariable("project");
 						criteria.setProjectId(new NumberSearchField(
 								SearchField.AND, project.getId()));

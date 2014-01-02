@@ -19,6 +19,7 @@ package com.esofthead.mycollab.module.project.view.message;
 
 import java.util.List;
 
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.*;
 import org.vaadin.dialogs.ConfirmDialog;
 
@@ -42,7 +43,7 @@ import com.esofthead.mycollab.schedule.email.project.MessageRelayEmailNotificati
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
-import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Button;

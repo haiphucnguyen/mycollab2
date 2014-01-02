@@ -18,7 +18,7 @@ package com.esofthead.mycollab.community.module.file.view;
 
 import com.esofthead.mycollab.community.view.NotPresentedView;
 import com.esofthead.mycollab.module.file.view.IFileModule;
-import com.esofthead.mycollab.vaadin.ui.ViewComponent;
+import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 
 @ViewComponent
 public class FileModule extends NotPresentedView implements IFileModule {

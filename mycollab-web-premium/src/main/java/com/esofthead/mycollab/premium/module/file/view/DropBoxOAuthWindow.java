@@ -16,7 +16,7 @@ import com.dropbox.core.DbxWebAuth;
 import com.esofthead.mycollab.cache.LocalCacheManager;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.module.ecm.StorageNames;
-import com.esofthead.mycollab.web.MyCollabApplication;
+import com.esofthead.mycollab.web.DesktopApplication;
 import com.vaadin.server.VaadinService;
 import com.vaadin.server.WrappedSession;
 
@@ -53,7 +53,7 @@ public abstract class DropBoxOAuthWindow extends
 				.getWrappedSession();
 		// TODO: fix compile issue only. Need to revise this feature
 		HttpSession session = null;
-		String appId = MyCollabApplication.getInstance().toString();
+		String appId = DesktopApplication.getInstance().toString();
 		String sessionKey = "dropbox-auth-csrf-token";
 		DbxSessionStore csrfTokenStore = new DbxStandardSessionStore(session,
 				sessionKey);

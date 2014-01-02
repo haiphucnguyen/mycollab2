@@ -22,8 +22,8 @@ import com.esofthead.mycollab.module.user.accountsettings.team.view.UserUrlResol
 import com.esofthead.mycollab.module.user.accountsettings.view.events.AccountBillingEvent;
 import com.esofthead.mycollab.module.user.accountsettings.view.events.ProfileEvent;
 import com.esofthead.mycollab.shell.events.ShellEvent;
-import com.esofthead.mycollab.vaadin.mvp.ModuleHelper;
-import com.esofthead.mycollab.vaadin.mvp.UrlResolver;
+import com.esofthead.mycollab.vaadin.desktop.ui.ModuleHelper;
+import com.esofthead.mycollab.vaadin.desktop.ui.UrlResolver;
 
 public class AccountUrlResolver extends UrlResolver {
 	public UrlResolver build() {

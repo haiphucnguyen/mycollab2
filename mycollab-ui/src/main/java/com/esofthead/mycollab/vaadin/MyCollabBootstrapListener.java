@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.web;
+package com.esofthead.mycollab.vaadin;
 
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.DeploymentMode;

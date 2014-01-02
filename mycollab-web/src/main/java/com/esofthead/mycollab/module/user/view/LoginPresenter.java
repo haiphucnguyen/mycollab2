@@ -33,10 +33,10 @@ import com.esofthead.mycollab.module.user.service.UserPreferenceService;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
-import com.esofthead.mycollab.web.AppContext;
-import com.esofthead.mycollab.web.MyCollabApplication;
+import com.esofthead.mycollab.vaadin.ui.AbstractPresenter;
+import com.esofthead.mycollab.web.DesktopApplication;
 import com.vaadin.ui.ComponentContainer;
 
 /**
@@ -81,7 +81,7 @@ public class LoginPresenter extends AbstractPresenter<LoginView> {
 				AppContext.getSubDomain(), false);
 
 		if (isRemmeberPassword) {
-			MyCollabApplication.getInstance().rememberPassword(username,
+			DesktopApplication.getInstance().rememberPassword(username,
 					password);
 		}
 

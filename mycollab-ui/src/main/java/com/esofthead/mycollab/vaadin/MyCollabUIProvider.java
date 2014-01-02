@@ -1,6 +1,6 @@
-package com.esofthead.mycollab.web;
+package com.esofthead.mycollab.vaadin;
 
-import com.esofthead.mycollab.mobile.MobileUI;
+import com.esofthead.mycollab.core.MyCollabException;
 import com.vaadin.server.UIClassSelectionEvent;
 import com.vaadin.server.UIProvider;
 import com.vaadin.ui.UI;
@@ -19,10 +19,18 @@ public class MyCollabUIProvider extends UIProvider {
 		String userAgent = event.getRequest().getHeader("user-agent")
 				.toLowerCase();
 
+		String uiClass = "";
+
 		if (userAgent.contains("mobile")) {
-			return MobileUI.class;
+			uiClass = "com.esofthead.mycollab.mobile";
 		} else {
-			return MyCollabApplication.class;
+			uiClass = "com.esofthead.mycollab.web.DesktopApplication";
+		}
+
+		try {
+			return (Class<? extends UI>) Class.forName(uiClass);
+		} catch (ClassNotFoundException e) {
+			throw new MyCollabException(e);
 		}
 	}
 

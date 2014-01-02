@@ -17,10 +17,11 @@
             <artifactId>vaadin-server</artifactId>
             <version>${vaadinVersion}</version>
         </dependency>
+
         <dependency>
-            <groupId>com.vaadin.addon</groupId>
-            <artifactId>vaadin-touchkit-agpl</artifactId>
-            <version>LATEST</version>
+            <groupId>com.esofthead.mycollab</groupId>
+            <artifactId>mycollab-ui</artifactId>
+            <version>3.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
 </project>

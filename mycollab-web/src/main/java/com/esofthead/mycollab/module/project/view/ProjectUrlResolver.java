@@ -33,9 +33,9 @@ import com.esofthead.mycollab.module.project.view.standup.StandupUrlResolver;
 import com.esofthead.mycollab.module.project.view.task.ScheduleUrlResolver;
 import com.esofthead.mycollab.module.project.view.time.TimeUrlResolver;
 import com.esofthead.mycollab.shell.events.ShellEvent;
-import com.esofthead.mycollab.vaadin.mvp.ModuleHelper;
+import com.esofthead.mycollab.vaadin.desktop.ui.ModuleHelper;
+import com.esofthead.mycollab.vaadin.desktop.ui.UrlResolver;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
-import com.esofthead.mycollab.vaadin.mvp.UrlResolver;
 
 /**
  * 

@@ -18,8 +18,14 @@ package com.esofthead.mycollab.community.module.user.accountsettings.billing.vie
 
 import com.esofthead.mycollab.community.view.NotPresentedView;
 import com.esofthead.mycollab.module.user.accountsettings.billing.view.IBillingContainer;
-import com.esofthead.mycollab.vaadin.ui.ViewComponent;
+import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @ViewComponent
 public class BillingContainer extends NotPresentedView implements
 		IBillingContainer {

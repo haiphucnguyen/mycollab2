@@ -59,6 +59,7 @@
 	<classpathentry kind="var" path="M2_REPO/org/springframework/spring-context-support/3.2.4.RELEASE/spring-context-support-3.2.4.RELEASE.jar" sourcepath="M2_REPO/org/springframework/spring-context-support/3.2.4.RELEASE/spring-context-support-3.2.4.RELEASE-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/aspectj/aspectjrt/1.7.3/aspectjrt-1.7.3.jar" sourcepath="M2_REPO/org/aspectj/aspectjrt/1.7.3/aspectjrt-1.7.3-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/cglib/cglib/3.0/cglib-3.0.jar"/>
+	<classpathentry kind="src" path="/mycollab-ui"/>
 	<classpathentry kind="src" path="/mycollab-config"/>
 	<classpathentry kind="var" path="M2_REPO/com/amazonaws/aws-java-sdk/1.6.4/aws-java-sdk-1.6.4.jar" sourcepath="M2_REPO/com/amazonaws/aws-java-sdk/1.6.4/aws-java-sdk-1.6.4-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/com/fasterxml/jackson/core/jackson-core/2.3.0-rc1/jackson-core-2.3.0-rc1.jar" sourcepath="M2_REPO/com/fasterxml/jackson/core/jackson-core/2.3.0-rc1/jackson-core-2.3.0-rc1-sources.jar"/>

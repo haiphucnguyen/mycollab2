@@ -18,8 +18,8 @@ package com.esofthead.mycollab.module.crm.view;
 
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.ValuedBean;
-import com.esofthead.mycollab.vaadin.mvp.ListSelectionPresenter;
-import com.esofthead.mycollab.vaadin.mvp.ListView;
+import com.esofthead.mycollab.vaadin.desktop.ui.ListSelectionPresenter;
+import com.esofthead.mycollab.vaadin.desktop.ui.ListView;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.vaadin.ui.ComponentContainer;
 

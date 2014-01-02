@@ -24,7 +24,7 @@ import com.esofthead.mycollab.module.user.view.LoginView;
 import com.esofthead.mycollab.shell.ShellController;
 import com.esofthead.mycollab.vaadin.mvp.ControllerRegistry;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
-import com.esofthead.mycollab.web.MyCollabApplication;
+import com.esofthead.mycollab.web.DesktopApplication;
 import com.vaadin.server.Page;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
@@ -67,8 +67,8 @@ public class MainWindowContainer extends CssLayout {
 
 		// Read previously stored cookie value
 		if (isAutoLogin) {
-			Cookie nameCookie = MyCollabApplication.getInstance()
-					.getCookieByName(MyCollabApplication.NAME_COOKIE);
+			Cookie nameCookie = DesktopApplication.getInstance()
+					.getCookieByName(DesktopApplication.NAME_COOKIE);
 			if (nameCookie != null) {
 				String loginInfo = nameCookie.getValue();
 				if (loginInfo != null) {

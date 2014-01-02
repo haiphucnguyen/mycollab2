@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.web;
+package com.esofthead.mycollab.vaadin;
 
 import javax.servlet.ServletException;
 

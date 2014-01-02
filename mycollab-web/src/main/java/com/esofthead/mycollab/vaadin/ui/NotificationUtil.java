@@ -18,7 +18,7 @@ package com.esofthead.mycollab.vaadin.ui;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
-import com.esofthead.mycollab.web.MyCollabApplication;
+import com.esofthead.mycollab.web.DesktopApplication;
 import com.vaadin.server.Page;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Notification.Type;
@@ -58,7 +58,7 @@ public class NotificationUtil {
 		if (Page.getCurrent() != null) {
 			warnNotif.show(Page.getCurrent());
 		} else {
-			warnNotif.show(MyCollabApplication.getInstance().getPage());
+			warnNotif.show(DesktopApplication.getInstance().getPage());
 		}
 
 	}

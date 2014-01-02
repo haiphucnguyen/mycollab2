@@ -19,14 +19,13 @@ import com.esofthead.mycollab.module.project.events.RiskEvent;
 import com.esofthead.mycollab.module.project.service.RiskService;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.DefaultPreviewFormHandler;
-import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
+import com.esofthead.mycollab.vaadin.ui.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
-import com.esofthead.mycollab.web.AppContext;
-import com.esofthead.mycollab.web.MyCollabApplication;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.UI;
 
@@ -107,7 +106,7 @@ public class RiskReadPresenter extends AbstractPresenter<RiskReadView> {
 						RiskService riskeService = ApplicationContextUtil
 								.getSpringBean(RiskService.class);
 						RiskSearchCriteria criteria = new RiskSearchCriteria();
-						SimpleProject project = (SimpleProject) MyCollabApplication
+						SimpleProject project = (SimpleProject) AppContext
 								.getVariable("project");
 						criteria.setProjectId(new NumberSearchField(
 								SearchField.AND, project.getId()));
@@ -128,7 +127,7 @@ public class RiskReadPresenter extends AbstractPresenter<RiskReadView> {
 						RiskService riskeService = ApplicationContextUtil
 								.getSpringBean(RiskService.class);
 						RiskSearchCriteria criteria = new RiskSearchCriteria();
-						SimpleProject project = (SimpleProject) MyCollabApplication
+						SimpleProject project = (SimpleProject) AppContext
 								.getVariable("project");
 						criteria.setProjectId(new NumberSearchField(
 								SearchField.AND, project.getId()));
