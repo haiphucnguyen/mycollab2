@@ -28,7 +28,7 @@ import com.esofthead.mycollab.module.project.domain.criteria.ProjectMemberSearch
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
-import com.vaadin.data.Buffered.SourceException;
+import com.vaadin.data.Property;
 import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.ui.AbstractSelect.ItemCaptionMode;
 import com.vaadin.ui.ComboBox;
@@ -47,7 +47,6 @@ public class ProjectMemberComboBox extends CustomField<String> {
 
 	private ComboBox userSelectionBox;
 
-	@SuppressWarnings("unchecked")
 	public ProjectMemberComboBox() {
 		super();
 
@@ -80,6 +79,15 @@ public class ProjectMemberComboBox extends CustomField<String> {
 					UserAvatarControlFactory.createAvatarResource(
 							member.getMemberAvatarId(), 16));
 		}
+	}
+
+	@Override
+	public void setPropertyDataSource(Property newDataSource) {
+		Object value = newDataSource.getValue();
+		if (value instanceof String) {
+			userSelectionBox.setValue(value);
+		}
+		super.setPropertyDataSource(newDataSource);
 	}
 
 	@Override

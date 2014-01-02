@@ -19,7 +19,6 @@ package com.esofthead.mycollab.module.project.view.bug;
 import java.util.Arrays;
 import java.util.GregorianCalendar;
 
-import com.vaadin.ui.CustomField;
 import org.vaadin.dialogs.ConfirmDialog;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
@@ -45,28 +44,34 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.DefaultPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 import com.esofthead.mycollab.web.MyCollabResource;
-import com.vaadin.event.MouseEvents;
-import com.vaadin.event.MouseEvents.ClickEvent;
 import com.vaadin.server.Resource;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.Embedded;
+import com.vaadin.ui.CustomField;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.Table;
-import com.vaadin.ui.UI;
 import com.vaadin.ui.Table.ColumnGenerator;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class BugRelatedField extends CustomField {
+
 	private static final long serialVersionUID = 1L;
 	private TextField itemField;
-	private Embedded browseBtn;
-	private Embedded clearBtn;
+	private Button browseBtn;
+	private Button clearBtn;
+
 	private Button btnRelate;
 	private BugRelationComboBox comboRelation;
 	private DefaultPagedBeanTable<RelatedBugService, BugRelatedSearchCriteria, SimpleRelatedBug> tableItem;
@@ -138,30 +143,32 @@ public class BugRelatedField extends CustomField {
 		layoutAdd.addComponent(itemField);
 		layoutAdd.setComponentAlignment(itemField, Alignment.MIDDLE_LEFT);
 
-		browseBtn = new Embedded(null,
-				MyCollabResource.newResource("icons/16/browseItem.png"));
-		browseBtn.addClickListener(new MouseEvents.ClickListener() {
+		browseBtn = new Button("", new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void click(com.vaadin.event.MouseEvents.ClickEvent event) {
+			public void buttonClick(com.vaadin.ui.Button.ClickEvent event) {
 				callItemSelectionWindow();
+
 			}
 		});
+		browseBtn.setIcon(MyCollabResource
+				.newResource("icons/16/browseItem.png"));
+		browseBtn.setStyleName("link");
 
 		layoutAdd.addComponent(browseBtn);
 		layoutAdd.setComponentAlignment(browseBtn, Alignment.MIDDLE_LEFT);
 
-		clearBtn = new Embedded(null,
-				MyCollabResource.newResource("icons/16/clearItem.png"));
-		clearBtn.addClickListener(new MouseEvents.ClickListener() {
+		clearBtn = new Button("", new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void click(ClickEvent event) {
+			public void buttonClick(com.vaadin.ui.Button.ClickEvent event) {
 				setItemFieldValue("");
 			}
 		});
+		clearBtn.setIcon(MyCollabResource.newResource("icons/16/clearItem.png"));
+		clearBtn.setStyleName("link");
 
 		layoutAdd.addComponent(clearBtn);
 		layoutAdd.setComponentAlignment(clearBtn, Alignment.MIDDLE_LEFT);
@@ -456,5 +463,4 @@ public class BugRelatedField extends CustomField {
 
 		return mainLayout;
 	}
-
 }

@@ -276,12 +276,21 @@ public class BugReadViewImpl extends AbstractPageView implements BugReadView,
 
 		private BugRelatedField bugRelatedField;
 
+		private CommentDisplay commentList;
+
 		@Override
 		public void setBean(SimpleBug bean) {
 			this.setFormLayoutFactory(new FormLayoutFactory());
 			this.setBeanFormFieldFactory(new PreviewFormFieldFactory(this));
 			super.setBean(bean);
 			BugReadViewImpl.this.displayWorkflowControl();
+
+			onPreviewItem();
+		}
+
+		private void onPreviewItem() {
+			commentList.loadComments(this.getBean().getId());
+			historyList.loadHistory(this.getBean().getId());
 		}
 
 		private class FormLayoutFactory implements IFormLayoutFactory {
@@ -355,8 +364,7 @@ public class BugReadViewImpl extends AbstractPageView implements BugReadView,
 				final TabSheet tabBugDetail = new TabSheet();
 				tabBugDetail.setWidth("100%");
 
-				final CommentDisplay commentList = new CommentDisplay(
-						CommentType.PRJ_BUG,
+				commentList = new CommentDisplay(CommentType.PRJ_BUG,
 						CurrentProjectVariables.getProjectId(), true, true,
 						BugRelayEmailNotificationAction.class);
 				commentList.setMargin(true);

@@ -26,7 +26,7 @@ public class SectionSelectList extends ComboBox {
 
 	public SectionSelectList(List<DynaSection> sections) {
 		super();
-		this.setItemCaptionMode(ITEM_CAPTION_MODE_EXPLICIT);
+		this.setItemCaptionMode(ItemCaptionMode.EXPLICIT);
 
 		for (DynaSection section : sections) {
 			this.addItem(section);

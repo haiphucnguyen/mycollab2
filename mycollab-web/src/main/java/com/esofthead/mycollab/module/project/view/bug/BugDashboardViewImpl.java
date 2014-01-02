@@ -52,6 +52,12 @@ import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @SuppressWarnings("serial")
 @ViewComponent
 public class BugDashboardViewImpl extends AbstractPageView implements
