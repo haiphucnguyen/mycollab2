@@ -1,5 +1,17 @@
-package com.esofthead.mycollab.mobile;
+package com.esofthead.mycollab.mobile.module.user.ui;
 
+import com.esofthead.mycollab.core.utils.BeanUtility;
+import com.esofthead.mycollab.mobile.UIConstants;
+import com.esofthead.mycollab.module.user.domain.SimpleBillingAccount;
+import com.esofthead.mycollab.module.user.domain.SimpleUser;
+import com.esofthead.mycollab.module.user.domain.UserPreference;
+import com.esofthead.mycollab.module.user.service.BillingAccountService;
+import com.esofthead.mycollab.module.user.service.UserPreferenceService;
+import com.esofthead.mycollab.module.user.service.UserService;
+import com.esofthead.mycollab.module.user.view.LoginView;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.mvp.AbstractMobileView;
 import com.vaadin.addon.touchkit.ui.EmailField;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Alignment;
@@ -9,13 +21,17 @@ import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.VerticalLayout;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Created by nghi on 12/31/13.
  */
-public class LoginView extends CssLayout {
+public class LoginViewImpl extends AbstractMobileView implements LoginView {
 
-    public LoginView() {
+    private static Logger log = LoggerFactory.getLogger(LoginView.class);
+
+    public LoginViewImpl() {
         super();
 
         initUI();
@@ -48,13 +64,13 @@ public class LoginView extends CssLayout {
         welcomeTextWrapper.addComponent(welcomeText);
         contentLayout.addComponent(welcomeTextWrapper);
 
-        EmailField emailField = new EmailField();
+        final EmailField emailField = new EmailField();
         emailField.setWidth("100%");
         emailField.setInputPrompt("E-mail Address");
         emailField.setStyleName("email-input");
         contentLayout.addComponent(emailField);
 
-        PasswordField pwdField = new PasswordField();
+        final PasswordField pwdField = new PasswordField();
         pwdField.setWidth("100%");
         pwdField.setInputPrompt("Password");
         pwdField.setStyleName("password-input");
@@ -64,6 +80,12 @@ public class LoginView extends CssLayout {
         signInBtn.setWidth("100%");
         signInBtn.addStyleName(UIConstants.BUTTON_BIG);
         signInBtn.addStyleName(UIConstants.COLOR_BLUE);
+        signInBtn.addClickListener(new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent event) {
+                doLogin(emailField.getValue(), pwdField.getValue());
+            }
+        });
         contentLayout.addComponent(signInBtn);
 
         Button createAccountBtn = new Button("Create Account");
@@ -73,5 +95,29 @@ public class LoginView extends CssLayout {
         contentLayout.addComponent(createAccountBtn);
 
         this.addComponent(contentLayout);
+    }
+
+    public void doLogin(String username, String password) {
+        UserService userService = ApplicationContextUtil
+                .getSpringBean(UserService.class);
+        SimpleUser user = userService.authentication(username, password,
+                AppContext.getSubDomain(), false);
+
+        BillingAccountService billingAccountService = ApplicationContextUtil
+                .getSpringBean(BillingAccountService.class);
+
+        SimpleBillingAccount billingAccount = billingAccountService
+                .getBillingAccountById(AppContext.getAccountId());
+
+        log.debug("Get billing account successfully: "
+                + BeanUtility.printBeanObj(billingAccount));
+
+        UserPreferenceService preferenceService = ApplicationContextUtil
+                .getSpringBean(UserPreferenceService.class);
+        UserPreference pref = preferenceService.getPreferenceOfUser(username,
+                AppContext.getAccountId());
+
+        log.debug("Login to system successfully. Save user and preference "
+                + pref + " to session");
     }
 }

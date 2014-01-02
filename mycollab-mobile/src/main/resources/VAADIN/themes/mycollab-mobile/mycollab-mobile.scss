@@ -17,7 +17,7 @@
         }
 
         .welcometext-wrapper {
-            background: url("icons/welcometext_bg.png") repeat-x left bottom transparent;
+            background: url("icons/welcometext_bg.png") repeat-x left bottom rgb(245, 245, 245);
 
             .v-label {
                 display: block;
@@ -26,12 +26,17 @@
                 background-color: rgb(245, 245, 245);
                 font-size: 16px;
                 color: #2692db;
+                border: none;
             }
         }
 
         .v-textfield {
             padding: 10px 5px 10px 55px;
             font-size: 15px;
+            color: rgb(34, 34, 34);
+        }
+
+        .v-textfield.v-textfield-prompt {
             color: #c7c7c7;
         }
 
