@@ -16,26 +16,24 @@
  */
 package com.esofthead.mycollab.mobile.module.user.ui;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.eventmanager.ApplicationEvent;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
-import com.esofthead.mycollab.eventmanager.EventBus;
+import com.esofthead.mycollab.mobile.module.user.event.UserEvent.PlainLogin;
+import com.esofthead.mycollab.mobile.mvp.AbstractPresenter;
 import com.esofthead.mycollab.module.user.domain.SimpleBillingAccount;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.domain.UserPreference;
-import com.esofthead.mycollab.module.user.events.UserEvent.PlainLogin;
 import com.esofthead.mycollab.module.user.service.BillingAccountService;
 import com.esofthead.mycollab.module.user.service.UserPreferenceService;
 import com.esofthead.mycollab.module.user.service.UserService;
-import com.esofthead.mycollab.module.user.view.LoginView;
-import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
-import com.esofthead.mycollab.vaadin.ui.AbstractPresenter;
 import com.vaadin.ui.ComponentContainer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * 
@@ -96,8 +94,6 @@ public class LoginPresenter extends AbstractPresenter<LoginView> {
 				+ pref + " to session");
 
 		AppContext.getInstance().setSession(user, pref, billingAccount);
-		EventBus.getInstance().fireEvent(
-				new ShellEvent.GotoMainPage(this, null));
 	}
 
 	@Override
