@@ -18,7 +18,6 @@ package com.esofthead.mycollab.module.project.view.milestone;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
-import com.esofthead.mycollab.module.crm.ui.components.HistoryLogWindow;
 import com.esofthead.mycollab.vaadin.ui.HistoryLogComponent;
 
 /**
@@ -27,10 +26,10 @@ import com.esofthead.mycollab.vaadin.ui.HistoryLogComponent;
  * @since 1.0
  * 
  */
-class MilestoneHistoryLogWindow extends HistoryLogWindow {
+class MilestoneHistoryLogList extends HistoryLogComponent {
 	private static final long serialVersionUID = 1L;
 
-	public MilestoneHistoryLogWindow(String module, String type) {
+	public MilestoneHistoryLogList(String module, String type) {
 		super(module, type);
 
 		this.generateFieldDisplayHandler("name", "Name");

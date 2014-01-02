@@ -24,9 +24,6 @@ import java.util.Date;
 
 import net.sf.dynamicreports.report.builder.column.TextColumnBuilder;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.esofthead.mycollab.module.file.resource.ExportItemsStreamResource;
 import com.esofthead.mycollab.module.project.domain.SimpleItemTimeLogging;
 import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
@@ -43,9 +40,6 @@ import com.esofthead.mycollab.reporting.ReportExportType;
 @SuppressWarnings("serial")
 public class ExportTimeLoggingStreamResource extends
 		ExportItemsStreamResource<SimpleItemTimeLogging> {
-
-	private static Logger log = LoggerFactory
-			.getLogger(ExportTimeLoggingStreamResource.class);
 
 	private ItemTimeLoggingService searchService;
 	private ItemTimeLoggingSearchCriteria searchCriteria;
