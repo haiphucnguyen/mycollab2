@@ -22,6 +22,7 @@
         <module>../mycollab-reporting</module>
         <module>../mycollab-scheduler</module>
         <module>../mycollab-web</module>
+        <module>../mycollab-mobile</module>
         <module>../mycollab-services-community</module>
         <module>../mycollab-web-community</module>
         <module>../mycollab-app-community</module>
