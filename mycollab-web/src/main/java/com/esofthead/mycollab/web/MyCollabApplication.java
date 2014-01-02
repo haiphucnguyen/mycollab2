@@ -32,6 +32,7 @@ import com.esofthead.mycollab.shell.view.MainWindowContainer;
 import com.esofthead.mycollab.shell.view.NoSubDomainExistedWindow;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.vaadin.annotations.Theme;
+import com.vaadin.annotations.Widgetset;
 import com.vaadin.server.DefaultErrorHandler;
 import com.vaadin.server.Page.UriFragmentChangedEvent;
 import com.vaadin.server.Page.UriFragmentChangedListener;
@@ -48,6 +49,7 @@ import com.vaadin.ui.UI;
  * 
  */
 @Theme("mycollab")
+@Widgetset("com.esofthead.mycollab.widgetset.MyCollabWidgetSet")
 public class MyCollabApplication extends UI {
 
 	private static final long serialVersionUID = 1L;

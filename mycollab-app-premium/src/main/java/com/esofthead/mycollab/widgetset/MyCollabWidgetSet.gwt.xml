@@ -73,5 +73,5 @@
 
     <inherits name="com.esofthead.vaadin.cropField.WidgetSet" />
 
-    <inherits name="com.vaadin.addon.touchkit.gwt.TouchKitWidgetSet" />
+    
 </module>
