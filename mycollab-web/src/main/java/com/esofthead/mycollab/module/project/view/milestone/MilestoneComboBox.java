@@ -45,7 +45,7 @@ public class MilestoneComboBox extends ComboBox {
 
 	public MilestoneComboBox() {
 		super();
-		this.setItemCaptionMode(ITEM_CAPTION_MODE_EXPLICIT);
+		this.setItemCaptionMode(ItemCaptionMode.EXPLICIT);
 
 		MilestoneSearchCriteria criteria = new MilestoneSearchCriteria();
 		SimpleProject project = CurrentProjectVariables.getProject();

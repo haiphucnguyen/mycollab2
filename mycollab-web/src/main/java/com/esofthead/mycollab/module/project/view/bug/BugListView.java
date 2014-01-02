@@ -23,6 +23,12 @@ import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.mvp.PageView;
 import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public interface BugListView extends PageView {
 	public static final String VIEW_DEF_ID = "project-bug-list";
 
