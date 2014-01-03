@@ -5,10 +5,8 @@ import org.slf4j.LoggerFactory;
 
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.DeploymentMode;
-import com.esofthead.mycollab.mobile.module.user.ui.LoginPresenter;
-import com.esofthead.mycollab.mobile.module.user.ui.LoginView;
+import com.esofthead.mycollab.mobile.module.user.ui.LoginViewImpl;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.vaadin.addon.touchkit.ui.NavigationManager;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Widgetset;
@@ -61,11 +59,7 @@ public class MobileApplication extends UI {
 			return;
 		}
 
-		final LoginPresenter presenter = PresenterResolver
-				.getPresenter(LoginPresenter.class);
-		LoginView loginView = presenter.initView();
-
-		NavigationManager manager = new NavigationManager(loginView.getWidget());
+		NavigationManager manager = new NavigationManager(new LoginViewImpl());
 		setContent(manager);
 
 	}

@@ -13,7 +13,6 @@ import com.esofthead.mycollab.module.user.service.UserPreferenceService;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.mvp.AbstractMobileView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.vaadin.addon.touchkit.ui.EmailField;
 import com.vaadin.server.ThemeResource;
@@ -26,14 +25,15 @@ import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.VerticalLayout;
 
 /**
+ * 
  * @author MyCollab Ltd.
  * @since 3.0
  */
 @ViewComponent
-public class LoginViewImpl extends AbstractMobileView implements LoginView {
+public class LoginViewImpl extends VerticalLayout {
 	private static final long serialVersionUID = 1L;
 
-	private static Logger log = LoggerFactory.getLogger(LoginView.class);
+	private static Logger log = LoggerFactory.getLogger(LoginViewImpl.class);
 
 	public LoginViewImpl() {
 		super();
