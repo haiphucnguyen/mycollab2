@@ -2,8 +2,8 @@ package com.esofthead.mycollab.vaadin.mvp;
 
 import com.esofthead.mycollab.eventmanager.ApplicationEvent;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
-import com.vaadin.addon.touchkit.ui.NavigationView;
 import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.VerticalLayout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,7 +18,7 @@ import java.util.Set;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-public abstract class AbstractMobileMainView extends NavigationView implements
+public abstract class AbstractMobileMainView extends VerticalLayout implements
         PageView, Serializable {
 
     private static Logger log = LoggerFactory.getLogger(AbstractPageView.class);
