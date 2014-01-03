@@ -20,11 +20,11 @@ import com.vaadin.ui.TextField;
  * 
  * @param <B>
  */
-public class ProblemEditFormFieldFactory<B extends Problem> extends
-AbstractBeanFieldGroupEditFieldFactory<B> {
+class ProblemEditFormFieldFactory<B extends Problem> extends
+		AbstractBeanFieldGroupEditFieldFactory<B> {
 	private static final long serialVersionUID = 1L;
 
-	public ProblemEditFormFieldFactory(GenericBeanForm<B> form) {
+	ProblemEditFormFieldFactory(GenericBeanForm<B> form) {
 		super(form);
 	}
 

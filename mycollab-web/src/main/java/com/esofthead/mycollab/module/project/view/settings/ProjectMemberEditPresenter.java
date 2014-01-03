@@ -55,6 +55,8 @@ public class ProjectMemberEditPresenter extends
 	protected void postInitView() {
 		view.getEditFormHandlers().addFormHandler(
 				new EditFormHandler<ProjectMember>() {
+					private static final long serialVersionUID = 1L;
+
 					@Override
 					public void onSave(final ProjectMember projectMember) {
 						saveProjectMember(projectMember);

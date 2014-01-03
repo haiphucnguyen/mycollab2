@@ -153,7 +153,7 @@ class ProjectMemberReadComp extends
 
 		@Override
 		protected Field<?> onCreateField(final Object propertyId) {
-			if (propertyId.equals("isadmin")) {
+			if (propertyId.equals("projectroleid")) {
 				if (attachForm.getBean().getIsadmin() != null
 						&& (attachForm.getBean().getIsadmin() == Boolean.FALSE)) {
 					FormLinkViewField roleLink = new FormLinkViewField(
