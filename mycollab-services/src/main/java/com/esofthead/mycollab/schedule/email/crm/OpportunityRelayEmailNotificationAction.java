@@ -18,6 +18,12 @@ package com.esofthead.mycollab.schedule.email.crm;
 
 import com.esofthead.mycollab.schedule.email.SendingRelayEmailNotificationAction;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public interface OpportunityRelayEmailNotificationAction extends
 		SendingRelayEmailNotificationAction {
 }

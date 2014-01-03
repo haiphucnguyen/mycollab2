@@ -33,6 +33,12 @@ import com.esofthead.mycollab.module.user.domain.BillingAccountExample;
 import com.esofthead.mycollab.module.user.domain.SimpleBillingAccount;
 import com.esofthead.mycollab.module.user.service.BillingAccountService;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @Service
 public class BillingAccountServiceImpl extends
 		DefaultCrudService<Integer, BillingAccount> implements
