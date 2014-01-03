@@ -1,12 +1,13 @@
 package com.esofthead.mycollab.mobile;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.DeploymentMode;
-import com.esofthead.mycollab.mobile.module.user.view.LoginViewImpl;
+import com.esofthead.mycollab.mobile.module.user.ui.LoginPresenter;
+import com.esofthead.mycollab.mobile.module.user.view.LoginView;
+import com.esofthead.mycollab.mobile.shell.ShellController;
 import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.mvp.ControllerRegistry;
+import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.vaadin.addon.touchkit.ui.NavigationManager;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Widgetset;
@@ -14,6 +15,8 @@ import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServletRequest;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.UI;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 
@@ -59,8 +62,14 @@ public class MobileApplication extends UI {
 			return;
 		}
 
-		NavigationManager manager = new NavigationManager(new LoginViewImpl());
+		final LoginPresenter presenter = PresenterResolver
+				.getPresenter(LoginPresenter.class);
+		LoginView loginView = presenter.initView();
+
+		NavigationManager manager = new NavigationManager(loginView.getWidget());
 		setContent(manager);
+
+        ControllerRegistry.addController(new ShellController(manager));
 
 	}
 

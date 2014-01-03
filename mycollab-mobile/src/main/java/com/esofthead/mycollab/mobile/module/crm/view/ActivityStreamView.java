@@ -1,6 +1,8 @@
 package com.esofthead.mycollab.mobile.module.crm.view;
 
-import com.vaadin.addon.touchkit.ui.NavigationView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractMobilePageView;
+import com.esofthead.mycollab.vaadin.mvp.PageView;
+import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Label;
 
@@ -10,7 +12,8 @@ import com.vaadin.ui.Label;
  * @since 3.0
  * 
  */
-public class ActivityStreamView extends NavigationView {
+@ViewComponent
+public class ActivityStreamView extends AbstractMobilePageView implements PageView {
 	private static final long serialVersionUID = 1L;
 
 	public ActivityStreamView() {

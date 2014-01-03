@@ -4,16 +4,12 @@
 @mixin mycollab-mobile {
     /* Include all the styles from the reindeer theme */
 
-    .login-view {
-        overflow: auto;
+    .content-wrapper {
+        margin: 0 auto;
+        display: block;
 
-        .content-wrapper {
-            margin: 0 auto;
-            display: block;
-
-            .intro-text {
-                text-align: center;
-            }
+        .intro-text {
+            text-align: center;
         }
 
         .welcometext-wrapper {
@@ -29,6 +25,10 @@
                 border: none;
             }
         }
+    }
+
+    .login-view {
+        overflow: auto;
 
         .v-textfield {
             padding: 10px 5px 10px 55px;
@@ -46,6 +46,38 @@
 
         .v-textfield.password-input {
             background: url("icons/password_input_bg.png") no-repeat left center #FFFFFF;
+        }
+    }
+
+    .main-view {
+        overflow: auto;
+
+        .module-button {
+            border: 1px solid #bdbdbd;
+            border-radius: 4px;
+            cursor: pointer;
+            padding: 25px 5px 25px 90px;
+            background-color: #ffffff;
+            background-repeat: no-repeat;
+            background-position: left center;
+            color: #727272;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .module-button:focus, .module-button:active {
+            border-width: 2px;
+            border-color: #49a3e1;
+        }
+
+        .module-button.crm {
+            background-image: url("icons/crm_icon.png");
+        }
+        .module-button.project {
+            background-image: url("icons/pm_icon.png");
+        }
+        .module-button.document {
+            background-image: url("icons/document_icon.png");
         }
     }
 
@@ -86,9 +118,18 @@
         }
     }
 
+    .v-touchkit-navbutton {
+        line-height: normal;
+    }
+
+    .v-touchkit-navbutton:after {
+        content: "";
+    }
+
     .v-textfield {
         border-radius: 4px;
         border: 1px solid #c7c7c7;
+        outline: none;
     }
 
     .v-textfield.v-textfield-focus {

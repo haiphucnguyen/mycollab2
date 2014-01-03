@@ -1,20 +1,8 @@
 package com.esofthead.mycollab.mobile.module.user.view;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.esofthead.mycollab.core.utils.BeanUtility;
-import com.esofthead.mycollab.mobile.MobileApplication;
 import com.esofthead.mycollab.mobile.UIConstants;
-import com.esofthead.mycollab.mobile.module.crm.view.ActivityStreamViewManager;
-import com.esofthead.mycollab.module.user.domain.SimpleBillingAccount;
-import com.esofthead.mycollab.module.user.domain.SimpleUser;
-import com.esofthead.mycollab.module.user.domain.UserPreference;
-import com.esofthead.mycollab.module.user.service.BillingAccountService;
-import com.esofthead.mycollab.module.user.service.UserPreferenceService;
-import com.esofthead.mycollab.module.user.service.UserService;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.mobile.module.user.events.UserEvent;
+import com.esofthead.mycollab.vaadin.mvp.AbstractMobileMainView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.vaadin.addon.touchkit.ui.EmailField;
 import com.vaadin.server.ThemeResource;
@@ -25,6 +13,8 @@ import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.VerticalLayout;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 
@@ -32,7 +22,7 @@ import com.vaadin.ui.VerticalLayout;
  * @since 3.0
  */
 @ViewComponent
-public class LoginViewImpl extends VerticalLayout {
+public class LoginViewImpl extends AbstractMobileMainView implements LoginView {
 	private static final long serialVersionUID = 1L;
 
 	private static Logger log = LoggerFactory.getLogger(LoginViewImpl.class);
@@ -92,7 +82,8 @@ public class LoginViewImpl extends VerticalLayout {
 
 			@Override
 			public void buttonClick(Button.ClickEvent event) {
-				doLogin(emailField.getValue(), pwdField.getValue());
+				//doLogin(emailField.getValue(), pwdField.getValue());
+                LoginViewImpl.this.fireEvent(new UserEvent.PlainLogin(LoginViewImpl.this, new String[] {emailField.getValue(), pwdField.getValue()}));
 			}
 		});
 		contentLayout.addComponent(signInBtn);
@@ -104,34 +95,5 @@ public class LoginViewImpl extends VerticalLayout {
 		contentLayout.addComponent(createAccountBtn);
 
 		this.addComponent(contentLayout);
-	}
-
-	private void doLogin(String username, String password) {
-		UserService userService = ApplicationContextUtil
-				.getSpringBean(UserService.class);
-		SimpleUser user = userService.authentication(username, password,
-				AppContext.getSubDomain(), false);
-
-		BillingAccountService billingAccountService = ApplicationContextUtil
-				.getSpringBean(BillingAccountService.class);
-
-		SimpleBillingAccount billingAccount = billingAccountService
-				.getBillingAccountById(AppContext.getAccountId());
-
-		log.debug("Get billing account successfully: "
-				+ BeanUtility.printBeanObj(billingAccount));
-
-		UserPreferenceService preferenceService = ApplicationContextUtil
-				.getSpringBean(UserPreferenceService.class);
-		UserPreference pref = preferenceService.getPreferenceOfUser(username,
-				AppContext.getAccountId());
-
-		AppContext.getInstance().setSession(user, pref, billingAccount);
-
-		log.debug("Login to system successfully. Save user and preference "
-				+ pref + " to session");
-
-		MobileApplication.getInstance().setContent(
-				new ActivityStreamViewManager());
 	}
 }
