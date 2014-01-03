@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.DeploymentMode;
-import com.esofthead.mycollab.mobile.module.user.ui.LoginViewImpl;
+import com.esofthead.mycollab.mobile.module.user.view.LoginViewImpl;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.vaadin.addon.touchkit.ui.NavigationManager;
 import com.vaadin.annotations.Theme;

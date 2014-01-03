@@ -1,10 +1,12 @@
-package com.esofthead.mycollab.mobile.module.user.ui;
+package com.esofthead.mycollab.mobile.module.user.view;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.esofthead.mycollab.core.utils.BeanUtility;
+import com.esofthead.mycollab.mobile.MobileApplication;
 import com.esofthead.mycollab.mobile.UIConstants;
+import com.esofthead.mycollab.mobile.module.crm.view.ActivityStreamViewManager;
 import com.esofthead.mycollab.module.user.domain.SimpleBillingAccount;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.domain.UserPreference;
@@ -124,7 +126,12 @@ public class LoginViewImpl extends VerticalLayout {
 		UserPreference pref = preferenceService.getPreferenceOfUser(username,
 				AppContext.getAccountId());
 
+		AppContext.getInstance().setSession(user, pref, billingAccount);
+
 		log.debug("Login to system successfully. Save user and preference "
 				+ pref + " to session");
+
+		MobileApplication.getInstance().setContent(
+				new ActivityStreamViewManager());
 	}
 }
