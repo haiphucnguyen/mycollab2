@@ -1,5 +1,15 @@
 package com.esofthead.mycollab.vaadin.ui;
 
+import java.lang.annotation.Annotation;
+import java.util.Set;
+
+import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
+
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.NotBindable;
 import com.esofthead.mycollab.core.utils.ClassUtils;
@@ -12,12 +22,6 @@ import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.AbstractTextField;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.RichTextArea;
-import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
-
-import javax.validation.ConstraintViolation;
-import javax.validation.Validator;
-import java.lang.annotation.Annotation;
-import java.util.Set;
 
 /**
  * 
@@ -30,6 +34,10 @@ public abstract class AbstractBeanFieldGroupEditFieldFactory<B> implements
 		IBeanFieldGroupFieldFactory<B>, CommitHandler {
 
 	private static final long serialVersionUID = 1L;
+
+	private static Logger log = LoggerFactory
+			.getLogger(AbstractBeanFieldGroupEditFieldFactory.class);
+
 	protected GenericBeanForm<B> attachForm;
 	protected FieldGroup fieldGroup;
 	private final Validator validation;
@@ -61,6 +69,8 @@ public abstract class AbstractBeanFieldGroupEditFieldFactory<B> implements
 				if (formField instanceof DummyCustomField) {
 					continue;
 				} else if (!(formField instanceof CompoundCustomField)) {
+					log.debug("Bind field: {} of form field {}",
+							field.getName(), formField);
 					fieldGroup.bind(formField, field.getName());
 				}
 			}

@@ -65,6 +65,11 @@ public abstract class AbstractEditItemComp<B> extends AbstractPageView
 
 			formAddLayout.addBody(informationLayout.getLayout());
 
+			final ComponentContainer bottomPanel = createBottomPanel();
+			if (bottomPanel != null) {
+				formAddLayout.addBottomControls(bottomPanel);
+			}
+
 			return formAddLayout;
 		}
 
@@ -72,6 +77,10 @@ public abstract class AbstractEditItemComp<B> extends AbstractPageView
 		public boolean attachField(Object propertyId, Field<?> field) {
 			return informationLayout.attachField(propertyId, field);
 		}
+	}
+
+	protected ComponentContainer createBottomPanel() {
+		return null;
 	}
 
 	abstract protected String initFormTitle();

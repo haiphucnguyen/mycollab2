@@ -35,6 +35,7 @@ import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
@@ -51,11 +52,13 @@ import com.vaadin.ui.VerticalLayout;
 public class RoleReadViewImpl extends AbstractPageView implements RoleReadView {
 
 	private static final long serialVersionUID = 1L;
+
 	protected AdvancedPreviewBeanForm<Role> previewForm;
 	protected SimpleRole role;
 
 	public RoleReadViewImpl() {
 		super();
+		this.setMargin(new MarginInfo(true, false, false, false));
 		this.previewForm = new AdvancedPreviewBeanForm<Role>();
 		this.addComponent(this.previewForm);
 	}
@@ -74,6 +77,7 @@ public class RoleReadViewImpl extends AbstractPageView implements RoleReadView {
 						return null;
 					}
 				});
+		this.previewForm.setBean(role);
 	}
 
 	@Override
@@ -103,7 +107,7 @@ public class RoleReadViewImpl extends AbstractPageView implements RoleReadView {
 			PermissionMap permissionMap, PermissionDefItem[] defItems) {
 		final GridFormLayoutHelper formHelper = new GridFormLayoutHelper(2,
 				defItems.length, "100%", "167px", Alignment.MIDDLE_LEFT);
-		formHelper.getLayout().setMargin(false);
+		formHelper.getLayout().setMargin(true);
 		formHelper.getLayout().setWidth("100%");
 		formHelper.getLayout().addStyleName(UIConstants.COLORED_GRIDLAYOUT);
 		final Depot component = new Depot(depotTitle, formHelper.getLayout());
@@ -137,6 +141,7 @@ public class RoleReadViewImpl extends AbstractPageView implements RoleReadView {
 					previewForm);
 			HorizontalLayout layout = buttonControls
 					.createButtonControls(RolePermissionCollections.ACCOUNT_ROLE);
+			layout.setMargin(true);
 			if (role.getIssystemrole() != null
 					&& role.getIssystemrole() == Boolean.TRUE) {
 				buttonControls.setDeleteButtonVisible(false);

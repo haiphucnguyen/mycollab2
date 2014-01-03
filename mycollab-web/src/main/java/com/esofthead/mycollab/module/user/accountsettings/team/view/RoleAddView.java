@@ -25,6 +25,7 @@ import com.esofthead.mycollab.vaadin.mvp.IFormAddView;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 public interface RoleAddView extends IFormAddView<Role> {
 

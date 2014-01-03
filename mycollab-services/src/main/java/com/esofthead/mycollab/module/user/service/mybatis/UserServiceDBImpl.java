@@ -62,6 +62,12 @@ import com.esofthead.mycollab.module.user.esb.UserRemovedCommand;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.security.PermissionMap;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @Service
 @Transactional
 public class UserServiceDBImpl extends
@@ -217,7 +223,8 @@ public class UserServiceDBImpl extends
 	@Override
 	public int updateWithSession(User record, String username) {
 		log.debug("Check whether there is exist email in system before");
-		if (!record.getUsername().equals(record.getEmail())) {
+		if ((record.getEmail()) != null
+				&& !record.getUsername().equals(record.getEmail())) {
 			UserExample ex = new UserExample();
 			ex.createCriteria().andUsernameEqualTo(record.getEmail());
 			int numUsers = userMapper.countByExample(ex);

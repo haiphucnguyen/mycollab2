@@ -18,23 +18,27 @@ package com.esofthead.mycollab.module.project.view.settings;
 
 import com.esofthead.mycollab.module.project.domain.ProjectMember;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
+import com.esofthead.mycollab.module.project.ui.components.AbstractEditItemComp;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectRoleComboBox;
-import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
-import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
+import com.esofthead.mycollab.vaadin.ui.DummyCustomField;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
+import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.Property;
+import com.vaadin.data.Validator.InvalidValueException;
+import com.vaadin.server.Resource;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
+import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CustomField;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Layout;
 
 /**
  * 
@@ -43,59 +47,57 @@ import com.vaadin.ui.Layout;
  * 
  */
 @ViewComponent
-public class ProjectMemberEditViewImpl extends AbstractPageView implements
-		ProjectMemberEditView {
+public class ProjectMemberEditViewImpl extends
+		AbstractEditItemComp<ProjectMember> implements ProjectMemberEditView {
 
 	private static final long serialVersionUID = 1L;
-	private final AdvancedEditBeanForm<ProjectMember> editForm;
-	private ProjectMember user;
 
 	public ProjectMemberEditViewImpl() {
 		super();
-		this.setMargin(new MarginInfo(false, false, true, false));
-		this.editForm = new AdvancedEditBeanForm<ProjectMember>();
-		this.addComponent(this.editForm);
+		this.setMargin(new MarginInfo(true, false, false, false));
 	}
 
 	@Override
-	public void editItem(final ProjectMember item) {
-		this.user = item;
-		editForm.setFormLayoutFactory(new FormLayoutFactory());
-		editForm.setBeanFormFieldFactory(new EditFormFieldFactory(editForm));
-		editForm.setBean(item);
+	protected String initFormTitle() {
+		return (beanItem.getId() == null) ? "Create Member"
+				: ((SimpleProjectMember) beanItem).getDisplayName();
 	}
 
-	private class FormLayoutFactory extends ProjectMemberFormLayoutFactory {
+	@Override
+	protected Resource initFormIconResource() {
+		return MyCollabResource.newResource("icons/22/project/menu_user.png");
+	}
 
-		private static final long serialVersionUID = 1L;
+	@Override
+	protected ComponentContainer createButtonControls() {
+		final HorizontalLayout controlPanel = new HorizontalLayout();
+		controlPanel.setMargin(true);
+		controlPanel.addStyleName("control-buttons");
 
-		public FormLayoutFactory() {
-//			super(((SimpleProjectMember) ProjectMemberEditViewImpl.this.user)
-//					.getMemberFullName(), UserAvatarControlFactory
-//					.createAvatarResource(null, 24));
-		}
+		final HorizontalLayout controlButtons = (new EditFormControlsGenerator<ProjectMember>(
+				editForm)).createButtonControls(true, false, true);
 
-		private Layout createButtonControls() {
-			final HorizontalLayout controlPanel = new HorizontalLayout();
-			final Layout controlButtons = (new EditFormControlsGenerator<ProjectMember>(
-					editForm)).createButtonControls(true, false, true);
-			controlButtons.setSizeUndefined();
-			controlPanel.addComponent(controlButtons);
-			controlPanel.setWidth("100%");
-			controlPanel.setComponentAlignment(controlButtons,
-					Alignment.MIDDLE_CENTER);
-			return controlPanel;
-		}
+		controlButtons.setSizeUndefined();
+		controlPanel.addComponent(controlButtons);
+		controlPanel.setWidth("100%");
+		controlPanel.setComponentAlignment(controlButtons,
+				Alignment.MIDDLE_CENTER);
+		return controlPanel;
+	}
 
-		
-		protected Layout createTopPanel() {
-			return this.createButtonControls();
-		}
+	@Override
+	protected AdvancedEditBeanForm<ProjectMember> initPreviewForm() {
+		return new AdvancedEditBeanForm<ProjectMember>();
+	}
 
-		
-		protected Layout createBottomPanel() {
-			return this.createButtonControls();
-		}
+	@Override
+	protected IFormLayoutFactory initFormLayoutFactory() {
+		return new ProjectMemberFormLayoutFactory();
+	}
+
+	@Override
+	protected AbstractBeanFieldGroupEditFieldFactory<ProjectMember> initBeanFormFieldFactory() {
+		return new EditFormFieldFactory(editForm);
 	}
 
 	private class EditFormFieldFactory extends
@@ -111,57 +113,23 @@ public class ProjectMemberEditViewImpl extends AbstractPageView implements
 
 			if (propertyId.equals("username")) {
 				return new DefaultFormViewFieldFactory.FormViewField(
-						((SimpleProjectMember) ProjectMemberEditViewImpl.this.user)
-								.getMemberFullName());
+						((SimpleProjectMember) beanItem).getMemberFullName());
 
-			} else if (propertyId.equals("isadmin")) {
+			} else if (propertyId.equals("projectroleid")) {
 				AdminRoleSelectionField roleBox = new AdminRoleSelectionField();
-				if (user.getProjectroleid() != null) {
-					roleBox.setRoleId(user.getProjectroleid());
-				} else if (user.getIsadmin() != null
-						&& user.getIsadmin() == Boolean.TRUE) {
-					roleBox.setRoleId(-1);
-				}
 				return roleBox;
+			} else if (propertyId.equals("isadmin")) {
+				return new DummyCustomField<Boolean>();
 			}
 			return null;
 		}
 	}
 
-	private class AdminRoleSelectionField extends CustomField {
+	private class AdminRoleSelectionField extends CustomField<Integer> {
 		private static final long serialVersionUID = 1L;
 		private ProjectRoleComboBox roleComboBox;
 
-		@Override
-		public Object getValue() {
-			Integer roleId = (Integer) AdminRoleSelectionField.this.roleComboBox
-					.getValue();
-			Boolean resultVal = null;
-			if (roleId == -1) {
-				ProjectMemberEditViewImpl.this.user.setIsadmin(Boolean.TRUE);
-				ProjectMemberEditViewImpl.this.user.setProjectroleid(null);
-				resultVal = Boolean.TRUE;
-			} else {
-				ProjectMemberEditViewImpl.this.user
-						.setProjectroleid((Integer) AdminRoleSelectionField.this.roleComboBox
-								.getValue());
-				ProjectMemberEditViewImpl.this.user.setIsadmin(Boolean.FALSE);
-				resultVal = Boolean.FALSE;
-			}
-			return resultVal;
-		}
-
-		public void setRoleId(int roleId) {
-			roleComboBox.setValue(roleId);
-		}
-
-		@Override
-		public Class<Integer> getType() {
-			return Integer.class;
-		}
-
-		@Override
-		protected Component initContent() {
+		public AdminRoleSelectionField() {
 			this.roleComboBox = new ProjectRoleComboBox();
 			this.roleComboBox
 					.addValueChangeListener(new Property.ValueChangeListener() {
@@ -174,14 +142,45 @@ public class ProjectMemberEditViewImpl extends AbstractPageView implements
 
 						}
 					});
+		}
 
+		@Override
+		public void commit() throws SourceException, InvalidValueException {
+			Integer roleId = (Integer) roleComboBox.getValue();
+			if (roleId == -1) {
+				beanItem.setIsadmin(Boolean.TRUE);
+				this.setInternalValue(null);
+			} else {
+				this.setInternalValue((Integer) this.roleComboBox.getValue());
+				beanItem.setIsadmin(Boolean.FALSE);
+			}
+
+			super.commit();
+		}
+
+		@Override
+		public void setPropertyDataSource(Property newDataSource) {
+			Object value = newDataSource.getValue();
+			if (value instanceof Integer) {
+				roleComboBox.setValue(value);
+			} else if (value == null) {
+				if (beanItem.getIsadmin() != null
+						&& beanItem.getIsadmin() == Boolean.TRUE) {
+					roleComboBox.setValue(-1);
+				}
+			}
+			super.setPropertyDataSource(newDataSource);
+		}
+
+		@Override
+		public Class<Integer> getType() {
+			return Integer.class;
+		}
+
+		@Override
+		protected Component initContent() {
 			return roleComboBox;
 		}
-	}
-
-	@Override
-	public HasEditFormHandlers<ProjectMember> getEditFormHandlers() {
-		return this.editForm;
 	}
 
 }

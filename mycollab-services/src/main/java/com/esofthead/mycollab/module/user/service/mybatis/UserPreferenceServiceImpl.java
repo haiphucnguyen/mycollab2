@@ -34,6 +34,7 @@ import com.esofthead.mycollab.module.user.service.UserPreferenceService;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 @Service
 @Transactional

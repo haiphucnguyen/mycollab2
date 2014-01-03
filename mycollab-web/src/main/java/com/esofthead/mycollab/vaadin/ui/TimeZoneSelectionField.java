@@ -33,17 +33,13 @@ import com.vaadin.ui.VerticalLayout;
  * 
  */
 @SuppressWarnings("serial")
-public class TimeZoneSelectionField extends CustomField {
+public class TimeZoneSelectionField extends CustomField<String> {
 
 	private ValueComboBox comboArea;
 	private ValueComboBox comboTimezone;
 	private List<String> lstLimeZoneArea = new ArrayList<String>();
 
-	@Override
-	protected Component initContent() {
-		VerticalLayout layout = new VerticalLayout();
-		layout.setSpacing(true);
-
+	public TimeZoneSelectionField() {
 		comboArea = new ValueComboBox(false, TimezoneMapper.AREAS);
 		comboArea.setWidth("100%");
 		comboArea.addValueChangeListener(new Property.ValueChangeListener() {
@@ -55,7 +51,6 @@ public class TimeZoneSelectionField extends CustomField {
 				setCboTimeZone(event.getProperty().getValue().toString().trim());
 			}
 		});
-		layout.addComponent(comboArea);
 
 		lstLimeZoneArea.removeAll(lstLimeZoneArea);
 		for (TimezoneExt timezone : TimezoneMapper.timeMap.values()) {
@@ -69,13 +64,21 @@ public class TimeZoneSelectionField extends CustomField {
 
 		comboTimezone = new ValueComboBox(false, arrayTimezone);
 		comboTimezone.setWidth("100%");
+	}
+
+	@Override
+	protected Component initContent() {
+		VerticalLayout layout = new VerticalLayout();
+		layout.setSpacing(true);
+
+		layout.addComponent(comboArea);
+
 		layout.addComponent(comboTimezone);
 
 		return layout;
 	}
 
 	private void setCboTimeZone(String area) {
-
 		for (TimezoneExt timezone : TimezoneMapper.timeMap.values()) {
 			if (timezone.getArea().trim().equals(area)) {
 				lstLimeZoneArea.add(timezone.getDisplayName());
@@ -107,8 +110,8 @@ public class TimeZoneSelectionField extends CustomField {
 	}
 
 	@Override
-	public Class<?> getType() {
-		return null;
+	public Class<String> getType() {
+		return String.class;
 	}
 
 }

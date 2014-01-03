@@ -20,7 +20,7 @@ import com.vaadin.ui.TextField;
  * 
  * @param <B>
  */
-public class RiskEditFormFieldFactory<B extends Risk> extends
+class RiskEditFormFieldFactory<B extends Risk> extends
 		AbstractBeanFieldGroupEditFieldFactory<B> {
 
 	private static final long serialVersionUID = 1L;

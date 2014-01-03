@@ -55,7 +55,7 @@ public class ProjectMemberFormLayoutFactory implements IFormLayoutFactory {
 	public boolean attachField(final Object propertyId, final Field<?> field) {
 		if (propertyId.equals("username")) {
 			this.informationLayout.addComponent(field, "User", 0, 0);
-		} else if (propertyId.equals("isadmin")) {
+		} else if (propertyId.equals("projectroleid")) {
 			this.informationLayout.addComponent(field, "Role", 0, 1);
 		} else {
 			return false;

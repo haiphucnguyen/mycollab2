@@ -143,6 +143,7 @@ public class UserAddViewImpl extends AbstractPageView implements UserAddView {
 
 			private Layout createButtonControls() {
 				final HorizontalLayout controlPanel = new HorizontalLayout();
+				controlPanel.setMargin(true);
 				final Layout controlButtons = (new EditFormControlsGenerator<SimpleUser>(
 						UserAddViewImpl.AdvancedEditUserForm.this))
 						.createButtonControls();
@@ -230,7 +231,7 @@ public class UserAddViewImpl extends AbstractPageView implements UserAddView {
 							Alignment.MIDDLE_LEFT);
 					return controlPanel;
 				} else {
-					return this.createButtonControls();
+					return null;
 				}
 			}
 		}
