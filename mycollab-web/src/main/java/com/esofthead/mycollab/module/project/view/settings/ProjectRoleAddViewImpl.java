@@ -60,7 +60,7 @@ public class ProjectRoleAddViewImpl extends AbstractEditItemComp<ProjectRole>
 	public ProjectRoleAddViewImpl() {
 		this.setMargin(new MarginInfo(true, false, false, false));
 	}
-	
+
 	@Override
 	protected String initFormTitle() {
 		return (beanItem.getId() == null) ? "Create Role" : beanItem
@@ -121,7 +121,8 @@ public class ProjectRoleAddViewImpl extends AbstractEditItemComp<ProjectRole>
 		};
 	}
 
-	protected Layout createBottomPanel() {
+	@Override
+	protected ComponentContainer createBottomPanel() {
 		final VerticalLayout permissionsPanel = new VerticalLayout();
 		final Label organizationHeader = new Label("Permissions");
 		organizationHeader.setStyleName("h2");
