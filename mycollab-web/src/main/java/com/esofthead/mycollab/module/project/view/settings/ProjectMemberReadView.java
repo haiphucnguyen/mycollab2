@@ -28,5 +28,6 @@ import com.esofthead.mycollab.vaadin.mvp.IPreviewView;
  */
 public interface ProjectMemberReadView extends
 		IPreviewView<SimpleProjectMember> {
+
 	HasPreviewFormHandlers<SimpleProjectMember> getPreviewFormHandlers();
 }
