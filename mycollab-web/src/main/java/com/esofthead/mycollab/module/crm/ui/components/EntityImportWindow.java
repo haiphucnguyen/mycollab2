@@ -49,6 +49,7 @@ import com.esofthead.mycollab.module.crm.view.contact.ContactListView;
 import com.esofthead.mycollab.module.crm.view.contact.iexport.ContactVCardObjectEntityConverter;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -160,7 +161,7 @@ public abstract class EntityImportWindow<E> extends Window {
 						String fileuploadType = filename.substring(
 								filename.indexOf(".") + 1, filename.length());
 						if (fileuploadType.equals("vcf") && isSupportVCard) {
-							ConfirmDialog.show(
+							ConfirmDialogExt.show(
 									UI.getCurrent(),
 									"Message information",
 									"You choose a vcf file. This step will import to database. Do you want to do it?",

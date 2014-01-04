@@ -34,6 +34,7 @@ import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemb
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserLink;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.DefaultPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
@@ -239,7 +240,7 @@ public abstract class CompFollowersSheet<V extends ValuedBean> extends
 
 					@Override
 					public void buttonClick(ClickEvent event) {
-						ConfirmDialog.show(
+						ConfirmDialogExt.show(
 								UI.getCurrent(),
 								"Please Confirm:",
 								"Are you sure to remove this user from the notification of item activity?",

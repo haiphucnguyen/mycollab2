@@ -32,6 +32,7 @@ import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserLink;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.DefaultPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
@@ -272,7 +273,7 @@ public abstract class CompTimeLogSheet<V extends ValuedBean> extends
 										@Override
 										public void buttonClick(
 												final ClickEvent event) {
-											ConfirmDialog.show(
+											ConfirmDialogExt.show(
 													UI.getCurrent(),
 													"Please Confirm:",
 													"Are you sure to delete this invest?",
