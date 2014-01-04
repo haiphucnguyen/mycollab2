@@ -312,22 +312,22 @@ public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 
 			this.priorityField = (BugStaticItemMultiSelectField) gridLayout
 					.addComponent(new BugStaticItemMultiSelectField(
-							ProjectDataTypeFactory.getBugPriorityList(),
-							componentFieldWidth), "Priority", 0, 4);
+							ProjectDataTypeFactory.getBugPriorityList()),
+							"Priority", 0, 4);
 
 			this.statusField = (BugStaticItemMultiSelectField) gridLayout
 					.addComponent(new BugStaticItemMultiSelectField(
-							ProjectDataTypeFactory.getBugStatusList(),
-							componentFieldWidth), "Status", 1, 4);
+							ProjectDataTypeFactory.getBugStatusList()),
+							"Status", 1, 4);
 
 			this.resolutionField = (BugStaticItemMultiSelectField) gridLayout
 					.addComponent(new BugStaticItemMultiSelectField(
-							ProjectDataTypeFactory.getBugResolutionList(),
-							componentFieldWidth), "Resolution", 0, 5);
+							ProjectDataTypeFactory.getBugResolutionList()),
+							"Resolution", 0, 5);
 			this.severityField = (BugStaticItemMultiSelectField) gridLayout
 					.addComponent(new BugStaticItemMultiSelectField(
-							ProjectDataTypeFactory.getBugSeverityList(),
-							componentFieldWidth), "Severity", 1, 5);
+							ProjectDataTypeFactory.getBugSeverityList()),
+							"Severity", 1, 5);
 
 			return gridLayout.getLayout();
 		}
@@ -363,13 +363,13 @@ public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 									.resetComp();
 							BugAdvancedSearchLayout.this.resolutionField
 									.resetComp();
-							//TODO: 
-//							BugAdvancedSearchLayout.this.affectedVersionField
-//									.resetComp();
-//							BugAdvancedSearchLayout.this.componentField
-//									.resetComp();
-//							BugAdvancedSearchLayout.this.fixedVersionField
-//									.resetComp();
+							// TODO:
+							// BugAdvancedSearchLayout.this.affectedVersionField
+							// .resetComp();
+							// BugAdvancedSearchLayout.this.componentField
+							// .resetComp();
+							// BugAdvancedSearchLayout.this.fixedVersionField
+							// .resetComp();
 							BugAdvancedSearchLayout.this.statusField
 									.resetComp();
 							BugAdvancedSearchLayout.this.severityField

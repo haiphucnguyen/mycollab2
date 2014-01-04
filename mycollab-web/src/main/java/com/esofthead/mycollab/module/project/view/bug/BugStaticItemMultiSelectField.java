@@ -29,7 +29,7 @@ import com.esofthead.mycollab.module.project.ui.components.MultiSelectComp;
 public class BugStaticItemMultiSelectField extends MultiSelectComp<String> {
 	private static final long serialVersionUID = 1L;
 
-	public BugStaticItemMultiSelectField(String[] arrItemData, String width) {
+	public BugStaticItemMultiSelectField(String[] arrItemData) {
 		super("", Arrays.asList(arrItemData));
 	}
 }

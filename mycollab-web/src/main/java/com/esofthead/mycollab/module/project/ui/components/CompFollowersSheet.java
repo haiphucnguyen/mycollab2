@@ -99,7 +99,7 @@ public abstract class CompFollowersSheet<V extends ValuedBean> extends
 			@Override
 			public void buttonClick(ClickEvent event) {
 
-				List<ProjectMember> members = memberSelection
+				List<SimpleProjectMember> members = memberSelection
 						.getSelectedItems();
 
 				boolean canSendEmail = false;

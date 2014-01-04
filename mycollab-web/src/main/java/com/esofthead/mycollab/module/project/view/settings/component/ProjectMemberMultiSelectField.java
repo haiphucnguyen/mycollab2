@@ -16,7 +16,22 @@
  */
 package com.esofthead.mycollab.module.project.view.settings.component;
 
+import java.util.List;
+
+import org.apache.commons.beanutils.PropertyUtils;
+
+import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.SearchRequest;
+import com.esofthead.mycollab.core.arguments.StringSearchField;
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectMemberStatusConstants;
+import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
+import com.esofthead.mycollab.module.project.domain.criteria.ProjectMemberSearchCriteria;
+import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.project.ui.components.MultiSelectComp;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
+import com.vaadin.ui.CustomComponent;
 
 /**
  * 
@@ -24,57 +39,55 @@ import com.esofthead.mycollab.module.project.ui.components.MultiSelectComp;
  * @since 1.0
  * 
  */
-public class ProjectMemberMultiSelectField extends MultiSelectComp {
-	public ProjectMemberMultiSelectField() {
-		super(displayName, null);
-		// TODO Auto-generated constructor stub
-	}
-
+public class ProjectMemberMultiSelectField extends CustomComponent {
 	private static final long serialVersionUID = 1L;
 
 	private static String displayName = "memberFullName";
+	private MultiSelectComp<SimpleProjectMember> memberSelectionComp;
 
-//	@Override
-//	protected void initData() {
-//		ProjectMemberSearchCriteria criteria = new ProjectMemberSearchCriteria();
-//		criteria.setProjectId(new NumberSearchField(CurrentProjectVariables
-//				.getProjectId()));
-//		criteria.setStatus(new StringSearchField(
-//				ProjectMemberStatusConstants.ACTIVE));
-//
-//		ProjectMemberService userService = ApplicationContextUtil
-//				.getSpringBean(ProjectMemberService.class);
-//		items = userService
-//				.findPagableListByCriteria(new SearchRequest<ProjectMemberSearchCriteria>(
-//						criteria, 0, Integer.MAX_VALUE));
-//	}
-//
-//	@Override
-//	protected void createItemPopup() {
-//		for (int i = 0; i < items.size(); i++) {
-//
-//			Object itemComp = items.get(i);
-//			String itemName = "";
-//			String username = "";
-//			String userAvatarId = "";
-//
-//			try {
-//				itemName = (String) PropertyUtils.getProperty(itemComp,
-//						displayName);
-//				username = (String) PropertyUtils.getProperty(itemComp,
-//						"username");
-//				userAvatarId = (String) PropertyUtils.getProperty(itemComp,
-//						"memberAvatarId");
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			}
-//
-//			final CheckBox chkItem = new CheckBox(itemName);
-//			chkItem.setImmediate(true);
-//			chkItem.setIcon(UserAvatarControlFactory.createAvatarResource(
-//					userAvatarId, 16));
-//			
-//		}
-//	}
+	public ProjectMemberMultiSelectField() {
+		ProjectMemberSearchCriteria criteria = new ProjectMemberSearchCriteria();
+		criteria.setProjectId(new NumberSearchField(CurrentProjectVariables
+				.getProjectId()));
+		criteria.setStatus(new StringSearchField(
+				ProjectMemberStatusConstants.ACTIVE));
+
+		ProjectMemberService userService = ApplicationContextUtil
+				.getSpringBean(ProjectMemberService.class);
+		List<SimpleProjectMember> items = userService
+				.findPagableListByCriteria(new SearchRequest<ProjectMemberSearchCriteria>(
+						criteria, 0, Integer.MAX_VALUE));
+
+		memberSelectionComp = new MultiSelectComp<SimpleProjectMember>(
+				displayName, items) {
+			protected ItemSelectionComp<SimpleProjectMember> buildItem(
+					final SimpleProjectMember item) {
+				ItemSelectionComp<SimpleProjectMember> buildItem = super
+						.buildItem(item);
+				String userAvatarId = "";
+
+				try {
+					userAvatarId = (String) PropertyUtils.getProperty(item,
+							"memberAvatarId");
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+
+				buildItem.setIcon(UserAvatarControlFactory
+						.createAvatarResource(userAvatarId, 16));
+				return buildItem;
+			}
+		};
+
+		this.setCompositionRoot(memberSelectionComp);
+	}
+
+	public List<SimpleProjectMember> getSelectedItems() {
+		return memberSelectionComp.getSelectedItems();
+	}
+
+	public void resetComp() {
+		memberSelectionComp.resetComp();
+	}
 
 }

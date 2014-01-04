@@ -128,31 +128,49 @@ public class MultiSelectComp<T> extends CustomComponent {
 		VerticalLayout popupContent = new VerticalLayout();
 		for (final T item : items) {
 
-			final ItemSelectionComp chkItem = new ItemSelectionComp(item);
-			chkItem.setImmediate(true);
-
-			chkItem.addValueChangeListener(new ValueChangeListener() {
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public void valueChange(
-						final com.vaadin.data.Property.ValueChangeEvent event) {
-					final Boolean value = (Boolean) chkItem.getValue();
-
-					if (value && !selectedItems.contains(item)) {
-						selectedItems.add(item);
-					} else {
-						selectedItems.remove(item);
-					}
-
-					displaySelectedItems();
-				}
-			});
+			final ItemSelectionComp chkItem = buildItem(item);
 			popupContent.addComponent(chkItem);
 		}
 
 		componentPopupSelection.setContent(popupContent);
 
+	}
+
+	protected ItemSelectionComp<T> buildItem(final T item) {
+		String itemName = "";
+		if (propertyDisplayField != "") {
+			try {
+				itemName = (String) PropertyUtils.getProperty(item,
+						propertyDisplayField);
+			} catch (final Exception e) {
+				e.printStackTrace();
+			}
+		} else {
+			itemName = (String) item.toString();
+		}
+
+		final ItemSelectionComp<T> chkItem = new ItemSelectionComp<T>(item,
+				itemName);
+		chkItem.setImmediate(true);
+
+		chkItem.addValueChangeListener(new ValueChangeListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void valueChange(
+					final com.vaadin.data.Property.ValueChangeEvent event) {
+				final Boolean value = (Boolean) chkItem.getValue();
+
+				if (value && !selectedItems.contains(item)) {
+					selectedItems.add(item);
+				} else {
+					selectedItems.remove(item);
+				}
+
+				displaySelectedItems();
+			}
+		});
+		return chkItem;
 	}
 
 	private void displaySelectedItems() {
@@ -228,27 +246,15 @@ public class MultiSelectComp<T> extends CustomComponent {
 		return str.toString();
 	}
 
-	class ItemSelectionComp extends CheckBox {
+	public static class ItemSelectionComp<T> extends CheckBox {
 		private static final long serialVersionUID = 1L;
 
 		private T item;
 
-		public ItemSelectionComp(T item) {
+		public ItemSelectionComp(T item, String caption) {
 			super();
 			this.item = item;
-
-			String itemName = "";
-			if (propertyDisplayField != "") {
-				try {
-					itemName = (String) PropertyUtils.getProperty(item,
-							propertyDisplayField);
-				} catch (final Exception e) {
-					e.printStackTrace();
-				}
-			} else {
-				itemName = (String) item.toString();
-			}
-			this.setCaption(itemName);
+			this.setCaption(caption);
 		}
 
 	}
