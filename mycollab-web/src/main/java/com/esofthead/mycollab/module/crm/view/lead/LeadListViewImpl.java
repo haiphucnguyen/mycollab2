@@ -131,9 +131,12 @@ public class LeadListViewImpl extends
 	@Override
 	protected DefaultMassItemActionHandlersContainer createActionControls() {
 		DefaultMassItemActionHandlersContainer container = new DefaultMassItemActionHandlersContainer();
-		container.addActionItem(MassItemActionHandler.DELETE_ACTION,
-				MyCollabResource.newResource("icons/16/action/delete.png"),
-				"delete");
+
+		if (AppContext.canAccess(RolePermissionCollections.CRM_LEAD)) {
+			container.addActionItem(MassItemActionHandler.DELETE_ACTION,
+					MyCollabResource.newResource("icons/16/action/delete.png"),
+					"delete");
+		}
 
 		container.addActionItem(MassItemActionHandler.MAIL_ACTION,
 				MyCollabResource.newResource("icons/16/action/mail.png"),
@@ -151,9 +154,13 @@ public class LeadListViewImpl extends
 				MyCollabResource.newResource("icons/16/action/csv.png"),
 				"export", "export.csv");
 
-		container.addActionItem(MassItemActionHandler.MASS_UPDATE_ACTION,
-				MyCollabResource.newResource("icons/16/action/massupdate.png"),
-				"update");
+		if (AppContext.canWrite(RolePermissionCollections.CRM_LEAD)) {
+			container.addActionItem(MassItemActionHandler.MASS_UPDATE_ACTION,
+					MyCollabResource
+							.newResource("icons/16/action/massupdate.png"),
+					"update");
+		}
+
 		return container;
 	}
 }

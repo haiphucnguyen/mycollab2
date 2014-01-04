@@ -111,7 +111,7 @@ public class UserLink extends Button {
 
 			// ---------define top layout
 			topLayout.setSpacing(true);
-			topLayout.addComponent(new Label("PageView full profile at: "));
+			topLayout.addComponent(new Label("View full profile at: "));
 
 			String userFullLinkStr = UserLinkUtils.generatePreviewFullUserLink(
 					AppContext.getSiteUrl(), user.getUsername());

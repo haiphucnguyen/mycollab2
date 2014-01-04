@@ -28,6 +28,8 @@ import com.esofthead.mycollab.module.crm.events.ActivityEvent;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.crm.localization.TaskI18nEnum;
 import com.esofthead.mycollab.module.crm.ui.components.AbstractListItemComp;
+import com.esofthead.mycollab.security.RolePermissionCollections;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.MassItemActionHandler;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.DefaultMassItemActionHandlersContainer;
@@ -120,9 +122,13 @@ public class ActivityListViewImpl extends
 	@Override
 	protected DefaultMassItemActionHandlersContainer createActionControls() {
 		DefaultMassItemActionHandlersContainer container = new DefaultMassItemActionHandlersContainer();
-		container.addActionItem(MassItemActionHandler.DELETE_ACTION,
-				MyCollabResource.newResource("icons/16/action/delete.png"),
-				"delete");
+		if (AppContext.canAccess(RolePermissionCollections.CRM_CALL)
+				|| AppContext.canAccess(RolePermissionCollections.CRM_MEETING)
+				|| AppContext.canAccess(RolePermissionCollections.CRM_TASK)) {
+			container.addActionItem(MassItemActionHandler.DELETE_ACTION,
+					MyCollabResource.newResource("icons/16/action/delete.png"),
+					"delete");
+		}
 
 		container.addActionItem(MassItemActionHandler.MAIL_ACTION,
 				MyCollabResource.newResource("icons/16/action/mail.png"),
@@ -140,9 +146,6 @@ public class ActivityListViewImpl extends
 				MyCollabResource.newResource("icons/16/action/csv.png"),
 				"export", "export.csv");
 
-		container.addActionItem(MassItemActionHandler.MASS_UPDATE_ACTION,
-				MyCollabResource.newResource("icons/16/action/massupdate.png"),
-				"update");
 		return container;
 	}
 }
