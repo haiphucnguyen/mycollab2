@@ -40,10 +40,13 @@ import com.esofthead.mycollab.module.crm.view.lead.LeadSelectionWindow;
 import com.esofthead.mycollab.module.crm.view.opportunity.OpportunitySelectionWindow;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.ui.CompoundCustomField;
 import com.esofthead.mycollab.vaadin.ui.FieldSelection;
 import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
 import com.esofthead.mycollab.web.MyCollabResource;
+import com.vaadin.data.Buffered.SourceException;
 import com.vaadin.data.Property;
+import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.event.MouseEvents;
 import com.vaadin.event.MouseEvents.ClickEvent;
 import com.vaadin.ui.Alignment;
@@ -134,8 +137,6 @@ public class RelatedEditItemField extends CustomField<String> implements
 			public void click(ClickEvent event) {
 				try {
 					PropertyUtils.setProperty(RelatedEditItemField.this.bean,
-							"type", "");
-					PropertyUtils.setProperty(RelatedEditItemField.this.bean,
 							"typeid", null);
 				} catch (Exception e) {
 					log.error("Error while saving type", e);
@@ -177,6 +178,13 @@ public class RelatedEditItemField extends CustomField<String> implements
 		} else {
 			super.setPropertyDataSource(newDataSource);
 		}
+	}
+
+	@Override
+	public void commit() throws SourceException, InvalidValueException {
+		String value = (String) relatedItemComboBox.getValue();
+		this.setInternalValue(value);
+		super.commit();
 	}
 
 	public void setType(String type) {
@@ -246,33 +254,27 @@ public class RelatedEditItemField extends CustomField<String> implements
 	public void fireValueChange(Object data) {
 		try {
 			if (data instanceof SimpleAccount) {
-				PropertyUtils.setProperty(bean, "type", "Account");
 				PropertyUtils.setProperty(bean, "typeid",
 						((SimpleAccount) data).getId());
 				itemField.setValue(((SimpleAccount) data).getAccountname());
 			} else if (data instanceof SimpleCampaign) {
-				PropertyUtils.setProperty(bean, "type", "Campaign");
 				PropertyUtils.setProperty(bean, "typeid",
 						((SimpleCampaign) data).getId());
 				itemField.setValue(((SimpleCampaign) data).getCampaignname());
 			} else if (data instanceof SimpleContact) {
-				PropertyUtils.setProperty(bean, "type", "Contact");
 				PropertyUtils.setProperty(bean, "typeid",
 						((SimpleContact) data).getId());
 				itemField.setValue(((SimpleContact) data).getContactName());
 			} else if (data instanceof SimpleLead) {
-				PropertyUtils.setProperty(bean, "type", "Lead");
 				PropertyUtils.setProperty(bean, "typeid",
 						((SimpleLead) data).getId());
 				itemField.setValue(((SimpleLead) data).getLeadName());
 			} else if (data instanceof SimpleOpportunity) {
-				PropertyUtils.setProperty(bean, "type", "Opportunity");
 				PropertyUtils.setProperty(bean, "typeid",
 						((SimpleOpportunity) data).getId());
 				itemField.setValue(((SimpleOpportunity) data)
 						.getOpportunityname());
 			} else if (data instanceof SimpleCase) {
-				PropertyUtils.setProperty(bean, "type", "Case");
 				PropertyUtils.setProperty(bean, "typeid",
 						((SimpleCase) data).getId());
 				itemField.setValue(((SimpleCase) data).getSubject());
@@ -291,6 +293,7 @@ public class RelatedEditItemField extends CustomField<String> implements
 			setCaption(null);
 			this.setWidth("100px");
 			this.loadData(types);
+			this.select(getNullSelectionItemId());
 		}
 	}
 }

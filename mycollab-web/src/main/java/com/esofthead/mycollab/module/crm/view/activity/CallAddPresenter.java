@@ -86,7 +86,7 @@ public class CallAddPresenter extends CrmGenericPresenter<CallAddView> {
 
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
-		if (AppContext.canWrite(RolePermissionCollections.CRM_TASK)) {
+		if (AppContext.canWrite(RolePermissionCollections.CRM_CALL)) {
 			CallWithBLOBs call = null;
 
 			if (data.getParams() instanceof Integer) {

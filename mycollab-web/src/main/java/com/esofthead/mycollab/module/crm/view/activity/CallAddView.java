@@ -27,6 +27,6 @@ import com.esofthead.mycollab.vaadin.mvp.IFormAddView;
  * 
  */
 public interface CallAddView extends IFormAddView<CallWithBLOBs> {
-	HasEditFormHandlers<CallWithBLOBs> getEditFormHandlers();
 
+	HasEditFormHandlers<CallWithBLOBs> getEditFormHandlers();
 }

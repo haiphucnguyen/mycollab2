@@ -25,6 +25,7 @@ import com.esofthead.mycollab.module.user.ui.components.ActiveUserComboBox;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
+import com.esofthead.mycollab.vaadin.ui.CompoundCustomField;
 import com.esofthead.mycollab.vaadin.ui.DummyCustomField;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
@@ -79,7 +80,7 @@ public class CallAddViewImpl extends AbstractEditItemComp<CallWithBLOBs>
 	@Override
 	protected IFormLayoutFactory initFormLayoutFactory() {
 		return new DynaFormLayout(CrmTypeConstants.CALL,
-				MeetingDefaultFormLayoutFactory.getForm());
+				CallDefaultFormLayoutFactory.getForm());
 	}
 
 	@Override
@@ -92,8 +93,12 @@ public class CallAddViewImpl extends AbstractEditItemComp<CallWithBLOBs>
 
 		private static final long serialVersionUID = 1L;
 
+		private CallStatusTypeField callStatusField;
+
 		public CallEditFormFieldFactory(GenericBeanForm<CallWithBLOBs> form) {
 			super(form);
+
+			callStatusField = new CallStatusTypeField();
 		}
 
 		@Override
@@ -116,14 +121,14 @@ public class CallAddViewImpl extends AbstractEditItemComp<CallWithBLOBs>
 				resultArea.setNullRepresentation("");
 				return resultArea;
 			} else if (propertyId.equals("durationinseconds")) {
-				CallDurationControl durationField = new CallDurationControl();
+				CallDurationField durationField = new CallDurationField();
 				return durationField;
 			} else if (propertyId.equals("purpose")) {
 				CallPurposeComboBox purposeField = new CallPurposeComboBox();
 				return purposeField;
-			} else if (propertyId.equals("status")) {
-				CallStatusTypeField field = new CallStatusTypeField();
-				return field;
+			} else if (propertyId.equals("status")
+					|| propertyId.equals("calltype")) {
+				return callStatusField;
 			} else if (propertyId.equals("type")) {
 				RelatedEditItemField field = new RelatedEditItemField(
 						new String[] { CrmTypeConstants.ACCOUNT,
@@ -141,6 +146,35 @@ public class CallAddViewImpl extends AbstractEditItemComp<CallWithBLOBs>
 			}
 			return null;
 		}
+
+		private class CallStatusTypeField extends CompoundCustomField {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public Class<?> getType() {
+				return Object.class;
+			}
+
+			@Override
+			protected Component initContent() {
+				HorizontalLayout layout = new HorizontalLayout();
+				layout.setSpacing(true);
+
+				CallTypeComboBox typeField = new CallTypeComboBox();
+				layout.addComponent(typeField);
+				typeField.select(beanItem.getCalltype());
+
+				CallStatusComboBox statusField = new CallStatusComboBox();
+				layout.addComponent(statusField);
+				statusField.select(beanItem.getStatus());
+
+				// binding field group
+				fieldGroup.bind(typeField, "calltype");
+				fieldGroup.bind(statusField, "status");
+				return layout;
+			}
+		}
 	}
 
 	private class CallPurposeComboBox extends ValueComboBox {
@@ -155,18 +189,29 @@ public class CallAddViewImpl extends AbstractEditItemComp<CallWithBLOBs>
 		}
 	}
 
-	private class CallDurationControl extends CustomField {
+	private class CallDurationField extends CustomField<Integer> {
 
 		private static final long serialVersionUID = 1L;
 		private TextField hourField;
 		private ValueComboBox minutesField;
 
-		@Override
-		public Class<?> getType() {
-			return Integer.class;
+		public CallDurationField() {
+			hourField = new TextField();
+			hourField.setWidth("30px");
+
+			minutesField = new ValueComboBox();
+			minutesField.loadData(new String[] { "0", "15", "30", "45" });
+			minutesField.setWidth("40px");
 		}
 
-		private void calculateDurationInSeconds() {
+		@Override
+		public void commit() {
+			Integer durationInSeconds = calculateDurationInSeconds();
+			this.setInternalValue(durationInSeconds);
+			super.commit();
+		}
+
+		private Integer calculateDurationInSeconds() {
 			String hourValue = (String) hourField.getValue();
 			String minuteValue = (String) minutesField.getValue();
 			int hourVal = 0, minutesVal = 0;
@@ -186,49 +231,33 @@ public class CallAddViewImpl extends AbstractEditItemComp<CallWithBLOBs>
 
 			if (hourVal != 0 || minutesVal != 0) {
 				int seconds = minutesVal * 60 + hourVal * 3600;
-				beanItem.setDurationinseconds(seconds);
+				return seconds;
 			}
+
+			return 0;
+		}
+
+		@Override
+		public void setPropertyDataSource(Property newDataSource) {
+			Object value = newDataSource.getValue();
+			if (value instanceof Integer) {
+				Integer duration = (Integer) value;
+				if (duration != null && duration != 0) {
+					int hours = duration / 3600;
+					int minutes = (duration % 3600) / 60;
+					hourField.setValue("" + hours);
+					minutesField.select("" + minutes);
+				}
+			}
+			super.setPropertyDataSource(newDataSource);
 		}
 
 		@Override
 		protected Component initContent() {
 			HorizontalLayout layout = new HorizontalLayout();
 			layout.setSpacing(true);
-			hourField = new TextField();
-			hourField.setWidth("30px");
-			hourField
-					.addValueChangeListener(new Property.ValueChangeListener() {
-						private static final long serialVersionUID = 1L;
-
-						@Override
-						public void valueChange(Property.ValueChangeEvent event) {
-							calculateDurationInSeconds();
-						}
-					});
 
 			layout.addComponent(hourField);
-
-			minutesField = new ValueComboBox();
-			minutesField.loadData(new String[] { "0", "15", "30", "45" });
-			minutesField.setWidth("40px");
-			minutesField
-					.addValueChangeListener(new Property.ValueChangeListener() {
-						private static final long serialVersionUID = 1L;
-
-						@Override
-						public void valueChange(Property.ValueChangeEvent event) {
-							calculateDurationInSeconds();
-
-						}
-					});
-
-			Integer duration = beanItem.getDurationinseconds();
-			if (duration != null && duration != 0) {
-				int hours = duration / 3600;
-				int minutes = (duration % 3600) / 60;
-				hourField.setValue("" + hours);
-				minutesField.select("" + minutes);
-			}
 
 			layout.addComponent(minutesField);
 
@@ -236,31 +265,10 @@ public class CallAddViewImpl extends AbstractEditItemComp<CallWithBLOBs>
 
 			return layout;
 		}
-	}
-
-	private class CallStatusTypeField extends CustomField {
-
-		private static final long serialVersionUID = 1L;
 
 		@Override
-		public Class<?> getType() {
-			return String.class;
-		}
-
-		@Override
-		protected Component initContent() {
-			HorizontalLayout layout = new HorizontalLayout();
-			layout.setSpacing(true);
-
-			CallTypeComboBox typeField = new CallTypeComboBox();
-			layout.addComponent(typeField);
-			typeField.select(beanItem.getCalltype());
-
-			CallStatusComboBox statusField = new CallStatusComboBox();
-			layout.addComponent(statusField);
-			statusField.select(beanItem.getStatus());
-
-			return layout;
+		public Class<Integer> getType() {
+			return Integer.class;
 		}
 	}
 

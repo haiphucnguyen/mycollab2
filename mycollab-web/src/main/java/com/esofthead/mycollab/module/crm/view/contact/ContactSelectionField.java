@@ -53,6 +53,10 @@ public class ContactSelectionField extends CustomField<Integer> implements
 	private Image browseBtn;
 	private Image clearBtn;
 
+	public ContactSelectionField() {
+		contactName = new TextField();
+	}
+
 	@Override
 	public void fireValueChange(Contact data) {
 		contact = (SimpleContact) data;
@@ -91,8 +95,6 @@ public class ContactSelectionField extends CustomField<Integer> implements
 		layout = new HorizontalLayout();
 		layout.setSpacing(true);
 
-		contactName = new TextField();
-		contactName.setEnabled(true);
 		layout.addComponent(contactName);
 		layout.setComponentAlignment(contactName, Alignment.MIDDLE_LEFT);
 
