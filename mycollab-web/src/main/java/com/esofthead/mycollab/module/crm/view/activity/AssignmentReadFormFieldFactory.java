@@ -1,12 +1,16 @@
 package com.esofthead.mycollab.module.crm.view.activity;
 
+import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.crm.domain.SimpleTask;
+import com.esofthead.mycollab.module.crm.events.ContactEvent;
 import com.esofthead.mycollab.module.crm.ui.components.RelatedReadItemField;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.DateFieldWithUserTimeZone;
-import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormViewField;
+import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormLinkViewField;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.UserLinkViewField;
 import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Field;
 
 /**
@@ -15,7 +19,7 @@ import com.vaadin.ui.Field;
  * @since 3.0
  * 
  */
-public class AssignmentReadFormFieldFactory extends
+class AssignmentReadFormFieldFactory extends
 		AbstractBeanFieldGroupViewFieldFactory<SimpleTask> {
 	private static final long serialVersionUID = 1L;
 
@@ -40,7 +44,17 @@ public class AssignmentReadFormFieldFactory extends
 			return new DateFieldWithUserTimeZone(attachForm.getBean()
 					.getDuedate(), "DATETIME_FIELD");
 		} else if (propertyId.equals("contactid")) {
-			return new FormViewField(attachForm.getBean().getContactName());
+			return new FormLinkViewField(attachForm.getBean().getContactName(),
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void buttonClick(ClickEvent event) {
+							EventBus.getInstance().fireEvent(
+									new ContactEvent.GotoRead(this, attachForm
+											.getBean().getContactid()));
+						}
+					});
 		} else if (propertyId.equals("type")) {
 			return new RelatedReadItemField(attachForm.getBean());
 

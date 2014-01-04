@@ -24,8 +24,8 @@ import com.vaadin.ui.ComboBox;
  * @since 1.0
  * 
  */
-@SuppressWarnings("serial")
 public class ValueComboBox extends ComboBox {
+	private static final long serialVersionUID = 1L;
 
 	public ValueComboBox() {
 		super();

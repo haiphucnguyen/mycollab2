@@ -40,6 +40,7 @@ import com.esofthead.mycollab.module.crm.service.CampaignService;
 import com.esofthead.mycollab.module.crm.ui.components.RelatedListComp;
 import com.esofthead.mycollab.module.crm.view.account.AccountTableDisplay;
 import com.esofthead.mycollab.module.crm.view.account.AccountTableFieldDef;
+import com.esofthead.mycollab.module.crm.view.account.AccountCampaignSelectionWindow;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -104,7 +105,7 @@ public class CampaignAccountListComp extends
 				new Button.ClickListener() {
 					@Override
 					public void buttonClick(Button.ClickEvent event) {
-						CampaignAccountSelectionWindow accountsWindow = new CampaignAccountSelectionWindow(
+						AccountCampaignSelectionWindow accountsWindow = new AccountCampaignSelectionWindow(
 								CampaignAccountListComp.this);
 						AccountSearchCriteria criteria = new AccountSearchCriteria();
 						criteria.setSaccountid(new NumberSearchField(AppContext

@@ -15,16 +15,14 @@
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.esofthead.mycollab.module.crm.view.campaign;
+package com.esofthead.mycollab.module.crm.view.account;
 
 import java.util.Arrays;
 
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.esofthead.mycollab.module.crm.ui.components.RelatedItemSelectionWindow;
-import com.esofthead.mycollab.module.crm.view.account.AccountSimpleSearchPanel;
-import com.esofthead.mycollab.module.crm.view.account.AccountTableDisplay;
-import com.esofthead.mycollab.module.crm.view.account.AccountTableFieldDef;
+import com.esofthead.mycollab.module.crm.view.campaign.CampaignAccountListComp;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.ui.Button;
@@ -34,12 +32,12 @@ import com.vaadin.ui.Button;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-public class CampaignAccountSelectionWindow extends
+public class AccountCampaignSelectionWindow extends
 		RelatedItemSelectionWindow<SimpleAccount, AccountSearchCriteria> {
 
 	private static final long serialVersionUID = 1L;
 
-	public CampaignAccountSelectionWindow(
+	public AccountCampaignSelectionWindow(
 			CampaignAccountListComp associateAccountList) {
 		super("Select Accounts", associateAccountList);
 

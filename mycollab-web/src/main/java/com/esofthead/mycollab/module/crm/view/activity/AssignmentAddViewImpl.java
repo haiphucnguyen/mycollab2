@@ -18,16 +18,12 @@ package com.esofthead.mycollab.module.crm.view.activity;
 
 import com.esofthead.mycollab.form.view.DynaFormLayout;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
-import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.Task;
-import com.esofthead.mycollab.module.crm.service.ContactService;
 import com.esofthead.mycollab.module.crm.ui.components.AbstractEditItemComp;
 import com.esofthead.mycollab.module.crm.ui.components.RelatedEditItemField;
 import com.esofthead.mycollab.module.crm.view.CrmDataTypeFactory;
 import com.esofthead.mycollab.module.crm.view.contact.ContactSelectionField;
 import com.esofthead.mycollab.module.user.ui.components.ActiveUserComboBox;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
@@ -112,16 +108,6 @@ public class AssignmentAddViewImpl extends AbstractEditItemComp<Task> implements
 				return descArea;
 			} else if (propertyId.equals("contactid")) {
 				ContactSelectionField field = new ContactSelectionField();
-				if (attachForm.getBean().getContactid() != null) {
-					ContactService accountService = ApplicationContextUtil
-							.getSpringBean(ContactService.class);
-					SimpleContact contact = accountService.findById(attachForm
-							.getBean().getContactid(), AppContext
-							.getAccountId());
-					if (contact != null) {
-						field.setContact(contact);
-					}
-				}
 				return field;
 			} else if (propertyId.equals("subject")) {
 				TextField tf = new TextField();

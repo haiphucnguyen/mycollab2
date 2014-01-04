@@ -22,6 +22,7 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.eventmanager.ApplicationEvent;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
+import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -42,9 +43,9 @@ public class ContactSelectionWindow extends Window {
 	private static final long serialVersionUID = 1L;
 	private ContactSearchCriteria searchCriteria;
 	private ContactTableDisplay tableItem;
-	private FieldSelection fieldSelection;
+	private FieldSelection<Contact> fieldSelection;
 
-	public ContactSelectionWindow(FieldSelection fieldSelection) {
+	public ContactSelectionWindow(FieldSelection<Contact> fieldSelection) {
 		super("Contact Name Lookup");
 		this.setWidth("900px");
 		this.fieldSelection = fieldSelection;
@@ -60,7 +61,7 @@ public class ContactSelectionWindow extends Window {
 		layout.setSpacing(true);
 		layout.setMargin(true);
 
-		createAccountList();
+		createContactList();
 
 		ContactSimpleSearchPanel contactSimpleSearchPanel = new ContactSimpleSearchPanel();
 		contactSimpleSearchPanel
@@ -81,7 +82,7 @@ public class ContactSelectionWindow extends Window {
 	}
 
 	@SuppressWarnings("serial")
-	private void createAccountList() {
+	private void createContactList() {
 		tableItem = new ContactTableDisplay(Arrays.asList(
 				ContactTableFieldDef.name, ContactTableFieldDef.phoneOffice,
 				ContactTableFieldDef.email, ContactTableFieldDef.assignUser));

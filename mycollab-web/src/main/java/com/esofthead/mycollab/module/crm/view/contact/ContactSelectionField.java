@@ -18,15 +18,19 @@ package com.esofthead.mycollab.module.crm.view.contact;
 
 import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
+import com.esofthead.mycollab.module.crm.service.ContactService;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.FieldSelection;
 import com.esofthead.mycollab.web.MyCollabResource;
+import com.vaadin.data.Property;
 import com.vaadin.event.MouseEvents;
 import com.vaadin.event.MouseEvents.ClickEvent;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomField;
-import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Image;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 
@@ -36,8 +40,8 @@ import com.vaadin.ui.UI;
  * @since 1.0
  * 
  */
-public class ContactSelectionField extends CustomField<Contact> implements
-		FieldSelection {
+public class ContactSelectionField extends CustomField<Integer> implements
+		FieldSelection<Contact> {
 	private static final long serialVersionUID = 1L;
 
 	private HorizontalLayout layout;
@@ -46,22 +50,40 @@ public class ContactSelectionField extends CustomField<Contact> implements
 
 	private SimpleContact contact;
 
-	private Embedded browseBtn;
-	private Embedded clearBtn;
-
-	public void setContact(SimpleContact contact) {
-		this.contact = contact;
-		contactName.setValue(contact.getContactName());
-	}
+	private Image browseBtn;
+	private Image clearBtn;
 
 	@Override
-	public void fireValueChange(Object data) {
+	public void fireValueChange(Contact data) {
 		contact = (SimpleContact) data;
 		if (contact != null) {
 			contactName.setValue(contact.getContactName());
-			contact = null;
+			setInternalValue(contact.getId());
 		}
 
+	}
+
+	@Override
+	public void setPropertyDataSource(Property newDataSource) {
+		Object value = newDataSource.getValue();
+		if (value instanceof Integer) {
+			ContactService contactService = ApplicationContextUtil
+					.getSpringBean(ContactService.class);
+			SimpleContact contactVal = contactService.findById((Integer) value,
+					AppContext.getAccountId());
+			if (contactVal != null) {
+				setInternalContact(contactVal);
+			}
+
+			super.setPropertyDataSource(newDataSource);
+		} else {
+			super.setPropertyDataSource(newDataSource);
+		}
+	}
+
+	private void setInternalContact(SimpleContact account) {
+		this.contact = account;
+		contactName.setValue(contact.getContactName());
 	}
 
 	@Override
@@ -74,7 +96,7 @@ public class ContactSelectionField extends CustomField<Contact> implements
 		layout.addComponent(contactName);
 		layout.setComponentAlignment(contactName, Alignment.MIDDLE_LEFT);
 
-		browseBtn = new Embedded(null,
+		browseBtn = new Image(null,
 				MyCollabResource.newResource("icons/16/browseItem.png"));
 		layout.addComponent(browseBtn);
 		layout.setComponentAlignment(browseBtn, Alignment.MIDDLE_LEFT);
@@ -87,11 +109,11 @@ public class ContactSelectionField extends CustomField<Contact> implements
 				ContactSelectionWindow contactWindow = new ContactSelectionWindow(
 						ContactSelectionField.this);
 				UI.getCurrent().addWindow(contactWindow);
-
+				contactWindow.show();
 			}
 		});
 
-		clearBtn = new Embedded(null,
+		clearBtn = new Image(null,
 				MyCollabResource.newResource("icons/16/clearItem.png"));
 
 		clearBtn.addClickListener(new MouseEvents.ClickListener() {
@@ -110,7 +132,7 @@ public class ContactSelectionField extends CustomField<Contact> implements
 	}
 
 	@Override
-	public Class<? extends Contact> getType() {
-		return Contact.class;
+	public Class<Integer> getType() {
+		return Integer.class;
 	}
 }
