@@ -15,7 +15,7 @@ import com.vaadin.ui.Field;
  * @since 3.0
  * 
  */
-public class CallReadFormFieldFactory extends
+class CallReadFormFieldFactory extends
 		AbstractBeanFieldGroupViewFieldFactory<SimpleCall> {
 	private static final long serialVersionUID = 1L;
 

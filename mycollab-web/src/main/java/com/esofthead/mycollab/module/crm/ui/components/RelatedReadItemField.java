@@ -40,6 +40,7 @@ import com.esofthead.mycollab.module.crm.service.OpportunityService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
@@ -95,6 +96,8 @@ public class RelatedReadItemField extends CustomField {
 													account.getId()));
 								}
 							});
+					relatedLink.setIcon(MyCollabResource
+							.newResource("icons/16/crm/account.png"));
 				}
 			} else if ("Campaign".equals(type)) {
 				CampaignService campaignService = ApplicationContextUtil
@@ -114,6 +117,8 @@ public class RelatedReadItemField extends CustomField {
 
 								}
 							});
+					relatedLink.setIcon(MyCollabResource
+							.newResource("icons/16/crm/campaign.png"));
 				}
 			} else if ("Contact".equals(type)) {
 				ContactService contactService = ApplicationContextUtil
@@ -132,6 +137,8 @@ public class RelatedReadItemField extends CustomField {
 													contact.getId()));
 								}
 							});
+					relatedLink.setIcon(MyCollabResource
+							.newResource("icons/16/crm/contact.png"));
 				}
 			} else if ("Lead".equals(type)) {
 				LeadService leadService = ApplicationContextUtil
@@ -150,6 +157,8 @@ public class RelatedReadItemField extends CustomField {
 													.getId()));
 								}
 							});
+					relatedLink.setIcon(MyCollabResource
+							.newResource("icons/16/crm/lead.png"));
 				}
 			} else if ("Opportunity".equals(type)) {
 				OpportunityService opportunityService = ApplicationContextUtil
@@ -169,6 +178,8 @@ public class RelatedReadItemField extends CustomField {
 													opportunity.getId()));
 								}
 							});
+					relatedLink.setIcon(MyCollabResource
+							.newResource("icons/16/crm/opportunity.png"));
 				}
 			} else if ("Case".equals(type)) {
 				CaseService caseService = ApplicationContextUtil
@@ -188,6 +199,8 @@ public class RelatedReadItemField extends CustomField {
 
 								}
 							});
+					relatedLink.setIcon(MyCollabResource
+							.newResource("icons/16/crm/case.png"));
 				}
 			}
 

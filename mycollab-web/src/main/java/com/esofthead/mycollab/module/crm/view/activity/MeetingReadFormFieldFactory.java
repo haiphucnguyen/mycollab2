@@ -13,7 +13,7 @@ import com.vaadin.ui.Field;
  * @since 3.0
  * 
  */
-public class MeetingReadFormFieldFactory extends
+class MeetingReadFormFieldFactory extends
 		AbstractBeanFieldGroupViewFieldFactory<SimpleMeeting> {
 	private static final long serialVersionUID = 1L;
 
