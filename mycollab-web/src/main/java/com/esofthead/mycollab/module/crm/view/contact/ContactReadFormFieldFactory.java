@@ -65,7 +65,7 @@ public class ContactReadFormFieldFactory extends
 									new AccountEvent.GotoRead(this, attachForm
 											.getBean().getAccountid()));
 						}
-					});
+					}, MyCollabResource.newResource("icons/16/crm/account.png"));
 		} else if (propertyId.equals("email")) {
 			return new FormEmailLinkViewField(attachForm.getBean().getEmail());
 		} else if (propertyId.equals("assignuser")) {

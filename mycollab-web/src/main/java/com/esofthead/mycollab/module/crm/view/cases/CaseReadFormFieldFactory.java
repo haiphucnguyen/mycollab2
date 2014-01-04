@@ -8,6 +8,7 @@ import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormEmailLin
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormLinkViewField;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.UserLinkViewField;
 import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Field;
@@ -41,7 +42,7 @@ class CaseReadFormFieldFactory extends
 											.getAccountid()));
 
 						}
-					});
+					}, MyCollabResource.newResource("icons/16/crm/account.png"));
 		} else if (propertyId.equals("email")) {
 			return new FormEmailLinkViewField(cases.getEmail());
 		} else if (propertyId.equals("assignuser")) {

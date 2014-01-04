@@ -24,6 +24,7 @@ import org.vaadin.easyuploads.MultiFileUploadExt;
 
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.vaadin.AppContext;
+import com.vaadin.server.Resource;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
@@ -261,11 +262,18 @@ public class DefaultFormViewFieldFactory {
 		private static final long serialVersionUID = 1L;
 
 		private String value;
+		private Resource iconResource;
 		private Button.ClickListener listener;
 
 		public FormLinkViewField(String value, Button.ClickListener listener) {
+			this(value, listener, null);
+		}
+
+		public FormLinkViewField(String value, Button.ClickListener listener,
+				Resource iconResource) {
 			this.value = value;
 			this.listener = listener;
+			this.iconResource = iconResource;
 		}
 
 		@Override
@@ -277,6 +285,9 @@ public class DefaultFormViewFieldFactory {
 		protected Component initContent() {
 			if (value != null && (!value.equals(""))) {
 				final ButtonLink l = new ButtonLink(value, listener);
+				if (iconResource != null) {
+					l.setIcon(iconResource);
+				}
 				l.setWidth("100%");
 				return l;
 			} else {

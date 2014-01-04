@@ -10,6 +10,7 @@ import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormLinkView
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormViewField;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.UserLinkViewField;
 import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Field;
@@ -39,7 +40,7 @@ public class OpportunityReadFormFieldFactory extends
 									new AccountEvent.GotoRead(this, opportunity
 											.getAccountid()));
 						}
-					});
+					}, MyCollabResource.newResource("icons/16/crm/account.png"));
 		} else if (propertyId.equals("campaignid")) {
 			field = new FormLinkViewField(opportunity.getCampaignName(),
 					new Button.ClickListener() {
@@ -52,7 +53,8 @@ public class OpportunityReadFormFieldFactory extends
 											opportunity.getCampaignid()));
 
 						}
-					});
+					},
+					MyCollabResource.newResource("icons/16/crm/campaign.png"));
 		} else if (propertyId.equals("assignuser")) {
 			field = new UserLinkViewField(opportunity.getAssignuser(),
 					opportunity.getAssignUserAvatarId(),

@@ -9,6 +9,7 @@ import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.DateFieldWit
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormLinkViewField;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.UserLinkViewField;
 import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Field;
@@ -54,7 +55,7 @@ class AssignmentReadFormFieldFactory extends
 									new ContactEvent.GotoRead(this, attachForm
 											.getBean().getContactid()));
 						}
-					});
+					}, MyCollabResource.newResource("icons/16/crm/contact.png"));
 		} else if (propertyId.equals("type")) {
 			return new RelatedReadItemField(attachForm.getBean());
 
