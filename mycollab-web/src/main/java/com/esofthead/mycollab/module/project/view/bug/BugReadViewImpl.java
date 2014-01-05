@@ -291,6 +291,9 @@ public class BugReadViewImpl extends AbstractPageView implements BugReadView,
 		private void onPreviewItem() {
 			commentList.loadComments(this.getBean().getId());
 			historyList.loadHistory(this.getBean().getId());
+
+			bugTimeLogList.setBean(this.getBean());
+			bugTimeLogList.loadTimeValue();
 		}
 
 		private class FormLayoutFactory implements IFormLayoutFactory {
@@ -710,7 +713,7 @@ public class BugReadViewImpl extends AbstractPageView implements BugReadView,
 
 				} else if (propertyId.equals("milestoneName")) {
 					if (BugReadViewImpl.this.bug.getMilestoneid() != null) {
-						final FormLinkViewField componentContainer = new FormLinkViewField(
+						final FormLinkViewField phaseLink = new FormLinkViewField(
 								BugReadViewImpl.this.bug.getMilestoneName(),
 								new Button.ClickListener() {
 									private static final long serialVersionUID = 1L;
@@ -725,8 +728,10 @@ public class BugReadViewImpl extends AbstractPageView implements BugReadView,
 																BugReadViewImpl.this.bug
 																		.getMilestoneid()));
 									}
-								});
-						return componentContainer;
+								},
+								MyCollabResource
+										.newResource("icons/16/project/milestone.png"));
+						return phaseLink;
 					} else {
 						return new FormViewField("");
 					}

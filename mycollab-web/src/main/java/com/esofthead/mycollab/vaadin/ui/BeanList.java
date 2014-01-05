@@ -172,6 +172,13 @@ public class BeanList<SearchService extends ISearchableService<S>, S extends Sea
 		}
 	}
 
+	/**
+	 * 
+	 * @author MyCollab Ltd.
+	 * @since 1.0
+	 *
+	 * @param <T>
+	 */
 	public static interface RowDisplayHandler<T> extends Serializable {
 
 		Component generateRow(T obj, int rowIndex);
