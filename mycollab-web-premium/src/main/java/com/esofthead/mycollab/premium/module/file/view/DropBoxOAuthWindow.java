@@ -2,9 +2,6 @@ package com.esofthead.mycollab.premium.module.file.view;
 
 import java.util.Locale;
 
-import javax.servlet.http.HttpSession;
-
-import org.infinispan.api.BasicCache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,12 +10,10 @@ import com.dropbox.core.DbxRequestConfig;
 import com.dropbox.core.DbxSessionStore;
 import com.dropbox.core.DbxStandardSessionStore;
 import com.dropbox.core.DbxWebAuth;
-import com.esofthead.mycollab.cache.LocalCacheManager;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.module.ecm.StorageNames;
-import com.esofthead.mycollab.web.DesktopApplication;
 import com.vaadin.server.VaadinService;
-import com.vaadin.server.WrappedSession;
+import com.vaadin.server.WrappedHttpSession;
 
 /**
  * 
@@ -49,21 +44,16 @@ public abstract class DropBoxOAuthWindow extends
 		DbxAppInfo appInfo = new DbxAppInfo("y43ga49m30dfu02",
 				"rheskqqb6f8fo6a");
 		log.debug("redirect URL : " + redirectUri);
-		WrappedSession wrappedSession = VaadinService.getCurrentRequest()
-				.getWrappedSession();
-		// TODO: fix compile issue only. Need to revise this feature
-		HttpSession session = null;
-		String appId = DesktopApplication.getInstance().toString();
+		WrappedHttpSession wrappedSession = (WrappedHttpSession) VaadinService
+				.getCurrentRequest().getWrappedSession();
+
 		String sessionKey = "dropbox-auth-csrf-token";
-		DbxSessionStore csrfTokenStore = new DbxStandardSessionStore(session,
-				sessionKey);
+		DbxSessionStore csrfTokenStore = new DbxStandardSessionStore(
+				wrappedSession.getHttpSession(), sessionKey);
 
 		DbxWebAuth webAuth = new DbxWebAuth(requestConfig, appInfo,
 				redirectUri, csrfTokenStore);
-		String authUrl = webAuth.start(appId);
-
-		BasicCache<String, Object> cache = LocalCacheManager.getCache(appId);
-		cache.put(sessionKey, csrfTokenStore.get());
+		String authUrl = webAuth.start(null);
 		return authUrl;
 	}
 

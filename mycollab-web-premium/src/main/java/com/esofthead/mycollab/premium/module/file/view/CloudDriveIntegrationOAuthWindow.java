@@ -22,6 +22,8 @@ import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.MyCollabResource;
+import com.vaadin.server.BrowserWindowOpener;
+import com.vaadin.server.ExternalResource;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -111,18 +113,11 @@ public abstract class CloudDriveIntegrationOAuthWindow extends Window {
 				"You can connect Cloud Drives (Google Drive, Dropbox) to Mycollab Documents. They will be showed in My-Documents' folder and you can do everything like in one place.");
 		messageBox.addComponent(messageInfoLbl);
 
-		Button btnLogin = new Button("Login (" + getStorageName() + ")",
-				new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
+		Button btnLogin = new Button("Login (" + getStorageName() + ")");
+		BrowserWindowOpener windowOpenner = new BrowserWindowOpener(
+				new ExternalResource(buildAuthUrl()));
+		windowOpenner.extend(btnLogin);
 
-					@Override
-					public void buttonClick(ClickEvent event) {
-						String authorizeUrl = buildAuthUrl();
-						// open(new ExternalResource(authorizeUrl),
-						// "New Window",
-						// true);
-					}
-				});
 		btnLogin.addStyleName(UIConstants.THEME_BLUE_LINK);
 		messageBox.addComponent(btnLogin);
 		messageBox.setComponentAlignment(btnLogin, Alignment.MIDDLE_CENTER);
