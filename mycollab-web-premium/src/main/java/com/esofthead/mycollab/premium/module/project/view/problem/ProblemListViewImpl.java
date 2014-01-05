@@ -257,9 +257,14 @@ public class ProblemListViewImpl extends AbstractPageView implements
 				.canAccess(ProjectRolePermissionCollections.PROBLEMS));
 
 		this.tableActionControls = new DefaultMassItemActionHandlersContainer();
-		tableActionControls.addActionItem(MassItemActionHandler.DELETE_ACTION,
-				MyCollabResource.newResource("icons/16/action/delete.png"),
-				"delete");
+
+		if (CurrentProjectVariables
+				.canAccess(ProjectRolePermissionCollections.PROBLEMS)) {
+			tableActionControls.addActionItem(
+					MassItemActionHandler.DELETE_ACTION,
+					MyCollabResource.newResource("icons/16/action/delete.png"),
+					"delete");
+		}
 
 		tableActionControls.addActionItem(MassItemActionHandler.MAIL_ACTION,
 				MyCollabResource.newResource("icons/16/action/mail.png"),
@@ -277,10 +282,13 @@ public class ProblemListViewImpl extends AbstractPageView implements
 				MyCollabResource.newResource("icons/16/action/csv.png"),
 				"export", "export.csv");
 
-		tableActionControls.addActionItem(
-				MassItemActionHandler.MASS_UPDATE_ACTION,
-				MyCollabResource.newResource("icons/16/action/massupdate.png"),
-				"update");
+		if (CurrentProjectVariables
+				.canWrite(ProjectRolePermissionCollections.PROBLEMS)) {
+			tableActionControls.addActionItem(
+					MassItemActionHandler.MASS_UPDATE_ACTION, MyCollabResource
+							.newResource("icons/16/action/massupdate.png"),
+					"update");
+		}
 
 		this.tableActionControls.setVisible(false);
 		this.tableActionControls.setWidth(Sizeable.SIZE_UNDEFINED, Unit.PIXELS);

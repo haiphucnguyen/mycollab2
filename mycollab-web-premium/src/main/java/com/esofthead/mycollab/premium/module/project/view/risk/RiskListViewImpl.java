@@ -253,9 +253,14 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
 				.canAccess(ProjectRolePermissionCollections.RISKS));
 
 		this.tableActionControls = new DefaultMassItemActionHandlersContainer();
-		tableActionControls.addActionItem(MassItemActionHandler.DELETE_ACTION,
-				MyCollabResource.newResource("icons/16/action/delete.png"),
-				"delete");
+
+		if (CurrentProjectVariables
+				.canAccess(ProjectRolePermissionCollections.RISKS)) {
+			tableActionControls.addActionItem(
+					MassItemActionHandler.DELETE_ACTION,
+					MyCollabResource.newResource("icons/16/action/delete.png"),
+					"delete");
+		}
 
 		tableActionControls.addActionItem(MassItemActionHandler.MAIL_ACTION,
 				MyCollabResource.newResource("icons/16/action/mail.png"),
@@ -273,10 +278,13 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
 				MyCollabResource.newResource("icons/16/action/csv.png"),
 				"export", "export.csv");
 
-		tableActionControls.addActionItem(
-				MassItemActionHandler.MASS_UPDATE_ACTION,
-				MyCollabResource.newResource("icons/16/action/massupdate.png"),
-				"update");
+		if (CurrentProjectVariables
+				.canWrite(ProjectRolePermissionCollections.RISKS)) {
+			tableActionControls.addActionItem(
+					MassItemActionHandler.MASS_UPDATE_ACTION, MyCollabResource
+							.newResource("icons/16/action/massupdate.png"),
+					"update");
+		}
 
 		this.tableActionControls.setVisible(false);
 		this.tableActionControls.setWidth(Sizeable.SIZE_UNDEFINED, Unit.PIXELS);

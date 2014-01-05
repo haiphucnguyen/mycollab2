@@ -294,6 +294,8 @@ public class BugReadViewImpl extends AbstractPageView implements BugReadView,
 
 			bugTimeLogList.setBean(this.getBean());
 			bugTimeLogList.loadTimeValue();
+
+			bugFollowersList.displayMonitorItems();
 		}
 
 		private class FormLayoutFactory implements IFormLayoutFactory {

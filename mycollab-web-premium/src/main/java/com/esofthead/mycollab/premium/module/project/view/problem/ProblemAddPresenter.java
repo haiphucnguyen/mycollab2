@@ -59,6 +59,8 @@ public class ProblemAddPresenter extends AbstractPresenter<ProblemAddView> {
 	protected void postInitView() {
 		view.getEditFormHandlers().addFormHandler(
 				new EditFormHandler<Problem>() {
+					private static final long serialVersionUID = 1L;
+
 					@Override
 					public void onSave(final Problem problem) {
 						saveProblem(problem);

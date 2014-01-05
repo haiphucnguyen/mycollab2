@@ -15,6 +15,12 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
 public class MassUpdateRiskWindow extends MassUpdateWindow<Risk> {
 	private static final long serialVersionUID = 1L;
 
@@ -32,9 +38,7 @@ public class MassUpdateRiskWindow extends MassUpdateWindow<Risk> {
 
 	@Override
 	protected AbstractBeanFieldGroupEditFieldFactory<Risk> initBeanFormFieldFactory() {
-		return null;
-		// TODO: fix this issue
-		// return RiskEditFormFieldFactory(updateForm);
+		return new RiskEditFormFieldFactory(updateForm);
 	}
 
 	private class MassUpdateRiskFormLayoutFactory implements IFormLayoutFactory {

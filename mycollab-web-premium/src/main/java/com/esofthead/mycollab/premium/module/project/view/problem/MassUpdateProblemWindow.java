@@ -37,9 +37,7 @@ public class MassUpdateProblemWindow extends MassUpdateWindow<Problem> {
 
 	@Override
 	protected AbstractBeanFieldGroupEditFieldFactory<Problem> initBeanFormFieldFactory() {
-		return null;
-		// TODO: fix this issue
-		// return new ProblemEditFormFieldFactory(updateForm);
+		return new ProblemEditFormFieldFactory(updateForm);
 	}
 
 	private class MassUpdateProblemFormLayoutFactory implements
@@ -67,6 +65,8 @@ public class MassUpdateProblemWindow extends MassUpdateWindow<Problem> {
 			formLayout.addComponent(this.informationLayout.getLayout());
 			formLayout.addComponent(buildButtonControls());
 
+			formLayout
+					.addStyleName("v-csslayout v-csslayout-readview-layout-body readview-layout-body");
 			return formLayout;
 		}
 
