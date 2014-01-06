@@ -72,6 +72,10 @@ div.v-button-link {
 	text-align: left;
 }
 
+div.v-disabled.v-button-link {
+    margin: 0px;
+}
+
 .v-button-buttonlinkcenter .v-button-wrap .v-popup-indicator {
 	background: url('icons/calendar_2.png') no-repeat scroll center center
 		rgba(0, 0, 0, 0);
@@ -157,7 +161,7 @@ input.v-textfield,textarea.v-textarea,.v-filterselect {
 }
 
 input.v-widget.v-textfield[type="text"], .v-filterselect  {
-	height: 24px;
+	height: 23px;
 }
 
 .v-app {
@@ -486,7 +490,7 @@ div.v-button-nonPopupIndicator div.v-popup-indicator {
 	margin: 0px;
 }
 
-.h-sidebar-menu .v-button-link .v-button-wrap,.v-ie .h-sidebar-menu .v-pressed.v-button-link .v-button-wrap,.v-ie7 .h-sidebar-menu .v-pressed.v-button-link .v-button-wrap,.h-sidebar-menu div.v-button-link:active .v-button-wrap,.h-sidebar-menu div.v-button-link:focus .v-button-wrap,.h-sidebar-menu .v-button-link .v-button-wrap:active,.h-sidebar-menu .v-popupbutton .v-button-wrap,.h-sidebar-menu .v-popupbutton:active .v-button-wrap
+.h-sidebar-menu .v-button-link .v-button-wrap,.v-ie .h-sidebar-menu .v-pressed.v-button-link .v-button-wrap,.v-ie7 .h-sidebar-menu .v-pressed.v-button-link .v-button-wrap,.h-sidebar-menu div.v-button-link:active .v-button-wrap,.h-sidebar-menu div.v-button-link:focus .v-button-wrap,.h-sidebar-menu .v-button-link .v-button-wrap:active,.h-sidebar-menu .v-popupbutton .v-button-wrap,.h-sidebar-menu .v-popupbutton:active .v-button-wrap, .h-sidebar-menu div.v-disabled.v-button-link .v-button-wrap
 	{
 	margin: 7px auto 0px;
 	display: inline-block;
@@ -3816,27 +3820,15 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 /* End Time Addon */
 
 /* New ReadViewLayout */
-.v-csslayout-readview-layout {
-	margin-top: 10px;
-}
-
-.projectTabContent .usergroup-view .v-csslayout-readview-layout {
+.projectTabContent .usergroup-view .readview-layout {
 	margin: 0px;
 }
 
-.v-csslayout-readview-layout>.v-csslayout-margin {
+.readview-layout {
 	border: 1px solid #a9a9a9;
 	background-color: #f5f5f5;
 	border-radius: 3px 3px 0px 0px;
 	padding: 0px;
-}
-
-.v-csslayout-readview-layout>.v-csslayout-margin>.v-csslayout-container
-	{
-	padding-top: 0px;
-	margin: 0px;
-	position: relative;
-	top: 0px;
 }
 
 .readview-layout-header {
@@ -4012,20 +4004,20 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 	margin-left: 0px;
 }
 
+.readview-layout .colored-gridlayout .gridform-field.v-margin-top {
+    padding-top: 8px;
+}
+.readview-layout .colored-gridlayout .gridform-field.v-margin-bottom {
+    padding-bottom: 8px;
+}
+
 /* New AddViewLayout */
-.v-csslayout-addview-layout {
+.addview-layout {
 	/* margin-top: 10px; */
 	border: 1px solid #a9a9a9;
 	background-color: #f5f5f5;
 	border-radius: 3px 3px 0px 0px;
 	padding: 0px;
-}
-
-.v-csslayout-addview-layout>.v-csslayout-margin>.v-csslayout-container {
-	padding-top: 0px;
-	margin: 0px;
-	position: relative;
-	top: 0px;
 }
 
 .addview-layout-header {

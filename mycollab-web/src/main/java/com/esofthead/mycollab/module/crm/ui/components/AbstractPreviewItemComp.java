@@ -29,6 +29,7 @@ public abstract class AbstractPreviewItemComp<B> extends VerticalLayout {
 		initRelatedComponents();
 
 		previewForm = initPreviewForm();
+        previewLayout.setStyleName("readview-layout");
 
 		VerticalLayout informationLayout = new VerticalLayout();
 		informationLayout.addStyleName("main-info");
