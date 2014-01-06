@@ -108,4 +108,16 @@ public class ProjectTaskServiceImpl extends
 
 		return super.updateWithSession(record, username);
 	}
+
+	@Override
+	public int removeWithSession(Integer primaryKey, String username,
+			int accountId) {
+		int result = super.removeWithSession(primaryKey, username, accountId);
+
+		// Clean cache of task group
+		LocalCacheManager.removeCacheItems(accountId + "",
+				ProjectTaskListService.class.getName());
+		return result;
+	}
+
 }

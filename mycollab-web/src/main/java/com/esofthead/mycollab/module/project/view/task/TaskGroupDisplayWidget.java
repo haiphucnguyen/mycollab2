@@ -46,7 +46,6 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HasComponents;
-import com.vaadin.ui.Layout;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
@@ -287,8 +286,6 @@ public class TaskGroupDisplayWidget
 																AppContext
 																		.getAccountId());
 												final Component parentComp = TaskListDepot.this
-														.getParent();
-												HasComponents rootComp = parentComp
 														.getParent();
 												if (parentComp instanceof CssLayout) {
 													((CssLayout) parentComp)

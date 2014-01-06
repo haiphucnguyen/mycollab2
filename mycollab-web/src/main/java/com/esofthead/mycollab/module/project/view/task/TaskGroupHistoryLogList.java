@@ -26,10 +26,10 @@ import com.esofthead.mycollab.vaadin.ui.HistoryLogComponent;
  * @author MyCollab Ltd.
  * @since 2.0
  */
-public class TaskListHistoryLogList extends HistoryLogComponent {
+public class TaskGroupHistoryLogList extends HistoryLogComponent {
 	private static final long serialVersionUID = 1L;
 
-	public TaskListHistoryLogList(String module, String type) {
+	public TaskGroupHistoryLogList(String module, String type) {
 		super(module, type);
 
 		this.generateFieldDisplayHandler("name", "Name");
