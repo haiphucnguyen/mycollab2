@@ -33,7 +33,6 @@ import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewPermission;
 import com.esofthead.mycollab.vaadin.ui.AbstractPresenter;
-import com.esofthead.mycollab.web.DesktopApplication;
 import com.vaadin.ui.ComponentContainer;
 
 /**

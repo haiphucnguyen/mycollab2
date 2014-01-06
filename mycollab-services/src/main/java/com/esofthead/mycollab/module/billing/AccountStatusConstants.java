@@ -16,6 +16,12 @@
  */
 package com.esofthead.mycollab.module.billing;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class AccountStatusConstants {
 	public static final String PENDING = "Pending";
 	public static final String ACTIVE = "Active";

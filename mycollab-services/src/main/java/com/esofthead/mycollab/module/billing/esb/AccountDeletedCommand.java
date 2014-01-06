@@ -16,6 +16,12 @@
  */
 package com.esofthead.mycollab.module.billing.esb;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public interface AccountDeletedCommand {
 	void accountDeleted(int accountid);
 }

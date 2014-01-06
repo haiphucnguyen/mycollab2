@@ -178,8 +178,16 @@ public class ProjectMemberReadPresenter extends
 
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
+		boolean isCurrentUserAccess = false;
+
+		if (data.getParams() instanceof String) {
+			if (AppContext.getUsername().equals(data.getParams())) {
+				isCurrentUserAccess = true;
+			}
+		}
 		if (CurrentProjectVariables
-				.canRead(ProjectRolePermissionCollections.USERS)) {
+				.canRead(ProjectRolePermissionCollections.USERS)
+				|| isCurrentUserAccess) {
 			ProjectMemberService prjMemberService = ApplicationContextUtil
 					.getSpringBean(ProjectMemberService.class);
 			SimpleProjectMember prjMember = null;

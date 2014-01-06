@@ -16,6 +16,12 @@
  */
 package com.esofthead.mycollab.module.billing.esb;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class BillingEndpoints {
 	public static final String ACCOUNT_DELETED_ENDPOINT = "direct:AccountDelete";
 }

@@ -22,6 +22,12 @@ import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @Component
 public class BillingRootBuilder extends SpringRouteBuilder {
 
