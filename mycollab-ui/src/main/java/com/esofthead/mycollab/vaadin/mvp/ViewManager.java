@@ -43,6 +43,12 @@ public abstract class ViewManager {
 
 	}
 
+	protected abstract void clearViews();
+
+	public static void clearViewCaches() {
+		impl.clearViews();
+	}
+
 	public static <T extends CacheableComponent> T getView(
 			final Class<T> viewClass) {
 		return impl.getViewInstance(viewClass);

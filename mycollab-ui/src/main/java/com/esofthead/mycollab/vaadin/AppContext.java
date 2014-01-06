@@ -48,6 +48,8 @@ import com.esofthead.mycollab.module.user.service.BillingAccountService;
 import com.esofthead.mycollab.module.user.service.UserPreferenceService;
 import com.esofthead.mycollab.security.PermissionMap;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
+import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.vaadin.server.Page;
 import com.vaadin.server.VaadinSession;
 
@@ -65,6 +67,7 @@ import com.vaadin.server.VaadinSession;
 public class AppContext implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	
 	private static int UPDATE_TIME_DURATION = 300000;
 
 	private static Logger log = LoggerFactory.getLogger(AppContext.class);
@@ -440,6 +443,8 @@ public class AppContext implements Serializable {
 		if (getInstance() != null) {
 			getInstance().session = null;
 			getInstance().userPreference = null;
+			ViewManager.clearViewCaches();
+			PresenterResolver.clearCaches();
 		}
 	}
 

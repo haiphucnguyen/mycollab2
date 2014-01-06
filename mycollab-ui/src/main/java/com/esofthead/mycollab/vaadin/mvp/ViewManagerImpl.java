@@ -76,4 +76,10 @@ class ViewManagerImpl extends ViewManager {
 					+ viewClass.getName(), e);
 		}
 	}
+
+	@Override
+	protected void clearViews() {
+		AppContext.removeVariable(VIEW_MANAGER_VAL);
+
+	}
 }

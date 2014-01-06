@@ -70,7 +70,7 @@ public final class MainView extends AbstractPageView {
 	private static final long serialVersionUID = 1L;
 
 	private final CssLayout bodyLayout;
-	
+
 	private ServiceMenu serviceMenu;
 
 	public MainView() {

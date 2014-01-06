@@ -31,6 +31,12 @@ import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.vaadin.desktop.ui.ModuleHelper;
 import com.esofthead.mycollab.vaadin.desktop.ui.UrlResolver;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class CrmUrlResolver extends UrlResolver {
 	public UrlResolver build() {
 		this.addSubResolver("dashboard", new CrmDashboardUrlResolver());

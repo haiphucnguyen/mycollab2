@@ -29,11 +29,9 @@ import com.esofthead.mycollab.shell.view.MainView;
 import com.esofthead.mycollab.shell.view.MainViewPresenter;
 import com.esofthead.mycollab.shell.view.MainWindowContainer;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.mvp.ControllerRegistry;
 import com.esofthead.mycollab.vaadin.mvp.IController;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.web.DesktopApplication;
-import com.vaadin.server.VaadinSession;
 
 /**
  * 
@@ -86,11 +84,10 @@ public class ShellController implements IController {
 
 					@Override
 					public void handle(LogOut event) {
+						AppContext.addFragment("", "Login Page");
 						LoginPresenter presenter = PresenterResolver
 								.getPresenter(LoginPresenter.class);
 						LoginView loginView = presenter.initView();
-						DesktopApplication.getInstance()
-								.unsetRememberPassword();
 
 						container.setStyleName("loginView");
 
@@ -109,9 +106,6 @@ public class ShellController implements IController {
 								.unsetRememberPassword();
 
 						AppContext.clearSession();
-						VaadinSession.getCurrent().close();
-						ControllerRegistry.addController(new ShellController(
-								container));
 					}
 				});
 

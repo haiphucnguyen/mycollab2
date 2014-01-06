@@ -76,7 +76,7 @@ public class LoginViewImpl extends AbstractPageView implements LoginView {
 
 			custom.addComponent(passwordField, "passwordField");
 
-			rememberMe = new CheckBox("Remember me for a week", true);
+			rememberMe = new CheckBox("Remember me for a week", false);
 			custom.addComponent(rememberMe, "rememberMe");
 
 			Button loginBtn = new Button("Sign In", new Button.ClickListener() {

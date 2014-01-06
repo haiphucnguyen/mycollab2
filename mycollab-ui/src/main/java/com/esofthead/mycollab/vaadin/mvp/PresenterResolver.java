@@ -52,6 +52,10 @@ public class PresenterResolver {
 
 	}
 
+	public static void clearCaches() {
+		AppContext.removeVariable(PRESENTER_VAL);
+	}
+
 	@SuppressWarnings("unchecked")
 	public static <P extends IPresenter> P getPresenter(Class<P> presenterClass) {
 		Map<Class<?>, Object> presenterMap = (Map<Class<?>, Object>) AppContext
