@@ -28,6 +28,12 @@ import com.esofthead.mycollab.module.tracker.domain.SimpleRelatedBug;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugRelatedSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.RelatedBugService;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @Service
 public class RelatedBugServiceImpl extends
 		DefaultService<Integer, SimpleRelatedBug, BugRelatedSearchCriteria>

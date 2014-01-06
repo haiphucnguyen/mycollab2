@@ -25,6 +25,12 @@ import com.esofthead.mycollab.module.project.dao.PermissionMapper;
 import com.esofthead.mycollab.module.project.domain.Permission;
 import com.esofthead.mycollab.module.project.service.PermissionService;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @Service
 public class PermissionServiceImpl extends
 		DefaultCrudService<Integer, Permission> implements PermissionService {

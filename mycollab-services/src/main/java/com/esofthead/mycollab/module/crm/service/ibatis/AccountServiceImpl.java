@@ -43,6 +43,12 @@ import com.esofthead.mycollab.module.crm.service.AccountService;
 import com.esofthead.mycollab.module.crm.service.LeadService;
 import com.esofthead.mycollab.schedule.email.crm.AccountRelayEmailNotificationAction;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @Service
 @Transactional
 @Traceable(module = ModuleNameConstants.CRM, type = CrmTypeConstants.ACCOUNT, nameField = "accountname")

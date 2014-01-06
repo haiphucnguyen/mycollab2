@@ -38,6 +38,12 @@ import com.esofthead.mycollab.module.project.domain.criteria.ProblemSearchCriter
 import com.esofthead.mycollab.module.project.service.ProblemService;
 import com.esofthead.mycollab.schedule.email.project.ProjectProblemRelayEmailNotificationAction;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @Service
 @Transactional
 @Traceable(module = ModuleNameConstants.PRJ, nameField = "issuename", type = ProjectContants.PROBLEM, extraFieldName = "projectid")

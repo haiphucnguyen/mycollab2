@@ -36,9 +36,11 @@ import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.crm.CrmLinkGenerator;
+import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.crm.localization.CrmLocalizationTypeMap;
 import com.esofthead.mycollab.module.user.UserLinkUtils;
+import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanPagedList;
@@ -125,6 +127,54 @@ public class ActivityStreamPanel extends Depot {
 
 			try {
 				for (final SimpleActivityStream activityStream : currentListData) {
+
+					if (CrmTypeConstants.ACCOUNT.equals(activityStream
+							.getType())
+							&& !AppContext
+									.canRead(RolePermissionCollections.CRM_ACCOUNT)) {
+						continue;
+					} else if (CrmTypeConstants.CONTACT.equals(activityStream
+							.getType())
+							&& !AppContext
+									.canRead(RolePermissionCollections.CRM_CONTACT)) {
+						continue;
+					} else if (CrmTypeConstants.CAMPAIGN.equals(activityStream
+							.getType())
+							&& !AppContext
+									.canRead(RolePermissionCollections.CRM_CAMPAIGN)) {
+						continue;
+					} else if (CrmTypeConstants.LEAD.equals(activityStream
+							.getType())
+							&& !AppContext
+									.canRead(RolePermissionCollections.CRM_LEAD)) {
+						continue;
+					} else if (CrmTypeConstants.OPPORTUNITY
+							.equals(activityStream.getType())
+							&& !AppContext
+									.canRead(RolePermissionCollections.CRM_OPPORTUNITY)) {
+						continue;
+					} else if (CrmTypeConstants.CASE.equals(activityStream
+							.getType())
+							&& !AppContext
+									.canRead(RolePermissionCollections.CRM_CASE)) {
+						continue;
+					} else if (CrmTypeConstants.TASK.equals(activityStream
+							.getType())
+							&& !AppContext
+									.canRead(RolePermissionCollections.CRM_TASK)) {
+						continue;
+					} else if (CrmTypeConstants.MEETING.equals(activityStream
+							.getType())
+							&& !AppContext
+									.canRead(RolePermissionCollections.CRM_MEETING)) {
+						continue;
+					} else if (CrmTypeConstants.CALL.equals(activityStream
+							.getType())
+							&& !AppContext
+									.canRead(RolePermissionCollections.CRM_CALL)) {
+						continue;
+					}
+
 					final Date itemCreatedDate = activityStream
 							.getCreatedtime();
 

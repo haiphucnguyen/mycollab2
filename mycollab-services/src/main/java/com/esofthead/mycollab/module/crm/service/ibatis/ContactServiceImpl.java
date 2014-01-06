@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.common.interceptor.aspect.Auditable;
 import com.esofthead.mycollab.common.interceptor.aspect.Traceable;
 import com.esofthead.mycollab.common.interceptor.aspect.Watchable;
@@ -43,10 +44,16 @@ import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.ContactService;
 import com.esofthead.mycollab.schedule.email.crm.ContactRelayEmailNotificationAction;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @Service
 @Transactional
-@Traceable(module = "Crm", type = "Contact", nameField = "lastname")
-@Auditable(module = "Crm", type = "Contact")
+@Traceable(module = ModuleNameConstants.CRM, type = CrmTypeConstants.CONTACT, nameField = "lastname")
+@Auditable(module = ModuleNameConstants.CRM, type = CrmTypeConstants.CONTACT)
 @Watchable(type = CrmTypeConstants.CONTACT, userFieldName = "assignuser", emailHandlerBean = ContactRelayEmailNotificationAction.class)
 public class ContactServiceImpl extends
 		DefaultService<Integer, Contact, ContactSearchCriteria> implements

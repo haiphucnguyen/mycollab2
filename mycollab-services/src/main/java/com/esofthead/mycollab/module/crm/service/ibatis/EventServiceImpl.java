@@ -26,6 +26,12 @@ import com.esofthead.mycollab.module.crm.dao.EventMapperExt;
 import com.esofthead.mycollab.module.crm.domain.criteria.ActivitySearchCriteria;
 import com.esofthead.mycollab.module.crm.service.EventService;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @Service
 @Transactional
 public class EventServiceImpl extends DefaultSearchService<ActivitySearchCriteria>

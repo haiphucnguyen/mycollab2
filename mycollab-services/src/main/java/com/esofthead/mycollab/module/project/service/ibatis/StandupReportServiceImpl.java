@@ -42,6 +42,12 @@ import com.esofthead.mycollab.module.project.domain.StandupReportWithBLOBs;
 import com.esofthead.mycollab.module.project.domain.criteria.StandupReportSearchCriteria;
 import com.esofthead.mycollab.module.project.service.StandupReportService;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @Service
 @Transactional
 @Traceable(module = ModuleNameConstants.PRJ, nameField = "forday", type = ProjectContants.STANDUP, extraFieldName = "projectid")

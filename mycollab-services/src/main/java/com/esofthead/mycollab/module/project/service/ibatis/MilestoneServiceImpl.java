@@ -42,6 +42,7 @@ import com.esofthead.mycollab.schedule.email.project.ProjectMilestoneRelayEmailN
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 @Service
 @Transactional
@@ -53,10 +54,10 @@ public class MilestoneServiceImpl extends
 
 	@Autowired
 	protected MilestoneMapper milestoneMapper;
-	
+
 	@Autowired
 	protected MilestoneMapperExt milestoneMapperExt;
-	
+
 	@Autowired
 	private RelayEmailNotificationService relayEmailNotificationService;
 

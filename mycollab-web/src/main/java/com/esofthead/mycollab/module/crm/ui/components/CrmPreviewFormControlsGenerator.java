@@ -16,7 +16,7 @@
  */
 package com.esofthead.mycollab.module.crm.ui.components;
 
-import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -159,12 +159,9 @@ public class CrmPreviewFormControlsGenerator {
 		layout.setComponentAlignment(historyBtn, Alignment.MIDDLE_RIGHT);
 
 		if (permissionItem != null) {
-			final boolean canRead = CurrentProjectVariables
-					.canRead(permissionItem);
-			final boolean canWrite = CurrentProjectVariables
-					.canWrite(permissionItem);
-			final boolean canAccess = CurrentProjectVariables
-					.canAccess(permissionItem);
+			final boolean canRead = AppContext.canRead(permissionItem);
+			final boolean canWrite = AppContext.canWrite(permissionItem);
+			final boolean canAccess = AppContext.canAccess(permissionItem);
 
 			backBtn.setEnabled(canRead);
 			editBtn.setEnabled(canWrite);

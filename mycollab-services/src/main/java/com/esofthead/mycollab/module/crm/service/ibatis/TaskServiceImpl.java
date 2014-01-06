@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.esofthead.mycollab.cache.CacheUtils;
+import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.common.interceptor.aspect.Auditable;
 import com.esofthead.mycollab.common.interceptor.aspect.Traceable;
 import com.esofthead.mycollab.common.interceptor.aspect.Watchable;
@@ -39,10 +40,16 @@ import com.esofthead.mycollab.module.crm.service.EventService;
 import com.esofthead.mycollab.module.crm.service.TaskService;
 import com.esofthead.mycollab.schedule.email.crm.TaskRelayEmailNotificationAction;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @Service
 @Transactional
-@Traceable(module = "Crm", type = "Task", nameField = "subject")
-@Auditable(module = "Crm", type = "Task")
+@Traceable(module = ModuleNameConstants.CRM, type = CrmTypeConstants.TASK, nameField = "subject")
+@Auditable(module = ModuleNameConstants.CRM, type = CrmTypeConstants.TASK)
 @Watchable(type = CrmTypeConstants.TASK, userFieldName = "assignuser", emailHandlerBean = TaskRelayEmailNotificationAction.class)
 public class TaskServiceImpl extends
 		DefaultService<Integer, Task, TodoSearchCriteria> implements

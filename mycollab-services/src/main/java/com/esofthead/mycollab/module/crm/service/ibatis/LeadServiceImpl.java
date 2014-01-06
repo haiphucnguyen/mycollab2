@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.common.interceptor.aspect.Auditable;
 import com.esofthead.mycollab.common.interceptor.aspect.Traceable;
 import com.esofthead.mycollab.common.interceptor.aspect.Watchable;
@@ -37,8 +38,8 @@ import com.esofthead.mycollab.schedule.email.crm.LeadRelayEmailNotificationActio
 
 @Service
 @Transactional
-@Traceable(module = "Crm", type = "Lead", nameField = "lastname")
-@Auditable(module = "Crm", type = "Lead")
+@Traceable(module = ModuleNameConstants.CRM, type = CrmTypeConstants.LEAD, nameField = "lastname")
+@Auditable(module = ModuleNameConstants.CRM, type = CrmTypeConstants.LEAD)
 @Watchable(type = CrmTypeConstants.LEAD, userFieldName = "assignuser", emailHandlerBean = LeadRelayEmailNotificationAction.class)
 public class LeadServiceImpl extends
 		DefaultService<Integer, Lead, LeadSearchCriteria> implements

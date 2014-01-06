@@ -37,6 +37,12 @@ import com.esofthead.mycollab.module.project.domain.criteria.MessageSearchCriter
 import com.esofthead.mycollab.module.project.service.MessageService;
 import com.esofthead.mycollab.schedule.email.project.MessageRelayEmailNotificationAction;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @Service
 @Transactional
 @Traceable(module = ModuleNameConstants.PRJ, nameField = "title", type = ProjectContants.MESSAGE, extraFieldName = "projectid")
