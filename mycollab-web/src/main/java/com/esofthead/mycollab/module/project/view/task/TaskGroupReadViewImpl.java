@@ -20,13 +20,11 @@ package com.esofthead.mycollab.module.project.view.task;
 import org.vaadin.hene.popupbutton.PopupButton;
 
 import com.esofthead.mycollab.common.CommentType;
-import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
-import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
@@ -53,7 +51,6 @@ import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
-import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 /**
@@ -154,14 +151,6 @@ public class TaskGroupReadViewImpl extends AbstractPageView implements
 			});
 			super.setBean(newDataSource);
 
-		}
-
-		@Override
-		public void showHistory() {
-//			final TaskListHistoryLogWindow historyLog = new TaskListHistoryLogWindow(
-//					ModuleNameConstants.PRJ, ProjectContants.TASK_LIST,
-//					TaskGroupReadViewImpl.this.taskList.getId());
-//			UI.getCurrent().addWindow(historyLog);
 		}
 
 		class FormLayoutFactory extends TaskGroupFormLayoutFactory {

@@ -227,6 +227,11 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask>
 		quickActionStatusBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		taskPreviewForm.insertToControlBlock(quickActionStatusBtn);
 
+		if (!CurrentProjectVariables
+				.canWrite(ProjectRolePermissionCollections.TASKS)) {
+			quickActionStatusBtn.setEnabled(false);
+		}
+
 		return topPanel;
 	}
 

@@ -188,6 +188,11 @@ public class ComponentReadViewImpl extends
 
 		quickActionStatusBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		componentPreviewForm.insertToControlBlock(quickActionStatusBtn);
+
+		if (!CurrentProjectVariables
+				.canWrite(ProjectRolePermissionCollections.COMPONENTS)) {
+			quickActionStatusBtn.setEnabled(false);
+		}
 		return topPanel;
 	}
 

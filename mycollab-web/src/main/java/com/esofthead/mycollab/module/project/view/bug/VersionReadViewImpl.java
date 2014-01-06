@@ -179,6 +179,11 @@ public class VersionReadViewImpl extends AbstractPreviewItemComp<Version>
 		quickActionStatusBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		versionPreviewForm.insertToControlBlock(quickActionStatusBtn);
 
+		if (!CurrentProjectVariables
+				.canWrite(ProjectRolePermissionCollections.VERSIONS)) {
+			quickActionStatusBtn.setEnabled(false);
+		}
+
 		return topPanel;
 	}
 
