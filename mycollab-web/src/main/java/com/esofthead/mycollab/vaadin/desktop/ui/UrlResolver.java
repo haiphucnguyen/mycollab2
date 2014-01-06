@@ -31,7 +31,8 @@ import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 /**
  * 
  * @author MyCollab Ltd.
- *
+ * @since 1.0
+ * 
  */
 public abstract class UrlResolver {
 	private static Logger log = LoggerFactory.getLogger(UrlResolver.class);

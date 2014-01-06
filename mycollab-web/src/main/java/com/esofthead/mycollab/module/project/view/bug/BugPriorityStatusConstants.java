@@ -16,6 +16,12 @@
  */
 package com.esofthead.mycollab.module.project.view.bug;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class BugPriorityStatusConstants {
 
 	public static final String PRIORITY_BLOCKER_IMG = "icons/12/priority_urgent.png";

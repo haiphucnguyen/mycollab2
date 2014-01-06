@@ -436,9 +436,6 @@ public class AppContext implements Serializable {
 		return getInstance().session.getPermissionMaps();
 	}
 
-	/**
-	 * 
-	 */
 	public static void clearSession() {
 		if (getInstance() != null) {
 			getInstance().session = null;

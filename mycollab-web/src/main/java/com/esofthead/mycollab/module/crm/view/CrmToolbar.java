@@ -47,6 +47,12 @@ import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.GridLayout;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @ViewComponent
 public class CrmToolbar extends CssLayout implements PageView {
 	private static final long serialVersionUID = 1L;

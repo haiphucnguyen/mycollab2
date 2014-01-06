@@ -27,6 +27,12 @@ import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.ui.AbstractPresenter;
 import com.vaadin.ui.ComponentContainer;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class BugPresenter extends AbstractPresenter<BugContainer> {
 	private static final long serialVersionUID = 1L;
 

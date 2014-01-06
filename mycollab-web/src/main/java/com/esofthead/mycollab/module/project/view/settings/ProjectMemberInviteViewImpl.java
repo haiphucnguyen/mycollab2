@@ -22,8 +22,10 @@ import java.util.List;
 
 import org.vaadin.tokenfield.TokenField;
 
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.utils.EmailValidator;
+import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.events.ProjectMemberEvent;
@@ -39,11 +41,10 @@ import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.mvp.ViewState;
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
-import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
+import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.web.MyCollabResource;
-import com.vaadin.data.Property;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.combobox.FilteringMode;
@@ -51,9 +52,6 @@ import com.vaadin.ui.AbstractSelect.ItemCaptionMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Component;
-import com.vaadin.ui.CustomField;
-import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Layout;
 
@@ -73,6 +71,9 @@ public class ProjectMemberInviteViewImpl extends AbstractPageView implements
 	private List<String> inviteEmails;
 	private Integer roleId = 0;
 
+	private InviteUserTokenField inviteUserTokenField;
+	private ProjectRoleComboBox roleComboBox;
+
 	public ProjectMemberInviteViewImpl() {
 		super();
 		this.setMargin(new MarginInfo(true, false, false, false));
@@ -83,46 +84,103 @@ public class ProjectMemberInviteViewImpl extends AbstractPageView implements
 		inviteEmails = new ArrayList<String>();
 		roleId = 0;
 
-		this.removeAllComponents();
-
+		initContent();
 	}
 
-	private class UserInviteTokenCustomField extends CustomField {
-		private static final long serialVersionUID = 1L;
+	private void initContent() {
+		this.removeAllComponents();
 
-		@Override
-		public Class<String> getType() {
-			return String.class;
+		// init invite token field
+		inviteUserTokenField = new InviteUserTokenField();
+		inviteUserTokenField.setFilteringMode(FilteringMode.CONTAINS);
+
+		final ProjectMemberService prjMemberService = ApplicationContextUtil
+				.getSpringBean(ProjectMemberService.class);
+		final List<SimpleUser> users = prjMemberService.getUsersNotInProject(
+				CurrentProjectVariables.getProjectId(),
+				AppContext.getAccountId());
+
+		BeanItemContainer<SimpleUser> dsContainer = new BeanItemContainer<SimpleUser>(
+				SimpleUser.class, users);
+		inviteUserTokenField.setContainerDataSource(dsContainer);
+
+		inviteUserTokenField.setTokenCaptionMode(ItemCaptionMode.PROPERTY);
+		inviteUserTokenField.setTokenCaptionPropertyId("displayName");
+		for (SimpleUser user : users) {
+			inviteUserTokenField.setTokenIcon(
+					user,
+					UserAvatarControlFactory.createAvatarResource(
+							user.getAvatarid(), 16));
 		}
+		this.addComponent(inviteUserTokenField);
 
-		@Override
-		protected Component initContent() {
-			InviteUserTokenField inviteUserTokenField = new InviteUserTokenField();
-			inviteUserTokenField.setFilteringMode(FilteringMode.CONTAINS);
+		this.roleComboBox = new ProjectRoleComboBox();
 
-			final ProjectMemberService prjMemberService = ApplicationContextUtil
-					.getSpringBean(ProjectMemberService.class);
-			final List<SimpleUser> users = prjMemberService
-					.getUsersNotInProject(
-							CurrentProjectVariables.getProjectId(),
-							AppContext.getAccountId());
+		final AddViewLayout userAddLayout = new AddViewLayout("Invite Members",
+				MyCollabResource.newResource("icons/24/project/group.png"));
 
-			BeanItemContainer<SimpleUser> dsContainer = new BeanItemContainer<SimpleUser>(
-					SimpleUser.class, users);
-			inviteUserTokenField.setContainerDataSource(dsContainer);
+		userAddLayout.addTopControls(createButtonControls());
 
-			inviteUserTokenField.setTokenCaptionMode(ItemCaptionMode.PROPERTY);
-			inviteUserTokenField.setTokenCaptionPropertyId("displayName");
-			for (SimpleUser user : users) {
-				inviteUserTokenField.setTokenIcon(
-						user,
-						UserAvatarControlFactory.createAvatarResource(
-								user.getAvatarid(), 16));
+		GridFormLayoutHelper informationLayout = new GridFormLayoutHelper(1, 2,
+				"100%", "167px", Alignment.MIDDLE_LEFT);
+		informationLayout.getLayout().setWidth("100%");
+		informationLayout.getLayout().setMargin(false);
+		informationLayout.getLayout().addStyleName("colored-gridlayout");
+
+		informationLayout.addComponent(inviteUserTokenField,
+				"Invitee's emails", 0, 0);
+		informationLayout.addComponent(roleComboBox, "Role", 0, 1);
+
+		userAddLayout.addBody(informationLayout.getLayout());
+		this.addComponent(userAddLayout);
+	}
+
+	private Layout createButtonControls() {
+		final HorizontalLayout controlPanel = new HorizontalLayout();
+		controlPanel.setMargin(new MarginInfo(true, false, true, false));
+
+		final HorizontalLayout controlButtons = new HorizontalLayout();
+		controlButtons.setSpacing(true);
+
+		Button inviteBtn = new Button("Invite Members",
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void buttonClick(ClickEvent event) {
+						roleId = (Integer) roleComboBox.getValue();
+						ProjectMemberInviteViewImpl.this
+								.fireEvent(new ProjectMemberEvent.InviteProjectMembers(
+										ProjectMemberInviteViewImpl.this,
+										inviteEmails, roleId));
+
+					}
+				});
+		inviteBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		controlButtons.addComponent(inviteBtn);
+
+		Button cancelBtn = new Button("Cancel", new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				ViewState viewState = HistoryViewManager.back();
+				if (viewState instanceof NullViewState) {
+					EventBus.getInstance().fireEvent(
+							new ProjectMemberEvent.GotoList(this, null));
+				}
+
 			}
+		});
+		cancelBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		controlButtons.addComponent(cancelBtn);
 
-			return inviteUserTokenField;
-		}
-
+		controlButtons.setSizeUndefined();
+		controlPanel.addComponent(controlButtons);
+		controlPanel.setWidth("100%");
+		controlPanel.setComponentAlignment(controlButtons,
+				Alignment.MIDDLE_CENTER);
+		return controlPanel;
 	}
 
 	private class InviteUserTokenField extends TokenField {
@@ -141,15 +199,15 @@ public class ProjectMemberInviteViewImpl extends AbstractPageView implements
 						+ tokenId);
 			}
 
-			// if (emailValidate.validate(invitedEmail)) {
-			// if (!inviteEmails.contains(invitedEmail)) {
-			// inviteEmails.add(invitedEmail);
-			// super.addToken(tokenId);
-			// }
-			// } else {
-			// NotificationUtil.showErrorNotification(LocalizationHelper
-			// .getMessage(GenericI18Enum.WARNING_NOT_VALID_EMAIL));
-			// }
+			if (emailValidate.validate(invitedEmail)) {
+				if (!inviteEmails.contains(invitedEmail)) {
+					inviteEmails.add(invitedEmail);
+					super.addToken(tokenId);
+				}
+			} else {
+				NotificationUtil.showErrorNotification(LocalizationHelper
+						.getMessage(GenericI18Enum.WARNING_NOT_VALID_EMAIL));
+			}
 
 		}
 
@@ -166,123 +224,8 @@ public class ProjectMemberInviteViewImpl extends AbstractPageView implements
 						+ tokenId);
 			}
 
-			// inviteEmails.remove(invitedEmail);
+			inviteEmails.remove(invitedEmail);
 			super.onTokenDelete(tokenId);
-		}
-	}
-
-	private class FormLayoutFactory implements IFormLayoutFactory {
-
-		private static final long serialVersionUID = 1L;
-
-		private GridFormLayoutHelper informationLayout;
-
-		private Layout createButtonControls() {
-			final HorizontalLayout controlPanel = new HorizontalLayout();
-			controlPanel.setMargin(new MarginInfo(true, false, true, false));
-
-			final HorizontalLayout controlButtons = new HorizontalLayout();
-			controlButtons.setSpacing(true);
-
-			Button inviteBtn = new Button("Invite Members",
-					new Button.ClickListener() {
-						private static final long serialVersionUID = 1L;
-
-						@Override
-						public void buttonClick(ClickEvent event) {
-							ProjectMemberInviteViewImpl.this
-									.fireEvent(new ProjectMemberEvent.InviteProjectMembers(
-											ProjectMemberInviteViewImpl.this,
-											inviteEmails, roleId));
-
-						}
-					});
-			inviteBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-			controlButtons.addComponent(inviteBtn);
-
-			Button cancelBtn = new Button("Cancel", new Button.ClickListener() {
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public void buttonClick(ClickEvent event) {
-					ViewState viewState = HistoryViewManager.back();
-					if (viewState instanceof NullViewState) {
-						EventBus.getInstance().fireEvent(
-								new ProjectMemberEvent.GotoList(this, null));
-					}
-
-				}
-			});
-			cancelBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-			controlButtons.addComponent(cancelBtn);
-
-			controlButtons.setSizeUndefined();
-			controlPanel.addComponent(controlButtons);
-			controlPanel.setWidth("100%");
-			controlPanel.setComponentAlignment(controlButtons,
-					Alignment.MIDDLE_CENTER);
-			return controlPanel;
-		}
-
-		@Override
-		public Layout getLayout() {
-			final AddViewLayout userAddLayout = new AddViewLayout(
-					"Invite Members",
-					MyCollabResource.newResource("icons/24/project/group.png"));
-
-			userAddLayout.addTopControls(createButtonControls());
-
-			this.informationLayout = new GridFormLayoutHelper(1, 2, "100%",
-					"167px", Alignment.MIDDLE_LEFT);
-			this.informationLayout.getLayout().setWidth("100%");
-			this.informationLayout.getLayout().setMargin(false);
-			this.informationLayout.getLayout().addStyleName(
-					"colored-gridlayout");
-
-			userAddLayout.addBody(this.informationLayout.getLayout());
-			return userAddLayout;
-		}
-
-		@Override
-		public boolean attachField(Object propertyId, Field<?> field) {
-			if (propertyId.equals("inviteEmails")) {
-				this.informationLayout.addComponent(field, "User emails", 0, 0);
-			} else if (propertyId.equals("roleId")) {
-				this.informationLayout.addComponent(field, "Role", 0, 1);
-			} else {
-				return false;
-			}
-
-			return true;
-
-		}
-	}
-
-	private class ProjectRoleSelectionField extends CustomField<Integer> {
-		private static final long serialVersionUID = 1L;
-		private ProjectRoleComboBox roleComboBox;
-
-		@Override
-		public Class<Integer> getType() {
-			return Integer.class;
-		}
-
-		@Override
-		protected Component initContent() {
-			this.roleComboBox = new ProjectRoleComboBox();
-			this.roleComboBox
-					.addValueChangeListener(new Property.ValueChangeListener() {
-						private static final long serialVersionUID = 1L;
-
-						@Override
-						public void valueChange(
-								final Property.ValueChangeEvent event) {
-							getValue();
-
-						}
-					});
-
-			return roleComboBox;
 		}
 	}
 }

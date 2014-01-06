@@ -30,6 +30,12 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.CustomLayout;
 import com.vaadin.ui.VerticalLayout;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @ViewComponent
 public class CrmModule extends AbstractPageView implements IModule {
 

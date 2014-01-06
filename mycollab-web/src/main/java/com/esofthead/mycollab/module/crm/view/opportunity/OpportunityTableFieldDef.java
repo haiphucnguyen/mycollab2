@@ -31,7 +31,8 @@ public interface OpportunityTableFieldDef {
 	public static TableViewField selected = new TableViewField("", "selected",
 			UIConstants.TABLE_CONTROL_WIDTH);
 
-	public static TableViewField action = new TableViewField("", "id");
+	public static TableViewField action = new TableViewField("", "id",
+			UIConstants.TABLE_ACTION_CONTROL_WIDTH);
 
 	public static TableViewField opportunityName = new TableViewField(
 			LocalizationHelper.getMessage(OpportunityI18nEnum.FORM_NAME),

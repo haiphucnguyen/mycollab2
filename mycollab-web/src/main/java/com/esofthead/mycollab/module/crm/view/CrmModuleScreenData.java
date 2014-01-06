@@ -18,6 +18,12 @@ package com.esofthead.mycollab.module.crm.view;
 
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class CrmModuleScreenData {
 	public static class GotoModule extends ScreenData<String[]> {
 		public GotoModule(String... params) {

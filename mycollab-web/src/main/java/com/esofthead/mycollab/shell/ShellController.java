@@ -33,6 +33,7 @@ import com.esofthead.mycollab.vaadin.mvp.ControllerRegistry;
 import com.esofthead.mycollab.vaadin.mvp.IController;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.web.DesktopApplication;
+import com.vaadin.server.VaadinSession;
 
 /**
  * 
@@ -103,7 +104,12 @@ public class ShellController implements IController {
 							presenter.go(container, null);
 						}
 
+						// clear cookie remember username/password if any
+						DesktopApplication.getInstance()
+								.unsetRememberPassword();
+
 						AppContext.clearSession();
+						VaadinSession.getCurrent().close();
 						ControllerRegistry.addController(new ShellController(
 								container));
 					}

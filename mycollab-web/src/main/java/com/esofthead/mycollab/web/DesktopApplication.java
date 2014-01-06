@@ -174,6 +174,7 @@ public class DesktopApplication extends UI {
 
 		if (cookie != null) {
 			cookie.setValue("");
+			cookie.setMaxAge(0);
 			VaadinService.getCurrentResponse().addCookie(cookie);
 		}
 	}

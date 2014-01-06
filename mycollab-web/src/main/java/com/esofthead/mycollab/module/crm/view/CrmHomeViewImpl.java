@@ -31,6 +31,12 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.VerticalLayout;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @SuppressWarnings("serial")
 @ViewComponent
 public class CrmHomeViewImpl extends AbstractPageView implements CrmHomeView {
@@ -106,13 +112,32 @@ public class CrmHomeViewImpl extends AbstractPageView implements CrmHomeView {
 
 	@Override
 	public void displayDashboard() {
-		accountDashlet.display();
-		meetingDashlet.display();
-		callDashlet.display();
-		leadDashlet.display();
-		opportunityChartDashlet.display();
+		if (accountDashlet != null) {
+			accountDashlet.display();
+		}
+		
+		if (meetingDashlet != null) {
+			meetingDashlet.display();
+		}
+		
+		if (callDashlet != null) {
+			callDashlet.display();
+		}
+		
+		if (leadDashlet != null) {
+			leadDashlet.display();
+		}
+		
+		if (opportunityChartDashlet != null) {
+			opportunityChartDashlet.display();
+		}
 
-		activityStreamPanel.display();
-		salesDashboard.displayReport();
+		if (activityStreamPanel != null) {
+			activityStreamPanel.display();
+		}
+		
+		if (salesDashboard != null) {
+			salesDashboard.displayReport();
+		}
 	}
 }
