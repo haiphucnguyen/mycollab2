@@ -4213,12 +4213,34 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 }*/
 
 .task-list-footer {
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-	box-sizing: border-box;
 	border-width: 0px 1px 1px 1px;
 	border-style: solid;
 	border-color: rgb(169, 169, 169);
+}
+.task-list-footer.v-margin-top {
+	padding-top: 5px;
+}
+.task-list-footer.v-margin-right {
+	padding-right: 5px;
+}
+.task-list-footer.v-margin-bottom {
+	padding-bottom: 5px;
+}
+.task-list-footer.v-margin-left {
+	padding-left: 5px;
+}
+
+.popup-footer.v-margin-top {
+	padding-top: 5px;
+}
+.popup-footer.v-margin-right {
+	padding-right: 5px;
+}
+.popup-footer.v-margin-bottom {
+	padding-bottom: 5px;
+}
+.popup-footer.v-margin-left {
+	padding-left: 15px;
 }
 
 /* .colored-gridlayout .v-csslayout
@@ -4344,9 +4366,19 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
     border-width: 1px 0px 0px;
 }
 
+.v-tabsheet-content .depotComp.task-list .task-list-footer {
+    border-width: 0px 1px 1px;
+}
+
 .v-tabsheet-content .task-list .v-table-header-wrap, .v-tabsheet-content .task-list .v-table-body-wrapper {
     border-width: 1px 0px 0px;
 }
+.v-tabsheet-content .depotComp.task-list .v-table-header-wrap {
+    border-width: 1px 1px 0px;
+}
+.v-tabsheet-content .depotComp.task-list .v-table-body-wrapper {
+ 	border-width: 1px;
+ }
 .v-tabsheet-content .task-list .v-csslayout-comp-header {
     padding: 5px;
 }
@@ -5599,6 +5631,10 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 
 .tab-style3 > .v-tabsheet-content > .v-tabsheet-tabsheetpanel {
 	padding-top: 12px;
+}
+
+.v-ie .v-tabsheet-content > .v-tabsheet-tabsheetpanel > div > .v-verticallayout:after {
+	content: ""; display: inline-block;
 }
 
 /* History Log Component */
