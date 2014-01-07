@@ -1307,11 +1307,8 @@ input.v-textfield-errorField {
 	background: none;
 }
 
-.accountViewContainer .userInfoContainer .addViewBody .avatar-pass-wrapper
-	{
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-	box-sizing: border-box;
+.accountViewContainer .userInfoContainer .readViewBody .avatar-pass-wrapper
+{
 	border-bottom: 1px solid rgb(169, 169, 169);
 }
 
@@ -1319,7 +1316,7 @@ input.v-textfield-errorField {
 	color: white;
 }
 
-.accountViewContainer .userInfoContainer .addViewBody .info-block-header
+.accountViewContainer .userInfoContainer .readViewBody .info-block-header
 	{
 	border-color: rgb(169, 169, 169);
 	border-width: 0px 0px 1px 0px;
@@ -1327,13 +1324,13 @@ input.v-textfield-errorField {
 	padding: 8px 0px 8px 18px;
 }
 
-.accountViewContainer .userInfoContainer .addViewBody .info-block-header .h2
+.accountViewContainer .userInfoContainer .readViewBody .info-block-header .h2
 	{
 	border: none;
 	padding: 0px;
 }
 
-.accountViewContainer .userInfoContainer .addViewBody .info-block-header .v-button {
+.accountViewContainer .userInfoContainer .readViewBody .info-block-header .v-button {
 	vertical-align: middle;
 }
 
@@ -1783,7 +1780,7 @@ input.v-textfield-errorField {
 		transparent;
 }
 
-.depotHeader .h2,.readview-layout-body .depotHeader .h2 {
+.depotHeader .h2, .readview-layout-body .depotHeader .h2, .readViewBottomControls .depotHeader .h2 {
 	border: 0px;
 	color: #444;
 	text-shadow: none;
@@ -3820,6 +3817,97 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 /* End Time Addon */
 
 /* New ReadViewLayout */
+
+.readViewLayout {
+	background-color: #F3F3F3;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#F3F3F3),
+		to(#DDDDDD));
+	background-image: -webkit-linear-gradient(top, #F3F3F3, #DDDDDD);
+	background-image: -moz-linear-gradient(top, #F3F3F3, #DDDDDD);
+	background-image: -ms-linear-gradient(top, #F3F3F3, #DDDDDD);
+	background-image: -o-linear-gradient(top, #F3F3F3, #DDDDDD);
+	background-image: linear-gradient(top, #F3F3F3, #DDDDDD);
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 0px;
+	border-bottom-left-radius: 0px;
+	border: 1px solid #8F8F8F;
+}
+
+.readViewLayout .readViewTopControls {
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	border-bottom: 1px solid rgb(169, 169, 169);
+}
+
+.readViewLayout .readViewTopControls .readNewControl {
+	border-bottom: none;
+}
+
+.readViewLayout .readNewControl.v-margin-top {
+	padding-top: 5px;
+}
+.readViewLayout .readNewControl.v-margin-right {
+	padding-right: 0px;
+}
+.readViewLayout .readNewControl.v-margin-bottom {
+	padding-bottom: 5px;
+}
+.readViewLayout .readNewControl.v-margin-left {
+	padding-left: 0px;
+}
+
+.readViewLayout .readViewTopControls .edit-btn .v-horizontallayout-margin,.readViewLayout .readViewTopControls .workflow-controls .v-horizontallayout-margin
+	{
+	padding: 0px;
+}
+
+.readViewHeader {
+	height: 25px;
+	padding: 3px 5px 3px 18px;
+	background: url('icons/grad-light-top2.png') repeat-x left top
+		rgb(227, 227, 227);
+	border-radius: 3px 3px 0px 0px;
+	border-bottom: 1px solid rgb(169, 169, 169);
+}
+
+.readViewHeader .readViewHeaderLeft {
+	float: left;
+}
+
+.readViewHeader .readViewHeaderRight {
+	float: right;
+	min-height: 24px;
+}
+
+.readViewHeaderIcon,.readViewHeaderTitle {
+	float: left;
+}
+
+.readViewLayout .readViewHeader .headerName {
+	font-size: 13px;
+	font-weight: bold;
+/* 	margin-top: 3px; */
+	line-height: 20px !important;
+	padding-top:2px;
+}
+
+.readViewLayout .v-label-h2 {
+	text-shadow: #F0F0F0 0 1px 0;
+	padding: 8px 0px 8px 18px;
+	font-size: 13px;
+	border-bottom: 1px solid #a9a9a9;
+	color: rgb(69, 69, 69);
+}
+.readViewLayout .v-label-h2.no-border {
+	border: none;
+}
+
+.readViewBottomControls .v-verticallayout {
+	display: block;
+}
+
 .projectTabContent .usergroup-view .readview-layout {
 	margin: 0px;
 }
@@ -4011,7 +4099,14 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
     padding-bottom: 8px;
 }
 
-/* New AddViewLayout */
+.readViewLayout .colored-gridlayout .gridform-field.v-margin-top {
+    padding-top: 8px;
+}
+.readViewLayout .colored-gridlayout .gridform-field.v-margin-bottom {
+    padding-bottom: 8px;
+}
+
+/* AddViewLayout2 */
 .addview-layout {
 	/* margin-top: 10px; */
 	border: 1px solid #a9a9a9;
@@ -4396,14 +4491,26 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 }
 
 /* Related Bugs Component */
-.relatedbug-comp-header {
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-	box-sizing: border-box;
-	border-bottom: 1px solid rgb(169, 169, 169);
+.relatedbug-comp-header.v-margin-top {
+	padding-top: 5px;
+}
+.relatedbug-comp-header.v-margin-right {
+	padding-right: 5px;
+}
+.relatedbug-comp-header.v-margin-bottom {
+	padding-bottom: 5px;
+}
+.relatedbug-comp-header.v-margin-left {
+	padding-left: 5px;
 }
 
 .addViewLayout .addViewBottomControls .relatedbug-comp .depotComp .depotHeader
+	{
+	border-width: 1px;
+	border-radius: 0px;
+}
+
+.readViewLayout .readViewBottomControls .relatedbug-comp .depotComp .depotHeader
 	{
 	border-width: 1px;
 	border-radius: 0px;

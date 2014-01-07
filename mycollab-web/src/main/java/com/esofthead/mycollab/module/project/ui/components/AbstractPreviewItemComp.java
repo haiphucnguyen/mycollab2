@@ -1,9 +1,9 @@
 package com.esofthead.mycollab.module.project.ui.components;
 
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
-import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
+import com.esofthead.mycollab.vaadin.ui.ReadViewLayout;
 import com.vaadin.server.Resource;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.VerticalLayout;
@@ -16,74 +16,74 @@ import com.vaadin.ui.VerticalLayout;
  * @param <B>
  */
 public abstract class AbstractPreviewItemComp<B> extends VerticalLayout {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	protected B beanItem;
-	protected AdvancedPreviewBeanForm<B> previewForm;
-	protected AddViewLayout previewLayout;
+    protected B beanItem;
+    protected AdvancedPreviewBeanForm<B> previewForm;
+    protected ReadViewLayout previewLayout;
 
-	abstract protected void initRelatedComponents();
+    abstract protected void initRelatedComponents();
 
-	public AbstractPreviewItemComp(Resource iconResource) {
-		previewLayout = new AddViewLayout("", iconResource);
+    public AbstractPreviewItemComp(Resource iconResource) {
+        previewLayout = new ReadViewLayout("", iconResource);
 
-		this.addComponent(previewLayout);
+        this.addComponent(previewLayout);
 
-		initRelatedComponents();
+        initRelatedComponents();
 
-		previewForm = initPreviewForm();
-		ComponentContainer actionControls = createButtonControls();
-		if (actionControls != null) {
-			actionControls.addStyleName("control-buttons");
-			previewLayout.addTopControls(actionControls);
-		}
+        previewForm = initPreviewForm();
+        ComponentContainer actionControls = createButtonControls();
+        if (actionControls != null) {
+            actionControls.addStyleName("control-buttons");
+            previewLayout.addTopControls(actionControls);
+        }
 
-		previewLayout.addBody(previewForm);
+        previewLayout.addBody(previewForm);
 
-		ComponentContainer bottomPanel = createBottomPanel();
-		if (bottomPanel != null) {
-			previewLayout.addBottomControls(bottomPanel);
-		}
-	}
+        ComponentContainer bottomPanel = createBottomPanel();
+        if (bottomPanel != null) {
+            previewLayout.addBottomControls(bottomPanel);
+        }
+    }
 
-	public void previewItem(final B item) {
-		this.beanItem = item;
-		previewLayout.setTitle(initFormTitle());
+    public void previewItem(final B item) {
+        this.beanItem = item;
+        previewLayout.setTitle(initFormTitle());
 
-		previewForm.setFormLayoutFactory(initFormLayoutFactory());
-		previewForm.setBeanFormFieldFactory(initBeanFormFieldFactory());
-		previewForm.setBean(item);
+        previewForm.setFormLayoutFactory(initFormLayoutFactory());
+        previewForm.setBeanFormFieldFactory(initBeanFormFieldFactory());
+        previewForm.setBean(item);
 
-		onPreviewItem();
-	}
+        onPreviewItem();
+    }
 
-	public B getBeanItem() {
-		return beanItem;
-	}
+    public B getBeanItem() {
+        return beanItem;
+    }
 
-	public AdvancedPreviewBeanForm<B> getPreviewForm() {
-		return previewForm;
-	}
+    public AdvancedPreviewBeanForm<B> getPreviewForm() {
+        return previewForm;
+    }
 
-	protected void addLayoutStyleName(String styleName) {
-		previewLayout.addTitleStyleName(styleName);
-	}
+    protected void addLayoutStyleName(String styleName) {
+        previewLayout.addTitleStyleName(styleName);
+    }
 
-	protected void removeLayoutStyleName(String styleName) {
-		previewLayout.removeTitleStyleName(styleName);
-	}
+    protected void removeLayoutStyleName(String styleName) {
+        previewLayout.removeTitleStyleName(styleName);
+    }
 
-	abstract protected void onPreviewItem();
+    abstract protected void onPreviewItem();
 
-	abstract protected String initFormTitle();
+    abstract protected String initFormTitle();
 
-	abstract protected AdvancedPreviewBeanForm<B> initPreviewForm();
+    abstract protected AdvancedPreviewBeanForm<B> initPreviewForm();
 
-	abstract protected IFormLayoutFactory initFormLayoutFactory();
+    abstract protected IFormLayoutFactory initFormLayoutFactory();
 
-	abstract protected AbstractBeanFieldGroupViewFieldFactory<B> initBeanFormFieldFactory();
+    abstract protected AbstractBeanFieldGroupViewFieldFactory<B> initBeanFormFieldFactory();
 
-	abstract protected ComponentContainer createButtonControls();
+    abstract protected ComponentContainer createButtonControls();
 
-	abstract protected ComponentContainer createBottomPanel();
+    abstract protected ComponentContainer createBottomPanel();
 }
