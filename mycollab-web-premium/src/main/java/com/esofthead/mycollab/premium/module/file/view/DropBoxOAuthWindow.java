@@ -2,6 +2,7 @@ package com.esofthead.mycollab.premium.module.file.view;
 
 import java.util.Locale;
 
+import org.infinispan.api.BasicCache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,6 +11,7 @@ import com.dropbox.core.DbxRequestConfig;
 import com.dropbox.core.DbxSessionStore;
 import com.dropbox.core.DbxStandardSessionStore;
 import com.dropbox.core.DbxWebAuth;
+import com.esofthead.mycollab.cache.LocalCacheManager;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.module.ecm.StorageNames;
 import com.vaadin.server.VaadinService;
@@ -50,10 +52,15 @@ public abstract class DropBoxOAuthWindow extends
 		String sessionKey = "dropbox-auth-csrf-token";
 		DbxSessionStore csrfTokenStore = new DbxStandardSessionStore(
 				wrappedSession.getHttpSession(), sessionKey);
+		String appId = wrappedSession.getId();
 
 		DbxWebAuth webAuth = new DbxWebAuth(requestConfig, appInfo,
 				redirectUri, csrfTokenStore);
-		String authUrl = webAuth.start(null);
+		String authUrl = webAuth.start(appId);
+
+		BasicCache<String, Object> cache = LocalCacheManager.getCache(appId);
+		cache.put(sessionKey, csrfTokenStore.get());
+
 		return authUrl;
 	}
 

@@ -45,7 +45,6 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.HasComponents;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 

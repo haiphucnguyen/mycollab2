@@ -53,15 +53,6 @@ public abstract class EventBus implements Serializable {
 
 	/**
 	 * 
-	 * @param appId
-	 * @return
-	 */
-	public static EventBus getInstanceSession(String appId) {
-		return eventbusFactory.getInstanceSession(appId);
-	}
-
-	/**
-	 * 
 	 * @param listener
 	 */
 	abstract public void addListener(ApplicationEventListener<?> listener);

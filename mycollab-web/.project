@@ -5,18 +5,17 @@
   <projects>
     <project>mycollab-core</project>
     <project>mycollab-ui</project>
-    <project>mycollab-config</project>
-    <project>mycollab-caching</project>
     <project>mycollab-dao</project>
-    <project>mycollab-reporting</project>
     <project>mycollab-services</project>
     <project>mycollab-migration</project>
+    <project>mycollab-config</project>
+    <project>mycollab-caching</project>
     <project>mycollab-jackrabbit</project>
+    <project>mycollab-reporting</project>
     <project>mycollab-esb</project>
     <project>mycollab-scheduler</project>
     <project>mycollab-test</project>
     <project>mycollab-server-runner</project>
-    <project>mycollab-mobile</project>
   </projects>
   <buildSpec>
     <buildCommand>

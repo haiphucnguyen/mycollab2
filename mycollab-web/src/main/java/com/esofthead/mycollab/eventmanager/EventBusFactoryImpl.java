@@ -16,17 +16,15 @@
  */
 package com.esofthead.mycollab.eventmanager;
 
-import org.infinispan.api.BasicCache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.esofthead.mycollab.cache.LocalCacheManager;
 import com.esofthead.mycollab.vaadin.AppContext;
 
 /**
  * 
  * @author MyCollab Ltd.
- * @since 2.0
+ * @since 1.0
  * 
  */
 class EventBusFactoryImpl implements EventBusFactory {
@@ -43,12 +41,6 @@ class EventBusFactoryImpl implements EventBusFactory {
 			AppContext.putVariable(EVENT_BUS_VAL, eventBus);
 			log.debug("Create new event bus {}", eventBus);
 		}
-		return eventBus;
-	}
-
-	public EventBus getInstanceSession(String appId) {
-		BasicCache<String, Object> cache = LocalCacheManager.getCache(appId);
-		EventBus eventBus = (EventBus) cache.get(EVENT_BUS_VAL);
 		return eventBus;
 	}
 }

@@ -29,6 +29,7 @@ import com.esofthead.mycollab.common.domain.criteria.ActivityStreamSearchCriteri
 import com.esofthead.mycollab.common.service.ActivityStreamService;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.ProjectResources;
 import com.esofthead.mycollab.module.project.domain.ProjectActivityStream;
 import com.esofthead.mycollab.module.project.localization.ProjectCommonI18nEnum;
@@ -133,23 +134,29 @@ public class ProjectActivityStreamPagedList
 				String arg10 = idUserStickyToolTipDiv;
 				String arg11 = idUserToopTipDiv;
 				String arg12 = idDivUserSeverData;
-				String arg13 = ProjectResources.getResourceLink(activityStream
+				String arg13 = activityStream.getType().toLowerCase();
+				if (arg13.equalsIgnoreCase(ProjectContants.TASK_LIST)) {
+					arg13 = "task group";
+				} else if (arg13.equalsIgnoreCase(ProjectContants.STANDUP)) {
+					arg13 = "standup report";
+				}
+				String arg14 = ProjectResources.getResourceLink(activityStream
 						.getType());
-				String arg14 = idtagA;
-				String arg15 = ProjectLinkBuilder.generateProjectItemLink(
+				String arg15 = idtagA;
+				String arg16 = ProjectLinkBuilder.generateProjectItemLink(
 						activityStream.getExtratypeid(),
 						activityStream.getType(), activityStream.getTypeid());
-				String arg16 = "'" + randomStrId + "'";
-				String arg17 = "'" + activityStream.getType() + "'";
-				String arg18 = "'" + activityStream.getTypeid() + "'";
-				String arg19 = "'" + AppContext.getSiteUrl() + "tooltip/'";
-				String arg20 = "'" + activityStream.getSaccountid() + "'";
-				String arg21 = "'" + AppContext.getSiteUrl() + "'";
-				String arg22 = AppContext.getSession().getTimezone();
-				String arg23 = activityStream.getNamefield();
-				String arg24 = idStickyToolTipDiv;
-				String arg25 = idToopTipDiv;
-				String arg26 = idDivSeverData;
+				String arg17 = "'" + randomStrId + "'";
+				String arg18 = "'" + activityStream.getType() + "'";
+				String arg19 = "'" + activityStream.getTypeid() + "'";
+				String arg20 = "'" + AppContext.getSiteUrl() + "tooltip/'";
+				String arg21 = "'" + activityStream.getSaccountid() + "'";
+				String arg22 = "'" + AppContext.getSiteUrl() + "'";
+				String arg23 = AppContext.getSession().getTimezone();
+				String arg24 = activityStream.getNamefield();
+				String arg25 = idStickyToolTipDiv;
+				String arg26 = idToopTipDiv;
+				String arg27 = idDivSeverData;
 				if (ActivityStreamConstants.ACTION_CREATE.equals(activityStream
 						.getAction())) {
 					content = LocalizationHelper
@@ -159,7 +166,7 @@ public class ProjectActivityStreamPagedList
 									arg7, arg8, arg9, arg10, arg11, arg12,
 									arg13, arg14, arg15, arg16, arg17, arg18,
 									arg19, arg20, arg21, arg22, arg23, arg24,
-									arg25, arg26);
+									arg25, arg26, arg27);
 				} else if (ActivityStreamConstants.ACTION_UPDATE
 						.equals(activityStream.getAction())) {
 					// tooltip id is = tooltip + dateTime + typeId
@@ -171,7 +178,7 @@ public class ProjectActivityStreamPagedList
 									arg7, arg8, arg9, arg10, arg11, arg12,
 									arg13, arg14, arg15, arg16, arg17, arg18,
 									arg19, arg20, arg21, arg22, arg23, arg24,
-									arg25, arg26);
+									arg25, arg26, arg27);
 					if (activityStream.getAssoAuditLog() != null) {
 						content += ProjectActivityStreamGenerator
 								.generatorDetailChangeOfActivity(activityStream);

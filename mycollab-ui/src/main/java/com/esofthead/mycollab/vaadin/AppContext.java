@@ -67,7 +67,7 @@ import com.vaadin.server.VaadinSession;
 public class AppContext implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private static int UPDATE_TIME_DURATION = 300000;
 
 	private static Logger log = LoggerFactory.getLogger(AppContext.class);
@@ -543,7 +543,9 @@ public class AppContext implements Serializable {
 	 * @param value
 	 */
 	public static void putVariable(String key, Object value) {
-		VaadinSession.getCurrent().setAttribute(key, value);
+		log.debug("Put variable {}, value {} to session {}", new Object[] {
+				key, value, VaadinSession.getCurrent().getSession().getId() });
+		VaadinSession.getCurrent().getSession().setAttribute(key, value);
 	}
 
 	/**
@@ -551,7 +553,7 @@ public class AppContext implements Serializable {
 	 * @param key
 	 */
 	public static void removeVariable(String key) {
-		VaadinSession.getCurrent().setAttribute(key, null);
+		VaadinSession.getCurrent().getSession().removeAttribute(key);
 	}
 
 	/**
@@ -560,7 +562,7 @@ public class AppContext implements Serializable {
 	 * @return
 	 */
 	public static Object getVariable(String key) {
-		return VaadinSession.getCurrent().getAttribute(key);
+		return VaadinSession.getCurrent().getSession().getAttribute(key);
 	}
 
 	/**

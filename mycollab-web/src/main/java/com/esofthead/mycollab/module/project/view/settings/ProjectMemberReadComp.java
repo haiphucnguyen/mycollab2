@@ -102,10 +102,15 @@ class ProjectMemberReadComp extends
 	protected ComponentContainer createBottomPanel() {
 		final TabsheetLazyLoadComp tabContainer = new TabsheetLazyLoadComp();
 		tabContainer.setWidth("100%");
-		tabContainer.addTab(this.userActivityComp, "Activities");
-		tabContainer.addTab(this.standupComp, "Stand Ups");
-		tabContainer.addTab(this.userTaskComp, "Task Assignments");
-		tabContainer.addTab(this.userBugComp, "Bug Assignments");
+		tabContainer.addTab(this.userActivityComp, "Activities",
+				MyCollabResource
+						.newResource("icons/16/project/gray/user_feed.png"));
+		tabContainer.addTab(this.standupComp, "Stand Ups", MyCollabResource
+				.newResource("icons/16/project/gray/standup.png"));
+		tabContainer.addTab(this.userTaskComp, "Task Assignments",
+				MyCollabResource.newResource("icons/16/project/gray/task.png"));
+		tabContainer.addTab(this.userBugComp, "Bug Assignments",
+				MyCollabResource.newResource("icons/16/project/gray/bug.png"));
 		return tabContainer;
 	}
 

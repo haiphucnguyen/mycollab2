@@ -4,8 +4,13 @@
     xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
     id="WebApp_ID" version="3.0">
     <display-name>mycollab-web</display-name>
+
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+    
+    <listener>
+        <listener-class>com.esofthead.mycollab.servlet.MyCollabHttpSessionListener</listener-class>
     </listener>
 
     <filter>
@@ -47,10 +52,6 @@
     <servlet>
         <servlet-name>MyCollabApplication</servlet-name>
         <servlet-class>com.esofthead.mycollab.vaadin.MyCollabServlet</servlet-class>
-        <!-- <init-param> <description>Vaadin UI</description> <param-name>UI</param-name> 
-            <param-value>com.esofthead.mycollab.web.DesktopApplication</param-value> 
-            </init-param> <init-param> <param-name>widgetset</param-name> <param-value>com.esofthead.mycollab.widgetset.MyCollabWidgetSet</param-value> 
-            </init-param> -->
     </servlet>
 
     <servlet-mapping>

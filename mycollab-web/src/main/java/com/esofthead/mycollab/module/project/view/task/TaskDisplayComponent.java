@@ -59,7 +59,7 @@ import com.vaadin.ui.VerticalLayout;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-public class TaskDisplayComponent extends CssLayout {
+class TaskDisplayComponent extends CssLayout {
 	private static final long serialVersionUID = 1L;
 
 	private TaskSearchCriteria criteria;
@@ -116,7 +116,9 @@ public class TaskDisplayComponent extends CssLayout {
 											TaskDisplayComponent.this.taskList
 													.getMilestoneid()));
 						}
-					});
+					},
+					MyCollabResource
+							.newResource("icons/16/project/milestone.png"));
 			this.layoutHelper.addComponent(milestoneLink, LocalizationHelper
 					.getMessage(TaskI18nEnum.FORM_PHASE_FIELD), 1, 1,
 					Alignment.TOP_RIGHT);
