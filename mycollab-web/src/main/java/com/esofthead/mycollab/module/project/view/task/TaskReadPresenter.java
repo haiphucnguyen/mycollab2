@@ -187,11 +187,17 @@ public class TaskReadPresenter extends AbstractPresenter<TaskReadView> {
 						.getSpringBean(ProjectTaskService.class);
 				final SimpleTask task = taskService.findById(
 						(Integer) data.getParams(), AppContext.getAccountId());
-				this.view.previewItem(task);
 
-				final ProjectBreadcrumb breadCrumb = ViewManager
-						.getView(ProjectBreadcrumb.class);
-				breadCrumb.gotoTaskRead(task);
+				if (task != null) {
+					this.view.previewItem(task);
+
+					final ProjectBreadcrumb breadCrumb = ViewManager
+							.getView(ProjectBreadcrumb.class);
+					breadCrumb.gotoTaskRead(task);
+				} else {
+					NotificationUtil.showRecordNotExistNotification();
+					return;
+				}
 			}
 		} else {
 			NotificationUtil.showMessagePermissionAlert();

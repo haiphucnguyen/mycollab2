@@ -53,6 +53,8 @@ public class ProjectRoleAddPresenter extends
 	protected void postInitView() {
 		view.getEditFormHandlers().addFormHandler(
 				new EditFormHandler<ProjectRole>() {
+					private static final long serialVersionUID = 1L;
+
 					@Override
 					public void onSave(final ProjectRole item) {
 						save(item);

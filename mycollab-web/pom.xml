@@ -92,13 +92,13 @@
             <version>${vaadinVersion}</version>
         </dependency>
 
+        <!-- VAADIN ADDONS -->
         <dependency>
-            <groupId>com.vaadin</groupId>
-            <artifactId>vaadin-push</artifactId>
-            <version>${vaadinVersion}</version>
+            <groupId>org.vaadin.addons</groupId>
+            <artifactId>icepush</artifactId>
+            <version>0.5.5</version>
         </dependency>
 
-        <!-- VAADIN ADDONS -->
         <dependency>
             <groupId>org.vaadin.addons</groupId>
             <artifactId>buttongroup</artifactId>

@@ -150,12 +150,7 @@
 	<classpathentry kind="var" path="M2_REPO/org/ow2/asm/asm/4.1/asm-4.1.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/ow2/asm/asm-commons/4.1/asm-commons-4.1.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/ow2/asm/asm-tree/4.1/asm-tree-4.1.jar"/>
-	<classpathentry kind="var" path="M2_REPO/com/vaadin/vaadin-push/7.1.9/vaadin-push-7.1.9.jar"/>
-	<classpathentry kind="var" path="M2_REPO/com/vaadin/external/atmosphere/atmosphere-runtime/1.0.18.vaadin1/atmosphere-runtime-1.0.18.vaadin1.jar"/>
-	<classpathentry kind="var" path="M2_REPO/com/vaadin/external/atmosphere/atmosphere-compat-jbossweb/1.0.18.vaadin1/atmosphere-compat-jbossweb-1.0.18.vaadin1.jar"/>
-	<classpathentry kind="var" path="M2_REPO/com/vaadin/external/slf4j/vaadin-slf4j-jdk14/1.6.1/vaadin-slf4j-jdk14-1.6.1.jar"/>
-	<classpathentry kind="var" path="M2_REPO/com/vaadin/external/atmosphere/atmosphere-compat-tomcat/1.0.18.vaadin1/atmosphere-compat-tomcat-1.0.18.vaadin1.jar"/>
-	<classpathentry kind="var" path="M2_REPO/com/vaadin/external/atmosphere/atmosphere-compat-tomcat7/1.0.18.vaadin1/atmosphere-compat-tomcat7-1.0.18.vaadin1.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/vaadin/addons/icepush/0.5.5/icepush-0.5.5.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/vaadin/addons/buttongroup/2.3/buttongroup-2.3.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/vaadin/addons/popupbutton/2.2.1/popupbutton-2.2.1.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/vaadin/addons/ratingstars/2.1/ratingstars-2.1.jar"/>
