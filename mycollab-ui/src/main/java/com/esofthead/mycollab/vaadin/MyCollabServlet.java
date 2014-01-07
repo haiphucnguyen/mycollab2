@@ -7,6 +7,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.icepush.servlet.MainServlet;
+import org.icepush.util.ExtensionRegistry;
 import org.vaadin.artur.icepush.ICEPush;
 import org.vaadin.artur.icepush.JavascriptProvider;
 
@@ -25,6 +27,7 @@ public class MyCollabServlet extends TouchKitServlet {
 	private static final long serialVersionUID = 1L;
 
 	private MyCollabUIProvider uiProvider = new MyCollabUIProvider();
+	private ExtensionRegistry a;
 
 	@Override
 	protected void servletInitialized() throws ServletException {

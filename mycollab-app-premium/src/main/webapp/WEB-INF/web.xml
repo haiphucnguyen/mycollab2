@@ -8,7 +8,7 @@
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
-    
+
     <listener>
         <listener-class>com.esofthead.mycollab.servlet.MyCollabHttpSessionListener</listener-class>
     </listener>
@@ -52,6 +52,7 @@
     <servlet>
         <servlet-name>MyCollabApplication</servlet-name>
         <servlet-class>com.esofthead.mycollab.vaadin.MyCollabServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
     </servlet>
 
     <servlet-mapping>
