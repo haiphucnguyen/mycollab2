@@ -7,12 +7,13 @@
     <project>mycollab-config</project>
     <project>mycollab-core</project>
     <project>mycollab-mobile</project>
-    <project>mycollab-services-premium</project>
     <project>mycollab-services</project>
     <project>mycollab-dao</project>
     <project>mycollab-migration</project>
     <project>mycollab-caching</project>
     <project>mycollab-jackrabbit</project>
+    <project>mycollab-ui</project>
+    <project>mycollab-services-premium</project>
     <project>mycollab-caching-premium</project>
     <project>mycollab-api</project>
     <project>mycollab-web-premium</project>

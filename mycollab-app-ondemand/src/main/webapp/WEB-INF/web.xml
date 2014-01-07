@@ -13,6 +13,14 @@
         <listener-class>org.jboss.resteasy.plugins.spring.SpringContextLoaderListener</listener-class>
     </listener>
 
+    <listener>
+        <listener-class>com.esofthead.mycollab.servlet.MyCollabHttpSessionListener</listener-class>
+    </listener>
+
+    <listener>
+        <listener-class>org.icepush.util.ExtensionRegistry</listener-class>
+    </listener>
+
     <filter>
         <filter-name>ExpiresFilter</filter-name>
         <filter-class>fr.xebia.servlet.filter.ExpiresFilter</filter-class>
