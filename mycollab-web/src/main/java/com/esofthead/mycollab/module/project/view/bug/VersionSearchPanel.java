@@ -116,7 +116,6 @@ public class VersionSearchPanel extends
 		@SuppressWarnings("unchecked")
 		public VersionBasicSearchLayout() {
 			super(VersionSearchPanel.this);
-			// TODO Auto-generated constructor stub
 		}
 
 		private static final long serialVersionUID = 1L;

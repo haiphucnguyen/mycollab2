@@ -146,9 +146,7 @@ public class ActivityEventProvider implements CalendarEventProvider {
 			Date eventEndDate) {
 		for (SimpleMeeting meeting : crmEvents) {
 			if (meeting.getIsrecurrence()) {
-				// TODO : xac dinh lai. khoan thoi gian cua recurring activity
-				// TODO: xac dinh lai cac events trong khoan thoi gian cua
-				// recurring activity
+				// TODO:Revise this implementation
 				if (meeting.getRecurrencetype() != null) {
 					if (meeting.getRecurrencetype().equals("DailyEvent")) {
 						DailyEvent dailyEvent = JsonDeSerializer.fromJson(

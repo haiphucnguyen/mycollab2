@@ -24,6 +24,12 @@ import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.TextField;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
 public class TextDetailFieldInfoPanel extends
 		DetailFieldInfoPanel<TextDynaField> {
 	private static final long serialVersionUID = 1L;

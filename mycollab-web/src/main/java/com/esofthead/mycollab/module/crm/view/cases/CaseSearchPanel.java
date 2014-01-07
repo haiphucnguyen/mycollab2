@@ -179,13 +179,12 @@ public class CaseSearchPanel extends
 
 		@Override
 		protected void loadSaveSearchToField(final CaseSearchCriteria value) {
-			// case thieu numberField
 			if (value.getSubject() != null) {
 				this.subjectField.setValue(value.getSubject().getValue());
 			}
 			if (value.getAccountName() != null) {
 				// TODO: check set value again
-				// this.accountField.setValue(value.getAccountName().getValue());
+//				 this.accountField.setValue(value.getAccountName().getValue());
 			}
 			if (value.getStatuses() != null) {
 				this.statusField.setValue(Arrays.asList((Object[]) value

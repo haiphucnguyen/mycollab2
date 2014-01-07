@@ -20,6 +20,13 @@ import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.module.project.esb.DeleteProjectComponentCommand;
 
+/**
+ * TODO: implement command
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @Component
 public class DeleteProjectComponentCommandImpl implements
 		DeleteProjectComponentCommand {
@@ -27,8 +34,6 @@ public class DeleteProjectComponentCommandImpl implements
 	@Override
 	public void componentRemoved(String username, int accountId, int projectId,
 			int bugId) {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

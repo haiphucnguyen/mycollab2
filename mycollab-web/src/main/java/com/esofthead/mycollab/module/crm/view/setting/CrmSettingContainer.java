@@ -109,7 +109,6 @@ public class CrmSettingContainer extends CssLayout implements PageView {
 	@Override
 	public void addViewListener(
 			ApplicationEventListener<? extends ApplicationEvent> listener) {
-		// TODO Auto-generated method stub
 
 	}
 

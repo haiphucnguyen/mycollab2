@@ -862,10 +862,4 @@ public class ActivityCalendarViewImpl extends AbstractPageView implements
 			}
 		}
 	}
-
-	@Override
-	public void displayCalendars() {
-		// TODO Auto-generated method stub
-
-	}
 }

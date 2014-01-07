@@ -16,6 +16,12 @@
  */
 package com.esofthead.mycollab.premium.module.crm.view.setting.customlayout.fieldinfo;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
 public class PhoneDetailFieldInfoPanel {
 
 }

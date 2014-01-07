@@ -18,7 +18,6 @@ public abstract class GoogleDriveOAuthWindow extends
 
 	@Override
 	protected String buildAuthUrl() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

@@ -101,7 +101,6 @@ public class RiskSearchPanel extends GenericSearchPanel<RiskSearchCriteria> {
 		@SuppressWarnings("unchecked")
 		public RiskBasicSearchLayout() {
 			super(RiskSearchPanel.this);
-			// TODO Auto-generated constructor stub
 		}
 
 		private static final long serialVersionUID = 1L;

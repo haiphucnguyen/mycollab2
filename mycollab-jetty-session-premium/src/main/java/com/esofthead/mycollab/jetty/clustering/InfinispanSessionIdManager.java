@@ -70,7 +70,6 @@ public class InfinispanSessionIdManager extends AbstractSessionIdManager {
 	@Override
 	public void renewSessionId(String oldClusterId, String oldNodeId,
 			HttpServletRequest request) {
-		// TODO Auto-generated method stub
 
 	}
 }

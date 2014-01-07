@@ -337,7 +337,6 @@ public class InfinispanSessionManager extends AbstractLifeCycle implements
 	@Override
 	public void renewSessionId(String oldClusterId, String oldNodeId,
 			String newClusterId, String newNodeId) {
-		// TODO Auto-generated method stub
 
 	}
 }

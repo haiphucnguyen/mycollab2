@@ -616,7 +616,7 @@ public class SimpleColumnComponentBuilderMap {
 
 	public static class RatingComponentBuilder implements
 			ColumnFieldComponentBuilder {
-		private static final long serialVersionUID = 1L;
+		
 		private String field;
 		private String classType;
 

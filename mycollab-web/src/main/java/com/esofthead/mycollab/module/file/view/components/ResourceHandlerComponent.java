@@ -110,35 +110,6 @@ public class ResourceHandlerComponent extends VerticalLayout {
 	private static final String illegalFileNamePattern = "[<>:&/\\|?*&]";
 	private boolean isNeedLoadExternalDirve = false;
 
-	public void setCurrentBaseFolder(Folder baseFolder) {
-		this.baseFolder = baseFolder;
-	}
-
-	public Folder getCurrentBaseFolder() {
-		return baseFolder;
-	}
-
-	/**
-	 * this method show Component when star loading
-	 * 
-	 * @param baseFolder
-	 */
-	public void displayComponent(Folder baseFolder, String rootPath,
-			String rootFolderName, boolean isNeedLoadExternalDrive) {
-		this.isNeedLoadExternalDirve = isNeedLoadExternalDrive;
-		if (isNeedLoadExternalDrive == false) {
-			externalResourceService = null;
-			externalDriveService = null;
-		}
-		this.baseFolder = baseFolder;
-		this.rootFolder = baseFolder;
-		this.rootPath = rootPath;
-		this.rootFolderName = rootFolderName;
-		this.fileBreadCrumb.setRootFolderPath(rootPath);
-		this.fileBreadCrumb.initBreadcrumb();
-		this.itemResourceContainerLayout.constructBody(this.baseFolder);
-	}
-
 	public ResourceHandlerComponent(final Folder baseFolder,
 			final String rootPath, Tree menuTree) {
 		this.menuTree = menuTree;
@@ -363,6 +334,35 @@ public class ResourceHandlerComponent extends VerticalLayout {
 		this.addComponent(mainBodyLayout);
 	}
 
+	public void setCurrentBaseFolder(Folder baseFolder) {
+		this.baseFolder = baseFolder;
+	}
+
+	public Folder getCurrentBaseFolder() {
+		return baseFolder;
+	}
+
+	/**
+	 * this method show Component when star loading
+	 * 
+	 * @param baseFolder
+	 */
+	public void displayComponent(Folder baseFolder, String rootPath,
+			String rootFolderName, boolean isNeedLoadExternalDrive) {
+		this.isNeedLoadExternalDirve = isNeedLoadExternalDrive;
+		if (isNeedLoadExternalDrive == false) {
+			externalResourceService = null;
+			externalDriveService = null;
+		}
+		this.baseFolder = baseFolder;
+		this.rootFolder = baseFolder;
+		this.rootPath = rootPath;
+		this.rootFolderName = rootFolderName;
+		this.fileBreadCrumb.setRootFolderPath(rootPath);
+		this.fileBreadCrumb.initBreadcrumb();
+		this.itemResourceContainerLayout.constructBody(this.baseFolder);
+	}
+
 	protected void deleteResourceAction() {
 		ConfirmDialogExt.show(UI.getCurrent(), LocalizationHelper.getMessage(
 				GenericI18Enum.DELETE_DIALOG_TITLE,
@@ -501,7 +501,6 @@ public class ResourceHandlerComponent extends VerticalLayout {
 					&& ResourceHandlerComponent.this.isNeedLoadExternalDirve) {
 				List<ExternalDrive> lst = externalDriveService
 						.getExternalDrivesOfUser(AppContext.getUsername());
-				boolean showMessage = false;
 				if (lst != null && lst.size() > 0) {
 					for (ExternalDrive drive : lst) {
 						if (drive.getStoragename().equals(StorageNames.DROPBOX)) {
@@ -513,8 +512,6 @@ public class ResourceHandlerComponent extends VerticalLayout {
 							} catch (Exception e) {
 								Log.error(e);
 							}
-						} else {
-							showMessage = true;
 						}
 					}
 				}
@@ -1038,7 +1035,7 @@ public class ResourceHandlerComponent extends VerticalLayout {
 			this.center();
 
 			VerticalLayout contentLayout = new VerticalLayout();
-            contentLayout.setMargin(true);
+			contentLayout.setMargin(true);
 			this.setContent(contentLayout);
 
 			final HorizontalLayout fileLayout = new HorizontalLayout();

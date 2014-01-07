@@ -51,9 +51,12 @@ import org.apache.batik.svggen.SVGGraphics2D;
 import org.apache.batik.svggen.SVGGraphics2DIOException;
 import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import com.esofthead.mycollab.core.MyCollabException;
 import com.vaadin.server.DownloadStream;
 import com.vaadin.server.Resource;
 import com.vaadin.server.Sizeable;
@@ -85,6 +88,8 @@ import com.vaadin.ui.Embedded;
  */
 @SuppressWarnings("serial")
 public class JFreeChartWrapper extends Embedded {
+	private static Logger log = LoggerFactory
+			.getLogger(JFreeChartWrapper.class);
 
 	public enum RenderingMode {
 		SVG, PNG, AUTO
@@ -324,15 +329,8 @@ public class JFreeChartWrapper extends Embedded {
 								outputStream.close();
 								bytestream = new ByteArrayInputStream(
 										baoutputStream.toByteArray());
-							} catch (UnsupportedEncodingException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							} catch (SVGGraphics2DIOException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							} catch (IOException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
+							} catch (Exception e) {
+								log.error("Error while generating chart", e);
 							}
 						} else {
 							// Draw png to bytestream
@@ -341,8 +339,7 @@ public class JFreeChartWrapper extends Embedded {
 										.createBufferedImage(widht, height));
 								bytestream = new ByteArrayInputStream(bytes);
 							} catch (IOException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
+								log.error("Error while generating chart", e);
 							}
 
 						}

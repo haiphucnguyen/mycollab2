@@ -21,6 +21,12 @@ import java.util.List;
 import com.esofthead.mycollab.form.view.builder.type.DynaSection;
 import com.vaadin.ui.ComboBox;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
 public class SectionSelectList extends ComboBox {
 	private static final long serialVersionUID = 1L;
 

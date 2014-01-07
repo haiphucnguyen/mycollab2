@@ -25,5 +25,4 @@ import com.esofthead.mycollab.vaadin.mvp.PageView;
  * 
  */
 public interface ActivityCalendarView extends PageView {
-	void displayCalendars();
 }

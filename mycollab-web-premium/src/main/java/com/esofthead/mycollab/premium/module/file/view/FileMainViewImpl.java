@@ -408,7 +408,6 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 
 		resourceHandlerLayout = new ResourceHandlerComponent(
 				FileMainViewImpl.this.baseFolder, rootPath, menuTree);
-		// resourceHandlerLayout.setSpacing(false);
 		mainBodyResourceLayout.addComponent(resourceHandlerLayout);
 
 		mainView.addComponent(mainBodyResourceLayout);

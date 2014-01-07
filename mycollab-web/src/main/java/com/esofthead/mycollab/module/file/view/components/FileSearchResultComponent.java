@@ -59,7 +59,7 @@ import com.vaadin.ui.Window;
  * 
  * @author MyCollab Ltd.
  * @since 1.0
- *
+ * 
  */
 public abstract class FileSearchResultComponent extends VerticalLayout {
 	private static final long serialVersionUID = 1L;
@@ -326,7 +326,7 @@ public abstract class FileSearchResultComponent extends VerticalLayout {
 
 								@Override
 								public void buttonClick(ClickEvent event) {
-									// TODO Auto-generated method stub
+									// TODO: implement click path link
 
 								}
 							});
