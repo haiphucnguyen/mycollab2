@@ -16,14 +16,12 @@
  */
 package com.esofthead.mycollab.vaadin.ui;
 
+import com.esofthead.mycollab.web.CustomLayoutExt;
 import com.vaadin.server.Resource;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Component;
-import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.Embedded;
+import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.TabSheet;
 
 /**
  * 
@@ -31,86 +29,77 @@ import com.vaadin.ui.TabSheet;
  * @since 2.0
  * 
  */
-public class ReadViewLayout extends CssLayout {
-	private static final long serialVersionUID = 1L;
+public class ReadViewLayout extends CustomLayoutExt {
+    private static final long serialVersionUID = 1L;
 
-	private final HorizontalLayout header;
-	private final Embedded iconEmbed;
-	private final Label titleLbl;
-	private TabsheetDecor viewTab;
+    private final Label titleLbl;
+    private final Image icon;
+    private final HorizontalLayout header;
 
-	public ReadViewLayout(final Resource icon) {
-		this.setSizeFull();
-		this.setStyleName("readview-layout");
+    public ReadViewLayout(final String title, final Resource icon) {
+        super("readView");
 
-		this.header = new HorizontalLayout();
-		this.header.setWidth("100%");
-		header.setSpacing(true);
-		this.header.setStyleName("readview-layout-header");
-		this.addComponent(this.header);
+        this.header = new HorizontalLayout();
+        this.header.setWidth("100%");
+        this.header.setSpacing(true);
+        this.header.setHeight("30px");
 
-		final HorizontalLayout headerLeft = new HorizontalLayout();
-		headerLeft.setSizeFull();
-		headerLeft.addStyleName("readview-header-left");
-		headerLeft.setSpacing(true);
-		this.iconEmbed = new Embedded();
-		headerLeft.addComponent(this.iconEmbed);
+        this.icon = new Image();
+        this.setTitleIcon(icon);
+        this.header.addComponent(this.icon);
+        this.titleLbl = new Label();
+        this.titleLbl.setStyleName("headerName");
+        this.titleLbl.setImmediate(true);
 
-		this.setTitleIcon(icon);
+        this.header.addComponent(this.titleLbl);
+        this.header.setExpandRatio(titleLbl, 1.0f);
 
-		headerLeft.setComponentAlignment(this.iconEmbed, Alignment.MIDDLE_LEFT);
+        if (title == null) {
+            if (icon != null) {
+                this.setTitle("Undefined");
+            }
+        } else {
+            this.setTitle(title);
+        }
 
-		this.titleLbl = new Label();
-		this.titleLbl.setStyleName("h2");
-		this.titleLbl.setWidth("100%");
-		headerLeft.addComponent(this.titleLbl);
-		headerLeft.setExpandRatio(this.titleLbl, 1.0f);
-		headerLeft.setComponentAlignment(this.titleLbl, Alignment.MIDDLE_LEFT);
-		this.header.addComponent(headerLeft);
-		this.header.setComponentAlignment(headerLeft, Alignment.TOP_LEFT);
-		this.header.setExpandRatio(headerLeft, 1.0f);
-	}
+        this.addComponent(this.header, "readViewHeader");
+    }
 
-	@Deprecated
-	public void addControlButtons(final Component controlsBtn) {
-		if (this.header != null) {
-			this.header.addComponent(controlsBtn);
-			this.header.setComponentAlignment(controlsBtn,
-					Alignment.MIDDLE_CENTER);
-		}
-	}
+    public void addBody(final ComponentContainer body) {
+        this.addComponent(body, "readViewBody");
+    }
 
-	@Deprecated
-	public void addTab(final Component content, final String caption) {
-		if (this.viewTab != null) {
-			this.viewTab.addTab(content, caption);
-		}
-	}
+    public void addBottomControls(final ComponentContainer bottomControls) {
+        this.addComponent(bottomControls, "readViewBottomControls");
+    }
 
-	@Deprecated
-	public void addSelectedTabChangeListener(
-			final TabSheet.SelectedTabChangeListener listener) {
-		if (this.viewTab != null) {
-			this.viewTab.addSelectedTabChangeListener(listener);
-		}
-	}
+    public void addHeaderRight(final ComponentContainer headerRight) {
+        this.header.addComponent(headerRight);
+    }
 
-	@Deprecated
-	public void selectTab(final String viewName) {
-		if (this.viewTab != null) {
-			viewTab.selectTab(viewName);
-		}
-	}
+    public void addTitleStyleName(final String styleName) {
+        this.titleLbl.addStyleName(styleName);
+    }
 
-	public void setTitle(final String title) {
-		if (this.titleLbl != null) {
-			this.titleLbl.setValue(title);
-		}
-	}
+    public void setTitleStyleName(final String styleName) {
+        this.titleLbl.setStyleName(styleName);
+    }
 
-	public void setTitleIcon(final Resource iconResource) {
-		if (this.iconEmbed != null && iconResource != null) {
-			this.iconEmbed.setSource(iconResource);
-		}
-	}
+    public void removeTitleStyleName(final String styleName) {
+        this.titleLbl.removeStyleName(styleName);
+    }
+
+    public void addTopControls(final ComponentContainer topControls) {
+        this.addComponent(topControls, "readViewTopControls");
+    }
+
+    public void setTitle(final String title) {
+        this.titleLbl.setValue(title);
+    }
+
+    public void setTitleIcon(final Resource resource) {
+        if (resource != null) {
+            this.icon.setSource(resource);
+        }
+    }
 }
