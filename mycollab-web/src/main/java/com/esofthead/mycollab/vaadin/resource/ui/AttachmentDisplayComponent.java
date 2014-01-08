@@ -27,7 +27,7 @@ import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
-import com.esofthead.mycollab.module.file.resource.StreamDownloadResourceFactory;
+import com.esofthead.mycollab.module.file.resource.StreamDownloadResourceUtil;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
@@ -96,7 +96,7 @@ public class AttachmentDisplayComponent extends VerticalLayout {
 
 				@Override
 				public void buttonClick(ClickEvent event) {
-					Resource previewResource = StreamDownloadResourceFactory
+					Resource previewResource = StreamDownloadResourceUtil
 							.getImagePreviewResource(attachment.getPath());
 					UI.getCurrent().addWindow(
 							new AttachmentPreviewWindow(previewResource));
@@ -152,7 +152,7 @@ public class AttachmentDisplayComponent extends VerticalLayout {
 
 		Button downloadBtn = new Button();
 		FileDownloader fileDownloader = new FileDownloader(
-				StreamDownloadResourceFactory.getStreamResource(attachment
+				StreamDownloadResourceUtil.getStreamResource(attachment
 						.getPath()));
 		fileDownloader.extend(downloadBtn);
 

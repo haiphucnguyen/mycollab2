@@ -20,6 +20,10 @@ public abstract class LazyStreamSource implements StreamResource.StreamSource {
 		return streamSource.getStream();
 	}
 
+	public String getFilename() {
+		return null;
+	}
+
 	abstract protected StreamSource buildStreamSource();
 
 }

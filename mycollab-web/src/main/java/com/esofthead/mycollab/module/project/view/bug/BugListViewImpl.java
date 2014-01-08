@@ -36,7 +36,7 @@ import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
-import com.esofthead.mycollab.vaadin.resource.OnDemandFileDownloader;
+import com.esofthead.mycollab.vaadin.resource.StreamWrapperFileDownloader;
 import com.esofthead.mycollab.vaadin.resource.StreamResourceFactory;
 import com.esofthead.mycollab.vaadin.resource.ui.SplitButton;
 import com.esofthead.mycollab.vaadin.resource.ui.UIConstants;
@@ -172,7 +172,7 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
 
 		Button exportPdfBtn = new Button("Pdf");
 
-		OnDemandFileDownloader fileDownloader = new OnDemandFileDownloader(
+		StreamWrapperFileDownloader fileDownloader = new StreamWrapperFileDownloader(
 				new StreamResourceFactory() {
 
 					@Override
@@ -207,7 +207,7 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
 		popupButtonsControl.addComponent(exportPdfBtn);
 
 		Button exportExcelBtn = new Button("Excel");
-		OnDemandFileDownloader excelDownloader = new OnDemandFileDownloader(
+		StreamWrapperFileDownloader excelDownloader = new StreamWrapperFileDownloader(
 				new StreamResourceFactory() {
 
 					@Override
@@ -242,7 +242,7 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
 
 		Button exportCsvBtn = new Button("CSV");
 
-		OnDemandFileDownloader csvFileDownloader = new OnDemandFileDownloader(
+		StreamWrapperFileDownloader csvFileDownloader = new StreamWrapperFileDownloader(
 				new StreamResourceFactory() {
 
 					@Override

@@ -29,7 +29,7 @@ import com.esofthead.mycollab.module.ecm.ResourceUtils;
 import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.module.ecm.domain.Resource;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
-import com.esofthead.mycollab.module.file.resource.StreamDownloadResourceFactory;
+import com.esofthead.mycollab.module.file.resource.StreamDownloadResourceUtil;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.resource.ui.ButtonLink;
@@ -41,6 +41,7 @@ import com.vaadin.data.Container;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.server.FileDownloader;
+import com.vaadin.server.StreamResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -182,7 +183,8 @@ public abstract class FileSearchResultComponent extends VerticalLayout {
 					final Button downloadBtn = new Button("Download");
 					List<Resource> lstRes = new ArrayList<Resource>();
 					lstRes.add(resource);
-					final com.vaadin.server.Resource downloadResource = StreamDownloadResourceFactory
+
+					final StreamResource downloadResource = StreamDownloadResourceUtil
 							.getStreamResourceSupportExtDrive(lstRes, false);
 					FileDownloader fileDownloader = new FileDownloader(
 							downloadResource);

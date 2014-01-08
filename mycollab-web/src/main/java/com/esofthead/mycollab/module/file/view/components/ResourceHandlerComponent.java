@@ -24,7 +24,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.jfree.util.Log;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.easyuploads.MultiFileUploadExt;
 import org.vaadin.hene.popupbutton.PopupButton;
@@ -46,12 +47,14 @@ import com.esofthead.mycollab.module.ecm.service.ExternalDriveService;
 import com.esofthead.mycollab.module.ecm.service.ExternalResourceService;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
 import com.esofthead.mycollab.module.file.domain.criteria.FileSearchCriteria;
-import com.esofthead.mycollab.module.file.resource.StreamDownloadResourceFactory;
+import com.esofthead.mycollab.module.file.resource.StreamDownloadResourceUtil;
 import com.esofthead.mycollab.module.file.view.components.FileDashboardComponent.AbstractMoveWindow;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
+import com.esofthead.mycollab.vaadin.resource.LazyStreamSource;
+import com.esofthead.mycollab.vaadin.resource.OnDemandFileDownloader;
 import com.esofthead.mycollab.vaadin.resource.ui.AttachmentPanel;
 import com.esofthead.mycollab.vaadin.resource.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.resource.ui.ConfirmDialogExt;
@@ -67,6 +70,7 @@ import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.event.LayoutEvents.LayoutClickEvent;
 import com.vaadin.event.LayoutEvents.LayoutClickListener;
+import com.vaadin.server.StreamResource.StreamSource;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -91,6 +95,9 @@ import com.vaadin.ui.Window;
  */
 public class ResourceHandlerComponent extends VerticalLayout {
 	private static final long serialVersionUID = 1L;
+
+	private static Logger log = LoggerFactory
+			.getLogger(ResourceHandlerComponent.class);
 
 	private HorizontalLayout controllGroupBtn;
 	private Button deleteBtn;
@@ -252,21 +259,26 @@ public class ResourceHandlerComponent extends VerticalLayout {
 
 		Button downloadBtn = new Button("Download");
 
-//		FileDownloader downloaderExt = new FileDownloader(
-//				new LazyStreamResource() {
-//					private static final long serialVersionUID = 1L;
-//
-//					@Override
-//					protected StreamResource makeStreamResource() {
-//						return StreamDownloadResourceFactory
-//								.getStreamResourceSupportExtDrive(
-//										selectedResourcesList,
-//										itemResourceContainerLayout.isSearchAction);
-//					}
-//
-//				});
+		LazyStreamSource streamSource = new LazyStreamSource() {
+			private static final long serialVersionUID = 1L;
 
-//		downloaderExt.extend(downloadBtn);
+			@Override
+			protected StreamSource buildStreamSource() {
+				return StreamDownloadResourceUtil
+						.getStreamSourceSupportExtDrive(selectedResourcesList,
+								itemResourceContainerLayout.isSearchAction);
+			}
+
+			@Override
+			public String getFilename() {
+				return StreamDownloadResourceUtil.getDownloadFileName(
+						selectedResourcesList,
+						itemResourceContainerLayout.isSearchAction);
+			}
+		};
+		OnDemandFileDownloader downloaderExt = new OnDemandFileDownloader(
+				streamSource);
+		downloaderExt.extend(downloadBtn);
 
 		downloadBtn.setIcon(MyCollabResource
 				.newResource("icons/16/ecm/download.png"));
@@ -509,7 +521,7 @@ public class ResourceHandlerComponent extends VerticalLayout {
 								res.setName(drive.getFoldername());
 								lstResource.add(0, res);
 							} catch (Exception e) {
-								Log.error(e);
+								log.error("Error while query resource", e);
 							}
 						}
 					}
@@ -782,7 +794,7 @@ public class ResourceHandlerComponent extends VerticalLayout {
 							// TODO: check download
 							List<Resource> lstRes = new ArrayList<Resource>();
 							lstRes.add(res);
-							final com.vaadin.server.Resource downloadResource = StreamDownloadResourceFactory
+							final com.vaadin.server.Resource downloadResource = StreamDownloadResourceUtil
 									.getStreamResourceSupportExtDrive(lstRes,
 											false);
 						}

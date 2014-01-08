@@ -22,13 +22,14 @@ import java.util.List;
 import com.esofthead.mycollab.module.ecm.ResourceUtils;
 import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.module.ecm.domain.Resource;
-import com.esofthead.mycollab.module.file.resource.StreamDownloadResourceFactory;
+import com.esofthead.mycollab.module.file.resource.StreamDownloadResourceUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.resource.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.resource.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.resource.ui.UiUtils;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.server.FileDownloader;
+import com.vaadin.server.StreamResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -43,7 +44,7 @@ import com.vaadin.ui.Window;
  * 
  * @author MyCollab Ltd.
  * @since 1.0
- *
+ * 
  */
 public class FileDownloadWindow extends Window {
 	private static final long serialVersionUID = 1L;
@@ -93,14 +94,16 @@ public class FileDownloadWindow extends Window {
 		final Button downloadBtn = new Button("Download");
 		List<Resource> lstRes = new ArrayList<Resource>();
 		lstRes.add(content);
-		com.vaadin.server.Resource downloadResource = StreamDownloadResourceFactory
+
+		StreamResource downloadResource = StreamDownloadResourceUtil
 				.getStreamResourceSupportExtDrive(lstRes, false);
 
 		FileDownloader fileDownloader = new FileDownloader(downloadResource);
 		fileDownloader.extend(downloadBtn);
 
 		downloadBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
-		UiUtils.addComponent(buttonControls, downloadBtn, Alignment.MIDDLE_CENTER);
+		UiUtils.addComponent(buttonControls, downloadBtn,
+				Alignment.MIDDLE_CENTER);
 
 		final Button cancle = new Button("Cancel", new ClickListener() {
 			private static final long serialVersionUID = 1L;

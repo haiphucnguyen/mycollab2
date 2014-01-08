@@ -53,7 +53,7 @@
 
     <servlet>
         <servlet-name>MyCollabApplication</servlet-name>
-        <servlet-class>com.esofthead.mycollab.vaadin.resource.MyCollabServlet</servlet-class>
+        <servlet-class>com.esofthead.mycollab.vaadin.MyCollabServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>

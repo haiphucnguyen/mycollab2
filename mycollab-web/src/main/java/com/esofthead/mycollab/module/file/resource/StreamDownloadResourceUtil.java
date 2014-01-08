@@ -22,19 +22,21 @@ import java.util.List;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.configuration.StorageConfiguration;
 import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.module.ecm.domain.Folder;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.server.FileResource;
 import com.vaadin.server.Resource;
 import com.vaadin.server.StreamResource;
+import com.vaadin.server.StreamResource.StreamSource;
 
 /**
  * 
  * @author MyCollab Ltd.
- * @since 1.0
+ * @since 3.0
  * 
  */
-public class StreamDownloadResourceFactory {
+public class StreamDownloadResourceUtil {
 
 	public static Resource getStreamResource(String documentPath) {
 		if (SiteConfiguration.isSupportFileStorage()) {
@@ -47,21 +49,42 @@ public class StreamDownloadResourceFactory {
 		}
 	}
 
-	public static StreamResource getStreamResourceSupportExtDrive(
+	public static String getDownloadFileName(
 			List<com.esofthead.mycollab.module.ecm.domain.Resource> lstRes,
 			boolean isSearchAction) {
 		if (lstRes == null || lstRes.isEmpty()) {
-			return null;
+			return "";
 		} else if (lstRes.size() == 1) {
 			String name = (lstRes.get(0) instanceof Folder) ? lstRes.get(0)
 					.getName() + ".zip" : lstRes.get(0).getName();
-			return new StreamResource(
-					new StreamDownloadResourceSupportExtDrive(lstRes,
-							isSearchAction), name);
+			return name;
 		} else {
-			return new StreamResource(
-					new StreamDownloadResourceSupportExtDrive(lstRes,
-							isSearchAction), "out.zip");
+			return "out.zip";
+		}
+
+	}
+
+	public static StreamResource getStreamResourceSupportExtDrive(
+			List<com.esofthead.mycollab.module.ecm.domain.Resource> lstRes,
+			boolean isSearchAction) {
+		String filename = getDownloadFileName(lstRes, isSearchAction);
+		StreamSource streamSource = getStreamSourceSupportExtDrive(lstRes,
+				isSearchAction);
+		return new StreamResource(streamSource, filename);
+	}
+
+	public static StreamSource getStreamSourceSupportExtDrive(
+			List<com.esofthead.mycollab.module.ecm.domain.Resource> lstRes,
+			boolean isSearchAction) {
+		if (lstRes == null || lstRes.isEmpty()) {
+			throw new UserInvalidInputException(
+					"You must select at least one file");
+		} else if (lstRes.size() == 1) {
+			return new StreamDownloadResourceSupportExtDrive(lstRes,
+					isSearchAction);
+		} else {
+			return new StreamDownloadResourceSupportExtDrive(lstRes,
+					isSearchAction);
 		}
 	}
 
