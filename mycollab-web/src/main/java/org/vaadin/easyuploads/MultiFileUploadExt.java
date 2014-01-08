@@ -25,7 +25,7 @@ import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.esofthead.mycollab.vaadin.ui.AttachmentUploadComponent;
+import com.esofthead.mycollab.vaadin.resource.ui.AttachmentUploadComponent;
 import com.vaadin.event.dd.DragAndDropEvent;
 import com.vaadin.event.dd.DropHandler;
 import com.vaadin.event.dd.acceptcriteria.AcceptAll;

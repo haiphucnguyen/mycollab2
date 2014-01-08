@@ -47,20 +47,22 @@ public class StreamDownloadResourceFactory {
 		}
 	}
 
-	public static Resource getStreamResourceSupportExtDrive(
+	public static StreamResource getStreamResourceSupportExtDrive(
 			List<com.esofthead.mycollab.module.ecm.domain.Resource> lstRes,
 			boolean isSearchAction) {
-		if (lstRes == null || lstRes.isEmpty())
+		if (lstRes == null || lstRes.isEmpty()) {
 			return null;
-		if (lstRes.size() == 1) {
+		} else if (lstRes.size() == 1) {
 			String name = (lstRes.get(0) instanceof Folder) ? lstRes.get(0)
 					.getName() + ".zip" : lstRes.get(0).getName();
 			return new StreamResource(
 					new StreamDownloadResourceSupportExtDrive(lstRes,
 							isSearchAction), name);
+		} else {
+			return new StreamResource(
+					new StreamDownloadResourceSupportExtDrive(lstRes,
+							isSearchAction), "out.zip");
 		}
-		return new StreamResource(new StreamDownloadResourceSupportExtDrive(
-				lstRes, isSearchAction), "out.zip");
 	}
 
 	public static Resource getImagePreviewResource(String documentPath) {

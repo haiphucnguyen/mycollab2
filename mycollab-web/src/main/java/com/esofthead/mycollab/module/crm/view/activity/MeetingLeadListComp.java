@@ -17,7 +17,7 @@
 
 package com.esofthead.mycollab.module.crm.view.activity;
 
-import com.esofthead.mycollab.vaadin.ui.Depot;
+import com.esofthead.mycollab.vaadin.resource.ui.Depot;
 import com.vaadin.ui.VerticalLayout;
 
 /**

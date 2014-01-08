@@ -32,8 +32,8 @@ import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
-import com.esofthead.mycollab.vaadin.ui.AbstractPresenter;
-import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
+import com.esofthead.mycollab.vaadin.resource.ui.AbstractPresenter;
+import com.esofthead.mycollab.vaadin.resource.ui.NotificationUtil;
 import com.vaadin.ui.ComponentContainer;
 
 /**

@@ -42,9 +42,9 @@ import com.esofthead.mycollab.module.project.ui.components.ProjectActivityStream
 import com.esofthead.mycollab.module.project.view.ProjectLinkBuilder;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.ui.AbstractBeanPagedList;
-import com.esofthead.mycollab.vaadin.ui.Depot;
-import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
+import com.esofthead.mycollab.vaadin.resource.ui.AbstractBeanPagedList;
+import com.esofthead.mycollab.vaadin.resource.ui.Depot;
+import com.esofthead.mycollab.vaadin.resource.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.CssLayout;

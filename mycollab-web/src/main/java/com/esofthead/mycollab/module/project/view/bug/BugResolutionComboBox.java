@@ -18,7 +18,7 @@
 package com.esofthead.mycollab.module.project.view.bug;
 
 import com.esofthead.mycollab.module.tracker.BugResolutionConstants;
-import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
+import com.esofthead.mycollab.vaadin.resource.ui.ValueComboBox;
 
 /**
  * 

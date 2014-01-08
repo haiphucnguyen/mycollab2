@@ -23,7 +23,7 @@ import java.util.List;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.vaadin.hene.popupbutton.PopupButton;
 
-import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.resource.ui.UIConstants;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.server.Sizeable;
 import com.vaadin.ui.Alignment;

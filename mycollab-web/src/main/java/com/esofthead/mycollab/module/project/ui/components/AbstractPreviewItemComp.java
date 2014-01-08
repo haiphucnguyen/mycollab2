@@ -1,9 +1,9 @@
 package com.esofthead.mycollab.module.project.ui.components;
 
-import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
-import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
-import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
-import com.esofthead.mycollab.vaadin.ui.ReadViewLayout;
+import com.esofthead.mycollab.vaadin.resource.ui.AbstractBeanFieldGroupViewFieldFactory;
+import com.esofthead.mycollab.vaadin.resource.ui.AdvancedPreviewBeanForm;
+import com.esofthead.mycollab.vaadin.resource.ui.IFormLayoutFactory;
+import com.esofthead.mycollab.vaadin.resource.ui.ReadViewLayout;
 import com.vaadin.server.Resource;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.VerticalLayout;

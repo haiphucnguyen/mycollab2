@@ -29,8 +29,8 @@ import com.esofthead.mycollab.module.project.view.bug.UnresolvedBugsByAssigneeWi
 import com.esofthead.mycollab.module.project.view.bug.UnresolvedBugsByPriorityWidget;
 import com.esofthead.mycollab.module.tracker.BugStatusConstants;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
-import com.esofthead.mycollab.vaadin.ui.ToggleButtonGroup;
-import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.resource.ui.ToggleButtonGroup;
+import com.esofthead.mycollab.vaadin.resource.ui.UIConstants;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;

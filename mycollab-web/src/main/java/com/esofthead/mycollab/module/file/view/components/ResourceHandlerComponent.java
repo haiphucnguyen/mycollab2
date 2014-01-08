@@ -52,15 +52,15 @@ import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
-import com.esofthead.mycollab.vaadin.ui.AttachmentPanel;
-import com.esofthead.mycollab.vaadin.ui.ButtonLink;
-import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
-import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
-import com.esofthead.mycollab.vaadin.ui.Hr;
-import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
-import com.esofthead.mycollab.vaadin.ui.Separator;
-import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.vaadin.ui.UiUtils;
+import com.esofthead.mycollab.vaadin.resource.ui.AttachmentPanel;
+import com.esofthead.mycollab.vaadin.resource.ui.ButtonLink;
+import com.esofthead.mycollab.vaadin.resource.ui.ConfirmDialogExt;
+import com.esofthead.mycollab.vaadin.resource.ui.GridFormLayoutHelper;
+import com.esofthead.mycollab.vaadin.resource.ui.Hr;
+import com.esofthead.mycollab.vaadin.resource.ui.NotificationUtil;
+import com.esofthead.mycollab.vaadin.resource.ui.Separator;
+import com.esofthead.mycollab.vaadin.resource.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.resource.ui.UiUtils;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.Container;
 import com.vaadin.data.Property.ValueChangeEvent;
@@ -250,24 +250,23 @@ public class ResourceHandlerComponent extends VerticalLayout {
 				.canWrite(RolePermissionCollections.PUBLIC_DOCUMENT_ACCESS));
 		navButton.addButton(uploadBtn);
 
-		Button downloadBtn = new Button("Download", new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
+		Button downloadBtn = new Button("Download");
 
-			@Override
-			public void buttonClick(ClickEvent event) {
-				if (selectedResourcesList != null
-						&& selectedResourcesList.size() > 0) {
-					// TODO: check download
-					com.vaadin.server.Resource downloadResource = StreamDownloadResourceFactory
-							.getStreamResourceSupportExtDrive(
-									selectedResourcesList,
-									itemResourceContainerLayout.isSearchAction);
-				} else {
-					NotificationUtil
-							.showWarningNotification("Please choose at least one item to download.");
-				}
-			}
-		});
+//		FileDownloader downloaderExt = new FileDownloader(
+//				new LazyStreamResource() {
+//					private static final long serialVersionUID = 1L;
+//
+//					@Override
+//					protected StreamResource makeStreamResource() {
+//						return StreamDownloadResourceFactory
+//								.getStreamResourceSupportExtDrive(
+//										selectedResourcesList,
+//										itemResourceContainerLayout.isSearchAction);
+//					}
+//
+//				});
+
+//		downloaderExt.extend(downloadBtn);
 
 		downloadBtn.setIcon(MyCollabResource
 				.newResource("icons/16/ecm/download.png"));

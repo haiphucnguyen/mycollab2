@@ -24,7 +24,7 @@ import com.esofthead.mycollab.module.crm.view.setting.ICrmCustomView;
 import com.esofthead.mycollab.premium.module.crm.view.setting.customlayout.fieldinfo.DetailFieldInfoPanel;
 import com.esofthead.mycollab.premium.module.crm.view.setting.customlayout.fieldinfo.IntegerDetailFieldInfoPanel;
 import com.esofthead.mycollab.premium.module.crm.view.setting.customlayout.fieldinfo.TextDetailFieldInfoPanel;
-import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.resource.ui.UIConstants;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.server.Resource;
 import com.vaadin.ui.Alignment;

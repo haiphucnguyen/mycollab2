@@ -30,12 +30,12 @@ import com.esofthead.mycollab.module.crm.service.TaskService;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.desktop.ui.DefaultMassEditActionHandler;
-import com.esofthead.mycollab.vaadin.desktop.ui.ListSelectionPresenter;
 import com.esofthead.mycollab.vaadin.events.MassItemActionHandler;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
-import com.esofthead.mycollab.vaadin.ui.MailFormWindow;
-import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
+import com.esofthead.mycollab.vaadin.resource.desktop.ui.DefaultMassEditActionHandler;
+import com.esofthead.mycollab.vaadin.resource.desktop.ui.ListSelectionPresenter;
+import com.esofthead.mycollab.vaadin.resource.ui.MailFormWindow;
+import com.esofthead.mycollab.vaadin.resource.ui.NotificationUtil;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.UI;
 

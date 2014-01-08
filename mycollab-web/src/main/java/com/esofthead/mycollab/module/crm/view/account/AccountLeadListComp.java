@@ -22,7 +22,10 @@ import java.util.Set;
 import org.vaadin.dialogs.ConfirmDialog;
 
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.ui.SplitButton;
+import com.esofthead.mycollab.vaadin.resource.ui.ConfirmDialogExt;
+import com.esofthead.mycollab.vaadin.resource.ui.SplitButton;
+import com.esofthead.mycollab.vaadin.resource.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.resource.ui.table.TableClickEvent;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
@@ -44,9 +47,6 @@ import com.esofthead.mycollab.module.crm.view.lead.LeadTableDisplay;
 import com.esofthead.mycollab.module.crm.view.lead.LeadTableFieldDef;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
-import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;

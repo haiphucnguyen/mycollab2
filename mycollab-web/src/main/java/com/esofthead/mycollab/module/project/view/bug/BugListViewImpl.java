@@ -32,16 +32,16 @@ import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.reporting.ReportExportType;
 import com.esofthead.mycollab.reporting.RpParameterBuilder;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.vaadin.OnDemandFileDownloader;
-import com.esofthead.mycollab.vaadin.StreamResourceFactory;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
-import com.esofthead.mycollab.vaadin.ui.SplitButton;
-import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable;
-import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
+import com.esofthead.mycollab.vaadin.resource.OnDemandFileDownloader;
+import com.esofthead.mycollab.vaadin.resource.StreamResourceFactory;
+import com.esofthead.mycollab.vaadin.resource.ui.SplitButton;
+import com.esofthead.mycollab.vaadin.resource.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.resource.ui.table.IPagedBeanTable;
+import com.esofthead.mycollab.vaadin.resource.ui.table.TableClickEvent;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.server.StreamResource;
 import com.vaadin.shared.ui.MarginInfo;
@@ -70,9 +70,9 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
 	private SplitButton exportButtonControl;
 
 	public BugListViewImpl() {
-		
+
 		this.setMargin(new MarginInfo(true, false, false, false));
-		
+
 		this.bugSearchPanel = new BugSearchPanel();
 		this.addComponent(this.bugSearchPanel);
 
@@ -164,7 +164,6 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
 		});
 		exportButtonControl = new SplitButton(exportBtn);
 		exportButtonControl.addStyleName(UIConstants.THEME_GRAY_LINK);
-		//exportButtonControl.addStyleName(UIConstants.SPLIT_BUTTON);
 		exportButtonControl.setIcon(MyCollabResource
 				.newResource("icons/16/export.png"));
 

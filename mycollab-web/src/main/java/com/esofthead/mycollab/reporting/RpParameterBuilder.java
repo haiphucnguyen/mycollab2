@@ -21,7 +21,7 @@ import java.util.List;
 
 import net.sf.dynamicreports.report.definition.expression.DRIExpression;
 
-import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
+import com.esofthead.mycollab.vaadin.resource.ui.table.TableViewField;
 
 /**
  * 

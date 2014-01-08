@@ -17,7 +17,7 @@
 package com.esofthead.mycollab.module.crm.view.opportunity;
 
 import com.esofthead.mycollab.module.crm.view.CrmDataTypeFactory;
-import com.esofthead.mycollab.vaadin.ui.ValueListSelect;
+import com.esofthead.mycollab.vaadin.resource.ui.ValueListSelect;
 
 @SuppressWarnings("serial")
 public class OpportunitySalesStageListSelect extends ValueListSelect {

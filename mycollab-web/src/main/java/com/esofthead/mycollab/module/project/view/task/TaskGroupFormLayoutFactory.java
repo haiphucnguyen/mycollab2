@@ -22,9 +22,9 @@ import java.util.List;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
-import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
-import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
-import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
+import com.esofthead.mycollab.vaadin.resource.ui.AddViewLayout;
+import com.esofthead.mycollab.vaadin.resource.ui.GridFormLayoutHelper;
+import com.esofthead.mycollab.vaadin.resource.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.ComponentContainer;

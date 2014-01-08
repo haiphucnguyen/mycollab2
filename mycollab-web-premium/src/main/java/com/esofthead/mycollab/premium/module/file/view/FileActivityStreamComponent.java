@@ -3,7 +3,7 @@ package com.esofthead.mycollab.premium.module.file.view;
 import com.esofthead.mycollab.module.ecm.domain.criteria.ContentActivityLogSearchCriteria;
 import com.esofthead.mycollab.module.file.domain.criteria.FileSearchCriteria;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
-import com.esofthead.mycollab.vaadin.ui.Depot;
+import com.esofthead.mycollab.vaadin.resource.ui.Depot;
 import com.vaadin.ui.VerticalLayout;
 
 /**

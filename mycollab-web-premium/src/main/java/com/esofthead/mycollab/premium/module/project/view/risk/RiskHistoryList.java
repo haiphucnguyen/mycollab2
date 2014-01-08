@@ -2,7 +2,7 @@ package com.esofthead.mycollab.premium.module.project.view.risk;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
-import com.esofthead.mycollab.vaadin.ui.HistoryLogComponent;
+import com.esofthead.mycollab.vaadin.resource.ui.HistoryLogComponent;
 
 /**
  * 

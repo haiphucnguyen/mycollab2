@@ -2,9 +2,9 @@ package com.esofthead.mycollab.module.crm.view.activity;
 
 import com.esofthead.mycollab.module.crm.domain.SimpleMeeting;
 import com.esofthead.mycollab.module.crm.ui.components.RelatedReadItemField;
-import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
-import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.DateFieldWithUserTimeZone;
-import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
+import com.esofthead.mycollab.vaadin.resource.ui.AbstractBeanFieldGroupViewFieldFactory;
+import com.esofthead.mycollab.vaadin.resource.ui.GenericBeanForm;
+import com.esofthead.mycollab.vaadin.resource.ui.DefaultFormViewFieldFactory.DateFieldWithUserTimeZone;
 import com.vaadin.ui.Field;
 
 /**

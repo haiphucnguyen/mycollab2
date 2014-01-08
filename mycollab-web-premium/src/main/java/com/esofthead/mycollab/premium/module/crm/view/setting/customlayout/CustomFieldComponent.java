@@ -19,7 +19,7 @@ package com.esofthead.mycollab.premium.module.crm.view.setting.customlayout;
 import org.vaadin.hene.popupbutton.PopupButton;
 
 import com.esofthead.mycollab.form.view.builder.type.AbstractDynaField;
-import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.resource.ui.UIConstants;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;

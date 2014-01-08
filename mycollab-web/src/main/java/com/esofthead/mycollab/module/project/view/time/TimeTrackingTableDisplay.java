@@ -27,11 +27,11 @@ import com.esofthead.mycollab.module.project.view.settings.component.ProjectUser
 import com.esofthead.mycollab.module.tracker.BugStatusConstants;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.ui.ButtonLink;
-import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.vaadin.ui.table.DefaultPagedBeanTable;
-import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
-import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
+import com.esofthead.mycollab.vaadin.resource.ui.ButtonLink;
+import com.esofthead.mycollab.vaadin.resource.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.resource.ui.table.DefaultPagedBeanTable;
+import com.esofthead.mycollab.vaadin.resource.ui.table.TableClickEvent;
+import com.esofthead.mycollab.vaadin.resource.ui.table.TableViewField;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;

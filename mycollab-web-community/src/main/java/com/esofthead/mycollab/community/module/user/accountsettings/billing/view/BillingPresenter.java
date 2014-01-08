@@ -20,7 +20,7 @@ import com.esofthead.mycollab.module.user.accountsettings.billing.view.IBillingC
 import com.esofthead.mycollab.module.user.accountsettings.billing.view.IBillingPresenter;
 import com.esofthead.mycollab.module.user.accountsettings.view.AccountModule;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
-import com.esofthead.mycollab.vaadin.ui.AbstractPresenter;
+import com.esofthead.mycollab.vaadin.resource.ui.AbstractPresenter;
 import com.vaadin.ui.ComponentContainer;
 
 /**

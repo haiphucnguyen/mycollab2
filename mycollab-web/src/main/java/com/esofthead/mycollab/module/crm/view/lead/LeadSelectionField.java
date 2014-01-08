@@ -18,7 +18,7 @@ package com.esofthead.mycollab.module.crm.view.lead;
 
 import com.esofthead.mycollab.module.crm.domain.Lead;
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
-import com.esofthead.mycollab.vaadin.ui.FieldSelection;
+import com.esofthead.mycollab.vaadin.resource.ui.FieldSelection;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.event.MouseEvents;
 import com.vaadin.event.MouseEvents.ClickEvent;
