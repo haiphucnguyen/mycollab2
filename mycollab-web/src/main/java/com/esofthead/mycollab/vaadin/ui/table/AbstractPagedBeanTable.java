@@ -127,6 +127,7 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, B>
 		} else {
 			this.displayColumns = displayColumns;
 		}
+
 		this.defaultSelectedColumns = displayColumns;
 		this.requiredColumn = requiredColumn;
 		this.type = type;
@@ -134,7 +135,13 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, B>
 		this.setStyleName("list-view");
 	}
 
-	public void setTableViewFieldCollection(List<TableViewField> viewFields) {
+	public void setDisplayColumns(List<TableViewField> viewFields) {
+		this.displayColumns = viewFields;
+		displayTableColumns();
+		this.markAsDirty();
+	}
+
+	private void displayTableColumns() {
 		List<String> visibleColumnsCol = new ArrayList<String>();
 		List<String> columnHeadersCol = new ArrayList<String>();
 
@@ -145,8 +152,8 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, B>
 					requiredColumn.getDefaultWidth());
 		}
 
-		for (int i = 0; i < viewFields.size(); i++) {
-			TableViewField viewField = viewFields.get(i);
+		for (int i = 0; i < displayColumns.size(); i++) {
+			TableViewField viewField = displayColumns.get(i);
 			visibleColumnsCol.add(viewField.getField());
 			columnHeadersCol.add(viewField.getDesc());
 
@@ -515,7 +522,7 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, B>
 				this.type, this.currentListData);
 		this.tableItem.setPageLength(0);
 		this.tableItem.setContainerDataSource(container);
-		setTableViewFieldCollection(this.displayColumns);
+		displayTableColumns();
 		this.tableItem.setWidth("100%");
 
 		if (this.getComponentCount() > 0) {

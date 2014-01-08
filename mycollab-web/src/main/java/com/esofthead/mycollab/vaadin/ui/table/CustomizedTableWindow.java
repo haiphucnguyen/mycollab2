@@ -137,7 +137,7 @@ public abstract class CustomizedTableWindow extends Window {
 					public void buttonClick(final ClickEvent event) {
 						final List<TableViewField> selectedColumns = (List<TableViewField>) CustomizedTableWindow.this.listBuilder
 								.getValue();
-						table.setTableViewFieldCollection(selectedColumns);
+						table.setDisplayColumns(selectedColumns);
 						CustomizedTableWindow.this.close();
 
 						// Save custom table view def
