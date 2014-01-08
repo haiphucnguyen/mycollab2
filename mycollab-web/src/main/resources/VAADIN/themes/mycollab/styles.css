@@ -759,14 +759,14 @@ input.v-textfield-pagedtable-pagefield {
 
 /* Basic Search Template */
 .basicSearch {
-	background-image: -webkit-gradient(linear, left top, left bottom, from(#F3F3F3),
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#F5F5F5),
 		to(#DDDDDD));
-	background-image: -webkit-linear-gradient(top, #F3F3F3, #DDDDDD);
-	background-image: -moz-linear-gradient(top, #F3F3F3, #DDDDDD);
-	background-image: -ms-linear-gradient(top, #F3F3F3, #DDDDDD);
-	background-image: -o-linear-gradient(top, #F3F3F3, #DDDDDD);
-	background-image: linear-gradient(top, #F3F3F3, #DDDDDD);
-	background-color: #F3F3F3;
+	background-image: -webkit-linear-gradient(top, #F5F5F5, #DDDDDD);
+	background-image: -moz-linear-gradient(top, #F5F5F5, #DDDDDD);
+	background-image: -ms-linear-gradient(top, #F5F5F5, #DDDDDD);
+	background-image: -o-linear-gradient(top, #F5F5F5, #DDDDDD);
+	background-image: linear-gradient(top, #F5F5F5, #DDDDDD);
+	background-color: #F5F5F5;
 	/* margin: 10px 0px 0px; */
 	border-top-left-radius: 3px;
 	border-top-right-radius: 3px;
@@ -996,7 +996,7 @@ input.v-textfield-errorField {
 
 #loginForm {
 	width: 280px;
-	background: #f3f3f3;
+	background: #F5F5F5;
 	float: right;
 	height: 355px;
 	margin-top: 15px;
@@ -1153,14 +1153,7 @@ input.v-textfield-errorField {
 
 /* Add View Styles */
 .addViewLayout {
-	background-color: #F3F3F3;
-	background-image: -webkit-gradient(linear, left top, left bottom, from(#F3F3F3),
-		to(#DDDDDD));
-	background-image: -webkit-linear-gradient(top, #F3F3F3, #DDDDDD);
-	background-image: -moz-linear-gradient(top, #F3F3F3, #DDDDDD);
-	background-image: -ms-linear-gradient(top, #F3F3F3, #DDDDDD);
-	background-image: -o-linear-gradient(top, #F3F3F3, #DDDDDD);
-	background-image: linear-gradient(top, #F3F3F3, #DDDDDD);
+	background-color: #F5F5F5;
 	margin: 10px 2px;
 	border-top-left-radius: 5px;
 	border-top-right-radius: 5px;
@@ -1267,14 +1260,14 @@ input.v-textfield-errorField {
 /* Account Settings */
 .accountViewContainer {
 	margin: 20px 0px;
-	background-color: #F3F3F3;
-	background-image: -webkit-gradient(linear, left top, left bottom, from(#F3F3F3),
+	background-color: #F5F5F5;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#F5F5F5),
 		to(#DDDDDD));
-	background-image: -webkit-linear-gradient(top, #F3F3F3, #DDDDDD);
-	background-image: -moz-linear-gradient(top, #F3F3F3, #DDDDDD);
-	background-image: -ms-linear-gradient(top, #F3F3F3, #DDDDDD);
-	background-image: -o-linear-gradient(top, #F3F3F3, #DDDDDD);
-	background-image: linear-gradient(top, #F3F3F3, #DDDDDD);
+	background-image: -webkit-linear-gradient(top, #F5F5F5, #DDDDDD);
+	background-image: -moz-linear-gradient(top, #F5F5F5, #DDDDDD);
+	background-image: -ms-linear-gradient(top, #F5F5F5, #DDDDDD);
+	background-image: -o-linear-gradient(top, #F5F5F5, #DDDDDD);
+	background-image: linear-gradient(top, #F5F5F5, #DDDDDD);
 	border-top-left-radius: 5px;
 	border-top-right-radius: 0px;
 	border-bottom-right-radius: 0px;
@@ -1416,14 +1409,14 @@ input.v-textfield-errorField {
 }
 
 .projectDashboardView {
-	background-color: #F3F3F3;
-	background-image: -webkit-gradient(linear, left top, left bottom, from(#F3F3F3),
+	background-color: #F5F5F5;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#F5F5F5),
 		to(#DDDDDD));
-	background-image: -webkit-linear-gradient(top, #F3F3F3, #DDDDDD);
-	background-image: -moz-linear-gradient(top, #F3F3F3, #DDDDDD);
-	background-image: -ms-linear-gradient(top, #F3F3F3, #DDDDDD);
-	background-image: -o-linear-gradient(top, #F3F3F3, #DDDDDD);
-	background-image: linear-gradient(top, #F3F3F3, #DDDDDD);
+	background-image: -webkit-linear-gradient(top, #F5F5F5, #DDDDDD);
+	background-image: -moz-linear-gradient(top, #F5F5F5, #DDDDDD);
+	background-image: -ms-linear-gradient(top, #F5F5F5, #DDDDDD);
+	background-image: -o-linear-gradient(top, #F5F5F5, #DDDDDD);
+	background-image: linear-gradient(top, #F5F5F5, #DDDDDD);
 	border-top-left-radius: 5px;
 	border-top-right-radius: 0px;
 	border-bottom-right-radius: 0px;
@@ -1509,11 +1502,11 @@ input.v-textfield-errorField {
 }
 
 .projectDashboardView .v-tabsheet-tabitem-selected {
-	background-color: #F3F3F3;
+	background-color: #F5F5F5;
 }
 
 .projectDashboardView .v-tabsheet-content {
-	background-color: #F3F3F3;
+	background-color: #F5F5F5;
 }
 
 .projectDashboardView .Milestones .v-tabsheet-content {
@@ -3819,14 +3812,7 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 /* New ReadViewLayout */
 
 .readViewLayout {
-	background-color: #F3F3F3;
-	background-image: -webkit-gradient(linear, left top, left bottom, from(#F3F3F3),
-		to(#DDDDDD));
-	background-image: -webkit-linear-gradient(top, #F3F3F3, #DDDDDD);
-	background-image: -moz-linear-gradient(top, #F3F3F3, #DDDDDD);
-	background-image: -ms-linear-gradient(top, #F3F3F3, #DDDDDD);
-	background-image: -o-linear-gradient(top, #F3F3F3, #DDDDDD);
-	background-image: linear-gradient(top, #F3F3F3, #DDDDDD);
+	background-color: #F5F5F5;
 	border-top-left-radius: 5px;
 	border-top-right-radius: 5px;
 	border-bottom-right-radius: 0px;
@@ -5602,14 +5588,14 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 /* CRM Tabview */
 .verticalTabView {
 	margin: 20px auto;
-	background-color: #F3F3F3;
-	background-image: -webkit-gradient(linear, left top, left bottom, from(#F3F3F3),
+	background-color: #F5F5F5;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#F5F5F5),
 		to(#DDDDDD));
-	background-image: -webkit-linear-gradient(top, #F3F3F3, #DDDDDD);
-	background-image: -moz-linear-gradient(top, #F3F3F3, #DDDDDD);
-	background-image: -ms-linear-gradient(top, #F3F3F3, #DDDDDD);
-	background-image: -o-linear-gradient(top, #F3F3F3, #DDDDDD);
-	background-image: linear-gradient(top, #F3F3F3, #DDDDDD);
+	background-image: -webkit-linear-gradient(top, #F5F5F5, #DDDDDD);
+	background-image: -moz-linear-gradient(top, #F5F5F5, #DDDDDD);
+	background-image: -ms-linear-gradient(top, #F5F5F5, #DDDDDD);
+	background-image: -o-linear-gradient(top, #F5F5F5, #DDDDDD);
+	background-image: linear-gradient(top, #F5F5F5, #DDDDDD);
 	border-top-left-radius: 5px;
 	border-top-right-radius: 0px;
 	border-bottom-right-radius: 0px;
