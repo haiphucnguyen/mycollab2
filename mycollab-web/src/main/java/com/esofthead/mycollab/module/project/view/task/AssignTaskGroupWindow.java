@@ -55,12 +55,12 @@ import com.vaadin.ui.Window;
  */
 public class AssignTaskGroupWindow extends Window {
 	private static final long serialVersionUID = 1L;
-	private final TaskList task;
+	private final TaskList taskList;
 	private final EditForm editForm;
 
 	public AssignTaskGroupWindow(TaskList task) {
-		super("Assign task group '" + task.getName() + "'");
-		this.task = task;
+		super("Assign taskList group '" + task.getName() + "'");
+		this.taskList = task;
 		this.setWidth("750px");
 
 		VerticalLayout contentLayout = new VerticalLayout();
@@ -128,43 +128,45 @@ public class AssignTaskGroupWindow extends Window {
 
 							@Override
 							public void buttonClick(Button.ClickEvent event) {
-
-								// Save task status and assignee
-								ProjectTaskListService bugService = ApplicationContextUtil
-										.getSpringBean(ProjectTaskListService.class);
-								bugService.updateWithSession(task,
-										AppContext.getUsername());
-
-								// Save comment
-								String commentValue = (String) commentArea
-										.getValue();
-								if (commentValue != null
-										&& !commentValue.trim().equals("")) {
-									Comment comment = new Comment();
-									comment.setComment((String) commentArea
-											.getValue());
-									comment.setCreatedtime(new GregorianCalendar()
-											.getTime());
-									comment.setCreateduser(AppContext
-											.getUsername());
-									comment.setSaccountid(AppContext
-											.getAccountId());
-									comment.setType(CommentType.PRJ_TASK_LIST
-											.toString());
-									comment.setTypeid(task.getId());
-									comment.setExtratypeid(CurrentProjectVariables
-											.getProjectId());
-
-									CommentService commentService = ApplicationContextUtil
-											.getSpringBean(CommentService.class);
-									commentService.saveWithSession(comment,
+								if (EditForm.this.validateForm()) {
+									// Save taskList status and assignee
+									ProjectTaskListService taskListService = ApplicationContextUtil
+											.getSpringBean(ProjectTaskListService.class);
+									taskListService.updateWithSession(taskList,
 											AppContext.getUsername());
+
+									// Save comment
+									String commentValue = (String) commentArea
+											.getValue();
+									if (commentValue != null
+											&& !commentValue.trim().equals("")) {
+										Comment comment = new Comment();
+										comment.setComment((String) commentArea
+												.getValue());
+										comment.setCreatedtime(new GregorianCalendar()
+												.getTime());
+										comment.setCreateduser(AppContext
+												.getUsername());
+										comment.setSaccountid(AppContext
+												.getAccountId());
+										comment.setType(CommentType.PRJ_TASK_LIST
+												.toString());
+										comment.setTypeid(taskList.getId());
+										comment.setExtratypeid(CurrentProjectVariables
+												.getProjectId());
+
+										CommentService commentService = ApplicationContextUtil
+												.getSpringBean(CommentService.class);
+										commentService.saveWithSession(comment,
+												AppContext.getUsername());
+									}
+
+									AssignTaskGroupWindow.this.close();
+									EventBus.getInstance().fireEvent(
+											new TaskListEvent.GotoRead(this,
+													taskList.getId()));
 								}
 
-								AssignTaskGroupWindow.this.close();
-								EventBus.getInstance().fireEvent(
-										new TaskListEvent.GotoRead(this, task
-												.getId()));
 							}
 						});
 				approveBtn.setStyleName(UIConstants.THEME_BLUE_LINK);

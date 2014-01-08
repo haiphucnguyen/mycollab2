@@ -129,55 +129,59 @@ public class ReOpenWindow extends Window {
 
 				final Button wonFixBtn = new Button("Reopen",
 						new Button.ClickListener() {
-							@SuppressWarnings("unchecked")
 							@Override
 							public void buttonClick(
 									final Button.ClickEvent event) {
 								ReOpenWindow.this.bug
 										.setStatus(BugStatusConstants.REOPENNED);
 
-								final BugRelatedItemService bugRelatedItemService = ApplicationContextUtil
-										.getSpringBean(BugRelatedItemService.class);
-								bugRelatedItemService.updateFixedVersionsOfBug(
-										ReOpenWindow.this.bug.getId(),
-										ReOpenWindow.this.fixedVersionSelect
-												.getSelectedItems());
+								if (EditForm.this.validateForm()) {
 
-								// Save bug status and assignee
-								final BugService bugService = ApplicationContextUtil
-										.getSpringBean(BugService.class);
-								bugService.updateWithSession(
-										ReOpenWindow.this.bug,
-										AppContext.getUsername());
+									final BugRelatedItemService bugRelatedItemService = ApplicationContextUtil
+											.getSpringBean(BugRelatedItemService.class);
+									bugRelatedItemService.updateFixedVersionsOfBug(
+											ReOpenWindow.this.bug.getId(),
+											ReOpenWindow.this.fixedVersionSelect
+													.getSelectedItems());
 
-								// Save comment
-								final String commentValue = (String) EditForm.this.commentArea
-										.getValue();
-								if (commentValue != null
-										&& !commentValue.trim().equals("")) {
-									final Comment comment = new Comment();
-									comment.setComment(commentValue);
-									comment.setCreatedtime(new GregorianCalendar()
-											.getTime());
-									comment.setCreateduser(AppContext
-											.getUsername());
-									comment.setSaccountid(AppContext
-											.getAccountId());
-									comment.setType(CommentType.PRJ_BUG
-											.toString());
-									comment.setTypeid(ReOpenWindow.this.bug
-											.getId());
-									comment.setExtratypeid(CurrentProjectVariables
-											.getProjectId());
-
-									final CommentService commentService = ApplicationContextUtil
-											.getSpringBean(CommentService.class);
-									commentService.saveWithSession(comment,
+									// Save bug status and assignee
+									final BugService bugService = ApplicationContextUtil
+											.getSpringBean(BugService.class);
+									bugService.updateWithSession(
+											ReOpenWindow.this.bug,
 											AppContext.getUsername());
+
+									// Save comment
+									final String commentValue = (String) EditForm.this.commentArea
+											.getValue();
+									if (commentValue != null
+											&& !commentValue.trim().equals("")) {
+										final Comment comment = new Comment();
+										comment.setComment(commentValue);
+										comment.setCreatedtime(new GregorianCalendar()
+												.getTime());
+										comment.setCreateduser(AppContext
+												.getUsername());
+										comment.setSaccountid(AppContext
+												.getAccountId());
+										comment.setType(CommentType.PRJ_BUG
+												.toString());
+										comment.setTypeid(ReOpenWindow.this.bug
+												.getId());
+										comment.setExtratypeid(CurrentProjectVariables
+												.getProjectId());
+
+										final CommentService commentService = ApplicationContextUtil
+												.getSpringBean(CommentService.class);
+										commentService.saveWithSession(comment,
+												AppContext.getUsername());
+									}
+
+									ReOpenWindow.this.close();
+									ReOpenWindow.this.callbackForm
+											.refreshBugItem();
 								}
 
-								ReOpenWindow.this.close();
-								ReOpenWindow.this.callbackForm.refreshBugItem();
 							}
 						});
 				wonFixBtn.setStyleName(UIConstants.THEME_BLUE_LINK);

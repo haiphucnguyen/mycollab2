@@ -133,45 +133,49 @@ public class ApproveInputWindow extends Window {
 							@Override
 							public void buttonClick(
 									final Button.ClickEvent event) {
-								// Save bug status and assignee
 								ApproveInputWindow.this.bug
 										.setStatus(BugStatusConstants.VERIFIED);
-								final BugService bugService = ApplicationContextUtil
-										.getSpringBean(BugService.class);
-								bugService.updateWithSession(
-										ApproveInputWindow.this.bug,
-										AppContext.getUsername());
 
-								// Save comment
-								final String commentValue = (String) EditForm.this.commentArea
-										.getValue();
-								if (commentValue != null
-										&& !commentValue.trim().equals("")) {
-									final Comment comment = new Comment();
-									comment.setComment((String) EditForm.this.commentArea
-											.getValue());
-									comment.setCreatedtime(new GregorianCalendar()
-											.getTime());
-									comment.setCreateduser(AppContext
-											.getUsername());
-									comment.setSaccountid(AppContext
-											.getAccountId());
-									comment.setType(CommentType.PRJ_BUG
-											.toString());
-									comment.setTypeid(ApproveInputWindow.this.bug
-											.getId());
-									comment.setExtratypeid(CurrentProjectVariables
-											.getProjectId());
+								if (EditForm.this.validateForm()) {
+									// Save bug status and assignee
 
-									final CommentService commentService = ApplicationContextUtil
-											.getSpringBean(CommentService.class);
-									commentService.saveWithSession(comment,
+									final BugService bugService = ApplicationContextUtil
+											.getSpringBean(BugService.class);
+									bugService.updateWithSession(
+											ApproveInputWindow.this.bug,
 											AppContext.getUsername());
-								}
 
-								ApproveInputWindow.this.close();
-								ApproveInputWindow.this.callbackForm
-										.refreshBugItem();
+									// Save comment
+									final String commentValue = (String) EditForm.this.commentArea
+											.getValue();
+									if (commentValue != null
+											&& !commentValue.trim().equals("")) {
+										final Comment comment = new Comment();
+										comment.setComment((String) EditForm.this.commentArea
+												.getValue());
+										comment.setCreatedtime(new GregorianCalendar()
+												.getTime());
+										comment.setCreateduser(AppContext
+												.getUsername());
+										comment.setSaccountid(AppContext
+												.getAccountId());
+										comment.setType(CommentType.PRJ_BUG
+												.toString());
+										comment.setTypeid(ApproveInputWindow.this.bug
+												.getId());
+										comment.setExtratypeid(CurrentProjectVariables
+												.getProjectId());
+
+										final CommentService commentService = ApplicationContextUtil
+												.getSpringBean(CommentService.class);
+										commentService.saveWithSession(comment,
+												AppContext.getUsername());
+									}
+
+									ApproveInputWindow.this.close();
+									ApproveInputWindow.this.callbackForm
+											.refreshBugItem();
+								}
 							}
 						});
 				approveBtn.setStyleName(UIConstants.THEME_BLUE_LINK);

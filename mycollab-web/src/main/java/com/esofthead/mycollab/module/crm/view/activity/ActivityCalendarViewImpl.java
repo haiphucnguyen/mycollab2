@@ -453,17 +453,21 @@ public class ActivityCalendarViewImpl extends AbstractPageView implements
 
 								@Override
 								public void buttonClick(ClickEvent event) {
-									MeetingService meetingService = ApplicationContextUtil
-											.getSpringBean(MeetingService.class);
-									meeting.setStartdate(startDatePicker
-											.getValue());
-									meeting.setEnddate(endDatePicker.getValue());
-									meetingService.saveWithSession(meeting,
-											AppContext.getUsername());
-									EventQuickCreateWindow.this.close();
-									EventBus.getInstance().fireEvent(
-											new ActivityEvent.GotoCalendar(
-													this, null));
+									if (EditForm.this.validateForm()) {
+										MeetingService meetingService = ApplicationContextUtil
+												.getSpringBean(MeetingService.class);
+										meeting.setStartdate(startDatePicker
+												.getValue());
+										meeting.setEnddate(endDatePicker
+												.getValue());
+										meetingService.saveWithSession(meeting,
+												AppContext.getUsername());
+										EventQuickCreateWindow.this.close();
+										EventBus.getInstance().fireEvent(
+												new ActivityEvent.GotoCalendar(
+														this, null));
+									}
+
 								}
 							});
 					saveBtn.setIcon(MyCollabResource

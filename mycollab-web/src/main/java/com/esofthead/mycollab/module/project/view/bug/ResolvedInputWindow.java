@@ -57,7 +57,7 @@ import com.vaadin.ui.Window;
  */
 public class ResolvedInputWindow extends Window {
 	private static final long serialVersionUID = 1L;
-	
+
 	private final SimpleBug bug;
 	private final EditForm editForm;
 	private VersionMultiSelectField fixedVersionSelect;
@@ -134,56 +134,59 @@ public class ResolvedInputWindow extends Window {
 						new Button.ClickListener() {
 							private static final long serialVersionUID = 1L;
 
-							@SuppressWarnings("unchecked")
 							@Override
 							public void buttonClick(
 									final Button.ClickEvent event) {
 								ResolvedInputWindow.this.bug
 										.setStatus(BugStatusConstants.RESOLVED);
+								if (EditForm.this.validateForm()) {
+									final BugRelatedItemService bugRelatedItemService = ApplicationContextUtil
+											.getSpringBean(BugRelatedItemService.class);
+									bugRelatedItemService
+											.updateFixedVersionsOfBug(
+													ResolvedInputWindow.this.bug
+															.getId(),
+													ResolvedInputWindow.this.fixedVersionSelect
+															.getSelectedItems());
 
-								final BugRelatedItemService bugRelatedItemService = ApplicationContextUtil
-										.getSpringBean(BugRelatedItemService.class);
-								bugRelatedItemService.updateFixedVersionsOfBug(
-										ResolvedInputWindow.this.bug.getId(),
-										ResolvedInputWindow.this.fixedVersionSelect
-												.getSelectedItems());
-
-								// Save bug status and assignee
-								final BugService bugService = ApplicationContextUtil
-										.getSpringBean(BugService.class);
-								bugService.updateWithSession(
-										ResolvedInputWindow.this.bug,
-										AppContext.getUsername());
-
-								// Save comment
-								final String commentValue = (String) EditForm.this.commentArea
-										.getValue();
-								if (commentValue != null
-										&& !commentValue.trim().equals("")) {
-									final Comment comment = new Comment();
-									comment.setComment(commentValue);
-									comment.setCreatedtime(new GregorianCalendar()
-											.getTime());
-									comment.setCreateduser(AppContext
-											.getUsername());
-									comment.setSaccountid(AppContext
-											.getAccountId());
-									comment.setType(CommentType.PRJ_BUG
-											.toString());
-									comment.setTypeid(ResolvedInputWindow.this.bug
-											.getId());
-									comment.setExtratypeid(CurrentProjectVariables
-											.getProjectId());
-
-									final CommentService commentService = ApplicationContextUtil
-											.getSpringBean(CommentService.class);
-									commentService.saveWithSession(comment,
+									// Save bug status and assignee
+									final BugService bugService = ApplicationContextUtil
+											.getSpringBean(BugService.class);
+									bugService.updateWithSession(
+											ResolvedInputWindow.this.bug,
 											AppContext.getUsername());
+
+									// Save comment
+									final String commentValue = (String) EditForm.this.commentArea
+											.getValue();
+									if (commentValue != null
+											&& !commentValue.trim().equals("")) {
+										final Comment comment = new Comment();
+										comment.setComment(commentValue);
+										comment.setCreatedtime(new GregorianCalendar()
+												.getTime());
+										comment.setCreateduser(AppContext
+												.getUsername());
+										comment.setSaccountid(AppContext
+												.getAccountId());
+										comment.setType(CommentType.PRJ_BUG
+												.toString());
+										comment.setTypeid(ResolvedInputWindow.this.bug
+												.getId());
+										comment.setExtratypeid(CurrentProjectVariables
+												.getProjectId());
+
+										final CommentService commentService = ApplicationContextUtil
+												.getSpringBean(CommentService.class);
+										commentService.saveWithSession(comment,
+												AppContext.getUsername());
+									}
+
+									ResolvedInputWindow.this.close();
+									ResolvedInputWindow.this.callbackForm
+											.refreshBugItem();
 								}
 
-								ResolvedInputWindow.this.close();
-								ResolvedInputWindow.this.callbackForm
-										.refreshBugItem();
 							}
 						});
 				wonFixBtn.setStyleName(UIConstants.THEME_BLUE_LINK);

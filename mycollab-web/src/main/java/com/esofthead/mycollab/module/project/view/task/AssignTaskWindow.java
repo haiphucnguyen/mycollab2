@@ -130,43 +130,44 @@ public class AssignTaskWindow extends Window {
 
 							@Override
 							public void buttonClick(Button.ClickEvent event) {
-
-								// Save task status and assignee
-								ProjectTaskService bugService = ApplicationContextUtil
-										.getSpringBean(ProjectTaskService.class);
-								bugService.updateWithSession(task,
-										AppContext.getUsername());
-
-								// Save comment
-								String commentValue = (String) commentArea
-										.getValue();
-								if (commentValue != null
-										&& !commentValue.trim().equals("")) {
-									Comment comment = new Comment();
-									comment.setComment((String) commentArea
-											.getValue());
-									comment.setCreatedtime(new GregorianCalendar()
-											.getTime());
-									comment.setCreateduser(AppContext
-											.getUsername());
-									comment.setSaccountid(AppContext
-											.getAccountId());
-									comment.setType(CommentType.PRJ_TASK
-											.toString());
-									comment.setTypeid(task.getId());
-									comment.setExtratypeid(CurrentProjectVariables
-											.getProjectId());
-
-									CommentService commentService = ApplicationContextUtil
-											.getSpringBean(CommentService.class);
-									commentService.saveWithSession(comment,
+								if (EditForm.this.validateForm()) {
+									// Save task status and assignee
+									ProjectTaskService taskService = ApplicationContextUtil
+											.getSpringBean(ProjectTaskService.class);
+									taskService.updateWithSession(task,
 											AppContext.getUsername());
-								}
 
-								AssignTaskWindow.this.close();
-								EventBus.getInstance().fireEvent(
-										new TaskEvent.GotoRead(this, task
-												.getId()));
+									// Save comment
+									String commentValue = (String) commentArea
+											.getValue();
+									if (commentValue != null
+											&& !commentValue.trim().equals("")) {
+										Comment comment = new Comment();
+										comment.setComment((String) commentArea
+												.getValue());
+										comment.setCreatedtime(new GregorianCalendar()
+												.getTime());
+										comment.setCreateduser(AppContext
+												.getUsername());
+										comment.setSaccountid(AppContext
+												.getAccountId());
+										comment.setType(CommentType.PRJ_TASK
+												.toString());
+										comment.setTypeid(task.getId());
+										comment.setExtratypeid(CurrentProjectVariables
+												.getProjectId());
+
+										CommentService commentService = ApplicationContextUtil
+												.getSpringBean(CommentService.class);
+										commentService.saveWithSession(comment,
+												AppContext.getUsername());
+									}
+
+									AssignTaskWindow.this.close();
+									EventBus.getInstance().fireEvent(
+											new TaskEvent.GotoRead(this, task
+													.getId()));
+								}
 							}
 						});
 				approveBtn.setStyleName(UIConstants.THEME_BLUE_LINK);

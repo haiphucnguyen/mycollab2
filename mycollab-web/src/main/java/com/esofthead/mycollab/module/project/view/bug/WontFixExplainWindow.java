@@ -130,61 +130,65 @@ public class WontFixExplainWindow extends Window {
 
 				final Button wonFixBtn = new Button("Won't Fix",
 						new Button.ClickListener() {
-							@SuppressWarnings("unchecked")
 							@Override
 							public void buttonClick(final ClickEvent event) {
 								WontFixExplainWindow.this.bug
 										.setStatus(BugStatusConstants.RESOLVED);
 
-								final BugRelatedItemService bugRelatedItemService = ApplicationContextUtil
-										.getSpringBean(BugRelatedItemService.class);
-								bugRelatedItemService.updateFixedVersionsOfBug(
-										WontFixExplainWindow.this.bug.getId(),
-										WontFixExplainWindow.this.fixedVersionSelect
-												.getSelectedItems());
+								if (EditForm.this.validateForm()) {
+									final String commentValue = (String) EditForm.this.commentArea
+											.getValue();
+									if (commentValue != null
+											&& !commentValue.trim().equals("")) {
+										final BugRelatedItemService bugRelatedItemService = ApplicationContextUtil
+												.getSpringBean(BugRelatedItemService.class);
+										bugRelatedItemService
+												.updateFixedVersionsOfBug(
+														WontFixExplainWindow.this.bug
+																.getId(),
+														WontFixExplainWindow.this.fixedVersionSelect
+																.getSelectedItems());
 
-								// Save bug status and assignee
-								final BugService bugService = ApplicationContextUtil
-										.getSpringBean(BugService.class);
-								bugService.updateWithSession(
-										WontFixExplainWindow.this.bug,
-										AppContext.getUsername());
+										// Save bug status and assignee
+										final BugService bugService = ApplicationContextUtil
+												.getSpringBean(BugService.class);
+										bugService.updateWithSession(
+												WontFixExplainWindow.this.bug,
+												AppContext.getUsername());
 
-								// Save comment
-								final String commentValue = (String) EditForm.this.commentArea
-										.getValue();
-								if (commentValue != null
-										&& !commentValue.trim().equals("")) {
-									final Comment comment = new Comment();
-									comment.setComment(commentValue);
-									comment.setCreatedtime(new GregorianCalendar()
-											.getTime());
-									comment.setCreateduser(AppContext
-											.getUsername());
-									comment.setSaccountid(AppContext
-											.getAccountId());
-									comment.setType(CommentType.PRJ_BUG
-											.toString());
-									comment.setTypeid(WontFixExplainWindow.this.bug
-											.getId());
-									comment.setExtratypeid(CurrentProjectVariables
-											.getProjectId());
+										// Save comment
 
-									final CommentService commentService = ApplicationContextUtil
-											.getSpringBean(CommentService.class);
-									commentService.saveWithSession(comment,
-											AppContext.getUsername());
+										final Comment comment = new Comment();
+										comment.setComment(commentValue);
+										comment.setCreatedtime(new GregorianCalendar()
+												.getTime());
+										comment.setCreateduser(AppContext
+												.getUsername());
+										comment.setSaccountid(AppContext
+												.getAccountId());
+										comment.setType(CommentType.PRJ_BUG
+												.toString());
+										comment.setTypeid(WontFixExplainWindow.this.bug
+												.getId());
+										comment.setExtratypeid(CurrentProjectVariables
+												.getProjectId());
+
+										final CommentService commentService = ApplicationContextUtil
+												.getSpringBean(CommentService.class);
+										commentService.saveWithSession(comment,
+												AppContext.getUsername());
+
+										WontFixExplainWindow.this.close();
+										WontFixExplainWindow.this.callbackForm
+												.refreshBugItem();
+									} else {
+										NotificationUtil
+												.showErrorNotification("You must enter a comment to explain for won't fix resolution");
+										return;
+									}
 
 									WontFixExplainWindow.this.close();
-									WontFixExplainWindow.this.callbackForm
-											.refreshBugItem();
-								} else {
-									NotificationUtil
-											.showErrorNotification("You must enter a comment to explain for won't fix resolution");
-									return;
 								}
-
-								WontFixExplainWindow.this.close();
 							}
 						});
 				wonFixBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
