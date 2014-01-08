@@ -78,13 +78,12 @@ public abstract class AbstractPresenter<V extends PageView> implements
 		if (checkPermissionAccessIfAny()) {
 			onGo((NavigationManager) container, data);
 		} else {
-			// TODO: show permission limitation notification
+			throw new SecurityException("You can not access this resource");
 		}
 
 	}
 
-	protected abstract void onGo(NavigationManager container,
-			ScreenData<?> data);
+	protected abstract void onGo(NavigationManager container, ScreenData<?> data);
 
 	private boolean checkPermissionAccessIfAny() {
 		ViewPermission viewPermission = this.getClass().getAnnotation(

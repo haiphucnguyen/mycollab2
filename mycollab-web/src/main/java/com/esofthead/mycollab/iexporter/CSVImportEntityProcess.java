@@ -34,11 +34,20 @@ import com.esofthead.mycollab.iexporter.CSVObjectEntityConverter.ImportFieldDef;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ * @param <S>
+ * @param <E>
+ */
 public class CSVImportEntityProcess<S extends ICrudService, E> {
 	private Validator validation;
 
 	public CSVImportEntityProcess() {
-		validation = ApplicationContextUtil.getSpringBean(LocalValidatorFactoryBean.class);
+		validation = ApplicationContextUtil
+				.getSpringBean(LocalValidatorFactoryBean.class);
 	}
 
 	/**

@@ -25,6 +25,7 @@ import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.configuration.PasswordEncryptHelper;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.DeploymentMode;
+import com.esofthead.mycollab.core.SecurityException;
 import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.shell.view.FragmentNavigator;
@@ -86,17 +87,25 @@ public class DesktopApplication extends UI {
 			@Override
 			public void error(com.vaadin.server.ErrorEvent event) {
 				Throwable e = event.getThrowable();
-				UserInvalidInputException invalidException = (UserInvalidInputException) getUserInvalidException(e);
+				UserInvalidInputException invalidException = (UserInvalidInputException) getExceptionType(
+						e, UserInvalidInputException.class);
 				if (invalidException != null) {
 					NotificationUtil.showWarningNotification(LocalizationHelper
 							.getMessage(
 									GenericI18Enum.ERROR_USER_INPUT_MESSAGE,
 									invalidException.getMessage()));
 				} else {
-					NotificationUtil.showErrorNotification(LocalizationHelper
-							.getMessage(GenericI18Enum.ERROR_USER_NOTICE_INFORMATION_MESSAGE));
+					SecurityException securityException = (SecurityException) getExceptionType(
+							e, SecurityException.class);
+					if (securityException != null) {
+						NotificationUtil.showMessagePermissionAlert();
+					} else {
+						NotificationUtil.showErrorNotification(LocalizationHelper
+								.getMessage(GenericI18Enum.ERROR_USER_NOTICE_INFORMATION_MESSAGE));
+						log.error("Error", e);
+					}
 				}
-				log.error("Error", e);
+
 			}
 		});
 
@@ -192,11 +201,12 @@ public class DesktopApplication extends UI {
 		return null;
 	}
 
-	private static Throwable getUserInvalidException(Throwable e) {
-		if (e instanceof UserInvalidInputException) {
+	private static Throwable getExceptionType(Throwable e,
+			Class<? extends Throwable> exceptionType) {
+		if (exceptionType.isAssignableFrom(e.getClass())) {
 			return e;
 		} else if (e.getCause() != null) {
-			return getUserInvalidException(e.getCause());
+			return getExceptionType(e.getCause(), exceptionType);
 		} else {
 			return null;
 		}

@@ -295,7 +295,7 @@ public class SimpleColumnComponentBuilderMap {
 			TextFieldBuilder textBuilder = null;
 			if (classType.equals(CrmTypeConstants.OPPORTUNITY)
 					&& field.equals("opportunityname")) {
-				// TODO
+
 				ConditionalStyleBuilder overDueStyle = stl.conditionalStyle(
 						new IsOpportunityOverDue()).setForegroundColor(
 						Color.RED);
@@ -616,7 +616,7 @@ public class SimpleColumnComponentBuilderMap {
 
 	public static class RatingComponentBuilder implements
 			ColumnFieldComponentBuilder {
-		
+
 		private String field;
 		private String classType;
 

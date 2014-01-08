@@ -785,20 +785,27 @@ public class ResourceHandlerComponent extends VerticalLayout {
 			renameBtn.addStyleName("link");
 			filterBtnLayout.addComponent(renameBtn);
 
-			final Button downloadBtn = new Button("Download",
-					new Button.ClickListener() {
-						private static final long serialVersionUID = 1L;
+			final Button downloadBtn = new Button("Download");
 
-						@Override
-						public void buttonClick(ClickEvent event) {
-							// TODO: check download
-							List<Resource> lstRes = new ArrayList<Resource>();
-							lstRes.add(res);
-							final com.vaadin.server.Resource downloadResource = StreamDownloadResourceUtil
-									.getStreamResourceSupportExtDrive(lstRes,
-											false);
-						}
-					});
+			LazyStreamSource streamsource = new LazyStreamSource() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				protected StreamSource buildStreamSource() {
+					List<Resource> lstRes = new ArrayList<Resource>();
+					lstRes.add(res);
+					return StreamDownloadResourceUtil
+							.getStreamSourceSupportExtDrive(lstRes, false);
+				}
+
+				public String getFilename() {
+					return res.getName();
+				}
+			};
+
+			OnDemandFileDownloader downloaderExt = new OnDemandFileDownloader(
+					streamsource);
+			downloaderExt.extend(downloadBtn);
 
 			downloadBtn.addStyleName("link");
 			filterBtnLayout.addComponent(downloadBtn);
