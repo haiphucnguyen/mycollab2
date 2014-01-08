@@ -28,6 +28,7 @@ import com.esofthead.mycollab.module.user.domain.UserAccountInvitation;
 import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.ui.CheckBoxDecor;
 import com.esofthead.mycollab.vaadin.ui.EmailLink;
 import com.esofthead.mycollab.vaadin.ui.UserLink;
 import com.esofthead.mycollab.vaadin.ui.table.DefaultPagedBeanTable;
@@ -37,7 +38,6 @@ import com.vaadin.data.Property;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
@@ -63,7 +63,7 @@ public class UserTableDisplay extends
 			@Override
 			public Object generateCell(final Table source, final Object itemId,
 					Object columnId) {
-				final CheckBox cb = new CheckBox("", false);
+				final CheckBoxDecor cb = new CheckBoxDecor("", false);
 				cb.setImmediate(true);
 				cb.addValueChangeListener(new Property.ValueChangeListener() {
 					private static final long serialVersionUID = 1L;

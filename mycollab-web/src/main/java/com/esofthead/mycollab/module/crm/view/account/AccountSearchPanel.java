@@ -276,6 +276,11 @@ public class AccountSearchPanel extends
 				}
 			}
 		}
+
+		@Override
+		protected Class<AccountSearchCriteria> getType() {
+			return AccountSearchCriteria.class;
+		}
 	}
 
 	private class AccountBasicSearchLayout extends

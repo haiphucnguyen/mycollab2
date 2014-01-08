@@ -25,13 +25,13 @@ import com.esofthead.mycollab.module.user.domain.criteria.RoleSearchCriteria;
 import com.esofthead.mycollab.module.user.service.RoleService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
+import com.esofthead.mycollab.vaadin.ui.CheckBoxDecor;
 import com.esofthead.mycollab.vaadin.ui.table.DefaultPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 import com.vaadin.data.Property;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.Table;
 
 /**
@@ -54,7 +54,7 @@ public class RoleTableDisplay extends
 			@Override
 			public Object generateCell(final Table source, final Object itemId,
 					Object columnId) {
-				final CheckBox cb = new CheckBox("", false);
+				final CheckBoxDecor cb = new CheckBoxDecor("", false);
 				cb.setImmediate(true);
 				cb.addValueChangeListener(new Property.ValueChangeListener() {
 					private static final long serialVersionUID = 1L;

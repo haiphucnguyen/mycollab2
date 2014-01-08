@@ -447,6 +447,11 @@ public class LeadSearchPanel extends
 						.getAssignUsers().values));
 			}
 		}
+
+		@Override
+		protected Class<LeadSearchCriteria> getType() {
+			return LeadSearchCriteria.class;
+		}
 	}
 
 	@SuppressWarnings("unchecked")

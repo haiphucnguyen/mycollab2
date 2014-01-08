@@ -184,7 +184,7 @@ public class CaseSearchPanel extends
 			}
 			if (value.getAccountName() != null) {
 				// TODO: check set value again
-//				 this.accountField.setValue(value.getAccountName().getValue());
+				// this.accountField.setValue(value.getAccountName().getValue());
 			}
 			if (value.getStatuses() != null) {
 				this.statusField.setValue(Arrays.asList((Object[]) value
@@ -199,6 +199,11 @@ public class CaseSearchPanel extends
 				this.priorityField.setValue(Arrays.asList((Object[]) value
 						.getPriorities().values));
 			}
+		}
+
+		@Override
+		protected Class<CaseSearchCriteria> getType() {
+			return CaseSearchCriteria.class;
 		}
 	}
 

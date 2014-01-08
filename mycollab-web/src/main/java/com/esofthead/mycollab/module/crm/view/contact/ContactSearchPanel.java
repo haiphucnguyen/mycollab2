@@ -66,8 +66,8 @@ public class ContactSearchPanel extends
 		layout.setSpacing(true);
 		layout.setMargin(true);
 
-		final Image titleIcon = new Image(null, MyCollabResource
-				.newResource("icons/22/crm/contact.png"));
+		final Image titleIcon = new Image(null,
+				MyCollabResource.newResource("icons/22/crm/contact.png"));
 		layout.addComponent(titleIcon);
 		layout.setComponentAlignment(titleIcon, Alignment.MIDDLE_LEFT);
 
@@ -441,6 +441,11 @@ public class ContactSearchPanel extends
 				final Object[] leadField = value.getLeadSources().values;
 				this.leadSourceField.setValue(Arrays.asList(leadField));
 			}
+		}
+
+		@Override
+		protected Class<ContactSearchCriteria> getType() {
+			return ContactSearchCriteria.class;
 		}
 	}
 

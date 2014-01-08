@@ -38,6 +38,7 @@ import com.esofthead.mycollab.vaadin.events.MassItemActionHandler;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
+import com.esofthead.mycollab.vaadin.ui.CheckBoxDecor;
 import com.esofthead.mycollab.vaadin.ui.PopupButtonControl;
 import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -75,7 +76,7 @@ public class ProjectRoleListViewImpl extends AbstractPageView implements
 	private final Label selectedItemsNumberLabel = new Label();
 
 	public ProjectRoleListViewImpl() {
-		
+
 		this.setMargin(new MarginInfo(true, false, false, false));
 
 		this.searchPanel = new ProjectRoleSearchPanel();
@@ -104,7 +105,7 @@ public class ProjectRoleListViewImpl extends AbstractPageView implements
 					@Override
 					public Object generateCell(final Table source,
 							final Object itemId, final Object columnId) {
-						final CheckBox cb = new CheckBox("", false);
+						final CheckBoxDecor cb = new CheckBoxDecor("", false);
 						cb.setImmediate(true);
 						cb.addValueChangeListener(new ValueChangeListener() {
 							private static final long serialVersionUID = 1L;

@@ -75,8 +75,8 @@ public class CampaignSearchPanel extends
 		layout.setSpacing(true);
 		layout.setMargin(true);
 
-		final Image titleIcon = new Image(null, MyCollabResource
-				.newResource("icons/22/crm/campaign.png"));
+		final Image titleIcon = new Image(null,
+				MyCollabResource.newResource("icons/22/crm/campaign.png"));
 		layout.addComponent(titleIcon);
 		layout.setComponentAlignment(titleIcon, Alignment.MIDDLE_LEFT);
 
@@ -339,12 +339,10 @@ public class CampaignSearchPanel extends
 
 		private void loadDateTimeField(final DateSearchField dateField,
 				final DateSelectionField selectDateField) {
-			if (dateField.getComparision().equals(
-					DateSearchField.GREATERTHAN)) {
+			if (dateField.getComparision().equals(DateSearchField.GREATERTHAN)) {
 				selectDateField.getDateSelectionBox().setValue(
 						DateSelectionComboBox.AFTER);
-			} else if (dateField.getComparision().equals(
-					DateSearchField.EQUAL)) {
+			} else if (dateField.getComparision().equals(DateSearchField.EQUAL)) {
 				selectDateField.getDateSelectionBox().setValue(
 						DateSelectionComboBox.EQUAL);
 			} else if (dateField.getComparision().equals(
@@ -423,6 +421,11 @@ public class CampaignSearchPanel extends
 				final Object[] assign = value.getAssignUsers().values;
 				this.assignUserField.setValue(Arrays.asList(assign));
 			}
+		}
+
+		@Override
+		protected Class<CampaignSearchCriteria> getType() {
+			return CampaignSearchCriteria.class;
 		}
 	}
 

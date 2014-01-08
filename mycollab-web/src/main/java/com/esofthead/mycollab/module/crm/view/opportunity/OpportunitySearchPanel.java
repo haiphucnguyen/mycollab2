@@ -371,6 +371,11 @@ public class OpportunitySearchPanel extends
 						.getLeadSources().values));
 			}
 		}
+
+		@Override
+		protected Class<OpportunitySearchCriteria> getType() {
+			return OpportunitySearchCriteria.class;
+		}
 	}
 
 	@SuppressWarnings("unchecked")

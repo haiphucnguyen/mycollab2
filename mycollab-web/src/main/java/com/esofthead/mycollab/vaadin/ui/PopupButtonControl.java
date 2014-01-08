@@ -39,19 +39,11 @@ public class PopupButtonControl extends SplitButton implements
 	private Set<MassItemActionHandler> handlers;
 
 	public PopupButtonControl(final String id, final Button button) {
-		super();
+		super(button);
 
 		addStyleName(UIConstants.THEME_GRAY_LINK);
 
 		initPopupButton(id, button.getCaption());
-	}
-
-	public PopupButtonControl(final String id, final String defaultName) {
-		super();
-		this.addStyleName(UIConstants.SPLIT_BUTTON);
-		this.setCaption(defaultName);
-		initPopupButton(id, defaultName);
-
 	}
 
 	private void initPopupButton(final String id, final String defaultName) {

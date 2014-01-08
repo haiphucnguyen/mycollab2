@@ -36,7 +36,6 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.MassItemActionHandler;
 import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel.SearchLayout;
-import com.google.gson.reflect.TypeToken;
 import com.vaadin.data.util.BeanContainer;
 import com.vaadin.server.StreamResource;
 import com.vaadin.shared.ui.MarginInfo;
@@ -70,6 +69,7 @@ public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
 	private SavedSearchResultComboBox saveResultComboBox;
 	private Label filterLabel = new Label("Filter");
 	protected String type;
+
 	private PopupButtonControl tableActionControls;
 	private HorizontalLayout saveSearchControls;
 	private Button addnewBtn;
@@ -160,6 +160,7 @@ public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
 
 		// tableActionControll for Update group controls
 		tableActionControls = new PopupButtonControl("updateSearch", updateBtn);
+
 		tableActionControls.addOptionItem("delete",
 				LocalizationHelper.getMessage(GenericI18Enum.BUTTON_DELETE));
 		tableActionControls.addOptionItem("new", "New");
@@ -276,7 +277,7 @@ public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
 									LocalizationHelper.getMessage(
 											GenericI18Enum.DELETE_DIALOG_TITLE,
 											SiteConfiguration.getSiteName()),
-									"Do you want to delete record ?",
+									"Do you want to delete record?",
 									LocalizationHelper
 											.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
 									LocalizationHelper
@@ -297,7 +298,7 @@ public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
 																AppContext
 																		.getAccountId());
 												NotificationUtil
-														.showNotification("Delete successfully.");
+														.showNotification("Delete saved query successfully.");
 
 												BeanContainer<String, SaveSearchResultWithBLOBs> beanData = saveResultComboBox
 														.getBeanIteam();
@@ -354,7 +355,7 @@ public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
 		// ------Define & contruct TopfooterLayout ------------------------
 		HorizontalLayout topfooterLayout = new HorizontalLayout();
 		topfooterLayout.setWidth("100%");
-		
+
 		Label spaceLbl = new Label("&nbsp;", ContentMode.HTML);
 		topfooterLayout.addComponent(spaceLbl);
 		topfooterLayout.setExpandRatio(spaceLbl, 1.0f);
@@ -398,9 +399,10 @@ public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
 
 						saveSearchValue.setValue("");
 						String queryText = data.getQuerytext();
+						Class<?> type2 = DefaultAdvancedSearchLayout.this
+								.getType();
 						S value = (S) JsonDeSerializer.fromJson(queryText,
-								new TypeToken<S>() {
-								}.getType());
+								type2);
 						loadSaveSearchToField(value);
 						saveSearchControls.replaceComponent(addnewBtn,
 								tableActionControls);
@@ -439,4 +441,6 @@ public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
 			return beanItem;
 		}
 	}
+
+	protected abstract Class<S> getType();
 }
