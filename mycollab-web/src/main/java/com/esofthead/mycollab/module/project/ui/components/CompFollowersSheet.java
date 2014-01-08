@@ -30,7 +30,7 @@ import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.ProjectMember;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
-import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberMultiSelectField;
+import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberMultiSelectComp;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserLink;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -90,7 +90,7 @@ public abstract class CompFollowersSheet<V extends ValuedBean> extends
 		HorizontalLayout layoutAdd = new HorizontalLayout();
 		layoutAdd.setSpacing(true);
 
-		final ProjectMemberMultiSelectField memberSelection = new ProjectMemberMultiSelectField();
+		final ProjectMemberMultiSelectComp memberSelection = new ProjectMemberMultiSelectComp();
 		layoutAdd.addComponent(memberSelection);
 		layoutAdd.setComponentAlignment(memberSelection, Alignment.MIDDLE_LEFT);
 

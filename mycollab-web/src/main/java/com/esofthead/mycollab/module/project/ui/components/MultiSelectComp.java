@@ -128,7 +128,16 @@ public class MultiSelectComp<T> extends CustomComponent {
 		VerticalLayout popupContent = new VerticalLayout();
 		for (final T item : items) {
 
-			final ItemSelectionComp chkItem = buildItem(item);
+			final ItemSelectionComp<T> chkItem = buildItem(item);
+
+			if (selectedItems != null) {
+				for (T selectedItem : selectedItems) {
+					if (compareVal(item, selectedItem)) {
+						chkItem.setInternalVal(true);
+					}
+				}
+			}
+
 			popupContent.addComponent(chkItem);
 		}
 
@@ -255,6 +264,10 @@ public class MultiSelectComp<T> extends CustomComponent {
 			super();
 			this.item = item;
 			this.setCaption(caption);
+		}
+
+		void setInternalVal(Boolean val) {
+			this.setInternalValue(val);
 		}
 
 	}

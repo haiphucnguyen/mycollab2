@@ -19,6 +19,8 @@ package com.esofthead.mycollab.module.project.view.settings.component;
 import java.util.List;
 
 import org.apache.commons.beanutils.PropertyUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
@@ -39,22 +41,25 @@ import com.vaadin.ui.CustomComponent;
  * @since 1.0
  * 
  */
-public class ProjectMemberMultiSelectField extends CustomComponent {
+public class ProjectMemberMultiSelectComp extends CustomComponent {
 	private static final long serialVersionUID = 1L;
+
+	private static Logger log = LoggerFactory
+			.getLogger(ProjectMemberMultiSelectComp.class);
 
 	private static String displayName = "memberFullName";
 	private MultiSelectComp<SimpleProjectMember> memberSelectionComp;
 
-	public ProjectMemberMultiSelectField() {
+	public ProjectMemberMultiSelectComp() {
 		ProjectMemberSearchCriteria criteria = new ProjectMemberSearchCriteria();
 		criteria.setProjectId(new NumberSearchField(CurrentProjectVariables
 				.getProjectId()));
 		criteria.setStatus(new StringSearchField(
 				ProjectMemberStatusConstants.ACTIVE));
 
-		ProjectMemberService userService = ApplicationContextUtil
+		ProjectMemberService projectMemberService = ApplicationContextUtil
 				.getSpringBean(ProjectMemberService.class);
-		List<SimpleProjectMember> items = userService
+		List<SimpleProjectMember> items = projectMemberService
 				.findPagableListByCriteria(new SearchRequest<ProjectMemberSearchCriteria>(
 						criteria, 0, Integer.MAX_VALUE));
 
@@ -70,7 +75,7 @@ public class ProjectMemberMultiSelectField extends CustomComponent {
 					userAvatarId = (String) PropertyUtils.getProperty(item,
 							"memberAvatarId");
 				} catch (Exception e) {
-					e.printStackTrace();
+					log.error("Error while getting project member avatar", e);
 				}
 
 				buildItem.setIcon(UserAvatarControlFactory
