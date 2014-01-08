@@ -150,20 +150,24 @@ public class ProjectAddWindow extends Window {
 
 						@Override
 						public void buttonClick(final ClickEvent event) {
-							editForm.fireSaveForm();
-							final ProjectService projectService = ApplicationContextUtil
-									.getSpringBean(ProjectService.class);
-							project.setSaccountid(AppContext.getAccountId());
-							projectService.saveWithSession(
-									ProjectAddWindow.this.project,
-									AppContext.getUsername());
+							if (editForm.validateForm()) {
+								project.setSaccountid(AppContext.getAccountId());
+								final ProjectService projectService = ApplicationContextUtil
+										.getSpringBean(ProjectService.class);
 
-							EventBus.getInstance().fireEvent(
-									new ProjectEvent.GotoMyProject(this,
-											new PageActionChain(
-													new ProjectScreenData.Goto(
-															project.getId()))));
-							ProjectAddWindow.this.close();
+								projectService.saveWithSession(
+										ProjectAddWindow.this.project,
+										AppContext.getUsername());
+
+								EventBus.getInstance()
+										.fireEvent(
+												new ProjectEvent.GotoMyProject(
+														this,
+														new PageActionChain(
+																new ProjectScreenData.Goto(
+																		project.getId()))));
+								ProjectAddWindow.this.close();
+							}
 						}
 
 					});
