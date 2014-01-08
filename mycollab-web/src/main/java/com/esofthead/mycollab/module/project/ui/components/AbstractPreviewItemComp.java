@@ -1,5 +1,8 @@
 package com.esofthead.mycollab.module.project.ui.components;
 
+import com.esofthead.mycollab.eventmanager.ApplicationEvent;
+import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
+import com.esofthead.mycollab.vaadin.mvp.PageView;
 import com.esofthead.mycollab.vaadin.resource.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.esofthead.mycollab.vaadin.resource.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.resource.ui.IFormLayoutFactory;
@@ -15,75 +18,89 @@ import com.vaadin.ui.VerticalLayout;
  * 
  * @param <B>
  */
-public abstract class AbstractPreviewItemComp<B> extends VerticalLayout {
-    private static final long serialVersionUID = 1L;
+public abstract class AbstractPreviewItemComp<B> extends VerticalLayout
+		implements PageView {
+	private static final long serialVersionUID = 1L;
+	
+	protected B beanItem;
+	protected AdvancedPreviewBeanForm<B> previewForm;
+	protected ReadViewLayout previewLayout;
 
-    protected B beanItem;
-    protected AdvancedPreviewBeanForm<B> previewForm;
-    protected ReadViewLayout previewLayout;
+	abstract protected void initRelatedComponents();
 
-    abstract protected void initRelatedComponents();
+	public AbstractPreviewItemComp(Resource iconResource) {
+		previewLayout = new ReadViewLayout("", iconResource);
 
-    public AbstractPreviewItemComp(Resource iconResource) {
-        previewLayout = new ReadViewLayout("", iconResource);
+		this.addComponent(previewLayout);
 
-        this.addComponent(previewLayout);
+		previewForm = initPreviewForm();
+		ComponentContainer actionControls = createButtonControls();
+		if (actionControls != null) {
+			actionControls.addStyleName("control-buttons");
+			previewLayout.addTopControls(actionControls);
+		}
 
-        initRelatedComponents();
+		previewLayout.addBody(previewForm);
+	}
 
-        previewForm = initPreviewForm();
-        ComponentContainer actionControls = createButtonControls();
-        if (actionControls != null) {
-            actionControls.addStyleName("control-buttons");
-            previewLayout.addTopControls(actionControls);
-        }
+	private void initLayout() {
+		initRelatedComponents();
+		ComponentContainer bottomPanel = createBottomPanel();
+		if (bottomPanel != null) {
+			previewLayout.addBottomControls(bottomPanel);
+		}
+	}
 
-        previewLayout.addBody(previewForm);
+	public void previewItem(final B item) {
+		this.beanItem = item;
+		initLayout();
+		previewLayout.setTitle(initFormTitle());
 
-        ComponentContainer bottomPanel = createBottomPanel();
-        if (bottomPanel != null) {
-            previewLayout.addBottomControls(bottomPanel);
-        }
-    }
+		previewForm.setFormLayoutFactory(initFormLayoutFactory());
+		previewForm.setBeanFormFieldFactory(initBeanFormFieldFactory());
+		previewForm.setBean(item);
 
-    public void previewItem(final B item) {
-        this.beanItem = item;
-        previewLayout.setTitle(initFormTitle());
+		onPreviewItem();
+	}
 
-        previewForm.setFormLayoutFactory(initFormLayoutFactory());
-        previewForm.setBeanFormFieldFactory(initBeanFormFieldFactory());
-        previewForm.setBean(item);
+	public B getBeanItem() {
+		return beanItem;
+	}
 
-        onPreviewItem();
-    }
+	public AdvancedPreviewBeanForm<B> getPreviewForm() {
+		return previewForm;
+	}
 
-    public B getBeanItem() {
-        return beanItem;
-    }
+	protected void addLayoutStyleName(String styleName) {
+		previewLayout.addTitleStyleName(styleName);
+	}
 
-    public AdvancedPreviewBeanForm<B> getPreviewForm() {
-        return previewForm;
-    }
+	protected void removeLayoutStyleName(String styleName) {
+		previewLayout.removeTitleStyleName(styleName);
+	}
 
-    protected void addLayoutStyleName(String styleName) {
-        previewLayout.addTitleStyleName(styleName);
-    }
+	@Override
+	public ComponentContainer getWidget() {
+		return this;
+	}
 
-    protected void removeLayoutStyleName(String styleName) {
-        previewLayout.removeTitleStyleName(styleName);
-    }
+	@Override
+	public void addViewListener(
+			ApplicationEventListener<? extends ApplicationEvent> listener) {
 
-    abstract protected void onPreviewItem();
+	}
 
-    abstract protected String initFormTitle();
+	abstract protected void onPreviewItem();
 
-    abstract protected AdvancedPreviewBeanForm<B> initPreviewForm();
+	abstract protected String initFormTitle();
 
-    abstract protected IFormLayoutFactory initFormLayoutFactory();
+	abstract protected AdvancedPreviewBeanForm<B> initPreviewForm();
 
-    abstract protected AbstractBeanFieldGroupViewFieldFactory<B> initBeanFormFieldFactory();
+	abstract protected IFormLayoutFactory initFormLayoutFactory();
 
-    abstract protected ComponentContainer createButtonControls();
+	abstract protected AbstractBeanFieldGroupViewFieldFactory<B> initBeanFormFieldFactory();
 
-    abstract protected ComponentContainer createBottomPanel();
+	abstract protected ComponentContainer createButtonControls();
+
+	abstract protected ComponentContainer createBottomPanel();
 }

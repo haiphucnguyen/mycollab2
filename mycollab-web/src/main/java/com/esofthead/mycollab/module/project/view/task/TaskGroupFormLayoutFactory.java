@@ -17,17 +17,11 @@
 
 package com.esofthead.mycollab.module.project.view.task;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
-import com.esofthead.mycollab.vaadin.resource.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.resource.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.resource.ui.IFormLayoutFactory;
-import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Alignment;
-import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
@@ -37,98 +31,47 @@ import com.vaadin.ui.VerticalLayout;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-public abstract class TaskGroupFormLayoutFactory implements IFormLayoutFactory {
+public class TaskGroupFormLayoutFactory implements IFormLayoutFactory {
 	private static final long serialVersionUID = 1L;
-	private final String title;
-	private TaskListInformationLayout informationLayout;
-	private final List<String> lstStyleTitle = new ArrayList<String>();
 
-	public TaskGroupFormLayoutFactory(final String title) {
-		this.title = title;
-	}
+	private GridFormLayoutHelper informationLayout;
 
 	@Override
 	public Layout getLayout() {
-		final AddViewLayout taskgroupAddLayout = new AddViewLayout(this.title,
-				MyCollabResource.newResource("icons/24/project/task.png"));
-
-		for (int i = 0; i < this.lstStyleTitle.size(); i++) {
-			taskgroupAddLayout.addTitleStyleName(this.lstStyleTitle.get(i));
-		}
-
-		final Layout topPanel = this.createTopPanel();
-		if (topPanel != null) {
-			taskgroupAddLayout.addTopControls(topPanel);
-		}
-
-		this.informationLayout = new TaskListInformationLayout();
-		taskgroupAddLayout.addBody(this.informationLayout.getLayout());
-
-		final ComponentContainer bottomPanel = this.createBottomPanel();
-		if (bottomPanel != null) {
-			taskgroupAddLayout.addBottomControls(bottomPanel);
-		}
-
-		return taskgroupAddLayout;
-	}
-
-	protected void addTitleStyle(final String styleName) {
-		this.lstStyleTitle.add(styleName);
+		this.informationLayout = new GridFormLayoutHelper(2, 4, "100%",
+				"180px", Alignment.MIDDLE_LEFT);
+		this.informationLayout.getLayout().addStyleName("colored-gridlayout");
+		this.informationLayout.getLayout().setMargin(false);
+		this.informationLayout.getLayout().setWidth("100%");
+		final VerticalLayout layout = new VerticalLayout();
+		layout.addComponent(this.informationLayout.getLayout());
+		layout.setComponentAlignment(this.informationLayout.getLayout(),
+				Alignment.BOTTOM_CENTER);
+		return layout;
 	}
 
 	@Override
 	public boolean attachField(final Object propertyId, final Field<?> field) {
-		return this.informationLayout.attachField(propertyId, field);
-	}
-
-	protected abstract Layout createTopPanel();
-
-	protected abstract ComponentContainer createBottomPanel();
-
-	@SuppressWarnings("serial")
-	public static class TaskListInformationLayout implements IFormLayoutFactory {
-
-		private GridFormLayoutHelper informationLayout;
-
-		@Override
-		public Layout getLayout() {
-			this.informationLayout = new GridFormLayoutHelper(2, 4, "100%",
-					"180px", Alignment.MIDDLE_LEFT);
-			this.informationLayout.getLayout().addStyleName(
-					"colored-gridlayout");
-			this.informationLayout.getLayout().setMargin(false);
-			this.informationLayout.getLayout().setWidth("100%");
-			final VerticalLayout layout = new VerticalLayout();
-			layout.addComponent(this.informationLayout.getLayout());
-			layout.setComponentAlignment(this.informationLayout.getLayout(),
-					Alignment.BOTTOM_CENTER);
-			return layout;
+		if (propertyId.equals("name")) {
+			this.informationLayout.addComponent(field, "Name", 0, 0, 2, "100%");
+		} else if (propertyId.equals("description")) {
+			this.informationLayout.addComponent(field, "Description", 0, 1, 2,
+					"100%");
+		} else if (propertyId.equals("owner")) {
+			this.informationLayout.addComponent(field, LocalizationHelper
+					.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD), 0, 2);
+		} else if (propertyId.equals("milestoneid")) {
+			this.informationLayout.addComponent(field, "Related Milestone", 1,
+					2);
+		} else if (propertyId.equals("percentageComplete")) {
+			this.informationLayout.addComponent(field, "Progress", 0, 3);
+		} else if (propertyId.equals("numOpenTasks")) {
+			this.informationLayout.addComponent(field, "Number of open tasks",
+					1, 3);
+		} else {
+			return false;
 		}
 
-		@Override
-		public boolean attachField(final Object propertyId, final Field<?> field) {
-			if (propertyId.equals("name")) {
-				this.informationLayout.addComponent(field, "Name", 0, 0, 2,
-						"100%");
-			} else if (propertyId.equals("description")) {
-				this.informationLayout.addComponent(field, "Description", 0, 1,
-						2, "100%");
-			} else if (propertyId.equals("owner")) {
-				this.informationLayout.addComponent(field, LocalizationHelper
-						.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD), 0, 2);
-			} else if (propertyId.equals("milestoneid")) {
-				this.informationLayout.addComponent(field, "Related Milestone",
-						1, 2);
-			} else if (propertyId.equals("percentageComplete")) {
-				this.informationLayout.addComponent(field, "Progress", 0, 3);
-			} else if (propertyId.equals("numOpenTasks")) {
-				this.informationLayout.addComponent(field,
-						"Number of open tasks", 1, 3);
-			} else {
-				return false;
-			}
-
-			return true;
-		}
+		return true;
 	}
 }
