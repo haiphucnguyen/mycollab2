@@ -20,8 +20,8 @@ import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.crm.localization.ContactI18nEnum;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
-import com.esofthead.mycollab.vaadin.resource.ui.UIConstants;
-import com.esofthead.mycollab.vaadin.resource.ui.table.TableViewField;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 
 /**
  * 

@@ -20,7 +20,7 @@ package com.esofthead.mycollab.module.project.view.message;
 import java.util.List;
 
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.resource.ui.*;
+import com.esofthead.mycollab.vaadin.ui.*;
 
 import org.vaadin.dialogs.ConfirmDialog;
 

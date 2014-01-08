@@ -26,8 +26,8 @@ import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
-import com.esofthead.mycollab.vaadin.resource.ui.FieldSelection;
-import com.esofthead.mycollab.vaadin.resource.ui.table.TableClickEvent;
+import com.esofthead.mycollab.vaadin.ui.FieldSelection;
+import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 

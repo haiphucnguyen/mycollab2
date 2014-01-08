@@ -26,7 +26,7 @@ import com.esofthead.mycollab.module.crm.view.campaign.CampaignSimpleSearchPanel
 import com.esofthead.mycollab.module.crm.view.campaign.CampaignTableDisplay;
 import com.esofthead.mycollab.module.crm.view.campaign.CampaignTableFieldDef;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
-import com.esofthead.mycollab.vaadin.resource.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.ui.Button;
 
 /**

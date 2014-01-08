@@ -17,7 +17,7 @@
 
 package com.esofthead.mycollab.module.crm.ui.components;
 
-import com.esofthead.mycollab.vaadin.resource.ui.HistoryLogComponent;
+import com.esofthead.mycollab.vaadin.ui.HistoryLogComponent;
 import com.vaadin.ui.Window;
 
 /**

@@ -1,7 +1,7 @@
 package com.esofthead.mycollab.premium.module.project.view.standup;
 
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
-import com.esofthead.mycollab.vaadin.resource.ui.AbstractPresenter;
+import com.esofthead.mycollab.vaadin.ui.AbstractPresenter;
 import com.vaadin.ui.ComponentContainer;
 
 /**

@@ -34,10 +34,10 @@ import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemb
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserLink;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.resource.ui.ConfirmDialogExt;
-import com.esofthead.mycollab.vaadin.resource.ui.UIConstants;
-import com.esofthead.mycollab.vaadin.resource.ui.table.DefaultPagedBeanTable;
-import com.esofthead.mycollab.vaadin.resource.ui.table.TableViewField;
+import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.table.DefaultPagedBeanTable;
+import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;

@@ -26,7 +26,7 @@ import com.esofthead.mycollab.module.crm.view.lead.LeadSimpleSearchPanel;
 import com.esofthead.mycollab.module.crm.view.lead.LeadTableDisplay;
 import com.esofthead.mycollab.module.crm.view.lead.LeadTableFieldDef;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
-import com.esofthead.mycollab.vaadin.resource.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.ui.Button;
 
 /**

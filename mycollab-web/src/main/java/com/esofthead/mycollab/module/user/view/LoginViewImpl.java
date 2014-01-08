@@ -25,7 +25,7 @@ import com.esofthead.mycollab.module.user.events.UserEvent;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
-import com.esofthead.mycollab.vaadin.resource.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.CustomLayoutLoader;
 import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.server.ExternalResource;

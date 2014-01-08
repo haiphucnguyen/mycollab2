@@ -10,7 +10,7 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.schedule.email.SendingRelayEmailNotificationAction;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.vaadin.resource.ui.BeanList;
+import com.esofthead.mycollab.vaadin.ui.BeanList;
 import com.vaadin.ui.VerticalLayout;
 
 /**

@@ -21,7 +21,7 @@ import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.mvp.PageView;
-import com.esofthead.mycollab.vaadin.resource.ui.table.IPagedBeanTable;
+import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable;
 
 /**
  * 

@@ -25,7 +25,7 @@ import com.esofthead.mycollab.module.crm.view.opportunity.IOpportunityLeadSource
 import com.esofthead.mycollab.module.crm.view.opportunity.IOpportunitySalesStageDashboard;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
-import com.esofthead.mycollab.vaadin.resource.ui.Depot;
+import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CssLayout;

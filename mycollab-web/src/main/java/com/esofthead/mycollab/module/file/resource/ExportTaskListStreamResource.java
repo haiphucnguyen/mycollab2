@@ -63,8 +63,8 @@ import com.esofthead.mycollab.reporting.SimpleColumnComponentBuilderMap;
 import com.esofthead.mycollab.reporting.TableViewFieldDecorator;
 import com.esofthead.mycollab.reporting.Templates;
 import com.esofthead.mycollab.schedule.email.project.ProjectMailLinkGenerator;
-import com.esofthead.mycollab.vaadin.resource.ui.UIConstants;
-import com.esofthead.mycollab.vaadin.resource.ui.table.TableViewField;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 
 /**
  * 

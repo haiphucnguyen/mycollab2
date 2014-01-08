@@ -21,8 +21,8 @@ import com.esofthead.mycollab.module.project.domain.criteria.StandupReportSearch
 import com.esofthead.mycollab.module.project.service.StandupReportService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.resource.ui.DefaultBeanPagedList;
-import com.esofthead.mycollab.vaadin.resource.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.DefaultBeanPagedList;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;

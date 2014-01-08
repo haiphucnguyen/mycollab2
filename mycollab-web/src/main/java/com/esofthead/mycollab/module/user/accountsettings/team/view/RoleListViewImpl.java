@@ -20,12 +20,12 @@ package com.esofthead.mycollab.module.user.accountsettings.team.view;
 import java.util.Arrays;
 
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.resource.ui.PopupButtonControl;
-import com.esofthead.mycollab.vaadin.resource.ui.SelectionOptionButton;
-import com.esofthead.mycollab.vaadin.resource.ui.UIConstants;
-import com.esofthead.mycollab.vaadin.resource.ui.table.AbstractPagedBeanTable;
-import com.esofthead.mycollab.vaadin.resource.ui.table.TableClickEvent;
-import com.esofthead.mycollab.vaadin.resource.ui.table.TableViewField;
+import com.esofthead.mycollab.vaadin.ui.PopupButtonControl;
+import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.table.AbstractPagedBeanTable;
+import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
+import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.eventmanager.ApplicationEvent;

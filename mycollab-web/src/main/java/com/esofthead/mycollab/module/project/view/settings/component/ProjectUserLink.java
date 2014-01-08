@@ -18,8 +18,8 @@ package com.esofthead.mycollab.module.project.view.settings.component;
 
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.project.events.ProjectMemberEvent;
-import com.esofthead.mycollab.vaadin.resource.ui.UIConstants;
-import com.esofthead.mycollab.vaadin.resource.ui.UserAvatarControlFactory;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.vaadin.ui.Button;
 
 /**

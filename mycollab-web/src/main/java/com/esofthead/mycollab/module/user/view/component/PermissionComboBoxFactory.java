@@ -20,7 +20,7 @@ import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.security.AccessPermissionFlag;
 import com.esofthead.mycollab.security.BooleanPermissionFlag;
 import com.esofthead.mycollab.security.PermissionFlag;
-import com.esofthead.mycollab.vaadin.resource.ui.KeyCaptionComboBox;
+import com.esofthead.mycollab.vaadin.ui.KeyCaptionComboBox;
 
 /**
  * 

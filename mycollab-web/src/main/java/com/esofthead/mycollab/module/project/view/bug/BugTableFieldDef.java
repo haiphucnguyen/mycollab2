@@ -18,8 +18,8 @@ package com.esofthead.mycollab.module.project.view.bug;
 
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.project.localization.BugI18nEnum;
-import com.esofthead.mycollab.vaadin.resource.ui.UIConstants;
-import com.esofthead.mycollab.vaadin.resource.ui.table.TableViewField;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 
 public interface BugTableFieldDef {
 

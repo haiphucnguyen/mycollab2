@@ -16,7 +16,7 @@
  */
 package com.esofthead.mycollab.shell.view;
 
-import com.esofthead.mycollab.vaadin.resource.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.CustomLayoutExt;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;

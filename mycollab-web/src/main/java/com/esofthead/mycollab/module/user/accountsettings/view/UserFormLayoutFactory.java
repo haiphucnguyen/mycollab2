@@ -17,11 +17,11 @@
 
 package com.esofthead.mycollab.module.user.accountsettings.view;
 
-import com.esofthead.mycollab.vaadin.resource.ui.AddViewLayout;
-import com.esofthead.mycollab.vaadin.resource.ui.GridFormLayoutHelper;
-import com.esofthead.mycollab.vaadin.resource.ui.IFormLayoutFactory;
-import com.esofthead.mycollab.vaadin.resource.ui.UIConstants;
-import com.esofthead.mycollab.vaadin.resource.ui.UserAvatarControlFactory;
+import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
+import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
+import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.server.Resource;
 import com.vaadin.ui.Alignment;

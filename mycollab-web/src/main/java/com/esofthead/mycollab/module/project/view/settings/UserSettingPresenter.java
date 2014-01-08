@@ -25,7 +25,7 @@ import com.esofthead.mycollab.module.project.view.parameters.ProjectRoleScreenDa
 import com.esofthead.mycollab.module.project.view.parameters.ProjectSettingScreenData;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
-import com.esofthead.mycollab.vaadin.resource.ui.AbstractPresenter;
+import com.esofthead.mycollab.vaadin.ui.AbstractPresenter;
 import com.vaadin.ui.ComponentContainer;
 
 /**

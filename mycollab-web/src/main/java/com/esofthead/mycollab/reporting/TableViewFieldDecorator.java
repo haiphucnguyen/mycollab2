@@ -21,7 +21,7 @@ import net.sf.dynamicreports.report.builder.component.ComponentBuilder;
 import net.sf.dynamicreports.report.definition.expression.DRIExpression;
 
 import com.esofthead.mycollab.reporting.SimpleColumnComponentBuilderMap.StringFieldUtilExpression;
-import com.esofthead.mycollab.vaadin.resource.ui.table.TableViewField;
+import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 
 /**
  * 

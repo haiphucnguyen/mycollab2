@@ -30,8 +30,8 @@ import com.esofthead.mycollab.module.crm.view.cases.CaseTableDisplay;
 import com.esofthead.mycollab.module.crm.view.cases.CaseTableFieldDef;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.resource.ui.UIConstants;
-import com.esofthead.mycollab.vaadin.resource.ui.table.TableClickEvent;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Button;
 

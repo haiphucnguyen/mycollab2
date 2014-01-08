@@ -22,7 +22,7 @@ import org.apache.commons.beanutils.PropertyUtils;
 
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
-import com.esofthead.mycollab.vaadin.resource.ui.ValueComboBox;
+import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
 import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.shared.ui.datefield.Resolution;
 import com.vaadin.ui.Component;
