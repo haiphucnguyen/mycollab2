@@ -32,8 +32,7 @@ public class StandupAdvertisementViewImpl extends AbstractPageView implements
 			throw new MyCollabException(e);
 		}
 
-		BrowserFrame browser = new BrowserFrame("Browser",
-				new ExternalResource(url));
+		BrowserFrame browser = new BrowserFrame("", new ExternalResource(url));
 		browser.setWidth("100%");
 		browser.setHeight("100%");
 		this.addComponent(browser);

@@ -22,6 +22,8 @@ import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 
 public class CaseSearchCriteria extends SearchCriteria {
+	private static final long serialVersionUID = 1L;
+
 	private StringSearchField subject;
 
 	private StringSearchField assignUser;

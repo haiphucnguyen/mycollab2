@@ -24,8 +24,15 @@ import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.vaadin.server.ExternalResource;
+import com.vaadin.ui.BrowserFrame;
 import com.vaadin.ui.Embedded;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @ViewComponent
 public class BugAdvertisementViewImpl extends AbstractPageView implements
 		BugAdvertisementView {
@@ -41,12 +48,10 @@ public class BugAdvertisementViewImpl extends AbstractPageView implements
 		} catch (MalformedURLException e) {
 			throw new MyCollabException(e);
 		}
-		Embedded browser = new Embedded("", new ExternalResource(url));
+		BrowserFrame browser = new BrowserFrame("", new ExternalResource(url));
 		browser.setWidth("100%");
 		browser.setHeight("100%");
 
-		// TODO: refactor here
-		browser.setType(Embedded.TYPE_BROWSER);
 		this.addComponent(browser);
 	}
 }

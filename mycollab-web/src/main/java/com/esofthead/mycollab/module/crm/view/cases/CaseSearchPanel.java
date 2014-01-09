@@ -29,7 +29,6 @@ import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
-import com.esofthead.mycollab.module.crm.domain.Account;
 import com.esofthead.mycollab.module.crm.domain.criteria.CaseSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.CaseEvent;
 import com.esofthead.mycollab.module.crm.view.account.AccountSelectionField;
@@ -47,6 +46,7 @@ import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.AbstractField;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.HorizontalLayout;
@@ -134,11 +134,11 @@ public class CaseSearchPanel extends
 								((String) this.subjectField.getValue()).trim()));
 			}
 
-			final Account account = this.accountField.getAccount();
-			if (StringUtils.isNotNullOrEmpty(account.getAccountname())) {
+			final Integer accountId = this.accountField.getValue();
+			if (accountId != null) {
 				CaseSearchPanel.this.searchCriteria
-						.setAccountName(new StringSearchField(SearchField.AND,
-								account.getAccountname()));
+						.setAccountId(new NumberSearchField(SearchField.AND,
+								accountId));
 			}
 
 			final Collection<String> statuses = (Collection<String>) this.statusField
@@ -182,9 +182,25 @@ public class CaseSearchPanel extends
 			if (value.getSubject() != null) {
 				this.subjectField.setValue(value.getSubject().getValue());
 			}
-			if (value.getAccountName() != null) {
-				// TODO: check set value again
-				// this.accountField.setValue(value.getAccountName().getValue());
+
+			if (value.getAccountId() != null) {
+				final Integer accountId = (Integer) value.getAccountId()
+						.getValue();
+
+				this.accountField
+						.setPropertyDataSource(new AbstractField<Integer>() {
+							private static final long serialVersionUID = 1L;
+
+							@Override
+							public Integer getValue() {
+								return accountId;
+							}
+
+							@Override
+							public Class<Integer> getType() {
+								return Integer.class;
+							}
+						});
 			}
 			if (value.getStatuses() != null) {
 				this.statusField.setValue(Arrays.asList((Object[]) value
