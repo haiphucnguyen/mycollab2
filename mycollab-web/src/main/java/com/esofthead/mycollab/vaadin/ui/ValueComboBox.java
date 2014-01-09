@@ -51,7 +51,9 @@ public class ValueComboBox extends ComboBox {
 		this.setImmediate(true);
 		this.loadData(values);
 
-		this.select(this.getItemIds().iterator().next());
+		if (!this.isNullSelectionAllowed()) {
+			this.select(this.getItemIds().iterator().next());
+		}
 	}
 
 	public final void loadData(String... values) {
@@ -61,7 +63,9 @@ public class ValueComboBox extends ComboBox {
 			this.addItem(values[i]);
 		}
 
-		this.select(this.getItemIds().iterator().next());
+		if (!this.isNullSelectionAllowed()) {
+			this.select(this.getItemIds().iterator().next());
+		}
 	}
 
 	public final void loadData(Number... values) {

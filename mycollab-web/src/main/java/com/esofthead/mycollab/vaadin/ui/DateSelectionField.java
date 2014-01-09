@@ -44,7 +44,7 @@ public class DateSelectionField extends GridLayout {
 	private DateField dateStart = new DateField();
 	private DateField dateEnd = new DateField();
 
-	DateSelectionComboBox dateSelectionBox;
+	private DateSelectionComboBox dateSelectionBox;
 
 	public DateField getDateStart() {
 		return dateStart;

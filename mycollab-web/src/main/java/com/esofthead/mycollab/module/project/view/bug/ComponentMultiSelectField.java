@@ -62,8 +62,11 @@ public class ComponentMultiSelectField extends CustomField {
 
 	@Override
 	protected com.vaadin.ui.Component initContent() {
-
 		return componentSelection;
+	}
+
+	public void resetComp() {
+		componentSelection.resetComp();
 	}
 
 	@Override

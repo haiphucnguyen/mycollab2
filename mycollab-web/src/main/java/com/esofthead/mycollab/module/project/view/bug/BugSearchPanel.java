@@ -363,13 +363,13 @@ public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 									.resetComp();
 							BugAdvancedSearchLayout.this.resolutionField
 									.resetComp();
-							// TODO: check multi select comp
-							// BugAdvancedSearchLayout.this.affectedVersionField
-							// .resetComp();
-							// BugAdvancedSearchLayout.this.componentField
-							// .resetComp();
-							// BugAdvancedSearchLayout.this.fixedVersionField
-							// .resetComp();
+							
+							 BugAdvancedSearchLayout.this.affectedVersionField
+									.resetComp();
+							 BugAdvancedSearchLayout.this.componentField
+							 .resetComp();
+							 BugAdvancedSearchLayout.this.fixedVersionField
+							 .resetComp();
 							BugAdvancedSearchLayout.this.statusField
 									.resetComp();
 							BugAdvancedSearchLayout.this.severityField

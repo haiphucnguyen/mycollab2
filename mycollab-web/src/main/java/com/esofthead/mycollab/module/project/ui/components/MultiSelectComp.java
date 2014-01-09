@@ -17,7 +17,6 @@
 package com.esofthead.mycollab.module.project.ui.components;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.beanutils.PropertyUtils;
@@ -113,15 +112,6 @@ public class MultiSelectComp<T> extends CustomComponent {
 		this.componentsDisplay.setReadOnly(false);
 		this.componentsDisplay.setValue("");
 		this.componentsDisplay.setReadOnly(true);
-
-		VerticalLayout layout = (VerticalLayout) componentPopupSelection
-				.getContent();
-
-		Iterator<Component> iterator = layout.iterator();
-		while (iterator.hasNext()) {
-			CheckBox checkBox = (CheckBox) iterator.next();
-			checkBox.setValue(false);
-		}
 	}
 
 	private void initContentPopup() {

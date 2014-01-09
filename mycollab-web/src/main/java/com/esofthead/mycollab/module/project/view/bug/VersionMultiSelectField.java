@@ -41,7 +41,7 @@ import com.vaadin.ui.CustomField;
 public class VersionMultiSelectField extends CustomField {
 
 	private MultiSelectComp<Version> versionSelection;
-	
+
 	public VersionMultiSelectField() {
 		VersionSearchCriteria searchCriteria = new VersionSearchCriteria();
 		searchCriteria.setStatus(new StringSearchField("Open"));
@@ -58,11 +58,15 @@ public class VersionMultiSelectField extends CustomField {
 		versionSelection = new MultiSelectComp<Version>("versionname", versions);
 	}
 
+	public void resetComp() {
+		versionSelection.resetComp();
+	}
+
 	@Override
 	protected Component initContent() {
 		return versionSelection;
 	}
-	
+
 	@Override
 	public void setPropertyDataSource(Property newDataSource) {
 		List<Version> versions = (List<Version>) newDataSource.getValue();
