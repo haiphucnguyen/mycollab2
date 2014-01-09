@@ -75,6 +75,7 @@ import com.vaadin.ui.VerticalLayout;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 @ViewComponent
 public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent {
@@ -757,8 +758,8 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
 		AppContext.addFragment(
 				"project/user/preview/"
 						+ UrlEncodeDecoder.encode(project.getId() + "/"
-								+ member.getUsername()),
-				"PageView Project Member: " + member.getMemberFullName());
+								+ member.getUsername()), "Project Member: "
+						+ member.getMemberFullName());
 	}
 
 	public void gotoUserEdit(SimpleProjectMember member) {
@@ -791,8 +792,8 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
 		AppContext.addFragment(
 				"project/role/preview/"
 						+ UrlEncodeDecoder.encode(project.getId() + "/"
-								+ role.getId()), "PageView Project Role: "
-						+ role.getRolename());
+								+ role.getId()),
+				"Project Role: " + role.getRolename());
 	}
 
 	public void gotoNotificationSetting(ProjectNotificationSetting notify) {
