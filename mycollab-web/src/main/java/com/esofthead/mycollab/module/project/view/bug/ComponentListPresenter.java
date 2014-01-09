@@ -57,6 +57,8 @@ public class ComponentListPresenter
 
 	@Override
 	protected void postInitView() {
+		super.postInitView();
+
 		componentService = ApplicationContextUtil
 				.getSpringBean(ComponentService.class);
 

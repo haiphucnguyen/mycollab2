@@ -28,6 +28,12 @@ import com.esofthead.mycollab.common.service.CurrencyService;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultCrudService;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @Service
 public class CurrencyServiceImpl extends DefaultCrudService<Integer, Currency>
 		implements CurrencyService {

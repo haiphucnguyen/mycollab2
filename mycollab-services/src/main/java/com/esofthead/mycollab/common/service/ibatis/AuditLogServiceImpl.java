@@ -43,6 +43,12 @@ import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
 import com.esofthead.mycollab.core.utils.JsonDeSerializer;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @Service
 public class AuditLogServiceImpl extends
 		DefaultService<Integer, AuditLog, AuditLogSearchCriteria> implements

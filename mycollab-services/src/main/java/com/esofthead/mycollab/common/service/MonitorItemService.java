@@ -21,6 +21,12 @@ import com.esofthead.mycollab.common.domain.criteria.MonitorSearchCriteria;
 import com.esofthead.mycollab.core.persistence.service.ICrudService;
 import com.esofthead.mycollab.core.persistence.service.ISearchableService;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public interface MonitorItemService extends ICrudService<Integer, MonitorItem>,
 		ISearchableService<MonitorSearchCriteria> {
 

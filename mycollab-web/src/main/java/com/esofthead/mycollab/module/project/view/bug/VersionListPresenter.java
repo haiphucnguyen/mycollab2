@@ -59,6 +59,8 @@ public class VersionListPresenter
 
 	@Override
 	protected void postInitView() {
+		super.postInitView();
+
 		versionService = ApplicationContextUtil
 				.getSpringBean(VersionService.class);
 

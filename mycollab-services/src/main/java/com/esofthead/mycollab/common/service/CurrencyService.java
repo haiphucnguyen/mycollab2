@@ -21,8 +21,14 @@ import java.util.List;
 import com.esofthead.mycollab.common.domain.Currency;
 import com.esofthead.mycollab.core.persistence.service.ICrudService;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public interface CurrencyService extends ICrudService<Integer, Currency> {
 	List<Currency> getCurrencies();
-	
+
 	Currency getCurrency(int currencyid);
 }

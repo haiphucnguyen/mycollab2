@@ -20,6 +20,12 @@ import com.esofthead.mycollab.common.domain.RelayEmailNotification;
 import com.esofthead.mycollab.common.domain.criteria.RelayEmailNotificationSearchCriteria;
 import com.esofthead.mycollab.core.persistence.service.IDefaultService;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public interface RelayEmailNotificationService
 		extends
 		IDefaultService<Integer, RelayEmailNotification, RelayEmailNotificationSearchCriteria> {

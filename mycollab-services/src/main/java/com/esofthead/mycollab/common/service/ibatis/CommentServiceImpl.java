@@ -32,6 +32,12 @@ import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
 import com.esofthead.mycollab.schedule.email.SendingRelayEmailNotificationAction;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @Service
 public class CommentServiceImpl extends
 		DefaultService<Integer, Comment, CommentSearchCriteria> implements

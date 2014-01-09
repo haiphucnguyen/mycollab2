@@ -24,10 +24,10 @@ import org.jsoup.Jsoup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.EventBus;
+import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.events.BugVersionEvent;
@@ -45,12 +45,14 @@ import com.esofthead.mycollab.vaadin.events.MassItemActionHandler;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
-import com.esofthead.mycollab.vaadin.ui.PopupButtonControl;
+import com.esofthead.mycollab.vaadin.ui.CheckBoxDecor;
+import com.esofthead.mycollab.vaadin.ui.DefaultMassItemActionHandlersContainer;
 import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.AbstractPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.DefaultPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.H3;
 import com.hp.gagawa.java.elements.Td;
@@ -60,7 +62,6 @@ import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
@@ -86,7 +87,7 @@ public class VersionListViewImpl extends AbstractPageView implements
 	private SelectionOptionButton selectOptionButton;
 	private DefaultPagedBeanTable<VersionService, VersionSearchCriteria, SimpleVersion> tableItem;
 	private final VerticalLayout componentListLayout;
-	private PopupButtonControl tableActionControls;
+	private DefaultMassItemActionHandlersContainer tableActionControls;
 	private final Label selectedItemsNumberLabel = new Label();
 
 	public VersionListViewImpl() {
@@ -119,7 +120,7 @@ public class VersionListViewImpl extends AbstractPageView implements
 					@Override
 					public Object generateCell(final Table source,
 							final Object itemId, final Object columnId) {
-						final CheckBox cb = new CheckBox("", false);
+						final CheckBoxDecor cb = new CheckBoxDecor("", false);
 						cb.setImmediate(true);
 						cb.addValueChangeListener(new ValueChangeListener() {
 							private static final long serialVersionUID = 1L;
@@ -200,26 +201,31 @@ public class VersionListViewImpl extends AbstractPageView implements
 		this.selectOptionButton = new SelectionOptionButton(this.tableItem);
 		layout.addComponent(this.selectOptionButton);
 
-		final Button deleteBtn = new Button("Delete");
-		deleteBtn.setEnabled(CurrentProjectVariables
-				.canAccess(ProjectRolePermissionCollections.VERSIONS));
+		tableActionControls = new DefaultMassItemActionHandlersContainer();
 
-		this.tableActionControls = new PopupButtonControl(
-				MassItemActionHandler.DELETE_ACTION, deleteBtn);
-		this.tableActionControls.addOptionItem(
-				MassItemActionHandler.MAIL_ACTION,
-				LocalizationHelper.getMessage(GenericI18Enum.BUTTON_MAIL));
-		this.tableActionControls
-				.addOptionItem(MassItemActionHandler.EXPORT_CSV_ACTION,
-						LocalizationHelper
-								.getMessage(GenericI18Enum.BUTTON_EXPORT_CSV));
-		this.tableActionControls
-				.addOptionItem(MassItemActionHandler.EXPORT_PDF_ACTION,
-						LocalizationHelper
-								.getMessage(GenericI18Enum.BUTTON_EXPORT_PDF));
-		this.tableActionControls.addOptionItem(
-				MassItemActionHandler.EXPORT_EXCEL_ACTION, LocalizationHelper
-						.getMessage(GenericI18Enum.BUTTON_EXPORT_EXCEL));
+		if (CurrentProjectVariables
+				.canAccess(ProjectRolePermissionCollections.VERSIONS)) {
+			tableActionControls.addActionItem(
+					MassItemActionHandler.DELETE_ACTION,
+					MyCollabResource.newResource("icons/16/action/delete.png"),
+					"delete");
+		}
+
+		tableActionControls.addActionItem(MassItemActionHandler.MAIL_ACTION,
+				MyCollabResource.newResource("icons/16/action/mail.png"),
+				"mail");
+		tableActionControls.addDownloadActionItem(
+				MassItemActionHandler.EXPORT_PDF_ACTION,
+				MyCollabResource.newResource("icons/16/action/pdf.png"),
+				"export", "export.pdf");
+		tableActionControls.addDownloadActionItem(
+				MassItemActionHandler.EXPORT_EXCEL_ACTION,
+				MyCollabResource.newResource("icons/16/action/excel.png"),
+				"export", "export.xlsx");
+		tableActionControls.addDownloadActionItem(
+				MassItemActionHandler.EXPORT_CSV_ACTION,
+				MyCollabResource.newResource("icons/16/action/csv.png"),
+				"export", "export.csv");
 
 		layout.addComponent(this.tableActionControls);
 		layout.addComponent(this.selectedItemsNumberLabel);
@@ -231,8 +237,9 @@ public class VersionListViewImpl extends AbstractPageView implements
 	@Override
 	public void enableActionControls(final int numOfSelectedItems) {
 		this.tableActionControls.setVisible(true);
-		this.selectedItemsNumberLabel.setValue("Selected: "
-				+ numOfSelectedItems);
+		this.selectedItemsNumberLabel.setValue(LocalizationHelper
+				.getMessage(CrmCommonI18nEnum.TABLE_SELECTED_ITEM_TITLE,
+						numOfSelectedItems));
 	}
 
 	@Override
