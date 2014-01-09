@@ -39,18 +39,18 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.CheckBoxDecor;
-import com.esofthead.mycollab.vaadin.ui.PopupButtonControl;
+import com.esofthead.mycollab.vaadin.ui.DefaultMassItemActionHandlersContainer;
 import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.AbstractPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.DefaultPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.Property;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
@@ -72,7 +72,7 @@ public class ProjectRoleListViewImpl extends AbstractPageView implements
 	private SelectionOptionButton selectOptionButton;
 	private DefaultPagedBeanTable<ProjectRoleService, ProjectRoleSearchCriteria, SimpleProjectRole> tableItem;
 	private final VerticalLayout listLayout;
-	private PopupButtonControl tableActionControls;
+	private DefaultMassItemActionHandlersContainer tableActionControls;
 	private final Label selectedItemsNumberLabel = new Label();
 
 	public ProjectRoleListViewImpl() {
@@ -181,22 +181,27 @@ public class ProjectRoleListViewImpl extends AbstractPageView implements
 		deleteBtn.setEnabled(CurrentProjectVariables
 				.canAccess(ProjectRolePermissionCollections.ROLES));
 
-		this.tableActionControls = new PopupButtonControl(
-				MassItemActionHandler.DELETE_ACTION, deleteBtn);
-		this.tableActionControls.addOptionItem(
-				MassItemActionHandler.MAIL_ACTION,
-				LocalizationHelper.getMessage(GenericI18Enum.BUTTON_MAIL));
-		this.tableActionControls
-				.addOptionItem(MassItemActionHandler.EXPORT_CSV_ACTION,
-						LocalizationHelper
-								.getMessage(GenericI18Enum.BUTTON_EXPORT_CSV));
-		this.tableActionControls
-				.addOptionItem(MassItemActionHandler.EXPORT_PDF_ACTION,
-						LocalizationHelper
-								.getMessage(GenericI18Enum.BUTTON_EXPORT_PDF));
-		this.tableActionControls.addOptionItem(
-				MassItemActionHandler.EXPORT_EXCEL_ACTION, LocalizationHelper
-						.getMessage(GenericI18Enum.BUTTON_EXPORT_EXCEL));
+		this.tableActionControls = new DefaultMassItemActionHandlersContainer();
+		if (CurrentProjectVariables
+				.canAccess(ProjectRolePermissionCollections.ROLES)) {
+			tableActionControls.addActionItem(
+					MassItemActionHandler.DELETE_ACTION,
+					MyCollabResource.newResource("icons/16/action/delete.png"),
+					"delete");
+		}
+
+		tableActionControls.addDownloadActionItem(
+				MassItemActionHandler.EXPORT_PDF_ACTION,
+				MyCollabResource.newResource("icons/16/action/pdf.png"),
+				"export", "export.pdf");
+		tableActionControls.addDownloadActionItem(
+				MassItemActionHandler.EXPORT_EXCEL_ACTION,
+				MyCollabResource.newResource("icons/16/action/excel.png"),
+				"export", "export.xlsx");
+		tableActionControls.addDownloadActionItem(
+				MassItemActionHandler.EXPORT_CSV_ACTION,
+				MyCollabResource.newResource("icons/16/action/csv.png"),
+				"export", "export.csv");
 
 		layout.addComponent(this.tableActionControls);
 		layout.addComponent(this.selectedItemsNumberLabel);

@@ -20,6 +20,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.esofthead.mycollab.core.arguments.NotBindable;
+import com.esofthead.mycollab.reporting.NotInReport;
 import com.esofthead.mycollab.security.PermissionMap;
 
 /**
@@ -37,6 +38,7 @@ public class SimpleProjectRole extends ProjectRole {
 	private String permissionVal;
 
 	@NotBindable
+	@NotInReport
 	private PermissionMap permissionMap;
 
 	public String getPermissionVal() {

@@ -238,6 +238,45 @@
     <dependent-module archiveName="flyway-core-2.2.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/googlecode/flyway/flyway-core/2.2.1/flyway-core-2.2.1.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
+    <dependent-module archiveName="mycollab-reporting.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mycollab-reporting/mycollab-reporting">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="dynamicreports-core-3.1.6.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/net/sourceforge/dynamicreports/dynamicreports-core/3.1.6/dynamicreports-core-3.1.6.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="jasperreports-5.2.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/net/sf/jasperreports/jasperreports/5.2.0/jasperreports-5.2.0.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="itext-2.1.5.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/lowagie/itext/2.1.5/itext-2.1.5.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="bcprov-jdk14-138.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/bouncycastle/bcprov-jdk14/138/bcprov-jdk14-138.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="xml-apis-1.3.04.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/xml-apis/xml-apis/1.3.04/xml-apis-1.3.04.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="jdtcore-3.1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/eclipse/jdtcore/3.1.0/jdtcore-3.1.0.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="castor-1.2.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/codehaus/castor/castor/1.2/castor-1.2.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="barcode4j-2.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/net/sf/barcode4j/barcode4j/2.0/barcode4j-2.0.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="avalon-framework-impl-4.2.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/avalon-framework/avalon-framework-impl/4.2.0/avalon-framework-impl-4.2.0.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="dynamicreports-adhoc-3.1.6.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/net/sourceforge/dynamicreports/dynamicreports-adhoc/3.1.6/dynamicreports-adhoc-3.1.6.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="dynamicreports-googlecharts-3.1.6.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/net/sourceforge/dynamicreports/dynamicreports-googlecharts/3.1.6/dynamicreports-googlecharts-3.1.6.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="schemacrawler-10.08.01.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/net/sourceforge/schemacrawler/schemacrawler/10.08.01/schemacrawler-10.08.01.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
     <dependent-module archiveName="mycollab-caching.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mycollab-caching/mycollab-caching">
       <dependency-type>uses</dependency-type>
     </dependent-module>
@@ -334,55 +373,7 @@
     <dependent-module archiveName="mycollab-extra-lib-1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/esofthead/mycollab/mycollab-extra-lib/1.0/mycollab-extra-lib-1.0.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="mycollab-reporting.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mycollab-reporting/mycollab-reporting">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="dynamicreports-core-3.1.6.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/net/sourceforge/dynamicreports/dynamicreports-core/3.1.6/dynamicreports-core-3.1.6.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="jasperreports-5.2.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/net/sf/jasperreports/jasperreports/5.2.0/jasperreports-5.2.0.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="itext-2.1.5.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/lowagie/itext/2.1.5/itext-2.1.5.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="bcprov-jdk14-138.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/bouncycastle/bcprov-jdk14/138/bcprov-jdk14-138.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="xml-apis-1.3.04.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/xml-apis/xml-apis/1.3.04/xml-apis-1.3.04.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="jdtcore-3.1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/eclipse/jdtcore/3.1.0/jdtcore-3.1.0.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="castor-1.2.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/codehaus/castor/castor/1.2/castor-1.2.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="barcode4j-2.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/net/sf/barcode4j/barcode4j/2.0/barcode4j-2.0.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="avalon-framework-impl-4.2.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/avalon-framework/avalon-framework-impl/4.2.0/avalon-framework-impl-4.2.0.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="dynamicreports-adhoc-3.1.6.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/net/sourceforge/dynamicreports/dynamicreports-adhoc/3.1.6/dynamicreports-adhoc-3.1.6.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="dynamicreports-googlecharts-3.1.6.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/net/sourceforge/dynamicreports/dynamicreports-googlecharts/3.1.6/dynamicreports-googlecharts-3.1.6.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="schemacrawler-10.08.01.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/net/sourceforge/schemacrawler/schemacrawler/10.08.01/schemacrawler-10.08.01.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="mycollab-esb.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mycollab-esb/mycollab-esb">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="mycollab-scheduler.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mycollab-scheduler/mycollab-scheduler">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="quartz-2.2.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/quartz-scheduler/quartz/2.2.0/quartz-2.2.0.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="c3p0-0.9.1.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/c3p0/c3p0/0.9.1.1/c3p0-0.9.1.1.jar">
+    <dependent-module archiveName="mycollab-ui.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mycollab-ui/mycollab-ui">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="vaadin-server-7.1.9.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/vaadin/vaadin-server/7.1.9/vaadin-server-7.1.9.jar">
@@ -409,10 +400,43 @@
     <dependent-module archiveName="commons-cli-1.2.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/commons-cli/commons-cli/1.2/commons-cli-1.2.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
+    <dependent-module archiveName="vaadin-touchkit-agpl-4.0.0.alpha2.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/vaadin/addon/vaadin-touchkit-agpl/4.0.0.alpha2/vaadin-touchkit-agpl-4.0.0.alpha2.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
     <dependent-module archiveName="vaadin-client-7.1.9.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/vaadin/vaadin-client/7.1.9/vaadin-client-7.1.9.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="validation-api-1.0.0.GA-sources.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/javax/validation/validation-api/1.0.0.GA/validation-api-1.0.0.GA-sources.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="icepush-0.5.5.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/vaadin/addons/icepush/0.5.5/icepush-0.5.5.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="icepush-3.3.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/icepush/icepush/3.3.0/icepush-3.3.0.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="jsp-api-2.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/javax/servlet/jsp/jsp-api/2.0/jsp-api-2.0.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="icepush-gwt-2.0.0-alpha3.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/icepush/icepush-gwt/2.0.0-alpha3/icepush-gwt-2.0.0-alpha3.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="reflections-0.9.9-RC1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/reflections/reflections/0.9.9-RC1/reflections-0.9.9-RC1.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="javassist-3.16.1-GA.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/javassist/javassist/3.16.1-GA/javassist-3.16.1-GA.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="mycollab-esb.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mycollab-esb/mycollab-esb">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="mycollab-scheduler.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mycollab-scheduler/mycollab-scheduler">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="quartz-2.2.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/quartz-scheduler/quartz/2.2.0/quartz-2.2.0.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="c3p0-0.9.1.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/c3p0/c3p0/0.9.1.1/c3p0-0.9.1.1.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="buttongroup-2.3.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/vaadin/addons/buttongroup/2.3/buttongroup-2.3.jar">
@@ -458,12 +482,6 @@
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="cropField-1.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/esofthead/vaadin/cropField/1.0-SNAPSHOT/cropField-1.0-SNAPSHOT.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="reflections-0.9.9-RC1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/reflections/reflections/0.9.9-RC1/reflections-0.9.9-RC1.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="javassist-3.16.1-GA.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/javassist/javassist/3.16.1-GA/javassist-3.16.1-GA.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="jfreechart-1.0.15.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/jfree/jfreechart/1.0.15/jfreechart-1.0.15.jar">

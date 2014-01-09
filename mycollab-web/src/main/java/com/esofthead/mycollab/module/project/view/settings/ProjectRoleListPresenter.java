@@ -58,6 +58,8 @@ public class ProjectRoleListPresenter
 
 	@Override
 	protected void postInitView() {
+		super.postInitView();
+
 		projectRoleService = ApplicationContextUtil
 				.getSpringBean(ProjectRoleService.class);
 
