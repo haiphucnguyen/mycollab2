@@ -133,11 +133,11 @@ public class ApproveInputWindow extends Window {
 							@Override
 							public void buttonClick(
 									final Button.ClickEvent event) {
-								ApproveInputWindow.this.bug
-										.setStatus(BugStatusConstants.VERIFIED);
 
 								if (EditForm.this.validateForm()) {
 									// Save bug status and assignee
+									ApproveInputWindow.this.bug
+											.setStatus(BugStatusConstants.VERIFIED);
 
 									final BugService bugService = ApplicationContextUtil
 											.getSpringBean(BugService.class);

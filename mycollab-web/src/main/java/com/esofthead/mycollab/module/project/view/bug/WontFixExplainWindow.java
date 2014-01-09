@@ -132,10 +132,11 @@ public class WontFixExplainWindow extends Window {
 						new Button.ClickListener() {
 							@Override
 							public void buttonClick(final ClickEvent event) {
-								WontFixExplainWindow.this.bug
-										.setStatus(BugStatusConstants.RESOLVED);
 
 								if (EditForm.this.validateForm()) {
+									WontFixExplainWindow.this.bug
+											.setStatus(BugStatusConstants.RESOLVED);
+
 									final String commentValue = (String) EditForm.this.commentArea
 											.getValue();
 									if (commentValue != null

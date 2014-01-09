@@ -132,10 +132,10 @@ public class ReOpenWindow extends Window {
 							@Override
 							public void buttonClick(
 									final Button.ClickEvent event) {
-								ReOpenWindow.this.bug
-										.setStatus(BugStatusConstants.REOPENNED);
 
 								if (EditForm.this.validateForm()) {
+									ReOpenWindow.this.bug
+											.setStatus(BugStatusConstants.REOPENNED);
 
 									final BugRelatedItemService bugRelatedItemService = ApplicationContextUtil
 											.getSpringBean(BugRelatedItemService.class);

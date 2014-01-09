@@ -137,9 +137,10 @@ public class ResolvedInputWindow extends Window {
 							@Override
 							public void buttonClick(
 									final Button.ClickEvent event) {
-								ResolvedInputWindow.this.bug
-										.setStatus(BugStatusConstants.RESOLVED);
 								if (EditForm.this.validateForm()) {
+									ResolvedInputWindow.this.bug
+											.setStatus(BugStatusConstants.RESOLVED);
+
 									final BugRelatedItemService bugRelatedItemService = ApplicationContextUtil
 											.getSpringBean(BugRelatedItemService.class);
 									bugRelatedItemService
