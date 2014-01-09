@@ -16,13 +16,13 @@
  */
 package com.esofthead.mycollab.module.crm.view.activity;
 
+import java.util.Calendar;
 import java.util.Date;
-
-import org.apache.commons.beanutils.PropertyUtils;
 
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
+import com.vaadin.data.Property;
 import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.shared.ui.datefield.Resolution;
 import com.vaadin.ui.Component;
@@ -36,7 +36,7 @@ import com.vaadin.ui.PopupDateField;
  * @since 2.0
  * 
  */
-public class DateTimePicker<B> extends CustomField<Date> {
+public class DateTimePicker extends CustomField<Date> {
 	private static final long serialVersionUID = 1L;
 
 	public static final long ONE_MINUTE_IN_MILLIS = 60000;
@@ -46,12 +46,61 @@ public class DateTimePicker<B> extends CustomField<Date> {
 	private MinutePickerComboBox minutePickerComboBox;
 	private ValueComboBox timeFormatComboBox;
 
-	private String fieldName;
-	private B bean;
+	public DateTimePicker() {
+		popupDateField = new PopupDateField();
+		popupDateField.setResolution(Resolution.DAY);
+		popupDateField.setWidth("130px");
 
-	public DateTimePicker(final String fieldName, final B bean) {
-		this.fieldName = fieldName;
-		this.bean = bean;
+		hourPickerComboBox = new HourPickerComboBox();
+		hourPickerComboBox.setWidth("50px");
+
+		minutePickerComboBox = new MinutePickerComboBox();
+		minutePickerComboBox.setWidth("50px");
+
+		timeFormatComboBox = new ValueComboBox();
+		timeFormatComboBox.setWidth("50px");
+		timeFormatComboBox.setCaption(null);
+		timeFormatComboBox.loadData(new String[] { "AM", "PM" });
+		timeFormatComboBox.setNullSelectionAllowed(false);
+		timeFormatComboBox.setImmediate(true);
+	}
+
+	@Override
+	protected Component initContent() {
+		HorizontalLayout layout = new HorizontalLayout();
+		layout.setSpacing(true);
+
+		try {
+			layout.addComponent(popupDateField);
+			layout.addComponent(hourPickerComboBox);
+			layout.addComponent(minutePickerComboBox);
+			layout.addComponent(timeFormatComboBox);
+			return layout;
+		} catch (Exception e) {
+			throw new MyCollabException(e);
+		}
+	}
+
+	@Override
+	public void setPropertyDataSource(Property newDataSource) {
+		Object value = newDataSource.getValue();
+		if (value instanceof Date) {
+			long min = 0, hrs = 0;
+			String timeFormat = "AM";
+
+			Date dateVal = (Date) value;
+			Calendar cal = java.util.Calendar.getInstance();
+			cal.setTime(dateVal);
+			min = cal.get(java.util.Calendar.MINUTE);
+			hrs = cal.get(java.util.Calendar.HOUR);
+			timeFormat = (cal.get(java.util.Calendar.AM_PM) == 0) ? "AM" : "PM";
+
+			popupDateField.setValue(dateVal);
+			hourPickerComboBox.setValue((hrs < 10) ? "0" + hrs : "" + hrs);
+			minutePickerComboBox.setValue((min < 10) ? "0" + min : "" + min);
+			timeFormatComboBox.setValue(timeFormat);
+		}
+		super.setPropertyDataSource(newDataSource);
 	}
 
 	private long calculateMiniSecond(Integer hour, Integer minus,
@@ -69,7 +118,7 @@ public class DateTimePicker<B> extends CustomField<Date> {
 
 	@Override
 	public void commit() throws SourceException, InvalidValueException {
-		Date internalValue = getValue();
+		Date internalValue = getDateValue();
 		super.setInternalValue(internalValue);
 		super.commit();
 	}
@@ -79,8 +128,7 @@ public class DateTimePicker<B> extends CustomField<Date> {
 		return Date.class;
 	}
 
-	@Override
-	public Date getValue() {
+	private Date getDateValue() {
 		if (popupDateField.getValue() == null) {
 			return null;
 		}
@@ -98,7 +146,7 @@ public class DateTimePicker<B> extends CustomField<Date> {
 
 	private class HourPickerComboBox extends ValueComboBox {
 		private static final long serialVersionUID = 1L;
-		private final String[] HOURDATA = new String[] { "12", "01", "02",
+		private final String[] HOURDATA = new String[] { "00", "01", "02",
 				"03", "04", "05", "06", "07", "08", "09", "10", "11" };
 
 		public HourPickerComboBox() {
@@ -116,109 +164,6 @@ public class DateTimePicker<B> extends CustomField<Date> {
 			super();
 			setCaption(null);
 			this.loadData(MINUSDATA);
-		}
-	}
-
-	@Override
-	protected Component initContent() {
-		HorizontalLayout layout = new HorizontalLayout();
-		layout.setSpacing(true);
-		long min = 0, hrs = 0;
-		String timeFormat = "AM";
-		try {
-			Date date = (Date) PropertyUtils.getProperty(bean, fieldName);
-			if (fieldName != null && date != null) {
-				java.util.Calendar cal = java.util.Calendar.getInstance();
-				cal.setTime(date);
-				min = cal.get(java.util.Calendar.MINUTE);
-				hrs = cal.get(java.util.Calendar.HOUR);
-				timeFormat = (cal.get(java.util.Calendar.AM_PM) == 0) ? "AM"
-						: "PM";
-			}
-			popupDateField = new PopupDateField(null, date);
-			popupDateField.setResolution(Resolution.DAY);
-			popupDateField.setWidth("130px");
-			popupDateField.addValueChangeListener(new ValueChangeListener() {
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public void valueChange(
-						com.vaadin.data.Property.ValueChangeEvent event) {
-					try {
-						PropertyUtils.setProperty(bean, fieldName,
-								DateTimePicker.this.getValue());
-					} catch (Exception e) {
-						throw new MyCollabException(e);
-					}
-				}
-			});
-			layout.addComponent(popupDateField);
-
-			hourPickerComboBox = new HourPickerComboBox();
-			hourPickerComboBox.setValue((hrs < 10) ? "0" + hrs : "" + hrs);
-			hourPickerComboBox.setWidth("50px");
-			hourPickerComboBox
-					.addValueChangeListener(new ValueChangeListener() {
-						private static final long serialVersionUID = 1L;
-
-						@Override
-						public void valueChange(
-								com.vaadin.data.Property.ValueChangeEvent event) {
-							try {
-								PropertyUtils.setProperty(bean, fieldName,
-										DateTimePicker.this.getValue());
-							} catch (Exception e) {
-								throw new MyCollabException(e);
-							}
-						}
-					});
-			layout.addComponent(hourPickerComboBox);
-			minutePickerComboBox = new MinutePickerComboBox();
-			minutePickerComboBox.setWidth("50px");
-			minutePickerComboBox.setValue((min < 10) ? "0" + min : "" + min);
-			minutePickerComboBox
-					.addValueChangeListener(new ValueChangeListener() {
-						private static final long serialVersionUID = 1L;
-
-						@Override
-						public void valueChange(
-								com.vaadin.data.Property.ValueChangeEvent event) {
-							try {
-								PropertyUtils.setProperty(bean, fieldName,
-										DateTimePicker.this.getValue());
-							} catch (Exception e) {
-								throw new MyCollabException(e);
-							}
-						}
-					});
-			layout.addComponent(minutePickerComboBox);
-
-			timeFormatComboBox = new ValueComboBox();
-			timeFormatComboBox.setWidth("50px");
-			timeFormatComboBox.setCaption(null);
-			timeFormatComboBox.loadData(new String[] { "AM", "PM" });
-			timeFormatComboBox.setNullSelectionAllowed(false);
-			timeFormatComboBox.setImmediate(true);
-			timeFormatComboBox.setValue(timeFormat);
-			timeFormatComboBox
-					.addValueChangeListener(new ValueChangeListener() {
-						private static final long serialVersionUID = 1L;
-
-						@Override
-						public void valueChange(
-								com.vaadin.data.Property.ValueChangeEvent event) {
-							try {
-								PropertyUtils.setProperty(bean, fieldName,
-										DateTimePicker.this.getValue());
-							} catch (Exception e) {
-								throw new MyCollabException(e);
-							}
-						}
-					});
-			layout.addComponent(timeFormatComboBox);
-			return layout;
-		} catch (Exception e) {
-			throw new MyCollabException(e);
 		}
 	}
 }

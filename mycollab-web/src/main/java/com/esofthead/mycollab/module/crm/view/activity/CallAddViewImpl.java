@@ -141,8 +141,7 @@ public class CallAddViewImpl extends AbstractEditItemComp<CallWithBLOBs>
 			} else if (propertyId.equals("typeid")) {
 				return new DummyCustomField<String>();
 			} else if (propertyId.equals("startdate")) {
-				return new DateTimePicker<CallWithBLOBs>("startdate",
-						attachForm.getBean());
+				return new DateTimePicker();
 			}
 			return null;
 		}

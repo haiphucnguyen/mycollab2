@@ -103,11 +103,9 @@ public class MeetingAddViewImpl extends AbstractEditItemComp<MeetingWithBLOBs>
 			} else if (propertyId.equals("status")) {
 				return new MeetingStatusComboBox();
 			} else if (propertyId.equals("startdate")) {
-				return new DateTimePicker<MeetingWithBLOBs>("startdate",
-						attachForm.getBean());
+				return new DateTimePicker();
 			} else if (propertyId.equals("enddate")) {
-				return new DateTimePicker<MeetingWithBLOBs>("enddate",
-						attachForm.getBean());
+				return new DateTimePicker();
 			} else if (propertyId.equals("description")) {
 				TextArea descArea = new TextArea();
 				descArea.setNullRepresentation("");

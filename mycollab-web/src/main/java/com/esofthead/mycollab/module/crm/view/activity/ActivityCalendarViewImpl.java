@@ -390,14 +390,12 @@ public class ActivityCalendarViewImpl extends AbstractPageView implements
 		}
 	}
 
-	public class EventQuickCreateWindow extends Window {
+	private class QuickCreateEventWindow extends Window {
 		private static final long serialVersionUID = 1L;
 		private EditForm editForm;
 		private MeetingWithBLOBs meeting;
-		private DateTimePicker<MeetingWithBLOBs> startDatePicker;
-		private DateTimePicker<MeetingWithBLOBs> endDatePicker;
 
-		public EventQuickCreateWindow(Date startDate, Date endDate) {
+		public QuickCreateEventWindow(Date startDate, Date endDate) {
 			super("Quick Create Event");
 			this.center();
 			this.setWidth("1220px");
@@ -406,10 +404,6 @@ public class ActivityCalendarViewImpl extends AbstractPageView implements
 			this.meeting.setSaccountid(AppContext.getAccountId());
 			this.meeting.setStartdate(startDate);
 			this.meeting.setEnddate(endDate);
-			this.startDatePicker = new DateTimePicker<MeetingWithBLOBs>(
-					"startdate", meeting);
-			this.endDatePicker = new DateTimePicker<MeetingWithBLOBs>(
-					"enddate", meeting);
 
 			VerticalLayout contentLayout = new VerticalLayout();
 			this.setContent(contentLayout);
@@ -456,13 +450,9 @@ public class ActivityCalendarViewImpl extends AbstractPageView implements
 									if (EditForm.this.validateForm()) {
 										MeetingService meetingService = ApplicationContextUtil
 												.getSpringBean(MeetingService.class);
-										meeting.setStartdate(startDatePicker
-												.getValue());
-										meeting.setEnddate(endDatePicker
-												.getValue());
 										meetingService.saveWithSession(meeting,
 												AppContext.getUsername());
-										EventQuickCreateWindow.this.close();
+										QuickCreateEventWindow.this.close();
 										EventBus.getInstance().fireEvent(
 												new ActivityEvent.GotoCalendar(
 														this, null));
@@ -482,7 +472,7 @@ public class ActivityCalendarViewImpl extends AbstractPageView implements
 
 								@Override
 								public void buttonClick(ClickEvent event) {
-									EventQuickCreateWindow.this.close();
+									QuickCreateEventWindow.this.close();
 								}
 							});
 					cancelBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
@@ -528,9 +518,9 @@ public class ActivityCalendarViewImpl extends AbstractPageView implements
 					} else if (propertyId.equals("status")) {
 						return new MeetingStatusComboBox();
 					} else if (propertyId.equals("startdate")) {
-						return startDatePicker;
+						return new DateTimePicker();
 					} else if (propertyId.equals("enddate")) {
-						return endDatePicker;
+						return new DateTimePicker();
 					} else if (propertyId.equals("description")) {
 						TextArea descArea = new TextArea();
 						descArea.setNullRepresentation("");
@@ -684,7 +674,7 @@ public class ActivityCalendarViewImpl extends AbstractPageView implements
 					if (AppContext
 							.canWrite(RolePermissionCollections.CRM_MEETING)) {
 						UI.getCurrent().addWindow(
-								new EventQuickCreateWindow(event.getStart(),
+								new QuickCreateEventWindow(event.getStart(),
 										event.getEnd()));
 					}
 				}
