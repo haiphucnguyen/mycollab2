@@ -67,6 +67,9 @@
         <table domainObjectName="ContactCase" schema="mycollab"
             tableName="m_crm_contacts_cases" />
 
+        <table domainObjectName="ContactLead" schema="mycollab"
+            tableName="m_crm_contacts_leads" />
+
         <table domainObjectName="ContactOpportunity" schema="mycollab"
             tableName="m_crm_contacts_opportunities" />
 
