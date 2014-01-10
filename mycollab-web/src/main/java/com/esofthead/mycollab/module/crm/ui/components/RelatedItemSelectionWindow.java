@@ -41,13 +41,12 @@ public abstract class RelatedItemSelectionWindow<T, S extends SearchCriteria>
 
 	private static final String selectedFieldName = "selected";
 
-	protected RelatedListComp<T, S> relatedListComp;
+	protected RelatedListComp relatedListComp;
 	protected IPagedBeanTable<S, T> tableItem;
 	protected Set selectedItems = new HashSet();
 	protected VerticalLayout bodyContent;
 
-	public RelatedItemSelectionWindow(String title,
-			RelatedListComp<T, S> relatedList) {
+	public RelatedItemSelectionWindow(String title, RelatedListComp relatedList) {
 		super(title);
 		center();
 		bodyContent = new VerticalLayout();

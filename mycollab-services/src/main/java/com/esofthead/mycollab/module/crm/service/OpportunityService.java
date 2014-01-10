@@ -29,6 +29,12 @@ import com.esofthead.mycollab.module.crm.domain.OpportunityLead;
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public interface OpportunityService extends
 		IDefaultService<Integer, Opportunity, OpportunitySearchCriteria> {
 

@@ -300,7 +300,9 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask>
 										new TaskListEvent.GotoRead(this,
 												beanItem.getTasklistid()));
 							}
-						});
+						},
+						MyCollabResource
+								.newResource("icons/16/project/task_group.png"));
 			} else if (propertyId.equals("id")) {
 				return new ProjectFormAttachmentDisplayField(
 						beanItem.getProjectid(),

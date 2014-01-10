@@ -23,6 +23,12 @@ import com.esofthead.mycollab.module.crm.domain.MeetingWithBLOBs;
 import com.esofthead.mycollab.module.crm.domain.SimpleMeeting;
 import com.esofthead.mycollab.module.crm.domain.criteria.MeetingSearchCriteria;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public interface MeetingService extends
 		IDefaultService<Integer, MeetingWithBLOBs, MeetingSearchCriteria> {
 

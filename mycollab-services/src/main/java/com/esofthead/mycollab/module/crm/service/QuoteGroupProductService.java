@@ -20,6 +20,12 @@ import java.util.List;
 
 import com.esofthead.mycollab.module.crm.domain.QuoteGroupProduct;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public interface QuoteGroupProductService {
 	List<QuoteGroupProduct> findQuoteGroupByQuoteId(int quoteid);
 	

@@ -32,9 +32,10 @@ import com.esofthead.mycollab.module.crm.CrmLinkGenerator;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.OpportunityContact;
 import com.esofthead.mycollab.module.crm.domain.OpportunityLead;
+import com.esofthead.mycollab.module.crm.domain.SimpleActivity;
 import com.esofthead.mycollab.module.crm.domain.SimpleCall;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
-import com.esofthead.mycollab.module.crm.domain.SimpleActivity;
+import com.esofthead.mycollab.module.crm.domain.SimpleContactOpportunityRel;
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.module.crm.domain.SimpleMeeting;
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
@@ -213,7 +214,7 @@ public class OpportunityReadPresenter extends
 				});
 
 		view.getRelatedContactHandlers().addRelatedListHandler(
-				new AbstractRelatedListHandler<SimpleContact>() {
+				new AbstractRelatedListHandler<SimpleContactOpportunityRel>() {
 
 					@Override
 					public void createNewRelatedItem(String itemId) {
@@ -227,7 +228,7 @@ public class OpportunityReadPresenter extends
 					}
 
 					@Override
-					public void selectAssociateItems(Set<SimpleContact> items) {
+					public void selectAssociateItems(Set<SimpleContactOpportunityRel> items) {
 						List<OpportunityContact> associateContacts = new ArrayList<OpportunityContact>();
 						SimpleOpportunity opportunity = view.getItem();
 						for (SimpleContact contact : items) {

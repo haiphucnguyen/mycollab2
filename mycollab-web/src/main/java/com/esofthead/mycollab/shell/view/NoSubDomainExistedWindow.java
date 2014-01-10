@@ -23,7 +23,6 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Window;
 
 /**
  * 
@@ -31,13 +30,14 @@ import com.vaadin.ui.Window;
  * @since 1.0
  * 
  */
-public class NoSubDomainExistedWindow extends Window {
+public class NoSubDomainExistedWindow extends VerticalLayout {
 	private static final long serialVersionUID = 1L;
 
 	public NoSubDomainExistedWindow(final String domain) {
 		final NoSubDomainLayout contentLayout = new NoSubDomainLayout(domain);
 		contentLayout.setWidth("616px");
-		this.setContent(contentLayout);
+		this.addComponent(contentLayout);
+		this.setComponentAlignment(contentLayout, Alignment.MIDDLE_CENTER);
 	}
 
 	private class NoSubDomainLayout extends CustomLayoutExt {

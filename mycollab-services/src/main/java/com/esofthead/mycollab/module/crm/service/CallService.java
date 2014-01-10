@@ -23,6 +23,12 @@ import com.esofthead.mycollab.module.crm.domain.CallWithBLOBs;
 import com.esofthead.mycollab.module.crm.domain.SimpleCall;
 import com.esofthead.mycollab.module.crm.domain.criteria.CallSearchCriteria;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public interface CallService extends
 		IDefaultService<Integer, CallWithBLOBs, CallSearchCriteria> {
 

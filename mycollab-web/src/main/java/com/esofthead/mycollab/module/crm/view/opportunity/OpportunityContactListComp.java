@@ -33,8 +33,10 @@ import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.crm.domain.Opportunity;
 import com.esofthead.mycollab.module.crm.domain.OpportunityContact;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
+import com.esofthead.mycollab.module.crm.domain.SimpleContactOpportunityRel;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.ContactEvent;
+import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.crm.service.OpportunityService;
 import com.esofthead.mycollab.module.crm.ui.components.RelatedListComp;
@@ -60,7 +62,7 @@ import com.vaadin.ui.VerticalLayout;
  * @since 1.0
  */
 public class OpportunityContactListComp extends
-		RelatedListComp<SimpleContact, ContactSearchCriteria> {
+		RelatedListComp<SimpleContactOpportunityRel, ContactSearchCriteria> {
 
 	private static final long serialVersionUID = 1L;
 	private Opportunity opportunity;
@@ -125,7 +127,7 @@ public class OpportunityContactListComp extends
 				.canWrite(RolePermissionCollections.CRM_CONTACT));
 		this.addComponent(controlsBtn);
 
-		tableItem = new ContactTableDisplay(Arrays.asList(
+		tableItem = new OpportunityContactTableDisplay(Arrays.asList(
 				ContactTableFieldDef.name, ContactTableFieldDef.email,
 				ContactTableFieldDef.phoneOffice, ContactTableFieldDef.account,
 				ContactTableFieldDef.action));
@@ -160,7 +162,7 @@ public class OpportunityContactListComp extends
 					@Override
 					public void buttonClick(Button.ClickEvent event) {
 						EventBus.getInstance().fireEvent(
-								new ContactEvent.GotoEdit(
+								new OpportunityEvent.GotoContactEdit(
 										OpportunityContactListComp.this,
 										contact));
 					}

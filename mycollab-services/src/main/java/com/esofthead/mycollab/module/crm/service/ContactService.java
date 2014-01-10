@@ -28,6 +28,12 @@ import com.esofthead.mycollab.module.crm.domain.ContactOpportunity;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public interface ContactService extends
 		IDefaultService<Integer, Contact, ContactSearchCriteria> {
 

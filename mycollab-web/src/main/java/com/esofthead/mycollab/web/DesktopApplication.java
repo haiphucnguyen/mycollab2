@@ -28,6 +28,7 @@ import com.esofthead.mycollab.core.DeploymentMode;
 import com.esofthead.mycollab.core.SecurityException;
 import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.module.billing.SubDomainNotExistException;
 import com.esofthead.mycollab.shell.view.FragmentNavigator;
 import com.esofthead.mycollab.shell.view.MainWindowContainer;
 import com.esofthead.mycollab.shell.view.NoSubDomainExistedWindow;
@@ -115,10 +116,11 @@ public class DesktopApplication extends UI {
 		postSetupApp(request);
 		try {
 			currentContext.initDomain(initialSubDomain);
-		} catch (Exception e) {
+		} catch (SubDomainNotExistException e) {
 			this.setContent(new NoSubDomainExistedWindow(initialSubDomain));
 			return;
 		}
+
 		this.setContent(new MainWindowContainer());
 
 		getPage().addUriFragmentChangedListener(

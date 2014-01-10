@@ -22,6 +22,12 @@ import com.esofthead.mycollab.module.crm.domain.Account;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public interface AccountMapperExt extends
 		ISearchableDAO<AccountSearchCriteria>,
 		IMassUpdateDAO<Account, AccountSearchCriteria> {

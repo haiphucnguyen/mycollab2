@@ -17,6 +17,7 @@
 package com.esofthead.mycollab.module.crm.view.opportunity;
 
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
+import com.esofthead.mycollab.module.crm.domain.SimpleContactOpportunityRel;
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.view.IRelatedListHandlers;
@@ -65,7 +66,7 @@ public class OpportunityReadViewImpl extends AbstractPageView implements
 	}
 
 	@Override
-	public IRelatedListHandlers<SimpleContact> getRelatedContactHandlers() {
+	public IRelatedListHandlers<SimpleContactOpportunityRel> getRelatedContactHandlers() {
 		return opportunityPreview.getAssociateContactList();
 	}
 

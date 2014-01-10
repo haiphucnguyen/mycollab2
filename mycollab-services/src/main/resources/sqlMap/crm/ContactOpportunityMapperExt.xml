@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+    namespace="com.esofthead.mycollab.module.crm.dao.ContactOpportunityMapperExt">
+
+    <resultMap
+        extends="com.esofthead.mycollab.module.crm.dao.ContactMapperExt.SimpleContactResult"
+        id="SimpleContactOpportunityRel"
+        type="com.esofthead.mycollab.module.crm.domain.SimpleContactOpportunityRel">
+        <result column="roleDecision" jdbcType="VARCHAR"
+            property="roleDecision" />
+    </resultMap>
+    
+    <sql id="queryTotalCountSearchCriteria">
+    </sql>
+    
+    <sql id="querySearchCriteria">
+    </sql>
+
+    <sql id="selectSimpleContact">
+        <![CDATA[
+        SELECT m_crm_contact.id, m_crm_contact.prefix, m_crm_contact.firstname, m_crm_contact.lastname, m_crm_account.id AS accountId, 
+               m_crm_contact.leadSource, m_crm_contact.campaignId, m_crm_contact.isCallable, m_crm_contact.officePhone, m_crm_contact.mobile, 
+               m_crm_contact.homePhone, m_crm_contact.otherPhone, m_crm_contact.fax, m_crm_contact.birthday, m_crm_contact.assistant, 
+               m_crm_contact.primAddress, m_crm_contact.primCity, m_crm_contact.primState, m_crm_contact.primPostalCode, m_crm_contact.primCountry, 
+               m_crm_contact.otherAddress, m_crm_contact.otherCity, m_crm_contact.otherState, m_crm_contact.otherPostalCode, m_crm_contact.otherCountry, 
+               m_crm_contact.description, m_crm_contact.title, m_crm_contact.assistantPhone, m_crm_contact.email, m_crm_contact.department, 
+               m_crm_contact.createdTime, m_crm_contact.createdUser, m_crm_contact.sAccountId, m_crm_contact.assignUser, 
+               concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) as assignUserFullName,
+               s_user.avatarId as assignUserAvatarId,
+               concat (LTRIM(concat(IFNULL(m_crm_contact.firstname, ''), ' ')), ' ', m_crm_contact.lastname) AS contactName,
+               m_crm_contact.lastUpdatedTime, m_crm_account.accountName accountName
+
+        FROM m_crm_contact 
+               LEFT OUTER JOIN m_crm_account ON (m_crm_contact.accountId = m_crm_account.id) 
+               LEFT OUTER JOIN s_user ON (m_crm_contact.assignUser = s_user.username)
+        ]]>
+    </sql>
+
+    <sql id="orderStatement">
+        ORDER BY
+        <if test="searchCriteria.orderByField != null">${searchCriteria.orderByField}
+            ${searchCriteria.sortDirection},
+        </if>
+        <![CDATA[
+            m_crm_contact.lastUpdatedTime DESC
+        ]]>
+    </sql>
+
+    <select id="getTotalCount" resultType="int" parameterType="ContactSearchCriteria">
+        SELECT count(*) as totalCount FROM m_crm_contact
+        <if test="searchCriteria != null">
+            <trim prefix="WHERE" prefixOverrides="AND | OR ">
+                1=1
+                <include
+                    refid="com.esofthead.mycollab.module.crm.dao.ContactOpportunityMapperExt.queryTotalCountSearchCriteria" />
+            </trim>
+        </if>
+    </select>
+
+    <select id="findPagableListByCriteria" resultMap="SimpleContactOpportunityRel"
+        parameterType="ContactSearchCriteria">
+        <include
+            refid="com.esofthead.mycollab.module.crm.dao.ContactOpportunityMapperExt.selectSimpleContact" />
+        <if test="searchCriteria != null">
+            <trim prefix="WHERE" prefixOverrides="AND |OR ">
+                1=1
+                <include
+                    refid="com.esofthead.mycollab.module.crm.dao.ContactOpportunityMapperExt.querySearchCriteria" />
+            </trim>
+            <include refid="orderStatement" />
+        </if>
+    </select>
+
+</mapper>
