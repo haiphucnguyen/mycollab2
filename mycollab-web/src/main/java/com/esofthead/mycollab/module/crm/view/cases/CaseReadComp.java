@@ -56,8 +56,8 @@ class CaseReadComp extends AbstractPreviewItemComp<SimpleCase> {
 
 	@Override
 	protected ComponentContainer createButtonControls() {
-		return CrmPreviewFormControlsGenerator.createFormButtonControls(
-				previewForm, RolePermissionCollections.CRM_CASE);
+		return new CrmPreviewFormControlsGenerator<SimpleCase>(previewForm)
+				.createButtonControls(RolePermissionCollections.CRM_CASE);
 	}
 
 	@Override

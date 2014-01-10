@@ -35,12 +35,12 @@ import com.esofthead.mycollab.module.crm.domain.OpportunityContact;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.SimpleContactOpportunityRel;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
+import com.esofthead.mycollab.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.module.crm.events.ContactEvent;
 import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.crm.service.OpportunityService;
 import com.esofthead.mycollab.module.crm.ui.components.RelatedListComp;
-import com.esofthead.mycollab.module.crm.view.contact.ContactTableDisplay;
 import com.esofthead.mycollab.module.crm.view.contact.ContactTableFieldDef;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
@@ -128,9 +128,9 @@ public class OpportunityContactListComp extends
 		this.addComponent(controlsBtn);
 
 		tableItem = new OpportunityContactTableDisplay(Arrays.asList(
-				ContactTableFieldDef.name, ContactTableFieldDef.email,
-				ContactTableFieldDef.phoneOffice, ContactTableFieldDef.account,
-				ContactTableFieldDef.action));
+				ContactTableFieldDef.name, ContactTableFieldDef.account,
+				ContactTableFieldDef.email, ContactTableFieldDef.phoneOffice,
+				ContactTableFieldDef.dicisionRole, ContactTableFieldDef.action));
 
 		tableItem
 				.addTableListener(new ApplicationEventListener<TableClickEvent>() {
@@ -147,6 +147,11 @@ public class OpportunityContactListComp extends
 									new ContactEvent.GotoRead(
 											OpportunityContactListComp.this,
 											contact.getId()));
+						} else if ("accountName".equals(event.getFieldName())) {
+							EventBus.getInstance().fireEvent(
+									new AccountEvent.GotoRead(
+											OpportunityContactListComp.this,
+											contact.getAccountid()));
 						}
 					}
 				});

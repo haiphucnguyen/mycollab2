@@ -48,8 +48,8 @@ class MeetingReadComp extends AbstractPreviewItemComp<SimpleMeeting> {
 
 	@Override
 	protected ComponentContainer createButtonControls() {
-		return CrmPreviewFormControlsGenerator.createFormButtonControls(
-				previewForm, RolePermissionCollections.CRM_MEETING);
+		return new CrmPreviewFormControlsGenerator<SimpleMeeting>(previewForm)
+				.createButtonControls(RolePermissionCollections.CRM_MEETING);
 	}
 
 	@Override

@@ -16,6 +16,7 @@
  */
 package com.esofthead.mycollab.module.crm.view.lead;
 
+import com.esofthead.mycollab.module.crm.domain.SimpleActivity;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.module.crm.view.IRelatedListHandlers;
@@ -57,7 +58,7 @@ public class LeadReadViewImpl extends AbstractPageView implements LeadReadView {
 	}
 
 	@Override
-	public IRelatedListHandlers getRelatedActivityHandlers() {
+	public IRelatedListHandlers<SimpleActivity> getRelatedActivityHandlers() {
 		return leadPreview.getAssociateActivityList();
 	}
 

@@ -71,8 +71,8 @@ class ContactReadComp extends AbstractPreviewItemComp<SimpleContact> {
 
 	@Override
 	protected ComponentContainer createButtonControls() {
-		return CrmPreviewFormControlsGenerator.createFormButtonControls(
-				previewForm, RolePermissionCollections.CRM_CONTACT);
+		return new CrmPreviewFormControlsGenerator<SimpleContact>(previewForm)
+				.createButtonControls(RolePermissionCollections.CRM_CONTACT);
 	}
 
 	public ContactOpportunityListComp getAssociateOpportunityList() {

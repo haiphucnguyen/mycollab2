@@ -9,13 +9,13 @@ package com.esofthead.mycollab.module.crm.domain;
 public class SimpleContactOpportunityRel extends SimpleContact {
 	private static final long serialVersionUID = 1L;
 
-	private String roleDecision;
+	private String decisionRole;
 
-	public String getRoleDecision() {
-		return roleDecision;
+	public String getDecisionRole() {
+		return decisionRole;
 	}
 
-	public void setRoleDecision(String roleDecision) {
-		this.roleDecision = roleDecision;
+	public void setDecisionRole(String decisionRole) {
+		this.decisionRole = decisionRole;
 	}
 }

@@ -44,6 +44,9 @@ public interface ContactTableFieldDef {
 			LocalizationHelper.getMessage(ContactI18nEnum.FORM_ACCOUNTS),
 			"accountName", UIConstants.TABLE_EX_LABEL_WIDTH);
 
+	public static TableViewField dicisionRole = new TableViewField(
+			"Dicision Role", "decisionRole", UIConstants.TABLE_M_LABEL_WIDTH);
+
 	public static TableViewField title = new TableViewField(
 			LocalizationHelper.getMessage(ContactI18nEnum.FORM_TITLE), "title",
 			UIConstants.TABLE_S_LABEL_WIDTH);

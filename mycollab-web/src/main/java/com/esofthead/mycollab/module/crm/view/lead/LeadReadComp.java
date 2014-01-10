@@ -56,8 +56,8 @@ class LeadReadComp extends AbstractPreviewItemComp<SimpleLead> {
 
 	@Override
 	protected ComponentContainer createButtonControls() {
-		return CrmPreviewFormControlsGenerator.createFormButtonControls(
-				previewForm, RolePermissionCollections.CRM_LEAD);
+		return new CrmPreviewFormControlsGenerator<SimpleLead>(previewForm)
+				.createButtonControls(RolePermissionCollections.CRM_LEAD);
 	}
 
 	@Override

@@ -32,13 +32,29 @@ import com.vaadin.ui.HorizontalLayout;
  * @since 1.0
  * 
  */
-public class CrmPreviewFormControlsGenerator {
-	
-	public static <T> HorizontalLayout createFormButtonControls(
-			final AdvancedPreviewBeanForm<T> previewForm, String permissionItem) {
-		Button backBtn, editBtn, deleteBtn, cloneBtn, previousItem, nextItemBtn, historyBtn;
+public class CrmPreviewFormControlsGenerator<T> {
+	private Button backBtn, editBtn, deleteBtn, cloneBtn, previousItem,
+			nextItemBtn, historyBtn;
+	private AdvancedPreviewBeanForm<T> previewForm;
 
-		HorizontalLayout layout = new HorizontalLayout();
+	private HorizontalLayout editButtons;
+	private HorizontalLayout layout;
+
+	public CrmPreviewFormControlsGenerator(
+			final AdvancedPreviewBeanForm<T> editForm) {
+		this.previewForm = editForm;
+
+		editButtons = new HorizontalLayout();
+		editButtons.setSpacing(true);
+		editButtons.addStyleName("edit-btn");
+	}
+
+	public void insertToControlBlock(Button button) {
+		editButtons.addComponent(button, 0);
+	}
+
+	public HorizontalLayout createButtonControls(final String permissionItem) {
+		layout = new HorizontalLayout();
 		layout.setSpacing(true);
 		layout.setMargin(true);
 		layout.setWidth("100%");
@@ -57,10 +73,6 @@ public class CrmPreviewFormControlsGenerator {
 		backBtn.setStyleName("link");
 		layout.addComponent(backBtn);
 		layout.setComponentAlignment(backBtn, Alignment.MIDDLE_LEFT);
-
-		HorizontalLayout editButtons = new HorizontalLayout();
-		editButtons.setSpacing(true);
-		editButtons.addStyleName("edit-btn");
 
 		editBtn = new Button(GenericBeanForm.EDIT_ACTION,
 				new Button.ClickListener() {

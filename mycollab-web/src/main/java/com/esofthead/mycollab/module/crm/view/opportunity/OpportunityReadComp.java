@@ -39,7 +39,7 @@ class OpportunityReadComp extends AbstractPreviewItemComp<SimpleOpportunity> {
 	OpportunityReadComp() {
 		super(MyCollabResource.newResource("icons/22/crm/opportunity.png"));
 	}
-	
+
 	@Override
 	protected AdvancedPreviewBeanForm<SimpleOpportunity> initPreviewForm() {
 		return new AdvancedPreviewBeanForm<SimpleOpportunity>() {
@@ -57,8 +57,9 @@ class OpportunityReadComp extends AbstractPreviewItemComp<SimpleOpportunity> {
 
 	@Override
 	protected ComponentContainer createButtonControls() {
-		return CrmPreviewFormControlsGenerator.createFormButtonControls(
-				previewForm, RolePermissionCollections.CRM_OPPORTUNITY);
+		return new CrmPreviewFormControlsGenerator<SimpleOpportunity>(
+				previewForm)
+				.createButtonControls(RolePermissionCollections.CRM_OPPORTUNITY);
 	}
 
 	@Override

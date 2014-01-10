@@ -7,14 +7,35 @@
         extends="com.esofthead.mycollab.module.crm.dao.ContactMapperExt.SimpleContactResult"
         id="SimpleContactOpportunityRel"
         type="com.esofthead.mycollab.module.crm.domain.SimpleContactOpportunityRel">
-        <result column="roleDecision" jdbcType="VARCHAR"
-            property="roleDecision" />
+        <result column="decisionRole" jdbcType="VARCHAR"
+            property="decisionRole" />
     </resultMap>
-    
-    <sql id="queryTotalCountSearchCriteria">
-    </sql>
-    
+
     <sql id="querySearchCriteria">
+        <if test="searchCriteria.saccountid != null">
+            <![CDATA[${searchCriteria.saccountid.operation} m_crm_contact.sAccountId = #{searchCriteria.saccountid.value,javaType=INTEGER}]]>
+        </if>
+        <if test="searchCriteria.opportunityId != null">
+            <![CDATA[
+            ${searchCriteria.opportunityId.operation} m_crm_contacts_opportunities.opportunityId=#{searchCriteria.opportunityId.value,javaType=INTEGER}
+            ]]>
+        </if>    
+    </sql>
+
+    <sql id="queryTotalCountSearchCriteria">
+        <if test="searchCriteria.saccountid != null">
+            <![CDATA[${searchCriteria.saccountid.operation} m_crm_contact.sAccountId = #{searchCriteria.saccountid.value,javaType=int}]]>
+        </if>
+        <if test="searchCriteria.opportunityId != null">
+            <![CDATA[
+                ${searchCriteria.opportunityId.operation} 
+                (SELECT COUNT(*) 
+                    FROM m_crm_opportunity, m_crm_opportunities_contacts 
+                    WHERE m_crm_opportunities_contacts.opportunityId=#{searchCriteria.opportunityId.value,javaType=INTEGER} 
+                        AND m_crm_opportunities_contacts.contactId=m_crm_contact.id 
+                        AND m_crm_opportunity.id=#{searchCriteria.opportunityId.value,javaType=INTEGER}) > 0
+            ]]>
+        </if>
     </sql>
 
     <sql id="selectSimpleContact">
@@ -29,11 +50,13 @@
                concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) as assignUserFullName,
                s_user.avatarId as assignUserAvatarId,
                concat (LTRIM(concat(IFNULL(m_crm_contact.firstname, ''), ' ')), ' ', m_crm_contact.lastname) AS contactName,
-               m_crm_contact.lastUpdatedTime, m_crm_account.accountName accountName
+               m_crm_contact.lastUpdatedTime, m_crm_account.accountName AS accountName,
+               m_crm_contacts_opportunities.decisionRole AS decisionRole
 
         FROM m_crm_contact 
                LEFT OUTER JOIN m_crm_account ON (m_crm_contact.accountId = m_crm_account.id) 
                LEFT OUTER JOIN s_user ON (m_crm_contact.assignUser = s_user.username)
+               INNER JOIN m_crm_contacts_opportunities ON (m_crm_contacts_opportunities.contactId=m_crm_contact.id)
         ]]>
     </sql>
 

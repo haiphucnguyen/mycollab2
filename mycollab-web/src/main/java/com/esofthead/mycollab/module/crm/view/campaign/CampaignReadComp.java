@@ -40,7 +40,7 @@ class CampaignReadComp extends AbstractPreviewItemComp<SimpleCampaign> {
 	public CampaignReadComp() {
 		super(MyCollabResource.newResource("icons/22/crm/campaign.png"));
 	}
-	
+
 	@Override
 	protected AdvancedPreviewBeanForm<SimpleCampaign> initPreviewForm() {
 		return new AdvancedPreviewBeanForm<SimpleCampaign>() {
@@ -58,8 +58,8 @@ class CampaignReadComp extends AbstractPreviewItemComp<SimpleCampaign> {
 
 	@Override
 	protected ComponentContainer createButtonControls() {
-		return CrmPreviewFormControlsGenerator.createFormButtonControls(
-				previewForm, RolePermissionCollections.CRM_CAMPAIGN);
+		return new CrmPreviewFormControlsGenerator<SimpleCampaign>(previewForm)
+				.createButtonControls(RolePermissionCollections.CRM_CAMPAIGN);
 	}
 
 	@Override
@@ -77,7 +77,7 @@ class CampaignReadComp extends AbstractPreviewItemComp<SimpleCampaign> {
 				MyCollabResource.newResource("icons/16/crm/lead.png"));
 		return tabContainer;
 	}
-	
+
 	@Override
 	protected void initRelatedComponents() {
 		associateAccountList = new CampaignAccountListComp();

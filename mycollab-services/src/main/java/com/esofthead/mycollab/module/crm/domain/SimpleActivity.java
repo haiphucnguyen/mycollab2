@@ -21,6 +21,12 @@ import java.util.Date;
 
 import com.esofthead.mycollab.core.arguments.ValuedBean;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class SimpleActivity extends ValuedBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 

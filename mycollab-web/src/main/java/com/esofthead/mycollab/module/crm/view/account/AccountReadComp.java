@@ -82,8 +82,8 @@ class AccountReadComp extends AbstractPreviewItemComp<SimpleAccount> {
 
 	@Override
 	protected ComponentContainer createButtonControls() {
-		return CrmPreviewFormControlsGenerator.createFormButtonControls(
-				previewForm, RolePermissionCollections.CRM_ACCOUNT);
+		return new CrmPreviewFormControlsGenerator<SimpleAccount>(previewForm)
+				.createButtonControls(RolePermissionCollections.CRM_ACCOUNT);
 
 	}
 

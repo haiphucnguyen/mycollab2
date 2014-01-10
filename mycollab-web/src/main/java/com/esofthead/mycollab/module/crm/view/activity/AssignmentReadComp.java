@@ -24,9 +24,9 @@ import com.vaadin.ui.UI;
  */
 class AssignmentReadComp extends AbstractPreviewItemComp<SimpleTask> {
 	private static final long serialVersionUID = 1L;
-	
+
 	protected NoteListItems noteListItems;
-	
+
 	AssignmentReadComp() {
 		super(MyCollabResource.newResource("icons/22/crm/task.png"));
 	}
@@ -48,8 +48,8 @@ class AssignmentReadComp extends AbstractPreviewItemComp<SimpleTask> {
 
 	@Override
 	protected ComponentContainer createButtonControls() {
-		return CrmPreviewFormControlsGenerator.createFormButtonControls(
-				previewForm, RolePermissionCollections.CRM_TASK);
+		return new CrmPreviewFormControlsGenerator<SimpleTask>(previewForm)
+				.createButtonControls(RolePermissionCollections.CRM_TASK);
 	}
 
 	@Override
@@ -61,7 +61,7 @@ class AssignmentReadComp extends AbstractPreviewItemComp<SimpleTask> {
 				MyCollabResource.newResource("icons/16/crm/note.png"));
 		return tabContainer;
 	}
-	
+
 	@Override
 	protected void onPreviewItem() {
 		displayNotes();

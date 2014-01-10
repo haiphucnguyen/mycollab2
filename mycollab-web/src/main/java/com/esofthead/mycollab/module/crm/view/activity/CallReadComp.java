@@ -48,9 +48,8 @@ class CallReadComp extends AbstractPreviewItemComp<SimpleCall> {
 
 	@Override
 	protected ComponentContainer createButtonControls() {
-		return CrmPreviewFormControlsGenerator.createFormButtonControls(
-				previewForm, RolePermissionCollections.CRM_CALL);
-
+		return new CrmPreviewFormControlsGenerator<SimpleCall>(previewForm)
+				.createButtonControls(RolePermissionCollections.CRM_CALL);
 	}
 
 	@Override
