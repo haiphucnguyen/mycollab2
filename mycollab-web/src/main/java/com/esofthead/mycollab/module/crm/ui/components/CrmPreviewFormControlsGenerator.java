@@ -33,6 +33,7 @@ import com.vaadin.ui.HorizontalLayout;
  * 
  */
 public class CrmPreviewFormControlsGenerator {
+	
 	public static <T> HorizontalLayout createFormButtonControls(
 			final AdvancedPreviewBeanForm<T> previewForm, String permissionItem) {
 		Button backBtn, editBtn, deleteBtn, cloneBtn, previousItem, nextItemBtn, historyBtn;

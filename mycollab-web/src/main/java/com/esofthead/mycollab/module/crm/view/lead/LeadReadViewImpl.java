@@ -31,8 +31,8 @@ import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
  */
 @ViewComponent
 public class LeadReadViewImpl extends AbstractPageView implements LeadReadView {
-
 	private static final long serialVersionUID = 1L;
+
 	private LeadReadComp leadPreview;
 
 	public LeadReadViewImpl() {

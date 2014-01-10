@@ -55,7 +55,6 @@ import com.vaadin.ui.ComponentContainer;
  * 
  */
 public class LeadAddPresenter extends CrmGenericPresenter<LeadAddView> {
-
 	private static final long serialVersionUID = 1L;
 
 	public LeadAddPresenter() {
@@ -66,6 +65,8 @@ public class LeadAddPresenter extends CrmGenericPresenter<LeadAddView> {
 	protected void postInitView() {
 		view.getEditFormHandlers().addFormHandler(
 				new EditFormHandler<SimpleLead>() {
+					private static final long serialVersionUID = 1L;
+
 					@Override
 					public void onSave(final SimpleLead lead) {
 						saveLead(lead);
