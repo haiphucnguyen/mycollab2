@@ -16,6 +16,10 @@
  */
 package com.esofthead.mycollab.module.crm.service.ibatis;
 
+import java.util.Arrays;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,11 +34,22 @@ import com.esofthead.mycollab.core.persistence.service.DefaultService;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.dao.LeadMapper;
 import com.esofthead.mycollab.module.crm.dao.LeadMapperExt;
+import com.esofthead.mycollab.module.crm.domain.Account;
+import com.esofthead.mycollab.module.crm.domain.AccountLead;
+import com.esofthead.mycollab.module.crm.domain.Contact;
+import com.esofthead.mycollab.module.crm.domain.ContactLead;
 import com.esofthead.mycollab.module.crm.domain.Lead;
+import com.esofthead.mycollab.module.crm.domain.Opportunity;
+import com.esofthead.mycollab.module.crm.domain.OpportunityContact;
+import com.esofthead.mycollab.module.crm.domain.OpportunityLead;
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
+import com.esofthead.mycollab.module.crm.service.AccountService;
+import com.esofthead.mycollab.module.crm.service.ContactService;
 import com.esofthead.mycollab.module.crm.service.LeadService;
+import com.esofthead.mycollab.module.crm.service.OpportunityService;
 import com.esofthead.mycollab.schedule.email.crm.LeadRelayEmailNotificationAction;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 
 @Service
 @Transactional
@@ -44,6 +59,7 @@ import com.esofthead.mycollab.schedule.email.crm.LeadRelayEmailNotificationActio
 public class LeadServiceImpl extends
 		DefaultService<Integer, Lead, LeadSearchCriteria> implements
 		LeadService {
+	private static Logger log = LoggerFactory.getLogger(LeadServiceImpl.class);
 
 	@Autowired
 	private LeadMapper leadMapper;
@@ -63,5 +79,78 @@ public class LeadServiceImpl extends
 	@Override
 	public SimpleLead findById(int leadId, int sAccountId) {
 		return leadMapperExt.findById(leadId);
+	}
+
+	@Override
+	public void convertLead(SimpleLead lead, Opportunity opportunity) {
+
+		log.debug("Create new account and save it");
+		Account account = new Account();
+		account.setAccountname(lead.getAccountname());
+		account.setNumemployees(lead.getNoemployees());
+		account.setIndustry(lead.getIndustry());
+		account.setEmail(lead.getEmail());
+		account.setPhoneoffice(lead.getOfficephone());
+		account.setFax(lead.getFax());
+		account.setWebsite(lead.getWebsite());
+		account.setAssignuser(lead.getAssignuser());
+		account.setDescription(lead.getDescription());
+		account.setSaccountid(lead.getSaccountid());
+
+		AccountService accountService = ApplicationContextUtil
+				.getSpringBean(AccountService.class);
+		int accountId = accountService.saveWithSession(account, "");
+		log.debug("Create account lead relationship");
+		AccountLead accLead = new AccountLead();
+		accLead.setAccountid(accountId);
+		accLead.setLeadid(lead.getId());
+		accountService.saveAccountLeadRelationship(Arrays.asList(accLead),
+				lead.getSaccountid());
+
+		log.debug("Create new contact and save it");
+		Contact contact = new Contact();
+		contact.setFirstname(lead.getFirstname());
+		contact.setLastname(lead.getLastname());
+		contact.setTitle(lead.getTitle());
+		contact.setDepartment(lead.getDepartment());
+		contact.setAccountid(accountId);
+		contact.setSaccountid(lead.getSaccountid());
+		contact.setLeadsource(lead.getSource());
+		contact.setAssignuser(lead.getAssignuser());
+		contact.setOfficephone(lead.getOfficephone());
+		contact.setEmail(lead.getEmail());
+
+		ContactService contactService = ApplicationContextUtil
+				.getSpringBean(ContactService.class);
+		int contactId = contactService.saveWithSession(contact, "");
+		log.debug("Create contact lead relationship");
+		ContactLead contactLead = new ContactLead();
+		contactLead.setContactid(contactId);
+		contactLead.setLeadid(lead.getId());
+		contactService.saveContactLeadRelationship(Arrays.asList(contactLead),
+				lead.getSaccountid());
+
+		if (opportunity != null) {
+			opportunity.setAccountid(accountId);
+			OpportunityService opportunityService = ApplicationContextUtil
+					.getSpringBean(OpportunityService.class);
+			int opportunityId = opportunityService.saveWithSession(opportunity,
+					"");
+
+			log.debug("Create new opportunity contact relationship");
+			OpportunityContact oppContact = new OpportunityContact();
+			oppContact.setContactid(contactId);
+			oppContact.setOpportunityid(opportunityId);
+			opportunityService.saveOpportunityContactRelationship(
+					Arrays.asList(oppContact), lead.getSaccountid());
+
+			log.debug("Create new opportunity lead relationship");
+			OpportunityLead oppLead = new OpportunityLead();
+			oppLead.setLeadid(lead.getId());
+			oppLead.setOpportunityid(opportunityId);
+			opportunityService.saveOpportunityLeadRelationship(
+					Arrays.asList(oppLead), lead.getSaccountid());
+		}
+
 	}
 }

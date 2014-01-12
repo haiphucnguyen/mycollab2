@@ -17,6 +17,8 @@
 
 package com.esofthead.mycollab.vaadin.events;
 
+import com.esofthead.mycollab.core.MyCollabException;
+
 /**
  * 
  * @author MyCollab Ltd.
@@ -50,5 +52,11 @@ public class DefaultPreviewFormHandler<T> implements PreviewFormHandler<T> {
 
 	@Override
 	public void onAssign(T data) {
+	}
+
+	@Override
+	public void onExtraAction(String action, T data) {
+		throw new MyCollabException("Must be override by sub class");
+
 	}
 }

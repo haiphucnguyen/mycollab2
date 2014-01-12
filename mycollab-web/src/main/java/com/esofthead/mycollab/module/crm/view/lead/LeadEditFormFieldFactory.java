@@ -80,6 +80,11 @@ class LeadEditFormFieldFactory<B extends Lead> extends
 			TextArea descArea = new TextArea();
 			descArea.setNullRepresentation("");
 			return descArea;
+		} else if (propertyId.equals("accountname")) {
+			TextField txtField = new TextField();
+			txtField.setRequired(true);
+			txtField.setRequiredError("Account name must be not null");
+			return txtField;
 		}
 
 		return null;

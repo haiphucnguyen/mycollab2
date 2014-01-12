@@ -26,22 +26,28 @@ import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.common.interceptor.aspect.Auditable;
 import com.esofthead.mycollab.common.interceptor.aspect.Traceable;
 import com.esofthead.mycollab.common.interceptor.aspect.Watchable;
+import com.esofthead.mycollab.core.cache.CacheEvict;
+import com.esofthead.mycollab.core.cache.CacheKey;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.dao.ContactCaseMapper;
+import com.esofthead.mycollab.module.crm.dao.ContactLeadMapper;
 import com.esofthead.mycollab.module.crm.dao.ContactMapper;
 import com.esofthead.mycollab.module.crm.dao.ContactMapperExt;
 import com.esofthead.mycollab.module.crm.dao.ContactOpportunityMapper;
 import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.module.crm.domain.ContactCase;
 import com.esofthead.mycollab.module.crm.domain.ContactCaseExample;
+import com.esofthead.mycollab.module.crm.domain.ContactLead;
+import com.esofthead.mycollab.module.crm.domain.ContactLeadExample;
 import com.esofthead.mycollab.module.crm.domain.ContactOpportunity;
 import com.esofthead.mycollab.module.crm.domain.ContactOpportunityExample;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.ContactService;
+import com.esofthead.mycollab.module.crm.service.LeadService;
 import com.esofthead.mycollab.schedule.email.crm.ContactRelayEmailNotificationAction;
 
 /**
@@ -67,6 +73,8 @@ public class ContactServiceImpl extends
 	private ContactOpportunityMapper contactOpportunityMapper;
 	@Autowired
 	private ContactCaseMapper contactCaseMapper;
+	@Autowired
+	private ContactLeadMapper contactLeadMapper;
 
 	@Override
 	public ICrudGenericDAO<Integer, Contact> getCrudMapper() {
@@ -130,5 +138,20 @@ public class ContactServiceImpl extends
 		ex.createCriteria().andContactidEqualTo(associateCase.getContactid())
 				.andCaseidEqualTo(associateCase.getCaseid());
 		contactCaseMapper.deleteByExample(ex);
+	}
+
+	@CacheEvict(serviceMap = LeadService.class)
+	public void saveContactLeadRelationship(List<ContactLead> associateLeads,
+			@CacheKey Integer accountId) {
+		for (ContactLead associateLead : associateLeads) {
+			ContactLeadExample ex = new ContactLeadExample();
+			ex.createCriteria()
+					.andContactidEqualTo(associateLead.getContactid())
+					.andLeadidEqualTo(associateLead.getLeadid());
+			if (contactLeadMapper.countByExample(ex) == 0) {
+				contactLeadMapper.insert(associateLead);
+			}
+		}
+
 	}
 }

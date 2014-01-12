@@ -77,6 +77,7 @@ import com.esofthead.mycollab.module.crm.view.contact.ContactReadPresenter;
 import com.esofthead.mycollab.module.crm.view.file.FileDashboardPresenter;
 import com.esofthead.mycollab.module.crm.view.file.FileSearchResultPresenter;
 import com.esofthead.mycollab.module.crm.view.lead.LeadAddPresenter;
+import com.esofthead.mycollab.module.crm.view.lead.LeadConvertInfoPresenter;
 import com.esofthead.mycollab.module.crm.view.lead.LeadListPresenter;
 import com.esofthead.mycollab.module.crm.view.lead.LeadReadPresenter;
 import com.esofthead.mycollab.module.crm.view.opportunity.OpportunityAddPresenter;
@@ -759,6 +760,21 @@ public class CrmController implements IController {
 								.getPresenter(LeadReadPresenter.class);
 						presenter.go(container,
 								new ScreenData.Preview(event.getData()));
+					}
+				});
+
+		EventBus.getInstance().addListener(
+				new ApplicationEventListener<LeadEvent.GotoConvertView>() {
+					@Override
+					public Class<? extends ApplicationEvent> getEventType() {
+						return LeadEvent.GotoConvertView.class;
+					}
+
+					@Override
+					public void handle(LeadEvent.GotoConvertView event) {
+						LeadConvertInfoPresenter presenter = PresenterResolver
+								.getPresenter(LeadConvertInfoPresenter.class);
+						presenter.go(container, new ScreenData(event.getData()));
 					}
 				});
 	}

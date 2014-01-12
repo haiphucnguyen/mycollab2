@@ -24,6 +24,7 @@ import com.esofthead.mycollab.core.cache.Cacheable;
 import com.esofthead.mycollab.core.persistence.service.IDefaultService;
 import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.module.crm.domain.ContactCase;
+import com.esofthead.mycollab.module.crm.domain.ContactLead;
 import com.esofthead.mycollab.module.crm.domain.ContactOpportunity;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
@@ -48,6 +49,11 @@ public interface ContactService extends
 	@CacheEvict(serviceMap = { OpportunityService.class })
 	void saveContactOpportunityRelationship(
 			List<ContactOpportunity> associateOpportunities,
+			@CacheKey Integer accountId);
+	
+	@CacheEvict(serviceMap = { LeadService.class })
+	void saveContactLeadRelationship(
+			List<ContactLead> associateLeads,
 			@CacheKey Integer accountId);
 
 	@CacheEvict(serviceMap = { CaseService.class })

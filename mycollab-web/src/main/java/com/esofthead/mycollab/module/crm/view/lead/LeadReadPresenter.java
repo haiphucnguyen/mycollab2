@@ -167,6 +167,12 @@ public class LeadReadPresenter extends CrmGenericPresenter<LeadReadView> {
 							NotificationUtil.showGotoFirstRecordNotification();
 						}
 					}
+
+					@Override
+					public void onExtraAction(String action, SimpleLead data) {
+						EventBus.getInstance().fireEvent(
+								new LeadEvent.GotoConvertView(this, data));
+					}
 				});
 
 		view.getRelatedActivityHandlers().addRelatedListHandler(

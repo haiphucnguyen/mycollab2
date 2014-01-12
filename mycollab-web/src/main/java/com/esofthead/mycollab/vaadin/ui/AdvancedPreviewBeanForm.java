@@ -108,4 +108,12 @@ public class AdvancedPreviewBeanForm<B> extends GenericBeanForm<B> implements
 			}
 		}
 	}
+
+	public void fireExtraAction(String action, B bean) {
+		if (handlers != null) {
+			for (PreviewFormHandler<B> handler : handlers) {
+				handler.onExtraAction(action, bean);
+			}
+		}
+	}
 }

@@ -17,10 +17,13 @@ import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.MyCollabResource;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.UI;
+import com.vaadin.ui.Button.ClickEvent;
 
 /**
  * 
@@ -56,7 +59,24 @@ class LeadReadComp extends AbstractPreviewItemComp<SimpleLead> {
 
 	@Override
 	protected ComponentContainer createButtonControls() {
-		return new CrmPreviewFormControlsGenerator<SimpleLead>(previewForm)
+		CrmPreviewFormControlsGenerator<SimpleLead> controlsButton = new CrmPreviewFormControlsGenerator<SimpleLead>(
+				previewForm);
+
+		Button convertButton = new Button("Convert",
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void buttonClick(ClickEvent event) {
+						previewForm.fireExtraAction("convert", beanItem);
+					}
+				});
+		convertButton.setStyleName(UIConstants.THEME_BLUE_LINK);
+		convertButton.setIcon(MyCollabResource
+				.newResource("icons/16/convert.png"));
+		controlsButton.insertToControlBlock(convertButton);
+
+		return controlsButton
 				.createButtonControls(RolePermissionCollections.CRM_LEAD);
 	}
 

@@ -65,4 +65,11 @@ public interface PreviewFormHandler<T> {
      * 
      */
 	void onCancel();
+
+	/**
+	 * 
+	 * @param action
+	 * @param data
+	 */
+	void onExtraAction(String action, T data);
 }

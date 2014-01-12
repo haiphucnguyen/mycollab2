@@ -26,7 +26,7 @@ import com.esofthead.mycollab.eventmanager.ApplicationEvent;
  */
 @SuppressWarnings("serial")
 public class LeadEvent {
-	
+
 	public static class Save extends ApplicationEvent {
 		public Save(Object source, Object data) {
 			super(source, data);
@@ -59,6 +59,12 @@ public class LeadEvent {
 
 	public static class GotoEdit extends ApplicationEvent {
 		public GotoEdit(Object source, Object data) {
+			super(source, data);
+		}
+	}
+
+	public static class GotoConvertView extends ApplicationEvent {
+		public GotoConvertView(Object source, Object data) {
 			super(source, data);
 		}
 	}
