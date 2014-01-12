@@ -55,6 +55,7 @@
             <artifactId>validation-api</artifactId>
             <version>1.0.0.GA</version>
         </dependency>
+        <!-- 
         <dependency>
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
@@ -62,6 +63,7 @@
             <classifier>sources</classifier>
             <scope>provided</scope>
         </dependency>
+        -->
 
         <!-- Camel dependency -->
         <dependency>
