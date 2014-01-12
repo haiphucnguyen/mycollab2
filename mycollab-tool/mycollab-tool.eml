@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component inheritJdk="true">
+	<output-test url="file://$MODULE_DIR$/target/test-classes"/>
+	<contentEntry url="file://$MODULE_DIR$">
+		<excludeFolder url="file://$MODULE_DIR$/target"/>
+	</contentEntry>
+	<lib name="mybatis-3.2.3.jar" scope="COMPILE">
+		<srcroot url="jar://$M2_REPO$/org/mybatis/mybatis/3.2.3/mybatis-3.2.3-sources.jar!/"/>
+	</lib>
+	<lib name="mybatis-generator-core-1.3.2.jar" scope="COMPILE">
+		<srcroot url="jar://$M2_REPO$/org/mybatis/generator/mybatis-generator-core/1.3.2/mybatis-generator-core-1.3.2-sources.jar!/"/>
+	</lib>
+</component>
