@@ -16,6 +16,7 @@
  */
 package com.esofthead.mycollab.module.crm.service.ibatis;
 
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,6 +91,7 @@ public class AccountServiceImpl extends
 					.andAccountidEqualTo(associateLead.getAccountid())
 					.andLeadidEqualTo(associateLead.getLeadid());
 			if (accountLeadMapper.countByExample(ex) == 0) {
+				associateLead.setCreatetime(new GregorianCalendar().getTime());
 				accountLeadMapper.insert(associateLead);
 			}
 		}

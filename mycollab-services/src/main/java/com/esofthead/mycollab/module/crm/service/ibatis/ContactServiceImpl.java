@@ -16,6 +16,7 @@
  */
 package com.esofthead.mycollab.module.crm.service.ibatis;
 
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -112,6 +113,8 @@ public class ContactServiceImpl extends
 					.andContactidEqualTo(assoOpportunity.getContactid())
 					.andOpportunityidEqualTo(assoOpportunity.getOpportunityid());
 			if (contactOpportunityMapper.countByExample(ex) == 0) {
+				assoOpportunity.setCreatedtime(new GregorianCalendar()
+						.getTime());
 				contactOpportunityMapper.insert(assoOpportunity);
 			}
 		}
@@ -126,6 +129,7 @@ public class ContactServiceImpl extends
 					.andContactidEqualTo(associateCase.getContactid())
 					.andCaseidEqualTo(associateCase.getCaseid());
 			if (contactCaseMapper.countByExample(ex) == 0) {
+				associateCase.setCreatedtime(new GregorianCalendar().getTime());
 				contactCaseMapper.insert(associateCase);
 			}
 		}

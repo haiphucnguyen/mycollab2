@@ -59,6 +59,7 @@ import com.esofthead.mycollab.module.crm.events.DocumentEvent;
 import com.esofthead.mycollab.module.crm.events.LeadEvent;
 import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
 import com.esofthead.mycollab.module.crm.service.CallService;
+import com.esofthead.mycollab.module.crm.service.LeadService;
 import com.esofthead.mycollab.module.crm.service.MeetingService;
 import com.esofthead.mycollab.module.crm.service.TaskService;
 import com.esofthead.mycollab.module.crm.view.account.AccountAddPresenter;
@@ -78,6 +79,7 @@ import com.esofthead.mycollab.module.crm.view.file.FileDashboardPresenter;
 import com.esofthead.mycollab.module.crm.view.file.FileSearchResultPresenter;
 import com.esofthead.mycollab.module.crm.view.lead.LeadAddPresenter;
 import com.esofthead.mycollab.module.crm.view.lead.LeadConvertInfoPresenter;
+import com.esofthead.mycollab.module.crm.view.lead.LeadConvertReadPresenter;
 import com.esofthead.mycollab.module.crm.view.lead.LeadListPresenter;
 import com.esofthead.mycollab.module.crm.view.lead.LeadReadPresenter;
 import com.esofthead.mycollab.module.crm.view.opportunity.OpportunityAddPresenter;
@@ -756,10 +758,32 @@ public class CrmController implements IController {
 					@SuppressWarnings({ "unchecked", "rawtypes" })
 					@Override
 					public void handle(LeadEvent.GotoRead event) {
-						LeadReadPresenter presenter = PresenterResolver
-								.getPresenter(LeadReadPresenter.class);
-						presenter.go(container,
-								new ScreenData.Preview(event.getData()));
+						Object value = event.getData();
+						SimpleLead lead;
+						if (value instanceof Integer) {
+							LeadService leadService = ApplicationContextUtil
+									.getSpringBean(LeadService.class);
+							lead = leadService.findById((Integer) value,
+									AppContext.getAccountId());
+						} else if (value instanceof SimpleLead) {
+							lead = (SimpleLead) value;
+						} else {
+							throw new MyCollabException(
+									"Do not support such param type");
+						}
+
+						if ("Converted".equals(lead.getStatus())) {
+							LeadConvertReadPresenter presenter = PresenterResolver
+									.getPresenter(LeadConvertReadPresenter.class);
+							presenter.go(container,
+									new ScreenData.Preview(lead));
+						} else {
+							LeadReadPresenter presenter = PresenterResolver
+									.getPresenter(LeadReadPresenter.class);
+							presenter.go(container,
+									new ScreenData.Preview(lead));
+						}
+
 					}
 				});
 

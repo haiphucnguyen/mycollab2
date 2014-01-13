@@ -86,7 +86,8 @@ public class LeadConvertInfoViewImpl extends AbstractPageView implements
 						leadService.updateWithSession(lead,
 								AppContext.getUsername());
 						Opportunity opportunity = null;
-						if (opportunityForm.isVisible()) {
+						if (opportunityForm != null
+								&& opportunityForm.isVisible()) {
 							if (opportunityForm.validateForm()) {
 								opportunity = opportunityForm.getBean();
 							}

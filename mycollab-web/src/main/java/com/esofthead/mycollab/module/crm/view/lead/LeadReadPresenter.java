@@ -249,24 +249,17 @@ public class LeadReadPresenter extends CrmGenericPresenter<LeadReadView> {
 			crmToolbar.gotoItem(LocalizationHelper
 					.getMessage(CrmCommonI18nEnum.TOOLBAR_LEADS_HEADER));
 
-			if (data.getParams() instanceof Integer) {
-				LeadService leadService = ApplicationContextUtil
-						.getSpringBean(LeadService.class);
-				SimpleLead lead = leadService.findById(
-						(Integer) data.getParams(), AppContext.getAccountId());
-				if (lead != null) {
-					super.onGo(container, data);
-					view.previewItem(lead);
+			if (data.getParams() instanceof SimpleLead) {
+				SimpleLead lead = (SimpleLead) data.getParams();
+				super.onGo(container, data);
+				view.previewItem(lead);
 
-					AppContext.addFragment(CrmLinkGenerator
-							.generateLeadPreviewLink(lead.getId()),
-							LocalizationHelper.getMessage(
-									GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
-									"Lead", lead.getLeadName()));
-				} else {
-					NotificationUtil.showRecordNotExistNotification();
-					return;
-				}
+				AppContext.addFragment(CrmLinkGenerator
+						.generateLeadPreviewLink(lead.getId()),
+						LocalizationHelper.getMessage(
+								GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
+								"Lead", lead.getLeadName()));
+
 			}
 		} else {
 			NotificationUtil.showMessagePermissionAlert();
