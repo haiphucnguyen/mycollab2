@@ -5,6 +5,8 @@ import com.esofthead.mycollab.module.crm.domain.Opportunity;
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.module.crm.events.LeadEvent;
 import com.esofthead.mycollab.module.crm.service.LeadService;
+import com.esofthead.mycollab.module.crm.view.campaign.CampaignSelectionField;
+import com.esofthead.mycollab.module.crm.view.opportunity.OpportunitySalesStageComboBox;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
@@ -12,6 +14,7 @@ import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout2;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
+import com.esofthead.mycollab.vaadin.ui.CurrencyComboBoxField;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -27,6 +30,7 @@ import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
+import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
 /**
@@ -49,6 +53,8 @@ public class LeadConvertInfoViewImpl extends AbstractPageView implements
 		this.removeAllComponents();
 
 		String formTitle = "Convert Lead (%s - %s)";
+		formTitle = String.format(formTitle, lead.getLastname(),
+				lead.getFirstname());
 		AddViewLayout2 formAddLayout = new AddViewLayout2(formTitle,
 				MyCollabResource.newResource("icons/22/crm/lead.png"));
 
@@ -207,6 +213,21 @@ public class LeadConvertInfoViewImpl extends AbstractPageView implements
 
 				@Override
 				protected Field<?> onCreateField(Object propertyId) {
+					if (propertyId.equals("campaignid")) {
+						return new CampaignSelectionField();
+					} else if (propertyId.equals("opportunityname")) {
+						TextField tf = new TextField();
+						tf.setNullRepresentation("");
+						tf.setRequired(true);
+						tf.setRequiredError("Name must not be null");
+						return tf;
+					} else if (propertyId.equals("currencyid")) {
+						CurrencyComboBoxField currencyBox = new CurrencyComboBoxField();
+						return currencyBox;
+					} else if (propertyId.equals("salesstage")) {
+						return new OpportunitySalesStageComboBox();
+					}
+
 					return null;
 				}
 

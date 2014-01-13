@@ -24,7 +24,7 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
-import com.esofthead.mycollab.vaadin.ui.CurrencyComboBox;
+import com.esofthead.mycollab.vaadin.ui.CurrencyComboBoxField;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
@@ -137,7 +137,7 @@ public class ProjectAddViewImpl extends AbstractPageView implements
 				tf.setRequiredError("Please enter a project short name");
 				return tf;
 			} else if (propertyId.equals("currencyid")) {
-				return new CurrencyComboBox();
+				return new CurrencyComboBoxField();
 			} else if (propertyId.equals("name")) {
 				final TextField tf = new TextField();
 				tf.setNullRepresentation("");

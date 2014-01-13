@@ -19,7 +19,7 @@ package com.esofthead.mycollab.module.crm.view.campaign;
 import com.esofthead.mycollab.module.crm.domain.CampaignWithBLOBs;
 import com.esofthead.mycollab.module.user.ui.components.ActiveUserComboBox;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
-import com.esofthead.mycollab.vaadin.ui.CurrencyComboBox;
+import com.esofthead.mycollab.vaadin.ui.CurrencyComboBoxField;
 import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.ui.Field;
@@ -67,7 +67,7 @@ public class CampaignEditFormFieldFactory<B extends CampaignWithBLOBs> extends
 			userBox.select(attachForm.getBean().getAssignuser());
 			return userBox;
 		} else if (propertyId.equals("currencyid")) {
-			return new CurrencyComboBox();
+			return new CurrencyComboBoxField();
 		}
 		return null;
 	}

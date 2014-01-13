@@ -42,6 +42,7 @@ public class LeadConvertReadViewImpl extends AbstractPageView implements
 				MyCollabResource.newResource("icons/22/crm/lead.png"));
 
 		HorizontalLayout buttonControls = new HorizontalLayout();
+		buttonControls.setMargin(true);
 		buttonControls.addStyleName("main-info");
 		Button gotoLeadListBtn = new Button("Go to Leads",
 				new Button.ClickListener() {

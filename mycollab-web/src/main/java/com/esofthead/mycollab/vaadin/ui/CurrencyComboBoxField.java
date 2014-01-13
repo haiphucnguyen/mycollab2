@@ -29,10 +29,10 @@ import com.vaadin.ui.ComboBox;
  * @since 2.0
  * 
  */
-public class CurrencyComboBox extends ComboBox {
+public class CurrencyComboBoxField extends ComboBox {
 	private static final long serialVersionUID = 1L;
 
-	public CurrencyComboBox() {
+	public CurrencyComboBoxField() {
 		super();
 		this.setItemCaptionMode(ItemCaptionMode.EXPLICIT);
 

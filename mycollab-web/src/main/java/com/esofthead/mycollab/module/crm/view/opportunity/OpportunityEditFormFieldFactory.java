@@ -22,7 +22,7 @@ import com.esofthead.mycollab.module.crm.view.campaign.CampaignSelectionField;
 import com.esofthead.mycollab.module.crm.view.lead.LeadSourceComboBox;
 import com.esofthead.mycollab.module.user.ui.components.ActiveUserComboBox;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
-import com.esofthead.mycollab.vaadin.ui.CurrencyComboBox;
+import com.esofthead.mycollab.vaadin.ui.CurrencyComboBoxField;
 import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.TextArea;
@@ -60,10 +60,7 @@ public class OpportunityEditFormFieldFactory<B extends Opportunity> extends
 			tf.setRequiredError("Name must not be null");
 			return tf;
 		} else if (propertyId.equals("currencyid")) {
-			CurrencyComboBox currencyBox = new CurrencyComboBox();
-			if (opportunity.getCurrencyid() != null) {
-				currencyBox.setValue(opportunity.getCurrencyid());
-			}
+			CurrencyComboBoxField currencyBox = new CurrencyComboBoxField();
 			return currencyBox;
 		} else if (propertyId.equals("salesstage")) {
 			return new OpportunitySalesStageComboBox();
