@@ -553,7 +553,11 @@ public class AppContext implements Serializable {
 	 * @param key
 	 */
 	public static void removeVariable(String key) {
-		VaadinSession.getCurrent().getSession().removeAttribute(key);
+		try {
+			VaadinSession.getCurrent().getSession().removeAttribute(key);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
