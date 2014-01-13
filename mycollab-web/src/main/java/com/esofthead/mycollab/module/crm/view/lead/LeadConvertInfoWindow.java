@@ -125,8 +125,6 @@ public class LeadConvertInfoWindow extends Window {
             @Override
             public void buttonClick(ClickEvent event) {
                 LeadConvertInfoWindow.this.close();
-                EventBus.getInstance().fireEvent(
-                        new LeadEvent.GotoList(this, null));
 
             }
         });
