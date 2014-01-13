@@ -5774,3 +5774,23 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 .comment-display .v-verticallayout, .comment-display .v-customcomponent {
     display: block;
 }
+
+/* Text styles */
+.bluetxt {
+	color: rgb(10, 88, 205);
+}
+
+/*Label Styles */
+.v-label.has-checkmark {
+	padding-left: 18px;
+	background: url("icons/16/checkmark.png") no-repeat left top transparent;
+}
+
+/*Lead Convert Window */
+.lead-convert-window {
+	/* padding-top: 10px; */
+	padding-bottom: 5px;
+}
+.lead-convert-window .colored-gridlayout > div > div.first-row {
+	border-top: 1px solid rgb(200, 200, 200);
+}

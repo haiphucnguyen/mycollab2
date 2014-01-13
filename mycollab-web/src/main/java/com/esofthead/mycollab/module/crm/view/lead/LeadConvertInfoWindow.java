@@ -9,56 +9,65 @@ import com.esofthead.mycollab.module.crm.view.campaign.CampaignSelectionField;
 import com.esofthead.mycollab.module.crm.view.opportunity.OpportunitySalesStageComboBox;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
-import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
-import com.esofthead.mycollab.vaadin.ui.AddViewLayout2;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.CurrencyComboBoxField;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Window;
 
-/**
- * 
- * @author MyCollab Ltd.
- * @since 3.0
- * 
- */
-@ViewComponent
-public class LeadConvertInfoViewImpl extends AbstractPageView implements
-        LeadConvertInfoView {
-    private static final long serialVersionUID = 1L;
+public class LeadConvertInfoWindow extends Window {
 
-    private SimpleLead lead;
+    private static final long serialVersionUID = -4005327071240226216L;
+
+    private final SimpleLead lead;
     private LeadOpportunityForm opportunityForm;
 
-    @Override
-    public void displayConvertLead(SimpleLead lead) {
-        this.lead = lead;
-        this.removeAllComponents();
+    public LeadConvertInfoWindow(SimpleLead lead) {
+        super();
 
+        this.lead = lead;
+        this.setWidth("900px");
+        this.setContent(initContent());
+        this.setResizable(false);
+
+        this.center();
+    }
+
+    @Override
+    public void attach() {
         String formTitle = "Convert Lead (%s - %s)";
         formTitle = String.format(formTitle, lead.getLastname(),
                 lead.getFirstname());
-        AddViewLayout2 formAddLayout = new AddViewLayout2(formTitle,
-                MyCollabResource.newResource("icons/22/crm/lead.png"));
+        setCaption(formTitle);
 
+        super.attach();
+    }
+
+    public Layout initContent() {
+
+        CssLayout contentLayout = new CssLayout();
+        contentLayout.setWidth("100%");
+        contentLayout.setStyleName("lead-convert-window");
+
+        contentLayout.addComponent(createBody());
         ComponentContainer buttonControls = createButtonControls();
         if (buttonControls != null) {
             final HorizontalLayout controlPanel = new HorizontalLayout();
@@ -68,12 +77,10 @@ public class LeadConvertInfoViewImpl extends AbstractPageView implements
             controlPanel.setMargin(true);
             controlPanel.setComponentAlignment(buttonControls,
                     Alignment.MIDDLE_CENTER);
-            formAddLayout.addControlButtons(controlPanel);
+            contentLayout.addComponent(controlPanel);
         }
 
-        formAddLayout.addBody(createBodyControls());
-
-        this.addComponent(formAddLayout);
+        return contentLayout;
     }
 
     private ComponentContainer createButtonControls() {
@@ -101,9 +108,10 @@ public class LeadConvertInfoViewImpl extends AbstractPageView implements
                         }
 
                         leadService.convertLead(lead, opportunity);
+                        LeadConvertInfoWindow.this.close();
                         EventBus.getInstance().fireEvent(
                                 new LeadEvent.GotoRead(
-                                        LeadConvertInfoViewImpl.this, lead
+                                        LeadConvertInfoWindow.this, lead
                                                 .getId()));
                     }
                 });
@@ -116,6 +124,7 @@ public class LeadConvertInfoViewImpl extends AbstractPageView implements
 
             @Override
             public void buttonClick(ClickEvent event) {
+                LeadConvertInfoWindow.this.close();
                 EventBus.getInstance().fireEvent(
                         new LeadEvent.GotoList(this, null));
 
@@ -127,23 +136,32 @@ public class LeadConvertInfoViewImpl extends AbstractPageView implements
         return layout;
     }
 
-    private ComponentContainer createBodyControls() {
-        final VerticalLayout layout = new VerticalLayout();
+    private ComponentContainer createBody() {
+        final CssLayout layout = new CssLayout();
         layout.setSizeFull();
+
+        Label shortDescription = new Label(
+                "<p>&nbsp;&nbsp;&nbsp;By clicking the \"Convert\" button, the following tasks will be done:</p>",
+                ContentMode.HTML);
+        layout.addComponent(shortDescription);
+
+        VerticalLayout infoLayout = new VerticalLayout();
+        infoLayout.setMargin(new MarginInfo(false, true, true, true));
+        infoLayout.setSpacing(true);
 
         String createAccountTxt = "Create Account: <span class='"
                 + UIConstants.TEXT_BLUE + "'>" + lead.getAccountname()
                 + "</span>";
         Label createAccountLbl = new Label(createAccountTxt, ContentMode.HTML);
         createAccountLbl.addStyleName(UIConstants.LABEL_CHECKED);
-        layout.addComponent(createAccountLbl);
+        infoLayout.addComponent(createAccountLbl);
 
         String createContactTxt = "Create Contact: <span class='"
                 + UIConstants.TEXT_BLUE + "'>" + lead.getLastname() + " "
                 + lead.getFirstname() + "</span>";
         Label createContactLbl = new Label(createContactTxt, ContentMode.HTML);
         createContactLbl.addStyleName(UIConstants.LABEL_CHECKED);
-        layout.addComponent(createContactLbl);
+        infoLayout.addComponent(createContactLbl);
 
         final CheckBox isCreateOpportunityChk = new CheckBox(
                 "Create an new opportunity for this account");
@@ -166,7 +184,9 @@ public class LeadConvertInfoViewImpl extends AbstractPageView implements
                     }
                 });
 
-        layout.addComponent(isCreateOpportunityChk);
+        infoLayout.addComponent(isCreateOpportunityChk);
+
+        layout.addComponent(infoLayout);
         return layout;
     }
 
@@ -240,4 +260,5 @@ public class LeadConvertInfoViewImpl extends AbstractPageView implements
             });
         }
     }
+
 }
