@@ -20,6 +20,7 @@ import java.io.Serializable;
 
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.GridLayout;
@@ -129,13 +130,15 @@ public class GridFormLayoutHelper implements Serializable {
             this.layout.addComponent(field, 2 * columns + 1, rows, 2 * (columns
                     + colspan - 1) + 1, rows + rowspan);
             this.layout.setColumnExpandRatio(2 * columns + 1, 1.0f);
-            field.setCaption(null);
+            if (!(field instanceof Button))
+                field.setCaption(null);
             return field;
         }
         this.layout.addComponent(field, 2 * columns, rows, 2 * (columns
                 + colspan - 1) + 1, rows + rowspan);
         this.layout.setColumnExpandRatio(2 * columns + 1, 1.0f);
-        field.setCaption(null);
+        if (!(field instanceof Button))
+            field.setCaption(null);
 
         field.setWidth("100%");
 
@@ -174,7 +177,9 @@ public class GridFormLayoutHelper implements Serializable {
         fieldWrapper.setStyleName("gridform-field");
         fieldWrapper.setMargin(true);
         fieldWrapper.addComponent(field);
-        field.setCaption(null);
+
+        if (!(field instanceof Button))
+            field.setCaption(null);
 
         field.setWidth(width);
 
@@ -199,7 +204,8 @@ public class GridFormLayoutHelper implements Serializable {
         this.layout.addComponent(field, 2 * columns + 1, rows, 2 * (columns
                 + colspan - 1) + 1, rows);
         this.layout.setColumnExpandRatio(2 * columns + 1, 1.0f);
-        field.setCaption(null);
+        if (!(field instanceof Button))
+            field.setCaption(null);
         field.setWidth(width);
         return field;
     }
@@ -233,7 +239,8 @@ public class GridFormLayoutHelper implements Serializable {
         }
         final HorizontalLayout fieldWrapper = new HorizontalLayout();
         fieldWrapper.setStyleName("gridform-field");
-        field.setCaption(null);
+        if (!(field instanceof Button))
+            field.setCaption(null);
         fieldWrapper.addComponent(field);
 
         field.setWidth(width);
@@ -256,7 +263,8 @@ public class GridFormLayoutHelper implements Serializable {
             this.layout.addComponent(l, 2 * columns, rows);
             this.layout.setComponentAlignment(l, this.captionAlignment);
         }
-        field.setCaption(null);
+        if (!(field instanceof Button))
+            field.setCaption(null);
 
         field.setWidth(fieldControlWidth);
 
@@ -292,7 +300,8 @@ public class GridFormLayoutHelper implements Serializable {
         this.layout.addComponent(captionWrapper, 2 * columns, rows);
         final HorizontalLayout fieldWrapper = new HorizontalLayout();
         fieldWrapper.setStyleName("gridform-field");
-        fieldValue.setCaption(null);
+        if (!(fieldValue instanceof Button))
+            fieldValue.setCaption(null);
         fieldWrapper.addComponent(fieldValue);
 
         fieldValue.setWidth(fieldValueWidth);
