@@ -106,11 +106,14 @@ public class LeadServiceImpl extends
 		AccountLead accLead = new AccountLead();
 		accLead.setAccountid(accountId);
 		accLead.setLeadid(lead.getId());
+		accLead.setIsconvertrel(true);
+
 		accountService.saveAccountLeadRelationship(Arrays.asList(accLead),
 				lead.getSaccountid());
 
 		log.debug("Create new contact and save it");
 		Contact contact = new Contact();
+		contact.setPrefix(lead.getPrefixname());
 		contact.setFirstname(lead.getFirstname());
 		contact.setLastname(lead.getLastname());
 		contact.setTitle(lead.getTitle());
@@ -129,6 +132,7 @@ public class LeadServiceImpl extends
 		ContactLead contactLead = new ContactLead();
 		contactLead.setContactid(contactId);
 		contactLead.setLeadid(lead.getId());
+		contactLead.setIsconvertrel(true);
 		contactService.saveContactLeadRelationship(Arrays.asList(contactLead),
 				lead.getSaccountid());
 
@@ -150,6 +154,7 @@ public class LeadServiceImpl extends
 			OpportunityLead oppLead = new OpportunityLead();
 			oppLead.setLeadid(lead.getId());
 			oppLead.setOpportunityid(opportunityId);
+			oppLead.setIsconvertrel(true);
 			opportunityService.saveOpportunityLeadRelationship(
 					Arrays.asList(oppLead), lead.getSaccountid());
 		}

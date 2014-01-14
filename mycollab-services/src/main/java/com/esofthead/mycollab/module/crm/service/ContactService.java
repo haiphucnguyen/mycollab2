@@ -26,6 +26,7 @@ import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.module.crm.domain.ContactCase;
 import com.esofthead.mycollab.module.crm.domain.ContactLead;
 import com.esofthead.mycollab.module.crm.domain.ContactOpportunity;
+import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
 
@@ -50,10 +51,9 @@ public interface ContactService extends
 	void saveContactOpportunityRelationship(
 			List<ContactOpportunity> associateOpportunities,
 			@CacheKey Integer accountId);
-	
+
 	@CacheEvict(serviceMap = { LeadService.class })
-	void saveContactLeadRelationship(
-			List<ContactLead> associateLeads,
+	void saveContactLeadRelationship(List<ContactLead> associateLeads,
 			@CacheKey Integer accountId);
 
 	@CacheEvict(serviceMap = { CaseService.class })
@@ -63,4 +63,8 @@ public interface ContactService extends
 	@CacheEvict(serviceMap = { CaseService.class })
 	void removeContactCaseRelationship(ContactCase associateCase,
 			@CacheKey Integer sAccountId);
+
+	@Cacheable
+	SimpleContact findContactAssoWithConvertedLead(int leadId,
+			@CacheKey int accountId);
 }

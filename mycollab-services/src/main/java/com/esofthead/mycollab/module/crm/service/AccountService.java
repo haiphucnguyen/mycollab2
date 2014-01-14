@@ -46,4 +46,8 @@ public interface AccountService extends
 	@CacheEvict(serviceMap = { LeadService.class })
 	void removeAccountLeadRelationship(AccountLead associateLead,
 			@CacheKey Integer accountId);
+
+	@Cacheable
+	SimpleAccount findAccountAssoWithConvertedLead(int leadId,
+			@CacheKey int accountId);
 }

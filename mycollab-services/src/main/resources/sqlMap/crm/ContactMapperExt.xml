@@ -321,6 +321,16 @@
         WHERE m_crm_contact.id=#{contactId,javaType=INTEGER}
         LIMIT 1
     </select>
+    
+    <select id="findContactAssoWithConvertedLead" parameterType="int"
+        resultMap="SimpleContactResult">
+        <include
+            refid="com.esofthead.mycollab.module.crm.dao.ContactMapperExt.selectSimpleContact" />
+
+        INNER JOIN m_crm_contacts_leads ON (m_crm_contacts_leads.contactId=m_crm_contact.id AND 
+            m_crm_contacts_leads.isConvertRel=1 AND m_crm_contacts_leads.leadId=#{leadId, javaType=INTEGER})
+        LIMIT 1
+    </select>
 
     <select id="getNextItemKey" parameterType="map" resultType="java.lang.Integer">
         SELECT MIN(id) FROM m_crm_contact

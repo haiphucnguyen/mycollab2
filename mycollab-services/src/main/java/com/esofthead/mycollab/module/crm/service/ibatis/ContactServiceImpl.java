@@ -158,4 +158,10 @@ public class ContactServiceImpl extends
 		}
 
 	}
+
+	@Override
+	public SimpleContact findContactAssoWithConvertedLead(int leadId,
+			@CacheKey int accountId) {
+		return contactMapperExt.findContactAssoWithConvertedLead(leadId);
+	}
 }

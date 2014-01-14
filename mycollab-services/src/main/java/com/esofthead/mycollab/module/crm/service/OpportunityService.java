@@ -26,6 +26,7 @@ import com.esofthead.mycollab.core.persistence.service.IDefaultService;
 import com.esofthead.mycollab.module.crm.domain.Opportunity;
 import com.esofthead.mycollab.module.crm.domain.OpportunityContact;
 import com.esofthead.mycollab.module.crm.domain.OpportunityLead;
+import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
 
@@ -68,4 +69,8 @@ public interface OpportunityService extends
 	@CacheEvict(serviceMap = { LeadService.class })
 	void removeOpportunityLeadRelationship(OpportunityLead associateLead,
 			@CacheKey Integer sAccountId);
+
+	@Cacheable
+	SimpleOpportunity findOpportunityAssoWithConvertedLead(int leadId,
+			@CacheKey int accountId);
 }
