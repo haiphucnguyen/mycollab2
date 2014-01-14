@@ -73,7 +73,7 @@
   <classpathentry kind="var" path="M2_REPO/com/fasterxml/jackson/core/jackson-annotations/2.3.0-rc1/jackson-annotations-2.3.0-rc1.jar" sourcepath="M2_REPO/com/fasterxml/jackson/core/jackson-annotations/2.3.0-rc1/jackson-annotations-2.3.0-rc1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/jasypt/jasypt/1.9.1/jasypt-1.9.1.jar" sourcepath="M2_REPO/org/jasypt/jasypt/1.9.1/jasypt-1.9.1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/jasypt/jasypt-spring31/1.9.1/jasypt-spring31-1.9.1.jar" sourcepath="M2_REPO/org/jasypt/jasypt-spring31/1.9.1/jasypt-spring31-1.9.1-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/com/googlecode/flyway/flyway-core/2.2.1/flyway-core-2.2.1.jar" sourcepath="M2_REPO/com/googlecode/flyway/flyway-core/2.2.1/flyway-core-2.2.1-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/googlecode/flyway/flyway-core/2.3/flyway-core-2.3.jar"/>
   <classpathentry kind="src" path="/mycollab-reporting"/>
   <classpathentry kind="var" path="M2_REPO/net/sourceforge/dynamicreports/dynamicreports-core/3.1.6/dynamicreports-core-3.1.6.jar"/>
   <classpathentry kind="var" path="M2_REPO/net/sf/jasperreports/jasperreports/5.2.0/jasperreports-5.2.0.jar" sourcepath="M2_REPO/net/sf/jasperreports/jasperreports/5.2.0/jasperreports-5.2.0-sources.jar"/>
