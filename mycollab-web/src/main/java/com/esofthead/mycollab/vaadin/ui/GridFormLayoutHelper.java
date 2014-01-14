@@ -18,12 +18,9 @@ package com.esofthead.mycollab.vaadin.ui;
 
 import java.io.Serializable;
 
-import com.vaadin.server.Sizeable;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
-import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.DateField;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
@@ -140,11 +137,7 @@ public class GridFormLayoutHelper implements Serializable {
         this.layout.setColumnExpandRatio(2 * columns + 1, 1.0f);
         field.setCaption(null);
 
-        // Set combobox fields undefined width
-        if (field instanceof ComboBox || field instanceof DateField)
-            field.setWidth(Sizeable.SIZE_UNDEFINED, Sizeable.Unit.PIXELS);
-        else
-            field.setWidth("100%");
+        field.setWidth("100%");
 
         return field;
     }
@@ -183,11 +176,7 @@ public class GridFormLayoutHelper implements Serializable {
         fieldWrapper.addComponent(field);
         field.setCaption(null);
 
-        // Set combobox fields undefined width
-        if (field instanceof ComboBox || field instanceof DateField)
-            field.setWidth(Sizeable.SIZE_UNDEFINED, Sizeable.Unit.PIXELS);
-        else
-            field.setWidth(width);
+        field.setWidth(width);
 
         fieldWrapper.setWidth("100%");
         if (rows == 0) {
@@ -247,11 +236,7 @@ public class GridFormLayoutHelper implements Serializable {
         field.setCaption(null);
         fieldWrapper.addComponent(field);
 
-        // Set combobox fields undefined width
-        if (field instanceof ComboBox || field instanceof DateField)
-            field.setWidth(Sizeable.SIZE_UNDEFINED, Sizeable.Unit.PIXELS);
-        else
-            field.setWidth(width);
+        field.setWidth(width);
 
         fieldWrapper.setWidth("100%");
         fieldWrapper.setMargin(true);
@@ -273,11 +258,7 @@ public class GridFormLayoutHelper implements Serializable {
         }
         field.setCaption(null);
 
-        // Set combobox fields undefined width
-        if (field instanceof ComboBox || field instanceof DateField)
-            field.setWidth(Sizeable.SIZE_UNDEFINED, Sizeable.Unit.PIXELS);
-        else
-            field.setWidth(fieldControlWidth);
+        field.setWidth(fieldControlWidth);
 
         this.layout.addComponent(field, 2 * columns + 1, rows);
         this.layout.setColumnExpandRatio(2 * columns + 1, 1.0f);
@@ -314,11 +295,7 @@ public class GridFormLayoutHelper implements Serializable {
         fieldValue.setCaption(null);
         fieldWrapper.addComponent(fieldValue);
 
-        // Set combobox fields undefined width
-        if (fieldValue instanceof ComboBox || fieldValue instanceof DateField)
-            fieldValue.setWidth(Sizeable.SIZE_UNDEFINED, Sizeable.Unit.PIXELS);
-        else
-            fieldValue.setWidth(fieldValueWidth);
+        fieldValue.setWidth(fieldValueWidth);
 
         fieldWrapper.setWidth("100%");
         fieldWrapper.setMargin(true);
