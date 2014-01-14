@@ -161,7 +161,7 @@ input.v-textfield,textarea.v-textarea,.v-filterselect {
 }
 
 input.v-widget.v-textfield[type="text"], .v-filterselect  {
-	height: 23px;
+	height: 24px;
 }
 
 .v-app {
