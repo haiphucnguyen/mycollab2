@@ -5796,3 +5796,14 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 .lead-convert-window .v-checkbox input[type="checkbox"] {
     margin-left: 0px;
 }
+
+/* ComboBox Fix*/
+.v-filterselect .v-icon {
+	width: 16px;
+	position: relative;
+}
+
+.v-app .v-filterselect .v-icon + input.v-filterselect-input[type="text"] {
+	margin-left: -16px;
+	padding-left: 18px;
+}
