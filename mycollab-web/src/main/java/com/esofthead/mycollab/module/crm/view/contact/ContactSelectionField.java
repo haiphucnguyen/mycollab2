@@ -55,6 +55,32 @@ public class ContactSelectionField extends CustomField<Integer> implements
 
 	public ContactSelectionField() {
 		contactName = new TextField();
+		browseBtn = new Image(null,
+				MyCollabResource.newResource("icons/16/browseItem.png"));
+		browseBtn.addClickListener(new MouseEvents.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void click(ClickEvent event) {
+				ContactSelectionWindow contactWindow = new ContactSelectionWindow(
+						ContactSelectionField.this);
+				UI.getCurrent().addWindow(contactWindow);
+				contactWindow.show();
+			}
+		});
+
+		clearBtn = new Image(null,
+				MyCollabResource.newResource("icons/16/clearItem.png"));
+
+		clearBtn.addClickListener(new MouseEvents.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void click(ClickEvent event) {
+				contactName.setValue("");
+				contact = null;
+			}
+		});
 	}
 
 	@Override
@@ -98,35 +124,9 @@ public class ContactSelectionField extends CustomField<Integer> implements
 		layout.addComponent(contactName);
 		layout.setComponentAlignment(contactName, Alignment.MIDDLE_LEFT);
 
-		browseBtn = new Image(null,
-				MyCollabResource.newResource("icons/16/browseItem.png"));
 		layout.addComponent(browseBtn);
 		layout.setComponentAlignment(browseBtn, Alignment.MIDDLE_LEFT);
 
-		browseBtn.addClickListener(new MouseEvents.ClickListener() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void click(ClickEvent event) {
-				ContactSelectionWindow contactWindow = new ContactSelectionWindow(
-						ContactSelectionField.this);
-				UI.getCurrent().addWindow(contactWindow);
-				contactWindow.show();
-			}
-		});
-
-		clearBtn = new Image(null,
-				MyCollabResource.newResource("icons/16/clearItem.png"));
-
-		clearBtn.addClickListener(new MouseEvents.ClickListener() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void click(ClickEvent event) {
-				contactName.setValue("");
-				contact = null;
-			}
-		});
 		layout.addComponent(clearBtn);
 		layout.setComponentAlignment(clearBtn, Alignment.MIDDLE_LEFT);
 

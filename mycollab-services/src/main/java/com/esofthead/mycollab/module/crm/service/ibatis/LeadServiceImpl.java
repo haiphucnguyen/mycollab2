@@ -82,7 +82,8 @@ public class LeadServiceImpl extends
 	}
 
 	@Override
-	public void convertLead(SimpleLead lead, Opportunity opportunity) {
+	public void convertLead(SimpleLead lead, Opportunity opportunity,
+			String convertUser) {
 
 		log.debug("Create new account and save it");
 		Account account = new Account();
@@ -99,7 +100,8 @@ public class LeadServiceImpl extends
 
 		AccountService accountService = ApplicationContextUtil
 				.getSpringBean(AccountService.class);
-		int accountId = accountService.saveWithSession(account, "");
+		int accountId = accountService.saveWithSession(account, convertUser);
+
 		log.debug("Create account lead relationship");
 		AccountLead accLead = new AccountLead();
 		accLead.setAccountid(accountId);
@@ -122,7 +124,7 @@ public class LeadServiceImpl extends
 
 		ContactService contactService = ApplicationContextUtil
 				.getSpringBean(ContactService.class);
-		int contactId = contactService.saveWithSession(contact, "");
+		int contactId = contactService.saveWithSession(contact, convertUser);
 		log.debug("Create contact lead relationship");
 		ContactLead contactLead = new ContactLead();
 		contactLead.setContactid(contactId);

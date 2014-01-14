@@ -37,5 +37,6 @@ public interface LeadService extends
 	SimpleLead findById(int leadId, @CacheKey int sAccountId);
 
 	@CacheEvict
-	void convertLead(SimpleLead lead, Opportunity opportunity);
+	void convertLead(SimpleLead lead, Opportunity opportunity,
+			String convertUser);
 }

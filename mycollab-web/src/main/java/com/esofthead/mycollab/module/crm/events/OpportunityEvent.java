@@ -63,8 +63,8 @@ public class OpportunityEvent {
 		}
 	}
 
-	public static class GotoContactEdit extends ApplicationEvent {
-		public GotoContactEdit(Object source, Object data) {
+	public static class GotoContactRoleEdit extends ApplicationEvent {
+		public GotoContactRoleEdit(Object source, Object data) {
 			super(source, data);
 		}
 	}

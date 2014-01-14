@@ -30,12 +30,16 @@ class LeadReadFormFieldFactory extends
 	protected Field<?> onCreateField(Object propertyId) {
 		SimpleLead lead = attachForm.getBean();
 		if (propertyId.equals("firstname")) {
-			if (lead.getPrefixname() == null) {
-				return new FormViewField(lead.getFirstname());
-			} else {
-				return new FormViewField(lead.getPrefixname() + " "
-						+ lead.getFirstname());
+			String prefix = "", firstName = "";
+			if (lead.getPrefixname() != null) {
+				prefix = lead.getPrefixname();
 			}
+
+			if (lead.getFirstname() != null) {
+				firstName = lead.getFirstname();
+			}
+
+			return new FormViewField(prefix + firstName);
 		} else if (propertyId.equals("website")) {
 			return new DefaultFormViewFieldFactory.FormUrlLinkViewField(
 					lead.getWebsite());

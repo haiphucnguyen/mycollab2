@@ -46,15 +46,14 @@ import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
-import com.esofthead.mycollab.vaadin.ui.SplitButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.UI;
-import com.vaadin.ui.VerticalLayout;
 
 /**
  * 
@@ -87,44 +86,24 @@ public class OpportunityContactListComp extends
 
 	@SuppressWarnings("serial")
 	private void initUI() {
-		final SplitButton controlsBtn = new SplitButton();
+		final Button controlsBtn = new Button("Add Contact Roles",
+				new Button.ClickListener() {
+
+					@Override
+					public void buttonClick(ClickEvent event) {
+						EventBus.getInstance().fireEvent(
+								new OpportunityEvent.GotoContactRoleEdit(
+										OpportunityContactListComp.this,
+										opportunity));
+
+					}
+				});
 		controlsBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_CONTACT));
-		controlsBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
-		controlsBtn.setCaption("New Contact");
+		controlsBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		controlsBtn.setCaption("Add Contact Roles");
 		controlsBtn.setIcon(MyCollabResource
 				.newResource("icons/16/addRecord.png"));
-		controlsBtn
-				.addClickListener(new SplitButton.SplitButtonClickListener() {
-					@Override
-					public void splitButtonClick(
-							SplitButton.SplitButtonClickEvent event) {
-						fireNewRelatedItem("");
-					}
-				});
-		Button selectBtn = new Button("Select from existing contacts",
-				new Button.ClickListener() {
-					@Override
-					public void buttonClick(Button.ClickEvent event) {
-						OpportunityContactSelectionWindow contactsWindow = new OpportunityContactSelectionWindow(
-								OpportunityContactListComp.this);
-						ContactSearchCriteria criteria = new ContactSearchCriteria();
-						criteria.setSaccountid(new NumberSearchField(AppContext
-								.getAccountId()));
-						UI.getCurrent().addWindow(contactsWindow);
-						contactsWindow.setSearchCriteria(criteria);
-						controlsBtn.setPopupVisible(false);
-					}
-				});
-		selectBtn.setIcon(MyCollabResource.newResource("icons/16/select.png"));
-		selectBtn.setStyleName("link");
-
-		VerticalLayout buttonControlsLayout = new VerticalLayout();
-		buttonControlsLayout.addComponent(selectBtn);
-		controlsBtn.setContent(buttonControlsLayout);
-
-		controlsBtn.setEnabled(AppContext
-				.canWrite(RolePermissionCollections.CRM_CONTACT));
 		this.addComponent(controlsBtn);
 
 		tableItem = new OpportunityContactTableDisplay(Arrays.asList(
@@ -163,13 +142,13 @@ public class OpportunityContactListComp extends
 				final SimpleContact contact = (SimpleContact) tableItem
 						.getBeanByIndex(itemId);
 				HorizontalLayout controlLayout = new HorizontalLayout();
+				
 				Button editBtn = new Button(null, new Button.ClickListener() {
 					@Override
 					public void buttonClick(Button.ClickEvent event) {
 						EventBus.getInstance().fireEvent(
-								new OpportunityEvent.GotoContactEdit(
-										OpportunityContactListComp.this,
-										contact));
+								new OpportunityEvent.GotoContactRoleEdit(
+										OpportunityContactListComp.this, opportunity));
 					}
 				});
 				editBtn.setStyleName("link");

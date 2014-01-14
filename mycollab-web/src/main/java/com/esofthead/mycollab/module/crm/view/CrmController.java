@@ -37,10 +37,10 @@ import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.domain.SimpleTask;
 import com.esofthead.mycollab.module.crm.domain.Task;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
+import com.esofthead.mycollab.module.crm.domain.criteria.ActivitySearchCriteria;
 import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
 import com.esofthead.mycollab.module.crm.domain.criteria.CaseSearchCriteria;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
-import com.esofthead.mycollab.module.crm.domain.criteria.ActivitySearchCriteria;
 import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
@@ -78,10 +78,10 @@ import com.esofthead.mycollab.module.crm.view.contact.ContactReadPresenter;
 import com.esofthead.mycollab.module.crm.view.file.FileDashboardPresenter;
 import com.esofthead.mycollab.module.crm.view.file.FileSearchResultPresenter;
 import com.esofthead.mycollab.module.crm.view.lead.LeadAddPresenter;
-import com.esofthead.mycollab.module.crm.view.lead.LeadConvertInfoPresenter;
 import com.esofthead.mycollab.module.crm.view.lead.LeadConvertReadPresenter;
 import com.esofthead.mycollab.module.crm.view.lead.LeadListPresenter;
 import com.esofthead.mycollab.module.crm.view.lead.LeadReadPresenter;
+import com.esofthead.mycollab.module.crm.view.opportunity.ContactRoleEditPresenter;
 import com.esofthead.mycollab.module.crm.view.opportunity.OpportunityAddPresenter;
 import com.esofthead.mycollab.module.crm.view.opportunity.OpportunityListPresenter;
 import com.esofthead.mycollab.module.crm.view.opportunity.OpportunityReadPresenter;
@@ -786,21 +786,6 @@ public class CrmController implements IController {
 
 					}
 				});
-
-		EventBus.getInstance().addListener(
-				new ApplicationEventListener<LeadEvent.GotoConvertView>() {
-					@Override
-					public Class<? extends ApplicationEvent> getEventType() {
-						return LeadEvent.GotoConvertView.class;
-					}
-
-					@Override
-					public void handle(LeadEvent.GotoConvertView event) {
-						LeadConvertInfoPresenter presenter = PresenterResolver
-								.getPresenter(LeadConvertInfoPresenter.class);
-						presenter.go(container, new ScreenData(event.getData()));
-					}
-				});
 	}
 
 	@SuppressWarnings("serial")
@@ -882,6 +867,25 @@ public class CrmController implements IController {
 								new ScreenData.Preview(event.getData()));
 					}
 				});
+
+		EventBus.getInstance()
+				.addListener(
+						new ApplicationEventListener<OpportunityEvent.GotoContactRoleEdit>() {
+							@Override
+							public Class<? extends ApplicationEvent> getEventType() {
+								return OpportunityEvent.GotoContactRoleEdit.class;
+							}
+
+							@SuppressWarnings({ "unchecked", "rawtypes" })
+							@Override
+							public void handle(
+									OpportunityEvent.GotoContactRoleEdit event) {
+								ContactRoleEditPresenter presenter = PresenterResolver
+										.getPresenter(ContactRoleEditPresenter.class);
+								presenter.go(container,
+										new ScreenData(event.getData()));
+							}
+						});
 	}
 
 	@SuppressWarnings("serial")

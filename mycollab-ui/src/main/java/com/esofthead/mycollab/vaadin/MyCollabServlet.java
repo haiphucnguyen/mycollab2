@@ -45,79 +45,79 @@ public class MyCollabServlet extends TouchKitServlet {
 			}
 		});
 	}
-	
+
 	private MainServlet ICEPushServlet;
 
-    private JavascriptProvider javascriptProvider;
+	private JavascriptProvider javascriptProvider;
 
-    @Override
-    public void init(ServletConfig servletConfig) throws ServletException {
-        try {
-            super.init(servletConfig);
-        } catch (ServletException e) {
-            if (e.getMessage().equals(
-                    "Application not specified in servlet parameters")) {
-                // Ignore if application is not specified to allow the same
-                // servlet to be used for only push in portals
-            } else {
-                throw e;
-            }
-        }
+	@Override
+	public void init(ServletConfig servletConfig) throws ServletException {
+		try {
+			super.init(servletConfig);
+		} catch (ServletException e) {
+			if (e.getMessage().equals(
+					"Application not specified in servlet parameters")) {
+				// Ignore if application is not specified to allow the same
+				// servlet to be used for only push in portals
+			} else {
+				throw e;
+			}
+		}
 
-        ICEPushServlet = new MainServlet(servletConfig.getServletContext());
+		ICEPushServlet = new MainServlet(servletConfig.getServletContext());
 
-        try {
-            javascriptProvider = new JavascriptProvider(getServletContext()
-                    .getContextPath());
+		try {
+			javascriptProvider = new JavascriptProvider(getServletContext()
+					.getContextPath());
 
-            ICEPush.setCodeJavascriptLocation(javascriptProvider
-                    .getCodeLocation());
-        } catch (IOException e) {
-            throw new ServletException("Error initializing JavascriptProvider",
-                    e);
-        }
-    }
+			ICEPush.setCodeJavascriptLocation(javascriptProvider
+					.getCodeLocation());
+		} catch (IOException e) {
+			throw new ServletException("Error initializing JavascriptProvider",
+					e);
+		}
+	}
 
-    @Override
-    protected void service(HttpServletRequest request,
-            HttpServletResponse response) throws ServletException, IOException {
-        String pathInfo = request.getPathInfo();
-        if (pathInfo != null
-                && pathInfo.equals("/" + javascriptProvider.getCodeName())) {
-            // Serve icepush.js
-            serveIcePushCode(request, response);
-            return;
-        }
+	@Override
+	protected void service(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		String pathInfo = request.getPathInfo();
+		if (pathInfo != null
+				&& pathInfo.equals("/" + javascriptProvider.getCodeName())) {
+			// Serve icepush.js
+			serveIcePushCode(request, response);
+			return;
+		}
 
-        if (request.getRequestURI().endsWith(".icepush")) {
-            // Push request
-            try {
-                ICEPushServlet.service(request, response);
-            } catch (ServletException e) {
-                throw e;
-            } catch (IOException e) {
-                throw e;
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        } else {
-            // Vaadin request
-            super.service(request, response);
-        }
-    }
+		if (request.getRequestURI().endsWith(".icepush")) {
+			// Push request
+			try {
+				ICEPushServlet.service(request, response);
+			} catch (ServletException e) {
+				throw e;
+			} catch (IOException e) {
+				throw e;
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		} else {
+			// Vaadin request
+			super.service(request, response);
+		}
+	}
 
-    private void serveIcePushCode(HttpServletRequest request,
-            HttpServletResponse response) throws IOException {
+	private void serveIcePushCode(HttpServletRequest request,
+			HttpServletResponse response) throws IOException {
 
-        String icepushJavscript = javascriptProvider.getJavaScript();
+		String icepushJavscript = javascriptProvider.getJavaScript();
 
-        response.setHeader("Content-Type", "text/javascript");
-        response.getOutputStream().write(icepushJavscript.getBytes());
-    }
+		response.setHeader("Content-Type", "text/javascript");
+		response.getOutputStream().write(icepushJavscript.getBytes());
+	}
 
-    @Override
-    public void destroy() {
-        super.destroy();
-        ICEPushServlet.shutdown();
-    }
+	@Override
+	public void destroy() {
+		super.destroy();
+		ICEPushServlet.shutdown();
+	}
 }

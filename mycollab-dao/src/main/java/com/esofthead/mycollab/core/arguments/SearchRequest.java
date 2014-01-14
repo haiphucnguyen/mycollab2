@@ -55,6 +55,10 @@ public class SearchRequest<S extends SearchCriteria> implements Serializable {
 		this(null, 1, 1);
 	}
 
+	public SearchRequest(S searchCriteria) {
+		this(searchCriteria, 0, Integer.MAX_VALUE);
+	}
+
 	public SearchRequest(S searchCriteria, int currentPage, int numberOfItems) {
 		this.searchCriteria = searchCriteria;
 		this.currentPage = currentPage;

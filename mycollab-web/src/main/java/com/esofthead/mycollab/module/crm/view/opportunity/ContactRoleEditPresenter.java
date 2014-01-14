@@ -1,8 +1,7 @@
-package com.esofthead.mycollab.module.crm.view.lead;
+package com.esofthead.mycollab.module.crm.view.opportunity;
 
-import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
-import com.esofthead.mycollab.module.crm.domain.SimpleLead;
+import com.esofthead.mycollab.module.crm.domain.Opportunity;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
 import com.esofthead.mycollab.module.crm.view.CrmToolbar;
@@ -19,29 +18,31 @@ import com.vaadin.ui.ComponentContainer;
  * @since 3.0
  * 
  */
-public class LeadConvertInfoPresenter extends
-		CrmGenericPresenter<LeadConvertInfoView> {
+public class ContactRoleEditPresenter extends
+		CrmGenericPresenter<ContactRoleEditView> {
 	private static final long serialVersionUID = 1L;
 
-	public LeadConvertInfoPresenter() {
-		super(LeadConvertInfoView.class);
+	public ContactRoleEditPresenter() {
+		super(ContactRoleEditView.class);
 	}
 
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
-		if (AppContext.canWrite(RolePermissionCollections.CRM_LEAD)) {
+		if (AppContext.canWrite(RolePermissionCollections.CRM_OPPORTUNITY)) {
 			CrmToolbar crmToolbar = ViewManager.getView(CrmToolbar.class);
 			crmToolbar.gotoItem(LocalizationHelper
-					.getMessage(CrmCommonI18nEnum.TOOLBAR_LEADS_HEADER));
+					.getMessage(CrmCommonI18nEnum.TOOLBAR_CONTACTS_HEADER));
 
-			if (data.getParams() instanceof SimpleLead) {
-				super.onGo(container, data);
-				view.displayConvertLead((SimpleLead) data.getParams());
-			} else {
-				throw new MyCollabException("Do not support such param");
-			}
+			Opportunity opportunity = (Opportunity) data.getParams();
+			super.onGo(container, data);
+			view.display(opportunity);
+
+			AppContext.addFragment("crm/opportunity/addcontactroles",
+					"Add Contact Roles");
 		} else {
 			NotificationUtil.showMessagePermissionAlert();
 		}
+
 	}
+
 }

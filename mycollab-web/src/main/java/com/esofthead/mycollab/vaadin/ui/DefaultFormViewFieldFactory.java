@@ -392,7 +392,7 @@ public class DefaultFormViewFieldFactory {
 		}
 	}
 
-	public static class FormViewField extends CustomField {
+	public static class FormViewField extends CustomField<String> {
 
 		private String value;
 		private ContentMode contentMode;
@@ -409,7 +409,7 @@ public class DefaultFormViewFieldFactory {
 		}
 
 		@Override
-		public Class<?> getType() {
+		public Class<String> getType() {
 			return String.class;
 		}
 

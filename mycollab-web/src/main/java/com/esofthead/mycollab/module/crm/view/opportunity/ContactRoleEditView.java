@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.module.crm.view.opportunity;
 
+import com.esofthead.mycollab.module.crm.domain.Opportunity;
 import com.esofthead.mycollab.vaadin.mvp.PageView;
 
 /**
@@ -8,6 +9,6 @@ import com.esofthead.mycollab.vaadin.mvp.PageView;
  * @since 3.0
  * 
  */
-public interface OpportunityContactEditView extends PageView {
-
+public interface ContactRoleEditView extends PageView {
+	void display(Opportunity opportunity);
 }

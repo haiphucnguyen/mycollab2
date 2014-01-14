@@ -62,10 +62,4 @@ public class LeadEvent {
 			super(source, data);
 		}
 	}
-
-	public static class GotoConvertView extends ApplicationEvent {
-		public GotoConvertView(Object source, Object data) {
-			super(source, data);
-		}
-	}
 }
