@@ -21,6 +21,7 @@ import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.crm.domain.CaseWithBLOBs;
+import com.esofthead.mycollab.module.crm.domain.SimpleCase;
 import com.esofthead.mycollab.module.crm.events.CaseEvent;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.crm.service.CaseService;
@@ -28,32 +29,36 @@ import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
 import com.esofthead.mycollab.module.crm.view.CrmToolbar;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.mvp.HistoryViewManager;
 import com.esofthead.mycollab.vaadin.mvp.NullViewState;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.mvp.ViewState;
-import com.esofthead.mycollab.vaadin.ui.MessageBox;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
-import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.Window;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
 public class CaseAddPresenter extends CrmGenericPresenter<CaseAddView> {
 
 	private static final long serialVersionUID = 1L;
 
 	public CaseAddPresenter() {
 		super(CaseAddView.class);
-		bind();
 	}
 
-	private void bind() {
+	@Override
+	protected void postInitView() {
 		view.getEditFormHandlers().addFormHandler(
-				new EditFormHandler<CaseWithBLOBs>() {
+				new EditFormHandler<SimpleCase>() {
 					@Override
-					public void onSave(final CaseWithBLOBs cases) {
+					public void onSave(final SimpleCase cases) {
 						saveCase(cases);
 						ViewState viewState = HistoryViewManager.back();
 						if (viewState instanceof NullViewState) {
@@ -72,7 +77,7 @@ public class CaseAddPresenter extends CrmGenericPresenter<CaseAddView> {
 					}
 
 					@Override
-					public void onSaveAndNew(final CaseWithBLOBs cases) {
+					public void onSaveAndNew(final SimpleCase cases) {
 						saveCase(cases);
 						EventBus.getInstance().fireEvent(
 								new CaseEvent.GotoAdd(this, null));
@@ -87,14 +92,14 @@ public class CaseAddPresenter extends CrmGenericPresenter<CaseAddView> {
 			crmToolbar.gotoItem(LocalizationHelper
 					.getMessage(CrmCommonI18nEnum.TOOLBAR_CASES_HEADER));
 
-			CaseWithBLOBs cases = null;
-			if (data.getParams() instanceof CaseWithBLOBs) {
-				cases = (CaseWithBLOBs) data.getParams();
+			SimpleCase cases = null;
+			if (data.getParams() instanceof SimpleCase) {
+				cases = (SimpleCase) data.getParams();
 			} else if (data.getParams() instanceof Integer) {
 				CaseService caseService = ApplicationContextUtil
 						.getSpringBean(CaseService.class);
-				cases = caseService.findByPrimaryKey(
-						(Integer) data.getParams(), AppContext.getAccountId());
+				cases = caseService.findById((Integer) data.getParams(),
+						AppContext.getAccountId());
 				if (cases == null) {
 					NotificationUtil.showRecordNotExistNotification();
 					return;
@@ -116,7 +121,7 @@ public class CaseAddPresenter extends CrmGenericPresenter<CaseAddView> {
 								cases.getSubject()));
 			}
 		} else {
-			MessageBox.showMessagePermissionAlert();
+			NotificationUtil.showMessagePermissionAlert();
 		}
 	}
 

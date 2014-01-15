@@ -14,10 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.module.project.view.bug;
 
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
@@ -28,11 +25,11 @@ import com.esofthead.mycollab.module.project.localization.BugI18nEnum;
 import com.esofthead.mycollab.module.project.view.parameters.BugSearchParameter;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserLink;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.BeanList;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.LabelHTMLDisplayWidget;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -45,7 +42,8 @@ import com.vaadin.ui.Label;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class RecentBugUpdateWidget extends BugDisplayWidget {
 	private static final long serialVersionUID = 1L;
@@ -63,6 +61,7 @@ public class RecentBugUpdateWidget extends BugDisplayWidget {
 
 	public static class RecentBugRowDisplayHandler implements
 			BeanList.RowDisplayHandler<SimpleBug> {
+		private static final long serialVersionUID = 1L;
 
 		@Override
 		public Component generateRow(final SimpleBug bug, final int rowIndex) {

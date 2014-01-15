@@ -14,10 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-services.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.esofthead.mycollab.common.dao;
 
 import com.esofthead.mycollab.common.domain.SimpleAuditLog;
@@ -26,7 +22,7 @@ import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public interface AuditLogMapperExt extends
 		ISearchableDAO<AuditLogSearchCriteria> {

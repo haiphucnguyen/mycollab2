@@ -16,15 +16,21 @@
  */
 package com.esofthead.mycollab.module.crm.domain;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class SimpleLead extends Lead {
 	private static final long serialVersionUID = 1L;
 
 	private String assignUserAvatarId;
-	
+
 	private String assignUserFullName;
 
 	private String campaignName;
-	
+
 	private String leadName;
 
 	public String getCampaignName() {
@@ -34,7 +40,7 @@ public class SimpleLead extends Lead {
 	public void setCampaignName(String campaignName) {
 		this.campaignName = campaignName;
 	}
-	
+
 	public String getAssignUserAvatarId() {
 		return assignUserAvatarId;
 	}

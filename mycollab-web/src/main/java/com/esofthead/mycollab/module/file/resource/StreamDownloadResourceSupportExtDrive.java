@@ -38,8 +38,14 @@ import com.esofthead.mycollab.module.ecm.domain.Resource;
 import com.esofthead.mycollab.module.ecm.service.ExternalResourceService;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.vaadin.terminal.StreamResource;
+import com.vaadin.server.StreamResource;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class StreamDownloadResourceSupportExtDrive implements
 		StreamResource.StreamSource {
 	private static final long serialVersionUID = 1L;
@@ -56,7 +62,8 @@ public class StreamDownloadResourceSupportExtDrive implements
 	public StreamDownloadResourceSupportExtDrive(List<Resource> lstRes,
 			boolean isSearchAction) {
 		this.lstResource = lstRes;
-		resourceService = ApplicationContextUtil.getSpringBean(ResourceService.class);
+		resourceService = ApplicationContextUtil
+				.getSpringBean(ResourceService.class);
 		this.isSearchAction = isSearchAction;
 	}
 

@@ -16,11 +16,19 @@
  */
 package com.esofthead.mycollab.module.user.domain;
 
+import com.esofthead.mycollab.core.arguments.NotBindable;
 import com.esofthead.mycollab.security.PermissionMap;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class SimpleUser extends User {
 
 	private static final long serialVersionUID = 1L;
+	
 	public static final String ACTIVE_STATUS = "active";
 	public static final String INACTION_STATUS = "inactive";
 	public static final String PENDING_STATUS = "pending";
@@ -28,7 +36,10 @@ public class SimpleUser extends User {
 
 	private Integer roleid;
 	private String roleName;
+
+	@NotBindable
 	private PermissionMap permissionMaps;
+
 	private Boolean isAccountOwner;
 	private String subdomain;
 	private Integer accountId;

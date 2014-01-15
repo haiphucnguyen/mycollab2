@@ -21,10 +21,11 @@ import com.esofthead.mycollab.module.user.accountsettings.view.events.ProfileEve
 import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.CountryComboBox;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.web.AppContext;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -34,6 +35,12 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @SuppressWarnings("serial")
 public class AdvancedInfoChangeWindow extends Window {
 
@@ -46,19 +53,15 @@ public class AdvancedInfoChangeWindow extends Window {
 	public AdvancedInfoChangeWindow(final User user) {
 		this.user = user;
 		this.setWidth("450px");
-		// this.setHeight("250px");
 		this.initUI();
 		this.center();
 		this.setCaption("Change your advanced information");
-		((VerticalLayout) this.getContent()).setMargin(false, false, true,
-				false);
 	}
 
 	private void initUI() {
-
 		final VerticalLayout mainLayout = new VerticalLayout();
 		mainLayout.setWidth("100%");
-		mainLayout.setMargin(true);
+		mainLayout.setMargin(new MarginInfo(false, false, true, false));
 		mainLayout.setSpacing(true);
 
 		final GridFormLayoutHelper passInfo = new GridFormLayoutHelper(1, 4,

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.esofthead.mycollab.module.crm.dao.LeadMapperExt">
-    
+
     <resultMap
         extends="com.esofthead.mycollab.module.crm.dao.LeadMapper.ResultMapWithBLOBs"
         id="SimpleLeadResult" type="com.esofthead.mycollab.module.crm.domain.SimpleLead">
@@ -14,6 +14,8 @@
 
         <result column="campaignName" jdbcType="VARCHAR"
             property="campaignName" />
+
+        <result column="leadName" jdbcType="VARCHAR" property="leadName" />
     </resultMap>
 
     <sql id="querySearchCriteria">
@@ -257,7 +259,7 @@
                m_crm_lead.source,
                s_user.avatarId AS assignUserAvatarId, 
                concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) AS assignUserFullName, 
-               concat (m_crm_lead.firstname, ' ', m_crm_lead.lastname) AS leadName,
+               concat (IFNULL(m_crm_lead.firstname,''), ' ', m_crm_lead.lastname) AS leadName,
                m_crm_campaign.campaignName, m_crm_lead.website, m_crm_lead.lastUpdatedTime, m_crm_lead.noemployees
 
         FROM m_crm_lead
@@ -288,7 +290,8 @@
     <sql id="orderStatement">
         ORDER BY
         <if test="searchCriteria.orderByField != null">${searchCriteria.orderByField}
-            ${searchCriteria.sortDirection}, </if>
+            ${searchCriteria.sortDirection},
+        </if>
         <![CDATA[
             m_crm_lead.lastUpdatedTime DESC
         ]]>
@@ -313,6 +316,30 @@
             refid="com.esofthead.mycollab.module.crm.dao.LeadMapperExt.selectSimpleLead" />
 
         WHERE m_crm_lead.id = #{leadId,javaType=INTEGER}
+    </select>
+    
+    <select id="findConvertedLeadOfAccount" parameterType="int" resultMap="SimpleLeadResult">
+        <include
+            refid="com.esofthead.mycollab.module.crm.dao.LeadMapperExt.selectSimpleLead" />
+
+        INNER JOIN m_crm_accounts_leads ON (m_crm_accounts_leads.leadId=m_crm_lead.id AND m_crm_accounts_leads.isConvertRel=1 AND
+            m_crm_accounts_leads.accountId=#{accountId,javaType=INTEGER})
+    </select>
+    
+    <select id="findConvertedLeadOfContact" parameterType="int" resultMap="SimpleLeadResult">
+        <include
+            refid="com.esofthead.mycollab.module.crm.dao.LeadMapperExt.selectSimpleLead" />
+
+        INNER JOIN m_crm_contacts_leads ON (m_crm_contacts_leads.leadId=m_crm_lead.id AND m_crm_contacts_leads.isConvertRel=1 AND
+            m_crm_contacts_leads.contactId=#{contactId,javaType=INTEGER})
+    </select>
+    
+    <select id="findConvertedLeadOfOpportunity" parameterType="int" resultMap="SimpleLeadResult">
+        <include
+            refid="com.esofthead.mycollab.module.crm.dao.LeadMapperExt.selectSimpleLead" />
+
+        INNER JOIN m_crm_opportunities_leads ON (m_crm_opportunities_leads.leadId=m_crm_lead.id AND m_crm_opportunities_leads.isConvertRel=1 AND
+            m_crm_opportunities_leads.opportunityId=#{opportunityId,javaType=INTEGER})
     </select>
 
     <select id="getNextItemKey" parameterType="map" resultType="java.lang.Integer">

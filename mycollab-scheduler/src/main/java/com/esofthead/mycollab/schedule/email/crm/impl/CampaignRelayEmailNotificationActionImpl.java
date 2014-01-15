@@ -37,6 +37,12 @@ import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.schedule.ScheduleUserTimeZoneUtils;
 import com.esofthead.mycollab.schedule.email.crm.CampaignRelayEmailNotificationAction;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @Component
 public class CampaignRelayEmailNotificationActionImpl extends
 		CrmDefaultSendingRelayEmailAction implements

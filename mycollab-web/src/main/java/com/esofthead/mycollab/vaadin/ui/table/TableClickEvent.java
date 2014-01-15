@@ -14,28 +14,26 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.vaadin.ui.table;
 
 import com.esofthead.mycollab.eventmanager.ApplicationEvent;
 
 /**
- *
- * @author haiphucnguyen
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
  */
 public class TableClickEvent extends ApplicationEvent {
+	private static final long serialVersionUID = 1L;
+	private String fieldName;
 
-    private String fieldName;
+	public TableClickEvent(IBeanTable source, Object data, String fieldName) {
+		super(source, data);
+		this.fieldName = fieldName;
+	}
 
-    public TableClickEvent(IBeanTable source, Object data, String fieldName) {
-        super(source, data);
-        this.fieldName = fieldName;
-    }
-
-    public String getFieldName() {
-        return fieldName;
-    }
+	public String getFieldName() {
+		return fieldName;
+	}
 }

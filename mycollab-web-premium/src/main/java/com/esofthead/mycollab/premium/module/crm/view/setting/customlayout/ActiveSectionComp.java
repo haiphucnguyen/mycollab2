@@ -23,7 +23,6 @@ import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.form.view.builder.type.AbstractDynaField;
 import com.esofthead.mycollab.form.view.builder.type.DynaSection;
 import com.esofthead.mycollab.form.view.builder.type.DynaSection.LayoutType;
-import com.esofthead.mycollab.module.crm.ui.components.CustomFieldComponent;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.event.dd.DragAndDropEvent;
 import com.vaadin.event.dd.DropHandler;
@@ -92,7 +91,7 @@ class ActiveSectionComp extends GenericSectionComp {
 					(originSection.getFieldCount() + 3) / 2);
 		} else {
 			throw new MyCollabException(
-					"Does not support form layout except 1 or 2 columns");
+					"Does not support attachForm layout except 1 or 2 columns");
 		}
 
 		dragLayout.setWidth("100%");

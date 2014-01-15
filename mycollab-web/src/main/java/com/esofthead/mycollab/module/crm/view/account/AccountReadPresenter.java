@@ -32,15 +32,15 @@ import com.esofthead.mycollab.module.crm.CrmLinkGenerator;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.Account;
 import com.esofthead.mycollab.module.crm.domain.AccountLead;
-import com.esofthead.mycollab.module.crm.domain.CallWithBLOBs;
-import com.esofthead.mycollab.module.crm.domain.CaseWithBLOBs;
-import com.esofthead.mycollab.module.crm.domain.Lead;
-import com.esofthead.mycollab.module.crm.domain.MeetingWithBLOBs;
-import com.esofthead.mycollab.module.crm.domain.Opportunity;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
+import com.esofthead.mycollab.module.crm.domain.SimpleCall;
+import com.esofthead.mycollab.module.crm.domain.SimpleCase;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
+import com.esofthead.mycollab.module.crm.domain.SimpleActivity;
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
-import com.esofthead.mycollab.module.crm.domain.Task;
+import com.esofthead.mycollab.module.crm.domain.SimpleMeeting;
+import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
+import com.esofthead.mycollab.module.crm.domain.SimpleTask;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.module.crm.events.ActivityEvent;
@@ -56,37 +56,43 @@ import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
 import com.esofthead.mycollab.module.crm.view.CrmToolbar;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
-import com.esofthead.mycollab.vaadin.ui.MessageBox;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
-import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.UI;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
 
 	private static final long serialVersionUID = 1L;
 
 	public AccountReadPresenter() {
 		super(AccountReadView.class);
-		bind();
 	}
 
-	private void bind() {
+	@Override
+	protected void postInitView() {
 		view.getPreviewFormHandlers().addFormHandler(
-				new DefaultPreviewFormHandler<Account>() {
+				new DefaultPreviewFormHandler<SimpleAccount>() {
 					@Override
-					public void onEdit(Account data) {
+					public void onEdit(SimpleAccount data) {
 						EventBus.getInstance().fireEvent(
 								new AccountEvent.GotoEdit(this, data));
 					}
 
 					@Override
-					public void onDelete(final Account data) {
+					public void onDelete(final SimpleAccount data) {
 						ConfirmDialogExt.show(
-								view.getWindow(),
+								UI.getCurrent(),
 								LocalizationHelper.getMessage(
 										GenericI18Enum.DELETE_DIALOG_TITLE,
 										SiteConfiguration.getSiteName()),
@@ -118,7 +124,7 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
 					}
 
 					@Override
-					public void onClone(Account data) {
+					public void onClone(SimpleAccount data) {
 						Account cloneData = (Account) data.copy();
 						cloneData.setId(null);
 						EventBus.getInstance().fireEvent(
@@ -132,7 +138,7 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
 					}
 
 					@Override
-					public void gotoNext(Account data) {
+					public void gotoNext(SimpleAccount data) {
 						AccountService accountService = ApplicationContextUtil
 								.getSpringBean(AccountService.class);
 						AccountSearchCriteria criteria = new AccountSearchCriteria();
@@ -152,7 +158,7 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
 					}
 
 					@Override
-					public void gotoPrevious(Account data) {
+					public void gotoPrevious(SimpleAccount data) {
 						AccountService accountService = ApplicationContextUtil
 								.getSpringBean(AccountService.class);
 						AccountSearchCriteria criteria = new AccountSearchCriteria();
@@ -199,10 +205,10 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
 				});
 
 		view.getRelatedOpportunityHandlers().addRelatedListHandler(
-				new AbstractRelatedListHandler() {
+				new AbstractRelatedListHandler<SimpleOpportunity>() {
 					@Override
 					public void createNewRelatedItem(String itemId) {
-						Opportunity opportunity = new Opportunity();
+						SimpleOpportunity opportunity = new SimpleOpportunity();
 						opportunity.setAccountid(view.getItem().getId());
 						EventBus.getInstance()
 								.fireEvent(
@@ -215,7 +221,7 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
 				new AbstractRelatedListHandler<SimpleLead>() {
 					@Override
 					public void createNewRelatedItem(String itemId) {
-						Lead lead = new Lead();
+						SimpleLead lead = new SimpleLead();
 						lead.setAccountname(view.getItem().getAccountname());
 						EventBus.getInstance().fireEvent(
 								new LeadEvent.GotoEdit(this, lead));
@@ -246,10 +252,10 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
 				});
 
 		view.getRelatedCaseHandlers().addRelatedListHandler(
-				new AbstractRelatedListHandler() {
+				new AbstractRelatedListHandler<SimpleCase>() {
 					@Override
 					public void createNewRelatedItem(String itemId) {
-						CaseWithBLOBs cases = new CaseWithBLOBs();
+						SimpleCase cases = new SimpleCase();
 						cases.setAccountid(view.getItem().getId());
 						EventBus.getInstance().fireEvent(
 								new CaseEvent.GotoEdit(this, cases));
@@ -257,18 +263,18 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
 				});
 
 		view.getRelatedActivityHandlers().addRelatedListHandler(
-				new AbstractRelatedListHandler() {
+				new AbstractRelatedListHandler<SimpleActivity>() {
 					@Override
 					public void createNewRelatedItem(final String itemId) {
 						if (itemId.equals("task")) {
-							final Task task = new Task();
+							final SimpleTask task = new SimpleTask();
 							task.setType(CrmTypeConstants.ACCOUNT);
 							task.setTypeid(view.getItem().getId());
 							EventBus.getInstance().fireEvent(
 									new ActivityEvent.TaskEdit(
 											AccountReadPresenter.this, task));
 						} else if (itemId.equals("meeting")) {
-							final MeetingWithBLOBs meeting = new MeetingWithBLOBs();
+							final SimpleMeeting meeting = new SimpleMeeting();
 							meeting.setType(CrmTypeConstants.ACCOUNT);
 							meeting.setTypeid(view.getItem().getId());
 							EventBus.getInstance()
@@ -277,7 +283,7 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
 													AccountReadPresenter.this,
 													meeting));
 						} else if (itemId.equals("call")) {
-							final CallWithBLOBs call = new CallWithBLOBs();
+							final SimpleCall call = new SimpleCall();
 							call.setType(CrmTypeConstants.ACCOUNT);
 							call.setTypeid(view.getItem().getId());
 							EventBus.getInstance().fireEvent(
@@ -315,7 +321,7 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
 				}
 			}
 		} else {
-			MessageBox.showMessagePermissionAlert();
+			NotificationUtil.showMessagePermissionAlert();
 		}
 	}
 }

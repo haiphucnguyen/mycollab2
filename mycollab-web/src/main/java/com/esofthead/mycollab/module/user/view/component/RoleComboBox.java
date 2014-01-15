@@ -14,10 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.module.user.view.component;
 
 import java.util.List;
@@ -32,7 +29,8 @@ import com.vaadin.ui.ComboBox;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class RoleComboBox extends ComboBox {
 
@@ -42,11 +40,12 @@ public class RoleComboBox extends ComboBox {
 	public RoleComboBox() {
 		super();
 		this.setNullSelectionAllowed(false);
-		this.setItemCaptionMode(ITEM_CAPTION_MODE_PROPERTY);
+		this.setItemCaptionMode(ItemCaptionMode.PROPERTY);
 
 		RoleSearchCriteria criteria = new RoleSearchCriteria();
 
-		RoleService roleService = ApplicationContextUtil.getSpringBean(RoleService.class);
+		RoleService roleService = ApplicationContextUtil
+				.getSpringBean(RoleService.class);
 		List<SimpleRole> roleList = roleService
 				.findPagableListByCriteria(new SearchRequest<RoleSearchCriteria>(
 						criteria, 0, Integer.MAX_VALUE));

@@ -30,6 +30,12 @@ import com.esofthead.mycollab.module.mail.service.MailRelayService;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.servlet.GenericServlet;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ *
+ */
 @Component("denyMemberInvitationFeedbackServlet")
 public class AnnotatedMemberDenyInvitationFeedBackHandlerServlet extends
 		GenericServlet {

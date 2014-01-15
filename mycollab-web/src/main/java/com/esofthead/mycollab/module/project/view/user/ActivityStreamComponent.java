@@ -14,10 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.module.project.view.user;
 
 import java.util.Date;
@@ -44,19 +41,20 @@ import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.project.ui.components.ProjectActivityStreamGenerator;
 import com.esofthead.mycollab.module.project.view.ProjectLinkBuilder;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
-import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
-import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class ActivityStreamComponent extends Depot {
 
@@ -76,8 +74,7 @@ public class ActivityStreamComponent extends Depot {
 
 	public void showFeeds(final List<Integer> prjKeys) {
 		this.bodyContent.removeAllComponents();
-		this.bodyContent.addComponent(new LazyLoadWrapper(
-				this.activityStreamList));
+		this.bodyContent.addComponent(this.activityStreamList);
 
 		final ActivityStreamSearchCriteria searchCriteria = new ActivityStreamSearchCriteria();
 		searchCriteria.setModuleSet(new SetSearchField<String>(SearchField.AND,
@@ -239,7 +236,7 @@ public class ActivityStreamComponent extends Depot {
 					}
 
 					final Label activityLink = new Label(content,
-							Label.CONTENT_XHTML);
+							ContentMode.HTML);
 					final CssLayout streamWrapper = new CssLayout();
 					streamWrapper.setWidth("100%");
 					streamWrapper.addStyleName("stream-wrapper");

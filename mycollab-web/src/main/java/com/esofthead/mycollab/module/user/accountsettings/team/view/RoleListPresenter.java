@@ -14,19 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.module.user.accountsettings.team.view;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.persistence.service.ISearchableService;
-import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.user.accountsettings.view.AccountSettingBreadcrumb;
 import com.esofthead.mycollab.module.user.domain.Role;
 import com.esofthead.mycollab.module.user.domain.SimpleRole;
@@ -35,20 +30,22 @@ import com.esofthead.mycollab.module.user.service.RoleService;
 import com.esofthead.mycollab.security.AccessPermissionFlag;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.vaadin.events.TablePopupActionHandler;
-import com.esofthead.mycollab.vaadin.mvp.ListSelectionPresenter;
+import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.desktop.ui.DefaultMassEditActionHandler;
+import com.esofthead.mycollab.vaadin.desktop.ui.ListSelectionPresenter;
+import com.esofthead.mycollab.vaadin.events.MassItemActionHandler;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.mvp.ViewPermission;
 import com.esofthead.mycollab.vaadin.ui.MailFormWindow;
-import com.esofthead.mycollab.vaadin.ui.MessageBox;
-import com.esofthead.mycollab.vaadin.ui.MessageBox.ButtonType;
-import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.UI;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
 @ViewPermission(permissionId = RolePermissionCollections.ACCOUNT_ROLE, impliedPermissionVal = AccessPermissionFlag.READ_ONLY)
 public class RoleListPresenter extends
@@ -60,15 +57,19 @@ public class RoleListPresenter extends
 	public RoleListPresenter() {
 		super(RoleListView.class);
 		roleService = ApplicationContextUtil.getSpringBean(RoleService.class);
+	}
 
-		view.getPopupActionHandlers().addPopupActionHandler(
-				new DefaultPopupActionHandler(this) {
+	@Override
+	protected void postInitView() {
+		super.postInitView();
+
+		view.getPopupActionHandlers().addMassItemActionHandler(
+				new DefaultMassEditActionHandler(this) {
 
 					@Override
-					protected void onSelectExtra(String id, String caption) {
-						if (TablePopupActionHandler.MAIL_ACTION.equals(id)) {
-							view.getWidget().getWindow()
-									.addWindow(new MailFormWindow());
+					protected void onSelectExtra(String id) {
+						if (MassItemActionHandler.MAIL_ACTION.equals(id)) {
+							UI.getCurrent().addWindow(new MailFormWindow());
 						}
 
 					}
@@ -79,7 +80,7 @@ public class RoleListPresenter extends
 					}
 
 					@Override
-					protected Class getReportModelClassType() {
+					protected Class<?> getReportModelClassType() {
 						return SimpleRole.class;
 					}
 				});
@@ -97,18 +98,10 @@ public class RoleListPresenter extends
 								.getIssystemrole() == Boolean.FALSE)) {
 					keyList.add(item.getId());
 				} else {
-					MessageBox mb = new MessageBox(
-							AppContext.getApplication().getMainWindow(),
-							LocalizationHelper
-									.getMessage(GenericI18Enum.WARNING_WINDOW_TITLE),
-							MessageBox.Icon.WARN,
-							"Can not delete role " + item.getRolename()
-									+ " because it is the system role.",
-							new MessageBox.ButtonConfig(
-									ButtonType.OK,
-									LocalizationHelper
-											.getMessage(GenericI18Enum.BUTTON_OK_LABEL)));
-					mb.show();
+					NotificationUtil
+							.showErrorNotification("Can not delete role "
+									+ item.getRolename()
+									+ " because it is the system role.");
 				}
 			}
 
@@ -139,7 +132,7 @@ public class RoleListPresenter extends
 					.getView(AccountSettingBreadcrumb.class);
 			breadcrumb.gotoRoleList();
 		} else {
-			MessageBox.showMessagePermissionAlert();
+			NotificationUtil.showMessagePermissionAlert();
 		}
 	}
 

@@ -31,12 +31,18 @@ import com.esofthead.mycollab.vaadin.ui.DefaultBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.web.MyCollabResource;
-import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class ProjectMessageListComponent extends Depot {
 	public static class MessageRowDisplayHandler implements
 			DefaultBeanPagedList.RowDisplayHandler<SimpleMessage> {
@@ -67,7 +73,7 @@ public class ProjectMessageListComponent extends Depot {
 							message.getProjectid(), message.getId(),
 							GenericLinkUtils.URL_PREFIX_PARAM), message
 							.getTitle());
-			final Label actionLbl = new Label(content, Label.CONTENT_XHTML);
+			final Label actionLbl = new Label(content, ContentMode.HTML);
 
 			header.addComponent(actionLbl);
 
@@ -101,7 +107,7 @@ public class ProjectMessageListComponent extends Depot {
 
 	public void showLatestMessages() {
 		bodyContent.removeAllComponents();
-		bodyContent.addComponent(new LazyLoadWrapper(messageList));
+		bodyContent.addComponent(messageList);
 		final MessageSearchCriteria searchCriteria = new MessageSearchCriteria();
 		searchCriteria.setProjectids(new SetSearchField<Integer>(
 				CurrentProjectVariables.getProjectId()));

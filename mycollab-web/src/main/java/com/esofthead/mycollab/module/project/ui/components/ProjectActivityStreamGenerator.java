@@ -193,6 +193,7 @@ public class ProjectActivityStreamGenerator {
 			AuditLogShowHandler {
 		public ComponentAuditLogShowHandler() {
 			this.generateFieldDisplayHandler("componentname", "Name");
+			this.generateFieldDisplayHandler("status", "Status");
 			this.generateFieldDisplayHandler("description", "Description");
 			this.generateFieldDisplayHandler("userLeadFullName", "Lead");
 		}
@@ -202,6 +203,7 @@ public class ProjectActivityStreamGenerator {
 		public VersionAuditLogShowHandler() {
 			this.generateFieldDisplayHandler("duedate", "Due Date",
 					AuditLogShowHandler.DATE_FIELD);
+			this.generateFieldDisplayHandler("status", "Status");
 			this.generateFieldDisplayHandler("versionname", "Name");
 			this.generateFieldDisplayHandler("description", "Description");
 		}

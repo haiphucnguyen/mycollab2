@@ -18,9 +18,15 @@ package com.esofthead.mycollab.module.crm.events;
 
 import com.esofthead.mycollab.eventmanager.ApplicationEvent;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @SuppressWarnings("serial")
 public class LeadEvent {
-	
+
 	public static class Save extends ApplicationEvent {
 		public Save(Object source, Object data) {
 			super(source, data);

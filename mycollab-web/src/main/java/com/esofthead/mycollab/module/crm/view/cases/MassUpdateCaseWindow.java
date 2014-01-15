@@ -19,123 +19,98 @@ package com.esofthead.mycollab.module.crm.view.cases;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.crm.domain.CaseWithBLOBs;
-import com.esofthead.mycollab.module.crm.domain.Contact;
-import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
+import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.MassUpdateWindow;
-import com.esofthead.mycollab.vaadin.ui.ReadViewLayout;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.MyCollabResource;
-import com.vaadin.data.Item;
-import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
 public class MassUpdateCaseWindow extends MassUpdateWindow<CaseWithBLOBs> {
 	private static final long serialVersionUID = 1L;
-	private final CaseWithBLOBs cases;
-	private final EditForm updateForm;
-	private final ReadViewLayout caseAddLayout;
-	private final VerticalLayout layout;
 
 	public MassUpdateCaseWindow(final String title,
 			final CaseListPresenter presenter) {
-		super(title, presenter);
-
-		this.setWidth("1000px");
-
-		this.setIcon(MyCollabResource.newResource("icons/18/crm/case.png"));
-
-		this.caseAddLayout = new ReadViewLayout(null, false);
-
-		this.cases = new CaseWithBLOBs();
-
-		this.layout = this.getLayout();
-
-		this.updateForm = new EditForm();
-
-		this.updateForm.setItemDataSource(new BeanItem<CaseWithBLOBs>(
-				this.cases));
-
-		this.caseAddLayout.addBody(this.updateForm);
-
-		this.addComponent(this.caseAddLayout);
-	}
-
-	private class EditForm extends AdvancedEditBeanForm<Contact> {
-		private static final long serialVersionUID = 1L;
-
-		@Override
-		public void setItemDataSource(final Item newDataSource) {
-			this.setFormLayoutFactory(new MassUpdateContactFormLayoutFactory());
-			this.setFormFieldFactory(new CaseEditFormFieldFactory(
-					MassUpdateCaseWindow.this.cases));
-			super.setItemDataSource(newDataSource);
-		}
-
-		private class MassUpdateContactFormLayoutFactory implements
-				IFormLayoutFactory {
-			private static final long serialVersionUID = 1L;
-
-			private GridFormLayoutHelper informationLayout;
-
-			@Override
-			public Layout getLayout() {
-				final VerticalLayout formLayout = new VerticalLayout();
-
-				final Label organizationHeader = new Label("Case Information");
-				organizationHeader.setStyleName("h2");
-				formLayout.addComponent(organizationHeader);
-
-				this.informationLayout = new GridFormLayoutHelper(2, 6, "100%",
-						"167px", Alignment.MIDDLE_LEFT);
-
-				this.informationLayout.getLayout().setWidth("100%");
-				this.informationLayout.getLayout().setMargin(false);
-				this.informationLayout.getLayout().setSpacing(false);
-				this.informationLayout.getLayout().addStyleName(
-						"colored-gridlayout");
-				formLayout.addComponent(this.informationLayout.getLayout());
-
-				formLayout.addComponent(MassUpdateCaseWindow.this.layout);
-
-				return formLayout;
-			}
-
-			// priority, status, account name, origin, type, reason, assignuser
-			@Override
-			public void attachField(final Object propertyId, final Field field) {
-				if (propertyId.equals("priority")) {
-					this.informationLayout
-							.addComponent(field, "Priority", 0, 0);
-				} else if (propertyId.equals("status")) {
-					this.informationLayout.addComponent(field, "Status", 1, 0);
-				} else if (propertyId.equals("accountid")) {
-					this.informationLayout.addComponent(field, "Account Name",
-							0, 1);
-				} else if (propertyId.equals("origin")) {
-					this.informationLayout.addComponent(field, "Origin", 1, 1);
-				} else if (propertyId.equals("type")) {
-					this.informationLayout.addComponent(field, "Type", 0, 2);
-				} else if (propertyId.equals("reason")) {
-					this.informationLayout.addComponent(field, "Reason", 1, 2);
-				} else if (propertyId.equals("assignuser")) {
-					this.informationLayout
-							.addComponent(
-									field,
-									LocalizationHelper
-											.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD),
-									0, 3, 2, "297px", Alignment.TOP_LEFT);
-				}
-			}
-		}
+		super(title, MyCollabResource.newResource("icons/18/crm/case.png"),
+				new CaseWithBLOBs(), presenter);
 	}
 
 	@Override
-	protected CaseWithBLOBs getItem() {
-		return this.cases;
+	protected IFormLayoutFactory buildFormLayoutFactory() {
+		return new MassUpdateContactFormLayoutFactory();
+	}
+
+	@Override
+	protected AbstractBeanFieldGroupEditFieldFactory<CaseWithBLOBs> initBeanFormFieldFactory() {
+		return new CaseEditFormFieldFactory<CaseWithBLOBs>(updateForm);
+	}
+
+	private class MassUpdateContactFormLayoutFactory implements
+			IFormLayoutFactory {
+		private static final long serialVersionUID = 1L;
+
+		private GridFormLayoutHelper informationLayout;
+
+		@Override
+		public Layout getLayout() {
+			final VerticalLayout formLayout = new VerticalLayout();
+			formLayout.setDefaultComponentAlignment(Alignment.TOP_CENTER);
+
+			final Label organizationHeader = new Label("Case Information");
+			organizationHeader.setStyleName(UIConstants.H2_STYLE2);
+			formLayout.addComponent(organizationHeader);
+
+			this.informationLayout = new GridFormLayoutHelper(2, 6, "100%",
+					"167px", Alignment.MIDDLE_LEFT);
+
+			this.informationLayout.getLayout().setWidth("100%");
+			this.informationLayout.getLayout().setMargin(false);
+			this.informationLayout.getLayout().setSpacing(false);
+			this.informationLayout.getLayout().addStyleName(
+					"colored-gridlayout");
+			formLayout.addComponent(this.informationLayout.getLayout());
+
+			formLayout.addComponent(buildButtonControls());
+
+			return formLayout;
+		}
+
+		// priority, status, account name, origin, type, reason, assignuser
+		@Override
+		public boolean attachField(final Object propertyId, final Field<?> field) {
+			if (propertyId.equals("priority")) {
+				this.informationLayout.addComponent(field, "Priority", 0, 0);
+			} else if (propertyId.equals("status")) {
+				this.informationLayout.addComponent(field, "Status", 1, 0);
+			} else if (propertyId.equals("accountid")) {
+				this.informationLayout
+						.addComponent(field, "Account Name", 0, 1);
+			} else if (propertyId.equals("origin")) {
+				this.informationLayout.addComponent(field, "Origin", 1, 1);
+			} else if (propertyId.equals("type")) {
+				this.informationLayout.addComponent(field, "Type", 0, 2);
+			} else if (propertyId.equals("reason")) {
+				this.informationLayout.addComponent(field, "Reason", 1, 2);
+			} else if (propertyId.equals("assignuser")) {
+				this.informationLayout.addComponent(field, LocalizationHelper
+						.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD), 0, 3,
+						2, "297px", Alignment.TOP_LEFT);
+			} else {
+				return false;
+			}
+
+			return true;
+		}
 	}
 }

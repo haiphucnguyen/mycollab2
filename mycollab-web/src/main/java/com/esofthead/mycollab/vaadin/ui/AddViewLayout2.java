@@ -16,41 +16,48 @@
  */
 package com.esofthead.mycollab.vaadin.ui;
 
-import com.vaadin.terminal.Resource;
+import com.vaadin.server.Resource;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
 public class AddViewLayout2 extends CssLayout {
 	private static final long serialVersionUID = 1L;
 
 	private final HorizontalLayout header;
-	private final Embedded iconEmbed;
+	private final Image iconEmbed;
 	private final Label titleLbl;
 	private final VerticalLayout body;
 
 	public AddViewLayout2(final String title, final Resource icon) {
-		// this.setSizeFull();
 		setStyleName("addview-layout");
 
 		header = new HorizontalLayout();
 		header.setWidth("100%");
 		header.setSpacing(true);
+		header.setMargin(true);
 		header.setStyleName("addview-layout-header");
 		header.setHeight("39px");
 		this.addComponent(header);
 
-		iconEmbed = new Embedded();
-		iconEmbed.setSource(icon);
+		iconEmbed = new Image(null, icon);
 		header.addComponent(iconEmbed);
 		header.setComponentAlignment(iconEmbed, Alignment.MIDDLE_LEFT);
 
 		titleLbl = new Label(title);
+		titleLbl.setContentMode(ContentMode.HTML);
 		titleLbl.setStyleName("h2");
 		titleLbl.setWidth("100%");
 		header.addComponent(titleLbl);

@@ -28,6 +28,12 @@ import org.springframework.web.HttpRequestHandler;
 import com.esofthead.mycollab.core.ResourceNotFoundException;
 import com.esofthead.mycollab.core.UserInvalidInputException;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public abstract class GenericServlet implements HttpRequestHandler {
 
 	@Override

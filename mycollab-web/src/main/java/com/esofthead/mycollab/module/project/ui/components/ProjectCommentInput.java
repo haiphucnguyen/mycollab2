@@ -28,9 +28,9 @@ import com.esofthead.mycollab.module.file.AttachmentUtils;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.schedule.email.SendingRelayEmailNotificationAction;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.AttachmentPanel;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -41,11 +41,13 @@ import com.vaadin.ui.VerticalLayout;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class ProjectCommentInput extends VerticalLayout {
 	private static final long serialVersionUID = 1L;
 	private final RichTextArea commentArea;
+
 	private CommentType type;
 	private Integer typeid;
 	private Integer extraTypeId;
@@ -53,21 +55,20 @@ public class ProjectCommentInput extends VerticalLayout {
 	ProjectCommentInput(
 			final ReloadableComponent component,
 			final CommentType typeVal,
-			final Integer typeidVal,
 			final Integer extraTypeIdVal,
 			final boolean cancelButtonEnable,
 			final boolean isSendingEmailRelay,
 			final Class<? extends SendingRelayEmailNotificationAction> emailHandler) {
 		this.setWidth("600px");
-		setSpacing(true);
+		this.setSpacing(true);
 		this.setMargin(true);
 
 		type = typeVal;
-		typeid = typeidVal;
 		extraTypeId = extraTypeIdVal;
 
 		commentArea = new RichTextArea();
 		commentArea.setWidth("100%");
+		commentArea.setHeight("200px");
 
 		final AttachmentPanel attachments = new AttachmentPanel();
 
@@ -146,8 +147,7 @@ public class ProjectCommentInput extends VerticalLayout {
 		this.addComponent(controlsLayout);
 	}
 
-	void setTypeAndId(final CommentType type, final int typeid) {
-		this.type = type;
+	void setTypeAndId(final int typeid) {
 		this.typeid = typeid;
 	}
 }

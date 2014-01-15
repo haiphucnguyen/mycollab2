@@ -22,7 +22,8 @@ import org.jasypt.util.text.BasicTextEncryptor;
 /**
  * Utility class to make encrypt and decrypt text
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  * 
  */
 public class PasswordEncryptHelper {

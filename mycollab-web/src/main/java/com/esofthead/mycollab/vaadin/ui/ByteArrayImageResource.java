@@ -19,9 +19,14 @@ package com.esofthead.mycollab.vaadin.ui;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
-import com.esofthead.mycollab.web.AppContext;
-import com.vaadin.terminal.StreamResource;
+import com.vaadin.server.StreamResource;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
 public class ByteArrayImageResource extends StreamResource {
 	private static final long serialVersionUID = 1L;
 
@@ -32,7 +37,7 @@ public class ByteArrayImageResource extends StreamResource {
 			public InputStream getStream() {
 				return new ByteArrayInputStream(imageData);
 			}
-		}, "avatar", AppContext.getApplication());
+		}, "avatar");
 
 		this.setMIMEType(mimeType);
 	}

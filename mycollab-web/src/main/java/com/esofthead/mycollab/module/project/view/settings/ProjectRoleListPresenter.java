@@ -14,17 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.module.project.view.settings;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.persistence.service.ISearchableService;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.project.domain.ProjectRole;
@@ -34,19 +30,21 @@ import com.esofthead.mycollab.module.project.localization.PeopleI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectRoleService;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.vaadin.events.TablePopupActionHandler;
-import com.esofthead.mycollab.vaadin.mvp.ListSelectionPresenter;
+import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.desktop.ui.DefaultMassEditActionHandler;
+import com.esofthead.mycollab.vaadin.desktop.ui.ListSelectionPresenter;
+import com.esofthead.mycollab.vaadin.events.MassItemActionHandler;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.MailFormWindow;
-import com.esofthead.mycollab.vaadin.ui.MessageBox;
-import com.esofthead.mycollab.vaadin.ui.MessageBox.ButtonType;
-import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.UI;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class ProjectRoleListPresenter
 		extends
@@ -56,16 +54,22 @@ public class ProjectRoleListPresenter
 
 	public ProjectRoleListPresenter() {
 		super(ProjectRoleListView.class);
-		projectRoleService = ApplicationContextUtil.getSpringBean(ProjectRoleService.class);
+	}
 
-		view.getPopupActionHandlers().addPopupActionHandler(
-				new DefaultPopupActionHandler(this) {
+	@Override
+	protected void postInitView() {
+		super.postInitView();
+
+		projectRoleService = ApplicationContextUtil
+				.getSpringBean(ProjectRoleService.class);
+
+		view.getPopupActionHandlers().addMassItemActionHandler(
+				new DefaultMassEditActionHandler(this) {
 
 					@Override
-					protected void onSelectExtra(String id, String caption) {
-						if (TablePopupActionHandler.MAIL_ACTION.equals(id)) {
-							view.getWidget().getWindow()
-									.addWindow(new MailFormWindow());
+					protected void onSelectExtra(String id) {
+						if (MassItemActionHandler.MAIL_ACTION.equals(id)) {
+							UI.getCurrent().addWindow(new MailFormWindow());
 						}
 					}
 
@@ -93,19 +97,10 @@ public class ProjectRoleListPresenter
 								.getIssystemrole() == Boolean.FALSE)) {
 					keyList.add(item.getId());
 				} else {
-					MessageBox mb = new MessageBox(
-							AppContext.getApplication().getMainWindow(),
-							LocalizationHelper
-									.getMessage(GenericI18Enum.WARNING_WINDOW_TITLE),
-							MessageBox.Icon.WARN,
-							LocalizationHelper.getMessage(
+					NotificationUtil.showErrorNotification(LocalizationHelper
+							.getMessage(
 									PeopleI18nEnum.CAN_NOT_DELETE_ROLE_MESSAGE,
-									item.getRolename()),
-							new MessageBox.ButtonConfig(
-									ButtonType.OK,
-									LocalizationHelper
-											.getMessage(GenericI18Enum.BUTTON_OK_LABEL)));
-					mb.show();
+									item.getRolename()));
 				}
 			}
 

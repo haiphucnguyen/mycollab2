@@ -37,6 +37,12 @@ import com.esofthead.mycollab.module.user.domain.criteria.RoleSearchCriteria;
 import com.esofthead.mycollab.module.user.service.RoleService;
 import com.esofthead.mycollab.security.PermissionMap;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @Service
 public class RoleServiceDBImpl extends
 		DefaultService<Integer, Role, RoleSearchCriteria> implements

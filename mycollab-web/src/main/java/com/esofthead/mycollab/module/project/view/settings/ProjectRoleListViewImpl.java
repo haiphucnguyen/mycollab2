@@ -14,15 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.module.project.view.settings;
 
 import java.util.Arrays;
-
-import org.vaadin.hene.splitbutton.PopupButtonControl;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
@@ -35,22 +30,27 @@ import com.esofthead.mycollab.module.project.domain.criteria.ProjectRoleSearchCr
 import com.esofthead.mycollab.module.project.events.ProjectRoleEvent;
 import com.esofthead.mycollab.module.project.service.ProjectRoleService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.vaadin.events.HasPopupActionHandlers;
+import com.esofthead.mycollab.vaadin.events.HasMassItemActionHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
-import com.esofthead.mycollab.vaadin.events.TablePopupActionHandler;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.events.MassItemActionHandler;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
+import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
+import com.esofthead.mycollab.vaadin.ui.CheckBoxDecor;
+import com.esofthead.mycollab.vaadin.ui.DefaultMassItemActionHandlersContainer;
 import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.table.AbstractPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.DefaultPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
+import com.esofthead.mycollab.web.MyCollabResource;
+import com.vaadin.data.Property;
+import com.vaadin.data.Property.ValueChangeListener;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
@@ -60,10 +60,11 @@ import com.vaadin.ui.VerticalLayout;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
 @ViewComponent
-public class ProjectRoleListViewImpl extends AbstractView implements
+public class ProjectRoleListViewImpl extends AbstractPageView implements
 		ProjectRoleListView {
 	private static final long serialVersionUID = 1L;
 
@@ -71,10 +72,12 @@ public class ProjectRoleListViewImpl extends AbstractView implements
 	private SelectionOptionButton selectOptionButton;
 	private DefaultPagedBeanTable<ProjectRoleService, ProjectRoleSearchCriteria, SimpleProjectRole> tableItem;
 	private final VerticalLayout listLayout;
-	private PopupButtonControl tableActionControls;
+	private DefaultMassItemActionHandlersContainer tableActionControls;
 	private final Label selectedItemsNumberLabel = new Label();
 
 	public ProjectRoleListViewImpl() {
+
+		this.setMargin(new MarginInfo(true, false, false, false));
 
 		this.searchPanel = new ProjectRoleSearchPanel();
 		this.addComponent(this.searchPanel);
@@ -102,14 +105,14 @@ public class ProjectRoleListViewImpl extends AbstractView implements
 					@Override
 					public Object generateCell(final Table source,
 							final Object itemId, final Object columnId) {
-						final CheckBox cb = new CheckBox("", false);
+						final CheckBoxDecor cb = new CheckBoxDecor("", false);
 						cb.setImmediate(true);
-						cb.addListener(new Button.ClickListener() {
+						cb.addValueChangeListener(new ValueChangeListener() {
 							private static final long serialVersionUID = 1L;
 
 							@Override
-							public void buttonClick(
-									final Button.ClickEvent event) {
+							public void valueChange(
+									Property.ValueChangeEvent event) {
 								final SimpleProjectRole role = ProjectRoleListViewImpl.this.tableItem
 										.getBeanByIndex(itemId);
 								ProjectRoleListViewImpl.this.tableItem
@@ -178,21 +181,27 @@ public class ProjectRoleListViewImpl extends AbstractView implements
 		deleteBtn.setEnabled(CurrentProjectVariables
 				.canAccess(ProjectRolePermissionCollections.ROLES));
 
-		this.tableActionControls = new PopupButtonControl(
-				TablePopupActionHandler.DELETE_ACTION, deleteBtn);
-		this.tableActionControls.addOptionItem(TablePopupActionHandler.MAIL_ACTION,
-				LocalizationHelper.getMessage(GenericI18Enum.BUTTON_MAIL));
-		this.tableActionControls
-				.addOptionItem(TablePopupActionHandler.EXPORT_CSV_ACTION,
-						LocalizationHelper
-								.getMessage(GenericI18Enum.BUTTON_EXPORT_CSV));
-		this.tableActionControls
-				.addOptionItem(TablePopupActionHandler.EXPORT_PDF_ACTION,
-						LocalizationHelper
-								.getMessage(GenericI18Enum.BUTTON_EXPORT_PDF));
-		this.tableActionControls.addOptionItem(
-				TablePopupActionHandler.EXPORT_EXCEL_ACTION, LocalizationHelper
-						.getMessage(GenericI18Enum.BUTTON_EXPORT_EXCEL));
+		this.tableActionControls = new DefaultMassItemActionHandlersContainer();
+		if (CurrentProjectVariables
+				.canAccess(ProjectRolePermissionCollections.ROLES)) {
+			tableActionControls.addActionItem(
+					MassItemActionHandler.DELETE_ACTION,
+					MyCollabResource.newResource("icons/16/action/delete.png"),
+					"delete");
+		}
+
+		tableActionControls.addDownloadActionItem(
+				MassItemActionHandler.EXPORT_PDF_ACTION,
+				MyCollabResource.newResource("icons/16/action/pdf.png"),
+				"export", "export.pdf");
+		tableActionControls.addDownloadActionItem(
+				MassItemActionHandler.EXPORT_EXCEL_ACTION,
+				MyCollabResource.newResource("icons/16/action/excel.png"),
+				"export", "export.xlsx");
+		tableActionControls.addDownloadActionItem(
+				MassItemActionHandler.EXPORT_CSV_ACTION,
+				MyCollabResource.newResource("icons/16/action/csv.png"),
+				"export", "export.csv");
 
 		layout.addComponent(this.tableActionControls);
 		layout.addComponent(this.selectedItemsNumberLabel);
@@ -221,7 +230,7 @@ public class ProjectRoleListViewImpl extends AbstractView implements
 	}
 
 	@Override
-	public HasPopupActionHandlers getPopupActionHandlers() {
+	public HasMassItemActionHandlers getPopupActionHandlers() {
 		return this.tableActionControls;
 	}
 

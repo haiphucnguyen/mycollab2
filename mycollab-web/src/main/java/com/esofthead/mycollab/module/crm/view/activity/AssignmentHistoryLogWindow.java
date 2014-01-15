@@ -20,11 +20,17 @@ import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.crm.ui.components.HistoryLogWindow;
 
-public class AssignmentHistoryLogWindow extends HistoryLogWindow {
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
+class AssignmentHistoryLogWindow extends HistoryLogWindow {
 	private static final long serialVersionUID = 1L;
 
-	public AssignmentHistoryLogWindow(String module, String type, int typeid) {
-		super(module, type, typeid);
+	public AssignmentHistoryLogWindow(String module, String type) {
+		super(module, type);
 
 		this.generateFieldDisplayHandler("subject", "Subject");
 		this.generateFieldDisplayHandler("startdate", "Start Date");

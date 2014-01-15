@@ -14,10 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.module.project.view.task;
 
 import com.esofthead.mycollab.eventmanager.EventBus;
@@ -30,29 +27,35 @@ import com.esofthead.mycollab.module.project.events.TaskListEvent;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
-import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.HistoryViewManager;
 import com.esofthead.mycollab.vaadin.mvp.NullViewState;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.mvp.ViewState;
+import com.esofthead.mycollab.vaadin.ui.AbstractPresenter;
+import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.AttachmentUploadField;
-import com.esofthead.mycollab.vaadin.ui.MessageBox;
-import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class TaskAddPresenter extends AbstractPresenter<TaskAddView> {
 	private static final long serialVersionUID = 1L;
 
 	public TaskAddPresenter() {
 		super(TaskAddView.class);
+	}
 
+	@Override
+	protected void postInitView() {
 		view.getEditFormHandlers().addFormHandler(new EditFormHandler<Task>() {
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void onSave(final Task item) {
 				save(item);
@@ -101,7 +104,7 @@ public class TaskAddPresenter extends AbstractPresenter<TaskAddView> {
 				breadCrumb.gotoTaskEdit(task);
 			}
 		} else {
-			MessageBox.showMessagePermissionAlert();
+			NotificationUtil.showMessagePermissionAlert();
 		}
 	}
 

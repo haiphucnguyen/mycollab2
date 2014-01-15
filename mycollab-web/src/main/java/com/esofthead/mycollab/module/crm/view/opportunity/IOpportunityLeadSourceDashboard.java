@@ -17,8 +17,8 @@
 package com.esofthead.mycollab.module.crm.view.opportunity;
 
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
-import com.esofthead.mycollab.vaadin.mvp.View;
+import com.esofthead.mycollab.vaadin.mvp.PageView;
 
-public interface IOpportunityLeadSourceDashboard extends View {
+public interface IOpportunityLeadSourceDashboard extends PageView {
 	void setSearchCriteria(OpportunitySearchCriteria searchCriteria);
 }

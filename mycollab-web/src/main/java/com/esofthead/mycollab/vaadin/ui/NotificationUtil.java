@@ -18,26 +18,49 @@ package com.esofthead.mycollab.vaadin.ui;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
-import com.esofthead.mycollab.web.AppContext;
-import com.vaadin.ui.Window;
+import com.esofthead.mycollab.web.DesktopApplication;
+import com.vaadin.server.Page;
+import com.vaadin.ui.Notification;
+import com.vaadin.ui.Notification.Type;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class NotificationUtil {
 
 	public static void showNotification(String caption) {
-		showNotification(caption, null,
-				Window.Notification.TYPE_HUMANIZED_MESSAGE);
+		showNotification(caption, null, Type.HUMANIZED_MESSAGE);
 	}
 
-	public static void showNotification(String caption, int type) {
-		showNotification(caption, null, type);
+	public static void showWarningNotification(String description) {
+		showNotification(
+				LocalizationHelper
+						.getMessage(GenericI18Enum.WARNING_WINDOW_TITLE),
+				description, Type.WARNING_MESSAGE);
+	}
+
+	public static void showErrorNotification(String description) {
+		showNotification(
+				LocalizationHelper
+						.getMessage(GenericI18Enum.ERROR_WINDOW_TITLE),
+				description, Type.ERROR_MESSAGE);
 	}
 
 	public static void showNotification(String caption, String description,
-			int type) {
-		Window.Notification warnNotif = new Window.Notification(caption,
-				description, type);
+			Type type) {
+		Notification warnNotif = new Notification(caption, description, type);
+		warnNotif.setHtmlContentAllowed(true);
 		warnNotif.setDelayMsec(3000);
-		AppContext.getApplication().getMainWindow().showNotification(warnNotif);
+
+		if (Page.getCurrent() != null) {
+			warnNotif.show(Page.getCurrent());
+		} else {
+			warnNotif.show(DesktopApplication.getInstance().getPage());
+		}
+
 	}
 
 	public static void showGotoLastRecordNotification() {
@@ -46,7 +69,7 @@ public class NotificationUtil {
 						.getMessage(GenericI18Enum.INFORMATION_WINDOW_TITLE),
 				LocalizationHelper
 						.getMessage(GenericI18Enum.INFORMATION_GOTO_LAST_RECORD),
-				Window.Notification.TYPE_WARNING_MESSAGE);
+				Type.HUMANIZED_MESSAGE);
 	}
 
 	public static void showGotoFirstRecordNotification() {
@@ -55,7 +78,7 @@ public class NotificationUtil {
 						.getMessage(GenericI18Enum.INFORMATION_WINDOW_TITLE),
 				LocalizationHelper
 						.getMessage(GenericI18Enum.INFORMATION_GOTO_FIRST_RECORD),
-				Window.Notification.TYPE_HUMANIZED_MESSAGE);
+				Type.HUMANIZED_MESSAGE);
 	}
 
 	public static void showRecordNotExistNotification() {
@@ -64,6 +87,14 @@ public class NotificationUtil {
 						.getMessage(GenericI18Enum.INFORMATION_WINDOW_TITLE),
 				LocalizationHelper
 						.getMessage(GenericI18Enum.INFORMATION_RECORD_IS_NOT_EXISTED_MESSAGE),
-				Window.Notification.TYPE_HUMANIZED_MESSAGE);
+				Type.HUMANIZED_MESSAGE);
+	}
+
+	public static void showMessagePermissionAlert() {
+		showNotification(
+				LocalizationHelper
+						.getMessage(GenericI18Enum.WARNING_WINDOW_TITLE),
+				"Sorry! You do not have permission to do this task.",
+				Type.WARNING_MESSAGE);
 	}
 }

@@ -16,14 +16,14 @@
  */
 package com.esofthead.mycollab.community.view;
 
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
-public class NotPresentedView extends AbstractView {
+public class NotPresentedView extends AbstractPageView {
 	private static final long serialVersionUID = 1L;
 
 	public NotPresentedView() {

@@ -14,10 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.module.project.view.settings;
 
 import org.vaadin.dialogs.ConfirmDialog;
@@ -32,7 +29,6 @@ import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectMemberStatusConstants;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
-import com.esofthead.mycollab.module.project.domain.ProjectMember;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectMemberSearchCriteria;
@@ -40,20 +36,20 @@ import com.esofthead.mycollab.module.project.events.ProjectMemberEvent;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.DefaultPreviewFormHandler;
-import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
+import com.esofthead.mycollab.vaadin.ui.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
-import com.esofthead.mycollab.vaadin.ui.MessageBox;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
-import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.Window;
+import com.vaadin.ui.UI;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class ProjectMemberReadPresenter extends
 		AbstractPresenter<ProjectMemberReadView> {
@@ -61,23 +57,23 @@ public class ProjectMemberReadPresenter extends
 
 	public ProjectMemberReadPresenter() {
 		super(ProjectMemberReadView.class);
-		bind();
 	}
 
-	private void bind() {
+	@Override
+	protected void postInitView() {
 		view.getPreviewFormHandlers().addFormHandler(
-				new DefaultPreviewFormHandler<ProjectMember>() {
+				new DefaultPreviewFormHandler<SimpleProjectMember>() {
 					@Override
-					public void onEdit(ProjectMember data) {
+					public void onEdit(SimpleProjectMember data) {
 						EventBus.getInstance().fireEvent(
 								new ProjectMemberEvent.GotoEdit(this, data));
 					}
 
 					@Override
-					public void onDelete(final ProjectMember data) {
+					public void onDelete(final SimpleProjectMember data) {
 
 						ConfirmDialogExt.show(
-								view.getWindow(),
+								UI.getCurrent(),
 								LocalizationHelper.getMessage(
 										GenericI18Enum.DELETE_DIALOG_TITLE,
 										SiteConfiguration.getSiteName()),
@@ -109,8 +105,9 @@ public class ProjectMemberReadPresenter extends
 					}
 
 					@Override
-					public void onClone(ProjectMember data) {
-						ProjectMember cloneData = (ProjectMember) data.copy();
+					public void onClone(SimpleProjectMember data) {
+						SimpleProjectMember cloneData = (SimpleProjectMember) data
+								.copy();
 						cloneData.setId(null);
 						EventBus.getInstance()
 								.fireEvent(
@@ -125,7 +122,7 @@ public class ProjectMemberReadPresenter extends
 					}
 
 					@Override
-					public void gotoNext(ProjectMember data) {
+					public void gotoNext(SimpleProjectMember data) {
 						ProjectMemberService projectMemberService = ApplicationContextUtil
 								.getSpringBean(ProjectMemberService.class);
 						ProjectMemberSearchCriteria criteria = new ProjectMemberSearchCriteria();
@@ -153,7 +150,7 @@ public class ProjectMemberReadPresenter extends
 					}
 
 					@Override
-					public void gotoPrevious(ProjectMember data) {
+					public void gotoPrevious(SimpleProjectMember data) {
 						ProjectMemberService projectMemberService = ApplicationContextUtil
 								.getSpringBean(ProjectMemberService.class);
 						ProjectMemberSearchCriteria criteria = new ProjectMemberSearchCriteria();
@@ -181,8 +178,16 @@ public class ProjectMemberReadPresenter extends
 
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
+		boolean isCurrentUserAccess = false;
+
+		if (data.getParams() instanceof String) {
+			if (AppContext.getUsername().equals(data.getParams())) {
+				isCurrentUserAccess = true;
+			}
+		}
 		if (CurrentProjectVariables
-				.canRead(ProjectRolePermissionCollections.USERS)) {
+				.canRead(ProjectRolePermissionCollections.USERS)
+				|| isCurrentUserAccess) {
 			ProjectMemberService prjMemberService = ApplicationContextUtil
 					.getSpringBean(ProjectMemberService.class);
 			SimpleProjectMember prjMember = null;
@@ -209,7 +214,7 @@ public class ProjectMemberReadPresenter extends
 				NotificationUtil.showRecordNotExistNotification();
 			}
 		} else {
-			MessageBox.showMessagePermissionAlert();
+			NotificationUtil.showMessagePermissionAlert();
 		}
 	}
 }

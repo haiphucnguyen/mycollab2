@@ -20,21 +20,17 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import org.apache.commons.beanutils.BeanUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.vaadin.addon.customfield.CustomField;
 import org.vaadin.easyuploads.MultiFileUploadExt;
 
 import com.esofthead.mycollab.core.utils.StringUtils;
-import com.esofthead.mycollab.web.AppContext;
-import com.vaadin.data.Item;
-import com.vaadin.data.util.BeanItem;
+import com.esofthead.mycollab.vaadin.AppContext;
+import com.vaadin.server.Resource;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.DefaultFieldFactory;
+import com.vaadin.ui.CustomField;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
@@ -43,60 +39,23 @@ import com.vaadin.ui.VerticalLayout;
 
 /**
  * 
- * @author haiphucnguyen
- *
+ * @author MyCollab Ltd.
+ * @since 2.0
  */
-public class DefaultFormViewFieldFactory extends DefaultFieldFactory {
-	private static Logger log = LoggerFactory
-			.getLogger(DefaultFormViewFieldFactory.class);
-
-	private static final long serialVersionUID = 1L;
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public Field createField(final Item item, final Object propertyId,
-			final com.vaadin.ui.Component uiContext) {
-
-		Field field = onCreateField(item, propertyId, uiContext);
-		if (field == null) {
-			final Object bean = ((BeanItem<Object>) item).getBean();
-
-			try {
-				final String propertyValue = BeanUtils.getProperty(bean,
-						(String) propertyId);
-				field = new FormViewField(propertyValue);
-			} catch (final Exception e) {
-				log.error("Error while get field value", e);
-				field = new FormViewField("Error");
-			}
-		}
-
-		return field;
-	}
-
-	protected Field onCreateField(final Item item, final Object propertyId,
-			final com.vaadin.ui.Component uiContext) {
-		return null;
-	}
+public class DefaultFormViewFieldFactory {
 
 	public static interface AttachmentUploadField extends Field {
-
 		void saveContentsToRepo(String attachmentPath);
 	}
 
 	public static class FormAttachmentUploadField extends CustomField implements
 			AttachmentUploadField {
 		private static final long serialVersionUID = 1L;
-		private final MultiFileUploadExt uploadExt;
-		private final AttachmentPanel attachmentPanel;
+		private MultiFileUploadExt uploadExt;
+		private AttachmentPanel attachmentPanel;
 
 		public FormAttachmentUploadField() {
-			final VerticalLayout layout = new VerticalLayout();
 			attachmentPanel = new AttachmentPanel();
-			uploadExt = new MultiFileUploadExt(attachmentPanel);
-			layout.addComponent(attachmentPanel);
-			layout.addComponent(uploadExt);
-			setCompositionRoot(layout);
 		}
 
 		public void getAttachments(String attachmentPath) {
@@ -112,35 +71,47 @@ public class DefaultFormViewFieldFactory extends DefaultFieldFactory {
 		public void saveContentsToRepo(String attachmentPath) {
 			attachmentPanel.saveContentsToRepo(attachmentPath);
 		}
+
+		@Override
+		protected Component initContent() {
+			final VerticalLayout layout = new VerticalLayout();
+			uploadExt = new MultiFileUploadExt(attachmentPanel);
+			layout.addComponent(attachmentPanel);
+			layout.addComponent(uploadExt);
+			return layout;
+		}
 	}
 
 	public static class FormContainerField extends CustomField {
 
 		private static final long serialVersionUID = 1L;
 
+		private ComponentContainer container;
+
 		public FormContainerField(final ComponentContainer container) {
-			setCompositionRoot(container);
+			this.container = container;
 		}
 
 		@Override
 		public Class<?> getType() {
 			return Object.class;
 		}
+
+		@Override
+		protected Component initContent() {
+			return container;
+		}
 	}
 
 	public static class FormContainerHorizontalViewField extends CustomField {
 		private static final long serialVersionUID = 1L;
-		private final HorizontalLayout layout;
+
+		private HorizontalLayout layout;
 
 		public FormContainerHorizontalViewField() {
-			this(true);
-		}
-
-		public FormContainerHorizontalViewField(boolean spacing) {
 			layout = new HorizontalLayout();
 			layout.setWidth("100%");
-			layout.setSpacing(spacing);
-			setCompositionRoot(layout);
+			layout.setSpacing(true);
 		}
 
 		public void addComponentField(final Component component) {
@@ -155,19 +126,39 @@ public class DefaultFormViewFieldFactory extends DefaultFieldFactory {
 		public Class<?> getType() {
 			return Object.class;
 		}
+
+		@Override
+		protected Component initContent() {
+			return layout;
+		}
 	}
 
-	public static class DateFieldWithUserTimeZone extends CustomField {
+	public static class DateFieldWithUserTimeZone extends CustomField<String> {
 		private static final long serialVersionUID = 1L;
+
 		private static String DATE_FORMAT = "MM/dd/yyyy";
 		private static String DATETIME_FORMAT = "MM/dd/yyyy HH:mm";
 		private SimpleDateFormat simpleDateTimeFormat = new SimpleDateFormat(
 				DATE_FORMAT);
 		private Calendar calendar = Calendar.getInstance();
 
+		private Date date;
+		private String dateformat;
+
 		public DateFieldWithUserTimeZone(final Date date, String dateformat) {
+			this.date = date;
+			this.dateformat = dateformat;
+		}
+
+		@Override
+		public Class<String> getType() {
+			return String.class;
+		}
+
+		@Override
+		protected Component initContent() {
 			if (date == null) {
-				this.setCompositionRoot(new Label());
+				return new Label();
 			} else {
 				if (dateformat.equals("DATETIME_FIELD")) {
 					simpleDateTimeFormat = new SimpleDateFormat(DATETIME_FORMAT);
@@ -185,25 +176,19 @@ public class DefaultFormViewFieldFactory extends DefaultFieldFactory {
 				label.setValue(timeStr);
 				HorizontalLayout layout = new HorizontalLayout();
 				layout.addComponent(label);
-				this.setCompositionRoot(layout);
+				return layout;
 			}
-		}
-
-		@Override
-		public Class<String> getType() {
-			return String.class;
 		}
 	}
 
-	public static class FormContainerViewField extends CustomField {
+	public static class FormContainerViewField extends CustomField<Object> {
 		private static final long serialVersionUID = 1L;
-		private final CssLayout layout;
+		private CssLayout layout;
 
 		public FormContainerViewField() {
 			layout = new CssLayout();
 			layout.setWidth("100%");
-			setCompositionRoot(layout);
-			setStyleName(UIConstants.FORM_CONTAINER_VIEW);
+			layout.setStyleName(UIConstants.FORM_CONTAINER_VIEW);
 		}
 
 		public void addComponentField(final Component component) {
@@ -214,179 +199,261 @@ public class DefaultFormViewFieldFactory extends DefaultFieldFactory {
 		public Class<?> getType() {
 			return Object.class;
 		}
+
+		@Override
+		protected Component initContent() {
+			return layout;
+		}
 	}
 
 	public static class FormDateViewField extends CustomField {
 		private static final long serialVersionUID = 1L;
 
+		private Date date;
+
 		public FormDateViewField(final Date date) {
-			final Label l = new Label();
-			l.setWidth("100%");
-			if (date == null) {
-				l.setValue("&nbsp;");
-				l.setContentMode(Label.CONTENT_XHTML);
-			} else {
-				l.setValue(AppContext.formatDate(date));
-			}
-			setCompositionRoot(l);
+			this.date = date;
 		}
 
 		@Override
 		public Class<?> getType() {
 			return Object.class;
 		}
+
+		@Override
+		protected Component initContent() {
+			final Label l = new Label();
+			l.setWidth("100%");
+			if (date == null) {
+				l.setValue("&nbsp;");
+				l.setContentMode(ContentMode.HTML);
+			} else {
+				l.setValue(AppContext.formatDate(date));
+			}
+			return l;
+		}
 	}
 
-	public static class FormEmailLinkViewField extends CustomField {
+	public static class FormEmailLinkViewField extends CustomField<String> {
 
 		private static final long serialVersionUID = 1L;
+
+		private String email;
 
 		public FormEmailLinkViewField(final String email) {
-			final EmailLink l = new EmailLink(email);
-			l.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
-			setCompositionRoot(l);
+			this.email = email;
 		}
 
 		@Override
-		public Class<?> getType() {
+		public Class<String> getType() {
 			return String.class;
+		}
+
+		@Override
+		protected Component initContent() {
+			final EmailLink emailLink = new EmailLink(email);
+			emailLink.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
+			return emailLink;
 		}
 	}
 
-	public static class FormLinkViewField extends CustomField {
+	public static class FormLinkViewField extends CustomField<String> {
 
 		private static final long serialVersionUID = 1L;
 
-		public FormLinkViewField(final String value,
-				final Button.ClickListener listener) {
-			if (value != null && (!value.equals(""))) {
-				final ButtonLink l = new ButtonLink(value, listener);
-				l.setWidth("100%");
-				setCompositionRoot(l);
-			} else {
-				final Label l = new Label("&nbsp;", Label.CONTENT_XHTML);
-				l.setWidth("100%");
-				setCompositionRoot(l);
-			}
+		private String value;
+		private Resource iconResource;
+		private Button.ClickListener listener;
+
+		public FormLinkViewField(String value, Button.ClickListener listener) {
+			this(value, listener, null);
+		}
+
+		public FormLinkViewField(String value, Button.ClickListener listener,
+				Resource iconResource) {
+			this.value = value;
+			this.listener = listener;
+			this.iconResource = iconResource;
 		}
 
 		@Override
-		public Class<?> getType() {
+		public Class<String> getType() {
 			return String.class;
+		}
+
+		@Override
+		protected Component initContent() {
+			if (value != null && (!value.equals(""))) {
+				final ButtonLink l = new ButtonLink(value, listener);
+				if (iconResource != null) {
+					l.setIcon(iconResource);
+				}
+				l.setWidth("100%");
+				return l;
+			} else {
+				final Label l = new Label("&nbsp;", ContentMode.HTML);
+				l.setWidth("100%");
+				return l;
+			}
 		}
 	}
 
 	public static class FormDetectAndDisplayUrlViewField extends CustomField {
-
 		private static final long serialVersionUID = 1L;
 
+		private String url;
+
 		public FormDetectAndDisplayUrlViewField(String url) {
-			if (url == null || url.trim().equals("")) {
-				Label lbl = new Label("&nbsp;");
-				lbl.setContentMode(Label.CONTENT_XHTML);
-				lbl.setWidth("100%");
-				setCompositionRoot(lbl);
-			} else {
-				final Label link = new Label(StringUtils.formatExtraLink(url),
-						Label.CONTENT_XHTML);
-				setCompositionRoot(link);
-			}
+			this.url = url;
 		}
 
 		@Override
 		public Class<?> getType() {
 			return String.class;
 		}
+
+		@Override
+		protected Component initContent() {
+			if (url == null || url.trim().equals("")) {
+				Label lbl = new Label("&nbsp;");
+				lbl.setContentMode(ContentMode.HTML);
+				lbl.setWidth("100%");
+				return lbl;
+			} else {
+				final Label link = new Label(StringUtils.formatExtraLink(url),
+						ContentMode.HTML);
+				return link;
+			}
+		}
 	}
 
-	public static class FormUrlLinkViewField extends CustomField {
+	public static class FormUrlLinkViewField extends CustomField<String> {
 
 		private static final long serialVersionUID = 1L;
 
+		private String url;
+
 		public FormUrlLinkViewField(String url) {
+			this.url = url;
+		}
+
+		@Override
+		public Class<String> getType() {
+			return String.class;
+		}
+
+		@Override
+		protected Component initContent() {
 			if (url == null || url.trim().equals("")) {
 				Label lbl = new Label("&nbsp;");
-				lbl.setContentMode(Label.CONTENT_XHTML);
+				lbl.setContentMode(ContentMode.HTML);
 				lbl.setWidth("100%");
-				setCompositionRoot(lbl);
+				return lbl;
 			} else {
 				final Link link = new UrlLink(url);
 				link.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
-				setCompositionRoot(link);
+				return link;
 			}
-		}
-
-		@Override
-		public Class<?> getType() {
-			return String.class;
 		}
 	}
 
-	public static class FormUrlSocialNetworkLinkViewField extends CustomField {
+	public static class FormUrlSocialNetworkLinkViewField extends
+			CustomField<String> {
 
 		private static final long serialVersionUID = 1L;
 
+		private String caption;
+		private String linkAccount;
+
 		public FormUrlSocialNetworkLinkViewField(String caption,
 				String linkAccount) {
+			this.caption = caption;
+			this.linkAccount = linkAccount;
+		}
+
+		@Override
+		public Class<String> getType() {
+			return String.class;
+		}
+
+		@Override
+		protected Component initContent() {
 			if (caption == null || caption.trim().equals("")) {
 				Label lbl = new Label("&nbsp;");
-				lbl.setContentMode(Label.CONTENT_XHTML);
+				lbl.setContentMode(ContentMode.HTML);
 				lbl.setWidth("100%");
-				setCompositionRoot(lbl);
+				return lbl;
 			} else {
 				linkAccount = (linkAccount == null) ? "" : linkAccount;
 				final Link link = new SocialNetworkLink(caption, linkAccount);
 				link.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
-				setCompositionRoot(link);
+				return link;
 			}
-		}
-
-		@Override
-		public Class<?> getType() {
-			return String.class;
 		}
 	}
 
-	public static class FormViewField extends CustomField {
+	public static class FormViewField extends CustomField<String> {
+
+		private String value;
+		private ContentMode contentMode;
 
 		private static final long serialVersionUID = 1L;
 
 		public FormViewField(final String value) {
-			this(value, Label.CONTENT_DEFAULT);
+			this(value, ContentMode.TEXT);
 		}
 
-		public FormViewField(final String value, final int contentMode) {
-			final Label l = new Label();
-			l.setWidth("100%");
-			l.setContentMode(contentMode);
-			setCompositionRoot(l);
-			if (value != null && (!value.equals(""))) {
-				l.setValue(value);
-			} else {
-				l.setValue("&nbsp;");
-				l.setContentMode(Label.CONTENT_XHTML);
-			}
+		public FormViewField(final String value, final ContentMode contentMode) {
+			this.value = value;
+			this.contentMode = contentMode;
 		}
 
 		@Override
-		public Class<?> getType() {
+		public Class<String> getType() {
 			return String.class;
+		}
+
+		@Override
+		protected Component initContent() {
+			final Label label = new Label();
+			label.setWidth("100%");
+			label.setContentMode(contentMode);
+
+			if (value != null && (!value.equals(""))) {
+				label.setValue(value);
+			} else {
+				label.setValue("");
+			}
+
+			return label;
 		}
 	}
 
 	public static class UserLinkViewField extends CustomField {
 		private static final long serialVersionUID = 1L;
 
-		public UserLinkViewField(final String username, String userAvatarId,
+		private String username;
+		private String userAvatarId;
+		private String fullName;
+
+		public UserLinkViewField(String username, String userAvatarId,
 				final String fullName) {
-			final UserLink l = new UserLink(username, userAvatarId, fullName);
-			l.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
-			setCompositionRoot(l);
+			this.username = username;
+			this.userAvatarId = userAvatarId;
+			this.fullName = fullName;
 		}
 
 		@Override
 		public Class<?> getType() {
 			return Object.class;
+		}
+
+		@Override
+		protected Component initContent() {
+			final UserLink userLink = new UserLink(username, userAvatarId,
+					fullName);
+			userLink.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
+			return userLink;
 		}
 	}
 }

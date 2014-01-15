@@ -14,10 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.module.project.view.bug;
 
 import java.util.List;
@@ -29,7 +26,7 @@ import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.Depot;
-import com.esofthead.mycollab.vaadin.ui.ProgressBar;
+import com.esofthead.mycollab.vaadin.ui.ProgressBarIndicator;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.vaadin.ui.Button;
@@ -38,7 +35,8 @@ import com.vaadin.ui.VerticalLayout;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class UnresolvedBugsByAssigneeWidget extends Depot {
 	private static final long serialVersionUID = 1L;
@@ -53,6 +51,7 @@ public class UnresolvedBugsByAssigneeWidget extends Depot {
 		this.componentLayout = componentLayout;
 		this.setContentBorder(true);
 		((VerticalLayout) this.bodyContent).setSpacing(true);
+		((VerticalLayout) this.bodyContent).setMargin(true);
 	}
 
 	public void setSearchCriteria(final BugSearchCriteria searchCriteria) {
@@ -75,8 +74,8 @@ public class UnresolvedBugsByAssigneeWidget extends Depot {
 				final BugAssigneeButton userLbl = new BugAssigneeButton(
 						assignUser, item.getExtraValue(), assignUserFullName);
 				assigneeLayout.addComponent(userLbl);
-				final ProgressBar indicator = new ProgressBar(totalCount,
-						totalCount - item.getValue(), false);
+				final ProgressBarIndicator indicator = new ProgressBarIndicator(
+						totalCount, totalCount - item.getValue(), false);
 				indicator.setWidth("100%");
 				assigneeLayout.addComponent(indicator);
 				assigneeLayout.setExpandRatio(indicator, 1.0f);

@@ -29,6 +29,12 @@ import com.esofthead.mycollab.module.project.domain.ProjectNotificationSetting;
 import com.esofthead.mycollab.module.project.domain.ProjectNotificationSettingExample;
 import com.esofthead.mycollab.module.project.service.ProjectNotificationSettingService;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @Service
 public class ProjectNotificationSettingServiceImpl extends
 		DefaultCrudService<Integer, ProjectNotificationSetting> implements

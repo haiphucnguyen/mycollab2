@@ -32,6 +32,12 @@ import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.TextField;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @SuppressWarnings("serial")
 public class BugSimpleSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 
@@ -59,7 +65,7 @@ public class BugSimpleSearchPanel extends GenericSearchPanel<BugSearchCriteria> 
 
 		Button searchBtn = new Button("Search");
 		searchBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-		searchBtn.addListener(new Button.ClickListener() {
+		searchBtn.addClickListener(new Button.ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				searchCriteria = new BugSearchCriteria();
@@ -86,7 +92,7 @@ public class BugSimpleSearchPanel extends GenericSearchPanel<BugSearchCriteria> 
 
 		Button clearBtn = new Button("Clear");
 		clearBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-		clearBtn.addListener(new Button.ClickListener() {
+		clearBtn.addClickListener(new Button.ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				textValueField.setValue("");

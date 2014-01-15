@@ -14,10 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.module.project.view.task;
 
 import org.vaadin.dialogs.ConfirmDialog;
@@ -39,20 +36,20 @@ import com.esofthead.mycollab.module.project.events.TaskListEvent;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.DefaultPreviewFormHandler;
-import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
+import com.esofthead.mycollab.vaadin.ui.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
-import com.esofthead.mycollab.vaadin.ui.MessageBox;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
-import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.Window;
+import com.vaadin.ui.UI;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class TaskReadPresenter extends AbstractPresenter<TaskReadView> {
 
@@ -60,29 +57,28 @@ public class TaskReadPresenter extends AbstractPresenter<TaskReadView> {
 
 	public TaskReadPresenter() {
 		super(TaskReadView.class);
-		this.bind();
 	}
 
-	private void bind() {
+	@Override
+	protected void postInitView() {
 		this.view.getPreviewFormHandlers().addFormHandler(
-				new DefaultPreviewFormHandler<Task>() {
+				new DefaultPreviewFormHandler<SimpleTask>() {
 
 					@Override
-					public void onAssign(final Task data) {
-						AppContext.getApplication().getMainWindow()
-								.addWindow(new AssignTaskWindow(data));
+					public void onAssign(final SimpleTask data) {
+						UI.getCurrent().addWindow(new AssignTaskWindow(data));
 					}
 
 					@Override
-					public void onEdit(final Task data) {
+					public void onEdit(final SimpleTask data) {
 						EventBus.getInstance().fireEvent(
 								new TaskEvent.GotoEdit(this, data));
 					}
 
 					@Override
-					public void onDelete(final Task data) {
+					public void onDelete(final SimpleTask data) {
 						ConfirmDialogExt.show(
-								AppContext.getApplication().getMainWindow(),
+								UI.getCurrent(),
 								LocalizationHelper.getMessage(
 										GenericI18Enum.DELETE_DIALOG_TITLE,
 										SiteConfiguration.getSiteName()),
@@ -115,7 +111,7 @@ public class TaskReadPresenter extends AbstractPresenter<TaskReadView> {
 					}
 
 					@Override
-					public void onClone(final Task data) {
+					public void onClone(final SimpleTask data) {
 						final Task cloneData = (Task) data.copy();
 						cloneData.setId(null);
 						EventBus.getInstance().fireEvent(
@@ -131,7 +127,7 @@ public class TaskReadPresenter extends AbstractPresenter<TaskReadView> {
 					}
 
 					@Override
-					public void gotoNext(final Task data) {
+					public void gotoNext(final SimpleTask data) {
 						final ProjectTaskService taskService = ApplicationContextUtil
 								.getSpringBean(ProjectTaskService.class);
 
@@ -154,7 +150,7 @@ public class TaskReadPresenter extends AbstractPresenter<TaskReadView> {
 					}
 
 					@Override
-					public void gotoPrevious(final Task data) {
+					public void gotoPrevious(final SimpleTask data) {
 						final ProjectTaskService taskService = ApplicationContextUtil
 								.getSpringBean(ProjectTaskService.class);
 
@@ -191,14 +187,20 @@ public class TaskReadPresenter extends AbstractPresenter<TaskReadView> {
 						.getSpringBean(ProjectTaskService.class);
 				final SimpleTask task = taskService.findById(
 						(Integer) data.getParams(), AppContext.getAccountId());
-				this.view.previewItem(task);
 
-				final ProjectBreadcrumb breadCrumb = ViewManager
-						.getView(ProjectBreadcrumb.class);
-				breadCrumb.gotoTaskRead(task);
+				if (task != null) {
+					this.view.previewItem(task);
+
+					final ProjectBreadcrumb breadCrumb = ViewManager
+							.getView(ProjectBreadcrumb.class);
+					breadCrumb.gotoTaskRead(task);
+				} else {
+					NotificationUtil.showRecordNotExistNotification();
+					return;
+				}
 			}
 		} else {
-			MessageBox.showMessagePermissionAlert();
+			NotificationUtil.showMessagePermissionAlert();
 		}
 	}
 }

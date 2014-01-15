@@ -1,8 +1,14 @@
 package com.esofthead.mycollab.premium.module.project.view.standup;
 
 import com.esofthead.mycollab.module.project.domain.criteria.StandupReportSearchCriteria;
-import com.esofthead.mycollab.vaadin.mvp.View;
+import com.esofthead.mycollab.vaadin.mvp.PageView;
 
-public interface StandupListView extends View {
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
+public interface StandupListView extends PageView {
 	void setSearchCriteria(StandupReportSearchCriteria searchCriteria);
 }

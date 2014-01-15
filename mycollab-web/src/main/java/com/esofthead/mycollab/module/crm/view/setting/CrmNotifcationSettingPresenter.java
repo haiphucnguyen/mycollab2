@@ -23,9 +23,9 @@ import com.esofthead.mycollab.module.crm.service.CrmNotificationSettingService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
 import com.esofthead.mycollab.module.crm.view.CrmToolbar;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
-import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
 public class CrmNotifcationSettingPresenter extends
@@ -39,7 +39,7 @@ public class CrmNotifcationSettingPresenter extends
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		CrmSettingContainer settingContainer = (CrmSettingContainer) container;
-		settingContainer.gotoSubView("Notification");
+		settingContainer.gotoSubView("Notifications");
 
 		CrmToolbar crmToolbar = ViewManager.getView(CrmToolbar.class);
 		crmToolbar.gotoItem(LocalizationHelper

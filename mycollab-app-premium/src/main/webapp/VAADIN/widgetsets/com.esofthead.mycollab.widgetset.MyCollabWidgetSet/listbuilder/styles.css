@@ -35,12 +35,6 @@
 	color: #c9ccce;
 }
 
-/* Twincolselect needs a little tweak in IE6 */
-.v-ie6 .v-listbuilder-buttons .v-button {
-	padding-left: 6px;
-	padding-right: 6px;
-}
-
 /* Custom Button styles */
 .v-listbuilder-buttons {
 	float: left;
@@ -82,7 +76,7 @@
 .v-select-error .v-listbuilder-options {
 	background: #ffaaaa;
 }
-*/
+ */
 
 /* Required styles disabled by default */
 /*
@@ -90,4 +84,4 @@
 .v-select-required .v-listbuilder-options {
 	background: #ffaaaa;
 }
-*/
+ */

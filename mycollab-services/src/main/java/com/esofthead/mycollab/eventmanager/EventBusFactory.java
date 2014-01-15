@@ -18,11 +18,10 @@ package com.esofthead.mycollab.eventmanager;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  * 
  */
 public interface EventBusFactory {
 	EventBus getInstance();
-
-	EventBus getInstanceSession(String sessionId);
 }

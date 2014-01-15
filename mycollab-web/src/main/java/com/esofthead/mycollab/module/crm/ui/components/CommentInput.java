@@ -14,10 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.module.crm.ui.components;
 
 import java.util.GregorianCalendar;
@@ -30,9 +27,9 @@ import com.esofthead.mycollab.common.service.CommentService;
 import com.esofthead.mycollab.common.ui.components.ReloadableComponent;
 import com.esofthead.mycollab.module.file.AttachmentUtils;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.AttachmentPanel;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -43,7 +40,8 @@ import com.vaadin.ui.VerticalLayout;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class CommentInput extends VerticalLayout {
 	private static final long serialVersionUID = 1L;
@@ -74,6 +72,7 @@ public class CommentInput extends VerticalLayout {
 
 		commentArea = new RichTextArea();
 		commentArea.setWidth("100%");
+		commentArea.setHeight("200px");
 
 		final AttachmentPanel attachments = new AttachmentPanel();
 

@@ -22,23 +22,30 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.eventmanager.ApplicationEvent;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
+import com.esofthead.mycollab.module.crm.domain.Account;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.ui.FieldSelection;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
-import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class AccountSelectionWindow extends Window {
 
 	private static final long serialVersionUID = 1L;
 	private AccountSearchCriteria searchCriteria;
 	private AccountTableDisplay tableItem;
-	private FieldSelection fieldSelection;
+	private FieldSelection<Account> fieldSelection;
 
-	public AccountSelectionWindow(FieldSelection fieldSelection) {
+	public AccountSelectionWindow(FieldSelection<Account> fieldSelection) {
 		super("Account Name Lookup");
 		this.setWidth("900px");
 		this.fieldSelection = fieldSelection;
@@ -93,8 +100,7 @@ public class AccountSelectionWindow extends Window {
 						SimpleAccount account = (SimpleAccount) event.getData();
 						if ("accountname".equals(event.getFieldName())) {
 							fieldSelection.fireValueChange(account);
-							AccountSelectionWindow.this.getParent()
-									.removeWindow(AccountSelectionWindow.this);
+							AccountSelectionWindow.this.close();
 						}
 					}
 				});

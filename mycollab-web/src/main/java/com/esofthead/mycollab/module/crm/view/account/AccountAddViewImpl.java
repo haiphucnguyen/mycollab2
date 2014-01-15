@@ -16,87 +16,60 @@
  */
 package com.esofthead.mycollab.module.crm.view.account;
 
+import com.esofthead.mycollab.form.view.DynaFormLayout;
+import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
-import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
-import com.esofthead.mycollab.vaadin.mvp.BeanItemCustomExt;
+import com.esofthead.mycollab.module.crm.ui.components.AbstractEditItemComp;
+import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
+import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
-import com.esofthead.mycollab.vaadin.ui.ViewComponent;
-import com.vaadin.data.Item;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Layout;
+import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
+import com.esofthead.mycollab.web.MyCollabResource;
+import com.vaadin.server.Resource;
+import com.vaadin.ui.ComponentContainer;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
 @ViewComponent
-public class AccountAddViewImpl extends AbstractView implements AccountAddView {
+public class AccountAddViewImpl extends AbstractEditItemComp<SimpleAccount>
+		implements AccountAddView {
 	private static final long serialVersionUID = 1L;
-	private final EditForm editForm;
 
-	private SimpleAccount account;
-
-	public AccountAddViewImpl() {
-		super();
-		this.editForm = new EditForm();
-		this.addComponent(this.editForm);
+	@Override
+	protected String initFormTitle() {
+		return (beanItem.getId() == null) ? "Create Account" : beanItem
+				.getAccountname();
 	}
 
 	@Override
-	public void editItem(final SimpleAccount account) {
-		this.account = account;
-		this.editForm.setItemDataSource(new BeanItemCustomExt<SimpleAccount>(
-				account));
+	protected Resource initFormIconResource() {
+		return MyCollabResource.newResource("icons/22/crm/account.png");
 	}
 
 	@Override
-	public HasEditFormHandlers<SimpleAccount> getEditFormHandlers() {
-		return this.editForm;
+	protected ComponentContainer createButtonControls() {
+		return new EditFormControlsGenerator<SimpleAccount>(editForm)
+				.createButtonControls();
 	}
 
-	private class EditForm extends AdvancedEditBeanForm<SimpleAccount> {
+	@Override
+	protected AdvancedEditBeanForm<SimpleAccount> initPreviewForm() {
+		return new AdvancedEditBeanForm<SimpleAccount>();
+	}
 
-		class FormLayoutFactory extends AccountFormLayoutFactory {
+	@Override
+	protected IFormLayoutFactory initFormLayoutFactory() {
+		return new DynaFormLayout(CrmTypeConstants.ACCOUNT,
+				AccountDefaultDynaFormLayoutFactory.getForm());
+	}
 
-			private static final long serialVersionUID = 1L;
-
-			public FormLayoutFactory() {
-				super(
-						(AccountAddViewImpl.this.account.getId() == null) ? "Create Account"
-								: AccountAddViewImpl.this.account
-										.getAccountname());
-			}
-
-			@Override
-			protected Layout createBottomPanel() {
-				return this.createButtonControls();
-			}
-
-			private Layout createButtonControls() {
-				final HorizontalLayout controlPanel = new HorizontalLayout();
-				final Layout controlButtons = (new EditFormControlsGenerator<SimpleAccount>(
-						EditForm.this)).createButtonControls();
-				controlButtons.setSizeUndefined();
-				controlPanel.addComponent(controlButtons);
-				controlPanel.setWidth("100%");
-				controlPanel.setComponentAlignment(controlButtons,
-						Alignment.MIDDLE_CENTER);
-				return controlPanel;
-			}
-
-			@Override
-			protected Layout createTopPanel() {
-				return this.createButtonControls();
-			}
-		}
-
-		private static final long serialVersionUID = 1L;
-
-		@Override
-		public void setItemDataSource(final Item newDataSource) {
-			this.setFormLayoutFactory(new FormLayoutFactory());
-			this.setFormFieldFactory(new AccountEditFormFieldFactory(
-					AccountAddViewImpl.this.account));
-			super.setItemDataSource(newDataSource);
-		}
+	@Override
+	protected AbstractBeanFieldGroupEditFieldFactory<SimpleAccount> initBeanFormFieldFactory() {
+		return new AccountEditFormFieldFactory<SimpleAccount>(editForm);
 	}
 }

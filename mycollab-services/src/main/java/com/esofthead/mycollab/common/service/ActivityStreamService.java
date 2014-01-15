@@ -22,6 +22,12 @@ import com.esofthead.mycollab.core.cache.CacheEvict;
 import com.esofthead.mycollab.core.cache.CacheKey;
 import com.esofthead.mycollab.core.persistence.service.IDefaultService;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public interface ActivityStreamService extends
 		IDefaultService<Integer, ActivityStream, ActivityStreamSearchCriteria> {
 

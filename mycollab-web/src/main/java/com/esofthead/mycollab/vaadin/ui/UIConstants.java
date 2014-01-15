@@ -16,6 +16,12 @@
  */
 package com.esofthead.mycollab.vaadin.ui;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class UIConstants {
 
     public static final String BORDER_BOX_2 = "border-box2";
@@ -25,7 +31,9 @@ public class UIConstants {
     public static final String DEFAULT_CONTROL_EXT_WIDTH = "350px";
     public static final String DEFAULT_2XCONTROL_WIDTH = "600px";
     public static final String DEFAULT_2XCONTROL_HEIGHT = "400px";
+    public static final String H2_STYLE2 = "h2-style2";
     public static final int TABLE_CONTROL_WIDTH = 22;
+    public static final int TABLE_ACTION_CONTROL_WIDTH = 40;
     public static final int TABLE_S_LABEL_WIDTH = 80;
     public static final int TABLE_M_LABEL_WIDTH = 120;
     public static final int TABLE_X_LABEL_WIDTH = 160;
@@ -74,4 +82,6 @@ public class UIConstants {
     public static final String PROJECT_SHORT_NAME = "project-shortname";
     public static final String WORD_WRAP = "wordWrap";
     public static final String WHITE_TABSHEET = "white-tabsheet";
+    public static final String TEXT_BLUE = "bluetxt";
+    public static final String LABEL_CHECKED = "has-checkmark";
 }

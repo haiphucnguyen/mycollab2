@@ -21,7 +21,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-import org.tepi.listbuilder.ListBuilder;
+import org.vaadin.tepi.listbuilder.ListBuilder;
 
 import com.esofthead.mycollab.common.domain.CustomViewStore;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
@@ -29,10 +29,11 @@ import com.esofthead.mycollab.common.service.CustomViewStoreService;
 import com.esofthead.mycollab.core.utils.JsonDeSerializer;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.util.BeanItemContainer;
-import com.vaadin.ui.AbstractSelect;
+import com.vaadin.server.Sizeable;
+import com.vaadin.ui.AbstractSelect.ItemCaptionMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -42,7 +43,8 @@ import com.vaadin.ui.Window;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 2.0
  * 
  */
 public abstract class CustomizedTableWindow extends Window {
@@ -51,40 +53,43 @@ public abstract class CustomizedTableWindow extends Window {
 	private final ListBuilder listBuilder;
 
 	private CustomViewStoreService customViewStoreService;
-	private AbstractPagedBeanTable tableItem;
+	private AbstractPagedBeanTable<?, ?> tableItem;
 
 	protected String viewId;
 
 	public CustomizedTableWindow(final String viewId,
-			final AbstractPagedBeanTable table) {
+			final AbstractPagedBeanTable<?, ?> table) {
 		super("Customize View");
 		this.viewId = viewId;
-		this.setWidth("800px");
+		this.addStyleName("customize-table-window");
+		this.setWidth("400px");
 		this.center();
 
 		this.tableItem = table;
 		customViewStoreService = ApplicationContextUtil
 				.getSpringBean(CustomViewStoreService.class);
 
-		final VerticalLayout body = new VerticalLayout();
-		body.setSpacing(true);
-		body.setSizeFull();
-		this.addComponent(body);
+		final VerticalLayout contentLayout = new VerticalLayout();
+		contentLayout.setSpacing(true);
+		contentLayout.setMargin(true);
+		this.setContent(contentLayout);
 
 		this.listBuilder = new ListBuilder();
 		this.listBuilder.setImmediate(true);
+		this.listBuilder.setColumns(0);
 		this.listBuilder.setLeftColumnCaption("Available Columns");
 		this.listBuilder.setRightColumnCaption("View Columns");
-		this.listBuilder.setWidth("100%");
+		this.listBuilder.setWidth(100, Sizeable.Unit.PERCENTAGE);
 
-		this.listBuilder
-				.setItemCaptionMode(AbstractSelect.ITEM_CAPTION_MODE_PROPERTY);
+		this.listBuilder.setItemCaptionMode(ItemCaptionMode.PROPERTY);
 		this.listBuilder.setItemCaptionPropertyId("desc");
 		final BeanItemContainer<TableViewField> container = new BeanItemContainer<TableViewField>(
 				TableViewField.class, this.getAvailableColumns());
 		this.listBuilder.setContainerDataSource(container);
 		this.setSelectedViewColumns();
-		body.addComponent(this.listBuilder);
+		contentLayout.addComponent(this.listBuilder);
+		contentLayout.setComponentAlignment(listBuilder,
+				Alignment.MIDDLE_CENTER);
 
 		Button restoreLink = new Button("Restore to default",
 				new Button.ClickListener() {
@@ -117,8 +122,9 @@ public abstract class CustomizedTableWindow extends Window {
 					}
 				});
 		restoreLink.setStyleName("link");
-		body.addComponent(restoreLink);
-		body.setComponentAlignment(restoreLink, Alignment.MIDDLE_RIGHT);
+		contentLayout.addComponent(restoreLink);
+		contentLayout
+				.setComponentAlignment(restoreLink, Alignment.MIDDLE_RIGHT);
 
 		final HorizontalLayout buttonControls = new HorizontalLayout();
 		buttonControls.setSpacing(true);
@@ -131,7 +137,7 @@ public abstract class CustomizedTableWindow extends Window {
 					public void buttonClick(final ClickEvent event) {
 						final List<TableViewField> selectedColumns = (List<TableViewField>) CustomizedTableWindow.this.listBuilder
 								.getValue();
-						table.setTableViewFieldCollection(selectedColumns);
+						table.setDisplayColumns(selectedColumns);
 						CustomizedTableWindow.this.close();
 
 						// Save custom table view def
@@ -162,8 +168,9 @@ public abstract class CustomizedTableWindow extends Window {
 		cancelBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		buttonControls.addComponent(cancelBtn);
 
-		body.addComponent(buttonControls);
-		body.setComponentAlignment(buttonControls, Alignment.MIDDLE_CENTER);
+		contentLayout.addComponent(buttonControls);
+		contentLayout.setComponentAlignment(buttonControls,
+				Alignment.MIDDLE_CENTER);
 	}
 
 	private void setSelectedViewColumns() {

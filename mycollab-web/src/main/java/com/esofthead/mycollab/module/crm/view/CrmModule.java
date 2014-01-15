@@ -18,19 +18,26 @@ package com.esofthead.mycollab.module.crm.view;
 
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.crm.events.CrmEvent;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ControllerRegistry;
 import com.esofthead.mycollab.vaadin.mvp.IModule;
-import com.esofthead.mycollab.vaadin.mvp.View;
+import com.esofthead.mycollab.vaadin.mvp.PageView;
+import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
-import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.CustomLayoutLoader;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.CustomLayout;
 import com.vaadin.ui.VerticalLayout;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @ViewComponent
-public class CrmModule extends AbstractView implements IModule {
+public class CrmModule extends AbstractPageView implements IModule {
 
 	private static final long serialVersionUID = 1L;
 
@@ -49,6 +56,8 @@ public class CrmModule extends AbstractView implements IModule {
 		container.addComponent(toolbar, "crmToolbar");
 
 		currentView = new VerticalLayout();
+		currentView.setMargin(new MarginInfo(true, false, false, false));
+		
 		container.addComponent(currentView, "currentView");
 		this.addComponent(container);
 		this.setComponentAlignment(container, Alignment.MIDDLE_CENTER);
@@ -58,7 +67,7 @@ public class CrmModule extends AbstractView implements IModule {
 		EventBus.getInstance().fireEvent(new CrmEvent.GotoHome(this, null));
 	}
 
-	public void addView(View view) {
+	public void addView(PageView view) {
 		currentView.removeAllComponents();
 		currentView.addComponent(view.getWidget());
 	}

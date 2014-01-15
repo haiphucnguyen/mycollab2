@@ -30,14 +30,13 @@ import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.crm.CrmLinkGenerator;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
-import com.esofthead.mycollab.module.crm.domain.CallWithBLOBs;
-import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.module.crm.domain.ContactOpportunity;
-import com.esofthead.mycollab.module.crm.domain.MeetingWithBLOBs;
-import com.esofthead.mycollab.module.crm.domain.Opportunity;
+import com.esofthead.mycollab.module.crm.domain.SimpleCall;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
+import com.esofthead.mycollab.module.crm.domain.SimpleActivity;
+import com.esofthead.mycollab.module.crm.domain.SimpleMeeting;
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
-import com.esofthead.mycollab.module.crm.domain.Task;
+import com.esofthead.mycollab.module.crm.domain.SimpleTask;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.ActivityEvent;
 import com.esofthead.mycollab.module.crm.events.ContactEvent;
@@ -49,38 +48,44 @@ import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
 import com.esofthead.mycollab.module.crm.view.CrmToolbar;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
-import com.esofthead.mycollab.vaadin.ui.MessageBox;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
-import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.UI;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class ContactReadPresenter extends CrmGenericPresenter<ContactReadView> {
 
 	private static final long serialVersionUID = 1L;
 
 	public ContactReadPresenter() {
 		super(ContactReadView.class);
-		bind();
 	}
 
-	private void bind() {
+	@Override
+	protected void postInitView() {
 		view.getPreviewFormHandlers().addFormHandler(
-				new DefaultPreviewFormHandler<Contact>() {
+				new DefaultPreviewFormHandler<SimpleContact>() {
 					@Override
-					public void onEdit(Contact data) {
+					public void onEdit(SimpleContact data) {
 						EventBus.getInstance().fireEvent(
 								new ContactEvent.GotoEdit(this, data));
 					}
 
 					@Override
-					public void onDelete(final Contact data) {
+					public void onDelete(final SimpleContact data) {
 
 						ConfirmDialogExt.show(
-								view.getWindow(),
+								UI.getCurrent(),
 								LocalizationHelper.getMessage(
 										GenericI18Enum.DELETE_DIALOG_TITLE,
 										SiteConfiguration.getSiteName()),
@@ -111,8 +116,8 @@ public class ContactReadPresenter extends CrmGenericPresenter<ContactReadView> {
 					}
 
 					@Override
-					public void onClone(Contact data) {
-						Contact cloneData = (Contact) data.copy();
+					public void onClone(SimpleContact data) {
+						SimpleContact cloneData = (SimpleContact) data.copy();
 						cloneData.setId(null);
 						EventBus.getInstance().fireEvent(
 								new ContactEvent.GotoEdit(this, cloneData));
@@ -125,7 +130,7 @@ public class ContactReadPresenter extends CrmGenericPresenter<ContactReadView> {
 					}
 
 					@Override
-					public void gotoNext(Contact data) {
+					public void gotoNext(SimpleContact data) {
 						ContactService contactService = ApplicationContextUtil
 								.getSpringBean(ContactService.class);
 						ContactSearchCriteria criteria = new ContactSearchCriteria();
@@ -145,7 +150,7 @@ public class ContactReadPresenter extends CrmGenericPresenter<ContactReadView> {
 					}
 
 					@Override
-					public void gotoPrevious(Contact data) {
+					public void gotoPrevious(SimpleContact data) {
 						ContactService contactService = ApplicationContextUtil
 								.getSpringBean(ContactService.class);
 						ContactSearchCriteria criteria = new ContactSearchCriteria();
@@ -165,18 +170,18 @@ public class ContactReadPresenter extends CrmGenericPresenter<ContactReadView> {
 				});
 
 		view.getRelatedActivityHandlers().addRelatedListHandler(
-				new AbstractRelatedListHandler() {
+				new AbstractRelatedListHandler<SimpleActivity>() {
 					@Override
 					public void createNewRelatedItem(String itemId) {
 						if (itemId.equals("task")) {
-							Task task = new Task();
+							SimpleTask task = new SimpleTask();
 							task.setType(CrmTypeConstants.CONTACT);
 							task.setTypeid(view.getItem().getId());
 							EventBus.getInstance().fireEvent(
 									new ActivityEvent.TaskEdit(
 											ContactReadPresenter.this, task));
 						} else if (itemId.equals("meeting")) {
-							MeetingWithBLOBs meeting = new MeetingWithBLOBs();
+							SimpleMeeting meeting = new SimpleMeeting();
 							meeting.setType(CrmTypeConstants.CONTACT);
 							meeting.setTypeid(view.getItem().getId());
 							EventBus.getInstance()
@@ -185,7 +190,7 @@ public class ContactReadPresenter extends CrmGenericPresenter<ContactReadView> {
 													ContactReadPresenter.this,
 													meeting));
 						} else if (itemId.equals("call")) {
-							CallWithBLOBs call = new CallWithBLOBs();
+							SimpleCall call = new SimpleCall();
 							call.setType(CrmTypeConstants.CONTACT);
 							call.setTypeid(view.getItem().getId());
 							EventBus.getInstance().fireEvent(
@@ -199,7 +204,7 @@ public class ContactReadPresenter extends CrmGenericPresenter<ContactReadView> {
 				new AbstractRelatedListHandler<SimpleOpportunity>() {
 					@Override
 					public void createNewRelatedItem(String itemId) {
-						Opportunity opportunity = new Opportunity();
+						SimpleOpportunity opportunity = new SimpleOpportunity();
 						opportunity.setExtraData(view.getItem());
 						EventBus.getInstance()
 								.fireEvent(
@@ -264,7 +269,7 @@ public class ContactReadPresenter extends CrmGenericPresenter<ContactReadView> {
 				}
 			}
 		} else {
-			MessageBox.showMessagePermissionAlert();
+			NotificationUtil.showMessagePermissionAlert();
 		}
 
 	}

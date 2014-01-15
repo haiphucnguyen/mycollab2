@@ -17,8 +17,14 @@
 package com.esofthead.mycollab.module.project.view.bug;
 
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
-import com.esofthead.mycollab.vaadin.mvp.View;
+import com.esofthead.mycollab.vaadin.mvp.PageView;
 
-public interface IStatusSummaryChartWidget extends View {
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
+public interface IStatusSummaryChartWidget extends PageView {
 	void setSearchCriteria(BugSearchCriteria searchCriteria);
 }

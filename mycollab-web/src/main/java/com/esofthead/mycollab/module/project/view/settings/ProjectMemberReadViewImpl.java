@@ -14,33 +14,32 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.module.project.view.settings;
 
-import com.esofthead.mycollab.module.project.domain.ProjectMember;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
-import com.esofthead.mycollab.vaadin.ui.ViewComponent;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
+import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
+import com.vaadin.shared.ui.MarginInfo;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
 @ViewComponent
-public class ProjectMemberReadViewImpl extends AbstractView implements
+public class ProjectMemberReadViewImpl extends AbstractPageView implements
 		ProjectMemberReadView {
 
 	private static final long serialVersionUID = 1L;
-	protected ProjectMemberPreviewBuilder.ReadView projectMemberPreview;
+	protected ProjectMemberReadComp projectMemberPreview;
 
 	public ProjectMemberReadViewImpl() {
 		super();
-		this.setMargin(false, false, true, false);
-		this.projectMemberPreview = new ProjectMemberPreviewBuilder.ReadView();
+		this.setStyleName("projectmember-view");
+		this.setMargin(new MarginInfo(true, false, false, false));
+		this.projectMemberPreview = new ProjectMemberReadComp();
 		this.addComponent(this.projectMemberPreview);
 	}
 
@@ -51,11 +50,11 @@ public class ProjectMemberReadViewImpl extends AbstractView implements
 
 	@Override
 	public SimpleProjectMember getItem() {
-		return this.projectMemberPreview.getProjectMember();
+		return this.projectMemberPreview.getBeanItem();
 	}
 
 	@Override
-	public HasPreviewFormHandlers<ProjectMember> getPreviewFormHandlers() {
+	public HasPreviewFormHandlers<SimpleProjectMember> getPreviewFormHandlers() {
 		return this.projectMemberPreview.getPreviewForm();
 	}
 }

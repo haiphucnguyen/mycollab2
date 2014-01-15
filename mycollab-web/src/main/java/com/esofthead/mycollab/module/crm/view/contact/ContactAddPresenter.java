@@ -26,45 +26,51 @@ import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.crm.domain.CampaignContact;
 import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.module.crm.domain.ContactCase;
-import com.esofthead.mycollab.module.crm.domain.OpportunityContact;
+import com.esofthead.mycollab.module.crm.domain.ContactOpportunity;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.domain.SimpleCase;
+import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.events.ContactEvent;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.crm.service.CampaignService;
 import com.esofthead.mycollab.module.crm.service.ContactService;
-import com.esofthead.mycollab.module.crm.service.OpportunityService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
 import com.esofthead.mycollab.module.crm.view.CrmToolbar;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.mvp.HistoryViewManager;
 import com.esofthead.mycollab.vaadin.mvp.NullViewState;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.mvp.ViewState;
-import com.esofthead.mycollab.vaadin.ui.MessageBox;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
-import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.Window;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class ContactAddPresenter extends CrmGenericPresenter<ContactAddView> {
 
 	private static final long serialVersionUID = 1L;
 
 	public ContactAddPresenter() {
 		super(ContactAddView.class);
-		bind();
 	}
 
-	private void bind() {
+	@Override
+	protected void postInitView() {
 		view.getEditFormHandlers().addFormHandler(
-				new EditFormHandler<Contact>() {
+				new EditFormHandler<SimpleContact>() {
+					private static final long serialVersionUID = 1L;
+
 					@Override
-					public void onSave(final Contact contact) {
+					public void onSave(final SimpleContact contact) {
 						saveContact(contact);
 						ViewState viewState = HistoryViewManager.back();
 
@@ -85,7 +91,7 @@ public class ContactAddPresenter extends CrmGenericPresenter<ContactAddView> {
 					}
 
 					@Override
-					public void onSaveAndNew(final Contact contact) {
+					public void onSaveAndNew(final SimpleContact contact) {
 						saveContact(contact);
 						EventBus.getInstance().fireEvent(
 								new ContactEvent.GotoAdd(this, null));
@@ -100,13 +106,13 @@ public class ContactAddPresenter extends CrmGenericPresenter<ContactAddView> {
 			crmToolbar.gotoItem(LocalizationHelper
 					.getMessage(CrmCommonI18nEnum.TOOLBAR_CONTACTS_HEADER));
 
-			Contact contact = null;
-			if (data.getParams() instanceof Contact) {
-				contact = (Contact) data.getParams();
+			SimpleContact contact = null;
+			if (data.getParams() instanceof SimpleContact) {
+				contact = (SimpleContact) data.getParams();
 			} else if (data.getParams() instanceof Integer) {
 				ContactService contactService = ApplicationContextUtil
 						.getSpringBean(ContactService.class);
-				contact = (Contact) contactService.findByPrimaryKey(
+				contact = (SimpleContact) contactService.findById(
 						(Integer) data.getParams(), AppContext.getAccountId());
 				if (contact == null) {
 					NotificationUtil.showRecordNotExistNotification();
@@ -129,7 +135,7 @@ public class ContactAddPresenter extends CrmGenericPresenter<ContactAddView> {
 								"Contact", contact.getLastname()));
 			}
 		} else {
-			MessageBox.showMessagePermissionAlert();
+			NotificationUtil.showMessagePermissionAlert();
 		}
 	}
 
@@ -157,15 +163,14 @@ public class ContactAddPresenter extends CrmGenericPresenter<ContactAddView> {
 						AppContext.getAccountId());
 			} else if (contact.getExtraData() != null
 					&& contact.getExtraData() instanceof SimpleOpportunity) {
-				OpportunityContact associateContact = new OpportunityContact();
+				ContactOpportunity associateContact = new ContactOpportunity();
 				associateContact.setContactid(contact.getId());
 				associateContact.setOpportunityid(((SimpleOpportunity) contact
 						.getExtraData()).getId());
 				associateContact.setCreatedtime(new GregorianCalendar()
 						.getTime());
-				OpportunityService opportunityService = ApplicationContextUtil
-						.getSpringBean(OpportunityService.class);
-				opportunityService.saveOpportunityContactRelationship(
+				
+				contactService.saveContactOpportunityRelationship(
 						Arrays.asList(associateContact),
 						AppContext.getAccountId());
 			} else if (contact.getExtraData() != null

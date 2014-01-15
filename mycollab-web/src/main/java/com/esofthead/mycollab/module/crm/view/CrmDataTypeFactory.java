@@ -16,6 +16,12 @@
  */
 package com.esofthead.mycollab.module.crm.view;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class CrmDataTypeFactory {
 	private static String[] ACCOUNT_INDUSTRY_LIST = new String[] { "Apparel",
 			"Banking", "Biotechnology", "Chemicals", "Communications",

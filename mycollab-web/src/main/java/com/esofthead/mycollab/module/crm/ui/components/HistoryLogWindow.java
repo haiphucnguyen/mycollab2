@@ -14,10 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.module.crm.ui.components;
 
 import com.esofthead.mycollab.vaadin.ui.HistoryLogComponent;
@@ -25,21 +22,26 @@ import com.vaadin.ui.Window;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
-@SuppressWarnings("serial")
 public class HistoryLogWindow extends Window {
+	private static final long serialVersionUID = 1L;
 
 	private final HistoryLogComponent historyLogComponent;
 
-	public HistoryLogWindow(final String module, final String type,
-			final int typeid) {
+	public HistoryLogWindow(final String module, final String type) {
 		super("Change Log");
+
 		this.setWidth("700px");
 
-		this.historyLogComponent = new HistoryLogComponent(module, type, typeid);
-		this.addComponent(this.historyLogComponent);
+		this.historyLogComponent = new HistoryLogComponent(module, type);
+		this.setContent(historyLogComponent);
 		this.center();
+	}
+
+	public void loadHistory(int typeid) {
+		historyLogComponent.loadHistory(typeid);
 	}
 
 	public void generateFieldDisplayHandler(final String fieldname,

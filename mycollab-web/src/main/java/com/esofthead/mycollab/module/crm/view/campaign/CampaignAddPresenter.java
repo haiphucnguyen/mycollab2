@@ -34,32 +34,38 @@ import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
 import com.esofthead.mycollab.module.crm.view.CrmToolbar;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.mvp.HistoryViewManager;
 import com.esofthead.mycollab.vaadin.mvp.NullViewState;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.mvp.ViewState;
-import com.esofthead.mycollab.vaadin.ui.MessageBox;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
-import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.Window;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
 public class CampaignAddPresenter extends CrmGenericPresenter<CampaignAddView> {
 
 	private static final long serialVersionUID = 1L;
 
 	public CampaignAddPresenter() {
 		super(CampaignAddView.class);
-		bind();
 	}
 
-	private void bind() {
+	@Override
+	protected void postInitView() {
 		view.getEditFormHandlers().addFormHandler(
-				new EditFormHandler<CampaignWithBLOBs>() {
+				new EditFormHandler<SimpleCampaign>() {
+					private static final long serialVersionUID = 1L;
+
 					@Override
-					public void onSave(final CampaignWithBLOBs campaign) {
+					public void onSave(final SimpleCampaign campaign) {
 						saveCampaign(campaign);
 						ViewState viewState = HistoryViewManager.back();
 						if (viewState instanceof NullViewState) {
@@ -78,7 +84,7 @@ public class CampaignAddPresenter extends CrmGenericPresenter<CampaignAddView> {
 					}
 
 					@Override
-					public void onSaveAndNew(final CampaignWithBLOBs campaign) {
+					public void onSaveAndNew(final SimpleCampaign campaign) {
 						saveCampaign(campaign);
 						EventBus.getInstance().fireEvent(
 								new CampaignEvent.GotoAdd(this, null));
@@ -93,15 +99,14 @@ public class CampaignAddPresenter extends CrmGenericPresenter<CampaignAddView> {
 			crmToolbar.gotoItem(LocalizationHelper
 					.getMessage(CrmCommonI18nEnum.TOOLBAR_CAMPAIGNS_HEADER));
 
-			CampaignWithBLOBs campaign = null;
+			SimpleCampaign campaign = null;
 			if (data.getParams() instanceof SimpleCampaign) {
 				campaign = (SimpleCampaign) data.getParams();
 			} else if (data.getParams() instanceof Integer) {
 				CampaignService campaignService = ApplicationContextUtil
 						.getSpringBean(CampaignService.class);
-				campaign = (CampaignWithBLOBs) campaignService
-						.findByPrimaryKey((Integer) data.getParams(),
-								AppContext.getAccountId());
+				campaign = (SimpleCampaign) campaignService.findById(
+						(Integer) data.getParams(), AppContext.getAccountId());
 				if (campaign == null) {
 					NotificationUtil.showRecordNotExistNotification();
 					return;
@@ -124,7 +129,7 @@ public class CampaignAddPresenter extends CrmGenericPresenter<CampaignAddView> {
 								"Campaign", campaign.getCampaignname()));
 			}
 		} else {
-			MessageBox.showMessagePermissionAlert();
+			NotificationUtil.showMessagePermissionAlert();
 		}
 	}
 

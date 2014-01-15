@@ -16,48 +16,53 @@
  */
 package com.esofthead.mycollab.module.crm.view.cases;
 
-import com.esofthead.mycollab.module.crm.domain.CaseWithBLOBs;
 import com.esofthead.mycollab.module.crm.domain.SimpleCase;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.view.IRelatedListHandlers;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
-import com.esofthead.mycollab.vaadin.ui.ViewComponent;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
+import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @ViewComponent
-public class CaseReadViewImpl extends AbstractView implements CaseReadView {
+public class CaseReadViewImpl extends AbstractPageView implements CaseReadView {
 
-    private static final long serialVersionUID = 1L;
-    private CasePreviewBuilder casePreview;
+	private static final long serialVersionUID = 1L;
+	private CaseReadComp casePreview;
 
-    public CaseReadViewImpl() {
-        super();
-        casePreview = new CasePreviewBuilder.ReadView();
-        this.addComponent(casePreview);
-    }
+	public CaseReadViewImpl() {
+		super();
+		casePreview = new CaseReadComp();
+		this.addComponent(casePreview);
+	}
 
-    @Override
-    public void previewItem(SimpleCase item) {
-        casePreview.previewItem(item);
-    }
+	@Override
+	public void previewItem(SimpleCase item) {
+		casePreview.previewItem(item);
+	}
 
-    @Override
-    public HasPreviewFormHandlers<CaseWithBLOBs> getPreviewFormHandlers() {
-        return casePreview.getPreviewForm();
-    }
+	@Override
+	public HasPreviewFormHandlers<SimpleCase> getPreviewFormHandlers() {
+		return casePreview.getPreviewForm();
+	}
 
-    @Override
-    public SimpleCase getItem() {
-        return casePreview.getCase();
-    }
+	@Override
+	public SimpleCase getItem() {
+		return casePreview.getCase();
+	}
 
-    @Override
-    public IRelatedListHandlers getRelatedActivityHandlers() {
-        return casePreview.getAssociateActivityList();
-    }
+	@Override
+	public IRelatedListHandlers getRelatedActivityHandlers() {
+		return casePreview.getAssociateActivityList();
+	}
 
-    @Override
-    public IRelatedListHandlers<SimpleContact> getRelatedContactHandlers() {
-        return casePreview.getAssociateContactList();
-    }
+	@Override
+	public IRelatedListHandlers<SimpleContact> getRelatedContactHandlers() {
+		return casePreview.getAssociateContactList();
+	}
 }

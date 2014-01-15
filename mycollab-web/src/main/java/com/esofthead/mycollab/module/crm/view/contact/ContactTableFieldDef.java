@@ -23,11 +23,18 @@ import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public interface ContactTableFieldDef {
 	public static TableViewField selected = new TableViewField("", "selected",
 			UIConstants.TABLE_CONTROL_WIDTH);
 
-	public static TableViewField action = new TableViewField("", "id");
+	public static TableViewField action = new TableViewField("", "id",
+			UIConstants.TABLE_ACTION_CONTROL_WIDTH);
 
 	public static TableViewField name = new TableViewField(
 			LocalizationHelper.getMessage(ContactI18nEnum.FORM_NAME),
@@ -36,6 +43,9 @@ public interface ContactTableFieldDef {
 	public static TableViewField account = new TableViewField(
 			LocalizationHelper.getMessage(ContactI18nEnum.FORM_ACCOUNTS),
 			"accountName", UIConstants.TABLE_EX_LABEL_WIDTH);
+
+	public static TableViewField dicisionRole = new TableViewField(
+			"Dicision Role", "decisionRole", UIConstants.TABLE_M_LABEL_WIDTH);
 
 	public static TableViewField title = new TableViewField(
 			LocalizationHelper.getMessage(ContactI18nEnum.FORM_TITLE), "title",

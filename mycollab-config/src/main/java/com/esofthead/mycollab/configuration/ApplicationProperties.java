@@ -29,7 +29,8 @@ import com.esofthead.mycollab.core.MyCollabException;
  * This file contains all constants define in system properties file
  * mycollab.properties read at system started.
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  * 
  */
 public class ApplicationProperties {

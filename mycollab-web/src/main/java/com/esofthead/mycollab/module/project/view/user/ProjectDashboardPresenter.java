@@ -14,10 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.module.project.view.user;
 
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
@@ -25,16 +22,17 @@ import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.module.project.view.ProjectView;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData;
-import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
-import com.esofthead.mycollab.vaadin.ui.MessageBox;
+import com.esofthead.mycollab.vaadin.ui.AbstractPresenter;
+import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.vaadin.ui.ComponentContainer;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class ProjectDashboardPresenter extends
 		AbstractPresenter<ProjectDashboardContainer> {
@@ -67,7 +65,7 @@ public class ProjectDashboardPresenter extends
 				presenter.go(view, data);
 				breadcrumb.gotoProjectEdit();
 			} else {
-				MessageBox.showMessagePermissionAlert();
+				NotificationUtil.showMessagePermissionAlert();
 			}
 		} else {
 			if (CurrentProjectVariables
@@ -77,7 +75,7 @@ public class ProjectDashboardPresenter extends
 				presenter.go(view, data);
 				breadcrumb.gotoProjectDashboard();
 			} else {
-				MessageBox.showMessagePermissionAlert();
+				NotificationUtil.showMessagePermissionAlert();
 			}
 		}
 	}

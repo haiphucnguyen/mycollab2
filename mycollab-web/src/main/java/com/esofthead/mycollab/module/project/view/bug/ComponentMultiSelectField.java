@@ -14,41 +14,35 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.module.project.view.bug;
+
+import java.util.List;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
-import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.ui.components.MultiSelectComp;
+import com.esofthead.mycollab.module.tracker.domain.Component;
 import com.esofthead.mycollab.module.tracker.domain.criteria.ComponentSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.ComponentService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.web.AppContext;
+import com.vaadin.data.Property;
+import com.vaadin.ui.CustomField;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
-@SuppressWarnings("serial")
-public class ComponentMultiSelectField extends MultiSelectComp {
+public class ComponentMultiSelectField extends CustomField {
+	private static final long serialVersionUID = 1L;
+
+	private MultiSelectComp<Component> componentSelection;
 
 	public ComponentMultiSelectField() {
-		super("componentname");
-	}
-
-	public ComponentMultiSelectField(String width) {
-		super("componentname", width);
-	}
-
-	@Override
-	protected void initData() {
 		ComponentSearchCriteria searchCriteria = new ComponentSearchCriteria();
 		searchCriteria.setStatus(new StringSearchField("Open"));
 
@@ -57,9 +51,39 @@ public class ComponentMultiSelectField extends MultiSelectComp {
 
 		ComponentService componentService = ApplicationContextUtil
 				.getSpringBean(ComponentService.class);
-		dataList = componentService
+
+		List<Component> components = (List<Component>) componentService
 				.findPagableListByCriteria(new SearchRequest<ComponentSearchCriteria>(
 						searchCriteria, 0, Integer.MAX_VALUE));
 
+		componentSelection = new MultiSelectComp<Component>("componentname",
+				components);
+	}
+
+	@Override
+	protected com.vaadin.ui.Component initContent() {
+		return componentSelection;
+	}
+
+	public void resetComp() {
+		componentSelection.resetComp();
+	}
+
+	@Override
+	public void setPropertyDataSource(Property newDataSource) {
+		List<Component> components = (List<Component>) newDataSource.getValue();
+		if (components != null) {
+			componentSelection.setSelectedItems(components);
+		}
+		super.setPropertyDataSource(newDataSource);
+	}
+
+	public List<Component> getSelectedItems() {
+		return componentSelection.getSelectedItems();
+	}
+
+	@Override
+	public Class<?> getType() {
+		return Object.class;
 	}
 }

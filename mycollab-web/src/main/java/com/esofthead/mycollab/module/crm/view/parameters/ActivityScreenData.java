@@ -16,7 +16,7 @@
  */
 package com.esofthead.mycollab.module.crm.view.parameters;
 
-import com.esofthead.mycollab.module.crm.domain.criteria.EventSearchCriteria;
+import com.esofthead.mycollab.module.crm.domain.criteria.ActivitySearchCriteria;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 
 public class ActivityScreenData {
@@ -28,9 +28,9 @@ public class ActivityScreenData {
 	}
 
 	public static class GotoActivityList extends
-			ScreenData<EventSearchCriteria> {
+			ScreenData<ActivitySearchCriteria> {
 
-		public GotoActivityList(EventSearchCriteria criteria) {
+		public GotoActivityList(ActivitySearchCriteria criteria) {
 			super(criteria);
 		}
 	}

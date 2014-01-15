@@ -19,6 +19,12 @@ package com.esofthead.mycollab.module.project.view.parameters;
 import com.esofthead.mycollab.module.project.domain.Task;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ *
+ */
 public class TaskScreenData {
 	public static class Read extends ScreenData<Integer> {
 

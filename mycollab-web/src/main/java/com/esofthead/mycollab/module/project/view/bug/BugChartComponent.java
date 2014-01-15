@@ -14,10 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.module.project.view.bug;
 
 import org.vaadin.hene.popupbutton.PopupButton;
@@ -28,7 +25,6 @@ import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.rits.cloning.Cloner;
-import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CssLayout;
@@ -36,7 +32,8 @@ import com.vaadin.ui.VerticalLayout;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class BugChartComponent extends Depot {
 	private static final long serialVersionUID = 1L;
@@ -66,9 +63,7 @@ public class BugChartComponent extends Depot {
 		if ("BugsByPriority".equals(reportName)) {
 			IPrioritySummaryChartWidget prioritySummaryChartWidget = ViewManager
 					.getView(IPrioritySummaryChartWidget.class);
-			final LazyLoadWrapper lazyComp = new LazyLoadWrapper(
-					prioritySummaryChartWidget);
-			bodyContent.addComponent(lazyComp);
+			bodyContent.addComponent(prioritySummaryChartWidget);
 
 			final BugSearchCriteria prioritySearchCriteria = new Cloner()
 					.deepClone(baseSearchCriteria);
@@ -77,9 +72,7 @@ public class BugChartComponent extends Depot {
 		} else if ("BugsByStatus".equals(reportName)) {
 			IStatusSummaryChartWidget statusSummaryChartWidget = ViewManager
 					.getView(IStatusSummaryChartWidget.class);
-			final LazyLoadWrapper lazyComp = new LazyLoadWrapper(
-					statusSummaryChartWidget);
-			bodyContent.addComponent(lazyComp);
+			bodyContent.addComponent(statusSummaryChartWidget);
 
 			final BugSearchCriteria statusSearchCriteria = new Cloner()
 					.deepClone(baseSearchCriteria);
@@ -87,9 +80,7 @@ public class BugChartComponent extends Depot {
 		} else if ("BugByResolution".equals(reportName)) {
 			IBugResolutionSummaryChartWidget resolutionSummaryWdiget = ViewManager
 					.getView(IBugResolutionSummaryChartWidget.class);
-			final LazyLoadWrapper lazyComp = new LazyLoadWrapper(
-					resolutionSummaryWdiget);
-			bodyContent.addComponent(lazyComp);
+			bodyContent.addComponent(resolutionSummaryWdiget);
 
 			final BugSearchCriteria statusSearchCriteria = new Cloner()
 					.deepClone(baseSearchCriteria);
@@ -154,7 +145,7 @@ public class BugChartComponent extends Depot {
 
 		displayReport();
 
-		bugChartPopup.addComponent(filterBtnLayout);
+		bugChartPopup.setContent(filterBtnLayout);
 		this.addHeaderElement(bugChartPopup);
 		this.setHeaderColor(true);
 	}

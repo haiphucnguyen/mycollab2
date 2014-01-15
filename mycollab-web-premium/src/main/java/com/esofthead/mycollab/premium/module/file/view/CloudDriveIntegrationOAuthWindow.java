@@ -19,11 +19,14 @@ import com.esofthead.mycollab.module.file.CloudDriveInfo;
 import com.esofthead.mycollab.module.file.events.CloudDriveOAuthCallbackEvent;
 import com.esofthead.mycollab.module.file.events.CloudDriveOAuthCallbackEvent.ReceiveCloudDriveInfo;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.DesktopApplication;
 import com.esofthead.mycollab.web.MyCollabResource;
-import com.vaadin.terminal.ExternalResource;
+import com.vaadin.server.BrowserWindowOpener;
+import com.vaadin.server.ExternalResource;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -34,6 +37,12 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public abstract class CloudDriveIntegrationOAuthWindow extends Window {
 	private static final long serialVersionUID = 1L;
 
@@ -58,7 +67,7 @@ public abstract class CloudDriveIntegrationOAuthWindow extends Window {
 		constructBody();
 		registerListeners();
 
-		this.addComponent(pusher);
+		pusher.extend(DesktopApplication.getCurrent());
 	}
 
 	private void registerListeners() {
@@ -86,7 +95,7 @@ public abstract class CloudDriveIntegrationOAuthWindow extends Window {
 	}
 
 	@Override
-	protected void close() {
+	public void close() {
 		if (listener != null) {
 			EventBus.getInstance().removeListener(listener);
 		}
@@ -106,17 +115,11 @@ public abstract class CloudDriveIntegrationOAuthWindow extends Window {
 				"You can connect Cloud Drives (Google Drive, Dropbox) to Mycollab Documents. They will be showed in My-Documents' folder and you can do everything like in one place.");
 		messageBox.addComponent(messageInfoLbl);
 
-		Button btnLogin = new Button("Login (" + getStorageName() + ")",
-				new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
+		Button btnLogin = new Button("Login (" + getStorageName() + ")");
+		BrowserWindowOpener windowOpenner = new BrowserWindowOpener(
+				new ExternalResource(buildAuthUrl()));
+		windowOpenner.extend(btnLogin);
 
-					@Override
-					public void buttonClick(ClickEvent event) {
-						String authorizeUrl = buildAuthUrl();
-						open(new ExternalResource(authorizeUrl), "New Window",
-								true);
-					}
-				});
 		btnLogin.addStyleName(UIConstants.THEME_BLUE_LINK);
 		messageBox.addComponent(btnLogin);
 		messageBox.setComponentAlignment(btnLogin, Alignment.MIDDLE_CENTER);
@@ -152,7 +155,7 @@ public abstract class CloudDriveIntegrationOAuthWindow extends Window {
 		HorizontalLayout controllGroupBtn = new HorizontalLayout();
 		controllGroupBtn.setSpacing(true);
 		controllGroupBtn.setHeight("50px");
-		controllGroupBtn.setMargin(true, false, false, false);
+		controllGroupBtn.setMargin(new MarginInfo(true, false, false, false));
 
 		Button doneBtn = new Button(
 				LocalizationHelper.getMessage(GenericI18Enum.BUTTON_OK_LABEL),
@@ -166,9 +169,7 @@ public abstract class CloudDriveIntegrationOAuthWindow extends Window {
 									.trim();
 							if (name.equals("")) {
 								NotificationUtil
-										.showNotification(
-												"Please enter folder name",
-												Window.Notification.TYPE_WARNING_MESSAGE);
+										.showWarningNotification("Please enter folder name");
 								return;
 							}
 							ExternalDrive externalDrive = new ExternalDrive();
@@ -212,7 +213,7 @@ public abstract class CloudDriveIntegrationOAuthWindow extends Window {
 		mainLayout.addComponent(controllGroupBtn);
 		mainLayout.setComponentAlignment(controllGroupBtn,
 				Alignment.MIDDLE_CENTER);
-		this.addComponent(mainLayout);
+		this.setContent(mainLayout);
 	}
 
 	public String getCloudDriveFolderName() {

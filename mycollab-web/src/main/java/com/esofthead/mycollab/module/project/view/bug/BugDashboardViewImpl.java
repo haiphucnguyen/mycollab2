@@ -18,8 +18,7 @@ package com.esofthead.mycollab.module.project.view.bug;
 
 import java.util.GregorianCalendar;
 
-import org.vaadin.hene.splitbutton.SplitButtonExt;
-
+import com.esofthead.mycollab.core.arguments.DateSearchField;
 import com.esofthead.mycollab.core.arguments.DateTimeSearchField;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
@@ -36,32 +35,39 @@ import com.esofthead.mycollab.module.project.events.BugVersionEvent;
 import com.esofthead.mycollab.module.project.localization.BugI18nEnum;
 import com.esofthead.mycollab.module.tracker.BugStatusConstants;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
-import com.esofthead.mycollab.shell.view.ScreenSize;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
+import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
+import com.esofthead.mycollab.vaadin.ui.SplitButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.vaadin.ui.ViewComponent;
-import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
-import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
+import com.vaadin.server.Sizeable;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @SuppressWarnings("serial")
 @ViewComponent
-public class BugDashboardViewImpl extends AbstractView implements
+public class BugDashboardViewImpl extends AbstractPageView implements
 		BugDashboardView {
 
 	private VerticalLayout leftColumn, rightColumn, headerWrapper;
 
 	public BugDashboardViewImpl() {
 		super();
-		this.setMargin(true);
+		this.setMargin(new MarginInfo(true, false, false, false));
 		this.initUI();
 	}
 
@@ -78,7 +84,7 @@ public class BugDashboardViewImpl extends AbstractView implements
 
 		this.leftColumn = new VerticalLayout();
 		this.leftColumn.setSpacing(true);
-		this.leftColumn.setMargin(false, true, false, false);
+		this.leftColumn.setMargin(new MarginInfo(false, true, false, false));
 		body.addComponent(this.leftColumn);
 		body.setExpandRatio(this.leftColumn, 1.0f);
 
@@ -95,16 +101,15 @@ public class BugDashboardViewImpl extends AbstractView implements
 		headerWrapper.removeAllComponents();
 		final CssLayout headerTop = new CssLayout();
 		headerTop.setWidth("100%");
-		headerTop.setHeight("30px");
 		headerTop.addStyleName("bugdashboard-header-top");
 		final HorizontalLayout header = new HorizontalLayout();
 		header.setWidth("100%");
+		header.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
 		final Label title = new Label(
 				LocalizationHelper.getMessage(BugI18nEnum.BUG_DASHBOARD_TITLE));
 		title.setStyleName("h2");
-		final Embedded icon = new Embedded();
-		icon.setSource(MyCollabResource.newResource("icons/24/project/bug.png"));
+		final Image icon = new Image(null, MyCollabResource.newResource("icons/24/project/bug.png"));
 		header.addComponent(icon);
 		header.addComponent(title);
 		header.setExpandRatio(title, 1.0f);
@@ -123,9 +128,9 @@ public class BugDashboardViewImpl extends AbstractView implements
 		createBugBtn.setEnabled(CurrentProjectVariables
 				.canWrite(ProjectRolePermissionCollections.BUGS));
 
-		final SplitButtonExt controlsBtn = new SplitButtonExt(createBugBtn);
-		controlsBtn.addStyleName(UIConstants.SPLIT_BUTTON);
+		final SplitButton controlsBtn = new SplitButton(createBugBtn);
 		controlsBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
+		controlsBtn.setWidth(SIZE_UNDEFINED, Sizeable.Unit.PIXELS);
 
 		final VerticalLayout btnControlsLayout = new VerticalLayout();
 		btnControlsLayout.setWidth("150px");
@@ -158,7 +163,8 @@ public class BugDashboardViewImpl extends AbstractView implements
 		createVersionBtn.setEnabled(CurrentProjectVariables
 				.canWrite(ProjectRolePermissionCollections.VERSIONS));
 		btnControlsLayout.addComponent(createVersionBtn);
-		controlsBtn.addComponent(btnControlsLayout);
+
+		controlsBtn.setContent(btnControlsLayout);
 
 		headerTop.addComponent(header);
 		headerWrapper.addComponent(headerTop);
@@ -174,18 +180,12 @@ public class BugDashboardViewImpl extends AbstractView implements
 		this.leftColumn.removeAllComponents();
 		this.rightColumn.removeAllComponents();
 
-		if (ScreenSize.hasSupport1024Pixels()) {
-			this.rightColumn.setWidth("310px");
-		} else if (ScreenSize.hasSupport1280Pixels()) {
-			this.rightColumn.setWidth("400px");
-		}
+		this.rightColumn.setWidth("400px");
 
 		final SimpleProject project = CurrentProjectVariables.getProject();
 
 		final MyBugListWidget myBugListWidget = new MyBugListWidget();
-		final LazyLoadWrapper myBugsWidgetWrapper = new LazyLoadWrapper(
-				myBugListWidget);
-		this.leftColumn.addComponent(myBugsWidgetWrapper);
+		this.leftColumn.addComponent(myBugListWidget);
 		final BugSearchCriteria myBugsSearchCriteria = new BugSearchCriteria();
 		myBugsSearchCriteria
 				.setProjectId(new NumberSearchField(project.getId()));
@@ -199,12 +199,10 @@ public class BugDashboardViewImpl extends AbstractView implements
 		myBugListWidget.setSearchCriteria(myBugsSearchCriteria);
 
 		final DueBugWidget dueBugWidget = new DueBugWidget();
-		final LazyLoadWrapper dueBugWidgetWrapper = new LazyLoadWrapper(
-				dueBugWidget);
-		this.leftColumn.addComponent(dueBugWidgetWrapper);
+		this.leftColumn.addComponent(dueBugWidget);
 		final BugSearchCriteria dueDefectsCriteria = new BugSearchCriteria();
 		dueDefectsCriteria.setProjectId(new NumberSearchField(project.getId()));
-		dueDefectsCriteria.setDueDate(new DateTimeSearchField(SearchField.AND,
+		dueDefectsCriteria.setDueDate(new DateSearchField(SearchField.AND,
 				DateTimeSearchField.LESSTHANEQUAL, new GregorianCalendar()
 						.getTime()));
 		dueDefectsCriteria.setStatuses(new SetSearchField<String>(
@@ -214,9 +212,7 @@ public class BugDashboardViewImpl extends AbstractView implements
 		dueBugWidget.setSearchCriteria(dueDefectsCriteria);
 
 		final RecentBugUpdateWidget updateBugWidget = new RecentBugUpdateWidget();
-		final LazyLoadWrapper updateBugWidgetWrapper = new LazyLoadWrapper(
-				updateBugWidget);
-		this.leftColumn.addComponent(updateBugWidgetWrapper);
+		this.leftColumn.addComponent(updateBugWidget);
 
 		// Unresolved by assignee
 		final UnresolvedBugsByAssigneeWidget2 unresolvedByAssigneeWidget = new UnresolvedBugsByAssigneeWidget2();
@@ -230,8 +226,7 @@ public class BugDashboardViewImpl extends AbstractView implements
 								BugStatusConstants.REOPENNED }));
 		unresolvedByAssigneeWidget
 				.setSearchCriteria(unresolvedByAssigneeSearchCriteria);
-		this.rightColumn.addComponent(new LazyLoadWrapper(
-				unresolvedByAssigneeWidget));
+		this.rightColumn.addComponent(unresolvedByAssigneeWidget);
 
 		// Unresolve by priority widget
 		final UnresolvedBugsByPriorityWidget2 unresolvedByPriorityWidget = new UnresolvedBugsByPriorityWidget2();
@@ -245,8 +240,7 @@ public class BugDashboardViewImpl extends AbstractView implements
 								BugStatusConstants.REOPENNED }));
 		unresolvedByPriorityWidget
 				.setSearchCriteria(unresolvedByPrioritySearchCriteria);
-		this.rightColumn.addComponent(new LazyLoadWrapper(
-				unresolvedByPriorityWidget));
+		this.rightColumn.addComponent(unresolvedByPriorityWidget);
 
 		// bug chart
 		final BugSearchCriteria recentDefectsCriteria = new BugSearchCriteria();

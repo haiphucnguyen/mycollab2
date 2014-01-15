@@ -14,17 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.module.crm.view.lead;
 
 import java.util.Arrays;
 import java.util.Set;
 
 import org.vaadin.dialogs.ConfirmDialog;
-import org.vaadin.hene.splitbutton.SplitButton;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
@@ -46,19 +42,22 @@ import com.esofthead.mycollab.module.crm.view.campaign.CampaignTableDisplay;
 import com.esofthead.mycollab.module.crm.view.campaign.CampaignTableFieldDef;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
+import com.esofthead.mycollab.vaadin.ui.SplitButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
-import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Table;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class LeadCampaignListComp extends
 		RelatedListComp<SimpleCampaign, CampaignSearchCriteria> {
@@ -67,7 +66,6 @@ public class LeadCampaignListComp extends
 	private Lead lead;
 
 	public LeadCampaignListComp() {
-		super("Campaigns");
 		initUI();
 	}
 
@@ -86,9 +84,6 @@ public class LeadCampaignListComp extends
 
 	@SuppressWarnings("serial")
 	private void initUI() {
-		VerticalLayout contentContainer = (VerticalLayout) bodyContent;
-		contentContainer.setSpacing(true);
-
 		final SplitButton controlsBtn = new SplitButton();
 		controlsBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_CONTACT));
@@ -113,17 +108,21 @@ public class LeadCampaignListComp extends
 						CampaignSearchCriteria criteria = new CampaignSearchCriteria();
 						criteria.setSaccountid(new NumberSearchField(AppContext
 								.getAccountId()));
-						getWindow().addWindow(leadsWindow);
+						UI.getCurrent().addWindow(leadsWindow);
 						leadsWindow.setSearchCriteria(criteria);
 						controlsBtn.setPopupVisible(false);
 					}
 				});
 		selectBtn.setIcon(MyCollabResource.newResource("icons/16/select.png"));
 		selectBtn.setStyleName("link");
-		controlsBtn.addComponent(selectBtn);
+
+		VerticalLayout buttonControlsLayout = new VerticalLayout();
+		buttonControlsLayout.addComponent(selectBtn);
+		controlsBtn.setContent(buttonControlsLayout);
+
 		controlsBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_CAMPAIGN));
-		addHeaderElement(controlsBtn);
+		this.addComponent(controlsBtn);
 
 		tableItem = new CampaignTableDisplay(Arrays.asList(
 				CampaignTableFieldDef.campaignname,
@@ -174,7 +173,7 @@ public class LeadCampaignListComp extends
 					@Override
 					public void buttonClick(Button.ClickEvent event) {
 						ConfirmDialogExt.show(
-								AppContext.getApplication().getMainWindow(),
+								UI.getCurrent(),
 								LocalizationHelper.getMessage(
 										GenericI18Enum.DELETE_DIALOG_TITLE,
 										SiteConfiguration.getSiteName()),
@@ -193,7 +192,7 @@ public class LeadCampaignListComp extends
 											CampaignService campaignService = ApplicationContextUtil
 													.getSpringBean(CampaignService.class);
 											CampaignLead associateLead = new CampaignLead();
-											associateLead.setLeadid(campaign
+											associateLead.setLeadid(lead
 													.getId());
 											associateLead
 													.setCampaignid(campaign
@@ -216,7 +215,7 @@ public class LeadCampaignListComp extends
 				return controlLayout;
 			}
 		});
-		contentContainer.addComponent(tableItem);
+		this.addComponent(tableItem);
 
 	}
 

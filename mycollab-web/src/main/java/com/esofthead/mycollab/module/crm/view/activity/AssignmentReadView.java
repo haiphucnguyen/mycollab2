@@ -20,6 +20,12 @@ import com.esofthead.mycollab.module.crm.domain.SimpleTask;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.IPreviewView;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
 public interface AssignmentReadView extends IPreviewView<SimpleTask> {
 
     HasPreviewFormHandlers<SimpleTask> getPreviewFormHandlers();

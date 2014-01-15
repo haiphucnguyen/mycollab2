@@ -14,10 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.module.project.view.user;
 
 import com.esofthead.mycollab.eventmanager.EventBus;
@@ -30,17 +27,18 @@ import com.esofthead.mycollab.security.BooleanPermissionFlag;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
-import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewPermission;
-import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.vaadin.ui.AbstractPresenter;
 import com.vaadin.ui.ComponentContainer;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
 @ViewPermission(permissionId = RolePermissionCollections.CREATE_NEW_PROJECT, impliedPermissionVal = BooleanPermissionFlag.TRUE)
 public class ProjectAddPresenter extends AbstractPresenter<ProjectAddView> {
@@ -48,25 +46,14 @@ public class ProjectAddPresenter extends AbstractPresenter<ProjectAddView> {
 
 	public ProjectAddPresenter() {
 		super(ProjectAddView.class);
-		bind();
 	}
 
 	@Override
-	protected void onGo(ComponentContainer container, ScreenData<?> data) {
-		ComponentContainer projectContainer = (ComponentContainer) container;
-		projectContainer.removeAllComponents();
-		projectContainer.addComponent(view.getWidget());
-		Project project = (Project) data.getParams();
-		view.editItem(project);
-
-		if (project.getId() == null) {
-			AppContext.addFragment("project/add", "New Project");
-		}
-	}
-
-	private void bind() {
+	protected void postInitView() {
 		view.getEditFormHandlers().addFormHandler(
 				new EditFormHandler<Project>() {
+					private static final long serialVersionUID = 1L;
+
 					@Override
 					public void onSave(final Project project) {
 						saveProject(project);
@@ -102,6 +89,19 @@ public class ProjectAddPresenter extends AbstractPresenter<ProjectAddView> {
 				});
 	}
 
+	@Override
+	protected void onGo(ComponentContainer container, ScreenData<?> data) {
+		ComponentContainer projectContainer = (ComponentContainer) container;
+		projectContainer.removeAllComponents();
+		projectContainer.addComponent(view.getWidget());
+		Project project = (Project) data.getParams();
+		view.editItem(project);
+
+		if (project.getId() == null) {
+			AppContext.addFragment("project/add", "New Project");
+		}
+	}
+
 	public void saveProject(Project project) {
 		ProjectService projectService = ApplicationContextUtil
 				.getSpringBean(ProjectService.class);
@@ -111,7 +111,8 @@ public class ProjectAddPresenter extends AbstractPresenter<ProjectAddView> {
 			projectService.saveWithSession(project, AppContext.getUsername());
 		} else {
 			projectService.updateWithSession(project, AppContext.getUsername());
-			AppContext.putVariable(ProjectContants.CURRENT_PROJECT, project);
+			AppContext.putVariable(ProjectContants.CURRENT_PROJECT,
+					project);
 		}
 
 	}

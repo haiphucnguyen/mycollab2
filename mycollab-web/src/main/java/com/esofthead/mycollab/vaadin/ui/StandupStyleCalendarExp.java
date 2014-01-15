@@ -24,7 +24,7 @@ import java.util.List;
 import org.vaadin.risto.stylecalendar.DateOptionsGenerator;
 import org.vaadin.risto.stylecalendar.StyleCalendar;
 
-import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -32,6 +32,12 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
 @SuppressWarnings("serial")
 public class StandupStyleCalendarExp extends VerticalLayout {
 	private List<Date> selectedDateList = new ArrayList<Date>();
@@ -51,6 +57,7 @@ public class StandupStyleCalendarExp extends VerticalLayout {
 		styleCalendar.setRenderHeader(false);
 		styleCalendar.setRenderWeekNumbers(false);
 		styleCalendar.setImmediate(true);
+		styleCalendar.setWidth("100%");
 		setDateOptionsGenerator();
 
 		btnShowNextYear = new Button();

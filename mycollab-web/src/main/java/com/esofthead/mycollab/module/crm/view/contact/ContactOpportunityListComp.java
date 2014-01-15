@@ -14,17 +14,19 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.module.crm.view.contact;
 
 import java.util.Arrays;
 import java.util.Set;
 
 import org.vaadin.dialogs.ConfirmDialog;
-import org.vaadin.hene.splitbutton.SplitButton;
+
+import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
+import com.esofthead.mycollab.vaadin.ui.SplitButton;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
@@ -46,19 +48,17 @@ import com.esofthead.mycollab.module.crm.view.opportunity.OpportunityTableDispla
 import com.esofthead.mycollab.module.crm.view.opportunity.OpportunityTableFieldDef;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
-import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
-import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Table;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class ContactOpportunityListComp extends
 		RelatedListComp<SimpleOpportunity, OpportunitySearchCriteria> {
@@ -68,7 +68,6 @@ public class ContactOpportunityListComp extends
 	private SimpleContact contact;
 
 	public ContactOpportunityListComp() {
-		super("Opportunities");
 		initUI();
 	}
 
@@ -87,8 +86,6 @@ public class ContactOpportunityListComp extends
 	}
 
 	private void initUI() {
-		VerticalLayout contentContainer = (VerticalLayout) bodyContent;
-		contentContainer.setSpacing(true);
 
 		final SplitButton controlsBtn = new SplitButton();
 		controlsBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
@@ -116,17 +113,21 @@ public class ContactOpportunityListComp extends
 						OpportunitySearchCriteria criteria = new OpportunitySearchCriteria();
 						criteria.setSaccountid(new NumberSearchField(AppContext
 								.getAccountId()));
-						getWindow().addWindow(opportunitiesWindow);
+						UI.getCurrent().addWindow(opportunitiesWindow);
 						opportunitiesWindow.setSearchCriteria(criteria);
 						controlsBtn.setPopupVisible(false);
 					}
 				});
 		selectBtn.setIcon(MyCollabResource.newResource("icons/16/select.png"));
 		selectBtn.setStyleName("link");
-		controlsBtn.addComponent(selectBtn);
+
+		VerticalLayout buttonControlsLayout = new VerticalLayout();
+		buttonControlsLayout.addComponent(selectBtn);
+		controlsBtn.setContent(buttonControlsLayout);
+
 		controlsBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_OPPORTUNITY));
-		addHeaderElement(controlsBtn);
+		this.addComponent(controlsBtn);
 
 		tableItem = new OpportunityTableDisplay(Arrays.asList(
 				OpportunityTableFieldDef.opportunityName,
@@ -188,7 +189,7 @@ public class ContactOpportunityListComp extends
 					@Override
 					public void buttonClick(Button.ClickEvent event) {
 						ConfirmDialogExt.show(
-								AppContext.getApplication().getMainWindow(),
+								UI.getCurrent(),
 								LocalizationHelper.getMessage(
 										GenericI18Enum.DELETE_DIALOG_TITLE,
 										SiteConfiguration.getSiteName()),
@@ -233,7 +234,7 @@ public class ContactOpportunityListComp extends
 			}
 		});
 
-		contentContainer.addComponent(tableItem);
+		this.addComponent(tableItem);
 	}
 
 	@Override

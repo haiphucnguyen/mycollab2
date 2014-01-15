@@ -18,6 +18,12 @@ package com.esofthead.mycollab.module.user.accountsettings.view;
 
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ *
+ */
 public class AccountModuleScreenData {
 	public static class GotoModule extends ScreenData<String[]> {
 		public GotoModule(String... params) {

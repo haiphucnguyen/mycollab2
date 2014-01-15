@@ -16,50 +16,55 @@
  */
 package com.esofthead.mycollab.module.crm.view.contact;
 
-import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.view.IRelatedListHandlers;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
-import com.esofthead.mycollab.vaadin.ui.ViewComponent;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
+import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
 @ViewComponent
-public class ContactReadViewImpl extends AbstractView implements
-        ContactReadView {
+public class ContactReadViewImpl extends AbstractPageView implements
+		ContactReadView {
 
-    private static final long serialVersionUID = 1L;
-    
-    private ContactPreviewBuilder contactPreview;
+	private static final long serialVersionUID = 1L;
 
-    public ContactReadViewImpl() {
-        super();
-        contactPreview = new ContactPreviewBuilder.ReadView();
-        this.addComponent(contactPreview);
-    }
+	private ContactReadComp contactPreview;
 
-    @Override
-    public void previewItem(SimpleContact item) {
-    	contactPreview.previewItem(item);
-    }
+	public ContactReadViewImpl() {
+		super();
+		contactPreview = new ContactReadComp();
+		this.addComponent(contactPreview);
+	}
 
-    @Override
-    public HasPreviewFormHandlers<Contact> getPreviewFormHandlers() {
-        return contactPreview.getPreviewForm();
-    }
+	@Override
+	public void previewItem(SimpleContact item) {
+		contactPreview.previewItem(item);
+	}
 
-    @Override
-    public SimpleContact getItem() {
-        return contactPreview.getContact();
-    }
+	@Override
+	public HasPreviewFormHandlers<SimpleContact> getPreviewFormHandlers() {
+		return contactPreview.getPreviewForm();
+	}
 
-    @Override
-    public IRelatedListHandlers getRelatedActivityHandlers() {
-        return contactPreview.getAssociateActivityList();
-    }
+	@Override
+	public SimpleContact getItem() {
+		return contactPreview.getContact();
+	}
 
-    @Override
-    public IRelatedListHandlers<SimpleOpportunity> getRelatedOpportunityHandlers() {
-        return contactPreview.getAssociateOpportunityList();
-    }
+	@Override
+	public IRelatedListHandlers getRelatedActivityHandlers() {
+		return contactPreview.getAssociateActivityList();
+	}
+
+	@Override
+	public IRelatedListHandlers<SimpleOpportunity> getRelatedOpportunityHandlers() {
+		return contactPreview.getAssociateOpportunityList();
+	}
 }

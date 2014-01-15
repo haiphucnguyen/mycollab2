@@ -23,11 +23,12 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import com.esofthead.vaadin.cropField.CropField;
+import com.esofthead.vaadin.cropField.client.VCropSelection;
+import com.vaadin.data.Property;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.davengo.web.vaadin.crop.CropField;
-import com.davengo.web.vaadin.crop.widgetset.client.ui.VCropSelection;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.UserInvalidInputException;
@@ -37,15 +38,15 @@ import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.file.service.UserAvatarService;
 import com.esofthead.mycollab.module.user.accountsettings.view.events.ProfileEvent;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
+import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.ByteArrayImageResource;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
-import com.esofthead.mycollab.vaadin.ui.ViewComponent;
-import com.esofthead.mycollab.web.AppContext;
-import com.vaadin.data.Property.ValueChangeEvent;
-import com.vaadin.data.Property.ValueChangeListener;
-import com.vaadin.terminal.Resource;
+import com.vaadin.server.Resource;
+import com.vaadin.shared.ui.MarginInfo;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -57,7 +58,7 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 
 @ViewComponent
-public class ProfilePhotoUploadViewImpl extends AbstractView implements
+public class ProfilePhotoUploadViewImpl extends AbstractPageView implements
 		ProfilePhotoUploadView {
 	private static final long serialVersionUID = 1L;
 
@@ -86,9 +87,8 @@ public class ProfilePhotoUploadViewImpl extends AbstractView implements
 
 		HorizontalLayout previewBox = new HorizontalLayout();
 		previewBox.setSpacing(true);
-		previewBox.setMargin(false, true, true, false);
+		previewBox.setMargin(new MarginInfo(false, true, true, false));
 		previewBox.setWidth("100%");
-		previewBox.setHeight(SIZE_UNDEFINED, 0);
 
 		Resource defaultPhoto = UserAvatarControlFactory.createAvatarResource(
 				AppContext.getUserAvatarId(), 100);
@@ -98,10 +98,10 @@ public class ProfilePhotoUploadViewImpl extends AbstractView implements
 		previewBox.setComponentAlignment(previewImage, Alignment.TOP_LEFT);
 
 		VerticalLayout previewBoxRight = new VerticalLayout();
-		previewBoxRight.setMargin(false, true, false, true);
+		previewBoxRight.setMargin(new MarginInfo(false, true, false, true));
 		Label lbPreview = new Label(
 				"<p style='margin: 0px;'><strong>To the left is what your profile photo will look like.</strong></p><p style='margin-top: 0px;'>To make adjustments, you can drag around and resize the selection square below. When you are happy with your photo click the &ldquo;Accept&ldquo; button.</p>",
-				Label.CONTENT_XHTML);
+				ContentMode.HTML);
 		previewBoxRight.addComponent(lbPreview);
 
 		HorizontalLayout controlBtns = new HorizontalLayout();
@@ -171,44 +171,42 @@ public class ProfilePhotoUploadViewImpl extends AbstractView implements
 		CssLayout cropBox = new CssLayout();
 		cropBox.addStyleName(UIConstants.PHOTO_CROPBOX);
 		cropBox.setWidth("100%");
-		Panel currentPhotoBox = new Panel();
+		VerticalLayout currentPhotoBox = new VerticalLayout();
 		Resource resource = new ByteArrayImageResource(
 				ImageUtil.convertImageToByteArray(originalImage), "image/png");
 		CropField cropField = new CropField(resource);
 		cropField.setImmediate(true);
 		cropField.setSelectionAspectRatio(1.0f);
-		cropField.addListener(new ValueChangeListener() {
+		cropField.addValueChangeListener(new Property.ValueChangeListener() {
 
-			@Override
-			public void valueChange(ValueChangeEvent event) {
-				VCropSelection newSelection = (VCropSelection) event
-						.getProperty().getValue();
-				int x1 = newSelection.getXTopLeft();
-				int y1 = newSelection.getYTopLeft();
-				int x2 = newSelection.getXBottomRight();
-				int y2 = newSelection.getYBottomRight();
-				if (x2 > x1 && y2 > y1) {
-					BufferedImage subImage = originalImage.getSubimage(x1, y1,
-							(x2 - x1), (y2 - y1));
-					ByteArrayOutputStream outStream = new ByteArrayOutputStream();
-					try {
-						ImageIO.write(subImage, "png", outStream);
-						scaleImageData = outStream.toByteArray();
-						displayPreviewImage();
-					} catch (IOException e) {
-						log.error("Error while scale image: ", e);
-					}
-				}
+            @Override
+            public void valueChange(Property.ValueChangeEvent event) {
+                VCropSelection newSelection = (VCropSelection) event
+                        .getProperty().getValue();
+                int x1 = newSelection.getXTopLeft();
+                int y1 = newSelection.getYTopLeft();
+                int x2 = newSelection.getXBottomRight();
+                int y2 = newSelection.getYBottomRight();
+                if (x2 > x1 && y2 > y1) {
+                    BufferedImage subImage = originalImage.getSubimage(x1, y1,
+                            (x2 - x1), (y2 - y1));
+                    ByteArrayOutputStream outStream = new ByteArrayOutputStream();
+                    try {
+                        ImageIO.write(subImage, "png", outStream);
+                        scaleImageData = outStream.toByteArray();
+                        displayPreviewImage();
+                    } catch (IOException e) {
+                        log.error("Error while scale image: ", e);
+                    }
+                }
 
-			}
+            }
 
-		});
+        });
 		currentPhotoBox.setWidth("650px");
 		currentPhotoBox.setHeight("650px");
-		currentPhotoBox.addStyleName(UIConstants.PANEL_WITHOUT_BORDER);
-		currentPhotoBox.getContent().setSizeUndefined();
-		currentPhotoBox.addComponent(cropField);
-		((VerticalLayout) currentPhotoBox.getContent()).setMargin(false);
+
+        currentPhotoBox.addComponent(cropField);
 
 		cropBox.addComponent(currentPhotoBox);
 

@@ -24,24 +24,37 @@ import com.esofthead.mycollab.core.cache.Cacheable;
 import com.esofthead.mycollab.core.persistence.service.IDefaultService;
 import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.module.crm.domain.ContactCase;
+import com.esofthead.mycollab.module.crm.domain.ContactLead;
 import com.esofthead.mycollab.module.crm.domain.ContactOpportunity;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public interface ContactService extends
 		IDefaultService<Integer, Contact, ContactSearchCriteria> {
 
 	@Cacheable
 	SimpleContact findById(int contactId, @CacheKey int sAccountId);
 
-	@CacheEvict(serviceMap = { OpportunityService.class })
+	@CacheEvict(serviceMap = { OpportunityService.class,
+			ContactOpportunityService.class })
 	void removeContactOpportunityRelationship(
 			ContactOpportunity associateOpportunity,
 			@CacheKey Integer sAccountId);
 
-	@CacheEvict(serviceMap = { OpportunityService.class })
+	@CacheEvict(serviceMap = { OpportunityService.class,
+			ContactOpportunityService.class })
 	void saveContactOpportunityRelationship(
 			List<ContactOpportunity> associateOpportunities,
+			@CacheKey Integer accountId);
+
+	@CacheEvict(serviceMap = { LeadService.class })
+	void saveContactLeadRelationship(List<ContactLead> associateLeads,
 			@CacheKey Integer accountId);
 
 	@CacheEvict(serviceMap = { CaseService.class })
@@ -51,4 +64,8 @@ public interface ContactService extends
 	@CacheEvict(serviceMap = { CaseService.class })
 	void removeContactCaseRelationship(ContactCase associateCase,
 			@CacheKey Integer sAccountId);
+
+	@Cacheable
+	SimpleContact findContactAssoWithConvertedLead(int leadId,
+			@CacheKey int accountId);
 }

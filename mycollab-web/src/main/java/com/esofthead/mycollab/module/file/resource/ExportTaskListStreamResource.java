@@ -66,14 +66,22 @@ import com.esofthead.mycollab.schedule.email.project.ProjectMailLinkGenerator;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class ExportTaskListStreamResource<T, S extends SearchCriteria> extends
 		ExportItemsStreamResource<SimpleTaskList> {
 	private static final long serialVersionUID = 1L;
 
-	private ISearchableService searchService;
-	private S searchCriteria;
 	private static Logger log = LoggerFactory
 			.getLogger(ExportTaskListStreamResource.class);
+
+	private ISearchableService searchService;
+	private S searchCriteria;
+
 	protected RpParameterBuilder parameters;
 
 	public ExportTaskListStreamResource(String reportTitle,

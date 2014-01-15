@@ -14,10 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-services.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.module.project.dao;
 
 import java.util.List;
@@ -32,7 +29,7 @@ import com.esofthead.mycollab.module.project.domain.criteria.ProjectGenericTaskS
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public interface ProjectGenericTaskMapper extends
 		ISearchableDAO<ProjectGenericTaskSearchCriteria> {

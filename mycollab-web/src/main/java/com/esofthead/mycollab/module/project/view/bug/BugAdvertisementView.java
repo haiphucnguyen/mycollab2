@@ -16,8 +16,8 @@
  */
 package com.esofthead.mycollab.module.project.view.bug;
 
-import com.esofthead.mycollab.vaadin.mvp.View;
+import com.esofthead.mycollab.vaadin.mvp.PageView;
 
-public interface BugAdvertisementView extends View {
+public interface BugAdvertisementView extends PageView {
 
 }

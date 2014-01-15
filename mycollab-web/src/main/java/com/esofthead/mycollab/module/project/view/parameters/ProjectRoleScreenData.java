@@ -20,6 +20,12 @@ import com.esofthead.mycollab.module.project.domain.ProjectRole;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectRoleSearchCriteria;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ *
+ */
 public class ProjectRoleScreenData {
 	public static class Search extends ScreenData<ProjectRoleSearchCriteria> {
 

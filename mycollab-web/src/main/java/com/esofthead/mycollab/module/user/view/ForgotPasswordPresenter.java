@@ -14,36 +14,35 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.module.user.view;
 
 import com.esofthead.mycollab.shell.view.MainWindowContainer;
-import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
-import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.vaadin.ui.AbstractPresenter;
 import com.vaadin.ui.ComponentContainer;
 
 /**
- *
- * @author haiphucnguyen
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
-public class ForgotPasswordPresenter extends AbstractPresenter<ForgotPasswordView> {
+public class ForgotPasswordPresenter extends
+		AbstractPresenter<ForgotPasswordView> {
 	private static final long serialVersionUID = 1L;
 
 	public ForgotPasswordPresenter() {
-        super(ForgotPasswordView.class);
-    }
+		super(ForgotPasswordView.class);
+	}
 
-    @Override
-    protected void onGo(ComponentContainer container, ScreenData<?> data) {
-        MainWindowContainer windowContainer = (MainWindowContainer) container;
-        windowContainer.removeAllComponents();
+	@Override
+	protected void onGo(ComponentContainer container, ScreenData<?> data) {
+		MainWindowContainer windowContainer = (MainWindowContainer) container;
+		windowContainer.removeAllComponents();
 
-        windowContainer.addComponent(view.getWidget());
-        
-        AppContext.addFragment("user/forgotpassword", "Forgot Password");
-    }
+		windowContainer.addComponent(view.getWidget());
+
+		AppContext.addFragment("user/forgotpassword", "Forgot Password");
+	}
 }

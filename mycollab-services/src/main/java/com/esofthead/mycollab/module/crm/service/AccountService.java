@@ -27,6 +27,12 @@ import com.esofthead.mycollab.module.crm.domain.AccountLead;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public interface AccountService extends
 		IDefaultService<Integer, Account, AccountSearchCriteria> {
 
@@ -40,4 +46,8 @@ public interface AccountService extends
 	@CacheEvict(serviceMap = { LeadService.class })
 	void removeAccountLeadRelationship(AccountLead associateLead,
 			@CacheKey Integer accountId);
+
+	@Cacheable
+	SimpleAccount findAccountAssoWithConvertedLead(int leadId,
+			@CacheKey int accountId);
 }

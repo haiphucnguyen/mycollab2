@@ -14,10 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.module.project.view.task;
 
 import java.util.GregorianCalendar;
@@ -33,16 +30,15 @@ import com.esofthead.mycollab.module.project.domain.Task;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberComboBox;
-import com.esofthead.mycollab.module.tracker.domain.BugWithBLOBs;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
-import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
+import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.web.AppContext;
-import com.vaadin.data.Item;
-import com.vaadin.data.util.BeanItem;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Field;
@@ -54,7 +50,8 @@ import com.vaadin.ui.Window;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class AssignTaskWindow extends Window {
 	private static final long serialVersionUID = 1L;
@@ -63,27 +60,32 @@ public class AssignTaskWindow extends Window {
 
 	public AssignTaskWindow(Task task) {
 		super("Assign task '" + task.getTaskname() + "'");
+
+		VerticalLayout contentLayout = new VerticalLayout();
+		contentLayout.setSpacing(true);
+		contentLayout.setMargin(new MarginInfo(false, false, true, false));
+
 		this.task = task;
 		this.setWidth("750px");
 		editForm = new EditForm();
-		this.addComponent(editForm);
-		editForm.setItemDataSource(new BeanItem<Task>(task));
-		VerticalLayout contentLayout = (VerticalLayout) this.getContent();
-		contentLayout.setSpacing(true);
-		contentLayout.setMargin(false, false, true, false);
+		contentLayout.addComponent(editForm);
+		editForm.setBean(task);
+
+		this.setContent(contentLayout);
+
 		center();
 	}
 
-	private class EditForm extends AdvancedEditBeanForm<BugWithBLOBs> {
+	private class EditForm extends AdvancedEditBeanForm<Task> {
 
 		private static final long serialVersionUID = 1L;
 		private RichTextArea commentArea;
 
 		@Override
-		public void setItemDataSource(Item newDataSource) {
+		public void setBean(Task newDataSource) {
 			this.setFormLayoutFactory(new FormLayoutFactory());
-			this.setFormFieldFactory(new EditFormFieldFactory());
-			super.setItemDataSource(newDataSource);
+			this.setBeanFormFieldFactory(new EditFormFieldFactory(EditForm.this));
+			super.setBean(newDataSource);
 		}
 
 		class FormLayoutFactory implements IFormLayoutFactory {
@@ -105,7 +107,7 @@ public class AssignTaskWindow extends Window {
 
 				HorizontalLayout controlsBtn = new HorizontalLayout();
 				controlsBtn.setSpacing(true);
-				controlsBtn.setMargin(true, true, true, false);
+				controlsBtn.setMargin(new MarginInfo(true, true, true, false));
 				layout.addComponent(controlsBtn);
 
 				Button cancelBtn = new Button("Cancel",
@@ -128,43 +130,44 @@ public class AssignTaskWindow extends Window {
 
 							@Override
 							public void buttonClick(Button.ClickEvent event) {
-
-								// Save task status and assignee
-								ProjectTaskService bugService = ApplicationContextUtil
-										.getSpringBean(ProjectTaskService.class);
-								bugService.updateWithSession(task,
-										AppContext.getUsername());
-
-								// Save comment
-								String commentValue = (String) commentArea
-										.getValue();
-								if (commentValue != null
-										&& !commentValue.trim().equals("")) {
-									Comment comment = new Comment();
-									comment.setComment((String) commentArea
-											.getValue());
-									comment.setCreatedtime(new GregorianCalendar()
-											.getTime());
-									comment.setCreateduser(AppContext
-											.getUsername());
-									comment.setSaccountid(AppContext
-											.getAccountId());
-									comment.setType(CommentType.PRJ_TASK
-											.toString());
-									comment.setTypeid(task.getId());
-									comment.setExtratypeid(CurrentProjectVariables
-											.getProjectId());
-
-									CommentService commentService = ApplicationContextUtil
-											.getSpringBean(CommentService.class);
-									commentService.saveWithSession(comment,
+								if (EditForm.this.validateForm()) {
+									// Save task status and assignee
+									ProjectTaskService taskService = ApplicationContextUtil
+											.getSpringBean(ProjectTaskService.class);
+									taskService.updateWithSession(task,
 											AppContext.getUsername());
-								}
 
-								AssignTaskWindow.this.close();
-								EventBus.getInstance().fireEvent(
-										new TaskEvent.GotoRead(this, task
-												.getId()));
+									// Save comment
+									String commentValue = (String) commentArea
+											.getValue();
+									if (commentValue != null
+											&& !commentValue.trim().equals("")) {
+										Comment comment = new Comment();
+										comment.setComment((String) commentArea
+												.getValue());
+										comment.setCreatedtime(new GregorianCalendar()
+												.getTime());
+										comment.setCreateduser(AppContext
+												.getUsername());
+										comment.setSaccountid(AppContext
+												.getAccountId());
+										comment.setType(CommentType.PRJ_TASK
+												.toString());
+										comment.setTypeid(task.getId());
+										comment.setExtratypeid(CurrentProjectVariables
+												.getProjectId());
+
+										CommentService commentService = ApplicationContextUtil
+												.getSpringBean(CommentService.class);
+										commentService.saveWithSession(comment,
+												AppContext.getUsername());
+									}
+
+									AssignTaskWindow.this.close();
+									EventBus.getInstance().fireEvent(
+											new TaskEvent.GotoRead(this, task
+													.getId()));
+								}
 							}
 						});
 				approveBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
@@ -179,7 +182,7 @@ public class AssignTaskWindow extends Window {
 			}
 
 			@Override
-			public void attachField(Object propertyId, Field field) {
+			public boolean attachField(Object propertyId, Field<?> field) {
 				if (propertyId.equals("assignuser")) {
 					informationLayout.addComponent(field, LocalizationHelper
 							.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD), 0,
@@ -187,17 +190,24 @@ public class AssignTaskWindow extends Window {
 				} else if (propertyId.equals("comment")) {
 					informationLayout.addComponent(field, "Comments", 0, 1, 2,
 							"100%", Alignment.MIDDLE_LEFT);
+				} else {
+					return false;
 				}
+
+				return true;
 			}
 		}
 
-		private class EditFormFieldFactory extends DefaultEditFormFieldFactory {
-
+		private class EditFormFieldFactory extends
+				AbstractBeanFieldGroupEditFieldFactory<Task> {
 			private static final long serialVersionUID = 1L;
 
+			public EditFormFieldFactory(GenericBeanForm<Task> form) {
+				super(form);
+			}
+
 			@Override
-			protected Field onCreateField(Item item, Object propertyId,
-					com.vaadin.ui.Component uiContext) {
+			protected Field<?> onCreateField(Object propertyId) {
 				if (propertyId.equals("assignuser")) {
 					return new ProjectMemberComboBox();
 				} else if (propertyId.equals("comment")) {

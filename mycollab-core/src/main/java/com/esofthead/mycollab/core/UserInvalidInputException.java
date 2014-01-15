@@ -14,10 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-core.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.esofthead.mycollab.core;
 
 /**
@@ -25,7 +21,8 @@ package com.esofthead.mycollab.core;
  * password, invalid input. Note that MyCollab catch this type exception to
  * recognize user mistake
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class UserInvalidInputException extends MyCollabException {
 	private static final long serialVersionUID = 1L;

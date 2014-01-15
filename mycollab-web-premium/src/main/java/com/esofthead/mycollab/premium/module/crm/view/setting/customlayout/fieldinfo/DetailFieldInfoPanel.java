@@ -22,6 +22,12 @@ import com.esofthead.mycollab.form.view.builder.type.AbstractDynaField;
 import com.esofthead.mycollab.form.view.builder.type.DynaSection;
 import com.vaadin.ui.VerticalLayout;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
 public abstract class DetailFieldInfoPanel<F extends AbstractDynaField> extends
 		VerticalLayout {
 	private static final long serialVersionUID = 1L;

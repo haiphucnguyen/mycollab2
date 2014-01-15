@@ -14,21 +14,19 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.module.project;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import com.esofthead.mycollab.web.MyCollabResource;
-import com.vaadin.terminal.Resource;
+import com.vaadin.server.Resource;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class ProjectResources {
 
@@ -51,7 +49,7 @@ public class ProjectResources {
 		resourceLinks.put(ProjectContants.TASK,
 				MyCollabResource.newResourceLink("icons/16/project/task.png"));
 		resourceLinks.put(ProjectContants.TASK_LIST, MyCollabResource
-				.newResourceLink("icons/16/project/tasklist.png"));
+				.newResourceLink("icons/16/project/task_group.png"));
 		resourceLinks.put(ProjectContants.BUG,
 				MyCollabResource.newResourceLink("icons/16/project/bug.png"));
 		resourceLinks.put(ProjectContants.BUG_COMPONENT, MyCollabResource
@@ -75,7 +73,7 @@ public class ProjectResources {
 		resources.put(ProjectContants.TASK,
 				MyCollabResource.newResource("icons/16/project/task.png"));
 		resources.put(ProjectContants.TASK_LIST,
-				MyCollabResource.newResource("icons/16/project/tasklist.png"));
+				MyCollabResource.newResource("icons/16/project/task_group.png"));
 		resources.put(ProjectContants.BUG,
 				MyCollabResource.newResource("icons/16/project/bug.png"));
 		resources.put(ProjectContants.BUG_COMPONENT,

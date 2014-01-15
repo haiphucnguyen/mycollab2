@@ -5,8 +5,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.vaadin.hene.splitbutton.SplitButtonExt;
-
 import com.esofthead.mycollab.common.MonitorTypeConstants;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.RangeDateSearchField;
@@ -31,21 +29,26 @@ import com.esofthead.mycollab.module.project.service.ProjectGenericTaskService;
 import com.esofthead.mycollab.module.project.view.time.TimeTrackingTableDisplay;
 import com.esofthead.mycollab.reporting.ReportExportType;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
+import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
+import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
+import com.esofthead.mycollab.vaadin.ui.SplitButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
-import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
-import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.Property;
 import com.vaadin.event.FieldEvents.TextChangeEvent;
 import com.vaadin.event.FieldEvents.TextChangeListener;
-import com.vaadin.terminal.Resource;
-import com.vaadin.terminal.StreamResource;
+import com.vaadin.server.FileDownloader;
+import com.vaadin.server.StreamResource;
+import com.vaadin.shared.ui.combobox.FilteringMode;
+import com.vaadin.shared.ui.datefield.Resolution;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -58,7 +61,7 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
 @ViewComponent
-public class TimeTrackingListViewImpl extends AbstractView implements
+public class TimeTrackingListViewImpl extends AbstractPageView implements
 		TimeTrackingListView {
 	private static final long serialVersionUID = 1L;
 
@@ -66,16 +69,14 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 	private final ItemTimeLoggingSearchPanel itemTimeLoggingPanel;
 	private ItemTimeLoggingSearchCriteria itemTimeLogginSearchCriteria;
 
-	private SplitButtonExt exportButtonControl;
+	private SplitButton exportButtonControl;
 	private final ItemTimeLoggingService itemTimeLoggingService;
 
 	private final Label lbTimeRange;
 	private EntryComponentLayout entryComponentLayout;
-	private HorizontalLayout addEntryLayoutWapper;
 	private boolean isNeedConstructLayout;
 
 	public TimeTrackingListViewImpl() {
-		this.setMargin(false, true, true, true);
 
 		this.itemTimeLoggingService = ApplicationContextUtil
 				.getSpringBean(ItemTimeLoggingService.class);
@@ -100,14 +101,12 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 		headerLayout.setWidth("100%");
 		headerLayout.setSpacing(true);
 		headerWrapper.addComponent(headerLayout);
-		this.lbTimeRange = new Label("", Label.CONTENT_XHTML);
+		this.lbTimeRange = new Label("", ContentMode.HTML);
 		headerLayout.addComponent(this.lbTimeRange);
 		headerLayout.setComponentAlignment(this.lbTimeRange,
 				Alignment.MIDDLE_LEFT);
 		headerLayout.setExpandRatio(this.lbTimeRange, 1.0f);
 
-		addEntryLayoutWapper = new HorizontalLayout();
-		addEntryLayoutWapper.setWidth("100%");
 		isNeedConstructLayout = true;
 		Button addNewEntryBtn = new Button("Add Entry",
 				new Button.ClickListener() {
@@ -118,8 +117,9 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 						if (isNeedConstructLayout) {
 							isNeedConstructLayout = false;
 							entryComponentLayout = new EntryComponentLayout();
-							addEntryLayoutWapper
-									.addComponent(entryComponentLayout);
+                            int index = TimeTrackingListViewImpl.this.getComponentIndex(headerWrapper) + 1;
+							TimeTrackingListViewImpl.this
+									.addComponent(entryComponentLayout, index);
 						}
 					}
 				});
@@ -139,37 +139,28 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 				exportButtonControl.setPopupVisible(true);
 			}
 		});
-		exportButtonControl = new SplitButtonExt(exportBtn);
+		exportButtonControl = new SplitButton(exportBtn);
 		exportButtonControl.setStyleName(UIConstants.THEME_GRAY_LINK);
 		exportButtonControl.addStyleName(UIConstants.SPLIT_BUTTON);
 		exportButtonControl.setIcon(MyCollabResource
 				.newResource("icons/16/export.png"));
 
 		VerticalLayout popupButtonsControl = new VerticalLayout();
-		popupButtonsControl.setWidth("150px");
-		exportButtonControl.addComponent(popupButtonsControl);
+		exportButtonControl.setContent(popupButtonsControl);
 
-		Button exportPdfBtn = new Button("Pdf", new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void buttonClick(ClickEvent event) {
-				downloadExportStreamCommand(ReportExportType.PDF);
-			}
-		});
+		Button exportPdfBtn = new Button("Pdf");
+		FileDownloader exportPdfDownloader = new FileDownloader(
+				constructStreamResource(ReportExportType.PDF));
+		exportPdfDownloader.extend(exportPdfBtn);
 		exportPdfBtn.setIcon(MyCollabResource
 				.newResource("icons/16/filetypes/pdf.png"));
 		exportPdfBtn.setStyleName("link");
 		popupButtonsControl.addComponent(exportPdfBtn);
 
-		Button exportExcelBtn = new Button("Excel", new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void buttonClick(ClickEvent event) {
-				downloadExportStreamCommand(ReportExportType.EXCEL);
-			}
-		});
+		Button exportExcelBtn = new Button("Excel");
+		FileDownloader excelDownloader = new FileDownloader(
+				constructStreamResource(ReportExportType.EXCEL));
+		excelDownloader.extend(exportExcelBtn);
 		exportExcelBtn.setIcon(MyCollabResource
 				.newResource("icons/16/filetypes/excel.png"));
 		exportExcelBtn.setStyleName("link");
@@ -179,7 +170,6 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 		headerLayout.setComponentAlignment(this.exportButtonControl,
 				Alignment.MIDDLE_RIGHT);
 		this.addComponent(headerWrapper);
-		this.addComponent(addEntryLayoutWapper);
 
 		this.tableItem = new TimeTrackingTableDisplay(Arrays.asList(
 				new TableViewField("Summary", "summary",
@@ -222,7 +212,7 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 		this.addComponent(this.tableItem);
 	}
 
-	private void downloadExportStreamCommand(ReportExportType exportType) {
+	private StreamResource constructStreamResource(ReportExportType exportType) {
 		final String title = "Time of Project "
 				+ ((CurrentProjectVariables.getProject() != null && CurrentProjectVariables
 						.getProject().getName() != null) ? CurrentProjectVariables
@@ -232,11 +222,10 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 				ApplicationContextUtil
 						.getSpringBean(ItemTimeLoggingService.class),
 				TimeTrackingListViewImpl.this.itemTimeLogginSearchCriteria);
-		final Resource res = new StreamResource(exportStream,
-				exportStream.getDefaultExportFileName(),
-				AppContext.getApplication());
-		AppContext.getApplication().getMainWindow().open(res, "_blank");
-		exportButtonControl.setPopupVisible(false);
+		final StreamResource res = new StreamResource(exportStream,
+				ExportTimeLoggingStreamResource
+						.getDefaultExportFileName(exportType));
+		return res;
 	}
 
 	private void setTimeRange() {
@@ -267,7 +256,7 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 		this.setTimeRange();
 	}
 
-	public class EntryComponentLayout extends AbstractView {
+	public class EntryComponentLayout extends AbstractPageView {
 		private static final long serialVersionUID = 1L;
 		private GridFormLayoutHelper gridLayout;
 
@@ -300,7 +289,7 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 			final NumbericTextField hourField = new NumbericTextField();
 
 			final DateField dateField = new DateField();
-			dateField.setResolution(DateField.RESOLUTION_DAY);
+			dateField.setResolution(Resolution.DAY);
 			gridLayout.addComponent(dateField, "Date", 0, 0, "230px");
 			gridLayout.addComponent(hourField, "Hours", 1, 0, "230px");
 			gridLayout.addComponent(ticketComboBox, "Ticket", 2, 0);
@@ -322,7 +311,7 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 				@Override
 				public void buttonClick(ClickEvent event) {
 					TimeTrackingListViewImpl.this.isNeedConstructLayout = true;
-					addEntryLayoutWapper.removeAllComponents();
+					TimeTrackingListViewImpl.this.removeComponent(entryComponentLayout);
 				}
 			});
 			cancelBtn.addStyleName(UIConstants.THEME_LINK);
@@ -337,8 +326,8 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 					ProjectGenericTask projectGenericTask = (ProjectGenericTask) ticketComboBox
 							.getCurrentItem();
 					if (projectGenericTask == null) {
-						getWindow()
-								.showNotification("Please choose assignment");
+						NotificationUtil
+								.showErrorNotification("Please choose assignment");
 						return;
 					}
 					try {
@@ -365,7 +354,7 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 								.saveWithSession(item, AppContext.getUsername());
 
 						TimeTrackingListViewImpl.this.isNeedConstructLayout = true;
-						addEntryLayoutWapper.removeAllComponents();
+                        TimeTrackingListViewImpl.this.removeComponent(entryComponentLayout);
 						setSearchCriteria(itemTimeLogginSearchCriteria);
 					} catch (Exception e) {
 						throw new MyCollabException(e);
@@ -391,12 +380,12 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 
 			public AssignmentSelectionComboBox() {
 				super();
-				this.setFilteringMode(ComboBox.FILTERINGMODE_STARTSWITH);
+				this.setFilteringMode(FilteringMode.STARTSWITH);
 				this.setTextInputAllowed(true);
 				this.setImmediate(true);
 				this.setNullSelectionAllowed(true);
-				this.setItemCaptionMode(ComboBox.ITEM_CAPTION_MODE_EXPLICIT);
-				this.addListener(new Property.ValueChangeListener() {
+				this.setItemCaptionMode(ItemCaptionMode.EXPLICIT);
+				this.addValueChangeListener(new Property.ValueChangeListener() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
@@ -469,7 +458,7 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 			private String oldText;
 
 			public NumbericTextField() {
-				this.addListener(new TextChangeListener() {
+				this.addTextChangeListener(new TextChangeListener() {
 					private static final long serialVersionUID = 1L;
 
 					@Override

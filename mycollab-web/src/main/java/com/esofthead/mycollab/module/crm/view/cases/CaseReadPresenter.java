@@ -30,14 +30,13 @@ import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.crm.CrmLinkGenerator;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
-import com.esofthead.mycollab.module.crm.domain.CallWithBLOBs;
-import com.esofthead.mycollab.module.crm.domain.CaseWithBLOBs;
-import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.module.crm.domain.ContactCase;
-import com.esofthead.mycollab.module.crm.domain.MeetingWithBLOBs;
+import com.esofthead.mycollab.module.crm.domain.SimpleCall;
 import com.esofthead.mycollab.module.crm.domain.SimpleCase;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
-import com.esofthead.mycollab.module.crm.domain.Task;
+import com.esofthead.mycollab.module.crm.domain.SimpleActivity;
+import com.esofthead.mycollab.module.crm.domain.SimpleMeeting;
+import com.esofthead.mycollab.module.crm.domain.SimpleTask;
 import com.esofthead.mycollab.module.crm.domain.criteria.CaseSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.ActivityEvent;
 import com.esofthead.mycollab.module.crm.events.CaseEvent;
@@ -50,37 +49,43 @@ import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
 import com.esofthead.mycollab.module.crm.view.CrmToolbar;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
-import com.esofthead.mycollab.vaadin.ui.MessageBox;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
-import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.UI;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class CaseReadPresenter extends CrmGenericPresenter<CaseReadView> {
 
 	private static final long serialVersionUID = 1L;
 
 	public CaseReadPresenter() {
 		super(CaseReadView.class);
-		bind();
 	}
 
-	private void bind() {
+	@Override
+	protected void postInitView() {
 		view.getPreviewFormHandlers().addFormHandler(
-				new DefaultPreviewFormHandler<CaseWithBLOBs>() {
+				new DefaultPreviewFormHandler<SimpleCase>() {
 					@Override
-					public void onEdit(CaseWithBLOBs data) {
+					public void onEdit(SimpleCase data) {
 						EventBus.getInstance().fireEvent(
 								new CaseEvent.GotoEdit(this, data));
 					}
 
 					@Override
-					public void onDelete(final CaseWithBLOBs data) {
+					public void onDelete(final SimpleCase data) {
 						ConfirmDialogExt.show(
-								view.getWindow(),
+								UI.getCurrent(),
 								LocalizationHelper.getMessage(
 										GenericI18Enum.DELETE_DIALOG_TITLE,
 										SiteConfiguration.getSiteName()),
@@ -111,8 +116,8 @@ public class CaseReadPresenter extends CrmGenericPresenter<CaseReadView> {
 					}
 
 					@Override
-					public void onClone(CaseWithBLOBs data) {
-						CaseWithBLOBs cloneData = (CaseWithBLOBs) data.copy();
+					public void onClone(SimpleCase data) {
+						SimpleCase cloneData = (SimpleCase) data.copy();
 						cloneData.setId(null);
 						EventBus.getInstance().fireEvent(
 								new CaseEvent.GotoEdit(this, cloneData));
@@ -125,7 +130,7 @@ public class CaseReadPresenter extends CrmGenericPresenter<CaseReadView> {
 					}
 
 					@Override
-					public void gotoNext(CaseWithBLOBs data) {
+					public void gotoNext(SimpleCase data) {
 						CaseService caseService = ApplicationContextUtil
 								.getSpringBean(CaseService.class);
 						CaseSearchCriteria criteria = new CaseSearchCriteria();
@@ -144,7 +149,7 @@ public class CaseReadPresenter extends CrmGenericPresenter<CaseReadView> {
 					}
 
 					@Override
-					public void gotoPrevious(CaseWithBLOBs data) {
+					public void gotoPrevious(SimpleCase data) {
 						CaseService caseService = ApplicationContextUtil
 								.getSpringBean(CaseService.class);
 						CaseSearchCriteria criteria = new CaseSearchCriteria();
@@ -164,25 +169,25 @@ public class CaseReadPresenter extends CrmGenericPresenter<CaseReadView> {
 				});
 
 		view.getRelatedActivityHandlers().addRelatedListHandler(
-				new AbstractRelatedListHandler() {
+				new AbstractRelatedListHandler<SimpleActivity>() {
 					@Override
 					public void createNewRelatedItem(String itemId) {
 						if (itemId.equals("task")) {
-							Task task = new Task();
+							SimpleTask task = new SimpleTask();
 							task.setType(CrmTypeConstants.CASE);
 							task.setTypeid(view.getItem().getId());
 							EventBus.getInstance().fireEvent(
 									new ActivityEvent.TaskEdit(
 											CaseReadPresenter.this, task));
 						} else if (itemId.equals("meeting")) {
-							MeetingWithBLOBs meeting = new MeetingWithBLOBs();
+							SimpleMeeting meeting = new SimpleMeeting();
 							meeting.setType(CrmTypeConstants.CASE);
 							meeting.setTypeid(view.getItem().getId());
 							EventBus.getInstance().fireEvent(
 									new ActivityEvent.MeetingEdit(
 											CaseReadPresenter.this, meeting));
 						} else if (itemId.equals("call")) {
-							CallWithBLOBs call = new CallWithBLOBs();
+							SimpleCall call = new SimpleCall();
 							call.setType(CrmTypeConstants.CASE);
 							call.setTypeid(view.getItem().getId());
 							EventBus.getInstance().fireEvent(
@@ -196,7 +201,7 @@ public class CaseReadPresenter extends CrmGenericPresenter<CaseReadView> {
 				new AbstractRelatedListHandler<SimpleContact>() {
 					@Override
 					public void createNewRelatedItem(String itemId) {
-						Contact contact = new Contact();
+						SimpleContact contact = new SimpleContact();
 						contact.setExtraData(view.getItem());
 						EventBus.getInstance().fireEvent(
 								new ContactEvent.GotoEdit(
@@ -255,7 +260,7 @@ public class CaseReadPresenter extends CrmGenericPresenter<CaseReadView> {
 				}
 			}
 		} else {
-			MessageBox.showMessagePermissionAlert();
+			NotificationUtil.showMessagePermissionAlert();
 		}
 	}
 }

@@ -14,10 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.module.project.view.task;
 
 import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
@@ -25,8 +22,9 @@ import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.IPreviewView;
 
 /**
- *
- * @author haiphucnguyen
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
 public interface TaskGroupReadView extends IPreviewView<SimpleTaskList> {
     

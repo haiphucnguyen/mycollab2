@@ -22,11 +22,18 @@ import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.crm.ui.components.HistoryLogWindow;
 import com.esofthead.mycollab.vaadin.ui.HistoryLogComponent;
 
-@SuppressWarnings("serial")
-public class ContactHistoryLogWindow extends HistoryLogWindow {
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
+class ContactHistoryLogWindow extends HistoryLogWindow {
+	private static final long serialVersionUID = 1L;
 
-	public ContactHistoryLogWindow(String module, String type, int typeid) {
-		super(module, type, typeid);
+	public ContactHistoryLogWindow(String module, String type) {
+		super(module, type);
+
 		this.generateFieldDisplayHandler("firstname", "First Name");
 		this.generateFieldDisplayHandler("lastname", "Last Name");
 		this.generateFieldDisplayHandler("accountId", "Account");

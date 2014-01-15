@@ -16,128 +16,66 @@
  */
 package com.esofthead.mycollab.vaadin.ui;
 
-import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.Validator;
-
-import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
-
-import com.esofthead.mycollab.common.localization.GenericI18Enum;
-import com.esofthead.mycollab.core.utils.LocalizationHelper;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
-import com.esofthead.mycollab.vaadin.ui.MessageBox.ButtonType;
-import com.esofthead.mycollab.validator.constraints.DateComparision;
-import com.esofthead.mycollab.web.AppContext;
 
 /**
- * Generic form with java bean as datasource. It includes validation against
- * bean input
+ * Generic attachForm with java bean as datasource. It includes validation
+ * against bean input
  * 
- * @param <T>
- *            java bean as datasource map with form fields
+ * @param <B>
+ *            java bean as datasource map with attachForm fields
+ * @author MyCollab Ltd.
+ * @since 2.0
  */
-public class AdvancedEditBeanForm<T> extends GenericForm implements
-		HasEditFormHandlers<T> {
+public class AdvancedEditBeanForm<B> extends GenericBeanForm<B> implements
+		HasEditFormHandlers<B> {
 	private static final long serialVersionUID = 1L;
 
-	private final Validator validation;
-	private List<EditFormHandler<T>> editFormHandlers;
-
-	public AdvancedEditBeanForm() {
-		this.setImmediate(true);
-		this.setWriteThrough(true);
-		validation = ApplicationContextUtil
-				.getSpringBean(LocalValidatorFactoryBean.class);
-	}
+	private List<EditFormHandler<B>> editFormHandlers;
 
 	/**
-	 * Validate form against data
+	 * Validate attachForm against data
 	 * 
-	 * @param data
 	 * @return true if data is valid, otherwise return false and show result to
-	 *         form
+	 *         attachForm
 	 */
-	public boolean validateForm(Object data) {
-		for (Object propertyId : this.getItemPropertyIds()) {
-			this.getField(propertyId).removeStyleName("errorField");
-		}
-		Set<ConstraintViolation<Object>> violations = validation.validate(data);
-		if (violations.size() > 0) {
-			StringBuilder errorMsg = new StringBuilder();
-
-			for (@SuppressWarnings("rawtypes")
-			ConstraintViolation violation : violations) {
-				errorMsg.append(violation.getMessage()).append("<br/>");
-
-				if (violation.getPropertyPath() != null
-						&& !violation.getPropertyPath().toString().equals("")) {
-					this.getField(violation.getPropertyPath().toString())
-							.addStyleName("errorField");
-				} else {
-					Annotation validateAnno = violation
-							.getConstraintDescriptor().getAnnotation();
-					if (validateAnno instanceof DateComparision) {
-						String firstDateField = ((DateComparision) validateAnno)
-								.firstDateField();
-						String lastDateField = ((DateComparision) validateAnno)
-								.lastDateField();
-
-						this.getField(firstDateField)
-								.addStyleName("errorField");
-						this.getField(lastDateField).addStyleName("errorField");
-					}
-				}
-
-			}
-
-			MessageBox mb = new MessageBox(AppContext.getApplication()
-					.getMainWindow(),
-					LocalizationHelper
-							.getMessage(GenericI18Enum.ERROR_WINDOW_TITLE),
-					MessageBox.Icon.ERROR, errorMsg.toString(),
-					new MessageBox.ButtonConfig(ButtonType.OK, "Ok"));
-			mb.show();
-
-			return false;
-		}
-
-		return true;
+	public boolean validateForm() {
+		fieldFactory.commit();
+		return isValid();
 	}
 
 	@Override
-	public void addFormHandler(EditFormHandler<T> editFormHandler) {
+	public void addFormHandler(EditFormHandler<B> editFormHandler) {
 		if (editFormHandlers == null) {
-			editFormHandlers = new ArrayList<EditFormHandler<T>>();
+			editFormHandlers = new ArrayList<EditFormHandler<B>>();
 		}
 
 		editFormHandlers.add(editFormHandler);
 	}
 
-	protected void fireSaveForm(T bean) {
+	public void fireSaveForm() {
 		if (editFormHandlers != null) {
-			for (EditFormHandler<T> editFormHandler : editFormHandlers) {
-				editFormHandler.onSave(bean);
+			for (EditFormHandler<B> editFormHandler : editFormHandlers) {
+				editFormHandler.onSave(this.getBean());
 			}
 		}
 	}
 
-	protected void fireSaveAndNewForm(T bean) {
+	public void fireSaveAndNewForm() {
 		if (editFormHandlers != null) {
-			for (EditFormHandler<T> editFormHandler : editFormHandlers) {
-				editFormHandler.onSaveAndNew(bean);
+			for (EditFormHandler<B> editFormHandler : editFormHandlers) {
+				editFormHandler.onSaveAndNew(this.getBean());
 			}
 		}
 	}
 
-	protected void fireCancelForm() {
+	public void fireCancelForm() {
 		if (editFormHandlers != null) {
-			for (EditFormHandler<T> editFormHandler : editFormHandlers) {
+			for (EditFormHandler<B> editFormHandler : editFormHandlers) {
 				editFormHandler.onCancel();
 			}
 		}

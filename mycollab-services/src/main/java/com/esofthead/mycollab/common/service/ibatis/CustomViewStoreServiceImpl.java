@@ -29,6 +29,12 @@ import com.esofthead.mycollab.common.service.CustomViewStoreService;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultCrudService;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
 @Service
 public class CustomViewStoreServiceImpl extends
 		DefaultCrudService<Integer, CustomViewStore> implements

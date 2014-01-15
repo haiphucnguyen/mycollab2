@@ -14,10 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-services.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.common;
 
 import java.io.UnsupportedEncodingException;
@@ -32,7 +29,8 @@ import com.esofthead.mycollab.core.MyCollabException;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class UrlEncodeDecoder {
 	private static Logger log = LoggerFactory.getLogger(UrlEncodeDecoder.class);
@@ -44,6 +42,9 @@ public class UrlEncodeDecoder {
 	 */
 	public static String encode(String str) {
 		try {
+			if (str == null) {
+				return "";
+			}
 			return URLEncoder.encode(
 					new String(
 							Base64.encodeBase64URLSafe(str.getBytes("UTF-8")),

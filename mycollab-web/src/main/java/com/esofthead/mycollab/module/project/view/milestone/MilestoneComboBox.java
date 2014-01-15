@@ -14,10 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.module.project.view.milestone;
 
 import java.util.Collections;
@@ -35,19 +32,20 @@ import com.esofthead.mycollab.module.project.domain.criteria.MilestoneSearchCrit
 import com.esofthead.mycollab.module.project.service.MilestoneService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.web.MyCollabResource;
-import com.vaadin.terminal.Resource;
+import com.vaadin.server.Resource;
 import com.vaadin.ui.ComboBox;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
 @SuppressWarnings("serial")
 public class MilestoneComboBox extends ComboBox {
 
 	public MilestoneComboBox() {
 		super();
-		this.setItemCaptionMode(ITEM_CAPTION_MODE_EXPLICIT);
+		this.setItemCaptionMode(ItemCaptionMode.EXPLICIT);
 
 		MilestoneSearchCriteria criteria = new MilestoneSearchCriteria();
 		SimpleProject project = CurrentProjectVariables.getProject();

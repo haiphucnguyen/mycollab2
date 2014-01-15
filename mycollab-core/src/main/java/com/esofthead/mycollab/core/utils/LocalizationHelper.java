@@ -24,7 +24,7 @@ import ch.qos.cal10n.MessageConveyor;
 /**
  * Wrapper class to get localization string.
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  * 
  */
 public class LocalizationHelper {

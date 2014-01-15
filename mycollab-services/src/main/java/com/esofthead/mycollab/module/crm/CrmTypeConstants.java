@@ -16,6 +16,12 @@
  */
 package com.esofthead.mycollab.module.crm;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class CrmTypeConstants {
 	public static final String ACCOUNT = "Account";
 

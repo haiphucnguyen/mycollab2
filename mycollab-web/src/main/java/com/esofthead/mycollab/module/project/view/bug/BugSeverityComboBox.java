@@ -14,27 +14,25 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.module.project.view.bug;
 
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.util.IndexedContainer;
-import com.vaadin.terminal.Resource;
+import com.vaadin.server.Resource;
 import com.vaadin.ui.ComboBox;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class BugSeverityComboBox extends ComboBox {
 
 	private static final long serialVersionUID = 1L;
 
 	public BugSeverityComboBox() {
-		this.setItemCaptionMode(ITEM_CAPTION_MODE_EXPLICIT_DEFAULTS_ID);
+		this.setItemCaptionMode(ItemCaptionMode.EXPLICIT_DEFAULTS_ID);
 		IndexedContainer ic = new IndexedContainer();
 		ic.addItem(BugSeverityConstants.CRITICAL);
 		ic.addItem(BugSeverityConstants.MAJOR);

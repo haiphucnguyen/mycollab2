@@ -14,10 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.module.project.view.task;
 
 import java.util.GregorianCalendar;
@@ -32,14 +29,13 @@ import com.esofthead.mycollab.module.project.service.ProjectTaskListService;
 import com.esofthead.mycollab.module.project.view.milestone.MilestoneComboBox;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberComboBox;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
-import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
+import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.web.AppContext;
-import com.vaadin.data.Item;
-import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -53,13 +49,18 @@ import com.vaadin.ui.Window;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class TaskGroupAddWindow extends Window {
 	private static final long serialVersionUID = 1L;
 	private final TaskGroupDisplayView taskView;
 	private SimpleTaskList taskList;
-	private TaskGroupAddWindow.TaskListForm taskListForm;
+	private TaskListForm taskListForm;
+
+	public TaskGroupAddWindow(final TaskGroupDisplayView taskView) {
+		this(taskView, new SimpleTaskList());
+	}
 
 	public TaskGroupAddWindow(final TaskGroupDisplayView taskView,
 			final SimpleTaskList taskList) {
@@ -69,20 +70,11 @@ public class TaskGroupAddWindow extends Window {
 		this.initUI();
 	}
 
-	public TaskGroupAddWindow(final TaskGroupDisplayView taskView) {
-		super(LocalizationHelper.getMessage(TaskI18nEnum.NEW_TASKGROUP_TITLE));
-		this.taskList = new SimpleTaskList();
-		this.taskView = taskView;
-
-		this.initUI();
-	}
-
 	private void initUI() {
 		this.setWidth("800px");
-		this.taskListForm = new TaskGroupAddWindow.TaskListForm();
-		this.taskListForm.setItemDataSource(new BeanItem(this.taskList));
-		this.addComponent(this.taskListForm);
-		((VerticalLayout) this.getContent()).setMargin(false);
+		this.taskListForm = new TaskListForm();
+		this.taskListForm.setBean(this.taskList);
+		this.setContent(this.taskListForm);
 
 		this.center();
 	}
@@ -95,10 +87,11 @@ public class TaskGroupAddWindow extends Window {
 		private static final long serialVersionUID = 1L;
 
 		@Override
-		public void setItemDataSource(final Item newDataSource) {
-			this.setFormLayoutFactory(new TaskGroupAddWindow.TaskListForm.TaskListFormLayoutFactory());
-			this.setFormFieldFactory(new TaskGroupAddWindow.TaskListForm.EditFormFieldFactory());
-			super.setItemDataSource(newDataSource);
+		public void setBean(final TaskList newDataSource) {
+			this.setFormLayoutFactory(new TaskListFormLayoutFactory());
+			this.setBeanFormFieldFactory(new EditFormFieldFactory(
+					TaskListForm.this));
+			super.setBean(newDataSource);
 		}
 
 		private class TaskListFormLayoutFactory implements IFormLayoutFactory {
@@ -133,7 +126,7 @@ public class TaskGroupAddWindow extends Window {
 				final HorizontalLayout layout = new HorizontalLayout();
 				layout.setSpacing(true);
 				layout.setMargin(true);
-				layout.setStyleName("addNewControl");
+				layout.setStyleName("control-buttons");
 				final Button saveBtn = new Button(
 						LocalizationHelper
 								.getMessage(GenericI18Enum.BUTTON_SAVE_LABEL),
@@ -143,7 +136,8 @@ public class TaskGroupAddWindow extends Window {
 							@Override
 							public void buttonClick(final ClickEvent event) {
 								if (TaskGroupAddWindow.TaskListForm.this
-										.validateForm(TaskGroupAddWindow.this.taskList)) {
+										.validateForm()) {
+									TaskListForm.this.fieldFactory.commit();
 									TaskListFormLayoutFactory.this
 											.saveTaskList();
 									TaskGroupAddWindow.this.close();
@@ -162,7 +156,8 @@ public class TaskGroupAddWindow extends Window {
 							@Override
 							public void buttonClick(final ClickEvent event) {
 								if (TaskGroupAddWindow.TaskListForm.this
-										.validateForm(TaskGroupAddWindow.this.taskList)) {
+										.validateForm()) {
+									TaskListForm.this.fieldFactory.commit();
 									TaskListFormLayoutFactory.this
 											.saveTaskList();
 									TaskGroupAddWindow.this.taskList = new SimpleTaskList();
@@ -213,7 +208,8 @@ public class TaskGroupAddWindow extends Window {
 			}
 
 			@Override
-			public void attachField(final Object propertyId, final Field field) {
+			public boolean attachField(final Object propertyId,
+					final Field<?> field) {
 				if (propertyId.equals("name")) {
 					this.informationLayout.addComponent(field, "Name", 0, 0, 2,
 							"100%");
@@ -230,18 +226,25 @@ public class TaskGroupAddWindow extends Window {
 				} else if (propertyId.equals("milestoneid")) {
 					this.informationLayout.addComponent(field,
 							"Related Milestone", 1, 2);
+				} else {
+					return false;
 				}
+
+				return true;
 			}
 		}
 
-		private class EditFormFieldFactory extends DefaultEditFormFieldFactory {
+		private class EditFormFieldFactory extends
+				AbstractBeanFieldGroupEditFieldFactory<TaskList> {
 
 			private static final long serialVersionUID = 1L;
 
+			public EditFormFieldFactory(GenericBeanForm<TaskList> form) {
+				super(form);
+			}
+
 			@Override
-			protected Field onCreateField(final Item item,
-					final Object propertyId,
-					final com.vaadin.ui.Component uiContext) {
+			protected Field<?> onCreateField(final Object propertyId) {
 				if (propertyId.equals("description")) {
 					final TextArea area = new TextArea();
 					area.setNullRepresentation("");

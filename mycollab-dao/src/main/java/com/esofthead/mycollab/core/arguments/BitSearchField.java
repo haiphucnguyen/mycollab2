@@ -30,17 +30,13 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-core.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.esofthead.mycollab.core.arguments;
 
 import com.esofthead.mycollab.core.utils.BeanUtility;
 
 /**
  *
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public class BitSearchField extends NumberSearchField {
     public static final BitSearchField TRUE = new BitSearchField(AND, 1);

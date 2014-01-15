@@ -53,6 +53,4 @@
   <classpathentry kind="var" path="M2_REPO/org/mybatis/mybatis/3.2.3/mybatis-3.2.3.jar" sourcepath="M2_REPO/org/mybatis/mybatis/3.2.3/mybatis-3.2.3-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/mybatis/mybatis-spring/1.2.1/mybatis-spring-1.2.1.jar" sourcepath="M2_REPO/org/mybatis/mybatis-spring/1.2.1/mybatis-spring-1.2.1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/mysql/mysql-connector-java/5.1.26/mysql-connector-java-5.1.26.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/springframework/flex/spring-flex-core/1.5.2.RELEASE/spring-flex-core-1.5.2.RELEASE.jar" sourcepath="M2_REPO/org/springframework/flex/spring-flex-core/1.5.2.RELEASE/spring-flex-core-1.5.2.RELEASE-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/cglib/cglib-nodep/2.1_3/cglib-nodep-2.1_3.jar" sourcepath="M2_REPO/cglib/cglib-nodep/2.1_3/cglib-nodep-2.1_3-sources.jar"/>
 </classpath>

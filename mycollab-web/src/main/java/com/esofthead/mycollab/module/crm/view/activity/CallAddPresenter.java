@@ -27,26 +27,35 @@ import com.esofthead.mycollab.module.crm.service.CallService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.mvp.HistoryViewManager;
 import com.esofthead.mycollab.vaadin.mvp.NullViewState;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewState;
-import com.esofthead.mycollab.vaadin.ui.MessageBox;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
-import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.Window;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
 public class CallAddPresenter extends CrmGenericPresenter<CallAddView> {
 
 	private static final long serialVersionUID = 1L;
 
 	public CallAddPresenter() {
 		super(CallAddView.class);
+	}
 
+	@Override
+	protected void postInitView() {
 		view.getEditFormHandlers().addFormHandler(
 				new EditFormHandler<CallWithBLOBs>() {
+					private static final long serialVersionUID = 1L;
+
 					@Override
 					public void onSave(final CallWithBLOBs item) {
 						save(item);
@@ -77,7 +86,7 @@ public class CallAddPresenter extends CrmGenericPresenter<CallAddView> {
 
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
-		if (AppContext.canWrite(RolePermissionCollections.CRM_TASK)) {
+		if (AppContext.canWrite(RolePermissionCollections.CRM_CALL)) {
 			CallWithBLOBs call = null;
 
 			if (data.getParams() instanceof Integer) {
@@ -112,7 +121,7 @@ public class CallAddPresenter extends CrmGenericPresenter<CallAddView> {
 								call.getSubject()));
 			}
 		} else {
-			MessageBox.showMessagePermissionAlert();
+			NotificationUtil.showMessagePermissionAlert();
 		}
 	}
 

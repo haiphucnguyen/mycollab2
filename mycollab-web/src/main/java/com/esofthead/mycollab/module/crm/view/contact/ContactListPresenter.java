@@ -33,16 +33,22 @@ import com.esofthead.mycollab.module.crm.view.CrmGenericListPresenter;
 import com.esofthead.mycollab.module.crm.view.CrmToolbar;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.desktop.ui.DefaultMassEditActionHandler;
 import com.esofthead.mycollab.vaadin.mvp.MassUpdateCommand;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.MailFormWindow;
-import com.esofthead.mycollab.vaadin.ui.MessageBox;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
-import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.Window;
+import com.vaadin.ui.UI;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class ContactListPresenter
 		extends
 		CrmGenericListPresenter<ContactListView, ContactSearchCriteria, SimpleContact>
@@ -53,11 +59,16 @@ public class ContactListPresenter
 
 	public ContactListPresenter() {
 		super(ContactListView.class);
+	}
+
+	@Override
+	protected void postInitView() {
+		super.postInitView();
 		contactService = ApplicationContextUtil
 				.getSpringBean(ContactService.class);
 
-		view.getPopupActionHandlers().addPopupActionHandler(
-				new DefaultPopupActionHandler(this) {
+		view.getPopupActionHandlers().addMassItemActionHandler(
+				new DefaultMassEditActionHandler(this) {
 
 					@Override
 					protected String getReportTitle() {
@@ -65,18 +76,17 @@ public class ContactListPresenter
 					}
 
 					@Override
-					protected Class getReportModelClassType() {
+					protected Class<?> getReportModelClassType() {
 						return SimpleContact.class;
 					}
 
 					@Override
-					protected void onSelectExtra(String id, String caption) {
+					protected void onSelectExtra(String id) {
 						if ("mail".equals(id)) {
 							if (isSelectAll) {
-								NotificationUtil.showNotification(LocalizationHelper
-										.getMessage(
-												WebExceptionI18nEnum.NOT_SUPPORT_SENDING_EMAIL_TO_ALL_USERS,
-												Window.Notification.TYPE_WARNING_MESSAGE));
+								NotificationUtil
+										.showWarningNotification(LocalizationHelper
+												.getMessage(WebExceptionI18nEnum.NOT_SUPPORT_SENDING_EMAIL_TO_ALL_USERS));
 
 							} else {
 								List<String> lstMail = new ArrayList<String>();
@@ -89,8 +99,8 @@ public class ContactListPresenter
 												+ " <" + item.getEmail() + ">");
 									}
 								}
-								view.getWidget().getWindow()
-										.addWindow(new MailFormWindow(lstMail));
+								UI.getCurrent().addWindow(
+										new MailFormWindow(lstMail));
 							}
 
 						} else if ("massUpdate".equals(id)) {
@@ -100,7 +110,7 @@ public class ContactListPresenter
 													GenericI18Enum.MASS_UPDATE_WINDOW_TITLE,
 													"Contact"),
 									ContactListPresenter.this);
-							view.getWindow().addWindow(massUpdateWindow);
+							UI.getCurrent().addWindow(massUpdateWindow);
 						}
 
 					}
@@ -120,7 +130,7 @@ public class ContactListPresenter
 					.getMessage(GenericI18Enum.BROWSER_LIST_ITEMS_TITLE,
 							"Contact"));
 		} else {
-			MessageBox.showMessagePermissionAlert();
+			NotificationUtil.showMessagePermissionAlert();
 		}
 	}
 

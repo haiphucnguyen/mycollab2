@@ -31,13 +31,19 @@ import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.Depot;
-import com.esofthead.mycollab.vaadin.ui.ProgressBar;
-import com.vaadin.terminal.Resource;
+import com.esofthead.mycollab.vaadin.ui.ProgressBarIndicator;
+import com.vaadin.server.Resource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.VerticalLayout;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class UnresolvedBugsByPriorityWidget2 extends Depot {
 	private static final long serialVersionUID = 1L;
 
@@ -49,6 +55,7 @@ public class UnresolvedBugsByPriorityWidget2 extends Depot {
 				new VerticalLayout());
 		this.setContentBorder(true);
 		((VerticalLayout) this.bodyContent).setSpacing(true);
+		((VerticalLayout) this.bodyContent).setMargin(true);
 	}
 
 	public void setSearchCriteria(final BugSearchCriteria searchCriteria) {
@@ -79,7 +86,7 @@ public class UnresolvedBugsByPriorityWidget2 extends Depot {
 						userLbl.setStyleName("link");
 
 						priorityLayout.addComponent(userLbl);
-						final ProgressBar indicator = new ProgressBar(
+						final ProgressBarIndicator indicator = new ProgressBarIndicator(
 								totalCount, totalCount - item.getValue(), false);
 						indicator.setWidth("100%");
 						priorityLayout.addComponent(indicator);
@@ -101,7 +108,7 @@ public class UnresolvedBugsByPriorityWidget2 extends Depot {
 					userLbl.setWidth("110px");
 					userLbl.setStyleName("link");
 					priorityLayout.addComponent(userLbl);
-					final ProgressBar indicator = new ProgressBar(totalCount,
+					final ProgressBarIndicator indicator = new ProgressBarIndicator(totalCount,
 							totalCount, false);
 					indicator.setWidth("100%");
 					priorityLayout.addComponent(indicator);

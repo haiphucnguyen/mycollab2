@@ -21,8 +21,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-import org.vaadin.hene.splitbutton.SplitButtonExt;
-
 import com.esofthead.mycollab.common.MonitorTypeConstants;
 import com.esofthead.mycollab.core.arguments.RangeDateSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
@@ -44,27 +42,39 @@ import com.esofthead.mycollab.reporting.ReportExportType;
 import com.esofthead.mycollab.reporting.RpParameterBuilder;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
+import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
+import com.esofthead.mycollab.vaadin.resource.LazyStreamSource;
+import com.esofthead.mycollab.vaadin.ui.SplitButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
-import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
-import com.vaadin.terminal.StreamResource;
+import com.vaadin.server.FileDownloader;
+import com.vaadin.server.Sizeable;
+import com.vaadin.server.StreamResource;
+import com.vaadin.server.StreamResource.StreamSource;
+import com.vaadin.shared.ui.MarginInfo;
+import com.vaadin.shared.ui.datefield.Resolution;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.DateField;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.PopupDateField;
 import com.vaadin.ui.VerticalLayout;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @ViewComponent
-public class TimeTrackingSummaryViewImpl extends AbstractView implements
+public class TimeTrackingSummaryViewImpl extends AbstractPageView implements
 		TimeTrackingSummaryView {
 	private static final long serialVersionUID = 1L;
 
@@ -74,7 +84,7 @@ public class TimeTrackingSummaryViewImpl extends AbstractView implements
 	private TimeTrackingTableDisplay tableItem;
 
 	private Label totalHoursLoggingLabel;
-	private SplitButtonExt exportButtonControl;
+	private SplitButton exportButtonControl;
 
 	private ItemTimeLoggingSearchCriteria searchCriteria;
 
@@ -110,7 +120,7 @@ public class TimeTrackingSummaryViewImpl extends AbstractView implements
 		contentWrapper.addComponent(headerWrapper);
 
 		final Button backBtn = new Button("Back to Work Board");
-		backBtn.addListener(new Button.ClickListener() {
+		backBtn.addClickListener(new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -125,25 +135,26 @@ public class TimeTrackingSummaryViewImpl extends AbstractView implements
 		backBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
 
 		HorizontalLayout controlBtns = new HorizontalLayout();
-		controlBtns.setMargin(true, false, true, false);
+		controlBtns.setMargin(new MarginInfo(true, false, true, false));
 		controlBtns.addComponent(backBtn);
 
 		contentWrapper.addComponent(controlBtns);
 
 		final HorizontalLayout dateSelectionLayout = new HorizontalLayout();
 		dateSelectionLayout.setSpacing(true);
-		dateSelectionLayout.setMargin(false, false, true, false);
+		dateSelectionLayout
+				.setMargin(new MarginInfo(false, false, true, false));
 		contentWrapper.addComponent(dateSelectionLayout);
 
 		dateSelectionLayout.addComponent(new Label("From:  "));
 
 		fromDateField = new PopupDateField();
-		fromDateField.setResolution(DateField.RESOLUTION_DAY);
+		fromDateField.setResolution(Resolution.DAY);
 		dateSelectionLayout.addComponent(fromDateField);
 
 		dateSelectionLayout.addComponent(new Label("  To:  "));
 		toDateField = new PopupDateField();
-		toDateField.setResolution(DateField.RESOLUTION_DAY);
+		toDateField.setResolution(Resolution.DAY);
 		dateSelectionLayout.addComponent(toDateField);
 
 		final Button queryBtn = new Button("Submit",
@@ -178,38 +189,28 @@ public class TimeTrackingSummaryViewImpl extends AbstractView implements
 
 			}
 		});
-		exportButtonControl = new SplitButtonExt(exportBtn);
-		exportButtonControl.setStyleName(UIConstants.THEME_GRAY_LINK);
-		exportButtonControl.addStyleName(UIConstants.SPLIT_BUTTON);
+		exportButtonControl = new SplitButton(exportBtn);
+		exportButtonControl.setWidth(Sizeable.SIZE_UNDEFINED, Sizeable.Unit.PIXELS);
+		exportButtonControl.addStyleName(UIConstants.THEME_GRAY_LINK);
 		exportButtonControl.setIcon(MyCollabResource
 				.newResource("icons/16/export.png"));
 
 		VerticalLayout popupButtonsControl = new VerticalLayout();
-		popupButtonsControl.setWidth("150px");
-		exportButtonControl.addComponent(popupButtonsControl);
+		exportButtonControl.setContent(popupButtonsControl);
 
-		Button exportPdfBtn = new Button("Pdf", new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void buttonClick(ClickEvent event) {
-				downloadExportStreamCommand(ReportExportType.PDF);
-
-			}
-		});
+		Button exportPdfBtn = new Button("Pdf");
+		FileDownloader pdfDownloader = new FileDownloader(
+				constructStreamResource(ReportExportType.PDF));
+		pdfDownloader.extend(exportPdfBtn);
 		exportPdfBtn.setIcon(MyCollabResource
 				.newResource("icons/16/filetypes/pdf.png"));
 		exportPdfBtn.setStyleName("link");
 		popupButtonsControl.addComponent(exportPdfBtn);
 
-		Button exportExcelBtn = new Button("Excel", new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void buttonClick(ClickEvent event) {
-				downloadExportStreamCommand(ReportExportType.EXCEL);
-			}
-		});
+		Button exportExcelBtn = new Button("Excel");
+		FileDownloader excelDownloader = new FileDownloader(
+				constructStreamResource(ReportExportType.EXCEL));
+		excelDownloader.extend(exportExcelBtn);
 		exportExcelBtn.setIcon(MyCollabResource
 				.newResource("icons/16/filetypes/excel.png"));
 		exportExcelBtn.setStyleName("link");
@@ -271,18 +272,24 @@ public class TimeTrackingSummaryViewImpl extends AbstractView implements
 		contentWrapper.addComponent(this.tableItem);
 	}
 
-	private void downloadExportStreamCommand(ReportExportType exportType) {
-		ExportItemsStreamResource<SimpleItemTimeLogging> stream = new SimpleGridExportItemsStreamResource.AllItems<ItemTimeLoggingSearchCriteria, SimpleItemTimeLogging>(
-				"Time Tracking Report", new RpParameterBuilder(
-						tableItem.getDisplayColumns()), exportType,
-				ApplicationContextUtil
-						.getSpringBean(ItemTimeLoggingService.class),
-				searchCriteria, SimpleItemTimeLogging.class);
-		StreamResource res = new StreamResource(stream,
-				stream.getDefaultExportFileName(),
-				TimeTrackingSummaryViewImpl.this.getApplication());
-		TimeTrackingSummaryViewImpl.this.getWindow().open(res, "_blank");
-		exportButtonControl.setPopupVisible(false);
+	private StreamResource constructStreamResource(
+			final ReportExportType exportType) {
+		LazyStreamSource streamSource = new LazyStreamSource() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected StreamSource buildStreamSource() {
+				return new SimpleGridExportItemsStreamResource.AllItems<ItemTimeLoggingSearchCriteria, SimpleItemTimeLogging>(
+						"Time Tracking Report", new RpParameterBuilder(
+								tableItem.getDisplayColumns()), exportType,
+						ApplicationContextUtil
+								.getSpringBean(ItemTimeLoggingService.class),
+						searchCriteria, SimpleItemTimeLogging.class);
+			}
+		};
+		StreamResource res = new StreamResource(streamSource,
+				ExportItemsStreamResource.getDefaultExportFileName(exportType));
+		return res;
 	}
 
 	@Override

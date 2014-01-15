@@ -14,10 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.module.project.view.user;
 
 import java.util.GregorianCalendar;
@@ -35,10 +32,10 @@ import com.esofthead.mycollab.module.project.localization.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectGenericTaskService;
 import com.esofthead.mycollab.module.project.view.ProjectLinkBuilder;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.DefaultBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.Depot;
-import com.esofthead.mycollab.web.AppContext;
-import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Label;
@@ -46,7 +43,8 @@ import com.vaadin.ui.VerticalLayout;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class ProjectTaskStatusComponent extends Depot {
 	public static class TaskRowDisplayHandler implements
@@ -82,7 +80,7 @@ public class ProjectTaskStatusComponent extends Depot {
 							genericTask.getTypeId()), taskType, genericTask
 							.getName());
 
-			final Label taskLink = new Label(content, Label.CONTENT_XHTML);
+			final Label taskLink = new Label(content, ContentMode.HTML);
 
 			header.addComponent(taskLink);
 
@@ -110,7 +108,8 @@ public class ProjectTaskStatusComponent extends Depot {
 				new VerticalLayout());
 
 		taskList = new DefaultBeanPagedList<ProjectGenericTaskService, ProjectGenericTaskSearchCriteria, ProjectGenericTask>(
-				ApplicationContextUtil.getSpringBean(ProjectGenericTaskService.class),
+				ApplicationContextUtil
+						.getSpringBean(ProjectGenericTaskService.class),
 				new TaskRowDisplayHandler(), 10);
 		addStyleName("activity-panel");
 		((VerticalLayout) bodyContent).setMargin(false);
@@ -118,7 +117,7 @@ public class ProjectTaskStatusComponent extends Depot {
 
 	public void showProjectTasksByStatus() {
 		bodyContent.removeAllComponents();
-		bodyContent.addComponent(new LazyLoadWrapper(taskList));
+		bodyContent.addComponent(taskList);
 		final ProjectGenericTaskSearchCriteria searchCriteria = new ProjectGenericTaskSearchCriteria();
 		searchCriteria.setIsOpenned(new SearchField());
 		searchCriteria.setAssignUser(new StringSearchField(SearchField.AND,

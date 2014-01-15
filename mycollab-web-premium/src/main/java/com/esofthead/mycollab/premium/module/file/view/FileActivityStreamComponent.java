@@ -1,19 +1,15 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.esofthead.mycollab.premium.module.file.view;
 
 import com.esofthead.mycollab.module.ecm.domain.criteria.ContentActivityLogSearchCriteria;
 import com.esofthead.mycollab.module.file.domain.criteria.FileSearchCriteria;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.ui.Depot;
-import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.ui.VerticalLayout;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class FileActivityStreamComponent extends Depot {
 	private static final long serialVersionUID = 1L;
@@ -28,8 +24,7 @@ public class FileActivityStreamComponent extends Depot {
 
 	public void showContentFeeds() {
 		this.bodyContent.removeAllComponents();
-		this.bodyContent.addComponent(new LazyLoadWrapper(
-				this.activityStreamList));
+		this.bodyContent.addComponent(this.activityStreamList);
 		final ContentActivityLogSearchCriteria searchCriteria = new ContentActivityLogSearchCriteria();
 
 		this.activityStreamList.setSearchCriteria(searchCriteria);

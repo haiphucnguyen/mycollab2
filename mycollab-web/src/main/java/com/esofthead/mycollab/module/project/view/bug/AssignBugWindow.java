@@ -14,10 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.module.project.view.bug;
 
 import java.util.GregorianCalendar;
@@ -33,14 +30,14 @@ import com.esofthead.mycollab.module.tracker.domain.BugWithBLOBs;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
-import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
+import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.web.AppContext;
-import com.vaadin.data.Item;
-import com.vaadin.data.util.BeanItem;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Field;
@@ -52,7 +49,8 @@ import com.vaadin.ui.Window;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class AssignBugWindow extends Window {
 	private static final long serialVersionUID = 1L;
@@ -65,12 +63,15 @@ public class AssignBugWindow extends Window {
 		super("Assign bug '" + bug.getSummary() + "'");
 		this.bug = bug;
 		this.callbackForm = callbackForm;
-		this.setWidth("750px");
+
+		VerticalLayout contentLayout = new VerticalLayout();
+		contentLayout.setWidth("750px");
 		this.editForm = new EditForm();
-		this.addComponent(this.editForm);
-		this.editForm.setItemDataSource(new BeanItem<SimpleBug>(bug));
-		((VerticalLayout) this.getContent()).setMargin(false, false, true,
-				false);
+		contentLayout.addComponent(this.editForm);
+		this.editForm.setBean(bug);
+		contentLayout.setMargin(new MarginInfo(false, false, true, false));
+
+		this.setContent(contentLayout);
 		this.center();
 	}
 
@@ -80,10 +81,10 @@ public class AssignBugWindow extends Window {
 		private RichTextArea commentArea;
 
 		@Override
-		public void setItemDataSource(final Item newDataSource) {
+		public void setBean(final BugWithBLOBs item) {
 			this.setFormLayoutFactory(new FormLayoutFactory());
-			this.setFormFieldFactory(new EditFormFieldFactory());
-			super.setItemDataSource(newDataSource);
+			this.setBeanFormFieldFactory(new EditFormFieldFactory(EditForm.this));
+			super.setBean(item);
 		}
 
 		class FormLayoutFactory implements IFormLayoutFactory {
@@ -105,7 +106,7 @@ public class AssignBugWindow extends Window {
 
 				final HorizontalLayout controlsBtn = new HorizontalLayout();
 				controlsBtn.setSpacing(true);
-				controlsBtn.setMargin(true, true, true, false);
+				controlsBtn.setMargin(new MarginInfo(true, true, true, false));
 				layout.addComponent(controlsBtn);
 
 				final Button cancelBtn = new Button("Cancel",
@@ -131,43 +132,45 @@ public class AssignBugWindow extends Window {
 							public void buttonClick(
 									final Button.ClickEvent event) {
 
-								// Save bug status and assignee
-								final BugService bugService = ApplicationContextUtil
-										.getSpringBean(BugService.class);
-								bugService.updateWithSession(
-										AssignBugWindow.this.bug,
-										AppContext.getUsername());
-
-								// Save comment
-								final String commentValue = (String) EditForm.this.commentArea
-										.getValue();
-								if (commentValue != null
-										&& !commentValue.trim().equals("")) {
-									final Comment comment = new Comment();
-									comment.setComment((String) EditForm.this.commentArea
-											.getValue());
-									comment.setCreatedtime(new GregorianCalendar()
-											.getTime());
-									comment.setCreateduser(AppContext
-											.getUsername());
-									comment.setSaccountid(AppContext
-											.getAccountId());
-									comment.setType(CommentType.PRJ_BUG
-											.toString());
-									comment.setTypeid(AssignBugWindow.this.bug
-											.getId());
-									comment.setExtratypeid(CurrentProjectVariables
-											.getProjectId());
-
-									final CommentService commentService = ApplicationContextUtil
-											.getSpringBean(CommentService.class);
-									commentService.saveWithSession(comment,
+								if (EditForm.this.validateForm()) {
+									// Save bug status and assignee
+									final BugService bugService = ApplicationContextUtil
+											.getSpringBean(BugService.class);
+									bugService.updateWithSession(
+											AssignBugWindow.this.bug,
 											AppContext.getUsername());
-								}
 
-								AssignBugWindow.this.close();
-								AssignBugWindow.this.callbackForm
-										.refreshBugItem();
+									// Save comment
+									final String commentValue = (String) EditForm.this.commentArea
+											.getValue();
+									if (commentValue != null
+											&& !commentValue.trim().equals("")) {
+										final Comment comment = new Comment();
+										comment.setComment((String) EditForm.this.commentArea
+												.getValue());
+										comment.setCreatedtime(new GregorianCalendar()
+												.getTime());
+										comment.setCreateduser(AppContext
+												.getUsername());
+										comment.setSaccountid(AppContext
+												.getAccountId());
+										comment.setType(CommentType.PRJ_BUG
+												.toString());
+										comment.setTypeid(AssignBugWindow.this.bug
+												.getId());
+										comment.setExtratypeid(CurrentProjectVariables
+												.getProjectId());
+
+										final CommentService commentService = ApplicationContextUtil
+												.getSpringBean(CommentService.class);
+										commentService.saveWithSession(comment,
+												AppContext.getUsername());
+									}
+
+									AssignBugWindow.this.close();
+									AssignBugWindow.this.callbackForm
+											.refreshBugItem();
+								}
 							}
 						});
 				approveBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
@@ -182,7 +185,8 @@ public class AssignBugWindow extends Window {
 			}
 
 			@Override
-			public void attachField(final Object propertyId, final Field field) {
+			public boolean attachField(final Object propertyId,
+					final Field<?> field) {
 				if (propertyId.equals("assignuser")) {
 					this.informationLayout
 							.addComponent(
@@ -193,18 +197,24 @@ public class AssignBugWindow extends Window {
 				} else if (propertyId.equals("comment")) {
 					this.informationLayout.addComponent(field, "Comments", 0,
 							1, 2, "100%", Alignment.MIDDLE_LEFT);
+				} else {
+					return false;
 				}
+
+				return true;
 			}
 		}
 
-		private class EditFormFieldFactory extends DefaultEditFormFieldFactory {
-
+		private class EditFormFieldFactory extends
+				AbstractBeanFieldGroupEditFieldFactory<BugWithBLOBs> {
 			private static final long serialVersionUID = 1L;
 
+			public EditFormFieldFactory(GenericBeanForm<BugWithBLOBs> form) {
+				super(form);
+			}
+
 			@Override
-			protected Field onCreateField(final Item item,
-					final Object propertyId,
-					final com.vaadin.ui.Component uiContext) {
+			protected Field<?> onCreateField(final Object propertyId) {
 				if (propertyId.equals("assignuser")) {
 					return new ProjectMemberComboBox();
 				} else if (propertyId.equals("comment")) {

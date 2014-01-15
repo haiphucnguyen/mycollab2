@@ -16,14 +16,29 @@
  */
 package com.esofthead.mycollab.module.crm.dao;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.esofthead.mycollab.core.persistence.IMassUpdateDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.module.crm.domain.Lead;
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public interface LeadMapperExt extends ISearchableDAO<LeadSearchCriteria>,
-	IMassUpdateDAO<Lead, LeadSearchCriteria>{
-	
+		IMassUpdateDAO<Lead, LeadSearchCriteria> {
+
 	SimpleLead findById(int leadId);
+
+	SimpleLead findConvertedLeadOfAccount(@Param("accountId") int accountId);
+
+	SimpleLead findConvertedLeadOfContact(@Param("contactId") int contactId);
+
+	SimpleLead findConvertedLeadOfOpportunity(
+			@Param("opportunityId") int opportunity);
 }

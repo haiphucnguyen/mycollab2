@@ -24,11 +24,11 @@ import com.esofthead.mycollab.module.project.localization.BugI18nEnum;
 import com.esofthead.mycollab.module.project.view.parameters.BugSearchParameter;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserLink;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.BeanList;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.LabelHTMLDisplayWidget;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -39,6 +39,12 @@ import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class MyBugListWidget extends BugDisplayWidget {
 	private static final long serialVersionUID = 1L;
 
@@ -49,6 +55,7 @@ public class MyBugListWidget extends BugDisplayWidget {
 
 	public static class MyBugRowDisplayHandler implements
 			BeanList.RowDisplayHandler<SimpleBug> {
+		private static final long serialVersionUID = 1L;
 
 		@Override
 		public Component generateRow(final SimpleBug bug, int rowIndex) {

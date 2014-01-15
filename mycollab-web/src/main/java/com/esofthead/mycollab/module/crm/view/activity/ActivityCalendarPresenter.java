@@ -16,11 +16,17 @@
  */
 package com.esofthead.mycollab.module.crm.view.activity;
 
-import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
-import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.vaadin.ui.AbstractPresenter;
 import com.vaadin.ui.ComponentContainer;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
 public class ActivityCalendarPresenter extends
 		AbstractPresenter<ActivityCalendarView> {
 	private static final long serialVersionUID = 1L;
@@ -31,6 +37,8 @@ public class ActivityCalendarPresenter extends
 
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
+		ActivityRootView activityContainer = (ActivityRootView) container;
+		activityContainer.gotoView("Calendar");
 		AppContext.addFragment("crm/activity/calendar", "Activity Calendar");
 	}
 

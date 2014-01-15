@@ -25,7 +25,7 @@ import com.esofthead.mycollab.form.service.MasterFormService;
 import com.esofthead.mycollab.form.view.builder.type.DynaForm;
 import com.esofthead.mycollab.form.view.builder.type.DynaSection;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
-import com.esofthead.mycollab.module.crm.view.account.AccountDefaultDynaFormFactory;
+import com.esofthead.mycollab.module.crm.view.account.AccountDefaultDynaFormLayoutFactory;
 import com.esofthead.mycollab.module.crm.view.activity.AssignmentDefaultFormLayoutFactory;
 import com.esofthead.mycollab.module.crm.view.activity.CallDefaultFormLayoutFactory;
 import com.esofthead.mycollab.module.crm.view.activity.MeetingDefaultFormLayoutFactory;
@@ -39,22 +39,25 @@ import com.esofthead.mycollab.premium.module.crm.view.setting.customlayout.Creat
 import com.esofthead.mycollab.premium.module.crm.view.setting.customlayout.CreateSectionWindow;
 import com.esofthead.mycollab.premium.module.crm.view.setting.customlayout.CustomLayoutDDComp;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
+import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
-import com.esofthead.mycollab.vaadin.ui.ViewComponent;
-import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.Property;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 @ViewComponent
-public class CrmCustomViewImpl extends AbstractView implements ICrmCustomView {
+public class CrmCustomViewImpl extends AbstractPageView implements
+		ICrmCustomView {
 
 	private static final long serialVersionUID = 1L;
 
@@ -75,6 +78,7 @@ public class CrmCustomViewImpl extends AbstractView implements ICrmCustomView {
 		headerLbl = new Label();
 		HorizontalLayout headerTitle = new HorizontalLayout();
 		headerTitle.setWidth("100%");
+		headerTitle.setMargin(true);
 		headerTitle.addStyleName("headerTitle");
 		headerTitle.addComponent(headerLbl);
 		headerTitle.setComponentAlignment(headerLbl, Alignment.MIDDLE_LEFT);
@@ -83,7 +87,7 @@ public class CrmCustomViewImpl extends AbstractView implements ICrmCustomView {
 
 		VerticalLayout headerContent = new VerticalLayout();
 		headerContent.setWidth("100%");
-		headerContent.setMargin(false, true, true, true);
+		headerContent.setMargin(new MarginInfo(false, true, true, true));
 		Label descLbl = new Label(
 				"Customize the page layout by changing the order of the columns and fields, marking fields as mandatory, adding or removing the fields and sections. You can drag and drop the originSection header to reorder the sections. You need to drag and drop the fields to move them to the List of Removed Fields");
 		descLbl.setStyleName("instructionLbl");
@@ -109,7 +113,7 @@ public class CrmCustomViewImpl extends AbstractView implements ICrmCustomView {
 					public void buttonClick(ClickEvent event) {
 						CreateCustomFieldWindow createCustomFieldWindow = new CreateCustomFieldWindow(
 								CrmCustomViewImpl.this);
-						getWindow().addWindow(createCustomFieldWindow);
+						UI.getCurrent().addWindow(createCustomFieldWindow);
 
 					}
 				});
@@ -128,7 +132,7 @@ public class CrmCustomViewImpl extends AbstractView implements ICrmCustomView {
 					public void buttonClick(ClickEvent event) {
 						CreateSectionWindow createSectionWindow = new CreateSectionWindow(
 								CrmCustomViewImpl.this);
-						getWindow().addWindow(createSectionWindow);
+						UI.getCurrent().addWindow(createSectionWindow);
 
 					}
 				});
@@ -202,7 +206,7 @@ public class CrmCustomViewImpl extends AbstractView implements ICrmCustomView {
 
 		if (form == null) {
 			if (CrmTypeConstants.ACCOUNT.equals(moduleName)) {
-				form = AccountDefaultDynaFormFactory.getForm();
+				form = AccountDefaultDynaFormLayoutFactory.getForm();
 			} else if (CrmTypeConstants.CONTACT.equals(moduleName)) {
 				form = ContactDefaultDynaFormLayoutFactory.getForm();
 			} else if (CrmTypeConstants.CAMPAIGN.equals(moduleName)) {
@@ -248,7 +252,7 @@ public class CrmCustomViewImpl extends AbstractView implements ICrmCustomView {
 					CrmTypeConstants.TASK, CrmTypeConstants.CALL,
 					CrmTypeConstants.MEETING);
 
-			this.addListener(new Property.ValueChangeListener() {
+			this.addValueChangeListener(new Property.ValueChangeListener() {
 				private static final long serialVersionUID = 1L;
 
 				@Override

@@ -19,11 +19,16 @@ package com.esofthead.mycollab.community.module.crm.view.setting;
 import com.esofthead.mycollab.module.crm.view.setting.CrmSettingContainer;
 import com.esofthead.mycollab.module.crm.view.setting.ICrmCustomView;
 import com.esofthead.mycollab.module.crm.view.setting.ICrmCustomViewPresenter;
-import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
-import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.vaadin.ui.AbstractPresenter;
 import com.vaadin.ui.ComponentContainer;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ */
 public class CrmCustomViewPresenter extends AbstractPresenter<ICrmCustomView>
 		implements ICrmCustomViewPresenter {
 	private static final long serialVersionUID = 1L;

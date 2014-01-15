@@ -14,17 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.module.crm.view.campaign;
 
 import java.util.Arrays;
 import java.util.Set;
 
 import org.vaadin.dialogs.ConfirmDialog;
-import org.vaadin.hene.splitbutton.SplitButton;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
@@ -44,21 +40,25 @@ import com.esofthead.mycollab.module.crm.service.CampaignService;
 import com.esofthead.mycollab.module.crm.ui.components.RelatedListComp;
 import com.esofthead.mycollab.module.crm.view.account.AccountTableDisplay;
 import com.esofthead.mycollab.module.crm.view.account.AccountTableFieldDef;
+import com.esofthead.mycollab.module.crm.view.account.AccountCampaignSelectionWindow;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
+import com.esofthead.mycollab.vaadin.ui.SplitButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
-import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Table;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class CampaignAccountListComp extends
 		RelatedListComp<SimpleAccount, AccountSearchCriteria> {
@@ -67,7 +67,6 @@ public class CampaignAccountListComp extends
 	private CampaignWithBLOBs campaign;
 
 	public CampaignAccountListComp() {
-		super("Accounts");
 		initUI();
 	}
 
@@ -87,9 +86,6 @@ public class CampaignAccountListComp extends
 
 	@SuppressWarnings("serial")
 	private void initUI() {
-		VerticalLayout contentContainer = (VerticalLayout) bodyContent;
-		contentContainer.setSpacing(true);
-
 		final SplitButton controlsBtn = new SplitButton();
 		controlsBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_CONTACT));
@@ -109,22 +105,26 @@ public class CampaignAccountListComp extends
 				new Button.ClickListener() {
 					@Override
 					public void buttonClick(Button.ClickEvent event) {
-						CampaignAccountSelectionWindow accountsWindow = new CampaignAccountSelectionWindow(
+						AccountCampaignSelectionWindow accountsWindow = new AccountCampaignSelectionWindow(
 								CampaignAccountListComp.this);
 						AccountSearchCriteria criteria = new AccountSearchCriteria();
 						criteria.setSaccountid(new NumberSearchField(AppContext
 								.getAccountId()));
-						getWindow().addWindow(accountsWindow);
+						UI.getCurrent().addWindow(accountsWindow);
 						accountsWindow.setSearchCriteria(criteria);
 						controlsBtn.setPopupVisible(false);
 					}
 				});
 		selectBtn.setIcon(MyCollabResource.newResource("icons/16/select.png"));
 		selectBtn.setStyleName("link");
-		controlsBtn.addComponent(selectBtn);
+
+		VerticalLayout buttonControlsLayout = new VerticalLayout();
+		buttonControlsLayout.addComponent(selectBtn);
+		controlsBtn.setContent(buttonControlsLayout);
+
 		controlsBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_ACCOUNT));
-		addHeaderElement(controlsBtn);
+		this.addComponent(controlsBtn);
 
 		tableItem = new AccountTableDisplay(Arrays.asList(
 				AccountTableFieldDef.accountname,
@@ -174,7 +174,7 @@ public class CampaignAccountListComp extends
 					@Override
 					public void buttonClick(Button.ClickEvent event) {
 						ConfirmDialogExt.show(
-								AppContext.getApplication().getMainWindow(),
+								UI.getCurrent(),
 								LocalizationHelper.getMessage(
 										GenericI18Enum.DELETE_DIALOG_TITLE,
 										SiteConfiguration.getSiteName()),
@@ -218,7 +218,7 @@ public class CampaignAccountListComp extends
 				return controlLayout;
 			}
 		});
-		contentContainer.addComponent(tableItem);
+		this.addComponent(tableItem);
 
 	}
 

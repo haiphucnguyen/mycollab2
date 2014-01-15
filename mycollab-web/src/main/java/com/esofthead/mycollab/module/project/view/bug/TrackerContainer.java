@@ -22,19 +22,24 @@ import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.view.parameters.BugScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.BugSearchParameter;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
+import com.esofthead.mycollab.vaadin.mvp.PageView;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
-import com.esofthead.mycollab.vaadin.mvp.View;
-import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.vaadin.ui.ViewComponent;
-import com.github.wolfie.detachedtabs.DetachedTabs;
-import com.vaadin.ui.Button;
+import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
+import com.esofthead.mycollab.vaadin.ui.TabsheetDecor;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.TabSheet.SelectedTabChangeEvent;
+import com.vaadin.ui.TabSheet.SelectedTabChangeListener;
+import com.vaadin.ui.TabSheet.Tab;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @ViewComponent
-public class TrackerContainer extends AbstractView {
+public class TrackerContainer extends AbstractPageView {
 
 	private static final long serialVersionUID = 1L;
 
@@ -46,28 +51,14 @@ public class TrackerContainer extends AbstractView {
 
 	private VersionPresenter versionPresenter;
 
-	private final DetachedTabs myProjectTab;
-	private final CssLayout mySpaceArea = new CssLayout();
+	private final TabsheetDecor myProjectTab;
 
 	public TrackerContainer() {
 
-		this.myProjectTab = new DetachedTabs.Horizontal(this.mySpaceArea);
-		this.myProjectTab.setSizeUndefined();
-
-		final HorizontalLayout menu = new HorizontalLayout();
-		menu.setWidth("100%");
-		menu.setStyleName(UIConstants.THEME_TAB_STYLE3);
-		menu.setHeight("40px");
-		menu.addComponent(this.myProjectTab);
-
-		this.addComponent(menu);
-		this.mySpaceArea.setWidth("100%");
-		this.mySpaceArea.setHeight(null);
-		this.mySpaceArea.addStyleName("usergroup-view");
-		this.addComponent(this.mySpaceArea);
-		this.setExpandRatio(this.mySpaceArea, 1.0f);
+		this.myProjectTab = new TabsheetDecor();
+		this.myProjectTab.setStyleName("tab-style3");
+		this.addComponent(myProjectTab);
 		this.setWidth("100%");
-		this.setMargin(true);
 		this.buildComponents();
 	}
 
@@ -76,26 +67,28 @@ public class TrackerContainer extends AbstractView {
 				.getPresenter(BugDashboardPresenter.class);
 
 		this.myProjectTab
-				.addTab(this.dashboardPresenter.getView(), "Dashboard");
+				.addTab(this.dashboardPresenter.initView(), "Dashboard");
 
 		bugPresenter = PresenterResolver.getPresenter(BugPresenter.class);
-		this.myProjectTab.addTab(bugPresenter.getView(), "Bugs");
+		this.myProjectTab.addTab(bugPresenter.initView(), "Bugs");
 
 		componentPresenter = PresenterResolver
 				.getPresenter(ComponentPresenter.class);
-		this.myProjectTab.addTab(componentPresenter.getView(), "Components");
+		this.myProjectTab.addTab(componentPresenter.initView(), "Components");
 
 		versionPresenter = PresenterResolver
 				.getPresenter(VersionPresenter.class);
-		this.myProjectTab.addTab(versionPresenter.getView(), "Versions");
+		this.myProjectTab.addTab(versionPresenter.initView(), "Versions");
 
 		this.myProjectTab
-				.addTabChangedListener(new DetachedTabs.TabChangedListener() {
+				.addSelectedTabChangeListener(new SelectedTabChangeListener() {
+					private static final long serialVersionUID = 1L;
+
 					@Override
-					public void tabChanged(
-							final DetachedTabs.TabChangedEvent event) {
-						final Button btn = event.getSource();
-						final String caption = btn.getCaption();
+					public void selectedTabChange(SelectedTabChangeEvent event) {
+						final Tab tab = (Tab) ((TabsheetDecor) event
+								.getTabSheet()).getSelectedTabInfo();
+						final String caption = tab.getCaption();
 						final SimpleProject project = CurrentProjectVariables
 								.getProject();
 
@@ -119,7 +112,8 @@ public class TrackerContainer extends AbstractView {
 	}
 
 	public Component gotoSubView(final String name) {
-		final View component = (View) this.myProjectTab.selectTab(name);
+		final PageView component = (PageView) this.myProjectTab.selectTab(name)
+				.getComponent();
 		return component;
 	}
 }

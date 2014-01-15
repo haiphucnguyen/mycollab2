@@ -16,42 +16,52 @@
  */
 package com.esofthead.mycollab.module.crm.view.contact;
 
-import java.util.Date;
-
-import org.vaadin.addon.customfield.CustomField;
-
 import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.module.crm.view.account.AccountSelectionField;
 import com.esofthead.mycollab.module.crm.view.lead.LeadSourceComboBox;
 import com.esofthead.mycollab.module.user.ui.components.ActiveUserComboBox;
+import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
+import com.esofthead.mycollab.vaadin.ui.CompoundCustomField;
 import com.esofthead.mycollab.vaadin.ui.CountryComboBox;
 import com.esofthead.mycollab.vaadin.ui.DateComboboxSelectionField;
-import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
-import com.esofthead.mycollab.vaadin.ui.FieldSelection;
-import com.vaadin.data.Item;
+import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
+import com.esofthead.mycollab.vaadin.ui.PrefixNameComboBox;
+import com.vaadin.data.Property;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 
-public class ContactEditFormFieldFactory extends DefaultEditFormFieldFactory {
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ * @param <B>
+ */
+class ContactEditFormFieldFactory<B extends Contact> extends
+		AbstractBeanFieldGroupEditFieldFactory<B> {
 	private static final long serialVersionUID = 1L;
 
-	private Contact contact;
+	private ContactFirstNamePrefixField firstNamePrefixField;
 
-	public ContactEditFormFieldFactory(Contact contact) {
-		this.contact = contact;
+	ContactEditFormFieldFactory(GenericBeanForm<B> form) {
+		super(form);
+
+		firstNamePrefixField = new ContactFirstNamePrefixField();
 	}
 
 	@Override
-	protected Field onCreateField(Item item, Object propertyId,
-			com.vaadin.ui.Component uiContext) {
-
-		if (propertyId.equals("leadsource")) {
+	protected Field<?> onCreateField(Object propertyId) {
+		if (propertyId.equals("firstname") || propertyId.equals("prefix")) {
+			return firstNamePrefixField;
+		} else if (propertyId.equals("leadsource")) {
 			LeadSourceComboBox leadSource = new LeadSourceComboBox();
 			return leadSource;
 		} else if (propertyId.equals("accountid")) {
-			AccountSelectionField contactField = new AccountSelectionField();
-			return contactField;
+			AccountSelectionField accountField = new AccountSelectionField();
+			return accountField;
 		} else if (propertyId.equals("lastname")) {
 			TextField tf = new TextField();
 			tf.setNullRepresentation("");
@@ -64,50 +74,60 @@ public class ContactEditFormFieldFactory extends DefaultEditFormFieldFactory {
 			return descArea;
 		} else if (propertyId.equals("assignuser")) {
 			ActiveUserComboBox userBox = new ActiveUserComboBox();
-			userBox.select(contact.getAssignuser());
+			userBox.select(attachForm.getBean().getAssignuser());
 			return userBox;
 		} else if (propertyId.equals("primcountry")
 				|| propertyId.equals("othercountry")) {
 			CountryComboBox otherCountryComboBox = new CountryComboBox();
 			return otherCountryComboBox;
 		} else if (propertyId.equals("birthday")) {
-			ContactBirthdayField birthdayField = new ContactBirthdayField();
-			if (contact.getBirthday() != null) {
-				birthdayField.setDate(contact.getBirthday());
-			}
-			return birthdayField;
+			return new DateComboboxSelectionField();
 		}
 		return null;
 	}
 
-	private class ContactBirthdayField extends CustomField implements
-			FieldSelection {
+	class ContactFirstNamePrefixField extends CompoundCustomField<Contact> {
 		private static final long serialVersionUID = 1L;
-		private final DateComboboxSelectionField dateSelection;
 
-		public ContactBirthdayField() {
-			this.dateSelection = new DateComboboxSelectionField(this);
+		@Override
+		protected Component initContent() {
+			HorizontalLayout layout = new HorizontalLayout();
+			layout.setWidth("100%");
+			layout.setSpacing(true);
 
-			this.setCompositionRoot(this.dateSelection);
+			final PrefixNameComboBox prefixSelect = new PrefixNameComboBox();
+			prefixSelect.setValue(attachForm.getBean().getPrefix());
+			layout.addComponent(prefixSelect);
+
+			prefixSelect
+					.addValueChangeListener(new Property.ValueChangeListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void valueChange(Property.ValueChangeEvent event) {
+							attachForm.getBean().setPrefix(
+									(String) prefixSelect.getValue());
+
+						}
+					});
+
+			TextField firstnameTxtField = new TextField();
+			firstnameTxtField.setWidth("100%");
+			firstnameTxtField.setNullRepresentation("");
+			layout.addComponent(firstnameTxtField);
+			layout.setExpandRatio(firstnameTxtField, 1.0f);
+
+			// binding field group
+			fieldGroup.bind(prefixSelect, "prefix");
+			fieldGroup.bind(firstnameTxtField, "firstname");
+
+			return layout;
 		}
 
 		@Override
-		public Class<?> getType() {
-			return Date.class;
+		public Class<? extends Contact> getType() {
+			return Contact.class;
 		}
 
-		public Object getValue() {
-			return dateSelection.getDate();
-		}
-
-		public void setDate(Date date) {
-			dateSelection.setDate(date);
-		}
-
-		@Override
-		public void fireValueChange(Object data) {
-			contact.setBirthday((Date) data);
-
-		}
 	}
 }

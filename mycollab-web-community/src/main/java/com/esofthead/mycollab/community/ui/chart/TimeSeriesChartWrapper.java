@@ -34,7 +34,8 @@ import com.esofthead.mycollab.core.arguments.SearchCriteria;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
 public abstract class TimeSeriesChartWrapper<S extends SearchCriteria> extends
 		GenericChartWrapper<S> {

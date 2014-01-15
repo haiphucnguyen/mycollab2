@@ -24,6 +24,12 @@ import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectSettingScreenData;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class SettingUrlResolver extends ProjectUrlResolver {
 	public SettingUrlResolver() {
 		this.addSubResolver("notification", new ViewUrlResolver());

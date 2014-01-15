@@ -39,6 +39,12 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.utils.InvalidPasswordException;
 import com.esofthead.mycollab.utils.PasswordCheckerUtil;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @Component("updateUserPasswordServlet")
 public class AnnotatedUserRecoveryPasswordActionHandlerServlet extends
 		GenericServlet {

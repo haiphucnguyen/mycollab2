@@ -16,67 +16,117 @@
  */
 package com.esofthead.mycollab.module.crm.view.account;
 
-import org.vaadin.addon.customfield.FieldWrapper;
-
 import com.esofthead.mycollab.module.crm.domain.Account;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.service.AccountService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.FieldSelection;
-import com.esofthead.mycollab.vaadin.ui.UIHelper;
-import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.Property;
 import com.vaadin.event.MouseEvents;
 import com.vaadin.event.MouseEvents.ClickEvent;
 import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Embedded;
+import com.vaadin.ui.Component;
+import com.vaadin.ui.CustomField;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Image;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.UI;
 
-@SuppressWarnings("serial")
-public class AccountSelectionField extends FieldWrapper<Account> implements
-		FieldSelection {
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 
-	private final HorizontalLayout layout;
-	private final TextField accountName;
-	private SimpleAccount account = new SimpleAccount();
-	private final Embedded browseBtn;
-	private final Embedded clearBtn;
+public class AccountSelectionField extends CustomField<Integer> implements
+		FieldSelection<Account> {
+	private static final long serialVersionUID = 1L;
 
-	public AccountSelectionField() {
-		super(new TextField(""), Account.class);
+	private TextField accountName = new TextField();
+	private Account account = new Account();
+	private Image browseBtn;
+	private Image clearBtn;
 
-		layout = new HorizontalLayout();
+	public void clearValue() {
+		accountName.setValue("");
+		this.account = new Account();
+	}
+
+	@Override
+	public void setPropertyDataSource(Property newDataSource) {
+		Object value = newDataSource.getValue();
+		if (value instanceof Integer) {
+			AccountService accountService = ApplicationContextUtil
+					.getSpringBean(AccountService.class);
+			SimpleAccount account = accountService.findById((Integer) value,
+					AppContext.getAccountId());
+			if (account != null) {
+				setInternalAccount(account);
+			}
+
+			super.setPropertyDataSource(newDataSource);
+		} else {
+			super.setPropertyDataSource(newDataSource);
+		}
+	}
+
+	private void setInternalAccount(SimpleAccount account) {
+		this.account = account;
+		accountName.setValue(account.getAccountname());
+	}
+
+	public Account getAccount() {
+		return account;
+	}
+
+	@Override
+	public void fireValueChange(Account data) {
+		account = (Account) data;
+		if (account != null) {
+			accountName.setValue(account.getAccountname());
+			setInternalValue(account.getId());
+		}
+	}
+
+	@Override
+	protected Component initContent() {
+		HorizontalLayout layout = new HorizontalLayout();
 		layout.setSpacing(true);
 		layout.setWidth("100%");
+		layout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
-		accountName = new TextField();
+		accountName.setNullRepresentation("");
 		accountName.setEnabled(true);
 		accountName.setWidth("100%");
 		layout.addComponent(accountName);
 		layout.setComponentAlignment(accountName, Alignment.MIDDLE_LEFT);
 
-		browseBtn = new Embedded(null,
+		browseBtn = new Image(null,
 				MyCollabResource.newResource("icons/16/browseItem.png"));
 		layout.addComponent(browseBtn);
 		layout.setComponentAlignment(browseBtn, Alignment.MIDDLE_LEFT);
 
-		browseBtn.addListener(new MouseEvents.ClickListener() {
+		browseBtn.addClickListener(new MouseEvents.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void click(ClickEvent event) {
 				AccountSelectionWindow accountWindow = new AccountSelectionWindow(
 						AccountSelectionField.this);
-				UIHelper.addWindowToRoot(AccountSelectionField.this,
-						accountWindow);
+				UI.getCurrent().addWindow(accountWindow);
 				accountWindow.show();
 			}
 		});
 
-		clearBtn = new Embedded(null,
+		clearBtn = new Image(null,
 				MyCollabResource.newResource("icons/16/clearItem.png"));
 
-		clearBtn.addListener(new MouseEvents.ClickListener() {
+		clearBtn.addClickListener(new MouseEvents.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void click(ClickEvent event) {
 				clearValue();
@@ -87,52 +137,11 @@ public class AccountSelectionField extends FieldWrapper<Account> implements
 
 		layout.setExpandRatio(accountName, 1.0f);
 
-		this.setCompositionRoot(layout);
-		this.addListener(new Property.ValueChangeListener() {
-			@Override
-			public void valueChange(
-					com.vaadin.data.Property.ValueChangeEvent event) {
-				try {
-					AccountService accountService = ApplicationContextUtil
-							.getSpringBean(AccountService.class);
-
-					Integer accountId = Integer.parseInt((String) event
-							.getProperty().getValue());
-					SimpleAccount account = accountService.findById(accountId,
-							AppContext.getAccountId());
-					if (account != null) {
-						accountName.setValue(account.getAccountname());
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-
-			}
-		});
-	}
-
-	public void clearValue() {
-		accountName.setValue("");
-		AccountSelectionField.this.getWrappedField().setValue(null);
-		this.account = new SimpleAccount();
-	}
-
-	public void setAccount(SimpleAccount account) {
-		this.account = account;
-		accountName.setValue(account.getAccountname());
-	}
-
-	public SimpleAccount getAccount() {
-		return account;
+		return layout;
 	}
 
 	@Override
-	public void fireValueChange(Object data) {
-		account = (SimpleAccount) data;
-		if (account != null) {
-			accountName.setValue(account.getAccountname());
-			this.getWrappedField().setValue(account.getId());
-		}
-
+	public Class<Integer> getType() {
+		return Integer.class;
 	}
 }

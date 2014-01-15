@@ -14,10 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.common.ui.components;
 
 import java.util.List;
@@ -37,16 +34,19 @@ import com.vaadin.ui.VerticalLayout;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class CommentRowDisplayHandler implements
 		BeanList.RowDisplayHandler<SimpleComment> {
+	private static final long serialVersionUID = 1L;
 
 	@Override
 	public Component generateRow(SimpleComment comment, int rowIndex) {
 		HorizontalLayout layout = new HorizontalLayout();
 		layout.setStyleName("message");
 		layout.setWidth("100%");
+		layout.setSpacing(true);
 		layout.addComponent(UserAvatarControlFactory
 				.createUserAvatarButtonLink(comment.getOwnerAvatarId(),
 						comment.getOwnerFullName()));

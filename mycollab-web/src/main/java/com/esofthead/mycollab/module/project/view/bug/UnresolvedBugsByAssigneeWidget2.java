@@ -31,13 +31,19 @@ import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.Depot;
-import com.esofthead.mycollab.vaadin.ui.ProgressBar;
+import com.esofthead.mycollab.vaadin.ui.ProgressBarIndicator;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.VerticalLayout;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class UnresolvedBugsByAssigneeWidget2 extends Depot {
 	class BugAssigneeButton extends Button {
 		private static final long serialVersionUID = 1L;
@@ -79,6 +85,7 @@ public class UnresolvedBugsByAssigneeWidget2 extends Depot {
 				new VerticalLayout());
 		this.setContentBorder(true);
 		((VerticalLayout) this.bodyContent).setSpacing(true);
+		((VerticalLayout) this.bodyContent).setMargin(true);
 	}
 
 	public void setSearchCriteria(final BugSearchCriteria searchCriteria) {
@@ -101,7 +108,7 @@ public class UnresolvedBugsByAssigneeWidget2 extends Depot {
 				final BugAssigneeButton userLbl = new BugAssigneeButton(
 						assignUser, item.getExtraValue(), assignUserFullName);
 				assigneeLayout.addComponent(userLbl);
-				final ProgressBar indicator = new ProgressBar(totalCount,
+				final ProgressBarIndicator indicator = new ProgressBarIndicator(totalCount,
 						totalCount - item.getValue(), false);
 				indicator.setWidth("100%");
 				assigneeLayout.addComponent(indicator);

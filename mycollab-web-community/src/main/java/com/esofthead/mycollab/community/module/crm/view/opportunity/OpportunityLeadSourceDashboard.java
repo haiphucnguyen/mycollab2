@@ -35,10 +35,15 @@ import com.esofthead.mycollab.module.crm.service.OpportunityService;
 import com.esofthead.mycollab.module.crm.view.CrmDataTypeFactory;
 import com.esofthead.mycollab.module.crm.view.opportunity.IOpportunityLeadSourceDashboard;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.vaadin.ui.ViewComponent;
-import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.vaadin.ui.ComponentContainer;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ */
 @ViewComponent
 public class OpportunityLeadSourceDashboard extends
 		PieChartWrapper<OpportunitySearchCriteria> implements

@@ -14,10 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.module.project.view.user;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
@@ -32,7 +29,7 @@ import com.esofthead.mycollab.module.project.view.settings.component.ProjectUser
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.BeanList;
 import com.esofthead.mycollab.vaadin.ui.Depot;
-import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Label;
@@ -40,7 +37,8 @@ import com.vaadin.ui.VerticalLayout;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class ProjectMembersWidget extends Depot {
 	private static final long serialVersionUID = 1L;
@@ -60,7 +58,7 @@ public class ProjectMembersWidget extends Depot {
 
 	public void showInformation() {
 		this.bodyContent.removeAllComponents();
-		this.bodyContent.addComponent(new LazyLoadWrapper(memberList));
+		this.bodyContent.addComponent(memberList);
 		ProjectMemberSearchCriteria searchCriteria = new ProjectMemberSearchCriteria();
 		searchCriteria.setProjectId(new NumberSearchField(
 				CurrentProjectVariables.getProjectId()));
@@ -71,6 +69,7 @@ public class ProjectMembersWidget extends Depot {
 
 	public static class MemberRowDisplayHandler implements
 			BeanList.RowDisplayHandler<SimpleProjectMember> {
+		private static final long serialVersionUID = 1L;
 
 		@Override
 		public Component generateRow(SimpleProjectMember member, int rowIndex) {
@@ -89,7 +88,7 @@ public class ProjectMembersWidget extends Depot {
 			body.setStyleName("activity-date");
 
 			Label memberRole = new Label();
-			memberRole.setContentMode(Label.CONTENT_XHTML);
+			memberRole.setContentMode(ContentMode.HTML);
 			String textRole = "";
 			if (member.getIsadmin() != null
 					&& member.getIsadmin() == Boolean.TRUE) {

@@ -49,6 +49,12 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.template.velocity.TemplateContext;
 import com.esofthead.template.velocity.TemplateEngine;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @Component("denyUserInviteServlet")
 public class AnnotatedDenyUserServletRequestHandler extends GenericServlet {
 

@@ -22,19 +22,24 @@ import com.esofthead.mycollab.module.crm.view.activity.MeetingListDashlet;
 import com.esofthead.mycollab.module.crm.view.lead.LeadListDashlet;
 import com.esofthead.mycollab.module.crm.view.opportunity.IOpportunityPipelineFunnelChartDashlet;
 import com.esofthead.mycollab.security.RolePermissionCollections;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
+import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
-import com.esofthead.mycollab.vaadin.ui.ViewComponent;
-import com.esofthead.mycollab.web.AppContext;
-import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
-import com.vaadin.terminal.Sizeable;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.VerticalLayout;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @SuppressWarnings("serial")
 @ViewComponent
-public class CrmHomeViewImpl extends AbstractView implements CrmHomeView {
+public class CrmHomeViewImpl extends AbstractPageView implements CrmHomeView {
 	private IOpportunityPipelineFunnelChartDashlet opportunityChartDashlet;
 	private AccountListDashlet accountDashlet;
 	private MeetingListDashlet meetingDashlet;
@@ -48,69 +53,61 @@ public class CrmHomeViewImpl extends AbstractView implements CrmHomeView {
 		this.setSpacing(true);
 		this.setMargin(false);
 
-		HorizontalLayout layout = new HorizontalLayout();
-		layout.setSpacing(true);
-		layout.setWidth("100%");
+		HorizontalLayout contentLayout = new HorizontalLayout();
+		contentLayout.setSpacing(true);
+		contentLayout.setWidth("100%");
 
 		VerticalLayout myAssignmentsLayout = new VerticalLayout();
 
 		if (AppContext.canRead(RolePermissionCollections.CRM_OPPORTUNITY)) {
 			opportunityChartDashlet = ViewManager
 					.getView(IOpportunityPipelineFunnelChartDashlet.class);
-			myAssignmentsLayout.addComponent(new LazyLoadWrapper(
-					opportunityChartDashlet));
+			myAssignmentsLayout.addComponent(opportunityChartDashlet);
 		}
 
 		if (AppContext.canRead(RolePermissionCollections.CRM_ACCOUNT)) {
 			accountDashlet = new AccountListDashlet();
-			myAssignmentsLayout
-					.addComponent(new LazyLoadWrapper(accountDashlet));
+			myAssignmentsLayout.addComponent(accountDashlet);
 		}
 
 		if (AppContext.canRead(RolePermissionCollections.CRM_MEETING)) {
 			meetingDashlet = new MeetingListDashlet();
-			myAssignmentsLayout
-					.addComponent(new LazyLoadWrapper(meetingDashlet));
+			myAssignmentsLayout.addComponent(meetingDashlet);
 		}
 
 		if (AppContext.canRead(RolePermissionCollections.CRM_CALL)) {
 			callDashlet = new CallListDashlet();
-			myAssignmentsLayout.addComponent(new LazyLoadWrapper(callDashlet));
+			myAssignmentsLayout.addComponent(callDashlet);
 		}
 
 		if (AppContext.canRead(RolePermissionCollections.CRM_LEAD)) {
 			leadDashlet = new LeadListDashlet();
-			myAssignmentsLayout.addComponent(new LazyLoadWrapper(leadDashlet));
+			myAssignmentsLayout.addComponent(leadDashlet);
 		}
 
-		layout.addComponent(myAssignmentsLayout);
+		contentLayout.addComponent(myAssignmentsLayout);
+		contentLayout.setExpandRatio(myAssignmentsLayout, 1.0f);
 
 		VerticalLayout streamsLayout = new VerticalLayout();
-		streamsLayout.setMargin(false, false, false, true);
-		streamsLayout.setWidth(Sizeable.SIZE_UNDEFINED, 0);
+		streamsLayout.setSizeUndefined();
+		streamsLayout.setMargin(new MarginInfo(false, false, false, true));
 
 		salesDashboard = new SalesDashboardView();
 		salesDashboard.setWidth("400px");
-		LazyLoadWrapper salesDashboardLazycomp = new LazyLoadWrapper(
-				salesDashboard);
-		streamsLayout.addComponent(salesDashboardLazycomp);
-		streamsLayout.setComponentAlignment(salesDashboardLazycomp,
+		streamsLayout.addComponent(salesDashboard);
+		streamsLayout.setComponentAlignment(salesDashboard,
 				Alignment.MIDDLE_RIGHT);
 
 		activityStreamPanel = new ActivityStreamPanel();
 		activityStreamPanel.setWidth("400px");
-		LazyLoadWrapper activityLazyLoad = new LazyLoadWrapper(
-				activityStreamPanel);
-		streamsLayout.addComponent(activityLazyLoad);
-		streamsLayout.setComponentAlignment(activityLazyLoad,
+		streamsLayout.addComponent(activityStreamPanel);
+		streamsLayout.setComponentAlignment(activityStreamPanel,
 				Alignment.MIDDLE_RIGHT);
 
-		layout.addComponent(streamsLayout);
-		layout.setComponentAlignment(streamsLayout, Alignment.TOP_RIGHT);
+		contentLayout.addComponent(streamsLayout);
+		contentLayout.setComponentAlignment(streamsLayout, Alignment.TOP_RIGHT);
 
-		layout.setExpandRatio(myAssignmentsLayout, 1.0f);
-
-		this.addComponent(layout);
+		this.addComponent(contentLayout);
 	}
 
 	@Override
@@ -118,24 +115,29 @@ public class CrmHomeViewImpl extends AbstractView implements CrmHomeView {
 		if (accountDashlet != null) {
 			accountDashlet.display();
 		}
-
+		
 		if (meetingDashlet != null) {
 			meetingDashlet.display();
 		}
-
+		
 		if (callDashlet != null) {
 			callDashlet.display();
 		}
-
+		
 		if (leadDashlet != null) {
 			leadDashlet.display();
 		}
-
+		
 		if (opportunityChartDashlet != null) {
 			opportunityChartDashlet.display();
 		}
 
-		activityStreamPanel.display();
-		salesDashboard.displayReport();
+		if (activityStreamPanel != null) {
+			activityStreamPanel.display();
+		}
+		
+		if (salesDashboard != null) {
+			salesDashboard.displayReport();
+		}
 	}
 }

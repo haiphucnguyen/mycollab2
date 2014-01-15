@@ -34,32 +34,40 @@ import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.project.events.TaskListEvent;
 import com.esofthead.mycollab.module.project.service.ProjectTaskListService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.BeanList;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.Separator;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.web.AppContext;
-import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.CssLayout;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ */
 public class TaskGroupDisplayWidget
 		extends
 		BeanList<ProjectTaskListService, TaskListSearchCriteria, SimpleTaskList> {
 	private static final long serialVersionUID = 1L;
 
 	public TaskGroupDisplayWidget() {
-		super(null, ApplicationContextUtil.getSpringBean(ProjectTaskListService.class),
-				TaskListRowDisplayHandler.class, true);
+		super(null, ApplicationContextUtil
+				.getSpringBean(ProjectTaskListService.class),
+				TaskListRowDisplayHandler.class);
 		this.setDisplayEmptyListText(false);
 	}
 
 	public static class TaskListRowDisplayHandler implements
 			BeanList.RowDisplayHandler<SimpleTaskList> {
+		private static final long serialVersionUID = 1L;
 
 		@Override
 		public Component generateRow(final SimpleTaskList taskList,
@@ -73,7 +81,7 @@ public class TaskGroupDisplayWidget
 		private final SimpleTaskList taskList;
 		private PopupButton taskListFilterControl;
 		private PopupButton taskListActionControl;
-		private final TaskDisplayComponent taskDisplayComponent;
+		private TaskDisplayComponent taskDisplayComponent;
 
 		public TaskListDepot(final SimpleTaskList taskListParam) {
 			super(taskListParam.getName(), null, new TaskDisplayComponent(
@@ -161,7 +169,7 @@ public class TaskGroupDisplayWidget
 					});
 			archievedTasksFilterBtn.setStyleName("link");
 			filterBtnLayout.addComponent(archievedTasksFilterBtn);
-			this.taskListFilterControl.addComponent(filterBtnLayout);
+			this.taskListFilterControl.setContent(filterBtnLayout);
 			this.addHeaderElement(this.taskListFilterControl);
 
 			final Separator divider = new Separator();
@@ -175,7 +183,7 @@ public class TaskGroupDisplayWidget
 			actionBtnLayout.setMargin(true);
 			actionBtnLayout.setSpacing(true);
 			actionBtnLayout.setWidth("200px");
-			this.taskListActionControl.addComponent(actionBtnLayout);
+			this.taskListActionControl.setContent(actionBtnLayout);
 
 			final Button readBtn = new Button("View",
 					new Button.ClickListener() {
@@ -229,7 +237,7 @@ public class TaskGroupDisplayWidget
 							taskListService.updateWithSession(
 									TaskListDepot.this.taskList,
 									AppContext.getUsername());
-							final LazyLoadWrapper parentComp = (LazyLoadWrapper) TaskListDepot.this
+							final Component parentComp = TaskListDepot.this
 									.getParent();
 							((ComponentContainer) parentComp.getParent())
 									.removeComponent(parentComp);
@@ -249,7 +257,7 @@ public class TaskGroupDisplayWidget
 							TaskListDepot.this.taskListActionControl
 									.setPopupVisible(false);
 							ConfirmDialogExt.show(
-									TaskListDepot.this.getWindow(),
+									UI.getCurrent(),
 									LocalizationHelper.getMessage(
 											GenericI18Enum.DELETE_DIALOG_TITLE,
 											SiteConfiguration.getSiteName()),
@@ -276,11 +284,16 @@ public class TaskGroupDisplayWidget
 																		.getUsername(),
 																AppContext
 																		.getAccountId());
-												final LazyLoadWrapper parentComp = (LazyLoadWrapper) TaskListDepot.this
+												final Component parentComp = TaskListDepot.this
 														.getParent();
-												((ComponentContainer) parentComp
-														.getParent())
-														.removeComponent(parentComp);
+												if (parentComp instanceof CssLayout) {
+													((CssLayout) parentComp)
+															.removeComponent(TaskListDepot.this);
+												} else {
+													((ComponentContainer) parentComp)
+															.removeComponent(TaskListDepot.this);
+												}
+
 											}
 										}
 									});

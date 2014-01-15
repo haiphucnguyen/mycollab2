@@ -17,6 +17,7 @@
 package com.esofthead.mycollab.module.project.domain;
 
 import com.esofthead.mycollab.common.domain.Currency;
+import com.esofthead.mycollab.core.arguments.NotBindable;
 
 public class SimpleProject extends Project {
 	private static final long serialVersionUID = 1L;
@@ -40,7 +41,8 @@ public class SimpleProject extends Project {
 	private int numOpenRisks;
 
 	private int numRisks;
-	
+
+	@NotBindable
 	private Currency currency;
 
 	public String getOwnerName() {

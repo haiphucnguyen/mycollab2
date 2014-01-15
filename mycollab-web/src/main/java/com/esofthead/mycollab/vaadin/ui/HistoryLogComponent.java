@@ -14,10 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.vaadin.ui;
 
 import java.text.SimpleDateFormat;
@@ -40,7 +37,9 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.vaadin.AppContext;
+import com.vaadin.server.Sizeable;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
@@ -51,10 +50,12 @@ import com.vaadin.ui.VerticalLayout;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 2.0
  */
-@SuppressWarnings("serial")
 public class HistoryLogComponent extends VerticalLayout {
+	private static final long serialVersionUID = 1L;
+
 	private static Logger log = LoggerFactory
 			.getLogger(HistoryLogComponent.class);
 
@@ -78,22 +79,24 @@ public class HistoryLogComponent extends VerticalLayout {
 	protected Map<String, FieldDisplayHandler> fieldsFormat = new HashMap<String, FieldDisplayHandler>();
 	private String module;
 	private String type;
-	private int typeid;
 
-	public HistoryLogComponent(String module, String type, int typeid) {
+	public HistoryLogComponent(String module, String type) {
 		this.module = module;
 		this.type = type;
-		this.typeid = typeid;
 
 		logTable = new BeanList<AuditLogService, AuditLogSearchCriteria, SimpleAuditLog>(
 				this,
 				ApplicationContextUtil.getSpringBean(AuditLogService.class),
 				HistoryLogRowDisplay.class);
+		this.setWidth("100%");
+		this.setHeight(Sizeable.SIZE_UNDEFINED, Sizeable.Unit.PIXELS);
+		this.setMargin(true);
+		this.setStyleName("historylog-component");
+
 		this.addComponent(logTable);
 	}
 
-	@Override
-	public void attach() {
+	public void loadHistory(int typeid) {
 		AuditLogSearchCriteria criteria = new AuditLogSearchCriteria();
 		criteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
 		criteria.setModule(new StringSearchField(module));
@@ -188,17 +191,17 @@ public class HistoryLogComponent extends VerticalLayout {
 
 					gridLayout.addComponent(new Label(
 							"<div style=\"font-weight: bold;\">Field</div>",
-							Label.CONTENT_XHTML), 0, 1);
+							ContentMode.HTML), 0, 1);
 					gridLayout
 							.addComponent(
 									new Label(
 											"<div style=\"font-weight: bold;\">Old Value</div>",
-											Label.CONTENT_XHTML), 1, 1);
+											ContentMode.HTML), 1, 1);
 					gridLayout
 							.addComponent(
 									new Label(
 											"<div style=\"font-weight: bold;\">New Value</div>",
-											Label.CONTENT_XHTML), 2, 1);
+											ContentMode.HTML), 2, 1);
 
 					gridLayout.setRows(visibleRows + 2);
 					layout.addComponent(gridLayout);

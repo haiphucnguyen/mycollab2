@@ -14,10 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.module.project.ui.components;
 
 import java.util.List;
@@ -35,7 +32,8 @@ import com.vaadin.ui.ComboBox;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class ProjectMilestoneComboBox extends ComboBox {
 
@@ -44,7 +42,7 @@ public class ProjectMilestoneComboBox extends ComboBox {
 	@SuppressWarnings("unchecked")
 	public ProjectMilestoneComboBox() {
 		super();
-		this.setItemCaptionMode(ITEM_CAPTION_MODE_PROPERTY);
+		this.setItemCaptionMode(ItemCaptionMode.PROPERTY);
 
 		MilestoneSearchCriteria criteria = new MilestoneSearchCriteria();
 		criteria.setProjectId(new NumberSearchField(SearchField.AND,

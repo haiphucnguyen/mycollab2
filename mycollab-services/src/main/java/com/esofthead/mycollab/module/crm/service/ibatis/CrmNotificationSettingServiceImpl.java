@@ -30,6 +30,12 @@ import com.esofthead.mycollab.module.crm.domain.CrmNotificationSetting;
 import com.esofthead.mycollab.module.crm.domain.CrmNotificationSettingExample;
 import com.esofthead.mycollab.module.crm.service.CrmNotificationSettingService;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @Service
 public class CrmNotificationSettingServiceImpl extends
 		DefaultCrudService<Integer, CrmNotificationSetting> implements

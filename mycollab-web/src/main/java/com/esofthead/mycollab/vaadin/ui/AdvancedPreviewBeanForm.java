@@ -23,83 +23,96 @@ import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.events.PreviewFormHandler;
 
-public class AdvancedPreviewBeanForm<T> extends GenericForm implements
-		HasPreviewFormHandlers<T> {
+/**
+ * 
+ * @param <B>
+ * @author MyCollab Ltd
+ * @since 1.0
+ */
+public class AdvancedPreviewBeanForm<B> extends GenericBeanForm<B> implements
+		HasPreviewFormHandlers<B> {
 
 	private static final long serialVersionUID = 1L;
-	private Set<PreviewFormHandler<T>> handlers;
+	private Set<PreviewFormHandler<B>> handlers;
+
+	public AdvancedPreviewBeanForm() {
+		super();
+	}
 
 	@Override
-	public void addFormHandler(PreviewFormHandler<T> handler) {
+	public void addFormHandler(PreviewFormHandler<B> handler) {
 		if (handlers == null) {
-			handlers = new HashSet<PreviewFormHandler<T>>();
+			handlers = new HashSet<PreviewFormHandler<B>>();
 		}
 
 		handlers.add(handler);
 	}
 
-	protected void fireAssignForm(T bean) {
+	public void fireAssignForm(B bean) {
 		if (handlers != null) {
-			for (PreviewFormHandler<T> handler : handlers) {
+			for (PreviewFormHandler<B> handler : handlers) {
 				handler.onAssign(bean);
 			}
 		}
 	}
 
-	protected void fireEditForm(T bean) {
+	public void fireEditForm(B bean) {
 		if (handlers != null) {
-			for (PreviewFormHandler<T> handler : handlers) {
+			for (PreviewFormHandler<B> handler : handlers) {
 				handler.onEdit(bean);
 			}
 		}
 	}
 
-	protected void doPrint() {
+	public void showHistory() {
 		throw new MyCollabException(
 				"This method must be override by sub classes");
 	}
 
-	protected void showHistory() {
-		throw new MyCollabException(
-				"This method must be override by sub classes");
-	}
-
-	protected void fireCancelForm(T bean) {
+	public void fireCancelForm(B bean) {
 		if (handlers != null) {
-			for (PreviewFormHandler<T> handler : handlers) {
+			for (PreviewFormHandler<B> handler : handlers) {
 				handler.onCancel();
 			}
 		}
 	}
 
-	protected void fireDeleteForm(T bean) {
+	public void fireDeleteForm(B bean) {
 		if (handlers != null) {
-			for (PreviewFormHandler<T> handler : handlers) {
+			for (PreviewFormHandler<B> handler : handlers) {
 				handler.onDelete(bean);
 			}
 		}
 	}
 
-	protected void fireCloneForm(T bean) {
+	public void fireCloneForm(B bean) {
 		if (handlers != null) {
-			for (PreviewFormHandler<T> handler : handlers) {
+			for (PreviewFormHandler<B> handler : handlers) {
 				handler.onClone(bean);
 			}
 		}
 	}
 
-	protected void fireGotoNextItem(T bean) {
+	public void fireGotoNextItem(B bean) {
 		if (handlers != null) {
-			for (PreviewFormHandler<T> handler : handlers) {
+			for (PreviewFormHandler<B> handler : handlers) {
 				handler.gotoNext(bean);
 			}
 		}
 	}
 
-	protected void fireGotoPrevious(T bean) {
+	public void fireGotoPrevious(B bean) {
 		if (handlers != null) {
-			for (PreviewFormHandler<T> handler : handlers) {
+			for (PreviewFormHandler<B> handler : handlers) {
 				handler.gotoPrevious(bean);
+			}
+		}
+	}
+
+	public void fireExtraAction(String action, B bean) {
+		if (handlers != null) {
+			for (PreviewFormHandler<B> handler : handlers) {
+				handler.onExtraAction(action, bean);
 			}
 		}
 	}

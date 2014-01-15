@@ -18,4 +18,14 @@ $(document).ready(function(){
 		$(".tab1").css("display", "block");
 		$(".tab2").css("display", "none");
 	});
+	$('.jcarousel-control-prev, .jcarousel-control-next').each(function(){
+		
+		$(this).click(function(){
+			$(this).css('opacity','0.5');
+			var this_var = $(this);
+			setTimeout(function(){
+				this_var.css('opacity','1');
+			},300);
+		});		
+	});
 });

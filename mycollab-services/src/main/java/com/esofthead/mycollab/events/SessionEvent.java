@@ -20,7 +20,7 @@ import com.esofthead.mycollab.eventmanager.ApplicationEvent;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  *
  */
 public class SessionEvent {

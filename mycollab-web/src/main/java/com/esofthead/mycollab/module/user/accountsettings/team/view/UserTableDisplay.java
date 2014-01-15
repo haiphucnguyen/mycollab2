@@ -14,10 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.module.user.accountsettings.team.view;
 
 import java.util.GregorianCalendar;
@@ -31,21 +28,25 @@ import com.esofthead.mycollab.module.user.domain.UserAccountInvitation;
 import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.ui.CheckBoxDecor;
 import com.esofthead.mycollab.vaadin.ui.EmailLink;
 import com.esofthead.mycollab.vaadin.ui.UserLink;
 import com.esofthead.mycollab.vaadin.ui.table.DefaultPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
+import com.vaadin.data.Property;
+import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
  */
 public class UserTableDisplay extends
 		DefaultPagedBeanTable<UserService, UserSearchCriteria, SimpleUser> {
@@ -53,8 +54,8 @@ public class UserTableDisplay extends
 
 	public UserTableDisplay(TableViewField requiredColumn,
 			List<TableViewField> displayColumns) {
-		super(ApplicationContextUtil.getSpringBean(UserService.class), SimpleUser.class,
-				requiredColumn, displayColumns);
+		super(ApplicationContextUtil.getSpringBean(UserService.class),
+				SimpleUser.class, requiredColumn, displayColumns);
 
 		this.addGeneratedColumn("selected", new Table.ColumnGenerator() {
 			private static final long serialVersionUID = 1L;
@@ -62,17 +63,16 @@ public class UserTableDisplay extends
 			@Override
 			public Object generateCell(final Table source, final Object itemId,
 					Object columnId) {
-				final CheckBox cb = new CheckBox("", false);
+				final CheckBoxDecor cb = new CheckBoxDecor("", false);
 				cb.setImmediate(true);
-				cb.addListener(new Button.ClickListener() {
+				cb.addValueChangeListener(new Property.ValueChangeListener() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
-					public void buttonClick(Button.ClickEvent event) {
+					public void valueChange(ValueChangeEvent event) {
 						SimpleUser user = UserTableDisplay.this
 								.getBeanByIndex(itemId);
 						UserTableDisplay.this.fireSelectItemEvent(user);
-
 					}
 				});
 
@@ -93,7 +93,7 @@ public class UserTableDisplay extends
 				UserLink b = new UserLink(user.getUsername(), user
 						.getAvatarid(), user.getDisplayName(), false);
 
-				b.addListener(new Button.ClickListener() {
+				b.addClickListener(new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
 					@Override

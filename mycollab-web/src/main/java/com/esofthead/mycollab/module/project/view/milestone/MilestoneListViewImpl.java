@@ -14,10 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.module.project.view.milestone;
 
 import java.util.List;
@@ -31,33 +28,33 @@ import com.esofthead.mycollab.module.project.domain.SimpleMilestone;
 import com.esofthead.mycollab.module.project.events.MilestoneEvent;
 import com.esofthead.mycollab.module.project.localization.TaskI18nEnum;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserLink;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
+import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
-import com.esofthead.mycollab.vaadin.ui.ProgressBar;
+import com.esofthead.mycollab.vaadin.ui.ProgressBarIndicator;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.vaadin.ui.ViewComponent;
-import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.CustomLayoutLoader;
 import com.esofthead.mycollab.web.MyCollabResource;
-import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.CustomLayout;
-import com.vaadin.ui.Embedded;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
 @ViewComponent
-public class MilestoneListViewImpl extends AbstractView implements
+public class MilestoneListViewImpl extends AbstractPageView implements
 		MilestoneListView {
 	private static final long serialVersionUID = 1L;
 
@@ -69,7 +66,6 @@ public class MilestoneListViewImpl extends AbstractView implements
 	private final Button createBtn;
 
 	public MilestoneListViewImpl() {
-		this.setMargin(true);
 		final CssLayout headerWrapper = new CssLayout();
 		headerWrapper.setWidth("100%");
 		headerWrapper.addStyleName("milestonelist-header");
@@ -77,9 +73,8 @@ public class MilestoneListViewImpl extends AbstractView implements
 		final Label titleLbl = new Label("Phases");
 		titleLbl.addStyleName("h2");
 		header.setWidth("100%");
-		final Embedded icon = new Embedded();
-		icon.setSource(MyCollabResource
-				.newResource("icons/24/project/phase.png"));
+		final Image icon = new Image(null,
+				MyCollabResource.newResource("icons/24/project/phase.png"));
 		header.addComponent(icon);
 		header.setComponentAlignment(icon, Alignment.MIDDLE_LEFT);
 		header.addComponent(titleLbl);
@@ -114,7 +109,7 @@ public class MilestoneListViewImpl extends AbstractView implements
 
 		final HorizontalLayout closedHeaderLayout = new HorizontalLayout();
 		closedHeaderLayout.setSpacing(true);
-		final Embedded embeddClosed = new Embedded(null,
+		final Image embeddClosed = new Image(null,
 				MyCollabResource
 						.newResource("icons/16/project/phase_closed.png"));
 		closedHeaderLayout.addComponent(embeddClosed);
@@ -133,7 +128,7 @@ public class MilestoneListViewImpl extends AbstractView implements
 
 		final HorizontalLayout inProgressHeaderLayout = new HorizontalLayout();
 		inProgressHeaderLayout.setSpacing(true);
-		final Embedded embeddInProgress = new Embedded(null,
+		final Image embeddInProgress = new Image(null,
 				MyCollabResource
 						.newResource("icons/16/project/phase_progress.png"));
 		inProgressHeaderLayout.addComponent(embeddInProgress);
@@ -153,7 +148,7 @@ public class MilestoneListViewImpl extends AbstractView implements
 
 		final HorizontalLayout futureHeaderLayout = new HorizontalLayout();
 		futureHeaderLayout.setSpacing(true);
-		final Embedded embeddFuture = new Embedded(null,
+		final Image embeddFuture = new Image(null,
 				MyCollabResource
 						.newResource("icons/16/project/phase_future.png"));
 		futureHeaderLayout.addComponent(embeddFuture);
@@ -206,7 +201,7 @@ public class MilestoneListViewImpl extends AbstractView implements
 		layout.addComponent(spacing);
 
 		final GridFormLayoutHelper layoutHelper = new GridFormLayoutHelper(1,
-				5, "100%", "60px");
+				5, "100%", "80px");
 		layoutHelper.addComponent(
 				new Label(AppContext.formatDate(milestone.getStartdate(),
 						"<<Not Set>>")), "Start Date", 0, 0,
@@ -225,15 +220,15 @@ public class MilestoneListViewImpl extends AbstractView implements
 				.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD), 0, 2,
 				Alignment.MIDDLE_LEFT);
 
-		final ProgressBar progressTask = new ProgressBar(
+		final ProgressBarIndicator progressTask = new ProgressBarIndicator(
 				milestone.getNumTasks(), milestone.getNumOpenTasks());
 		progressTask.setWidth("100%");
 
 		layoutHelper.addComponent(progressTask, "Tasks", 0, 3,
 				Alignment.MIDDLE_LEFT);
 
-		final ProgressBar progressBug = new ProgressBar(milestone.getNumBugs(),
-				milestone.getNumOpenBugs());
+		final ProgressBarIndicator progressBug = new ProgressBarIndicator(
+				milestone.getNumBugs(), milestone.getNumOpenBugs());
 		progressBug.setWidth("100%");
 
 		layoutHelper.addComponent(progressBug, "Bugs", 0, 4,
@@ -258,16 +253,16 @@ public class MilestoneListViewImpl extends AbstractView implements
 
 		for (final SimpleMilestone milestone : milestones) {
 			if (SimpleMilestone.STATUS_INPROGRESS.equals(milestone.getStatus())) {
-				this.inProgressContainer.addComponent(new LazyLoadWrapper(this
-						.constructMilestoneBox(milestone)));
+				this.inProgressContainer.addComponent(this
+						.constructMilestoneBox(milestone));
 			} else if (SimpleMilestone.STATUS_FUTURE.equals(milestone
 					.getStatus())) {
-				this.futureContainer.addComponent(new LazyLoadWrapper(this
-						.constructMilestoneBox(milestone)));
+				this.futureContainer.addComponent(this
+						.constructMilestoneBox(milestone));
 			} else if (SimpleMilestone.STATUS_CLOSE.equals(milestone
 					.getStatus())) {
-				this.closeContainer.addComponent(new LazyLoadWrapper(this
-						.constructMilestoneBox(milestone)));
+				this.closeContainer.addComponent(this
+						.constructMilestoneBox(milestone));
 			}
 		}
 

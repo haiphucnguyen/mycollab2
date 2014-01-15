@@ -9,7 +9,20 @@ _gaq.push(['_trackPageview']);
 })();
 
 $(document).ready(function() {
-   $("#livechat-compact > .livechat-title").click(function(){
+	$('#bt-main-menu').click(function(){
+		if ($(this).hasClass('active'))
+		{
+			$(this).removeClass('active');
+			$('.header-mid ul').removeClass('active');
+		}
+		else
+		{
+			$(this).addClass('active');
+			$('.header-mid ul').addClass('active');
+		}
+	});
+	
+	$("#livechat-compact > .livechat-title").click(function(){
        $("#livechat-full").css("visibility", "visible");
    });
 

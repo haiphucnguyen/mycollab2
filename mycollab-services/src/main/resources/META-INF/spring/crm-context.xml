@@ -106,6 +106,18 @@
             value="com.esofthead.mycollab.module.crm.dao.ContactOpportunityMapper" />
     </bean>
 
+    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="contactOpportunityMapperExt">
+        <property name="sqlSessionTemplate" ref="sqlMapClient" />
+        <property name="mapperInterface"
+            value="com.esofthead.mycollab.module.crm.dao.ContactOpportunityMapperExt" />
+    </bean>
+
+    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="contactLeadMapper">
+        <property name="sqlSessionTemplate" ref="sqlMapClient" />
+        <property name="mapperInterface"
+            value="com.esofthead.mycollab.module.crm.dao.ContactLeadMapper" />
+    </bean>
+
     <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="contractMapper">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface"
@@ -170,12 +182,6 @@
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface"
             value="com.esofthead.mycollab.module.crm.dao.NoteMapperExt" />
-    </bean>
-
-    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="opportunityContactMapper">
-        <property name="sqlSessionTemplate" ref="sqlMapClient" />
-        <property name="mapperInterface"
-            value="com.esofthead.mycollab.module.crm.dao.OpportunityContactMapper" />
     </bean>
 
     <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="opportunityLeadMapper">

@@ -17,11 +17,17 @@
 package com.esofthead.mycollab.vaadin.ui;
 
 import com.esofthead.mycollab.web.MyCollabResource;
-import com.vaadin.terminal.Resource;
+import com.vaadin.server.Resource;
 import com.vaadin.ui.AbstractOrderedLayout;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class UiUtils {
 
 	public static void addComponent(AbstractOrderedLayout parent,

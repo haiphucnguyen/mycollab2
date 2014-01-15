@@ -19,12 +19,17 @@ package com.esofthead.mycollab.module.ecm.service;
 import java.io.InputStream;
 import java.util.List;
 
-import com.esofthead.mycollab.core.dist.NotMobile;
 import com.esofthead.mycollab.core.persistence.service.IService;
 import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.module.ecm.domain.Folder;
 import com.esofthead.mycollab.module.ecm.domain.Resource;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public interface ResourceService extends IService {
 	Folder createNewFolder(String baseFolderPath, String folderName,
 			String createdBy);
@@ -37,7 +42,6 @@ public interface ResourceService extends IService {
 
 	List<Folder> getSubFolders(String path);
 
-	@NotMobile
 	void saveContent(Content content, String createdUser,
 			InputStream refStream, Integer sAccountId);
 

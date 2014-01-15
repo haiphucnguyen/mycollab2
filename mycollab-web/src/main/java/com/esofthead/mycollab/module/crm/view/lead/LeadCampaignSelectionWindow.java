@@ -14,10 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.module.crm.view.lead;
 
 import java.util.Arrays;
@@ -34,7 +31,8 @@ import com.vaadin.ui.Button;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
 @SuppressWarnings("serial")
 public class LeadCampaignSelectionWindow extends
@@ -48,11 +46,11 @@ public class LeadCampaignSelectionWindow extends
 
 	@Override
 	protected void initUI() {
-		tableItem = new CampaignTableDisplay(Arrays.asList(
-				CampaignTableFieldDef.selected,
-				CampaignTableFieldDef.campaignname,
-				CampaignTableFieldDef.status, CampaignTableFieldDef.type,
-				CampaignTableFieldDef.endDate));
+		tableItem = new CampaignTableDisplay(CampaignTableFieldDef.selected,
+				Arrays.asList(CampaignTableFieldDef.campaignname,
+						CampaignTableFieldDef.status,
+						CampaignTableFieldDef.type,
+						CampaignTableFieldDef.endDate));
 
 		Button selectBtn = new Button("Select", new Button.ClickListener() {
 

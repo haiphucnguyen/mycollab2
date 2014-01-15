@@ -14,10 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.module.user.view.component;
 
 import com.esofthead.mycollab.security.AccessPermissionFlag;
@@ -25,7 +22,8 @@ import com.esofthead.mycollab.vaadin.ui.KeyCaptionComboBox;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class AccessPermissionComboBox extends KeyCaptionComboBox {
 	private static final long serialVersionUID = 1L;

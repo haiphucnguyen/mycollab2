@@ -16,12 +16,18 @@
  */
 package com.esofthead.mycollab.module.crm.view;
 
-import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
-import com.esofthead.mycollab.vaadin.mvp.View;
+import com.esofthead.mycollab.vaadin.mvp.PageView;
+import com.esofthead.mycollab.vaadin.ui.AbstractPresenter;
 import com.vaadin.ui.ComponentContainer;
 
-public class CrmGenericPresenter<V extends View> extends AbstractPresenter<V> {
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
+public class CrmGenericPresenter<V extends PageView> extends AbstractPresenter<V> {
 
     private static final long serialVersionUID = 1L;
 

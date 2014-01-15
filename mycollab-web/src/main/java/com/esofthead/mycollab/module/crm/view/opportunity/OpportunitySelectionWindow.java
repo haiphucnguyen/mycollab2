@@ -24,13 +24,19 @@ import com.esofthead.mycollab.eventmanager.ApplicationEvent;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.ui.FieldSelection;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
-import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class OpportunitySelectionWindow extends Window {
 
 	private static final long serialVersionUID = 1L;
@@ -96,9 +102,7 @@ public class OpportunitySelectionWindow extends Window {
 								.getData();
 						if ("opportunityname".equals(event.getFieldName())) {
 							fieldSelection.fireValueChange(opportunity);
-							OpportunitySelectionWindow.this.getParent()
-									.removeWindow(
-											OpportunitySelectionWindow.this);
+							OpportunitySelectionWindow.this.close();
 						}
 					}
 				});

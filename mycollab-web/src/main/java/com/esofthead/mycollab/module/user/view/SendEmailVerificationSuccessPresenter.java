@@ -16,10 +16,16 @@
  */
 package com.esofthead.mycollab.module.user.view;
 
-import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
+import com.esofthead.mycollab.vaadin.ui.AbstractPresenter;
 import com.vaadin.ui.ComponentContainer;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class SendEmailVerificationSuccessPresenter extends
 		AbstractPresenter<SendEmailVerificationSuccessView> {
 	private static final long serialVersionUID = 1L;

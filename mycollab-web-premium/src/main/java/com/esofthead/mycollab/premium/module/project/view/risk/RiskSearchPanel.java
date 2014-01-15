@@ -13,23 +13,29 @@ import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.RiskSearchCriteria;
 import com.esofthead.mycollab.module.project.events.RiskEvent;
 import com.esofthead.mycollab.module.project.localization.RiskI18nEnum;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
 import com.esofthead.mycollab.vaadin.ui.Separator;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
-import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.themes.Reindeer;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class RiskSearchPanel extends GenericSearchPanel<RiskSearchCriteria> {
 
 	private static final long serialVersionUID = 1L;
@@ -55,10 +61,10 @@ public class RiskSearchPanel extends GenericSearchPanel<RiskSearchCriteria> {
 		final HorizontalLayout layout = new HorizontalLayout();
 		layout.setWidth("100%");
 		layout.setSpacing(true);
+		layout.setMargin(true);
 
-		final Embedded titleIcon = new Embedded();
-		titleIcon.setSource(MyCollabResource
-				.newResource("icons/24/project/risk.png"));
+		final Image titleIcon = new Image(null,
+				MyCollabResource.newResource("icons/24/project/risk.png"));
 		layout.addComponent(titleIcon);
 		layout.setComponentAlignment(titleIcon, Alignment.MIDDLE_LEFT);
 
@@ -95,7 +101,6 @@ public class RiskSearchPanel extends GenericSearchPanel<RiskSearchCriteria> {
 		@SuppressWarnings("unchecked")
 		public RiskBasicSearchLayout() {
 			super(RiskSearchPanel.this);
-			// TODO Auto-generated constructor stub
 		}
 
 		private static final long serialVersionUID = 1L;
@@ -111,6 +116,7 @@ public class RiskSearchPanel extends GenericSearchPanel<RiskSearchCriteria> {
 		public ComponentContainer constructBody() {
 			final HorizontalLayout basicSearchBody = new HorizontalLayout();
 			basicSearchBody.setSpacing(false);
+			basicSearchBody.setMargin(true);
 
 			this.nameField = this.createSeachSupportTextField(new TextField(),
 					"NameFieldOfBasicSearch");
@@ -123,7 +129,7 @@ public class RiskSearchPanel extends GenericSearchPanel<RiskSearchCriteria> {
 			searchBtn.setStyleName("search-icon-button");
 			searchBtn.setIcon(MyCollabResource
 					.newResource("icons/16/search_white.png"));
-			searchBtn.addListener(new Button.ClickListener() {
+			searchBtn.addClickListener(new Button.ClickListener() {
 				private static final long serialVersionUID = 1L;
 
 				@Override
@@ -147,7 +153,7 @@ public class RiskSearchPanel extends GenericSearchPanel<RiskSearchCriteria> {
 					LocalizationHelper.getMessage(GenericI18Enum.BUTTON_CLEAR));
 			cancelBtn.setStyleName(UIConstants.THEME_LINK);
 			cancelBtn.addStyleName("cancel-button");
-			cancelBtn.addListener(new Button.ClickListener() {
+			cancelBtn.addClickListener(new Button.ClickListener() {
 				private static final long serialVersionUID = 1L;
 
 				@Override
@@ -170,7 +176,7 @@ public class RiskSearchPanel extends GenericSearchPanel<RiskSearchCriteria> {
 					.setRiskname(new StringSearchField(this.nameField
 							.getValue().toString().trim()));
 
-			if (this.myItemCheckbox.booleanValue()) {
+			if (this.myItemCheckbox.getValue()) {
 				RiskSearchPanel.this.searchCriteria
 						.setAssignToUser(new StringSearchField(SearchField.AND,
 								AppContext.getUsername()));

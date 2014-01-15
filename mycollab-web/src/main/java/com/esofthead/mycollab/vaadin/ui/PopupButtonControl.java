@@ -19,25 +19,34 @@ package com.esofthead.mycollab.vaadin.ui;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.vaadin.hene.splitbutton.SplitButton;
-
-import com.esofthead.mycollab.vaadin.events.HasPopupActionHandlers;
-import com.esofthead.mycollab.vaadin.events.TablePopupActionHandler;
+import com.esofthead.mycollab.vaadin.events.HasMassItemActionHandlers;
+import com.esofthead.mycollab.vaadin.events.MassItemActionHandler;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.VerticalLayout;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 3.0
+ * 
+ */
 public class PopupButtonControl extends SplitButton implements
-		HasPopupActionHandlers {
+		HasMassItemActionHandlers {
 
 	private static final long serialVersionUID = 1L;
-	private final VerticalLayout selectContent;
-	private Set<TablePopupActionHandler> handlers;
+	private VerticalLayout selectContent;
+	private Set<MassItemActionHandler> handlers;
 
-	public PopupButtonControl(final String id, final String defaultName) {
-		super();
-		this.addStyleName(UIConstants.SPLIT_BUTTON);
-		this.setCaption(defaultName);
+	public PopupButtonControl(final String id, final Button button) {
+		super(button);
+
+		addStyleName(UIConstants.THEME_GRAY_LINK);
+
+		initPopupButton(id, button.getCaption());
+	}
+
+	private void initPopupButton(final String id, final String defaultName) {
 		this.setData(id);
 
 		this.addClickListener(new SplitButtonClickListener() {
@@ -45,42 +54,48 @@ public class PopupButtonControl extends SplitButton implements
 
 			@Override
 			public void splitButtonClick(SplitButtonClickEvent event) {
-				changeOption(id, defaultName);
+				changeOption(id);
 				PopupButtonControl.this.setPopupVisible(false);
 			}
 		});
 
 		selectContent = new VerticalLayout();
 		selectContent.setWidth("100px");
-		this.setComponent(selectContent);
+		this.setContent(selectContent);
 	}
 
 	public void addOptionItem(final String id, final String name) {
-		ButtonLink selectAllBtn = new ButtonLink(name,
-				new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
-
-					@Override
-					public void buttonClick(ClickEvent event) {
-						changeOption(id, name);
-						PopupButtonControl.this.setPopupVisible(false);
-					}
-				});
-		selectContent.addComponent(selectAllBtn);
+		this.addOptionItem(id, name, true);
 	}
 
-	private void changeOption(String id, String caption) {
+	public void addOptionItem(final String id, final String name,
+			final boolean isEnable) {
+		final Button optionBtn = new Button(name, new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(final ClickEvent event) {
+				changeOption(id);
+				PopupButtonControl.this.setPopupVisible(false);
+			}
+		});
+		optionBtn.addStyleName("link");
+		optionBtn.setEnabled(isEnable);
+		selectContent.addComponent(optionBtn);
+	}
+
+	private void changeOption(String id) {
 		if (handlers != null) {
-			for (TablePopupActionHandler handler : handlers) {
-				handler.onSelect(id, caption);
+			for (MassItemActionHandler handler : handlers) {
+				handler.onSelect(id);
 			}
 		}
 	}
 
 	@Override
-	public void addPopupActionHandler(TablePopupActionHandler handler) {
+	public void addMassItemActionHandler(MassItemActionHandler handler) {
 		if (handlers == null) {
-			handlers = new HashSet<TablePopupActionHandler>();
+			handlers = new HashSet<MassItemActionHandler>();
 		}
 		handlers.add(handler);
 

@@ -14,34 +14,30 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.module.project.view.milestone;
 
-import com.esofthead.mycollab.module.project.domain.Milestone;
 import com.esofthead.mycollab.module.project.domain.SimpleMilestone;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
-import com.esofthead.mycollab.vaadin.ui.ViewComponent;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
+import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
 @ViewComponent
-public class MilestoneReadViewImpl extends AbstractView implements
+public class MilestoneReadViewImpl extends AbstractPageView implements
 		MilestoneReadView {
 
 	private static final long serialVersionUID = 1L;
-	private final MilestonePreviewBuilder.ReadView milestonePreview;
+	private final MilestoneReadComp milestonePreview;
 
 	public MilestoneReadViewImpl() {
 		super();
-		this.milestonePreview = new MilestonePreviewBuilder.ReadView();
+		this.milestonePreview = new MilestoneReadComp();
 		this.addComponent(this.milestonePreview);
-		this.setMargin(true);
 	}
 
 	@Override
@@ -51,11 +47,11 @@ public class MilestoneReadViewImpl extends AbstractView implements
 
 	@Override
 	public SimpleMilestone getItem() {
-		return this.milestonePreview.getMilestone();
+		return this.milestonePreview.getBeanItem();
 	}
 
 	@Override
-	public HasPreviewFormHandlers<Milestone> getPreviewFormHandlers() {
+	public HasPreviewFormHandlers<SimpleMilestone> getPreviewFormHandlers() {
 		return this.milestonePreview.getPreviewForm();
 	}
 }

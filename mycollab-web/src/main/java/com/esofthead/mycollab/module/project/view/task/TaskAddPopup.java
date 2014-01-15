@@ -14,10 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.module.project.view.task;
 
 import org.vaadin.easyuploads.MultiFileUploadExt;
@@ -33,18 +30,16 @@ import com.esofthead.mycollab.module.project.domain.TaskList;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.project.ui.components.TaskPercentageCompleteComboBox;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberComboBox;
-import com.esofthead.mycollab.shell.view.ScreenSize;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.AttachmentPanel;
-import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
+import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
-import com.vaadin.data.Item;
-import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -60,7 +55,8 @@ import com.vaadin.ui.VerticalLayout;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class TaskAddPopup extends CustomComponent {
 	private static final long serialVersionUID = 1L;
@@ -76,6 +72,7 @@ public class TaskAddPopup extends CustomComponent {
 
 		final VerticalLayout popupHeader = new VerticalLayout();
 		popupHeader.setWidth("100%");
+		popupHeader.setMargin(true);
 		popupHeader.addStyleName("popup-header");
 
 		final Label titleLbl = new Label("Add New Task");
@@ -85,9 +82,9 @@ public class TaskAddPopup extends CustomComponent {
 
 		this.task = new SimpleTask();
 		this.taskContainer = new TabSheet();
-		final TaskInformationLayout taskInformationLayout = new TaskInformationLayout();
-		taskInformationLayout.setWidth("100%");
-		this.taskContainer.addTab(taskInformationLayout, LocalizationHelper
+		final TaskInputForm taskInputForm = new TaskInputForm();
+		taskInputForm.setWidth("100%");
+		this.taskContainer.addTab(taskInputForm, LocalizationHelper
 				.getMessage(GenericI18Enum.INFORMATION_WINDOW_TITLE));
 
 		this.taskNoteComponent = new TaskNoteLayout();
@@ -122,27 +119,20 @@ public class TaskAddPopup extends CustomComponent {
 
 					@Override
 					public void buttonClick(final ClickEvent event) {
-						final ProjectTaskService taskService = ApplicationContextUtil
-								.getSpringBean(ProjectTaskService.class);
+						if (taskInputForm.validateForm()) {
+							final ProjectTaskService taskService = ApplicationContextUtil
+									.getSpringBean(ProjectTaskService.class);
 
-						TaskAddPopup.this.task.setTasklistid(taskList.getId());
-						TaskAddPopup.this.task
-								.setProjectid(CurrentProjectVariables
-										.getProjectId());
-						TaskAddPopup.this.task.setSaccountid(AppContext
-								.getAccountId());
-						TaskAddPopup.this.task
-								.setNotes(TaskAddPopup.this.taskNoteComponent
-										.getNote());
-						if (taskInformationLayout
-								.validateForm(TaskAddPopup.this.task)) {
-							taskService.saveWithSession(TaskAddPopup.this.task,
+							task.setTasklistid(taskList.getId());
+							task.setProjectid(CurrentProjectVariables
+									.getProjectId());
+							task.setSaccountid(AppContext.getAccountId());
+							task.setNotes(taskNoteComponent.getNote());
+
+							taskService.saveWithSession(task,
 									AppContext.getUsername());
-							TaskAddPopup.this.taskNoteComponent
-									.saveContentsToRepo(TaskAddPopup.this.task
-											.getId());
-							taskDisplayComp
-									.saveTaskSuccess(TaskAddPopup.this.task);
+							taskNoteComponent.saveContentsToRepo(task.getId());
+							taskDisplayComp.saveTaskSuccess(task);
 							taskDisplayComp.closeTaskAdd();
 						}
 					}
@@ -159,13 +149,14 @@ public class TaskAddPopup extends CustomComponent {
 		this.setCompositionRoot(taskLayout);
 	}
 
-	private class TaskInformationLayout extends AdvancedEditBeanForm<Task> {
+	private class TaskInputForm extends AdvancedEditBeanForm<Task> {
 		private static final long serialVersionUID = 1L;
 
-		public TaskInformationLayout() {
+		public TaskInputForm() {
 			this.setFormLayoutFactory(new TaskLayout());
-			this.setFormFieldFactory(new EditFormFieldFactory());
-			this.setItemDataSource(new BeanItem<Task>(TaskAddPopup.this.task));
+			this.setBeanFormFieldFactory(new EditFormFieldFactory(
+					TaskInputForm.this));
+			this.setBean(task);
 		}
 	}
 
@@ -175,13 +166,8 @@ public class TaskAddPopup extends CustomComponent {
 
 		@Override
 		public Layout getLayout() {
-			this.informationLayout = new GridFormLayoutHelper(2, 5);
-
-			if (ScreenSize.hasSupport1024Pixels()) {
-				this.informationLayout = new GridFormLayoutHelper(2, 5,
-						UIConstants.DEFAULT_CONTROL_WIDTH_1024_RESOLUTION,
-						"150px");
-			}
+			this.informationLayout = new GridFormLayoutHelper(2, 5, "100%",
+					"180px", Alignment.MIDDLE_LEFT);
 
 			final VerticalLayout layout = new VerticalLayout();
 			this.informationLayout.getLayout().addStyleName(
@@ -193,7 +179,7 @@ public class TaskAddPopup extends CustomComponent {
 		}
 
 		@Override
-		public void attachField(final Object propertyId, final Field field) {
+		public boolean attachField(final Object propertyId, final Field<?> field) {
 			if (propertyId.equals("taskname")) {
 				this.informationLayout.addComponent(field, "Task Name", 0, 0,
 						2, "100%");
@@ -216,7 +202,11 @@ public class TaskAddPopup extends CustomComponent {
 						.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD), 0, 4);
 			} else if (propertyId.equals("percentagecomplete")) {
 				this.informationLayout.addComponent(field, "Complete(%)", 1, 4);
+			} else {
+				return false;
 			}
+
+			return true;
 		}
 	}
 
@@ -254,13 +244,16 @@ public class TaskAddPopup extends CustomComponent {
 		}
 	}
 
-	private class EditFormFieldFactory extends DefaultEditFormFieldFactory {
-
+	private class EditFormFieldFactory extends
+			AbstractBeanFieldGroupEditFieldFactory<Task> {
 		private static final long serialVersionUID = 1L;
 
+		public EditFormFieldFactory(GenericBeanForm<Task> form) {
+			super(form);
+		}
+
 		@Override
-		protected Field onCreateField(final Item item, final Object propertyId,
-				final com.vaadin.ui.Component uiContext) {
+		protected Field<?> onCreateField(final Object propertyId) {
 			if (propertyId.equals("assignuser")) {
 				return new ProjectMemberComboBox();
 			} else if (propertyId.equals("taskname")) {
@@ -270,15 +263,14 @@ public class TaskAddPopup extends CustomComponent {
 				tf.setRequiredError("Please enter a Task Name");
 				return tf;
 			} else if (propertyId.equals("percentagecomplete")) {
-				if (TaskAddPopup.this.task.getPercentagecomplete() == null) {
-					TaskAddPopup.this.task.setPercentagecomplete(0d);
+				if (task.getPercentagecomplete() == null) {
+					task.setPercentagecomplete(0d);
 				}
 
 				return new TaskPercentageCompleteComboBox();
 			} else if ("priority".equals(propertyId)) {
-				if (TaskAddPopup.this.task.getPriority() == null) {
-					TaskAddPopup.this.task
-							.setPriority(TaskPriorityComboBox.PRIORITY_MEDIUM);
+				if (task.getPriority() == null) {
+					task.setPriority(TaskPriorityComboBox.PRIORITY_MEDIUM);
 				}
 				return new TaskPriorityComboBox();
 			}

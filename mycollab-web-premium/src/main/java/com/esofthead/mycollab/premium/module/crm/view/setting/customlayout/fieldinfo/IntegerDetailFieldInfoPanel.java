@@ -21,6 +21,12 @@ import java.util.List;
 import com.esofthead.mycollab.form.view.builder.type.DynaSection;
 import com.esofthead.mycollab.form.view.builder.type.IntDynaField;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
 public class IntegerDetailFieldInfoPanel extends
 		DetailFieldInfoPanel<IntDynaField> {
 	private static final long serialVersionUID = 1L;
@@ -28,7 +34,6 @@ public class IntegerDetailFieldInfoPanel extends
 	public IntegerDetailFieldInfoPanel(String candidateFieldName,
 			List<DynaSection> activeSections) {
 		super(candidateFieldName, activeSections);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

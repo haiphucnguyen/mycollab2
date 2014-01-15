@@ -104,9 +104,9 @@
             <![CDATA[
                 ${searchCriteria.opportunityId.operation} 
                 (SELECT COUNT(*) 
-                    FROM m_crm_opportunity, m_crm_opportunities_contacts 
-                    WHERE m_crm_opportunities_contacts.opportunityId=#{searchCriteria.opportunityId.value,javaType=INTEGER} 
-                        AND m_crm_opportunities_contacts.contactId=m_crm_contact.id 
+                    FROM m_crm_opportunity, m_crm_contacts_opportunities 
+                    WHERE m_crm_contacts_opportunities.opportunityId=#{searchCriteria.opportunityId.value,javaType=INTEGER} 
+                        AND m_crm_contacts_opportunities.contactId=m_crm_contact.id 
                         AND m_crm_opportunity.id=#{searchCriteria.opportunityId.value,javaType=INTEGER}) > 0
             ]]>
         </if>
@@ -233,9 +233,9 @@
             <![CDATA[
                 ${searchCriteria.opportunityId.operation} 
                 (SELECT COUNT(*) 
-                    FROM m_crm_opportunity, m_crm_opportunities_contacts 
-                    WHERE m_crm_opportunities_contacts.opportunityId=#{searchCriteria.opportunityId.value,javaType=INTEGER} 
-                        AND m_crm_opportunities_contacts.contactId=m_crm_contact.id 
+                    FROM m_crm_opportunity, m_crm_contacts_opportunities 
+                    WHERE m_crm_contacts_opportunities.opportunityId=#{searchCriteria.opportunityId.value,javaType=INTEGER} 
+                        AND m_crm_contacts_opportunities.contactId=m_crm_contact.id 
                         AND m_crm_opportunity.id=#{searchCriteria.opportunityId.value,javaType=INTEGER}) > 0
             ]]>
         </if>
@@ -319,6 +319,16 @@
             refid="com.esofthead.mycollab.module.crm.dao.ContactMapperExt.selectSimpleContact" />
 
         WHERE m_crm_contact.id=#{contactId,javaType=INTEGER}
+        LIMIT 1
+    </select>
+    
+    <select id="findContactAssoWithConvertedLead" parameterType="int"
+        resultMap="SimpleContactResult">
+        <include
+            refid="com.esofthead.mycollab.module.crm.dao.ContactMapperExt.selectSimpleContact" />
+
+        INNER JOIN m_crm_contacts_leads ON (m_crm_contacts_leads.contactId=m_crm_contact.id AND 
+            m_crm_contacts_leads.isConvertRel=1 AND m_crm_contacts_leads.leadId=#{leadId, javaType=INTEGER})
         LIMIT 1
     </select>
 

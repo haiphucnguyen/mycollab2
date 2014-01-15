@@ -25,10 +25,10 @@ import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
 import com.esofthead.mycollab.module.user.ui.components.ActiveUserComboBox;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
-import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Property;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.ui.Alignment;
@@ -37,6 +37,12 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.TextField;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @SuppressWarnings("serial")
 public class OpportunitySimpleSearchPanel extends
 		GenericSearchPanel<OpportunitySearchCriteria> {
@@ -67,7 +73,7 @@ public class OpportunitySimpleSearchPanel extends
 								.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD) });
 		group.select("Name");
 		group.setImmediate(true);
-		group.addListener(new Property.ValueChangeListener() {
+		group.addValueChangeListener(new Property.ValueChangeListener() {
 
 			@Override
 			public void valueChange(ValueChangeEvent event) {
@@ -92,7 +98,7 @@ public class OpportunitySimpleSearchPanel extends
 
 		Button searchBtn = new Button("Search");
 		searchBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-		searchBtn.addListener(new Button.ClickListener() {
+		searchBtn.addClickListener(new Button.ClickListener() {
 
 			@Override
 			public void buttonClick(ClickEvent event) {

@@ -14,17 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.module.crm.view.campaign;
 
 import java.util.Arrays;
 import java.util.Set;
 
 import org.vaadin.dialogs.ConfirmDialog;
-import org.vaadin.hene.splitbutton.SplitButton;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
@@ -46,19 +42,22 @@ import com.esofthead.mycollab.module.crm.view.lead.LeadTableDisplay;
 import com.esofthead.mycollab.module.crm.view.lead.LeadTableFieldDef;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
+import com.esofthead.mycollab.vaadin.ui.SplitButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
-import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Table;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class CampaignLeadListComp extends
 		RelatedListComp<SimpleLead, LeadSearchCriteria> {
@@ -67,7 +66,6 @@ public class CampaignLeadListComp extends
 	private CampaignWithBLOBs campaign;
 
 	public CampaignLeadListComp() {
-		super("Leads");
 		initUI();
 	}
 
@@ -87,9 +85,6 @@ public class CampaignLeadListComp extends
 
 	@SuppressWarnings("serial")
 	private void initUI() {
-		VerticalLayout contentContainer = (VerticalLayout) bodyContent;
-		contentContainer.setSpacing(true);
-
 		final SplitButton controlsBtn = new SplitButton();
 		controlsBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_CONTACT));
@@ -114,17 +109,21 @@ public class CampaignLeadListComp extends
 						LeadSearchCriteria criteria = new LeadSearchCriteria();
 						criteria.setSaccountid(new NumberSearchField(AppContext
 								.getAccountId()));
-						getWindow().addWindow(leadsWindow);
+						UI.getCurrent().addWindow(leadsWindow);
 						leadsWindow.setSearchCriteria(criteria);
 						controlsBtn.setPopupVisible(false);
 					}
 				});
 		selectBtn.setIcon(MyCollabResource.newResource("icons/16/select.png"));
 		selectBtn.setStyleName("link");
-		controlsBtn.addComponent(selectBtn);
+
+		VerticalLayout buttonControlsLayout = new VerticalLayout();
+		buttonControlsLayout.addComponent(selectBtn);
+		controlsBtn.setContent(buttonControlsLayout);
+
 		controlsBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_LEAD));
-		addHeaderElement(controlsBtn);
+		this.addComponent(controlsBtn);
 
 		tableItem = new LeadTableDisplay(Arrays.asList(LeadTableFieldDef.name,
 				LeadTableFieldDef.status, LeadTableFieldDef.email,
@@ -173,7 +172,7 @@ public class CampaignLeadListComp extends
 					@Override
 					public void buttonClick(Button.ClickEvent event) {
 						ConfirmDialogExt.show(
-								AppContext.getApplication().getMainWindow(),
+								UI.getCurrent(),
 								LocalizationHelper.getMessage(
 										GenericI18Enum.DELETE_DIALOG_TITLE,
 										SiteConfiguration.getSiteName()),
@@ -215,7 +214,7 @@ public class CampaignLeadListComp extends
 				return controlLayout;
 			}
 		});
-		contentContainer.addComponent(tableItem);
+		this.addComponent(tableItem);
 
 	}
 

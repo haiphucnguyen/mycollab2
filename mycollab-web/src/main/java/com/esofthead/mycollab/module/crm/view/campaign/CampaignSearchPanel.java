@@ -21,7 +21,6 @@ import java.util.Collection;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.DateSearchField;
-import com.esofthead.mycollab.core.arguments.DateTimeSearchField;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.RangeDateSearchField;
 import com.esofthead.mycollab.core.arguments.RangeDateTimeSearchField;
@@ -37,6 +36,7 @@ import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.CampaignEvent;
 import com.esofthead.mycollab.module.user.ui.components.ActiveUserListSelect;
 import com.esofthead.mycollab.security.RolePermissionCollections;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.DateSelectionComboBox;
 import com.esofthead.mycollab.vaadin.ui.DateSelectionField;
 import com.esofthead.mycollab.vaadin.ui.DefaultAdvancedSearchLayout;
@@ -45,16 +45,16 @@ import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.Separator;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
-import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.DateField;
-import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.themes.Reindeer;
@@ -73,10 +73,10 @@ public class CampaignSearchPanel extends
 		final HorizontalLayout layout = new HorizontalLayout();
 		layout.setWidth("100%");
 		layout.setSpacing(true);
+		layout.setMargin(true);
 
-		final Embedded titleIcon = new Embedded();
-		titleIcon.setSource(MyCollabResource
-				.newResource("icons/22/crm/campaign.png"));
+		final Image titleIcon = new Image(null,
+				MyCollabResource.newResource("icons/22/crm/campaign.png"));
 		layout.addComponent(titleIcon);
 		layout.setComponentAlignment(titleIcon, Alignment.MIDDLE_LEFT);
 
@@ -125,6 +125,7 @@ public class CampaignSearchPanel extends
 		public ComponentContainer constructBody() {
 			final HorizontalLayout layout = new HorizontalLayout();
 			layout.setSpacing(false);
+			layout.setMargin(true);
 			this.nameField = this.createSeachSupportTextField(new TextField(),
 					"NameFieldOfBasicSearch");
 
@@ -136,7 +137,7 @@ public class CampaignSearchPanel extends
 			searchBtn.setStyleName("search-icon-button");
 			searchBtn.setIcon(MyCollabResource
 					.newResource("icons/16/search_white.png"));
-			searchBtn.addListener(new Button.ClickListener() {
+			searchBtn.addClickListener(new Button.ClickListener() {
 				@Override
 				public void buttonClick(final ClickEvent event) {
 					CampaignBasicSearchLayout.this.callSearchAction();
@@ -159,7 +160,7 @@ public class CampaignSearchPanel extends
 					LocalizationHelper.getMessage(GenericI18Enum.BUTTON_CLEAR));
 			cancelBtn.setStyleName(UIConstants.THEME_LINK);
 			cancelBtn.addStyleName("cancel-button");
-			cancelBtn.addListener(new Button.ClickListener() {
+			cancelBtn.addClickListener(new Button.ClickListener() {
 				@Override
 				public void buttonClick(final ClickEvent event) {
 					CampaignBasicSearchLayout.this.nameField.setValue("");
@@ -199,7 +200,7 @@ public class CampaignSearchPanel extends
 								(String) this.nameField.getValue()));
 			}
 
-			if (this.myItemCheckbox.booleanValue()) {
+			if (this.myItemCheckbox.getValue()) {
 				CampaignSearchPanel.this.searchCriteria
 						.setAssignUsers(new SetSearchField<String>(
 								SearchField.AND, new String[] { AppContext
@@ -236,15 +237,8 @@ public class CampaignSearchPanel extends
 			GridFormLayoutHelper gridLayout = new GridFormLayoutHelper(3, 3,
 					"100%", "90px");
 			gridLayout.getLayout().setWidth("100%");
-			gridLayout.getLayout().setMargin(true, true, true, false);
-
-			// if (ScreenSize.hasSupport1024Pixels()) {
-			// gridLayout = new GridFormLayoutHelper(3, 3,
-			// UIConstants.DEFAULT_CONTROL_WIDTH_1024_RESOLUTION,
-			// "90px");
-			// } else if (ScreenSize.hasSupport1280Pixels()) {
-			// gridLayout = new GridFormLayoutHelper(3, 3, "90px");
-			// }
+			gridLayout.getLayout().setMargin(
+					new MarginInfo(true, true, true, false));
 
 			this.nameField = (TextField) gridLayout.addComponent(
 					new TextField(), "Name", 0, 0);
@@ -261,10 +255,12 @@ public class CampaignSearchPanel extends
 			this.statusField = (CampaignStatusListSelect) gridLayout
 					.addComponent(new CampaignStatusListSelect(), "Status", 1,
 							1);
-			this.assignUserField = (ActiveUserListSelect) gridLayout.addComponent(
-					new ActiveUserListSelect(), LocalizationHelper
-							.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD), 2,
-					1);
+			this.assignUserField = (ActiveUserListSelect) gridLayout
+					.addComponent(
+							new ActiveUserListSelect(),
+							LocalizationHelper
+									.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD),
+							2, 1);
 
 			gridLayout.getLayout().setSpacing(true);
 
@@ -278,7 +274,8 @@ public class CampaignSearchPanel extends
 					.setSaccountid(new NumberSearchField(SearchField.AND,
 							AppContext.getAccountId()));
 
-			if (StringUtils.isNotNullOrEmpty((String) this.nameField.getValue())) {
+			if (StringUtils
+					.isNotNullOrEmpty((String) this.nameField.getValue())) {
 				CampaignSearchPanel.this.searchCriteria
 						.setCampaignName(new StringSearchField(SearchField.AND,
 								((String) this.nameField.getValue()).trim()));
@@ -340,22 +337,20 @@ public class CampaignSearchPanel extends
 			this.assignUserField.setValue(null);
 		}
 
-		private void loadDateTimeField(final DateTimeSearchField dateField,
+		private void loadDateTimeField(final DateSearchField dateField,
 				final DateSelectionField selectDateField) {
-			if (dateField.getComparision().equals(
-					DateTimeSearchField.GREATERTHAN)) {
+			if (dateField.getComparision().equals(DateSearchField.GREATERTHAN)) {
 				selectDateField.getDateSelectionBox().setValue(
 						DateSelectionComboBox.AFTER);
-			} else if (dateField.getComparision().equals(
-					DateTimeSearchField.EQUAL)) {
+			} else if (dateField.getComparision().equals(DateSearchField.EQUAL)) {
 				selectDateField.getDateSelectionBox().setValue(
 						DateSelectionComboBox.EQUAL);
 			} else if (dateField.getComparision().equals(
-					DateTimeSearchField.LESSTHAN)) {
+					DateSearchField.LESSTHAN)) {
 				selectDateField.getDateSelectionBox().setValue(
 						DateSelectionComboBox.BEFORE);
 			} else if (dateField.getComparision().equals(
-					DateTimeSearchField.NOTEQUAL)) {
+					DateSearchField.NOTEQUAL)) {
 				selectDateField.getDateSelectionBox().setValue(
 						DateSelectionComboBox.NOTON);
 			}
@@ -426,6 +421,11 @@ public class CampaignSearchPanel extends
 				final Object[] assign = value.getAssignUsers().values;
 				this.assignUserField.setValue(Arrays.asList(assign));
 			}
+		}
+
+		@Override
+		protected Class<CampaignSearchCriteria> getType() {
+			return CampaignSearchCriteria.class;
 		}
 	}
 

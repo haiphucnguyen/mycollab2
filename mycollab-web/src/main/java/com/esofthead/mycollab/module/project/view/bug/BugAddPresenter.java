@@ -30,52 +30,37 @@ import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.service.BugRelatedItemService;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
-import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.HistoryViewManager;
 import com.esofthead.mycollab.vaadin.mvp.NullViewState;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.mvp.ViewState;
-import com.esofthead.mycollab.vaadin.ui.MessageBox;
-import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.vaadin.ui.AbstractPresenter;
+import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.vaadin.ui.ComponentContainer;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class BugAddPresenter extends AbstractPresenter<BugAddView> {
 
 	private static final long serialVersionUID = 1L;
 
 	public BugAddPresenter() {
 		super(BugAddView.class);
-		bind();
 	}
 
 	@Override
-	protected void onGo(ComponentContainer container, ScreenData<?> data) {
-		if (CurrentProjectVariables
-				.canWrite(ProjectRolePermissionCollections.BUGS)) {
-			BugContainer bugContainer = (BugContainer) container;
-			bugContainer.removeAllComponents();
-			bugContainer.addComponent(view.getWidget());
-
-			SimpleBug bug = (SimpleBug) data.getParams();
-			view.editItem(bug);
-
-			ProjectBreadcrumb breadcrumb = ViewManager
-					.getView(ProjectBreadcrumb.class);
-			if (bug.getId() == null) {
-				breadcrumb.gotoBugAdd();
-			} else {
-				breadcrumb.gotoBugEdit(bug);
-			}
-		} else {
-			MessageBox.showMessagePermissionAlert();
-		}
-	}
-
-	private void bind() {
+	protected void postInitView() {
 		view.getEditFormHandlers().addFormHandler(
 				new EditFormHandler<SimpleBug>() {
+					private static final long serialVersionUID = 1L;
+
 					@Override
 					public void onSave(final SimpleBug bug) {
 						saveBug(bug);
@@ -104,8 +89,32 @@ public class BugAddPresenter extends AbstractPresenter<BugAddView> {
 				});
 	}
 
+	@Override
+	protected void onGo(ComponentContainer container, ScreenData<?> data) {
+		if (CurrentProjectVariables
+				.canWrite(ProjectRolePermissionCollections.BUGS)) {
+			BugContainer bugContainer = (BugContainer) container;
+			bugContainer.removeAllComponents();
+			bugContainer.addComponent(view.getWidget());
+
+			SimpleBug bug = (SimpleBug) data.getParams();
+			view.editItem(bug);
+
+			ProjectBreadcrumb breadcrumb = ViewManager
+					.getView(ProjectBreadcrumb.class);
+			if (bug.getId() == null) {
+				breadcrumb.gotoBugAdd();
+			} else {
+				breadcrumb.gotoBugEdit(bug);
+			}
+		} else {
+			NotificationUtil.showMessagePermissionAlert();
+		}
+	}
+
 	public void saveBug(SimpleBug bug) {
-		BugService bugService = ApplicationContextUtil.getSpringBean(BugService.class);
+		BugService bugService = ApplicationContextUtil
+				.getSpringBean(BugService.class);
 		bug.setProjectid(CurrentProjectVariables.getProjectId());
 		bug.setSaccountid(AppContext.getAccountId());
 		if (bug.getId() == null) {

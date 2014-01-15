@@ -31,10 +31,16 @@ import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.ui.components.CompFollowersSheet;
 import com.esofthead.mycollab.schedule.email.project.ProjectTaskRelayEmailNotificationAction;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.vaadin.AppContext;
 
-@SuppressWarnings("serial")
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class TaskFollowersSheet extends CompFollowersSheet<SimpleTask> {
+	private static final long serialVersionUID = 1L;
 
 	protected TaskFollowersSheet(SimpleTask task) {
 		super(task);

@@ -13,17 +13,25 @@ import com.esofthead.mycollab.module.project.domain.criteria.RiskSearchCriteria;
 import com.esofthead.mycollab.module.project.service.RiskService;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.vaadin.events.TablePopupActionHandler;
+import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.desktop.ui.DefaultMassEditActionHandler;
+import com.esofthead.mycollab.vaadin.desktop.ui.ListSelectionPresenter;
+import com.esofthead.mycollab.vaadin.events.MassItemActionHandler;
 import com.esofthead.mycollab.vaadin.mvp.ListCommand;
-import com.esofthead.mycollab.vaadin.mvp.ListSelectionPresenter;
 import com.esofthead.mycollab.vaadin.mvp.MassUpdateCommand;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.MailFormWindow;
-import com.esofthead.mycollab.vaadin.ui.MessageBox;
-import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.UI;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class RiskListPresenter extends
 		ListSelectionPresenter<RiskListView, RiskSearchCriteria, SimpleRisk>
 		implements ListCommand<RiskSearchCriteria>, MassUpdateCommand<Risk> {
@@ -33,23 +41,27 @@ public class RiskListPresenter extends
 
 	public RiskListPresenter() {
 		super(RiskListView.class);
+	}
+
+	@Override
+	protected void postInitView() {
+		super.postInitView();
 
 		riskService = ApplicationContextUtil.getSpringBean(RiskService.class);
 
-		view.getPopupActionHandlers().addPopupActionHandler(
-				new DefaultPopupActionHandler(this) {
+		view.getPopupActionHandlers().addMassItemActionHandler(
+				new DefaultMassEditActionHandler(this) {
 
 					@Override
-					protected void onSelectExtra(String id, String caption) {
-						if (TablePopupActionHandler.MAIL_ACTION.equals(id)) {
-							view.getWidget().getWindow()
-									.addWindow(new MailFormWindow());
+					protected void onSelectExtra(String id) {
+						if (MassItemActionHandler.MAIL_ACTION.equals(id)) {
+							UI.getCurrent().addWindow(new MailFormWindow());
 
-						} else if (TablePopupActionHandler.MASS_UPDATE_ACTION
+						} else if (MassItemActionHandler.MASS_UPDATE_ACTION
 								.equals(id)) {
 							MassUpdateRiskWindow massUpdateWindow = new MassUpdateRiskWindow(
 									"Mass Update Risk", RiskListPresenter.this);
-							view.getWindow().addWindow(massUpdateWindow);
+							UI.getCurrent().addWindow(massUpdateWindow);
 						}
 
 					}
@@ -60,7 +72,7 @@ public class RiskListPresenter extends
 					}
 
 					@Override
-					protected Class getReportModelClassType() {
+					protected Class<?> getReportModelClassType() {
 						return SimpleRisk.class;
 					}
 				});
@@ -79,7 +91,7 @@ public class RiskListPresenter extends
 					.getView(ProjectBreadcrumb.class);
 			breadCrumb.gotoRiskList();
 		} else {
-			MessageBox.showMessagePermissionAlert();
+			NotificationUtil.showMessagePermissionAlert();
 		}
 	}
 

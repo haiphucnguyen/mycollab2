@@ -27,16 +27,23 @@ import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
-import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ListSelect;
 
-public @SuppressWarnings("serial")
-class ActiveUserListSelect extends ListSelect {
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
+public class ActiveUserListSelect extends ListSelect {
+	private static final long serialVersionUID = 1L;
+
 	private List<SimpleUser> userList;
 
 	public ActiveUserListSelect() {
-		this.setItemCaptionMode(ITEM_CAPTION_MODE_EXPLICIT);
+		this.setItemCaptionMode(ItemCaptionMode.EXPLICIT);
 		this.setMultiSelect(true);
 
 		UserSearchCriteria criteria = new UserSearchCriteria();

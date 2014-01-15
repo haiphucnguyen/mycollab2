@@ -14,10 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.module.user.accountsettings.view;
 
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
@@ -26,7 +23,7 @@ import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.web.MyCollabResource;
-import com.vaadin.terminal.Resource;
+import com.vaadin.server.Resource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Label;
@@ -35,7 +32,8 @@ import com.vaadin.ui.VerticalLayout;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
 @SuppressWarnings("serial")
 public abstract class UserFormLayoutFactory implements IFormLayoutFactory {
@@ -84,8 +82,8 @@ public abstract class UserFormLayoutFactory implements IFormLayoutFactory {
 	protected abstract Layout createBottomPanel();
 
 	@Override
-	public void attachField(final Object propertyId, final Field field) {
-		this.userInformationLayout.attachField(propertyId, field);
+	public boolean attachField(final Object propertyId, final Field<?> field) {
+		return this.userInformationLayout.attachField(propertyId, field);
 	}
 
 	public static class UserInformationLayout implements IFormLayoutFactory {
@@ -111,7 +109,7 @@ public abstract class UserFormLayoutFactory implements IFormLayoutFactory {
 		}
 
 		@Override
-		public void attachField(final Object propertyId, final Field field) {
+		public boolean attachField(final Object propertyId, final Field<?> field) {
 			if (propertyId.equals("firstname")) {
 				this.informationLayout.addComponent(field, "First Name", 0, 0);
 			} else if (propertyId.equals("lastname")) {
@@ -128,7 +126,11 @@ public abstract class UserFormLayoutFactory implements IFormLayoutFactory {
 				this.informationLayout.addComponent(field, "Company", 0, 3);
 			} else if (propertyId.equals("website")) {
 				this.informationLayout.addComponent(field, "Website", 1, 3);
+			} else {
+				return false;
 			}
+
+			return true;
 		}
 	}
 }

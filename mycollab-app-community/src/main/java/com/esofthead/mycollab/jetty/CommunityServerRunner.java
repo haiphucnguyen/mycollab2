@@ -18,6 +18,12 @@ package com.esofthead.mycollab.jetty;
 
 import org.eclipse.jetty.webapp.WebAppContext;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class CommunityServerRunner extends GenericServerRunner {
 	@Override
 	public WebAppContext buildContext(String baseDir) {

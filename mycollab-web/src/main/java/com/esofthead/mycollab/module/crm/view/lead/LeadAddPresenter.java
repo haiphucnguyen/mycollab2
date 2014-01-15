@@ -27,6 +27,7 @@ import com.esofthead.mycollab.module.crm.domain.CampaignLead;
 import com.esofthead.mycollab.module.crm.domain.Lead;
 import com.esofthead.mycollab.module.crm.domain.OpportunityLead;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
+import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.events.LeadEvent;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
@@ -37,54 +38,61 @@ import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
 import com.esofthead.mycollab.module.crm.view.CrmToolbar;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.mvp.HistoryViewManager;
 import com.esofthead.mycollab.vaadin.mvp.NullViewState;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.mvp.ViewState;
-import com.esofthead.mycollab.vaadin.ui.MessageBox;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
-import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class LeadAddPresenter extends CrmGenericPresenter<LeadAddView> {
-
 	private static final long serialVersionUID = 1L;
 
 	public LeadAddPresenter() {
 		super(LeadAddView.class);
-		bind();
 	}
 
-	private void bind() {
-		view.getEditFormHandlers().addFormHandler(new EditFormHandler<Lead>() {
-			@Override
-			public void onSave(final Lead lead) {
-				saveLead(lead);
-				ViewState viewState = HistoryViewManager.back();
-				if (viewState instanceof NullViewState) {
-					EventBus.getInstance().fireEvent(
-							new LeadEvent.GotoList(this, null));
-				}
-			}
+	@Override
+	protected void postInitView() {
+		view.getEditFormHandlers().addFormHandler(
+				new EditFormHandler<SimpleLead>() {
+					private static final long serialVersionUID = 1L;
 
-			@Override
-			public void onCancel() {
-				ViewState viewState = HistoryViewManager.back();
-				if (viewState instanceof NullViewState) {
-					EventBus.getInstance().fireEvent(
-							new LeadEvent.GotoList(this, null));
-				}
-			}
+					@Override
+					public void onSave(final SimpleLead lead) {
+						saveLead(lead);
+						ViewState viewState = HistoryViewManager.back();
+						if (viewState instanceof NullViewState) {
+							EventBus.getInstance().fireEvent(
+									new LeadEvent.GotoList(this, null));
+						}
+					}
 
-			@Override
-			public void onSaveAndNew(final Lead lead) {
-				saveLead(lead);
-				EventBus.getInstance().fireEvent(
-						new LeadEvent.GotoAdd(this, null));
-			}
-		});
+					@Override
+					public void onCancel() {
+						ViewState viewState = HistoryViewManager.back();
+						if (viewState instanceof NullViewState) {
+							EventBus.getInstance().fireEvent(
+									new LeadEvent.GotoList(this, null));
+						}
+					}
+
+					@Override
+					public void onSaveAndNew(final SimpleLead lead) {
+						saveLead(lead);
+						EventBus.getInstance().fireEvent(
+								new LeadEvent.GotoAdd(this, null));
+					}
+				});
 	}
 
 	@Override
@@ -94,14 +102,14 @@ public class LeadAddPresenter extends CrmGenericPresenter<LeadAddView> {
 			crmToolbar.gotoItem(LocalizationHelper
 					.getMessage(CrmCommonI18nEnum.TOOLBAR_LEADS_HEADER));
 
-			Lead lead = null;
+			SimpleLead lead = null;
 
-			if (data.getParams() instanceof Lead) {
-				lead = (Lead) data.getParams();
+			if (data.getParams() instanceof SimpleLead) {
+				lead = (SimpleLead) data.getParams();
 			} else if (data.getParams() instanceof Integer) {
 				LeadService leadService = ApplicationContextUtil
 						.getSpringBean(LeadService.class);
-				lead = (Lead) leadService.findByPrimaryKey(
+				lead = (SimpleLead) leadService.findById(
 						(Integer) data.getParams(), AppContext.getAccountId());
 				if (lead == null) {
 					NotificationUtil.showRecordNotExistNotification();
@@ -125,7 +133,7 @@ public class LeadAddPresenter extends CrmGenericPresenter<LeadAddView> {
 								lead.getLastname()));
 			}
 		} else {
-			MessageBox.showMessagePermissionAlert();
+			NotificationUtil.showMessagePermissionAlert();
 		}
 
 	}

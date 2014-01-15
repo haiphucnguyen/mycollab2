@@ -17,7 +17,6 @@
 package com.esofthead.mycollab.vaadin.ui.table;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -35,23 +34,21 @@ import com.esofthead.mycollab.core.utils.JsonDeSerializer;
 import com.esofthead.mycollab.eventmanager.ApplicationEvent;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.PagableHandler;
 import com.esofthead.mycollab.vaadin.events.SelectableItemHandler;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
-import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.google.gson.reflect.TypeToken;
 import com.vaadin.data.Container;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.util.BeanItemContainer;
-import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
@@ -60,17 +57,18 @@ import com.vaadin.ui.VerticalLayout;
 
 /**
  * 
- * @author haiphucnguyen
- *
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
  * @param <S>
- * @param <T>
+ * @param <B>
  */
-public abstract class AbstractPagedBeanTable<S extends SearchCriteria, T>
-		extends VerticalLayout implements IPagedBeanTable<S, T> {
+public abstract class AbstractPagedBeanTable<S extends SearchCriteria, B>
+		extends VerticalLayout implements IPagedBeanTable<S, B> {
 	private static final long serialVersionUID = 1L;
 
 	protected int displayNumItems = SearchRequest.DEFAULT_NUMBER_SEARCH_ITEMS;
-	protected List<T> currentListData;
+	protected List<B> currentListData;
 
 	protected HorizontalLayout pageManagement;
 
@@ -87,10 +85,10 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, T>
 	protected CssLayout controlBarWrapper;
 
 	protected Map<Class<? extends ApplicationEvent>, Set<ApplicationEventListener<?>>> mapEventListener;
-	protected Set<SelectableItemHandler<T>> selectableHandlers;
+	protected Set<SelectableItemHandler<B>> selectableHandlers;
 	protected Set<PagableHandler> pagableHandlers;
 
-	protected final Class<T> type;
+	protected final Class<B> type;
 
 	private TableViewField requiredColumn;
 	private List<TableViewField> displayColumns;
@@ -98,17 +96,17 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, T>
 
 	protected final Map<Object, ColumnGenerator> columnGenerators = new HashMap<Object, Table.ColumnGenerator>();
 
-	public AbstractPagedBeanTable(Class<T> type,
+	public AbstractPagedBeanTable(Class<B> type,
 			List<TableViewField> displayColumns) {
 		this(type, null, displayColumns);
 	}
 
-	public AbstractPagedBeanTable(Class<T> type, TableViewField requiredColumn,
+	public AbstractPagedBeanTable(Class<B> type, TableViewField requiredColumn,
 			List<TableViewField> displayColumns) {
 		this(type, null, requiredColumn, displayColumns);
 	}
 
-	public AbstractPagedBeanTable(Class<T> type, String viewId,
+	public AbstractPagedBeanTable(Class<B> type, String viewId,
 			TableViewField requiredColumn, List<TableViewField> displayColumns) {
 		if (viewId != null) {
 			CustomViewStoreService customViewStoreService = ApplicationContextUtil
@@ -129,6 +127,7 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, T>
 		} else {
 			this.displayColumns = displayColumns;
 		}
+
 		this.defaultSelectedColumns = displayColumns;
 		this.requiredColumn = requiredColumn;
 		this.type = type;
@@ -136,13 +135,13 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, T>
 		this.setStyleName("list-view");
 	}
 
-	public void setTableViewFieldCollection(List<TableViewField> viewFields) {
+	public void setDisplayColumns(List<TableViewField> viewFields) {
 		this.displayColumns = viewFields;
-		setTableViewFieldCollection(displayColumns, true);
+		displayTableColumns();
+		this.markAsDirty();
 	}
 
-	private void setTableViewFieldCollection(List<TableViewField> viewFields,
-			boolean requestRepaint) {
+	private void displayTableColumns() {
 		List<String> visibleColumnsCol = new ArrayList<String>();
 		List<String> columnHeadersCol = new ArrayList<String>();
 
@@ -153,8 +152,8 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, T>
 					requiredColumn.getDefaultWidth());
 		}
 
-		for (int i = 0; i < viewFields.size(); i++) {
-			TableViewField viewField = viewFields.get(i);
+		for (int i = 0; i < displayColumns.size(); i++) {
+			TableViewField viewField = displayColumns.get(i);
 			visibleColumnsCol.add(viewField.getField());
 			columnHeadersCol.add(viewField.getDesc());
 
@@ -171,16 +170,12 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, T>
 
 		this.tableItem.setVisibleColumns(visibleColumns);
 		this.tableItem.setColumnHeaders(columnHeaders);
-
-		if (requestRepaint) {
-			this.tableItem.requestRepaint();
-		}
 	}
 
 	@Override
-	public void addSelectableItemHandler(final SelectableItemHandler<T> handler) {
+	public void addSelectableItemHandler(final SelectableItemHandler<B> handler) {
 		if (this.selectableHandlers == null) {
-			this.selectableHandlers = new HashSet<SelectableItemHandler<T>>();
+			this.selectableHandlers = new HashSet<SelectableItemHandler<B>>();
 		}
 		this.selectableHandlers.add(handler);
 	}
@@ -204,17 +199,18 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, T>
 
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
-	public List<T> getCurrentDataList() {
-		final BeanItemContainer<T> containerDataSource = (BeanItemContainer<T>) this.tableItem
-				.getContainerDataSource();
-		final Collection<T> itemIds = containerDataSource.getItemIds();
-		if (itemIds instanceof List) {
-			return (List<T>) itemIds;
-		} else {
-			return new ArrayList<T>(itemIds);
-		}
+	public List<B> getCurrentDataList() {
+		// final BeanItemContainer<B> containerDataSource =
+		// (BeanItemContainer<B>) this.tableItem
+		// .getContainerDataSource();
+		// final Collection<B> itemIds = containerDataSource.getItemIds();
+		// if (itemIds instanceof List) {
+		// return (List<B>) itemIds;
+		// } else {
+		// return new ArrayList<B>(itemIds);
+		// }
+		return currentListData;
 	}
 
 	@Override
@@ -249,9 +245,9 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, T>
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public T getBeanByIndex(final Object itemId) {
+	public B getBeanByIndex(final Object itemId) {
 		final Container container = this.tableItem.getContainerDataSource();
-		final BeanItem<T> item = (BeanItem<T>) container.getItem(itemId);
+		final BeanItem<B> item = (BeanItem<B>) container.getItem(itemId);
 		return (item == null) ? null : item.getBean();
 	}
 
@@ -296,9 +292,9 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, T>
 		}
 	}
 
-	public void fireSelectItemEvent(final T item) {
+	public void fireSelectItemEvent(final B item) {
 		if (this.selectableHandlers != null) {
-			for (final SelectableItemHandler<T> handler : this.selectableHandlers) {
+			for (final SelectableItemHandler<B> handler : this.selectableHandlers) {
 				handler.onSelect(item);
 			}
 		}
@@ -437,7 +433,7 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, T>
 
 	abstract protected int queryTotalCount();
 
-	abstract protected List<T> queryCurrentData();
+	abstract protected List<B> queryCurrentData();
 
 	protected void doSearch() {
 		this.totalCount = this.queryTotalCount();
@@ -464,10 +460,8 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, T>
 
 		this.tableItem = new Table();
 		this.tableItem.setWidth("100%");
-		final CustomComponent tableWrap = new CustomComponent(this.tableItem);
-		LazyLoadWrapper tableLazyLoadContainer = new LazyLoadWrapper(tableWrap);
 		this.tableItem.addStyleName("striped");
-		this.tableItem.setSortDisabled(true);
+		this.tableItem.setSortEnabled(false);
 
 		// set column generator
 		for (final Object propertyId : this.columnGenerators.keySet()) {
@@ -484,7 +478,7 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, T>
 									.newResource("icons/16/arrow_up.png"));
 		}
 
-		this.tableItem.addListener(new Table.HeaderClickListener() {
+		this.tableItem.addHeaderClickListener(new Table.HeaderClickListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -524,22 +518,22 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, T>
 			}
 		});
 
-		final BeanItemContainer<T> container = new BeanItemContainer<T>(
+		final BeanItemContainer<B> container = new BeanItemContainer<B>(
 				this.type, this.currentListData);
 		this.tableItem.setPageLength(0);
 		this.tableItem.setContainerDataSource(container);
-		setTableViewFieldCollection(this.displayColumns);
+		displayTableColumns();
 		this.tableItem.setWidth("100%");
 
 		if (this.getComponentCount() > 0) {
 			final Component component0 = this.getComponent(0);
-			if (component0 instanceof LazyLoadWrapper) {
-				this.replaceComponent(component0, tableLazyLoadContainer);
+			if (component0 instanceof Table) {
+				this.replaceComponent(component0, tableItem);
 			} else {
-				this.addComponent(tableLazyLoadContainer, 0);
+				this.addComponent(tableItem, 0);
 			}
 		} else {
-			this.addComponent(tableLazyLoadContainer, 0);
+			this.addComponent(tableItem, 0);
 		}
 
 	}

@@ -14,10 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.module.crm.view.account;
 
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
@@ -26,12 +23,14 @@ import com.esofthead.mycollab.module.crm.ui.components.HistoryLogWindow;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
-@SuppressWarnings("serial")
-public class AccountHistoryLogWindow extends HistoryLogWindow {
+class AccountHistoryLogWindow extends HistoryLogWindow {
+	private static final long serialVersionUID = 1L;
+
 	public AccountHistoryLogWindow(String module, String type, int typeid) {
-		super(module, type, typeid);
+		super(module, type);
 
 		this.generateFieldDisplayHandler("accountname", "Account Name");
 		this.generateFieldDisplayHandler("phoneoffice", LocalizationHelper

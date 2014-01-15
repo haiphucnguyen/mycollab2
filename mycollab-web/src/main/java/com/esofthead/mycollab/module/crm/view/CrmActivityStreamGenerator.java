@@ -16,9 +16,6 @@
  */
 package com.esofthead.mycollab.module.crm.view;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.esofthead.mycollab.common.domain.SimpleActivityStream;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
@@ -26,10 +23,14 @@ import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.utils.AuditLogShowHandler;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class CrmActivityStreamGenerator {
-	private static Logger log = LoggerFactory
-			.getLogger(CrmActivityStreamGenerator.class);
-
+	
 	private static AuditLogShowHandler accountHandler = new AccountAuditLogShowHandler();
 	private static AuditLogShowHandler contactHandler = new ContactAuditLogShowHandler();
 	private static AuditLogShowHandler campaignHandler = new CampaignAuditLogShowHandler();

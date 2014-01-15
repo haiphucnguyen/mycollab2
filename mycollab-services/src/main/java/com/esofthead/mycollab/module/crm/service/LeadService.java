@@ -16,15 +16,36 @@
  */
 package com.esofthead.mycollab.module.crm.service;
 
+import com.esofthead.mycollab.core.cache.CacheEvict;
 import com.esofthead.mycollab.core.cache.CacheKey;
 import com.esofthead.mycollab.core.cache.Cacheable;
 import com.esofthead.mycollab.core.persistence.service.IDefaultService;
 import com.esofthead.mycollab.module.crm.domain.Lead;
+import com.esofthead.mycollab.module.crm.domain.Opportunity;
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public interface LeadService extends
 		IDefaultService<Integer, Lead, LeadSearchCriteria> {
 	@Cacheable
 	SimpleLead findById(int leadId, @CacheKey int sAccountId);
+
+	@CacheEvict
+	void convertLead(SimpleLead lead, Opportunity opportunity,
+			String convertUser);
+
+	SimpleLead findConvertedLeadOfAccount(int accountId,
+			@CacheKey int sAccountId);
+
+	SimpleLead findConvertedLeadOfContact(int contactId,
+			@CacheKey int sAccountId);
+
+	SimpleLead findConvertedLeadOfOpportunity(int opportunity,
+			@CacheKey int sAccountId);
 }

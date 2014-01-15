@@ -14,10 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.module.project.view.bug;
 
 import com.esofthead.mycollab.common.ModuleNameConstants;
@@ -29,13 +26,14 @@ import com.esofthead.mycollab.vaadin.ui.HistoryLogComponent;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
 @SuppressWarnings("serial")
 public class BugHistoryList extends HistoryLogComponent {
 
 	public BugHistoryList(int bugId) {
-		super(ModuleNameConstants.PRJ, ProjectContants.BUG, bugId);
+		super(ModuleNameConstants.PRJ, ProjectContants.BUG);
 		this.addStyleName("activity-panel");
 
 		this.generateFieldDisplayHandler("description", "Description");

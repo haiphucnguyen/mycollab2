@@ -17,7 +17,6 @@
 package com.esofthead.mycollab.module.crm.ui.components;
 
 import org.apache.commons.beanutils.PropertyUtils;
-import org.vaadin.addon.customfield.CustomField;
 
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
@@ -39,12 +38,21 @@ import com.esofthead.mycollab.module.crm.service.ContactService;
 import com.esofthead.mycollab.module.crm.service.LeadService;
 import com.esofthead.mycollab.module.crm.service.OpportunityService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
-import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Component;
+import com.vaadin.ui.CustomField;
 import com.vaadin.ui.Label;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class RelatedReadItemField extends CustomField {
 	private static final long serialVersionUID = 1L;
 
@@ -52,20 +60,21 @@ public class RelatedReadItemField extends CustomField {
 
 	public RelatedReadItemField(Object bean) {
 		this.bean = bean;
+	}
 
+	@Override
+	protected Component initContent() {
 		try {
 			final Integer typeid = (Integer) PropertyUtils.getProperty(
 					RelatedReadItemField.this.bean, "typeid");
 			if (typeid == null) {
-				this.setCompositionRoot(new Label(""));
-				return;
+				return new Label("");
 			}
 
 			final String type = (String) PropertyUtils
 					.getProperty(bean, "type");
 			if (type == null || type.equals("")) {
-				this.setCompositionRoot(new Label(""));
-				return;
+				return new Label("");
 			}
 
 			ButtonLink relatedLink = null;
@@ -87,6 +96,8 @@ public class RelatedReadItemField extends CustomField {
 													account.getId()));
 								}
 							});
+					relatedLink.setIcon(MyCollabResource
+							.newResource("icons/16/crm/account.png"));
 				}
 			} else if ("Campaign".equals(type)) {
 				CampaignService campaignService = ApplicationContextUtil
@@ -106,6 +117,8 @@ public class RelatedReadItemField extends CustomField {
 
 								}
 							});
+					relatedLink.setIcon(MyCollabResource
+							.newResource("icons/16/crm/campaign.png"));
 				}
 			} else if ("Contact".equals(type)) {
 				ContactService contactService = ApplicationContextUtil
@@ -124,6 +137,8 @@ public class RelatedReadItemField extends CustomField {
 													contact.getId()));
 								}
 							});
+					relatedLink.setIcon(MyCollabResource
+							.newResource("icons/16/crm/contact.png"));
 				}
 			} else if ("Lead".equals(type)) {
 				LeadService leadService = ApplicationContextUtil
@@ -142,6 +157,8 @@ public class RelatedReadItemField extends CustomField {
 													.getId()));
 								}
 							});
+					relatedLink.setIcon(MyCollabResource
+							.newResource("icons/16/crm/lead.png"));
 				}
 			} else if ("Opportunity".equals(type)) {
 				OpportunityService opportunityService = ApplicationContextUtil
@@ -161,6 +178,8 @@ public class RelatedReadItemField extends CustomField {
 													opportunity.getId()));
 								}
 							});
+					relatedLink.setIcon(MyCollabResource
+							.newResource("icons/16/crm/opportunity.png"));
 				}
 			} else if ("Case".equals(type)) {
 				CaseService caseService = ApplicationContextUtil
@@ -180,17 +199,19 @@ public class RelatedReadItemField extends CustomField {
 
 								}
 							});
+					relatedLink.setIcon(MyCollabResource
+							.newResource("icons/16/crm/case.png"));
 				}
 			}
 
 			if (relatedLink != null) {
-				this.setCompositionRoot(relatedLink);
+				return relatedLink;
 			} else {
-				this.setCompositionRoot(new Label(""));
+				return new Label("");
 			}
 
 		} catch (Exception e) {
-			this.setCompositionRoot(new Label(""));
+			return new Label("");
 		}
 	}
 

@@ -16,35 +16,44 @@
  */
 package com.esofthead.mycollab.module.crm.view.lead;
 
-import org.vaadin.addon.customfield.FieldWrapper;
-
 import com.esofthead.mycollab.module.crm.domain.Lead;
 import com.esofthead.mycollab.module.crm.ui.components.IndustryComboBox;
 import com.esofthead.mycollab.module.user.ui.components.ActiveUserComboBox;
+import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
+import com.esofthead.mycollab.vaadin.ui.CompoundCustomField;
 import com.esofthead.mycollab.vaadin.ui.CountryComboBox;
-import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
-import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
-import com.vaadin.data.Item;
+import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
+import com.esofthead.mycollab.vaadin.ui.PrefixNameComboBox;
 import com.vaadin.data.Property;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 
-public class LeadEditFormFieldFactory extends DefaultEditFormFieldFactory {
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ * @param <B>
+ */
+class LeadEditFormFieldFactory<B extends Lead> extends
+		AbstractBeanFieldGroupEditFieldFactory<B> {
 	private static final long serialVersionUID = 1L;
 
-	private Lead lead;
+	private LeadFirstNamePrefixField firstNamePrefixField;
 
-	public LeadEditFormFieldFactory(Lead lead) {
-		this.lead = lead;
+	public LeadEditFormFieldFactory(GenericBeanForm<B> form) {
+		super(form);
+
+		firstNamePrefixField = new LeadFirstNamePrefixField();
 	}
 
 	@Override
-	protected Field onCreateField(Item item, Object propertyId,
-			com.vaadin.ui.Component uiContext) {
-		if (propertyId.equals("firstname")) {
-			return new LeadFirstNamePrefixField();
+	protected Field<?> onCreateField(Object propertyId) {
+		if (propertyId.equals("firstname") || propertyId.equals("prefixname")) {
+			return firstNamePrefixField;
 		} else if (propertyId.equals("primcountry")
 				|| propertyId.equals("othercountry")) {
 			CountryComboBox otherCountryComboBox = new CountryComboBox();
@@ -71,55 +80,58 @@ public class LeadEditFormFieldFactory extends DefaultEditFormFieldFactory {
 			TextArea descArea = new TextArea();
 			descArea.setNullRepresentation("");
 			return descArea;
+		} else if (propertyId.equals("accountname")) {
+			TextField txtField = new TextField();
+			txtField.setRequired(true);
+			txtField.setRequiredError("Account name must be not null");
+			return txtField;
 		}
 
 		return null;
 	}
 
-	class LeadFirstNamePrefixField extends FieldWrapper<Lead> {
+	class LeadFirstNamePrefixField extends CompoundCustomField<Lead> {
 		private static final long serialVersionUID = 1L;
 
-		LeadFirstNamePrefixField() {
-			super(new TextField(), null, Lead.class);
-			this.setWidth("100%");
-
+		@Override
+		protected Component initContent() {
 			HorizontalLayout layout = new HorizontalLayout();
 			layout.setWidth("100%");
 			layout.setSpacing(true);
 
-			final PrefixListSelect prefixSelect = new PrefixListSelect();
-			prefixSelect.setValue(lead.getPrefixname());
+			final PrefixNameComboBox prefixSelect = new PrefixNameComboBox();
+			prefixSelect.setValue(attachForm.getBean().getPrefixname());
 			layout.addComponent(prefixSelect);
 
-			prefixSelect.addListener(new Property.ValueChangeListener() {
-				private static final long serialVersionUID = 1L;
+			prefixSelect
+					.addValueChangeListener(new Property.ValueChangeListener() {
+						private static final long serialVersionUID = 1L;
 
-				@Override
-				public void valueChange(Property.ValueChangeEvent event) {
-					lead.setPrefixname((String) prefixSelect.getValue());
+						@Override
+						public void valueChange(Property.ValueChangeEvent event) {
+							attachForm.getBean().setPrefixname(
+									(String) prefixSelect.getValue());
 
-				}
-			});
+						}
+					});
 
-			TextField firstnameTxtField = (TextField) getWrappedField();
+			TextField firstnameTxtField = new TextField();
 			firstnameTxtField.setWidth("100%");
+			firstnameTxtField.setNullRepresentation("");
 			layout.addComponent(firstnameTxtField);
 			layout.setExpandRatio(firstnameTxtField, 1.0f);
 
-			this.setCompositionRoot(layout);
+			// binding field group
+			fieldGroup.bind(prefixSelect, "prefixname");
+			fieldGroup.bind(firstnameTxtField, "firstname");
+
+			return layout;
 		}
 
-	}
-
-	static class PrefixListSelect extends ValueComboBox {
-
-		private static final long serialVersionUID = 1L;
-
-		public PrefixListSelect() {
-			super();
-			this.setWidth("50px");
-			setCaption(null);
-			this.loadData(new String[] { "Mr.", "Ms.", "Mrs.", "Dr.", "Prof." });
+		@Override
+		public Class<? extends Lead> getType() {
+			return Lead.class;
 		}
+
 	}
 }

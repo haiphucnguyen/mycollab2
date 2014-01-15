@@ -23,36 +23,30 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.vaadin.addon.customfield.CustomField;
-
 import com.vaadin.data.Property;
+import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.ComboBox;
+import com.vaadin.ui.Component;
+import com.vaadin.ui.CustomField;
 import com.vaadin.ui.HorizontalLayout;
 
-@SuppressWarnings("serial")
-public class DateComboboxSelectionField extends CustomField {
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
+public class DateComboboxSelectionField extends CustomField<Date> {
+	private static final long serialVersionUID = 1L;
 
-	private ComboBox cboYear;
-	private ComboBox cboMonth;
-	private ComboBox cboDate;
+	protected ComboBox cboYear;
+	protected ComboBox cboMonth;
+	protected ComboBox cboDate;
 
 	private Map<String, Integer> mapNumberMonth = new HashMap<String, Integer>();
-	private FieldSelection fieldSelection;
 
 	public DateComboboxSelectionField() {
-		this(null);
-	}
-
-	public DateComboboxSelectionField(FieldSelection fieldSelection) {
-		this.fieldSelection = fieldSelection;
-		initUI();
-	}
-
-	private void initUI() {
-		HorizontalLayout layout = new HorizontalLayout();
-		layout.setSpacing(true);
-
 		cboMonth = new ComboBox();
 		cboMonth.setNullSelectionAllowed(true);
 		cboMonth.setImmediate(true);
@@ -60,8 +54,6 @@ public class DateComboboxSelectionField extends CustomField {
 		addMonthItems();
 		cboMonth.select(cboMonth.getItemIds().iterator().next());
 		cboMonth.setWidth("117px");
-		layout.addComponent(cboMonth);
-		layout.setComponentAlignment(cboMonth, Alignment.TOP_CENTER);
 
 		cboDate = new ComboBox();
 		cboDate.setNullSelectionAllowed(true);
@@ -70,8 +62,6 @@ public class DateComboboxSelectionField extends CustomField {
 		addDayItems();
 		cboDate.select(cboDate.getItemIds().iterator().next());
 		cboDate.setWidth("50px");
-		layout.addComponent(cboDate);
-		layout.setComponentAlignment(cboDate, Alignment.TOP_CENTER);
 
 		cboYear = new ComboBox();
 		cboYear.setNullSelectionAllowed(true);
@@ -80,42 +70,22 @@ public class DateComboboxSelectionField extends CustomField {
 		addYearItems();
 		cboYear.select(cboYear.getItemIds().iterator().next());
 		cboYear.setWidth("70px");
-		layout.addComponent(cboYear);
-		layout.setComponentAlignment(cboYear, Alignment.TOP_CENTER);
-
-		cboMonth.addListener(new Property.ValueChangeListener() {
-
-			@Override
-			public void valueChange(Property.ValueChangeEvent event) {
-				fireDateChange();
-
-			}
-		});
-
-		cboDate.addListener(new Property.ValueChangeListener() {
-
-			@Override
-			public void valueChange(Property.ValueChangeEvent event) {
-				fireDateChange();
-
-			}
-		});
-
-		cboYear.addListener(new Property.ValueChangeListener() {
-
-			@Override
-			public void valueChange(Property.ValueChangeEvent event) {
-				fireDateChange();
-
-			}
-		});
-		setCompositionRoot(layout);
 	}
 
-	private void fireDateChange() {
-		if (fieldSelection != null) {
-			fieldSelection.fireValueChange(getDate());
-		}
+	@Override
+	protected Component initContent() {
+		HorizontalLayout layout = new HorizontalLayout();
+		layout.setSpacing(true);
+
+		layout.addComponent(cboMonth);
+		layout.setComponentAlignment(cboMonth, Alignment.TOP_CENTER);
+
+		layout.addComponent(cboDate);
+		layout.setComponentAlignment(cboDate, Alignment.TOP_CENTER);
+
+		layout.addComponent(cboYear);
+		layout.setComponentAlignment(cboYear, Alignment.TOP_CENTER);
+		return layout;
 	}
 
 	private String formatMonth(String month) {
@@ -159,7 +129,14 @@ public class DateComboboxSelectionField extends CustomField {
 		if (date != null) {
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTime(date);
-			cboDate.select(calendar.get(Calendar.DATE) + "");
+
+			int dateVal = calendar.get(Calendar.DATE);
+			if (dateVal < 10) {
+				cboDate.select("0" + dateVal);
+			} else {
+				cboDate.select(dateVal + "");
+			}
+
 			cboMonth.select(formatMonth(calendar.get(Calendar.MONTH) + 1 + ""));
 			cboYear.select(calendar.get(Calendar.YEAR));
 		} else {
@@ -185,7 +162,23 @@ public class DateComboboxSelectionField extends CustomField {
 	}
 
 	@Override
-	public Class<?> getType() {
+	public void setPropertyDataSource(Property newDataSource) {
+		Date value = (Date) newDataSource.getValue();
+		if (value != null) {
+			this.setDate(value);
+		}
+		super.setPropertyDataSource(newDataSource);
+	}
+
+	@Override
+	public void commit() throws SourceException, InvalidValueException {
+		Date value = getDate();
+		setInternalValue(value);
+		super.commit();
+	}
+
+	@Override
+	public Class<Date> getType() {
 		return Date.class;
 	}
 }

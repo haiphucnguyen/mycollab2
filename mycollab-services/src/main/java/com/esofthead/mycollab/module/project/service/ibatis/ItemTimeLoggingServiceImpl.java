@@ -28,6 +28,12 @@ import com.esofthead.mycollab.module.project.domain.ItemTimeLogging;
 import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ItemTimeLoggingService;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @Service
 public class ItemTimeLoggingServiceImpl extends
 		DefaultService<Integer, ItemTimeLogging, ItemTimeLoggingSearchCriteria>

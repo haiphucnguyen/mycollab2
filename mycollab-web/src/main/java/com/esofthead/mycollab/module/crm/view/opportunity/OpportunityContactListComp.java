@@ -14,17 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.module.crm.view.opportunity;
 
 import java.util.Arrays;
 import java.util.Set;
 
 import org.vaadin.dialogs.ConfirmDialog;
-import org.vaadin.hene.splitbutton.SplitButton;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
@@ -34,40 +30,43 @@ import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.eventmanager.ApplicationEvent;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBus;
+import com.esofthead.mycollab.module.crm.domain.ContactOpportunity;
 import com.esofthead.mycollab.module.crm.domain.Opportunity;
-import com.esofthead.mycollab.module.crm.domain.OpportunityContact;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
+import com.esofthead.mycollab.module.crm.domain.SimpleContactOpportunityRel;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
+import com.esofthead.mycollab.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.module.crm.events.ContactEvent;
+import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
-import com.esofthead.mycollab.module.crm.service.OpportunityService;
+import com.esofthead.mycollab.module.crm.service.ContactService;
 import com.esofthead.mycollab.module.crm.ui.components.RelatedListComp;
-import com.esofthead.mycollab.module.crm.view.contact.ContactTableDisplay;
 import com.esofthead.mycollab.module.crm.view.contact.ContactTableFieldDef;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
-import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Table;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.UI;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class OpportunityContactListComp extends
-		RelatedListComp<SimpleContact, ContactSearchCriteria> {
+		RelatedListComp<SimpleContactOpportunityRel, ContactSearchCriteria> {
 
 	private static final long serialVersionUID = 1L;
 	private Opportunity opportunity;
 
 	public OpportunityContactListComp() {
-		super("Contacts");
 		initUI();
 	}
 
@@ -87,49 +86,30 @@ public class OpportunityContactListComp extends
 
 	@SuppressWarnings("serial")
 	private void initUI() {
-		VerticalLayout contentContainer = (VerticalLayout) bodyContent;
-		contentContainer.setSpacing(true);
+		final Button controlsBtn = new Button("Add Contact Roles",
+				new Button.ClickListener() {
 
-		final SplitButton controlsBtn = new SplitButton();
+					@Override
+					public void buttonClick(ClickEvent event) {
+						EventBus.getInstance().fireEvent(
+								new OpportunityEvent.GotoContactRoleEdit(
+										OpportunityContactListComp.this,
+										opportunity));
+
+					}
+				});
 		controlsBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_CONTACT));
-		controlsBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
-		controlsBtn.setCaption("New Contact");
+		controlsBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		controlsBtn.setCaption("Add Contact Roles");
 		controlsBtn.setIcon(MyCollabResource
 				.newResource("icons/16/addRecord.png"));
-		controlsBtn
-				.addClickListener(new SplitButton.SplitButtonClickListener() {
-					@Override
-					public void splitButtonClick(
-							SplitButton.SplitButtonClickEvent event) {
-						fireNewRelatedItem("");
-					}
-				});
-		Button selectBtn = new Button("Select from existing contacts",
-				new Button.ClickListener() {
-					@Override
-					public void buttonClick(Button.ClickEvent event) {
-						OpportunityContactSelectionWindow contactsWindow = new OpportunityContactSelectionWindow(
-								OpportunityContactListComp.this);
-						ContactSearchCriteria criteria = new ContactSearchCriteria();
-						criteria.setSaccountid(new NumberSearchField(AppContext
-								.getAccountId()));
-						getWindow().addWindow(contactsWindow);
-						contactsWindow.setSearchCriteria(criteria);
-						controlsBtn.setPopupVisible(false);
-					}
-				});
-		selectBtn.setIcon(MyCollabResource.newResource("icons/16/select.png"));
-		selectBtn.setStyleName("link");
-		controlsBtn.addComponent(selectBtn);
-		controlsBtn.setEnabled(AppContext
-				.canWrite(RolePermissionCollections.CRM_CONTACT));
-		addHeaderElement(controlsBtn);
+		this.addComponent(controlsBtn);
 
-		tableItem = new ContactTableDisplay(Arrays.asList(
-				ContactTableFieldDef.name, ContactTableFieldDef.email,
-				ContactTableFieldDef.phoneOffice, ContactTableFieldDef.account,
-				ContactTableFieldDef.action));
+		tableItem = new OpportunityContactTableDisplay(Arrays.asList(
+				ContactTableFieldDef.name, ContactTableFieldDef.account,
+				ContactTableFieldDef.email, ContactTableFieldDef.phoneOffice,
+				ContactTableFieldDef.dicisionRole, ContactTableFieldDef.action));
 
 		tableItem
 				.addTableListener(new ApplicationEventListener<TableClickEvent>() {
@@ -146,6 +126,11 @@ public class OpportunityContactListComp extends
 									new ContactEvent.GotoRead(
 											OpportunityContactListComp.this,
 											contact.getId()));
+						} else if ("accountName".equals(event.getFieldName())) {
+							EventBus.getInstance().fireEvent(
+									new AccountEvent.GotoRead(
+											OpportunityContactListComp.this,
+											contact.getAccountid()));
 						}
 					}
 				});
@@ -157,13 +142,13 @@ public class OpportunityContactListComp extends
 				final SimpleContact contact = (SimpleContact) tableItem
 						.getBeanByIndex(itemId);
 				HorizontalLayout controlLayout = new HorizontalLayout();
+				
 				Button editBtn = new Button(null, new Button.ClickListener() {
 					@Override
 					public void buttonClick(Button.ClickEvent event) {
 						EventBus.getInstance().fireEvent(
-								new ContactEvent.GotoEdit(
-										OpportunityContactListComp.this,
-										contact));
+								new OpportunityEvent.GotoContactRoleEdit(
+										OpportunityContactListComp.this, opportunity));
 					}
 				});
 				editBtn.setStyleName("link");
@@ -175,7 +160,7 @@ public class OpportunityContactListComp extends
 					@Override
 					public void buttonClick(Button.ClickEvent event) {
 						ConfirmDialogExt.show(
-								AppContext.getApplication().getMainWindow(),
+								UI.getCurrent(),
 								LocalizationHelper.getMessage(
 										GenericI18Enum.DELETE_DIALOG_TITLE,
 										SiteConfiguration.getSiteName()),
@@ -191,17 +176,17 @@ public class OpportunityContactListComp extends
 									@Override
 									public void onClose(ConfirmDialog dialog) {
 										if (dialog.isConfirmed()) {
-											OpportunityService opportunityService = ApplicationContextUtil
-													.getSpringBean(OpportunityService.class);
-											OpportunityContact associateContact = new OpportunityContact();
+											ContactService contactService = ApplicationContextUtil
+													.getSpringBean(ContactService.class);
+											ContactOpportunity associateContact = new ContactOpportunity();
 											associateContact
 													.setOpportunityid(opportunity
 															.getId());
 											associateContact
 													.setContactid(contact
 															.getId());
-											opportunityService
-													.removeOpportunityContactRelationship(
+											contactService
+													.removeContactOpportunityRelationship(
 															associateContact,
 															AppContext
 																	.getAccountId());
@@ -219,7 +204,7 @@ public class OpportunityContactListComp extends
 				return controlLayout;
 			}
 		});
-		contentContainer.addComponent(tableItem);
+		this.addComponent(tableItem);
 
 	}
 

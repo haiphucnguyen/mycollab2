@@ -18,6 +18,12 @@ package com.esofthead.mycollab.shell.events;
 
 import com.esofthead.mycollab.eventmanager.ApplicationEvent;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @SuppressWarnings("serial")
 public class ShellEvent {
 
@@ -66,13 +72,6 @@ public class ShellEvent {
 	public static class GotoConsolePage extends ApplicationEvent {
 
 		public GotoConsolePage(Object source, Object data) {
-			super(source, data);
-		}
-	}
-
-	public static class GotoSignupPage extends ApplicationEvent {
-
-		public GotoSignupPage(Object source, Object data) {
 			super(source, data);
 		}
 	}

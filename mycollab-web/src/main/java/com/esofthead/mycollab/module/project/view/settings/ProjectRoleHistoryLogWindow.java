@@ -14,24 +14,23 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.module.project.view.settings;
 
 import com.esofthead.mycollab.module.crm.ui.components.HistoryLogWindow;
 
 /**
- *
- * @author haiphucnguyen
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
-@SuppressWarnings("serial")
-public class ProjectRoleHistoryLogWindow extends HistoryLogWindow {
-    public ProjectRoleHistoryLogWindow(String module, String type, int typeid) {
-        super(module, type, typeid);
-        
-        this.generateFieldDisplayHandler("rolename", "Role Name");
-        this.generateFieldDisplayHandler("description", "Description");
-    }
+class ProjectRoleHistoryLogWindow extends HistoryLogWindow {
+	private static final long serialVersionUID = 1L;
+
+	public ProjectRoleHistoryLogWindow(String module, String type) {
+		super(module, type);
+
+		this.generateFieldDisplayHandler("rolename", "Role Name");
+		this.generateFieldDisplayHandler("description", "Description");
+	}
 }

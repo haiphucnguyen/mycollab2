@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.common.domain.GroupItem;
 import com.esofthead.mycollab.common.interceptor.aspect.Auditable;
 import com.esofthead.mycollab.common.interceptor.aspect.Traceable;
@@ -31,13 +32,10 @@ import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
-import com.esofthead.mycollab.module.crm.dao.OpportunityContactMapper;
 import com.esofthead.mycollab.module.crm.dao.OpportunityLeadMapper;
 import com.esofthead.mycollab.module.crm.dao.OpportunityMapper;
 import com.esofthead.mycollab.module.crm.dao.OpportunityMapperExt;
 import com.esofthead.mycollab.module.crm.domain.Opportunity;
-import com.esofthead.mycollab.module.crm.domain.OpportunityContact;
-import com.esofthead.mycollab.module.crm.domain.OpportunityContactExample;
 import com.esofthead.mycollab.module.crm.domain.OpportunityLead;
 import com.esofthead.mycollab.module.crm.domain.OpportunityLeadExample;
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
@@ -45,10 +43,16 @@ import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriter
 import com.esofthead.mycollab.module.crm.service.OpportunityService;
 import com.esofthead.mycollab.schedule.email.crm.OpportunityRelayEmailNotificationAction;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @Service
 @Transactional
-@Traceable(module = "Crm", type = "Opportunity", nameField = "opportunityname")
-@Auditable(module = "Crm", type = "Opportunity")
+@Traceable(module = ModuleNameConstants.CRM, type = CrmTypeConstants.OPPORTUNITY, nameField = "opportunityname")
+@Auditable(module = ModuleNameConstants.CRM, type = CrmTypeConstants.OPPORTUNITY)
 @Watchable(type = CrmTypeConstants.OPPORTUNITY, userFieldName = "assignuser", emailHandlerBean = OpportunityRelayEmailNotificationAction.class)
 public class OpportunityServiceImpl extends
 		DefaultService<Integer, Opportunity, OpportunitySearchCriteria>
@@ -58,8 +62,6 @@ public class OpportunityServiceImpl extends
 	private OpportunityMapper opportunityMapper;
 	@Autowired
 	private OpportunityMapperExt opportunityMapperExt;
-	@Autowired
-	private OpportunityContactMapper opportunityContactMapper;
 	@Autowired
 	private OpportunityLeadMapper opportunityLeadMapper;
 
@@ -97,31 +99,6 @@ public class OpportunityServiceImpl extends
 	}
 
 	@Override
-	public void saveOpportunityContactRelationship(
-			List<OpportunityContact> associateContacts, Integer sAccountId) {
-		for (OpportunityContact associateContact : associateContacts) {
-			OpportunityContactExample ex = new OpportunityContactExample();
-			ex.createCriteria()
-					.andContactidEqualTo(associateContact.getContactid())
-					.andOpportunityidEqualTo(
-							associateContact.getOpportunityid());
-			if (opportunityContactMapper.countByExample(ex) == 0) {
-				opportunityContactMapper.insert(associateContact);
-			}
-		}
-	}
-
-	@Override
-	public void removeOpportunityContactRelationship(
-			OpportunityContact associateContact, Integer sAccountId) {
-		OpportunityContactExample ex = new OpportunityContactExample();
-		ex.createCriteria()
-				.andContactidEqualTo(associateContact.getContactid())
-				.andOpportunityidEqualTo(associateContact.getOpportunityid());
-		opportunityContactMapper.deleteByExample(ex);
-	}
-
-	@Override
 	public void saveOpportunityLeadRelationship(
 			List<OpportunityLead> associateLeads, Integer sAccountId) {
 		for (OpportunityLead associateLead : associateLeads) {
@@ -143,5 +120,12 @@ public class OpportunityServiceImpl extends
 				.andOpportunityidEqualTo(associateLead.getOpportunityid())
 				.andLeadidEqualTo(associateLead.getLeadid());
 		opportunityLeadMapper.deleteByExample(ex);
+	}
+
+	@Override
+	public SimpleOpportunity findOpportunityAssoWithConvertedLead(int leadId,
+			@CacheKey int accountId) {
+		return opportunityMapperExt
+				.findOpportunityAssoWithConvertedLead(leadId);
 	}
 }

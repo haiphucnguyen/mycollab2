@@ -14,15 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-services.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.module.project.service;
 
 import java.util.List;
-
-import org.springframework.flex.remoting.RemotingDestination;
 
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.persistence.service.ISearchableService;
@@ -32,9 +27,8 @@ import com.esofthead.mycollab.module.project.domain.criteria.ProjectGenericTaskS
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
-@RemotingDestination
 public interface ProjectGenericTaskService extends
 		ISearchableService<ProjectGenericTaskSearchCriteria> {
 	

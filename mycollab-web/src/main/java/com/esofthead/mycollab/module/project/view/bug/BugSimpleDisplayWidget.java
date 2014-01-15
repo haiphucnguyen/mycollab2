@@ -24,6 +24,7 @@ import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.BeanList;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.vaadin.server.Sizeable;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -31,17 +32,24 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class BugSimpleDisplayWidget extends
 		BeanList<BugService, BugSearchCriteria, SimpleBug> {
 	private static final long serialVersionUID = 1L;
 
 	public BugSimpleDisplayWidget() {
 		super(null, ApplicationContextUtil.getSpringBean(BugService.class),
-				TaskRowDisplayHandler.class, false);
+				TaskRowDisplayHandler.class);
 	}
 
 	public static class TaskRowDisplayHandler implements
 			BeanList.RowDisplayHandler<SimpleBug> {
+		private static final long serialVersionUID = 1L;
 
 		@Override
 		public Component generateRow(final SimpleBug bug, int rowIndex) {
@@ -57,16 +65,18 @@ public class BugSimpleDisplayWidget extends
 						}
 					});
 			bugLink.setStyleName("link");
+			bugLink.setWidth(Sizeable.SIZE_UNDEFINED, Sizeable.Unit.PIXELS);
 			if (bug.isCompleted()) {
 				bugLink.addStyleName(UIConstants.LINK_COMPLETED);
 			} else if (bug.isOverdue()) {
 				bugLink.addStyleName(UIConstants.LINK_OVERDUE);
 			}
 			layout.addComponent(bugLink);
-			
+
 			Label bugSummary = new Label(bug.getSummary());
 			layout.addComponent(bugSummary);
 			layout.setComponentAlignment(bugSummary, Alignment.MIDDLE_LEFT);
+			layout.setExpandRatio(bugSummary, 1.0f);
 			return layout;
 		}
 	}

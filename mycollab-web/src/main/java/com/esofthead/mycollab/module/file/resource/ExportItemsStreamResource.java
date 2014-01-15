@@ -39,8 +39,15 @@ import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.MyCollabThread;
 import com.esofthead.mycollab.reporting.ReportExportType;
 import com.esofthead.mycollab.reporting.Templates;
-import com.vaadin.terminal.StreamResource;
+import com.vaadin.server.StreamResource;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ * @param <T>
+ */
 public abstract class ExportItemsStreamResource<T> implements
 		StreamResource.StreamSource {
 	private static final long serialVersionUID = 1L;
@@ -60,16 +67,15 @@ public abstract class ExportItemsStreamResource<T> implements
 		this.outputForm = outputForm;
 	}
 
-	public String getDefaultExportFileName() {
-		if (outputForm == ReportExportType.PDF) {
+	public static String getDefaultExportFileName(ReportExportType type) {
+		if (type == ReportExportType.PDF) {
 			return "export.pdf";
-		} else if (outputForm == ReportExportType.CSV) {
+		} else if (type == ReportExportType.CSV) {
 			return "export.csv";
-		} else if (outputForm == ReportExportType.EXCEL) {
+		} else if (type == ReportExportType.EXCEL) {
 			return "export.xlsx";
 		} else {
-			throw new MyCollabException("Do not support report output "
-					+ outputForm);
+			throw new MyCollabException("Do not support report output " + type);
 		}
 	}
 
@@ -87,9 +93,6 @@ public abstract class ExportItemsStreamResource<T> implements
 		}
 
 		Thread threadExport = new MyCollabThread(new Runnable() {
-			/**
-			 * @see java.lang.Runnable#run()
-			 */
 			@Override
 			public void run() {
 				try {
@@ -103,6 +106,7 @@ public abstract class ExportItemsStreamResource<T> implements
 					} else if (outputForm == ReportExportType.CSV) {
 						JasperCsvExporterBuilder csvExporter = export
 								.csvExporter(outStream);
+						reportBuilder.ignorePageWidth();
 						reportBuilder.toCsv(csvExporter);
 					} else if (outputForm == ReportExportType.EXCEL) {
 						JasperXlsxExporterBuilder xlsExporter = export
@@ -120,6 +124,12 @@ public abstract class ExportItemsStreamResource<T> implements
 				} catch (Exception e) {
 					log.error("Exception while generating report ", e);
 					throw new MyCollabException(e);
+				} finally {
+					try {
+						outStream.close();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
 				}
 			}
 		});

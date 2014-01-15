@@ -14,11 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.module.project.view.bug;
+
+import java.util.List;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
@@ -26,27 +25,24 @@ import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ui.components.MultiSelectComp;
+import com.esofthead.mycollab.module.tracker.domain.Version;
 import com.esofthead.mycollab.module.tracker.domain.criteria.VersionSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.VersionService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.vaadin.data.Property;
+import com.vaadin.ui.Component;
+import com.vaadin.ui.CustomField;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
-@SuppressWarnings("serial")
-public class VersionMultiSelectField extends MultiSelectComp {
+public class VersionMultiSelectField extends CustomField {
+
+	private MultiSelectComp<Version> versionSelection;
 
 	public VersionMultiSelectField() {
-		super("versionname");
-	}
-
-	public VersionMultiSelectField(String width) {
-		super("versionname", width);
-	}
-
-	@Override
-	protected void initData() {
 		VersionSearchCriteria searchCriteria = new VersionSearchCriteria();
 		searchCriteria.setStatus(new StringSearchField("Open"));
 
@@ -55,9 +51,37 @@ public class VersionMultiSelectField extends MultiSelectComp {
 
 		VersionService versionService = ApplicationContextUtil
 				.getSpringBean(VersionService.class);
-		dataList = versionService
+		List versions = versionService
 				.findPagableListByCriteria(new SearchRequest<VersionSearchCriteria>(
 						searchCriteria, 0, Integer.MAX_VALUE));
 
+		versionSelection = new MultiSelectComp<Version>("versionname", versions);
+	}
+
+	public void resetComp() {
+		versionSelection.resetComp();
+	}
+
+	@Override
+	protected Component initContent() {
+		return versionSelection;
+	}
+
+	@Override
+	public void setPropertyDataSource(Property newDataSource) {
+		List<Version> versions = (List<Version>) newDataSource.getValue();
+		if (versions != null) {
+			versionSelection.setSelectedItems(versions);
+		}
+		super.setPropertyDataSource(newDataSource);
+	}
+
+	public List<Version> getSelectedItems() {
+		return versionSelection.getSelectedItems();
+	}
+
+	@Override
+	public Class getType() {
+		return Object.class;
 	}
 }

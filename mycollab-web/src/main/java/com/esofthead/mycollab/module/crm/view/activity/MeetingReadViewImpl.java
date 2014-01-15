@@ -16,22 +16,21 @@
  */
 package com.esofthead.mycollab.module.crm.view.activity;
 
-import com.esofthead.mycollab.module.crm.domain.MeetingWithBLOBs;
 import com.esofthead.mycollab.module.crm.domain.SimpleMeeting;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
-import com.esofthead.mycollab.vaadin.ui.ViewComponent;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
+import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 
 @ViewComponent
-public class MeetingReadViewImpl extends AbstractView implements
+public class MeetingReadViewImpl extends AbstractPageView implements
 		MeetingReadView {
 
 	private static final long serialVersionUID = 1L;
-	private MeetingPreviewBuilder previewForm;
+	private MeetingReadComp previewForm;
 
 	public MeetingReadViewImpl() {
 		super();
-		previewForm = new MeetingPreviewBuilder.ReadView();
+		previewForm = new MeetingReadComp();
 		this.addComponent(previewForm);
 	}
 
@@ -41,12 +40,12 @@ public class MeetingReadViewImpl extends AbstractView implements
 	}
 
 	@Override
-	public HasPreviewFormHandlers<MeetingWithBLOBs> getPreviewFormHandlers() {
+	public HasPreviewFormHandlers<SimpleMeeting> getPreviewFormHandlers() {
 		return previewForm.getPreviewForm();
 	}
 
 	@Override
 	public SimpleMeeting getItem() {
-		return previewForm.getMeeting();
+		return previewForm.getBeanItem();
 	}
 }

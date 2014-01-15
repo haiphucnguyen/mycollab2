@@ -14,10 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.module.project.view.user;
 
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
@@ -33,7 +30,8 @@ import com.vaadin.ui.VerticalLayout;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
 public abstract class ProjectFormLayoutFactory implements IFormLayoutFactory {
 	private static final long serialVersionUID = 1L;
@@ -69,8 +67,8 @@ public abstract class ProjectFormLayoutFactory implements IFormLayoutFactory {
 	}
 
 	@Override
-	public void attachField(final Object propertyId, final Field field) {
-		this.projectInformationLayout.attachField(propertyId, field);
+	public boolean attachField(final Object propertyId, final Field<?> field) {
+		return this.projectInformationLayout.attachField(propertyId, field);
 	}
 
 	protected abstract Layout createTopPanel();
@@ -132,7 +130,7 @@ public abstract class ProjectFormLayoutFactory implements IFormLayoutFactory {
 		}
 
 		@Override
-		public void attachField(final Object propertyId, final Field field) {
+		public boolean attachField(final Object propertyId, final Field<?> field) {
 			if (propertyId.equals("name")) {
 				this.informationLayout
 						.addComponent(field, "Project Name", 0, 0);
@@ -164,7 +162,11 @@ public abstract class ProjectFormLayoutFactory implements IFormLayoutFactory {
 			} else if (propertyId.equals("description")) {
 				this.descriptionLayout.addComponent(field, "Description", 0, 0,
 						2, UIConstants.DEFAULT_2XCONTROL_WIDTH);
+			} else {
+				return false;
 			}
+
+			return true;
 		}
 	}
 }

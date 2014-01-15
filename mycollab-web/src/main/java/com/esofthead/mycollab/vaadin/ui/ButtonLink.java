@@ -20,6 +20,9 @@ import com.vaadin.ui.Button;
 
 /**
  * Button link
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
  */
 public class ButtonLink extends Button {
 

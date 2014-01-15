@@ -16,6 +16,12 @@
  */
 package com.esofthead.mycollab.reporting;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public enum ReportExportType {
 	CSV, EXCEL, PDF
 }

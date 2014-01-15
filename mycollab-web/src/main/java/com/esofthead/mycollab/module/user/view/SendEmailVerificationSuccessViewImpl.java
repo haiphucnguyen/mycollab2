@@ -16,11 +16,17 @@
  */
 package com.esofthead.mycollab.module.user.view;
 
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
-import com.esofthead.mycollab.vaadin.ui.ViewComponent;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
+import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @ViewComponent
-public class SendEmailVerificationSuccessViewImpl extends AbstractView
+public class SendEmailVerificationSuccessViewImpl extends AbstractPageView
 		implements SendEmailVerificationSuccessView {
 	private static final long serialVersionUID = 1L;
 

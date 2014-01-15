@@ -26,6 +26,7 @@ import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.crm.domain.ContactOpportunity;
 import com.esofthead.mycollab.module.crm.domain.Opportunity;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
+import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.crm.service.ContactService;
@@ -34,18 +35,22 @@ import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
 import com.esofthead.mycollab.module.crm.view.CrmToolbar;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.mvp.HistoryViewManager;
 import com.esofthead.mycollab.vaadin.mvp.NullViewState;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.mvp.ViewState;
-import com.esofthead.mycollab.vaadin.ui.MessageBox;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
-import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.Window;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class OpportunityAddPresenter extends
 		CrmGenericPresenter<OpportunityAddView> {
 
@@ -53,14 +58,16 @@ public class OpportunityAddPresenter extends
 
 	public OpportunityAddPresenter() {
 		super(OpportunityAddView.class);
-		bind();
 	}
 
-	private void bind() {
+	@Override
+	protected void postInitView() {
 		view.getEditFormHandlers().addFormHandler(
-				new EditFormHandler<Opportunity>() {
+				new EditFormHandler<SimpleOpportunity>() {
+					private static final long serialVersionUID = 1L;
+
 					@Override
-					public void onSave(final Opportunity item) {
+					public void onSave(final SimpleOpportunity item) {
 						saveOpportunity(item);
 						ViewState viewState = HistoryViewManager.back();
 						if (viewState instanceof NullViewState) {
@@ -79,7 +86,7 @@ public class OpportunityAddPresenter extends
 					}
 
 					@Override
-					public void onSaveAndNew(final Opportunity item) {
+					public void onSaveAndNew(final SimpleOpportunity item) {
 						saveOpportunity(item);
 						EventBus.getInstance().fireEvent(
 								new OpportunityEvent.GotoAdd(this, null));
@@ -94,13 +101,13 @@ public class OpportunityAddPresenter extends
 			crmToolbar.gotoItem(LocalizationHelper
 					.getMessage(CrmCommonI18nEnum.TOOLBAR_OPPORTUNTIES_HEADER));
 
-			Opportunity opportunity = null;
-			if (data.getParams() instanceof Opportunity) {
-				opportunity = (Opportunity) data.getParams();
+			SimpleOpportunity opportunity = null;
+			if (data.getParams() instanceof SimpleOpportunity) {
+				opportunity = (SimpleOpportunity) data.getParams();
 			} else if (data.getParams() instanceof Integer) {
 				OpportunityService accountService = ApplicationContextUtil
 						.getSpringBean(OpportunityService.class);
-				opportunity = accountService.findByPrimaryKey(
+				opportunity = accountService.findById(
 						(Integer) data.getParams(), AppContext.getAccountId());
 				if (opportunity == null) {
 					NotificationUtil.showRecordNotExistNotification();
@@ -127,7 +134,7 @@ public class OpportunityAddPresenter extends
 										opportunity.getOpportunityname()));
 			}
 		} else {
-			MessageBox.showMessagePermissionAlert();
+			NotificationUtil.showMessagePermissionAlert();
 		}
 	}
 

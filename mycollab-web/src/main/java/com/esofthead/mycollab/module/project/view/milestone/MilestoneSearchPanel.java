@@ -14,10 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.module.project.view.milestone;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
@@ -31,10 +28,10 @@ import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.MilestoneSearchCriteria;
 import com.esofthead.mycollab.module.project.events.MilestoneEvent;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
-import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -47,7 +44,8 @@ import com.vaadin.ui.themes.Reindeer;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class MilestoneSearchPanel extends
 		GenericSearchPanel<MilestoneSearchCriteria> {
@@ -75,6 +73,7 @@ public class MilestoneSearchPanel extends
 		HorizontalLayout layout = new HorizontalLayout();
 		layout.setWidth("100%");
 		layout.setSpacing(true);
+		layout.setMargin(true);
 
 		Label searchtitle = new Label("Search Milestones");
 		searchtitle.setStyleName(Reindeer.LABEL_H2);
@@ -121,6 +120,7 @@ public class MilestoneSearchPanel extends
 		public ComponentContainer constructBody() {
 			HorizontalLayout basicSearchBody = new HorizontalLayout();
 			basicSearchBody.setSpacing(true);
+			basicSearchBody.setMargin(true);
 			basicSearchBody.addComponent(new Label("Name"));
 			nameField = new TextField();
 			nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
@@ -157,10 +157,9 @@ public class MilestoneSearchPanel extends
 		@Override
 		protected SearchCriteria fillupSearchCriteria() {
 			searchCriteria = new MilestoneSearchCriteria();
-			searchCriteria.setProjectId(new NumberSearchField(
-					SearchField.AND, project.getId()));
-			if (StringUtils.isNotNullOrEmpty((String) nameField
-					.getValue())) {
+			searchCriteria.setProjectId(new NumberSearchField(SearchField.AND,
+					project.getId()));
+			if (StringUtils.isNotNullOrEmpty((String) nameField.getValue())) {
 				searchCriteria.setMilestoneName(new StringSearchField(
 						SearchField.AND, (String) nameField.getValue()));
 			}

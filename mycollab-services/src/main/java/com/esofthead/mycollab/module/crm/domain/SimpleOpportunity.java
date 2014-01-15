@@ -17,18 +17,26 @@
 package com.esofthead.mycollab.module.crm.domain;
 
 import com.esofthead.mycollab.common.domain.Currency;
+import com.esofthead.mycollab.core.arguments.NotBindable;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class SimpleOpportunity extends Opportunity {
 	private static final long serialVersionUID = 1L;
 
 	private String accountName;
 
 	private String campaignName;
-	
+
 	private String assignUserAvatarId;
 
 	private String assignUserFullName;
-	
+
+	@NotBindable
 	private Currency currency;
 
 	public String getAccountName() {
@@ -38,7 +46,6 @@ public class SimpleOpportunity extends Opportunity {
 	public void setAccountName(String accountName) {
 		this.accountName = accountName;
 	}
-	
 
 	public String getCampaignName() {
 		return campaignName;

@@ -16,11 +16,14 @@
  */
 package com.esofthead.mycollab.vaadin.ui;
 
-import com.vaadin.terminal.ExternalResource;
+import com.vaadin.server.ExternalResource;
 import com.vaadin.ui.Link;
 
 /**
  * Vaadin Url link
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
  * 
  */
 public class UrlLink extends Link {

@@ -16,37 +16,51 @@
  */
 package com.esofthead.mycollab.module.crm.service.ibatis;
 
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.common.interceptor.aspect.Auditable;
 import com.esofthead.mycollab.common.interceptor.aspect.Traceable;
 import com.esofthead.mycollab.common.interceptor.aspect.Watchable;
+import com.esofthead.mycollab.core.cache.CacheEvict;
+import com.esofthead.mycollab.core.cache.CacheKey;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.dao.ContactCaseMapper;
+import com.esofthead.mycollab.module.crm.dao.ContactLeadMapper;
 import com.esofthead.mycollab.module.crm.dao.ContactMapper;
 import com.esofthead.mycollab.module.crm.dao.ContactMapperExt;
 import com.esofthead.mycollab.module.crm.dao.ContactOpportunityMapper;
 import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.module.crm.domain.ContactCase;
 import com.esofthead.mycollab.module.crm.domain.ContactCaseExample;
+import com.esofthead.mycollab.module.crm.domain.ContactLead;
+import com.esofthead.mycollab.module.crm.domain.ContactLeadExample;
 import com.esofthead.mycollab.module.crm.domain.ContactOpportunity;
 import com.esofthead.mycollab.module.crm.domain.ContactOpportunityExample;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.ContactService;
+import com.esofthead.mycollab.module.crm.service.LeadService;
 import com.esofthead.mycollab.schedule.email.crm.ContactRelayEmailNotificationAction;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @Service
 @Transactional
-@Traceable(module = "Crm", type = "Contact", nameField = "lastname")
-@Auditable(module = "Crm", type = "Contact")
+@Traceable(module = ModuleNameConstants.CRM, type = CrmTypeConstants.CONTACT, nameField = "lastname")
+@Auditable(module = ModuleNameConstants.CRM, type = CrmTypeConstants.CONTACT)
 @Watchable(type = CrmTypeConstants.CONTACT, userFieldName = "assignuser", emailHandlerBean = ContactRelayEmailNotificationAction.class)
 public class ContactServiceImpl extends
 		DefaultService<Integer, Contact, ContactSearchCriteria> implements
@@ -60,6 +74,8 @@ public class ContactServiceImpl extends
 	private ContactOpportunityMapper contactOpportunityMapper;
 	@Autowired
 	private ContactCaseMapper contactCaseMapper;
+	@Autowired
+	private ContactLeadMapper contactLeadMapper;
 
 	@Override
 	public ICrudGenericDAO<Integer, Contact> getCrudMapper() {
@@ -97,7 +113,12 @@ public class ContactServiceImpl extends
 					.andContactidEqualTo(assoOpportunity.getContactid())
 					.andOpportunityidEqualTo(assoOpportunity.getOpportunityid());
 			if (contactOpportunityMapper.countByExample(ex) == 0) {
+				assoOpportunity.setCreatedtime(new GregorianCalendar()
+						.getTime());
 				contactOpportunityMapper.insert(assoOpportunity);
+			} else {
+				contactOpportunityMapper.updateByExampleSelective(
+						assoOpportunity, ex);
 			}
 		}
 	}
@@ -111,6 +132,7 @@ public class ContactServiceImpl extends
 					.andContactidEqualTo(associateCase.getContactid())
 					.andCaseidEqualTo(associateCase.getCaseid());
 			if (contactCaseMapper.countByExample(ex) == 0) {
+				associateCase.setCreatedtime(new GregorianCalendar().getTime());
 				contactCaseMapper.insert(associateCase);
 			}
 		}
@@ -123,5 +145,26 @@ public class ContactServiceImpl extends
 		ex.createCriteria().andContactidEqualTo(associateCase.getContactid())
 				.andCaseidEqualTo(associateCase.getCaseid());
 		contactCaseMapper.deleteByExample(ex);
+	}
+
+	@CacheEvict(serviceMap = LeadService.class)
+	public void saveContactLeadRelationship(List<ContactLead> associateLeads,
+			@CacheKey Integer accountId) {
+		for (ContactLead associateLead : associateLeads) {
+			ContactLeadExample ex = new ContactLeadExample();
+			ex.createCriteria()
+					.andContactidEqualTo(associateLead.getContactid())
+					.andLeadidEqualTo(associateLead.getLeadid());
+			if (contactLeadMapper.countByExample(ex) == 0) {
+				contactLeadMapper.insert(associateLead);
+			}
+		}
+
+	}
+
+	@Override
+	public SimpleContact findContactAssoWithConvertedLead(int leadId,
+			@CacheKey int accountId) {
+		return contactMapperExt.findContactAssoWithConvertedLead(leadId);
 	}
 }

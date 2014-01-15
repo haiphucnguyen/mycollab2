@@ -20,7 +20,8 @@ package com.esofthead.mycollab.configuration;
  * MyCollab offers its social links in emails and all sharing options are kept
  * in this bean.
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  * 
  */
 public class SharingOptions {

@@ -14,10 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.module.crm.ui.components;
 
 import java.util.HashSet;
@@ -36,7 +33,7 @@ import com.vaadin.ui.Window;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public abstract class RelatedItemSelectionWindow<T, S extends SearchCriteria>
 		extends Window {
@@ -44,13 +41,12 @@ public abstract class RelatedItemSelectionWindow<T, S extends SearchCriteria>
 
 	private static final String selectedFieldName = "selected";
 
-	protected RelatedListComp<T, S> relatedListComp;
+	protected RelatedListComp relatedListComp;
 	protected IPagedBeanTable<S, T> tableItem;
 	protected Set selectedItems = new HashSet();
 	protected VerticalLayout bodyContent;
 
-	public RelatedItemSelectionWindow(String title,
-			RelatedListComp<T, S> relatedList) {
+	public RelatedItemSelectionWindow(String title, RelatedListComp relatedList) {
 		super(title);
 		center();
 		bodyContent = new VerticalLayout();
@@ -93,7 +89,7 @@ public abstract class RelatedItemSelectionWindow<T, S extends SearchCriteria>
 	}
 
 	@Override
-	protected void close() {
+	public void close() {
 		super.close();
 		if (!selectedItems.isEmpty()) {
 			relatedListComp.setSelectedItems(selectedItems);

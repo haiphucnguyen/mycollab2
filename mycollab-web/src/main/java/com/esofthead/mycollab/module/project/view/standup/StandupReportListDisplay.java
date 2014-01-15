@@ -20,10 +20,11 @@ import com.esofthead.mycollab.module.project.domain.SimpleStandupReport;
 import com.esofthead.mycollab.module.project.domain.criteria.StandupReportSearchCriteria;
 import com.esofthead.mycollab.module.project.service.StandupReportService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.DefaultBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.web.AppContext;
-import com.vaadin.terminal.Sizeable;
+import com.vaadin.shared.ui.MarginInfo;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
@@ -31,6 +32,12 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ *
+ */
 public class StandupReportListDisplay
 		extends
 		DefaultBeanPagedList<StandupReportService, StandupReportSearchCriteria, SimpleStandupReport> {
@@ -49,7 +56,7 @@ public class StandupReportListDisplay
 				final int rowIndex) {
 			final VerticalLayout layout = new VerticalLayout();
 			layout.setWidth("100%");
-			layout.setMargin(true, false, true, false);
+			layout.setMargin(new MarginInfo(true, false, true, false));
 
 			final VerticalLayout reportHeader = new VerticalLayout();
 			final Label reportDateLbl = new Label(AppContext.formatDate(obj
@@ -57,7 +64,6 @@ public class StandupReportListDisplay
 			reportDateLbl.setWidth("111px");
 			reportHeader.addComponent(reportDateLbl);
 			reportHeader.addStyleName(UIConstants.REPORT_ROW_HEADER);
-			reportHeader.setWidth(Sizeable.SIZE_UNDEFINED, 0);
 			reportHeader.setHeight("20px");
 			reportHeader.setComponentAlignment(reportDateLbl,
 					Alignment.MIDDLE_LEFT);
@@ -71,7 +77,7 @@ public class StandupReportListDisplay
 			final String prevText = "<b>What I did in the last day/week</b><p>"
 					+ obj.getWhatlastday() + "</p>";
 			final Label prevLbl = new Label(prevText);
-			prevLbl.setContentMode(Label.CONTENT_XHTML);
+			prevLbl.setContentMode(ContentMode.HTML);
 			report1.addComponent(prevLbl);
 			report1.setSizeFull();
 			report1.setStyleName(UIConstants.REPORT_ROW_BLOCK);
@@ -82,7 +88,7 @@ public class StandupReportListDisplay
 			final String todayText = "<b>What I will do today/week</b><p>"
 					+ obj.getWhattoday() + "</p>";
 			final Label todatLbl = new Label(todayText);
-			todatLbl.setContentMode(Label.CONTENT_XHTML);
+			todatLbl.setContentMode(ContentMode.HTML);
 			report2.addComponent(todatLbl);
 			report2.setSizeFull();
 			report2.setStyleName(UIConstants.REPORT_ROW_BLOCK);
@@ -94,7 +100,7 @@ public class StandupReportListDisplay
 			final String issueText = "<b>Do you have roadblocks?</b><p>"
 					+ obj.getWhatproblem() + "</p>";
 			final Label issueLbl = new Label(issueText);
-			issueLbl.setContentMode(Label.CONTENT_XHTML);
+			issueLbl.setContentMode(ContentMode.HTML);
 			report3.addComponent(issueLbl);
 			report3.setWidth("100%");
 			report3.setHeight("100%");

@@ -1,3 +1,18 @@
+/**
+ * Copyright 2013 Vaadin Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ */
 /** Calendar */ 
 
 /* Global resize style */
@@ -252,11 +267,11 @@ div.v-calendar-event-all-day {
 	outline: none;
 }
 
-.v-calendar-day-times .v-slot,.v-calendar-day-times .v-slot-even {
+.v-calendar-day-times .v-datecellslot,.v-calendar-day-times .v-datecellslot-even {
 	border-bottom: 1px solid #ccc;
 }
 
-.v-calendar-day-times .v-slot-even {
+.v-calendar-day-times .v-datecellslot-even {
 	border-bottom-color: #eee;
 }
 
@@ -384,10 +399,10 @@ div.v-calendar-event-all-day {
 	width: 42px;
 }
 
-.v-calendar-day-times-Vsized .v-slot,.v-calendar-day-times-Vsized .v-slot-even {
+.v-calendar-day-times-Vsized .v-datecellslot,.v-calendar-day-times-Vsized .v-datecellslot-even {
 	height: 18px;
 }
 
-.v-calendar-day-times-Hsized, .v-calendar-day-times-Hsized .v-slot,.v-calendar-day-times-Hsized .v-slot-even {
+.v-calendar-day-times-Hsized, .v-calendar-day-times-Hsized .v-datecellslot,.v-calendar-day-times-Hsized .v-datecellslot-even {
 	width: 200px;
 }

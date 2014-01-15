@@ -14,10 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-services.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.module.crm.domain.criteria;
 
 import com.esofthead.mycollab.core.arguments.BitSearchField;
@@ -28,9 +25,11 @@ import com.esofthead.mycollab.core.arguments.SetSearchField;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class MeetingSearchCriteria extends SearchCriteria {
+	private static final long serialVersionUID = 1L;
 
 	private SetSearchField<String> assignUsers;
 	private NumberSearchField id;

@@ -25,10 +25,12 @@ import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.ValuedBean;
 import com.esofthead.mycollab.core.persistence.service.ICrudService;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
+import com.vaadin.server.Sizeable;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -38,6 +40,14 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.OptionGroup;
 import com.vaadin.ui.VerticalLayout;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ * @param <B>
+ * @param <S>
+ */
 public abstract class NotificationSettingViewComponent<B extends ValuedBean, S extends ICrudService>
 		extends VerticalLayout {
 	private static final long serialVersionUID = 1L;
@@ -57,7 +67,6 @@ public abstract class NotificationSettingViewComponent<B extends ValuedBean, S e
 	private void constructBody() {
 		this.setWidth("100%");
 		this.setHeight("220px");
-		this.setMargin(true);
 		this.setSpacing(true);
 
 		mainLayout = new CssLayout();
@@ -77,6 +86,8 @@ public abstract class NotificationSettingViewComponent<B extends ValuedBean, S e
 
 		Label notificationLabel = new Label("Notification Levels");
 		notificationLabel.addStyleName("h2");
+		notificationLabel.setHeight(Sizeable.SIZE_UNDEFINED,
+				Sizeable.Unit.PIXELS);
 		body.addComponent(notificationLabel);
 
 		List<String> options = Arrays
@@ -86,8 +97,10 @@ public abstract class NotificationSettingViewComponent<B extends ValuedBean, S e
 						"Minimal - We won't do any magic behind the scences to subscribe you to any items, you will only be notified about things you are currently assigned.",
 						"Full - You will be notified every things about your project." });
 		final OptionGroup optionGroup = new OptionGroup(null, options);
+		optionGroup.setHeight("100%");
 
 		body.addComponent(optionGroup);
+		body.setExpandRatio(optionGroup, 1.0f);
 		body.setComponentAlignment(optionGroup, Alignment.MIDDLE_LEFT);
 
 		try {
@@ -104,7 +117,7 @@ public abstract class NotificationSettingViewComponent<B extends ValuedBean, S e
 					}
 				}
 			}
-			optionGroup.addListener(new ValueChangeListener() {
+			optionGroup.addValueChangeListener(new ValueChangeListener() {
 				private static final long serialVersionUID = 1L;
 
 				@Override
@@ -150,9 +163,8 @@ public abstract class NotificationSettingViewComponent<B extends ValuedBean, S e
 											.updateWithSession(bean,
 													AppContext.getUsername());
 								}
-								getWindow()
-										.showNotification(
-												"Update notification setting successfully.");
+								NotificationUtil
+										.showNotification("Update notification setting successfully.");
 							} catch (Exception e) {
 								throw new MyCollabException(e);
 							}

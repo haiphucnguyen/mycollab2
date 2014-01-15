@@ -14,13 +14,8 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-services.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-package com.esofthead.mycollab.module.project.service;
 
-import org.springframework.flex.remoting.RemotingDestination;
+package com.esofthead.mycollab.module.project.service;
 
 import com.esofthead.mycollab.core.cache.CacheKey;
 import com.esofthead.mycollab.core.cache.Cacheable;
@@ -31,9 +26,8 @@ import com.esofthead.mycollab.module.project.domain.criteria.MilestoneSearchCrit
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
-@RemotingDestination
 public interface MilestoneService extends
 		IDefaultService<Integer, Milestone, MilestoneSearchCriteria> {
 

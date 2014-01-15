@@ -14,10 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.module.user.accountsettings.team.view;
 
 import java.util.HashMap;
@@ -30,18 +27,18 @@ import com.esofthead.mycollab.security.PermissionDefItem;
 import com.esofthead.mycollab.security.PermissionMap;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
+import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
+import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
-import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
+import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.KeyCaptionComboBox;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.vaadin.ui.ViewComponent;
-import com.vaadin.data.Item;
-import com.vaadin.data.util.BeanItem;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
@@ -53,10 +50,11 @@ import com.vaadin.ui.VerticalLayout;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
 @ViewComponent
-public class RoleAddViewImpl extends AbstractView implements RoleAddView {
+public class RoleAddViewImpl extends AbstractPageView implements RoleAddView {
 
 	private static final long serialVersionUID = 1L;
 	private final RoleAddViewImpl.EditForm editForm;
@@ -64,14 +62,17 @@ public class RoleAddViewImpl extends AbstractView implements RoleAddView {
 
 	public RoleAddViewImpl() {
 		super();
+		
+		this.setMargin(new MarginInfo(true, false, false, false));
 		this.editForm = new EditForm();
 		this.addComponent(this.editForm);
+		this.addStyleName("accountsettings-role");
 	}
 
 	@Override
 	public void editItem(final Role item) {
 		this.role = item;
-		this.editForm.setItemDataSource(new BeanItem<Role>(this.role));
+		this.editForm.setBean(this.role);
 	}
 
 	@Override
@@ -85,10 +86,10 @@ public class RoleAddViewImpl extends AbstractView implements RoleAddView {
 		private final Map<String, KeyCaptionComboBox> permissionControlsMap = new HashMap<String, KeyCaptionComboBox>();
 
 		@Override
-		public void setItemDataSource(final Item newDataSource) {
+		public void setBean(final Role item) {
 			this.setFormLayoutFactory(new RoleAddViewImpl.EditForm.FormLayoutFactory());
-			this.setFormFieldFactory(new RoleAddViewImpl.EditForm.EditFormFieldFactory());
-			super.setItemDataSource(newDataSource);
+			this.setBeanFormFieldFactory(new ReadFormFieldFactory(EditForm.this));
+			super.setBean(item);
 		}
 
 		private class FormLayoutFactory extends RoleFormLayoutFactory {
@@ -108,6 +109,8 @@ public class RoleAddViewImpl extends AbstractView implements RoleAddView {
 				controlPanel.setWidth("100%");
 				controlPanel.setComponentAlignment(controlButtons,
 						Alignment.MIDDLE_CENTER);
+				controlPanel.setMargin(true);
+				controlPanel.addStyleName("control-buttons");
 				return controlPanel;
 			}
 
@@ -120,7 +123,7 @@ public class RoleAddViewImpl extends AbstractView implements RoleAddView {
 			protected Layout createBottomPanel() {
 				final VerticalLayout permissionsPanel = new VerticalLayout();
 				final Label organizationHeader = new Label("Permissions");
-				organizationHeader.setStyleName("h2");
+				organizationHeader.setStyleName(UIConstants.H2_STYLE2);
 				permissionsPanel.addComponent(organizationHeader);
 
 				PermissionMap perMap;
@@ -213,14 +216,16 @@ public class RoleAddViewImpl extends AbstractView implements RoleAddView {
 			return permissionMap;
 		}
 
-		private class EditFormFieldFactory extends DefaultEditFormFieldFactory {
-
+		private class ReadFormFieldFactory extends
+				AbstractBeanFieldGroupViewFieldFactory<Role> {
 			private static final long serialVersionUID = 1L;
 
+			public ReadFormFieldFactory(GenericBeanForm<Role> form) {
+				super(form);
+			}
+
 			@Override
-			protected Field onCreateField(final Item item,
-					final Object propertyId,
-					final com.vaadin.ui.Component uiContext) {
+			protected Field<?> onCreateField(final Object propertyId) {
 				if (propertyId.equals("description")) {
 					final TextArea textArea = new TextArea();
 					textArea.setNullRepresentation("");

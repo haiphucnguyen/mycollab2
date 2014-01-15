@@ -32,14 +32,22 @@ import com.esofthead.mycollab.module.crm.view.CrmGenericListPresenter;
 import com.esofthead.mycollab.module.crm.view.CrmToolbar;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.desktop.ui.DefaultMassEditActionHandler;
 import com.esofthead.mycollab.vaadin.mvp.MassUpdateCommand;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.MailFormWindow;
-import com.esofthead.mycollab.vaadin.ui.MessageBox;
-import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.UI;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class OpportunityListPresenter
 		extends
 		CrmGenericListPresenter<OpportunityListView, OpportunitySearchCriteria, SimpleOpportunity>
@@ -50,16 +58,22 @@ public class OpportunityListPresenter
 
 	public OpportunityListPresenter() {
 		super(OpportunityListView.class);
-		opportunityService = ApplicationContextUtil.getSpringBean(OpportunityService.class);
+	}
 
-		view.getPopupActionHandlers().addPopupActionHandler(
-				new DefaultPopupActionHandler(this) {
+	@Override
+	protected void postInitView() {
+		super.postInitView();
+
+		opportunityService = ApplicationContextUtil
+				.getSpringBean(OpportunityService.class);
+
+		view.getPopupActionHandlers().addMassItemActionHandler(
+				new DefaultMassEditActionHandler(this) {
 
 					@Override
-					protected void onSelectExtra(String id, String caption) {
+					protected void onSelectExtra(String id) {
 						if ("mail".equals(id)) {
-							view.getWidget().getWindow()
-									.addWindow(new MailFormWindow());
+							UI.getCurrent().addWindow(new MailFormWindow());
 						} else if ("massUpdate".equals(id)) {
 							MassUpdateOpportunityWindow massUpdateWindow = new MassUpdateOpportunityWindow(
 									LocalizationHelper
@@ -67,7 +81,7 @@ public class OpportunityListPresenter
 													GenericI18Enum.MASS_UPDATE_WINDOW_TITLE,
 													"Opportunity"),
 									OpportunityListPresenter.this);
-							view.getWindow().addWindow(massUpdateWindow);
+							UI.getCurrent().addWindow(massUpdateWindow);
 						}
 
 					}
@@ -78,7 +92,7 @@ public class OpportunityListPresenter
 					}
 
 					@Override
-					protected Class getReportModelClassType() {
+					protected Class<?> getReportModelClassType() {
 						return SimpleOpportunity.class;
 					}
 				});
@@ -98,7 +112,7 @@ public class OpportunityListPresenter
 					.getMessage(GenericI18Enum.BROWSER_LIST_ITEMS_TITLE,
 							"Opportunity"));
 		} else {
-			MessageBox.showMessagePermissionAlert();
+			NotificationUtil.showMessagePermissionAlert();
 		}
 	}
 

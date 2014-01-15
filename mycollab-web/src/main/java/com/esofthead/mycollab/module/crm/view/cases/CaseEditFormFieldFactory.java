@@ -17,29 +17,24 @@
 package com.esofthead.mycollab.module.crm.view.cases;
 
 import com.esofthead.mycollab.module.crm.domain.CaseWithBLOBs;
-import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
-import com.esofthead.mycollab.module.crm.service.AccountService;
 import com.esofthead.mycollab.module.crm.view.account.AccountSelectionField;
 import com.esofthead.mycollab.module.user.ui.components.ActiveUserComboBox;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
-import com.esofthead.mycollab.web.AppContext;
-import com.vaadin.data.Item;
+import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
+import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 
-public class CaseEditFormFieldFactory extends DefaultEditFormFieldFactory {
+public class CaseEditFormFieldFactory<B extends CaseWithBLOBs> extends
+		AbstractBeanFieldGroupEditFieldFactory<B> {
 	private static final long serialVersionUID = 1L;
-	private CaseWithBLOBs cases;
 
-	public CaseEditFormFieldFactory(CaseWithBLOBs cases) {
-		this.cases = cases;
+	public CaseEditFormFieldFactory(GenericBeanForm<B> form) {
+		super(form);
 	}
 
 	@Override
-	protected Field onCreateField(Item item, Object propertyId,
-			com.vaadin.ui.Component uiContext) {
+	protected Field onCreateField(Object propertyId) {
 		if (propertyId.equals("priority")) {
 			return new CasePriorityComboBox();
 		} else if (propertyId.equals("status")) {
@@ -62,15 +57,15 @@ public class CaseEditFormFieldFactory extends DefaultEditFormFieldFactory {
 			AccountSelectionField accountField = new AccountSelectionField();
 			accountField.setRequired(true);
 
-			if (cases.getAccountid() != null) {
-				AccountService accountService = ApplicationContextUtil
-						.getSpringBean(AccountService.class);
-				SimpleAccount account = accountService.findById(
-						cases.getAccountid(), AppContext.getAccountId());
-				if (account != null) {
-					accountField.setAccount(account);
-				}
-			}
+			// if (attachForm.getBean().getAccountid() != null) {
+			// AccountService accountService = ApplicationContextUtil
+			// .getSpringBean(AccountService.class);
+			// SimpleAccount account = accountService.findById(attachForm
+			// .getBean().getAccountid(), AppContext.getAccountId());
+			// if (account != null) {
+			// accountField.setAccount(account);
+			// }
+			// }
 			return accountField;
 		} else if (propertyId.equals("subject")) {
 			TextField tf = new TextField();
@@ -80,7 +75,7 @@ public class CaseEditFormFieldFactory extends DefaultEditFormFieldFactory {
 			return tf;
 		} else if (propertyId.equals("assignuser")) {
 			ActiveUserComboBox userBox = new ActiveUserComboBox();
-			userBox.select(cases.getAssignuser());
+			userBox.select(attachForm.getBean().getAssignuser());
 			return userBox;
 		}
 

@@ -19,28 +19,30 @@ package com.esofthead.mycollab.module.file.view.components;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.esofthead.mycollab.eventmanager.ApplicationEvent;
-import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.module.ecm.StorageNames;
 import com.esofthead.mycollab.module.ecm.domain.ExternalFolder;
 import com.esofthead.mycollab.module.ecm.domain.Folder;
 import com.esofthead.mycollab.module.file.domain.criteria.FileSearchCriteria;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
-import com.esofthead.mycollab.vaadin.mvp.View;
+import com.esofthead.mycollab.vaadin.mvp.CacheableComponent;
+import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.CommonUIFactory;
-import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.utils.LabelStringGenerator;
-import com.esofthead.mycollab.web.AppContext;
 import com.lexaden.breadcrumb.Breadcrumb;
-import com.vaadin.terminal.Sizeable;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.ComponentContainer;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ *
+ */
 @ViewComponent
-public class FileBreadcrumb extends Breadcrumb implements View,
+public class FileBreadcrumb extends Breadcrumb implements CacheableComponent,
 		HasSearchHandlers<FileSearchCriteria> {
 
 	private static final long serialVersionUID = 1L;
@@ -72,7 +74,7 @@ public class FileBreadcrumb extends Breadcrumb implements View,
 				notifySelectHandler(criteria);
 			}
 		}));
-		this.setHeight(25, Sizeable.UNITS_PIXELS);
+		this.setHeight(25, Unit.PIXELS);
 
 		this.select(0);
 		Button documentBtnLink = generateBreadcrumbLink("My Documents",
@@ -116,7 +118,7 @@ public class FileBreadcrumb extends Breadcrumb implements View,
 																	// folder
 			Button btn = new Button(((ExternalFolder) folder)
 					.getExternalDrive().getFoldername());
-			btn.addListener(new Button.ClickListener() {
+			btn.addClickListener(new Button.ClickListener() {
 				private static final long serialVersionUID = 1L;
 
 				@Override
@@ -163,7 +165,7 @@ public class FileBreadcrumb extends Breadcrumb implements View,
 				}
 				btn.setDescription(pathName);
 				final String currentResourcePath = curPath.toString();
-				btn.addListener(new Button.ClickListener() {
+				btn.addClickListener(new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
@@ -235,17 +237,6 @@ public class FileBreadcrumb extends Breadcrumb implements View,
 				handler.onSearch(criteria);
 			}
 		}
-	}
-
-	@Override
-	public ComponentContainer getWidget() {
-		throw new UnsupportedOperationException("Not supported yet.");
-	}
-
-	@Override
-	public void addViewListener(
-			ApplicationEventListener<? extends ApplicationEvent> listener) {
-		throw new UnsupportedOperationException("Not supported yet.");
 	}
 
 	public Folder getCurrentBreadCrumbFolder() {

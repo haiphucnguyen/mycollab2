@@ -1,0 +1,24 @@
+CACHE MANIFEST
+# Build timeThu Jan 02 09:58:32 ICT 2014
+
+CACHE:
+../../../VAADIN/themes/touchkit/styles.css
+../../../VAADIN/vaadinBootstrap.js
+650109D413E2C231EC22108817C9E71A.cache.woff
+709862C3E14C91E9E07F33629F51420F.cache.js
+clear.cache.gif
+com.esofthead.mycollab.widgetset.MyCollabMobileWidgetSet.devmode.js
+com.esofthead.mycollab.widgetset.MyCollabMobileWidgetSet.nocache.js
+deferredjs/709862C3E14C91E9E07F33629F51420F/1.cache.js
+deferredjs/709862C3E14C91E9E07F33629F51420F/2.cache.js
+deferredjs/709862C3E14C91E9E07F33629F51420F/3.cache.js
+deferredjs/709862C3E14C91E9E07F33629F51420F/4.cache.js
+deferredjs/709862C3E14C91E9E07F33629F51420F/5.cache.js
+deferredjs/709862C3E14C91E9E07F33629F51420F/6.cache.js
+deferredjs/709862C3E14C91E9E07F33629F51420F/7.cache.js
+deferredjs/709862C3E14C91E9E07F33629F51420F/8.cache.js
+deferredjs/709862C3E14C91E9E07F33629F51420F/9.cache.js
+
+NETWORK:
+*
+

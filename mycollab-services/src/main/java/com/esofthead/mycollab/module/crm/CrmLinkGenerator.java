@@ -20,8 +20,9 @@ import com.esofthead.mycollab.common.GenericLinkUtils;
 
 /**
  * 
- * @author haiphucnguyen
- *
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
  */
 public class CrmLinkGenerator {
 	public static String generateAccountPreviewLink(Integer accountId) {

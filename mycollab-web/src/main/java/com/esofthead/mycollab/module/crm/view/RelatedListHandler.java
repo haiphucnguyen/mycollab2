@@ -18,6 +18,12 @@ package com.esofthead.mycollab.module.crm.view;
 
 import java.util.Set;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public interface RelatedListHandler<T> {
 
     void createNewRelatedItem(String itemId);

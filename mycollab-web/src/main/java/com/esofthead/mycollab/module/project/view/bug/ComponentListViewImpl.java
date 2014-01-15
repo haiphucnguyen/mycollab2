@@ -14,10 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.module.project.view.bug;
 
 import java.util.Arrays;
@@ -25,12 +22,11 @@ import java.util.Arrays;
 import org.jsoup.Jsoup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.vaadin.hene.splitbutton.PopupButtonControl;
 
-import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.EventBus;
+import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.events.BugComponentEvent;
@@ -40,30 +36,35 @@ import com.esofthead.mycollab.module.tracker.domain.criteria.ComponentSearchCrit
 import com.esofthead.mycollab.module.tracker.service.ComponentService;
 import com.esofthead.mycollab.module.user.UserLinkUtils;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.vaadin.events.HasPopupActionHandlers;
+import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.events.HasMassItemActionHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
-import com.esofthead.mycollab.vaadin.events.TablePopupActionHandler;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.events.MassItemActionHandler;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
+import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
+import com.esofthead.mycollab.vaadin.ui.CheckBoxDecor;
+import com.esofthead.mycollab.vaadin.ui.DefaultMassItemActionHandlersContainer;
 import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
-import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.table.AbstractPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.DefaultPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
-import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.H3;
 import com.hp.gagawa.java.elements.Img;
 import com.hp.gagawa.java.elements.Td;
 import com.hp.gagawa.java.elements.Tr;
+import com.vaadin.data.Property;
+import com.vaadin.data.Property.ValueChangeEvent;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
@@ -73,10 +74,11 @@ import com.vaadin.ui.VerticalLayout;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
 @ViewComponent
-public class ComponentListViewImpl extends AbstractView implements
+public class ComponentListViewImpl extends AbstractPageView implements
 		ComponentListView {
 	private static Logger log = LoggerFactory
 			.getLogger(ComponentListViewImpl.class);
@@ -86,11 +88,12 @@ public class ComponentListViewImpl extends AbstractView implements
 	private SelectionOptionButton selectOptionButton;
 	private DefaultPagedBeanTable<ComponentService, ComponentSearchCriteria, SimpleComponent> tableItem;
 	private final VerticalLayout componentListLayout;
-	private PopupButtonControl tableActionControls;
+	private DefaultMassItemActionHandlersContainer tableActionControls;
 	private final Label selectedItemsNumberLabel = new Label();
 
 	public ComponentListViewImpl() {
-		this.setMargin(false, true, true, true);
+
+		this.setMargin(new MarginInfo(true, false, false, false));
 
 		this.componentSearchPanel = new ComponentSearchPanel();
 		this.addComponent(this.componentSearchPanel);
@@ -120,14 +123,13 @@ public class ComponentListViewImpl extends AbstractView implements
 					@Override
 					public Object generateCell(final Table source,
 							final Object itemId, final Object columnId) {
-						final CheckBox cb = new CheckBox("", false);
+						final CheckBoxDecor cb = new CheckBoxDecor("", false);
 						cb.setImmediate(true);
-						cb.addListener(new Button.ClickListener() {
+						cb.addValueChangeListener(new Property.ValueChangeListener() {
 							private static final long serialVersionUID = 1L;
 
 							@Override
-							public void buttonClick(
-									final Button.ClickEvent event) {
+							public void valueChange(ValueChangeEvent event) {
 								final SimpleComponent component = ComponentListViewImpl.this.tableItem
 										.getBeanByIndex(itemId);
 								ComponentListViewImpl.this.tableItem
@@ -217,26 +219,31 @@ public class ComponentListViewImpl extends AbstractView implements
 		this.selectOptionButton = new SelectionOptionButton(this.tableItem);
 		layout.addComponent(this.selectOptionButton);
 
-		final Button deleteBtn = new Button("Delete");
-		deleteBtn.setEnabled(CurrentProjectVariables
-				.canAccess(ProjectRolePermissionCollections.COMPONENTS));
+		this.tableActionControls = new DefaultMassItemActionHandlersContainer();
+		if (CurrentProjectVariables
+				.canAccess(ProjectRolePermissionCollections.COMPONENTS)) {
+			tableActionControls.addActionItem(
+					MassItemActionHandler.DELETE_ACTION,
+					MyCollabResource.newResource("icons/16/action/delete.png"),
+					"delete");
+		}
 
-		this.tableActionControls = new PopupButtonControl(
-				TablePopupActionHandler.DELETE_ACTION, deleteBtn);
-		this.tableActionControls.addOptionItem(
-				TablePopupActionHandler.MAIL_ACTION,
-				LocalizationHelper.getMessage(GenericI18Enum.BUTTON_MAIL));
-		this.tableActionControls
-				.addOptionItem(TablePopupActionHandler.EXPORT_CSV_ACTION,
-						LocalizationHelper
-								.getMessage(GenericI18Enum.BUTTON_EXPORT_CSV));
-		this.tableActionControls
-				.addOptionItem(TablePopupActionHandler.EXPORT_PDF_ACTION,
-						LocalizationHelper
-								.getMessage(GenericI18Enum.BUTTON_EXPORT_PDF));
-		this.tableActionControls.addOptionItem(
-				TablePopupActionHandler.EXPORT_EXCEL_ACTION, LocalizationHelper
-						.getMessage(GenericI18Enum.BUTTON_EXPORT_EXCEL));
+		tableActionControls.addActionItem(MassItemActionHandler.MAIL_ACTION,
+				MyCollabResource.newResource("icons/16/action/mail.png"),
+				"mail");
+
+		tableActionControls.addDownloadActionItem(
+				MassItemActionHandler.EXPORT_PDF_ACTION,
+				MyCollabResource.newResource("icons/16/action/pdf.png"),
+				"export", "export.pdf");
+		tableActionControls.addDownloadActionItem(
+				MassItemActionHandler.EXPORT_EXCEL_ACTION,
+				MyCollabResource.newResource("icons/16/action/excel.png"),
+				"export", "export.xlsx");
+		tableActionControls.addDownloadActionItem(
+				MassItemActionHandler.EXPORT_CSV_ACTION,
+				MyCollabResource.newResource("icons/16/action/csv.png"),
+				"export", "export.csv");
 
 		layout.addComponent(this.tableActionControls);
 		layout.addComponent(this.selectedItemsNumberLabel);
@@ -248,8 +255,9 @@ public class ComponentListViewImpl extends AbstractView implements
 	@Override
 	public void enableActionControls(final int numOfSelectedItems) {
 		this.tableActionControls.setVisible(true);
-		this.selectedItemsNumberLabel.setValue("Selected: "
-				+ numOfSelectedItems);
+		this.selectedItemsNumberLabel.setValue(LocalizationHelper
+				.getMessage(CrmCommonI18nEnum.TABLE_SELECTED_ITEM_TITLE,
+						numOfSelectedItems));
 	}
 
 	@Override
@@ -265,7 +273,7 @@ public class ComponentListViewImpl extends AbstractView implements
 	}
 
 	@Override
-	public HasPopupActionHandlers getPopupActionHandlers() {
+	public HasMassItemActionHandlers getPopupActionHandlers() {
 		return this.tableActionControls;
 	}
 

@@ -16,8 +16,14 @@
  */
 package com.esofthead.mycollab.module.user.view;
 
-import com.esofthead.mycollab.vaadin.mvp.View;
+import com.esofthead.mycollab.vaadin.mvp.PageView;
 
-public interface SendEmailVerificationSuccessView extends View {
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
+public interface SendEmailVerificationSuccessView extends PageView {
 
 }

@@ -35,7 +35,7 @@ import com.vaadin.ui.Table;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  * 
  * @param <SearchService>
  * @param <S>

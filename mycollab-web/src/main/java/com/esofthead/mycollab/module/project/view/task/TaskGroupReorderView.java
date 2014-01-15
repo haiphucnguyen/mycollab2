@@ -14,18 +14,16 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.module.project.view.task;
 
-import com.esofthead.mycollab.vaadin.mvp.View;
+import com.esofthead.mycollab.vaadin.mvp.PageView;
 
 /**
- *
- * @author haiphucnguyen
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
-public interface TaskGroupReorderView extends View {
-    void displayTaskLists();
+public interface TaskGroupReorderView extends PageView {
+	void displayTaskLists();
 }

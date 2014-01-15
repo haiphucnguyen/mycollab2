@@ -14,10 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.module.project.view.settings;
 
 import java.util.List;
@@ -43,14 +40,15 @@ import com.esofthead.mycollab.module.project.events.ProjectMemberEvent;
 import com.esofthead.mycollab.module.project.localization.PeopleI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
+import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
-import com.esofthead.mycollab.vaadin.ui.ViewComponent;
-import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -60,14 +58,16 @@ import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
 @ViewComponent
-public class ProjectMemberListViewImpl extends AbstractView implements
+public class ProjectMemberListViewImpl extends AbstractPageView implements
 		ProjectMemberListView {
 	private static final long serialVersionUID = 1L;
 
@@ -133,13 +133,13 @@ public class ProjectMemberListViewImpl extends AbstractView implements
 		layoutButtonDelete.setExpandRatio(emptylb, 1.0f);
 
 		Button btnDelete = new Button();
-		btnDelete.addListener(new Button.ClickListener() {
+		btnDelete.addClickListener(new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void buttonClick(ClickEvent event) {
 				ConfirmDialogExt.show(
-						AppContext.getApplication().getMainWindow(),
+						UI.getCurrent(),
 						LocalizationHelper.getMessage(
 								GenericI18Enum.DELETE_DIALOG_TITLE,
 								SiteConfiguration.getSiteName()),
@@ -179,7 +179,7 @@ public class ProjectMemberListViewImpl extends AbstractView implements
 		memberInfo.addComponent(layoutButtonDelete);
 
 		ButtonLink memberLink = new ButtonLink(member.getMemberFullName());
-		memberLink.addListener(new ClickListener() {
+		memberLink.addClickListener(new ClickListener() {
 
 			private static final long serialVersionUID = 1L;
 
@@ -193,13 +193,12 @@ public class ProjectMemberListViewImpl extends AbstractView implements
 			}
 		});
 		memberLink.setWidth("100%");
-		memberLink.setHeight(SIZE_UNDEFINED, 0);
 
 		memberInfo.addComponent(memberLink);
 
 		Label memberEmailLabel = new Label("<a href='mailto:"
 				+ member.getUsername() + "'>" + member.getUsername() + "</a>",
-				Label.CONTENT_XHTML);
+				ContentMode.HTML);
 		memberEmailLabel.addStyleName("member-email");
 		memberEmailLabel.setWidth("100%");
 		memberInfo.addComponent(memberEmailLabel);
@@ -272,7 +271,7 @@ public class ProjectMemberListViewImpl extends AbstractView implements
 						member.getProjectid(), member.getProjectRoleId())
 				+ "\"";
 		Label memberRole = new Label();
-		memberRole.setContentMode(Label.CONTENT_XHTML);
+		memberRole.setContentMode(ContentMode.HTML);
 		if ((member.getIsadmin() != null && member.getIsadmin() == Boolean.TRUE)
 				|| member.getProjectroleid() == null) {
 			memberRole.setValue(memerRoleLinkPrefix

@@ -2,8 +2,48 @@
 <html xmlns:wicket="http://wicket.apache.org">
 <head>
 <wicket:head>
+	<script type="text/javascript" src="static/js/jquery.jcarousel.min.js"></script>
 	<script type="text/javascript" src="static/js/pricing.js"></script>
+	<script>
+	(function($) {
+	    $(function() {
+	        $('.jcarousel').jcarousel();
+
+	        $('.jcarousel-control-prev')
+	            .on('jcarouselcontrol:active', function() {
+	                $(this).removeClass('inactive');
+	            })
+	            .on('jcarouselcontrol:inactive', function() {
+	                $(this).addClass('inactive');
+	            })
+	            .jcarouselControl({
+	                target: '-=1'
+	            });
+
+	        $('.jcarousel-control-next')
+	            .on('jcarouselcontrol:active', function() {
+	                $(this).removeClass('inactive');
+	            })
+	            .on('jcarouselcontrol:inactive', function() {
+	                $(this).addClass('inactive');
+	            })
+	            .jcarouselControl({
+	                target: '+=1'
+	            });
+
+	        $('.jcarousel-pagination')
+	            .on('jcarouselpagination:active', 'a', function() {
+	                $(this).addClass('active');
+	            })
+	            .on('jcarouselpagination:inactive', 'a', function() {
+	                $(this).removeClass('active');
+	            })
+	            .jcarouselPagination();
+	    });
+	})(jQuery);
+</script>
 </wicket:head>
+
 </head>
 <body>
 	<wicket:extend>
@@ -23,7 +63,10 @@
 			<div id="pricing-content-wrapper">
 				<div class="tab-content tab1">
 					<div id="pricing-content">
-						<div class="package-block">
+					<div class="jcarousel-wrapper">
+						<div class="jcarousel">
+						<ul style="left: -428px; top: 0px;">
+						<li>	<div class="package-block">
 							<div class="block-header">
 								<h2 class="prig-free">FREE</h2>
 
@@ -88,7 +131,8 @@
 								</div>
 							</div>
 						</div>
-
+						</li>
+						<li>
 						<div class="package-block">
 							<div class="block-header">
 								<h2 class="prig-micro">MICRO</h2>
@@ -150,7 +194,8 @@
 								</div>
 							</div>
 						</div>
-
+						</li>
+						<li>
 						<div class="package-block best-choice">
 							<div class="block-header">
 								<h2 class="prig-compact">COMPACT</h2>
@@ -212,7 +257,9 @@
 								</div>
 							</div>
 						</div>
-
+						
+						</li>
+						<li>
 						<div class="package-block">
 							<div class="block-header">
 								<h2 class="prig-corporate">CORPORATE</h2>
@@ -274,7 +321,8 @@
 								</div>
 							</div>
 						</div>
-
+						</li>
+						<li>
 						<div class="package-block">
 							<div class="block-header">
 								<h2 class="prig-enterprise">ENTERPRISE</h2>
@@ -335,6 +383,15 @@
 									<a wicket:id="enterprise-link" href="#">Start Free Trial</a>
 								</div>
 							</div>
+						</div>
+						</li>
+						</ul>
+						</div>
+						<a href="#" class="jcarousel-control-prev"></a>
+               			<a href="#" class="jcarousel-control-next"></a>
+                
+                		<p class="jcarousel-pagination"></p>
+						
 						</div>
 					</div>
 

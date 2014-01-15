@@ -30,20 +30,17 @@ import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.crm.CrmLinkGenerator;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
-import com.esofthead.mycollab.module.crm.domain.Account;
-import com.esofthead.mycollab.module.crm.domain.CallWithBLOBs;
 import com.esofthead.mycollab.module.crm.domain.CampaignAccount;
 import com.esofthead.mycollab.module.crm.domain.CampaignContact;
 import com.esofthead.mycollab.module.crm.domain.CampaignLead;
-import com.esofthead.mycollab.module.crm.domain.CampaignWithBLOBs;
-import com.esofthead.mycollab.module.crm.domain.Contact;
-import com.esofthead.mycollab.module.crm.domain.Lead;
-import com.esofthead.mycollab.module.crm.domain.MeetingWithBLOBs;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
+import com.esofthead.mycollab.module.crm.domain.SimpleCall;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
+import com.esofthead.mycollab.module.crm.domain.SimpleActivity;
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
-import com.esofthead.mycollab.module.crm.domain.Task;
+import com.esofthead.mycollab.module.crm.domain.SimpleMeeting;
+import com.esofthead.mycollab.module.crm.domain.SimpleTask;
 import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.module.crm.events.ActivityEvent;
@@ -57,15 +54,21 @@ import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
 import com.esofthead.mycollab.module.crm.view.CrmToolbar;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
-import com.esofthead.mycollab.vaadin.ui.MessageBox;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
-import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.UI;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class CampaignReadPresenter extends
 		CrmGenericPresenter<CampaignReadView> {
 
@@ -73,22 +76,22 @@ public class CampaignReadPresenter extends
 
 	public CampaignReadPresenter() {
 		super(CampaignReadView.class);
-		bind();
 	}
 
-	private void bind() {
+	@Override
+	protected void postInitView() {
 		view.getPreviewFormHandlers().addFormHandler(
-				new DefaultPreviewFormHandler<CampaignWithBLOBs>() {
+				new DefaultPreviewFormHandler<SimpleCampaign>() {
 					@Override
-					public void onEdit(CampaignWithBLOBs data) {
+					public void onEdit(SimpleCampaign data) {
 						EventBus.getInstance().fireEvent(
 								new CampaignEvent.GotoEdit(this, data));
 					}
 
 					@Override
-					public void onDelete(final CampaignWithBLOBs data) {
+					public void onDelete(final SimpleCampaign data) {
 						ConfirmDialogExt.show(
-								view.getWindow(),
+								UI.getCurrent(),
 								LocalizationHelper.getMessage(
 										GenericI18Enum.DELETE_DIALOG_TITLE,
 										SiteConfiguration.getSiteName()),
@@ -119,9 +122,8 @@ public class CampaignReadPresenter extends
 					}
 
 					@Override
-					public void onClone(CampaignWithBLOBs data) {
-						CampaignWithBLOBs cloneData = (CampaignWithBLOBs) data
-								.copy();
+					public void onClone(SimpleCampaign data) {
+						SimpleCampaign cloneData = (SimpleCampaign) data.copy();
 						cloneData.setId(null);
 						EventBus.getInstance().fireEvent(
 								new CampaignEvent.GotoEdit(this, cloneData));
@@ -134,7 +136,7 @@ public class CampaignReadPresenter extends
 					}
 
 					@Override
-					public void gotoNext(CampaignWithBLOBs data) {
+					public void gotoNext(SimpleCampaign data) {
 						CampaignService contactService = ApplicationContextUtil
 								.getSpringBean(CampaignService.class);
 						CampaignSearchCriteria criteria = new CampaignSearchCriteria();
@@ -154,7 +156,7 @@ public class CampaignReadPresenter extends
 					}
 
 					@Override
-					public void gotoPrevious(CampaignWithBLOBs data) {
+					public void gotoPrevious(SimpleCampaign data) {
 						CampaignService contactService = ApplicationContextUtil
 								.getSpringBean(CampaignService.class);
 						CampaignSearchCriteria criteria = new CampaignSearchCriteria();
@@ -174,18 +176,18 @@ public class CampaignReadPresenter extends
 				});
 
 		view.getRelatedActivityHandlers().addRelatedListHandler(
-				new AbstractRelatedListHandler() {
+				new AbstractRelatedListHandler<SimpleActivity>() {
 					@Override
 					public void createNewRelatedItem(String itemId) {
 						if (itemId.equals("task")) {
-							Task task = new Task();
+							SimpleTask task = new SimpleTask();
 							task.setType(CrmTypeConstants.CAMPAIGN);
 							task.setTypeid(view.getItem().getId());
 							EventBus.getInstance().fireEvent(
 									new ActivityEvent.TaskEdit(
 											CampaignReadPresenter.this, task));
 						} else if (itemId.equals("meeting")) {
-							MeetingWithBLOBs meeting = new MeetingWithBLOBs();
+							SimpleMeeting meeting = new SimpleMeeting();
 							meeting.setType(CrmTypeConstants.CAMPAIGN);
 							meeting.setTypeid(view.getItem().getId());
 							EventBus.getInstance()
@@ -194,7 +196,7 @@ public class CampaignReadPresenter extends
 													CampaignReadPresenter.this,
 													meeting));
 						} else if (itemId.equals("call")) {
-							CallWithBLOBs call = new CallWithBLOBs();
+							SimpleCall call = new SimpleCall();
 							call.setType(CrmTypeConstants.CAMPAIGN);
 							call.setTypeid(view.getItem().getId());
 							EventBus.getInstance().fireEvent(
@@ -208,7 +210,7 @@ public class CampaignReadPresenter extends
 				new AbstractRelatedListHandler<SimpleAccount>() {
 					@Override
 					public void createNewRelatedItem(String itemId) {
-						Account account = new Account();
+						SimpleAccount account = new SimpleAccount();
 						account.setExtraData(view.getItem());
 						EventBus.getInstance().fireEvent(
 								new AccountEvent.GotoEdit(
@@ -247,7 +249,7 @@ public class CampaignReadPresenter extends
 
 					@Override
 					public void createNewRelatedItem(String itemId) {
-						Contact contact = new Contact();
+						SimpleContact contact = new SimpleContact();
 						contact.setExtraData(view.getItem());
 						EventBus.getInstance().fireEvent(
 								new ContactEvent.GotoEdit(
@@ -284,7 +286,7 @@ public class CampaignReadPresenter extends
 				new AbstractRelatedListHandler<SimpleLead>() {
 					@Override
 					public void createNewRelatedItem(String itemId) {
-						Lead lead = new Lead();
+						SimpleLead lead = new SimpleLead();
 						lead.setExtraData(view.getItem());
 						EventBus.getInstance().fireEvent(
 								new LeadEvent.GotoEdit(
@@ -344,7 +346,7 @@ public class CampaignReadPresenter extends
 				}
 			}
 		} else {
-			MessageBox.showMessagePermissionAlert();
+			NotificationUtil.showMessagePermissionAlert();
 		}
 	}
 }

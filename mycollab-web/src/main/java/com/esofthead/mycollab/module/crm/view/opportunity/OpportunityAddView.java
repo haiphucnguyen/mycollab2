@@ -16,11 +16,17 @@
  */
 package com.esofthead.mycollab.module.crm.view.opportunity;
 
-import com.esofthead.mycollab.module.crm.domain.Opportunity;
+import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.IFormAddView;
 
-public interface OpportunityAddView extends IFormAddView<Opportunity> {
-	HasEditFormHandlers<Opportunity> getEditFormHandlers();
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
+public interface OpportunityAddView extends IFormAddView<SimpleOpportunity> {
+	HasEditFormHandlers<SimpleOpportunity> getEditFormHandlers();
 
 }

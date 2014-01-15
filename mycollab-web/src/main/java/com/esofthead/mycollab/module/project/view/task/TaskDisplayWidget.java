@@ -31,17 +31,25 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class TaskDisplayWidget extends
 		BeanList<ProjectTaskService, TaskSearchCriteria, SimpleTask> {
 	private static final long serialVersionUID = 1L;
 
 	public TaskDisplayWidget() {
-		super(null, ApplicationContextUtil.getSpringBean(ProjectTaskService.class),
-				TaskRowDisplayHandler.class, false);
+		super(null, ApplicationContextUtil
+				.getSpringBean(ProjectTaskService.class),
+				TaskRowDisplayHandler.class);
 	}
 
 	public static class TaskRowDisplayHandler implements
 			BeanList.RowDisplayHandler<SimpleTask> {
+		private static final long serialVersionUID = 1L;
 
 		@Override
 		public Component generateRow(final SimpleTask task, int rowIndex) {

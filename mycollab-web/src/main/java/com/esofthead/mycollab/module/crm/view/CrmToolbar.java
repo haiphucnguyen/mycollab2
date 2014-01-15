@@ -36,134 +36,30 @@ import com.esofthead.mycollab.module.crm.events.LeadEvent;
 import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.security.RolePermissionCollections;
-import com.esofthead.mycollab.vaadin.mvp.View;
+import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.mvp.PageView;
+import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
-import com.esofthead.mycollab.vaadin.ui.ViewComponent;
-import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
-import com.vaadin.terminal.Sizeable;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.GridLayout;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @ViewComponent
-public class CrmToolbar extends CssLayout implements View {
-	private class NavigatorItemListener implements Button.ClickListener {
-
-		private static final long serialVersionUID = 1L;
-
-		@Override
-		public void buttonClick(final ClickEvent event) {
-			final String caption = event.getButton().getCaption();
-
-			if (caption == null) {
-				EventBus.getInstance().fireEvent(
-						new CrmEvent.GotoHome(this, null));
-			} else if (LocalizationHelper.getMessage(
-					CrmCommonI18nEnum.TOOLBAR_ACCOUNT_NEW_ACTION).equals(
-					caption)) {
-				EventBus.getInstance().fireEvent(
-						new AccountEvent.GotoAdd(this, null));
-			} else if (LocalizationHelper.getMessage(
-					CrmCommonI18nEnum.TOOLBAR_ACCOUNTS_HEADER).equals(caption)) {
-				EventBus.getInstance().fireEvent(
-						new AccountEvent.GotoList(this, null));
-			} else if (LocalizationHelper.getMessage(
-					CrmCommonI18nEnum.TOOLBAR_CAMPAIGN_NEW_ACTION).equals(
-					caption)) {
-				EventBus.getInstance().fireEvent(
-						new CampaignEvent.GotoAdd(this, null));
-			} else if (LocalizationHelper.getMessage(
-					CrmCommonI18nEnum.TOOLBAR_CAMPAIGNS_HEADER).equals(caption)) {
-				EventBus.getInstance().fireEvent(
-						new CampaignEvent.GotoList(this, null));
-			} else if (LocalizationHelper.getMessage(
-					CrmCommonI18nEnum.TOOLBAR_CASE_NEW_ACTION).equals(caption)) {
-				EventBus.getInstance().fireEvent(
-						new CaseEvent.GotoAdd(this, null));
-			} else if (LocalizationHelper.getMessage(
-					CrmCommonI18nEnum.TOOLBAR_CASES_HEADER).equals(caption)) {
-				EventBus.getInstance().fireEvent(
-						new CaseEvent.GotoList(this, null));
-			} else if (LocalizationHelper.getMessage(
-					CrmCommonI18nEnum.TOOLBAR_CONTACTS_HEADER).equals(caption)) {
-				EventBus.getInstance().fireEvent(
-						new ContactEvent.GotoList(this, null));
-			} else if (LocalizationHelper.getMessage(
-					CrmCommonI18nEnum.TOOLBAR_CONTACT_NEW_ACTION).equals(
-					caption)) {
-				EventBus.getInstance().fireEvent(
-						new ContactEvent.GotoAdd(this, null));
-			} else if (LocalizationHelper.getMessage(
-					CrmCommonI18nEnum.TOOLBAR_LEAD_NEW_ACTION).equals(caption)) {
-				EventBus.getInstance().fireEvent(
-						new LeadEvent.GotoAdd(this, null));
-			} else if (LocalizationHelper.getMessage(
-					CrmCommonI18nEnum.TOOLBAR_LEADS_HEADER).equals(caption)) {
-				EventBus.getInstance().fireEvent(
-						new LeadEvent.GotoList(this, null));
-			} else if (LocalizationHelper.getMessage(
-					CrmCommonI18nEnum.TOOLBAR_OPPORTUNITY_NEW_ACTION).equals(
-					caption)) {
-				EventBus.getInstance().fireEvent(
-						new OpportunityEvent.GotoAdd(this, null));
-			} else if (LocalizationHelper.getMessage(
-					CrmCommonI18nEnum.TOOLBAR_OPPORTUNTIES_HEADER).equals(
-					caption)) {
-				EventBus.getInstance().fireEvent(
-						new OpportunityEvent.GotoList(this, null));
-			} else if (LocalizationHelper.getMessage(
-					CrmCommonI18nEnum.TOOLBAR_ACTIVITIES_HEADER)
-					.equals(caption)) {
-				EventBus.getInstance().fireEvent(
-						new ActivityEvent.GotoCalendar(this, null));
-			} else if (LocalizationHelper.getMessage(
-					CrmCommonI18nEnum.TOOLBAR_TASK_NEW_ACTION).equals(caption)) {
-				EventBus.getInstance().fireEvent(
-						new ActivityEvent.TaskAdd(this, null));
-			} else if (LocalizationHelper.getMessage(
-					CrmCommonI18nEnum.TOOLBAR_CALL_NEW_ACTION).equals(caption)) {
-				EventBus.getInstance().fireEvent(
-						new ActivityEvent.CallAdd(this, null));
-			} else if (LocalizationHelper.getMessage(
-					CrmCommonI18nEnum.TOOLBAR_MEETING_NEW_ACTION).equals(
-					caption)) {
-				EventBus.getInstance().fireEvent(
-						new ActivityEvent.MeetingAdd(this, null));
-			} else if (LocalizationHelper.getMessage(
-					CrmCommonI18nEnum.TOOLBAR_DOCUMENT_HEADER).equals(caption)) {
-				EventBus.getInstance().fireEvent(
-						new DocumentEvent.GotoDashboard(this, null));
-			} else if (LocalizationHelper.getMessage(
-					CrmCommonI18nEnum.TOOLBAR_CRMNOTIFICATION_HEADER).equals(
-					caption)) {
-				EventBus.getInstance()
-						.fireEvent(
-								new CrmSettingEvent.GotoNotificationSetting(
-										this, null));
-			}
-
-			addBtn.setPopupVisible(false);
-
-			for (final Iterator<com.vaadin.ui.Component> it = getComponentIterator(); it
-					.hasNext();) {
-				final Button btn = (Button) it.next();
-				btn.removeStyleName("isSelected");
-			}
-
-			event.getButton().addStyleName("isSelected");
-		}
-	}
-
+public class CrmToolbar extends CssLayout implements PageView {
 	private static final long serialVersionUID = 1L;
 
 	private final PopupButton addBtn;
 
 	public CrmToolbar() {
-		this.setWidth(Sizeable.SIZE_UNDEFINED, 0);
-		this.setHeight("30px");
 		final NavigatorItemListener listener = new NavigatorItemListener();
 		final Button homeBtn = new Button(null, listener);
 		homeBtn.setStyleName("link");
@@ -348,9 +244,116 @@ public class CrmToolbar extends CssLayout implements View {
 				.newResource("icons/18/crm/meeting.png"));
 		addBtnLayout.addComponent(newMeetingBtn);
 
-		addBtn.addComponent(addBtnLayout);
+		addBtn.setContent(addBtnLayout);
 		addBtn.setStyleName("link");
 		addComponent(addBtn);
+	}
+
+	private class NavigatorItemListener implements Button.ClickListener {
+
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		public void buttonClick(final ClickEvent event) {
+			final String caption = event.getButton().getCaption();
+
+			if (caption == null) {
+				EventBus.getInstance().fireEvent(
+						new CrmEvent.GotoHome(this, null));
+			} else if (LocalizationHelper.getMessage(
+					CrmCommonI18nEnum.TOOLBAR_ACCOUNT_NEW_ACTION).equals(
+					caption)) {
+				EventBus.getInstance().fireEvent(
+						new AccountEvent.GotoAdd(this, null));
+			} else if (LocalizationHelper.getMessage(
+					CrmCommonI18nEnum.TOOLBAR_ACCOUNTS_HEADER).equals(caption)) {
+				EventBus.getInstance().fireEvent(
+						new AccountEvent.GotoList(this, null));
+			} else if (LocalizationHelper.getMessage(
+					CrmCommonI18nEnum.TOOLBAR_CAMPAIGN_NEW_ACTION).equals(
+					caption)) {
+				EventBus.getInstance().fireEvent(
+						new CampaignEvent.GotoAdd(this, null));
+			} else if (LocalizationHelper.getMessage(
+					CrmCommonI18nEnum.TOOLBAR_CAMPAIGNS_HEADER).equals(caption)) {
+				EventBus.getInstance().fireEvent(
+						new CampaignEvent.GotoList(this, null));
+			} else if (LocalizationHelper.getMessage(
+					CrmCommonI18nEnum.TOOLBAR_CASE_NEW_ACTION).equals(caption)) {
+				EventBus.getInstance().fireEvent(
+						new CaseEvent.GotoAdd(this, null));
+			} else if (LocalizationHelper.getMessage(
+					CrmCommonI18nEnum.TOOLBAR_CASES_HEADER).equals(caption)) {
+				EventBus.getInstance().fireEvent(
+						new CaseEvent.GotoList(this, null));
+			} else if (LocalizationHelper.getMessage(
+					CrmCommonI18nEnum.TOOLBAR_CONTACTS_HEADER).equals(caption)) {
+				EventBus.getInstance().fireEvent(
+						new ContactEvent.GotoList(this, null));
+			} else if (LocalizationHelper.getMessage(
+					CrmCommonI18nEnum.TOOLBAR_CONTACT_NEW_ACTION).equals(
+					caption)) {
+				EventBus.getInstance().fireEvent(
+						new ContactEvent.GotoAdd(this, null));
+			} else if (LocalizationHelper.getMessage(
+					CrmCommonI18nEnum.TOOLBAR_LEAD_NEW_ACTION).equals(caption)) {
+				EventBus.getInstance().fireEvent(
+						new LeadEvent.GotoAdd(this, null));
+			} else if (LocalizationHelper.getMessage(
+					CrmCommonI18nEnum.TOOLBAR_LEADS_HEADER).equals(caption)) {
+				EventBus.getInstance().fireEvent(
+						new LeadEvent.GotoList(this, null));
+			} else if (LocalizationHelper.getMessage(
+					CrmCommonI18nEnum.TOOLBAR_OPPORTUNITY_NEW_ACTION).equals(
+					caption)) {
+				EventBus.getInstance().fireEvent(
+						new OpportunityEvent.GotoAdd(this, null));
+			} else if (LocalizationHelper.getMessage(
+					CrmCommonI18nEnum.TOOLBAR_OPPORTUNTIES_HEADER).equals(
+					caption)) {
+				EventBus.getInstance().fireEvent(
+						new OpportunityEvent.GotoList(this, null));
+			} else if (LocalizationHelper.getMessage(
+					CrmCommonI18nEnum.TOOLBAR_ACTIVITIES_HEADER)
+					.equals(caption)) {
+				EventBus.getInstance().fireEvent(
+						new ActivityEvent.GotoCalendar(this, null));
+			} else if (LocalizationHelper.getMessage(
+					CrmCommonI18nEnum.TOOLBAR_TASK_NEW_ACTION).equals(caption)) {
+				EventBus.getInstance().fireEvent(
+						new ActivityEvent.TaskAdd(this, null));
+			} else if (LocalizationHelper.getMessage(
+					CrmCommonI18nEnum.TOOLBAR_CALL_NEW_ACTION).equals(caption)) {
+				EventBus.getInstance().fireEvent(
+						new ActivityEvent.CallAdd(this, null));
+			} else if (LocalizationHelper.getMessage(
+					CrmCommonI18nEnum.TOOLBAR_MEETING_NEW_ACTION).equals(
+					caption)) {
+				EventBus.getInstance().fireEvent(
+						new ActivityEvent.MeetingAdd(this, null));
+			} else if (LocalizationHelper.getMessage(
+					CrmCommonI18nEnum.TOOLBAR_DOCUMENT_HEADER).equals(caption)) {
+				EventBus.getInstance().fireEvent(
+						new DocumentEvent.GotoDashboard(this, null));
+			} else if (LocalizationHelper.getMessage(
+					CrmCommonI18nEnum.TOOLBAR_CRMNOTIFICATION_HEADER).equals(
+					caption)) {
+				EventBus.getInstance()
+						.fireEvent(
+								new CrmSettingEvent.GotoNotificationSetting(
+										this, null));
+			}
+
+			addBtn.setPopupVisible(false);
+
+			for (final Iterator<com.vaadin.ui.Component> it = CrmToolbar.this
+					.iterator(); it.hasNext();) {
+				final Button btn = (Button) it.next();
+				btn.removeStyleName("isSelected");
+			}
+
+			event.getButton().addStyleName("isSelected");
+		}
 	}
 
 	@Override
@@ -364,7 +367,7 @@ public class CrmToolbar extends CssLayout implements View {
 	}
 
 	public void gotoItem(final String crmItem) {
-		for (final Iterator<com.vaadin.ui.Component> it = getComponentIterator(); it
+		for (final Iterator<com.vaadin.ui.Component> it = this.iterator(); it
 				.hasNext();) {
 			final Button btn = (Button) it.next();
 			if (crmItem.equals(btn.getCaption())) {

@@ -24,13 +24,13 @@ import com.esofthead.mycollab.module.billing.service.BillingService;
 import com.esofthead.mycollab.module.user.accountsettings.localization.UserI18nEnum;
 import com.esofthead.mycollab.module.user.accountsettings.view.events.AccountBillingEvent;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
+import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.vaadin.ui.ViewComponent;
-import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
-import com.vaadin.terminal.ExternalResource;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -41,10 +41,17 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.OptionGroup;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @ViewComponent
-public class CancelAccountViewImpl extends AbstractView implements
+public class CancelAccountViewImpl extends AbstractPageView implements
 		CancelAccountView {
 	private static final long serialVersionUID = 1L;
 
@@ -72,23 +79,20 @@ public class CancelAccountViewImpl extends AbstractView implements
 				LocalizationHelper
 						.getMessage(UserI18nEnum.CANCEL_ACCOUNT_FIRST_LINE));
 		headerTopLine.addStyleName("first-line");
-		headerTopLine.setWidth(SIZE_UNDEFINED, 0);
 		header.addComponent(headerTopLine);
 		header.setComponentAlignment(headerTopLine, Alignment.MIDDLE_CENTER);
 
 		Label headerMsg = new Label(
 				LocalizationHelper
 						.getMessage(UserI18nEnum.CANCEL_ACCOUNT_MESSAGE),
-				Label.CONTENT_XHTML);
+				ContentMode.HTML);
 		headerMsg.addStyleName("header-content");
-		headerMsg.setWidth(SIZE_UNDEFINED, 0);
 		header.addComponent(headerMsg);
 		header.setComponentAlignment(headerMsg, Alignment.MIDDLE_CENTER);
 
 		Label headerNote = new Label(
 				LocalizationHelper.getMessage(UserI18nEnum.CANCEL_ACCOUNT_NOTE));
 		headerNote.addStyleName("header-note");
-		headerNote.setWidth(SIZE_UNDEFINED, 0);
 		header.addComponent(headerNote);
 		header.setComponentAlignment(headerNote, Alignment.MIDDLE_CENTER);
 		layout.addComponent(header);
@@ -152,9 +156,8 @@ public class CancelAccountViewImpl extends AbstractView implements
 						BillingService billingService = ApplicationContextUtil
 								.getSpringBean(BillingService.class);
 						billingService.cancelAccount(AppContext.getAccountId());
-						getWindow()
-								.open(new ExternalResource(
-										"http://www.mycollab.com"));
+						UI.getCurrent().getPage()
+								.setLocation("http://www.mycollab.com");
 					}
 				});
 		submitBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
@@ -186,7 +189,7 @@ public class CancelAccountViewImpl extends AbstractView implements
 		Label confirmNote = new Label(
 				LocalizationHelper
 						.getMessage(UserI18nEnum.CANCEL_ACCOUNT_CONFIRM_NOTE),
-				Label.CONTENT_XHTML);
+				ContentMode.HTML);
 		confirmNote.setWidth("600px");
 		innerLayout.addComponent(confirmNote);
 		innerLayout.setComponentAlignment(confirmNote, Alignment.TOP_CENTER);

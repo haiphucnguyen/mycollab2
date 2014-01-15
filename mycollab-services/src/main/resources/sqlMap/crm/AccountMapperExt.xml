@@ -229,6 +229,15 @@
 
         WHERE m_crm_account.id=#{accountId, javaType=INTEGER}
     </select>
+    
+    <select id="findAccountAssoWithConvertedLead" parameterType="java.lang.Integer"
+        resultMap="SimpleAccountResult">
+        <include
+            refid="com.esofthead.mycollab.module.crm.dao.AccountMapperExt.selectSimpleAccount" />
+
+        INNER JOIN m_crm_accounts_leads ON (m_crm_accounts_leads.isConvertRel=1 AND m_crm_accounts_leads.accountId= m_crm_account.id
+            AND m_crm_accounts_leads.leadId=#{leadId, javaType=INTEGER})
+    </select>
 
     <select id="getNextItemKey" parameterType="map" resultType="java.lang.Integer">
         SELECT MIN(id) FROM m_crm_account

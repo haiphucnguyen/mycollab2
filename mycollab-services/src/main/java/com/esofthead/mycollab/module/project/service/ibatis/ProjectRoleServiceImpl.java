@@ -37,6 +37,12 @@ import com.esofthead.mycollab.module.project.domain.criteria.ProjectRoleSearchCr
 import com.esofthead.mycollab.module.project.service.ProjectRoleService;
 import com.esofthead.mycollab.security.PermissionMap;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @Service
 @Auditable(module = ModuleNameConstants.PRJ, type = ProjectContants.PROJECT_ROLE)
 public class ProjectRoleServiceImpl extends

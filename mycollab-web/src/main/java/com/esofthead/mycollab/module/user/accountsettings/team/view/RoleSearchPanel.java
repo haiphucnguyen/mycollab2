@@ -14,10 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.module.user.accountsettings.team.view;
 
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
@@ -28,11 +25,10 @@ import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.user.domain.criteria.RoleSearchCriteria;
 import com.esofthead.mycollab.module.user.events.RoleEvent;
 import com.esofthead.mycollab.security.RolePermissionCollections;
-import com.esofthead.mycollab.shell.view.ScreenSize;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
-import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -44,7 +40,8 @@ import com.vaadin.ui.themes.Reindeer;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class RoleSearchPanel extends GenericSearchPanel<RoleSearchCriteria> {
 	private static final long serialVersionUID = 1L;
@@ -52,15 +49,13 @@ public class RoleSearchPanel extends GenericSearchPanel<RoleSearchCriteria> {
 
 	public RoleSearchPanel() {
 		this.setCompositionRoot(new RoleBasicSearchLayout());
-		if (ScreenSize.hasSupport1024Pixels()) {
-			this.setWidth("750px");
-		}
 	}
 
 	private HorizontalLayout createSearchTopPanel() {
 		final HorizontalLayout layout = new HorizontalLayout();
 		layout.setWidth("100%");
 		layout.setSpacing(true);
+		layout.setMargin(true);
 
 		final Label searchtitle = new Label("Roles");
 		searchtitle.setStyleName(Reindeer.LABEL_H2);
@@ -110,6 +105,7 @@ public class RoleSearchPanel extends GenericSearchPanel<RoleSearchCriteria> {
 			final HorizontalLayout basicSearchBody = new HorizontalLayout();
 			basicSearchBody.addComponent(new Label("Name"));
 			basicSearchBody.setSpacing(true);
+			basicSearchBody.setMargin(true);
 
 			final HorizontalLayout searchComp = new HorizontalLayout();
 			searchComp.addStyleName("search-comp");
@@ -121,7 +117,7 @@ public class RoleSearchPanel extends GenericSearchPanel<RoleSearchCriteria> {
 			searchBtn.setStyleName("search-icon-button");
 			searchBtn.setIcon(MyCollabResource
 					.newResource("icons/16/search_white.png"));
-			searchBtn.addListener(new Button.ClickListener() {
+			searchBtn.addClickListener(new Button.ClickListener() {
 				private static final long serialVersionUID = 1L;
 
 				@Override

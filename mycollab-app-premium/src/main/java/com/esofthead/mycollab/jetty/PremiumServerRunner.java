@@ -8,6 +8,12 @@ import com.esofthead.mycollab.cache.LocalCacheManager;
 import com.esofthead.mycollab.jetty.clustering.InfinispanHttpSession;
 import com.esofthead.mycollab.jetty.clustering.InfinispanSessionManager;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class PremiumServerRunner extends GenericServerRunner {
 	@Override
 	public WebAppContext buildContext(String baseDir) {

@@ -32,25 +32,32 @@ import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.module.user.ui.components.ActiveUserListSelect;
 import com.esofthead.mycollab.security.RolePermissionCollections;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.DefaultAdvancedSearchLayout;
 import com.esofthead.mycollab.vaadin.ui.DefaultGenericSearchPanel;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.Separator;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
-import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.themes.Reindeer;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @SuppressWarnings("serial")
 public class AccountSearchPanel extends
 		DefaultGenericSearchPanel<AccountSearchCriteria> {
@@ -78,15 +85,8 @@ public class AccountSearchPanel extends
 			GridFormLayoutHelper gridLayout = new GridFormLayoutHelper(3, 3,
 					"100%", "90px");
 			gridLayout.getLayout().setWidth("100%");
-			gridLayout.getLayout().setMargin(true, true, true, false);
-
-			// if (ScreenSize.hasSupport1024Pixels()) {
-			// gridLayout = new GridFormLayoutHelper(3, 3,
-			// UIConstants.DEFAULT_CONTROL_WIDTH_1024_RESOLUTION,
-			// "90px");
-			// } else if (ScreenSize.hasSupport1280Pixels()) {
-			// gridLayout = new GridFormLayoutHelper(3, 3, "90px");
-			// }
+			gridLayout.getLayout().setMargin(
+					new MarginInfo(true, true, true, false));
 
 			this.nameField = (TextField) gridLayout.addComponent(this
 					.createSeachSupportTextField(new TextField(), "nameField"),
@@ -122,11 +122,12 @@ public class AccountSearchPanel extends
 							this.createSeachSupportComboBox(new AccountTypeListSelect()),
 							"Type", 1, 2);
 
-			this.userField = (ActiveUserListSelect) gridLayout.addComponent(this
-					.createSeachSupportComboBox(new ActiveUserListSelect()),
-					LocalizationHelper
-							.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD), 2,
-					2);
+			this.userField = (ActiveUserListSelect) gridLayout
+					.addComponent(
+							this.createSeachSupportComboBox(new ActiveUserListSelect()),
+							LocalizationHelper
+									.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD),
+							2, 2);
 			gridLayout.getLayout().setSpacing(true);
 			return gridLayout.getLayout();
 		}
@@ -144,7 +145,8 @@ public class AccountSearchPanel extends
 			searchCriteria.setAccountname(new StringSearchField(
 					SearchField.AND, (String) this.nameField.getValue()));
 
-			if (StringUtils.isNotNullOrEmpty((String) this.nameField.getValue())) {
+			if (StringUtils
+					.isNotNullOrEmpty((String) this.nameField.getValue())) {
 				searchCriteria.setAccountname(new StringSearchField(
 						SearchField.AND, (String) this.nameField.getValue()));
 			}
@@ -177,7 +179,8 @@ public class AccountSearchPanel extends
 								(String) this.anyMailField.getValue()));
 			}
 
-			if (StringUtils.isNotNullOrEmpty((String) this.cityField.getValue())) {
+			if (StringUtils
+					.isNotNullOrEmpty((String) this.cityField.getValue())) {
 				searchCriteria.setAnyCity(new StringSearchField(
 						SearchField.AND, (String) this.cityField.getValue()));
 			}
@@ -273,6 +276,11 @@ public class AccountSearchPanel extends
 				}
 			}
 		}
+
+		@Override
+		protected Class<AccountSearchCriteria> getType() {
+			return AccountSearchCriteria.class;
+		}
 	}
 
 	private class AccountBasicSearchLayout extends
@@ -289,6 +297,7 @@ public class AccountSearchPanel extends
 		public ComponentContainer constructBody() {
 			final HorizontalLayout basicSearchBody = new HorizontalLayout();
 			basicSearchBody.setSpacing(false);
+			basicSearchBody.setMargin(true);
 			// basicSearchBody.addComponent(new Label("Name"));
 
 			this.nameField = this.createSeachSupportTextField(new TextField(),
@@ -305,7 +314,7 @@ public class AccountSearchPanel extends
 			searchBtn.setStyleName("search-icon-button");
 			searchBtn.setIcon(MyCollabResource
 					.newResource("icons/16/search_white.png"));
-			searchBtn.addListener(new Button.ClickListener() {
+			searchBtn.addClickListener(new Button.ClickListener() {
 				@Override
 				public void buttonClick(final ClickEvent event) {
 					AccountBasicSearchLayout.this.callSearchAction();
@@ -331,7 +340,7 @@ public class AccountSearchPanel extends
 					LocalizationHelper.getMessage(GenericI18Enum.BUTTON_CLEAR));
 			cancelBtn.setStyleName(UIConstants.THEME_LINK);
 			cancelBtn.addStyleName("cancel-button");
-			cancelBtn.addListener(new Button.ClickListener() {
+			cancelBtn.addClickListener(new Button.ClickListener() {
 				@Override
 				public void buttonClick(final ClickEvent event) {
 					AccountBasicSearchLayout.this.nameField.setValue("");
@@ -373,7 +382,7 @@ public class AccountSearchPanel extends
 			searchCriteria.setAccountname(new StringSearchField(
 					SearchField.AND, ((String) this.nameField.getValue())
 							.trim()));
-			if (this.myItemCheckbox.booleanValue()) {
+			if (this.myItemCheckbox.getValue()) {
 				searchCriteria.setAssignUser(new StringSearchField(
 						SearchField.AND, AppContext.getUsername()));
 			} else {
@@ -388,10 +397,10 @@ public class AccountSearchPanel extends
 		final HorizontalLayout layout = new HorizontalLayout();
 		layout.setWidth("100%");
 		layout.setSpacing(true);
+		layout.setMargin(true);
 
-		final Embedded titleIcon = new Embedded();
-		titleIcon.setSource(MyCollabResource
-				.newResource("icons/22/crm/account.png"));
+		final Image titleIcon = new Image(null,
+				MyCollabResource.newResource("icons/22/crm/account.png"));
 		layout.addComponent(titleIcon);
 		layout.setComponentAlignment(titleIcon, Alignment.MIDDLE_LEFT);
 

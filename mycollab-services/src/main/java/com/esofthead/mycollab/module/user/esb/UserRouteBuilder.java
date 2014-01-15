@@ -24,8 +24,8 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
 
 /**
  * 
- * @author haiphucnguyen
- *
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
 @Component
 public class UserRouteBuilder extends SpringRouteBuilder {

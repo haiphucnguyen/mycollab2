@@ -1,0 +1,28 @@
+.contact-us-content {
+	width:100%;
+}
+
+.contact-us-content .left-col {
+	width:100%;
+	float:none;
+}
+
+.contact-us-content .left-col .formfield {
+	float:none;
+	width:100%;
+	padding: 8px 20px 8px 20px;
+}
+
+#recaptcha_area, #recaptcha_table {
+	margin: 0 auto;
+}
+
+
+.contact-us-content .left-col .formfield input[type="submit"] {
+	float:none;
+}
+
+.contact-us-content .right-col {
+	width:100%;
+	float:none;
+}

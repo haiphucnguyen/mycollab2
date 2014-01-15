@@ -16,8 +16,8 @@
  */
 package com.esofthead.mycollab.module.user.accountsettings.profile.view;
 
-import com.esofthead.mycollab.vaadin.mvp.View;
+import com.esofthead.mycollab.vaadin.mvp.PageView;
 
-public interface ProfilePhotoUploadView extends View {
+public interface ProfilePhotoUploadView extends PageView {
 	void editPhoto(byte[] imageData);
 }

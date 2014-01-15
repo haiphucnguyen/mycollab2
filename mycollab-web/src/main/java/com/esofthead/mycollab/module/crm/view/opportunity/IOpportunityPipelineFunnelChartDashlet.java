@@ -16,8 +16,8 @@
  */
 package com.esofthead.mycollab.module.crm.view.opportunity;
 
-import com.esofthead.mycollab.vaadin.mvp.View;
+import com.esofthead.mycollab.vaadin.mvp.PageView;
 
-public interface IOpportunityPipelineFunnelChartDashlet extends View {
+public interface IOpportunityPipelineFunnelChartDashlet extends PageView {
 	void display();
 }

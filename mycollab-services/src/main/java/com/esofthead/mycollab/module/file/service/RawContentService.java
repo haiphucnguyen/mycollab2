@@ -18,7 +18,6 @@ package com.esofthead.mycollab.module.file.service;
 
 import java.io.InputStream;
 
-import com.esofthead.mycollab.core.dist.NotMobile;
 import com.esofthead.mycollab.core.persistence.service.IService;
 
 /**
@@ -28,6 +27,8 @@ import com.esofthead.mycollab.core.persistence.service.IService;
  * <code>RawContentService</code>. In practice, you should not work in low-level
  * API as <code>RawContentService</code> but <code>ContentService</code>
  * 
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
 public interface RawContentService extends IService {
 	/**
@@ -38,7 +39,6 @@ public interface RawContentService extends IService {
 	 * @param stream
 	 *            input stream
 	 */
-	@NotMobile
 	void saveContent(String objectPath, InputStream stream);
 
 	/**

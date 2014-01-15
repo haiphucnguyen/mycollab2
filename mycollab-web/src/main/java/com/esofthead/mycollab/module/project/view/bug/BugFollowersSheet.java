@@ -27,8 +27,14 @@ import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.ui.components.CompFollowersSheet;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
-import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.vaadin.AppContext;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 class BugFollowersSheet extends CompFollowersSheet<SimpleBug> {
 	private static final long serialVersionUID = 1L;
 

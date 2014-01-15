@@ -39,6 +39,9 @@ public interface OpportunityMapperExt extends
 	List<GroupItem> getLeadSourcesSummary(
 			@Param("searchCriteria") OpportunitySearchCriteria criteria);
 
-	public List<GroupItem> getPipeline(
+	List<GroupItem> getPipeline(
 			@Param("searchCriteria") OpportunitySearchCriteria criteria);
+
+	SimpleOpportunity findOpportunityAssoWithConvertedLead(
+			@Param("leadId") int leadId);
 }

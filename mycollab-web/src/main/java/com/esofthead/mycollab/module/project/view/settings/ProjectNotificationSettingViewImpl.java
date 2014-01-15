@@ -19,15 +19,26 @@ package com.esofthead.mycollab.module.project.view.settings;
 import com.esofthead.mycollab.module.project.domain.ProjectNotificationSetting;
 import com.esofthead.mycollab.module.project.service.ProjectNotificationSettingService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
-import com.esofthead.mycollab.vaadin.ui.ViewComponent;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
+import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
+import com.vaadin.shared.ui.MarginInfo;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
 @ViewComponent
-public class ProjectNotificationSettingViewImpl extends AbstractView implements
-		ProjectNotificationSettingView {
+public class ProjectNotificationSettingViewImpl extends AbstractPageView
+		implements ProjectNotificationSettingView {
 	private static final long serialVersionUID = 1L;
 	private NotificationSettingViewComponent<ProjectNotificationSetting, ProjectNotificationSettingService> component;
 
+	public ProjectNotificationSettingViewImpl() {
+		this.setMargin(new MarginInfo(true, false, false, false));
+	}
+	
 	@Override
 	public void showNotificationSettings(ProjectNotificationSetting notification) {
 		this.removeAllComponents();

@@ -30,13 +30,14 @@ import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.ProjectMember;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
-import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberMultiSelectField;
+import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberMultiSelectComp;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserLink;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.DefaultPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
-import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -45,11 +46,19 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.Table.ColumnGenerator;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
-@SuppressWarnings("serial")
+/**
+ * 
+ * @author NyCollab Ltd.
+ * @since 1.0
+ * 
+ * @param <V>
+ */
 public abstract class CompFollowersSheet<V extends ValuedBean> extends
 		VerticalLayout {
+	private static final long serialVersionUID = 1L;
 
 	protected DefaultPagedBeanTable<MonitorItemService, MonitorSearchCriteria, SimpleMonitorItem> tableItem;
 	protected MonitorItemService monitorItemService;
@@ -63,18 +72,15 @@ public abstract class CompFollowersSheet<V extends ValuedBean> extends
 		this.setSpacing(true);
 		this.setWidth("100%");
 
-		monitorItemService = ApplicationContextUtil.getSpringBean(MonitorItemService.class);
+		monitorItemService = ApplicationContextUtil
+				.getSpringBean(MonitorItemService.class);
 
 		initUI();
 	}
 
-	protected abstract void loadMonitorItems();
-
-	protected abstract boolean saveMonitorItem(String username);
-
-	protected abstract void saveRelayNotification();
-
-	protected abstract boolean isEnableAdd();
+	public void setBean(V bean) {
+		this.bean = bean;
+	}
 
 	private void initUI() {
 		Label lbInstruct = new Label(
@@ -84,16 +90,17 @@ public abstract class CompFollowersSheet<V extends ValuedBean> extends
 		HorizontalLayout layoutAdd = new HorizontalLayout();
 		layoutAdd.setSpacing(true);
 
-		final ProjectMemberMultiSelectField memberSelection = new ProjectMemberMultiSelectField();
+		final ProjectMemberMultiSelectComp memberSelection = new ProjectMemberMultiSelectComp();
 		layoutAdd.addComponent(memberSelection);
 		layoutAdd.setComponentAlignment(memberSelection, Alignment.MIDDLE_LEFT);
 
 		btnSave = new Button("Add", new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void buttonClick(ClickEvent event) {
 
-				List<ProjectMember> members = memberSelection
+				List<SimpleProjectMember> members = memberSelection
 						.getSelectedItems();
 
 				boolean canSendEmail = false;
@@ -150,7 +157,8 @@ public abstract class CompFollowersSheet<V extends ValuedBean> extends
 		followBtn.addStyleName("link");
 		followBtn.setCaption("Follow by Me");
 		followBtn.setDescription("Follow");
-		followBtn.addListener(new Button.ClickListener() {
+		followBtn.addClickListener(new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void buttonClick(ClickEvent event) {
@@ -219,6 +227,8 @@ public abstract class CompFollowersSheet<V extends ValuedBean> extends
 		});
 
 		tableItem.addGeneratedColumn("id", new ColumnGenerator() {
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public Object generateCell(Table source, Object itemId,
 					Object columnId) {
@@ -226,34 +236,31 @@ public abstract class CompFollowersSheet<V extends ValuedBean> extends
 						.getBeanByIndex(itemId);
 
 				Button deleteBtn = new Button(null, new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
 					@Override
 					public void buttonClick(ClickEvent event) {
-						ConfirmDialog
-								.show(AppContext.getApplication()
-										.getMainWindow(),
-										"Please Confirm:",
-										"Are you sure to remove this user from the notification of item activity?",
-										"Yes", "No",
-										new ConfirmDialog.Listener() {
-											private static final long serialVersionUID = 1L;
+						ConfirmDialogExt.show(
+								UI.getCurrent(),
+								"Please Confirm:",
+								"Are you sure to remove this user from the notification of item activity?",
+								"Yes", "No", new ConfirmDialog.Listener() {
+									private static final long serialVersionUID = 1L;
 
-											@Override
-											public void onClose(
-													ConfirmDialog dialog) {
-												if (dialog.isConfirmed()) {
-													MonitorItemService monitorItemService = ApplicationContextUtil
-															.getSpringBean(MonitorItemService.class);
-													monitorItemService.removeWithSession(
-															monitorItem.getId(),
-															AppContext
-																	.getUsername(),
-															AppContext
-																	.getAccountId());
-													CompFollowersSheet.this
-															.loadMonitorItems();
-												}
-											}
-										});
+									@Override
+									public void onClose(ConfirmDialog dialog) {
+										if (dialog.isConfirmed()) {
+											MonitorItemService monitorItemService = ApplicationContextUtil
+													.getSpringBean(MonitorItemService.class);
+											monitorItemService.removeWithSession(
+													monitorItem.getId(),
+													AppContext.getUsername(),
+													AppContext.getAccountId());
+											CompFollowersSheet.this
+													.displayMonitorItems();
+										}
+									}
+								});
 					}
 				});
 				deleteBtn.setStyleName("link");
@@ -280,7 +287,9 @@ public abstract class CompFollowersSheet<V extends ValuedBean> extends
 		tableItem.setWidth("100%");
 
 		this.addComponent(tableItem);
+	}
 
+	public void displayMonitorItems() {
 		loadMonitorItems();
 
 		for (SimpleMonitorItem monitorItem : tableItem.getCurrentDataList()) {
@@ -297,5 +306,13 @@ public abstract class CompFollowersSheet<V extends ValuedBean> extends
 			followBtn.setDescription("Follow");
 		}
 	}
+
+	protected abstract void loadMonitorItems();
+
+	protected abstract boolean saveMonitorItem(String username);
+
+	protected abstract void saveRelayNotification();
+
+	protected abstract boolean isEnableAdd();
 
 }

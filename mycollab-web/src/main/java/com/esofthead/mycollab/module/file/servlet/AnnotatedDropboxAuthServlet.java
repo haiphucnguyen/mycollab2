@@ -29,7 +29,6 @@ import org.infinispan.api.BasicCache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import org.springframework.web.HttpRequestHandler;
 
 import com.dropbox.core.DbxAppInfo;
 import com.dropbox.core.DbxAuthFinish;
@@ -44,9 +43,18 @@ import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.ecm.StorageNames;
 import com.esofthead.mycollab.module.file.CloudDriveInfo;
 import com.esofthead.mycollab.module.file.events.CloudDriveOAuthCallbackEvent;
+import com.esofthead.mycollab.servlet.GenericServlet;
+import com.vaadin.server.VaadinService;
+import com.vaadin.server.WrappedHttpSession;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @Component("dropboxAuthServlet")
-public class AnnotatedDropboxAuthServlet implements HttpRequestHandler {
+public class AnnotatedDropboxAuthServlet extends GenericServlet {
 	private static Logger log = LoggerFactory
 			.getLogger(AnnotatedDropboxAuthServlet.class);
 
@@ -93,7 +101,7 @@ public class AnnotatedDropboxAuthServlet implements HttpRequestHandler {
 	}
 
 	@Override
-	public void handleRequest(HttpServletRequest request,
+	protected void onHandleRequest(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		DbxAuthFinish authFinish = null;
 		try {
@@ -122,7 +130,10 @@ public class AnnotatedDropboxAuthServlet implements HttpRequestHandler {
 		CloudDriveInfo cloudDriveInfo = new CloudDriveInfo(
 				StorageNames.DROPBOX, accessToken);
 
-		EventBus eventBus = EventBus.getInstanceSession(appId);
+		HttpSession session = (HttpSession) request.getServletContext()
+				.getAttribute(appId);
+
+		EventBus eventBus = (EventBus) session.getAttribute("eventBusVal");
 		if (eventBus != null) {
 			eventBus.fireEvent(new CloudDriveOAuthCallbackEvent.ReceiveCloudDriveInfo(
 					AnnotatedDropboxAuthServlet.this, cloudDriveInfo));

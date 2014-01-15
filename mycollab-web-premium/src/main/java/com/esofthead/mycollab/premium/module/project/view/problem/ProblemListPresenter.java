@@ -13,16 +13,24 @@ import com.esofthead.mycollab.module.project.domain.criteria.ProblemSearchCriter
 import com.esofthead.mycollab.module.project.service.ProblemService;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.vaadin.events.TablePopupActionHandler;
-import com.esofthead.mycollab.vaadin.mvp.ListSelectionPresenter;
+import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.desktop.ui.DefaultMassEditActionHandler;
+import com.esofthead.mycollab.vaadin.desktop.ui.ListSelectionPresenter;
+import com.esofthead.mycollab.vaadin.events.MassItemActionHandler;
 import com.esofthead.mycollab.vaadin.mvp.MassUpdateCommand;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.MailFormWindow;
-import com.esofthead.mycollab.vaadin.ui.MessageBox;
-import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.UI;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class ProblemListPresenter
 		extends
 		ListSelectionPresenter<ProblemListView, ProblemSearchCriteria, SimpleProblem>
@@ -33,23 +41,28 @@ public class ProblemListPresenter
 
 	public ProblemListPresenter() {
 		super(ProblemListView.class);
+	}
 
-		problemService = ApplicationContextUtil.getSpringBean(ProblemService.class);
+	@Override
+	protected void postInitView() {
+		super.postInitView();
 
-		view.getPopupActionHandlers().addPopupActionHandler(
-				new DefaultPopupActionHandler(this) {
+		problemService = ApplicationContextUtil
+				.getSpringBean(ProblemService.class);
+
+		view.getPopupActionHandlers().addMassItemActionHandler(
+				new DefaultMassEditActionHandler(this) {
 
 					@Override
-					protected void onSelectExtra(String id, String caption) {
-						if (TablePopupActionHandler.MAIL_ACTION.equals(id)) {
-							view.getWidget().getWindow()
-									.addWindow(new MailFormWindow());
-						} else if (TablePopupActionHandler.MASS_UPDATE_ACTION
+					protected void onSelectExtra(String id) {
+						if (MassItemActionHandler.MAIL_ACTION.equals(id)) {
+							UI.getCurrent().addWindow(new MailFormWindow());
+						} else if (MassItemActionHandler.MASS_UPDATE_ACTION
 								.equals(id)) {
 							MassUpdateProblemWindow massUpdateWindow = new MassUpdateProblemWindow(
 									"Mass Update Problems",
 									ProblemListPresenter.this);
-							view.getWindow().addWindow(massUpdateWindow);
+							UI.getCurrent().addWindow(massUpdateWindow);
 						}
 
 					}
@@ -60,7 +73,7 @@ public class ProblemListPresenter
 					}
 
 					@Override
-					protected Class getReportModelClassType() {
+					protected Class<?> getReportModelClassType() {
 						return SimpleProblem.class;
 					}
 				});
@@ -80,7 +93,7 @@ public class ProblemListPresenter
 					.getView(ProjectBreadcrumb.class);
 			breadcrumb.gotoProblemList();
 		} else {
-			MessageBox.showMessagePermissionAlert();
+			NotificationUtil.showMessagePermissionAlert();
 		}
 	}
 

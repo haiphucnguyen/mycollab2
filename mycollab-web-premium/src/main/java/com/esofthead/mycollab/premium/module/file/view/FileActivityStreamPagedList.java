@@ -19,12 +19,13 @@ import com.esofthead.mycollab.module.ecm.service.ContentActivityLogService;
 import com.esofthead.mycollab.module.file.domain.criteria.FileSearchCriteria;
 import com.esofthead.mycollab.module.user.UserLinkUtils;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
-import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CssLayout;
@@ -32,6 +33,12 @@ import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class FileActivityStreamPagedList
 		extends
 		AbstractBeanPagedList<ContentActivityLogSearchCriteria, SimpleContentActivityLog>
@@ -106,7 +113,7 @@ public class FileActivityStreamPagedList
 					Label IconEmbedded = new Label("<img src=\""
 							+ UserAvatarControlFactory.getAvatarLink(
 									activityStream.getUserAvatarId(), 16)
-							+ "\" alt=\"\">", Label.CONTENT_XHTML);
+							+ "\" alt=\"\">", ContentMode.HTML);
 					streamInfoLayout.addComponent(IconEmbedded);
 				} else {
 					Button button = new Button();
@@ -121,7 +128,7 @@ public class FileActivityStreamPagedList
 								AppContext.getSiteUrl(),
 								activityStream.getCreateduser()) + "\">"
 						+ activityStream.getUserFullName() + "</a>";
-				Label userLbl = new Label(userLinkStr, Label.CONTENT_XHTML);
+				Label userLbl = new Label(userLinkStr, ContentMode.HTML);
 				streamInfoLayout.addComponent(userLbl);
 
 				if (contentActivityAction instanceof Move) {

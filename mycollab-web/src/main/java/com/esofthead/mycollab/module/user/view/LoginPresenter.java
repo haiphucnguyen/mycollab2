@@ -32,14 +32,19 @@ import com.esofthead.mycollab.module.user.service.BillingAccountService;
 import com.esofthead.mycollab.module.user.service.UserPreferenceService;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.shell.events.ShellEvent;
-import com.esofthead.mycollab.shell.view.MainWindowContainer;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
-import com.esofthead.mycollab.web.AppContext;
-import com.vaadin.terminal.gwt.server.AbstractWebApplicationContext;
+import com.esofthead.mycollab.vaadin.ui.AbstractPresenter;
+import com.esofthead.mycollab.web.DesktopApplication;
 import com.vaadin.ui.ComponentContainer;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class LoginPresenter extends AbstractPresenter<LoginView> {
 
 	private static final long serialVersionUID = 1L;
@@ -48,10 +53,10 @@ public class LoginPresenter extends AbstractPresenter<LoginView> {
 
 	public LoginPresenter() {
 		super(LoginView.class);
-		bind();
 	}
 
-	private void bind() {
+	@Override
+	protected void postInitView() {
 		view.addViewListener(new ApplicationEventListener<UserEvent.PlainLogin>() {
 			private static final long serialVersionUID = 1L;
 
@@ -76,8 +81,8 @@ public class LoginPresenter extends AbstractPresenter<LoginView> {
 				AppContext.getSubDomain(), false);
 
 		if (isRemmeberPassword) {
-			((MainWindowContainer) AppContext.getApplication().getMainWindow())
-					.rememberPassword(username, password);
+			DesktopApplication.getInstance().rememberPassword(username,
+					password);
 		}
 
 		BillingAccountService billingAccountService = ApplicationContextUtil
@@ -100,13 +105,6 @@ public class LoginPresenter extends AbstractPresenter<LoginView> {
 		AppContext.getInstance().setSession(user, pref, billingAccount);
 		EventBus.getInstance().fireEvent(
 				new ShellEvent.GotoMainPage(this, null));
-
-		// Tracking user service
-		AbstractWebApplicationContext context = (AbstractWebApplicationContext) AppContext
-				.getApplication().getContext();
-
-		log.debug("User agent: " + context.getBrowser().getBrowserApplication()
-				+ "  " + context.getBrowser().getAddress());
 	}
 
 	@Override

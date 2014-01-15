@@ -34,7 +34,7 @@ package com.esofthead.mycollab.core.arguments;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  *
  */
 public class NumberSearchField extends SearchField {

@@ -37,6 +37,12 @@ import com.esofthead.mycollab.schedule.ScheduleUserTimeZoneUtils;
 import com.esofthead.mycollab.schedule.email.project.ProjectMailLinkGenerator;
 import com.esofthead.mycollab.schedule.email.project.ProjectProblemRelayEmailNotificationAction;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @Component
 public class ProjectProblemRelayEmailNotificationActionImpl extends
 		SendMailToAllMembersAction implements

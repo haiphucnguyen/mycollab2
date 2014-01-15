@@ -14,18 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-services.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-package com.esofthead.mycollab.module.project.service;
 
-import org.springframework.flex.remoting.RemotingDestination;
+package com.esofthead.mycollab.module.project.service;
 
 import com.esofthead.mycollab.core.cache.CacheEvict;
 import com.esofthead.mycollab.core.cache.CacheKey;
 import com.esofthead.mycollab.core.cache.Cacheable;
-import com.esofthead.mycollab.core.dist.NotMobile;
 import com.esofthead.mycollab.core.persistence.service.IDefaultService;
 import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
 import com.esofthead.mycollab.module.project.domain.TaskList;
@@ -33,15 +27,14 @@ import com.esofthead.mycollab.module.project.domain.criteria.TaskListSearchCrite
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
-@RemotingDestination
 public interface ProjectTaskListService extends
 		IDefaultService<Integer, TaskList, TaskListSearchCriteria> {
 	@Cacheable
 	SimpleTaskList findById(int taskListId, @CacheKey int sAccountId);
 
 	@CacheEvict
-	@NotMobile
 	void updateTaskListIndex(TaskList[] taskLists, @CacheKey int sAccountId);
 }

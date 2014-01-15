@@ -14,23 +14,20 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.module.project.view.milestone;
 
-import com.esofthead.mycollab.module.project.domain.Milestone;
 import com.esofthead.mycollab.module.project.domain.SimpleMilestone;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.IPreviewView;
 
 /**
- *
- * @author haiphucnguyen
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
-public interface MilestoneReadView  extends IPreviewView<SimpleMilestone> {
+public interface MilestoneReadView extends IPreviewView<SimpleMilestone> {
 
-    HasPreviewFormHandlers<Milestone> getPreviewFormHandlers();
-    
+	HasPreviewFormHandlers<SimpleMilestone> getPreviewFormHandlers();
+
 }

@@ -14,10 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.module.user.accountsettings.team.view;
 
 import java.util.Arrays;
@@ -41,14 +38,15 @@ import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
 import com.esofthead.mycollab.module.user.events.UserEvent;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
+import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
-import com.esofthead.mycollab.vaadin.ui.ViewComponent;
-import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -58,14 +56,16 @@ import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
 @ViewComponent
-public class UserListViewImpl extends AbstractView implements UserListView {
+public class UserListViewImpl extends AbstractPageView implements UserListView {
 
 	private static final long serialVersionUID = 1L;
 
@@ -128,13 +128,13 @@ public class UserListViewImpl extends AbstractView implements UserListView {
 		layoutButtonDelete.setExpandRatio(emptylb, 1.0f);
 
 		Button btnDelete = new Button();
-		btnDelete.addListener(new Button.ClickListener() {
+		btnDelete.addClickListener(new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void buttonClick(ClickEvent event) {
 				ConfirmDialogExt.show(
-						AppContext.getApplication().getMainWindow(),
+						UI.getCurrent(),
 						LocalizationHelper.getMessage(
 								GenericI18Enum.DELETE_DIALOG_TITLE,
 								SiteConfiguration.getSiteName()),
@@ -174,7 +174,7 @@ public class UserListViewImpl extends AbstractView implements UserListView {
 		memberInfo.addComponent(layoutButtonDelete);
 
 		ButtonLink userAccountLink = new ButtonLink(member.getDisplayName());
-		userAccountLink.addListener(new ClickListener() {
+		userAccountLink.addClickListener(new ClickListener() {
 
 			private static final long serialVersionUID = 1L;
 
@@ -186,13 +186,13 @@ public class UserListViewImpl extends AbstractView implements UserListView {
 			}
 		});
 		userAccountLink.setWidth("100%");
-		userAccountLink.setHeight(SIZE_UNDEFINED, 0);
+		userAccountLink.setHeight("100%");
 
 		memberInfo.addComponent(userAccountLink);
 
 		Label memberEmailLabel = new Label("<a href='mailto:"
 				+ member.getUsername() + "'>" + member.getUsername() + "</a>",
-				Label.CONTENT_XHTML);
+				ContentMode.HTML);
 		memberEmailLabel.addStyleName("member-email");
 		memberEmailLabel.setWidth("100%");
 		memberInfo.addComponent(memberEmailLabel);
@@ -252,7 +252,7 @@ public class UserListViewImpl extends AbstractView implements UserListView {
 					+ UserLinkUtils.generateUserRoleLink(member.getRoleid())
 					+ "\"";
 			Label memberRole = new Label();
-			memberRole.setContentMode(Label.CONTENT_XHTML);
+			memberRole.setContentMode(ContentMode.HTML);
 			if (member.getRoleName().equals(SimpleRole.ADMIN)
 					|| (member.getIsAccountOwner() != null && member
 							.getIsAccountOwner())) {
@@ -271,7 +271,7 @@ public class UserListViewImpl extends AbstractView implements UserListView {
 		} else if (member.getIsAccountOwner() != null
 				&& member.getIsAccountOwner() == Boolean.TRUE) {
 			Label memberRole = new Label();
-			memberRole.setContentMode(Label.CONTENT_XHTML);
+			memberRole.setContentMode(ContentMode.HTML);
 			memberRole.setValue("<a style=\"color: #B00000;\">"
 					+ "Administrator" + "</a>");
 			memberRole.setSizeUndefined();

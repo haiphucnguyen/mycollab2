@@ -36,7 +36,7 @@ import java.util.Date;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  *
  */
 public class RangeDateTimeSearchField extends SearchField {

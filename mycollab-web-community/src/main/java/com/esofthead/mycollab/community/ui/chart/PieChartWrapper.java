@@ -30,7 +30,8 @@ import com.esofthead.mycollab.core.arguments.SearchCriteria;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
 public abstract class PieChartWrapper<S extends SearchCriteria> extends
 		GenericChartWrapper<S> {
@@ -83,4 +84,3 @@ public abstract class PieChartWrapper<S extends SearchCriteria> extends
 
 	protected abstract void onClickedDescription(String key);
 }
-

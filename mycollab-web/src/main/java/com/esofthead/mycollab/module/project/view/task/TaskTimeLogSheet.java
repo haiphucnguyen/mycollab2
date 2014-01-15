@@ -27,10 +27,16 @@ import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSear
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.project.ui.components.CompTimeLogSheet;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.vaadin.AppContext;
 
-@SuppressWarnings("serial")
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class TaskTimeLogSheet extends CompTimeLogSheet<SimpleTask> {
+	private static final long serialVersionUID = 1L;
 
 	protected TaskTimeLogSheet(SimpleTask bean) {
 		super(bean);

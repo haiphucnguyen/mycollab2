@@ -16,8 +16,8 @@
  */
 package com.esofthead.mycollab.module.project.view.wiki;
 
-import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
+import com.esofthead.mycollab.vaadin.ui.AbstractPresenter;
 import com.vaadin.ui.ComponentContainer;
 
 public class WikiListPresenter extends AbstractPresenter<WikiListView> {

@@ -28,19 +28,20 @@ import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.user.accountsettings.localization.UserI18nEnum;
 import com.esofthead.mycollab.module.user.accountsettings.view.events.ProfileEvent;
 import com.esofthead.mycollab.module.user.domain.User;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
-import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
+import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
+import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
+import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
+import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
+import com.esofthead.mycollab.vaadin.ui.ReadViewLayout;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
-import com.esofthead.mycollab.vaadin.ui.ViewComponent;
-import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
-import com.vaadin.data.Item;
-import com.vaadin.data.util.BeanItem;
-import com.vaadin.terminal.Sizeable;
+import com.vaadin.server.Sizeable;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -50,12 +51,19 @@ import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
-@SuppressWarnings("serial")
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
 @ViewComponent
-public class ProfileReadViewImpl extends AbstractView implements
+public class ProfileReadViewImpl extends AbstractPageView implements
         ProfileReadView {
+    private static final long serialVersionUID = 1L;
 
     public static final int MAX_UPLOAD_SIZE = 20 * 1024 * 1024;
 
@@ -69,7 +77,6 @@ public class ProfileReadViewImpl extends AbstractView implements
         this.viewLayout.setWidth("100%");
         this.viewLayout.setSpacing(true);
         this.setStyleName("userInfoContainer");
-        this.setMargin(true);
         this.userAvatar = new VerticalLayout();
         this.userAvatar.setWidth("100%");
         this.userAvatar.setSpacing(true);
@@ -95,18 +102,16 @@ public class ProfileReadViewImpl extends AbstractView implements
                 LocalizationHelper
                         .getMessage(UserI18nEnum.BUTTON_CHANGE_PASSWORD),
                 new Button.ClickListener() {
+                    private static final long serialVersionUID = 1L;
 
                     @Override
                     public void buttonClick(final ClickEvent event) {
-                        ProfileReadViewImpl.this
-                                .getWidget()
-                                .getWindow()
-                                .addWindow(
-                                        new PasswordChangeWindow(formItem.user));
+                        UI.getCurrent().addWindow(
+                                new PasswordChangeWindow(formItem.user));
                     }
                 });
         final VerticalLayout passLayout = new VerticalLayout();
-        passLayout.setMargin(true, false, false, false);
+        passLayout.setMargin(new MarginInfo(true, false, false, false));
         final Label userName = new Label(AppContext.getSession()
                 .getDisplayName());
         userName.setStyleName("h1");
@@ -122,6 +127,8 @@ public class ProfileReadViewImpl extends AbstractView implements
         this.userAvatar.addComponent(avatarAndPass);
 
         final UploadField avatarUploadField = new UploadField() {
+            private static final long serialVersionUID = 1L;
+
             @Override
             protected void updateDisplay() {
                 byte[] imageData = (byte[]) this.getValue();
@@ -148,7 +155,6 @@ public class ProfileReadViewImpl extends AbstractView implements
         };
         avatarUploadField.setButtonCaption("Change Avatar");
         avatarUploadField.setFieldType(FieldType.BYTE_ARRAY);
-        avatarUploadField.setWidth(Sizeable.SIZE_UNDEFINED, 0);
         this.userAvatar.addComponent(avatarUploadField);
     }
 
@@ -163,13 +169,15 @@ public class ProfileReadViewImpl extends AbstractView implements
         }
 
         @Override
-        public void setItemDataSource(final Item newDataSource) {
+        public void setBean(final User newDataSource) {
             this.setFormLayoutFactory(new FormLayoutFactory());
-            this.setFormFieldFactory(new PreviewFormFieldFactory());
-            super.setItemDataSource(newDataSource);
+            this.setBeanFormFieldFactory(new PreviewFormFieldFactory(
+                    PreviewForm.this));
+            super.setBean(newDataSource);
         }
 
         private class FormLayoutFactory implements IFormLayoutFactory {
+            private static final long serialVersionUID = 1L;
 
             protected GridFormLayoutHelper basicInformation;
 
@@ -179,7 +187,7 @@ public class ProfileReadViewImpl extends AbstractView implements
 
             @Override
             public Layout getLayout() {
-                final AddViewLayout accountAddLayout = new AddViewLayout(
+                final ReadViewLayout accountAddLayout = new ReadViewLayout(
                         "User Information",
                         MyCollabResource
                                 .newResource("icons/22/user/menu_profile.png"));
@@ -194,7 +202,8 @@ public class ProfileReadViewImpl extends AbstractView implements
                 final Label basicInformationHeaderLbl = new Label(
                         "Basic Information");
                 basicInformationHeaderLbl.setStyleName("h2");
-                basicInformationHeaderLbl.setWidth(Sizeable.SIZE_UNDEFINED, 0);
+                basicInformationHeaderLbl.setWidth(Sizeable.SIZE_UNDEFINED,
+                        Sizeable.Unit.PIXELS);
                 basicInformationHeader.addComponent(basicInformationHeaderLbl);
 
                 final CssLayout contactInformationHeader = new CssLayout();
@@ -203,8 +212,8 @@ public class ProfileReadViewImpl extends AbstractView implements
                 final Label contactInformationHeaderLbl = new Label(
                         "Contact Information");
                 contactInformationHeaderLbl.setStyleName("h2");
-                contactInformationHeaderLbl
-                        .setWidth(Sizeable.SIZE_UNDEFINED, 0);
+                contactInformationHeaderLbl.setWidth(Sizeable.SIZE_UNDEFINED,
+                        Sizeable.Unit.PIXELS);
                 contactInformationHeader
                         .addComponent(contactInformationHeaderLbl);
 
@@ -214,7 +223,8 @@ public class ProfileReadViewImpl extends AbstractView implements
                 final Label advanceInfoHeaderLbl = new Label(
                         "Advanced Information");
                 advanceInfoHeaderLbl.setStyleName("h2");
-                advanceInfoHeaderLbl.setWidth(Sizeable.SIZE_UNDEFINED, 0);
+                advanceInfoHeaderLbl.setWidth(Sizeable.SIZE_UNDEFINED,
+                        Sizeable.Unit.PIXELS);
                 advanceInfoHeader.addComponent(advanceInfoHeaderLbl);
 
                 this.basicInformation = new GridFormLayoutHelper(1, 6, "100%",
@@ -244,15 +254,13 @@ public class ProfileReadViewImpl extends AbstractView implements
                         LocalizationHelper
                                 .getMessage(GenericI18Enum.BUTTON_EDIT_LABEL),
                         new Button.ClickListener() {
+                            private static final long serialVersionUID = 1L;
 
                             @Override
                             public void buttonClick(final ClickEvent event) {
-                                ProfileReadViewImpl.this
-                                        .getWidget()
-                                        .getWindow()
-                                        .addWindow(
-                                                new BasicInfoChangeWindow(
-                                                        PreviewForm.this.user));
+                                UI.getCurrent().addWindow(
+                                        new BasicInfoChangeWindow(
+                                                PreviewForm.this.user));
                             }
                         });
                 btnChangeBasicInfo.addStyleName("link");
@@ -264,15 +272,13 @@ public class ProfileReadViewImpl extends AbstractView implements
                         LocalizationHelper
                                 .getMessage(GenericI18Enum.BUTTON_EDIT_LABEL),
                         new Button.ClickListener() {
+                            private static final long serialVersionUID = 1L;
 
                             @Override
                             public void buttonClick(final ClickEvent event) {
-                                ProfileReadViewImpl.this
-                                        .getWidget()
-                                        .getWindow()
-                                        .addWindow(
-                                                new ContactInfoChangeWindow(
-                                                        PreviewForm.this.user));
+                                UI.getCurrent().addWindow(
+                                        new ContactInfoChangeWindow(
+                                                PreviewForm.this.user));
                             }
                         });
                 btnChangeContactInfo.addStyleName("link");
@@ -284,15 +290,13 @@ public class ProfileReadViewImpl extends AbstractView implements
                         LocalizationHelper
                                 .getMessage(GenericI18Enum.BUTTON_EDIT_LABEL),
                         new Button.ClickListener() {
+                            private static final long serialVersionUID = 1L;
 
                             @Override
                             public void buttonClick(final ClickEvent event) {
-                                ProfileReadViewImpl.this
-                                        .getWidget()
-                                        .getWindow()
-                                        .addWindow(
-                                                new AdvancedInfoChangeWindow(
-                                                        PreviewForm.this.user));
+                                UI.getCurrent().addWindow(
+                                        new AdvancedInfoChangeWindow(
+                                                PreviewForm.this.user));
                             }
                         });
                 btnChangeAdvanceInfo.addStyleName("link");
@@ -303,7 +307,8 @@ public class ProfileReadViewImpl extends AbstractView implements
             }
 
             @Override
-            public void attachField(final Object propertyId, final Field field) {
+            public boolean attachField(final Object propertyId,
+                    final Field<?> field) {
                 if (propertyId.equals("firstname")) {
                     this.basicInformation.addComponent(field, "First Name", 0,
                             0);
@@ -339,17 +344,24 @@ public class ProfileReadViewImpl extends AbstractView implements
                             .addComponent(field, "Twitter", 0, 3);
                 } else if (propertyId.equals("skypecontact")) {
                     this.contactInformation.addComponent(field, "Skype", 0, 4);
+                } else {
+                    return false;
                 }
+
+                return true;
             }
         }
 
         private class PreviewFormFieldFactory extends
-                DefaultFormViewFieldFactory {
+                AbstractBeanFieldGroupViewFieldFactory<User> {
+            private static final long serialVersionUID = 1L;
+
+            public PreviewFormFieldFactory(GenericBeanForm<User> form) {
+                super(form);
+            }
 
             @Override
-            protected Field onCreateField(final Item item,
-                    final Object propertyId,
-                    final com.vaadin.ui.Component uiContext) {
+            protected Field<?> onCreateField(final Object propertyId) {
                 String value = "";
 
                 if (propertyId.equals("email")) {
@@ -393,7 +405,7 @@ public class ProfileReadViewImpl extends AbstractView implements
     @Override
     public void previewItem(final User user) {
         this.formItem.setUser(user);
-        this.formItem.setItemDataSource(new BeanItem<User>(user));
+        this.formItem.setBean(user);
         this.displayUserAvatar();
     }
 

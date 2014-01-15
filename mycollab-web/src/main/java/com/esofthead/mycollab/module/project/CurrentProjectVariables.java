@@ -31,8 +31,14 @@ import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.security.PermissionMap;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.vaadin.AppContext;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class CurrentProjectVariables {
 	private static Logger log = LoggerFactory
 			.getLogger(CurrentProjectVariables.class);
@@ -72,7 +78,8 @@ public class CurrentProjectVariables {
 				}
 			}
 
-			AppContext.putVariable(ProjectContants.PROJECT_MEMBER, prjMember);
+			AppContext.putVariable(ProjectContants.PROJECT_MEMBER,
+					prjMember);
 		} else if (!AppContext.isAdmin()) {
 			throw new MyCollabException("You are not belong to this project");
 		}

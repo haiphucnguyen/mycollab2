@@ -21,7 +21,6 @@ import java.util.GregorianCalendar;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vaadin.dialogs.ConfirmDialog;
-import org.vaadin.hene.splitbutton.SplitButtonExt;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
@@ -68,35 +67,43 @@ import com.esofthead.mycollab.module.project.view.time.ITimeTrackingPresenter;
 import com.esofthead.mycollab.module.project.view.user.ProjectDashboardPresenter;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
+import com.esofthead.mycollab.vaadin.mvp.PageView;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
-import com.esofthead.mycollab.vaadin.mvp.View;
+import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
-import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.vaadin.ui.ViewComponent;
-import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.vaadin.ui.SplitButton;
+import com.esofthead.mycollab.vaadin.ui.VerticalTabsheet;
 import com.esofthead.mycollab.web.MyCollabResource;
-import com.github.wolfie.detachedtabs.DetachedTabs;
-import com.github.wolfie.detachedtabs.DetachedTabs.TabChangedEvent;
+import com.vaadin.server.Sizeable;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.TabSheet.SelectedTabChangeEvent;
+import com.vaadin.ui.TabSheet.SelectedTabChangeListener;
+import com.vaadin.ui.TabSheet.Tab;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @SuppressWarnings("serial")
 @ViewComponent
-public class ProjectViewImpl extends AbstractView implements ProjectView {
+public class ProjectViewImpl extends AbstractPageView implements ProjectView {
 
 	private static Logger log = LoggerFactory.getLogger(ProjectViewImpl.class);
-	private final HorizontalLayout root;
-	private final DetachedTabs myProjectTab;
-	private final CssLayout mySpaceArea = new CssLayout();
+	private final VerticalTabsheet myProjectTab;
 	private final HorizontalLayout topPanel;
 	private ProjectDashboardPresenter dashboardPresenter;
 	private MessagePresenter messagePresenter;
@@ -110,15 +117,15 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 	private UserSettingPresenter userPresenter;
 	private IStandupPresenter standupPresenter;
 	private final ProjectBreadcrumb breadCrumb;
-	private SplitButtonExt controlsBtn;
+	private SplitButton controlsBtn;
 
 	public ProjectViewImpl() {
 		this.setWidth("100%");
 
 		final CssLayout contentWrapper = new CssLayout();
 		contentWrapper.setStyleName("projectDashboardView");
-		contentWrapper.addStyleName("main-content-wrapper");
 		contentWrapper.setWidth("100%");
+		this.addStyleName("main-content-wrapper");
 		this.addComponent(contentWrapper);
 
 		breadCrumb = ViewManager.getView(ProjectBreadcrumb.class);
@@ -128,73 +135,67 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 		topPanel.setMargin(true);
 		contentWrapper.addComponent(topPanel);
 
-		root = new HorizontalLayout();
-		root.setStyleName("menuContent");
-
-		myProjectTab = new DetachedTabs.Vertical(mySpaceArea);
+		myProjectTab = new VerticalTabsheet();
 		myProjectTab.setSizeFull();
+		myProjectTab.setNavigatorWidth("170px");
+		myProjectTab.setNavigatorStyleName("sidebar-menu");
+		myProjectTab.setContainerStyleName("tab-content");
 		myProjectTab.setHeight(null);
 
-		CssLayout menu = new CssLayout();
-		menu.setWidth("170px");
-		menu.setStyleName("sidebar-menu");
-		menu.addComponent(myProjectTab);
-
-		root.addComponent(menu);
-		mySpaceArea.setStyleName("projectTabContent");
-		mySpaceArea.setWidth("100%");
-		mySpaceArea.setHeight(null);
-		root.addComponent(mySpaceArea);
-		root.setExpandRatio(mySpaceArea, 1.0f);
-		root.setWidth("100%");
 		buildComponents();
-		contentWrapper.addComponent(root);
-	}
-
-	private static class MenuButton extends Button {
-		public MenuButton(String caption, String iconResource) {
-			super(caption);
-			this.setIcon(MyCollabResource.newResource("icons/22/project/"
-					+ iconResource));
-			this.setStyleName("link");
-		}
+		contentWrapper.addComponent(myProjectTab);
 	}
 
 	private void buildComponents() {
-		myProjectTab.addTab(constructProjectDashboardComponent(),
-				new MenuButton("Dashboard", "menu_dashboard.png"));
-		myProjectTab.addTab(constructProjectMessageComponent(), new MenuButton(
-				"Messages", "menu_message.png"));
-		myProjectTab.addTab(constructProjectMilestoneComponent(),
-				new MenuButton("Phases", "menu_milestone.png"));
-		myProjectTab.addTab(constructTaskDashboardComponent(), new MenuButton(
-				"Tasks", "menu_task.png"));
-		myProjectTab.addTab(constructProjectBugComponent(), new MenuButton(
-				"Bugs", "menu_bug.png"));
-		myProjectTab.addTab(constructProjectFileComponent(), new MenuButton(
-				"Files", "menu_file.png"));
-		myProjectTab.addTab(constructProjectRiskComponent(), new MenuButton(
-				"Risks", "menu_risk.png"));
-		myProjectTab.addTab(constructProjectProblemComponent(), new MenuButton(
-				"Problems", "menu_problem.png"));
-		myProjectTab.addTab(constructTimeTrackingComponent(), new MenuButton(
-				"Time", "menu_time.png"));
-		myProjectTab.addTab(constructProjectStandupMeeting(), new MenuButton(
-				"StandUp", "menu_standup.png"));
-		myProjectTab.addTab(constructProjectUsers(), new MenuButton(
-				"Users & Settings", "menu_user.png"));
+		myProjectTab.addTab(constructProjectDashboardComponent(), "Dashboard",
+				MyCollabResource
+						.newResource("icons/22/project/menu_dashboard.png"));
+
+		myProjectTab.addTab(constructProjectMessageComponent(), "Messages",
+				MyCollabResource
+						.newResource("icons/22/project/menu_message.png"));
+
+		myProjectTab.addTab(constructProjectMilestoneComponent(), "Phases",
+				MyCollabResource
+						.newResource("icons/22/project/menu_milestone.png"));
+
+		myProjectTab.addTab(constructTaskDashboardComponent(), "Tasks",
+				MyCollabResource.newResource("icons/22/project/menu_task.png"));
+
+		myProjectTab.addTab(constructProjectBugComponent(), "Bugs",
+				MyCollabResource.newResource("icons/22/project/menu_bug.png"));
+
+		myProjectTab.addTab(constructProjectFileComponent(), "Files",
+				MyCollabResource.newResource("icons/22/project/menu_file.png"));
+
+		myProjectTab.addTab(constructProjectRiskComponent(), "Risks",
+				MyCollabResource.newResource("icons/22/project/menu_risk.png"));
+
+		myProjectTab.addTab(constructProjectProblemComponent(), "Problems",
+				MyCollabResource
+						.newResource("icons/22/project/menu_problem.png"));
+
+		myProjectTab.addTab(constructTimeTrackingComponent(), "Time",
+				MyCollabResource.newResource("icons/22/project/menu_time.png"));
+
+		myProjectTab.addTab(constructProjectStandupMeeting(), "StandUp",
+				MyCollabResource
+						.newResource("icons/22/project/menu_standup.png"));
+
+		myProjectTab.addTab(constructProjectUsers(), "Users & Settings",
+				MyCollabResource.newResource("icons/22/project/menu_user.png"));
 
 		myProjectTab
-				.addTabChangedListener(new DetachedTabs.TabChangedListener() {
+				.addSelectedTabChangeListener(new SelectedTabChangeListener() {
+
 					@Override
-					public void tabChanged(TabChangedEvent event) {
-						Button btn = event.getSource();
-						String caption = btn.getCaption();
-						mySpaceArea.setStyleName("projectTabContent");
+					public void selectedTabChange(SelectedTabChangeEvent event) {
+						Tab tab = ((VerticalTabsheet) event.getSource())
+								.getSelectedTab();
+						String caption = tab.getCaption();
 						if ("Messages".equals(caption)) {
 							messagePresenter.go(ProjectViewImpl.this, null);
 						} else if ("Phases".equals(caption)) {
-							mySpaceArea.addStyleName("Phases");
 							MilestoneSearchCriteria searchCriteria = new MilestoneSearchCriteria();
 							searchCriteria.setProjectId(new NumberSearchField(
 									SearchField.AND, CurrentProjectVariables
@@ -252,6 +253,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 							standupPresenter.go(ProjectViewImpl.this,
 									new StandupScreenData.Search(criteria));
 						}
+
 					}
 				});
 	}
@@ -262,7 +264,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 	}
 
 	@Override
-	public void gotoTaskList(ScreenData data) {
+	public void gotoTaskList(ScreenData<?> data) {
 		taskPresenter.go(ProjectViewImpl.this, data);
 	}
 
@@ -272,7 +274,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 		riskPresenter.go(ProjectViewImpl.this, data);
 	}
 
-	public void gotoTimeTrackingView(ScreenData data) {
+	public void gotoTimeTrackingView(ScreenData<?> data) {
 		timePresenter.go(ProjectViewImpl.this, data);
 	}
 
@@ -283,7 +285,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 	}
 
 	@Override
-	public void gotoMilestoneView(ScreenData data) {
+	public void gotoMilestoneView(ScreenData<?> data) {
 		milestonesPresenter.go(ProjectViewImpl.this, data);
 	}
 
@@ -295,64 +297,64 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 	private Component constructProjectDashboardComponent() {
 		dashboardPresenter = PresenterResolver
 				.getPresenter(ProjectDashboardPresenter.class);
-		return dashboardPresenter.getView();
+		return dashboardPresenter.initView();
 	}
 
 	private Component constructProjectUsers() {
 		userPresenter = PresenterResolver
 				.getPresenter(UserSettingPresenter.class);
-		return userPresenter.getView();
+		return userPresenter.initView();
 	}
 
 	private Component constructProjectMessageComponent() {
 		messagePresenter = PresenterResolver
 				.getPresenter(MessagePresenter.class);
-		return messagePresenter.getView();
+		return messagePresenter.initView();
 	}
 
 	private Component constructProjectMilestoneComponent() {
 		milestonesPresenter = PresenterResolver
 				.getPresenter(MilestonePresenter.class);
-		return milestonesPresenter.getView();
+		return milestonesPresenter.initView();
 	}
 
 	private Component constructProjectRiskComponent() {
 		riskPresenter = PresenterResolver.getPresenter(IRiskPresenter.class);
-		return riskPresenter.getView();
+		return riskPresenter.initView();
 	}
 
 	private Component constructProjectProblemComponent() {
 		problemPresenter = PresenterResolver
 				.getPresenter(IProblemPresenter.class);
-		return problemPresenter.getView();
+		return problemPresenter.initView();
 	}
 
 	private Component constructTimeTrackingComponent() {
 		timePresenter = PresenterResolver
 				.getPresenter(ITimeTrackingPresenter.class);
-		return timePresenter.getView();
+		return timePresenter.initView();
 	}
 
 	private Component constructProjectStandupMeeting() {
 		standupPresenter = PresenterResolver
 				.getPresenter(IStandupPresenter.class);
-		return standupPresenter.getView();
+		return standupPresenter.initView();
 	}
 
 	private Component constructTaskDashboardComponent() {
 		taskPresenter = PresenterResolver.getPresenter(TaskPresenter.class);
-		return taskPresenter.getView();
+		return taskPresenter.initView();
 	}
 
 	private Component constructProjectBugComponent() {
 		trackerPresenter = PresenterResolver
 				.getPresenter(TrackerPresenter.class);
-		return trackerPresenter.getView();
+		return trackerPresenter.initView();
 	}
 
 	private Component constructProjectFileComponent() {
 		filePresenter = PresenterResolver.getPresenter(IFilePresenter.class);
-		return filePresenter.getView();
+		return filePresenter.initView();
 	}
 
 	@Override
@@ -361,7 +363,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 		topPanel.removeAllComponents();
 
 		topPanel.addComponent(breadCrumb);
-		topPanel.setComponentAlignment(breadCrumb, Alignment.BOTTOM_CENTER);
+		topPanel.setComponentAlignment(breadCrumb, Alignment.MIDDLE_LEFT);
 		topPanel.setExpandRatio(breadCrumb, 1.0f);
 
 		breadCrumb.setProject(project);
@@ -374,8 +376,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 						controlsBtn.setPopupVisible(true);
 					}
 				});
-		controlsBtn = new SplitButtonExt(quickActionBtn);
-		controlsBtn.addStyleName(UIConstants.SPLIT_BUTTON);
+		controlsBtn = new SplitButton(quickActionBtn);
 		controlsBtn.setIcon(MyCollabResource
 				.newResource("icons/16/project/quick_action.png"));
 
@@ -465,62 +466,6 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 		editProjectBtn.setStyleName("link");
 		popupButtonsControl.addComponent(editProjectBtn);
 
-		// if (CurrentProjectVariables
-		// .canAccess(ProjectRolePermissionCollections.PROJECT)) {
-		// Button archievedProjectBtn = new Button(
-		// LocalizationHelper
-		// .getMessage(ProjectCommonI18nEnum.ARCHIVE_PROJECT_ACTION),
-		// new Button.ClickListener() {
-		// @Override
-		// public void buttonClick(ClickEvent event) {
-		// controlsBtn.setPopupVisible(false);
-		// ConfirmDialogExt.show(
-		// ProjectViewImpl.this.getWindow(),
-		// LocalizationHelper
-		// .getMessage(
-		// ProjectCommonI18nEnum.DIALOG_ARCHIVE_PROJECT_TITLE,
-		// SiteConfiguration
-		// .getSiteName()),
-		// LocalizationHelper
-		// .getMessage(ProjectCommonI18nEnum.CONFIRM_PROJECT_ARCHIVE_MESSAGE),
-		// LocalizationHelper
-		// .getMessage(GenericI18Enum.BUTTON_YES_LABEL),
-		// LocalizationHelper
-		// .getMessage(GenericI18Enum.BUTTON_NO_LABEL),
-		// new ConfirmDialog.Listener() {
-		// private static final long serialVersionUID = 1L;
-		//
-		// @Override
-		// public void onClose(ConfirmDialog dialog) {
-		// if (dialog.isConfirmed()) {
-		// ProjectService projectService = AppContext
-		// .getSpringBean(ProjectService.class);
-		// SimpleProject project = CurrentProjectVariables
-		// .getProject();
-		// project.setProjectstatus(ProjectStatusConstants.ARCHIVE);
-		// projectService
-		// .updateWithSession(
-		// project,
-		// AppContext
-		// .getUsername());
-		// EventBus.getInstance()
-		// .fireEvent(
-		// new ShellEvent.GotoProjectModule(
-		// this,
-		// null));
-		// }
-		// }
-		// });
-		// }
-		// });
-		// archievedProjectBtn.setEnabled(CurrentProjectVariables
-		// .canAccess(ProjectRolePermissionCollections.PROJECT));
-		// archievedProjectBtn.setIcon(MyCollabResource
-		// .newResource("icons/16/project/delete_project.png"));
-		// archievedProjectBtn.setStyleName("link");
-		// popupButtonsControl.addComponent(archievedProjectBtn);
-		// }
-
 		if (CurrentProjectVariables
 				.canAccess(ProjectRolePermissionCollections.PROJECT)) {
 			Button deleteProjectBtn = new Button(
@@ -531,7 +476,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 						public void buttonClick(ClickEvent event) {
 							controlsBtn.setPopupVisible(false);
 							ConfirmDialogExt.show(
-									ProjectViewImpl.this.getWindow(),
+									UI.getCurrent(),
 									LocalizationHelper.getMessage(
 											GenericI18Enum.DELETE_DIALOG_TITLE,
 											SiteConfiguration.getSiteName()),
@@ -574,7 +519,8 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 			popupButtonsControl.addComponent(deleteProjectBtn);
 		}
 
-		controlsBtn.addComponent(popupButtonsControl);
+		controlsBtn.setContent(popupButtonsControl);
+		controlsBtn.setWidth(Sizeable.SIZE_UNDEFINED, Sizeable.Unit.PIXELS);
 
 		topPanel.addComponent(controlsBtn);
 		topPanel.setComponentAlignment(controlsBtn, Alignment.MIDDLE_RIGHT);
@@ -583,7 +529,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 	@Override
 	public Component gotoSubView(String name) {
 		log.debug("Project: Go to tab view name " + name);
-		View component = (View) myProjectTab.selectTab(name);
+		PageView component = (PageView) myProjectTab.selectTab(name);
 		return component;
 	}
 }

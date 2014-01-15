@@ -14,10 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.module.project.view.bug;
 
 import java.util.ArrayList;
@@ -33,18 +30,21 @@ import com.esofthead.mycollab.module.tracker.domain.Version;
 import com.esofthead.mycollab.module.tracker.domain.criteria.VersionSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.VersionService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.vaadin.events.TablePopupActionHandler;
-import com.esofthead.mycollab.vaadin.mvp.ListSelectionPresenter;
+import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.desktop.ui.DefaultMassEditActionHandler;
+import com.esofthead.mycollab.vaadin.desktop.ui.ListSelectionPresenter;
+import com.esofthead.mycollab.vaadin.events.MassItemActionHandler;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.MailFormWindow;
-import com.esofthead.mycollab.vaadin.ui.MessageBox;
-import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.UI;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class VersionListPresenter
 		extends
@@ -55,17 +55,22 @@ public class VersionListPresenter
 
 	public VersionListPresenter() {
 		super(VersionListView.class);
+	}
 
-		versionService = ApplicationContextUtil.getSpringBean(VersionService.class);
+	@Override
+	protected void postInitView() {
+		super.postInitView();
 
-		view.getPopupActionHandlers().addPopupActionHandler(
-				new DefaultPopupActionHandler(this) {
+		versionService = ApplicationContextUtil
+				.getSpringBean(VersionService.class);
+
+		view.getPopupActionHandlers().addMassItemActionHandler(
+				new DefaultMassEditActionHandler(this) {
 
 					@Override
-					protected void onSelectExtra(String id, String caption) {
-						if (TablePopupActionHandler.MAIL_ACTION.equals(id)) {
-							view.getWidget().getWindow()
-									.addWindow(new MailFormWindow());
+					protected void onSelectExtra(String id) {
+						if (MassItemActionHandler.MAIL_ACTION.equals(id)) {
+							UI.getCurrent().addWindow(new MailFormWindow());
 						}
 					}
 
@@ -75,7 +80,7 @@ public class VersionListPresenter
 					}
 
 					@Override
-					protected Class getReportModelClassType() {
+					protected Class<?> getReportModelClassType() {
 						return SimpleVersion.class;
 					}
 				});
@@ -95,7 +100,7 @@ public class VersionListPresenter
 					.getView(ProjectBreadcrumb.class);
 			breadcrumb.gotoVersionList();
 		} else {
-			MessageBox.showMessagePermissionAlert();
+			NotificationUtil.showMessagePermissionAlert();
 		}
 	}
 

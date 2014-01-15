@@ -10,7 +10,6 @@ import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
-import com.esofthead.mycollab.module.project.domain.Problem;
 import com.esofthead.mycollab.module.project.domain.SimpleProblem;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.ProblemSearchCriteria;
@@ -18,39 +17,44 @@ import com.esofthead.mycollab.module.project.events.ProblemEvent;
 import com.esofthead.mycollab.module.project.service.ProblemService;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.DefaultPreviewFormHandler;
-import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
+import com.esofthead.mycollab.vaadin.ui.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
-import com.esofthead.mycollab.vaadin.ui.MessageBox;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
-import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.Window;
+import com.vaadin.ui.UI;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class ProblemReadPresenter extends AbstractPresenter<ProblemReadView> {
 
 	private static final long serialVersionUID = 1L;
 
 	public ProblemReadPresenter() {
 		super(ProblemReadView.class);
-		bind();
 	}
 
-	private void bind() {
+	@Override
+	protected void postInitView() {
 		view.getPreviewFormHandlers().addFormHandler(
-				new DefaultPreviewFormHandler<Problem>() {
+				new DefaultPreviewFormHandler<SimpleProblem>() {
 					@Override
-					public void onEdit(Problem data) {
+					public void onEdit(SimpleProblem data) {
 						EventBus.getInstance().fireEvent(
 								new ProblemEvent.GotoEdit(this, data));
 					}
 
 					@Override
-					public void onDelete(final Problem data) {
+					public void onDelete(final SimpleProblem data) {
 						ConfirmDialogExt.show(
-								view.getWindow(),
+								UI.getCurrent(),
 								LocalizationHelper.getMessage(
 										GenericI18Enum.DELETE_DIALOG_TITLE,
 										SiteConfiguration.getSiteName()),
@@ -81,8 +85,8 @@ public class ProblemReadPresenter extends AbstractPresenter<ProblemReadView> {
 					}
 
 					@Override
-					public void onClone(Problem data) {
-						Problem cloneData = (Problem) data.copy();
+					public void onClone(SimpleProblem data) {
+						SimpleProblem cloneData = (SimpleProblem) data.copy();
 						cloneData.setId(null);
 						EventBus.getInstance().fireEvent(
 								new ProblemEvent.GotoEdit(this, cloneData));
@@ -95,7 +99,7 @@ public class ProblemReadPresenter extends AbstractPresenter<ProblemReadView> {
 					}
 
 					@Override
-					public void gotoNext(Problem data) {
+					public void gotoNext(SimpleProblem data) {
 						ProblemService problemService = ApplicationContextUtil
 								.getSpringBean(ProblemService.class);
 						ProblemSearchCriteria criteria = new ProblemSearchCriteria();
@@ -117,7 +121,7 @@ public class ProblemReadPresenter extends AbstractPresenter<ProblemReadView> {
 					}
 
 					@Override
-					public void gotoPrevious(Problem data) {
+					public void gotoPrevious(SimpleProblem data) {
 						ProblemService problemService = ApplicationContextUtil
 								.getSpringBean(ProblemService.class);
 						ProblemSearchCriteria criteria = new ProblemSearchCriteria();
@@ -164,7 +168,7 @@ public class ProblemReadPresenter extends AbstractPresenter<ProblemReadView> {
 
 			}
 		} else {
-			MessageBox.showMessagePermissionAlert();
+			NotificationUtil.showMessagePermissionAlert();
 		}
 	}
 }

@@ -22,6 +22,12 @@ import java.util.Map;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.web.MyCollabResource;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class CrmResources {
 	private static final Map<String, String> resourceLinks;
 

@@ -14,10 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.module.project.view;
 
 import java.util.Date;
@@ -28,8 +25,6 @@ import org.vaadin.hene.popupbutton.PopupButton;
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
-import com.esofthead.mycollab.eventmanager.ApplicationEvent;
-import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectLinkUtils;
@@ -65,26 +60,25 @@ import com.esofthead.mycollab.module.tracker.domain.Component;
 import com.esofthead.mycollab.module.tracker.domain.Version;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.mvp.CacheableComponent;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
-import com.esofthead.mycollab.vaadin.mvp.View;
+import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.CommonUIFactory;
-import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.utils.LabelStringGenerator;
-import com.esofthead.mycollab.web.AppContext;
 import com.lexaden.breadcrumb.Breadcrumb;
 import com.lexaden.breadcrumb.BreadcrumbLayout;
-import com.vaadin.terminal.Sizeable;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.VerticalLayout;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
 @ViewComponent
-public class ProjectBreadcrumb extends Breadcrumb implements View {
+public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent {
 	private static final long serialVersionUID = 1L;
 	private static LabelStringGenerator menuLinkGenerator = new BreadcrumbLabelStringGenerator();
 
@@ -103,8 +97,6 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 						new ShellEvent.GotoProjectModule(this, null));
 			}
 		}));
-
-		this.setHeight(25, Sizeable.UNITS_PIXELS);
 	}
 
 	public void setProject(SimpleProject project) {
@@ -151,7 +143,7 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 			filterBtnLayout.addComponent(btnProject);
 		}
 
-		projectSelectionPopupBtn.addComponent(filterBtnLayout);
+		projectSelectionPopupBtn.setContent(filterBtnLayout);
 		this.addLink(projectSelectionPopupBtn);
 		this.setLinkEnabled(true, 1);
 	}
@@ -766,8 +758,8 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 		AppContext.addFragment(
 				"project/user/preview/"
 						+ UrlEncodeDecoder.encode(project.getId() + "/"
-								+ member.getUsername()),
-				"View Project Member: " + member.getMemberFullName());
+								+ member.getUsername()), "Project Member: "
+						+ member.getMemberFullName());
 	}
 
 	public void gotoUserEdit(SimpleProjectMember member) {
@@ -801,7 +793,7 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 				"project/role/preview/"
 						+ UrlEncodeDecoder.encode(project.getId() + "/"
 								+ role.getId()),
-				"View Project Role: " + role.getRolename());
+				"Project Role: " + role.getRolename());
 	}
 
 	public void gotoNotificationSetting(ProjectNotificationSetting notify) {
@@ -921,11 +913,6 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 		return super.getComponentCount();
 	}
 
-	@Override
-	public ComponentContainer getWidget() {
-		throw new UnsupportedOperationException("Not supported yet.");
-	}
-
 	private static Button generateBreadcrumbLink(String linkname) {
 		return CommonUIFactory.createButtonTooltip(
 				menuLinkGenerator.handleText(linkname), linkname);
@@ -948,11 +935,5 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 			return value;
 		}
 
-	}
-
-	@Override
-	public void addViewListener(
-			ApplicationEventListener<? extends ApplicationEvent> listener) {
-		throw new UnsupportedOperationException("Not supported yet.");
 	}
 }

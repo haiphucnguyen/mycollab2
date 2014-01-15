@@ -14,11 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.vaadin.ui;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
@@ -29,21 +29,26 @@ import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.vaadin.AppContext;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class UserLink extends Button {
 	private static final long serialVersionUID = 1L;
+
+	private static Logger log = LoggerFactory.getLogger(UserLink.class);
 
 	public UserLink(final String username, String userAvatarId,
 			final String displayName, boolean useWordWrap) {
@@ -58,7 +63,7 @@ public class UserLink extends Button {
 		if (useWordWrap) {
 			this.addStyleName(UIConstants.WORD_WRAP);
 		}
-		this.addListener(new Button.ClickListener() {
+		this.addClickListener(new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -68,11 +73,11 @@ public class UserLink extends Button {
 				SimpleUser user = userService.findUserByUserNameInAccount(
 						username, AppContext.getAccountId());
 				try {
-					getWindow().getParent().addWindow(
-							new UserQuickPreviewWindow(user));
+					UI.getCurrent().addWindow(new UserQuickPreviewWindow(user));
 				} catch (Exception e) {
-					UserLink.this.getParent().getWindow()
-							.addWindow(new UserQuickPreviewWindow(user));
+					log.error(
+							"Error while try to show user information window",
+							e);
 				}
 			}
 		});
@@ -91,6 +96,7 @@ public class UserLink extends Button {
 			super("User preview");
 			this.center();
 			this.setWidth("500px");
+			this.addStyleName("user-preview-window");
 			this.user = user;
 			constructBody();
 		}
@@ -98,6 +104,8 @@ public class UserLink extends Button {
 		private void constructBody() {
 			VerticalLayout layout = new VerticalLayout();
 			layout.setSpacing(true);
+			layout.setMargin(true);
+
 			HorizontalLayout topLayout = new HorizontalLayout();
 			layout.addComponent(topLayout);
 
@@ -109,7 +117,7 @@ public class UserLink extends Button {
 					AppContext.getSiteUrl(), user.getUsername());
 			userFullLinkStr = userFullLinkStr.substring(0, 50);
 			ButtonLink userFullLinkBtn = new ButtonLink(userFullLinkStr);
-			userFullLinkBtn.addListener(new Button.ClickListener() {
+			userFullLinkBtn.addClickListener(new Button.ClickListener() {
 				private static final long serialVersionUID = 1L;
 
 				@Override
@@ -124,8 +132,9 @@ public class UserLink extends Button {
 													.getUsername()) }));
 				}
 			});
-			userFullLinkBtn.setWidth("300px");
+			userFullLinkBtn.setWidth("100%");
 			topLayout.addComponent(userFullLinkBtn);
+			topLayout.setExpandRatio(userFullLinkBtn, 1.0f);
 			// -----------------------------------
 			CssLayout mainBodyWapper = new CssLayout();
 			mainBodyWapper.addStyleName("border-box2-color");
@@ -156,7 +165,7 @@ public class UserLink extends Button {
 			emailLayout.addComponent(emailTitle);
 
 			Label emailLink = new Label("<a href=\"mailto:" + user.getEmail()
-					+ "\">" + user.getEmail() + "</a>", Label.CONTENT_XHTML);
+					+ "\">" + user.getEmail() + "</a>", ContentMode.HTML);
 			emailLayout.addComponent(emailLink);
 			mainUserInfoLayout.addComponent(emailLayout);
 
@@ -197,7 +206,7 @@ public class UserLink extends Button {
 					UserAvatarControlFactory.createAvatarResource(
 							user.getAvatarid(), 100));
 			userImageLayout.addComponent(embeedIcon);
-			this.addComponent(layout);
+			this.setContent(layout);
 		}
 	}
 }

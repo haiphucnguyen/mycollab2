@@ -14,10 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.module.project.view.user;
 
 import com.esofthead.mycollab.common.ModuleNameConstants;
@@ -26,14 +23,14 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.Depot;
-import com.esofthead.mycollab.web.AppContext;
-import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.ui.VerticalLayout;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class ProjectActivityStreamComponent extends Depot {
 	private static final long serialVersionUID = 1L;
@@ -48,8 +45,7 @@ public class ProjectActivityStreamComponent extends Depot {
 
 	public void showProjectFeeds() {
 		this.bodyContent.removeAllComponents();
-		this.bodyContent.addComponent(new LazyLoadWrapper(
-				this.activityStreamList));
+		this.bodyContent.addComponent(this.activityStreamList);
 		final ActivityStreamSearchCriteria searchCriteria = new ActivityStreamSearchCriteria();
 		searchCriteria.setModuleSet(new SetSearchField<String>(SearchField.AND,
 				new String[] { ModuleNameConstants.PRJ }));

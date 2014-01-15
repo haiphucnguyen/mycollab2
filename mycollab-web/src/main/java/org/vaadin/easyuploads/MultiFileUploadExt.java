@@ -14,10 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package org.vaadin.easyuploads;
 
 import java.io.File;
@@ -33,7 +30,8 @@ import com.vaadin.event.dd.DragAndDropEvent;
 import com.vaadin.event.dd.DropHandler;
 import com.vaadin.event.dd.acceptcriteria.AcceptAll;
 import com.vaadin.event.dd.acceptcriteria.AcceptCriterion;
-import com.vaadin.terminal.StreamVariable;
+import com.vaadin.server.StreamVariable;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.DragAndDropWrapper;
@@ -42,268 +40,281 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.ProgressIndicator;
 
 /**
- *
- * @author haiphucnguyen
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class MultiFileUploadExt extends CssLayout implements DropHandler {
 	private static final long serialVersionUID = 1L;
 	private AttachmentUploadComponent attachmentDisplayComponent;
-    private CssLayout progressBars = new CssLayout();
-    private CssLayout uploads = new CssLayout();
-    private String uploadButtonCaption = "Attach File(s)";
-    private MultiUpload upload;
+	private CssLayout progressBars = new CssLayout();
+	private CssLayout uploads = new CssLayout();
+	private String uploadButtonCaption = "Attach File(s)";
+	private MultiUpload upload;
 
-    public MultiFileUploadExt(AttachmentUploadComponent attachmentDisplayComponent) {
-        this.attachmentDisplayComponent = attachmentDisplayComponent;
-        this.attachmentDisplayComponent.registerMultiUpload(this);
-        setWidth("200px");
-        addComponent(progressBars);
-        uploads.setStyleName("v-multifileupload-uploads");
-        addComponent(uploads);
-        prepareUpload();
-    }
-    
-    public void removeAndReInitMultiUpload() {
-    	uploads.removeComponent(upload);
-    	upload = null;
-    	prepareUpload();
-    }
+	public MultiFileUploadExt(
+			AttachmentUploadComponent attachmentDisplayComponent) {
+		this.attachmentDisplayComponent = attachmentDisplayComponent;
+		this.attachmentDisplayComponent.registerMultiUpload(this);
+		setWidth("200px");
+        setStyleName("v-multifileupload-ext");
+		addComponent(progressBars);
+		uploads.setStyleName("v-multifileupload-uploads");
+		addComponent(uploads);
+		prepareUpload();
+	}
 
-    private void prepareUpload() {
-        final FileBuffer receiver = createReceiver();
+	public void removeAndReInitMultiUpload() {
+		uploads.removeComponent(upload);
+		upload = null;
+		prepareUpload();
+	}
 
-        upload = new MultiUpload();
-        MultiUploadHandler handler = new MultiUploadHandler() {
-            private LinkedList<ProgressIndicator> indicators;
+	private void prepareUpload() {
+		final FileBuffer receiver = createReceiver();
 
-            public void streamingStarted(StreamVariable.StreamingStartEvent event) {
-            }
+		upload = new MultiUpload();
+		MultiUploadHandler handler = new MultiUploadHandler() {
+			private LinkedList<ProgressIndicator> indicators;
 
-            public void streamingFinished(StreamVariable.StreamingEndEvent event) {
-                if (!indicators.isEmpty()) {
-                    progressBars.removeComponent(indicators.remove(0));
-                }
-                File file = receiver.getFile();
-                
-                handleFile(file, event.getFileName(), event.getMimeType(),
-                        event.getBytesReceived());
-                receiver.setValue(null);
-            }
+			public void streamingStarted(
+					StreamVariable.StreamingStartEvent event) {
+			}
 
-            public void streamingFailed(StreamVariable.StreamingErrorEvent event) {
-                Logger.getLogger(getClass().getName()).log(Level.FINE,
-                        "Streaming failed", event.getException());
+			public void streamingFinished(StreamVariable.StreamingEndEvent event) {
+				if (!indicators.isEmpty()) {
+					progressBars.removeComponent(indicators.remove(0));
+				}
+				File file = receiver.getFile();
 
-                for (ProgressIndicator progressIndicator : indicators) {
-                    progressBars.removeComponent(progressIndicator);
-                }
+				handleFile(file, event.getFileName(), event.getMimeType(),
+						event.getBytesReceived());
+				receiver.setValue(null);
+			}
 
-            }
+			public void streamingFailed(StreamVariable.StreamingErrorEvent event) {
+				Logger.getLogger(getClass().getName()).log(Level.FINE,
+						"Streaming failed", event.getException());
 
-            public void onProgress(StreamVariable.StreamingProgressEvent event) {
-                long readBytes = event.getBytesReceived();
-                long contentLength = event.getContentLength();
-                float f = (float) readBytes / (float) contentLength;
-                indicators.get(0).setValue(f);
-            }
+				for (ProgressIndicator progressIndicator : indicators) {
+					progressBars.removeComponent(progressIndicator);
+				}
 
-            public OutputStream getOutputStream() {
-                MultiUpload.FileDetail next = upload.getPendingFileNames().iterator()
-                        .next();
-                return receiver.receiveUpload(next.getFileName(),
-                        next.getMimeType());
-            }
+			}
 
-            public void filesQueued(Collection<MultiUpload.FileDetail> pendingFileNames) {
-                if (indicators == null) {
-                    indicators = new LinkedList<ProgressIndicator>();
-                }
-                for (MultiUpload.FileDetail f : pendingFileNames) {
-                    ProgressIndicator pi = createProgressIndicator();
-                    progressBars.addComponent(pi);
-                    pi.setCaption(f.getFileName());
-                    pi.setVisible(true);
-                    indicators.add(pi);
-                }
-            }
-        };
-        upload.setHandler(handler);
-        upload.setButtonCaption(getUploadButtonCaption());
-        uploads.addComponent(upload);
+			public void onProgress(StreamVariable.StreamingProgressEvent event) {
+				long readBytes = event.getBytesReceived();
+				long contentLength = event.getContentLength();
+				float f = (float) readBytes / (float) contentLength;
+				indicators.get(0).setValue(f);
+			}
 
-    }
+			public OutputStream getOutputStream() {
+				MultiUpload.FileDetail next = upload.getPendingFileNames()
+						.iterator().next();
+				return receiver.receiveUpload(next.getFileName(),
+						next.getMimeType());
+			}
 
-    private ProgressIndicator createProgressIndicator() {
-        ProgressIndicator progressIndicator = new ProgressIndicator();
-        progressIndicator.setPollingInterval(300);
-        progressIndicator.setValue(0);
-        return progressIndicator;
-    }
+			public void filesQueued(
+					Collection<MultiUpload.FileDetail> pendingFileNames) {
+				if (indicators == null) {
+					indicators = new LinkedList<ProgressIndicator>();
+				}
+				for (MultiUpload.FileDetail f : pendingFileNames) {
+					ProgressIndicator pi = createProgressIndicator();
+					progressBars.addComponent(pi);
+					pi.setCaption(f.getFileName());
+					pi.setVisible(true);
+					indicators.add(pi);
+				}
+			}
+		};
+		upload.setHandler(handler);
+		upload.setButtonCaption(getUploadButtonCaption());
+		uploads.addComponent(upload);
 
-    public String getUploadButtonCaption() {
-        return uploadButtonCaption;
-    }
+	}
 
-    public void setUploadButtonCaption(String uploadButtonCaption) {
-        this.uploadButtonCaption = uploadButtonCaption;
-        Iterator<Component> componentIterator = uploads.getComponentIterator();
-        while (componentIterator.hasNext()) {
-            Component next = componentIterator.next();
-            if (next instanceof MultiUpload) {
-                MultiUpload upload = (MultiUpload) next;
-                if (upload.isVisible()) {
-                    upload.setButtonCaption(getUploadButtonCaption());
-                }
-            }
-        }
-    }
-    private FileFactory fileFactory;
+	private ProgressIndicator createProgressIndicator() {
+		ProgressIndicator progressIndicator = new ProgressIndicator();
+		progressIndicator.setPollingInterval(300);
+		progressIndicator.setValue(0f);
+		return progressIndicator;
+	}
 
-    public FileFactory getFileFactory() {
-        if (fileFactory == null) {
-            fileFactory = new TempFileFactory();
-        }
-        return fileFactory;
-    }
+	public String getUploadButtonCaption() {
+		return uploadButtonCaption;
+	}
 
-    public void setFileFactory(FileFactory fileFactory) {
-        this.fileFactory = fileFactory;
-    }
+	public void setUploadButtonCaption(String uploadButtonCaption) {
+		this.uploadButtonCaption = uploadButtonCaption;
+		Iterator<Component> componentIterator = uploads.getComponentIterator();
+		while (componentIterator.hasNext()) {
+			Component next = componentIterator.next();
+			if (next instanceof MultiUpload) {
+				MultiUpload upload = (MultiUpload) next;
+				if (upload.isVisible()) {
+					upload.setButtonCaption(getUploadButtonCaption());
+				}
+			}
+		}
+	}
 
-    protected FileBuffer createReceiver() {
-        FileBuffer receiver = new FileBuffer(UploadField.FieldType.FILE) {
+	private FileFactory fileFactory;
+
+	public FileFactory getFileFactory() {
+		if (fileFactory == null) {
+			fileFactory = new TempFileFactory();
+		}
+		return fileFactory;
+	}
+
+	public void setFileFactory(FileFactory fileFactory) {
+		this.fileFactory = fileFactory;
+	}
+
+	protected FileBuffer createReceiver() {
+		FileBuffer receiver = new FileBuffer(UploadField.FieldType.FILE) {
 			private static final long serialVersionUID = 1L;
 
 			@Override
-            public FileFactory getFileFactory() {
-                return MultiFileUploadExt.this.getFileFactory();
-            }
-        };
-        receiver.setDeleteFiles(false);
-        return receiver;
-    }
+			public FileFactory getFileFactory() {
+				return MultiFileUploadExt.this.getFileFactory();
+			}
+		};
+		receiver.setDeleteFiles(false);
+		return receiver;
+	}
 
-    protected int getPollinInterval() {
-        return 500;
-    }
+	protected int getPollinInterval() {
+		return 500;
+	}
 
-    @Override
-    public void attach() {
-        super.attach();
-        if (supportsFileDrops()) {
-            prepareDropZone();
-        }
-    }
-    private DragAndDropWrapper dropZone;
+	@Override
+	public void attach() {
+		super.attach();
+		if (supportsFileDrops()) {
+			prepareDropZone();
+		}
+	}
 
-    /**
-     * Sets up DragAndDropWrapper to accept multi file drops.
-     */
-    private void prepareDropZone() {
-        if (dropZone == null) {
-            Component label = new Label(getAreaText(), Label.CONTENT_XHTML);
-            label.setSizeUndefined();
-            dropZone = new DragAndDropWrapper(label);
-            dropZone.setStyleName("v-multifileupload-dropzone");
-            dropZone.setSizeUndefined();
-            addComponent(dropZone, 1);
-            dropZone.setDropHandler(this);
-            addStyleName("no-horizontal-drag-hints");
-            addStyleName("no-vertical-drag-hints");
-        }
-    }
+	private DragAndDropWrapper dropZone;
 
-    protected String getAreaText() {
-        return "<small>DROP<br/>FILES</small>";
-    }
+	/**
+	 * Sets up DragAndDropWrapper to accept multi file drops.
+	 */
+	private void prepareDropZone() {
+		if (dropZone == null) {
+			Component label = new Label(getAreaText(), ContentMode.HTML);
+			label.setSizeUndefined();
+			dropZone = new DragAndDropWrapper(label);
+			dropZone.setStyleName("v-multifileupload-dropzone");
+			dropZone.setSizeUndefined();
+			addComponent(dropZone, 1);
+			dropZone.setDropHandler(this);
+			addStyleName("no-horizontal-drag-hints");
+			addStyleName("no-vertical-drag-hints");
+		}
+	}
 
-    protected boolean supportsFileDrops() {
-//        AbstractWebApplicationContext context = (AbstractWebApplicationContext) AppContext.getApplication()
-//                .getContext();
-//        WebBrowser browser = context.getBrowser();
-//        if (browser.isChrome()) {
-//            return true;
-//        } else if (browser.isFirefox()) {
-//            return true;
-//        } else if (browser.isSafari()) {
-//            return true;
-//        }
-        return false;
-    }
+	protected String getAreaText() {
+		return "<small>DROP<br/>FILES</small>";
+	}
 
-    protected void handleFile(File file, String fileName,
-            String mimeType, long length) {
-        attachmentDisplayComponent.receiveFile(file, fileName, mimeType, length);
-    }
+	protected boolean supportsFileDrops() {
+		// AbstractWebApplicationContext context =
+		// (AbstractWebApplicationContext) AppContext.getApplication()
+		// .getContext();
+		// WebBrowser browser = context.getBrowser();
+		// if (browser.isChrome()) {
+		// return true;
+		// } else if (browser.isFirefox()) {
+		// return true;
+		// } else if (browser.isSafari()) {
+		// return true;
+		// }
+		return false;
+	}
 
-    /**
-     * A helper method to set DirectoryFileFactory with given pathname as
-     * directory.
-     *
-     * @param file
-     */
-    public void setRootDirectory(String directoryWhereToUpload) {
-        setFileFactory(new DirectoryFileFactory(
-                new File(directoryWhereToUpload)));
-    }
+	protected void handleFile(File file, String fileName, String mimeType,
+			long length) {
+		attachmentDisplayComponent
+				.receiveFile(file, fileName, mimeType, length);
+	}
 
-    public AcceptCriterion getAcceptCriterion() {
-        // accept only files
-        // return new And(new TargetDetailIs("verticalLocation","MIDDLE"), new
-        // TargetDetailIs("horizontalLoction", "MIDDLE"));
-        return AcceptAll.get();
-    }
+	/**
+	 * A helper method to set DirectoryFileFactory with given pathname as
+	 * directory.
+	 * 
+	 * @param file
+	 */
+	public void setRootDirectory(String directoryWhereToUpload) {
+		setFileFactory(new DirectoryFileFactory(
+				new File(directoryWhereToUpload)));
+	}
 
-    public void drop(DragAndDropEvent event) {
-        DragAndDropWrapper.WrapperTransferable transferable = (DragAndDropWrapper.WrapperTransferable) event
-                .getTransferable();
-        Html5File[] files = transferable.getFiles();
-        for (final Html5File html5File : files) {
-            final ProgressIndicator pi = new ProgressIndicator();
-            pi.setCaption(html5File.getFileName());
-            progressBars.addComponent(pi);
-            final FileBuffer receiver = createReceiver();
-            html5File.setStreamVariable(new StreamVariable() {
+	public AcceptCriterion getAcceptCriterion() {
+		// accept only files
+		// return new And(new TargetDetailIs("verticalLocation","MIDDLE"), new
+		// TargetDetailIs("horizontalLoction", "MIDDLE"));
+		return AcceptAll.get();
+	}
+
+	public void drop(DragAndDropEvent event) {
+		DragAndDropWrapper.WrapperTransferable transferable = (DragAndDropWrapper.WrapperTransferable) event
+				.getTransferable();
+		Html5File[] files = transferable.getFiles();
+		for (final Html5File html5File : files) {
+			final ProgressIndicator pi = new ProgressIndicator();
+			pi.setCaption(html5File.getFileName());
+			progressBars.addComponent(pi);
+			final FileBuffer receiver = createReceiver();
+			html5File.setStreamVariable(new StreamVariable() {
 				private static final long serialVersionUID = 1L;
 				private String name;
-                private String mime;
+				private String mime;
 
-                public OutputStream getOutputStream() {
-                    return receiver.receiveUpload(name, mime);
-                }
+				public OutputStream getOutputStream() {
+					return receiver.receiveUpload(name, mime);
+				}
 
-                public boolean listenProgress() {
-                    return true;
-                }
+				public boolean listenProgress() {
+					return true;
+				}
 
-                public void onProgress(StreamVariable.StreamingProgressEvent event) {
-                    float p = (float) event.getBytesReceived()
-                            / (float) event.getContentLength();
-                    pi.setValue(p);
-                }
+				public void onProgress(
+						StreamVariable.StreamingProgressEvent event) {
+					float p = (float) event.getBytesReceived()
+							/ (float) event.getContentLength();
+					pi.setValue(p);
+				}
 
-                public void streamingStarted(StreamVariable.StreamingStartEvent event) {
-                    name = event.getFileName();
-                    mime = event.getMimeType();
+				public void streamingStarted(
+						StreamVariable.StreamingStartEvent event) {
+					name = event.getFileName();
+					mime = event.getMimeType();
 
-                }
+				}
 
-                public void streamingFinished(StreamVariable.StreamingEndEvent event) {
-                    progressBars.removeComponent(pi);
-                    handleFile(receiver.getFile(), html5File.getFileName(),
-                            html5File.getType(), html5File.getFileSize());
-                    receiver.setValue(null);
-                }
+				public void streamingFinished(
+						StreamVariable.StreamingEndEvent event) {
+					progressBars.removeComponent(pi);
+					handleFile(receiver.getFile(), html5File.getFileName(),
+							html5File.getType(), html5File.getFileSize());
+					receiver.setValue(null);
+				}
 
-                public void streamingFailed(StreamVariable.StreamingErrorEvent event) {
-                    progressBars.removeComponent(pi);
-                }
+				public void streamingFailed(
+						StreamVariable.StreamingErrorEvent event) {
+					progressBars.removeComponent(pi);
+				}
 
-                public boolean isInterrupted() {
-                    return false;
-                }
-            });
-        }
+				public boolean isInterrupted() {
+					return false;
+				}
+			});
+		}
 
-    }
+	}
 }

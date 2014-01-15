@@ -18,6 +18,12 @@ package com.esofthead.mycollab.schedule.email.user;
 
 import com.esofthead.mycollab.schedule.email.SendingRelayEmailsAction;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public interface SendingRecoveryPasswordEmailAction extends
 		SendingRelayEmailsAction {
 

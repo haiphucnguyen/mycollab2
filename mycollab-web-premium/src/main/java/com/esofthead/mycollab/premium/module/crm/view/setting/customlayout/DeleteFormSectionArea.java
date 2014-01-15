@@ -53,7 +53,7 @@ public class DeleteFormSectionArea extends DDVerticalLayout {
 					ActiveFormSectionArea parentSection = (ActiveFormSectionArea) srcComp
 							.getParent();
 					parentSection.removeComponent(srcComp);
-					parentSection.requestRepaintAll();
+					parentSection.getState();
 				}
 			}
 		});

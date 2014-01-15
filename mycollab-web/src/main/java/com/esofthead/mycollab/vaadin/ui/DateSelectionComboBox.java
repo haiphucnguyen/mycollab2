@@ -14,19 +14,17 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.vaadin.ui;
 
 /**
- *
- * @author haiphucnguyen
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
  */
 @SuppressWarnings("serial")
-public class DateSelectionComboBox extends ValueComboBox{
-	
+public class DateSelectionComboBox extends ValueComboBox {
+
 	public static String EQUAL = "Equals";
 	public static String NOTON = "Not On";
 	public static String AFTER = "After";
@@ -38,15 +36,15 @@ public class DateSelectionComboBox extends ValueComboBox{
 	public static String LASTMONTH = "Last Month";
 	public static String THISMONTH = "This Month";
 	public static String NEXTMONTH = "Next Month";
-	public static String LASTYEAR= "Last Year";
+	public static String LASTYEAR = "Last Year";
 	public static String THISYEAR = "This Year";
 	public static String NEXTYEAR = "Next Year";
 	public static String ISBETWEEN = "Is Between";
-	
-    public DateSelectionComboBox() {
-        super();
-        this.loadData(EQUAL, NOTON, AFTER, BEFORE, LAST7DAYS, NEXT7DAYS,
-        				LAST30DAYS, NEXT30DAYS, LASTMONTH, THISMONTH, NEXTMONTH,
-        				LASTYEAR, THISYEAR, NEXTYEAR, ISBETWEEN);
-    }
+
+	public DateSelectionComboBox() {
+		super();
+		this.loadData(EQUAL, NOTON, AFTER, BEFORE, LAST7DAYS, NEXT7DAYS,
+				LAST30DAYS, NEXT30DAYS, LASTMONTH, THISMONTH, NEXTMONTH,
+				LASTYEAR, THISYEAR, NEXTYEAR, ISBETWEEN);
+	}
 }

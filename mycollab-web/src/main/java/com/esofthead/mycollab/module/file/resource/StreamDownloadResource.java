@@ -14,10 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.module.file.resource;
 
 import java.io.File;
@@ -28,13 +25,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.esofthead.mycollab.configuration.FileStorageConfiguration;
-import com.esofthead.mycollab.web.AppContext;
-import com.vaadin.terminal.DownloadStream;
-import com.vaadin.terminal.FileResource;
+import com.vaadin.server.DownloadStream;
+import com.vaadin.server.FileResource;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 2.0
  */
 public class StreamDownloadResource extends FileResource {
 	private static final long serialVersionUID = 1L;
@@ -45,7 +42,7 @@ public class StreamDownloadResource extends FileResource {
 	public StreamDownloadResource(String documentPath) {
 		super(
 				new File(FileStorageConfiguration.baseContentFolder,
-						documentPath), AppContext.getApplication());
+						documentPath));
 	}
 
 	@Override

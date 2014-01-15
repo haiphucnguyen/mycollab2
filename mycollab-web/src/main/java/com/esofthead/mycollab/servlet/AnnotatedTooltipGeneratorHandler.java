@@ -80,6 +80,12 @@ import com.hp.gagawa.java.elements.Img;
 import com.hp.gagawa.java.elements.Td;
 import com.hp.gagawa.java.elements.Tr;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @Component("tooltipGeneratorServlet")
 public class AnnotatedTooltipGeneratorHandler extends GenericServlet {
 	private static Logger log = LoggerFactory
@@ -233,7 +239,7 @@ public class AnnotatedTooltipGeneratorHandler extends GenericServlet {
 			return;
 		} catch (Exception e) {
 			log.error(
-					"Error while get html tooltip form AnnotatedTooltipGeneratorHandler",
+					"Error while get html tooltip attachForm AnnotatedTooltipGeneratorHandler",
 					e);
 			String html = null;
 			PrintWriter out = response.getWriter();

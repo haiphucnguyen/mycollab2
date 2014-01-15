@@ -19,6 +19,12 @@ package com.esofthead.mycollab.module.crm.events;
 import com.esofthead.mycollab.eventmanager.ApplicationEvent;
 import com.esofthead.mycollab.module.file.domain.criteria.FileSearchCriteria;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class DocumentEvent {
 	public static class GotoDashboard extends ApplicationEvent {
 		private static final long serialVersionUID = 1L;

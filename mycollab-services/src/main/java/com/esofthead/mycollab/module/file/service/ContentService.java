@@ -18,12 +18,14 @@ package com.esofthead.mycollab.module.file.service;
 
 import java.io.InputStream;
 
-import com.esofthead.mycollab.core.dist.NotMobile;
 import com.esofthead.mycollab.core.persistence.service.IService;
 
 /**
  * Abstract class keep all business services relate to MyCollab content
  * repository.
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
  * 
  */
 public interface ContentService extends IService {
@@ -37,7 +39,6 @@ public interface ContentService extends IService {
 	 * @param stream
 	 *            input stream of content us saved
 	 */
-	@NotMobile
 	void saveContent(Integer accountId, String objectPath, InputStream stream);
 
 	/**
@@ -50,7 +51,6 @@ public interface ContentService extends IService {
 	 * @return return input stream of content. If MyCollab can not find content,
 	 *         return null
 	 */
-	@NotMobile
 	InputStream getContent(Integer accountId, String objectPath);
 
 	/**

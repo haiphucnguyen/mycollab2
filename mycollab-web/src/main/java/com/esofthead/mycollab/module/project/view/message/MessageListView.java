@@ -19,9 +19,15 @@ package com.esofthead.mycollab.module.project.view.message;
 import com.esofthead.mycollab.module.project.domain.Message;
 import com.esofthead.mycollab.module.project.domain.criteria.MessageSearchCriteria;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
-import com.esofthead.mycollab.vaadin.mvp.View;
+import com.esofthead.mycollab.vaadin.mvp.PageView;
 
-public interface MessageListView extends View {
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ *
+ */
+public interface MessageListView extends PageView {
 	void setCriteria(MessageSearchCriteria criteria);
 	
 	HasEditFormHandlers<Message> getEditFormHandlers();

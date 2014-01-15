@@ -16,6 +16,12 @@
  */
 package com.esofthead.mycollab.module.tracker.domain;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class SimpleComponent extends Component {
 	private static final long serialVersionUID = 1L;
 
@@ -23,9 +29,9 @@ public class SimpleComponent extends Component {
 
 	private String userLeadFullName;
 
-	private int numOpenBugs;
+	private Integer numOpenBugs;
 
-	private int numBugs;
+	private Integer numBugs;
 
 	public String getUserLeadFullName() {
 		return userLeadFullName;
@@ -35,19 +41,19 @@ public class SimpleComponent extends Component {
 		this.userLeadFullName = userLeadFullName;
 	}
 
-	public int getNumOpenBugs() {
+	public Integer getNumOpenBugs() {
 		return numOpenBugs;
 	}
 
-	public void setNumOpenBugs(int numOpenBugs) {
+	public void setNumOpenBugs(Integer numOpenBugs) {
 		this.numOpenBugs = numOpenBugs;
 	}
 
-	public int getNumBugs() {
+	public Integer getNumBugs() {
 		return numBugs;
 	}
 
-	public void setNumBugs(int numBugs) {
+	public void setNumBugs(Integer numBugs) {
 		this.numBugs = numBugs;
 	}
 

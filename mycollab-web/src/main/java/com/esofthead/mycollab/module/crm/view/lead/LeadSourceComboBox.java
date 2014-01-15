@@ -19,8 +19,14 @@ package com.esofthead.mycollab.module.crm.view.lead;
 import com.esofthead.mycollab.module.crm.view.CrmDataTypeFactory;
 import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
 
-@SuppressWarnings("serial")
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ *
+ */
 public class LeadSourceComboBox extends ValueComboBox {
+	private static final long serialVersionUID = 1L;
 
 	public LeadSourceComboBox() {
 		this.loadData(CrmDataTypeFactory.getLeadSourceList());

@@ -67,8 +67,14 @@ import com.esofthead.mycollab.module.user.service.BillingAccountService;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.schedule.email.project.ProjectMailLinkGenerator;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.vaadin.AppContext;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @SuppressWarnings("unchecked")
 public class SimpleColumnComponentBuilderMap {
 	private static Map<Class, List<? extends ColumnFieldComponentBuilder>> mapInjection = new HashMap<Class, List<? extends ColumnFieldComponentBuilder>>();
@@ -289,7 +295,7 @@ public class SimpleColumnComponentBuilderMap {
 			TextFieldBuilder textBuilder = null;
 			if (classType.equals(CrmTypeConstants.OPPORTUNITY)
 					&& field.equals("opportunityname")) {
-				// TODO
+
 				ConditionalStyleBuilder overDueStyle = stl.conditionalStyle(
 						new IsOpportunityOverDue()).setForegroundColor(
 						Color.RED);
@@ -610,7 +616,7 @@ public class SimpleColumnComponentBuilderMap {
 
 	public static class RatingComponentBuilder implements
 			ColumnFieldComponentBuilder {
-		private static final long serialVersionUID = 1L;
+
 		private String field;
 		private String classType;
 

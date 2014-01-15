@@ -14,15 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-services.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.module.tracker.service;
 
 import java.util.List;
-
-import org.springframework.flex.remoting.RemotingDestination;
 
 import com.esofthead.mycollab.core.persistence.service.IService;
 import com.esofthead.mycollab.module.tracker.domain.Component;
@@ -30,9 +25,8 @@ import com.esofthead.mycollab.module.tracker.domain.Version;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
-@RemotingDestination
 public interface BugRelatedItemService extends IService {
 	
 	void saveAffectedVersionsOfBug(int bugid, List<Version> versions);

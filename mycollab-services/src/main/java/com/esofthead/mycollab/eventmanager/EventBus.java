@@ -16,14 +16,18 @@
  */
 package com.esofthead.mycollab.eventmanager;
 
+import java.io.Serializable;
+
 import com.esofthead.mycollab.core.MyCollabException;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  * 
  */
-public abstract class EventBus {
+public abstract class EventBus implements Serializable {
+	private static final long serialVersionUID = 1L;
 
 	private static String eventbusFactoryImplClsName = "com.esofthead.mycollab.eventmanager.EventBusFactoryImpl";
 
@@ -45,15 +49,6 @@ public abstract class EventBus {
 	 */
 	public static EventBus getInstance() {
 		return eventbusFactory.getInstance();
-	}
-
-	/**
-	 * 
-	 * @param appId
-	 * @return
-	 */
-	public static EventBus getInstanceSession(String appId) {
-		return eventbusFactory.getInstanceSession(appId);
 	}
 
 	/**

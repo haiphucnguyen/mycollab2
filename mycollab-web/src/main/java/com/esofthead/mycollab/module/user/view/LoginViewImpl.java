@@ -23,24 +23,30 @@ import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.jetty.GenericServerRunner;
 import com.esofthead.mycollab.module.user.events.UserEvent;
 import com.esofthead.mycollab.shell.events.ShellEvent;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
+import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.CustomLayoutLoader;
 import com.vaadin.data.validator.StringLengthValidator;
-import com.vaadin.terminal.ExternalResource;
-import com.vaadin.terminal.UserError;
+import com.vaadin.server.ExternalResource;
+import com.vaadin.server.UserError;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CheckBox;
+import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.CustomLayout;
-import com.vaadin.ui.Form;
 import com.vaadin.ui.Link;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @ViewComponent
-public class LoginViewImpl extends AbstractView implements LoginView {
+public class LoginViewImpl extends AbstractPageView implements LoginView {
 
 	private static final long serialVersionUID = 1L;
 
@@ -48,7 +54,7 @@ public class LoginViewImpl extends AbstractView implements LoginView {
 		this.addComponent(new LoginForm());
 	}
 
-	public class LoginForm extends Form {
+	class LoginForm extends CustomComponent {
 
 		private static final long serialVersionUID = 1L;
 		private final TextField usernameField;
@@ -70,7 +76,7 @@ public class LoginViewImpl extends AbstractView implements LoginView {
 
 			custom.addComponent(passwordField, "passwordField");
 
-			rememberMe = new CheckBox("Remember me for a week", true);
+			rememberMe = new CheckBox("Remember me for a week", false);
 			custom.addComponent(rememberMe, "rememberMe");
 
 			Button loginBtn = new Button("Sign In", new Button.ClickListener() {
@@ -83,8 +89,7 @@ public class LoginViewImpl extends AbstractView implements LoginView {
 								LoginViewImpl.this, new String[] {
 										(String) usernameField.getValue(),
 										(String) passwordField.getValue(),
-										String.valueOf(rememberMe
-												.booleanValue()) }));
+										String.valueOf(rememberMe.getValue()) }));
 					} catch (MyCollabException e) {
 						LoginForm.this.setComponentError(new UserError(e
 								.getMessage()));
@@ -127,7 +132,7 @@ public class LoginViewImpl extends AbstractView implements LoginView {
 				GenericServerRunner.isFirstTimeRunner = false;
 			}
 
-			this.setLayout(custom);
+			this.setCompositionRoot(custom);
 			this.setHeight("100%");
 		}
 	}

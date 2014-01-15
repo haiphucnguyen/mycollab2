@@ -20,7 +20,6 @@ import java.util.Arrays;
 import java.util.Set;
 
 import org.vaadin.dialogs.ConfirmDialog;
-import org.vaadin.hene.splitbutton.SplitButton;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
@@ -41,18 +40,26 @@ import com.esofthead.mycollab.module.crm.view.contact.ContactTableDisplay;
 import com.esofthead.mycollab.module.crm.view.contact.ContactTableFieldDef;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
+import com.esofthead.mycollab.vaadin.ui.SplitButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
-import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.Table.ColumnGenerator;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
 public class AccountContactListComp extends
 		RelatedListComp<SimpleContact, ContactSearchCriteria> {
 
@@ -60,7 +67,6 @@ public class AccountContactListComp extends
 	private Account account;
 
 	public AccountContactListComp() {
-		super("Contacts");
 		initUI();
 	}
 
@@ -71,7 +77,6 @@ public class AccountContactListComp extends
 
 	@SuppressWarnings("serial")
 	private void initUI() {
-		final VerticalLayout contentContainer = (VerticalLayout) bodyContent;
 
 		final SplitButton controlsBtn = new SplitButton();
 		controlsBtn.setEnabled(AppContext
@@ -97,16 +102,18 @@ public class AccountContactListComp extends
 						final ContactSearchCriteria criteria = new ContactSearchCriteria();
 						criteria.setSaccountid(new NumberSearchField(AppContext
 								.getAccountId()));
-						getWindow().addWindow(contactsWindow);
+						UI.getCurrent().addWindow(contactsWindow);
 						contactsWindow.setSearchCriteria(criteria);
 						controlsBtn.setPopupVisible(false);
 					}
 				});
 		selectBtn.setIcon(MyCollabResource.newResource("icons/16/select.png"));
 		selectBtn.setStyleName("link");
-		controlsBtn.addComponent(selectBtn);
+		VerticalLayout buttonControlLayout = new VerticalLayout();
+		buttonControlLayout.addComponent(selectBtn);
+		controlsBtn.setContent(buttonControlLayout);
 
-		addHeaderElement(controlsBtn);
+		this.addComponent(controlsBtn);
 
 		tableItem = new ContactTableDisplay(Arrays.asList(
 				ContactTableFieldDef.name, ContactTableFieldDef.title,
@@ -158,42 +165,40 @@ public class AccountContactListComp extends
 						new Button.ClickListener() {
 							@Override
 							public void buttonClick(final ClickEvent event) {
-								ConfirmDialogExt
-										.show(AppContext.getApplication()
-												.getMainWindow(),
-												LocalizationHelper
-														.getMessage(
-																GenericI18Enum.DELETE_DIALOG_TITLE,
-																SiteConfiguration
-																		.getSiteName()),
-												LocalizationHelper
-														.getMessage(CrmCommonI18nEnum.DIALOG_DELETE_RELATIONSHIP_TITLE),
-												LocalizationHelper
-														.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
-												LocalizationHelper
-														.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
-												new ConfirmDialog.Listener() {
-													private static final long serialVersionUID = 1L;
+								ConfirmDialogExt.show(
+										UI.getCurrent(),
+										LocalizationHelper
+												.getMessage(
+														GenericI18Enum.DELETE_DIALOG_TITLE,
+														SiteConfiguration
+																.getSiteName()),
+										LocalizationHelper
+												.getMessage(CrmCommonI18nEnum.DIALOG_DELETE_RELATIONSHIP_TITLE),
+										LocalizationHelper
+												.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
+										LocalizationHelper
+												.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
+										new ConfirmDialog.Listener() {
+											private static final long serialVersionUID = 1L;
 
-													@Override
-													public void onClose(
-															final ConfirmDialog dialog) {
-														if (dialog
-																.isConfirmed()) {
-															final ContactService contactService = ApplicationContextUtil
-																	.getSpringBean(ContactService.class);
-															contact.setAccountid(null);
-															contactService
-																	.updateWithSession(
-																			contact,
-																			AppContext
-																					.getUsername());
+											@Override
+											public void onClose(
+													final ConfirmDialog dialog) {
+												if (dialog.isConfirmed()) {
+													final ContactService contactService = ApplicationContextUtil
+															.getSpringBean(ContactService.class);
+													contact.setAccountid(null);
+													contactService
+															.updateWithSession(
+																	contact,
+																	AppContext
+																			.getUsername());
 
-															AccountContactListComp.this
-																	.refresh();
-														}
-													}
-												});
+													AccountContactListComp.this
+															.refresh();
+												}
+											}
+										});
 							}
 						});
 				deleteBtn.setStyleName("link");
@@ -203,7 +208,7 @@ public class AccountContactListComp extends
 				return controlLayout;
 			}
 		});
-		contentContainer.addComponent(tableItem);
+		this.addComponent(tableItem);
 
 	}
 

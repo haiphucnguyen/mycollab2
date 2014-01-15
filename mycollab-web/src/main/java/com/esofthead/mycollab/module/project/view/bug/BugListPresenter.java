@@ -27,14 +27,20 @@ import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.vaadin.events.PagableHandler;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.events.SelectableItemHandler;
-import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ListCommand;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
-import com.esofthead.mycollab.vaadin.ui.MessageBox;
+import com.esofthead.mycollab.vaadin.ui.AbstractPresenter;
+import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class BugListPresenter extends AbstractPresenter<BugListView> implements
 		ListCommand<BugSearchCriteria> {
 
@@ -44,7 +50,10 @@ public class BugListPresenter extends AbstractPresenter<BugListView> implements
 
 	public BugListPresenter() {
 		super(BugListView.class);
+	}
 
+	@Override
+	protected void postInitView() {
 		view.getPagedBeanTable().addPagableHandler(new PagableHandler() {
 			private static final long serialVersionUID = 1L;
 
@@ -120,7 +129,7 @@ public class BugListPresenter extends AbstractPresenter<BugListView> implements
 					.getView(ProjectBreadcrumb.class);
 			breadcrumb.gotoBugList();
 		} else {
-			MessageBox.showMessagePermissionAlert();
+			NotificationUtil.showMessagePermissionAlert();
 		}
 	}
 

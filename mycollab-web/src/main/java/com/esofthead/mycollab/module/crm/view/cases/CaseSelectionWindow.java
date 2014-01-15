@@ -26,13 +26,19 @@ import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.crm.domain.SimpleCase;
 import com.esofthead.mycollab.module.crm.domain.criteria.CaseSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.CaseEvent;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.ui.FieldSelection;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
-import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class CaseSelectionWindow extends Window {
 
 	private static final long serialVersionUID = 1L;
@@ -99,8 +105,7 @@ public class CaseSelectionWindow extends Window {
 													.getId()));
 						} else if ("accountName".equals(event.getFieldName())) {
 							fieldSelection.fireValueChange(cases);
-							CaseSelectionWindow.this.getParent().removeWindow(
-									CaseSelectionWindow.this);
+							CaseSelectionWindow.this.close();
 						}
 					}
 				});

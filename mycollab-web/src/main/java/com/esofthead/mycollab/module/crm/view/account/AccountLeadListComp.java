@@ -20,7 +20,12 @@ import java.util.Arrays;
 import java.util.Set;
 
 import org.vaadin.dialogs.ConfirmDialog;
-import org.vaadin.hene.splitbutton.SplitButton;
+
+import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
+import com.esofthead.mycollab.vaadin.ui.SplitButton;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
@@ -42,18 +47,21 @@ import com.esofthead.mycollab.module.crm.view.lead.LeadTableDisplay;
 import com.esofthead.mycollab.module.crm.view.lead.LeadTableFieldDef;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
-import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
-import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Table;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.Table.ColumnGenerator;
 import com.vaadin.ui.VerticalLayout;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class AccountLeadListComp extends
 		RelatedListComp<SimpleLead, LeadSearchCriteria> {
 
@@ -61,8 +69,6 @@ public class AccountLeadListComp extends
 	private Account account;
 
 	public AccountLeadListComp() {
-		super("Leads");
-
 		initUI();
 	}
 
@@ -72,7 +78,6 @@ public class AccountLeadListComp extends
 	}
 
 	private void initUI() {
-		final VerticalLayout contentContainer = (VerticalLayout) bodyContent;
 
 		final SplitButton controlsBtn = new SplitButton();
 		controlsBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
@@ -102,16 +107,19 @@ public class AccountLeadListComp extends
 						final LeadSearchCriteria criteria = new LeadSearchCriteria();
 						criteria.setSaccountid(new NumberSearchField(AppContext
 								.getAccountId()));
-						getWindow().addWindow(leadsWindow);
+						UI.getCurrent().addWindow(leadsWindow);
 						leadsWindow.setSearchCriteria(criteria);
 						controlsBtn.setPopupVisible(false);
 					}
 				});
 		selectBtn.setIcon(MyCollabResource.newResource("icons/16/select.png"));
 		selectBtn.setStyleName("link");
-		controlsBtn.addComponent(selectBtn);
 
-		addHeaderElement(controlsBtn);
+		VerticalLayout buttonControlsLayout = new VerticalLayout();
+		buttonControlsLayout.addComponent(selectBtn);
+		controlsBtn.setContent(buttonControlsLayout);
+
+		this.addComponent(controlsBtn);
 
 		tableItem = new LeadTableDisplay(Arrays.asList(LeadTableFieldDef.name,
 				LeadTableFieldDef.status, LeadTableFieldDef.phoneoffice,
@@ -168,47 +176,45 @@ public class AccountLeadListComp extends
 
 							@Override
 							public void buttonClick(final ClickEvent event) {
-								ConfirmDialogExt
-										.show(AppContext.getApplication()
-												.getMainWindow(),
-												LocalizationHelper
-														.getMessage(
-																GenericI18Enum.DELETE_DIALOG_TITLE,
-																SiteConfiguration
-																		.getSiteName()),
-												LocalizationHelper
-														.getMessage(CrmCommonI18nEnum.DIALOG_DELETE_RELATIONSHIP_TITLE),
-												LocalizationHelper
-														.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
-												LocalizationHelper
-														.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
-												new ConfirmDialog.Listener() {
-													private static final long serialVersionUID = 1L;
+								ConfirmDialogExt.show(
+										UI.getCurrent(),
+										LocalizationHelper
+												.getMessage(
+														GenericI18Enum.DELETE_DIALOG_TITLE,
+														SiteConfiguration
+																.getSiteName()),
+										LocalizationHelper
+												.getMessage(CrmCommonI18nEnum.DIALOG_DELETE_RELATIONSHIP_TITLE),
+										LocalizationHelper
+												.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
+										LocalizationHelper
+												.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
+										new ConfirmDialog.Listener() {
+											private static final long serialVersionUID = 1L;
 
-													@Override
-													public void onClose(
-															final ConfirmDialog dialog) {
-														if (dialog
-																.isConfirmed()) {
-															final AccountService accountService = ApplicationContextUtil
-																	.getSpringBean(AccountService.class);
-															final AccountLead associateLead = new AccountLead();
-															associateLead
-																	.setAccountid(account
-																			.getId());
-															associateLead
-																	.setLeadid(lead
-																			.getId());
-															accountService
-																	.removeAccountLeadRelationship(
-																			associateLead,
-																			AppContext
-																					.getAccountId());
-															AccountLeadListComp.this
-																	.refresh();
-														}
-													}
-												});
+											@Override
+											public void onClose(
+													final ConfirmDialog dialog) {
+												if (dialog.isConfirmed()) {
+													final AccountService accountService = ApplicationContextUtil
+															.getSpringBean(AccountService.class);
+													final AccountLead associateLead = new AccountLead();
+													associateLead
+															.setAccountid(account
+																	.getId());
+													associateLead
+															.setLeadid(lead
+																	.getId());
+													accountService
+															.removeAccountLeadRelationship(
+																	associateLead,
+																	AppContext
+																			.getAccountId());
+													AccountLeadListComp.this
+															.refresh();
+												}
+											}
+										});
 							}
 						});
 				deleteBtn.setStyleName("link");
@@ -219,7 +225,7 @@ public class AccountLeadListComp extends
 			}
 		});
 
-		contentContainer.addComponent(tableItem);
+		this.addComponent(tableItem);
 	}
 
 	private void loadLeads() {

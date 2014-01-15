@@ -32,7 +32,7 @@ import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.vaadin.ui.ToggleButtonGroup;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.MyCollabResource;
-import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -40,6 +40,12 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class MilestoneBugListComp extends VerticalLayout implements
 		IBugReportDisplayContainer {
 	private static final long serialVersionUID = 1L;
@@ -54,7 +60,6 @@ public class MilestoneBugListComp extends VerticalLayout implements
 
 	private void constructHeader() {
 		final HorizontalLayout header = new HorizontalLayout();
-		header.setMargin(true, false, false, false);
 		header.setSpacing(true);
 		header.setWidth("100%");
 		final Label taskGroupSelection = new Label("Related Bugs");
@@ -107,7 +112,7 @@ public class MilestoneBugListComp extends VerticalLayout implements
 		bodyLayout.setSpacing(false);
 		bodyLayout.setWidth("100%");
 		final VerticalLayout leftColumn = new VerticalLayout();
-		leftColumn.setMargin(false, true, false, false);
+		leftColumn.setMargin(new MarginInfo(false, true, false, false));
 		bodyLayout.addComponent(leftColumn);
 		bodyLayout.setExpandRatio(leftColumn, 1.0f);
 		final VerticalLayout rightColumn = new VerticalLayout();
@@ -159,7 +164,7 @@ public class MilestoneBugListComp extends VerticalLayout implements
 		BugChartComponent bugChartComponent = null;
 		bugChartComponent = new BugChartComponent(chartSearchCriteria, 400, 200);
 		rightColumn.addComponent(bugChartComponent);
-		rightColumn.setWidth("410px");
+		rightColumn.setWidth("400px");
 
 		this.addComponent(bodyLayout);
 	}
@@ -178,7 +183,7 @@ public class MilestoneBugListComp extends VerticalLayout implements
 
 	@Override
 	public void displayBugReports() {
-		this.viewGroup.setDefaultSelectionByIndex(1);
+		// TODO: check default tab index
 		this.displayAdvancedView();
 	}
 
@@ -199,7 +204,7 @@ public class MilestoneBugListComp extends VerticalLayout implements
 				.getId()));
 
 		final BugSimpleDisplayWidget displayWidget = new BugSimpleDisplayWidget();
-		this.addComponent(new LazyLoadWrapper(displayWidget));
+		this.addComponent(displayWidget);
 		displayWidget.setSearchCriteria(criteria);
 	}
 

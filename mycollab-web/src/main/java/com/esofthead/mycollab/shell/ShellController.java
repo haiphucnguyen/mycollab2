@@ -22,19 +22,23 @@ import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.user.view.ForgotPasswordPresenter;
 import com.esofthead.mycollab.module.user.view.LoginPresenter;
 import com.esofthead.mycollab.module.user.view.LoginView;
-import com.esofthead.mycollab.module.user.view.SignupPresenter;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.shell.events.ShellEvent.GotoMainPage;
-import com.esofthead.mycollab.shell.events.ShellEvent.GotoSignupPage;
 import com.esofthead.mycollab.shell.events.ShellEvent.LogOut;
 import com.esofthead.mycollab.shell.view.MainView;
 import com.esofthead.mycollab.shell.view.MainViewPresenter;
 import com.esofthead.mycollab.shell.view.MainWindowContainer;
-import com.esofthead.mycollab.vaadin.mvp.ControllerRegistry;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.IController;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
-import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.DesktopApplication;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class ShellController implements IController {
 
 	private static final long serialVersionUID = 1L;
@@ -60,9 +64,8 @@ public class ShellController implements IController {
 					public void handle(GotoMainPage event) {
 						MainViewPresenter mainViewPresenter = PresenterResolver
 								.getPresenter(MainViewPresenter.class);
-						MainView mainView = mainViewPresenter.getView();
-						((MainWindowContainer) container)
-								.setMainContent(mainView);
+						MainView mainView = mainViewPresenter.initView();
+						((MainWindowContainer) container).setContent(mainView);
 
 						container.setStyleName("mainView");
 
@@ -81,11 +84,10 @@ public class ShellController implements IController {
 
 					@Override
 					public void handle(LogOut event) {
+						AppContext.addFragment("", "Login Page");
 						LoginPresenter presenter = PresenterResolver
 								.getPresenter(LoginPresenter.class);
-						LoginView loginView = presenter.getView();
-						((MainWindowContainer) container)
-								.unsetRememberPassword();
+						LoginView loginView = presenter.initView();
 
 						container.setStyleName("loginView");
 
@@ -94,33 +96,17 @@ public class ShellController implements IController {
 							((MainWindowContainer) container)
 									.setAutoLogin(false);
 							((MainWindowContainer) container)
-									.setMainContent(loginView);
+									.setContent(loginView);
 						} else {
 							presenter.go(container, null);
 						}
 
+						// clear cookie remember username/password if any
+						DesktopApplication.getInstance()
+								.unsetRememberPassword();
+
 						AppContext.clearSession();
-						ControllerRegistry.addController(new ShellController(
-								container));
 					}
-				});
-
-		EventBus.getInstance().addListener(
-				new ApplicationEventListener<ShellEvent.GotoSignupPage>() {
-					private static final long serialVersionUID = 1L;
-
-					@Override
-					public Class<? extends ApplicationEvent> getEventType() {
-						return ShellEvent.GotoSignupPage.class;
-					}
-
-					@Override
-					public void handle(GotoSignupPage event) {
-						SignupPresenter presenter = PresenterResolver
-								.getPresenter(SignupPresenter.class);
-						presenter.go(container, null);
-					}
-
 				});
 
 		EventBus.getInstance()

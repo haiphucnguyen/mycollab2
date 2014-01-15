@@ -16,15 +16,25 @@
  */
 package com.esofthead.mycollab.module.crm.dao;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.esofthead.mycollab.core.persistence.IMassUpdateDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.module.crm.domain.Account;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public interface AccountMapperExt extends
 		ISearchableDAO<AccountSearchCriteria>,
 		IMassUpdateDAO<Account, AccountSearchCriteria> {
 
-	public abstract SimpleAccount findById(int accountId);
+	SimpleAccount findById(int accountId);
+
+	SimpleAccount findAccountAssoWithConvertedLead(@Param("leadId") int leadId);
 }

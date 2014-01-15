@@ -18,25 +18,31 @@ package com.esofthead.mycollab.module.crm.view.campaign;
 
 import com.esofthead.mycollab.module.crm.domain.CampaignWithBLOBs;
 import com.esofthead.mycollab.module.user.ui.components.ActiveUserComboBox;
-import com.esofthead.mycollab.vaadin.ui.CurrencyComboBox;
-import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
+import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
+import com.esofthead.mycollab.vaadin.ui.CurrencyComboBoxField;
+import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.vaadin.data.Item;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 
-public class CampaignEditFormFieldFactory extends DefaultEditFormFieldFactory{
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 3.0
+ * 
+ * @param <B>
+ */
+public class CampaignEditFormFieldFactory<B extends CampaignWithBLOBs> extends
+		AbstractBeanFieldGroupEditFieldFactory<B> {
 	private static final long serialVersionUID = 1L;
-	
-	private CampaignWithBLOBs campaign;
-	
-	public CampaignEditFormFieldFactory(CampaignWithBLOBs campaign){
-		this.campaign = campaign;
+
+	public CampaignEditFormFieldFactory(GenericBeanForm<B> form) {
+		super(form);
 	}
+
 	@Override
-	protected Field onCreateField(Item item, Object propertyId,
-			com.vaadin.ui.Component uiContext) {
+	protected Field<?> onCreateField(Object propertyId) {
 
 		if ("type".equals(propertyId)) {
 			CampaignTypeComboBox typeCombo = new CampaignTypeComboBox();
@@ -58,10 +64,10 @@ public class CampaignEditFormFieldFactory extends DefaultEditFormFieldFactory{
 			return descArea;
 		} else if ("assignuser".equals(propertyId)) {
 			ActiveUserComboBox userBox = new ActiveUserComboBox();
-			userBox.select(campaign.getAssignuser());
+			userBox.select(attachForm.getBean().getAssignuser());
 			return userBox;
 		} else if (propertyId.equals("currencyid")) {
-			return new CurrencyComboBox();
+			return new CurrencyComboBoxField();
 		}
 		return null;
 	}

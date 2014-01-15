@@ -12,12 +12,11 @@ import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
 import com.esofthead.mycollab.module.project.localization.TimeTrackingI18nEnum;
 import com.esofthead.mycollab.module.project.view.user.ProjectMemberListSelect;
-import com.esofthead.mycollab.shell.view.ScreenSize;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.DateRangeField;
 import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -25,6 +24,7 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.themes.Reindeer;
 
@@ -49,9 +49,9 @@ public class ItemTimeLoggingSearchPanel extends
 		final HorizontalLayout layout = new HorizontalLayout();
 		layout.setWidth("100%");
 		layout.setSpacing(true);
+		layout.setMargin(true);
 
-		final Embedded titleIcon = new Embedded();
-		titleIcon.setSource(MyCollabResource
+		final Image titleIcon = new Image(null, MyCollabResource
 				.newResource("icons/24/project/time.png"));
 		layout.addComponent(titleIcon);
 
@@ -87,21 +87,13 @@ public class ItemTimeLoggingSearchPanel extends
 			GridFormLayoutHelper gridLayout = new GridFormLayoutHelper(2, 2,
 					"300px", "100px");
 
-			int dateFieldWidth = 140;
 			String nameFieldWidth = "300px";
-
-			if (ScreenSize.hasSupport1024Pixels()) {
-				gridLayout = new GridFormLayoutHelper(2, 2, "250px", "100px");
-				dateFieldWidth = 120;
-				nameFieldWidth = "200px";
-			}
 
 			gridLayout.getLayout().setWidth("100%");
 			gridLayout.getLayout().setSpacing(true);
 
 			this.dateRangeField = (DateRangeField) gridLayout.addComponent(
-					new DateRangeField(new HorizontalLayout(), dateFieldWidth),
-					null, 0, 0);
+					new DateRangeField(), null, 0, 0);
 			this.dateRangeField.setDateFormat(AppContext.getDateFormat());
 
 			this.userField = (ProjectMemberListSelect) gridLayout.addComponent(
@@ -122,7 +114,8 @@ public class ItemTimeLoggingSearchPanel extends
 					new Button.ClickListener() {
 						@Override
 						public void buttonClick(final ClickEvent event) {
-							TimeLoggingAdvancedSearchLayout.this.callSearchAction();
+							TimeLoggingAdvancedSearchLayout.this
+									.callSearchAction();
 						}
 					});
 

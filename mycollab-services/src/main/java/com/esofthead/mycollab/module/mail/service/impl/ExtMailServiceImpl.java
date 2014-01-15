@@ -14,10 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-services.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.module.mail.service.impl;
 
 import org.springframework.stereotype.Service;
@@ -31,7 +28,7 @@ import com.esofthead.mycollab.module.mail.service.ExtMailService;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 @Service
 public class ExtMailServiceImpl extends AbstractMailService implements

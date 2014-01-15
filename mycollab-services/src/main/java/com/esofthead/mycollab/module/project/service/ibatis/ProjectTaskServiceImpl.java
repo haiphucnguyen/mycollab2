@@ -39,6 +39,12 @@ import com.esofthead.mycollab.module.project.service.ProjectTaskListService;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.schedule.email.project.ProjectTaskRelayEmailNotificationAction;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @Service
 @Transactional
 @Traceable(module = ModuleNameConstants.PRJ, type = ProjectContants.TASK, nameField = "taskname", extraFieldName = "projectid")
@@ -102,4 +108,16 @@ public class ProjectTaskServiceImpl extends
 
 		return super.updateWithSession(record, username);
 	}
+
+	@Override
+	public int removeWithSession(Integer primaryKey, String username,
+			int accountId) {
+		int result = super.removeWithSession(primaryKey, username, accountId);
+
+		// Clean cache of task group
+		LocalCacheManager.removeCacheItems(accountId + "",
+				ProjectTaskListService.class.getName());
+		return result;
+	}
+
 }

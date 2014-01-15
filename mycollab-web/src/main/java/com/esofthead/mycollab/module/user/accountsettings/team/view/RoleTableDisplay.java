@@ -14,10 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.module.user.accountsettings.team.view;
 
 import java.util.List;
@@ -28,16 +25,19 @@ import com.esofthead.mycollab.module.user.domain.criteria.RoleSearchCriteria;
 import com.esofthead.mycollab.module.user.service.RoleService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
+import com.esofthead.mycollab.vaadin.ui.CheckBoxDecor;
 import com.esofthead.mycollab.vaadin.ui.table.DefaultPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
+import com.vaadin.data.Property;
+import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.Table;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class RoleTableDisplay extends
 		DefaultPagedBeanTable<RoleService, RoleSearchCriteria, SimpleRole> {
@@ -45,8 +45,8 @@ public class RoleTableDisplay extends
 
 	public RoleTableDisplay(TableViewField requiredColumn,
 			List<TableViewField> displayColumns) {
-		super(ApplicationContextUtil.getSpringBean(RoleService.class), SimpleRole.class,
-				requiredColumn, displayColumns);
+		super(ApplicationContextUtil.getSpringBean(RoleService.class),
+				SimpleRole.class, requiredColumn, displayColumns);
 
 		this.addGeneratedColumn("selected", new Table.ColumnGenerator() {
 			private static final long serialVersionUID = 1L;
@@ -54,17 +54,16 @@ public class RoleTableDisplay extends
 			@Override
 			public Object generateCell(final Table source, final Object itemId,
 					Object columnId) {
-				final CheckBox cb = new CheckBox("", false);
+				final CheckBoxDecor cb = new CheckBoxDecor("", false);
 				cb.setImmediate(true);
-				cb.addListener(new Button.ClickListener() {
+				cb.addValueChangeListener(new Property.ValueChangeListener() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
-					public void buttonClick(Button.ClickEvent event) {
+					public void valueChange(ValueChangeEvent event) {
 						SimpleRole role = RoleTableDisplay.this
 								.getBeanByIndex(itemId);
 						RoleTableDisplay.this.fireSelectItemEvent(role);
-
 					}
 				});
 

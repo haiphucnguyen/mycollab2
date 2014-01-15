@@ -1,16 +1,16 @@
 package com.esofthead.mycollab.premium.module.file.view;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.esofthead.mycollab.module.ecm.StorageNames;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public abstract class GoogleDriveOAuthWindow extends
 		CloudDriveIntegrationOAuthWindow {
 	private static final long serialVersionUID = 1L;
-
-	private static Logger log = LoggerFactory
-			.getLogger(DropBoxOAuthWindow.class);
 
 	public GoogleDriveOAuthWindow() {
 		super("Add GoogleDrive");
@@ -18,7 +18,6 @@ public abstract class GoogleDriveOAuthWindow extends
 
 	@Override
 	protected String buildAuthUrl() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

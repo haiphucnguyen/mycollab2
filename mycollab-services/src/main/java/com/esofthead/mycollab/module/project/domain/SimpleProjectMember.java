@@ -14,19 +14,18 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-services.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.module.project.domain;
 
 import java.util.Date;
 
+import com.esofthead.mycollab.core.arguments.NotBindable;
 import com.esofthead.mycollab.security.PermissionMap;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class SimpleProjectMember extends ProjectMember {
 	private static final long serialVersionUID = 1L;
@@ -36,8 +35,10 @@ public class SimpleProjectMember extends ProjectMember {
 	private String memberFullName;
 
 	private String roleName;
+
 	private int projectRoleId;
 
+	@NotBindable
 	private PermissionMap permissionMaps;
 
 	private int numOpenTasks;
@@ -47,8 +48,6 @@ public class SimpleProjectMember extends ProjectMember {
 	private String projectName;
 
 	private String email;
-
-	private int sAccountId;
 
 	private Date lastAccessTime;
 

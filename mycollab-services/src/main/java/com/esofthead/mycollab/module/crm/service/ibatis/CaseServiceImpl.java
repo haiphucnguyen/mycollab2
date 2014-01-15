@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.common.interceptor.aspect.Auditable;
 import com.esofthead.mycollab.common.interceptor.aspect.Traceable;
 import com.esofthead.mycollab.common.interceptor.aspect.Watchable;
@@ -35,10 +36,16 @@ import com.esofthead.mycollab.module.crm.domain.criteria.CaseSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.CaseService;
 import com.esofthead.mycollab.schedule.email.crm.CaseRelayEmailNotificationAction;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @Service
 @Transactional
-@Traceable(module = "Crm", type = "Case", nameField = "subject")
-@Auditable(module = "Crm", type = "Case")
+@Traceable(module = ModuleNameConstants.CRM, type = CrmTypeConstants.CASE, nameField = "subject")
+@Auditable(module = ModuleNameConstants.CRM, type = CrmTypeConstants.CASE)
 @Watchable(type = CrmTypeConstants.CASE, userFieldName = "assignuser", emailHandlerBean = CaseRelayEmailNotificationAction.class)
 public class CaseServiceImpl extends
 		DefaultService<Integer, CaseWithBLOBs, CaseSearchCriteria> implements

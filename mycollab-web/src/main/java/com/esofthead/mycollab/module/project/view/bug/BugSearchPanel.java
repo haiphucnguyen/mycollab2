@@ -39,25 +39,30 @@ import com.esofthead.mycollab.module.project.localization.BugI18nEnum;
 import com.esofthead.mycollab.module.tracker.domain.Component;
 import com.esofthead.mycollab.module.tracker.domain.Version;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
-import com.esofthead.mycollab.shell.view.ScreenSize;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.DateSelectionField;
 import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
-import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.themes.Reindeer;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 
 	private static final long serialVersionUID = 1L;
@@ -94,10 +99,10 @@ public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 		final HorizontalLayout layout = new HorizontalLayout();
 		layout.setWidth("100%");
 		layout.setSpacing(true);
+		layout.setMargin(true);
 
-		final Embedded titleIcon = new Embedded();
-		titleIcon.setSource(MyCollabResource
-				.newResource("icons/24/project/bug.png"));
+		final Image titleIcon = new Image(null,
+				MyCollabResource.newResource("icons/24/project/bug.png"));
 		layout.addComponent(titleIcon);
 		layout.setComponentAlignment(titleIcon, Alignment.MIDDLE_LEFT);
 
@@ -154,6 +159,7 @@ public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 		public ComponentContainer constructBody() {
 			final HorizontalLayout basicSearchBody = new HorizontalLayout();
 			basicSearchBody.setSpacing(true);
+			basicSearchBody.setMargin(true);
 			basicSearchBody.addComponent(new Label("Name"));
 			this.nameField = new TextField();
 			this.nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
@@ -165,7 +171,7 @@ public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 
 			final Button searchBtn = new Button("Search");
 			searchBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
-			searchBtn.addListener(new Button.ClickListener() {
+			searchBtn.addClickListener(new Button.ClickListener() {
 				@Override
 				public void buttonClick(final ClickEvent event) {
 
@@ -178,7 +184,7 @@ public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 
 			final Button cancelBtn = new Button("Clear");
 			cancelBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
-			cancelBtn.addListener(new Button.ClickListener() {
+			cancelBtn.addClickListener(new Button.ClickListener() {
 				@Override
 				public void buttonClick(final ClickEvent event) {
 					BugBasicSearchLayout.this.nameField.setValue("");
@@ -253,16 +259,8 @@ public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 			String dateFieldWidth = "245px";
 			String componentFieldWidth = "225px";
 
-			if (ScreenSize.hasSupport1024Pixels()) {
-				gridLayout = new GridFormLayoutHelper(2, 6,
-						UIConstants.DEFAULT_CONTROL_WIDTH_1024_RESOLUTION,
-						"150px");
-				nameFieldWidth = "380px";
-				dateFieldWidth = "195px";
-				componentFieldWidth = "170px";
-			} else if (ScreenSize.hasSupport1280Pixels()) {
-				gridLayout = new GridFormLayoutHelper(2, 6, "150px");
-			}
+			gridLayout = new GridFormLayoutHelper(2, 6, "150px");
+
 			gridLayout.getLayout().setWidth("100%");
 			gridLayout.getLayout().setSpacing(true);
 
@@ -277,8 +275,11 @@ public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 			this.summaryField = new CheckBox("Summary", true);
 			this.descriptionField = new CheckBox("Description", true);
 			layoutCheckbox.addComponent(this.nameField);
+			layoutCheckbox.setExpandRatio(this.nameField, 2.0f);
 			layoutCheckbox.addComponent(this.summaryField);
+			layoutCheckbox.setExpandRatio(this.summaryField, 1.0f);
 			layoutCheckbox.addComponent(this.descriptionField);
+			layoutCheckbox.setExpandRatio(this.descriptionField, 1.0f);
 
 			this.updateDateField = (DateSelectionField) gridLayout
 					.addComponent(new DateSelectionField(dateFieldWidth),
@@ -295,35 +296,38 @@ public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 			this.resolveDateField.setDateFormat(AppContext.getDateFormat());
 
 			this.componentField = (ComponentMultiSelectField) gridLayout
-					.addComponent(new ComponentMultiSelectField(
-							componentFieldWidth), "Component", 1, 2);
+					.addComponent(new ComponentMultiSelectField(), "Component",
+							1, 2);
+			this.componentField.setWidth(componentFieldWidth);
 
 			this.affectedVersionField = (VersionMultiSelectField) gridLayout
-					.addComponent(new VersionMultiSelectField(
-							componentFieldWidth), "Affected Version", 1, 1);
+					.addComponent(new VersionMultiSelectField(),
+							"Affected Version", 1, 1);
+			this.affectedVersionField.setWidth(componentFieldWidth);
 
 			this.fixedVersionField = (VersionMultiSelectField) gridLayout
-					.addComponent(new VersionMultiSelectField(
-							componentFieldWidth), "Fixed Version", 1, 3);
+					.addComponent(new VersionMultiSelectField(),
+							"Fixed Version", 1, 3);
+			fixedVersionField.setWidth(componentFieldWidth);
 
 			this.priorityField = (BugStaticItemMultiSelectField) gridLayout
 					.addComponent(new BugStaticItemMultiSelectField(
-							ProjectDataTypeFactory.getBugPriorityList(),
-							componentFieldWidth), "Priority", 0, 4);
+							ProjectDataTypeFactory.getBugPriorityList()),
+							"Priority", 0, 4);
 
 			this.statusField = (BugStaticItemMultiSelectField) gridLayout
 					.addComponent(new BugStaticItemMultiSelectField(
-							ProjectDataTypeFactory.getBugStatusList(),
-							componentFieldWidth), "Status", 1, 4);
+							ProjectDataTypeFactory.getBugStatusList()),
+							"Status", 1, 4);
 
 			this.resolutionField = (BugStaticItemMultiSelectField) gridLayout
 					.addComponent(new BugStaticItemMultiSelectField(
-							ProjectDataTypeFactory.getBugResolutionList(),
-							componentFieldWidth), "Resolution", 0, 5);
+							ProjectDataTypeFactory.getBugResolutionList()),
+							"Resolution", 0, 5);
 			this.severityField = (BugStaticItemMultiSelectField) gridLayout
 					.addComponent(new BugStaticItemMultiSelectField(
-							ProjectDataTypeFactory.getBugSeverityList(),
-							componentFieldWidth), "Severity", 1, 5);
+							ProjectDataTypeFactory.getBugSeverityList()),
+							"Severity", 1, 5);
 
 			return gridLayout.getLayout();
 		}
@@ -359,12 +363,13 @@ public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 									.resetComp();
 							BugAdvancedSearchLayout.this.resolutionField
 									.resetComp();
-							BugAdvancedSearchLayout.this.affectedVersionField
+							
+							 BugAdvancedSearchLayout.this.affectedVersionField
 									.resetComp();
-							BugAdvancedSearchLayout.this.componentField
-									.resetComp();
-							BugAdvancedSearchLayout.this.fixedVersionField
-									.resetComp();
+							 BugAdvancedSearchLayout.this.componentField
+							 .resetComp();
+							 BugAdvancedSearchLayout.this.fixedVersionField
+							 .resetComp();
 							BugAdvancedSearchLayout.this.statusField
 									.resetComp();
 							BugAdvancedSearchLayout.this.severityField
@@ -399,7 +404,8 @@ public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 					.setProjectId(new NumberSearchField(SearchField.AND,
 							BugSearchPanel.this.project.getId()));
 
-			if (StringUtils.isNotNullOrEmpty((String) this.nameField.getValue())) {
+			if (StringUtils
+					.isNotNullOrEmpty((String) this.nameField.getValue())) {
 
 				if (((Boolean) this.summaryField.getValue()) == true) {
 					BugSearchPanel.this.searchCriteria

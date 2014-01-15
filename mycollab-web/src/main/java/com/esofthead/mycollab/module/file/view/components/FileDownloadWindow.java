@@ -22,12 +22,14 @@ import java.util.List;
 import com.esofthead.mycollab.module.ecm.ResourceUtils;
 import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.module.ecm.domain.Resource;
-import com.esofthead.mycollab.module.file.resource.StreamDownloadResourceFactory;
+import com.esofthead.mycollab.module.file.resource.StreamDownloadResourceUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
-import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
+import com.vaadin.server.FileDownloader;
+import com.vaadin.server.StreamResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -38,6 +40,12 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class FileDownloadWindow extends Window {
 	private static final long serialVersionUID = 1L;
 	private final Content content;
@@ -71,8 +79,8 @@ public class FileDownloadWindow extends Window {
 		final Label author = new Label(this.content.getCreatedBy());
 		info.addComponent(author, "Created by", 0, 1);
 
-		final Label size = new Label(ResourceUtils.getVolumeDisplay(this.content
-				.getSize()));
+		final Label size = new Label(
+				ResourceUtils.getVolumeDisplay(this.content.getSize()));
 		info.addComponent(size, "Size", 0, 2);
 
 		final Label dateCreate = new Label(AppContext.formatDate(this.content
@@ -83,22 +91,19 @@ public class FileDownloadWindow extends Window {
 
 		final HorizontalLayout buttonControls = new HorizontalLayout();
 		buttonControls.setSpacing(true);
-		final Button download = new Button("Download", new ClickListener() {
-			private static final long serialVersionUID = 1L;
+		final Button downloadBtn = new Button("Download");
+		List<Resource> lstRes = new ArrayList<Resource>();
+		lstRes.add(content);
 
-			@Override
-			public void buttonClick(final ClickEvent event) {
-				List<Resource> lstRes = new ArrayList<Resource>();
-				lstRes.add(content);
+		StreamResource downloadResource = StreamDownloadResourceUtil
+				.getStreamResourceSupportExtDrive(lstRes, false);
 
-				com.vaadin.terminal.Resource downloadResource = StreamDownloadResourceFactory
-						.getStreamResourceSupportExtDrive(lstRes, false);
-				AppContext.getApplication().getMainWindow()
-						.open(downloadResource, "_blank");
-			}
-		});
-		download.addStyleName(UIConstants.THEME_BLUE_LINK);
-		UiUtils.addComponent(buttonControls, download, Alignment.MIDDLE_CENTER);
+		FileDownloader fileDownloader = new FileDownloader(downloadResource);
+		fileDownloader.extend(downloadBtn);
+
+		downloadBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
+		UiUtils.addComponent(buttonControls, downloadBtn,
+				Alignment.MIDDLE_CENTER);
 
 		final Button cancle = new Button("Cancel", new ClickListener() {
 			private static final long serialVersionUID = 1L;
@@ -112,6 +117,6 @@ public class FileDownloadWindow extends Window {
 
 		UiUtils.addComponent(buttonControls, cancle, Alignment.MIDDLE_CENTER);
 		UiUtils.addComponent(layout, buttonControls, Alignment.MIDDLE_CENTER);
-		this.addComponent(layout);
+		this.setContent(layout);
 	}
 }

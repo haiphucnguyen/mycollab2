@@ -14,10 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.module.file.resource;
 
 import java.io.InputStream;
@@ -28,14 +25,14 @@ import com.amazonaws.services.s3.model.S3Object;
 import com.esofthead.mycollab.configuration.S3StorageConfiguration;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.MyCollabException;
-import com.esofthead.mycollab.web.AppContext;
-import com.vaadin.service.FileTypeResolver;
-import com.vaadin.terminal.DownloadStream;
-import com.vaadin.terminal.StreamResource;
+import com.vaadin.server.DownloadStream;
+import com.vaadin.server.StreamResource;
+import com.vaadin.util.FileTypeResolver;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class S3StreamDownloadResource extends StreamResource {
 
@@ -44,8 +41,7 @@ public class S3StreamDownloadResource extends StreamResource {
 	private String documentPath;
 
 	public S3StreamDownloadResource(String documentPath) {
-		super(new S3StreamSource(documentPath), getFilename(documentPath),
-				AppContext.getApplication());
+		super(new S3StreamSource(documentPath), getFilename(documentPath));
 		this.documentPath = documentPath;
 		this.setMIMEType(FileTypeResolver
 				.getMIMEType(getFilename(documentPath)));

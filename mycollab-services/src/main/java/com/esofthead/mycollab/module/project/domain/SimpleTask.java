@@ -19,6 +19,11 @@ package com.esofthead.mycollab.module.project.domain;
 import java.util.Calendar;
 import java.util.Date;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ */
 public class SimpleTask extends Task {
 
 	private static final long serialVersionUID = 1L;

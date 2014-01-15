@@ -24,11 +24,16 @@ import com.esofthead.mycollab.core.cache.CacheKey;
 import com.esofthead.mycollab.core.cache.Cacheable;
 import com.esofthead.mycollab.core.persistence.service.IDefaultService;
 import com.esofthead.mycollab.module.crm.domain.Opportunity;
-import com.esofthead.mycollab.module.crm.domain.OpportunityContact;
 import com.esofthead.mycollab.module.crm.domain.OpportunityLead;
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public interface OpportunityService extends
 		IDefaultService<Integer, Opportunity, OpportunitySearchCriteria> {
 
@@ -46,15 +51,6 @@ public interface OpportunityService extends
 	List<GroupItem> getLeadSourcesSummary(
 			@CacheKey OpportunitySearchCriteria criteria);
 
-	@CacheEvict(serviceMap = { ContactService.class })
-	void saveOpportunityContactRelationship(
-			List<OpportunityContact> associateContacts,
-			@CacheKey Integer sAccountId);
-
-	@CacheEvict(serviceMap = { ContactService.class })
-	void removeOpportunityContactRelationship(
-			OpportunityContact associateContact, @CacheKey Integer sAccountId);
-
 	@CacheEvict(serviceMap = { LeadService.class })
 	void saveOpportunityLeadRelationship(List<OpportunityLead> associateLeads,
 			@CacheKey Integer sAccountId);
@@ -62,4 +58,8 @@ public interface OpportunityService extends
 	@CacheEvict(serviceMap = { LeadService.class })
 	void removeOpportunityLeadRelationship(OpportunityLead associateLead,
 			@CacheKey Integer sAccountId);
+
+	@Cacheable
+	SimpleOpportunity findOpportunityAssoWithConvertedLead(int leadId,
+			@CacheKey int accountId);
 }

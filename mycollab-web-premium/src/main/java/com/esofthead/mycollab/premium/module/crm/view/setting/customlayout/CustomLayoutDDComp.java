@@ -46,13 +46,12 @@ public class CustomLayoutDDComp extends HorizontalLayout {
 		activeFormArea.setWidth("100%");
 
 		deleteFormArea = new DeleteFormSectionArea();
-		deleteFormArea.setWidth("100%");
+		deleteFormArea.setWidth("450px");
 
 		this.addComponent(activeFormArea);
 		this.setExpandRatio(activeFormArea, 1.0f);
 
 		this.addComponent(deleteFormArea);
-		this.setExpandRatio(deleteFormArea, 1.0f);
 
 		boolean hasDeletedSection = false;
 

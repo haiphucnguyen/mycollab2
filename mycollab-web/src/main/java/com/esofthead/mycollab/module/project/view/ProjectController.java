@@ -95,12 +95,18 @@ import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.domain.criteria.ComponentSearchCriteria;
 import com.esofthead.mycollab.module.tracker.domain.criteria.VersionSearchCriteria;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.IController;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
-import com.esofthead.mycollab.web.AppContext;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class ProjectController implements IController {
 	private static final long serialVersionUID = 1L;
 	private ProjectModule container;
@@ -247,27 +253,6 @@ public class ProjectController implements IController {
 						projectView.gotoTaskList(data);
 					}
 				});
-
-		EventBus.getInstance()
-				.addListener(
-						new ApplicationEventListener<TaskListEvent.GotoGanttChartView>() {
-							private static final long serialVersionUID = 1L;
-
-							@Override
-							public Class<? extends ApplicationEvent> getEventType() {
-								return TaskListEvent.GotoGanttChartView.class;
-							}
-
-							@Override
-							public void handle(
-									TaskListEvent.GotoGanttChartView event) {
-								ProjectView projectView = ViewManager
-										.getView(ProjectView.class);
-								projectView
-										.gotoTaskList((TaskGroupScreenData.DisplayGanttChartRequest) event
-												.getData());
-							}
-						});
 
 		EventBus.getInstance().addListener(
 				new ApplicationEventListener<TaskListEvent.GotoAdd>() {

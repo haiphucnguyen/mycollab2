@@ -20,6 +20,12 @@ import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.crm.events.ActivityEvent;
 import com.esofthead.mycollab.module.crm.view.CrmUrlResolver;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
 public class ActivityUrlResolver extends CrmUrlResolver {
 	public ActivityUrlResolver() {
 		this.addSubResolver("calendar", new ActivityCalendartUrlResolver());

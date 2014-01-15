@@ -36,8 +36,10 @@ import java.awt.Rectangle;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.util.zip.GZIPOutputStream;
 
@@ -46,18 +48,21 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.batik.svggen.SVGGraphics2D;
+import org.apache.batik.svggen.SVGGraphics2DIOException;
 import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import com.esofthead.mycollab.web.AppContext;
-import com.vaadin.Application;
-import com.vaadin.terminal.ApplicationResource;
-import com.vaadin.terminal.DownloadStream;
-import com.vaadin.terminal.Resource;
-import com.vaadin.terminal.Sizeable;
-import com.vaadin.terminal.gwt.server.AbstractWebApplicationContext;
+import com.esofthead.mycollab.core.MyCollabException;
+import com.vaadin.server.DownloadStream;
+import com.vaadin.server.Resource;
+import com.vaadin.server.Sizeable;
+import com.vaadin.server.StreamResource;
+import com.vaadin.server.StreamResource.StreamSource;
+import com.vaadin.server.WebBrowser;
 import com.vaadin.ui.Embedded;
 
 /**
@@ -83,17 +88,19 @@ import com.vaadin.ui.Embedded;
  */
 @SuppressWarnings("serial")
 public class JFreeChartWrapper extends Embedded {
+	private static Logger log = LoggerFactory
+			.getLogger(JFreeChartWrapper.class);
 
 	public enum RenderingMode {
-
 		SVG, PNG, AUTO
 	}
 
 	// 809x 500 ~g olden ratio
 	private static final int DEFAULT_WIDTH = 809;
 	private static final int DEFAULT_HEIGHT = 500;
+
 	private final JFreeChart chart;
-	private ApplicationResource res;
+	private Resource res;
 	private RenderingMode mode = RenderingMode.AUTO;
 	private boolean gzipEnabled = false;
 	private int graphWidthInPixels = -1;
@@ -102,8 +109,8 @@ public class JFreeChartWrapper extends Embedded {
 
 	public JFreeChartWrapper(JFreeChart chartToBeWrapped) {
 		chart = chartToBeWrapped;
-		setWidth(DEFAULT_WIDTH, UNITS_PIXELS);
-		setHeight(DEFAULT_HEIGHT, UNITS_PIXELS);
+		setWidth(DEFAULT_WIDTH, Unit.PIXELS);
+		setHeight(DEFAULT_HEIGHT, Unit.PIXELS);
 	}
 
 	public JFreeChartWrapper(JFreeChart chartToBeWrapped,
@@ -121,7 +128,6 @@ public class JFreeChartWrapper extends Embedded {
 	 */
 	public void setGzipCompression(boolean compress) {
 		this.gzipEnabled = compress;
-		requestRepaint();
 	}
 
 	private void setRenderingMode(RenderingMode newMode) {
@@ -137,25 +143,19 @@ public class JFreeChartWrapper extends Embedded {
 	@Override
 	public void attach() {
 		super.attach();
-		AbstractWebApplicationContext context = (AbstractWebApplicationContext) AppContext
-				.getApplication().getContext();
 		if (mode == RenderingMode.AUTO) {
-			if (context.getBrowser().isIE()
-					&& context.getBrowser().getBrowserMajorVersion() < 9) {
+			WebBrowser browser = getSession().getBrowser();
+			if (browser.isIE() && browser.getBrowserMajorVersion() < 9) {
 				setRenderingMode(RenderingMode.PNG);
 			} else {
 				// all decent browsers support SVG
 				setRenderingMode(RenderingMode.SVG);
 			}
 		}
-		AppContext.getApplication().addResource(
-				(ApplicationResource) getSource());
 	}
 
 	@Override
 	public void detach() {
-		AppContext.getApplication().removeResource(
-				(ApplicationResource) getSource());
 		super.detach();
 	}
 
@@ -208,13 +208,13 @@ public class JFreeChartWrapper extends Embedded {
 			return DEFAULT_WIDTH;
 		}
 		switch (getWidthUnits()) {
-		case UNITS_CM:
+		case CM:
 			width = (int) (w * 96 / 2.54);
 			break;
-		case UNITS_INCH:
+		case INCH:
 			width = (int) (w * 96);
 			break;
-		case UNITS_PERCENTAGE:
+		case PERCENTAGE:
 			width = DEFAULT_WIDTH;
 			break;
 		default:
@@ -239,13 +239,13 @@ public class JFreeChartWrapper extends Embedded {
 			return DEFAULT_HEIGHT;
 		}
 		switch (getWidthUnits()) {
-		case UNITS_CM:
+		case CM:
 			height = (int) (w * 96 / 2.54);
 			break;
-		case UNITS_INCH:
+		case INCH:
 			height = (int) (w * 96);
 			break;
-		case UNITS_PERCENTAGE:
+		case PERCENTAGE:
 			height = DEFAULT_HEIGHT;
 			break;
 		default:
@@ -260,11 +260,9 @@ public class JFreeChartWrapper extends Embedded {
 	}
 
 	/**
-	 * See SVG spec from W3 for more information.
-	 * 
-	 * 
-	 * Default is "none" (stretch), another common value is "xMidYMid" (stretch
-	 * proportionally, align middle of the area).
+	 * See SVG spec from W3 for more information. Default is "none" (stretch),
+	 * another common value is "xMidYMid" (stretch proportionally, align middle
+	 * of the area).
 	 * 
 	 * @param svgAspectRatioSetting
 	 */
@@ -275,7 +273,7 @@ public class JFreeChartWrapper extends Embedded {
 	@Override
 	public Resource getSource() {
 		if (res == null) {
-			res = new ApplicationResource() {
+			StreamSource streamSource = new StreamResource.StreamSource() {
 				private ByteArrayInputStream bytestream = null;
 
 				ByteArrayInputStream getByteStream() {
@@ -332,7 +330,7 @@ public class JFreeChartWrapper extends Embedded {
 								bytestream = new ByteArrayInputStream(
 										baoutputStream.toByteArray());
 							} catch (Exception e) {
-								e.printStackTrace();
+								log.error("Error while generating chart", e);
 							}
 						} else {
 							// Draw png to bytestream
@@ -341,7 +339,7 @@ public class JFreeChartWrapper extends Embedded {
 										.createBufferedImage(widht, height));
 								bytestream = new ByteArrayInputStream(bytes);
 							} catch (IOException e) {
-								e.printStackTrace();
+								log.error("Error while generating chart", e);
 							}
 
 						}
@@ -352,39 +350,55 @@ public class JFreeChartWrapper extends Embedded {
 					return bytestream;
 				}
 
-				public Application getApplication() {
-					return AppContext.getApplication();
+				@Override
+				public InputStream getStream() {
+					return getByteStream();
 				}
+			};
 
+			res = new StreamResource(streamSource, String.format("graph%d",
+					System.currentTimeMillis())) {
+
+				@Override
 				public int getBufferSize() {
-					if (getByteStream() != null) {
-						return getByteStream().available();
+					if (getStreamSource().getStream() != null) {
+						try {
+							return getStreamSource().getStream().available();
+						} catch (IOException e) {
+							return 0;
+						}
 					} else {
 						return 0;
 					}
 				}
 
+				@Override
 				public long getCacheTime() {
 					return 0;
 				}
 
+				@Override
 				public String getFilename() {
 					if (mode == RenderingMode.PNG) {
-						return "graph.png";
+						return super.getFilename() + ".png";
 					} else {
-						return gzipEnabled ? "graph.svgz" : "graph.svg";
+						return super.getFilename()
+								+ (gzipEnabled ? ".svgz" : ".svg");
 					}
 				}
 
+				@Override
 				public DownloadStream getStream() {
 					DownloadStream downloadStream = new DownloadStream(
-							getByteStream(), getMIMEType(), getFilename());
+							getStreamSource().getStream(), getMIMEType(),
+							getFilename());
 					if (gzipEnabled && mode == RenderingMode.SVG) {
 						downloadStream.setParameter("Content-Encoding", "gzip");
 					}
 					return downloadStream;
 				}
 
+				@Override
 				public String getMIMEType() {
 					if (mode == RenderingMode.PNG) {
 						return "image/png";
@@ -395,5 +409,14 @@ public class JFreeChartWrapper extends Embedded {
 			};
 		}
 		return res;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void markAsDirty() {
+		super.markAsDirty();
+		res = null;
 	}
 }

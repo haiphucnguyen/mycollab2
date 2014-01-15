@@ -14,443 +14,373 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.module.project.view.bug;
 
 import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
+import com.esofthead.mycollab.eventmanager.ApplicationEvent;
+import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
+import com.esofthead.mycollab.module.project.ui.components.AbstractPreviewItemComp;
 import com.esofthead.mycollab.module.tracker.BugStatusConstants;
 import com.esofthead.mycollab.module.tracker.domain.Version;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.VersionService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
+import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
+import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.ProjectPreviewFormControlsGenerator;
+import com.esofthead.mycollab.vaadin.ui.TabsheetLazyLoadComp;
 import com.esofthead.mycollab.vaadin.ui.ToggleButtonGroup;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.vaadin.ui.ViewComponent;
-import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
-import com.vaadin.data.Item;
-import com.vaadin.data.util.BeanItem;
-import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
-import com.vaadin.terminal.ExternalResource;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Component;
+import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Window;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
 @ViewComponent
-public class VersionReadViewImpl extends AbstractView implements
-		VersionReadView {
-	private static final long serialVersionUID = 1L;
-	protected Version version;
-	protected AdvancedPreviewBeanForm<Version> previewForm;
+public class VersionReadViewImpl extends AbstractPreviewItemComp<Version>
+        implements VersionReadView {
+    private static final long serialVersionUID = 1L;
 
-	public VersionReadViewImpl() {
-		super();
-		this.setMargin(true);
-		this.previewForm = new PreviewForm();
-		this.addComponent(this.previewForm);
-	}
+    private VersionHistoryLogList historyLogList;
+    private RelatedBugComp relatedBugComp;
 
-	@Override
-	public void previewItem(final Version item) {
-		this.version = item;
-		this.previewForm.setItemDataSource(new BeanItem<Version>(item));
-	}
+    private Button quickActionStatusBtn;
 
-	@Override
-	public Version getItem() {
-		return this.version;
-	}
+    public VersionReadViewImpl() {
+        super(MyCollabResource.newResource("icons/22/project/version.png"));
 
-	@Override
-	public HasPreviewFormHandlers<Version> getPreviewFormHandlers() {
-		return this.previewForm;
-	}
+        this.setMargin(new MarginInfo(true, false, false, false));
+    }
 
-	private class PreviewForm extends AdvancedPreviewBeanForm<Version> {
+    @Override
+    public HasPreviewFormHandlers<Version> getPreviewFormHandlers() {
+        return this.previewForm;
+    }
 
-		private static final long serialVersionUID = 1L;
+    @Override
+    protected void initRelatedComponents() {
+        historyLogList = new VersionHistoryLogList(ModuleNameConstants.PRJ,
+                ProjectContants.BUG_VERSION);
+        relatedBugComp = new RelatedBugComp();
+    }
 
-		@Override
-		public void setItemDataSource(final Item newDataSource) {
-			this.setFormLayoutFactory(new FormLayoutFactory());
-			this.setFormFieldFactory(new DefaultFormViewFieldFactory() {
-				private static final long serialVersionUID = 1L;
+    @Override
+    protected void onPreviewItem() {
+        relatedBugComp.displayBugReports();
+        historyLogList.loadHistory(beanItem.getId());
 
-				@Override
-				protected Field onCreateField(final Item item,
-						final Object propertyId, final Component uiContext) {
-					if (propertyId.equals("duedate")) {
-						return new DefaultFormViewFieldFactory.FormDateViewField(
-								VersionReadViewImpl.this.version.getDuedate());
-					}
-					return null;
-				}
-			});
-			super.setItemDataSource(newDataSource);
-		}
+        if (beanItem.getStatus() == null || beanItem.getStatus().equals("Open")) {
+            removeLayoutStyleName(UIConstants.LINK_COMPLETED);
+            quickActionStatusBtn.setCaption("Close");
+            quickActionStatusBtn.setIcon(MyCollabResource
+                    .newResource("icons/16/project/closeTask.png"));
+        } else {
+            addLayoutStyleName(UIConstants.LINK_COMPLETED);
+            quickActionStatusBtn.setCaption("ReOpen");
+            quickActionStatusBtn.setIcon(MyCollabResource
+                    .newResource("icons/16/project/reopenTask.png"));
 
-		@Override
-		protected void doPrint() {
-			// Create a window that contains what you want to print
-			final Window window = new Window("Window to Print");
+        }
 
-			final VersionReadViewImpl printView = new VersionReadViewImpl.PrintView();
-			printView.previewItem(VersionReadViewImpl.this.version);
-			window.addComponent(printView);
+    }
 
-			// Add the printing window as a new application-level window
-			this.getApplication().addWindow(window);
+    @Override
+    protected String initFormTitle() {
+        return beanItem.getVersionname();
+    }
 
-			// Open it as a popup window with no decorations
-			this.getWindow().open(new ExternalResource(window.getURL()),
-					"_blank", 1100, 200, // Width and height
-					Window.BORDER_NONE); // No decorations
+    @Override
+    protected AdvancedPreviewBeanForm<Version> initPreviewForm() {
+        return new AdvancedPreviewBeanForm<Version>();
+    }
 
-			// Print automatically when the window opens.
-			// This call will block until the print dialog exits!
-			window.executeJavaScript("print();");
+    @Override
+    protected IFormLayoutFactory initFormLayoutFactory() {
+        return new VersionFormLayoutFactory();
+    }
 
-			// Close the window automatically after printing
-			window.executeJavaScript("self.close();");
-		}
+    @Override
+    protected AbstractBeanFieldGroupViewFieldFactory<Version> initBeanFormFieldFactory() {
+        return new AbstractBeanFieldGroupViewFieldFactory<Version>(previewForm) {
+            private static final long serialVersionUID = 1L;
 
-		@Override
-		protected void showHistory() {
-			final VersionHistoryLogWindow historyLog = new VersionHistoryLogWindow(
-					ModuleNameConstants.PRJ, ProjectContants.BUG_VERSION,
-					VersionReadViewImpl.this.version.getId());
-			this.getWindow().addWindow(historyLog);
-		}
+            @Override
+            protected Field<?> onCreateField(Object propertyId) {
+                if (propertyId.equals("duedate")) {
+                    return new DefaultFormViewFieldFactory.FormDateViewField(
+                            beanItem.getDuedate());
+                }
+                return null;
+            }
+        };
+    }
 
-		class FormLayoutFactory extends VersionFormLayoutFactory implements
-				IBugReportDisplayContainer {
+    @Override
+    protected ComponentContainer createButtonControls() {
+        ProjectPreviewFormControlsGenerator<Version> versionPreviewForm = new ProjectPreviewFormControlsGenerator<Version>(
+                previewForm);
+        final HorizontalLayout topPanel = versionPreviewForm
+                .createButtonControls(ProjectRolePermissionCollections.VERSIONS);
 
-			private static final long serialVersionUID = 1L;
-			private HorizontalLayout bottomLayout;
-			private VerticalLayout mainBottomLayout;
-			private ToggleButtonGroup viewGroup;
-			private Button quickActionStatusBtn;
+        quickActionStatusBtn = new Button("", new Button.ClickListener() {
+            private static final long serialVersionUID = 1L;
 
-			public FormLayoutFactory() {
-				super(VersionReadViewImpl.this.version.getVersionname());
-			}
+            @Override
+            public void buttonClick(ClickEvent event) {
+                if (beanItem.getStatus() != null
+                        && beanItem.getStatus().equals("Close")) {
+                    beanItem.setStatus("Open");
+                    VersionReadViewImpl.this
+                            .removeLayoutStyleName(UIConstants.LINK_COMPLETED);
+                    quickActionStatusBtn.setCaption("Close");
+                    quickActionStatusBtn.setIcon(MyCollabResource
+                            .newResource("icons/16/project/closeTask.png"));
+                } else {
+                    beanItem.setStatus("Close");
 
-			@Override
-			protected Layout createTopPanel() {
-				ProjectPreviewFormControlsGenerator<Version> versionPreviewForm = new ProjectPreviewFormControlsGenerator<Version>(
-						PreviewForm.this);
-				final HorizontalLayout topPanel = versionPreviewForm
-						.createButtonControls(ProjectRolePermissionCollections.VERSIONS);
+                    VersionReadViewImpl.this
+                            .addLayoutStyleName(UIConstants.LINK_COMPLETED);
+                    quickActionStatusBtn.setCaption("ReOpen");
+                    quickActionStatusBtn.setIcon(MyCollabResource
+                            .newResource("icons/16/project/reopenTask.png"));
+                }
 
-				quickActionStatusBtn = new Button("",
-						new Button.ClickListener() {
-							private static final long serialVersionUID = 1L;
+                VersionService service = ApplicationContextUtil
+                        .getSpringBean(VersionService.class);
+                service.updateWithSession(beanItem, AppContext.getUsername());
 
-							@Override
-							public void buttonClick(ClickEvent event) {
-								if (quickActionStatusBtn.getCaption().equals(
-										"ReOpen")) {
-									version.setStatus("Open");
-									VersionService service = ApplicationContextUtil
-											.getSpringBean(VersionService.class);
-									service.updateWithSession(version,
-											AppContext.getUsername());
-									FormLayoutFactory.this
-											.removeTitleStyleName(UIConstants.LINK_COMPLETED);
-									quickActionStatusBtn.setCaption("Close");
-									quickActionStatusBtn.setIcon(MyCollabResource
-											.newResource("icons/16/project/closeTask.png"));
-								} else {
-									version.setStatus("Close");
-									VersionService service = ApplicationContextUtil
-											.getSpringBean(VersionService.class);
-									service.updateWithSession(version,
-											AppContext.getUsername());
-									FormLayoutFactory.this
-											.addTitleStyleName("headerName");
-									FormLayoutFactory.this
-											.addTitleStyleName(UIConstants.LINK_COMPLETED);
-									quickActionStatusBtn.setCaption("ReOpen");
-									quickActionStatusBtn.setIcon(MyCollabResource
-											.newResource("icons/16/project/reopenTask.png"));
-								}
-							}
-						});
-				quickActionStatusBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-				if (version.getStatus() == null
-						|| version.getStatus().equals("Open")) {
-					quickActionStatusBtn.setCaption("Close");
-					quickActionStatusBtn.setIcon(MyCollabResource
-							.newResource("icons/16/project/closeTask.png"));
-					versionPreviewForm
-							.addQuickActionButton(quickActionStatusBtn);
-				} else {
-					FormLayoutFactory.this.addTitleStyleName("headerName");
-					FormLayoutFactory.this
-							.addTitleStyleName(UIConstants.LINK_COMPLETED);
-					quickActionStatusBtn.setCaption("ReOpen");
-					quickActionStatusBtn.setIcon(MyCollabResource
-							.newResource("icons/16/project/reopenTask.png"));
-					versionPreviewForm
-							.addQuickActionButton(quickActionStatusBtn);
-				}
-				return topPanel;
-			}
+            }
+        });
 
-			@Override
-			protected Layout createBottomPanel() {
-				this.mainBottomLayout = new VerticalLayout();
-				this.mainBottomLayout.setMargin(false, false, true, false);
-				this.mainBottomLayout.setSpacing(true);
-				this.mainBottomLayout.setWidth("100%");
-				this.mainBottomLayout.addStyleName("relatedbug-comp");
+        quickActionStatusBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+        versionPreviewForm.insertToControlBlock(quickActionStatusBtn);
 
-				final HorizontalLayout header = new HorizontalLayout();
-				header.setMargin(false, true, false, false);
-				header.setSpacing(true);
-				header.setWidth("100%");
-				header.addStyleName("relatedbug-comp-header");
-				final Label taskGroupSelection = new Label("Related Bugs");
-				taskGroupSelection.addStyleName("h2");
-				taskGroupSelection.addStyleName(UIConstants.THEME_NO_BORDER);
-				header.addComponent(taskGroupSelection);
-				header.setExpandRatio(taskGroupSelection, 1.0f);
-				header.setComponentAlignment(taskGroupSelection,
-						Alignment.MIDDLE_LEFT);
+        if (!CurrentProjectVariables
+                .canWrite(ProjectRolePermissionCollections.VERSIONS)) {
+            quickActionStatusBtn.setEnabled(false);
+        }
 
-				this.viewGroup = new ToggleButtonGroup();
+        return topPanel;
+    }
 
-				final Button simpleDisplay = new Button(null,
-						new Button.ClickListener() {
-							private static final long serialVersionUID = 1L;
+    @Override
+    protected ComponentContainer createBottomPanel() {
+        final TabsheetLazyLoadComp tabContainer = new TabsheetLazyLoadComp();
+        tabContainer.setWidth("100%");
 
-							@Override
-							public void buttonClick(final ClickEvent event) {
-								FormLayoutFactory.this.displaySimpleView();
-							}
-						});
-				simpleDisplay.setIcon(MyCollabResource
-						.newResource("icons/16/project/list_display.png"));
+        tabContainer.addTab(relatedBugComp, "Related Bugs",
+                MyCollabResource.newResource("icons/16/project/gray/bug.png"));
+        tabContainer.addTab(historyLogList, "History", MyCollabResource
+                .newResource("icons/16/project/gray/history.png"));
+        return tabContainer;
+    }
 
-				this.viewGroup.addButton(simpleDisplay);
+    class RelatedBugComp extends VerticalLayout implements
+            IBugReportDisplayContainer {
+        private static final long serialVersionUID = 1L;
 
-				final Button advanceDisplay = new Button(null,
-						new Button.ClickListener() {
-							private static final long serialVersionUID = 1L;
+        private HorizontalLayout bottomLayout;
 
-							@Override
-							public void buttonClick(final ClickEvent event) {
-								FormLayoutFactory.this.displayAdvancedView();
-							}
-						});
-				advanceDisplay
-						.setIcon(MyCollabResource
-								.newResource("icons/16/project/bug_advanced_display.png"));
-				this.viewGroup.addButton(advanceDisplay);
-				header.addComponent(this.viewGroup);
-				header.setComponentAlignment(this.viewGroup,
-						Alignment.MIDDLE_RIGHT);
+        public RelatedBugComp() {
+            this.setMargin(new MarginInfo(false, false, true, false));
+            this.setSpacing(false);
+            this.setWidth("100%");
+            this.addStyleName("relatedbug-comp");
 
-				this.mainBottomLayout.addComponent(header);
+            final HorizontalLayout header = new HorizontalLayout();
+            header.setMargin(new MarginInfo(true, true, true, false));
+            header.setSpacing(true);
+            header.setWidth("100%");
+            header.addStyleName("relatedbug-comp-header");
+            final Label taskGroupSelection = new Label("");
+            taskGroupSelection.addStyleName("h2");
+            taskGroupSelection.addStyleName(UIConstants.THEME_NO_BORDER);
+            header.addComponent(taskGroupSelection);
+            header.setExpandRatio(taskGroupSelection, 1.0f);
+            header.setComponentAlignment(taskGroupSelection,
+                    Alignment.MIDDLE_LEFT);
 
-				this.bottomLayout = new HorizontalLayout();
-				this.bottomLayout.setMargin(false, true, false, true);
-				this.bottomLayout.setSpacing(true);
-				this.bottomLayout.setWidth("100%");
+            ToggleButtonGroup viewGroup = new ToggleButtonGroup();
 
-				this.viewGroup.removeButtonsCss("selected");
-				advanceDisplay.addStyleName("selected");
+            final Button simpleDisplay = new Button(null,
+                    new Button.ClickListener() {
+                        private static final long serialVersionUID = 1L;
 
-				this.displayBugReports();
-				return this.mainBottomLayout;
-			}
+                        @Override
+                        public void buttonClick(final ClickEvent event) {
+                            displaySimpleView();
+                        }
+                    });
+            simpleDisplay.setIcon(MyCollabResource
+                    .newResource("icons/16/project/list_display.png"));
 
-			private void displaySimpleView() {
-				if (this.mainBottomLayout.getComponentCount() > 1) {
-					this.mainBottomLayout.removeComponent(this.mainBottomLayout
-							.getComponent(1));
-				}
+            viewGroup.addButton(simpleDisplay);
 
-				final BugSearchCriteria criteria = new BugSearchCriteria();
-				criteria.setProjectId(new NumberSearchField(
-						CurrentProjectVariables.getProjectId()));
-				criteria.setVersionids(new SetSearchField<Integer>(
-						VersionReadViewImpl.this.version.getId()));
+            final Button advanceDisplay = new Button(null,
+                    new Button.ClickListener() {
+                        private static final long serialVersionUID = 1L;
 
-				final BugSimpleDisplayWidget displayWidget = new BugSimpleDisplayWidget();
-				this.mainBottomLayout.addComponent(new LazyLoadWrapper(
-						displayWidget));
-				displayWidget.setSearchCriteria(criteria);
-			}
+                        @Override
+                        public void buttonClick(final ClickEvent event) {
+                            displayAdvancedView();
+                        }
+                    });
+            advanceDisplay.setIcon(MyCollabResource
+                    .newResource("icons/16/project/bug_advanced_display.png"));
+            viewGroup.addButton(advanceDisplay);
+            header.addComponent(viewGroup);
+            header.setComponentAlignment(viewGroup, Alignment.MIDDLE_RIGHT);
 
-			private void displayAdvancedView() {
-				if (this.mainBottomLayout.getComponentCount() > 1) {
-					this.mainBottomLayout.removeComponent(this.mainBottomLayout
-							.getComponent(1));
-				}
+            this.addComponent(header);
 
-				this.mainBottomLayout.addComponent(this.bottomLayout);
+            this.bottomLayout = new HorizontalLayout();
+            this.bottomLayout
+                    .setMargin(new MarginInfo(false, true, true, true));
+            this.bottomLayout.setSpacing(true);
+            this.bottomLayout.setWidth("100%");
 
-				this.bottomLayout.removeAllComponents();
-				final SimpleProject project = CurrentProjectVariables
-						.getProject();
-				final VerticalLayout leftColumn = new VerticalLayout();
-				leftColumn.setSpacing(true);
-				this.bottomLayout.addComponent(leftColumn);
-				this.bottomLayout.setExpandRatio(leftColumn, 1.0f);
+            advanceDisplay.addStyleName("selected");
+        }
 
-				final UnresolvedBugsByPriorityWidget unresolvedBugWidget = new UnresolvedBugsByPriorityWidget(
-						FormLayoutFactory.this);
-				leftColumn.addComponent(unresolvedBugWidget);
-				leftColumn.setComponentAlignment(unresolvedBugWidget,
-						Alignment.MIDDLE_CENTER);
+        private void displaySimpleView() {
+            if (this.getComponentCount() > 1) {
+                this.removeComponent(this.getComponent(1));
+            }
 
-				final BugSearchCriteria unresolvedByPrioritySearchCriteria = new BugSearchCriteria();
-				unresolvedByPrioritySearchCriteria
-						.setProjectId(new NumberSearchField(project.getId()));
-				unresolvedByPrioritySearchCriteria
-						.setVersionids(new SetSearchField<Integer>(
-								VersionReadViewImpl.this.version.getId()));
-				unresolvedByPrioritySearchCriteria
-						.setStatuses(new SetSearchField<String>(
-								SearchField.AND, new String[] {
-										BugStatusConstants.INPROGRESS,
-										BugStatusConstants.OPEN,
-										BugStatusConstants.REOPENNED }));
-				unresolvedBugWidget
-						.setSearchCriteria(unresolvedByPrioritySearchCriteria);
+            final BugSearchCriteria criteria = new BugSearchCriteria();
+            criteria.setProjectId(new NumberSearchField(CurrentProjectVariables
+                    .getProjectId()));
+            criteria.setVersionids(new SetSearchField<Integer>(beanItem.getId()));
 
-				final UnresolvedBugsByAssigneeWidget unresolvedByAssigneeWidget = new UnresolvedBugsByAssigneeWidget(
-						FormLayoutFactory.this);
-				leftColumn.addComponent(unresolvedByAssigneeWidget);
-				leftColumn.setComponentAlignment(unresolvedByAssigneeWidget,
-						Alignment.MIDDLE_CENTER);
+            final BugSimpleDisplayWidget displayWidget = new BugSimpleDisplayWidget();
+            this.addComponent(displayWidget);
+            displayWidget.setSearchCriteria(criteria);
+        }
 
-				final BugSearchCriteria unresolvedByAssigneeSearchCriteria = new BugSearchCriteria();
-				unresolvedByAssigneeSearchCriteria
-						.setProjectId(new NumberSearchField(project.getId()));
-				unresolvedByAssigneeSearchCriteria
-						.setVersionids(new SetSearchField<Integer>(
-								VersionReadViewImpl.this.version.getId()));
-				unresolvedByAssigneeSearchCriteria
-						.setStatuses(new SetSearchField<String>(
-								SearchField.AND, new String[] {
-										BugStatusConstants.INPROGRESS,
-										BugStatusConstants.OPEN,
-										BugStatusConstants.REOPENNED }));
-				unresolvedByAssigneeWidget
-						.setSearchCriteria(unresolvedByAssigneeSearchCriteria);
+        private void displayAdvancedView() {
+            if (this.getComponentCount() > 1) {
+                this.removeComponent(this.getComponent(1));
+            }
 
-				final VerticalLayout rightColumn = new VerticalLayout();
-				rightColumn.setMargin(false, false, false, true);
-				this.bottomLayout.addComponent(rightColumn);
+            this.addComponent(this.bottomLayout);
 
-				final BugSearchCriteria chartSearchCriteria = new BugSearchCriteria();
-				chartSearchCriteria.setProjectId(new NumberSearchField(
-						CurrentProjectVariables.getProjectId()));
-				chartSearchCriteria.setVersionids(new SetSearchField<Integer>(
-						VersionReadViewImpl.this.version.getId()));
+            this.bottomLayout.removeAllComponents();
+            final SimpleProject project = CurrentProjectVariables.getProject();
+            final VerticalLayout leftColumn = new VerticalLayout();
+            leftColumn.setSpacing(true);
+            this.bottomLayout.addComponent(leftColumn);
+            this.bottomLayout.setExpandRatio(leftColumn, 1.0f);
 
-				BugChartComponent bugChartComponent = null;
-				bugChartComponent = new BugChartComponent(chartSearchCriteria,
-						400, 200);
-				rightColumn.addComponent(bugChartComponent);
-				rightColumn.setWidth("410px");
-			}
+            final UnresolvedBugsByPriorityWidget unresolvedBugWidget = new UnresolvedBugsByPriorityWidget(
+                    this);
+            leftColumn.addComponent(unresolvedBugWidget);
+            leftColumn.setComponentAlignment(unresolvedBugWidget,
+                    Alignment.MIDDLE_CENTER);
 
-			@Override
-			public void displayBugReports() {
-				this.viewGroup.setDefaultSelectionByIndex(1);
-				this.displayAdvancedView();
-			}
+            final BugSearchCriteria unresolvedByPrioritySearchCriteria = new BugSearchCriteria();
+            unresolvedByPrioritySearchCriteria
+                    .setProjectId(new NumberSearchField(project.getId()));
+            unresolvedByPrioritySearchCriteria
+                    .setVersionids(new SetSearchField<Integer>(beanItem.getId()));
+            unresolvedByPrioritySearchCriteria
+                    .setStatuses(new SetSearchField<String>(SearchField.AND,
+                            new String[] { BugStatusConstants.INPROGRESS,
+                                    BugStatusConstants.OPEN,
+                                    BugStatusConstants.REOPENNED }));
+            unresolvedBugWidget
+                    .setSearchCriteria(unresolvedByPrioritySearchCriteria);
 
-			@Override
-			public void displayBugListWidget(final String title,
-					final BugSearchCriteria criteria) {
-				this.bottomLayout.removeAllComponents();
-				final BugListWidget bugListWidget = new BugListWidget(title
-						+ " Bug List", "Back to version dashboard", criteria,
-						this);
-				bugListWidget.setWidth("100%");
-				this.bottomLayout.addComponent(bugListWidget);
+            final UnresolvedBugsByAssigneeWidget unresolvedByAssigneeWidget = new UnresolvedBugsByAssigneeWidget(
+                    this);
+            leftColumn.addComponent(unresolvedByAssigneeWidget);
+            leftColumn.setComponentAlignment(unresolvedByAssigneeWidget,
+                    Alignment.MIDDLE_CENTER);
 
-			}
-		}
-	}
+            final BugSearchCriteria unresolvedByAssigneeSearchCriteria = new BugSearchCriteria();
+            unresolvedByAssigneeSearchCriteria
+                    .setProjectId(new NumberSearchField(project.getId()));
+            unresolvedByAssigneeSearchCriteria
+                    .setVersionids(new SetSearchField<Integer>(beanItem.getId()));
+            unresolvedByAssigneeSearchCriteria
+                    .setStatuses(new SetSearchField<String>(SearchField.AND,
+                            new String[] { BugStatusConstants.INPROGRESS,
+                                    BugStatusConstants.OPEN,
+                                    BugStatusConstants.REOPENNED }));
+            unresolvedByAssigneeWidget
+                    .setSearchCriteria(unresolvedByAssigneeSearchCriteria);
 
-	@SuppressWarnings("serial")
-	public static class PrintView extends VersionReadViewImpl {
+            final VerticalLayout rightColumn = new VerticalLayout();
+            rightColumn.setMargin(new MarginInfo(false, false, false, true));
+            this.bottomLayout.addComponent(rightColumn);
 
-		public PrintView() {
-			this.previewForm = new AdvancedPreviewBeanForm<Version>() {
-				@Override
-				public void setItemDataSource(final Item newDataSource) {
-					this.setFormLayoutFactory(new VersionReadViewImpl.PrintView.FormLayoutFactory());
-					this.setFormFieldFactory(new DefaultFormViewFieldFactory() {
-						private static final long serialVersionUID = 1L;
+            final BugSearchCriteria chartSearchCriteria = new BugSearchCriteria();
+            chartSearchCriteria.setProjectId(new NumberSearchField(
+                    CurrentProjectVariables.getProjectId()));
+            chartSearchCriteria.setVersionids(new SetSearchField<Integer>(
+                    beanItem.getId()));
 
-						@Override
-						protected Field onCreateField(final Item item,
-								final Object propertyId,
-								final Component uiContext) {
-							if (propertyId.equals("duedate")) {
-								return new FormDateViewField(
-										PrintView.this.version.getDuedate());
-							}
-							return null;
-						}
-					});
-					super.setItemDataSource(newDataSource);
-				}
-			};
+            BugChartComponent bugChartComponent = null;
+            bugChartComponent = new BugChartComponent(chartSearchCriteria, 400,
+                    200);
+            rightColumn.addComponent(bugChartComponent);
+            rightColumn.setWidth("410px");
+        }
 
-			this.addComponent(this.previewForm);
-		}
+        @Override
+        public void displayBugReports() {
+            this.displayAdvancedView();
+        }
 
-		class FormLayoutFactory extends VersionFormLayoutFactory {
+        @Override
+        public void displayBugListWidget(final String title,
+                final BugSearchCriteria criteria) {
+            this.bottomLayout.removeAllComponents();
+            final BugListWidget bugListWidget = new BugListWidget(title
+                    + " Bug List", "Back to version dashboard", criteria, this);
+            bugListWidget.setWidth("100%");
+            this.bottomLayout.addComponent(bugListWidget);
 
-			private static final long serialVersionUID = 1L;
+        }
+    }
 
-			public FormLayoutFactory() {
-				super(PrintView.this.version.getVersionname());
-			}
+    @Override
+    public Version getItem() {
+        return beanItem;
+    }
 
-			@Override
-			protected Layout createTopPanel() {
-				return new HorizontalLayout();
-			}
+    @Override
+    public ComponentContainer getWidget() {
+        return this;
+    }
 
-			@Override
-			protected Layout createBottomPanel() {
-				return new HorizontalLayout();
-			}
-		}
-	}
+    @Override
+    public void addViewListener(
+            ApplicationEventListener<? extends ApplicationEvent> listener) {
+
+    }
 
 }

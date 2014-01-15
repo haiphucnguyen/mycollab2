@@ -14,25 +14,23 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.module.project.view.task;
 
 import com.esofthead.mycollab.core.utils.ClassUtils;
 import com.esofthead.mycollab.module.project.view.ProjectView;
 import com.esofthead.mycollab.module.project.view.parameters.TaskGroupScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.TaskScreenData;
-import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
+import com.esofthead.mycollab.vaadin.ui.AbstractPresenter;
 import com.vaadin.ui.ComponentContainer;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class TaskPresenter extends AbstractPresenter<TaskContainer> {
 	private static final long serialVersionUID = 1L;
@@ -53,7 +51,7 @@ public class TaskPresenter extends AbstractPresenter<TaskContainer> {
 
 		view.removeAllComponents();
 
-		AbstractPresenter presenter = null;
+		AbstractPresenter<?> presenter = null;
 
 		if (data instanceof TaskScreenData.Read) {
 			presenter = PresenterResolver.getPresenter(TaskReadPresenter.class);
@@ -71,9 +69,6 @@ public class TaskPresenter extends AbstractPresenter<TaskContainer> {
 		} else if (data instanceof TaskGroupScreenData.ReorderTaskListRequest) {
 			presenter = PresenterResolver
 					.getPresenter(TaskGroupReorderPresenter.class);
-		} else if (data instanceof TaskGroupScreenData.DisplayGanttChartRequest) {
-			presenter = PresenterResolver
-					.getPresenter(TaskGanttChatPresenter.class);
 		} else if (data instanceof TaskGroupScreenData.GotoDashboard
 				|| data == null) {
 			presenter = PresenterResolver
@@ -87,7 +82,7 @@ public class TaskPresenter extends AbstractPresenter<TaskContainer> {
 	public void handleChain(ComponentContainer container,
 			PageActionChain pageActionChain) {
 
-		ScreenData pageAction = pageActionChain.peek();
+		ScreenData<?> pageAction = pageActionChain.peek();
 		onGo(container, pageAction);
 	}
 }

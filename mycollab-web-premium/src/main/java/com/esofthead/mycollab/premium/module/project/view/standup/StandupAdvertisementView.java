@@ -1,7 +1,13 @@
 package com.esofthead.mycollab.premium.module.project.view.standup;
 
-import com.esofthead.mycollab.vaadin.mvp.View;
+import com.esofthead.mycollab.vaadin.mvp.PageView;
 
-public interface StandupAdvertisementView extends View {
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
+public interface StandupAdvertisementView extends PageView {
 
 }

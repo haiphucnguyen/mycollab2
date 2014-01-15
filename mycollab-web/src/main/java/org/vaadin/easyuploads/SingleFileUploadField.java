@@ -18,11 +18,12 @@ package org.vaadin.easyuploads;
 
 import java.io.File;
 
-import com.esofthead.mycollab.vaadin.ui.UiUtils;
-import com.vaadin.ui.Embedded;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Label;
-
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
 public class SingleFileUploadField extends UploadField {
 	private static final long serialVersionUID = 1L;
 
@@ -32,24 +33,7 @@ public class SingleFileUploadField extends UploadField {
 	}
 
 	public File getContentAsFile() {
-		if (receiver instanceof FileBuffer) {
-			return ((FileBuffer) receiver).getFile();
-		}
-		return null;
-	}
-
-	@Override
-	protected void updateDisplay() {
-		// super.updateDisplay();
-		String filename = getLastFileName();
-
-		HorizontalLayout layout = new HorizontalLayout();
-		layout.addComponent(new Embedded(null, UiUtils
-				.getFileIconResource(filename)));
-		layout.addComponent(new Label(filename));
-
-		getRootLayout().addComponent(layout);
-		upload.setVisible(false);
+		return (File) getValue();
 	}
 
 	public String getFileName() {

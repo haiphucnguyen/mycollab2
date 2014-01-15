@@ -19,9 +19,14 @@ package com.esofthead.mycollab.vaadin.ui;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.dialogs.DefaultConfirmDialogFactory;
 
-import com.vaadin.terminal.Sizeable;
 import com.vaadin.ui.Button;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
 public class ConfirmDialogFactory extends DefaultConfirmDialogFactory {
 	private static final long serialVersionUID = 1L;
 
@@ -30,8 +35,6 @@ public class ConfirmDialogFactory extends DefaultConfirmDialogFactory {
 			final String okCaption, final String cancelCaption) {
 		final ConfirmDialog d = super.create(caption, message, okCaption,
 				cancelCaption);
-
-		d.setHeight(Sizeable.SIZE_UNDEFINED, 0);
 
 		d.getContent().setStyleName("custom-dialog");
 

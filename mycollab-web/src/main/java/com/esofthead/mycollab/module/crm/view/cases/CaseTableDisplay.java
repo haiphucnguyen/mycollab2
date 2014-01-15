@@ -29,30 +29,39 @@ import com.esofthead.mycollab.module.crm.domain.criteria.CaseSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.CaseService;
 import com.esofthead.mycollab.module.user.UserLinkUtils;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
+import com.esofthead.mycollab.vaadin.ui.CheckBoxDecor;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.vaadin.ui.UserLink;
 import com.esofthead.mycollab.vaadin.ui.table.DefaultPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
-import com.esofthead.mycollab.web.AppContext;
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.H3;
 import com.hp.gagawa.java.elements.Img;
 import com.hp.gagawa.java.elements.Td;
 import com.hp.gagawa.java.elements.Tr;
+import com.vaadin.data.Property.ValueChangeEvent;
+import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.Table.ColumnGenerator;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @SuppressWarnings("serial")
 public class CaseTableDisplay extends
 		DefaultPagedBeanTable<CaseService, CaseSearchCriteria, SimpleCase> {
+
 	private static Logger log = LoggerFactory.getLogger(CaseTableDisplay.class);
 
 	public CaseTableDisplay(List<TableViewField> displayColumns) {
@@ -76,19 +85,18 @@ public class CaseTableDisplay extends
 			@Override
 			public Object generateCell(final Table source, final Object itemId,
 					Object columnId) {
-				final CheckBox cb = new CheckBox("", false);
+				final CheckBoxDecor cb = new CheckBoxDecor("", false);
 				cb.setImmediate(true);
-				cb.addListener(new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
+				cb.addValueChangeListener(new ValueChangeListener() {
 
 					@Override
-					public void buttonClick(Button.ClickEvent event) {
+					public void valueChange(ValueChangeEvent event) {
 						SimpleCase cases = CaseTableDisplay.this
 								.getBeanByIndex(itemId);
 						CaseTableDisplay.this.fireSelectItemEvent(cases);
-
 					}
 				});
+
 				SimpleCase cases = CaseTableDisplay.this.getBeanByIndex(itemId);
 				cases.setExtraData(cb);
 				return cb;

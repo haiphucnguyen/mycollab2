@@ -23,7 +23,6 @@ import org.slf4j.LoggerFactory;
 
 import com.esofthead.mycollab.form.view.builder.type.AbstractDynaField;
 import com.esofthead.mycollab.form.view.builder.type.DynaSection;
-import com.esofthead.mycollab.module.crm.ui.components.CustomFieldComponent;
 import com.vaadin.event.dd.DragAndDropEvent;
 import com.vaadin.event.dd.DropHandler;
 import com.vaadin.event.dd.acceptcriteria.AcceptCriterion;
@@ -50,6 +49,7 @@ class DeleteSectionComp extends GenericSectionComp {
         super(section);
 
         this.addStyleName("deleteSection");
+        this.setWidth("450px");
 
         CssLayout headerWrapper = new CssLayout();
         headerWrapper.addStyleName("header-wrapper");

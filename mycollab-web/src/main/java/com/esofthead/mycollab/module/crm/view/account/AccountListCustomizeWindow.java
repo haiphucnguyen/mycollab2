@@ -19,15 +19,19 @@ package com.esofthead.mycollab.module.crm.view.account;
 import java.util.Arrays;
 import java.util.Collection;
 
-import com.esofthead.mycollab.vaadin.ui.table.AbstractPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.CustomizedTableWindow;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class AccountListCustomizeWindow extends CustomizedTableWindow {
 	private static final long serialVersionUID = 1L;
 
-	public AccountListCustomizeWindow(String viewId,
-			AbstractPagedBeanTable table) {
+	public AccountListCustomizeWindow(String viewId, AccountTableDisplay table) {
 		super(viewId, table);
 	}
 

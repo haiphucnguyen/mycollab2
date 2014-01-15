@@ -178,6 +178,7 @@
             m_crm_task.priority, m_crm_task.isClosed,
             m_crm_task.type, s_user.avatarId AS assignUserAvatarId, 
             m_crm_task.lastUpdatedTime, concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) as assignUserFullName,
+            LTRIM(concat(IFNULL(m_crm_contact.prefix, ' '), m_crm_contact.firstname, ' ', m_crm_contact.lastname)) as contactName,
             concat(m_crm_contact.prefix, ', ', m_crm_contact.firstname, ' ', m_crm_contact.lastname) as contactName, "" AS relatedTo
         FROM m_crm_task
             LEFT OUTER JOIN s_user ON (m_crm_task.assignUser = s_user.username)
@@ -199,7 +200,7 @@
                m_crm_task.description, m_crm_task.createdTime, m_crm_task.lastUpdatedTime, m_crm_task.createdUser, m_crm_task.sAccountId, m_crm_task.status, 
                m_crm_task.assignUser, m_crm_task.priority, m_crm_task.type, m_crm_task.isClosed,
                concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) as assignUserFullName,
-               concat(m_crm_contact.prefix, ', ', m_crm_contact.firstname, ' ', m_crm_contact.lastname) as contactName, 
+               LTRIM(concat(IFNULL(m_crm_contact.prefix, ' '), m_crm_contact.firstname, ' ', m_crm_contact.lastname)) as contactName, 
                concat(contact2.prefix, ', ', contact2.firstname, ' ', contact2.lastname) as relatedTo
                
         FROM m_crm_task 
@@ -222,7 +223,7 @@
                m_crm_task.description, m_crm_task.createdTime, m_crm_task.lastUpdatedTime, m_crm_task.createdUser, m_crm_task.sAccountId, m_crm_task.status, 
                m_crm_task.assignUser, m_crm_task.priority, m_crm_task.type, m_crm_task.isClosed,
                concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastName) as assignUserFullName,
-               concat(m_crm_contact.prefix, ', ', m_crm_contact.firstname, ' ', m_crm_contact.lastname) as contactName, 
+               LTRIM(concat(IFNULL(m_crm_contact.prefix, ' '), m_crm_contact.firstname, ' ', m_crm_contact.lastname)) as contactName, 
                m_crm_account.accountName as relatedTo
 
         FROM m_crm_task 
@@ -244,7 +245,7 @@
                m_crm_task.description, m_crm_task.createdTime, m_crm_task.lastUpdatedTime, m_crm_task.createdUser, m_crm_task.sAccountId, m_crm_task.status, 
                m_crm_task.assignUser, m_crm_task.priority, m_crm_task.type, m_crm_task.isClosed,
                concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) as assignUserFullName,
-               concat(m_crm_contact.prefix, ', ', m_crm_contact.firstname, ' ', m_crm_contact.lastname) as contactName, 
+               LTRIM(concat(IFNULL(m_crm_contact.prefix, ' '), m_crm_contact.firstname, ' ', m_crm_contact.lastname)) as contactName, 
                m_crm_campaign.campaignName  as relatedTo
 
         FROM m_crm_task 
@@ -267,7 +268,7 @@
                m_crm_task.description, m_crm_task.createdTime, m_crm_task.lastUpdatedTime, m_crm_task.createdUser, m_crm_task.sAccountId, m_crm_task.status, 
                m_crm_task.assignUser, m_crm_task.priority, m_crm_task.type, m_crm_task.isClosed,
                concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) as assignUserFullName,
-               concat(m_crm_contact.prefix, ', ', m_crm_contact.firstname, ' ', m_crm_contact.lastname) as contactName, 
+               LTRIM(concat(IFNULL(m_crm_contact.prefix, ' '), m_crm_contact.firstname, ' ', m_crm_contact.lastname)) as contactName, 
                concat(m_crm_target.prefixname, ', ', m_crm_target.firstname , ' ', m_crm_target.lastname) as relatedTo
         FROM m_crm_task 
             LEFT OUTER JOIN s_user ON (m_crm_task.assignUser = s_user.username) 
@@ -288,7 +289,7 @@
                m_crm_task.description, m_crm_task.createdTime, m_crm_task.lastUpdatedTime, m_crm_task.createdUser, m_crm_task.sAccountId, m_crm_task.status, 
                m_crm_task.assignUser, m_crm_task.priority, m_crm_task.type, m_crm_task.isClosed,
                concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) as assignUserFullName,
-               concat(m_crm_contact.prefix, ', ', m_crm_contact.firstname, ' ', m_crm_contact.lastname) as contactName, 
+               LTRIM(concat(IFNULL(m_crm_contact.prefix, ' '), m_crm_contact.firstname, ' ', m_crm_contact.lastname)) as contactName, 
                concat(m_crm_lead.prefixName, ', ', m_crm_lead.firstname, ' ',   m_crm_lead.lastname) as relatedTo
 
         FROM m_crm_task 
@@ -310,7 +311,7 @@
                m_crm_task.description, m_crm_task.createdTime, m_crm_task.lastUpdatedTime, m_crm_task.createdUser, m_crm_task.sAccountId, m_crm_task.status, 
                m_crm_task.assignUser, m_crm_task.priority, m_crm_task.type, m_crm_task.isClosed,
                concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) as assignUserFullName,
-               concat(m_crm_contact.prefix, ', ', m_crm_contact.firstname, ' ', m_crm_contact.lastname) as contactName, 
+               LTRIM(concat(IFNULL(m_crm_contact.prefix, ' '), m_crm_contact.firstname, ' ', m_crm_contact.lastname)) as contactName, 
                m_crm_opportunity.opportunityName as relatedTo
 
         FROM m_crm_task 
@@ -333,7 +334,7 @@
                m_crm_task.description, m_crm_task.createdTime, m_crm_task.lastUpdatedTime, m_crm_task.createdUser, m_crm_task.sAccountId, m_crm_task.status, 
                m_crm_task.assignUser, m_crm_task.priority, m_crm_task.type, m_crm_task.isClosed,
                concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) as assignUserFullName,
-               concat(m_crm_contact.prefix, ', ', m_crm_contact.firstname, ' ', m_crm_contact.lastname) as contactName, 
+               LTRIM(concat(IFNULL(m_crm_contact.prefix, ' '), m_crm_contact.firstname, ' ', m_crm_contact.lastname)) as contactName, 
                m_crm_quote.subject as relatedTo
 
         FROM m_crm_task 
@@ -356,7 +357,7 @@
                m_crm_task.description, m_crm_task.createdTime, m_crm_task.lastUpdatedTime, m_crm_task.createdUser, m_crm_task.sAccountId, m_crm_task.status, 
                m_crm_task.assignUser, m_crm_task.priority, m_crm_task.type, m_crm_task.isClosed,
                concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) as assignUserFullName,
-               concat(m_crm_contact.prefix, ', ', m_crm_contact.firstname, ' ', m_crm_contact.lastname) as contactName, 
+               LTRIM(concat(IFNULL(m_crm_contact.prefix, ' '), m_crm_contact.firstname, ' ', m_crm_contact.lastname)) as contactName, 
                m_crm_product.productname as relatedTo
 
         FROM m_crm_task 
@@ -379,7 +380,7 @@
                m_crm_task.description, m_crm_task.createdTime, m_crm_task.lastUpdatedTime, m_crm_task.createdUser, m_crm_task.sAccountId, m_crm_task.status, 
                m_crm_task.assignUser, m_crm_task.priority, m_crm_task.type, m_crm_task.isClosed,
                concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) as assignUserFullName,
-               concat(m_crm_contact.prefix, ', ', m_crm_contact.firstname, ' ', m_crm_contact.lastname) as contactName, 
+               LTRIM(concat(IFNULL(m_crm_contact.prefix, ' '), m_crm_contact.firstname, ' ', m_crm_contact.lastname)) as contactName, 
                m_crm_case.subject as relatedTo
 
         FROM m_crm_task 
@@ -403,7 +404,7 @@
                m_crm_task.description, m_crm_task.createdTime, m_crm_task.lastUpdatedTime, m_crm_task.createdUser, m_crm_task.sAccountId, m_crm_task.status, 
                m_crm_task.assignUser, m_crm_task.priority, m_crm_task.type, m_crm_task.isClosed,
                concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) as assignUserFullName,
-               concat(m_crm_contact.prefix, ', ', m_crm_contact.firstname, ' ', m_crm_contact.lastname) as contactName, 
+               LTRIM(concat(IFNULL(m_crm_contact.prefix, ' '), m_crm_contact.firstname, ' ', m_crm_contact.lastname)) as contactName, 
                '' as relatedTo
 
         FROM m_crm_task 

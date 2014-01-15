@@ -37,10 +37,10 @@ import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.domain.SimpleTask;
 import com.esofthead.mycollab.module.crm.domain.Task;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
+import com.esofthead.mycollab.module.crm.domain.criteria.ActivitySearchCriteria;
 import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
 import com.esofthead.mycollab.module.crm.domain.criteria.CaseSearchCriteria;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
-import com.esofthead.mycollab.module.crm.domain.criteria.EventSearchCriteria;
 import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
@@ -59,6 +59,7 @@ import com.esofthead.mycollab.module.crm.events.DocumentEvent;
 import com.esofthead.mycollab.module.crm.events.LeadEvent;
 import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
 import com.esofthead.mycollab.module.crm.service.CallService;
+import com.esofthead.mycollab.module.crm.service.LeadService;
 import com.esofthead.mycollab.module.crm.service.MeetingService;
 import com.esofthead.mycollab.module.crm.service.TaskService;
 import com.esofthead.mycollab.module.crm.view.account.AccountAddPresenter;
@@ -77,8 +78,10 @@ import com.esofthead.mycollab.module.crm.view.contact.ContactReadPresenter;
 import com.esofthead.mycollab.module.crm.view.file.FileDashboardPresenter;
 import com.esofthead.mycollab.module.crm.view.file.FileSearchResultPresenter;
 import com.esofthead.mycollab.module.crm.view.lead.LeadAddPresenter;
+import com.esofthead.mycollab.module.crm.view.lead.LeadConvertReadPresenter;
 import com.esofthead.mycollab.module.crm.view.lead.LeadListPresenter;
 import com.esofthead.mycollab.module.crm.view.lead.LeadReadPresenter;
+import com.esofthead.mycollab.module.crm.view.opportunity.ContactRoleEditPresenter;
 import com.esofthead.mycollab.module.crm.view.opportunity.OpportunityAddPresenter;
 import com.esofthead.mycollab.module.crm.view.opportunity.OpportunityListPresenter;
 import com.esofthead.mycollab.module.crm.view.opportunity.OpportunityReadPresenter;
@@ -89,11 +92,17 @@ import com.esofthead.mycollab.module.crm.view.parameters.MeetingScreenData;
 import com.esofthead.mycollab.module.crm.view.setting.CrmSettingPresenter;
 import com.esofthead.mycollab.module.file.domain.criteria.FileSearchCriteria;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.IController;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
-import com.esofthead.mycollab.web.AppContext;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class CrmController implements IController {
 	private static final long serialVersionUID = 1L;
 	private CrmModule container;
@@ -237,7 +246,7 @@ public class CrmController implements IController {
 					public void handle(GotoTodoList event) {
 						ActivityRootPresenter presenter = PresenterResolver
 								.getPresenter(ActivityRootPresenter.class);
-						EventSearchCriteria searchCriteria = new EventSearchCriteria();
+						ActivitySearchCriteria searchCriteria = new ActivitySearchCriteria();
 						searchCriteria.setSaccountid(new NumberSearchField(
 								SearchField.AND, AppContext.getAccountId()));
 						presenter.go(container,
@@ -749,10 +758,32 @@ public class CrmController implements IController {
 					@SuppressWarnings({ "unchecked", "rawtypes" })
 					@Override
 					public void handle(LeadEvent.GotoRead event) {
-						LeadReadPresenter presenter = PresenterResolver
-								.getPresenter(LeadReadPresenter.class);
-						presenter.go(container,
-								new ScreenData.Preview(event.getData()));
+						Object value = event.getData();
+						SimpleLead lead;
+						if (value instanceof Integer) {
+							LeadService leadService = ApplicationContextUtil
+									.getSpringBean(LeadService.class);
+							lead = leadService.findById((Integer) value,
+									AppContext.getAccountId());
+						} else if (value instanceof SimpleLead) {
+							lead = (SimpleLead) value;
+						} else {
+							throw new MyCollabException(
+									"Do not support such param type");
+						}
+
+						if ("Converted".equals(lead.getStatus())) {
+							LeadConvertReadPresenter presenter = PresenterResolver
+									.getPresenter(LeadConvertReadPresenter.class);
+							presenter.go(container,
+									new ScreenData.Preview(lead));
+						} else {
+							LeadReadPresenter presenter = PresenterResolver
+									.getPresenter(LeadReadPresenter.class);
+							presenter.go(container,
+									new ScreenData.Preview(lead));
+						}
+
 					}
 				});
 	}
@@ -836,6 +867,25 @@ public class CrmController implements IController {
 								new ScreenData.Preview(event.getData()));
 					}
 				});
+
+		EventBus.getInstance()
+				.addListener(
+						new ApplicationEventListener<OpportunityEvent.GotoContactRoleEdit>() {
+							@Override
+							public Class<? extends ApplicationEvent> getEventType() {
+								return OpportunityEvent.GotoContactRoleEdit.class;
+							}
+
+							@SuppressWarnings({ "unchecked", "rawtypes" })
+							@Override
+							public void handle(
+									OpportunityEvent.GotoContactRoleEdit event) {
+								ContactRoleEditPresenter presenter = PresenterResolver
+										.getPresenter(ContactRoleEditPresenter.class);
+								presenter.go(container,
+										new ScreenData(event.getData()));
+							}
+						});
 	}
 
 	@SuppressWarnings("serial")

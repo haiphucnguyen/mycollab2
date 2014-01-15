@@ -14,10 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.module.user.accountsettings.team.view;
 
 import org.vaadin.dialogs.ConfirmDialog;
@@ -34,20 +31,21 @@ import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.security.AccessPermissionFlag;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.DefaultPreviewFormHandler;
-import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.mvp.ViewPermission;
+import com.esofthead.mycollab.vaadin.ui.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
-import com.esofthead.mycollab.vaadin.ui.MessageBox;
-import com.esofthead.mycollab.vaadin.ui.MessageBox.ButtonType;
-import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.UI;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
 @ViewPermission(permissionId = RolePermissionCollections.ACCOUNT_USER, impliedPermissionVal = AccessPermissionFlag.READ_ONLY)
 public class UserReadPresenter extends AbstractPresenter<UserReadView> {
@@ -55,11 +53,10 @@ public class UserReadPresenter extends AbstractPresenter<UserReadView> {
 
 	public UserReadPresenter() {
 		super(UserReadView.class);
-
-		bind();
 	}
 
-	private void bind() {
+	@Override
+	protected void postInitView() {
 		view.getPreviewFormHandlers().addFormHandler(
 				new DefaultPreviewFormHandler<User>() {
 					@Override
@@ -71,7 +68,7 @@ public class UserReadPresenter extends AbstractPresenter<UserReadView> {
 					@Override
 					public void onDelete(final User data) {
 						ConfirmDialogExt.show(
-								view.getWindow(),
+								UI.getCurrent(),
 								LocalizationHelper.getMessage(
 										GenericI18Enum.DELETE_DIALOG_TITLE,
 										SiteConfiguration.getSiteName()),
@@ -136,21 +133,12 @@ public class UserReadPresenter extends AbstractPresenter<UserReadView> {
 						.getView(AccountSettingBreadcrumb.class);
 				breadcrumb.gotoUserRead(user);
 			} else {
-				MessageBox mb = new MessageBox(
-						AppContext.getApplication().getMainWindow(),
-						LocalizationHelper
-								.getMessage(GenericI18Enum.WARNING_WINDOW_TITLE),
-						MessageBox.Icon.WARN,
-						"There is no user " + username + " in this account",
-						new MessageBox.ButtonConfig(
-								ButtonType.OK,
-								LocalizationHelper
-										.getMessage(GenericI18Enum.BUTTON_OK_LABEL)));
-				mb.show();
+				NotificationUtil.showErrorNotification("There is no user "
+						+ username + " in this account");
 			}
 
 		} else {
-			MessageBox.showMessagePermissionAlert();
+			NotificationUtil.showMessagePermissionAlert();
 		}
 
 	}

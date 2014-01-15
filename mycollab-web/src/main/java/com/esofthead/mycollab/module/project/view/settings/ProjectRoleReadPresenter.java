@@ -14,39 +14,32 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.module.project.view.settings;
 
-import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
-import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.eventmanager.EventBus;
-import com.esofthead.mycollab.module.project.domain.ProjectRole;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectRole;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectRoleSearchCriteria;
 import com.esofthead.mycollab.module.project.events.ProjectRoleEvent;
 import com.esofthead.mycollab.module.project.service.ProjectRoleService;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
-import com.esofthead.mycollab.module.user.domain.Role;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.DefaultPreviewFormHandler;
-import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
+import com.esofthead.mycollab.vaadin.ui.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
-import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.Window;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class ProjectRoleReadPresenter extends
 		AbstractPresenter<ProjectRoleReadView> {
@@ -54,21 +47,20 @@ public class ProjectRoleReadPresenter extends
 
 	public ProjectRoleReadPresenter() {
 		super(ProjectRoleReadView.class);
-
-		bind();
 	}
 
-	private void bind() {
+	@Override
+	protected void postInitView() {
 		view.getPreviewFormHandlers().addFormHandler(
-				new DefaultPreviewFormHandler<ProjectRole>() {
+				new DefaultPreviewFormHandler<SimpleProjectRole>() {
 					@Override
-					public void onEdit(ProjectRole data) {
+					public void onEdit(SimpleProjectRole data) {
 						EventBus.getInstance().fireEvent(
 								new ProjectRoleEvent.GotoEdit(this, data));
 					}
 
 					@Override
-					public void onDelete(ProjectRole data) {
+					public void onDelete(SimpleProjectRole data) {
 						ProjectRoleService projectRoleService = ApplicationContextUtil
 								.getSpringBean(ProjectRoleService.class);
 						projectRoleService.removeWithSession(data.getId(),
@@ -79,8 +71,9 @@ public class ProjectRoleReadPresenter extends
 					}
 
 					@Override
-					public void onClone(ProjectRole data) {
-						Role cloneData = (Role) data.copy();
+					public void onClone(SimpleProjectRole data) {
+						SimpleProjectRole cloneData = (SimpleProjectRole) data
+								.copy();
 						cloneData.setRolename(null);
 						EventBus.getInstance().fireEvent(
 								new ProjectRoleEvent.GotoAdd(this, cloneData));
@@ -93,7 +86,7 @@ public class ProjectRoleReadPresenter extends
 					}
 
 					@Override
-					public void gotoNext(ProjectRole data) {
+					public void gotoNext(SimpleProjectRole data) {
 						ProjectRoleService projectRoleService = ApplicationContextUtil
 								.getSpringBean(ProjectRoleService.class);
 						ProjectRoleSearchCriteria criteria = new ProjectRoleSearchCriteria();
@@ -117,7 +110,7 @@ public class ProjectRoleReadPresenter extends
 					}
 
 					@Override
-					public void gotoPrevious(ProjectRole data) {
+					public void gotoPrevious(SimpleProjectRole data) {
 						ProjectRoleService projectRoleService = ApplicationContextUtil
 								.getSpringBean(ProjectRoleService.class);
 						ProjectRoleSearchCriteria criteria = new ProjectRoleSearchCriteria();

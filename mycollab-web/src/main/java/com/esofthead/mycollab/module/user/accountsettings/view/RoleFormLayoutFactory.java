@@ -14,10 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.module.user.accountsettings.view;
 
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
@@ -33,7 +30,8 @@ import com.vaadin.ui.VerticalLayout;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 2.0
  */
 public abstract class RoleFormLayoutFactory implements IFormLayoutFactory {
 	private static final long serialVersionUID = 1L;
@@ -71,8 +69,8 @@ public abstract class RoleFormLayoutFactory implements IFormLayoutFactory {
 	protected abstract Layout createBottomPanel();
 
 	@Override
-	public void attachField(final Object propertyId, final Field field) {
-		this.userInformationLayout.attachField(propertyId, field);
+	public boolean attachField(final Object propertyId, final Field<?> field) {
+		return this.userInformationLayout.attachField(propertyId, field);
 	}
 
 	public static class RoleInformationLayout implements IFormLayoutFactory {
@@ -98,12 +96,16 @@ public abstract class RoleFormLayoutFactory implements IFormLayoutFactory {
 		}
 
 		@Override
-		public void attachField(final Object propertyId, final Field field) {
+		public boolean attachField(final Object propertyId, final Field<?> field) {
 			if (propertyId.equals("rolename")) {
 				this.informationLayout.addComponent(field, "Role Name", 0, 0);
 			} else if (propertyId.equals("description")) {
 				this.informationLayout.addComponent(field, "Description", 0, 1);
+			} else {
+				return false;
 			}
+
+			return true;
 		}
 	}
 }

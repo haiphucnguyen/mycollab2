@@ -25,22 +25,23 @@ import org.vaadin.hene.popupbutton.PopupButton;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
-import com.esofthead.mycollab.module.ecm.ContentException;
 import com.esofthead.mycollab.module.ecm.ResourceUtils;
 import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.module.ecm.domain.Resource;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
-import com.esofthead.mycollab.module.file.resource.StreamDownloadResourceFactory;
+import com.esofthead.mycollab.module.file.resource.StreamDownloadResourceUtil;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
-import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.Container;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.server.FileDownloader;
+import com.vaadin.server.StreamResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -51,9 +52,16 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public abstract class FileSearchResultComponent extends VerticalLayout {
 	private static final long serialVersionUID = 1L;
 
@@ -166,29 +174,22 @@ public abstract class FileSearchResultComponent extends VerticalLayout {
 									final RenameResourceWindow renameWindow = new RenameResourceWindow(
 											resource,
 											FileSearchResultComponent.this.resourceService);
-									ResourceTableDisplay.this.getWindow()
-											.addWindow(renameWindow);
+									UI.getCurrent().addWindow(renameWindow);
 								}
 							});
 					renameBtn.setStyleName("link");
 					filterBtnLayout.addComponent(renameBtn);
 
-					final Button downloadBtn = new Button("Download",
-							new Button.ClickListener() {
+					final Button downloadBtn = new Button("Download");
+					List<Resource> lstRes = new ArrayList<Resource>();
+					lstRes.add(resource);
 
-								@Override
-								public void buttonClick(final ClickEvent event) {
-									resourceSettingPopupBtn
-											.setPopupVisible(false);
-									List<Resource> lstRes = new ArrayList<Resource>();
-									lstRes.add(resource);
-									final com.vaadin.terminal.Resource downloadResource = StreamDownloadResourceFactory
-											.getStreamResourceSupportExtDrive(
-													lstRes, false);
-									AppContext.getApplication().getMainWindow()
-											.open(downloadResource, "_blank");
-								}
-							});
+					final StreamResource downloadResource = StreamDownloadResourceUtil
+							.getStreamResourceSupportExtDrive(lstRes, false);
+					FileDownloader fileDownloader = new FileDownloader(
+							downloadResource);
+					fileDownloader.extend(downloadBtn);
+
 					downloadBtn.setStyleName("link");
 					filterBtnLayout.addComponent(downloadBtn);
 
@@ -200,8 +201,7 @@ public abstract class FileSearchResultComponent extends VerticalLayout {
 									resourceSettingPopupBtn
 											.setPopupVisible(false);
 									ConfirmDialogExt.show(
-											FileSearchResultComponent.this
-													.getWindow(),
+											UI.getCurrent(),
 											LocalizationHelper
 													.getMessage(
 															GenericI18Enum.DELETE_DIALOG_TITLE,
@@ -248,7 +248,7 @@ public abstract class FileSearchResultComponent extends VerticalLayout {
 					resourceSettingPopupBtn.setIcon(MyCollabResource
 							.newResource("icons/16/item_settings.png"));
 					resourceSettingPopupBtn.setStyleName("link");
-					resourceSettingPopupBtn.addComponent(filterBtnLayout);
+					resourceSettingPopupBtn.setContent(filterBtnLayout);
 					return resourceSettingPopupBtn;
 				}
 			});
@@ -268,7 +268,7 @@ public abstract class FileSearchResultComponent extends VerticalLayout {
 					}
 					final HorizontalLayout resourceLabel = new HorizontalLayout();
 
-					com.vaadin.terminal.Resource iconResource = null;
+					com.vaadin.server.Resource iconResource = null;
 					if (resource instanceof Content) {
 						iconResource = UiUtils
 								.getFileIconResource(((Content) resource)
@@ -291,8 +291,8 @@ public abstract class FileSearchResultComponent extends VerticalLayout {
 
 									final FileDownloadWindow downloadFileWindow = new FileDownloadWindow(
 											(Content) resource);
-									ResourceTableDisplay.this.getWindow()
-											.addWindow(downloadFileWindow);
+									UI.getCurrent().addWindow(
+											downloadFileWindow);
 
 								}
 							});
@@ -328,7 +328,7 @@ public abstract class FileSearchResultComponent extends VerticalLayout {
 
 								@Override
 								public void buttonClick(ClickEvent event) {
-									// TODO Auto-generated method stub
+									// TODO: implement click path link
 
 								}
 							});
@@ -449,7 +449,7 @@ public abstract class FileSearchResultComponent extends VerticalLayout {
 			cancel.addStyleName(UIConstants.THEME_BLUE_LINK);
 			UiUtils.addComponent(controlButton, cancel, Alignment.MIDDLE_CENTER);
 			UiUtils.addComponent(layout, controlButton, Alignment.MIDDLE_CENTER);
-			this.addComponent(layout);
+			this.setContent(layout);
 		}
 	}
 

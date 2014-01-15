@@ -22,14 +22,12 @@ import java.util.List;
 
 import org.vaadin.easyuploads.MultiFileUploadExt;
 
-import com.esofthead.mycollab.common.localization.GenericI18Enum;
-import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.mail.EmailAttachementSource;
 import com.esofthead.mycollab.module.mail.FileEmailAttachmentSource;
 import com.esofthead.mycollab.module.mail.service.ExtMailService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.vaadin.ui.MessageBox.ButtonType;
-import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.vaadin.AppContext;
+import com.vaadin.server.Sizeable;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -39,11 +37,16 @@ import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
-import com.vaadin.ui.Panel;
 import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.Window;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class MailFormWindow extends Window {
 
 	private static final long serialVersionUID = 1L;
@@ -74,7 +77,7 @@ public class MailFormWindow extends Window {
 
 	private void initLayout() {
 		this.setWidth("830px");
-		this.setHeight("510px");
+		this.setHeight(Sizeable.SIZE_UNDEFINED, Sizeable.Unit.PIXELS);
 		initUI();
 		center();
 		this.setModal(true);
@@ -92,7 +95,7 @@ public class MailFormWindow extends Window {
 		inputLayout.addComponent(btnLinkBcc, 2, 0);
 		inputLayout.setComponentAlignment(btnLinkBcc, Alignment.MIDDLE_CENTER);
 
-		btnLinkCc.addListener(new Button.ClickListener() {
+		btnLinkCc.addClickListener(new Button.ClickListener() {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
@@ -100,13 +103,11 @@ public class MailFormWindow extends Window {
 			}
 		});
 
-		btnLinkBcc.addListener(new Button.ClickListener() {
+		btnLinkBcc.addClickListener(new Button.ClickListener() {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-
 				butonLinkBccClick(event);
-
 			}
 		});
 	}
@@ -120,6 +121,8 @@ public class MailFormWindow extends Window {
 		layout.setComponentAlignment(lbTitle, Alignment.MIDDLE_RIGHT);
 		layout.addComponent(component);
 		layout.setComponentAlignment(component, Alignment.MIDDLE_LEFT);
+		layout.setWidth("100%");
+		layout.setExpandRatio(component, 1.0f);
 		return layout;
 	}
 
@@ -135,7 +138,8 @@ public class MailFormWindow extends Window {
 
 		inputLayout = new GridLayout(3, 4);
 		inputLayout.setSpacing(true);
-		inputLayout.setSizeUndefined();
+		inputLayout.setWidth("100%");
+		inputLayout.setColumnExpandRatio(0, 1.0f);
 
 		inputPanel.addComponent(inputLayout);
 
@@ -166,7 +170,7 @@ public class MailFormWindow extends Window {
 
 		final TextField subject = new TextField();
 		subject.setRequired(true);
-		subject.setWidth("550px");
+		subject.setWidth("100%");
 		subjectField = createTextFieldMail("Subject:", subject);
 		inputLayout.addComponent(subjectField, 0, 1);
 
@@ -177,6 +181,7 @@ public class MailFormWindow extends Window {
 
 		final RichTextArea noteArea = new RichTextArea();
 		noteArea.setWidth("100%");
+		noteArea.setHeight("200px");
 		mainLayout.addComponent(noteArea, 0, 1);
 		mainLayout.setComponentAlignment(noteArea, Alignment.MIDDLE_CENTER);
 
@@ -188,17 +193,8 @@ public class MailFormWindow extends Window {
 
 		MultiFileUploadExt uploadExt = new MultiFileUploadExt(attachments);
 
-		Panel attachedFilepanel = new Panel();
-		attachedFilepanel.setScrollable(true);
-		attachedFilepanel.setHeight("80px");
-		attachedFilepanel.setStyleName("noneBorder-panel");
-		attachedFilepanel.getContent().setSizeUndefined();
-		attachedFilepanel.addComponent(attachments);
-
-		attachedFilepanel.addComponent(uploadExt);
-
-		controlsLayout.addComponent(attachedFilepanel);
-		controlsLayout.setExpandRatio(attachedFilepanel, 1.0f);
+		controlsLayout.addComponent(uploadExt);
+		controlsLayout.setExpandRatio(uploadExt, 1.0f);
 
 		controlsLayout.setSpacing(true);
 
@@ -222,15 +218,9 @@ public class MailFormWindow extends Window {
 			public void buttonClick(ClickEvent event) {
 
 				if (tokenFieldMailTo.getListRecipient().size() <= 0
-						|| subject.toString().equals("")) {
-					MessageBox mb = new MessageBox(
-							AppContext.getApplication().getMainWindow(),
-							LocalizationHelper
-									.getMessage(GenericI18Enum.WARNING_WINDOW_TITLE),
-							MessageBox.Icon.WARN,
-							"The To Email field and Subject field must be not empty! Please fulfil them before pressing enter button.",
-							new MessageBox.ButtonConfig(ButtonType.OK, "Ok"));
-					mb.show();
+						|| subject.getValue().equals("")) {
+					NotificationUtil
+							.showErrorNotification("To Email field and Subject field must be not empty! Please fulfil them before sending email.");
 					return;
 				}
 				if (AppContext.getSession().getEmail() != null
@@ -258,13 +248,8 @@ public class MailFormWindow extends Window {
 							emailAttachmentSource);
 					MailFormWindow.this.close();
 				} else {
-					MessageBox mb = new MessageBox(
-							AppContext.getApplication().getMainWindow(),
-							"Warming!",
-							MessageBox.Icon.WARN,
-							"Your email is not configured, please fulfil it before sending email!",
-							new MessageBox.ButtonConfig(ButtonType.OK, "Ok"));
-					mb.show();
+					NotificationUtil
+							.showErrorNotification("Your email is empty value, please fulfil it before sending email!");
 				}
 			}
 		});
@@ -308,6 +293,10 @@ public class MailFormWindow extends Window {
 				inputLayout.addComponent(btnLinkBcc, 1, 1);
 				inputLayout.addComponent(btnLinkCc, 2, 1);
 				inputLayout.addComponent(subjectField, 0, 2);
+			} else {
+				inputLayout.addComponent(btnLinkBcc, 1, 0);
+				inputLayout.addComponent(btnLinkCc, 2, 0);
+				inputLayout.addComponent(subjectField, 0, 1);
 			}
 		}
 
@@ -359,6 +348,10 @@ public class MailFormWindow extends Window {
 				inputLayout.addComponent(btnLinkCc, 1, 1);
 				inputLayout.addComponent(btnLinkBcc, 2, 1);
 				inputLayout.addComponent(subjectField, 0, 2);
+			} else {
+				inputLayout.addComponent(btnLinkBcc, 1, 0);
+				inputLayout.addComponent(btnLinkCc, 2, 0);
+				inputLayout.addComponent(subjectField, 0, 1);
 			}
 		}
 		inputLayout.setComponentAlignment(btnLinkBcc, Alignment.MIDDLE_CENTER);

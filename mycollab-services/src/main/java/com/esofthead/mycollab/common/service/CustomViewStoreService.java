@@ -22,6 +22,12 @@ import com.esofthead.mycollab.core.cache.CacheKey;
 import com.esofthead.mycollab.core.cache.Cacheable;
 import com.esofthead.mycollab.core.persistence.service.ICrudService;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
 public interface CustomViewStoreService extends
 		ICrudService<Integer, CustomViewStore> {
 	@Cacheable

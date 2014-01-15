@@ -33,16 +33,23 @@ import com.esofthead.mycollab.module.crm.view.CrmGenericListPresenter;
 import com.esofthead.mycollab.module.crm.view.CrmToolbar;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.desktop.ui.DefaultMassEditActionHandler;
+import com.esofthead.mycollab.vaadin.events.MassItemActionHandler;
 import com.esofthead.mycollab.vaadin.mvp.MassUpdateCommand;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.MailFormWindow;
-import com.esofthead.mycollab.vaadin.ui.MessageBox;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
-import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.Window;
+import com.vaadin.ui.UI;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
 public class AccountListPresenter
 		extends
 		CrmGenericListPresenter<AccountListView, AccountSearchCriteria, SimpleAccount>
@@ -54,14 +61,19 @@ public class AccountListPresenter
 
 	public AccountListPresenter() {
 		super(AccountListView.class);
+	}
+
+	@Override
+	protected void postInitView() {
+		super.postInitView();
 		accountService = ApplicationContextUtil
 				.getSpringBean(AccountService.class);
 
-		view.getPopupActionHandlers().addPopupActionHandler(
-				new DefaultPopupActionHandler(this) {
+		view.getPopupActionHandlers().addMassItemActionHandler(
+				new DefaultMassEditActionHandler(this) {
 
 					@Override
-					protected Class getReportModelClassType() {
+					protected Class<SimpleAccount> getReportModelClassType() {
 						return SimpleAccount.class;
 					}
 
@@ -71,13 +83,12 @@ public class AccountListPresenter
 					}
 
 					@Override
-					protected void onSelectExtra(String id, String caption) {
-						if ("mail".equals(id)) {
+					protected void onSelectExtra(String id) {
+						if (MassItemActionHandler.MAIL_ACTION.equals(id)) {
 							if (isSelectAll) {
-								NotificationUtil.showNotification(LocalizationHelper
-										.getMessage(
-												WebExceptionI18nEnum.NOT_SUPPORT_SENDING_EMAIL_TO_ALL_USERS,
-												Window.Notification.TYPE_WARNING_MESSAGE));
+								NotificationUtil
+										.showWarningNotification(LocalizationHelper
+												.getMessage(WebExceptionI18nEnum.NOT_SUPPORT_SENDING_EMAIL_TO_ALL_USERS));
 							} else {
 								List<String> lstMail = new ArrayList<String>();
 								List<SimpleAccount> tableData = view
@@ -89,17 +100,18 @@ public class AccountListPresenter
 												+ " <" + item.getEmail() + ">");
 									}
 								}
-								view.getWidget().getWindow()
-										.addWindow(new MailFormWindow(lstMail));
+								UI.getCurrent().addWindow(
+										new MailFormWindow(lstMail));
 							}
-						} else if ("massUpdate".equals(id)) {
+						} else if (MassItemActionHandler.MASS_UPDATE_ACTION
+								.equals(id)) {
 							MassUpdateAccountWindow massUpdateWindow = new MassUpdateAccountWindow(
 									LocalizationHelper
 											.getMessage(
 													GenericI18Enum.MASS_UPDATE_WINDOW_TITLE,
 													"Account"),
 									AccountListPresenter.this);
-							view.getWindow().addWindow(massUpdateWindow);
+							UI.getCurrent().addWindow(massUpdateWindow);
 						}
 
 					}
@@ -145,7 +157,7 @@ public class AccountListPresenter
 					.getMessage(GenericI18Enum.BROWSER_LIST_ITEMS_TITLE,
 							"Account"));
 		} else {
-			MessageBox.showMessagePermissionAlert();
+			NotificationUtil.showMessagePermissionAlert();
 		}
 	}
 

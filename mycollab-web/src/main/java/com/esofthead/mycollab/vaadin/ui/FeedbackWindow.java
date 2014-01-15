@@ -24,28 +24,31 @@ import java.util.List;
 import org.vaadin.easyuploads.MultiFileUploadExt;
 
 import com.esofthead.mycollab.common.domain.MailRecipientField;
-import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.utils.EmailValidator;
-import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.mail.EmailAttachementSource;
 import com.esofthead.mycollab.module.mail.FileEmailAttachmentSource;
 import com.esofthead.mycollab.module.mail.service.ExtMailService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.vaadin.ui.MessageBox.ButtonType;
-import com.esofthead.mycollab.web.AppContext;
-import com.vaadin.terminal.Sizeable;
+import com.esofthead.mycollab.vaadin.AppContext;
+import com.vaadin.server.Sizeable;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.Panel;
 import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class FeedbackWindow extends Window {
 	private static final long serialVersionUID = 1L;
 	private TextField emailTextField;
@@ -57,8 +60,6 @@ public class FeedbackWindow extends Window {
 	}
 
 	private void initLayout() {
-		this.setWidth(Sizeable.SIZE_UNDEFINED, 0);
-		this.setHeight("450px");
 		this.setCaption("Send us feedback for MyCollab ");
 		initUI();
 		center();
@@ -106,6 +107,9 @@ public class FeedbackWindow extends Window {
 		mainLayout.addComponent(subjectTextField, 1, 2);
 
 		final RichTextArea contentArea = new RichTextArea();
+		contentArea.setImmediate(true);
+		contentArea.setWidth(500, Sizeable.Unit.PIXELS);
+		contentArea.setHeight(200, Sizeable.Unit.PIXELS);
 		Label contentLbl = new Label("Your feedback: ");
 
 		mainLayout.addComponent(contentLbl, 0, 3);
@@ -121,19 +125,21 @@ public class FeedbackWindow extends Window {
 
 		MultiFileUploadExt uploadExt = new MultiFileUploadExt(attachments);
 
-		Panel attachedFilepanel = new Panel();
-		attachedFilepanel.setScrollable(true);
-		attachedFilepanel.setHeight("80px");
-		attachedFilepanel.setStyleName("noneBorder-panel");
-		attachedFilepanel.getContent().setSizeUndefined();
-		attachedFilepanel.addComponent(attachments);
+		// Panel attachedFilepanel = new Panel();
+		VerticalLayout contentLayout = new VerticalLayout();
+		contentLayout.setHeight("80px");
+		contentLayout.setStyleName("noneBorder-panel");
+		contentLayout.setSizeUndefined();
+		contentLayout.addComponent(attachments);
 
-		attachedFilepanel.addComponent(uploadExt);
+		contentLayout.addComponent(uploadExt);
 
-		controlsLayout.addComponent(attachedFilepanel);
-		controlsLayout.setComponentAlignment(attachedFilepanel,
+		// attachedFilepanel.setContent(contentLayout);
+
+		controlsLayout.addComponent(contentLayout);
+		controlsLayout.setComponentAlignment(contentLayout,
 				Alignment.BOTTOM_LEFT);
-		controlsLayout.setExpandRatio(attachedFilepanel, 1.0f);
+		controlsLayout.setExpandRatio(contentLayout, 1.0f);
 
 		controlsLayout.setSpacing(true);
 
@@ -159,13 +165,8 @@ public class FeedbackWindow extends Window {
 				String subject = subjectTextField.getValue().toString().trim();
 				EmailValidator emailValidator = new EmailValidator();
 				if (!emailValidator.validate(email)) {
-					MessageBox mb = new MessageBox(AppContext.getApplication()
-							.getMainWindow(), LocalizationHelper
-							.getMessage(GenericI18Enum.WARNING_WINDOW_TITLE),
-							MessageBox.Icon.WARN,
-							"The email is not valid, please check it again!",
-							new MessageBox.ButtonConfig(ButtonType.OK, "Ok"));
-					mb.show();
+					NotificationUtil
+							.showWarningNotification("The email is not valid, please check it again!");
 					return;
 				}
 				if (!email.equals("") && !subject.equals("")) {
@@ -195,13 +196,8 @@ public class FeedbackWindow extends Window {
 									.toString(), emailAttachmentSource);
 
 				} else {
-					MessageBox mb = new MessageBox(
-							AppContext.getApplication().getMainWindow(),
-							"Warming!",
-							MessageBox.Icon.WARN,
-							"The email field and subject field must be not empty! Please fulfil them before pressing enter button.",
-							new MessageBox.ButtonConfig(ButtonType.OK, "Ok"));
-					mb.show();
+					NotificationUtil
+							.showWarningNotification("The email field and subject field must be not empty! Please fulfil them before pressing enter button.");
 				}
 			}
 		});

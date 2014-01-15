@@ -28,12 +28,13 @@ import java.lang.annotation.Target;
  * This annotation denotes a method has data clean of cache with the key compose
  * by its arguments.
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  * 
  */
 @Inherited
 @Retention(RetentionPolicy.RUNTIME)
 @Target(value = { ElementType.METHOD })
 public @interface CacheEvict {
-	Class[] serviceMap() default {};
+	Class<?>[] serviceMap() default {};
 }

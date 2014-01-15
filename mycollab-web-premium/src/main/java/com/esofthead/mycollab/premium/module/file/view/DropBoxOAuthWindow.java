@@ -2,8 +2,6 @@ package com.esofthead.mycollab.premium.module.file.view;
 
 import java.util.Locale;
 
-import javax.servlet.http.HttpSession;
-
 import org.infinispan.api.BasicCache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,10 +14,15 @@ import com.dropbox.core.DbxWebAuth;
 import com.esofthead.mycollab.cache.LocalCacheManager;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.module.ecm.StorageNames;
-import com.esofthead.mycollab.web.AppContext;
-import com.esofthead.mycollab.web.MyCollabApplication;
-import com.vaadin.terminal.gwt.server.WebApplicationContext;
+import com.vaadin.server.VaadinService;
+import com.vaadin.server.WrappedHttpSession;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public abstract class DropBoxOAuthWindow extends
 		CloudDriveIntegrationOAuthWindow {
 	private static final long serialVersionUID = 1L;
@@ -43,14 +46,13 @@ public abstract class DropBoxOAuthWindow extends
 		DbxAppInfo appInfo = new DbxAppInfo("y43ga49m30dfu02",
 				"rheskqqb6f8fo6a");
 		log.debug("redirect URL : " + redirectUri);
-		WebApplicationContext webContext = (WebApplicationContext) AppContext
-				.getApplication().getContext();
+		WrappedHttpSession wrappedSession = (WrappedHttpSession) VaadinService
+				.getCurrentRequest().getWrappedSession();
 
-		HttpSession session = webContext.getHttpSession();
-		String appId = MyCollabApplication.getInstance().toString();
 		String sessionKey = "dropbox-auth-csrf-token";
-		DbxSessionStore csrfTokenStore = new DbxStandardSessionStore(session,
-				sessionKey);
+		DbxSessionStore csrfTokenStore = new DbxStandardSessionStore(
+				wrappedSession.getHttpSession(), sessionKey);
+		String appId = wrappedSession.getId();
 
 		DbxWebAuth webAuth = new DbxWebAuth(requestConfig, appInfo,
 				redirectUri, csrfTokenStore);
@@ -58,6 +60,7 @@ public abstract class DropBoxOAuthWindow extends
 
 		BasicCache<String, Object> cache = LocalCacheManager.getCache(appId);
 		cache.put(sessionKey, csrfTokenStore.get());
+
 		return authUrl;
 	}
 

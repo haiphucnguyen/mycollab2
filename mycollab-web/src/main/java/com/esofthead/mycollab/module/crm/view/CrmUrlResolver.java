@@ -28,9 +28,15 @@ import com.esofthead.mycollab.module.crm.view.lead.LeadUrlResolver;
 import com.esofthead.mycollab.module.crm.view.opportunity.OpportunityUrlResolver;
 import com.esofthead.mycollab.module.crm.view.setting.CrmSettingUrlResolver;
 import com.esofthead.mycollab.shell.events.ShellEvent;
-import com.esofthead.mycollab.vaadin.mvp.ModuleHelper;
-import com.esofthead.mycollab.vaadin.mvp.UrlResolver;
+import com.esofthead.mycollab.vaadin.desktop.ui.ModuleHelper;
+import com.esofthead.mycollab.vaadin.desktop.ui.UrlResolver;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class CrmUrlResolver extends UrlResolver {
 	public UrlResolver build() {
 		this.addSubResolver("dashboard", new CrmDashboardUrlResolver());

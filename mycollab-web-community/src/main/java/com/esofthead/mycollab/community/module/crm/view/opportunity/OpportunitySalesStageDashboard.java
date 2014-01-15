@@ -35,10 +35,15 @@ import com.esofthead.mycollab.module.crm.service.OpportunityService;
 import com.esofthead.mycollab.module.crm.view.CrmDataTypeFactory;
 import com.esofthead.mycollab.module.crm.view.opportunity.IOpportunitySalesStageDashboard;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.vaadin.ui.ViewComponent;
-import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.vaadin.ui.ComponentContainer;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ */
 @ViewComponent
 public class OpportunitySalesStageDashboard extends
 		PieChartWrapper<OpportunitySearchCriteria> implements
@@ -46,7 +51,7 @@ public class OpportunitySalesStageDashboard extends
 	private static final long serialVersionUID = 1L;
 
 	public OpportunitySalesStageDashboard() {
-		this(388, 265);
+		this(400, 265);
 	}
 
 	public OpportunitySalesStageDashboard(final int width, final int height) {

@@ -24,6 +24,12 @@ import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Layout;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
 public abstract class CallFormLayoutFactory implements IFormLayoutFactory {
 
 	private static final long serialVersionUID = 1L;
@@ -58,7 +64,7 @@ public abstract class CallFormLayoutFactory implements IFormLayoutFactory {
 	protected abstract Layout createBottomPanel();
 
 	@Override
-	public void attachField(Object propertyId, Field field) {
-		informationLayout.attachField(propertyId, field);
+	public boolean attachField(Object propertyId, Field<?> field) {
+		return informationLayout.attachField(propertyId, field);
 	}
 }

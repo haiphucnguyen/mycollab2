@@ -14,10 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.module.project.view.task;
 
 import java.util.Set;
@@ -34,16 +31,17 @@ import com.esofthead.mycollab.module.project.events.TaskListEvent.SaveReoderTask
 import com.esofthead.mycollab.module.project.service.ProjectTaskListService;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
-import com.esofthead.mycollab.vaadin.ui.MessageBox;
-import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.vaadin.ui.AbstractPresenter;
+import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.vaadin.ui.ComponentContainer;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class TaskGroupReorderPresenter extends
 		AbstractPresenter<TaskGroupReorderView> {
@@ -51,7 +49,10 @@ public class TaskGroupReorderPresenter extends
 
 	public TaskGroupReorderPresenter() {
 		super(TaskGroupReorderView.class);
+	}
 
+	@Override
+	protected void postInitView() {
 		EventBus.getInstance()
 				.addListener(
 						new ApplicationEventListener<TaskListEvent.SaveReoderTaskList>() {
@@ -92,7 +93,7 @@ public class TaskGroupReorderPresenter extends
 					.getView(ProjectBreadcrumb.class);
 			breadCrumb.gotoTaskListReorder();
 		} else {
-			MessageBox.showMessagePermissionAlert();
+			NotificationUtil.showMessagePermissionAlert();
 		}
 	}
 }

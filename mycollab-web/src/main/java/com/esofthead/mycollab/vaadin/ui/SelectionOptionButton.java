@@ -19,30 +19,40 @@ package com.esofthead.mycollab.vaadin.ui;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.vaadin.hene.splitbutton.SplitButton;
+import com.esofthead.mycollab.vaadin.ui.SplitButton;
 
 import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
 import com.esofthead.mycollab.vaadin.events.SelectionOptionHandler;
 import com.esofthead.mycollab.web.MyCollabResource;
-import com.vaadin.terminal.Resource;
+import com.vaadin.server.Resource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.VerticalLayout;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
 public class SelectionOptionButton extends SplitButton implements
 		HasSelectionOptionHandlers {
 
 	private static final long serialVersionUID = 1L;
 	private boolean isSelectAll = false;
 	private boolean isSelected = false;
+
 	@SuppressWarnings("rawtypes")
 	private final HasSelectableItemHandlers selectableItemHandlers;
+
 	private static Resource selectIcon = MyCollabResource
 			.newResource("icons/16/checkbox.png");
 	private static Resource unSelectIcon = MyCollabResource
 			.newResource("icons/16/checkbox_empty.png");
+
 	private Set<SelectionOptionHandler> handlers;
+
 	private final Button selectAllBtn;
 	private final Button selectThisPageBtn;
 	private final Button deSelectBtn;
@@ -58,7 +68,7 @@ public class SelectionOptionButton extends SplitButton implements
 		addClickListener(new SplitButtonClickListener() {
 			@Override
 			public void splitButtonClick(final SplitButtonClickEvent event) {
-				toogleChangeOption();
+				toggleChangeOption();
 			}
 		});
 
@@ -81,28 +91,28 @@ public class SelectionOptionButton extends SplitButton implements
 		final VerticalLayout selectContent = new VerticalLayout();
 		selectContent.setWidth("150px");
 
-		selectAllBtn = new Button("", new Button.ClickListener() {
+		selectAllBtn = new ButtonLink("", new Button.ClickListener() {
 			@Override
 			public void buttonClick(final ClickEvent event) {
 				isSelectAll = true;
 				SelectionOptionButton.this
 						.setIcon(SelectionOptionButton.selectIcon);
 				fireSelectAll();
+                SelectionOptionButton.this.setPopupVisible(false);
 			}
 		});
-		selectAllBtn.setStyleName("link");
 		selectContent.addComponent(selectAllBtn);
 
-		selectThisPageBtn = new Button("", new Button.ClickListener() {
+		selectThisPageBtn = new ButtonLink("", new Button.ClickListener() {
 			@Override
 			public void buttonClick(final ClickEvent event) {
 				isSelectAll = false;
 				SelectionOptionButton.this
 						.setIcon(SelectionOptionButton.selectIcon);
 				fireSelectCurrentPage();
+                SelectionOptionButton.this.setPopupVisible(false);
 			}
 		});
-		selectThisPageBtn.setStyleName("link");
 		selectContent.addComponent(selectThisPageBtn);
 
 		deSelectBtn = new ButtonLink("Deselect All",
@@ -113,11 +123,11 @@ public class SelectionOptionButton extends SplitButton implements
 						SelectionOptionButton.this
 								.setIcon(SelectionOptionButton.unSelectIcon);
 						fireDeselect();
+                        SelectionOptionButton.this.setPopupVisible(false);
 					}
 				});
-		deSelectBtn.setStyleName("link");
 		selectContent.addComponent(deSelectBtn);
-		setComponent(selectContent);
+		setContent(selectContent);
 	}
 
 	@Override
@@ -160,7 +170,7 @@ public class SelectionOptionButton extends SplitButton implements
 		SelectionOptionButton.this.setIcon(icon);
 	}
 
-	private void toogleChangeOption() {
+	private void toggleChangeOption() {
 		if (isSelectAll) {
 			return;
 		}
@@ -168,7 +178,7 @@ public class SelectionOptionButton extends SplitButton implements
 		isSelected = !isSelected;
 		final Resource icon = (isSelected) ? SelectionOptionButton.selectIcon
 				: SelectionOptionButton.unSelectIcon;
-		SelectionOptionButton.this.setIcon(icon);
+		this.setIcon(icon);
 
 		if (isSelected) {
 			fireSelectCurrentPage();

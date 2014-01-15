@@ -14,34 +14,22 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.module.project.view.bug;
+
+import java.util.Arrays;
 
 import com.esofthead.mycollab.module.project.ui.components.MultiSelectComp;
 
-
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
-@SuppressWarnings("serial")
-public class BugStaticItemMultiSelectField extends MultiSelectComp {
+public class BugStaticItemMultiSelectField extends MultiSelectComp<String> {
+	private static final long serialVersionUID = 1L;
 
-	private String[] arrItemData;
-	
-	public BugStaticItemMultiSelectField(String[] arrItemData, String width) {
-		super("", width);
-		this.arrItemData = arrItemData;
-	}
-
-	@Override
-	protected void initData() {
-		for (int i = 0; i < arrItemData.length; i++) {
-			dataList.add(arrItemData[i]);
-		}
-
+	public BugStaticItemMultiSelectField(String[] arrItemData) {
+		super("", Arrays.asList(arrItemData));
 	}
 }

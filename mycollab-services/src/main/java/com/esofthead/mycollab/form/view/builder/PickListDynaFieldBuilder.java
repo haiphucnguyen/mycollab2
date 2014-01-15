@@ -20,7 +20,7 @@ import com.esofthead.mycollab.form.view.builder.type.PickListDynaField;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  * 
  * @param <T>
  */

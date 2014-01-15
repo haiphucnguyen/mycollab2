@@ -31,11 +31,13 @@ import com.esofthead.mycollab.module.project.service.ItemTimeLoggingService;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserLink;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.DefaultPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
-import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -44,11 +46,19 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.Table.ColumnGenerator;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
-@SuppressWarnings("serial")
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ * @param <V>
+ */
 public abstract class CompTimeLogSheet<V extends ValuedBean> extends
 		HorizontalLayout {
+	private static final long serialVersionUID = 1L;
 
 	protected DefaultPagedBeanTable<ItemTimeLoggingService, ItemTimeLoggingSearchCriteria, SimpleItemTimeLogging> tableItem;
 	protected ItemTimeLoggingService itemTimeLoggingService;
@@ -69,6 +79,10 @@ public abstract class CompTimeLogSheet<V extends ValuedBean> extends
 		this.initUI();
 	}
 
+	public void setBean(V bean) {
+		this.bean = bean;
+	}
+
 	private void initUI() {
 
 		this.investTimeLayout = this.new AddTimeInvest();
@@ -78,6 +92,11 @@ public abstract class CompTimeLogSheet<V extends ValuedBean> extends
 		this.addComponent(this.updateTimeRemainLayout);
 		this.setExpandRatio(this.updateTimeRemainLayout, 1);
 		this.setWidth("100%");
+	}
+
+	public void loadTimeValue() {
+		investTimeLayout.loadTimeInvestItem();
+		updateTimeRemainLayout.setUpdateTimeValue();
 	}
 
 	protected double getInvestValue() {
@@ -101,6 +120,7 @@ public abstract class CompTimeLogSheet<V extends ValuedBean> extends
 	}
 
 	private class AddTimeInvest extends VerticalLayout {
+		private static final long serialVersionUID = 1L;
 
 		public Label lbTimeTotal;
 
@@ -135,6 +155,7 @@ public abstract class CompTimeLogSheet<V extends ValuedBean> extends
 
 			CompTimeLogSheet.this.btnAdd = new Button("Add",
 					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
 
 						@Override
 						public void buttonClick(final ClickEvent event) {
@@ -146,10 +167,10 @@ public abstract class CompTimeLogSheet<V extends ValuedBean> extends
 									CompTimeLogSheet.this.saveTimeInvest();
 									AddTimeInvest.this.loadTimeInvestItem();
 									AddTimeInvest.this.numberField
-											.setValue(0.0);
+											.setValue("0.0");
 								}
 							} catch (final Exception e) {
-								AddTimeInvest.this.numberField.setValue(0.0);
+								AddTimeInvest.this.numberField.setValue("0.0");
 							}
 						}
 
@@ -172,7 +193,8 @@ public abstract class CompTimeLogSheet<V extends ValuedBean> extends
 					.setComponentAlignment(lbIntructAdd, Alignment.MIDDLE_LEFT);
 
 			CompTimeLogSheet.this.tableItem = new DefaultPagedBeanTable<ItemTimeLoggingService, ItemTimeLoggingSearchCriteria, SimpleItemTimeLogging>(
-					ApplicationContextUtil.getSpringBean(ItemTimeLoggingService.class),
+					ApplicationContextUtil
+							.getSpringBean(ItemTimeLoggingService.class),
 					SimpleItemTimeLogging.class, Arrays.asList(
 							new TableViewField("User", "logUserFullName",
 									UIConstants.TABLE_X_LABEL_WIDTH),
@@ -229,7 +251,7 @@ public abstract class CompTimeLogSheet<V extends ValuedBean> extends
 							final SimpleItemTimeLogging itemTimeLogging = CompTimeLogSheet.this.tableItem
 									.getBeanByIndex(itemId);
 							final Label l = new Label();
-							l.setValue(itemTimeLogging.getLogvalue());
+							l.setValue(itemTimeLogging.getLogvalue() + "");
 							return l;
 						}
 					});
@@ -246,38 +268,38 @@ public abstract class CompTimeLogSheet<V extends ValuedBean> extends
 									.getBeanByIndex(itemId);
 							final Button deleteBtn = new Button(null,
 									new Button.ClickListener() {
+										private static final long serialVersionUID = 1L;
+
 										@Override
 										public void buttonClick(
 												final ClickEvent event) {
-											ConfirmDialog
-													.show(AppContext
-															.getApplication()
-															.getMainWindow(),
-															"Please Confirm:",
-															"Are you sure to delete this invest?",
-															"Yes",
-															"No",
-															new ConfirmDialog.Listener() {
-																private static final long serialVersionUID = 1L;
+											ConfirmDialogExt.show(
+													UI.getCurrent(),
+													"Please Confirm:",
+													"Are you sure to delete this invest?",
+													"Yes",
+													"No",
+													new ConfirmDialog.Listener() {
+														private static final long serialVersionUID = 1L;
 
-																@Override
-																public void onClose(
-																		final ConfirmDialog dialog) {
-																	if (dialog
-																			.isConfirmed()) {
-																		CompTimeLogSheet.this.itemTimeLoggingService
-																				.removeWithSession(
-																						itemTimeLogging
-																								.getId(),
-																						AppContext
-																								.getUsername(),
-																						AppContext
-																								.getAccountId());
-																		AddTimeInvest.this
-																				.loadTimeInvestItem();
-																	}
-																}
-															});
+														@Override
+														public void onClose(
+																final ConfirmDialog dialog) {
+															if (dialog
+																	.isConfirmed()) {
+																CompTimeLogSheet.this.itemTimeLoggingService
+																		.removeWithSession(
+																				itemTimeLogging
+																						.getId(),
+																				AppContext
+																						.getUsername(),
+																				AppContext
+																						.getAccountId());
+																AddTimeInvest.this
+																		.loadTimeInvestItem();
+															}
+														}
+													});
 										}
 									});
 							deleteBtn.setStyleName("link");
@@ -304,8 +326,6 @@ public abstract class CompTimeLogSheet<V extends ValuedBean> extends
 			CompTimeLogSheet.this.tableItem.setWidth("100%");
 
 			this.addComponent(CompTimeLogSheet.this.tableItem);
-			this.loadTimeInvestItem();
-			this.setTotalTimeValue();
 		}
 
 		private void loadTimeInvestItem() {
@@ -319,7 +339,7 @@ public abstract class CompTimeLogSheet<V extends ValuedBean> extends
 			double total = 0;
 			final ItemTimeLoggingSearchCriteria searchCriteria = CompTimeLogSheet.this
 					.getItemSearchCriteria();
-			final List<SimpleItemTimeLogging> listTime = CompTimeLogSheet.this.itemTimeLoggingService
+			final List<SimpleItemTimeLogging> listTime = itemTimeLoggingService
 					.findPagableListByCriteria(new SearchRequest<ItemTimeLoggingSearchCriteria>(
 							searchCriteria, 0, Integer.MAX_VALUE));
 			for (final SimpleItemTimeLogging simpleItemTimeLogging : listTime) {
@@ -330,12 +350,13 @@ public abstract class CompTimeLogSheet<V extends ValuedBean> extends
 
 		public void setTotalTimeValue() {
 			if (this.getTotalInvest() > 0) {
-				this.lbTimeTotal.setValue(this.getTotalInvest());
+				this.lbTimeTotal.setValue(this.getTotalInvest() + "");
 			}
 		}
 	}
 
 	private class UpdateTimeRemain extends VerticalLayout {
+		private static final long serialVersionUID = 1L;
 
 		public NumbericTextField numberField;
 
@@ -344,7 +365,7 @@ public abstract class CompTimeLogSheet<V extends ValuedBean> extends
 		public UpdateTimeRemain() {
 
 			this.setSpacing(true);
-			this.setMargin(false, false, false, true);
+			this.setMargin(new MarginInfo(false, false, false, true));
 			this.setWidth("100%");
 
 			final VerticalLayout updateLayout = new VerticalLayout();
@@ -372,6 +393,7 @@ public abstract class CompTimeLogSheet<V extends ValuedBean> extends
 
 			CompTimeLogSheet.this.btnAdd = new Button("Update",
 					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
 
 						@Override
 						public void buttonClick(final ClickEvent event) {
@@ -386,10 +408,11 @@ public abstract class CompTimeLogSheet<V extends ValuedBean> extends
 											.setValue(UpdateTimeRemain.this.numberField
 													.getValue());
 									UpdateTimeRemain.this.numberField
-											.setValue(0.0);
+											.setValue("0.0");
 								}
 							} catch (final Exception e) {
-								UpdateTimeRemain.this.numberField.setValue(0.0);
+								UpdateTimeRemain.this.numberField
+										.setValue("0.0");
 							}
 						}
 
@@ -407,13 +430,12 @@ public abstract class CompTimeLogSheet<V extends ValuedBean> extends
 			addLayout.addComponent(lbIntructAdd);
 			addLayout
 					.setComponentAlignment(lbIntructAdd, Alignment.MIDDLE_LEFT);
-			this.setUpdateTimeValue();
 		}
 
 		public void setUpdateTimeValue() {
 			if (CompTimeLogSheet.this.getEstimateRemainTime() > -1) {
 				this.lbUpdateTime.setValue(CompTimeLogSheet.this
-						.getEstimateRemainTime());
+						.getEstimateRemainTime() + "");
 			}
 		}
 	}
@@ -422,13 +444,13 @@ public abstract class CompTimeLogSheet<V extends ValuedBean> extends
 		private static final long serialVersionUID = 1L;
 
 		@Override
-		protected void setValue(final Object newValue,
+		protected void setValue(final String newValue,
 				final boolean repaintIsNotNeeded) {
 			try {
-				final double d = Double.parseDouble((String) newValue);
+				final String d = Double.parseDouble((String) newValue) + "";
 				super.setValue(d, repaintIsNotNeeded);
 			} catch (final Exception e) {
-				super.setValue(0.0, repaintIsNotNeeded);
+				super.setValue("0.0", repaintIsNotNeeded);
 			}
 		}
 	}

@@ -26,7 +26,7 @@ import com.esofthead.mycollab.module.project.view.bug.IPrioritySummaryChartWidge
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.vaadin.ui.ViewComponent;
+import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.vaadin.addon.charts.Chart;
 import com.vaadin.addon.charts.model.ChartType;
 import com.vaadin.addon.charts.model.Configuration;
@@ -39,6 +39,12 @@ import com.vaadin.addon.charts.model.Tooltip;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @ViewComponent
 public class PrioritySummaryChartWidget extends CssLayout implements
 		IPrioritySummaryChartWidget {
@@ -108,7 +114,6 @@ public class PrioritySummaryChartWidget extends CssLayout implements
 	@Override
 	public void addViewListener(
 			ApplicationEventListener<? extends ApplicationEvent> listener) {
-		// TODO Auto-generated method stub
 
 	}
 }

@@ -16,14 +16,20 @@
  */
 package com.esofthead.mycollab.module.project.view;
 
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ControllerRegistry;
 import com.esofthead.mycollab.vaadin.mvp.IModule;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
-import com.esofthead.mycollab.vaadin.ui.ViewComponent;
+import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @ViewComponent
-public class ProjectModule extends AbstractView implements IModule {
+public class ProjectModule extends AbstractPageView implements IModule {
 	private static final long serialVersionUID = 1L;
 
 	public ProjectModule() {

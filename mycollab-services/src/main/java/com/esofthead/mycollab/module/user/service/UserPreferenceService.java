@@ -14,10 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-services.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.module.user.service;
 
 import com.esofthead.mycollab.core.cache.CacheKey;
@@ -27,7 +24,7 @@ import com.esofthead.mycollab.module.user.domain.UserPreference;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  */
 public interface UserPreferenceService extends
 		ICrudService<Integer, UserPreference> {

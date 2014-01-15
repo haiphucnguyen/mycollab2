@@ -26,6 +26,12 @@ import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Table;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
 public interface IPagedBeanTable<S extends SearchCriteria, T> extends
 		HasSelectableItemHandlers<T>, HasPagableHandlers, Component, IBeanTable {
 

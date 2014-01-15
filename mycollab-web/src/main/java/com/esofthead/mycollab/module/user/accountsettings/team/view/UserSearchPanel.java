@@ -14,10 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.module.user.accountsettings.team.view;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
@@ -31,11 +28,10 @@ import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
 import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
 import com.esofthead.mycollab.module.user.events.UserEvent;
 import com.esofthead.mycollab.security.RolePermissionCollections;
-import com.esofthead.mycollab.shell.view.ScreenSize;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
-import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -47,7 +43,8 @@ import com.vaadin.ui.themes.Reindeer;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class UserSearchPanel extends GenericSearchPanel<UserSearchCriteria> {
 	private static final long serialVersionUID = 1L;
@@ -55,15 +52,13 @@ public class UserSearchPanel extends GenericSearchPanel<UserSearchCriteria> {
 
 	public UserSearchPanel() {
 		this.setCompositionRoot(new UserBasicSearchLayout());
-		if (ScreenSize.hasSupport1024Pixels()) {
-			this.setWidth("750px");
-		}
 	}
 
 	private HorizontalLayout createSearchTopPanel() {
 		final HorizontalLayout layout = new HorizontalLayout();
 		layout.setWidth("100%");
 		layout.setSpacing(true);
+		layout.setMargin(true);
 
 		final Label searchtitle = new Label("Users");
 		searchtitle.setStyleName(Reindeer.LABEL_H2);
@@ -112,6 +107,7 @@ public class UserSearchPanel extends GenericSearchPanel<UserSearchCriteria> {
 			final HorizontalLayout basicSearchBody = new HorizontalLayout();
 			basicSearchBody.addComponent(new Label("Name"));
 			basicSearchBody.setSpacing(true);
+			basicSearchBody.setMargin(true);
 
 			final HorizontalLayout searchComp = new HorizontalLayout();
 			searchComp.addStyleName("search-comp");
@@ -123,7 +119,7 @@ public class UserSearchPanel extends GenericSearchPanel<UserSearchCriteria> {
 			searchBtn.setStyleName("search-icon-button");
 			searchBtn.setIcon(MyCollabResource
 					.newResource("icons/16/search_white.png"));
-			searchBtn.addListener(new Button.ClickListener() {
+			searchBtn.addClickListener(new Button.ClickListener() {
 				private static final long serialVersionUID = 1L;
 
 				@Override
@@ -165,7 +161,8 @@ public class UserSearchPanel extends GenericSearchPanel<UserSearchCriteria> {
 									RegisterStatusConstants.SENT_VERIFICATION_EMAIL,
 									RegisterStatusConstants.VERIFICATING }));
 
-			if (StringUtils.isNotNullOrEmpty((String) this.nameField.getValue())) {
+			if (StringUtils
+					.isNotNullOrEmpty((String) this.nameField.getValue())) {
 				UserSearchPanel.this.searchCriteria
 						.setDisplayName(new StringSearchField(SearchField.AND,
 								(String) this.nameField.getValue()));

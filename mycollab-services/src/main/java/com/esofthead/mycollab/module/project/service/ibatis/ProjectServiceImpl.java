@@ -61,6 +61,12 @@ import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.security.AccessPermissionFlag;
 import com.esofthead.mycollab.security.PermissionMap;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @Service
 @Transactional
 @Traceable(module = ModuleNameConstants.PRJ, nameField = "name", type = ProjectContants.PROJECT, extraFieldName = "id")

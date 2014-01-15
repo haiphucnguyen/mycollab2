@@ -28,31 +28,40 @@ import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.ContactService;
 import com.esofthead.mycollab.module.user.UserLinkUtils;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
+import com.esofthead.mycollab.vaadin.ui.CheckBoxDecor;
 import com.esofthead.mycollab.vaadin.ui.EmailLink;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.vaadin.ui.UserLink;
 import com.esofthead.mycollab.vaadin.ui.table.DefaultPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
-import com.esofthead.mycollab.web.AppContext;
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.H3;
 import com.hp.gagawa.java.elements.Img;
 import com.hp.gagawa.java.elements.Td;
 import com.hp.gagawa.java.elements.Tr;
+import com.vaadin.data.Property.ValueChangeEvent;
+import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.Table.ColumnGenerator;
 
-@SuppressWarnings("serial")
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class ContactTableDisplay
 		extends
 		DefaultPagedBeanTable<ContactService, ContactSearchCriteria, SimpleContact> {
+	private static final long serialVersionUID = 1L;
+
 	private static Logger log = LoggerFactory
 			.getLogger(ContactTableDisplay.class);
 
@@ -72,23 +81,26 @@ public class ContactTableDisplay
 				SimpleContact.class, viewId, requiredColumn, displayColumns);
 
 		addGeneratedColumn("selected", new Table.ColumnGenerator() {
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public Object generateCell(final Table source, final Object itemId,
 					final Object columnId) {
-				final CheckBox cb = new CheckBox("", false);
-				cb.setImmediate(true);
-				cb.addListener(new Button.ClickListener() {
+				final CheckBoxDecor cb = new CheckBoxDecor("", false);
+				cb.addValueChangeListener(new ValueChangeListener() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
-					public void buttonClick(final Button.ClickEvent event) {
+					public void valueChange(ValueChangeEvent event) {
 						final SimpleContact contact = ContactTableDisplay.this
 								.getBeanByIndex(itemId);
 						ContactTableDisplay.this.fireSelectItemEvent(contact);
 						fireTableEvent(new TableClickEvent(
 								ContactTableDisplay.this, contact, "selected"));
+
 					}
 				});
+
 				final SimpleContact contact = ContactTableDisplay.this
 						.getBeanByIndex(itemId);
 				contact.setExtraData(cb);
@@ -97,6 +109,8 @@ public class ContactTableDisplay
 		});
 
 		addGeneratedColumn("contactName", new ColumnGenerator() {
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public Object generateCell(final Table source, final Object itemId,
 					final Object columnId) {
@@ -155,6 +169,7 @@ public class ContactTableDisplay
 				if (contact.getAccountName() != null) {
 					ButtonLink accountLink = new ButtonLink(contact
 							.getAccountName(), new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
 
 						@Override
 						public void buttonClick(ClickEvent event) {

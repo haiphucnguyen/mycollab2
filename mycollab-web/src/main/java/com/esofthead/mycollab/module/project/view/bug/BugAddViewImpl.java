@@ -19,36 +19,45 @@ package com.esofthead.mycollab.module.project.view.bug;
 import java.util.List;
 
 import com.esofthead.mycollab.module.file.AttachmentType;
+import com.esofthead.mycollab.module.project.ui.components.AbstractEditItemComp;
 import com.esofthead.mycollab.module.project.ui.components.DefaultProjectFormViewFieldFactory.ProjectFormAttachmentUploadField;
 import com.esofthead.mycollab.module.project.view.milestone.MilestoneComboBox;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberComboBox;
-import com.esofthead.mycollab.module.tracker.domain.BugWithBLOBs;
 import com.esofthead.mycollab.module.tracker.domain.Component;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.Version;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
+import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
-import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
-import com.esofthead.mycollab.vaadin.ui.ViewComponent;
-import com.vaadin.data.Item;
+import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
+import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
+import com.esofthead.mycollab.vaadin.ui.NumberField;
+import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.Property;
-import com.vaadin.data.util.BeanItem;
+import com.vaadin.server.Resource;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
+import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.TextField;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @ViewComponent
-public class BugAddViewImpl extends AbstractView implements BugAddView {
+public class BugAddViewImpl extends AbstractEditItemComp<SimpleBug> implements
+		BugAddView {
 
 	private static final long serialVersionUID = 1L;
 
-	private final EditForm editForm;
-	private SimpleBug bug;
 	private ProjectFormAttachmentUploadField attachmentUploadField;
 
 	private ComponentMultiSelectField componentSelect;
@@ -56,19 +65,9 @@ public class BugAddViewImpl extends AbstractView implements BugAddView {
 	private VersionMultiSelectField fixedVersionSelect;
 
 	public BugAddViewImpl() {
-		super();
-		this.editForm = new EditForm();
-		this.addComponent(this.editForm);
-		this.setMargin(true);
+		this.setMargin(new MarginInfo(true, false, false, false));
 	}
-
-	@Override
-	public void editItem(final SimpleBug item) {
-		this.bug = item;
-		this.editForm.setItemDataSource(new BeanItem<BugWithBLOBs>(item));
-
-	}
-
+	
 	@Override
 	public ProjectFormAttachmentUploadField getAttachUploadField() {
 		return this.attachmentUploadField;
@@ -89,170 +88,130 @@ public class BugAddViewImpl extends AbstractView implements BugAddView {
 		return this.fixedVersionSelect.getSelectedItems();
 	}
 
-	private class EditForm extends AdvancedEditBeanForm<SimpleBug> {
+	private class EditFormFieldFactory extends
+			AbstractBeanFieldGroupEditFieldFactory<SimpleBug> {
 
 		private static final long serialVersionUID = 1L;
 
+		public EditFormFieldFactory(GenericBeanForm<SimpleBug> form) {
+			super(form);
+		}
+
 		@Override
-		public void setItemDataSource(final Item newDataSource) {
-			this.setFormLayoutFactory(new FormLayoutFactory());
-			this.setFormFieldFactory(new EditFormFieldFactory());
-			super.setItemDataSource(newDataSource);
-		}
+		protected Field<?> onCreateField(final Object propertyId) {
 
-		class FormLayoutFactory extends BugAddFormLayoutFactory {
-
-			private static final long serialVersionUID = 1L;
-
-			public FormLayoutFactory() {
-				super((BugAddViewImpl.this.bug.getId() == null) ? "Create Bug"
-						: BugAddViewImpl.this.bug.getSummary());
-			}
-
-			private Layout createButtonControls() {
-				final HorizontalLayout controlPanel = new HorizontalLayout();
-				final Layout controlButtons = (new EditFormControlsGenerator<SimpleBug>(
-						EditForm.this)).createButtonControls();
-				controlButtons.setSizeUndefined();
-				controlPanel.addComponent(controlButtons);
-				controlPanel.setWidth("100%");
-				controlPanel.setComponentAlignment(controlButtons,
-						Alignment.MIDDLE_CENTER);
-				return controlPanel;
-			}
-
-			@Override
-			protected Layout createTopPanel() {
-				return this.createButtonControls();
-			}
-
-			@Override
-			protected Layout createBottomPanel() {
-				return this.createButtonControls();
-			}
-		}
-
-		private class EditFormFieldFactory extends DefaultEditFormFieldFactory {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected Field onCreateField(final Item item,
-					final Object propertyId,
-					final com.vaadin.ui.Component uiContext) {
-
-				if (propertyId.equals("environment")) {
-					final RichTextArea field = new RichTextArea("", "");
-					field.setNullRepresentation("");
-					return field;
-				} else if (propertyId.equals("description")) {
-					final RichTextArea field = new RichTextArea("", "");
-					field.setNullRepresentation("");
-					return field;
-				} else if (propertyId.equals("priority")) {
-					if (BugAddViewImpl.this.bug.getPriority() == null) {
-						BugAddViewImpl.this.bug
-								.setPriority(BugPriorityStatusConstants.PRIORITY_MAJOR);
-					}
-					return new BugPriorityComboBox();
-				} else if (propertyId.equals("assignuser")) {
-					return new ProjectMemberComboBox();
-				} else if (propertyId.equals("id")) {
-					BugAddViewImpl.this.attachmentUploadField = new ProjectFormAttachmentUploadField();
-					if (BugAddViewImpl.this.bug.getId() != null) {
-						BugAddViewImpl.this.attachmentUploadField
-								.getAttachments(bug.getProjectid(),
-										AttachmentType.PROJECT_BUG_TYPE,
-										BugAddViewImpl.this.bug.getId());
-					}
-					return BugAddViewImpl.this.attachmentUploadField;
-				} else if (propertyId.equals("severity")) {
-					if (BugAddViewImpl.this.bug.getSeverity() == null) {
-						BugAddViewImpl.this.bug
-								.setSeverity(BugSeverityConstants.MAJOR);
-					}
-					return new BugSeverityComboBox();
-				} else if (propertyId.equals("components")) {
-					BugAddViewImpl.this.componentSelect = new ComponentMultiSelectField(
-							"100%");
-					if (BugAddViewImpl.this.bug.getComponents() != null
-							&& BugAddViewImpl.this.bug.getComponents().size() > 0) {
-						BugAddViewImpl.this.componentSelect
-								.setSelectedItems(BugAddViewImpl.this.bug
-										.getComponents());
-					}
-					return BugAddViewImpl.this.componentSelect;
-				} else if (propertyId.equals("affectedVersions")) {
-					BugAddViewImpl.this.affectedVersionSelect = new VersionMultiSelectField(
-							"100%");
-					if (BugAddViewImpl.this.bug.getAffectedVersions() != null
-							&& BugAddViewImpl.this.bug.getAffectedVersions()
-									.size() > 0) {
-						BugAddViewImpl.this.affectedVersionSelect
-								.setSelectedItems(BugAddViewImpl.this.bug
-										.getAffectedVersions());
-					}
-					return BugAddViewImpl.this.affectedVersionSelect;
-				} else if (propertyId.equals("fixedVersions")) {
-					BugAddViewImpl.this.fixedVersionSelect = new VersionMultiSelectField(
-							"100%");
-					if (BugAddViewImpl.this.bug.getFixedVersions() != null
-							&& BugAddViewImpl.this.bug.getFixedVersions()
-									.size() > 0) {
-						BugAddViewImpl.this.fixedVersionSelect
-								.setSelectedItems(BugAddViewImpl.this.bug
-										.getFixedVersions());
-					}
-					return BugAddViewImpl.this.fixedVersionSelect;
-				} else if (propertyId.equals("summary")) {
-					final TextField tf = new TextField();
-					tf.setNullRepresentation("");
-					tf.setRequired(true);
-					tf.setRequiredError("Please enter summary");
-					return tf;
-				} else if (propertyId.equals("milestoneid")) {
-					final MilestoneComboBox milestoneBox = new MilestoneComboBox();
-					milestoneBox
-							.addListener(new Property.ValueChangeListener() {
-								private static final long serialVersionUID = 1L;
-
-								@Override
-								public void valueChange(
-										Property.ValueChangeEvent event) {
-									String milestoneName = milestoneBox
-											.getItemCaption(milestoneBox
-													.getValue());
-									bug.setMilestoneName(milestoneName);
-								}
-							});
-					return milestoneBox;
-				} else if (propertyId.equals("estimatetime")
-						|| (propertyId.equals("estimateremaintime"))) {
-					return new NumbericTextField();
+			if (propertyId.equals("environment")) {
+				final RichTextArea field = new RichTextArea("", "");
+				field.setNullRepresentation("");
+				return field;
+			} else if (propertyId.equals("description")) {
+				final RichTextArea field = new RichTextArea("", "");
+				field.setNullRepresentation("");
+				return field;
+			} else if (propertyId.equals("priority")) {
+				if (beanItem.getPriority() == null) {
+					beanItem.setPriority(BugPriorityStatusConstants.PRIORITY_MAJOR);
 				}
+				return new BugPriorityComboBox();
+			} else if (propertyId.equals("assignuser")) {
+				return new ProjectMemberComboBox();
+			} else if (propertyId.equals("id")) {
+				BugAddViewImpl.this.attachmentUploadField = new ProjectFormAttachmentUploadField();
+				if (beanItem.getId() != null) {
+					BugAddViewImpl.this.attachmentUploadField.getAttachments(
+							beanItem.getProjectid(),
+							AttachmentType.PROJECT_BUG_TYPE, beanItem.getId());
+				}
+				return BugAddViewImpl.this.attachmentUploadField;
+			} else if (propertyId.equals("severity")) {
+				if (beanItem.getSeverity() == null) {
+					beanItem.setSeverity(BugSeverityConstants.MAJOR);
+				}
+				return new BugSeverityComboBox();
+			} else if (propertyId.equals("components")) {
+				componentSelect = new ComponentMultiSelectField();
+				return componentSelect;
+			} else if (propertyId.equals("affectedVersions")) {
+				affectedVersionSelect = new VersionMultiSelectField();
+				return affectedVersionSelect;
+			} else if (propertyId.equals("fixedVersions")) {
+				fixedVersionSelect = new VersionMultiSelectField();
+				return fixedVersionSelect;
+			} else if (propertyId.equals("summary")) {
+				final TextField tf = new TextField();
+				tf.setNullRepresentation("");
+				tf.setRequired(true);
+				tf.setRequiredError("Please enter summary");
+				return tf;
+			} else if (propertyId.equals("milestoneid")) {
+				final MilestoneComboBox milestoneBox = new MilestoneComboBox();
+				milestoneBox
+						.addValueChangeListener(new Property.ValueChangeListener() {
+							private static final long serialVersionUID = 1L;
 
-				return null;
+							@Override
+							public void valueChange(
+									Property.ValueChangeEvent event) {
+								String milestoneName = milestoneBox
+										.getItemCaption(milestoneBox.getValue());
+								beanItem.setMilestoneName(milestoneName);
+							}
+						});
+				return milestoneBox;
+			} else if (propertyId.equals("estimatetime")
+					|| (propertyId.equals("estimateremaintime"))) {
+				TextField field = new TextField();
+				NumberField.extend(field);
+				return field;
 			}
-		}
-	}
 
-	private static class NumbericTextField extends TextField {
-		private static final long serialVersionUID = 1L;
-
-		@Override
-		protected void setValue(final Object newValue,
-				final boolean repaintIsNotNeeded) {
-			try {
-				final double d = Double.parseDouble((String) newValue);
-				super.setValue(d, repaintIsNotNeeded);
-			} catch (final Exception e) {
-				super.setValue(0, repaintIsNotNeeded);
-			}
+			return null;
 		}
 	}
 
 	@Override
 	public HasEditFormHandlers<SimpleBug> getEditFormHandlers() {
 		return this.editForm;
+	}
+
+	@Override
+	protected String initFormTitle() {
+		return (beanItem.getId() == null) ? "Create Bug" : beanItem
+				.getSummary();
+	}
+
+	@Override
+	protected Resource initFormIconResource() {
+		return MyCollabResource.newResource("icons/22/project/menu_bug.png");
+	}
+
+	@Override
+	protected ComponentContainer createButtonControls() {
+		final HorizontalLayout controlPanel = new HorizontalLayout();
+		controlPanel.setMargin(true);
+		controlPanel.addStyleName("control-buttons");
+		final Layout controlButtons = (new EditFormControlsGenerator<SimpleBug>(
+				editForm)).createButtonControls();
+		controlButtons.setSizeUndefined();
+		controlPanel.addComponent(controlButtons);
+		controlPanel.setWidth("100%");
+		controlPanel.setComponentAlignment(controlButtons,
+				Alignment.MIDDLE_CENTER);
+		return controlPanel;
+	}
+
+	@Override
+	protected AdvancedEditBeanForm<SimpleBug> initPreviewForm() {
+		return new AdvancedEditBeanForm<SimpleBug>();
+	}
+
+	@Override
+	protected IFormLayoutFactory initFormLayoutFactory() {
+		return new BugAddFormLayoutFactory();
+	}
+
+	@Override
+	protected AbstractBeanFieldGroupEditFieldFactory<SimpleBug> initBeanFormFieldFactory() {
+		return new EditFormFieldFactory(editForm);
 	}
 }

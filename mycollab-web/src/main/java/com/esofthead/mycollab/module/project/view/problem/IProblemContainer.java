@@ -16,8 +16,14 @@
  */
 package com.esofthead.mycollab.module.project.view.problem;
 
-import com.esofthead.mycollab.vaadin.mvp.View;
+import com.esofthead.mycollab.vaadin.mvp.PageView;
 
-public interface IProblemContainer extends View {
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
+public interface IProblemContainer extends PageView {
 
 }

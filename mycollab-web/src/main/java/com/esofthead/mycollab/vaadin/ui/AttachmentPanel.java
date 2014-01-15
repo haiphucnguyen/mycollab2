@@ -38,7 +38,7 @@ import com.esofthead.mycollab.core.utils.ImageUtil;
 import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -47,12 +47,12 @@ import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Window;
 
 /**
  * 
- * @author haiphucnguyen
- *
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
  */
 public class AttachmentPanel extends VerticalLayout implements
 		AttachmentUploadComponent {
@@ -227,9 +227,8 @@ public class AttachmentPanel extends VerticalLayout implements
 			fileStores = new HashMap<String, File>();
 		}
 		if (fileStores.containsKey(fileName)) {
-			NotificationUtil.showNotification("File " + fileName
-					+ " is already existed.",
-					Window.Notification.TYPE_WARNING_MESSAGE);
+			NotificationUtil.showWarningNotification("File " + fileName
+					+ " is already existed.");
 		} else {
 			log.debug("Store file " + fileName + " in path "
 					+ file.getAbsolutePath() + " is exist: " + file.exists());

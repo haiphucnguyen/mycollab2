@@ -20,7 +20,7 @@ import com.esofthead.mycollab.form.view.builder.type.TextAreaDynaField;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  * 
  */
 public class TextAreaDynaFieldBuilder extends

@@ -19,11 +19,17 @@ package com.esofthead.mycollab.module.crm.view.activity;
 import com.esofthead.mycollab.module.crm.ui.components.HistoryLogWindow;
 import com.esofthead.mycollab.vaadin.ui.HistoryLogComponent;
 
-public class MeetingHistoryLogWindow extends HistoryLogWindow {
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
+class MeetingHistoryLogWindow extends HistoryLogWindow {
 	private static final long serialVersionUID = 1L;
 
-	public MeetingHistoryLogWindow(String module, String type, int typeid) {
-		super(module, type, typeid);
+	public MeetingHistoryLogWindow(String module, String type) {
+		super(module, type);
 
 		this.generateFieldDisplayHandler("subject", "Subject");
 		this.generateFieldDisplayHandler("status", "Status");

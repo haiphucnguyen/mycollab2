@@ -22,23 +22,31 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.eventmanager.ApplicationEvent;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
+import com.esofthead.mycollab.module.crm.domain.CampaignWithBLOBs;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.ui.FieldSelection;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
-import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class CampaignSelectionWindow extends Window {
 
 	private static final long serialVersionUID = 1L;
 	private CampaignSearchCriteria searchCriteria;
 	private CampaignTableDisplay tableItem;
-	private FieldSelection fieldSelection;
+	private FieldSelection<CampaignWithBLOBs> fieldSelection;
 
-	public CampaignSelectionWindow(FieldSelection fieldSelection) {
+	public CampaignSelectionWindow(
+			FieldSelection<CampaignWithBLOBs> fieldSelection) {
 		super("Campaign Name Lookup");
 		this.setWidth("800px");
 		this.fieldSelection = fieldSelection;
@@ -94,8 +102,7 @@ public class CampaignSelectionWindow extends Window {
 								.getData();
 						if ("campaignname".equals(event.getFieldName())) {
 							fieldSelection.fireValueChange(campaign);
-							CampaignSelectionWindow.this.getParent()
-									.removeWindow(CampaignSelectionWindow.this);
+							CampaignSelectionWindow.this.close();
 						}
 
 					}

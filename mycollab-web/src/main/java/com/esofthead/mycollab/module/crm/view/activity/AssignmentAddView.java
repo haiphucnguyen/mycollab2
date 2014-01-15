@@ -20,6 +20,12 @@ import com.esofthead.mycollab.module.crm.domain.Task;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.IFormAddView;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
 public interface AssignmentAddView extends IFormAddView<Task> {
 	HasEditFormHandlers<Task> getEditFormHandlers();
 }

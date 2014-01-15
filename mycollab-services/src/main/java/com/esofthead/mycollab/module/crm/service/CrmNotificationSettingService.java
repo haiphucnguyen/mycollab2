@@ -23,6 +23,12 @@ import com.esofthead.mycollab.core.cache.Cacheable;
 import com.esofthead.mycollab.core.persistence.service.ICrudService;
 import com.esofthead.mycollab.module.crm.domain.CrmNotificationSetting;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public interface CrmNotificationSettingService extends
 		ICrudService<Integer, CrmNotificationSetting> {
 	@Cacheable

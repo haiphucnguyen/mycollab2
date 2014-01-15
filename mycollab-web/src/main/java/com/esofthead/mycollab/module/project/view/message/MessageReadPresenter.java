@@ -14,10 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.module.project.view.message;
 
 import com.esofthead.mycollab.core.MyCollabException;
@@ -29,86 +26,92 @@ import com.esofthead.mycollab.module.project.events.MessageEvent;
 import com.esofthead.mycollab.module.project.service.MessageService;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.PreviewFormHandler;
-import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
-import com.esofthead.mycollab.vaadin.ui.MessageBox;
-import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.vaadin.ui.AbstractPresenter;
+import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.vaadin.ui.ComponentContainer;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
 
 public class MessageReadPresenter extends AbstractPresenter<MessageReadView> {
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    public MessageReadPresenter() {
-        super(MessageReadView.class);
-        bind();
-    }
+	public MessageReadPresenter() {
+		super(MessageReadView.class);
+	}
 
-    protected void bind() {
-        view.getPreviewFormHandlers().addFormHandler(
-                new PreviewFormHandler<SimpleMessage>() {
+	@Override
+	protected void postInitView() {
+		view.getPreviewFormHandlers().addFormHandler(
+				new PreviewFormHandler<SimpleMessage>() {
 
-                    @Override
-                    public void onEdit(SimpleMessage data) {
-                    }
+					@Override
+					public void onEdit(SimpleMessage data) {
+					}
 
-                    @Override
-                    public void onDelete(SimpleMessage data) {
-                    }
+					@Override
+					public void onDelete(SimpleMessage data) {
+					}
 
-                    @Override
-                    public void onClone(SimpleMessage data) {
-                    }
+					@Override
+					public void onClone(SimpleMessage data) {
+					}
 
-                    @Override
-                    public void onCancel() {
-                        EventBus.getInstance().fireEvent(
-                                new MessageEvent.GotoList(this, null));
-                    }
+					@Override
+					public void onCancel() {
+						EventBus.getInstance().fireEvent(
+								new MessageEvent.GotoList(this, null));
+					}
 
-                    @Override
-                    public void onAssign(SimpleMessage data) {
-                    }
+					@Override
+					public void onAssign(SimpleMessage data) {
+					}
 
-                    @Override
-                    public void gotoPrevious(SimpleMessage data) {
-                    }
+					@Override
+					public void gotoPrevious(SimpleMessage data) {
+					}
 
-                    @Override
-                    public void gotoNext(SimpleMessage data) {
-                    }
-                });
-    }
+					@Override
+					public void gotoNext(SimpleMessage data) {
+					}
 
-    @Override
-    protected void onGo(ComponentContainer container, ScreenData<?> data) {
-        if (CurrentProjectVariables
-                .canRead(ProjectRolePermissionCollections.MESSAGES)) {
-            MessageContainer messageContainer = (MessageContainer) container;
-            messageContainer.removeAllComponents();
-            messageContainer.addComponent(view.getWidget());
+					@Override
+					public void onExtraAction(String action, SimpleMessage data) {
 
-            if (data.getParams() instanceof Integer) {
-                MessageService messageService = ApplicationContextUtil
-                        .getSpringBean(MessageService.class);
-                SimpleMessage message = messageService.findMessageById(
-                        (Integer) data.getParams(), AppContext.getAccountId());
-                view.previewItem(message);
+					}
+				});
+	}
 
-                ProjectBreadcrumb breadCrumb = ViewManager
-                        .getView(ProjectBreadcrumb.class);
-                breadCrumb.gotoMessage(message);
-            } else {
-                throw new MyCollabException("Unhanddle this case yet");
-            }
-        } else {
-            MessageBox.showMessagePermissionAlert();
-        }
-    }
+	@Override
+	protected void onGo(ComponentContainer container, ScreenData<?> data) {
+		if (CurrentProjectVariables
+				.canRead(ProjectRolePermissionCollections.MESSAGES)) {
+			MessageContainer messageContainer = (MessageContainer) container;
+			messageContainer.removeAllComponents();
+			messageContainer.addComponent(view.getWidget());
+
+			if (data.getParams() instanceof Integer) {
+				MessageService messageService = ApplicationContextUtil
+						.getSpringBean(MessageService.class);
+				SimpleMessage message = messageService.findMessageById(
+						(Integer) data.getParams(), AppContext.getAccountId());
+				view.previewItem(message);
+
+				ProjectBreadcrumb breadCrumb = ViewManager
+						.getView(ProjectBreadcrumb.class);
+				breadCrumb.gotoMessage(message);
+			} else {
+				throw new MyCollabException("Unhanddle this case yet");
+			}
+		} else {
+			NotificationUtil.showMessagePermissionAlert();
+		}
+	}
 }

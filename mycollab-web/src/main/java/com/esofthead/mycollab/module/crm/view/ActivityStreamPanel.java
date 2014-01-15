@@ -14,10 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.module.crm.view;
 
 import java.util.Date;
@@ -39,22 +36,25 @@ import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.crm.CrmLinkGenerator;
+import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.crm.localization.CrmLocalizationTypeMap;
 import com.esofthead.mycollab.module.user.UserLinkUtils;
+import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
-import com.esofthead.mycollab.web.AppContext;
-import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class ActivityStreamPanel extends Depot {
 	private static final long serialVersionUID = 1L;
@@ -66,8 +66,7 @@ public class ActivityStreamPanel extends Depot {
 		this.activityStreamList = new CrmActivityStreamPagedList();
 
 		this.activityStreamList.addStyleName("stream-list");
-		this.bodyContent.addComponent(new LazyLoadWrapper(
-				this.activityStreamList));
+		this.bodyContent.addComponent(this.activityStreamList);
 		this.addStyleName("activity-panel");
 		((VerticalLayout) this.bodyContent).setMargin(false);
 	}
@@ -128,6 +127,54 @@ public class ActivityStreamPanel extends Depot {
 
 			try {
 				for (final SimpleActivityStream activityStream : currentListData) {
+
+					if (CrmTypeConstants.ACCOUNT.equals(activityStream
+							.getType())
+							&& !AppContext
+									.canRead(RolePermissionCollections.CRM_ACCOUNT)) {
+						continue;
+					} else if (CrmTypeConstants.CONTACT.equals(activityStream
+							.getType())
+							&& !AppContext
+									.canRead(RolePermissionCollections.CRM_CONTACT)) {
+						continue;
+					} else if (CrmTypeConstants.CAMPAIGN.equals(activityStream
+							.getType())
+							&& !AppContext
+									.canRead(RolePermissionCollections.CRM_CAMPAIGN)) {
+						continue;
+					} else if (CrmTypeConstants.LEAD.equals(activityStream
+							.getType())
+							&& !AppContext
+									.canRead(RolePermissionCollections.CRM_LEAD)) {
+						continue;
+					} else if (CrmTypeConstants.OPPORTUNITY
+							.equals(activityStream.getType())
+							&& !AppContext
+									.canRead(RolePermissionCollections.CRM_OPPORTUNITY)) {
+						continue;
+					} else if (CrmTypeConstants.CASE.equals(activityStream
+							.getType())
+							&& !AppContext
+									.canRead(RolePermissionCollections.CRM_CASE)) {
+						continue;
+					} else if (CrmTypeConstants.TASK.equals(activityStream
+							.getType())
+							&& !AppContext
+									.canRead(RolePermissionCollections.CRM_TASK)) {
+						continue;
+					} else if (CrmTypeConstants.MEETING.equals(activityStream
+							.getType())
+							&& !AppContext
+									.canRead(RolePermissionCollections.CRM_MEETING)) {
+						continue;
+					} else if (CrmTypeConstants.CALL.equals(activityStream
+							.getType())
+							&& !AppContext
+									.canRead(RolePermissionCollections.CRM_CALL)) {
+						continue;
+					}
+
 					final Date itemCreatedDate = activityStream
 							.getCreatedtime();
 
@@ -218,7 +265,7 @@ public class ActivityStreamPanel extends Depot {
 					}
 
 					final Label activityLink = new Label(content.toString(),
-							Label.CONTENT_XHTML);
+							ContentMode.HTML);
 					final CssLayout streamWrapper = new CssLayout();
 					streamWrapper.setWidth("100%");
 					streamWrapper.addStyleName("stream-wrapper");

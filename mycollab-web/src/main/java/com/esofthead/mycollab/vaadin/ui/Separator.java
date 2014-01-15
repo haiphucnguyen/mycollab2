@@ -16,13 +16,20 @@
  */
 package com.esofthead.mycollab.vaadin.ui;
 
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Label;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
 public class Separator extends Label {
 	private static final long serialVersionUID = 1L;
 
 	public Separator() {
-		super("&nbsp;", Label.CONTENT_XHTML);
+		super("&nbsp;", ContentMode.HTML);
 		this.setStyleName("separator");
 	}
 }

@@ -20,6 +20,12 @@ import com.esofthead.mycollab.core.persistence.service.IDefaultService;
 import com.esofthead.mycollab.module.crm.domain.Contract;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContractSearchCriteria;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public interface ContractService extends
 		IDefaultService<Integer, Contract, ContractSearchCriteria> {
 

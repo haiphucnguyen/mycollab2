@@ -16,10 +16,16 @@
  */
 package com.esofthead.mycollab.module.crm.view;
 
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
-import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class CrmHomePresenter extends CrmGenericPresenter<CrmHomeView> {
 
 	private static final long serialVersionUID = 1L;

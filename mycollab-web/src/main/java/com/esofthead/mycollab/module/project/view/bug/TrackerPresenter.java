@@ -23,13 +23,19 @@ import com.esofthead.mycollab.module.project.view.parameters.BugScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.ComponentScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.VersionScreenData;
 import com.esofthead.mycollab.shell.BillingPlanCheckerContext;
-import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.vaadin.mvp.IPresenter;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
+import com.esofthead.mycollab.vaadin.ui.AbstractPresenter;
 import com.vaadin.ui.ComponentContainer;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class TrackerPresenter extends AbstractPresenter<TrackerContainer> {
 
 	private static final long serialVersionUID = 1L;
@@ -48,7 +54,7 @@ public class TrackerPresenter extends AbstractPresenter<TrackerContainer> {
 		ProjectView projectViewContainer = (ProjectView) container;
 		projectViewContainer.gotoSubView("Bugs");
 
-		IPresenter presenter = null;
+		IPresenter<?> presenter = null;
 
 		if (BillingPlanCheckerContext.isBugComponentEnable()) {
 			if (ClassUtils.instanceOf(data, BugScreenData.Search.class,
@@ -88,7 +94,7 @@ public class TrackerPresenter extends AbstractPresenter<TrackerContainer> {
 	public void handleChain(ComponentContainer container,
 			PageActionChain pageActionChain) {
 
-		ScreenData pageAction = pageActionChain.pop();
+		ScreenData<?> pageAction = pageActionChain.pop();
 		onGo(container, pageAction);
 	}
 

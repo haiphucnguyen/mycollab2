@@ -14,10 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-services.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.module.project.service.ibatis;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +41,8 @@ import com.esofthead.mycollab.schedule.email.project.ProjectMilestoneRelayEmailN
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
 @Service
 @Transactional
@@ -56,10 +54,10 @@ public class MilestoneServiceImpl extends
 
 	@Autowired
 	protected MilestoneMapper milestoneMapper;
-	
+
 	@Autowired
 	protected MilestoneMapperExt milestoneMapperExt;
-	
+
 	@Autowired
 	private RelayEmailNotificationService relayEmailNotificationService;
 

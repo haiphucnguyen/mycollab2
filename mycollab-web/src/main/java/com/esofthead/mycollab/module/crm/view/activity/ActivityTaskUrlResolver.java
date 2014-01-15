@@ -22,6 +22,12 @@ import com.esofthead.mycollab.module.crm.domain.Task;
 import com.esofthead.mycollab.module.crm.events.ActivityEvent;
 import com.esofthead.mycollab.module.crm.view.CrmUrlResolver;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
 public class ActivityTaskUrlResolver extends CrmUrlResolver {
 	public ActivityTaskUrlResolver() {
 		this.addSubResolver("add", new TaskAddUrlResolver());

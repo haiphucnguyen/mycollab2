@@ -29,6 +29,7 @@ import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
+import com.esofthead.mycollab.module.crm.domain.Account;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
 import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
@@ -38,25 +39,32 @@ import com.esofthead.mycollab.module.crm.view.lead.LeadSourceListSelect;
 import com.esofthead.mycollab.module.user.ui.components.ActiveUserListSelect;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.DefaultAdvancedSearchLayout;
 import com.esofthead.mycollab.vaadin.ui.DefaultGenericSearchPanel;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.Separator;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
-import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.themes.Reindeer;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @SuppressWarnings("serial")
 public class OpportunitySearchPanel extends
 		DefaultGenericSearchPanel<OpportunitySearchCriteria> {
@@ -71,10 +79,10 @@ public class OpportunitySearchPanel extends
 		final HorizontalLayout layout = new HorizontalLayout();
 		layout.setWidth("100%");
 		layout.setSpacing(true);
+		layout.setMargin(true);
 
-		final Embedded titleIcon = new Embedded();
-		titleIcon.setSource(MyCollabResource
-				.newResource("icons/22/crm/opportunity.png"));
+		final Image titleIcon = new Image(null,
+				MyCollabResource.newResource("icons/22/crm/opportunity.png"));
 		layout.addComponent(titleIcon);
 		layout.setComponentAlignment(titleIcon, Alignment.MIDDLE_LEFT);
 
@@ -126,6 +134,7 @@ public class OpportunitySearchPanel extends
 		public ComponentContainer constructBody() {
 			final HorizontalLayout layout = new HorizontalLayout();
 			layout.setSpacing(false);
+			layout.setMargin(true);
 
 			this.nameField = this.createSeachSupportTextField(new TextField(),
 					"NameFieldOfSearch");
@@ -138,7 +147,7 @@ public class OpportunitySearchPanel extends
 			searchBtn.setIcon(MyCollabResource
 					.newResource("icons/16/search_white.png"));
 
-			searchBtn.addListener(new Button.ClickListener() {
+			searchBtn.addClickListener(new Button.ClickListener() {
 				@Override
 				public void buttonClick(final ClickEvent event) {
 					OpportunityBasicSearchLayout.this.callSearchAction();
@@ -160,7 +169,7 @@ public class OpportunitySearchPanel extends
 					LocalizationHelper.getMessage(GenericI18Enum.BUTTON_CLEAR));
 			cancelBtn.setStyleName(UIConstants.THEME_LINK);
 			cancelBtn.addStyleName("cancel-button");
-			cancelBtn.addListener(new Button.ClickListener() {
+			cancelBtn.addClickListener(new Button.ClickListener() {
 				@Override
 				public void buttonClick(final ClickEvent event) {
 					OpportunityBasicSearchLayout.this.nameField.setValue("");
@@ -202,7 +211,7 @@ public class OpportunitySearchPanel extends
 										.getValue()).trim()));
 			}
 
-			if (this.myItemCheckbox.booleanValue()) {
+			if (this.myItemCheckbox.getValue()) {
 				OpportunitySearchPanel.this.searchCriteria
 						.setAssignUsers(new SetSearchField<String>(
 								SearchField.AND, new String[] { AppContext
@@ -241,7 +250,8 @@ public class OpportunitySearchPanel extends
 			GridFormLayoutHelper gridLayout = new GridFormLayoutHelper(3, 3,
 					"100%", "90px");
 			gridLayout.getLayout().setWidth("100%");
-			gridLayout.getLayout().setMargin(true, true, true, false);
+			gridLayout.getLayout().setMargin(
+					new MarginInfo(true, true, true, false));
 
 			this.opportunityNameField = (TextField) gridLayout.addComponent(
 					new TextField(), "Name", 0, 0);
@@ -280,7 +290,7 @@ public class OpportunitySearchPanel extends
 										.trim()));
 			}
 
-			final SimpleAccount account = this.accountField.getAccount();
+			final Account account = this.accountField.getAccount();
 			if (account.getId() != null) {
 				OpportunitySearchPanel.this.searchCriteria
 						.setAccountId(new NumberSearchField(SearchField.AND,
@@ -343,7 +353,7 @@ public class OpportunitySearchPanel extends
 				final SimpleAccount account = accountService.findById(
 						(Integer) value.getAccountId().getValue(),
 						AppContext.getAccountId());
-				this.accountField.setAccount(account);
+				// this.accountField.setAccount(account);
 			}
 			if (value.getNextStep() != null) {
 				this.nextStepField.setValue(value.getNextStep().getValue());
@@ -360,6 +370,11 @@ public class OpportunitySearchPanel extends
 				this.sourceField.setValue(Arrays.asList((Object[]) value
 						.getLeadSources().values));
 			}
+		}
+
+		@Override
+		protected Class<OpportunitySearchCriteria> getType() {
+			return OpportunitySearchCriteria.class;
 		}
 	}
 

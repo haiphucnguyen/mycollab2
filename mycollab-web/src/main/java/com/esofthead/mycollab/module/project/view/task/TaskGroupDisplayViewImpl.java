@@ -16,8 +16,9 @@
  */
 package com.esofthead.mycollab.module.project.view.task;
 
+import com.vaadin.server.Sizeable;
+import com.vaadin.ui.*;
 import org.vaadin.hene.popupbutton.PopupButton;
-import org.vaadin.hene.splitbutton.SplitButtonExt;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
@@ -29,41 +30,38 @@ import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskListSearchCriteria;
-import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.project.events.TaskListEvent;
 import com.esofthead.mycollab.module.project.localization.TaskI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectTaskListService;
-import com.esofthead.mycollab.module.project.view.parameters.TaskGroupScreenData;
 import com.esofthead.mycollab.reporting.ReportExportType;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
+import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
+import com.esofthead.mycollab.vaadin.ui.SplitButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.MyCollabResource;
-import com.vaadin.terminal.Resource;
-import com.vaadin.terminal.StreamResource;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Button;
+import com.vaadin.server.FileDownloader;
+import com.vaadin.server.StreamResource;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.Embedded;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.VerticalLayout;
 
-@SuppressWarnings("serial")
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ */
 @ViewComponent
-public class TaskGroupDisplayViewImpl extends AbstractView implements
+public class TaskGroupDisplayViewImpl extends AbstractPageView implements
 		TaskGroupDisplayView {
+	private static final long serialVersionUID = 1L;
 
 	private PopupButton taskGroupSelection;
 	private TaskGroupDisplayWidget taskLists;
 	private Button reOrderBtn;
 
-	private SplitButtonExt exportButtonControl;
+	private SplitButton exportButtonControl;
 
 	public TaskGroupDisplayViewImpl() {
 		super();
-		this.setMargin(true);
 
 		this.constructHeader();
 	}
@@ -85,9 +83,8 @@ public class TaskGroupDisplayViewImpl extends AbstractView implements
 				.canRead(ProjectRolePermissionCollections.TASKS));
 		this.taskGroupSelection.addStyleName("link");
 		this.taskGroupSelection.addStyleName("h2");
-		final Embedded icon = new Embedded();
-		icon.setSource(MyCollabResource
-				.newResource("icons/24/project/task.png"));
+		final Image icon = new Image(null,
+				MyCollabResource.newResource("icons/24/project/task.png"));
 		header.addComponent(icon);
 		header.addComponent(this.taskGroupSelection);
 		header.setExpandRatio(this.taskGroupSelection, 1.0f);
@@ -154,18 +151,19 @@ public class TaskGroupDisplayViewImpl extends AbstractView implements
 		archievedTasksFilterBtn.setStyleName("link");
 		filterBtnLayout.addComponent(archievedTasksFilterBtn);
 
-		this.taskGroupSelection.addComponent(filterBtnLayout);
+		this.taskGroupSelection.setContent(filterBtnLayout);
 
 		final Button newTaskListBtn = new Button(
 				LocalizationHelper
 						.getMessage(TaskI18nEnum.NEW_TASKGROUP_ACTION),
 				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
 					@Override
 					public void buttonClick(final ClickEvent event) {
 						final TaskGroupAddWindow taskListWindow = new TaskGroupAddWindow(
 								TaskGroupDisplayViewImpl.this);
-						TaskGroupDisplayViewImpl.this.getWindow().addWindow(
-								taskListWindow);
+						UI.getCurrent().addWindow(taskListWindow);
 					}
 				});
 		newTaskListBtn.setEnabled(CurrentProjectVariables
@@ -179,6 +177,8 @@ public class TaskGroupDisplayViewImpl extends AbstractView implements
 		header.setComponentAlignment(newTaskListBtn, Alignment.MIDDLE_RIGHT);
 
 		this.reOrderBtn = new Button(null, new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void buttonClick(final ClickEvent event) {
 				EventBus.getInstance().fireEvent(
@@ -195,32 +195,6 @@ public class TaskGroupDisplayViewImpl extends AbstractView implements
 		header.addComponent(this.reOrderBtn);
 		header.setComponentAlignment(this.reOrderBtn, Alignment.MIDDLE_RIGHT);
 
-		final Button showGanttChartBtn = new Button(null,
-				new Button.ClickListener() {
-
-					@Override
-					public void buttonClick(final ClickEvent event) {
-						final TaskSearchCriteria searchCriteria = new TaskSearchCriteria();
-						searchCriteria.setProjectid(new NumberSearchField(
-								CurrentProjectVariables.getProjectId()));
-						EventBus.getInstance()
-								.fireEvent(
-										new TaskListEvent.GotoGanttChartView(
-												this,
-												new TaskGroupScreenData.DisplayGanttChartRequest(
-														searchCriteria)));
-					}
-				});
-		showGanttChartBtn.setEnabled(CurrentProjectVariables
-				.canRead(ProjectRolePermissionCollections.TASKS));
-		showGanttChartBtn.setDescription(LocalizationHelper
-				.getMessage(TaskI18nEnum.DISPLAY_GANTT_CHART_ACTION));
-		showGanttChartBtn.setIcon(MyCollabResource
-				.newResource("icons/16/project/gantt_chart.png"));
-		showGanttChartBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-		header.addComponent(showGanttChartBtn);
-		header.setComponentAlignment(showGanttChartBtn, Alignment.MIDDLE_RIGHT);
-
 		mainLayout.addComponent(header);
 
 		Button exportBtn = new Button("Export", new Button.ClickListener() {
@@ -231,37 +205,28 @@ public class TaskGroupDisplayViewImpl extends AbstractView implements
 				exportButtonControl.setPopupVisible(true);
 			}
 		});
-		exportButtonControl = new SplitButtonExt(exportBtn);
-		exportButtonControl.setStyleName(UIConstants.THEME_BLUE_LINK);
-		exportButtonControl.addStyleName(UIConstants.SPLIT_BUTTON);
+		exportButtonControl = new SplitButton(exportBtn);
+		exportButtonControl.addStyleName(UIConstants.THEME_BLUE_LINK);
 		exportButtonControl.setIcon(MyCollabResource
 				.newResource("icons/16/export.png"));
 
 		VerticalLayout popupButtonsControl = new VerticalLayout();
-		popupButtonsControl.setWidth("150px");
-		exportButtonControl.addComponent(popupButtonsControl);
+		exportButtonControl.setContent(popupButtonsControl);
+        exportButtonControl.setWidth(Sizeable.SIZE_UNDEFINED, Unit.PIXELS);
 
-		Button exportPdfBtn = new Button("Pdf", new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void buttonClick(ClickEvent event) {
-				downloadExportStreamCommand(ReportExportType.PDF);
-			}
-		});
+		Button exportPdfBtn = new Button("Pdf");
+		FileDownloader pdfDownloader = new FileDownloader(
+				constructStreamResource(ReportExportType.PDF));
+		pdfDownloader.extend(exportPdfBtn);
 		exportPdfBtn.setIcon(MyCollabResource
 				.newResource("icons/16/filetypes/pdf.png"));
 		exportPdfBtn.setStyleName("link");
 		popupButtonsControl.addComponent(exportPdfBtn);
 
-		Button exportExcelBtn = new Button("Excel", new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void buttonClick(ClickEvent event) {
-				downloadExportStreamCommand(ReportExportType.EXCEL);
-			}
-		});
+		Button exportExcelBtn = new Button("Excel");
+		FileDownloader excelDownloader = new FileDownloader(
+				constructStreamResource(ReportExportType.EXCEL));
+		excelDownloader.extend(exportExcelBtn);
 		exportExcelBtn.setIcon(MyCollabResource
 				.newResource("icons/16/filetypes/excel.png"));
 		exportExcelBtn.setStyleName("link");
@@ -277,7 +242,7 @@ public class TaskGroupDisplayViewImpl extends AbstractView implements
 		this.addComponent(this.taskLists);
 	}
 
-	private void downloadExportStreamCommand(ReportExportType exportType) {
+	private StreamResource constructStreamResource(ReportExportType exportType) {
 		final String title = "Task report of Project "
 				+ ((CurrentProjectVariables.getProject() != null && CurrentProjectVariables
 						.getProject().getName() != null) ? CurrentProjectVariables
@@ -287,32 +252,28 @@ public class TaskGroupDisplayViewImpl extends AbstractView implements
 		tasklistSearchCriteria.setProjectId(new NumberSearchField(
 				SearchField.AND, CurrentProjectVariables.getProject().getId()));
 
-		Resource res = null;
+		StreamResource res = null;
 		if (exportType.equals(ReportExportType.PDF)) {
 			res = new StreamResource(new ExportTaskListStreamResource(title,
 					exportType,
 					ApplicationContextUtil
 							.getSpringBean(ProjectTaskListService.class),
-					tasklistSearchCriteria, null), "task_list.pdf",
-					TaskGroupDisplayViewImpl.this.getApplication());
+					tasklistSearchCriteria, null), "task_list.pdf");
 		} else if (exportType.equals(ReportExportType.CSV)) {
 			res = new StreamResource(new ExportTaskListStreamResource(title,
 					exportType,
 					ApplicationContextUtil
 							.getSpringBean(ProjectTaskListService.class),
-					tasklistSearchCriteria, null), "task_list.csv",
-					TaskGroupDisplayViewImpl.this.getApplication());
+					tasklistSearchCriteria, null), "task_list.csv");
 		} else {
 			res = new StreamResource(new ExportTaskListStreamResource(title,
 					exportType,
 					ApplicationContextUtil
 							.getSpringBean(ProjectTaskListService.class),
-					tasklistSearchCriteria, null), "task_list.xls",
-					TaskGroupDisplayViewImpl.this.getApplication());
+					tasklistSearchCriteria, null), "task_list.xls");
 		}
 
-		TaskGroupDisplayViewImpl.this.getWindow().open(res, "_blank");
-		exportButtonControl.setPopupVisible(false);
+		return res;
 	}
 
 	private TaskListSearchCriteria createBaseSearchCriteria() {

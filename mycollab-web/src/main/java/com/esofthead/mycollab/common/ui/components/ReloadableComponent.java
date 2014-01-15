@@ -14,24 +14,22 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.common.ui.components;
 
 /**
- *
- * @author haiphucnguyen
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
 public interface ReloadableComponent {
 	/**
 	 * 
 	 */
-    void cancel();
-    
-    /**
+	void cancel();
+
+	/**
      * 
      */
-    void reload();
+	void reload();
 }

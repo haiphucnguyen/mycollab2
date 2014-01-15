@@ -21,6 +21,12 @@ import java.util.List;
 import com.esofthead.mycollab.form.view.builder.type.BooleanDynaField;
 import com.esofthead.mycollab.form.view.builder.type.DynaSection;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
 public class CheckboxDetailFieldInfoPanel extends
 		DetailFieldInfoPanel<BooleanDynaField> {
 	private static final long serialVersionUID = 1L;

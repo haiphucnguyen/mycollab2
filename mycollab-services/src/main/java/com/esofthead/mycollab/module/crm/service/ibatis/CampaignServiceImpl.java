@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.common.interceptor.aspect.Auditable;
 import com.esofthead.mycollab.common.interceptor.aspect.Traceable;
 import com.esofthead.mycollab.common.interceptor.aspect.Watchable;
@@ -46,10 +47,16 @@ import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.CampaignService;
 import com.esofthead.mycollab.schedule.email.crm.CampaignRelayEmailNotificationAction;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @Service
 @Transactional
-@Traceable(module = "Crm", type = "Campaign", nameField = "campaignname")
-@Auditable(module = "Crm", type = "Campaign")
+@Traceable(module = ModuleNameConstants.CRM, type = CrmTypeConstants.CAMPAIGN, nameField = "campaignname")
+@Auditable(module = ModuleNameConstants.CRM, type = CrmTypeConstants.CAMPAIGN)
 @Watchable(type = CrmTypeConstants.CAMPAIGN, userFieldName = "assignuser", emailHandlerBean = CampaignRelayEmailNotificationAction.class)
 public class CampaignServiceImpl extends
 		DefaultService<Integer, CampaignWithBLOBs, CampaignSearchCriteria>

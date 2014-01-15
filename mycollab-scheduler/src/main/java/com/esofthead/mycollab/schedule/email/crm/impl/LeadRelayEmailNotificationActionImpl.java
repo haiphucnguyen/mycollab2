@@ -36,6 +36,12 @@ import com.esofthead.mycollab.module.user.UserLinkUtils;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.schedule.email.crm.LeadRelayEmailNotificationAction;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @Component
 public class LeadRelayEmailNotificationActionImpl extends
 		CrmDefaultSendingRelayEmailAction implements
@@ -100,26 +106,28 @@ public class LeadRelayEmailNotificationActionImpl extends
 	@Override
 	protected TemplateGenerator templateGeneratorForUpdateAction(
 			SimpleRelayEmailNotification emailNotification, SimpleUser user) {
-		SimpleLead simpleLead = leadService.findById(
-				emailNotification.getTypeid(),
+		SimpleLead lead = leadService.findById(emailNotification.getTypeid(),
 				emailNotification.getSaccountid());
+		if (lead == null) {
+			return null;
+		}
 
-		String subject = StringUtils.subString(simpleLead.getLeadName(), 150);
+		String subject = StringUtils.subString(lead.getLeadName(), 150);
 
 		TemplateGenerator templateGenerator = new TemplateGenerator("Lead: \""
 				+ subject + "...\" has been updated",
 				"templates/email/crm/leadUpdatedNotifier.mt");
-		templateGenerator.putVariable("simpleLead", simpleLead);
-		templateGenerator.putVariable("hyperLinks",
-				constructHyperLinks(simpleLead));
+		templateGenerator.putVariable("simpleLead", lead);
+		templateGenerator.putVariable("hyperLinks", constructHyperLinks(lead));
 
 		if (emailNotification.getTypeid() != null) {
 			SimpleAuditLog auditLog = auditLogService.findLatestLog(
 					emailNotification.getTypeid(),
 					emailNotification.getSaccountid());
-			templateGenerator.putVariable("postedUserURL", UserLinkUtils
-					.generatePreviewFullUserLink(
-							getSiteUrl(simpleLead.getSaccountid()),
+			templateGenerator.putVariable(
+					"postedUserURL",
+					UserLinkUtils.generatePreviewFullUserLink(
+							getSiteUrl(lead.getSaccountid()),
 							auditLog.getPosteduser()));
 			templateGenerator.putVariable("historyLog", auditLog);
 

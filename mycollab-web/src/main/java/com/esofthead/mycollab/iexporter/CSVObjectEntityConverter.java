@@ -20,7 +20,7 @@ import org.apache.commons.beanutils.PropertyUtils;
 
 import com.esofthead.mycollab.iexporter.CSVObjectEntityConverter.CSVItemMapperDef;
 import com.esofthead.mycollab.iexporter.csv.CSVFormatter;
-import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.vaadin.AppContext;
 
 public class CSVObjectEntityConverter<E> implements
 		ObjectEntityConverter<CSVItemMapperDef, E> {

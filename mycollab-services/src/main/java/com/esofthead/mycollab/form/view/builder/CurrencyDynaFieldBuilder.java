@@ -20,7 +20,7 @@ import com.esofthead.mycollab.form.view.builder.type.CurrencyDynaField;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  *
  */
 public class CurrencyDynaFieldBuilder extends

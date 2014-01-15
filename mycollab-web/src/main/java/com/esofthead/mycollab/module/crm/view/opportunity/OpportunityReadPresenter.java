@@ -30,38 +30,44 @@ import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.crm.CrmLinkGenerator;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
-import com.esofthead.mycollab.module.crm.domain.CallWithBLOBs;
-import com.esofthead.mycollab.module.crm.domain.Contact;
-import com.esofthead.mycollab.module.crm.domain.Lead;
-import com.esofthead.mycollab.module.crm.domain.MeetingWithBLOBs;
-import com.esofthead.mycollab.module.crm.domain.Opportunity;
-import com.esofthead.mycollab.module.crm.domain.OpportunityContact;
+import com.esofthead.mycollab.module.crm.domain.ContactOpportunity;
 import com.esofthead.mycollab.module.crm.domain.OpportunityLead;
+import com.esofthead.mycollab.module.crm.domain.SimpleActivity;
+import com.esofthead.mycollab.module.crm.domain.SimpleCall;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
+import com.esofthead.mycollab.module.crm.domain.SimpleContactOpportunityRel;
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
+import com.esofthead.mycollab.module.crm.domain.SimpleMeeting;
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
-import com.esofthead.mycollab.module.crm.domain.Task;
+import com.esofthead.mycollab.module.crm.domain.SimpleTask;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
 import com.esofthead.mycollab.module.crm.events.ActivityEvent;
 import com.esofthead.mycollab.module.crm.events.ContactEvent;
 import com.esofthead.mycollab.module.crm.events.LeadEvent;
 import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
+import com.esofthead.mycollab.module.crm.service.ContactService;
 import com.esofthead.mycollab.module.crm.service.OpportunityService;
 import com.esofthead.mycollab.module.crm.view.AbstractRelatedListHandler;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
 import com.esofthead.mycollab.module.crm.view.CrmToolbar;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
-import com.esofthead.mycollab.vaadin.ui.MessageBox;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
-import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.UI;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class OpportunityReadPresenter extends
 		CrmGenericPresenter<OpportunityReadView> {
 
@@ -69,22 +75,22 @@ public class OpportunityReadPresenter extends
 
 	public OpportunityReadPresenter() {
 		super(OpportunityReadView.class);
-		bind();
 	}
 
-	private void bind() {
+	@Override
+	protected void postInitView() {
 		view.getPreviewFormHandlers().addFormHandler(
-				new DefaultPreviewFormHandler<Opportunity>() {
+				new DefaultPreviewFormHandler<SimpleOpportunity>() {
 					@Override
-					public void onEdit(Opportunity data) {
+					public void onEdit(SimpleOpportunity data) {
 						EventBus.getInstance().fireEvent(
 								new OpportunityEvent.GotoEdit(this, data));
 					}
 
 					@Override
-					public void onDelete(final Opportunity data) {
+					public void onDelete(final SimpleOpportunity data) {
 						ConfirmDialogExt.show(
-								view.getWindow(),
+								UI.getCurrent(),
 								LocalizationHelper.getMessage(
 										GenericI18Enum.DELETE_DIALOG_TITLE,
 										SiteConfiguration.getSiteName()),
@@ -116,8 +122,9 @@ public class OpportunityReadPresenter extends
 					}
 
 					@Override
-					public void onClone(Opportunity data) {
-						Opportunity cloneData = (Opportunity) data.copy();
+					public void onClone(SimpleOpportunity data) {
+						SimpleOpportunity cloneData = (SimpleOpportunity) data
+								.copy();
 						cloneData.setId(null);
 						EventBus.getInstance().fireEvent(
 								new OpportunityEvent.GotoEdit(this, cloneData));
@@ -130,7 +137,7 @@ public class OpportunityReadPresenter extends
 					}
 
 					@Override
-					public void gotoNext(Opportunity data) {
+					public void gotoNext(SimpleOpportunity data) {
 						OpportunityService opportunityService = ApplicationContextUtil
 								.getSpringBean(OpportunityService.class);
 						OpportunitySearchCriteria criteria = new OpportunitySearchCriteria();
@@ -152,7 +159,7 @@ public class OpportunityReadPresenter extends
 					}
 
 					@Override
-					public void gotoPrevious(Opportunity data) {
+					public void gotoPrevious(SimpleOpportunity data) {
 						OpportunityService opportunityService = ApplicationContextUtil
 								.getSpringBean(OpportunityService.class);
 						OpportunitySearchCriteria criteria = new OpportunitySearchCriteria();
@@ -174,11 +181,11 @@ public class OpportunityReadPresenter extends
 				});
 
 		view.getRelatedActivityHandlers().addRelatedListHandler(
-				new AbstractRelatedListHandler() {
+				new AbstractRelatedListHandler<SimpleActivity>() {
 					@Override
 					public void createNewRelatedItem(String itemId) {
 						if (itemId.equals("task")) {
-							Task task = new Task();
+							SimpleTask task = new SimpleTask();
 							task.setType(CrmTypeConstants.OPPORTUNITY);
 							task.setTypeid(view.getItem().getId());
 							EventBus.getInstance()
@@ -187,7 +194,7 @@ public class OpportunityReadPresenter extends
 													OpportunityReadPresenter.this,
 													task));
 						} else if (itemId.equals("meeting")) {
-							MeetingWithBLOBs meeting = new MeetingWithBLOBs();
+							SimpleMeeting meeting = new SimpleMeeting();
 							meeting.setType(CrmTypeConstants.OPPORTUNITY);
 							meeting.setTypeid(view.getItem().getId());
 							EventBus.getInstance().fireEvent(
@@ -195,7 +202,7 @@ public class OpportunityReadPresenter extends
 											OpportunityReadPresenter.this,
 											meeting));
 						} else if (itemId.equals("call")) {
-							CallWithBLOBs call = new CallWithBLOBs();
+							SimpleCall call = new SimpleCall();
 							call.setType(CrmTypeConstants.OPPORTUNITY);
 							call.setTypeid(view.getItem().getId());
 							EventBus.getInstance()
@@ -208,11 +215,11 @@ public class OpportunityReadPresenter extends
 				});
 
 		view.getRelatedContactHandlers().addRelatedListHandler(
-				new AbstractRelatedListHandler<SimpleContact>() {
+				new AbstractRelatedListHandler<SimpleContactOpportunityRel>() {
 
 					@Override
 					public void createNewRelatedItem(String itemId) {
-						Contact contact = new Contact();
+						SimpleContact contact = new SimpleContact();
 						contact.setExtraData(view.getItem());
 						EventBus.getInstance()
 								.fireEvent(
@@ -222,11 +229,11 @@ public class OpportunityReadPresenter extends
 					}
 
 					@Override
-					public void selectAssociateItems(Set<SimpleContact> items) {
-						List<OpportunityContact> associateContacts = new ArrayList<OpportunityContact>();
+					public void selectAssociateItems(Set<SimpleContactOpportunityRel> items) {
+						List<ContactOpportunity> associateContacts = new ArrayList<ContactOpportunity>();
 						SimpleOpportunity opportunity = view.getItem();
 						for (SimpleContact contact : items) {
-							OpportunityContact associateContact = new OpportunityContact();
+							ContactOpportunity associateContact = new ContactOpportunity();
 							associateContact.setContactid(contact.getId());
 							associateContact.setOpportunityid(opportunity
 									.getId());
@@ -236,9 +243,9 @@ public class OpportunityReadPresenter extends
 							associateContacts.add(associateContact);
 						}
 
-						OpportunityService opportunityService = ApplicationContextUtil
-								.getSpringBean(OpportunityService.class);
-						opportunityService.saveOpportunityContactRelationship(
+						ContactService contactService = ApplicationContextUtil
+								.getSpringBean(ContactService.class);
+						contactService.saveContactOpportunityRelationship(
 								associateContacts, AppContext.getAccountId());
 						view.getRelatedContactHandlers().refresh();
 					}
@@ -248,7 +255,7 @@ public class OpportunityReadPresenter extends
 				new AbstractRelatedListHandler<SimpleLead>() {
 					@Override
 					public void createNewRelatedItem(String itemId) {
-						Lead lead = new Lead();
+						SimpleLead lead = new SimpleLead();
 						lead.setExtraData(view.getItem());
 						EventBus.getInstance().fireEvent(
 								new LeadEvent.GotoEdit(
@@ -308,7 +315,7 @@ public class OpportunityReadPresenter extends
 				}
 			}
 		} else {
-			MessageBox.showMessagePermissionAlert();
+			NotificationUtil.showMessagePermissionAlert();
 		}
 	}
 }

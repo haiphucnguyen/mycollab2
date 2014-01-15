@@ -14,10 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.module.crm.view;
 
 import org.vaadin.hene.popupbutton.PopupButton;
@@ -26,10 +23,9 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
 import com.esofthead.mycollab.module.crm.view.opportunity.IOpportunityLeadSourceDashboard;
 import com.esofthead.mycollab.module.crm.view.opportunity.IOpportunitySalesStageDashboard;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.Depot;
-import com.esofthead.mycollab.web.AppContext;
-import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CssLayout;
@@ -37,7 +33,8 @@ import com.vaadin.ui.VerticalLayout;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class SalesDashboardView extends Depot {
 	private static final long serialVersionUID = 1L;
@@ -62,9 +59,7 @@ public class SalesDashboardView extends Depot {
 		if ("OpportunitySalesStage".equals(reportName)) {
 			final IOpportunitySalesStageDashboard salesStageDashboard = ViewManager
 					.getView(IOpportunitySalesStageDashboard.class);
-			final LazyLoadWrapper lazyComp = new LazyLoadWrapper(
-					salesStageDashboard);
-			bodyContent.addComponent(lazyComp);
+			bodyContent.addComponent(salesStageDashboard);
 
 			final OpportunitySearchCriteria criteria = new OpportunitySearchCriteria();
 			criteria.setSaccountid(new NumberSearchField(AppContext
@@ -73,9 +68,7 @@ public class SalesDashboardView extends Depot {
 		} else if ("OpportunityLeadSource".equals(reportName)) {
 			final IOpportunityLeadSourceDashboard leadSourceDashboard = ViewManager
 					.getView(IOpportunityLeadSourceDashboard.class);
-			final LazyLoadWrapper lazyComp = new LazyLoadWrapper(
-					leadSourceDashboard);
-			bodyContent.addComponent(lazyComp);
+			bodyContent.addComponent(leadSourceDashboard);
 
 			final OpportunitySearchCriteria criteria = new OpportunitySearchCriteria();
 			criteria.setSaccountid(new NumberSearchField(AppContext
@@ -127,7 +120,7 @@ public class SalesDashboardView extends Depot {
 
 		this.displayReport();
 
-		saleChartPopup.addComponent(filterBtnLayout);
+		saleChartPopup.setContent(filterBtnLayout);
 		this.addHeaderElement(saleChartPopup);
 	}
 }

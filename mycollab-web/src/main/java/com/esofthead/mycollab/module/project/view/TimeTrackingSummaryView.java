@@ -16,8 +16,14 @@
  */
 package com.esofthead.mycollab.module.project.view;
 
-import com.esofthead.mycollab.vaadin.mvp.View;
+import com.esofthead.mycollab.vaadin.mvp.PageView;
 
-public interface TimeTrackingSummaryView extends View {
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
+public interface TimeTrackingSummaryView extends PageView {
 	void display();
 }

@@ -17,59 +17,41 @@
 package com.esofthead.mycollab.module.crm.view.opportunity;
 
 import com.esofthead.mycollab.module.crm.domain.Opportunity;
-import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
-import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
-import com.esofthead.mycollab.module.crm.service.AccountService;
-import com.esofthead.mycollab.module.crm.service.CampaignService;
 import com.esofthead.mycollab.module.crm.view.account.AccountSelectionField;
 import com.esofthead.mycollab.module.crm.view.campaign.CampaignSelectionField;
 import com.esofthead.mycollab.module.crm.view.lead.LeadSourceComboBox;
 import com.esofthead.mycollab.module.user.ui.components.ActiveUserComboBox;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.vaadin.ui.CurrencyComboBox;
-import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
-import com.esofthead.mycollab.web.AppContext;
-import com.vaadin.data.Item;
+import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
+import com.esofthead.mycollab.vaadin.ui.CurrencyComboBoxField;
+import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 
-public class OpportunityEditFormFieldFactory extends
-		DefaultEditFormFieldFactory {
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ * @param <B>
+ */
+public class OpportunityEditFormFieldFactory<B extends Opportunity> extends
+		AbstractBeanFieldGroupEditFieldFactory<B> {
 	private static final long serialVersionUID = 1L;
-	private Opportunity opportunity;
 
-	public OpportunityEditFormFieldFactory(Opportunity opportunity) {
-		this.opportunity = opportunity;
+	public OpportunityEditFormFieldFactory(GenericBeanForm<B> form) {
+		super(form);
 	}
 
 	@Override
-	protected Field onCreateField(Item item, Object propertyId,
-			com.vaadin.ui.Component uiContext) {
+	protected Field<?> onCreateField(Object propertyId) {
+		B opportunity = attachForm.getBean();
+
 		if (propertyId.equals("campaignid")) {
-			CampaignSelectionField campaignField = new CampaignSelectionField();
-			if (opportunity.getCampaignid() != null) {
-				CampaignService campaignService = ApplicationContextUtil
-						.getSpringBean(CampaignService.class);
-				SimpleCampaign campaign = campaignService.findById(
-						opportunity.getCampaignid(), AppContext.getAccountId());
-				if (campaign != null) {
-					campaignField.setCampaign(campaign);
-				}
-			}
-			return campaignField;
+			return new CampaignSelectionField();
 		} else if (propertyId.equals("accountid")) {
 			AccountSelectionField accountField = new AccountSelectionField();
 			accountField.setRequired(true);
-			if (opportunity.getAccountid() != null) {
-				AccountService accountService = ApplicationContextUtil
-						.getSpringBean(AccountService.class);
-				SimpleAccount account = accountService.findById(
-						opportunity.getAccountid(), AppContext.getAccountId());
-				if (account != null) {
-					accountField.setAccount(account);
-				}
-			}
 			return accountField;
 		} else if (propertyId.equals("opportunityname")) {
 			TextField tf = new TextField();
@@ -78,10 +60,7 @@ public class OpportunityEditFormFieldFactory extends
 			tf.setRequiredError("Name must not be null");
 			return tf;
 		} else if (propertyId.equals("currencyid")) {
-			CurrencyComboBox currencyBox = new CurrencyComboBox();
-			if (opportunity.getCurrencyid() != null) {
-				currencyBox.setValue(opportunity.getCurrencyid());
-			}
+			CurrencyComboBoxField currencyBox = new CurrencyComboBoxField();
 			return currencyBox;
 		} else if (propertyId.equals("salesstage")) {
 			return new OpportunitySalesStageComboBox();

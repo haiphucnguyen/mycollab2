@@ -20,7 +20,7 @@ import com.esofthead.mycollab.form.view.builder.type.IntDynaField;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  * 
  */
 public class IntDynaFieldBuilder extends AbstractDynaFieldBuilder<IntDynaField> {

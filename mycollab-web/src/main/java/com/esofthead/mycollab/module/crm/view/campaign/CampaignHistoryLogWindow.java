@@ -14,10 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.module.crm.view.campaign;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
@@ -27,12 +24,15 @@ import com.esofthead.mycollab.vaadin.ui.HistoryLogComponent;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
-@SuppressWarnings("serial")
-public class CampaignHistoryLogWindow extends HistoryLogWindow {
-	public CampaignHistoryLogWindow(String module, String type, int typeid) {
-		super(module, type, typeid);
+class CampaignHistoryLogWindow extends HistoryLogWindow {
+	private static final long serialVersionUID = 1L;
+
+	public CampaignHistoryLogWindow(String module, String type) {
+		super(module, type);
+
 		this.generateFieldDisplayHandler("campaignname", "Name");
 		this.generateFieldDisplayHandler("startdate", "Start Date",
 				HistoryLogComponent.DATE_FIELD);

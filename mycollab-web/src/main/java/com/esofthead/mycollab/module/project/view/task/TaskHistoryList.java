@@ -23,11 +23,17 @@ import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.localization.TaskI18nEnum;
 import com.esofthead.mycollab.vaadin.ui.HistoryLogComponent;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class TaskHistoryList extends HistoryLogComponent {
 	private static final long serialVersionUID = 1L;
 
-	public TaskHistoryList(int taskId) {
-		super(ModuleNameConstants.PRJ, ProjectContants.TASK, taskId);
+	public TaskHistoryList() {
+		super(ModuleNameConstants.PRJ, ProjectContants.TASK);
 		this.addStyleName("activity-panel");
 
 		this.generateFieldDisplayHandler("taskname", "Task Name");

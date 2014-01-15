@@ -14,35 +14,34 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.module.project.view;
 
-import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
+import com.esofthead.mycollab.vaadin.ui.AbstractPresenter;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
 
 /**
- *
- * @author haiphucnguyen
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
-public class UserDashboardPresenter extends AbstractPresenter<UserDashboardView> {
+public class UserDashboardPresenter extends
+		AbstractPresenter<UserDashboardView> {
 	private static final long serialVersionUID = 1L;
 
 	public UserDashboardPresenter() {
-        super(UserDashboardView.class);
-    }
+		super(UserDashboardView.class);
+	}
 
-    @Override
-    protected void onGo(ComponentContainer container, ScreenData<?> data) {
-        ProjectModule prjContainer = (ProjectModule) container;
-        prjContainer.removeAllComponents();
-        prjContainer.addComponent((Component) view);
-        prjContainer.setComponentAlignment(view, Alignment.TOP_CENTER);
-        view.display();
-    }
+	@Override
+	protected void onGo(ComponentContainer container, ScreenData<?> data) {
+		ProjectModule prjContainer = (ProjectModule) container;
+		prjContainer.removeAllComponents();
+		prjContainer.addComponent((Component) view);
+		prjContainer.setComponentAlignment(view, Alignment.TOP_CENTER);
+		view.display();
+	}
 }

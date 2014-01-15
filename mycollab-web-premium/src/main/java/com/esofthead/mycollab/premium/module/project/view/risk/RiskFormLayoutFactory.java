@@ -2,33 +2,27 @@ package com.esofthead.mycollab.premium.module.project.view.risk;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
-import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
-import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
 
-public abstract class RiskFormLayoutFactory implements IFormLayoutFactory {
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
+public class RiskFormLayoutFactory implements IFormLayoutFactory {
 
 	private static final long serialVersionUID = 1L;
 	private GridFormLayoutHelper informationLayout;
-	private final String title;
-
-	public RiskFormLayoutFactory(final String title) {
-		this.title = title;
-	}
 
 	@Override
 	public Layout getLayout() {
-		final AddViewLayout riskAddLayout = new AddViewLayout(this.title,
-				MyCollabResource.newResource("icons/24/project/risk.png"));
-
-		riskAddLayout.addTopControls(this.createTopPanel());
-
 		final VerticalLayout layout = new VerticalLayout();
 
 		final Label organizationHeader = new Label("Risk Information");
@@ -43,16 +37,11 @@ public abstract class RiskFormLayoutFactory implements IFormLayoutFactory {
 		layout.addComponent(this.informationLayout.getLayout());
 		layout.setComponentAlignment(this.informationLayout.getLayout(),
 				Alignment.BOTTOM_CENTER);
-
-		riskAddLayout.addBottomControls(this.createBottomPanel());
-
-		riskAddLayout.addBody(layout);
-
-		return riskAddLayout;
+		return layout;
 	}
 
 	@Override
-	public void attachField(final Object propertyId, final Field field) {
+	public boolean attachField(final Object propertyId, final Field<?> field) {
 		if (propertyId.equals("riskname")) {
 			this.informationLayout.addComponent(field, "Name", 0, 0, 2, "100%");
 		} else if (propertyId.equals("description")) {
@@ -78,10 +67,10 @@ public abstract class RiskFormLayoutFactory implements IFormLayoutFactory {
 		} else if (propertyId.equals("response")) {
 			this.informationLayout.addComponent(field, "Response", 0, 6, 2,
 					"100%");
+		} else {
+			return false;
 		}
+
+		return true;
 	}
-
-	protected abstract Layout createTopPanel();
-
-	protected abstract Layout createBottomPanel();
 }

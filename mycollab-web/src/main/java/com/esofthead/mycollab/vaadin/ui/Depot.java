@@ -18,6 +18,8 @@ package com.esofthead.mycollab.vaadin.ui;
 
 import com.vaadin.event.LayoutEvents.LayoutClickEvent;
 import com.vaadin.event.LayoutEvents.LayoutClickListener;
+import com.vaadin.server.Sizeable;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
@@ -56,6 +58,7 @@ public class Depot extends VerticalLayout {
             final ComponentContainer component, final String headerWidth,
             final String headerLeftWidth) {
         this.setStyleName("depotComp");
+        this.setMargin(new MarginInfo(true, false, false, false));
         this.header = new HorizontalLayout();
         this.header.setStyleName("depotHeader");
         this.header.setWidth(headerWidth);
@@ -65,10 +68,14 @@ public class Depot extends VerticalLayout {
         } else {
             this.headerContent = new HorizontalLayout();
             ((HorizontalLayout) this.headerContent).setSpacing(true);
+            ((HorizontalLayout) this.headerContent).setMargin(true);
+            ((HorizontalLayout) this.headerContent).setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
             this.headerContent.setVisible(false);
         }
 
         this.headerContent.setStyleName("header-elements");
+        this.headerContent.setWidth(Sizeable.SIZE_UNDEFINED, Sizeable.Unit.PIXELS);
+        //this.headerContent.setHeight("100%");
         this.headerContent.setSizeUndefined();
 
         this.addComponent(this.header);
@@ -79,17 +86,17 @@ public class Depot extends VerticalLayout {
         this.headerLbl.setWidth("100%");
         headerLeft.addComponent(this.headerLbl);
         headerLeft.setStyleName("depot-title");
-        headerLeft.addListener(new LayoutClickListener() {
+        headerLeft.addLayoutClickListener(new LayoutClickListener() {
             private static final long serialVersionUID = 1L;
 
             @Override
             public void layoutClick(final LayoutClickEvent event) {
                 Depot.this.isOpenned = !Depot.this.isOpenned;
                 if (Depot.this.isOpenned) {
-                    Depot.this.bodyContent.setHeight("100%");
+                	Depot.this.bodyContent.setVisible(true);
                     Depot.this.removeStyleName("collapsed");
                 } else {
-                    Depot.this.bodyContent.setHeight("0px");
+                    Depot.this.bodyContent.setVisible(false);
                     Depot.this.addStyleName("collapsed");
                 }
             }

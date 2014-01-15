@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.esofthead.mycollab.cache.CacheUtils;
+import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.common.interceptor.aspect.Auditable;
 import com.esofthead.mycollab.common.interceptor.aspect.Traceable;
 import com.esofthead.mycollab.common.interceptor.aspect.Watchable;
@@ -39,10 +40,16 @@ import com.esofthead.mycollab.module.crm.service.CallService;
 import com.esofthead.mycollab.module.crm.service.EventService;
 import com.esofthead.mycollab.schedule.email.crm.CallRelayEmailNotificationAction;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @Service
 @Transactional
-@Traceable(module = "Crm", type = "Call", nameField = "subject")
-@Auditable(module = "Crm", type = "Call")
+@Traceable(module = ModuleNameConstants.CRM, type = CrmTypeConstants.CALL, nameField = "subject")
+@Auditable(module = ModuleNameConstants.CRM, type = CrmTypeConstants.CALL)
 @Watchable(type = CrmTypeConstants.CALL, userFieldName = "assignuser", emailHandlerBean = CallRelayEmailNotificationAction.class)
 public class CallServiceImpl extends
 		DefaultService<Integer, CallWithBLOBs, CallSearchCriteria> implements

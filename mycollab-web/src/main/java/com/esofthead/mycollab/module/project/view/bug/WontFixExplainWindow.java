@@ -14,10 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.esofthead.mycollab.module.project.view.bug;
 
 import java.util.GregorianCalendar;
@@ -35,15 +32,15 @@ import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.service.BugRelatedItemService;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
-import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
+import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.web.AppContext;
-import com.vaadin.data.Item;
-import com.vaadin.data.util.BeanItem;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -56,7 +53,8 @@ import com.vaadin.ui.Window;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
 @SuppressWarnings("serial")
 public class WontFixExplainWindow extends Window {
@@ -72,12 +70,14 @@ public class WontFixExplainWindow extends Window {
 		this.bug = bug;
 		this.callbackForm = callbackForm;
 		this.setWidth("750px");
+
+		VerticalLayout contentLayout = new VerticalLayout();
+		contentLayout.setMargin(new MarginInfo(false, false, true, false));
 		this.editForm = new EditForm();
-		this.addComponent(this.editForm);
-		this.editForm.setItemDataSource(new BeanItem<SimpleBug>(bug));
+		contentLayout.addComponent(this.editForm);
+		this.editForm.setBean(bug);
+		this.setContent(contentLayout);
 		this.center();
-		((VerticalLayout) this.getContent()).setMargin(false, false, true,
-				false);
 	}
 
 	private class EditForm extends AdvancedEditBeanForm<BugWithBLOBs> {
@@ -86,10 +86,10 @@ public class WontFixExplainWindow extends Window {
 		private RichTextArea commentArea;
 
 		@Override
-		public void setItemDataSource(final Item newDataSource) {
+		public void setBean(final BugWithBLOBs newDataSource) {
 			this.setFormLayoutFactory(new FormLayoutFactory());
-			this.setFormFieldFactory(new EditFormFieldFactory());
-			super.setItemDataSource(newDataSource);
+			this.setBeanFormFieldFactory(new EditFormFieldFactory(EditForm.this));
+			super.setBean(newDataSource);
 		}
 
 		class FormLayoutFactory implements IFormLayoutFactory {
@@ -111,7 +111,7 @@ public class WontFixExplainWindow extends Window {
 
 				final HorizontalLayout controlsBtn = new HorizontalLayout();
 				controlsBtn.setSpacing(true);
-				controlsBtn.setMargin(true, true, false, false);
+				controlsBtn.setMargin(new MarginInfo(true, true, false, false));
 				layout.addComponent(controlsBtn);
 
 				final Button cancelBtn = new Button(
@@ -130,64 +130,66 @@ public class WontFixExplainWindow extends Window {
 
 				final Button wonFixBtn = new Button("Won't Fix",
 						new Button.ClickListener() {
-							@SuppressWarnings("unchecked")
 							@Override
 							public void buttonClick(final ClickEvent event) {
-								WontFixExplainWindow.this.bug
-										.setStatus(BugStatusConstants.RESOLVED);
 
-								final BugRelatedItemService bugRelatedItemService = ApplicationContextUtil
-										.getSpringBean(BugRelatedItemService.class);
-								bugRelatedItemService.updateFixedVersionsOfBug(
-										WontFixExplainWindow.this.bug.getId(),
-										WontFixExplainWindow.this.fixedVersionSelect
-												.getSelectedItems());
+								if (EditForm.this.validateForm()) {
+									WontFixExplainWindow.this.bug
+											.setStatus(BugStatusConstants.RESOLVED);
 
-								// Save bug status and assignee
-								final BugService bugService = ApplicationContextUtil
-										.getSpringBean(BugService.class);
-								bugService.updateWithSession(
-										WontFixExplainWindow.this.bug,
-										AppContext.getUsername());
+									final String commentValue = (String) EditForm.this.commentArea
+											.getValue();
+									if (commentValue != null
+											&& !commentValue.trim().equals("")) {
+										final BugRelatedItemService bugRelatedItemService = ApplicationContextUtil
+												.getSpringBean(BugRelatedItemService.class);
+										bugRelatedItemService
+												.updateFixedVersionsOfBug(
+														WontFixExplainWindow.this.bug
+																.getId(),
+														WontFixExplainWindow.this.fixedVersionSelect
+																.getSelectedItems());
 
-								// Save comment
-								final String commentValue = (String) EditForm.this.commentArea
-										.getValue();
-								if (commentValue != null
-										&& !commentValue.trim().equals("")) {
-									final Comment comment = new Comment();
-									comment.setComment(commentValue);
-									comment.setCreatedtime(new GregorianCalendar()
-											.getTime());
-									comment.setCreateduser(AppContext
-											.getUsername());
-									comment.setSaccountid(AppContext
-											.getAccountId());
-									comment.setType(CommentType.PRJ_BUG
-											.toString());
-									comment.setTypeid(WontFixExplainWindow.this.bug
-											.getId());
-									comment.setExtratypeid(CurrentProjectVariables
-											.getProjectId());
+										// Save bug status and assignee
+										final BugService bugService = ApplicationContextUtil
+												.getSpringBean(BugService.class);
+										bugService.updateWithSession(
+												WontFixExplainWindow.this.bug,
+												AppContext.getUsername());
 
-									final CommentService commentService = ApplicationContextUtil
-											.getSpringBean(CommentService.class);
-									commentService.saveWithSession(comment,
-											AppContext.getUsername());
+										// Save comment
+
+										final Comment comment = new Comment();
+										comment.setComment(commentValue);
+										comment.setCreatedtime(new GregorianCalendar()
+												.getTime());
+										comment.setCreateduser(AppContext
+												.getUsername());
+										comment.setSaccountid(AppContext
+												.getAccountId());
+										comment.setType(CommentType.PRJ_BUG
+												.toString());
+										comment.setTypeid(WontFixExplainWindow.this.bug
+												.getId());
+										comment.setExtratypeid(CurrentProjectVariables
+												.getProjectId());
+
+										final CommentService commentService = ApplicationContextUtil
+												.getSpringBean(CommentService.class);
+										commentService.saveWithSession(comment,
+												AppContext.getUsername());
+
+										WontFixExplainWindow.this.close();
+										WontFixExplainWindow.this.callbackForm
+												.refreshBugItem();
+									} else {
+										NotificationUtil
+												.showErrorNotification("You must enter a comment to explain for won't fix resolution");
+										return;
+									}
 
 									WontFixExplainWindow.this.close();
-									WontFixExplainWindow.this.callbackForm
-											.refreshBugItem();
-								} else {
-									NotificationUtil
-											.showNotification(
-													"Error",
-													"You must enter a comment to explain for won't fix resolution",
-													Window.Notification.TYPE_HUMANIZED_MESSAGE);
-									return;
 								}
-
-								WontFixExplainWindow.this.close();
 							}
 						});
 				wonFixBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
@@ -202,7 +204,8 @@ public class WontFixExplainWindow extends Window {
 			}
 
 			@Override
-			public void attachField(final Object propertyId, final Field field) {
+			public boolean attachField(final Object propertyId,
+					final Field<?> field) {
 				if (propertyId.equals("resolution")) {
 					this.informationLayout.addComponent(field, "Resolution", 0,
 							0);
@@ -219,30 +222,30 @@ public class WontFixExplainWindow extends Window {
 				} else if (propertyId.equals("comment")) {
 					this.informationLayout.addComponent(field, "Comments", 0,
 							3, 2, "100%", Alignment.MIDDLE_LEFT);
+				} else {
+					return false;
 				}
+
+				return true;
 			}
 		}
 
-		private class EditFormFieldFactory extends DefaultEditFormFieldFactory {
-
+		private class EditFormFieldFactory extends
+				AbstractBeanFieldGroupEditFieldFactory<BugWithBLOBs> {
 			private static final long serialVersionUID = 1L;
 
+			public EditFormFieldFactory(GenericBeanForm<BugWithBLOBs> form) {
+				super(form);
+			}
+
 			@Override
-			protected Field onCreateField(final Item item,
-					final Object propertyId,
-					final com.vaadin.ui.Component uiContext) {
+			protected Field<?> onCreateField(final Object propertyId) {
 				if (propertyId.equals("resolution")) {
 					return BugResolutionComboBox.getInstanceForWontFixWindow();
 				} else if (propertyId.equals("assignuser")) {
 					return new ProjectMemberComboBox();
 				} else if (propertyId.equals("fixedVersions")) {
-					WontFixExplainWindow.this.fixedVersionSelect = new VersionMultiSelectField(
-							"227px");
-					if (WontFixExplainWindow.this.bug.getFixedVersions().size() > 0) {
-						WontFixExplainWindow.this.fixedVersionSelect
-								.setSelectedItems(WontFixExplainWindow.this.bug
-										.getFixedVersions());
-					}
+					WontFixExplainWindow.this.fixedVersionSelect = new VersionMultiSelectField();
 					return WontFixExplainWindow.this.fixedVersionSelect;
 				} else if (propertyId.equals("comment")) {
 					EditForm.this.commentArea = new RichTextArea();

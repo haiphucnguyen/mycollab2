@@ -31,23 +31,28 @@ import com.esofthead.mycollab.module.project.localization.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.vaadin.ui.BeanList;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.Depot;
-import com.esofthead.mycollab.vaadin.ui.ProgressBar;
-import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.vaadin.ui.ProgressBarIndicator;
 import com.esofthead.mycollab.web.MyCollabResource;
-import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class MyProjectListComponent extends Depot {
 	private static final long serialVersionUID = 1L;
 
@@ -66,7 +71,7 @@ public class MyProjectListComponent extends Depot {
 
 	public void showProjects(final List<Integer> prjKeys) {
 		this.bodyContent.removeAllComponents();
-		this.bodyContent.addComponent(new LazyLoadWrapper(this.projectList));
+		this.bodyContent.addComponent(this.projectList);
 		final ProjectSearchCriteria searchCriteria = new ProjectSearchCriteria();
 		searchCriteria.setInvolvedMember(new StringSearchField(SearchField.AND,
 				AppContext.getUsername()));
@@ -88,6 +93,7 @@ public class MyProjectListComponent extends Depot {
 
 	public static class ProjectRowDisplayHandler implements
 			BeanList.RowDisplayHandler<SimpleProject> {
+		private static final long serialVersionUID = 1L;
 
 		@Override
 		public Component generateRow(final SimpleProject project,
@@ -123,9 +129,9 @@ public class MyProjectListComponent extends Depot {
 															project.getId()))));
 						}
 					});
-			final Embedded projectIcon = new Embedded();
-			projectIcon.setSource(MyCollabResource
-					.newResource("icons/16/project/project.png"));
+			final Image projectIcon = new Image(null,
+					MyCollabResource
+							.newResource("icons/16/project/project.png"));
 			linkIconFix.addComponent(projectIcon);
 			linkIconFix.addComponent(projectLink);
 			linkIconFix.setExpandRatio(projectLink, 1.0f);
@@ -135,18 +141,18 @@ public class MyProjectListComponent extends Depot {
 
 			final VerticalLayout projectStatusLayout = new VerticalLayout();
 			projectStatusLayout.setSpacing(true);
+			projectStatusLayout.setMargin(true);
 
 			final HorizontalLayout taskStatus = new HorizontalLayout();
 			taskStatus.setWidth("100%");
 			taskStatus.setSpacing(true);
 			final Label taskLbl = new Label("Tasks :");
-			final Embedded taskIcon = new Embedded();
-			taskIcon.setSource(MyCollabResource
-					.newResource("icons/16/project/task.png"));
+			final Image taskIcon = new Image(null,
+					MyCollabResource.newResource("icons/16/project/task.png"));
 			taskStatus.addComponent(taskIcon);
-			taskLbl.setWidth("40px");
+			taskLbl.setWidth("45px");
 			taskStatus.addComponent(taskLbl);
-			final ProgressBar progressTask = new ProgressBar(
+			final ProgressBarIndicator progressTask = new ProgressBarIndicator(
 					project.getNumTasks(), project.getNumOpenTasks());
 			progressTask.setWidth("100%");
 			taskStatus.addComponent(progressTask);
@@ -157,13 +163,12 @@ public class MyProjectListComponent extends Depot {
 			bugStatus.setWidth("100%");
 			bugStatus.setSpacing(true);
 			final Label bugLbl = new Label("Bugs :");
-			final Embedded bugIcon = new Embedded();
-			bugIcon.setSource(MyCollabResource
-					.newResource("icons/16/project/bug.png"));
+			final Image bugIcon = new Image(null,
+					MyCollabResource.newResource("icons/16/project/bug.png"));
 			bugStatus.addComponent(bugIcon);
-			bugLbl.setWidth("40px");
+			bugLbl.setWidth("45px");
 			bugStatus.addComponent(bugLbl);
-			final ProgressBar progressBug = new ProgressBar(
+			final ProgressBarIndicator progressBug = new ProgressBarIndicator(
 					project.getNumBugs(), project.getNumOpenBugs());
 			progressBug.setWidth("100%");
 			bugStatus.addComponent(progressBug);

@@ -18,7 +18,7 @@ package com.esofthead.mycollab.module.ecm;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  *
  */
 public class StorageNames {

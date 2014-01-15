@@ -19,23 +19,23 @@ package com.esofthead.mycollab.module.tracker.domain;
 public class SimpleVersion extends Version {
 	private static final long serialVersionUID = 1L;
 
-	private int numOpenBugs;
+	private Integer numOpenBugs;
 
-	private int numBugs;
+	private Integer numBugs;
 
-	public int getNumOpenBugs() {
+	public Integer getNumOpenBugs() {
 		return numOpenBugs;
 	}
 
-	public void setNumOpenBugs(int numOpenBugs) {
+	public void setNumOpenBugs(Integer numOpenBugs) {
 		this.numOpenBugs = numOpenBugs;
 	}
 
-	public int getNumBugs() {
+	public Integer getNumBugs() {
 		return numBugs;
 	}
 
-	public void setNumBugs(int numBugs) {
+	public void setNumBugs(Integer numBugs) {
 		this.numBugs = numBugs;
 	}
 }

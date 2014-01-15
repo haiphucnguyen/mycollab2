@@ -34,6 +34,7 @@ import com.esofthead.mycollab.module.crm.events.ContactEvent;
 import com.esofthead.mycollab.module.crm.view.lead.LeadSourceListSelect;
 import com.esofthead.mycollab.module.user.ui.components.ActiveUserListSelect;
 import com.esofthead.mycollab.security.RolePermissionCollections;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.CountryListSelect;
 import com.esofthead.mycollab.vaadin.ui.DefaultAdvancedSearchLayout;
 import com.esofthead.mycollab.vaadin.ui.DefaultGenericSearchPanel;
@@ -41,8 +42,8 @@ import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.Separator;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
-import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -50,6 +51,7 @@ import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.themes.Reindeer;
@@ -62,10 +64,10 @@ public class ContactSearchPanel extends
 		final HorizontalLayout layout = new HorizontalLayout();
 		layout.setWidth("100%");
 		layout.setSpacing(true);
+		layout.setMargin(true);
 
-		final Embedded titleIcon = new Embedded();
-		titleIcon.setSource(MyCollabResource
-				.newResource("icons/22/crm/contact.png"));
+		final Image titleIcon = new Image(null,
+				MyCollabResource.newResource("icons/22/crm/contact.png"));
 		layout.addComponent(titleIcon);
 		layout.setComponentAlignment(titleIcon, Alignment.MIDDLE_LEFT);
 
@@ -117,6 +119,7 @@ public class ContactSearchPanel extends
 		public ComponentContainer constructBody() {
 			final HorizontalLayout layout = new HorizontalLayout();
 			layout.setSpacing(false);
+			layout.setMargin(true);
 			// layout.addComponent(new Label("Name"));
 			this.nameField = this.createSeachSupportTextField(new TextField(),
 					"NameFieldOfBasicSearch");
@@ -129,7 +132,7 @@ public class ContactSearchPanel extends
 			searchBtn.setIcon(MyCollabResource
 					.newResource("icons/16/search_white.png"));
 
-			searchBtn.addListener(new Button.ClickListener() {
+			searchBtn.addClickListener(new Button.ClickListener() {
 				@Override
 				public void buttonClick(final ClickEvent event) {
 					ContactBasicSearchLayout.this.callSearchAction();
@@ -153,7 +156,7 @@ public class ContactSearchPanel extends
 					LocalizationHelper.getMessage(GenericI18Enum.BUTTON_CLEAR));
 			cancelBtn.setStyleName(UIConstants.THEME_LINK);
 			cancelBtn.addStyleName("cancel-button");
-			cancelBtn.addListener(new Button.ClickListener() {
+			cancelBtn.addClickListener(new Button.ClickListener() {
 				@Override
 				public void buttonClick(final ClickEvent event) {
 					ContactBasicSearchLayout.this.nameField.setValue("");
@@ -195,7 +198,7 @@ public class ContactSearchPanel extends
 								.trim()));
 			}
 
-			if (this.myItemCheckbox.booleanValue()) {
+			if (this.myItemCheckbox.getValue()) {
 				searchCriteria.setAssignUsers(new SetSearchField<String>(
 						SearchField.AND, new String[] { AppContext
 								.getUsername() }));
@@ -237,15 +240,8 @@ public class ContactSearchPanel extends
 			GridFormLayoutHelper gridLayout = new GridFormLayoutHelper(3, 4,
 					"100%", "90px");
 			gridLayout.getLayout().setWidth("100%");
-			gridLayout.getLayout().setMargin(true, true, true, false);
-
-			// if (ScreenSize.hasSupport1024Pixels()) {
-			// gridLayout = new GridFormLayoutHelper(3, 4,
-			// UIConstants.DEFAULT_CONTROL_WIDTH_1024_RESOLUTION,
-			// "90px");
-			// } else if (ScreenSize.hasSupport1280Pixels()) {
-			// gridLayout = new GridFormLayoutHelper(3, 4, "90px");
-			// }
+			gridLayout.getLayout().setMargin(
+					new MarginInfo(true, true, true, false));
 
 			this.firstnameField = (TextField) gridLayout.addComponent(this
 					.createSeachSupportTextField(new TextField(),
@@ -256,11 +252,12 @@ public class ContactSearchPanel extends
 			this.accountnameField = (TextField) gridLayout.addComponent(this
 					.createSeachSupportTextField(new TextField(),
 							"accountnameField"), "Account Name", 0, 2);
-			this.assignUserField = (ActiveUserListSelect) gridLayout.addComponent(
-					this.createSeachSupportComboBox(new ActiveUserListSelect()),
-					LocalizationHelper
-							.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD), 0,
-					3);
+			this.assignUserField = (ActiveUserListSelect) gridLayout
+					.addComponent(
+							this.createSeachSupportComboBox(new ActiveUserListSelect()),
+							LocalizationHelper
+									.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD),
+							0, 3);
 
 			this.anyEmailField = (TextField) gridLayout.addComponent(this
 					.createSeachSupportTextField(new TextField(),
@@ -342,8 +339,8 @@ public class ContactSearchPanel extends
 								.getValue()));
 			}
 
-			if (StringUtils
-					.isNotNullOrEmpty((String) this.stateField.getValue())) {
+			if (StringUtils.isNotNullOrEmpty((String) this.stateField
+					.getValue())) {
 				searchCriteria.setAnyState(new StringSearchField(
 						SearchField.AND, (String) this.stateField.getValue()));
 			}
@@ -362,7 +359,8 @@ public class ContactSearchPanel extends
 								(String) this.anyPhoneField.getValue()));
 			}
 
-			if (StringUtils.isNotNullOrEmpty((String) this.cityField.getValue())) {
+			if (StringUtils
+					.isNotNullOrEmpty((String) this.cityField.getValue())) {
 				searchCriteria.setAnyCity(new StringSearchField(
 						SearchField.AND, (String) this.cityField.getValue()));
 			}
@@ -443,6 +441,11 @@ public class ContactSearchPanel extends
 				final Object[] leadField = value.getLeadSources().values;
 				this.leadSourceField.setValue(Arrays.asList(leadField));
 			}
+		}
+
+		@Override
+		protected Class<ContactSearchCriteria> getType() {
+			return ContactSearchCriteria.class;
 		}
 	}
 

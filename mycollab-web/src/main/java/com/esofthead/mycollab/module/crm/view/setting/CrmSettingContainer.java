@@ -20,25 +20,23 @@ import com.esofthead.mycollab.eventmanager.ApplicationEvent;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.module.crm.data.CustomViewScreenData;
 import com.esofthead.mycollab.module.crm.data.NotificationSettingScreenData;
+import com.esofthead.mycollab.vaadin.mvp.PageView;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
-import com.esofthead.mycollab.vaadin.mvp.View;
-import com.esofthead.mycollab.vaadin.ui.ViewComponent;
+import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
+import com.esofthead.mycollab.vaadin.ui.VerticalTabsheet;
 import com.esofthead.mycollab.web.MyCollabResource;
-import com.github.wolfie.detachedtabs.DetachedTabs;
-import com.github.wolfie.detachedtabs.DetachedTabs.TabChangedEvent;
-import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.TabSheet.SelectedTabChangeEvent;
+import com.vaadin.ui.TabSheet.SelectedTabChangeListener;
+import com.vaadin.ui.TabSheet.Tab;
 
 @ViewComponent
-public class CrmSettingContainer extends CssLayout implements View {
+public class CrmSettingContainer extends CssLayout implements PageView {
 	private static final long serialVersionUID = 1L;
 
-	private final HorizontalLayout root;
-	private final DetachedTabs settingTab;
-	private final CssLayout mySpaceArea = new CssLayout();
+	private final VerticalTabsheet settingTab;
 
 	private ICrmCustomViewPresenter customViewPresenter;
 	private CrmNotifcationSettingPresenter notificationPresenter;
@@ -47,79 +45,60 @@ public class CrmSettingContainer extends CssLayout implements View {
 		this.setWidth("100%");
 
 		final CssLayout contentWrapper = new CssLayout();
-		contentWrapper.setStyleName("projectDashboardView");
-		contentWrapper.addStyleName("main-content-wrapper");
+		contentWrapper.setStyleName("verticalTabView");
 		contentWrapper.setWidth("100%");
 		this.addComponent(contentWrapper);
 
-		root = new HorizontalLayout();
-		root.setStyleName("menuContent");
-
-		settingTab = new DetachedTabs.Vertical(mySpaceArea);
+		settingTab = new VerticalTabsheet();
 		settingTab.setSizeFull();
+		settingTab.setNavigatorWidth("170px");
+		settingTab.setNavigatorStyleName("sidebar-menu");
+		settingTab.setContainerStyleName("tab-content");
 		settingTab.setHeight(null);
 
-		CssLayout menu = new CssLayout();
-		menu.setWidth("170px");
-		menu.setStyleName("sidebar-menu");
-		menu.addComponent(settingTab);
-
-		root.addComponent(menu);
-		mySpaceArea.setStyleName("projectTabContent");
-		mySpaceArea.setWidth("100%");
-		mySpaceArea.setHeight(null);
-		root.addComponent(mySpaceArea);
-		root.setExpandRatio(mySpaceArea, 1.0f);
-		root.setWidth("100%");
 		buildComponents();
-		contentWrapper.addComponent(root);
-	}
-
-	private static class MenuButton extends Button {
-		private static final long serialVersionUID = 1L;
-
-		public MenuButton(String caption, String iconResource) {
-			super(caption);
-			this.setIcon(MyCollabResource.newResource("icons/22/crm/"
-					+ iconResource));
-			this.setStyleName("link");
-		}
+		contentWrapper.addComponent(settingTab);
 	}
 
 	private void buildComponents() {
-		settingTab.addTab(constructNotificationSettingView(), new MenuButton(
-				"Notifications", "notification.png"));
-		settingTab.addTab(constructCustomView(), new MenuButton(
-				"Custom Layouts", "layout.png"));
+		settingTab.addTab(constructNotificationSettingView(), "Notifications",
+				MyCollabResource.newResource("icons/22/crm/notification.png"));
 
-		settingTab.addTabChangedListener(new DetachedTabs.TabChangedListener() {
-			@Override
-			public void tabChanged(TabChangedEvent event) {
-				Button btn = event.getSource();
-				String caption = btn.getCaption();
-				mySpaceArea.setStyleName("projectTabContent");
+		settingTab.addTab(constructCustomLayoutView(), "Custom Layouts",
+				MyCollabResource.newResource("icons/22/crm/layout.png"));
 
-				if ("Notifications".equals(caption)) {
-					notificationPresenter.go(CrmSettingContainer.this,
-							new NotificationSettingScreenData.Read());
-				} else if ("Custom Layouts".equals(caption)) {
-					customViewPresenter.go(CrmSettingContainer.this,
-							new CustomViewScreenData.Read());
-				}
-			}
-		});
+		settingTab
+				.addSelectedTabChangeListener(new SelectedTabChangeListener() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void selectedTabChange(SelectedTabChangeEvent event) {
+						Tab tab = ((VerticalTabsheet) event.getSource())
+								.getSelectedTab();
+						String caption = tab.getCaption();
+
+						if ("Notifications".equals(caption)) {
+							notificationPresenter.go(CrmSettingContainer.this,
+									new NotificationSettingScreenData.Read());
+						} else if ("Custom Layouts".equals(caption)) {
+							customViewPresenter.go(CrmSettingContainer.this,
+									new CustomViewScreenData.Read());
+						}
+
+					}
+				});
 	}
 
 	private Component constructNotificationSettingView() {
 		notificationPresenter = PresenterResolver
 				.getPresenter(CrmNotifcationSettingPresenter.class);
-		return notificationPresenter.getView();
+		return notificationPresenter.initView();
 	}
 
-	private Component constructCustomView() {
+	private Component constructCustomLayoutView() {
 		customViewPresenter = PresenterResolver
 				.getPresenter(ICrmCustomViewPresenter.class);
-		return customViewPresenter.getView();
+		return customViewPresenter.initView();
 	}
 
 	@Override
@@ -130,12 +109,11 @@ public class CrmSettingContainer extends CssLayout implements View {
 	@Override
 	public void addViewListener(
 			ApplicationEventListener<? extends ApplicationEvent> listener) {
-		// TODO Auto-generated method stub
 
 	}
 
 	public Component gotoSubView(String name) {
-		View component = (View) settingTab.selectTab(name);
+		PageView component = (PageView) settingTab.selectTab(name);
 		return component;
 	}
 

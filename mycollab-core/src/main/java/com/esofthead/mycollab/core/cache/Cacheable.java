@@ -29,7 +29,8 @@ import java.lang.annotation.Target;
  * by its arguments. Mycollab cache user data base on user account value base on
  * user account
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
  * 
  */
 @Retention(value = RetentionPolicy.RUNTIME)

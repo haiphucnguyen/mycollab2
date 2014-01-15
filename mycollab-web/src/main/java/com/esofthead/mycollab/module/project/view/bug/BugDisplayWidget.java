@@ -26,14 +26,20 @@ import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.BeanList;
-import com.esofthead.mycollab.vaadin.ui.BeanList.RowDisplayHandler;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.BeanList.RowDisplayHandler;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.VerticalLayout;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public abstract class BugDisplayWidget extends Depot {
 
 	private static final long serialVersionUID = 1L;
@@ -49,10 +55,11 @@ public abstract class BugDisplayWidget extends Depot {
 		super(title, new VerticalLayout());
 
 		dataList = new BeanList<BugService, BugSearchCriteria, SimpleBug>(
-				ApplicationContextUtil.getSpringBean(BugService.class), rowDisplayHandler);
+				ApplicationContextUtil.getSpringBean(BugService.class),
+				rowDisplayHandler);
 		bodyContent.addComponent(dataList);
 		bodyContent.setStyleName(UIConstants.BUG_LIST);
-		
+
 	}
 
 	protected abstract BugSearchParameter constructMoreDisplayFilter();
@@ -78,6 +85,7 @@ public abstract class BugDisplayWidget extends Depot {
 			final VerticalLayout widgetFooter = new VerticalLayout();
 			widgetFooter.addStyleName("widget-footer");
 			widgetFooter.setWidth("100%");
+			widgetFooter.setMargin(true);
 			widgetFooter.addComponent(moreBtn);
 			widgetFooter.setComponentAlignment(moreBtn, Alignment.TOP_RIGHT);
 			bodyContent.addComponent(widgetFooter);

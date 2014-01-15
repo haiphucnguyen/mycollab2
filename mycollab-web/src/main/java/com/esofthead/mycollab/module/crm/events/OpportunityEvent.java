@@ -18,9 +18,15 @@ package com.esofthead.mycollab.module.crm.events;
 
 import com.esofthead.mycollab.eventmanager.ApplicationEvent;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @SuppressWarnings("serial")
 public class OpportunityEvent {
-	
+
 	public static class Save extends ApplicationEvent {
 		public Save(Object source, Object data) {
 			super(source, data);
@@ -53,6 +59,12 @@ public class OpportunityEvent {
 
 	public static class GotoEdit extends ApplicationEvent {
 		public GotoEdit(Object source, Object data) {
+			super(source, data);
+		}
+	}
+
+	public static class GotoContactRoleEdit extends ApplicationEvent {
+		public GotoContactRoleEdit(Object source, Object data) {
 			super(source, data);
 		}
 	}

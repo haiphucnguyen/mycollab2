@@ -20,13 +20,18 @@ import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.module.project.esb.CleanProjectAssignmentsCacheCommand;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @Component
 public class CleanProjectAssignmentsCacheCommandImpl implements
 		CleanProjectAssignmentsCacheCommand {
 
 	@Override
 	public void cleanAssignmentsCache(int accountId, int projectId) {
-		// TODO Auto-generated method stub
 
 	}
 

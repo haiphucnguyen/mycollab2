@@ -16,12 +16,16 @@
  */
 package com.esofthead.mycollab.vaadin.ui.table;
 
+import java.io.Serializable;
+
 /**
  * 
- * @author haiphucnguyen
- *
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
  */
-public class TableViewField {
+public class TableViewField implements Serializable {
+	private static final long serialVersionUID = 1L;
 
 	private String desc;
 

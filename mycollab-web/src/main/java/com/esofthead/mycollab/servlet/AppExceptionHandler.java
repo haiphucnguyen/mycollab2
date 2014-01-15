@@ -23,8 +23,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.esofthead.mycollab.core.ResourceNotFoundException;
-
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class AppExceptionHandler extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -42,8 +46,6 @@ public class AppExceptionHandler extends HttpServlet {
 
 	private void processError(HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
-		Class errorTypeClass = (Class) request
-				.getAttribute("javax.servlet.error.exception_type");
 		Integer status_code = (Integer) request
 				.getAttribute("javax.servlet.error.status_code");
 		String requestUri = (String) request
@@ -51,10 +53,8 @@ public class AppExceptionHandler extends HttpServlet {
 		if (requestUri == null) {
 			requestUri = "Unknown";
 		}
-		if (ResourceNotFoundException.class.getName().equals(
-				errorTypeClass.getName())) {
-			PageCommonResponseUtils.responsePage404(response);
-		} else if (status_code == 404) {
+
+		if (status_code == 404) {
 			PageCommonResponseUtils.responsePage404(response);
 		} else {
 			PageCommonResponseUtils.responsePage500(response);

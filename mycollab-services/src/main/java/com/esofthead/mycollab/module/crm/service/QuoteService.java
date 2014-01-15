@@ -23,6 +23,12 @@ import com.esofthead.mycollab.module.crm.domain.Quote;
 import com.esofthead.mycollab.module.crm.domain.SimpleQuoteGroupProduct;
 import com.esofthead.mycollab.module.crm.domain.criteria.QuoteSearchCriteria;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public interface QuoteService extends
 		IDefaultService<Integer, Quote, QuoteSearchCriteria> {
 

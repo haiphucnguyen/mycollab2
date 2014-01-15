@@ -3,12 +3,18 @@ package com.esofthead.mycollab.premium.module.file.view;
 import com.esofthead.mycollab.module.file.view.FileMainView;
 import com.esofthead.mycollab.security.AccessPermissionFlag;
 import com.esofthead.mycollab.security.RolePermissionCollections;
-import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewPermission;
-import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.vaadin.ui.AbstractPresenter;
 import com.vaadin.ui.ComponentContainer;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @ViewPermission(permissionId = RolePermissionCollections.PUBLIC_DOCUMENT_ACCESS, impliedPermissionVal = AccessPermissionFlag.READ_ONLY)
 public class FileMainPresenter extends AbstractPresenter<FileMainView> {
 	private static final long serialVersionUID = 1L;

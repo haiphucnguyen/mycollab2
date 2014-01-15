@@ -16,85 +16,60 @@
  */
 package com.esofthead.mycollab.module.crm.view.campaign;
 
-import com.esofthead.mycollab.module.crm.domain.CampaignWithBLOBs;
-import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
-import com.esofthead.mycollab.vaadin.mvp.IFormAddView;
+import com.esofthead.mycollab.form.view.DynaFormLayout;
+import com.esofthead.mycollab.module.crm.CrmTypeConstants;
+import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
+import com.esofthead.mycollab.module.crm.ui.components.AbstractEditItemComp;
+import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
+import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
-import com.esofthead.mycollab.vaadin.ui.ViewComponent;
-import com.vaadin.data.Item;
-import com.vaadin.data.util.BeanItem;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Layout;
+import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
+import com.esofthead.mycollab.web.MyCollabResource;
+import com.vaadin.server.Resource;
+import com.vaadin.ui.ComponentContainer;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
 @ViewComponent
-public class CampaignAddViewImpl extends AbstractView implements
-		IFormAddView<CampaignWithBLOBs>, CampaignAddView {
-
+public class CampaignAddViewImpl extends AbstractEditItemComp<SimpleCampaign>
+		implements CampaignAddView {
 	private static final long serialVersionUID = 1L;
-	private EditForm editForm;
-	private CampaignWithBLOBs campaign;
 
-	public CampaignAddViewImpl() {
-		super();
-		editForm = new EditForm();
-		this.addComponent(editForm);
+	@Override
+	protected String initFormTitle() {
+		return (beanItem.getId() == null) ? "Create Campaign" : beanItem
+				.getCampaignname();
 	}
 
 	@Override
-	public void editItem(CampaignWithBLOBs campaign) {
-		this.campaign = campaign;
-		editForm.setItemDataSource(new BeanItem<CampaignWithBLOBs>(campaign));
-	}
-
-	private class EditForm extends AdvancedEditBeanForm<CampaignWithBLOBs> {
-
-		private static final long serialVersionUID = 1L;
-
-		@Override
-		public void setItemDataSource(Item newDataSource) {
-			this.setFormLayoutFactory(new FormLayoutFactory());
-			this.setFormFieldFactory(new CampaignEditFormFieldFactory(campaign));
-			super.setItemDataSource(newDataSource);
-		}
-
-		class FormLayoutFactory extends CampaignFormLayoutFactory {
-
-			private static final long serialVersionUID = 1L;
-
-			public FormLayoutFactory() {
-				super((campaign.getId() == null) ? "Create Campaign" : campaign
-						.getCampaignname());
-			}
-
-			private HorizontalLayout createButtonControls() {
-				final HorizontalLayout controlPanel = new HorizontalLayout();
-				final Layout controlButtons = (new EditFormControlsGenerator<CampaignWithBLOBs>(
-						EditForm.this)).createButtonControls();
-				controlButtons.setSizeUndefined();
-				controlPanel.addComponent(controlButtons);
-				controlPanel.setWidth("100%");
-				controlPanel.setComponentAlignment(controlButtons,
-						Alignment.MIDDLE_CENTER);
-				return controlPanel;
-			}
-
-			@Override
-			protected Layout createTopPanel() {
-				return createButtonControls();
-			}
-
-			@Override
-			protected Layout createBottomPanel() {
-				return createButtonControls();
-			}
-		}
+	protected Resource initFormIconResource() {
+		return MyCollabResource.newResource("icons/22/crm/campaign.png");
 	}
 
 	@Override
-	public HasEditFormHandlers<CampaignWithBLOBs> getEditFormHandlers() {
-		return editForm;
+	protected ComponentContainer createButtonControls() {
+		return new EditFormControlsGenerator<SimpleCampaign>(editForm)
+				.createButtonControls();
+	}
+
+	@Override
+	protected AdvancedEditBeanForm<SimpleCampaign> initPreviewForm() {
+		return new AdvancedEditBeanForm<SimpleCampaign>();
+	}
+
+	@Override
+	protected IFormLayoutFactory initFormLayoutFactory() {
+		return new DynaFormLayout(CrmTypeConstants.CAMPAIGN,
+				CampaignDefaultDynaFormLayoutFactory.getForm());
+	}
+
+	@Override
+	protected AbstractBeanFieldGroupEditFieldFactory<SimpleCampaign> initBeanFormFieldFactory() {
+		return new CampaignEditFormFieldFactory<SimpleCampaign>(editForm);
 	}
 }

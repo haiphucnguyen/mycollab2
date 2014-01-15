@@ -17,6 +17,9 @@
 package com.esofthead.mycollab.module.file.resource;
 
 import static net.sf.dynamicreports.report.builder.DynamicReports.type;
+
+import java.lang.reflect.Field;
+
 import net.sf.dynamicreports.report.base.datatype.AbstractDataType;
 import net.sf.dynamicreports.report.definition.datatype.DRIDataType;
 import net.sf.dynamicreports.report.exception.DRException;
@@ -24,14 +27,25 @@ import net.sf.dynamicreports.report.exception.DRException;
 import org.apache.commons.lang3.Validate;
 
 import com.esofthead.mycollab.common.domain.Currency;
+import com.esofthead.mycollab.reporting.NotInReport;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class DRIDataTypeFactory {
 	private static final CurrencyType currencyType = new CurrencyType();
 
 	@SuppressWarnings("unchecked")
-	public static <T extends DRIDataType<?, ?>> T detectType(String dataType)
+	public static <T extends DRIDataType<?, ?>> T detectType(Field field)
 			throws DRException {
-		Validate.notNull(dataType, "dataType must not be null");
+		if (field.getAnnotation(NotInReport.class) != null) {
+			return null;
+		}
+
+		String dataType = field.getType().getName();
 
 		String dataTypeLC = dataType.toLowerCase().trim();
 		if (dataTypeLC.equals("currency")

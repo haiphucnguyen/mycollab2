@@ -19,6 +19,12 @@ package com.esofthead.mycollab.module.user.view.component;
 import com.esofthead.mycollab.security.BooleanPermissionFlag;
 import com.esofthead.mycollab.vaadin.ui.KeyCaptionComboBox;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class YesNoPermissionComboBox extends KeyCaptionComboBox {
 	private static final long serialVersionUID = 1L;
 

@@ -22,12 +22,13 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.eventmanager.ApplicationEvent;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
+import com.esofthead.mycollab.module.crm.domain.Lead;
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.ui.FieldSelection;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
-import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
@@ -36,9 +37,9 @@ public class LeadSelectionWindow extends Window {
 	private static final long serialVersionUID = 1L;
 	private LeadSearchCriteria searchCriteria;
 	private LeadTableDisplay tableItem;
-	private FieldSelection fieldSelection;
+	private FieldSelection<Lead> fieldSelection;
 
-	public LeadSelectionWindow(FieldSelection fieldSelection) {
+	public LeadSelectionWindow(FieldSelection<Lead> fieldSelection) {
 		super("Lead Name Lookup");
 		this.setWidth("800px");
 		this.fieldSelection = fieldSelection;
@@ -93,8 +94,7 @@ public class LeadSelectionWindow extends Window {
 						SimpleLead lead = (SimpleLead) event.getData();
 						if ("leadName".equals(event.getFieldName())) {
 							fieldSelection.fireValueChange(lead);
-							LeadSelectionWindow.this.getParent().removeWindow(
-									LeadSelectionWindow.this);
+							LeadSelectionWindow.this.close();
 						}
 					}
 				});

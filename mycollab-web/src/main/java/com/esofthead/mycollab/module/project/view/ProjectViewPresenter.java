@@ -47,17 +47,23 @@ import com.esofthead.mycollab.module.project.view.task.TaskPresenter;
 import com.esofthead.mycollab.module.project.view.time.ITimeTrackingPresenter;
 import com.esofthead.mycollab.module.project.view.user.ProjectDashboardPresenter;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.vaadin.mvp.IPresenter;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
+import com.esofthead.mycollab.vaadin.ui.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
-import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class ProjectViewPresenter extends AbstractPresenter<ProjectView> {
 
 	private static final long serialVersionUID = 1L;
@@ -107,7 +113,7 @@ public class ProjectViewPresenter extends AbstractPresenter<ProjectView> {
 	@Override
 	protected void onHandleChain(ComponentContainer container,
 			PageActionChain pageActionChain) {
-		ScreenData pageAction = pageActionChain.peek();
+		ScreenData<?> pageAction = pageActionChain.peek();
 
 		IPresenter<?> presenter = null;
 

@@ -16,6 +16,12 @@
  */
 package com.esofthead.mycollab.module.file.resource;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class FieldExportColumn {
 
 	private String name;

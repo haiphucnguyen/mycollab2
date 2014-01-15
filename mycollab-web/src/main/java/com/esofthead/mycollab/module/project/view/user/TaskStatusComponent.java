@@ -39,11 +39,11 @@ import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.RiskScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.TaskScreenData;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.Container.Hierarchical;
 import com.vaadin.data.util.HierarchicalContainer;
@@ -58,7 +58,9 @@ import com.vaadin.ui.VerticalLayout;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
  */
 public class TaskStatusComponent extends Depot {
 	private static final long serialVersionUID = 1L;
@@ -87,7 +89,7 @@ public class TaskStatusComponent extends Depot {
 		this.bodyContent.addComponent(taskTree);
 		taskTree.setSizeFull();
 
-		taskTree.addListener(new Tree.ExpandListener() {
+		taskTree.addExpandListener(new Tree.ExpandListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override

@@ -16,6 +16,7 @@
  */
 package com.esofthead.mycollab.module.crm.service.ibatis;
 
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,8 @@ import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.common.interceptor.aspect.Auditable;
 import com.esofthead.mycollab.common.interceptor.aspect.Traceable;
 import com.esofthead.mycollab.common.interceptor.aspect.Watchable;
+import com.esofthead.mycollab.core.cache.CacheKey;
+import com.esofthead.mycollab.core.cache.Cacheable;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
@@ -43,6 +46,12 @@ import com.esofthead.mycollab.module.crm.service.AccountService;
 import com.esofthead.mycollab.module.crm.service.LeadService;
 import com.esofthead.mycollab.schedule.email.crm.AccountRelayEmailNotificationAction;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 @Service
 @Transactional
 @Traceable(module = ModuleNameConstants.CRM, type = CrmTypeConstants.ACCOUNT, nameField = "accountname")
@@ -84,6 +93,7 @@ public class AccountServiceImpl extends
 					.andAccountidEqualTo(associateLead.getAccountid())
 					.andLeadidEqualTo(associateLead.getLeadid());
 			if (accountLeadMapper.countByExample(ex) == 0) {
+				associateLead.setCreatetime(new GregorianCalendar().getTime());
 				accountLeadMapper.insert(associateLead);
 			}
 		}
@@ -109,6 +119,12 @@ public class AccountServiceImpl extends
 
 		LocalCacheManager.removeCacheItems(accountId.toString(),
 				AccountService.class.getName());
+	}
+
+	@Override
+	public SimpleAccount findAccountAssoWithConvertedLead(int leadId,
+			int accountId) {
+		return accountMapperExt.findAccountAssoWithConvertedLead(leadId);
 	}
 
 }

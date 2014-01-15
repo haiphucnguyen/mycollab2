@@ -21,7 +21,6 @@ import java.util.List;
 
 import com.esofthead.mycollab.form.view.builder.type.AbstractDynaField;
 import com.esofthead.mycollab.form.view.builder.type.DynaSection;
-import com.esofthead.mycollab.module.crm.ui.components.CustomFieldComponent;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.VerticalLayout;

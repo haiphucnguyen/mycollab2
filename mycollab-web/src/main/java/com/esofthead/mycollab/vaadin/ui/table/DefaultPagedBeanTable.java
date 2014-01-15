@@ -23,7 +23,7 @@ import com.esofthead.mycollab.core.persistence.service.ISearchableService;
 
 /**
  * 
- * @author haiphucnguyen
+ * @author MyCollab Ltd.
  *
  * @param <SearchService>
  * @param <S>
