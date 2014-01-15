@@ -17,6 +17,7 @@
 package com.esofthead.mycollab.module.crm.service.ibatis;
 
 import java.util.Arrays;
+import java.util.GregorianCalendar;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +29,7 @@ import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.common.interceptor.aspect.Auditable;
 import com.esofthead.mycollab.common.interceptor.aspect.Traceable;
 import com.esofthead.mycollab.common.interceptor.aspect.Watchable;
+import com.esofthead.mycollab.core.cache.CacheKey;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
@@ -124,6 +126,7 @@ public class LeadServiceImpl extends
 		contact.setAssignuser(lead.getAssignuser());
 		contact.setOfficephone(lead.getOfficephone());
 		contact.setEmail(lead.getEmail());
+		contact.setSaccountid(lead.getSaccountid());
 
 		ContactService contactService = ApplicationContextUtil
 				.getSpringBean(ContactService.class);
@@ -138,6 +141,7 @@ public class LeadServiceImpl extends
 
 		if (opportunity != null) {
 			opportunity.setAccountid(accountId);
+			opportunity.setSaccountid(lead.getSaccountid());
 			OpportunityService opportunityService = ApplicationContextUtil
 					.getSpringBean(OpportunityService.class);
 			int opportunityId = opportunityService.saveWithSession(opportunity,
@@ -155,9 +159,28 @@ public class LeadServiceImpl extends
 			oppLead.setLeadid(lead.getId());
 			oppLead.setOpportunityid(opportunityId);
 			oppLead.setIsconvertrel(true);
+			oppLead.setCreatedtime(new GregorianCalendar().getTime());
 			opportunityService.saveOpportunityLeadRelationship(
 					Arrays.asList(oppLead), lead.getSaccountid());
 		}
 
+	}
+
+	@Override
+	public SimpleLead findConvertedLeadOfAccount(int accountId,
+			@CacheKey int sAccountId) {
+		return leadMapperExt.findConvertedLeadOfAccount(accountId);
+	}
+
+	@Override
+	public SimpleLead findConvertedLeadOfContact(int contactId,
+			@CacheKey int sAccountId) {
+		return leadMapperExt.findConvertedLeadOfContact(contactId);
+	}
+
+	@Override
+	public SimpleLead findConvertedLeadOfOpportunity(int opportunity,
+			@CacheKey int sAccountId) {
+		return leadMapperExt.findConvertedLeadOfOpportunity(opportunity);
 	}
 }

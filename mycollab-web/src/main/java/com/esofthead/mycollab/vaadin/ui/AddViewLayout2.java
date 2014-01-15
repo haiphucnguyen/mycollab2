@@ -17,6 +17,7 @@
 package com.esofthead.mycollab.vaadin.ui;
 
 import com.vaadin.server.Resource;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
@@ -56,6 +57,7 @@ public class AddViewLayout2 extends CssLayout {
 		header.setComponentAlignment(iconEmbed, Alignment.MIDDLE_LEFT);
 
 		titleLbl = new Label(title);
+		titleLbl.setContentMode(ContentMode.HTML);
 		titleLbl.setStyleName("h2");
 		titleLbl.setWidth("100%");
 		header.addComponent(titleLbl);

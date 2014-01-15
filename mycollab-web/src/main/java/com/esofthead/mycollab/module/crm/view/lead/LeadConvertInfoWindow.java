@@ -12,6 +12,7 @@ import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.CurrencyComboBoxField;
+import com.esofthead.mycollab.vaadin.ui.DummyCustomField;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -174,6 +175,9 @@ public class LeadConvertInfoWindow extends Window {
 						if (isSelected) {
 							opportunityForm = new LeadOpportunityForm();
 							Opportunity opportunity = new Opportunity();
+
+							// this is a trick to pass validation
+							opportunity.setAccountid(0);
 							opportunityForm.setBean(opportunity);
 							layout.addComponent(opportunityForm);
 						} else {
@@ -251,6 +255,8 @@ public class LeadConvertInfoWindow extends Window {
 						return currencyBox;
 					} else if (propertyId.equals("salesstage")) {
 						return new OpportunitySalesStageComboBox();
+					} else if (propertyId.equals("accountId")) {
+						return new DummyCustomField();
 					}
 
 					return null;

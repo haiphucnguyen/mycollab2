@@ -317,6 +317,30 @@
 
         WHERE m_crm_lead.id = #{leadId,javaType=INTEGER}
     </select>
+    
+    <select id="findConvertedLeadOfAccount" parameterType="int" resultMap="SimpleLeadResult">
+        <include
+            refid="com.esofthead.mycollab.module.crm.dao.LeadMapperExt.selectSimpleLead" />
+
+        INNER JOIN m_crm_accounts_leads ON (m_crm_accounts_leads.leadId=m_crm_lead.id AND m_crm_accounts_leads.isConvertRel=1 AND
+            m_crm_accounts_leads.accountId=#{accountId,javaType=INTEGER})
+    </select>
+    
+    <select id="findConvertedLeadOfContact" parameterType="int" resultMap="SimpleLeadResult">
+        <include
+            refid="com.esofthead.mycollab.module.crm.dao.LeadMapperExt.selectSimpleLead" />
+
+        INNER JOIN m_crm_contacts_leads ON (m_crm_contacts_leads.leadId=m_crm_lead.id AND m_crm_contacts_leads.isConvertRel=1 AND
+            m_crm_contacts_leads.contactId=#{contactId,javaType=INTEGER})
+    </select>
+    
+    <select id="findConvertedLeadOfOpportunity" parameterType="int" resultMap="SimpleLeadResult">
+        <include
+            refid="com.esofthead.mycollab.module.crm.dao.LeadMapperExt.selectSimpleLead" />
+
+        INNER JOIN m_crm_opportunities_leads ON (m_crm_opportunities_leads.leadId=m_crm_lead.id AND m_crm_opportunities_leads.isConvertRel=1 AND
+            m_crm_opportunities_leads.opportunityId=#{opportunityId,javaType=INTEGER})
+    </select>
 
     <select id="getNextItemKey" parameterType="map" resultType="java.lang.Integer">
         SELECT MIN(id) FROM m_crm_lead
