@@ -24,6 +24,12 @@ import com.esofthead.mycollab.module.crm.domain.Lead;
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public interface LeadMapperExt extends ISearchableDAO<LeadSearchCriteria>,
 		IMassUpdateDAO<Lead, LeadSearchCriteria> {
 

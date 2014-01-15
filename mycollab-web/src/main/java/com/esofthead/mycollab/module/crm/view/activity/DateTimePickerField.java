@@ -36,7 +36,7 @@ import com.vaadin.ui.PopupDateField;
  * @since 2.0
  * 
  */
-public class DateTimePicker extends CustomField<Date> {
+public class DateTimePickerField extends CustomField<Date> {
 	private static final long serialVersionUID = 1L;
 
 	public static final long ONE_MINUTE_IN_MILLIS = 60000;
@@ -46,7 +46,7 @@ public class DateTimePicker extends CustomField<Date> {
 	private MinutePickerComboBox minutePickerComboBox;
 	private ValueComboBox timeFormatComboBox;
 
-	public DateTimePicker() {
+	public DateTimePickerField() {
 		popupDateField = new PopupDateField();
 		popupDateField.setResolution(Resolution.DAY);
 		popupDateField.setWidth("130px");

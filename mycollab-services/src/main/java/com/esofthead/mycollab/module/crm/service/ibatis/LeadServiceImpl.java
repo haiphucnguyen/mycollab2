@@ -40,9 +40,9 @@ import com.esofthead.mycollab.module.crm.domain.Account;
 import com.esofthead.mycollab.module.crm.domain.AccountLead;
 import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.module.crm.domain.ContactLead;
+import com.esofthead.mycollab.module.crm.domain.ContactOpportunity;
 import com.esofthead.mycollab.module.crm.domain.Lead;
 import com.esofthead.mycollab.module.crm.domain.Opportunity;
-import com.esofthead.mycollab.module.crm.domain.OpportunityContact;
 import com.esofthead.mycollab.module.crm.domain.OpportunityLead;
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
@@ -148,10 +148,10 @@ public class LeadServiceImpl extends
 					"");
 
 			log.debug("Create new opportunity contact relationship");
-			OpportunityContact oppContact = new OpportunityContact();
+			ContactOpportunity oppContact = new ContactOpportunity();
 			oppContact.setContactid(contactId);
 			oppContact.setOpportunityid(opportunityId);
-			opportunityService.saveOpportunityContactRelationship(
+			contactService.saveContactOpportunityRelationship(
 					Arrays.asList(oppContact), lead.getSaccountid());
 
 			log.debug("Create new opportunity lead relationship");

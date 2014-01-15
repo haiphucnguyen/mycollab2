@@ -1,16 +1,24 @@
 package com.esofthead.mycollab.module.crm.view.opportunity;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.eventmanager.EventBus;
-import com.esofthead.mycollab.module.crm.domain.Opportunity;
+import com.esofthead.mycollab.module.crm.domain.Contact;
+import com.esofthead.mycollab.module.crm.domain.ContactOpportunity;
+import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.SimpleContactOpportunityRel;
+import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
+import com.esofthead.mycollab.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.module.crm.events.ContactEvent;
+import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
 import com.esofthead.mycollab.module.crm.service.ContactOpportunityService;
+import com.esofthead.mycollab.module.crm.service.ContactService;
 import com.esofthead.mycollab.module.crm.view.contact.ContactSelectionField;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -23,12 +31,13 @@ import com.esofthead.mycollab.vaadin.ui.AddViewLayout2;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
 import com.esofthead.mycollab.web.MyCollabResource;
+import com.vaadin.ui.AbstractField;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
 /**
@@ -42,10 +51,11 @@ public class ContactRoleEditViewImpl extends AbstractPageView implements
 		ContactRoleEditView {
 	private static final long serialVersionUID = 1L;
 
-	private Opportunity opportunity;
+	private VerticalLayout contactRoleList;
+	private SimpleOpportunity opportunity;
 
 	@Override
-	public void display(Opportunity opportunity) {
+	public void display(SimpleOpportunity opportunity) {
 		this.opportunity = opportunity;
 		this.removeAllComponents();
 
@@ -66,7 +76,9 @@ public class ContactRoleEditViewImpl extends AbstractPageView implements
 		}
 
 		previewLayout.addBody(informationLayout);
-		previewLayout.addBody(constructContactOpportunityList());
+
+		contactRoleList = constructContactOpportunityList();
+		previewLayout.addBody(contactRoleList);
 
 		Button addMoreContactRolesBtn = new Button("Add more contact roles",
 				new Button.ClickListener() {
@@ -74,8 +86,10 @@ public class ContactRoleEditViewImpl extends AbstractPageView implements
 
 					@Override
 					public void buttonClick(ClickEvent event) {
-						// TODO Auto-generated method stub
-
+						SimpleContactOpportunityRel contactRole = new SimpleContactOpportunityRel();
+						ContactRoleRowComp row = new ContactRoleRowComp(
+								contactRole);
+						contactRoleList.addComponent(row);
 					}
 				});
 		addMoreContactRolesBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
@@ -112,15 +126,13 @@ public class ContactRoleEditViewImpl extends AbstractPageView implements
 		HorizontalLayout layout = new HorizontalLayout();
 		layout.setSpacing(true);
 		layout.setMargin(true);
-		layout.setWidth("100%");
 
 		Button updateBtn = new Button("Update", new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				// TODO Auto-generated method stub
-
+				updateContactRoles();
 			}
 		});
 		updateBtn.setIcon(MyCollabResource.newResource("icons/16/save.png"));
@@ -150,21 +162,126 @@ public class ContactRoleEditViewImpl extends AbstractPageView implements
 		return layout;
 	}
 
-	private static class ContactRoleRowComp extends HorizontalLayout {
-		private static final long serialVersionUID = 1L;
+	private void updateContactRoles() {
+		Iterator<Component> components = contactRoleList.iterator();
+		List<ContactOpportunity> contactOpps = new ArrayList<ContactOpportunity>();
 
-		public ContactRoleRowComp(SimpleContactOpportunityRel contactOpp) {
-			ContactSelectionField contactField = new ContactSelectionField();
-			this.addComponent(contactField);
-
-			RoleDecisionComboBox roleBox = new RoleDecisionComboBox();
-			this.addComponent(roleBox);
+		while (components.hasNext()) {
+			Component component = components.next();
+			if (component instanceof ContactRoleRowComp) {
+				ContactOpportunity contactVal = ((ContactRoleRowComp) component)
+						.getContactVal();
+				if (contactVal != null) {
+					contactOpps.add(contactVal);
+				}
+			}
 		}
 
+		if (contactOpps.size() > 0) {
+			ContactService contactService = ApplicationContextUtil
+					.getSpringBean(ContactService.class);
+			contactService.saveContactOpportunityRelationship(contactOpps,
+					AppContext.getAccountId());
+		}
+
+		// lead user to opportunity view
+		EventBus.getInstance().fireEvent(
+				new OpportunityEvent.GotoRead(ContactRoleEditViewImpl.this,
+						opportunity.getId()));
+	}
+
+	private class ContactRoleRowComp extends HorizontalLayout {
+		private static final long serialVersionUID = 1L;
+
+		private ContactSelectionField contactField;
+		private RoleDecisionComboBox roleBox;
+
+		public ContactRoleRowComp(final SimpleContactOpportunityRel contactOpp) {
+			super();
+			this.setMargin(true);
+			this.setSpacing(true);
+			this.setWidth("100%");
+
+			contactField = new ContactSelectionField();
+			this.addComponent(contactField);
+			contactField
+					.setPropertyDataSource(new AbstractField<SimpleContact>() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public SimpleContact getValue() {
+							return contactOpp;
+						}
+
+						@Override
+						public Class<? extends SimpleContact> getType() {
+							return SimpleContact.class;
+						}
+
+					});
+
+			Button accountLink = new Button(contactOpp.getAccountName(),
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void buttonClick(ClickEvent event) {
+							EventBus.getInstance().fireEvent(
+									new AccountEvent.GotoRead(
+											ContactRoleRowComp.this, contactOpp
+													.getAccountid()));
+
+						}
+					});
+			accountLink.setIcon(MyCollabResource
+					.newResource("icons/16/crm/account.png"));
+			accountLink.setStyleName("link");
+			this.addComponent(accountLink);
+
+			roleBox = new RoleDecisionComboBox();
+			if (contactOpp.getDecisionRole() != null) {
+				roleBox.setValue(contactOpp.getDecisionRole());
+			}
+			this.addComponent(roleBox);
+
+			Button deleteBtn = new Button("", new Button.ClickListener() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void buttonClick(ClickEvent event) {
+					((VerticalLayout) ContactRoleRowComp.this.getParent())
+							.removeComponent(ContactRoleRowComp.this);
+
+				}
+			});
+			deleteBtn.setIcon(MyCollabResource
+					.newResource("icons/16/delete.png"));
+			deleteBtn.setStyleName("link");
+			this.addComponent(deleteBtn);
+		}
+
+		public ContactOpportunity getContactVal() {
+			ContactOpportunity contactOppRel = new ContactOpportunity();
+			Contact contact = (Contact) contactField.getContact();
+			if (contact != null && contact.getId() != null) {
+				contactOppRel.setContactid(contact.getId());
+				contactOppRel.setOpportunityid(opportunity.getId());
+				contactOppRel.setDecisionrole((String) roleBox.getValue());
+				return contactOppRel;
+			} else {
+				return null;
+			}
+		}
 	}
 
 	private static class RoleDecisionComboBox extends ValueComboBox {
 		private static final long serialVersionUID = 1L;
 
+		public RoleDecisionComboBox() {
+			super();
+			this.setNullSelectionAllowed(false);
+			this.loadData("Primary Decision Marker", "Evaluator", "Influencer",
+					"Other");
+		}
 	}
 }

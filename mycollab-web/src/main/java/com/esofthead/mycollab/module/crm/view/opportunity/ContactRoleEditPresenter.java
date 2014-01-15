@@ -1,7 +1,7 @@
 package com.esofthead.mycollab.module.crm.view.opportunity;
 
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
-import com.esofthead.mycollab.module.crm.domain.Opportunity;
+import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
 import com.esofthead.mycollab.module.crm.view.CrmToolbar;
@@ -33,7 +33,8 @@ public class ContactRoleEditPresenter extends
 			crmToolbar.gotoItem(LocalizationHelper
 					.getMessage(CrmCommonI18nEnum.TOOLBAR_CONTACTS_HEADER));
 
-			Opportunity opportunity = (Opportunity) data.getParams();
+			SimpleOpportunity opportunity = (SimpleOpportunity) data
+					.getParams();
 			super.onGo(container, data);
 			view.display(opportunity);
 
