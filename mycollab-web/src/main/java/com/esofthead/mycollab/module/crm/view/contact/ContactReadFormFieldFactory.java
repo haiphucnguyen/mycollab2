@@ -90,7 +90,16 @@ public class ContactReadFormFieldFactory extends
 					.getBirthday()));
 		} else if (propertyId.equals("firstname")) {
 			final FormContainerHorizontalViewField containerField = new FormContainerHorizontalViewField();
-			final Label nameLbl = new Label(attachForm.getBean().getFirstname());
+			SimpleContact contact = attachForm.getBean();
+			String displayName = "";
+			if (contact.getPrefix() != null) {
+				displayName = contact.getPrefix();
+			}
+			if (contact.getFirstname() != null) {
+				displayName += contact.getFirstname();
+			}
+
+			final Label nameLbl = new Label(displayName);
 			containerField.addComponentField(nameLbl);
 			containerField.getLayout().setExpandRatio(nameLbl, 1.0f);
 			final Button vcardDownloadBtn = new Button("");

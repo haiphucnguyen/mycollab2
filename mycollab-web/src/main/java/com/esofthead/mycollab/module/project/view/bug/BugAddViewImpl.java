@@ -109,9 +109,9 @@ public class BugAddViewImpl extends AbstractEditItemComp<SimpleBug> implements
 				field.setNullRepresentation("");
 				return field;
 			} else if (propertyId.equals("priority")) {
-//				if (beanItem.getPriority() == null) {
-//					beanItem.setPriority(BugPriorityStatusConstants.PRIORITY_MAJOR);
-//				}
+				if (beanItem.getPriority() == null) {
+					beanItem.setPriority(BugPriorityStatusConstants.PRIORITY_MAJOR);
+				}
 				return new BugPriorityComboBox();
 			} else if (propertyId.equals("assignuser")) {
 				return new ProjectMemberComboBox();

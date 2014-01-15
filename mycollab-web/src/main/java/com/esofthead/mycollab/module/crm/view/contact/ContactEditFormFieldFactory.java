@@ -21,10 +21,15 @@ import com.esofthead.mycollab.module.crm.view.account.AccountSelectionField;
 import com.esofthead.mycollab.module.crm.view.lead.LeadSourceComboBox;
 import com.esofthead.mycollab.module.user.ui.components.ActiveUserComboBox;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
+import com.esofthead.mycollab.vaadin.ui.CompoundCustomField;
 import com.esofthead.mycollab.vaadin.ui.CountryComboBox;
 import com.esofthead.mycollab.vaadin.ui.DateComboboxSelectionField;
 import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
+import com.esofthead.mycollab.vaadin.ui.PrefixNameComboBox;
+import com.vaadin.data.Property;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 
@@ -39,14 +44,19 @@ class ContactEditFormFieldFactory<B extends Contact> extends
 		AbstractBeanFieldGroupEditFieldFactory<B> {
 	private static final long serialVersionUID = 1L;
 
+	private ContactFirstNamePrefixField firstNamePrefixField;
+
 	ContactEditFormFieldFactory(GenericBeanForm<B> form) {
 		super(form);
+
+		firstNamePrefixField = new ContactFirstNamePrefixField();
 	}
 
 	@Override
 	protected Field<?> onCreateField(Object propertyId) {
-
-		if (propertyId.equals("leadsource")) {
+		if (propertyId.equals("firstname") || propertyId.equals("prefix")) {
+			return firstNamePrefixField;
+		} else if (propertyId.equals("leadsource")) {
 			LeadSourceComboBox leadSource = new LeadSourceComboBox();
 			return leadSource;
 		} else if (propertyId.equals("accountid")) {
@@ -74,5 +84,50 @@ class ContactEditFormFieldFactory<B extends Contact> extends
 			return new DateComboboxSelectionField();
 		}
 		return null;
+	}
+
+	class ContactFirstNamePrefixField extends CompoundCustomField<Contact> {
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		protected Component initContent() {
+			HorizontalLayout layout = new HorizontalLayout();
+			layout.setWidth("100%");
+			layout.setSpacing(true);
+
+			final PrefixNameComboBox prefixSelect = new PrefixNameComboBox();
+			prefixSelect.setValue(attachForm.getBean().getPrefix());
+			layout.addComponent(prefixSelect);
+
+			prefixSelect
+					.addValueChangeListener(new Property.ValueChangeListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void valueChange(Property.ValueChangeEvent event) {
+							attachForm.getBean().setPrefix(
+									(String) prefixSelect.getValue());
+
+						}
+					});
+
+			TextField firstnameTxtField = new TextField();
+			firstnameTxtField.setWidth("100%");
+			firstnameTxtField.setNullRepresentation("");
+			layout.addComponent(firstnameTxtField);
+			layout.setExpandRatio(firstnameTxtField, 1.0f);
+
+			// binding field group
+			fieldGroup.bind(prefixSelect, "prefix");
+			fieldGroup.bind(firstnameTxtField, "firstname");
+
+			return layout;
+		}
+
+		@Override
+		public Class<? extends Contact> getType() {
+			return Contact.class;
+		}
+
 	}
 }
