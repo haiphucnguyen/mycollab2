@@ -62,5 +62,5 @@
   <classpathentry kind="var" path="M2_REPO/com/fasterxml/jackson/core/jackson-annotations/2.1.1/jackson-annotations-2.1.1.jar" sourcepath="M2_REPO/com/fasterxml/jackson/core/jackson-annotations/2.1.1/jackson-annotations-2.1.1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/jasypt/jasypt/1.9.1/jasypt-1.9.1.jar" sourcepath="M2_REPO/org/jasypt/jasypt/1.9.1/jasypt-1.9.1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/jasypt/jasypt-spring31/1.9.1/jasypt-spring31-1.9.1.jar" sourcepath="M2_REPO/org/jasypt/jasypt-spring31/1.9.1/jasypt-spring31-1.9.1-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/com/googlecode/flyway/flyway-core/2.3/flyway-core-2.3.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/googlecode/flyway/flyway-core/2.3/flyway-core-2.3.jar" sourcepath="M2_REPO/com/googlecode/flyway/flyway-core/2.3/flyway-core-2.3-sources.jar"/>
 </classpath>
