@@ -16,9 +16,9 @@
  */
 package com.esofthead.mycollab.module.project.view.settings.component;
 
+import com.esofthead.mycollab.vaadin.ui.CustomFieldExt;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.CustomField;
 
 /**
  * 
@@ -26,7 +26,7 @@ import com.vaadin.ui.CustomField;
  * @since 1.0
  * 
  */
-public class ProjectUserFormLinkField extends CustomField {
+public class ProjectUserFormLinkField extends CustomFieldExt {
 	private static final long serialVersionUID = 1L;
 
 	private String username;

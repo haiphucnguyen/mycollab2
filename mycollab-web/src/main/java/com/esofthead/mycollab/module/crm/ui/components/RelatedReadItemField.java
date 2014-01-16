@@ -40,11 +40,11 @@ import com.esofthead.mycollab.module.crm.service.OpportunityService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
+import com.esofthead.mycollab.vaadin.ui.CustomFieldExt;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.CustomField;
 import com.vaadin.ui.Label;
 
 /**
@@ -53,7 +53,7 @@ import com.vaadin.ui.Label;
  * @since 1.0
  * 
  */
-public class RelatedReadItemField extends CustomField {
+public class RelatedReadItemField extends CustomFieldExt {
 	private static final long serialVersionUID = 1L;
 
 	private Object bean;

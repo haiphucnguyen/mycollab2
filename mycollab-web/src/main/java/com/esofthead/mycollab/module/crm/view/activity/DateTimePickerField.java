@@ -21,12 +21,12 @@ import java.util.Date;
 
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
+import com.esofthead.mycollab.vaadin.ui.CustomFieldExt;
 import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
 import com.vaadin.data.Property;
 import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.shared.ui.datefield.Resolution;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.CustomField;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.PopupDateField;
 
@@ -36,7 +36,7 @@ import com.vaadin.ui.PopupDateField;
  * @since 2.0
  * 
  */
-public class DateTimePickerField extends CustomField<Date> {
+public class DateTimePickerField extends CustomFieldExt<Date> {
 	private static final long serialVersionUID = 1L;
 
 	public static final long ONE_MINUTE_IN_MILLIS = 60000;

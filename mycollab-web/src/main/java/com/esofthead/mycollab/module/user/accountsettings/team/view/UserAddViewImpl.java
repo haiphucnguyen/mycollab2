@@ -39,11 +39,13 @@ import com.esofthead.mycollab.vaadin.mvp.ViewState;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.CountryComboBox;
+import com.esofthead.mycollab.vaadin.ui.CustomFieldExt;
 import com.esofthead.mycollab.vaadin.ui.DateComboboxSelectionField;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.esofthead.mycollab.vaadin.ui.TimeZoneSelectionField;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.vaadin.data.Buffered.SourceException;
 import com.vaadin.data.Property;
 import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.shared.ui.MarginInfo;
@@ -51,7 +53,6 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.CustomField;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Layout;
@@ -297,7 +298,7 @@ public class UserAddViewImpl extends AbstractPageView implements UserAddView {
 			}
 		}
 
-		private class AdminRoleSelectionField extends CustomField<Integer> {
+		private class AdminRoleSelectionField extends CustomFieldExt<Integer> {
 			private static final long serialVersionUID = 1L;
 
 			private RoleComboBox roleBox;

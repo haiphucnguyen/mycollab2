@@ -23,12 +23,14 @@ import com.esofthead.mycollab.module.project.view.settings.component.ProjectRole
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
+import com.esofthead.mycollab.vaadin.ui.CustomFieldExt;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.DummyCustomField;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.web.MyCollabResource;
+import com.vaadin.data.Buffered.SourceException;
 import com.vaadin.data.Property;
 import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.server.Resource;
@@ -36,7 +38,6 @@ import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.CustomField;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
 
@@ -125,7 +126,7 @@ public class ProjectMemberEditViewImpl extends
 		}
 	}
 
-	private class AdminRoleSelectionField extends CustomField<Integer> {
+	private class AdminRoleSelectionField extends CustomFieldExt<Integer> {
 		private static final long serialVersionUID = 1L;
 		private ProjectRoleComboBox roleComboBox;
 

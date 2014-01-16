@@ -16,8 +16,6 @@
  */
 package com.esofthead.mycollab.vaadin.ui;
 
-import com.vaadin.ui.CustomField;
-
 /**
  * 
  * @author MyCollab Ltd.
@@ -25,7 +23,7 @@ import com.vaadin.ui.CustomField;
  * 
  * @param <T>
  */
-public abstract class CompoundCustomField<T> extends CustomField<T> {
+public abstract class CompoundCustomField<T> extends CustomFieldExt<T> {
 	private static final long serialVersionUID = 1L;
 
 }

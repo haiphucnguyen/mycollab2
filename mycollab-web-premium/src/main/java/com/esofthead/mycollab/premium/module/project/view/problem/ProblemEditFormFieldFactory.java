@@ -3,7 +3,7 @@ package com.esofthead.mycollab.premium.module.project.view.problem;
 import org.vaadin.teemu.ratingstars.RatingStars;
 
 import com.esofthead.mycollab.module.project.domain.Problem;
-import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberComboBox;
+import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberSelectionField;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
@@ -41,10 +41,10 @@ class ProblemEditFormFieldFactory<B extends Problem> extends
 			if (problem.getRaisedbyuser() == null) {
 				problem.setRaisedbyuser(AppContext.getUsername());
 			}
-			return new ProjectMemberComboBox();
+			return new ProjectMemberSelectionField();
 		} else if (propertyId.equals("type")) {
 		} else if (propertyId.equals("assigntouser")) {
-			return new ProjectMemberComboBox();
+			return new ProjectMemberSelectionField();
 		} else if (propertyId.equals("priority")) {
 			if (problem.getPriority() == null) {
 				problem.setPriority("Medium");

@@ -21,6 +21,7 @@ import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.service.ContactService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.ui.CustomFieldExt;
 import com.esofthead.mycollab.vaadin.ui.FieldSelection;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.Property;
@@ -28,7 +29,6 @@ import com.vaadin.event.MouseEvents;
 import com.vaadin.event.MouseEvents.ClickEvent;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.CustomField;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.TextField;
@@ -40,7 +40,7 @@ import com.vaadin.ui.UI;
  * @since 1.0
  * 
  */
-public class ContactSelectionField extends CustomField<Object> implements
+public class ContactSelectionField extends CustomFieldExt<Object> implements
 		FieldSelection<Contact> {
 	private static final long serialVersionUID = 1L;
 

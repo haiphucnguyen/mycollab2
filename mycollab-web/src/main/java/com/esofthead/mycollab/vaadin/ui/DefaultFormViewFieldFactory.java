@@ -30,7 +30,6 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.CustomField;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
@@ -48,8 +47,8 @@ public class DefaultFormViewFieldFactory {
 		void saveContentsToRepo(String attachmentPath);
 	}
 
-	public static class FormAttachmentUploadField extends CustomField implements
-			AttachmentUploadField {
+	public static class FormAttachmentUploadField extends CustomFieldExt
+			implements AttachmentUploadField {
 		private static final long serialVersionUID = 1L;
 		private MultiFileUploadExt uploadExt;
 		private AttachmentPanel attachmentPanel;
@@ -82,7 +81,7 @@ public class DefaultFormViewFieldFactory {
 		}
 	}
 
-	public static class FormContainerField extends CustomField {
+	public static class FormContainerField extends CustomFieldExt {
 
 		private static final long serialVersionUID = 1L;
 
@@ -103,7 +102,7 @@ public class DefaultFormViewFieldFactory {
 		}
 	}
 
-	public static class FormContainerHorizontalViewField extends CustomField {
+	public static class FormContainerHorizontalViewField extends CustomFieldExt {
 		private static final long serialVersionUID = 1L;
 
 		private HorizontalLayout layout;
@@ -133,7 +132,8 @@ public class DefaultFormViewFieldFactory {
 		}
 	}
 
-	public static class DateFieldWithUserTimeZone extends CustomField<String> {
+	public static class DateFieldWithUserTimeZone extends
+			CustomFieldExt<String> {
 		private static final long serialVersionUID = 1L;
 
 		private static String DATE_FORMAT = "MM/dd/yyyy";
@@ -181,7 +181,7 @@ public class DefaultFormViewFieldFactory {
 		}
 	}
 
-	public static class FormContainerViewField extends CustomField<Object> {
+	public static class FormContainerViewField extends CustomFieldExt<Object> {
 		private static final long serialVersionUID = 1L;
 		private CssLayout layout;
 
@@ -206,7 +206,7 @@ public class DefaultFormViewFieldFactory {
 		}
 	}
 
-	public static class FormDateViewField extends CustomField {
+	public static class FormDateViewField extends CustomFieldExt {
 		private static final long serialVersionUID = 1L;
 
 		private Date date;
@@ -234,7 +234,7 @@ public class DefaultFormViewFieldFactory {
 		}
 	}
 
-	public static class FormEmailLinkViewField extends CustomField<String> {
+	public static class FormEmailLinkViewField extends CustomFieldExt<String> {
 
 		private static final long serialVersionUID = 1L;
 
@@ -257,7 +257,7 @@ public class DefaultFormViewFieldFactory {
 		}
 	}
 
-	public static class FormLinkViewField extends CustomField<String> {
+	public static class FormLinkViewField extends CustomFieldExt<String> {
 
 		private static final long serialVersionUID = 1L;
 
@@ -298,7 +298,7 @@ public class DefaultFormViewFieldFactory {
 		}
 	}
 
-	public static class FormDetectAndDisplayUrlViewField extends CustomField {
+	public static class FormDetectAndDisplayUrlViewField extends CustomFieldExt {
 		private static final long serialVersionUID = 1L;
 
 		private String url;
@@ -327,7 +327,7 @@ public class DefaultFormViewFieldFactory {
 		}
 	}
 
-	public static class FormUrlLinkViewField extends CustomField<String> {
+	public static class FormUrlLinkViewField extends CustomFieldExt<String> {
 
 		private static final long serialVersionUID = 1L;
 
@@ -358,7 +358,7 @@ public class DefaultFormViewFieldFactory {
 	}
 
 	public static class FormUrlSocialNetworkLinkViewField extends
-			CustomField<String> {
+			CustomFieldExt<String> {
 
 		private static final long serialVersionUID = 1L;
 
@@ -392,7 +392,7 @@ public class DefaultFormViewFieldFactory {
 		}
 	}
 
-	public static class FormViewField extends CustomField<String> {
+	public static class FormViewField extends CustomFieldExt<String> {
 
 		private String value;
 		private ContentMode contentMode;
@@ -429,7 +429,7 @@ public class DefaultFormViewFieldFactory {
 		}
 	}
 
-	public static class UserLinkViewField extends CustomField {
+	public static class UserLinkViewField extends CustomFieldExt {
 		private static final long serialVersionUID = 1L;
 
 		private String username;

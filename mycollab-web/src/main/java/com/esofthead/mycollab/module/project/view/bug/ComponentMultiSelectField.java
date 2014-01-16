@@ -29,15 +29,15 @@ import com.esofthead.mycollab.module.tracker.domain.Component;
 import com.esofthead.mycollab.module.tracker.domain.criteria.ComponentSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.ComponentService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.ui.CustomFieldExt;
 import com.vaadin.data.Property;
-import com.vaadin.ui.CustomField;
 
 /**
  * 
  * @author MyCollab Ltd.
  * @since 1.0
  */
-public class ComponentMultiSelectField extends CustomField {
+public class ComponentMultiSelectField extends CustomFieldExt {
 	private static final long serialVersionUID = 1L;
 
 	private MultiSelectComp<Component> componentSelection;

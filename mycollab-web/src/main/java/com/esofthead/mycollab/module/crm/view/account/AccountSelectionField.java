@@ -21,6 +21,7 @@ import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.service.AccountService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.ui.CustomFieldExt;
 import com.esofthead.mycollab.vaadin.ui.FieldSelection;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.Property;
@@ -28,7 +29,6 @@ import com.vaadin.event.MouseEvents;
 import com.vaadin.event.MouseEvents.ClickEvent;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.CustomField;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.TextField;
@@ -41,7 +41,7 @@ import com.vaadin.ui.UI;
  * 
  */
 
-public class AccountSelectionField extends CustomField<Integer> implements
+public class AccountSelectionField extends CustomFieldExt<Integer> implements
 		FieldSelection<Account> {
 	private static final long serialVersionUID = 1L;
 

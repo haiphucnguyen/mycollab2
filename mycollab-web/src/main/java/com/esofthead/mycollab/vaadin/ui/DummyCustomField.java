@@ -17,7 +17,6 @@
 package com.esofthead.mycollab.vaadin.ui;
 
 import com.vaadin.ui.Component;
-import com.vaadin.ui.CustomField;
 
 /**
  * 
@@ -26,7 +25,7 @@ import com.vaadin.ui.CustomField;
  * 
  * @param <T>
  */
-public class DummyCustomField<T> extends CustomField<T> {
+public class DummyCustomField<T> extends CustomFieldExt<T> {
 	private static final long serialVersionUID = 1L;
 
 	@Override

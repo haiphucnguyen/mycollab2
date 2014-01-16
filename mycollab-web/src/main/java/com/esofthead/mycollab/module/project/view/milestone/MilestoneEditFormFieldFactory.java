@@ -18,7 +18,7 @@ package com.esofthead.mycollab.module.project.view.milestone;
 
 import com.esofthead.mycollab.module.project.domain.Milestone;
 import com.esofthead.mycollab.module.project.domain.SimpleMilestone;
-import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberComboBox;
+import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberSelectionField;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.esofthead.mycollab.vaadin.ui.ProgressBarIndicator;
@@ -48,7 +48,7 @@ public class MilestoneEditFormFieldFactory<B extends Milestone> extends
 	@Override
 	protected Field<?> onCreateField(Object propertyId) {
 		if (propertyId.equals("owner")) {
-			final ProjectMemberComboBox userbox = new ProjectMemberComboBox();
+			final ProjectMemberSelectionField userbox = new ProjectMemberSelectionField();
 			userbox.setRequired(true);
 			userbox.setRequiredError("Please select an assignee");
 			return userbox;

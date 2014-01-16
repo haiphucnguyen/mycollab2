@@ -25,7 +25,7 @@ import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.common.service.CommentService;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
-import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberComboBox;
+import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberSelectionField;
 import com.esofthead.mycollab.module.tracker.BugResolutionConstants;
 import com.esofthead.mycollab.module.tracker.BugStatusConstants;
 import com.esofthead.mycollab.module.tracker.domain.BugWithBLOBs;
@@ -249,7 +249,7 @@ public class ResolvedInputWindow extends Window {
 					ResolvedInputWindow.this.bug
 							.setAssignuser(ResolvedInputWindow.this.bug
 									.getLogby());
-					return new ProjectMemberComboBox();
+					return new ProjectMemberSelectionField();
 				} else if (propertyId.equals("fixedVersions")) {
 					ResolvedInputWindow.this.fixedVersionSelect = new VersionMultiSelectField();
 					return ResolvedInputWindow.this.fixedVersionSelect;

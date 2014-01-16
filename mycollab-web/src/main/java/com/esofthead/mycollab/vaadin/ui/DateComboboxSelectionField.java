@@ -28,7 +28,6 @@ import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.CustomField;
 import com.vaadin.ui.HorizontalLayout;
 
 /**
@@ -37,7 +36,7 @@ import com.vaadin.ui.HorizontalLayout;
  * @since 1.0
  * 
  */
-public class DateComboboxSelectionField extends CustomField<Date> {
+public class DateComboboxSelectionField extends CustomFieldExt<Date> {
 	private static final long serialVersionUID = 1L;
 
 	protected ComboBox cboYear;
