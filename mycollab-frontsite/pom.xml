@@ -48,11 +48,7 @@
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-api</artifactId>
-            <<<<<<< HEAD
-            <version>${project.version}</version>
-            =======
             <version>3.0.0</version>
-            >>>>>>> 3.0
         </dependency>
 
         <!-- WICKET DEPENDENCIES -->
