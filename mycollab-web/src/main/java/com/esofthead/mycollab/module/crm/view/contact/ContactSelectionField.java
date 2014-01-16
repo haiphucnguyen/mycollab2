@@ -41,105 +41,108 @@ import com.vaadin.ui.UI;
  * 
  */
 public class ContactSelectionField extends CustomField<Object> implements
-		FieldSelection<Contact> {
-	private static final long serialVersionUID = 1L;
+        FieldSelection<Contact> {
+    private static final long serialVersionUID = 1L;
 
-	private HorizontalLayout layout;
+    private HorizontalLayout layout;
 
-	private TextField contactName;
+    private TextField contactName;
 
-	private SimpleContact contact;
+    private SimpleContact contact;
 
-	private Image browseBtn;
-	private Image clearBtn;
+    private Image browseBtn;
+    private Image clearBtn;
 
-	public ContactSelectionField() {
-		contactName = new TextField();
-		contactName.setNullRepresentation("");
-		browseBtn = new Image(null,
-				MyCollabResource.newResource("icons/16/browseItem.png"));
-		browseBtn.addClickListener(new MouseEvents.ClickListener() {
-			private static final long serialVersionUID = 1L;
+    public ContactSelectionField() {
+        contactName = new TextField();
+        contactName.setNullRepresentation("");
+        contactName.setWidth("100%");
+        browseBtn = new Image(null,
+                MyCollabResource.newResource("icons/16/browseItem.png"));
+        browseBtn.addClickListener(new MouseEvents.ClickListener() {
+            private static final long serialVersionUID = 1L;
 
-			@Override
-			public void click(ClickEvent event) {
-				ContactSelectionWindow contactWindow = new ContactSelectionWindow(
-						ContactSelectionField.this);
-				UI.getCurrent().addWindow(contactWindow);
-				contactWindow.show();
-			}
-		});
+            @Override
+            public void click(ClickEvent event) {
+                ContactSelectionWindow contactWindow = new ContactSelectionWindow(
+                        ContactSelectionField.this);
+                UI.getCurrent().addWindow(contactWindow);
+                contactWindow.show();
+            }
+        });
 
-		clearBtn = new Image(null,
-				MyCollabResource.newResource("icons/16/clearItem.png"));
+        clearBtn = new Image(null,
+                MyCollabResource.newResource("icons/16/clearItem.png"));
 
-		clearBtn.addClickListener(new MouseEvents.ClickListener() {
-			private static final long serialVersionUID = 1L;
+        clearBtn.addClickListener(new MouseEvents.ClickListener() {
+            private static final long serialVersionUID = 1L;
 
-			@Override
-			public void click(ClickEvent event) {
-				contactName.setValue("");
-				contact = null;
-			}
-		});
-	}
+            @Override
+            public void click(ClickEvent event) {
+                contactName.setValue("");
+                contact = null;
+            }
+        });
+    }
 
-	@Override
-	public void fireValueChange(Contact data) {
-		contact = (SimpleContact) data;
-		if (contact != null) {
-			contactName.setValue(contact.getContactName());
-			setInternalValue(contact.getId());
-		}
+    @Override
+    public void fireValueChange(Contact data) {
+        contact = (SimpleContact) data;
+        if (contact != null) {
+            contactName.setValue(contact.getContactName());
+            setInternalValue(contact.getId());
+        }
 
-	}
+    }
 
-	@Override
-	public void setPropertyDataSource(Property newDataSource) {
-		Object value = newDataSource.getValue();
-		if (value instanceof Integer) {
-			ContactService contactService = ApplicationContextUtil
-					.getSpringBean(ContactService.class);
-			SimpleContact contactVal = contactService.findById((Integer) value,
-					AppContext.getAccountId());
-			if (contactVal != null) {
-				setInternalContact(contactVal);
-			}
+    @Override
+    public void setPropertyDataSource(Property newDataSource) {
+        Object value = newDataSource.getValue();
+        if (value instanceof Integer) {
+            ContactService contactService = ApplicationContextUtil
+                    .getSpringBean(ContactService.class);
+            SimpleContact contactVal = contactService.findById((Integer) value,
+                    AppContext.getAccountId());
+            if (contactVal != null) {
+                setInternalContact(contactVal);
+            }
 
-		} else if (value instanceof SimpleContact) {
-			setInternalContact((SimpleContact) value);
-		}
-		super.setPropertyDataSource(newDataSource);
-	}
+        } else if (value instanceof SimpleContact) {
+            setInternalContact((SimpleContact) value);
+        }
+        super.setPropertyDataSource(newDataSource);
+    }
 
-	private void setInternalContact(SimpleContact contact) {
-		this.contact = contact;
-		contactName.setValue(contact.getContactName());
-	}
+    private void setInternalContact(SimpleContact contact) {
+        this.contact = contact;
+        contactName.setValue(contact.getContactName());
+    }
 
-	public SimpleContact getContact() {
-		return this.contact;
-	}
+    public SimpleContact getContact() {
+        return this.contact;
+    }
 
-	@Override
-	protected Component initContent() {
-		layout = new HorizontalLayout();
-		layout.setSpacing(true);
+    @Override
+    protected Component initContent() {
+        layout = new HorizontalLayout();
+        layout.setSpacing(true);
+        layout.setWidth("100%");
 
-		layout.addComponent(contactName);
-		layout.setComponentAlignment(contactName, Alignment.MIDDLE_LEFT);
+        layout.addComponent(contactName);
+        layout.setComponentAlignment(contactName, Alignment.MIDDLE_LEFT);
+        layout.setExpandRatio(contactName, 1.0f);
 
-		layout.addComponent(browseBtn);
-		layout.setComponentAlignment(browseBtn, Alignment.MIDDLE_LEFT);
+        layout.addComponent(browseBtn);
+        layout.setComponentAlignment(browseBtn, Alignment.MIDDLE_LEFT);
 
-		layout.addComponent(clearBtn);
-		layout.setComponentAlignment(clearBtn, Alignment.MIDDLE_LEFT);
+        layout.addComponent(clearBtn);
+        layout.setComponentAlignment(clearBtn, Alignment.MIDDLE_LEFT);
 
-		return layout;
-	}
+        return layout;
+    }
 
-	@Override
-	public Class<Object> getType() {
-		return Object.class;
-	}
+    @Override
+    public Class<Object> getType() {
+        return Object.class;
+    }
 }
