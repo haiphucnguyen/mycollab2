@@ -61,7 +61,10 @@
         - Export risk, problem list throws exception
         - Schedule runner can not send reports in some cases
         - Display activities throws exception in some cases
+        - Invite member does not send when first name is null
         - Do not display tooltip of lead and contact if firstname is null
+        - Can not save search result in CRM module
+        - Fix spelling mistakes
     
     Well known issues
     =================

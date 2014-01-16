@@ -5,11 +5,10 @@
     <name>mycollab-core</name>
     <groupId>com.esofthead.mycollab</groupId>
     <artifactId>mycollab-installer</artifactId>
-    <version>3.0-SNAPSHOT</version>
     <parent>
         <groupId>com.esofthead.mycollab</groupId>
         <artifactId>parent-premium</artifactId>
-        <version>3.0-SNAPSHOT</version>
+        <version>3.0.0</version>
     </parent>
     <packaging>jar</packaging>
     <properties>
