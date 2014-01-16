@@ -16,13 +16,31 @@
  */
 package com.esofthead.mycollab.module.crm.view.lead;
 
+import org.vaadin.dialogs.ConfirmDialog;
+
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.configuration.SiteConfiguration;
+import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.eventmanager.EventBus;
+import com.esofthead.mycollab.module.crm.CrmLinkGenerator;
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
+import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
+import com.esofthead.mycollab.module.crm.events.LeadEvent;
+import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
+import com.esofthead.mycollab.module.crm.service.LeadService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
+import com.esofthead.mycollab.module.crm.view.CrmToolbar;
 import com.esofthead.mycollab.security.RolePermissionCollections;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
+import com.esofthead.mycollab.vaadin.mvp.ViewManager;
+import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.UI;
 
 /**
  * 
@@ -39,11 +57,71 @@ public class LeadConvertReadPresenter extends
 	}
 
 	@Override
+	protected void postInitView() {
+		view.getPreviewFormHandlers().addFormHandler(
+				new DefaultPreviewFormHandler<SimpleLead>() {
+					@Override
+					public void onCancel() {
+						EventBus.getInstance().fireEvent(
+								new LeadEvent.GotoList(this, null));
+					}
+
+					@Override
+					public void gotoNext(SimpleLead data) {
+						LeadService contactService = ApplicationContextUtil
+								.getSpringBean(LeadService.class);
+						LeadSearchCriteria criteria = new LeadSearchCriteria();
+						criteria.setSaccountid(new NumberSearchField(AppContext
+								.getAccountId()));
+						criteria.setId(new NumberSearchField(data.getId(),
+								NumberSearchField.GREATER));
+						Integer nextId = contactService
+								.getNextItemKey(criteria);
+						if (nextId != null) {
+							EventBus.getInstance().fireEvent(
+									new LeadEvent.GotoRead(this, nextId));
+						} else {
+							NotificationUtil.showGotoLastRecordNotification();
+						}
+
+					}
+
+					@Override
+					public void gotoPrevious(SimpleLead data) {
+						LeadService contactService = ApplicationContextUtil
+								.getSpringBean(LeadService.class);
+						LeadSearchCriteria criteria = new LeadSearchCriteria();
+						criteria.setSaccountid(new NumberSearchField(AppContext
+								.getAccountId()));
+						criteria.setId(new NumberSearchField(data.getId(),
+								NumberSearchField.LESSTHAN));
+						Integer nextId = contactService
+								.getPreviousItemKey(criteria);
+						if (nextId != null) {
+							EventBus.getInstance().fireEvent(
+									new LeadEvent.GotoRead(this, nextId));
+						} else {
+							NotificationUtil.showGotoFirstRecordNotification();
+						}
+					}
+				});
+	}
+
+	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		if (AppContext.canRead(RolePermissionCollections.CRM_LEAD)) {
+			CrmToolbar crmToolbar = ViewManager.getView(CrmToolbar.class);
+			crmToolbar.gotoItem(LocalizationHelper
+					.getMessage(CrmCommonI18nEnum.TOOLBAR_LEADS_HEADER));
+
 			SimpleLead lead = (SimpleLead) data.getParams();
 			super.onGo(container, data);
 			view.displayConvertLeadInfo(lead);
+
+			AppContext.addFragment(CrmLinkGenerator
+					.generateLeadPreviewLink(lead.getId()), LocalizationHelper
+					.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
+							"Lead", lead.getLeadName()));
 		} else {
 			NotificationUtil.showMessagePermissionAlert();
 		}

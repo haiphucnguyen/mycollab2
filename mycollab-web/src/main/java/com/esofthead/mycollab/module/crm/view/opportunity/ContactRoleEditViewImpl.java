@@ -332,6 +332,18 @@ public class ContactRoleEditViewImpl extends AbstractPageView implements
 					((CssLayout) ContactRoleRowComp.this.getParent())
 							.removeComponent(ContactRoleRowComp.this);
 
+					// The contact opportunity relationship is existed
+					if (contactOpp.getId() != null) {
+						ContactService contactService = ApplicationContextUtil
+								.getSpringBean(ContactService.class);
+						ContactOpportunity associateOpportunity = new ContactOpportunity();
+						associateOpportunity.setContactid(contactOpp.getId());
+						associateOpportunity.setOpportunityid(opportunity
+								.getId());
+						contactService.removeContactOpportunityRelationship(
+								associateOpportunity, AppContext.getAccountId());
+					}
+
 				}
 			});
 			deleteBtn.setIcon(MyCollabResource

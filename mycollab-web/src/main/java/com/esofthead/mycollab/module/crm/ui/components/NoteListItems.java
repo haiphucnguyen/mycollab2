@@ -79,145 +79,87 @@ import com.vaadin.ui.VerticalLayout;
  */
 public class NoteListItems extends VerticalLayout {
 
-	private class NoteEditor extends VerticalLayout {
+	private static final long serialVersionUID = 1L;
+	private String type;
+	private Integer typeid;
+	private VerticalLayout noteListContainer;
+	private BeanList<NoteService, NoteSearchCriteria, SimpleNote> noteList;
 
-		private static final long serialVersionUID = 1L;
-		private final RichTextArea noteArea;
+	private final NoteService noteService;
 
-		public NoteEditor() {
-			super();
-			setSpacing(true);
-			this.setMargin(true);
-			this.setWidth("600px");
+	private Button createBtn;
 
-			final AttachmentPanel attachments = new AttachmentPanel();
+	public NoteListItems(final String title) {
+		this(title, "", 0);
+	}
 
-			noteArea = new RichTextArea();
-			noteArea.setWidth("100%");
-			noteArea.setHeight("200px");
-			this.addComponent(noteArea);
-			this.addComponent(attachments);
+	public NoteListItems(final String title, final String type,
+			final Integer typeid) {
+		super();
+		this.setWidth("100%");
+		this.setMargin(false);
+		addStyleName("note-list");
 
-			final HorizontalLayout controls = new HorizontalLayout();
-			controls.setSpacing(true);
-			controls.setWidth("100%");
+		noteService = ApplicationContextUtil.getSpringBean(NoteService.class);
+		this.type = type;
+		this.typeid = typeid;
 
-			final MultiFileUploadExt uploadExt = new MultiFileUploadExt(
-					attachments);
-			controls.addComponent(uploadExt);
-			controls.setComponentAlignment(uploadExt, Alignment.MIDDLE_LEFT);
+		initUI();
+	}
 
-			final Label emptySpace = new Label();
-			controls.addComponent(emptySpace);
-			controls.setExpandRatio(emptySpace, 1.0f);
+	public void setEnableCreateButton(boolean enabled) {
+		createBtn.setEnabled(enabled);
+	}
 
-			final Button cancelBtn = new Button("Cancel",
-					new Button.ClickListener() {
-						private static final long serialVersionUID = 1L;
-
-						@Override
-						public void buttonClick(final ClickEvent event) {
-							addCreateBtn();
-						}
-					});
-			cancelBtn.setStyleName("link");
-			controls.addComponent(cancelBtn);
-			controls.setComponentAlignment(cancelBtn, Alignment.MIDDLE_RIGHT);
-
-			final Button saveBtn = new Button("Post",
-					new Button.ClickListener() {
-						private static final long serialVersionUID = 1L;
-
-						@Override
-						public void buttonClick(final ClickEvent event) {
-							final Note note = new Note();
-							note.setCreateduser(AppContext.getUsername());
-							note.setNote((String) noteArea.getValue());
-							note.setSaccountid(AppContext.getAccountId());
-							note.setSubject("");
-							note.setType(type);
-							note.setTypeid(typeid);
-							note.setCreatedtime(new GregorianCalendar()
-									.getTime());
-							note.setLastupdatedtime(new GregorianCalendar()
-									.getTime());
-							final int noteid = noteService.saveWithSession(
-									note, AppContext.getUsername());
-
-							// Save Relay Email -- having time must refact to
-							// Aop
-							// ------------------------------------------------------
-							RelayEmailNotification relayNotification = new RelayEmailNotification();
-							relayNotification.setChangeby(AppContext
-									.getUsername());
-							relayNotification
-									.setChangecomment((String) noteArea
-											.getValue());
-							relayNotification.setSaccountid(AppContext
-									.getAccountId());
-							relayNotification.setType(type);
-							relayNotification
-									.setAction(MonitorTypeConstants.ADD_COMMENT_ACTION);
-							relayNotification.setTypeid(typeid);
-							if (type.equals(CrmTypeConstants.ACCOUNT)) {
-								relayNotification
-										.setEmailhandlerbean(AccountRelayEmailNotificationAction.class
-												.getName());
-							} else if (type.equals(CrmTypeConstants.CONTACT)) {
-								relayNotification
-										.setEmailhandlerbean(ContactRelayEmailNotificationAction.class
-												.getName());
-							} else if (type.equals(CrmTypeConstants.CAMPAIGN)) {
-								relayNotification
-										.setEmailhandlerbean(CampaignRelayEmailNotificationAction.class
-												.getName());
-							} else if (type.equals(CrmTypeConstants.LEAD)) {
-								relayNotification
-										.setEmailhandlerbean(LeadRelayEmailNotificationAction.class
-												.getName());
-							} else if (type
-									.equals(CrmTypeConstants.OPPORTUNITY)) {
-								relayNotification
-										.setEmailhandlerbean(OpportunityRelayEmailNotificationAction.class
-												.getName());
-							} else if (type.equals(CrmTypeConstants.CASE)) {
-								relayNotification
-										.setEmailhandlerbean(CaseRelayEmailNotificationAction.class
-												.getName());
-							} else if (type.equals(CrmTypeConstants.TASK)) {
-								relayNotification
-										.setEmailhandlerbean(TaskRelayEmailNotificationAction.class
-												.getName());
-							} else if (type.equals(CrmTypeConstants.MEETING)) {
-								relayNotification
-										.setEmailhandlerbean(MeetingRelayEmailNotificationAction.class
-												.getName());
-							} else if (type.equals(CrmTypeConstants.CALL)) {
-								relayNotification
-										.setEmailhandlerbean(CallRelayEmailNotificationAction.class
-												.getName());
-							}
-							RelayEmailNotificationService relayEmailNotificationService = ApplicationContextUtil
-									.getSpringBean(RelayEmailNotificationService.class);
-							relayEmailNotificationService.saveWithSession(
-									relayNotification, AppContext.getUsername());
-							// End save relay Email
-							// --------------------------------------------------
-
-							String attachmentPath = AttachmentUtils
-									.getCrmNoteAttachmentPath(
-											AppContext.getAccountId(), noteid);
-							attachments.saveContentsToRepo(attachmentPath);
-							displayNotes();
-							addCreateBtn();
-						}
-					});
-			saveBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-			controls.addComponent(saveBtn);
-			controls.setComponentAlignment(saveBtn, Alignment.MIDDLE_RIGHT);
-
-			this.addComponent(controls);
+	private void addCreateBtn() {
+		final Component component = this.getComponent(0);
+		if (component instanceof NoteEditor) {
+			this.replaceComponent(component, createBtn);
 		}
+	}
+
+	private void displayNotes() {
+		noteListContainer.removeAllComponents();
+		noteListContainer.addComponent(noteList);
+
+		final NoteSearchCriteria searchCriteria = new NoteSearchCriteria();
+		searchCriteria.setType(new StringSearchField(SearchField.AND, type));
+		searchCriteria.setTypeid(new NumberSearchField(typeid));
+		noteList.setSearchCriteria(searchCriteria);
+	}
+
+	private void initUI() {
+		this.setSpacing(true);
+		this.setMargin(new MarginInfo(true, true, false, true));
+		createBtn = new Button("New Note", new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(final ClickEvent event) {
+				NoteListItems.this
+						.replaceComponent(createBtn, new NoteEditor());
+			}
+		});
+
+		createBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		createBtn.setIcon(MyCollabResource
+				.newResource("icons/16/addRecord.png"));
+		this.addComponent(createBtn);
+
+		noteList = new BeanList<NoteService, NoteSearchCriteria, SimpleNote>(
+				noteService, NoteRowDisplayHandler.class);
+		noteList.setDisplayEmptyListText(false);
+		noteList.setStyleName("noteList");
+
+		noteListContainer = new VerticalLayout();
+		this.addComponent(noteListContainer);
+		displayNotes();
+	}
+
+	public void showNotes(final String type, final int typeid) {
+		this.type = type;
+		this.typeid = typeid;
+		displayNotes();
 	}
 
 	public static class NoteRowDisplayHandler implements
@@ -364,82 +306,144 @@ public class NoteListItems extends VerticalLayout {
 		}
 	}
 
-	private static final long serialVersionUID = 1L;
-	private String type;
-	private Integer typeid;
-	private VerticalLayout noteListContainer;
-	private BeanList<NoteService, NoteSearchCriteria, SimpleNote> noteList;
+	private class NoteEditor extends VerticalLayout {
 
-	private final NoteService noteService;
+		private static final long serialVersionUID = 1L;
+		private final RichTextArea noteArea;
 
-	private Button createBtn;
+		public NoteEditor() {
+			super();
+			setSpacing(true);
+			this.setMargin(true);
+			this.setWidth("600px");
 
-	public NoteListItems(final String title) {
-		this(title, "", 0);
-	}
+			final AttachmentPanel attachments = new AttachmentPanel();
 
-	public NoteListItems(final String title, final String type,
-			final Integer typeid) {
-		super();
-		this.setWidth("100%");
-		this.setMargin(false);
-		addStyleName("note-list");
+			noteArea = new RichTextArea();
+			noteArea.setWidth("100%");
+			noteArea.setHeight("200px");
+			this.addComponent(noteArea);
+			this.addComponent(attachments);
 
-		noteService = ApplicationContextUtil.getSpringBean(NoteService.class);
-		this.type = type;
-		this.typeid = typeid;
+			final HorizontalLayout controls = new HorizontalLayout();
+			controls.setSpacing(true);
+			controls.setWidth("100%");
 
-		initUI();
-	}
+			final MultiFileUploadExt uploadExt = new MultiFileUploadExt(
+					attachments);
+			controls.addComponent(uploadExt);
+			controls.setComponentAlignment(uploadExt, Alignment.MIDDLE_LEFT);
 
-	private void addCreateBtn() {
-		final Component component = this.getComponent(0);
-		if (component instanceof NoteEditor) {
-			this.replaceComponent(component, createBtn);
+			final Label emptySpace = new Label();
+			controls.addComponent(emptySpace);
+			controls.setExpandRatio(emptySpace, 1.0f);
+
+			final Button cancelBtn = new Button("Cancel",
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void buttonClick(final ClickEvent event) {
+							addCreateBtn();
+						}
+					});
+			cancelBtn.setStyleName("link");
+			controls.addComponent(cancelBtn);
+			controls.setComponentAlignment(cancelBtn, Alignment.MIDDLE_RIGHT);
+
+			final Button saveBtn = new Button("Post",
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void buttonClick(final ClickEvent event) {
+							final Note note = new Note();
+							note.setCreateduser(AppContext.getUsername());
+							note.setNote((String) noteArea.getValue());
+							note.setSaccountid(AppContext.getAccountId());
+							note.setSubject("");
+							note.setType(type);
+							note.setTypeid(typeid);
+							note.setCreatedtime(new GregorianCalendar()
+									.getTime());
+							note.setLastupdatedtime(new GregorianCalendar()
+									.getTime());
+							final int noteid = noteService.saveWithSession(
+									note, AppContext.getUsername());
+
+							// Save Relay Email -- having time must refact to
+							// Aop
+							// ------------------------------------------------------
+							RelayEmailNotification relayNotification = new RelayEmailNotification();
+							relayNotification.setChangeby(AppContext
+									.getUsername());
+							relayNotification
+									.setChangecomment((String) noteArea
+											.getValue());
+							relayNotification.setSaccountid(AppContext
+									.getAccountId());
+							relayNotification.setType(type);
+							relayNotification
+									.setAction(MonitorTypeConstants.ADD_COMMENT_ACTION);
+							relayNotification.setTypeid(typeid);
+							if (type.equals(CrmTypeConstants.ACCOUNT)) {
+								relayNotification
+										.setEmailhandlerbean(AccountRelayEmailNotificationAction.class
+												.getName());
+							} else if (type.equals(CrmTypeConstants.CONTACT)) {
+								relayNotification
+										.setEmailhandlerbean(ContactRelayEmailNotificationAction.class
+												.getName());
+							} else if (type.equals(CrmTypeConstants.CAMPAIGN)) {
+								relayNotification
+										.setEmailhandlerbean(CampaignRelayEmailNotificationAction.class
+												.getName());
+							} else if (type.equals(CrmTypeConstants.LEAD)) {
+								relayNotification
+										.setEmailhandlerbean(LeadRelayEmailNotificationAction.class
+												.getName());
+							} else if (type
+									.equals(CrmTypeConstants.OPPORTUNITY)) {
+								relayNotification
+										.setEmailhandlerbean(OpportunityRelayEmailNotificationAction.class
+												.getName());
+							} else if (type.equals(CrmTypeConstants.CASE)) {
+								relayNotification
+										.setEmailhandlerbean(CaseRelayEmailNotificationAction.class
+												.getName());
+							} else if (type.equals(CrmTypeConstants.TASK)) {
+								relayNotification
+										.setEmailhandlerbean(TaskRelayEmailNotificationAction.class
+												.getName());
+							} else if (type.equals(CrmTypeConstants.MEETING)) {
+								relayNotification
+										.setEmailhandlerbean(MeetingRelayEmailNotificationAction.class
+												.getName());
+							} else if (type.equals(CrmTypeConstants.CALL)) {
+								relayNotification
+										.setEmailhandlerbean(CallRelayEmailNotificationAction.class
+												.getName());
+							}
+							RelayEmailNotificationService relayEmailNotificationService = ApplicationContextUtil
+									.getSpringBean(RelayEmailNotificationService.class);
+							relayEmailNotificationService.saveWithSession(
+									relayNotification, AppContext.getUsername());
+							// End save relay Email
+							// --------------------------------------------------
+
+							String attachmentPath = AttachmentUtils
+									.getCrmNoteAttachmentPath(
+											AppContext.getAccountId(), noteid);
+							attachments.saveContentsToRepo(attachmentPath);
+							displayNotes();
+							addCreateBtn();
+						}
+					});
+			saveBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+			controls.addComponent(saveBtn);
+			controls.setComponentAlignment(saveBtn, Alignment.MIDDLE_RIGHT);
+
+			this.addComponent(controls);
 		}
-	}
-
-	private void displayNotes() {
-		noteListContainer.removeAllComponents();
-		noteListContainer.addComponent(noteList);
-
-		final NoteSearchCriteria searchCriteria = new NoteSearchCriteria();
-		searchCriteria.setType(new StringSearchField(SearchField.AND, type));
-		searchCriteria.setTypeid(new NumberSearchField(typeid));
-		noteList.setSearchCriteria(searchCriteria);
-	}
-
-	private void initUI() {
-		this.setSpacing(true);
-		this.setMargin(new MarginInfo(true, true, false, true));
-		createBtn = new Button("New Note", new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void buttonClick(final ClickEvent event) {
-				NoteListItems.this
-						.replaceComponent(createBtn, new NoteEditor());
-			}
-		});
-
-		createBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-		createBtn.setIcon(MyCollabResource
-				.newResource("icons/16/addRecord.png"));
-		this.addComponent(createBtn);
-
-		noteList = new BeanList<NoteService, NoteSearchCriteria, SimpleNote>(
-				noteService, NoteRowDisplayHandler.class);
-		noteList.setDisplayEmptyListText(false);
-		noteList.setStyleName("noteList");
-
-		noteListContainer = new VerticalLayout();
-		this.addComponent(noteListContainer);
-		displayNotes();
-	}
-
-	public void showNotes(final String type, final int typeid) {
-		this.type = type;
-		this.typeid = typeid;
-		displayNotes();
 	}
 }

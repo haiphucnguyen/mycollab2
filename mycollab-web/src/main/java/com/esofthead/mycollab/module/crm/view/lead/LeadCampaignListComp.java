@@ -64,6 +64,7 @@ public class LeadCampaignListComp extends
 
 	private static final long serialVersionUID = 1L;
 	private Lead lead;
+	private SplitButton controlsBtn;
 
 	public LeadCampaignListComp() {
 		initUI();
@@ -82,9 +83,13 @@ public class LeadCampaignListComp extends
 		this.setSearchCriteria(criteria);
 	}
 
+	public void setEnableControlButtons(boolean enabled) {
+		controlsBtn.setEnabled(enabled);
+	}
+
 	@SuppressWarnings("serial")
 	private void initUI() {
-		final SplitButton controlsBtn = new SplitButton();
+		controlsBtn = new SplitButton();
 		controlsBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_CONTACT));
 		controlsBtn.addStyleName(UIConstants.THEME_BLUE_LINK);

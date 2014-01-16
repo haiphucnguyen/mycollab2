@@ -17,6 +17,7 @@
 package com.esofthead.mycollab.module.crm.view.lead;
 
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
+import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.PageView;
 
 /**
@@ -26,5 +27,7 @@ import com.esofthead.mycollab.vaadin.mvp.PageView;
  * 
  */
 public interface LeadConvertReadView extends PageView {
+	HasPreviewFormHandlers<SimpleLead> getPreviewFormHandlers();
+
 	void displayConvertLeadInfo(SimpleLead lead);
 }

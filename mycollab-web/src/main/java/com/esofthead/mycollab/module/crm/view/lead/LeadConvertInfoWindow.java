@@ -50,6 +50,12 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 3.0
+ * 
+ */
 public class LeadConvertInfoWindow extends Window {
 
 	private static final long serialVersionUID = -4005327071240226216L;
