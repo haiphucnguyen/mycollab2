@@ -25,7 +25,7 @@ import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.common.service.CommentService;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
-import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberComboBox;
+import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberSelectionField;
 import com.esofthead.mycollab.module.tracker.BugStatusConstants;
 import com.esofthead.mycollab.module.tracker.domain.BugWithBLOBs;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
@@ -243,7 +243,7 @@ public class WontFixExplainWindow extends Window {
 				if (propertyId.equals("resolution")) {
 					return BugResolutionComboBox.getInstanceForWontFixWindow();
 				} else if (propertyId.equals("assignuser")) {
-					return new ProjectMemberComboBox();
+					return new ProjectMemberSelectionField();
 				} else if (propertyId.equals("fixedVersions")) {
 					WontFixExplainWindow.this.fixedVersionSelect = new VersionMultiSelectField();
 					return WontFixExplainWindow.this.fixedVersionSelect;

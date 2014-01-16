@@ -29,7 +29,7 @@ import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.Task;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
-import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberComboBox;
+import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberSelectionField;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
@@ -209,7 +209,7 @@ public class AssignTaskWindow extends Window {
 			@Override
 			protected Field<?> onCreateField(Object propertyId) {
 				if (propertyId.equals("assignuser")) {
-					return new ProjectMemberComboBox();
+					return new ProjectMemberSelectionField();
 				} else if (propertyId.equals("comment")) {
 					commentArea = new RichTextArea();
 					commentArea.setNullRepresentation("");

@@ -23,11 +23,10 @@ import com.esofthead.mycollab.core.arguments.RangeDateSearchField;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.vaadin.shared.ui.datefield.Resolution;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.CustomField;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.HorizontalLayout;
 
-public class DateRangeField extends CustomField {
+public class DateRangeField extends CustomFieldExt {
 
 	private static final long serialVersionUID = 1L;
 
@@ -37,7 +36,7 @@ public class DateRangeField extends CustomField {
 	@Override
 	protected Component initContent() {
 		HorizontalLayout container = new HorizontalLayout();
-        container.setSpacing(true);
+		container.setSpacing(true);
 		dateStart.setCaption("From: ");
 		dateEnd.setCaption("To: ");
 

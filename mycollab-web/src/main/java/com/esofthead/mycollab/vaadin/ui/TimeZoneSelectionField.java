@@ -23,7 +23,6 @@ import com.esofthead.mycollab.core.utils.TimezoneMapper;
 import com.esofthead.mycollab.core.utils.TimezoneMapper.TimezoneExt;
 import com.vaadin.data.Property;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.CustomField;
 import com.vaadin.ui.VerticalLayout;
 
 /**
@@ -33,7 +32,7 @@ import com.vaadin.ui.VerticalLayout;
  * 
  */
 @SuppressWarnings("serial")
-public class TimeZoneSelectionField extends CustomField<String> {
+public class TimeZoneSelectionField extends CustomFieldExt<String> {
 
 	private ValueComboBox comboArea;
 	private ValueComboBox comboTimezone;

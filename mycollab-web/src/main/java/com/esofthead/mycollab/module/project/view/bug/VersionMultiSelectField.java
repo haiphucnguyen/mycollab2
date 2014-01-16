@@ -29,16 +29,17 @@ import com.esofthead.mycollab.module.tracker.domain.Version;
 import com.esofthead.mycollab.module.tracker.domain.criteria.VersionSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.VersionService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.ui.CustomFieldExt;
 import com.vaadin.data.Property;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.CustomField;
 
 /**
  * 
  * @author MyCollab Ltd.
  * @since 1.0
  */
-public class VersionMultiSelectField extends CustomField {
+public class VersionMultiSelectField extends CustomFieldExt {
+	private static final long serialVersionUID = 1L;
 
 	private MultiSelectComp<Version> versionSelection;
 

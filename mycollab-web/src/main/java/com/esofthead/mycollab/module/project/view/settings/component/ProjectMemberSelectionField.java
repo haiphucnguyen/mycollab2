@@ -27,13 +27,13 @@ import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectMemberSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.ui.CustomFieldExt;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.vaadin.data.Property;
 import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.ui.AbstractSelect.ItemCaptionMode;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.CustomField;
 
 /**
  * 
@@ -41,13 +41,13 @@ import com.vaadin.ui.CustomField;
  * @since 1.0
  * 
  */
-public class ProjectMemberComboBox extends CustomField<String> {
+public class ProjectMemberSelectionField extends CustomFieldExt<String> {
 
 	private static final long serialVersionUID = 1L;
 
 	private ComboBox userSelectionBox;
 
-	public ProjectMemberComboBox() {
+	public ProjectMemberSelectionField() {
 		super();
 
 		userSelectionBox = new ComboBox();

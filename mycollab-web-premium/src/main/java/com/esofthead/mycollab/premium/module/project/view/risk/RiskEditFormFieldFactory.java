@@ -3,7 +3,7 @@ package com.esofthead.mycollab.premium.module.project.view.risk;
 import org.vaadin.teemu.ratingstars.RatingStars;
 
 import com.esofthead.mycollab.module.project.domain.Risk;
-import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberComboBox;
+import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberSelectionField;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
@@ -42,9 +42,9 @@ class RiskEditFormFieldFactory<B extends Risk> extends
 			if (risk.getRaisedbyuser() == null) {
 				risk.setRaisedbyuser(AppContext.getUsername());
 			}
-			return new ProjectMemberComboBox();
+			return new ProjectMemberSelectionField();
 		} else if (propertyId.equals("assigntouser")) {
-			return new ProjectMemberComboBox();
+			return new ProjectMemberSelectionField();
 		} else if (propertyId.equals("response")) {
 			return new RichTextArea();
 		} else if (propertyId.equals("consequence")) {

@@ -29,7 +29,7 @@ import com.esofthead.mycollab.module.project.domain.Task;
 import com.esofthead.mycollab.module.project.domain.TaskList;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.project.ui.components.TaskPercentageCompleteComboBox;
-import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberComboBox;
+import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberSelectionField;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
@@ -255,7 +255,7 @@ public class TaskAddPopup extends CustomComponent {
 		@Override
 		protected Field<?> onCreateField(final Object propertyId) {
 			if (propertyId.equals("assignuser")) {
-				return new ProjectMemberComboBox();
+				return new ProjectMemberSelectionField();
 			} else if (propertyId.equals("taskname")) {
 				final TextField tf = new TextField();
 				tf.setNullRepresentation("");

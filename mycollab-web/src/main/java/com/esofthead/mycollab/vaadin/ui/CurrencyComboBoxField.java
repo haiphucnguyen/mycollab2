@@ -26,7 +26,6 @@ import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.ui.AbstractSelect.ItemCaptionMode;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.CustomField;
 
 /**
  * 
@@ -34,7 +33,7 @@ import com.vaadin.ui.CustomField;
  * @since 2.0
  * 
  */
-public class CurrencyComboBoxField extends CustomField<Integer> {
+public class CurrencyComboBoxField extends CustomFieldExt<Integer> {
 	private static final long serialVersionUID = 1L;
 
 	private ComboBox currencyBox;
