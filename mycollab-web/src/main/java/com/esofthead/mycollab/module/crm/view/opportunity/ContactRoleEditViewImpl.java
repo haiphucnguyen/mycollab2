@@ -68,297 +68,301 @@ import com.vaadin.ui.VerticalLayout;
  */
 @ViewComponent
 public class ContactRoleEditViewImpl extends AbstractPageView implements
-        ContactRoleEditView {
-    private static final long serialVersionUID = 1L;
+		ContactRoleEditView {
+	private static final long serialVersionUID = 1L;
 
-    private ContactOpportunityList contactRoleList;
-    private SimpleOpportunity opportunity;
+	private ContactOpportunityList contactRoleList;
+	private SimpleOpportunity opportunity;
 
-    @Override
-    public void display(SimpleOpportunity opportunity) {
-        this.opportunity = opportunity;
-        this.removeAllComponents();
+	@Override
+	public void display(SimpleOpportunity opportunity) {
+		this.opportunity = opportunity;
+		this.removeAllComponents();
 
-        AddViewLayout2 previewLayout = new AddViewLayout2(
-                "Add or Edit Contact Roles",
-                MyCollabResource.newResource("icons/22/crm/contact.png"));
-        this.addComponent(previewLayout);
+		AddViewLayout2 previewLayout = new AddViewLayout2(
+				"Add or Edit Contact Roles",
+				MyCollabResource.newResource("icons/22/crm/contact.png"));
+		this.addComponent(previewLayout);
 
-        ComponentContainer actionControls = createButtonControls();
-        if (actionControls != null) {
-            previewLayout.addControlButtons(actionControls);
-        }
+		ComponentContainer actionControls = createButtonControls();
+		if (actionControls != null) {
+			previewLayout.addControlButtons(actionControls);
+		}
 
-        contactRoleList = new ContactOpportunityList();
-        previewLayout.addBody(contactRoleList);
+		contactRoleList = new ContactOpportunityList();
+		previewLayout.addBody(contactRoleList);
 
-        Button addMoreContactRolesBtn = new Button("Add more contact roles",
-                new Button.ClickListener() {
-                    private static final long serialVersionUID = 1L;
+		Button addMoreContactRolesBtn = new Button("Add more contact roles",
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
 
-                    @Override
-                    public void buttonClick(ClickEvent event) {
-                        SimpleContactOpportunityRel contactRole = new SimpleContactOpportunityRel();
-                        ContactRoleRowComp row = new ContactRoleRowComp(
-                                contactRole);
-                        contactRoleList.addRow(row);
-                    }
-                });
-        addMoreContactRolesBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+					@Override
+					public void buttonClick(ClickEvent event) {
+						SimpleContactOpportunityRel contactRole = new SimpleContactOpportunityRel();
+						ContactRoleRowComp row = new ContactRoleRowComp(
+								contactRole);
+						contactRoleList.addRow(row);
+					}
+				});
+		addMoreContactRolesBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 
-        HorizontalLayout buttonControls = new HorizontalLayout();
-        buttonControls.addComponent(addMoreContactRolesBtn);
-        buttonControls.setMargin(new MarginInfo(true, true, true, true));
+		HorizontalLayout buttonControls = new HorizontalLayout();
+		buttonControls.addComponent(addMoreContactRolesBtn);
+		buttonControls.setMargin(new MarginInfo(true, true, true, true));
 
-        previewLayout.addBody(buttonControls);
-    }
+		previewLayout.addBody(buttonControls);
+	}
 
-    private ComponentContainer createButtonControls() {
-        HorizontalLayout layout = new HorizontalLayout();
-        layout.setSpacing(true);
-        layout.setMargin(true);
-        layout.setWidth("100%");
+	private ComponentContainer createButtonControls() {
+		HorizontalLayout layout = new HorizontalLayout();
+		layout.setSpacing(true);
+		layout.setMargin(true);
+		layout.setWidth("100%");
 
-        HorizontalLayout buttonWrapper = new HorizontalLayout();
-        buttonWrapper.setWidth(Sizeable.SIZE_UNDEFINED, Sizeable.Unit.PIXELS);
-        buttonWrapper.setSpacing(true);
+		HorizontalLayout buttonWrapper = new HorizontalLayout();
+		buttonWrapper.setWidth(Sizeable.SIZE_UNDEFINED, Sizeable.Unit.PIXELS);
+		buttonWrapper.setSpacing(true);
 
-        Button updateBtn = new Button("Update", new Button.ClickListener() {
-            private static final long serialVersionUID = 1L;
+		Button updateBtn = new Button("Update", new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
 
-            @Override
-            public void buttonClick(ClickEvent event) {
-                updateContactRoles();
-            }
-        });
-        updateBtn.setIcon(MyCollabResource.newResource("icons/16/save.png"));
-        updateBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-        buttonWrapper.addComponent(updateBtn);
+			@Override
+			public void buttonClick(ClickEvent event) {
+				updateContactRoles();
+			}
+		});
+		updateBtn.setIcon(MyCollabResource.newResource("icons/16/save.png"));
+		updateBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		buttonWrapper.addComponent(updateBtn);
 
-        Button cancelBtn = new Button("Cancel", new Button.ClickListener() {
-            private static final long serialVersionUID = 1L;
+		Button cancelBtn = new Button("Cancel", new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
 
-            @Override
-            public void buttonClick(ClickEvent event) {
-                ViewState viewState = HistoryViewManager.back();
+			@Override
+			public void buttonClick(ClickEvent event) {
+				ViewState viewState = HistoryViewManager.back();
 
-                if (viewState instanceof NullViewState) {
-                    EventBus.getInstance().fireEvent(
-                            new ContactEvent.GotoList(this, null));
-                }
+				if (viewState instanceof NullViewState) {
+					EventBus.getInstance().fireEvent(
+							new ContactEvent.GotoList(this, null));
+				}
 
-            }
-        });
-        cancelBtn.setIcon(MyCollabResource.newResource("icons/16/cancel.png"));
-        cancelBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-        buttonWrapper.addComponent(cancelBtn);
+			}
+		});
+		cancelBtn.setIcon(MyCollabResource.newResource("icons/16/cancel.png"));
+		cancelBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		buttonWrapper.addComponent(cancelBtn);
 
-        layout.addComponent(buttonWrapper);
-        layout.setComponentAlignment(buttonWrapper, Alignment.MIDDLE_CENTER);
+		layout.addComponent(buttonWrapper);
+		layout.setComponentAlignment(buttonWrapper, Alignment.MIDDLE_CENTER);
 
-        return layout;
-    }
+		return layout;
+	}
 
-    private void updateContactRoles() {
-        Iterator<Component> components = contactRoleList.iterator();
-        List<ContactOpportunity> contactOpps = new ArrayList<ContactOpportunity>();
+	private void updateContactRoles() {
+		Iterator<Component> components = contactRoleList.getBodySubComponents();
+		List<ContactOpportunity> contactOpps = new ArrayList<ContactOpportunity>();
 
-        while (components.hasNext()) {
-            Component component = components.next();
-            if (component instanceof ContactRoleRowComp) {
-                ContactOpportunity contactVal = ((ContactRoleRowComp) component)
-                        .getContactVal();
-                if (contactVal != null) {
-                    contactOpps.add(contactVal);
-                }
-            }
-        }
+		while (components.hasNext()) {
+			Component component = components.next();
+			if (component instanceof ContactRoleRowComp) {
+				ContactOpportunity contactVal = ((ContactRoleRowComp) component)
+						.getContactVal();
+				if (contactVal != null) {
+					contactOpps.add(contactVal);
+				}
+			}
+		}
 
-        if (contactOpps.size() > 0) {
-            ContactService contactService = ApplicationContextUtil
-                    .getSpringBean(ContactService.class);
-            contactService.saveContactOpportunityRelationship(contactOpps,
-                    AppContext.getAccountId());
-        }
+		if (contactOpps.size() > 0) {
+			ContactService contactService = ApplicationContextUtil
+					.getSpringBean(ContactService.class);
+			contactService.saveContactOpportunityRelationship(contactOpps,
+					AppContext.getAccountId());
+		}
 
-        // lead user to opportunity view
-        EventBus.getInstance().fireEvent(
-                new OpportunityEvent.GotoRead(ContactRoleEditViewImpl.this,
-                        opportunity.getId()));
-    }
+		// lead user to opportunity view
+		EventBus.getInstance().fireEvent(
+				new OpportunityEvent.GotoRead(ContactRoleEditViewImpl.this,
+						opportunity.getId()));
+	}
 
-    private class ContactOpportunityList extends VerticalLayout {
-        private static final long serialVersionUID = 1L;
+	private class ContactOpportunityList extends VerticalLayout {
+		private static final long serialVersionUID = 1L;
 
-        private final CssLayout bodyWrapper;
+		private final CssLayout bodyWrapper;
 
-        public ContactOpportunityList() {
-            super();
-            this.setStyleName("contactopp-list");
+		public ContactOpportunityList() {
+			super();
+			this.setStyleName("contactopp-list");
 
-            HorizontalLayout header = new HorizontalLayout();
-            header.setWidth("100%");
-            header.setStyleName("contactopp-list-header");
-            header.setMargin(new MarginInfo(false, true, false, true));
-            header.setSpacing(true);
+			HorizontalLayout header = new HorizontalLayout();
+			header.setWidth("100%");
+			header.setStyleName("contactopp-list-header");
+			header.setMargin(new MarginInfo(false, true, false, true));
+			header.setSpacing(true);
 
-            Label contactLbl = new Label("Contact");
-            contactLbl.setWidth("250px");
-            header.addComponent(contactLbl);
+			Label contactLbl = new Label("Contact");
+			contactLbl.setWidth("250px");
+			header.addComponent(contactLbl);
 
-            Label accountLbl = new Label("Account");
-            accountLbl.setWidth("250px");
-            header.addComponent(accountLbl);
+			Label accountLbl = new Label("Account");
+			accountLbl.setWidth("250px");
+			header.addComponent(accountLbl);
 
-            Label roleLbl = new Label("Role");
-            roleLbl.setWidth("250px");
-            header.addComponent(roleLbl);
-            header.setExpandRatio(roleLbl, 1.0f);
+			Label roleLbl = new Label("Role");
+			roleLbl.setWidth("250px");
+			header.addComponent(roleLbl);
+			header.setExpandRatio(roleLbl, 1.0f);
 
-            this.addComponent(header);
+			this.addComponent(header);
 
-            bodyWrapper = new CssLayout();
-            bodyWrapper.setStyleName("contactopp-list-body");
-            bodyWrapper.setSizeFull();
+			bodyWrapper = new CssLayout();
+			bodyWrapper.setStyleName("contactopp-list-body");
+			bodyWrapper.setSizeFull();
 
-            ContactOpportunityService contactOppoService = ApplicationContextUtil
-                    .getSpringBean(ContactOpportunityService.class);
-            ContactSearchCriteria criteria = new ContactSearchCriteria();
-            criteria.setSaccountid(new NumberSearchField(SearchField.AND,
-                    AppContext.getAccountId()));
-            criteria.setOpportunityId(new NumberSearchField(SearchField.AND,
-                    opportunity.getId()));
-            List<SimpleContactOpportunityRel> contactOppoRels = contactOppoService
-                    .findPagableListByCriteria(new SearchRequest<ContactSearchCriteria>(
-                            criteria));
-            boolean oddRow = true;
-            if (contactOppoRels != null && contactOppoRels.size() > 0) {
-                for (SimpleContactOpportunityRel contactOppoRel : contactOppoRels) {
-                    ContactRoleRowComp rowComp = new ContactRoleRowComp(
-                            contactOppoRel);
-                    if (oddRow) {
-                        rowComp.addStyleName("odd");
-                        oddRow = !oddRow;
-                    }
+			ContactOpportunityService contactOppoService = ApplicationContextUtil
+					.getSpringBean(ContactOpportunityService.class);
+			ContactSearchCriteria criteria = new ContactSearchCriteria();
+			criteria.setSaccountid(new NumberSearchField(SearchField.AND,
+					AppContext.getAccountId()));
+			criteria.setOpportunityId(new NumberSearchField(SearchField.AND,
+					opportunity.getId()));
+			List<SimpleContactOpportunityRel> contactOppoRels = contactOppoService
+					.findPagableListByCriteria(new SearchRequest<ContactSearchCriteria>(
+							criteria));
+			boolean oddRow = true;
+			if (contactOppoRels != null && contactOppoRels.size() > 0) {
+				for (SimpleContactOpportunityRel contactOppoRel : contactOppoRels) {
+					ContactRoleRowComp rowComp = new ContactRoleRowComp(
+							contactOppoRel);
+					if (oddRow) {
+						rowComp.addStyleName("odd");
+						oddRow = !oddRow;
+					}
 
-                    bodyWrapper.addComponent(rowComp);
-                }
-            }
+					bodyWrapper.addComponent(rowComp);
+				}
+			}
 
-            if (bodyWrapper.getComponentCount() == 0) {
-                bodyWrapper.addStyleName("no-child");
-            }
+			if (bodyWrapper.getComponentCount() == 0) {
+				bodyWrapper.addStyleName("no-child");
+			}
 
-            this.addComponent(bodyWrapper);
-        }
+			this.addComponent(bodyWrapper);
+		}
 
-        public void addRow(Component child) {
-            if (bodyWrapper.getComponentCount() % 2 == 0)
-                child.addStyleName("odd");
+		public void addRow(Component child) {
+			if (bodyWrapper.getComponentCount() % 2 == 0)
+				child.addStyleName("odd");
 
-            bodyWrapper.addComponent(child);
-            bodyWrapper.removeStyleName("no-child");
-        }
+			bodyWrapper.addComponent(child);
+			bodyWrapper.removeStyleName("no-child");
+		}
 
-    }
+		public Iterator<Component> getBodySubComponents() {
+			return bodyWrapper.iterator();
+		}
 
-    private class ContactRoleRowComp extends HorizontalLayout {
-        private static final long serialVersionUID = 1L;
+	}
 
-        private ContactSelectionField contactField;
-        private RoleDecisionComboBox roleBox;
+	private class ContactRoleRowComp extends HorizontalLayout {
+		private static final long serialVersionUID = 1L;
 
-        public ContactRoleRowComp(final SimpleContactOpportunityRel contactOpp) {
-            super();
-            this.setMargin(true);
-            this.setSpacing(true);
-            this.setWidth("100%");
-            this.setStyleName("contactrole-row");
+		private ContactSelectionField contactField;
+		private RoleDecisionComboBox roleBox;
 
-            contactField = new ContactSelectionField();
-            this.addComponent(contactField);
-            contactField
-                    .setPropertyDataSource(new AbstractField<SimpleContact>() {
-                        private static final long serialVersionUID = 1L;
+		public ContactRoleRowComp(final SimpleContactOpportunityRel contactOpp) {
+			super();
+			this.setMargin(true);
+			this.setSpacing(true);
+			this.setWidth("100%");
+			this.setStyleName("contactrole-row");
 
-                        @Override
-                        public SimpleContact getValue() {
-                            return contactOpp;
-                        }
+			contactField = new ContactSelectionField();
+			this.addComponent(contactField);
+			contactField
+					.setPropertyDataSource(new AbstractField<SimpleContact>() {
+						private static final long serialVersionUID = 1L;
 
-                        @Override
-                        public Class<? extends SimpleContact> getType() {
-                            return SimpleContact.class;
-                        }
+						@Override
+						public SimpleContact getValue() {
+							return contactOpp;
+						}
 
-                    });
-            contactField.setWidth("250px");
+						@Override
+						public Class<? extends SimpleContact> getType() {
+							return SimpleContact.class;
+						}
 
-            Button accountLink = new Button(contactOpp.getAccountName(),
-                    new Button.ClickListener() {
-                        private static final long serialVersionUID = 1L;
+					});
+			contactField.setWidth("250px");
 
-                        @Override
-                        public void buttonClick(ClickEvent event) {
-                            EventBus.getInstance().fireEvent(
-                                    new AccountEvent.GotoRead(
-                                            ContactRoleRowComp.this, contactOpp
-                                                    .getAccountid()));
+			Button accountLink = new Button(contactOpp.getAccountName(),
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
 
-                        }
-                    });
-            accountLink.setIcon(MyCollabResource
-                    .newResource("icons/16/crm/account.png"));
-            accountLink.setStyleName("link");
-            accountLink.setWidth("250px");
-            this.addComponent(accountLink);
+						@Override
+						public void buttonClick(ClickEvent event) {
+							EventBus.getInstance().fireEvent(
+									new AccountEvent.GotoRead(
+											ContactRoleRowComp.this, contactOpp
+													.getAccountid()));
 
-            roleBox = new RoleDecisionComboBox();
-            if (contactOpp.getDecisionRole() != null) {
-                roleBox.setValue(contactOpp.getDecisionRole());
-            }
-            roleBox.setWidth("250px");
-            this.addComponent(roleBox);
+						}
+					});
+			accountLink.setIcon(MyCollabResource
+					.newResource("icons/16/crm/account.png"));
+			accountLink.setStyleName("link");
+			accountLink.setWidth("250px");
+			this.addComponent(accountLink);
 
-            Button deleteBtn = new Button(null, new Button.ClickListener() {
-                private static final long serialVersionUID = 1L;
+			roleBox = new RoleDecisionComboBox();
+			if (contactOpp.getDecisionRole() != null) {
+				roleBox.setValue(contactOpp.getDecisionRole());
+			}
+			roleBox.setWidth("250px");
+			this.addComponent(roleBox);
 
-                @Override
-                public void buttonClick(ClickEvent event) {
-                    ((VerticalLayout) ContactRoleRowComp.this.getParent())
-                            .removeComponent(ContactRoleRowComp.this);
+			Button deleteBtn = new Button(null, new Button.ClickListener() {
+				private static final long serialVersionUID = 1L;
 
-                }
-            });
-            deleteBtn.setIcon(MyCollabResource
-                    .newResource("icons/16/delete.png"));
-            deleteBtn.setStyleName("link");
-            this.addComponent(deleteBtn);
-            this.setExpandRatio(deleteBtn, 1.0f);
-        }
+				@Override
+				public void buttonClick(ClickEvent event) {
+					((CssLayout) ContactRoleRowComp.this.getParent())
+							.removeComponent(ContactRoleRowComp.this);
 
-        public ContactOpportunity getContactVal() {
-            ContactOpportunity contactOppRel = new ContactOpportunity();
-            Contact contact = contactField.getContact();
-            if (contact != null && contact.getId() != null) {
-                contactOppRel.setContactid(contact.getId());
-                contactOppRel.setOpportunityid(opportunity.getId());
-                contactOppRel.setDecisionrole((String) roleBox.getValue());
-                return contactOppRel;
-            } else {
-                return null;
-            }
-        }
-    }
+				}
+			});
+			deleteBtn.setIcon(MyCollabResource
+					.newResource("icons/16/delete.png"));
+			deleteBtn.setStyleName("link");
+			this.addComponent(deleteBtn);
+			this.setExpandRatio(deleteBtn, 1.0f);
+		}
 
-    private static class RoleDecisionComboBox extends ValueComboBox {
-        private static final long serialVersionUID = 1L;
+		public ContactOpportunity getContactVal() {
+			ContactOpportunity contactOppRel = new ContactOpportunity();
+			Contact contact = contactField.getContact();
+			if (contact != null && contact.getId() != null) {
+				contactOppRel.setContactid(contact.getId());
+				contactOppRel.setOpportunityid(opportunity.getId());
+				contactOppRel.setDecisionrole((String) roleBox.getValue());
+				return contactOppRel;
+			} else {
+				return null;
+			}
+		}
+	}
 
-        public RoleDecisionComboBox() {
-            super();
-            this.setNullSelectionAllowed(false);
-            this.loadData("Primary Decision Marker", "Evaluator", "Influencer",
-                    "Other");
-        }
-    }
+	private static class RoleDecisionComboBox extends ValueComboBox {
+		private static final long serialVersionUID = 1L;
+
+		public RoleDecisionComboBox() {
+			super();
+			this.setNullSelectionAllowed(false);
+			this.loadData("Primary Decision Marker", "Evaluator", "Influencer",
+					"Other");
+		}
+	}
 }
