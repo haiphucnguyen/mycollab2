@@ -171,9 +171,7 @@
                 <inherited>true</inherited>
                 <version>2.5</version>
                 <configuration>
-                    <<<<<<< HEAD
                     <tag>${project.artifactId}-${project.version}</tag>
-                    =======
                     <header>https://raw.github.com/mycila/license-maven-plugin/master/src/main/resources/com/mycila/maven/plugin/license/templates/GPL-3.txt</header>
                     <properties>
                         <owner>MyCollab</owner>
@@ -183,7 +181,6 @@
                         <include>src/main/java/**/*.java</include>
                         <include>src/test/java/**/*.java</include>
                     </includes>
-                    >>>>>>> 3.0
                 </configuration>
                 <executions>
                     <execution>
