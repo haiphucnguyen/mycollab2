@@ -213,3 +213,135 @@
 	color: red;
 	line-height: 1.4em;
 }
+
+@media only screen and  (max-width:1120px)
+{
+	#signup-content {
+		width:auto;
+		padding: 0 20px;
+	}
+	.sig-mid-right {
+		margin-bottom:0;
+	}
+	
+	.sig-top {
+		width:100%;
+	}
+	
+	.sig-mid {
+		padding:0;
+	}
+	
+	.sig-mid-left {
+		width:100%;
+		float:none;
+	}
+	
+	.sig-left-otherservices {
+		float:none;
+		width:100%;
+	}
+	
+	.sig-left-normal-signup {
+		float:none;
+		width:100%;
+	}
+	
+	
+	.sig-left-otherservices ul li {
+		margin: 0px 0px 20px;
+		display: table-cell;
+		vertical-align: top;
+		width: 49%;
+	}
+	
+	.sig-mid-left input[type="submit"] {
+		float:none;
+	}
+	.sig-left-chk label {
+		font-size:14px;
+	}
+	.sig-right-block p {
+		font-size:14px;
+	}
+	.sig-right-block h2 {
+		font-size:inherit;
+		background: url("../images/pricing_question.png") no-repeat scroll left top 3px transparent;
+	}
+	.sig-left-otherservices ul {
+		display: table;
+		height: 120px;
+		margin: 0px auto;
+		max-width: 420px;
+		width: auto;
+	}
+	.sig-left-otherservices ul li .service-title {
+		font-size:14px;
+	}
+	
+	.sig-left-otherservices .sig-lef-separator {
+		width: 170px;
+		display: block;
+		margin: 0 auto;
+		text-align: center;
+	}
+	
+	.sig-left-otherservices .sig-lef-separator .separator-text {
+		display: inline-block;
+		height: 26px;
+	}
+	
+	
+	
+	#id1 {
+		padding: 0 20px;
+	}
+	
+	.sig-mid-right {
+		float:none;
+		width:100%;
+	}
+	
+	.sig-left-normal-signup .formfield {
+		max-width: 440px;
+		padding: 0 20px;
+		width: auto;
+		margin: 0px auto 15px;
+	}
+
+	
+	.sig-left-otherservices .sig-lef-separator {
+		background: url('../images/signup_separator_horizontal.png') repeat-x center center rgb(255, 255, 255);
+	}
+	.sig-subdomain {
+	    background-color: rgb(34, 139, 201);
+	    color: rgb(255, 255, 255);
+	    font-size: 14px;
+	    height: 33px;
+	    margin-left: -85px;
+	    margin-top: 1px;
+	    padding-left: 8px;
+	    position: absolute;
+	    width: 110px;
+	    right: 20px;
+	    top: 0px;
+	    border-radius: 0px 2px 2px 0px;
+	    font-family: 'verdana';
+	}
+	#receiveUpdate {
+		height:13px !important;
+	}
+	
+}
+@media only screen and  (max-width:440px) {
+	.sig-left-otherservices ul li {
+		float:none;
+		width:100%;
+		display:block;
+		
+		
+	}
+	.sig-left-otherservices ul {
+		margin:10px 20px
+	}
+}

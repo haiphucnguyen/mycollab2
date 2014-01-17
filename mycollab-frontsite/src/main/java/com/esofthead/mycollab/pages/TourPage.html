@@ -10,10 +10,6 @@
 <body>
 	<wicket:extend>
 		<div id="banner" class="hidden"></div>
-		<div id="tour-navigator-mobile">
-		<a class="left-tour-nav" ></a>
-			<span>MyCollab Highlights</span>
-		</div>
 		<div id="tour-content">
 			<div class="tour-top">
 				<div class="free-trial-cnt-3">
@@ -36,7 +32,8 @@
 				</div>
 				<div class="tour-top-content">
 					<h1>
-						A TOUR OF MYCOLLAB<br /> <span class="tour-top-small">See
+						<span class="header-title">A TOUR OF MYCOLLAB</span>
+						<span class="tour-top-small">See
 							what MyCollab has to offer</span>
 					</h1>
 				</div>
@@ -67,7 +64,26 @@
 				</div>
 				<div class="tour-mid-right">
 					<div class="tour-items">
+					
 						<h1 class="tour-title">MyCollab Office</h1>
+						<div id="mobile-sub-nav">
+							<div class="nav-header">
+							<span>Tour</span>
+							</div>
+							<div class="sub-nav">
+							<ul>
+								<li class="items-1 tour-menu"><a wicket:id="whoisitforLink">
+									Who is it for?</a></li>
+								<li class="items-1 tour-menu"><a
+									wicket:id="highlightLink">MyCollab Highlights</a></li>
+								<li class="items-3 tour-menu"><a wicket:id="documentLink">Document
+										Management</a></li>
+								<li class="items-4 tour-menu"><a wicket:id="projectLink">Project
+										Management</a></li>
+								<li class="items-5 tour-menu"><a wicket:id="crmLink">CRM</a></li>
+							</ul>
+							</div>					
+						</div>
 						<p class="tour-text">A cloud service for online document
 							management and collaboration. Created for small and medium
 							business it provides</p>

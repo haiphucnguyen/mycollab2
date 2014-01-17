@@ -99,21 +99,29 @@
 	border-width: 2px;
 }
 .contact-us-content .left-col .formfield input[type="submit"] {
-	float: right;
-	width: 124px;
-	height: 40px;
+	background-color: rgb(22, 128, 197);
+	border-color: rgb(12, 93, 145);
+	border-radius: 4px;
+	border-style: solid;
+	border-width: 1px;
+	color: rgb(255, 255, 255);
 	display: block;
-	color: #fefefe;
-	padding: 3px 0px 0px 0px;
-	margin: 6px auto 0px;
-	font-size: 13px;
-	font-family: 'Monda';
+	font-size: 16px;
 	font-weight: bold;
-	background-color: rgb(99, 182, 232);
-	border-radius: 3px;
-	text-align: center;
-	border-color: rgb(58, 138, 199);
-	cursor: pointer;
+	height: 35px;
+	letter-spacing: 1px;
+	line-height: 31px;
+	padding: 0px;
+	text-decoration: none;
+	width: 170px;
+	font-family: 'verdana';
+	margin: 0px auto;
+	cursor:pointer;
+	float:left;
+	margin-left: 3px;
+}
+.contact-us-content .left-col .formfield input[type="submit"]:hover {
+	opacity: 0.7;
 }
 .contact-us-content .left-col .formfield textarea {
 	height: 200px;
@@ -189,4 +197,40 @@ div.wicket-modal div.w_content_3 {
 }
 .notification-body .notification-txt {
     font-weight: bold;
+}
+
+@media only screen and (max-width:1120px) {
+	.contact-us-content {
+		width:100%;
+	}
+	
+	.contact-us-content .left-col {
+		width:100%;
+		float:none;
+	}
+	
+	.contact-us-content .left-col .formfield {
+		float:none;
+		width:100%;
+		padding: 8px 20px 8px 20px;
+	}
+	
+	.contact-us-content .right-col .info-block .block-content {
+		font-size:14px;
+	}
+	
+	#recaptcha_area, #recaptcha_table {
+		margin: 0 auto;
+	}
+	
+	
+	.contact-us-content .left-col .formfield input[type="submit"] {
+		float:none;
+		margin: 10px auto;
+	}
+	
+	.contact-us-content .right-col {
+		width:100%;
+		float:none;
+	}
 }

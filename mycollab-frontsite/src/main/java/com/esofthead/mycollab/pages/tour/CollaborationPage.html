@@ -10,11 +10,7 @@
 <body>
 	<wicket:extend>
 		<div id="banner" class="hidden"></div>
-		<div id="tour-navigator-mobile">
-			<a class="left-tour-nav" ></a>
-			<span>Project Management</span>
-			<a class="right-tour-nav" ></a>
-		</div>
+	
 		<div id="tour-content">
 			<div class="tour-top">
 				<div class="free-trial-cnt-3">
@@ -38,7 +34,8 @@
 				</div>
 				<div class="tour-top-content">
 					<h1>
-						A TOUR OF MYCOLLAB<br /> <span class="tour-top-small">See
+						<span class="header-title">A TOUR OF MYCOLLAB</span>
+						<span class="tour-top-small">See
 							what MyCollab has to offer</span>
 					</h1>
 				</div>
@@ -69,6 +66,7 @@
 				</div>
 				<div class="tour-mid-right">
 					<div class="tour-items">
+					<h1 class="tour-title">Collaboration</h1>
 						<div class="tour-two-coll">
 							<div class="tour-row">
 								<div class="slider-wrapper theme-default tour-slide-2">
@@ -83,6 +81,24 @@
 											data-src="../static/images/tour/officeApp/slide_1.png" /> <img
 											alt="macbok 2" data-src="../static/images/tour/officeApp/slide_1.png" />
 									</div>
+								</div>
+								<div id="mobile-sub-nav">
+								<div class="nav-header">
+								<span>Tour</span>
+								</div>
+								<div class="sub-nav">
+								<ul>
+									<li class="items-1 tour-menu"><a wicket:id="whoisitforLink">
+										Who is it for?</a></li>
+									<li class="items-1 tour-menu"><a
+										wicket:id="highlightLink">MyCollab Highlights</a></li>
+									<li class="items-3 tour-menu"><a wicket:id="documentLink">Document
+											Management</a></li>
+									<li class="items-4 tour-menu"><a wicket:id="projectLink">Project
+											Management</a></li>
+									<li class="items-5 tour-menu"><a wicket:id="crmLink">CRM</a></li>
+								</ul>
+								</div>					
 								</div>
 								<div class="tour-block">
 									<h2>Unique Technology</h2>
