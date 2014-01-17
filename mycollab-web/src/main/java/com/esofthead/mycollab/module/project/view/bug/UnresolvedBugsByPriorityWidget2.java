@@ -23,6 +23,7 @@ import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.project.ProjectDataTypeFactory;
+import com.esofthead.mycollab.module.project.ProjectResources;
 import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.project.localization.BugI18nEnum;
 import com.esofthead.mycollab.module.project.view.parameters.BugScreenData;
@@ -79,8 +80,8 @@ public class UnresolvedBugsByPriorityWidget2 extends Depot {
 						priorityLayout.setSpacing(true);
 						priorityLayout.setWidth("100%");
 						final Button userLbl = new Button(status, listener);
-						final Resource iconPriority = BugPriorityComboBox
-								.getIconResourceByPriority(status);
+						final Resource iconPriority = ProjectResources
+								.getIconResource16ByPriority(status);
 						userLbl.setIcon(iconPriority);
 						userLbl.setWidth("110px");
 						userLbl.setStyleName("link");
@@ -102,14 +103,14 @@ public class UnresolvedBugsByPriorityWidget2 extends Depot {
 					priorityLayout.setSpacing(true);
 					priorityLayout.setWidth("100%");
 					final Button userLbl = new Button(status, listener);
-					final Resource iconPriority = BugPriorityComboBox
-							.getIconResourceByPriority(status);
+					final Resource iconPriority = ProjectResources
+							.getIconResource16ByPriority(status);
 					userLbl.setIcon(iconPriority);
 					userLbl.setWidth("110px");
 					userLbl.setStyleName("link");
 					priorityLayout.addComponent(userLbl);
-					final ProgressBarIndicator indicator = new ProgressBarIndicator(totalCount,
-							totalCount, false);
+					final ProgressBarIndicator indicator = new ProgressBarIndicator(
+							totalCount, totalCount, false);
 					indicator.setWidth("100%");
 					priorityLayout.addComponent(indicator);
 					priorityLayout.setExpandRatio(indicator, 1.0f);

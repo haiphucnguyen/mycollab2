@@ -16,7 +16,17 @@
  */
 package com.esofthead.mycollab.module.project.view.milestone;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class MilestoneStatusConstant {
+	public static final String INPROGRESS_IMG_12 = "icons/12/project/phase_progress.png";
+	public static final String CLOSED_IMG_12 = "icons/12/project/phase_closed.png";
+	public static final String FUTURE_IMG_12 = "icons/12/project/phase_future.png";
+
 	public static final String IN_PROGRESS = "In Progress";
 
 	public static final String FUTURE = "Future";

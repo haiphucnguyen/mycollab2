@@ -47,46 +47,23 @@ public class BugPriorityComboBox extends ComboBox {
 		this.setItemIcon(
 				BugPriorityStatusConstants.PRIORITY_BLOCKER,
 				MyCollabResource
-						.newResource(BugPriorityStatusConstants.PRIORITY_BLOCKER_IMG));
+						.newResource(BugPriorityStatusConstants.PRIORITY_BLOCKER_IMG_16));
 		this.setItemIcon(
 				BugPriorityStatusConstants.PRIORITY_CRITICAL,
 				MyCollabResource
-						.newResource(BugPriorityStatusConstants.PRIORITY_CRITICAL_IMG));
+						.newResource(BugPriorityStatusConstants.PRIORITY_CRITICAL_IMG_16));
 		this.setItemIcon(
 				BugPriorityStatusConstants.PRIORITY_MAJOR,
 				MyCollabResource
-						.newResource(BugPriorityStatusConstants.PRIORITY_MAJOR_IMG));
+						.newResource(BugPriorityStatusConstants.PRIORITY_MAJOR_IMG_16));
 		this.setItemIcon(
 				BugPriorityStatusConstants.PRIORITY_MINOR,
 				MyCollabResource
-						.newResource(BugPriorityStatusConstants.PRIORITY_MINOR_IMG));
+						.newResource(BugPriorityStatusConstants.PRIORITY_MINOR_IMG_16));
 		this.setItemIcon(
 				BugPriorityStatusConstants.PRIORITY_TRIVIAL,
 				MyCollabResource
-						.newResource(BugPriorityStatusConstants.PRIORITY_TRIVIAL_IMG));
+						.newResource(BugPriorityStatusConstants.PRIORITY_TRIVIAL_IMG_16));
 		this.setNullSelectionAllowed(false);
-	}
-
-	public static Resource getIconResourceByPriority(String priority) {
-		Resource iconPriority = MyCollabResource
-				.newResource(BugPriorityStatusConstants.PRIORITY_MAJOR_IMG);
-		if (BugPriorityStatusConstants.PRIORITY_BLOCKER.equals(priority)) {
-			iconPriority = MyCollabResource
-					.newResource(BugPriorityStatusConstants.PRIORITY_BLOCKER_IMG);
-		} else if (BugPriorityStatusConstants.PRIORITY_CRITICAL
-				.equals(priority)) {
-			iconPriority = MyCollabResource
-					.newResource(BugPriorityStatusConstants.PRIORITY_CRITICAL_IMG);
-		} else if (BugPriorityStatusConstants.PRIORITY_MAJOR.equals(priority)) {
-			iconPriority = MyCollabResource
-					.newResource(BugPriorityStatusConstants.PRIORITY_MAJOR_IMG);
-		} else if (BugPriorityStatusConstants.PRIORITY_MINOR.equals(priority)) {
-			iconPriority = MyCollabResource
-					.newResource(BugPriorityStatusConstants.PRIORITY_MINOR_IMG);
-		} else if (BugPriorityStatusConstants.PRIORITY_TRIVIAL.equals(priority)) {
-			iconPriority = MyCollabResource
-					.newResource(BugPriorityStatusConstants.PRIORITY_TRIVIAL_IMG);
-		}
-		return iconPriority;
 	}
 }

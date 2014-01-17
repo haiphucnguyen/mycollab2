@@ -20,6 +20,7 @@ import com.esofthead.mycollab.common.CommentType;
 import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectContants;
+import com.esofthead.mycollab.module.project.ProjectResources;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleMilestone;
 import com.esofthead.mycollab.module.project.ui.components.AbstractPreviewItemComp;
@@ -29,15 +30,17 @@ import com.esofthead.mycollab.schedule.email.project.ProjectMilestoneRelayEmailN
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
+import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormContainerHorizontalViewField;
 import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.ProgressBarIndicator;
 import com.esofthead.mycollab.vaadin.ui.ProjectPreviewFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.TabsheetLazyLoadComp;
-import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormContainerHorizontalViewField;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Field;
+import com.vaadin.ui.Image;
+import com.vaadin.ui.Label;
 
 /**
  * 
@@ -139,7 +142,7 @@ class MilestoneReadComp extends AbstractPreviewItemComp<SimpleMilestone> {
 		this.associateTaskGroupListComp.displayTakLists(this.beanItem);
 	}
 
-	private static class MilestoneFormFieldFactory extends
+	private class MilestoneFormFieldFactory extends
 			AbstractBeanFieldGroupViewFieldFactory<SimpleMilestone> {
 
 		private static final long serialVersionUID = 1L;
@@ -180,6 +183,16 @@ class MilestoneReadComp extends AbstractPreviewItemComp<SimpleMilestone> {
 				progressBug.setWidth("100%");
 				bugComp.addComponentField(progressBug);
 				return bugComp;
+			} else if (propertyId.equals("status")) {
+				final FormContainerHorizontalViewField statusField = new FormContainerHorizontalViewField();
+				Image icon = new Image();
+				icon.setSource(ProjectResources
+						.getIconResource12ByPhase(beanItem.getStatus()));
+				statusField.addComponentField(icon);
+				Label statusLbl = new Label(beanItem.getStatus());
+				statusField.addComponentField(statusLbl);
+				statusField.getLayout().setExpandRatio(statusLbl, 1.0f);
+				return statusField;
 			}
 			return null;
 		}
