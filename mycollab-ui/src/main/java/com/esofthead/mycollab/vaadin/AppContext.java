@@ -108,6 +108,7 @@ public class AppContext implements Serializable {
 	private Integer accountId = null;
 
 	public AppContext() {
+		VaadinSession.getCurrent().setAttribute("context", this);
 
 		GroupIdProvider.registerAccountIdProvider(new GroupIdProvider() {
 
@@ -116,8 +117,6 @@ public class AppContext implements Serializable {
 				return AppContext.getAccountId();
 			}
 		});
-
-		VaadinSession.getCurrent().setAttribute("context", this);
 	}
 
 	/**
