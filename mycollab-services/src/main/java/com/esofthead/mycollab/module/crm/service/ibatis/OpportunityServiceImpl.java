@@ -28,18 +28,14 @@ import com.esofthead.mycollab.common.interceptor.aspect.Auditable;
 import com.esofthead.mycollab.common.interceptor.aspect.Traceable;
 import com.esofthead.mycollab.common.interceptor.aspect.Watchable;
 import com.esofthead.mycollab.core.cache.CacheKey;
-import com.esofthead.mycollab.core.cache.Cacheable;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
-import com.esofthead.mycollab.module.crm.dao.OpportunityContactMapper;
 import com.esofthead.mycollab.module.crm.dao.OpportunityLeadMapper;
 import com.esofthead.mycollab.module.crm.dao.OpportunityMapper;
 import com.esofthead.mycollab.module.crm.dao.OpportunityMapperExt;
 import com.esofthead.mycollab.module.crm.domain.Opportunity;
-import com.esofthead.mycollab.module.crm.domain.OpportunityContact;
-import com.esofthead.mycollab.module.crm.domain.OpportunityContactExample;
 import com.esofthead.mycollab.module.crm.domain.OpportunityLead;
 import com.esofthead.mycollab.module.crm.domain.OpportunityLeadExample;
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
@@ -66,8 +62,6 @@ public class OpportunityServiceImpl extends
 	private OpportunityMapper opportunityMapper;
 	@Autowired
 	private OpportunityMapperExt opportunityMapperExt;
-	@Autowired
-	private OpportunityContactMapper opportunityContactMapper;
 	@Autowired
 	private OpportunityLeadMapper opportunityLeadMapper;
 
@@ -102,31 +96,6 @@ public class OpportunityServiceImpl extends
 	public List<GroupItem> getPipeline(
 			@CacheKey OpportunitySearchCriteria criteria) {
 		return opportunityMapperExt.getPipeline(criteria);
-	}
-
-	@Override
-	public void saveOpportunityContactRelationship(
-			List<OpportunityContact> associateContacts, Integer sAccountId) {
-		for (OpportunityContact associateContact : associateContacts) {
-			OpportunityContactExample ex = new OpportunityContactExample();
-			ex.createCriteria()
-					.andContactidEqualTo(associateContact.getContactid())
-					.andOpportunityidEqualTo(
-							associateContact.getOpportunityid());
-			if (opportunityContactMapper.countByExample(ex) == 0) {
-				opportunityContactMapper.insert(associateContact);
-			}
-		}
-	}
-
-	@Override
-	public void removeOpportunityContactRelationship(
-			OpportunityContact associateContact, Integer sAccountId) {
-		OpportunityContactExample ex = new OpportunityContactExample();
-		ex.createCriteria()
-				.andContactidEqualTo(associateContact.getContactid())
-				.andOpportunityidEqualTo(associateContact.getOpportunityid());
-		opportunityContactMapper.deleteByExample(ex);
 	}
 
 	@Override

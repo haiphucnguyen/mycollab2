@@ -1,20 +1,43 @@
+/**
+ * This file is part of mycollab-web.
+ *
+ * mycollab-web is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * mycollab-web is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package com.esofthead.mycollab.module.crm.view.account;
 
 import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
+import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.form.view.DynaFormLayout;
+import com.esofthead.mycollab.module.crm.CrmLinkGenerator;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
+import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.module.crm.domain.criteria.ActivitySearchCriteria;
 import com.esofthead.mycollab.module.crm.domain.criteria.CaseSearchCriteria;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
+import com.esofthead.mycollab.module.crm.localization.LeadI18nEnum;
+import com.esofthead.mycollab.module.crm.service.LeadService;
 import com.esofthead.mycollab.module.crm.ui.components.AbstractPreviewItemComp;
 import com.esofthead.mycollab.module.crm.ui.components.CrmPreviewFormControlsGenerator;
 import com.esofthead.mycollab.module.crm.ui.components.NoteListItems;
+import com.esofthead.mycollab.module.crm.view.CrmResources;
 import com.esofthead.mycollab.module.crm.view.activity.ActivityRelatedItemListComp;
 import com.esofthead.mycollab.security.RolePermissionCollections;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
@@ -147,7 +170,25 @@ class AccountReadComp extends AbstractPreviewItemComp<SimpleAccount> {
 
 	@Override
 	protected String initFormTitle() {
-		return beanItem.getAccountname();
+		// check if there is converted lead associates with this account
+		LeadService leadService = ApplicationContextUtil
+				.getSpringBean(LeadService.class);
+		SimpleLead lead = leadService.findConvertedLeadOfAccount(
+				beanItem.getId(), AppContext.getAccountId());
+		if (lead != null) {
+			return "<h2>"
+					+ beanItem.getAccountname()
+					+ LocalizationHelper
+							.getMessage(
+									LeadI18nEnum.CONVERT_FROM_LEAD_TITLE,
+									CrmResources
+											.getResourceLink(CrmTypeConstants.LEAD),
+									CrmLinkGenerator.generateCrmItemLink(
+											CrmTypeConstants.LEAD, lead.getId()),
+									lead.getLeadName()) + "</h2>";
+		} else {
+			return "<h2>" + beanItem.getAccountname() + "</h2>";
+		}
 	}
 
 	protected final void initRelatedComponents() {

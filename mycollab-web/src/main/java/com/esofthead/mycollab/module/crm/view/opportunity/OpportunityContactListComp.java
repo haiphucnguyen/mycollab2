@@ -30,8 +30,8 @@ import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.eventmanager.ApplicationEvent;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBus;
+import com.esofthead.mycollab.module.crm.domain.ContactOpportunity;
 import com.esofthead.mycollab.module.crm.domain.Opportunity;
-import com.esofthead.mycollab.module.crm.domain.OpportunityContact;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.SimpleContactOpportunityRel;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
@@ -39,7 +39,7 @@ import com.esofthead.mycollab.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.module.crm.events.ContactEvent;
 import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
-import com.esofthead.mycollab.module.crm.service.OpportunityService;
+import com.esofthead.mycollab.module.crm.service.ContactService;
 import com.esofthead.mycollab.module.crm.ui.components.RelatedListComp;
 import com.esofthead.mycollab.module.crm.view.contact.ContactTableFieldDef;
 import com.esofthead.mycollab.security.RolePermissionCollections;
@@ -176,17 +176,17 @@ public class OpportunityContactListComp extends
 									@Override
 									public void onClose(ConfirmDialog dialog) {
 										if (dialog.isConfirmed()) {
-											OpportunityService opportunityService = ApplicationContextUtil
-													.getSpringBean(OpportunityService.class);
-											OpportunityContact associateContact = new OpportunityContact();
+											ContactService contactService = ApplicationContextUtil
+													.getSpringBean(ContactService.class);
+											ContactOpportunity associateContact = new ContactOpportunity();
 											associateContact
 													.setOpportunityid(opportunity
 															.getId());
 											associateContact
 													.setContactid(contact
 															.getId());
-											opportunityService
-													.removeOpportunityContactRelationship(
+											contactService
+													.removeContactOpportunityRelationship(
 															associateContact,
 															AppContext
 																	.getAccountId());

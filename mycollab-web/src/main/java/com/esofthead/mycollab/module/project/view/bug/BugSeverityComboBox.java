@@ -19,7 +19,6 @@ package com.esofthead.mycollab.module.project.view.bug;
 
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.util.IndexedContainer;
-import com.vaadin.server.Resource;
 import com.vaadin.ui.ComboBox;
 
 /**
@@ -41,33 +40,14 @@ public class BugSeverityComboBox extends ComboBox {
 
 		this.setContainerDataSource(ic);
 
-		this.setItemIcon(BugSeverityConstants.CRITICAL,
-				MyCollabResource.newResource(BugSeverityConstants.CRITICAL_IMG));
+		this.setItemIcon(BugSeverityConstants.CRITICAL, MyCollabResource
+				.newResource(BugSeverityConstants.CRITICAL_IMG_12));
 		this.setItemIcon(BugSeverityConstants.MAJOR,
-				MyCollabResource.newResource(BugSeverityConstants.MAJOR_IMG));
+				MyCollabResource.newResource(BugSeverityConstants.MAJOR_IMG_12));
 		this.setItemIcon(BugSeverityConstants.MINOR,
-				MyCollabResource.newResource(BugSeverityConstants.MINOR_IMG));
-		this.setItemIcon(BugSeverityConstants.TRIVIAL,
-				MyCollabResource.newResource(BugSeverityConstants.TRIVIAL_IMG));
+				MyCollabResource.newResource(BugSeverityConstants.MINOR_IMG_12));
+		this.setItemIcon(BugSeverityConstants.TRIVIAL, MyCollabResource
+				.newResource(BugSeverityConstants.TRIVIAL_IMG_12));
 		this.setNullSelectionAllowed(false);
-	}
-
-	public static Resource getIconResourceBySeverity(String severity) {
-		Resource iconseverity = MyCollabResource
-				.newResource(BugSeverityConstants.MINOR_IMG);
-		if (BugSeverityConstants.CRITICAL.equals(severity)) {
-			iconseverity = MyCollabResource
-					.newResource(BugSeverityConstants.CRITICAL_IMG);
-		} else if (BugSeverityConstants.MAJOR.equals(severity)) {
-			iconseverity = MyCollabResource
-					.newResource(BugSeverityConstants.MAJOR_IMG);
-		} else if (BugSeverityConstants.MINOR.equals(severity)) {
-			iconseverity = MyCollabResource
-					.newResource(BugSeverityConstants.MINOR_IMG);
-		} else if (BugSeverityConstants.TRIVIAL.equals(severity)) {
-			iconseverity = MyCollabResource
-					.newResource(BugSeverityConstants.TRIVIAL_IMG);
-		}
-		return iconseverity;
 	}
 }

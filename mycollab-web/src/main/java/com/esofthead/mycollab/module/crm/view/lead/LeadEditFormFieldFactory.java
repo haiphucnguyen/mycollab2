@@ -23,7 +23,7 @@ import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.CompoundCustomField;
 import com.esofthead.mycollab.vaadin.ui.CountryComboBox;
 import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
-import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
+import com.esofthead.mycollab.vaadin.ui.PrefixNameComboBox;
 import com.vaadin.data.Property;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
@@ -99,7 +99,7 @@ class LeadEditFormFieldFactory<B extends Lead> extends
 			layout.setWidth("100%");
 			layout.setSpacing(true);
 
-			final PrefixListSelect prefixSelect = new PrefixListSelect();
+			final PrefixNameComboBox prefixSelect = new PrefixNameComboBox();
 			prefixSelect.setValue(attachForm.getBean().getPrefixname());
 			layout.addComponent(prefixSelect);
 
@@ -133,17 +133,5 @@ class LeadEditFormFieldFactory<B extends Lead> extends
 			return Lead.class;
 		}
 
-	}
-
-	static class PrefixListSelect extends ValueComboBox {
-
-		private static final long serialVersionUID = 1L;
-
-		public PrefixListSelect() {
-			super();
-			this.setWidth("50px");
-			setCaption(null);
-			this.loadData(new String[] { "Mr.", "Ms.", "Mrs.", "Dr.", "Prof." });
-		}
 	}
 }

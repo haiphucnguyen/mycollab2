@@ -116,6 +116,9 @@ public class ContactServiceImpl extends
 				assoOpportunity.setCreatedtime(new GregorianCalendar()
 						.getTime());
 				contactOpportunityMapper.insert(assoOpportunity);
+			} else {
+				contactOpportunityMapper.updateByExampleSelective(
+						assoOpportunity, ex);
 			}
 		}
 	}

@@ -25,7 +25,7 @@ import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.common.service.CommentService;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
-import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberComboBox;
+import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberSelectionField;
 import com.esofthead.mycollab.module.tracker.domain.BugWithBLOBs;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.service.BugService;
@@ -216,7 +216,7 @@ public class AssignBugWindow extends Window {
 			@Override
 			protected Field<?> onCreateField(final Object propertyId) {
 				if (propertyId.equals("assignuser")) {
-					return new ProjectMemberComboBox();
+					return new ProjectMemberSelectionField();
 				} else if (propertyId.equals("comment")) {
 					EditForm.this.commentArea = new RichTextArea();
 					EditForm.this.commentArea.setNullRepresentation("");

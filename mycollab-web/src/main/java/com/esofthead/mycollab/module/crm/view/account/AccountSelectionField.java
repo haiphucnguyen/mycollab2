@@ -98,6 +98,7 @@ public class AccountSelectionField extends CustomField<Integer> implements
 		layout.setWidth("100%");
 		layout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
+		accountName.setNullRepresentation("");
 		accountName.setEnabled(true);
 		accountName.setWidth("100%");
 		layout.addComponent(accountName);

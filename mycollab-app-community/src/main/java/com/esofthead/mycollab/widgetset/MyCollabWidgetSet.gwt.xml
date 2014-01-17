@@ -3,49 +3,38 @@
     "-//Google Inc.//DTD Google Web Toolkit 1.7.0//EN"
     "http://google-web-toolkit.googlecode.com/svn/tags/1.7.0/distro-source/core/src/gwt-module.dtd">
 <module>
-    
+    <!-- WS Compiler: manually edited -->
 
-    <inherits name="org.vaadin.jouni.animator.AnimatorWidgetset" />
+    <inherits name="com.vaadin.addon.touchkit.gwt.TouchKitWidgetSet" />
 
-    <inherits name="org.vaadin.hene.splitbutton.widgetset.SplitButtonWidgetSet" />
-
-    <inherits name="com.vaadin.lazyloadwrapper.widgetset.LazyLoadWrapperWidgetset" />
+    <inherits name="com.vaadin.DefaultWidgetSet" />
 
     <inherits name="org.vaadin.artur.icepush.IcepushaddonWidgetset" />
 
-    <inherits name="org.vaadin.teemu.ratingstars.gwt.RatingStarsWidgetset" />
+    <inherits name="org.vaadin.peter.buttongroup.ButtonGroupWidgetset" />
 
-    
+    <inherits name="org.vaadin.teemu.ratingstars.gwt.RatingStarsWidgetset" />
 
     <inherits name="org.vaadin.peter.contextmenu.ContextmenuWidgetset" />
 
     <inherits name="fi.jasoft.dragdroplayouts.DragDropLayoutsWidgetSet" />
 
-    <inherits name="org.vaadin.peter.buttongroup.ButtongroupWidgetset" />
+    <inherits
+        name="org.vaadin.hene.popupbutton.widgetset.PopupbuttonWidgetset" />
 
-    <inherits name="org.tepi.listbuilder.gwt.ListBuilderWidgetset" />
+    <inherits name="com.esofthead.vaadin.cropField.WidgetSet" />
 
-    <inherits name="ru.bazon.vaadin.ganttdiagram.GanttDiagramWidgetset" />
+    <inherits name="com.lexaden.breadcrumb.gwt.BreadcrumbWidgetset" />
 
-    <inherits name="org.vaadin.hene.popupbutton.widgetset.PopupbuttonWidgetset" />
-
-    <inherits name="org.vaadin.browsercookies.widgetset.BrowserCookiesApplicationWidgetset" />
-
-    <inherits name="com.vaadin.terminal.gwt.DefaultWidgetSet" />
-
-    <inherits name="com.davengo.web.vaadin.crop.widgetset.CropWidgetset" />
-
-    <inherits name="org.vaadin.easyuploads.EasyuploadsWidgetset" />
+    <inherits
+        name="org.vaadin.tepi.listbuilder.widgetset.ListBuilderWidgetset" />
 
     <inherits name="org.vaadin.tokenfield.TokenfieldWidgetset" />
 
-    <inherits name="org.vaadin.notifique.widgetset.NotifiqueWidgetset" />
+    <inherits name="org.vaadin.easyuploads.Widgetset" />
 
-    
-
-    <inherits name="com.lexaden.breadcrumb.BreadcrumbWidgetset" />
-
-    <inherits name="org.vaadin.risto.stylecalendar.widgetset.StyleCalendarWidgetset" />
+    <inherits
+        name="org.vaadin.risto.stylecalendar.widgetset.StyleCalendarWidgetset" />
 
     <inherits name="com.vaadin.addon.calendar.gwt.CalendarWidgetset" />
 </module>

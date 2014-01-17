@@ -5807,3 +5807,44 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 	margin-left: -16px;
 	padding-left: 18px;
 }
+
+/* Contact Role Edit */
+.contactopp-list-header > .v-expand > .v-spacing {
+	width: 12px;
+}
+.contactopp-list .contactrole-row > .v-expand > .v-spacing {
+	width: 14px;
+}
+.contactopp-list-header {
+	border-bottom: 1px solid rgb(169, 169, 169);
+}
+/* .contactopp-list-header.v-margin-top {
+	padding-top: 8px;
+}
+.contactopp-list-header.v-margin-bottom {
+	padding-bottom: 8px;
+} */
+.contactopp-list-header > .v-expand > .v-slot:first-child .v-label {
+	border-left: none;
+	padding-left: 0px;
+}
+.contactopp-list-header .v-label {
+	font-weight: bold;
+	padding: 4px 0px 4px 12px;
+	border-left: 1px solid rgb(169, 169, 169);
+}
+.contactopp-list-body.no-child {
+	border-bottom: none;
+}
+.contactopp-list-body {
+	border-bottom: 1px solid rgb(169, 169, 169);
+}
+.contactrole-row.v-margin-top {
+	padding-top: 6px;
+}
+.contactrole-row.v-margin-bottom {
+	padding-bottom: 6px;
+}
+.contactrole-row.odd {
+	background-color: rgb(212, 223, 239);
+}

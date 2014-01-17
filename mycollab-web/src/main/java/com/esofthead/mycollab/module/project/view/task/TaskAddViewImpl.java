@@ -24,7 +24,7 @@ import com.esofthead.mycollab.module.project.domain.Task;
 import com.esofthead.mycollab.module.project.ui.components.AbstractEditItemComp;
 import com.esofthead.mycollab.module.project.ui.components.ProjectTaskListComboBox;
 import com.esofthead.mycollab.module.project.ui.components.TaskPercentageCompleteComboBox;
-import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberComboBox;
+import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberSelectionField;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
@@ -118,7 +118,7 @@ public class TaskAddViewImpl extends AbstractEditItemComp<Task> implements
 		@Override
 		protected Field<?> onCreateField(final Object propertyId) {
 			if (propertyId.equals("assignuser")) {
-				return new ProjectMemberComboBox();
+				return new ProjectMemberSelectionField();
 			} else if (propertyId.equals("tasklistid")) {
 				return new ProjectTaskListComboBox();
 			} else if (propertyId.equals("notes")) {

@@ -37,7 +37,8 @@ import com.vaadin.ui.VerticalLayout;
  */
 public class DefaultProjectFormViewFieldFactory {
 
-	public static class ProjectFormAttachmentDisplayField extends CustomField {
+	public static class ProjectFormAttachmentDisplayField extends
+			CustomField {
 		private static final long serialVersionUID = 1L;
 
 		private int projectid;
@@ -73,7 +74,7 @@ public class DefaultProjectFormViewFieldFactory {
 		private static final long serialVersionUID = 1L;
 		private MultiFileUploadExt uploadExt;
 		private AttachmentPanel attachmentPanel;
-		
+
 		public ProjectFormAttachmentUploadField() {
 			attachmentPanel = new AttachmentPanel();
 		}

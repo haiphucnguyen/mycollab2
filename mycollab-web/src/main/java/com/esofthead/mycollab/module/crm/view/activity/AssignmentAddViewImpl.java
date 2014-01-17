@@ -94,9 +94,9 @@ public class AssignmentAddViewImpl extends AbstractEditItemComp<Task> implements
 		@Override
 		protected Field<?> onCreateField(Object propertyId) {
 			if (propertyId.equals("startdate")) {
-				return new DateTimePicker();
+				return new DateTimePickerField();
 			} else if (propertyId.equals("duedate")) {
-				return new DateTimePicker();
+				return new DateTimePickerField();
 			} else if (propertyId.equals("status")) {
 				return new TaskStatusComboBox();
 			} else if (propertyId.equals("priority")) {

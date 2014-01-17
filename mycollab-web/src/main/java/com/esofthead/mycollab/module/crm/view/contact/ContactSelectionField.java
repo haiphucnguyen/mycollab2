@@ -40,7 +40,7 @@ import com.vaadin.ui.UI;
  * @since 1.0
  * 
  */
-public class ContactSelectionField extends CustomField<Integer> implements
+public class ContactSelectionField extends CustomField<Object> implements
 		FieldSelection<Contact> {
 	private static final long serialVersionUID = 1L;
 
@@ -55,6 +55,8 @@ public class ContactSelectionField extends CustomField<Integer> implements
 
 	public ContactSelectionField() {
 		contactName = new TextField();
+		contactName.setNullRepresentation("");
+		contactName.setWidth("100%");
 		browseBtn = new Image(null,
 				MyCollabResource.newResource("icons/16/browseItem.png"));
 		browseBtn.addClickListener(new MouseEvents.ClickListener() {
@@ -105,24 +107,30 @@ public class ContactSelectionField extends CustomField<Integer> implements
 				setInternalContact(contactVal);
 			}
 
-			super.setPropertyDataSource(newDataSource);
-		} else {
-			super.setPropertyDataSource(newDataSource);
+		} else if (value instanceof SimpleContact) {
+			setInternalContact((SimpleContact) value);
 		}
+		super.setPropertyDataSource(newDataSource);
 	}
 
-	private void setInternalContact(SimpleContact account) {
-		this.contact = account;
+	private void setInternalContact(SimpleContact contact) {
+		this.contact = contact;
 		contactName.setValue(contact.getContactName());
+	}
+
+	public SimpleContact getContact() {
+		return this.contact;
 	}
 
 	@Override
 	protected Component initContent() {
 		layout = new HorizontalLayout();
 		layout.setSpacing(true);
+		layout.setWidth("100%");
 
 		layout.addComponent(contactName);
 		layout.setComponentAlignment(contactName, Alignment.MIDDLE_LEFT);
+		layout.setExpandRatio(contactName, 1.0f);
 
 		layout.addComponent(browseBtn);
 		layout.setComponentAlignment(browseBtn, Alignment.MIDDLE_LEFT);
@@ -134,7 +142,7 @@ public class ContactSelectionField extends CustomField<Integer> implements
 	}
 
 	@Override
-	public Class<Integer> getType() {
-		return Integer.class;
+	public Class<Object> getType() {
+		return Object.class;
 	}
 }

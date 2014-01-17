@@ -18,7 +18,7 @@
 package com.esofthead.mycollab.module.project.view.bug;
 
 import com.esofthead.mycollab.module.project.ui.components.AbstractEditItemComp;
-import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberComboBox;
+import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberSelectionField;
 import com.esofthead.mycollab.module.tracker.domain.Component;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
@@ -121,7 +121,7 @@ public class ComponentAddViewImpl extends AbstractEditItemComp<Component>
 				field.setNullRepresentation("");
 				return field;
 			} else if (propertyId.equals("userlead")) {
-				final ProjectMemberComboBox userBox = new ProjectMemberComboBox();
+				final ProjectMemberSelectionField userBox = new ProjectMemberSelectionField();
 				return userBox;
 			}
 

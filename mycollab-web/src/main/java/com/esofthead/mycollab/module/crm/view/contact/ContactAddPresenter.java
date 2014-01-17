@@ -26,7 +26,7 @@ import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.crm.domain.CampaignContact;
 import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.module.crm.domain.ContactCase;
-import com.esofthead.mycollab.module.crm.domain.OpportunityContact;
+import com.esofthead.mycollab.module.crm.domain.ContactOpportunity;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.domain.SimpleCase;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
@@ -35,7 +35,6 @@ import com.esofthead.mycollab.module.crm.events.ContactEvent;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.crm.service.CampaignService;
 import com.esofthead.mycollab.module.crm.service.ContactService;
-import com.esofthead.mycollab.module.crm.service.OpportunityService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
 import com.esofthead.mycollab.module.crm.view.CrmToolbar;
 import com.esofthead.mycollab.security.RolePermissionCollections;
@@ -164,15 +163,14 @@ public class ContactAddPresenter extends CrmGenericPresenter<ContactAddView> {
 						AppContext.getAccountId());
 			} else if (contact.getExtraData() != null
 					&& contact.getExtraData() instanceof SimpleOpportunity) {
-				OpportunityContact associateContact = new OpportunityContact();
+				ContactOpportunity associateContact = new ContactOpportunity();
 				associateContact.setContactid(contact.getId());
 				associateContact.setOpportunityid(((SimpleOpportunity) contact
 						.getExtraData()).getId());
 				associateContact.setCreatedtime(new GregorianCalendar()
 						.getTime());
-				OpportunityService opportunityService = ApplicationContextUtil
-						.getSpringBean(OpportunityService.class);
-				opportunityService.saveOpportunityContactRelationship(
+				
+				contactService.saveContactOpportunityRelationship(
 						Arrays.asList(associateContact),
 						AppContext.getAccountId());
 			} else if (contact.getExtraData() != null

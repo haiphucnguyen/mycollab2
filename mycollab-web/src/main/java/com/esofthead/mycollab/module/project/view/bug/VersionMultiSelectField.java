@@ -39,6 +39,7 @@ import com.vaadin.ui.CustomField;
  * @since 1.0
  */
 public class VersionMultiSelectField extends CustomField {
+	private static final long serialVersionUID = 1L;
 
 	private MultiSelectComp<Version> versionSelection;
 

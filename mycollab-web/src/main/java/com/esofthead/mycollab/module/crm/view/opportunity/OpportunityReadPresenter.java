@@ -30,7 +30,7 @@ import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.crm.CrmLinkGenerator;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
-import com.esofthead.mycollab.module.crm.domain.OpportunityContact;
+import com.esofthead.mycollab.module.crm.domain.ContactOpportunity;
 import com.esofthead.mycollab.module.crm.domain.OpportunityLead;
 import com.esofthead.mycollab.module.crm.domain.SimpleActivity;
 import com.esofthead.mycollab.module.crm.domain.SimpleCall;
@@ -46,6 +46,7 @@ import com.esofthead.mycollab.module.crm.events.ContactEvent;
 import com.esofthead.mycollab.module.crm.events.LeadEvent;
 import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
+import com.esofthead.mycollab.module.crm.service.ContactService;
 import com.esofthead.mycollab.module.crm.service.OpportunityService;
 import com.esofthead.mycollab.module.crm.view.AbstractRelatedListHandler;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
@@ -229,10 +230,10 @@ public class OpportunityReadPresenter extends
 
 					@Override
 					public void selectAssociateItems(Set<SimpleContactOpportunityRel> items) {
-						List<OpportunityContact> associateContacts = new ArrayList<OpportunityContact>();
+						List<ContactOpportunity> associateContacts = new ArrayList<ContactOpportunity>();
 						SimpleOpportunity opportunity = view.getItem();
 						for (SimpleContact contact : items) {
-							OpportunityContact associateContact = new OpportunityContact();
+							ContactOpportunity associateContact = new ContactOpportunity();
 							associateContact.setContactid(contact.getId());
 							associateContact.setOpportunityid(opportunity
 									.getId());
@@ -242,9 +243,9 @@ public class OpportunityReadPresenter extends
 							associateContacts.add(associateContact);
 						}
 
-						OpportunityService opportunityService = ApplicationContextUtil
-								.getSpringBean(OpportunityService.class);
-						opportunityService.saveOpportunityContactRelationship(
+						ContactService contactService = ApplicationContextUtil
+								.getSpringBean(ContactService.class);
+						contactService.saveContactOpportunityRelationship(
 								associateContacts, AppContext.getAccountId());
 						view.getRelatedContactHandlers().refresh();
 					}

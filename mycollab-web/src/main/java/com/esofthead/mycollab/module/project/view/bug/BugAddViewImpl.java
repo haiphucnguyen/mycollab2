@@ -22,7 +22,7 @@ import com.esofthead.mycollab.module.file.AttachmentType;
 import com.esofthead.mycollab.module.project.ui.components.AbstractEditItemComp;
 import com.esofthead.mycollab.module.project.ui.components.DefaultProjectFormViewFieldFactory.ProjectFormAttachmentUploadField;
 import com.esofthead.mycollab.module.project.view.milestone.MilestoneComboBox;
-import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberComboBox;
+import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberSelectionField;
 import com.esofthead.mycollab.module.tracker.domain.Component;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.Version;
@@ -109,12 +109,12 @@ public class BugAddViewImpl extends AbstractEditItemComp<SimpleBug> implements
 				field.setNullRepresentation("");
 				return field;
 			} else if (propertyId.equals("priority")) {
-//				if (beanItem.getPriority() == null) {
-//					beanItem.setPriority(BugPriorityStatusConstants.PRIORITY_MAJOR);
-//				}
+				if (beanItem.getPriority() == null) {
+					beanItem.setPriority(BugPriorityStatusConstants.PRIORITY_MAJOR);
+				}
 				return new BugPriorityComboBox();
 			} else if (propertyId.equals("assignuser")) {
-				return new ProjectMemberComboBox();
+				return new ProjectMemberSelectionField();
 			} else if (propertyId.equals("id")) {
 				BugAddViewImpl.this.attachmentUploadField = new ProjectFormAttachmentUploadField();
 				if (beanItem.getId() != null) {

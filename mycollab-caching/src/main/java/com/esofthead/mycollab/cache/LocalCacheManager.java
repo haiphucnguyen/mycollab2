@@ -20,7 +20,7 @@ import java.io.InputStream;
 import java.util.Set;
 
 import org.infinispan.AdvancedCache;
-import org.infinispan.api.BasicCache;
+import org.infinispan.commons.api.BasicCache;
 import org.infinispan.context.Flag;
 import org.infinispan.manager.DefaultCacheManager;
 import org.slf4j.Logger;

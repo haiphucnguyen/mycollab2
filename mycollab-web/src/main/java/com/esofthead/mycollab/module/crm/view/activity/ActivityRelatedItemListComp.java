@@ -56,7 +56,6 @@ public class ActivityRelatedItemListComp extends
 	}
 
 	private void initUI() {
-
 		if (allowCreateNew) {
 			HorizontalLayout buttonLayout = new HorizontalLayout();
 			buttonLayout.setSpacing(true);

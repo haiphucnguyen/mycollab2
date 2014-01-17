@@ -30,9 +30,9 @@
             <![CDATA[
                 ${searchCriteria.opportunityId.operation} 
                 (SELECT COUNT(*) 
-                    FROM m_crm_opportunity, m_crm_opportunities_contacts 
-                    WHERE m_crm_opportunities_contacts.opportunityId=#{searchCriteria.opportunityId.value,javaType=INTEGER} 
-                        AND m_crm_opportunities_contacts.contactId=m_crm_contact.id 
+                    FROM m_crm_opportunity, m_crm_contacts_opportunities 
+                    WHERE m_crm_contacts_opportunities.opportunityId=#{searchCriteria.opportunityId.value,javaType=INTEGER} 
+                        AND m_crm_contacts_opportunities.contactId=m_crm_contact.id 
                         AND m_crm_opportunity.id=#{searchCriteria.opportunityId.value,javaType=INTEGER}) > 0
             ]]>
         </if>

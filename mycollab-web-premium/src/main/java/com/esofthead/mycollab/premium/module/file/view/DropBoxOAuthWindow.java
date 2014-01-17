@@ -2,7 +2,7 @@ package com.esofthead.mycollab.premium.module.file.view;
 
 import java.util.Locale;
 
-import org.infinispan.api.BasicCache;
+import org.infinispan.commons.api.BasicCache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

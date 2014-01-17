@@ -1,19 +1,21 @@
-06E482A527CB00705DBE464745449FAB.cache.js
+2DAA38FC1AD16C316902E955596C7D5B.cache.js
 user.agent safari
+webkitvariant android2
 
-0930211A163537D246645769D6589FD4.cache.js
+2DAA38FC1AD16C316902E955596C7D5B.cache.js
+user.agent safari
+webkitvariant ios7hswa
+
+2DAA38FC1AD16C316902E955596C7D5B.cache.js
+user.agent safari
+webkitvariant std
+
+6E0E33A874924F4249E7CAE3C55808D9.cache.js
 user.agent ie10
+webkitvariant std
 
-29407BF6AFB8670195177BD86F05CA36.cache.js
-user.agent opera
-
-53829561BDB96774F121A32DA347518E.cache.js
+8B46737AF5178BA6A2E0F272632E8450.cache.js
 user.agent gecko1_8
-
-9E1557F5F09428BDFAA4A30D7038D64C.cache.js
-user.agent ie8
-
-FED442578B1A3CFDD8CFD1BE83424855.cache.js
-user.agent ie9
+webkitvariant std
 
 Devmode:devmode.js

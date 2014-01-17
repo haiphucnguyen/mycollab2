@@ -21,7 +21,7 @@ import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
 import com.esofthead.mycollab.module.project.domain.TaskList;
 import com.esofthead.mycollab.module.project.ui.components.AbstractEditItemComp;
 import com.esofthead.mycollab.module.project.ui.components.ProjectMilestoneComboBox;
-import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberComboBox;
+import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberSelectionField;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
@@ -109,7 +109,7 @@ public class TaskGroupAddViewImpl extends AbstractEditItemComp<TaskList>
 		@Override
 		protected Field<?> onCreateField(Object propertyId) {
 			if ("owner".equals(propertyId)) {
-				return new ProjectMemberComboBox();
+				return new ProjectMemberSelectionField();
 			} else if ("milestoneid".equals(propertyId)) {
 				return new ProjectMilestoneComboBox();
 			} else if ("description".equals(propertyId)) {

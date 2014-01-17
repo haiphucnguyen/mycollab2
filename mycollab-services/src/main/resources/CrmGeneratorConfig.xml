@@ -91,9 +91,6 @@
         <table domainObjectName="Opportunity" schema="mycollab"
             tableName="m_crm_opportunity" />
 
-        <table domainObjectName="OpportunityContact" schema="mycollab"
-            tableName="m_crm_opportunities_contacts" />
-
         <table domainObjectName="OpportunityLead" schema="mycollab"
             tableName="m_crm_opportunities_leads" />
 

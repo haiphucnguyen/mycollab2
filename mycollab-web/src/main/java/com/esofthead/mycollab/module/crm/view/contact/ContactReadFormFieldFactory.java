@@ -1,3 +1,19 @@
+/**
+ * This file is part of mycollab-web.
+ *
+ * mycollab-web is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * mycollab-web is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package com.esofthead.mycollab.module.crm.view.contact;
 
 import java.io.File;
@@ -90,7 +106,16 @@ public class ContactReadFormFieldFactory extends
 					.getBirthday()));
 		} else if (propertyId.equals("firstname")) {
 			final FormContainerHorizontalViewField containerField = new FormContainerHorizontalViewField();
-			final Label nameLbl = new Label(attachForm.getBean().getFirstname());
+			SimpleContact contact = attachForm.getBean();
+			String displayName = "";
+			if (contact.getPrefix() != null) {
+				displayName = contact.getPrefix();
+			}
+			if (contact.getFirstname() != null) {
+				displayName += contact.getFirstname();
+			}
+
+			final Label nameLbl = new Label(displayName);
 			containerField.addComponentField(nameLbl);
 			containerField.getLayout().setExpandRatio(nameLbl, 1.0f);
 			final Button vcardDownloadBtn = new Button("");

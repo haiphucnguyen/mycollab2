@@ -84,8 +84,9 @@ public class ContactSelectionWindow extends Window {
 	@SuppressWarnings("serial")
 	private void createContactList() {
 		tableItem = new ContactTableDisplay(Arrays.asList(
-				ContactTableFieldDef.name, ContactTableFieldDef.phoneOffice,
-				ContactTableFieldDef.email, ContactTableFieldDef.assignUser));
+				ContactTableFieldDef.name, ContactTableFieldDef.account,
+				ContactTableFieldDef.phoneOffice, ContactTableFieldDef.email,
+				ContactTableFieldDef.assignUser));
 		tableItem.setWidth("100%");
 
 		tableItem

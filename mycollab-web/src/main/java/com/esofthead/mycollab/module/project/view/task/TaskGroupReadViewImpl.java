@@ -256,7 +256,6 @@ public class TaskGroupReadViewImpl extends
 
 			@Override
 			protected Field<?> onCreateField(final Object propertyId) {
-
 				if (propertyId.equals("milestoneid")) {
 					return new FormLinkViewField(
 							beanItem.getMilestoneName(),

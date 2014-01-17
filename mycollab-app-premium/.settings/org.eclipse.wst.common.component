@@ -259,7 +259,7 @@
     <dependent-module archiveName="mycollab-migration.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mycollab-migration/mycollab-migration">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="flyway-core-2.2.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/googlecode/flyway/flyway-core/2.2.1/flyway-core-2.2.1.jar">
+    <dependent-module archiveName="flyway-core-2.3.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/googlecode/flyway/flyway-core/2.3/flyway-core-2.3.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="mycollab-reporting.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mycollab-reporting/mycollab-reporting">
@@ -304,25 +304,25 @@
     <dependent-module archiveName="mycollab-caching.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mycollab-caching/mycollab-caching">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="infinispan-core-5.3.0.Final.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/infinispan/infinispan-core/5.3.0.Final/infinispan-core-5.3.0.Final.jar">
+    <dependent-module archiveName="infinispan-core-6.0.0.Final.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/infinispan/infinispan-core/6.0.0.Final/infinispan-core-6.0.0.Final.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="jgroups-3.4.1.Final.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/jgroups/jgroups/3.4.1.Final/jgroups-3.4.1.Final.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="jboss-transaction-api_1.1_spec-1.0.0.Final.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/jboss/spec/javax/transaction/jboss-transaction-api_1.1_spec/1.0.0.Final/jboss-transaction-api_1.1_spec-1.0.0.Final.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="jboss-marshalling-river-1.3.15.GA.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/jboss/marshalling/jboss-marshalling-river/1.3.15.GA/jboss-marshalling-river-1.3.15.GA.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="jboss-marshalling-1.3.15.GA.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/jboss/marshalling/jboss-marshalling/1.3.15.GA/jboss-marshalling-1.3.15.GA.jar">
+    <dependent-module archiveName="infinispan-commons-6.0.0.Final.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/infinispan/infinispan-commons/6.0.0.Final/infinispan-commons-6.0.0.Final.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="jboss-logging-3.1.0.CR2.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/jboss/logging/jboss-logging/3.1.0.CR2/jboss-logging-3.1.0.CR2.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="staxmapper-1.1.0.Final.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/jboss/staxmapper/1.1.0.Final/staxmapper-1.1.0.Final.jar">
+    <dependent-module archiveName="jgroups-3.4.1.Final.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/jgroups/jgroups/3.4.1.Final/jgroups-3.4.1.Final.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="jboss-transaction-api_1.1_spec-1.0.1.Final.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/jboss/spec/javax/transaction/jboss-transaction-api_1.1_spec/1.0.1.Final/jboss-transaction-api_1.1_spec-1.0.1.Final.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="jboss-marshalling-river-1.3.18.GA.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/jboss/marshalling/jboss-marshalling-river/1.3.18.GA/jboss-marshalling-river-1.3.18.GA.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="jboss-marshalling-1.3.18.GA.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/jboss/marshalling/jboss-marshalling/1.3.18.GA/jboss-marshalling-1.3.18.GA.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="mycollab-jackrabbit.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mycollab-jackrabbit/mycollab-jackrabbit">
@@ -601,7 +601,7 @@
     <dependent-module archiveName="spring-webmvc-3.2.4.RELEASE.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/springframework/spring-webmvc/3.2.4.RELEASE/spring-webmvc-3.2.4.RELEASE.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="vaadin-charts-1.1.3.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/vaadin/addon/vaadin-charts/1.1.3/vaadin-charts-1.1.3.jar">
+    <dependent-module archiveName="vaadin-charts-1.1.4.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/vaadin/addon/vaadin-charts/1.1.4/vaadin-charts-1.1.4.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="mycollab-jetty-session-premium.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mycollab-jetty-session-premium/mycollab-jetty-session-premium">
