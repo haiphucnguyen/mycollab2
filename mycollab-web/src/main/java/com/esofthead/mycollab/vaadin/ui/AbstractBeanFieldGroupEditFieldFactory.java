@@ -36,6 +36,7 @@ import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitHandler;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.AbstractTextField;
+import com.vaadin.ui.CustomField;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.RichTextArea;
 
@@ -124,6 +125,9 @@ public abstract class AbstractBeanFieldGroupEditFieldFactory<B> implements
 		int violationCount = 0;
 		for (Field<?> f : commitEvent.getFieldBinder().getFields()) {
 			try {
+				if (f instanceof CustomField) {
+					continue;
+				}
 				f.validate();
 			} catch (com.vaadin.data.Validator.InvalidValueException e) {
 				violationCount++;

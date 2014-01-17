@@ -23,7 +23,6 @@ import com.esofthead.mycollab.module.file.AttachmentUtils;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.AttachmentDisplayComponent;
 import com.esofthead.mycollab.vaadin.ui.AttachmentPanel;
-import com.esofthead.mycollab.vaadin.ui.CustomFieldExt;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomField;
@@ -39,7 +38,7 @@ import com.vaadin.ui.VerticalLayout;
 public class DefaultProjectFormViewFieldFactory {
 
 	public static class ProjectFormAttachmentDisplayField extends
-			CustomFieldExt {
+			CustomField {
 		private static final long serialVersionUID = 1L;
 
 		private int projectid;
@@ -71,7 +70,7 @@ public class DefaultProjectFormViewFieldFactory {
 		}
 	}
 
-	public static class ProjectFormAttachmentUploadField extends CustomFieldExt {
+	public static class ProjectFormAttachmentUploadField extends CustomField {
 		private static final long serialVersionUID = 1L;
 		private MultiFileUploadExt uploadExt;
 		private AttachmentPanel attachmentPanel;

@@ -23,10 +23,17 @@ import com.esofthead.mycollab.core.arguments.RangeDateSearchField;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.vaadin.shared.ui.datefield.Resolution;
 import com.vaadin.ui.Component;
+import com.vaadin.ui.CustomField;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.HorizontalLayout;
 
-public class DateRangeField extends CustomFieldExt {
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 2.0
+ * 
+ */
+public class DateRangeField extends CustomField {
 
 	private static final long serialVersionUID = 1L;
 

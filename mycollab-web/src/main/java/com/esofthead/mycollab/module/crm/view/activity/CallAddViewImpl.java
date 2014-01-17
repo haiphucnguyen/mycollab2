@@ -26,7 +26,6 @@ import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.CompoundCustomField;
-import com.esofthead.mycollab.vaadin.ui.CustomFieldExt;
 import com.esofthead.mycollab.vaadin.ui.DummyCustomField;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
@@ -37,6 +36,7 @@ import com.vaadin.data.Property;
 import com.vaadin.server.Resource;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.CustomField;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
@@ -188,7 +188,7 @@ public class CallAddViewImpl extends AbstractEditItemComp<CallWithBLOBs>
 		}
 	}
 
-	private class CallDurationField extends CustomFieldExt<Integer> {
+	private class CallDurationField extends CustomField<Integer> {
 
 		private static final long serialVersionUID = 1L;
 		private TextField hourField;
