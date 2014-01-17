@@ -145,7 +145,7 @@ public class LeadServiceImpl extends
 			OpportunityService opportunityService = ApplicationContextUtil
 					.getSpringBean(OpportunityService.class);
 			int opportunityId = opportunityService.saveWithSession(opportunity,
-					"");
+					convertUser);
 
 			log.debug("Create new opportunity contact relationship");
 			ContactOpportunity oppContact = new ContactOpportunity();
