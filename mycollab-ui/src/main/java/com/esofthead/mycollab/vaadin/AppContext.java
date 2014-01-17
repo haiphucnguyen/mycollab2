@@ -129,7 +129,6 @@ public class AppContext implements Serializable {
 			return (AppContext) VaadinSession.getCurrent().getAttribute(
 					"context");
 		} catch (Exception e) {
-			log.error("Can not get context instance", e);
 			return null;
 		}
 	}
