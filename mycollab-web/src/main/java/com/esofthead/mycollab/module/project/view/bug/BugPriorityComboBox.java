@@ -18,7 +18,6 @@ package com.esofthead.mycollab.module.project.view.bug;
 
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.util.IndexedContainer;
-import com.vaadin.server.Resource;
 import com.vaadin.ui.ComboBox;
 
 /**
