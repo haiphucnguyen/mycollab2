@@ -81,7 +81,7 @@ public class UnresolvedBugsByPriorityWidget2 extends Depot {
 						priorityLayout.setWidth("100%");
 						final Button userLbl = new Button(status, listener);
 						final Resource iconPriority = ProjectResources
-								.getIconResource16ByPriority(status);
+								.getIconResource12ByPriority(status);
 						userLbl.setIcon(iconPriority);
 						userLbl.setWidth("110px");
 						userLbl.setStyleName("link");
@@ -104,7 +104,7 @@ public class UnresolvedBugsByPriorityWidget2 extends Depot {
 					priorityLayout.setWidth("100%");
 					final Button userLbl = new Button(status, listener);
 					final Resource iconPriority = ProjectResources
-							.getIconResource16ByPriority(status);
+							.getIconResource12ByPriority(status);
 					userLbl.setIcon(iconPriority);
 					userLbl.setWidth("110px");
 					userLbl.setStyleName("link");

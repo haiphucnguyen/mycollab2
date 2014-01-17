@@ -47,23 +47,23 @@ public class BugPriorityComboBox extends ComboBox {
 		this.setItemIcon(
 				BugPriorityStatusConstants.PRIORITY_BLOCKER,
 				MyCollabResource
-						.newResource(BugPriorityStatusConstants.PRIORITY_BLOCKER_IMG_16));
+						.newResource(BugPriorityStatusConstants.PRIORITY_BLOCKER_IMG_12));
 		this.setItemIcon(
 				BugPriorityStatusConstants.PRIORITY_CRITICAL,
 				MyCollabResource
-						.newResource(BugPriorityStatusConstants.PRIORITY_CRITICAL_IMG_16));
+						.newResource(BugPriorityStatusConstants.PRIORITY_CRITICAL_IMG_12));
 		this.setItemIcon(
 				BugPriorityStatusConstants.PRIORITY_MAJOR,
 				MyCollabResource
-						.newResource(BugPriorityStatusConstants.PRIORITY_MAJOR_IMG_16));
+						.newResource(BugPriorityStatusConstants.PRIORITY_MAJOR_IMG_12));
 		this.setItemIcon(
 				BugPriorityStatusConstants.PRIORITY_MINOR,
 				MyCollabResource
-						.newResource(BugPriorityStatusConstants.PRIORITY_MINOR_IMG_16));
+						.newResource(BugPriorityStatusConstants.PRIORITY_MINOR_IMG_12));
 		this.setItemIcon(
 				BugPriorityStatusConstants.PRIORITY_TRIVIAL,
 				MyCollabResource
-						.newResource(BugPriorityStatusConstants.PRIORITY_TRIVIAL_IMG_16));
+						.newResource(BugPriorityStatusConstants.PRIORITY_TRIVIAL_IMG_12));
 		this.setNullSelectionAllowed(false);
 	}
 }

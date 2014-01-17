@@ -117,6 +117,7 @@ public class ProjectResources {
 	public static Resource getIconResource12BySeverity(String severity) {
 		Resource iconseverity = MyCollabResource
 				.newResource(BugSeverityConstants.MINOR_IMG_12);
+		
 		if (BugSeverityConstants.CRITICAL.equals(severity)) {
 			iconseverity = MyCollabResource
 					.newResource(BugSeverityConstants.CRITICAL_IMG_12);

@@ -53,16 +53,16 @@ import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
-import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
-import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
-import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
-import com.esofthead.mycollab.vaadin.ui.ReadViewLayout;
-import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormContainerHorizontalViewField;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormContainerViewField;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormDateViewField;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormLinkViewField;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormViewField;
+import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
+import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
+import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
+import com.esofthead.mycollab.vaadin.ui.ReadViewLayout;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.server.Resource;
 import com.vaadin.shared.ui.MarginInfo;
@@ -70,9 +70,9 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.Embedded;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.TabSheet;
@@ -752,16 +752,12 @@ public class BugReadViewImpl extends AbstractPageView implements BugReadView,
 						final Resource iconPriority = ProjectResources
 								.getIconResource12ByPriority(BugReadViewImpl.this.bug
 										.getPriority());
-						final Embedded iconEmbedded = new Embedded(null,
-								iconPriority);
+						final Image iconEmbedded = new Image(null, iconPriority);
 						final Label lbPriority = new Label(
 								BugReadViewImpl.this.bug.getPriority());
 
 						final FormContainerHorizontalViewField containerField = new FormContainerHorizontalViewField();
 						containerField.addComponentField(iconEmbedded);
-						containerField.getLayout().setComponentAlignment(
-								iconEmbedded, Alignment.MIDDLE_LEFT);
-						lbPriority.setWidth("220px");
 						containerField.addComponentField(lbPriority);
 						containerField.getLayout().setExpandRatio(lbPriority,
 								1.0f);
@@ -773,16 +769,13 @@ public class BugReadViewImpl extends AbstractPageView implements BugReadView,
 						final Resource iconPriority = ProjectResources
 								.getIconResource12BySeverity(BugReadViewImpl.this.bug
 										.getSeverity());
-						final Embedded iconEmbedded = new Embedded(null,
-								iconPriority);
+						final Image iconEmbedded = new Image();
+						iconEmbedded.setSource(iconPriority);
 						final Label lbPriority = new Label(
 								BugReadViewImpl.this.bug.getSeverity());
 
 						final FormContainerHorizontalViewField containerField = new FormContainerHorizontalViewField();
 						containerField.addComponentField(iconEmbedded);
-						containerField.getLayout().setComponentAlignment(
-								iconEmbedded, Alignment.MIDDLE_LEFT);
-						lbPriority.setWidth("220px");
 						containerField.addComponentField(lbPriority);
 						containerField.getLayout().setExpandRatio(lbPriority,
 								1.0f);

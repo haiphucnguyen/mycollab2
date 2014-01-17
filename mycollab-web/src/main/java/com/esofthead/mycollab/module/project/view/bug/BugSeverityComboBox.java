@@ -41,14 +41,14 @@ public class BugSeverityComboBox extends ComboBox {
 
 		this.setContainerDataSource(ic);
 
-		this.setItemIcon(BugSeverityConstants.CRITICAL,
-				MyCollabResource.newResource(BugSeverityConstants.CRITICAL_IMG_16));
+		this.setItemIcon(BugSeverityConstants.CRITICAL, MyCollabResource
+				.newResource(BugSeverityConstants.CRITICAL_IMG_12));
 		this.setItemIcon(BugSeverityConstants.MAJOR,
-				MyCollabResource.newResource(BugSeverityConstants.MAJOR_IMG_16));
+				MyCollabResource.newResource(BugSeverityConstants.MAJOR_IMG_12));
 		this.setItemIcon(BugSeverityConstants.MINOR,
-				MyCollabResource.newResource(BugSeverityConstants.MINOR_IMG_16));
-		this.setItemIcon(BugSeverityConstants.TRIVIAL,
-				MyCollabResource.newResource(BugSeverityConstants.TRIVIAL_IMG_16));
+				MyCollabResource.newResource(BugSeverityConstants.MINOR_IMG_12));
+		this.setItemIcon(BugSeverityConstants.TRIVIAL, MyCollabResource
+				.newResource(BugSeverityConstants.TRIVIAL_IMG_12));
 		this.setNullSelectionAllowed(false);
 	}
 }
