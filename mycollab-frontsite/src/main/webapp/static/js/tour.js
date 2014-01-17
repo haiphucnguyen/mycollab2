@@ -26,7 +26,7 @@ $(document).mouseup(function (e)
 		        container.removeClass('active');
 		    }
 		});
-
+var offset_top;
 $(window).load(function() {
 	$('#slider').nivoSlider({
         pauseOnHover: false,
@@ -54,9 +54,13 @@ $(window).load(function() {
 		  before: function(){},   // Function: Before callback
 		  after: function(){}     // Function: After callback
 		});
+	offset_top = $('.free-trial-cnt-3').offset().top;
 });
 
 //Fixed scroll
+$(window).resize(function(){
+	offset_top = $('.free-trial-cnt-3').offset().top;
+});
 $(window).scroll(function(){
 	var $free_trial = $('.free-trial');
 	var $menu_left = $('.tour-mid-left');
@@ -70,7 +74,8 @@ $(window).scroll(function(){
 		$('.free-trial-cnt-1').show();
 		
 	}
-	if ($(window).scrollTop() > 149)
+	
+	if ($(window).scrollTop() > offset_top)
 		{
 			$('.free-trial-cnt-3').css({'position': 'fixed', 'top': '0px', 'right':'0'});
 		}

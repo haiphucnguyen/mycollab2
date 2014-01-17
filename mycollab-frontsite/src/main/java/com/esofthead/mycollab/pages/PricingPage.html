@@ -4,6 +4,7 @@
 <wicket:head>
 	<script type="text/javascript" src="static/js/jquery.jcarousel.min.js"></script>
 	<script type="text/javascript" src="static/js/pricing.js"></script>
+	<!-- <script src="static/js/Hyphenator.js" type="text/javascript"> -->
 	<script>
 	(function($) {
 	    $(function() {
@@ -42,6 +43,9 @@
 	    });
 	})(jQuery);
 </script>
+<!-- <script type="text/javascript">
+            Hyphenator.run();
+</script>-->
 </wicket:head>
 
 </head>
@@ -52,7 +56,7 @@
 			<div id="navtab-container">
 				<div class="navtab selected" id="onsite-tab">
 					<div class="tab-icon"></div>
-					Onsite
+					&nbsp;&nbsp;&nbsp;Onsite&nbsp;&nbsp;&nbsp;&nbsp;
 				</div>
 				<div class="navtab" id="download-tab">
 					<div class="tab-icon"></div>
@@ -544,8 +548,8 @@
 								</div>
 							</div>
 							<div class="clear"></div>
-							<table id="service-features" class="mainfeature-table"
-								cellpadding="10" cellspacing="0" width="100%">
+							<table id="service-features" class="mainfeature-table hyphenate"
+								cellpadding="10" cellspacing="0" width="100%" >
 								<tr class="table-header">
 									<td class="feature-name" width="425">Main features</td>
 									<td>Community Edition</td>
