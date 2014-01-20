@@ -85,7 +85,7 @@ public class MobileApplication extends UI {
 		NavigationManager manager = new NavigationManager(loginView.getWidget());
 		setContent(manager);
 
-        ControllerRegistry.addController(new ShellController(manager));
+		ControllerRegistry.addController(new ShellController(manager));
 
 	}
 
@@ -110,7 +110,6 @@ public class MobileApplication extends UI {
 	public void close() {
 		super.close();
 		log.debug("Application is closed. Clean all resources");
-		AppContext.clearSession();
 		currentContext = null;
 		VaadinSession.getCurrent().close();
 	}

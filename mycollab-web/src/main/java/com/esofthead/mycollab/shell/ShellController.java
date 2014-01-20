@@ -105,7 +105,7 @@ public class ShellController implements IController {
 						DesktopApplication.getInstance()
 								.unsetRememberPassword();
 
-						AppContext.clearSession();
+						DesktopApplication.getInstance().clearSession();
 					}
 				});
 

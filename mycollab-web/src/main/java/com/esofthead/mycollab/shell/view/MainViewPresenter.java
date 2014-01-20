@@ -48,6 +48,7 @@ public class MainViewPresenter extends AbstractPresenter<MainView> {
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		// if user type remember URL, instead of going to main page, to to his
 		// url
+		view.initialize();
 		String url = DesktopApplication.getInstance().getInitialUrl();
 		if (url != null && !url.equals("")) {
 			if (url.startsWith("/")) {

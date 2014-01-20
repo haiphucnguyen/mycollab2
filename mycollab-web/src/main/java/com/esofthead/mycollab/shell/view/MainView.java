@@ -69,12 +69,17 @@ import com.vaadin.ui.VerticalLayout;
 public final class MainView extends AbstractPageView {
 	private static final long serialVersionUID = 1L;
 
-	private final CssLayout bodyLayout;
+	private CssLayout bodyLayout;
 
 	private ServiceMenu serviceMenu;
 
 	public MainView() {
 		this.setSizeFull();
+		ControllerRegistry.addController(new MainViewController(this));
+	}
+
+	public void initialize() {
+		this.removeAllComponents();
 		this.addComponent(this.createTopMenu());
 		this.bodyLayout = new CssLayout();
 		this.bodyLayout.addStyleName("main-body");
@@ -83,8 +88,6 @@ public final class MainView extends AbstractPageView {
 		this.addComponent(this.bodyLayout);
 		this.setExpandRatio(this.bodyLayout, 1.0f);
 		this.addComponent(this.createFooter());
-		this.setSizeFull();
-		ControllerRegistry.addController(new MainViewController(this));
 	}
 
 	public void addModule(final IModule module) {

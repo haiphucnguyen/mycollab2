@@ -160,9 +160,16 @@ public class DesktopApplication extends UI {
 	public void close() {
 		super.close();
 		log.debug("Application is closed. Clean all resources");
-		AppContext.clearSession();
+		clearSession();
 		currentContext = null;
 		VaadinSession.getCurrent().close();
+	}
+
+	public void clearSession() {
+		if (AppContext.getInstance() != null) {
+			AppContext.getInstance().setSession(null, null, null);
+			initialUrl = "";
+		}
 	}
 
 	public void rememberPassword(String username, String password) {
