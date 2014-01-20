@@ -77,6 +77,8 @@ public class UserDashboardViewImpl extends AbstractPageView implements
 
 	@Override
 	public void display() {
+		this.removeAllComponents();
+
 		this.setSpacing(true);
 		this.setWidth("100%");
 
