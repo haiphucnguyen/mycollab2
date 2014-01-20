@@ -1119,7 +1119,7 @@ input.v-textfield-errorField {
 	float: left;
 	display: block;
 	width: 100%;
-	padding: 20px 0px;
+	padding: 20px 0px 10px;
 	text-align: right;
 }
 
@@ -1147,6 +1147,23 @@ input.v-textfield-errorField {
 #loginFormContainer #newToUs #signupLink .v-button-wrap .v-button-caption
 	{
 	text-decoration: none;
+}
+
+#loginForm .customErrorMsg {
+	float: left;
+	display: block;
+	width: 100%;
+	padding-bottom: 5px;
+}
+
+#loginForm .customErrorMsg .v-label:before {
+	content: "*\0020";
+}
+
+#loginForm .customErrorMsg .v-label {
+	color: red;
+	font-size: 12px;
+	padding-left: 20px;
 }
 
 /* End Login Form */
@@ -4769,7 +4786,7 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 }
 
 /* Billing Plan Setting */
-.account-dashboard .billing-setting>.v-csslayout-margin {
+.billing-setting {
 	border-width: 1px;
 	border-style: solid;
 	border-color: rgb(169, 169, 169);
@@ -4777,8 +4794,12 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 	background-color: rgb(245, 245, 245);
 }
 
-.billing-setting .faq-layout .v-verticallayout-margin {
-	padding: 0px 25px;
+.billing-setting .faq-layout.v-margin-left {
+	padding-left: 25px;
+}
+
+.billing-setting .faq-layout.v-margin-right {
+	padding-right: 25px;
 }
 
 .billing-setting .faq-layout {
@@ -4794,6 +4815,10 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 }
 
 .current-plan-information {
+	text-align: center;
+}
+
+.current-plan-information .v-label {
 	text-align: center;
 }
 
@@ -4902,7 +4927,7 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 	background-color: rgb(245, 245, 245);
 }
 
-.billing-plan-list>div>div:first-child>div>.billing-plan {
+.billing-plan-list>div>div:first-child>.billing-plan {
 	border-width: 1px 0px 0px;
 }
 
@@ -4920,6 +4945,7 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 	text-transform: uppercase;
 	border-bottom: 1px solid rgb(200, 200, 200);
 	background-color: white;
+	text-align: center;
 }
 
 .billing-price-lbl {

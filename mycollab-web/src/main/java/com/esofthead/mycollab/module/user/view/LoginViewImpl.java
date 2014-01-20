@@ -35,6 +35,7 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.CustomLayout;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Link;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
@@ -48,92 +49,96 @@ import com.vaadin.ui.TextField;
 @ViewComponent
 public class LoginViewImpl extends AbstractPageView implements LoginView {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public LoginViewImpl() {
-		this.addComponent(new LoginForm());
-	}
+    public LoginViewImpl() {
+        this.addComponent(new LoginForm());
+    }
 
-	class LoginForm extends CustomComponent {
+    class LoginForm extends CustomComponent {
 
-		private static final long serialVersionUID = 1L;
-		private final TextField usernameField;
-		private final PasswordField passwordField;
-		private final CheckBox rememberMe;
+        private static final long serialVersionUID = 1L;
+        private final TextField usernameField;
+        private final PasswordField passwordField;
+        private final CheckBox rememberMe;
 
-		public LoginForm() {
-			CustomLayout custom = CustomLayoutLoader.createLayout("loginForm");
-			custom.addStyleName("customLoginForm");
-			usernameField = new TextField("Email address");
+        public LoginForm() {
+            final CustomLayout custom = CustomLayoutLoader
+                    .createLayout("loginForm");
+            custom.addStyleName("customLoginForm");
+            usernameField = new TextField("Email address");
 
-			custom.addComponent(usernameField, "usernameField");
+            custom.addComponent(usernameField, "usernameField");
 
-			passwordField = new PasswordField("Password");
-			StringLengthValidator passwordValidator = new StringLengthValidator(
-					"Password length must be greater than 6", 6,
-					Integer.MAX_VALUE, false);
-			passwordField.addValidator(passwordValidator);
+            passwordField = new PasswordField("Password");
+            StringLengthValidator passwordValidator = new StringLengthValidator(
+                    "Password length must be greater than 6", 6,
+                    Integer.MAX_VALUE, false);
+            passwordField.addValidator(passwordValidator);
 
-			custom.addComponent(passwordField, "passwordField");
+            custom.addComponent(passwordField, "passwordField");
 
-			rememberMe = new CheckBox("Remember me for a week", false);
-			custom.addComponent(rememberMe, "rememberMe");
+            rememberMe = new CheckBox("Remember me for a week", false);
+            custom.addComponent(rememberMe, "rememberMe");
 
-			Button loginBtn = new Button("Sign In", new Button.ClickListener() {
-				private static final long serialVersionUID = 1L;
+            Button loginBtn = new Button("Sign In", new Button.ClickListener() {
+                private static final long serialVersionUID = 1L;
 
-				@Override
-				public void buttonClick(ClickEvent event) {
-					try {
-						LoginViewImpl.this.fireEvent(new UserEvent.PlainLogin(
-								LoginViewImpl.this, new String[] {
-										(String) usernameField.getValue(),
-										(String) passwordField.getValue(),
-										String.valueOf(rememberMe.getValue()) }));
-					} catch (MyCollabException e) {
-						LoginForm.this.setComponentError(new UserError(e
-								.getMessage()));
+                @Override
+                public void buttonClick(ClickEvent event) {
+                    try {
 
-					} catch (Exception e) {
-						throw new MyCollabException(e);
-					}
-				}
-			});
+                        custom.removeComponent("customErrorMsg");
 
-			loginBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-			custom.addComponent(loginBtn, "loginButton");
+                        LoginViewImpl.this.fireEvent(new UserEvent.PlainLogin(
+                                LoginViewImpl.this, new String[] {
+                                        usernameField.getValue(),
+                                        passwordField.getValue(),
+                                        String.valueOf(rememberMe.getValue()) }));
+                    } catch (MyCollabException e) {
+                        custom.addComponent(new Label(e.getMessage()),
+                                "customErrorMsg");
 
-			if (SiteConfiguration.getDeploymentMode() == DeploymentMode.SITE) {
-				Link signupLink = new Link(
-						"Create an Account",
-						new ExternalResource("https://www.mycollab.com/pricing"));
-				signupLink.setTargetName("_blank");
-				custom.addComponent(signupLink, "signupLink");
-			}
+                    } catch (Exception e) {
+                        throw new MyCollabException(e);
+                    }
+                }
+            });
 
-			Button forgotPasswordBtn = new Button("Forgot your password?",
-					new Button.ClickListener() {
-						private static final long serialVersionUID = 1L;
+            loginBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+            custom.addComponent(loginBtn, "loginButton");
 
-						@Override
-						public void buttonClick(ClickEvent event) {
-							EventBus.getInstance().fireEvent(
-									new ShellEvent.GotoForgotPasswordPage(this,
-											null));
-						}
-					});
-			forgotPasswordBtn.setStyleName("link");
-			custom.addComponent(forgotPasswordBtn, "forgotLink");
+            if (SiteConfiguration.getDeploymentMode() == DeploymentMode.SITE) {
+                Link signupLink = new Link(
+                        "Create an Account",
+                        new ExternalResource("https://www.mycollab.com/pricing"));
+                signupLink.setTargetName("_blank");
+                custom.addComponent(signupLink, "signupLink");
+            }
 
-			if (GenericServerRunner.isFirstTimeRunner) {
-				LoginForm.this
-						.setComponentError(new UserError(
-								"For the first time using MyCollab, the default email/password is admin@mycollab.com/admin123. You should change email/password when you access MyCollab successfully."));
-				GenericServerRunner.isFirstTimeRunner = false;
-			}
+            Button forgotPasswordBtn = new Button("Forgot your password?",
+                    new Button.ClickListener() {
+                        private static final long serialVersionUID = 1L;
 
-			this.setCompositionRoot(custom);
-			this.setHeight("100%");
-		}
-	}
+                        @Override
+                        public void buttonClick(ClickEvent event) {
+                            EventBus.getInstance().fireEvent(
+                                    new ShellEvent.GotoForgotPasswordPage(this,
+                                            null));
+                        }
+                    });
+            forgotPasswordBtn.setStyleName("link");
+            custom.addComponent(forgotPasswordBtn, "forgotLink");
+
+            if (GenericServerRunner.isFirstTimeRunner) {
+                LoginForm.this
+                        .setComponentError(new UserError(
+                                "For the first time using MyCollab, the default email/password is admin@mycollab.com/admin123. You should change email/password when you access MyCollab successfully."));
+                GenericServerRunner.isFirstTimeRunner = false;
+            }
+
+            this.setCompositionRoot(custom);
+            this.setHeight("100%");
+        }
+    }
 }

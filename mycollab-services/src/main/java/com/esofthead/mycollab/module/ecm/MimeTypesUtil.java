@@ -20,7 +20,6 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import org.apache.tika.Tika;
-import org.apache.tika.mime.MediaType;
 
 /**
  * Utility class mainly used to detect mimetype of file upload to MyCollab

@@ -56,7 +56,7 @@ import com.vaadin.ui.VerticalLayout;
 public class MyProjectListComponent extends Depot {
 	private static final long serialVersionUID = 1L;
 
-	ProjectPagedList projectList;
+	private ProjectPagedList projectList;
 
 	public MyProjectListComponent() {
 		super(LocalizationHelper

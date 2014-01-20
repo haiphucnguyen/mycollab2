@@ -35,7 +35,8 @@ package com.esofthead.mycollab.core.arguments;
 /**
  * 
  * @author MyCollab Ltd.
- *
+ * @since 1.0
+ * 
  */
 public abstract class GroupIdProvider {
 	private static GroupIdProvider instance;
@@ -48,7 +49,11 @@ public abstract class GroupIdProvider {
 
 	public static Integer getAccountId() {
 		if (instance != null) {
-			return instance.getGroupId();
+			try {
+				return instance.getGroupId();
+			} catch (Exception e) {
+				return 0;
+			}
 		} else {
 			return 0;
 		}

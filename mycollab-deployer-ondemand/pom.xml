@@ -26,6 +26,7 @@
         <module>../mycollab-caching-premium</module>
         <module>../mycollab-reporting</module>
         <module>../mycollab-scheduler</module>
+        <module>../mycollab-ui</module>
         <module>../mycollab-web</module>
         <module>../mycollab-api</module>
         <module>../mycollab-api-impl</module>
