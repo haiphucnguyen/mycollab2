@@ -442,8 +442,8 @@ public class AppContext implements Serializable {
 		if (getInstance() != null) {
 			getInstance().session = null;
 			getInstance().userPreference = null;
-			ViewManager.clearViewCaches();
-			PresenterResolver.clearCaches();
+//			ViewManager.clearViewCaches();
+//			PresenterResolver.clearCaches();
 		}
 	}
 
