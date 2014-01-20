@@ -80,6 +80,9 @@ public class ProjectViewPresenter extends AbstractPresenter<ProjectView> {
 		prjContainer.setComponentAlignment((Component) view,
 				Alignment.TOP_CENTER);
 
+		if (data == null) {
+			// do nothing
+		}
 		if (data.getParams() instanceof Integer) {
 			if (CurrentProjectVariables.getProjectId() == (Integer) data
 					.getParams()) {
