@@ -56,7 +56,7 @@ public class MyCollabBootstrapListener implements BootstrapListener {
 
 			response.getDocument()
 					.head()
-					.append("<script type=\"text/javascript\" src=\"/assets/js/1.10.2/jquery.min.js\"></script>");
+					.append("<script type=\"text/javascript\" src=\"/assets/js/jquery-1.10.2.min.js\"></script>");
 		}
 	}
 
