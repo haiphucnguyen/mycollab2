@@ -384,6 +384,7 @@ input[type="submit"] {
     margin: 0 auto;
     float: right;
     -webkit-appearance: none;
+    background-image: none;
 }
 .home-mid .price-plan li {
 	display:block;
@@ -4542,6 +4543,10 @@ body {
 	.signin-main h1 {
 		width:200px;
 		margin: 0 auto;
+	}
+	#signin-content .signin-main h1{
+		padding-top:15px;
+		background-position: left top 16px;
 	}
 	
 
