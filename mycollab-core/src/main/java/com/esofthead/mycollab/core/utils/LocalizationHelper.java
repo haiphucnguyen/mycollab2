@@ -18,6 +18,9 @@ package com.esofthead.mycollab.core.utils;
 
 import java.util.Locale;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import ch.qos.cal10n.IMessageConveyor;
 import ch.qos.cal10n.MessageConveyor;
 
@@ -28,11 +31,18 @@ import ch.qos.cal10n.MessageConveyor;
  * 
  */
 public class LocalizationHelper {
+	private static Logger log = LoggerFactory
+			.getLogger(LocalizationHelper.class);
 	// LOCALIZATION
 	private static IMessageConveyor mc = new MessageConveyor(Locale.US);
 
 	public static String getMessage(Enum key) {
-		return mc.getMessage(key);
+		try {
+			return mc.getMessage(key);
+		} catch (Exception e) {
+			log.error("Can not find resource key {}", key);
+			return "Undefined";
+		}
 	}
 
 	public static String getMessage(Enum key, Object... objects) {
