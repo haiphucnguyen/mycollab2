@@ -23,21 +23,22 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- *
+ * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target(value = {ElementType.TYPE })
+@Target(value = { ElementType.TYPE })
 public @interface Auditable {
 	/**
 	 * 
 	 * @return
 	 */
-    String type();
-    
-    /**
-     * 
-     * @return
-     */
-    String module();
+	String type();
+
+	/**
+	 * 
+	 * @return
+	 */
+	String module();
 }

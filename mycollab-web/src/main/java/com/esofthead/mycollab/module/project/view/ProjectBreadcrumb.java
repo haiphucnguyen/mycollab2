@@ -101,9 +101,10 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
 
 	public void setProject(SimpleProject project) {
 		this.project = project;
+		initBreadcrumb();
 	}
 
-	public void initBreadcrumb() {
+	private void initBreadcrumb() {
 		this.select(0);
 		PopupButton projectSelectionPopupBtn = CommonUIFactory
 				.createPopupButtonTooltip(

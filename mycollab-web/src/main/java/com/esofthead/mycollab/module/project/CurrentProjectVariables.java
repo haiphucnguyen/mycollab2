@@ -78,11 +78,14 @@ public class CurrentProjectVariables {
 				}
 			}
 
-			AppContext.putVariable(ProjectContants.PROJECT_MEMBER,
-					prjMember);
+			setProjectMember(prjMember);
 		} else if (!AppContext.isAdmin()) {
 			throw new MyCollabException("You are not belong to this project");
 		}
+	}
+
+	public static void setProjectMember(SimpleProjectMember prjMember) {
+		AppContext.putVariable(ProjectContants.PROJECT_MEMBER, prjMember);
 	}
 
 	private static SimpleProjectMember getProjectMember() {

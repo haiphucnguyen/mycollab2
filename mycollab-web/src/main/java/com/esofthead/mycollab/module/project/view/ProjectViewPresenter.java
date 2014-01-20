@@ -84,24 +84,18 @@ public class ProjectViewPresenter extends AbstractPresenter<ProjectView> {
 			// do nothing
 		}
 		if (data.getParams() instanceof Integer) {
-			if (CurrentProjectVariables.getProjectId() == (Integer) data
-					.getParams()) {
-				// do nothing
+			ProjectService projectService = (ProjectService) ApplicationContextUtil
+					.getSpringBean(ProjectService.class);
+			SimpleProject project = (SimpleProject) projectService.findById(
+					(Integer) data.getParams(), AppContext.getAccountId());
+
+			if (project == null) {
+				NotificationUtil.showRecordNotExistNotification();
 			} else {
-				ProjectService projectService = (ProjectService) ApplicationContextUtil
-						.getSpringBean(ProjectService.class);
-				SimpleProject project = (SimpleProject) projectService
-						.findById((Integer) data.getParams(),
-								AppContext.getAccountId());
-
-				if (project == null) {
-					NotificationUtil.showRecordNotExistNotification();
-				} else {
-					CurrentProjectVariables.setProject(project);
-					view.constructProjectHeaderPanel(project, null);
-
-				}
+				CurrentProjectVariables.setProject(project);
 			}
+
+			view.constructProjectHeaderPanel(project, null);
 
 		}
 	}

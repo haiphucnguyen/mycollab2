@@ -16,6 +16,12 @@
  */
 package com.esofthead.mycollab.module.project;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class ProjectContants {
 
 	public static final String CURRENT_PROJECT = "project";

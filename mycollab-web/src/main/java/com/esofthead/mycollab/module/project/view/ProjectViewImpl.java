@@ -103,7 +103,7 @@ import com.vaadin.ui.VerticalLayout;
 public class ProjectViewImpl extends AbstractPageView implements ProjectView {
 
 	private static Logger log = LoggerFactory.getLogger(ProjectViewImpl.class);
-	
+
 	private final VerticalTabsheet myProjectTab;
 	private final HorizontalLayout topPanel;
 	private ProjectDashboardPresenter dashboardPresenter;
@@ -368,7 +368,6 @@ public class ProjectViewImpl extends AbstractPageView implements ProjectView {
 		topPanel.setExpandRatio(breadCrumb, 1.0f);
 
 		breadCrumb.setProject(project);
-		breadCrumb.initBreadcrumb();
 
 		Button quickActionBtn = new Button("Quick Action",
 				new Button.ClickListener() {
