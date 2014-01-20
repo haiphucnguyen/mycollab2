@@ -216,16 +216,25 @@
 
 @media only screen and  (max-width:1120px)
 {
+	#timezone_dropdown_hidden {
+		width:90%;
+	}
 	#signup-content {
 		width:auto;
-		padding: 0 20px;
+		padding: 0;
 	}
 	.sig-mid-right {
 		margin-bottom:0;
 	}
 	
 	.sig-top {
-		width:100%;
+	   	width: auto;
+	    padding: 0 20px;
+	    text-align: left;
+	}
+	.mid-left-title {
+	    text-align: left;
+	    padding: 0 20px;
 	}
 	
 	.sig-mid {
@@ -293,9 +302,9 @@
 	
 	
 	
-	#id1 {
+	/*#id1 {
 		padding: 0 20px;
-	}
+	}*/
 	
 	.sig-mid-right {
 		float:none;
@@ -308,25 +317,26 @@
 		width: auto;
 		margin: 0px auto 15px;
 	}
+	
 
 	
 	.sig-left-otherservices .sig-lef-separator {
 		background: url('../images/signup_separator_horizontal.png') repeat-x center center rgb(255, 255, 255);
 	}
-	.sig-subdomain {
+	#signup-content .sig-subdomain {
 	    background-color: rgb(34, 139, 201);
 	    color: rgb(255, 255, 255);
-	    font-size: 14px;
+	    font-size: 13px;
 	    height: 33px;
 	    margin-left: -85px;
 	    margin-top: 1px;
-	    padding-left: 8px;
 	    position: absolute;
-	    width: 110px;
+	    width: 97px;
 	    right: 20px;
 	    top: 0px;
 	    border-radius: 0px 2px 2px 0px;
 	    font-family: 'verdana';
+	    line-height:32px;
 	}
 	#receiveUpdate {
 		height:13px !important;

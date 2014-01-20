@@ -23,11 +23,11 @@ $(document).ready(function() {
 	});
 	
 	$("#livechat-compact > .livechat-title").click(function(){
-       $("#livechat-full").css("visibility", "visible");
+       $("#livechat-full").css("display", "block");
    });
 
    $("#livechat-full > .livechat-title").click(function(){
-       $("#livechat-full").css("visibility", "hidden");
+       $("#livechat-full").css("display", "none");
    });
 });
 
