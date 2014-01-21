@@ -24,10 +24,6 @@ package com.esofthead.mycollab.module.project;
  */
 public class ProjectContants {
 
-	public static final String CURRENT_PROJECT = "project";
-
-	public static final String PROJECT_MEMBER = "project_member";
-
 	public static final String PROJECT_ROLE = "project_role";
 
 	public static final String PROJECT = "Project";

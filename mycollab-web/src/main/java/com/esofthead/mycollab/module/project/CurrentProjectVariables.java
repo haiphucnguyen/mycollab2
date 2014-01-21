@@ -33,6 +33,10 @@ import com.esofthead.mycollab.security.PermissionMap;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.MyCollabSession;
+import static com.esofthead.mycollab.vaadin.MyCollabSession.CURRENT_PROJECT;
+import static com.esofthead.mycollab.vaadin.MyCollabSession.PROJECT_MEMBER;
+
+;
 
 /**
  * 
@@ -45,12 +49,11 @@ public class CurrentProjectVariables {
 			.getLogger(CurrentProjectVariables.class);
 
 	public static SimpleProject getProject() {
-		return (SimpleProject) MyCollabSession
-				.getVariable(ProjectContants.CURRENT_PROJECT);
+		return (SimpleProject) MyCollabSession.getVariable(CURRENT_PROJECT);
 	}
 
 	public static void setProject(SimpleProject project) {
-		MyCollabSession.putVariable(ProjectContants.CURRENT_PROJECT, project);
+		MyCollabSession.putVariable(CURRENT_PROJECT, project);
 
 		// get member permission
 		ProjectMemberService prjMemberService = ApplicationContextUtil
@@ -86,12 +89,12 @@ public class CurrentProjectVariables {
 	}
 
 	public static void setProjectMember(SimpleProjectMember prjMember) {
-		MyCollabSession.putVariable(ProjectContants.PROJECT_MEMBER, prjMember);
+		MyCollabSession.putVariable(PROJECT_MEMBER, prjMember);
 	}
 
 	private static SimpleProjectMember getProjectMember() {
 		return (SimpleProjectMember) MyCollabSession
-				.getVariable(ProjectContants.PROJECT_MEMBER);
+				.getVariable(PROJECT_MEMBER);
 	}
 
 	private static boolean isAdmin() {
@@ -99,7 +102,7 @@ public class CurrentProjectVariables {
 			return true;
 		}
 		ProjectMember member = (ProjectMember) MyCollabSession
-				.getVariable(ProjectContants.PROJECT_MEMBER);
+				.getVariable(PROJECT_MEMBER);
 		if (member != null && member.getIsadmin() != null) {
 			return member.getIsadmin();
 		}

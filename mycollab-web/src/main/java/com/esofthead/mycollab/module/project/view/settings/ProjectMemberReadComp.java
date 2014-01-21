@@ -31,7 +31,6 @@ import com.esofthead.mycollab.eventmanager.ApplicationEvent;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
-import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
@@ -54,12 +53,12 @@ import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
+import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormLinkViewField;
+import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.UserLinkViewField;
 import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.ProjectPreviewFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.TabsheetLazyLoadComp;
-import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormLinkViewField;
-import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.UserLinkViewField;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.ui.Button;
@@ -67,7 +66,6 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 /**
@@ -99,10 +97,10 @@ class ProjectMemberReadComp extends
 
 			@Override
 			public void showHistory() {
-				final ProjectMemberHistoryLogWindow historyLog = new ProjectMemberHistoryLogWindow(
-						ModuleNameConstants.PRJ, ProjectContants.PROJECT_MEMBER);
-				historyLog.loadHistory(previewForm.getBean().getId());
-				UI.getCurrent().addWindow(historyLog);
+//				final ProjectMemberHistoryLogWindow historyLog = new ProjectMemberHistoryLogWindow(
+//						ModuleNameConstants.PRJ, ProjectContants.PROJECT_MEMBER);
+//				historyLog.loadHistory(previewForm.getBean().getId());
+//				UI.getCurrent().addWindow(historyLog);
 			}
 		};
 	}

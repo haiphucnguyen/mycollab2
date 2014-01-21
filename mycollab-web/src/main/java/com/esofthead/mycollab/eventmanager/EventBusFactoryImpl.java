@@ -20,6 +20,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.esofthead.mycollab.vaadin.MyCollabSession;
+import static com.esofthead.mycollab.vaadin.MyCollabSession.EVENT_BUS_VAL;
 
 /**
  * 
@@ -31,10 +32,9 @@ class EventBusFactoryImpl implements EventBusFactory {
 	private static Logger log = LoggerFactory
 			.getLogger(EventBusFactoryImpl.class);
 
-	private static final String EVENT_BUS_VAL = "eventBusVal";
-
 	public EventBus getInstance() {
-		EventBus eventBus = (EventBus) MyCollabSession.getVariable(EVENT_BUS_VAL);
+		EventBus eventBus = (EventBus) MyCollabSession
+				.getVariable(EVENT_BUS_VAL);
 		log.debug("Event bus {}", eventBus);
 		if (eventBus == null) {
 			eventBus = new EventBusImpl();

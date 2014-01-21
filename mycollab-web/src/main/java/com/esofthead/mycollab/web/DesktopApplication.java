@@ -16,6 +16,8 @@
  */
 package com.esofthead.mycollab.web;
 
+import static com.esofthead.mycollab.vaadin.MyCollabSession.CURRENT_APP;
+
 import javax.servlet.http.Cookie;
 
 import org.slf4j.Logger;
@@ -29,13 +31,11 @@ import com.esofthead.mycollab.core.SecurityException;
 import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.billing.SubDomainNotExistException;
-import com.esofthead.mycollab.shell.ShellController;
 import com.esofthead.mycollab.shell.view.FragmentNavigator;
 import com.esofthead.mycollab.shell.view.MainWindowContainer;
 import com.esofthead.mycollab.shell.view.NoSubDomainExistedWindow;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.MyCollabSession;
-import com.esofthead.mycollab.vaadin.mvp.ControllerRegistry;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Widgetset;
@@ -62,10 +62,6 @@ public class DesktopApplication extends UI {
 
 	private static Logger log = LoggerFactory
 			.getLogger(DesktopApplication.class);
-
-	private static final String CURRENT_APP = "currentApp";
-
-	private MainWindowContainer mainContainer = null;
 
 	/**
 	 * Context of current logged in user
@@ -127,10 +123,7 @@ public class DesktopApplication extends UI {
 			return;
 		}
 
-		mainContainer = new MainWindowContainer();
-		ControllerRegistry.addController(new ShellController(mainContainer));
-		this.setContent(mainContainer);
-		mainContainer.setDefaultView();
+		this.setContent(new MainWindowContainer());
 
 		getPage().addUriFragmentChangedListener(
 				new UriFragmentChangedListener() {

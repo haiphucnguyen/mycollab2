@@ -17,8 +17,9 @@
 
 package com.esofthead.mycollab.module.project.view.user;
 
+import static com.esofthead.mycollab.vaadin.MyCollabSession.CURRENT_PROJECT;
+
 import com.esofthead.mycollab.eventmanager.EventBus;
-import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.domain.Project;
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.module.project.service.ProjectService;
@@ -112,7 +113,7 @@ public class ProjectAddPresenter extends AbstractPresenter<ProjectAddView> {
 			projectService.saveWithSession(project, AppContext.getUsername());
 		} else {
 			projectService.updateWithSession(project, AppContext.getUsername());
-			MyCollabSession.putVariable(ProjectContants.CURRENT_PROJECT,
+			MyCollabSession.putVariable(CURRENT_PROJECT,
 					project);
 		}
 

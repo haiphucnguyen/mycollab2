@@ -25,6 +25,7 @@ import org.slf4j.LoggerFactory;
 
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.vaadin.MyCollabSession;
+import static com.esofthead.mycollab.vaadin.MyCollabSession.VIEW_MANAGER_VAL;
 
 /**
  * 
@@ -33,9 +34,6 @@ import com.esofthead.mycollab.vaadin.MyCollabSession;
  * 
  */
 class ViewManagerImpl extends ViewManager {
-
-	public static final String VIEW_MANAGER_VAL = "viewMap";
-
 	private static Logger log = LoggerFactory.getLogger(ViewManagerImpl.class);
 
 	@SuppressWarnings("unchecked")

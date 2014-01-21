@@ -16,6 +16,8 @@
  */
 package com.esofthead.mycollab.vaadin;
 
+import static com.esofthead.mycollab.vaadin.MyCollabSession.USER_TIMEZONE;
+
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -68,8 +70,6 @@ public class AppContext implements Serializable {
 	private static int UPDATE_TIME_DURATION = 300000;
 
 	static Logger log = LoggerFactory.getLogger(AppContext.class);
-
-	public static String USER_TIMEZONE = "USER_TIMEZONE";
 
 	/**
 	 * Current user log in to MyCollab

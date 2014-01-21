@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.esofthead.mycollab.vaadin.MyCollabSession;
+import static com.esofthead.mycollab.vaadin.MyCollabSession.CONTROLLER_REGISTRY;
 
 /**
  * 
@@ -28,7 +29,6 @@ import com.esofthead.mycollab.vaadin.MyCollabSession;
  * 
  */
 public class ControllerRegistry {
-	private static final String CONTROLLER_REGISTRY = "CONTROLLER_REGISTRY";
 
 	public static void addController(IController controler) {
 		List<IController> controllerList = ((List<IController>) MyCollabSession

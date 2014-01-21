@@ -17,6 +17,8 @@
 
 package com.esofthead.mycollab.vaadin.mvp;
 
+import static com.esofthead.mycollab.vaadin.MyCollabSession.PRESENTER_VAL;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -35,9 +37,6 @@ import com.esofthead.mycollab.vaadin.MyCollabSession;
  * 
  */
 public class PresenterResolver {
-
-	private static final String PRESENTER_VAL = "presenterMap";
-
 	private static Logger log = LoggerFactory
 			.getLogger(PresenterResolver.class);
 
