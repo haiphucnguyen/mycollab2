@@ -28,6 +28,7 @@ import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.MyCollabSession;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
@@ -111,7 +112,7 @@ public class ProjectAddPresenter extends AbstractPresenter<ProjectAddView> {
 			projectService.saveWithSession(project, AppContext.getUsername());
 		} else {
 			projectService.updateWithSession(project, AppContext.getUsername());
-			AppContext.putVariable(ProjectContants.CURRENT_PROJECT,
+			MyCollabSession.putVariable(ProjectContants.CURRENT_PROJECT,
 					project);
 		}
 

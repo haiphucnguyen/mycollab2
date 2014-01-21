@@ -32,8 +32,14 @@ public class MyCollabUIProvider extends UIProvider {
 
 	@Override
 	public Class<? extends UI> getUIClass(UIClassSelectionEvent event) {
-		String userAgent = event.getRequest().getHeader("user-agent")
-				.toLowerCase();
+		String userAgent = "";
+		try {
+			userAgent = event.getRequest().getHeader("user-agent")
+					.toLowerCase();
+		} catch (Exception e) {
+			// exception is thrown when request is bot that can not detect
+			// user-agent
+		}
 
 		String uiClass = "";
 

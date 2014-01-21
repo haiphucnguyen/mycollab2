@@ -14,6 +14,7 @@ import com.esofthead.mycollab.module.project.domain.criteria.ProblemSearchCriter
 import com.esofthead.mycollab.module.project.events.ProblemEvent;
 import com.esofthead.mycollab.module.project.localization.ProblemI18nEnum;
 import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.MyCollabSession;
 import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
 import com.esofthead.mycollab.vaadin.ui.Separator;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -43,7 +44,7 @@ public class ProblemSearchPanel extends
 	protected ProblemSearchCriteria searchCriteria;
 
 	public ProblemSearchPanel() {
-		this.project = (SimpleProject) AppContext.getVariable("project");
+		this.project = (SimpleProject) MyCollabSession.getVariable("project");
 	}
 
 	@Override

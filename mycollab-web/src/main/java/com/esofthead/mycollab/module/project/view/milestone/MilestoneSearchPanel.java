@@ -28,7 +28,7 @@ import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.MilestoneSearchCriteria;
 import com.esofthead.mycollab.module.project.events.MilestoneEvent;
-import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.MyCollabSession;
 import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
@@ -55,7 +55,7 @@ public class MilestoneSearchPanel extends
 	protected MilestoneSearchCriteria searchCriteria;
 
 	public MilestoneSearchPanel() {
-		this.project = (SimpleProject) AppContext.getVariable("project");
+		this.project = (SimpleProject) MyCollabSession.getVariable("project");
 	}
 
 	@Override

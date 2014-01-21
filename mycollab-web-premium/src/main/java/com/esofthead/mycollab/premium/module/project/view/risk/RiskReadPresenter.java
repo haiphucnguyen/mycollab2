@@ -20,6 +20,7 @@ import com.esofthead.mycollab.module.project.service.RiskService;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.MyCollabSession;
 import com.esofthead.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
@@ -106,7 +107,7 @@ public class RiskReadPresenter extends AbstractPresenter<RiskReadView> {
 						RiskService riskeService = ApplicationContextUtil
 								.getSpringBean(RiskService.class);
 						RiskSearchCriteria criteria = new RiskSearchCriteria();
-						SimpleProject project = (SimpleProject) AppContext
+						SimpleProject project = (SimpleProject) MyCollabSession
 								.getVariable("project");
 						criteria.setProjectId(new NumberSearchField(
 								SearchField.AND, project.getId()));
@@ -127,7 +128,7 @@ public class RiskReadPresenter extends AbstractPresenter<RiskReadView> {
 						RiskService riskeService = ApplicationContextUtil
 								.getSpringBean(RiskService.class);
 						RiskSearchCriteria criteria = new RiskSearchCriteria();
-						SimpleProject project = (SimpleProject) AppContext
+						SimpleProject project = (SimpleProject) MyCollabSession
 								.getVariable("project");
 						criteria.setProjectId(new NumberSearchField(
 								SearchField.AND, project.getId()));

@@ -31,6 +31,7 @@ import com.esofthead.mycollab.module.project.service.ProjectTaskListService;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.MyCollabSession;
 import com.esofthead.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
@@ -103,7 +104,7 @@ public class TaskGroupReadPresenter extends
 						ProjectTaskListService tasklistService = ApplicationContextUtil
 								.getSpringBean(ProjectTaskListService.class);
 						TaskListSearchCriteria criteria = new TaskListSearchCriteria();
-						SimpleProject project = (SimpleProject) AppContext
+						SimpleProject project = (SimpleProject) MyCollabSession
 								.getVariable("project");
 						criteria.setProjectId(new NumberSearchField(
 								SearchField.AND, project.getId()));
@@ -125,7 +126,7 @@ public class TaskGroupReadPresenter extends
 						ProjectTaskListService tasklistService = ApplicationContextUtil
 								.getSpringBean(ProjectTaskListService.class);
 						TaskListSearchCriteria criteria = new TaskListSearchCriteria();
-						SimpleProject project = (SimpleProject) AppContext
+						SimpleProject project = (SimpleProject) MyCollabSession
 								.getVariable("project");
 						criteria.setProjectId(new NumberSearchField(
 								SearchField.AND, project.getId()));

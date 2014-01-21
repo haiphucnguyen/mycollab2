@@ -34,7 +34,7 @@ import com.esofthead.mycollab.shell.view.FragmentNavigator;
 import com.esofthead.mycollab.shell.view.MainWindowContainer;
 import com.esofthead.mycollab.shell.view.NoSubDomainExistedWindow;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.desktop.ui.ModuleHelper;
+import com.esofthead.mycollab.vaadin.MyCollabSession;
 import com.esofthead.mycollab.vaadin.mvp.ControllerRegistry;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.vaadin.annotations.Theme;
@@ -60,10 +60,10 @@ public class DesktopApplication extends UI {
 
 	private static final long serialVersionUID = 1L;
 
-	private static final String CURRENT_APP = "currentApp";
-
 	private static Logger log = LoggerFactory
 			.getLogger(DesktopApplication.class);
+
+	private static final String CURRENT_APP = "currentApp";
 
 	private MainWindowContainer mainContainer = null;
 
@@ -78,8 +78,7 @@ public class DesktopApplication extends UI {
 	public static final String NAME_COOKIE = "mycollab";
 
 	public static DesktopApplication getInstance() {
-		return (DesktopApplication) VaadinSession.getCurrent().getAttribute(
-				CURRENT_APP);
+		return (DesktopApplication) MyCollabSession.getVariable(CURRENT_APP);
 	}
 
 	@Override
@@ -87,6 +86,8 @@ public class DesktopApplication extends UI {
 		log.debug("Init mycollab application {} associate with session {}",
 				this.toString(), VaadinSession.getCurrent());
 		log.debug("Register default error handler");
+		MyCollabSession.clearVariables();
+
 		VaadinSession.getCurrent().setErrorHandler(new DefaultErrorHandler() {
 			private static final long serialVersionUID = 1L;
 
@@ -116,9 +117,7 @@ public class DesktopApplication extends UI {
 		});
 
 		initialUrl = this.getPage().getUriFragment();
-		ControllerRegistry.reset();
-		AppContext.removeVariable(ModuleHelper.CURRENT_MODULE);
-		VaadinSession.getCurrent().setAttribute(CURRENT_APP, this);
+		MyCollabSession.putVariable(CURRENT_APP, this);
 		currentContext = new AppContext();
 		postSetupApp(request);
 		try {
@@ -128,9 +127,7 @@ public class DesktopApplication extends UI {
 			return;
 		}
 
-		if (mainContainer == null) {
-			mainContainer = new MainWindowContainer();
-		}
+		mainContainer = new MainWindowContainer();
 		ControllerRegistry.addController(new ShellController(mainContainer));
 		this.setContent(mainContainer);
 		mainContainer.setDefaultView();
@@ -142,7 +139,6 @@ public class DesktopApplication extends UI {
 					@Override
 					public void uriFragmentChanged(UriFragmentChangedEvent event) {
 						enter(event.getUriFragment());
-
 					}
 				});
 	}

@@ -37,6 +37,7 @@ import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.MyCollabSession;
 import com.esofthead.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
@@ -132,7 +133,7 @@ public class TaskReadPresenter extends AbstractPresenter<TaskReadView> {
 								.getSpringBean(ProjectTaskService.class);
 
 						final TaskSearchCriteria criteria = new TaskSearchCriteria();
-						final SimpleProject project = (SimpleProject) AppContext
+						final SimpleProject project = (SimpleProject) MyCollabSession
 								.getVariable("project");
 						criteria.setProjectid(new NumberSearchField(
 								SearchField.AND, project.getId()));
@@ -155,7 +156,7 @@ public class TaskReadPresenter extends AbstractPresenter<TaskReadView> {
 								.getSpringBean(ProjectTaskService.class);
 
 						final TaskSearchCriteria criteria = new TaskSearchCriteria();
-						final SimpleProject project = (SimpleProject) AppContext
+						final SimpleProject project = (SimpleProject) MyCollabSession
 								.getVariable("project");
 						criteria.setProjectid(new NumberSearchField(
 								SearchField.AND, project.getId()));
