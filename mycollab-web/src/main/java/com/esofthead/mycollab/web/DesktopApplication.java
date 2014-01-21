@@ -82,7 +82,6 @@ public class DesktopApplication extends UI {
 		log.debug("Init mycollab application {} associate with session {}",
 				this.toString(), VaadinSession.getCurrent());
 		log.debug("Register default error handler");
-		MyCollabSession.clearVariables();
 
 		VaadinSession.getCurrent().setErrorHandler(new DefaultErrorHandler() {
 			private static final long serialVersionUID = 1L;

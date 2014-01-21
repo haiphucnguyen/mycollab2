@@ -1,6 +1,9 @@
 package com.esofthead.mycollab.vaadin;
 
-import com.vaadin.server.VaadinSession;
+import org.infinispan.commons.api.BasicCache;
+
+import com.esofthead.mycollab.cache.LocalCacheManager;
+import com.vaadin.ui.UI;
 
 /**
  * 
@@ -9,6 +12,7 @@ import com.vaadin.server.VaadinSession;
  * 
  */
 public class MyCollabSession {
+
 	public static final String EVENT_BUS_VAL = "eventBusVal";
 
 	public static final String CURRENT_PROJECT = "project";
@@ -33,7 +37,9 @@ public class MyCollabSession {
 	 * @param value
 	 */
 	public static void putVariable(String key, Object value) {
-		VaadinSession.getCurrent().setAttribute(key, value);
+		BasicCache<String, Object> cache = LocalCacheManager.getCache(UI
+				.getCurrent().toString());
+		cache.put(key, value);
 	}
 
 	/**
@@ -42,22 +48,12 @@ public class MyCollabSession {
 	 */
 	public static void removeVariable(String key) {
 		try {
-			VaadinSession.getCurrent().setAttribute(key, null);
+			BasicCache<String, Object> cache = LocalCacheManager.getCache(UI
+					.getCurrent().toString());
+			cache.remove(key);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
-
-	public static void clearVariables() {
-		removeVariable(EVENT_BUS_VAL);
-		removeVariable(CURRENT_PROJECT);
-		removeVariable(PROJECT_MEMBER);
-		removeVariable(USER_TIMEZONE);
-		removeVariable(CURRENT_MODULE);
-		removeVariable(CONTROLLER_REGISTRY);
-		removeVariable(PRESENTER_VAL);
-		removeVariable(VIEW_MANAGER_VAL);
-		removeVariable(CURRENT_APP);
 	}
 
 	/**
@@ -66,7 +62,9 @@ public class MyCollabSession {
 	 * @return
 	 */
 	public static Object getVariable(String key) {
-		return VaadinSession.getCurrent().getAttribute(key);
+		BasicCache<String, Object> cache = LocalCacheManager.getCache(UI
+				.getCurrent().toString());
+		return cache.get(key);
 	}
 
 }
