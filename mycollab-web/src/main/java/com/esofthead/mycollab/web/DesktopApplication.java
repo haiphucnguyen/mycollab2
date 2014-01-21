@@ -29,10 +29,13 @@ import com.esofthead.mycollab.core.SecurityException;
 import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.billing.SubDomainNotExistException;
+import com.esofthead.mycollab.shell.ShellController;
 import com.esofthead.mycollab.shell.view.FragmentNavigator;
 import com.esofthead.mycollab.shell.view.MainWindowContainer;
 import com.esofthead.mycollab.shell.view.NoSubDomainExistedWindow;
 import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.desktop.ui.ModuleHelper;
+import com.esofthead.mycollab.vaadin.mvp.ControllerRegistry;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Widgetset;
@@ -62,6 +65,8 @@ public class DesktopApplication extends UI {
 	private static Logger log = LoggerFactory
 			.getLogger(DesktopApplication.class);
 
+	private MainWindowContainer mainContainer = null;
+
 	/**
 	 * Context of current logged in user
 	 */
@@ -79,8 +84,8 @@ public class DesktopApplication extends UI {
 
 	@Override
 	protected void init(VaadinRequest request) {
-
-		log.debug("Init mycollab application {}", this.toString());
+		log.debug("Init mycollab application {} associate with session {}",
+				this.toString(), VaadinSession.getCurrent());
 		log.debug("Register default error handler");
 		VaadinSession.getCurrent().setErrorHandler(new DefaultErrorHandler() {
 			private static final long serialVersionUID = 1L;
@@ -111,6 +116,8 @@ public class DesktopApplication extends UI {
 		});
 
 		initialUrl = this.getPage().getUriFragment();
+		ControllerRegistry.reset();
+		AppContext.removeVariable(ModuleHelper.CURRENT_MODULE);
 		VaadinSession.getCurrent().setAttribute(CURRENT_APP, this);
 		currentContext = new AppContext();
 		postSetupApp(request);
@@ -121,7 +128,11 @@ public class DesktopApplication extends UI {
 			return;
 		}
 
-		this.setContent(new MainWindowContainer());
+		if (mainContainer == null) {
+			mainContainer = new MainWindowContainer();
+		}
+		ControllerRegistry.addController(new ShellController(mainContainer));
+		this.setContent(mainContainer);
 
 		getPage().addUriFragmentChangedListener(
 				new UriFragmentChangedListener() {
@@ -158,11 +169,11 @@ public class DesktopApplication extends UI {
 
 	@Override
 	public void close() {
-		super.close();
 		log.debug("Application is closed. Clean all resources");
 		clearSession();
 		currentContext = null;
 		VaadinSession.getCurrent().close();
+		super.close();
 	}
 
 	public void clearSession() {
