@@ -133,6 +133,7 @@ public class DesktopApplication extends UI {
 		}
 		ControllerRegistry.addController(new ShellController(mainContainer));
 		this.setContent(mainContainer);
+		mainContainer.setDefaultView();
 
 		getPage().addUriFragmentChangedListener(
 				new UriFragmentChangedListener() {

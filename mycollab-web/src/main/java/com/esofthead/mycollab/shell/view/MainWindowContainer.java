@@ -42,7 +42,6 @@ public class MainWindowContainer extends CssLayout {
 	public MainWindowContainer() {
 		this.setCaption("MyCollab");
 		isAutoLogin = true;
-		setDefaultView();
 	}
 
 	public void setContent(ComponentContainer container) {
@@ -54,7 +53,7 @@ public class MainWindowContainer extends CssLayout {
 		Page.getCurrent().setUriFragment(fragement, false);
 	}
 
-	private final void setDefaultView() {
+	public final void setDefaultView() {
 		final LoginPresenter presenter = PresenterResolver
 				.getPresenter(LoginPresenter.class);
 		LoginView loginView = presenter.initView();
