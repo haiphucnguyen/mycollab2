@@ -24,7 +24,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.esofthead.mycollab.core.MyCollabException;
-import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.MyCollabSession;
+import static com.esofthead.mycollab.vaadin.MyCollabSession.VIEW_MANAGER_VAL;
 
 /**
  * 
@@ -33,9 +34,6 @@ import com.esofthead.mycollab.vaadin.AppContext;
  * 
  */
 class ViewManagerImpl extends ViewManager {
-
-	public static final String VIEW_MANAGER_VAL = "viewMap";
-
 	private static Logger log = LoggerFactory.getLogger(ViewManagerImpl.class);
 
 	@SuppressWarnings("unchecked")
@@ -43,11 +41,11 @@ class ViewManagerImpl extends ViewManager {
 	protected <T extends CacheableComponent> T getViewInstance(
 			final Class<T> viewClass) {
 		try {
-			Map<Class<?>, Object> viewMap = (Map<Class<?>, Object>) AppContext
+			Map<Class<?>, Object> viewMap = (Map<Class<?>, Object>) MyCollabSession
 					.getVariable(VIEW_MANAGER_VAL);
 			if (viewMap == null) {
 				viewMap = new HashMap<Class<?>, Object>();
-				AppContext.putVariable(VIEW_MANAGER_VAL, viewMap);
+				MyCollabSession.putVariable(VIEW_MANAGER_VAL, viewMap);
 			}
 
 			T value = (T) viewMap.get(viewClass);
@@ -80,7 +78,7 @@ class ViewManagerImpl extends ViewManager {
 
 	@Override
 	protected void clearViews() {
-		AppContext.removeVariable(VIEW_MANAGER_VAL);
+		MyCollabSession.removeVariable(VIEW_MANAGER_VAL);
 
 	}
 }

@@ -16,11 +16,13 @@
  */
 package com.esofthead.mycollab.vaadin.desktop.ui;
 
+import static com.esofthead.mycollab.vaadin.MyCollabSession.CURRENT_MODULE;
+
 import com.esofthead.mycollab.module.crm.view.CrmModule;
 import com.esofthead.mycollab.module.file.view.IFileModule;
 import com.esofthead.mycollab.module.project.view.ProjectModule;
 import com.esofthead.mycollab.module.user.accountsettings.view.AccountModule;
-import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.MyCollabSession;
 import com.esofthead.mycollab.vaadin.mvp.IModule;
 
 /**
@@ -30,14 +32,13 @@ import com.esofthead.mycollab.vaadin.mvp.IModule;
  * 
  */
 public class ModuleHelper {
-	public static final String CURRENT_MODULE = "currentModule";
 
 	public static void setCurrentModule(IModule module) {
-		AppContext.putVariable(CURRENT_MODULE, module);
+		MyCollabSession.putVariable(CURRENT_MODULE, module);
 	}
 
 	public static IModule getCurrentModule() {
-		return (IModule) AppContext.getVariable(CURRENT_MODULE);
+		return (IModule) MyCollabSession.getVariable(CURRENT_MODULE);
 	}
 
 	public static boolean isCurrentProjectModule() {

@@ -27,7 +27,7 @@ import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectRoleSearchCriteria;
 import com.esofthead.mycollab.module.project.events.ProjectRoleEvent;
 import com.esofthead.mycollab.module.project.localization.PeopleI18nEnum;
-import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.MyCollabSession;
 import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
@@ -54,7 +54,7 @@ public class ProjectRoleSearchPanel extends
 	protected ProjectRoleSearchCriteria searchCriteria;
 
 	public ProjectRoleSearchPanel() {
-		this.project = (SimpleProject) AppContext.getVariable("project");
+		this.project = (SimpleProject) MyCollabSession.getVariable("project");
 	}
 
 	@Override

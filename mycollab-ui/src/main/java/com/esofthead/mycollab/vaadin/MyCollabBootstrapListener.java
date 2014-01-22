@@ -44,19 +44,19 @@ public class MyCollabBootstrapListener implements BootstrapListener {
 		if (deploymentMode == DeploymentMode.SITE) {
 			response.getDocument()
 					.head()
-					.append("<script type=\"text/javascript\" src=\"https://s3.amazonaws.com/mycollab_assets/assets/js/stickytooltip.js\"></script>");
+					.append("<script type=\"text/javascript\" src=\"https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js\"></script>");
 
 			response.getDocument()
 					.head()
-					.append("<script type=\"text/javascript\" src=\"https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js\"></script>");
+					.append("<script type=\"text/javascript\" src=\"https://s3.amazonaws.com/mycollab_assets/assets/js/stickytooltip.js\"></script>");
 		} else {
 			response.getDocument()
 					.head()
-					.append("<script type=\"text/javascript\" src=\"/assets/js/stickytooltip.js\"></script>");
+					.append("<script type=\"text/javascript\" src=\"/assets/js/jquery-1.10.2.min.js\"></script>");
 
 			response.getDocument()
 					.head()
-					.append("<script type=\"text/javascript\" src=\"/assets/js/jquery-1.10.2.min.js\"></script>");
+					.append("<script type=\"text/javascript\" src=\"/assets/js/stickytooltip.js\"></script>");
 		}
 	}
 

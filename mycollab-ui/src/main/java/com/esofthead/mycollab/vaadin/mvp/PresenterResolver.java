@@ -17,6 +17,8 @@
 
 package com.esofthead.mycollab.vaadin.mvp;
 
+import static com.esofthead.mycollab.vaadin.MyCollabSession.PRESENTER_VAL;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -26,7 +28,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.esofthead.mycollab.core.MyCollabException;
-import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.MyCollabSession;
 
 /**
  * 
@@ -35,9 +37,6 @@ import com.esofthead.mycollab.vaadin.AppContext;
  * 
  */
 public class PresenterResolver {
-
-	private static final String PRESENTER_VAL = "presenterMap";
-
 	private static Logger log = LoggerFactory
 			.getLogger(PresenterResolver.class);
 
@@ -54,16 +53,16 @@ public class PresenterResolver {
 	}
 
 	public static void clearCaches() {
-		AppContext.removeVariable(PRESENTER_VAL);
+		MyCollabSession.removeVariable(PRESENTER_VAL);
 	}
 
 	@SuppressWarnings("unchecked")
 	public static <P extends IPresenter> P getPresenter(Class<P> presenterClass) {
-		Map<Class<?>, Object> presenterMap = (Map<Class<?>, Object>) AppContext
+		Map<Class<?>, Object> presenterMap = (Map<Class<?>, Object>) MyCollabSession
 				.getVariable(PRESENTER_VAL);
 		if (presenterMap == null) {
 			presenterMap = new HashMap<Class<?>, Object>();
-			AppContext.putVariable(PRESENTER_VAL, presenterMap);
+			MyCollabSession.putVariable(PRESENTER_VAL, presenterMap);
 		}
 
 		P value = (P) presenterMap.get(presenterClass);

@@ -63,19 +63,22 @@ public class UserDashboardViewImpl extends AbstractPageView implements
 		UserDashboardView {
 	private static final long serialVersionUID = 1L;
 
-	private final ButtonLink followingTicketsLink;
+	private ButtonLink followingTicketsLink;
 
-	private final ButtonLink timeTrackingLink;
+	private ButtonLink timeTrackingLink;
 
-	private final MyProjectListComponent myProjectListComponent;
+	private MyProjectListComponent myProjectListComponent;
 
-	private final ActivityStreamComponent activityStreamComponent;
+	private ActivityStreamComponent activityStreamComponent;
 
-	private final TaskStatusComponent taskStatusComponent;
+	private TaskStatusComponent taskStatusComponent;
 
 	private List<Integer> prjKeys;
 
-	public UserDashboardViewImpl() {
+	@Override
+	public void display() {
+		this.removeAllComponents();
+
 		this.setSpacing(true);
 		this.setWidth("100%");
 
@@ -202,10 +205,7 @@ public class UserDashboardViewImpl extends AbstractPageView implements
 		layout.setExpandRatio(leftPanel, 1.0f);
 
 		contentWrapper.addComponent(layout);
-	}
 
-	@Override
-	public void display() {
 		final ProjectService prjService = ApplicationContextUtil
 				.getSpringBean(ProjectService.class);
 		prjKeys = prjService.getUserProjectKeys(AppContext.getUsername(),

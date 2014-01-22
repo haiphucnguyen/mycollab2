@@ -16,6 +16,8 @@
  */
 package com.esofthead.mycollab.vaadin;
 
+import static com.esofthead.mycollab.vaadin.MyCollabSession.USER_TIMEZONE;
+
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -48,10 +50,7 @@ import com.esofthead.mycollab.module.user.service.BillingAccountService;
 import com.esofthead.mycollab.module.user.service.UserPreferenceService;
 import com.esofthead.mycollab.security.PermissionMap;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
-import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.vaadin.server.Page;
-import com.vaadin.server.VaadinSession;
 
 /**
  * The core class that keep user session data while user login to MyCollab
@@ -70,9 +69,7 @@ public class AppContext implements Serializable {
 
 	private static int UPDATE_TIME_DURATION = 300000;
 
-	private static Logger log = LoggerFactory.getLogger(AppContext.class);
-
-	public static String USER_TIMEZONE = "USER_TIMEZONE";
+	static Logger log = LoggerFactory.getLogger(AppContext.class);
 
 	/**
 	 * Current user log in to MyCollab
@@ -108,7 +105,7 @@ public class AppContext implements Serializable {
 	private Integer accountId = null;
 
 	public AppContext() {
-		VaadinSession.getCurrent().setAttribute("context", this);
+		MyCollabSession.putVariable("context", this);
 
 		GroupIdProvider.registerAccountIdProvider(new GroupIdProvider() {
 
@@ -126,8 +123,7 @@ public class AppContext implements Serializable {
 	 */
 	public static AppContext getInstance() {
 		try {
-			return (AppContext) VaadinSession.getCurrent().getAttribute(
-					"context");
+			return (AppContext) MyCollabSession.getVariable("context");
 		} catch (Exception e) {
 			return null;
 		}
@@ -197,7 +193,7 @@ public class AppContext implements Serializable {
 		billingAccount = billingAc;
 
 		TimeZone timezone = getTimezoneInContext();
-		putVariable(USER_TIMEZONE, timezone);
+		MyCollabSession.putVariable(USER_TIMEZONE, timezone);
 	}
 
 	/**
@@ -438,15 +434,6 @@ public class AppContext implements Serializable {
 		return getInstance().session.getPermissionMaps();
 	}
 
-	public static void clearSession() {
-		if (getInstance() != null) {
-			getInstance().session = null;
-			getInstance().userPreference = null;
-//			ViewManager.clearViewCaches();
-//			PresenterResolver.clearCaches();
-		}
-	}
-
 	private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
 			"MM/dd/yyyy");
 	private static SimpleDateFormat df = new SimpleDateFormat(
@@ -475,7 +462,7 @@ public class AppContext implements Serializable {
 	 */
 	public static String formatDateTime(Date date) {
 		return DateTimeUtils.formatDateTime(date,
-				(TimeZone) getVariable(USER_TIMEZONE));
+				(TimeZone) MyCollabSession.getVariable(USER_TIMEZONE));
 	}
 
 	/**
@@ -485,7 +472,7 @@ public class AppContext implements Serializable {
 	 */
 	public static String formatDate(Date date) {
 		return DateTimeUtils.formatDate(date,
-				(TimeZone) getVariable(USER_TIMEZONE));
+				(TimeZone) MyCollabSession.getVariable(USER_TIMEZONE));
 	}
 
 	/**
@@ -534,38 +521,6 @@ public class AppContext implements Serializable {
 		}
 		return df.format(date);
 
-	}
-
-	/**
-	 * 
-	 * @param key
-	 * @param value
-	 */
-	public static void putVariable(String key, Object value) {
-		log.debug("Put variable {}, value {} to session {}", new Object[] {
-				key, value, VaadinSession.getCurrent().getSession().getId() });
-		VaadinSession.getCurrent().getSession().setAttribute(key, value);
-	}
-
-	/**
-	 * 
-	 * @param key
-	 */
-	public static void removeVariable(String key) {
-		try {
-			VaadinSession.getCurrent().getSession().removeAttribute(key);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * 
-	 * @param key
-	 * @return
-	 */
-	public static Object getVariable(String key) {
-		return VaadinSession.getCurrent().getSession().getAttribute(key);
 	}
 
 	/**

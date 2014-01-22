@@ -32,6 +32,11 @@ import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.security.PermissionMap;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.MyCollabSession;
+import static com.esofthead.mycollab.vaadin.MyCollabSession.CURRENT_PROJECT;
+import static com.esofthead.mycollab.vaadin.MyCollabSession.PROJECT_MEMBER;
+
+;
 
 /**
  * 
@@ -44,12 +49,11 @@ public class CurrentProjectVariables {
 			.getLogger(CurrentProjectVariables.class);
 
 	public static SimpleProject getProject() {
-		return (SimpleProject) AppContext
-				.getVariable(ProjectContants.CURRENT_PROJECT);
+		return (SimpleProject) MyCollabSession.getVariable(CURRENT_PROJECT);
 	}
 
 	public static void setProject(SimpleProject project) {
-		AppContext.putVariable(ProjectContants.CURRENT_PROJECT, project);
+		MyCollabSession.putVariable(CURRENT_PROJECT, project);
 
 		// get member permission
 		ProjectMemberService prjMemberService = ApplicationContextUtil
@@ -78,24 +82,27 @@ public class CurrentProjectVariables {
 				}
 			}
 
-			AppContext.putVariable(ProjectContants.PROJECT_MEMBER,
-					prjMember);
+			setProjectMember(prjMember);
 		} else if (!AppContext.isAdmin()) {
 			throw new MyCollabException("You are not belong to this project");
 		}
 	}
 
+	public static void setProjectMember(SimpleProjectMember prjMember) {
+		MyCollabSession.putVariable(PROJECT_MEMBER, prjMember);
+	}
+
 	private static SimpleProjectMember getProjectMember() {
-		return (SimpleProjectMember) AppContext
-				.getVariable(ProjectContants.PROJECT_MEMBER);
+		return (SimpleProjectMember) MyCollabSession
+				.getVariable(PROJECT_MEMBER);
 	}
 
 	private static boolean isAdmin() {
 		if (AppContext.isAdmin()) {
 			return true;
 		}
-		ProjectMember member = (ProjectMember) AppContext
-				.getVariable(ProjectContants.PROJECT_MEMBER);
+		ProjectMember member = (ProjectMember) MyCollabSession
+				.getVariable(PROJECT_MEMBER);
 		if (member != null && member.getIsadmin() != null) {
 			return member.getIsadmin();
 		}

@@ -16,11 +16,13 @@
  */
 package com.esofthead.mycollab.module.project;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class ProjectContants {
-
-	public static final String CURRENT_PROJECT = "project";
-
-	public static final String PROJECT_MEMBER = "project_member";
 
 	public static final String PROJECT_ROLE = "project_role";
 

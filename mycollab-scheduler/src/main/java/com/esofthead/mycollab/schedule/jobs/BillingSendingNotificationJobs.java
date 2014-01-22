@@ -141,8 +141,8 @@ public class BillingSendingNotificationJobs extends QuartzJobBean {
 			if (afterDay == BillingSendingNotificationJobs.DATE_REMIND_FOR_FREEPLAN_2ND
 					|| afterDay == BillingSendingNotificationJobs.DATE_REMIND_FOR_FREEPLAN_1ST) {
 				for (SimpleUser user : account.getOwners()) {
-					log.error("Send mail after " + afterDay
-							+ "day for username {} , mail {}",
+					log.info("Send mail after " + afterDay
+							+ "days for username {} , mail {}",
 							user.getUsername(), user.getEmail());
 					TemplateGenerator templateGenerator = new TemplateGenerator(
 							"Your trial is about to end",
@@ -170,8 +170,8 @@ public class BillingSendingNotificationJobs extends QuartzJobBean {
 				}
 			} else if (afterDay == BillingSendingNotificationJobs.DATE_NOTIFY_EXPIRE) {
 				for (SimpleUser user : account.getOwners()) {
-					log.error(
-							"Send mail after 32day for username {} , mail {}",
+					log.info(
+							"Send mail after 32 days for username {} , mail {}",
 							user.getUsername(), user.getEmail());
 					TemplateGenerator templateGenerator = new TemplateGenerator(
 							"Your trial has ended",

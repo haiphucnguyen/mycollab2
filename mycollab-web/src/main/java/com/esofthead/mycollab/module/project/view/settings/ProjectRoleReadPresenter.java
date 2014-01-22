@@ -29,6 +29,7 @@ import com.esofthead.mycollab.module.project.service.ProjectRoleService;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.MyCollabSession;
 import com.esofthead.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
@@ -90,7 +91,7 @@ public class ProjectRoleReadPresenter extends
 						ProjectRoleService projectRoleService = ApplicationContextUtil
 								.getSpringBean(ProjectRoleService.class);
 						ProjectRoleSearchCriteria criteria = new ProjectRoleSearchCriteria();
-						SimpleProject project = (SimpleProject) AppContext
+						SimpleProject project = (SimpleProject) MyCollabSession
 								.getVariable("project");
 						criteria.setProjectId(new NumberSearchField(
 								SearchField.AND, project.getId()));
@@ -114,7 +115,7 @@ public class ProjectRoleReadPresenter extends
 						ProjectRoleService projectRoleService = ApplicationContextUtil
 								.getSpringBean(ProjectRoleService.class);
 						ProjectRoleSearchCriteria criteria = new ProjectRoleSearchCriteria();
-						SimpleProject project = (SimpleProject) AppContext
+						SimpleProject project = (SimpleProject) MyCollabSession
 								.getVariable("project");
 						criteria.setProjectId(new NumberSearchField(
 								SearchField.AND, project.getId()));

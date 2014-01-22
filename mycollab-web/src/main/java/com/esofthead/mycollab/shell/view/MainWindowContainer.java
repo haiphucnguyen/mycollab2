@@ -43,9 +43,9 @@ public class MainWindowContainer extends CssLayout {
 
 	public MainWindowContainer() {
 		this.setCaption("MyCollab");
-		ControllerRegistry.addController(new ShellController(this));
 		isAutoLogin = true;
-		setDefaultView();
+		ControllerRegistry.addController(new ShellController(this));
+		this.setDefaultView();
 	}
 
 	public void setContent(ComponentContainer container) {

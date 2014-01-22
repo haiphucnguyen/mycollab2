@@ -16,6 +16,8 @@
  */
 package com.esofthead.mycollab.web;
 
+import static com.esofthead.mycollab.vaadin.MyCollabSession.CURRENT_APP;
+
 import javax.servlet.http.Cookie;
 
 import org.slf4j.Logger;
@@ -33,6 +35,7 @@ import com.esofthead.mycollab.shell.view.FragmentNavigator;
 import com.esofthead.mycollab.shell.view.MainWindowContainer;
 import com.esofthead.mycollab.shell.view.NoSubDomainExistedWindow;
 import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.MyCollabSession;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Widgetset;
@@ -57,8 +60,6 @@ public class DesktopApplication extends UI {
 
 	private static final long serialVersionUID = 1L;
 
-	private static final String CURRENT_APP = "currentApp";
-
 	private static Logger log = LoggerFactory
 			.getLogger(DesktopApplication.class);
 
@@ -73,15 +74,15 @@ public class DesktopApplication extends UI {
 	public static final String NAME_COOKIE = "mycollab";
 
 	public static DesktopApplication getInstance() {
-		return (DesktopApplication) VaadinSession.getCurrent().getAttribute(
-				CURRENT_APP);
+		return (DesktopApplication) MyCollabSession.getVariable(CURRENT_APP);
 	}
 
 	@Override
 	protected void init(VaadinRequest request) {
-
-		log.debug("Init mycollab application {}", this.toString());
+		log.debug("Init mycollab application {} associate with session {}",
+				this.toString(), VaadinSession.getCurrent());
 		log.debug("Register default error handler");
+
 		VaadinSession.getCurrent().setErrorHandler(new DefaultErrorHandler() {
 			private static final long serialVersionUID = 1L;
 
@@ -111,7 +112,7 @@ public class DesktopApplication extends UI {
 		});
 
 		initialUrl = this.getPage().getUriFragment();
-		VaadinSession.getCurrent().setAttribute(CURRENT_APP, this);
+		MyCollabSession.putVariable(CURRENT_APP, this);
 		currentContext = new AppContext();
 		postSetupApp(request);
 		try {
@@ -130,7 +131,6 @@ public class DesktopApplication extends UI {
 					@Override
 					public void uriFragmentChanged(UriFragmentChangedEvent event) {
 						enter(event.getUriFragment());
-
 					}
 				});
 	}
@@ -158,11 +158,18 @@ public class DesktopApplication extends UI {
 
 	@Override
 	public void close() {
-		super.close();
 		log.debug("Application is closed. Clean all resources");
-		AppContext.clearSession();
+		clearSession();
 		currentContext = null;
 		VaadinSession.getCurrent().close();
+		super.close();
+	}
+
+	public void clearSession() {
+		if (AppContext.getInstance() != null) {
+			AppContext.getInstance().setSession(null, null, null);
+			initialUrl = "";
+		}
 	}
 
 	public void rememberPassword(String username, String password) {

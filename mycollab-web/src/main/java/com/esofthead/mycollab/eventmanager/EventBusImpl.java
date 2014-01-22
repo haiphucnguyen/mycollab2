@@ -33,8 +33,9 @@ import org.slf4j.LoggerFactory;
 class EventBusImpl extends EventBus {
 	private static final long serialVersionUID = 1L;
 
+	private final Logger log = LoggerFactory.getLogger(EventBusImpl.class);
+
 	private Map<Class<? extends ApplicationEvent>, Set<ApplicationEventListener<?>>> map = new HashMap<Class<? extends ApplicationEvent>, Set<ApplicationEventListener<?>>>();
-	private final Logger log = LoggerFactory.getLogger(EventBus.class);
 
 	EventBusImpl() {
 

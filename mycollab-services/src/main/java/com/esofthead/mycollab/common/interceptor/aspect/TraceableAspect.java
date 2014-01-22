@@ -35,6 +35,11 @@ import com.esofthead.mycollab.common.domain.ActivityStream;
 import com.esofthead.mycollab.common.service.ActivityStreamService;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ */
 @Aspect
 @Component
 public class TraceableAspect {
