@@ -21,6 +21,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -41,7 +42,7 @@ import com.esofthead.mycollab.module.file.service.ContentService;
  * 
  * @author MyCollab Ltd.
  * @since 1.0
- *
+ * 
  */
 @Component("userAvatarFSServlet")
 public class AnnotatedUserAvatarServlet implements HttpRequestHandler {
@@ -85,28 +86,25 @@ public class AnnotatedUserAvatarServlet implements HttpRequestHandler {
 		FileStorageConfiguration fileConfiguration = (FileStorageConfiguration) SiteConfiguration
 				.getStorageConfiguration();
 		avatarFile = fileConfiguration.getAvatarFile(username, size);
-
-		if (avatarFile == null) {
-			String realpath = request.getSession().getServletContext()
-					.getRealPath("");
-			String userAvatarPath = realpath
-					+ "/assets/images/default_user_avatar_" + size + ".png";
-			avatarFile = new File(userAvatarPath);
-			log.debug("Get default user avatar at "
-					+ avatarFile.getAbsolutePath());
+		InputStream avatarInputStream = null;
+		if (avatarFile != null) {
+			avatarInputStream = new FileInputStream(avatarFile);
+		} else {
+			String userAvatarPath = "assets/images/default_user_avatar_" + size
+					+ ".png";
+			avatarInputStream = AnnotatedUserAvatarServlet.class
+					.getClassLoader().getResourceAsStream(userAvatarPath);
 		}
 
 		response.setHeader("Content-Type", "image/png");
 		response.setHeader("Content-Length",
-				String.valueOf(avatarFile.length()));
-		response.setHeader("Content-Disposition", "inline; filename=\""
-				+ avatarFile.getName() + "\"");
+				String.valueOf(avatarInputStream.available()));
 
 		BufferedInputStream input = null;
 		BufferedOutputStream output = null;
 
 		try {
-			input = new BufferedInputStream(new FileInputStream(avatarFile));
+			input = new BufferedInputStream(avatarInputStream);
 			output = new BufferedOutputStream(response.getOutputStream());
 			byte[] buffer = new byte[8192];
 			int length = 0;
