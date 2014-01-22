@@ -106,6 +106,10 @@ input, select, textarea {
 	display: none!important;
 }
 
+p {
+	font-family:'verdana';
+	font-size:13px;
+}
 
 /**********************Structure all templates**********************/
 	
@@ -1960,13 +1964,23 @@ a.nivo-prevNav {
     padding-left: 30px;
     font-family: 'Monda';
     line-height: 28px;
-    margin:5px 0;
+    margin:0 0;
+}
+#pricing-content-wrapper .pri-bott-block h2 {
+	font-size: 16px;
+    font-weight: bold;
+    padding-left: 25px;
+    background: url("../images/pricing_question.png") no-repeat scroll left top 3px transparent;
+    font-family: 'Monda';
+    margin-top:0;
+    margin-bottom:0;
+    color:rgb(57, 148, 195);
 }
 
 .pri-bott-block p {
-	font-size: 12px;
+	font-size: 13px;
 	color: #5f5c5c;
-	padding-bottom: 10px;
+	padding-bottom: 15px;
 	text-align:justify;
 	font-family: 'verdana';
 }
@@ -2002,7 +2016,12 @@ a.nivo-prevNav {
 	margin: 0 auto;
 	background: url("../images/home_banner_bg.jpg") no-repeat top center;
 }
-
+#tour-content .pricing-link {
+	color:#2B97D7;
+}
+#tour-content .pricing-link:hover {
+	opacity:0.7;
+}
 .tour-top {
 	text-align: center;
 	background: url("../images/home_border_2.png") no-repeat bottom center;
@@ -2092,6 +2111,7 @@ a.nivo-prevNav {
 	padding-top: 30px;
 	border-bottom: 2px solid rgb(204, 204, 204);
 	width:93%;
+	line-height:33px;
 }
 
 .tour-two-coll {
@@ -2169,10 +2189,11 @@ a.nivo-prevNav {
 }
 
 .tour-block p {
-	font-size: 12px;
+	font-size: 13px;
 	color: #505050;
 	font-family: 'Verdana';
 	line-height: 180%;
+	padding-left:10px;
 }
 
 .two-coll-2 {
@@ -2287,24 +2308,38 @@ a.nivo-prevNav {
 	width: 765px;
 }
 
+.tour-whoisitfor ul> li{
+	font-size: 16px;
+	font-weight: bold;
+	padding-left: 25px;
+	font-family: 'Monda';
+	margin-top: 0;
+	margin-bottom: 2px;
+	line-height: 28px;
+	background:url("../images/pyramid_icon.png") no-repeat scroll left top 3px transparent;
+}
+
+.tour-whoisitfor ul ol li{
+	list-style:none;
+	font-family:'verdana';
+	font-size:13px;
+}
+
 .tour-whoisitfor p {
 	padding-bottom: 10px;
 }
 
 .tour-whoisitfor ul {
-	list-style: disc;
+	list-style: none;
 	margin-left: 40px;
 }
 
-.tour-whoisitfor ul li {
-	margin-bottom: 15px;
-}
 
 .tour-whoisitfor ol {
-	margin-left: 40px;
+	margin-left: 0;
 }
 
-.tour-whoisitfor ol li {
+-isisitfor ol li {
 	margin-bottom: 15px;
 }
 /* End Tour style */
@@ -3038,7 +3073,7 @@ body {
 	}
 	.pri-bott-block p {
 		font-size:14px;
-		padding-bottom:0;
+		padding-bottom:15px;
 		color:#505050;
 	}
 	#pricing-content .package-block .block-content .info-row {
@@ -3052,7 +3087,7 @@ body {
 		font-size: 14px;
 	}
 	.prig-bottom-cnt h2 {
-    	background: url("../images/pyramid_icon.png") no-repeat scroll left top 5px transparent;
+    	background: url("../images/pyramid_icon.png") no-repeat scroll left top 3px transparent;
 	}
 	#pricing-content {
 		margin-bottom:0;
@@ -3596,6 +3631,7 @@ body {
 	
 	
 	
+	
 	.free-trial-cnt-3 {
 		display:block;
 		width:100%;
@@ -3777,6 +3813,7 @@ body {
 		margin-top:10px;
 		margin-bottom:10px;
 	}
+	
 	
 	.pricing-button a {
 		width: 140px;
@@ -4096,8 +4133,12 @@ body {
 		margin:0;
 	}
 	.tour-block h2 {
-		margin-top:10px;
-		margin-bottom:10px;
+		margin-top:0;
+		margin-bottom:5px;;
+	}
+	
+	.tour-block p {
+		padding-bottom:15px;
 	}
 	
 	.formfield#captcha-div {
