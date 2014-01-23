@@ -22,6 +22,7 @@
     <project>mycollab-esb</project>
     <project>mycollab-scheduler</project>
     <project>mycollab-jetty-session-premium</project>
+    <project>mycollab-mobile</project>
   </projects>
   <buildSpec>
     <buildCommand>

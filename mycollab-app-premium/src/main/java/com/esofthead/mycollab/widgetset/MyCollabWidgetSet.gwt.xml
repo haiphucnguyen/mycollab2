@@ -4,7 +4,7 @@
     "http://google-web-toolkit.googlecode.com/svn/tags/1.7.0/distro-source/core/src/gwt-module.dtd">
 <module>
 
-    <!-- WS Compiler: manually edited -->
+   <!-- WS Compiler: manually edited -->
 
 
 
@@ -75,10 +75,4 @@
 
 
     <inherits name="com.esofthead.vaadin.cropField.WidgetSet" />
-
-
-
-
-
-    <inherits name="org.vaadin.artur.icepush.IcepushaddonWidgetset" />
 </module>

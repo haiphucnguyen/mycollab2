@@ -4,7 +4,6 @@ import java.util.GregorianCalendar;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.vaadin.artur.icepush.ICEPush;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.MyCollabException;
@@ -22,7 +21,6 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.web.DesktopApplication;
 import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.server.BrowserWindowOpener;
 import com.vaadin.server.ExternalResource;
@@ -52,8 +50,6 @@ public abstract class CloudDriveIntegrationOAuthWindow extends Window {
 	private static Logger log = LoggerFactory
 			.getLogger(CloudDriveIntegrationOAuthWindow.class);
 
-	private ICEPush pusher = new ICEPush();
-
 	private VerticalLayout mainLayout;
 	private VerticalLayout messageBox;
 
@@ -67,7 +63,7 @@ public abstract class CloudDriveIntegrationOAuthWindow extends Window {
 		constructBody();
 		registerListeners();
 
-		pusher.extend(DesktopApplication.getCurrent());
+//		pusher.extend(DesktopApplication.getCurrent());
 	}
 
 	private void registerListeners() {
@@ -83,7 +79,7 @@ public abstract class CloudDriveIntegrationOAuthWindow extends Window {
 				messageBox.removeAllComponents();
 				messageBox.addComponent(new Label("Access token retrieved"));
 				CloudDriveIntegrationOAuthWindow.this.setHeight("210px");
-				pusher.push();
+//				pusher.push();
 			}
 
 			@Override

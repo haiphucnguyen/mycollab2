@@ -48,6 +48,7 @@
             <artifactId>mycollab-jetty-session-premium</artifactId>
             <version>3.0.0</version>
         </dependency>
+
 <!-- 
         <dependency>
             <groupId>com.vaadin</groupId>
@@ -55,7 +56,7 @@
             <version>${vaadinVersion}</version>
             <scope>provided</scope>
         </dependency>
-        -->
+     -->  
 
     </dependencies>
     <build>
