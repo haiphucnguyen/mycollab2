@@ -20,18 +20,19 @@ import com.esofthead.mycollab.eventmanager.ApplicationEvent;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.mobile.module.crm.events.CrmEvent;
+import com.esofthead.mycollab.mobile.module.crm.ui.CrmNavigationMenu;
 import com.esofthead.mycollab.vaadin.mvp.IController;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
-import com.vaadin.addon.touchkit.ui.NavigationManager;
+import com.esofthead.vaadin.mobilecomponent.MobileNavigationManager;
 
 /**
  * @author MyCollab Ltd.
  * @since 3.0
  */
 public class CrmModuleController implements IController {
-    final private NavigationManager crmViewNavigation;
+    final private MobileNavigationManager crmViewNavigation;
 
-    public CrmModuleController(NavigationManager navigationManager) {
+    public CrmModuleController(MobileNavigationManager navigationManager) {
         this.crmViewNavigation = navigationManager;
 
         bindCrmEvents();
@@ -47,6 +48,9 @@ public class CrmModuleController implements IController {
 
                     @Override
                     public void handle(CrmEvent.GotoHome event) {
+                    	if(crmViewNavigation.getNavigationMenu() == null)
+                    		crmViewNavigation.setNavigationMenu(new CrmNavigationMenu());
+                    	
                         ActivityStreamPresenter presenter = PresenterResolver
                                 .getPresenter(ActivityStreamPresenter.class);
                         presenter.go(crmViewNavigation, null);

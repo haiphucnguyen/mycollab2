@@ -18,8 +18,9 @@ package com.esofthead.mycollab.vaadin.mvp;
 
 import com.esofthead.mycollab.eventmanager.ApplicationEvent;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
-import com.vaadin.addon.touchkit.ui.NavigationView;
+import com.esofthead.vaadin.mobilecomponent.MobileNavigationView;
 import com.vaadin.ui.ComponentContainer;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,7 +35,7 @@ import java.util.Set;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-public abstract class AbstractMobilePageView extends NavigationView implements
+public abstract class AbstractMobilePageView extends MobileNavigationView implements
         PageView, Serializable {
 	private static final long serialVersionUID = 1L;
 	

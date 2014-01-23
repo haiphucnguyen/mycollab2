@@ -21,6 +21,7 @@ import com.esofthead.mycollab.vaadin.mvp.PageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.VerticalLayout;
 
 /**
  * 
@@ -33,7 +34,12 @@ public class ActivityStreamView extends AbstractMobilePageView implements PageVi
 	private static final long serialVersionUID = 1L;
 
 	public ActivityStreamView() {
-		this.setContent(new Label("AAAA"));
-		this.setLeftComponent(new Button("Back"));
+		final VerticalLayout layout = new VerticalLayout();
+		layout.setSizeFull();
+		layout.addComponent(new Label("AAAAA"));
+		
+		this.setContent(layout);
+		//this.setLeftComponent(new Button("Back"));
+		this.setToggleButton(true);
 	}
 }

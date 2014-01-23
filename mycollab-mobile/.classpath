@@ -13,6 +13,7 @@
   <classpathentry kind="var" path="M2_REPO/javax/servlet/javax.servlet-api/3.1.0/javax.servlet-api-3.1.0.jar" sourcepath="M2_REPO/javax/servlet/javax.servlet-api/3.1.0/javax.servlet-api-3.1.0-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/javax/persistence/persistence-api/1.0/persistence-api-1.0.jar" sourcepath="M2_REPO/javax/persistence/persistence-api/1.0/persistence-api-1.0-sources.jar"/>
   <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+  <classpathentry kind="var" path="M2_REPO/com/esofthead/vaadin/mobilecomponent/1.0.0-SNAPSHOT/mobilecomponent-1.0.0-SNAPSHOT.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/vaadin/vaadin-server/7.1.10/vaadin-server-7.1.10.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/vaadin/vaadin-shared/7.1.10/vaadin-shared-7.1.10.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/vaadin/vaadin-shared-deps/1.0.2/vaadin-shared-deps-1.0.2.jar" sourcepath="M2_REPO/com/vaadin/vaadin-shared-deps/1.0.2/vaadin-shared-deps-1.0.2-sources.jar"/>

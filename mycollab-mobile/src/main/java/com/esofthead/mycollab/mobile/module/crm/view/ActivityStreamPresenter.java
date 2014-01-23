@@ -18,6 +18,7 @@ package com.esofthead.mycollab.mobile.module.crm.view;
 
 import com.esofthead.mycollab.mobile.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
+import com.esofthead.vaadin.mobilecomponent.MobileNavigationManager;
 import com.vaadin.addon.touchkit.ui.NavigationManager;
 
 /**
@@ -31,7 +32,7 @@ public class ActivityStreamPresenter extends AbstractPresenter<ActivityStreamVie
     }
 
     @Override
-    protected void onGo(NavigationManager container, ScreenData<?> data) {
+    protected void onGo(MobileNavigationManager container, ScreenData<?> data) {
         container.navigateTo(view.getWidget());
     }
 }

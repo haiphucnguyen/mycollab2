@@ -50,7 +50,9 @@ import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
+import com.esofthead.vaadin.mobilecomponent.MobileNavigationManager;
 import com.vaadin.addon.touchkit.ui.NavigationManager;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -118,7 +120,7 @@ public class LoginPresenter extends AbstractPresenter<LoginView> {
 	}
 
 	@Override
-	protected void onGo(NavigationManager navigationManager, ScreenData<?> data) {
+	protected void onGo(MobileNavigationManager navigationManager, ScreenData<?> data) {
         navigationManager.navigateTo(view.getWidget());
 
 		AppContext.addFragment("user/login", "Login Page");

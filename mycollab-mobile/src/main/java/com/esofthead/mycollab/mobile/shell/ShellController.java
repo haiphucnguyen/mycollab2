@@ -19,14 +19,13 @@ package com.esofthead.mycollab.mobile.shell;
 import com.esofthead.mycollab.eventmanager.ApplicationEvent;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBus;
-import com.esofthead.mycollab.mobile.module.crm.view.CrmModulePresenter;
+import com.esofthead.mycollab.mobile.module.crm.events.CrmEvent;
 import com.esofthead.mycollab.mobile.shell.events.ShellEvent;
 import com.esofthead.mycollab.mobile.shell.events.ShellEvent.GotoMainPage;
 import com.esofthead.mycollab.mobile.shell.ui.MainViewPresenter;
 import com.esofthead.mycollab.vaadin.mvp.IController;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
-import com.vaadin.addon.touchkit.ui.NavigationManager;
-import com.vaadin.ui.Label;
+import com.esofthead.vaadin.mobilecomponent.MobileNavigationManager;
 
 /**
  * 
@@ -37,11 +36,10 @@ import com.vaadin.ui.Label;
 public class ShellController implements IController {
 	private static final long serialVersionUID = 1L;
 
-	final private NavigationManager mainNav;
+	final private MobileNavigationManager mainNav;
 
-	public ShellController(NavigationManager navigationManager) {
+	public ShellController(MobileNavigationManager navigationManager) {
 		this.mainNav = navigationManager;
-		this.mainNav.addComponent(new Label());
 		bind();
 	}
 
@@ -74,12 +72,7 @@ public class ShellController implements IController {
 
 					@Override
 					public void handle(ShellEvent.GotoCrmModule event) {
-						CrmModulePresenter crmModulePresenter = PresenterResolver
-								.getPresenter(CrmModulePresenter.class);
-						// CrmModuleScreenData.GotoModule screenData = new
-						// CrmModuleScreenData.GotoModule(
-						// (String[]) event.getData());
-						crmModulePresenter.go(mainNav, null);
+						EventBus.getInstance().fireEvent(new CrmEvent.GotoHome(this, event.getData()));						
 					}
 				});
 	}
