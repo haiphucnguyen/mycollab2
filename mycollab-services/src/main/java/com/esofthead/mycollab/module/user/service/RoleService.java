@@ -26,7 +26,9 @@ import com.esofthead.mycollab.module.user.domain.criteria.RoleSearchCriteria;
 import com.esofthead.mycollab.security.PermissionMap;
 
 /**
- * @author hpnguyen
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
 public interface RoleService extends
 		IDefaultService<Integer, Role, RoleSearchCriteria> {

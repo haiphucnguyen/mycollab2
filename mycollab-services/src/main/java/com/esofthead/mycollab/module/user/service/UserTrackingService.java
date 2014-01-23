@@ -18,9 +18,10 @@
 package com.esofthead.mycollab.module.user.service;
 
 /**
- *
+ * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 public class UserTrackingService {
-    
+
 }

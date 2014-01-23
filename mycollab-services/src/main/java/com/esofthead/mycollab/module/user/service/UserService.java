@@ -27,7 +27,8 @@ import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
 
 /**
- * @author hai
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
 public interface UserService extends
 		IDefaultService<String, User, UserSearchCriteria> {

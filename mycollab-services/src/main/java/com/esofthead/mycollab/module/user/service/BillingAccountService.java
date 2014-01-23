@@ -22,11 +22,17 @@ import com.esofthead.mycollab.core.persistence.service.ICrudService;
 import com.esofthead.mycollab.module.user.domain.BillingAccount;
 import com.esofthead.mycollab.module.user.domain.SimpleBillingAccount;
 
-public interface BillingAccountService extends ICrudService<Integer, BillingAccount> {
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ */
+public interface BillingAccountService extends
+		ICrudService<Integer, BillingAccount> {
 	SimpleBillingAccount getBillingAccountById(int accountId);
-	
+
 	BillingAccount getAccountByDomain(String domain);
-	
+
 	@Cacheable
 	BillingAccount getAccountById(@CacheKey Integer accountId);
 }
