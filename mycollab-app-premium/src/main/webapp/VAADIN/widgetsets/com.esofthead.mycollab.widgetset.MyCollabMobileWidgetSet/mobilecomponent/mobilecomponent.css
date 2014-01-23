@@ -11,6 +11,9 @@ html {
 div.v-cache-loading-indicator {
 	right: 6px;
 }
+.v-touchkit-navpanel-navigation {
+	overflow: auto;
+}
 .v-touchkit-navpanel-navigation, .v-mobilecomponent .v-touchkit-navpanel {
 	position: absolute;
 	top: 0px;
