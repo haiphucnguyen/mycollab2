@@ -34,7 +34,7 @@ public class ProjectManagementPage extends BasePage {
 
 	@Override
 	public IModel getPageTitle() {
-		return new Model<String>("MyCollab - Project Management Features");
+		return new Model<String>("Project Management Features - Online Project Management, CRM, Document Management");
 	}
 
 	@Override

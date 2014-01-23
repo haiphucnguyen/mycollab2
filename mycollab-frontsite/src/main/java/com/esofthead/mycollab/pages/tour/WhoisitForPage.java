@@ -34,7 +34,7 @@ public class WhoisitForPage extends BasePage {
 
 	@Override
 	public IModel getPageTitle() {
-		return new Model<String>("MyCollab - Who is it for");
+		return new Model<String>("Who is it for - Online Project Management, CRM, Document Management");
 	}
 
 	@Override

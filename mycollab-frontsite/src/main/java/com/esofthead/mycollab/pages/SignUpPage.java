@@ -424,7 +424,7 @@ public class SignUpPage extends BasePage {
 
 	@Override
 	public IModel getPageTitle() {
-		return new Model<String>("MyCollab - Signup");
+		return new Model<String>("Signup - Online Project Management, CRM, Document Management");
 	}
 
 	@Override

@@ -4,46 +4,39 @@
 <wicket:head>
 	<script type="text/javascript" src="static/js/jquery.jcarousel.min.js"></script>
 	<script type="text/javascript" src="static/js/pricing.js"></script>
-	<!-- <script src="static/js/Hyphenator.js" type="text/javascript"> -->
 	<script>
-	(function($) {
-	    $(function() {
-	        $('.jcarousel').jcarousel();
+		(function($) {
+			$(function() {
+				$('.jcarousel').jcarousel();
 
-	        $('.jcarousel-control-prev')
-	            .on('jcarouselcontrol:active', function() {
-	                $(this).removeClass('inactive');
-	            })
-	            .on('jcarouselcontrol:inactive', function() {
-	                $(this).addClass('inactive');
-	            })
-	            .jcarouselControl({
-	                target: '-=1'
-	            });
+				$('.jcarousel-control-prev').on('jcarouselcontrol:active',
+						function() {
+							$(this).removeClass('inactive');
+						}).on('jcarouselcontrol:inactive', function() {
+					$(this).addClass('inactive');
+				}).jcarouselControl({
+					target : '-=1'
+				});
 
-	        $('.jcarousel-control-next')
-	            .on('jcarouselcontrol:active', function() {
-	                $(this).removeClass('inactive');
-	            })
-	            .on('jcarouselcontrol:inactive', function() {
-	                $(this).addClass('inactive');
-	            })
-	            .jcarouselControl({
-	                target: '+=1'
-	            });
+				$('.jcarousel-control-next').on('jcarouselcontrol:active',
+						function() {
+							$(this).removeClass('inactive');
+						}).on('jcarouselcontrol:inactive', function() {
+					$(this).addClass('inactive');
+				}).jcarouselControl({
+					target : '+=1'
+				});
 
-	        $('.jcarousel-pagination')
-	            .on('jcarouselpagination:active', 'a', function() {
-	                $(this).addClass('active');
-	            })
-	            .on('jcarouselpagination:inactive', 'a', function() {
-	                $(this).removeClass('active');
-	            })
-	            .jcarouselPagination();
-	    });
-	})(jQuery);
-</script>
-<!-- <script type="text/javascript">
+				$('.jcarousel-pagination').on('jcarouselpagination:active',
+						'a', function() {
+							$(this).addClass('active');
+						}).on('jcarouselpagination:inactive', 'a', function() {
+					$(this).removeClass('active');
+				}).jcarouselPagination();
+			});
+		})(jQuery);
+	</script>
+	<!-- <script type="text/javascript">
             Hyphenator.run();
 </script>-->
 </wicket:head>
@@ -67,335 +60,338 @@
 			<div id="pricing-content-wrapper">
 				<div class="tab-content tab1">
 					<div id="pricing-content">
-					<div class="jcarousel-wrapper">
-						<div class="jcarousel">
-						<ul style="left: -428px; top: 0px;">
-						<li>	<div class="package-block">
-							<div class="block-header">
-								<h2 class="prig-free">FREE</h2>
+						<div class="jcarousel-wrapper">
+							<div class="jcarousel">
+								<ul style="left: -428px; top: 0px;">
+									<li>
+										<div class="package-block">
+											<div class="block-header">
+												<h2 class="prig-free">FREE</h2>
 
-								<p class="prig-description">
-									Best way to try MyCollab <br />at no Risk
-								</p>
+												<p class="prig-description">
+													Best way to try MyCollab <br />at no Risk
+												</p>
 
+											</div>
+											<div class="block-content">
+												<div class="info-row">
+													<div class="left-col">
+														<span class="blue-text">3</span>
+													</div>
+													<div class="right-col">&nbsp;Users</div>
+													<div class="clear"></div>
+												</div>
+												<div class="info-row">
+													<div class="left-col">
+														<span class="blue-text">200 MB</span>
+													</div>
+													<div class="right-col">&nbsp;Storage</div>
+													<div class="clear"></div>
+												</div>
+												<div class="info-row">
+													<div class="left-col">
+														<span class="blue-text">1</span>
+													</div>
+													<div class="right-col">&nbsp;Project</div>
+													<div class="clear"></div>
+												</div>
+												<div class="info-row style2">
+													<img alt="yes" src="static/images/pricing_yes_new.png" />&nbsp;SSL
+													Encryption
+												</div>
+												<div class="info-row style2">
+													<img alt="no" src="static/images/pricing_no_new.png" />&nbsp;Documents
+													Management
+												</div>
+												<div class="info-row style2">
+													<img alt="yes" src="static/images/pricing_yes_new.png" />&nbsp;Customers
+													Management
+												</div>
+												<div class="info-row style2">
+													<img alt="no" src="static/images/pricing_no_new.png" />&nbsp;Bug
+													tracking
+												</div>
+												<div class="info-row style2">
+													<img alt="no" src="static/images/pricing_no_new.png" />&nbsp;Standup
+													Meeting
+												</div>
+												<div class="info-row style2">
+													<img alt="no" src="static/images/pricing_no_new.png" />&nbsp;Time
+													Tracking
+												</div>
+											</div>
+											<div class="block-footer">
+												<p class="prig-price">
+													$0.00<span class="prig-month">/mo</span>
+												</p>
+												<div class="pricing-button">
+													<a wicket:id="free-link" href="#">Select</a>
+												</div>
+											</div>
+										</div>
+									</li>
+									<li>
+										<div class="package-block">
+											<div class="block-header">
+												<h2 class="prig-micro">MICRO</h2>
+												<p class="prig-description">Great For Individuals</p>
+											</div>
+											<div class="block-content">
+												<div class="info-row">
+													<div class="left-col">
+														<span class="blue-text">3</span>
+													</div>
+													<div class="right-col">&nbsp;Users</div>
+													<div class="clear"></div>
+												</div>
+												<div class="info-row">
+													<div class="left-col">
+														<span class="blue-text">1 GB</span>
+													</div>
+													<div class="right-col">&nbsp;Storage</div>
+													<div class="clear"></div>
+												</div>
+												<div class="info-row">
+													<div class="left-col">
+														<span class="blue-text">1</span>
+													</div>
+													<div class="right-col">&nbsp;Project</div>
+													<div class="clear"></div>
+												</div>
+												<div class="info-row style2">
+													<img alt="yes" src="static/images/pricing_yes_new.png" />&nbsp;SSL
+													Encryption
+												</div>
+												<div class="info-row style2">
+													<img alt="yes" src="static/images/pricing_yes_new.png" />&nbsp;Documents
+													Management
+												</div>
+												<div class="info-row style2">
+													<img alt="yes" src="static/images/pricing_yes_new.png" />&nbsp;Customers
+													Management
+												</div>
+												<div class="info-row style2">
+													<img alt="yes" src="static/images/pricing_yes_new.png" />&nbsp;Bug
+													tracking
+												</div>
+												<div class="info-row style2">
+													<img alt="no" src="static/images/pricing_no_new.png" />&nbsp;Standup
+													Meeting
+												</div>
+												<div class="info-row style2">
+													<img alt="no" src="static/images/pricing_no_new.png" />&nbsp;Time
+													Tracking
+												</div>
+											</div>
+											<div class="block-footer">
+												<p class="prig-price">
+													$9.99<span class="prig-month">/mo</span>
+												</p>
+												<div class="pricing-button">
+													<a wicket:id="micro-link" href="#">Start Free Trial</a>
+												</div>
+											</div>
+										</div>
+									</li>
+									<li>
+										<div class="package-block best-choice">
+											<div class="block-header">
+												<h2 class="prig-compact">COMPACT</h2>
+												<p class="prig-description">Best For Teams</p>
+											</div>
+											<div class="block-content">
+												<div class="info-row">
+													<div class="left-col">
+														<span class="blue-text">5</span>
+													</div>
+													<div class="right-col">&nbsp;Users</div>
+													<div class="clear"></div>
+												</div>
+												<div class="info-row">
+													<div class="left-col">
+														<span class="blue-text">3 GB</span>
+													</div>
+													<div class="right-col">&nbsp;Storage</div>
+													<div class="clear"></div>
+												</div>
+												<div class="info-row">
+													<div class="left-col">
+														<span class="blue-text">10</span>
+													</div>
+													<div class="right-col">&nbsp;Projects</div>
+													<div class="clear"></div>
+												</div>
+												<div class="info-row style2">
+													<img alt="yes" src="static/images/pricing_yes_new.png" />&nbsp;SSL
+													Encryption
+												</div>
+												<div class="info-row style2">
+													<img alt="yes" src="static/images/pricing_yes_new.png" />&nbsp;Documents
+													Management
+												</div>
+												<div class="info-row style2">
+													<img alt="yes" src="static/images/pricing_yes_new.png" />&nbsp;Customers
+													Management
+												</div>
+												<div class="info-row style2">
+													<img alt="yes" src="static/images/pricing_yes_new.png" />&nbsp;Bug
+													tracking
+												</div>
+												<div class="info-row style2">
+													<img alt="no" src="static/images/pricing_no_new.png" />&nbsp;Standup
+													Meeting
+												</div>
+												<div class="info-row style2">
+													<img alt="no" src="static/images/pricing_no_new.png" />&nbsp;Time
+													Tracking
+												</div>
+											</div>
+											<div class="block-footer">
+												<p class="prig-price">
+													$19.99<span class="prig-month">/mo</span>
+												</p>
+												<div class="pricing-button">
+													<a wicket:id="compact-link" href="#">Start Free Trial</a>
+												</div>
+											</div>
+										</div>
+
+									</li>
+									<li>
+										<div class="package-block">
+											<div class="block-header">
+												<h2 class="prig-corporate">CORPORATE</h2>
+												<p class="prig-description">Best For Large Teams</p>
+											</div>
+											<div class="block-content">
+												<div class="info-row">
+													<div class="left-col">
+														<span class="blue-text">30</span>
+													</div>
+													<div class="right-col">&nbsp;Users</div>
+													<div class="clear"></div>
+												</div>
+												<div class="info-row">
+													<div class="left-col">
+														<span class="blue-text">9 GB</span>
+													</div>
+													<div class="right-col">&nbsp;Storage</div>
+													<div class="clear"></div>
+												</div>
+												<div class="info-row">
+													<div class="left-col">
+														<span class="blue-text">10</span>
+													</div>
+													<div class="right-col">&nbsp;Projects</div>
+													<div class="clear"></div>
+												</div>
+												<div class="info-row style2">
+													<img alt="yes" src="static/images/pricing_yes_new.png" />&nbsp;SSL
+													Encryption
+												</div>
+												<div class="info-row style2">
+													<img alt="yes" src="static/images/pricing_yes_new.png" />&nbsp;Documents
+													Management
+												</div>
+												<div class="info-row style2">
+													<img alt="yes" src="static/images/pricing_yes_new.png" />&nbsp;Customers
+													Management
+												</div>
+												<div class="info-row style2">
+													<img alt="yes" src="static/images/pricing_yes_new.png" />&nbsp;Bug
+													tracking
+												</div>
+												<div class="info-row style2">
+													<img alt="yes" src="static/images/pricing_yes_new.png" />&nbsp;Standup
+													Meeting
+												</div>
+												<div class="info-row style2">
+													<img alt="yes" src="static/images/pricing_yes_new.png" />&nbsp;Time
+													Tracking
+												</div>
+											</div>
+											<div class="block-footer">
+												<p class="prig-price">
+													$49.99<span class="prig-month">/mo</span>
+												</p>
+												<div class="pricing-button">
+													<a wicket:id="corporate-link" href="#">Start Free Trial</a>
+												</div>
+											</div>
+										</div>
+									</li>
+									<li>
+										<div class="package-block">
+											<div class="block-header">
+												<h2 class="prig-enterprise">ENTERPRISE</h2>
+												<p class="prig-description">Medium &amp; Large
+													Enterprises</p>
+											</div>
+											<div class="block-content">
+												<div class="info-row">
+													<div class="left-col">
+														<span class="blue-text">200</span>
+													</div>
+													<div class="right-col">&nbsp;Users</div>
+													<div class="clear"></div>
+												</div>
+												<div class="info-row">
+													<div class="left-col">
+														<span class="blue-text">20 GB</span>
+													</div>
+													<div class="right-col">&nbsp;Storage</div>
+													<div class="clear"></div>
+												</div>
+												<div class="info-row">
+													<div class="left-col">
+														<span class="blue-text">50</span>
+													</div>
+													<div class="right-col">&nbsp;Projects</div>
+													<div class="clear"></div>
+												</div>
+												<div class="info-row style2">
+													<img alt="yes" src="static/images/pricing_yes_new.png" />&nbsp;SSL
+													Encryption
+												</div>
+												<div class="info-row style2">
+													<img alt="yes" src="static/images/pricing_yes_new.png" />&nbsp;Documents
+													Management
+												</div>
+												<div class="info-row style2">
+													<img alt="yes" src="static/images/pricing_yes_new.png" />&nbsp;Customers
+													Management
+												</div>
+												<div class="info-row style2">
+													<img alt="yes" src="static/images/pricing_yes_new.png" />&nbsp;Bug
+													tracking
+												</div>
+												<div class="info-row style2">
+													<img alt="yes" src="static/images/pricing_yes_new.png" />&nbsp;Standup
+													Meeting
+												</div>
+												<div class="info-row style2">
+													<img alt="yes" src="static/images/pricing_yes_new.png" />&nbsp;Time
+													Tracking
+												</div>
+											</div>
+											<div class="block-footer">
+												<p class="prig-price">
+													$99.99<span class="prig-month">/mo</span>
+												</p>
+												<div class="pricing-button">
+													<a wicket:id="enterprise-link" href="#">Start Free
+														Trial</a>
+												</div>
+											</div>
+										</div>
+									</li>
+								</ul>
 							</div>
-							<div class="block-content">
-								<div class="info-row">
-									<div class="left-col">
-										<span class="blue-text">3</span>
-									</div>
-									<div class="right-col">&nbsp;Users</div>
-									<div class="clear"></div>
-								</div>
-								<div class="info-row">
-									<div class="left-col">
-										<span class="blue-text">200 MB</span>
-									</div>
-									<div class="right-col">&nbsp;Storage</div>
-									<div class="clear"></div>
-								</div>
-								<div class="info-row">
-									<div class="left-col">
-										<span class="blue-text">1</span>
-									</div>
-									<div class="right-col">&nbsp;Project</div>
-									<div class="clear"></div>
-								</div>
-								<div class="info-row style2">
-									<img alt="yes" src="static/images/pricing_yes_new.png" />&nbsp;SSL
-									Encryption
-								</div>
-								<div class="info-row style2">
-									<img alt="no" src="static/images/pricing_no_new.png" />&nbsp;Documents
-									Management
-								</div>
-								<div class="info-row style2">
-									<img alt="yes" src="static/images/pricing_yes_new.png" />&nbsp;Customers
-									Management
-								</div>
-								<div class="info-row style2">
-									<img alt="no" src="static/images/pricing_no_new.png" />&nbsp;Bug
-									tracking
-								</div>
-								<div class="info-row style2">
-									<img alt="no" src="static/images/pricing_no_new.png" />&nbsp;Standup
-									Meeting
-								</div>
-								<div class="info-row style2">
-									<img alt="no" src="static/images/pricing_no_new.png" />&nbsp;Time
-									Tracking
-								</div>
-							</div>
-							<div class="block-footer">
-								<p class="prig-price">
-									$0.00<span class="prig-month">/mo</span>
-								</p>
-								<div class="pricing-button">
-									<a wicket:id="free-link" href="#">Select</a>
-								</div>
-							</div>
-						</div>
-						</li>
-						<li>
-						<div class="package-block">
-							<div class="block-header">
-								<h2 class="prig-micro">MICRO</h2>
-								<p class="prig-description">Great For Individuals</p>
-							</div>
-							<div class="block-content">
-								<div class="info-row">
-									<div class="left-col">
-										<span class="blue-text">3</span>
-									</div>
-									<div class="right-col">&nbsp;Users</div>
-									<div class="clear"></div>
-								</div>
-								<div class="info-row">
-									<div class="left-col">
-										<span class="blue-text">1 GB</span>
-									</div>
-									<div class="right-col">&nbsp;Storage</div>
-									<div class="clear"></div>
-								</div>
-								<div class="info-row">
-									<div class="left-col">
-										<span class="blue-text">1</span>
-									</div>
-									<div class="right-col">&nbsp;Project</div>
-									<div class="clear"></div>
-								</div>
-								<div class="info-row style2">
-									<img alt="yes" src="static/images/pricing_yes_new.png" />&nbsp;SSL
-									Encryption
-								</div>
-								<div class="info-row style2">
-									<img alt="yes" src="static/images/pricing_yes_new.png" />&nbsp;Documents
-									Management
-								</div>
-								<div class="info-row style2">
-									<img alt="yes" src="static/images/pricing_yes_new.png" />&nbsp;Customers
-									Management
-								</div>
-								<div class="info-row style2">
-									<img alt="yes" src="static/images/pricing_yes_new.png" />&nbsp;Bug
-									tracking
-								</div>
-								<div class="info-row style2">
-									<img alt="no" src="static/images/pricing_no_new.png" />&nbsp;Standup
-									Meeting
-								</div>
-								<div class="info-row style2">
-									<img alt="no" src="static/images/pricing_no_new.png" />&nbsp;Time
-									Tracking
-								</div>
-							</div>
-							<div class="block-footer">
-								<p class="prig-price">
-									$9.99<span class="prig-month">/mo</span>
-								</p>
-								<div class="pricing-button">
-									<a wicket:id="micro-link" href="#">Start Free Trial</a>
-								</div>
-							</div>
-						</div>
-						</li>
-						<li>
-						<div class="package-block best-choice">
-							<div class="block-header">
-								<h2 class="prig-compact">COMPACT</h2>
-								<p class="prig-description">Best For Teams</p>
-							</div>
-							<div class="block-content">
-								<div class="info-row">
-									<div class="left-col">
-										<span class="blue-text">5</span>
-									</div>
-									<div class="right-col">&nbsp;Users</div>
-									<div class="clear"></div>
-								</div>
-								<div class="info-row">
-									<div class="left-col">
-										<span class="blue-text">3 GB</span>
-									</div>
-									<div class="right-col">&nbsp;Storage</div>
-									<div class="clear"></div>
-								</div>
-								<div class="info-row">
-									<div class="left-col">
-										<span class="blue-text">10</span>
-									</div>
-									<div class="right-col">&nbsp;Projects</div>
-									<div class="clear"></div>
-								</div>
-								<div class="info-row style2">
-									<img alt="yes" src="static/images/pricing_yes_new.png" />&nbsp;SSL
-									Encryption
-								</div>
-								<div class="info-row style2">
-									<img alt="yes" src="static/images/pricing_yes_new.png" />&nbsp;Documents
-									Management
-								</div>
-								<div class="info-row style2">
-									<img alt="yes" src="static/images/pricing_yes_new.png" />&nbsp;Customers
-									Management
-								</div>
-								<div class="info-row style2">
-									<img alt="yes" src="static/images/pricing_yes_new.png" />&nbsp;Bug
-									tracking
-								</div>
-								<div class="info-row style2">
-									<img alt="no" src="static/images/pricing_no_new.png" />&nbsp;Standup
-									Meeting
-								</div>
-								<div class="info-row style2">
-									<img alt="no" src="static/images/pricing_no_new.png" />&nbsp;Time
-									Tracking
-								</div>
-							</div>
-							<div class="block-footer">
-								<p class="prig-price">
-									$19.99<span class="prig-month">/mo</span>
-								</p>
-								<div class="pricing-button">
-									<a wicket:id="compact-link" href="#">Start Free Trial</a>
-								</div>
-							</div>
-						</div>
-						
-						</li>
-						<li>
-						<div class="package-block">
-							<div class="block-header">
-								<h2 class="prig-corporate">CORPORATE</h2>
-								<p class="prig-description">Best For Large Teams</p>
-							</div>
-							<div class="block-content">
-								<div class="info-row">
-									<div class="left-col">
-										<span class="blue-text">30</span>
-									</div>
-									<div class="right-col">&nbsp;Users</div>
-									<div class="clear"></div>
-								</div>
-								<div class="info-row">
-									<div class="left-col">
-										<span class="blue-text">9 GB</span>
-									</div>
-									<div class="right-col">&nbsp;Storage</div>
-									<div class="clear"></div>
-								</div>
-								<div class="info-row">
-									<div class="left-col">
-										<span class="blue-text">10</span>
-									</div>
-									<div class="right-col">&nbsp;Projects</div>
-									<div class="clear"></div>
-								</div>
-								<div class="info-row style2">
-									<img alt="yes" src="static/images/pricing_yes_new.png" />&nbsp;SSL
-									Encryption
-								</div>
-								<div class="info-row style2">
-									<img alt="yes" src="static/images/pricing_yes_new.png" />&nbsp;Documents
-									Management
-								</div>
-								<div class="info-row style2">
-									<img alt="yes" src="static/images/pricing_yes_new.png" />&nbsp;Customers
-									Management
-								</div>
-								<div class="info-row style2">
-									<img alt="yes" src="static/images/pricing_yes_new.png" />&nbsp;Bug
-									tracking
-								</div>
-								<div class="info-row style2">
-									<img alt="yes" src="static/images/pricing_yes_new.png" />&nbsp;Standup
-									Meeting
-								</div>
-								<div class="info-row style2">
-									<img alt="yes" src="static/images/pricing_yes_new.png" />&nbsp;Time
-									Tracking
-								</div>
-							</div>
-							<div class="block-footer">
-								<p class="prig-price">
-									$49.99<span class="prig-month">/mo</span>
-								</p>
-								<div class="pricing-button">
-									<a wicket:id="corporate-link" href="#">Start Free Trial</a>
-								</div>
-							</div>
-						</div>
-						</li>
-						<li>
-						<div class="package-block">
-							<div class="block-header">
-								<h2 class="prig-enterprise">ENTERPRISE</h2>
-								<p class="prig-description">Medium &amp; Large Enterprises</p>
-							</div>
-							<div class="block-content">
-								<div class="info-row">
-									<div class="left-col">
-										<span class="blue-text">200</span>
-									</div>
-									<div class="right-col">&nbsp;Users</div>
-									<div class="clear"></div>
-								</div>
-								<div class="info-row">
-									<div class="left-col">
-										<span class="blue-text">20 GB</span>
-									</div>
-									<div class="right-col">&nbsp;Storage</div>
-									<div class="clear"></div>
-								</div>
-								<div class="info-row">
-									<div class="left-col">
-										<span class="blue-text">50</span>
-									</div>
-									<div class="right-col">&nbsp;Projects</div>
-									<div class="clear"></div>
-								</div>
-								<div class="info-row style2">
-									<img alt="yes" src="static/images/pricing_yes_new.png" />&nbsp;SSL
-									Encryption
-								</div>
-								<div class="info-row style2">
-									<img alt="yes" src="static/images/pricing_yes_new.png" />&nbsp;Documents
-									Management
-								</div>
-								<div class="info-row style2">
-									<img alt="yes" src="static/images/pricing_yes_new.png" />&nbsp;Customers
-									Management
-								</div>
-								<div class="info-row style2">
-									<img alt="yes" src="static/images/pricing_yes_new.png" />&nbsp;Bug
-									tracking
-								</div>
-								<div class="info-row style2">
-									<img alt="yes" src="static/images/pricing_yes_new.png" />&nbsp;Standup
-									Meeting
-								</div>
-								<div class="info-row style2">
-									<img alt="yes" src="static/images/pricing_yes_new.png" />&nbsp;Time
-									Tracking
-								</div>
-							</div>
-							<div class="block-footer">
-								<p class="prig-price">
-									$99.99<span class="prig-month">/mo</span>
-								</p>
-								<div class="pricing-button">
-									<a wicket:id="enterprise-link" href="#">Start Free Trial</a>
-								</div>
-							</div>
-						</div>
-						</li>
-						</ul>
-						</div>
-						<a href="#" class="jcarousel-control-prev"></a>
-               			<a href="#" class="jcarousel-control-next"></a>
-                
-                		<p class="jcarousel-pagination"></p>
-						
+							<a href="#" class="jcarousel-control-prev"></a> <a href="#"
+								class="jcarousel-control-next"></a>
+
+							<p class="jcarousel-pagination"></p>
+
 						</div>
 					</div>
 
@@ -549,61 +545,73 @@
 							</div>
 							<div class="clear"></div>
 							<div id="table-wrapper">
-							<table id="service-features" class="mainfeature-table hyphenate"
-								cellpadding="10" cellspacing="0" width="100%" >
-								<tr class="table-header">
-									<td class="feature-name" width="425">Main features</td>
-									<td>Community Edition</td>
-									<td>Professional Edition</td>
-								</tr>
-								<tr class="table-row odd">
-									<td class="feature-name">Customer Management</td>
-									<td><img alt="yes" src="static/images/pricing_yes_new.png" /></td>
-									<td><img alt="yes" src="static/images/pricing_yes_new.png" /></td>
-								</tr>
-								<tr class="table-row">
-									<td class="feature-name">Project Management</td>
-									<td><img alt="yes" src="static/images/pricing_yes_new.png" /></td>
-									<td class="table-row"><img alt="yes"
-										src="static/images/pricing_yes_new.png" /></td>
-								</tr>
-								<tr class="table-row odd">
-									<td class="feature-name">Email Reporting</td>
-									<td><img alt="yes" src="static/images/pricing_yes_new.png" /></td>
-									<td class="table-row"><img alt="yes"
-										src="static/images/pricing_yes_new.png" /></td>
-								</tr>
-								<tr class="table-row">
-									<td class="feature-name">Boost Performance</td>
-									<td><img alt="no" src="static/images/pricing_no_new.png" /></td>
-									<td><img alt="yes" src="static/images/pricing_yes_new.png" /></td>
-								</tr>
-								<tr class="table-row odd">
-									<td class="feature-name">Documents</td>
-									<td><img alt="no" src="static/images/pricing_no_new.png" /></td>
-									<td><img alt="yes" src="static/images/pricing_yes_new.png" /></td>
-								</tr>
-								<tr class="table-row">
-									<td class="feature-name">Automatic alerts and reminders</td>
-									<td><img alt="yes" src="static/images/pricing_yes_new.png" /></td>
-									<td><img alt="yes" src="static/images/pricing_yes_new.png" /></td>
-								</tr>
-								<tr class="table-row odd">
-									<td class="feature-name">Issues Tracking</td>
-									<td><img alt="yes" src="static/images/pricing_yes_new.png" /></td>
-									<td><img alt="yes" src="static/images/pricing_yes_new.png" /></td>
-								</tr>
-								<tr class="table-row">
-									<td class="feature-name">Time Tracking</td>
-									<td><img alt="no" src="static/images/pricing_no_new.png" /></td>
-									<td><img alt="yes" src="static/images/pricing_yes_new.png" /></td>
-								</tr>
-								<tr class="table-row odd">
-									<td class="feature-name">Standup Report</td>
-									<td><img alt="no" src="static/images/pricing_no_new.png" /></td>
-									<td><img alt="yes" src="static/images/pricing_yes_new.png" /></td>
-								</tr>
-							</table>
+								<table id="service-features" class="mainfeature-table hyphenate"
+									cellpadding="10" cellspacing="0" width="100%">
+									<tr class="table-header">
+										<td class="feature-name" width="425">Main features</td>
+										<td>Community Edition</td>
+										<td>Professional Edition</td>
+									</tr>
+									<tr class="table-row odd">
+										<td class="feature-name">Customer Management</td>
+										<td><img alt="yes"
+											src="static/images/pricing_yes_new.png" /></td>
+										<td><img alt="yes"
+											src="static/images/pricing_yes_new.png" /></td>
+									</tr>
+									<tr class="table-row">
+										<td class="feature-name">Project Management</td>
+										<td><img alt="yes"
+											src="static/images/pricing_yes_new.png" /></td>
+										<td class="table-row"><img alt="yes"
+											src="static/images/pricing_yes_new.png" /></td>
+									</tr>
+									<tr class="table-row odd">
+										<td class="feature-name">Email Reporting</td>
+										<td><img alt="yes"
+											src="static/images/pricing_yes_new.png" /></td>
+										<td class="table-row"><img alt="yes"
+											src="static/images/pricing_yes_new.png" /></td>
+									</tr>
+									<tr class="table-row">
+										<td class="feature-name">Boost Performance</td>
+										<td><img alt="no" src="static/images/pricing_no_new.png" /></td>
+										<td><img alt="yes"
+											src="static/images/pricing_yes_new.png" /></td>
+									</tr>
+									<tr class="table-row odd">
+										<td class="feature-name">Documents</td>
+										<td><img alt="no" src="static/images/pricing_no_new.png" /></td>
+										<td><img alt="yes"
+											src="static/images/pricing_yes_new.png" /></td>
+									</tr>
+									<tr class="table-row">
+										<td class="feature-name">Automatic alerts and reminders</td>
+										<td><img alt="yes"
+											src="static/images/pricing_yes_new.png" /></td>
+										<td><img alt="yes"
+											src="static/images/pricing_yes_new.png" /></td>
+									</tr>
+									<tr class="table-row odd">
+										<td class="feature-name">Issues Tracking</td>
+										<td><img alt="yes"
+											src="static/images/pricing_yes_new.png" /></td>
+										<td><img alt="yes"
+											src="static/images/pricing_yes_new.png" /></td>
+									</tr>
+									<tr class="table-row">
+										<td class="feature-name">Time Tracking</td>
+										<td><img alt="no" src="static/images/pricing_no_new.png" /></td>
+										<td><img alt="yes"
+											src="static/images/pricing_yes_new.png" /></td>
+									</tr>
+									<tr class="table-row odd">
+										<td class="feature-name">Standup Report</td>
+										<td><img alt="no" src="static/images/pricing_no_new.png" /></td>
+										<td><img alt="yes"
+											src="static/images/pricing_yes_new.png" /></td>
+									</tr>
+								</table>
 							</div>
 							<div class="clear"></div>
 							<table class="mainfeature-table" cellpadding="10" cellspacing="0"

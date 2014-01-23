@@ -38,7 +38,7 @@ public class TourPage extends BasePage {
 	@Override
 	public IModel getPageTitle() {
 		return new Model<String>(
-				"MyCollab - Cloud CRM, Project, Document Management and more tools");
+				"Tour - Online Project Management, CRM, Document Management");
 	}
 
 	@Override

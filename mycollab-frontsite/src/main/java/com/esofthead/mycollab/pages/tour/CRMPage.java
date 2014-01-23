@@ -34,7 +34,7 @@ public class CRMPage extends BasePage {
 
 	@Override
 	public IModel getPageTitle() {
-		return new Model<String>("MyCollab - Crm Features");
+		return new Model<String>("Crm Features - Online Project Management, CRM, Document Management");
 	}
 
 	@Override

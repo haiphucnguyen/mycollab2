@@ -13,7 +13,7 @@ public class TermOfServicePage extends BasePage {
 
 	@Override
 	public IModel getPageTitle() {
-		return new Model<String>("MyCollab - Terms of Service");
+		return new Model<String>("Terms of Service - Online Project Management, CRM, Document Management");
 	}
 
 	@Override

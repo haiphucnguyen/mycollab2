@@ -16,7 +16,7 @@ public class PrivacyPage extends BasePage {
 
 	@Override
 	public IModel getPageTitle() {
-		return new Model<String>("MyCollab - Privacy");
+		return new Model<String>("Privacy - Online Project Management, CRM, Document Management");
 	}
 
 	@Override

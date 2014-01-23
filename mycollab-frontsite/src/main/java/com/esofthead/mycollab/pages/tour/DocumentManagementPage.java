@@ -34,7 +34,7 @@ public class DocumentManagementPage extends BasePage {
 
 	@Override
 	public IModel getPageTitle() {
-		return new Model<String>("MyCollab - Cloud Office Tools");
+		return new Model<String>("Document Features - Online Project Management, CRM, Document Management");
 	}
 
 	@Override

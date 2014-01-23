@@ -162,7 +162,8 @@ public class ContactUsPage extends BasePage {
 
 	@Override
 	public IModel getPageTitle() {
-		return new Model<String>("MyCollab - Contact Us");
+		return new Model<String>(
+				"Contact Us - Online Project Management, CRM, Document Management");
 	}
 
 	@Override

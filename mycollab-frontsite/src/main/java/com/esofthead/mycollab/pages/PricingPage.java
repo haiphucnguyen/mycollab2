@@ -29,7 +29,7 @@ public class PricingPage extends BasePage {
 
 	@Override
 	public IModel getPageTitle() {
-		return new Model<String>("MyCollab - Pricing");
+		return new Model<String>("Pricing - Online Project Management, CRM, Document Management");
 	}
 
 	@Override

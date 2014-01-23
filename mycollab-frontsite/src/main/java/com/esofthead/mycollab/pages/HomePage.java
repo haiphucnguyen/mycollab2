@@ -23,7 +23,7 @@ public class HomePage extends BasePage {
 	@Override
 	public IModel getPageTitle() {
 		return new Model<String>(
-				"MyCollab - Cloud CRM, Project, Document Management and more tools");
+				"Home - Online Project Management, CRM, Document Management");
 	}
 
 	@Override
