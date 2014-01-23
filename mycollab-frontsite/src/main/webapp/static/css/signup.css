@@ -223,6 +223,12 @@
 		width:auto;
 		padding: 0;
 	}
+	#signup-content .sig-right-block h2{
+		font-size:16px;
+		background: url("../images/pricing_question.png") no-repeat scroll left top 3px transparent;
+		margin-top:0;
+		margin-bottom:0;
+	}
 	.sig-mid-right {
 		margin-bottom:0;
 	}
@@ -272,10 +278,6 @@
 	}
 	.sig-right-block p {
 		font-size:14px;
-	}
-	.sig-right-block h2 {
-		font-size:inherit;
-		background: url("../images/pricing_question.png") no-repeat scroll left top 3px transparent;
 	}
 	.sig-left-otherservices ul {
 		display: table;
