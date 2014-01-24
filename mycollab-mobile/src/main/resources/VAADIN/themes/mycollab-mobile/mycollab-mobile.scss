@@ -117,6 +117,7 @@
 	    		background: none no-repeat 0 0 rgb(255, 255, 255);
 	    		border-bottom: 1px solid rgb(226, 226, 226);
 	    		border-radius: 0px;
+	    		-webkit-tap-highlight-color: transparent;
 	    		
 	    		.v-button-wrap {
 	    			padding: 6px 12px;
@@ -135,9 +136,9 @@
 	    		}
 	    	}
 	    	
-	    	.v-button.nav-btn:active, .v-button.nav-btn.isSelected {
+	    	.v-button.nav-btn.isSelected {
 	    		background-color: rgba(0, 0, 0, 0.3);
-	    		
+	    	
 	    		.v-button-caption {
 	    			color: rgb(255, 255, 255);
 	    			position: relative;
@@ -152,25 +153,33 @@
     }
     
     /* Main Panel Styles */
-    .mobilenavview {
-    	background-color: rgb(255, 255, 255);
-    	
-    	.v-touchkit-navbar {
-    		.v-touchkit-navbar-left {
-    			max-width: 49px;
-    		}
-    		.v-touchkit-navbar-caption {
-    			line-height: 4rem;
-    			height: 4rem;
-    			position: absolute;
-    			left: 55px;
-    			text-align: left;
-    			font-size: 2rem;
-    			color: rgb(255, 255, 255);
-    		}
-    	} 
-    }
-
+    .v-touchkit-navpanel-wrapper {
+		-webkit-tap-highlight-color: transparent;
+				
+	    .mobilenavview {
+	    	background-color: rgb(255, 255, 255);
+	    	
+	    	.v-touchkit-navbar {
+	    		.v-touchkit-navbar-left {
+	    			max-width: 49px;
+	    		}
+	    		.v-touchkit-navbar-caption {
+	    			line-height: 4rem;
+	    			height: 4rem;
+	    			position: absolute;
+	    			left: 55px;
+	    			text-align: left;
+	    			font-size: 2rem;
+	    			color: rgb(255, 255, 255);
+	    		}
+	    	}
+	    	
+	    	.v-touchkit-navview-wrapper {
+				-webkit-tap-highlight-color: transparent;
+	    	}
+	    }
+	}
+	
     .v-button {
         line-height: normal;
         box-shadow: none;
@@ -224,5 +233,11 @@
 
     .v-textfield.v-textfield-focus {
         box-shadow: 0px 0px 3px 1px #49a3e1;
+    }
+    
+    .v-button:active {
+    	.v-button-wrap:after {
+    		background-color: transparent;
+    	}
     }
 }
