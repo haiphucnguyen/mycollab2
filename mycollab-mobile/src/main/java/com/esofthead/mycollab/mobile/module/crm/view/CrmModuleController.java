@@ -19,8 +19,10 @@ package com.esofthead.mycollab.mobile.module.crm.view;
 import com.esofthead.mycollab.eventmanager.ApplicationEvent;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBus;
+import com.esofthead.mycollab.mobile.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.mobile.module.crm.events.CrmEvent;
 import com.esofthead.mycollab.mobile.module.crm.ui.CrmNavigationMenu;
+import com.esofthead.mycollab.mobile.module.crm.view.account.AccountListPresenter;
 import com.esofthead.mycollab.vaadin.mvp.IController;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.vaadin.mobilecomponent.MobileNavigationManager;
@@ -36,9 +38,10 @@ public class CrmModuleController implements IController {
         this.crmViewNavigation = navigationManager;
 
         bindCrmEvents();
+        bindAccountEvents();
     }
 
-    private void bindCrmEvents() {
+	private void bindCrmEvents() {
         EventBus.getInstance().addListener(
                 new ApplicationEventListener<CrmEvent.GotoHome>() {
                     @Override
@@ -61,4 +64,25 @@ public class CrmModuleController implements IController {
                     }
                 });
     }
+	
+	private void bindAccountEvents() {
+		EventBus.getInstance().addListener(
+				new ApplicationEventListener<AccountEvent.GotoList>() {
+
+					private static final long serialVersionUID = -3451799893080539849L;
+		
+					@Override
+					public Class<? extends ApplicationEvent> getEventType() {
+						return AccountEvent.GotoList.class;
+					}
+		
+					@Override
+					public void handle(AccountEvent.GotoList event) {
+						AccountListPresenter presenter = PresenterResolver.getPresenter(AccountListPresenter.class);
+						presenter.go(crmViewNavigation, null);
+					}
+					
+				}
+		);
+	}
 }

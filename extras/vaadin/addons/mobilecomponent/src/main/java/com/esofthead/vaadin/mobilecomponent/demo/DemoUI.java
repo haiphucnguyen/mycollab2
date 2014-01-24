@@ -1,5 +1,8 @@
 package com.esofthead.vaadin.mobilecomponent.demo;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import javax.servlet.annotation.WebServlet;
 
 import com.esofthead.vaadin.mobilecomponent.MobileNavigationManager;
@@ -19,6 +22,8 @@ import com.vaadin.ui.VerticalLayout;
 @Title("MobileNavigationManager Add-on Demo")
 @SuppressWarnings("serial")
 public class DemoUI extends UI {
+	
+	private static Logger log = Logger.getLogger(DemoUI.class.getName());
 
     @WebServlet(value = "/*", asyncSupported = true)
     @VaadinServletConfiguration(productionMode = false, ui = DemoUI.class, widgetset = "com.esofthead.vaadin.mobilecomponent.WidgetSet")
@@ -32,7 +37,15 @@ public class DemoUI extends UI {
         final MobileNavigationManager root = new MobileNavigationManager();
 
         VerticalLayout mainNav = new VerticalLayout();
-        mainNav.addComponent(new Label("This is main navigation"));
+        Button testBtn = new Button("Click me", new Button.ClickListener() {
+			
+			@Override
+			public void buttonClick(ClickEvent event) {
+				log.log(Level.INFO, "Button clicked");
+			}
+		});
+        //testBtn.add
+        mainNav.addComponent(testBtn);
         mainNav.setHeight("1000px");
         root.setNavigationMenu(mainNav);
         root.setMaintainBreadcrumb(false);

@@ -29,13 +29,16 @@ public class VMobileNavigationManager extends VNavigationManager {
         navigationMenu = new SimplePanel();
         navigationMenu.setStyleName(getStyleName() + "-navigation");
         
-        wrapper.getElement().appendChild(navigationMenu.getElement());
         wrapper.getElement().appendChild(content);
         
         setElement(wrapper.getElement());
     }
 
     public void setNavigationMenu(Widget widget) {
+    	if(!navigationMenu.isAttached()) {
+    		add(navigationMenu, wrapper.getElement());
+    	}   		
+    	
         navigationMenu.setWidget(widget);
     }
 
