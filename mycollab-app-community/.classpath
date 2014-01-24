@@ -6,6 +6,7 @@
   <classpathentry kind="var" path="M2_REPO/javax/validation/validation-api/1.0.0.GA/validation-api-1.0.0.GA.jar" sourcepath="M2_REPO/javax/validation/validation-api/1.0.0.GA/validation-api-1.0.0.GA-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/javax/servlet/javax.servlet-api/3.1.0/javax.servlet-api-3.1.0.jar" sourcepath="M2_REPO/javax/servlet/javax.servlet-api/3.1.0/javax.servlet-api-3.1.0-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/javax/annotation/javax.annotation-api/1.2/javax.annotation-api-1.2.jar" sourcepath="M2_REPO/javax/annotation/javax.annotation-api/1.2/javax.annotation-api-1.2-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/javax/servlet/jsp/jsp-api/2.2.1-b03/jsp-api-2.2.1-b03.jar" sourcepath="M2_REPO/javax/servlet/jsp/jsp-api/2.2.1-b03/jsp-api-2.2.1-b03-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/javax/transaction/jta/1.1/jta-1.1.jar" sourcepath="M2_REPO/javax/transaction/jta/1.1/jta-1.1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/javax/jcr/jcr/2.0/jcr-2.0.jar" sourcepath="M2_REPO/javax/jcr/jcr/2.0/jcr-2.0-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/javax/mail/mail/1.4.5/mail-1.4.5.jar" sourcepath="M2_REPO/javax/mail/mail/1.4.5/mail-1.4.5-sources.jar"/>
@@ -65,17 +66,17 @@
   <classpathentry kind="var" path="M2_REPO/com/fasterxml/jackson/core/jackson-annotations/2.3.0-rc1/jackson-annotations-2.3.0-rc1.jar" sourcepath="M2_REPO/com/fasterxml/jackson/core/jackson-annotations/2.3.0-rc1/jackson-annotations-2.3.0-rc1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/jasypt/jasypt/1.9.1/jasypt-1.9.1.jar" sourcepath="M2_REPO/org/jasypt/jasypt/1.9.1/jasypt-1.9.1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/jasypt/jasypt-spring31/1.9.1/jasypt-spring31-1.9.1.jar" sourcepath="M2_REPO/org/jasypt/jasypt-spring31/1.9.1/jasypt-spring31-1.9.1-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/eclipse/jetty/jetty-server/9.1.0.v20131115/jetty-server-9.1.0.v20131115.jar" sourcepath="M2_REPO/org/eclipse/jetty/jetty-server/9.1.0.v20131115/jetty-server-9.1.0.v20131115-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/eclipse/jetty/jetty-http/9.1.0.v20131115/jetty-http-9.1.0.v20131115.jar" sourcepath="M2_REPO/org/eclipse/jetty/jetty-http/9.1.0.v20131115/jetty-http-9.1.0.v20131115-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/eclipse/jetty/jetty-util/9.1.0.v20131115/jetty-util-9.1.0.v20131115.jar" sourcepath="M2_REPO/org/eclipse/jetty/jetty-util/9.1.0.v20131115/jetty-util-9.1.0.v20131115-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/eclipse/jetty/jetty-io/9.1.0.v20131115/jetty-io-9.1.0.v20131115.jar" sourcepath="M2_REPO/org/eclipse/jetty/jetty-io/9.1.0.v20131115/jetty-io-9.1.0.v20131115-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/eclipse/jetty/jetty-servlet/9.1.0.v20131115/jetty-servlet-9.1.0.v20131115.jar" sourcepath="M2_REPO/org/eclipse/jetty/jetty-servlet/9.1.0.v20131115/jetty-servlet-9.1.0.v20131115-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/eclipse/jetty/jetty-security/9.1.0.v20131115/jetty-security-9.1.0.v20131115.jar" sourcepath="M2_REPO/org/eclipse/jetty/jetty-security/9.1.0.v20131115/jetty-security-9.1.0.v20131115-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/eclipse/jetty/jetty-webapp/9.1.0.v20131115/jetty-webapp-9.1.0.v20131115.jar" sourcepath="M2_REPO/org/eclipse/jetty/jetty-webapp/9.1.0.v20131115/jetty-webapp-9.1.0.v20131115-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/eclipse/jetty/jetty-xml/9.1.0.v20131115/jetty-xml-9.1.0.v20131115.jar" sourcepath="M2_REPO/org/eclipse/jetty/jetty-xml/9.1.0.v20131115/jetty-xml-9.1.0.v20131115-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/eclipse/jetty/jetty-annotations/9.1.0.v20131115/jetty-annotations-9.1.0.v20131115.jar" sourcepath="M2_REPO/org/eclipse/jetty/jetty-annotations/9.1.0.v20131115/jetty-annotations-9.1.0.v20131115-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/eclipse/jetty/jetty-plus/9.1.0.v20131115/jetty-plus-9.1.0.v20131115.jar" sourcepath="M2_REPO/org/eclipse/jetty/jetty-plus/9.1.0.v20131115/jetty-plus-9.1.0.v20131115-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/eclipse/jetty/jetty-jndi/9.1.0.v20131115/jetty-jndi-9.1.0.v20131115.jar" sourcepath="M2_REPO/org/eclipse/jetty/jetty-jndi/9.1.0.v20131115/jetty-jndi-9.1.0.v20131115-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/eclipse/jetty/jetty-server/9.1.1.v20140108/jetty-server-9.1.1.v20140108.jar" sourcepath="M2_REPO/org/eclipse/jetty/jetty-server/9.1.1.v20140108/jetty-server-9.1.1.v20140108-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/eclipse/jetty/jetty-http/9.1.1.v20140108/jetty-http-9.1.1.v20140108.jar" sourcepath="M2_REPO/org/eclipse/jetty/jetty-http/9.1.1.v20140108/jetty-http-9.1.1.v20140108-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/eclipse/jetty/jetty-util/9.1.1.v20140108/jetty-util-9.1.1.v20140108.jar" sourcepath="M2_REPO/org/eclipse/jetty/jetty-util/9.1.1.v20140108/jetty-util-9.1.1.v20140108-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/eclipse/jetty/jetty-io/9.1.1.v20140108/jetty-io-9.1.1.v20140108.jar" sourcepath="M2_REPO/org/eclipse/jetty/jetty-io/9.1.1.v20140108/jetty-io-9.1.1.v20140108-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/eclipse/jetty/jetty-servlet/9.1.1.v20140108/jetty-servlet-9.1.1.v20140108.jar" sourcepath="M2_REPO/org/eclipse/jetty/jetty-servlet/9.1.1.v20140108/jetty-servlet-9.1.1.v20140108-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/eclipse/jetty/jetty-security/9.1.1.v20140108/jetty-security-9.1.1.v20140108.jar" sourcepath="M2_REPO/org/eclipse/jetty/jetty-security/9.1.1.v20140108/jetty-security-9.1.1.v20140108-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/eclipse/jetty/jetty-webapp/9.1.1.v20140108/jetty-webapp-9.1.1.v20140108.jar" sourcepath="M2_REPO/org/eclipse/jetty/jetty-webapp/9.1.1.v20140108/jetty-webapp-9.1.1.v20140108-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/eclipse/jetty/jetty-xml/9.1.1.v20140108/jetty-xml-9.1.1.v20140108.jar" sourcepath="M2_REPO/org/eclipse/jetty/jetty-xml/9.1.1.v20140108/jetty-xml-9.1.1.v20140108-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/eclipse/jetty/jetty-annotations/9.1.1.v20140108/jetty-annotations-9.1.1.v20140108.jar" sourcepath="M2_REPO/org/eclipse/jetty/jetty-annotations/9.1.1.v20140108/jetty-annotations-9.1.1.v20140108-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/eclipse/jetty/jetty-plus/9.1.1.v20140108/jetty-plus-9.1.1.v20140108.jar" sourcepath="M2_REPO/org/eclipse/jetty/jetty-plus/9.1.1.v20140108/jetty-plus-9.1.1.v20140108-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/eclipse/jetty/jetty-jndi/9.1.1.v20140108/jetty-jndi-9.1.1.v20140108.jar" sourcepath="M2_REPO/org/eclipse/jetty/jetty-jndi/9.1.1.v20140108/jetty-jndi-9.1.1.v20140108-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/ow2/asm/asm/4.1/asm-4.1.jar" sourcepath="M2_REPO/org/ow2/asm/asm/4.1/asm-4.1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/ow2/asm/asm-commons/4.1/asm-commons-4.1.jar" sourcepath="M2_REPO/org/ow2/asm/asm-commons/4.1/asm-commons-4.1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/ow2/asm/asm-tree/4.1/asm-tree-4.1.jar" sourcepath="M2_REPO/org/ow2/asm/asm-tree/4.1/asm-tree-4.1-sources.jar"/>
@@ -142,16 +143,27 @@
   <classpathentry kind="var" path="M2_REPO/com/vaadin/vaadin-client/7.1.10/vaadin-client-7.1.10.jar" sourcepath="M2_REPO/com/vaadin/vaadin-client/7.1.10/vaadin-client-7.1.10-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/reflections/reflections/0.9.9-RC1/reflections-0.9.9-RC1.jar" sourcepath="M2_REPO/org/reflections/reflections/0.9.9-RC1/reflections-0.9.9-RC1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/javassist/javassist/3.16.1-GA/javassist-3.16.1-GA.jar" sourcepath="M2_REPO/org/javassist/javassist/3.16.1-GA/javassist-3.16.1-GA-sources.jar"/>
-  <classpathentry kind="src" path="/mycollab-esb"/>
-  <classpathentry kind="src" path="/mycollab-scheduler"/>
-  <classpathentry kind="var" path="M2_REPO/org/quartz-scheduler/quartz/2.2.0/quartz-2.2.0.jar" sourcepath="M2_REPO/org/quartz-scheduler/quartz/2.2.0/quartz-2.2.0-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/c3p0/c3p0/0.9.1.1/c3p0-0.9.1.1.jar" sourcepath="M2_REPO/c3p0/c3p0/0.9.1.1/c3p0-0.9.1.1-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/esofthead/vaadin/mobilecomponent/1.0.0-SNAPSHOT/mobilecomponent-1.0.0-SNAPSHOT.jar" sourcepath="M2_REPO/com/esofthead/vaadin/mobilecomponent/1.0.0-SNAPSHOT/mobilecomponent-1.0.0-SNAPSHOT-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/vaadin/vaadin-push/7.1.10/vaadin-push-7.1.10.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/vaadin/external/atmosphere/atmosphere-runtime/1.0.18.vaadin1/atmosphere-runtime-1.0.18.vaadin1.jar" sourcepath="M2_REPO/com/vaadin/external/atmosphere/atmosphere-runtime/1.0.18.vaadin1/atmosphere-runtime-1.0.18.vaadin1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/vaadin/external/atmosphere/atmosphere-compat-jbossweb/1.0.18.vaadin1/atmosphere-compat-jbossweb-1.0.18.vaadin1.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/vaadin/external/slf4j/vaadin-slf4j-jdk14/1.6.1/vaadin-slf4j-jdk14-1.6.1.jar" sourcepath="M2_REPO/com/vaadin/external/slf4j/vaadin-slf4j-jdk14/1.6.1/vaadin-slf4j-jdk14-1.6.1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/vaadin/external/atmosphere/atmosphere-compat-tomcat/1.0.18.vaadin1/atmosphere-compat-tomcat-1.0.18.vaadin1.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/vaadin/external/atmosphere/atmosphere-compat-tomcat7/1.0.18.vaadin1/atmosphere-compat-tomcat7-1.0.18.vaadin1.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/vaadin/vaadin-client-compiler/7.1.10/vaadin-client-compiler-7.1.10.jar" sourcepath="M2_REPO/com/vaadin/vaadin-client-compiler/7.1.10/vaadin-client-compiler-7.1.10-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/ant/ant/1.6.5/ant-1.6.5.jar" sourcepath="M2_REPO/ant/ant/1.6.5/ant-1.6.5-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/ant/ant-launcher/1.6.5/ant-launcher-1.6.5.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/mortbay/jetty/jetty/6.1.11/jetty-6.1.11.jar" sourcepath="M2_REPO/org/mortbay/jetty/jetty/6.1.11/jetty-6.1.11-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/mortbay/jetty/jetty-util/6.1.11/jetty-util-6.1.11.jar" sourcepath="M2_REPO/org/mortbay/jetty/jetty-util/6.1.11/jetty-util-6.1.11-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/mortbay/jetty/servlet-api-2.5/6.1.11/servlet-api-2.5-6.1.11.jar" sourcepath="M2_REPO/org/mortbay/jetty/servlet-api-2.5/6.1.11/servlet-api-2.5-6.1.11-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/jdesktop/swing-worker/1.1/swing-worker-1.1.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/apache/james/apache-mime4j/0.6/apache-mime4j-0.6.jar" sourcepath="M2_REPO/org/apache/james/apache-mime4j/0.6/apache-mime4j-0.6-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/vaadin/vaadin-client-compiler-deps/1.0.2/vaadin-client-compiler-deps-1.0.2.jar" sourcepath="M2_REPO/com/vaadin/vaadin-client-compiler-deps/1.0.2/vaadin-client-compiler-deps-1.0.2-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/vaadin/vaadin-themes/7.0.0/vaadin-themes-7.0.0.jar"/>
+  <classpathentry kind="src" path="/mycollab-esb"/>
+  <classpathentry kind="src" path="/mycollab-scheduler"/>
+  <classpathentry kind="var" path="M2_REPO/org/quartz-scheduler/quartz/2.2.0/quartz-2.2.0.jar" sourcepath="M2_REPO/org/quartz-scheduler/quartz/2.2.0/quartz-2.2.0-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/c3p0/c3p0/0.9.1.1/c3p0-0.9.1.1.jar" sourcepath="M2_REPO/c3p0/c3p0/0.9.1.1/c3p0-0.9.1.1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/vaadin/addons/buttongroup/2.3/buttongroup-2.3.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/vaadin/addons/popupbutton/2.2.1/popupbutton-2.2.1.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/vaadin/addons/ratingstars/2.1/ratingstars-2.1.jar"/>
@@ -163,7 +175,6 @@
   <classpathentry kind="var" path="M2_REPO/com/vaadin/addon/vaadin-calendar/2.0.0/vaadin-calendar-2.0.0.jar" sourcepath="M2_REPO/com/vaadin/addon/vaadin-calendar/2.0.0/vaadin-calendar-2.0.0-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/lexaden/components/breadcrumb/1.7.3/breadcrumb-1.7.3.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/vaadin/vaadin-client-compiled/7.0.0/vaadin-client-compiled-7.0.0.jar"/>
-  <classpathentry kind="var" path="M2_REPO/com/vaadin/vaadin-themes/7.0.0/vaadin-themes-7.0.0.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/vaadin/addons/listbuilder/0.7.3.v7/listbuilder-0.7.3.v7.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/vaadin/addon/confirmdialog/2.0.4/confirmdialog-2.0.4.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/esofthead/vaadin/cropField/1.0-SNAPSHOT/cropField-1.0-SNAPSHOT.jar" sourcepath="M2_REPO/com/esofthead/vaadin/cropField/1.0-SNAPSHOT/cropField-1.0-SNAPSHOT-sources.jar">
@@ -194,13 +205,4 @@
   <classpathentry kind="var" path="M2_REPO/org/freemarker/freemarker/2.3.19/freemarker-2.3.19.jar" sourcepath="M2_REPO/org/freemarker/freemarker/2.3.19/freemarker-2.3.19-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/net/sf/opencsv/opencsv/2.0/opencsv-2.0.jar" sourcepath="M2_REPO/net/sf/opencsv/opencsv/2.0/opencsv-2.0-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/springframework/spring-webmvc/3.2.4.RELEASE/spring-webmvc-3.2.4.RELEASE.jar" sourcepath="M2_REPO/org/springframework/spring-webmvc/3.2.4.RELEASE/spring-webmvc-3.2.4.RELEASE-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/com/vaadin/vaadin-client-compiler/7.1.10/vaadin-client-compiler-7.1.10.jar" sourcepath="M2_REPO/com/vaadin/vaadin-client-compiler/7.1.10/vaadin-client-compiler-7.1.10-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/ant/ant/1.6.5/ant-1.6.5.jar" sourcepath="M2_REPO/ant/ant/1.6.5/ant-1.6.5-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/ant/ant-launcher/1.6.5/ant-launcher-1.6.5.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/mortbay/jetty/jetty/6.1.11/jetty-6.1.11.jar" sourcepath="M2_REPO/org/mortbay/jetty/jetty/6.1.11/jetty-6.1.11-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/mortbay/jetty/jetty-util/6.1.11/jetty-util-6.1.11.jar" sourcepath="M2_REPO/org/mortbay/jetty/jetty-util/6.1.11/jetty-util-6.1.11-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/mortbay/jetty/servlet-api-2.5/6.1.11/servlet-api-2.5-6.1.11.jar" sourcepath="M2_REPO/org/mortbay/jetty/servlet-api-2.5/6.1.11/servlet-api-2.5-6.1.11-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/jdesktop/swing-worker/1.1/swing-worker-1.1.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/apache/james/apache-mime4j/0.6/apache-mime4j-0.6.jar" sourcepath="M2_REPO/org/apache/james/apache-mime4j/0.6/apache-mime4j-0.6-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/com/vaadin/vaadin-client-compiler-deps/1.0.2/vaadin-client-compiler-deps-1.0.2.jar" sourcepath="M2_REPO/com/vaadin/vaadin-client-compiler-deps/1.0.2/vaadin-client-compiler-deps-1.0.2-sources.jar"/>
 </classpath>

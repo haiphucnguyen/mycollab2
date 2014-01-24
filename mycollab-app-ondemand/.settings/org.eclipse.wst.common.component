@@ -163,40 +163,40 @@
     <dependent-module archiveName="jasypt-spring31-1.9.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/jasypt/jasypt-spring31/1.9.1/jasypt-spring31-1.9.1.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="jetty-server-9.1.0.v20131115.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/jetty-server/9.1.0.v20131115/jetty-server-9.1.0.v20131115.jar">
+    <dependent-module archiveName="jetty-server-9.1.1.v20140108.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/jetty-server/9.1.1.v20140108/jetty-server-9.1.1.v20140108.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="javax.servlet-api-3.1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/javax/servlet/javax.servlet-api/3.1.0/javax.servlet-api-3.1.0.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="jetty-http-9.1.0.v20131115.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/jetty-http/9.1.0.v20131115/jetty-http-9.1.0.v20131115.jar">
+    <dependent-module archiveName="jetty-http-9.1.1.v20140108.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/jetty-http/9.1.1.v20140108/jetty-http-9.1.1.v20140108.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="jetty-util-9.1.0.v20131115.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/jetty-util/9.1.0.v20131115/jetty-util-9.1.0.v20131115.jar">
+    <dependent-module archiveName="jetty-util-9.1.1.v20140108.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/jetty-util/9.1.1.v20140108/jetty-util-9.1.1.v20140108.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="jetty-io-9.1.0.v20131115.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/jetty-io/9.1.0.v20131115/jetty-io-9.1.0.v20131115.jar">
+    <dependent-module archiveName="jetty-io-9.1.1.v20140108.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/jetty-io/9.1.1.v20140108/jetty-io-9.1.1.v20140108.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="jetty-servlet-9.1.0.v20131115.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/jetty-servlet/9.1.0.v20131115/jetty-servlet-9.1.0.v20131115.jar">
+    <dependent-module archiveName="jetty-servlet-9.1.1.v20140108.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/jetty-servlet/9.1.1.v20140108/jetty-servlet-9.1.1.v20140108.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="jetty-security-9.1.0.v20131115.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/jetty-security/9.1.0.v20131115/jetty-security-9.1.0.v20131115.jar">
+    <dependent-module archiveName="jetty-security-9.1.1.v20140108.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/jetty-security/9.1.1.v20140108/jetty-security-9.1.1.v20140108.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="jetty-webapp-9.1.0.v20131115.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/jetty-webapp/9.1.0.v20131115/jetty-webapp-9.1.0.v20131115.jar">
+    <dependent-module archiveName="jetty-webapp-9.1.1.v20140108.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/jetty-webapp/9.1.1.v20140108/jetty-webapp-9.1.1.v20140108.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="jetty-xml-9.1.0.v20131115.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/jetty-xml/9.1.0.v20131115/jetty-xml-9.1.0.v20131115.jar">
+    <dependent-module archiveName="jetty-xml-9.1.1.v20140108.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/jetty-xml/9.1.1.v20140108/jetty-xml-9.1.1.v20140108.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="jetty-annotations-9.1.0.v20131115.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/jetty-annotations/9.1.0.v20131115/jetty-annotations-9.1.0.v20131115.jar">
+    <dependent-module archiveName="jetty-annotations-9.1.1.v20140108.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/jetty-annotations/9.1.1.v20140108/jetty-annotations-9.1.1.v20140108.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="jetty-plus-9.1.0.v20131115.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/jetty-plus/9.1.0.v20131115/jetty-plus-9.1.0.v20131115.jar">
+    <dependent-module archiveName="jetty-plus-9.1.1.v20140108.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/jetty-plus/9.1.1.v20140108/jetty-plus-9.1.1.v20140108.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="jetty-jndi-9.1.0.v20131115.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/jetty-jndi/9.1.0.v20131115/jetty-jndi-9.1.0.v20131115.jar">
+    <dependent-module archiveName="jetty-jndi-9.1.1.v20140108.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/jetty-jndi/9.1.1.v20140108/jetty-jndi-9.1.1.v20140108.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="javax.annotation-api-1.2.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/javax/annotation/javax.annotation-api/1.2/javax.annotation-api-1.2.jar">
@@ -209,6 +209,9 @@
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="asm-tree-4.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/ow2/asm/asm-tree/4.1/asm-tree-4.1.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="jsp-api-2.2.1-b03.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/javax/servlet/jsp/jsp-api/2.2.1-b03/jsp-api-2.2.1-b03.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="mycollab-services-ondemand.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mycollab-services-ondemand/mycollab-services-ondemand">
@@ -463,16 +466,7 @@
     <dependent-module archiveName="javassist-3.16.1-GA.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/javassist/javassist/3.16.1-GA/javassist-3.16.1-GA.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="mycollab-esb.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mycollab-esb/mycollab-esb">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="mycollab-scheduler.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mycollab-scheduler/mycollab-scheduler">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="quartz-2.2.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/quartz-scheduler/quartz/2.2.0/quartz-2.2.0.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="c3p0-0.9.1.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/c3p0/c3p0/0.9.1.1/c3p0-0.9.1.1.jar">
+    <dependent-module archiveName="mobilecomponent-1.0.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/esofthead/vaadin/mobilecomponent/1.0.0-SNAPSHOT/mobilecomponent-1.0.0-SNAPSHOT.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="vaadin-push-7.1.10.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/vaadin/vaadin-push/7.1.10/vaadin-push-7.1.10.jar">
@@ -491,6 +485,48 @@
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="atmosphere-compat-tomcat7-1.0.18.vaadin1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/vaadin/external/atmosphere/atmosphere-compat-tomcat7/1.0.18.vaadin1/atmosphere-compat-tomcat7-1.0.18.vaadin1.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="vaadin-client-compiler-7.1.9.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/vaadin/vaadin-client-compiler/7.1.9/vaadin-client-compiler-7.1.9.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="ant-1.6.5.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/ant/ant/1.6.5/ant-1.6.5.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="ant-launcher-1.6.5.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/ant/ant-launcher/1.6.5/ant-launcher-1.6.5.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="jetty-6.1.11.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/mortbay/jetty/jetty/6.1.11/jetty-6.1.11.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="jetty-util-6.1.11.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/mortbay/jetty/jetty-util/6.1.11/jetty-util-6.1.11.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="servlet-api-2.5-6.1.11.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/mortbay/jetty/servlet-api-2.5/6.1.11/servlet-api-2.5-6.1.11.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="swing-worker-1.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/jdesktop/swing-worker/1.1/swing-worker-1.1.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="apache-mime4j-0.6.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/apache/james/apache-mime4j/0.6/apache-mime4j-0.6.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="vaadin-client-compiler-deps-1.0.2.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/vaadin/vaadin-client-compiler-deps/1.0.2/vaadin-client-compiler-deps-1.0.2.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="vaadin-themes-7.0.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/vaadin/vaadin-themes/7.0.0/vaadin-themes-7.0.0.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="mycollab-esb.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mycollab-esb/mycollab-esb">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="mycollab-scheduler.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mycollab-scheduler/mycollab-scheduler">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="quartz-2.2.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/quartz-scheduler/quartz/2.2.0/quartz-2.2.0.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="c3p0-0.9.1.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/c3p0/c3p0/0.9.1.1/c3p0-0.9.1.1.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="buttongroup-2.3.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/vaadin/addons/buttongroup/2.3/buttongroup-2.3.jar">
@@ -524,9 +560,6 @@
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="vaadin-client-compiled-7.0.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/vaadin/vaadin-client-compiled/7.0.0/vaadin-client-compiled-7.0.0.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="vaadin-themes-7.0.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/vaadin/vaadin-themes/7.0.0/vaadin-themes-7.0.0.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="listbuilder-0.7.3.v7.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/vaadin/addons/listbuilder/0.7.3.v7/listbuilder-0.7.3.v7.jar">
