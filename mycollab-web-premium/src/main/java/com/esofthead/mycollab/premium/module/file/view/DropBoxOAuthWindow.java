@@ -16,6 +16,7 @@ import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.module.ecm.StorageNames;
 import com.vaadin.server.VaadinService;
 import com.vaadin.server.WrappedHttpSession;
+import com.vaadin.ui.UI;
 
 /**
  * 
@@ -52,7 +53,7 @@ public abstract class DropBoxOAuthWindow extends
 		String sessionKey = "dropbox-auth-csrf-token";
 		DbxSessionStore csrfTokenStore = new DbxStandardSessionStore(
 				wrappedSession.getHttpSession(), sessionKey);
-		String appId = wrappedSession.getId();
+		String appId = UI.getCurrent().toString();
 
 		DbxWebAuth webAuth = new DbxWebAuth(requestConfig, appInfo,
 				redirectUri, csrfTokenStore);

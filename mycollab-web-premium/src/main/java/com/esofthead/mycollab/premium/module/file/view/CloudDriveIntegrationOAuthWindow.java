@@ -32,6 +32,7 @@ import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
@@ -50,6 +51,8 @@ public abstract class CloudDriveIntegrationOAuthWindow extends Window {
 	private static Logger log = LoggerFactory
 			.getLogger(CloudDriveIntegrationOAuthWindow.class);
 
+	private UI currentUI;
+
 	private VerticalLayout mainLayout;
 	private VerticalLayout messageBox;
 
@@ -62,8 +65,7 @@ public abstract class CloudDriveIntegrationOAuthWindow extends Window {
 		this.center();
 		constructBody();
 		registerListeners();
-
-//		pusher.extend(DesktopApplication.getCurrent());
+		currentUI = UI.getCurrent();
 	}
 
 	private void registerListeners() {
@@ -76,10 +78,19 @@ public abstract class CloudDriveIntegrationOAuthWindow extends Window {
 
 				log.debug("Receive cloud drive info: "
 						+ BeanUtility.printBeanObj(cloudDriveInfo));
-				messageBox.removeAllComponents();
-				messageBox.addComponent(new Label("Access token retrieved"));
 				CloudDriveIntegrationOAuthWindow.this.setHeight("210px");
-//				pusher.push();
+
+				currentUI.access(new Runnable() {
+
+					@Override
+					public void run() {
+						messageBox.removeAllComponents();
+						messageBox.addComponent(new Label(
+								"Access token retrieved"));
+						currentUI.push();
+
+					}
+				});
 			}
 
 			@Override

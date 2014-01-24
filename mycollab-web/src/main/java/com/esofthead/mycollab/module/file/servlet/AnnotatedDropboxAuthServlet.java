@@ -44,6 +44,7 @@ import com.esofthead.mycollab.module.ecm.StorageNames;
 import com.esofthead.mycollab.module.file.CloudDriveInfo;
 import com.esofthead.mycollab.module.file.events.CloudDriveOAuthCallbackEvent;
 import com.esofthead.mycollab.servlet.GenericServlet;
+import com.esofthead.mycollab.vaadin.MyCollabSession;
 
 /**
  * 
@@ -128,10 +129,9 @@ public class AnnotatedDropboxAuthServlet extends GenericServlet {
 		CloudDriveInfo cloudDriveInfo = new CloudDriveInfo(
 				StorageNames.DROPBOX, accessToken);
 
-		HttpSession session = (HttpSession) request.getServletContext()
-				.getAttribute(appId);
+		BasicCache<String, Object> cache = LocalCacheManager.getCache(appId);
 
-		EventBus eventBus = (EventBus) session.getAttribute("eventBusVal");
+		EventBus eventBus = (EventBus) cache.get(MyCollabSession.EVENT_BUS_VAL);
 		if (eventBus != null) {
 			eventBus.fireEvent(new CloudDriveOAuthCallbackEvent.ReceiveCloudDriveInfo(
 					AnnotatedDropboxAuthServlet.this, cloudDriveInfo));

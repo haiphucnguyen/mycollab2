@@ -37,6 +37,7 @@ import com.esofthead.mycollab.shell.view.NoSubDomainExistedWindow;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.MyCollabSession;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
+import com.vaadin.annotations.Push;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Widgetset;
 import com.vaadin.server.DefaultErrorHandler;
@@ -46,6 +47,7 @@ import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinService;
 import com.vaadin.server.VaadinServletRequest;
 import com.vaadin.server.VaadinSession;
+import com.vaadin.shared.communication.PushMode;
 import com.vaadin.ui.UI;
 
 /**
@@ -56,6 +58,7 @@ import com.vaadin.ui.UI;
  */
 @Theme("mycollab")
 @Widgetset("com.esofthead.mycollab.widgetset.MyCollabWidgetSet")
+@Push(PushMode.MANUAL)
 public class DesktopApplication extends UI {
 
 	private static final long serialVersionUID = 1L;
