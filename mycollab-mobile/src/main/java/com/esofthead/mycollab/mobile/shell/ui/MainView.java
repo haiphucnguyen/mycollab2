@@ -20,9 +20,10 @@ import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.mobile.shell.events.ShellEvent;
 import com.esofthead.mycollab.vaadin.mvp.AbstractMobileMainView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
-import com.vaadin.addon.touchkit.ui.NavigationButton;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
@@ -69,12 +70,15 @@ public class MainView extends AbstractMobileMainView {
         ModuleButton crmButton = new ModuleButton("Customer Management");
         crmButton.setWidth("100%");
         crmButton.addStyleName("crm");
-        crmButton.addClickListener(new NavigationButton.NavigationButtonClickListener() {
-            @Override
-            public void buttonClick(NavigationButton.NavigationButtonClickEvent event) {
-                EventBus.getInstance().fireEvent(new ShellEvent.GotoCrmModule(this, null));
-            }
-        });
+        crmButton.addClickListener(new Button.ClickListener() {
+			private static final long serialVersionUID = -1218427186205574547L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				EventBus.getInstance().fireEvent(new ShellEvent.GotoCrmModule(this, null));
+			}
+		});
+        
         contentLayout.addComponent(crmButton);
 
         ModuleButton pmButton = new ModuleButton("Project Management");

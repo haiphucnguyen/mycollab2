@@ -1,0 +1,14 @@
+<module>
+
+	<!-- WS Compiler: manually edited -->
+
+	<!-- Inherit DefaultWidgetSet -->
+	<inherits name="com.vaadin.DefaultWidgetSet" />
+	
+	<!-- Inherit TouchkitWidgetSet -->
+	<inherits name="com.vaadin.addon.touchkit.gwt.TouchKitWidgetSet" />
+
+	<!-- Widget styles in public -directory -->
+	<stylesheet src="mobilecomponent/mobilecomponent.css"/>
+
+</module>

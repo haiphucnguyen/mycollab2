@@ -48,6 +48,10 @@ public class CrmModuleController implements IController {
 
                     @Override
                     public void handle(CrmEvent.GotoHome event) {
+                    	/*
+                    	 * TODO: put setNavigationMenu here seems not right with current structure,
+                    	 * need to move it to somewhere else
+                    	 */                    	
                     	if(crmViewNavigation.getNavigationMenu() == null)
                     		crmViewNavigation.setNavigationMenu(new CrmNavigationMenu());
                     	
