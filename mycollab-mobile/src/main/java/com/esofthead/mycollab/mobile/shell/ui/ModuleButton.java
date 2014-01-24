@@ -16,14 +16,17 @@
  */
 package com.esofthead.mycollab.mobile.shell.ui;
 
-import com.vaadin.addon.touchkit.ui.NavigationButton;
+import com.vaadin.ui.Button;
 
 /**
  * @author MyCollab Ltd.
  * @since 3.0
  */
-public class ModuleButton extends NavigationButton {
-    public static String CLASSNAME = "module-button";
+public class ModuleButton extends Button {
+	
+	private static final long serialVersionUID = 1197359749888761486L;
+	
+	public static String CLASSNAME = "module-button";
 
     public ModuleButton(String moduleName) {
         super(moduleName);

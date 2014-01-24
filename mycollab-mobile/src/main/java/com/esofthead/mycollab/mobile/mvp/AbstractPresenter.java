@@ -17,6 +17,7 @@
 package com.esofthead.mycollab.mobile.mvp;
 
 import com.vaadin.addon.touchkit.ui.NavigationManager;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,6 +32,7 @@ import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.mvp.ViewPermission;
 import com.esofthead.mycollab.vaadin.mvp.ViewState;
+import com.esofthead.vaadin.mobilecomponent.MobileNavigationManager;
 import com.vaadin.ui.ComponentContainer;
 
 /**
@@ -92,14 +94,14 @@ public abstract class AbstractPresenter<V extends PageView> implements
 		}
 
 		if (checkPermissionAccessIfAny()) {
-			onGo((NavigationManager) container, data);
+			onGo((MobileNavigationManager) container, data);
 		} else {
 			throw new SecurityException("You can not access this resource");
 		}
 
 	}
 
-	protected abstract void onGo(NavigationManager container, ScreenData<?> data);
+	protected abstract void onGo(MobileNavigationManager container, ScreenData<?> data);
 
 	private boolean checkPermissionAccessIfAny() {
 		ViewPermission viewPermission = this.getClass().getAnnotation(
