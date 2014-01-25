@@ -1,27 +1,23 @@
 CACHE MANIFEST
-# Build timeFri Jan 24 22:22:21 ICT 2014
+# Build timeTue Jan 21 11:11:45 ICT 2014
 
 CACHE:
 ../../../VAADIN/themes/touchkit/styles.css
 ../../../VAADIN/vaadinBootstrap.js
 650109D413E2C231EC22108817C9E71A.cache.woff
-EAC1F17DA3BA4C41461E64F13DE09DD2.cache.js
+FEAE0C8DAB51CBA8E82F9CAA35D4E871.cache.js
 clear.cache.gif
 com.esofthead.mycollab.widgetset.MyCollabMobileWidgetSet.devmode.js
 com.esofthead.mycollab.widgetset.MyCollabMobileWidgetSet.nocache.js
-deferredjs/EAC1F17DA3BA4C41461E64F13DE09DD2/1.cache.js
-deferredjs/EAC1F17DA3BA4C41461E64F13DE09DD2/2.cache.js
-deferredjs/EAC1F17DA3BA4C41461E64F13DE09DD2/3.cache.js
-deferredjs/EAC1F17DA3BA4C41461E64F13DE09DD2/4.cache.js
-deferredjs/EAC1F17DA3BA4C41461E64F13DE09DD2/5.cache.js
-deferredjs/EAC1F17DA3BA4C41461E64F13DE09DD2/6.cache.js
-deferredjs/EAC1F17DA3BA4C41461E64F13DE09DD2/7.cache.js
-deferredjs/EAC1F17DA3BA4C41461E64F13DE09DD2/8.cache.js
-deferredjs/EAC1F17DA3BA4C41461E64F13DE09DD2/9.cache.js
-mobilecomponent/img/drawer_shadow.png
-mobilecomponent/img/header_shadow.png
-mobilecomponent/img/menu_icon.png
-mobilecomponent/mobilecomponent.css
+deferredjs/FEAE0C8DAB51CBA8E82F9CAA35D4E871/1.cache.js
+deferredjs/FEAE0C8DAB51CBA8E82F9CAA35D4E871/2.cache.js
+deferredjs/FEAE0C8DAB51CBA8E82F9CAA35D4E871/3.cache.js
+deferredjs/FEAE0C8DAB51CBA8E82F9CAA35D4E871/4.cache.js
+deferredjs/FEAE0C8DAB51CBA8E82F9CAA35D4E871/5.cache.js
+deferredjs/FEAE0C8DAB51CBA8E82F9CAA35D4E871/6.cache.js
+deferredjs/FEAE0C8DAB51CBA8E82F9CAA35D4E871/7.cache.js
+deferredjs/FEAE0C8DAB51CBA8E82F9CAA35D4E871/8.cache.js
+deferredjs/FEAE0C8DAB51CBA8E82F9CAA35D4E871/9.cache.js
 
 NETWORK:
 *
