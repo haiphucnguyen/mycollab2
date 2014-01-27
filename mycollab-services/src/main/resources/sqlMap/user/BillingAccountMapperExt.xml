@@ -43,7 +43,7 @@
             s_billing_plan.hasStandupMeetingEnable AS billingPlan_hasStandupMeetingEnable
         FROM s_account
             LEFT OUTER JOIN s_billing_plan ON (s_billing_plan.id=s_account.billingPlanId)
-        WHERE s_account.id = #{accountId,javaType=INTEGER}
+        WHERE s_account.id = #{accountId,jdbcType=NUMERIC}
         ]]>
     </select>
 

@@ -28,7 +28,7 @@
         </if>
         <if test="searchCriteria.accountId != null">
             <![CDATA[
-                ${searchCriteria.accountId.operation} m_crm_opportunity.accountid = #{searchCriteria.accountId.value,javaType=INTEGER}
+                ${searchCriteria.accountId.operation} m_crm_opportunity.accountid = #{searchCriteria.accountId.value,jdbcType=NUMERIC}
                 ]]>
         </if>
         <if test="searchCriteria.contactId != null">
@@ -36,8 +36,8 @@
                 ${searchCriteria.contactId.operation} 
                 (SELECT COUNT(*) 
                     FROM m_crm_contacts_opportunities, m_crm_contact 
-                    WHERE m_crm_contact.id=#{searchCriteria.contactId.value, javaType=INTEGER} AND m_crm_opportunity.id= m_crm_contacts_opportunities.opportunityId
-                            AND m_crm_contacts_opportunities.contactId=#{searchCriteria.contactId.value,javaType=INTEGER}) > 0
+                    WHERE m_crm_contact.id=#{searchCriteria.contactId.value, jdbcType=NUMERIC} AND m_crm_opportunity.id= m_crm_contacts_opportunities.opportunityId
+                            AND m_crm_contacts_opportunities.contactId=#{searchCriteria.contactId.value,jdbcType=NUMERIC}) > 0
             ]]>
         </if>
         <if test="searchCriteria.campaignName != null">
@@ -59,7 +59,7 @@
             </foreach>
         </if>
         <if test="searchCriteria.saccountid != null">
-            <![CDATA[${searchCriteria.saccountid.operation} m_crm_opportunity.sAccountId = #{searchCriteria.saccountid.value,javaType=INTEGER}]]>
+            <![CDATA[${searchCriteria.saccountid.operation} m_crm_opportunity.sAccountId = #{searchCriteria.saccountid.value,jdbcType=NUMERIC}]]>
         </if>
         <if test="searchCriteria.nextStep != null">
             <![CDATA[
@@ -89,7 +89,7 @@
     <sql id="queryTotalCountSearchCriteria">
 
         <if test="searchCriteria.id != null">
-            <![CDATA[${searchCriteria.id.operation} m_crm_opportunity.id ${searchCriteria.id.compareOperator} #{searchCriteria.id.value,javaType=INTEGER}]]>
+            <![CDATA[${searchCriteria.id.operation} m_crm_opportunity.id ${searchCriteria.id.compareOperator} #{searchCriteria.id.value,jdbcType=NUMERIC}]]>
         </if>
 
         <if test="searchCriteria.opportunityName != null">
@@ -110,7 +110,7 @@
                 (SELECT COUNT(*) 
                 FROM m_crm_account 
                 WHERE m_crm_opportunity.accountid = m_crm_account.id 
-                    AND m_crm_account.id = #{searchCriteria.accountId.value,javaType=INTEGER}) > 0
+                    AND m_crm_account.id = #{searchCriteria.accountId.value,jdbcType=NUMERIC}) > 0
                 ]]>
         </if>
         <if test="searchCriteria.contactId != null">
@@ -118,8 +118,8 @@
                 ${searchCriteria.contactId.operation} 
                 (SELECT COUNT(*) 
                     FROM m_crm_contacts_opportunities, m_crm_contact 
-                    WHERE m_crm_contact.id=#{searchCriteria.contactId.value,javaType=INTEGER} AND m_crm_opportunity.id= m_crm_contacts_opportunities.opportunityId
-                            AND m_crm_contacts_opportunities.contactId=#{searchCriteria.contactId.value,javaType=INTEGER}) > 0
+                    WHERE m_crm_contact.id=#{searchCriteria.contactId.value,jdbcType=NUMERIC} AND m_crm_opportunity.id= m_crm_contacts_opportunities.opportunityId
+                            AND m_crm_contacts_opportunities.contactId=#{searchCriteria.contactId.value,jdbcType=NUMERIC}) > 0
             ]]>
         </if>
         <if test="searchCriteria.campaignName != null">
@@ -149,7 +149,7 @@
             </foreach>
         </if>
         <if test="searchCriteria.saccountid != null">
-            <![CDATA[${searchCriteria.saccountid.operation} m_crm_opportunity.sAccountId = #{searchCriteria.saccountid.value,javaType=INTEGER}]]>
+            <![CDATA[${searchCriteria.saccountid.operation} m_crm_opportunity.sAccountId = #{searchCriteria.saccountid.value,jdbcType=NUMERIC}]]>
         </if>
         <if test="searchCriteria.nextStep != null">
             <![CDATA[
@@ -245,7 +245,7 @@
         <include
             refid="com.esofthead.mycollab.module.crm.dao.OpportunityMapperExt.selectSimpleOpportunity" />
 
-        WHERE m_crm_opportunity.id=#{opportunityId,javaType=INTEGER}
+        WHERE m_crm_opportunity.id=#{opportunityId,jdbcType=NUMERIC}
     </select>
 
     <select id="findOpportunityAssoWithConvertedLead" parameterType="int"
@@ -256,7 +256,7 @@
         INNER JOIN m_crm_opportunities_leads ON
         (m_crm_opportunities_leads.opportunityId=m_crm_opportunity.id
         AND m_crm_opportunities_leads.isConvertRel=1 AND
-        m_crm_opportunities_leads.leadId=#{leadId,javaType=INTEGER})
+        m_crm_opportunities_leads.leadId=#{leadId,jdbcType=NUMERIC})
     </select>
 
     <select id="getNextItemKey" parameterType="map" resultType="java.lang.Integer">

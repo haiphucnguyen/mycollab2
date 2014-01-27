@@ -113,7 +113,7 @@
         </if>
 
         <if test="searchCriteria.projectId != null">
-            <![CDATA[${searchCriteria.projectId.operation} m_tracker_bug.projectid=#{searchCriteria.projectId.value,javaType=INTEGER}]]>
+            <![CDATA[${searchCriteria.projectId.operation} m_tracker_bug.projectid=#{searchCriteria.projectId.value,jdbcType=NUMERIC}]]>
 
         </if>
 
@@ -127,7 +127,7 @@
             (SELECT COUNT(*)
                 FROM m_tracker_bug_related_item
                 WHERE m_tracker_bug_related_item.type='AffVersion'
-                    AND m_tracker_bug_related_item.typeid=#{affectedversion,javaType=INTEGER}
+                    AND m_tracker_bug_related_item.typeid=#{affectedversion,jdbcType=NUMERIC}
                     AND m_tracker_bug_related_item.bugid=m_tracker_bug.id)> 0
                     ]]>
             </foreach>
@@ -143,7 +143,7 @@
                 (SELECT COUNT(*) 
                     FROM m_tracker_bug_related_item
                     WHERE m_tracker_bug_related_item.type='FixVersion'
-                        AND m_tracker_bug_related_item.typeid=#{fixedversion,javaType=INTEGER}
+                        AND m_tracker_bug_related_item.typeid=#{fixedversion,jdbcType=NUMERIC}
                         AND m_tracker_bug_related_item.bugid=m_tracker_bug.id)> 0
                 ]]>
             </foreach>
@@ -158,13 +158,13 @@
                 ((SELECT COUNT(*)
                 FROM m_tracker_bug_related_item
                 WHERE m_tracker_bug_related_item.type='AffVersion'
-                    AND m_tracker_bug_related_item.typeid=#{versionid,javaType=INTEGER}
+                    AND m_tracker_bug_related_item.typeid=#{versionid,jdbcType=NUMERIC}
                     AND m_tracker_bug_related_item.bugid=m_tracker_bug.id)> 0)
                   OR 
                   ((SELECT COUNT(*) 
                     FROM m_tracker_bug_related_item
                     WHERE m_tracker_bug_related_item.type='FixVersion'
-                        AND m_tracker_bug_related_item.typeid=#{versionid,javaType=INTEGER}
+                        AND m_tracker_bug_related_item.typeid=#{versionid,jdbcType=NUMERIC}
                         AND m_tracker_bug_related_item.bugid=m_tracker_bug.id)> 0)
                 ]]>
             </foreach>
@@ -179,7 +179,7 @@
                 (SELECT COUNT(*)
                     FROM m_tracker_bug_related_item
                     WHERE m_tracker_bug_related_item.type='Component'
-                        AND m_tracker_bug_related_item.typeid=#{componentid,javaType=INTEGER}
+                        AND m_tracker_bug_related_item.typeid=#{componentid,jdbcType=NUMERIC}
                         AND m_tracker_bug_related_item.bugid=m_tracker_bug.id)> 0
                 ]]>
             </foreach>
@@ -318,7 +318,7 @@
             (SELECT COUNT(*)
                 FROM m_tracker_bug_related_item
                 WHERE m_tracker_bug_related_item.type='AffVersion'
-                    AND m_tracker_bug_related_item.typeid=#{affectedversion,javaType=INTEGER}
+                    AND m_tracker_bug_related_item.typeid=#{affectedversion,jdbcType=NUMERIC}
                     AND m_tracker_bug_related_item.bugid=m_tracker_bug.id)> 0
                     ]]>
             </foreach>
@@ -334,7 +334,7 @@
                 (SELECT COUNT(*) 
                     FROM m_tracker_bug_related_item
                     WHERE m_tracker_bug_related_item.type='FixVersion'
-                        AND m_tracker_bug_related_item.typeid=#{fixedversion,javaType=INTEGER}
+                        AND m_tracker_bug_related_item.typeid=#{fixedversion,jdbcType=NUMERIC}
                         AND m_tracker_bug_related_item.bugid=m_tracker_bug.id)> 0
                 ]]>
             </foreach>
@@ -349,13 +349,13 @@
                 ((SELECT COUNT(*)
                 FROM m_tracker_bug_related_item
                 WHERE m_tracker_bug_related_item.type='AffVersion'
-                    AND m_tracker_bug_related_item.typeid=#{versionid,javaType=INTEGER}
+                    AND m_tracker_bug_related_item.typeid=#{versionid,jdbcType=NUMERIC}
                     AND m_tracker_bug_related_item.bugid=m_tracker_bug.id)> 0)
                   OR 
                   ((SELECT COUNT(*) 
                     FROM m_tracker_bug_related_item
                     WHERE m_tracker_bug_related_item.type='FixVersion'
-                        AND m_tracker_bug_related_item.typeid=#{versionid,javaType=INTEGER}
+                        AND m_tracker_bug_related_item.typeid=#{versionid,jdbcType=NUMERIC}
                         AND m_tracker_bug_related_item.bugid=m_tracker_bug.id)> 0)
                 ]]>
             </foreach>
@@ -370,7 +370,7 @@
                 (SELECT COUNT(*)
                     FROM m_tracker_bug_related_item
                     WHERE m_tracker_bug_related_item.type='Component'
-                        AND m_tracker_bug_related_item.typeid=#{componentid,javaType=INTEGER}
+                        AND m_tracker_bug_related_item.typeid=#{componentid,jdbcType=NUMERIC}
                         AND m_tracker_bug_related_item.bugid=m_tracker_bug.id)> 0
                 ]]>
             </foreach>
@@ -471,7 +471,7 @@
 
         <include
             refid="com.esofthead.mycollab.module.tracker.dao.BugMapperExt.selectBug" />
-        WHERE m_tracker_bug.id = #{bugid,javaType=INTEGER}
+        WHERE m_tracker_bug.id = #{bugid,jdbcType=NUMERIC}
 
 
     </select>
@@ -756,7 +756,7 @@
         <![CDATA[
         SELECT MAX(bugkey) 
             FROM m_tracker_bug
-            WHERE m_tracker_bug.projectid=#{projectId, javaType=INTEGER}
+            WHERE m_tracker_bug.projectid=#{projectId, jdbcType=NUMERIC}
         ]]>
     </select>
 

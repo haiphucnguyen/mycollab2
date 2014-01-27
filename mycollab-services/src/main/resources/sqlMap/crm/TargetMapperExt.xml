@@ -33,13 +33,13 @@
               (SELECT COUNT(*) 
                FROM m_crm_type_relationship, m_crm_target_list
                WHERE m_crm_type_relationship.type=10
-                  AND m_crm_target_list.id=#{targetListId.value,javaType=INTEGER}
+                  AND m_crm_target_list.id=#{targetListId.value,jdbcType=NUMERIC}
                   AND m_crm_type_relationship.type1id = m_crm_target_list.id
                   AND m_crm_type_relationship.type2id = m_crm_target.id) > 0
           ]]>
         </if>
         <if test="saccountid != null">
-            <![CDATA[${saccountid.operation} target.sAccountId = #{saccountid.value,javaType=INTEGER}]]>
+            <![CDATA[${saccountid.operation} target.sAccountId = #{saccountid.value,jdbcType=NUMERIC}]]>
         </if>
     </sql>
     
@@ -62,7 +62,7 @@
         </if>
         <if test="assignUser != null">
             <![CDATA[
-            ${assignUser.operation} m_crm_target.assignUser = #{assignUser.value,javaType=INTEGER}
+            ${assignUser.operation} m_crm_target.assignUser = #{assignUser.value,jdbcType=NUMERIC}
             ]]>
         </if>
         <if test="targetListId != null">
@@ -77,7 +77,7 @@
           ]]>
         </if>
         <if test="saccountid != null">
-            <![CDATA[${saccountid.operation} target.sAccountId = #{saccountid.value,javaType=INTEGER}]]>
+            <![CDATA[${saccountid.operation} target.sAccountId = #{saccountid.value,jdbcType=NUMERIC}]]>
         </if>
     </sql>
 
@@ -131,6 +131,6 @@
     <select id="findTargetById" parameterType="int" resultMap="SimpleTargetResult">
         <include refid="com.esofthead.mycollab.module.crm.dao.TargetMapperExt.selectSimpleTarget" />
 
-        WHERE m_crm_target.id=#{targetId,javaType=INTEGER}
+        WHERE m_crm_target.id=#{targetId,jdbcType=NUMERIC}
     </select>
 </mapper>

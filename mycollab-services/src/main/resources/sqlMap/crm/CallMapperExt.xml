@@ -34,12 +34,12 @@
         <include
             refid="com.esofthead.mycollab.module.crm.dao.CallMapperExt.selectSimpleCall" />
 
-        WHERE m_crm_call.id=#{callId,javaType=INTEGER}
+        WHERE m_crm_call.id=#{callId,jdbcType=NUMERIC}
     </select>
 
     <sql id="querySearchCriteria">
         <if test="searchCriteria.id != null">
-            <![CDATA[${searchCriteria.id.operation} m_crm_call.id ${searchCriteria.id.compareOperator} #{searchCriteria.id.value,javaType=INTEGER}]]>
+            <![CDATA[${searchCriteria.id.operation} m_crm_call.id ${searchCriteria.id.compareOperator} #{searchCriteria.id.value,jdbcType=NUMERIC}]]>
         </if>
 
         <if test="searchCriteria.isClosed != null">
@@ -47,7 +47,7 @@
         </if>
 
         <if test="searchCriteria.saccountid != null">
-            <![CDATA[${searchCriteria.saccountid.operation} m_crm_call.sAccountId = #{searchCriteria.saccountid.value,javaType=INTEGER}]]>
+            <![CDATA[${searchCriteria.saccountid.operation} m_crm_call.sAccountId = #{searchCriteria.saccountid.value,jdbcType=NUMERIC}]]>
         </if>
         <if test="searchCriteria.assignUsers != null">
             ${searchCriteria.assignUsers.operation} m_crm_call.assignUser IN

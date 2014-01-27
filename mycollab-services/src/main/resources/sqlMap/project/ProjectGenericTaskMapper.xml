@@ -31,12 +31,12 @@
 		<if test='searchCriteria.saccountid != null'>
 			${searchCriteria.saccountid.operation}
 			m_prj_problem.sAccountId =
-			#{searchCriteria.saccountid.value,javaType=INTEGER}
+			#{searchCriteria.saccountid.value,jdbcType=NUMERIC}
 		</if>
 		<if test='searchCriteria.projectId != null'>
 			${searchCriteria.projectId.operation}
 			m_prj_problem.projectid =
-			#{searchCriteria.projectId.value,javaType=INTEGER}
+			#{searchCriteria.projectId.value,jdbcType=NUMERIC}
 		</if>
 		<if test='searchCriteria.assignUser != null'>
 			${searchCriteria.assignUser.operation}
@@ -54,12 +54,12 @@
 		<if test='searchCriteria.saccountid != null'>
 			${searchCriteria.saccountid.operation}
 			m_prj_risk.sAccountId =
-			#{searchCriteria.saccountid.value,javaType=INTEGER}
+			#{searchCriteria.saccountid.value,jdbcType=NUMERIC}
 		</if>
 		<if test='searchCriteria.projectId != null'>
 			${searchCriteria.projectId.operation}
 			m_prj_risk.projectid =
-			#{searchCriteria.projectId.value,javaType=INTEGER}
+			#{searchCriteria.projectId.value,jdbcType=NUMERIC}
 		</if>
 		<if test='searchCriteria.assignUser != null'>
 			${searchCriteria.assignUser.operation}
@@ -76,12 +76,12 @@
 		<if test='searchCriteria.saccountid != null'>
 			${searchCriteria.saccountid.operation}
 			m_tracker_bug.sAccountId =
-			#{searchCriteria.saccountid.value,javaType=INTEGER}
+			#{searchCriteria.saccountid.value,jdbcType=NUMERIC}
 		</if>
 		<if test='searchCriteria.projectId != null'>
 			${searchCriteria.projectId.operation}
 			m_tracker_bug.projectid =
-			#{searchCriteria.projectId.value,javaType=INTEGER}
+			#{searchCriteria.projectId.value,jdbcType=NUMERIC}
 		</if>
 		<if test='searchCriteria.assignUser != null'>
 			${searchCriteria.assignUser.operation}
@@ -102,12 +102,12 @@
 		<if test='searchCriteria.saccountid != null'>
 			${searchCriteria.saccountid.operation}
 			m_prj_task.sAccountId =
-			#{searchCriteria.saccountid.value,javaType=INTEGER}
+			#{searchCriteria.saccountid.value,jdbcType=NUMERIC}
 		</if>
 		<if test='searchCriteria.projectId != null'>
 			${searchCriteria.projectId.operation}
 			m_prj_task.projectid =
-			#{searchCriteria.projectId.value,javaType=INTEGER}
+			#{searchCriteria.projectId.value,jdbcType=NUMERIC}
 		</if>
 		<if test='searchCriteria.assignUser != null'>
 			${searchCriteria.assignUser.operation}

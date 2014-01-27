@@ -75,7 +75,7 @@
             '%${searchCriteria.projectType.value}%'
         </if>
         <if test="searchCriteria.saccountid != null">
-            <![CDATA[${searchCriteria.saccountid.operation} m_prj_project.sAccountId = #{searchCriteria.saccountid.value,javaType=INTEGER}]]>
+            <![CDATA[${searchCriteria.saccountid.operation} m_prj_project.sAccountId = #{searchCriteria.saccountid.value,jdbcType=NUMERIC}]]>
         </if>
         <if test="searchCriteria.projectName != null">
           <![CDATA[
@@ -134,7 +134,7 @@
             '%${searchCriteria.projectType.value}%'
         </if>
         <if test="searchCriteria.saccountid != null">
-            <![CDATA[${searchCriteria.saccountid.operation} m_prj_project.sAccountId = #{searchCriteria.saccountid.value,javaType=INTEGER}]]>
+            <![CDATA[${searchCriteria.saccountid.operation} m_prj_project.sAccountId = #{searchCriteria.saccountid.value,jdbcType=NUMERIC}]]>
         </if>
         <if test="searchCriteria.projectName != null">
           <![CDATA[
@@ -175,7 +175,7 @@
         resultMap="SimpleProjectResult">
         <include refid="selectSimpleProject" />
 
-        WHERE m_prj_project.id=#{projectId, javaType=INTEGER}
+        WHERE m_prj_project.id=#{projectId, jdbcType=NUMERIC}
     </select>
 
     <select id="getTotalCount" resultType="int" parameterType="ProjectSearchCriteria">
@@ -265,7 +265,7 @@
         SELECT s_account.subdomain
             FROM s_account, m_prj_project
             WHERE m_prj_project.sAccountId=s_account.id AND
-                  m_prj_project.id=#{projectId,javaType=INTEGER}
+                  m_prj_project.id=#{projectId,jdbcType=NUMERIC}
                   ]]>
     </select>
 

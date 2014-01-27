@@ -22,7 +22,7 @@
     <sql id="querySearchCriteria">
 
         <if test="searchCriteria.id != null">
-            <![CDATA[${searchCriteria.id.operation} m_prj_problem.id ${searchCriteria.id.compareOperator} #{searchCriteria.id.value,javaType=INTEGER}]]>
+            <![CDATA[${searchCriteria.id.operation} m_prj_problem.id ${searchCriteria.id.compareOperator} #{searchCriteria.id.value,jdbcType=NUMERIC}]]>
         </if>
 
         <if test="searchCriteria.problemname != null">
@@ -35,7 +35,7 @@
         <if test="searchCriteria.projectId != null">
             ${searchCriteria.projectId.operation}
             m_prj_problem.projectid =
-            #{searchCriteria.projectId.value,javaType=INTEGER}
+            #{searchCriteria.projectId.value,jdbcType=NUMERIC}
 
         </if>
 
@@ -120,7 +120,7 @@
 
         <include
             refid="com.esofthead.mycollab.module.project.dao.ProblemMapperExt.selectProblem" />
-        WHERE m_prj_problem.id=#{problemId, javaType=INTEGER}
+        WHERE m_prj_problem.id=#{problemId, jdbcType=NUMERIC}
 
     </select>
 

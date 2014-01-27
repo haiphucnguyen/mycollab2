@@ -12,11 +12,11 @@
     <sql id="querySearchCriteria">
 
         <if test="searchCriteria.bugId != null">
-            <![CDATA[${searchCriteria.bugId.operation} m_tracker_related_bug.bugid ${searchCriteria.bugId.compareOperator} #{searchCriteria.bugId.value,javaType=INTEGER}]]>
+            <![CDATA[${searchCriteria.bugId.operation} m_tracker_related_bug.bugid ${searchCriteria.bugId.compareOperator} #{searchCriteria.bugId.value,jdbcType=NUMERIC}]]>
         </if>
 
         <if test="searchCriteria.relatedId != null">
-            <![CDATA[${searchCriteria.relatedId.operation} m_tracker_related_bug.relatedid ${searchCriteria.relatedId.compareOperator} #{searchCriteria.relatedId.value,javaType=INTEGER}]]>
+            <![CDATA[${searchCriteria.relatedId.operation} m_tracker_related_bug.relatedid ${searchCriteria.relatedId.compareOperator} #{searchCriteria.relatedId.value,jdbcType=NUMERIC}]]>
         </if>
     </sql>
 

@@ -25,7 +25,7 @@
     <sql id="querySearchCriteria">
 
         <if test="searchCriteria.projectId != null">
-            <![CDATA[${searchCriteria.projectId.operation} m_prj_time_logging.projectId ${searchCriteria.projectId.compareOperator} #{searchCriteria.projectId.value,javaType=INTEGER}]]>
+            <![CDATA[${searchCriteria.projectId.operation} m_prj_time_logging.projectId ${searchCriteria.projectId.compareOperator} #{searchCriteria.projectId.value,jdbcType=NUMERIC}]]>
         </if>
 
         <if test="searchCriteria.type != null">
@@ -33,7 +33,7 @@
         </if>
 
         <if test="searchCriteria.typeId != null">
-            <![CDATA[${searchCriteria.typeId.operation} m_prj_time_logging.typeid ${searchCriteria.typeId.compareOperator} #{searchCriteria.typeId.value,javaType=INTEGER}]]>
+            <![CDATA[${searchCriteria.typeId.operation} m_prj_time_logging.typeid ${searchCriteria.typeId.compareOperator} #{searchCriteria.typeId.value,jdbcType=NUMERIC}]]>
         </if>
 
         <if test="searchCriteria.rangeDate != null">

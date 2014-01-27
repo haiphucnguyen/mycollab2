@@ -11,7 +11,7 @@
 			m_crm_product_catalog.mft_partnumber like '%${mftNumber.value}%'
         </if>
 		<if test="saccountid != null">
-            <![CDATA[${saccountid.operation} m_crm_product_catalog.sAccountId = #{saccountid.value,javaType=INTEGER}]]>
+            <![CDATA[${saccountid.operation} m_crm_product_catalog.sAccountId = #{saccountid.value,jdbcType=NUMERIC}]]>
 		</if>
 	</sql>
 

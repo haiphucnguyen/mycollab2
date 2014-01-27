@@ -35,13 +35,13 @@
     <sql id="querySearchCriteria">
 
         <if test="searchCriteria.id != null">
-            <![CDATA[${searchCriteria.id.operation} m_prj_task_list.id ${searchCriteria.id.compareOperator} #{searchCriteria.id.value,javaType=INTEGER}]]>
+            <![CDATA[${searchCriteria.id.operation} m_prj_task_list.id ${searchCriteria.id.compareOperator} #{searchCriteria.id.value,jdbcType=NUMERIC}]]>
         </if>
 
         <if test="searchCriteria.projectId != null">
             ${searchCriteria.projectId.operation}
             m_prj_task_list.projectid =
-            #{searchCriteria.projectId.value,javaType=INTEGER}
+            #{searchCriteria.projectId.value,jdbcType=NUMERIC}
         </if>
 
         <if test="searchCriteria.status != null">
@@ -132,7 +132,7 @@
         <include
             refid="com.esofthead.mycollab.module.project.dao.TaskListMapperExt.selectTaskList" />
 
-        WHERE m_prj_task_list.id=#{taskListId, javaType=INTEGER}
+        WHERE m_prj_task_list.id=#{taskListId, jdbcType=NUMERIC}
     </select>
 
     <select id="getNextItemKey" parameterType="map" resultType="java.lang.Integer">

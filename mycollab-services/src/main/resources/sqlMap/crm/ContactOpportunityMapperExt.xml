@@ -13,11 +13,11 @@
 
     <sql id="querySearchCriteria">
         <if test="searchCriteria.saccountid != null">
-            <![CDATA[${searchCriteria.saccountid.operation} m_crm_contact.sAccountId = #{searchCriteria.saccountid.value,javaType=INTEGER}]]>
+            <![CDATA[${searchCriteria.saccountid.operation} m_crm_contact.sAccountId = #{searchCriteria.saccountid.value,jdbcType=NUMERIC}]]>
         </if>
         <if test="searchCriteria.opportunityId != null">
             <![CDATA[
-            ${searchCriteria.opportunityId.operation} m_crm_contacts_opportunities.opportunityId=#{searchCriteria.opportunityId.value,javaType=INTEGER}
+            ${searchCriteria.opportunityId.operation} m_crm_contacts_opportunities.opportunityId=#{searchCriteria.opportunityId.value,jdbcType=NUMERIC}
             ]]>
         </if>    
     </sql>
@@ -31,9 +31,9 @@
                 ${searchCriteria.opportunityId.operation} 
                 (SELECT COUNT(*) 
                     FROM m_crm_opportunity, m_crm_contacts_opportunities 
-                    WHERE m_crm_contacts_opportunities.opportunityId=#{searchCriteria.opportunityId.value,javaType=INTEGER} 
+                    WHERE m_crm_contacts_opportunities.opportunityId=#{searchCriteria.opportunityId.value,jdbcType=NUMERIC} 
                         AND m_crm_contacts_opportunities.contactId=m_crm_contact.id 
-                        AND m_crm_opportunity.id=#{searchCriteria.opportunityId.value,javaType=INTEGER}) > 0
+                        AND m_crm_opportunity.id=#{searchCriteria.opportunityId.value,jdbcType=NUMERIC}) > 0
             ]]>
         </if>
     </sql>

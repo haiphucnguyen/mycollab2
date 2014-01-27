@@ -8,14 +8,13 @@
     <version>3.0.0</version>
     <packaging>pom</packaging>
     <properties>
-        <springVersion>3.2.4.RELEASE</springVersion>
-        <aspectjVersion>1.7.3</aspectjVersion>
+        <springVersion>3.2.6.RELEASE</springVersion>
+        <aspectjVersion>1.7.4</aspectjVersion>
         <javaVersion>1.7</javaVersion>
         <slf4jVersion>1.6.4</slf4jVersion>
         <log4jVersion>1.2.16</log4jVersion>
         <servletVersion>3.1.0</servletVersion>
         <vaadinVersion>7.1.10</vaadinVersion>
-        <gwtversion>2.5.1</gwtversion>
         <jettyVersion>9.1.1.v20140108</jettyVersion>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.inceptionYear>2011</project.inceptionYear>

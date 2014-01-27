@@ -24,7 +24,7 @@
             ]]>
         </if>
         <if test="searchCriteria.saccountid != null">
-            <![CDATA[${searchCriteria.saccountid.operation} s_user_account.accountId = #{searchCriteria.saccountid.value,javaType=INTEGER}]]>
+            <![CDATA[${searchCriteria.saccountid.operation} s_user_account.accountId = #{searchCriteria.saccountid.value,jdbcType=NUMERIC}]]>
         </if>
         <if test="searchCriteria.subdomain != null">
             <![CDATA[${searchCriteria.subdomain.operation} (SELECT COUNT(*) 
@@ -67,7 +67,7 @@
         <if test="searchCriteria.saccountid != null">
             <![CDATA[${searchCriteria.saccountid.operation} (SELECT COUNT(*) 
                 FROM s_user_account 
-                WHERE s_user_account.accountId = #{searchCriteria.saccountid.value,javaType=INTEGER} AND s_user_account.username=s_user.username) > 0]]>
+                WHERE s_user_account.accountId = #{searchCriteria.saccountid.value,jdbcType=NUMERIC} AND s_user_account.username=s_user.username) > 0]]>
         </if>
         <if test="searchCriteria.subdomain != null">
             <![CDATA[${searchCriteria.subdomain.operation} (SELECT COUNT(*) 
