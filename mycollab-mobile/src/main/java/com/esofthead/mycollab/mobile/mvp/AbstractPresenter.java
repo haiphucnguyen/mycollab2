@@ -16,8 +16,6 @@
  */
 package com.esofthead.mycollab.mobile.mvp;
 
-import com.vaadin.addon.touchkit.ui.NavigationManager;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

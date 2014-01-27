@@ -25,7 +25,9 @@ import com.esofthead.mycollab.eventmanager.ApplicationEvent;
 public class CrmEvent {
 
     public static class GotoHome extends ApplicationEvent {
-        public GotoHome(Object source, Object data) {
+		private static final long serialVersionUID = -6550809291368983694L;
+
+		public GotoHome(Object source, Object data) {
             super(source, data);
         }
     }

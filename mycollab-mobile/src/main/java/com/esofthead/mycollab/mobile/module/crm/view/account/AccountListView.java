@@ -1,27 +1,15 @@
 package com.esofthead.mycollab.mobile.module.crm.view.account;
 
-import com.esofthead.mycollab.vaadin.mvp.AbstractMobilePageView;
-import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
-import com.vaadin.ui.VerticalLayout;
+import com.esofthead.mycollab.mobile.ui.ListView;
+import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
+import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 
-@ViewComponent
-public class AccountListView extends AbstractMobilePageView {
-
-	private static final long serialVersionUID = -500810154594390148L;
-	
-	public AccountListView() {
-		super();
-		
-		setCaption("Accounts");
-		setToggleButton(true);
-		initContent();
-	}
-
-	private void initContent() {
-		final VerticalLayout mainContent = new VerticalLayout();
-		mainContent.setSizeFull();
-		
-		setContent(mainContent);
-	}
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 3.0
+ * 
+ */
+public interface AccountListView extends ListView<AccountSearchCriteria, SimpleAccount> {
 
 }

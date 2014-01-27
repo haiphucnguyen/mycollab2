@@ -16,6 +16,8 @@
  */
 package com.esofthead.mycollab.mobile.module.crm.view;
 
+import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.eventmanager.ApplicationEvent;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBus;
@@ -23,8 +25,11 @@ import com.esofthead.mycollab.mobile.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.mobile.module.crm.events.CrmEvent;
 import com.esofthead.mycollab.mobile.module.crm.ui.CrmNavigationMenu;
 import com.esofthead.mycollab.mobile.module.crm.view.account.AccountListPresenter;
+import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.IController;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
+import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.vaadin.mobilecomponent.MobileNavigationManager;
 
 /**
@@ -32,7 +37,8 @@ import com.esofthead.vaadin.mobilecomponent.MobileNavigationManager;
  * @since 3.0
  */
 public class CrmModuleController implements IController {
-    final private MobileNavigationManager crmViewNavigation;
+	private static final long serialVersionUID = 6995176903239247669L;
+	final private MobileNavigationManager crmViewNavigation;
 
     public CrmModuleController(MobileNavigationManager navigationManager) {
         this.crmViewNavigation = navigationManager;
@@ -44,7 +50,9 @@ public class CrmModuleController implements IController {
 	private void bindCrmEvents() {
         EventBus.getInstance().addListener(
                 new ApplicationEventListener<CrmEvent.GotoHome>() {
-                    @Override
+					private static final long serialVersionUID = -2434410171305636265L;
+
+					@Override
                     public Class<? extends ApplicationEvent> getEventType() {
                         return CrmEvent.GotoHome.class;
                     }
@@ -79,7 +87,12 @@ public class CrmModuleController implements IController {
 					@Override
 					public void handle(AccountEvent.GotoList event) {
 						AccountListPresenter presenter = PresenterResolver.getPresenter(AccountListPresenter.class);
-						presenter.go(crmViewNavigation, null);
+						AccountSearchCriteria criteria = new AccountSearchCriteria();
+						criteria.setSaccountid(new NumberSearchField(
+								SearchField.AND, AppContext.getAccountId()));
+						presenter.go(crmViewNavigation,
+								new ScreenData.Search<AccountSearchCriteria>(
+										criteria));
 					}
 					
 				}

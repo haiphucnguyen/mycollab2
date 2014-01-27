@@ -35,8 +35,9 @@ import com.vaadin.ui.VerticalLayout;
  */
 @ViewComponent
 public class MainView extends AbstractMobileMainView {
+	private static final long serialVersionUID = 1316340508967377888L;
 
-    public MainView() {
+	public MainView() {
         super();
 
         initUI();

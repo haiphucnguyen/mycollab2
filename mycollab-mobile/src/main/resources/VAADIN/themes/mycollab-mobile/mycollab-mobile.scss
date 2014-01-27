@@ -180,6 +180,34 @@
 	    }
 	}
 	
+	/* Data List View */
+	.data-list-view {
+		.v-table-row {
+			-moz-box-sizing: border-box;
+			-webkit-box-sizing: border-box;
+			box-sizing: border-box;
+			border-bottom: 1px solid rgb(236, 236, 236);
+			display: inline-block;
+		}
+		.v-table-row-odd {
+			@extend .v-table-row;
+			background-color: rgb(255, 255, 255);
+		}
+		.v-button {
+			text-align: left;
+			
+			.v-button-wrap {
+				padding: 0px;
+				word-wrap: break-word;
+				white-space: normal;
+				
+				.v-button-caption {
+					color: rgb(142, 142, 142);
+				}
+			}
+		}
+	}
+	
     .v-button {
         line-height: normal;
         box-shadow: none;

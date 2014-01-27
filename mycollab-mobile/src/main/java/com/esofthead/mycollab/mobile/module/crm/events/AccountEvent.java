@@ -2,6 +2,12 @@ package com.esofthead.mycollab.mobile.module.crm.events;
 
 import com.esofthead.mycollab.eventmanager.ApplicationEvent;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 3.0
+ * 
+ */
 public class AccountEvent {
 	public static class Save extends ApplicationEvent {
 		private static final long serialVersionUID = -8233913139722949767L;
