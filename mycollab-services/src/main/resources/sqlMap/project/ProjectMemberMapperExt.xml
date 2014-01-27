@@ -26,7 +26,7 @@
     <sql id="querySearchCriteria">
 
         <if test="searchCriteria.id != null">
-            <![CDATA[${searchCriteria.id.operation} m_prj_member.id ${searchCriteria.id.compareOperator} #{searchCriteria.id.value,javaType=INTEGER}]]>
+            <![CDATA[${searchCriteria.id.operation} m_prj_member.id ${searchCriteria.id.compareOperator} #{searchCriteria.id.value,jdbcType=NUMERIC}]]>
         </if>
 
         <if test="searchCriteria.status != null">
@@ -34,18 +34,18 @@
         </if>
 
         <if test="searchCriteria.projectId != null">
-            <![CDATA[${searchCriteria.projectId.operation} m_prj_member.projectId ${searchCriteria.projectId.compareOperator} #{searchCriteria.projectId.value,javaType=INTEGER}]]>
+            <![CDATA[${searchCriteria.projectId.operation} m_prj_member.projectId ${searchCriteria.projectId.compareOperator} #{searchCriteria.projectId.value,jdbcType=NUMERIC}]]>
         </if>
 
         <if test="searchCriteria.saccountid != null">
-            <![CDATA[${searchCriteria.saccountid.operation} s_user_account.accountId = #{searchCriteria.saccountid.value,javaType=INTEGER}]]>
+            <![CDATA[${searchCriteria.saccountid.operation} s_user_account.accountId = #{searchCriteria.saccountid.value,jdbcType=NUMERIC}]]>
         </if>
     </sql>
 
     <sql id="queryTotalCountSearchCriteria">
 
         <if test="searchCriteria.id != null">
-            <![CDATA[${searchCriteria.id.operation} m_prj_member.id ${searchCriteria.id.compareOperator} #{searchCriteria.id.value,javaType=INTEGER}]]>
+            <![CDATA[${searchCriteria.id.operation} m_prj_member.id ${searchCriteria.id.compareOperator} #{searchCriteria.id.value,jdbcType=NUMERIC}]]>
         </if>
 
         <if test="searchCriteria.status != null">
@@ -53,13 +53,13 @@
         </if>
 
         <if test="searchCriteria.projectId != null">
-            <![CDATA[${searchCriteria.projectId.operation} m_prj_member.projectId ${searchCriteria.projectId.compareOperator} #{searchCriteria.projectId.value,javaType=INTEGER}]]>
+            <![CDATA[${searchCriteria.projectId.operation} m_prj_member.projectId ${searchCriteria.projectId.compareOperator} #{searchCriteria.projectId.value,jdbcType=NUMERIC}]]>
         </if>
 
         <if test="searchCriteria.saccountid != null">
             <![CDATA[${searchCriteria.saccountid.operation}
                 (SELECT COUNT(*) FROM m_prj_project
-                WHERE m_prj_project.sAccountId=#{searchCriteria.saccountid.value,javaType=INTEGER} AND m_prj_member.projectId=m_prj_project.id ) > 0
+                WHERE m_prj_project.sAccountId=#{searchCriteria.saccountid.value,jdbcType=NUMERIC} AND m_prj_member.projectId=m_prj_project.id ) > 0
             ]]>
         </if>
     </sql>
@@ -127,7 +127,7 @@
 
         <include
             refid="com.esofthead.mycollab.module.project.dao.ProjectMemberMapperExt.selectMember" />
-        WHERE m_prj_member.id=#{memberId, javaType=INTEGER}
+        WHERE m_prj_member.id=#{memberId, jdbcType=NUMERIC}
 
     </select>
 
@@ -141,7 +141,7 @@
         FROM m_prj_member, s_user
         WHERE (m_prj_member.username=s_user.username AND
             s_user.username=#{username} AND
-            m_prj_member.projectId=#{projectId})
+            m_prj_member.projectId=#{projectId, jdbcType=NUMERIC})
             ]]>
     </select>
 
@@ -155,9 +155,9 @@
                         FROM m_prj_member 
                         WHERE m_prj_member.username = s_user.username 
                             AND m_prj_member.status='Active' 
-                            AND m_prj_member.projectId=#{projectId,javaType=INTEGER}
+                            AND m_prj_member.projectId=#{projectId,jdbcType=NUMERIC}
                             AND s_user_account.username=s_user.username 
-                            AND s_user_account.accountId=#{sAccountId,javaType=INTEGER}) = 0)
+                            AND s_user_account.accountId=#{sAccountId,jdbcType=NUMERIC}) = 0)
         ]]>
 
     </select>
@@ -172,9 +172,9 @@
                 FROM m_prj_member 
                 WHERE m_prj_member.username = s_user.username 
                     AND m_prj_member.status='Active' 
-                    AND m_prj_member.projectId=#{projectId,javaType=INTEGER}
+                    AND m_prj_member.projectId=#{projectId,jdbcType=NUMERIC}
                     AND s_user_account.username=s_user.username 
-                    AND s_user_account.accountId=#{sAccountId,javaType=INTEGER}) > 0)
+                    AND s_user_account.accountId=#{sAccountId,jdbcType=NUMERIC}) > 0)
         ]]>
 
     </select>

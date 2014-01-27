@@ -20,14 +20,14 @@
     <sql id="querySearchCriteria">
         <if test="searchCriteria.id != null">
             ${searchCriteria.id.operation} m_prj_message.id =
-            #{searchCriteria.id.value,javaType=INTEGER}
+            #{searchCriteria.id.value,jdbcType=NUMERIC}
         </if>
         <if test="searchCriteria.projectids != null">
             ${searchCriteria.projectids.operation}
             m_prj_message.projectid IN
             <foreach close=")" collection="searchCriteria.projectids.values"
                 item="projectid" open="(" separator="OR">
-                #{projectid.value,javaType=INTEGER}
+                #{projectid.value,jdbcType=NUMERIC}
             </foreach>
         </if>
         <if test="searchCriteria.category != null">
@@ -95,6 +95,6 @@
         <include
             refid="com.esofthead.mycollab.module.project.dao.MessageMapperExt.selectMessage" />
 
-        WHERE m_prj_message.id=#{messageId, javaType=INTEGER}
+        WHERE m_prj_message.id=#{messageId, jdbcType=NUMERIC}
     </select>
 </mapper>

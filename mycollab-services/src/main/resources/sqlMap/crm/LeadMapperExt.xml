@@ -29,7 +29,7 @@
             ${searchCriteria.campaignId.operation} 
                 (SELECT COUNT(*) 
                     FROM m_crm_campaign, m_crm_campaigns_leads 
-                    WHERE m_crm_campaigns_leads.campaignId=#{searchCriteria.campaignId.value,javaType=INTEGER} AND m_crm_campaigns_leads.leadId=m_crm_lead.id
+                    WHERE m_crm_campaigns_leads.campaignId=#{searchCriteria.campaignId.value,jdbcType=NUMERIC} AND m_crm_campaigns_leads.leadId=m_crm_lead.id
                         AND m_crm_campaign.id=m_crm_campaigns_leads.campaignId) > 0
             ]]>
         </if>
@@ -61,7 +61,7 @@
             </foreach>
         </if>
         <if test="searchCriteria.saccountid != null">
-            <![CDATA[${searchCriteria.saccountid.operation} m_crm_lead.sAccountId = #{searchCriteria.saccountid.value,javaType=INTEGER}]]>
+            <![CDATA[${searchCriteria.saccountid.operation} m_crm_lead.sAccountId = #{searchCriteria.saccountid.value,jdbcType=NUMERIC}]]>
         </if>
         <if test="searchCriteria.firstname != null">
             <![CDATA[${searchCriteria.firstname.operation} m_crm_lead.firstname like '%${searchCriteria.firstname.value}%']]>
@@ -113,7 +113,7 @@
                 ${searchCriteria.accountId.operation}
                 (SELECT COUNT(*) 
                 FROM m_crm_account, m_crm_accounts_leads 
-                WHERE m_crm_account.id = #{searchCriteria.accountId.value,javaType=INTEGER} 
+                WHERE m_crm_account.id = #{searchCriteria.accountId.value,jdbcType=NUMERIC} 
                     AND m_crm_lead.id = m_crm_accounts_leads.leadId
                     AND m_crm_account.id = m_crm_accounts_leads.accountId) > 0
                 ]]>
@@ -123,7 +123,7 @@
             ${searchCriteria.campaignId.operation} 
                 (SELECT COUNT(*) 
                     FROM m_crm_campaign, m_crm_campaigns_leads 
-                    WHERE m_crm_campaigns_leads.campaignId=#{searchCriteria.campaignId.value,javaType=INTEGER} AND m_crm_campaigns_leads.leadId=m_crm_lead.id
+                    WHERE m_crm_campaigns_leads.campaignId=#{searchCriteria.campaignId.value,jdbcType=NUMERIC} AND m_crm_campaigns_leads.leadId=m_crm_lead.id
                         AND m_crm_campaign.id=m_crm_campaigns_leads.campaignId) > 0
             ]]>
         </if>
@@ -132,8 +132,8 @@
             ${searchCriteria.opportunityId.operation} 
                 (SELECT COUNT(*) 
                     FROM m_crm_opportunity, m_crm_opportunities_leads
-                    WHERE m_crm_opportunities_leads.opportunityId=#{searchCriteria.opportunityId.value,javaType=INTEGER} AND m_crm_opportunities_leads.leadId=m_crm_lead.id
-                        AND m_crm_opportunity.id=#{searchCriteria.opportunityId.value,javaType=INTEGER}) > 0
+                    WHERE m_crm_opportunities_leads.opportunityId=#{searchCriteria.opportunityId.value,jdbcType=NUMERIC} AND m_crm_opportunities_leads.leadId=m_crm_lead.id
+                        AND m_crm_opportunity.id=#{searchCriteria.opportunityId.value,jdbcType=NUMERIC}) > 0
             ]]>
         </if>
     </sql>
@@ -141,7 +141,7 @@
     <sql id="queryTotalCountSearchCriteria">
 
         <if test="searchCriteria.id != null">
-            <![CDATA[${searchCriteria.id.operation} m_crm_lead.id ${searchCriteria.id.compareOperator} #{searchCriteria.id.value,javaType=INTEGER}]]>
+            <![CDATA[${searchCriteria.id.operation} m_crm_lead.id ${searchCriteria.id.compareOperator} #{searchCriteria.id.value,jdbcType=NUMERIC}]]>
         </if>
 
         <if test="searchCriteria.campaignName != null">
@@ -155,7 +155,7 @@
         </if>
         <if test="searchCriteria.campaignId != null">
             <![CDATA[
-                ${searchCriteria.campaignId.operation} m_crm_lead.campaignId = #{searchCriteria.campaignId.value,javaType=INTEGER}
+                ${searchCriteria.campaignId.operation} m_crm_lead.campaignId = #{searchCriteria.campaignId.value,jdbcType=NUMERIC}
                 ]]>
         </if>
         <if test="searchCriteria.referredBy != null">
@@ -188,12 +188,12 @@
             ${searchCriteria.opportunityId.operation} 
                 (SELECT COUNT(*) 
                     FROM m_crm_opportunity, m_crm_opportunities_leads
-                    WHERE m_crm_opportunities_leads.opportunityId=#{searchCriteria.opportunityId.value,javaType=INTEGER} AND m_crm_opportunities_leads.leadId=m_crm_lead.id
-                        AND m_crm_opportunity.id=#{searchCriteria.opportunityId.value,javaType=INTEGER}) > 0
+                    WHERE m_crm_opportunities_leads.opportunityId=#{searchCriteria.opportunityId.value,jdbcType=NUMERIC} AND m_crm_opportunities_leads.leadId=m_crm_lead.id
+                        AND m_crm_opportunity.id=#{searchCriteria.opportunityId.value,jdbcType=NUMERIC}) > 0
             ]]>
         </if>
         <if test="searchCriteria.saccountid != null">
-            <![CDATA[${searchCriteria.saccountid.operation} m_crm_lead.sAccountId = #{searchCriteria.saccountid.value,javaType=INTEGER}]]>
+            <![CDATA[${searchCriteria.saccountid.operation} m_crm_lead.sAccountId = #{searchCriteria.saccountid.value,jdbcType=NUMERIC}]]>
         </if>
         <if test="searchCriteria.firstname != null">
             <![CDATA[${searchCriteria.firstname.operation} m_crm_lead.firstname like '%${searchCriteria.firstname.value}%']]>
@@ -241,7 +241,7 @@
                 ${searchCriteria.accountId.operation}
                 (SELECT COUNT(*) 
                 FROM m_crm_account, m_crm_accounts_leads 
-                WHERE m_crm_account.id = #{searchCriteria.accountId.value,javaType=INTEGER} 
+                WHERE m_crm_account.id = #{searchCriteria.accountId.value,jdbcType=NUMERIC} 
                     AND m_crm_lead.id = m_crm_accounts_leads.leadId
                     AND m_crm_account.id = m_crm_accounts_leads.accountId) > 0
                 ]]>
@@ -315,7 +315,7 @@
         <include
             refid="com.esofthead.mycollab.module.crm.dao.LeadMapperExt.selectSimpleLead" />
 
-        WHERE m_crm_lead.id = #{leadId,javaType=INTEGER}
+        WHERE m_crm_lead.id = #{leadId,jdbcType=NUMERIC}
     </select>
     
     <select id="findConvertedLeadOfAccount" parameterType="int" resultMap="SimpleLeadResult">
@@ -323,7 +323,7 @@
             refid="com.esofthead.mycollab.module.crm.dao.LeadMapperExt.selectSimpleLead" />
 
         INNER JOIN m_crm_accounts_leads ON (m_crm_accounts_leads.leadId=m_crm_lead.id AND m_crm_accounts_leads.isConvertRel=1 AND
-            m_crm_accounts_leads.accountId=#{accountId,javaType=INTEGER})
+            m_crm_accounts_leads.accountId=#{accountId,jdbcType=NUMERIC})
     </select>
     
     <select id="findConvertedLeadOfContact" parameterType="int" resultMap="SimpleLeadResult">
@@ -331,7 +331,7 @@
             refid="com.esofthead.mycollab.module.crm.dao.LeadMapperExt.selectSimpleLead" />
 
         INNER JOIN m_crm_contacts_leads ON (m_crm_contacts_leads.leadId=m_crm_lead.id AND m_crm_contacts_leads.isConvertRel=1 AND
-            m_crm_contacts_leads.contactId=#{contactId,javaType=INTEGER})
+            m_crm_contacts_leads.contactId=#{contactId,jdbcType=NUMERIC})
     </select>
     
     <select id="findConvertedLeadOfOpportunity" parameterType="int" resultMap="SimpleLeadResult">
@@ -339,7 +339,7 @@
             refid="com.esofthead.mycollab.module.crm.dao.LeadMapperExt.selectSimpleLead" />
 
         INNER JOIN m_crm_opportunities_leads ON (m_crm_opportunities_leads.leadId=m_crm_lead.id AND m_crm_opportunities_leads.isConvertRel=1 AND
-            m_crm_opportunities_leads.opportunityId=#{opportunityId,javaType=INTEGER})
+            m_crm_opportunities_leads.opportunityId=#{opportunityId,jdbcType=NUMERIC})
     </select>
 
     <select id="getNextItemKey" parameterType="map" resultType="java.lang.Integer">

@@ -25,7 +25,7 @@
     <sql id="querySearchCriteria">
 
         <if test="searchCriteria.id != null">
-            <![CDATA[${searchCriteria.id.operation} m_prj_risk.id ${searchCriteria.id.compareOperator} #{searchCriteria.id.value,javaType=INTEGER}]]>
+            <![CDATA[${searchCriteria.id.operation} m_prj_risk.id ${searchCriteria.id.compareOperator} #{searchCriteria.id.value,jdbcType=NUMERIC}]]>
         </if>
 
         <if test="searchCriteria.riskname != null">
@@ -37,7 +37,7 @@
         <if test="searchCriteria.projectId != null">
             ${searchCriteria.projectId.operation}
             m_prj_risk.projectid =
-            #{searchCriteria.projectId.value,javaType=INTEGER}
+            #{searchCriteria.projectId.value,jdbcType=NUMERIC}
         </if>
         <if test="searchCriteria.raisedByUser != null">
             ${searchCriteria.raisedByUser.operation}
@@ -112,7 +112,7 @@
         <include
             refid="com.esofthead.mycollab.module.project.dao.RiskMapperExt.selectRisk" />
 
-        WHERE m_prj_risk.id=#{riskId, javaType=INTEGER}
+        WHERE m_prj_risk.id=#{riskId, jdbcType=NUMERIC}
     </select>
 
     <select id="getNextItemKey" parameterType="map" resultType="java.lang.Integer">

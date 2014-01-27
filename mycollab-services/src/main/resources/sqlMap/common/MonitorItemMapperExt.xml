@@ -15,7 +15,7 @@
     <sql id="querySearchCriteria">
 
         <if test="searchCriteria.typeId != null">
-            <![CDATA[${searchCriteria.typeId.operation} m_monitor_item.typeid ${searchCriteria.typeId.compareOperator} #{searchCriteria.typeId.value,javaType=INTEGER}]]>
+            <![CDATA[${searchCriteria.typeId.operation} m_monitor_item.typeid ${searchCriteria.typeId.compareOperator} #{searchCriteria.typeId.value,jdbcType=NUMERIC}]]>
         </if>
 
         <if test="searchCriteria.type != null ">

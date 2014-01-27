@@ -12,7 +12,7 @@
 
     <sql id="querySearchCriteria">
         <if test="searchCriteria.saccountid != null ">
-            <![CDATA[${searchCriteria.saccountid.operation} s_save_search_result.sAccountId = #{searchCriteria.saccountid.value, javaType=INTEGER} ]]>
+            <![CDATA[${searchCriteria.saccountid.operation} s_save_search_result.sAccountId = #{searchCriteria.saccountid.value, jdbcType=NUMERIC} ]]>
         </if>
 
         <if test="searchCriteria.type != null ">

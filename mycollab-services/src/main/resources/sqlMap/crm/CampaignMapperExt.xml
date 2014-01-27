@@ -33,7 +33,7 @@
             ${searchCriteria.leadId.operation} 
             (SELECT COUNT(*) 
                 FROM m_crm_lead, m_crm_campaigns_leads
-                WHERE m_crm_lead.id=#{searchCriteria.leadId.value,javaType=INTEGER} AND m_crm_campaigns_leads.leadId=m_crm_lead.id 
+                WHERE m_crm_lead.id=#{searchCriteria.leadId.value,jdbcType=NUMERIC} AND m_crm_campaigns_leads.leadId=m_crm_lead.id 
                     AND  m_crm_campaigns_leads.campaignId=m_crm_campaign.id ) > 0
             ]]>
         </if>
@@ -87,14 +87,14 @@
             #{searchCriteria.endDateRange.to}
         </if>
         <if test="searchCriteria.saccountid != null">
-            <![CDATA[${searchCriteria.saccountid.operation} m_crm_campaign.sAccountId = #{searchCriteria.saccountid.value, javaType=INTEGER}]]>
+            <![CDATA[${searchCriteria.saccountid.operation} m_crm_campaign.sAccountId = #{searchCriteria.saccountid.value, jdbcType=NUMERIC}]]>
         </if>
     </sql>
 
     <sql id="queryTotalCountSearchCriteria">
 
         <if test="searchCriteria.id != null">
-            <![CDATA[${searchCriteria.id.operation} m_crm_campaign.id ${searchCriteria.id.compareOperator} #{searchCriteria.id.value,javaType=INTEGER}]]>
+            <![CDATA[${searchCriteria.id.operation} m_crm_campaign.id ${searchCriteria.id.compareOperator} #{searchCriteria.id.value,jdbcType=NUMERIC}]]>
         </if>
 
         <if test="searchCriteria.campaignName != null">
@@ -116,7 +116,7 @@
             ${searchCriteria.leadId.operation} 
             (SELECT COUNT(*) 
                 FROM m_crm_lead, m_crm_campaigns_leads
-                WHERE m_crm_lead.id=#{searchCriteria.leadId.value,javaType=INTEGER} AND m_crm_campaigns_leads.leadId=m_crm_lead.id 
+                WHERE m_crm_lead.id=#{searchCriteria.leadId.value,jdbcType=NUMERIC} AND m_crm_campaigns_leads.leadId=m_crm_lead.id 
                     AND  m_crm_campaigns_leads.campaignId=m_crm_campaign.id ) > 0
             ]]>
         </if>
@@ -171,7 +171,7 @@
             #{searchCriteria.endDateRange.to}
         </if>
         <if test="searchCriteria.saccountid != null">
-            <![CDATA[${searchCriteria.saccountid.operation} m_crm_campaign.sAccountId = #{searchCriteria.saccountid.value, javaType=INTEGER}]]>
+            <![CDATA[${searchCriteria.saccountid.operation} m_crm_campaign.sAccountId = #{searchCriteria.saccountid.value, jdbcType=NUMERIC}]]>
         </if>
     </sql>
 
@@ -240,7 +240,7 @@
         <include
             refid="com.esofthead.mycollab.module.crm.dao.CampaignMapperExt.selectSimpleCampaign" />
 
-        WHERE m_crm_campaign.id=#{campaignId,javaType=INTEGER}
+        WHERE m_crm_campaign.id=#{campaignId,jdbcType=NUMERIC}
     </select>
 
     <select id="getNextItemKey" parameterType="map" resultType="java.lang.Integer">

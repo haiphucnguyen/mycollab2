@@ -57,6 +57,6 @@
         <include
             refid="com.esofthead.mycollab.module.user.dao.RoleMapperExt.selectSimpleRole" />
 
-        WHERE s_roles.id=#{roleId, javaType=INTEGER}
+        WHERE s_roles.id=#{roleId, jdbcType=NUMERIC}
     </select>
 </mapper>

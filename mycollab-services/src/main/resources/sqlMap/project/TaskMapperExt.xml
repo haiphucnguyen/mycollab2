@@ -23,12 +23,12 @@
 
     <sql id="querySearchCriteria">
         <if test="searchCriteria.id != null">
-            <![CDATA[${searchCriteria.id.operation} m_prj_task.id ${searchCriteria.id.compareOperator} #{searchCriteria.id.value,javaType=INTEGER}]]>
+            <![CDATA[${searchCriteria.id.operation} m_prj_task.id ${searchCriteria.id.compareOperator} #{searchCriteria.id.value,jdbcType=NUMERIC}]]>
         </if>
 
         <if test="searchCriteria.projectid != null">
             <![CDATA[
-                ${searchCriteria.projectid.operation} m_prj_task.projectid=#{searchCriteria.projectid.value,javaType=INTEGER}
+                ${searchCriteria.projectid.operation} m_prj_task.projectid=#{searchCriteria.projectid.value,jdbcType=NUMERIC}
             ]]>
         </if>
         <if test='searchCriteria.statuses != null'>
@@ -49,24 +49,24 @@
           ]]>
         </if>
         <if test="searchCriteria.taskListId != null">
-            <![CDATA[${searchCriteria.taskListId.operation} m_prj_task.tasklistid = #{searchCriteria.taskListId.value,javaType=INTEGER}]]>
+            <![CDATA[${searchCriteria.taskListId.operation} m_prj_task.tasklistid = #{searchCriteria.taskListId.value,jdbcType=NUMERIC}]]>
         </if>
         <if test="searchCriteria.assignUser != null">
             <![CDATA[${searchCriteria.assignUser.operation} m_prj_task.assignUser = #{searchCriteria.assignUser.value}]]>
         </if>
         <if test="searchCriteria.milestoneId != null">
-            <![CDATA[${searchCriteria.milestoneId.operation} m_prj_task_list.milestoneId=#{searchCriteria.milestoneId.value,javaType=INTEGER}]]>
+            <![CDATA[${searchCriteria.milestoneId.operation} m_prj_task_list.milestoneId=#{searchCriteria.milestoneId.value,jdbcType=NUMERIC}]]>
         </if>
     </sql>
 
     <sql id="queryTotalCountSearchCriteria">
         <if test="searchCriteria.id != null">
-            <![CDATA[${searchCriteria.id.operation} m_prj_task.id ${searchCriteria.id.compareOperator} #{searchCriteria.id.value,javaType=INTEGER}]]>
+            <![CDATA[${searchCriteria.id.operation} m_prj_task.id ${searchCriteria.id.compareOperator} #{searchCriteria.id.value,jdbcType=NUMERIC}]]>
         </if>
 
         <if test="searchCriteria.projectid != null">
             <![CDATA[
-                ${searchCriteria.projectid.operation} m_prj_task.projectid=#{searchCriteria.projectid.value,javaType=INTEGER}
+                ${searchCriteria.projectid.operation} m_prj_task.projectid=#{searchCriteria.projectid.value,jdbcType=NUMERIC}
             ]]>
         </if>
         <if test='searchCriteria.statuses != null'>
@@ -87,13 +87,13 @@
           ]]>
         </if>
         <if test="searchCriteria.taskListId != null">
-            <![CDATA[${searchCriteria.taskListId.operation} m_prj_task.tasklistid = #{searchCriteria.taskListId.value,javaType=INTEGER}]]>
+            <![CDATA[${searchCriteria.taskListId.operation} m_prj_task.tasklistid = #{searchCriteria.taskListId.value,jdbcType=NUMERIC}]]>
         </if>
         <if test="searchCriteria.assignUser != null">
             <![CDATA[${searchCriteria.assignUser.operation} m_prj_task.assignUser = #{searchCriteria.assignUser.value}]]>
         </if>
         <if test="searchCriteria.milestoneId != null">
-            <![CDATA[${searchCriteria.milestoneId.operation} (SELECT COUNT(*) FROM m_prj_task_list WHERE m_prj_task_list.id=m_prj_task.id AND m_prj_task_list.milestoneId=#{searchCriteria.milestoneId.value,javaType=INTEGER}) > 0 ]]>
+            <![CDATA[${searchCriteria.milestoneId.operation} (SELECT COUNT(*) FROM m_prj_task_list WHERE m_prj_task_list.id=m_prj_task.id AND m_prj_task_list.milestoneId=#{searchCriteria.milestoneId.value,jdbcType=NUMERIC}) > 0 ]]>
         </if>
     </sql>
 
@@ -157,7 +157,7 @@
         <include
             refid="com.esofthead.mycollab.module.project.dao.TaskMapperExt.selectTask" />
 
-        WHERE m_prj_task.id=#{taskId, javaType=INTEGER}
+        WHERE m_prj_task.id=#{taskId, jdbcType=NUMERIC}
     </select>
 
     <select id="getNextItemKey" parameterType="map" resultType="java.lang.Integer">
@@ -185,6 +185,6 @@
         resultType="java.lang.Integer">
         SELECT MAX(taskkey) FROM m_prj_task
         WHERE
-        m_prj_task.projectid=#{projectId, javaType=INTEGER}
+        m_prj_task.projectid=#{projectId, jdbcType=NUMERIC}
     </select>
 </mapper>

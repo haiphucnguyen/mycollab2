@@ -15,7 +15,7 @@
 
     <sql id="querySearchCriteria">
         <if test="searchCriteria.projectId != null">
-            <![CDATA[${searchCriteria.projectId.operation} m_prj_standup.projectId=#{searchCriteria.projectId.value,javaType=INTEGER}]]>
+            <![CDATA[${searchCriteria.projectId.operation} m_prj_standup.projectId=#{searchCriteria.projectId.value,jdbcType=NUMERIC}]]>
         </if>
         <if test="searchCriteria.logBy != null">
             <![CDATA[${searchCriteria.logBy.operation} m_prj_standup.logBy=#{searchCriteria.logBy.value}]]>
@@ -79,7 +79,7 @@
         resultMap="StandupResult">
         <include refid="selectStandupReport" />
 
-        WHERE m_prj_standup.id=#{standupId, javaType=INTEGER}
+        WHERE m_prj_standup.id=#{standupId, jdbcType=NUMERIC}
     </select>
 
     <select id="getReportsCount" parameterType="StandupReportSearchCriteria"

@@ -22,10 +22,10 @@
             <![CDATA[${searchCriteria.type.operation} m_audit_log.type=#{searchCriteria.type.value}]]>
         </if>
         <if test="searchCriteria.typeid != null">
-            <![CDATA[${searchCriteria.typeid.operation} m_audit_log.typeid=#{searchCriteria.typeid.value,javaType=INTEGER}]]>
+            <![CDATA[${searchCriteria.typeid.operation} m_audit_log.typeid=#{searchCriteria.typeid.value,jdbcType=NUMERIC}]]>
         </if>
         <if test="searchCriteria.saccountid != null">
-            <![CDATA[${searchCriteria.saccountid.operation} m_audit_log.sAccountId = #{searchCriteria.saccountid.value,javaType=INTEGER}]]>
+            <![CDATA[${searchCriteria.saccountid.operation} m_audit_log.sAccountId = #{searchCriteria.saccountid.value,jdbcType=NUMERIC}]]>
         </if>
     </sql>
 
@@ -59,7 +59,7 @@
         <include
             refid="com.esofthead.mycollab.common.dao.AuditLogMapperExt.selectSimpleAuditLog" />
 
-        WHERE m_audit_log.typeid=#{auditLogId, javaType=INTEGER}
+        WHERE m_audit_log.typeid=#{auditLogId, jdbcType=NUMERIC}
         ORDER BY m_audit_log.id DESC
         LIMIT 1
     </select>
