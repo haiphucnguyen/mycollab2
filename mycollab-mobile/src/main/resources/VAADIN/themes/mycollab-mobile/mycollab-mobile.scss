@@ -188,6 +188,10 @@
 			box-sizing: border-box;
 			border-bottom: 1px solid rgb(236, 236, 236);
 			display: inline-block;
+			
+			.v-table-cell-content {
+				padding-left: 10px;
+			}
 		}
 		.v-table-row-odd {
 			@extend .v-table-row;
@@ -203,6 +207,7 @@
 				
 				.v-button-caption {
 					color: rgb(142, 142, 142);
+					font-size: 1.3rem;
 				}
 			}
 		}

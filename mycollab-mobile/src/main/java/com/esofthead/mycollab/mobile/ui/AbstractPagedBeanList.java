@@ -136,8 +136,6 @@ public abstract class AbstractPagedBeanList<S extends SearchCriteria, B> extends
 			this.searchRequest.setCurrentPage(this.totalPage);
 		}
 
-		
-
 		this.currentListData = this.queryCurrentData();
 		this.currentViewCount = this.currentListData.size();
 
