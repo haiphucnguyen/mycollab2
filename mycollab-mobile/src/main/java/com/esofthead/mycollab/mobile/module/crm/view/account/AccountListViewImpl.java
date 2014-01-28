@@ -10,7 +10,6 @@ import com.esofthead.mycollab.mobile.ui.TableClickEvent;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
-import com.vaadin.ui.VerticalLayout;
 
 /**
  * 
@@ -20,28 +19,23 @@ import com.vaadin.ui.VerticalLayout;
  */
 
 @ViewComponent
-public class AccountListViewImpl extends AbstractListViewComp<AccountSearchCriteria, SimpleAccount> implements AccountListView {
+public class AccountListViewImpl extends
+		AbstractListViewComp<AccountSearchCriteria, SimpleAccount> implements
+		AccountListView {
 
 	private static final long serialVersionUID = -500810154594390148L;
-	
+
 	public AccountListViewImpl() {
 		super();
-		
+
 		setCaption("Accounts");
 		setToggleButton(true);
-		//initContent();
-	}
-
-	private void initContent() {
-		final VerticalLayout mainContent = new VerticalLayout();
-		mainContent.setSizeFull();
-		
-		setContent(mainContent);
 	}
 
 	@Override
 	protected AbstractPagedBeanList<AccountSearchCriteria, SimpleAccount> createBeanTable() {
-		AccountTableDisplay accountTableDisplay = new AccountTableDisplay("accountname");
+		AccountTableDisplay accountTableDisplay = new AccountTableDisplay(
+				"accountname");
 
 		accountTableDisplay
 				.addTableListener(new ApplicationEventListener<TableClickEvent>() {

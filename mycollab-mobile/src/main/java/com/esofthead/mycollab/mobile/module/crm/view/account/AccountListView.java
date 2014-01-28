@@ -10,6 +10,7 @@ import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
  * @since 3.0
  * 
  */
-public interface AccountListView extends ListView<AccountSearchCriteria, SimpleAccount> {
+public interface AccountListView extends
+		ListView<AccountSearchCriteria, SimpleAccount> {
 
 }

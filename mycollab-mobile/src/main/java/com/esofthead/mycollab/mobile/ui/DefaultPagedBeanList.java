@@ -5,7 +5,17 @@ import java.util.List;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.persistence.service.ISearchableService;
 
-public class DefaultPagedBeanList<SearchService extends ISearchableService<S>, S extends SearchCriteria, B> extends AbstractPagedBeanList<S, B> {
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 4.0
+ * 
+ * @param <SearchService>
+ * @param <S>
+ * @param <B>
+ */
+public class DefaultPagedBeanList<SearchService extends ISearchableService<S>, S extends SearchCriteria, B>
+		extends AbstractPagedBeanList<S, B> {
 	private static final long serialVersionUID = 1L;
 
 	private final SearchService searchService;

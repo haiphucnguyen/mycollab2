@@ -9,14 +9,21 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Table;
 
-public class AccountTableDisplay extends
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 4.0
+ * 
+ */
+public class AccountTableDisplay
+		extends
 		DefaultPagedBeanList<AccountService, AccountSearchCriteria, SimpleAccount> {
 	private static final long serialVersionUID = 1491890029721763281L;
-	
-	public AccountTableDisplay( String displayColumnId) {
+
+	public AccountTableDisplay(String displayColumnId) {
 		super(ApplicationContextUtil.getSpringBean(AccountService.class),
 				SimpleAccount.class, displayColumnId);
-		
+
 		addGeneratedColumn("accountname", new Table.ColumnGenerator() {
 			private static final long serialVersionUID = 1L;
 
@@ -25,7 +32,7 @@ public class AccountTableDisplay extends
 					final Object itemId, final Object columnId) {
 				final SimpleAccount account = AccountTableDisplay.this
 						.getBeanByIndex(itemId);
-				
+
 				final Button b = new Button(account.getAccountname(),
 						new Button.ClickListener() {
 							private static final long serialVersionUID = 1L;

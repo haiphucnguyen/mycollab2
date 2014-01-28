@@ -29,8 +29,6 @@ import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.VerticalLayout;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * 
@@ -40,8 +38,6 @@ import org.slf4j.LoggerFactory;
 @ViewComponent
 public class LoginViewImpl extends AbstractMobileMainView implements LoginView {
 	private static final long serialVersionUID = 1L;
-
-	private static Logger log = LoggerFactory.getLogger(LoginViewImpl.class);
 
 	public LoginViewImpl() {
 		super();
@@ -98,8 +94,10 @@ public class LoginViewImpl extends AbstractMobileMainView implements LoginView {
 
 			@Override
 			public void buttonClick(Button.ClickEvent event) {
-				//doLogin(emailField.getValue(), pwdField.getValue());
-                LoginViewImpl.this.fireEvent(new UserEvent.PlainLogin(LoginViewImpl.this, new String[] {emailField.getValue(), pwdField.getValue()}));
+				// doLogin(emailField.getValue(), pwdField.getValue());
+				LoginViewImpl.this.fireEvent(new UserEvent.PlainLogin(
+						LoginViewImpl.this, new String[] {
+								emailField.getValue(), pwdField.getValue() }));
 			}
 		});
 		contentLayout.addComponent(signInBtn);
