@@ -304,9 +304,6 @@
     <dependent-module archiveName="dynamicreports-googlecharts-3.1.6.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/net/sourceforge/dynamicreports/dynamicreports-googlecharts/3.1.6/dynamicreports-googlecharts-3.1.6.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="schemacrawler-10.08.01.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/net/sourceforge/schemacrawler/schemacrawler/10.08.01/schemacrawler-10.08.01.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
     <dependent-module archiveName="mycollab-caching.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mycollab-caching/mycollab-caching">
       <dependency-type>uses</dependency-type>
     </dependent-module>

@@ -226,7 +226,7 @@
     <dependent-module archiveName="mybatis-3.2.3.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/mybatis/mybatis/3.2.3/mybatis-3.2.3.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="mybatis-spring-1.2.2.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/mybatis/mybatis-spring/1.2.2/mybatis-spring-1.2.2.jar">
+    <dependent-module archiveName="mybatis-spring-1.2.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/mybatis/mybatis-spring/1.2.1/mybatis-spring-1.2.1.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="mybatis-velocity-1.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/mybatis/scripting/mybatis-velocity/1.1/mybatis-velocity-1.1.jar">
@@ -278,9 +278,6 @@
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="dynamicreports-googlecharts-3.1.6.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/net/sourceforge/dynamicreports/dynamicreports-googlecharts/3.1.6/dynamicreports-googlecharts-3.1.6.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="schemacrawler-10.08.01.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/net/sourceforge/schemacrawler/schemacrawler/10.08.01/schemacrawler-10.08.01.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="mycollab-caching.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mycollab-caching/mycollab-caching">
