@@ -28,10 +28,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.extensions.jcr.JcrSessionFactory;
 
-public class MyCollabJcrSessionFactory2 extends JcrSessionFactory {
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
+public class MyCollabContentSessionFactory extends JcrSessionFactory {
 
 	private static Logger log = LoggerFactory
-			.getLogger(MyCollabJcrSessionFactory2.class);
+			.getLogger(MyCollabContentSessionFactory.class);
 
 	@Override
 	protected void registerNodeTypes() throws Exception {

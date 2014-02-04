@@ -14,7 +14,6 @@
 		<config>src/main/resources/META-INF/spring/crm-context.xml</config>
 		<config>src/main/resources/META-INF/spring/datasource-context.xml</config>
 		<config>src/main/resources/META-INF/spring/ecm-context.xml</config>
-		<config>src/main/resources/META-INF/spring/migration-context.xml</config>
 		<config>src/main/resources/META-INF/spring/project-context.xml</config>
 		<config>src/main/resources/META-INF/spring/tracker-context.xml</config>
 		<config>src/main/resources/META-INF/spring/user-context.xml</config>
@@ -27,6 +26,7 @@
 		<config>java:com.esofthead.mycollab.module.project.esb.ProjectRouteBuilder</config>
 		<config>java:com.esofthead.mycollab.common.interceptor.aspect.TraceableAspect</config>
 		<config>java:com.esofthead.mycollab.module.user.esb.UserRouteBuilder</config>
+		<config>src/main/resources/META-INF/spring/mail-context.xml</config>
 	</configs>
 	<configSets>
 	</configSets>

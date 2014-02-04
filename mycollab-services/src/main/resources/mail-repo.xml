@@ -6,7 +6,7 @@
     <!-- virtual file system where the repository stores global state (e.g. 
         registered namespaces, custom node types, etc.) -->
     <FileSystem class="com.esofthead.mycollab.module.ecm.DbFileSystemExt">
-        <param name="schemaObjectPrefix" value="ecm_s_" />
+        <param name="schemaObjectPrefix" value="mailtemplate_s_" />
     </FileSystem>
 
     <!-- security configuration -->
@@ -27,12 +27,12 @@
     <Workspaces rootPath='repo/workspaces' defaultWorkspace='default' />
     <Workspace name="mycollab">
         <FileSystem class="com.esofthead.mycollab.module.ecm.DbFileSystemExt">
-            <param name="schemaObjectPrefix" value="ecm_s_" />
+            <param name="schemaObjectPrefix" value="mailtemplate_s_" />
         </FileSystem>
 
         <PersistenceManager
             class="com.esofthead.mycollab.module.ecm.BundleDbPersistenceManagerExt">
-            <param name="schemaObjectPrefix" value="ecm_p_workspace" />
+            <param name="schemaObjectPrefix" value="mailtemplate_p_workspace" />
         </PersistenceManager>
         <SearchIndex
             class='org.apache.jackrabbit.core.query.lucene.SearchIndex'>
@@ -41,7 +41,7 @@
             <param name='supportHighlighting' value='true' />
             <FileSystem
                 class="com.esofthead.mycollab.module.ecm.DbFileSystemExt">
-                <param name="schemaObjectPrefix" value="ecm_s_" />
+                <param name="schemaObjectPrefix" value="mailtemplate_s_" />
             </FileSystem>
         </SearchIndex>
     </Workspace>
@@ -49,11 +49,11 @@
 
     <Versioning rootPath='repo/version'>
         <FileSystem class='com.esofthead.mycollab.module.ecm.DbFileSystemExt'>
-            <param name="schemaObjectPrefix" value="ecm_s_" />
+            <param name="schemaObjectPrefix" value="mailtemplate_s_" />
         </FileSystem>
         <PersistenceManager
             class="com.esofthead.mycollab.module.ecm.BundleDbPersistenceManagerExt">
-            <param name="schemaObjectPrefix" value="ecm_p_version" />
+            <param name="schemaObjectPrefix" value="mailtemplate_p_version" />
         </PersistenceManager>
 
     </Versioning>
@@ -70,7 +70,7 @@
     <Cluster>
         <Journal
             class="com.esofthead.mycollab.module.ecm.MyCollabDatabaseJournal">
-            <param name="schemaObjectPrefix" value="ecm_journal" />
+            <param name="schemaObjectPrefix" value="mailtemplate_journal" />
         </Journal>
     </Cluster>
 
