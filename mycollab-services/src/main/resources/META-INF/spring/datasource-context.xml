@@ -43,6 +43,7 @@
         <property name="typeAliasesPackage" value="com.esofthead.mycollab" />
         <property name="typeAliasesSuperType"
             value="com.esofthead.mycollab.core.arguments.SearchCriteria" />
+        <property name="typeAliases" value="com.esofthead.mycollab.core.persistence.VelocityDriverDeclare"></property>
         <property name="typeHandlersPackage" value="com.esofthead.mybatis.plugin.ext" />
         <property name="mapperLocations" value="classpath*:sqlMap/**/*.xml" />
     </bean>
