@@ -27,7 +27,7 @@
         #end
         
         #ifnotnull($_parameter.searchCriteria.website)
-            ${_parameter.searchCriteria.website.operation} m_crm_account.website LiKE '%${_parameter.searchCriteria.website.value}%'
+            ${_parameter.searchCriteria.website.operation} m_crm_account.website LIKE '%${_parameter.searchCriteria.website.value}%'
         #end
         
         #ifnotnull($_parameter.searchCriteria.anyCity)
@@ -102,6 +102,7 @@
         #end
         
         #ifnotnull($_parameter.searchCriteria.assignUserName)
+            ${_parameter.searchCriteria.assignUserName.operation}
              (SELECT COUNT(*)
                 FROM s_user
                 WHERE m_crm_account.assignUser = s_user.username AND
@@ -109,7 +110,7 @@
         #end
        
         #ifnotnull($_parameter.searchCriteria.website)
-            ${_parameter.searchCriteria.website.operation} m_crm_account.website LiKE '%${_parameter.searchCriteria.website.value}%'
+            ${_parameter.searchCriteria.website.operation} m_crm_account.website LIKE '%${_parameter.searchCriteria.website.value}%'
         #end
         
         #ifnotnull($_parameter.searchCriteria.anyCity)
@@ -187,7 +188,7 @@
     <sql id="orderStatement">
         <![CDATA[
         ORDER BY
-        #if($_parameter.searchCriteria.orderByField)
+        #ifnotnull($_parameter.searchCriteria.orderByField)
             ${_parameter.searchCriteria.orderByField} ${_parameter.searchCriteria.sortDirection},
         #end
         m_crm_account.lastUpdatedTime DESC
@@ -198,37 +199,37 @@
         resultMap="SimpleAccountResult" lang="velocity">
         <include
             refid="com.esofthead.mycollab.module.crm.dao.AccountMapperExt.selectSimpleAccount" />
-        <if test="searchCriteria != null">
+        #ifnotnull($_parameter.searchCriteria)
             #trim("WHERE" "AND|OR")
                 1=1
                 <include
                     refid="com.esofthead.mycollab.module.crm.dao.AccountMapperExt.querySearchCriteria" />
             #end
-            <include refid="orderStatement" />
-        </if>
+        #end
+        <include refid="orderStatement" />
     </select>
 
     <select id="getTotalCount" parameterType="AccountSearchCriteria"
         resultType="java.lang.Integer" lang="velocity">
         SELECT count(*) as totalCount FROM m_crm_account
-        <if test="searchCriteria != null">
+        #ifnotnull($_parameter.searchCriteria)
             #trim("WHERE" "AND|OR")
                 1=1
                 <include
                     refid="com.esofthead.mycollab.module.crm.dao.AccountMapperExt.queryTotalCountSearchCriteria" />
             #end
-        </if>
+        #end
     </select>
 
     <delete id="removeByCriteria" parameterType="AccountSearchCriteria" lang="velocity">
         DELETE FROM m_crm_account
-        <if test="searchCriteria != null">
-            <trim prefix="WHERE" prefixOverrides="AND | OR ">
+        #ifnotnull($_parameter.searchCriteria)
+            #trim("WHERE" "AND|OR")
                 1=1
                 <include
                     refid="com.esofthead.mycollab.module.crm.dao.AccountMapperExt.queryTotalCountSearchCriteria" />
-            </trim>
-        </if>
+            #end
+        #end
     </delete>
 
     <select id="findById" parameterType="java.lang.Integer"
@@ -275,7 +276,7 @@
         <include
             refid="com.esofthead.mycollab.module.crm.dao.AccountMapper.massUpdateWithSessionSql" />
 
-        #if($searchCriteria)
+        #ifnotnull($_parameter.searchCriteria)
             #trim("WHERE" "AND|OR")
                 1=1
                 <include

@@ -19,6 +19,7 @@ import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.ProjectPreviewFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.TabsheetLazyLoadComp;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormDetectAndDisplayUrlViewField;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormViewField;
 import com.esofthead.mycollab.web.MyCollabResource;
@@ -70,6 +71,10 @@ class RiskReadComp extends AbstractPreviewItemComp<SimpleRisk> {
 
 	@Override
 	protected void onPreviewItem() {
+		if ("Closed".equals(beanItem.getStatus())) {
+			addLayoutStyleName(UIConstants.LINK_COMPLETED);
+		}
+
 		commentDisplay.loadComments(beanItem.getId());
 		historyList.loadHistory(beanItem.getId());
 	}
