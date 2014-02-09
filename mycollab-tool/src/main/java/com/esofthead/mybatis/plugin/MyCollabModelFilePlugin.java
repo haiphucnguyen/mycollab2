@@ -1,35 +1,3 @@
-/**
- * This file is part of mycollab-dao.
- *
- * mycollab-dao is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-dao is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-dao.  If not, see <http://www.gnu.org/licenses/>.
- */
-/**
- * This file is part of mycollab-core.
- *
- * mycollab-core is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-core is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-core.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.esofthead.mybatis.plugin;
 
 import java.util.List;
@@ -48,6 +16,12 @@ import org.mybatis.generator.api.dom.xml.Document;
 import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class MyCollabModelFilePlugin extends
 		org.mybatis.generator.api.PluginAdapter {
 
@@ -80,6 +54,11 @@ public class MyCollabModelFilePlugin extends
 					introspectedColumn.getLength(), "Field value is too long");
 			field.addAnnotation(annotation);
 		}
+
+		String columnAnnotation = "@com.esofthead.mycollab.core.db.metadata.Column(\"%s\")";
+		columnAnnotation = String.format(columnAnnotation,
+				introspectedColumn.getActualColumnName());
+		field.addAnnotation(columnAnnotation);
 		return true;
 	}
 
@@ -136,9 +115,6 @@ public class MyCollabModelFilePlugin extends
 		}
 		sqlBuilder.append(") ");
 		sqlBuilder.append(valueSt.toString()).append(")");
-
-		// System.out
-		// .println("Generate insert statement " + sqlBuilder.toString());
 
 		element.addElement(new TextElement(sqlBuilder.toString()));
 
@@ -239,6 +215,11 @@ public class MyCollabModelFilePlugin extends
 		} else {
 			topLevelClass.setVisibility(JavaVisibility.DEFAULT);
 		}
+
+		String tableAnnotation = "@com.esofthead.mycollab.core.db.metadata.Table(\"%s\")";
+		tableAnnotation = String.format(tableAnnotation, introspectedTable
+				.getTableConfiguration().getTableName());
+		topLevelClass.addAnnotation(tableAnnotation);
 
 		return super.modelBaseRecordClassGenerated(topLevelClass,
 				introspectedTable);
