@@ -5882,3 +5882,8 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 .contactrole-row.odd {
 	background-color: rgb(212, 223, 239);
 }
+
+/* Message List fix */
+.message-list > .v-slot > .v-verticallayout {
+	display: block;
+}
