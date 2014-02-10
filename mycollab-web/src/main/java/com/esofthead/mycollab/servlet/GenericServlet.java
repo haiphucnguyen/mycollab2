@@ -40,6 +40,12 @@ public abstract class GenericServlet implements HttpRequestHandler {
 	public void handleRequest(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		try {
+			String pathInfo = request.getPathInfo();
+			
+			//Hack: omit the VAADIN request in servlet.
+			if (pathInfo.contains("VAADIN")) {
+				return;
+			}
 			onHandleRequest(request, response);
 		} catch (Exception e) {
 			if (e instanceof ResourceNotFoundException) {
