@@ -6,8 +6,6 @@ package com.esofthead.mycollab.core.arguments;
  * @since 4.0
  * 
  */
-public class DoubleValueCriterion extends Criterion {
+public class NoValueCriterion extends Criterion {
 	private static final long serialVersionUID = 1L;
-
-	
 }

@@ -12,6 +12,8 @@ public abstract class Criterion implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	protected String operation;
+	
+	protected String expression;
 
 	public String getOperation() {
 		return operation;
@@ -19,5 +21,13 @@ public abstract class Criterion implements Serializable {
 
 	public void setOperation(String operation) {
 		this.operation = operation;
+	}
+
+	public String getExpression() {
+		return expression;
+	}
+
+	public void setExpression(String expression) {
+		this.expression = expression;
 	}
 }
