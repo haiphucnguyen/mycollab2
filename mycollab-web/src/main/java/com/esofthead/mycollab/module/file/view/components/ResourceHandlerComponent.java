@@ -174,7 +174,7 @@ public class ResourceHandlerComponent extends VerticalLayout {
 					if (itemResourceContainerLayout.getListAllCheckBox() != null) {
 						for (CheckBox cb : itemResourceContainerLayout
 								.getListAllCheckBox()) {
-							if ((Boolean) cb.getValue())
+							if (cb.getValue())
 								cb.setValue(false);
 						}
 					}
@@ -642,7 +642,7 @@ public class ResourceHandlerComponent extends VerticalLayout {
 
 				@Override
 				public void valueChange(ValueChangeEvent event) {
-					if ((Boolean) checkbox.getValue()) {
+					if (checkbox.getValue()) {
 						selectedResourcesList.add(res);
 					} else {
 						selectedResourcesList.remove(res);
@@ -657,7 +657,7 @@ public class ResourceHandlerComponent extends VerticalLayout {
 
 				@Override
 				public void layoutClick(LayoutClickEvent event) {
-					if ((Boolean) checkbox.getValue())
+					if (checkbox.getValue())
 						checkbox.setValue(false);
 					else
 						checkbox.setValue(true);
@@ -798,6 +798,7 @@ public class ResourceHandlerComponent extends VerticalLayout {
 							.getStreamSourceSupportExtDrive(lstRes, false);
 				}
 
+				@Override
 				public String getFilename() {
 					return res.getName();
 				}
@@ -915,7 +916,7 @@ public class ResourceHandlerComponent extends VerticalLayout {
 					Resource containFolder = resourceService
 							.getParentFolder(res.getPath());
 					if (menuTree != null)
-						menuTree.expandItem((Folder) containFolder);
+						menuTree.expandItem(containFolder);
 					itemResourceContainerLayout
 							.constructBody((Folder) containFolder);
 					baseFolder = (Folder) containFolder;
@@ -977,7 +978,7 @@ public class ResourceHandlerComponent extends VerticalLayout {
 						parentPath = (parentPath.length() == 0) ? "/"
 								: parentPath;
 					}
-					String newNameValue = (String) newName.getValue();
+					String newNameValue = newName.getValue();
 					String newPath = parentPath + newNameValue;
 
 					if (resource instanceof ExternalFolder
@@ -1086,7 +1087,7 @@ public class ResourceHandlerComponent extends VerticalLayout {
 						@Override
 						public void buttonClick(final ClickEvent event) {
 
-							final String folderVal = (String) AddNewFolderWindow.this.folderName
+							final String folderVal = AddNewFolderWindow.this.folderName
 									.getValue();
 
 							if (folderVal != null
@@ -1289,20 +1290,20 @@ public class ResourceHandlerComponent extends VerticalLayout {
 
 	private class PagingResourceWapper extends CssLayout {
 		private static final long serialVersionUID = 1L;
-		private int totalItem;
+		private final int totalItem;
 		public static final int pageItemNum = 15;
 		private int currentPage;
-		private CssLayout controlBarWrapper;
-		private HorizontalLayout pageManagement;
-		private int totalPage;
-		private List<Resource> lstResource;
+		private final CssLayout controlBarWrapper;
+		private final HorizontalLayout pageManagement;
+		private final int totalPage;
+		private final List<Resource> lstResource;
 		private Button currentBtn;
-		private HorizontalLayout controlBar;
+		private final HorizontalLayout controlBar;
 
 		public PagingResourceWapper(List<Resource> lstResource) {
 			this.totalItem = lstResource.size();
 			this.currentPage = 1;
-			this.totalPage = ((int) totalItem / pageItemNum) + 1;
+			this.totalPage = (totalItem / pageItemNum) + 1;
 			this.lstResource = lstResource;
 
 			// defined layout here ---------------------------
@@ -1329,7 +1330,7 @@ public class ResourceHandlerComponent extends VerticalLayout {
 							public void buttonClick(final ClickEvent event) {
 								pageChange(1);
 							}
-						});
+						}, false);
 				firstLink.addStyleName("buttonPaging");
 				this.pageManagement.addComponent(firstLink);
 			}
@@ -1347,7 +1348,7 @@ public class ResourceHandlerComponent extends VerticalLayout {
 					public void buttonClick(final ClickEvent event) {
 						pageChange(currentPage - 2);
 					}
-				});
+				}, false);
 				previous2.addStyleName("buttonPaging");
 				this.pageManagement.addComponent(previous2);
 			}
@@ -1360,7 +1361,7 @@ public class ResourceHandlerComponent extends VerticalLayout {
 					public void buttonClick(final ClickEvent event) {
 						pageChange(currentPage - 1);
 					}
-				});
+				}, false);
 				previous1.addStyleName("buttonPaging");
 				this.pageManagement.addComponent(previous1);
 			}
@@ -1373,7 +1374,7 @@ public class ResourceHandlerComponent extends VerticalLayout {
 						public void buttonClick(final ClickEvent event) {
 							// pageChange(currentPage);
 						}
-					});
+					}, false);
 			currentBtn.addStyleName("buttonPaging");
 			currentBtn.addStyleName("buttonPagingcurrent");
 
@@ -1388,7 +1389,7 @@ public class ResourceHandlerComponent extends VerticalLayout {
 							public void buttonClick(final ClickEvent event) {
 								pageChange(currentPage + 1);
 							}
-						});
+						}, false);
 				next1.addStyleName("buttonPaging");
 				this.pageManagement.addComponent(next1);
 			}
@@ -1401,7 +1402,7 @@ public class ResourceHandlerComponent extends VerticalLayout {
 							public void buttonClick(final ClickEvent event) {
 								pageChange(currentPage + 2);
 							}
-						});
+						}, false);
 				next2.addStyleName("buttonPaging");
 				this.pageManagement.addComponent(next2);
 			}
@@ -1419,7 +1420,7 @@ public class ResourceHandlerComponent extends VerticalLayout {
 							public void buttonClick(final ClickEvent event) {
 								pageChange(totalPage);
 							}
-						});
+						}, false);
 				last.addStyleName("buttonPaging");
 				this.pageManagement.addComponent(last);
 			}
@@ -1490,9 +1491,9 @@ public class ResourceHandlerComponent extends VerticalLayout {
 				for (Object item : dataSourceArray) {
 					if (((Folder) item).getPath().equals(folder.getPath())) {
 						ResourceHandlerComponent.this.menuTree
-								.collapseItem((Folder) item);
+								.collapseItem(item);
 						ResourceHandlerComponent.this.menuTree
-								.expandItem((Folder) item);
+								.expandItem(item);
 						break;
 					}
 				}
@@ -1500,9 +1501,9 @@ public class ResourceHandlerComponent extends VerticalLayout {
 					if (((Folder) item).getPath().equals(
 							ResourceHandlerComponent.this.baseFolder.getPath())) {
 						ResourceHandlerComponent.this.menuTree
-								.collapseItem((Folder) item);
+								.collapseItem(item);
 						ResourceHandlerComponent.this.menuTree
-								.expandItem((Folder) item);
+								.expandItem(item);
 						break;
 					}
 				}
