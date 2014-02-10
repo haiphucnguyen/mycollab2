@@ -15,15 +15,15 @@ public class PricingPage extends BasePage {
 		super(parameters);
 
 		this.add(new BookmarkablePageLink<Void>("free-link", SignUpPage.class,
-				new PageParameters().add("planId", "5")));
+				new PageParameters().add("planId", "1")));
 		this.add(new BookmarkablePageLink<Void>("micro-link", SignUpPage.class,
 				new PageParameters().add("planId", "2")));
 		this.add(new BookmarkablePageLink<Void>("compact-link",
-				SignUpPage.class, new PageParameters().add("planId", "1")));
-		this.add(new BookmarkablePageLink<Void>("corporate-link",
 				SignUpPage.class, new PageParameters().add("planId", "3")));
-		this.add(new BookmarkablePageLink<Void>("enterprise-link",
+		this.add(new BookmarkablePageLink<Void>("corporate-link",
 				SignUpPage.class, new PageParameters().add("planId", "4")));
+		this.add(new BookmarkablePageLink<Void>("enterprise-link",
+				SignUpPage.class, new PageParameters().add("planId", "5")));
 
 	}
 
