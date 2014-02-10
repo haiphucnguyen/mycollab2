@@ -8,4 +8,6 @@ package com.esofthead.mycollab.core.arguments;
  */
 public class SingleValueCriterion extends Criterion {
 	private static final long serialVersionUID = 1L;
+	
+	
 }
