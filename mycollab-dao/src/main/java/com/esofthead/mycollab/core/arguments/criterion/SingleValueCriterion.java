@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.core.arguments;
+package com.esofthead.mycollab.core.arguments.criterion;
 
 /**
  * 

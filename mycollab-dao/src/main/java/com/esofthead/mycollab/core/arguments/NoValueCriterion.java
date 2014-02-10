@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.core.arguments;
 
+import com.esofthead.mycollab.core.arguments.criterion.Criterion;
+
 /**
  * 
  * @author MyCollab Ltd.

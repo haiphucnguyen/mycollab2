@@ -112,7 +112,8 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 		mainView.setWidth("100%");
 
 		final HorizontalLayout menuBarContainerHorizontalLayout = new HorizontalLayout();
-		menuBarContainerHorizontalLayout.setMargin(new MarginInfo(false, true, true, true));
+		menuBarContainerHorizontalLayout.setMargin(new MarginInfo(false, true,
+				true, true));
 
 		final VerticalLayout menuLayout = new VerticalLayout();
 		menuLayout.setSpacing(true);
@@ -152,7 +153,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 					switchViewBtn.setDescription("Event");
 					switchViewBtn.setIcon(MyCollabResource
 							.newResource("icons/16/ecm/event.png"));
-					gotoFileMainViewPage(baseFolder, true);
+					gotoFileMainViewPage(baseFolder);
 				}
 			}
 		});
@@ -370,11 +371,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 					@Override
 					public void itemClick(final ItemClickEvent event) {
 						final Folder item = (Folder) event.getItemId();
-						if (item instanceof ExternalFolder) {
-							gotoFileMainViewPage(item, false);
-						} else {
-							gotoFileMainViewPage(item, true);
-						}
+						gotoFileMainViewPage(item);
 					}
 				});
 
@@ -441,7 +438,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 								gotoEnclosingFoder(res, criteria);
 								return;
 							}
-							gotoFileMainViewPage((Folder) res, true);
+							gotoFileMainViewPage((Folder) res);
 						}
 					});
 			// add File - handeler
@@ -476,7 +473,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 				criteria.getBaseFolder().lastIndexOf("/"));
 		Resource parentFolder = resourceService.getResource(path);
 		if (parentFolder != null) {
-			gotoFileMainViewPage((Folder) parentFolder, true);
+			gotoFileMainViewPage((Folder) parentFolder);
 		} else {
 			String message = (res instanceof Folder) ? "Folder's location has been moved successfully"
 					: "File's location has been moved successfully";
@@ -484,8 +481,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 		}
 	}
 
-	private void gotoFileMainViewPage(Folder baseFolder,
-			boolean isNeedGotoBreadCumb) {
+	private void gotoFileMainViewPage(Folder baseFolder) {
 		this.baseFolder = baseFolder;
 
 		mainBodyResourceLayout.removeAllComponents();
@@ -499,10 +495,9 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 		mainBodyResourceLayout.addComponent(filterWapper);
 		mainBodyResourceLayout.addComponent(resourceHandlerLayout);
 
-		if (isNeedGotoBreadCumb == true) {
-			resourceHandlerLayout.gotoFolderBreadCumb(baseFolder);
-			resourceHandlerLayout.constructBodyItemContainer(baseFolder);
-		}
+		resourceHandlerLayout.gotoFolderBreadCumb(baseFolder);
+		resourceHandlerLayout.constructBodyItemContainer(baseFolder);
+
 		switchViewBtn.setDescription("Event");
 		switchViewBtn.setIcon(MyCollabResource
 				.newResource("icons/16/ecm/event.png"));
