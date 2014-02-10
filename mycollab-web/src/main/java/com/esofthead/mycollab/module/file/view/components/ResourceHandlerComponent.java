@@ -48,7 +48,6 @@ import com.esofthead.mycollab.module.ecm.service.ExternalResourceService;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
 import com.esofthead.mycollab.module.file.domain.criteria.FileSearchCriteria;
 import com.esofthead.mycollab.module.file.resource.StreamDownloadResourceUtil;
-import com.esofthead.mycollab.module.file.view.components.FileDashboardComponent.AbstractMoveWindow;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -99,6 +98,12 @@ public class ResourceHandlerComponent extends VerticalLayout {
 	private static Logger log = LoggerFactory
 			.getLogger(ResourceHandlerComponent.class);
 
+	private static final String illegalFileNamePattern = "[<>:&/\\|?*&]";
+
+	private ResourceService resourceService;
+	private ExternalResourceService externalResourceService;
+	private ExternalDriveService externalDriveService;
+
 	private HorizontalLayout controllGroupBtn;
 	private Button deleteBtn;
 	private Button selectAllBtn;
@@ -107,14 +112,10 @@ public class ResourceHandlerComponent extends VerticalLayout {
 	private Folder baseFolder;
 	private Folder rootFolder;
 	private String rootFolderName;
-	private ResourceService resourceService;
-	private ExternalResourceService externalResourceService;
-	private ExternalDriveService externalDriveService;
 	private String rootPath;
 	private List<Resource> selectedResourcesList;
 	private Tree menuTree;
 	private PagingResourceWapper pagingResourceWapper;
-	private static final String illegalFileNamePattern = "[<>:&/\\|?*&]";
 	private boolean isNeedLoadExternalDirve = false;
 
 	public ResourceHandlerComponent(final Folder baseFolder,
@@ -931,7 +932,7 @@ public class ResourceHandlerComponent extends VerticalLayout {
 		}
 	}
 
-	protected class RenameResourceWindow extends Window {
+	private class RenameResourceWindow extends Window {
 		private static final long serialVersionUID = 1L;
 		private final Resource resource;
 		private final ResourceService service;
@@ -1457,7 +1458,7 @@ public class ResourceHandlerComponent extends VerticalLayout {
 		}
 	}
 
-	protected class MoveResourceWindow extends AbstractMoveWindow {
+	private class MoveResourceWindow extends AbstractResourceMovingWindow {
 		private static final long serialVersionUID = 1L;
 
 		public MoveResourceWindow(Resource resource,
@@ -1492,8 +1493,7 @@ public class ResourceHandlerComponent extends VerticalLayout {
 					if (((Folder) item).getPath().equals(folder.getPath())) {
 						ResourceHandlerComponent.this.menuTree
 								.collapseItem(item);
-						ResourceHandlerComponent.this.menuTree
-								.expandItem(item);
+						ResourceHandlerComponent.this.menuTree.expandItem(item);
 						break;
 					}
 				}
@@ -1502,8 +1502,7 @@ public class ResourceHandlerComponent extends VerticalLayout {
 							ResourceHandlerComponent.this.baseFolder.getPath())) {
 						ResourceHandlerComponent.this.menuTree
 								.collapseItem(item);
-						ResourceHandlerComponent.this.menuTree
-								.expandItem(item);
+						ResourceHandlerComponent.this.menuTree.expandItem(item);
 						break;
 					}
 				}
