@@ -152,6 +152,41 @@
     	}
     }
     
+    /* Navigation Bar Styles */
+    .v-touchkit-navbar {
+    	.v-touchkit-navbar-left {
+   			.v-touchkit-navbutton-back {
+   				position: relative;
+   				background: #49a3e1; 
+   				border: 2px solid #2482c2; 
+   				color: rgb(255, 255, 255);
+   			} 
+   			.v-touchkit-navbutton-back:after, .v-touchkit-navbutton-back:before 
+   			{ 
+   				right: 100%; 
+   				top: 50%; 
+   				border: solid transparent; content: " "; 
+   				height: 0; 
+   				width: 0; 
+   				position: absolute; 
+   				pointer-events: none; 
+   			} 
+   			.v-touchkit-navbutton-back:after {
+   				border-color: rgba(73, 163, 225, 0); 
+   				border-right-color: #49a3e1; 
+   				border-width: 38px; 
+   				margin-top: -38px; 
+   			}
+   			.v-touchkit-navbutton-back:before {
+   				border-color: rgba(36, 130, 194, 0);
+   				border-right-color: #2482c2; 
+   				border-width: 41px; 
+   				margin-top: -41px; 
+   			}
+    	}
+    	
+    }
+    
     /* Main Panel Styles */
     .v-touchkit-navpanel-wrapper {
 		-webkit-tap-highlight-color: transparent;
@@ -210,6 +245,19 @@
 					font-size: 1.3rem;
 				}
 			}
+		}
+	}
+	
+	/* Read View Layout */
+	.readview-layout {
+		.h2 {
+			font-size: 1.5rem;
+			color: rgb(68, 68, 68);
+			padding: 0.9rem 0rem 0.9rem 1rem;
+			border-bottom: .2rem solid rgb(245, 147, 46);
+		}
+		.v-gridlayout {
+			color: rgb(145, 145, 145);
 		}
 	}
 	
