@@ -6,12 +6,12 @@ package com.esofthead.mycollab.core.arguments;
  * @since 4.0
  * 
  */
-public class OneValueSearchField extends SearchField {
+public class OneValueSearchField extends ExtSearchField {
 
 	private String expression;
-	
+
 	private Object value;
-	
+
 	public OneValueSearchField(String oper, String expression, Object value) {
 		this.operation = oper;
 		this.expression = expression;

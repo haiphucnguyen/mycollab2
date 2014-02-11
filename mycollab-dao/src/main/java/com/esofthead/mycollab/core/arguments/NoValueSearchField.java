@@ -6,10 +6,10 @@ package com.esofthead.mycollab.core.arguments;
  * @since 4.0
  * 
  */
-public class NoValueSearchField extends SearchField {
+public class NoValueSearchField extends ExtSearchField {
 
 	private String expression;
-	
+
 	public NoValueSearchField(String oper, String expression) {
 		this.operation = oper;
 		this.expression = expression;
