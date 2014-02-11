@@ -84,6 +84,15 @@
                     AND m_crm_account.id=m_crm_campaigns_accounts.accountId 
                     AND m_crm_campaigns_accounts.campaignId=@{_parameter.searchCriteria.campaignId.value,jdbcType=NUMERIC}) > 0
          #end
+         
+         #ifnotnull($_parameter.searchCriteria.extraFields)
+            AND
+            #repeat($_parameter.searchCriteria.extraFields $extraField "AND")
+                #novalexpr($extraField)
+                    @{extraField}
+                #end
+            #end
+         #end
          ]]>
     </sql>
 

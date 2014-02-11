@@ -33,6 +33,7 @@
 package com.esofthead.mycollab.core.arguments;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 
@@ -47,11 +48,13 @@ public abstract class SearchCriteria implements Serializable {
 
 	public static String DESC = "DESC";
 
-	private String orderByField;
+	protected String orderByField;
 
-	private String sortDirection;
+	protected String sortDirection;
 
-	private NumberSearchField saccountid;
+	protected NumberSearchField saccountid;
+
+	protected List<SearchField> extraFields;
 
 	public SearchCriteria() {
 		saccountid = new NumberSearchField(GroupIdProvider.getAccountId());
@@ -79,5 +82,13 @@ public abstract class SearchCriteria implements Serializable {
 
 	public void setSaccountid(NumberSearchField saccountid) {
 		this.saccountid = saccountid;
+	}
+
+	public List<SearchField> getExtraFields() {
+		return extraFields;
+	}
+
+	public void setExtraFields(List<SearchField> extraFields) {
+		this.extraFields = extraFields;
 	}
 }
