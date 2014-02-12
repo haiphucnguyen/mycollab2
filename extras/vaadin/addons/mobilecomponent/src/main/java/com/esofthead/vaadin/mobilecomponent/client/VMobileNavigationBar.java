@@ -7,9 +7,13 @@ public class VMobileNavigationBar extends VNavigationBar {
 
 	@Override
     public void setLeftWidget(Widget left) {
-		Widget currentLeftWidget = getWidget(0);
-        remove(currentLeftWidget);
-        currentLeftWidget = null;
+		if(getWidgetCount() > 0) {
+			Widget currentLeftWidget = getWidget(0);
+			if (left == currentLeftWidget)
+				return;
+			
+	        remove(currentLeftWidget);
+		}
         
         super.setLeftWidget(left);
     }
@@ -18,8 +22,10 @@ public class VMobileNavigationBar extends VNavigationBar {
     public void setRightWidget(Widget right) {
         if (getWidgetCount() > 1) {
         	Widget currentRightWidget = getWidget(1);
+        	if (right == currentRightWidget)
+        		return;
+        	
         	remove(currentRightWidget);
-        	currentRightWidget = null;
         }
         
         super.setRightWidget(right);

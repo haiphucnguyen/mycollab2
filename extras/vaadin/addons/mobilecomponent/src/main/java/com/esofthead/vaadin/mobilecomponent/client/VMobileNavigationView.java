@@ -28,7 +28,6 @@ import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
-import com.vaadin.addon.touchkit.gwt.client.ui.VNavigationBar;
 import com.vaadin.addon.touchkit.gwt.client.ui.VNavigationView;
 import com.vaadin.client.BrowserInfo;
 import com.vaadin.client.Util;
@@ -84,9 +83,9 @@ public class VMobileNavigationView extends VNavigationView {
         }
     }
 
-    public VNavigationBar getNavigationBar() {
-        if(getWidget(0) instanceof VNavigationBar) {
-            return (VNavigationBar) getWidget(0);
+    public VMobileNavigationBar getNavigationBar() {
+        if(getWidget(0) instanceof VMobileNavigationBar) {
+            return (VMobileNavigationBar) getWidget(0);
         }
         return null;
     }
