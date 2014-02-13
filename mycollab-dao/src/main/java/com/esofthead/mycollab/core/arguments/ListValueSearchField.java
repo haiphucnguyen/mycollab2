@@ -8,12 +8,12 @@ import java.util.List;
  * @since 4.0
  * 
  */
-public class InListSearchField extends ExtSearchField {
+public class ListValueSearchField extends ExtSearchField {
 	private String expression;
 
 	private List<?> list;
 
-	public InListSearchField(String oper, String expression, List<?> list) {
+	public ListValueSearchField(String oper, String expression, List<?> list) {
 		this.operation = oper;
 		this.expression = expression;
 		this.list = list;

@@ -8,18 +8,29 @@ package com.esofthead.mycollab.core.arguments;
  */
 public class NoValueSearchField extends ExtSearchField {
 
-	private String expression;
+	private String queryCount;
+	
+	private String querySelect;
 
 	public NoValueSearchField(String oper, String expression) {
 		this.operation = oper;
-		this.expression = expression;
+		this.queryCount = expression;
+		this.querySelect = expression;
 	}
 
-	public String getExpression() {
-		return expression;
+	public String getQueryCount() {
+		return queryCount;
 	}
 
-	public void setExpression(String expression) {
-		this.expression = expression;
+	public void setQueryCount(String queryCount) {
+		this.queryCount = queryCount;
+	}
+
+	public String getQuerySelect() {
+		return querySelect;
+	}
+
+	public void setQuerySelect(String querySelect) {
+		this.querySelect = querySelect;
 	}
 }
