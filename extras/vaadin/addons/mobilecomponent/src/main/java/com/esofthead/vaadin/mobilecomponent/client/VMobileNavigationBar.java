@@ -5,29 +5,50 @@ import com.vaadin.addon.touchkit.gwt.client.ui.VNavigationBar;
 
 public class VMobileNavigationBar extends VNavigationBar {
 
+	private Widget leftComponent;
+	private Widget rightComponent;
+	
 	@Override
     public void setLeftWidget(Widget left) {
-		if(getWidgetCount() > 0) {
-			Widget currentLeftWidget = getWidget(0);
-			if (left == currentLeftWidget)
-				return;
-			
-	        remove(currentLeftWidget);
+		if(getWidgetCount() == 0) {
+			super.setLeftWidget(left);
+			leftComponent = left;
+		} else{
+			if (left != null) {
+	            if (leftComponent != left && leftComponent != null) {
+	            	remove(leftComponent);
+	            }
+
+	            leftComponent = left;
+	            if (!leftComponent.isAttached()) {
+	                super.setLeftWidget(left);
+	            }
+	        } else if (leftComponent != null) {
+	            remove(leftComponent);
+	        }
 		}
         
-        super.setLeftWidget(left);
+       
     }
 
     @Override
     public void setRightWidget(Widget right) {
-        if (getWidgetCount() > 1) {
-        	Widget currentRightWidget = getWidget(1);
-        	if (right == currentRightWidget)
-        		return;
-        	
-        	remove(currentRightWidget);
+        if (getWidgetCount() == 1) {
+        	super.setRightWidget(right);
+        	rightComponent = right;
+        } else {
+        	if (right != null) {
+                if (rightComponent != right && rightComponent != null) {
+                    remove(rightComponent);
+                }
+
+                rightComponent = right;
+                if (!rightComponent.isAttached()) {
+                    super.setRightWidget(right);
+                }
+            } else if (rightComponent != null) {
+            	remove(rightComponent);
+            }
         }
-        
-        super.setRightWidget(right);
     }	
 }

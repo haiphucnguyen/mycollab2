@@ -30,6 +30,7 @@ div.v-cache-loading-indicator {
 	-webkit-box-shadow: -3px 0px 5px 0px #444;
 	-moz-box-shadow: -3px 0px 5px 0px #444;
 	z-index: 1;
+	outline: 0;
 }
 .mobilenavview {
 	background-color: rgb(255, 255, 255);
