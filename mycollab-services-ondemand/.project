@@ -5,6 +5,7 @@
   <projects>
     <project>mycollab-services</project>
     <project>mycollab-core</project>
+    <project>mycollab-test</project>
     <project>mycollab-dao</project>
     <project>mycollab-migration</project>
     <project>mycollab-config</project>
@@ -13,7 +14,6 @@
     <project>mycollab-jackrabbit</project>
     <project>mycollab-api</project>
     <project>mycollab-api-impl</project>
-    <project>mycollab-test</project>
   </projects>
   <buildSpec>
     <buildCommand>
