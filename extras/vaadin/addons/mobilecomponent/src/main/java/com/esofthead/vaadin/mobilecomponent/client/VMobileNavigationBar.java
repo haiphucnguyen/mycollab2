@@ -1,12 +1,35 @@
 package com.esofthead.vaadin.mobilecomponent.client;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import com.google.gwt.dom.client.DivElement;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.client.ui.Widget;
 import com.vaadin.addon.touchkit.gwt.client.ui.VNavigationBar;
 
 public class VMobileNavigationBar extends VNavigationBar {
 
+	private static Logger log = Logger.getLogger(VMobileNavigationBar.class.getName());
+	
 	private Widget leftComponent;
 	private Widget rightComponent;
+	
+	@Override
+	public void avoidCaptionOverlap() {
+		DivElement caption = (DivElement) getElement().getFirstChildElement();
+		DivElement rightElement = (DivElement) caption.getNextSiblingElement();
+		DivElement leftElement = (DivElement) rightElement.getNextSiblingElement();
+		
+		int leftSize = leftComponent != null ? leftElement.getAbsoluteRight() : 0;
+		log.log(Level.INFO, "leftSize: " + leftSize);
+		
+		int rightSize = rightComponent != null ? getOffsetWidth() - rightElement.getAbsoluteLeft() : 0;
+		log.log(Level.INFO, "rightSize: " + rightSize);
+		
+		caption.getStyle().setWidth((getOffsetWidth() - leftSize - rightSize), Unit.PX);
+		caption.getStyle().setLeft(leftSize, Unit.PX);
+	}
 	
 	@Override
     public void setLeftWidget(Widget left) {
