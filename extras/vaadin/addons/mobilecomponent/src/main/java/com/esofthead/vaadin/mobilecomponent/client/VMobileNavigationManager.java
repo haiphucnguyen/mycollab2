@@ -67,7 +67,7 @@ public class VMobileNavigationManager extends VNavigationManager {
     }
     
     public int getNavigationMenuWidth() {
-    	return (int) (Math.ceil(content.getOffsetWidth() * 0.8));
+    	return navigationMenu.getOffsetWidth();
     }
     
     public void setHorizontalOffsetExt(int deltaX, boolean animate) {

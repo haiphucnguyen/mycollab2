@@ -4,6 +4,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.google.gwt.dom.client.DivElement;
+import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.client.ui.Widget;
 import com.vaadin.addon.touchkit.gwt.client.ui.VNavigationBar;
@@ -21,14 +22,15 @@ public class VMobileNavigationBar extends VNavigationBar {
 		DivElement rightElement = (DivElement) caption.getNextSiblingElement();
 		DivElement leftElement = (DivElement) rightElement.getNextSiblingElement();
 		
-		int leftSize = leftComponent != null ? leftElement.getAbsoluteRight() : 0;
+		int leftSize = leftComponent != null ? leftElement.getOffsetLeft() + leftElement.getOffsetWidth() : 0;
 		log.log(Level.INFO, "leftSize: " + leftSize);
 		
-		int rightSize = rightComponent != null ? getOffsetWidth() - rightElement.getAbsoluteLeft() : 0;
+		int rightSize = rightComponent != null ? getOffsetWidth() - rightElement.getOffsetLeft() : 0;
 		log.log(Level.INFO, "rightSize: " + rightSize);
 		
 		caption.getStyle().setWidth((getOffsetWidth() - leftSize - rightSize), Unit.PX);
 		caption.getStyle().setLeft(leftSize, Unit.PX);
+		caption.getStyle().setPosition(Position.ABSOLUTE);
 	}
 	
 	@Override
