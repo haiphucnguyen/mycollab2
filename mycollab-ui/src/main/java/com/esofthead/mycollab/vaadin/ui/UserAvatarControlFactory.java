@@ -20,7 +20,6 @@ import java.io.File;
 
 import com.esofthead.mycollab.configuration.FileStorageConfiguration;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
-import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.server.FileResource;
 import com.vaadin.server.Resource;
