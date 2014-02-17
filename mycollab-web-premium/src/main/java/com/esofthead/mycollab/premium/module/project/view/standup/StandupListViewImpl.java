@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.vaadin.shared.ui.MarginInfo;
+
 import org.vaadin.hene.popupbutton.PopupButton;
 
 import com.esofthead.mycollab.common.domain.GroupItem;
@@ -24,12 +25,12 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.BeanList;
 import com.esofthead.mycollab.vaadin.ui.Depot;
+import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.StandupStyleCalendarExp;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UrlDetectableLabel;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.vaadin.ui.BeanList.RowDisplayHandler;
-import com.esofthead.mycollab.web.MyCollabResource;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.shared.ui.label.ContentMode;

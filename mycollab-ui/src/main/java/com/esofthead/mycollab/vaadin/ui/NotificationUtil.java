@@ -1,11 +1,30 @@
-package com.esofthead.mycollab.mobile.utils;
+/**
+ * This file is part of mycollab-web.
+ *
+ * mycollab-web is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * mycollab-web is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
+ */
+package com.esofthead.mycollab.vaadin.ui;
+
+import static com.esofthead.mycollab.vaadin.MyCollabSession.CURRENT_APP;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
-import com.esofthead.mycollab.mobile.MobileApplication;
+import com.esofthead.mycollab.vaadin.MyCollabSession;
 import com.vaadin.server.Page;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Notification.Type;
+import com.vaadin.ui.UI;
 
 /**
  * 
@@ -22,14 +41,14 @@ public class NotificationUtil {
 	public static void showWarningNotification(String description) {
 		showNotification(
 				LocalizationHelper
-						.getMessage(GenericI18Enum.WARNING_WINDOW_TITLE),
+				.getMessage(GenericI18Enum.WARNING_WINDOW_TITLE),
 				description, Type.WARNING_MESSAGE);
 	}
 
 	public static void showErrorNotification(String description) {
 		showNotification(
 				LocalizationHelper
-						.getMessage(GenericI18Enum.ERROR_WINDOW_TITLE),
+				.getMessage(GenericI18Enum.ERROR_WINDOW_TITLE),
 				description, Type.ERROR_MESSAGE);
 	}
 
@@ -42,7 +61,7 @@ public class NotificationUtil {
 		if (Page.getCurrent() != null) {
 			warnNotif.show(Page.getCurrent());
 		} else {
-			warnNotif.show(MobileApplication.getInstance().getPage());
+			warnNotif.show(((UI) MyCollabSession.getVariable(CURRENT_APP)).getPage());
 		}
 
 	}
@@ -50,34 +69,34 @@ public class NotificationUtil {
 	public static void showGotoLastRecordNotification() {
 		showNotification(
 				LocalizationHelper
-						.getMessage(GenericI18Enum.INFORMATION_WINDOW_TITLE),
+				.getMessage(GenericI18Enum.INFORMATION_WINDOW_TITLE),
 				LocalizationHelper
-						.getMessage(GenericI18Enum.INFORMATION_GOTO_LAST_RECORD),
+				.getMessage(GenericI18Enum.INFORMATION_GOTO_LAST_RECORD),
 				Type.HUMANIZED_MESSAGE);
 	}
 
 	public static void showGotoFirstRecordNotification() {
 		showNotification(
 				LocalizationHelper
-						.getMessage(GenericI18Enum.INFORMATION_WINDOW_TITLE),
+				.getMessage(GenericI18Enum.INFORMATION_WINDOW_TITLE),
 				LocalizationHelper
-						.getMessage(GenericI18Enum.INFORMATION_GOTO_FIRST_RECORD),
+				.getMessage(GenericI18Enum.INFORMATION_GOTO_FIRST_RECORD),
 				Type.HUMANIZED_MESSAGE);
 	}
 
 	public static void showRecordNotExistNotification() {
 		showNotification(
 				LocalizationHelper
-						.getMessage(GenericI18Enum.INFORMATION_WINDOW_TITLE),
+				.getMessage(GenericI18Enum.INFORMATION_WINDOW_TITLE),
 				LocalizationHelper
-						.getMessage(GenericI18Enum.INFORMATION_RECORD_IS_NOT_EXISTED_MESSAGE),
+				.getMessage(GenericI18Enum.INFORMATION_RECORD_IS_NOT_EXISTED_MESSAGE),
 				Type.HUMANIZED_MESSAGE);
 	}
 
 	public static void showMessagePermissionAlert() {
 		showNotification(
 				LocalizationHelper
-						.getMessage(GenericI18Enum.WARNING_WINDOW_TITLE),
+				.getMessage(GenericI18Enum.WARNING_WINDOW_TITLE),
 				"Sorry! You do not have permission to do this task.",
 				Type.WARNING_MESSAGE);
 	}

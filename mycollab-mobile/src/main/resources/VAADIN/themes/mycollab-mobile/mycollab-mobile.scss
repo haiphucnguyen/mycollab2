@@ -231,6 +231,24 @@
 	    }
 	}
 	
+	/* Controls Popover */
+	.controls-popover {
+		top: 4rem !important;
+		
+		.v-window-contents {
+			background-color: #252c34;
+			
+			.v-button {
+				background-color: #515a62;
+				color: #FFFFFF;
+				
+				.v-button-wrap {
+					padding: 5px 0px;
+				}
+			}
+		}
+	}
+	
 	/* Data List View */
 	.data-list-view {
 		.v-table-row {
