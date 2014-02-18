@@ -15,12 +15,12 @@ import com.vaadin.ui.Table;
  * @since 4.0
  * 
  */
-public class AccountTableDisplay
-		extends
-		DefaultPagedBeanList<AccountService, AccountSearchCriteria, SimpleAccount> {
+public class AccountListDisplay
+extends
+DefaultPagedBeanList<AccountService, AccountSearchCriteria, SimpleAccount> {
 	private static final long serialVersionUID = 1491890029721763281L;
 
-	public AccountTableDisplay(String displayColumnId) {
+	public AccountListDisplay(String displayColumnId) {
 		super(ApplicationContextUtil.getSpringBean(AccountService.class),
 				SimpleAccount.class, displayColumnId);
 
@@ -30,21 +30,21 @@ public class AccountTableDisplay
 			@Override
 			public com.vaadin.ui.Component generateCell(final Table source,
 					final Object itemId, final Object columnId) {
-				final SimpleAccount account = AccountTableDisplay.this
+				final SimpleAccount account = AccountListDisplay.this
 						.getBeanByIndex(itemId);
 
 				final Button b = new Button(account.getAccountname(),
 						new Button.ClickListener() {
-							private static final long serialVersionUID = 1L;
+					private static final long serialVersionUID = 1L;
 
-							@Override
-							public void buttonClick(
-									final Button.ClickEvent event) {
-								fireTableEvent(new TableClickEvent(
-										AccountTableDisplay.this, account,
-										"accountname"));
-							}
-						});
+					@Override
+					public void buttonClick(
+							final Button.ClickEvent event) {
+						fireTableEvent(new TableClickEvent(
+								AccountListDisplay.this, account,
+								"accountname"));
+					}
+				});
 				b.setWidth("100%");
 				return b;
 			}

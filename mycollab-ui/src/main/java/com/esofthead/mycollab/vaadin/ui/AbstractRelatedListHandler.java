@@ -1,20 +1,21 @@
 /**
- * This file is part of mycollab-web.
+ * This file is part of mycollab-ui.
  *
- * mycollab-web is free software: you can redistribute it and/or modify
+ * mycollab-ui is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * mycollab-web is distributed in the hope that it will be useful,
+ * mycollab-ui is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
+ * along with mycollab-ui.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.module.crm.view;
+
+package com.esofthead.mycollab.vaadin.ui;
 
 import java.util.Set;
 
@@ -22,11 +23,13 @@ import java.util.Set;
  * 
  * @author MyCollab Ltd.
  * @since 1.0
- * 
  */
-public interface RelatedListHandler<T> {
+public abstract class AbstractRelatedListHandler<T> implements
+RelatedListHandler<T> {
 
-    void createNewRelatedItem(String itemId);
-    
-    void selectAssociateItems(Set<T> items);
+	@Override
+	public void selectAssociateItems(Set<T> items) {
+
+	}
+
 }
