@@ -1,49 +1,29 @@
-/**
- * This file is part of mycollab-web.
- *
- * mycollab-web is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-web is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
- */
-
-package com.esofthead.mycollab.module.crm.ui.components;
+package com.esofthead.mycollab.mobile.module.crm.ui;
 
 import java.util.HashSet;
 import java.util.Set;
 
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
+import com.esofthead.mycollab.mobile.ui.IPagedBeanList;
+import com.esofthead.mycollab.vaadin.mvp.AbstractMobilePageView;
 import com.esofthead.mycollab.vaadin.ui.IRelatedListHandlers;
 import com.esofthead.mycollab.vaadin.ui.RelatedListHandler;
-import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable;
-import com.vaadin.ui.VerticalLayout;
 
 /**
  * 
  * @author MyCollab Ltd.
- * @since 1.0
+ * @since 4.0
  */
-public abstract class RelatedListComp<T, S extends SearchCriteria> extends
-		VerticalLayout implements IRelatedListHandlers<T> {
+public abstract class AbstractRelatedListView<T, S extends SearchCriteria> extends AbstractMobilePageView implements IRelatedListHandlers<T> {
 
 	private static final long serialVersionUID = 1L;
 
 	protected Set<RelatedListHandler<T>> handlers;
-	protected IPagedBeanTable<S, T> tableItem;
+	protected IPagedBeanList<S, T> tableItem;
 
-	public RelatedListComp() {
+	public AbstractRelatedListView() {
 		this.setWidth("100%");
-		this.setMargin(true);
-		this.setSpacing(true);
 	}
 
 	@Override
