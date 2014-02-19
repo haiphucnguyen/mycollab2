@@ -162,3 +162,4 @@ mycollab-web-premium/pom.xml.versionsBackup
 extras/vaadin/addons/ckeditor/bin/target/classes/.gitignore
 .idea/
 *.iml
+mycollab-test/src/main/resources/mycollab-test.properties
