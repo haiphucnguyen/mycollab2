@@ -16,6 +16,7 @@
  */
 package com.esofthead.mycollab.common.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.junit.Assert;
@@ -23,7 +24,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.esofthead.mycollab.core.arguments.DateSearchField;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.SearchCriteria;
+import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.domain.User;
@@ -62,5 +66,14 @@ public class UserServiceTest extends ServiceTest {
 		SimpleUser anotherUser = userService.findUserByUserNameInAccount(
 				"hannguyen@esofthead.com", 1);
 		Assert.assertNotNull(anotherUser);
+	}
+
+	@DataSet
+	@Test
+	public void testGetLoginByDate() {
+		UserSearchCriteria searchCriteria = new UserSearchCriteria();
+		searchCriteria.setLastAccessedTime(new DateSearchField(SearchField.AND,
+				new Date()));
+		Assert.assertEquals(1, userService.getTotalCount(searchCriteria));
 	}
 }
