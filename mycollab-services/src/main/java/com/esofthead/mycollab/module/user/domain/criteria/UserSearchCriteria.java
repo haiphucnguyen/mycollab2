@@ -16,11 +16,8 @@
  */
 package com.esofthead.mycollab.module.user.domain.criteria;
 
-import java.util.Date;
-
 import com.esofthead.mycollab.core.arguments.DateSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
-import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 
@@ -72,11 +69,11 @@ public class UserSearchCriteria extends SearchCriteria {
 	public void setStatus(SetSearchField<String> status) {
 		this.status = status;
 	}
-	
+
 	public DateSearchField getLastAccessedTime() {
 		return lastAccessedTime;
 	}
-	
+
 	public void setLastAccessedTime(DateSearchField lastAccessedTime) {
 		this.lastAccessedTime = lastAccessedTime;
 	}
