@@ -16,6 +16,7 @@
  */
 package com.esofthead.mycollab.common.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.junit.Assert;
@@ -62,5 +63,14 @@ public class UserServiceTest extends ServiceTest {
 		SimpleUser anotherUser = userService.findUserByUserNameInAccount(
 				"hannguyen@esofthead.com", 1);
 		Assert.assertNotNull(anotherUser);
+	}
+	
+	@DataSet
+	@Test
+	public void testGetLoginByDate() {
+		Date currentDate = new Date();
+		int count =0;
+		//int count = userService.getLoginCountByDate(currentDate);
+		Assert.assertEquals(1, count);
 	}
 }
