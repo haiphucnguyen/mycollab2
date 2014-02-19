@@ -22,15 +22,26 @@ div.v-cache-loading-indicator {
 }
 .v-mobilecomponent .v-touchkit-navpanel-navigation {
 	z-index: 0;
+	width: 80%;
+}
+.v-mobilecomponent .v-touchkit-navpanel-navigation:after {
+	content: "";
+	position: absolute;
+	right: 0px;
+	top: 0px;
+	width: 0.9rem;
+	height: 100%;
+	background: url('img/drawer_shadow.png') repeat-y left top transparent;
 }
 .v-mobilecomponent .v-touchkit-navpanel {
 	transition: all 0.3s ease;
 	-webkit-transition: all 0.3s ease;
-	box-shadow: -3px 0px 5px 0px #444;
+	/* box-shadow: -3px 0px 5px 0px #444;
 	-webkit-box-shadow: -3px 0px 5px 0px #444;
-	-moz-box-shadow: -3px 0px 5px 0px #444;
+	-moz-box-shadow: -3px 0px 5px 0px #444; */
 	z-index: 1;
 	outline: 0;
+	overflow-x: hidden;
 }
 .mobilenavview {
 	background-color: rgb(255, 255, 255);
