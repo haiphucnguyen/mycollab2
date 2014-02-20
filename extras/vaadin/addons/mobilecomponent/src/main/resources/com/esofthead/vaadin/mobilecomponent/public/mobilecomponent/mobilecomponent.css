@@ -75,3 +75,25 @@ div.v-cache-loading-indicator {
 	background: url("img/menu_icon.png") no-repeat left top transparent;
 	cursor: pointer;
 }
+
+/* Toolbar's Styles */
+.v-mobileview-toolbar {
+	padding: 0px 2rem;
+}
+.v-mobileview-toolbar .v-mobileview-toolbar-wrap {
+	overflow-x: auto;
+}
+.v-mobileview-toolbar .v-mobileview-toolbar-prevBtn, .v-mobileview-toolbar .v-mobileview-toolbar-nextBtn {
+	width: 2rem;
+	height: 100%;
+	position: absolute;
+	top: 0px;
+	display: none;
+	color: black;
+}
+.v-mobileview-toolbar .v-mobileview-toolbar-prevBtn {
+	left: 0px;
+}
+.v-mobileview-toolbar .v-mobileview-toolbar-nextBtn {
+	right: 0px;
+}
