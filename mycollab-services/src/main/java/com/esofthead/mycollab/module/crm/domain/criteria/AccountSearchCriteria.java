@@ -20,6 +20,11 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
+import com.esofthead.mycollab.core.db.query.DateParam;
+import com.esofthead.mycollab.core.db.query.NumberParam;
+import com.esofthead.mycollab.core.db.query.Param;
+import com.esofthead.mycollab.core.db.query.PropertyParam;
+import com.esofthead.mycollab.core.db.query.StringParam;
 
 /**
  * 
@@ -29,6 +34,19 @@ import com.esofthead.mycollab.core.arguments.StringSearchField;
  */
 public class AccountSearchCriteria extends SearchCriteria {
 	private static final long serialVersionUID = 1L;
+
+	public static Param p_accountName = new StringParam(
+			"account-name", "Account Name", "m_crm_account", "accountName");
+
+	public static Param p_numemployees = new NumberParam(
+			"account-employees", "Employees", "m_crm_account", "numemployees");
+
+	public static Param p_assignee = new PropertyParam(
+			"account-assignuser", "Assignee");
+
+	public static Param p_createdtime = new DateParam(
+			"account-createdtime", "Created Time", "m_crm_account",
+			"createdTime");
 
 	private StringSearchField accountname;
 	private StringSearchField assignUser;
