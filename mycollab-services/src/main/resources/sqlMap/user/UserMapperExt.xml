@@ -18,7 +18,12 @@
             ${searchCriteria.displayName.operation} (concat(s_user.firstname, ' ', LTRIM(IFNULL(s_user.middlename + ' ', '')), s_user.lastname) like '%${searchCriteria.displayName.value}%')
             ]]>
         </if>
-        <if test="searchCriteria.username != null">
+        <if test="searchCriteria.lastAccessedTime != null">
+        	<![CDATA[
+            ${searchCriteria.lastAccessedTime.operation} CAST(s_user.lastAccessedTime AS DATE )  = #{searchCriteria.lastAccessedTime.value}
+            ]]>
+        </if>
+         <if test="searchCriteria.username != null">
           <![CDATA[
             ${searchCriteria.username.operation} s_user.username = #{searchCriteria.username.value}
             ]]>
@@ -57,6 +62,11 @@
         <if test="searchCriteria.displayName != null">
           <![CDATA[
             ${searchCriteria.displayName.operation} (concat(s_user.firstname, ' ', LTRIM(IFNULL(s_user.middlename + ' ', '')), s_user.lastname) like '%${searchCriteria.displayName.value}%')
+            ]]>
+        </if>
+        <if test="searchCriteria.lastAccessedTime != null">
+        	<![CDATA[
+            ${searchCriteria.lastAccessedTime.operation} CAST(s_user.lastAccessedTime AS DATE )  = #{searchCriteria.lastAccessedTime.value}
             ]]>
         </if>
         <if test="searchCriteria.username != null">
