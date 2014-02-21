@@ -1,8 +1,9 @@
 package com.esofthead.mycollab.core.db.query;
 
+import java.util.Collection;
 import java.util.List;
 
-import com.esofthead.mycollab.core.arguments.ListValueSearchField;
+import com.esofthead.mycollab.core.arguments.CollectionValueSearchField;
 import com.esofthead.mycollab.core.arguments.NoValueSearchField;
 import com.esofthead.mycollab.core.arguments.OneValueSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
@@ -22,7 +23,6 @@ public class QueryFieldUtil {
 	private static String NOT_LIKE_EXPR = "%s.%s not like ";
 	private static String IN_EXPR = "%s.%s in ";
 	private static String NOT_IN_EXPR = "%s.%s not in ";
-	public static String CONTAINS_EXPR = "";
 
 	public static NoValueSearchField buildStringParamIsNull(String oper,
 			StringParam param) {
@@ -84,51 +84,63 @@ public class QueryFieldUtil {
 		return buildStringParamIsNotEqual(SearchField.OR, param, value);
 	}
 
+	public static OneValueSearchField buildStringParamIsLike(String oper,
+			StringParam param, Object value) {
+		return new OneValueSearchField(oper, String.format(LIKE_EXPR,
+				param.getTable(), param.getColumn()), value);
+	}
+
 	public static OneValueSearchField andStringParamIsLike(StringParam param,
 			Object value) {
-		return new OneValueSearchField(SearchField.AND, String.format(
-				LIKE_EXPR, param.getTable(), param.getColumn()), value);
+		return buildStringParamIsLike(SearchField.AND, param, value);
 	}
 
 	public static OneValueSearchField orStringParamIsLike(StringParam param,
 			Object value) {
-		return new OneValueSearchField(SearchField.OR, String.format(LIKE_EXPR,
+		return buildStringParamIsLike(SearchField.OR, param, value);
+	}
+
+	public static OneValueSearchField buildStringParamIsNotLike(String oper,
+			StringParam param, Object value) {
+		return new OneValueSearchField(oper, String.format(NOT_LIKE_EXPR,
 				param.getTable(), param.getColumn()), value);
 	}
 
 	public static OneValueSearchField andStringParamIsNotLike(
 			StringParam param, Object value) {
-		return new OneValueSearchField(SearchField.AND, String.format(
-				NOT_LIKE_EXPR, param.getTable(), param.getColumn()), value);
+		return buildStringParamIsNotLike(SearchField.AND, param, value);
 	}
 
 	public static OneValueSearchField orStringParamIsNotLike(StringParam param,
 			Object value) {
-		return new OneValueSearchField(SearchField.OR, String.format(
-				NOT_LIKE_EXPR, param.getTable(), param.getColumn()), value);
+		return buildStringParamIsNotLike(SearchField.OR, param, value);
 	}
 
-	public static ListValueSearchField andStringParamInList(StringParam param,
-			List<?> value) {
-		return new ListValueSearchField(SearchField.AND, String.format(IN_EXPR,
+	public static CollectionValueSearchField buildStringParamInList(String oper,
+			StringListParam param, Collection<?> value) {
+		return new CollectionValueSearchField(oper, String.format(IN_EXPR,
 				param.getTable(), param.getColumn()), value);
 	}
 
-	public static ListValueSearchField orStringParamInList(StringParam param,
-			List<?> value) {
-		return new ListValueSearchField(SearchField.OR, String.format(IN_EXPR,
-				param.getTable(), param.getColumn()), value);
+	public static CollectionValueSearchField andStringParamInList(
+			StringListParam param, Collection<?> value) {
+		return buildStringParamInList(SearchField.AND, param, value);
 	}
 
-	public static ListValueSearchField andStringParamNotInList(
+	public static CollectionValueSearchField orStringParamInList(
+			StringListParam param, Collection<?> value) {
+		return buildStringParamInList(SearchField.OR, param, value);
+	}
+
+	public static CollectionValueSearchField andStringParamNotInList(
 			StringParam param, List<?> value) {
-		return new ListValueSearchField(SearchField.AND, String.format(
+		return new CollectionValueSearchField(SearchField.AND, String.format(
 				NOT_IN_EXPR, param.getTable(), param.getColumn()), value);
 	}
 
-	public static ListValueSearchField orStringParamNotInList(
+	public static CollectionValueSearchField orStringParamNotInList(
 			StringParam param, List<?> value) {
-		return new ListValueSearchField(SearchField.OR, String.format(
+		return new CollectionValueSearchField(SearchField.OR, String.format(
 				NOT_IN_EXPR, param.getTable(), param.getColumn()), value);
 	}
 }
