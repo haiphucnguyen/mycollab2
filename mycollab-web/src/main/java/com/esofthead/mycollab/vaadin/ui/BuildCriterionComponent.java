@@ -240,6 +240,7 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends
 
 		private SearchField buildSearchField() {
 			Param param = (Param) fieldSelectionBox.getValue();
+			String prefixOperation = (String) operatorSelectionBox.getValue();
 			if (param != null) {
 				String compareOper = (String) compareSelectionBox.getValue();
 
@@ -252,21 +253,23 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends
 					StringParam wrapParam = (StringParam) param;
 					switch (compareOper) {
 					case StringParam.IS_EMPTY:
-						return wrapParam.buildStringParamIsNull(compareOper);
+						return wrapParam
+								.buildStringParamIsNull(prefixOperation);
 					case StringParam.IS_NOT_EMPTY:
-						return wrapParam.buildStringParamIsNotNull(compareOper);
+						return wrapParam
+								.buildStringParamIsNotNull(prefixOperation);
 					case StringParam.IS:
-						return wrapParam.buildStringParamIsEqual(compareOper,
-								value);
+						return wrapParam.buildStringParamIsEqual(
+								prefixOperation, value);
 					case StringParam.IS_NOT:
 						return wrapParam.buildStringParamIsNotEqual(
-								compareOper, value);
+								prefixOperation, value);
 					case StringParam.CONTAINS:
-						return wrapParam.buildStringParamIsLike(compareOper,
-								value);
+						return wrapParam.buildStringParamIsLike(
+								prefixOperation, value);
 					case StringParam.NOT_CONTAINS:
-						return wrapParam.buildStringParamIsNotLike(compareOper,
-								value);
+						return wrapParam.buildStringParamIsNotLike(
+								prefixOperation, value);
 					default:
 						throw new MyCollabException("Not support yet");
 					}
@@ -285,11 +288,11 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends
 
 					switch (compareOper) {
 					case StringListParam.IN:
-						return wrapParam.buildStringParamInList(compareOper,
-								value);
+						return wrapParam.buildStringParamInList(
+								prefixOperation, value);
 					case StringListParam.NOT_IN:
-						return wrapParam.buildStringParamInList(compareOper,
-								value);
+						return wrapParam.buildStringParamInList(
+								prefixOperation, value);
 					default:
 						throw new MyCollabException("Not support yet");
 					}
@@ -305,8 +308,32 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends
 
 					}
 
+					NumberParam wrapParam = (NumberParam) param;
 					switch (compareOper) {
 					case NumberParam.EQUAL:
+						return wrapParam.buildParamIsEqual(prefixOperation,
+								value);
+					case NumberParam.NOT_EQUAL:
+						return wrapParam.buildParamIsNotEqual(prefixOperation,
+								value);
+					case NumberParam.IS_EMPTY:
+						return wrapParam.buildParamIsNull(prefixOperation);
+					case NumberParam.IS_NOT_EMPTY:
+						return wrapParam.buildParamIsNotNull(prefixOperation);
+					case NumberParam.GREATER_THAN:
+						return wrapParam.buildParamIsGreaterThan(
+								prefixOperation, value);
+					case NumberParam.GREATER_THAN_EQUAL:
+						return wrapParam.buildParamIsGreaterThanEqual(
+								prefixOperation, value);
+					case NumberParam.LESS_THAN:
+						return wrapParam.buildParamIsLessThan(prefixOperation,
+								value);
+					case NumberParam.LESS_THAN_EQUAL:
+						return wrapParam.buildParamIsLessThanEqual(
+								prefixOperation, value);
+					default:
+						throw new MyCollabException("Not support yet");
 					}
 				} else {
 					throw new MyCollabException("Not support yet");
