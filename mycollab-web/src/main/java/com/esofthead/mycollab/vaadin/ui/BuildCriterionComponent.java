@@ -11,7 +11,6 @@ import com.esofthead.mycollab.core.db.query.DateTimeParam;
 import com.esofthead.mycollab.core.db.query.NumberParam;
 import com.esofthead.mycollab.core.db.query.Param;
 import com.esofthead.mycollab.core.db.query.PropertyParam;
-import com.esofthead.mycollab.core.db.query.QueryFieldUtil;
 import com.esofthead.mycollab.core.db.query.StringListParam;
 import com.esofthead.mycollab.core.db.query.StringParam;
 import com.vaadin.data.Property.ValueChangeEvent;
@@ -250,26 +249,24 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends
 					}
 					TextField field = (TextField) valueBox.getComponent(0);
 					String value = field.getValue();
-
+					StringParam wrapParam = (StringParam) param;
 					switch (compareOper) {
 					case StringParam.IS_EMPTY:
-						return QueryFieldUtil.buildStringParamIsNull(
-								compareOper, (StringParam) param);
+						return wrapParam.buildStringParamIsNull(compareOper);
 					case StringParam.IS_NOT_EMPTY:
-						return QueryFieldUtil.buildStringParamIsNotNull(
-								compareOper, (StringParam) param);
+						return wrapParam.buildStringParamIsNotNull(compareOper);
 					case StringParam.IS:
-						return QueryFieldUtil.buildStringParamIsEqual(
-								compareOper, (StringParam) param, value);
+						return wrapParam.buildStringParamIsEqual(compareOper,
+								value);
 					case StringParam.IS_NOT:
-						return QueryFieldUtil.buildStringParamIsNotEqual(
-								compareOper, (StringParam) param, value);
+						return wrapParam.buildStringParamIsNotEqual(
+								compareOper, value);
 					case StringParam.CONTAINS:
-						return QueryFieldUtil.buildStringParamIsLike(
-								compareOper, (StringParam) param, value);
+						return wrapParam.buildStringParamIsLike(compareOper,
+								value);
 					case StringParam.NOT_CONTAINS:
-						return QueryFieldUtil.buildStringParamIsNotLike(
-								compareOper, (StringParam) param, value);
+						return wrapParam.buildStringParamIsNotLike(compareOper,
+								value);
 					default:
 						throw new MyCollabException("Not support yet");
 					}
@@ -284,15 +281,32 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends
 						return null;
 					}
 
+					StringListParam wrapParam = (StringListParam) param;
+
 					switch (compareOper) {
 					case StringListParam.IN:
-						return QueryFieldUtil.buildStringParamInList(
-								compareOper, (StringListParam) param, value);
+						return wrapParam.buildStringParamInList(compareOper,
+								value);
 					case StringListParam.NOT_IN:
-						return QueryFieldUtil.buildStringParamInList(
-								compareOper, (StringListParam) param, value);
+						return wrapParam.buildStringParamInList(compareOper,
+								value);
 					default:
 						throw new MyCollabException("Not support yet");
+					}
+				} else if (param instanceof NumberParam) {
+					if (valueBox.getComponentCount() != 1) {
+						return null;
+					}
+					TextField field = (TextField) valueBox.getComponent(0);
+					Number value = 0;
+					try {
+						value = Double.parseDouble(field.getValue());
+					} catch (Exception e) {
+
+					}
+
+					switch (compareOper) {
+					case NumberParam.EQUAL:
 					}
 				} else {
 					throw new MyCollabException("Not support yet");
