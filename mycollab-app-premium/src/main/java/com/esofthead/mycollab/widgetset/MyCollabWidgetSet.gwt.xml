@@ -3,8 +3,8 @@
     "-//Google Inc.//DTD Google Web Toolkit 1.7.0//EN"
     "http://google-web-toolkit.googlecode.com/svn/tags/1.7.0/distro-source/core/src/gwt-module.dtd">
 <module>
-
     <!-- WS Compiler: manually edited -->
+
     <inherits name="org.vaadin.teemu.ratingstars.gwt.RatingStarsWidgetset" />
 
     <inherits name="org.vaadin.peter.contextmenu.ContextmenuWidgetset" />
@@ -39,4 +39,6 @@
     <inherits name="com.esofthead.vaadin.cropField.WidgetSet" />
 
     <inherits name="org.tltv.gantt.WidgetSet" />
+
+    <inherits name="org.vaadin.artur.icepush.IcepushaddonWidgetset" />
 </module>

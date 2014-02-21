@@ -16,6 +16,8 @@
  */
 package com.esofthead.mycollab.common.service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -26,11 +28,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.esofthead.mycollab.core.arguments.DateSearchField;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
-import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
-import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.test.DataSet;
@@ -70,10 +70,18 @@ public class UserServiceTest extends ServiceTest {
 
 	@DataSet
 	@Test
-	public void testGetLoginByDate() {
+	public void testGetLoginByDate() throws ParseException {
+		SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
+		Date date = fmt.parse("2014-02-19");
 		UserSearchCriteria searchCriteria = new UserSearchCriteria();
+		searchCriteria.setSaccountid(null);
 		searchCriteria.setLastAccessedTime(new DateSearchField(SearchField.AND,
-				new Date()));
-		Assert.assertEquals(1, userService.getTotalCount(searchCriteria));
+				date));
+		List<SimpleUser> lstSimpleUsers = userService
+				.findPagableListByCriteria(new SearchRequest<UserSearchCriteria>(
+						searchCriteria, 0, Integer.MAX_VALUE));
+		//Assert.assertEquals(2, lstSimpleUsers.size());
+		Assert.assertEquals(2, userService.getTotalCount(searchCriteria));
 	}
+
 }
