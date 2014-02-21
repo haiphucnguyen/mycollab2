@@ -67,7 +67,7 @@ public class UserServiceTest extends ServiceTest {
 				"hannguyen@esofthead.com", 1);
 		Assert.assertNotNull(anotherUser);
 	}
-	
+
 	@DataSet
 	@Test
 	public void testGetLoginByDate() throws ParseException {

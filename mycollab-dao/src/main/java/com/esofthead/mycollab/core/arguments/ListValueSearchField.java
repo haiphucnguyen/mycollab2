@@ -8,7 +8,7 @@ import java.util.List;
  * @since 4.0
  * 
  */
-public class ListValueSearchField extends ExtSearchField {
+public class ListValueSearchField extends SearchField {
 	private String expression;
 
 	private List<?> list;
