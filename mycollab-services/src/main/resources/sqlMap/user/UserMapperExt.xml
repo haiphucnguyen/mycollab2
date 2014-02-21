@@ -20,7 +20,7 @@
         </if>
         <if test="searchCriteria.lastAccessedTime != null">
         	<![CDATA[
-            ${searchCriteria.lastAccessedTime.operation} CAST(s_user.lastAccessedTime AS DATE )  = #{searchCriteria.lastAccessedTime.value}
+            ${searchCriteria.lastAccessedTime.operation} CAST(s_user_preference.lastAccessedTime AS DATE )  = #{searchCriteria.lastAccessedTime.value}
             ]]>
         </if>
          <if test="searchCriteria.username != null">
@@ -66,7 +66,7 @@
         </if>
         <if test="searchCriteria.lastAccessedTime != null">
         	<![CDATA[
-            ${searchCriteria.lastAccessedTime.operation} CAST(s_user.lastAccessedTime AS DATE )  = #{searchCriteria.lastAccessedTime.value}
+            ${searchCriteria.lastAccessedTime.operation} (SELECT count(*) FROM s_user_preference WHERE (s_user_preference.username = s_user.username) AND CAST(s_user_preference.lastAccessedTime AS DATE ) = #{searchCriteria.lastAccessedTime.value}) > 0 ;
             ]]>
         </if>
         <if test="searchCriteria.username != null">
@@ -99,6 +99,7 @@
             </foreach>
             ) > 0
         </if>
+        
     </sql>
 
     <sql id="selectUser">
