@@ -59,7 +59,8 @@ public class AccountSearchPanel extends
 			AccountSearchCriteria.p_accountName,
 			AccountSearchCriteria.p_numemployees,
 			AccountSearchCriteria.p_assignee,
-			AccountSearchCriteria.p_createdtime };
+			AccountSearchCriteria.p_createdtime,
+			AccountSearchCriteria.p_industries, AccountSearchCriteria.p_types };
 
 	private HorizontalLayout createSearchTopPanel() {
 		final HorizontalLayout layout = new HorizontalLayout();

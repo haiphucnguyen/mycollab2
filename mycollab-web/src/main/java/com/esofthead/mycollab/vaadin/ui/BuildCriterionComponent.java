@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.vaadin.ui;
 
+import java.util.Collection;
 import java.util.Iterator;
 
 import com.esofthead.mycollab.core.MyCollabException;
@@ -11,6 +12,7 @@ import com.esofthead.mycollab.core.db.query.NumberParam;
 import com.esofthead.mycollab.core.db.query.Param;
 import com.esofthead.mycollab.core.db.query.PropertyParam;
 import com.esofthead.mycollab.core.db.query.QueryFieldUtil;
+import com.esofthead.mycollab.core.db.query.StringListParam;
 import com.esofthead.mycollab.core.db.query.StringParam;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
@@ -181,6 +183,9 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends
 							compareSelectionBox.loadData(DateTimeParam.OPTIONS);
 						} else if (field instanceof PropertyParam) {
 							compareSelectionBox.loadData(PropertyParam.OPTIONS);
+						} else if (field instanceof StringListParam) {
+							compareSelectionBox
+									.loadData(StringListParam.OPTIONS);
 						}
 
 						displayAssociateInputField();
@@ -224,7 +229,12 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends
 				} else if (field instanceof DateTimeParam) {
 
 				} else if (field instanceof PropertyParam) {
-					compareSelectionBox.loadData(PropertyParam.OPTIONS);
+				} else if (field instanceof StringListParam) {
+					ValueListSelect listSelect = new ValueListSelect();
+					listSelect.setCaption(null);
+					listSelect.loadData(((StringListParam) field)
+							.getLstValues().toArray(new String[0]));
+					valueBox.addComponent(listSelect);
 				}
 			}
 		}
@@ -255,12 +265,36 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends
 						return QueryFieldUtil.buildStringParamIsNotEqual(
 								compareOper, (StringParam) param, value);
 					case StringParam.CONTAINS:
-						
+						return QueryFieldUtil.buildStringParamIsLike(
+								compareOper, (StringParam) param, value);
+					case StringParam.NOT_CONTAINS:
+						return QueryFieldUtil.buildStringParamIsNotLike(
+								compareOper, (StringParam) param, value);
 					default:
 						throw new MyCollabException("Not support yet");
 					}
-				} 
-				else {
+				} else if (param instanceof StringListParam) {
+					if (valueBox.getComponentCount() != 1) {
+						return null;
+					}
+					ValueListSelect field = (ValueListSelect) valueBox
+							.getComponent(0);
+					Collection<?> value = (Collection<?>) field.getValue();
+					if (value.size() == 0) {
+						return null;
+					}
+
+					switch (compareOper) {
+					case StringListParam.IN:
+						return QueryFieldUtil.buildStringParamInList(
+								compareOper, (StringListParam) param, value);
+					case StringListParam.NOT_IN:
+						return QueryFieldUtil.buildStringParamInList(
+								compareOper, (StringListParam) param, value);
+					default:
+						throw new MyCollabException("Not support yet");
+					}
+				} else {
 					throw new MyCollabException("Not support yet");
 				}
 			}

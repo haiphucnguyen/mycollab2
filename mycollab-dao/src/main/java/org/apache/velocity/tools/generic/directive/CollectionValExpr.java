@@ -10,7 +10,7 @@ import org.apache.velocity.exception.ResourceNotFoundException;
 import org.apache.velocity.runtime.directive.Directive;
 import org.apache.velocity.runtime.parser.node.Node;
 
-import com.esofthead.mycollab.core.arguments.OneValueSearchField;
+import com.esofthead.mycollab.core.arguments.CollectionValueSearchField;
 
 /**
  * 
@@ -18,7 +18,7 @@ import com.esofthead.mycollab.core.arguments.OneValueSearchField;
  * @since 4.0
  * 
  */
-public class OneValExpr extends Directive {
+public class CollectionValExpr extends Directive {
 
 	/*
 	 * (non-Javadoc)
@@ -26,7 +26,7 @@ public class OneValExpr extends Directive {
 	 * @see org.apache.velocity.runtime.directive.Directive#getName()
 	 */
 	public String getName() {
-		return "onevalexpr";
+		return "collectionvalexpr";
 	}
 
 	/*
@@ -50,7 +50,7 @@ public class OneValExpr extends Directive {
 			Node node) throws IOException, ResourceNotFoundException,
 			ParseErrorException, MethodInvocationException {
 		Object value = node.jjtGetChild(0).value(context);
-		if (value instanceof OneValueSearchField) {
+		if (value instanceof CollectionValueSearchField) {
 			Node content = node.jjtGetChild(1);
 			content.render(context, writer);
 		}

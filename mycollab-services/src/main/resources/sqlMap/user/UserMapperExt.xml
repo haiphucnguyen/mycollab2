@@ -23,7 +23,7 @@
             ${searchCriteria.lastAccessedTime.operation} CAST(s_user_preference.lastAccessedTime AS DATE )  = #{searchCriteria.lastAccessedTime.value}
             ]]>
         </if>
-         <if test="searchCriteria.username != null">
+        <if test="searchCriteria.username != null">
           <![CDATA[
             ${searchCriteria.username.operation} s_user.username = #{searchCriteria.username.value}
             ]]>
@@ -50,9 +50,8 @@
         <if test="searchCriteria.status != null">
             ${searchCriteria.status.operation}
             s_user.status IN
-            <foreach close=")"
-                collection="searchCriteria.status.values" item="userstatus"
-                open="(" separator=",">
+            <foreach close=")" collection="searchCriteria.status.values"
+                item="userstatus" open="(" separator=",">
                 #{userstatus}
             </foreach>
         </if>

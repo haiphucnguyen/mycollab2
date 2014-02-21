@@ -24,6 +24,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.esofthead.mycollab.core.arguments.CollectionValueSearchField;
 import com.esofthead.mycollab.core.arguments.NoValueSearchField;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.OneValueSearchField;
@@ -43,23 +44,6 @@ public class AccountServiceTest extends ServiceTest {
 
 	@Autowired
 	protected AccountService accountService;
-
-	@DataSet
-	@Test
-	public void testSaveAccount() {
-		List accountList = accountService
-				.findPagableListByCriteria(new SearchRequest<AccountSearchCriteria>(
-						new AccountSearchCriteria(), 0, Integer.MAX_VALUE));
-		System.out.println("List: " + accountList.size());
-		Account account = new Account();
-		account.setAccountname("aaa");
-		account.setSaccountid(1);
-		accountService.saveWithSession(account, "aaa");
-		accountList = accountService
-				.findPagableListByCriteria(new SearchRequest<AccountSearchCriteria>(
-						new AccountSearchCriteria(), 0, Integer.MAX_VALUE));
-		System.out.println("List: " + accountList.size());
-	}
 
 	@DataSet
 	@Test
@@ -278,6 +262,22 @@ public class AccountServiceTest extends ServiceTest {
 		Assert.assertEquals(1, accountService.getTotalCount(criteria));
 		Assert.assertEquals(
 				1,
+				accountService.findPagableListByCriteria(
+						new SearchRequest<AccountSearchCriteria>(criteria, 0,
+								Integer.MAX_VALUE)).size());
+	}
+
+	@Test
+	@DataSet
+	public void testQueryAccountWithExtCollectionValueSearchField() {
+		AccountSearchCriteria criteria = new AccountSearchCriteria();
+		criteria.setSaccountid(new NumberSearchField(1));
+
+		criteria.addExtraField(new CollectionValueSearchField(SearchField.AND,
+				"m_crm_account.industry in ", Arrays.asList("a", "b")));
+		Assert.assertEquals(2, accountService.getTotalCount(criteria));
+		Assert.assertEquals(
+				2,
 				accountService.findPagableListByCriteria(
 						new SearchRequest<AccountSearchCriteria>(criteria, 0,
 								Integer.MAX_VALUE)).size());

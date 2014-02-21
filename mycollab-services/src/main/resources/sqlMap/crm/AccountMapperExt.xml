@@ -94,6 +94,12 @@
                 #onevalexpr($extraField)
                     ${extraField.querySelect} @{extraField.value}
                 #end
+                #collectionvalexpr($extraField)
+                    ${extraField.querySelect}
+                    #repeat(${extraField.value} $listItem "," "(" ")")
+                        @{listItem}
+                    #end
+                #end
             #end
          #end
          ]]>
@@ -188,6 +194,12 @@
                 #onevalexpr($extraField)
                     ${extraField.queryCount} @{extraField.value}
                 #end
+                #collectionvalexpr($extraField)
+                    ${extraField.queryCount}
+                    #repeat(${extraField.value} $listItem "," "(" ")")
+                        @{listItem}
+                    #end
+                #end
             #end
          #end
         ]]>
@@ -272,8 +284,10 @@
 
         INNER JOIN m_crm_accounts_leads ON
         (m_crm_accounts_leads.isConvertRel=1
-        AND m_crm_accounts_leads.accountId= m_crm_account.id
-        AND m_crm_accounts_leads.leadId=@{leadId, jdbcType=NUMERIC})
+        AND
+        m_crm_accounts_leads.accountId= m_crm_account.id
+        AND
+        m_crm_accounts_leads.leadId=@{leadId, jdbcType=NUMERIC})
     </select>
 
     <select id="getNextItemKey" parameterType="map" resultType="java.lang.Integer"
