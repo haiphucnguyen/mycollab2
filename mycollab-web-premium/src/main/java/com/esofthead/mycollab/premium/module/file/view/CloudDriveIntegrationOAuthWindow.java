@@ -4,6 +4,7 @@ import java.util.GregorianCalendar;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.vaadin.artur.icepush.ICEPush;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.MyCollabException;
@@ -45,13 +46,13 @@ import com.vaadin.ui.Window;
 public abstract class CloudDriveIntegrationOAuthWindow extends Window {
 	private static final long serialVersionUID = 1L;
 
-	private TextField folderName;
-	private CloudDriveInfo cloudDriveInfo;
-
 	private static Logger log = LoggerFactory
 			.getLogger(CloudDriveIntegrationOAuthWindow.class);
 
-	private UI currentUI;
+	private TextField folderName;
+	private CloudDriveInfo cloudDriveInfo;
+
+	private ICEPush pusher = new ICEPush();
 
 	private VerticalLayout mainLayout;
 	private VerticalLayout messageBox;
@@ -65,10 +66,11 @@ public abstract class CloudDriveIntegrationOAuthWindow extends Window {
 		this.center();
 		constructBody();
 		registerListeners();
-		currentUI = UI.getCurrent();
 	}
 
 	private void registerListeners() {
+		pusher.extend(UI.getCurrent());
+
 		listener = new ApplicationEventListener<CloudDriveOAuthCallbackEvent.ReceiveCloudDriveInfo>() {
 			private static final long serialVersionUID = 1L;
 
@@ -80,17 +82,10 @@ public abstract class CloudDriveIntegrationOAuthWindow extends Window {
 						+ BeanUtility.printBeanObj(cloudDriveInfo));
 				CloudDriveIntegrationOAuthWindow.this.setHeight("210px");
 
-				currentUI.access(new Runnable() {
-
-					@Override
-					public void run() {
-						messageBox.removeAllComponents();
-						messageBox.addComponent(new Label(
-								"Access token retrieved"));
-						currentUI.push();
-
-					}
-				});
+				messageBox.removeAllComponents();
+				messageBox.addComponent(new Label("Access token retrieved"));
+				// Push changes to client
+				pusher.push();
 			}
 
 			@Override
