@@ -18,14 +18,15 @@ import com.vaadin.client.ui.layout.ElementResizeListener;
 import com.vaadin.shared.ui.Connect;
 
 @Connect(MobileViewToolbar.class)
-public class MobileViewToolbarConnector extends AbstractComponentContainerConnector {
+public class MobileViewToolbarConnector extends
+        AbstractComponentContainerConnector {
 
 	private static final long serialVersionUID = -2664274991068733980L;
 	private final ElementResizeListener resizeListener = new ElementResizeListener() {
 
 		@Override
 		public void onElementResize(ElementResizeEvent e) {
-			if(!alreadyLayouted) {
+			if (!alreadyLayouted) {
 				MobileViewToolbarConnector.this.getWidget().checkWidth();
 				Scheduler.get().scheduleFinally(doResetLayouting);
 				alreadyLayouted = true;
@@ -43,25 +44,21 @@ public class MobileViewToolbarConnector extends AbstractComponentContainerConnec
 		}
 	};
 
-
-
 	@Override
 	protected void init() {
 		super.init();
 
-		getLayoutManager().addElementResizeListener(getWidget().getContainerElement(), resizeListener);
+		getLayoutManager().addElementResizeListener(
+		        getWidget().getContainerElement(), resizeListener);
 	}
-
-
 
 	@Override
 	public void onUnregister() {
 		super.onUnregister();
 
-		getLayoutManager().removeElementResizeListener(getWidget().getContainerElement(), resizeListener);
+		getLayoutManager().removeElementResizeListener(
+		        getWidget().getContainerElement(), resizeListener);
 	}
-
-
 
 	@Override
 	public void updateCaption(ComponentConnector connector) {
@@ -85,7 +82,7 @@ public class MobileViewToolbarConnector extends AbstractComponentContainerConnec
 
 	@Override
 	public void onConnectorHierarchyChange(
-			ConnectorHierarchyChangeEvent connectorHierarchyChangeEvent) {
+	        ConnectorHierarchyChangeEvent connectorHierarchyChangeEvent) {
 		if (getParent() == null)
 			return;
 
