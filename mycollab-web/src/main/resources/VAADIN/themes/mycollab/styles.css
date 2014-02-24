@@ -3911,6 +3911,15 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 	border: none;
 }
 
+.readViewLayout .v-label-h2-no-padding
+{
+	text-shadow: #F0F0F0 0 1px 0;
+	padding: 0px 0px 0px 0px;
+	font-size: 13px;
+	border-bottom: 1px solid #a9a9a9;
+	color: rgb(69, 69, 69);
+	font-weight: bold;
+}
 .readViewBottomControls .v-verticallayout {
 	display: block;
 }
@@ -5890,4 +5899,11 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 /* Message List fix */
 .message-list > .v-slot > .v-verticallayout {
 	display: block;
+}
+
+/* case list no item */
+.case-noitem {
+	background-color:#FFFBF8;
+	box-shadow: 0 0 8px 0px rgb(114, 94, 94);
+	border-radius: 2px;
 }

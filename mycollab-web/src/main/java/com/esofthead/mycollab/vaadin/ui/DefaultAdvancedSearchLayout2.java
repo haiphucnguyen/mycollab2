@@ -9,6 +9,7 @@ import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.HorizontalLayout;
 
@@ -115,5 +116,9 @@ public abstract class DefaultAdvancedSearchLayout2<S extends SearchCriteria>
 		HorizontalLayout buttonControls = createButtonControls();
 		buttonControls.setMargin(new MarginInfo(false, true, false, true));
 		return buttonControls;
+	}
+
+	protected Component buildSelectionComp(String fieldId) {
+		return null;
 	}
 }
