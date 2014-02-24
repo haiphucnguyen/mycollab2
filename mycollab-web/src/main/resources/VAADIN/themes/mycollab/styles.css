@@ -5900,3 +5900,10 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 .message-list > .v-slot > .v-verticallayout {
 	display: block;
 }
+
+/* case list no item */
+.case-noitem {
+	background-color:#FFFBF8;
+	box-shadow: 0 0 8px 0px rgb(114, 94, 94);
+	border-radius: 2px;
+}
