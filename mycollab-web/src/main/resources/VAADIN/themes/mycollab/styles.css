@@ -3911,6 +3911,15 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 	border: none;
 }
 
+.readViewLayout .v-label-h2-no-padding
+{
+	text-shadow: #F0F0F0 0 1px 0;
+	padding: 0px 0px 0px 0px;
+	font-size: 13px;
+	border-bottom: 1px solid #a9a9a9;
+	color: rgb(69, 69, 69);
+	font-weight: bold;
+}
 .readViewBottomControls .v-verticallayout {
 	display: block;
 }
