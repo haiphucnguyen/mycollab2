@@ -124,7 +124,14 @@ public class CaseListPresenter extends
 					.getMessage(CrmCommonI18nEnum.TOOLBAR_CASES_HEADER));
 
 			super.onGo(container, data);
-			doSearch((CaseSearchCriteria) data.getParams());
+
+			CaseSearchCriteria criteria = (CaseSearchCriteria) data.getParams();
+			int totalCount = caseService.getTotalCount(searchCriteria);
+			if (totalCount > 0) {
+				doSearch(criteria);
+			} else {
+				view.displayNoCaseView();
+			}
 
 			AppContext.addFragment("crm/cases/list",
 					LocalizationHelper.getMessage(
