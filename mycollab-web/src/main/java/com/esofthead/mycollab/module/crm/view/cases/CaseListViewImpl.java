@@ -38,7 +38,6 @@ import com.esofthead.mycollab.vaadin.ui.table.AbstractPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
 
 /**
@@ -136,13 +135,12 @@ public class CaseListViewImpl extends
 	@Override
 	protected DefaultMassItemActionHandlersContainer createActionControls() {
 		DefaultMassItemActionHandlersContainer container = new DefaultMassItemActionHandlersContainer();
-		
+
 		if (AppContext.canAccess(RolePermissionCollections.CRM_CASE)) {
 			container.addActionItem(MassItemActionHandler.DELETE_ACTION,
 					MyCollabResource.newResource("icons/16/action/delete.png"),
 					"delete");
 		}
-		
 
 		container.addActionItem(MassItemActionHandler.MAIL_ACTION,
 				MyCollabResource.newResource("icons/16/action/mail.png"),
@@ -162,17 +160,11 @@ public class CaseListViewImpl extends
 
 		if (AppContext.canWrite(RolePermissionCollections.CRM_CASE)) {
 			container.addActionItem(MassItemActionHandler.MASS_UPDATE_ACTION,
-					MyCollabResource.newResource("icons/16/action/massupdate.png"),
+					MyCollabResource
+							.newResource("icons/16/action/massupdate.png"),
 					"update");
 		}
-		
-		return container;
-	}
 
-	@Override
-	public void displayNoCaseView() {
-		this.removeAllComponents();
-		
-		this.addComponent(new Label("No Case"));
+		return container;
 	}
 }
