@@ -22,4 +22,6 @@ import com.esofthead.mycollab.vaadin.desktop.ui.ListView;
 
 public interface CaseListView extends ListView<CaseSearchCriteria, SimpleCase> {
 	public static final String VIEW_DEF_ID = "crm-case-list";
+
+	public void displayNoCaseView();
 }

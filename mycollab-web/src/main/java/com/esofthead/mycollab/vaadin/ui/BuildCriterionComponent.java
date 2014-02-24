@@ -228,6 +228,7 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends
 				} else if (field instanceof DateTimeParam) {
 
 				} else if (field instanceof PropertyParam) {
+					
 				} else if (field instanceof StringListParam) {
 					ValueListSelect listSelect = new ValueListSelect();
 					listSelect.setCaption(null);

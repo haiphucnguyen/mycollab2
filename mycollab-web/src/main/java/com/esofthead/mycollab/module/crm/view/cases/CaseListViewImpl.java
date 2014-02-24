@@ -38,6 +38,7 @@ import com.esofthead.mycollab.vaadin.ui.table.AbstractPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
 
 /**
@@ -166,5 +167,12 @@ public class CaseListViewImpl extends
 		}
 		
 		return container;
+	}
+
+	@Override
+	public void displayNoCaseView() {
+		this.removeAllComponents();
+		
+		this.addComponent(new Label("No Case"));
 	}
 }
