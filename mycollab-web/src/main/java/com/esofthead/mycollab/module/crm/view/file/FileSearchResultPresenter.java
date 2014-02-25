@@ -17,6 +17,7 @@
 package com.esofthead.mycollab.module.crm.view.file;
 
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.module.crm.domain.criteria.CaseSearchCriteria;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
 import com.esofthead.mycollab.module.crm.view.CrmToolbar;
@@ -43,8 +44,15 @@ public class FileSearchResultPresenter extends
 			crmToolbar.gotoItem(LocalizationHelper
 					.getMessage(CrmCommonI18nEnum.TOOLBAR_DOCUMENT_HEADER));
 
-			super.onGo(container, data);
-			view.displaySearchResult((FileSearchCriteria) data.getParams());
+			CaseSearchCriteria criteria = (CaseSearchCriteria) data.getParams();
+			int totalCount = caseService.getTotalCount(searchCriteria);
+			if (totalCount > 0) {
+				this.displayListView(container, data);
+				doSearch(criteria);
+			} else {
+				this.displayNoExistItems(container, data);
+			}
+			
 		} else {
 			NotificationUtil.showMessagePermissionAlert();
 		}
