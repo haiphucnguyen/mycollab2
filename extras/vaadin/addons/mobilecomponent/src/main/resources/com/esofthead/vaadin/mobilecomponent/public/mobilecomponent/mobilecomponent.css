@@ -110,7 +110,6 @@ div.v-cache-loading-indicator {
 
 /* Toolbar's Styles */
 .v-mobileview-toolbar {
-	padding: 0px 2rem;
 }
 .v-mobileview-toolbar .v-mobileview-toolbar-wrap {
 	overflow-x: auto;
@@ -127,10 +126,17 @@ div.v-cache-loading-indicator {
 	box-sizing: border-box;
 	padding-left: 0.5rem;
 	line-height: 4.8rem;
+	background-color: rgba(0, 0, 0, 0.7);
+	z-index: 1;
+	color: #fff;
 }
 .v-mobileview-toolbar .v-mobileview-toolbar-prevBtn {
 	left: 0px;
 }
 .v-mobileview-toolbar .v-mobileview-toolbar-nextBtn {
 	right: 0px;
+}
+/* InfiniteScrollLayout */
+.v-csslayout.v-scrolllayout {
+	overflow-y: auto;
 }

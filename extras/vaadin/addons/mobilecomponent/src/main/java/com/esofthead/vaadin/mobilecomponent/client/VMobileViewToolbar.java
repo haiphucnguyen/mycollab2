@@ -1,135 +1,101 @@
 package com.esofthead.vaadin.mobilecomponent.client;
 
-import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.Scheduler;
-import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.dom.client.Style.Display;
+import com.google.gwt.dom.client.Style.Overflow;
 import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.event.dom.client.ScrollEvent;
+import com.google.gwt.event.dom.client.ScrollHandler;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.Event;
-import com.google.gwt.user.client.ui.ComplexPanel;
+import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class VMobileViewToolbar extends ComplexPanel {
+public class VMobileViewToolbar extends ScrollPanel implements ScrollHandler {
 	private static final String CLASSNAME = "v-mobileview-toolbar";
 
-	private final DivElement prevBtn;
-	private final DivElement nextBtn;
+	private final Element prevBtn;
+	private final Element nextBtn;
 	private int overflowWidth = 0;
-	private Widget onlyChild;
-	private final Element wrapper;
-	public JavaScriptObject scrollHandler;
+
+	protected HandlerRegistration handler;
 
 	public VMobileViewToolbar() {
-		setElement(Document.get().createDivElement());
-		setStylePrimaryName(CLASSNAME);
+		super();
+		addStyleName(CLASSNAME);
 
-		wrapper = Document.get().createDivElement().cast();
-		wrapper.addClassName(CLASSNAME + "-wrap");
-		wrapper.getStyle().setWidth(100, Unit.PCT);
-		wrapper.getStyle().setHeight(100, Unit.PCT);
-		getElement().appendChild(wrapper);
-
-		prevBtn = Document.get().createDivElement();
+		prevBtn = Document.get().createDivElement().cast();
 		prevBtn.addClassName(CLASSNAME + "-prevBtn");
 		prevBtn.addClassName("icon-chevron-left");
 		getElement().appendChild(prevBtn);
 
-		nextBtn = Document.get().createDivElement();
+		nextBtn = Document.get().createDivElement().cast();
 		nextBtn.addClassName(CLASSNAME + "-nextBtn");
 		nextBtn.addClassName("icon-chevron-right");
 		getElement().appendChild(nextBtn);
 
-		DOM.sinkEvents(getElement(), Event.ONCLICK);
-		DOM.sinkEvents(getWrapper(), Event.ONSCROLL);
-		initHandler(getWrapper());
+		Style style = getContainerElement().getStyle();
+		style.setOverflow(Overflow.AUTO);
+		style.setHeight(100, Unit.PCT);
+
+		DOM.sinkEvents(getElement(), Event.ONSCROLL);
 	}
 
-	protected native void initHandler(Element el) /*-{
-		var self = this;
-		this.@com.esofthead.vaadin.mobilecomponent.client.VMobileViewToolbar::scrollHandler = function() {
-			self.@com.esofthead.vaadin.mobilecomponent.client.VMobileViewToolbar::onScroll()();
-		};
-	}-*/;
-
-	private native boolean isRTL(Element elem) /*-{
-	    var style = elem.ownerDocument.defaultView.getComputedStyle(elem, null);
-	    return style.direction == 'rtl';
-	}-*/;
+	@Override
+	protected Element getScrollableElement() {
+		return getContainerElement();
+	}
 
 	@Override
 	protected void onAttach() {
 		super.onAttach();
-		attachListener(getWrapper());
+
+		handler = addScrollHandler(this);
+		attachClickListeners(prevBtn, nextBtn);
 	}
 
 	@Override
 	protected void onDetach() {
 		super.onDetach();
-		removeListener(getWrapper());
+
+		handler.removeHandler();
+		removeClickListeners(prevBtn, nextBtn);
 	}
 
-	private native void attachListener(Element el) /*-{
+	private native void attachClickListeners(Element prevBtn, Element nextBtn) /*-{
 		var self = this;
-		el.addEventListener('scroll', self.@com.esofthead.vaadin.mobilecomponent.client.VMobileViewToolbar::scrollHandler);
-	}-*/;
+	    prevBtn.onclick = $entry(function (){
+	    	self.@com.esofthead.vaadin.mobilecomponent.client.VMobileViewToolbar::scrollToLeft()();
+	    });
+	    nextBtn.onclick = $entry(function (){
+	    	self.@com.esofthead.vaadin.mobilecomponent.client.VMobileViewToolbar::scrollToRight()();
+	    });
+    }-*/;
 
-	private native void removeListener(Element el) /*-{
-		var self = this;
-		el.removeEventListener('scroll', self.@com.esofthead.vaadin.mobilecomponent.client.VMobileViewToolbar::scrollHandler);
+	private native void removeClickListeners(Element prevBtn, Element nextBtn) /*-{
+		prevBtn.onclick = null;
+		nextBtn.onclick = null;
 	}-*/;
 
 	@Override
-	public void add(Widget w) {
-		add(w, getWrapper());
-		checkWidth();
-	}
-
 	public void setWidget(Widget w) {
-		if (onlyChild != null && onlyChild != w) {
-			remove(onlyChild);
-		}
-		onlyChild = w;
-		if (onlyChild.getParent() != this) {
-			add(onlyChild, getWrapper());
-			Scheduler.get().scheduleFinally(new Scheduler.ScheduledCommand()
-			{
-				@Override
-				public void execute() {
-					checkWidth();
-				}
-			});
-		}
-	}
+		super.setWidget(w);
 
-	@Override
-	public boolean remove(Widget w) {
-		boolean removed = super.remove(w);
-		if (removed) {
-			if (onlyChild == w) {
-				onlyChild = null;
+		Scheduler.get().scheduleFinally(new Scheduler.ScheduledCommand() {
+			@Override
+			public void execute() {
+				checkWidth();
 			}
-		}
-		return removed;
-	}
-
-	public Element getContainerElement() {
-		if (onlyChild != null) {
-			return onlyChild.getElement();
-		}
-		return null;
-	}
-
-	public Element getWrapper() {
-		return this.wrapper;
+		});
 	}
 
 	public void checkWidth() {
-		if (onlyChild != null && getContainerElement().getOffsetWidth() > getWrapper().getOffsetWidth()) {
-			overflowWidth = getContainerElement().getOffsetWidth() - getWrapper().getOffsetWidth();
+		if (getMaximumHorizontalScrollPosition() > 0) {
+			overflowWidth = getMaximumHorizontalScrollPosition();
 			nextBtn.getStyle().setDisplay(Display.BLOCK);
 		} else {
 			overflowWidth = 0;
@@ -137,8 +103,9 @@ public class VMobileViewToolbar extends ComplexPanel {
 		}
 	}
 
-	public void onScroll() {
-		int scrollLeft = getWrapper().getScrollLeft();
+	@Override
+	public void onScroll(ScrollEvent event) {
+		int scrollLeft = getHorizontalScrollPosition();
 		Style leftStyle = prevBtn.getStyle();
 		Style rightStyle = nextBtn.getStyle();
 
@@ -155,15 +122,8 @@ public class VMobileViewToolbar extends ComplexPanel {
 	}
 
 	@Override
-	public void onBrowserEvent(Event event) {
-		if (event.getTypeInt() == Event.ONCLICK) {
-			if(DOM.eventGetTarget(event) == prevBtn.cast())
-			{
-				getWrapper().setScrollLeft(0);
-			} else if (DOM.eventGetTarget(event) == nextBtn.cast()) {
-				getWrapper().setScrollLeft(overflowWidth);
-			}
-		}
+	public Element getContainerElement() {
+		return super.getContainerElement();
 	}
 
 }

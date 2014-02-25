@@ -16,11 +16,12 @@ import com.vaadin.shared.ui.Connect;
 public class InfiniteScrollLayoutConnector extends AbstractExtensionConnector implements AttachEvent.Handler {
 	private static final long serialVersionUID = -6280613841079001933L;
 
+	private static final String CLASSNAME = "v-scrolllayout";
+
 	private ScrollReachBottomRpc scrollReachBottomRpc = RpcProxy.create(ScrollReachBottomRpc.class, this);
-	private JavaScriptObject scrollHandler;
+	public JavaScriptObject scrollHandler;
 	private VCssLayout layout;
-
-
+	private Element contentEl;
 
 	@Override
 	protected void init() {
@@ -39,31 +40,34 @@ public class InfiniteScrollLayoutConnector extends AbstractExtensionConnector im
 	@Override
 	protected void extend(ServerConnector target) {
 		layout = (VCssLayout) ((ComponentConnector) target).getWidget();
-
+		layout.addStyleName(CLASSNAME);
+		contentEl = layout.getElement();
 		layout.addAttachHandler(this);
 	}
 
 	@Override
 	public void onAttachOrDetach(AttachEvent event) {
 		if (event.isAttached()) {
-			addScrollHandler(layout.getElement());
+			addScrollHandler(contentEl);
 		} else {
-			removeScrollHandler(layout.getElement());
+			removeScrollHandler(contentEl);
 		}
 	}
 
 	private native void removeScrollHandler(Element element) /*-{
 		var self = this;
-		element.addEventListener('scroll', self.@com.esofthead.vaadin.mobilecomponent.client.ui.InfiniteScrollLayoutConnector::scrollHandler);
+		element.removeEventListener('scroll', self.@com.esofthead.vaadin.mobilecomponent.client.ui.InfiniteScrollLayoutConnector::scrollHandler);
 	}-*/;
 
 	private native void addScrollHandler(Element element) /*-{
 		var self = this;
-		element.removeEventListener('scroll', self.@com.esofthead.vaadin.mobilecomponent.client.ui.InfiniteScrollLayoutConnector::scrollHandler);
+		element.addEventListener('scroll', self.@com.esofthead.vaadin.mobilecomponent.client.ui.InfiniteScrollLayoutConnector::scrollHandler);
 	}-*/;
 
-	private void callRpc() {
-		scrollReachBottomRpc.onReachBottom();
+	public void callRpc() {
+		int scrollTop = contentEl.getScrollTop();
+		if (scrollTop == contentEl.getScrollHeight() - contentEl.getOffsetHeight())
+			scrollReachBottomRpc.onReachBottom();
 	}
 
 }
