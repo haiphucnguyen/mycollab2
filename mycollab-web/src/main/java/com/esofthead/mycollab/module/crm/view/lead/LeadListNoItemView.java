@@ -1,7 +1,9 @@
-package com.esofthead.mycollab.module.crm.view.cases;
+package com.esofthead.mycollab.module.crm.view.lead;
+
+
 
 import com.esofthead.mycollab.eventmanager.EventBus;
-import com.esofthead.mycollab.module.crm.events.CaseEvent;
+import com.esofthead.mycollab.module.crm.events.LeadEvent;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
@@ -15,7 +17,6 @@ import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
-
 /**
  * 
  * @author MyCollab Ltd.
@@ -23,12 +24,11 @@ import com.vaadin.ui.VerticalLayout;
  * 
  */
 @ViewComponent
-public class CaseListNoItemView extends AbstractPageView {
+public class LeadListNoItemView extends AbstractPageView{
 	private static final long serialVersionUID = 1L;
 
-	public CaseListNoItemView() {
+	public LeadListNoItemView() {
 
-		
 		VerticalLayout layout = new VerticalLayout();
 		layout.addStyleName("case-noitem");
 		layout.setWidth("800px");
@@ -37,10 +37,10 @@ public class CaseListNoItemView extends AbstractPageView {
 		layout.setMargin(true);
 		
 		Image image = new Image(null,
-			   MyCollabResource.newResource("icons/48/crm/case.png"));
+			   MyCollabResource.newResource("icons/48/crm/lead.png"));
 		layout.addComponent(image);
 		
-		Label title = new Label("Maintance Your Cases");
+		Label title = new Label("Maintance Your Leads");
 		title.addStyleName("h2");
 		title.setWidth(SIZE_UNDEFINED, Sizeable.Unit.PIXELS);
 		layout.addComponent(title);
@@ -50,13 +50,13 @@ public class CaseListNoItemView extends AbstractPageView {
 		layout.addComponent(contact);
 		
 		
-		Button btCreateContact = new Button("Create Case", new Button.ClickListener() {
+		Button btCreateContact = new Button("Create Lead", new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void buttonClick(final ClickEvent event) {
 				EventBus.getInstance().fireEvent(
-						new CaseEvent.GotoAdd(this, null));
+						new LeadEvent.GotoAdd(this, null));
 			}
 		});
 		
@@ -70,7 +70,7 @@ public class CaseListNoItemView extends AbstractPageView {
 		or.setStyleName("h2");
 		links.addComponent(or);
 		
-		Button btImportContact = new Button("Import Cases", new Button.ClickListener() {
+		Button btImportContact = new Button("Import Leads", new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
