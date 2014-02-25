@@ -151,11 +151,11 @@ public class AccountListPresenter
 			crmToolbar.gotoItem(LocalizationHelper
 					.getMessage(CrmCommonI18nEnum.TOOLBAR_ACCOUNTS_HEADER));
 			
-			AccountSearchCriteria criteria = (AccountSearchCriteria) data.getParams();
+			searchCriteria = (AccountSearchCriteria) data.getParams();
 			int totalCount = accountService.getTotalCount(searchCriteria);
 			if (totalCount > 0) {
 				this.displayListView(container, data);
-				doSearch(criteria);
+				doSearch(searchCriteria);
 			} else {
 				this.displayNoExistItems(container, data);
 			}

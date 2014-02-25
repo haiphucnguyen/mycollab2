@@ -124,15 +124,15 @@ public class ContactListPresenter
 			crmToolbar.gotoItem(LocalizationHelper
 					.getMessage(CrmCommonI18nEnum.TOOLBAR_CONTACTS_HEADER));
 
-			ContactSearchCriteria criteria = (ContactSearchCriteria) data.getParams();
+			searchCriteria = (ContactSearchCriteria) data.getParams();
 			int totalCount = contactService.getTotalCount(searchCriteria);
 			if (totalCount > 0) {
 				this.displayListView(container, data);
-				doSearch(criteria);
+				doSearch(searchCriteria);
 			} else {
 				this.displayNoExistItems(container, data);
 			}
-			
+
 			AppContext.addFragment("crm/contact/list", LocalizationHelper
 					.getMessage(GenericI18Enum.BROWSER_LIST_ITEMS_TITLE,
 							"Contact"));

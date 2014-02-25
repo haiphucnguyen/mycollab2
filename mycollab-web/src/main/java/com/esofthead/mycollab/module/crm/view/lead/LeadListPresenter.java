@@ -125,12 +125,11 @@ public class LeadListPresenter extends
 			crmToolbar.gotoItem(LocalizationHelper
 					.getMessage(CrmCommonI18nEnum.TOOLBAR_LEADS_HEADER));
 
-			
-			LeadSearchCriteria criteria = (LeadSearchCriteria) data.getParams();
+			searchCriteria = (LeadSearchCriteria) data.getParams();
 			int totalCount = leadService.getTotalCount(searchCriteria);
 			if (totalCount > 0) {
 				this.displayListView(container, data);
-				doSearch(criteria);
+				doSearch(searchCriteria);
 			} else {
 				this.displayNoExistItems(container, data);
 			}

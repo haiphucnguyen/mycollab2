@@ -123,11 +123,11 @@ public class CaseListPresenter extends
 			crmToolbar.gotoItem(LocalizationHelper
 					.getMessage(CrmCommonI18nEnum.TOOLBAR_CASES_HEADER));
 
-			CaseSearchCriteria criteria = (CaseSearchCriteria) data.getParams();
+			searchCriteria = (CaseSearchCriteria) data.getParams();
 			int totalCount = caseService.getTotalCount(searchCriteria);
 			if (totalCount > 0) {
 				this.displayListView(container, data);
-				doSearch(criteria);
+				doSearch(searchCriteria);
 			} else {
 				this.displayNoExistItems(container, data);
 			}

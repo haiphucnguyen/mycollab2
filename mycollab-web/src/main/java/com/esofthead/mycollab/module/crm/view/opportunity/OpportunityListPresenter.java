@@ -25,7 +25,6 @@ import com.esofthead.mycollab.core.persistence.service.ISearchableService;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.crm.domain.Opportunity;
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
-import com.esofthead.mycollab.module.crm.domain.criteria.CaseSearchCriteria;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.crm.service.OpportunityService;
@@ -106,15 +105,15 @@ public class OpportunityListPresenter
 			crmToolbar.gotoItem(LocalizationHelper
 					.getMessage(CrmCommonI18nEnum.TOOLBAR_OPPORTUNTIES_HEADER));
 
-			OpportunitySearchCriteria criteria = (OpportunitySearchCriteria) data.getParams();
+			searchCriteria = (OpportunitySearchCriteria) data.getParams();
 			int totalCount = opportunityService.getTotalCount(searchCriteria);
 			if (totalCount > 0) {
 				this.displayListView(container, data);
-				doSearch(criteria);
+				doSearch(searchCriteria);
 			} else {
 				this.displayNoExistItems(container, data);
 			}
-			
+
 			AppContext.addFragment("crm/opportunity/list", LocalizationHelper
 					.getMessage(GenericI18Enum.BROWSER_LIST_ITEMS_TITLE,
 							"Opportunity"));

@@ -104,15 +104,14 @@ public class CampaignListPresenter
 			crmToolbar.gotoItem(LocalizationHelper
 					.getMessage(CrmCommonI18nEnum.TOOLBAR_CAMPAIGNS_HEADER));
 
-			CampaignSearchCriteria criteria = (CampaignSearchCriteria) data.getParams();
+			searchCriteria = (CampaignSearchCriteria) data.getParams();
 			int totalCount = campaignService.getTotalCount(searchCriteria);
 			if (totalCount > 0) {
 				this.displayListView(container, data);
-				doSearch(criteria);
+				doSearch(searchCriteria);
 			} else {
 				this.displayNoExistItems(container, data);
 			}
-
 
 			AppContext.addFragment("crm/campaign/list", LocalizationHelper
 					.getMessage(GenericI18Enum.BROWSER_LIST_ITEMS_TITLE,
