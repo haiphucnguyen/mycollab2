@@ -43,10 +43,10 @@ public class CaseListNoItemView extends AbstractPageView {
 		layout.setMargin(true);
 		
 		Image image = new Image(null,
-			   MyCollabResource.newResource("icons/48/crm/contact.png"));
+			   MyCollabResource.newResource("icons/48/crm/case.png"));
 		layout.addComponent(image);
 		
-		Label title = new Label("Maintance Your Contact");
+		Label title = new Label("Maintance Your Cases");
 		title.addStyleName("h2");
 		title.setWidth(SIZE_UNDEFINED, Sizeable.Unit.PIXELS);
 		layout.addComponent(title);
@@ -56,7 +56,7 @@ public class CaseListNoItemView extends AbstractPageView {
 		layout.addComponent(contact);
 		
 		
-		Button btCreateContact = new Button("Create Contact", new Button.ClickListener() {
+		Button btCreateContact = new Button("Create Case", new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -71,6 +71,7 @@ public class CaseListNoItemView extends AbstractPageView {
 		links.addComponent(btCreateContact);
 		btCreateContact.addStyleName(UIConstants.THEME_BLUE_LINK);
 		
+		/*
 		Label or = new Label("Or");
 		or.setStyleName("h2");
 		links.addComponent(or);
@@ -83,10 +84,11 @@ public class CaseListNoItemView extends AbstractPageView {
 				UI.getCurrent().addWindow(new CaseImportWindow());
 			}
 		});
+
 		btImportContact.addStyleName(UIConstants.THEME_GRAY_LINK);
 		
 		
-		links.addComponent(btImportContact);
+		links.addComponent(btImportContact);*/
 		links.setSpacing(true);
 		
 		layout.addComponent(links);
