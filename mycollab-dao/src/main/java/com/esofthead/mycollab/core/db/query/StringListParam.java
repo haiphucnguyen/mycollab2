@@ -51,13 +51,17 @@ public class StringListParam extends ColumnParam {
 		return buildStringParamInList(SearchField.OR, value);
 	}
 
+	public CollectionValueSearchField buildStringParamNotInList(String oper,
+			Collection<?> value) {
+		return new CollectionValueSearchField(oper, String.format(NOT_IN_EXPR,
+				this.getTable(), this.getColumn()), value);
+	}
+
 	public CollectionValueSearchField andStringParamNotInList(List<?> value) {
-		return new CollectionValueSearchField(SearchField.AND, String.format(
-				NOT_IN_EXPR, this.getTable(), this.getColumn()), value);
+		return buildStringParamNotInList(SearchField.AND, value);
 	}
 
 	public CollectionValueSearchField orStringParamNotInList(List<?> value) {
-		return new CollectionValueSearchField(SearchField.OR, String.format(
-				NOT_IN_EXPR, this.getTable(), this.getColumn()), value);
+		return buildStringParamNotInList(SearchField.OR, value);
 	}
 }
