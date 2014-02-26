@@ -108,7 +108,11 @@ public abstract class DefaultAdvancedSearchLayout2<S extends SearchCriteria>
 
 	public ComponentContainer constructBody() {
 		buildCriterionComp = new BuildCriterionComponent<S>(getParamFields(),
-				getType());
+				getType()) {
+			protected Component buildPropertySearchComp(String fieldId) {
+				return buildSelectionComp(fieldId);
+			}
+		};
 		return buildCriterionComp;
 	}
 

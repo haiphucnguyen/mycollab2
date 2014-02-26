@@ -10,6 +10,7 @@ import com.esofthead.mycollab.core.db.query.DateParam;
 import com.esofthead.mycollab.core.db.query.DateTimeParam;
 import com.esofthead.mycollab.core.db.query.NumberParam;
 import com.esofthead.mycollab.core.db.query.Param;
+import com.esofthead.mycollab.core.db.query.PropertyListParam;
 import com.esofthead.mycollab.core.db.query.PropertyParam;
 import com.esofthead.mycollab.core.db.query.StringListParam;
 import com.esofthead.mycollab.core.db.query.StringParam;
@@ -24,6 +25,7 @@ import com.vaadin.ui.DateField;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.ListSelect;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
@@ -71,6 +73,10 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends
 
 		this.addComponent(searchContainer);
 		this.addComponent(controlsBtn);
+	}
+
+	protected Component buildPropertySearchComp(String fieldId) {
+		return null;
 	}
 
 	public S fillupSearchCriteria() {
@@ -182,6 +188,9 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends
 							compareSelectionBox.loadData(DateTimeParam.OPTIONS);
 						} else if (field instanceof PropertyParam) {
 							compareSelectionBox.loadData(PropertyParam.OPTIONS);
+						} else if (field instanceof PropertyListParam) {
+							compareSelectionBox
+									.loadData(PropertyListParam.OPTIONS);
 						} else if (field instanceof StringListParam) {
 							compareSelectionBox
 									.loadData(StringListParam.OPTIONS);
@@ -227,8 +236,12 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends
 					}
 				} else if (field instanceof DateTimeParam) {
 
-				} else if (field instanceof PropertyParam) {
-					
+				} else if (field instanceof PropertyParam
+						|| field instanceof PropertyListParam) {
+					Component comp = buildPropertySearchComp(field.getId());
+					if (comp != null) {
+						valueBox.addComponent(comp);
+					}
 				} else if (field instanceof StringListParam) {
 					ValueListSelect listSelect = new ValueListSelect();
 					listSelect.setCaption(null);
@@ -292,7 +305,7 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends
 						return wrapParam.buildStringParamInList(
 								prefixOperation, value);
 					case StringListParam.NOT_IN:
-						return wrapParam.buildStringParamInList(
+						return wrapParam.buildStringParamNotInList(
 								prefixOperation, value);
 					default:
 						throw new MyCollabException("Not support yet");
@@ -336,6 +349,29 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends
 					default:
 						throw new MyCollabException("Not support yet");
 					}
+				} else if (param instanceof PropertyListParam) {
+					if (valueBox.getComponentCount() != 1) {
+						return null;
+					}
+
+					ListSelect field = (ListSelect) valueBox.getComponent(0);
+					Collection<?> value = (Collection<?>) field.getValue();
+					if (value.size() == 0) {
+						return null;
+					}
+					PropertyListParam wrapParam = (PropertyListParam) param;
+					switch (compareOper) {
+					case PropertyListParam.BELONG_TO:
+						return wrapParam.buildPropertyParamInList(
+								prefixOperation, value);
+					case PropertyListParam.NOT_BELONG_TO:
+						return wrapParam.buildPropertyParamNotInList(
+								prefixOperation, value);
+					default:
+						throw new MyCollabException("Not support yet");
+					}
+				} else if (param instanceof PropertyParam) {
+					return null;
 				} else {
 					throw new MyCollabException("Not support yet");
 				}

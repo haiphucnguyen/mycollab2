@@ -26,6 +26,7 @@ import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
+import com.esofthead.mycollab.module.user.ui.components.ActiveUserListSelect;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.DefaultAdvancedSearchLayout2;
@@ -38,6 +39,7 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CheckBox;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
@@ -129,6 +131,13 @@ public class AccountSearchPanel extends
 		@Override
 		protected Class<AccountSearchCriteria> getType() {
 			return AccountSearchCriteria.class;
+		}
+		
+		protected Component buildSelectionComp(String fieldId) {
+			if ("account-assignuser".equals(fieldId)) {
+				return new ActiveUserListSelect();
+			}
+			return null;
 		}
 	}
 
