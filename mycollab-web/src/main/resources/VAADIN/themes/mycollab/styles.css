@@ -6,7 +6,7 @@
 		margin: 15px;
 	}
 	.projectDashboardView {
-		margin: 20px 15px 20px 0px;
+		margin: 0px 15px 20px 0px;
 	}
 	.menuContent .v-csslayout-projectTabContent {
 		min-width: 700px;
@@ -23,7 +23,7 @@
 		margin: 15px auto;
 	}
 	.projectDashboardView {
-		margin: 20px auto;
+		margin: 0px auto;
 	}
 	.member-block {
 		width: 290px;
@@ -1425,7 +1425,7 @@ input.v-textfield-errorField {
 /* End Account Settings */
 
 /* Project Management */
-.projectDashboardView {
+/* .projectDashboardView {
 	margin: 20px auto;
 }
 
@@ -1444,6 +1444,38 @@ input.v-textfield-errorField {
 	border-bottom-left-radius: 5px;
 	border: 1px solid #8F8F8F;
 	overflow: hidden;
+} */
+
+.projectDashboardView.main-content-wrapper.v-verticallayout.v-margin-top {
+	padding-top: 20px;
+}
+
+.projectDashboardView.main-content-wrapper.v-verticallayout.v-margin-bottom {
+	padding-bottom: 20px;
+}
+
+.projectDashboardView .navigator-wrap {
+	border: 1px solid #BCBCBC;
+	background-color: #FFFFFF;
+	border-radius: 0px 0px 5px 5px;
+}
+
+.projectDashboardView .container-wrap.main-content.v-verticallayout.v-margin-left {
+	padding-left: 20px;
+}
+
+.projectDashboardView .container-wrap.main-content .top-panel {
+	background-color: #EEEEEE;
+	border-style: solid;
+	border-width: 1px;
+	border-color: #BCBCBC #BCBCBC #CFCFCF #BCBCBC;
+	border-radius: 5px 5px 0px 0px;
+}
+
+.projectDashboardView .container-wrap.main-content > .v-slot > .tab-content {
+	border-width: 0px 1px 1px;
+	border-color: #BCBCBC;
+	border-radius: 0px 0px 5px 5px;
 }
 
 .projectDashboardView .v-label-h1,.projectDashboardView .v-label h1 {
@@ -1472,7 +1504,7 @@ input.v-textfield-errorField {
 }
 
 .projectDashboardView .sidebar-menu {
-	padding: 10px 0px;
+	/*padding: 10px 0px;*/
 }
 
 .projectDashboardView .sidebar-menu .v-label.sectionHeader {
@@ -3406,7 +3438,7 @@ div.v-lazyloadingwrapper-loading {
 /* Main body */
 .main-body {
 	overflow-y: scroll; /*CSS fix for Vaadin 7 */
-	background-color: #FFFFFF;
+	background-color: #DBDBDB;
 	position: relative;
 }
 
