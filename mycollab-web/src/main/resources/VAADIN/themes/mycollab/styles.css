@@ -5609,7 +5609,7 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 	border: none;
 	background: none no-repeat 0 0 transparent;
 	border-radius: 0px;
-	padding: 4px 13px;
+	/* padding: 4px 13px; */
 }
 
 .vertical-tabsheet .v-button-tab>.v-button-wrap {
@@ -5617,6 +5617,7 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 	border-radius: 0px;
 	text-align: left;
 	border: none;
+	padding: 9px 13px;
 }
 
 .vertical-tabsheet .v-button-tab.tab-selected>.v-button-wrap {

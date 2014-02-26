@@ -148,43 +148,27 @@ public class ProjectViewImpl extends AbstractPageView implements ProjectView {
 	}
 
 	private void buildComponents() {
-		myProjectTab.addTab(constructProjectDashboardComponent(), "Dashboard",
-				MyCollabResource
-						.newResource("icons/22/project/menu_dashboard.png"));
+		myProjectTab.addTab(constructProjectDashboardComponent(), "Dashboard");
 
-		myProjectTab.addTab(constructProjectMessageComponent(), "Messages",
-				MyCollabResource
-						.newResource("icons/22/project/menu_message.png"));
+		myProjectTab.addTab(constructProjectMessageComponent(), "Messages");
 
-		myProjectTab.addTab(constructProjectMilestoneComponent(), "Phases",
-				MyCollabResource
-						.newResource("icons/22/project/menu_milestone.png"));
+		myProjectTab.addTab(constructProjectMilestoneComponent(), "Phases");
 
-		myProjectTab.addTab(constructTaskDashboardComponent(), "Tasks",
-				MyCollabResource.newResource("icons/22/project/menu_task.png"));
+		myProjectTab.addTab(constructTaskDashboardComponent(), "Tasks");
 
-		myProjectTab.addTab(constructProjectBugComponent(), "Bugs",
-				MyCollabResource.newResource("icons/22/project/menu_bug.png"));
+		myProjectTab.addTab(constructProjectBugComponent(), "Bugs");
 
-		myProjectTab.addTab(constructProjectFileComponent(), "Files",
-				MyCollabResource.newResource("icons/22/project/menu_file.png"));
+		myProjectTab.addTab(constructProjectFileComponent(), "Files");
 
-		myProjectTab.addTab(constructProjectRiskComponent(), "Risks",
-				MyCollabResource.newResource("icons/22/project/menu_risk.png"));
+		myProjectTab.addTab(constructProjectRiskComponent(), "Risks");
 
-		myProjectTab.addTab(constructProjectProblemComponent(), "Problems",
-				MyCollabResource
-						.newResource("icons/22/project/menu_problem.png"));
+		myProjectTab.addTab(constructProjectProblemComponent(), "Problems");
 
-		myProjectTab.addTab(constructTimeTrackingComponent(), "Time",
-				MyCollabResource.newResource("icons/22/project/menu_time.png"));
+		myProjectTab.addTab(constructTimeTrackingComponent(), "Time");
 
-		myProjectTab.addTab(constructProjectStandupMeeting(), "StandUp",
-				MyCollabResource
-						.newResource("icons/22/project/menu_standup.png"));
+		myProjectTab.addTab(constructProjectStandupMeeting(), "StandUp");
 
-		myProjectTab.addTab(constructProjectUsers(), "Users & Settings",
-				MyCollabResource.newResource("icons/22/project/menu_user.png"));
+		myProjectTab.addTab(constructProjectUsers(), "Users & Settings");
 
 		myProjectTab
 				.addSelectedTabChangeListener(new SelectedTabChangeListener() {
