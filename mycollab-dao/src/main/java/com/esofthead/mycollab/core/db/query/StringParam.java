@@ -89,7 +89,7 @@ public class StringParam extends ColumnParam {
 
 	public OneValueSearchField buildStringParamIsLike(String oper, Object value) {
 		return new OneValueSearchField(oper, String.format(LIKE_EXPR,
-				this.getTable(), this.getColumn()), value);
+				this.getTable(), this.getColumn()), "%" + value + "%");
 	}
 
 	public OneValueSearchField andStringParamIsLike(Object value) {
@@ -103,7 +103,7 @@ public class StringParam extends ColumnParam {
 	public OneValueSearchField buildStringParamIsNotLike(String oper,
 			Object value) {
 		return new OneValueSearchField(oper, String.format(NOT_LIKE_EXPR,
-				this.getTable(), this.getColumn()), value);
+				this.getTable(), this.getColumn()), "%" + value + "%");
 	}
 
 	public OneValueSearchField andStringParamIsNotLike(Object value) {

@@ -33,6 +33,7 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.CustomComponent;
+import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.TabSheet.SelectedTabChangeEvent;
@@ -52,6 +53,7 @@ public class VerticalTabsheet extends CustomComponent {
 	
 	private VerticalLayout tabNavigator;
 	private CssLayout tabContainer;
+	private VerticalLayout contentWrapper;
 
 	private Map<Button, Tab> compMap = new HashMap<Button, Tab>();
 
@@ -63,14 +65,24 @@ public class VerticalTabsheet extends CustomComponent {
 	private final String TAB_SELECTED_STYLENAME = "tab-selected";
 
 	public VerticalTabsheet() {
-		HorizontalLayout contentLayout = new HorizontalLayout();
+		GridLayout contentLayout = new GridLayout(2, 1);
+		CssLayout navigatorWrapper = new CssLayout();
+		navigatorWrapper.setStyleName("navigator-wrap");
+		navigatorWrapper.setHeight("100%");
 		tabNavigator = new VerticalLayout();
+		navigatorWrapper.addComponent(tabNavigator);
+
+		contentWrapper = new VerticalLayout();
+		contentWrapper.setStyleName("container-wrap");
+		contentWrapper.setWidth("100%");
+
 		tabContainer = new CssLayout();
 		tabContainer.setWidth("100%");
+		contentWrapper.addComponent(tabContainer);
 
-		contentLayout.addComponent(tabNavigator);
-		contentLayout.addComponent(tabContainer);
-		contentLayout.setExpandRatio(tabContainer, 1.0f);
+		contentLayout.addComponent(navigatorWrapper, 0, 0);
+		contentLayout.addComponent(contentWrapper, 1, 0);
+		contentLayout.setColumnExpandRatio(1, 1.0f);
 		this.setCompositionRoot(contentLayout);
 		this.setStyleName(TABSHEET_STYLENAME);
 	}
@@ -374,5 +386,9 @@ public class VerticalTabsheet extends CustomComponent {
 		default:
 			log.debug("cannot find resource for" + caption);
 		}
+	}
+	
+	public VerticalLayout getContentWrapper() {
+		return this.contentWrapper;
 	}
 }

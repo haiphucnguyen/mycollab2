@@ -86,16 +86,15 @@
          #end
          
          #ifnotnull($_parameter.searchCriteria.extraFields)
-            AND
-            #repeat($_parameter.searchCriteria.extraFields $extraField "AND")
+            #repeat($_parameter.searchCriteria.extraFields $extraField)
                 #novalexpr($extraField)
-                    ${extraField.querySelect}
+                    ${extraField.operation} ${extraField.querySelect}
                 #end
                 #onevalexpr($extraField)
-                    ${extraField.querySelect} @{extraField.value}
+                    ${extraField.operation} ${extraField.querySelect} @{extraField.value}
                 #end
                 #collectionvalexpr($extraField)
-                    ${extraField.querySelect}
+                    ${extraField.operation} ${extraField.querySelect}
                     #repeat(${extraField.value} $listItem "," "(" ")")
                         @{listItem}
                     #end
@@ -186,16 +185,15 @@
         #end
         
         #ifnotnull($_parameter.searchCriteria.extraFields)
-            AND
-            #repeat($_parameter.searchCriteria.extraFields $extraField "AND")
+            #repeat($_parameter.searchCriteria.extraFields $extraField)
                 #novalexpr($extraField)
-                    ${extraField.queryCount}
+                    ${extraField.operation} ${extraField.queryCount}
                 #end
                 #onevalexpr($extraField)
-                    ${extraField.queryCount} @{extraField.value}
+                    ${extraField.operation} ${extraField.queryCount} @{extraField.value}
                 #end
                 #collectionvalexpr($extraField)
-                    ${extraField.queryCount}
+                    ${extraField.operation} ${extraField.queryCount}
                     #repeat(${extraField.value} $listItem "," "(" ")")
                         @{listItem}
                     #end
