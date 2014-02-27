@@ -1458,7 +1458,7 @@ input.v-textfield-errorField {
 
 
 .projectDashboardView .container-wrap.main-content.v-verticallayout.v-margin-left {
-	padding-left: 10px;
+	padding-left: 20px;
 }
 
 .projectDashboardView .container-wrap.main-content .top-panel {
@@ -5946,3 +5946,25 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 	box-shadow: 0 0 8px 0px rgb(114, 94, 94);
 	border-radius: 2px;
 }
+
+
+/* new style for split button */
+.splitbutton .v-popupbutton.action-button
+{
+	padding: 0px 0px 0px 0px !important;
+	border:0 !important;
+}
+.splitbutton .v-button.action-button {
+	padding: 6px 11px 6px 11px;
+	border-radius:0;
+	/*border:1px solid #a9a9a9;*/
+	border-width: 1px 1px 1px 1px;
+	height:31px;
+}
+.splitbutton .v-button.action-button .v-icon {
+	margin-right:0;
+}
+.v-customcomponent.action-button {
+	position: absolute;
+	top: 18px;
+} 
