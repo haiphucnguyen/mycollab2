@@ -5572,14 +5572,14 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 /* new splitbutton */
 .splitbutton .v-button,.splitbutton .v-button.v-disabled,.splitbutton .v-button:active
 {
-	background-image: url("icons/grad-dark-bottom.png");
+	background-image: none;
 	background-repeat: repeat-x;
 	background-position: left bottom;
-	background-color: rgb(252, 252, 252);
+	background-color: #F9F9F9;
 	border-radius: 3px 0px 0px 3px;
 	border-width: 1px 0px 1px 1px;
-	/* padding: 4px 6px 4px 15px; */
-	padding: 3px 6px 3px 8px;
+	/*padding: 4px 6px 4px 15px;
+	padding: 3px 6px 3px 8px;*/
 	font-weight: bold;
 }
 .splitbutton .v-button.bluebtn {
@@ -5591,6 +5591,7 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 .splitbutton .v-button .v-button-wrap, .splitbutton .v-button:active .v-button-wrap {
 	background-image: none;
 	border: none;
+	/* padding: 6px 11px 6px 11px; */
 }
 
 .v-ie .splitbutton .bluebtn,.v-ie .splitbutton .graybtn {
@@ -5947,20 +5948,45 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 	border-radius: 2px;
 }
 
+/* change style for all button */
 
-/* new style for split button */
+
+/* new style for action button */
 .splitbutton .v-popupbutton.action-button
 {
 	padding: 0px 0px 0px 0px !important;
 	border:0 !important;
 }
 .splitbutton .v-button.action-button {
-	padding: 6px 11px 6px 11px;
+	
 	border-radius:0;
-	/*border:1px solid #a9a9a9;*/
-	border-width: 1px 1px 1px 1px;
-	height:31px;
+	border-width: 1px 1px 1px 1px !important;
+	
+	height:100%;
+	border-width: 0;
+	
 }
+.splitbutton .v-button.action-button:active {
+	border-color:#a9a9a9;	
+}
+.splitbutton .v-button.action-button .v-button-wrap {
+	padding: 7px 12px 7px 12px;
+	border-top:1px solid transparent;
+}
+
+.splitbutton .v-button.action-button .v-button-wrap:active, 
+.splitbutton .v-button.action-button .v-button-wrap:hover {
+	/*background-color: #E7E7E7;*/
+	background-image: -webkit-linear-gradient(top,#F0F0F0,#E7E7E7);
+	background-image: -moz-linear-gradient(top,#F0F0F0,#E7E7E7);
+	background-image: -ms-linear-gradient(top,#F0F0F0,#E7E7E7);
+	background-image: -o-linear-gradient(top,#F0F0F0,#E7E7E7);
+	background-image: linear-gradient(top,#F0F0F0,#E7E7E7);
+}
+.splitbutton .v-button.action-button .v-button-wrap:active {
+	border-top-color: #C7C7C7;
+	background-color:#F0F0F0;
+}	
 .splitbutton .v-button.action-button .v-icon {
 	margin-right:0;
 }
@@ -5968,3 +5994,4 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 	position: absolute;
 	top: 18px;
 } 
+

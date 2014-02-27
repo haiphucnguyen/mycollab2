@@ -364,6 +364,7 @@ public class ProjectViewImpl extends AbstractPageView implements ProjectView {
 						controlsBtn.setPopupVisible(true);
 					}
 				});
+		quickActionBtn.setDescription("Quick action");
 		controlsBtn = new SplitButton(quickActionBtn);
 		controlsBtn.setIcon(MyCollabResource
 				.newResource("icons/16/project/quick_action_edited.png"));
