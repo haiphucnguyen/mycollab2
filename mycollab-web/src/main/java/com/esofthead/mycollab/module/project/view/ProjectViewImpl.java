@@ -139,7 +139,7 @@ public class ProjectViewImpl extends AbstractPageView implements ProjectView {
 
 		myProjectTab = new VerticalTabsheet();
 		myProjectTab.setSizeFull();
-		myProjectTab.setNavigatorWidth("180px");
+		myProjectTab.setNavigatorWidth("170px");
 		myProjectTab.setNavigatorStyleName("sidebar-menu");
 		myProjectTab.setContainerStyleName("tab-content");
 		myProjectTab.setHeight(null);
@@ -365,14 +365,19 @@ public class ProjectViewImpl extends AbstractPageView implements ProjectView {
 
 		Button quickActionBtn = new Button("",
 				new Button.ClickListener() {
+
 			@Override
 			public void buttonClick(ClickEvent event) {
 				controlsBtn.setPopupVisible(true);
 			}
 		});
+		quickActionBtn.setDescription("Quick action");
 		controlsBtn = new SplitButton(quickActionBtn);
 		controlsBtn.setIcon(MyCollabResource
-				.newResource("icons/16/project/quick_action.png"));
+				.newResource("icons/16/project/quick_action_edited.png"));
+		controlsBtn.addStyleName("action-button");
+		controlsBtn.setWidthPopupButton("0");
+
 
 		VerticalLayout popupButtonsControl = new VerticalLayout();
 		popupButtonsControl.setWidth("150px");
