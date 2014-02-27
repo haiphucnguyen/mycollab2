@@ -357,7 +357,7 @@ public class ProjectViewImpl extends AbstractPageView implements ProjectView {
 
 		breadCrumb.setProject(project);
 
-		Button quickActionBtn = new Button("Quick Action",
+		Button quickActionBtn = new Button("",
 				new Button.ClickListener() {
 					@Override
 					public void buttonClick(ClickEvent event) {

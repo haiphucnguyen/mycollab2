@@ -1437,13 +1437,24 @@ input.v-textfield-errorField {
 .projectDashboardView .navigator-wrap {
 	
 	background-color: #FFFFFF;
-	border-radius: 3px 3px 3px 3px;
-	box-shadow:
+	border-radius: 3px 3px 3px 3px;	
+	border: 1px solid #BCBCBC;
+	
+	
+	/*box-shadow:
 		  	0 0 0 1px  #BCBCBC,
-		 	0 0 0 2px  #d0d0d0;
+		 	0 0 0 2px  #d0d0d0;*/
 	
 	/* margin: 2px; */
+	
 }
+/*.projectDashboardView .navigator-wrap:before {
+    position: absolute; display: block; content: '';
+    border: 1px solid #d0d0d0;
+    height: 100%; width: 100%;
+    box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box;
+    border-radius: 3px 3px 3px 3px;
+}*/
 
 
 .projectDashboardView .container-wrap.main-content.v-verticallayout.v-margin-left {
@@ -5642,10 +5653,11 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 	-o-transition:All 0.2s ease;
 }
 .vertical-tabsheet .v-button-tab>.v-button-wrap:hover {
-	background: none no-repeat 0 0 rgb(40, 126, 206);
+	background: none no-repeat 0 0 #007EBB;
+	color:white;
 }
 .vertical-tabsheet .v-button-tab.tab-selected>.v-button-wrap {
-	background: none no-repeat 0 0 rgb(40, 126, 206);
+	background: none no-repeat 0 0 #007EBB;
 
 }
 
