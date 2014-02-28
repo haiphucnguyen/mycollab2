@@ -5976,16 +5976,15 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 
 .splitbutton .v-button.action-button .v-button-wrap:active, 
 .splitbutton .v-button.action-button .v-button-wrap:hover {
-	/*background-color: #E7E7E7;*/
-	background-image: -webkit-linear-gradient(top,#F0F0F0,#E7E7E7);
-	background-image: -moz-linear-gradient(top,#F0F0F0,#E7E7E7);
-	background-image: -ms-linear-gradient(top,#F0F0F0,#E7E7E7);
-	background-image: -o-linear-gradient(top,#F0F0F0,#E7E7E7);
-	background-image: linear-gradient(top,#F0F0F0,#E7E7E7);
+	background-color: #F0F0F0;
+	background-image: -webkit-linear-gradient(top,#F0F0F0,#E0E0E0);
+	background-image: -moz-linear-gradient(top,#F0F0F0,#E0E0E0);
+	background-image: -ms-linear-gradient(top,#F0F0F0,#E0E0E0);
+	background-image: -o-linear-gradient(top,#F0F0F0,#E0E0E0);
+	background-image: linear-gradient(top,#F0F0F0,#E0E0E0);
 }
 .splitbutton .v-button.action-button .v-button-wrap:active {
 	border-top-color: #C7C7C7;
-	background-color:#F0F0F0;
 }	
 .splitbutton .v-button.action-button .v-icon {
 	margin-right:0;
