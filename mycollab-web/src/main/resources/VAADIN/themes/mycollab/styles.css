@@ -1435,27 +1435,51 @@ input.v-textfield-errorField {
 }
 
 .projectDashboardView .navigator-wrap {
-	
 	background-color: #FFFFFF;
-	border-radius: 3px 3px 3px 3px;	
 	border: 1px solid #BCBCBC;
-	
-	
-	/*box-shadow:
-		  	0 0 0 1px  #BCBCBC,
-		 	0 0 0 2px  #d0d0d0;*/
-	
-	/* margin: 2px; */
-	
 }
-/*.projectDashboardView .navigator-wrap:before {
-    position: absolute; display: block; content: '';
-    border: 1px solid #d0d0d0;
-    height: 100%; width: 100%;
-    box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box;
-    border-radius: 3px 3px 3px 3px;
-}*/
+.projectDashboardView .navigator-wrap .project-list-comp {
+	border-bottom: 1px solid #CFCFCF;
+}
+.projectDashboardView .navigator-wrap .project-list-comp .project-list-comp-hdr {
+	background-color: #EEEEEE;
+	border-bottom: 1px solid #CFCFCF;
+	cursor: pointer;
+}
+.projectDashboardView .navigator-wrap .project-list-comp .project-list-comp-hdr .v-label {
+	cursor: pointer;
+}
 
+.projectDashboardView .navigator-wrap .project-list-comp .project-list-comp-hdr.v-margin-top {
+	padding-top: 15px;
+}
+.projectDashboardView .navigator-wrap .project-list-comp .project-list-comp-hdr.v-margin-right {
+	padding-right: 15px;
+}
+.projectDashboardView .navigator-wrap .project-list-comp .project-list-comp-hdr.v-margin-bottom {
+	padding-bottom: 15px;
+}
+.projectDashboardView .navigator-wrap .project-list-comp .project-list-comp-hdr.v-margin-left {
+	padding-left: 15px;
+}
+
+.projectDashboardView .navigator-wrap .project-list-comp .project-name {
+	background-color: #F7F7F7;
+	cursor: pointer;
+}
+.projectDashboardView .navigator-wrap .project-list-comp .project-name .v-label {
+	cursor: pointer;
+}
+
+.projectDashboardView .navigator-wrap .project-list-comp .project-name.v-margin-top {
+	padding-top: 9px
+}
+.projectDashboardView .navigator-wrap .project-list-comp .project-name.v-margin-bottom {
+	padding-bottom: 9px;
+}
+.projectDashboardView .navigator-wrap .project-list-comp .project-name.v-margin-left {
+	padding-left: 13px;
+}
 
 .projectDashboardView .container-wrap.main-content.v-verticallayout.v-margin-left {
 	padding-left: 20px;
@@ -2971,8 +2995,8 @@ div.v-splitbutton,div.v-splitbutton .v-button {
 	font-size: 13px !important;
 }
 
-.v-button-xbreadcrumbbutton-home .v-button-caption {
-	background-position: center center !important;
+.v-button-xbreadcrumbbutton-home span.v-button-caption {
+	padding-left: 18px;
 }
 div.v-button-link.xbreadcrumbbutton .v-button-wrap {
 	padding: 0px;

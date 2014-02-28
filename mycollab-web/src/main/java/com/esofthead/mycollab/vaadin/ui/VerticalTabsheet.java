@@ -34,7 +34,6 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.GridLayout;
-import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.TabSheet.SelectedTabChangeEvent;
 import com.vaadin.ui.TabSheet.SelectedTabChangeListener;
@@ -48,12 +47,13 @@ import com.vaadin.ui.VerticalLayout;
  */
 public class VerticalTabsheet extends CustomComponent {
 	private static final long serialVersionUID = 1L;
-	
+
 	private static Logger log = LoggerFactory.getLogger(VerticalTabsheet.class);
-	
+
 	private VerticalLayout tabNavigator;
 	private CssLayout tabContainer;
 	private VerticalLayout contentWrapper;
+	private CssLayout navigatorWrapper;
 
 	private Map<Button, Tab> compMap = new HashMap<Button, Tab>();
 
@@ -66,7 +66,7 @@ public class VerticalTabsheet extends CustomComponent {
 
 	public VerticalTabsheet() {
 		GridLayout contentLayout = new GridLayout(2, 1);
-		CssLayout navigatorWrapper = new CssLayout();
+		navigatorWrapper = new CssLayout();
 		navigatorWrapper.setStyleName("navigator-wrap");
 		navigatorWrapper.setHeight("100%");
 		tabNavigator = new VerticalLayout();
@@ -86,7 +86,7 @@ public class VerticalTabsheet extends CustomComponent {
 		this.setCompositionRoot(contentLayout);
 		this.setStyleName(TABSHEET_STYLENAME);
 	}
-	
+
 	public void addTab(Component component, String caption) {
 		addTab(component, caption, null);
 	}
@@ -127,8 +127,8 @@ public class VerticalTabsheet extends CustomComponent {
 		TabImpl tabImpl = new TabImpl(caption, component);
 		compMap.put(button, tabImpl);
 	}
-	
-	
+
+
 
 	private void fireTabChangeEvent(SelectedTabChangeEvent event) {
 		this.fireEvent(event);
@@ -179,7 +179,7 @@ public class VerticalTabsheet extends CustomComponent {
 
 	public static class TabImpl implements Tab {
 		private static final long serialVersionUID = 1L;
-		
+
 		private String caption;
 		private Component component;
 
@@ -320,12 +320,12 @@ public class VerticalTabsheet extends CustomComponent {
 		Collection<Button> tabs = compMap.keySet();
 		for (Button btn : tabs) {
 			if(btn.getStyleName().contains(TAB_SELECTED_STYLENAME)){
-	            btn.removeStyleName(TAB_SELECTED_STYLENAME);       
-	            setDefaulButtonIcon(btn, false);
-	        }
+				btn.removeStyleName(TAB_SELECTED_STYLENAME);       
+				setDefaulButtonIcon(btn, false);
+			}
 		}
 	}
-	
+
 	public void setDefaulButtonIcon(Button btn, Boolean selected){
 		String caption = btn.getCaption();
 		String suffix;
@@ -333,22 +333,22 @@ public class VerticalTabsheet extends CustomComponent {
 			suffix = "_selected";
 		else
 			suffix = "";
-	
+
 		switch (caption){
 		case "Dashboard":
 			btn.setIcon(MyCollabResource
-				.newResource("icons/22/project/menu_dashboard.png"));
+					.newResource("icons/22/project/menu_dashboard.png"));
 			break;
-		
+
 		case "Messages":
-				btn.setIcon(MyCollabResource
-						.newResource("icons/22/project/menu_message.png"));
-				break;
+			btn.setIcon(MyCollabResource
+					.newResource("icons/22/project/menu_message.png"));
+			break;
 		case "Phases":
 			btn.setIcon(MyCollabResource
 					.newResource("icons/22/project/menu_milestone.png"));
 			break;
-		
+
 		case "Tasks":
 			btn.setIcon(MyCollabResource
 					.newResource("icons/22/project/menu_task" + suffix + ".png"));
@@ -387,8 +387,12 @@ public class VerticalTabsheet extends CustomComponent {
 			log.debug("cannot find resource for" + caption);
 		}
 	}
-	
+
 	public VerticalLayout getContentWrapper() {
 		return this.contentWrapper;
+	}
+
+	public CssLayout getNavigatorWrapper() {
+		return this.navigatorWrapper;
 	}
 }
