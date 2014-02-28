@@ -1498,6 +1498,8 @@ input.v-textfield-errorField {
 
 .projectDashboardView .container-wrap.main-content .tab-content {
 	min-height: 599px;
+	border-width: 1px 0px 0px 1px;
+	padding: 0px;
 }
 
 .projectDashboardView .container-wrap.main-content.v-verticallayout.v-margin-left {
@@ -5676,7 +5678,7 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 	padding: 12px;
 	border-style: solid;
 	border-color: #8f8f8f;
-	border-width: 1px 0px 0px 1px;
+	border-width: 0px 0px 0px 1px;
 	background-color: #fff;
 	height: 100%;
 }
@@ -5819,38 +5821,55 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 	font-weight: bold;
 }
 /* Tabsheet style 3 */
-.tab-style3 > .v-tabsheet-tabcontainer > .v-tabsheet-tabs {
+/* .tab-style3 > .v-tabsheet-tabcontainer > .v-tabsheet-tabs {
 	background: none;
+	border-bottom: 1px solid #CFCFCF;
+} */
+.tab-style3 > .v-tabsheet-tabcontainer > .v-tabsheet-tabs > tbody > tr > td > div {
+	/* border-bottom: 1px solid #CFCFCF; */
 }
 .tab-style3 > .v-tabsheet-tabcontainer > .v-tabsheet-tabs > tbody > tr > .v-tabsheet-tabitemcell > .v-tabsheet-tabitem {
-	background: url("icons/border-bottom2.png") repeat-x scroll left bottom transparent;
-	border: none;
+	background: url(icons/tab-bg.jpg) repeat-x scroll left bottom #F7F7F7;
+	border-width: 0px 1px 0px 0px;
+	border-style: solid;
+	border-color: #CFCFCF;
 	position: relative;
+	/* overflow-y: visible; */
+}
+.tab-style3 > .v-tabsheet-tabcontainer > .v-tabsheet-tabs > tbody > tr > .v-tabsheet-tabitemcell > .v-tabsheet-tabitem .v-caption {
+	padding: 8px 17px 9px;
 }
 .tab-style3 > .v-tabsheet-tabcontainer > .v-tabsheet-tabs > tbody > tr > .v-tabsheet-tabitemcell > .v-tabsheet-tabitem .v-caption .v-captiontext {
 	font-size: 13px;
 	text-shadow: none;
-	color: rgb(145, 142, 142);
+	color: #525252;
 }
 .tab-style3 > .v-tabsheet-tabcontainer > .v-tabsheet-tabs > tbody > tr > .v-tabsheet-tabitemcell > .v-tabsheet-tabitem:hover .v-caption .v-captiontext {
 	color: rgb(94, 94, 94);
 } 
-.tab-style3 > .v-tabsheet-tabcontainer > .v-tabsheet-tabs > tbody > tr > .v-tabsheet-tabitemcell.v-tabsheet-tabitemcell-selected {
-	background: none;
+.tab-style3 > .v-tabsheet-tabcontainer > .v-tabsheet-tabs > tbody > tr > .v-tabsheet-tabitemcell.v-tabsheet-tabitemcell-selected > .v-tabsheet-tabitem {
+	background: url(icons/tab-bg-selected.jpg) repeat-x scroll left bottom #717171;
+}
+.tab-style3 > .v-tabsheet-tabcontainer > .v-tabsheet-tabs > tbody > tr > .v-tabsheet-tabitemcell > .v-tabsheet-tabitem-selected .v-caption {
+	background: url(icons/tab-selected-indicator.png) no-repeat center bottom transparent;
+	cursor: pointer;
 }
 .tab-style3 > .v-tabsheet-tabcontainer > .v-tabsheet-tabs > tbody > tr > .v-tabsheet-tabitemcell > .v-tabsheet-tabitem.v-tabsheet-tabitem-selected .v-caption .v-captiontext, .tab-style3 > .v-tabsheet-tabcontainer > .v-tabsheet-tabs > tr > .v-tabsheet-tabitemcell > .v-tabsheet-tabitem.v-tabsheet-tabitem-selected:hover .v-caption .v-captiontext {
-	color: rgb(40, 126, 206);
-	font-size: 14px;
+	/* color: rgb(40, 126, 206); */
+	color: #FFF;
 }
-.tab-style3 > .v-tabsheet-tabcontainer > .v-tabsheet-tabs > tbody > tr > .v-tabsheet-tabitemcell > .v-tabsheet-tabitem-selected:after {
+/* .tab-style3 > .v-tabsheet-tabcontainer > .v-tabsheet-tabs > tbody > tr > .v-tabsheet-tabitemcell.v-tabsheet-tabitemcell-selected:after {
 	content: " ";
 	display: block;
 	width: 100%;
-	height: 2px;
-	background: #2E9DFF;
+	height: 8px;
+	background: url(icons/tab-selected-indicator.png) no-repeat center center transparent;
 	position: absolute;
-	bottom: 0px;
+	bottom: -1px;
 	left: 0px;
+} */
+.tab-style3 > .v-tabsheet-tabcontainer > .v-tabsheet-tabs > tbody > tr > .v-tabsheet-spacertd {
+	background: url(icons/tab-space-bg.jpg) repeat-x left bottom #FFFFFF;
 }
 .tab-style3 > .v-tabsheet-tabcontainer > .v-tabsheet-tabs > tbody > tr > .v-tabsheet-spacertd div {
 	border-bottom: none;
