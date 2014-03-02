@@ -51,6 +51,7 @@ import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
+import com.esofthead.mycollab.vaadin.ui.AbstractBeanPagedList.RowDisplayHandler;
 import com.esofthead.mycollab.vaadin.ui.AttachmentPanel;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.DefaultBeanPagedList;
@@ -60,7 +61,6 @@ import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
-import com.esofthead.mycollab.vaadin.ui.AbstractBeanPagedList.RowDisplayHandler;
 import com.vaadin.event.FieldEvents.TextChangeEvent;
 import com.vaadin.event.FieldEvents.TextChangeListener;
 import com.vaadin.server.Sizeable;
@@ -74,7 +74,6 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.TextField;
@@ -89,7 +88,7 @@ import com.vaadin.ui.VerticalLayout;
  */
 @ViewComponent
 public class MessageListViewImpl extends AbstractPageView implements
-		MessageListView, HasEditFormHandlers<Message> {
+MessageListView, HasEditFormHandlers<Message> {
 
 	private static final long serialVersionUID = 8433776359091397422L;
 	private final DefaultBeanPagedList<MessageService, MessageSearchCriteria, SimpleMessage> tableItem;
@@ -103,6 +102,8 @@ public class MessageListViewImpl extends AbstractPageView implements
 	public MessageListViewImpl() {
 		super();
 		this.setWidth("100%");
+		this.setMargin(true);
+
 		this.topMessagePanel = new TopMessagePanel();
 		this.topMessagePanel.setWidth("100%");
 
@@ -111,7 +112,7 @@ public class MessageListViewImpl extends AbstractPageView implements
 					@Override
 					public void onSearch(final MessageSearchCriteria criteria) {
 						MessageListViewImpl.this.tableItem
-								.setSearchCriteria(criteria);
+						.setSearchCriteria(criteria);
 					}
 				});
 		this.addComponent(this.topMessagePanel);
@@ -152,7 +153,7 @@ public class MessageListViewImpl extends AbstractPageView implements
 	}
 
 	private class MessageRowDisplayHandler implements
-			RowDisplayHandler<SimpleMessage> {
+	RowDisplayHandler<SimpleMessage> {
 
 		@Override
 		public Component generateRow(final SimpleMessage message,
@@ -174,16 +175,16 @@ public class MessageListViewImpl extends AbstractPageView implements
 			rowLayout.setWidth("100%");
 			final Button title = new Button(message.getTitle(),
 					new Button.ClickListener() {
-						private static final long serialVersionUID = 1L;
+				private static final long serialVersionUID = 1L;
 
-						@Override
-						public void buttonClick(final ClickEvent event) {
-							EventBus.getInstance().fireEvent(
-									new MessageEvent.GotoRead(
-											MessageListViewImpl.this, message
-													.getId()));
-						}
-					});
+				@Override
+				public void buttonClick(final ClickEvent event) {
+					EventBus.getInstance().fireEvent(
+							new MessageEvent.GotoRead(
+									MessageListViewImpl.this, message
+									.getId()));
+				}
+			});
 
 			title.setWidth("550px");
 			title.setStyleName("link");
@@ -257,13 +258,13 @@ public class MessageListViewImpl extends AbstractPageView implements
 							LocalizationHelper.getMessage(
 									GenericI18Enum.DELETE_DIALOG_TITLE,
 									SiteConfiguration.getSiteName()),
-							LocalizationHelper
+									LocalizationHelper
 									.getMessage(GenericI18Enum.CONFIRM_DELETE_RECORD_DIALOG_MESSAGE),
-							LocalizationHelper
+									LocalizationHelper
 									.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
-							LocalizationHelper
+									LocalizationHelper
 									.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
-							new ConfirmDialog.Listener() {
+									new ConfirmDialog.Listener() {
 								private static final long serialVersionUID = 1L;
 
 								@Override
@@ -276,7 +277,7 @@ public class MessageListViewImpl extends AbstractPageView implements
 												AppContext.getUsername(),
 												AppContext.getAccountId());
 										MessageListViewImpl.this.tableItem
-												.setSearchCriteria(searchCriteria);
+										.setSearchCriteria(searchCriteria);
 									}
 								}
 							});
@@ -314,7 +315,7 @@ public class MessageListViewImpl extends AbstractPageView implements
 
 	@SuppressWarnings({ "serial" })
 	private class MessageSearchPanel extends
-			GenericSearchPanel<MessageSearchCriteria> {
+	GenericSearchPanel<MessageSearchCriteria> {
 
 		private final SimpleProject project;
 		private MessageSearchCriteria messageSearchCriteria;
@@ -343,19 +344,19 @@ public class MessageListViewImpl extends AbstractPageView implements
 					MessageSearchPanel.this.messageSearchCriteria = new MessageSearchCriteria();
 
 					MessageSearchPanel.this.messageSearchCriteria
-							.setProjectids(new SetSearchField<Integer>(
-									SearchField.AND,
-									MessageSearchPanel.this.project.getId()));
+					.setProjectids(new SetSearchField<Integer>(
+							SearchField.AND,
+							MessageSearchPanel.this.project.getId()));
 
 					MessageSearchPanel.this.textSearch = event.getText()
 							.toString().trim();
 
 					MessageSearchPanel.this.messageSearchCriteria
-							.setMessage(new StringSearchField(
-									MessageSearchPanel.this.textSearch));
+					.setMessage(new StringSearchField(
+							MessageSearchPanel.this.textSearch));
 
 					MessageSearchPanel.this
-							.notifySearchHandler(MessageSearchPanel.this.messageSearchCriteria);
+					.notifySearchHandler(MessageSearchPanel.this.messageSearchCriteria);
 				}
 			});
 
@@ -374,16 +375,16 @@ public class MessageListViewImpl extends AbstractPageView implements
 					MessageSearchPanel.this.messageSearchCriteria = new MessageSearchCriteria();
 
 					MessageSearchPanel.this.messageSearchCriteria
-							.setProjectids(new SetSearchField<Integer>(
-									SearchField.AND,
-									MessageSearchPanel.this.project.getId()));
+					.setProjectids(new SetSearchField<Integer>(
+							SearchField.AND,
+							MessageSearchPanel.this.project.getId()));
 
 					MessageSearchPanel.this.messageSearchCriteria
-							.setMessage(new StringSearchField(
-									MessageSearchPanel.this.textSearch));
+					.setMessage(new StringSearchField(
+							MessageSearchPanel.this.textSearch));
 
 					MessageSearchPanel.this
-							.notifySearchHandler(MessageSearchPanel.this.messageSearchCriteria);
+					.notifySearchHandler(MessageSearchPanel.this.messageSearchCriteria);
 				}
 			});
 			searchBtn.setStyleName("search-icon-button");
@@ -406,7 +407,9 @@ public class MessageListViewImpl extends AbstractPageView implements
 			this.setStyleName("message-toppanel");
 			this.messageSearchPanel = new MessageSearchPanel();
 			this.messagePanelBody = new HorizontalLayout();
-			final Label headerLbl = new Label("Messages");
+			this.messagePanelBody.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
+
+			/*final Label headerLbl = new Label("Messages");
 			headerLbl.setStyleName("h2");
 			final Image icon = new Image(null, MyCollabResource
 					.newResource("icons/24/project/message.png"));
@@ -420,7 +423,8 @@ public class MessageListViewImpl extends AbstractPageView implements
 					.setComponentAlignment(headerLbl, Alignment.MIDDLE_LEFT);
 			layoutHeader.setSpacing(true);
 			layoutHeader.setWidth("100%");
-			this.addComponent(layoutHeader);
+			this.addComponent(layoutHeader);*/
+
 			this.messageSearchPanel.setWidth("320px");
 			this.messagePanelBody.setStyleName("message-toppanel-body");
 			this.messagePanelBody.setWidth("100%");
@@ -484,7 +488,7 @@ public class MessageListViewImpl extends AbstractPageView implements
 
 			final Button cancelBtn = new Button(
 					LocalizationHelper
-							.getMessage(GenericI18Enum.BUTTON_CANCEL_LABEL),
+					.getMessage(GenericI18Enum.BUTTON_CANCEL_LABEL),
 					new Button.ClickListener() {
 						private static final long serialVersionUID = 1L;
 
@@ -499,40 +503,40 @@ public class MessageListViewImpl extends AbstractPageView implements
 
 			final Button saveBtn = new Button("Post",
 					new Button.ClickListener() {
-						private static final long serialVersionUID = 1L;
+				private static final long serialVersionUID = 1L;
 
-						@Override
-						public void buttonClick(final ClickEvent event) {
-							final Message message = new Message();
-							message.setProjectid(CurrentProjectVariables
-									.getProjectId());
-							message.setPosteddate(new GregorianCalendar()
-									.getTime());
-							if (!titleField.getValue().toString().trim()
-									.equals("")) {
-								message.setTitle((String) titleField.getValue());
-								message.setMessage((String) ckEditorTextField
-										.getValue());
-								message.setPosteduser(AppContext.getUsername());
-								message.setSaccountid(AppContext.getAccountId());
-								message.setIsstick((Boolean) chkIsStick
-										.getValue());
-								MessageListViewImpl.this.fireSaveItem(message);
+				@Override
+				public void buttonClick(final ClickEvent event) {
+					final Message message = new Message();
+					message.setProjectid(CurrentProjectVariables
+							.getProjectId());
+					message.setPosteddate(new GregorianCalendar()
+					.getTime());
+					if (!titleField.getValue().toString().trim()
+							.equals("")) {
+						message.setTitle(titleField.getValue());
+						message.setMessage(ckEditorTextField
+								.getValue());
+						message.setPosteduser(AppContext.getUsername());
+						message.setSaccountid(AppContext.getAccountId());
+						message.setIsstick(chkIsStick
+								.getValue());
+						MessageListViewImpl.this.fireSaveItem(message);
 
-								String attachmentPath = AttachmentUtils
-										.getProjectEntityAttachmentPath(
-												AppContext.getAccountId(),
-												message.getProjectid(),
-												AttachmentType.PROJECT_MESSAGE,
-												message.getId());
-								attachments.saveContentsToRepo(attachmentPath);
-							} else {
-								titleField.addStyleName("errorField");
-								NotificationUtil
-										.showErrorNotification("Title must be not null!");
-							}
-						}
-					});
+						String attachmentPath = AttachmentUtils
+								.getProjectEntityAttachmentPath(
+										AppContext.getAccountId(),
+										message.getProjectid(),
+										AttachmentType.PROJECT_MESSAGE,
+										message.getId());
+						attachments.saveContentsToRepo(attachmentPath);
+					} else {
+						titleField.addStyleName("errorField");
+						NotificationUtil
+						.showErrorNotification("Title must be not null!");
+					}
+				}
+			});
 			saveBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 			controls.addComponent(saveBtn);
 			controls.setComponentAlignment(saveBtn, Alignment.MIDDLE_CENTER);
@@ -549,7 +553,7 @@ public class MessageListViewImpl extends AbstractPageView implements
 
 			final Button createMessageBtn = new Button(
 					LocalizationHelper
-							.getMessage(MessageI18nEnum.NEW_MESSAGE_ACTION),
+					.getMessage(MessageI18nEnum.NEW_MESSAGE_ACTION),
 					new Button.ClickListener() {
 						private static final long serialVersionUID = 1L;
 
