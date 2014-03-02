@@ -1,7 +1,9 @@
 package com.esofthead.mycollab.core.db.query;
 
+import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.NoValueSearchField;
 import com.esofthead.mycollab.core.arguments.OneValueSearchField;
+import com.esofthead.mycollab.core.arguments.SearchField;
 
 /**
  * 
@@ -35,6 +37,30 @@ public class NumberParam extends ColumnParam {
 	public NumberParam(String id, String displayName, String table,
 			String column) {
 		super(id, displayName, table, column);
+	}
+
+	public SearchField buildSearchField(String prefixOper, String compareOper,
+			Number value) {
+		switch (compareOper) {
+		case NumberParam.EQUAL:
+			return this.buildParamIsEqual(prefixOper, value);
+		case NumberParam.NOT_EQUAL:
+			return this.buildParamIsNotEqual(prefixOper, value);
+		case NumberParam.IS_EMPTY:
+			return this.buildParamIsNull(prefixOper);
+		case NumberParam.IS_NOT_EMPTY:
+			return this.buildParamIsNotNull(prefixOper);
+		case NumberParam.GREATER_THAN:
+			return this.buildParamIsGreaterThan(prefixOper, value);
+		case NumberParam.GREATER_THAN_EQUAL:
+			return this.buildParamIsGreaterThanEqual(prefixOper, value);
+		case NumberParam.LESS_THAN:
+			return this.buildParamIsLessThan(prefixOper, value);
+		case NumberParam.LESS_THAN_EQUAL:
+			return this.buildParamIsLessThanEqual(prefixOper, value);
+		default:
+			throw new MyCollabException("Not support yet");
+		}
 	}
 
 	public OneValueSearchField buildParamIsEqual(String oper, Object value) {

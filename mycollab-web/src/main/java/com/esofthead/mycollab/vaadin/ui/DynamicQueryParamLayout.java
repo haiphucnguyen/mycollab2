@@ -20,14 +20,14 @@ import com.vaadin.ui.HorizontalLayout;
  * 
  * @param <S>
  */
-public abstract class DefaultAdvancedSearchLayout2<S extends SearchCriteria>
+public abstract class DynamicQueryParamLayout<S extends SearchCriteria>
 		extends SearchLayout<S> {
 	private static final long serialVersionUID = 1L;
 
 	protected String type;
 	protected BuildCriterionComponent<S> buildCriterionComp;
 
-	public DefaultAdvancedSearchLayout2(DefaultGenericSearchPanel<S> parent,
+	public DynamicQueryParamLayout(DefaultGenericSearchPanel<S> parent,
 			String type) {
 		super(parent, "advancedSearch");
 		setStyleName("advancedSearchLayout");
@@ -55,7 +55,7 @@ public abstract class DefaultAdvancedSearchLayout2<S extends SearchCriteria>
 
 					@Override
 					public void buttonClick(final ClickEvent event) {
-						DefaultAdvancedSearchLayout2.this.callSearchAction();
+						DynamicQueryParamLayout.this.callSearchAction();
 					}
 				});
 		UiUtils.addComponent(buttonControls, searchBtn, Alignment.MIDDLE_CENTER);
@@ -81,7 +81,7 @@ public abstract class DefaultAdvancedSearchLayout2<S extends SearchCriteria>
 
 					@Override
 					public void buttonClick(final ClickEvent event) {
-						((DefaultGenericSearchPanel<S>) DefaultAdvancedSearchLayout2.this.searchPanel)
+						((DefaultGenericSearchPanel<S>) DynamicQueryParamLayout.this.searchPanel)
 								.moveToBasicSearchLayout();
 					}
 				});

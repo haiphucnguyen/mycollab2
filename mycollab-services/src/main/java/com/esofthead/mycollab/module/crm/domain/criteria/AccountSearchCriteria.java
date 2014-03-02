@@ -22,6 +22,7 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
+import com.esofthead.mycollab.core.db.query.CompositionStringParam;
 import com.esofthead.mycollab.core.db.query.DateParam;
 import com.esofthead.mycollab.core.db.query.NumberParam;
 import com.esofthead.mycollab.core.db.query.Param;
@@ -50,6 +51,11 @@ public class AccountSearchCriteria extends SearchCriteria {
 
 	public static Param p_createdtime = new DateParam("account-createdtime",
 			"Created Time", "m_crm_account", "createdTime");
+
+	public static Param p_anyPhone = new CompositionStringParam(
+			"account-anyPhone", "Any Phone", new StringParam[] {
+					new StringParam("", "", "m_crm_account", "alternatePhone"),
+					new StringParam("", "", "m_crm_account", "phoneOffice") });
 
 	public static Param p_industries = new StringListParam("account-industry",
 			"Industry", "m_crm_account", "industry",
