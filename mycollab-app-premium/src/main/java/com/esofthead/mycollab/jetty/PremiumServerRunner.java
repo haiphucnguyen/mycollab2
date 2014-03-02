@@ -25,11 +25,11 @@ public class PremiumServerRunner extends GenericServerRunner {
 		webAppContext.setResourceBase(baseDir);
 
 		// add originSection clustering mode
-		Cache<String, InfinispanHttpSession> cache = LocalCacheManager
-				.getCacheManager().getCache("mainClustering");
+//		Cache<String, InfinispanHttpSession> cache = LocalCacheManager
+//				.getCacheManager().getCache("mainClustering");
 
 		// create a InfinispanSessionManager instance
-		InfinispanSessionManager sm = new InfinispanSessionManager(cache);
+		InfinispanSessionManager sm = new InfinispanSessionManager();
 
 		// apply the session manager to the jetty server
 		SessionHandler sh = new SessionHandler();
@@ -37,7 +37,7 @@ public class PremiumServerRunner extends GenericServerRunner {
 
 		webAppContext.setSessionHandler(sh);
 		// and start the cache
-		cache.start();
+		
 		return webAppContext;
 	}
 

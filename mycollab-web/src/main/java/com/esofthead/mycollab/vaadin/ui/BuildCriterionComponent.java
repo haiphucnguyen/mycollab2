@@ -6,6 +6,7 @@ import java.util.Iterator;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchField;
+import com.esofthead.mycollab.core.db.query.CompositionStringParam;
 import com.esofthead.mycollab.core.db.query.DateParam;
 import com.esofthead.mycollab.core.db.query.DateTimeParam;
 import com.esofthead.mycollab.core.db.query.NumberParam;
@@ -194,9 +195,12 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends
 						} else if (field instanceof StringListParam) {
 							compareSelectionBox
 									.loadData(StringListParam.OPTIONS);
+						} else if (field instanceof CompositionStringParam) {
+							compareSelectionBox.loadData(StringParam.OPTIONS);
 						}
 
-						displayAssociateInputField();
+						displayAssociateInputField((Param) fieldSelectionBox
+								.getValue());
 					}
 				}
 			});
@@ -210,45 +214,45 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends
 
 						@Override
 						public void valueChange(ValueChangeEvent event) {
-							displayAssociateInputField();
+							displayAssociateInputField((Param) fieldSelectionBox
+									.getValue());
 						}
 					});
 		}
 
-		private void displayAssociateInputField() {
-			Param field = (Param) fieldSelectionBox.getValue();
+		private void displayAssociateInputField(Param field) {
 			String compareItem = (String) compareSelectionBox.getValue();
 			valueBox.removeAllComponents();
 
-			if (field != null) {
-				if (field instanceof StringParam) {
-					valueBox.addComponent(new TextField());
-				} else if (field instanceof NumberParam) {
-					valueBox.addComponent(new TextField());
-				} else if (field instanceof DateParam) {
-					if (DateParam.BETWEEN.equals(compareItem)) {
-						DateField field1 = new DateField();
-						DateField field2 = new DateField();
-						valueBox.addComponent(field1);
-						valueBox.addComponent(field2);
-					} else {
-						valueBox.addComponent(new DateField());
-					}
-				} else if (field instanceof DateTimeParam) {
-
-				} else if (field instanceof PropertyParam
-						|| field instanceof PropertyListParam) {
-					Component comp = buildPropertySearchComp(field.getId());
-					if (comp != null) {
-						valueBox.addComponent(comp);
-					}
-				} else if (field instanceof StringListParam) {
-					ValueListSelect listSelect = new ValueListSelect();
-					listSelect.setCaption(null);
-					listSelect.loadData(((StringListParam) field)
-							.getLstValues().toArray(new String[0]));
-					valueBox.addComponent(listSelect);
+			if (field instanceof StringParam) {
+				valueBox.addComponent(new TextField());
+			} else if (field instanceof NumberParam) {
+				valueBox.addComponent(new TextField());
+			} else if (field instanceof DateParam) {
+				if (DateParam.BETWEEN.equals(compareItem)) {
+					DateField field1 = new DateField();
+					DateField field2 = new DateField();
+					valueBox.addComponent(field1);
+					valueBox.addComponent(field2);
+				} else {
+					valueBox.addComponent(new DateField());
 				}
+			} else if (field instanceof DateTimeParam) {
+
+			} else if (field instanceof PropertyParam
+					|| field instanceof PropertyListParam) {
+				Component comp = buildPropertySearchComp(field.getId());
+				if (comp != null) {
+					valueBox.addComponent(comp);
+				}
+			} else if (field instanceof StringListParam) {
+				ValueListSelect listSelect = new ValueListSelect();
+				listSelect.setCaption(null);
+				listSelect.loadData(((StringListParam) field).getLstValues()
+						.toArray(new String[0]));
+				valueBox.addComponent(listSelect);
+			} else if (field instanceof CompositionStringParam) {
+
 			}
 		}
 
@@ -265,28 +269,8 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends
 					TextField field = (TextField) valueBox.getComponent(0);
 					String value = field.getValue();
 					StringParam wrapParam = (StringParam) param;
-					switch (compareOper) {
-					case StringParam.IS_EMPTY:
-						return wrapParam
-								.buildStringParamIsNull(prefixOperation);
-					case StringParam.IS_NOT_EMPTY:
-						return wrapParam
-								.buildStringParamIsNotNull(prefixOperation);
-					case StringParam.IS:
-						return wrapParam.buildStringParamIsEqual(
-								prefixOperation, value);
-					case StringParam.IS_NOT:
-						return wrapParam.buildStringParamIsNotEqual(
-								prefixOperation, value);
-					case StringParam.CONTAINS:
-						return wrapParam.buildStringParamIsLike(
-								prefixOperation, value);
-					case StringParam.NOT_CONTAINS:
-						return wrapParam.buildStringParamIsNotLike(
-								prefixOperation, value);
-					default:
-						throw new MyCollabException("Not support yet");
-					}
+					return wrapParam.buildSearchField(prefixOperation,
+							compareOper, value);
 				} else if (param instanceof StringListParam) {
 					if (valueBox.getComponentCount() != 1) {
 						return null;
@@ -323,32 +307,8 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends
 					}
 
 					NumberParam wrapParam = (NumberParam) param;
-					switch (compareOper) {
-					case NumberParam.EQUAL:
-						return wrapParam.buildParamIsEqual(prefixOperation,
-								value);
-					case NumberParam.NOT_EQUAL:
-						return wrapParam.buildParamIsNotEqual(prefixOperation,
-								value);
-					case NumberParam.IS_EMPTY:
-						return wrapParam.buildParamIsNull(prefixOperation);
-					case NumberParam.IS_NOT_EMPTY:
-						return wrapParam.buildParamIsNotNull(prefixOperation);
-					case NumberParam.GREATER_THAN:
-						return wrapParam.buildParamIsGreaterThan(
-								prefixOperation, value);
-					case NumberParam.GREATER_THAN_EQUAL:
-						return wrapParam.buildParamIsGreaterThanEqual(
-								prefixOperation, value);
-					case NumberParam.LESS_THAN:
-						return wrapParam.buildParamIsLessThan(prefixOperation,
-								value);
-					case NumberParam.LESS_THAN_EQUAL:
-						return wrapParam.buildParamIsLessThanEqual(
-								prefixOperation, value);
-					default:
-						throw new MyCollabException("Not support yet");
-					}
+					return wrapParam.buildSearchField(prefixOperation,
+							compareOper, value);
 				} else if (param instanceof PropertyListParam) {
 					if (valueBox.getComponentCount() != 1) {
 						return null;
@@ -372,6 +332,12 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends
 					}
 				} else if (param instanceof PropertyParam) {
 					return null;
+				} else if (param instanceof CompositionStringParam) {
+					if (valueBox.getComponentCount() != 1) {
+						return null;
+					}
+					TextField field = (TextField) valueBox.getComponent(0);
+					String value = field.getValue();
 				} else {
 					throw new MyCollabException("Not support yet");
 				}
