@@ -18,6 +18,7 @@ package com.esofthead.mycollab.module.project.view.message;
 
 import java.util.GregorianCalendar;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.vaadin.dialogs.ConfirmDialog;
@@ -32,6 +33,8 @@ import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.EventBus;
+import com.esofthead.mycollab.module.ecm.domain.Content;
+import com.esofthead.mycollab.module.ecm.service.ResourceService;
 import com.esofthead.mycollab.module.file.AttachmentType;
 import com.esofthead.mycollab.module.file.AttachmentUtils;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
@@ -64,6 +67,7 @@ import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.vaadin.event.FieldEvents.TextChangeEvent;
 import com.vaadin.event.FieldEvents.TextChangeListener;
 import com.vaadin.server.Sizeable;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.AbstractTextField.TextChangeEventMode;
 import com.vaadin.ui.Alignment;
@@ -72,8 +76,8 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.TextField;
@@ -165,10 +169,18 @@ MessageListView, HasEditFormHandlers<Message> {
 				messageLayout.addStyleName("important-message");
 			}
 			messageLayout.setWidth("100%");
-			messageLayout.addComponent(UserAvatarControlFactory
+			VerticalLayout userBlock = new VerticalLayout();
+			userBlock.setDefaultComponentAlignment(Alignment.TOP_CENTER);
+			userBlock.setWidth("80px");
+			userBlock.setSpacing(true);
+			userBlock.addComponent(UserAvatarControlFactory
 					.createUserAvatarButtonLink(
 							message.getPostedUserAvatarId(),
 							message.getFullPostedUserName()));
+			Label userName = new Label(message.getFullPostedUserName());
+			userName.setStyleName("user-name");
+			userBlock.addComponent(userName);
+			messageLayout.addComponent(userBlock);
 
 			final CssLayout rowLayout = new CssLayout();
 			rowLayout.setStyleName("message-container");
@@ -192,26 +204,24 @@ MessageListView, HasEditFormHandlers<Message> {
 
 			final HorizontalLayout messageHeader = new HorizontalLayout();
 			messageHeader.setStyleName("message-header");
+			messageHeader.setMargin(new MarginInfo(true, true, false, true));
 			final VerticalLayout leftHeader = new VerticalLayout();
-
-			final Label username = new Label(message.getFullPostedUserName());
-			username.setStyleName("user-name");
-			leftHeader.addComponent(username);
 
 			title.addStyleName("message-title");
 			leftHeader.addComponent(title);
 
 			final HorizontalLayout rightHeader = new HorizontalLayout();
 			rightHeader.setSpacing(true);
-			final VerticalLayout infoLayout = new VerticalLayout();
+
 			final Label timePostLbl = new Label(
 					DateTimeUtils.getStringDateFromNow(message.getPosteddate()));
 			timePostLbl.setSizeUndefined();
 			timePostLbl.setStyleName("time-post");
-			infoLayout.addComponent(timePostLbl);
+
 			final HorizontalLayout notification = new HorizontalLayout();
 			notification.setStyleName("notification");
 			notification.setSizeUndefined();
+			notification.setSpacing(true);
 			if (message.getCommentsCount() > 0) {
 				final HorizontalLayout commentNotification = new HorizontalLayout();
 				final Label commentCountLbl = new Label(
@@ -219,34 +229,36 @@ MessageListView, HasEditFormHandlers<Message> {
 				commentCountLbl.setStyleName("comment-count");
 				commentCountLbl.setSizeUndefined();
 				commentNotification.addComponent(commentCountLbl);
-				final Embedded commentIcon = new Embedded();
-				commentIcon.setSource(MyCollabResource
+				final Image commentIcon = new Image(null, MyCollabResource
 						.newResource("icons/16/project/message.png"));
 				commentNotification.addComponent(commentIcon);
 
 				notification.addComponent(commentNotification);
 
 			}
-			final int attachmentCount = 1;
-			if (attachmentCount > 0) {
+			ResourceService attachmentService = ApplicationContextUtil
+					.getSpringBean(ResourceService.class);
+			List<Content> attachments = attachmentService
+					.getContents(AttachmentUtils
+							.getProjectEntityAttachmentPath(
+									AppContext.getAccountId(),
+									message.getProjectid(),
+									AttachmentType.PROJECT_MESSAGE,
+									message.getId()));
+			if (attachments != null && !attachments.isEmpty()) {
 				final HorizontalLayout attachmentNotification = new HorizontalLayout();
 				final Label attachmentCountLbl = new Label(
-						Integer.toString(attachmentCount));
+						Integer.toString(attachments.size()));
 				attachmentCountLbl.setStyleName("attachment-count");
 				attachmentCountLbl.setSizeUndefined();
 				attachmentNotification.addComponent(attachmentCountLbl);
-				final Embedded attachmentIcon = new Embedded();
-				attachmentIcon.setSource(MyCollabResource
+				final Image attachmentIcon = new Image(null, MyCollabResource
 						.newResource("icons/16/attachment.png"));
 				attachmentNotification.addComponent(attachmentIcon);
 
 				notification.addComponent(attachmentNotification);
 
 			}
-			infoLayout.addComponent(notification);
-			infoLayout.setSizeUndefined();
-			infoLayout.setComponentAlignment(notification,
-					Alignment.MIDDLE_CENTER);
 
 			Button deleteBtn = new Button("", new Button.ClickListener() {
 				private static final long serialVersionUID = 1L;
@@ -289,9 +301,9 @@ MessageListView, HasEditFormHandlers<Message> {
 			deleteBtn.setEnabled(CurrentProjectVariables
 					.canAccess(ProjectRolePermissionCollections.MESSAGES));
 
-			rightHeader.addComponent(infoLayout);
+			rightHeader.addComponent(timePostLbl);
 			rightHeader.addComponent(deleteBtn);
-			rightHeader.setExpandRatio(infoLayout, 1.0f);
+			rightHeader.setExpandRatio(timePostLbl, 1.0f);
 
 			messageHeader.addComponent(leftHeader);
 			messageHeader.setExpandRatio(leftHeader, 1.0f);
@@ -305,6 +317,16 @@ MessageListView, HasEditFormHandlers<Message> {
 					ContentMode.HTML);
 			messageContent.setStyleName("message-body");
 			rowLayout.addComponent(messageContent);
+
+			if (notification.getComponentCount() > 0) {
+				VerticalLayout messageFooter = new VerticalLayout();
+				messageFooter.setWidth("100%");
+				messageFooter.setStyleName("message-footer");
+				messageFooter.addComponent(notification);
+				messageFooter.setMargin(true);
+				messageFooter.setComponentAlignment(notification, Alignment.MIDDLE_RIGHT);
+				rowLayout.addComponent(messageFooter);
+			}
 
 			messageLayout.addComponent(rowLayout);
 			messageLayout.setExpandRatio(rowLayout, 1.0f);

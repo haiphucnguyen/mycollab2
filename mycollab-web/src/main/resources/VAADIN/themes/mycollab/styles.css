@@ -2772,7 +2772,7 @@ div.v-splitbutton,div.v-splitbutton .v-button {
 
 .message-list .beanlist-content {
 	padding: 5px 15px;
-	background: none no-repeat left top rgb(229, 239, 240);
+	background: none no-repeat left top rgb(255, 255, 255);
 	border-width: 0px 1px 1px;
 	border-style: solid;
 	border-color: #BCBCBC;
@@ -2787,7 +2787,7 @@ div.v-splitbutton,div.v-splitbutton .v-button {
 }
 
 .message {
-	margin: 5px 0px;
+	margin: 8px 0px;
 }
 
 .comment-list-wrapper.v-margin-left {
@@ -2806,8 +2806,8 @@ div.v-splitbutton,div.v-splitbutton .v-button {
 }
 
 .message .message-container {
-	background-color: #fff;
-	padding: 10px;
+	background-color: #f2fafd;
+	padding: 0px;
 	border: 2px solid #BCBCBC;
 	border-radius: 5px;
 	/* margin-left: 10px; */
@@ -2842,23 +2842,41 @@ div.v-splitbutton,div.v-splitbutton .v-button {
 	top: 10px;
 	left: -10px;
 	border-width: 10px 10px 10px 0;
-	border-color: transparent #fff;
+	border-color: transparent #f2fafd;
 	border-radius: 0px;
 }
 
 .message.important-message .message-container {
-	border-color: #045c8e;
+	border-color: #ff9339;
 }
 
 .message.important-message .message-container:before
 	{
-	border-color: transparent #045c8e;
+	border-color: transparent #ff9339;
 }
 
-.message-header .user-name {
-	font-size: 15px;
-	font-weight: bold;
-	color: black;
+.message .user-name {
+	text-align: center;
+	color: #0061ac;
+}
+
+.message-header.v-margin-top {
+	padding-top: 10px;
+}
+
+.message-header.v-margin-left {
+	padding-left: 10px;
+}
+
+.message-header.v-margin-right {
+	padding-right: 10px;
+}
+
+.message-body {
+	padding: 5px 10px 10px;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 .message-header .v-button-link.message-title {
@@ -2896,6 +2914,22 @@ div.v-splitbutton,div.v-splitbutton .v-button {
 .message-body p {
 	margin: 4px 0px;
 	color: gray;
+}
+
+.message-footer {
+	border-top: 1px solid #CFCFCF;
+}
+.message-footer.v-margin-top {
+	padding-top: 7px;
+}
+.message-footer.v-margin-right {
+	padding-right: 10px;
+}
+.message-footer.v-margin-bottom {
+	padding-bottom: 7px;
+}
+.message-footer.v-margin-left {
+	padding-left: 10px;
 }
 
 .messageread-bottompanel {
@@ -3771,12 +3805,22 @@ div.v-csslayout.member-block {
 	border-width: 1px 1px 2px;
 	border-radius: 3px;
 	border-style: solid;
-	padding: 10px 10px 3px;
+	padding: 5px 5px 10px 10px;
 	border-color: #bebebe;
+}
+
+.member-block .member-name {
+	font-size: 14px;
+	border-bottom: 1px solid #CFCFCF;
+	padding-bottom: 5px;
 }
 
 .member-block div.v-button-link .v-button-wrap .v-button-caption {
 	font-weight: bold;
+}
+
+.member-block .member-role {
+	padding-top: 3px;
 }
 
 .member-block .member-email {
@@ -6100,3 +6144,22 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 	margin-right:0;
 }
 
+/* New View's Styles */
+.view-hdr {
+	background-color: #F7F7F7;
+	border-bottom: 1px solid #CFCFCF;
+}
+.view-hdr .hdr-text {
+	font-size: 15px;
+	color: #525252;
+	font-weight: bold;
+}
+.view-content {
+	padding: 12px;
+}
+
+/* Icon only button */
+img.icon-btn {
+	cursor: pointer;
+	display: block;
+}
