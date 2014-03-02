@@ -434,6 +434,8 @@ public abstract class GenericServerRunner {
 		server.setHandler(handlers);
 
 		server.setStopAtShutdown(true);
+		
+		//set up hotdeploy manager
 
 		server.start();
 
