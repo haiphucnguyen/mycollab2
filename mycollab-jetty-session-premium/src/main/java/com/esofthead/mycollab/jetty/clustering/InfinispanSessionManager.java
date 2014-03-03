@@ -30,6 +30,8 @@ import org.infinispan.notifications.cachelistener.event.CacheEntriesEvictedEvent
 import org.infinispan.notifications.cachelistener.event.CacheEntryCreatedEvent;
 import org.infinispan.notifications.cachelistener.event.CacheEntryRemovedEvent;
 
+import com.esofthead.mycollab.cache.LocalCacheManager;
+
 /**
  * Jetty {@link SessionManager} that stores sessions in an Infinispan
  * distributed {@link Cache}.
@@ -66,20 +68,8 @@ public class InfinispanSessionManager extends AbstractLifeCycle implements
 	 * @param cache
 	 *            The cache to manage sessions in.
 	 */
-	public InfinispanSessionManager(Cache<String, InfinispanHttpSession> cache) {
-		this.maxIdleUnit = TimeUnit.SECONDS;
-		this.idManager = new InfinispanSessionIdManager(cache, maxIdleUnit);
-		this.cache = cache;
+	public InfinispanSessionManager() {
 
-		cookieConfig = new InfinispanSessionCookieConfig();
-		cookieConfig.setName(__DefaultSessionCookie);
-		cookieConfig.setDomain(__DefaultSessionDomain);
-		cookieConfig.setPath(null);
-		cookieConfig.setHttpOnly(false);
-		cookieConfig.setSecure(false);
-		cookieConfig.setMaxAge(-1);
-
-		cache.addListener(this);
 	}
 
 	@Override
@@ -275,6 +265,22 @@ public class InfinispanSessionManager extends AbstractLifeCycle implements
 
 	@Override
 	public void doStart() throws Exception {
+		this.maxIdleUnit = TimeUnit.SECONDS;
+		this.cache = LocalCacheManager.getCacheManager().getCache(
+				"mainClustering");
+		this.idManager = new InfinispanSessionIdManager(cache, maxIdleUnit);
+
+		cookieConfig = new InfinispanSessionCookieConfig();
+		cookieConfig.setName(__DefaultSessionCookie);
+		cookieConfig.setDomain(__DefaultSessionDomain);
+		cookieConfig.setPath(null);
+		cookieConfig.setHttpOnly(false);
+		cookieConfig.setSecure(false);
+		cookieConfig.setMaxAge(-1);
+
+		cache.addListener(this);
+		cache.start();
+
 		context = ContextHandler.getCurrentContext();
 		if (!idManager.isStarted()) {
 			idManager.start();

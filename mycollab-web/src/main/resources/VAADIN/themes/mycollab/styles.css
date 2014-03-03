@@ -233,7 +233,7 @@ body div>input.v-filterselect-input[type="text"] {
 
 select.v-select-select {
 	background: none no-repeat left top #FFFFFF;
-	border: 1px solid #A9A9A9;
+	border: 1px solid #BCBCBC;
 }
 
 .v-table-table th,.v-table-table td {
@@ -765,7 +765,7 @@ input.v-textfield-pagedtable-pagefield {
 .advSearch .advSearchHeader {
 	background: url('icons/grad-light-top2.png') repeat-x 0 0 #e7e7e7;
 	border-radius: 3px 3px 0px 0px;
-	border-bottom: 1px solid #a9a9a9;
+	border-bottom: 1px solid #BCBCBC;
 }
 
 .advSearchHeader .v-horizontallayout.v-margin-top {
@@ -824,13 +824,13 @@ input.v-textfield-pagedtable-pagefield {
 	border-top-right-radius: 3px;
 	border-bottom-right-radius: 0px;
 	border-bottom-left-radius: 0px;
-	border: 1px solid #a9a9a9;
+	border: 1px solid #BCBCBC;
 }
 
 .basicSearch .basicSearchHeader {
 	background: url('icons/grad-light-top2.png') repeat-x 0 0 #e7e7e7;
 	border-radius: 3px 3px 0px 0px;
-	border-bottom: 1px solid #a9a9a9;
+	border-bottom: 1px solid #BCBCBC;
 }
 
 .basicSearchHeader .v-horizontallayout.v-margin-top {
@@ -1294,7 +1294,7 @@ input.v-textfield-errorField {
 	text-shadow: #F0F0F0 0 1px 0;
 	padding: 8px 0px 8px 18px;
 	font-size: 13px;
-	border-bottom: 1px solid #a9a9a9;
+	border-bottom: 1px solid #BCBCBC;
 	color: rgb(69, 69, 69);
 }
 
@@ -1546,6 +1546,8 @@ input.v-textfield-errorField {
 
 .projectDashboardView .container-wrap.main-content .tab-content {
 	min-height: 599px;
+	border-width: 1px 0px 0px 1px;
+	padding: 0px;
 }
 
 .projectDashboardView .container-wrap.main-content.v-verticallayout.v-margin-left {
@@ -1717,20 +1719,20 @@ input.v-textfield-errorField {
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
-	border: 1px solid #a9a9a9;
-	background: url('icons/grad-light-top2.png') repeat-x left top #f5f5f5;
-	border-radius: 3px;
+	border: 1px solid #BCBCBC;
+	background: none no-repeat left top #f7f7f7;
+	border-radius: 0px;
 }
 
 .projectinfo-header,.message-toppanel-header {
 	font-size: 13px;
-	border-bottom: 1px solid #a9a9a9;
+	border-bottom: 1px solid #BCBCBC;
 	padding-bottom: 0.2em;
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
-	background: none no-repeat left top #e4e4e4;
-	border-radius: 3px 3px 0px 0px;
+	background: none no-repeat left top #F7F7F7;
+	border-radius: 0px;
 }
 
 .projectinfo-header.v-margin-top {
@@ -1879,16 +1881,15 @@ input.v-textfield-errorField {
 }
 
 .depotComp .v-csslayout-header-wrapper {
-	padding: 2px 10px 3px 5px;
+	padding: 7px 10px;
 }
 
 .depotComp .depotHeader {
 	border-width: 1px;
 	border-style: solid;
-	border-color: #a9a9a9;
-	border-radius: 0px 0px 0px 0px;
-	background: url('icons/grad-light-top2.png') repeat-x 0 0
-		rgb(230, 230, 230);
+	border-color: #BCBCBC;
+	border-radius: 0px;
+	background: none no-repeat 0 0 #F7F7F7;
 }
 
 .depotComp .depotHeader .header-elements.colored-header .v-button .v-button-caption
@@ -1907,7 +1908,7 @@ input.v-textfield-errorField {
 }
 
 .depotComp .depot-title {
-	background: url('icons/16/depot_arrow_down.png') no-repeat top left
+	background: url('icons/16/depot_arrow_down.png') no-repeat left center
 		transparent;
 	cursor: pointer;
 }
@@ -1917,7 +1918,7 @@ input.v-textfield-errorField {
 }
 
 .depotComp.collapsed .depot-title {
-	background: url('icons/16/depot_arrow_right.png') no-repeat top left
+	background: url('icons/16/depot_arrow_right.png') no-repeat left center
 		transparent;
 }
 
@@ -1925,8 +1926,9 @@ input.v-textfield-errorField {
 	border: 0px;
 	color: #444;
 	text-shadow: none;
-	font-weight: bold;
-	font-size: 11px;
+	font-size: 14px;
+	line-height: 16px;
+	font-weight: 400;
 	cursor: pointer;
 	padding: 0px 0px 0px 20px;
 	word-break: normal;
@@ -2345,7 +2347,7 @@ input.v-textfield-errorField {
 
 .activity-stream {
 	background-color: #F7F7F7;
-	border-color: #a9a9a9;
+	border-color: #BCBCBC;
 	border-width: 0px 1px 1px;
 	border-style: solid;
 	padding: 5px;
@@ -2670,7 +2672,7 @@ div.v-splitbutton,div.v-splitbutton .v-button {
 	padding: 2px;
 	border-width: 0px 1px 1px;
 	border-style: solid;
-	border-color: #a9a9a9;
+	border-color: #BCBCBC;
 	border-radius: 0px 0px 3px 3px;
 	background: none no-repeat 0 0 #f5f5f5;
 }
@@ -2773,10 +2775,10 @@ div.v-splitbutton,div.v-splitbutton .v-button {
 
 .message-list .beanlist-content {
 	padding: 5px 15px;
-	background: none no-repeat left top rgb(229, 239, 240);
+	background: none no-repeat left top rgb(255, 255, 255);
 	border-width: 0px 1px 1px;
 	border-style: solid;
-	border-color: #a9a9a9;
+	border-color: #BCBCBC;
 }
 
 .message-list .v-csslayout-beanlist-content>.v-csslayout-margin>.v-csslayout-container>div
@@ -2788,7 +2790,7 @@ div.v-splitbutton,div.v-splitbutton .v-button {
 }
 
 .message {
-	margin: 5px 0px;
+	margin: 8px 0px;
 }
 
 .comment-list-wrapper.v-margin-left {
@@ -2807,9 +2809,9 @@ div.v-splitbutton,div.v-splitbutton .v-button {
 }
 
 .message .message-container {
-	background-color: #fff;
-	padding: 10px;
-	border: 2px solid #a9a9a9;
+	background-color: #f2fafd;
+	padding: 0px;
+	border: 2px solid #BCBCBC;
 	border-radius: 5px;
 	/* margin-left: 10px; */
 	position: relative;
@@ -2830,7 +2832,7 @@ div.v-splitbutton,div.v-splitbutton .v-button {
 	top: 9px; /* controls vertical position */
 	left: -12px; /* value = - border-left-width - border-right-width */
 	border-width: 11px 11px 11px 0;
-	border-color: transparent #a9a9a9;
+	border-color: transparent #BCBCBC;
 	border-radius: 0px;
 }
 
@@ -2843,23 +2845,41 @@ div.v-splitbutton,div.v-splitbutton .v-button {
 	top: 10px;
 	left: -10px;
 	border-width: 10px 10px 10px 0;
-	border-color: transparent #fff;
+	border-color: transparent #f2fafd;
 	border-radius: 0px;
 }
 
 .message.important-message .message-container {
-	border-color: #045c8e;
+	border-color: #ff9339;
 }
 
 .message.important-message .message-container:before
 	{
-	border-color: transparent #045c8e;
+	border-color: transparent #ff9339;
 }
 
-.message-header .user-name {
-	font-size: 15px;
-	font-weight: bold;
-	color: black;
+.message .user-name {
+	text-align: center;
+	color: #0061ac;
+}
+
+.message-header.v-margin-top {
+	padding-top: 10px;
+}
+
+.message-header.v-margin-left {
+	padding-left: 10px;
+}
+
+.message-header.v-margin-right {
+	padding-right: 10px;
+}
+
+.message-body {
+	padding: 5px 10px 10px;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 .message-header .v-button-link.message-title {
@@ -2899,6 +2919,22 @@ div.v-splitbutton,div.v-splitbutton .v-button {
 	color: gray;
 }
 
+.message-footer {
+	border-top: 1px solid #CFCFCF;
+}
+.message-footer.v-margin-top {
+	padding-top: 7px;
+}
+.message-footer.v-margin-right {
+	padding-right: 10px;
+}
+.message-footer.v-margin-bottom {
+	padding-bottom: 7px;
+}
+.message-footer.v-margin-left {
+	padding-left: 10px;
+}
+
 .messageread-bottompanel {
     border: 1px solid rgb(169, 169, 169);
     background: none no-repeat 0 0 rgb(229, 239, 240);
@@ -2909,7 +2945,7 @@ div.v-splitbutton,div.v-splitbutton .v-button {
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
 	background: none no-repeat left top #f5f5f5;
-	border-color: #a9a9a9;
+	border-color: #BCBCBC;
 	border-style: solid;
 	border-width: 0px 1px 1px;
 }
@@ -3471,7 +3507,7 @@ div.v-lazyloadingwrapper-loading {
 .v-csslayout.border-box {
 	max-width: 400px;
 	margin: 0 auto;
-	border: 1px solid #a9a9a9;
+	border: 1px solid #BCBCBC;
 	padding-right: 5px;
 }
 
@@ -3733,7 +3769,7 @@ table.legendBox {
 	border-spacing: 0px;
 	border-collapse: collapse;
 	width: 100%;
-	border-top: 1px solid #a9a9a9;
+	border-top: 1px solid #BCBCBC;
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
@@ -3752,7 +3788,7 @@ table.legendBox .legendBoxContent .v-csslayout > div {
 
 .chart-wrapper {
 	border-width: 0px 1px 1px 1px;
-	border-color: #a9a9a9;
+	border-color: #BCBCBC;
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
@@ -3772,12 +3808,22 @@ div.v-csslayout.member-block {
 	border-width: 1px 1px 2px;
 	border-radius: 3px;
 	border-style: solid;
-	padding: 10px 10px 3px;
+	padding: 5px 5px 10px 10px;
 	border-color: #bebebe;
+}
+
+.member-block .member-name {
+	font-size: 14px;
+	border-bottom: 1px solid #CFCFCF;
+	padding-bottom: 5px;
 }
 
 .member-block div.v-button-link .v-button-wrap .v-button-caption {
 	font-weight: bold;
+}
+
+.member-block .member-role {
+	padding-top: 3px;
 }
 
 .member-block .member-email {
@@ -4032,7 +4078,7 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 	text-shadow: #F0F0F0 0 1px 0;
 	padding: 8px 0px 8px 18px;
 	font-size: 13px;
-	border-bottom: 1px solid #a9a9a9;
+	border-bottom: 1px solid #BCBCBC;
 	color: rgb(69, 69, 69);
 }
 .readViewLayout .v-label-h2.no-border {
@@ -4044,7 +4090,7 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 	text-shadow: #F0F0F0 0 1px 0;
 	padding: 0px 0px 0px 0px;
 	font-size: 13px;
-	border-bottom: 1px solid #a9a9a9;
+	border-bottom: 1px solid #BCBCBC;
 	color: rgb(69, 69, 69);
 	font-weight: bold;
 }
@@ -4057,7 +4103,7 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 }
 
 .readview-layout {
-	border: 1px solid #a9a9a9;
+	border: 1px solid #BCBCBC;
 	background-color: #f5f5f5;
 	border-radius: 3px 3px 0px 0px;
 	padding: 0px;
@@ -4066,7 +4112,7 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 .readview-layout-header {
 	background: url('icons/grad-light-top2.png') repeat-x 0 0 #e5e5e5;
 	border-radius: 3px 3px 0px 0px;
-	border-bottom: 1px solid #a9a9a9;
+	border-bottom: 1px solid #BCBCBC;
 	position: relative;
 	z-index: 0;
 	overflow: visible !important;
@@ -4114,7 +4160,7 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
-	border: 1px solid #a9a9a9;
+	border: 1px solid #BCBCBC;
 }
 
 .readview-layout-header .detachedtabs .v-button>.v-button-wrap,.readview-layout-header .detachedtabs .v-button:active>.v-button-wrap
@@ -4131,7 +4177,7 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 .readview-layout-body .h2 {
 	padding: 8px 0px 8px 18px;
 	font-size: 13px;
-	border-bottom: 1px solid #a9a9a9;
+	border-bottom: 1px solid #BCBCBC;
 	color: rgb(69, 69, 69);
 }
 
@@ -4139,11 +4185,11 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
-	border-bottom: 1px solid #a9a9a9;
+	border-bottom: 1px solid #BCBCBC;
 }
 
 .readview-layout-body .v-gridlayout-margin {
-	border-bottom: 1px solid #a9a9a9;
+	border-bottom: 1px solid #BCBCBC;
 }
 
 .readview-layout-body .v-gridlayout-margin .v-csslayout>.v-csslayout-margin
@@ -4174,7 +4220,7 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 
 .readview-layout-body .v-gridlayout-margin .gridform-caption {
 	background-color: rgb(212, 223, 239);
-	border-left: 1px solid #a9a9a9;
+	border-left: 1px solid #BCBCBC;
 	border-right: 1px solid #c8c8c8;
 }
 
@@ -4253,7 +4299,7 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 /* AddViewLayout2 */
 .addview-layout {
 	/* margin-top: 10px; */
-	border: 1px solid #a9a9a9;
+	border: 1px solid #BCBCBC;
 	background-color: #f5f5f5;
 	border-radius: 3px 3px 0px 0px;
 	padding: 0px;
@@ -4262,7 +4308,7 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 .addview-layout-header {
 	background: url('icons/grad-light-top2.png') repeat-x 0 0 #e5e5e5;
 	border-radius: 3px 3px 0px 0px;
-	border-bottom: 1px solid #a9a9a9;
+	border-bottom: 1px solid #BCBCBC;
 	position: relative;
 	z-index: 0;
 	overflow: visible !important;
@@ -4319,7 +4365,7 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 .addview-layout-body .h2 {
 	padding: 8px 0px 8px 18px;
 	font-size: 13px;
-	border-bottom: 1px solid #a9a9a9;
+	border-bottom: 1px solid #BCBCBC;
 	color: rgb(69, 69, 69);
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
@@ -4330,11 +4376,11 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
-	border-bottom: 1px solid #a9a9a9;
+	border-bottom: 1px solid #BCBCBC;
 }
 
 .addview-layout-body .v-gridlayout {
-	border-bottom: 1px solid #a9a9a9;
+	border-bottom: 1px solid #BCBCBC;
 }
 
 .addview-layout-body .v-horizontallayout-gridform-caption.v-margin-top {
@@ -4352,7 +4398,7 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 
 .addview-layout-body .gridform-caption {
 	background-color: rgb(212, 223, 239);
-	border-left: 1px solid #a9a9a9;
+	border-left: 1px solid #BCBCBC;
 	border-right: 1px solid #c8c8c8;
 }
 
@@ -4417,7 +4463,7 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 /* Richtext Editor */
 .v-richtextarea .gwt-RichTextToolbar {
 	background: url("icons/grad-light-top.png") repeat-x left top #ebebeb;
-	border-bottom: 1px solid #a9a9a9;
+	border-bottom: 1px solid #BCBCBC;
 	padding: 3px;
 }
 
@@ -4438,7 +4484,7 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 
 /* The New GridLayout */
 .colored-gridlayout {
-	border-bottom: 1px solid #a9a9a9;
+	border-bottom: 1px solid #BCBCBC;
 }
 
 .task-list .colored-gridlayout {
@@ -4519,7 +4565,7 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 
 .colored-gridlayout .gridform-caption {
 	background-color: rgb(212, 223, 239);
-	border-left: 1px solid #a9a9a9;
+	border-left: 1px solid #BCBCBC;
 	border-right: 1px solid #c8c8c8;
 }
 
@@ -4822,7 +4868,7 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 	font-size: 13px;
 	border-width: 1px 1px 0px;
 	border-style: solid;
-	border-color: #a9a9a9;
+	border-color: #BCBCBC;
 	background: url('icons/grad-light-top2.png') repeat-x left top
 		rgb(229, 229, 229);
 	border-radius: 3px 3px 0px 0px;
@@ -4832,7 +4878,7 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 .v-verticallayout-component-body {
 	border-width: 0px 1px 1px;
 	border-style: solid;
-	border-color: #a9a9a9;
+	border-color: #BCBCBC;
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
@@ -5714,7 +5760,7 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 	padding: 12px;
 	border-style: solid;
 	border-color: #8f8f8f;
-	border-width: 1px 0px 0px 1px;
+	border-width: 0px 0px 0px 1px;
 	background-color: #fff;
 	height: 100%;
 }
@@ -5852,43 +5898,60 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 .h2-style2 {
 	padding: 8px 0px 8px 18px;
 	font-size: 13px;
-	border-bottom: 1px solid #a9a9a9;
+	border-bottom: 1px solid #BCBCBC;
 	color: rgb(69, 69, 69);
 	font-weight: bold;
 }
 /* Tabsheet style 3 */
-.tab-style3 > .v-tabsheet-tabcontainer > .v-tabsheet-tabs {
+/* .tab-style3 > .v-tabsheet-tabcontainer > .v-tabsheet-tabs {
 	background: none;
+	border-bottom: 1px solid #CFCFCF;
+} */
+.tab-style3 > .v-tabsheet-tabcontainer > .v-tabsheet-tabs > tbody > tr > td > div {
+	/* border-bottom: 1px solid #CFCFCF; */
 }
 .tab-style3 > .v-tabsheet-tabcontainer > .v-tabsheet-tabs > tbody > tr > .v-tabsheet-tabitemcell > .v-tabsheet-tabitem {
-	background: url("icons/border-bottom2.png") repeat-x scroll left bottom transparent;
-	border: none;
+	background: url(icons/tab-bg.jpg) repeat-x scroll left bottom #F7F7F7;
+	border-width: 0px 1px 0px 0px;
+	border-style: solid;
+	border-color: #CFCFCF;
 	position: relative;
+	/* overflow-y: visible; */
+}
+.tab-style3 > .v-tabsheet-tabcontainer > .v-tabsheet-tabs > tbody > tr > .v-tabsheet-tabitemcell > .v-tabsheet-tabitem .v-caption {
+	padding: 8px 17px 9px;
 }
 .tab-style3 > .v-tabsheet-tabcontainer > .v-tabsheet-tabs > tbody > tr > .v-tabsheet-tabitemcell > .v-tabsheet-tabitem .v-caption .v-captiontext {
 	font-size: 13px;
 	text-shadow: none;
-	color: rgb(145, 142, 142);
+	color: #525252;
 }
 .tab-style3 > .v-tabsheet-tabcontainer > .v-tabsheet-tabs > tbody > tr > .v-tabsheet-tabitemcell > .v-tabsheet-tabitem:hover .v-caption .v-captiontext {
 	color: rgb(94, 94, 94);
 } 
-.tab-style3 > .v-tabsheet-tabcontainer > .v-tabsheet-tabs > tbody > tr > .v-tabsheet-tabitemcell.v-tabsheet-tabitemcell-selected {
-	background: none;
+.tab-style3 > .v-tabsheet-tabcontainer > .v-tabsheet-tabs > tbody > tr > .v-tabsheet-tabitemcell.v-tabsheet-tabitemcell-selected > .v-tabsheet-tabitem {
+	background: url(icons/tab-bg-selected.jpg) repeat-x scroll left bottom #717171;
+}
+.tab-style3 > .v-tabsheet-tabcontainer > .v-tabsheet-tabs > tbody > tr > .v-tabsheet-tabitemcell > .v-tabsheet-tabitem-selected .v-caption {
+	background: url(icons/tab-selected-indicator.png) no-repeat center bottom transparent;
+	cursor: pointer;
 }
 .tab-style3 > .v-tabsheet-tabcontainer > .v-tabsheet-tabs > tbody > tr > .v-tabsheet-tabitemcell > .v-tabsheet-tabitem.v-tabsheet-tabitem-selected .v-caption .v-captiontext, .tab-style3 > .v-tabsheet-tabcontainer > .v-tabsheet-tabs > tr > .v-tabsheet-tabitemcell > .v-tabsheet-tabitem.v-tabsheet-tabitem-selected:hover .v-caption .v-captiontext {
-	color: rgb(40, 126, 206);
-	font-size: 14px;
+	/* color: rgb(40, 126, 206); */
+	color: #FFF;
 }
-.tab-style3 > .v-tabsheet-tabcontainer > .v-tabsheet-tabs > tbody > tr > .v-tabsheet-tabitemcell > .v-tabsheet-tabitem-selected:after {
+/* .tab-style3 > .v-tabsheet-tabcontainer > .v-tabsheet-tabs > tbody > tr > .v-tabsheet-tabitemcell.v-tabsheet-tabitemcell-selected:after {
 	content: " ";
 	display: block;
 	width: 100%;
-	height: 2px;
-	background: #2E9DFF;
+	height: 8px;
+	background: url(icons/tab-selected-indicator.png) no-repeat center center transparent;
 	position: absolute;
-	bottom: 0px;
+	bottom: -1px;
 	left: 0px;
+} */
+.tab-style3 > .v-tabsheet-tabcontainer > .v-tabsheet-tabs > tbody > tr > .v-tabsheet-spacertd {
+	background: url(icons/tab-space-bg.jpg) repeat-x left bottom #FFFFFF;
 }
 .tab-style3 > .v-tabsheet-tabcontainer > .v-tabsheet-tabs > tbody > tr > .v-tabsheet-spacertd div {
 	border-bottom: none;
@@ -5907,7 +5970,7 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 
 /* History Log Component */
 .historylog-component .bean-list {
-	border-top: 1px solid #a9a9a9;
+	border-top: 1px solid #BCBCBC;
 }
 
 /* Account Settings - Role's depot header fix */
@@ -6046,7 +6109,7 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 	border:0 !important;
 }
 .splitbutton .parent-button.action-button,.splitbutton .parent-button.action-button:focus {
-	border-color:#a9a9a9;
+	border-color:#BCBCBC;
 	border-radius:2px;
 	background-color:#F9F9F9;
 }
@@ -6060,7 +6123,7 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 	
 }
 .splitbutton .v-button.action-button:active {
-	border-color:#a9a9a9;	
+	border-color:#BCBCBC;	
 }
 .splitbutton .v-button.action-button .v-button-wrap {
 	padding: 6px 12px 6px 12px !important;
@@ -6084,3 +6147,22 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 	margin-right:0;
 }
 
+/* New View's Styles */
+.view-hdr {
+	background-color: #F7F7F7;
+	border-bottom: 1px solid #CFCFCF;
+}
+.view-hdr .hdr-text {
+	font-size: 15px;
+	color: #525252;
+	font-weight: bold;
+}
+.view-content {
+	padding: 12px;
+}
+
+/* Icon only button */
+img.icon-btn {
+	cursor: pointer;
+	display: block;
+}

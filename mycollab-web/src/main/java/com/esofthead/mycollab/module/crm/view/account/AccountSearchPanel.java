@@ -29,7 +29,7 @@ import com.esofthead.mycollab.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.module.user.ui.components.ActiveUserListSelect;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.ui.DefaultAdvancedSearchLayout2;
+import com.esofthead.mycollab.vaadin.ui.DynamicQueryParamLayout;
 import com.esofthead.mycollab.vaadin.ui.DefaultGenericSearchPanel;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.Separator;
@@ -59,6 +59,7 @@ public class AccountSearchPanel extends
 
 	private static Param[] paramFields = new Param[] {
 			AccountSearchCriteria.p_accountName,
+			AccountSearchCriteria.p_anyPhone,
 			AccountSearchCriteria.p_numemployees,
 			AccountSearchCriteria.p_assignee,
 			AccountSearchCriteria.p_createdtime,
@@ -112,7 +113,7 @@ public class AccountSearchPanel extends
 	}
 
 	private class AccountAdvancedSearchLayout extends
-			DefaultAdvancedSearchLayout2<AccountSearchCriteria> {
+			DynamicQueryParamLayout<AccountSearchCriteria> {
 
 		public AccountAdvancedSearchLayout() {
 			super(AccountSearchPanel.this, CrmTypeConstants.ACCOUNT);
@@ -132,7 +133,7 @@ public class AccountSearchPanel extends
 		protected Class<AccountSearchCriteria> getType() {
 			return AccountSearchCriteria.class;
 		}
-		
+
 		protected Component buildSelectionComp(String fieldId) {
 			if ("account-assignuser".equals(fieldId)) {
 				return new ActiveUserListSelect();

@@ -11,13 +11,14 @@ import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 
 @ViewComponent
 public class FileDashboardViewImpl extends AbstractPageView implements
-		FileDashboardView {
+FileDashboardView {
 	private static final long serialVersionUID = 1L;
 
 	private FileDashboardComponent dashboardComponent;
 
 	public FileDashboardViewImpl() {
 		this.setWidth("100%");
+		this.setMargin(true);
 		dashboardComponent = new FileDashboardComponent() {
 			private static final long serialVersionUID = 1L;
 

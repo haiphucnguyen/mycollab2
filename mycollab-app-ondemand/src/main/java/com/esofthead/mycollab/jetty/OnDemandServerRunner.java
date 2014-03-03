@@ -29,7 +29,7 @@ public class OnDemandServerRunner extends GenericServerRunner {
 				.getCacheManager().getCache("mainClustering");
 
 		// create a InfinispanSessionManager instance
-		InfinispanSessionManager sm = new InfinispanSessionManager(cache);
+		InfinispanSessionManager sm = new InfinispanSessionManager();
 
 		// apply the session manager to the jetty server
 		SessionHandler sh = new SessionHandler();
