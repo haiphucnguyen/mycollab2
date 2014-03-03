@@ -99,7 +99,7 @@ public class VerticalTabsheet extends CustomComponent {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				if (selectedButton != button) {
-					clearTabSelection();
+					clearTabSelection(true);
 					selectedButton = button;
 					selectedButton.addStyleName(TAB_SELECTED_STYLENAME);
 					selectedComp = compMap.get(selectedButton);
@@ -161,7 +161,7 @@ public class VerticalTabsheet extends CustomComponent {
 			Tab tab = compMap.get(btn);
 			if (tab.getCaption().equals(viewName)) {
 				selectedButton = btn;
-				clearTabSelection();
+				clearTabSelection(true);
 				selectedButton.addStyleName(TAB_SELECTED_STYLENAME);
 				setDefaulButtonIcon(selectedButton, true);
 				selectedComp = tab;
@@ -317,13 +317,31 @@ public class VerticalTabsheet extends CustomComponent {
 	}
 
 	private void clearTabSelection() {
+		boolean setDefaultIcon = false;
+		clearTabSelection(setDefaultIcon);
+	}
+	
+	private void clearTabSelection(boolean setDefaultIcon) {
 		Collection<Button> tabs = compMap.keySet();
-		for (Button btn : tabs) {
-			if(btn.getStyleName().contains(TAB_SELECTED_STYLENAME)){
-				btn.removeStyleName(TAB_SELECTED_STYLENAME);       
-				setDefaulButtonIcon(btn, false);
+		if (setDefaultIcon == true)
+		{
+			for (Button btn : tabs) {
+				if(btn.getStyleName().contains(TAB_SELECTED_STYLENAME)){
+					btn.removeStyleName(TAB_SELECTED_STYLENAME);       
+					setDefaulButtonIcon(btn, false);
+				}
 			}
 		}
+		else 
+		{
+			for (Button btn : tabs) {
+				if(btn.getStyleName().contains(TAB_SELECTED_STYLENAME)){
+					btn.removeStyleName(TAB_SELECTED_STYLENAME);     
+					/*setDefaulButtonIcon(btn, false);*/
+				}
+			}
+		}
+			
 	}
 
 	public void setDefaulButtonIcon(Button btn, Boolean selected){
@@ -346,7 +364,7 @@ public class VerticalTabsheet extends CustomComponent {
 			break;
 		case "Phases":
 			btn.setIcon(MyCollabResource
-					.newResource("icons/22/project/milestone" + suffix + ".png"));
+					.newResource("icons/22/project/phase" + suffix + ".png"));
 			break;
 
 		case "Tasks":

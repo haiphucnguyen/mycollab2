@@ -119,7 +119,7 @@ public class ProjectPreviewFormControlsGenerator<T> {
 					}
 				});
 		deleteBtn.setIcon(MyCollabResource.newResource("icons/16/delete2.png"));
-		deleteBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		deleteBtn.setStyleName(UIConstants.THEME_RED_LINK);
 		editButtons.addComponent(deleteBtn);
 		editButtons.setComponentAlignment(deleteBtn, Alignment.MIDDLE_CENTER);
 
