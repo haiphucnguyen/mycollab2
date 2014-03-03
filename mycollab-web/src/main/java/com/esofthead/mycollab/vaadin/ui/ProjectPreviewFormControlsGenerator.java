@@ -16,6 +16,8 @@
  */
 package com.esofthead.mycollab.vaadin.ui;
 
+import java.io.Serializable;
+
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -28,7 +30,8 @@ import com.vaadin.ui.HorizontalLayout;
  * @since 2.0
  * 
  */
-public class ProjectPreviewFormControlsGenerator<T> {
+public class ProjectPreviewFormControlsGenerator<T> implements Serializable {
+	private static final long serialVersionUID = 1L;
 
 	private final AdvancedPreviewBeanForm<T> previewForm;
 	private Button backBtn;

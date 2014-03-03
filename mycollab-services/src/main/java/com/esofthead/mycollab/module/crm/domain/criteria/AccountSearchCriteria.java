@@ -52,6 +52,11 @@ public class AccountSearchCriteria extends SearchCriteria {
 	public static Param p_createdtime = new DateParam("account-createdtime",
 			"Created Time", "m_crm_account", "createdTime");
 
+	public static Param p_anyCity = new CompositionStringParam(
+			"account-anyCity", "Any City", new StringParam[] {
+					new StringParam("", "", "m_crm_account", "city"),
+					new StringParam("", "", "m_crm_account", "shippingCity") });
+
 	public static Param p_anyPhone = new CompositionStringParam(
 			"account-anyPhone", "Any Phone", new StringParam[] {
 					new StringParam("", "", "m_crm_account", "alternatePhone"),

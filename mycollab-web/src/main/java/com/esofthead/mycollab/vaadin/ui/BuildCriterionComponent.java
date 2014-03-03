@@ -252,7 +252,7 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends
 						.toArray(new String[0]));
 				valueBox.addComponent(listSelect);
 			} else if (field instanceof CompositionStringParam) {
-
+				valueBox.addComponent(new TextField());
 			}
 		}
 
@@ -338,6 +338,9 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends
 					}
 					TextField field = (TextField) valueBox.getComponent(0);
 					String value = field.getValue();
+					CompositionStringParam wrapParam = (CompositionStringParam) param;
+					return wrapParam.buildSearchField(prefixOperation,
+							compareOper, value);
 				} else {
 					throw new MyCollabException("Not support yet");
 				}
