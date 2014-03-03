@@ -291,16 +291,18 @@ div.v-button-link.v-button-no-margin .v-button-wrap,div.v-button-link:focus
 	border:none;
 	background-image:none;
 	border-top:1px solid transparent;
-	font-weight:bold;
+	
 }
 
 .v-button.v-button-bluebtn {
 	background-color:#17d61b;
 	color:white;
+	font-weight:bold;
 }
 .v-button.v-button-graybtn {
 	background-color:#8B8B8B;
 	color:white;
+	font-weight:bold;
 }
 
 
@@ -2496,6 +2498,7 @@ input.v-textfield-errorField {
 	{
 	border: none;
 	background: none;
+	padding: 3px 13px;
 }
 
 .v-button.v-button-round-border:hover {
