@@ -2,10 +2,7 @@ package com.esofthead.mycollab.jetty;
 
 import org.eclipse.jetty.server.session.SessionHandler;
 import org.eclipse.jetty.webapp.WebAppContext;
-import org.infinispan.Cache;
 
-import com.esofthead.mycollab.cache.LocalCacheManager;
-import com.esofthead.mycollab.jetty.clustering.InfinispanHttpSession;
 import com.esofthead.mycollab.jetty.clustering.InfinispanSessionManager;
 
 /**
@@ -24,10 +21,6 @@ public class PremiumServerRunner extends GenericServerRunner {
 				.getContextClassLoader());
 		webAppContext.setResourceBase(baseDir);
 
-		// add originSection clustering mode
-//		Cache<String, InfinispanHttpSession> cache = LocalCacheManager
-//				.getCacheManager().getCache("mainClustering");
-
 		// create a InfinispanSessionManager instance
 		InfinispanSessionManager sm = new InfinispanSessionManager();
 
@@ -36,8 +29,6 @@ public class PremiumServerRunner extends GenericServerRunner {
 		sh.setSessionManager(sm);
 
 		webAppContext.setSessionHandler(sh);
-		// and start the cache
-		
 		return webAppContext;
 	}
 
