@@ -60,6 +60,7 @@ public class RiskSearchPanel extends GenericSearchPanel<RiskSearchCriteria> {
 
 	private HorizontalLayout createSearchTopPanel() {
 		final HorizontalLayout layout = new HorizontalLayout();
+		layout.setStyleName("hdr-view");
 		layout.setWidth("100%");
 		layout.setSpacing(true);
 		layout.setMargin(true);
@@ -70,7 +71,8 @@ public class RiskSearchPanel extends GenericSearchPanel<RiskSearchCriteria> {
 		layout.setComponentAlignment(titleIcon, Alignment.MIDDLE_LEFT);
 
 		final Label risktitle = new Label("Risks");
-		risktitle.setStyleName(Reindeer.LABEL_H2);
+		//risktitle.setStyleName(Reindeer.LABEL_H2);
+		risktitle.setStyleName("hdr-text");
 		layout.addComponent(risktitle);
 		layout.setExpandRatio(risktitle, 1.0f);
 		layout.setComponentAlignment(risktitle, Alignment.MIDDLE_LEFT);
