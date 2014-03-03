@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.core.arguments;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,4 +24,11 @@ public class CompositionSearchField extends SearchField {
 		this.fields = fields;
 	}
 
+	public void addField(SearchField field) {
+		if (fields == null) {
+			fields = new ArrayList<SearchField>();
+		}
+
+		fields.add(field);
+	}
 }

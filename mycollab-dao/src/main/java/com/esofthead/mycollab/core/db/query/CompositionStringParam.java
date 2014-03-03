@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.core.db.query;
 
+import com.esofthead.mycollab.core.arguments.CompositionSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 
 /**
@@ -10,7 +11,6 @@ import com.esofthead.mycollab.core.arguments.SearchField;
  */
 public class CompositionStringParam extends Param {
 	private StringParam[] params;
-	private String[] compareOptions;
 
 	public CompositionStringParam(String id, String displayName,
 			StringParam[] params) {
@@ -27,15 +27,14 @@ public class CompositionStringParam extends Param {
 		this.params = params;
 	}
 
-	public String[] getCompareOptions() {
-		return compareOptions;
-	}
-
-	public void setCompareOptions(String[] compareOptions) {
-		this.compareOptions = compareOptions;
-	}
-
-	public SearchField buildSearchField() {
-		return null;
+	public SearchField buildSearchField(String prefixOper, String compareOper,
+			String value) {
+		CompositionSearchField searchField = new CompositionSearchField(
+				prefixOper);
+		for (StringParam param : params) {
+			SearchField field = param.buildSearchField("", compareOper, value);
+			searchField.addField(field);
+		}
+		return searchField;
 	}
 }
