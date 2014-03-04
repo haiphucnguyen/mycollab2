@@ -21,19 +21,25 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.themes.Reindeer;
 
 public class ItemTimeLoggingSearchPanel extends
 		GenericSearchPanel<ItemTimeLoggingSearchCriteria> {
 
 	private static final long serialVersionUID = 1L;
 	protected ItemTimeLoggingSearchCriteria searchCriteria;
+	protected ClickListener listener;
+	
 
+	public ItemTimeLoggingSearchPanel() {
+		// TODO Auto-generated constructor stub
+		
+	}
+	
 	@Override
 	public void attach() {
 		super.attach();
@@ -45,11 +51,14 @@ public class ItemTimeLoggingSearchPanel extends
 		this.setCompositionRoot(layout);
 	}
 
+
 	private HorizontalLayout createSearchTopPanel() {
 		final HorizontalLayout layout = new HorizontalLayout();
+		
 		layout.setWidth("100%");
 		layout.setSpacing(true);
 		layout.setMargin(true);
+		layout.setStyleName("hdr-view");
 
 		final Image titleIcon = new Image(null, MyCollabResource
 				.newResource("icons/24/project/time.png"));
@@ -58,13 +67,14 @@ public class ItemTimeLoggingSearchPanel extends
 		final Label searchtitle = new Label(
 				LocalizationHelper
 						.getMessage(TimeTrackingI18nEnum.SEARCH_TIME_TITLE));
-		searchtitle.setStyleName(Reindeer.LABEL_H2);
+		searchtitle.setStyleName("hdr-text");
 		layout.addComponent(searchtitle);
 		layout.setComponentAlignment(searchtitle, Alignment.MIDDLE_LEFT);
 		layout.setExpandRatio(searchtitle, 1.0f);
+		layout.setVisible(false);
 		return layout;
 	}
-
+	
 	@SuppressWarnings({ "serial", "rawtypes" })
 	private class TimeLoggingAdvancedSearchLayout extends AdvancedSearchLayout {
 

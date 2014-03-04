@@ -548,6 +548,9 @@ div.v-button-nonPopupIndicator div.v-popup-indicator {
 
 .v-table-body-wrapper.v-table-body {
 	height: 100% !important;
+	border-width: 0px 1px 1px 1px;
+	border-bottom-left-radius: 3px;
+	border-bottom-right-radius: 3px;
 }
 
 .v-table-cell-wrapper {
@@ -2764,6 +2767,8 @@ div.v-splitbutton,div.v-splitbutton .v-button {
 .v-table-header-wrap {
 	background: none no-repeat 0 0 rgb(245, 245, 245);
 	border-radius: 0px;
+	border-width: 0 1px 1px 1px;
+	border-bottom: 1px solid #A9A9A9;
 }
 
 .v-table-header-wrap .v-table-caption-container {
@@ -4862,7 +4867,7 @@ div.v-ratingstars-bar {
 
 /*Table Action Controls */
 .table-actionctls {
-	border-width: 0px 1px;
+	border-width: 0 1px 1px 1px;
 	border-style: solid;
 	border-color: rgb(169, 169, 169);
 	background-color: rgb(245, 245, 245);
@@ -5241,7 +5246,7 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 
 /* reponsive wrapper */
 .main-content-wrapper {
-	padding: 0px 25px 12px;
+	/* padding: 0px 25px 12px; */
 }
 
 .v-label>hr {
@@ -5455,7 +5460,7 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 	border-style: solid;
 	border-color: rgb(169, 169, 169);
 	background-color: rgb(245, 245, 245);
-	border-top: 1px solid rgb(169, 169, 169);
+	border: 1px solid rgb(169, 169, 169);
 }
 
 .timeAdd-popup .popup-header {
@@ -6214,9 +6219,9 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 }
 
 /* New View's Styles */
-.hdr-view {
-	background-color: #F7F7F7;
-	border-bottom: 1px solid #CFCFCF;
+.hdr-view, .v-horizontallayout.hdr-view, .advSearchHeader .v-horizontallayout.hdr-view, .basicSearchHeader .hdr-view{
+	background-color: #FFFFFF;
+	/* border-bottom: 1px solid #CFCFCF; */
 	padding: 12px;
 }
 .hdr-view .hdr-text,.hdr-view .hdr-text  span{
@@ -6231,11 +6236,19 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 	padding: 12px;
 }
 
-.basicSearchHeader .hdr-view, .advSearchHeader .hdr-view {
+.basicSearchHeader .v-horizontallayout.hdr-view, .advSearchHeader .v-horizontallayout.hdr-view {
 	border:none;
 }
 /* Icon only button */
 img.icon-btn {
 	cursor: pointer;
 	display: block;
+}
+
+/* search content */
+.search-content {
+	padding: 10px 30px;
+}
+.v-slot-timeAdd-popup {
+	padding-bottom:12px;
 }
