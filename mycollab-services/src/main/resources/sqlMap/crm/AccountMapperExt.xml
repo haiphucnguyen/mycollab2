@@ -285,7 +285,6 @@
 
         #ifnotnull($_parameter.searchCriteria)
             #trim("WHERE" "AND|OR")
-            1=1
             <include
                 refid="queryTotalCountSearchCriteria" />
             #end
