@@ -125,7 +125,7 @@
         #end 
         
         #ifnotnull($searchCriteria.anyPhone)
-             ${searchCriteria.anyPhone.operation} (alternatePhone LIKE '%${]searchCriteria.anyPhone.value}%' 
+             ${searchCriteria.anyPhone.operation} (alternatePhone LIKE '%${searchCriteria.anyPhone.value}%' 
                 OR phoneOffice LIKE '%${searchCriteria.anyPhone.value}%')
         #end
         
@@ -206,13 +206,12 @@
     <select id="findPagableListByCriteria" parameterType="AccountSearchCriteria"
         resultMap="SimpleAccountResult" lang="velocity">
         <include
-            refid="com.esofthead.mycollab.module.crm.dao.AccountMapperExt.selectSimpleAccount" />
+            refid="selectSimpleAccount" />
         #ifnotnull($_parameter.searchCriteria)
-        #trim("WHERE" "AND|OR")
-        1=1
-        <include
-            refid="com.esofthead.mycollab.module.crm.dao.AccountMapperExt.querySearchCriteria" />
-        #end
+            #trim("WHERE" "AND|OR")
+            <include
+                refid="querySearchCriteria" />
+            #end
         #end
         <include refid="orderStatement" />
     </select>
@@ -222,11 +221,10 @@
 
         SELECT count(*) as totalCount FROM m_crm_account
         #ifnotnull($_parameter.searchCriteria)
-        #trim("WHERE" "AND|OR")
-        1=1
-        <include
-            refid="com.esofthead.mycollab.module.crm.dao.AccountMapperExt.queryTotalCountSearchCriteria" />
-        #end
+            #trim("WHERE" "AND|OR")
+                <include
+                    refid="queryTotalCountSearchCriteria" />
+            #end
         #end
     </select>
 
@@ -234,18 +232,17 @@
         lang="velocity">
         DELETE FROM m_crm_account
         #ifnotnull($_parameter.searchCriteria)
-        #trim("WHERE" "AND|OR")
-        1=1
-        <include
-            refid="com.esofthead.mycollab.module.crm.dao.AccountMapperExt.queryTotalCountSearchCriteria" />
-        #end
+            #trim("WHERE" "AND|OR")
+                <include
+                    refid="queryTotalCountSearchCriteria" />
+            #end
         #end
     </delete>
 
     <select id="findById" parameterType="java.lang.Integer"
         resultMap="SimpleAccountResult" lang="velocity">
         <include
-            refid="com.esofthead.mycollab.module.crm.dao.AccountMapperExt.selectSimpleAccount" />
+            refid="selectSimpleAccount" />
 
         WHERE m_crm_account.id=@{accountId, jdbcType=NUMERIC}
     </select>
@@ -253,7 +250,7 @@
     <select id="findAccountAssoWithConvertedLead" parameterType="java.lang.Integer"
         resultMap="SimpleAccountResult" lang="velocity">
         <include
-            refid="com.esofthead.mycollab.module.crm.dao.AccountMapperExt.selectSimpleAccount" />
+            refid="selectSimpleAccount" />
     <![CDATA[
         INNER JOIN m_crm_accounts_leads ON (m_crm_accounts_leads.isConvertRel=1
             AND m_crm_accounts_leads.accountId= m_crm_account.id
@@ -266,9 +263,8 @@
         SELECT MIN(id) FROM m_crm_account
 
         #trim("WHERE" "AND|OR")
-        1=1
-        <include
-            refid="com.esofthead.mycollab.module.crm.dao.AccountMapperExt.queryTotalCountSearchCriteria" />
+            <include
+                refid="queryTotalCountSearchCriteria" />
         #end
     </select>
 
@@ -277,22 +273,20 @@
         SELECT MAX(id) FROM m_crm_account
 
         #trim("WHERE" "AND|OR")
-        1=1
-        <include
-            refid="com.esofthead.mycollab.module.crm.dao.AccountMapperExt.queryTotalCountSearchCriteria" />
+            <include
+                refid="queryTotalCountSearchCriteria" />
         #end
     </select>
 
     <!-- Here for Mass Update -->
     <update id="updateBySearchCriteria" parameterType="map" lang="velocity">
         <include
-            refid="com.esofthead.mycollab.module.crm.dao.AccountMapper.massUpdateWithSessionSql" />
+    refid="com.esofthead.mycollab.module.crm.dao.AccountMapper.massUpdateWithSessionSql" />
 
         #ifnotnull($_parameter.searchCriteria)
             #trim("WHERE" "AND|OR")
-            1=1
             <include
-                refid="com.esofthead.mycollab.module.crm.dao.AccountMapperExt.queryTotalCountSearchCriteria" />
+                refid="queryTotalCountSearchCriteria" />
             #end
         #end
     </update>
