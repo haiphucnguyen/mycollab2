@@ -23,6 +23,7 @@ import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.db.query.Param;
+import com.esofthead.mycollab.core.db.query.PropertyListParam;
 import com.esofthead.mycollab.core.db.query.StringListParam;
 import com.esofthead.mycollab.core.db.query.StringParam;
 import com.esofthead.mycollab.module.crm.CrmDataTypeFactory;
@@ -40,7 +41,7 @@ public class OpportunitySearchCriteria extends SearchCriteria {
 			"Opportunity Name", "m_crm_opportunity", "opportunityName");
 
 	public static Param p_nextStep = new StringParam("opportunity-nextstep",
-			"Opportunity Name", "m_crm_opportunity", "opportunityName");
+			"Next Step", "m_crm_opportunity", "nextStep");
 
 	public static Param p_saleStage = new StringListParam(
 			"opportunity-saleStage", "Sales Stage", "m_crm_opportunity",
@@ -54,6 +55,10 @@ public class OpportunitySearchCriteria extends SearchCriteria {
 	public static Param p_type = new StringListParam("opportunity-type",
 			"Type", "m_crm_opportunity", "type",
 			Arrays.asList(CrmDataTypeFactory.getOpportunityTypeList()));
+
+	public static Param p_assignee = new PropertyListParam(
+			"opportunity-assignee", "Assignee", "m_crm_opportunity",
+			"assignUser");
 
 	private StringSearchField opportunityName;
 	private SetSearchField<String> assignUsers;

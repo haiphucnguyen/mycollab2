@@ -29,6 +29,7 @@ import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
 import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
+import com.esofthead.mycollab.module.user.ui.components.ActiveUserListSelect;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.DefaultGenericSearchPanel;
@@ -255,7 +256,9 @@ public class OpportunitySearchPanel extends
 		}
 
 		protected Component buildSelectionComp(String fieldId) {
-
+			if ("opportunity-assignee".equals(fieldId)) {
+				return new ActiveUserListSelect();
+			}
 			return null;
 		}
 	}
