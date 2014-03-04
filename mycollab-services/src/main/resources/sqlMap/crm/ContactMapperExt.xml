@@ -288,11 +288,9 @@
         lang="velocity">
         SELECT count(*) as totalCount FROM m_crm_contact
         #ifnotnull($_parameter.searchCriteria)
-        #trim("WHERE" "AND|OR")
-        1=1
-        <include
-            refid="com.esofthead.mycollab.module.crm.dao.ContactMapperExt.queryTotalCountSearchCriteria" />
-        #end
+            #trim("WHERE" "AND|OR")
+                <include refid="queryTotalCountSearchCriteria" />
+            #end
         #end
     </select>
 
@@ -301,9 +299,7 @@
         DELETE FROM m_crm_contact
         #ifnotnull($_parameter.searchCriteria)
             #trim("WHERE" "AND|OR")
-            1=1
-            <include
-                refid="com.esofthead.mycollab.module.crm.dao.ContactMapperExt.queryTotalCountSearchCriteria" />
+                <include refid="queryTotalCountSearchCriteria" />
             #end
         #end
     </delete>
@@ -321,21 +317,18 @@
     <select id="findPagableListByCriteria" resultMap="SimpleContactResult"
         parameterType="ContactSearchCriteria" lang="velocity">
         <include
-            refid="com.esofthead.mycollab.module.crm.dao.ContactMapperExt.selectSimpleContact" />
+            refid="selectSimpleContact" />
         #ifnotnull($_parameter.searchCriteria)
-        #trim("WHERE" "AND|OR")
-        1=1
-        <include
-            refid="com.esofthead.mycollab.module.crm.dao.ContactMapperExt.querySearchCriteria" />
-        #end
+            #trim("WHERE" "AND|OR")
+            <include refid="querySearchCriteria" />
+            #end
         #end
         <include refid="orderStatement" />
     </select>
 
     <select id="findById" parameterType="int" resultMap="SimpleContactResult"
         lang="velocity">
-        <include
-            refid="com.esofthead.mycollab.module.crm.dao.ContactMapperExt.selectSimpleContact" />
+        <include refid="selectSimpleContact" />
 
         WHERE m_crm_contact.id=@{contactId,jdbcType=NUMERIC}
         LIMIT 1
@@ -344,7 +337,7 @@
     <select id="findContactAssoWithConvertedLead" parameterType="int"
         resultMap="SimpleContactResult" lang="velocity">
         <include
-            refid="com.esofthead.mycollab.module.crm.dao.ContactMapperExt.selectSimpleContact" />
+            refid="selectSimpleContact" />
 
         INNER JOIN m_crm_contacts_leads ON
         (m_crm_contacts_leads.contactId=m_crm_contact.id AND
@@ -358,9 +351,7 @@
         SELECT MIN(id) FROM m_crm_contact
 
         #trim("WHERE" "AND|OR")
-        1=1
-        <include
-            refid="com.esofthead.mycollab.module.crm.dao.ContactMapperExt.queryTotalCountSearchCriteria" />
+        <include refid="queryTotalCountSearchCriteria" />
         #end
     </select>
 
@@ -369,9 +360,7 @@
         SELECT MAX(id) FROM m_crm_contact
 
         #trim("WHERE" "AND|OR")
-        1=1
-        <include
-            refid="com.esofthead.mycollab.module.crm.dao.ContactMapperExt.queryTotalCountSearchCriteria" />
+        <include refid="queryTotalCountSearchCriteria" />
         #end
     </select>
 
@@ -381,11 +370,9 @@
             refid="com.esofthead.mycollab.module.crm.dao.ContactMapper.massUpdateWithSessionSql" />
 
         #ifnotnull($_parameter.searchCriteria)
-        #trim("WHERE" "AND|OR")
-        1=1
-        <include
-            refid="com.esofthead.mycollab.module.crm.dao.ContactMapperExt.queryTotalCountSearchCriteria" />
-        #end
+            #trim("WHERE" "AND|OR")
+                <include refid="queryTotalCountSearchCriteria" />
+            #end
         #end
     </update>
 
