@@ -23,6 +23,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
@@ -52,7 +53,7 @@ public class ItemTimeLoggingSearchPanel extends
 	}
 
 
-	private HorizontalLayout createSearchTopPanel() {
+	/*private HorizontalLayout createSearchTopPanel() {
 		final HorizontalLayout layout = new HorizontalLayout();
 		
 		layout.setWidth("100%");
@@ -71,9 +72,9 @@ public class ItemTimeLoggingSearchPanel extends
 		layout.addComponent(searchtitle);
 		layout.setComponentAlignment(searchtitle, Alignment.MIDDLE_LEFT);
 		layout.setExpandRatio(searchtitle, 1.0f);
-		layout.setVisible(false);
+		
 		return layout;
-	}
+	}*/
 	
 	@SuppressWarnings({ "serial", "rawtypes" })
 	private class TimeLoggingAdvancedSearchLayout extends AdvancedSearchLayout {
@@ -89,7 +90,8 @@ public class ItemTimeLoggingSearchPanel extends
 
 		@Override
 		public ComponentContainer constructHeader() {
-			return ItemTimeLoggingSearchPanel.this.createSearchTopPanel();
+			//return ItemTimeLoggingSearchPanel.this.createSearchTopPanel();
+			return new CssLayout();
 		}
 
 		@Override

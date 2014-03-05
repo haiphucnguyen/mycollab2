@@ -80,8 +80,8 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements
 	private Button addNewEntryBtn;
 	public TimeTrackingListViewImpl() {
 		final CssLayout headerWrapper = new CssLayout();
-		final VerticalLayout contentWrappers = new VerticalLayout();
-		contentWrappers.setStyleName("search-content");
+		final CssLayout contentWrappers = new CssLayout();
+		contentWrappers.setStyleName("content-wrapper");
 		isNeedConstructLayout = true;
 		addNewEntryBtn = new Button("Add Entry");
 		addNewEntryBtn.setStyleName(UIConstants.THEME_GRAY_LINK);

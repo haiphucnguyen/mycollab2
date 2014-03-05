@@ -123,9 +123,9 @@ public class GenericSearchPanel<S extends SearchCriteria> extends
 		}
 
 		protected void initLayout() {
-			this.header = this.constructHeader();
+			//this.header = this.constructHeader();
 			this.body = this.constructBody();
-			this.addComponent(this.header, "basicSearchHeader");
+			//this.addComponent(this.header, "basicSearchHeader");
 			this.addComponent(this.body, "basicSearchBody");
 		}
 
@@ -148,10 +148,10 @@ public class GenericSearchPanel<S extends SearchCriteria> extends
 		}
 
 		protected void initLayout() {
-			this.header = this.constructHeader();
+			//this.header = this.constructHeader();
 			this.body = this.constructBody();
 			this.footer = this.constructFooter();
-			this.addComponent(this.header, "advSearchHeader");
+			//this.addComponent(this.header, "advSearchHeader");
 			this.addComponent(this.body, "advSearchBody");
 			this.addComponent(this.footer, "advSearchFooter");
 		}
