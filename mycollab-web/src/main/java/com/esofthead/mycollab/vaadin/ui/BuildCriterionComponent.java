@@ -24,6 +24,7 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.DateField;
+import com.vaadin.ui.Field;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
@@ -336,7 +337,14 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends
 						throw new MyCollabException("Not support yet");
 					}
 				} else if (param instanceof PropertyParam) {
-					return null;
+					if (valueBox.getComponentCount() != 1) {
+						return null;
+					}
+					Field field = (Field) valueBox.getComponent(0);
+					Object value = field.getValue();
+					PropertyParam wrapParam = (PropertyParam) param;
+					return wrapParam.buildSearchField(prefixOperation,
+							compareOper, value);
 				} else if (param instanceof CompositionStringParam) {
 					if (valueBox.getComponentCount() != 1) {
 						return null;
