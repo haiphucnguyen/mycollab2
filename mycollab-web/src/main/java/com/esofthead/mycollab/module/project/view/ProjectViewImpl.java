@@ -81,7 +81,6 @@ import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.SplitButton;
 import com.esofthead.mycollab.vaadin.ui.VerticalTabsheet;
 import com.vaadin.server.Sizeable;
-import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -126,7 +125,7 @@ public class ProjectViewImpl extends AbstractPageView implements ProjectView {
 	public ProjectViewImpl() {
 		this.setWidth("100%");
 
-		this.setMargin(new MarginInfo(true, false, true, false));
+		this.setMargin(false);
 		this.addStyleName("main-content-wrapper");
 		this.addStyleName("projectDashboardView");
 
@@ -139,19 +138,19 @@ public class ProjectViewImpl extends AbstractPageView implements ProjectView {
 
 		myProjectTab = new VerticalTabsheet();
 		myProjectTab.setSizeFull();
-		myProjectTab.setNavigatorWidth("170px");
+		myProjectTab.setNavigatorWidth("100%");
 		myProjectTab.setNavigatorStyleName("sidebar-menu");
 		myProjectTab.setContainerStyleName("tab-content");
 		myProjectTab.setHeight(null);
 
 		VerticalLayout contentWrapper = myProjectTab.getContentWrapper();
-		contentWrapper.setMargin(new MarginInfo(false, false, false, true));
 		contentWrapper.addStyleName("main-content");
 		contentWrapper.addComponentAsFirst(topPanel);
 
 		prjList = new ProjectListComponent();
 		CssLayout navigatorWrapper = myProjectTab.getNavigatorWrapper();
 		navigatorWrapper.addComponentAsFirst(prjList);
+		navigatorWrapper.setWidth("250px");
 
 		buildComponents();
 		this.addComponent(myProjectTab);
