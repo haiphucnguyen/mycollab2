@@ -24,6 +24,7 @@ import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.db.query.CompositionStringParam;
+import com.esofthead.mycollab.core.db.query.ConcatStringParam;
 import com.esofthead.mycollab.core.db.query.Param;
 import com.esofthead.mycollab.core.db.query.PropertyListParam;
 import com.esofthead.mycollab.core.db.query.StringListParam;
@@ -39,11 +40,9 @@ import com.esofthead.mycollab.module.crm.CrmDataTypeFactory;
 public class ContactSearchCriteria extends SearchCriteria {
 	private static final long serialVersionUID = 1L;
 
-	public static Param p_firstname = new StringParam("contact-firstname",
-			"First Name", "m_crm_contact", "firstname");
-
-	public static Param p_lastname = new StringParam("contact-lastname",
-			"Last Name", "m_crm_contact", "lastname");
+	public static Param p_name = new ConcatStringParam("contact-firstname",
+			"Contact Name", "m_crm_contact", new String[] { "firstname",
+					"lastname" });
 
 	public static Param p_leadsource = new StringListParam(
 			"contact-leadsource", "Lead Source", "m_crm_contact", "leadSource",

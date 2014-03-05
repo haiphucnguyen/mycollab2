@@ -61,9 +61,7 @@ public class ContactSearchPanel extends
 		DefaultGenericSearchPanel<ContactSearchCriteria> {
 
 	private static Param[] paramFields = new Param[] {
-			ContactSearchCriteria.p_firstname,
-			ContactSearchCriteria.p_lastname,
-			ContactSearchCriteria.p_leadsource,
+			ContactSearchCriteria.p_name, ContactSearchCriteria.p_leadsource,
 			ContactSearchCriteria.p_billingCountry,
 			ContactSearchCriteria.p_shippingCountry,
 			ContactSearchCriteria.p_anyPhone, ContactSearchCriteria.p_anyEmail,

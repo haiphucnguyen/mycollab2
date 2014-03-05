@@ -7,6 +7,7 @@ import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.db.query.CompositionStringParam;
+import com.esofthead.mycollab.core.db.query.ConcatStringParam;
 import com.esofthead.mycollab.core.db.query.DateParam;
 import com.esofthead.mycollab.core.db.query.DateTimeParam;
 import com.esofthead.mycollab.core.db.query.NumberParam;
@@ -197,6 +198,9 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends
 									.loadData(StringListParam.OPTIONS);
 						} else if (field instanceof CompositionStringParam) {
 							compareSelectionBox.loadData(StringParam.OPTIONS);
+						} else if (field instanceof ConcatStringParam) {
+							compareSelectionBox
+									.loadData(ConcatStringParam.OPTIONS);
 						}
 
 						displayAssociateInputField((Param) fieldSelectionBox
@@ -224,7 +228,8 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends
 			String compareItem = (String) compareSelectionBox.getValue();
 			valueBox.removeAllComponents();
 
-			if (field instanceof StringParam) {
+			if (field instanceof StringParam
+					|| field instanceof ConcatStringParam) {
 				valueBox.addComponent(new TextField());
 			} else if (field instanceof NumberParam) {
 				valueBox.addComponent(new TextField());
@@ -339,6 +344,15 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends
 					TextField field = (TextField) valueBox.getComponent(0);
 					String value = field.getValue();
 					CompositionStringParam wrapParam = (CompositionStringParam) param;
+					return wrapParam.buildSearchField(prefixOperation,
+							compareOper, value);
+				} else if (param instanceof ConcatStringParam) {
+					if (valueBox.getComponentCount() != 1) {
+						return null;
+					}
+					TextField field = (TextField) valueBox.getComponent(0);
+					String value = field.getValue();
+					ConcatStringParam wrapParam = (ConcatStringParam) param;
 					return wrapParam.buildSearchField(prefixOperation,
 							compareOper, value);
 				} else {
