@@ -6220,7 +6220,7 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 .hdr-view, .v-horizontallayout.hdr-view, .advSearchHeader .v-horizontallayout.hdr-view, .basicSearchHeader .hdr-view{
 	background-color: #FFFFFF;
 	/* border-bottom: 1px solid #CFCFCF; */
-	padding: 12px;
+	padding: 12px 30px;
 }
 .hdr-view .hdr-text,.hdr-view .hdr-text  span{
 	font-size: 15px;
@@ -6245,7 +6245,7 @@ img.icon-btn {
 
 
 /* search content */
-.search-content {
+.content-wrapper {
 	padding: 10px 30px;
 }
 .v-slot-timeAdd-popup {

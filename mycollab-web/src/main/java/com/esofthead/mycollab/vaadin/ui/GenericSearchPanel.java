@@ -26,6 +26,7 @@ import com.esofthead.mycollab.web.CustomLayoutExt;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.event.ShortcutListener;
 import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.ListSelect;
 import com.vaadin.ui.TextField;
@@ -123,13 +124,16 @@ public class GenericSearchPanel<S extends SearchCriteria> extends
 		}
 
 		protected void initLayout() {
-			this.header = this.constructHeader();
+			//this.header = this.constructHeader();
 			this.body = this.constructBody();
-			this.addComponent(this.header, "basicSearchHeader");
+			//this.addComponent(this.header, "basicSearchHeader");
 			this.addComponent(this.body, "basicSearchBody");
 		}
 
-		abstract public ComponentContainer constructHeader();
+		/*abstract public ComponentContainer constructHeader();*/
+		public ComponentContainer constructHeader() {
+			return new CssLayout();
+		}
 
 		abstract public ComponentContainer constructBody();
 	}
@@ -148,15 +152,19 @@ public class GenericSearchPanel<S extends SearchCriteria> extends
 		}
 
 		protected void initLayout() {
-			this.header = this.constructHeader();
+			//this.header = this.constructHeader();
 			this.body = this.constructBody();
 			this.footer = this.constructFooter();
-			this.addComponent(this.header, "advSearchHeader");
+			//this.addComponent(this.header, "advSearchHeader");
 			this.addComponent(this.body, "advSearchBody");
 			this.addComponent(this.footer, "advSearchFooter");
 		}
-
-		public abstract ComponentContainer constructHeader();
+		
+		/*abstract public ComponentContainer constructHeader();*/
+		
+		public ComponentContainer constructHeader() {
+			return new CssLayout();
+		}
 
 		public abstract ComponentContainer constructBody();
 

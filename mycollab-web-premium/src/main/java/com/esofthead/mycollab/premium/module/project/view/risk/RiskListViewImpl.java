@@ -17,6 +17,7 @@ import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleRisk;
 import com.esofthead.mycollab.module.project.domain.criteria.RiskSearchCriteria;
 import com.esofthead.mycollab.module.project.events.RiskEvent;
+import com.esofthead.mycollab.module.project.localization.RiskI18nEnum;
 import com.esofthead.mycollab.module.project.service.RiskService;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserLink;
 import com.esofthead.mycollab.module.user.UserLinkUtils;
@@ -27,14 +28,15 @@ import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
 import com.esofthead.mycollab.vaadin.events.MassItemActionHandler;
-import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
+import com.esofthead.mycollab.vaadin.ui.AbstractProjectPageView;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.CheckBoxDecor;
 import com.esofthead.mycollab.vaadin.ui.DefaultMassItemActionHandlersContainer;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.UiUtils;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.vaadin.ui.table.AbstractPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.DefaultPagedBeanTable;
@@ -66,7 +68,7 @@ import com.vaadin.ui.VerticalLayout;
  * 
  */
 @ViewComponent
-public class RiskListViewImpl extends AbstractPageView implements RiskListView {
+public class RiskListViewImpl extends AbstractProjectPageView implements RiskListView {
 
 	private static final long serialVersionUID = 1L;
 	private final RiskSearchPanel riskSearchPanel;
@@ -78,7 +80,13 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
 	private static Logger log = LoggerFactory.getLogger(RiskListViewImpl.class);
 
 	public RiskListViewImpl() {
-
+		super("Risks","risk_selected.png");
+		
+		this.addHeaderRightContent(createHeaderRight());
+		
+		CssLayout contentWrapper = new CssLayout();
+		contentWrapper.setStyleName("content-wrapper");
+		
 		this.riskSearchPanel = new RiskSearchPanel();
 		this.addComponent(this.riskSearchPanel);
 
@@ -511,5 +519,30 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
 			log.error("Error while generate tooltip for Risk", e);
 			return "";
 		}
+	}
+	
+	private HorizontalLayout createHeaderRight() {
+		final HorizontalLayout layout = new HorizontalLayout();
+	
+		final Button createBtn = new Button(
+				LocalizationHelper.getMessage(RiskI18nEnum.NEW_RISK_ACTION),
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void buttonClick(final ClickEvent event) {
+						EventBus.getInstance().fireEvent(
+								new RiskEvent.GotoAdd(this, null));
+					}
+				});
+		createBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		createBtn.setIcon(MyCollabResource
+				.newResource("icons/16/addRecord.png"));
+		createBtn.setEnabled(CurrentProjectVariables
+				.canWrite(ProjectRolePermissionCollections.RISKS));
+
+		UiUtils.addComponent(layout, createBtn, Alignment.MIDDLE_RIGHT);
+
+		return layout;
 	}
 }

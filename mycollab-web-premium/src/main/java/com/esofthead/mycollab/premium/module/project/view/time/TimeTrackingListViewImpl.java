@@ -27,12 +27,15 @@ import com.esofthead.mycollab.module.project.localization.TimeTrackingI18nEnum;
 import com.esofthead.mycollab.module.project.service.ItemTimeLoggingService;
 import com.esofthead.mycollab.module.project.service.ProjectGenericTaskService;
 import com.esofthead.mycollab.module.project.view.time.TimeTrackingTableDisplay;
+import com.esofthead.mycollab.module.user.events.RoleEvent;
 import com.esofthead.mycollab.reporting.ReportExportType;
+import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
+import com.esofthead.mycollab.vaadin.ui.AbstractProjectPageView;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
@@ -52,7 +55,6 @@ import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.DateField;
@@ -63,9 +65,9 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
 @ViewComponent
-public class TimeTrackingListViewImpl extends AbstractPageView implements
+public class TimeTrackingListViewImpl extends AbstractProjectPageView implements
 		TimeTrackingListView {
-	private static final long serialVersionUID = 1L;
+	
 
 	private TimeTrackingTableDisplay tableItem;
 	private final ItemTimeLoggingSearchPanel itemTimeLoggingPanel;
@@ -77,33 +79,18 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements
 	private final Label lbTimeRange;
 	private EntryComponentLayout entryComponentLayout;
 	private boolean isNeedConstructLayout;
-	private Button addNewEntryBtn;
+	private final CssLayout contentWrappers;
+	
 	public TimeTrackingListViewImpl() {
-		final CssLayout headerWrapper = new CssLayout();
-		final VerticalLayout contentWrappers = new VerticalLayout();
-		contentWrappers.setStyleName("search-content");
-		isNeedConstructLayout = true;
-		addNewEntryBtn = new Button("Add Entry");
-		addNewEntryBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
-		addNewEntryBtn.setIcon(MyCollabResource
-				.newResource("icons/16/project/add_time.png"));
-		addNewEntryBtn.addStyleName("v-button-caption-bool");
-		addNewEntryBtn.addClickListener(new Button.ClickListener() {
-		private static final long serialVersionUID = 1L;
-
-		@Override
-		public void buttonClick(ClickEvent event) {
-			if (isNeedConstructLayout) {
-				isNeedConstructLayout = false;
-				entryComponentLayout = new EntryComponentLayout();
-                //int index = TimeTrackingListViewImpl.this.getComponentIndex(headerWrapper) + 1;
-				int index=0;
-				contentWrappers.addComponent(entryComponentLayout, index);
-			}
-		}
-		});	
-		this.addComponent(createSearchTopPanel());
+		super(LocalizationHelper
+				.getMessage(TimeTrackingI18nEnum.SEARCH_TIME_TITLE), "time_selected.png");
+		this.addHeaderRightContent(createHeaderRight());
 		
+		final CssLayout headerWrapper = new CssLayout();
+		isNeedConstructLayout = true;
+		
+		contentWrappers = new CssLayout();
+		contentWrappers.setStyleName("content-wrapper");
 		
 		this.itemTimeLoggingService = ApplicationContextUtil
 				.getSpringBean(ItemTimeLoggingService.class);
@@ -218,30 +205,6 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements
 		this.addComponent(contentWrappers);
 	}
 	
-	private HorizontalLayout createSearchTopPanel() {
-		final HorizontalLayout layout = new HorizontalLayout();
-		layout.setWidth("100%");
-		layout.setSpacing(true);
-		layout.setMargin(true);
-		layout.setStyleName("hdr-view");
-
-		final Image titleIcon = new Image(null, MyCollabResource
-				.newResource("icons/24/project/time.png"));
-		layout.addComponent(titleIcon);
-
-		final Label searchtitle = new Label(
-				LocalizationHelper
-						.getMessage(TimeTrackingI18nEnum.SEARCH_TIME_TITLE));
-		searchtitle.setStyleName("hdr-text");
-		layout.addComponent(searchtitle);
-		layout.setComponentAlignment(searchtitle, Alignment.MIDDLE_LEFT);
-		layout.setExpandRatio(searchtitle, 1.0f);
-	
-	
-			
-		layout.addComponent(addNewEntryBtn);
-		return layout;
-	}
 
 	private StreamResource constructStreamResource(ReportExportType exportType) {
 		final String title = "Time of Project "
@@ -278,7 +241,35 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements
 					TimeTrackingI18nEnum.TASK_LIST_RANGE, fromDate, toDate));
 		}
 	}
+	
+	private HorizontalLayout createHeaderRight()  {
+		final HorizontalLayout layout = new HorizontalLayout();
+		final Button addNewEntryBtn;
+		addNewEntryBtn = new Button("Add Entry");
+		addNewEntryBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		addNewEntryBtn.setIcon(MyCollabResource
+				.newResource("icons/16/project/add_time.png"));
+		addNewEntryBtn.addStyleName("v-button-caption-bool");
+		addNewEntryBtn.addClickListener(new Button.ClickListener() {
+		private static final long serialVersionUID = 1L;
 
+		@Override
+		public void buttonClick(ClickEvent event) {
+			if (isNeedConstructLayout) {
+				isNeedConstructLayout = false;
+				entryComponentLayout = new EntryComponentLayout();
+                //int index = TimeTrackingListViewImpl.this.getComponentIndex(headerWrapper) + 1;
+				int index=0;
+				contentWrappers.addComponent(entryComponentLayout, index);
+			}
+		}
+		});	
+
+		UiUtils.addComponent(layout, addNewEntryBtn, Alignment.MIDDLE_RIGHT);
+
+		return layout;
+	}
+	
 	@Override
 	public void setSearchCriteria(
 			final ItemTimeLoggingSearchCriteria searchCriteria) {

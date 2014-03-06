@@ -16,6 +16,7 @@ import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleProblem;
 import com.esofthead.mycollab.module.project.domain.criteria.ProblemSearchCriteria;
 import com.esofthead.mycollab.module.project.events.ProblemEvent;
+import com.esofthead.mycollab.module.project.localization.ProblemI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProblemService;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserLink;
 import com.esofthead.mycollab.module.user.UserLinkUtils;
@@ -26,14 +27,15 @@ import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
 import com.esofthead.mycollab.vaadin.events.MassItemActionHandler;
-import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
+import com.esofthead.mycollab.vaadin.ui.AbstractProjectPageView;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.CheckBoxDecor;
 import com.esofthead.mycollab.vaadin.ui.DefaultMassItemActionHandlersContainer;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.UiUtils;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.vaadin.ui.table.AbstractPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.DefaultPagedBeanTable;
@@ -65,7 +67,7 @@ import com.vaadin.ui.VerticalLayout;
  * 
  */
 @ViewComponent
-public class ProblemListViewImpl extends AbstractPageView implements
+public class ProblemListViewImpl extends AbstractProjectPageView implements
 		ProblemListView {
 
 	private static final long serialVersionUID = 1L;
@@ -79,14 +81,21 @@ public class ProblemListViewImpl extends AbstractPageView implements
 			.getLogger(ProblemListViewImpl.class);
 
 	public ProblemListViewImpl() {
-
+		super("Problems", "problem_selected.png");
+		
+		this.addHeaderRightContent(createHeaderRight());
+		
+		CssLayout contentWrapper = new CssLayout();
+		contentWrapper.setStyleName("content-wrapper");
+		
 		this.problemSearchPanel = new ProblemSearchPanel();
-		this.addComponent(this.problemSearchPanel);
+		contentWrapper.addComponent(this.problemSearchPanel);
 
 		this.problemListLayout = new VerticalLayout();
-		this.addComponent(this.problemListLayout);
+		contentWrapper.addComponent(this.problemListLayout);
 
 		this.generateDisplayTable();
+		this.addComponent(contentWrapper);
 	}
 
 	private void generateDisplayTable() {
@@ -515,5 +524,31 @@ public class ProblemListViewImpl extends AbstractPageView implements
 			log.error("Error while generate tooltip for Problem", e);
 			return "";
 		}
+	}
+	
+	private HorizontalLayout createHeaderRight() {
+		final HorizontalLayout layout = new HorizontalLayout();
+		
+		final Button createProblemBtn = new Button(
+				LocalizationHelper
+						.getMessage(ProblemI18nEnum.NEW_PROBLEM_ACTION),
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void buttonClick(final ClickEvent event) {
+						EventBus.getInstance().fireEvent(
+								new ProblemEvent.GotoAdd(this, null));
+					}
+				});
+		createProblemBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		createProblemBtn.setIcon(MyCollabResource
+				.newResource("icons/16/addRecord.png"));
+		createProblemBtn.setEnabled(CurrentProjectVariables
+				.canWrite(ProjectRolePermissionCollections.PROBLEMS));
+
+		UiUtils.addComponent(layout, createProblemBtn, Alignment.MIDDLE_RIGHT);
+
+		return layout;
 	}
 }

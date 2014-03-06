@@ -6,13 +6,8 @@ import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
-import com.esofthead.mycollab.eventmanager.EventBus;
-import com.esofthead.mycollab.module.project.CurrentProjectVariables;
-import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.ProblemSearchCriteria;
-import com.esofthead.mycollab.module.project.events.ProblemEvent;
-import com.esofthead.mycollab.module.project.localization.ProblemI18nEnum;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.MyCollabSession;
 import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
@@ -26,10 +21,7 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Image;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
-import com.vaadin.ui.themes.Reindeer;
 
 /**
  * 
@@ -58,46 +50,7 @@ public class ProblemSearchPanel extends
 		this.setCompositionRoot(new ProblemBasicSearchLayout());
 	}
 
-	private HorizontalLayout createSearchTopPanel() {
-		final HorizontalLayout layout = new HorizontalLayout();
-		layout.setWidth("100%");
-		layout.setSpacing(true);
-		layout.setMargin(true);
-
-		final Image titleIcon = new Image();
-		titleIcon.setSource(MyCollabResource
-				.newResource("icons/24/project/problem.png"));
-		layout.addComponent(titleIcon);
-		layout.setComponentAlignment(titleIcon, Alignment.MIDDLE_LEFT);
-
-		final Label problemtitle = new Label("Problems");
-		problemtitle.setStyleName(Reindeer.LABEL_H2);
-		layout.addComponent(problemtitle);
-		layout.setExpandRatio(problemtitle, 1.0f);
-		layout.setComponentAlignment(problemtitle, Alignment.MIDDLE_LEFT);
-
-		final Button createProblemBtn = new Button(
-				LocalizationHelper
-						.getMessage(ProblemI18nEnum.NEW_PROBLEM_ACTION),
-				new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
-
-					@Override
-					public void buttonClick(final ClickEvent event) {
-						EventBus.getInstance().fireEvent(
-								new ProblemEvent.GotoAdd(this, null));
-					}
-				});
-		createProblemBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-		createProblemBtn.setIcon(MyCollabResource
-				.newResource("icons/16/addRecord.png"));
-		createProblemBtn.setEnabled(CurrentProjectVariables
-				.canWrite(ProjectRolePermissionCollections.PROBLEMS));
-
-		UiUtils.addComponent(layout, createProblemBtn, Alignment.MIDDLE_RIGHT);
-
-		return layout;
-	}
+	
 
 	@SuppressWarnings("rawtypes")
 	private class ProblemBasicSearchLayout extends BasicSearchLayout {
@@ -110,11 +63,6 @@ public class ProblemSearchPanel extends
 		private static final long serialVersionUID = 1L;
 		private TextField nameField;
 		private CheckBox myItemCheckbox;
-
-		@Override
-		public ComponentContainer constructHeader() {
-			return ProblemSearchPanel.this.createSearchTopPanel();
-		}
 
 		@Override
 		public ComponentContainer constructBody() {
