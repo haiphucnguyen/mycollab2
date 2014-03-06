@@ -6,13 +6,8 @@ import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
-import com.esofthead.mycollab.eventmanager.EventBus;
-import com.esofthead.mycollab.module.project.CurrentProjectVariables;
-import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.RiskSearchCriteria;
-import com.esofthead.mycollab.module.project.events.RiskEvent;
-import com.esofthead.mycollab.module.project.localization.RiskI18nEnum;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.MyCollabSession;
 import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
@@ -26,10 +21,7 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Image;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
-import com.vaadin.ui.themes.Reindeer;
 
 /**
  * 
@@ -58,45 +50,7 @@ public class RiskSearchPanel extends GenericSearchPanel<RiskSearchCriteria> {
 		this.setCompositionRoot(new RiskBasicSearchLayout());
 	}
 
-	private HorizontalLayout createSearchTopPanel() {
-		final HorizontalLayout layout = new HorizontalLayout();
-		layout.setStyleName("hdr-view");
-		layout.setWidth("100%");
-		layout.setSpacing(true);
-		layout.setMargin(true);
-
-		final Image titleIcon = new Image(null,
-				MyCollabResource.newResource("icons/24/project/risk.png"));
-		layout.addComponent(titleIcon);
-		layout.setComponentAlignment(titleIcon, Alignment.MIDDLE_LEFT);
-
-		final Label risktitle = new Label("Risks");
-		//risktitle.setStyleName(Reindeer.LABEL_H2);
-		risktitle.setStyleName("hdr-text");
-		layout.addComponent(risktitle);
-		layout.setExpandRatio(risktitle, 1.0f);
-		layout.setComponentAlignment(risktitle, Alignment.MIDDLE_LEFT);
-		final Button createBtn = new Button(
-				LocalizationHelper.getMessage(RiskI18nEnum.NEW_RISK_ACTION),
-				new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
-
-					@Override
-					public void buttonClick(final ClickEvent event) {
-						EventBus.getInstance().fireEvent(
-								new RiskEvent.GotoAdd(this, null));
-					}
-				});
-		createBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-		createBtn.setIcon(MyCollabResource
-				.newResource("icons/16/addRecord.png"));
-		createBtn.setEnabled(CurrentProjectVariables
-				.canWrite(ProjectRolePermissionCollections.RISKS));
-
-		UiUtils.addComponent(layout, createBtn, Alignment.MIDDLE_RIGHT);
-
-		return layout;
-	}
+	
 
 	@SuppressWarnings("rawtypes")
 	private class RiskBasicSearchLayout extends BasicSearchLayout {
@@ -109,11 +63,6 @@ public class RiskSearchPanel extends GenericSearchPanel<RiskSearchCriteria> {
 		private static final long serialVersionUID = 1L;
 		private TextField nameField;
 		private CheckBox myItemCheckbox;
-
-		@Override
-		public ComponentContainer constructHeader() {
-			return RiskSearchPanel.this.createSearchTopPanel();
-		}
 
 		@Override
 		public ComponentContainer constructBody() {

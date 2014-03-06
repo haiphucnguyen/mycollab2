@@ -74,14 +74,13 @@ public class BugListViewImpl extends AbstractProjectPageView implements BugListV
 	private SplitButton exportButtonControl;
 
 	public BugListViewImpl() {
-		super(LocalizationHelper.getMessage(BugI18nEnum.BUG_SEARCH_TITLE), "bug.png");
+		super(LocalizationHelper.getMessage(BugI18nEnum.BUG_SEARCH_TITLE), "bug_selected.png");
 
-		this.setMargin(true);
-		
 		this.addHeaderRightContent(createHeaderRight());
 		
 		CssLayout contentWrapper = new CssLayout();
 		contentWrapper.setStyleName("content-wrapper");
+		
 		this.bugSearchPanel = new BugSearchPanel();
 		contentWrapper.addComponent(this.bugSearchPanel);
 

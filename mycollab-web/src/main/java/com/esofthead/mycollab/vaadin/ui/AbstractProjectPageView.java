@@ -21,7 +21,7 @@ public class AbstractProjectPageView extends AbstractPageView{
 		
 		this.headerRight = new CssLayout();
 		this.titleIcon = new Image(null,
-				MyCollabResource.newResource("icons/24/project/"+iconName));
+				MyCollabResource.newResource("icons/22/project/"+iconName));
 		this.headerText = new Label(headerText);
 		this.addComponent(constructHeader());
 
