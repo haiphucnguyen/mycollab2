@@ -98,7 +98,6 @@ div.v-button .v-button-link .link .v-button-buttonlinkcenter .buttonlinkcenter .
 .v-button-link .v-button-caption,.v-button-link-buttonlinkcenter .v-button-caption
 	{
 	text-decoration: none;
-	padding-left: 1px;
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
@@ -267,7 +266,7 @@ div.v-button-link.v-button-no-margin .v-button-wrap,div.v-button-link:focus
 .v-button-wrap, .v-disabled:active .v-button-wrap, .v-button:active .v-button-wrap, .v-ie8  .v-pressed.v-button .v-button-wrap {
 	border:none;
 	border-top:1px solid transparent;
-	padding: 6px 7px;
+	padding: 6px 15px;
 	/* background-color: #F9F9F9; */
 	/* color: #525252; */
 	background-image:none;
@@ -1620,46 +1619,61 @@ input.v-textfield-errorField {
 	background-color: #7B7B7B;
 }
 .projectDashboardView .navigator-wrap .project-list-comp {
-	border-bottom: none;
-	padding: 15px;
-}
-.projectDashboardView .navigator-wrap .project-list-comp.isExpanded {
-	border-bottom: 1px solid #CFCFCF;
+	padding: 13px 13px 0px;
 }
 .projectDashboardView .navigator-wrap .project-list-comp .project-list-comp-hdr {
 	background-color: #EEEEEE;
-	border-bottom: 1px solid #CFCFCF;
 	cursor: pointer;
-	background-image: url('icons/16/depot_arrow_down.png');
 	background-position: right 10px center;
 	background-repeat: no-repeat;
+	border-radius: 5px;
 }
-.projectDashboardView .navigator-wrap .project-list-comp .project-list-comp-hdr .v-label {
-	cursor: pointer;
+
+.v-popupbutton-popup.v-popupbutton-popup-project-list-comp-hdr {
+	padding: 0px;
+	border: 1px solid #CFCFCF;
+}
+
+.projectDashboardView .navigator-wrap .project-list-comp .project-list-comp-hdr .v-button-wrap {
+	text-align: left;
 	font-size: 13px;
 }
 
-.projectDashboardView .navigator-wrap .project-list-comp .project-list-comp-hdr.v-margin-top {
-	padding-top: 15px;
-}
-.projectDashboardView .navigator-wrap .project-list-comp .project-list-comp-hdr.v-margin-right {
-	padding-right: 15px;
-}
-.projectDashboardView .navigator-wrap .project-list-comp .project-list-comp-hdr.v-margin-bottom {
-	padding-bottom: 15px;
-}
-.projectDashboardView .navigator-wrap .project-list-comp .project-list-comp-hdr.v-margin-left {
-	padding-left: 15px;
+.projectDashboardView .navigator-wrap .project-list-comp .project-list-comp-hdr .v-button-wrap .v-icon {
+	vertical-align: middle;
 }
 
-.projectDashboardView .navigator-wrap .project-list-comp .project-name {
+.projectDashboardView .navigator-wrap .project-list-comp .project-list-comp-hdr .v-button-wrap .v-button-caption {
+	vertical-align: middle;
+}
+
+.projectDashboardView .navigator-wrap .project-list-comp .project-list-comp-hdr.v-margin-top {
+	padding-top: 8px;
+}
+.projectDashboardView .navigator-wrap .project-list-comp .project-list-comp-hdr.v-margin-right {
+	padding-right: 13px;
+}
+.projectDashboardView .navigator-wrap .project-list-comp .project-list-comp-hdr.v-margin-bottom {
+	padding-bottom: 8px;
+}
+.projectDashboardView .navigator-wrap .project-list-comp .project-list-comp-hdr.v-margin-left {
+	padding-left: 13px;
+}
+
+.projectDashboardView .navigator-wrap .project-list-comp .project-list-comp-hdr .v-popup-indicator {
+	position: absolute;
+	right: 25px;
+	top: 23px;
+}
+
+.project-list-comp-content .project-name {
 	background-color: #F7F7F7;
 	cursor: pointer;
 }
-.projectDashboardView .navigator-wrap .project-list-comp .project-name.current-project {
+.project-list-comp-content .project-name.current-project {
 	font-weight: bold;
 }
-.projectDashboardView .navigator-wrap .project-list-comp .project-name:hover {
+.project-list-comp-content .project-name:hover {
 	background: none no-repeat scroll 0px 0px #007EBB;
 	color: #FFF;
 }
@@ -1678,6 +1692,12 @@ input.v-textfield-errorField {
 	/* padding: 0px 13px; */
 }
 
+.projectDashboardView .navigator-wrap .project-list-comp .project-description {
+	color: #FFFFFF;
+	padding: 20px 10px;
+	border-bottom: 1px solid #CFCFCF;
+}
+
 .projectDashboardView .container-wrap.main-content .tab-content {
 	min-height: 599px;
 	border-width: 1px 0px 0px 1px;
@@ -1689,15 +1709,23 @@ input.v-textfield-errorField {
 }
 
 .projectDashboardView .container-wrap.main-content .top-panel {
-	background-color: #EEEEEE;
+	background-color: #FFFFFF;
 	border-bottom: 1px solid #CFCFCF;
 }
 .projectDashboardView .container-wrap.main-content .top-panel.v-margin-top {
 	padding-top: 10px;
 }
 
+.projectDashboardView .container-wrap.main-content .top-panel.v-margin-right {
+	padding-right: 30px;
+}
+
 .projectDashboardView .container-wrap.main-content .top-panel.v-margin-bottom {
 	padding-bottom: 10px;
+}
+
+.projectDashboardView .container-wrap.main-content .top-panel.v-margin-left {
+	padding-left: 30px;
 }
 
 .projectDashboardView .container-wrap.main-content > .v-slot > .tab-content {
@@ -1845,7 +1873,7 @@ input.v-textfield-errorField {
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
 	border: 1px solid #BCBCBC;
-	background: none no-repeat left top #f7f7f7;
+	background: none no-repeat left top #FFFFFF;
 	border-radius: 0px;
 }
 
@@ -1856,7 +1884,7 @@ input.v-textfield-errorField {
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
-	background: none no-repeat left top #F7F7F7;
+	background: none no-repeat left top #dcdffe;
 	border-radius: 0px;
 }
 
@@ -2014,7 +2042,7 @@ input.v-textfield-errorField {
 	border-style: solid;
 	border-color: #BCBCBC;
 	border-radius: 0px;
-	background: none no-repeat 0 0 #F7F7F7;
+	background: none no-repeat 0 0 #DCDFFE;
 }
 
 .depotComp .depotHeader .header-elements.colored-header .v-button .v-button-caption
@@ -2474,7 +2502,7 @@ td.v-tabsheet-spacertd div {
 }
 
 .activity-stream {
-	background-color: #F7F7F7;
+	background-color: #FFFFFF;
 	border-color: #BCBCBC;
 	border-width: 0px 1px 1px;
 	border-style: solid;
@@ -2482,7 +2510,7 @@ td.v-tabsheet-spacertd div {
 }
 
 .activity-stream.odd {
-	background-color: rgb(212, 223, 239);
+	background-color: #F7F7F7;
 }
 
 .v-tabsheet-tabsheetpanel .activity-panel .v-lazyloadingwrapper>.v-verticallayout>div>div:first-child .activity-stream
@@ -2791,11 +2819,11 @@ div.v-splitbutton,div.v-splitbutton .v-button {
     padding-right: 0px;
 }*/
 .v-table-row {
-	background: none repeat scroll 0% 0% rgb(212, 223, 239);
+	background: none repeat scroll 0% 0% #F7F7F7;
 }
 
 .v-table-row-odd {
-	background: none repeat scroll 0% 0% rgb(247, 247, 247);
+	background: none repeat scroll 0% 0% #FFFFFF;
 }
 
 .v-csslayout-listControl {
@@ -2804,7 +2832,7 @@ div.v-splitbutton,div.v-splitbutton .v-button {
 	border-style: solid;
 	border-color: #BCBCBC;
 	border-radius: 0px 0px 3px 3px;
-	background: none no-repeat 0 0 #f5f5f5;
+	background: none no-repeat 0 0 #ffffff;
 }
 
 .project-member-readview .v-csslayout-listControl {
@@ -3154,6 +3182,10 @@ div.v-splitbutton,div.v-splitbutton .v-button {
 	background-color: transparent !important;
 }
 
+.xbreadcrumbs > .v-slot:first-child > li {
+	padding-left: 0px;
+}
+
 .xbreadcrumbs li {
 	padding-bottom: 8px !important;
 }
@@ -3235,7 +3267,7 @@ div.v-button-link.xbreadcrumbbutton .v-button-wrap {
 }
 
 .widget-row {
-	background-color: rgb(247, 247, 247);
+	background-color: #FFFFFF;
 	border-width: 0px 1px 1px 1px;
 	border-style: solid;
 	border-color: rgb(169, 169, 169);
@@ -3243,7 +3275,7 @@ div.v-button-link.xbreadcrumbbutton .v-button-wrap {
 }
 
 .widget-row.odd {
-	background-color: rgb(212, 223, 239);
+	background-color: #F7F7F7;
 }
 /* End Bug Widget */
 
@@ -3884,7 +3916,7 @@ div.v-csslayout.member-block {
 	border-color: #bebebe;
 }
 
-.member-block .member-name {
+.member-block .member-name, .member-block .member-name:focus {
 	font-size: 14px;
 	border-bottom: 1px solid #CFCFCF;
 	padding-bottom: 5px;
@@ -4291,7 +4323,7 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 }
 
 .readview-layout-body .v-gridlayout-margin .gridform-caption {
-	background-color: rgb(212, 223, 239);
+	background-color: #E0E0E0;
 	border-left: 1px solid #BCBCBC;
 	border-right: 1px solid #c8c8c8;
 }
@@ -4469,7 +4501,7 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 }
 
 .addview-layout-body .gridform-caption {
-	background-color: rgb(212, 223, 239);
+	background-color: #E0E0E0;
 	border-left: 1px solid #BCBCBC;
 	border-right: 1px solid #c8c8c8;
 }
@@ -4636,7 +4668,7 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 }
 
 .colored-gridlayout .gridform-caption {
-	background-color: rgb(212, 223, 239);
+	background-color: #E0E0E0;
 	border-left: 1px solid #BCBCBC;
 	border-right: 1px solid #c8c8c8;
 }
@@ -4717,7 +4749,7 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 }
 
 .taskdisplay-component {
-    background-color: rgb(245, 245, 245);
+    background-color: #FFFFFF;
 }
 
 .v-tabsheet-content .task-list .task-list-footer {
@@ -5846,6 +5878,7 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 	border: none;
 	background: none no-repeat 0 0 transparent;
 	border-radius: 0px;
+	-webkit-box-shadow: none;
 	/* padding: 4px 13px; */
 }
 
@@ -5854,7 +5887,7 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 	border-radius: 0px;
 	text-align: left;
 	border: none;
-	padding: 9px 13px;
+	padding: 9px 25px;
 	transition:All 0.2s ease;
 	-webkit-transition:All 0.2s ease;
 	-moz-transition:All 0.2s ease;
@@ -6192,7 +6225,7 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 .splitbutton .v-button.action-button:active {
 	border-color:#BCBCBC;	
 }
-.splitbutton .v-button.action-button .v-button-wrap {
+.splitbutton .v-button.action-button .v-button-wrap {p
 	padding: 6px 12px 6px 12px !important;
 	border:none;
 	border-top:1px solid transparent;
@@ -6246,7 +6279,7 @@ img.icon-btn {
 
 /* search content */
 .content-wrapper {
-	padding: 10px 30px;
+	padding: 0px 30px 10px;
 }
 .v-slot-timeAdd-popup {
 	padding-bottom:12px;
@@ -6327,4 +6360,7 @@ img.icon-btn {
 	font-size: 13px;
 }
 
-
+/*Project Members Widget */
+.project-member-widget .username .v-button-wrap {
+	padding: 0px;
+}
