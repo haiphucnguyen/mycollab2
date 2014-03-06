@@ -1599,18 +1599,21 @@ input.v-textfield-errorField {
 /* End Account Settings */
 
 /* Project Management */
-
+.project-module {
+	min-height: 100%;
+	background: url("icons/project-module-bg.jpg") repeat-y left top #FFFFFF;
+}
 
 .projectDashboardView.main-content-wrapper.v-verticallayout.v-margin-bottom {
 	padding-bottom: 0;
 }
 
 .projectDashboardView .navigator-wrap {
-	background-color: #FFFFFF;
-	/* border: 1px solid #BCBCBC; */
+	background-color: #7B7B7B;
 }
 .projectDashboardView .navigator-wrap .project-list-comp {
 	border-bottom: none;
+	padding: 15px;
 }
 .projectDashboardView .navigator-wrap .project-list-comp.isExpanded {
 	border-bottom: 1px solid #CFCFCF;
@@ -1679,10 +1682,7 @@ input.v-textfield-errorField {
 
 .projectDashboardView .container-wrap.main-content .top-panel {
 	background-color: #EEEEEE;
-	border-style: solid;
-	border-width: 1px;
-	border-color: #BCBCBC #BCBCBC #CFCFCF #BCBCBC;
-	border-radius: 0px;
+	border-bottom: 1px solid #CFCFCF;
 }
 .projectDashboardView .container-wrap.main-content .top-panel.v-margin-top {
 	padding-top: 10px;
@@ -1693,9 +1693,10 @@ input.v-textfield-errorField {
 }
 
 .projectDashboardView .container-wrap.main-content > .v-slot > .tab-content {
-	border-width: 0px 1px 1px;
+	/* border-width: 0px 1px 1px;
 	border-color: #BCBCBC;
-	border-radius: 0px;
+	border-radius: 0px; */
+	border: none;
 }
 
 .projectDashboardView .v-label-h1,.projectDashboardView .v-label h1 {
@@ -1738,11 +1739,6 @@ input.v-textfield-errorField {
 	margin: 3px 0px;
 }
 
-.projectDashboardView .sidebar-menu .tab-selected,.accountViewContainer .sidebar-menu .selected
-	{
-	/* background: none no-repeat scroll 0px 0px rgb(40, 126, 206); */
-}
-
 .projectDashboardView .v-nativebutton .v-nativebutton-caption {
 	padding: 5px 0px 4px 15px !important;
 	border-radius: 0px;
@@ -1761,8 +1757,6 @@ input.v-textfield-errorField {
 
 .projectDashboardView .v-label-h2,.v-label h2 {
 	font-size:12px;
-/* 	margin-top: 3px; */
-/* 	line-height: 20px!important; */
 	font-weight : bold;
 	padding: 0px;
 }
@@ -5854,14 +5848,11 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 	-webkit-transition:All 0.2s ease;
 	-moz-transition:All 0.2s ease;
 	-o-transition:All 0.2s ease;
-}
-.vertical-tabsheet .v-button-tab>.v-button-wrap:hover {
-	background: none no-repeat 0 0 #007EBB;
-	color:white;
+	color: #FFFFFF;
 }
 .vertical-tabsheet .v-button-tab.tab-selected>.v-button-wrap {
-	background: none no-repeat 0 0 #007EBB;
-
+	background: none no-repeat 0 0 #FFFFFF;
+	color: #525252;
 }
 
 .vertical-tabsheet .v-button-tab>.v-button-wrap>.v-icon {
