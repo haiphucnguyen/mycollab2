@@ -1600,8 +1600,16 @@ input.v-textfield-errorField {
 
 /* Project Management */
 .project-module {
+	display: block;
+	min-height: 100%;
+}
+.projectDashboardView {
 	min-height: 100%;
 	background: url("icons/project-module-bg.jpg") repeat-y left top #FFFFFF;
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: block;
 }
 
 .projectDashboardView.main-content-wrapper.v-verticallayout.v-margin-bottom {
@@ -1773,7 +1781,7 @@ input.v-textfield-errorField {
 }
 
 .projectDashboardView .v-tabsheet-content {
-	background-color: #F5F5F5;
+	background-color: #FFFFFF;
 }
 
 .projectDashboardView .Milestones .v-tabsheet-content {
@@ -2384,12 +2392,15 @@ input.v-textfield-errorField {
 }
 
 .v-tabsheet-tabs {
-	background-color: rgb(227, 227, 227);
+	background-color: rgb(247, 247, 247)
 }
 
 .v-tabsheet-content {
-	background-color: rgb(245, 245, 245);
+	background-color: rgb(255, 255, 255);
 	border: none;
+}
+td.v-tabsheet-spacertd div {
+	border-color: #CFCFCF;
 }
 
 .v-tabsheet-tabitem .v-caption {
@@ -2408,9 +2419,9 @@ input.v-textfield-errorField {
 }
 
 .v-tabsheet-tabitem.v-tabsheet-tabitem-selected {
-	background-color: rgb(245, 245, 245);
+	background-color: rgb(255, 255, 255);
 	border-radius: 0px;
-	border-bottom-color: rgb(245, 245, 245);
+	border-bottom-color: rgb(255, 255, 255);
 }
 
 .v-tabsheet-tabitem {
@@ -2420,7 +2431,7 @@ input.v-textfield-errorField {
 	padding: 0px;
 	border-width: 0px 1px 1px 0px;
 	border-style: solid;
-	border-color: rgb(169, 169, 169);
+	border-color: #CFCFCF;
 }
 
 .v-tabsheet-tabitemcell.v-tabsheet-tabitemcell-selected {
@@ -6042,9 +6053,6 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 	padding-bottom: 0px;
 }
 
-.projectmember-view .v-tabsheet-content .date-wrapper, .projectmember-view .v-tabsheet-content .stream-wrapper {
-	border-width: 0px 0px 1px;
-}
 .projectmember-view .v-tabsheet-content .listControl {
  	border-width: 0px;
 }
@@ -6260,7 +6268,7 @@ img.icon-btn {
 	color: #FFFFFF;
 	cursor: pointer;
 }
-.project-activity-list .year-lbl {
+.year-lbl {
 	padding-left: 52px;
 	padding-right: 10px;
 	line-height: 49px;
@@ -6312,10 +6320,10 @@ img.icon-btn {
 .feed-block .stream-wrapper:first-child {
 	border-width: 0px;
 }
-.project-activity-list .page-controls {
+.page-controls {
 	padding-top: 12px;
 }
-.project-activity-list .page-controls .v-button .v-button-caption {
+.page-controls .v-button .v-button-caption {
 	font-size: 13px;
 }
 
