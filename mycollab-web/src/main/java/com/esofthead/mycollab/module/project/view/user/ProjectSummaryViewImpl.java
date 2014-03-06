@@ -17,9 +17,10 @@
 package com.esofthead.mycollab.module.project.view.user;
 
 import com.esofthead.mycollab.module.project.view.ProjectInformationComponent;
-import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
+import com.esofthead.mycollab.vaadin.ui.AbstractProjectPageView;
 import com.vaadin.shared.ui.MarginInfo;
+import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.VerticalLayout;
 
@@ -31,7 +32,7 @@ import com.vaadin.ui.VerticalLayout;
  */
 @SuppressWarnings("serial")
 @ViewComponent
-public class ProjectSummaryViewImpl extends AbstractPageView implements
+public class ProjectSummaryViewImpl extends AbstractProjectPageView implements
 ProjectSummaryView {
 
 	private final ProjectActivityStreamComponent activityPanel;
@@ -41,16 +42,21 @@ ProjectSummaryView {
 	private final ProjectMessageListComponent messageWidget;
 
 	public ProjectSummaryViewImpl() {
-		this.setMargin(true);
+		super("Dashboard", "dashboard_selected.png");
 		this.setSpacing(true);
 
+		CssLayout contentWrapper = new CssLayout();
+		contentWrapper.setStyleName("content-wrapper");
+		contentWrapper.setWidth("100%");
+		this.addComponent(contentWrapper);
+
 		this.prjView = new ProjectInformationComponent();
-		this.addComponent(this.prjView);
+		contentWrapper.addComponent(this.prjView);
 
 		final HorizontalLayout layout = new HorizontalLayout();
 		layout.setWidth("100%");
 		layout.setSpacing(true);
-		this.addComponent(layout);
+		contentWrapper.addComponent(layout);
 
 		final VerticalLayout leftPanel = new VerticalLayout();
 
