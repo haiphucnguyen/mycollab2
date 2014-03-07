@@ -46,7 +46,7 @@ public class ReadViewLayout extends CustomLayoutExt {
 
         this.icon = new Image();
         this.setTitleIcon(icon);
-        this.header.addComponent(this.icon);
+        /*this.header.addComponent(this.icon);*/
         this.titleLbl = new Label();
         this.titleLbl.setStyleName("headerName");
         this.titleLbl.setImmediate(true);

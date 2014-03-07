@@ -19,10 +19,8 @@ package com.esofthead.mycollab.module.project.view.milestone;
 
 import com.esofthead.mycollab.module.project.domain.SimpleMilestone;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
-import com.esofthead.mycollab.vaadin.ui.AbstractProjectPageView;
-import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.CssLayout;
 
 /**
  * 
@@ -30,27 +28,19 @@ import com.vaadin.ui.CssLayout;
  * @since 1.0
  */
 @ViewComponent
-public class MilestoneReadViewImpl extends AbstractProjectPageView implements
+public class MilestoneReadViewImpl extends AbstractPageView implements
 		MilestoneReadView {
 
 	private static final long serialVersionUID = 1L;
 	private final MilestoneReadComp milestonePreview;
 
 	public MilestoneReadViewImpl() {
-		super("Phase Detail", "phase_selected.png");
-		CssLayout contentWrapper = new CssLayout(); 
-		contentWrapper.setStyleName("content-wrapper");
+		super();
 		
 		this.milestonePreview = new MilestoneReadComp();
 		
-		ComponentContainer actionControls = this.milestonePreview.createButtonControls();
-		if (actionControls != null) {
-			actionControls.addStyleName("control-buttons");
-		this.addHeaderRightContent(actionControls);
-		}
-		
-		contentWrapper.addComponent(this.milestonePreview);
-		this.addComponent(contentWrapper);
+		this.addComponent(this.milestonePreview);
+
 	}
 
 	@Override
