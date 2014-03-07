@@ -39,7 +39,7 @@ class RiskReadComp extends AbstractPreviewItemComp<SimpleRisk> {
 	private RiskHistoryList historyList;
 
 	public RiskReadComp() {
-		super(MyCollabResource.newResource("icons/22/project/menu_risk.png"));
+		super("Risk Detail", MyCollabResource.newResource("icons/22/project/risk_selected.png"));
 	}
 
 	@Override

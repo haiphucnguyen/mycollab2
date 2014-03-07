@@ -39,7 +39,7 @@ class ProblemReadComp extends AbstractPreviewItemComp<SimpleProblem> {
 	private ProblemHistoryList historyList;
 
 	public ProblemReadComp() {
-		super(MyCollabResource.newResource("icons/22/project/menu_problem.png"));
+		super("Problem Detail", MyCollabResource.newResource("icons/22/project/problem_selected.png"));
 	}
 
 	@Override

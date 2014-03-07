@@ -5618,6 +5618,7 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 	max-height: 450px;
 	overflow-x: hidden;
 	overflow-y: scroll;
+	padding:0;
 }
 
 .deleteSection .customFieldComponent {
@@ -6374,6 +6375,7 @@ img.icon-btn {
 .page-controls .v-button .v-button-caption {
 	font-size: 13px;
 }
+
 
 /*Project Members Widget */
 .project-member-widget .username .v-button-wrap {
