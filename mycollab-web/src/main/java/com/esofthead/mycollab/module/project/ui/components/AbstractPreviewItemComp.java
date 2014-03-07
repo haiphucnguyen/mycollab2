@@ -50,11 +50,6 @@ public abstract class AbstractPreviewItemComp<B> extends VerticalLayout
 		this.addComponent(previewLayout);
 
 		previewForm = initPreviewForm();
-		ComponentContainer actionControls = createButtonControls();
-		if (actionControls != null) {
-			actionControls.addStyleName("control-buttons");
-			previewLayout.addTopControls(actionControls);
-		}
 
 		previewLayout.addBody(previewForm);
 	}

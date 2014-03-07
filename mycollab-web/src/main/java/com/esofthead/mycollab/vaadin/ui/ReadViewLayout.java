@@ -89,10 +89,6 @@ public class ReadViewLayout extends CustomLayoutExt {
         this.titleLbl.removeStyleName(styleName);
     }
 
-    public void addTopControls(final ComponentContainer topControls) {
-        this.addComponent(topControls, "readViewTopControls");
-    }
-
     public void setTitle(final String title) {
         this.titleLbl.setValue(title);
     }

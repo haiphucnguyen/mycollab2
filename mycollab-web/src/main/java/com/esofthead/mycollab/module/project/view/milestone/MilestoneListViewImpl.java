@@ -103,8 +103,8 @@ public class MilestoneListViewImpl extends AbstractProjectPageView implements
 				Alignment.MIDDLE_CENTER);
 
 		bodyContent.addComponent(closedHeaderLayout, "closed-header");
-		this.closeContainer = new VerticalLayout();
-		this.closeContainer.setWidth("100%");
+		closeContainer = new VerticalLayout();
+		closeContainer.setWidth("100%");
 		bodyContent.addComponent(this.closeContainer, "closed-milestones");
 
 		final HorizontalLayout inProgressHeaderLayout = new HorizontalLayout();
@@ -122,8 +122,8 @@ public class MilestoneListViewImpl extends AbstractProjectPageView implements
 				Alignment.MIDDLE_CENTER);
 
 		bodyContent.addComponent(inProgressHeaderLayout, "in-progress-header");
-		this.inProgressContainer = new VerticalLayout();
-		this.inProgressContainer.setWidth("100%");
+		inProgressContainer = new VerticalLayout();
+		inProgressContainer.setWidth("100%");
 		bodyContent.addComponent(this.inProgressContainer,
 				"in-progress-milestones");
 
@@ -142,8 +142,8 @@ public class MilestoneListViewImpl extends AbstractProjectPageView implements
 				Alignment.MIDDLE_CENTER);
 
 		bodyContent.addComponent(futureHeaderLayout, "future-header");
-		this.futureContainer = new VerticalLayout();
-		this.futureContainer.setWidth("100%");
+		futureContainer = new VerticalLayout();
+		futureContainer.setWidth("100%");
 		bodyContent.addComponent(this.futureContainer, "future-milestones");
 		
 	}
