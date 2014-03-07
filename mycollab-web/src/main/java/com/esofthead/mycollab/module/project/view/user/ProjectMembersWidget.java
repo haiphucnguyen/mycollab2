@@ -83,6 +83,7 @@ public class ProjectMembersWidget extends Depot {
 			HorizontalLayout layout = new HorizontalLayout();
 			layout.setWidth("100%");
 			layout.setStyleName("activity-stream");
+			layout.addStyleName("odd");
 			layout.setSpacing(true);
 			layout.addComponent(new Image(null, UserAvatarControlFactory.createAvatarResource(
 					member.getMemberAvatarId(), 48)));

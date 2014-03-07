@@ -17,8 +17,8 @@
 package com.esofthead.mycollab.module.project.view.user;
 
 import com.esofthead.mycollab.module.project.view.ProjectInformationComponent;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
-import com.esofthead.mycollab.vaadin.ui.AbstractProjectPageView;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
@@ -32,7 +32,7 @@ import com.vaadin.ui.VerticalLayout;
  */
 @SuppressWarnings("serial")
 @ViewComponent
-public class ProjectSummaryViewImpl extends AbstractProjectPageView implements
+public class ProjectSummaryViewImpl extends AbstractPageView implements
 ProjectSummaryView {
 
 	private final ProjectActivityStreamComponent activityPanel;
@@ -42,7 +42,7 @@ ProjectSummaryView {
 	private final ProjectMessageListComponent messageWidget;
 
 	public ProjectSummaryViewImpl() {
-		super("Dashboard", "dashboard_selected.png");
+		this.setMargin(new MarginInfo(true, false, false, false));
 		this.setSpacing(true);
 
 		CssLayout contentWrapper = new CssLayout();

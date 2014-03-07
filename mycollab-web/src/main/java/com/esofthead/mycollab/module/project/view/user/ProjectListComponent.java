@@ -60,7 +60,7 @@ public class ProjectListComponent extends VerticalLayout {
 
 		contentLayout = new VerticalLayout();
 		contentLayout.setStyleName("project-list-comp-content");
-		contentLayout.setWidth("222px");
+		contentLayout.setWidth("202px");
 
 		projectList = new ProjectPagedList();
 		headerLayout.setContent(projectList);
