@@ -103,6 +103,9 @@ public class VerticalTabsheet extends CustomComponent {
 						VerticalTabsheet.this));
 			}
 		});
+		if (resource == null)
+			setDefaulButtonIcon(button, false);
+		else
 		button.setIcon(resource);
 		button.setStyleName(TAB_STYLENAME);
 		button.setWidth("100%");

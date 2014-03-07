@@ -79,7 +79,6 @@ import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.SplitButton;
-import com.esofthead.mycollab.vaadin.ui.VerticalTabsheet;
 import com.vaadin.server.Sizeable;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -105,7 +104,7 @@ public class ProjectViewImpl extends AbstractPageView implements ProjectView {
 
 	private static Logger log = LoggerFactory.getLogger(ProjectViewImpl.class);
 
-	private final VerticalTabsheet myProjectTab;
+	private final ProjectVerticalTabsheet myProjectTab;
 	private final HorizontalLayout topPanel;
 	private ProjectDashboardPresenter dashboardPresenter;
 	private MessagePresenter messagePresenter;
@@ -136,7 +135,7 @@ public class ProjectViewImpl extends AbstractPageView implements ProjectView {
 		topPanel.setMargin(true);
 		topPanel.setStyleName("top-panel");
 
-		myProjectTab = new VerticalTabsheet();
+		myProjectTab = new ProjectVerticalTabsheet();
 		myProjectTab.setSizeFull();
 		myProjectTab.setNavigatorWidth("100%");
 		myProjectTab.setNavigatorStyleName("sidebar-menu");
@@ -184,7 +183,7 @@ public class ProjectViewImpl extends AbstractPageView implements ProjectView {
 
 			@Override
 			public void selectedTabChange(SelectedTabChangeEvent event) {
-				Tab tab = ((VerticalTabsheet) event.getSource())
+				Tab tab = ((ProjectVerticalTabsheet) event.getSource())
 						.getSelectedTab();
 				String caption = tab.getCaption();
 				if ("Messages".equals(caption)) {
@@ -532,4 +531,6 @@ public class ProjectViewImpl extends AbstractPageView implements ProjectView {
 		PageView component = (PageView) myProjectTab.selectTab(name);
 		return component;
 	}
+	
+	
 }
