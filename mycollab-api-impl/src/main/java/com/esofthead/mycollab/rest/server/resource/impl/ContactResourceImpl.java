@@ -61,6 +61,6 @@ public class ContactResourceImpl implements ContactResource {
 				new String[] { "hainguyen@esofthead.com" },
 				"New guy wanna contact you!",
 				templateGenerator.generateBodyContent());
-		return "OK";
+		return "Success";
 	}
 }
