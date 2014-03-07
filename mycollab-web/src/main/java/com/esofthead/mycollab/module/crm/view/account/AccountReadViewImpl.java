@@ -50,7 +50,6 @@ import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.IRelatedListHandlers;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
-import com.esofthead.mycollab.vaadin.ui.TabsheetLazyLoadComp;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.UI;
 
@@ -79,22 +78,7 @@ public class AccountReadViewImpl extends AbstractPreviewItemComp<SimpleAccount>
 
 	@Override
 	protected ComponentContainer createBottomPanel() {
-		final TabsheetLazyLoadComp tabContainer = new TabsheetLazyLoadComp();
-		tabContainer.setWidth("100%");
-
-		tabContainer.addTab(noteListItems, "Notes",
-				MyCollabResource.newResource("icons/16/crm/note.png"));
-		tabContainer.addTab(associateContactList, "Contacts",
-				MyCollabResource.newResource("icons/16/crm/contact.png"));
-		tabContainer.addTab(associateOpportunityList, "Opportunities",
-				MyCollabResource.newResource("icons/16/crm/opportunity.png"));
-		tabContainer.addTab(associateLeadList, "Leads",
-				MyCollabResource.newResource("icons/16/crm/lead.png"));
-		tabContainer.addTab(associateCaseList, "Cases",
-				MyCollabResource.newResource("icons/16/crm/case.png"));
-		tabContainer.addTab(associateActivityList, "Activities",
-				MyCollabResource.newResource("icons/16/crm/calendar.png"));
-		return tabContainer;
+		return noteListItems;
 	}
 
 	@Override
@@ -188,6 +172,14 @@ public class AccountReadViewImpl extends AbstractPreviewItemComp<SimpleAccount>
 		associateLeadList = new AccountLeadListComp();
 		associateCaseList = new AccountCaseListComp();
 		noteListItems = new NoteListItems("Notes");
+
+		previewItemContainer.addTab(previewLayout, "About");
+		previewItemContainer.addTab(associateContactList, "Contacts");
+		previewItemContainer.addTab(associateLeadList, "Leads");
+		previewItemContainer.addTab(associateOpportunityList, "Opportunities");
+		previewItemContainer.addTab(associateCaseList, "Cases");
+		
+		previewItemContainer.selectTab("About");
 	}
 
 	@Override

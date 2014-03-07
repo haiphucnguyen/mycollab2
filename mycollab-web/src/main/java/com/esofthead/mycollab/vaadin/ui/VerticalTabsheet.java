@@ -60,6 +60,10 @@ public class VerticalTabsheet extends CustomComponent {
 	private final String TAB_SELECTED_STYLENAME = "tab-selected";
 
 	public VerticalTabsheet() {
+		this(true);
+	}
+
+	public VerticalTabsheet(boolean isLeft) {
 		GridLayout contentLayout = new GridLayout(2, 1);
 		navigatorWrapper = new CssLayout();
 		navigatorWrapper.setStyleName("navigator-wrap");
@@ -75,9 +79,16 @@ public class VerticalTabsheet extends CustomComponent {
 		tabContainer.setWidth("100%");
 		contentWrapper.addComponent(tabContainer);
 
-		contentLayout.addComponent(navigatorWrapper, 0, 0);
-		contentLayout.addComponent(contentWrapper, 1, 0);
-		contentLayout.setColumnExpandRatio(1, 1.0f);
+		if (isLeft) {
+			contentLayout.addComponent(navigatorWrapper, 0, 0);
+			contentLayout.addComponent(contentWrapper, 1, 0);
+			contentLayout.setColumnExpandRatio(1, 1.0f);
+		} else {
+			contentLayout.addComponent(contentWrapper, 0, 0);
+			contentLayout.addComponent(navigatorWrapper, 1, 0);
+			contentLayout.setColumnExpandRatio(0, 1.0f);
+		}
+
 		this.setCompositionRoot(contentLayout);
 		this.setStyleName(TABSHEET_STYLENAME);
 	}
