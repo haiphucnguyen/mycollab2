@@ -363,6 +363,8 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends
 					ConcatStringParam wrapParam = (ConcatStringParam) param;
 					return wrapParam.buildSearchField(prefixOperation,
 							compareOper, value);
+				} else if (param instanceof DateParam) {
+
 				} else {
 					throw new MyCollabException("Not support yet");
 				}
