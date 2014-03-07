@@ -16,10 +16,12 @@
  */
 package com.esofthead.mycollab.module.crm.ui.components;
 
+import com.esofthead.mycollab.vaadin.mvp.AbstractHorizontalPageView;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout2;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
+import com.esofthead.mycollab.vaadin.ui.VerticalTabsheet;
 import com.vaadin.server.Resource;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.VerticalLayout;
@@ -31,21 +33,22 @@ import com.vaadin.ui.VerticalLayout;
  * 
  * @param <B>
  */
-public abstract class AbstractPreviewItemComp<B> extends VerticalLayout {
+public abstract class AbstractPreviewItemComp<B> extends
+		AbstractHorizontalPageView {
 	private static final long serialVersionUID = 1L;
 
 	protected B beanItem;
 	protected AddViewLayout2 previewLayout;
 	protected AdvancedPreviewBeanForm<B> previewForm;
+	protected VerticalTabsheet tabSheet;
 
 	public AbstractPreviewItemComp(Resource iconResource) {
 		previewLayout = new AddViewLayout2("", iconResource);
-		this.addComponent(previewLayout);
 
 		initRelatedComponents();
 
 		previewForm = initPreviewForm();
-        previewLayout.setStyleName("readview-layout");
+		previewLayout.setStyleName("readview-layout");
 
 		VerticalLayout informationLayout = new VerticalLayout();
 		informationLayout.addStyleName("main-info");
@@ -58,6 +61,10 @@ public abstract class AbstractPreviewItemComp<B> extends VerticalLayout {
 		informationLayout.addComponent(previewForm);
 		previewLayout.addBody(informationLayout);
 		previewLayout.addBody(createBottomPanel());
+
+		tabSheet = new VerticalTabsheet();
+
+		this.addComponent(tabSheet);
 	}
 
 	public void previewItem(final B item) {
