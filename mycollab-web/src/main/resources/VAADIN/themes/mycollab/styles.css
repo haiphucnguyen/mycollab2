@@ -6263,6 +6263,10 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 .splitbutton .v-button.action-button .v-button-wrap:active {
 	border-top-color: #C7C7C7;
 }	
+.splitbutton .parent-button.action-button .v-button-wrap {
+	padding-left:11px;
+	padding-right:11px;
+}
 .splitbutton .v-button.action-button .v-icon {
 	margin-right:0;
 }

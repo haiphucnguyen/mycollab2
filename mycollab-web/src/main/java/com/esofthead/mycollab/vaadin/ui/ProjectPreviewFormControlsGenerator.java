@@ -121,15 +121,15 @@ public class ProjectPreviewFormControlsGenerator<T> implements Serializable {
 		editButtons.addComponent(deleteBtn);
 		editButtons.setComponentAlignment(deleteBtn, Alignment.MIDDLE_CENTER);
 
-	
+		
 		optionParentBtn = new Button("Option",
 				new Button.ClickListener() {
 			
 			@Override
 			public void buttonClick(ClickEvent event) {
-				if (optionBtn.getPopupVisible())
+			/*	if (optionBtn.getPopupVisible())
 				optionBtn.setPopupVisible(false);
-				else				
+				else*/				
 				optionBtn.setPopupVisible(true);
 			}
 		});
@@ -138,8 +138,10 @@ public class ProjectPreviewFormControlsGenerator<T> implements Serializable {
 		optionBtn.setWidth(Sizeable.SIZE_UNDEFINED, Sizeable.Unit.PIXELS);
 		optionBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
 		
+		
 		popupButtonsControl = new VerticalLayout();
 		popupButtonsControl.setWidth("100px");
+		popupButtonsControl.setMargin(true);
 		
 		
 		editBtn = new Button(GenericBeanForm.EDIT_ACTION,
