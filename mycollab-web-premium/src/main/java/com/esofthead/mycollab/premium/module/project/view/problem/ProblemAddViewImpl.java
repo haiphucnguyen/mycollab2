@@ -25,7 +25,7 @@ import com.vaadin.ui.Layout;
  */
 @ViewComponent
 public class ProblemAddViewImpl extends AbstractEditItemComp<Problem> implements
-		ProblemAddView, IFormAddView<Problem> {
+ProblemAddView, IFormAddView<Problem> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -42,6 +42,12 @@ public class ProblemAddViewImpl extends AbstractEditItemComp<Problem> implements
 
 	public static Map<Integer, String> getValueCaptions() {
 		return valueCaptions;
+	}
+
+	@Override
+	protected String initFormHeader() {
+		return (beanItem.getId() == null) ? "Create Problem" : beanItem
+				.getIssuename();
 	}
 
 	@Override

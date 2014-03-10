@@ -20,7 +20,7 @@ import com.vaadin.ui.VerticalLayout;
  * 
  */
 public abstract class StandupReportFormLayoutFactory implements
-		IFormLayoutFactory {
+IFormLayoutFactory {
 	private static final long serialVersionUID = 1L;
 
 	private StandupCustomField whatTodayField;
@@ -40,7 +40,7 @@ public abstract class StandupReportFormLayoutFactory implements
 		final AddViewLayout reportAddLayout = new AddViewLayout(this.title,
 				MyCollabResource.newResource("icons/24/project/standup.png"));
 
-		reportAddLayout.addTopControls(this.createTopPanel());
+		reportAddLayout.addHeaderRight(this.createTopPanel());
 
 		final HorizontalLayout mainLayout = new HorizontalLayout();
 		mainLayout.setSpacing(true);

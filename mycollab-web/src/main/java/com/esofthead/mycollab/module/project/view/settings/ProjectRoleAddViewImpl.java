@@ -52,13 +52,19 @@ import com.vaadin.ui.VerticalLayout;
  */
 @ViewComponent
 public class ProjectRoleAddViewImpl extends AbstractEditItemComp<ProjectRole>
-		implements ProjectRoleAddView {
+implements ProjectRoleAddView {
 
 	private static final long serialVersionUID = 1L;
 	private final Map<String, AccessPermissionComboBox> permissionControlsMap = new HashMap<String, AccessPermissionComboBox>();
 
 	public ProjectRoleAddViewImpl() {
 		this.setMargin(new MarginInfo(true, false, false, false));
+	}
+
+	@Override
+	protected String initFormHeader() {
+		return (beanItem.getId() == null) ? "Create Role" : beanItem
+				.getRolename();
 	}
 
 	@Override

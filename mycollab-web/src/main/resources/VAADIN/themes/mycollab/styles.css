@@ -1349,14 +1349,9 @@ input.v-textfield-errorField {
 /* End Login Form */
 
 /* Add View Styles */
-.addViewLayout {
-	background-color: #F5F5F5;
-	margin: 10px 2px;
-	border-top-left-radius: 5px;
-	border-top-right-radius: 5px;
-	border-bottom-right-radius: 0px;
-	border-bottom-left-radius: 0px;
-	border: 1px solid #8F8F8F;
+.addViewBody {
+	background-color: #FFFFFF;
+	border: 1px solid #CFCFCF;
 }
 
 .addViewLayout .addViewTopControls {
@@ -1388,13 +1383,21 @@ input.v-textfield-errorField {
 	padding: 0px;
 }
 
+.addViewTitle {
+	padding: 10px 5px 10px 18px;
+	background: none repeat-x left top #EEEEEE;
+	border-color: #cfcfcf;
+	border-style: solid;
+	border-width: 1px 1px 0px;
+	font-size: 15px;
+}
+.addViewTitle .v-label {
+	font-size: 15px;
+	color: #303030;
+}
+
 .addViewHeader {
-	height: 25px;
-	padding: 3px 5px 3px 18px;
-	background: url('icons/grad-light-top2.png') repeat-x left top
-		rgb(227, 227, 227);
-	border-radius: 3px 3px 0px 0px;
-	border-bottom: 1px solid rgb(169, 169, 169);
+	padding: 12px 0px;
 }
 
 .addViewHeader .addViewHeaderLeft {
@@ -1411,6 +1414,12 @@ input.v-textfield-errorField {
 }
 
 .addViewLayout .addViewHeader .headerName {
+	font-size: 15px;
+	font-weight: bold;
+	color: #525252;
+}
+
+.addViewLayout .addViewTitle .titleName {
 	font-size: 13px;
 	font-weight: bold;
 /* 	margin-top: 3px; */
@@ -1820,11 +1829,12 @@ input.v-textfield-errorField {
 }
 
 .projectDashboardView .addViewLayout {
-	border: 1px solid rgb(169, 169, 169);
+	/* border: 1px solid rgb(169, 169, 169);
 	background: none no-repeat left top rgb(245, 245, 245);
 	box-shadow: none;
 	margin: 0px 0px 10px;
-	border-radius: 3px 3px 0px 0px;
+	border-radius: 3px 3px 0px 0px; */
+	padding: 0px 30px 10px;
 }
 
 .projectDashboardView .addViewLayout .h2 {

@@ -45,17 +45,22 @@ import com.vaadin.ui.TextField;
  */
 @ViewComponent
 public class ComponentAddViewImpl extends AbstractEditItemComp<Component>
-		implements ComponentAddView {
+implements ComponentAddView {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	public ComponentAddViewImpl() {
 		this.setMargin(new MarginInfo(true, false, false, false));
 	}
 
 	@Override
+	protected String initFormHeader() {
+		return (beanItem.getId() == null) ? "Create Component" : "Component Edit";		
+	}
+
+	@Override
 	protected String initFormTitle() {
-		return (beanItem.getId() == null) ? "Create Component" : beanItem
+		return (beanItem.getId() == null) ? null : beanItem
 				.getComponentname();
 	}
 
@@ -100,7 +105,7 @@ public class ComponentAddViewImpl extends AbstractEditItemComp<Component>
 	}
 
 	private class EditFormFieldFactory extends
-			AbstractBeanFieldGroupEditFieldFactory<Component> {
+	AbstractBeanFieldGroupEditFieldFactory<Component> {
 		private static final long serialVersionUID = 1L;
 
 		public EditFormFieldFactory(GenericBeanForm<Component> form) {

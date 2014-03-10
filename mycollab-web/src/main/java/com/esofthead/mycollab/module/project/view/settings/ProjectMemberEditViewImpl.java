@@ -29,7 +29,6 @@ import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
-import com.vaadin.data.Buffered.SourceException;
 import com.vaadin.data.Property;
 import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.server.Resource;
@@ -49,7 +48,7 @@ import com.vaadin.ui.HorizontalLayout;
  */
 @ViewComponent
 public class ProjectMemberEditViewImpl extends
-		AbstractEditItemComp<ProjectMember> implements ProjectMemberEditView {
+AbstractEditItemComp<ProjectMember> implements ProjectMemberEditView {
 
 	private static final long serialVersionUID = 1L;
 
@@ -59,14 +58,20 @@ public class ProjectMemberEditViewImpl extends
 	}
 
 	@Override
-	protected String initFormTitle() {
+	protected String initFormHeader() {
 		return (beanItem.getId() == null) ? "Create Member"
+				: "Member Edit";
+	}
+
+	@Override
+	protected String initFormTitle() {
+		return (beanItem.getId() == null) ? null
 				: ((SimpleProjectMember) beanItem).getDisplayName();
 	}
 
 	@Override
 	protected Resource initFormIconResource() {
-		return MyCollabResource.newResource("icons/22/project/menu_user.png");
+		return MyCollabResource.newResource("icons/22/project/user_selected.png");
 	}
 
 	@Override
@@ -102,7 +107,7 @@ public class ProjectMemberEditViewImpl extends
 	}
 
 	private class EditFormFieldFactory extends
-			AbstractBeanFieldGroupEditFieldFactory<ProjectMember> {
+	AbstractBeanFieldGroupEditFieldFactory<ProjectMember> {
 		private static final long serialVersionUID = 1L;
 
 		public EditFormFieldFactory(GenericBeanForm<ProjectMember> form) {
@@ -133,16 +138,16 @@ public class ProjectMemberEditViewImpl extends
 		public AdminRoleSelectionField() {
 			this.roleComboBox = new ProjectRoleComboBox();
 			this.roleComboBox
-					.addValueChangeListener(new Property.ValueChangeListener() {
-						private static final long serialVersionUID = 1L;
+			.addValueChangeListener(new Property.ValueChangeListener() {
+				private static final long serialVersionUID = 1L;
 
-						@Override
-						public void valueChange(
-								final Property.ValueChangeEvent event) {
-							getValue();
+				@Override
+				public void valueChange(
+						final Property.ValueChangeEvent event) {
+					getValue();
 
-						}
-					});
+				}
+			});
 		}
 
 		@Override

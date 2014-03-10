@@ -62,7 +62,7 @@ import com.vaadin.ui.Layout;
  */
 @ViewComponent
 public class ProjectMemberInviteViewImpl extends AbstractPageView implements
-		ProjectMemberInviteView {
+ProjectMemberInviteView {
 
 	private static final long serialVersionUID = 1L;
 
@@ -119,7 +119,7 @@ public class ProjectMemberInviteViewImpl extends AbstractPageView implements
 		final AddViewLayout userAddLayout = new AddViewLayout("Invite Members",
 				MyCollabResource.newResource("icons/24/project/group.png"));
 
-		userAddLayout.addTopControls(createButtonControls());
+		userAddLayout.addHeaderRight(createButtonControls());
 
 		GridFormLayoutHelper informationLayout = new GridFormLayoutHelper(1, 2,
 				"100%", "167px", Alignment.MIDDLE_LEFT);
@@ -144,18 +144,18 @@ public class ProjectMemberInviteViewImpl extends AbstractPageView implements
 
 		Button inviteBtn = new Button("Invite Members",
 				new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
+			private static final long serialVersionUID = 1L;
 
-					@Override
-					public void buttonClick(ClickEvent event) {
-						roleId = (Integer) roleComboBox.getValue();
-						ProjectMemberInviteViewImpl.this
-								.fireEvent(new ProjectMemberEvent.InviteProjectMembers(
-										ProjectMemberInviteViewImpl.this,
-										inviteEmails, roleId));
+			@Override
+			public void buttonClick(ClickEvent event) {
+				roleId = (Integer) roleComboBox.getValue();
+				ProjectMemberInviteViewImpl.this
+				.fireEvent(new ProjectMemberEvent.InviteProjectMembers(
+						ProjectMemberInviteViewImpl.this,
+						inviteEmails, roleId));
 
-					}
-				});
+			}
+		});
 		inviteBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		controlButtons.addComponent(inviteBtn);
 
