@@ -19,8 +19,10 @@ package com.esofthead.mycollab.vaadin.ui;
 import java.io.Serializable;
 
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.vaadin.server.Sizeable;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.HorizontalLayout;
 
@@ -43,6 +45,10 @@ public class ProjectPreviewFormControlsGenerator<T> implements Serializable {
 
 	private Button assignBtn;
 	private boolean haveAssignButton;
+	
+	private SplitButton optionBtn;
+	private Button optionParentBtn;
+	private VerticalLayout popupButtonsControl;
 
 	private HorizontalLayout editButtons;
 	private HorizontalLayout layout;
@@ -72,6 +78,8 @@ public class ProjectPreviewFormControlsGenerator<T> implements Serializable {
 		backBtn.setDescription("Back to list");
 		backBtn.setStyleName("link");
 		//UiUtils.addComponent(layout, backBtn, Alignment.MIDDLE_LEFT);
+		
+		
 
 		editButtons = new HorizontalLayout();
 		editButtons.setSpacing(true);
@@ -95,21 +103,6 @@ public class ProjectPreviewFormControlsGenerator<T> implements Serializable {
 			editButtons.setComponentAlignment(assignBtn,
 					Alignment.MIDDLE_CENTER);
 		}
-		editBtn = new Button(GenericBeanForm.EDIT_ACTION,
-				new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
-
-					@Override
-					public void buttonClick(final ClickEvent event) {
-						final T item = previewForm.getBean();
-						previewForm.fireEditForm(item);
-					}
-				});
-		editBtn.setIcon(MyCollabResource.newResource("icons/16/edit_white.png"));
-		editBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-		editButtons.addComponent(editBtn);
-		editButtons.setComponentAlignment(editBtn, Alignment.MIDDLE_CENTER);
-
 		deleteBtn = new Button(GenericBeanForm.DELETE_ACTION,
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
@@ -125,6 +118,30 @@ public class ProjectPreviewFormControlsGenerator<T> implements Serializable {
 		editButtons.addComponent(deleteBtn);
 		editButtons.setComponentAlignment(deleteBtn, Alignment.MIDDLE_CENTER);
 
+		
+		optionParentBtn = new Button("Option");
+		optionBtn = new SplitButton(optionParentBtn);
+		optionBtn.setWidth(Sizeable.SIZE_UNDEFINED, Sizeable.Unit.PIXELS);
+		optionBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
+		
+		popupButtonsControl = new VerticalLayout();
+		popupButtonsControl.setWidth("100px");
+		
+		
+		editBtn = new Button(GenericBeanForm.EDIT_ACTION,
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void buttonClick(final ClickEvent event) {
+						final T item = previewForm.getBean();
+						previewForm.fireEditForm(item);
+					}
+				});
+		editBtn.setIcon(MyCollabResource.newResource("icons/16/edit.png"));
+		editBtn.setStyleName("link");
+		popupButtonsControl.addComponent(editBtn);
+
 		cloneBtn = new Button(GenericBeanForm.CLONE_ACTION,
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
@@ -136,14 +153,18 @@ public class ProjectPreviewFormControlsGenerator<T> implements Serializable {
 					}
 				});
 		cloneBtn.setIcon(MyCollabResource.newResource("icons/16/clone.png"));
-		cloneBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-		editButtons.addComponent(cloneBtn);
-		editButtons.setComponentAlignment(cloneBtn, Alignment.MIDDLE_CENTER);
+		cloneBtn.setStyleName("link");
+		popupButtonsControl.addComponent(cloneBtn);
 
+		optionBtn.setContent(popupButtonsControl);
+		editButtons.addComponent(optionBtn);
+		editButtons.setComponentAlignment(optionBtn, Alignment.MIDDLE_CENTER);
+		
 		layout.addComponent(editButtons);
 		layout.setComponentAlignment(editButtons, Alignment.MIDDLE_CENTER);
 		layout.setExpandRatio(editButtons, 1.0f);
-
+		
+		
 		previousItem = new Button(null, new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
@@ -174,6 +195,7 @@ public class ProjectPreviewFormControlsGenerator<T> implements Serializable {
 		nextItemBtn.setIcon(MyCollabResource.newResource("icons/16/next.png"));
 		nextItemBtn.setStyleName("link");
 		nextItemBtn.setDescription("Show next item");
+		
 		layout.addComponent(nextItemBtn);
 		layout.setComponentAlignment(nextItemBtn, Alignment.MIDDLE_RIGHT);
 

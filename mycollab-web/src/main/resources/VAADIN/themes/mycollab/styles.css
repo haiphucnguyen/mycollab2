@@ -463,6 +463,7 @@ div.v-button-link.v-button-no-margin .v-button-wrap,div.v-button-link:focus
 }
 .splitbutton .parent-button .v-button-wrap {
 	border-right:1px solid #F9F9F9;
+	padding-right:6px;
 }
 .splitbutton .v-popupbutton {
 	border-right-width: 1px;
@@ -4700,7 +4701,7 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 
 /* Bug Dashboard */
 .bugdashboard-header {
-	border: 1px solid #CFCFCF;
+	/* border: 1px solid #CFCFCF; */
 	border-radius: 3px 3px 0px 0px;
 	background: url("icons/grad-light-top2.png") repeat-x left top
 		rgb(245, 245, 245);
