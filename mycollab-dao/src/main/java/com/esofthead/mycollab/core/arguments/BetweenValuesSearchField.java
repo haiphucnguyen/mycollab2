@@ -9,25 +9,37 @@ package com.esofthead.mycollab.core.arguments;
 public class BetweenValuesSearchField extends SearchField {
 	private static final long serialVersionUID = 1L;
 
-	private String expression;
+	private String queryCount;
+
+	private String querySelect;
 
 	private Object value;
 
 	private Object secondValue;
 
-	public BetweenValuesSearchField(String oper, String expression, Object value,
-			Object secondValue) {
+	public BetweenValuesSearchField(String oper, String expression,
+			Object value, Object secondValue) {
 		this.operation = oper;
-		this.expression = expression;
+		this.queryCount = expression;
+		this.querySelect = expression;
 		this.value = value;
+		this.secondValue = secondValue;
 	}
 
-	public String getExpression() {
-		return expression;
+	public String getQueryCount() {
+		return queryCount;
 	}
 
-	public void setExpression(String expression) {
-		this.expression = expression;
+	public void setQueryCount(String queryCount) {
+		this.queryCount = queryCount;
+	}
+
+	public String getQuerySelect() {
+		return querySelect;
+	}
+
+	public void setQuerySelect(String querySelect) {
+		this.querySelect = querySelect;
 	}
 
 	public Object getValue() {
