@@ -464,6 +464,7 @@ div.v-button-link.v-button-no-margin .v-button-wrap,div.v-button-link:focus
 .splitbutton .parent-button .v-button-wrap {
 	border-right:1px solid #F9F9F9;
 	padding-right:6px;
+	padding-left: 8px;
 }
 .splitbutton .v-popupbutton {
 	border-right-width: 1px;
@@ -4473,7 +4474,7 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 	padding-top: 5px;
 }
 .control-buttons.v-margin-right {
-	padding-right: 5px;
+	padding-right: 0;
 }
 .control-buttons.v-margin-bottom {
 	padding-bottom: 5px;

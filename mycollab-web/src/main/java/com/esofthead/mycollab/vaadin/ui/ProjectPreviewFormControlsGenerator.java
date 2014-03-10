@@ -122,7 +122,18 @@ public class ProjectPreviewFormControlsGenerator<T> implements Serializable {
 		editButtons.setComponentAlignment(deleteBtn, Alignment.MIDDLE_CENTER);
 
 	
-		optionParentBtn = new Button("Option");
+		optionParentBtn = new Button("Option",
+				new Button.ClickListener() {
+			
+			@Override
+			public void buttonClick(ClickEvent event) {
+				if (optionBtn.getPopupVisible())
+				optionBtn.setPopupVisible(false);
+				else				
+				optionBtn.setPopupVisible(true);
+			}
+		});
+		
 		optionBtn = new SplitButton(optionParentBtn);
 		optionBtn.setWidth(Sizeable.SIZE_UNDEFINED, Sizeable.Unit.PIXELS);
 		optionBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
@@ -138,6 +149,7 @@ public class ProjectPreviewFormControlsGenerator<T> implements Serializable {
 
 					@Override
 					public void buttonClick(final ClickEvent event) {
+						optionBtn.setPopupVisible(false);
 						final T item = previewForm.getBean();
 						previewForm.fireEditForm(item);
 					}
@@ -154,6 +166,7 @@ public class ProjectPreviewFormControlsGenerator<T> implements Serializable {
 
 			@Override
 			public void buttonClick(final ClickEvent event) {
+				optionBtn.setPopupVisible(false);
 				final T item = previewForm.getBean();
 				previewForm.fireCloneForm(item);
 			}
