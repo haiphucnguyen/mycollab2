@@ -18,6 +18,8 @@ package com.esofthead.mycollab.vaadin.ui;
 
 import java.io.Serializable;
 
+import org.vaadin.peter.buttongroup.ButtonGroup;
+
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.vaadin.server.Sizeable;
 import com.vaadin.ui.Alignment;
@@ -88,14 +90,14 @@ public class ProjectPreviewFormControlsGenerator<T> implements Serializable {
 		if (haveAssignButton) {
 			assignBtn = new Button(GenericBeanForm.ASSIGN_ACTION,
 					new Button.ClickListener() {
-						private static final long serialVersionUID = 1L;
+				private static final long serialVersionUID = 1L;
 
-						@Override
-						public void buttonClick(final ClickEvent event) {
-							final T item = previewForm.getBean();
-							previewForm.fireAssignForm(item);
-						}
-					});
+				@Override
+				public void buttonClick(final ClickEvent event) {
+					final T item = previewForm.getBean();
+					previewForm.fireAssignForm(item);
+				}
+			});
 			assignBtn.setIcon(MyCollabResource
 					.newResource("icons/16/assign.png"));
 			assignBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
@@ -105,6 +107,7 @@ public class ProjectPreviewFormControlsGenerator<T> implements Serializable {
 		}
 		deleteBtn = new Button(GenericBeanForm.DELETE_ACTION,
 				new Button.ClickListener() {
+
 					private static final long serialVersionUID = 1L;
 
 					@Override
@@ -118,7 +121,7 @@ public class ProjectPreviewFormControlsGenerator<T> implements Serializable {
 		editButtons.addComponent(deleteBtn);
 		editButtons.setComponentAlignment(deleteBtn, Alignment.MIDDLE_CENTER);
 
-		
+	
 		optionParentBtn = new Button("Option");
 		optionBtn = new SplitButton(optionParentBtn);
 		optionBtn.setWidth(Sizeable.SIZE_UNDEFINED, Sizeable.Unit.PIXELS);
@@ -130,6 +133,7 @@ public class ProjectPreviewFormControlsGenerator<T> implements Serializable {
 		
 		editBtn = new Button(GenericBeanForm.EDIT_ACTION,
 				new Button.ClickListener() {
+
 					private static final long serialVersionUID = 1L;
 
 					@Override
@@ -142,16 +146,18 @@ public class ProjectPreviewFormControlsGenerator<T> implements Serializable {
 		editBtn.setStyleName("link");
 		popupButtonsControl.addComponent(editBtn);
 
+
+
 		cloneBtn = new Button(GenericBeanForm.CLONE_ACTION,
 				new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
+			private static final long serialVersionUID = 1L;
 
-					@Override
-					public void buttonClick(final ClickEvent event) {
-						final T item = previewForm.getBean();
-						previewForm.fireCloneForm(item);
-					}
-				});
+			@Override
+			public void buttonClick(final ClickEvent event) {
+				final T item = previewForm.getBean();
+				previewForm.fireCloneForm(item);
+			}
+		});
 		cloneBtn.setIcon(MyCollabResource.newResource("icons/16/clone.png"));
 		cloneBtn.setStyleName("link");
 		popupButtonsControl.addComponent(cloneBtn);
@@ -163,9 +169,10 @@ public class ProjectPreviewFormControlsGenerator<T> implements Serializable {
 		layout.addComponent(editButtons);
 		layout.setComponentAlignment(editButtons, Alignment.MIDDLE_CENTER);
 		layout.setExpandRatio(editButtons, 1.0f);
-		
-		
-		previousItem = new Button(null, new Button.ClickListener() {
+
+		ButtonGroup navigationBtns = new ButtonGroup();
+		navigationBtns.setStyleName("navigation-btns");
+		previousItem = new Button("<", new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -175,14 +182,11 @@ public class ProjectPreviewFormControlsGenerator<T> implements Serializable {
 			}
 		});
 
-		previousItem.setIcon(MyCollabResource
-				.newResource("icons/16/previous.png"));
-		previousItem.setStyleName("link");
+		previousItem.setStyleName(UIConstants.THEME_BLUE_LINK);
 		previousItem.setDescription("Show previous item");
-		layout.addComponent(previousItem);
-		layout.setComponentAlignment(previousItem, Alignment.MIDDLE_RIGHT);
+		navigationBtns.addButton(previousItem);
 
-		nextItemBtn = new Button(null, new Button.ClickListener() {
+		nextItemBtn = new Button(">", new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -192,12 +196,13 @@ public class ProjectPreviewFormControlsGenerator<T> implements Serializable {
 			}
 		});
 
-		nextItemBtn.setIcon(MyCollabResource.newResource("icons/16/next.png"));
-		nextItemBtn.setStyleName("link");
+		nextItemBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		nextItemBtn.setDescription("Show next item");
-		
-		layout.addComponent(nextItemBtn);
-		layout.setComponentAlignment(nextItemBtn, Alignment.MIDDLE_RIGHT);
+
+		navigationBtns.addButton(nextItemBtn);
+		layout.addComponent(navigationBtns);
+		layout.setComponentAlignment(navigationBtns, Alignment.MIDDLE_RIGHT);
+
 
 		if (permissionItem != null) {
 			final boolean canRead = CurrentProjectVariables
