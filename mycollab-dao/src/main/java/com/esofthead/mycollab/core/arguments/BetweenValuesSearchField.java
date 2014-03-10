@@ -6,7 +6,7 @@ package com.esofthead.mycollab.core.arguments;
  * @since 4.0
  * 
  */
-public class TwoValuesSearchField extends SearchField {
+public class BetweenValuesSearchField extends SearchField {
 	private static final long serialVersionUID = 1L;
 
 	private String expression;
@@ -15,7 +15,7 @@ public class TwoValuesSearchField extends SearchField {
 
 	private Object secondValue;
 
-	public TwoValuesSearchField(String oper, String expression, Object value,
+	public BetweenValuesSearchField(String oper, String expression, Object value,
 			Object secondValue) {
 		this.operation = oper;
 		this.expression = expression;
