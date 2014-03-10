@@ -288,6 +288,12 @@ div.v-button-link.v-button-no-margin .v-button-wrap,div.v-button-link:focus
 	padding:0;
 }
 
+.v-button.v-button-blankbtn {
+	background-color:#8FAFAFA;
+	font-weight:normal;
+	border-color:#B3B3B3;
+}
+
 .v-button-blankbtn:active, .v-button-blankbtn:hover, .v-button-blankbtn:focus {
 
 	background-image:none;
@@ -464,6 +470,7 @@ div.v-button-link.v-button-no-margin .v-button-wrap,div.v-button-link:focus
 .splitbutton .parent-button .v-button-wrap {
 	border-right:1px solid #F9F9F9;
 	padding-right:6px;
+	padding-left: 8px;
 }
 .splitbutton .v-popupbutton {
 	border-right-width: 1px;
@@ -937,20 +944,9 @@ input.v-textfield-pagedtable-pagefield {
 
 /* Basic Search Template */
 .basicSearch {
-	background-image: -webkit-gradient(linear, left top, left bottom, from(#F5F5F5),
-		to(#DDDDDD));
-	background-image: -webkit-linear-gradient(top, #F5F5F5, #DDDDDD);
-	background-image: -moz-linear-gradient(top, #F5F5F5, #DDDDDD);
-	background-image: -ms-linear-gradient(top, #F5F5F5, #DDDDDD);
-	background-image: -o-linear-gradient(top, #F5F5F5, #DDDDDD);
-	background-image: linear-gradient(top, #F5F5F5, #DDDDDD);
-	background-color: #F5F5F5;
-	/* margin: 10px 0px 0px; */
-	border-top-left-radius: 3px;
-	border-top-right-radius: 3px;
-	border-bottom-right-radius: 0px;
-	border-bottom-left-radius: 0px;
+	background-color: #F7F7F7;
 	border: 1px solid #BCBCBC;
+	border-radius: 0;
 }
 
 .basicSearch .basicSearchHeader {
@@ -983,7 +979,7 @@ input.v-textfield-pagedtable-pagefield {
 }
 */
 .basicSearch .basicSearchBody {
-	background-color: #f5f5f5;
+	/* background-color: #f5f5f5; */
 }
 
 .basicSearch .basicSearchBody>.v-horizontallayout .v-horizontallayout-margin
@@ -2820,7 +2816,7 @@ div.v-splitbutton,div.v-splitbutton .v-button {
 
 /* New Table */
 .v-table-header-wrap {
-	background: none no-repeat 0 0 rgb(245, 245, 245);
+	background: none no-repeat 0 0 #EEEEEE;
 	border-radius: 0px;
 	border-width: 0 1px 1px 1px;
 	border-bottom: 1px solid #A9A9A9;
@@ -4483,7 +4479,7 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 	padding-top: 5px;
 }
 .control-buttons.v-margin-right {
-	padding-right: 5px;
+	padding-right: 0;
 }
 .control-buttons.v-margin-bottom {
 	padding-bottom: 5px;
@@ -6272,6 +6268,10 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 .splitbutton .v-button.action-button .v-button-wrap:active {
 	border-top-color: #C7C7C7;
 }	
+.splitbutton .parent-button.action-button .v-button-wrap {
+	padding-left:11px;
+	padding-right:11px;
+}
 .splitbutton .v-button.action-button .v-icon {
 	margin-right:0;
 }
