@@ -58,6 +58,7 @@ public class UserResourceImpl implements UserResource {
 		String json = gson.toJson(result);
 
 		Response response = Response.status(200).entity(json).build();
+		response.getHeaders().add("Access-Control-Allow-Origin", "*");
 		return response;
 	}
 

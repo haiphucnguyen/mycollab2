@@ -7,6 +7,8 @@ package com.esofthead.mycollab.core.arguments;
  * 
  */
 public class TwoValuesSearchField extends SearchField {
+	private static final long serialVersionUID = 1L;
+
 	private String expression;
 
 	private Object value;
