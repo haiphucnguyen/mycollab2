@@ -6,7 +6,7 @@ package com.esofthead.mycollab.core.arguments;
  * @since 4.0
  * 
  */
-public class OneValueSearchField extends SearchField {
+public class BetweenValuesSearchField extends SearchField {
 	private static final long serialVersionUID = 1L;
 
 	private String queryCount;
@@ -15,11 +15,15 @@ public class OneValueSearchField extends SearchField {
 
 	private Object value;
 
-	public OneValueSearchField(String oper, String expression, Object value) {
+	private Object secondValue;
+
+	public BetweenValuesSearchField(String oper, String expression,
+			Object value, Object secondValue) {
 		this.operation = oper;
 		this.queryCount = expression;
 		this.querySelect = expression;
 		this.value = value;
+		this.secondValue = secondValue;
 	}
 
 	public String getQueryCount() {
@@ -44,5 +48,13 @@ public class OneValueSearchField extends SearchField {
 
 	public void setValue(Object value) {
 		this.value = value;
+	}
+
+	public Object getSecondValue() {
+		return secondValue;
+	}
+
+	public void setSecondValue(Object secondValue) {
+		this.secondValue = secondValue;
 	}
 }
