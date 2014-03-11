@@ -52,4 +52,13 @@ public class AbstractProjectPageView extends AbstractPageView{
 	public void addComponent(Component c) {
 		contentWrapper.addComponent(c);
 	}
+
+	@Override
+	public void replaceComponent(Component oldComponent, Component newComponent) {
+		contentWrapper.replaceComponent(oldComponent, newComponent);
+	}
+
+	public ComponentContainer getBody() {
+		return contentWrapper;
+	}
 }

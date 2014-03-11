@@ -6386,3 +6386,24 @@ img.icon-btn {
 .project-module .page-view.v-margin-right {
 	padding-right: 30px;
 }
+/* New Project Member View */
+.member-preview-form {
+	border: 1px solid #CFCFCF;
+	padding: 30px;
+	background-color: #E9F2F7;
+}
+.member-preview-form div.v-csslayout.member-block {
+	border-radius: 0px;
+	border: none;
+	padding: 0px;
+	margin: 0px;
+	width: 350px;
+}
+.member-preview-form .member-block .member-info.v-margin-left {
+	padding-left: 20px;
+}
+.member-preview-bottom {
+	border-color: #CFCFCF;
+	border-style: solid;
+	border-width: 0px 1px 1px;
+}
