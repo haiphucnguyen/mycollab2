@@ -16,9 +16,6 @@
  */
 package com.esofthead.mycollab.module.project.view.task;
 
-import com.vaadin.server.Sizeable;
-import com.vaadin.ui.*;
-
 import org.vaadin.hene.popupbutton.PopupButton;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
@@ -42,8 +39,16 @@ import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.SplitButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.server.FileDownloader;
+import com.vaadin.server.Sizeable;
 import com.vaadin.server.StreamResource;
+import com.vaadin.shared.ui.MarginInfo;
+import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Image;
+import com.vaadin.ui.UI;
+import com.vaadin.ui.VerticalLayout;
 
 /**
  * 
@@ -52,7 +57,7 @@ import com.vaadin.ui.Button.ClickEvent;
  */
 @ViewComponent
 public class TaskGroupDisplayViewImpl extends AbstractPageView implements
-		TaskGroupDisplayView {
+TaskGroupDisplayView {
 	private static final long serialVersionUID = 1L;
 
 	private PopupButton taskGroupSelection;
@@ -64,30 +69,28 @@ public class TaskGroupDisplayViewImpl extends AbstractPageView implements
 
 	public TaskGroupDisplayViewImpl() {
 		super();
+		this.setMargin(new MarginInfo(false, true, false, true));
 
 		this.constructHeader();
 	}
 
 	private void constructHeader() {
-		final CssLayout headerWrapper = new CssLayout();
-		headerWrapper.setWidth("100%");
-		//headerWrapper.addStyleName("taskgroup-header");
-		headerWrapper.addStyleName("hdr-view");
 		final VerticalLayout mainLayout = new VerticalLayout();
 		mainLayout.setSpacing(true);
-		headerWrapper.addComponent(mainLayout);
 
 		final HorizontalLayout header = new HorizontalLayout();
-		header.setMargin(false);
+		header.setMargin(new MarginInfo(true, false, true, false));
+		header.setStyleName("hdr-view");
 		header.setSpacing(true);
 		header.setWidth("100%");
+		header.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 		this.taskGroupSelection = new PopupButton("Active Tasks");
 		this.taskGroupSelection.setEnabled(CurrentProjectVariables
 				.canRead(ProjectRolePermissionCollections.TASKS));
 		this.taskGroupSelection.addStyleName("link");
 		this.taskGroupSelection.addStyleName("hdr-text");
 		final Image icon = new Image(null,
-				MyCollabResource.newResource("icons/24/project/task.png"));
+				MyCollabResource.newResource("icons/22/project/task_selected.png"));
 		header.addComponent(icon);
 		header.addComponent(this.taskGroupSelection);
 		header.setExpandRatio(this.taskGroupSelection, 1.0f);
@@ -101,14 +104,14 @@ public class TaskGroupDisplayViewImpl extends AbstractPageView implements
 
 		final Button allTasksFilterBtn = new Button(
 				LocalizationHelper
-						.getMessage(TaskI18nEnum.FILTER_ALL_TASK_GROUPS_TITLE),
+				.getMessage(TaskI18nEnum.FILTER_ALL_TASK_GROUPS_TITLE),
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
 					public void buttonClick(final ClickEvent event) {
 						TaskGroupDisplayViewImpl.this.taskGroupSelection
-								.setPopupVisible(false);
+						.setPopupVisible(false);
 						TaskGroupDisplayViewImpl.this.taskGroupSelection.setCaption(LocalizationHelper
 								.getMessage(TaskI18nEnum.FILTER_ALL_TASK_GROUPS_TITLE));
 						TaskGroupDisplayViewImpl.this.displayAllTaskGroups();
@@ -119,14 +122,14 @@ public class TaskGroupDisplayViewImpl extends AbstractPageView implements
 
 		final Button activeTasksFilterBtn = new Button(
 				LocalizationHelper
-						.getMessage(TaskI18nEnum.FILTER_ACTIVE_TASK_GROUPS_TITLE),
+				.getMessage(TaskI18nEnum.FILTER_ACTIVE_TASK_GROUPS_TITLE),
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
 					public void buttonClick(final ClickEvent event) {
 						TaskGroupDisplayViewImpl.this.taskGroupSelection
-								.setPopupVisible(false);
+						.setPopupVisible(false);
 						TaskGroupDisplayViewImpl.this.taskGroupSelection.setCaption(LocalizationHelper
 								.getMessage(TaskI18nEnum.FILTER_ACTIVE_TASK_GROUPS_TITLE));
 						TaskGroupDisplayViewImpl.this.displayActiveTakLists();
@@ -137,7 +140,7 @@ public class TaskGroupDisplayViewImpl extends AbstractPageView implements
 
 		final Button archievedTasksFilterBtn = new Button(
 				LocalizationHelper
-						.getMessage(TaskI18nEnum.FILTER_ARCHIEVED_TASK_GROUPS_TITLE),
+				.getMessage(TaskI18nEnum.FILTER_ARCHIEVED_TASK_GROUPS_TITLE),
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
@@ -146,9 +149,9 @@ public class TaskGroupDisplayViewImpl extends AbstractPageView implements
 						TaskGroupDisplayViewImpl.this.taskGroupSelection.setCaption(LocalizationHelper
 								.getMessage(TaskI18nEnum.FILTER_ARCHIEVED_TASK_GROUPS_TITLE));
 						TaskGroupDisplayViewImpl.this.taskGroupSelection
-								.setPopupVisible(false);
+						.setPopupVisible(false);
 						TaskGroupDisplayViewImpl.this
-								.displayInActiveTaskGroups();
+						.displayInActiveTaskGroups();
 					}
 				});
 		archievedTasksFilterBtn.setStyleName("link");
@@ -158,7 +161,7 @@ public class TaskGroupDisplayViewImpl extends AbstractPageView implements
 
 		final Button newTaskListBtn = new Button(
 				LocalizationHelper
-						.getMessage(TaskI18nEnum.NEW_TASKGROUP_ACTION),
+				.getMessage(TaskI18nEnum.NEW_TASKGROUP_ACTION),
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
@@ -197,24 +200,6 @@ public class TaskGroupDisplayViewImpl extends AbstractPageView implements
 				.getMessage(TaskI18nEnum.REODER_TASKGROUP_ACTION));
 		header.addComponent(this.reOrderBtn);
 		header.setComponentAlignment(this.reOrderBtn, Alignment.MIDDLE_RIGHT);
-
-//		this.viewGanttChartBtn = new Button("Gantt chart",
-//				new Button.ClickListener() {
-//					private static final long serialVersionUID = 1L;
-//
-//					@Override
-//					public void buttonClick(ClickEvent event) {
-//						EventBus.getInstance()
-//								.fireEvent(
-//										new TaskListEvent.GotoGanttChartView(
-//												this, null));
-//
-//					}
-//				});
-//		this.viewGanttChartBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-//		header.addComponent(this.viewGanttChartBtn);
-//		header.setComponentAlignment(this.viewGanttChartBtn,
-//				Alignment.MIDDLE_RIGHT);
 
 		mainLayout.addComponent(header);
 
@@ -258,7 +243,7 @@ public class TaskGroupDisplayViewImpl extends AbstractPageView implements
 				Alignment.MIDDLE_RIGHT);
 
 		mainLayout.setWidth("100%");
-		this.addComponent(headerWrapper);
+		this.addComponent(mainLayout);
 		this.taskLists = new TaskGroupDisplayWidget();
 		this.addComponent(this.taskLists);
 	}
@@ -266,7 +251,7 @@ public class TaskGroupDisplayViewImpl extends AbstractPageView implements
 	private StreamResource constructStreamResource(ReportExportType exportType) {
 		final String title = "Task report of Project "
 				+ ((CurrentProjectVariables.getProject() != null && CurrentProjectVariables
-						.getProject().getName() != null) ? CurrentProjectVariables
+				.getProject().getName() != null) ? CurrentProjectVariables
 						.getProject().getName() : "");
 
 		final TaskListSearchCriteria tasklistSearchCriteria = new TaskListSearchCriteria();
@@ -278,19 +263,19 @@ public class TaskGroupDisplayViewImpl extends AbstractPageView implements
 			res = new StreamResource(new ExportTaskListStreamResource(title,
 					exportType,
 					ApplicationContextUtil
-							.getSpringBean(ProjectTaskListService.class),
+					.getSpringBean(ProjectTaskListService.class),
 					tasklistSearchCriteria, null), "task_list.pdf");
 		} else if (exportType.equals(ReportExportType.CSV)) {
 			res = new StreamResource(new ExportTaskListStreamResource(title,
 					exportType,
 					ApplicationContextUtil
-							.getSpringBean(ProjectTaskListService.class),
+					.getSpringBean(ProjectTaskListService.class),
 					tasklistSearchCriteria, null), "task_list.csv");
 		} else {
 			res = new StreamResource(new ExportTaskListStreamResource(title,
 					exportType,
 					ApplicationContextUtil
-							.getSpringBean(ProjectTaskListService.class),
+					.getSpringBean(ProjectTaskListService.class),
 					tasklistSearchCriteria, null), "task_list.xls");
 		}
 

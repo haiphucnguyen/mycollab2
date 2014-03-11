@@ -32,8 +32,6 @@ import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.vaadin.data.Property;
 import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.server.Resource;
-import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CustomField;
@@ -54,7 +52,6 @@ AbstractEditItemComp<ProjectMember> implements ProjectMemberEditView {
 
 	public ProjectMemberEditViewImpl() {
 		super();
-		this.setMargin(new MarginInfo(true, false, false, false));
 	}
 
 	@Override
@@ -76,19 +73,9 @@ AbstractEditItemComp<ProjectMember> implements ProjectMemberEditView {
 
 	@Override
 	protected ComponentContainer createButtonControls() {
-		final HorizontalLayout controlPanel = new HorizontalLayout();
-		controlPanel.setMargin(true);
-		controlPanel.addStyleName("control-buttons");
-
 		final HorizontalLayout controlButtons = (new EditFormControlsGenerator<ProjectMember>(
 				editForm)).createButtonControls(true, false, true);
-
-		controlButtons.setSizeUndefined();
-		controlPanel.addComponent(controlButtons);
-		controlPanel.setWidth("100%");
-		controlPanel.setComponentAlignment(controlButtons,
-				Alignment.MIDDLE_CENTER);
-		return controlPanel;
+		return controlButtons;
 	}
 
 	@Override

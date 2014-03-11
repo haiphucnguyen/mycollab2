@@ -27,8 +27,8 @@ import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
 import com.esofthead.mycollab.vaadin.events.MassItemActionHandler;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
-import com.esofthead.mycollab.vaadin.ui.AbstractProjectPageView;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.CheckBoxDecor;
 import com.esofthead.mycollab.vaadin.ui.DefaultMassItemActionHandlersContainer;
@@ -48,6 +48,7 @@ import com.hp.gagawa.java.elements.Tr;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.server.Sizeable;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -67,8 +68,8 @@ import com.vaadin.ui.VerticalLayout;
  * 
  */
 @ViewComponent
-public class ProblemListViewImpl extends AbstractProjectPageView implements
-		ProblemListView {
+public class ProblemListViewImpl extends AbstractPageView implements
+ProblemListView {
 
 	private static final long serialVersionUID = 1L;
 	private final ProblemSearchPanel problemSearchPanel;
@@ -81,21 +82,22 @@ public class ProblemListViewImpl extends AbstractProjectPageView implements
 			.getLogger(ProblemListViewImpl.class);
 
 	public ProblemListViewImpl() {
-		super("Problems", "problem_selected.png");
-		
+		/*super("Problems", "problem_selected.png");
+
 		this.addHeaderRightContent(createHeaderRight());
-		
+
 		CssLayout contentWrapper = new CssLayout();
-		contentWrapper.setStyleName("content-wrapper");
-		
+		contentWrapper.setStyleName("content-wrapper");*/
+		this.setMargin(new MarginInfo(false, true, false, true));
+
 		this.problemSearchPanel = new ProblemSearchPanel();
-		contentWrapper.addComponent(this.problemSearchPanel);
+		addComponent(this.problemSearchPanel);
 
 		this.problemListLayout = new VerticalLayout();
-		contentWrapper.addComponent(this.problemListLayout);
+		addComponent(this.problemListLayout);
 
 		this.generateDisplayTable();
-		this.addComponent(contentWrapper);
+		//this.addComponent(contentWrapper);
 	}
 
 	private void generateDisplayTable() {
@@ -124,7 +126,7 @@ public class ProblemListViewImpl extends AbstractProjectPageView implements
 						final SimpleProblem account = ProblemListViewImpl.this.tableItem
 								.getBeanByIndex(itemId);
 						ProblemListViewImpl.this.tableItem
-								.fireSelectItemEvent(account);
+						.fireSelectItemEvent(account);
 
 					}
 				});
@@ -146,15 +148,15 @@ public class ProblemListViewImpl extends AbstractProjectPageView implements
 						.getBeanByIndex(itemId);
 				final ButtonLink b = new ButtonLink(problem.getIssuename(),
 						new Button.ClickListener() {
-							private static final long serialVersionUID = 1L;
+					private static final long serialVersionUID = 1L;
 
-							@Override
-							public void buttonClick(final ClickEvent event) {
-								EventBus.getInstance().fireEvent(
-										new ProblemEvent.GotoRead(this, problem
-												.getId()));
-							}
-						});
+					@Override
+					public void buttonClick(final ClickEvent event) {
+						EventBus.getInstance().fireEvent(
+								new ProblemEvent.GotoRead(this, problem
+										.getId()));
+					}
+				});
 
 				if ("Closed".equals(problem.getStatus())) {
 					b.addStyleName(UIConstants.LINK_COMPLETED);
@@ -173,37 +175,37 @@ public class ProblemListViewImpl extends AbstractProjectPageView implements
 
 		this.tableItem.addGeneratedColumn("assignedUserFullName",
 				new Table.ColumnGenerator() {
-					private static final long serialVersionUID = 1L;
+			private static final long serialVersionUID = 1L;
 
-					@Override
-					public com.vaadin.ui.Component generateCell(
-							final Table source, final Object itemId,
-							final Object columnId) {
-						final SimpleProblem problem = ProblemListViewImpl.this.tableItem
-								.getBeanByIndex(itemId);
-						return new ProjectUserLink(problem.getAssigntouser(),
-								problem.getAssignUserAvatarId(), problem
-										.getAssignedUserFullName(), true, true);
+			@Override
+			public com.vaadin.ui.Component generateCell(
+					final Table source, final Object itemId,
+					final Object columnId) {
+				final SimpleProblem problem = ProblemListViewImpl.this.tableItem
+						.getBeanByIndex(itemId);
+				return new ProjectUserLink(problem.getAssigntouser(),
+						problem.getAssignUserAvatarId(), problem
+						.getAssignedUserFullName(), true, true);
 
-					}
-				});
+			}
+		});
 
 		this.tableItem.addGeneratedColumn("raisedByUserFullName",
 				new Table.ColumnGenerator() {
-					private static final long serialVersionUID = 1L;
+			private static final long serialVersionUID = 1L;
 
-					@Override
-					public com.vaadin.ui.Component generateCell(
-							final Table source, final Object itemId,
-							final Object columnId) {
-						final SimpleProblem problem = ProblemListViewImpl.this.tableItem
-								.getBeanByIndex(itemId);
-						return new ProjectUserLink(problem.getAssigntouser(),
-								problem.getRaisedByUserAvatarId(), problem
-										.getRaisedByUserFullName(), true, true);
+			@Override
+			public com.vaadin.ui.Component generateCell(
+					final Table source, final Object itemId,
+					final Object columnId) {
+				final SimpleProblem problem = ProblemListViewImpl.this.tableItem
+						.getBeanByIndex(itemId);
+				return new ProjectUserLink(problem.getAssigntouser(),
+						problem.getRaisedByUserAvatarId(), problem
+						.getRaisedByUserFullName(), true, true);
 
-					}
-				});
+			}
+		});
 
 		this.tableItem.addGeneratedColumn("datedue", new ColumnGenerator() {
 			private static final long serialVersionUID = 1L;
@@ -238,7 +240,7 @@ public class ProblemListViewImpl extends AbstractProjectPageView implements
 		this.tableItem.setWidth("100%");
 
 		this.problemListLayout
-				.addComponent(this.constructTableActionControls());
+		.addComponent(this.constructTableActionControls());
 		this.problemListLayout.addComponent(this.tableItem);
 	}
 
@@ -295,7 +297,7 @@ public class ProblemListViewImpl extends AbstractProjectPageView implements
 				.canWrite(ProjectRolePermissionCollections.PROBLEMS)) {
 			tableActionControls.addActionItem(
 					MassItemActionHandler.MASS_UPDATE_ACTION, MyCollabResource
-							.newResource("icons/16/action/massupdate.png"),
+					.newResource("icons/16/action/massupdate.png"),
 					"update");
 		}
 
@@ -376,8 +378,8 @@ public class ProblemListViewImpl extends AbstractProjectPageView implements
 
 			Tr trRow5 = new Tr();
 			Td trRow5_value = new Td()
-					.setStyle(
-							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+			.setStyle(
+					"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 					.appendText(
 							StringUtils.getStringRemoveHtmlTag(problem
 									.getDescription()));
@@ -387,44 +389,44 @@ public class ProblemListViewImpl extends AbstractProjectPageView implements
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
 							.appendText("Description:")).appendChild(
-					trRow5_value);
+									trRow5_value);
 
 			Tr trRow1 = new Tr();
 			trRow1.appendChild(
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
 							.appendText("Raised by:"))
-					.appendChild(
-							new Td().setStyle(
-									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
-									.appendChild(
-											new A().setHref(
-													(problem.getRaisedbyuser() != null) ? UserLinkUtils
-															.generatePreviewFullUserLink(
-																	AppContext
+							.appendChild(
+									new Td().setStyle(
+											"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+											.appendChild(
+													new A().setHref(
+															(problem.getRaisedbyuser() != null) ? UserLinkUtils
+																	.generatePreviewFullUserLink(
+																			AppContext
 																			.getSiteUrl(),
-																	problem.getRaisedbyuser())
-															: "")
-													.appendChild(
-															new Img(
-																	"",
-																	UserAvatarControlFactory
-																			.getAvatarLink(
-																					problem.getRaisedByUserAvatarId(),
-																					16)))
-													.appendText(
-															StringUtils
-																	.getStringFieldValue(problem
-																			.getRaisedByUserFullName()))));
+																			problem.getRaisedbyuser())
+																			: "")
+																			.appendChild(
+																					new Img(
+																							"",
+																							UserAvatarControlFactory
+																							.getAvatarLink(
+																									problem.getRaisedByUserAvatarId(),
+																									16)))
+																									.appendText(
+																											StringUtils
+																											.getStringFieldValue(problem
+																													.getRaisedByUserFullName()))));
 			trRow1.appendChild(
 					new Td().setStyle(
 							"width: 80px; vertical-align: top; text-align: right;")
 							.appendText("Impact:"))
-					.appendChild(
-							new Td().setStyle(
-									"width: 150px;word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
-									.appendText(
-											StringUtils
+							.appendChild(
+									new Td().setStyle(
+											"width: 150px;word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+											.appendText(
+													StringUtils
 													.getStringFieldValue(problem
 															.getImpact())));
 
@@ -433,37 +435,37 @@ public class ProblemListViewImpl extends AbstractProjectPageView implements
 					new Td().setStyle(
 							"width: 80px; vertical-align: top; text-align: right;")
 							.appendText("Assignee:"))
-					.appendChild(
-							new Td().setStyle(
-									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
-									.appendChild(
-											new A().setHref(
-													(problem.getRaisedbyuser() != null) ? UserLinkUtils
-															.generatePreviewFullUserLink(
-																	AppContext
+							.appendChild(
+									new Td().setStyle(
+											"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+											.appendChild(
+													new A().setHref(
+															(problem.getRaisedbyuser() != null) ? UserLinkUtils
+																	.generatePreviewFullUserLink(
+																			AppContext
 																			.getSiteUrl(),
-																	problem.getRaisedbyuser())
-															: "")
-													.appendChild(
-															new Img(
-																	"",
-																	UserAvatarControlFactory
-																			.getAvatarLink(
-																					problem.getRaisedByUserAvatarId(),
-																					16)))
-													.appendText(
-															StringUtils
-																	.getStringFieldValue(problem
-																			.getRaisedByUserFullName()))));
+																			problem.getRaisedbyuser())
+																			: "")
+																			.appendChild(
+																					new Img(
+																							"",
+																							UserAvatarControlFactory
+																							.getAvatarLink(
+																									problem.getRaisedByUserAvatarId(),
+																									16)))
+																									.appendText(
+																											StringUtils
+																											.getStringFieldValue(problem
+																													.getRaisedByUserFullName()))));
 			trRow2.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
 							.appendText("Priority:"))
-					.appendChild(
-							new Td().setStyle(
-									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
-									.appendText(
-											StringUtils
+							.appendChild(
+									new Td().setStyle(
+											"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+											.appendText(
+													StringUtils
 													.getStringFieldValue(problem
 															.getPriority())));
 
@@ -472,35 +474,35 @@ public class ProblemListViewImpl extends AbstractProjectPageView implements
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
 							.appendText("Date due:")).appendChild(
-					new Td().appendText(AppContext.formatDate(problem
-							.getDatedue())));
+									new Td().appendText(AppContext.formatDate(problem
+											.getDatedue())));
 			trRow3.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
 							.appendText("Rating:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(problem
-							.getLevel())));
+									new Td().appendText(StringUtils.getStringFieldValue(problem
+											.getLevel())));
 
 			Tr trRow4 = new Tr();
 			trRow4.appendChild(
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
 							.appendText("Status:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(problem
-							.getStatus())));
+									new Td().appendText(StringUtils.getStringFieldValue(problem
+											.getStatus())));
 			trRow4.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
 							.appendText("Related to:"))
-					.appendChild(
-							new Td().setStyle(
-									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
-									.appendText(""));
+							.appendChild(
+									new Td().setStyle(
+											"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+											.appendText(""));
 
 			Tr trRow6 = new Tr();
 			Td trRow6_value = new Td()
-					.setStyle(
-							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+			.setStyle(
+					"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 					.appendText(
 							StringUtils.getStringRemoveHtmlTag(problem
 									.getResolution()));
@@ -510,7 +512,7 @@ public class ProblemListViewImpl extends AbstractProjectPageView implements
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
 							.appendText("Resolution:")).appendChild(
-					trRow6_value);
+									trRow6_value);
 
 			table.appendChild(trRow5);
 			table.appendChild(trRow1);
@@ -525,13 +527,13 @@ public class ProblemListViewImpl extends AbstractProjectPageView implements
 			return "";
 		}
 	}
-	
+
 	private HorizontalLayout createHeaderRight() {
 		final HorizontalLayout layout = new HorizontalLayout();
-		
+
 		final Button createProblemBtn = new Button(
 				LocalizationHelper
-						.getMessage(ProblemI18nEnum.NEW_PROBLEM_ACTION),
+				.getMessage(ProblemI18nEnum.NEW_PROBLEM_ACTION),
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 

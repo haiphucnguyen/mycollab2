@@ -29,11 +29,8 @@ import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.vaadin.server.Resource;
-import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.ui.Alignment;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Field;
-import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
@@ -49,10 +46,6 @@ implements ComponentAddView {
 
 	private static final long serialVersionUID = 1L;
 
-	public ComponentAddViewImpl() {
-		this.setMargin(new MarginInfo(true, false, false, false));
-	}
-
 	@Override
 	protected String initFormHeader() {
 		return (beanItem.getId() == null) ? "Create Component" : "Component Edit";		
@@ -66,22 +59,14 @@ implements ComponentAddView {
 
 	@Override
 	protected Resource initFormIconResource() {
-		return MyCollabResource.newResource("icons/22/project/menu_bug.png");
+		return MyCollabResource.newResource("icons/22/project/component.png");
 	}
 
 	@Override
 	protected ComponentContainer createButtonControls() {
-		final HorizontalLayout controlPanel = new HorizontalLayout();
 		final Layout controlButtons = (new EditFormControlsGenerator<Component>(
 				editForm)).createButtonControls();
-		controlButtons.setSizeUndefined();
-		controlPanel.addComponent(controlButtons);
-		controlPanel.setWidth("100%");
-		controlPanel.setMargin(true);
-		controlPanel.setComponentAlignment(controlButtons,
-				Alignment.MIDDLE_CENTER);
-		controlPanel.addStyleName("control-buttons");
-		return controlPanel;
+		return controlButtons;
 	}
 
 	@Override

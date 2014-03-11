@@ -97,19 +97,11 @@ public class BugReadViewImpl extends AbstractPageView implements BugReadView,
 	public BugReadViewImpl() {
 		super();
 
-		this.setMargin(new MarginInfo(true, false, false, false));
-
 		this.previewForm = new BugPreviewForm();
 		this.addComponent(this.previewForm);
 	}
 
 	private void displayWorkflowControl() {
-		
-		
-	
-		
-		
-		
 		if (BugStatusConstants.OPEN.equals(this.bug.getStatus())
 				|| BugStatusConstants.REOPENNED.equals(this.bug.getStatus())) {
 			this.bugWorkflowControl.removeAllComponents();

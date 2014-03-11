@@ -6,8 +6,13 @@ import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.eventmanager.EventBus;
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.ProblemSearchCriteria;
+import com.esofthead.mycollab.module.project.events.ProblemEvent;
+import com.esofthead.mycollab.module.project.localization.ProblemI18nEnum;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.MyCollabSession;
 import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
@@ -15,12 +20,15 @@ import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.Separator;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Image;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
 
 /**
@@ -29,7 +37,7 @@ import com.vaadin.ui.TextField;
  * @since 1.0
  */
 public class ProblemSearchPanel extends
-		GenericSearchPanel<ProblemSearchCriteria> {
+GenericSearchPanel<ProblemSearchCriteria> {
 
 	private static final long serialVersionUID = 1L;
 	private final SimpleProject project;
@@ -50,7 +58,7 @@ public class ProblemSearchPanel extends
 		this.setCompositionRoot(new ProblemBasicSearchLayout());
 	}
 
-	
+
 
 	@SuppressWarnings("rawtypes")
 	private class ProblemBasicSearchLayout extends BasicSearchLayout {
@@ -123,21 +131,59 @@ public class ProblemSearchPanel extends
 		protected SearchCriteria fillupSearchCriteria() {
 			ProblemSearchPanel.this.searchCriteria = new ProblemSearchCriteria();
 			ProblemSearchPanel.this.searchCriteria
-					.setProjectId(new NumberSearchField(SearchField.AND,
-							ProblemSearchPanel.this.project.getId()));
+			.setProjectId(new NumberSearchField(SearchField.AND,
+					ProblemSearchPanel.this.project.getId()));
 
 			ProblemSearchPanel.this.searchCriteria
-					.setProblemname(new StringSearchField(this.nameField
-							.getValue().toString().trim()));
+			.setProblemname(new StringSearchField(this.nameField
+					.getValue().toString().trim()));
 
 			if (this.myItemCheckbox.getValue()) {
 				ProblemSearchPanel.this.searchCriteria
-						.setAssignToUser(new StringSearchField(SearchField.AND,
-								AppContext.getUsername()));
+				.setAssignToUser(new StringSearchField(SearchField.AND,
+						AppContext.getUsername()));
 			} else {
 				ProblemSearchPanel.this.searchCriteria.setAssignToUser(null);
 			}
 			return ProblemSearchPanel.this.searchCriteria;
+		}
+
+		@Override
+		public ComponentContainer constructHeader() {
+			Image titleIcon = new Image(null,
+					MyCollabResource.newResource("icons/22/project/problem_selected.png"));
+			Label headerText = new Label("Problem List");
+
+			final Button createBtn = new Button(
+					LocalizationHelper.getMessage(ProblemI18nEnum.NEW_PROBLEM_ACTION),
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void buttonClick(final ClickEvent event) {
+							EventBus.getInstance().fireEvent(
+									new ProblemEvent.GotoAdd(this, null));
+						}
+					});
+			createBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+			createBtn.setIcon(MyCollabResource
+					.newResource("icons/16/addRecord.png"));
+			createBtn.setEnabled(CurrentProjectVariables
+					.canWrite(ProjectRolePermissionCollections.PROBLEMS));
+
+			HorizontalLayout header = new HorizontalLayout();
+			headerText.setStyleName("hdr-text");
+
+			UiUtils.addComponent(header, titleIcon, Alignment.MIDDLE_LEFT);
+			UiUtils.addComponent(header, headerText, Alignment.MIDDLE_LEFT);
+			UiUtils.addComponent(header, createBtn, Alignment.MIDDLE_RIGHT);
+			header.setExpandRatio(headerText, 1.0f);
+
+			header.setStyleName("hdr-view");
+			header.setWidth("100%");
+			header.setSpacing(true);
+			header.setMargin(new MarginInfo(true, false, true, false));
+			return header;
 		}
 	}
 }

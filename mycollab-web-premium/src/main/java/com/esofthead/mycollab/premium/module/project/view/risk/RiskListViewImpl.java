@@ -28,8 +28,8 @@ import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
 import com.esofthead.mycollab.vaadin.events.MassItemActionHandler;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
-import com.esofthead.mycollab.vaadin.ui.AbstractProjectPageView;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.CheckBoxDecor;
 import com.esofthead.mycollab.vaadin.ui.DefaultMassItemActionHandlersContainer;
@@ -49,6 +49,7 @@ import com.hp.gagawa.java.elements.Tr;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.server.Sizeable;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -68,7 +69,7 @@ import com.vaadin.ui.VerticalLayout;
  * 
  */
 @ViewComponent
-public class RiskListViewImpl extends AbstractProjectPageView implements RiskListView {
+public class RiskListViewImpl extends AbstractPageView implements RiskListView {
 
 	private static final long serialVersionUID = 1L;
 	private final RiskSearchPanel riskSearchPanel;
@@ -80,13 +81,14 @@ public class RiskListViewImpl extends AbstractProjectPageView implements RiskLis
 	private static Logger log = LoggerFactory.getLogger(RiskListViewImpl.class);
 
 	public RiskListViewImpl() {
-		super("Risks","risk_selected.png");
-		
+		/*super("Risks","risk_selected.png");
+
 		this.addHeaderRightContent(createHeaderRight());
-		
+
 		CssLayout contentWrapper = new CssLayout();
-		contentWrapper.setStyleName("content-wrapper");
-		
+		contentWrapper.setStyleName("content-wrapper");*/
+		this.setMargin(new MarginInfo(false, true, false, true));
+
 		this.riskSearchPanel = new RiskSearchPanel();
 		this.addComponent(this.riskSearchPanel);
 
@@ -120,7 +122,7 @@ public class RiskListViewImpl extends AbstractProjectPageView implements RiskLis
 						final SimpleRisk item = RiskListViewImpl.this.tableItem
 								.getBeanByIndex(itemId);
 						RiskListViewImpl.this.tableItem
-								.fireSelectItemEvent(item);
+						.fireSelectItemEvent(item);
 
 					}
 				});
@@ -142,15 +144,15 @@ public class RiskListViewImpl extends AbstractProjectPageView implements RiskLis
 						.getBeanByIndex(itemId);
 				final ButtonLink b = new ButtonLink(risk.getRiskname(),
 						new Button.ClickListener() {
-							private static final long serialVersionUID = 1L;
+					private static final long serialVersionUID = 1L;
 
-							@Override
-							public void buttonClick(final ClickEvent event) {
-								EventBus.getInstance().fireEvent(
-										new RiskEvent.GotoRead(this, risk
-												.getId()));
-							}
-						});
+					@Override
+					public void buttonClick(final ClickEvent event) {
+						EventBus.getInstance().fireEvent(
+								new RiskEvent.GotoRead(this, risk
+										.getId()));
+					}
+				});
 
 				if ("Closed".equals(risk.getStatus())) {
 					b.addStyleName(UIConstants.LINK_COMPLETED);
@@ -169,37 +171,37 @@ public class RiskListViewImpl extends AbstractProjectPageView implements RiskLis
 
 		this.tableItem.addGeneratedColumn("assignedToUserFullName",
 				new Table.ColumnGenerator() {
-					private static final long serialVersionUID = 1L;
+			private static final long serialVersionUID = 1L;
 
-					@Override
-					public com.vaadin.ui.Component generateCell(
-							final Table source, final Object itemId,
-							final Object columnId) {
-						final SimpleRisk risk = RiskListViewImpl.this.tableItem
-								.getBeanByIndex(itemId);
-						return new ProjectUserLink(risk.getAssigntouser(), risk
-								.getAssignToUserAvatarId(), risk
-								.getAssignedToUserFullName(), true, true);
+			@Override
+			public com.vaadin.ui.Component generateCell(
+					final Table source, final Object itemId,
+					final Object columnId) {
+				final SimpleRisk risk = RiskListViewImpl.this.tableItem
+						.getBeanByIndex(itemId);
+				return new ProjectUserLink(risk.getAssigntouser(), risk
+						.getAssignToUserAvatarId(), risk
+						.getAssignedToUserFullName(), true, true);
 
-					}
-				});
+			}
+		});
 
 		this.tableItem.addGeneratedColumn("raisedByUserFullName",
 				new Table.ColumnGenerator() {
-					private static final long serialVersionUID = 1L;
+			private static final long serialVersionUID = 1L;
 
-					@Override
-					public com.vaadin.ui.Component generateCell(
-							final Table source, final Object itemId,
-							final Object columnId) {
-						final SimpleRisk risk = RiskListViewImpl.this.tableItem
-								.getBeanByIndex(itemId);
-						return new ProjectUserLink(risk.getRaisedbyuser(), risk
-								.getRaisedByUserAvatarId(), risk
-								.getRaisedByUserFullName(), true, true);
+			@Override
+			public com.vaadin.ui.Component generateCell(
+					final Table source, final Object itemId,
+					final Object columnId) {
+				final SimpleRisk risk = RiskListViewImpl.this.tableItem
+						.getBeanByIndex(itemId);
+				return new ProjectUserLink(risk.getRaisedbyuser(), risk
+						.getRaisedByUserAvatarId(), risk
+						.getRaisedByUserFullName(), true, true);
 
-					}
-				});
+			}
+		});
 
 		this.tableItem.addGeneratedColumn("datedue", new ColumnGenerator() {
 			private static final long serialVersionUID = 1L;
@@ -290,7 +292,7 @@ public class RiskListViewImpl extends AbstractProjectPageView implements RiskLis
 				.canWrite(ProjectRolePermissionCollections.RISKS)) {
 			tableActionControls.addActionItem(
 					MassItemActionHandler.MASS_UPDATE_ACTION, MyCollabResource
-							.newResource("icons/16/action/massupdate.png"),
+					.newResource("icons/16/action/massupdate.png"),
 					"update");
 		}
 
@@ -371,8 +373,8 @@ public class RiskListViewImpl extends AbstractProjectPageView implements RiskLis
 
 			Tr trRow5 = new Tr();
 			Td trRow5_value = new Td()
-					.setStyle(
-							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+			.setStyle(
+					"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 					.appendText(
 							StringUtils.getStringRemoveHtmlTag(risk
 									.getDescription()));
@@ -382,44 +384,44 @@ public class RiskListViewImpl extends AbstractProjectPageView implements RiskLis
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
 							.appendText("Description:")).appendChild(
-					trRow5_value);
+									trRow5_value);
 
 			Tr trRow1 = new Tr();
 			trRow1.appendChild(
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
 							.appendText("Raised by:"))
-					.appendChild(
-							new Td().setStyle(
-									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
-									.appendChild(
-											new A().setHref(
-													(risk.getRaisedbyuser() != null) ? UserLinkUtils
-															.generatePreviewFullUserLink(
-																	AppContext
+							.appendChild(
+									new Td().setStyle(
+											"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+											.appendChild(
+													new A().setHref(
+															(risk.getRaisedbyuser() != null) ? UserLinkUtils
+																	.generatePreviewFullUserLink(
+																			AppContext
 																			.getSiteUrl(),
-																	risk.getRaisedbyuser())
-															: "")
-													.appendChild(
-															new Img(
-																	"",
-																	UserAvatarControlFactory
-																			.getAvatarLink(
-																					risk.getRaisedByUserAvatarId(),
-																					16)))
-													.appendText(
-															StringUtils
-																	.getStringFieldValue(risk
-																			.getRaisedByUserFullName()))));
+																			risk.getRaisedbyuser())
+																			: "")
+																			.appendChild(
+																					new Img(
+																							"",
+																							UserAvatarControlFactory
+																							.getAvatarLink(
+																									risk.getRaisedByUserAvatarId(),
+																									16)))
+																									.appendText(
+																											StringUtils
+																											.getStringFieldValue(risk
+																													.getRaisedByUserFullName()))));
 			trRow1.appendChild(
 					new Td().setStyle(
 							"width: 80px; vertical-align: top; text-align: right;")
 							.appendText("Consequence:"))
-					.appendChild(
-							new Td().setStyle(
-									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
-									.appendText(
-											StringUtils
+							.appendChild(
+									new Td().setStyle(
+											"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+											.appendText(
+													StringUtils
 													.getStringFieldValue(risk
 															.getConsequence())));
 
@@ -428,37 +430,37 @@ public class RiskListViewImpl extends AbstractProjectPageView implements RiskLis
 					new Td().setStyle(
 							"width: 80px; vertical-align: top; text-align: right;")
 							.appendText("Assignee:"))
-					.appendChild(
-							new Td().setStyle(
-									"width:150px;word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
-									.appendChild(
-											new A().setHref(
-													(risk.getAssigntouser() != null) ? UserLinkUtils
-															.generatePreviewFullUserLink(
-																	AppContext
+							.appendChild(
+									new Td().setStyle(
+											"width:150px;word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+											.appendChild(
+													new A().setHref(
+															(risk.getAssigntouser() != null) ? UserLinkUtils
+																	.generatePreviewFullUserLink(
+																			AppContext
 																			.getSiteUrl(),
-																	risk.getAssigntouser())
-															: "")
-													.appendChild(
-															new Img(
-																	"",
-																	UserAvatarControlFactory
-																			.getAvatarLink(
-																					risk.getAssignToUserAvatarId(),
-																					16)))
-													.appendText(
-															StringUtils
-																	.getStringFieldValue(risk
-																			.getAssignedToUserFullName()))));
+																			risk.getAssigntouser())
+																			: "")
+																			.appendChild(
+																					new Img(
+																							"",
+																							UserAvatarControlFactory
+																							.getAvatarLink(
+																									risk.getAssignToUserAvatarId(),
+																									16)))
+																									.appendText(
+																											StringUtils
+																											.getStringFieldValue(risk
+																													.getAssignedToUserFullName()))));
 			trRow2.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
 							.appendText("Probability:"))
-					.appendChild(
-							new Td().setStyle(
-									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
-									.appendText(
-											StringUtils
+							.appendChild(
+									new Td().setStyle(
+											"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+											.appendText(
+													StringUtils
 													.getStringFieldValue(risk
 															.getProbalitity())));
 
@@ -467,36 +469,36 @@ public class RiskListViewImpl extends AbstractProjectPageView implements RiskLis
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
 							.appendText("Date due:"))
-					.appendChild(
-							new Td().appendText(AppContext.formatDate(risk
-									.getDatedue())));
+							.appendChild(
+									new Td().appendText(AppContext.formatDate(risk
+											.getDatedue())));
 			trRow3.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
 							.appendText("Rating:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(risk
-							.getLevel())));
+									new Td().appendText(StringUtils.getStringFieldValue(risk
+											.getLevel())));
 
 			Tr trRow4 = new Tr();
 			trRow4.appendChild(
 					new Td().setStyle(
 							"width: 70px; vertical-align: top; text-align: right;")
 							.appendText("Status:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(risk
-							.getStatus())));
+									new Td().appendText(StringUtils.getStringFieldValue(risk
+											.getStatus())));
 			trRow4.appendChild(
 					new Td().setStyle(
 							"width: 110px; vertical-align: top; text-align: right;")
 							.appendText("Related to:"))
-					.appendChild(
-							new Td().setStyle(
-									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
-									.appendText(""));
+							.appendChild(
+									new Td().setStyle(
+											"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+											.appendText(""));
 
 			Tr trRow6 = new Tr();
 			Td trRow6_value = new Td()
-					.setStyle(
-							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+			.setStyle(
+					"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 					.appendText(
 							StringUtils.getStringRemoveHtmlTag(risk
 									.getResponse()));
@@ -520,10 +522,10 @@ public class RiskListViewImpl extends AbstractProjectPageView implements RiskLis
 			return "";
 		}
 	}
-	
+
 	private HorizontalLayout createHeaderRight() {
 		final HorizontalLayout layout = new HorizontalLayout();
-	
+
 		final Button createBtn = new Button(
 				LocalizationHelper.getMessage(RiskI18nEnum.NEW_RISK_ACTION),
 				new Button.ClickListener() {

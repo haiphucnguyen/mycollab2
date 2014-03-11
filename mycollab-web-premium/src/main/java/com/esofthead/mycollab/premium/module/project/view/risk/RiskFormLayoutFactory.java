@@ -6,7 +6,6 @@ import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Field;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
 
@@ -24,10 +23,6 @@ public class RiskFormLayoutFactory implements IFormLayoutFactory {
 	@Override
 	public Layout getLayout() {
 		final VerticalLayout layout = new VerticalLayout();
-
-		final Label organizationHeader = new Label("Risk Information");
-		organizationHeader.setStyleName("h2");
-		layout.addComponent(organizationHeader);
 
 		this.informationLayout = new GridFormLayoutHelper(2, 7, "100%",
 				"167px", Alignment.MIDDLE_LEFT);

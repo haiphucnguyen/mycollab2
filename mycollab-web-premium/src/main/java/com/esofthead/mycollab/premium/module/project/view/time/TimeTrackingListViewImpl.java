@@ -1,7 +1,6 @@
 package com.esofthead.mycollab.premium.module.project.view.time;
 
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -27,15 +26,12 @@ import com.esofthead.mycollab.module.project.localization.TimeTrackingI18nEnum;
 import com.esofthead.mycollab.module.project.service.ItemTimeLoggingService;
 import com.esofthead.mycollab.module.project.service.ProjectGenericTaskService;
 import com.esofthead.mycollab.module.project.view.time.TimeTrackingTableDisplay;
-import com.esofthead.mycollab.module.user.events.RoleEvent;
 import com.esofthead.mycollab.reporting.ReportExportType;
-import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
-import com.esofthead.mycollab.vaadin.ui.AbstractProjectPageView;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
@@ -59,15 +55,14 @@ import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
 @ViewComponent
-public class TimeTrackingListViewImpl extends AbstractProjectPageView implements
-		TimeTrackingListView {
-	
+public class TimeTrackingListViewImpl extends AbstractPageView implements
+TimeTrackingListView {
+	private static final long serialVersionUID = 3742030333599796165L;
 
 	private TimeTrackingTableDisplay tableItem;
 	private final ItemTimeLoggingSearchPanel itemTimeLoggingPanel;
@@ -79,35 +74,41 @@ public class TimeTrackingListViewImpl extends AbstractProjectPageView implements
 	private final Label lbTimeRange;
 	private EntryComponentLayout entryComponentLayout;
 	private boolean isNeedConstructLayout;
-	private final CssLayout contentWrappers;
-	
+
 	public TimeTrackingListViewImpl() {
-		super(LocalizationHelper
-				.getMessage(TimeTrackingI18nEnum.SEARCH_TIME_TITLE), "time_selected.png");
-		this.addHeaderRightContent(createHeaderRight());
-		
 		final CssLayout headerWrapper = new CssLayout();
 		isNeedConstructLayout = true;
-		
-		contentWrappers = new CssLayout();
-		contentWrappers.setStyleName("content-wrapper");
-		
+
 		this.itemTimeLoggingService = ApplicationContextUtil
 				.getSpringBean(ItemTimeLoggingService.class);
 
 		this.itemTimeLoggingPanel = new ItemTimeLoggingSearchPanel();
 		this.itemTimeLoggingPanel
-				.addSearchHandler(new SearchHandler<ItemTimeLoggingSearchCriteria>() {
-					@Override
-					public void onSearch(
-							final ItemTimeLoggingSearchCriteria criteria) {
-						TimeTrackingListViewImpl.this
-								.setSearchCriteria(criteria);
-					}
-				});
-		
-		contentWrappers.addComponent(this.itemTimeLoggingPanel);
-		
+		.addSearchHandler(new SearchHandler<ItemTimeLoggingSearchCriteria>() {
+			@Override
+			public void onSearch(
+					final ItemTimeLoggingSearchCriteria criteria) {
+				TimeTrackingListViewImpl.this
+				.setSearchCriteria(criteria);
+			}
+		});
+
+		this.addComponent(this.itemTimeLoggingPanel);
+		this.itemTimeLoggingPanel.addClickListener(new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				if (isNeedConstructLayout) {
+					isNeedConstructLayout = false;
+					entryComponentLayout = new EntryComponentLayout();
+					//int index = TimeTrackingListViewImpl.this.getComponentIndex(headerWrapper) + 1;
+					int index=0;
+					TimeTrackingListViewImpl.this.itemTimeLoggingPanel.addComponent(entryComponentLayout, index);
+				}
+			}
+		});
+
 		headerWrapper.setWidth("100%");
 		headerWrapper.addStyleName(UIConstants.TABLE_ACTION_CONTROLS);
 
@@ -121,7 +122,7 @@ public class TimeTrackingListViewImpl extends AbstractProjectPageView implements
 				Alignment.MIDDLE_LEFT);
 		headerLayout.setExpandRatio(this.lbTimeRange, 1.0f);
 
-		
+
 		Button exportBtn = new Button("Export", new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
@@ -160,65 +161,64 @@ public class TimeTrackingListViewImpl extends AbstractProjectPageView implements
 		headerLayout.addComponent(exportButtonControl);
 		headerLayout.setComponentAlignment(this.exportButtonControl,
 				Alignment.MIDDLE_RIGHT);
-		contentWrappers.addComponent(headerWrapper);
-		
+		this.addComponent(headerWrapper);
+
 
 		this.tableItem = new TimeTrackingTableDisplay(Arrays.asList(
 				new TableViewField("Summary", "summary",
 						UIConstants.TABLE_X_LABEL_WIDTH), new TableViewField(
-						"User", "logUserFullName",
-						UIConstants.TABLE_X_LABEL_WIDTH), new TableViewField(
-						"Hours", "logvalue", UIConstants.TABLE_S_LABEL_WIDTH),
-				new TableViewField("Created Time", "createdtime",
-						UIConstants.TABLE_DATE_TIME_WIDTH)));
+								"User", "logUserFullName",
+								UIConstants.TABLE_X_LABEL_WIDTH), new TableViewField(
+										"Hours", "logvalue", UIConstants.TABLE_S_LABEL_WIDTH),
+										new TableViewField("Created Time", "createdtime",
+												UIConstants.TABLE_DATE_TIME_WIDTH)));
 
 		this.tableItem
-				.addTableListener(new ApplicationEventListener<TableClickEvent>() {
-					private static final long serialVersionUID = 1L;
+		.addTableListener(new ApplicationEventListener<TableClickEvent>() {
+			private static final long serialVersionUID = 1L;
 
-					@Override
-					public Class<? extends ApplicationEvent> getEventType() {
-						return TableClickEvent.class;
+			@Override
+			public Class<? extends ApplicationEvent> getEventType() {
+				return TableClickEvent.class;
+			}
+
+			@Override
+			public void handle(final TableClickEvent event) {
+				final SimpleItemTimeLogging itemLogging = (SimpleItemTimeLogging) event
+						.getData();
+				if ("summary".equals(event.getFieldName())) {
+					if (MonitorTypeConstants.PRJ_BUG.equals(itemLogging
+							.getType())) {
+						EventBus.getInstance().fireEvent(
+								new BugEvent.GotoRead(this, itemLogging
+										.getTypeid()));
+					} else if (MonitorTypeConstants.PRJ_TASK
+							.equals(itemLogging.getType())) {
+						EventBus.getInstance().fireEvent(
+								new TaskEvent.GotoRead(this,
+										itemLogging.getTypeid()));
 					}
+				}
+			}
+		});
 
-					@Override
-					public void handle(final TableClickEvent event) {
-						final SimpleItemTimeLogging itemLogging = (SimpleItemTimeLogging) event
-								.getData();
-						if ("summary".equals(event.getFieldName())) {
-							if (MonitorTypeConstants.PRJ_BUG.equals(itemLogging
-									.getType())) {
-								EventBus.getInstance().fireEvent(
-										new BugEvent.GotoRead(this, itemLogging
-												.getTypeid()));
-							} else if (MonitorTypeConstants.PRJ_TASK
-									.equals(itemLogging.getType())) {
-								EventBus.getInstance().fireEvent(
-										new TaskEvent.GotoRead(this,
-												itemLogging.getTypeid()));
-							}
-						}
-					}
-				});
-
-		contentWrappers.addComponent(this.tableItem);
-		this.addComponent(contentWrappers);
+		this.addComponent(this.tableItem);
 	}
-	
+
 
 	private StreamResource constructStreamResource(ReportExportType exportType) {
 		final String title = "Time of Project "
 				+ ((CurrentProjectVariables.getProject() != null && CurrentProjectVariables
-						.getProject().getName() != null) ? CurrentProjectVariables
+				.getProject().getName() != null) ? CurrentProjectVariables
 						.getProject().getName() : "");
 		ExportTimeLoggingStreamResource exportStream = new ExportTimeLoggingStreamResource(
 				title, exportType,
 				ApplicationContextUtil
-						.getSpringBean(ItemTimeLoggingService.class),
+				.getSpringBean(ItemTimeLoggingService.class),
 				TimeTrackingListViewImpl.this.itemTimeLogginSearchCriteria);
 		final StreamResource res = new StreamResource(exportStream,
 				ExportTimeLoggingStreamResource
-						.getDefaultExportFileName(exportType));
+				.getDefaultExportFileName(exportType));
 		return res;
 	}
 
@@ -241,35 +241,7 @@ public class TimeTrackingListViewImpl extends AbstractProjectPageView implements
 					TimeTrackingI18nEnum.TASK_LIST_RANGE, fromDate, toDate));
 		}
 	}
-	
-	private HorizontalLayout createHeaderRight()  {
-		final HorizontalLayout layout = new HorizontalLayout();
-		final Button addNewEntryBtn;
-		addNewEntryBtn = new Button("Add Entry");
-		addNewEntryBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-		addNewEntryBtn.setIcon(MyCollabResource
-				.newResource("icons/16/project/add_time.png"));
-		addNewEntryBtn.addStyleName("v-button-caption-bool");
-		addNewEntryBtn.addClickListener(new Button.ClickListener() {
-		private static final long serialVersionUID = 1L;
 
-		@Override
-		public void buttonClick(ClickEvent event) {
-			if (isNeedConstructLayout) {
-				isNeedConstructLayout = false;
-				entryComponentLayout = new EntryComponentLayout();
-                //int index = TimeTrackingListViewImpl.this.getComponentIndex(headerWrapper) + 1;
-				int index=0;
-				contentWrappers.addComponent(entryComponentLayout, index);
-			}
-		}
-		});	
-
-		UiUtils.addComponent(layout, addNewEntryBtn, Alignment.MIDDLE_RIGHT);
-
-		return layout;
-	}
-	
 	@Override
 	public void setSearchCriteria(
 			final ItemTimeLoggingSearchCriteria searchCriteria) {
@@ -333,7 +305,7 @@ public class TimeTrackingListViewImpl extends AbstractProjectPageView implements
 				@Override
 				public void buttonClick(ClickEvent event) {
 					TimeTrackingListViewImpl.this.isNeedConstructLayout = true;
-					TimeTrackingListViewImpl.this.removeComponent(entryComponentLayout);
+					TimeTrackingListViewImpl.this.itemTimeLoggingPanel.removeComponent(entryComponentLayout);
 				}
 			});
 			cancelBtn.addStyleName(UIConstants.THEME_LINK);
@@ -345,18 +317,18 @@ public class TimeTrackingListViewImpl extends AbstractProjectPageView implements
 
 				@Override
 				public void buttonClick(ClickEvent event) {
-					ProjectGenericTask projectGenericTask = (ProjectGenericTask) ticketComboBox
+					ProjectGenericTask projectGenericTask = ticketComboBox
 							.getCurrentItem();
 					if (projectGenericTask == null) {
 						NotificationUtil
-								.showErrorNotification("Please choose assignment");
+						.showErrorNotification("Please choose assignment");
 						return;
 					}
 					try {
 						Double hourValue = Double
-								.parseDouble((String) hourField.getValue());
+								.parseDouble(hourField.getValue());
 						ItemTimeLogging item = new ItemTimeLogging();
-						item.setNote((String) descriptionField.getValue());
+						item.setNote(descriptionField.getValue());
 						if (projectGenericTask.getType().equals("Bug")) {
 							item.setType("Project-Bug");
 						} else if (projectGenericTask.getType().equals("Task")) {
@@ -369,14 +341,14 @@ public class TimeTrackingListViewImpl extends AbstractProjectPageView implements
 						item.setTypeid(projectGenericTask.getTypeId());
 						item.setProjectid(projectGenericTask.getProjectId());
 						item.setSaccountid(AppContext.getAccountId());
-						item.setCreatedtime((Date) dateField.getValue());
+						item.setCreatedtime(dateField.getValue());
 						item.setLogvalue(hourValue);
 						item.setLoguser(AppContext.getUsername());
 						TimeTrackingListViewImpl.this.itemTimeLoggingService
-								.saveWithSession(item, AppContext.getUsername());
+						.saveWithSession(item, AppContext.getUsername());
 
 						TimeTrackingListViewImpl.this.isNeedConstructLayout = true;
-                        TimeTrackingListViewImpl.this.removeComponent(entryComponentLayout);
+						TimeTrackingListViewImpl.this.itemTimeLoggingPanel.removeComponent(entryComponentLayout);
 						setSearchCriteria(itemTimeLogginSearchCriteria);
 					} catch (Exception e) {
 						throw new MyCollabException(e);
@@ -445,26 +417,27 @@ public class TimeTrackingListViewImpl extends AbstractProjectPageView implements
 								projectGenericTask.getName());
 						if (projectGenericTask.getType().equals("Bug")) {
 							AssignmentSelectionComboBox.this
-									.setItemIcon(
-											projectGenericTask,
-											MyCollabResource
-													.newResource("icons/16/project/bug.png"));
+							.setItemIcon(
+									projectGenericTask,
+									MyCollabResource
+									.newResource("icons/16/project/bug.png"));
 						} else if (projectGenericTask.getType().equals("Task")) {
 							AssignmentSelectionComboBox.this
-									.setItemIcon(
-											projectGenericTask,
-											MyCollabResource
-													.newResource("icons/16/project/task.png"));
+							.setItemIcon(
+									projectGenericTask,
+									MyCollabResource
+									.newResource("icons/16/project/task.png"));
 						}
 					}
 				}
 				super.changeVariables(source, variables);
 			}
 
+			@Override
 			protected List<?> getOptionsWithFilter(boolean needNullSelectOption) {
 				@SuppressWarnings("unchecked")
 				List<Object> options = (List<Object>) super
-						.getOptionsWithFilter(needNullSelectOption);
+				.getOptionsWithFilter(needNullSelectOption);
 
 				if (getValue() != null && options != null && options.size() > 0) {
 					options.add(0, getValue());

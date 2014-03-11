@@ -13,9 +13,7 @@ import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.vaadin.server.Resource;
-import com.vaadin.ui.Alignment;
 import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Layout;
 
 /**
@@ -46,35 +44,27 @@ ProblemAddView, IFormAddView<Problem> {
 
 	@Override
 	protected String initFormHeader() {
-		return (beanItem.getId() == null) ? "Create Problem" : beanItem
-				.getIssuename();
+		return (beanItem.getId() == null) ? "Create Problem" : "Problem Edit";
 	}
 
 	@Override
 	protected String initFormTitle() {
-		return (beanItem.getId() == null) ? "Create Problem" : beanItem
+		return (beanItem.getId() == null) ? null : beanItem
 				.getIssuename();
 	}
 
 	@Override
 	protected Resource initFormIconResource() {
 		return MyCollabResource
-				.newResource("icons/22/project/menu_problem.png");
+				.newResource("icons/22/project/problem_selected.png");
 	}
 
 	@Override
 	protected ComponentContainer createButtonControls() {
-		final HorizontalLayout controlPanel = new HorizontalLayout();
-		controlPanel.setMargin(true);
-		controlPanel.addStyleName("control-buttons");
 		final Layout controlButtons = (new EditFormControlsGenerator<Problem>(
 				editForm)).createButtonControls();
 		controlButtons.setSizeUndefined();
-		controlPanel.addComponent(controlButtons);
-		controlPanel.setWidth("100%");
-		controlPanel.setComponentAlignment(controlButtons,
-				Alignment.MIDDLE_CENTER);
-		return controlPanel;
+		return controlButtons;
 	}
 
 	@Override

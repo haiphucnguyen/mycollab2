@@ -46,7 +46,6 @@ import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.vaadin.data.util.BeanItemContainer;
-import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.combobox.FilteringMode;
 import com.vaadin.ui.AbstractSelect.ItemCaptionMode;
 import com.vaadin.ui.Alignment;
@@ -76,7 +75,6 @@ ProjectMemberInviteView {
 
 	public ProjectMemberInviteViewImpl() {
 		super();
-		this.setMargin(new MarginInfo(true, false, false, false));
 	}
 
 	@Override
@@ -117,7 +115,7 @@ ProjectMemberInviteView {
 		this.roleComboBox = new ProjectRoleComboBox();
 
 		final AddViewLayout userAddLayout = new AddViewLayout("Invite Members",
-				MyCollabResource.newResource("icons/24/project/group.png"));
+				MyCollabResource.newResource("icons/22/project/user_selected.png"));
 
 		userAddLayout.addHeaderRight(createButtonControls());
 
@@ -136,9 +134,6 @@ ProjectMemberInviteView {
 	}
 
 	private Layout createButtonControls() {
-		final HorizontalLayout controlPanel = new HorizontalLayout();
-		controlPanel.setMargin(new MarginInfo(true, false, true, false));
-
 		final HorizontalLayout controlButtons = new HorizontalLayout();
 		controlButtons.setSpacing(true);
 
@@ -176,11 +171,7 @@ ProjectMemberInviteView {
 		controlButtons.addComponent(cancelBtn);
 
 		controlButtons.setSizeUndefined();
-		controlPanel.addComponent(controlButtons);
-		controlPanel.setWidth("100%");
-		controlPanel.setComponentAlignment(controlButtons,
-				Alignment.MIDDLE_CENTER);
-		return controlPanel;
+		return controlButtons;
 	}
 
 	private class InviteUserTokenField extends TokenField {

@@ -6,8 +6,13 @@ import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.eventmanager.EventBus;
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.RiskSearchCriteria;
+import com.esofthead.mycollab.module.project.events.RiskEvent;
+import com.esofthead.mycollab.module.project.localization.RiskI18nEnum;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.MyCollabSession;
 import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
@@ -15,12 +20,15 @@ import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.Separator;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Image;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
 
 /**
@@ -50,7 +58,7 @@ public class RiskSearchPanel extends GenericSearchPanel<RiskSearchCriteria> {
 		this.setCompositionRoot(new RiskBasicSearchLayout());
 	}
 
-	
+
 
 	@SuppressWarnings("rawtypes")
 	private class RiskBasicSearchLayout extends BasicSearchLayout {
@@ -122,20 +130,58 @@ public class RiskSearchPanel extends GenericSearchPanel<RiskSearchCriteria> {
 		protected SearchCriteria fillupSearchCriteria() {
 			RiskSearchPanel.this.searchCriteria = new RiskSearchCriteria();
 			RiskSearchPanel.this.searchCriteria
-					.setProjectId(new NumberSearchField(SearchField.AND,
-							RiskSearchPanel.this.project.getId()));
+			.setProjectId(new NumberSearchField(SearchField.AND,
+					RiskSearchPanel.this.project.getId()));
 			RiskSearchPanel.this.searchCriteria
-					.setRiskname(new StringSearchField(this.nameField
-							.getValue().toString().trim()));
+			.setRiskname(new StringSearchField(this.nameField
+					.getValue().toString().trim()));
 
 			if (this.myItemCheckbox.getValue()) {
 				RiskSearchPanel.this.searchCriteria
-						.setAssignToUser(new StringSearchField(SearchField.AND,
-								AppContext.getUsername()));
+				.setAssignToUser(new StringSearchField(SearchField.AND,
+						AppContext.getUsername()));
 			} else {
 				RiskSearchPanel.this.searchCriteria.setAssignToUser(null);
 			}
 			return RiskSearchPanel.this.searchCriteria;
+		}
+
+		@Override
+		public ComponentContainer constructHeader() {
+			Image titleIcon = new Image(null,
+					MyCollabResource.newResource("icons/22/project/risk_selected.png"));
+			Label headerText = new Label("Risk List");
+
+			final Button createBtn = new Button(
+					LocalizationHelper.getMessage(RiskI18nEnum.NEW_RISK_ACTION),
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void buttonClick(final ClickEvent event) {
+							EventBus.getInstance().fireEvent(
+									new RiskEvent.GotoAdd(this, null));
+						}
+					});
+			createBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+			createBtn.setIcon(MyCollabResource
+					.newResource("icons/16/addRecord.png"));
+			createBtn.setEnabled(CurrentProjectVariables
+					.canWrite(ProjectRolePermissionCollections.RISKS));
+
+			HorizontalLayout header = new HorizontalLayout();
+			headerText.setStyleName("hdr-text");
+
+			UiUtils.addComponent(header, titleIcon, Alignment.MIDDLE_LEFT);
+			UiUtils.addComponent(header, headerText, Alignment.MIDDLE_LEFT);
+			UiUtils.addComponent(header, createBtn, Alignment.MIDDLE_RIGHT);
+			header.setExpandRatio(headerText, 1.0f);
+
+			header.setStyleName("hdr-view");
+			header.setWidth("100%");
+			header.setSpacing(true);
+			header.setMargin(new MarginInfo(true, false, true, false));
+			return header;
 		}
 	}
 

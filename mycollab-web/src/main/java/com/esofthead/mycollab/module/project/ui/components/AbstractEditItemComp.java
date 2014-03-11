@@ -46,7 +46,7 @@ implements IFormAddView<B> {
 		super();
 		this.editForm = new AdvancedEditBeanForm<B>();
 		this.addComponent(this.editForm);
-		this.setMargin(false);
+		//this.setMargin(false);
 	}
 
 	@Override
