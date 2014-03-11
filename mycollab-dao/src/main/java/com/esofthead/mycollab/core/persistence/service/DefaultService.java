@@ -47,6 +47,7 @@ import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.IMassUpdateDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
+import com.esofthead.mycollab.core.utils.BeanUtility;
 
 /**
  * 
@@ -81,7 +82,7 @@ public abstract class DefaultService<K extends Serializable, T, S extends Search
 			try {
 				PropertyUtils.setProperty(record, "createduser", username);
 			} catch (Exception e) {
-				log.error("There is no field createduser");
+				
 			}
 		}
 
