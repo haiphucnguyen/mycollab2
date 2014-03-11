@@ -36,15 +36,17 @@ import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
+import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormContainerHorizontalViewField;
+import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormDetectAndDisplayUrlViewField;
+import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormLinkViewField;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.ProgressPercentageIndicator;
 import com.esofthead.mycollab.vaadin.ui.ProjectPreviewFormControlsGenerator;
+import com.esofthead.mycollab.vaadin.ui.SplitButton;
 import com.esofthead.mycollab.vaadin.ui.TabsheetLazyLoadComp;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormContainerHorizontalViewField;
-import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormDetectAndDisplayUrlViewField;
-import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormLinkViewField;
+import com.vaadin.server.Sizeable;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -70,6 +72,8 @@ public class TaskGroupReadViewImpl extends
 	private SubTasksDisplayComp taskDisplayComp;
 
 	private TaskGroupHistoryLogList historyList;
+	private SplitButton taskListFilterControl;
+	
 
 	public TaskGroupReadViewImpl() {
 		super("Task Group",MyCollabResource.newResource("icons/22/project/task_group.png"));
@@ -164,12 +168,30 @@ public class TaskGroupReadViewImpl extends
 			final CssLayout componentHeader = new CssLayout();
 			componentHeader.setStyleName("comp-header");
 
-			final PopupButton taskListFilterControl;
-			taskListFilterControl = new PopupButton("Active Tasks");
-			taskListFilterControl.setWidth("120px");
-			taskListFilterControl.addStyleName("link");
 
+			
+			
+						
+			final Button parentTaskListFilterButton = new Button("Active Tasks only", new Button.ClickListener() {
+				
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void buttonClick(final ClickEvent event) {
+					taskListFilterControl.setPopupVisible(false);
+					SubTasksDisplayComp.this.displayActiveTasksOnly();
+				}
+				
+			}); 
+			
+			taskListFilterControl = new SplitButton(parentTaskListFilterButton);
+			taskListFilterControl.addStyleName(UIConstants.THEME_BLANK_LINK);
+			taskListFilterControl.setWidth(Sizeable.SIZE_UNDEFINED, Sizeable.Unit.PIXELS);
+		
 			final VerticalLayout filterBtnLayout = new VerticalLayout();
+			
+			filterBtnLayout.setWidth("120px");
+			
 			filterBtnLayout.setMargin(true);
 			filterBtnLayout.setSpacing(true);
 
@@ -186,20 +208,6 @@ public class TaskGroupReadViewImpl extends
 					});
 			allTasksFilterBtn.setStyleName("link");
 			filterBtnLayout.addComponent(allTasksFilterBtn);
-
-			final Button activeTasksFilterBtn = new Button("Active Tasks Only",
-					new Button.ClickListener() {
-						private static final long serialVersionUID = 1L;
-
-						@Override
-						public void buttonClick(final ClickEvent event) {
-							taskListFilterControl.setPopupVisible(false);
-							taskListFilterControl.setCaption("Active Tasks");
-							SubTasksDisplayComp.this.displayActiveTasksOnly();
-						}
-					});
-			activeTasksFilterBtn.setStyleName("link");
-			filterBtnLayout.addComponent(activeTasksFilterBtn);
 
 			final Button archievedTasksFilterBtn = new Button(
 					"Archieved Tasks Only", new Button.ClickListener() {

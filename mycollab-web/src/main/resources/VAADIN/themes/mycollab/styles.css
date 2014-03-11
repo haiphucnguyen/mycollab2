@@ -272,6 +272,10 @@ div.v-button-link.v-button-no-margin .v-button-wrap,div.v-button-link:focus
 	background-image:none;
 }
 
+.v-popupbutton .v-button-wrap, .v-popupbutton:active .v-button-wrap {
+	padding:6px 8px;
+}
+
 .v-button, .splitbutton .v-button.v-disabled
 	{
 	/*background-image: url("icons/grad-dark-bottom2.png");*/
@@ -466,6 +470,9 @@ div.v-button-link.v-button-no-margin .v-button-wrap,div.v-button-link:focus
 	border-top-right-radius:0;
 	border-bottom-right-radius:0;
 	
+}
+.splitbutton .parent-button.blankbtn .v-button-wrap {
+	border-right-color: #B3B3B3;
 }
 .splitbutton .parent-button .v-button-wrap {
 	border-right:1px solid #F9F9F9;
@@ -2066,13 +2073,13 @@ input.v-textfield-errorField {
 
 .depotComp .depotHeader .header-elements.colored-header .v-button .v-button-caption
 	{
-	color: white;
+	/* color: white; */
 }
 
 .depotComp .depotHeader .header-elements.colored-header .v-popupbutton .v-popup-indicator
 	{
-	background: url("icons/sprites-white.png") no-repeat scroll -5px -10px
-		transparent;
+	/* background: url("icons/sprites-white.png") no-repeat scroll -5px -10px
+		transparent; */
 }
 
 .depotComp.collapsed .header-wrapper {
@@ -2113,7 +2120,7 @@ input.v-textfield-errorField {
 }
 
 .depotComp .header-elements.colored-header {
-	background-color: rgb(113, 113, 113);
+	/* background-color: rgb(113, 113, 113); */
 }
 .depotComp .header-elements.v-margin-top {
 	padding-top: 3px;
@@ -2807,10 +2814,10 @@ div.v-splitbutton,div.v-splitbutton .v-button {
 	padding: 3px 7px 3px 2px;
 }
 
-.v-popupbutton.bluebtn .v-popup-indicator, .v-popupbutton.graybtn .v-popup-indicator
+.v-popupbutton.bluebtn .v-popup-indicator
 	{
-	/* background: url("icons/sprites.png") no-repeat scroll -5px -10px
-		transparent; */
+	background: url("icons/sprites.png") no-repeat scroll -5px -10px
+		transparent;
 }
 /* End Split button*/
 
@@ -4960,8 +4967,8 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 
 .v-label.separator {
 	border-right: 1px solid rgb(169, 169, 169);
-	padding-left: 3px;
-	margin-right: 3px;
+	/* padding-left: 3px; */
+	/* margin-right: 3px; */
 }
 
 .v-label-hr {
@@ -5845,7 +5852,7 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 /* new splitbutton */
 .splitbutton .v-button,.splitbutton .v-button.v-disabled,.splitbutton .v-button:active
 {
-	font-weight: bold;
+	/* font-weight: bold; */
 }
 .splitbutton .v-button.bluebtn {
 	/* background-color: rgb(37, 153, 200); */

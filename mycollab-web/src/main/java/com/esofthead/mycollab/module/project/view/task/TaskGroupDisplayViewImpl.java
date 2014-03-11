@@ -16,9 +16,6 @@
  */
 package com.esofthead.mycollab.module.project.view.task;
 
-import com.vaadin.server.Sizeable;
-import com.vaadin.ui.*;
-
 import org.vaadin.hene.popupbutton.PopupButton;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
@@ -39,11 +36,18 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
-import com.esofthead.mycollab.vaadin.ui.SplitButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.server.FileDownloader;
+import com.vaadin.server.Sizeable;
 import com.vaadin.server.StreamResource;
+import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.CssLayout;
+import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Image;
+import com.vaadin.ui.UI;
+import com.vaadin.ui.VerticalLayout;
 
 /**
  * 
@@ -60,7 +64,7 @@ public class TaskGroupDisplayViewImpl extends AbstractPageView implements
 	private Button reOrderBtn;
 	private Button viewGanttChartBtn;
 
-	private SplitButton exportButtonControl;
+	private PopupButton exportButtonControl;
 
 	public TaskGroupDisplayViewImpl() {
 		super();
@@ -87,7 +91,7 @@ public class TaskGroupDisplayViewImpl extends AbstractPageView implements
 		this.taskGroupSelection.addStyleName("link");
 		this.taskGroupSelection.addStyleName("hdr-text");
 		final Image icon = new Image(null,
-				MyCollabResource.newResource("icons/24/project/task.png"));
+				MyCollabResource.newResource("icons/22/project/task_selected.png"));
 		header.addComponent(icon);
 		header.addComponent(this.taskGroupSelection);
 		header.setExpandRatio(this.taskGroupSelection, 1.0f);
@@ -226,8 +230,9 @@ public class TaskGroupDisplayViewImpl extends AbstractPageView implements
 				exportButtonControl.setPopupVisible(true);
 			}
 		});
-		exportButtonControl = new SplitButton(exportBtn);
-		exportButtonControl.addStyleName(UIConstants.THEME_GRAY_LINK);
+		//exportButtonControl = new SplitButton(exportBtn);
+		exportButtonControl = new PopupButton();
+		exportButtonControl.addStyleName(UIConstants.THEME_BLUE_LINK);
 		exportButtonControl.setIcon(MyCollabResource
 				.newResource("icons/16/export.png"));
 
@@ -259,8 +264,12 @@ public class TaskGroupDisplayViewImpl extends AbstractPageView implements
 
 		mainLayout.setWidth("100%");
 		this.addComponent(headerWrapper);
+		CssLayout contentWrapper = new CssLayout();
+		contentWrapper.setStyleName("content-wrapper");
+		
 		this.taskLists = new TaskGroupDisplayWidget();
-		this.addComponent(this.taskLists);
+		contentWrapper.addComponent(this.taskLists);
+		this.addComponent(contentWrapper);
 	}
 
 	private StreamResource constructStreamResource(ReportExportType exportType) {
