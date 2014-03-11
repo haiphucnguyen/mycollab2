@@ -37,11 +37,8 @@ import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.NumberField;
 import com.vaadin.data.Property;
 import com.vaadin.server.Resource;
-import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.ui.Alignment;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Field;
-import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.TextField;
@@ -63,10 +60,6 @@ BugAddView {
 	private ComponentMultiSelectField componentSelect;
 	private VersionMultiSelectField affectedVersionSelect;
 	private VersionMultiSelectField fixedVersionSelect;
-
-	public BugAddViewImpl() {
-		this.setMargin(new MarginInfo(true, false, false, false));
-	}
 
 	@Override
 	public ProjectFormAttachmentUploadField getAttachUploadField() {
@@ -192,17 +185,9 @@ BugAddView {
 
 	@Override
 	protected ComponentContainer createButtonControls() {
-		final HorizontalLayout controlPanel = new HorizontalLayout();
-		controlPanel.setMargin(true);
-		controlPanel.addStyleName("control-buttons");
 		final Layout controlButtons = (new EditFormControlsGenerator<SimpleBug>(
 				editForm)).createButtonControls();
-		controlButtons.setSizeUndefined();
-		controlPanel.addComponent(controlButtons);
-		controlPanel.setWidth("100%");
-		controlPanel.setComponentAlignment(controlButtons,
-				Alignment.MIDDLE_CENTER);
-		return controlPanel;
+		return controlButtons;
 	}
 
 	@Override

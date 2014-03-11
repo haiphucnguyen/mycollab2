@@ -562,8 +562,6 @@ div.v-button-nonPopupIndicator div.v-popup-indicator {
 .v-table-body-wrapper.v-table-body {
 	height: 100% !important;
 	border-width: 0px 1px 1px 1px;
-	border-bottom-left-radius: 3px;
-	border-bottom-right-radius: 3px;
 }
 
 .v-table-cell-wrapper {
@@ -892,35 +890,6 @@ input.v-textfield-pagedtable-pagefield {
 /* End Top Menu */
 
 /* Advanced Search Template */
-/* .advSearch {
-	background-color: #F5F5F5;
-	margin: 10px 0px 0px;
-	border-top-left-radius: 3px;
-	border-top-right-radius: 3px;
-	border-bottom-right-radius: 0px;
-	border-bottom-left-radius: 0px;
-	border: 1px solid #8F8F8F;
-} */
-
-/* .advSearch .advSearchHeader {
-	background: url('icons/grad-light-top2.png') repeat-x 0 0 #e7e7e7;
-	border-radius: 3px 3px 0px 0px;
-	border-bottom: 1px solid #BCBCBC;
-} */
-
-/* .advSearchHeader .v-horizontallayout.v-margin-top {
-	padding-top: 3px;
-}
-
-.advSearchHeader .v-horizontallayout.v-margin-right {
-	padding-right: 5px;
-}
-.advSearchHeader .v-horizontallayout.v-margin-bottom {
-	padding-bottom: 3px;
-}
-.advSearchHeader .v-horizontallayout.v-margin-left {
-	padding-left: 15px;
-} */
 
 .advSearch .advSearchHeader .h2 {
 	padding-top: 0px;
@@ -959,45 +928,10 @@ input.v-textfield-pagedtable-pagefield {
 /* End Advanced Search Template */
 
 /* Basic Search Template */
-/* .basicSearch {
-	background-color: #F7F7F7;
-	border: 1px solid #BCBCBC;
-	border-radius: 0;
-} */
 
-/* .basicSearch .basicSearchHeader {
-	background: url('icons/grad-light-top2.png') repeat-x 0 0 #e7e7e7;
-	border-radius: 3px 3px 0px 0px;
-	border-bottom: 1px solid #BCBCBC;
-} */
-
-/*.basicSearchHeader .v-horizontallayout.v-margin-top {
-	padding-top: 3px;
-}
-.basicSearchHeader .v-horizontallayout.v-margin-right {
-	padding-right: 5px;
-}
-.basicSearchHeader .v-horizontallayout.v-margin-bottom {
-	padding-bottom: 3px;
-}
-.basicSearchHeader .v-horizontallayout.v-margin-left {
-	padding-left: 15px;
-}
-
-.basicSearchHeader .v-horizontallayout-control-buttons .v-horizontallayout-margin
-	{
-	padding: 0px;
-}
-
-.basicSearch .basicSearchHeader .h2 {
-	padding-top: 0px;
-	font-size: 13px;
-}
-*/
 .basicSearch .basicSearchBody {
-	/* background-color: #f5f5f5; */
 	background-color: #F7F7F7;
-	border: 1px solid #BCBCBC;
+	border: 1px solid #CFCFCF;
 	border-radius: 0;
 }
 
@@ -2078,7 +2012,7 @@ input.v-textfield-errorField {
 .depotComp .depotHeader {
 	border-width: 1px;
 	border-style: solid;
-	border-color: #BCBCBC;
+	border-color: #CFCFCF;
 	border-radius: 0px;
 	background: none no-repeat 0 0 #F1F1F1;
 }
@@ -2841,7 +2775,7 @@ div.v-splitbutton,div.v-splitbutton .v-button {
 	background: none no-repeat 0 0 #EEEEEE;
 	border-radius: 0px;
 	border-width: 0 1px 1px 1px;
-	border-bottom: 1px solid #A9A9A9;
+	border-bottom: 1px solid #CFCFCF;
 }
 
 .v-table-header-wrap .v-table-caption-container {
@@ -2881,7 +2815,7 @@ div.v-splitbutton,div.v-splitbutton .v-button {
 }
 
 .v-table-row-spacer {
-	background: none no-repeat 0 0 rgb(212, 223, 239);
+	background: none no-repeat 0 0 #F7F7F7;
 }
 /* End New Table */
 
@@ -4947,6 +4881,7 @@ div.v-ratingstars-bar {
 
 /*Table Action Controls */
 .table-actionctls {
+
 	/* border-width: 0 1px 1px 1px; */
 	/* border-style: solid; */
 	/* border-color: rgb(169, 169, 169); */

@@ -25,6 +25,7 @@ import com.vaadin.server.Sizeable;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.VerticalLayout;
 
@@ -233,7 +234,7 @@ public class ProjectPreviewFormControlsGenerator<T> implements Serializable {
 		return layout;
 	}
 
-	public void insertToControlBlock(Button button) {
+	public void insertToControlBlock(Component button) {
 		editButtons.addComponent(button, 0);
 	}
 
