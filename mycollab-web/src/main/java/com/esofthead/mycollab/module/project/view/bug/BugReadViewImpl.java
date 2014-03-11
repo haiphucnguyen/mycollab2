@@ -372,6 +372,7 @@ IBugCallbackStatusComp {
 
 		bugPreviewFormControls.insertToControlBlock(bugWorkflowControl);
 		bugPreviewFormControls.insertToControlBlock(assignBtn);
+		topPanel.setSizeUndefined();
 
 		return topPanel;
 	}
