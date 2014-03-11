@@ -52,6 +52,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
@@ -69,7 +70,7 @@ public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 	private final SimpleProject project;
 	protected BugSearchCriteria searchCriteria;
 	protected Label bugtitle;
-
+	private ComponentContainer rightComponent;
 	public BugSearchPanel() {
 		this("Bugs");
 	}
@@ -77,6 +78,7 @@ public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 	public BugSearchPanel(final String title) {
 		this.project = CurrentProjectVariables.getProject();
 		this.bugtitle = new Label(title);
+		this.rightComponent = new CssLayout();
 	}
 
 	@Override
@@ -214,6 +216,7 @@ public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 			UiUtils.addComponent(header, titleIcon, Alignment.MIDDLE_LEFT);
 			UiUtils.addComponent(header, headerText, Alignment.MIDDLE_LEFT);
 			UiUtils.addComponent(header, createBtn, Alignment.MIDDLE_RIGHT);
+			UiUtils.addComponent(header, rightComponent, Alignment.MIDDLE_RIGHT);
 			header.setExpandRatio(headerText, 1.0f);
 
 			header.setStyleName("hdr-view");
@@ -533,5 +536,52 @@ public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 			}
 			return BugSearchPanel.this.searchCriteria;
 		}
+
+
+		@Override
+		public ComponentContainer constructHeader() {
+			Image titleIcon = new Image(null,
+					MyCollabResource.newResource("icons/22/project/bug_selected.png"));
+			Label headerText = new Label("Bug List");
+
+			final Button createBtn = new Button(
+					LocalizationHelper.getMessage(BugI18nEnum.NEW_BUG_ACTION),
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void buttonClick(final ClickEvent event) {
+							EventBus.getInstance().fireEvent(
+									new BugEvent.GotoAdd(this, null));
+						}
+					});
+			createBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+			createBtn.setIcon(MyCollabResource
+					.newResource("icons/16/addRecord.png"));
+			createBtn.setEnabled(CurrentProjectVariables
+					.canWrite(ProjectRolePermissionCollections.BUGS));
+
+			HorizontalLayout header = new HorizontalLayout();
+			headerText.setStyleName("hdr-text");
+
+			UiUtils.addComponent(header, titleIcon, Alignment.MIDDLE_LEFT);
+			UiUtils.addComponent(header, headerText, Alignment.MIDDLE_LEFT);
+			UiUtils.addComponent(header, createBtn, Alignment.MIDDLE_RIGHT);
+			UiUtils.addComponent(header, rightComponent, Alignment.MIDDLE_RIGHT);
+			header.setExpandRatio(headerText, 1.0f);
+
+			header.setStyleName("hdr-view");
+			header.setWidth("100%");
+			header.setSpacing(true);
+			header.setMargin(new MarginInfo(true, false, true, false));
+			
+			return header;
+		}
 	}
+	
+
+	public void addRightComponent(ComponentContainer c) {
+		rightComponent.addComponent(c);
+	}
+	
 }

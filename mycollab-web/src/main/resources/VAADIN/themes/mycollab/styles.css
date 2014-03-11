@@ -292,13 +292,13 @@ div.v-button-link.v-button-no-margin .v-button-wrap,div.v-button-link:focus
 	padding:0;
 }
 
-.v-button.v-button-blankbtn {
-	background-color:#8FAFAFA;
+.v-button.v-button-blankbtn, .v-button-blankbtn:focus {
+	background-color: #FAFAFA;
 	font-weight:normal;
 	border-color:#B3B3B3;
 }
 
-.v-button-blankbtn:active, .v-button-blankbtn:hover, .v-button-blankbtn:focus {
+.v-button-blankbtn:active, .v-button-blankbtn:hover {
 
 	background-image:none;
 	background-color: #F0F0F0;
@@ -313,13 +313,13 @@ div.v-button-link.v-button-no-margin .v-button-wrap,div.v-button-link:focus
 	border-top-color: #C7C7C7;
 }
 
-.v-button.v-button-graybtn {
+.v-button.v-button-graybtn, .v-button-graybtn:focus {
 	background-color:#8B8B8B;
 	color:white;
 	font-weight:normal;
 }
 
-.v-button-graybtn:hover, .v-button-graybtn:active, .v-button-graybtn:focus {
+.v-button-graybtn:hover, .v-button-graybtn:active {
 	background-color: #8B8B8B;
 	background-image: -webkit-linear-gradient(top,#8B8B8B,#808080);
 	background-image: -moz-linear-gradient(top,#8B8B8B,#808080);
@@ -333,14 +333,14 @@ div.v-button-link.v-button-no-margin .v-button-wrap,div.v-button-link:focus
 	border-top-color: #5F5F5F;
 }
 
-.v-button.v-button-redbtn {
+.v-button.v-button-redbtn, .v-button-redbtn:focus {
 	background-color:#F64A46;
 	color:white;
 	font-weight:normal;
 }
 
 
-.v-button-redbtn:hover, .v-button-redbtn:active, .v-button-redbtn:focus {
+.v-button-redbtn:hover, .v-button-redbtn:active {
 	background-color: #F64A46;
 	background-image: -webkit-linear-gradient(top,#F64A46,#F53431);
 	background-image: -moz-linear-gradient(top,#F64A46,#F53431);
@@ -354,14 +354,14 @@ div.v-button-link.v-button-no-margin .v-button-wrap,div.v-button-link:focus
 	border-top-color: #BD0C09;
 }
 
-.v-button.v-button-brownbtn {
+.v-button.v-button-brownbtn, .v-button-brownbtn:focus {
 	background-color: #C06B11;
 	color:white;
 	font-weight:normal;
 }
 
 
-.v-button-brownbtn:hover, .v-button-brownbtn:active, .v-button-brownbtn:focus {
+.v-button-brownbtn:hover, .v-button-brownbtn:active {
 	background-color: #C06B11;
 	background-image: -webkit-linear-gradient(top,#C06B11,#AF620F);
 	background-image: -moz-linear-gradient(top,#C06B11,#AF620F);
@@ -376,13 +376,13 @@ div.v-button-link.v-button-no-margin .v-button-wrap,div.v-button-link:focus
 }
 
 
-.v-button.v-button-bluebtn {
+.v-button.v-button-bluebtn, .v-button-bluebtn:focus  {
 	background-color:#17d61b;
 	color:white;
 	font-weight:normal;
 }
 
-.v-button-bluebtn:hover, .v-button-bluebtn:active, .v-button-bluebtn:focus {
+.v-button-bluebtn:hover, .v-button-bluebtn:active{
 	background-color: #17d61b;
 	background-image: -webkit-linear-gradient(top,#17d61b,#16CA19);
 	background-image: -moz-linear-gradient(top,#17d61b,#16CA19);
@@ -4947,11 +4947,11 @@ div.v-ratingstars-bar {
 
 /*Table Action Controls */
 .table-actionctls {
-	border-width: 0 1px 1px 1px;
-	border-style: solid;
-	border-color: rgb(169, 169, 169);
-	background-color: rgb(245, 245, 245);
-	padding: 5px 6px 5px 14px;
+	/* border-width: 0 1px 1px 1px; */
+	/* border-style: solid; */
+	/* border-color: rgb(169, 169, 169); */
+	/* background-color: rgb(245, 245, 245); */
+	/* padding: 5px 6px 5px 14px; */
 }
 
 div.v-button-link.buttonPaging {
