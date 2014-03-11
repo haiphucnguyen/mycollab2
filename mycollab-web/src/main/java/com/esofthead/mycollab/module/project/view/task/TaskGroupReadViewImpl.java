@@ -17,8 +17,6 @@
 
 package com.esofthead.mycollab.module.project.view.task;
 
-import org.vaadin.hene.popupbutton.PopupButton;
-
 import com.esofthead.mycollab.common.CommentType;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
@@ -47,7 +45,6 @@ import com.esofthead.mycollab.vaadin.ui.SplitButton;
 import com.esofthead.mycollab.vaadin.ui.TabsheetLazyLoadComp;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.server.Sizeable;
-import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComponentContainer;
@@ -63,7 +60,7 @@ import com.vaadin.ui.VerticalLayout;
  */
 @ViewComponent
 public class TaskGroupReadViewImpl extends
-		AbstractPreviewItemComp<SimpleTaskList> implements TaskGroupReadView {
+AbstractPreviewItemComp<SimpleTaskList> implements TaskGroupReadView {
 
 	private static final long serialVersionUID = 1L;
 
@@ -77,8 +74,6 @@ public class TaskGroupReadViewImpl extends
 
 	public TaskGroupReadViewImpl() {
 		super("Task Group",MyCollabResource.newResource("icons/22/project/task_group.png"));
-
-		this.setMargin(new MarginInfo(true, false, false, false));
 	}
 
 	@Override
@@ -126,7 +121,7 @@ public class TaskGroupReadViewImpl extends
 	protected ComponentContainer createButtonControls() {
 		return (new ProjectPreviewFormControlsGenerator<SimpleTaskList>(
 				previewForm)).createButtonControls(
-				ProjectRolePermissionCollections.TASKS, true);
+						ProjectRolePermissionCollections.TASKS, true);
 	}
 
 	@Override
@@ -197,17 +192,33 @@ public class TaskGroupReadViewImpl extends
 
 			final Button allTasksFilterBtn = new Button("All Tasks",
 					new Button.ClickListener() {
-						private static final long serialVersionUID = 1L;
+				private static final long serialVersionUID = 1L;
 
-						@Override
-						public void buttonClick(final ClickEvent event) {
-							taskListFilterControl.setPopupVisible(false);
-							taskListFilterControl.setCaption("All Tasks");
-							SubTasksDisplayComp.this.displayAllTasks();
-						}
-					});
+				@Override
+				public void buttonClick(final ClickEvent event) {
+					taskListFilterControl.setPopupVisible(false);
+					taskListFilterControl.setCaption("All Tasks");
+					SubTasksDisplayComp.this.displayAllTasks();
+				}
+			});
 			allTasksFilterBtn.setStyleName("link");
 			filterBtnLayout.addComponent(allTasksFilterBtn);
+
+
+			final Button activeTasksFilterBtn = new Button("Active Tasks Only",
+					new Button.ClickListener() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void buttonClick(final ClickEvent event) {
+					taskListFilterControl.setPopupVisible(false);
+					taskListFilterControl.setCaption("Active Tasks");
+					SubTasksDisplayComp.this.displayActiveTasksOnly();
+				}
+			});
+			activeTasksFilterBtn.setStyleName("link");
+			filterBtnLayout.addComponent(activeTasksFilterBtn);
+
 
 			final Button archievedTasksFilterBtn = new Button(
 					"Archieved Tasks Only", new Button.ClickListener() {
@@ -278,7 +289,7 @@ public class TaskGroupReadViewImpl extends
 								}
 							},
 							MyCollabResource
-									.newResource("icons/16/project/milestone.png"));
+							.newResource("icons/16/project/milestone.png"));
 				} else if (propertyId.equals("owner")) {
 					return new ProjectUserFormLinkField(beanItem.getOwner(),
 							beanItem.getOwnerAvatarId(),

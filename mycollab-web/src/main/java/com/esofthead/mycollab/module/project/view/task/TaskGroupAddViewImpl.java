@@ -33,10 +33,8 @@ import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.ProgressPercentageIndicator;
 import com.vaadin.server.Resource;
-import com.vaadin.ui.Alignment;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Field;
-import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.RichTextArea;
@@ -76,17 +74,9 @@ implements TaskGroupAddView {
 
 	@Override
 	protected ComponentContainer createButtonControls() {
-		final HorizontalLayout controlPanel = new HorizontalLayout();
 		final Layout controlButtons = (new EditFormControlsGenerator<TaskList>(
 				editForm)).createButtonControls();
-		controlButtons.setSizeUndefined();
-		controlPanel.addComponent(controlButtons);
-		controlPanel.setWidth("100%");
-		controlPanel.setComponentAlignment(controlButtons,
-				Alignment.MIDDLE_CENTER);
-		controlPanel.setMargin(true);
-		controlPanel.setStyleName("control-buttons");
-		return controlPanel;
+		return controlButtons;
 	}
 
 	@Override
