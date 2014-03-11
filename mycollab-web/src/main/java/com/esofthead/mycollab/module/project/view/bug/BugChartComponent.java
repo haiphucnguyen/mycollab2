@@ -24,6 +24,8 @@ import com.esofthead.mycollab.module.project.localization.BugI18nEnum;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.Depot;
+import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.rits.cloning.Cloner;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -90,8 +92,9 @@ public class BugChartComponent extends Depot {
 
 	private void initUI() {
 
-		final PopupButton bugChartPopup = new PopupButton("Bugs By Priority");
-		bugChartPopup.addStyleName("link");
+		final PopupButton bugChartPopup = new PopupButton("");
+		bugChartPopup.addStyleName(UIConstants.THEME_BLANK_LINK);
+		bugChartPopup.setIcon(MyCollabResource.newResource("icons/12/project/task_filter.png"));
 
 		final VerticalLayout filterBtnLayout = new VerticalLayout();
 		filterBtnLayout.setMargin(true);
