@@ -122,7 +122,7 @@ implements TaskReadView {
 
 	@Override
 	protected void onPreviewItem() {
-
+		previewLayout.clearTitleStyleName();
 		if (beanItem.getPercentagecomplete() != null
 				&& 100d == beanItem.getPercentagecomplete()) {
 			addLayoutStyleName(UIConstants.LINK_COMPLETED);

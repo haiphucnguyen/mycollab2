@@ -3534,16 +3534,6 @@ div.v-lazyloadingwrapper-loading {
 	font-size: 14px;
 }
 
-.standupreport-list-content {
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-	box-sizing: border-box;
-	border-width: 0px 1px 1px 1px;
-	border-style: solid;
-	border-color: rgb(169, 169, 169);
-	background-color: rgb(245, 245, 245);
-}
-
 .standupreport-list-content .depotComp {
 	margin: 0px;
 }
@@ -3566,6 +3556,31 @@ div.v-lazyloadingwrapper-loading {
 .standupreport-list-content .depotComp .depotContent.v-margin-left
 {
 	padding-left: 10px;
+}
+
+.standup-block {
+	background-color: #F7F7F7;
+	border: 1px solid #CFCFCF;
+}
+.standup-block .report-content {
+	border-left: 1px solid #CFCFCF;
+	background-color: #FFFFFF;
+}
+.standup-block .report-content.v-margin-top {
+	padding-top: 20px;
+}
+.standup-block .report-content.v-margin-right {
+	padding-right: 20px;
+}
+.standup-block .report-content.v-margin-bottom {
+	padding-bottom: 20px;
+}
+.standup-block .report-content.v-margin-left {
+	padding-left: 20px;
+}
+.standup-block .report-content .v-label.h2 {
+	color: #a56116;
+	font-size: 14px;
 }
 /* End StandUp Report List */
 
@@ -3775,8 +3790,8 @@ div.v-lazyloadingwrapper-loading {
 
 /* Stand Up List View */
 .v-label.standup-row-content {
-	padding: 10px 0px 10px 20px;
-	font-size: 12px
+	padding: 10px 0px 10px 0px;
+	font-size: 13px;
 }
 
 .v-label.standup-row-content ul {

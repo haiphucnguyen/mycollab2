@@ -11,9 +11,7 @@ import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
-import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Field;
-import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.RichTextArea;
 
@@ -25,7 +23,7 @@ import com.vaadin.ui.RichTextArea;
  */
 @ViewComponent
 public class StandupAddViewImpl extends AbstractPageView implements
-		StandupAddView {
+StandupAddView {
 
 	private static final long serialVersionUID = 1L;
 	private final AdvancedEditBeanForm<StandupReportWithBLOBs> editForm;
@@ -40,12 +38,12 @@ public class StandupAddViewImpl extends AbstractPageView implements
 	public void editItem(final StandupReportWithBLOBs standupReport) {
 		this.editForm.setFormLayoutFactory(new FormLayoutFactory());
 		this.editForm
-				.setBeanFormFieldFactory(new EditFormFieldFactory(editForm));
+		.setBeanFormFieldFactory(new EditFormFieldFactory(editForm));
 		this.editForm.setBean(standupReport);
 	}
 
 	private class EditFormFieldFactory extends
-			AbstractBeanFieldGroupEditFieldFactory<StandupReportWithBLOBs> {
+	AbstractBeanFieldGroupEditFieldFactory<StandupReportWithBLOBs> {
 		private static final long serialVersionUID = 1L;
 
 		public EditFormFieldFactory(GenericBeanForm<StandupReportWithBLOBs> form) {
@@ -75,16 +73,9 @@ public class StandupAddViewImpl extends AbstractPageView implements
 		}
 
 		private Layout createButtonControls() {
-			final HorizontalLayout controlPanel = new HorizontalLayout();
 			final Layout controlButtons = (new EditFormControlsGenerator<StandupReportWithBLOBs>(
 					editForm)).createButtonControls(true, false, true);
-			controlButtons.setSizeUndefined();
-			controlPanel.addComponent(controlButtons);
-			controlPanel.setWidth("100%");
-			controlPanel.setComponentAlignment(controlButtons,
-					Alignment.MIDDLE_CENTER);
-			controlPanel.setMargin(true);
-			return controlPanel;
+			return controlButtons;
 		}
 
 		@Override
