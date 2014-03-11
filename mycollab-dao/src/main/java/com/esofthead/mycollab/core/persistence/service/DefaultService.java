@@ -48,6 +48,15 @@ import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.IMassUpdateDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ * @param <K>
+ * @param <T>
+ * @param <S>
+ */
 public abstract class DefaultService<K extends Serializable, T, S extends SearchCriteria>
 		implements IDefaultService<K, T, S> {
 
@@ -68,11 +77,19 @@ public abstract class DefaultService<K extends Serializable, T, S extends Search
 		Class<? extends ICrudGenericDAO> crudMapperClass = crudMapper
 				.getClass();
 
+		if (username != null && !username.trim().equals("")) {
+			try {
+				PropertyUtils.setProperty(record, "createduser", username);
+			} catch (Exception e) {
+				log.error("There is no field createduser");
+			}
+		}
+
 		getCrudMapper().insertAndReturnKey(record);
 		try {
 			return (Integer) PropertyUtils.getProperty(record, "id");
 		} catch (Exception e) {
-			return 1;
+			return 0;
 		}
 	}
 
