@@ -95,7 +95,7 @@ public class AccountSearchPanel extends
 								new AccountEvent.GotoAdd(this, null));
 					}
 				});
-		createAccountBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		createAccountBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 		createAccountBtn.setIcon(MyCollabResource
 				.newResource("icons/16/addRecord.png"));
 		createAccountBtn.setEnabled(AppContext

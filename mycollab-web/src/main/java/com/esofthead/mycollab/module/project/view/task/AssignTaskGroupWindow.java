@@ -169,7 +169,7 @@ public class AssignTaskGroupWindow extends Window {
 
 							}
 						});
-				approveBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+				approveBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 				controlsBtn.addComponent(approveBtn);
 				controlsBtn.setComponentAlignment(approveBtn,
 						Alignment.MIDDLE_RIGHT);

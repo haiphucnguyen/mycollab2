@@ -201,7 +201,7 @@ public class FeedbackWindow extends Window {
 				}
 			}
 		});
-		sendBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		sendBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 		controlsLayout.addComponent(sendBtn);
 		controlsLayout.setComponentAlignment(sendBtn, Alignment.MIDDLE_RIGHT);
 		mainLayout.addComponent(controlsLayout, 0, 4, 1, 4);

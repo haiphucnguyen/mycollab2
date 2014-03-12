@@ -1000,7 +1000,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 						}
 					}
 				});
-				saveBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
+				saveBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
 				layout.addComponent(saveBtn);
 
 				Button cancelBtn = new Button("Cancel", new ClickListener() {
@@ -1012,7 +1012,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 								externalDriveEditLayout);
 					}
 				});
-				cancelBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
+				cancelBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
 				layout.addComponent(cancelBtn);
 				return layout;
 			}

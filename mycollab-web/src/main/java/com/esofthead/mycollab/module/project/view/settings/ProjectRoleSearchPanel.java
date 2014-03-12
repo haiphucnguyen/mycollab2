@@ -109,7 +109,7 @@ GenericSearchPanel<ProjectRoleSearchCriteria> {
 					.callSearchAction();
 				}
 			});
-			searchBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+			searchBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 			basicSearchBody.addComponent(searchBtn);
 
 			final Button clearBtn = new Button("Clear",
@@ -122,7 +122,7 @@ GenericSearchPanel<ProjectRoleSearchCriteria> {
 					.setValue("");
 				}
 			});
-			clearBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+			clearBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 			basicSearchBody.addComponent(clearBtn);
 			return basicSearchBody;
 		}
@@ -153,7 +153,7 @@ GenericSearchPanel<ProjectRoleSearchCriteria> {
 									new RoleEvent.GotoAdd(this, null));
 						}
 					});
-			createBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+			createBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 			createBtn.setIcon(MyCollabResource
 					.newResource("icons/16/addRecord.png"));
 			createBtn.setEnabled(CurrentProjectVariables

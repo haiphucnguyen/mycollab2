@@ -16,6 +16,9 @@
  */
 package com.esofthead.mycollab.rest.server.resource.impl;
 
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
 import org.jboss.resteasy.annotations.Form;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,7 +39,7 @@ public class AccountResourceImpl implements AccountResource {
 	private BillingService billingService;
 
 	@Override
-	public String signup(@Form SignupForm entity) {
+	public Response signup(@Form SignupForm entity) {
 		log.debug("Start handling form request");
 		String subdomain = entity.getSubdomain();
 		int planId = entity.getPlanId();
@@ -52,7 +55,10 @@ public class AccountResourceImpl implements AccountResource {
 
 		String siteUrl = SiteConfiguration.getSiteUrl(subdomain);
 		log.debug("Return site url {} to sign up user {}", siteUrl, email);
-		return siteUrl;
+
+		Response response = Response.status(200).entity(siteUrl).type(MediaType.TEXT_PLAIN_TYPE).build();
+		response.getHeaders().add("Access-Control-Allow-Origin", "*");
+		return response;
 	}
 
 }

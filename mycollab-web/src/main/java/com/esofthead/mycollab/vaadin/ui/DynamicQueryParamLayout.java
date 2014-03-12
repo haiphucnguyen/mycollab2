@@ -59,7 +59,7 @@ public abstract class DynamicQueryParamLayout<S extends SearchCriteria>
 					}
 				});
 		UiUtils.addComponent(buttonControls, searchBtn, Alignment.MIDDLE_CENTER);
-		searchBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		searchBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 
 		final Button clearBtn = new Button(
 				LocalizationHelper.getMessage(GenericI18Enum.BUTTON_CLEAR),
@@ -71,7 +71,7 @@ public abstract class DynamicQueryParamLayout<S extends SearchCriteria>
 						clearFields();
 					}
 				});
-		clearBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		clearBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 		UiUtils.addComponent(buttonControls, clearBtn, Alignment.MIDDLE_CENTER);
 		final Button basicSearchBtn = new Button(
 				LocalizationHelper

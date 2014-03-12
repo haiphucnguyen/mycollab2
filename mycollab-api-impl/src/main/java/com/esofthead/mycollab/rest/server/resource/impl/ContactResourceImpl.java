@@ -16,6 +16,9 @@
  */
 package com.esofthead.mycollab.rest.server.resource.impl;
 
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
 import org.jboss.resteasy.annotations.Form;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,7 +37,7 @@ public class ContactResourceImpl implements ContactResource {
 	private static final String contactUsTemplate = "contactUs.mt";
 
 	@Override
-	public String submit(@Form final ContactForm entity) {
+	public Response submit(@Form final ContactForm entity) {
 		log.debug("Start handling form request");
 		log.debug("Name: " + entity.getName());
 		log.debug("Email: " + entity.getEmail());
@@ -61,6 +64,8 @@ public class ContactResourceImpl implements ContactResource {
 				new String[] { "hainguyen@esofthead.com" },
 				"New guy wanna contact you!",
 				templateGenerator.generateBodyContent());
-		return "Success";
+		Response response = Response.status(200).entity("OK").type(MediaType.TEXT_PLAIN_TYPE).build();
+		response.getHeaders().add("Access-Control-Allow-Origin", "*");
+		return response;
 	}
 }

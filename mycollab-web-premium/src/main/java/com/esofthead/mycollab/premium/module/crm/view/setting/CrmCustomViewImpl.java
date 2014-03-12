@@ -117,7 +117,7 @@ public class CrmCustomViewImpl extends AbstractPageView implements
 
 					}
 				});
-		createCustomFieldBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
+		createCustomFieldBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
 		createCustomFieldBtn.setIcon(MyCollabResource
 				.newResource("icons/16/addRecord.png"));
 		controlLayout.addComponent(createCustomFieldBtn);
@@ -136,7 +136,7 @@ public class CrmCustomViewImpl extends AbstractPageView implements
 
 					}
 				});
-		createSectionBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
+		createSectionBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
 		createSectionBtn.setIcon(MyCollabResource
 				.newResource("icons/16/addRecord.png"));
 		controlLayout.addComponent(createSectionBtn);
@@ -166,7 +166,7 @@ public class CrmCustomViewImpl extends AbstractPageView implements
 								moduleName, rebuildForm);
 					}
 				});
-		saveBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
+		saveBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
 		buttonsLayout.addComponent(saveBtn);
 
 		Button cancelBtn = new Button(
@@ -181,7 +181,7 @@ public class CrmCustomViewImpl extends AbstractPageView implements
 
 					}
 				});
-		cancelBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
+		cancelBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
 		buttonsLayout.addComponent(cancelBtn);
 
 		headerContent.addComponent(buttonsLayout);

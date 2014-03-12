@@ -141,7 +141,7 @@ public class NoteListItems extends VerticalLayout {
 			}
 		});
 
-		createBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		createBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 		createBtn.setIcon(MyCollabResource
 				.newResource("icons/16/addRecord.png"));
 		this.addComponent(createBtn);
@@ -439,7 +439,7 @@ public class NoteListItems extends VerticalLayout {
 							addCreateBtn();
 						}
 					});
-			saveBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+			saveBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 			controls.addComponent(saveBtn);
 			controls.setComponentAlignment(saveBtn, Alignment.MIDDLE_RIGHT);
 

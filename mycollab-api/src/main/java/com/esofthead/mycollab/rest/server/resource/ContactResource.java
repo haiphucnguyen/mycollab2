@@ -5,6 +5,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import org.jboss.resteasy.annotations.Form;
 
@@ -16,6 +17,6 @@ public interface ContactResource {
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces(MediaType.TEXT_PLAIN)
 	@Path("/submit")
-	String submit(@Form ContactForm entity);
+	Response submit(@Form ContactForm entity);
 
 }

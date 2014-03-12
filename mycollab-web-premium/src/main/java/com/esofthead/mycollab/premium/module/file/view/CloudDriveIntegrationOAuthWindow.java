@@ -122,7 +122,7 @@ public abstract class CloudDriveIntegrationOAuthWindow extends Window {
 				new ExternalResource(buildAuthUrl()));
 		windowOpenner.extend(btnLogin);
 
-		btnLogin.addStyleName(UIConstants.THEME_BLUE_LINK);
+		btnLogin.addStyleName(UIConstants.THEME_GREEN_LINK);
 		messageBox.addComponent(btnLogin);
 		messageBox.setComponentAlignment(btnLogin, Alignment.MIDDLE_CENTER);
 
@@ -195,7 +195,7 @@ public abstract class CloudDriveIntegrationOAuthWindow extends Window {
 						CloudDriveIntegrationOAuthWindow.this.close();
 					}
 				});
-		doneBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
+		doneBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
 		controllGroupBtn.addComponent(doneBtn);
 
 		Button cancleBtn = new Button(
@@ -209,7 +209,7 @@ public abstract class CloudDriveIntegrationOAuthWindow extends Window {
 						CloudDriveIntegrationOAuthWindow.this.close();
 					}
 				});
-		cancleBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
+		cancleBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
 		controllGroupBtn.addComponent(cancleBtn);
 
 		mainLayout.addComponent(controllGroupBtn);

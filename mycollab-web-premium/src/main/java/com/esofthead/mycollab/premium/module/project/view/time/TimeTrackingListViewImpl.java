@@ -355,7 +355,7 @@ TimeTrackingListView {
 					}
 				}
 			});
-			saveBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
+			saveBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
 			UiUtils.addComponent(controllGroupBtn, saveBtn,
 					Alignment.MIDDLE_LEFT);
 

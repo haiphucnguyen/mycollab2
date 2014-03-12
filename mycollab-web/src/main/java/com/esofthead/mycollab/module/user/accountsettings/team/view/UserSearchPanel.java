@@ -75,7 +75,7 @@ public class UserSearchPanel extends GenericSearchPanel<UserSearchCriteria> {
 								new UserEvent.GotoAdd(this, null));
 					}
 				});
-		createBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		createBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 		createBtn.setIcon(MyCollabResource
 				.newResource("icons/16/addRecord.png"));
 		createBtn.setEnabled(AppContext
@@ -139,7 +139,7 @@ public class UserSearchPanel extends GenericSearchPanel<UserSearchCriteria> {
 							UserBasicSearchLayout.this.nameField.setValue("");
 						}
 					});
-			clearBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+			clearBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 			clearBtn.addStyleName("cancel-button");
 			basicSearchBody.addComponent(clearBtn);
 			basicSearchBody.setComponentAlignment(clearBtn,

@@ -192,7 +192,7 @@ public class WontFixExplainWindow extends Window {
 								}
 							}
 						});
-				wonFixBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+				wonFixBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 				controlsBtn.addComponent(wonFixBtn);
 				controlsBtn.setComponentAlignment(wonFixBtn,
 						Alignment.MIDDLE_RIGHT);
