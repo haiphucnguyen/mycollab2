@@ -1,9 +1,13 @@
 package com.esofthead.mycollab.vaadin.ui;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
 
+import com.esofthead.mycollab.common.domain.SaveSearchResultWithBLOBs;
+import com.esofthead.mycollab.common.service.SaveSearchResultService;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchField;
@@ -15,8 +19,12 @@ import com.esofthead.mycollab.core.db.query.NumberParam;
 import com.esofthead.mycollab.core.db.query.Param;
 import com.esofthead.mycollab.core.db.query.PropertyListParam;
 import com.esofthead.mycollab.core.db.query.PropertyParam;
+import com.esofthead.mycollab.core.db.query.SearchFieldInfo;
 import com.esofthead.mycollab.core.db.query.StringListParam;
 import com.esofthead.mycollab.core.db.query.StringParam;
+import com.esofthead.mycollab.core.utils.JsonDeSerializer;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.ui.AbstractSelect.ItemCaptionMode;
@@ -46,7 +54,9 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends
 	private Param[] paramFields;
 	private Class<S> type;
 
+	private HorizontalLayout filterBox;
 	private VerticalLayout searchContainer;
+	private HorizontalLayout controlsBtn;
 
 	public BuildCriterionComponent(Param[] paramFields, Class<S> type) {
 		this.setSpacing(true);
@@ -56,7 +66,7 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends
 		this.searchContainer = new VerticalLayout();
 		this.searchContainer.setSpacing(true);
 
-		HorizontalLayout controlsBtn = new HorizontalLayout();
+		controlsBtn = new HorizontalLayout();
 		controlsBtn.setSpacing(true);
 
 		Button addCriteriaBtn = new Button("Add Criteria",
@@ -72,11 +82,14 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends
 				});
 		controlsBtn.addComponent(addCriteriaBtn);
 
-		Button saveSearchCriteriaBtn = new Button("Save Search");
-		controlsBtn.addComponent(saveSearchCriteriaBtn);
-
 		this.addComponent(searchContainer);
 		this.addComponent(controlsBtn);
+	}
+
+	private void buildFilterBox() {
+		filterBox = new HorizontalLayout();
+		filterBox.addComponent(new Label("Saved Filter: "));
+		this.addComponent(filterBox);
 	}
 
 	protected Component buildPropertySearchComp(String fieldId) {
@@ -99,6 +112,31 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends
 		} catch (Exception e) {
 			throw new MyCollabException(e);
 		}
+	}
+
+	private void saveSearchCriteria() {
+		Iterator<Component> iterator = searchContainer.iterator();
+		List<SearchFieldInfo> fieldInfos = new ArrayList<SearchFieldInfo>();
+		while (iterator.hasNext()) {
+			CriteriaSelectionLayout bar = (CriteriaSelectionLayout) iterator
+					.next();
+			SearchFieldInfo searchFieldInfo = bar.buildSearchFieldInfo();
+			if (searchFieldInfo != null) {
+				fieldInfos.add(searchFieldInfo);
+			}
+		}
+
+		SaveSearchResultService saveSearchResultService = ApplicationContextUtil
+				.getSpringBean(SaveSearchResultService.class);
+		SaveSearchResultWithBLOBs searchResult = new SaveSearchResultWithBLOBs();
+		searchResult.setSaveuser(AppContext.getUsername());
+		searchResult.setSaccountid(AppContext.getAccountId());
+		searchResult.setQuerytext(JsonDeSerializer.toJson(fieldInfos));
+		// searchResult.setType(type);
+		// searchResult.setQueryname((String) saveSearchValue
+		// .getValue());
+		saveSearchResultService.saveWithSession(searchResult,
+				AppContext.getUsername());
 	}
 
 	private class CriteriaSelectionLayout extends GridLayout {
@@ -164,7 +202,6 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends
 		}
 
 		private void buildFieldSelectionBox() {
-
 			fieldSelectionBox = new ComboBox();
 			fieldSelectionBox.setImmediate(true);
 			fieldSelectionBox.setItemCaptionMode(ItemCaptionMode.EXPLICIT);
@@ -262,6 +299,10 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends
 			} else if (field instanceof CompositionStringParam) {
 				valueBox.addComponent(new TextField());
 			}
+		}
+
+		private SearchFieldInfo buildSearchFieldInfo() {
+			return null;
 		}
 
 		private SearchField buildSearchField() {
@@ -395,4 +436,6 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends
 			return null;
 		}
 	}
+	
+	
 }
