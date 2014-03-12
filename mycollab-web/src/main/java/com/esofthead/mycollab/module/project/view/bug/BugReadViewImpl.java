@@ -46,6 +46,7 @@ import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.schedule.email.project.BugRelayEmailNotificationAction;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
@@ -345,7 +346,7 @@ IBugCallbackStatusComp {
 	@Override
 	protected ComponentContainer createButtonControls() {
 		bugPreviewFormControls = new ProjectPreviewFormControlsGenerator<SimpleBug>(previewForm);
-		final HorizontalLayout topPanel = bugPreviewFormControls.createButtonControls(ProjectRolePermissionCollections.BUGS);
+		final HorizontalLayout topPanel = bugPreviewFormControls.createButtonControls(ProjectRolePermissionCollections.BUGS, false, false);
 
 		final Button assignBtn = new Button("Assign",
 				new Button.ClickListener() {
@@ -677,5 +678,10 @@ IBugCallbackStatusComp {
 			}
 			return null;
 		}
+	}
+
+	@Override
+	public HasPreviewFormHandlers<SimpleBug> getPreviewFormHandlers() {
+		return this.previewForm;
 	}
 }
