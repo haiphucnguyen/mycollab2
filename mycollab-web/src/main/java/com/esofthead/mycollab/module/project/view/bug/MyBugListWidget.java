@@ -34,10 +34,10 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.Embedded;
-import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.VerticalLayout;
 
 /**
  * 
@@ -54,18 +54,19 @@ public class MyBugListWidget extends BugDisplayWidget {
 	}
 
 	public static class MyBugRowDisplayHandler implements
-			BeanList.RowDisplayHandler<SimpleBug> {
+	BeanList.RowDisplayHandler<SimpleBug> {
 		private static final long serialVersionUID = 1L;
 
 		@Override
 		public Component generateRow(final SimpleBug bug, int rowIndex) {
-			GridLayout layout = new GridLayout(2, 4);
+			HorizontalLayout layout = new HorizontalLayout();
 			layout.setWidth("100%");
-			layout.setSpacing(false);
+			layout.setSpacing(true);
 			layout.addComponent(
-					new Embedded(null, MyCollabResource
-							.newResource("icons/16/project/bug.png")), 0, 0, 0,
-					1);
+					new Image(null, MyCollabResource
+							.newResource("icons/16/project/bug.png")));
+
+			VerticalLayout rowContent = new VerticalLayout();
 
 			ButtonLink defectLink = new ButtonLink("["
 					+ CurrentProjectVariables.getProject().getShortname() + "-"
@@ -85,18 +86,17 @@ public class MyBugListWidget extends BugDisplayWidget {
 			if (bug.isOverdue()) {
 				defectLink.addStyleName(UIConstants.LINK_OVERDUE);
 			}
-			layout.addComponent(defectLink);
-			layout.setColumnExpandRatio(1, 1.0f);
+			rowContent.addComponent(defectLink);
 
 			LabelHTMLDisplayWidget descInfo = new LabelHTMLDisplayWidget(
 					bug.getDescription());
 			descInfo.setWidth("100%");
-			layout.addComponent(descInfo);
+			rowContent.addComponent(descInfo);
 
 			Label dateInfo = new Label("Last updated on "
 					+ AppContext.formatDateTime(bug.getLastupdatedtime()));
 			dateInfo.setStyleName(UIConstants.WIDGET_ROW_METADATA);
-			layout.addComponent(dateInfo, 1, 2);
+			rowContent.addComponent(dateInfo);
 
 			HorizontalLayout hLayoutAssigneeInfo = new HorizontalLayout();
 			hLayoutAssigneeInfo.setSpacing(true);
@@ -112,7 +112,10 @@ public class MyBugListWidget extends BugDisplayWidget {
 			hLayoutAssigneeInfo.addComponent(userLink);
 			hLayoutAssigneeInfo.setComponentAlignment(userLink,
 					Alignment.MIDDLE_CENTER);
-			layout.addComponent(hLayoutAssigneeInfo, 1, 3);
+			rowContent.addComponent(hLayoutAssigneeInfo);
+
+			layout.addComponent(rowContent);
+			layout.setExpandRatio(rowContent, 1.0f);
 
 			CssLayout rowLayout = new CssLayout();
 			rowLayout.addComponent(layout);
