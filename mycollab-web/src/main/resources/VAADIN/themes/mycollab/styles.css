@@ -2967,7 +2967,7 @@ div.v-splitbutton,div.v-splitbutton .v-button {
 .message .message-container {
 	background-color: #f2fafd;
 	padding: 0px;
-	border: 2px solid #CFCFCF;
+	border: 1px solid #CFCFCF;
 	border-radius: 5px;
 	/* margin-left: 10px; */
 	position: relative;
@@ -2986,7 +2986,7 @@ div.v-splitbutton,div.v-splitbutton .v-button {
 	display: block;
 	width: 0;
 	top: 9px; /* controls vertical position */
-	left: -12px; /* value = - border-left-width - border-right-width */
+	left: -11px; /* value = - border-left-width - border-right-width */
 	border-width: 11px 11px 11px 0;
 	border-color: transparent #CFCFCF;
 	border-radius: 0px;

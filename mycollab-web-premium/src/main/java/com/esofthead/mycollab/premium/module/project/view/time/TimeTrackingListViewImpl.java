@@ -276,6 +276,7 @@ TimeTrackingListView {
 			gridLayout.getLayout().setWidth("100%");
 			gridLayout.getLayout().setStyleName(UIConstants.COLORED_GRIDLAYOUT);
 			gridLayout.getLayout().setMargin(false);
+			gridLayout.getLayout().setSpacing(true);
 
 			final AssignmentSelectionComboBox ticketComboBox = new AssignmentSelectionComboBox();
 			ticketComboBox.setImmediate(true);
@@ -286,9 +287,9 @@ TimeTrackingListView {
 
 			final DateField dateField = new DateField();
 			dateField.setResolution(Resolution.DAY);
-			gridLayout.addComponent(dateField, "Date", 0, 0, "230px");
-			gridLayout.addComponent(hourField, "Hours", 1, 0, "230px");
-			gridLayout.addComponent(ticketComboBox, "Ticket", 2, 0);
+			gridLayout.addComponent(dateField, "Date", 0, 0, "190px");
+			gridLayout.addComponent(hourField, "Hours", 1, 0, "190px");
+			gridLayout.addComponent(ticketComboBox, "Ticket", 2, 0, "190px");
 			gridLayout.getLayout().setColumnExpandRatio(3, 1.0f);
 
 			this.addComponent(gridLayout.getLayout());
