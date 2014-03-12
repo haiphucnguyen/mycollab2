@@ -101,7 +101,7 @@ GenericSearchPanel<ItemTimeLoggingSearchCriteria> {
 					.getMessage(TimeTrackingI18nEnum.SEARCH_TIME_TITLE));
 
 			createBtn = new Button("Add Entry");
-			createBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+			createBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 			createBtn.setIcon(MyCollabResource
 					.newResource("icons/16/project/add_time.png"));
 			createBtn.addStyleName("v-button-caption-bool");
@@ -161,7 +161,7 @@ GenericSearchPanel<ItemTimeLoggingSearchCriteria> {
 					});
 
 			buttonControls.addComponent(searchBtn);
-			searchBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+			searchBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 
 			final Button clearBtn = new Button(
 					LocalizationHelper
@@ -175,7 +175,7 @@ GenericSearchPanel<ItemTimeLoggingSearchCriteria> {
 							.setDefaultValue();
 						}
 					});
-			clearBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+			clearBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 			buttonControls.addComponent(clearBtn);
 
 			return buttonControls;

@@ -151,7 +151,7 @@ ProjectMemberInviteView {
 
 			}
 		});
-		inviteBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		inviteBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 		controlButtons.addComponent(inviteBtn);
 
 		Button cancelBtn = new Button("Cancel", new Button.ClickListener() {
@@ -167,7 +167,7 @@ ProjectMemberInviteView {
 
 			}
 		});
-		cancelBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		cancelBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 		controlButtons.addComponent(cancelBtn);
 
 		controlButtons.setSizeUndefined();

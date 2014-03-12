@@ -62,7 +62,7 @@ public class DefaultMassItemActionHandlersContainer extends HorizontalLayout
 			groupMap.put(groupId, group);
 			this.addComponent(group);
 		}
-		group.addStyleName(UIConstants.THEME_GRAY_LINK);
+		group.addStyleName(UIConstants.THEME_BLUE_LINK);
 
 		Button optionBtn = new Button(null, new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
@@ -73,7 +73,7 @@ public class DefaultMassItemActionHandlersContainer extends HorizontalLayout
 			}
 		});
 		optionBtn.setIcon(resource);
-		optionBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
+		optionBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
 		group.addButton(optionBtn);
 	}
 
@@ -86,7 +86,7 @@ public class DefaultMassItemActionHandlersContainer extends HorizontalLayout
 			groupMap.put(groupId, group);
 			this.addComponent(group);
 		}
-		group.addStyleName(UIConstants.THEME_GRAY_LINK);
+		group.addStyleName(UIConstants.THEME_BLUE_LINK);
 
 		Button optionBtn = new Button(null);
 
@@ -94,7 +94,7 @@ public class DefaultMassItemActionHandlersContainer extends HorizontalLayout
 				new LazyStreamSource(id), downloadFileName));
 		fileDownler.extend(optionBtn);
 		optionBtn.setIcon(resource);
-		optionBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
+		optionBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
 		group.addButton(optionBtn);
 	}
 

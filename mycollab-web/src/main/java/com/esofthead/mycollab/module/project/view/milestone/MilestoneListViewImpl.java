@@ -163,7 +163,7 @@ MilestoneListView {
 
 		this.createBtn.setIcon(MyCollabResource
 				.newResource("icons/16/addRecord.png"));
-		this.createBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		this.createBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 		layout.addComponent(this.createBtn);
 		layout.setComponentAlignment(this.createBtn, Alignment.MIDDLE_RIGHT);
 

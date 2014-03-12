@@ -147,7 +147,7 @@ public class ContactInfoChangeWindow extends Window {
 						ContactInfoChangeWindow.this.changeUserInfo();
 					}
 				});
-		sendBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		sendBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 		hlayoutControls.addComponent(sendBtn);
 		hlayoutControls.setComponentAlignment(sendBtn, Alignment.MIDDLE_CENTER);
 

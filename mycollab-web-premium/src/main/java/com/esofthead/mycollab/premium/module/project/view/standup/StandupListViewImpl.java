@@ -242,7 +242,7 @@ StandupListView {
 
 			}
 		});
-		addNewReport.setStyleName(UIConstants.THEME_BLUE_LINK);
+		addNewReport.setStyleName(UIConstants.THEME_GREEN_LINK);
 		addNewReport.setIcon(MyCollabResource
 				.newResource("icons/16/addRecord.png"));
 

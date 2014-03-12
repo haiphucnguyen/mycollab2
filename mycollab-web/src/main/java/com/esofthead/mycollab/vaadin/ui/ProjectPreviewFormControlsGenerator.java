@@ -97,7 +97,7 @@ public class ProjectPreviewFormControlsGenerator<T> implements Serializable {
 			});
 			assignBtn.setIcon(MyCollabResource
 					.newResource("icons/16/assign.png"));
-			assignBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+			assignBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 			editButtons.addComponent(assignBtn);
 			editButtons.setComponentAlignment(assignBtn,
 					Alignment.MIDDLE_CENTER);
@@ -192,7 +192,7 @@ public class ProjectPreviewFormControlsGenerator<T> implements Serializable {
 			}
 		});
 
-		previousItem.setStyleName(UIConstants.THEME_BLUE_LINK);
+		previousItem.setStyleName(UIConstants.THEME_GREEN_LINK);
 		previousItem.setDescription("Show previous item");
 		navigationBtns.addButton(previousItem);
 
@@ -206,7 +206,7 @@ public class ProjectPreviewFormControlsGenerator<T> implements Serializable {
 			}
 		});
 
-		nextItemBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		nextItemBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 		nextItemBtn.setDescription("Show next item");
 
 		navigationBtns.addButton(nextItemBtn);

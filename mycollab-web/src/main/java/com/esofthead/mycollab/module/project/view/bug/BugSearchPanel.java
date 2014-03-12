@@ -204,7 +204,7 @@ public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 									new BugEvent.GotoAdd(this, null));
 						}
 					});
-			createBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+			createBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 			createBtn.setIcon(MyCollabResource
 					.newResource("icons/16/addRecord.png"));
 			createBtn.setEnabled(CurrentProjectVariables
@@ -349,7 +349,7 @@ public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 			});
 
 			buttonControls.addComponent(searchBtn);
-			searchBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+			searchBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 
 			final Button clearBtn = new Button("Clear",
 					new Button.ClickListener() {
@@ -383,7 +383,7 @@ public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 					.setValue(true);
 				}
 			});
-			/*clearBtn.setStyleName(UIConstants.THEME_BLUE_LINK);*/
+			/*clearBtn.setStyleName(UIConstants.THEME_GREEN_LINK);*/
 			buttonControls.addComponent(clearBtn);
 
 			final Button basicSearchBtn = new Button("Basic Search",
@@ -555,7 +555,7 @@ public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 									new BugEvent.GotoAdd(this, null));
 						}
 					});
-			createBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+			createBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 			createBtn.setIcon(MyCollabResource
 					.newResource("icons/16/addRecord.png"));
 			createBtn.setEnabled(CurrentProjectVariables

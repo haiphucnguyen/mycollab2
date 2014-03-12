@@ -364,7 +364,7 @@ IBugCallbackStatusComp {
 		assignBtn.setIcon(MyCollabResource
 				.newResource("icons/16/assign.png"));
 
-		assignBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		assignBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 
 		this.bugWorkflowControl = new HorizontalLayout();
 		this.bugWorkflowControl.setMargin(false);

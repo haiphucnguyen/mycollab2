@@ -146,7 +146,7 @@ public class CreateCustomFieldWindow extends Window {
 						CreateCustomFieldWindow.this.close();
 					}
 				});
-		saveBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		saveBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 		buttonControls.addComponent(saveBtn);
 		buttonControls.setComponentAlignment(saveBtn, Alignment.MIDDLE_CENTER);
 

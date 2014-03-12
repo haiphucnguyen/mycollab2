@@ -114,7 +114,7 @@ public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
 					}
 				});
 		UiUtils.addComponent(buttonControls, searchBtn, Alignment.MIDDLE_CENTER);
-		searchBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		searchBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 
 		final Button clearBtn = new Button(
 				LocalizationHelper.getMessage(GenericI18Enum.BUTTON_CLEAR),
@@ -124,7 +124,7 @@ public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
 						clearFields();
 					}
 				});
-		clearBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		clearBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 		UiUtils.addComponent(buttonControls, clearBtn, Alignment.MIDDLE_CENTER);
 		final Button basicSearchBtn = new Button(
 				LocalizationHelper
@@ -153,10 +153,10 @@ public abstract class DefaultAdvancedSearchLayout<S extends SearchCriteria>
 		final Button updateBtn = new Button("Update");
 		final Button cancelBtn = new Button("Cancel");
 
-		addnewBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-		saveBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-		updateBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-		cancelBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		addnewBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+		saveBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+		updateBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+		cancelBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 
 		// tableActionControll for Update group controls
 		tableActionControls = new PopupButtonControl("updateSearch", updateBtn);

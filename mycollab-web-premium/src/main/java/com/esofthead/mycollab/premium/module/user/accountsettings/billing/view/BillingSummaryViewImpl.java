@@ -115,7 +115,7 @@ public class BillingSummaryViewImpl extends AbstractPageView implements
                                             BillingSummaryViewImpl.this, null));
                         }
                     });
-            cancelAccountBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+            cancelAccountBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 
             FAQLayout.addComponent(cancelAccountBtn);
         }
@@ -233,7 +233,7 @@ public class BillingSummaryViewImpl extends AbstractPageView implements
                             .addWindow(new UpdateBillingPlanWindow(plan));
                 }
             });
-            selectThisPlan.addStyleName(UIConstants.THEME_BLUE_LINK);
+            selectThisPlan.addStyleName(UIConstants.THEME_GREEN_LINK);
             singlePlan.addComponent(selectThisPlan);
 
             plansList.addComponent(singlePlan);
@@ -399,7 +399,7 @@ public class BillingSummaryViewImpl extends AbstractPageView implements
                     UpdateBillingPlanWindow.this.close();
                 }
             });
-            saveBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+            saveBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
             controlBtns.addComponent(saveBtn);
             controlBtns.setComponentAlignment(saveBtn, Alignment.MIDDLE_CENTER);
 

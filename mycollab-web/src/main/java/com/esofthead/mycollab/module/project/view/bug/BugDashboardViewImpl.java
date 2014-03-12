@@ -126,7 +126,7 @@ BugDashboardView {
 				.canWrite(ProjectRolePermissionCollections.BUGS));
 		createBugBtn.setIcon(MyCollabResource.newResource("icons/16/addRecord.png"));
 		final SplitButton controlsBtn = new SplitButton(createBugBtn);
-		controlsBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
+		controlsBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
 		controlsBtn.setWidth(SIZE_UNDEFINED, Sizeable.Unit.PIXELS);
 
 		final VerticalLayout btnControlsLayout = new VerticalLayout();

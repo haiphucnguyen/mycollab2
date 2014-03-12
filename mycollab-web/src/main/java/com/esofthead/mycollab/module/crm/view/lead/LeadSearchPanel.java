@@ -104,7 +104,7 @@ public class LeadSearchPanel extends
 				});
 		createAccountBtn.setIcon(MyCollabResource
 				.newResource("icons/16/addRecord.png"));
-		createAccountBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		createAccountBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 		createAccountBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_LEAD));
 		UiUtils.addComponent(layout, createAccountBtn, Alignment.MIDDLE_RIGHT);

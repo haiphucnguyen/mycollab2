@@ -160,7 +160,7 @@ public class CancelAccountViewImpl extends AbstractPageView implements
 								.setLocation("http://www.mycollab.com");
 					}
 				});
-		submitBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
+		submitBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
 
 		Button cancelBtn = new Button("Never mind, go back",
 				new Button.ClickListener() {
