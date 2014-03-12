@@ -100,25 +100,25 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 		this.displayResourcesInTable(this.baseFolder);
 
 		resourceHandlerComponent
-				.addSearchHandlerToBreadCrumb(new SearchHandler<FileSearchCriteria>() {
-					@Override
-					public void onSearch(FileSearchCriteria criteria) {
-						Folder selectedFolder = null;
-						selectedFolder = (Folder) FileDashboardComponent.this.resourceService
-								.getResource(criteria.getBaseFolder());
-						resourceHandlerComponent
-								.constructBodyItemContainer(selectedFolder);
-						resourceHandlerComponent
-								.gotoFolderBreadCumb(selectedFolder);
-						FileDashboardComponent.this.baseFolder = selectedFolder;
-						resourceHandlerComponent
-								.setCurrentBaseFolder(selectedFolder);
-					}
-				});
+		.addSearchHandlerToBreadCrumb(new SearchHandler<FileSearchCriteria>() {
+			@Override
+			public void onSearch(FileSearchCriteria criteria) {
+				Folder selectedFolder = null;
+				selectedFolder = (Folder) FileDashboardComponent.this.resourceService
+						.getResource(criteria.getBaseFolder());
+				resourceHandlerComponent
+				.constructBodyItemContainer(selectedFolder);
+				resourceHandlerComponent
+				.gotoFolderBreadCumb(selectedFolder);
+				FileDashboardComponent.this.baseFolder = selectedFolder;
+				resourceHandlerComponent
+				.setCurrentBaseFolder(selectedFolder);
+			}
+		});
 	}
 
 	private class FileSearchPanel extends
-			GenericSearchPanel<FileSearchCriteria> {
+	GenericSearchPanel<FileSearchCriteria> {
 		private static final long serialVersionUID = 1L;
 		protected FileSearchCriteria searchCriteria;
 		private ComponentContainer menuBar = null;
@@ -197,14 +197,14 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 				final Button searchBtn = new Button();
 				searchBtn.setStyleName("search-icon-button");
 				searchBtn.setIcon(MyCollabResource
-						.newResource("icons/16/search_white.png"));
+						.newResource("icons/16/search.png"));
 				searchBtn.addClickListener(new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
 					public void buttonClick(final ClickEvent event) {
 						FileDashboardComponent.this
-								.doSearch((FileSearchCriteria) fillupSearchCriteria());
+						.doSearch((FileSearchCriteria) fillupSearchCriteria());
 					}
 				});
 				UiUtils.addComponent(basicSearchBody, searchBtn,
@@ -221,7 +221,7 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 
 				final Button cancelBtn = new Button(
 						LocalizationHelper
-								.getMessage(GenericI18Enum.BUTTON_CLEAR));
+						.getMessage(GenericI18Enum.BUTTON_CLEAR));
 				cancelBtn.setStyleName(UIConstants.THEME_LINK);
 				cancelBtn.addStyleName("cancel-button");
 				cancelBtn.addClickListener(new Button.ClickListener() {

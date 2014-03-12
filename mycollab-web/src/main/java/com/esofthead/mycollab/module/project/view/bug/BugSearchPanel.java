@@ -132,7 +132,7 @@ public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 			final Button searchBtn = new Button();
 			searchBtn.setStyleName("search-icon-button");
 			searchBtn.setIcon(MyCollabResource
-					.newResource("icons/16/search_white.png"));
+					.newResource("icons/16/search.png"));
 
 			searchBtn.addClickListener(new Button.ClickListener() {
 				@Override
@@ -574,14 +574,14 @@ public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 			header.setWidth("100%");
 			header.setSpacing(true);
 			header.setMargin(new MarginInfo(true, false, true, false));
-			
+
 			return header;
 		}
 	}
-	
+
 
 	public void addRightComponent(ComponentContainer c) {
 		rightComponent.addComponent(c);
 	}
-	
+
 }
