@@ -192,6 +192,7 @@ MessageListView, HasEditFormHandlers<Message> {
 			Button userName = new Button(message.getFullPostedUserName());
 			userName.setStyleName("user-name");
 			userName.addStyleName("link");
+			userName.addStyleName(UIConstants.WORD_WRAP);
 			userName.addClickListener(gotoUser);
 			userBlock.addComponent(userName);
 			messageLayout.addComponent(userBlock);

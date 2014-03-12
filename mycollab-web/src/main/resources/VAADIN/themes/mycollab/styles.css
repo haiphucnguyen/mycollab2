@@ -160,7 +160,7 @@ div.v-button .v-button-link .link .v-button-buttonlinkcenter .buttonlinkcenter .
 }
 
 input.v-textfield,textarea.v-textarea,.v-filterselect {
-	background: #fff url('icons/input-bg.png') repeat-x;
+	background: none no-repeat left top #FFFFFF;
 }
 
 input.v-widget.v-textfield[type="text"], .v-filterselect  {
@@ -1321,9 +1321,11 @@ input.v-textfield-errorField {
 /* End Login Form */
 
 /* Add View Styles */
-.addViewBody {
+.addViewLayout .addViewBody {
 	background-color: #FFFFFF;
-	border: 1px solid #CFCFCF;
+	border-color: #CFCFCF;
+	border-style: solid;
+	border-width: 1px 1px 0px;
 }
 
 .addViewLayout .addViewTopControls {
@@ -1413,6 +1415,11 @@ input.v-textfield-errorField {
 
 .preview .addViewLayout .addViewBottomControls {
 	margin-bottom: 0px;
+}
+.addViewLayout .addViewBottomControls {
+	border-width: 0px 1px;
+	border-style: solid;
+	border-color: #CFCFCF;
 }
 
 /* .addViewLayout .addViewBottomControls .depotComp {
@@ -1603,7 +1610,7 @@ input.v-textfield-errorField {
 	background-color: #7B7B7B;
 }
 .projectDashboardView .navigator-wrap .project-list-comp {
-	padding: 13px 23px 0px;
+	padding: 13px 7px 0px;
 }
 .projectDashboardView .navigator-wrap .project-list-comp .project-list-comp-hdr {
 	background-color: #EEEEEE;
@@ -1646,7 +1653,7 @@ input.v-textfield-errorField {
 
 .projectDashboardView .navigator-wrap .project-list-comp .project-list-comp-hdr .v-popup-indicator {
 	position: absolute;
-	right: 35px;
+	right: 19px;
 	top: 23px;
 }
 
@@ -1678,7 +1685,7 @@ input.v-textfield-errorField {
 
 .projectDashboardView .navigator-wrap .project-list-comp .project-description {
 	color: #FFFFFF;
-	padding: 20px 10px;
+	padding: 10px 0px 20px;
 	border-bottom: 1px solid #CFCFCF;
 }
 
@@ -2788,9 +2795,9 @@ div.v-splitbutton,div.v-splitbutton .v-button {
 	background: url("icons/sprites.png") no-repeat scroll -5px -10px
 		transparent;
 }
-.v-popupbutton .v-button-wrap img {
+/* .v-popupbutton .v-button-wrap img {
 	margin-right:0;
-}
+} */
 /* End Split button*/
 
 /* New Table */
@@ -2947,6 +2954,10 @@ div.v-splitbutton,div.v-splitbutton .v-button {
 
 .message {
 	margin: 8px 0px;
+}
+
+.message .user-name .v-button-caption {
+	text-align: center;
 }
 
 .comment-list-wrapper.v-margin-left {
@@ -3698,27 +3709,43 @@ div.v-lazyloadingwrapper-loading {
 /* Footer */
 .footer {
 	width: 100%;
-	border-top: 1px solid rgb(143, 143, 143);
+	border-top: 1px solid #CFCFCF;
 	padding: 6px 0px;
-	background-color: rgb(56, 56, 56);
+	background-color: #FFFFFF;
 }
 
 .footer-wrapper {
 	min-width: 910px;
 	margin: 0 auto;
+	padding: 0px 30px;
 }
 
 .footer-left {
 	float: left;
-	text-shadow: 0px 1px 0px #444;
-	padding-top: 4px;
 	padding-left: 5px;
-	color: white;
+	color: #313131;
 }
 
 .footer-right {
 	float: right;
 	padding-right: 5px;
+}
+.footer-right .v-link {
+	line-height: 16px;
+}
+.footer-right .v-link a {
+	vertical-align: top;
+}
+.footer .v-link a span {
+	text-decoration: none;
+}
+.footer-right .v-spacing {
+	height: 18px;
+	border-right: 1px solid #CFCFCF;
+	margin-right: 5px;
+}
+.footer-right .v-spacing:before {
+	content: "\a0";
 }
 /* End Footer */
 

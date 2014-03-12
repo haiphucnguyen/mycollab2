@@ -474,10 +474,7 @@ textarea.v-textarea,
 input.v-textfield,
 textarea.v-textarea,
 .v-filterselect {
-	border-bottom-color: rgb(161,161,161);
-	border-left-color: rgb(161,161,161);
-	border-right-color: rgb(161,161,161);
-	border-top-color: rgb(161,161,161);
+	border-color: #CFCFCF;
 }
 
 .v-button,

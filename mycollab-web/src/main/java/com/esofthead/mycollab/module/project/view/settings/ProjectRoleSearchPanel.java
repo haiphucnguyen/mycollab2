@@ -25,8 +25,8 @@ import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectRoleSearchCriteria;
+import com.esofthead.mycollab.module.project.events.ProjectRoleEvent;
 import com.esofthead.mycollab.module.project.localization.PeopleI18nEnum;
-import com.esofthead.mycollab.module.user.events.RoleEvent;
 import com.esofthead.mycollab.vaadin.MyCollabSession;
 import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
@@ -150,7 +150,7 @@ GenericSearchPanel<ProjectRoleSearchCriteria> {
 						@Override
 						public void buttonClick(final ClickEvent event) {
 							EventBus.getInstance().fireEvent(
-									new RoleEvent.GotoAdd(this, null));
+									new ProjectRoleEvent.GotoAdd(this, null));
 						}
 					});
 			createBtn.setStyleName(UIConstants.THEME_GREEN_LINK);

@@ -81,12 +81,6 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
 	private static Logger log = LoggerFactory.getLogger(RiskListViewImpl.class);
 
 	public RiskListViewImpl() {
-		/*super("Risks","risk_selected.png");
-
-		this.addHeaderRightContent(createHeaderRight());
-
-		CssLayout contentWrapper = new CssLayout();
-		contentWrapper.setStyleName("content-wrapper");*/
 		this.setMargin(new MarginInfo(false, true, false, true));
 
 		this.riskSearchPanel = new RiskSearchPanel();
