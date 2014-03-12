@@ -75,6 +75,10 @@ public class ReadViewLayout extends CustomLayoutExt {
 		this.header.addComponent(headerRight);
 	}
 
+	public void clearTitleStyleName() {
+		this.titleLbl.setStyleName("headerName");
+	}
+
 	public void addTitleStyleName(final String styleName) {
 		this.titleLbl.addStyleName(styleName);
 	}

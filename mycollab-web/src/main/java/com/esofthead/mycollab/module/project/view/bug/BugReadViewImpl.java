@@ -277,6 +277,7 @@ IBugCallbackStatusComp {
 	public void previewItem(final SimpleBug item) {
 		super.previewItem(item);
 		displayWorkflowControl();
+		this.previewLayout.clearTitleStyleName();
 		if (BugStatusConstants.VERIFIED.equals(this.beanItem
 				.getStatus())) {
 			this.previewLayout.addTitleStyleName(UIConstants.LINK_COMPLETED);
@@ -371,6 +372,7 @@ IBugCallbackStatusComp {
 
 		bugPreviewFormControls.insertToControlBlock(bugWorkflowControl);
 		bugPreviewFormControls.insertToControlBlock(assignBtn);
+		topPanel.setSizeUndefined();
 
 		return topPanel;
 	}
@@ -475,20 +477,6 @@ IBugCallbackStatusComp {
 
 		@Override
 		public Layout getLayout() {
-			/*final ReadViewLayout bugAddLayout = new ReadViewLayout(
-					"[Issue " + BugReadViewImpl.this.beanItem.getBugkey()
-					+ "#]: "
-					+ BugReadViewImpl.this.beanItem.getSummary(),
-					MyCollabResource
-					.newResource("icons/22/project/bug_selected.png"));*/
-
-			/*if (BugStatusConstants.VERIFIED.equals(BugReadViewImpl.this.beanItem
-					.getStatus())) {
-				bugAddLayout.addTitleStyleName(UIConstants.LINK_COMPLETED);
-			} else if (BugReadViewImpl.this.beanItem.isOverdue()) {
-				bugAddLayout.addTitleStyleName(UIConstants.LINK_OVERDUE);
-			}*/
-
 			this.informationLayout = new GridFormLayoutHelper(2, 12,
 					"100%", "167px", Alignment.MIDDLE_LEFT);
 			this.informationLayout.getLayout().addStyleName(

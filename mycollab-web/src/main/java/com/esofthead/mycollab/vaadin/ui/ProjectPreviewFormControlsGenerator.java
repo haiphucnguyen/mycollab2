@@ -65,7 +65,7 @@ public class ProjectPreviewFormControlsGenerator<T> implements Serializable {
 		layout = new HorizontalLayout();
 		layout.setStyleName("control-buttons");
 		layout.setSpacing(true);
-		layout.setWidth("100%");
+		layout.setSizeUndefined();
 
 		backBtn = new Button(null, new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
