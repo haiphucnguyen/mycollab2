@@ -57,6 +57,7 @@ StandupListView {
 	private final StandupStyleCalendarExp standupCalendar = new StandupStyleCalendarExp();
 
 	private final BeanList<StandupReportService, StandupReportSearchCriteria, SimpleStandupReport> reportInDay;
+	private StandupMissingComp standupMissingComp;
 
 	public StandupListViewImpl() {
 		super();
@@ -72,7 +73,17 @@ StandupListView {
 				.getSpringBean(StandupReportService.class),
 				StandupReportRowDisplay.class);
 		this.reportInDay.addStyleName("standupreport-list-content");
-		this.addComponent(this.reportInDay);
+		HorizontalLayout contentWrap = new HorizontalLayout();
+		contentWrap.setWidth("100%");
+		contentWrap.setSpacing(true);
+		contentWrap.addComponent(reportInDay);
+		contentWrap.setExpandRatio(reportInDay, 1.0f);
+
+		standupMissingComp = new StandupMissingComp();
+		standupMissingComp.setWidth("250px");
+		contentWrap.addComponent(standupMissingComp);
+
+		this.addComponent(contentWrap);
 	}
 
 	private RangeDateSearchField getRangeDateSearchField(final Date date1,
@@ -184,6 +195,7 @@ StandupListView {
 				CurrentProjectVariables.getProjectId()));
 		searchCriteria.setOnDate(new DateSearchField(SearchField.AND, date));
 		this.setSearchCriteria(searchCriteria);
+		this.standupMissingComp.search(date);
 	}
 
 	@Override

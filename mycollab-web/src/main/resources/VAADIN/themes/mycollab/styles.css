@@ -165,6 +165,7 @@ input.v-textfield,textarea.v-textarea,.v-filterselect {
 
 input.v-widget.v-textfield[type="text"], .v-filterselect  {
 	height: 25px;
+	border-color: #CFCFCF;
 }
 
 .v-app {
@@ -2110,7 +2111,7 @@ input.v-textfield-errorField {
 }
 
 .depotContent.bordered {
-	border-color: rgb(169, 169, 169);
+	border-color: #CFCFCF;
 	border-style: solid;
 	border-width: 0px 1px 1px 1px;
 	background-color: #FFFFFF;
@@ -2474,8 +2475,8 @@ td.v-tabsheet-spacertd div {
 }
 
 .activity-stream {
-	background-color: #F7F7F7;
-	border-color: #BCBCBC;
+	background-color: #FFFFFF;
+	border-color: #CFCFCF;
 	border-width: 0px 1px 1px;
 	border-style: solid;
 	padding: 5px;
@@ -2791,11 +2792,11 @@ div.v-splitbutton,div.v-splitbutton .v-button {
     padding-right: 0px;
 }*/
 .v-table-row {
-	background: none repeat scroll 0% 0% #F7F7F7;
+	background: none repeat scroll 0% 0% #FFFFFF;
 }
 
 .v-table-row-odd, .v-table-striped .v-table-row-odd {
-	background: none repeat scroll 0% 0% #FFFFFF;
+	background: none repeat scroll 0% 0% #F7F7F7;
 }
 
 .v-csslayout-listControl {
@@ -3532,6 +3533,10 @@ div.v-lazyloadingwrapper-loading {
 	{
 	font-weight: bold;
 	font-size: 14px;
+}
+
+.standupreport-list-content {
+	padding-right: 15px;
 }
 
 .standupreport-list-content .depotComp {
@@ -4839,8 +4844,8 @@ div.v-ratingstars-bar {
 }
 
 .myprojectlist .stream-content .projectlink-wrapper {
-	border-right: 1px solid rgb(169, 169, 169);
-	background-color: rgb(212, 223, 239);
+	border-right: 1px solid #CFCFCF;
+	background-color: #F7F7F7;
 	padding: 5px 0px 5px 5px;
 }
 
@@ -6406,4 +6411,21 @@ img.icon-btn {
 	border-color: #CFCFCF;
 	border-style: solid;
 	border-width: 0px 1px 1px;
+}
+
+/* Standup Missing Comp */
+.standup-missing-comp {
+	border: 1px solid #CFCFCF
+}
+.standup-missing-comp .header-wrap {
+	border-bottom: 1px solid #CFCFCF;
+	background-color: #F7F7F7;
+	padding: 7px 10px;
+}
+.standup-missing-comp .header-wrap .v-label {
+	font-size: 14px;
+	color: #313131;
+}
+.standup-missing-comp .comp-body-wrap .v-label {
+	text-align: center;	
 }
