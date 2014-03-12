@@ -26,7 +26,6 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
-import com.esofthead.mycollab.vaadin.ui.Separator;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
 import com.vaadin.ui.Alignment;
@@ -183,21 +182,22 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 
 			@Override
 			public ComponentContainer constructBody() {
-				basicSearchBody = new HorizontalLayout();
-				basicSearchBody.setSpacing(false);
+				final HorizontalLayout basicSearchBody = new HorizontalLayout();
+				basicSearchBody.setSpacing(true);
 				basicSearchBody.setMargin(true);
+				UiUtils.addComponent(basicSearchBody,new Label("Name:"), Alignment.MIDDLE_LEFT);
 
-				this.nameField = this.createSeachSupportTextField(
-						new TextField(), "NameFieldOfBasicSearch");
-
+				final HorizontalLayout comboSearchField = new HorizontalLayout();
+				this.nameField = new TextField();
 				this.nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
-				UiUtils.addComponent(basicSearchBody, this.nameField,
+				UiUtils.addComponent(comboSearchField, this.nameField,
 						Alignment.MIDDLE_CENTER);
 
 				final Button searchBtn = new Button();
 				searchBtn.setStyleName("search-icon-button");
 				searchBtn.setIcon(MyCollabResource
-						.newResource("icons/16/search.png"));
+						.newResource("icons/16/search_white.png"));
+
 				searchBtn.addClickListener(new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
@@ -207,23 +207,18 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 						.doSearch((FileSearchCriteria) fillupSearchCriteria());
 					}
 				});
-				UiUtils.addComponent(basicSearchBody, searchBtn,
+				UiUtils.addComponent(comboSearchField, searchBtn,
 						Alignment.MIDDLE_LEFT);
+				UiUtils.addComponent(basicSearchBody, comboSearchField, Alignment.MIDDLE_CENTER);
 
 				this.myItemCheckbox = new CheckBox("My Items");
-				this.myItemCheckbox.setWidth("75px");
 				UiUtils.addComponent(basicSearchBody, this.myItemCheckbox,
 						Alignment.MIDDLE_CENTER);
 
-				final Separator separator = new Separator();
-				UiUtils.addComponent(basicSearchBody, separator,
-						Alignment.MIDDLE_LEFT);
-
-				final Button cancelBtn = new Button(
-						LocalizationHelper
+				final Button cancelBtn = new Button(LocalizationHelper
 						.getMessage(GenericI18Enum.BUTTON_CLEAR));
-				cancelBtn.setStyleName(UIConstants.THEME_LINK);
-				cancelBtn.addStyleName("cancel-button");
+			
+
 				cancelBtn.addClickListener(new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
@@ -232,8 +227,10 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 						FileBasicSearchLayout.this.nameField.setValue("");
 					}
 				});
-				UiUtils.addComponent(basicSearchBody, cancelBtn,
-						Alignment.MIDDLE_CENTER);
+				cancelBtn.setStyleName(UIConstants.THEME_BLANK_LINK);
+				basicSearchBody.addComponent(cancelBtn);
+
+				
 				return basicSearchBody;
 			}
 

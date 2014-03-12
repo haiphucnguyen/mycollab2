@@ -4916,28 +4916,27 @@ div.v-ratingstars-bar {
 
 /*Table Action Controls */
 .table-actionctls {
-
-	/* border-width: 0 1px 1px 1px; */
-	/* border-style: solid; */
-	/* border-color: #CFCFCF; */
-	/* background-color: rgb(245, 245, 245); */
-	/* padding: 5px 6px 5px 14px; */
+	border-width: 0 1px 1px 1px;
+	border-style: solid;
+	border-color: rgb(204, 203, 203);
+	background-color: rgb(245, 245, 245);
 }
 
 div.v-button-link.buttonPaging {
 	/* background: url("icons/sprite-vert2-light.png") no-repeat -10px -8px
 		transparent; */
-	color: white;
-	background-color: #72838D;
+	color: #525252;
+	background-color: #F7F7F7;
 }
 
 div.v-button-link.buttonPaging .v-button-wrap {
-	width: 23px;
+	width: 17px;
 	padding: 4px 0px 3px;
 	text-align: center;
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
+	border: 1px solid #777575;
 }
 
 div.v-button-link.buttonPaging .v-button-wrap .v-button-caption {
@@ -4949,7 +4948,8 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 	{
 	/* background: url("icons/sprite-vert1-light.png") no-repeat -10px -8px
 		transparent; */
-	background-color: #1C7DCE;
+	background-color: #548BCE;
+	color: white;
 }
 
 .v-label.separator {
