@@ -85,16 +85,12 @@ TaskAddView {
 
 	@Override
 	protected ComponentContainer createButtonControls() {
-		final HorizontalLayout controlPanel = new HorizontalLayout();
+		
 		final Layout controlButtons = (new EditFormControlsGenerator<Task>(
-				editForm)).createButtonControls();
+				editForm)).createButtonControls(true,true,true);
 		controlButtons.setSizeUndefined();
-		controlPanel.addComponent(controlButtons);
-		controlPanel.setWidth("100%");
-		controlPanel.setComponentAlignment(controlButtons,
-				Alignment.MIDDLE_CENTER);
-		controlPanel.setMargin(true);
-		return controlPanel;
+
+		return controlButtons;
 	}
 
 	@Override

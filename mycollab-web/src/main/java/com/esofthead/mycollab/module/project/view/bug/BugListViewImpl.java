@@ -71,12 +71,7 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
 	private PopupButton exportButtonControl;
 
 	public BugListViewImpl() {
-		/*super(LocalizationHelper.getMessage(BugI18nEnum.BUG_SEARCH_TITLE), "bug_selected.png");
-
-		this.addHeaderRightContent(createHeaderRight());
-
-		CssLayout contentWrapper = new CssLayout();
-		contentWrapper.setStyleName("content-wrapper");*/
+	
 		this.setMargin(new MarginInfo(false, true, false, true));
 
 		this.bugSearchPanel = new BugSearchPanel();
@@ -84,9 +79,8 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
 		this.generateDisplayTable();
 		this.bugSearchPanel.addRightComponent(constructTableActionControls());
 		addComponent(this.bugSearchPanel);
-		//addComponent(constructTableActionControls());
 		addComponent(this.bugListLayout);
-		//this.addComponent(contentWrapper);
+
 
 	}
 
@@ -126,13 +120,12 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
 	}
 
 	private ComponentContainer constructTableActionControls() {
-		final CssLayout layoutWrapper = new CssLayout();
-		layoutWrapper.setWidth("100%");
+
+
 		final HorizontalLayout layout = new HorizontalLayout();
 		layout.setSpacing(true);
 		layout.setWidth("100%");
-		layoutWrapper.addStyleName(UIConstants.TABLE_ACTION_CONTROLS);
-		layoutWrapper.addComponent(layout);
+
 
 		final Label lbEmpty = new Label("");
 		layout.addComponent(lbEmpty);
@@ -276,7 +269,7 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
 		popupButtonsControl.addComponent(exportCsvBtn);
 
 		buttonControls.addComponent(exportButtonControl);
-		return layoutWrapper;
+		return layout;
 	}
 
 	@Override
