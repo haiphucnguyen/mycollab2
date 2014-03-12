@@ -156,12 +156,12 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
 		customizeViewBtn.setIcon(MyCollabResource
 				.newResource("icons/16/option_white.png"));
 		customizeViewBtn.setDescription("Layout Options");
-		customizeViewBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		customizeViewBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 		buttonControls.addComponent(customizeViewBtn);
 
 		
 		exportButtonControl = new PopupButton();
-		exportButtonControl.addStyleName(UIConstants.THEME_BLUE_LINK);
+		exportButtonControl.addStyleName(UIConstants.THEME_GREEN_LINK);
 		exportButtonControl.setIcon(MyCollabResource
 				.newResource("icons/16/export.png"));
 		exportButtonControl.setDescription("Exports");

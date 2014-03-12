@@ -101,7 +101,7 @@ GenericSearchPanel<VersionSearchCriteria> {
 				});
 		createBtn.setEnabled(CurrentProjectVariables
 				.canWrite(ProjectRolePermissionCollections.VERSIONS));
-		createBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		createBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 		createBtn.setIcon(MyCollabResource
 				.newResource("icons/16/addRecord.png"));
 
@@ -133,17 +133,21 @@ GenericSearchPanel<VersionSearchCriteria> {
 			final HorizontalLayout basicSearchBody = new HorizontalLayout();
 			basicSearchBody.setSpacing(true);
 			basicSearchBody.setMargin(true);
-			basicSearchBody.addComponent(new Label("Name"));
+			UiUtils.addComponent(basicSearchBody,new Label("Name:"), Alignment.MIDDLE_LEFT);
+
+			final HorizontalLayout comboSearchField = new HorizontalLayout();
 			this.nameField = new TextField();
 			this.nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
-			UiUtils.addComponent(basicSearchBody, this.nameField,
-					Alignment.MIDDLE_CENTER);
-			this.myItemCheckbox = new CheckBox("My Items");
-			UiUtils.addComponent(basicSearchBody, this.myItemCheckbox,
+			UiUtils.addComponent(comboSearchField, this.nameField,
 					Alignment.MIDDLE_CENTER);
 
-			final Button searchBtn = new Button("Search",
-					new Button.ClickListener() {
+			final Button searchBtn = new Button();
+			searchBtn.setStyleName("search-icon-button");
+			searchBtn.setIcon(MyCollabResource
+					.newResource("icons/16/search_white.png"));
+
+			searchBtn.addClickListener(new Button.ClickListener() {
+			
 				private static final long serialVersionUID = 1L;
 
 				@Override
@@ -151,11 +155,17 @@ GenericSearchPanel<VersionSearchCriteria> {
 					VersionBasicSearchLayout.this.callSearchAction();
 				}
 			});
-			searchBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-			basicSearchBody.addComponent(searchBtn);
+			UiUtils.addComponent(comboSearchField, searchBtn,
+					Alignment.MIDDLE_LEFT);
+			UiUtils.addComponent(basicSearchBody, comboSearchField, Alignment.MIDDLE_CENTER);
 
-			final Button clearBtn = new Button("Clear",
-					new Button.ClickListener() {
+			this.myItemCheckbox = new CheckBox("My Items");
+			UiUtils.addComponent(basicSearchBody, this.myItemCheckbox,
+					Alignment.MIDDLE_CENTER);
+
+			final Button cancelBtn = new Button("Clear");
+			cancelBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
+			cancelBtn.addClickListener(new Button.ClickListener() {
 				private static final long serialVersionUID = 1L;
 
 				@Override
@@ -164,8 +174,10 @@ GenericSearchPanel<VersionSearchCriteria> {
 					.setValue("");
 				}
 			});
-			clearBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-			basicSearchBody.addComponent(clearBtn);
+			cancelBtn.setStyleName(UIConstants.THEME_BLANK_LINK);
+			basicSearchBody.addComponent(cancelBtn);
+
+			
 			return basicSearchBody;
 		}
 

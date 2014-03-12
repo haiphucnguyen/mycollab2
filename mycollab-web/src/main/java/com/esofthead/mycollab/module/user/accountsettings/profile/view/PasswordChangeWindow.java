@@ -130,7 +130,7 @@ public class PasswordChangeWindow extends Window {
 						PasswordChangeWindow.this.changePassword();
 					}
 				});
-		sendBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		sendBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 		hlayoutControls.addComponent(sendBtn);
 		hlayoutControls.setComponentAlignment(sendBtn, Alignment.MIDDLE_CENTER);
 

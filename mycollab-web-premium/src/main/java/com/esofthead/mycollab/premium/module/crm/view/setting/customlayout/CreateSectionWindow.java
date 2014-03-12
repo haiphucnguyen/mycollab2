@@ -80,7 +80,7 @@ public class CreateSectionWindow extends Window {
 						CreateSectionWindow.this.close();
 					}
 				});
-		saveBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
+		saveBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
 		controlLayout.addComponent(saveBtn);
 		controlLayout.setComponentAlignment(saveBtn, Alignment.MIDDLE_LEFT);
 

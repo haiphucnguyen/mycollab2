@@ -543,7 +543,7 @@ ProblemListView {
 								new ProblemEvent.GotoAdd(this, null));
 					}
 				});
-		createProblemBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		createProblemBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 		createProblemBtn.setIcon(MyCollabResource
 				.newResource("icons/16/addRecord.png"));
 		createProblemBtn.setEnabled(CurrentProjectVariables

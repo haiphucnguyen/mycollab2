@@ -106,7 +106,7 @@ ProjectMemberListView {
 				});
 		createBtn.setEnabled(CurrentProjectVariables
 				.canWrite(ProjectRolePermissionCollections.USERS));
-		createBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		createBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 		createBtn.setIcon(MyCollabResource
 				.newResource("icons/16/addRecord.png"));
 

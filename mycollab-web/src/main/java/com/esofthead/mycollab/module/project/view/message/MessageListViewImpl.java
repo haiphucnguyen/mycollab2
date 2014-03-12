@@ -559,7 +559,7 @@ MessageListView, HasEditFormHandlers<Message> {
 					}
 				}
 			});
-			saveBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+			saveBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 			controls.addComponent(saveBtn);
 			controls.setComponentAlignment(saveBtn, Alignment.MIDDLE_CENTER);
 
@@ -586,7 +586,7 @@ MessageListView, HasEditFormHandlers<Message> {
 					});
 			createMessageBtn.setEnabled(CurrentProjectVariables
 					.canWrite(ProjectRolePermissionCollections.MESSAGES));
-			createMessageBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+			createMessageBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 			createMessageBtn.setIcon(MyCollabResource
 					.newResource("icons/16/addRecord.png"));
 			createMessageBtn.setEnabled(CurrentProjectVariables

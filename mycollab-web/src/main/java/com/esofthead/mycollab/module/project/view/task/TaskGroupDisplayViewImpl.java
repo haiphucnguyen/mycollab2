@@ -177,7 +177,7 @@ TaskGroupDisplayView {
 				.newResource("icons/16/project/new_task_list.png"));
 		newTaskListBtn.setDescription(LocalizationHelper
 				.getMessage(TaskI18nEnum.NEW_TASKGROUP_ACTION));
-		newTaskListBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		newTaskListBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 		header.addComponent(newTaskListBtn);
 		header.setComponentAlignment(newTaskListBtn, Alignment.MIDDLE_RIGHT);
 
@@ -194,7 +194,7 @@ TaskGroupDisplayView {
 				.canWrite(ProjectRolePermissionCollections.TASKS));
 		this.reOrderBtn.setIcon(MyCollabResource
 				.newResource("icons/16/project/reorder.png"));
-		this.reOrderBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		this.reOrderBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 		this.reOrderBtn.setDescription(LocalizationHelper
 				.getMessage(TaskI18nEnum.REODER_TASKGROUP_ACTION));
 		header.addComponent(this.reOrderBtn);
@@ -212,7 +212,7 @@ TaskGroupDisplayView {
 		});
 		//exportButtonControl = new SplitButton(exportBtn);
 		exportButtonControl = new PopupButton();
-		exportButtonControl.addStyleName(UIConstants.THEME_BLUE_LINK);
+		exportButtonControl.addStyleName(UIConstants.THEME_GREEN_LINK);
 		exportButtonControl.setIcon(MyCollabResource
 				.newResource("icons/16/export.png"));
 

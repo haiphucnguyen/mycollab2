@@ -86,7 +86,7 @@ public class ActivitySearchPanel extends
 		controlsBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_CALL)
 				|| AppContext.canWrite(RolePermissionCollections.CRM_MEETING));
-		controlsBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
+		controlsBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
 		controlsBtn.setIcon(MyCollabResource
 				.newResource("icons/16/addRecord.png"));
 		controlsBtn.setCaption("Create Task");

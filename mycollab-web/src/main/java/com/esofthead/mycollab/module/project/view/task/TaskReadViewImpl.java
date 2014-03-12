@@ -220,7 +220,7 @@ implements TaskReadView {
 			}
 		});
 
-		quickActionStatusBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		quickActionStatusBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 		taskPreviewForm.insertToControlBlock(quickActionStatusBtn);
 
 		if (!CurrentProjectVariables

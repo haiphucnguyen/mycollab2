@@ -64,7 +64,7 @@ public class BugSimpleSearchPanel extends GenericSearchPanel<BugSearchCriteria> 
 				Alignment.MIDDLE_CENTER);
 
 		Button searchBtn = new Button("Search");
-		searchBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		searchBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 		searchBtn.addClickListener(new Button.ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
@@ -91,7 +91,7 @@ public class BugSimpleSearchPanel extends GenericSearchPanel<BugSearchCriteria> 
 				Alignment.MIDDLE_CENTER);
 
 		Button clearBtn = new Button("Clear");
-		clearBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		clearBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 		clearBtn.addClickListener(new Button.ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {

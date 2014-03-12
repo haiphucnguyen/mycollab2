@@ -1024,7 +1024,7 @@ public class ResourceHandlerComponent extends VerticalLayout {
 					RenameResourceWindow.this.close();
 				}
 			});
-			save.addStyleName(UIConstants.THEME_BLUE_LINK);
+			save.addStyleName(UIConstants.THEME_GREEN_LINK);
 
 			UiUtils.addComponent(controlButton, save, Alignment.MIDDLE_CENTER);
 
@@ -1036,7 +1036,7 @@ public class ResourceHandlerComponent extends VerticalLayout {
 					RenameResourceWindow.this.close();
 				}
 			});
-			cancel.addStyleName(UIConstants.THEME_BLUE_LINK);
+			cancel.addStyleName(UIConstants.THEME_GREEN_LINK);
 			UiUtils.addComponent(controlButton, cancel, Alignment.MIDDLE_CENTER);
 			UiUtils.addComponent(layout, controlButton, Alignment.MIDDLE_CENTER);
 
@@ -1145,7 +1145,7 @@ public class ResourceHandlerComponent extends VerticalLayout {
 							}
 						}
 					});
-			saveBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
+			saveBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
 			controlsLayout.addComponent(saveBtn);
 
 			final Button cancelBtn = new Button(
@@ -1263,7 +1263,7 @@ public class ResourceHandlerComponent extends VerticalLayout {
 							}
 						}
 					});
-			uploadBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
+			uploadBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
 			controlsLayout.addComponent(uploadBtn);
 
 			final Button cancelBtn = new Button(

@@ -154,7 +154,7 @@ public class CommentInput extends VerticalLayout {
 						component.reload();
 					}
 				});
-		newCommentBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		newCommentBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 		controlsLayout.addComponent(newCommentBtn);
 
 		this.addComponent(commentArea);

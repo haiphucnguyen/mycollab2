@@ -60,7 +60,7 @@ public class SelectionOptionButton extends SplitButton implements
 			@SuppressWarnings("rawtypes") final HasSelectableItemHandlers selectableItemHandlers) {
 		super();
 		this.selectableItemHandlers = selectableItemHandlers;
-		addStyleName(UIConstants.THEME_GRAY_LINK);
+		addStyleName(UIConstants.THEME_BLUE_LINK);
 		setIcon(SelectionOptionButton.unSelectIcon);
 
 		addClickListener(new SplitButtonClickListener() {
