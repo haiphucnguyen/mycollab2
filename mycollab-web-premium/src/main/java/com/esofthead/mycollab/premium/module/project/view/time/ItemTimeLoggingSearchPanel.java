@@ -25,6 +25,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
@@ -84,7 +85,7 @@ GenericSearchPanel<ItemTimeLoggingSearchCriteria> {
 		private DateRangeField dateRangeField;
 
 		private ProjectMemberListSelect userField;
-
+		private HorizontalLayout buttonControls;
 		private Button createBtn;
 		private VerticalLayout bodyWrap;
 
@@ -124,13 +125,15 @@ GenericSearchPanel<ItemTimeLoggingSearchCriteria> {
 		@Override
 		public ComponentContainer constructBody() {
 			bodyWrap = new VerticalLayout();
-			GridFormLayoutHelper gridLayout = new GridFormLayoutHelper(2, 2,
-					"300px", "100px");
-
+			
+			GridFormLayoutHelper gridLayout = new GridFormLayoutHelper(3, 1,
+					"350px", "50px");
+			
 			String nameFieldWidth = "300px";
 
 			gridLayout.getLayout().setWidth("100%");
 			gridLayout.getLayout().setSpacing(true);
+			gridLayout.getLayout().setMargin(true);
 
 			this.dateRangeField = (DateRangeField) gridLayout.addComponent(
 					new DateRangeField(), null, 0, 0);
@@ -139,14 +142,11 @@ GenericSearchPanel<ItemTimeLoggingSearchCriteria> {
 			this.userField = (ProjectMemberListSelect) gridLayout.addComponent(
 					new ProjectMemberListSelect(), "User", 1, 0);
 			this.userField.setWidth(nameFieldWidth);
-
-			bodyWrap.addComponent(gridLayout.getLayout());
-			return bodyWrap;
-		}
-
-		@Override
-		public ComponentContainer constructFooter() {
-			final HorizontalLayout buttonControls = new HorizontalLayout();
+			
+			
+			
+			
+			buttonControls = new HorizontalLayout();
 			buttonControls.setSpacing(true);
 
 			final Button searchBtn = new Button(
@@ -160,7 +160,7 @@ GenericSearchPanel<ItemTimeLoggingSearchCriteria> {
 						}
 					});
 
-			buttonControls.addComponent(searchBtn);
+			UiUtils.addComponent(buttonControls, searchBtn, Alignment.MIDDLE_LEFT);
 			searchBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 
 			final Button clearBtn = new Button(
@@ -175,10 +175,24 @@ GenericSearchPanel<ItemTimeLoggingSearchCriteria> {
 							.setDefaultValue();
 						}
 					});
-			clearBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
-			buttonControls.addComponent(clearBtn);
+			clearBtn.setStyleName(UIConstants.THEME_BLANK_LINK);
+			UiUtils.addComponent(buttonControls, clearBtn, Alignment.MIDDLE_LEFT);
+			buttonControls.setExpandRatio(clearBtn, 1.0f);
+			//buttonControls.setExpandRatio(searchBtn, 1.0f);
+			
+			
+			gridLayout.addComponent(buttonControls, null, 2,0);
 
-			return buttonControls;
+			bodyWrap.addComponent(gridLayout.getLayout());
+			
+			return bodyWrap;
+		}
+		
+		@Override
+		public ComponentContainer constructFooter() {
+			CssLayout c = new CssLayout();
+			c.setStyleName("empty-compnent");
+			return c;
 		}
 
 		@Override

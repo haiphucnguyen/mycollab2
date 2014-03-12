@@ -4,8 +4,6 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.vaadin.shared.ui.MarginInfo;
-
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.hene.popupbutton.PopupButton;
 import org.vaadin.peter.buttongroup.ButtonGroup;
@@ -47,6 +45,7 @@ import com.esofthead.mycollab.vaadin.ui.UiUtils;
 import com.vaadin.data.Container;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.server.Sizeable;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -613,22 +612,24 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 
 			@Override
 			public ComponentContainer constructBody() {
-				basicSearchBody = new HorizontalLayout();
-				basicSearchBody.setSpacing(false);
+				final HorizontalLayout basicSearchBody = new HorizontalLayout();
+				basicSearchBody.setSpacing(true);
 				basicSearchBody.setMargin(true);
+				UiUtils.addComponent(basicSearchBody,new Label("Name:"), Alignment.MIDDLE_LEFT);
 
-				this.nameField = this.createSeachSupportTextField(
-						new TextField(), "NameFieldOfBasicSearch");
-
+				final HorizontalLayout comboSearchField = new HorizontalLayout();
+				this.nameField = new TextField();
 				this.nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
-				UiUtils.addComponent(basicSearchBody, this.nameField,
+				UiUtils.addComponent(comboSearchField, this.nameField,
 						Alignment.MIDDLE_CENTER);
 
 				final Button searchBtn = new Button();
 				searchBtn.setStyleName("search-icon-button");
 				searchBtn.setIcon(MyCollabResource
 						.newResource("icons/16/search_white.png"));
+
 				searchBtn.addClickListener(new Button.ClickListener() {
+				
 					private static final long serialVersionUID = 1L;
 
 					@Override
@@ -655,23 +656,17 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 						}
 					}
 				});
-				UiUtils.addComponent(basicSearchBody, searchBtn,
+				UiUtils.addComponent(comboSearchField, searchBtn,
 						Alignment.MIDDLE_LEFT);
+				UiUtils.addComponent(basicSearchBody, comboSearchField, Alignment.MIDDLE_CENTER);
 
 				this.myItemCheckbox = new CheckBox("My Items");
-				this.myItemCheckbox.setWidth("75px");
 				UiUtils.addComponent(basicSearchBody, this.myItemCheckbox,
 						Alignment.MIDDLE_CENTER);
 
-				final Separator separator = new Separator();
-				UiUtils.addComponent(basicSearchBody, separator,
-						Alignment.MIDDLE_LEFT);
-
-				final Button cancelBtn = new Button(
-						LocalizationHelper
-								.getMessage(GenericI18Enum.BUTTON_CLEAR));
-				cancelBtn.setStyleName(UIConstants.THEME_LINK);
-				cancelBtn.addStyleName("cancel-button");
+				final Button cancelBtn = new Button(LocalizationHelper
+						.getMessage(GenericI18Enum.BUTTON_CLEAR));
+			
 				cancelBtn.addClickListener(new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
@@ -680,8 +675,10 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 						FileBasicSearchLayout.this.nameField.setValue("");
 					}
 				});
-				UiUtils.addComponent(basicSearchBody, cancelBtn,
-						Alignment.MIDDLE_CENTER);
+				cancelBtn.setStyleName(UIConstants.THEME_BLANK_LINK);
+				basicSearchBody.addComponent(cancelBtn);
+
+				
 				return basicSearchBody;
 			}
 

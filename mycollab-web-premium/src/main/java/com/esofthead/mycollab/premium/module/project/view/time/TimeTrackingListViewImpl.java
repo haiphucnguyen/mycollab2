@@ -45,6 +45,7 @@ import com.vaadin.event.FieldEvents.TextChangeEvent;
 import com.vaadin.event.FieldEvents.TextChangeListener;
 import com.vaadin.server.FileDownloader;
 import com.vaadin.server.StreamResource;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.combobox.FilteringMode;
 import com.vaadin.shared.ui.datefield.Resolution;
 import com.vaadin.shared.ui.label.ContentMode;
@@ -76,6 +77,7 @@ TimeTrackingListView {
 	private boolean isNeedConstructLayout;
 
 	public TimeTrackingListViewImpl() {
+		this.setMargin(new MarginInfo(false, true, false, true));
 		final CssLayout headerWrapper = new CssLayout();
 		isNeedConstructLayout = true;
 

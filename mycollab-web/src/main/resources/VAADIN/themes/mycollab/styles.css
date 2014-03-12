@@ -4912,10 +4912,18 @@ div.v-ratingstars-bar {
 /*Table Action Controls */
 .table-actionctls {
 
-	/* border-width: 0 1px 1px 1px; */
-	/* border-style: solid; */
-	/* border-color: rgb(169, 169, 169); */
-	/* background-color: rgb(245, 245, 245); */
+	border-width: 0 1px 1px 1px;
+	
+
+	border-style: solid;
+	
+
+	border-color: rgb(204, 203, 203);
+	
+
+	background-color: rgb(245, 245, 245);
+	
+
 	/* padding: 5px 6px 5px 14px; */
 }
 
