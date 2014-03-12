@@ -78,7 +78,7 @@ public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 	public BugSearchPanel(final String title) {
 		this.project = CurrentProjectVariables.getProject();
 		this.bugtitle = new Label(title);
-		this.rightComponent = new CssLayout();
+		this.rightComponent = new HorizontalLayout();
 	}
 
 	@Override
