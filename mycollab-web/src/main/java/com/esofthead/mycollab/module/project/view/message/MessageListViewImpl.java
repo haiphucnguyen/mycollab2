@@ -44,6 +44,7 @@ import com.esofthead.mycollab.module.project.domain.SimpleMessage;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.MessageSearchCriteria;
 import com.esofthead.mycollab.module.project.events.MessageEvent;
+import com.esofthead.mycollab.module.project.events.ProjectMemberEvent;
 import com.esofthead.mycollab.module.project.localization.MessageI18nEnum;
 import com.esofthead.mycollab.module.project.service.MessageService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
@@ -73,6 +74,7 @@ import com.vaadin.ui.AbstractTextField.TextChangeEventMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
@@ -173,12 +175,24 @@ MessageListView, HasEditFormHandlers<Message> {
 			userBlock.setDefaultComponentAlignment(Alignment.TOP_CENTER);
 			userBlock.setWidth("80px");
 			userBlock.setSpacing(true);
-			userBlock.addComponent(UserAvatarControlFactory
+			ClickListener gotoUser = new ClickListener() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void buttonClick(ClickEvent event) {
+					EventBus.getInstance().fireEvent(new ProjectMemberEvent.GotoRead(MessageListViewImpl.this, message.getPosteduser()));
+				}
+			};
+			Button userAvatarBtn = UserAvatarControlFactory
 					.createUserAvatarButtonLink(
 							message.getPostedUserAvatarId(),
-							message.getFullPostedUserName()));
-			Label userName = new Label(message.getFullPostedUserName());
+							message.getFullPostedUserName());
+			userAvatarBtn.addClickListener(gotoUser);
+			userBlock.addComponent(userAvatarBtn);
+			Button userName = new Button(message.getFullPostedUserName());
 			userName.setStyleName("user-name");
+			userName.addStyleName("link");
+			userName.addClickListener(gotoUser);
 			userBlock.addComponent(userName);
 			messageLayout.addComponent(userBlock);
 
