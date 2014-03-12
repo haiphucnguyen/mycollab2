@@ -525,8 +525,15 @@ div.v-button-nonPopupIndicator div.v-popup-indicator {
 	padding: 0px;
 }
 
+.table-actionctls {
+	padding:7px;
+}
 
-
+.hdr-view .table-actionctls {
+	padding:0;
+	border:0;
+	background:none;
+}
 
 
 .v-button-greenbtn-no-radius-left {
