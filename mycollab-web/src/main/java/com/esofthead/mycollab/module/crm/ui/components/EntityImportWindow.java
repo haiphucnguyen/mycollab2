@@ -284,7 +284,7 @@ public abstract class EntityImportWindow<E> extends Window {
 					EntityImportWindow.this.close();
 				}
 			});
-			cancleBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+			cancleBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
 			UiUtils.addComponent(controlGroupBtn, cancleBtn,
 					Alignment.MIDDLE_CENTER);
 

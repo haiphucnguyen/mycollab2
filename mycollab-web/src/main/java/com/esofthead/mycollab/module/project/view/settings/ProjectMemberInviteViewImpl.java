@@ -167,7 +167,7 @@ ProjectMemberInviteView {
 
 			}
 		});
-		cancelBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+		cancelBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
 		controlButtons.addComponent(cancelBtn);
 
 		controlButtons.setSizeUndefined();

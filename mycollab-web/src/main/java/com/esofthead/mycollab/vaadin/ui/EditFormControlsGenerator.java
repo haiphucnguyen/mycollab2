@@ -106,7 +106,7 @@ public class EditFormControlsGenerator<T> implements Serializable {
 			});
 			cancelBtn.setIcon(MyCollabResource
 					.newResource("icons/16/cancel.png"));
-			cancelBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+			cancelBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
 			layout.addComponent(cancelBtn);
 			layout.setComponentAlignment(cancelBtn, Alignment.MIDDLE_CENTER);
 		}
