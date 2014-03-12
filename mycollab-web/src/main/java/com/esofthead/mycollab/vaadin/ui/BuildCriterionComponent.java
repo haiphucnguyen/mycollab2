@@ -1,16 +1,22 @@
 package com.esofthead.mycollab.vaadin.ui;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import com.esofthead.mycollab.common.domain.AuditChangeItem;
 import com.esofthead.mycollab.common.domain.SaveSearchResultWithBLOBs;
+import com.esofthead.mycollab.common.domain.criteria.SaveSearchResultCriteria;
 import com.esofthead.mycollab.common.service.SaveSearchResultService;
 import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchField;
+import com.esofthead.mycollab.core.arguments.SearchRequest;
+import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.db.query.CompositionStringParam;
 import com.esofthead.mycollab.core.db.query.ConcatStringParam;
 import com.esofthead.mycollab.core.db.query.DateParam;
@@ -25,8 +31,10 @@ import com.esofthead.mycollab.core.db.query.StringParam;
 import com.esofthead.mycollab.core.utils.JsonDeSerializer;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
+import com.google.gson.reflect.TypeToken;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
+import com.vaadin.data.util.BeanContainer;
 import com.vaadin.ui.AbstractSelect.ItemCaptionMode;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -52,16 +60,29 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends
 	private static final long serialVersionUID = 1L;
 
 	private Param[] paramFields;
+	private String searchCategory;
 	private Class<S> type;
 
 	private HorizontalLayout filterBox;
+	private SavedSearchResultComboBox filterComboBox;
 	private VerticalLayout searchContainer;
 	private HorizontalLayout controlsBtn;
 
-	public BuildCriterionComponent(Param[] paramFields, Class<S> type) {
+	public BuildCriterionComponent(Param[] paramFields, Class<S> type,
+			String searchCategory) {
 		this.setSpacing(true);
 		this.paramFields = paramFields;
 		this.type = type;
+		this.searchCategory = searchCategory;
+
+		HorizontalLayout headerBox = new HorizontalLayout();
+		headerBox.setSpacing(true);
+		headerBox.addComponent(new Label("Saved Filter: "));
+		filterBox = new HorizontalLayout();
+		filterBox.setSpacing(true);
+		headerBox.addComponent(filterBox);
+		this.addComponent(filterBox);
+		buildFilterBox(null);
 
 		this.searchContainer = new VerticalLayout();
 		this.searchContainer.setSpacing(true);
@@ -86,10 +107,78 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends
 		this.addComponent(controlsBtn);
 	}
 
-	private void buildFilterBox() {
-		filterBox = new HorizontalLayout();
-		filterBox.addComponent(new Label("Saved Filter: "));
-		this.addComponent(filterBox);
+	private void buildFilterBox(String queryname) {
+		filterBox.removeAllComponents();
+
+		filterComboBox = new SavedSearchResultComboBox();
+		filterBox.addComponent(filterComboBox);
+
+		Button saveSearchBtn = new Button("New Filter",
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void buttonClick(ClickEvent event) {
+						buildSaveFilterBox();
+					}
+				});
+		filterBox.addComponent(saveSearchBtn);
+
+		if (queryname != null) {
+
+		}
+	}
+
+	private void buildSaveFilterBox() {
+		filterBox.removeAllComponents();
+		final TextField queryTextField = new TextField();
+		filterBox.addComponent(queryTextField);
+
+		Button saveBtn = new Button("Save", new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				String queryText = queryTextField.getValue();
+				saveSearchCriteria(queryText);
+			}
+		});
+		filterBox.addComponent(saveBtn);
+
+		Button cancelBtn = new Button("Cancel", new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				buildFilterBox(null);
+			}
+		});
+		filterBox.addComponent(cancelBtn);
+	}
+
+	private void saveSearchCriteria(String queryText) {
+		Iterator<Component> iterator = searchContainer.iterator();
+		List<SearchFieldInfo> fieldInfos = new ArrayList<SearchFieldInfo>();
+		while (iterator.hasNext()) {
+			CriteriaSelectionLayout bar = (CriteriaSelectionLayout) iterator
+					.next();
+			SearchFieldInfo searchFieldInfo = bar.buildSearchFieldInfo();
+			if (searchFieldInfo != null) {
+				fieldInfos.add(searchFieldInfo);
+			}
+		}
+
+		SaveSearchResultService saveSearchResultService = ApplicationContextUtil
+				.getSpringBean(SaveSearchResultService.class);
+		SaveSearchResultWithBLOBs searchResult = new SaveSearchResultWithBLOBs();
+		searchResult.setSaveuser(AppContext.getUsername());
+		searchResult.setSaccountid(AppContext.getAccountId());
+		searchResult.setQuerytext(JsonDeSerializer.toJson(fieldInfos));
+		searchResult.setType(searchCategory);
+		searchResult.setQueryname(queryText);
+		saveSearchResultService.saveWithSession(searchResult,
+				AppContext.getUsername());
+		buildFilterBox(queryText);
 	}
 
 	protected Component buildPropertySearchComp(String fieldId) {
@@ -112,31 +201,6 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends
 		} catch (Exception e) {
 			throw new MyCollabException(e);
 		}
-	}
-
-	private void saveSearchCriteria() {
-		Iterator<Component> iterator = searchContainer.iterator();
-		List<SearchFieldInfo> fieldInfos = new ArrayList<SearchFieldInfo>();
-		while (iterator.hasNext()) {
-			CriteriaSelectionLayout bar = (CriteriaSelectionLayout) iterator
-					.next();
-			SearchFieldInfo searchFieldInfo = bar.buildSearchFieldInfo();
-			if (searchFieldInfo != null) {
-				fieldInfos.add(searchFieldInfo);
-			}
-		}
-
-		SaveSearchResultService saveSearchResultService = ApplicationContextUtil
-				.getSpringBean(SaveSearchResultService.class);
-		SaveSearchResultWithBLOBs searchResult = new SaveSearchResultWithBLOBs();
-		searchResult.setSaveuser(AppContext.getUsername());
-		searchResult.setSaccountid(AppContext.getAccountId());
-		searchResult.setQuerytext(JsonDeSerializer.toJson(fieldInfos));
-		// searchResult.setType(type);
-		// searchResult.setQueryname((String) saveSearchValue
-		// .getValue());
-		saveSearchResultService.saveWithSession(searchResult,
-				AppContext.getUsername());
 	}
 
 	private class CriteriaSelectionLayout extends GridLayout {
@@ -302,7 +366,25 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends
 		}
 
 		private SearchFieldInfo buildSearchFieldInfo() {
-			return null;
+			String prefixOper = (String) operatorSelectionBox.getValue();
+			Param param = (Param) fieldSelectionBox.getValue();
+			String compareOper = (String) compareSelectionBox.getValue();
+			Object value = null;
+			int componentCount = valueBox.getComponentCount();
+			if (componentCount == 1) {
+				Field<?> component = (Field<?>) valueBox.getComponent(0);
+				value = component.getValue();
+			} else if (componentCount > 1) {
+				value = new Object[componentCount];
+				for (int i = 0; i < componentCount; i++) {
+					Array.set(value, i,
+							((Field<?>) valueBox.getComponent(i)).getValue());
+				}
+			} else {
+				return null;
+			}
+
+			return new SearchFieldInfo(prefixOper, param, compareOper, value);
 		}
 
 		private SearchField buildSearchField() {
@@ -436,6 +518,63 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends
 			return null;
 		}
 	}
-	
-	
+
+	private class SavedSearchResultComboBox extends ComboBox {
+		private static final long serialVersionUID = 1L;
+		BeanContainer<String, SaveSearchResultWithBLOBs> beanItem;
+
+		public SavedSearchResultComboBox() {
+			this.setImmediate(true);
+			this.setItemCaptionMode(ItemCaptionMode.PROPERTY);
+
+			contructComboBox();
+
+			this.addValueChangeListener(new ValueChangeListener() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void valueChange(
+						com.vaadin.data.Property.ValueChangeEvent event) {
+					Object itemId = SavedSearchResultComboBox.this.getValue();
+					if (itemId != null) {
+						SaveSearchResultWithBLOBs data = beanItem.getItem(
+								itemId).getBean();
+
+						String queryText = data.getQuerytext();
+						List fromJson = JsonDeSerializer.fromJson(queryText,
+								new TypeToken<List<SearchFieldInfo>>() {
+								}.getType());
+						System.out.println(fromJson);
+					} else {
+
+					}
+				}
+			});
+			this.setImmediate(true);
+		}
+
+		public void contructComboBox() {
+			SaveSearchResultCriteria searchCriteria = new SaveSearchResultCriteria();
+			searchCriteria.setType(new StringSearchField(searchCategory));
+			searchCriteria.setCreateUser(new StringSearchField(AppContext
+					.getUsername()));
+			searchCriteria.setSaccountid(new NumberSearchField(AppContext
+					.getAccountId()));
+
+			SaveSearchResultService saveSearchResultService = ApplicationContextUtil
+					.getSpringBean(SaveSearchResultService.class);
+			List<SaveSearchResultWithBLOBs> result = saveSearchResultService
+					.findPagableListByCriteria(new SearchRequest<SaveSearchResultCriteria>(
+							searchCriteria, 0, Integer.MAX_VALUE));
+			beanItem = new BeanContainer<String, SaveSearchResultWithBLOBs>(
+					SaveSearchResultWithBLOBs.class);
+			beanItem.setBeanIdProperty("id");
+
+			for (SaveSearchResultWithBLOBs searchResult : result) {
+				beanItem.addBean(searchResult);
+			}
+			this.setContainerDataSource(beanItem);
+			this.setItemCaptionPropertyId("queryname");
+		}
+	}
 }

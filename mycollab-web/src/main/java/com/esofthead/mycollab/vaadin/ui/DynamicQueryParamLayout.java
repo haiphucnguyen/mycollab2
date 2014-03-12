@@ -20,8 +20,8 @@ import com.vaadin.ui.HorizontalLayout;
  * 
  * @param <S>
  */
-public abstract class DynamicQueryParamLayout<S extends SearchCriteria>
-		extends SearchLayout<S> {
+public abstract class DynamicQueryParamLayout<S extends SearchCriteria> extends
+		SearchLayout<S> {
 	private static final long serialVersionUID = 1L;
 
 	protected String type;
@@ -108,7 +108,7 @@ public abstract class DynamicQueryParamLayout<S extends SearchCriteria>
 
 	public ComponentContainer constructBody() {
 		buildCriterionComp = new BuildCriterionComponent<S>(getParamFields(),
-				getType()) {
+				getType(), type) {
 			protected Component buildPropertySearchComp(String fieldId) {
 				return buildSelectionComp(fieldId);
 			}
