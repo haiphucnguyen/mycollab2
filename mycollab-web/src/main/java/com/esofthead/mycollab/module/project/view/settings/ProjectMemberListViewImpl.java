@@ -84,7 +84,7 @@ ProjectMemberListView {
 		viewHeader.setWidth("100%");
 		viewHeader.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
-		viewHeader.addComponent(new Image(null, MyCollabResource.newResource("icons/22/project/user_selected.png")));
+		viewHeader.addComponent(new Image(null, MyCollabResource.newResource("icons/24/project/user.png")));
 
 		Label headerText = new Label("Project Members");
 		headerText.setStyleName("hdr-text");

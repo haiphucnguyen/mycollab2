@@ -123,7 +123,7 @@ public class WontFixExplainWindow extends Window {
 								WontFixExplainWindow.this.close();
 							}
 						});
-				cancelBtn.setStyleName("link");
+				cancelBtn.setStyleName(UIConstants.THEME_BLANK_LINK);
 				controlsBtn.addComponent(cancelBtn);
 				controlsBtn.setComponentAlignment(cancelBtn,
 						Alignment.MIDDLE_LEFT);

@@ -132,7 +132,7 @@ public class ContactInfoChangeWindow extends Window {
 					}
 				});
 
-		cancelBtn.setStyleName("link");
+		cancelBtn.setStyleName(UIConstants.THEME_BLANK_LINK);
 		hlayoutControls.addComponent(cancelBtn);
 		hlayoutControls.setComponentAlignment(cancelBtn,
 				Alignment.MIDDLE_CENTER);

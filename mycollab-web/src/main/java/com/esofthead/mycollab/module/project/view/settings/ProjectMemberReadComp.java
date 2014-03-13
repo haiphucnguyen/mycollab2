@@ -105,7 +105,7 @@ AbstractProjectPageView {
 	private ComponentContainer bottomPanel;
 
 	ProjectMemberReadComp() {
-		super("Member Detail", "user_selected.png");
+		super("Member Detail", "user.png");
 
 		previewForm = initPreviewForm();
 

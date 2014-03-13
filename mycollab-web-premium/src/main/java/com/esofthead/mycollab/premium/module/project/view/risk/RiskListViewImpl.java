@@ -292,6 +292,7 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
 
 		this.tableActionControls.setVisible(false);
 		this.tableActionControls.setWidth(Sizeable.SIZE_UNDEFINED, Unit.PIXELS);
+		this.tableActionControls.addStyleName(UIConstants.THEME_SMALL_PADDING);
 
 		layout.addComponent(this.tableActionControls);
 		this.selectedItemsNumberLabel.setWidth("100%");

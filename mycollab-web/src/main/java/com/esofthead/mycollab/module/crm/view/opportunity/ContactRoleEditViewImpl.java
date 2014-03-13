@@ -150,7 +150,7 @@ public class ContactRoleEditViewImpl extends AbstractPageView implements
 			}
 		});
 		cancelBtn.setIcon(MyCollabResource.newResource("icons/16/cancel.png"));
-		cancelBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+		cancelBtn.setStyleName(UIConstants.THEME_BLANK_LINK);
 		buttonWrapper.addComponent(cancelBtn);
 
 		layout.addComponent(buttonWrapper);

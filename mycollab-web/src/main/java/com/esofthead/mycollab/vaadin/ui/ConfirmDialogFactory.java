@@ -47,9 +47,9 @@ public class ConfirmDialogFactory extends DefaultConfirmDialogFactory {
 		HorizontalLayout buttons = (HorizontalLayout) ok.getParent();
 		buttons.setHeight(Sizeable.SIZE_UNDEFINED, Unit.PIXELS);
 
-		final Button cancel = d.getCancelButton();
-		cancel.setStyleName(UIConstants.THEME_LINK);
-		cancel.focus();
+		final Button cancelBtn = d.getCancelButton();
+		cancelBtn.setStyleName(UIConstants.THEME_BLANK_LINK);
+		cancelBtn.focus();
 
 		return d;
 	}

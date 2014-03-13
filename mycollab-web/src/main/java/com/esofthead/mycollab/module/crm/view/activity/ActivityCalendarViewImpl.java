@@ -475,7 +475,7 @@ public class ActivityCalendarViewImpl extends AbstractPageView implements
 									QuickCreateEventWindow.this.close();
 								}
 							});
-					cancelBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+					cancelBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
 					cancelBtn.setIcon(MyCollabResource
 							.newResource("icons/16/cancel.png"));
 					layout.addComponent(cancelBtn);

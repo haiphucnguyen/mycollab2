@@ -299,7 +299,7 @@ TimeTrackingListView {
 			HorizontalLayout controllGroupBtn = new HorizontalLayout();
 			controllGroupBtn.setSpacing(true);
 			controllGroupBtn.setMargin(true);
-			bottomWapper.addComponent(controllGroupBtn);
+			UiUtils.addComponent(bottomWapper, controllGroupBtn, Alignment.MIDDLE_CENTER);
 			bottomWapper.setStyleName("popup-groupBtn");
 
 			Button cancelBtn = new Button("Cancel", new Button.ClickListener() {
@@ -311,7 +311,7 @@ TimeTrackingListView {
 					TimeTrackingListViewImpl.this.itemTimeLoggingPanel.removeComponent(entryComponentLayout);
 				}
 			});
-			cancelBtn.addStyleName(UIConstants.THEME_LINK);
+			cancelBtn.addStyleName(UIConstants.THEME_BLANK_LINK);
 			UiUtils.addComponent(controllGroupBtn, cancelBtn,
 					Alignment.MIDDLE_LEFT);
 

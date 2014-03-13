@@ -95,7 +95,7 @@ public class ProjectCommentInput extends VerticalLayout {
 							component.cancel();
 						}
 					});
-			cancelBtn.setStyleName("link");
+			cancelBtn.setStyleName(UIConstants.THEME_BLANK_LINK);
 			controlsLayout.addComponent(cancelBtn);
 			controlsLayout.setComponentAlignment(cancelBtn,
 					Alignment.MIDDLE_RIGHT);
@@ -141,7 +141,7 @@ public class ProjectCommentInput extends VerticalLayout {
 					}
 				});
 		newCommentBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
-		newCommentBtn.setIcon(MyCollabResource.newResource("icons/post.png"));
+		newCommentBtn.setIcon(MyCollabResource.newResource("icons/16/post.png"));
 		controlsLayout.addComponent(newCommentBtn);
 
 		this.addComponent(commentArea);

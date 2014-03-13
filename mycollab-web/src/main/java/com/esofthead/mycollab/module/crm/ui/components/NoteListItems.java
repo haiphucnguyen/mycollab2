@@ -347,7 +347,7 @@ public class NoteListItems extends VerticalLayout {
 							addCreateBtn();
 						}
 					});
-			cancelBtn.setStyleName("link");
+			cancelBtn.setStyleName(UIConstants.THEME_BLANK_LINK);
 			controls.addComponent(cancelBtn);
 			controls.setComponentAlignment(cancelBtn, Alignment.MIDDLE_RIGHT);
 

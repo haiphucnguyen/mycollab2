@@ -80,7 +80,7 @@ TaskAddView {
 
 	@Override
 	protected Resource initFormIconResource() {
-		return MyCollabResource.newResource("icons/22/project/task_selected.png");
+		return MyCollabResource.newResource("icons/24/project/task.png");
 	}
 
 	@Override

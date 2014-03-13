@@ -110,6 +110,7 @@ GenericSearchPanel<ProjectRoleSearchCriteria> {
 				}
 			});
 			searchBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+			searchBtn.setIcon(MyCollabResource.newResource("icons/16/search.png"));
 			basicSearchBody.addComponent(searchBtn);
 
 			final Button clearBtn = new Button("Clear",
@@ -122,7 +123,7 @@ GenericSearchPanel<ProjectRoleSearchCriteria> {
 					.setValue("");
 				}
 			});
-			clearBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+			clearBtn.setStyleName(UIConstants.THEME_BLANK_LINK);
 			basicSearchBody.addComponent(clearBtn);
 			return basicSearchBody;
 		}
@@ -139,7 +140,7 @@ GenericSearchPanel<ProjectRoleSearchCriteria> {
 		@Override
 		public ComponentContainer constructHeader() {
 			Image titleIcon = new Image(null,
-					MyCollabResource.newResource("icons/22/project/user_selected.png"));
+					MyCollabResource.newResource("icons/24/project/user.png"));
 			Label headerText = new Label("Role List");
 
 			final Button createBtn = new Button(

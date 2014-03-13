@@ -372,7 +372,7 @@ MessageListView, HasEditFormHandlers<Message> {
 			final HorizontalLayout basicSearchBody = new HorizontalLayout();
 			basicSearchBody.setStyleName("message-search");
 			basicSearchBody.setSizeUndefined();
-			basicSearchBody.setSpacing(false);
+			basicSearchBody.setSpacing(true);
 
 			final TextField nameField = new TextField();
 			nameField.addTextChangeListener(new TextChangeListener() {
@@ -403,7 +403,7 @@ MessageListView, HasEditFormHandlers<Message> {
 			UiUtils.addComponent(basicSearchBody, nameField,
 					Alignment.MIDDLE_LEFT);
 
-			final Button searchBtn = new Button();
+			final Button searchBtn = new Button("Search");
 			searchBtn.addClickListener(new Button.ClickListener() {
 				private static final long serialVersionUID = 1L;
 
@@ -424,9 +424,8 @@ MessageListView, HasEditFormHandlers<Message> {
 					.notifySearchHandler(MessageSearchPanel.this.messageSearchCriteria);
 				}
 			});
-			searchBtn.setStyleName("search-icon-button");
-			searchBtn.setIcon(MyCollabResource
-					.newResource("icons/16/search.png"));
+			searchBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+			searchBtn.setIcon(MyCollabResource.newResource("icons/16/search.png"));
 			basicSearchBody.addComponent(searchBtn);
 
 			this.setCompositionRoot(basicSearchBody);
@@ -534,7 +533,7 @@ MessageListView, HasEditFormHandlers<Message> {
 							TopMessagePanel.this.createBasicLayout();
 						}
 					});
-			cancelBtn.setStyleName("link");
+			cancelBtn.setStyleName(UIConstants.THEME_BLANK_LINK);
 			controls.addComponent(cancelBtn);
 			controls.setComponentAlignment(cancelBtn, Alignment.MIDDLE_CENTER);
 

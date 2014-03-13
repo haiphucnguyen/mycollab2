@@ -102,7 +102,7 @@ IBugCallbackStatusComp {
 	private ProjectPreviewFormControlsGenerator<SimpleBug> bugPreviewFormControls;
 
 	public BugReadViewImpl() {
-		super("Bug Detail", MyCollabResource.newResource("icons/22/project/bug_selected.png"));
+		super("Bug Detail", MyCollabResource.newResource("icons/24/project/bug.png"));
 	}
 
 	private void displayWorkflowControl() {

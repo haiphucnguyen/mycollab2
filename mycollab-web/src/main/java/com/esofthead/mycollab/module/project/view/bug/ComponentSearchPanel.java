@@ -135,16 +135,18 @@ GenericSearchPanel<ComponentSearchCriteria> {
 			basicSearchBody.setMargin(true);
 			UiUtils.addComponent(basicSearchBody,new Label("Name:"), Alignment.MIDDLE_LEFT);
 
-			final HorizontalLayout comboSearchField = new HorizontalLayout();
+			
 			this.nameField = new TextField();
 			this.nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
-			UiUtils.addComponent(comboSearchField, this.nameField,
+			UiUtils.addComponent(basicSearchBody, this.nameField,
 					Alignment.MIDDLE_CENTER);
 
-			final Button searchBtn = new Button();
-			searchBtn.setStyleName("search-icon-button");
-			searchBtn.setIcon(MyCollabResource
-					.newResource("icons/16/search.png"));
+			this.myItemCheckbox = new CheckBox("My Items");
+			UiUtils.addComponent(basicSearchBody, this.myItemCheckbox,
+					Alignment.MIDDLE_CENTER);
+			final Button searchBtn = new Button("Search");
+			searchBtn.setIcon(MyCollabResource.newResource("icons/16/search.png"));
+			searchBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 
 			searchBtn.addClickListener(new Button.ClickListener() {
 
@@ -156,16 +158,11 @@ GenericSearchPanel<ComponentSearchCriteria> {
 					.callSearchAction();
 				}
 			});
-			UiUtils.addComponent(comboSearchField, searchBtn,
+			UiUtils.addComponent(basicSearchBody, searchBtn,
 					Alignment.MIDDLE_LEFT);
-			UiUtils.addComponent(basicSearchBody, comboSearchField, Alignment.MIDDLE_CENTER);
-
-			this.myItemCheckbox = new CheckBox("My Items");
-			UiUtils.addComponent(basicSearchBody, this.myItemCheckbox,
-					Alignment.MIDDLE_CENTER);
-
+			
 			final Button cancelBtn = new Button("Clear");
-			cancelBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
+			cancelBtn.setStyleName(UIConstants.THEME_BLANK_LINK);
 			cancelBtn.addClickListener(new Button.ClickListener() {
 				private static final long serialVersionUID = 1L;
 

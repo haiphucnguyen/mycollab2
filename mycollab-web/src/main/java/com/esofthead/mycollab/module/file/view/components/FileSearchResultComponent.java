@@ -446,7 +446,7 @@ public abstract class FileSearchResultComponent extends VerticalLayout {
 					RenameResourceWindow.this.close();
 				}
 			});
-			cancel.addStyleName(UIConstants.THEME_GREEN_LINK);
+			cancel.addStyleName(UIConstants.THEME_GRAY_LINK);
 			UiUtils.addComponent(controlButton, cancel, Alignment.MIDDLE_CENTER);
 			UiUtils.addComponent(layout, controlButton, Alignment.MIDDLE_CENTER);
 			this.setContent(layout);

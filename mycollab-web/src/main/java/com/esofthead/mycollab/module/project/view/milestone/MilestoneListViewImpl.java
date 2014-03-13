@@ -66,7 +66,7 @@ MilestoneListView {
 	private final CustomLayout bodyContent;
 
 	public MilestoneListViewImpl() {
-		super("Phases list", "phase_selected.png" );
+		super("Phases list", "phase.png" );
 		createBtn = new Button();
 
 		this.addHeaderRightContent(createHeaderRight());

@@ -52,6 +52,7 @@ public class UIConstants {
     public static final String THEME_BLANK_LINK = "blankbtn";
     public static final String THEME_RED_LINK = "redbtn";
     public static final String THEME_BLUE_LINK = "bluebtn";
+    public static final String THEME_SMALL_PADDING = "small-padding";
     public static final String THEME_BROWN_LINK = "brownbtn";
     public static final String THEME_COMP_BODY = "component-body";
     public static final String THEME_COMP_HEADER = "component-header";
@@ -89,4 +90,5 @@ public class UIConstants {
     public static final String TEXT_BLUE = "bluetxt";
     public static final String LABEL_CHECKED = "has-checkmark";
     public static final String H2_NO_PADDING = "h2-no-padding";
+    
 }

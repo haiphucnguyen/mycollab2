@@ -80,15 +80,7 @@ ProjectRoleListView {
 	public ProjectRoleListViewImpl() {
 		this.setMargin(new MarginInfo(false, true, false, true));
 
-		//super("Roles", "user_selected.png");
-
-		//this.addHeaderRightContent(createHeaderRight());
-
-		/*CssLayout contentWrapper = new CssLayout();
-		contentWrapper.setStyleName("content-wrapper");*/
-
-		/*this.setMargin(new MarginInfo(true, false, false, false));*/
-
+	
 		this.searchPanel = new ProjectRoleSearchPanel();
 		addComponent(this.searchPanel);
 
@@ -96,7 +88,7 @@ ProjectRoleListView {
 		addComponent(this.listLayout);
 
 		this.generateDisplayTable();
-		//this.addComponent(contentWrapper);
+
 	}
 
 	private void generateDisplayTable() {

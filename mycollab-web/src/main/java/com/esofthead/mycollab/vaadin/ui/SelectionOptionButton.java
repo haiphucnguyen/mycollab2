@@ -61,6 +61,7 @@ public class SelectionOptionButton extends SplitButton implements
 		super();
 		this.selectableItemHandlers = selectableItemHandlers;
 		addStyleName(UIConstants.THEME_BLUE_LINK);
+		addStyleName(UIConstants.THEME_SMALL_PADDING);
 		setIcon(SelectionOptionButton.unSelectIcon);
 
 		addClickListener(new SplitButtonClickListener() {

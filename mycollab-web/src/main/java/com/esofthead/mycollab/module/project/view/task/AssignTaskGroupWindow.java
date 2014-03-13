@@ -117,7 +117,7 @@ public class AssignTaskGroupWindow extends Window {
 								AssignTaskGroupWindow.this.close();
 							}
 						});
-				cancelBtn.setStyleName("link");
+				cancelBtn.setStyleName(UIConstants.THEME_BLANK_LINK);
 				controlsBtn.addComponent(cancelBtn);
 				controlsBtn.setComponentAlignment(cancelBtn,
 						Alignment.MIDDLE_LEFT);

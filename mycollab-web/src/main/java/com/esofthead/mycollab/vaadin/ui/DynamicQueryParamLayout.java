@@ -48,6 +48,7 @@ public abstract class DynamicQueryParamLayout<S extends SearchCriteria> extends
 	private HorizontalLayout createButtonControls() {
 		HorizontalLayout buttonControls = new HorizontalLayout();
 		buttonControls.setSpacing(true);
+		buttonControls.setMargin(true);
 		final Button searchBtn = new Button(
 				LocalizationHelper.getMessage(GenericI18Enum.BUTTON_SEARCH),
 				new Button.ClickListener() {
@@ -60,6 +61,7 @@ public abstract class DynamicQueryParamLayout<S extends SearchCriteria> extends
 				});
 		UiUtils.addComponent(buttonControls, searchBtn, Alignment.MIDDLE_CENTER);
 		searchBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+		searchBtn.setIcon(MyCollabResource.newResource("icons/16/search.png"));
 
 		final Button clearBtn = new Button(
 				LocalizationHelper.getMessage(GenericI18Enum.BUTTON_CLEAR),
@@ -71,7 +73,7 @@ public abstract class DynamicQueryParamLayout<S extends SearchCriteria> extends
 						clearFields();
 					}
 				});
-		clearBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+		clearBtn.setStyleName(UIConstants.THEME_BLANK_LINK);
 		UiUtils.addComponent(buttonControls, clearBtn, Alignment.MIDDLE_CENTER);
 		final Button basicSearchBtn = new Button(
 				LocalizationHelper

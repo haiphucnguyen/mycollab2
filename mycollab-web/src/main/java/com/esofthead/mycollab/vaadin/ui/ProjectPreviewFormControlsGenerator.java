@@ -22,6 +22,7 @@ import org.vaadin.peter.buttongroup.ButtonGroup;
 
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.vaadin.server.Sizeable;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -139,7 +140,8 @@ public class ProjectPreviewFormControlsGenerator<T> implements Serializable {
 
 		popupButtonsControl = new VerticalLayout();
 		popupButtonsControl.setWidth("100px");
-		popupButtonsControl.setMargin(true);
+		popupButtonsControl.setMargin(new MarginInfo( false,true, false, true));
+		popupButtonsControl.setSpacing(true);
 
 		editBtn = new Button(GenericBeanForm.EDIT_ACTION,
 				new Button.ClickListener() {

@@ -105,7 +105,7 @@ public class BillingSummaryViewImpl extends AbstractPageView implements
         FAQLayout.setSpacing(true);
 
         if (AppContext.isAdmin()) {
-            Button cancelAccountBtn = new Button("Cancel entire account",
+            Button cancelBtn = new Button("Cancel entire account",
                     new Button.ClickListener() {
 
                         @Override
@@ -115,9 +115,9 @@ public class BillingSummaryViewImpl extends AbstractPageView implements
                                             BillingSummaryViewImpl.this, null));
                         }
                     });
-            cancelAccountBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+            cancelBtn.setStyleName(UIConstants.THEME_BLANK_LINK);
 
-            FAQLayout.addComponent(cancelAccountBtn);
+            FAQLayout.addComponent(cancelBtn);
         }
 
         FAQLayout.setWidth("285px");
@@ -365,7 +365,7 @@ public class BillingSummaryViewImpl extends AbstractPageView implements
                         }
                     });
 
-            cancelBtn.setStyleName("link");
+            cancelBtn.setStyleName(UIConstants.THEME_BLANK_LINK);
             controlBtns.addComponent(cancelBtn);
             controlBtns.setComponentAlignment(cancelBtn,
                     Alignment.MIDDLE_CENTER);

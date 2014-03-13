@@ -106,7 +106,7 @@ BugDashboardView {
 				LocalizationHelper.getMessage(BugI18nEnum.BUG_DASHBOARD_TITLE));
 		title.setStyleName("hdr-text");
 		title.setSizeUndefined();
-		final Image icon = new Image(null, MyCollabResource.newResource("icons/22/project/bug_selected.png"));
+		final Image icon = new Image(null, MyCollabResource.newResource("icons/24/project/bug.png"));
 		header.addComponent(icon);
 		header.addComponent(title);
 		header.setExpandRatio(title, 1.0f);

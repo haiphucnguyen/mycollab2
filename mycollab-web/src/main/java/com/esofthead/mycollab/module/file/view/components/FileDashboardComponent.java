@@ -187,17 +187,23 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 				basicSearchBody.setMargin(true);
 				UiUtils.addComponent(basicSearchBody,new Label("Name:"), Alignment.MIDDLE_LEFT);
 
-				final HorizontalLayout comboSearchField = new HorizontalLayout();
+				
 				this.nameField = new TextField();
 				this.nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
-				UiUtils.addComponent(comboSearchField, this.nameField,
+				UiUtils.addComponent(basicSearchBody, this.nameField,
 						Alignment.MIDDLE_CENTER);
 
-				final Button searchBtn = new Button();
-				searchBtn.setStyleName("search-icon-button");
-				searchBtn.setIcon(MyCollabResource
-						.newResource("icons/16/search_white.png"));
+				
+				
 
+				this.myItemCheckbox = new CheckBox("My Items");
+				UiUtils.addComponent(basicSearchBody, this.myItemCheckbox,
+						Alignment.MIDDLE_CENTER);
+
+				final Button searchBtn = new Button("Search");
+				searchBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+				searchBtn.setIcon(MyCollabResource.newResource("icons/16/search.png"));
+				
 				searchBtn.addClickListener(new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
@@ -207,14 +213,8 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 						.doSearch((FileSearchCriteria) fillupSearchCriteria());
 					}
 				});
-				UiUtils.addComponent(comboSearchField, searchBtn,
+				UiUtils.addComponent(basicSearchBody, searchBtn,
 						Alignment.MIDDLE_LEFT);
-				UiUtils.addComponent(basicSearchBody, comboSearchField, Alignment.MIDDLE_CENTER);
-
-				this.myItemCheckbox = new CheckBox("My Items");
-				UiUtils.addComponent(basicSearchBody, this.myItemCheckbox,
-						Alignment.MIDDLE_CENTER);
-
 				final Button cancelBtn = new Button(LocalizationHelper
 						.getMessage(GenericI18Enum.BUTTON_CLEAR));
 			

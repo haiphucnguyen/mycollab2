@@ -60,6 +60,7 @@ public class DefaultMassItemActionHandlersContainer extends HorizontalLayout
 		if (group == null) {
 			group = new ButtonGroup();
 			groupMap.put(groupId, group);
+			
 			this.addComponent(group);
 		}
 		
@@ -80,6 +81,8 @@ public class DefaultMassItemActionHandlersContainer extends HorizontalLayout
 		else 
 		optionBtn.addStyleName(UIConstants.THEME_RED_LINK);
 		
+		optionBtn.addStyleName("small-padding");
+		
 		group.addButton(optionBtn);
 	}
 
@@ -92,7 +95,8 @@ public class DefaultMassItemActionHandlersContainer extends HorizontalLayout
 			groupMap.put(groupId, group);
 			this.addComponent(group);
 		}
-		group.addStyleName(UIConstants.THEME_BLUE_LINK);
+	/*	group.addStyleName(UIConstants.THEME_BLUE_LINK);
+		group.addStyleName("small-padding");*/
 
 		Button optionBtn = new Button(null);
 
@@ -101,6 +105,7 @@ public class DefaultMassItemActionHandlersContainer extends HorizontalLayout
 		fileDownler.extend(optionBtn);
 		optionBtn.setIcon(resource);
 		optionBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
+		optionBtn.addStyleName("small-padding");
 		group.addButton(optionBtn);
 	}
 

@@ -179,7 +179,7 @@ MessageReadView {
 					.canAccess(ProjectRolePermissionCollections.MESSAGES));
 
 			UiUtils.addComponent(header, new Image(null,
-					MyCollabResource.newResource("icons/22/project/message_selected.png")), Alignment.MIDDLE_LEFT);
+					MyCollabResource.newResource("icons/24/project/message.png")), Alignment.MIDDLE_LEFT);
 			UiUtils.addComponent(header, headerText, Alignment.MIDDLE_LEFT);
 			UiUtils.addComponent(header, deleteBtn, Alignment.MIDDLE_RIGHT);
 			header.setExpandRatio(headerText, 1.0f);

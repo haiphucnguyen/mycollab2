@@ -144,6 +144,7 @@ public class ResourceHandlerComponent extends VerticalLayout {
 		controllGroupBtn = new HorizontalLayout();
 		controllGroupBtn.setMargin(new MarginInfo(false, false, false, true));
 		controllGroupBtn.setSpacing(true);
+		controllGroupBtn.addStyleName(UIConstants.THEME_SMALL_PADDING );
 
 		selectAllBtn = new Button();
 		selectAllBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
@@ -151,6 +152,7 @@ public class ResourceHandlerComponent extends VerticalLayout {
 				.newResource("icons/16/checkbox_empty.png"));
 		selectAllBtn.setData(false);
 		selectAllBtn.setImmediate(true);
+		selectAllBtn.setDescription("Select all");
 
 		selectAllBtn.addClickListener(new ClickListener() {
 			private static final long serialVersionUID = 1L;
@@ -223,11 +225,12 @@ public class ResourceHandlerComponent extends VerticalLayout {
 		});
 		goUpBtn.setDescription("Back to parent folder");
 		goUpBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		goUpBtn.setDescription("Go up");
 		UiUtils.addComponent(controllGroupBtn, goUpBtn, Alignment.MIDDLE_LEFT);
 
 		ButtonGroup navButton = new ButtonGroup();
 		navButton.addStyleName(UIConstants.THEME_BLUE_LINK);
-		Button createBtn = new Button("Create", new Button.ClickListener() {
+		Button createBtn = new Button("", new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -238,11 +241,12 @@ public class ResourceHandlerComponent extends VerticalLayout {
 		});
 		createBtn.setIcon(MyCollabResource.newResource("icons/16/ecm/add.png"));
 		createBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
+		createBtn.setDescription("Create");
 		createBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.PUBLIC_DOCUMENT_ACCESS));
 		navButton.addButton(createBtn);
 
-		Button uploadBtn = new Button("Upload", new ClickListener() {
+		Button uploadBtn = new Button("", new ClickListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -254,11 +258,12 @@ public class ResourceHandlerComponent extends VerticalLayout {
 		uploadBtn.setIcon(MyCollabResource
 				.newResource("icons/16/ecm/upload.png"));
 		uploadBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
+		uploadBtn.setDescription("Upload");;
 		uploadBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.PUBLIC_DOCUMENT_ACCESS));
 		navButton.addButton(uploadBtn);
 
-		Button downloadBtn = new Button("Download");
+		Button downloadBtn = new Button("");
 
 		LazyStreamSource streamSource = new LazyStreamSource() {
 			private static final long serialVersionUID = 1L;
@@ -284,11 +289,12 @@ public class ResourceHandlerComponent extends VerticalLayout {
 		downloadBtn.setIcon(MyCollabResource
 				.newResource("icons/16/ecm/download.png"));
 		downloadBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
+		downloadBtn.setDescription("Download");
 		downloadBtn.setEnabled(AppContext
 				.canRead(RolePermissionCollections.PUBLIC_DOCUMENT_ACCESS));
 		navButton.addButton(downloadBtn);
 
-		Button moveToBtn = new Button("Move to", new Button.ClickListener() {
+		Button moveToBtn = new Button("", new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -309,11 +315,11 @@ public class ResourceHandlerComponent extends VerticalLayout {
 		moveToBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
 		moveToBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.PUBLIC_DOCUMENT_ACCESS));
+		moveToBtn.setDescription("Move to");
 		navButton.addButton(moveToBtn);
 
-		deleteBtn = new Button(
-				LocalizationHelper
-						.getMessage(GenericI18Enum.BUTTON_DELETE_LABEL),
+		deleteBtn = new Button(""
+				,
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
@@ -329,8 +335,9 @@ public class ResourceHandlerComponent extends VerticalLayout {
 				});
 		deleteBtn.setIcon(MyCollabResource
 				.newResource("icons/16/ecm/delete.png"));
-		deleteBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
+		deleteBtn.addStyleName(UIConstants.THEME_RED_LINK);
 		deleteBtn.setImmediate(true);
+		deleteBtn.setDescription("Delele");
 		deleteBtn.setEnabled(AppContext
 				.canAccess(RolePermissionCollections.PUBLIC_DOCUMENT_ACCESS));
 		navButton.addButton(deleteBtn);
@@ -1036,7 +1043,7 @@ public class ResourceHandlerComponent extends VerticalLayout {
 					RenameResourceWindow.this.close();
 				}
 			});
-			cancel.addStyleName(UIConstants.THEME_GREEN_LINK);
+			cancel.addStyleName(UIConstants.THEME_GRAY_LINK);
 			UiUtils.addComponent(controlButton, cancel, Alignment.MIDDLE_CENTER);
 			UiUtils.addComponent(layout, controlButton, Alignment.MIDDLE_CENTER);
 
@@ -1159,7 +1166,7 @@ public class ResourceHandlerComponent extends VerticalLayout {
 							AddNewFolderWindow.this.close();
 						}
 					});
-			cancelBtn.addStyleName(UIConstants.THEME_LINK);
+			cancelBtn.addStyleName(UIConstants.THEME_BLANK_LINK);
 			controlsLayout.addComponent(cancelBtn);
 			controlsLayout.setComponentAlignment(cancelBtn,
 					Alignment.MIDDLE_RIGHT);
@@ -1277,7 +1284,7 @@ public class ResourceHandlerComponent extends VerticalLayout {
 							MultiUploadContentWindow.this.close();
 						}
 					});
-			cancelBtn.addStyleName(UIConstants.THEME_LINK);
+			cancelBtn.addStyleName(UIConstants.THEME_BLANK_LINK);
 			controlsLayout.addComponent(cancelBtn);
 			controlsLayout.setComponentAlignment(cancelBtn,
 					Alignment.MIDDLE_RIGHT);

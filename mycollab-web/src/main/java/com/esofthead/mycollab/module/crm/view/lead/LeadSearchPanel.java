@@ -150,10 +150,10 @@ public class LeadSearchPanel extends
 			UiUtils.addComponent(layout, this.nameField,
 					Alignment.MIDDLE_CENTER);
 
-			final Button searchBtn = new Button();
-			searchBtn.setStyleName("search-icon-button");
+			final Button searchBtn = new Button("Search");
+			searchBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 			searchBtn.setIcon(MyCollabResource
-					.newResource("icons/16/search_white.png"));
+					.newResource("icons/16/search.png"));
 
 			searchBtn.addClickListener(new Button.ClickListener() {
 				@Override
@@ -175,7 +175,7 @@ public class LeadSearchPanel extends
 
 			final Button cancelBtn = new Button(
 					LocalizationHelper.getMessage(GenericI18Enum.BUTTON_CLEAR));
-			cancelBtn.setStyleName(UIConstants.THEME_LINK);
+			cancelBtn.setStyleName(UIConstants.THEME_BLANK_LINK);
 			cancelBtn.addStyleName("cancel-button");
 			cancelBtn.addClickListener(new Button.ClickListener() {
 				@Override

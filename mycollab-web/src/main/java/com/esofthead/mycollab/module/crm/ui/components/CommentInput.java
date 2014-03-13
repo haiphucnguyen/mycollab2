@@ -98,7 +98,7 @@ public class CommentInput extends VerticalLayout {
 							component.cancel();
 						}
 					});
-			cancelBtn.setStyleName("link");
+			cancelBtn.setStyleName(UIConstants.THEME_BLANK_LINK);
 			controlsLayout.addComponent(cancelBtn);
 			controlsLayout.setComponentAlignment(cancelBtn,
 					Alignment.MIDDLE_RIGHT);

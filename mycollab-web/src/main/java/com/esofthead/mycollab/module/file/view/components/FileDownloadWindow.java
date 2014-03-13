@@ -124,7 +124,7 @@ public class FileDownloadWindow extends Window {
 				FileDownloadWindow.this.close();
 			}
 		});
-		cancle.addStyleName(UIConstants.THEME_GREEN_LINK);
+		cancle.addStyleName(UIConstants.THEME_GRAY_LINK);
 
 		UiUtils.addComponent(buttonControls, cancle, Alignment.MIDDLE_CENTER);
 		UiUtils.addComponent(layout, buttonControls, Alignment.MIDDLE_CENTER);

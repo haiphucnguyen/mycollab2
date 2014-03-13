@@ -273,6 +273,22 @@ div.v-button-link.v-button-no-margin .v-button-wrap,div.v-button-link:focus
 	background-image:none;
 }
 
+.small-padding .v-button-wrap, .small-padding:active .v-button-wrap,
+.splitbutton .small-padding.v-parent .v-button-wrap
+
+{
+		padding: 3px 4px;
+}
+.splitbutton .small-padding.v-popupbutton .v-button-wrap, .splitbutton .small-padding.v-popupbutton:active .v-button-wrap {
+	padding:3px 1px
+}
+.small-padding .v-spacing {
+	width:3px;
+}
+.small-padding .v-icon {
+	margin:0;
+}
+
 .v-popupbutton .v-button-wrap, .v-popupbutton:active .v-button-wrap {
 	padding:6px 8px;
 }
@@ -334,6 +350,9 @@ div.v-button-link.v-button-no-margin .v-button-wrap,div.v-button-link:focus
 	border-top-color: #5F5F5F;
 }
 
+.v-button-graybtn.v-popupbutton .v-popup-indicator {
+	
+} 
 .v-button.v-button-redbtn, .v-button-redbtn:focus {
 	background-color:#F64A46;
 	color:white;
@@ -397,18 +416,18 @@ div.v-button-link.v-button-no-margin .v-button-wrap,div.v-button-link:focus
 }
 
 .v-button.v-button-bluebtn, .v-button-bluebtn:focus  {
-	background-color: #558CCD;
+	background-color: #1C7DCE;
 	color:white;
 	font-weight:normal;
 }
 
 .v-button-bluebtn:hover, .v-button-bluebtn:active{
-	background-color: #558CCD;
-	background-image: -webkit-linear-gradient(top,#558CCD,#507BAD);
-	background-image: -moz-linear-gradient(top,#558CCD,#507BAD);
-	background-image: -ms-linear-gradient(top,#558CCD,#507BAD);
-	background-image: -o-linear-gradient(top,#558CCD,#507BAD);
-	background-image: linear-gradient(top,#558CCD,#507BAD);
+	background-color: #1C7DCE;
+	background-image: -webkit-linear-gradient(top,#1C7DCE,#1970B7);
+	background-image: -moz-linear-gradient(top,#1C7DCE,#1970B7);
+	background-image: -ms-linear-gradient(top,#1C7DCE,#1970B7);
+	background-image: -o-linear-gradient(top,#1C7DCE,#1970B7);
+	background-image: linear-gradient(top,#1C7DCE,#1970B7);
 }
 
 .v-button.v-button-bluebtn:active .v-button-wrap{
@@ -507,6 +526,7 @@ div.v-button-link.v-button-no-margin .v-button-wrap,div.v-button-link:focus
 	padding-left:2px;
 	padding-right:6px;
 }
+
 
  {
 	/* background-color:#b2b2b2; */

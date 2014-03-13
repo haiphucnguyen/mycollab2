@@ -82,7 +82,7 @@ implements TaskReadView {
 	private Button quickActionStatusBtn;
 
 	public TaskReadViewImpl() {
-		super("Task Detail", MyCollabResource.newResource( "icons/22/project/task_selected.png"));
+		super("Task Detail", MyCollabResource.newResource( "icons/24/project/task.png"));
 	}
 
 	@Override

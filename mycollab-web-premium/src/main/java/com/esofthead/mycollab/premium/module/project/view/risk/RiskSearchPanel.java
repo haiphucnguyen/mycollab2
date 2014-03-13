@@ -75,7 +75,7 @@ public class RiskSearchPanel extends GenericSearchPanel<RiskSearchCriteria> {
 		@Override
 		public ComponentContainer constructBody() {
 			final HorizontalLayout basicSearchBody = new HorizontalLayout();
-			basicSearchBody.setSpacing(false);
+			basicSearchBody.setSpacing(true);
 			basicSearchBody.setMargin(true);
 
 			this.nameField = this.createSeachSupportTextField(new TextField(),
@@ -84,11 +84,17 @@ public class RiskSearchPanel extends GenericSearchPanel<RiskSearchCriteria> {
 			this.nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
 			UiUtils.addComponent(basicSearchBody, this.nameField,
 					Alignment.MIDDLE_CENTER);
+	
 
-			final Button searchBtn = new Button();
-			searchBtn.setStyleName("search-icon-button");
+			this.myItemCheckbox = new CheckBox("My Items");
+			this.myItemCheckbox.setWidth("75px");
+			UiUtils.addComponent(basicSearchBody, this.myItemCheckbox,
+					Alignment.MIDDLE_CENTER);
+
+			final Button searchBtn = new Button("Search");
 			searchBtn.setIcon(MyCollabResource
 					.newResource("icons/16/search.png"));
+			searchBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 			searchBtn.addClickListener(new Button.ClickListener() {
 				private static final long serialVersionUID = 1L;
 
@@ -99,19 +105,11 @@ public class RiskSearchPanel extends GenericSearchPanel<RiskSearchCriteria> {
 			});
 			UiUtils.addComponent(basicSearchBody, searchBtn,
 					Alignment.MIDDLE_LEFT);
-
-			this.myItemCheckbox = new CheckBox("My Items");
-			this.myItemCheckbox.setWidth("75px");
-			UiUtils.addComponent(basicSearchBody, this.myItemCheckbox,
-					Alignment.MIDDLE_CENTER);
-
-			final Separator separator = new Separator();
-			UiUtils.addComponent(basicSearchBody, separator,
-					Alignment.MIDDLE_LEFT);
-
+			
+			
 			final Button cancelBtn = new Button(
 					LocalizationHelper.getMessage(GenericI18Enum.BUTTON_CLEAR));
-			cancelBtn.setStyleName(UIConstants.THEME_LINK);
+			cancelBtn.setStyleName(UIConstants.THEME_BLANK_LINK);
 			cancelBtn.addStyleName("cancel-button");
 			cancelBtn.addClickListener(new Button.ClickListener() {
 				private static final long serialVersionUID = 1L;

@@ -162,6 +162,7 @@ GenericSearchPanel<ItemTimeLoggingSearchCriteria> {
 
 			UiUtils.addComponent(buttonControls, searchBtn, Alignment.MIDDLE_LEFT);
 			searchBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+			searchBtn.setIcon(MyCollabResource.newResource("icons/16/search.png"));
 
 			final Button clearBtn = new Button(
 					LocalizationHelper
