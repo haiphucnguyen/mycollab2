@@ -30,6 +30,7 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UrlDetectableLabel;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.vaadin.shared.ui.MarginInfo;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -57,7 +58,7 @@ BeanList.RowDisplayHandler<SimpleComment> {
 		layout.setSpacing(true);
 		VerticalLayout userBlock = new VerticalLayout();
 		userBlock.setDefaultComponentAlignment(Alignment.TOP_CENTER);
-		userBlock.setWidth("80px");
+		userBlock.setWidth("60px");
 		userBlock.setSpacing(true);
 		ClickListener gotoUser = new ClickListener() {
 			private static final long serialVersionUID = 1L;
@@ -73,26 +74,32 @@ BeanList.RowDisplayHandler<SimpleComment> {
 						comment.getOwnerFullName());
 		userAvatarBtn.addClickListener(gotoUser);
 		userBlock.addComponent(userAvatarBtn);
-		Button userName = new Button(comment.getOwnerFullName());
-		userName.setStyleName("user-name");
-		userName.addStyleName("link");
-		userName.addStyleName(UIConstants.WORD_WRAP);
-		userName.addClickListener(gotoUser);
-		userBlock.addComponent(userName);
+
+		//userBlock.addComponent(userName);
 		layout.addComponent(userBlock);
 
 		CssLayout rowLayout = new CssLayout();
 		rowLayout.setStyleName("message-container");
 		rowLayout.setWidth("100%");
 
-		VerticalLayout messageHeader = new VerticalLayout();
+		HorizontalLayout messageHeader = new HorizontalLayout();
 		messageHeader.setStyleName("message-header");
+		messageHeader.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
+		messageHeader.setSpacing(true);
 
-		Label timePostLbl = new Label(comment.getOwnerFullName() + " added a comment - " +
-				DateTimeUtils.getStringDateFromNow(comment.getCreatedtime()));
+		Button userName = new Button(comment.getOwnerFullName());
+		userName.setStyleName("user-name");
+		userName.addStyleName("link");
+		userName.addStyleName(UIConstants.WORD_WRAP);
+		userName.addClickListener(gotoUser);
+		messageHeader.addComponent(userName);
+
+		Label timePostLbl = new Label("-&nbsp;&nbsp;" +
+				DateTimeUtils.getStringDateFromNow(comment.getCreatedtime()), ContentMode.HTML);
 		timePostLbl.setSizeUndefined();
 		timePostLbl.setStyleName("time-post");
 		messageHeader.addComponent(timePostLbl);
+		messageHeader.setExpandRatio(timePostLbl, 1.0f);
 		messageHeader.setWidth("100%");
 		messageHeader.setMargin(new MarginInfo(true, true, false, true));
 

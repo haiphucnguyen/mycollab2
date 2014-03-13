@@ -201,7 +201,7 @@ MessageReadView {
 			}
 			VerticalLayout userBlock = new VerticalLayout();
 			userBlock.setDefaultComponentAlignment(Alignment.TOP_CENTER);
-			userBlock.setWidth("80px");
+			userBlock.setWidth("60px");
 			userBlock.setSpacing(true);
 			ClickListener gotoUser = new ClickListener() {
 				private static final long serialVersionUID = 1L;
@@ -217,12 +217,7 @@ MessageReadView {
 							message.getFullPostedUserName());
 			userAvatarBtn.addClickListener(gotoUser);
 			userBlock.addComponent(userAvatarBtn);
-			Button userName = new Button(message.getFullPostedUserName());
-			userName.setStyleName("user-name");
-			userName.addStyleName("link");
-			userName.addStyleName(UIConstants.WORD_WRAP);
-			userName.addClickListener(gotoUser);
-			userBlock.addComponent(userName);
+
 			messageLayout.addComponent(userBlock);
 
 			final CssLayout rowLayout = new CssLayout();
@@ -232,13 +227,23 @@ MessageReadView {
 			final HorizontalLayout messageHeader = new HorizontalLayout();
 			messageHeader.setStyleName("message-header");
 			messageHeader.setMargin(new MarginInfo(true, true, false, true));
+			messageHeader.setSpacing(true);
+			messageHeader.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
-			final Label timePostLbl = new Label(message.getFullPostedUserName() + " added a comment - " +
-					DateTimeUtils.getStringDateFromNow(message.getPosteddate()));
+			Button userName = new Button(message.getFullPostedUserName());
+			userName.setStyleName("user-name");
+			userName.addStyleName("link");
+			userName.addStyleName(UIConstants.WORD_WRAP);
+			userName.addClickListener(gotoUser);
+			messageHeader.addComponent(userName);
+
+			final Label timePostLbl = new Label("-&nbsp;&nbsp;" +
+					DateTimeUtils.getStringDateFromNow(message.getPosteddate()), ContentMode.HTML);
 			timePostLbl.setSizeUndefined();
 			timePostLbl.setStyleName("time-post");
 
 			messageHeader.addComponent(timePostLbl);
+			messageHeader.setExpandRatio(timePostLbl, 1.0f);
 			messageHeader.setWidth("100%");
 
 			rowLayout.addComponent(messageHeader);
