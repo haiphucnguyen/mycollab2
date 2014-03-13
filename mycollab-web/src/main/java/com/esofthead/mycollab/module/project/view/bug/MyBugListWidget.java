@@ -33,7 +33,6 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
@@ -62,6 +61,7 @@ public class MyBugListWidget extends BugDisplayWidget {
 			HorizontalLayout layout = new HorizontalLayout();
 			layout.setWidth("100%");
 			layout.setSpacing(true);
+			layout.setMargin(true);
 			layout.addComponent(
 					new Image(null, MyCollabResource
 							.newResource("icons/16/project/bug.png")));
@@ -116,15 +116,12 @@ public class MyBugListWidget extends BugDisplayWidget {
 
 			layout.addComponent(rowContent);
 			layout.setExpandRatio(rowContent, 1.0f);
-
-			CssLayout rowLayout = new CssLayout();
-			rowLayout.addComponent(layout);
-			rowLayout.setStyleName(UIConstants.WIDGET_ROW);
+			layout.setStyleName(UIConstants.WIDGET_ROW);
 			if ((rowIndex + 1) % 2 != 0) {
-				rowLayout.addStyleName("odd");
+				layout.addStyleName("odd");
 			}
-			rowLayout.setWidth("100%");
-			return rowLayout;
+			layout.setWidth("100%");
+			return layout;
 		}
 	}
 
