@@ -313,9 +313,10 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
 			}
 		});
 		customizeViewBtn.setIcon(MyCollabResource
-				.newResource("icons/16/option_white.png"));
+				.newResource("icons/16/customize.png"));
 		customizeViewBtn.setDescription("Layout Options");
 		customizeViewBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		customizeViewBtn.addStyleName(UIConstants.THEME_SMALL_PADDING);
 		layout.addComponent(customizeViewBtn);
 		layout.setComponentAlignment(customizeViewBtn, Alignment.MIDDLE_RIGHT);
 

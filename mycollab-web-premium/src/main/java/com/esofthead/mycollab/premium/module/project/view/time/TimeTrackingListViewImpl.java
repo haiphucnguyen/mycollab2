@@ -302,18 +302,7 @@ TimeTrackingListView {
 			UiUtils.addComponent(bottomWapper, controllGroupBtn, Alignment.MIDDLE_CENTER);
 			bottomWapper.setStyleName("popup-groupBtn");
 
-			Button cancelBtn = new Button("Cancel", new Button.ClickListener() {
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public void buttonClick(ClickEvent event) {
-					TimeTrackingListViewImpl.this.isNeedConstructLayout = true;
-					TimeTrackingListViewImpl.this.itemTimeLoggingPanel.removeComponent(entryComponentLayout);
-				}
-			});
-			cancelBtn.addStyleName(UIConstants.THEME_BLANK_LINK);
-			UiUtils.addComponent(controllGroupBtn, cancelBtn,
-					Alignment.MIDDLE_LEFT);
+			
 
 			Button saveBtn = new Button("Save", new Button.ClickListener() {
 				private static final long serialVersionUID = 1L;
@@ -360,6 +349,18 @@ TimeTrackingListView {
 			});
 			saveBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
 			UiUtils.addComponent(controllGroupBtn, saveBtn,
+					Alignment.MIDDLE_LEFT);
+			Button cancelBtn = new Button("Cancel", new Button.ClickListener() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void buttonClick(ClickEvent event) {
+					TimeTrackingListViewImpl.this.isNeedConstructLayout = true;
+					TimeTrackingListViewImpl.this.itemTimeLoggingPanel.removeComponent(entryComponentLayout);
+				}
+			});
+			cancelBtn.addStyleName(UIConstants.THEME_BLANK_LINK);
+			UiUtils.addComponent(controllGroupBtn, cancelBtn,
 					Alignment.MIDDLE_LEFT);
 
 			this.addComponent(bottomWapper);

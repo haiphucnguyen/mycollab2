@@ -373,6 +373,7 @@ MessageListView, HasEditFormHandlers<Message> {
 			basicSearchBody.setStyleName("message-search");
 			basicSearchBody.setSizeUndefined();
 			basicSearchBody.setSpacing(true);
+			basicSearchBody.setMargin(true);
 
 			final TextField nameField = new TextField();
 			nameField.addTextChangeListener(new TextChangeListener() {
@@ -461,7 +462,7 @@ MessageListView, HasEditFormHandlers<Message> {
 			layoutHeader.setWidth("100%");
 			this.addComponent(layoutHeader);*/
 
-			this.messageSearchPanel.setWidth("320px");
+			this.messageSearchPanel.setWidth("400px");
 			this.messagePanelBody.setStyleName("message-toppanel-body");
 			this.messagePanelBody.setWidth("100%");
 			this.messagePanelBody.setMargin(true);
