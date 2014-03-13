@@ -80,7 +80,6 @@ ProjectRoleListView {
 	public ProjectRoleListViewImpl() {
 		this.setMargin(new MarginInfo(false, true, false, true));
 
-	
 		this.searchPanel = new ProjectRoleSearchPanel();
 		addComponent(this.searchPanel);
 
@@ -88,7 +87,6 @@ ProjectRoleListView {
 		addComponent(this.listLayout);
 
 		this.generateDisplayTable();
-
 	}
 
 	private void generateDisplayTable() {

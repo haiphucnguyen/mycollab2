@@ -21,13 +21,20 @@ import java.util.List;
 
 import com.esofthead.mycollab.common.domain.SimpleComment;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
+import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.ecm.domain.Content;
+import com.esofthead.mycollab.module.project.events.ProjectMemberEvent;
 import com.esofthead.mycollab.vaadin.ui.AttachmentDisplayComponent;
 import com.esofthead.mycollab.vaadin.ui.BeanList;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UrlDetectableLabel;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.vaadin.shared.ui.MarginInfo;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
@@ -44,22 +51,31 @@ BeanList.RowDisplayHandler<SimpleComment> {
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	public Component generateRow(SimpleComment comment, int rowIndex) {
+	public Component generateRow(final SimpleComment comment, int rowIndex) {
 		HorizontalLayout layout = new HorizontalLayout();
 		layout.setStyleName("message");
 		layout.setWidth("100%");
 		layout.setSpacing(true);
 		VerticalLayout userBlock = new VerticalLayout();
 		userBlock.setDefaultComponentAlignment(Alignment.TOP_CENTER);
-		userBlock.setWidth("80px");
+		userBlock.setWidth("60px");
 		userBlock.setSpacing(true);
-		userBlock.addComponent(UserAvatarControlFactory
+		ClickListener gotoUser = new ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				EventBus.getInstance().fireEvent(new ProjectMemberEvent.GotoRead(this, comment.getCreateduser()));
+			}
+		};
+		Button userAvatarBtn = UserAvatarControlFactory
 				.createUserAvatarButtonLink(
 						comment.getOwnerAvatarId(),
-						comment.getOwnerFullName()));
-		Label userName = new Label(comment.getOwnerFullName());
-		userName.setStyleName("user-name");
-		userBlock.addComponent(userName);
+						comment.getOwnerFullName());
+		userAvatarBtn.addClickListener(gotoUser);
+		userBlock.addComponent(userAvatarBtn);
+
+		//userBlock.addComponent(userName);
 		layout.addComponent(userBlock);
 
 		CssLayout rowLayout = new CssLayout();
@@ -68,18 +84,22 @@ BeanList.RowDisplayHandler<SimpleComment> {
 
 		HorizontalLayout messageHeader = new HorizontalLayout();
 		messageHeader.setStyleName("message-header");
-		VerticalLayout leftHeader = new VerticalLayout();
+		messageHeader.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
+		messageHeader.setSpacing(true);
 
-		VerticalLayout rightHeader = new VerticalLayout();
-		Label timePostLbl = new Label(
-				DateTimeUtils.getStringDateFromNow(comment.getCreatedtime()));
+		Button userName = new Button(comment.getOwnerFullName());
+		userName.setStyleName("user-name");
+		userName.addStyleName("link");
+		userName.addStyleName(UIConstants.WORD_WRAP);
+		userName.addClickListener(gotoUser);
+		messageHeader.addComponent(userName);
+
+		Label timePostLbl = new Label("-&nbsp;&nbsp;" +
+				DateTimeUtils.getStringDateFromNow(comment.getCreatedtime()), ContentMode.HTML);
 		timePostLbl.setSizeUndefined();
 		timePostLbl.setStyleName("time-post");
-		rightHeader.addComponent(timePostLbl);
-
-		messageHeader.addComponent(leftHeader);
-		messageHeader.setExpandRatio(leftHeader, 1.0f);
 		messageHeader.addComponent(timePostLbl);
+		messageHeader.setExpandRatio(timePostLbl, 1.0f);
 		messageHeader.setWidth("100%");
 		messageHeader.setMargin(new MarginInfo(true, true, false, true));
 

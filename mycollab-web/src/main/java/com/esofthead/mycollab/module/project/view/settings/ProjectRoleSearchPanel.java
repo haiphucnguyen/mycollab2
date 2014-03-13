@@ -90,14 +90,14 @@ GenericSearchPanel<ProjectRoleSearchCriteria> {
 			final HorizontalLayout basicSearchBody = new HorizontalLayout();
 			basicSearchBody.setSpacing(true);
 			basicSearchBody.setMargin(true);
+			basicSearchBody.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
+
 			basicSearchBody.addComponent(new Label("Name"));
 			this.nameField = new TextField();
 			this.nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
-			UiUtils.addComponent(basicSearchBody, this.nameField,
-					Alignment.MIDDLE_CENTER);
+			basicSearchBody.addComponent(this.nameField);
 			this.myItemCheckbox = new CheckBox("My Items");
-			UiUtils.addComponent(basicSearchBody, this.myItemCheckbox,
-					Alignment.MIDDLE_CENTER);
+			basicSearchBody.addComponent(this.myItemCheckbox);
 
 			final Button searchBtn = new Button("Search",
 					new Button.ClickListener() {

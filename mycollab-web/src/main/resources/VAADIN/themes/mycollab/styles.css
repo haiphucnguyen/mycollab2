@@ -62,6 +62,10 @@ a {
 	text-decoration: none;
 }
 
+.mycollab .v-richtextarea {
+	border: 1px solid #CFCFCF;
+}
+
 .v-button,.v-button-caption {
 	text-shadow: none;
 }
@@ -3300,7 +3304,22 @@ div.v-button-link.xbreadcrumbbutton .v-button-wrap {
 	border-width: 0px 1px 1px 1px;
 	border-style: solid;
 	border-color: #CFCFCF;
-	padding: 3px 5px 0px;
+}
+
+.widget-row.v-margin-top {
+	padding-top: 3px;
+}
+
+.widget-row.v-margin-right {
+	padding-right: 5px;
+}
+
+.widget-row.v-margin-bottom {
+	padding-bottom: 3px;
+}
+
+.widget-row.v-margin-left {
+	padding-left: 5px;
 }
 
 .widget-row.odd {
@@ -3310,7 +3329,7 @@ div.v-button-link.xbreadcrumbbutton .v-button-wrap {
 
 /* Background has SELECT icon */
 .v-button.select-bg {
-	height: 24px;
+	height: 25px;
 	width: 22px;
 	background: url('icons/16/select.png') no-repeat center center
 		transparent;
@@ -6504,3 +6523,10 @@ img.icon-btn {
 .standup-missing-comp .comp-body-wrap .v-label {
 	text-align: center;	
 }
+/* Popup select field */
+.v-popupbutton-popup.v-popupbutton-popup-select-bg {
+	background-color: #FFFFFF;
+	border: 1px solid #A8A8A8;
+	border-radius: 3px;
+}
+
