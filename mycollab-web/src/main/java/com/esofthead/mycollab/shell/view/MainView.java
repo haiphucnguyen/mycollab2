@@ -108,7 +108,11 @@ public final class MainView extends AbstractPageView {
 
 	private CustomLayout createFooter() {
 		final CustomLayout footer = CustomLayoutLoader.createLayout("footer");
-		footer.addComponent(new Link("Esofthead", new ExternalResource("http://www.esofthead.com")), "company-url");
+
+		Link companyLink = new Link("Esofthead", new ExternalResource("http://www.esofthead.com"));
+		companyLink.setTargetName("_blank");
+
+		footer.addComponent(companyLink, "company-url");
 
 		Calendar currentCal = Calendar.getInstance();
 
@@ -129,9 +133,18 @@ public final class MainView extends AbstractPageView {
 				UI.getCurrent().addWindow(new FeedbackWindow());
 			}
 		});
-		footerRight.addComponent(new Link("Blog", new ExternalResource("http://blog.mycollab.com")));
-		footerRight.addComponent(new Link("Forum", new ExternalResource("http://forum.mycollab.com")));
-		footerRight.addComponent(new Link("Knowledge Base", new ExternalResource("http://wiki.mycollab.com")));
+		Link blogLink = new Link("Blog", new ExternalResource("http://blog.mycollab.com"));
+		blogLink.setTargetName("_blank");
+
+		Link forumLink = new Link("Forum", new ExternalResource("http://forum.mycollab.com"));
+		forumLink.setTargetName("_blank");
+
+		Link wikiLink = new Link("Knowledge Base", new ExternalResource("http://wiki.mycollab.com"));
+		wikiLink.setTargetName("_blank");
+
+		footerRight.addComponent(blogLink);
+		footerRight.addComponent(forumLink);
+		footerRight.addComponent(wikiLink);
 		footerRight.addComponent(sendFeedback);
 
 		footer.addComponent(footerRight, "footer-right");
