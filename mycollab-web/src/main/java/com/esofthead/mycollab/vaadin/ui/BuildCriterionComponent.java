@@ -7,7 +7,6 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import com.esofthead.mycollab.common.domain.AuditChangeItem;
 import com.esofthead.mycollab.common.domain.SaveSearchResultWithBLOBs;
 import com.esofthead.mycollab.common.domain.criteria.SaveSearchResultCriteria;
 import com.esofthead.mycollab.common.service.SaveSearchResultService;
@@ -20,7 +19,6 @@ import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.db.query.CompositionStringParam;
 import com.esofthead.mycollab.core.db.query.ConcatStringParam;
 import com.esofthead.mycollab.core.db.query.DateParam;
-import com.esofthead.mycollab.core.db.query.DateTimeParam;
 import com.esofthead.mycollab.core.db.query.NumberParam;
 import com.esofthead.mycollab.core.db.query.Param;
 import com.esofthead.mycollab.core.db.query.PropertyListParam;
@@ -291,8 +289,6 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends
 							compareSelectionBox.loadData(NumberParam.OPTIONS);
 						} else if (field instanceof DateParam) {
 							compareSelectionBox.loadData(DateParam.OPTIONS);
-						} else if (field instanceof DateTimeParam) {
-							compareSelectionBox.loadData(DateTimeParam.OPTIONS);
 						} else if (field instanceof PropertyParam) {
 							compareSelectionBox.loadData(PropertyParam.OPTIONS);
 						} else if (field instanceof PropertyListParam) {
@@ -348,8 +344,6 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends
 				} else {
 					valueBox.addComponent(new DateField());
 				}
-			} else if (field instanceof DateTimeParam) {
-
 			} else if (field instanceof PropertyParam
 					|| field instanceof PropertyListParam) {
 				Component comp = buildPropertySearchComp(field.getId());

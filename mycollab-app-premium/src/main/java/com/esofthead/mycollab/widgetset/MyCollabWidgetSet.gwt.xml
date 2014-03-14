@@ -38,7 +38,11 @@
 
     <inherits name="com.esofthead.vaadin.cropField.WidgetSet" />
 
+
+
     <inherits name="org.tltv.gantt.WidgetSet" />
 
     <inherits name="org.vaadin.artur.icepush.IcepushaddonWidgetset" />
+
+    <inherits name="com.esofthead.vaadin.popupbutton.WidgetSet" />
 </module>

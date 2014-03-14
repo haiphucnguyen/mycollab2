@@ -3355,9 +3355,24 @@ div.v-button-link.xbreadcrumbbutton .v-button-wrap {
 .v-button.select-bg {
 	height: 25px;
 	width: 22px;
-	background: url('icons/16/select.png') no-repeat center center
-		transparent;
+	background: none no-repeat 0px 0px transparent;
 	border-radius: 0px 2px 2px 0px;
+	border-width: 1px 1px 1px 0px;
+	border-color: #CFCFCF;
+	position: relative;
+}
+.v-button.select-bg::after {
+	background: url('icons/sprites-black.png') no-repeat 0px -9px transparent;
+	content: "";
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	position: absolute;
+	opacity: .4;
+}
+.v-button.select-bg:hover::after {
+	opacity: .7;
 }
 
 .v-button.select-bg .v-button-wrap,.v-button.select-bg:active .v-button-wrap
@@ -5403,11 +5418,6 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 }
 
 /* Multiple Select Comp */
-.v-csslayout.select-bg {
-	background: url("icons/grad-light-top.png") repeat-x 0 1px
-		rgb(218, 218, 218);
-}
-
 .colored-gridlayout .v-gridlayout-margin .gridform-field .v-csslayout.select-bg>.v-csslayout-margin
 	{
 	padding: 0px;
@@ -6551,5 +6561,5 @@ img.icon-btn {
 	background-color: #FFFFFF;
 	border: 1px solid #A8A8A8;
 	border-radius: 3px;
+	padding: 0px;
 }
-

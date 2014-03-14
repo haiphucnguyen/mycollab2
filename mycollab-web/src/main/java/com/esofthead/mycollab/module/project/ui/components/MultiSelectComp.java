@@ -20,10 +20,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.beanutils.PropertyUtils;
-import org.vaadin.hene.popupbutton.PopupButton;
 
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.vaadin.data.Property.ValueChangeListener;
+import com.esofthead.vaadin.popupbutton.PopupButtonExt;
 import com.vaadin.server.Sizeable;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -31,7 +30,7 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.CustomComponent;
+import com.vaadin.ui.CustomField;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
@@ -42,11 +41,11 @@ import com.vaadin.ui.VerticalLayout;
  * @since 1.0
  * 
  */
-public class MultiSelectComp<T> extends CustomComponent {
+public abstract class MultiSelectComp<T> extends CustomField<T> {
 	private static final long serialVersionUID = 1L;
 
 	protected TextField componentsDisplay;
-	protected PopupButton componentPopupSelection;
+	protected PopupButtonExt componentPopupSelection;
 
 	private String propertyDisplayField;
 	private String widthVal;
@@ -55,17 +54,9 @@ public class MultiSelectComp<T> extends CustomComponent {
 
 	protected List<T> items = new ArrayList<T>();
 
-	public MultiSelectComp(final String displayName, List<T> items) {
-		this.propertyDisplayField = displayName;
-		this.items = items;
-
-		this.setCompositionRoot(initContent());
-	}
-
-	protected Component initContent() {
-		this.setWidth("100%");
-		final HorizontalLayout content = new HorizontalLayout();
-		content.setSpacing(false);
+	public MultiSelectComp(final String displayName) {
+		propertyDisplayField = displayName;
+		items = createData();
 
 		this.componentsDisplay = new TextField();
 		this.componentsDisplay.setNullRepresentation("");
@@ -73,16 +64,31 @@ public class MultiSelectComp<T> extends CustomComponent {
 		this.componentsDisplay.addStyleName("noBorderRight");
 		this.componentsDisplay.setWidth("100%");
 
-		this.componentPopupSelection = new PopupButton();
+		this.componentPopupSelection = new PopupButtonExt();
 		this.componentPopupSelection
-				.addClickListener(new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
+		.addClickListener(new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
 
-					@Override
-					public void buttonClick(final ClickEvent event) {
-						MultiSelectComp.this.initContentPopup();
-					}
-				});
+			@Override
+			public void buttonClick(final ClickEvent event) {
+				MultiSelectComp.this.initContentPopup();
+			}
+		});
+	}
+
+	public MultiSelectComp(final String displayName, List<T> data) {
+		this(displayName);
+		items = data;		
+	}
+
+	protected List<T> createData() {
+		return null;
+	}
+
+	@Override
+	protected Component initContent() {
+		final HorizontalLayout content = new HorizontalLayout();
+		content.setSpacing(false);
 
 		content.addComponent(this.componentsDisplay);
 		content.setComponentAlignment(this.componentsDisplay,
@@ -91,6 +97,7 @@ public class MultiSelectComp<T> extends CustomComponent {
 		this.componentPopupSelection.addStyleName("nonPopupIndicator");
 		this.componentPopupSelection.addStyleName(UIConstants.SELECT_BG);
 		this.componentPopupSelection.setWidth("25px");
+		this.componentPopupSelection.setPopupPositionComponent(content);
 
 		CssLayout btnWrapper = new CssLayout();
 		btnWrapper.setWidth(SIZE_UNDEFINED, Sizeable.Unit.PIXELS);
@@ -104,6 +111,12 @@ public class MultiSelectComp<T> extends CustomComponent {
 		content.setExpandRatio(this.componentsDisplay, 1.0f);
 
 		return content;
+	}
+
+	@Override
+	public void setWidth(String width) {
+		super.setWidth(width);
+		widthVal = width;
 	}
 
 	public void resetComp() {
@@ -131,6 +144,7 @@ public class MultiSelectComp<T> extends CustomComponent {
 			popupContent.addComponent(chkItem);
 		}
 
+		popupContent.setWidth(widthVal);
 		componentPopupSelection.setContent(popupContent);
 
 	}
@@ -145,7 +159,7 @@ public class MultiSelectComp<T> extends CustomComponent {
 				e.printStackTrace();
 			}
 		} else {
-			itemName = (String) item.toString();
+			itemName = item.toString();
 		}
 
 		final ItemSelectionComp<T> chkItem = new ItemSelectionComp<T>(item,
@@ -158,7 +172,7 @@ public class MultiSelectComp<T> extends CustomComponent {
 			@Override
 			public void valueChange(
 					final com.vaadin.data.Property.ValueChangeEvent event) {
-				final Boolean value = (Boolean) chkItem.getValue();
+				final Boolean value = chkItem.getValue();
 
 				if (value && !selectedItems.contains(item)) {
 					selectedItems.add(item);
@@ -261,4 +275,5 @@ public class MultiSelectComp<T> extends CustomComponent {
 		}
 
 	}
+
 }
