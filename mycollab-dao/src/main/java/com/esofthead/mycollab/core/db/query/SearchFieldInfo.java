@@ -19,12 +19,18 @@ public class SearchFieldInfo implements Serializable {
 
 	private Object value;
 
+	private String paramClsName;
+
+	public SearchFieldInfo() {
+	}
+
 	public SearchFieldInfo(String prefixOper, Param param, String compareOper,
 			Object value) {
 		this.prefixOper = prefixOper;
 		this.param = param;
 		this.compareOper = compareOper;
 		this.value = value;
+		this.paramClsName = param.getClass().getName();
 	}
 
 	public String getPrefixOper() {
@@ -57,5 +63,13 @@ public class SearchFieldInfo implements Serializable {
 
 	public void setCompareOper(String compareOper) {
 		this.compareOper = compareOper;
+	}
+
+	public String getParamClsName() {
+		return paramClsName;
+	}
+
+	public void setParamClsName(String paramClsName) {
+		this.paramClsName = paramClsName;
 	}
 }
