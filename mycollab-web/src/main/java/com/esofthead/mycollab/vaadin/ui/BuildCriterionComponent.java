@@ -19,6 +19,7 @@ import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.db.query.CompositionStringParam;
 import com.esofthead.mycollab.core.db.query.ConcatStringParam;
 import com.esofthead.mycollab.core.db.query.DateParam;
+import com.esofthead.mycollab.core.db.query.JsonDeSerializerHelper;
 import com.esofthead.mycollab.core.db.query.NumberParam;
 import com.esofthead.mycollab.core.db.query.Param;
 import com.esofthead.mycollab.core.db.query.PropertyListParam;
@@ -29,7 +30,6 @@ import com.esofthead.mycollab.core.db.query.StringParam;
 import com.esofthead.mycollab.core.utils.JsonDeSerializer;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.google.gson.reflect.TypeToken;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanContainer;
@@ -38,6 +38,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Component;
+import com.vaadin.ui.CustomField;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.GridLayout;
@@ -141,7 +142,7 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends
 				saveSearchCriteria(queryText);
 			}
 		});
-		saveBtn.setStyleName(UIConstants.THEME_GREEN_LINK);  
+		saveBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 		saveBtn.setIcon(MyCollabResource.newResource("icons/16/save.png"));
 		filterBox.addComponent(saveBtn);
 
@@ -200,6 +201,18 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends
 			return searchCriteria;
 		} catch (Exception e) {
 			throw new MyCollabException(e);
+		}
+	}
+
+	private void fillSearchFieldInfo(List<SearchFieldInfo> searchFieldInfos) {
+		searchContainer.removeAllComponents();
+
+		for (int i = 0; i < searchFieldInfos.size(); i++) {
+			SearchFieldInfo searchFieldInfo = searchFieldInfos.get(i);
+			CriteriaSelectionLayout newCriteriaBar = new CriteriaSelectionLayout(
+					searchContainer.getComponentCount() + 1);
+			newCriteriaBar.fillSearchFieldInfo(searchFieldInfo);
+			searchContainer.addComponent(newCriteriaBar);
 		}
 	}
 
@@ -262,6 +275,73 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends
 			indexLbl.setValue(index + "");
 			if (index == 1) {
 				operatorSelectionBox.setVisible(false);
+			}
+		}
+
+		private void fillSearchFieldInfo(SearchFieldInfo searchFieldInfo) {
+			operatorSelectionBox.setValue(searchFieldInfo.getPrefixOper());
+
+			Param param = searchFieldInfo.getParam();
+			Collection<?> itemIds = fieldSelectionBox.getItemIds();
+			for (Object item : itemIds) {
+				if (param.equals(item)) {
+					fieldSelectionBox.setValue(item);
+					break;
+				}
+			}
+
+			compareSelectionBox.setValue(searchFieldInfo.getCompareOper());
+			valueBox.removeAllComponents();
+
+			if (param instanceof StringParam
+					|| param instanceof ConcatStringParam) {
+				TextField valueField = new TextField();
+				valueField.setValue((String) searchFieldInfo.getValue());
+				valueBox.addComponent(valueField);
+			} else if (param instanceof NumberParam) {
+				TextField valueField = new TextField();
+				valueField.setValue(String.valueOf(searchFieldInfo.getValue()));
+				valueBox.addComponent(valueField);
+			} else if (param instanceof DateParam) {
+				String compareItem = (String) compareSelectionBox.getValue();
+				if (DateParam.BETWEEN.equals(compareItem)
+						|| DateParam.NOT_BETWEEN.equals(compareItem)) {
+					DateField field1 = new DateField();
+					field1.setValue((Date) Array.get(
+							searchFieldInfo.getValue(), 0));
+					DateField field2 = new DateField();
+					field2.setValue((Date) Array.get(
+							searchFieldInfo.getValue(), 1));
+					valueBox.addComponent(field1);
+					valueBox.addComponent(field2);
+				} else {
+					DateField field = new DateField();
+					field.setValue((Date) searchFieldInfo.getValue());
+					valueBox.addComponent(field);
+				}
+			} else if (param instanceof PropertyParam
+					|| param instanceof PropertyListParam) {
+				Component comp = buildPropertySearchComp(param.getId());
+				if (comp != null) {
+					if (comp instanceof CustomField<?>
+							&& (((CustomField) comp).getType() == Integer.class)) {
+						((Field) comp).setValue(Integer
+								.parseInt(searchFieldInfo.getValue() + ""));
+					} else {
+						((Field) comp).setValue(searchFieldInfo.getValue());
+					}
+
+					valueBox.addComponent(comp);
+				}
+			} else if (param instanceof StringListParam) {
+				ValueListSelect listSelect = new ValueListSelect();
+				listSelect.setCaption(null);
+				listSelect.loadData(((StringListParam) param).getLstValues()
+						.toArray(new String[0]));
+				listSelect.setValue(searchFieldInfo.getValue());
+				valueBox.addComponent(listSelect);
+			} else if (param instanceof CompositionStringParam) {
+				valueBox.addComponent(new TextField());
 			}
 		}
 
@@ -537,10 +617,9 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends
 								itemId).getBean();
 
 						String queryText = data.getQuerytext();
-						List fromJson = JsonDeSerializer.fromJson(queryText,
-								new TypeToken<List<SearchFieldInfo>>() {
-								}.getType());
-						System.out.println(fromJson);
+						List<SearchFieldInfo> fieldInfos = JsonDeSerializerHelper
+								.fromJson(queryText);
+						fillSearchFieldInfo(fieldInfos);
 					} else {
 
 					}
