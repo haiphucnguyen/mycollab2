@@ -58,7 +58,7 @@ BeanList.RowDisplayHandler<SimpleComment> {
 		layout.setSpacing(true);
 		VerticalLayout userBlock = new VerticalLayout();
 		userBlock.setDefaultComponentAlignment(Alignment.TOP_CENTER);
-		userBlock.setWidth("60px");
+		userBlock.setWidth("80px");
 		userBlock.setSpacing(true);
 		ClickListener gotoUser = new ClickListener() {
 			private static final long serialVersionUID = 1L;
@@ -75,7 +75,12 @@ BeanList.RowDisplayHandler<SimpleComment> {
 		userAvatarBtn.addClickListener(gotoUser);
 		userBlock.addComponent(userAvatarBtn);
 
-		//userBlock.addComponent(userName);
+		Button userName = new Button(comment.getOwnerFullName());
+		userName.setStyleName("user-name");
+		userName.addStyleName("link");
+		userName.addStyleName(UIConstants.WORD_WRAP);
+		userName.addClickListener(gotoUser);
+		userBlock.addComponent(userName);
 		layout.addComponent(userBlock);
 
 		CssLayout rowLayout = new CssLayout();
@@ -87,14 +92,7 @@ BeanList.RowDisplayHandler<SimpleComment> {
 		messageHeader.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 		messageHeader.setSpacing(true);
 
-		Button userName = new Button(comment.getOwnerFullName());
-		userName.setStyleName("user-name");
-		userName.addStyleName("link");
-		userName.addStyleName(UIConstants.WORD_WRAP);
-		userName.addClickListener(gotoUser);
-		messageHeader.addComponent(userName);
-
-		Label timePostLbl = new Label("-&nbsp;&nbsp;" +
+		Label timePostLbl = new Label("<span class=\"post-owner\"><b>" + comment.getOwnerFullName() + "</b>&nbsp;added a comment</span>&nbsp;-&nbsp;" +
 				DateTimeUtils.getStringDateFromNow(comment.getCreatedtime()), ContentMode.HTML);
 		timePostLbl.setSizeUndefined();
 		timePostLbl.setStyleName("time-post");

@@ -201,7 +201,7 @@ MessageReadView {
 			}
 			VerticalLayout userBlock = new VerticalLayout();
 			userBlock.setDefaultComponentAlignment(Alignment.TOP_CENTER);
-			userBlock.setWidth("60px");
+			userBlock.setWidth("80px");
 			userBlock.setSpacing(true);
 			ClickListener gotoUser = new ClickListener() {
 				private static final long serialVersionUID = 1L;
@@ -218,6 +218,13 @@ MessageReadView {
 			userAvatarBtn.addClickListener(gotoUser);
 			userBlock.addComponent(userAvatarBtn);
 
+			Button userName = new Button(message.getFullPostedUserName());
+			userName.setStyleName("user-name");
+			userName.addStyleName("link");
+			userName.addStyleName(UIConstants.WORD_WRAP);
+			userName.addClickListener(gotoUser);
+			userBlock.addComponent(userName);
+
 			messageLayout.addComponent(userBlock);
 
 			final CssLayout rowLayout = new CssLayout();
@@ -230,14 +237,7 @@ MessageReadView {
 			messageHeader.setSpacing(true);
 			messageHeader.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
-			Button userName = new Button(message.getFullPostedUserName());
-			userName.setStyleName("user-name");
-			userName.addStyleName("link");
-			userName.addStyleName(UIConstants.WORD_WRAP);
-			userName.addClickListener(gotoUser);
-			messageHeader.addComponent(userName);
-
-			final Label timePostLbl = new Label("-&nbsp;&nbsp;" +
+			final Label timePostLbl = new Label("<span class=\"post-owner\"><b>" + message.getFullPostedUserName() + "</b>&nbsp;added a comment</span>&nbsp;-&nbsp;" +
 					DateTimeUtils.getStringDateFromNow(message.getPosteddate()), ContentMode.HTML);
 			timePostLbl.setSizeUndefined();
 			timePostLbl.setStyleName("time-post");

@@ -227,7 +227,7 @@ public class NoteListItems extends VerticalLayout {
 			VerticalLayout messageHeader = new VerticalLayout();
 			messageHeader.setStyleName("message-header");
 
-			Label timePostLbl = new Label(note.getCreateUserFullName() + " added a note - " +
+			Label timePostLbl = new Label("<span class=\"post-owner\"><b>" + note.getCreateUserFullName() + "</b>&nbsp;added a note</span>&nbsp;-&nbsp;" +
 					DateTimeUtils.getStringDateFromNow(note.getCreatedtime()));
 			timePostLbl.setSizeUndefined();
 			timePostLbl.setStyleName("time-post");

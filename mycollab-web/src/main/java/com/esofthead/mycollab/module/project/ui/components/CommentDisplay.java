@@ -34,6 +34,7 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
 /**
@@ -119,16 +120,16 @@ ReloadableComponent {
 		SimpleUser currentUser = AppContext.getSession();
 		VerticalLayout userBlock = new VerticalLayout();
 		userBlock.setDefaultComponentAlignment(Alignment.TOP_CENTER);
-		userBlock.setWidth("60px");
+		userBlock.setWidth("80px");
 		userBlock.setSpacing(true);
 		userBlock.addComponent(UserAvatarControlFactory
 				.createUserAvatarButtonLink(
 						currentUser.getAvatarid(),
 						currentUser.getDisplayName()));
-		/*Label userName = new Label(currentUser.getDisplayName());
+		Label userName = new Label(currentUser.getDisplayName());
 		userName.setStyleName("user-name");
 		userBlock.addComponent(userName);
-		 */
+
 		commentWrap.addComponent(userBlock);
 		CssLayout textAreaWrap = new CssLayout();
 		textAreaWrap.setStyleName("message-container");

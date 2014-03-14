@@ -3054,6 +3054,10 @@ div.v-splitbutton,div.v-splitbutton .v-button {
 	color: #0061ac;
 }
 
+.message-header .post-owner {
+	color: #525252;
+}
+
 .message-header.v-margin-top {
 	padding-top: 10px;
 }
