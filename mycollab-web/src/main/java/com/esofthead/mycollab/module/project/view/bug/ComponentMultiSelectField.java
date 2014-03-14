@@ -30,19 +30,21 @@ import com.esofthead.mycollab.module.tracker.domain.criteria.ComponentSearchCrit
 import com.esofthead.mycollab.module.tracker.service.ComponentService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.vaadin.data.Property;
-import com.vaadin.ui.CustomField;
 
 /**
  * 
  * @author MyCollab Ltd.
  * @since 1.0
  */
-public class ComponentMultiSelectField extends CustomField {
+public class ComponentMultiSelectField extends MultiSelectComp<Component> {
 	private static final long serialVersionUID = 1L;
 
-	private MultiSelectComp<Component> componentSelection;
-
 	public ComponentMultiSelectField() {
+		super("componentname");
+	}
+
+	@Override
+	protected List<Component> createData() {
 		ComponentSearchCriteria searchCriteria = new ComponentSearchCriteria();
 		searchCriteria.setStatus(new StringSearchField("Open"));
 
@@ -52,38 +54,28 @@ public class ComponentMultiSelectField extends CustomField {
 		ComponentService componentService = ApplicationContextUtil
 				.getSpringBean(ComponentService.class);
 
-		List<Component> components = (List<Component>) componentService
+		List<Component> components = componentService
 				.findPagableListByCriteria(new SearchRequest<ComponentSearchCriteria>(
 						searchCriteria, 0, Integer.MAX_VALUE));
-
-		componentSelection = new MultiSelectComp<Component>("componentname",
-				components);
-	}
-
-	@Override
-	protected com.vaadin.ui.Component initContent() {
-		return componentSelection;
-	}
-
-	public void resetComp() {
-		componentSelection.resetComp();
+		return components;
 	}
 
 	@Override
 	public void setPropertyDataSource(Property newDataSource) {
 		List<Component> components = (List<Component>) newDataSource.getValue();
 		if (components != null) {
-			componentSelection.setSelectedItems(components);
+			this.setSelectedItems(components);
 		}
 		super.setPropertyDataSource(newDataSource);
 	}
 
+	@Override
 	public List<Component> getSelectedItems() {
-		return componentSelection.getSelectedItems();
+		return this.getSelectedItems();
 	}
 
 	@Override
-	public Class<?> getType() {
-		return Object.class;
+	public Class<Component> getType() {
+		return Component.class;
 	}
 }
