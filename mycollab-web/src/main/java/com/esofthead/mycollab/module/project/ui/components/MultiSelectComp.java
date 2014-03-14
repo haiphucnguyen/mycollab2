@@ -20,9 +20,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.beanutils.PropertyUtils;
-import org.vaadin.hene.popupbutton.PopupButton;
 
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.vaadin.popupbutton.PopupButtonExt;
 import com.vaadin.server.Sizeable;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -41,11 +41,11 @@ import com.vaadin.ui.VerticalLayout;
  * @since 1.0
  * 
  */
-public class MultiSelectComp<T> extends CustomField<T> {
+public abstract class MultiSelectComp<T> extends CustomField<T> {
 	private static final long serialVersionUID = 1L;
 
 	protected TextField componentsDisplay;
-	protected PopupButton componentPopupSelection;
+	protected PopupButtonExt componentPopupSelection;
 
 	private String propertyDisplayField;
 	private String widthVal;
@@ -79,7 +79,7 @@ public class MultiSelectComp<T> extends CustomField<T> {
 		this.componentsDisplay.addStyleName("noBorderRight");
 		this.componentsDisplay.setWidth("100%");
 
-		this.componentPopupSelection = new PopupButton();
+		this.componentPopupSelection = new PopupButtonExt();
 		this.componentPopupSelection
 		.addClickListener(new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
@@ -97,6 +97,7 @@ public class MultiSelectComp<T> extends CustomField<T> {
 		this.componentPopupSelection.addStyleName("nonPopupIndicator");
 		this.componentPopupSelection.addStyleName(UIConstants.SELECT_BG);
 		this.componentPopupSelection.setWidth("25px");
+		this.componentPopupSelection.setPopupPositionComponent(content);
 
 		CssLayout btnWrapper = new CssLayout();
 		btnWrapper.setWidth(SIZE_UNDEFINED, Sizeable.Unit.PIXELS);
@@ -144,7 +145,6 @@ public class MultiSelectComp<T> extends CustomField<T> {
 		}
 
 		popupContent.setWidth(widthVal);
-
 		componentPopupSelection.setContent(popupContent);
 
 	}
@@ -276,9 +276,4 @@ public class MultiSelectComp<T> extends CustomField<T> {
 
 	}
 
-	@Override
-	public Class<? extends T> getType() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }
