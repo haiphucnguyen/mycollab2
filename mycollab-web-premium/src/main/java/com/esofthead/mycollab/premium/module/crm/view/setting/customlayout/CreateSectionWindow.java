@@ -22,6 +22,7 @@ import com.esofthead.mycollab.form.view.builder.type.DynaSection;
 import com.esofthead.mycollab.form.view.builder.type.DynaSection.LayoutType;
 import com.esofthead.mycollab.module.crm.view.setting.ICrmCustomView;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
+import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -81,6 +82,7 @@ public class CreateSectionWindow extends Window {
 					}
 				});
 		saveBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+		saveBtn.setIcon(MyCollabResource.newResource("icons/16/save.png"));
 		controlLayout.addComponent(saveBtn);
 		controlLayout.setComponentAlignment(saveBtn, Alignment.MIDDLE_LEFT);
 

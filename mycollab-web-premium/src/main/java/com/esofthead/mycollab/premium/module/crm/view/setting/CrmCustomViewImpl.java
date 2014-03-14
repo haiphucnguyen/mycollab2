@@ -167,6 +167,7 @@ public class CrmCustomViewImpl extends AbstractPageView implements
 					}
 				});
 		saveBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+		saveBtn.setIcon(MyCollabResource.newResource("icons/16/save.png"));
 		buttonsLayout.addComponent(saveBtn);
 
 		Button cancelBtn = new Button(

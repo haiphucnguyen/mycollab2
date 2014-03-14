@@ -143,6 +143,8 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends
 				saveSearchCriteria(queryText);
 			}
 		});
+		saveBtn.setStyleName(UIConstants.THEME_GREEN_LINK);  
+		saveBtn.setIcon(MyCollabResource.newResource("icons/16/save.png"));
 		filterBox.addComponent(saveBtn);
 
 		Button cancelBtn = new Button("Cancel", new Button.ClickListener() {

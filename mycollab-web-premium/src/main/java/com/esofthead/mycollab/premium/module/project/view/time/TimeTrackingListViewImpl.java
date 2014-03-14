@@ -348,6 +348,7 @@ TimeTrackingListView {
 				}
 			});
 			saveBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+			saveBtn.setIcon(MyCollabResource.newResource("icons/16/save.png"));
 			UiUtils.addComponent(controllGroupBtn, saveBtn,
 					Alignment.MIDDLE_LEFT);
 			Button cancelBtn = new Button("Cancel", new Button.ClickListener() {

@@ -33,6 +33,7 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
+import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.server.Sizeable;
 import com.vaadin.shared.ui.MarginInfo;
@@ -400,6 +401,7 @@ public class BillingSummaryViewImpl extends AbstractPageView implements
                 }
             });
             saveBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+            saveBtn.setIcon(MyCollabResource.newResource("icons/16/save.png"));
             controlBtns.addComponent(saveBtn);
             controlBtns.setComponentAlignment(saveBtn, Alignment.MIDDLE_CENTER);
 
