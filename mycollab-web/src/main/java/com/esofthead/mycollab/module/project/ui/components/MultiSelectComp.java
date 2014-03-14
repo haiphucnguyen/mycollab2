@@ -57,21 +57,6 @@ public abstract class MultiSelectComp<T> extends CustomField<T> {
 	public MultiSelectComp(final String displayName) {
 		propertyDisplayField = displayName;
 		items = createData();
-	}
-
-	public MultiSelectComp(final String displayName, List<T> data) {
-		propertyDisplayField = displayName;
-		items = data;
-	}
-
-	protected List<T> createData() {
-		return null;
-	}
-
-	@Override
-	protected Component initContent() {
-		final HorizontalLayout content = new HorizontalLayout();
-		content.setSpacing(false);
 
 		this.componentsDisplay = new TextField();
 		this.componentsDisplay.setNullRepresentation("");
@@ -89,6 +74,21 @@ public abstract class MultiSelectComp<T> extends CustomField<T> {
 				MultiSelectComp.this.initContentPopup();
 			}
 		});
+	}
+
+	public MultiSelectComp(final String displayName, List<T> data) {
+		this(displayName);
+		items = data;		
+	}
+
+	protected List<T> createData() {
+		return null;
+	}
+
+	@Override
+	protected Component initContent() {
+		final HorizontalLayout content = new HorizontalLayout();
+		content.setSpacing(false);
 
 		content.addComponent(this.componentsDisplay);
 		content.setComponentAlignment(this.componentsDisplay,

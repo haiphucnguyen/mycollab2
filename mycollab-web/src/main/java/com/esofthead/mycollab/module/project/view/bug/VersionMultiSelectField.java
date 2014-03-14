@@ -36,7 +36,7 @@ import com.vaadin.data.Property;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-public class VersionMultiSelectField extends MultiSelectComp<Version> {
+public class VersionMultiSelectField extends MultiSelectComp {
 	private static final long serialVersionUID = 1L;
 
 	public VersionMultiSelectField() {
@@ -69,7 +69,7 @@ public class VersionMultiSelectField extends MultiSelectComp<Version> {
 	}
 
 	@Override
-	public Class<Version> getType() {
-		return Version.class;
+	public Class<?> getType() {
+		return Object.class;
 	}
 }
