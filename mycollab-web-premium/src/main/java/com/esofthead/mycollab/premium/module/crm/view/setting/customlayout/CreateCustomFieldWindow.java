@@ -147,6 +147,7 @@ public class CreateCustomFieldWindow extends Window {
 					}
 				});
 		saveBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+		saveBtn.setIcon(MyCollabResource.newResource("icons/16/save.png"));
 		buttonControls.addComponent(saveBtn);
 		buttonControls.setComponentAlignment(saveBtn, Alignment.MIDDLE_CENTER);
 

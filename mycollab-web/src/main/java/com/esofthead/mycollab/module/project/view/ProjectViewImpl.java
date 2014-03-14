@@ -382,6 +382,7 @@ public class ProjectViewImpl extends AbstractPageView implements ProjectView {
 
 
 		VerticalLayout popupButtonsControl = new VerticalLayout();
+		popupButtonsControl.setSpacing(true);
 		popupButtonsControl.setWidth("150px");
 
 		Button createPhaseBtn = new Button("Create Phase",

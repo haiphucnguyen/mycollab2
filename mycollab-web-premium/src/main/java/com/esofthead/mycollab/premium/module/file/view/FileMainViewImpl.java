@@ -1000,6 +1000,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 					}
 				});
 				saveBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+				saveBtn.setIcon(MyCollabResource.newResource("icons/16/save.png"));
 				layout.addComponent(saveBtn);
 
 				Button cancelBtn = new Button("Cancel", new ClickListener() {
