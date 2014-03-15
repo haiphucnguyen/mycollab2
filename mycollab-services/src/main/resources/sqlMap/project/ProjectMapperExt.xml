@@ -32,121 +32,70 @@
     </resultMap>
 
     <sql id="querySearchCriteria">
-        <if test="searchCriteria.username != null">
-            <![CDATA[
+        <![CDATA[
+        #set($searchCriteria = $_parameter.searchCriteria)
+        
+        #ifnotnull($searchCriteria.username)
             ${searchCriteria.username.operation}
             (SELECT COUNT(*)
             FROM s_user as user 
             WHERE m_prj_project.owner = user.username 
-                AND user.username = #{searchCriteria.username.value} ) > 0
-            ]]>
-        </if>
-        <if test="searchCriteria.ownerName != null">
-            <![CDATA[
-            ${searchCriteria.ownerName.operation}
-            (SELECT COUNT(*) 
-             FROM s_user AS user
-             WHERE m_prj_project.owner = user.username 
-                 AND (concat(user.firstname, ' ', LTRIM(concat(IFNULL(user.middlename, ''), ' ')), user.lastname) like '%${searchCriteria.ownerName.value}%') ) > 0
-            ]]>
-        </if>
-        <if test="searchCriteria.accountName != null">
-            <![CDATA[
-            ${searchCriteria.accountName.operation}
-            (SELECT COUNT(*) 
-             FROM m_crm_account 
-             WHERE m_prj_project.account = m_crm_account.id 
-                 AND m_crm_account.accountName LIKE '%${searchCriteria.accountName.value}%') > 0
-            ]]>
-        </if>
-        <if test="searchCriteria.projectStatuses != null">
+                AND user.username = @{searchCriteria.username.value} ) > 0
+        #end
+        
+        #ifnotnull($searchCriteria.projectStatuses)
             ${searchCriteria.projectStatuses.operation}
             m_prj_project.projectStatus IN
-            <foreach close=")"
-                collection="searchCriteria.projectStatuses.values" item="status"
-                open="(" separator=",">
-                #{status}
-            </foreach>
-        </if>
-        <if test="searchCriteria.projectType != null">
-            ${searchCriteria.projectType.operation}
-            m_prj_project.projectType
-            like
-            '%${searchCriteria.projectType.value}%'
-        </if>
-        <if test="searchCriteria.saccountid != null">
-            <![CDATA[${searchCriteria.saccountid.operation} m_prj_project.sAccountId = #{searchCriteria.saccountid.value,jdbcType=NUMERIC}]]>
-        </if>
-        <if test="searchCriteria.projectName != null">
-          <![CDATA[
-            ${searchCriteria.projectName.operation} m_prj_project.name like '%${searchCriteria.projectName.value}%'
-            ]]>
-        </if>
-        <if test="searchCriteria.involvedMember != null">
-          <![CDATA[
+            #repeat(${searchCriteria.projectStatuses.values} $status "," "(" ")")
+                @{status}
+            #end
+        #end
+        
+        #ifnotnull($searchCriteria.saccountid)
+            ${searchCriteria.saccountid.operation} m_prj_project.sAccountId = @{searchCriteria.saccountid.value,jdbcType=NUMERIC}
+        #end
+        
+        #ifnotnull($searchCriteria.involvedMember)
             ${searchCriteria.involvedMember.operation} 
-            (SELECT COUNT(*) FROM m_prj_member WHERE m_prj_member.status='Active' AND m_prj_member.projectId=m_prj_project.id AND m_prj_member.username=#{searchCriteria.involvedMember.value}) > 0
-            ]]>
-        </if>
+            (SELECT COUNT(*) FROM m_prj_member 
+                WHERE m_prj_member.status='Active' AND m_prj_member.projectId=m_prj_project.id AND m_prj_member.username=@{searchCriteria.involvedMember.value}) > 0
+        #end
+        
+        #selectExpr($searchCriteria.extraFields)
+        ]]>
     </sql>
 
     <sql id="queryTotalCountSearchCriteria">
-        <if test="searchCriteria.username != null">
-            <![CDATA[
+        <![CDATA[
+        #set($searchCriteria = $_parameter.searchCriteria)
+        
+        #ifnotnull($searchCriteria.username)
             ${searchCriteria.username.operation}
             (SELECT COUNT(*) 
              FROM s_user as user 
              WHERE m_prj_project.owner = user.username 
-                 AND user.username = #{searchCriteria.username.value} ) > 0
-            ]]>
-        </if>
-        <if test="searchCriteria.ownerName != null">
-            <![CDATA[
-            ${searchCriteria.ownerName.operation}
-            (SELECT COUNT(*) 
-             FROM s_user as user 
-             WHERE m_prj_project.owner = user.username 
-                 AND (concat(user.firstname, ' ', LTRIM(concat(IFNULL(user.middlename, ''), ' ')), user.lastname) like '%${searchCriteria.ownerName.value}%') ) > 0
-            ]]>
-        </if>
-        <if test="searchCriteria.accountName != null">
-            <![CDATA[
-            ${searchCriteria.accountName.operation}
-            (SELECT COUNT(*)
-                FROM m_crm_account 
-                WHERE m_prj_project.account = m_crm_account.id 
-                    AND m_crm_account.accountName LIKE '%${searchCriteria.accountName.value}%') > 0
-            ]]>
-        </if>
-        <if test="searchCriteria.projectStatuses != null">
+                 AND user.username = @{searchCriteria.username.value} ) > 0
+        #end
+        #ifnotnull($searchCriteria.projectStatuses)
             ${searchCriteria.projectStatuses.operation}
             m_prj_project.projectStatus IN
-            <foreach close=")"
-                collection="searchCriteria.projectStatuses.values" item="status"
-                open="(" separator=",">
-                #{status}
-            </foreach>
-        </if>
-        <if test="searchCriteria.projectType != null">
-            ${searchCriteria.projectType.operation}
-            m_prj_project.projectType
-            like
-            '%${searchCriteria.projectType.value}%'
-        </if>
-        <if test="searchCriteria.saccountid != null">
-            <![CDATA[${searchCriteria.saccountid.operation} m_prj_project.sAccountId = #{searchCriteria.saccountid.value,jdbcType=NUMERIC}]]>
-        </if>
-        <if test="searchCriteria.projectName != null">
-          <![CDATA[
-            ${searchCriteria.projectName.operation} m_prj_project.name like '%${searchCriteria.projectName.value}%'
-            ]]>
-        </if>
-        <if test="searchCriteria.involvedMember != null">
-          <![CDATA[
+            #repeat(${searchCriteria.projectStatuses.values} $status "," "(" ")")
+                @{status}
+            #end
+        #end
+        
+        #ifnotnull($searchCriteria.saccountid)
+            ${searchCriteria.saccountid.operation} m_prj_project.sAccountId = @{searchCriteria.saccountid.value,jdbcType=NUMERIC}
+        #end
+        
+        #ifnotnull($searchCriteria.involvedMember)
             ${searchCriteria.involvedMember.operation} 
-            (SELECT COUNT(*) FROM m_prj_member WHERE m_prj_member.status='Active' AND m_prj_member.projectId=m_prj_project.id AND m_prj_member.username=#{searchCriteria.involvedMember.value}) > 0
-            ]]>
-        </if>
+            (SELECT COUNT(*) FROM m_prj_member 
+                WHERE m_prj_member.status='Active' AND m_prj_member.projectId=m_prj_project.id AND m_prj_member.username=@{searchCriteria.involvedMember.value}) > 0
+        #end
+        
+        #totalCountExpr($searchCriteria.extraFields)
+        ]]>
     </sql>
 
     <sql id="selectSimpleProject">
@@ -172,47 +121,40 @@
     </sql>
 
     <select id="findProjectById" parameterType="java.lang.Integer"
-        resultMap="SimpleProjectResult">
+        resultMap="SimpleProjectResult" lang="velocity">
         <include refid="selectSimpleProject" />
 
-        WHERE m_prj_project.id=#{projectId, jdbcType=NUMERIC}
+        WHERE m_prj_project.id=@{projectId, jdbcType=NUMERIC}
     </select>
 
-    <select id="getTotalCount" resultType="int" parameterType="ProjectSearchCriteria">
+    <select id="getTotalCount" resultType="int" parameterType="ProjectSearchCriteria" lang="velocity">
         SELECT count(*) as totalCount FROM m_prj_project
-        <if test="searchCriteria != null">
-            <trim prefix="WHERE" prefixOverrides="AND | OR ">
-                1=1
-                <include
-                    refid="com.esofthead.mycollab.module.project.dao.ProjectMapperExt.queryTotalCountSearchCriteria" />
-            </trim>
-        </if>
+        #ifnotnull($_parameter.searchCriteria)
+            #trim("WHERE" "AND|OR")
+                <include refid="queryTotalCountSearchCriteria" />
+            #end
+        #end
     </select>
 
-    <select id="getUserProjectKeys" resultType="java.lang.Integer">
+    <select id="getUserProjectKeys" resultType="java.lang.Integer" lang="velocity">
         SELECT m_prj_project.id
         FROM m_prj_project
-        <if test="searchCriteria != null">
-            <trim prefix="WHERE" prefixOverrides="AND | OR ">
-                1=1
-                <include
-                    refid="com.esofthead.mycollab.module.project.dao.ProjectMapperExt.querySearchCriteria" />
-            </trim>
-        </if>
+        #ifnotnull($_parameter.searchCriteria)
+            #trim("WHERE" "AND|OR")
+                <include refid="querySearchCriteria" />
+            #end
+        #end
     </select>
 
 
     <select id="findPagableListByCriteria" resultMap="SimpleProjectResult"
-        parameterType="ProjectSearchCriteria">
-        <include
-            refid="com.esofthead.mycollab.module.project.dao.ProjectMapperExt.selectSimpleProject" />
-        <if test="searchCriteria != null">
-            <trim prefix="WHERE" prefixOverrides="AND | OR ">
-                1=1
-                <include
-                    refid="com.esofthead.mycollab.module.project.dao.ProjectMapperExt.querySearchCriteria" />
-            </trim>
-        </if>
+        parameterType="ProjectSearchCriteria" lang="velocity">
+        <include refid="selectSimpleProject" />
+        #ifnotnull($_parameter.searchCriteria)
+            #trim("WHERE" "AND|OR")
+                <include refid="querySearchCriteria" />
+            #end
+        #end
     </select>
 
     <sql id="selectSimpleActivityStream">
@@ -233,39 +175,37 @@
     </sql>
 
     <select id="getProjectActivityStreams" parameterType="ActivityStreamSearchCriteria"
-        resultMap="ActivityStreamResult">
+        resultMap="ActivityStreamResult" lang="velocity">
         <include
             refid="com.esofthead.mycollab.module.project.dao.ProjectMapperExt.selectSimpleActivityStream" />
-        <if test="searchCriteria != null">
-            <trim prefix="WHERE" prefixOverrides="AND | OR ">
-                1=1
+        #ifnotnull($_parameter.searchCriteria)
+            #trim("WHERE" "AND|OR")
                 <include
                     refid="com.esofthead.mycollab.common.dao.ActivityStreamMapperExt.querySearchCriteria" />
-            </trim>
-            <include
+            #end
+        #end    
+        <include
                 refid="com.esofthead.mycollab.common.dao.ActivityStreamMapperExt.orderStatement" />
-        </if>
     </select>
 
     <select id="getTotalActivityStream" resultType="int"
-        parameterType="ActivityStreamSearchCriteria">
+        parameterType="ActivityStreamSearchCriteria" lang="velocity">
         SELECT count(*) as totalCount FROM s_activitystream
-        <if test="searchCriteria != null">
-            <trim prefix="WHERE" prefixOverrides="AND | OR ">
-                1=1
+        #ifnotnull($_parameter.searchCriteria)
+            #trim("WHERE" "AND|OR")
                 <include
                     refid="com.esofthead.mycollab.common.dao.ActivityStreamMapperExt.querySearchCriteria" />
-            </trim>
-        </if>
+            #end
+        #end
     </select>
 
     <select id="getSubdomainOfProject" resultType="java.lang.String"
-        parameterType="java.lang.Integer">
+        parameterType="java.lang.Integer" lang="velocity">
         <![CDATA[
         SELECT s_account.subdomain
             FROM s_account, m_prj_project
             WHERE m_prj_project.sAccountId=s_account.id AND
-                  m_prj_project.id=#{projectId,jdbcType=NUMERIC}
+                  m_prj_project.id=@{projectId,jdbcType=NUMERIC}
                   ]]>
     </select>
 
@@ -275,6 +215,7 @@
         <result column="projectId" jdbcType="INTEGER"
             property="projectId" />
     </resultMap>
+    
     <select id="findProjectRelayEmailNotifications" resultMap="ProjectEmailRelayNotificationResult">
         (SELECT s_relay_email_notification.id, s_relay_email_notification.sAccountId, s_relay_email_notification.type, 
                     s_relay_email_notification.typeid, s_relay_email_notification.action, 
