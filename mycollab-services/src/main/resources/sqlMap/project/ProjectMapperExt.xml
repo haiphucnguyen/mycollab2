@@ -18,6 +18,8 @@
         <result column="numOpenRisks" jdbcType="INTEGER"
             property="numOpenRisks" />
         <result column="numRisks" jdbcType="INTEGER" property="numRisks" />
+        <result column="numActiveMembers" jdbcType="INTEGER"
+            property="numActiveMembers" />
         <association property="currency"
             resultMap="com.esofthead.mycollab.common.dao.CurrencyMapper.BaseResultMap"
             columnPrefix="curr_"></association>
@@ -111,6 +113,7 @@
         (SELECT COUNT(*) FROM m_tracker_bug WHERE m_tracker_bug.projectid=m_prj_project.id AND m_tracker_bug.status IN ('Open', 'In Progress', 'Reopenned')) AS numOpenBugs, 
         (SELECT COUNT(*) FROM m_prj_task WHERE m_prj_task.projectid=m_prj_project.id) AS numTasks,
         (SELECT COUNT(*) FROM m_prj_task WHERE m_prj_task.projectid=m_prj_project.id AND m_prj_task.status='Open') AS numOpenTasks,
+        (SELECT COUNT(*) FROM m_prj_member WHERE m_prj_member.projectId = m_prj_project.id AND m_prj_member.status='Active') AS numActiveMembers, 
         s_currency.id, s_currency.shortname AS curr_shortname, s_currency.fullname AS curr_fullname, s_currency.isocode AS curr_isocode, 
         s_currency.symbol AS curr_symbol, s_currency.conversionrate AS curr_conversionrate
         FROM m_prj_project 
@@ -127,7 +130,8 @@
         WHERE m_prj_project.id=@{projectId, jdbcType=NUMERIC}
     </select>
 
-    <select id="getTotalCount" resultType="int" parameterType="ProjectSearchCriteria" lang="velocity">
+    <select id="getTotalCount" resultType="int" parameterType="ProjectSearchCriteria"
+        lang="velocity">
         SELECT count(*) as totalCount FROM m_prj_project
         #ifnotnull($_parameter.searchCriteria)
             #trim("WHERE" "AND|OR")
@@ -136,13 +140,14 @@
         #end
     </select>
 
-    <select id="getUserProjectKeys" resultType="java.lang.Integer" lang="velocity">
+    <select id="getUserProjectKeys" resultType="java.lang.Integer"
+        lang="velocity">
         SELECT m_prj_project.id
         FROM m_prj_project
         #ifnotnull($_parameter.searchCriteria)
-            #trim("WHERE" "AND|OR")
-                <include refid="querySearchCriteria" />
-            #end
+        #trim("WHERE" "AND|OR")
+        <include refid="querySearchCriteria" />
+        #end
         #end
     </select>
 
@@ -151,9 +156,9 @@
         parameterType="ProjectSearchCriteria" lang="velocity">
         <include refid="selectSimpleProject" />
         #ifnotnull($_parameter.searchCriteria)
-            #trim("WHERE" "AND|OR")
-                <include refid="querySearchCriteria" />
-            #end
+        #trim("WHERE" "AND|OR")
+        <include refid="querySearchCriteria" />
+        #end
         #end
     </select>
 
@@ -179,23 +184,23 @@
         <include
             refid="com.esofthead.mycollab.module.project.dao.ProjectMapperExt.selectSimpleActivityStream" />
         #ifnotnull($_parameter.searchCriteria)
-            #trim("WHERE" "AND|OR")
-                <include
-                    refid="com.esofthead.mycollab.common.dao.ActivityStreamMapperExt.querySearchCriteria" />
-            #end
-        #end    
+        #trim("WHERE" "AND|OR")
         <include
-                refid="com.esofthead.mycollab.common.dao.ActivityStreamMapperExt.orderStatement" />
+            refid="com.esofthead.mycollab.common.dao.ActivityStreamMapperExt.querySearchCriteria" />
+        #end
+        #end
+        <include
+            refid="com.esofthead.mycollab.common.dao.ActivityStreamMapperExt.orderStatement" />
     </select>
 
     <select id="getTotalActivityStream" resultType="int"
         parameterType="ActivityStreamSearchCriteria" lang="velocity">
         SELECT count(*) as totalCount FROM s_activitystream
         #ifnotnull($_parameter.searchCriteria)
-            #trim("WHERE" "AND|OR")
-                <include
-                    refid="com.esofthead.mycollab.common.dao.ActivityStreamMapperExt.querySearchCriteria" />
-            #end
+        #trim("WHERE" "AND|OR")
+        <include
+            refid="com.esofthead.mycollab.common.dao.ActivityStreamMapperExt.querySearchCriteria" />
+        #end
         #end
     </select>
 
@@ -212,119 +217,216 @@
     <resultMap id="ProjectEmailRelayNotificationResult"
         type="com.esofthead.mycollab.module.project.domain.ProjectRelayEmailNotification"
         extends="com.esofthead.mycollab.common.dao.RelayEmailNotificationMapperExt.SimpleEmailRelayNotificationResult">
-        <result column="projectId" jdbcType="INTEGER"
-            property="projectId" />
+        <result column="projectId" jdbcType="INTEGER" property="projectId" />
     </resultMap>
-    
+
     <select id="findProjectRelayEmailNotifications" resultMap="ProjectEmailRelayNotificationResult">
-        (SELECT s_relay_email_notification.id, s_relay_email_notification.sAccountId, s_relay_email_notification.type, 
-                    s_relay_email_notification.typeid, s_relay_email_notification.action, 
-                    s_relay_email_notification.extraTypeId, s_relay_email_notification.emailHandlerBean,
-                    s_relay_email_notification.changeby, s_relay_email_notification.changeComment,
-                    concat(changeUser.firstname, ' ', LTRIM(IFNULL(changeUser.middlename, '')), changeUser.lastname) as changeByUserFullName,
-                    notifier.firstname AS notifiers_firstname, notifier.lastname AS notifiers_lastname, notifier.username AS notifiers_username,
-                    notifier.timezone AS notifiers_timezone,
-                    notifier.email AS notifiers_email, m_tracker_bug.projectid AS projectId 
+        (SELECT s_relay_email_notification.id,
+        s_relay_email_notification.sAccountId,
+        s_relay_email_notification.type,
+        s_relay_email_notification.typeid,
+        s_relay_email_notification.action,
+        s_relay_email_notification.extraTypeId,
+        s_relay_email_notification.emailHandlerBean,
+        s_relay_email_notification.changeby,
+        s_relay_email_notification.changeComment,
+        concat(changeUser.firstname, ' ',
+        LTRIM(IFNULL(changeUser.middlename, '')), changeUser.lastname)
+        as changeByUserFullName,
+        notifier.firstname AS notifiers_firstname, notifier.lastname AS notifiers_lastname,
+        notifier.username AS notifiers_username,
+        notifier.timezone AS notifiers_timezone,
+        notifier.email AS notifiers_email, m_tracker_bug.projectid AS projectId
         FROM s_relay_email_notification
-             LEFT OUTER JOIN s_user AS changeUser ON (changeUser.username=s_relay_email_notification.changeby)
-             LEFT OUTER JOIN m_monitor_item ON (m_monitor_item.typeid=s_relay_email_notification.typeid AND s_relay_email_notification.type=m_monitor_item.type)
-             LEFT OUTER JOIN s_user AS notifier ON (m_monitor_item.user=notifier.username)
-             JOIN m_tracker_bug ON (s_relay_email_notification.type="Project-Bug" AND m_tracker_bug.id=s_relay_email_notification.typeid)
-       )
-       UNION
-       (SELECT s_relay_email_notification.id, s_relay_email_notification.sAccountId, s_relay_email_notification.type, 
-                    s_relay_email_notification.typeid, s_relay_email_notification.action, 
-                    s_relay_email_notification.extraTypeId, s_relay_email_notification.emailHandlerBean,
-                    s_relay_email_notification.changeby, s_relay_email_notification.changeComment,
-                    concat(changeUser.firstname, ' ', LTRIM(IFNULL(changeUser.middlename, '')), changeUser.lastname) as changeByUserFullName,
-                    notifier.firstname AS notifiers_firstname, notifier.lastname AS notifiers_lastname, notifier.username AS notifiers_username,
-                     notifier.timezone AS notifiers_timezone,
-                    notifier.email AS notifiers_email, m_prj_task.projectid AS projectId
-        FROM s_relay_email_notification
-             LEFT OUTER JOIN s_user AS changeUser ON (changeUser.username=s_relay_email_notification.changeby)
-             LEFT OUTER JOIN m_monitor_item ON (m_monitor_item.typeid=s_relay_email_notification.typeid AND s_relay_email_notification.type=m_monitor_item.type)
-             LEFT OUTER JOIN s_user AS notifier ON (m_monitor_item.user=notifier.username)
-             JOIN m_prj_task ON (s_relay_email_notification.type="Project-Task" AND m_prj_task.id=s_relay_email_notification.typeid)
-  		)
-        
+        LEFT OUTER JOIN s_user AS changeUser ON
+        (changeUser.username=s_relay_email_notification.changeby)
+        LEFT OUTER JOIN m_monitor_item ON
+        (m_monitor_item.typeid=s_relay_email_notification.typeid AND
+        s_relay_email_notification.type=m_monitor_item.type)
+        LEFT OUTER JOIN s_user AS notifier ON
+        (m_monitor_item.user=notifier.username)
+        JOIN m_tracker_bug ON (s_relay_email_notification.type="Project-Bug" AND
+        m_tracker_bug.id=s_relay_email_notification.typeid)
+        )
         UNION
-        (SELECT s_relay_email_notification.id, s_relay_email_notification.sAccountId, s_relay_email_notification.type, 
-                    s_relay_email_notification.typeid, s_relay_email_notification.action, 
-                    s_relay_email_notification.extraTypeId, s_relay_email_notification.emailHandlerBean,
-                    s_relay_email_notification.changeby, s_relay_email_notification.changeComment,
-                    concat(changeUser.firstname, ' ', LTRIM(IFNULL(changeUser.middlename, '')), changeUser.lastname) as changeByUserFullName,
-                    notifier.firstname AS notifiers_firstname, notifier.lastname AS notifiers_lastname, notifier.username AS notifiers_username,
-                    notifier.timezone AS notifiers_timezone,
-                    notifier.email AS notifiers_email, m_prj_task_list.projectid AS projectId
-        FROM s_relay_email_notification
-             LEFT OUTER JOIN s_user AS changeUser ON (changeUser.username=s_relay_email_notification.changeby)
-             LEFT OUTER JOIN m_monitor_item ON (m_monitor_item.typeid=s_relay_email_notification.typeid AND s_relay_email_notification.type=m_monitor_item.type)
-             LEFT OUTER JOIN s_user AS notifier ON (m_monitor_item.user=notifier.username)
-             JOIN m_prj_task_list ON (s_relay_email_notification.type="Project-TaskList" AND m_prj_task_list.id=s_relay_email_notification.typeid)
-         )
-        
-         UNION
-        (SELECT s_relay_email_notification.id, s_relay_email_notification.sAccountId, s_relay_email_notification.type, 
-                    s_relay_email_notification.typeid, s_relay_email_notification.action, 
-                    s_relay_email_notification.extraTypeId, s_relay_email_notification.emailHandlerBean,
-                    s_relay_email_notification.changeby, s_relay_email_notification.changeComment,
-                    concat(changeUser.firstname, ' ', LTRIM(IFNULL(changeUser.middlename, '')), changeUser.lastname) as changeByUserFullName,
-                    notifier.firstname AS notifiers_firstname, notifier.lastname AS notifiers_lastname, notifier.username AS notifiers_username,
-                    notifier.timezone AS notifiers_timezone,
-                    notifier.email AS notifiers_email, m_prj_message.projectid AS projectId
-        FROM s_relay_email_notification
-             LEFT OUTER JOIN s_user AS changeUser ON (changeUser.username=s_relay_email_notification.changeby)
-             LEFT OUTER JOIN m_monitor_item ON (m_monitor_item.typeid=s_relay_email_notification.typeid AND s_relay_email_notification.type=m_monitor_item.type)
-             LEFT OUTER JOIN s_user AS notifier ON (m_monitor_item.user=notifier.username)
-             JOIN m_prj_message ON (s_relay_email_notification.type="Project-Message" AND m_prj_message.id=s_relay_email_notification.typeid)    
-        )      
-             
-         UNION
-        (SELECT s_relay_email_notification.id, s_relay_email_notification.sAccountId, s_relay_email_notification.type, 
-                    s_relay_email_notification.typeid, s_relay_email_notification.action, 
-                    s_relay_email_notification.extraTypeId, s_relay_email_notification.emailHandlerBean,
-                    s_relay_email_notification.changeby, s_relay_email_notification.changeComment,
-                    concat(changeUser.firstname, ' ', LTRIM(IFNULL(changeUser.middlename, '')), changeUser.lastname) as changeByUserFullName,
-                    notifier.firstname AS notifiers_firstname, notifier.lastname AS notifiers_lastname,  notifier.username AS notifiers_username,
-                    notifier.timezone AS notifiers_timezone,
-                    notifier.email AS notifiers_email, m_prj_milestone.projectid AS projectId
-        FROM s_relay_email_notification
-             LEFT OUTER JOIN s_user AS changeUser ON (changeUser.username=s_relay_email_notification.changeby)
-             LEFT OUTER JOIN m_monitor_item ON (m_monitor_item.typeid=s_relay_email_notification.typeid AND s_relay_email_notification.type=m_monitor_item.type)
-             LEFT OUTER JOIN s_user AS notifier ON (m_monitor_item.user=notifier.username)
-             JOIN m_prj_milestone ON (s_relay_email_notification.type="Project-Milestone" AND m_prj_milestone.id=s_relay_email_notification.typeid)
-        )      
-             
+        (SELECT s_relay_email_notification.id, s_relay_email_notification.sAccountId,
+        s_relay_email_notification.type,
+        s_relay_email_notification.typeid,
+        s_relay_email_notification.action,
+        s_relay_email_notification.extraTypeId,
+        s_relay_email_notification.emailHandlerBean,
+        s_relay_email_notification.changeby,
+        s_relay_email_notification.changeComment,
+        concat(changeUser.firstname, ' ',
+        LTRIM(IFNULL(changeUser.middlename, '')), changeUser.lastname)
+        as changeByUserFullName,
+        notifier.firstname AS notifiers_firstname, notifier.lastname AS notifiers_lastname,
+        notifier.username AS notifiers_username,
+        notifier.timezone AS notifiers_timezone,
+        notifier.email AS notifiers_email, m_prj_task.projectid AS projectId
+        FROM
+        s_relay_email_notification
+        LEFT OUTER JOIN s_user AS changeUser ON
+        (changeUser.username=s_relay_email_notification.changeby)
+        LEFT OUTER JOIN m_monitor_item ON
+        (m_monitor_item.typeid=s_relay_email_notification.typeid AND
+        s_relay_email_notification.type=m_monitor_item.type)
+        LEFT OUTER JOIN s_user AS notifier ON
+        (m_monitor_item.user=notifier.username)
+        JOIN m_prj_task ON (s_relay_email_notification.type="Project-Task" AND
+        m_prj_task.id=s_relay_email_notification.typeid)
+        )
+
         UNION
-        (SELECT s_relay_email_notification.id, s_relay_email_notification.sAccountId, s_relay_email_notification.type, 
-                    s_relay_email_notification.typeid, s_relay_email_notification.action, 
-                    s_relay_email_notification.extraTypeId, s_relay_email_notification.emailHandlerBean,
-                    s_relay_email_notification.changeby, s_relay_email_notification.changeComment,
-                    concat(changeUser.firstname, ' ', LTRIM(IFNULL(changeUser.middlename, '')), changeUser.lastname) as changeByUserFullName,
-                    notifier.firstname AS notifiers_firstname, notifier.lastname AS notifiers_lastname,  notifier.username AS notifiers_username,
-                    notifier.timezone AS notifiers_timezone,
-                    notifier.email AS notifiers_email, m_prj_risk.projectid AS projectId
-        FROM s_relay_email_notification
-             LEFT OUTER JOIN s_user AS changeUser ON (changeUser.username=s_relay_email_notification.changeby)
-             LEFT OUTER JOIN m_monitor_item ON (m_monitor_item.typeid=s_relay_email_notification.typeid AND s_relay_email_notification.type=m_monitor_item.type)
-             LEFT OUTER JOIN s_user AS notifier ON (m_monitor_item.user=notifier.username)
-             JOIN m_prj_risk ON (s_relay_email_notification.type="Project-Risk" AND m_prj_risk.id=s_relay_email_notification.typeid)  
-         )    
-             
-         UNION
-        (SELECT s_relay_email_notification.id, s_relay_email_notification.sAccountId, s_relay_email_notification.type, 
-                    s_relay_email_notification.typeid, s_relay_email_notification.action, 
-                    s_relay_email_notification.extraTypeId, s_relay_email_notification.emailHandlerBean,
-                    s_relay_email_notification.changeby, s_relay_email_notification.changeComment,
-                    concat(changeUser.firstname, ' ', LTRIM(IFNULL(changeUser.middlename, '')), changeUser.lastname) as changeByUserFullName,
-                    notifier.firstname AS notifiers_firstname, notifier.lastname AS notifiers_lastname,
-                    notifier.username AS notifiers_username, notifier.timezone AS notifiers_timezone,
-                    notifier.email AS notifiers_email, m_prj_problem.projectid AS projectId
-        FROM s_relay_email_notification
-             LEFT OUTER JOIN s_user AS changeUser ON (changeUser.username=s_relay_email_notification.changeby)
-             LEFT OUTER JOIN m_monitor_item ON (m_monitor_item.typeid=s_relay_email_notification.typeid AND s_relay_email_notification.type=m_monitor_item.type)
-             LEFT OUTER JOIN s_user AS notifier ON (m_monitor_item.user=notifier.username)
-             JOIN m_prj_problem ON (s_relay_email_notification.type="Project-Problem" AND m_prj_problem.id=s_relay_email_notification.typeid)     
-         )            
+        (SELECT s_relay_email_notification.id,
+        s_relay_email_notification.sAccountId,
+        s_relay_email_notification.type,
+        s_relay_email_notification.typeid,
+        s_relay_email_notification.action,
+        s_relay_email_notification.extraTypeId,
+        s_relay_email_notification.emailHandlerBean,
+        s_relay_email_notification.changeby,
+        s_relay_email_notification.changeComment,
+        concat(changeUser.firstname, ' ',
+        LTRIM(IFNULL(changeUser.middlename, '')), changeUser.lastname)
+        as changeByUserFullName,
+        notifier.firstname AS notifiers_firstname, notifier.lastname AS notifiers_lastname,
+        notifier.username AS notifiers_username,
+        notifier.timezone AS notifiers_timezone,
+        notifier.email AS notifiers_email, m_prj_task_list.projectid AS projectId
+        FROM
+        s_relay_email_notification
+        LEFT OUTER JOIN s_user AS changeUser ON
+        (changeUser.username=s_relay_email_notification.changeby)
+        LEFT OUTER JOIN m_monitor_item ON
+        (m_monitor_item.typeid=s_relay_email_notification.typeid AND
+        s_relay_email_notification.type=m_monitor_item.type)
+        LEFT OUTER JOIN s_user AS notifier ON
+        (m_monitor_item.user=notifier.username)
+        JOIN m_prj_task_list ON
+        (s_relay_email_notification.type="Project-TaskList" AND
+        m_prj_task_list.id=s_relay_email_notification.typeid)
+        )
+
+        UNION
+        (SELECT s_relay_email_notification.id,
+        s_relay_email_notification.sAccountId,
+        s_relay_email_notification.type,
+        s_relay_email_notification.typeid,
+        s_relay_email_notification.action,
+        s_relay_email_notification.extraTypeId,
+        s_relay_email_notification.emailHandlerBean,
+        s_relay_email_notification.changeby,
+        s_relay_email_notification.changeComment,
+        concat(changeUser.firstname, ' ',
+        LTRIM(IFNULL(changeUser.middlename, '')), changeUser.lastname)
+        as changeByUserFullName,
+        notifier.firstname AS notifiers_firstname, notifier.lastname AS notifiers_lastname,
+        notifier.username AS notifiers_username,
+        notifier.timezone AS notifiers_timezone,
+        notifier.email AS notifiers_email, m_prj_message.projectid AS projectId
+        FROM
+        s_relay_email_notification
+        LEFT OUTER JOIN s_user AS changeUser ON
+        (changeUser.username=s_relay_email_notification.changeby)
+        LEFT OUTER JOIN m_monitor_item ON
+        (m_monitor_item.typeid=s_relay_email_notification.typeid AND
+        s_relay_email_notification.type=m_monitor_item.type)
+        LEFT OUTER JOIN s_user AS notifier ON
+        (m_monitor_item.user=notifier.username)
+        JOIN m_prj_message ON (s_relay_email_notification.type="Project-Message"
+        AND m_prj_message.id=s_relay_email_notification.typeid)
+        )
+
+        UNION
+        (SELECT s_relay_email_notification.id,
+        s_relay_email_notification.sAccountId,
+        s_relay_email_notification.type,
+        s_relay_email_notification.typeid,
+        s_relay_email_notification.action,
+        s_relay_email_notification.extraTypeId,
+        s_relay_email_notification.emailHandlerBean,
+        s_relay_email_notification.changeby,
+        s_relay_email_notification.changeComment,
+        concat(changeUser.firstname, ' ',
+        LTRIM(IFNULL(changeUser.middlename, '')), changeUser.lastname)
+        as changeByUserFullName,
+        notifier.firstname AS notifiers_firstname, notifier.lastname AS notifiers_lastname,
+        notifier.username AS notifiers_username,
+        notifier.timezone AS notifiers_timezone,
+        notifier.email AS notifiers_email, m_prj_milestone.projectid AS projectId
+        FROM
+        s_relay_email_notification
+        LEFT OUTER JOIN s_user AS changeUser ON
+        (changeUser.username=s_relay_email_notification.changeby)
+        LEFT OUTER JOIN m_monitor_item ON
+        (m_monitor_item.typeid=s_relay_email_notification.typeid AND
+        s_relay_email_notification.type=m_monitor_item.type)
+        LEFT OUTER JOIN s_user AS notifier ON
+        (m_monitor_item.user=notifier.username)
+        JOIN m_prj_milestone ON
+        (s_relay_email_notification.type="Project-Milestone" AND
+        m_prj_milestone.id=s_relay_email_notification.typeid)
+        )
+
+        UNION
+        (SELECT s_relay_email_notification.id,
+        s_relay_email_notification.sAccountId,
+        s_relay_email_notification.type,
+        s_relay_email_notification.typeid,
+        s_relay_email_notification.action,
+        s_relay_email_notification.extraTypeId,
+        s_relay_email_notification.emailHandlerBean,
+        s_relay_email_notification.changeby,
+        s_relay_email_notification.changeComment,
+        concat(changeUser.firstname, ' ',
+        LTRIM(IFNULL(changeUser.middlename, '')), changeUser.lastname)
+        as changeByUserFullName,
+        notifier.firstname AS notifiers_firstname, notifier.lastname AS notifiers_lastname,
+        notifier.username AS notifiers_username,
+        notifier.timezone AS notifiers_timezone,
+        notifier.email AS notifiers_email, m_prj_risk.projectid AS projectId
+        FROM
+        s_relay_email_notification
+        LEFT OUTER JOIN s_user AS changeUser ON
+        (changeUser.username=s_relay_email_notification.changeby)
+        LEFT OUTER JOIN m_monitor_item ON
+        (m_monitor_item.typeid=s_relay_email_notification.typeid AND
+        s_relay_email_notification.type=m_monitor_item.type)
+        LEFT OUTER JOIN s_user AS notifier ON
+        (m_monitor_item.user=notifier.username)
+        JOIN m_prj_risk ON (s_relay_email_notification.type="Project-Risk" AND
+        m_prj_risk.id=s_relay_email_notification.typeid)
+        )
+
+        UNION
+        (SELECT s_relay_email_notification.id,
+        s_relay_email_notification.sAccountId,
+        s_relay_email_notification.type,
+        s_relay_email_notification.typeid,
+        s_relay_email_notification.action,
+        s_relay_email_notification.extraTypeId,
+        s_relay_email_notification.emailHandlerBean,
+        s_relay_email_notification.changeby,
+        s_relay_email_notification.changeComment,
+        concat(changeUser.firstname, ' ',
+        LTRIM(IFNULL(changeUser.middlename, '')), changeUser.lastname)
+        as changeByUserFullName,
+        notifier.firstname AS notifiers_firstname, notifier.lastname AS notifiers_lastname,
+        notifier.username AS notifiers_username, notifier.timezone AS
+        notifiers_timezone,
+        notifier.email AS notifiers_email, m_prj_problem.projectid AS projectId
+        FROM
+        s_relay_email_notification
+        LEFT OUTER JOIN s_user AS changeUser ON
+        (changeUser.username=s_relay_email_notification.changeby)
+        LEFT OUTER JOIN m_monitor_item ON
+        (m_monitor_item.typeid=s_relay_email_notification.typeid AND
+        s_relay_email_notification.type=m_monitor_item.type)
+        LEFT OUTER JOIN s_user AS notifier ON
+        (m_monitor_item.user=notifier.username)
+        JOIN m_prj_problem ON (s_relay_email_notification.type="Project-Problem"
+        AND m_prj_problem.id=s_relay_email_notification.typeid)
+        )
     </select>
 </mapper>

@@ -44,8 +44,6 @@ public class SimpleProjectMember extends ProjectMember {
 	private int numOpenTasks;
 
 	private int numOpenBugs;
-	
-	private int numActiveMembers;
 
 	private String projectName;
 
@@ -131,14 +129,6 @@ public class SimpleProjectMember extends ProjectMember {
 
 	public void setProjectRoleId(int projectRoleId) {
 		this.projectRoleId = projectRoleId;
-	}
-
-	public int getNumActiveMembers() {
-		return numActiveMembers;
-	}
-
-	public void setNumActiveMembers(int numActiveMembers) {
-		this.numActiveMembers = numActiveMembers;
 	}
 
 	public String getDisplayName() {
