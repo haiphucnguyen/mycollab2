@@ -55,30 +55,6 @@ GenericSearchPanel<ItemTimeLoggingSearchCriteria> {
 		layout.bodyWrap.removeComponent(c);
 	}
 
-
-	/*private HorizontalLayout createSearchTopPanel() {
-		final HorizontalLayout layout = new HorizontalLayout();
-
-		layout.setWidth("100%");
-		layout.setSpacing(true);
-		layout.setMargin(true);
-		layout.setStyleName("hdr-view");
-
-		final Image titleIcon = new Image(null, MyCollabResource
-				.newResource("icons/24/project/time.png"));
-		layout.addComponent(titleIcon);
-
-		final Label searchtitle = new Label(
-				LocalizationHelper
-						.getMessage(TimeTrackingI18nEnum.SEARCH_TIME_TITLE));
-		searchtitle.setStyleName("hdr-text");
-		layout.addComponent(searchtitle);
-		layout.setComponentAlignment(searchtitle, Alignment.MIDDLE_LEFT);
-		layout.setExpandRatio(searchtitle, 1.0f);
-
-		return layout;
-	}*/
-
 	@SuppressWarnings({ "serial", "rawtypes" })
 	private class TimeLoggingAdvancedSearchLayout extends AdvancedSearchLayout {
 
@@ -179,8 +155,6 @@ GenericSearchPanel<ItemTimeLoggingSearchCriteria> {
 			clearBtn.setStyleName(UIConstants.THEME_BLANK_LINK);
 			UiUtils.addComponent(buttonControls, clearBtn, Alignment.MIDDLE_LEFT);
 			buttonControls.setExpandRatio(clearBtn, 1.0f);
-			//buttonControls.setExpandRatio(searchBtn, 1.0f);
-			
 			
 			gridLayout.addComponent(buttonControls, null, 2,0);
 

@@ -617,14 +617,10 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 				basicSearchBody.setMargin(true);
 				UiUtils.addComponent(basicSearchBody,new Label("Name:"), Alignment.MIDDLE_LEFT);
 
-				
 				this.nameField = new TextField();
 				this.nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
 				UiUtils.addComponent(basicSearchBody, this.nameField,
 						Alignment.MIDDLE_CENTER);
-
-				
-				
 
 				this.myItemCheckbox = new CheckBox("My Items");
 				UiUtils.addComponent(basicSearchBody, this.myItemCheckbox,
