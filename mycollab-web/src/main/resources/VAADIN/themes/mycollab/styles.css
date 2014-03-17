@@ -4111,7 +4111,7 @@ div.v-csslayout.member-block {
 
 .milestone-view-header {
 	text-align: center;
-	background: url('icons/grad-light-top2.png') repeat-x left top
+	background: none repeat-x left top
 		rgb(212, 223, 239);
 	height: 30px;
 	color: #5e5e5e;
