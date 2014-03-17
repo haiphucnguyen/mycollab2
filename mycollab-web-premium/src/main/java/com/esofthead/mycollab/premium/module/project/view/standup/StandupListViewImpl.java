@@ -1,6 +1,8 @@
 package com.esofthead.mycollab.premium.module.project.view.standup;
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.vaadin.hene.popupbutton.PopupButton;
@@ -49,7 +51,7 @@ import com.vaadin.ui.VerticalLayout;
  */
 @ViewComponent
 public class StandupListViewImpl extends AbstractPageView implements
-StandupListView {
+		StandupListView {
 	private static final long serialVersionUID = 1L;
 
 	private Label titleLbl;
@@ -70,7 +72,7 @@ StandupListView {
 
 		this.reportInDay = new BeanList<StandupReportService, StandupReportSearchCriteria, SimpleStandupReport>(
 				ApplicationContextUtil
-				.getSpringBean(StandupReportService.class),
+						.getSpringBean(StandupReportService.class),
 				StandupReportRowDisplay.class);
 		this.reportInDay.addStyleName("standupreport-list-content");
 		HorizontalLayout contentWrap = new HorizontalLayout();
@@ -86,15 +88,16 @@ StandupListView {
 		this.addComponent(contentWrap);
 	}
 
-	private RangeDateSearchField getRangeDateSearchField(final Date date1,
-			final Date date2) {
-		if (date1.before(date2)) {
-			return new RangeDateSearchField(date1, date2);
-		} else if (date1.after(date2)) {
-			return new RangeDateSearchField(date2, date1);
-		} else {
-			return new RangeDateSearchField(date1, date2);
-		}
+	private RangeDateSearchField getRangeDateSearchField(final Date date) {
+		GregorianCalendar cal1 = new GregorianCalendar();
+		cal1.setTime(date);
+		cal1.set(Calendar.DAY_OF_MONTH, 1);
+
+		GregorianCalendar cal2 = new GregorianCalendar();
+		cal2.setTime(date);
+		cal2.set(Calendar.DAY_OF_MONTH,
+				cal2.getActualMaximum(Calendar.DAY_OF_MONTH));
+		return new RangeDateSearchField(cal1.getTime(), cal2.getTime());
 	}
 
 	@SuppressWarnings("serial")
@@ -107,14 +110,17 @@ StandupListView {
 					public void valueChange(final ValueChangeEvent event) {
 						final Date selectedDate = (Date) event.getProperty()
 								.getValue();
-						StandupListViewImpl.this.displayReport(selectedDate);
+						GregorianCalendar calendar = new GregorianCalendar();
+						calendar.setTime(selectedDate);
+						StandupListViewImpl.this.displayReport(calendar
+								.getTime());
 						StandupListViewImpl.this.standupCalendar
-						.setLabelTime(AppContext
-								.formatDate(selectedDate));
+								.setLabelTime(AppContext
+										.formatDate(selectedDate));
 						StandupListViewImpl.this.dateChooser
-						.setCaption(AppContext.formatDate(selectedDate));
+								.setCaption(AppContext.formatDate(selectedDate));
 						StandupListViewImpl.this.dateChooser
-						.setPopupVisible(false);
+								.setPopupVisible(false);
 					}
 				});
 
@@ -123,7 +129,7 @@ StandupListView {
 					@Override
 					public void buttonClick(final ClickEvent event) {
 						StandupListViewImpl.this.standupCalendar
-						.getStyleCalendar().showNextYear();
+								.getStyleCalendar().showNextYear();
 						StandupListViewImpl.this.standupCalendar.setLabelTime(AppContext
 								.formatDate(StandupListViewImpl.this.standupCalendar
 										.getStyleCalendar().getShowingDate()));
@@ -136,7 +142,7 @@ StandupListView {
 					@Override
 					public void buttonClick(final ClickEvent event) {
 						StandupListViewImpl.this.standupCalendar
-						.getStyleCalendar().showNextMonth();
+								.getStyleCalendar().showNextMonth();
 						StandupListViewImpl.this.standupCalendar.setLabelTime(AppContext
 								.formatDate(StandupListViewImpl.this.standupCalendar
 										.getStyleCalendar().getShowingDate()));
@@ -149,7 +155,7 @@ StandupListView {
 					@Override
 					public void buttonClick(final ClickEvent event) {
 						StandupListViewImpl.this.standupCalendar
-						.getStyleCalendar().showPreviousMonth();
+								.getStyleCalendar().showPreviousMonth();
 						StandupListViewImpl.this.standupCalendar.setLabelTime(AppContext
 								.formatDate(StandupListViewImpl.this.standupCalendar
 										.getStyleCalendar().getShowingDate()));
@@ -162,7 +168,7 @@ StandupListView {
 					@Override
 					public void buttonClick(final ClickEvent event) {
 						StandupListViewImpl.this.standupCalendar
-						.getStyleCalendar().showPreviousYear();
+								.getStyleCalendar().showPreviousYear();
 						StandupListViewImpl.this.standupCalendar.setLabelTime(AppContext
 								.formatDate(StandupListViewImpl.this.standupCalendar
 										.getStyleCalendar().getShowingDate()));
@@ -175,8 +181,9 @@ StandupListView {
 		final StandupReportSearchCriteria criteria = new StandupReportSearchCriteria();
 		criteria.setProjectId(new NumberSearchField(CurrentProjectVariables
 				.getProjectId()));
-		criteria.setReportDateRange(this.getRangeDateSearchField(new Date(),
-				this.standupCalendar.getStyleCalendar().getShowingDate()));
+		criteria.setReportDateRange(this
+				.getRangeDateSearchField(this.standupCalendar
+						.getStyleCalendar().getShowingDate()));
 		final StandupReportService reportService = ApplicationContextUtil
 				.getSpringBean(StandupReportService.class);
 		final List<GroupItem> reportsCount = reportService
@@ -193,9 +200,9 @@ StandupListView {
 		final StandupReportSearchCriteria searchCriteria = new StandupReportSearchCriteria();
 		searchCriteria.setProjectId(new NumberSearchField(
 				CurrentProjectVariables.getProjectId()));
-		searchCriteria.setOnDate(new DateSearchField(SearchField.AND, date));
+		searchCriteria.setOnDate(new DateSearchField(SearchField.AND,
+				DateSearchField.EQUAL, date));
 		this.setSearchCriteria(searchCriteria);
-		this.standupMissingComp.search(date);
 	}
 
 	@Override
@@ -210,6 +217,8 @@ StandupListView {
 					searchCriteria.getOnDate().getValue());
 			this.standupCalendar.setLabelTime(AppContext
 					.formatDate(searchCriteria.getOnDate().getValue()));
+			this.standupMissingComp.search(searchCriteria.getOnDate()
+					.getValue());
 		}
 	}
 
@@ -225,7 +234,8 @@ StandupListView {
 		headerLeft.setSpacing(true);
 		headerLeft.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
-		headerLeft.addComponent(new Image(null, MyCollabResource.newResource("icons/22/project/standup_selected.png")));
+		headerLeft.addComponent(new Image(null, MyCollabResource
+				.newResource("icons/22/project/standup_selected.png")));
 
 		this.titleLbl = new Label("StandUp Reports for: ");
 		this.titleLbl.addStyleName("hdr-text");
@@ -244,16 +254,16 @@ StandupListView {
 
 		final Button addNewReport = new Button("Add/Edit Report",
 				new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
+					private static final long serialVersionUID = 1L;
 
-			@Override
-			public void buttonClick(final ClickEvent event) {
-				EventBus.getInstance().fireEvent(
-						new StandUpEvent.GotoAdd(
-								StandupListViewImpl.class, null));
+					@Override
+					public void buttonClick(final ClickEvent event) {
+						EventBus.getInstance().fireEvent(
+								new StandUpEvent.GotoAdd(
+										StandupListViewImpl.class, null));
 
-			}
-		});
+					}
+				});
 		addNewReport.setStyleName(UIConstants.THEME_GREEN_LINK);
 		addNewReport.setIcon(MyCollabResource
 				.newResource("icons/16/addRecord.png"));
@@ -264,7 +274,7 @@ StandupListView {
 	}
 
 	public static class StandupReportRowDisplay implements
-	RowDisplayHandler<SimpleStandupReport> {
+			RowDisplayHandler<SimpleStandupReport> {
 		private static final long serialVersionUID = 1L;
 
 		@Override
@@ -295,16 +305,20 @@ StandupListView {
 			userInfo.setSizeUndefined();
 			userInfo.setMargin(true);
 
-			userInfo.addComponent(UserAvatarControlFactory.createUserAvatarEmbeddedComponent(report.getLogByAvatarId(), 100));
-			Button userBtn = new Button(report.getLogByFullName(), new Button.ClickListener() {
-				private static final long serialVersionUID = 1L;
+			userInfo.addComponent(UserAvatarControlFactory
+					.createUserAvatarEmbeddedComponent(
+							report.getLogByAvatarId(), 100));
+			Button userBtn = new Button(report.getLogByFullName(),
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
 
-				@Override
-				public void buttonClick(ClickEvent event) {
-					EventBus.getInstance().fireEvent(
-							new ProjectMemberEvent.GotoRead(this, report.getLogby()));
-				}
-			});
+						@Override
+						public void buttonClick(ClickEvent event) {
+							EventBus.getInstance().fireEvent(
+									new ProjectMemberEvent.GotoRead(this,
+											report.getLogby()));
+						}
+					});
 			userInfo.addComponent(userBtn);
 			userBtn.addStyleName("link");
 			this.addComponent(userInfo);
