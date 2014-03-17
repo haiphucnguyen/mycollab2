@@ -310,7 +310,7 @@ div.v-button-link.v-button-no-margin .v-button-wrap,div.v-button-link:focus
 	width: 4px;
 }
 .small-padding .v-icon {
-	margin:0;
+	margin-right: 2px;
 }
 
 .v-popupbutton .v-button-wrap, .v-popupbutton:active .v-button-wrap {
