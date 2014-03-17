@@ -155,6 +155,7 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends
 				buildFilterBox(null);
 			}
 		});
+		cancelBtn.addStyleName(UIConstants.THEME_BLANK_LINK);
 		filterBox.addComponent(cancelBtn);
 	}
 
@@ -252,7 +253,7 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends
 			buildFieldSelectionBox();
 
 			valueBox = new VerticalLayout();
-			deleteBtn = new Button("Delete", new Button.ClickListener() {
+			deleteBtn = new Button("", new Button.ClickListener() {
 				private static final long serialVersionUID = 1L;
 
 				@Override
@@ -269,6 +270,8 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends
 					}
 				}
 			});
+			deleteBtn.addStyleName(UIConstants.THEME_RED_LINK);
+			deleteBtn.setIcon(MyCollabResource.newResource("icons/16/action/delete.png"));
 
 			this.addComponent(fieldSelectionBox, 2, 0);
 			this.addComponent(compareSelectionBox, 3, 0);

@@ -374,9 +374,7 @@ div.v-button-link.v-button-no-margin .v-button-wrap,div.v-button-link:focus
 	border-top-color: #5F5F5F;
 }
 
-.v-button-graybtn.v-popupbutton .v-popup-indicator {
-	
-} 
+
 .v-button.v-button-redbtn, .v-button-redbtn:focus {
 	background-color:#F64A46;
 	color:white;
@@ -806,6 +804,7 @@ input.v-textfield-pagedtable-pagefield {
 	padding: 3px 0 4px;
 	border-radius: 0px 2px 2px 0px;
 	height: 24px;
+	background: url(icons/16/crm/date_btn.png) no-repeat 50%;
 }
 
 /* Top Menu */
@@ -5975,7 +5974,7 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 	padding: 3px 7px 3px 2px;
 }
 
-.splitbutton .v-popupbutton.greenbtn .v-popup-indicator,.splitbutton .v-popupbutton.graybtn .v-popup-indicator, .splitbutton .v-popupbutton.bluebtn .v-popup-indicator
+.v-button-graybtn.v-popupbutton .v-popup-indicator , .splitbutton .v-popupbutton.greenbtn .v-popup-indicator,.splitbutton .v-popupbutton.graybtn .v-popup-indicator, .splitbutton .v-popupbutton.bluebtn .v-popup-indicator
 	{
 	background: url("icons/sprites.png") no-repeat scroll -6px -10px transparent;
 }
