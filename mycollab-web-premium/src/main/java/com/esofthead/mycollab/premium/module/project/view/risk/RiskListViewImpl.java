@@ -263,31 +263,31 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
 			tableActionControls.addActionItem(
 					MassItemActionHandler.DELETE_ACTION,
 					MyCollabResource.newResource("icons/16/action/delete.png"),
-					"delete");
+					"delete", "Delete");
 		}
 
 		tableActionControls.addActionItem(MassItemActionHandler.MAIL_ACTION,
 				MyCollabResource.newResource("icons/16/action/mail.png"),
-				"mail");
+				"mail", "Mail");
 		tableActionControls.addDownloadActionItem(
 				MassItemActionHandler.EXPORT_PDF_ACTION,
 				MyCollabResource.newResource("icons/16/action/pdf.png"),
-				"export", "export.pdf");
+				"export", "export.pdf", "Export pdf");
 		tableActionControls.addDownloadActionItem(
 				MassItemActionHandler.EXPORT_EXCEL_ACTION,
 				MyCollabResource.newResource("icons/16/action/excel.png"),
-				"export", "export.xlsx");
+				"export", "export.xlsx", "Export excel");
 		tableActionControls.addDownloadActionItem(
 				MassItemActionHandler.EXPORT_CSV_ACTION,
 				MyCollabResource.newResource("icons/16/action/csv.png"),
-				"export", "export.csv");
+				"export", "export.csv", "Export csv");
 
 		if (CurrentProjectVariables
 				.canWrite(ProjectRolePermissionCollections.RISKS)) {
 			tableActionControls.addActionItem(
 					MassItemActionHandler.MASS_UPDATE_ACTION, MyCollabResource
 					.newResource("icons/16/action/massupdate.png"),
-					"update");
+					"update","Update");
 		}
 
 		this.tableActionControls.setVisible(false);

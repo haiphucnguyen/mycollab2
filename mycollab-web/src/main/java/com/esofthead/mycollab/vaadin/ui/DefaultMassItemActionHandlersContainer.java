@@ -81,18 +81,26 @@ public class DefaultMassItemActionHandlersContainer extends HorizontalLayout
 		
 		optionBtn.setIcon(resource);
 		if ("delete".equals(groupId)) {
-			optionBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
-		} else {
+			
 			optionBtn.addStyleName(UIConstants.THEME_RED_LINK);
+		} else {
+			optionBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
 		}
 
 		optionBtn.addStyleName("small-padding");
+		optionBtn.setDescription(description);
 
 		group.addButton(optionBtn);
 	}
-
+	
+	@Deprecated
 	public void addDownloadActionItem(final String id, Resource resource,
 			String groupId, String downloadFileName) {
+		addDownloadActionItem(id, resource, groupId, downloadFileName, "");
+	}
+	
+	public void addDownloadActionItem(final String id, Resource resource,
+			String groupId, String downloadFileName, String description) {
 		ButtonGroup group = groupMap.get(groupId);
 
 		if (group == null) {
@@ -109,6 +117,7 @@ public class DefaultMassItemActionHandlersContainer extends HorizontalLayout
 		optionBtn.setIcon(resource);
 		optionBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
 		optionBtn.addStyleName("small-padding");
+		optionBtn.setDescription(description);
 		group.addButton(optionBtn);
 	}
 
