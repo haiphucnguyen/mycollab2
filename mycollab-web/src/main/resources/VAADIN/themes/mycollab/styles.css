@@ -834,8 +834,7 @@ input.v-textfield-pagedtable-pagefield {
 
 #topNavigation .service-menu.v-buttongroup .v-button.selected {
 	background: none no-repeat 0 0 #E4E4E4;
-	border-radius: 3px 3px 3px 3px;
-	/* padding: 3px 13px 0px; */
+	border-radius: 2px;
 }
 
 #topNavigation .service-menu.v-buttongroup .v-button.selected .v-button-caption {
