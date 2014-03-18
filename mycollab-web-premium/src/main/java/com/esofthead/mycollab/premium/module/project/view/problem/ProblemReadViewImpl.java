@@ -13,14 +13,13 @@ import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
  */
 @ViewComponent
 public class ProblemReadViewImpl extends AbstractPageView implements
-		ProblemReadView {
+ProblemReadView {
 
 	private static final long serialVersionUID = 1L;
 	private ProblemReadComp problemReadComp;
 
 	public ProblemReadViewImpl() {
 		super();
-		this.setMargin(true);
 		problemReadComp = new ProblemReadComp();
 		this.addComponent(this.problemReadComp);
 	}
