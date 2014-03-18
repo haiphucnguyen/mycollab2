@@ -239,7 +239,7 @@ public class TaskGroupDisplayViewImpl extends AbstractPageView implements
 		mainLayout.setSpacing(true);
 		this.taskLists = new TaskGroupDisplayWidget();
 		this.rightColumn = new VerticalLayout();
-		this.rightColumn.setWidth("350px");
+		this.rightColumn.setWidth("300px");
 		mainLayout.addComponent(taskLists);
 		mainLayout.addComponent(rightColumn);
 		mainLayout.setExpandRatio(taskLists, 1.0f);

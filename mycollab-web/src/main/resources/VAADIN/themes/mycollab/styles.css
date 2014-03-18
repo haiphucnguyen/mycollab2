@@ -188,22 +188,26 @@ input.v-widget.v-textfield[type="text"], .v-filterselect  {
     font-size: 1.85em;
 }
 
+.v-window-modalitycurtain {
+	background-color: #000000;
+}
+
 .popupContent .v-window-contents {
-	background-color: rgb(245, 245, 245);
+	background-color: #FFFFFF;
 }
 
 .popupContent .v-window-outerheader {
-	background-color: #8B8B8B;
+	background-color: #F7F7F7;
 	padding: 0;
 }
 .popupContent .v-window-outerheader .v-window-header {
 	padding: 12px 10px;
 	font-size: 14px;
-	color: rgb(247, 247, 247);
+	color: #525252;
 }
 
 .v-window-closebox {
-	background: transparent url(icons/16/action/delete.png) no-repeat;
+	background: url('icons/16/delete3.png') no-repeat left top transparent;
 	width:16px;
 	height:16px;
 	background-position: 0 0;
@@ -1097,6 +1101,10 @@ input.v-textfield-pagedtable-pagefield {
 }
 .crmContainer .crm-toolbar.v-margin-left, .crmContainer .main-view.v-margin-left {
 	padding-left: 30px;
+}
+.crmContainer .crm-toolbar .v-popupbutton .v-popup-indicator {
+	width: 0px;
+	background: none no-repeat left top transparent;
 }
 .crmContainer .v-table-body-noselection {
 	height: 100% !important;

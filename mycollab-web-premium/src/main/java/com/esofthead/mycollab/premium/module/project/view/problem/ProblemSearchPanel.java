@@ -17,7 +17,6 @@ import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.MyCollabSession;
 import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
-import com.esofthead.mycollab.vaadin.ui.Separator;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
 import com.vaadin.shared.ui.MarginInfo;
@@ -85,7 +84,7 @@ GenericSearchPanel<ProblemSearchCriteria> {
 			UiUtils.addComponent(basicSearchBody, this.nameField,
 					Alignment.MIDDLE_CENTER);
 
-			
+
 			this.myItemCheckbox = new CheckBox("My Items");
 			this.myItemCheckbox.setWidth("75px");
 			UiUtils.addComponent(basicSearchBody, this.myItemCheckbox,
@@ -106,7 +105,7 @@ GenericSearchPanel<ProblemSearchCriteria> {
 			});
 			UiUtils.addComponent(basicSearchBody, searchBtn,
 					Alignment.MIDDLE_LEFT);
-			
+
 
 			final Button cancelBtn = new Button(
 					LocalizationHelper.getMessage(GenericI18Enum.BUTTON_CLEAR));
@@ -170,14 +169,14 @@ GenericSearchPanel<ProblemSearchCriteria> {
 					.canWrite(ProjectRolePermissionCollections.PROBLEMS));
 
 			HorizontalLayout header = new HorizontalLayout();
-			headerText.setStyleName("hdr-text");
+			headerText.setStyleName(UIConstants.HEADER_TEXT);
 
 			UiUtils.addComponent(header, titleIcon, Alignment.MIDDLE_LEFT);
 			UiUtils.addComponent(header, headerText, Alignment.MIDDLE_LEFT);
 			UiUtils.addComponent(header, createBtn, Alignment.MIDDLE_RIGHT);
 			header.setExpandRatio(headerText, 1.0f);
 
-			header.setStyleName("hdr-view");
+			header.setStyleName(UIConstants.HEADER_VIEW);
 			header.setWidth("100%");
 			header.setSpacing(true);
 			header.setMargin(new MarginInfo(true, false, true, false));
