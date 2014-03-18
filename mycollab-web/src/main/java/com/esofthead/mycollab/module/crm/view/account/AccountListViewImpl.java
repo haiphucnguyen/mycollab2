@@ -47,8 +47,8 @@ import com.vaadin.ui.UI;
  */
 @ViewComponent
 public class AccountListViewImpl extends
-		AbstractListItemComp<AccountSearchCriteria, SimpleAccount> implements
-		AccountListView {
+AbstractListItemComp<AccountSearchCriteria, SimpleAccount> implements
+AccountListView {
 
 	private static final long serialVersionUID = 1L;
 
@@ -63,26 +63,26 @@ public class AccountListViewImpl extends
 						AccountTableFieldDef.assignUser));
 
 		accountTableDisplay
-				.addTableListener(new ApplicationEventListener<TableClickEvent>() {
-					private static final long serialVersionUID = 1L;
+		.addTableListener(new ApplicationEventListener<TableClickEvent>() {
+			private static final long serialVersionUID = 1L;
 
-					@Override
-					public Class<? extends ApplicationEvent> getEventType() {
-						return TableClickEvent.class;
-					}
+			@Override
+			public Class<? extends ApplicationEvent> getEventType() {
+				return TableClickEvent.class;
+			}
 
-					@Override
-					public void handle(final TableClickEvent event) {
-						final SimpleAccount account = (SimpleAccount) event
-								.getData();
-						if ("accountname".equals(event.getFieldName())) {
-							EventBus.getInstance().fireEvent(
-									new AccountEvent.GotoRead(
-											AccountListViewImpl.this, account
-													.getId()));
-						}
-					}
-				});
+			@Override
+			public void handle(final TableClickEvent event) {
+				final SimpleAccount account = (SimpleAccount) event
+						.getData();
+				if ("accountname".equals(event.getFieldName())) {
+					EventBus.getInstance().fireEvent(
+							new AccountEvent.GotoRead(
+									AccountListViewImpl.this, account
+									.getId()));
+				}
+			}
+		});
 		return accountTableDisplay;
 
 	}
@@ -121,7 +121,7 @@ public class AccountListViewImpl extends
 		if (AppContext.canWrite(RolePermissionCollections.CRM_ACCOUNT)) {
 			container.addActionItem(MassItemActionHandler.MASS_UPDATE_ACTION,
 					MyCollabResource
-							.newResource("icons/16/action/massupdate.png"),
+					.newResource("icons/16/action/massupdate.png"),
 					"update");
 		}
 
@@ -145,7 +145,7 @@ public class AccountListViewImpl extends
 		customizeViewBtn.setIcon(MyCollabResource
 				.newResource("icons/16/customize.png"));
 		customizeViewBtn.setDescription("Layout Options");
-		customizeViewBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
+		customizeViewBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		this.addExtraComponent(customizeViewBtn);
 
 		Button importBtn = new Button("", new Button.ClickListener() {
@@ -159,7 +159,7 @@ public class AccountListViewImpl extends
 		});
 		importBtn.setDescription("Import");
 		importBtn.setIcon(MyCollabResource.newResource("icons/16/import.png"));
-		importBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
+		importBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
 		importBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_ACCOUNT));
 		this.addExtraComponent(importBtn);
