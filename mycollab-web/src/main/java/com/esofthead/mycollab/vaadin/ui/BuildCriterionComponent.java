@@ -34,6 +34,7 @@ import com.sun.mail.handlers.text_html;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanContainer;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.AbstractSelect.ItemCaptionMode;
 import com.vaadin.ui.Alignment;
@@ -112,8 +113,13 @@ VerticalLayout {
 
 	private void buildFilterBox(String queryname) {
 		filterBox.removeAllComponents();
-
+		filterBox.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
+		Label placeHolder = new Label("&nbsp;", ContentMode.HTML);
+		placeHolder.setWidth("85px");
+		filterBox.addComponent(placeHolder);
+		
 		filterComboBox = new SavedSearchResultComboBox();
+		filterComboBox.setWidth("125px");
 		filterBox.addComponent(filterComboBox);
 
 		Button saveSearchBtn = new Button("New Filter",
@@ -242,6 +248,7 @@ VerticalLayout {
 			super(6, 1);
 			this.index = index;
 			this.setSpacing(true);
+			this.setMargin(new MarginInfo(false, true, false, true));
 			this.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
 			indexLbl = new Label(index + "");
