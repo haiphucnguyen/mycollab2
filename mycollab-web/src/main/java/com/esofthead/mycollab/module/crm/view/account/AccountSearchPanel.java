@@ -75,7 +75,7 @@ DefaultGenericSearchPanel<AccountSearchCriteria> {
 		layout.setWidth("100%");
 		layout.setSpacing(true);
 		layout.setMargin(new MarginInfo(true, false, true, false));
-		layout.setStyleName("hdr-view");
+		layout.setStyleName(UIConstants.HEADER_VIEW);
 
 		final Image titleIcon = new Image(null,
 				MyCollabResource.newResource("icons/22/crm/account.png"));
@@ -83,7 +83,7 @@ DefaultGenericSearchPanel<AccountSearchCriteria> {
 		layout.setComponentAlignment(titleIcon, Alignment.MIDDLE_LEFT);
 
 		final Label searchtitle = new Label("Accounts");
-		searchtitle.setStyleName("hdr-text");
+		searchtitle.setStyleName(UIConstants.HEADER_TEXT);
 		layout.addComponent(searchtitle);
 		layout.setExpandRatio(searchtitle, 1.0f);
 		layout.setComponentAlignment(searchtitle, Alignment.MIDDLE_LEFT);
