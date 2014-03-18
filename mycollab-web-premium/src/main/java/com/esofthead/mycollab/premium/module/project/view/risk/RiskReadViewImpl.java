@@ -1,9 +1,32 @@
 package com.esofthead.mycollab.premium.module.project.view.risk;
 
+import org.vaadin.teemu.ratingstars.RatingStars;
+
+import com.esofthead.mycollab.common.CommentType;
+import com.esofthead.mycollab.common.ModuleNameConstants;
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectContants;
+import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleRisk;
+import com.esofthead.mycollab.module.project.ui.components.AbstractPreviewItemComp;
+import com.esofthead.mycollab.module.project.ui.components.CommentDisplay;
+import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserFormLinkField;
+import com.esofthead.mycollab.schedule.email.project.ProjectRiskRelayEmailNotificationAction;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
-import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
+import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
+import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
+import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormDetectAndDisplayUrlViewField;
+import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormViewField;
+import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
+import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
+import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
+import com.esofthead.mycollab.vaadin.ui.ProjectPreviewFormControlsGenerator;
+import com.esofthead.mycollab.vaadin.ui.TabsheetLazyLoadComp;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.Field;
 
 /**
  * 
@@ -12,30 +35,126 @@ import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
  * 
  */
 @ViewComponent
-public class RiskReadViewImpl extends AbstractPageView implements RiskReadView {
+public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk>
+		implements RiskReadView {
 
 	private static final long serialVersionUID = 1L;
 
-	private RiskReadComp riskReadComp;
+	private CommentDisplay commentDisplay;
+	private RiskHistoryList historyList;
 
 	public RiskReadViewImpl() {
-		super();
-		riskReadComp = new RiskReadComp();
-		this.addComponent(riskReadComp);
+		super("Risk Detail", MyCollabResource
+				.newResource("icons/22/project/risk_selected.png"));
+	}
+
+	@Override
+	protected AdvancedPreviewBeanForm<SimpleRisk> initPreviewForm() {
+		return new AdvancedPreviewBeanForm<SimpleRisk>();
+	}
+
+	@Override
+	protected ComponentContainer createButtonControls() {
+		return new ProjectPreviewFormControlsGenerator<SimpleRisk>(previewForm)
+				.createButtonControls(ProjectRolePermissionCollections.RISKS);
+	}
+
+	@Override
+	protected String initFormTitle() {
+		return beanItem.getRiskname();
+	}
+
+	@Override
+	protected void initRelatedComponents() {
+		commentDisplay = new CommentDisplay(CommentType.PRJ_RISK,
+				CurrentProjectVariables.getProjectId(), true, true,
+				ProjectRiskRelayEmailNotificationAction.class);
+		commentDisplay.setWidth("100%");
+
+		historyList = new RiskHistoryList(ModuleNameConstants.PRJ,
+				ProjectContants.RISK);
+	}
+
+	@Override
+	protected void onPreviewItem() {
+		if ("Closed".equals(beanItem.getStatus())) {
+			addLayoutStyleName(UIConstants.LINK_COMPLETED);
+		}
+
+		commentDisplay.loadComments(beanItem.getId());
+		historyList.loadHistory(beanItem.getId());
+	}
+
+	@Override
+	protected IFormLayoutFactory initFormLayoutFactory() {
+		return new RiskFormLayoutFactory();
+	}
+
+	@Override
+	protected AbstractBeanFieldGroupViewFieldFactory<SimpleRisk> initBeanFormFieldFactory() {
+		return new RiskReadFormFieldFactory(previewForm);
+	}
+
+	@Override
+	protected ComponentContainer createBottomPanel() {
+		final TabsheetLazyLoadComp tabContainer = new TabsheetLazyLoadComp();
+		tabContainer.setWidth("100%");
+
+		tabContainer.addTab(commentDisplay, "Comments", MyCollabResource
+				.newResource("icons/16/project/gray/comment.png"));
+
+		tabContainer.addTab(historyList, "History", MyCollabResource
+				.newResource("icons/16/project/gray/history.png"));
+		return tabContainer;
+	}
+
+	private static class RiskReadFormFieldFactory extends
+			AbstractBeanFieldGroupViewFieldFactory<SimpleRisk> {
+		private static final long serialVersionUID = 1L;
+
+		public RiskReadFormFieldFactory(GenericBeanForm<SimpleRisk> form) {
+			super(form);
+		}
+
+		@Override
+		protected Field<?> onCreateField(Object propertyId) {
+			SimpleRisk risk = attachForm.getBean();
+			if (propertyId.equals("description")) {
+				return new FormDetectAndDisplayUrlViewField(
+						risk.getDescription());
+			} else if (propertyId.equals("level")) {
+				final RatingStars tinyRs = new RatingStars();
+				tinyRs.setValue(risk.getLevel());
+				tinyRs.setReadOnly(true);
+				return tinyRs;
+			} else if (propertyId.equals("status")) {
+				return new FormViewField(risk.getStatus());
+			} else if (propertyId.equals("datedue")) {
+				return new FormViewField(AppContext.formatDate(risk
+						.getDatedue()));
+			} else if (propertyId.equals("raisedbyuser")) {
+				return new ProjectUserFormLinkField(risk.getRaisedbyuser(),
+						risk.getRaisedByUserAvatarId(),
+						risk.getRaisedByUserFullName());
+			} else if (propertyId.equals("assigntouser")) {
+				return new ProjectUserFormLinkField(risk.getAssigntouser(),
+						risk.getAssignToUserAvatarId(),
+						risk.getAssignedToUserFullName());
+			} else if (propertyId.equals("response")) {
+				return new FormDetectAndDisplayUrlViewField(risk.getResponse());
+			}
+
+			return null;
+		}
 	}
 
 	@Override
 	public SimpleRisk getItem() {
-		return riskReadComp.getBeanItem();
-	}
-
-	@Override
-	public void previewItem(SimpleRisk item) {
-		riskReadComp.previewItem(item);
+		return beanItem;
 	}
 
 	@Override
 	public HasPreviewFormHandlers<SimpleRisk> getPreviewFormHandlers() {
-		return riskReadComp.getPreviewForm();
+		return previewForm;
 	}
 }
