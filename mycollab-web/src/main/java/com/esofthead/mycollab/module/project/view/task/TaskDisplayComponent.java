@@ -17,6 +17,7 @@
 
 package com.esofthead.mycollab.module.project.view.task;
 
+import java.util.Arrays;
 import java.util.Iterator;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
@@ -166,21 +167,10 @@ class TaskDisplayComponent extends CssLayout {
 			previewForm.setBean(this.taskList);
 		}
 
-		this.taskDisplay = new TaskTableDisplay(
-				new String[] { "id", "taskname", "startdate", "deadline",
-						"percentagecomplete", "assignUserFullName" },
-				new String[] {
-						"",
-						LocalizationHelper
-								.getMessage(TaskI18nEnum.TABLE_TASK_NAME_HEADER),
-						LocalizationHelper
-								.getMessage(TaskI18nEnum.TABLE_START_DATE_HEADER),
-						LocalizationHelper
-								.getMessage(TaskI18nEnum.TABLE_DUE_DATE_HEADER),
-						LocalizationHelper
-								.getMessage(TaskI18nEnum.TABLE_PER_COMPLETE_HEADER),
-						LocalizationHelper
-								.getMessage(TaskI18nEnum.TABLE_ASSIGNEE_HEADER) });
+		this.taskDisplay = new TaskTableDisplay(TaskTableFieldDef.id,
+				Arrays.asList(TaskTableFieldDef.taskname,
+						TaskTableFieldDef.startdate, TaskTableFieldDef.duedate,
+						TaskTableFieldDef.percentagecomplete));
 		this.addComponent(this.taskDisplay);
 
 		this.taskDisplay
