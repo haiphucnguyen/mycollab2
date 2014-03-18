@@ -88,7 +88,7 @@ public class UnresolvedTaskByAssigneeWidget extends Depot {
 							SearchField.AND, assignee));
 					TaskFilterParameter filterParam = new TaskFilterParameter(
 							searchCriteria, "Filter Tasks by Assignee: "
-									+ assignee);
+									+ assigneeFullName);
 					EventBus.getInstance().fireEvent(
 							new TaskEvent.Filter(this, filterParam));
 				}

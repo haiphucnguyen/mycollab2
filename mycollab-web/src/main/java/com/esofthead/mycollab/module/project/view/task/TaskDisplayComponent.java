@@ -170,6 +170,7 @@ class TaskDisplayComponent extends CssLayout {
 		this.taskDisplay = new TaskTableDisplay(TaskTableFieldDef.id,
 				Arrays.asList(TaskTableFieldDef.taskname,
 						TaskTableFieldDef.startdate, TaskTableFieldDef.duedate,
+						TaskTableFieldDef.assignee,
 						TaskTableFieldDef.percentagecomplete));
 		this.addComponent(this.taskDisplay);
 

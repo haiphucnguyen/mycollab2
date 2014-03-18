@@ -3,18 +3,23 @@ package com.esofthead.mycollab.module.project.view.task;
 import java.util.Arrays;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
+import com.esofthead.mycollab.module.project.events.TaskListEvent;
 import com.esofthead.mycollab.module.project.view.parameters.TaskFilterParameter;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
 import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Button.ClickEvent;
 
 /**
  * 
@@ -48,14 +53,30 @@ public class FilterTaskViewImpl extends AbstractPageView implements
 		headerText.setSizeUndefined();
 		headerText.setStyleName("hdr-text");
 
+		Button backtoTaskListBtn = new Button("Back to task dashboard",
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void buttonClick(ClickEvent event) {
+						EventBus.getInstance()
+								.fireEvent(
+										new TaskListEvent.GotoTaskListScreen(
+												this, null));
+
+					}
+				});
+		backtoTaskListBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+
 		UiUtils.addComponent(header, titleIcon, Alignment.MIDDLE_LEFT);
 		UiUtils.addComponent(header, headerText, Alignment.MIDDLE_LEFT);
-		header.setExpandRatio(headerText, 1.0f);
+		UiUtils.addComponent(header, backtoTaskListBtn, Alignment.MIDDLE_LEFT);
 
 		this.addComponent(header);
 
 		HorizontalLayout contentLayout = new HorizontalLayout();
 		contentLayout.setWidth("100%");
+		contentLayout.setSpacing(true);
 		this.addComponent(contentLayout);
 
 		this.taskTableDisplay = new TaskTableDisplay(TaskTableFieldDef.id,
