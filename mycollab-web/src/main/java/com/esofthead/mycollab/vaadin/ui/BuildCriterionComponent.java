@@ -30,10 +30,10 @@ import com.esofthead.mycollab.core.db.query.StringParam;
 import com.esofthead.mycollab.core.utils.JsonDeSerializer;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.vaadin.popupbutton.PopupButtonExt;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanContainer;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.AbstractSelect.ItemCaptionMode;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -56,7 +56,7 @@ import com.vaadin.ui.VerticalLayout;
  * 
  */
 public class BuildCriterionComponent<S extends SearchCriteria> extends
-		VerticalLayout {
+VerticalLayout {
 	private static final long serialVersionUID = 1L;
 
 	private Param[] paramFields;
@@ -92,15 +92,15 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends
 
 		Button addCriteriaBtn = new Button("Add Criteria",
 				new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
+			private static final long serialVersionUID = 1L;
 
-					@Override
-					public void buttonClick(ClickEvent event) {
-						CriteriaSelectionLayout newCriteriaBar = new CriteriaSelectionLayout(
-								searchContainer.getComponentCount() + 1);
-						searchContainer.addComponent(newCriteriaBar);
-					}
-				});
+			@Override
+			public void buttonClick(ClickEvent event) {
+				CriteriaSelectionLayout newCriteriaBar = new CriteriaSelectionLayout(
+						searchContainer.getComponentCount() + 1);
+				searchContainer.addComponent(newCriteriaBar);
+			}
+		});
 		controlsBtn.addComponent(addCriteriaBtn);
 
 		this.addComponent(searchContainer);
@@ -115,13 +115,13 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends
 
 		Button saveSearchBtn = new Button("New Filter",
 				new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
+			private static final long serialVersionUID = 1L;
 
-					@Override
-					public void buttonClick(ClickEvent event) {
-						buildSaveFilterBox();
-					}
-				});
+			@Override
+			public void buttonClick(ClickEvent event) {
+				buildSaveFilterBox();
+			}
+		});
 		filterBox.addComponent(saveSearchBtn);
 
 		if (queryname != null) {
@@ -241,18 +241,22 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends
 
 			indexLbl = new Label(index + "");
 			this.addComponent(indexLbl, 0, 0);
-			operatorSelectionBox = new ValueComboBox(false, SearchField.AND,
-					SearchField.OR);
-			operatorSelectionBox.setWidth("60px");
-			this.addComponent(operatorSelectionBox, 1, 0);
 
 			if (index == 1) {
-				operatorSelectionBox.setVisible(false);
+				Label placeHolder = new Label("&nbsp;", ContentMode.HTML);
+				placeHolder.setWidth("60px");
+				this.addComponent(placeHolder, 1, 0);
+			} else {
+				operatorSelectionBox = new ValueComboBox(false, SearchField.AND,
+						SearchField.OR);
+				operatorSelectionBox.setWidth("60px");
+				this.addComponent(operatorSelectionBox, 1, 0);
 			}
 
 			buildFieldSelectionBox();
 
 			valueBox = new VerticalLayout();
+			valueBox.setWidth("200px");
 			deleteBtn = new Button("", new Button.ClickListener() {
 				private static final long serialVersionUID = 1L;
 
@@ -261,7 +265,7 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends
 					int compIndex = searchContainer
 							.getComponentIndex(CriteriaSelectionLayout.this);
 					searchContainer
-							.removeComponent(CriteriaSelectionLayout.this);
+					.removeComponent(CriteriaSelectionLayout.this);
 					for (int i = compIndex; i < searchContainer
 							.getComponentCount(); i++) {
 						CriteriaSelectionLayout searchCriteriaLayout = (CriteriaSelectionLayout) searchContainer
@@ -333,7 +337,7 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends
 				Component comp = buildPropertySearchComp(param.getId());
 				if (comp != null) {
 					if (comp instanceof CustomField<?>
-							&& (((CustomField) comp).getType() == Integer.class)) {
+					&& (((CustomField) comp).getType() == Integer.class)) {
 						((Field) comp).setValue(Integer
 								.parseInt(searchFieldInfo.getValue() + ""));
 					} else {
@@ -357,6 +361,7 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends
 		private void buildFieldSelectionBox() {
 			fieldSelectionBox = new ComboBox();
 			fieldSelectionBox.setImmediate(true);
+			fieldSelectionBox.setWidth("125px");
 			fieldSelectionBox.setItemCaptionMode(ItemCaptionMode.EXPLICIT);
 			for (Param field : paramFields) {
 				fieldSelectionBox.addItem(field);
@@ -382,15 +387,15 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends
 							compareSelectionBox.loadData(PropertyParam.OPTIONS);
 						} else if (field instanceof PropertyListParam) {
 							compareSelectionBox
-									.loadData(PropertyListParam.OPTIONS);
+							.loadData(PropertyListParam.OPTIONS);
 						} else if (field instanceof StringListParam) {
 							compareSelectionBox
-									.loadData(StringListParam.OPTIONS);
+							.loadData(StringListParam.OPTIONS);
 						} else if (field instanceof CompositionStringParam) {
 							compareSelectionBox.loadData(StringParam.OPTIONS);
 						} else if (field instanceof ConcatStringParam) {
 							compareSelectionBox
-									.loadData(ConcatStringParam.OPTIONS);
+							.loadData(ConcatStringParam.OPTIONS);
 						}
 
 						displayAssociateInputField((Param) fieldSelectionBox
@@ -403,15 +408,15 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends
 			compareSelectionBox.setWidth("120px");
 			compareSelectionBox.setImmediate(true);
 			compareSelectionBox
-					.addValueChangeListener(new ValueChangeListener() {
-						private static final long serialVersionUID = 1L;
+			.addValueChangeListener(new ValueChangeListener() {
+				private static final long serialVersionUID = 1L;
 
-						@Override
-						public void valueChange(ValueChangeEvent event) {
-							displayAssociateInputField((Param) fieldSelectionBox
-									.getValue());
-						}
-					});
+				@Override
+				public void valueChange(ValueChangeEvent event) {
+					displayAssociateInputField((Param) fieldSelectionBox
+							.getValue());
+				}
+			});
 		}
 
 		private void displayAssociateInputField(Param field) {
@@ -633,54 +638,54 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends
 						if (filterBox.getComponentCount() <= 2) {
 							Button updateBtn = new Button("Update");
 							updateBtn
-									.addClickListener(new Button.ClickListener() {
-										private static final long serialVersionUID = 1L;
+							.addClickListener(new Button.ClickListener() {
+								private static final long serialVersionUID = 1L;
 
-										@Override
-										public void buttonClick(ClickEvent event) {
+								@Override
+								public void buttonClick(ClickEvent event) {
 
-											List<SearchFieldInfo> fieldInfos = buildSearchFieldInfos();
-											SaveSearchResultService saveSearchResultService = ApplicationContextUtil
-													.getSpringBean(SaveSearchResultService.class);
-											data.setSaveuser(AppContext
-													.getUsername());
-											data.setSaccountid(AppContext
-													.getAccountId());
-											data.setQuerytext(JsonDeSerializer
-													.toJson(fieldInfos));
-											saveSearchResultService
-													.updateWithSession(
-															data,
-															AppContext
-																	.getUsername());
+									List<SearchFieldInfo> fieldInfos = buildSearchFieldInfos();
+									SaveSearchResultService saveSearchResultService = ApplicationContextUtil
+											.getSpringBean(SaveSearchResultService.class);
+									data.setSaveuser(AppContext
+											.getUsername());
+									data.setSaccountid(AppContext
+											.getAccountId());
+									data.setQuerytext(JsonDeSerializer
+											.toJson(fieldInfos));
+									saveSearchResultService
+									.updateWithSession(
+											data,
+											AppContext
+											.getUsername());
 
-										}
-									});
+								}
+							});
 							SplitButton optionBtn = new SplitButton(updateBtn);
 
 							final VerticalLayout optionContent = new VerticalLayout();
 							Button deleteBtn = new Button("Delete",
 									new Button.ClickListener() {
-										private static final long serialVersionUID = 1L;
+								private static final long serialVersionUID = 1L;
 
-										@Override
-										public void buttonClick(ClickEvent event) {
-											SaveSearchResultService saveSearchResultService = ApplicationContextUtil
-													.getSpringBean(SaveSearchResultService.class);
-											saveSearchResultService.removeWithSession(
-													data.getId(),
-													AppContext.getUsername(),
-													AppContext.getAccountId());
-											searchContainer
-													.removeAllComponents();
-											if (filterBox.getComponentCount() > 2) {
-												filterBox
-														.removeComponent(filterBox
-																.getComponent(1));
-											}
-											contructComboBox();
-										}
-									});
+								@Override
+								public void buttonClick(ClickEvent event) {
+									SaveSearchResultService saveSearchResultService = ApplicationContextUtil
+											.getSpringBean(SaveSearchResultService.class);
+									saveSearchResultService.removeWithSession(
+											data.getId(),
+											AppContext.getUsername(),
+											AppContext.getAccountId());
+									searchContainer
+									.removeAllComponents();
+									if (filterBox.getComponentCount() > 2) {
+										filterBox
+										.removeComponent(filterBox
+												.getComponent(1));
+									}
+									contructComboBox();
+								}
+							});
 							optionContent.addComponent(deleteBtn);
 							optionBtn.setContent(optionContent);
 
