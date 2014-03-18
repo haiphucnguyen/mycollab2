@@ -35,6 +35,7 @@ import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanContainer;
 import com.vaadin.ui.AbstractSelect.ItemCaptionMode;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComboBox;
@@ -241,10 +242,12 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends
 
 			indexLbl = new Label(index + "");
 			this.addComponent(indexLbl, 0, 0);
+			this.setComponentAlignment(indexLbl, Alignment.MIDDLE_RIGHT);
 			operatorSelectionBox = new ValueComboBox(false, SearchField.AND,
 					SearchField.OR);
 			operatorSelectionBox.setWidth("60px");
 			this.addComponent(operatorSelectionBox, 1, 0);
+			this.setComponentAlignment(operatorSelectionBox, Alignment.MIDDLE_RIGHT);
 
 			if (index == 1) {
 				operatorSelectionBox.setVisible(false);
@@ -270,13 +273,17 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends
 					}
 				}
 			});
-			deleteBtn.addStyleName(UIConstants.THEME_RED_LINK);
-			deleteBtn.setIcon(MyCollabResource.newResource("icons/16/action/delete.png"));
+			deleteBtn.addStyleName(UIConstants.THEME_TRANSPARENT_LINK);
+			deleteBtn.setIcon(MyCollabResource.newResource("icons/16/crm/basket.png"));
 
 			this.addComponent(fieldSelectionBox, 2, 0);
+			this.setComponentAlignment(fieldSelectionBox, Alignment.MIDDLE_RIGHT);
 			this.addComponent(compareSelectionBox, 3, 0);
+			this.setComponentAlignment(compareSelectionBox, Alignment.MIDDLE_RIGHT);
 			this.addComponent(valueBox, 4, 0);
+			this.setComponentAlignment(valueBox, Alignment.MIDDLE_RIGHT);;
 			this.addComponent(deleteBtn, 5, 0);
+			this.setComponentAlignment(deleteBtn, Alignment.MIDDLE_RIGHT);;
 		}
 
 		private void updateIndex() {
