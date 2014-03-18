@@ -21,7 +21,7 @@ import java.util.Collection;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
-import com.esofthead.mycollab.module.project.view.parameters.BugSearchParameter;
+import com.esofthead.mycollab.module.project.view.parameters.BugFilterParameter;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.vaadin.events.PagableHandler;
@@ -120,7 +120,7 @@ public class BugListPresenter extends AbstractPresenter<BugListView> implements
 			trackerContainer.removeAllComponents();
 			trackerContainer.addComponent(view.getWidget());
 
-			BugSearchParameter param = (BugSearchParameter) data.getParams();
+			BugFilterParameter param = (BugFilterParameter) data.getParams();
 
 			view.setTitle(param.getScreenTitle());
 			doSearch(param.getSearchCriteria());

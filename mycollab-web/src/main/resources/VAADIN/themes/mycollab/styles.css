@@ -454,6 +454,29 @@ div.v-button-link.v-button-no-margin .v-button-wrap,div.v-button-link:focus
 	border-top-color: #2E5788;
 }
 
+.v-button.v-button-transparentbtn, .v-button-transparentbtn:focus  {
+	background-color: transparent;
+	color:white;
+	font-weight:normal;
+	border:none;
+	padding:0;
+}
+
+.v-button-transparentbtn:hover, .v-button-transparentbtn:active{
+	background-color: transparent;
+	padding:0;
+	background-image:none;
+	
+}
+
+.v-button.v-button-transparentbtn:active .v-button-wrap{
+	border-top-color: transparent;
+	background-image:none;
+	padding:0;
+}
+.v-button.v-button-transparentbtn .v-button-wrap {
+	padding:0;
+}
 /* .v-buttongroup .v-button.v-button-left,.v-buttongroup .v-button.v-button-middle,.v-buttongroup .v-button.v-button-right
 {
 	background-color: #C06B11;

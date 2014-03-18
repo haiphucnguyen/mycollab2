@@ -30,11 +30,14 @@ import com.esofthead.mycollab.core.db.query.StringParam;
 import com.esofthead.mycollab.core.utils.JsonDeSerializer;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
+import com.sun.mail.handlers.text_html;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanContainer;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.AbstractSelect.ItemCaptionMode;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComboBox;
@@ -86,6 +89,7 @@ VerticalLayout {
 
 		this.searchContainer = new VerticalLayout();
 		this.searchContainer.setSpacing(true);
+		this.searchContainer.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
 		controlsBtn = new HorizontalLayout();
 		controlsBtn.setSpacing(true);
@@ -109,8 +113,13 @@ VerticalLayout {
 
 	private void buildFilterBox(String queryname) {
 		filterBox.removeAllComponents();
-
+		filterBox.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
+		Label placeHolder = new Label("&nbsp;", ContentMode.HTML);
+		placeHolder.setWidth("85px");
+		filterBox.addComponent(placeHolder);
+		
 		filterComboBox = new SavedSearchResultComboBox();
+		filterComboBox.setWidth("125px");
 		filterBox.addComponent(filterComboBox);
 
 		Button saveSearchBtn = new Button("New Filter",
@@ -218,6 +227,7 @@ VerticalLayout {
 			SearchFieldInfo searchFieldInfo = searchFieldInfos.get(i);
 			CriteriaSelectionLayout newCriteriaBar = new CriteriaSelectionLayout(
 					searchContainer.getComponentCount() + 1);
+			
 			newCriteriaBar.fillSearchFieldInfo(searchFieldInfo);
 			searchContainer.addComponent(newCriteriaBar);
 		}
@@ -238,6 +248,8 @@ VerticalLayout {
 			super(6, 1);
 			this.index = index;
 			this.setSpacing(true);
+			this.setMargin(new MarginInfo(false, true, false, true));
+			this.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
 			indexLbl = new Label(index + "");
 			this.addComponent(indexLbl, 0, 0);
@@ -256,6 +268,7 @@ VerticalLayout {
 			buildFieldSelectionBox();
 
 			valueBox = new VerticalLayout();
+			valueBox.setSpacing(true);
 			valueBox.setWidth("200px");
 			deleteBtn = new Button("", new Button.ClickListener() {
 				private static final long serialVersionUID = 1L;
@@ -274,13 +287,14 @@ VerticalLayout {
 					}
 				}
 			});
-			deleteBtn.addStyleName(UIConstants.THEME_RED_LINK);
-			deleteBtn.setIcon(MyCollabResource.newResource("icons/16/action/delete.png"));
+			deleteBtn.addStyleName(UIConstants.THEME_TRANSPARENT_LINK);
+			deleteBtn.setIcon(MyCollabResource.newResource("icons/16/crm/basket.png"));
 
 			this.addComponent(fieldSelectionBox, 2, 0);
 			this.addComponent(compareSelectionBox, 3, 0);
 			this.addComponent(valueBox, 4, 0);
 			this.addComponent(deleteBtn, 5, 0);
+			
 		}
 
 		private void updateIndex() {
@@ -292,6 +306,7 @@ VerticalLayout {
 		}
 
 		private void fillSearchFieldInfo(SearchFieldInfo searchFieldInfo) {
+			String width = "200px";
 			operatorSelectionBox.setValue(searchFieldInfo.getPrefixOper());
 
 			Param param = searchFieldInfo.getParam();
@@ -310,10 +325,13 @@ VerticalLayout {
 					|| param instanceof ConcatStringParam) {
 				TextField valueField = new TextField();
 				valueField.setValue((String) searchFieldInfo.getValue());
+				valueField.setWidth(width);
 				valueBox.addComponent(valueField);
+				
 			} else if (param instanceof NumberParam) {
 				TextField valueField = new TextField();
 				valueField.setValue(String.valueOf(searchFieldInfo.getValue()));
+				valueField.setWidth(width);
 				valueBox.addComponent(valueField);
 			} else if (param instanceof DateParam) {
 				String compareItem = (String) compareSelectionBox.getValue();
@@ -325,11 +343,14 @@ VerticalLayout {
 					DateField field2 = new DateField();
 					field2.setValue((Date) Array.get(
 							searchFieldInfo.getValue(), 1));
+					field1.setWidth(width);
+					field2.setWidth(width);
 					valueBox.addComponent(field1);
 					valueBox.addComponent(field2);
 				} else {
 					DateField field = new DateField();
 					field.setValue((Date) searchFieldInfo.getValue());
+					field.setWidth(width);
 					valueBox.addComponent(field);
 				}
 			} else if (param instanceof PropertyParam
@@ -343,7 +364,7 @@ VerticalLayout {
 					} else {
 						((Field) comp).setValue(searchFieldInfo.getValue());
 					}
-
+					comp.setWidth(width);
 					valueBox.addComponent(comp);
 				}
 			} else if (param instanceof StringListParam) {
@@ -352,9 +373,13 @@ VerticalLayout {
 				listSelect.loadData(((StringListParam) param).getLstValues()
 						.toArray(new String[0]));
 				listSelect.setValue(searchFieldInfo.getValue());
+				listSelect.setWidth(width);
 				valueBox.addComponent(listSelect);
+				
 			} else if (param instanceof CompositionStringParam) {
-				valueBox.addComponent(new TextField());
+				TextField tempTextField = new TextField(); 
+				tempTextField.setWidth(width);
+				valueBox.addComponent(tempTextField);
 			}
 		}
 
@@ -420,28 +445,38 @@ VerticalLayout {
 		}
 
 		private void displayAssociateInputField(Param field) {
+			String width = "200px";
 			String compareItem = (String) compareSelectionBox.getValue();
 			valueBox.removeAllComponents();
 
 			if (field instanceof StringParam
 					|| field instanceof ConcatStringParam) {
-				valueBox.addComponent(new TextField());
+				TextField tempTextField = new TextField();
+				tempTextField.setWidth(width);
+				valueBox.addComponent(tempTextField);
 			} else if (field instanceof NumberParam) {
-				valueBox.addComponent(new TextField());
+				TextField tempTextField = new TextField();
+				tempTextField.setWidth(width);
+				valueBox.addComponent(tempTextField);
 			} else if (field instanceof DateParam) {
 				if (DateParam.BETWEEN.equals(compareItem)
 						|| DateParam.NOT_BETWEEN.equals(compareItem)) {
 					DateField field1 = new DateField();
 					DateField field2 = new DateField();
+					field1.setWidth(width);
+					field2.setWidth(width);
 					valueBox.addComponent(field1);
 					valueBox.addComponent(field2);
 				} else {
-					valueBox.addComponent(new DateField());
+					DateField tempDateField = new DateField();
+					tempDateField.setWidth(width);
+					valueBox.addComponent(tempDateField);
 				}
 			} else if (field instanceof PropertyParam
 					|| field instanceof PropertyListParam) {
 				Component comp = buildPropertySearchComp(field.getId());
 				if (comp != null) {
+					comp.setWidth(width);
 					valueBox.addComponent(comp);
 				}
 			} else if (field instanceof StringListParam) {
@@ -449,9 +484,12 @@ VerticalLayout {
 				listSelect.setCaption(null);
 				listSelect.loadData(((StringListParam) field).getLstValues()
 						.toArray(new String[0]));
+				listSelect.setWidth(width);
 				valueBox.addComponent(listSelect);
 			} else if (field instanceof CompositionStringParam) {
-				valueBox.addComponent(new TextField());
+				TextField tempTextField = new TextField();
+				tempTextField.setWidth(width);
+				valueBox.addComponent(tempTextField);
 			}
 		}
 
