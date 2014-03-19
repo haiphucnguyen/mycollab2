@@ -235,7 +235,7 @@ public class TaskGroupDisplayViewImpl extends AbstractPageView implements
 				Alignment.MIDDLE_RIGHT);
 
 		HorizontalLayout mainLayout = new HorizontalLayout();
-		mainLayout.setWidth("100%");
+		mainLayout.setSizeFull();
 		mainLayout.setSpacing(true);
 		this.taskLists = new TaskGroupDisplayWidget();
 		this.rightColumn = new VerticalLayout();
