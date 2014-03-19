@@ -30,7 +30,6 @@ import com.esofthead.mycollab.core.db.query.StringParam;
 import com.esofthead.mycollab.core.utils.JsonDeSerializer;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.sun.mail.handlers.text_html;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanContainer;
@@ -113,9 +112,10 @@ VerticalLayout {
 
 	private void buildFilterBox(String queryname) {
 		filterBox.removeAllComponents();
+		filterBox.setMargin(new MarginInfo(true, false, false, true));
 		filterBox.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
-		Label placeHolder = new Label("&nbsp;", ContentMode.HTML);
-		placeHolder.setWidth("85px");
+		Label placeHolder = new Label("", ContentMode.HTML);
+		placeHolder.setWidth("73px");
 		filterBox.addComponent(placeHolder);
 		
 		filterComboBox = new SavedSearchResultComboBox();
@@ -140,7 +140,13 @@ VerticalLayout {
 
 	private void buildSaveFilterBox() {
 		filterBox.removeAllComponents();
+		
+		Label placeHolder = new Label("", ContentMode.HTML);
+		placeHolder.setWidth("73px");
+		filterBox.addComponent(placeHolder);
+		
 		final TextField queryTextField = new TextField();
+		queryTextField.setWidth("125px");
 		filterBox.addComponent(queryTextField);
 
 		Button saveBtn = new Button("Save", new Button.ClickListener() {
