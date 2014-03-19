@@ -381,6 +381,8 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends
 
 			} else if (param instanceof CompositionStringParam) {
 				TextField tempTextField = new TextField();
+				tempTextField.setValue(String.valueOf(searchFieldInfo
+						.getValue()));
 				tempTextField.setWidth(width);
 				valueBox.addComponent(tempTextField);
 			}
@@ -497,7 +499,8 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends
 		}
 
 		private SearchFieldInfo buildSearchFieldInfo() {
-			String prefixOper = (String) operatorSelectionBox.getValue();
+			String prefixOper = (operatorSelectionBox != null) ? (String) operatorSelectionBox
+					.getValue() : "AND";
 			Param param = (Param) fieldSelectionBox.getValue();
 			String compareOper = (String) compareSelectionBox.getValue();
 			Object value = null;
