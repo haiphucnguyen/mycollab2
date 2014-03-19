@@ -38,6 +38,7 @@ import com.esofthead.mycollab.module.project.dao.TaskMapperExt;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.Task;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
+import com.esofthead.mycollab.module.project.service.ProjectGenericTaskService;
 import com.esofthead.mycollab.module.project.service.ProjectTaskListService;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.schedule.email.project.ProjectTaskRelayEmailNotificationAction;
@@ -90,8 +91,7 @@ public class ProjectTaskServiceImpl extends
 		Integer key = taskMapperExt.getMaxKey(record.getProjectid());
 		record.setTaskkey((key == null) ? 1 : (key + 1));
 
-		LocalCacheManager.removeCacheItems(record.getSaccountid() + "",
-				ProjectTaskListService.class.getName());
+		cleanAssociateCaches(record.getSaccountid());
 
 		return super.saveWithSession(record, username);
 	}
@@ -105,9 +105,7 @@ public class ProjectTaskServiceImpl extends
 			record.setStatus("Open");
 		}
 
-		// Clean cache of task group
-		LocalCacheManager.removeCacheItems(record.getSaccountid() + "",
-				ProjectTaskListService.class.getName());
+		cleanAssociateCaches(record.getSaccountid());
 
 		return super.updateWithSession(record, username);
 	}
@@ -116,11 +114,17 @@ public class ProjectTaskServiceImpl extends
 	public int removeWithSession(Integer primaryKey, String username,
 			int accountId) {
 		int result = super.removeWithSession(primaryKey, username, accountId);
+		cleanAssociateCaches(accountId);
 
-		// Clean cache of task group
+		return result;
+	}
+
+	private void cleanAssociateCaches(int accountId) {
 		LocalCacheManager.removeCacheItems(accountId + "",
 				ProjectTaskListService.class.getName());
-		return result;
+
+		LocalCacheManager.removeCacheItems(accountId + "",
+				ProjectGenericTaskService.class.getName());
 	}
 
 	@Override
