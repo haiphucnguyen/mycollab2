@@ -47,8 +47,8 @@ import com.vaadin.ui.UI;
  */
 @ViewComponent
 public class AccountListViewImpl extends
-AbstractListItemComp<AccountSearchCriteria, SimpleAccount> implements
-AccountListView {
+		AbstractListItemComp<AccountSearchCriteria, SimpleAccount> implements
+		AccountListView {
 
 	private static final long serialVersionUID = 1L;
 
@@ -63,26 +63,26 @@ AccountListView {
 						AccountTableFieldDef.assignUser));
 
 		accountTableDisplay
-		.addTableListener(new ApplicationEventListener<TableClickEvent>() {
-			private static final long serialVersionUID = 1L;
+				.addTableListener(new ApplicationEventListener<TableClickEvent>() {
+					private static final long serialVersionUID = 1L;
 
-			@Override
-			public Class<? extends ApplicationEvent> getEventType() {
-				return TableClickEvent.class;
-			}
+					@Override
+					public Class<? extends ApplicationEvent> getEventType() {
+						return TableClickEvent.class;
+					}
 
-			@Override
-			public void handle(final TableClickEvent event) {
-				final SimpleAccount account = (SimpleAccount) event
-						.getData();
-				if ("accountname".equals(event.getFieldName())) {
-					EventBus.getInstance().fireEvent(
-							new AccountEvent.GotoRead(
-									AccountListViewImpl.this, account
-									.getId()));
-				}
-			}
-		});
+					@Override
+					public void handle(final TableClickEvent event) {
+						final SimpleAccount account = (SimpleAccount) event
+								.getData();
+						if ("accountname".equals(event.getFieldName())) {
+							EventBus.getInstance().fireEvent(
+									new AccountEvent.GotoRead(
+											AccountListViewImpl.this, account
+													.getId()));
+						}
+					}
+				});
 		return accountTableDisplay;
 
 	}
@@ -121,7 +121,7 @@ AccountListView {
 		if (AppContext.canWrite(RolePermissionCollections.CRM_ACCOUNT)) {
 			container.addActionItem(MassItemActionHandler.MASS_UPDATE_ACTION,
 					MyCollabResource
-					.newResource("icons/16/action/massupdate.png"),
+							.newResource("icons/16/action/massupdate.png"),
 					"update");
 		}
 

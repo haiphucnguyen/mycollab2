@@ -58,7 +58,7 @@ import com.vaadin.ui.VerticalLayout;
  * 
  */
 public class BuildCriterionComponent<S extends SearchCriteria> extends
-VerticalLayout {
+		VerticalLayout {
 	private static final long serialVersionUID = 1L;
 
 	private Param[] paramFields;
@@ -88,22 +88,23 @@ VerticalLayout {
 
 		this.searchContainer = new VerticalLayout();
 		this.searchContainer.setSpacing(true);
-		this.searchContainer.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
+		this.searchContainer
+				.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
 		controlsBtn = new HorizontalLayout();
 		controlsBtn.setSpacing(true);
 
 		Button addCriteriaBtn = new Button("Add Criteria",
 				new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
+					private static final long serialVersionUID = 1L;
 
-			@Override
-			public void buttonClick(ClickEvent event) {
-				CriteriaSelectionLayout newCriteriaBar = new CriteriaSelectionLayout(
-						searchContainer.getComponentCount() + 1);
-				searchContainer.addComponent(newCriteriaBar);
-			}
-		});
+					@Override
+					public void buttonClick(ClickEvent event) {
+						CriteriaSelectionLayout newCriteriaBar = new CriteriaSelectionLayout(
+								searchContainer.getComponentCount() + 1);
+						searchContainer.addComponent(newCriteriaBar);
+					}
+				});
 		controlsBtn.addComponent(addCriteriaBtn);
 
 		this.addComponent(searchContainer);
@@ -117,20 +118,20 @@ VerticalLayout {
 		Label placeHolder = new Label("", ContentMode.HTML);
 		placeHolder.setWidth("73px");
 		filterBox.addComponent(placeHolder);
-		
+
 		filterComboBox = new SavedSearchResultComboBox();
 		filterComboBox.setWidth("125px");
 		filterBox.addComponent(filterComboBox);
 
 		Button saveSearchBtn = new Button("New Filter",
 				new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
+					private static final long serialVersionUID = 1L;
 
-			@Override
-			public void buttonClick(ClickEvent event) {
-				buildSaveFilterBox();
-			}
-		});
+					@Override
+					public void buttonClick(ClickEvent event) {
+						buildSaveFilterBox();
+					}
+				});
 		filterBox.addComponent(saveSearchBtn);
 
 		if (queryname != null) {
@@ -233,7 +234,7 @@ VerticalLayout {
 			SearchFieldInfo searchFieldInfo = searchFieldInfos.get(i);
 			CriteriaSelectionLayout newCriteriaBar = new CriteriaSelectionLayout(
 					searchContainer.getComponentCount() + 1);
-			
+
 			newCriteriaBar.fillSearchFieldInfo(searchFieldInfo);
 			searchContainer.addComponent(newCriteriaBar);
 		}
@@ -265,8 +266,8 @@ VerticalLayout {
 				placeHolder.setWidth("60px");
 				this.addComponent(placeHolder, 1, 0);
 			} else {
-				operatorSelectionBox = new ValueComboBox(false, SearchField.AND,
-						SearchField.OR);
+				operatorSelectionBox = new ValueComboBox(false,
+						SearchField.AND, SearchField.OR);
 				operatorSelectionBox.setWidth("60px");
 				this.addComponent(operatorSelectionBox, 1, 0);
 			}
@@ -284,7 +285,7 @@ VerticalLayout {
 					int compIndex = searchContainer
 							.getComponentIndex(CriteriaSelectionLayout.this);
 					searchContainer
-					.removeComponent(CriteriaSelectionLayout.this);
+							.removeComponent(CriteriaSelectionLayout.this);
 					for (int i = compIndex; i < searchContainer
 							.getComponentCount(); i++) {
 						CriteriaSelectionLayout searchCriteriaLayout = (CriteriaSelectionLayout) searchContainer
@@ -294,13 +295,14 @@ VerticalLayout {
 				}
 			});
 			deleteBtn.addStyleName(UIConstants.THEME_TRANSPARENT_LINK);
-			deleteBtn.setIcon(MyCollabResource.newResource("icons/16/crm/basket.png"));
+			deleteBtn.setIcon(MyCollabResource
+					.newResource("icons/16/crm/basket.png"));
 
 			this.addComponent(fieldSelectionBox, 2, 0);
 			this.addComponent(compareSelectionBox, 3, 0);
 			this.addComponent(valueBox, 4, 0);
 			this.addComponent(deleteBtn, 5, 0);
-			
+
 		}
 
 		private void updateIndex() {
@@ -313,7 +315,9 @@ VerticalLayout {
 
 		private void fillSearchFieldInfo(SearchFieldInfo searchFieldInfo) {
 			String width = "200px";
-			operatorSelectionBox.setValue(searchFieldInfo.getPrefixOper());
+			if (operatorSelectionBox != null) {
+				operatorSelectionBox.setValue(searchFieldInfo.getPrefixOper());
+			}
 
 			Param param = searchFieldInfo.getParam();
 			Collection<?> itemIds = fieldSelectionBox.getItemIds();
@@ -333,7 +337,7 @@ VerticalLayout {
 				valueField.setValue((String) searchFieldInfo.getValue());
 				valueField.setWidth(width);
 				valueBox.addComponent(valueField);
-				
+
 			} else if (param instanceof NumberParam) {
 				TextField valueField = new TextField();
 				valueField.setValue(String.valueOf(searchFieldInfo.getValue()));
@@ -364,7 +368,7 @@ VerticalLayout {
 				Component comp = buildPropertySearchComp(param.getId());
 				if (comp != null) {
 					if (comp instanceof CustomField<?>
-					&& (((CustomField) comp).getType() == Integer.class)) {
+							&& (((CustomField) comp).getType() == Integer.class)) {
 						((Field) comp).setValue(Integer
 								.parseInt(searchFieldInfo.getValue() + ""));
 					} else {
@@ -381,9 +385,11 @@ VerticalLayout {
 				listSelect.setValue(searchFieldInfo.getValue());
 				listSelect.setWidth(width);
 				valueBox.addComponent(listSelect);
-				
+
 			} else if (param instanceof CompositionStringParam) {
-				TextField tempTextField = new TextField(); 
+				TextField tempTextField = new TextField();
+				tempTextField.setValue(String.valueOf(searchFieldInfo
+						.getValue()));
 				tempTextField.setWidth(width);
 				valueBox.addComponent(tempTextField);
 			}
@@ -418,15 +424,15 @@ VerticalLayout {
 							compareSelectionBox.loadData(PropertyParam.OPTIONS);
 						} else if (field instanceof PropertyListParam) {
 							compareSelectionBox
-							.loadData(PropertyListParam.OPTIONS);
+									.loadData(PropertyListParam.OPTIONS);
 						} else if (field instanceof StringListParam) {
 							compareSelectionBox
-							.loadData(StringListParam.OPTIONS);
+									.loadData(StringListParam.OPTIONS);
 						} else if (field instanceof CompositionStringParam) {
 							compareSelectionBox.loadData(StringParam.OPTIONS);
 						} else if (field instanceof ConcatStringParam) {
 							compareSelectionBox
-							.loadData(ConcatStringParam.OPTIONS);
+									.loadData(ConcatStringParam.OPTIONS);
 						}
 
 						displayAssociateInputField((Param) fieldSelectionBox
@@ -439,15 +445,15 @@ VerticalLayout {
 			compareSelectionBox.setWidth("120px");
 			compareSelectionBox.setImmediate(true);
 			compareSelectionBox
-			.addValueChangeListener(new ValueChangeListener() {
-				private static final long serialVersionUID = 1L;
+					.addValueChangeListener(new ValueChangeListener() {
+						private static final long serialVersionUID = 1L;
 
-				@Override
-				public void valueChange(ValueChangeEvent event) {
-					displayAssociateInputField((Param) fieldSelectionBox
-							.getValue());
-				}
-			});
+						@Override
+						public void valueChange(ValueChangeEvent event) {
+							displayAssociateInputField((Param) fieldSelectionBox
+									.getValue());
+						}
+					});
 		}
 
 		private void displayAssociateInputField(Param field) {
@@ -500,7 +506,8 @@ VerticalLayout {
 		}
 
 		private SearchFieldInfo buildSearchFieldInfo() {
-			String prefixOper = (String) operatorSelectionBox.getValue();
+			String prefixOper = (operatorSelectionBox != null) ? (String) operatorSelectionBox
+					.getValue() : "AND";
 			Param param = (Param) fieldSelectionBox.getValue();
 			String compareOper = (String) compareSelectionBox.getValue();
 			Object value = null;
@@ -682,54 +689,54 @@ VerticalLayout {
 						if (filterBox.getComponentCount() <= 2) {
 							Button updateBtn = new Button("Update");
 							updateBtn
-							.addClickListener(new Button.ClickListener() {
-								private static final long serialVersionUID = 1L;
+									.addClickListener(new Button.ClickListener() {
+										private static final long serialVersionUID = 1L;
 
-								@Override
-								public void buttonClick(ClickEvent event) {
+										@Override
+										public void buttonClick(ClickEvent event) {
 
-									List<SearchFieldInfo> fieldInfos = buildSearchFieldInfos();
-									SaveSearchResultService saveSearchResultService = ApplicationContextUtil
-											.getSpringBean(SaveSearchResultService.class);
-									data.setSaveuser(AppContext
-											.getUsername());
-									data.setSaccountid(AppContext
-											.getAccountId());
-									data.setQuerytext(JsonDeSerializer
-											.toJson(fieldInfos));
-									saveSearchResultService
-									.updateWithSession(
-											data,
-											AppContext
-											.getUsername());
+											List<SearchFieldInfo> fieldInfos = buildSearchFieldInfos();
+											SaveSearchResultService saveSearchResultService = ApplicationContextUtil
+													.getSpringBean(SaveSearchResultService.class);
+											data.setSaveuser(AppContext
+													.getUsername());
+											data.setSaccountid(AppContext
+													.getAccountId());
+											data.setQuerytext(JsonDeSerializer
+													.toJson(fieldInfos));
+											saveSearchResultService
+													.updateWithSession(
+															data,
+															AppContext
+																	.getUsername());
 
-								}
-							});
+										}
+									});
 							SplitButton optionBtn = new SplitButton(updateBtn);
 
 							final VerticalLayout optionContent = new VerticalLayout();
 							Button deleteBtn = new Button("Delete",
 									new Button.ClickListener() {
-								private static final long serialVersionUID = 1L;
+										private static final long serialVersionUID = 1L;
 
-								@Override
-								public void buttonClick(ClickEvent event) {
-									SaveSearchResultService saveSearchResultService = ApplicationContextUtil
-											.getSpringBean(SaveSearchResultService.class);
-									saveSearchResultService.removeWithSession(
-											data.getId(),
-											AppContext.getUsername(),
-											AppContext.getAccountId());
-									searchContainer
-									.removeAllComponents();
-									if (filterBox.getComponentCount() > 2) {
-										filterBox
-										.removeComponent(filterBox
-												.getComponent(1));
-									}
-									contructComboBox();
-								}
-							});
+										@Override
+										public void buttonClick(ClickEvent event) {
+											SaveSearchResultService saveSearchResultService = ApplicationContextUtil
+													.getSpringBean(SaveSearchResultService.class);
+											saveSearchResultService.removeWithSession(
+													data.getId(),
+													AppContext.getUsername(),
+													AppContext.getAccountId());
+											searchContainer
+													.removeAllComponents();
+											if (filterBox.getComponentCount() > 2) {
+												filterBox
+														.removeComponent(filterBox
+																.getComponent(1));
+											}
+											contructComboBox();
+										}
+									});
 							optionContent.addComponent(deleteBtn);
 							optionBtn.setContent(optionContent);
 

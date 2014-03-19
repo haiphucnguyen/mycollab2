@@ -36,7 +36,7 @@ import com.vaadin.ui.Field;
  */
 @ViewComponent
 public class ProblemReadViewImpl extends AbstractPreviewItemComp<SimpleProblem>
-		implements ProblemReadView {
+implements ProblemReadView {
 
 	private static final long serialVersionUID = 1L;
 
@@ -109,7 +109,7 @@ public class ProblemReadViewImpl extends AbstractPreviewItemComp<SimpleProblem>
 	}
 
 	private static class ProblemReadFormFieldFactory extends
-			AbstractBeanFieldGroupViewFieldFactory<SimpleProblem> {
+	AbstractBeanFieldGroupViewFieldFactory<SimpleProblem> {
 		private static final long serialVersionUID = 1L;
 
 		public ProblemReadFormFieldFactory(GenericBeanForm<SimpleProblem> form) {
