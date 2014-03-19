@@ -7,6 +7,12 @@ import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.AbstractPresenter;
 import com.vaadin.ui.ComponentContainer;
 
+/**
+ * 
+ * @author MyCollab Ltd
+ * @since 2.0
+ * 
+ */
 public class TimeTrackingListPresenter extends
 		AbstractPresenter<TimeTrackingListView> {
 	private static final long serialVersionUID = 1L;
