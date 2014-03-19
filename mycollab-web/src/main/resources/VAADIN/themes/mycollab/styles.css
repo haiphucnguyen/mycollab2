@@ -1092,9 +1092,21 @@ input.v-textfield-pagedtable-pagefield {
 /* End Basic Search Template */
 
 /* CRM Service */
-
+.crm-module, .crm-module .crmContainer-wrap {
+	position: absolute;
+	top: 0;
+	left: 0;
+	min-height: 100%;
+}
+.crmContainer {
+	width: 100%:
+}
+.crmContainer-wrap.preview-comp {
+	background: url("icons/crm-module-bg.jpg") repeat-y right top #FFFFFF;
+}
 .crmContainer .main-view {
 	background-color: #FFFFFF;
+	min-height: 100%;
 }
 .crmContainer .crm-toolbar.v-margin-right, .crmContainer .main-view.v-margin-right {
 	padding-right: 30px;
@@ -1119,7 +1131,7 @@ input.v-textfield-pagedtable-pagefield {
 	font-weight: bold;
 }
 
-.crmContainer .main-view .preview-comp {
+.crmContainer.preview-comp {
 	min-height: 100%;
 }
 
