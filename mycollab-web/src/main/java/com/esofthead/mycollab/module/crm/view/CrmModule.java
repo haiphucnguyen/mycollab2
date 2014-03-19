@@ -46,10 +46,9 @@ public class CrmModule extends AbstractPageView implements IModule {
 	public CrmModule() {
 		this.setStyleName("crm-module");
 		ControllerRegistry.addController(new CrmController(this));
-		container = CustomLayoutLoader
-				.createLayout("crmContainer");
+		container = CustomLayoutLoader.createLayout("crmContainer");
 		container.setStyleName("crmContainer-wrap");
-		container.setWidth("100%");		
+		container.setWidth("100%");
 
 		toolbar = ViewManager.getView(CrmToolbar.class);
 		container.addComponent(toolbar, "crmToolbar");
