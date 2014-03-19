@@ -3,6 +3,7 @@ package com.esofthead.mycollab.module.project.service.ibatis;
 import java.util.List;
 
 import org.apache.ibatis.session.RowBounds;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.esofthead.mycollab.common.domain.criteria.ActivityStreamSearchCriteria;
@@ -16,6 +17,7 @@ import com.esofthead.mycollab.module.project.service.ProjectActivityStreamServic
 public class ProjectActivityStreamServiceImpl implements
 		ProjectActivityStreamService {
 
+	@Autowired
 	private ProjectMapperExt projectMapperExt;
 
 	@Override
