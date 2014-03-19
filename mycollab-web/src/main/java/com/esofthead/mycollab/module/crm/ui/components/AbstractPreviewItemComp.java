@@ -25,6 +25,7 @@ import com.esofthead.mycollab.vaadin.ui.VerticalTabsheet;
 import com.vaadin.server.Resource;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.TabSheet.SelectedTabChangeEvent;
 import com.vaadin.ui.TabSheet.SelectedTabChangeListener;
 import com.vaadin.ui.TabSheet.Tab;
@@ -46,6 +47,7 @@ public abstract class AbstractPreviewItemComp<B> extends AbstractPageView {
 
 	public AbstractPreviewItemComp(Resource iconResource) {
 		previewItemContainer = new VerticalTabsheet(false);
+		previewItemContainer.addStyleName("preview-comp");
 
 		this.addComponent(previewItemContainer);
 		previewItemContainer.setSizeFull();
@@ -53,6 +55,9 @@ public abstract class AbstractPreviewItemComp<B> extends AbstractPageView {
 		previewItemContainer.setNavigatorStyleName("sidebar-menu");
 		previewItemContainer.setContainerStyleName("tab-content");
 		previewItemContainer.setHeight(null);
+
+		CssLayout navigatorWrapper = previewItemContainer.getNavigatorWrapper();
+		navigatorWrapper.setWidth("250px");
 
 		previewItemContainer
 		.addSelectedTabChangeListener(new SelectedTabChangeListener() {

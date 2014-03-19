@@ -113,6 +113,7 @@ AbstractPageView implements ListView<S, B> {
 		contentLayout.addComponent(this.tableItem);
 
 		buildExtraControls();
+		searchPanel.addHeaderRight(extraControlsLayout);
 	}
 
 	@Override

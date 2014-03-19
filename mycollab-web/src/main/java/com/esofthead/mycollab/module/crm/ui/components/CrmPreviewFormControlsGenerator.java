@@ -46,8 +46,8 @@ public class CrmPreviewFormControlsGenerator<T> {
 	public static int NEXT_BTN_PRESENTED = 64;
 	public static int HISTORY_BTN_PRESENTED = 128;
 
-	private Button backBtn, editBtn, deleteBtn, cloneBtn, previousItem,
-	nextItemBtn, historyBtn;
+	private Button editBtn, deleteBtn, cloneBtn, previousItem,
+	nextItemBtn;
 	private AdvancedPreviewBeanForm<T> previewForm;
 
 	private VerticalLayout popupButtonsControl;
@@ -58,6 +58,8 @@ public class CrmPreviewFormControlsGenerator<T> {
 	public CrmPreviewFormControlsGenerator(
 			final AdvancedPreviewBeanForm<T> editForm) {
 		this.previewForm = editForm;
+
+		layout = new HorizontalLayout();
 
 		editButtons = new SplitButton();
 		editButtons.setCaption("Option");
@@ -70,15 +72,14 @@ public class CrmPreviewFormControlsGenerator<T> {
 	}
 
 	public HorizontalLayout createButtonControls(final String permissionItem) {
-		return createButtonControls(BACK_BTN_PRESENTED | EDIT_BTN_PRESENTED
+		return createButtonControls(EDIT_BTN_PRESENTED
 				| DELETE_BTN_PRESENTED | CLONE_BTN_PRESENTED
-				| PREVIOUS_BTN_PRESENTED | NEXT_BTN_PRESENTED
-				| HISTORY_BTN_PRESENTED, permissionItem);
+				| PREVIOUS_BTN_PRESENTED | NEXT_BTN_PRESENTED, permissionItem);
 	}
 
 	public HorizontalLayout createButtonControls(int buttonEnableFlags,
 			final String permissionItem) {
-		layout = new HorizontalLayout();
+
 		layout.setStyleName("control-buttons");
 		layout.setSpacing(true);
 		layout.setSizeUndefined();
@@ -91,24 +92,6 @@ public class CrmPreviewFormControlsGenerator<T> {
 			canWrite = AppContext.canWrite(permissionItem);
 			canAccess = AppContext.canAccess(permissionItem);
 		}
-
-		/*if ((buttonEnableFlags & BACK_BTN_PRESENTED) == BACK_BTN_PRESENTED) {
-			backBtn = new Button(null, new Button.ClickListener() {
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public void buttonClick(final ClickEvent event) {
-					final T item = previewForm.getBean();
-					previewForm.fireCancelForm(item);
-				}
-			});
-			backBtn.setIcon(MyCollabResource.newResource("icons/16/back.png"));
-			backBtn.setDescription("Back to list");
-			backBtn.setStyleName("link");
-			layout.addComponent(backBtn);
-			layout.setComponentAlignment(backBtn, Alignment.MIDDLE_LEFT);
-			backBtn.setEnabled(canRead);
-		}*/
 
 		popupButtonsControl = new VerticalLayout();
 		popupButtonsControl.setMargin(new MarginInfo( false,true, false, true));
@@ -206,24 +189,6 @@ public class CrmPreviewFormControlsGenerator<T> {
 		}
 
 		layout.addComponent(navigationBtns);
-
-		/*if ((buttonEnableFlags & HISTORY_BTN_PRESENTED) == HISTORY_BTN_PRESENTED) {
-			historyBtn = new Button(null, new Button.ClickListener() {
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public void buttonClick(final ClickEvent event) {
-					previewForm.showHistory();
-				}
-			});
-			historyBtn.setIcon(MyCollabResource
-					.newResource("icons/16/history.png"));
-			historyBtn.setStyleName("link");
-			historyBtn.setDescription("Show history log");
-			layout.addComponent(historyBtn);
-			layout.setComponentAlignment(historyBtn, Alignment.MIDDLE_RIGHT);
-			historyBtn.setEnabled(canRead);
-		}*/
 
 		return layout;
 	}
