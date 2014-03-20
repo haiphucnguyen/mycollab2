@@ -37,7 +37,7 @@ import com.vaadin.ui.VerticalLayout;
  * @since 2.0
  * 
  */
-public class ItemTimeLoggingSearchPanel extends
+class ItemTimeLoggingSearchPanel extends
 		GenericSearchPanel<ItemTimeLoggingSearchCriteria> {
 
 	private static final long serialVersionUID = 1L;
@@ -85,7 +85,7 @@ public class ItemTimeLoggingSearchPanel extends
 					LocalizationHelper
 							.getMessage(TimeTrackingI18nEnum.SEARCH_TIME_TITLE));
 
-			createBtn = new Button("Add Entry");
+			createBtn = new Button("Log Time");
 			createBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 			createBtn.setIcon(MyCollabResource
 					.newResource("icons/16/project/add_time.png"));
