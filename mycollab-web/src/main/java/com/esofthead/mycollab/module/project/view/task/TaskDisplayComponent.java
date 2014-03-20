@@ -86,6 +86,7 @@ class TaskDisplayComponent extends CssLayout {
 		this.setStyleName("taskdisplay-component");
 
 		this.showTaskGroupInfo();
+		this.setSizeFull();
 	}
 
 	private void showTaskGroupInfo() {

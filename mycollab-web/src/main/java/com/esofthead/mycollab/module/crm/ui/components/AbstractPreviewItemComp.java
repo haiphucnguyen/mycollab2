@@ -26,6 +26,7 @@ import com.vaadin.server.Resource;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
+import com.vaadin.ui.CustomLayout;
 import com.vaadin.ui.TabSheet.SelectedTabChangeEvent;
 import com.vaadin.ui.TabSheet.SelectedTabChangeListener;
 import com.vaadin.ui.TabSheet.Tab;
@@ -47,7 +48,6 @@ public abstract class AbstractPreviewItemComp<B> extends AbstractPageView {
 
 	public AbstractPreviewItemComp(Resource iconResource) {
 		previewItemContainer = new VerticalTabsheet(false);
-		previewItemContainer.addStyleName("preview-comp");
 
 		this.addComponent(previewItemContainer);
 		previewItemContainer.setSizeFull();
@@ -87,6 +87,19 @@ public abstract class AbstractPreviewItemComp<B> extends AbstractPageView {
 		previewLayout.addBody(previewForm);
 		previewLayout.addBody(createBottomPanel());
 	}
+
+
+
+	@Override
+	public void attach() {
+		super.attach();
+
+		if(this.getParent() instanceof CustomLayout) {
+			this.getParent().addStyleName("preview-comp");
+		}
+	}
+
+
 
 	public void previewItem(final B item) {
 		this.beanItem = item;
