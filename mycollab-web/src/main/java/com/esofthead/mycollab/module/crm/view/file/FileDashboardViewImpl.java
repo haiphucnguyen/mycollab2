@@ -46,6 +46,7 @@ public class FileDashboardViewImpl extends AbstractPageView implements
 		};
 		dashboardComponent.setWidth("100%");
 		this.addComponent(dashboardComponent);
+		this.setMargin(true);
 	}
 
 	@Override
