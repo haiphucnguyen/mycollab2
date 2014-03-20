@@ -69,7 +69,7 @@ implements AccountReadView {
 
 	private static final long serialVersionUID = 1L;
 
-	protected AccountContactListComp associateContactList;
+	protected AccountContactListComp2 associateContactList;
 	protected AccountOpportunityListComp associateOpportunityList;
 	protected AccountLeadListComp associateLeadList;
 	protected AccountCaseListComp associateCaseList;
@@ -174,7 +174,7 @@ implements AccountReadView {
 
 	@Override
 	protected final void initRelatedComponents() {
-		associateContactList = new AccountContactListComp();
+		associateContactList = new AccountContactListComp2();
 		associateActivityList = new ActivityRelatedItemListComp(true);
 		associateOpportunityList = new AccountOpportunityListComp();
 		associateLeadList = new AccountLeadListComp();

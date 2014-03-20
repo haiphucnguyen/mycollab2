@@ -1,20 +1,3 @@
-/**
- * This file is part of mycollab-web.
- *
- * mycollab-web is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-web is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
- */
-
 package com.esofthead.mycollab.vaadin.ui;
 
 import java.util.HashSet;
@@ -35,19 +18,13 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
-/**
- * 
- * @author MyCollab Ltd.
- * @since 2.0
- * 
- */
-public abstract class AbstractBeanPagedList<S extends SearchCriteria, T>
-extends VerticalLayout implements HasPagableHandlers {
-	private static final long serialVersionUID = 1L;
+public abstract class AbstractBeanBlockList<S extends SearchCriteria, T> extends VerticalLayout implements HasPagableHandlers {
+
+	private static final long serialVersionUID = -1842929843421392806L;
 
 	private int defaultNumberSearchItems = 10;
-	protected final VerticalLayout listContainer;
-	protected final RowDisplayHandler<T> rowDisplayHandler;
+	protected final CssLayout itemContainer;
+	protected BlockDisplayHandler<T> blockDisplayHandler;
 	protected int currentPage = 1;
 	protected int totalPage = 1;
 	protected int totalCount;
@@ -59,12 +36,21 @@ extends VerticalLayout implements HasPagableHandlers {
 
 	protected SearchRequest<S> searchRequest;
 
-	public AbstractBeanPagedList(final RowDisplayHandler<T> rowDisplayHandler,
+	public AbstractBeanBlockList(final BlockDisplayHandler<T> blockDisplayHandler,
 			final int defaultNumberSearchItems) {
+		this(defaultNumberSearchItems);
+		this.setBlockDisplayHandler(blockDisplayHandler);
+	}
+
+	public AbstractBeanBlockList(final int defaultNumberSearchItems) {
 		this.defaultNumberSearchItems = defaultNumberSearchItems;
-		this.rowDisplayHandler = rowDisplayHandler;
-		listContainer = new VerticalLayout();
-		this.addComponent(listContainer);
+		itemContainer = new CssLayout();
+
+		Component topControls = generateTopControls();
+		if (topControls != null) {
+			this.addComponent(topControls);
+		}
+		this.addComponent(itemContainer);
 	}
 
 	@Override
@@ -94,7 +80,7 @@ extends VerticalLayout implements HasPagableHandlers {
 
 				@Override
 				public void buttonClick(final ClickEvent event) {
-					AbstractBeanPagedList.this.pageChange(1);
+					AbstractBeanBlockList.this.pageChange(1);
 				}
 			}, false);
 			firstLink.addStyleName("buttonPaging");
@@ -112,8 +98,8 @@ extends VerticalLayout implements HasPagableHandlers {
 
 						@Override
 						public void buttonClick(final ClickEvent event) {
-							AbstractBeanPagedList.this
-							.pageChange(AbstractBeanPagedList.this.currentPage - 2);
+							AbstractBeanBlockList.this
+							.pageChange(AbstractBeanBlockList.this.currentPage - 2);
 						}
 					}, false);
 			previous2.addStyleName("buttonPaging");
@@ -126,8 +112,8 @@ extends VerticalLayout implements HasPagableHandlers {
 
 						@Override
 						public void buttonClick(final ClickEvent event) {
-							AbstractBeanPagedList.this
-							.pageChange(AbstractBeanPagedList.this.currentPage - 1);
+							AbstractBeanBlockList.this
+							.pageChange(AbstractBeanBlockList.this.currentPage - 1);
 						}
 					}, false);
 			previous1.addStyleName("buttonPaging");
@@ -140,8 +126,8 @@ extends VerticalLayout implements HasPagableHandlers {
 
 			@Override
 			public void buttonClick(final ClickEvent event) {
-				AbstractBeanPagedList.this
-				.pageChange(AbstractBeanPagedList.this.currentPage);
+				AbstractBeanBlockList.this
+				.pageChange(AbstractBeanBlockList.this.currentPage);
 			}
 		}, false);
 		current.addStyleName("buttonPaging");
@@ -156,8 +142,8 @@ extends VerticalLayout implements HasPagableHandlers {
 
 				@Override
 				public void buttonClick(final ClickEvent event) {
-					AbstractBeanPagedList.this
-					.pageChange(AbstractBeanPagedList.this.currentPage + 1);
+					AbstractBeanBlockList.this
+					.pageChange(AbstractBeanBlockList.this.currentPage + 1);
 				}
 			}, false);
 			next1.addStyleName("buttonPaging");
@@ -170,8 +156,8 @@ extends VerticalLayout implements HasPagableHandlers {
 
 				@Override
 				public void buttonClick(final ClickEvent event) {
-					AbstractBeanPagedList.this
-					.pageChange(AbstractBeanPagedList.this.currentPage + 2);
+					AbstractBeanBlockList.this
+					.pageChange(AbstractBeanBlockList.this.currentPage + 2);
 				}
 			}, false);
 			next2.addStyleName("buttonPaging");
@@ -189,8 +175,8 @@ extends VerticalLayout implements HasPagableHandlers {
 
 				@Override
 				public void buttonClick(final ClickEvent event) {
-					AbstractBeanPagedList.this
-					.pageChange(AbstractBeanPagedList.this.totalPage);
+					AbstractBeanBlockList.this
+					.pageChange(AbstractBeanBlockList.this.totalPage);
 				}
 			}, false);
 			last.addStyleName("buttonPaging");
@@ -244,7 +230,7 @@ extends VerticalLayout implements HasPagableHandlers {
 
 		int i = 0;
 		for (final T item : currentListData) {
-			final Component row = rowDisplayHandler.generateRow(item, i);
+			final Component row = blockDisplayHandler.generateBlock(item, i);
 			content.addComponent(row);
 			i++;
 		}
@@ -269,7 +255,7 @@ extends VerticalLayout implements HasPagableHandlers {
 	}
 
 	public void setSearchCriteria(final S searchCriteria) {
-		listContainer.removeAllComponents();
+		itemContainer.removeAllComponents();
 
 		searchRequest = new SearchRequest<S>(searchCriteria, currentPage,
 				defaultNumberSearchItems);
@@ -280,13 +266,20 @@ extends VerticalLayout implements HasPagableHandlers {
 		this.totalPage = totalPage;
 	}
 
-	public RowDisplayHandler<T> getRowDisplayHandler() {
-		return rowDisplayHandler;
+	public BlockDisplayHandler<T> getRowDisplayHandler() {
+		return blockDisplayHandler;
 	}
 
-	public static interface RowDisplayHandler<T> {
+	public void setBlockDisplayHandler(BlockDisplayHandler<T> handler) {
+		this.blockDisplayHandler = handler;
+	}
 
-		Component generateRow(T obj, int rowIndex);
+	abstract protected Component generateTopControls();
+
+	public static interface BlockDisplayHandler<T> {
+
+		Component generateBlock(T obj, int blockIndex);
 
 	}
+
 }
