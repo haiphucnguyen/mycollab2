@@ -84,7 +84,9 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends
 		headerBox.setSpacing(true);
 		headerBox.setMargin(new MarginInfo(true, false, false, true));
 		headerBox.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
-		UiUtils.addComponent(headerBox, new Label("Saved Filter: "), Alignment.MIDDLE_LEFT);
+		
+		UiUtils.addComponent(headerBox, new Label("&nbsp; Saved Filter: ", ContentMode.HTML), Alignment.MIDDLE_LEFT);
+				
 		filterBox = new HorizontalLayout();
 		filterBox.setSpacing(true);
 		UiUtils.addComponent(headerBox, filterBox, Alignment.MIDDLE_LEFT);
