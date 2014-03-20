@@ -566,8 +566,8 @@ div.v-button-link.v-button-no-margin .v-button-wrap,div.v-button-link:focus
 	padding:0;
 }
 .splitbutton .v-popupbutton .v-button-wrap {
-	padding-left:2px;
-	padding-right:6px;
+	padding-left:3px;
+	padding-right:3px;
 }
 
 
@@ -6020,7 +6020,7 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
     padding: 3px 7px 3px 2px;
 }
 
-.splitbutton .v-popupbutton, .splitbutton .v-popupbutton:active, .splitbutton .v-popupbutton.greenbtn, .splitbutton .v-popupbutton.graybtn
+.splitbutton .v-popupbutton, .splitbutton .v-popupbutton:active, .splitbutton .v-popupbutton.greenbtn, .splitbutton .v-popupbutton.graybtn, .splitbutton .v-popupbutton.bluebtn, .splitbutton .v-popupbutton.brownbtn
 {
 	/* border-width: 1px; */
 	/* border-right: 1px solid #093768; */
@@ -6036,8 +6036,11 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 
 .v-button-graybtn.v-popupbutton .v-popup-indicator , .splitbutton .v-popupbutton.greenbtn .v-popup-indicator,.splitbutton .v-popupbutton.graybtn .v-popup-indicator, .splitbutton .v-popupbutton.bluebtn .v-popup-indicator
 	{
-	background: url("icons/sprites.png") no-repeat scroll -6px -10px transparent;
+	background: url("icons/sprites.png") no-repeat scroll -7px -10px transparent;
 }
+.v-popupbutton .v-popup-indicator {
+	
+} 
 /* End new splitbutton */
 
 /* VerticalTabsheet */
