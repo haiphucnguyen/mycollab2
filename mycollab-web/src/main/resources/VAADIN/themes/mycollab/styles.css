@@ -6065,14 +6065,11 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 
 .vertical-tabsheet .v-button-tab>.v-button-wrap {
 	background: none no-repeat 0 0 transparent;
+	background-image:none;
 	border-radius: 0px;
 	text-align: left;
 	border: none;
-	padding: 9px 35px;
-	transition:All 0.2s ease;
-	-webkit-transition:All 0.2s ease;
-	-moz-transition:All 0.2s ease;
-	-o-transition:All 0.2s ease;
+	padding: 9px 25px;
 	color: #FFFFFF;
 }
 .vertical-tabsheet .v-button-tab.tab-selected>.v-button-wrap {
@@ -6105,7 +6102,7 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 	border-top-right-radius: 0px;
 	border-bottom-right-radius: 0px;
 	border-bottom-left-radius: 5px;
-	border: 1px solid #8F8F8F;
+	//*border: 1px solid #8F8F8F;*/
 	overflow: hidden;
 }
 .verticalTabView .sidebar-menu {
@@ -6113,7 +6110,7 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 }
 
 .verticalTabView .sidebar-menu {
-	padding: 10px 0px;
+	padding: 0px 0px;
 }
 
 .verticalTabView .sidebar-menu .v-label.sectionHeader {
@@ -6642,4 +6639,9 @@ div.v-csslayout.bean-block {
 }
 .bean-block .icon-wrap {
 	padding: 5px 10px 0px 0px;
+}
+/* End Bean Block List */
+
+.notification-label {
+	background-color:#fff0e3;
 }

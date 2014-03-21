@@ -141,8 +141,7 @@ public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 				@Override
 				public void buttonClick(final ClickEvent event) {
 
-					BugSearchPanel.this
-					.notifySearchHandler(BugSearchPanel.this.searchCriteria);
+					BugBasicSearchLayout.this.callSearchAction();
 				}
 			});
 			searchBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
