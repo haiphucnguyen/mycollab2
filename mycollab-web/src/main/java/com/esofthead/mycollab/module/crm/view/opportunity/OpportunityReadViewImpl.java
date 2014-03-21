@@ -162,7 +162,7 @@ OpportunityReadView {
 
 		navigatorWrapper.addComponentAsFirst(basicInfo);
 
-		previewItemContainer.addTab(previewLayout, "About");
+		previewItemContainer.addTab(previewForm, "About");
 		previewItemContainer.addTab(associateContactList, "Contacts");
 		previewItemContainer.addTab(associateLeadList, "Leads");
 		previewItemContainer.addTab(associateActivityList, "Activities");

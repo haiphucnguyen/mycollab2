@@ -43,7 +43,7 @@ import com.vaadin.ui.UI;
  */
 @ViewComponent
 public class MeetingReadViewImpl extends AbstractPreviewItemComp<SimpleMeeting>
-		implements MeetingReadView {
+implements MeetingReadView {
 
 	private static final long serialVersionUID = 1L;
 	protected NoteListItems noteListItems;
@@ -98,7 +98,7 @@ public class MeetingReadViewImpl extends AbstractPreviewItemComp<SimpleMeeting>
 		dateInfoComp = new DateInfoComp();
 		navigatorWrapper.addComponentAsFirst(dateInfoComp);
 
-		previewItemContainer.addTab(previewLayout, "About");
+		previewItemContainer.addTab(previewForm, "About");
 		previewItemContainer.selectTab("About");
 	}
 
