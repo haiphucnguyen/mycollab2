@@ -18,7 +18,8 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
-public abstract class AbstractBeanBlockList<S extends SearchCriteria, T> extends VerticalLayout implements HasPagableHandlers {
+public abstract class AbstractBeanBlockList<S extends SearchCriteria, T> extends
+VerticalLayout implements HasPagableHandlers {
 
 	private static final long serialVersionUID = -1842929843421392806L;
 
@@ -203,7 +204,7 @@ public abstract class AbstractBeanBlockList<S extends SearchCriteria, T> extends
 			searchRequest.setCurrentPage(totalPage);
 		}
 
-		if (totalPage > 1) {
+		/*if (totalPage > 1) {
 			if (this.controlBarWrapper != null) {
 				this.removeComponent(this.controlBarWrapper);
 			}
@@ -212,11 +213,11 @@ public abstract class AbstractBeanBlockList<S extends SearchCriteria, T> extends
 			if (getComponentCount() == 2) {
 				removeComponent(getComponent(1));
 			}
-		}
+		}*/
 
 		currentListData = queryCurrentData();
 
-		if (getComponentCount() > 0) {
+		/*if (getComponentCount() > 0) {
 			final Component comp = getComponent(0);
 			if (comp instanceof CssLayout) {
 				removeComponent(comp);
@@ -226,12 +227,14 @@ public abstract class AbstractBeanBlockList<S extends SearchCriteria, T> extends
 		final CssLayout content = new CssLayout();
 		content.setStyleName("beanlist-content");
 		content.setWidth("100%");
-		this.addComponent(content, 0);
+		this.addComponent(content, 0);*/
+
+		itemContainer.removeAllComponents();
 
 		int i = 0;
 		for (final T item : currentListData) {
 			final Component row = blockDisplayHandler.generateBlock(item, i);
-			content.addComponent(row);
+			itemContainer.addComponent(row);
 			i++;
 		}
 	}
@@ -255,7 +258,7 @@ public abstract class AbstractBeanBlockList<S extends SearchCriteria, T> extends
 	}
 
 	public void setSearchCriteria(final S searchCriteria) {
-		itemContainer.removeAllComponents();
+		//itemContainer.removeAllComponents();
 
 		searchRequest = new SearchRequest<S>(searchCriteria, currentPage,
 				defaultNumberSearchItems);
