@@ -99,7 +99,7 @@ implements CallReadView {
 		dateInfoComp = new DateInfoComp();
 		navigatorWrapper.addComponentAsFirst(dateInfoComp);
 
-		previewItemContainer.addTab(previewForm, "About");
+		previewItemContainer.addTab(previewContent, "About");
 		previewItemContainer.selectTab("About");
 	}
 

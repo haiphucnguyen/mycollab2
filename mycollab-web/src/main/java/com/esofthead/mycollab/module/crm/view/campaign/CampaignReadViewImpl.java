@@ -124,13 +124,11 @@ AbstractPreviewItemComp<SimpleCampaign> implements CampaignReadView {
 
 		navigatorWrapper.addComponentAsFirst(basicInfo);
 
-		previewItemContainer.addTab(previewLayout, "About");
+		previewItemContainer.addTab(previewContent, "About");
 		previewItemContainer.addTab(associateAccountList, "Accounts");
 		previewItemContainer.addTab(associateContactList, "Contacts");
 		previewItemContainer.addTab(associateLeadList, "Leads");
 		previewItemContainer.addTab(associateActivityList, "Activities");
-
-		previewItemContainer.selectTab("About");
 	}
 
 	protected void displayNotes() {
@@ -172,6 +170,8 @@ AbstractPreviewItemComp<SimpleCampaign> implements CampaignReadView {
 
 		dateInfoComp.displayEntryDateTime(beanItem);
 		peopleInfoComp.displayEntryPeople(beanItem);
+
+		previewItemContainer.selectTab("About");
 	}
 
 	@Override

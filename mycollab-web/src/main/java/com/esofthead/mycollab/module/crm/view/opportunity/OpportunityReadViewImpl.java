@@ -114,6 +114,8 @@ OpportunityReadView {
 
 		dateInfoComp.displayEntryDateTime(beanItem);
 		peopleInfoComp.displayEntryPeople(beanItem);
+
+		previewItemContainer.selectTab("About");
 	}
 
 	@Override
@@ -162,12 +164,10 @@ OpportunityReadView {
 
 		navigatorWrapper.addComponentAsFirst(basicInfo);
 
-		previewItemContainer.addTab(previewForm, "About");
+		previewItemContainer.addTab(previewContent, "About");
 		previewItemContainer.addTab(associateContactList, "Contacts");
 		previewItemContainer.addTab(associateLeadList, "Leads");
 		previewItemContainer.addTab(associateActivityList, "Activities");
-
-		previewItemContainer.selectTab("About");
 	}
 
 	@Override

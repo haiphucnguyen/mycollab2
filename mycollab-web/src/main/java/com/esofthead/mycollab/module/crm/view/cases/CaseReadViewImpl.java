@@ -102,6 +102,8 @@ implements CaseReadView {
 
 		peopleInfoComp.displayEntryPeople(beanItem);
 		dateInfoComp.displayEntryDateTime(beanItem);
+
+		previewItemContainer.selectTab("About");
 	}
 
 	@Override
@@ -131,11 +133,9 @@ implements CaseReadView {
 
 		navigatorWrapper.addComponentAsFirst(basicInfo);
 
-		previewItemContainer.addTab(previewForm, "About");
+		previewItemContainer.addTab(previewContent, "About");
 		previewItemContainer.addTab(associateContactList, "Contacts");
 		previewItemContainer.addTab(associateActivityList, "Activities");
-
-		previewItemContainer.selectTab("About");
 	}
 
 	@Override

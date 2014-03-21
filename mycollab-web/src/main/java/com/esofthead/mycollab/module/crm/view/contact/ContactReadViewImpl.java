@@ -139,6 +139,8 @@ implements ContactReadView {
 
 		peopleInfoComp.displayEntryPeople(beanItem);
 		dateInfoComp.displayEntryDateTime(beanItem);
+
+		previewItemContainer.selectTab("About");
 	}
 
 	@Override
@@ -186,11 +188,9 @@ implements ContactReadView {
 
 		navigatorWrapper.addComponentAsFirst(basicInfo);
 
-		previewItemContainer.addTab(previewForm, "About");
+		previewItemContainer.addTab(previewContent, "About");
 		previewItemContainer.addTab(associateOpportunityList, "Opportunities");
 		previewItemContainer.addTab(associateActivityList, "Activities");
-
-		previewItemContainer.selectTab("About");
 	}
 
 	@Override
