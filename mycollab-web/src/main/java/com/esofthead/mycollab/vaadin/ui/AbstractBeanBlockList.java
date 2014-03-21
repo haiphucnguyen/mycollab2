@@ -45,6 +45,7 @@ VerticalLayout implements HasPagableHandlers {
 
 	public AbstractBeanBlockList(final int defaultNumberSearchItems) {
 		this.defaultNumberSearchItems = defaultNumberSearchItems;
+		this.setSpacing(true);
 		itemContainer = new CssLayout();
 
 		Component topControls = generateTopControls();
@@ -64,7 +65,6 @@ VerticalLayout implements HasPagableHandlers {
 
 	protected CssLayout createPageControls() {
 		this.controlBarWrapper = new CssLayout();
-		this.controlBarWrapper.setStyleName("listControl");
 		this.controlBarWrapper.setWidth("100%");
 
 		final HorizontalLayout controlBar = new HorizontalLayout();
@@ -204,30 +204,15 @@ VerticalLayout implements HasPagableHandlers {
 			searchRequest.setCurrentPage(totalPage);
 		}
 
-		/*if (totalPage > 1) {
-			if (this.controlBarWrapper != null) {
-				this.removeComponent(this.controlBarWrapper);
-			}
-			this.addComponent(this.createPageControls());
-		} else {
-			if (getComponentCount() == 2) {
-				removeComponent(getComponent(1));
-			}
-		}*/
-
-		currentListData = queryCurrentData();
-
-		/*if (getComponentCount() > 0) {
-			final Component comp = getComponent(0);
-			if (comp instanceof CssLayout) {
-				removeComponent(comp);
-			}
+		if (this.controlBarWrapper != null && this.controlBarWrapper.getParent() == this) {
+			this.removeComponent(this.controlBarWrapper);
 		}
 
-		final CssLayout content = new CssLayout();
-		content.setStyleName("beanlist-content");
-		content.setWidth("100%");
-		this.addComponent(content, 0);*/
+		if (totalPage > 1) {
+			this.addComponent(this.createPageControls());
+		}
+
+		currentListData = queryCurrentData();
 
 		itemContainer.removeAllComponents();
 
@@ -258,8 +243,6 @@ VerticalLayout implements HasPagableHandlers {
 	}
 
 	public void setSearchCriteria(final S searchCriteria) {
-		//itemContainer.removeAllComponents();
-
 		searchRequest = new SearchRequest<S>(searchCriteria, currentPage,
 				defaultNumberSearchItems);
 		doSearch();

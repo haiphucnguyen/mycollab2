@@ -52,6 +52,7 @@ import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.UI;
+import com.vaadin.ui.VerticalLayout;
 
 /**
  * 
@@ -61,7 +62,7 @@ import com.vaadin.ui.UI;
  */
 @ViewComponent
 public class ContactReadViewImpl extends AbstractPreviewItemComp<SimpleContact>
-		implements ContactReadView {
+implements ContactReadView {
 
 	private static final long serialVersionUID = 1L;
 
@@ -102,6 +103,7 @@ public class ContactReadViewImpl extends AbstractPreviewItemComp<SimpleContact>
 				.createButtonControls(RolePermissionCollections.CRM_CONTACT);
 	}
 
+	@Override
 	public AdvancedPreviewBeanForm<SimpleContact> getPreviewForm() {
 		return this.previewForm;
 	}
@@ -150,12 +152,12 @@ public class ContactReadViewImpl extends AbstractPreviewItemComp<SimpleContact>
 			return "<h2>"
 					+ beanItem.getContactName()
 					+ LocalizationHelper
-							.getMessage(
-									LeadI18nEnum.CONVERT_FROM_LEAD_TITLE,
-									CrmResources
-											.getResourceLink(CrmTypeConstants.LEAD),
-									CrmLinkGenerator.generateCrmItemLink(
-											CrmTypeConstants.LEAD, lead.getId()),
+					.getMessage(
+							LeadI18nEnum.CONVERT_FROM_LEAD_TITLE,
+							CrmResources
+							.getResourceLink(CrmTypeConstants.LEAD),
+							CrmLinkGenerator.generateCrmItemLink(
+									CrmTypeConstants.LEAD, lead.getId()),
 									lead.getLeadName()) + "</h2>";
 		} else {
 			return beanItem.getContactName();
@@ -169,10 +171,20 @@ public class ContactReadViewImpl extends AbstractPreviewItemComp<SimpleContact>
 		this.noteListItems = new NoteListItems("Notes");
 
 		CssLayout navigatorWrapper = previewItemContainer.getNavigatorWrapper();
-		peopleInfoComp = new PeopleInfoComp();
-		navigatorWrapper.addComponentAsFirst(peopleInfoComp);
+		VerticalLayout basicInfo = new VerticalLayout();
+		basicInfo.setWidth("100%");
+		basicInfo.setMargin(true);
+		basicInfo.setSpacing(true);
+		basicInfo.setStyleName("basic-info");
+
 		dateInfoComp = new DateInfoComp();
-		navigatorWrapper.addComponentAsFirst(dateInfoComp);
+		basicInfo.addComponent(dateInfoComp);
+
+		peopleInfoComp = new PeopleInfoComp();
+		basicInfo.addComponent(peopleInfoComp);
+
+
+		navigatorWrapper.addComponentAsFirst(basicInfo);
 
 		previewItemContainer.addTab(previewLayout, "About");
 		previewItemContainer.addTab(associateOpportunityList, "Opportunities");

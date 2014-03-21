@@ -46,6 +46,7 @@ import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.UI;
+import com.vaadin.ui.VerticalLayout;
 
 /**
  * 
@@ -55,7 +56,7 @@ import com.vaadin.ui.UI;
  */
 @ViewComponent
 public class CampaignReadViewImpl extends
-		AbstractPreviewItemComp<SimpleCampaign> implements CampaignReadView {
+AbstractPreviewItemComp<SimpleCampaign> implements CampaignReadView {
 
 	private static final long serialVersionUID = 1L;
 
@@ -106,11 +107,22 @@ public class CampaignReadViewImpl extends
 		associateActivityList = new ActivityRelatedItemListComp(true);
 		noteListItems = new NoteListItems("Notes");
 
+		VerticalLayout basicInfo = new VerticalLayout();
+		basicInfo.setWidth("100%");
+		basicInfo.setMargin(true);
+		basicInfo.setSpacing(true);
+		basicInfo.setStyleName("basic-info");
+
 		CssLayout navigatorWrapper = previewItemContainer.getNavigatorWrapper();
-		peopleInfoComp = new PeopleInfoComp();
-		navigatorWrapper.addComponentAsFirst(peopleInfoComp);
+
 		dateInfoComp = new DateInfoComp();
-		navigatorWrapper.addComponentAsFirst(dateInfoComp);
+		basicInfo.addComponent(dateInfoComp);
+
+		peopleInfoComp = new PeopleInfoComp();
+		basicInfo.addComponent(peopleInfoComp);
+
+
+		navigatorWrapper.addComponentAsFirst(basicInfo);
 
 		previewItemContainer.addTab(previewLayout, "About");
 		previewItemContainer.addTab(associateAccountList, "Accounts");
@@ -146,6 +158,7 @@ public class CampaignReadViewImpl extends
 		associateLeadList.displayLeads(beanItem);
 	}
 
+	@Override
 	public AdvancedPreviewBeanForm<SimpleCampaign> getPreviewForm() {
 		return previewForm;
 	}
