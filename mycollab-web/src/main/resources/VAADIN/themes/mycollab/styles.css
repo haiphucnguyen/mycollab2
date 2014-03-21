@@ -4646,8 +4646,10 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 	padding-left: 5px;
 }
 
-.addview-layout-body {
-	border: 1px solid #CFCFCF;
+.addview-layout-body .preview-form {
+	border-color: #CFCFCF;
+	border-width: 1px 1px 0px;
+	border-style: solid;
 }
 
 .addview-layout-body .h2 {
@@ -6619,6 +6621,26 @@ img.icon-btn {
 	border-radius: 3px;
 	padding: 0px;
 }
+
+/* Bean Block List */
+div.v-csslayout.bean-block {
+	display: inline-block;
+	background-color: #e9f2f7;
+	margin-bottom: 15px;
+	font-size: 12px;
+	vertical-align: top;
+	width: 290px;
+	margin-right: 11px;
+	border-width: 1px;
+	border-radius: 2px;
+	border-style: solid;
+	padding: 5px 5px 10px 15px;
+	border-color: #bebebe;
+}
+.bean-block .icon-wrap {
+	padding: 5px 10px 0px 0px;
+}
+/* End Bean Block List */
 
 .notification-label {
 	background-color:#fff0e3;

@@ -35,7 +35,9 @@ public class PeopleInfoComp extends VerticalLayout {
 		layout.setMargin(new MarginInfo(false, false, false, true));
 		layout.setWidth("100%");
 		try {
-			layout.addComponent(new Label("Created:"), 0, 0);
+			Label createdLbl = new Label("Created:");
+			createdLbl.setSizeUndefined();
+			layout.addComponent(createdLbl, 0, 0);
 
 			String createdUserName = (String) PropertyUtils.getProperty(bean,
 					"createduser");

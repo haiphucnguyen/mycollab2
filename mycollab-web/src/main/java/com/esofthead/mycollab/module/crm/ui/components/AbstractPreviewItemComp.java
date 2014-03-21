@@ -73,9 +73,8 @@ public abstract class AbstractPreviewItemComp<B> extends AbstractPageView {
 
 		previewLayout = new AddViewLayout2("", iconResource);
 
-		initRelatedComponents();
-
 		previewForm = initPreviewForm();
+		previewForm.addStyleName("preview-form");
 		previewLayout.setStyleName("readview-layout");
 		previewLayout.setMargin(new MarginInfo(false, true, false, true));
 
@@ -84,8 +83,12 @@ public abstract class AbstractPreviewItemComp<B> extends AbstractPageView {
 			previewLayout.addHeaderRight(actionControls);
 		}
 
-		previewLayout.addBody(previewForm);
-		previewLayout.addBody(createBottomPanel());
+		initRelatedComponents();
+
+		previewItemContainer.replaceContainer(previewLayout, previewLayout.getBody());
+
+		//previewLayout.addBody(previewItemContainer.getContentWrapper());
+		//previewLayout.addBody(createBottomPanel());
 	}
 
 

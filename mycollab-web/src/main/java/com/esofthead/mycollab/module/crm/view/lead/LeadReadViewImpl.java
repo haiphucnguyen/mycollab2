@@ -47,6 +47,7 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.UI;
+import com.vaadin.ui.VerticalLayout;
 
 /**
  * 
@@ -56,7 +57,7 @@ import com.vaadin.ui.UI;
  */
 @ViewComponent
 public class LeadReadViewImpl extends AbstractPreviewItemComp<SimpleLead>
-		implements LeadReadView {
+implements LeadReadView {
 	private static final long serialVersionUID = 1L;
 
 	protected LeadCampaignListComp associateCampaignList;
@@ -92,13 +93,13 @@ public class LeadReadViewImpl extends AbstractPreviewItemComp<SimpleLead>
 
 		Button convertButton = new Button("Convert",
 				new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
+			private static final long serialVersionUID = 1L;
 
-					@Override
-					public void buttonClick(ClickEvent event) {
-						previewForm.fireExtraAction("convert", beanItem);
-					}
-				});
+			@Override
+			public void buttonClick(ClickEvent event) {
+				previewForm.fireExtraAction("convert", beanItem);
+			}
+		});
 		convertButton.setStyleName(UIConstants.THEME_GREEN_LINK);
 		convertButton.setIcon(MyCollabResource
 				.newResource("icons/16/convert.png"));
@@ -135,10 +136,20 @@ public class LeadReadViewImpl extends AbstractPreviewItemComp<SimpleLead>
 		associateActivityList = new ActivityRelatedItemListComp(true);
 
 		CssLayout navigatorWrapper = previewItemContainer.getNavigatorWrapper();
-		peopleInfoComp = new PeopleInfoComp();
-		navigatorWrapper.addComponentAsFirst(peopleInfoComp);
+		VerticalLayout basicInfo = new VerticalLayout();
+		basicInfo.setWidth("100%");
+		basicInfo.setMargin(true);
+		basicInfo.setSpacing(true);
+		basicInfo.setStyleName("basic-info");
+
 		dateInfoComp = new DateInfoComp();
-		navigatorWrapper.addComponentAsFirst(dateInfoComp);
+		basicInfo.addComponent(dateInfoComp);
+
+		peopleInfoComp = new PeopleInfoComp();
+		basicInfo.addComponent(peopleInfoComp);
+
+
+		navigatorWrapper.addComponentAsFirst(basicInfo);
 
 		previewItemContainer.addTab(previewLayout, "About");
 		previewItemContainer.addTab(associateCampaignList, "Campaigns");
