@@ -151,7 +151,7 @@ implements LeadReadView {
 
 		navigatorWrapper.addComponentAsFirst(basicInfo);
 
-		previewItemContainer.addTab(previewLayout, "About");
+		previewItemContainer.addTab(previewForm, "About");
 		previewItemContainer.addTab(associateCampaignList, "Campaigns");
 		previewItemContainer.addTab(associateActivityList, "Activities");
 

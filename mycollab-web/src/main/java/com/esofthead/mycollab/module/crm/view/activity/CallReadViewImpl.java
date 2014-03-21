@@ -43,7 +43,7 @@ import com.vaadin.ui.UI;
  */
 @ViewComponent
 public class CallReadViewImpl extends AbstractPreviewItemComp<SimpleCall>
-		implements CallReadView {
+implements CallReadView {
 
 	private static final long serialVersionUID = 1L;
 
@@ -99,7 +99,7 @@ public class CallReadViewImpl extends AbstractPreviewItemComp<SimpleCall>
 		dateInfoComp = new DateInfoComp();
 		navigatorWrapper.addComponentAsFirst(dateInfoComp);
 
-		previewItemContainer.addTab(previewLayout, "About");
+		previewItemContainer.addTab(previewForm, "About");
 		previewItemContainer.selectTab("About");
 	}
 

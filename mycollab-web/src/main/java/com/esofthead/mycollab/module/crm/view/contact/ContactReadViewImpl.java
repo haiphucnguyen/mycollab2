@@ -186,7 +186,7 @@ implements ContactReadView {
 
 		navigatorWrapper.addComponentAsFirst(basicInfo);
 
-		previewItemContainer.addTab(previewLayout, "About");
+		previewItemContainer.addTab(previewForm, "About");
 		previewItemContainer.addTab(associateOpportunityList, "Opportunities");
 		previewItemContainer.addTab(associateActivityList, "Activities");
 

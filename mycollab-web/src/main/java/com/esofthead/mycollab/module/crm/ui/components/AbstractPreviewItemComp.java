@@ -83,9 +83,9 @@ public abstract class AbstractPreviewItemComp<B> extends AbstractPageView {
 			previewLayout.addHeaderRight(actionControls);
 		}
 
-		initRelatedComponents();
-
 		previewItemContainer.replaceContainer(previewLayout, previewLayout.getBody());
+
+		initRelatedComponents();
 
 		//previewLayout.addBody(previewItemContainer.getContentWrapper());
 		//previewLayout.addBody(createBottomPanel());
