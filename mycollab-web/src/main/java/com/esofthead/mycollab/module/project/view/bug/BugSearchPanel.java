@@ -159,10 +159,6 @@ public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 			cancelBtn.setStyleName(UIConstants.THEME_BLANK_LINK);
 			basicSearchBody.addComponent(cancelBtn);
 
-			final Separator separator1 = new Separator();
-			UiUtils.addComponent(basicSearchBody, separator1,
-					Alignment.MIDDLE_LEFT);
-
 			final Button advancedSearchBtn = new Button("Advanced Search",
 					new Button.ClickListener() {
 				@Override

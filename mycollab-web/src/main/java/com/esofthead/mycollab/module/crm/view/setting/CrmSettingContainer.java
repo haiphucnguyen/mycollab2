@@ -53,7 +53,7 @@ public class CrmSettingContainer extends CssLayout implements PageView {
 		
 		
 
-		settingTab = new VerticalTabsheet();
+		settingTab = new VerticalTabsheet(false);
 		settingTab.setSizeFull();
 		settingTab.setNavigatorWidth("250px");
 		settingTab.setNavigatorStyleName("sidebar-menu");

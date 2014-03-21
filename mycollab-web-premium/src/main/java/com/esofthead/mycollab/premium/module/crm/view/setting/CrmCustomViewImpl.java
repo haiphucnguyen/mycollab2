@@ -44,6 +44,7 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.UiUtils;
 import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
 import com.vaadin.data.Property;
 import com.vaadin.shared.ui.MarginInfo;
@@ -51,6 +52,7 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
@@ -73,16 +75,27 @@ public class CrmCustomViewImpl extends AbstractPageView implements
 		VerticalLayout headerBox = new VerticalLayout();
 		headerBox.setWidth("100%");
 		headerBox.setSpacing(true);
-		headerBox.addStyleName("CrmCustomViewHeader");
+		//headerBox.addStyleName(UIConstants.HEADER_VIEW);
 
-		headerLbl = new Label();
+		headerLbl = new Label("abcd");
+		Image titleIcon = new Image(null,
+				MyCollabResource.newResource("icons/22/crm/layout.png"));
+		
 		HorizontalLayout headerTitle = new HorizontalLayout();
 		headerTitle.setWidth("100%");
-		headerTitle.setMargin(true);
-		headerTitle.addStyleName("headerTitle");
+		headerTitle.setMargin(false);
+		headerTitle.setSpacing(true);
+		headerTitle.addStyleName(UIConstants.HEADER_VIEW);
+		headerTitle.setMargin(new MarginInfo(true, false, true, false));
+		
+	
+		
+		UiUtils.addComponent(headerTitle,titleIcon, Alignment.MIDDLE_LEFT);
 		headerTitle.addComponent(headerLbl);
 		headerTitle.setComponentAlignment(headerLbl, Alignment.MIDDLE_LEFT);
 		headerTitle.setExpandRatio(headerLbl, 1.0f);
+		
+		
 		headerBox.addComponent(headerTitle);
 
 		VerticalLayout headerContent = new VerticalLayout();
@@ -151,6 +164,7 @@ public class CrmCustomViewImpl extends AbstractPageView implements
 
 		HorizontalLayout buttonsLayout = new HorizontalLayout();
 		buttonsLayout.setSpacing(true);
+		buttonsLayout.setMargin(new MarginInfo(true, false, true,false));
 		Button saveBtn = new Button(
 				LocalizationHelper.getMessage(GenericI18Enum.BUTTON_SAVE_LABEL),
 				new Button.ClickListener() {
@@ -182,7 +196,7 @@ public class CrmCustomViewImpl extends AbstractPageView implements
 
 					}
 				});
-		cancelBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+		cancelBtn.addStyleName(UIConstants.THEME_BLANK_LINK);
 		buttonsLayout.addComponent(cancelBtn);
 
 		headerContent.addComponent(buttonsLayout);
@@ -193,7 +207,9 @@ public class CrmCustomViewImpl extends AbstractPageView implements
 	@Override
 	public void display(String moduleName) {
 		this.moduleName = moduleName;
-		headerLbl.setCaption(moduleName + ": Edit Page Layout (Beta)");
+		headerLbl.setValue(moduleName + ": Edit Page Layout (Beta)");
+		
+		headerLbl.setStyleName(UIConstants.HEADER_TEXT);
 		moduleComboBox.select(moduleName);
 
 		layoutComp.displayLayoutCustom(getDynaForm(moduleName));

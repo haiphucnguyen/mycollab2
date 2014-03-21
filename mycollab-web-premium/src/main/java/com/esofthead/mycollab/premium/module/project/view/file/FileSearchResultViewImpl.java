@@ -28,7 +28,7 @@ public class FileSearchResultViewImpl extends AbstractPageView implements
 			}
 		};
 		this.addComponent(searchResultComp);
-		this.setMargin(new MarginInfo( true, false, true, false));
+		this.setMargin(true);
 	}
 
 	@Override
