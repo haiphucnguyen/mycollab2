@@ -66,8 +66,8 @@ OpportunityReadView {
 
 	private static final long serialVersionUID = 1L;
 
-	protected OpportunityContactListComp associateContactList;
-	protected OpportunityLeadListComp associateLeadList;
+	protected OpportunityContactListComp2 associateContactList;
+	protected OpportunityLeadListComp2 associateLeadList;
 	protected NoteListItems noteListItems;
 	protected ActivityRelatedItemListComp associateActivityList;
 
@@ -143,8 +143,8 @@ OpportunityReadView {
 
 	@Override
 	protected void initRelatedComponents() {
-		associateContactList = new OpportunityContactListComp();
-		associateLeadList = new OpportunityLeadListComp();
+		associateContactList = new OpportunityContactListComp2();
+		associateLeadList = new OpportunityLeadListComp2();
 		associateActivityList = new ActivityRelatedItemListComp(true);
 		noteListItems = new NoteListItems("Notes");
 
