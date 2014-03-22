@@ -69,7 +69,7 @@ implements AccountReadView {
 
 	private static final long serialVersionUID = 1L;
 
-	protected AccountContactListComp2 associateContactList;
+	protected AccountContactListComp associateContactList;
 	protected AccountOpportunityListComp associateOpportunityList;
 	protected AccountLeadListComp associateLeadList;
 	protected AccountCaseListComp associateCaseList;
@@ -174,7 +174,7 @@ implements AccountReadView {
 
 	@Override
 	protected final void initRelatedComponents() {
-		associateContactList = new AccountContactListComp2();
+		associateContactList = new AccountContactListComp();
 		associateActivityList = new ActivityRelatedItemListComp(true);
 		associateOpportunityList = new AccountOpportunityListComp();
 		associateLeadList = new AccountLeadListComp();
@@ -197,7 +197,7 @@ implements AccountReadView {
 
 		navigatorWrapper.addComponentAsFirst(basicInfo);
 
-		previewItemContainer.addTab(previewForm, "About");
+		previewItemContainer.addTab(previewContent, "About");
 		previewItemContainer.addTab(associateContactList, "Contacts");
 		previewItemContainer.addTab(associateLeadList, "Leads");
 		previewItemContainer.addTab(associateOpportunityList, "Opportunities");

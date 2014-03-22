@@ -30,6 +30,7 @@ import com.vaadin.ui.CustomLayout;
 import com.vaadin.ui.TabSheet.SelectedTabChangeEvent;
 import com.vaadin.ui.TabSheet.SelectedTabChangeListener;
 import com.vaadin.ui.TabSheet.Tab;
+import com.vaadin.ui.VerticalLayout;
 
 /**
  * 
@@ -43,6 +44,7 @@ public abstract class AbstractPreviewItemComp<B> extends AbstractPageView {
 
 	protected B beanItem;
 	protected AddViewLayout2 previewLayout;
+	protected VerticalLayout previewContent;
 	protected AdvancedPreviewBeanForm<B> previewForm;
 	protected VerticalTabsheet previewItemContainer;
 
@@ -73,6 +75,9 @@ public abstract class AbstractPreviewItemComp<B> extends AbstractPageView {
 
 		previewLayout = new AddViewLayout2("", iconResource);
 
+		previewContent = new VerticalLayout();
+		previewContent.setWidth("100%");
+
 		previewForm = initPreviewForm();
 		previewForm.addStyleName("preview-form");
 		previewLayout.setStyleName("readview-layout");
@@ -88,7 +93,8 @@ public abstract class AbstractPreviewItemComp<B> extends AbstractPageView {
 		initRelatedComponents();
 
 		//previewLayout.addBody(previewItemContainer.getContentWrapper());
-		//previewLayout.addBody(createBottomPanel());
+		previewContent.addComponent(previewForm);
+		previewContent.addComponent(createBottomPanel());
 	}
 
 

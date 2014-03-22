@@ -39,6 +39,7 @@ public class AddViewLayout2 extends VerticalLayout {
 	private final Image iconEmbed;
 	private final Label titleLbl;
 	private final VerticalLayout body;
+	private final VerticalLayout footer;
 
 	public AddViewLayout2(final String title, final Resource icon) {
 		setStyleName("addview-layout");
@@ -74,6 +75,10 @@ public class AddViewLayout2 extends VerticalLayout {
 		body = new VerticalLayout();
 		body.setStyleName("addview-layout-body");
 		this.addComponent(body);
+
+		footer = new VerticalLayout();
+		footer.setStyleName("addview-layout-footer");
+		this.addComponent(footer);
 	}
 
 	public void addBody(final ComponentContainer body) {
@@ -85,9 +90,17 @@ public class AddViewLayout2 extends VerticalLayout {
 		return this.body;
 	}
 
+	public VerticalLayout getFooter() {
+		return this.footer;
+	}
+
 	public void addControlButtons(final Component controlsBtn) {
 		controlsBtn.addStyleName("control-buttons");
-		body.addComponent(controlsBtn);
+		addHeaderRight(controlsBtn);
+	}
+
+	public void addToFooter(Component c) {
+		this.footer.addComponent(c);
 	}
 
 	public void setTitle(final String title) {
@@ -100,7 +113,7 @@ public class AddViewLayout2 extends VerticalLayout {
 		}
 	}
 
-	public void addHeaderRight(final ComponentContainer headerRight) {
+	public void addHeaderRight(final Component headerRight) {
 		this.header.addComponent(headerRight);
 	}
 }
