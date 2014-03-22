@@ -420,6 +420,11 @@ div.v-button-link.v-button-no-margin .v-button-wrap,div.v-button-link:focus
 	background-color:#17d61b;
 	color:white;
 	font-weight:normal;
+	border-color: rgb(66, 129, 68);
+}
+
+.v-button.v-button-greenbtn.selected {
+	background-color: rgb(22, 151, 25);
 }
 
 .v-button-greenbtn:hover, .v-button-greenbtn:active{
@@ -2431,8 +2436,8 @@ input.v-textfield-errorField {
 	line-height: 30px;
 }
 
-.v-calendar-header-week {
-	margin-top: 10px;
+.stylecalendar.v-widget {
+	border-radius: 0px;
 }
 
 .v-calendar-header-week td:nth-of-type(2) .v-calendar-header-day-Hsized
@@ -3991,8 +3996,10 @@ div.v-lazyloadingwrapper-loading {
 /* Toggle Button Group */
 .v-buttongroup.toggle-btn-group .v-button.selected,.v-buttongroup.toggle-btn-group .v-button.selected:active,.v-buttongroup.toggle-btn-group .v-button.selected:focus
 	{
-	background: url("icons/grad-dark-top2.png") no-repeat scroll left bottom
-		rgb(40, 126, 206);
+	background-image: url("icons/grad-dark-top2.png");
+	background-repeat: no-repeat;
+	background-position: left bottom;
+	background-color: rgb(40, 126, 206);
 }
 
 .v-buttongroup.toggle-btn-group .v-button.v-button-left,.v-buttongroup.toggle-btn-group .v-button.v-button-middle,.v-buttongroup.toggle-btn-group .v-button.v-button-right
@@ -4031,13 +4038,17 @@ div.v-lazyloadingwrapper-loading {
 
 .v-buttongroup.toggle-btn-group .v-button.v-button-left:active,.v-buttongroup.toggle-btn-group .v-button.v-button-middle:active,.v-buttongroup.toggle-btn-group .v-button.v-button-right:active,.v-buttongroup.toggle-btn-group .v-button.v-button-left:focus,.v-buttongroup.toggle-btn-group .v-button.v-button-middle:focus,.v-buttongroup.toggle-btn-group .v-button.v-button-right:focus
 	{
-	background: url("icons/grad-dark-top2.png") no-repeat scroll left bottom
-		rgb(40, 126, 206);
+	background-image: url("icons/grad-dark-top2.png");
+	background-repeat: no-repeat;
+	background-position: left bottom;
+	background-color: rgb(40, 126, 206);
 }
 
 .v-buttongroup.toggle-btn-group .v-button {
-	background: url("icons/grad-dark-bottom2.png") repeat-x scroll left
-		bottom rgb(123, 123, 123);
+	background-image: url("icons/grad-dark-bottom2.png");
+	background-repeat: repeat-x;
+	background-position: left bottom;
+	background-color: rgb(123, 123, 123);
 	color: white;
 }
 /* End Toggle Button Group */
