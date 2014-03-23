@@ -6463,6 +6463,9 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 	color: #525252;
 	font-weight: bold;
 }
+.hdr-view .hdr-text > img {
+	vertical-align: middle;
+}
 .hdr-view .hdr-text .v-popup-indicator {
 	height:14px;
 }

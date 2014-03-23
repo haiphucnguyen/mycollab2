@@ -151,8 +151,7 @@ implements ContactReadView {
 		SimpleLead lead = leadService.findConvertedLeadOfContact(
 				beanItem.getId(), AppContext.getAccountId());
 		if (lead != null) {
-			return "<h2>"
-					+ beanItem.getContactName()
+			return beanItem.getContactName() + "&nbsp;"
 					+ LocalizationHelper
 					.getMessage(
 							LeadI18nEnum.CONVERT_FROM_LEAD_TITLE,
@@ -160,7 +159,7 @@ implements ContactReadView {
 							.getResourceLink(CrmTypeConstants.LEAD),
 							CrmLinkGenerator.generateCrmItemLink(
 									CrmTypeConstants.LEAD, lead.getId()),
-									lead.getLeadName()) + "</h2>";
+									lead.getLeadName());
 		} else {
 			return beanItem.getContactName();
 		}

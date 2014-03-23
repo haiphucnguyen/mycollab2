@@ -102,11 +102,11 @@ ActivityCalendarView {
 	private static final long serialVersionUID = 1L;
 	private final PopupButton calendarActionBtn;
 	private MonthViewCalendar calendarComponent;
-	private PopupButton groupViewBtn;
+	private PopupButton toggleViewBtn;
 	private Button monthViewBtn;
 	private Button weekViewBtn;
 	private Button dailyViewBtn;
-	private Label dateChooser;
+	private Label dateHdr;
 	private final StandupStyleCalendarExp datePicker = new StandupStyleCalendarExp();
 
 	public ActivityCalendarViewImpl() {
@@ -156,14 +156,14 @@ ActivityCalendarView {
 
 		mainContent.addComponent(actionPanel);
 
-		this.dateChooser = new Label();
-		this.dateChooser.setSizeUndefined();
-		this.dateChooser.setStyleName("h2");
-		mainContent.addComponent(this.dateChooser);
-		mainContent.setComponentAlignment(this.dateChooser, Alignment.MIDDLE_CENTER);
+		this.dateHdr = new Label();
+		this.dateHdr.setSizeUndefined();
+		this.dateHdr.setStyleName("h2");
+		mainContent.addComponent(this.dateHdr);
+		mainContent.setComponentAlignment(this.dateHdr, Alignment.MIDDLE_CENTER);
 
-		groupViewBtn = new PopupButton("Monthly");
-		groupViewBtn.setWidth("200px");
+		toggleViewBtn = new PopupButton("Monthly");
+		toggleViewBtn.setWidth("200px");
 		VerticalLayout popupLayout = new VerticalLayout();
 		popupLayout.setSpacing(true);
 		popupLayout.setMargin(new MarginInfo(false, true, false, true));
@@ -174,8 +174,8 @@ ActivityCalendarView {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				groupViewBtn.setPopupVisible(false);
-				groupViewBtn.setCaption(monthViewBtn.getCaption());
+				toggleViewBtn.setPopupVisible(false);
+				toggleViewBtn.setCaption(monthViewBtn.getCaption());
 				calendarComponent.switchToMonthView(new Date(), true);
 				monthViewBtn.addStyleName("selected-style");
 				initLabelCaption();
@@ -189,8 +189,8 @@ ActivityCalendarView {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				groupViewBtn.setPopupVisible(false);
-				groupViewBtn.setCaption(weekViewBtn.getCaption());
+				toggleViewBtn.setPopupVisible(false);
+				toggleViewBtn.setCaption(weekViewBtn.getCaption());
 				calendarComponent.switchToWeekView(new Date());
 			}
 		});
@@ -202,18 +202,18 @@ ActivityCalendarView {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				groupViewBtn.setPopupVisible(false);
-				groupViewBtn.setCaption(dailyViewBtn.getCaption());
+				toggleViewBtn.setPopupVisible(false);
+				toggleViewBtn.setCaption(dailyViewBtn.getCaption());
 				calendarComponent.switchToDateView(new Date());
 			}
 		});
 		dailyViewBtn.setStyleName("link");
 		popupLayout.addComponent(dailyViewBtn);
 
-		groupViewBtn.setContent(popupLayout);
+		toggleViewBtn.setContent(popupLayout);
 
-		rightColumn.addComponent(groupViewBtn);
-		rightColumn.setComponentAlignment(groupViewBtn, Alignment.MIDDLE_CENTER);
+		rightColumn.addComponent(toggleViewBtn);
+		rightColumn.setComponentAlignment(toggleViewBtn, Alignment.MIDDLE_CENTER);
 
 		rightColumn.addComponent(this.datePicker);
 		initLabelCaption();
@@ -333,9 +333,8 @@ ActivityCalendarView {
 			calendar.setTime(date);
 			DateFormatSymbols s = new DateFormatSymbols();
 			String month = s.getMonths()[calendar.get(GregorianCalendar.MONTH)];
-			dateChooser.setValue(month + " "
+			dateHdr.setValue(month + " "
 					+ calendar.get(GregorianCalendar.YEAR));
-			//this.dateChooser.setWidth("110px");
 			break;
 		case WEEK:
 			java.util.Calendar cal = java.util.Calendar.getInstance();
@@ -350,12 +349,10 @@ ActivityCalendarView {
 			String firstDateOfWeek = DateTimeUtils.formatDate(cal.getTime());
 			cal.add(java.util.Calendar.DATE, 6);
 			String endDateOfWeek = DateTimeUtils.formatDate(cal.getTime());
-			dateChooser.setValue(firstDateOfWeek + " - " + endDateOfWeek);
-			//this.dateChooser.setWidth("150px");
+			dateHdr.setValue(firstDateOfWeek + " - " + endDateOfWeek);
 			break;
 		case DAY:
-			dateChooser.setValue(AppContext.formatDate(date));
-			//this.dateChooser.setWidth("80px");
+			dateHdr.setValue(AppContext.formatDate(date));
 			break;
 		}
 	}
@@ -374,7 +371,7 @@ ActivityCalendarView {
 						datePicker.setLabelTime(AppContext
 								.formatDate(selectedDate));
 						updateLabelCaption(selectedDate);
-						//dateChooser.setPopupVisible(false);
+						//dateHdr.setPopupVisible(false);
 					}
 				});
 
@@ -437,7 +434,7 @@ ActivityCalendarView {
 		calendar.setTime(datenow);
 		DateFormatSymbols s = new DateFormatSymbols();
 		String month = s.getMonths()[calendar.get(GregorianCalendar.MONTH)];
-		dateChooser.setValue(month + " "
+		dateHdr.setValue(month + " "
 				+ calendar.get(GregorianCalendar.YEAR));
 	}
 
@@ -693,12 +690,12 @@ ActivityCalendarView {
 						calendar.add(java.util.Calendar.DATE, 6);
 						String endDateOfWeek = DateTimeUtils
 								.formatDate(calendar.getTime());
-						dateChooser.setValue(firstDateOfWeek + " - "
+						dateHdr.setValue(firstDateOfWeek + " - "
 								+ endDateOfWeek);
 						break;
 					case DAY:
 						calendar.add(java.util.Calendar.DATE, 1);
-						dateChooser.setValue(DateTimeUtils
+						dateHdr.setValue(DateTimeUtils
 								.formatDate(calendar.getTime()));
 						break;
 					case MONTH:
@@ -724,12 +721,12 @@ ActivityCalendarView {
 						calendar.add(java.util.Calendar.DATE, 6);
 						String endDateOfWeek = DateTimeUtils
 								.formatDate(calendar.getTime());
-						dateChooser.setValue(firstDateOfWeek + " - "
+						dateHdr.setValue(firstDateOfWeek + " - "
 								+ endDateOfWeek);
 						break;
 					case DAY:
 						calendar.add(java.util.Calendar.DATE, -1);
-						dateChooser.setValue(DateTimeUtils
+						dateHdr.setValue(DateTimeUtils
 								.formatDate(calendar.getTime()));
 						break;
 					case MONTH:
@@ -858,7 +855,6 @@ ActivityCalendarView {
 		}
 
 		private void switchToWeekView(Date date) {
-			//dateChooser.setWidth("150px");
 			viewMode = Mode.WEEK;
 			calendar.setTime(date);
 			java.util.Calendar cal = java.util.Calendar.getInstance();
@@ -873,21 +869,19 @@ ActivityCalendarView {
 			String firstDateOfWeek = DateTimeUtils.formatDate(cal.getTime());
 			cal.add(java.util.Calendar.DATE, 6);
 			String endDateOfWeek = DateTimeUtils.formatDate(cal.getTime());
-			dateChooser.setValue(firstDateOfWeek + " - " + endDateOfWeek);
+			dateHdr.setValue(firstDateOfWeek + " - " + endDateOfWeek);
 		}
 
 		private void switchToDateView(Date date) {
-			//dateChooser.setWidth("80px");
 			viewMode = Mode.DAY;
 			calendar.setTime(date);
 			DateClickHandler handler = (DateClickHandler) calendarComponent
 					.getHandler(DateClickEvent.EVENT_ID);
 			handler.dateClick(new DateClickEvent(calendarComponent, date));
-			dateChooser.setValue(AppContext.formatDate(date));
+			dateHdr.setValue(AppContext.formatDate(date));
 		}
 
 		private void switchToMonthView(Date date, boolean isViewCurrentMonth) {
-			//dateChooser.setWidth("110px");
 			viewMode = Mode.MONTH;
 			calendar = new GregorianCalendar();
 			calendar.setTime(date);
