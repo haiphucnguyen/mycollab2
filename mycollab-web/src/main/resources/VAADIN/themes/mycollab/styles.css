@@ -4656,6 +4656,7 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 	padding: 8px 0px 8px 18px;
 	font-size: 13px;
 	border-bottom: 1px solid #CFCFCF;
+	border-top: 1px solid #CFCFCF;
 	color: rgb(69, 69, 69);
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;

@@ -148,10 +148,11 @@ public class CrmPreviewFormControlsGenerator<T> {
 			cloneBtn.setStyleName("link");
 			popupButtonsControl.addComponent(cloneBtn);
 		}
-
 		editButtons.setContent(popupButtonsControl);
-
+		if ((buttonEnableFlags & CLONE_BTN_PRESENTED) == CLONE_BTN_PRESENTED | (buttonEnableFlags & EDIT_BTN_PRESENTED) == EDIT_BTN_PRESENTED) {
+		
 		layout.addComponent(editButtons);
+		}
 
 		ButtonGroup navigationBtns = new ButtonGroup();
 		navigationBtns.setStyleName("navigation-btns");
