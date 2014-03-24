@@ -315,7 +315,7 @@ div.v-button-link.v-button-no-margin .v-button-wrap,div.v-button-link:focus
 	padding:6px 8px;
 }
 
-.v-button, .splitbutton .v-button.v-disabled
+.v-button
 	{
 	/*background-image: url("icons/grad-dark-bottom2.png");*/
 	/*background-image:none;*/
@@ -2907,6 +2907,10 @@ div.v-splitbutton,div.v-splitbutton .v-button {
 	border-radius: 0px;
 	border-width: 0 1px 1px 1px;
 	border-bottom: 1px solid #CFCFCF;
+	
+}
+.activity-realated-content .v-table-header-wrap {
+	border-top-width:1px;
 }
 
 .v-table-header-wrap .v-table-caption-container {
@@ -4667,7 +4671,6 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 	padding: 8px 0px 8px 18px;
 	font-size: 13px;
 	border-bottom: 1px solid #CFCFCF;
-	border-top: 1px solid #CFCFCF;
 	color: rgb(69, 69, 69);
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
@@ -5107,6 +5110,7 @@ div.v-ratingstars-bar {
 	border-color: rgb(204, 203, 203);
 	background-color: rgb(245, 245, 245);
 }
+
 
 div.v-button-link.buttonPaging {
 	/* background: url("icons/sprite-vert2-light.png") no-repeat -10px -8px
@@ -6659,4 +6663,8 @@ div.v-csslayout.bean-block {
 
 .notification-label {
 	background-color:#fff0e3;
+}
+.index_lbl {
+	padding-top: 2px;
+	font-size: 15px;
 }

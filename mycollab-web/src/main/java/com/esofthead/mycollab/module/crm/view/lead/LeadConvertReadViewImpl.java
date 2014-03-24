@@ -234,8 +234,7 @@ public class LeadConvertReadViewImpl extends AbstractPreviewItemComp<SimpleLead>
 	public IRelatedListHandlers<SimpleCampaign> getRelatedCampaignHandlers() {
 		return associateCampaignList;
 	}
-	
-	@Override
+
 	public void displayConvertLeadInfo(final SimpleLead lead) {
 		this.removeAllComponents();
 		previewForm.removeAllComponents();
