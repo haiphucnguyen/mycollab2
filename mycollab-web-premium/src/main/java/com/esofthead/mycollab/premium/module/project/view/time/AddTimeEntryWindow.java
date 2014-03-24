@@ -1,14 +1,21 @@
 package com.esofthead.mycollab.premium.module.project.view.time;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-
-import org.vaadin.hene.popupbutton.PopupButton;
+import java.util.List;
 
 import com.esofthead.mycollab.core.UserInvalidInputException;
+import com.esofthead.mycollab.core.utils.DateTimeUtils;
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.domain.ItemTimeLogging;
+import com.esofthead.mycollab.module.project.service.ItemTimeLoggingService;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberSelectionBox;
-import com.esofthead.mycollab.vaadin.ui.StandupStyleCalendarExp;
-import com.esofthead.vaadin.popupbutton.PopupButtonExt;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.ui.StyleCalendarFieldExp;
 import com.vaadin.data.Item;
 import com.vaadin.data.Property;
 import com.vaadin.data.Property.ValueChangeEvent;
@@ -18,9 +25,7 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.InlineDateField;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.PopupDateField;
 import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.VerticalLayout;
@@ -35,19 +40,18 @@ import com.vaadin.ui.Window;
 public class AddTimeEntryWindow extends Window {
 	private static final long serialVersionUID = 1L;
 
-	private static String[] DAY_IN_WEEK = { "Monday", "Tuesday", "Wednesday",
-			"Thursday", "Friday", "Saturday", "Sunday" };
-
-	private PopupDateField weekSelectionCalendar;
+	private Date selectedDate;
+	private StyleCalendarFieldExp weekSelectionCalendar;
 	private CheckBox isBillableCheckBox;
 	private Table timeInputTable;
 	private ProjectMemberSelectionBox projectMemberSelectionBox;
 	private RichTextArea descArea;
-	private Date selectedDate;
 
 	public AddTimeEntryWindow(TimeTrackingListView view) {
 		this.setModal(true);
 		this.setCaption("Log time on this project");
+
+		selectedDate = new GregorianCalendar().getTime();
 
 		VerticalLayout content = new VerticalLayout();
 		content.setSpacing(true);
@@ -65,18 +69,19 @@ public class AddTimeEntryWindow extends Window {
 		projectMemberSelectionBox = new ProjectMemberSelectionBox();
 		grid.addComponent(projectMemberSelectionBox, 0, 1);
 
-		weekSelectionCalendar = new PopupDateField();
-		weekSelectionCalendar.setInputPrompt("Select week");
-		weekSelectionCalendar.addValueChangeListener(
-				new ValueChangeListener() {
-					private static final long serialVersionUID = 1L;
+		weekSelectionCalendar = new StyleCalendarFieldExp();
+		weekSelectionCalendar.setWidth("150px");
+		weekSelectionCalendar.setValue(selectedDate);
+		weekSelectionCalendar.addValueChangeListener(new ValueChangeListener() {
+			private static final long serialVersionUID = 1L;
 
-					@Override
-					public void valueChange(ValueChangeEvent event) {
-						Date dateVal = weekSelectionCalendar.getValue();
-						System.out.println("DATE: " + dateVal);
-					}
-				});
+			@Override
+			public void valueChange(ValueChangeEvent event) {
+				selectedDate = weekSelectionCalendar.getValue();
+				weekSelectionCalendar.setPopupClose();
+				updateTimeTableHeader();
+			}
+		});
 		grid.addComponent(weekSelectionCalendar, 1, 1);
 
 		isBillableCheckBox = new CheckBox();
@@ -95,6 +100,7 @@ public class AddTimeEntryWindow extends Window {
 		timeInputTable.addItem(new Double[] { 0d, 0d, 0d, 0d, 0d, 0d, 0d },
 				"timeEntry");
 		timeInputTable.setEditable(true);
+		updateTimeTableHeader();
 		content.addComponent(timeInputTable);
 
 		Label descriptionLbl = new Label("Description");
@@ -137,7 +143,40 @@ public class AddTimeEntryWindow extends Window {
 		this.center();
 	}
 
-	private void calculateDateInWeek() {
+	private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
+			"MM/dd");
+
+	private void updateTimeTableHeader() {
+		Date monday = DateTimeUtils.getBounceDateofWeek(selectedDate)[0];
+		Calendar calendar = new GregorianCalendar();
+		calendar.setTime(monday);
+
+		timeInputTable.setColumnHeader("Monday",
+				"Monday (" + simpleDateFormat.format(calendar.getTime()) + ")");
+
+		calendar.add(Calendar.DAY_OF_YEAR, 1);
+		timeInputTable.setColumnHeader("Tuesday", "Tuesday ("
+				+ simpleDateFormat.format(calendar.getTime()) + ")");
+
+		calendar.add(Calendar.DAY_OF_YEAR, 1);
+		timeInputTable.setColumnHeader("Wednesday", "Wednesday ("
+				+ simpleDateFormat.format(calendar.getTime()) + ")");
+
+		calendar.add(Calendar.DAY_OF_YEAR, 1);
+		timeInputTable.setColumnHeader("Thursday", "Thursday ("
+				+ simpleDateFormat.format(calendar.getTime()) + ")");
+
+		calendar.add(Calendar.DAY_OF_YEAR, 1);
+		timeInputTable.setColumnHeader("Friday",
+				"Friday (" + simpleDateFormat.format(calendar.getTime()) + ")");
+
+		calendar.add(Calendar.DAY_OF_YEAR, 1);
+		timeInputTable.setColumnHeader("Saturday", "Saturday ("
+				+ simpleDateFormat.format(calendar.getTime()) + ")");
+
+		calendar.add(Calendar.DAY_OF_YEAR, 1);
+		timeInputTable.setColumnHeader("Sunday",
+				"Sunday (" + simpleDateFormat.format(calendar.getTime()) + ")");
 
 	}
 
@@ -147,12 +186,80 @@ public class AddTimeEntryWindow extends Window {
 			throw new UserInvalidInputException("You must select a member");
 		}
 
-		Boolean isBillable = isBillableCheckBox.getValue();
-		String desc = descArea.getValue();
-		Object value = timeInputTable.getValue();
+		Date monday = DateTimeUtils.getBounceDateofWeek(selectedDate)[0];
+		Calendar calendar = new GregorianCalendar();
+		calendar.setTime(monday);
+
+		List<ItemTimeLogging> timeLoggins = new ArrayList<ItemTimeLogging>();
+
+		ItemTimeLogging timeLogging = buildItemTimeLogging("Monday", calendar);
+		if (timeLogging != null) {
+			timeLoggins.add(buildItemTimeLogging("Monday", calendar));
+		}
+
+		calendar.add(Calendar.DAY_OF_YEAR, 1);
+		timeLogging = buildItemTimeLogging("Tuesday", calendar);
+		if (timeLogging != null) {
+			timeLoggins.add(timeLogging);
+		}
+
+		calendar.add(Calendar.DAY_OF_YEAR, 1);
+		timeLogging = buildItemTimeLogging("Wednesday", calendar);
+		if (timeLogging != null) {
+			timeLoggins.add(timeLogging);
+		}
+
+		calendar.add(Calendar.DAY_OF_YEAR, 1);
+		timeLogging = buildItemTimeLogging("Thursday", calendar);
+		if (timeLogging != null) {
+			timeLoggins.add(timeLogging);
+		}
+
+		calendar.add(Calendar.DAY_OF_YEAR, 1);
+		timeLogging = buildItemTimeLogging("Friday", calendar);
+		if (timeLogging != null) {
+			timeLoggins.add(timeLogging);
+		}
+
+		calendar.add(Calendar.DAY_OF_YEAR, 1);
+		timeLogging = buildItemTimeLogging("Saturday", calendar);
+		if (timeLogging != null) {
+			timeLoggins.add(timeLogging);
+		}
+
+		calendar.add(Calendar.DAY_OF_YEAR, 1);
+		timeLogging = buildItemTimeLogging("Sunday", calendar);
+		if (timeLogging != null) {
+			timeLoggins.add(timeLogging);
+		}
+
+		ItemTimeLoggingService itemTimeLoggingService = ApplicationContextUtil
+				.getSpringBean(ItemTimeLoggingService.class);
+		itemTimeLoggingService.batchSaveTimeLogging(timeLoggins,
+				AppContext.getAccountId());
+	}
+
+	private ItemTimeLogging buildItemTimeLogging(String headerId,
+			Calendar calendar) {
 		Item timeEntries = (Item) timeInputTable.getItem("timeEntry");
-		Property itemProperty = timeEntries.getItemProperty("Monday");
+		Property<?> itemProperty = timeEntries.getItemProperty(headerId);
 		Double timeVal = (Double) itemProperty.getValue();
-		System.out.println("Hello: " + timeVal);
+		if (timeVal == null || timeVal == 0) {
+			return null;
+		} else {
+			ItemTimeLogging timeLogging = new ItemTimeLogging();
+			timeLogging.setIsbillable(isBillableCheckBox.getValue());
+			timeLogging.setLoguser((String) projectMemberSelectionBox
+					.getValue());
+			timeLogging.setCreateduser(AppContext.getUsername());
+			timeLogging.setLogforday(calendar.getTime());
+			timeLogging.setLogvalue(timeVal);
+			timeLogging.setNote(descArea.getValue());
+			timeLogging.setProjectid(CurrentProjectVariables.getProjectId());
+			timeLogging.setSaccountid(AppContext.getAccountId());
+			timeLogging.setCreatedtime(new GregorianCalendar().getTime());
+			timeLogging.setLastupdatedtime(new GregorianCalendar().getTime());
+			return timeLogging;
+		}
 	}
 }

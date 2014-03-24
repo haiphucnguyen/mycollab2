@@ -39,7 +39,7 @@ import com.vaadin.ui.VerticalLayout;
  * 
  */
 @SuppressWarnings("serial")
-public class StandupStyleCalendarExp extends VerticalLayout {
+public class StyleCalendarExp extends VerticalLayout {
 	private List<Date> selectedDateList = new ArrayList<Date>();
 	private StyleCalendar styleCalendar = new StyleCalendar();
 
@@ -49,7 +49,7 @@ public class StandupStyleCalendarExp extends VerticalLayout {
 	private Button btnShowPreviousYear;
 	private Label lbSelectedDate = new Label();
 
-	public StandupStyleCalendarExp() {
+	public StyleCalendarExp() {
 		this.setWidth("230px");
 		this.setHeight(Sizeable.SIZE_UNDEFINED, Sizeable.Unit.PIXELS);
 		this.setSpacing(false);

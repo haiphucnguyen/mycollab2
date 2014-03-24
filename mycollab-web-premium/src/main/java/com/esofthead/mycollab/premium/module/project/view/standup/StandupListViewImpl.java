@@ -27,7 +27,7 @@ import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.BeanList;
 import com.esofthead.mycollab.vaadin.ui.BeanList.RowDisplayHandler;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
-import com.esofthead.mycollab.vaadin.ui.StandupStyleCalendarExp;
+import com.esofthead.mycollab.vaadin.ui.StyleCalendarExp;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UrlDetectableLabel;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
@@ -56,7 +56,7 @@ public class StandupListViewImpl extends AbstractPageView implements
 
 	private Label titleLbl;
 	private PopupButton dateChooser;
-	private final StandupStyleCalendarExp standupCalendar = new StandupStyleCalendarExp();
+	private final StyleCalendarExp standupCalendar = new StyleCalendarExp();
 
 	private final BeanList<StandupReportService, StandupReportSearchCriteria, SimpleStandupReport> reportInDay;
 	private StandupMissingComp standupMissingComp;

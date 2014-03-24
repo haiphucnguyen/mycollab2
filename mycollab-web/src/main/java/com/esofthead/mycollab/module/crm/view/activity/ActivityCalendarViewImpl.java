@@ -46,7 +46,7 @@ import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
-import com.esofthead.mycollab.vaadin.ui.StandupStyleCalendarExp;
+import com.esofthead.mycollab.vaadin.ui.StyleCalendarExp;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
 import com.vaadin.addon.calendar.event.CalendarEvent;
@@ -107,7 +107,7 @@ ActivityCalendarView {
 	private Button weekViewBtn;
 	private Button dailyViewBtn;
 	private Label dateHdr;
-	private final StandupStyleCalendarExp datePicker = new StandupStyleCalendarExp();
+	private final StyleCalendarExp datePicker = new StyleCalendarExp();
 
 	public ActivityCalendarViewImpl() {
 		super();
