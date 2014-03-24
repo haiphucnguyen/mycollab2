@@ -221,7 +221,13 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements
 	public void setSearchCriteria(
 			final ItemTimeLoggingSearchCriteria searchCriteria) {
 		this.itemTimeLogginSearchCriteria = searchCriteria;
+		refresh();
+	}
+
+	@Override
+	public void refresh() {
 		this.setTimeRange();
-		this.tableItem.setSearchCriteria(searchCriteria);
+		this.tableItem.setSearchCriteria(itemTimeLogginSearchCriteria);
+
 	}
 }

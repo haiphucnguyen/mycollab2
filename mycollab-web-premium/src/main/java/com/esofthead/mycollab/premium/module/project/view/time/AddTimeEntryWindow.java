@@ -46,9 +46,11 @@ public class AddTimeEntryWindow extends Window {
 	private Table timeInputTable;
 	private ProjectMemberSelectionBox projectMemberSelectionBox;
 	private RichTextArea descArea;
+	private TimeTrackingListView parentView;
 
 	public AddTimeEntryWindow(TimeTrackingListView view) {
 		this.setModal(true);
+		this.parentView = view;
 		this.setCaption("Log time on this project");
 
 		selectedDate = new GregorianCalendar().getTime();
@@ -237,6 +239,7 @@ public class AddTimeEntryWindow extends Window {
 				.getSpringBean(ItemTimeLoggingService.class);
 		itemTimeLoggingService.batchSaveTimeLogging(timeLoggins,
 				AppContext.getAccountId());
+		parentView.refresh();
 	}
 
 	private ItemTimeLogging buildItemTimeLogging(String headerId,

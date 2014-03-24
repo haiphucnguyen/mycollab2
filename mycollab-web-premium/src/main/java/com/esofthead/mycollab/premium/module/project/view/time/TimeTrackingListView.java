@@ -11,4 +11,6 @@ import com.esofthead.mycollab.vaadin.mvp.PageView;
  */
 public interface TimeTrackingListView extends PageView {
 	void setSearchCriteria(ItemTimeLoggingSearchCriteria searchCriteria);
+	
+	void refresh();
 }
