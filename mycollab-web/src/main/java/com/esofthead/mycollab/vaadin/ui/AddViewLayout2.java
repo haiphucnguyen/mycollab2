@@ -18,6 +18,7 @@ package com.esofthead.mycollab.vaadin.ui;
 
 import com.vaadin.server.Resource;
 import com.vaadin.shared.ui.MarginInfo;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
@@ -55,7 +56,7 @@ public class AddViewLayout2 extends VerticalLayout {
 		this.setTitleIcon(icon);
 		this.header.addComponent(iconEmbed);
 
-		this.titleLbl = new Label();
+		this.titleLbl = new Label("", ContentMode.HTML);
 		this.titleLbl.setStyleName(UIConstants.HEADER_TEXT);
 		this.titleLbl.setImmediate(true);
 

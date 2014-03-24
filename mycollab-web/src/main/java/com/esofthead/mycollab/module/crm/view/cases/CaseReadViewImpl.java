@@ -57,7 +57,7 @@ public class CaseReadViewImpl extends AbstractPreviewItemComp<SimpleCase>
 implements CaseReadView {
 
 	private static final long serialVersionUID = 1L;
-	protected CaseContactListComp associateContactList;
+	protected CaseContactListComp2 associateContactList;
 	protected NoteListItems noteListItems;
 	protected ActivityRelatedItemListComp associateActivityList;
 
@@ -113,7 +113,7 @@ implements CaseReadView {
 
 	@Override
 	protected void initRelatedComponents() {
-		associateContactList = new CaseContactListComp();
+		associateContactList = new CaseContactListComp2();
 		associateActivityList = new ActivityRelatedItemListComp(true);
 		noteListItems = new NoteListItems("Notes");
 

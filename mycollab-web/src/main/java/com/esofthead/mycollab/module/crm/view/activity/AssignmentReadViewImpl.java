@@ -34,6 +34,7 @@ import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.UI;
+import com.vaadin.ui.VerticalLayout;
 
 /**
  * 
@@ -94,9 +95,18 @@ implements AssignmentReadView {
 	protected void initRelatedComponents() {
 		noteListItems = new NoteListItems("Notes");
 
+		VerticalLayout basicInfo = new VerticalLayout();
+		basicInfo.setWidth("100%");
+		basicInfo.setMargin(true);
+		basicInfo.setSpacing(true);
+		basicInfo.setStyleName("basic-info");
+
 		CssLayout navigatorWrapper = previewItemContainer.getNavigatorWrapper();
+
 		dateInfoComp = new DateInfoComp();
-		navigatorWrapper.addComponentAsFirst(dateInfoComp);
+		basicInfo.addComponent(dateInfoComp);
+
+		navigatorWrapper.addComponentAsFirst(basicInfo);
 
 		previewItemContainer.addTab(previewContent, "About");
 		previewItemContainer.selectTab("About");

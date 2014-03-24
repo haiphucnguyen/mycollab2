@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.module.crm.view.contact;
+package com.esofthead.mycollab.module.crm.view.opportunity;
 
 import java.util.Set;
 
@@ -11,11 +11,11 @@ import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.crm.CrmLinkGenerator;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
-import com.esofthead.mycollab.module.crm.domain.Contact;
-import com.esofthead.mycollab.module.crm.domain.ContactOpportunity;
-import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
-import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
-import com.esofthead.mycollab.module.crm.service.ContactService;
+import com.esofthead.mycollab.module.crm.domain.Opportunity;
+import com.esofthead.mycollab.module.crm.domain.OpportunityLead;
+import com.esofthead.mycollab.module.crm.domain.SimpleLead;
+import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
+import com.esofthead.mycollab.module.crm.service.LeadService;
 import com.esofthead.mycollab.module.crm.service.OpportunityService;
 import com.esofthead.mycollab.module.crm.ui.components.RelatedListComp2;
 import com.esofthead.mycollab.security.RolePermissionCollections;
@@ -29,6 +29,7 @@ import com.vaadin.event.MouseEvents;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
@@ -37,15 +38,15 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
-public class ContactOpportunityListComp2 extends
-RelatedListComp2<OpportunityService, OpportunitySearchCriteria, SimpleOpportunity> {
-	private static final long serialVersionUID = 8849210168154580096L;
+public class OpportunityLeadListComp2 extends
+RelatedListComp2<LeadService, LeadSearchCriteria, SimpleLead> {
+	private static final long serialVersionUID = -2052696198773718949L;
 
-	private Contact contact;
+	private Opportunity opportunity;
 
-	public ContactOpportunityListComp2() {
-		super(ApplicationContextUtil.getSpringBean(OpportunityService.class), 20);
-		this.setBlockDisplayHandler(new ContactOpportunityBlockDisplay());
+	public OpportunityLeadListComp2() {
+		super(ApplicationContextUtil.getSpringBean(LeadService.class), 20);
+		this.setBlockDisplayHandler(new OpportunityLeadBlockDisplay());
 	}
 
 	@Override
@@ -53,69 +54,63 @@ RelatedListComp2<OpportunityService, OpportunitySearchCriteria, SimpleOpportunit
 		VerticalLayout controlsBtnWrap = new VerticalLayout();
 		controlsBtnWrap.setWidth("100%");
 		final SplitButton controlsBtn = new SplitButton();
+		controlsBtn.setSizeUndefined();
+		controlsBtn.setEnabled(AppContext
+				.canWrite(RolePermissionCollections.CRM_LEAD));
 		controlsBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
-		controlsBtn.setCaption("New Opportunity");
+		controlsBtn.setCaption("New Lead");
 		controlsBtn.setIcon(MyCollabResource
 				.newResource("icons/16/addRecord.png"));
 		controlsBtn
 		.addClickListener(new SplitButton.SplitButtonClickListener() {
-			private static final long serialVersionUID = 1L;
-
 			@Override
 			public void splitButtonClick(
-					SplitButton.SplitButtonClickEvent event) {
+					final SplitButton.SplitButtonClickEvent event) {
 				fireNewRelatedItem("");
 			}
 		});
-		controlsBtn.setSizeUndefined();
-		Button selectBtn = new Button("Select from existing opportunities",
+		final Button selectBtn = new Button("Select from existing leads",
 				new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
-
 			@Override
-			public void buttonClick(Button.ClickEvent event) {
-				ContactOpportunitySelectionWindow2 opportunitiesWindow = new ContactOpportunitySelectionWindow2(
-						ContactOpportunityListComp2.this);
-				OpportunitySearchCriteria criteria = new OpportunitySearchCriteria();
+			public void buttonClick(final ClickEvent event) {
+				final OpportunityLeadSelectionWindow2 leadsWindow = new OpportunityLeadSelectionWindow2(
+						OpportunityLeadListComp2.this);
+				final LeadSearchCriteria criteria = new LeadSearchCriteria();
 				criteria.setSaccountid(new NumberSearchField(AppContext
 						.getAccountId()));
-				UI.getCurrent().addWindow(opportunitiesWindow);
-				opportunitiesWindow.setSearchCriteria(criteria);
+				UI.getCurrent().addWindow(leadsWindow);
+				leadsWindow.setSearchCriteria(criteria);
 				controlsBtn.setPopupVisible(false);
 			}
 		});
 		selectBtn.setIcon(MyCollabResource.newResource("icons/16/select.png"));
 		selectBtn.setStyleName("link");
-
-		VerticalLayout buttonControlsLayout = new VerticalLayout();
-		buttonControlsLayout.addComponent(selectBtn);
-		controlsBtn.setContent(buttonControlsLayout);
-
-		controlsBtn.setEnabled(AppContext
-				.canWrite(RolePermissionCollections.CRM_OPPORTUNITY));
+		VerticalLayout buttonControlLayout = new VerticalLayout();
+		buttonControlLayout.addComponent(selectBtn);
+		controlsBtn.setContent(buttonControlLayout);
 
 		controlsBtnWrap.addComponent(controlsBtn);
 		controlsBtnWrap.setComponentAlignment(controlsBtn, Alignment.MIDDLE_RIGHT);
 		return controlsBtnWrap;
 	}
 
-	public void displayOpportunities(final Contact contact) {
-		this.contact = contact;
-		loadOpportunities();
+	public void displayLeads(final Opportunity opportunity) {
+		this.opportunity = opportunity;
+		loadLeads();
 	}
 
-	private void loadOpportunities() {
-		final OpportunitySearchCriteria criteria = new OpportunitySearchCriteria();
+	private void loadLeads() {
+		final LeadSearchCriteria criteria = new LeadSearchCriteria();
 		criteria.setSaccountid(new NumberSearchField(SearchField.AND,
 				AppContext.getAccountId()));
-		criteria.setContactId(new NumberSearchField(SearchField.AND, contact
+		criteria.setOpportunityId(new NumberSearchField(SearchField.AND, opportunity
 				.getId()));
 		setSearchCriteria(criteria);
 	}
 
 	@Override
 	public void refresh() {
-		loadOpportunities();
+		loadLeads();
 	}
 
 	@Override
@@ -123,10 +118,10 @@ RelatedListComp2<OpportunityService, OpportunitySearchCriteria, SimpleOpportunit
 		fireSelectedRelatedItems(selectedItems);
 	}
 
-	public class ContactOpportunityBlockDisplay implements BlockDisplayHandler<SimpleOpportunity> {
+	public class OpportunityLeadBlockDisplay implements BlockDisplayHandler<SimpleLead> {
 
 		@Override
-		public Component generateBlock(final SimpleOpportunity opportunity, int blockIndex) {
+		public Component generateBlock(final SimpleLead lead, int blockIndex) {
 			CssLayout beanBlock = new CssLayout();
 			beanBlock.addStyleName("bean-block");
 			beanBlock.setWidth("350px");
@@ -136,12 +131,12 @@ RelatedListComp2<OpportunityService, OpportunitySearchCriteria, SimpleOpportunit
 			blockTop.setSpacing(true);
 			CssLayout iconWrap = new CssLayout();
 			iconWrap.setStyleName("icon-wrap");
-			Image opportunityIcon = new Image(null, MyCollabResource.newResource("icons/48/crm/contact_icon.png"));
-			iconWrap.addComponent(opportunityIcon);
+			Image leadAvatar = new Image(null, MyCollabResource.newResource("icons/48/crm/contact_icon.png"));
+			iconWrap.addComponent(leadAvatar);
 			blockTop.addComponent(iconWrap);
 
-			VerticalLayout opportunityInfo = new VerticalLayout();
-			opportunityInfo.setSpacing(true);
+			VerticalLayout leadInfo = new VerticalLayout();
+			leadInfo.setSpacing(true);
 
 			Image btnDelete = new Image(null, MyCollabResource
 					.newResource("icons/12/project/icon_x.png"));
@@ -167,21 +162,21 @@ RelatedListComp2<OpportunityService, OpportunitySearchCriteria, SimpleOpportunit
 								@Override
 								public void onClose(ConfirmDialog dialog) {
 									if (dialog.isConfirmed()) {
-										ContactService contactService = ApplicationContextUtil
-												.getSpringBean(ContactService.class);
-										ContactOpportunity associateOpportunity = new ContactOpportunity();
-										associateOpportunity
-										.setContactid(contact
-												.getId());
-										associateOpportunity
+										final OpportunityService accountService = ApplicationContextUtil
+												.getSpringBean(OpportunityService.class);
+										final OpportunityLead associateLead = new OpportunityLead();
+										associateLead
 										.setOpportunityid(opportunity
 												.getId());
-										contactService
-										.removeContactOpportunityRelationship(
-												associateOpportunity,
+										associateLead
+										.setLeadid(lead
+												.getId());
+										accountService
+										.removeOpportunityLeadRelationship(
+												associateLead,
 												AppContext
 												.getAccountId());
-										ContactOpportunityListComp2.this.refresh();
+										OpportunityLeadListComp2.this.refresh();
 									}
 								}
 							});
@@ -192,26 +187,27 @@ RelatedListComp2<OpportunityService, OpportunitySearchCriteria, SimpleOpportunit
 			blockContent.addComponent(btnDelete);
 			blockContent.setComponentAlignment(btnDelete, Alignment.TOP_RIGHT);
 
-			Label opportunityName = new Label("Name: <a href='" + SiteConfiguration.getSiteUrl(AppContext.getSession().getSubdomain()) 
-					+ CrmLinkGenerator.generateCrmItemLink(CrmTypeConstants.OPPORTUNITY, opportunity.getId()) 
-					+ "'>" + opportunity.getOpportunityname() + "</a>", ContentMode.HTML);
+			Label leadName = new Label("Name: <a href='" + SiteConfiguration.getSiteUrl(AppContext.getSession().getSubdomain()) 
+					+ CrmLinkGenerator.generateCrmItemLink(CrmTypeConstants.LEAD, lead.getId()) 
+					+ "'>" + lead.getLeadName() + "</a>", ContentMode.HTML);
 
-			opportunityInfo.addComponent(opportunityName);
+			leadInfo.addComponent(leadName);
 
-			Label opportunityAmount = new Label("Amount: " + (opportunity.getAmount() != null ? opportunity.getAmount() : ""));
-			if (opportunity.getCurrency() != null && opportunity.getAmount() != null) {
-				opportunityAmount.setValue(opportunityAmount.getValue() + opportunity.getCurrency().getSymbol());
-			}
-			opportunityInfo.addComponent(opportunityAmount);
+			Label leadStatus = new Label("Status: " + (lead.getStatus() != null ? lead.getStatus() : ""));
+			leadInfo.addComponent(leadStatus);
 
-			Label opportunitySaleStage = new Label("Sale Stage: " + (opportunity.getSalesstage() != null ? opportunity.getSalesstage() : ""));
-			opportunityInfo.addComponent(opportunitySaleStage);
+			Label leadEmail = new Label("Email: " 
+					+ (lead.getEmail() != null ? 
+							"<a href='mailto:" + lead.getEmail() + "'>" + lead.getEmail() + "</a>" 
+							: "")
+							, ContentMode.HTML);
+			leadInfo.addComponent(leadEmail);
 
-			Label opportunityExpectedCloseDate = new Label("Expected Close Date: " + (opportunity.getExpectedcloseddate() != null ? AppContext.formatDate(opportunity.getExpectedcloseddate()) : ""));
-			opportunityInfo.addComponent(opportunityExpectedCloseDate);
+			Label leadOfficePhone = new Label("Office Phone: " + (lead.getOfficephone() != null ? lead.getOfficephone() : ""));
+			leadInfo.addComponent(leadOfficePhone);
 
-			blockTop.addComponent(opportunityInfo);
-			blockTop.setExpandRatio(opportunityInfo, 1.0f);
+			blockTop.addComponent(leadInfo);
+			blockTop.setExpandRatio(leadInfo, 1.0f);
 			blockTop.setWidth("100%");
 			blockContent.addComponent(blockTop);
 
@@ -222,5 +218,4 @@ RelatedListComp2<OpportunityService, OpportunitySearchCriteria, SimpleOpportunit
 		}
 
 	}
-
 }
