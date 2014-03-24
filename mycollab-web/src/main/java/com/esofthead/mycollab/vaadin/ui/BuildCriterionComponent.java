@@ -84,9 +84,10 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends
 		headerBox.setSpacing(true);
 		headerBox.setMargin(new MarginInfo(true, false, false, true));
 		headerBox.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
-		
-		UiUtils.addComponent(headerBox, new Label("&nbsp; Saved Filter: ", ContentMode.HTML), Alignment.MIDDLE_LEFT);
-				
+
+		UiUtils.addComponent(headerBox, new Label("&nbsp; Saved Filter: ",
+				ContentMode.HTML), Alignment.MIDDLE_LEFT);
+
 		filterBox = new HorizontalLayout();
 		filterBox.setSpacing(true);
 		UiUtils.addComponent(headerBox, filterBox, Alignment.MIDDLE_LEFT);
@@ -114,12 +115,11 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends
 					}
 				});
 		addCriteriaBtn.setStyleName(UIConstants.THEME_BROWN_LINK);
-		addCriteriaBtn.setIcon(MyCollabResource.newResource("icons/16/add.png"));
+		addCriteriaBtn
+				.setIcon(MyCollabResource.newResource("icons/16/add.png"));
 		UiUtils.addComponent(this, addCriteriaBtn, Alignment.MIDDLE_CENTER);
-		
+
 		controlsBtn.addComponent(addCriteriaBtn);
-		
-		
 
 		this.addComponent(searchContainer);
 		this.addComponent(controlsBtn);
@@ -127,7 +127,7 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends
 
 	private void buildFilterBox(String queryname) {
 		filterBox.removeAllComponents();
-		
+
 		filterComboBox = new SavedSearchResultComboBox();
 		filterComboBox.setWidth("125px");
 		filterBox.addComponent(filterComboBox);
@@ -142,7 +142,8 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends
 					}
 				});
 		saveSearchBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
-		saveSearchBtn.setIcon(MyCollabResource.newResource("icons/16/addRecord.png"));
+		saveSearchBtn.setIcon(MyCollabResource
+				.newResource("icons/16/addRecord.png"));
 		filterBox.addComponent(saveSearchBtn);
 
 		if (queryname != null) {
@@ -152,7 +153,7 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends
 
 	private void buildSaveFilterBox() {
 		filterBox.removeAllComponents();
-		
+
 		final TextField queryTextField = new TextField();
 		queryTextField.setWidth("125px");
 		filterBox.addComponent(queryTextField);
@@ -537,7 +538,8 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends
 
 		private SearchField buildSearchField() {
 			Param param = (Param) fieldSelectionBox.getValue();
-			String prefixOperation = (String) operatorSelectionBox.getValue();
+			String prefixOperation = (operatorSelectionBox != null) ? (String) operatorSelectionBox
+					.getValue() : "AND";
 			if (param != null) {
 				String compareOper = (String) compareSelectionBox.getValue();
 
@@ -723,7 +725,7 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends
 							SplitButton optionBtn = new SplitButton(updateBtn);
 							optionBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
 							final VerticalLayout optionContent = new VerticalLayout();
-							
+
 							Button deleteBtn = new Button("Delete",
 									new Button.ClickListener() {
 										private static final long serialVersionUID = 1L;
@@ -747,10 +749,11 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends
 										}
 									});
 							deleteBtn.setStyleName(UIConstants.THEME_RED_LINK);
-							deleteBtn.setIcon(MyCollabResource.newResource("icons/16/delete2.png"));
+							deleteBtn.setIcon(MyCollabResource
+									.newResource("icons/16/delete2.png"));
 							optionContent.addComponent(deleteBtn);
 							optionBtn.setContent(optionContent);
-						
+
 							filterBox.addComponent(optionBtn, 1);
 						}
 
