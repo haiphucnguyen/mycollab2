@@ -19,6 +19,8 @@ package com.esofthead.mycollab.schedule.email.crm.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.esofthead.mycollab.common.MonitorTypeConstants;
@@ -54,6 +56,9 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
  */
 public abstract class CrmDefaultSendingRelayEmailAction<B extends ValuedBean>
 		implements SendingRelayEmailNotificationAction {
+
+	private static Logger log = LoggerFactory
+			.getLogger(CrmDefaultSendingRelayEmailAction.class);
 
 	@Autowired
 	protected ExtMailService extMailService;
