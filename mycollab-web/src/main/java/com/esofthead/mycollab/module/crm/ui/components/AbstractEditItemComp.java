@@ -47,6 +47,7 @@ implements IFormAddView<B> {
 		super();
 		this.setMargin(new MarginInfo(false, true, true, true));
 		this.editForm = new AdvancedEditBeanForm<B>();
+		this.editForm.addStyleName("crm-edit-form");
 		this.addComponent(this.editForm);
 	}
 
