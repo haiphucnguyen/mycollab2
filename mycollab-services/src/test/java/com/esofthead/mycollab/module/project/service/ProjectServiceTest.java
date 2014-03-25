@@ -56,7 +56,7 @@ public class ProjectServiceTest extends ServiceTest {
 		List projects = projectService
 				.findPagableListByCriteria(new SearchRequest<ProjectSearchCriteria>(
 						criteria, 0, Integer.MAX_VALUE));
-		Assert.assertEquals(1, projects.size());
+		Assert.assertEquals(4, projects.size());
 	}
 
 	@DataSet

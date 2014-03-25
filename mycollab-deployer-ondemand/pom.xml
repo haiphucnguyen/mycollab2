@@ -34,6 +34,10 @@
         <module>../mycollab-api-impl</module>
         <module>../mycollab-services-ondemand</module>
         <module>../mycollab-web-premium</module>
+        <!-- 
+        <module>../mycollab-app-community</module>
+        <module>../mycollab-app-premium</module>
+        -->
         <module>../mycollab-app-ondemand</module>
     </modules>
 </project>
