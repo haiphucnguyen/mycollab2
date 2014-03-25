@@ -94,8 +94,8 @@
   <classpathentry kind="src" path="/mycollab-services-ondemand"/>
   <classpathentry kind="src" path="/mycollab-services"/>
   <classpathentry kind="src" path="/mycollab-dao"/>
-  <classpathentry kind="var" path="M2_REPO/org/mybatis/mybatis/3.2.3/mybatis-3.2.3.jar" sourcepath="M2_REPO/org/mybatis/mybatis/3.2.3/mybatis-3.2.3-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/mybatis/mybatis-spring/1.2.1/mybatis-spring-1.2.1.jar" sourcepath="M2_REPO/org/mybatis/mybatis-spring/1.2.1/mybatis-spring-1.2.1-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/mybatis/mybatis/3.2.6/mybatis-3.2.6.jar" sourcepath="M2_REPO/org/mybatis/mybatis/3.2.6/mybatis-3.2.6-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/mybatis/mybatis-spring/1.2.2/mybatis-spring-1.2.2.jar" sourcepath="M2_REPO/org/mybatis/mybatis-spring/1.2.2/mybatis-spring-1.2.2-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/mybatis/scripting/mybatis-velocity/1.1/mybatis-velocity-1.1.jar" sourcepath="M2_REPO/org/mybatis/scripting/mybatis-velocity/1.1/mybatis-velocity-1.1-sources.jar"/>
   <classpathentry kind="src" path="/mycollab-migration"/>
   <classpathentry kind="var" path="M2_REPO/com/googlecode/flyway/flyway-core/2.3/flyway-core-2.3.jar" sourcepath="M2_REPO/com/googlecode/flyway/flyway-core/2.3/flyway-core-2.3-sources.jar"/>
@@ -188,6 +188,8 @@
   <classpathentry kind="var" path="M2_REPO/com/vaadin/vaadin-client-compiled/7.0.0/vaadin-client-compiled-7.0.0.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/vaadin/vaadin-themes/7.0.0/vaadin-themes-7.0.0.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/vaadin/addons/listbuilder/0.7.3.v7/listbuilder-0.7.3.v7.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/lexaden/components/organisationchart/1.7.1/organisationchart-1.7.1.jar" sourcepath="M2_REPO/com/lexaden/components/organisationchart/1.7.1/organisationchart-1.7.1-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/google/gwt/google-apis/gwt-visualization/1.1.2/gwt-visualization-1.1.2.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/esofthead/vaadin/popupbutton/1.0.0-SNAPSHOT/popupbutton-1.0.0-SNAPSHOT.jar" sourcepath="M2_REPO/com/esofthead/vaadin/popupbutton/1.0.0-SNAPSHOT/popupbutton-1.0.0-SNAPSHOT-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/tltv/gantt/gantt-addon/0.1.1/gantt-addon-0.1.1.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/vaadin/addon/confirmdialog/2.0.4/confirmdialog-2.0.4.jar"/>
