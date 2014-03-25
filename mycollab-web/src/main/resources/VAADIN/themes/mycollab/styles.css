@@ -6685,3 +6685,59 @@ div.v-csslayout.bean-block {
 	padding-top: 2px;
 	font-size: 15px;
 }
+
+/* Activity Calendar */
+.activityCalendar .switcher-wrap {
+	padding-bottom: 20px;
+}
+.activityCalendar .calendar-view-switcher.v-button, .activityCalendar .calendar-view-switcher.v-button:active, .activityCalendar .calendar-view-switcher.v-button:focus {
+	background: none no-repeat left top rgb(233, 233, 233);
+}
+.activityCalendar .calendar-view-switcher .v-button-wrap {
+	text-align: left;
+	position: relative
+}
+.activityCalendar .calendar-view-switcher .v-popup-indicator {
+	position: absolute;
+	right: 10px;
+}
+.activityCalendar .stylecalendar-ext {
+	border-top: 1px solid #CFCFCF;
+}
+.activityCalendar .stylecalendar-ext.v-margin-top {
+	padding-top: 10px;
+}
+.activityCalendar .calendarHeader {
+	background-color: transparent;
+}
+.activityCalendar .calendarHeader .calendarDateLabel {
+	font-size: 14px;
+	font-weight: bold;
+	text-align: center;
+}
+.activityCalendar .stylecalendar {
+	border: none;
+	background-color: transparent;
+}
+.activityCalendar .stylecalendar .week {
+	background-color: transparent;
+}
+.activityCalendar .stylecalendar .weekdays {
+	border: none;
+}
+.activityCalendar .stylecalendar .weekdays TD, .activityCalendar .stylecalendar .day {
+	color: #FFFFFF;
+}
+.activityCalendar .stylecalendar .day.othermonth {
+	color: rgb(173, 173, 173);
+}
+.activityCalendar .stylecalendar .day.today {
+	color: #525252;
+}
+.activityCalendar .stylecalendar .day.selected, .activityCalendar .stylecalendar .day.selected-ext {
+	background-color: rgb(198, 198, 198);
+	color: #525252;
+}
+.activityCalendar .stylecalendar .week .selected .gwt-Label {
+	border: none;
+}
