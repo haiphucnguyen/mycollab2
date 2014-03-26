@@ -89,6 +89,7 @@ public class NoteListItems extends VerticalLayout {
 	private Integer typeid;
 	private VerticalLayout noteListContainer;
 	private BeanList<NoteService, NoteSearchCriteria, SimpleNote> noteList;
+	private VerticalLayout noteWrapper;
 
 	private final NoteService noteService;
 
@@ -101,10 +102,10 @@ public class NoteListItems extends VerticalLayout {
 	public NoteListItems(final String title, final String type,
 			final Integer typeid) {
 		super();
-		this.setWidth("100%");
-		this.setMargin(false);
-		addStyleName("note-list");
-
+		
+		Label header = new Label(title);
+		header.addStyleName("h2");
+		this.addComponent(header);
 		noteService = ApplicationContextUtil.getSpringBean(NoteService.class);
 		this.type = type;
 		this.typeid = typeid;
@@ -117,9 +118,10 @@ public class NoteListItems extends VerticalLayout {
 	}
 
 	private void addCreateBtn() {
-		final Component component = this.getComponent(0);
+		final Component component = noteWrapper.getComponent(0);
 		if (component instanceof NoteEditor) {
-			this.replaceComponent(component, createBtn);
+			noteWrapper.replaceComponent(component, createBtn);
+			noteWrapper.setComponentAlignment(createBtn, Alignment.TOP_RIGHT);
 		}
 	}
 
@@ -134,23 +136,32 @@ public class NoteListItems extends VerticalLayout {
 	}
 
 	private void initUI() {
+		noteWrapper = new VerticalLayout();
+		noteWrapper.setMargin(new MarginInfo(false, true, false, true));
+		this.setWidth("100%");
 		this.setSpacing(true);
-		this.setMargin(new MarginInfo(true, true, false, true));
+		this.setMargin(new MarginInfo(false, false, true, false));
+		this.setStyleName("note-view");
+		
+		this.addComponent(noteWrapper);
+		addStyleName("note-list");
+		
 		createBtn = new Button("New Note", new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void buttonClick(final ClickEvent event) {
 					
-				NoteListItems.this
-				.replaceComponent(createBtn, new NoteEditor());
+				noteWrapper
+ 				.replaceComponent(createBtn, new NoteEditor());
 			}
 		});
 
 		createBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 		createBtn.setIcon(MyCollabResource
 				.newResource("icons/16/addRecord.png"));
-		this.addComponent(createBtn);
+		noteWrapper.addComponent(createBtn);
+		noteWrapper.setComponentAlignment(createBtn, Alignment.TOP_RIGHT);
 
 		noteList = new BeanList<NoteService, NoteSearchCriteria, SimpleNote>(
 				noteService, NoteRowDisplayHandler.class);
@@ -158,7 +169,7 @@ public class NoteListItems extends VerticalLayout {
 		noteList.setStyleName("noteList");
 
 		noteListContainer = new VerticalLayout();
-		this.addComponent(noteListContainer);
+		noteWrapper.addComponent(noteListContainer);
 		displayNotes();
 	}
 
@@ -231,7 +242,7 @@ public class NoteListItems extends VerticalLayout {
 			rowLayout.setStyleName("message-container");
 			rowLayout.setWidth("100%");
 
-			VerticalLayout messageHeader = new VerticalLayout();
+			HorizontalLayout messageHeader = new HorizontalLayout();
 			messageHeader.setStyleName("message-header");
 
 			Label timePostLbl = new Label("<span class=\"post-owner\"><b>" + note.getCreateUserFullName() + "</b>&nbsp;added a note</span>&nbsp;-&nbsp;" +
@@ -279,12 +290,14 @@ public class NoteListItems extends VerticalLayout {
 			});
 
 			replyBtn.setStyleName("link");
-			messageFooter.addComponent(replyBtn);
+			replyBtn.setIcon(MyCollabResource.newResource("icons/16/crm/reply.png"));
+			messageHeader.addComponent(replyBtn);
 			messageFooter.setWidth("100%");
-			messageFooter.setComponentAlignment(replyBtn, Alignment.TOP_RIGHT);
+			messageHeader.setComponentAlignment(replyBtn, Alignment.TOP_RIGHT);
 			rowLayout.addComponent(messageFooter);
 
 			layout.addComponent(rowLayout);
+			
 			layout.setExpandRatio(rowLayout, 1.0f);
 			return layout;
 		}
@@ -342,6 +355,7 @@ public class NoteListItems extends VerticalLayout {
 			setSpacing(true);
 			this.setMargin(true);
 			this.setWidth("600px");
+		
 			
 			VerticalLayout editBox = new VerticalLayout();
 			editBox.setMargin(true);
