@@ -32,14 +32,19 @@ public class DateInfoComp extends VerticalLayout {
 		dateInfoHeader.setStyleName("info-hdr");
 		this.addComponent(dateInfoHeader);
 
+		VerticalLayout layout = new VerticalLayout();
+		layout.setWidth("100%");
+		layout.setSpacing(true);
+		layout.setMargin(new MarginInfo(false, false, false, true));
 		try {
 			String createdDate = AppContext.formatDate((Date) PropertyUtils
 					.getProperty(bean, "createdtime"));
-			this.addComponent(new Label("Created: " + createdDate));
+			layout.addComponent(new Label("Created: " + createdDate));
 
 			String updatedDate = AppContext.formatDate((Date) PropertyUtils
 					.getProperty(bean, "lastupdatedtime"));
-			this.addComponent(new Label("Updated: " + updatedDate));
+			layout.addComponent(new Label("Updated: " + updatedDate));
+			this.addComponent(layout);
 		} catch (Exception e) {
 			log.error("Get date is failed {}", BeanUtility.printBeanObj(bean));
 		}
