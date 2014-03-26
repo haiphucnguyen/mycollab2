@@ -11,9 +11,11 @@ import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.crm.CrmLinkGenerator;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
+import com.esofthead.mycollab.module.crm.domain.CampaignContact;
 import com.esofthead.mycollab.module.crm.domain.CampaignWithBLOBs;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
+import com.esofthead.mycollab.module.crm.service.CampaignService;
 import com.esofthead.mycollab.module.crm.service.ContactService;
 import com.esofthead.mycollab.module.crm.ui.components.RelatedListComp2;
 import com.esofthead.mycollab.security.RolePermissionCollections;
@@ -164,14 +166,20 @@ RelatedListComp2<ContactService, ContactSearchCriteria, SimpleContact> {
 								@Override
 								public void onClose(ConfirmDialog dialog) {
 									if (dialog.isConfirmed()) {
-										final ContactService contactService = ApplicationContextUtil
-												.getSpringBean(ContactService.class);
-										contact.setCampaignid(null);
-										contactService
-										.updateWithSession(
-												contact,
+										CampaignService campaignService = ApplicationContextUtil
+												.getSpringBean(CampaignService.class);
+										CampaignContact associateContact = new CampaignContact();
+										associateContact
+										.setContactid(contact
+												.getId());
+										associateContact
+										.setCampaignid(campaign
+												.getId());
+										campaignService
+										.removeCampaignContactRelationship(
+												associateContact,
 												AppContext
-												.getUsername());
+												.getAccountId());
 										CampaignContactListComp2.this.refresh();
 									}
 								}

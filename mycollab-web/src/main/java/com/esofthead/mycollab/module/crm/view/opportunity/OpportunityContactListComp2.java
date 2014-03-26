@@ -11,6 +11,7 @@ import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.crm.CrmLinkGenerator;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
+import com.esofthead.mycollab.module.crm.domain.ContactOpportunity;
 import com.esofthead.mycollab.module.crm.domain.Opportunity;
 import com.esofthead.mycollab.module.crm.domain.SimpleContactOpportunityRel;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
@@ -163,12 +164,18 @@ RelatedListComp2<ContactOpportunityService, ContactSearchCriteria, SimpleContact
 									if (dialog.isConfirmed()) {
 										final ContactService contactService = ApplicationContextUtil
 												.getSpringBean(ContactService.class);
-										contact.setAccountid(null);
+										ContactOpportunity associateContact = new ContactOpportunity();
+										associateContact
+										.setOpportunityid(opportunity
+												.getId());
+										associateContact
+										.setContactid(contact
+												.getId());
 										contactService
-										.updateWithSession(
-												contact,
+										.removeContactOpportunityRelationship(
+												associateContact,
 												AppContext
-												.getUsername());
+												.getAccountId());
 										OpportunityContactListComp2.this.refresh();
 									}
 								}

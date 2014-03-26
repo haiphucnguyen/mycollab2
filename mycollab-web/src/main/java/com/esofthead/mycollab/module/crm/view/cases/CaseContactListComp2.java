@@ -12,6 +12,7 @@ import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.crm.CrmLinkGenerator;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.CaseWithBLOBs;
+import com.esofthead.mycollab.module.crm.domain.ContactCase;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.ContactService;
@@ -163,12 +164,17 @@ public class CaseContactListComp2 extends RelatedListComp2<ContactService, Conta
 									if (dialog.isConfirmed()) {
 										final ContactService contactService = ApplicationContextUtil
 												.getSpringBean(ContactService.class);
-										contact.setCampaignid(null);
+										ContactCase associateContact = new ContactCase();
+										associateContact.setCaseid(cases
+												.getId());
+										associateContact
+										.setContactid(contact
+												.getId());
 										contactService
-										.updateWithSession(
-												contact,
+										.removeContactCaseRelationship(
+												associateContact,
 												AppContext
-												.getUsername());
+												.getAccountId());
 										CaseContactListComp2.this.refresh();
 									}
 								}
