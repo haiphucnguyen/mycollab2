@@ -43,6 +43,10 @@
   <classpathentry kind="var" path="M2_REPO/org/springframework/spring-context-support/3.2.6.RELEASE/spring-context-support-3.2.6.RELEASE.jar" sourcepath="M2_REPO/org/springframework/spring-context-support/3.2.6.RELEASE/spring-context-support-3.2.6.RELEASE-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/aspectj/aspectjrt/1.7.4/aspectjrt-1.7.4.jar" sourcepath="M2_REPO/org/aspectj/aspectjrt/1.7.4/aspectjrt-1.7.4-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/cglib/cglib/3.0/cglib-3.0.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/amazonaws/aws-java-sdk/1.7.5/aws-java-sdk-1.7.5.jar" sourcepath="M2_REPO/com/amazonaws/aws-java-sdk/1.7.5/aws-java-sdk-1.7.5-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/fasterxml/jackson/core/jackson-core/2.1.1/jackson-core-2.1.1.jar" sourcepath="M2_REPO/com/fasterxml/jackson/core/jackson-core/2.1.1/jackson-core-2.1.1-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/fasterxml/jackson/core/jackson-databind/2.1.1/jackson-databind-2.1.1.jar" sourcepath="M2_REPO/com/fasterxml/jackson/core/jackson-databind/2.1.1/jackson-databind-2.1.1-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/fasterxml/jackson/core/jackson-annotations/2.1.1/jackson-annotations-2.1.1.jar" sourcepath="M2_REPO/com/fasterxml/jackson/core/jackson-annotations/2.1.1/jackson-annotations-2.1.1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/mortennobel/java-image-scaling/0.8.5/java-image-scaling-0.8.5.jar" sourcepath="M2_REPO/com/mortennobel/java-image-scaling/0.8.5/java-image-scaling-0.8.5-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/jhlabs/filters/2.0.235/filters-2.0.235.jar" sourcepath="M2_REPO/com/jhlabs/filters/2.0.235/filters-2.0.235-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/ch/qos/cal10n/cal10n-api/0.8.1/cal10n-api-0.8.1.jar" sourcepath="M2_REPO/ch/qos/cal10n/cal10n-api/0.8.1/cal10n-api-0.8.1-sources.jar"/>
