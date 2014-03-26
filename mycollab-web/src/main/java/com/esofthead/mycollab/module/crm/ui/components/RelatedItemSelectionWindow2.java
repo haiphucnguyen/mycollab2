@@ -17,9 +17,10 @@ import com.vaadin.ui.Window;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 4.0
  */
 public abstract class RelatedItemSelectionWindow2<T, S extends SearchCriteria>
-extends Window {
+		extends Window {
 	private static final long serialVersionUID = 1L;
 
 	private static final String selectedFieldName = "selected";
@@ -29,7 +30,8 @@ extends Window {
 	protected Set selectedItems = new HashSet();
 	protected VerticalLayout bodyContent;
 
-	public RelatedItemSelectionWindow2(String title, RelatedListComp2 relatedList) {
+	public RelatedItemSelectionWindow2(String title,
+			RelatedListComp2 relatedList) {
 		super(title);
 		center();
 		bodyContent = new VerticalLayout();
@@ -41,34 +43,34 @@ extends Window {
 		initUI();
 
 		tableItem
-		.addTableListener(new ApplicationEventListener<TableClickEvent>() {
-			private static final long serialVersionUID = 1L;
+				.addTableListener(new ApplicationEventListener<TableClickEvent>() {
+					private static final long serialVersionUID = 1L;
 
-			@Override
-			public Class<? extends ApplicationEvent> getEventType() {
-				return TableClickEvent.class;
-			}
-
-			@Override
-			public void handle(TableClickEvent event) {
-				try {
-					Object rowItem = event.getData();
-					Boolean selectedVal = (Boolean) PropertyUtils
-							.getProperty(rowItem, selectedFieldName);
-					if (selectedVal == true) {
-						selectedItems.remove(rowItem);
-						PropertyUtils.setProperty(rowItem,
-								selectedFieldName, false);
-					} else {
-						selectedItems.add(rowItem);
-						PropertyUtils.setProperty(rowItem,
-								selectedFieldName, true);
+					@Override
+					public Class<? extends ApplicationEvent> getEventType() {
+						return TableClickEvent.class;
 					}
-				} catch (Exception ex) {
-					throw new MyCollabException(ex);
-				}
-			}
-		});
+
+					@Override
+					public void handle(TableClickEvent event) {
+						try {
+							Object rowItem = event.getData();
+							Boolean selectedVal = (Boolean) PropertyUtils
+									.getProperty(rowItem, selectedFieldName);
+							if (selectedVal == true) {
+								selectedItems.remove(rowItem);
+								PropertyUtils.setProperty(rowItem,
+										selectedFieldName, false);
+							} else {
+								selectedItems.add(rowItem);
+								PropertyUtils.setProperty(rowItem,
+										selectedFieldName, true);
+							}
+						} catch (Exception ex) {
+							throw new MyCollabException(ex);
+						}
+					}
+				});
 	}
 
 	@Override
