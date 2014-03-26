@@ -38,13 +38,13 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
-public class OpportunityLeadListComp2 extends
+public class OpportunityLeadListComp extends
 RelatedListComp2<LeadService, LeadSearchCriteria, SimpleLead> {
 	private static final long serialVersionUID = -2052696198773718949L;
 
 	private Opportunity opportunity;
 
-	public OpportunityLeadListComp2() {
+	public OpportunityLeadListComp() {
 		super(ApplicationContextUtil.getSpringBean(LeadService.class), 20);
 		this.setBlockDisplayHandler(new OpportunityLeadBlockDisplay());
 	}
@@ -73,8 +73,8 @@ RelatedListComp2<LeadService, LeadSearchCriteria, SimpleLead> {
 				new Button.ClickListener() {
 			@Override
 			public void buttonClick(final ClickEvent event) {
-				final OpportunityLeadSelectionWindow2 leadsWindow = new OpportunityLeadSelectionWindow2(
-						OpportunityLeadListComp2.this);
+				final OpportunityLeadSelectionWindow leadsWindow = new OpportunityLeadSelectionWindow(
+						OpportunityLeadListComp.this);
 				final LeadSearchCriteria criteria = new LeadSearchCriteria();
 				criteria.setSaccountid(new NumberSearchField(AppContext
 						.getAccountId()));
@@ -176,7 +176,7 @@ RelatedListComp2<LeadService, LeadSearchCriteria, SimpleLead> {
 												associateLead,
 												AppContext
 												.getAccountId());
-										OpportunityLeadListComp2.this.refresh();
+										OpportunityLeadListComp.this.refresh();
 									}
 								}
 							});

@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.module.crm.view.opportunity;
+package com.esofthead.mycollab.module.crm.view.campaign;
 
 import java.util.Set;
 
@@ -11,11 +11,11 @@ import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.crm.CrmLinkGenerator;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
-import com.esofthead.mycollab.module.crm.domain.ContactOpportunity;
-import com.esofthead.mycollab.module.crm.domain.Opportunity;
-import com.esofthead.mycollab.module.crm.domain.SimpleContactOpportunityRel;
+import com.esofthead.mycollab.module.crm.domain.CampaignContact;
+import com.esofthead.mycollab.module.crm.domain.CampaignWithBLOBs;
+import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
-import com.esofthead.mycollab.module.crm.service.ContactOpportunityService;
+import com.esofthead.mycollab.module.crm.service.CampaignService;
 import com.esofthead.mycollab.module.crm.service.ContactService;
 import com.esofthead.mycollab.module.crm.ui.components.RelatedListComp2;
 import com.esofthead.mycollab.security.RolePermissionCollections;
@@ -38,15 +38,15 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
-public class OpportunityContactListComp2 extends
-RelatedListComp2<ContactOpportunityService, ContactSearchCriteria, SimpleContactOpportunityRel> {
-	private static final long serialVersionUID = 5717208523696358616L;
+public class CampaignContactListComp extends
+RelatedListComp2<ContactService, ContactSearchCriteria, SimpleContact> {
+	private static final long serialVersionUID = 4515934156312167566L;
 
-	private Opportunity opportunity;
+	private CampaignWithBLOBs campaign;
 
-	public OpportunityContactListComp2() {
-		super(ApplicationContextUtil.getSpringBean(ContactOpportunityService.class), 20);
-		this.setBlockDisplayHandler(new OpportunityContactBlockDisplay());
+	public CampaignContactListComp() {
+		super(ApplicationContextUtil.getSpringBean(ContactService.class), 20);
+		this.setBlockDisplayHandler(new CampaignContactBlockDisplay());
 	}
 
 	@Override
@@ -63,6 +63,8 @@ RelatedListComp2<ContactOpportunityService, ContactSearchCriteria, SimpleContact
 				.newResource("icons/16/addRecord.png"));
 		controlsBtn
 		.addClickListener(new SplitButton.SplitButtonClickListener() {
+			private static final long serialVersionUID = -5166203461087915517L;
+
 			@Override
 			public void splitButtonClick(
 					final SplitButton.SplitButtonClickEvent event) {
@@ -71,10 +73,12 @@ RelatedListComp2<ContactOpportunityService, ContactSearchCriteria, SimpleContact
 		});
 		final Button selectBtn = new Button("Select from existing contacts",
 				new Button.ClickListener() {
+			private static final long serialVersionUID = -4257729842567787799L;
+
 			@Override
 			public void buttonClick(final ClickEvent event) {
-				final OpportunityContactSelectionWindow2 contactsWindow = new OpportunityContactSelectionWindow2(
-						OpportunityContactListComp2.this);
+				final CampaignContactSelectionWindow contactsWindow = new CampaignContactSelectionWindow(
+						CampaignContactListComp.this);
 				final ContactSearchCriteria criteria = new ContactSearchCriteria();
 				criteria.setSaccountid(new NumberSearchField(AppContext
 						.getAccountId()));
@@ -94,8 +98,8 @@ RelatedListComp2<ContactOpportunityService, ContactSearchCriteria, SimpleContact
 		return controlsBtnWrap;
 	}
 
-	public void displayContacts(final Opportunity opportunity) {
-		this.opportunity = opportunity;
+	public void displayContacts(final CampaignWithBLOBs campaign) {
+		this.campaign = campaign;
 		loadContacts();
 	}
 
@@ -103,7 +107,7 @@ RelatedListComp2<ContactOpportunityService, ContactSearchCriteria, SimpleContact
 		final ContactSearchCriteria criteria = new ContactSearchCriteria();
 		criteria.setSaccountid(new NumberSearchField(SearchField.AND,
 				AppContext.getAccountId()));
-		criteria.setOpportunityId(new NumberSearchField(SearchField.AND, opportunity
+		criteria.setCampaignId(new NumberSearchField(SearchField.AND, campaign
 				.getId()));
 		setSearchCriteria(criteria);
 	}
@@ -118,10 +122,10 @@ RelatedListComp2<ContactOpportunityService, ContactSearchCriteria, SimpleContact
 		fireSelectedRelatedItems(selectedItems);
 	}
 
-	public class OpportunityContactBlockDisplay implements BlockDisplayHandler<SimpleContactOpportunityRel> {
+	public class CampaignContactBlockDisplay implements BlockDisplayHandler<SimpleContact> {
 
 		@Override
-		public Component generateBlock(final SimpleContactOpportunityRel contact, int blockIndex) {
+		public Component generateBlock(final SimpleContact contact, int blockIndex) {
 			CssLayout beanBlock = new CssLayout();
 			beanBlock.addStyleName("bean-block");
 			beanBlock.setWidth("350px");
@@ -162,21 +166,21 @@ RelatedListComp2<ContactOpportunityService, ContactSearchCriteria, SimpleContact
 								@Override
 								public void onClose(ConfirmDialog dialog) {
 									if (dialog.isConfirmed()) {
-										final ContactService contactService = ApplicationContextUtil
-												.getSpringBean(ContactService.class);
-										ContactOpportunity associateContact = new ContactOpportunity();
-										associateContact
-										.setOpportunityid(opportunity
-												.getId());
+										CampaignService campaignService = ApplicationContextUtil
+												.getSpringBean(CampaignService.class);
+										CampaignContact associateContact = new CampaignContact();
 										associateContact
 										.setContactid(contact
 												.getId());
-										contactService
-										.removeContactOpportunityRelationship(
+										associateContact
+										.setCampaignid(campaign
+												.getId());
+										campaignService
+										.removeCampaignContactRelationship(
 												associateContact,
 												AppContext
 												.getAccountId());
-										OpportunityContactListComp2.this.refresh();
+										CampaignContactListComp.this.refresh();
 									}
 								}
 							});
@@ -218,5 +222,4 @@ RelatedListComp2<ContactOpportunityService, ContactSearchCriteria, SimpleContact
 		}
 
 	}
-
 }

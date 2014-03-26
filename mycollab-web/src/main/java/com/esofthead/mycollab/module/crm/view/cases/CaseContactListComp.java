@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.module.crm.view.campaign;
+package com.esofthead.mycollab.module.crm.view.cases;
 
 import java.util.Set;
 
@@ -11,12 +11,11 @@ import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.crm.CrmLinkGenerator;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
-import com.esofthead.mycollab.module.crm.domain.CampaignAccount;
-import com.esofthead.mycollab.module.crm.domain.CampaignWithBLOBs;
-import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
-import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
-import com.esofthead.mycollab.module.crm.service.AccountService;
-import com.esofthead.mycollab.module.crm.service.CampaignService;
+import com.esofthead.mycollab.module.crm.domain.CaseWithBLOBs;
+import com.esofthead.mycollab.module.crm.domain.ContactCase;
+import com.esofthead.mycollab.module.crm.domain.SimpleContact;
+import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
+import com.esofthead.mycollab.module.crm.service.ContactService;
 import com.esofthead.mycollab.module.crm.ui.components.RelatedListComp2;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
@@ -29,7 +28,6 @@ import com.vaadin.event.MouseEvents;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
@@ -38,15 +36,26 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
-public class CampaignAccountListComp2 extends
-RelatedListComp2<AccountService, AccountSearchCriteria, SimpleAccount> {
-	private static final long serialVersionUID = 4624196496275152351L;
+public class CaseContactListComp extends RelatedListComp2<ContactService, ContactSearchCriteria, SimpleContact> {
+	private static final long serialVersionUID = 2049142673385990009L;
+	private CaseWithBLOBs cases;
 
-	private CampaignWithBLOBs campaign;
+	public CaseContactListComp() {
+		super(ApplicationContextUtil.getSpringBean(ContactService.class), 20);
+		this.setBlockDisplayHandler(new CaseContactBlockDisplay());
+	}
 
-	public CampaignAccountListComp2() {
-		super(ApplicationContextUtil.getSpringBean(AccountService.class), 20);
-		this.setBlockDisplayHandler(new CampaignAccountBlockDisplay());
+	public void displayContacts(CaseWithBLOBs cases) {
+		this.cases = cases;
+		loadContacts();
+	}
+
+	private void loadContacts() {
+		ContactSearchCriteria criteria = new ContactSearchCriteria();
+		criteria.setSaccountid(new NumberSearchField(SearchField.AND,
+				AppContext.getAccountId()));
+		criteria.setCaseId(new NumberSearchField(SearchField.AND, cases.getId()));
+		this.setSearchCriteria(criteria);
 	}
 
 	@Override
@@ -56,74 +65,63 @@ RelatedListComp2<AccountService, AccountSearchCriteria, SimpleAccount> {
 
 	@Override
 	public void refresh() {
-		loadAccounts();
-	}
-
-	public void displayAccounts(CampaignWithBLOBs campaign) {
-		this.campaign = campaign;
-		loadAccounts();
-	}
-
-	private void loadAccounts() {
-		AccountSearchCriteria criteria = new AccountSearchCriteria();
-		criteria.setSaccountid(new NumberSearchField(SearchField.AND,
-				AppContext.getAccountId()));
-		criteria.setCampaignId(new NumberSearchField(SearchField.AND, campaign
-				.getId()));
-		this.setSearchCriteria(criteria);
+		loadContacts();
 	}
 
 	@Override
 	protected Component generateTopControls() {
 		VerticalLayout controlsBtnWrap = new VerticalLayout();
 		controlsBtnWrap.setWidth("100%");
+
 		final SplitButton controlsBtn = new SplitButton();
 		controlsBtn.setSizeUndefined();
 		controlsBtn.setEnabled(AppContext
-				.canWrite(RolePermissionCollections.CRM_ACCOUNT));
+				.canWrite(RolePermissionCollections.CRM_CONTACT));
 		controlsBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
-		controlsBtn.setCaption("New Account");
+		controlsBtn.setCaption("New Contact");
 		controlsBtn.setIcon(MyCollabResource
 				.newResource("icons/16/addRecord.png"));
 		controlsBtn
 		.addClickListener(new SplitButton.SplitButtonClickListener() {
-
 			@Override
 			public void splitButtonClick(
-					final SplitButton.SplitButtonClickEvent event) {
+					SplitButton.SplitButtonClickEvent event) {
 				fireNewRelatedItem("");
 			}
 		});
-		final Button selectBtn = new Button("Select from existing contacts",
+		Button selectBtn = new Button("Select from existing contacts",
 				new Button.ClickListener() {
-
 			@Override
-			public void buttonClick(final ClickEvent event) {
-				final CampaignAccountSelectionWindow accountsWindow = new CampaignAccountSelectionWindow(
-						CampaignAccountListComp2.this);
-				final AccountSearchCriteria criteria = new AccountSearchCriteria();
+			public void buttonClick(Button.ClickEvent event) {
+				CaseContactSelectionWindow contactsWindow = new CaseContactSelectionWindow(
+						CaseContactListComp.this);
+				ContactSearchCriteria criteria = new ContactSearchCriteria();
 				criteria.setSaccountid(new NumberSearchField(AppContext
 						.getAccountId()));
-				UI.getCurrent().addWindow(accountsWindow);
-				accountsWindow.setSearchCriteria(criteria);
+				UI.getCurrent().addWindow(contactsWindow);
+				contactsWindow.setSearchCriteria(criteria);
 				controlsBtn.setPopupVisible(false);
 			}
 		});
 		selectBtn.setIcon(MyCollabResource.newResource("icons/16/select.png"));
 		selectBtn.setStyleName("link");
-		VerticalLayout buttonControlLayout = new VerticalLayout();
-		buttonControlLayout.addComponent(selectBtn);
-		controlsBtn.setContent(buttonControlLayout);
+
+		VerticalLayout buttonControlsLayout = new VerticalLayout();
+		buttonControlsLayout.addComponent(selectBtn);
+		controlsBtn.setContent(buttonControlsLayout);
+
+		controlsBtn.setEnabled(AppContext
+				.canWrite(RolePermissionCollections.CRM_CONTACT));
 
 		controlsBtnWrap.addComponent(controlsBtn);
 		controlsBtnWrap.setComponentAlignment(controlsBtn, Alignment.MIDDLE_RIGHT);
 		return controlsBtnWrap;
 	}
 
-	protected class CampaignAccountBlockDisplay implements BlockDisplayHandler<SimpleAccount> {
+	protected class CaseContactBlockDisplay implements BlockDisplayHandler<SimpleContact> {
 
 		@Override
-		public Component generateBlock(final SimpleAccount account, int blockIndex) {
+		public Component generateBlock(final SimpleContact contact, int blockIndex) {
 			CssLayout beanBlock = new CssLayout();
 			beanBlock.addStyleName("bean-block");
 			beanBlock.setWidth("350px");
@@ -133,12 +131,12 @@ RelatedListComp2<AccountService, AccountSearchCriteria, SimpleAccount> {
 			blockTop.setSpacing(true);
 			CssLayout iconWrap = new CssLayout();
 			iconWrap.setStyleName("icon-wrap");
-			Image accountAvatar = new Image(null, MyCollabResource.newResource("icons/48/crm/account.png"));
-			iconWrap.addComponent(accountAvatar);
+			Image contactAvatar = new Image(null, MyCollabResource.newResource("icons/48/crm/contact.png"));
+			iconWrap.addComponent(contactAvatar);
 			blockTop.addComponent(iconWrap);
 
-			VerticalLayout accountInfo = new VerticalLayout();
-			accountInfo.setSpacing(true);
+			VerticalLayout contactInfo = new VerticalLayout();
+			contactInfo.setSpacing(true);
 
 			Image btnDelete = new Image(null, MyCollabResource
 					.newResource("icons/12/project/icon_x.png"));
@@ -164,22 +162,20 @@ RelatedListComp2<AccountService, AccountSearchCriteria, SimpleAccount> {
 								@Override
 								public void onClose(ConfirmDialog dialog) {
 									if (dialog.isConfirmed()) {
-										CampaignService campaignService = ApplicationContextUtil
-												.getSpringBean(CampaignService.class);
-										CampaignAccount associateAccount = new CampaignAccount();
-										associateAccount
-										.setAccountid(account
+										final ContactService contactService = ApplicationContextUtil
+												.getSpringBean(ContactService.class);
+										ContactCase associateContact = new ContactCase();
+										associateContact.setCaseid(cases
 												.getId());
-										associateAccount
-										.setCampaignid(campaign
+										associateContact
+										.setContactid(contact
 												.getId());
-										campaignService
-										.removeCampaignAccountRelationship(
-												associateAccount,
+										contactService
+										.removeContactCaseRelationship(
+												associateContact,
 												AppContext
 												.getAccountId());
-										CampaignAccountListComp2.this
-										.refresh();
+										CaseContactListComp.this.refresh();
 									}
 								}
 							});
@@ -190,27 +186,27 @@ RelatedListComp2<AccountService, AccountSearchCriteria, SimpleAccount> {
 			blockContent.addComponent(btnDelete);
 			blockContent.setComponentAlignment(btnDelete, Alignment.TOP_RIGHT);
 
-			Label accountName = new Label("Name: <a href='" + SiteConfiguration.getSiteUrl(AppContext.getSession().getSubdomain()) 
-					+ CrmLinkGenerator.generateCrmItemLink(CrmTypeConstants.ACCOUNT, account.getId()) 
-					+ "'>" + account.getAccountname() + "</a>", ContentMode.HTML);
+			Label contactName = new Label("Name: <a href='" + SiteConfiguration.getSiteUrl(AppContext.getSession().getSubdomain()) 
+					+ CrmLinkGenerator.generateCrmItemLink(CrmTypeConstants.CONTACT, contact.getId()) 
+					+ "'>" + contact.getContactName() + "</a>", ContentMode.HTML);
 
-			accountInfo.addComponent(accountName);
+			contactInfo.addComponent(contactName);
 
-			Label accountOfficePhone = new Label("Office Phone: " + (account.getPhoneoffice() != null ? account.getPhoneoffice() : ""));
-			accountInfo.addComponent(accountOfficePhone);
+			Label contactTitle = new Label("Title: " + (contact.getTitle() != null ? contact.getTitle() : ""));
+			contactInfo.addComponent(contactTitle);
 
-			Label accountEmail = new Label("Email: " 
-					+ (account.getEmail() != null ? 
-							"<a href='mailto:" + account.getEmail() + "'>" + account.getEmail() + "</a>" 
+			Label contactEmail = new Label("Email: " 
+					+ (contact.getEmail() != null ? 
+							"<a href='mailto:" + contact.getEmail() + "'>" + contact.getEmail() + "</a>" 
 							: "")
 							, ContentMode.HTML);
-			accountInfo.addComponent(accountEmail);
+			contactInfo.addComponent(contactEmail);
 
-			Label accountCity = new Label("City: " + (account.getCity() != null ? account.getCity() : ""));
-			accountInfo.addComponent(accountCity);
+			Label contactOfficePhone = new Label("Office Phone: " + (contact.getOfficephone() != null ? contact.getOfficephone() : ""));
+			contactInfo.addComponent(contactOfficePhone);
 
-			blockTop.addComponent(accountInfo);
-			blockTop.setExpandRatio(accountInfo, 1.0f);
+			blockTop.addComponent(contactInfo);
+			blockTop.setExpandRatio(contactInfo, 1.0f);
 			blockTop.setWidth("100%");
 			blockContent.addComponent(blockTop);
 
@@ -221,4 +217,5 @@ RelatedListComp2<AccountService, AccountSearchCriteria, SimpleAccount> {
 		}
 
 	}
+
 }

@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.module.crm.view.cases;
+package com.esofthead.mycollab.module.crm.view.lead;
 
 import java.util.Set;
 
@@ -11,11 +11,11 @@ import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.crm.CrmLinkGenerator;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
-import com.esofthead.mycollab.module.crm.domain.CaseWithBLOBs;
-import com.esofthead.mycollab.module.crm.domain.ContactCase;
-import com.esofthead.mycollab.module.crm.domain.SimpleContact;
-import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
-import com.esofthead.mycollab.module.crm.service.ContactService;
+import com.esofthead.mycollab.module.crm.domain.CampaignLead;
+import com.esofthead.mycollab.module.crm.domain.Lead;
+import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
+import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
+import com.esofthead.mycollab.module.crm.service.CampaignService;
 import com.esofthead.mycollab.module.crm.ui.components.RelatedListComp2;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
@@ -36,25 +36,26 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
-public class CaseContactListComp2 extends RelatedListComp2<ContactService, ContactSearchCriteria, SimpleContact> {
-	private static final long serialVersionUID = 2049142673385990009L;
-	private CaseWithBLOBs cases;
+public class LeadCampaignListComp extends
+RelatedListComp2<CampaignService, CampaignSearchCriteria, SimpleCampaign> {
+	private static final long serialVersionUID = -1891728022550632203L;
+	private Lead lead;
 
-	public CaseContactListComp2() {
-		super(ApplicationContextUtil.getSpringBean(ContactService.class), 20);
-		this.setBlockDisplayHandler(new CaseContactBlockDisplay());
+	public LeadCampaignListComp() {
+		super(ApplicationContextUtil.getSpringBean(CampaignService.class), 20);
+		this.setBlockDisplayHandler(new LeadCampaignBlockDisplay());
 	}
 
-	public void displayContacts(CaseWithBLOBs cases) {
-		this.cases = cases;
-		loadContacts();
+	public void displayCampaigns(Lead lead) {
+		this.lead = lead;
+		loadCampaigns();
 	}
 
-	private void loadContacts() {
-		ContactSearchCriteria criteria = new ContactSearchCriteria();
+	private void loadCampaigns() {
+		CampaignSearchCriteria criteria = new CampaignSearchCriteria();
 		criteria.setSaccountid(new NumberSearchField(SearchField.AND,
 				AppContext.getAccountId()));
-		criteria.setCaseId(new NumberSearchField(SearchField.AND, cases.getId()));
+		criteria.setLeadId(new NumberSearchField(SearchField.AND, lead.getId()));
 		this.setSearchCriteria(criteria);
 	}
 
@@ -65,41 +66,45 @@ public class CaseContactListComp2 extends RelatedListComp2<ContactService, Conta
 
 	@Override
 	public void refresh() {
-		loadContacts();
+		loadCampaigns();
 	}
 
 	@Override
 	protected Component generateTopControls() {
-		VerticalLayout controlsBtnWrap = new VerticalLayout();
-		controlsBtnWrap.setWidth("100%");
+		VerticalLayout controlBtnWrap = new VerticalLayout();
+		controlBtnWrap.setWidth("100%");
 
 		final SplitButton controlsBtn = new SplitButton();
 		controlsBtn.setSizeUndefined();
 		controlsBtn.setEnabled(AppContext
-				.canWrite(RolePermissionCollections.CRM_CONTACT));
+				.canWrite(RolePermissionCollections.CRM_CAMPAIGN));
 		controlsBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
-		controlsBtn.setCaption("New Contact");
+		controlsBtn.setCaption("New Campaign");
 		controlsBtn.setIcon(MyCollabResource
 				.newResource("icons/16/addRecord.png"));
 		controlsBtn
 		.addClickListener(new SplitButton.SplitButtonClickListener() {
+			private static final long serialVersionUID = 1099580202385205069L;
+
 			@Override
 			public void splitButtonClick(
 					SplitButton.SplitButtonClickEvent event) {
 				fireNewRelatedItem("");
 			}
 		});
-		Button selectBtn = new Button("Select from existing contacts",
+		Button selectBtn = new Button("Select from existing campaigns",
 				new Button.ClickListener() {
+			private static final long serialVersionUID = 3046728004767791528L;
+
 			@Override
 			public void buttonClick(Button.ClickEvent event) {
-				CaseContactSelectionWindow2 contactsWindow = new CaseContactSelectionWindow2(
-						CaseContactListComp2.this);
-				ContactSearchCriteria criteria = new ContactSearchCriteria();
+				LeadCampaignSelectionWindow leadsWindow = new LeadCampaignSelectionWindow(
+						LeadCampaignListComp.this);
+				CampaignSearchCriteria criteria = new CampaignSearchCriteria();
 				criteria.setSaccountid(new NumberSearchField(AppContext
 						.getAccountId()));
-				UI.getCurrent().addWindow(contactsWindow);
-				contactsWindow.setSearchCriteria(criteria);
+				UI.getCurrent().addWindow(leadsWindow);
+				leadsWindow.setSearchCriteria(criteria);
 				controlsBtn.setPopupVisible(false);
 			}
 		});
@@ -110,18 +115,16 @@ public class CaseContactListComp2 extends RelatedListComp2<ContactService, Conta
 		buttonControlsLayout.addComponent(selectBtn);
 		controlsBtn.setContent(buttonControlsLayout);
 
-		controlsBtn.setEnabled(AppContext
-				.canWrite(RolePermissionCollections.CRM_CONTACT));
+		controlBtnWrap.addComponent(controlsBtn);
+		controlBtnWrap.setComponentAlignment(controlsBtn, Alignment.MIDDLE_RIGHT);
 
-		controlsBtnWrap.addComponent(controlsBtn);
-		controlsBtnWrap.setComponentAlignment(controlsBtn, Alignment.MIDDLE_RIGHT);
-		return controlsBtnWrap;
+		return controlBtnWrap;
 	}
 
-	protected class CaseContactBlockDisplay implements BlockDisplayHandler<SimpleContact> {
+	protected class LeadCampaignBlockDisplay implements BlockDisplayHandler<SimpleCampaign> {
 
 		@Override
-		public Component generateBlock(final SimpleContact contact, int blockIndex) {
+		public Component generateBlock(final SimpleCampaign campaign, int blockIndex) {
 			CssLayout beanBlock = new CssLayout();
 			beanBlock.addStyleName("bean-block");
 			beanBlock.setWidth("350px");
@@ -131,12 +134,12 @@ public class CaseContactListComp2 extends RelatedListComp2<ContactService, Conta
 			blockTop.setSpacing(true);
 			CssLayout iconWrap = new CssLayout();
 			iconWrap.setStyleName("icon-wrap");
-			Image contactAvatar = new Image(null, MyCollabResource.newResource("icons/48/crm/contact.png"));
-			iconWrap.addComponent(contactAvatar);
+			Image campaignIcon = new Image(null, MyCollabResource.newResource("icons/48/crm/campaign.png"));
+			iconWrap.addComponent(campaignIcon);
 			blockTop.addComponent(iconWrap);
 
-			VerticalLayout contactInfo = new VerticalLayout();
-			contactInfo.setSpacing(true);
+			VerticalLayout campaignInfo = new VerticalLayout();
+			campaignInfo.setSpacing(true);
 
 			Image btnDelete = new Image(null, MyCollabResource
 					.newResource("icons/12/project/icon_x.png"));
@@ -162,20 +165,20 @@ public class CaseContactListComp2 extends RelatedListComp2<ContactService, Conta
 								@Override
 								public void onClose(ConfirmDialog dialog) {
 									if (dialog.isConfirmed()) {
-										final ContactService contactService = ApplicationContextUtil
-												.getSpringBean(ContactService.class);
-										ContactCase associateContact = new ContactCase();
-										associateContact.setCaseid(cases
+										CampaignService campaignService = ApplicationContextUtil
+												.getSpringBean(CampaignService.class);
+										CampaignLead associateLead = new CampaignLead();
+										associateLead.setLeadid(lead
 												.getId());
-										associateContact
-										.setContactid(contact
+										associateLead
+										.setCampaignid(campaign
 												.getId());
-										contactService
-										.removeContactCaseRelationship(
-												associateContact,
+										campaignService
+										.removeCampaignLeadRelationship(
+												associateLead,
 												AppContext
 												.getAccountId());
-										CaseContactListComp2.this.refresh();
+										LeadCampaignListComp.this.refresh();
 									}
 								}
 							});
@@ -187,26 +190,23 @@ public class CaseContactListComp2 extends RelatedListComp2<ContactService, Conta
 			blockContent.setComponentAlignment(btnDelete, Alignment.TOP_RIGHT);
 
 			Label contactName = new Label("Name: <a href='" + SiteConfiguration.getSiteUrl(AppContext.getSession().getSubdomain()) 
-					+ CrmLinkGenerator.generateCrmItemLink(CrmTypeConstants.CONTACT, contact.getId()) 
-					+ "'>" + contact.getContactName() + "</a>", ContentMode.HTML);
+					+ CrmLinkGenerator.generateCrmItemLink(CrmTypeConstants.CAMPAIGN, campaign.getId()) 
+					+ "'>" + campaign.getCampaignname() + "</a>", ContentMode.HTML);
 
-			contactInfo.addComponent(contactName);
+			campaignInfo.addComponent(contactName);
 
-			Label contactTitle = new Label("Title: " + (contact.getTitle() != null ? contact.getTitle() : ""));
-			contactInfo.addComponent(contactTitle);
+			Label campaignStatus = new Label("Status: " + (campaign.getStatus() != null ? campaign.getStatus() : ""));
+			campaignInfo.addComponent(campaignStatus);
 
-			Label contactEmail = new Label("Email: " 
-					+ (contact.getEmail() != null ? 
-							"<a href='mailto:" + contact.getEmail() + "'>" + contact.getEmail() + "</a>" 
-							: "")
-							, ContentMode.HTML);
-			contactInfo.addComponent(contactEmail);
+			Label campaignType = new Label("Type: " + (campaign.getType() != null ? campaign.getType() : ""));
+			campaignInfo.addComponent(campaignType);
 
-			Label contactOfficePhone = new Label("Office Phone: " + (contact.getOfficephone() != null ? contact.getOfficephone() : ""));
-			contactInfo.addComponent(contactOfficePhone);
+			Label campaignEndDate = new Label("End Date: " 
+					+ (campaign.getEnddate() != null ? AppContext.formatDate(campaign.getEnddate())  : ""));
+			campaignInfo.addComponent(campaignEndDate);
 
-			blockTop.addComponent(contactInfo);
-			blockTop.setExpandRatio(contactInfo, 1.0f);
+			blockTop.addComponent(campaignInfo);
+			blockTop.setExpandRatio(campaignInfo, 1.0f);
 			blockTop.setWidth("100%");
 			blockContent.addComponent(blockTop);
 

@@ -1,10 +1,10 @@
-package com.esofthead.mycollab.module.crm.view.opportunity;
+package com.esofthead.mycollab.module.crm.view.campaign;
 
 import java.util.Arrays;
 
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
-import com.esofthead.mycollab.module.crm.ui.components.RelatedItemSelectionWindow2;
+import com.esofthead.mycollab.module.crm.ui.components.RelatedItemSelectionWindow;
 import com.esofthead.mycollab.module.crm.view.contact.ContactSimpleSearchPanel;
 import com.esofthead.mycollab.module.crm.view.contact.ContactTableDisplay;
 import com.esofthead.mycollab.module.crm.view.contact.ContactTableFieldDef;
@@ -15,13 +15,14 @@ import com.vaadin.ui.Button;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 @SuppressWarnings("serial")
-public class OpportunityContactSelectionWindow2 extends
-RelatedItemSelectionWindow2<SimpleContact, ContactSearchCriteria> {
+public class CampaignContactSelectionWindow extends
+RelatedItemSelectionWindow<SimpleContact, ContactSearchCriteria> {
 
-	public OpportunityContactSelectionWindow2(
-			OpportunityContactListComp2 associateContactList) {
+	public CampaignContactSelectionWindow(
+			CampaignContactListComp associateContactList) {
 		super("Select Contacts", associateContactList);
 
 		this.setWidth("900px");

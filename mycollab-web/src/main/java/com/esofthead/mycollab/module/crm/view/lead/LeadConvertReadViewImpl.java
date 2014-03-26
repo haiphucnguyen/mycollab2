@@ -85,7 +85,7 @@ LeadConvertReadView {
 
 	private SimpleLead lead;
 
-	private LeadCampaignListComp2 associateCampaignList;
+	private LeadCampaignListComp associateCampaignList;
 	private ActivityRelatedItemListComp associateActivityList;
 	private NoteListItems noteListItems;
 
@@ -160,7 +160,7 @@ LeadConvertReadView {
 
 	@Override
 	protected void initRelatedComponents() {
-		associateCampaignList = new LeadCampaignListComp2();
+		associateCampaignList = new LeadCampaignListComp();
 
 		noteListItems = new NoteListItems("Notes");
 		noteListItems.setEnableCreateButton(false);

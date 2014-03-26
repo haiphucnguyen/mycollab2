@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
-import com.esofthead.mycollab.module.crm.ui.components.RelatedItemSelectionWindow2;
+import com.esofthead.mycollab.module.crm.ui.components.RelatedItemSelectionWindow;
 import com.esofthead.mycollab.module.crm.view.campaign.CampaignSimpleSearchPanel;
 import com.esofthead.mycollab.module.crm.view.campaign.CampaignTableDisplay;
 import com.esofthead.mycollab.module.crm.view.campaign.CampaignTableFieldDef;
@@ -18,10 +18,10 @@ import com.vaadin.ui.Button;
  * @since 1.0
  */
 @SuppressWarnings("serial")
-public class LeadCampaignSelectionWindow2 extends
-RelatedItemSelectionWindow2<SimpleCampaign, CampaignSearchCriteria> {
+public class LeadCampaignSelectionWindow extends
+RelatedItemSelectionWindow<SimpleCampaign, CampaignSearchCriteria> {
 
-	public LeadCampaignSelectionWindow2(LeadCampaignListComp2 associateLeadList) {
+	public LeadCampaignSelectionWindow(LeadCampaignListComp associateLeadList) {
 		super("Select Campaigns", associateLeadList);
 
 		this.setWidth("900px");
