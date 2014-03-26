@@ -43,6 +43,7 @@ import com.esofthead.mycollab.module.crm.service.NoteService;
 import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.module.file.AttachmentUtils;
 import com.esofthead.mycollab.module.project.events.ProjectMemberEvent;
+import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.schedule.email.crm.AccountRelayEmailNotificationAction;
 import com.esofthead.mycollab.schedule.email.crm.CallRelayEmailNotificationAction;
 import com.esofthead.mycollab.schedule.email.crm.CampaignRelayEmailNotificationAction;
@@ -140,8 +141,9 @@ public class NoteListItems extends VerticalLayout {
 
 			@Override
 			public void buttonClick(final ClickEvent event) {
+					
 				NoteListItems.this
-				.replaceComponent(createBtn, new NoteEditor());
+				.replaceComponent(createBtn, createCommentBox(new NoteEditor()));
 			}
 		});
 
@@ -164,6 +166,38 @@ public class NoteListItems extends VerticalLayout {
 		this.type = type;
 		this.typeid = typeid;
 		displayNotes();
+	}
+	
+	protected Component createCommentBox(NoteEditor commentBox) {
+
+		HorizontalLayout commentWrap = new HorizontalLayout();
+		commentWrap.setSpacing(true);
+		commentWrap.addStyleName("message");
+		commentWrap.setWidth("100%");
+
+		SimpleUser currentUser = AppContext.getSession();
+		VerticalLayout userBlock = new VerticalLayout();
+		userBlock.setDefaultComponentAlignment(Alignment.TOP_CENTER);
+		userBlock.setWidth("80px");
+		userBlock.setSpacing(true);
+		userBlock.addComponent(UserAvatarControlFactory
+				.createUserAvatarButtonLink(
+						currentUser.getAvatarid(),
+						currentUser.getDisplayName()));
+		Label userName = new Label(currentUser.getDisplayName());
+		userName.setStyleName("user-name");
+		userBlock.addComponent(userName);
+
+		commentWrap.addComponent(userBlock);
+		CssLayout textAreaWrap = new CssLayout();
+		textAreaWrap.setStyleName("message-container");
+		textAreaWrap.setWidth("100%");
+		textAreaWrap.addComponent(commentBox);
+		commentBox.setWidth("100%");
+		commentWrap.addComponent(textAreaWrap);
+		commentWrap.setExpandRatio(textAreaWrap, 1.0f);
+
+		return commentWrap;
 	}
 
 	public static class NoteRowDisplayHandler implements
@@ -188,7 +222,9 @@ public class NoteListItems extends VerticalLayout {
 				}
 			}
 		}
-
+		
+		
+		
 		private Component constructNoteHeader(final SimpleNote note) {
 			final HorizontalLayout layout = new HorizontalLayout();
 			layout.setStyleName("message");
@@ -335,7 +371,8 @@ public class NoteListItems extends VerticalLayout {
 			super();
 			setSpacing(true);
 			this.setMargin(true);
-			this.setWidth("600px");
+			this.setWidth("500px");
+			this.addStyleName("message-container");
 
 			final AttachmentPanel attachments = new AttachmentPanel();
 
