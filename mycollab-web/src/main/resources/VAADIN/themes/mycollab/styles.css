@@ -1127,12 +1127,9 @@ input.v-textfield-pagedtable-pagefield {
 	height: 100% !important;
 }
 
-.crmContainer .navigator-wrap .basic-info, .crmContainer .navigator-wrap .basic-info .v-button-link .v-button-caption {
+.crmContainer .navigator-wrap .basic-info {
 	color: #FFFFFF;
-}
-
-.crmContainer .navigator-wrap .basic-info .v-button-link .v-button-caption {
-	font-weight: bold;
+	
 }
 
 .crmContainer .navigator-wrap .basic-info:after {
@@ -2922,9 +2919,6 @@ div.v-splitbutton,div.v-splitbutton .v-button {
 	border-bottom: 1px solid #CFCFCF;
 	
 }
-.readViewBottomControls .v-table-header-wrap {
-	border-width: 1px;
-}
 .activity-realated-content .v-table-header-wrap {
 	border-top-width:1px;
 }
@@ -3090,7 +3084,7 @@ div.v-splitbutton,div.v-splitbutton .v-button {
 }
 
 .message .message-container {
-    /* padding-left: 10px; */
+    padding-left: 10px;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
@@ -3098,7 +3092,7 @@ div.v-splitbutton,div.v-splitbutton .v-button {
 
 .message .message-container {
 	background-color: #f2fafd;
-	/* padding: 0px; */
+	padding: 0px;
 	border: 1px solid #CFCFCF;
 	border-radius: 5px;
 	/* margin-left: 10px; */
@@ -3484,7 +3478,7 @@ div.v-window-header {
 }
 
 .v-window .v-table-header-wrap {
-	border-top: 1px solid #CFCFCF;
+	background: url('icons/grad-light-top.png') repeat-x left top #ddd;
 }
 
 .v-window .v-table-header-wrap .v-table-caption-container {
@@ -4791,7 +4785,7 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 
 /* Richtext Editor */
 .v-richtextarea .gwt-RichTextToolbar {
-	background:  none no-repeat left top #F7F7F7;
+	background: url("icons/grad-light-top.png") repeat-x left top #ebebeb;
 	border-bottom: 1px solid #CFCFCF;
 	padding: 3px;
 }
@@ -4803,14 +4797,6 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 
 .v-richtextarea .gwt-RichTextToolbar .gwt-ListBox {
 	margin-right: 3px;
-	background: url('../../themes/base/common/img/sprites.png') no-repeat right -8px #FFFFFF;
-	border: 1px solid #CFCFCF;
-	-moz-appearance: none;
-	-webkit-appearance: none;
-	text-indent: 0.01px;
-	text-overflow: "";
-	padding: 3px 5px;
-	outline:0px;
 }
 
 /* Mac OS native select fix */
@@ -6126,13 +6112,11 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 
 .vertical-tabsheet .v-button-tab>.v-button-wrap>.v-icon {
 	margin-right: 8px;
-	vertical-align: middle;
 }
 
 .vertical-tabsheet .v-button-tab>.v-button-wrap>.v-button-caption {
 	line-height: 24px;
 	font-size: 13px;
-	vertical-align: middle;
 }
 /* End VerticalTabsheet */
 
@@ -6690,7 +6674,7 @@ div.v-csslayout.bean-block {
 	border-color: #bebebe;
 }
 .bean-block .icon-wrap {
-	padding: 0px 10px 0px 0px;
+	padding: 5px 10px 0px 0px;
 }
 /* End Bean Block List */
 
@@ -6756,4 +6740,9 @@ div.v-csslayout.bean-block {
 }
 .activityCalendar .stylecalendar .week .selected .gwt-Label {
 	border: none;
+}
+.note-view {
+	border-width: 0px 1px 1px 1px;
+	border-color: #CFCFCF;
+	border-style: solid;
 }
