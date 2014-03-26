@@ -143,7 +143,7 @@ public class NoteListItems extends VerticalLayout {
 			public void buttonClick(final ClickEvent event) {
 					
 				NoteListItems.this
-				.replaceComponent(createBtn, createCommentBox(new NoteEditor()));
+				.replaceComponent(createBtn, new NoteEditor());
 			}
 		});
 
@@ -168,37 +168,7 @@ public class NoteListItems extends VerticalLayout {
 		displayNotes();
 	}
 	
-	protected Component createCommentBox(NoteEditor commentBox) {
 
-		HorizontalLayout commentWrap = new HorizontalLayout();
-		commentWrap.setSpacing(true);
-		commentWrap.addStyleName("message");
-		commentWrap.setWidth("100%");
-
-		SimpleUser currentUser = AppContext.getSession();
-		VerticalLayout userBlock = new VerticalLayout();
-		userBlock.setDefaultComponentAlignment(Alignment.TOP_CENTER);
-		userBlock.setWidth("80px");
-		userBlock.setSpacing(true);
-		userBlock.addComponent(UserAvatarControlFactory
-				.createUserAvatarButtonLink(
-						currentUser.getAvatarid(),
-						currentUser.getDisplayName()));
-		Label userName = new Label(currentUser.getDisplayName());
-		userName.setStyleName("user-name");
-		userBlock.addComponent(userName);
-
-		commentWrap.addComponent(userBlock);
-		CssLayout textAreaWrap = new CssLayout();
-		textAreaWrap.setStyleName("message-container");
-		textAreaWrap.setWidth("100%");
-		textAreaWrap.addComponent(commentBox);
-		commentBox.setWidth("100%");
-		commentWrap.addComponent(textAreaWrap);
-		commentWrap.setExpandRatio(textAreaWrap, 1.0f);
-
-		return commentWrap;
-	}
 
 	public static class NoteRowDisplayHandler implements
 	RowDisplayHandler<SimpleNote>, ReloadableComponent {
@@ -371,16 +341,54 @@ public class NoteListItems extends VerticalLayout {
 			super();
 			setSpacing(true);
 			this.setMargin(true);
-			this.setWidth("500px");
-			this.addStyleName("message-container");
+			this.setWidth("600px");
+			
+			VerticalLayout editBox = new VerticalLayout();
+			editBox.setMargin(true);
+			editBox.setSpacing(true);
+		
+			
+			HorizontalLayout commentWrap = new HorizontalLayout();
+			commentWrap.setSpacing(true);
+			commentWrap.addStyleName("message");
+			commentWrap.setWidth("100%");
+			
 
+			SimpleUser currentUser = AppContext.getSession();
+			VerticalLayout userBlock = new VerticalLayout();
+			userBlock.setDefaultComponentAlignment(Alignment.TOP_CENTER);
+			userBlock.setWidth("80px");
+			userBlock.setSpacing(true);
+			userBlock.addComponent(UserAvatarControlFactory
+					.createUserAvatarButtonLink(
+							currentUser.getAvatarid(),
+							currentUser.getDisplayName()));
+			Label userName = new Label(currentUser.getDisplayName());
+			userName.setStyleName("user-name");
+			userBlock.addComponent(userName);
+
+			commentWrap.addComponent(userBlock);
+			VerticalLayout textAreaWrap = new VerticalLayout();
+			textAreaWrap.setStyleName("message-container");
+			textAreaWrap.setWidth("100%");
+			textAreaWrap.addComponent(editBox);
+			
+			
+			
+			commentWrap.addComponent(textAreaWrap);
+			commentWrap.setExpandRatio(textAreaWrap, 1.0f);
+			
+			
 			final AttachmentPanel attachments = new AttachmentPanel();
 
 			noteArea = new RichTextArea();
 			noteArea.setWidth("100%");
 			noteArea.setHeight("200px");
-			this.addComponent(noteArea);
-			this.addComponent(attachments);
+			
+			
+			editBox.addComponent(noteArea);
+			editBox.addComponent(attachments);
+			
 
 			final HorizontalLayout controls = new HorizontalLayout();
 			controls.setSpacing(true);
@@ -502,8 +510,9 @@ public class NoteListItems extends VerticalLayout {
 			saveBtn.setIcon(MyCollabResource.newResource("icons/16/post.png"));
 			controls.addComponent(saveBtn);
 			controls.setComponentAlignment(saveBtn, Alignment.MIDDLE_RIGHT);
-
-			this.addComponent(controls);
+			
+			editBox.addComponent(controls);
+			this.addComponent(commentWrap);
 		}
 	}
 }
