@@ -3,9 +3,15 @@ package com.esofthead.mycollab.module.project.view.task;
 import java.util.Arrays;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.SearchField;
+import com.esofthead.mycollab.core.arguments.SetSearchField;
+import com.esofthead.mycollab.eventmanager.ApplicationEvent;
+import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
+import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.events.TaskListEvent;
 import com.esofthead.mycollab.module.project.view.parameters.TaskFilterParameter;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
@@ -13,6 +19,7 @@ import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
+import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -49,8 +56,6 @@ public class FilterTaskViewImpl extends AbstractPageView implements
 		header.setWidth("100%");
 		Image titleIcon = new Image(null,
 				MyCollabResource.newResource("icons/24/project/task.png"));
-		
-		
 
 		headerText = new Label();
 		headerText.setSizeUndefined();
@@ -83,15 +88,33 @@ public class FilterTaskViewImpl extends AbstractPageView implements
 		contentLayout.setSpacing(true);
 		this.addComponent(contentLayout);
 
-		this.taskTableDisplay = new TaskTableDisplay(TaskTableFieldDef.id,
-				Arrays.asList(TaskTableFieldDef.taskname,
+		this.taskTableDisplay = new TaskTableDisplay(
+				TaskTableFieldDef.taskname, Arrays.asList(
 						TaskTableFieldDef.startdate, TaskTableFieldDef.duedate,
 						TaskTableFieldDef.percentagecomplete));
+		this.taskTableDisplay
+				.addTableListener(new ApplicationEventListener<TableClickEvent>() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public Class<? extends ApplicationEvent> getEventType() {
+						return TableClickEvent.class;
+					}
+
+					@Override
+					public void handle(final TableClickEvent event) {
+						final SimpleTask task = (SimpleTask) event.getData();
+						if ("taskname".equals(event.getFieldName())) {
+							EventBus.getInstance().fireEvent(
+									new TaskEvent.GotoRead(
+											FilterTaskViewImpl.this, task
+													.getId()));
+						}
+					}
+				});
 		taskTableDisplay.setWidth("100%");
 		taskTableDisplay.setStyleName("filter-task-table");
-		
-		
-		
+
 		leftColumn = new VerticalLayout();
 		leftColumn.addComponent(taskTableDisplay);
 		leftColumn.setStyleName("depotComp");
@@ -117,7 +140,8 @@ public class FilterTaskViewImpl extends AbstractPageView implements
 		TaskSearchCriteria searchCriteria = new TaskSearchCriteria();
 		searchCriteria.setProjectid(new NumberSearchField(
 				CurrentProjectVariables.getProjectId()));
-		unresolvedTaskByAssigneeWidget.setSearchCriteria(searchCriteria);
+		searchCriteria.setStatuses(new SetSearchField<String>(SearchField.AND,
+				new String[] { "Open" }));
 
 		unresolvedTaskByAssigneeWidget.setSearchCriteria(searchCriteria);
 		unresolvedTaskByPriorityWidget.setSearchCriteria(searchCriteria);
