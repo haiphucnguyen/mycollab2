@@ -87,15 +87,15 @@ public abstract class CrmDefaultSendingRelayEmailAction<B extends ValuedBean>
 				TemplateGenerator templateGenerator = templateGeneratorForCreateAction(
 						notification, user);
 				if (templateGenerator != null) {
-					String userName = user.getUsername();
-					if (userName == null || userName.length() == 0) {
+					String notifierFullName = user.getDisplayName();
+					if (notifierFullName == null || notifierFullName.trim().length() == 0) {
 						log.error(
 								"Can not find user {} of notification {}",
 								new String[] { BeanUtility.printBeanObj(user),
 										BeanUtility.printBeanObj(notification) });
 						return;
 					}
-					templateGenerator.putVariable("userName", userName);
+					templateGenerator.putVariable("userName", notifierFullName);
 
 					MailRecipientField userMail = new MailRecipientField(
 							user.getEmail(), user.getUsername());
