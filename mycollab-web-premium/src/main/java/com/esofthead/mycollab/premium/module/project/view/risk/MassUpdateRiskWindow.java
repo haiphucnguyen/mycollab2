@@ -37,7 +37,7 @@ public class MassUpdateRiskWindow extends MassUpdateWindow<Risk> {
 	}
 
 	@Override
-	protected AbstractBeanFieldGroupEditFieldFactory<Risk> initBeanFormFieldFactory() {
+	protected AbstractBeanFieldGroupEditFieldFactory<Risk> buildBeanFormFieldFactory() {
 		return new RiskEditFormFieldFactory(updateForm);
 	}
 

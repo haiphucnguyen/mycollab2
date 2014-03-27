@@ -28,6 +28,10 @@ class ProblemEditFormFieldFactory<B extends Problem> extends
 		super(form);
 	}
 
+	ProblemEditFormFieldFactory(GenericBeanForm<B> form, boolean isValidateForm) {
+		super(form, isValidateForm);
+	}
+
 	@Override
 	protected Field<?> onCreateField(Object propertyId) {
 		Problem problem = attachForm.getBean();
