@@ -60,7 +60,7 @@ public abstract class ProfileFormLayoutFactory implements IFormLayoutFactory {
 	public Layout getLayout() {
 		if (userAvatarIcon == null) {
 			userAvatarIcon = MyCollabResource
-					.newResource("icons/22/user/user.png");
+					.newResource("icons/24/project/user.png");
 		}
 		final ReadViewLayout userAddLayout = new ReadViewLayout(this.title,
 				userAvatarIcon);

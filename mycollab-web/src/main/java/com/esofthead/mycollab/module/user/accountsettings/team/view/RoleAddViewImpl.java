@@ -106,7 +106,7 @@ public class RoleAddViewImpl extends AbstractPageView implements RoleAddView {
 			@Override
 			public Layout getLayout() {
 				final AddViewLayout formAddLayout = new AddViewLayout(
-						initFormHeader(), MyCollabResource.newResource("icons/22/user/group.png"));
+						initFormHeader(), MyCollabResource.newResource("icons/24/project/user.png"));
 
 				final ComponentContainer topLayout = createButtonControls();
 				if (topLayout != null) {
@@ -128,17 +128,17 @@ public class RoleAddViewImpl extends AbstractPageView implements RoleAddView {
 			}
 
 			protected String initFormHeader() {
-				return (role.getId() == null) ? "Create Role" : "Role Edit";
+				return role.getId() == null ? "Create Role" : "Role Edit";
 			}
 
 			protected String initFormTitle() {
-				return (role.getId() == null) ? null : role.getRolename();
+				return role.getId() == null ? null : role.getRolename();
 			}
 
 			private Layout createButtonControls() {
 				final HorizontalLayout controlPanel = new HorizontalLayout();
-				final Layout controlButtons = (new EditFormControlsGenerator<Role>(
-						RoleAddViewImpl.EditForm.this)).createButtonControls();
+				final Layout controlButtons = new EditFormControlsGenerator<Role>(
+						RoleAddViewImpl.EditForm.this).createButtonControls();
 				controlButtons.setSizeUndefined();
 				controlPanel.addComponent(controlButtons);
 				controlPanel.setComponentAlignment(controlButtons,

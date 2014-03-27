@@ -45,7 +45,7 @@ public abstract class RoleFormLayoutFactory implements IFormLayoutFactory {
 	@Override
 	public Layout getLayout() {
 		final ReadViewLayout userAddLayout = new ReadViewLayout(this.title,
-				MyCollabResource.newResource("icons/22/user/group.png"));
+				MyCollabResource.newResource("icons/24/project/user.png"));
 
 		this.userInformationLayout = new RoleInformationLayout();
 		this.userInformationLayout.getLayout().setWidth("100%");
