@@ -124,6 +124,9 @@ div.v-button .v-button-link .link .v-button-buttonlinkcenter .buttonlinkcenter .
 	border-radius: 0px;
 	margin: 0px;
 }
+.v-button.v-button-link:active .v-button-wrap {
+	padding: 0px 1px;
+}
 
 .v-textarea {
 	overflow: auto;
@@ -287,7 +290,7 @@ div.v-button-link.v-button-no-margin .v-button-wrap,div.v-button-link:focus
 	margin: 0px;
 }
 
-.v-button-wrap, .v-disabled:active .v-button-wrap, .v-ie8  .v-pressed.v-button .v-button-wrap {
+.v-button-wrap, .v-disabled:active .v-button-wrap, .v-button:active .v-button-wrap, .v-ie8  .v-pressed.v-button .v-button-wrap {
 	border:none;
 	border-top:1px solid transparent;
 	padding: 6px 15px;
