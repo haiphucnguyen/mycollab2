@@ -26,7 +26,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.esofthead.mycollab.common.MonitorTypeConstants;
 import com.esofthead.mycollab.common.domain.MailRecipientField;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
-import com.esofthead.mycollab.configuration.ApplicationProperties;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.DeploymentMode;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
@@ -73,9 +72,6 @@ public abstract class CrmDefaultSendingRelayEmailAction<B extends ValuedBean>
 	protected CrmNotificationSettingService notificationService;
 
 	protected String crmType;
-
-	private Integer sAccountId;
-	private String siteUrl;
 
 	public CrmDefaultSendingRelayEmailAction(String crmType) {
 		this.crmType = crmType;
@@ -250,28 +246,20 @@ public abstract class CrmDefaultSendingRelayEmailAction<B extends ValuedBean>
 		return false;
 	}
 
-	public String getSiteUrl(Integer sAccountId) {
-		if (CrmDefaultSendingRelayEmailAction.this.sAccountId == null) {
-			CrmDefaultSendingRelayEmailAction.this.sAccountId = sAccountId;
-			if (SiteConfiguration.getDeploymentMode() == DeploymentMode.SITE) {
-				BillingAccountService billingAccountService = ApplicationContextUtil
-						.getSpringBean(BillingAccountService.class);
-				BillingAccount account = billingAccountService
-						.getAccountById(sAccountId);
-				if (account != null) {
-					siteUrl = String.format(ApplicationProperties
-							.getString(ApplicationProperties.APP_URL), account
-							.getSubdomain());
-				}
-			} else {
-				siteUrl = ApplicationProperties
-						.getString(ApplicationProperties.APP_URL);
+	protected String getSiteUrl(Integer sAccountId) {
+		String siteUrl = "";
+		if (SiteConfiguration.getDeploymentMode() == DeploymentMode.SITE) {
+			BillingAccountService billingAccountService = ApplicationContextUtil
+					.getSpringBean(BillingAccountService.class);
+			BillingAccount account = billingAccountService
+					.getAccountById(sAccountId);
+			if (account != null) {
+				siteUrl = SiteConfiguration.getSiteUrl(account.getSubdomain());
 			}
-			return siteUrl;
-		} else if (CrmDefaultSendingRelayEmailAction.this.sAccountId == sAccountId) {
-			return siteUrl;
+		} else {
+			siteUrl = SiteConfiguration.getSiteUrl("");
 		}
-		return "";
+		return siteUrl;
 	}
 
 	protected abstract TemplateGenerator templateGeneratorForCreateAction(
