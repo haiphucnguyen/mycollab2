@@ -20,10 +20,12 @@ import com.esofthead.mycollab.module.project.domain.criteria.StandupReportSearch
 import com.esofthead.mycollab.module.project.events.ProjectMemberEvent;
 import com.esofthead.mycollab.module.project.events.StandUpEvent;
 import com.esofthead.mycollab.module.project.service.StandupReportService;
+import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
+import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.BeanList;
 import com.esofthead.mycollab.vaadin.ui.BeanList.RowDisplayHandler;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
@@ -121,6 +123,10 @@ public class StandupListViewImpl extends AbstractPageView implements
 								.setCaption(AppContext.formatDate(selectedDate));
 						StandupListViewImpl.this.dateChooser
 								.setPopupVisible(false);
+
+						ProjectBreadcrumb breadCrumb = ViewManager
+								.getView(ProjectBreadcrumb.class);
+						breadCrumb.gotoStandupList(selectedDate);
 					}
 				});
 

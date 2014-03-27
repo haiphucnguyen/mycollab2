@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.premium.module.project.view.standup;
 
+import java.util.Date;
+
 import com.esofthead.mycollab.module.project.domain.criteria.StandupReportSearchCriteria;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.vaadin.mvp.ListCommand;
@@ -27,11 +29,17 @@ public class StandupListPresenter extends AbstractPresenter<StandupListView>
 		StandupContainer standupContainer = (StandupContainer) container;
 		standupContainer.removeAllComponents();
 		standupContainer.addComponent(view.getWidget());
-		doSearch((StandupReportSearchCriteria) data.getParams());
+		StandupReportSearchCriteria searchCriteria = (StandupReportSearchCriteria) data
+				.getParams();
+		doSearch(searchCriteria);
 
+		Date showDate = null;
+		if (searchCriteria.getOnDate() != null) {
+			showDate = searchCriteria.getOnDate().getValue();
+		}
 		ProjectBreadcrumb breadCrumb = ViewManager
 				.getView(ProjectBreadcrumb.class);
-		breadCrumb.gotoStandupList();
+		breadCrumb.gotoStandupList(showDate);
 	}
 
 	public void doSearch(StandupReportSearchCriteria searchCriteria) {
