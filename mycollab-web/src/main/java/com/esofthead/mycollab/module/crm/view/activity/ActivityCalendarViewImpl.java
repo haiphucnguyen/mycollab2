@@ -102,8 +102,9 @@ public class ActivityCalendarViewImpl extends AbstractPageView implements
 
 	private static final long serialVersionUID = 1L;
 	private final PopupButton calendarActionBtn;
-	private MonthViewCalendar calendarComponent;
+	private CalendarDisplay calendarComponent;
 	private PopupButton toggleViewBtn;
+
 	private Button monthViewBtn;
 	private Button weekViewBtn;
 	private Button dailyViewBtn;
@@ -134,8 +135,6 @@ public class ActivityCalendarViewImpl extends AbstractPageView implements
 		rightColumn.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
 		rightColumn.setMargin(new MarginInfo(true, false, true, false));
 		contentWrapper.addComponent(rightColumn);
-
-		MenuActionListener listener = new MenuActionListener();
 
 		calendarActionBtn = new PopupButton("Create");
 		calendarActionBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
@@ -210,8 +209,9 @@ public class ActivityCalendarViewImpl extends AbstractPageView implements
 			public void buttonClick(ClickEvent event) {
 				toggleViewBtn.setPopupVisible(false);
 				toggleViewBtn.setCaption(dailyViewBtn.getCaption());
-				calendarComponent.switchToDateView(new Date());
-				datePicker.selectDate(new Date());
+				Date currentDate = new Date();
+				datePicker.selectDate(currentDate);
+				calendarComponent.switchToDateView(currentDate);
 			}
 		});
 		dailyViewBtn.setStyleName("link");
@@ -238,6 +238,26 @@ public class ActivityCalendarViewImpl extends AbstractPageView implements
 		actionBtnLayout.setMargin(true);
 		actionBtnLayout.setSpacing(true);
 		actionBtnLayout.setWidth("150px");
+
+		Button.ClickListener listener = new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				calendarActionBtn.setPopupVisible(false);
+				String caption = event.getButton().getCaption();
+				if (caption.equals("Create Todo")) {
+					EventBus.getInstance().fireEvent(
+							new ActivityEvent.TaskAdd(this, null));
+				} else if (caption.equals("Create Call")) {
+					EventBus.getInstance().fireEvent(
+							new ActivityEvent.CallAdd(this, null));
+				} else if (caption.equals("Create Event")) {
+					EventBus.getInstance().fireEvent(
+							new ActivityEvent.MeetingAdd(this, null));
+				}
+			}
+		};
 
 		ButtonLink todoBtn = new ButtonLink("Create Todo", listener);
 		actionBtnLayout.addComponent(todoBtn);
@@ -286,7 +306,7 @@ public class ActivityCalendarViewImpl extends AbstractPageView implements
 		actionPanel.addComponent(viewSwitcher);
 		actionPanel.setComponentAlignment(viewSwitcher, Alignment.MIDDLE_RIGHT);
 
-		calendarComponent = new MonthViewCalendar();
+		calendarComponent = new CalendarDisplay();
 		mainContent.addComponent(calendarComponent);
 		mainContent.setExpandRatio(calendarComponent, 1);
 		mainContent.setComponentAlignment(calendarComponent,
@@ -456,23 +476,305 @@ public class ActivityCalendarViewImpl extends AbstractPageView implements
 		dateHdr.setValue(month + " " + calendar.get(GregorianCalendar.YEAR));
 	}
 
-	private class MenuActionListener implements Button.ClickListener {
+	@Override
+	public void attach() {
+		super.attach();
 
+		if (this.getParent() instanceof CustomLayout) {
+			this.getParent().addStyleName("preview-comp");
+		}
+	}
+
+	public enum Mode {
+		MONTH, WEEK, DAY;
+	}
+
+	class CalendarDisplay extends Calendar {
 		private static final long serialVersionUID = 1L;
 
-		@Override
-		public void buttonClick(ClickEvent event) {
-			calendarActionBtn.setPopupVisible(false);
-			String caption = event.getButton().getCaption();
-			if (caption.equals("Create Todo")) {
-				EventBus.getInstance().fireEvent(
-						new ActivityEvent.TaskAdd(this, null));
-			} else if (caption.equals("Create Call")) {
-				EventBus.getInstance().fireEvent(
-						new ActivityEvent.CallAdd(this, null));
-			} else if (caption.equals("Create Event")) {
-				EventBus.getInstance().fireEvent(
-						new ActivityEvent.MeetingAdd(this, null));
+		private GregorianCalendar calendar = new GregorianCalendar();
+
+		private Date currentMonthsFirstDate = null;
+		private Mode viewMode = Mode.MONTH;
+
+		public CalendarDisplay() {
+			super(new ActivityEventProvider());
+			this.setTimeFormat(TimeFormat.Format12H);
+			this.setSizeFull();
+			this.setImmediate(true);
+			this.setLocale(Locale.US);
+
+			Date today = new Date();
+			calendar.setTime(today);
+			int rollAmount = calendar.get(GregorianCalendar.DAY_OF_MONTH) - 1;
+			calendar.add(GregorianCalendar.DAY_OF_MONTH, -rollAmount);
+			resetTime(false);
+			currentMonthsFirstDate = calendar.getTime();
+			this.setStartDate(currentMonthsFirstDate);
+			calendar.add(GregorianCalendar.MONTH, 1);
+			calendar.add(GregorianCalendar.DATE, -1);
+			this.setEndDate(calendar.getTime());
+
+			this.setHandler(new BasicDateClickHandler() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void dateClick(DateClickEvent event) {
+					super.dateClick(event);
+					viewMode = Mode.DAY;
+				}
+			});
+			
+			this.setHandler(new EventClickHandler() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void eventClick(EventClick event) {
+					CrmEvent calendarEvent = (CrmEvent) event
+							.getCalendarEvent();
+					SimpleMeeting source = calendarEvent.getSource();
+					EventBus.getInstance().fireEvent(
+							new ActivityEvent.MeetingRead(
+									ActivityCalendarViewImpl.this, source
+											.getId()));
+				}
+			});
+
+			this.setHandler(new BasicForwardHandler() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void forward(ForwardEvent event) {
+					super.forward(event);
+					switch (viewMode) {
+					case WEEK:
+						calendar.add(java.util.Calendar.DATE, 7);
+						calendar.set(java.util.Calendar.DAY_OF_WEEK,
+								calendar.getFirstDayOfWeek());
+						String firstDateOfWeek = DateTimeUtils
+								.formatDate(calendar.getTime());
+						calendar.add(java.util.Calendar.DATE, 6);
+						String endDateOfWeek = DateTimeUtils
+								.formatDate(calendar.getTime());
+						dateHdr.setValue(firstDateOfWeek + " - "
+								+ endDateOfWeek);
+						break;
+					case DAY:
+						calendar.add(java.util.Calendar.DATE, 1);
+						dateHdr.setValue(DateTimeUtils.formatDate(calendar
+								.getTime()));
+						break;
+					case MONTH:
+						break;
+					}
+				}
+
+			});
+
+			this.setHandler(new BasicBackwardHandler() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void backward(BackwardEvent event) {
+					super.backward(event);
+					switch (viewMode) {
+					case WEEK:
+						calendar.add(java.util.Calendar.DATE, -7);
+						calendar.set(java.util.Calendar.DAY_OF_WEEK,
+								calendar.getFirstDayOfWeek());
+						String firstDateOfWeek = DateTimeUtils
+								.formatDate(calendar.getTime());
+						calendar.add(java.util.Calendar.DATE, 6);
+						String endDateOfWeek = DateTimeUtils
+								.formatDate(calendar.getTime());
+						dateHdr.setValue(firstDateOfWeek + " - "
+								+ endDateOfWeek);
+						break;
+					case DAY:
+						calendar.add(java.util.Calendar.DATE, -1);
+						dateHdr.setValue(DateTimeUtils.formatDate(calendar
+								.getTime()));
+						break;
+					case MONTH:
+						break;
+					}
+				}
+			});
+
+			this.setHandler(new RangeSelectHandler() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void rangeSelect(RangeSelectEvent event) {
+					if (AppContext
+							.canWrite(RolePermissionCollections.CRM_MEETING)) {
+						UI.getCurrent().addWindow(
+								new QuickCreateEventWindow(event.getStart(),
+										event.getEnd()));
+					}
+				}
+			});
+
+			this.setHandler(new EventResizeHandler() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void eventResize(EventResize event) {
+					CrmEvent crmEvent = (CrmEvent) event.getCalendarEvent();
+					SimpleMeeting simpleMeeting = crmEvent.getSource();
+					simpleMeeting.setStartdate(event.getNewStartTime());
+					simpleMeeting.setEnddate(event.getNewEndTime());
+					MeetingService service = ApplicationContextUtil
+							.getSpringBean(MeetingService.class);
+					service.updateWithSession(simpleMeeting,
+							AppContext.getUsername());
+					NotificationUtil.showNotification("Success", "Event: \""
+							+ simpleMeeting.getSubject()
+							+ "\" has been updated!", Type.HUMANIZED_MESSAGE);
+					EventBus.getInstance().fireEvent(
+							new ActivityEvent.GotoCalendar(this, null));
+				}
+			});
+
+			this.setHandler(new EventMoveHandler() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void eventMove(MoveEvent event) {
+					CrmEvent crmEvent = (CrmEvent) event.getCalendarEvent();
+					if (crmEvent.getStart().compareTo(event.getNewStart()) != 0) {
+						SimpleMeeting simpleMeeting = crmEvent.getSource();
+
+						Date newStartDate = event.getNewStart();
+						long rangeOfStartEnd = crmEvent.getEnd().getTime()
+								- crmEvent.getStart().getTime();
+						long newEndDateTime;
+						if (crmEvent.getStart().compareTo(newStartDate) > 0) {
+							newEndDateTime = newStartDate.getTime()
+									+ rangeOfStartEnd;
+						} else {
+							newEndDateTime = newStartDate.getTime()
+									- rangeOfStartEnd;
+						}
+						java.util.Calendar calendar = java.util.Calendar
+								.getInstance();
+						calendar.setTimeInMillis(newEndDateTime);
+
+						simpleMeeting.setStartdate(newStartDate);
+						simpleMeeting.setEnddate(calendar.getTime());
+
+						MeetingService service = ApplicationContextUtil
+								.getSpringBean(MeetingService.class);
+						service.updateWithSession(simpleMeeting,
+								AppContext.getUsername());
+						NotificationUtil.showNotification("Success",
+								"Event: \"" + simpleMeeting.getSubject()
+										+ "\" has been updated!",
+								Type.HUMANIZED_MESSAGE);
+						EventBus.getInstance().fireEvent(
+								new ActivityEvent.GotoCalendar(this, null));
+					}
+				}
+			});
+
+			this.setHandler(new BasicWeekClickHandler() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void weekClick(WeekClick event) {
+					super.weekClick(event);
+					viewMode = Mode.WEEK;
+				}
+			});
+		}
+
+		private void switchCalendarByDatePicker(Date date) {
+			switch (viewMode) {
+			case MONTH:
+				switchToMonthView(date, false);
+				break;
+			case WEEK:
+				switchToWeekView(date);
+				break;
+			case DAY:
+				switchToDateView(date);
+				break;
+			}
+		}
+
+		public Date getCurrentMonthsFirstDate() {
+			return currentMonthsFirstDate;
+		}
+
+		public GregorianCalendar getCalendar() {
+			return calendar;
+		}
+
+		private void switchToWeekView(Date date) {
+			viewMode = Mode.WEEK;
+			calendar.setTime(date);
+			java.util.Calendar cal = java.util.Calendar.getInstance();
+			cal.setTime(date);
+			int week = cal.get(java.util.Calendar.WEEK_OF_YEAR);
+			WeekClickHandler handler = (WeekClickHandler) calendarComponent
+					.getHandler(WeekClick.EVENT_ID);
+			handler.weekClick(new WeekClick(calendarComponent, week, cal
+					.get(GregorianCalendar.YEAR)));
+
+			cal.set(java.util.Calendar.DAY_OF_WEEK, cal.getFirstDayOfWeek());
+			String firstDateOfWeek = DateTimeUtils.formatDate(cal.getTime());
+			cal.add(java.util.Calendar.DATE, 6);
+			String endDateOfWeek = DateTimeUtils.formatDate(cal.getTime());
+			dateHdr.setValue(firstDateOfWeek + " - " + endDateOfWeek);
+		}
+
+		private void switchToDateView(Date date) {
+			viewMode = Mode.DAY;
+			calendar.setTime(date);
+			DateClickHandler handler = (DateClickHandler) calendarComponent
+					.getHandler(DateClickEvent.EVENT_ID);
+			handler.dateClick(new DateClickEvent(calendarComponent, date));
+			dateHdr.setValue(AppContext.formatDate(date));
+		}
+
+		private void switchToMonthView(Date date, boolean isViewCurrentMonth) {
+			viewMode = Mode.MONTH;
+			calendar = new GregorianCalendar();
+			calendar.setTime(date);
+			int rollAmount = calendar.get(GregorianCalendar.DAY_OF_MONTH) - 1;
+			calendar.add(GregorianCalendar.DAY_OF_MONTH, -rollAmount);
+			currentMonthsFirstDate = calendar.getTime();
+			calendarComponent.setStartDate(currentMonthsFirstDate);
+
+			calendar.add(GregorianCalendar.MONTH, 1);
+			calendar.add(GregorianCalendar.DATE, -1);
+			resetCalendarTime(true);
+		}
+
+		private void resetCalendarTime(boolean resetEndTime) {
+			resetTime(resetEndTime);
+			if (resetEndTime) {
+				this.setEndDate(calendar.getTime());
+			} else {
+				this.setStartDate(calendar.getTime());
+			}
+		}
+
+		private void resetTime(boolean max) {
+			if (max) {
+				calendar.set(GregorianCalendar.HOUR_OF_DAY,
+						calendar.getMaximum(GregorianCalendar.HOUR_OF_DAY));
+				calendar.set(GregorianCalendar.MINUTE,
+						calendar.getMaximum(GregorianCalendar.MINUTE));
+				calendar.set(GregorianCalendar.SECOND,
+						calendar.getMaximum(GregorianCalendar.SECOND));
+				calendar.set(GregorianCalendar.MILLISECOND,
+						calendar.getMaximum(GregorianCalendar.MILLISECOND));
+			} else {
+				calendar.set(GregorianCalendar.HOUR_OF_DAY, 0);
+				calendar.set(GregorianCalendar.MINUTE, 0);
+				calendar.set(GregorianCalendar.SECOND, 0);
+				calendar.set(GregorianCalendar.MILLISECOND, 0);
 			}
 		}
 	}
@@ -643,314 +945,6 @@ public class ActivityCalendarViewImpl extends AbstractPageView implements
 					this.loadData(new String[] { "Planned", "Held", "Not Held" });
 				}
 			}
-		}
-	}
-
-	public enum Mode {
-		MONTH, WEEK, DAY;
-	}
-
-	public class MonthViewCalendar extends Calendar {
-		private static final long serialVersionUID = 1L;
-
-		GregorianCalendar calendar = new GregorianCalendar();
-
-		private Date currentMonthsFirstDate = null;
-		private Mode viewMode = Mode.MONTH;
-
-		public MonthViewCalendar() {
-			super(new ActivityEventProvider());
-			this.setTimeFormat(TimeFormat.Format12H);
-			this.setSizeFull();
-			this.setImmediate(true);
-			this.setLocale(Locale.US);
-
-			Date today = new Date();
-			calendar.setTime(today);
-			int rollAmount = calendar.get(GregorianCalendar.DAY_OF_MONTH) - 1;
-			calendar.add(GregorianCalendar.DAY_OF_MONTH, -rollAmount);
-			resetTime(false);
-			currentMonthsFirstDate = calendar.getTime();
-			this.setStartDate(currentMonthsFirstDate);
-			calendar.add(GregorianCalendar.MONTH, 1);
-			calendar.add(GregorianCalendar.DATE, -1);
-			this.setEndDate(calendar.getTime());
-
-			this.setHandler(new BasicDateClickHandler() {
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public void dateClick(DateClickEvent event) {
-					super.dateClick(event);
-					viewMode = Mode.DAY;
-				}
-			});
-			this.setHandler(new EventClickHandler() {
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public void eventClick(EventClick event) {
-					CrmEvent calendarEvent = (CrmEvent) event
-							.getCalendarEvent();
-					handleClickEvent(calendarEvent);
-				}
-			});
-
-			this.setHandler(new BasicForwardHandler() {
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public void forward(ForwardEvent event) {
-					super.forward(event);
-					switch (viewMode) {
-					case WEEK:
-						calendar.add(java.util.Calendar.DATE, 7);
-						calendar.set(java.util.Calendar.DAY_OF_WEEK,
-								calendar.getFirstDayOfWeek());
-						String firstDateOfWeek = DateTimeUtils
-								.formatDate(calendar.getTime());
-						calendar.add(java.util.Calendar.DATE, 6);
-						String endDateOfWeek = DateTimeUtils
-								.formatDate(calendar.getTime());
-						dateHdr.setValue(firstDateOfWeek + " - "
-								+ endDateOfWeek);
-						break;
-					case DAY:
-						calendar.add(java.util.Calendar.DATE, 1);
-						dateHdr.setValue(DateTimeUtils.formatDate(calendar
-								.getTime()));
-						break;
-					case MONTH:
-						break;
-					}
-				}
-
-			});
-
-			this.setHandler(new BasicBackwardHandler() {
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public void backward(BackwardEvent event) {
-					super.backward(event);
-					switch (viewMode) {
-					case WEEK:
-						calendar.add(java.util.Calendar.DATE, -7);
-						calendar.set(java.util.Calendar.DAY_OF_WEEK,
-								calendar.getFirstDayOfWeek());
-						String firstDateOfWeek = DateTimeUtils
-								.formatDate(calendar.getTime());
-						calendar.add(java.util.Calendar.DATE, 6);
-						String endDateOfWeek = DateTimeUtils
-								.formatDate(calendar.getTime());
-						dateHdr.setValue(firstDateOfWeek + " - "
-								+ endDateOfWeek);
-						break;
-					case DAY:
-						calendar.add(java.util.Calendar.DATE, -1);
-						dateHdr.setValue(DateTimeUtils.formatDate(calendar
-								.getTime()));
-						break;
-					case MONTH:
-						break;
-					}
-				}
-			});
-
-			this.setHandler(new RangeSelectHandler() {
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public void rangeSelect(RangeSelectEvent event) {
-					if (AppContext
-							.canWrite(RolePermissionCollections.CRM_MEETING)) {
-						UI.getCurrent().addWindow(
-								new QuickCreateEventWindow(event.getStart(),
-										event.getEnd()));
-					}
-				}
-			});
-
-			this.setHandler(new EventResizeHandler() {
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public void eventResize(EventResize event) {
-					CrmEvent crmEvent = (CrmEvent) event.getCalendarEvent();
-					SimpleMeeting simpleMeeting = crmEvent.getSource();
-					simpleMeeting.setStartdate(event.getNewStartTime());
-					simpleMeeting.setEnddate(event.getNewEndTime());
-					MeetingService service = ApplicationContextUtil
-							.getSpringBean(MeetingService.class);
-					service.updateWithSession(simpleMeeting,
-							AppContext.getUsername());
-					NotificationUtil.showNotification("Success", "Event: \""
-							+ simpleMeeting.getSubject()
-							+ "\" has been updated!", Type.HUMANIZED_MESSAGE);
-					EventBus.getInstance().fireEvent(
-							new ActivityEvent.GotoCalendar(this, null));
-				}
-			});
-
-			this.setHandler(new EventMoveHandler() {
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public void eventMove(MoveEvent event) {
-					CrmEvent crmEvent = (CrmEvent) event.getCalendarEvent();
-					if (crmEvent.getStart().compareTo(event.getNewStart()) != 0) {
-						SimpleMeeting simpleMeeting = crmEvent.getSource();
-
-						Date newStartDate = event.getNewStart();
-						long rangeOfStartEnd = crmEvent.getEnd().getTime()
-								- crmEvent.getStart().getTime();
-						long newEndDateTime;
-						if (crmEvent.getStart().compareTo(newStartDate) > 0) {
-							newEndDateTime = newStartDate.getTime()
-									+ rangeOfStartEnd;
-						} else {
-							newEndDateTime = newStartDate.getTime()
-									- rangeOfStartEnd;
-						}
-						java.util.Calendar calendar = java.util.Calendar
-								.getInstance();
-						calendar.setTimeInMillis(newEndDateTime);
-
-						simpleMeeting.setStartdate(newStartDate);
-						simpleMeeting.setEnddate(calendar.getTime());
-
-						MeetingService service = ApplicationContextUtil
-								.getSpringBean(MeetingService.class);
-						service.updateWithSession(simpleMeeting,
-								AppContext.getUsername());
-						NotificationUtil.showNotification("Success",
-								"Event: \"" + simpleMeeting.getSubject()
-										+ "\" has been updated!",
-								Type.HUMANIZED_MESSAGE);
-						EventBus.getInstance().fireEvent(
-								new ActivityEvent.GotoCalendar(this, null));
-					}
-				}
-			});
-
-			this.setHandler(new BasicWeekClickHandler() {
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public void weekClick(WeekClick event) {
-					super.weekClick(event);
-					viewMode = Mode.WEEK;
-				}
-			});
-		}
-
-		private void switchCalendarByDatePicker(Date date) {
-			switch (viewMode) {
-			case MONTH:
-				switchToMonthView(date, false);
-				break;
-			case WEEK:
-				switchToWeekView(date);
-				break;
-			case DAY:
-				switchToDateView(date);
-				break;
-			}
-		}
-
-		private void handleClickEvent(CalendarEvent event) {
-			if (event == null) {
-				return;
-			}
-			SimpleMeeting source = ((CrmEvent) event).getSource();
-			EventBus.getInstance().fireEvent(
-					new ActivityEvent.MeetingRead(
-							ActivityCalendarViewImpl.this, source.getId()));
-		}
-
-		public Date getCurrentMonthsFirstDate() {
-			return currentMonthsFirstDate;
-		}
-
-		public GregorianCalendar getCalendar() {
-			return calendar;
-		}
-
-		private void switchToWeekView(Date date) {
-			viewMode = Mode.WEEK;
-			calendar.setTime(date);
-			java.util.Calendar cal = java.util.Calendar.getInstance();
-			cal.setTime(date);
-			int week = cal.get(java.util.Calendar.WEEK_OF_YEAR);
-			WeekClickHandler handler = (WeekClickHandler) calendarComponent
-					.getHandler(WeekClick.EVENT_ID);
-			handler.weekClick(new WeekClick(calendarComponent, week, cal
-					.get(GregorianCalendar.YEAR)));
-
-			cal.set(java.util.Calendar.DAY_OF_WEEK, cal.getFirstDayOfWeek());
-			String firstDateOfWeek = DateTimeUtils.formatDate(cal.getTime());
-			cal.add(java.util.Calendar.DATE, 6);
-			String endDateOfWeek = DateTimeUtils.formatDate(cal.getTime());
-			dateHdr.setValue(firstDateOfWeek + " - " + endDateOfWeek);
-		}
-
-		private void switchToDateView(Date date) {
-			viewMode = Mode.DAY;
-			calendar.setTime(date);
-			DateClickHandler handler = (DateClickHandler) calendarComponent
-					.getHandler(DateClickEvent.EVENT_ID);
-			handler.dateClick(new DateClickEvent(calendarComponent, date));
-			dateHdr.setValue(AppContext.formatDate(date));
-		}
-
-		private void switchToMonthView(Date date, boolean isViewCurrentMonth) {
-			viewMode = Mode.MONTH;
-			calendar = new GregorianCalendar();
-			calendar.setTime(date);
-			int rollAmount = calendar.get(GregorianCalendar.DAY_OF_MONTH) - 1;
-			calendar.add(GregorianCalendar.DAY_OF_MONTH, -rollAmount);
-			currentMonthsFirstDate = calendar.getTime();
-			calendarComponent.setStartDate(currentMonthsFirstDate);
-
-			calendar.add(GregorianCalendar.MONTH, 1);
-			calendar.add(GregorianCalendar.DATE, -1);
-			resetCalendarTime(true);
-		}
-
-		private void resetCalendarTime(boolean resetEndTime) {
-			resetTime(resetEndTime);
-			if (resetEndTime) {
-				this.setEndDate(calendar.getTime());
-			} else {
-				this.setStartDate(calendar.getTime());
-			}
-		}
-
-		private void resetTime(boolean max) {
-			if (max) {
-				calendar.set(GregorianCalendar.HOUR_OF_DAY,
-						calendar.getMaximum(GregorianCalendar.HOUR_OF_DAY));
-				calendar.set(GregorianCalendar.MINUTE,
-						calendar.getMaximum(GregorianCalendar.MINUTE));
-				calendar.set(GregorianCalendar.SECOND,
-						calendar.getMaximum(GregorianCalendar.SECOND));
-				calendar.set(GregorianCalendar.MILLISECOND,
-						calendar.getMaximum(GregorianCalendar.MILLISECOND));
-			} else {
-				calendar.set(GregorianCalendar.HOUR_OF_DAY, 0);
-				calendar.set(GregorianCalendar.MINUTE, 0);
-				calendar.set(GregorianCalendar.SECOND, 0);
-				calendar.set(GregorianCalendar.MILLISECOND, 0);
-			}
-		}
-	}
-
-	@Override
-	public void attach() {
-		super.attach();
-
-		if (this.getParent() instanceof CustomLayout) {
-			this.getParent().addStyleName("preview-comp");
 		}
 	}
 }
