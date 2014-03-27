@@ -585,7 +585,7 @@ div.v-button-link.v-button-no-margin .v-button-wrap,div.v-button-link:focus
 }
 
 .v-upload .v-button {
-	color: white;
+	/*color: white;*/
 }
 
 div.v-button-nonPopupIndicator div.v-popup-indicator {
@@ -2250,6 +2250,11 @@ input.v-textfield-errorField {
 .depotComp .depotContent .taskdisplay-component {
 	padding-left: 30px;
 }
+.filter-task-table {
+	border-color: #CFCFCF;
+	border-style: solid;
+	border-width: 1px 0px 0px;
+}
 
 .depotComp .v-customcomponent, .depotComp .v-verticallayout {
     display: block;
@@ -3463,7 +3468,9 @@ div.v-window-header {
 	padding: 3px 0px 0px;
 	text-align: left;
 }
-
+.v-window-header .v-icon {
+	padding-right:3px;
+}
 .v-window .v-table-header-wrap {
 	border-top: 1px solid #CFCFCF;
 }
@@ -3505,7 +3512,7 @@ div.v-window-header {
 /* Form Container View Field */
 .form-container div.v-button-link, .form-container div.v-button-link:active, .form-container div.v-button-link:focus {
 	height: 18px;
-	border-radius: 8px 8px 8px 8px;
+	/*border-radius: 8px 8px 8px 8px;*/
 	background: url("icons/grad-dark-bottom.png") repeat-x scroll left
 		bottom rgb(57, 71, 84);
 	padding: 0px 7px 1px;
@@ -3787,7 +3794,7 @@ div.v-lazyloadingwrapper-loading {
 
 /* Border Box 2 */
 .border-box2 {
-	background-color: rgb(245, 245, 245);
+	/*background-color: rgb(245, 245, 245);*/
 	border: 1px solid #CFCFCF;
 }
 
@@ -5117,6 +5124,9 @@ div.v-button-link.buttonPaging .v-button-wrap {
 	box-sizing: border-box;
 	border: 1px solid #777575;
 }
+div.v-button-link.buttonPaging:active .v-button-wrap, div.v-button-link.buttonPaging:focus .v-button-wrap {
+	padding: 4px 0px 3px;
+}
 
 div.v-button-link.buttonPaging .v-button-wrap .v-button-caption {
 	text-align: center;
@@ -6037,11 +6047,11 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 }
 
 .v-button-graybtn.v-popupbutton .v-popup-indicator , .splitbutton .v-popupbutton.greenbtn .v-popup-indicator,.splitbutton .v-popupbutton.graybtn .v-popup-indicator, .splitbutton .v-popupbutton.bluebtn .v-popup-indicator
-	{
-	background: url("icons/sprites.png") no-repeat scroll -7px -10px transparent;
+{
+	background: url("icons/sprites.png");
 }
 .v-popupbutton .v-popup-indicator {
-	
+	background-position:-7px -10px !important;
 } 
 /* End new splitbutton */
 
