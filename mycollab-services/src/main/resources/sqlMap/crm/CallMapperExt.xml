@@ -10,27 +10,27 @@
 
         <result column="assignUserFullName" jdbcType="VARCHAR"
             property="assignUserFullName" />
-       	<result column="assignUserAvatarId" jdbcType="VARCHAR"
+        <result column="assignUserAvatarId" jdbcType="VARCHAR"
             property="assignUserAvatarId" />
     </resultMap>
-    
+
     <sql id="querySearchCriteria">
         <![CDATA[
         #set($searchCriteria = $_parameter.searchCriteria)
         
-        #ifnotnull($_parameter.id)
+        #ifnotnull($searchCriteria.id)
             ${searchCriteria.id.operation} m_crm_call.id ${searchCriteria.id.compareOperator} @{searchCriteria.id.value,jdbcType=NUMERIC}
         #end
         
-        #ifnotnull($_parameter.isClosed)
+        #ifnotnull($searchCriteria.isClosed)
             ${searchCriteria.isClosed.operation} m_crm_call.isClosed = ${searchCriteria.isClosed.value}
         #end
         
-        #ifnotnull($_parameter.saccountid)
+        #ifnotnull($searchCriteria.saccountid)
             ${searchCriteria.saccountid.operation} m_crm_call.sAccountId = @{searchCriteria.saccountid.value,jdbcType=NUMERIC}
         #end
         
-        #ifnotnull($_parameter.assignUsers)
+        #ifnotnull($searchCriteria.assignUsers)
             ${searchCriteria.assignUsers.operation} m_crm_call.assignUser IN
             #repeat(${searchCriteria.assignUsers.values} $user "," "(" ")")
                 @{user}
@@ -58,12 +58,14 @@
     <sql id="orderStatement">
         ORDER BY
         #ifnotnull($_parameter.searchCriteria.orderByField)
-            ${_parameter.searchCriteria.orderByField} ${_parameter.searchCriteria.sortDirection},
+        ${_parameter.searchCriteria.orderByField}
+        ${_parameter.searchCriteria.sortDirection},
         #end
         m_crm_call.lastUpdatedTime DESC
     </sql>
-    
-    <select id="findById" parameterType="int" resultMap="SimpleCallResult" lang="velocity">
+
+    <select id="findById" parameterType="int" resultMap="SimpleCallResult"
+        lang="velocity">
         <include refid="selectSimpleCall" />
 
         WHERE m_crm_call.id=@{callId,jdbcType=NUMERIC}
@@ -74,10 +76,10 @@
         <include
             refid="com.esofthead.mycollab.module.crm.dao.CallMapperExt.selectSimpleCall" />
         #ifnotnull($_parameter.searchCriteria)
-            #trimext("WHERE" "AND|OR")
-                <include refid="querySearchCriteria" />
-            #end
-        #end    
+        #trimext("WHERE" "AND|OR")
+        <include refid="querySearchCriteria" />
+        #end
+        #end
         <include refid="orderStatement" />
     </select>
 
@@ -85,17 +87,18 @@
         resultType="java.lang.Integer" lang="velocity">
         SELECT count(*) as totalCount FROM m_crm_call
         #ifnotnull($_parameter.searchCriteria)
-            #trimext("WHERE" "AND|OR")
-                <include refid="querySearchCriteria" />
-            #end
+        #trimext("WHERE" "AND|OR")
+        <include refid="querySearchCriteria" />
+        #end
         #end
     </select>
 
-    <select id="getNextItemKey" parameterType="map" resultType="java.lang.Integer" lang="velocity">
+    <select id="getNextItemKey" parameterType="map" resultType="java.lang.Integer"
+        lang="velocity">
         SELECT MIN(id) FROM m_crm_call
 
         #trimext("WHERE" "AND|OR")
-            <include refid="querySearchCriteria" />
+        <include refid="querySearchCriteria" />
         #end
     </select>
 
@@ -104,7 +107,7 @@
         SELECT MAX(id) FROM m_crm_call
 
         #trimext("WHERE" "AND|OR")
-            <include refid="querySearchCriteria" />
+        <include refid="querySearchCriteria" />
         #end
     </select>
 
