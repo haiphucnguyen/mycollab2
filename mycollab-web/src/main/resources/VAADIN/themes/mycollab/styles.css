@@ -1067,9 +1067,11 @@ input.v-textfield-pagedtable-pagefield {
 }
 
 .v-button.dropbox-icon-button {
-	background: url("icons/input-bg.png") repeat-x left top #fff;
+	background:none;
 	border-radius: 3px 0px 0px 3px;
 	border-right: medium none;
+	border-color: #CFCFCF;
+	padding: 1px 0px 0px;
 }
 
 .v-button.dropbox-icon-button .v-button-wrap,.v-button.dropbox-icon-button:active .v-button-wrap
