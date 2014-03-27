@@ -69,8 +69,9 @@ a {
 	margin-left: 0px;
 }
 
-div.v-button-link {
+.v-button.v-button-link {
 	margin: 0px;
+	padding: 0px;
 	text-align: left;
 }
 
@@ -124,8 +125,8 @@ div.v-button .v-button-link .link .v-button-buttonlinkcenter .buttonlinkcenter .
 	border-radius: 0px;
 	margin: 0px;
 }
-.v-button.v-button-link:active .v-button-wrap {
-	padding: 0px 1px;
+.v-button.v-button-link:active .v-button-wrap, .v-button.v-button-link:focus .v-button-wrap {
+	padding: 1px;
 }
 
 .v-textarea {
