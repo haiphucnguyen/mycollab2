@@ -67,6 +67,7 @@ public class TaskGroupDisplayViewImpl extends AbstractPageView implements
 
 	private PopupButton exportButtonControl;
 	private VerticalLayout rightColumn;
+	private VerticalLayout leftColumn;
 
 	public TaskGroupDisplayViewImpl() {
 		super();
@@ -238,11 +239,18 @@ public class TaskGroupDisplayViewImpl extends AbstractPageView implements
 		mainLayout.setSizeFull();
 		mainLayout.setSpacing(true);
 		this.taskLists = new TaskGroupDisplayWidget();
+		
+		this.leftColumn = new VerticalLayout();
+		this.leftColumn.addComponent(taskLists);
+		this.leftColumn.setMargin(new MarginInfo(false, true, false, false));
+		
+		
 		this.rightColumn = new VerticalLayout();
 		this.rightColumn.setWidth("300px");
-		mainLayout.addComponent(taskLists);
+		
+		mainLayout.addComponent(leftColumn);
 		mainLayout.addComponent(rightColumn);
-		mainLayout.setExpandRatio(taskLists, 1.0f);
+		mainLayout.setExpandRatio(leftColumn, 1.0f);
 		this.addComponent(mainLayout);
 
 	}

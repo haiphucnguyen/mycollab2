@@ -855,7 +855,7 @@ public class ResourceHandlerComponent extends VerticalLayout {
 			filterBtnLayout.setSpacing(true);
 			filterBtnLayout.setWidth("100px");
 			resourceSettingPopupBtn.setIcon(MyCollabResource
-					.newResource("icons/16/item_settings.png"));
+					.newResource("icons/16/item_settings_big.png"));
 			resourceSettingPopupBtn.setStyleName(UIConstants.THEME_BLANK_LINK);
 			resourceSettingPopupBtn.setContent(filterBtnLayout);
 
@@ -935,7 +935,7 @@ public class ResourceHandlerComponent extends VerticalLayout {
 			iconWapper.addComponent(toContainFolder);
 			UiUtils.addComponent(layout, iconWapper, Alignment.MIDDLE_CENTER);
 
-			return new HorizontalLayout();
+			return layout;
 		}
 	}
 

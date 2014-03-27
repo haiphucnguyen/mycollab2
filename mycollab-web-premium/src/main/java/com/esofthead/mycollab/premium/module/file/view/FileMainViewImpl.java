@@ -800,7 +800,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 
 					final PopupButton popupBtn = new PopupButton();
 					popupBtn.setIcon(MyCollabResource
-							.newResource("icons/16/item_settings.png"));
+							.newResource("icons/16/item_settings_big.png"));
 					popupBtn.setStyleName(UIConstants.THEME_BLANK_LINK);
 					
 
