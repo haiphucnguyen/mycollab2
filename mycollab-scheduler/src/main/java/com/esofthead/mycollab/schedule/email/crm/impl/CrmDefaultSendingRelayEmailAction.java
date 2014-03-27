@@ -88,7 +88,8 @@ public abstract class CrmDefaultSendingRelayEmailAction<B extends ValuedBean>
 						notification, user);
 				if (templateGenerator != null) {
 					String notifierFullName = user.getDisplayName();
-					if (notifierFullName == null || notifierFullName.trim().length() == 0) {
+					if (notifierFullName == null
+							|| notifierFullName.trim().length() == 0) {
 						log.error(
 								"Can not find user {} of notification {}",
 								new String[] { BeanUtility.printBeanObj(user),
@@ -103,7 +104,7 @@ public abstract class CrmDefaultSendingRelayEmailAction<B extends ValuedBean>
 					lst.add(userMail);
 
 					extMailService.sendHTMLMail("noreply@mycollab.com",
-							"noreply@mycollab.com", lst, null, null,
+							"MyCollab", lst, null, null,
 							templateGenerator.generateSubjectContent(),
 							templateGenerator.generateBodyContent(), null);
 				}
@@ -122,15 +123,15 @@ public abstract class CrmDefaultSendingRelayEmailAction<B extends ValuedBean>
 				TemplateGenerator templateGenerator = templateGeneratorForUpdateAction(
 						notification, user);
 				if (templateGenerator != null) {
-					String userName = user.getUsername();
-					if (userName == null) {
+					String notifierFullName = user.getDisplayName();
+					if (notifierFullName == null) {
 						log.error(
 								"Can not find user {} of notification {}",
 								new String[] { BeanUtility.printBeanObj(user),
 										BeanUtility.printBeanObj(notification) });
 						return;
 					}
-					templateGenerator.putVariable("userName", userName);
+					templateGenerator.putVariable("userName", notifierFullName);
 
 					MailRecipientField userMail = new MailRecipientField(
 							user.getEmail(), user.getUsername());
@@ -138,7 +139,7 @@ public abstract class CrmDefaultSendingRelayEmailAction<B extends ValuedBean>
 					lst.add(userMail);
 
 					extMailService.sendHTMLMail("noreply@mycollab.com",
-							"noreply@mycollab.com", lst, null, null,
+							"MyCollab", lst, null, null,
 							templateGenerator.generateSubjectContent(),
 							templateGenerator.generateBodyContent(), null);
 				}
@@ -156,15 +157,15 @@ public abstract class CrmDefaultSendingRelayEmailAction<B extends ValuedBean>
 				TemplateGenerator templateGenerator = templateGeneratorForCommentAction(
 						notification, user);
 				if (templateGenerator != null) {
-					String userName = user.getUsername();
-					if (userName == null) {
+					String notifierFullName = user.getDisplayName();
+					if (notifierFullName == null) {
 						log.error(
 								"Can not find user {} of notification {}",
 								new String[] { BeanUtility.printBeanObj(user),
 										BeanUtility.printBeanObj(notification) });
 						return;
 					}
-					templateGenerator.putVariable("userName", userName);
+					templateGenerator.putVariable("userName", notifierFullName);
 
 					MailRecipientField userMail = new MailRecipientField(
 							user.getEmail(), user.getUsername());
@@ -172,7 +173,7 @@ public abstract class CrmDefaultSendingRelayEmailAction<B extends ValuedBean>
 					lst.add(userMail);
 
 					extMailService.sendHTMLMail("noreply@mycollab.com",
-							"noreply@mycollab.com", lst, null, null,
+							"MyCollab", lst, null, null,
 							templateGenerator.generateSubjectContent(),
 							templateGenerator.generateBodyContent(), null);
 				}

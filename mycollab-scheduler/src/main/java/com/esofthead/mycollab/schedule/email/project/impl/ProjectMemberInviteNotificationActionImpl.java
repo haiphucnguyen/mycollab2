@@ -99,10 +99,9 @@ public class ProjectMemberInviteNotificationActionImpl implements
 
 			templateGenerator.putVariable("userName",
 					member.getMemberFullName());
-			extMailService.sendHTMLMail("noreply@mycollab.com",
-					"noreply@mycollab.com", Arrays
-							.asList(new MailRecipientField(member.getEmail(),
-									member.getMemberFullName())), null, null,
+			extMailService.sendHTMLMail("noreply@mycollab.com", "MyCollab",
+					Arrays.asList(new MailRecipientField(member.getEmail(),
+							member.getMemberFullName())), null, null,
 					templateGenerator.generateSubjectContent(),
 					templateGenerator.generateBodyContent(), null);
 
