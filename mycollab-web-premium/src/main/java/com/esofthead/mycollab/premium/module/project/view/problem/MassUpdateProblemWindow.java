@@ -36,8 +36,8 @@ public class MassUpdateProblemWindow extends MassUpdateWindow<Problem> {
 	}
 
 	@Override
-	protected AbstractBeanFieldGroupEditFieldFactory<Problem> initBeanFormFieldFactory() {
-		return new ProblemEditFormFieldFactory(updateForm);
+	protected AbstractBeanFieldGroupEditFieldFactory<Problem> buildBeanFormFieldFactory() {
+		return new ProblemEditFormFieldFactory(updateForm, false);
 	}
 
 	private class MassUpdateProblemFormLayoutFactory implements

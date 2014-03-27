@@ -157,7 +157,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 				}
 			}
 		});
-		switchViewBtn.addStyleName("graybtn2");
+		switchViewBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
 		navButton.addButton(switchViewBtn);
 
 		Button settingBtn = new Button();
@@ -175,11 +175,12 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 				mainBodyResourceLayout.addComponent(settingConnectionDrive);
 			}
 		});
-		settingBtn.addStyleName("graybtn2");
+		settingBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
 		navButton.addButton(settingBtn);
 
 		final PopupButton linkBtn = new PopupButton();
 		linkBtn.setIcon(MyCollabResource.newResource("icons/16/ecm/link.png"));
+		linkBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
 		linkBtn.setWidth("65px");
 		final VerticalLayout filterBtnLayout = new VerticalLayout();
 		filterBtnLayout.setMargin(true);
@@ -218,7 +219,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 		filterBtnLayout.addComponent(connectDropboxLayout);
 
 		linkBtn.setContent(filterBtnLayout);
-		linkBtn.addStyleName("graybtn2");
+		
 		navButton.addButton(linkBtn);
 
 		Label usedVolumeInfo = new Label();
@@ -800,8 +801,8 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 					final PopupButton popupBtn = new PopupButton();
 					popupBtn.setIcon(MyCollabResource
 							.newResource("icons/16/item_settings.png"));
-					popupBtn.setWidth("18px");
-					popupBtn.addStyleName("link");
+					popupBtn.setStyleName(UIConstants.THEME_BLANK_LINK);
+					
 
 					final VerticalLayout popupOptionActionLayout = new VerticalLayout();
 					popupOptionActionLayout.setMargin(true);

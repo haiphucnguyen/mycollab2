@@ -62,8 +62,6 @@ public class SyncWebResourcesToS3Command {
 					throw new RuntimeException(e);
 				}
 			}
-		} else {
-
 		}
 	}
 
