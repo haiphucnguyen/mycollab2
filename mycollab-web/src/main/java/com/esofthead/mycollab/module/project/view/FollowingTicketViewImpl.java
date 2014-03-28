@@ -56,7 +56,6 @@ import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
@@ -72,7 +71,7 @@ import com.vaadin.ui.VerticalLayout;
  */
 @ViewComponent
 public class FollowingTicketViewImpl extends AbstractPageView implements
-FollowingTicketView {
+		FollowingTicketView {
 	private static final long serialVersionUID = 1L;
 
 	private SplitButton exportButtonControl;
@@ -81,11 +80,21 @@ FollowingTicketView {
 
 	public FollowingTicketViewImpl() {
 		this.setSpacing(true);
+		this.setMargin(new MarginInfo(false, true, true, true));
 		this.setWidth("100%");
 
-		final CssLayout headerWrapper = new CssLayout();
+		final VerticalLayout contentWrapper = new VerticalLayout();
+		
+		contentWrapper.setWidth("100%");
+		contentWrapper.addStyleName("main-content-wrapper");
+		
+		
+
+		final VerticalLayout headerWrapper = new VerticalLayout();
 		headerWrapper.setWidth("100%");
 		headerWrapper.setStyleName("projectfeed-hdr-wrapper");
+		
+		HorizontalLayout controlBtns = new HorizontalLayout();
 
 		final HorizontalLayout header = new HorizontalLayout();
 		header.setWidth("100%");
@@ -102,6 +111,8 @@ FollowingTicketView {
 
 		headerWrapper.addComponent(header);
 		this.addComponent(headerWrapper);
+		this.addComponent(controlBtns);
+		this.addComponent(contentWrapper);
 
 		final Button backBtn = new Button("Back to Work Board");
 		backBtn.addClickListener(new Button.ClickListener() {
@@ -117,8 +128,9 @@ FollowingTicketView {
 		});
 
 		backBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+		backBtn.setIcon(MyCollabResource.newResource("icons/16/back.png"));
 
-		HorizontalLayout controlBtns = new HorizontalLayout();
+		
 		controlBtns.setMargin(new MarginInfo(true, false, true, false));
 		controlBtns.setWidth("100%");
 		controlBtns.addComponent(backBtn);
@@ -162,13 +174,7 @@ FollowingTicketView {
 
 		controlBtns.addComponent(exportButtonControl);
 
-
-		final CssLayout contentWrapper = new CssLayout();
-		contentWrapper.setWidth("100%");
-		contentWrapper.addStyleName("content-wrapper");
-		this.addComponent(contentWrapper);
-
-		contentWrapper.addComponent(controlBtns);
+	
 
 		this.ticketTable = new FollowingTicketTable();
 		contentWrapper.addComponent(this.ticketTable);
@@ -187,7 +193,7 @@ FollowingTicketView {
 						new RpParameterBuilder(ticketTable.getDisplayColumns()),
 						exportType,
 						ApplicationContextUtil
-						.getSpringBean(ProjectFollowingTicketService.class),
+								.getSpringBean(ProjectFollowingTicketService.class),
 						searchCriteria, FollowingTicket.class);
 			}
 		};
@@ -210,7 +216,7 @@ FollowingTicketView {
 	}
 
 	private class FollowingTicketTable extends
-	AbstractPagedBeanTable<MonitorSearchCriteria, FollowingTicket> {
+			AbstractPagedBeanTable<MonitorSearchCriteria, FollowingTicket> {
 
 		private static final long serialVersionUID = 1L;
 		private ProjectFollowingTicketService projectFollowingTicketService;
@@ -246,7 +252,7 @@ FollowingTicketView {
 						} else if (ticket.getDueDate() != null
 								&& (ticket.getDueDate()
 										.before(new GregorianCalendar()
-										.getTime()))) {
+												.getTime()))) {
 							ticketLink.addStyleName(UIConstants.LINK_OVERDUE);
 						}
 					} else if ("Task".equals(ticket.getType())) {
@@ -258,13 +264,13 @@ FollowingTicketView {
 						} else {
 							if ("Pending".equals(ticket.getStatus())) {
 								ticketLink
-								.addStyleName(UIConstants.LINK_PENDING);
+										.addStyleName(UIConstants.LINK_PENDING);
 							} else if (ticket.getDueDate() != null
 									&& (ticket.getDueDate()
 											.before(new GregorianCalendar()
-											.getTime()))) {
+													.getTime()))) {
 								ticketLink
-								.addStyleName(UIConstants.LINK_OVERDUE);
+										.addStyleName(UIConstants.LINK_OVERDUE);
 							}
 						}
 					}
@@ -320,9 +326,9 @@ FollowingTicketView {
 							final PageActionChain chain = new PageActionChain(
 									new ProjectScreenData.Goto(projectId));
 							EventBus.getInstance()
-							.fireEvent(
-									new ProjectEvent.GotoMyProject(
-											this, chain));
+									.fireEvent(
+											new ProjectEvent.GotoMyProject(
+													this, chain));
 						}
 					});
 					projectLink.setIcon(MyCollabResource

@@ -285,9 +285,9 @@ div.v-button-link.v-button-no-margin:focus {
 	margin: 0px;
 }
 
-div.v-button-link.v-button-no-margin .v-button-wrap,div.v-button-link:focus
-	{
-	padding: 0px;
+div.v-button-link, div.v-button-link:focus, .v-button-link:active, div.v-disabled.v-button-link, div.v-disabled.v-button-link:focus, body.v-ie .v-pressed.v-button-link, div.v-button-borderless, div.v-button-borderless:focus, .v-button-borderless:active, div.v-disabled.v-button-borderless, div.v-disabled.v-button-borderless:focus, body.v-ie .v-pressed.v-button-borderless
+{
+	/*padding: 0px;*/
 	margin: 0px;
 }
 
@@ -313,7 +313,7 @@ div.v-button-link.v-button-no-margin .v-button-wrap,div.v-button-link:focus
 	/* width: 4px; */
 }
 .small-padding .v-icon {
-	margin-right: 2px;
+	margin-right: 3px;
 }
 
 .v-popupbutton .v-button-wrap, .v-popupbutton:active .v-button-wrap {
@@ -4040,7 +4040,7 @@ div.v-lazyloadingwrapper-loading {
 	color: white;
 }
 
-.v-buttongroup.toggle-btn-group .v-button.v-button-left:active,.v-buttongroup.toggle-btn-group .v-button.v-button-middle:active,.v-buttongroup.toggle-btn-group .v-button.v-button-right:active,.v-buttongroup.toggle-btn-group .v-button.v-button-left:focus,.v-buttongroup.toggle-btn-group .v-button.v-button-middle:focus,.v-buttongroup.toggle-btn-group .v-button.v-button-right:focus
+.v-buttongroup.toggle-btn-group .v-button.v-button-left:active,.v-buttongroup.toggle-btn-group .v-button.v-button-middle:active,.v-buttongroup.toggle-btn-group .v-button.v-button-right:active,.v-buttongroup.toggle-btn-group .v-button.v-button-left:focus,.v-buttongroup.toggle-btn-group .v-button.v-button-middle:focus,.v-buttongroup.toggle-btn-group .v-button.v-button-right:focus, .v-buttongroup.toggle-btn-group .v-button.active
 	{
 	background-image: url("icons/grad-dark-top2.png");
 	background-repeat: no-repeat;
@@ -4383,7 +4383,6 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 	text-shadow: #F0F0F0 0 1px 0;
 	padding: 0px 0px 0px 0px;
 	font-size: 13px;
-	border-bottom: 1px solid #CFCFCF;
 	color: rgb(69, 69, 69);
 	font-weight: bold;
 }
@@ -4674,7 +4673,9 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 .addview-layout-body .v-gridlayout {
 	border-bottom: 1px solid #CFCFCF;
 }
-
+.no-border .addview-layout-body .v-gridlayout {
+	border:none;
+}
 .addview-layout-body .v-horizontallayout-gridform-caption.v-margin-top {
 	padding-top: 5px;
 }
@@ -5136,6 +5137,7 @@ div.v-button-link.buttonPaging .v-button-wrap {
 }
 div.v-button-link.buttonPaging:active .v-button-wrap, div.v-button-link.buttonPaging:focus .v-button-wrap {
 	padding: 4px 0px 3px;
+	border: 1px solid #777575;
 }
 
 div.v-button-link.buttonPaging .v-button-wrap .v-button-caption {
@@ -5494,6 +5496,7 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 /* reponsive wrapper */
 .main-content-wrapper {
 	/* padding: 0px 25px 12px; */
+	border-top: 1px solid #CFCFCF;
 }
 
 .v-label>hr {
