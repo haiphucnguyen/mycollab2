@@ -799,6 +799,8 @@ public class ActivityCalendarViewImpl extends AbstractPageView implements
 			editForm = new EditForm();
 			editForm.setBean(meeting);
 			contentLayout.addComponent(editForm);
+			contentLayout.setStyleName("readview-layout");
+			contentLayout.setMargin(new MarginInfo(false, true, true, true));
 		}
 
 		private class EditForm extends AdvancedEditBeanForm<MeetingWithBLOBs> {
@@ -827,7 +829,7 @@ public class ActivityCalendarViewImpl extends AbstractPageView implements
 					controlPanel.setWidth("100%");
 
 					final HorizontalLayout layout = new HorizontalLayout();
-					layout.setMargin(true);
+					
 					layout.setSpacing(true);
 					layout.setStyleName("addNewControl");
 					Button saveBtn = new Button("Save",
@@ -865,14 +867,12 @@ public class ActivityCalendarViewImpl extends AbstractPageView implements
 								}
 							});
 					cancelBtn.addStyleName(UIConstants.THEME_BLANK_LINK);
-					cancelBtn.setIcon(MyCollabResource
-							.newResource("icons/16/cancel.png"));
 					layout.addComponent(cancelBtn);
 					layout.setComponentAlignment(cancelBtn,
 							Alignment.MIDDLE_CENTER);
 					controlPanel.addComponent(layout);
 					controlPanel.setComponentAlignment(layout,
-							Alignment.MIDDLE_CENTER);
+							Alignment.MIDDLE_RIGHT);
 					return controlPanel;
 				}
 
