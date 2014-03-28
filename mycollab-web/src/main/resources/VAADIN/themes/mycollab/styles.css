@@ -285,9 +285,9 @@ div.v-button-link.v-button-no-margin:focus {
 	margin: 0px;
 }
 
-div.v-button-link.v-button-no-margin .v-button-wrap,div.v-button-link:focus
-	{
-	padding: 0px;
+div.v-button-link, div.v-button-link:focus, .v-button-link:active, div.v-disabled.v-button-link, div.v-disabled.v-button-link:focus, body.v-ie .v-pressed.v-button-link, div.v-button-borderless, div.v-button-borderless:focus, .v-button-borderless:active, div.v-disabled.v-button-borderless, div.v-disabled.v-button-borderless:focus, body.v-ie .v-pressed.v-button-borderless
+{
+	/*padding: 0px;*/
 	margin: 0px;
 }
 
@@ -5126,6 +5126,7 @@ div.v-button-link.buttonPaging .v-button-wrap {
 }
 div.v-button-link.buttonPaging:active .v-button-wrap, div.v-button-link.buttonPaging:focus .v-button-wrap {
 	padding: 4px 0px 3px;
+	border: 1px solid #777575;
 }
 
 div.v-button-link.buttonPaging .v-button-wrap .v-button-caption {
