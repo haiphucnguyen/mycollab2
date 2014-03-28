@@ -291,10 +291,11 @@ div.v-button-link, div.v-button-link:focus, .v-button-link:active, div.v-disable
 	margin: 0px;
 }
 
-.v-button-wrap, .v-disabled:active .v-button-wrap, .v-button:active .v-button-wrap, .v-ie8  .v-pressed.v-button .v-button-wrap {
+.v-button-wrap, .v-disabled:active .v-button-wrap, .v-button:active .v-button-wrap, .v-ie  .v-pressed.v-button .v-button-wrap {
 	border:none;
 	border-top:1px solid transparent;
 	padding: 6px 15px;
+	margin: 0px;
 	/* background-color: #F9F9F9; */
 	/* color: #525252; */
 	background-image:none;
@@ -2048,12 +2049,14 @@ input.v-textfield-errorField {
 }
 
 .projectfeed-hdr-wrapper {
-	background-color: rgb(230, 230, 230);
-	padding: 8px 8px 10px 8px;
-	border-radius: 0px 0px 3px 3px;
-	border-width: 0px 1px 2px 1px;
-	border-style: solid;
-	border-color: #CFCFCF;
+	background-color: rgb(71, 116, 157);
+	padding: 15px 30px;
+}
+.projectfeed-hdr-wrapper .h1 {
+	padding: 0px;
+}
+.projectfeed-hdr-wrapper .h1, .projectfeed-hdr-wrapper .h2, .projectfeed-hdr-wrapper .v-button-link .v-button-caption {
+	color: #FFFFFF;
 }
 
 /* End Project Management */
@@ -2921,7 +2924,7 @@ div.v-splitbutton,div.v-splitbutton .v-button {
 	border-width: 0 1px 1px 1px;
 	border-bottom: 1px solid #CFCFCF;
 }
-.readViewBottomControls .v-table-header-wrap {
+.readViewBottomControls .v-table-header-wrap, .v-table.full-border .v-table-header-wrap {
 	border-width: 1px;
 }
 .activity-realated-content .v-table-header-wrap {
@@ -5045,7 +5048,17 @@ div.v-ratingstars-bar {
 .myprojectlist .stream-content .projectlink-wrapper {
 	border-right: 1px solid #CFCFCF;
 	background-color: #F7F7F7;
-	padding: 5px 0px 5px 5px;
+	padding: 10px 15px 15px;
+}
+
+.myprojectlist .stream-content .projectlink-wrapper .project-name .v-button-wrap,
+.myprojectlist .stream-content .projectlink-wrapper .project-name:focus .v-button-wrap,
+.myprojectlist .stream-content .projectlink-wrapper .project-name:active .v-button-wrap {
+	padding: 0px 0px 10px;
+}
+
+.myprojectlist .stream-content .projectlink-wrapper .project-name .v-button-caption {
+	font-size: 14px;
 }
 
 .project-status .v-verticallayout.v-margin-top {
