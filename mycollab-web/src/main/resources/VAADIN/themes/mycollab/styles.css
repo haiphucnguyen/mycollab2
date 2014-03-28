@@ -5040,6 +5040,10 @@ div.v-ratingstars-bar {
 	padding: 0px;
 }
 
+.v-window-contents .myprojectlist .bean-list {
+	border-top: 1px solid #CFCFCF;
+}
+
 .myprojectlist .stream-content {
 	padding: 0px;
 }
