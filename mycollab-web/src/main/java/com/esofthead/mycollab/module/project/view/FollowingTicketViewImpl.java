@@ -72,7 +72,7 @@ import com.vaadin.ui.VerticalLayout;
  */
 @ViewComponent
 public class FollowingTicketViewImpl extends AbstractPageView implements
-		FollowingTicketView {
+FollowingTicketView {
 	private static final long serialVersionUID = 1L;
 
 	private SplitButton exportButtonControl;
@@ -82,11 +82,6 @@ public class FollowingTicketViewImpl extends AbstractPageView implements
 	public FollowingTicketViewImpl() {
 		this.setSpacing(true);
 		this.setWidth("100%");
-
-		final CssLayout contentWrapper = new CssLayout();
-		contentWrapper.setWidth("100%");
-		contentWrapper.addStyleName("main-content-wrapper");
-		this.addComponent(contentWrapper);
 
 		final CssLayout headerWrapper = new CssLayout();
 		headerWrapper.setWidth("100%");
@@ -106,7 +101,7 @@ public class FollowingTicketViewImpl extends AbstractPageView implements
 		header.setExpandRatio(layoutHeader, 1.0f);
 
 		headerWrapper.addComponent(header);
-		contentWrapper.addComponent(headerWrapper);
+		this.addComponent(headerWrapper);
 
 		final Button backBtn = new Button("Back to Work Board");
 		backBtn.addClickListener(new Button.ClickListener() {
@@ -167,6 +162,12 @@ public class FollowingTicketViewImpl extends AbstractPageView implements
 
 		controlBtns.addComponent(exportButtonControl);
 
+
+		final CssLayout contentWrapper = new CssLayout();
+		contentWrapper.setWidth("100%");
+		contentWrapper.addStyleName("content-wrapper");
+		this.addComponent(contentWrapper);
+
 		contentWrapper.addComponent(controlBtns);
 
 		this.ticketTable = new FollowingTicketTable();
@@ -186,7 +187,7 @@ public class FollowingTicketViewImpl extends AbstractPageView implements
 						new RpParameterBuilder(ticketTable.getDisplayColumns()),
 						exportType,
 						ApplicationContextUtil
-								.getSpringBean(ProjectFollowingTicketService.class),
+						.getSpringBean(ProjectFollowingTicketService.class),
 						searchCriteria, FollowingTicket.class);
 			}
 		};
@@ -209,7 +210,7 @@ public class FollowingTicketViewImpl extends AbstractPageView implements
 	}
 
 	private class FollowingTicketTable extends
-			AbstractPagedBeanTable<MonitorSearchCriteria, FollowingTicket> {
+	AbstractPagedBeanTable<MonitorSearchCriteria, FollowingTicket> {
 
 		private static final long serialVersionUID = 1L;
 		private ProjectFollowingTicketService projectFollowingTicketService;
@@ -245,7 +246,7 @@ public class FollowingTicketViewImpl extends AbstractPageView implements
 						} else if (ticket.getDueDate() != null
 								&& (ticket.getDueDate()
 										.before(new GregorianCalendar()
-												.getTime()))) {
+										.getTime()))) {
 							ticketLink.addStyleName(UIConstants.LINK_OVERDUE);
 						}
 					} else if ("Task".equals(ticket.getType())) {
@@ -257,13 +258,13 @@ public class FollowingTicketViewImpl extends AbstractPageView implements
 						} else {
 							if ("Pending".equals(ticket.getStatus())) {
 								ticketLink
-										.addStyleName(UIConstants.LINK_PENDING);
+								.addStyleName(UIConstants.LINK_PENDING);
 							} else if (ticket.getDueDate() != null
 									&& (ticket.getDueDate()
 											.before(new GregorianCalendar()
-													.getTime()))) {
+											.getTime()))) {
 								ticketLink
-										.addStyleName(UIConstants.LINK_OVERDUE);
+								.addStyleName(UIConstants.LINK_OVERDUE);
 							}
 						}
 					}
@@ -319,9 +320,9 @@ public class FollowingTicketViewImpl extends AbstractPageView implements
 							final PageActionChain chain = new PageActionChain(
 									new ProjectScreenData.Goto(projectId));
 							EventBus.getInstance()
-									.fireEvent(
-											new ProjectEvent.GotoMyProject(
-													this, chain));
+							.fireEvent(
+									new ProjectEvent.GotoMyProject(
+											this, chain));
 						}
 					});
 					projectLink.setIcon(MyCollabResource
