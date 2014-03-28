@@ -1,19 +1,3 @@
-/**
- * This file is part of mycollab-web.
- *
- * mycollab-web is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-web is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.esofthead.mycollab.tools;
 
 import java.io.File;
@@ -28,6 +12,12 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.esofthead.mycollab.core.utils.MimeTypesUtil;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class SyncWebResourcesToS3Command {
 
 	public static void syncLocalResourcesToS3(String localPath, String s3Path) {
@@ -35,6 +25,9 @@ public class SyncWebResourcesToS3Command {
 		AmazonS3 s3client = new AmazonS3Client(myCredentials);
 
 		File localFolder = new File(localPath);
+		if (!localFolder.isDirectory()) {
+			throw new RuntimeException(localPath + " must point to a folder");
+		}
 		syncFoldersToS3(s3client, localFolder, localFolder.getAbsolutePath(),
 				s3Path);
 	}

@@ -1537,6 +1537,9 @@ input.v-textfield-errorField {
 	border-style: solid;
 	border-color: #CFCFCF;
 }
+.addViewLayout .addViewBottomControls .more-info {
+	border-bottom: 1px solid #CFCFCF;
+}
 
 /* .addViewLayout .addViewBottomControls .depotComp {
 	margin: 0px;
@@ -1560,21 +1563,12 @@ input.v-textfield-errorField {
 
 /* Account Settings */
 .accountViewContainer {
-	margin: 20px 0px;
-	background-color: #F5F5F5;
-	background-image: -webkit-gradient(linear, left top, left bottom, from(#F5F5F5),
-		to(#DDDDDD));
-	background-image: -webkit-linear-gradient(top, #F5F5F5, #DDDDDD);
-	background-image: -moz-linear-gradient(top, #F5F5F5, #DDDDDD);
-	background-image: -ms-linear-gradient(top, #F5F5F5, #DDDDDD);
-	background-image: -o-linear-gradient(top, #F5F5F5, #DDDDDD);
-	background-image: linear-gradient(top, #F5F5F5, #DDDDDD);
-	border-top-left-radius: 5px;
-	border-top-right-radius: 0px;
-	border-bottom-right-radius: 0px;
-	border-bottom-left-radius: 5px;
-	border: 1px solid #8F8F8F;
-	overflow: hidden;
+	min-height: 100%;
+	background: url("icons/project-module-bg.jpg") repeat-y left top #FFFFFF;
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: block;
 }
 
 .accountViewContainer .v-label-h1,.accountViewContainer .v-label h1 {
@@ -1601,16 +1595,22 @@ input.v-textfield-errorField {
 	background: none;
 }
 
-.accountViewContainer .userInfoContainer .readViewBody .avatar-pass-wrapper
+.accountViewContainer .userInfoContainer .avatar-pass-wrapper
 {
 	border-bottom: 1px solid #CFCFCF;
+	background-color: #E9F2F7;
 }
 
 .avatar-pass-wrapper .v-upload .v-button {
-	color: white;
+	color: #525252;
+	border-color: #CFCFCF;
 }
 
-.accountViewContainer .userInfoContainer .readViewBody .info-block-header
+.accountViewContainer .addview-layout-body {
+	border: 1px solid #CFCFCF;
+}
+
+.accountViewContainer .userInfoContainer .addview-layout-body .info-block-header
 	{
 	border-color: #CFCFCF;
 	border-width: 0px 0px 1px 0px;
@@ -1618,13 +1618,18 @@ input.v-textfield-errorField {
 	padding: 8px 0px 8px 18px;
 }
 
-.accountViewContainer .userInfoContainer .readViewBody .info-block-header .h2
+.accountViewContainer .userInfoContainer .addview-layout-body .info-block-header .h2
 	{
 	border: none;
 	padding: 0px;
+	background-color: transparent;
+	vertical-align: middle;
+	display: inline-block;
+	*display: inline;
+	margin-right: 3px;
 }
 
-.accountViewContainer .userInfoContainer .readViewBody .info-block-header .v-button {
+.accountViewContainer .userInfoContainer .addview-layout-body .info-block-header .v-button {
 	vertical-align: middle;
 }
 
@@ -1638,12 +1643,12 @@ input.v-textfield-errorField {
 	border-color: #CFCFCF;
 }
 
-.accountViewContainer .userInfoContainer .addViewBody .info-block-header>.v-csslayout-margin>.v-csslayout-container>div
+/* .accountViewContainer .userInfoContainer .addview-layout-body .info-block-header>.v-csslayout-margin>.v-csslayout-container>div
 	{
 	display: inline-block;
 	*display: inline;
 	margin-right: 3px;
-}
+} */
 
 .accountViewContainer .userInfoContainer .editInfoControl {
 	margin-top: 10px;
@@ -1679,15 +1684,7 @@ input.v-textfield-errorField {
 .accountViewContainer .addViewLayout {
 	background: none;
 	box-shadow: none;
-	border: 1px solid #CFCFCF;
-	background: none no-repeat left top rgb(245, 245, 245);
 	box-shadow: none;
-	margin: 0px 0px 10px;
-	border-radius: 3px 3px 0px 0px;
-}
-
-.accountViewContainer .sidebar-menu {
-	padding: 10px 0px;
 }
 
 .v-csslayout-account-dashboard {
@@ -1795,10 +1792,6 @@ input.v-textfield-errorField {
 	padding-bottom: 9px;
 }
 
-.projectDashboardView .navigator-wrap .project-list-comp .project-list-comp-content {
-	/* padding: 0px 13px; */
-}
-
 .projectDashboardView .navigator-wrap .project-list-comp .project-description {
 	color: #FFFFFF;
 	padding: 10px 0px 20px;
@@ -1815,23 +1808,23 @@ input.v-textfield-errorField {
 	padding-left: 20px;
 }
 
-.projectDashboardView .container-wrap.main-content .top-panel {
+.projectDashboardView .container-wrap.main-content .top-panel, .accountViewContainer .container-wrap.main-content .top-panel {
 	background-color: #FFFFFF;
 	border-bottom: 1px solid #CFCFCF;
 }
-.projectDashboardView .container-wrap.main-content .top-panel.v-margin-top {
+.projectDashboardView .container-wrap.main-content .top-panel.v-margin-top, .accountViewContainer .container-wrap.main-content .top-panel.v-margin-top {
 	padding-top: 10px;
 }
 
-.projectDashboardView .container-wrap.main-content .top-panel.v-margin-right {
+.projectDashboardView .container-wrap.main-content .top-panel.v-margin-right, .accountViewContainer .container-wrap.main-content .top-panel.v-margin-right {
 	padding-right: 30px;
 }
 
-.projectDashboardView .container-wrap.main-content .top-panel.v-margin-bottom {
+.projectDashboardView .container-wrap.main-content .top-panel.v-margin-bottom, .accountViewContainer .container-wrap.main-content .top-panel.v-margin-bottom {
 	padding-bottom: 10px;
 }
 
-.projectDashboardView .container-wrap.main-content .top-panel.v-margin-left {
+.projectDashboardView .container-wrap.main-content .top-panel.v-margin-left, .accountViewContainer .container-wrap.main-content .top-panel.v-margin-left {
 	padding-left: 30px;
 }
 
@@ -4104,7 +4097,7 @@ div.v-csslayout.member-block {
 	margin-bottom: 15px;
 	font-size: 12px;
 	vertical-align: top;
-	width: 290px;
+	width: 350px;
 	margin-right: 11px;
 	border-width: 1px 1px 2px;
 	border-radius: 3px;
@@ -4374,7 +4367,7 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 .readViewLayout .v-label-h2 {
 	text-shadow: #F0F0F0 0 1px 0;
 	padding: 8px 0px 8px 18px;
-	font-size: 14px;
+	font-size: 13px;
 	border-bottom: 1px solid #CFCFCF;
 	color: rgb(69, 69, 69);
 }
@@ -6571,10 +6564,10 @@ img.icon-btn {
 	font-weight: bold;
 }
 /* Project Page View */
-.project-module .page-view.v-margin-left {
+.project-module .page-view.v-margin-left, .accountViewContainer .page-view.v-margin-left {
 	padding-left: 30px;
 }
-.project-module .page-view.v-margin-right {
+.project-module .page-view.v-margin-right, .accountViewContainer .page-view.v-margin-right {
 	padding-right: 30px;
 }
 
