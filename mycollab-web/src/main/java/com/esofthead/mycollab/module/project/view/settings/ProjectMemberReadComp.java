@@ -382,6 +382,7 @@ class ProjectMemberReadComp extends AbstractProjectPageView {
 
 		private PopupButton taskListFilterControl;
 		private TaskTableDisplay taskDisplay;
+		private Label taskLabel;
 
 		private TaskSearchCriteria taskSearchCriteria;
 
@@ -434,10 +435,10 @@ class ProjectMemberReadComp extends AbstractProjectPageView {
 			headerLayout.setMargin(true);
 			headerLayout.setStyleName("comp-header");
 			
-			Label activeTask = new Label("Active Tasks&nbsp;&nbsp;",ContentMode.HTML);
-			activeTask.setStyleName("h2");
-			headerLayout.addComponent(activeTask);
-			headerLayout.setComponentAlignment(activeTask, Alignment.MIDDLE_LEFT);
+			taskLabel = new Label("Active Tasks&nbsp;&nbsp;",ContentMode.HTML);
+			taskLabel.setStyleName("h2");
+			headerLayout.addComponent(taskLabel);
+			headerLayout.setComponentAlignment(taskLabel, Alignment.MIDDLE_LEFT);
 			
 			this.taskListFilterControl = new PopupButton("");
 			this.taskListFilterControl.addStyleName(UIConstants.THEME_BLANK_LINK);
@@ -455,8 +456,8 @@ class ProjectMemberReadComp extends AbstractProjectPageView {
 						public void buttonClick(final ClickEvent event) {
 							UserTaskComp.this.taskListFilterControl
 									.setPopupVisible(false);
-							UserTaskComp.this.taskListFilterControl
-									.setCaption("All Tasks");
+							UserTaskComp.this.taskLabel
+									.setValue("All Tasks&nbsp;&nbsp;");
 							UserTaskComp.this.displayAllTasks();
 						}
 					});
@@ -471,8 +472,8 @@ class ProjectMemberReadComp extends AbstractProjectPageView {
 						public void buttonClick(final ClickEvent event) {
 							UserTaskComp.this.taskListFilterControl
 									.setPopupVisible(false);
-							UserTaskComp.this.taskListFilterControl
-									.setCaption("Active Tasks");
+							UserTaskComp.this.taskLabel
+									.setValue("Active Tasks&nbsp;&nbsp;");
 							UserTaskComp.this.displayActiveTasksOnly();
 						}
 					});
@@ -487,8 +488,8 @@ class ProjectMemberReadComp extends AbstractProjectPageView {
 						public void buttonClick(final ClickEvent event) {
 							UserTaskComp.this.taskListFilterControl
 									.setPopupVisible(false);
-							UserTaskComp.this.taskListFilterControl
-									.setCaption("Pending Tasks");
+							UserTaskComp.this.taskLabel
+									.setValue("Pending Tasks&nbsp;&nbsp;");
 							UserTaskComp.this.displayPendingTasksOnly();
 						}
 					});
@@ -502,9 +503,9 @@ class ProjectMemberReadComp extends AbstractProjectPageView {
 						@Override
 						public void buttonClick(final ClickEvent event) {
 							UserTaskComp.this.taskListFilterControl
-									.setCaption("Archived Tasks");
-							UserTaskComp.this.taskListFilterControl
 									.setPopupVisible(false);
+							UserTaskComp.this.taskLabel
+									.setValue("Archived Tasks&nbsp;&nbsp;");
 							UserTaskComp.this.displayInActiveTasks();
 						}
 					});
@@ -558,6 +559,7 @@ class ProjectMemberReadComp extends AbstractProjectPageView {
 		private static final long serialVersionUID = 1L;
 		private PopupButton bugActionControl;
 		private BugTableDisplay bugDisplay;
+		private Label bugLabel;
 
 		public UserBugComp() {
 			super();
@@ -599,10 +601,10 @@ class ProjectMemberReadComp extends AbstractProjectPageView {
 			headerLayout.setMargin(true);
 			headerLayout.setStyleName("comp-header");
 			
-			Label activeTask = new Label("Open Bugs&nbsp;&nbsp;",ContentMode.HTML);
-			activeTask.setStyleName("h2");
-			headerLayout.addComponent(activeTask);
-			headerLayout.setComponentAlignment(activeTask, Alignment.MIDDLE_LEFT);
+			bugLabel = new Label("Open Bugs&nbsp;&nbsp;",ContentMode.HTML);
+			bugLabel.setStyleName("h2");
+			headerLayout.addComponent(bugLabel);
+			headerLayout.setComponentAlignment(bugLabel, Alignment.MIDDLE_LEFT);
 			
 			this.bugActionControl = new PopupButton("");
 			this.bugActionControl.addStyleName(UIConstants.THEME_BLANK_LINK);
@@ -624,8 +626,8 @@ class ProjectMemberReadComp extends AbstractProjectPageView {
 						public void buttonClick(final ClickEvent event) {
 							UserBugComp.this.bugActionControl
 									.setPopupVisible(false);
-							UserBugComp.this.bugActionControl
-									.setCaption("Open Bugs");
+							UserBugComp.this.bugLabel
+									.setValue("Open Bugs&nbsp;&nbsp;");
 							UserBugComp.this.displayOpenBugs();
 						}
 					});
@@ -642,8 +644,8 @@ class ProjectMemberReadComp extends AbstractProjectPageView {
 						public void buttonClick(final ClickEvent event) {
 							UserBugComp.this.bugActionControl
 									.setPopupVisible(false);
-							UserBugComp.this.bugActionControl
-									.setCaption("Resolved Bugs");
+							UserBugComp.this.bugLabel
+									.setValue("Resolved Bugs&nbsp;&nbsp;");
 							UserBugComp.this.displayResolvedBugs();
 						}
 					});
@@ -660,8 +662,8 @@ class ProjectMemberReadComp extends AbstractProjectPageView {
 						public void buttonClick(final ClickEvent event) {
 							UserBugComp.this.bugActionControl
 									.setPopupVisible(false);
-							UserBugComp.this.bugActionControl
-									.setCaption("Verified Bugs");
+							UserBugComp.this.bugLabel
+									.setValue("Verified Bugs&nbsp;&nbsp;");
 							UserBugComp.this.displayClosedBugs();
 						}
 					});
