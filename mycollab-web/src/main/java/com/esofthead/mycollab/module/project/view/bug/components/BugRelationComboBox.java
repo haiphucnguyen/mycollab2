@@ -15,26 +15,31 @@
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.esofthead.mycollab.module.project.view.bug;
+package com.esofthead.mycollab.module.project.view.bug.components;
 
-import java.util.Arrays;
-
-import com.esofthead.mycollab.module.project.ui.components.MultiSelectComp;
+import com.esofthead.mycollab.module.project.view.bug.BugRelationConstants;
+import com.vaadin.ui.ComboBox;
 
 /**
  * 
  * @author MyCollab Ltd.
  * @since 1.0
  */
-public class BugStaticItemMultiSelectField extends MultiSelectComp<String> {
+public class BugRelationComboBox extends ComboBox {
+
 	private static final long serialVersionUID = 1L;
 
-	public BugStaticItemMultiSelectField(String[] arrItemData) {
-		super("", Arrays.asList(arrItemData));
+	public BugRelationComboBox() {
+		this.setItemCaptionMode(ItemCaptionMode.EXPLICIT_DEFAULTS_ID);
+		this.addItem(BugRelationConstants.PARENT);
+		this.addItem(BugRelationConstants.CHILD);
+		this.addItem(BugRelationConstants.RELATED);
+		this.addItem(BugRelationConstants.DUPLICATED);
+		this.addItem(BugRelationConstants.BEFORE);
+		this.addItem(BugRelationConstants.AFTER);
+
+		this.setNullSelectionAllowed(false);
+		this.select(BugRelationConstants.PARENT);
 	}
 
-	@Override
-	public Class<? extends String> getType() {
-		return String.class;
-	}
 }

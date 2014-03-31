@@ -822,7 +822,6 @@ ActivityCalendarView {
 
 				private Layout createButtonControls() {
 					final HorizontalLayout controlPanel = new HorizontalLayout();
-					controlPanel.setWidth("100%");
 
 					final HorizontalLayout layout = new HorizontalLayout();
 

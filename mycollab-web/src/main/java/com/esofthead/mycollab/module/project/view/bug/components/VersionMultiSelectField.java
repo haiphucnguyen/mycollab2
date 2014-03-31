@@ -15,7 +15,7 @@
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.esofthead.mycollab.module.project.view.bug;
+package com.esofthead.mycollab.module.project.view.bug.components;
 
 import java.util.List;
 
@@ -25,9 +25,9 @@ import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ui.components.MultiSelectComp;
-import com.esofthead.mycollab.module.tracker.domain.Component;
-import com.esofthead.mycollab.module.tracker.domain.criteria.ComponentSearchCriteria;
-import com.esofthead.mycollab.module.tracker.service.ComponentService;
+import com.esofthead.mycollab.module.tracker.domain.Version;
+import com.esofthead.mycollab.module.tracker.domain.criteria.VersionSearchCriteria;
+import com.esofthead.mycollab.module.tracker.service.VersionService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.vaadin.data.Property;
 
@@ -36,35 +36,34 @@ import com.vaadin.data.Property;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-public class ComponentMultiSelectField extends MultiSelectComp {
+public class VersionMultiSelectField extends MultiSelectComp {
 	private static final long serialVersionUID = 1L;
 
-	public ComponentMultiSelectField() {
-		super("componentname");
+	public VersionMultiSelectField() {
+		super("versionname");
 	}
 
 	@Override
-	protected List<Component> createData() {
-		ComponentSearchCriteria searchCriteria = new ComponentSearchCriteria();
+	protected List<Version> createData() {
+		VersionSearchCriteria searchCriteria = new VersionSearchCriteria();
 		searchCriteria.setStatus(new StringSearchField("Open"));
 
-		searchCriteria.setProjectid(new NumberSearchField(SearchField.AND,
+		searchCriteria.setProjectId(new NumberSearchField(SearchField.AND,
 				CurrentProjectVariables.getProjectId()));
 
-		ComponentService componentService = ApplicationContextUtil
-				.getSpringBean(ComponentService.class);
-
-		List<Component> components = componentService
-				.findPagableListByCriteria(new SearchRequest<ComponentSearchCriteria>(
+		VersionService versionService = ApplicationContextUtil
+				.getSpringBean(VersionService.class);
+		List<Version> versions = versionService
+				.findPagableListByCriteria(new SearchRequest<VersionSearchCriteria>(
 						searchCriteria, 0, Integer.MAX_VALUE));
-		return components;
+		return versions;
 	}
 
 	@Override
 	public void setPropertyDataSource(Property newDataSource) {
-		List<Component> components = (List<Component>) newDataSource.getValue();
-		if (components != null) {
-			this.setSelectedItems(components);
+		List<Version> versions = (List<Version>) newDataSource.getValue();
+		if (versions != null) {
+			this.setSelectedItems(versions);
 		}
 		super.setPropertyDataSource(newDataSource);
 	}
