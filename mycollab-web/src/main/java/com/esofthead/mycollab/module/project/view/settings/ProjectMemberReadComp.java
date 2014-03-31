@@ -66,10 +66,12 @@ import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.ProjectPreviewFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.TabsheetLazyLoadComp;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComponentContainer;
@@ -431,10 +433,15 @@ class ProjectMemberReadComp extends AbstractProjectPageView {
 			final HorizontalLayout headerLayout = new HorizontalLayout();
 			headerLayout.setMargin(true);
 			headerLayout.setStyleName("comp-header");
-
-			this.taskListFilterControl = new PopupButton("Active Tasks");
-			this.taskListFilterControl.addStyleName("link");
-
+			
+			Label activeTask = new Label("Active Tasks&nbsp;&nbsp;",ContentMode.HTML);
+			activeTask.setStyleName("h2");
+			headerLayout.addComponent(activeTask);
+			headerLayout.setComponentAlignment(activeTask, Alignment.MIDDLE_LEFT);
+			
+			this.taskListFilterControl = new PopupButton("");
+			this.taskListFilterControl.addStyleName(UIConstants.THEME_BLANK_LINK);
+			this.taskListFilterControl.setIcon(MyCollabResource.newResource("icons/12/project/task_filter.png"));
 			final VerticalLayout filterBtnLayout = new VerticalLayout();
 			filterBtnLayout.setMargin(true);
 			filterBtnLayout.setSpacing(true);
@@ -591,10 +598,17 @@ class ProjectMemberReadComp extends AbstractProjectPageView {
 			final HorizontalLayout headerLayout = new HorizontalLayout();
 			headerLayout.setMargin(true);
 			headerLayout.setStyleName("comp-header");
-
-			this.bugActionControl = new PopupButton("Open Bugs");
-			this.bugActionControl.addStyleName("link");
+			
+			Label activeTask = new Label("Open Bugs&nbsp;&nbsp;",ContentMode.HTML);
+			activeTask.setStyleName("h2");
+			headerLayout.addComponent(activeTask);
+			headerLayout.setComponentAlignment(activeTask, Alignment.MIDDLE_LEFT);
+			
+			this.bugActionControl = new PopupButton("");
+			this.bugActionControl.addStyleName(UIConstants.THEME_BLANK_LINK);
+			this.bugActionControl.setIcon(MyCollabResource.newResource("icons/12/project/task_filter.png"));
 			headerLayout.addComponent(this.bugActionControl);
+			
 
 			final VerticalLayout actionBtnLayout = new VerticalLayout();
 			actionBtnLayout.setMargin(true);

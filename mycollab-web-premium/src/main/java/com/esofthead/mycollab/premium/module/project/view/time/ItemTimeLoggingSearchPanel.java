@@ -74,6 +74,7 @@ class ItemTimeLoggingSearchPanel extends
 		@SuppressWarnings("unchecked")
 		public TimeLoggingAdvancedSearchLayout() {
 			super(ItemTimeLoggingSearchPanel.this);
+			this.setStyleName("time-tracking-logging");
 		}
 
 		@Override
