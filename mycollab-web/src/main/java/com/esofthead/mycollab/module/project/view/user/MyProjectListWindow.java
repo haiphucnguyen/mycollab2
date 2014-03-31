@@ -42,8 +42,10 @@ public class MyProjectListWindow extends Window {
 		VerticalLayout layout = new VerticalLayout();
 		layout.setStyleName("myprojectlist");
 		layout.setMargin(true);
+		layout.setWidth("550px");
 
 		projectList = new ProjectPagedList();
+		projectList.setWidth("100%");
 		layout.addComponent(projectList);
 		this.setContent(layout);
 		this.setModal(true);

@@ -5494,10 +5494,6 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 }
 
 /* reponsive wrapper */
-.main-content-wrapper {
-	/* padding: 0px 25px 12px; */
-	border-top: 1px solid #CFCFCF;
-}
 
 .v-label>hr {
 	margin: 0px;
