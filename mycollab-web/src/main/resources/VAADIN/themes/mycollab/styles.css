@@ -6475,6 +6475,10 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 .basicSearchHeader .v-horizontallayout.hdr-view, .advSearchHeader .v-horizontallayout.hdr-view {
 	border:none;
 }
+
+.time-tracking-logging .advSearchFooterContainer {
+	display:none;
+}
 /* Icon only button */
 img.icon-btn {
 	cursor: pointer;
