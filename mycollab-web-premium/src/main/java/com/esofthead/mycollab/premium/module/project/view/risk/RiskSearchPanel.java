@@ -47,7 +47,12 @@ public class RiskSearchPanel extends
 	private static final long serialVersionUID = 1L;
 	private final SimpleProject project;
 
-	private static Param[] paramFields = new Param[] { RiskSearchCriteria.p_assignee };
+	private static Param[] paramFields = new Param[] {
+			RiskSearchCriteria.p_assignee, RiskSearchCriteria.p_raisedUser,
+			RiskSearchCriteria.p_status, RiskSearchCriteria.p_probalitity,
+			RiskSearchCriteria.p_consequence, RiskSearchCriteria.p_duedate,
+			RiskSearchCriteria.p_raiseddate, RiskSearchCriteria.p_createdtime,
+			RiskSearchCriteria.p_lastupdatedtime };
 
 	protected RiskSearchCriteria searchCriteria;
 
@@ -233,6 +238,8 @@ public class RiskSearchPanel extends
 		@Override
 		protected Component buildSelectionComp(String fieldId) {
 			if ("risk-assignuser".equals(fieldId)) {
+				return new ProjectMemberListSelect();
+			} else if ("risk-raiseduser".equals(fieldId)) {
 				return new ProjectMemberListSelect();
 			}
 			return null;
