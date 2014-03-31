@@ -4,17 +4,21 @@ import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
+import com.esofthead.mycollab.core.db.query.Param;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.ProblemSearchCriteria;
 import com.esofthead.mycollab.module.project.events.ProblemEvent;
 import com.esofthead.mycollab.module.project.localization.ProblemI18nEnum;
+import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberListSelect;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.MyCollabSession;
 import com.esofthead.mycollab.vaadin.ui.DefaultGenericSearchPanel;
+import com.esofthead.mycollab.vaadin.ui.DynamicQueryParamLayout;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
@@ -23,6 +27,7 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CheckBox;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
@@ -38,6 +43,8 @@ public class ProblemSearchPanel extends
 		DefaultGenericSearchPanel<ProblemSearchCriteria> {
 
 	private static final long serialVersionUID = 1L;
+	private static Param[] paramFields = new Param[] { ProblemSearchCriteria.p_assignee };
+
 	private final SimpleProject project;
 	protected ProblemSearchCriteria searchCriteria;
 
@@ -52,8 +59,7 @@ public class ProblemSearchPanel extends
 
 	@Override
 	protected SearchLayout<ProblemSearchCriteria> createAdvancedSearchLayout() {
-		// TODO Auto-generated method stub
-		return null;
+		return new ProblemAdvancedSearchLayout();
 	}
 
 	private HorizontalLayout constructHeader() {
@@ -154,6 +160,22 @@ public class ProblemSearchPanel extends
 			});
 			UiUtils.addComponent(basicSearchBody, cancelBtn,
 					Alignment.MIDDLE_CENTER);
+
+			final Button advancedSearchBtn = new Button(
+					LocalizationHelper
+							.getMessage(GenericI18Enum.BUTTON_ADVANCED_SEARCH),
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void buttonClick(final ClickEvent event) {
+							ProblemSearchPanel.this
+									.moveToAdvancedSearchLayout();
+						}
+					});
+			advancedSearchBtn.setStyleName("link");
+			UiUtils.addComponent(basicSearchBody, advancedSearchBtn,
+					Alignment.MIDDLE_CENTER);
 			return basicSearchBody;
 		}
 
@@ -181,6 +203,38 @@ public class ProblemSearchPanel extends
 		@Override
 		public ComponentContainer constructHeader() {
 			return ProblemSearchPanel.this.constructHeader();
+		}
+	}
+
+	private class ProblemAdvancedSearchLayout extends
+			DynamicQueryParamLayout<ProblemSearchCriteria> {
+		private static final long serialVersionUID = 1L;
+
+		public ProblemAdvancedSearchLayout() {
+			super(ProblemSearchPanel.this, ProjectContants.PROBLEM);
+		}
+
+		@Override
+		public ComponentContainer constructHeader() {
+			return ProblemSearchPanel.this.constructHeader();
+		}
+
+		@Override
+		public Param[] getParamFields() {
+			return paramFields;
+		}
+
+		@Override
+		protected Class<ProblemSearchCriteria> getType() {
+			return ProblemSearchCriteria.class;
+		}
+
+		@Override
+		protected Component buildSelectionComp(String fieldId) {
+			if ("problem-assignuser".equals(fieldId)) {
+				return new ProjectMemberListSelect();
+			}
+			return null;
 		}
 	}
 }
