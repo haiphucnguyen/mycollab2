@@ -19,6 +19,8 @@ package com.esofthead.mycollab.module.project.domain.criteria;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
+import com.esofthead.mycollab.core.db.query.Param;
+import com.esofthead.mycollab.core.db.query.PropertyListParam;
 
 /**
  * 
@@ -29,6 +31,10 @@ import com.esofthead.mycollab.core.arguments.StringSearchField;
 public class ProblemSearchCriteria extends SearchCriteria {
 	private static final long serialVersionUID = 1L;
 
+	public static Param p_assignee = new PropertyListParam(
+			"problem-assignuser",
+			"Assignee", "m_prj_problem", "assigntouser");
+	
 	private StringSearchField problemname;
 	private NumberSearchField projectId;
 	private StringSearchField raisedByUser;

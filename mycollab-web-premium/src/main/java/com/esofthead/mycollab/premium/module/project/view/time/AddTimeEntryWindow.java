@@ -113,7 +113,17 @@ public class AddTimeEntryWindow extends Window {
 		content.addComponent(descArea);
 
 		HorizontalLayout taskLayout = new HorizontalLayout();
-		Button attachTaskBtn = new Button("Link with task");
+		Button attachTaskBtn = new Button("Link with task",
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void buttonClick(ClickEvent event) {
+						// TODO Auto-generated method stub
+
+					}
+				});
+
 		taskLayout.addComponent(attachTaskBtn);
 		content.addComponent(taskLayout);
 

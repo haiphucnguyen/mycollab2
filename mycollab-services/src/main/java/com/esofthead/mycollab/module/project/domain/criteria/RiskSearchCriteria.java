@@ -16,10 +16,11 @@
  */
 package com.esofthead.mycollab.module.project.domain.criteria;
 
-import com.esofthead.mycollab.core.arguments.BooleanSearchField;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
+import com.esofthead.mycollab.core.db.query.Param;
+import com.esofthead.mycollab.core.db.query.PropertyListParam;
 
 /**
  * 
@@ -30,13 +31,14 @@ import com.esofthead.mycollab.core.arguments.StringSearchField;
 public class RiskSearchCriteria extends SearchCriteria {
 	private static final long serialVersionUID = 1L;
 
+	public static Param p_assignee = new PropertyListParam("risk-assignuser",
+			"Assignee", "m_prj_risk", "assigntouser");
+
 	private StringSearchField riskname;
 
 	private StringSearchField raisedByUser;
 
 	private StringSearchField assignToUser;
-
-	private BooleanSearchField isCompleted;
 
 	private NumberSearchField projectId;
 
@@ -72,14 +74,6 @@ public class RiskSearchCriteria extends SearchCriteria {
 
 	public void setAssignToUser(StringSearchField assignToUser) {
 		this.assignToUser = assignToUser;
-	}
-
-	public BooleanSearchField getIsCompleted() {
-		return isCompleted;
-	}
-
-	public void setIsCompleted(BooleanSearchField isCompleted) {
-		this.isCompleted = isCompleted;
 	}
 
 	public void setId(NumberSearchField id) {

@@ -2,20 +2,23 @@ package com.esofthead.mycollab.premium.module.project.view.problem;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
-import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
+import com.esofthead.mycollab.core.db.query.Param;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.ProblemSearchCriteria;
 import com.esofthead.mycollab.module.project.events.ProblemEvent;
 import com.esofthead.mycollab.module.project.localization.ProblemI18nEnum;
+import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberListSelect;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.MyCollabSession;
-import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
+import com.esofthead.mycollab.vaadin.ui.DefaultGenericSearchPanel;
+import com.esofthead.mycollab.vaadin.ui.DynamicQueryParamLayout;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
@@ -24,6 +27,7 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CheckBox;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
@@ -36,9 +40,11 @@ import com.vaadin.ui.TextField;
  * @since 1.0
  */
 public class ProblemSearchPanel extends
-GenericSearchPanel<ProblemSearchCriteria> {
+		DefaultGenericSearchPanel<ProblemSearchCriteria> {
 
 	private static final long serialVersionUID = 1L;
+	private static Param[] paramFields = new Param[] { ProblemSearchCriteria.p_assignee };
+
 	private final SimpleProject project;
 	protected ProblemSearchCriteria searchCriteria;
 
@@ -47,22 +53,57 @@ GenericSearchPanel<ProblemSearchCriteria> {
 	}
 
 	@Override
-	public void attach() {
-		super.attach();
-		this.createBasicSearchLayout();
+	protected SearchLayout<ProblemSearchCriteria> createBasicSearchLayout() {
+		return new ProblemBasicSearchLayout();
 	}
 
-	private void createBasicSearchLayout() {
-
-		this.setCompositionRoot(new ProblemBasicSearchLayout());
+	@Override
+	protected SearchLayout<ProblemSearchCriteria> createAdvancedSearchLayout() {
+		return new ProblemAdvancedSearchLayout();
 	}
 
+	private HorizontalLayout constructHeader() {
+		Image titleIcon = new Image(null,
+				MyCollabResource
+						.newResource("icons/22/project/problem_selected.png"));
+		Label headerText = new Label("Problem List");
 
+		final Button createBtn = new Button(
+				LocalizationHelper
+						.getMessage(ProblemI18nEnum.NEW_PROBLEM_ACTION),
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
 
-	@SuppressWarnings("rawtypes")
-	private class ProblemBasicSearchLayout extends BasicSearchLayout {
+					@Override
+					public void buttonClick(final ClickEvent event) {
+						EventBus.getInstance().fireEvent(
+								new ProblemEvent.GotoAdd(this, null));
+					}
+				});
+		createBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+		createBtn.setIcon(MyCollabResource
+				.newResource("icons/16/addRecord.png"));
+		createBtn.setEnabled(CurrentProjectVariables
+				.canWrite(ProjectRolePermissionCollections.PROBLEMS));
 
-		@SuppressWarnings("unchecked")
+		HorizontalLayout header = new HorizontalLayout();
+		headerText.setStyleName(UIConstants.HEADER_TEXT);
+
+		UiUtils.addComponent(header, titleIcon, Alignment.MIDDLE_LEFT);
+		UiUtils.addComponent(header, headerText, Alignment.MIDDLE_LEFT);
+		UiUtils.addComponent(header, createBtn, Alignment.MIDDLE_RIGHT);
+		header.setExpandRatio(headerText, 1.0f);
+
+		header.setStyleName(UIConstants.HEADER_VIEW);
+		header.setWidth("100%");
+		header.setSpacing(true);
+		header.setMargin(new MarginInfo(true, false, true, false));
+		return header;
+	}
+
+	private class ProblemBasicSearchLayout extends
+			BasicSearchLayout<ProblemSearchCriteria> {
+
 		public ProblemBasicSearchLayout() {
 			super(ProblemSearchPanel.this);
 		}
@@ -83,7 +124,6 @@ GenericSearchPanel<ProblemSearchCriteria> {
 			this.nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
 			UiUtils.addComponent(basicSearchBody, this.nameField,
 					Alignment.MIDDLE_CENTER);
-
 
 			this.myItemCheckbox = new CheckBox("My Items");
 			this.myItemCheckbox.setWidth("75px");
@@ -106,7 +146,6 @@ GenericSearchPanel<ProblemSearchCriteria> {
 			UiUtils.addComponent(basicSearchBody, searchBtn,
 					Alignment.MIDDLE_LEFT);
 
-
 			final Button cancelBtn = new Button(
 					LocalizationHelper.getMessage(GenericI18Enum.BUTTON_CLEAR));
 			cancelBtn.setStyleName(UIConstants.THEME_BLANK_LINK);
@@ -121,24 +160,40 @@ GenericSearchPanel<ProblemSearchCriteria> {
 			});
 			UiUtils.addComponent(basicSearchBody, cancelBtn,
 					Alignment.MIDDLE_CENTER);
+
+			final Button advancedSearchBtn = new Button(
+					LocalizationHelper
+							.getMessage(GenericI18Enum.BUTTON_ADVANCED_SEARCH),
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void buttonClick(final ClickEvent event) {
+							ProblemSearchPanel.this
+									.moveToAdvancedSearchLayout();
+						}
+					});
+			advancedSearchBtn.setStyleName("link");
+			UiUtils.addComponent(basicSearchBody, advancedSearchBtn,
+					Alignment.MIDDLE_CENTER);
 			return basicSearchBody;
 		}
 
 		@Override
-		protected SearchCriteria fillupSearchCriteria() {
+		protected ProblemSearchCriteria fillupSearchCriteria() {
 			ProblemSearchPanel.this.searchCriteria = new ProblemSearchCriteria();
 			ProblemSearchPanel.this.searchCriteria
-			.setProjectId(new NumberSearchField(SearchField.AND,
-					ProblemSearchPanel.this.project.getId()));
+					.setProjectId(new NumberSearchField(SearchField.AND,
+							ProblemSearchPanel.this.project.getId()));
 
 			ProblemSearchPanel.this.searchCriteria
-			.setProblemname(new StringSearchField(this.nameField
-					.getValue().toString().trim()));
+					.setProblemname(new StringSearchField(this.nameField
+							.getValue().toString().trim()));
 
 			if (this.myItemCheckbox.getValue()) {
 				ProblemSearchPanel.this.searchCriteria
-				.setAssignToUser(new StringSearchField(SearchField.AND,
-						AppContext.getUsername()));
+						.setAssignToUser(new StringSearchField(SearchField.AND,
+								AppContext.getUsername()));
 			} else {
 				ProblemSearchPanel.this.searchCriteria.setAssignToUser(null);
 			}
@@ -147,40 +202,39 @@ GenericSearchPanel<ProblemSearchCriteria> {
 
 		@Override
 		public ComponentContainer constructHeader() {
-			Image titleIcon = new Image(null,
-					MyCollabResource.newResource("icons/22/project/problem_selected.png"));
-			Label headerText = new Label("Problem List");
+			return ProblemSearchPanel.this.constructHeader();
+		}
+	}
 
-			final Button createBtn = new Button(
-					LocalizationHelper.getMessage(ProblemI18nEnum.NEW_PROBLEM_ACTION),
-					new Button.ClickListener() {
-						private static final long serialVersionUID = 1L;
+	private class ProblemAdvancedSearchLayout extends
+			DynamicQueryParamLayout<ProblemSearchCriteria> {
+		private static final long serialVersionUID = 1L;
 
-						@Override
-						public void buttonClick(final ClickEvent event) {
-							EventBus.getInstance().fireEvent(
-									new ProblemEvent.GotoAdd(this, null));
-						}
-					});
-			createBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
-			createBtn.setIcon(MyCollabResource
-					.newResource("icons/16/addRecord.png"));
-			createBtn.setEnabled(CurrentProjectVariables
-					.canWrite(ProjectRolePermissionCollections.PROBLEMS));
+		public ProblemAdvancedSearchLayout() {
+			super(ProblemSearchPanel.this, ProjectContants.PROBLEM);
+		}
 
-			HorizontalLayout header = new HorizontalLayout();
-			headerText.setStyleName(UIConstants.HEADER_TEXT);
+		@Override
+		public ComponentContainer constructHeader() {
+			return ProblemSearchPanel.this.constructHeader();
+		}
 
-			UiUtils.addComponent(header, titleIcon, Alignment.MIDDLE_LEFT);
-			UiUtils.addComponent(header, headerText, Alignment.MIDDLE_LEFT);
-			UiUtils.addComponent(header, createBtn, Alignment.MIDDLE_RIGHT);
-			header.setExpandRatio(headerText, 1.0f);
+		@Override
+		public Param[] getParamFields() {
+			return paramFields;
+		}
 
-			header.setStyleName(UIConstants.HEADER_VIEW);
-			header.setWidth("100%");
-			header.setSpacing(true);
-			header.setMargin(new MarginInfo(true, false, true, false));
-			return header;
+		@Override
+		protected Class<ProblemSearchCriteria> getType() {
+			return ProblemSearchCriteria.class;
+		}
+
+		@Override
+		protected Component buildSelectionComp(String fieldId) {
+			if ("problem-assignuser".equals(fieldId)) {
+				return new ProjectMemberListSelect();
+			}
+			return null;
 		}
 	}
 }
