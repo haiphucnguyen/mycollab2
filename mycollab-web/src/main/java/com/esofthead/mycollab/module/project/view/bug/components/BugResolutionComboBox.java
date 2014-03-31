@@ -15,7 +15,7 @@
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.esofthead.mycollab.module.project.view.bug;
+package com.esofthead.mycollab.module.project.view.bug.components;
 
 import com.esofthead.mycollab.module.tracker.BugResolutionConstants;
 import com.esofthead.mycollab.vaadin.ui.ValueComboBox;

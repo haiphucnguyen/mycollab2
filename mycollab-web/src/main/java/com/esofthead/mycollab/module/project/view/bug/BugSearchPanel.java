@@ -61,7 +61,10 @@ public class BugSearchPanel extends
 	protected Label bugtitle;
 	private ComponentContainer rightComponent;
 
-	private static Param[] paramFields = new Param[] {};
+	private static Param[] paramFields = new Param[] {
+			BugSearchCriteria.p_textDesc, BugSearchCriteria.p_resolveddate,
+			BugSearchCriteria.p_duedate, BugSearchCriteria.p_createdtime,
+			BugSearchCriteria.p_lastupdatedtime };
 
 	public BugSearchPanel() {
 		this("Bugs");

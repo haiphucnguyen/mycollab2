@@ -23,6 +23,7 @@ import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.db.query.CompositionStringParam;
+import com.esofthead.mycollab.core.db.query.DateParam;
 import com.esofthead.mycollab.core.db.query.Param;
 import com.esofthead.mycollab.core.db.query.StringParam;
 
@@ -39,6 +40,19 @@ public class BugSearchCriteria extends SearchCriteria {
 			"Text", new StringParam[] {
 					new StringParam("", "", "m_tracker_bug", "summary"),
 					new StringParam("", "", "m_tracker_bug", "detail") });
+
+	public static Param p_createdtime = new DateParam("bug-createdtime",
+			"Created Date", "m_tracker_bug", "createdTime");
+
+	public static Param p_lastupdatedtime = new DateParam(
+			"bug-lastupdatedtime", "Last Updated Date", "m_tracker_bug",
+			"lastUpdatedTime");
+
+	public static Param p_resolveddate = new DateParam("bug-resolveddate",
+			"Resolved Date", "m_tracker_bug", "resolveddate");
+
+	public static Param p_duedate = new DateParam("bug-duedate", "Due Date",
+			"m_tracker_bug", "duedate");
 
 	private StringSearchField assignuser;
 

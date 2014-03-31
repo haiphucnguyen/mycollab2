@@ -14,8 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.module.project.view.bug;
+package com.esofthead.mycollab.module.project.view.bug.components;
 
+import com.esofthead.mycollab.module.project.view.bug.BugPriorityStatusConstants;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.vaadin.data.util.IndexedContainer;
 import com.vaadin.ui.ComboBox;
