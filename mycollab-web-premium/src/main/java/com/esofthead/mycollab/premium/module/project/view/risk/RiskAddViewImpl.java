@@ -23,7 +23,7 @@ import com.vaadin.ui.Layout;
  */
 @ViewComponent
 public class RiskAddViewImpl extends AbstractEditItemComp<Risk> implements
-RiskAddView {
+		RiskAddView {
 
 	private static final long serialVersionUID = 1L;
 
@@ -49,13 +49,13 @@ RiskAddView {
 
 	@Override
 	protected String initFormTitle() {
-		return (beanItem.getId() == null) ? null : beanItem
-				.getRiskname();
+		return (beanItem.getId() == null) ? null : beanItem.getRiskname();
 	}
 
 	@Override
 	protected Resource initFormIconResource() {
-		return MyCollabResource.newResource("icons/22/project/risk_selected.png");
+		return MyCollabResource
+				.newResource("icons/22/project/risk_selected.png");
 	}
 
 	@Override
