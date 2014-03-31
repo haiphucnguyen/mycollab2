@@ -26,6 +26,7 @@ public class ProjectMemberListSelect extends ListSelect {
 	public ProjectMemberListSelect() {
 		this.setItemCaptionMode(ItemCaptionMode.EXPLICIT);
 		this.setNullSelectionAllowed(false);
+		this.setMultiSelect(true);
 
 		ProjectMemberSearchCriteria criteria = new ProjectMemberSearchCriteria();
 		criteria.setProjectId(new NumberSearchField(CurrentProjectVariables
@@ -51,5 +52,6 @@ public class ProjectMemberListSelect extends ListSelect {
 					UserAvatarControlFactory.createAvatarResource(
 							member.getMemberAvatarId(), 16));
 		}
+		this.setRows(4);
 	}
 }

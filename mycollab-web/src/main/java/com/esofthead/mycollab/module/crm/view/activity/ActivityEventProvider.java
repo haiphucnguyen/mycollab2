@@ -32,9 +32,9 @@ import com.esofthead.mycollab.module.crm.domain.criteria.MeetingSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.MeetingService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.vaadin.addon.calendar.event.BasicEvent;
-import com.vaadin.addon.calendar.event.CalendarEvent;
-import com.vaadin.addon.calendar.event.CalendarEventProvider;
+import com.vaadin.ui.components.calendar.event.BasicEvent;
+import com.vaadin.ui.components.calendar.event.CalendarEvent;
+import com.vaadin.ui.components.calendar.event.CalendarEventProvider;
 
 /**
  * 
@@ -137,42 +137,44 @@ public class ActivityEventProvider implements CalendarEventProvider {
 	private void filterListEventRecurringActivity(
 			final List<SimpleMeeting> crmEvents, Date eventStartDate,
 			Date eventEndDate) {
-//		for (SimpleMeeting meeting : crmEvents) {
-//			if (meeting.getIsrecurrence()) {
-//				// TODO:Revise this implementation
-//				if (meeting.getRecurrencetype() != null) {
-//					if (meeting.getRecurrencetype().equals("DailyEvent")) {
-//						DailyEvent dailyEvent = JsonDeSerializer.fromJson(
-//								meeting.getRecurrenceinfo(), DailyEvent.class);
-//					} else if (meeting.getRecurrencetype()
-//							.equals("WeeklyEvent")) {
-//						WeeklyEvent weeklyEvent = JsonDeSerializer.fromJson(
-//								meeting.getRecurrenceinfo(), WeeklyEvent.class);
-//					} else if (meeting.getRecurrencetype().equals(
-//							"MonthlyEventFollowDay")) {
-//						MonthlyEventFollowDay monthEventFollowDay = JsonDeSerializer
-//								.fromJson(meeting.getRecurrenceinfo(),
-//										MonthlyEventFollowDay.class);
-//					} else if (meeting.getRecurrencetype().equals(
-//							"MonthlyEventFollowKindDay")) {
-//						MonthlyEventFollowKindDay monthEventFollowKindDay = JsonDeSerializer
-//								.fromJson(meeting.getRecurrenceinfo(),
-//										MonthlyEventFollowKindDay.class);
-//					} else if (meeting.getRecurrencetype().equals(
-//							"YearlyEventFollowEveryMonth")) {
-//						YearlyEventFollowEveryMonth yearlyEventFollowEveryMonth = JsonDeSerializer
-//								.fromJson(meeting.getRecurrenceinfo(),
-//										YearlyEventFollowEveryMonth.class);
-//					} else if (meeting.getRecurrencetype().equals(
-//							"YearlyEventFollowAdvanceSettingMonth")) {
-//						YearlyEventFollowAdvanceSettingMonth yearlyEventFollowAdvanceSettingMonth = JsonDeSerializer
-//								.fromJson(
-//										meeting.getRecurrenceinfo(),
-//										YearlyEventFollowAdvanceSettingMonth.class);
-//					}
-//				}
-//			}
-//		}
+		// for (SimpleMeeting meeting : crmEvents) {
+		// if (meeting.getIsrecurrence()) {
+		// // TODO:Revise this implementation
+		// if (meeting.getRecurrencetype() != null) {
+		// if (meeting.getRecurrencetype().equals("DailyEvent")) {
+		// DailyEvent dailyEvent = JsonDeSerializer.fromJson(
+		// meeting.getRecurrenceinfo(), DailyEvent.class);
+		// } else if (meeting.getRecurrencetype()
+		// .equals("WeeklyEvent")) {
+		// WeeklyEvent weeklyEvent = JsonDeSerializer.fromJson(
+		// meeting.getRecurrenceinfo(), WeeklyEvent.class);
+		// } else if (meeting.getRecurrencetype().equals(
+		// "MonthlyEventFollowDay")) {
+		// MonthlyEventFollowDay monthEventFollowDay = JsonDeSerializer
+		// .fromJson(meeting.getRecurrenceinfo(),
+		// MonthlyEventFollowDay.class);
+		// } else if (meeting.getRecurrencetype().equals(
+		// "MonthlyEventFollowKindDay")) {
+		// MonthlyEventFollowKindDay monthEventFollowKindDay = JsonDeSerializer
+		// .fromJson(meeting.getRecurrenceinfo(),
+		// MonthlyEventFollowKindDay.class);
+		// } else if (meeting.getRecurrencetype().equals(
+		// "YearlyEventFollowEveryMonth")) {
+		// YearlyEventFollowEveryMonth yearlyEventFollowEveryMonth =
+		// JsonDeSerializer
+		// .fromJson(meeting.getRecurrenceinfo(),
+		// YearlyEventFollowEveryMonth.class);
+		// } else if (meeting.getRecurrencetype().equals(
+		// "YearlyEventFollowAdvanceSettingMonth")) {
+		// YearlyEventFollowAdvanceSettingMonth
+		// yearlyEventFollowAdvanceSettingMonth = JsonDeSerializer
+		// .fromJson(
+		// meeting.getRecurrenceinfo(),
+		// YearlyEventFollowAdvanceSettingMonth.class);
+		// }
+		// }
+		// }
+		// }
 	}
 
 	public static class CrmEvent extends BasicEvent {
