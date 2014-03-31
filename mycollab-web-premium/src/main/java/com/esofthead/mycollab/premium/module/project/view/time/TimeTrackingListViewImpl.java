@@ -2,12 +2,18 @@ package com.esofthead.mycollab.premium.module.project.view.time;
 
 import java.util.Arrays;
 
+import org.vaadin.dialogs.ConfirmDialog;
+
 import com.esofthead.mycollab.common.MonitorTypeConstants;
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.arguments.RangeDateSearchField;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.eventmanager.ApplicationEvent;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBus;
+import com.esofthead.mycollab.module.crm.events.AccountEvent;
+import com.esofthead.mycollab.module.crm.service.AccountService;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ExportTimeLoggingStreamResource;
 import com.esofthead.mycollab.module.project.domain.SimpleItemTimeLogging;
@@ -24,6 +30,7 @@ import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
+import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.SplitButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -147,7 +154,7 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements
 		this.tableItem = new TimeTrackingTableDisplay(Arrays.asList(
 				TimeTableFieldDef.summary, TimeTableFieldDef.logUser,
 				TimeTableFieldDef.logValue, TimeTableFieldDef.billable,
-				TimeTableFieldDef.logForDate));
+				TimeTableFieldDef.logForDate, TimeTableFieldDef.id));
 
 		this.tableItem
 				.addTableListener(new ApplicationEventListener<TableClickEvent>() {
@@ -174,6 +181,39 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements
 										new TaskEvent.GotoRead(this,
 												itemLogging.getTypeid()));
 							}
+						} else if ("delete".equals(event.getFieldName())) {
+							ConfirmDialogExt.show(
+									UI.getCurrent(),
+									LocalizationHelper.getMessage(
+											GenericI18Enum.DELETE_DIALOG_TITLE,
+											SiteConfiguration.getSiteName()),
+									LocalizationHelper
+											.getMessage(GenericI18Enum.CONFIRM_DELETE_RECORD_DIALOG_MESSAGE),
+									LocalizationHelper
+											.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
+									LocalizationHelper
+											.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
+									new ConfirmDialog.Listener() {
+										private static final long serialVersionUID = 1L;
+
+										@Override
+										public void onClose(ConfirmDialog dialog) {
+											if (dialog.isConfirmed()) {
+												ItemTimeLoggingService itemTimeLoggingService = ApplicationContextUtil
+														.getSpringBean(ItemTimeLoggingService.class);
+												itemTimeLoggingService.removeWithSession(
+														itemLogging.getId(),
+														AppContext
+																.getUsername(),
+														AppContext
+																.getAccountId());
+												refresh();
+											}
+										}
+									});
+
+						} else if ("edit".equals(event.getFieldName())) {
+
 						}
 					}
 				});

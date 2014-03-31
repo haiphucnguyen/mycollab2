@@ -1,33 +1,13 @@
-/**
- * This file is part of mycollab-web.
- *
- * mycollab-web is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-web is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.esofthead.mycollab.module.project.view.user;
-
-import java.util.List;
 
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
-import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.project.ProjectStatusConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectSearchCriteria;
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
-import com.esofthead.mycollab.module.project.localization.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.project.view.parameters.BugScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.MilestoneScreenData;
@@ -39,7 +19,6 @@ import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.vaadin.ui.BeanList;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
-import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.ProgressBarIndicator;
 import com.vaadin.ui.Alignment;
@@ -51,41 +30,27 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Window;
 
-/**
- * 
- * @author MyCollab Ltd.
- * @since 1.0
- * 
- */
-public class MyProjectListComponent extends Depot {
-	private static final long serialVersionUID = 1L;
+public class MyProjectListWindow extends Window {
+	private static final long serialVersionUID = -3927621612074942453L;
+	ProjectPagedList projectList;
 
-	private ProjectPagedList projectList;
+	public MyProjectListWindow() {
+		super("My Project");
 
-	public MyProjectListComponent() {
-		super(LocalizationHelper
-				.getMessage(ProjectCommonI18nEnum.MY_PROJECTS_TITLE),
-				new VerticalLayout());
+		VerticalLayout layout = new VerticalLayout();
+		layout.setStyleName("myprojectlist");
+		layout.setMargin(true);
 
-		this.projectList = new ProjectPagedList();
-		this.addStyleName("activity-panel");
-		this.addStyleName("myprojectlist");
-		((VerticalLayout) this.bodyContent).setMargin(false);
+		projectList = new ProjectPagedList();
+		layout.addComponent(projectList);
+		this.setContent(layout);
+		this.setModal(true);
+		this.center();
 	}
 
-	public void showProjects(final List<Integer> prjKeys) {
-		this.bodyContent.removeAllComponents();
-		this.bodyContent.addComponent(this.projectList);
-		final ProjectSearchCriteria searchCriteria = new ProjectSearchCriteria();
-		searchCriteria.setInvolvedMember(new StringSearchField(SearchField.AND,
-				AppContext.getUsername()));
-		searchCriteria.setProjectStatuses(new SetSearchField<String>(
-				new String[] { ProjectStatusConstants.OPEN }));
-		this.projectList.setSearchCriteria(searchCriteria);
-	}
-
-	public static class ProjectPagedList extends
+	private class ProjectPagedList extends
 	BeanList<ProjectService, ProjectSearchCriteria, SimpleProject> {
 		private static final long serialVersionUID = 1L;
 
@@ -96,7 +61,7 @@ public class MyProjectListComponent extends Depot {
 		}
 	}
 
-	public static class ProjectRowDisplayHandler implements
+	public class ProjectRowDisplayHandler implements
 	BeanList.RowDisplayHandler<SimpleProject> {
 		private static final long serialVersionUID = 1L;
 
@@ -126,6 +91,7 @@ public class MyProjectListComponent extends Depot {
 
 				@Override
 				public void buttonClick(final ClickEvent event) {
+					closeWindowParent(event);
 					EventBus.getInstance().fireEvent(
 							new ProjectEvent.GotoMyProject(this,
 									new PageActionChain(
@@ -142,6 +108,7 @@ public class MyProjectListComponent extends Depot {
 
 				@Override
 				public void buttonClick(ClickEvent event) {
+					closeWindowParent(event);
 					EventBus.getInstance().fireEvent(
 							new ProjectEvent.GotoMyProject(this, 
 									new PageActionChain(
@@ -168,6 +135,7 @@ public class MyProjectListComponent extends Depot {
 
 				@Override
 				public void buttonClick(ClickEvent event) {
+					closeWindowParent(event);
 					EventBus.getInstance().fireEvent(new ProjectEvent.GotoMyProject(this, 
 							new PageActionChain(
 									new ProjectScreenData.Goto(project.getId()),
@@ -194,6 +162,7 @@ public class MyProjectListComponent extends Depot {
 
 				@Override
 				public void buttonClick(ClickEvent event) {
+					closeWindowParent(event);
 					EventBus.getInstance().fireEvent(new ProjectEvent.GotoMyProject(this, 
 							new PageActionChain(
 									new ProjectScreenData.Goto(project.getId()),
@@ -224,6 +193,7 @@ public class MyProjectListComponent extends Depot {
 
 				@Override
 				public void buttonClick(ClickEvent event) {
+					closeWindowParent(event);
 					EventBus.getInstance().fireEvent(new ProjectEvent.GotoMyProject(this, 
 							new PageActionChain(
 									new ProjectScreenData.Goto(project.getId()),
@@ -246,6 +216,31 @@ public class MyProjectListComponent extends Depot {
 			layout.addComponent(header);
 			return layout;
 		}
+
+		protected void closeWindowParent(ClickEvent evt) {
+			Component parent = evt.getButton().getParent();
+			while (parent != null) {
+				if (parent instanceof Window) {
+					((Window) parent).close();
+					return;
+				}
+				parent = parent.getParent();
+			}
+		}
 	}
+
+	@Override
+	public void attach() {
+		super.attach();
+
+		final ProjectSearchCriteria searchCriteria = new ProjectSearchCriteria();
+		searchCriteria.setInvolvedMember(new StringSearchField(SearchField.AND,
+				AppContext.getUsername()));
+		searchCriteria.setProjectStatuses(new SetSearchField<String>(
+				new String[] { ProjectStatusConstants.OPEN }));
+		this.projectList.setSearchCriteria(searchCriteria);
+	}
+
+
 
 }
