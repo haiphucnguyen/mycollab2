@@ -68,7 +68,7 @@ import com.vaadin.ui.VerticalLayout;
  */
 @ViewComponent
 public class ContactRoleEditViewImpl extends AbstractPageView implements
-		ContactRoleEditView {
+ContactRoleEditView {
 	private static final long serialVersionUID = 1L;
 
 	private ContactOpportunityList contactRoleList;
@@ -94,16 +94,16 @@ public class ContactRoleEditViewImpl extends AbstractPageView implements
 
 		Button addMoreContactRolesBtn = new Button("Add more contact roles",
 				new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
+			private static final long serialVersionUID = 1L;
 
-					@Override
-					public void buttonClick(ClickEvent event) {
-						SimpleContactOpportunityRel contactRole = new SimpleContactOpportunityRel();
-						ContactRoleRowComp row = new ContactRoleRowComp(
-								contactRole);
-						contactRoleList.addRow(row);
-					}
-				});
+			@Override
+			public void buttonClick(ClickEvent event) {
+				SimpleContactOpportunityRel contactRole = new SimpleContactOpportunityRel();
+				ContactRoleRowComp row = new ContactRoleRowComp(
+						contactRole);
+				contactRoleList.addRow(row);
+			}
+		});
 		addMoreContactRolesBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 
 		HorizontalLayout buttonControls = new HorizontalLayout();
@@ -117,7 +117,6 @@ public class ContactRoleEditViewImpl extends AbstractPageView implements
 		HorizontalLayout layout = new HorizontalLayout();
 		layout.setSpacing(true);
 		layout.setMargin(true);
-		layout.setWidth("100%");
 
 		HorizontalLayout buttonWrapper = new HorizontalLayout();
 		buttonWrapper.setWidth(Sizeable.SIZE_UNDEFINED, Sizeable.Unit.PIXELS);
@@ -282,35 +281,35 @@ public class ContactRoleEditViewImpl extends AbstractPageView implements
 			contactField = new ContactSelectionField();
 			this.addComponent(contactField);
 			contactField
-					.setPropertyDataSource(new AbstractField<SimpleContact>() {
-						private static final long serialVersionUID = 1L;
+			.setPropertyDataSource(new AbstractField<SimpleContact>() {
+				private static final long serialVersionUID = 1L;
 
-						@Override
-						public SimpleContact getValue() {
-							return contactOpp;
-						}
+				@Override
+				public SimpleContact getValue() {
+					return contactOpp;
+				}
 
-						@Override
-						public Class<? extends SimpleContact> getType() {
-							return SimpleContact.class;
-						}
+				@Override
+				public Class<? extends SimpleContact> getType() {
+					return SimpleContact.class;
+				}
 
-					});
+			});
 			contactField.setWidth("250px");
 
 			Button accountLink = new Button(contactOpp.getAccountName(),
 					new Button.ClickListener() {
-						private static final long serialVersionUID = 1L;
+				private static final long serialVersionUID = 1L;
 
-						@Override
-						public void buttonClick(ClickEvent event) {
-							EventBus.getInstance().fireEvent(
-									new AccountEvent.GotoRead(
-											ContactRoleRowComp.this, contactOpp
-													.getAccountid()));
+				@Override
+				public void buttonClick(ClickEvent event) {
+					EventBus.getInstance().fireEvent(
+							new AccountEvent.GotoRead(
+									ContactRoleRowComp.this, contactOpp
+									.getAccountid()));
 
-						}
-					});
+				}
+			});
 			accountLink.setIcon(MyCollabResource
 					.newResource("icons/16/crm/account.png"));
 			accountLink.setStyleName("link");
@@ -330,7 +329,7 @@ public class ContactRoleEditViewImpl extends AbstractPageView implements
 				@Override
 				public void buttonClick(ClickEvent event) {
 					((CssLayout) ContactRoleRowComp.this.getParent())
-							.removeComponent(ContactRoleRowComp.this);
+					.removeComponent(ContactRoleRowComp.this);
 
 					// The contact opportunity relationship is existed
 					if (contactOpp.getId() != null) {

@@ -9,12 +9,14 @@ import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.crm.CrmLinkGenerator;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.ContactOpportunity;
 import com.esofthead.mycollab.module.crm.domain.Opportunity;
 import com.esofthead.mycollab.module.crm.domain.SimpleContactOpportunityRel;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
+import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
 import com.esofthead.mycollab.module.crm.service.ContactOpportunityService;
 import com.esofthead.mycollab.module.crm.service.ContactService;
 import com.esofthead.mycollab.module.crm.ui.components.RelatedListComp2;
@@ -45,8 +47,8 @@ import com.vaadin.ui.VerticalLayout;
  * 
  */
 public class OpportunityContactListComp
-		extends
-		RelatedListComp2<ContactOpportunityService, ContactSearchCriteria, SimpleContactOpportunityRel> {
+extends
+RelatedListComp2<ContactOpportunityService, ContactSearchCriteria, SimpleContactOpportunityRel> {
 	private static final long serialVersionUID = 5717208523696358616L;
 
 	private Opportunity opportunity;
@@ -59,8 +61,25 @@ public class OpportunityContactListComp
 
 	@Override
 	protected Component generateTopControls() {
-		VerticalLayout controlsBtnWrap = new VerticalLayout();
-		controlsBtnWrap.setWidth("100%");
+		VerticalLayout topControls = new VerticalLayout();
+		topControls.setWidth("100%");
+		HorizontalLayout controlsBtnWrap = new HorizontalLayout();
+		controlsBtnWrap.setSizeUndefined();
+		controlsBtnWrap.setSpacing(true);
+
+		Button editContactRole = new Button("Edit contacts' role");
+		editContactRole.setIcon(MyCollabResource.newResource("icons/16/edit_white.png"));
+		editContactRole.setStyleName(UIConstants.THEME_GREEN_LINK);
+		editContactRole.addClickListener(new Button.ClickListener() {
+			private static final long serialVersionUID = 8817255902355940210L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				EventBus.getInstance().fireEvent(new OpportunityEvent.GotoContactRoleEdit(this, opportunity));
+			}
+		});
+		controlsBtnWrap.addComponent(editContactRole);
+
 		final SplitButton controlsBtn = new SplitButton();
 		controlsBtn.setSizeUndefined();
 		controlsBtn.setEnabled(AppContext
@@ -70,31 +89,31 @@ public class OpportunityContactListComp
 		controlsBtn.setIcon(MyCollabResource
 				.newResource("icons/16/addRecord.png"));
 		controlsBtn
-				.addClickListener(new SplitButton.SplitButtonClickListener() {
-					private static final long serialVersionUID = 1L;
+		.addClickListener(new SplitButton.SplitButtonClickListener() {
+			private static final long serialVersionUID = 1L;
 
-					@Override
-					public void splitButtonClick(
-							final SplitButton.SplitButtonClickEvent event) {
-						fireNewRelatedItem("");
-					}
-				});
+			@Override
+			public void splitButtonClick(
+					final SplitButton.SplitButtonClickEvent event) {
+				fireNewRelatedItem("");
+			}
+		});
 		final Button selectBtn = new Button("Select from existing contacts",
 				new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
+			private static final long serialVersionUID = 1L;
 
-					@Override
-					public void buttonClick(final ClickEvent event) {
-						final OpportunityContactSelectionWindow contactsWindow = new OpportunityContactSelectionWindow(
-								OpportunityContactListComp.this);
-						final ContactSearchCriteria criteria = new ContactSearchCriteria();
-						criteria.setSaccountid(new NumberSearchField(AppContext
-								.getAccountId()));
-						UI.getCurrent().addWindow(contactsWindow);
-						contactsWindow.setSearchCriteria(criteria);
-						controlsBtn.setPopupVisible(false);
-					}
-				});
+			@Override
+			public void buttonClick(final ClickEvent event) {
+				final OpportunityContactSelectionWindow contactsWindow = new OpportunityContactSelectionWindow(
+						OpportunityContactListComp.this);
+				final ContactSearchCriteria criteria = new ContactSearchCriteria();
+				criteria.setSaccountid(new NumberSearchField(AppContext
+						.getAccountId()));
+				UI.getCurrent().addWindow(contactsWindow);
+				contactsWindow.setSearchCriteria(criteria);
+				controlsBtn.setPopupVisible(false);
+			}
+		});
 		selectBtn.setIcon(MyCollabResource.newResource("icons/16/select.png"));
 		selectBtn.setStyleName("link");
 		VerticalLayout buttonControlLayout = new VerticalLayout();
@@ -102,9 +121,11 @@ public class OpportunityContactListComp
 		controlsBtn.setContent(buttonControlLayout);
 
 		controlsBtnWrap.addComponent(controlsBtn);
-		controlsBtnWrap.setComponentAlignment(controlsBtn,
+
+		topControls.addComponent(controlsBtnWrap);
+		topControls.setComponentAlignment(controlsBtnWrap,
 				Alignment.MIDDLE_RIGHT);
-		return controlsBtnWrap;
+		return topControls;
 	}
 
 	public void displayContacts(final Opportunity opportunity) {
@@ -132,7 +153,7 @@ public class OpportunityContactListComp
 	}
 
 	public class OpportunityContactBlockDisplay implements
-			BlockDisplayHandler<SimpleContactOpportunityRel> {
+	BlockDisplayHandler<SimpleContactOpportunityRel> {
 
 		@Override
 		public Component generateBlock(
@@ -166,13 +187,13 @@ public class OpportunityContactListComp
 							LocalizationHelper.getMessage(
 									GenericI18Enum.DELETE_DIALOG_TITLE,
 									SiteConfiguration.getSiteName()),
-							LocalizationHelper
+									LocalizationHelper
 									.getMessage(GenericI18Enum.CONFIRM_DELETE_RECORD_DIALOG_MESSAGE),
-							LocalizationHelper
+									LocalizationHelper
 									.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
-							LocalizationHelper
+									LocalizationHelper
 									.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
-							new ConfirmDialog.Listener() {
+									new ConfirmDialog.Listener() {
 								private static final long serialVersionUID = 1L;
 
 								@Override
@@ -182,17 +203,17 @@ public class OpportunityContactListComp
 												.getSpringBean(ContactService.class);
 										ContactOpportunity associateContact = new ContactOpportunity();
 										associateContact
-												.setOpportunityid(opportunity
-														.getId());
+										.setOpportunityid(opportunity
+												.getId());
 										associateContact.setContactid(contact
 												.getId());
 										contactService
-												.removeContactOpportunityRelationship(
-														associateContact,
-														AppContext
-																.getAccountId());
+										.removeContactOpportunityRelationship(
+												associateContact,
+												AppContext
+												.getAccountId());
 										OpportunityContactListComp.this
-												.refresh();
+										.refresh();
 									}
 								}
 							});
@@ -206,9 +227,9 @@ public class OpportunityContactListComp
 			Label contactName = new Label("Name: <a href='"
 					+ SiteConfiguration.getSiteUrl(AppContext.getSession()
 							.getSubdomain())
-					+ CrmLinkGenerator.generateCrmItemLink(
-							CrmTypeConstants.CONTACT, contact.getId()) + "'>"
-					+ contact.getContactName() + "</a>", ContentMode.HTML);
+							+ CrmLinkGenerator.generateCrmItemLink(
+									CrmTypeConstants.CONTACT, contact.getId()) + "'>"
+									+ contact.getContactName() + "</a>", ContentMode.HTML);
 
 			contactInfo.addComponent(contactName);
 
