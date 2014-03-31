@@ -11,7 +11,7 @@ import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
 import com.esofthead.mycollab.module.project.localization.TimeTrackingI18nEnum;
-import com.esofthead.mycollab.module.project.view.user.ProjectMemberListSelect;
+import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberListSelect;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.DateRangeField;
 import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
