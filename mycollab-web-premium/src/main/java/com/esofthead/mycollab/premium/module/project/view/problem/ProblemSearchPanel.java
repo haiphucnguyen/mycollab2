@@ -43,7 +43,11 @@ public class ProblemSearchPanel extends
 		DefaultGenericSearchPanel<ProblemSearchCriteria> {
 
 	private static final long serialVersionUID = 1L;
-	private static Param[] paramFields = new Param[] { ProblemSearchCriteria.p_assignee };
+	private static Param[] paramFields = new Param[] {
+			ProblemSearchCriteria.p_assignee,
+			ProblemSearchCriteria.p_raisedUser,
+			ProblemSearchCriteria.p_priority, ProblemSearchCriteria.p_status,
+			ProblemSearchCriteria.p_duedate, ProblemSearchCriteria.p_raiseddate };
 
 	private final SimpleProject project;
 	protected ProblemSearchCriteria searchCriteria;
@@ -232,6 +236,8 @@ public class ProblemSearchPanel extends
 		@Override
 		protected Component buildSelectionComp(String fieldId) {
 			if ("problem-assignuser".equals(fieldId)) {
+				return new ProjectMemberListSelect();
+			} else if ("problem-raiseduser".equals(fieldId)) {
 				return new ProjectMemberListSelect();
 			}
 			return null;
