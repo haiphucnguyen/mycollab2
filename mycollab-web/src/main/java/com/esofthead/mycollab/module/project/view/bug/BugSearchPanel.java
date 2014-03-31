@@ -328,7 +328,7 @@ public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 					.addComponent(new BugStaticItemMultiSelectField(
 							ProjectDataTypeFactory.getBugSeverityList()),
 							"Severity", 1, 5);
-
+			gridLayout.getLayout().setMargin(new MarginInfo(true, false, true, false));
 			return gridLayout.getLayout();
 		}
 
