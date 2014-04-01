@@ -11,6 +11,7 @@ import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.ItemTimeLogging;
+import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.service.ItemTimeLoggingService;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberSelectionBox;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
@@ -193,7 +194,8 @@ public class AddTimeEntryWindow extends Window {
 	}
 
 	private void saveTimeLoggingItems() {
-		String user = (String) projectMemberSelectionBox.getValue();
+		SimpleProjectMember user = (SimpleProjectMember) projectMemberSelectionBox
+				.getValue();
 		if (user == null) {
 			throw new UserInvalidInputException("You must select a member");
 		}
@@ -204,43 +206,44 @@ public class AddTimeEntryWindow extends Window {
 
 		List<ItemTimeLogging> timeLoggins = new ArrayList<ItemTimeLogging>();
 
-		ItemTimeLogging timeLogging = buildItemTimeLogging("Monday", calendar);
+		ItemTimeLogging timeLogging = buildItemTimeLogging("Monday", calendar,
+				user);
 		if (timeLogging != null) {
-			timeLoggins.add(buildItemTimeLogging("Monday", calendar));
+			timeLoggins.add(buildItemTimeLogging("Monday", calendar, user));
 		}
 
 		calendar.add(Calendar.DAY_OF_YEAR, 1);
-		timeLogging = buildItemTimeLogging("Tuesday", calendar);
-		if (timeLogging != null) {
-			timeLoggins.add(timeLogging);
-		}
-
-		calendar.add(Calendar.DAY_OF_YEAR, 1);
-		timeLogging = buildItemTimeLogging("Wednesday", calendar);
+		timeLogging = buildItemTimeLogging("Tuesday", calendar, user);
 		if (timeLogging != null) {
 			timeLoggins.add(timeLogging);
 		}
 
 		calendar.add(Calendar.DAY_OF_YEAR, 1);
-		timeLogging = buildItemTimeLogging("Thursday", calendar);
+		timeLogging = buildItemTimeLogging("Wednesday", calendar, user);
 		if (timeLogging != null) {
 			timeLoggins.add(timeLogging);
 		}
 
 		calendar.add(Calendar.DAY_OF_YEAR, 1);
-		timeLogging = buildItemTimeLogging("Friday", calendar);
+		timeLogging = buildItemTimeLogging("Thursday", calendar, user);
 		if (timeLogging != null) {
 			timeLoggins.add(timeLogging);
 		}
 
 		calendar.add(Calendar.DAY_OF_YEAR, 1);
-		timeLogging = buildItemTimeLogging("Saturday", calendar);
+		timeLogging = buildItemTimeLogging("Friday", calendar, user);
 		if (timeLogging != null) {
 			timeLoggins.add(timeLogging);
 		}
 
 		calendar.add(Calendar.DAY_OF_YEAR, 1);
-		timeLogging = buildItemTimeLogging("Sunday", calendar);
+		timeLogging = buildItemTimeLogging("Saturday", calendar, user);
+		if (timeLogging != null) {
+			timeLoggins.add(timeLogging);
+		}
+
+		calendar.add(Calendar.DAY_OF_YEAR, 1);
+		timeLogging = buildItemTimeLogging("Sunday", calendar, user);
 		if (timeLogging != null) {
 			timeLoggins.add(timeLogging);
 		}
@@ -253,7 +256,7 @@ public class AddTimeEntryWindow extends Window {
 	}
 
 	private ItemTimeLogging buildItemTimeLogging(String headerId,
-			Calendar calendar) {
+			Calendar calendar, SimpleProjectMember logForMember) {
 		Item timeEntries = (Item) timeInputTable.getItem("timeEntry");
 		Property<?> itemProperty = timeEntries.getItemProperty(headerId);
 		Double timeVal = (Double) itemProperty.getValue();
@@ -262,8 +265,7 @@ public class AddTimeEntryWindow extends Window {
 		} else {
 			ItemTimeLogging timeLogging = new ItemTimeLogging();
 			timeLogging.setIsbillable(isBillableCheckBox.getValue());
-			timeLogging.setLoguser((String) projectMemberSelectionBox
-					.getValue());
+			timeLogging.setLoguser(logForMember.getUsername());
 			timeLogging.setCreateduser(AppContext.getUsername());
 			timeLogging.setLogforday(calendar.getTime());
 			timeLogging.setLogvalue(timeVal);
