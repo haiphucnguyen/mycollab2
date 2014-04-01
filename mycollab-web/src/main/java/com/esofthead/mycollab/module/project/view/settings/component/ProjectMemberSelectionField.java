@@ -16,22 +16,8 @@
  */
 package com.esofthead.mycollab.module.project.view.settings.component;
 
-import java.util.List;
-
-import com.esofthead.mycollab.core.arguments.NumberSearchField;
-import com.esofthead.mycollab.core.arguments.SearchRequest;
-import com.esofthead.mycollab.core.arguments.StringSearchField;
-import com.esofthead.mycollab.module.project.CurrentProjectVariables;
-import com.esofthead.mycollab.module.project.ProjectMemberStatusConstants;
-import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
-import com.esofthead.mycollab.module.project.domain.criteria.ProjectMemberSearchCriteria;
-import com.esofthead.mycollab.module.project.service.ProjectMemberService;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.vaadin.data.Property;
 import com.vaadin.data.Validator.InvalidValueException;
-import com.vaadin.ui.AbstractSelect.ItemCaptionMode;
-import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomField;
 
@@ -65,6 +51,10 @@ public class ProjectMemberSelectionField extends CustomField<String> {
 	public void commit() throws SourceException, InvalidValueException {
 		this.setInternalValue((String) memberSelectionBox.getValue());
 		super.commit();
+	}
+
+	public ProjectMemberSelectionBox getWrappedComponent() {
+		return memberSelectionBox;
 	}
 
 	@Override
