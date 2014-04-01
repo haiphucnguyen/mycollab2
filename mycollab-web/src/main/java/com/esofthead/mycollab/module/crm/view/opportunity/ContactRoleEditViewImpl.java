@@ -26,7 +26,6 @@ import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.module.crm.domain.ContactOpportunity;
-import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.SimpleContactOpportunityRel;
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
@@ -68,7 +67,7 @@ import com.vaadin.ui.VerticalLayout;
  */
 @ViewComponent
 public class ContactRoleEditViewImpl extends AbstractPageView implements
-ContactRoleEditView {
+		ContactRoleEditView {
 	private static final long serialVersionUID = 1L;
 
 	private ContactOpportunityList contactRoleList;
@@ -94,16 +93,16 @@ ContactRoleEditView {
 
 		Button addMoreContactRolesBtn = new Button("Add more contact roles",
 				new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
+					private static final long serialVersionUID = 1L;
 
-			@Override
-			public void buttonClick(ClickEvent event) {
-				SimpleContactOpportunityRel contactRole = new SimpleContactOpportunityRel();
-				ContactRoleRowComp row = new ContactRoleRowComp(
-						contactRole);
-				contactRoleList.addRow(row);
-			}
-		});
+					@Override
+					public void buttonClick(ClickEvent event) {
+						SimpleContactOpportunityRel contactRole = new SimpleContactOpportunityRel();
+						ContactRoleRowComp row = new ContactRoleRowComp(
+								contactRole);
+						contactRoleList.addRow(row);
+					}
+				});
 		addMoreContactRolesBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 
 		HorizontalLayout buttonControls = new HorizontalLayout();
@@ -281,35 +280,35 @@ ContactRoleEditView {
 			contactField = new ContactSelectionField();
 			this.addComponent(contactField);
 			contactField
-			.setPropertyDataSource(new AbstractField<SimpleContact>() {
-				private static final long serialVersionUID = 1L;
+					.setPropertyDataSource(new AbstractField<SimpleContactOpportunityRel>() {
+						private static final long serialVersionUID = 1L;
 
-				@Override
-				public SimpleContact getValue() {
-					return contactOpp;
-				}
+						@Override
+						public SimpleContactOpportunityRel getValue() {
+							return contactOpp;
+						}
 
-				@Override
-				public Class<? extends SimpleContact> getType() {
-					return SimpleContact.class;
-				}
+						@Override
+						public Class<? extends SimpleContactOpportunityRel> getType() {
+							return SimpleContactOpportunityRel.class;
+						}
 
-			});
+					});
 			contactField.setWidth("250px");
 
 			Button accountLink = new Button(contactOpp.getAccountName(),
 					new Button.ClickListener() {
-				private static final long serialVersionUID = 1L;
+						private static final long serialVersionUID = 1L;
 
-				@Override
-				public void buttonClick(ClickEvent event) {
-					EventBus.getInstance().fireEvent(
-							new AccountEvent.GotoRead(
-									ContactRoleRowComp.this, contactOpp
-									.getAccountid()));
+						@Override
+						public void buttonClick(ClickEvent event) {
+							EventBus.getInstance().fireEvent(
+									new AccountEvent.GotoRead(
+											ContactRoleRowComp.this, contactOpp
+													.getAccountid()));
 
-				}
-			});
+						}
+					});
 			accountLink.setIcon(MyCollabResource
 					.newResource("icons/16/crm/account.png"));
 			accountLink.setStyleName("link");
@@ -329,7 +328,7 @@ ContactRoleEditView {
 				@Override
 				public void buttonClick(ClickEvent event) {
 					((CssLayout) ContactRoleRowComp.this.getParent())
-					.removeComponent(ContactRoleRowComp.this);
+							.removeComponent(ContactRoleRowComp.this);
 
 					// The contact opportunity relationship is existed
 					if (contactOpp.getId() != null) {
