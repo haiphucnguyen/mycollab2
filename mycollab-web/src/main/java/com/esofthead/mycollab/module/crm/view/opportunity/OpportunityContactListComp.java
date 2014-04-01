@@ -233,6 +233,12 @@ public class OpportunityContactListComp
 									.getOfficephone() : ""));
 			contactInfo.addComponent(contactOfficePhone);
 
+			Label contactRole = new Label(
+					"Contact Role: "
+							+ (contact.getDecisionRole() != null ? contact
+									.getDecisionRole() : ""));
+			contactInfo.addComponent(contactRole);
+
 			blockTop.addComponent(contactInfo);
 			blockTop.setExpandRatio(contactInfo, 1.0f);
 			blockTop.setWidth("100%");

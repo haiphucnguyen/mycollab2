@@ -21,7 +21,9 @@ import com.esofthead.mycollab.core.utils.MimeTypesUtil;
 public class SyncWebResourcesToS3Command {
 
 	public static void syncLocalResourcesToS3(String localPath, String s3Path) {
-		AWSCredentials myCredentials = new BasicAWSCredentials("key", "secret");
+		AWSCredentials myCredentials = new BasicAWSCredentials(
+				"AKIAJ5BHX5QOTJQ4QUAQ",
+				"PU9HdTqMrwkypWo0eyU2myxLxcMTp55KHhCLNOYU");
 		AmazonS3 s3client = new AmazonS3Client(myCredentials);
 
 		File localFolder = new File(localPath);
@@ -37,22 +39,30 @@ public class SyncWebResourcesToS3Command {
 		if (file.isDirectory()) {
 			File[] files = file.listFiles();
 			for (File subFile : files) {
-				try {
-					ObjectMetadata metaData = new ObjectMetadata();
-					metaData.setCacheControl("max-age=8640000");
-					metaData.setContentType(MimeTypesUtil
-							.detectMimeType(subFile.getAbsolutePath()));
-					metaData.setContentLength(subFile.length());
-					String objectPath = s3Path
-							+ subFile.getAbsolutePath().substring(
-									baseFolderPath.length() + 1);
-					PutObjectRequest request = new PutObjectRequest("mycollab",
-							objectPath, new FileInputStream(subFile), metaData);
+				if (subFile.isDirectory()) {
+					syncFoldersToS3(s3client, subFile, baseFolderPath, s3Path);
+				} else {
+					try {
+						ObjectMetadata metaData = new ObjectMetadata();
+						metaData.setCacheControl("max-age=8640000");
+						metaData.setContentType(MimeTypesUtil
+								.detectMimeType(subFile.getAbsolutePath()));
+						metaData.setContentLength(subFile.length());
+						String objectPath = s3Path
+								+ subFile.getAbsolutePath().substring(
+										baseFolderPath.length() + 1);
+						System.out.println("Upload file: "
+								+ subFile.getAbsolutePath() + " to s3 path: "
+								+ objectPath);
+						PutObjectRequest request = new PutObjectRequest(
+								"mycollab_assets", objectPath,
+								new FileInputStream(subFile), metaData);
 
-					s3client.putObject(request
-							.withCannedAcl(CannedAccessControlList.PublicRead));
-				} catch (Exception e) {
-					throw new RuntimeException(e);
+						s3client.putObject(request
+								.withCannedAcl(CannedAccessControlList.PublicRead));
+					} catch (Exception e) {
+						throw new RuntimeException(e);
+					}
 				}
 			}
 		}
@@ -60,7 +70,11 @@ public class SyncWebResourcesToS3Command {
 
 	public static void main(String[] args) {
 		syncLocalResourcesToS3(
-				"/Users/haiphucnguyen/Documents/workspace/mycollab/mycollab-web/src/main/webapp/assets/images/email",
-				"assets/images/email/");
+				"/Users/haiphucnguyen/Documents/workspace/mycollab/mycollab-web/src/main/resources/assets",
+				"assets/");
+
+		syncLocalResourcesToS3(
+				"/Users/haiphucnguyen/Documents/workspace/mycollab/mycollab-web/src/main/resources/VAADIN/themes/mycollab",
+				"");
 	}
 }
