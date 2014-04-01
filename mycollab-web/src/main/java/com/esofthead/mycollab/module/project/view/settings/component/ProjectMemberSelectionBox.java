@@ -57,7 +57,7 @@ public class ProjectMemberSelectionBox extends ComboBox {
 	@Override
 	public void setValue(Object value) {
 		if (value instanceof String) {
-			Collection<?> containerPropertyIds = this.getContainerPropertyIds();
+			Collection<?> containerPropertyIds = this.getItemIds();
 			for (Object id : containerPropertyIds) {
 				if (id instanceof SimpleProjectMember) {
 					if (value.equals(((SimpleProjectMember) id).getUsername())) {
