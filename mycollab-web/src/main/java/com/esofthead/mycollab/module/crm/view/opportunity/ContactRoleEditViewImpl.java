@@ -77,6 +77,8 @@ public class ContactRoleEditViewImpl extends AbstractPageView implements
 	public void display(SimpleOpportunity opportunity) {
 		this.opportunity = opportunity;
 		this.removeAllComponents();
+		this.setMargin(new MarginInfo(false, true, true, true));
+		this.addStyleName("oppcontact-role-edit");
 
 		AddViewLayout2 previewLayout = new AddViewLayout2(
 				"Add or Edit Contact Roles",
@@ -147,7 +149,8 @@ public class ContactRoleEditViewImpl extends AbstractPageView implements
 
 			}
 		});
-		cancelBtn.setIcon(MyCollabResource.newResource("icons/16/cancel.png"));
+		cancelBtn.setIcon(MyCollabResource
+				.newResource("icons/16/cancel_black.png"));
 		cancelBtn.setStyleName(UIConstants.THEME_BLANK_LINK);
 		buttonWrapper.addComponent(cancelBtn);
 

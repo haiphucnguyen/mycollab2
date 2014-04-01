@@ -45,4 +45,8 @@
 
     <inherits
         name="com.lexaden.business.chart.widgetset.OrganisationWidgetset" />
+        
+    <replace-with class="com.esofthead.mycollab.vaadin.ui.WeekGridExt">
+    	<when-type-is class="com.vaadin.client.ui.calendar.schedule.WeekGrid" />
+    </replace-with>
 </module>

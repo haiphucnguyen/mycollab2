@@ -6740,3 +6740,8 @@ div.v-csslayout.bean-block {
 .intro-text-wrap.v-margin-left {
 	padding-left: 10px;
 }
+
+/* Opportunity Contact Role Edit */
+.oppcontact-role-edit .addview-layout-body {
+	border: 1px solid #CFCFCF;
+}
