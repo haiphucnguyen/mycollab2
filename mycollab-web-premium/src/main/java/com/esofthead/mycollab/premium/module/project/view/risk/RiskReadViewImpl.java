@@ -70,6 +70,7 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk>
 				CurrentProjectVariables.getProjectId(), true, true,
 				ProjectRiskRelayEmailNotificationAction.class);
 		commentDisplay.setWidth("100%");
+		commentDisplay.setMargin(true);
 
 		historyList = new RiskHistoryList(ModuleNameConstants.PRJ,
 				ProjectContants.RISK);

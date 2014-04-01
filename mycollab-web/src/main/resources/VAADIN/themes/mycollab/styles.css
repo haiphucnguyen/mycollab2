@@ -733,7 +733,9 @@ div.v-button-nonPopupIndicator div.v-popup-indicator {
 	width: 100%;
 	display: table-row;
 }
-
+.message .user-name.v-button-link.v-button-wordWrap .v-button-wrap {
+	display:inline-block;
+}
 .v-button-link.v-button-wordWrap .v-button-caption {
 	display: table-cell;
 	white-space: normal;
@@ -3115,6 +3117,7 @@ div.v-splitbutton,div.v-splitbutton .v-button {
 
 .message .user-name .v-button-caption {
 	text-align: center;
+	display:inline-block;
 }
 
 .comment-list-wrapper.v-margin-left {
@@ -3180,7 +3183,7 @@ div.v-splitbutton,div.v-splitbutton .v-button {
 }
 
 .message .user-name {
-	text-align: center;
+	text-align: center !important;
 	color: #0061ac;
 }
 
