@@ -121,7 +121,7 @@
     <dependent-module archiveName="aws-java-sdk-1.7.5.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/amazonaws/aws-java-sdk/1.7.5/aws-java-sdk-1.7.5.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="jackson-core-2.3.0-rc2-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/fasterxml/jackson/core/jackson-core/2.3.0-rc2-SNAPSHOT/jackson-core-2.3.0-rc2-SNAPSHOT.jar">
+    <dependent-module archiveName="jackson-core-2.3.2.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/fasterxml/jackson/core/jackson-core/2.3.2/jackson-core-2.3.2.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="jackson-databind-2.3.2.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/fasterxml/jackson/core/jackson-databind/2.3.2/jackson-databind-2.3.2.jar">

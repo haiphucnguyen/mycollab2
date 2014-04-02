@@ -124,13 +124,13 @@
     <dependent-module archiveName="aws-java-sdk-1.7.5.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/amazonaws/aws-java-sdk/1.7.5/aws-java-sdk-1.7.5.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="jackson-core-2.3.0-rc1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/fasterxml/jackson/core/jackson-core/2.3.0-rc1/jackson-core-2.3.0-rc1.jar">
+    <dependent-module archiveName="jackson-core-2.2.3.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/fasterxml/jackson/core/jackson-core/2.2.3/jackson-core-2.2.3.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="jackson-databind-2.3.2.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/fasterxml/jackson/core/jackson-databind/2.3.2/jackson-databind-2.3.2.jar">
+    <dependent-module archiveName="jackson-databind-2.2.3.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/fasterxml/jackson/core/jackson-databind/2.2.3/jackson-databind-2.2.3.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="jackson-annotations-2.3.2.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/fasterxml/jackson/core/jackson-annotations/2.3.2/jackson-annotations-2.3.2.jar">
+    <dependent-module archiveName="jackson-annotations-2.2.3.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/fasterxml/jackson/core/jackson-annotations/2.2.3/jackson-annotations-2.2.3.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="java-image-scaling-0.8.5.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/mortennobel/java-image-scaling/0.8.5/java-image-scaling-0.8.5.jar">
