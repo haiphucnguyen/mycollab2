@@ -12,6 +12,7 @@ import com.esofthead.mycollab.jetty.clustering.InfinispanSessionManager;
  * 
  */
 public class OnDemandServerRunner extends GenericServerRunner {
+
 	@Override
 	public WebAppContext buildContext(String baseDir) {
 		WebAppContext webAppContext = new WebAppContext();
