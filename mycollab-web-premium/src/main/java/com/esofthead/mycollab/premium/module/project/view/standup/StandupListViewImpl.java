@@ -83,6 +83,8 @@ public class StandupListViewImpl extends AbstractPageView implements
 		contentWrap.addComponent(reportInDay);
 		contentWrap.setExpandRatio(reportInDay, 1.0f);
 
+		standupCalendar.addStyleName("standup-calendar");
+
 		standupMissingComp = new StandupMissingComp();
 		standupMissingComp.setWidth("250px");
 		contentWrap.addComponent(standupMissingComp);
@@ -112,10 +114,7 @@ public class StandupListViewImpl extends AbstractPageView implements
 					public void valueChange(final ValueChangeEvent event) {
 						final Date selectedDate = (Date) event.getProperty()
 								.getValue();
-						GregorianCalendar calendar = new GregorianCalendar();
-						calendar.setTime(selectedDate);
-						StandupListViewImpl.this.displayReport(calendar
-								.getTime());
+						StandupListViewImpl.this.displayReport(selectedDate);
 						StandupListViewImpl.this.standupCalendar
 								.setLabelTime(AppContext
 										.formatDate(selectedDate));

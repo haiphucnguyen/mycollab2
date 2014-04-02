@@ -3671,6 +3671,10 @@ div.v-lazyloadingwrapper-loading {
 	border-top: 1px solid #CFCFCF;
 }
 
+.standup-calendar .selected-ext {
+	border: 1px solid #EE7C08;
+}
+
 .report-row-header {
 	font-weight: bold;
 	background: url("icons/timehdr-bg.png") no-repeat left top transparent;
