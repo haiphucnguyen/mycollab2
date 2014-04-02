@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.module.crm.view.opportunity;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 import org.vaadin.dialogs.ConfirmDialog;
@@ -10,6 +12,7 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.eventmanager.EventBus;
+import com.esofthead.mycollab.module.crm.CrmDataTypeFactory;
 import com.esofthead.mycollab.module.crm.CrmLinkGenerator;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.ContactOpportunity;
@@ -23,6 +26,7 @@ import com.esofthead.mycollab.module.crm.ui.components.RelatedListComp2;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.ui.AbstractBeanBlockList;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.SplitButton;
@@ -52,6 +56,19 @@ public class OpportunityContactListComp
 	private static final long serialVersionUID = 5717208523696358616L;
 
 	private Opportunity opportunity;
+
+	public static Map<String, String> colormap = new HashMap<String, String>();
+
+	static {
+		for (int i = 0; i < CrmDataTypeFactory.getOpportunityContactRoleList().length; i++) {
+			String roleKeyName = CrmDataTypeFactory
+					.getOpportunityContactRoleList()[i];
+			if (!colormap.containsKey(roleKeyName)) {
+				colormap.put(roleKeyName,
+						AbstractBeanBlockList.getColorStyleNameList()[i]);
+			}
+		}
+	}
 
 	public OpportunityContactListComp() {
 		super(ApplicationContextUtil
@@ -238,6 +255,10 @@ public class OpportunityContactListComp
 							+ (contact.getDecisionRole() != null ? contact
 									.getDecisionRole() : ""));
 			contactInfo.addComponent(contactRole);
+
+			if (contact.getDecisionRole() != null) {
+				beanBlock.addStyleName(colormap.get(contact.getDecisionRole()));
+			}
 
 			blockTop.addComponent(contactInfo);
 			blockTop.setExpandRatio(contactInfo, 1.0f);

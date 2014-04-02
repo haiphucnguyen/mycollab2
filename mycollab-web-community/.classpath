@@ -52,6 +52,10 @@
   <classpathentry kind="var" path="M2_REPO/org/springframework/spring-context-support/3.2.6.RELEASE/spring-context-support-3.2.6.RELEASE.jar" sourcepath="M2_REPO/org/springframework/spring-context-support/3.2.6.RELEASE/spring-context-support-3.2.6.RELEASE-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/aspectj/aspectjrt/1.7.4/aspectjrt-1.7.4.jar" sourcepath="M2_REPO/org/aspectj/aspectjrt/1.7.4/aspectjrt-1.7.4-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/cglib/cglib/3.0/cglib-3.0.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/amazonaws/aws-java-sdk/1.7.5/aws-java-sdk-1.7.5.jar" sourcepath="M2_REPO/com/amazonaws/aws-java-sdk/1.7.5/aws-java-sdk-1.7.5-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/fasterxml/jackson/core/jackson-core/2.2.3/jackson-core-2.2.3.jar" sourcepath="M2_REPO/com/fasterxml/jackson/core/jackson-core/2.2.3/jackson-core-2.2.3-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/fasterxml/jackson/core/jackson-databind/2.2.3/jackson-databind-2.2.3.jar" sourcepath="M2_REPO/com/fasterxml/jackson/core/jackson-databind/2.2.3/jackson-databind-2.2.3-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/fasterxml/jackson/core/jackson-annotations/2.2.3/jackson-annotations-2.2.3.jar" sourcepath="M2_REPO/com/fasterxml/jackson/core/jackson-annotations/2.2.3/jackson-annotations-2.2.3-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/mortennobel/java-image-scaling/0.8.5/java-image-scaling-0.8.5.jar" sourcepath="M2_REPO/com/mortennobel/java-image-scaling/0.8.5/java-image-scaling-0.8.5-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/jhlabs/filters/2.0.235/filters-2.0.235.jar" sourcepath="M2_REPO/com/jhlabs/filters/2.0.235/filters-2.0.235-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/ch/qos/cal10n/cal10n-api/0.8.1/cal10n-api-0.8.1.jar" sourcepath="M2_REPO/ch/qos/cal10n/cal10n-api/0.8.1/cal10n-api-0.8.1-sources.jar"/>
@@ -64,23 +68,20 @@
   <classpathentry kind="var" path="M2_REPO/dom4j/dom4j/1.6.1/dom4j-1.6.1.jar" sourcepath="M2_REPO/dom4j/dom4j/1.6.1/dom4j-1.6.1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/oro/oro/2.0.8/oro-2.0.8.jar" sourcepath="M2_REPO/oro/oro/2.0.8/oro-2.0.8-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/sslext/sslext/1.2-0/sslext-1.2-0.jar" sourcepath="M2_REPO/sslext/sslext/1.2-0/sslext-1.2-0-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/apache/camel/camel-core/2.12.3/camel-core-2.12.3.jar" sourcepath="M2_REPO/org/apache/camel/camel-core/2.12.3/camel-core-2.12.3-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/apache/camel/camel-core/2.13.0/camel-core-2.13.0.jar" sourcepath="M2_REPO/org/apache/camel/camel-core/2.13.0/camel-core-2.13.0-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/sun/xml/bind/jaxb-impl/2.2.6/jaxb-impl-2.2.6.jar" sourcepath="M2_REPO/com/sun/xml/bind/jaxb-impl/2.2.6/jaxb-impl-2.2.6-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/apache/camel/camel-spring/2.12.3/camel-spring-2.12.3.jar" sourcepath="M2_REPO/org/apache/camel/camel-spring/2.12.3/camel-spring-2.12.3-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/apache/camel/camel-spring/2.13.0/camel-spring-2.13.0.jar" sourcepath="M2_REPO/org/apache/camel/camel-spring/2.13.0/camel-spring-2.13.0-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/apache/tika/tika-core/1.5/tika-core-1.5.jar" sourcepath="M2_REPO/org/apache/tika/tika-core/1.5/tika-core-1.5-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/google/code/gson/gson/2.2.4/gson-2.2.4.jar" sourcepath="M2_REPO/com/google/code/gson/gson/2.2.4/gson-2.2.4-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/jsoup/jsoup/1.7.3/jsoup-1.7.3.jar" sourcepath="M2_REPO/org/jsoup/jsoup/1.7.3/jsoup-1.7.3-sources.jar"/>
   <classpathentry kind="src" path="/mycollab-ui"/>
   <classpathentry kind="src" path="/mycollab-dao"/>
-  <classpathentry kind="var" path="M2_REPO/org/mybatis/mybatis/3.2.6/mybatis-3.2.6.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/mybatis/mybatis/3.2.6/mybatis-3.2.6.jar" sourcepath="M2_REPO/org/mybatis/mybatis/3.2.6/mybatis-3.2.6-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/mybatis/mybatis-spring/1.2.2/mybatis-spring-1.2.2.jar" sourcepath="M2_REPO/org/mybatis/mybatis-spring/1.2.2/mybatis-spring-1.2.2-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/mybatis/scripting/mybatis-velocity/1.1/mybatis-velocity-1.1.jar" sourcepath="M2_REPO/org/mybatis/scripting/mybatis-velocity/1.1/mybatis-velocity-1.1-sources.jar"/>
   <classpathentry kind="src" path="/mycollab-services"/>
   <classpathentry kind="src" path="/mycollab-migration"/>
   <classpathentry kind="src" path="/mycollab-config"/>
-  <classpathentry kind="var" path="M2_REPO/com/amazonaws/aws-java-sdk/1.6.4/aws-java-sdk-1.6.4.jar" sourcepath="M2_REPO/com/amazonaws/aws-java-sdk/1.6.4/aws-java-sdk-1.6.4-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/com/fasterxml/jackson/core/jackson-core/2.3.0-rc1/jackson-core-2.3.0-rc1.jar" sourcepath="M2_REPO/com/fasterxml/jackson/core/jackson-core/2.3.0-rc1/jackson-core-2.3.0-rc1-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/com/fasterxml/jackson/core/jackson-databind/2.3.0-rc1/jackson-databind-2.3.0-rc1.jar" sourcepath="M2_REPO/com/fasterxml/jackson/core/jackson-databind/2.3.0-rc1/jackson-databind-2.3.0-rc1-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/com/fasterxml/jackson/core/jackson-annotations/2.3.0-rc1/jackson-annotations-2.3.0-rc1.jar" sourcepath="M2_REPO/com/fasterxml/jackson/core/jackson-annotations/2.3.0-rc1/jackson-annotations-2.3.0-rc1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/jasypt/jasypt/1.9.1/jasypt-1.9.1.jar" sourcepath="M2_REPO/org/jasypt/jasypt/1.9.1/jasypt-1.9.1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/jasypt/jasypt-spring31/1.9.1/jasypt-spring31-1.9.1.jar" sourcepath="M2_REPO/org/jasypt/jasypt-spring31/1.9.1/jasypt-spring31-1.9.1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/googlecode/flyway/flyway-core/2.3/flyway-core-2.3.jar" sourcepath="M2_REPO/com/googlecode/flyway/flyway-core/2.3/flyway-core-2.3-sources.jar"/>
@@ -94,16 +95,16 @@
   <classpathentry kind="var" path="M2_REPO/org/codehaus/castor/castor/1.2/castor-1.2.jar" sourcepath="M2_REPO/org/codehaus/castor/castor/1.2/castor-1.2-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/net/sf/barcode4j/barcode4j/2.0/barcode4j-2.0.jar" sourcepath="M2_REPO/net/sf/barcode4j/barcode4j/2.0/barcode4j-2.0-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/avalon-framework/avalon-framework-impl/4.2.0/avalon-framework-impl-4.2.0.jar"/>
-  <classpathentry kind="var" path="M2_REPO/net/sourceforge/dynamicreports/dynamicreports-adhoc/3.1.6/dynamicreports-adhoc-3.1.6.jar" sourcepath="M2_REPO/net/sourceforge/dynamicreports/dynamicreports-adhoc/3.1.6/dynamicreports-adhoc-3.1.6-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/net/sourceforge/dynamicreports/dynamicreports-googlecharts/3.1.6/dynamicreports-googlecharts-3.1.6.jar" sourcepath="M2_REPO/net/sourceforge/dynamicreports/dynamicreports-googlecharts/3.1.6/dynamicreports-googlecharts-3.1.6-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/net/sourceforge/dynamicreports/dynamicreports-adhoc/3.2.0/dynamicreports-adhoc-3.2.0.jar" sourcepath="M2_REPO/net/sourceforge/dynamicreports/dynamicreports-adhoc/3.2.0/dynamicreports-adhoc-3.2.0-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/net/sourceforge/dynamicreports/dynamicreports-googlecharts/3.2.0/dynamicreports-googlecharts-3.2.0.jar" sourcepath="M2_REPO/net/sourceforge/dynamicreports/dynamicreports-googlecharts/3.2.0/dynamicreports-googlecharts-3.2.0-sources.jar"/>
   <classpathentry kind="src" path="/mycollab-caching"/>
-  <classpathentry kind="var" path="M2_REPO/org/infinispan/infinispan-core/6.0.1.Final/infinispan-core-6.0.1.Final.jar" sourcepath="M2_REPO/org/infinispan/infinispan-core/6.0.1.Final/infinispan-core-6.0.1.Final-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/infinispan/infinispan-commons/6.0.1.Final/infinispan-commons-6.0.1.Final.jar" sourcepath="M2_REPO/org/infinispan/infinispan-commons/6.0.1.Final/infinispan-commons-6.0.1.Final-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/infinispan/infinispan-core/6.0.2.Final/infinispan-core-6.0.2.Final.jar" sourcepath="M2_REPO/org/infinispan/infinispan-core/6.0.2.Final/infinispan-core-6.0.2.Final-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/infinispan/infinispan-commons/6.0.2.Final/infinispan-commons-6.0.2.Final.jar" sourcepath="M2_REPO/org/infinispan/infinispan-commons/6.0.2.Final/infinispan-commons-6.0.2.Final-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/jboss/logging/jboss-logging/3.1.2.GA/jboss-logging-3.1.2.GA.jar" sourcepath="M2_REPO/org/jboss/logging/jboss-logging/3.1.2.GA/jboss-logging-3.1.2.GA-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/jgroups/jgroups/3.4.3.Final/jgroups-3.4.3.Final.jar" sourcepath="M2_REPO/org/jgroups/jgroups/3.4.3.Final/jgroups-3.4.3.Final-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/jboss/spec/javax/transaction/jboss-transaction-api_1.1_spec/1.0.1.Final/jboss-transaction-api_1.1_spec-1.0.1.Final.jar" sourcepath="M2_REPO/org/jboss/spec/javax/transaction/jboss-transaction-api_1.1_spec/1.0.1.Final/jboss-transaction-api_1.1_spec-1.0.1.Final-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/jboss/marshalling/jboss-marshalling-river/1.3.18.GA/jboss-marshalling-river-1.3.18.GA.jar" sourcepath="M2_REPO/org/jboss/marshalling/jboss-marshalling-river/1.3.18.GA/jboss-marshalling-river-1.3.18.GA-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/jboss/marshalling/jboss-marshalling/1.3.18.GA/jboss-marshalling-1.3.18.GA.jar" sourcepath="M2_REPO/org/jboss/marshalling/jboss-marshalling/1.3.18.GA/jboss-marshalling-1.3.18.GA-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/jboss/marshalling/jboss-marshalling-river/1.4.4.Final/jboss-marshalling-river-1.4.4.Final.jar" sourcepath="M2_REPO/org/jboss/marshalling/jboss-marshalling-river/1.4.4.Final/jboss-marshalling-river-1.4.4.Final-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/jboss/marshalling/jboss-marshalling/1.4.4.Final/jboss-marshalling-1.4.4.Final.jar" sourcepath="M2_REPO/org/jboss/marshalling/jboss-marshalling/1.4.4.Final/jboss-marshalling-1.4.4.Final-sources.jar"/>
   <classpathentry kind="src" path="/mycollab-jackrabbit"/>
   <classpathentry kind="var" path="M2_REPO/org/apache/jackrabbit/jackrabbit-core/2.6.5/jackrabbit-core-2.6.5.jar" sourcepath="M2_REPO/org/apache/jackrabbit/jackrabbit-core/2.6.5/jackrabbit-core-2.6.5-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/concurrent/concurrent/1.3.4/concurrent-1.3.4.jar" sourcepath="M2_REPO/concurrent/concurrent/1.3.4/concurrent-1.3.4-sources.jar"/>
@@ -113,23 +114,22 @@
   <classpathentry kind="var" path="M2_REPO/org/apache/jackrabbit/jackrabbit-jcr-commons/2.6.5/jackrabbit-jcr-commons-2.6.5.jar" sourcepath="M2_REPO/org/apache/jackrabbit/jackrabbit-jcr-commons/2.6.5/jackrabbit-jcr-commons-2.6.5-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/apache/jackrabbit/jackrabbit-spi-commons/2.6.5/jackrabbit-spi-commons-2.6.5.jar" sourcepath="M2_REPO/org/apache/jackrabbit/jackrabbit-spi-commons/2.6.5/jackrabbit-spi-commons-2.6.5-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/apache/jackrabbit/jackrabbit-spi/2.6.5/jackrabbit-spi-2.6.5.jar" sourcepath="M2_REPO/org/apache/jackrabbit/jackrabbit-spi/2.6.5/jackrabbit-spi-2.6.5-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/apache/tika/tika-core/1.3/tika-core-1.3.jar" sourcepath="M2_REPO/org/apache/tika/tika-core/1.3/tika-core-1.3-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/apache/lucene/lucene-core/3.6.0/lucene-core-3.6.0.jar" sourcepath="M2_REPO/org/apache/lucene/lucene-core/3.6.0/lucene-core-3.6.0-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/commons-codec/commons-codec/1.7/commons-codec-1.7.jar" sourcepath="M2_REPO/commons-codec/commons-codec/1.7/commons-codec-1.7-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/commons-codec/commons-codec/1.9/commons-codec-1.9.jar" sourcepath="M2_REPO/commons-codec/commons-codec/1.9/commons-codec-1.9-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/apache/commons/commons-email/1.3.2/commons-email-1.3.2.jar" sourcepath="M2_REPO/org/apache/commons/commons-email/1.3.2/commons-email-1.3.2-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/hibernate/hibernate-validator/5.1.0.Final/hibernate-validator-5.1.0.Final.jar" sourcepath="M2_REPO/org/hibernate/hibernate-validator/5.1.0.Final/hibernate-validator-5.1.0.Final-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/fasterxml/classmate/1.0.0/classmate-1.0.0.jar" sourcepath="M2_REPO/com/fasterxml/classmate/1.0.0/classmate-1.0.0-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/dropbox/core/dropbox-core-sdk/1.7.6/dropbox-core-sdk-1.7.6.jar" sourcepath="M2_REPO/com/dropbox/core/dropbox-core-sdk/1.7.6/dropbox-core-sdk-1.7.6-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/com/vaadin/vaadin-server/7.1.12/vaadin-server-7.1.12.jar" sourcepath="M2_REPO/com/vaadin/vaadin-server/7.1.12/vaadin-server-7.1.12-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/com/vaadin/vaadin-shared/7.1.12/vaadin-shared-7.1.12.jar" sourcepath="M2_REPO/com/vaadin/vaadin-shared/7.1.12/vaadin-shared-7.1.12-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/vaadin/vaadin-server/7.1.13/vaadin-server-7.1.13.jar" sourcepath="M2_REPO/com/vaadin/vaadin-server/7.1.13/vaadin-server-7.1.13-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/vaadin/vaadin-shared/7.1.13/vaadin-shared-7.1.13.jar" sourcepath="M2_REPO/com/vaadin/vaadin-shared/7.1.13/vaadin-shared-7.1.13-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/vaadin/vaadin-shared-deps/1.0.2/vaadin-shared-deps-1.0.2.jar" sourcepath="M2_REPO/com/vaadin/vaadin-shared-deps/1.0.2/vaadin-shared-deps-1.0.2-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/com/vaadin/vaadin-theme-compiler/7.1.12/vaadin-theme-compiler-7.1.12.jar" sourcepath="M2_REPO/com/vaadin/vaadin-theme-compiler/7.1.12/vaadin-theme-compiler-7.1.12-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/vaadin/vaadin-theme-compiler/7.1.13/vaadin-theme-compiler-7.1.13.jar" sourcepath="M2_REPO/com/vaadin/vaadin-theme-compiler/7.1.13/vaadin-theme-compiler-7.1.13-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/apache/commons/commons-jexl/2.1.1/commons-jexl-2.1.1.jar" sourcepath="M2_REPO/org/apache/commons/commons-jexl/2.1.1/commons-jexl-2.1.1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/w3c/css/sac/1.3/sac-1.3.jar" sourcepath="M2_REPO/org/w3c/css/sac/1.3/sac-1.3-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/net/sourceforge/cssparser/cssparser/0.9.5/cssparser-0.9.5.jar" sourcepath="M2_REPO/net/sourceforge/cssparser/cssparser/0.9.5/cssparser-0.9.5-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/commons-cli/commons-cli/1.2/commons-cli-1.2.jar" sourcepath="M2_REPO/commons-cli/commons-cli/1.2/commons-cli-1.2-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/vaadin/addon/vaadin-touchkit-agpl/4.0.0.alpha2/vaadin-touchkit-agpl-4.0.0.alpha2.jar" sourcepath="M2_REPO/com/vaadin/addon/vaadin-touchkit-agpl/4.0.0.alpha2/vaadin-touchkit-agpl-4.0.0.alpha2-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/com/vaadin/vaadin-client/7.1.12/vaadin-client-7.1.12.jar" sourcepath="M2_REPO/com/vaadin/vaadin-client/7.1.12/vaadin-client-7.1.12-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/vaadin/vaadin-client/7.1.13/vaadin-client-7.1.13.jar" sourcepath="M2_REPO/com/vaadin/vaadin-client/7.1.13/vaadin-client-7.1.13-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/reflections/reflections/0.9.9-RC1/reflections-0.9.9-RC1.jar" sourcepath="M2_REPO/org/reflections/reflections/0.9.9-RC1/reflections-0.9.9-RC1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/google/code/findbugs/jsr305/1.3.9/jsr305-1.3.9.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/javassist/javassist/3.16.1-GA/javassist-3.16.1-GA.jar" sourcepath="M2_REPO/org/javassist/javassist/3.16.1-GA/javassist-3.16.1-GA-sources.jar"/>
@@ -165,12 +165,11 @@
   <classpathentry kind="var" path="M2_REPO/org/vaadin/addons/stylecalendar/2.1.0/stylecalendar-2.1.0.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/vaadin/addon/easyuploads/7.0.1/easyuploads-7.0.1.jar" sourcepath="M2_REPO/org/vaadin/addon/easyuploads/7.0.1/easyuploads-7.0.1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/vaadin/addons/contextmenu/4.2.1/contextmenu-4.2.1.jar"/>
-  <classpathentry kind="var" path="M2_REPO/com/vaadin/addon/vaadin-calendar/2.0.0/vaadin-calendar-2.0.0.jar" sourcepath="M2_REPO/com/vaadin/addon/vaadin-calendar/2.0.0/vaadin-calendar-2.0.0-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/lexaden/components/breadcrumb/1.7.3/breadcrumb-1.7.3.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/vaadin/vaadin-client-compiled/7.0.0/vaadin-client-compiled-7.0.0.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/vaadin/vaadin-themes/7.0.0/vaadin-themes-7.0.0.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/vaadin/addons/listbuilder/0.7.3.v7/listbuilder-0.7.3.v7.jar"/>
-  <classpathentry kind="var" path="M2_REPO/com/lexaden/components/organisationchart/1.7.1/organisationchart-1.7.1.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/lexaden/components/organisationchart/1.7.1/organisationchart-1.7.1.jar" sourcepath="M2_REPO/com/lexaden/components/organisationchart/1.7.1/organisationchart-1.7.1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/google/gwt/google-apis/gwt-visualization/1.1.2/gwt-visualization-1.1.2.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/esofthead/vaadin/popupbutton/1.0.0-SNAPSHOT/popupbutton-1.0.0-SNAPSHOT.jar" sourcepath="M2_REPO/com/esofthead/vaadin/popupbutton/1.0.0-SNAPSHOT/popupbutton-1.0.0-SNAPSHOT-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/tltv/gantt/gantt-addon/0.1.1/gantt-addon-0.1.1.jar"/>

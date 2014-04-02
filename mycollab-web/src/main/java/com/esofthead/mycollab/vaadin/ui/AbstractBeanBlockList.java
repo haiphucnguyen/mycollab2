@@ -45,6 +45,16 @@ public abstract class AbstractBeanBlockList<S extends SearchCriteria, T>
 
 	protected SearchRequest<S> searchRequest;
 
+	private static String[] COLOR_STYLENAME_LIST = new String[] { "red-block",
+			"cyan-block", "blue-block", "darkblue-block", "lightblue-block",
+			"purple-block", "yellow-block", "lime-block", "magenta-block",
+			"silver-block", "gray-block", "orange-block", "brown-block",
+			"maroon-block", "green-block", "olive-block" };
+
+	public static String[] getColorStyleNameList() {
+		return COLOR_STYLENAME_LIST;
+	}
+
 	public AbstractBeanBlockList(
 			final BlockDisplayHandler<T> blockDisplayHandler,
 			final int defaultNumberSearchItems) {

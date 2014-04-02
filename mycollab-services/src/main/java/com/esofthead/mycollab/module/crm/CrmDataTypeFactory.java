@@ -58,6 +58,9 @@ public class CrmDataTypeFactory {
 			"Proposal/Price Quote", "Negotiation/Review", "Closed Won",
 			"Closed Lost" };
 
+	private static String[] OPPORTUNITY_CONTACT_ROLE_LIST = new String[] {
+			"Primary Decision Marker", "Evaluator", "Influencer", "Other" };
+
 	private static String[] OPPORTUNITY_TYPE_LIST = new String[] {
 			"Existing Business", "New Business" };
 
@@ -111,6 +114,10 @@ public class CrmDataTypeFactory {
 		return OPPORTUNITY_SALES_STAGE_LIST;
 	}
 
+	public static String[] getOpportunityContactRoleList() {
+		return OPPORTUNITY_CONTACT_ROLE_LIST;
+	}
+
 	public static String[] getOpportunityTypeList() {
 		return OPPORTUNITY_TYPE_LIST;
 	}
@@ -138,7 +145,7 @@ public class CrmDataTypeFactory {
 	public static String[] getTaskPriorities() {
 		return TASK_PRIORITY_LIST;
 	}
-	
+
 	public static String[] getTaskStatuses() {
 		return TASK_STATUS_LIST;
 	}

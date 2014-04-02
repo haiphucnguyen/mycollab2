@@ -75,7 +75,7 @@ public class S3StorageConfiguration implements StorageConfiguration {
 			if (userAvatarId == null || "".equals(userAvatarId.trim())) {
 				return S3AssetsResource
 						.generateResourceLink("icons/default_user_avatar_"
-								+ "_" + size + ".png");
+								+ size + ".png");
 			} else {
 				return s3UrlPath + "avatar/" + userAvatarId + "_" + size
 						+ ".png";
