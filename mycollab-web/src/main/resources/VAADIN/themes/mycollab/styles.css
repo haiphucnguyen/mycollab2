@@ -206,7 +206,7 @@ input.v-widget.v-textfield[type="text"], .v-filterselect  {
 	padding: 0;
 }
 .popupContent .v-window-outerheader .v-window-header {
-	padding: 12px 10px;
+	padding: 12px 30px 12px 10px;
 	font-size: 14px;
 	color: #525252;
 }
@@ -1768,6 +1768,7 @@ input.v-textfield-errorField {
 	background-position: right 10px center;
 	background-repeat: no-repeat;
 	border-radius: 5px;
+	box-shadow: none;
 }
 
 .v-popupbutton-popup.v-popupbutton-popup-project-list-comp-hdr {
@@ -3668,6 +3669,10 @@ div.v-lazyloadingwrapper-loading {
 .projectDashboardView .addViewLayout .depotContent .beanlist-content>.v-csslayout-margin
 	{
 	border-top: 1px solid #CFCFCF;
+}
+
+.standup-calendar .selected-ext {
+	border: 1px solid #EE7C08;
 }
 
 .report-row-header {
