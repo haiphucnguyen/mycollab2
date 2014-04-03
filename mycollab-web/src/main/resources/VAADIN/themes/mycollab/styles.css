@@ -5688,6 +5688,7 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 /* volume usage info */
 .v-horizontallayout.border-box2-no-margin.file-topcontrols {
 	border-radius: 5px 5px 0px 0px;
+	border-width: 1px 1px 0px;
 }
 .file-topcontrols .v-button.v-button-right {
 	border-right: none;
