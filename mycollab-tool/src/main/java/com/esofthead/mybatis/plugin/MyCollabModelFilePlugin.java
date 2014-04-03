@@ -291,14 +291,15 @@ public class MyCollabModelFilePlugin extends
 	public boolean clientUpdateByPrimaryKeyWithBLOBsMethodGenerated(
 			Method method, Interface interfaze,
 			IntrospectedTable introspectedTable) {
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean clientUpdateByPrimaryKeyWithoutBLOBsMethodGenerated(
 			Method method, Interface interfaze,
 			IntrospectedTable introspectedTable) {
-		return false;
+		boolean result = isBlobDomainGenerated(introspectedTable);
+		return !result;
 	}
 
 	@Override
