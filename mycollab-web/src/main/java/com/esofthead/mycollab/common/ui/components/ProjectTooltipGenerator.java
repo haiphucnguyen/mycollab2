@@ -1326,7 +1326,7 @@ public class ProjectTooltipGenerator {
 			Tr trRow3 = new Tr();
 			trRow3.appendChild(
 					new Td().setStyle(
-							"width: 150px; vertical-align: top; text-align: right;")
+							"width: 165px; vertical-align: top; text-align: right;")
 							.appendText("What I did in the last day/week:"))
 					.appendChild(
 							new Td().setStyle(
@@ -1336,7 +1336,7 @@ public class ProjectTooltipGenerator {
 			Tr trRow4 = new Tr();
 			trRow4.appendChild(
 					new Td().setStyle(
-							"width: 150px;vertical-align: top; text-align: right;")
+							"width: 165px;vertical-align: top; text-align: right;")
 							.appendText("What I will do today/week:"))
 					.appendChild(
 							new Td().setStyle(
@@ -1345,8 +1345,8 @@ public class ProjectTooltipGenerator {
 			Tr trRow5 = new Tr();
 			trRow5.appendChild(
 					new Td().setStyle(
-							"width: 150px;vertical-align: top; text-align: right;")
-							.appendText("Do you have roadblocks? :"))
+							"width: 165px;vertical-align: top; text-align: right;")
+							.appendText("Do you have roadblocks?:"))
 					.appendChild(
 							new Td().setStyle(
 									"break-word; white-space: normal;vertical-align: top; word-break: break-all;")
