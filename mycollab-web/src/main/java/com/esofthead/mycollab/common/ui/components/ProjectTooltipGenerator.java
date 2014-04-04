@@ -68,7 +68,7 @@ public class ProjectTooltipGenerator {
 			String timeZone) {
 		try {
 			if (task == null)
-				return null;
+				return generateTolltipNull();
 			String beforeStr = "<html><head><meta content=\"text/html; charset=utf-8\" http-equiv=\"Content-Type\"></head><body>";
 			Div div = new Div()
 					.setStyle("font: 12px Arial, Verdana, Helvetica, sans-serif !important;line-height: normal;");
