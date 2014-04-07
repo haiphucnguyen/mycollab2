@@ -4,13 +4,10 @@
     <property name="context-root" value="mycollab-app-community"/>
     <wb-resource deploy-path="/" source-path="src/main/webapp"/>
     <property name="java-output-path" value="/target/classes"/>
-    <dependent-module archiveName="mycollab-vaadin-ext-3.0.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/esofthead/mycollab/mycollab-vaadin-ext/3.0.0/mycollab-vaadin-ext-3.0.0.jar">
+    <dependent-module archiveName="mycollab-server-runner.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mycollab-server-runner/mycollab-server-runner">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="mycollab-web.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mycollab-web/mycollab-web">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="mycollab-extra-lib-1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/esofthead/mycollab/mycollab-extra-lib/1.0/mycollab-extra-lib-1.0.jar">
+    <dependent-module archiveName="mycollab-config.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mycollab-config/mycollab-config">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="mycollab-core.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mycollab-core/mycollab-core">
@@ -160,7 +157,7 @@
     <dependent-module archiveName="commons-validator-1.3.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/commons-validator/commons-validator/1.3.1/commons-validator-1.3.1.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="dom4j-1.6.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/dom4j/dom4j/1.6.1/dom4j-1.6.1.jar">
+    <dependent-module archiveName="dom4j-1.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/dom4j/dom4j/1.1/dom4j-1.1.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="oro-2.0.8.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/oro/oro/2.0.8/oro-2.0.8.jar">
@@ -193,7 +190,70 @@
     <dependent-module archiveName="jsoup-1.7.3.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/jsoup/jsoup/1.7.3/jsoup-1.7.3.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="mycollab-ui.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mycollab-ui/mycollab-ui">
+    <dependent-module archiveName="jasypt-1.9.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/jasypt/jasypt/1.9.1/jasypt-1.9.1.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="jasypt-spring31-1.9.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/jasypt/jasypt-spring31/1.9.1/jasypt-spring31-1.9.1.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="jetty-server-9.1.3.v20140225.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/jetty-server/9.1.3.v20140225/jetty-server-9.1.3.v20140225.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="javax.servlet-api-3.1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/javax/servlet/javax.servlet-api/3.1.0/javax.servlet-api-3.1.0.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="jetty-http-9.1.3.v20140225.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/jetty-http/9.1.3.v20140225/jetty-http-9.1.3.v20140225.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="jetty-util-9.1.3.v20140225.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/jetty-util/9.1.3.v20140225/jetty-util-9.1.3.v20140225.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="jetty-io-9.1.3.v20140225.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/jetty-io/9.1.3.v20140225/jetty-io-9.1.3.v20140225.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="jetty-servlet-9.1.3.v20140225.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/jetty-servlet/9.1.3.v20140225/jetty-servlet-9.1.3.v20140225.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="jetty-security-9.1.3.v20140225.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/jetty-security/9.1.3.v20140225/jetty-security-9.1.3.v20140225.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="jetty-deploy-9.1.3.v20140225.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/jetty-deploy/9.1.3.v20140225/jetty-deploy-9.1.3.v20140225.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="jetty-webapp-9.1.3.v20140225.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/jetty-webapp/9.1.3.v20140225/jetty-webapp-9.1.3.v20140225.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="jetty-xml-9.1.3.v20140225.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/jetty-xml/9.1.3.v20140225/jetty-xml-9.1.3.v20140225.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="jetty-annotations-9.1.3.v20140225.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/jetty-annotations/9.1.3.v20140225/jetty-annotations-9.1.3.v20140225.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="jetty-plus-9.1.3.v20140225.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/jetty-plus/9.1.3.v20140225/jetty-plus-9.1.3.v20140225.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="jetty-jndi-9.1.3.v20140225.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/jetty-jndi/9.1.3.v20140225/jetty-jndi-9.1.3.v20140225.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="javax.annotation-api-1.2.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/javax/annotation/javax.annotation-api/1.2/javax.annotation-api-1.2.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="asm-4.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/ow2/asm/asm/4.1/asm-4.1.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="asm-commons-4.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/ow2/asm/asm-commons/4.1/asm-commons-4.1.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="asm-tree-4.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/ow2/asm/asm-tree/4.1/asm-tree-4.1.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="jsp-api-2.2.1-b03.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/javax/servlet/jsp/jsp-api/2.2.1-b03/jsp-api-2.2.1-b03.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="mycollab-services-community.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mycollab-services-community/mycollab-services-community">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="mycollab-services.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mycollab-services/mycollab-services">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="mycollab-dao.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mycollab-dao/mycollab-dao">
@@ -211,19 +271,7 @@
     <dependent-module archiveName="jta-1.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/javax/transaction/jta/1.1/jta-1.1.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="mycollab-services.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mycollab-services/mycollab-services">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
     <dependent-module archiveName="mycollab-migration.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mycollab-migration/mycollab-migration">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="mycollab-config.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mycollab-config/mycollab-config">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="jasypt-1.9.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/jasypt/jasypt/1.9.1/jasypt-1.9.1.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="jasypt-spring31-1.9.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/jasypt/jasypt-spring31/1.9.1/jasypt-spring31-1.9.1.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="flyway-core-2.3.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/googlecode/flyway/flyway-core/2.3/flyway-core-2.3.jar">
@@ -343,6 +391,18 @@
     <dependent-module archiveName="dropbox-core-sdk-1.7.6.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/dropbox/core/dropbox-core-sdk/1.7.6/dropbox-core-sdk-1.7.6.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
+    <dependent-module archiveName="mycollab-web-community.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mycollab-web-community/mycollab-web-community">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="mycollab-web.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mycollab-web/mycollab-web">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="mycollab-extra-lib-1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/esofthead/mycollab/mycollab-extra-lib/1.0/mycollab-extra-lib-1.0.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="mycollab-ui.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mycollab-ui/mycollab-ui">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
     <dependent-module archiveName="vaadin-server-7.1.13.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/vaadin/vaadin-server/7.1.13/vaadin-server-7.1.13.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
@@ -376,13 +436,7 @@
     <dependent-module archiveName="validation-api-1.0.0.GA-sources.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/javax/validation/validation-api/1.0.0.GA/validation-api-1.0.0.GA-sources.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="javax.servlet-api-3.1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/javax/servlet/javax.servlet-api/3.1.0/javax.servlet-api-3.1.0.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
     <dependent-module archiveName="reflections-0.9.9-RC1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/reflections/reflections/0.9.9-RC1/reflections-0.9.9-RC1.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="jsr305-1.3.9.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/google/code/findbugs/jsr305/1.3.9/jsr305-1.3.9.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="javassist-3.16.1-GA.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/javassist/javassist/3.16.1-GA/javassist-3.16.1-GA.jar">
@@ -392,9 +446,6 @@
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="icepush-3.3.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/icepush/icepush/3.3.0/icepush-3.3.0.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="jsp-api-2.2.1-b03.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/javax/servlet/jsp/jsp-api/2.2.1-b03/jsp-api-2.2.1-b03.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="icepush-gwt-2.0.0-alpha3.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/icepush/icepush-gwt/2.0.0-alpha3/icepush-gwt-2.0.0-alpha3.jar">
@@ -413,57 +464,6 @@
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="c3p0-0.9.1.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/c3p0/c3p0/0.9.1.1/c3p0-0.9.1.1.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="mycollab-server-runner.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mycollab-server-runner/mycollab-server-runner">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="jetty-server-9.1.3.v20140225.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/jetty-server/9.1.3.v20140225/jetty-server-9.1.3.v20140225.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="jetty-http-9.1.3.v20140225.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/jetty-http/9.1.3.v20140225/jetty-http-9.1.3.v20140225.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="jetty-util-9.1.3.v20140225.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/jetty-util/9.1.3.v20140225/jetty-util-9.1.3.v20140225.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="jetty-io-9.1.3.v20140225.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/jetty-io/9.1.3.v20140225/jetty-io-9.1.3.v20140225.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="jetty-servlet-9.1.3.v20140225.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/jetty-servlet/9.1.3.v20140225/jetty-servlet-9.1.3.v20140225.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="jetty-security-9.1.3.v20140225.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/jetty-security/9.1.3.v20140225/jetty-security-9.1.3.v20140225.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="jetty-deploy-9.1.3.v20140225.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/jetty-deploy/9.1.3.v20140225/jetty-deploy-9.1.3.v20140225.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="jetty-webapp-9.1.3.v20140225.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/jetty-webapp/9.1.3.v20140225/jetty-webapp-9.1.3.v20140225.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="jetty-xml-9.1.3.v20140225.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/jetty-xml/9.1.3.v20140225/jetty-xml-9.1.3.v20140225.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="jetty-annotations-9.1.3.v20140225.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/jetty-annotations/9.1.3.v20140225/jetty-annotations-9.1.3.v20140225.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="jetty-plus-9.1.3.v20140225.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/jetty-plus/9.1.3.v20140225/jetty-plus-9.1.3.v20140225.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="jetty-jndi-9.1.3.v20140225.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/jetty-jndi/9.1.3.v20140225/jetty-jndi-9.1.3.v20140225.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="javax.annotation-api-1.2.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/javax/annotation/javax.annotation-api/1.2/javax.annotation-api-1.2.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="asm-4.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/ow2/asm/asm/4.1/asm-4.1.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="asm-commons-4.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/ow2/asm/asm-commons/4.1/asm-commons-4.1.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="asm-tree-4.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/ow2/asm/asm-tree/4.1/asm-tree-4.1.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="buttongroup-2.3.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/vaadin/addons/buttongroup/2.3/buttongroup-2.3.jar">
@@ -518,6 +518,12 @@
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="cropField-1.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/esofthead/vaadin/cropField/1.0-SNAPSHOT/cropField-1.0-SNAPSHOT.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="calendarext-1.0.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/esofthead/vaadin/calendarext/1.0.0-SNAPSHOT/calendarext-1.0.0-SNAPSHOT.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="jsr305-1.3.9.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/google/code/findbugs/jsr305/1.3.9/jsr305-1.3.9.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="jfreechart-1.0.15.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/jfree/jfreechart/1.0.15/jfreechart-1.0.15.jar">
@@ -584,12 +590,6 @@
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="spring-webmvc-3.2.6.RELEASE.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/springframework/spring-webmvc/3.2.6.RELEASE/spring-webmvc-3.2.6.RELEASE.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="mycollab-services-community.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mycollab-services-community/mycollab-services-community">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="mycollab-web-community.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mycollab-web-community/mycollab-web-community">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <wb-resource deploy-path="/WEB-INF/classes" source-path="src/main/java"/>

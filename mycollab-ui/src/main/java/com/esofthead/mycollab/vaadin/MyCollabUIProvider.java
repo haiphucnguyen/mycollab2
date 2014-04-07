@@ -43,7 +43,7 @@ public class MyCollabUIProvider extends UIProvider {
 
 		String uiClass = "";
 
-		if (userAgent.contains("mobile")) {
+		if (userAgent.contains("gecko")) {
 			uiClass = "com.esofthead.mycollab.mobile.MobileApplication";
 		} else {
 			uiClass = "com.esofthead.mycollab.web.DesktopApplication";
