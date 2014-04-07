@@ -3773,6 +3773,10 @@ div.v-lazyloadingwrapper-loading {
 	padding-right: 15px;
 }
 
+.standupreport-list-content .standup-block {
+	margin-bottom: 15px
+}
+
 .standupreport-list-content .depotComp {
 	margin: 0px;
 }
