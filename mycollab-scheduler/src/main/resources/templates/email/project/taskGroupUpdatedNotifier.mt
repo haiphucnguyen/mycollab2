@@ -32,12 +32,14 @@
 									<td>$!date.format('short_date', $!taskList.EndDate)</td>
 								</tr>
 								<tr>
-									<td style="text-align: right;">Percent Completeness:&nbsp;</td>
+									<td style="text-align: right;">Completeness(%):&nbsp;</td>
 									<td>$!taskList.PercentageComplete</td>	
 									<td style="text-align: right; width : 100px; vertical-align: top;"> Milestone:&nbsp;</td>
 									<td style="width: 180px;word-wrap: break-word; white-space: normal; vertical-align: top; word-break: break-all;"><a href="$!hyperLinks.milestoneUrl" style="color: rgb(216, 121, 55); text-decoration: none;">$!taskList.MilestoneName</a></td>		
 								</tr>
 								<tr>
+									<td style="text-align: right;">Description:&nbsp;</td>
+									<td>$!taskList.Description</td>	
 									<td style="text-align: right; width : 100px; vertical-align: top;">Owner:&nbsp;</td>
 									<td style="word-wrap: break-word; vertical-align: top; white-space: normal; word-break: break-all;">
 										<a href="$!hyperLinks.ownerUrl" style="color: rgb(216, 121, 55); text-decoration: none;">$!taskList.OwnerFullName</a>
@@ -82,11 +84,11 @@
                                 			#foreach ($comment in $lstComment)
                                 				<tr>
                                 					<td valign="top" style="border-color: rgb(169, 169, 169);font-size:10px; width: 200px;">
-                                						$comment.ownerFullName <br>
-                                						$comment.createdtime
+                                						$!comment.ownerFullName <br>
+                                						$!comment.createdtime
                                 					</td>
                                 					<td valign="top" style="border-color: rgb(169, 169, 169);font-size:10px;width: 450px ;word-wrap: break-word; white-space: normal; word-break: break-all;">
-                                						$comment.comment
+                                						$!comment.comment
                                 					</td>
                                 				</tr>
                                 			#end

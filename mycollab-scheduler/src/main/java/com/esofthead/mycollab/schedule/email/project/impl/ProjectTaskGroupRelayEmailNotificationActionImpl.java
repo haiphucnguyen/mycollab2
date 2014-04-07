@@ -17,7 +17,6 @@
 package com.esofthead.mycollab.schedule.email.project.impl;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,17 +28,12 @@ import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
 import com.esofthead.mycollab.common.service.AuditLogService;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
-import com.esofthead.mycollab.module.project.domain.ProjectNotificationSetting;
-import com.esofthead.mycollab.module.project.domain.ProjectNotificationSettingType;
-import com.esofthead.mycollab.module.project.domain.ProjectRelayEmailNotification;
 import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
-import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.project.service.ProjectTaskListService;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.schedule.ScheduleUserTimeZoneUtils;
 import com.esofthead.mycollab.schedule.email.project.ProjectMailLinkGenerator;
 import com.esofthead.mycollab.schedule.email.project.ProjectTaskGroupRelayEmailNotificationAction;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
 
 /**
  * 
@@ -114,8 +108,7 @@ public class ProjectTaskGroupRelayEmailNotificationActionImpl extends
 		}
 
 		ScheduleUserTimeZoneUtils.formatDateTimeZone(taskList, user.getTimezone(),
-				new String[] { "startdate", "enddate", "deadline",
-						"actualstartdate", "actualenddate" });
+				new String[] { "startdate", "enddate" });
 		String subject = StringUtils.trim(taskList.getName(), 100);
 
 		TemplateGenerator templateGenerator = new TemplateGenerator(
@@ -133,8 +126,7 @@ public class ProjectTaskGroupRelayEmailNotificationActionImpl extends
 					emailNotification.getSaccountid());
 
 			ScheduleUserTimeZoneUtils.formatDate(auditLog, user.getTimezone(),
-					new String[] { "startdate", "enddate", "deadline",
-							"actualstartdate", "actualenddate" });
+					new String[] { "startdate", "enddate" });
 
 			templateGenerator.putVariable("historyLog", auditLog);
 			templateGenerator.putVariable("mapper", mapper);
@@ -180,17 +172,17 @@ public class ProjectTaskGroupRelayEmailNotificationActionImpl extends
 		ProjectFieldNameMapper() {
 			fieldNameMap = new HashMap<String, String>();
 
-			fieldNameMap.put("taskname", "Task Name");
+			fieldNameMap.put("name", "Task Group Name");
 			fieldNameMap.put("startdate", "Start Date");
 			fieldNameMap.put("enddate", "End Date");
-			fieldNameMap.put("actualstartdate", "Actual Start Date");
-			fieldNameMap.put("actualenddate", "Actual End Date");
-			fieldNameMap.put("assignUserFullName", "Assignee");
+			fieldNameMap.put("owner", "Owner");
 			fieldNameMap.put("percentagecomplete", "Complete (%)");
-			fieldNameMap.put("notes", "Notes");
 			fieldNameMap.put("priority", "Priority");
-			fieldNameMap.put("deadline", "Deadline");
-			fieldNameMap.put("taskListName", "Task Group");
+			fieldNameMap.put("taskListname", "Task Group");
+			fieldNameMap.put("description", "Description");
+			fieldNameMap.put("milestonename", "Milestone Name");
+			fieldNameMap.put("projectname", "Project Name");
+			
 		}
 
 		public boolean hasField(String fieldName) {
