@@ -36,7 +36,7 @@
             <version>3.0.0</version>
         </dependency>
     </dependencies>
-
+<!-- 
     <build>
         <plugins>
             <plugin>
@@ -56,13 +56,14 @@
                     <resources>
                         <resource>
                             <source>
-                                <directory>${basedir}/src/main/resources/scss</directory>
+                                <directory>${basedir}/src/main/resources/VAADIN/themes/mycollab-mobile/scss</directory>
                             </source>
-                            <destination>${basedir}/src/main/resources</destination>
+                            <destination>${basedir}/src/main/resources/VAADIN/themes/mycollab-mobile/</destination>
                         </resource>
                     </resources>
                 </configuration>
             </plugin>
         </plugins>
     </build>
+    -->
 </project>
