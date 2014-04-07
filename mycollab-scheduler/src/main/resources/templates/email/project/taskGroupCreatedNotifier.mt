@@ -16,7 +16,7 @@
 		<tr>
 			<td style="background: url('${defaultUrls.cdn_url}border_large_center_new.png') repeat-y 0 0 transparent; color: #4e4e4e; font: 13px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif; padding: 10px 30px 0px;">
 				<div style="font-weight: bold; display: block; border-bottom: 1px solid rgb(212, 212, 212); padding-bottom: 5px; margin-bottom: 10px;">Hi $userName,</div>
-				<div style="display: block; padding: 8px; background-color: rgb(247, 228, 221); line-height: 20px;">Just wanna let you know that a new task group <a href="$!hyperLinks.taskListUrl" style="color: rgb(216, 121, 55); text-decoration: underline;">$!taskList.Name</a> has been created in project <a href="$!hyperLinks.projectUrl" style="color: rgb(216, 121, 55); text-decoration: underline;">$!taskList.Projectname</a>. Here're details about it:</div>
+				<div style="display: block; padding: 8px; background-color: rgb(247, 228, 221); line-height: 20px;">Just wanna let you know that a new task group <a href="$!hyperLinks.taskListUrl" style="color: rgb(216, 121, 55); text-decoration: underline;">$!taskList.Name</a> has been created in project <a href="$!hyperLinks.projectUrl" style="color: rgb(216, 121, 55); text-decoration: underline;">$!taskList.ProjectName</a>. Here're details about it:</div>
 				<table width="588" cellpadding="0" cellspacing="0" border="0" style="margin: 0 auto 25px;">
 					<tr>
 						<td style="color: #5a5a5a; font: 10px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif; padding: 3px 10px;">
@@ -24,12 +24,6 @@
 								<tr>
 									<td style="width: 60px; max-width: 90px; vertical-align: top; text-align: right;">Task Name:&nbsp;</td>
 									<td style="font-weight: bold; font-size: 11px; word-wrap: break-word;" colspan="3"><a href="$!hyperLinks.taskListUrl" style="color: rgb(216, 121, 55); text-decoration: none;">$!hyperLinks.taskListName</a></td>
-								</tr>
-								<tr>
-									<td style="text-align: right;">Start Date:&nbsp;</td>
-									<td>$!date.format('short_date', $!taskList.StartDate)</td>
-									<td style="text-align: right;">End Date:&nbsp;</td>
-									<td>$!date.format('short_date', $!taskList.EndDate)</td>
 								</tr>
 								<tr>
 									<td style="text-align: right;">Completeness(%):&nbsp;</td>

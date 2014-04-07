@@ -31,7 +31,6 @@ import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
 import com.esofthead.mycollab.module.project.service.ProjectTaskListService;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
-import com.esofthead.mycollab.schedule.ScheduleUserTimeZoneUtils;
 import com.esofthead.mycollab.schedule.email.project.ProjectMailLinkGenerator;
 import com.esofthead.mycollab.schedule.email.project.ProjectTaskGroupRelayEmailNotificationAction;
 
@@ -65,8 +64,6 @@ public class ProjectTaskGroupRelayEmailNotificationActionImpl extends
 				emailNotification.getSaccountid());
 
 		String subject = StringUtils.trim(taskList.getName(), 100);
-		ScheduleUserTimeZoneUtils.formatDateTimeZone(taskList, user.getTimezone(),
-				new String[] { "startdate", "enddate" });
 
 		TemplateGenerator templateGenerator = new TemplateGenerator(
 				"[$taskList.projectName]: "
@@ -107,8 +104,6 @@ public class ProjectTaskGroupRelayEmailNotificationActionImpl extends
 			return null;
 		}
 
-		ScheduleUserTimeZoneUtils.formatDateTimeZone(taskList, user.getTimezone(),
-				new String[] { "startdate", "enddate" });
 		String subject = StringUtils.trim(taskList.getName(), 100);
 
 		TemplateGenerator templateGenerator = new TemplateGenerator(
@@ -124,9 +119,6 @@ public class ProjectTaskGroupRelayEmailNotificationActionImpl extends
 			SimpleAuditLog auditLog = auditLogService.findLatestLog(
 					emailNotification.getTypeid(),
 					emailNotification.getSaccountid());
-
-			ScheduleUserTimeZoneUtils.formatDate(auditLog, user.getTimezone(),
-					new String[] { "startdate", "enddate" });
 
 			templateGenerator.putVariable("historyLog", auditLog);
 			templateGenerator.putVariable("mapper", mapper);
@@ -173,8 +165,6 @@ public class ProjectTaskGroupRelayEmailNotificationActionImpl extends
 			fieldNameMap = new HashMap<String, String>();
 
 			fieldNameMap.put("name", "Task Group Name");
-			fieldNameMap.put("startdate", "Start Date");
-			fieldNameMap.put("enddate", "End Date");
 			fieldNameMap.put("owner", "Owner");
 			fieldNameMap.put("percentagecomplete", "Complete (%)");
 			fieldNameMap.put("priority", "Priority");
