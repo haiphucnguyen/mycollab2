@@ -301,7 +301,7 @@ public class StandupListViewImpl extends AbstractPageView implements
 			super();
 			this.setStyleName("standup-block");
 
-			this.setMargin(false);
+			this.setMargin(new MarginInfo(false, false, true, false));
 
 			VerticalLayout userInfo = new VerticalLayout();
 			userInfo.setStyleName("user-info");
