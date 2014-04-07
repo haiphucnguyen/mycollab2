@@ -31,11 +31,11 @@ import com.google.gwt.user.client.ui.Widget;
 import com.vaadin.addon.touchkit.gwt.client.ui.VNavigationView;
 import com.vaadin.client.BrowserInfo;
 import com.vaadin.client.Util;
-import com.vaadin.client.ui.TouchScrollDelegate;
 
 public class VMobileNavigationView extends VNavigationView {
 
-	private static Logger log = Logger.getLogger(VMobileNavigationView.class.getName());
+	private static Logger log = Logger.getLogger(VMobileNavigationView.class
+			.getName());
 
 	private final SimplePanel toggleNavBtn;
 	private VMobileNavigationManager viewNavigationManager;
@@ -51,7 +51,8 @@ public class VMobileNavigationView extends VNavigationView {
 	private boolean touchDrag;
 	private final Element scrollElement;
 	protected TouchStartEvent dragStartEvent;
-	private final TouchScrollDelegate touchScrollDelegate;
+
+	// private final TouchScrollDelegate touchScrollDelegate;
 
 	public VMobileNavigationView() {
 		super();
@@ -71,7 +72,7 @@ public class VMobileNavigationView extends VNavigationView {
 		style.setHeight(100, Unit.PCT);
 		style.setPosition(Position.ABSOLUTE);
 		DOM.sinkEvents(scrollElement, Event.ONSCROLL);
-		touchScrollDelegate = new TouchScrollDelegate(scrollElement);
+		// touchScrollDelegate = new TouchScrollDelegate(scrollElement);
 	}
 
 	@Override
@@ -84,21 +85,22 @@ public class VMobileNavigationView extends VNavigationView {
 	}
 
 	public VMobileNavigationBar getNavigationBar() {
-		if(getWidget(0) instanceof VMobileNavigationBar) {
+		if (getWidget(0) instanceof VMobileNavigationBar) {
 			return (VMobileNavigationBar) getWidget(0);
 		}
 		return null;
 	}
 
 	public void addToggleButton() {
-		if(getNavigationBar() != null) {
+		if (getNavigationBar() != null) {
 			getNavigationBar().setLeftWidget(toggleNavBtn);
 		}
 
 	}
 
 	public void removeToggleButton() {
-		if(getNavigationBar() != null && getNavigationBar().hasChildComponent(toggleNavBtn)) {
+		if (getNavigationBar() != null
+				&& getNavigationBar().hasChildComponent(toggleNavBtn)) {
 			getNavigationBar().setLeftWidget(null);
 		}
 	}
@@ -117,7 +119,7 @@ public class VMobileNavigationView extends VNavigationView {
 
 			@Override
 			public void onMouseDown(MouseDownEvent event) {
-				if(viewNavigationManager != null) {
+				if (viewNavigationManager != null) {
 					viewNavigationManager.toggleMenu();
 				}
 			}
@@ -182,8 +184,7 @@ public class VMobileNavigationView extends VNavigationView {
 			dragging = true;
 			touchDrag = Event.as(ne).getTypeInt() == Event.ONTOUCHSTART;
 			dragstartX = Util.getTouchOrMouseClientX(ne);
-			if (dragstartX < 20 && !viewNavigationManager.getMenuVisibility())
-			{
+			if (dragstartX < 20 && !viewNavigationManager.getMenuVisibility()) {
 				dragging = false;
 				ne.preventDefault();
 				return;
@@ -204,11 +205,12 @@ public class VMobileNavigationView extends VNavigationView {
 				@Override
 				public void run() {
 					// Swipe must start soon or drag start will be ignored
-					if(!swiping) {
+					if (!swiping) {
 						dragging = false;
 					}
 				}
-			}.schedule(200);;
+			}.schedule(200);
+			;
 		}
 	}
 
@@ -239,20 +241,19 @@ public class VMobileNavigationView extends VNavigationView {
 					viewNavigationManager.setHorizontalOffsetExt(deltaX, false);
 					ne.preventDefault(); // prevent page scroll
 				}
-				if (BrowserInfo.get().requiresTouchScrollDelegate()) {
-					if (Math.abs(deltaX / (double) dragY) < 0.5) {
-						if (Event.as(event.getNativeEvent()).getTypeInt() == Event.ONTOUCHMOVE) {
-							/*
-							 * We'll "lazyly" activate touchScrollDelegate if
-							 * the direction is enough down.
-							 */
-							dragStartEvent.setNativeEvent(event
-									.getNativeEvent());
-							touchScrollDelegate.onTouchStart(dragStartEvent);
-							dragging = false;
-						}
-					}
-				}
+				/*
+				 * if (BrowserInfo.get().requiresTouchScrollDelegate()) { if
+				 * (Math.abs(deltaX / (double) dragY) < 0.5) { if
+				 * (Event.as(event.getNativeEvent()).getTypeInt() ==
+				 * Event.ONTOUCHMOVE) {
+				 * 
+				 * We'll "lazyly" activate touchScrollDelegate if the direction
+				 * is enough down.
+				 * 
+				 * dragStartEvent.setNativeEvent(event .getNativeEvent()); //
+				 * touchScrollDelegate.onTouchStart(dragStartEvent); dragging =
+				 * false; } } }
+				 */
 			}
 		}
 	}
@@ -266,10 +267,13 @@ public class VMobileNavigationView extends VNavigationView {
 					NativeEvent ne = event.getNativeEvent();
 					int x = Util.getTouchOrMouseClientX(ne);
 					int deltaX = x - dragstartX;
-					if (deltaX < viewNavigationManager.getNavigationMenuWidth() / 2 || lastSpeed > SPEED_THRESHOLD) {
+					if (deltaX < viewNavigationManager.getNavigationMenuWidth() / 2
+							|| lastSpeed < -SPEED_THRESHOLD) {
 						// navigate backward
 						viewNavigationManager.toggleMenu(false);
-					} else if (deltaX >= viewNavigationManager.getNavigationMenuWidth() / 2 || lastSpeed < -SPEED_THRESHOLD) {
+					} else if (deltaX >= viewNavigationManager
+							.getNavigationMenuWidth() / 2
+							|| lastSpeed > SPEED_THRESHOLD) {
 						// navigate forward
 						viewNavigationManager.toggleMenu(true);
 					} else {
