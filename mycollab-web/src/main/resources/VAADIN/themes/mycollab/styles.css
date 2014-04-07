@@ -2445,6 +2445,9 @@ input.v-textfield-errorField {
 	height: 30px;
 	vertical-align: middle;
 	line-height: 30px;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 .v-calendar-header-week .v-calendar-datecell {
@@ -2536,6 +2539,7 @@ input.v-textfield-errorField {
 
 .v-calendar-header-week .v-calendar-back {
 	float: right;
+	/* width: 49px; */
 }
 
 .v-calendar-header-week .v-calendar-next {
