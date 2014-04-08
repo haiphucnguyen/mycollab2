@@ -87,6 +87,7 @@ AbstractPreviewItemComp<SimpleTaskList> implements TaskGroupReadView {
 		commentList = new CommentDisplay(CommentType.PRJ_TASK_LIST,
 				CurrentProjectVariables.getProjectId(), true, true, ProjectTaskGroupRelayEmailNotificationAction.class);
 		commentList.setWidth("100%");
+		commentList.setMargin(true);
 
 		taskDisplayComp = new SubTasksDisplayComp();
 
