@@ -3719,7 +3719,7 @@ div.v-lazyloadingwrapper-loading {
 	background-color: rgb(229, 239, 240);
 }
 
-.report-row-content>div>div:first-child+div {
+.report-row-content>div:first-child+div+div {
 	border-width: 0px 1px 0px 1px;
 	border-style: solid;
 	border-color: rgb(204, 204, 204);
@@ -3727,6 +3727,7 @@ div.v-lazyloadingwrapper-loading {
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
+	height: 100%;
 }
 
 .report-row-block {
