@@ -22,18 +22,15 @@
 						<td style="color: #5a5a5a; font: 10px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif; padding: 3px 10px;">
 							<table cellpadding="0" cellspacing="5" border="0" style="font-size: 10px; width: 100%;">
 								<tr>
-									<td style="width: 60px; max-width: 90px; vertical-align: top; text-align: right;">Task Name:&nbsp;</td>
-									<td style="font-weight: bold; font-size: 11px; word-wrap: break-word;" colspan="3"><a href="$!hyperLinks.taskListUrl" style="color: rgb(216, 121, 55); text-decoration: none;">$!hyperLinks.taskListName</a></td>
+									<td style="width: 60px; text-align: right;">Task Name:&nbsp;</td>
+									<td style="font-size: 11px; word-wrap: break-word;"><a href="$!hyperLinks.taskListUrl" style="color: rgb(216, 121, 55); text-decoration: none;">$!hyperLinks.taskListName</a></td>
+									<td style="text-align: right; width : 100px; text-align: right;"> Milestone:&nbsp;</td>
+									<td><a href="$!hyperLinks.milestoneUrl" style="color: rgb(216, 121, 55); text-decoration: none;">$!taskList.MilestoneName</a></td>
 								</tr>
+
 								<tr>
-									<td style="text-align: right;">Completeness(%):&nbsp;</td>
-									<td>$!taskList.PercentageComplete</td>	
-									<td style="text-align: right; width : 100px; vertical-align: top;"> Milestone:&nbsp;</td>
-									<td style="width: 180px;word-wrap: break-word; white-space: normal; vertical-align: top; word-break: break-all;"><a href="$!hyperLinks.milestoneUrl" style="color: rgb(216, 121, 55); text-decoration: none;">$!taskList.MilestoneName</a></td>		
-								</tr>
-								<tr>
-									<td style="text-align: right;">Description:&nbsp;</td>
-									<td>$!taskList.Description</td>	
+									<td style="width: 60px;text-align: right;vertical-align: top;">Description:&nbsp;</td>
+									<tdstyle="word-wrap: break-word; vertical-align: top; white-space: normal; word-break: break-all;">$!taskList.Description</td>	
 									<td style="text-align: right; width : 100px; vertical-align: top;">Owner:&nbsp;</td>
 									<td style="word-wrap: break-word; vertical-align: top; white-space: normal; word-break: break-all;">
 										<a href="$!hyperLinks.ownerUrl" style="color: rgb(216, 121, 55); text-decoration: none;">$!taskList.OwnerFullName</a>
