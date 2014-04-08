@@ -4051,6 +4051,8 @@ div.v-lazyloadingwrapper-loading {
 .v-label.standup-row-content {
 	padding: 10px 0px 10px 0px;
 	font-size: 13px;
+	width: 100%;
+	white-space: normal;
 }
 
 .v-label.standup-row-content ul {
