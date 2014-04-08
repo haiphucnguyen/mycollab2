@@ -243,7 +243,9 @@ body div>input.v-filterselect-input[type="text"] {
 	background-position: left top;
 	background-repeat: repeat-x;
 }
-
+.v-button {
+	box-shadow:none;
+}
 .v-button-wrap {
 	text-overflow: clip;
 	height: auto;
@@ -5707,8 +5709,8 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 
 /* volume usage info */
 .v-horizontallayout.border-box2-no-margin.file-topcontrols {
-	border-radius: 5px 5px 0px 0px;
-	border-width: 1px 1px 0px;
+	border-radius: 2px 3px 0px 0px;
+	border-width: 1px 1px 0px 1px;
 }
 .file-topcontrols .v-button.v-button-right {
 	border-right: none;
