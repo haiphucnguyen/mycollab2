@@ -23,7 +23,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.esofthead.mycollab.cache.CacheUtils;
 import com.esofthead.mycollab.common.ModuleNameConstants;
-import com.esofthead.mycollab.common.MonitorTypeConstants;
 import com.esofthead.mycollab.common.interceptor.aspect.Auditable;
 import com.esofthead.mycollab.common.interceptor.aspect.Traceable;
 import com.esofthead.mycollab.common.interceptor.aspect.Watchable;
@@ -31,6 +30,7 @@ import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
 import com.esofthead.mycollab.module.project.ProjectContants;
+import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.dao.TaskListMapper;
 import com.esofthead.mycollab.module.project.dao.TaskListMapperExt;
 import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
@@ -49,7 +49,7 @@ import com.esofthead.mycollab.schedule.email.project.ProjectTaskGroupRelayEmailN
 @Transactional
 @Traceable(module = ModuleNameConstants.PRJ, type = ProjectContants.TASK_LIST, nameField = "name", extraFieldName = "projectid")
 @Auditable(module = ModuleNameConstants.PRJ, type = ProjectContants.TASK_LIST)
-@Watchable(type = MonitorTypeConstants.PRJ_TASK_LIST, userFieldName = "owner", extraTypeId = "projectid", emailHandlerBean = ProjectTaskGroupRelayEmailNotificationAction.class)
+@Watchable(type = ProjectTypeConstants.PRJ_TASK_LIST, userFieldName = "owner", extraTypeId = "projectid", emailHandlerBean = ProjectTaskGroupRelayEmailNotificationAction.class)
 public class ProjectTaskListServiceImpl extends
 		DefaultService<Integer, TaskList, TaskListSearchCriteria> implements
 		ProjectTaskListService {

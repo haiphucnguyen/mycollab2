@@ -33,6 +33,7 @@ import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
 import com.esofthead.mycollab.module.project.ProjectContants;
+import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.dao.RiskMapper;
 import com.esofthead.mycollab.module.project.dao.RiskMapperExt;
 import com.esofthead.mycollab.module.project.domain.Risk;
@@ -137,7 +138,7 @@ public class RiskServiceImpl extends
 		relayNotification.setChangecomment("");
 		int sAccountId = record.getSaccountid();
 		relayNotification.setSaccountid(sAccountId);
-		relayNotification.setType(MonitorTypeConstants.PRJ_RISK);
+		relayNotification.setType(ProjectTypeConstants.PRJ_RISK);
 		relayNotification.setAction(action);
 		relayNotification
 				.setEmailhandlerbean(ProjectRiskRelayEmailNotificationAction.class

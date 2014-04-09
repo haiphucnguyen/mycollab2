@@ -21,7 +21,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-import com.esofthead.mycollab.common.MonitorTypeConstants;
 import com.esofthead.mycollab.core.arguments.RangeDateSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
@@ -30,6 +29,7 @@ import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.file.resource.ExportItemsStreamResource;
 import com.esofthead.mycollab.module.file.resource.SimpleGridExportItemsStreamResource;
+import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleItemTimeLogging;
 import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
@@ -255,7 +255,7 @@ TimeTrackingSummaryView {
 					final int typeId = itemLogging.getTypeid();
 					final int projectId = itemLogging.getProjectid();
 
-					if (MonitorTypeConstants.PRJ_BUG.equals(itemLogging
+					if (ProjectTypeConstants.PRJ_BUG.equals(itemLogging
 							.getType())) {
 						final PageActionChain chain = new PageActionChain(
 								new ProjectScreenData.Goto(projectId),
@@ -263,7 +263,7 @@ TimeTrackingSummaryView {
 						EventBus.getInstance().fireEvent(
 								new ProjectEvent.GotoMyProject(this,
 										chain));
-					} else if (MonitorTypeConstants.PRJ_TASK
+					} else if (ProjectTypeConstants.PRJ_TASK
 							.equals(itemLogging.getType())) {
 						final PageActionChain chain = new PageActionChain(
 								new ProjectScreenData.Goto(projectId),

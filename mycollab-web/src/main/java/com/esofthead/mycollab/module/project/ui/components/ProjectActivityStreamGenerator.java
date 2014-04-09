@@ -23,6 +23,12 @@ import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.localization.TaskI18nEnum;
 import com.esofthead.mycollab.utils.AuditLogShowHandler;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class ProjectActivityStreamGenerator {
 	private static AuditLogShowHandler bugHandler = new BugAuditLogShowHandler();
 	private static AuditLogShowHandler taskHandler = new TaskAuditLogShowHandler();

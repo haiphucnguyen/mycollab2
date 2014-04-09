@@ -11,6 +11,7 @@ import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.ItemTimeLogging;
+import com.esofthead.mycollab.module.project.domain.ProjectGenericTask;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.service.ItemTimeLoggingService;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberSelectionBox;
@@ -29,6 +30,7 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.Table;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
@@ -48,6 +50,7 @@ public class AddTimeEntryWindow extends Window {
 	private ProjectMemberSelectionBox projectMemberSelectionBox;
 	private RichTextArea descArea;
 	private TimeTrackingListView parentView;
+	private ProjectGenericTask selectionTask;
 
 	public AddTimeEntryWindow(TimeTrackingListView view) {
 		this.setModal(true);
@@ -120,8 +123,10 @@ public class AddTimeEntryWindow extends Window {
 
 					@Override
 					public void buttonClick(ClickEvent event) {
-						// TODO Auto-generated method stub
-
+						ProjectGenericTaskSelectionWindow selectionTaskWindow = new ProjectGenericTaskSelectionWindow(
+								AddTimeEntryWindow.this);
+						AddTimeEntryWindow.this.getUI().addWindow(
+								selectionTaskWindow);
 					}
 				});
 
@@ -154,6 +159,10 @@ public class AddTimeEntryWindow extends Window {
 		content.addComponent(controlsLayout);
 		this.setContent(content);
 		this.center();
+	}
+
+	void setSelectionTask(ProjectGenericTask selectionTask) {
+		this.selectionTask = selectionTask;
 	}
 
 	private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
@@ -274,6 +283,10 @@ public class AddTimeEntryWindow extends Window {
 			timeLogging.setSaccountid(AppContext.getAccountId());
 			timeLogging.setCreatedtime(new GregorianCalendar().getTime());
 			timeLogging.setLastupdatedtime(new GregorianCalendar().getTime());
+			if (selectionTask != null) {
+				timeLogging.setType(selectionTask.getType());
+				timeLogging.setTypeid(selectionTask.getTypeId());
+			}
 			return timeLogging;
 		}
 	}
