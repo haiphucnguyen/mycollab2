@@ -158,10 +158,12 @@ public class BugRelayEmailNotificationActionImpl extends
 
 		List<Map<String, String>> listOfTitles = new ArrayList<Map<String, String>>();
 
+		ProjectMailLinkGenerator linkGenerator = new ProjectMailLinkGenerator(
+				bug.getProjectid());
+
 		HashMap<String, String> currentProject = new HashMap<String, String>();
 		currentProject.put("displayName", bug.getProjectname());
-		currentProject.put("webLink",
-				ProjectLinkUtils.generateProjectLink(bug.getProjectid()));
+		currentProject.put("webLink", linkGenerator.generateProjectFullLink());
 
 		listOfTitles.add(currentProject);
 
@@ -170,10 +172,8 @@ public class BugRelayEmailNotificationActionImpl extends
 				bug.getProjectid(), emailNotification.getSaccountid());
 		bugCode.put("displayName", "[" + relatedProject.getShortname() + "-"
 				+ bug.getBugkey() + "]");
-		bugCode.put(
-				"webLink",
-				ProjectLinkUtils.generateBugPreviewLink(bug.getProjectid(),
-						bug.getId()));
+		bugCode.put("webLink",
+				linkGenerator.generateBugPreviewFullLink(bug.getId()));
 
 		listOfTitles.add(bugCode);
 
@@ -181,10 +181,10 @@ public class BugRelayEmailNotificationActionImpl extends
 		String summaryLink = ProjectLinkUtils.generateBugPreviewLink(
 				bug.getProjectid(), bug.getId());
 
-		TemplateGenerator templateGenerator = new TemplateGenerator(
-				"[$bug.projectname]: "
-						+ emailNotification.getChangeByUserFullName()
-						+ " has updated the bug \"" + subject + "\"",
+		TemplateGenerator templateGenerator = new TemplateGenerator("["
+				+ bug.getProjectname() + "]: "
+				+ emailNotification.getChangeByUserFullName()
+				+ " has updated the bug \"" + subject + "\"",
 				"templates/email/project/bugUpdatedNotifier.mt");
 		/*
 		 * ScheduleUserTimeZoneUtils.formatDateTimeZone(bug, user.getTimezone(),
