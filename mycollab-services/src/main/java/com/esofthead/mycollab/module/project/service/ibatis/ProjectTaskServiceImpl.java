@@ -31,7 +31,6 @@ import com.esofthead.mycollab.common.interceptor.aspect.Watchable;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
-import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.dao.TaskMapper;
 import com.esofthead.mycollab.module.project.dao.TaskMapperExt;
@@ -55,9 +54,9 @@ import com.esofthead.mycollab.schedule.email.project.ProjectTaskRelayEmailNotifi
  */
 @Service
 @Transactional
-@Traceable(module = ModuleNameConstants.PRJ, type = ProjectContants.TASK, nameField = "taskname", extraFieldName = "projectid")
-@Auditable(module = ModuleNameConstants.PRJ, type = ProjectContants.TASK)
-@Watchable(type = ProjectTypeConstants.PRJ_TASK, userFieldName = "assignuser", extraTypeId = "projectid", emailHandlerBean = ProjectTaskRelayEmailNotificationAction.class)
+@Traceable(module = ModuleNameConstants.PRJ, type = ProjectTypeConstants.TASK, nameField = "taskname", extraFieldName = "projectid")
+@Auditable(module = ModuleNameConstants.PRJ, type = ProjectTypeConstants.TASK)
+@Watchable(type = ProjectTypeConstants.TASK, userFieldName = "assignuser", extraTypeId = "projectid", emailHandlerBean = ProjectTaskRelayEmailNotificationAction.class)
 public class ProjectTaskServiceImpl extends
 		DefaultService<Integer, Task, TaskSearchCriteria> implements
 		ProjectTaskService {

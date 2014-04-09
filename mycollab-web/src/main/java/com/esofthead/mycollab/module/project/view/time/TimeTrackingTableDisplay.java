@@ -87,7 +87,7 @@ public class TimeTrackingTableDisplay
 					return new Label(itemLogging.getNote(), ContentMode.HTML);
 				}
 
-				if (itemLogging.getType().equals(ProjectTypeConstants.PRJ_BUG)) {
+				if (itemLogging.getType().equals(ProjectTypeConstants.BUG)) {
 
 					timeTrackingLink = new ButtonLink(itemLogging.getSummary(),
 							new Button.ClickListener() {
@@ -114,7 +114,7 @@ public class TimeTrackingTableDisplay
 						timeTrackingLink.addStyleName(UIConstants.LINK_OVERDUE);
 					}
 				} else if (itemLogging.getType().equals(
-						ProjectTypeConstants.PRJ_TASK)) {
+						ProjectTypeConstants.TASK)) {
 
 					timeTrackingLink = new ButtonLink(itemLogging.getSummary(),
 							new Button.ClickListener() {

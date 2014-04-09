@@ -4,6 +4,7 @@ import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomComponent;
@@ -33,6 +34,7 @@ IFormLayoutFactory {
 
 	public StandupReportFormLayoutFactory(final String title) {
 		this.title = title;
+		
 	}
 
 	@Override
@@ -43,11 +45,13 @@ IFormLayoutFactory {
 		reportAddLayout.addHeaderRight(this.createTopPanel());
 
 		final HorizontalLayout mainLayout = new HorizontalLayout();
+		mainLayout.setStyleName("report-addview-layout");
 		mainLayout.setSpacing(true);
 		mainLayout.setWidth("100%");
 
 		final VerticalLayout layoutField = new VerticalLayout();
 		layoutField.addStyleName("standup-edit-layout");
+		layoutField.setMargin(new MarginInfo(false, false, true, true));
 		layoutField.setWidth("100%");
 		final Label whatYesterdayLbl = new Label(
 				"What I did in the last day/week");

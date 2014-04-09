@@ -168,12 +168,12 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements
 						final SimpleItemTimeLogging itemLogging = (SimpleItemTimeLogging) event
 								.getData();
 						if ("summary".equals(event.getFieldName())) {
-							if (ProjectTypeConstants.PRJ_BUG.equals(itemLogging
+							if (ProjectTypeConstants.BUG.equals(itemLogging
 									.getType())) {
 								EventBus.getInstance().fireEvent(
 										new BugEvent.GotoRead(this, itemLogging
 												.getTypeid()));
-							} else if (ProjectTypeConstants.PRJ_TASK
+							} else if (ProjectTypeConstants.TASK
 									.equals(itemLogging.getType())) {
 								EventBus.getInstance().fireEvent(
 										new TaskEvent.GotoRead(this,

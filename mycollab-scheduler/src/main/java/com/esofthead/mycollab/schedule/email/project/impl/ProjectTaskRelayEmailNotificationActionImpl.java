@@ -139,8 +139,8 @@ public class ProjectTaskRelayEmailNotificationActionImpl extends
 		}
 		templateGenerator.putVariable(
 				"lstComment",
-				getListComment(task.getSaccountid(),
-						ProjectTypeConstants.PRJ_TASK, task.getId()));
+				getListComment(task.getSaccountid(), ProjectTypeConstants.TASK,
+						task.getId()));
 
 		return templateGenerator;
 	}
@@ -161,8 +161,7 @@ public class ProjectTaskRelayEmailNotificationActionImpl extends
 				"[$task.projectName]: "
 						+ emailNotification.getChangeByUserFullName()
 						+ " has commented on the task \""
-						+ StringUtils.trim(task.getTaskname(), 100)
-						+ "\"",
+						+ StringUtils.trim(task.getTaskname(), 100) + "\"",
 				"templates/email/project/taskCommentNotifier.mt");
 		templateGenerator.putVariable("task", task);
 		templateGenerator.putVariable("comment", emailNotification);

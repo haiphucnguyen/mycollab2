@@ -73,8 +73,7 @@ public class ProjectProblemRelayEmailNotificationActionImpl extends
 				"[$hyperLinks.projectName]: "
 						+ emailNotification.getChangeByUserFullName()
 						+ " has created the problem \""
-						+ StringUtils.trim(problem.getIssuename(), 100)
-						+ "\"",
+						+ StringUtils.trim(problem.getIssuename(), 100) + "\"",
 				"templates/email/project/problemCreatedNotifier.mt");
 		ScheduleUserTimeZoneUtils.formatDateTimeZone(problem,
 				user.getTimezone(), new String[] { "dateraised", "datedue",
@@ -123,7 +122,7 @@ public class ProjectProblemRelayEmailNotificationActionImpl extends
 		templateGenerator.putVariable(
 				"lstComment",
 				getListComment(problem.getSaccountid(),
-						ProjectTypeConstants.PRJ_PROBLEM, problem.getId()));
+						ProjectTypeConstants.PROBLEM, problem.getId()));
 		return templateGenerator;
 	}
 
@@ -140,8 +139,7 @@ public class ProjectProblemRelayEmailNotificationActionImpl extends
 				"[$hyperLinks.projectName]: "
 						+ emailNotification.getChangeByUserFullName()
 						+ " has commented on the problem \""
-						+ StringUtils.trim(problem.getIssuename(), 100)
-						+ "\"",
+						+ StringUtils.trim(problem.getIssuename(), 100) + "\"",
 				"templates/email/project/problemCommentNotifier.mt");
 
 		templateGenerator.putVariable("problem", problem);

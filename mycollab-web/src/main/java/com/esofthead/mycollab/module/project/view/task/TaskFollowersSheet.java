@@ -51,19 +51,19 @@ public class TaskFollowersSheet extends CompFollowersSheet<SimpleTask> {
 	protected void loadMonitorItems() {
 		MonitorSearchCriteria searchCriteria = new MonitorSearchCriteria();
 		searchCriteria.setTypeId(new NumberSearchField(bean.getId()));
-		searchCriteria.setType(new StringSearchField(
-				ProjectTypeConstants.PRJ_TASK));
+		searchCriteria
+				.setType(new StringSearchField(ProjectTypeConstants.TASK));
 		tableItem.setSearchCriteria(searchCriteria);
 	}
 
 	@Override
 	protected boolean saveMonitorItem(String username) {
 		if (!monitorItemService.isUserWatchingItem(username,
-				ProjectTypeConstants.PRJ_TASK, bean.getId())) {
+				ProjectTypeConstants.TASK, bean.getId())) {
 
 			MonitorItem monitorItem = new MonitorItem();
 			monitorItem.setMonitorDate(new GregorianCalendar().getTime());
-			monitorItem.setType(ProjectTypeConstants.PRJ_TASK);
+			monitorItem.setType(ProjectTypeConstants.TASK);
 			monitorItem.setTypeid(bean.getId());
 			monitorItem.setUser(username);
 			monitorItem.setSaccountid(AppContext.getAccountId());
@@ -81,7 +81,7 @@ public class TaskFollowersSheet extends CompFollowersSheet<SimpleTask> {
 		relayNotification.setChangeby(AppContext.getUsername());
 		relayNotification.setChangecomment("");
 		relayNotification.setSaccountid(AppContext.getAccountId());
-		relayNotification.setType(ProjectTypeConstants.PRJ_TASK);
+		relayNotification.setType(ProjectTypeConstants.TASK);
 		relayNotification.setTypeid(bean.getId());
 		relayNotification
 				.setEmailhandlerbean(ProjectTaskRelayEmailNotificationAction.class
