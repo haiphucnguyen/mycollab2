@@ -30,7 +30,6 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.Table;
-import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
@@ -51,6 +50,7 @@ public class AddTimeEntryWindow extends Window {
 	private RichTextArea descArea;
 	private TimeTrackingListView parentView;
 	private ProjectGenericTask selectionTask;
+	private HorizontalLayout taskLayout;
 
 	public AddTimeEntryWindow(TimeTrackingListView view) {
 		this.setModal(true);
@@ -116,21 +116,8 @@ public class AddTimeEntryWindow extends Window {
 		descArea.setWidth("100%");
 		content.addComponent(descArea);
 
-		HorizontalLayout taskLayout = new HorizontalLayout();
-		Button attachTaskBtn = new Button("Link with task",
-				new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
-
-					@Override
-					public void buttonClick(ClickEvent event) {
-						ProjectGenericTaskSelectionWindow selectionTaskWindow = new ProjectGenericTaskSelectionWindow(
-								AddTimeEntryWindow.this);
-						AddTimeEntryWindow.this.getUI().addWindow(
-								selectionTaskWindow);
-					}
-				});
-
-		taskLayout.addComponent(attachTaskBtn);
+		taskLayout = new HorizontalLayout();
+		createLinkTaskButton();
 		content.addComponent(taskLayout);
 
 		HorizontalLayout controlsLayout = new HorizontalLayout();
@@ -163,6 +150,26 @@ public class AddTimeEntryWindow extends Window {
 
 	void setSelectionTask(ProjectGenericTask selectionTask) {
 		this.selectionTask = selectionTask;
+		
+		
+	}
+	
+	private void createLinkTaskButton() {
+		taskLayout.removeAllComponents();
+		Button attachTaskBtn = new Button("Link with task",
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void buttonClick(ClickEvent event) {
+						ProjectGenericTaskSelectionWindow selectionTaskWindow = new ProjectGenericTaskSelectionWindow(
+								AddTimeEntryWindow.this);
+						AddTimeEntryWindow.this.getUI().addWindow(
+								selectionTaskWindow);
+					}
+				});
+
+		taskLayout.addComponent(attachTaskBtn);
 	}
 
 	private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat(

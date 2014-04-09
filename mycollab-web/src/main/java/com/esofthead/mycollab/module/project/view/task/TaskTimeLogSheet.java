@@ -50,7 +50,7 @@ public class TaskTimeLogSheet extends CompTimeLogSheet<SimpleTask> {
 		item.setLoguser(AppContext.getUsername());
 		item.setLogvalue(getInvestValue());
 		item.setTypeid(bean.getId());
-		item.setType(ProjectTypeConstants.PRJ_TASK);
+		item.setType(ProjectTypeConstants.TASK);
 		item.setSaccountid(AppContext.getAccountId());
 		item.setProjectid(CurrentProjectVariables.getProjectId());
 		item.setLogforday(new GregorianCalendar().getTime());
@@ -72,8 +72,8 @@ public class TaskTimeLogSheet extends CompTimeLogSheet<SimpleTask> {
 		ItemTimeLoggingSearchCriteria searchCriteria = new ItemTimeLoggingSearchCriteria();
 		searchCriteria.setProjectId(new NumberSearchField(
 				CurrentProjectVariables.getProjectId()));
-		searchCriteria.setType(new StringSearchField(
-				ProjectTypeConstants.PRJ_TASK));
+		searchCriteria
+				.setType(new StringSearchField(ProjectTypeConstants.TASK));
 		searchCriteria.setTypeId(new NumberSearchField(bean.getId()));
 		return searchCriteria;
 	}

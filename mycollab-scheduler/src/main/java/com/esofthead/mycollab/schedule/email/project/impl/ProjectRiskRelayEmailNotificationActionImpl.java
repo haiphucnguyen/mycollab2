@@ -74,8 +74,7 @@ public class ProjectRiskRelayEmailNotificationActionImpl extends
 				"[$hyperLinks.projectName]: "
 						+ emailNotification.getChangeByUserFullName()
 						+ " has created the risk \""
-						+ StringUtils.trim(risk.getRiskname(), 100)
-						+ "\"",
+						+ StringUtils.trim(risk.getRiskname(), 100) + "\"",
 				"templates/email/project/riskCreatedNotifier.mt");
 		ScheduleUserTimeZoneUtils.formatDateTimeZone(risk, user.getTimezone(),
 				new String[] { "dateraised", "datedue" });
@@ -142,8 +141,8 @@ public class ProjectRiskRelayEmailNotificationActionImpl extends
 		}
 		templateGenerator.putVariable(
 				"lstComment",
-				getListComment(risk.getSaccountid(),
-						ProjectTypeConstants.PRJ_RISK, risk.getId()));
+				getListComment(risk.getSaccountid(), ProjectTypeConstants.RISK,
+						risk.getId()));
 
 		return templateGenerator;
 	}
@@ -162,8 +161,7 @@ public class ProjectRiskRelayEmailNotificationActionImpl extends
 				"[$hyperLinks.projectName]: "
 						+ emailNotification.getChangeByUserFullName()
 						+ " has commented the risk \""
-						+ StringUtils.trim(risk.getRiskname(), 100)
-						+ "\"",
+						+ StringUtils.trim(risk.getRiskname(), 100) + "\"",
 				"templates/email/project/riskCommentNotifier.mt");
 		templateGenerator.putVariable("risk", risk);
 		templateGenerator.putVariable("hyperLinks",

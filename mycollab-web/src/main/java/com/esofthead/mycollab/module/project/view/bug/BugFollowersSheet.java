@@ -46,8 +46,7 @@ class BugFollowersSheet extends CompFollowersSheet<SimpleBug> {
 	protected void loadMonitorItems() {
 		MonitorSearchCriteria searchCriteria = new MonitorSearchCriteria();
 		searchCriteria.setTypeId(new NumberSearchField(bean.getId()));
-		searchCriteria.setType(new StringSearchField(
-				ProjectTypeConstants.PRJ_BUG));
+		searchCriteria.setType(new StringSearchField(ProjectTypeConstants.BUG));
 		tableItem.setSearchCriteria(searchCriteria);
 	}
 
@@ -55,11 +54,11 @@ class BugFollowersSheet extends CompFollowersSheet<SimpleBug> {
 	protected boolean saveMonitorItem(String username) {
 
 		if (!monitorItemService.isUserWatchingItem(username,
-				ProjectTypeConstants.PRJ_BUG, bean.getId())) {
+				ProjectTypeConstants.BUG, bean.getId())) {
 
 			MonitorItem monitorItem = new MonitorItem();
 			monitorItem.setMonitorDate(new GregorianCalendar().getTime());
-			monitorItem.setType(ProjectTypeConstants.PRJ_BUG);
+			monitorItem.setType(ProjectTypeConstants.BUG);
 			monitorItem.setTypeid(bean.getId());
 			monitorItem.setUser(username);
 			monitorItem.setSaccountid(AppContext.getAccountId());
