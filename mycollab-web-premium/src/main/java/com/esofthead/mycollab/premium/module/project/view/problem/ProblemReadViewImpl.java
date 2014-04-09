@@ -5,8 +5,8 @@ import org.vaadin.teemu.ratingstars.RatingStars;
 import com.esofthead.mycollab.common.CommentType;
 import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
-import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
+import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleProblem;
 import com.esofthead.mycollab.module.project.ui.components.AbstractPreviewItemComp;
 import com.esofthead.mycollab.module.project.ui.components.CommentDisplay;
@@ -68,7 +68,7 @@ implements ProblemReadView {
 		commentList.setWidth("100%");
 
 		historyList = new ProblemHistoryList(ModuleNameConstants.PRJ,
-				ProjectContants.PROBLEM);
+				ProjectTypeConstants.PROBLEM);
 	}
 
 	@Override

@@ -50,7 +50,7 @@ public class BugTimeLogSheet extends CompTimeLogSheet<SimpleBug> {
 		item.setLoguser(AppContext.getUsername());
 		item.setLogvalue(getInvestValue());
 		item.setTypeid(bean.getId());
-		item.setType(ProjectTypeConstants.PRJ_BUG);
+		item.setType(ProjectTypeConstants.BUG);
 		item.setSaccountid(AppContext.getAccountId());
 		item.setProjectid(CurrentProjectVariables.getProjectId());
 		item.setLogforday(new GregorianCalendar().getTime());
@@ -73,8 +73,7 @@ public class BugTimeLogSheet extends CompTimeLogSheet<SimpleBug> {
 		ItemTimeLoggingSearchCriteria searchCriteria = new ItemTimeLoggingSearchCriteria();
 		searchCriteria.setProjectId(new NumberSearchField(
 				CurrentProjectVariables.getProjectId()));
-		searchCriteria.setType(new StringSearchField(
-				ProjectTypeConstants.PRJ_BUG));
+		searchCriteria.setType(new StringSearchField(ProjectTypeConstants.BUG));
 		searchCriteria.setTypeId(new NumberSearchField(bean.getId()));
 		return searchCriteria;
 	}

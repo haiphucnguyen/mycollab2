@@ -74,22 +74,19 @@ public class ProjectTaskGroupRelayEmailNotificationActionImpl extends
 		templateGenerator.putVariable("hyperLinks", createHyperLinks(taskList));
 		return templateGenerator;
 	}
-	
 
 	private Map<String, String> createHyperLinks(SimpleTaskList taskList) {
 		Map<String, String> hyperLinks = new HashMap<String, String>();
 		ProjectMailLinkGenerator linkGenerator = new ProjectMailLinkGenerator(
 				taskList.getProjectid());
-		hyperLinks.put("taskListUrl",
-				linkGenerator.generateTaskGroupPreviewFullLink(taskList.getId()));
+		hyperLinks.put("taskListUrl", linkGenerator
+				.generateTaskGroupPreviewFullLink(taskList.getId()));
 		hyperLinks.put("taskListName",
 				StringUtils.trim(taskList.getName(), 100));
 		hyperLinks.put("projectUrl", linkGenerator.generateProjectFullLink());
-		hyperLinks
-				.put("ownerUrl", linkGenerator
-						.generateUserPreviewFullLink(taskList.getOwner()));
-		hyperLinks
-		.put("milestoneUrl", linkGenerator
+		hyperLinks.put("ownerUrl",
+				linkGenerator.generateUserPreviewFullLink(taskList.getOwner()));
+		hyperLinks.put("milestoneUrl", linkGenerator
 				.generateMilestonePreviewFullLink(taskList.getMilestoneid()));
 		return hyperLinks;
 	}
@@ -113,7 +110,6 @@ public class ProjectTaskGroupRelayEmailNotificationActionImpl extends
 				"templates/email/project/taskGroupUpdatedNotifier.mt");
 		templateGenerator.putVariable("taskList", taskList);
 		templateGenerator.putVariable("hyperLinks", createHyperLinks(taskList));
-	
 
 		if (emailNotification.getTypeid() != null) {
 			SimpleAuditLog auditLog = auditLogService.findLatestLog(
@@ -126,10 +122,10 @@ public class ProjectTaskGroupRelayEmailNotificationActionImpl extends
 		templateGenerator.putVariable(
 				"lstComment",
 				getListComment(taskList.getSaccountid(),
-						ProjectTypeConstants.PRJ_TASK_LIST, taskList.getId()));
+						ProjectTypeConstants.TASK_LIST, taskList.getId()));
 		return templateGenerator;
 	}
-	
+
 	@Override
 	public TemplateGenerator templateGeneratorForCommentAction(
 			SimpleRelayEmailNotification emailNotification) {
@@ -146,8 +142,7 @@ public class ProjectTaskGroupRelayEmailNotificationActionImpl extends
 				"[$taskList.projectName]: "
 						+ emailNotification.getChangeByUserFullName()
 						+ " has commented on the task group \""
-						+ StringUtils.trim(taskList.getName(), 100)
-						+ "\"",
+						+ StringUtils.trim(taskList.getName(), 100) + "\"",
 				"templates/email/project/taskGroupCommentNotifier.mt");
 		templateGenerator.putVariable("taskList", taskList);
 		templateGenerator.putVariable("comment", emailNotification);
@@ -172,7 +167,7 @@ public class ProjectTaskGroupRelayEmailNotificationActionImpl extends
 			fieldNameMap.put("description", "Description");
 			fieldNameMap.put("milestonename", "Milestone Name");
 			fieldNameMap.put("projectname", "Project Name");
-			
+
 		}
 
 		public boolean hasField(String fieldName) {

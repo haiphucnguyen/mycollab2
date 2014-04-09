@@ -9,8 +9,8 @@ import com.esofthead.mycollab.core.db.query.Param;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
-import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
+import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.RiskSearchCriteria;
 import com.esofthead.mycollab.module.project.events.RiskEvent;
@@ -217,7 +217,7 @@ public class RiskSearchPanel extends
 		private static final long serialVersionUID = 1L;
 
 		public RiskAdvancedSearchLayout() {
-			super(RiskSearchPanel.this, ProjectContants.RISK);
+			super(RiskSearchPanel.this, ProjectTypeConstants.RISK);
 		}
 
 		@Override

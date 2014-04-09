@@ -70,8 +70,7 @@ public class BugRelayEmailNotificationActionImpl extends
 
 		hyperLinks.put("bugUrl",
 				linkGenerator.generateBugPreviewFullLink(bug.getId()));
-		hyperLinks.put("shortBugUrl",
-				StringUtils.trim(bug.getSummary(), 150));
+		hyperLinks.put("shortBugUrl", StringUtils.trim(bug.getSummary(), 150));
 		hyperLinks.put("projectUrl", linkGenerator.generateProjectFullLink());
 		if (bug.getLogby() != null) {
 			hyperLinks.put("loggedUserUrl",
@@ -177,8 +176,8 @@ public class BugRelayEmailNotificationActionImpl extends
 
 		templateGenerator.putVariable(
 				"lstComment",
-				getListComment(bug.getSaccountid(),
-						ProjectTypeConstants.PRJ_BUG, bug.getId()));
+				getListComment(bug.getSaccountid(), ProjectTypeConstants.BUG,
+						bug.getId()));
 
 		return templateGenerator;
 	}
