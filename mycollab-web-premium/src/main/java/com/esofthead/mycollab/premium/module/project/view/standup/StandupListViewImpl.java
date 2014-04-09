@@ -249,6 +249,7 @@ public class StandupListViewImpl extends AbstractPageView implements
 
 		this.dateChooser = new PopupButton("Choose date to view reports");
 		this.dateChooser.setContent(this.standupCalendar);
+		this.dateChooser.setStyleName(UIConstants.THEME_BLANK_LINK);
 		headerLeft.addComponent(this.dateChooser);
 		headerLeft.setComponentAlignment(this.dateChooser,
 				Alignment.BOTTOM_RIGHT);
