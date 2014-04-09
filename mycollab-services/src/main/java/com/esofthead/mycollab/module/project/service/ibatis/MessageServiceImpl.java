@@ -30,6 +30,7 @@ import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
 import com.esofthead.mycollab.module.project.ProjectContants;
+import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.dao.MessageMapper;
 import com.esofthead.mycollab.module.project.dao.MessageMapperExt;
 import com.esofthead.mycollab.module.project.domain.Message;
@@ -99,7 +100,7 @@ public class MessageServiceImpl extends
 		relayNotification.setChangecomment("");
 		int sAccountId = record.getSaccountid();
 		relayNotification.setSaccountid(sAccountId);
-		relayNotification.setType(MonitorTypeConstants.PRJ_MESSAGE);
+		relayNotification.setType(ProjectTypeConstants.PRJ_MESSAGE);
 		relayNotification.setAction(MonitorTypeConstants.CREATE_ACTION);
 		relayNotification
 				.setEmailhandlerbean(MessageRelayEmailNotificationAction.class

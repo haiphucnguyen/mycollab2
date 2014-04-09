@@ -33,6 +33,7 @@ import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
 import com.esofthead.mycollab.module.project.ProjectContants;
+import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.dao.ProblemMapper;
 import com.esofthead.mycollab.module.project.dao.ProblemMapperExt;
 import com.esofthead.mycollab.module.project.domain.Problem;
@@ -144,7 +145,7 @@ public class ProblemServiceImpl extends
 		relayNotification.setChangecomment("");
 		int sAccountId = record.getSaccountid();
 		relayNotification.setSaccountid(sAccountId);
-		relayNotification.setType(MonitorTypeConstants.PRJ_PROBLEM);
+		relayNotification.setType(ProjectTypeConstants.PRJ_PROBLEM);
 		relayNotification.setAction(action);
 		relayNotification
 				.setEmailhandlerbean(ProjectProblemRelayEmailNotificationAction.class

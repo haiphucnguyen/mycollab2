@@ -22,12 +22,12 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.esofthead.mycollab.common.MonitorTypeConstants;
 import com.esofthead.mycollab.common.domain.SimpleAuditLog;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
 import com.esofthead.mycollab.common.service.AuditLogService;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
+import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
 import com.esofthead.mycollab.module.project.service.ProjectTaskListService;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
@@ -126,7 +126,7 @@ public class ProjectTaskGroupRelayEmailNotificationActionImpl extends
 		templateGenerator.putVariable(
 				"lstComment",
 				getListComment(taskList.getSaccountid(),
-						MonitorTypeConstants.PRJ_TASK_LIST, taskList.getId()));
+						ProjectTypeConstants.PRJ_TASK_LIST, taskList.getId()));
 		return templateGenerator;
 	}
 	

@@ -31,6 +31,7 @@ import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
 import com.esofthead.mycollab.module.project.ProjectContants;
+import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.dao.MilestoneMapper;
 import com.esofthead.mycollab.module.project.dao.MilestoneMapperExt;
 import com.esofthead.mycollab.module.project.domain.Milestone;
@@ -100,7 +101,7 @@ public class MilestoneServiceImpl extends
 		relayNotification.setChangecomment("");
 		relayNotification.setAction(action);
 		relayNotification.setSaccountid(record.getSaccountid());
-		relayNotification.setType(MonitorTypeConstants.PRJ_MILESTONE);
+		relayNotification.setType(ProjectTypeConstants.PRJ_MILESTONE);
 		relayNotification
 				.setEmailhandlerbean(ProjectMilestoneRelayEmailNotificationAction.class
 						.getName());
