@@ -1035,7 +1035,7 @@ input.v-textfield-pagedtable-pagefield {
 .advSearch .advSearchFooterContainer {
 	padding: 10px 0px 10px;
 	border-color: #CFCFCF;
-	border-width: 0px 1px 1px;
+	border-width: 0px 1px 0px;
 	border-style: solid;
 	background-color: #F7F7F7;
 }
@@ -1057,7 +1057,8 @@ input.v-textfield-pagedtable-pagefield {
 
 .basicSearch .basicSearchBody {
 	background-color: #F7F7F7;
-	border: 1px solid #CFCFCF;
+	border: solid #CFCFCF;
+	border-width: 1px 1px 0px 1px;
 	border-radius: 0;
 }
 
@@ -2965,7 +2966,7 @@ div.v-splitbutton,div.v-splitbutton .v-button {
 .v-table-header-wrap {
 	background: none no-repeat 0 0 #EEEEEE;
 	border-radius: 0px;
-	border-width: 0 1px 1px 1px;
+	border-width: 1px 1px 1px 1px;
 	border-bottom: 1px solid #CFCFCF;
 }
 .readViewBottomControls .v-table-header-wrap, .full-border-table .v-table .v-table-header-wrap {
@@ -3332,6 +3333,11 @@ div.v-splitbutton,div.v-splitbutton .v-button {
 /* End Button Group */
 
 /* Multifiles Upload */
+.file-list-view .basicSearchBody {
+	border-bottom-width:1px;
+}
+
+
 .v-multifileupload-ext .v-verticallayout {
     display: block;
 }
@@ -3722,7 +3728,7 @@ div.v-lazyloadingwrapper-loading {
 	background-color: rgb(229, 239, 240);
 }
 
-.report-row-content>div:first-child+div+div {
+.report-row-content>div>div:first-child+div {
 	border-width: 0px 1px 0px 1px;
 	border-style: solid;
 	border-color: rgb(204, 204, 204);
@@ -3730,7 +3736,6 @@ div.v-lazyloadingwrapper-loading {
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
-	height: 100%;
 }
 
 .report-row-block {
@@ -4055,8 +4060,6 @@ div.v-lazyloadingwrapper-loading {
 .v-label.standup-row-content {
 	padding: 10px 0px 10px 0px;
 	font-size: 13px;
-	width: 100%;
-	white-space: normal;
 }
 
 .v-label.standup-row-content ul {
@@ -5182,7 +5185,7 @@ div.v-ratingstars-bar {
 
 /*Table Action Controls */
 .table-actionctls {
-	border-width: 0 1px 1px 1px;
+	border-width: 1px 1px 0px 1px;
 	border-style: solid;
 	border-color: rgb(204, 203, 203);
 	background-color: rgb(245, 245, 245);
@@ -6125,7 +6128,9 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 	padding: 3px 7px 3px 2px;
 }
 
-.v-button-graybtn.v-popupbutton .v-popup-indicator , .splitbutton .v-popupbutton.greenbtn .v-popup-indicator,.splitbutton .v-popupbutton.graybtn .v-popup-indicator, .splitbutton .v-popupbutton.bluebtn .v-popup-indicator
+.v-button-graybtn.v-popupbutton .v-popup-indicator , .splitbutton .v-popupbutton.greenbtn .v-popup-indicator,
+.splitbutton .v-popupbutton.graybtn .v-popup-indicator, .splitbutton .v-popupbutton.bluebtn .v-popup-indicator,
+ .v-popupbutton.bluebtn .v-popup-indicator
 {
 	background: url("icons/sprites.png");
 }
@@ -6321,6 +6326,10 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 	padding-top: 12px;
 }
 
+.v-tabsheet-tabsheetpanel .v-slot-comp-header {
+	border: solid #CFCFCF;
+	border-width:0px 1px;
+}
 .v-ie .v-tabsheet-content > .v-tabsheet-tabsheetpanel > div > .v-verticallayout:after {
 	content: ""; display: inline-block;
 }

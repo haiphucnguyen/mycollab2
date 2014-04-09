@@ -105,7 +105,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 
 		this.setSpacing(true);
 		this.setMargin(false);
-
+		this.setStyleName("file-list-view");
 		HorizontalLayout mainView = new HorizontalLayout();
 		mainView.setSpacing(true);
 		mainView.setMargin(true);
@@ -601,7 +601,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 			public FileBasicSearchLayout() {
 				super(FilterPanel.this);
 			}
-
+			
 			private static final long serialVersionUID = 1L;
 			private TextField nameField;
 			private CheckBox myItemCheckbox;
@@ -617,7 +617,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 				basicSearchBody.setSpacing(true);
 				basicSearchBody.setMargin(true);
 				UiUtils.addComponent(basicSearchBody,new Label("Name:"), Alignment.MIDDLE_LEFT);
-
+				this.addStyleName("file-list-view");
 				this.nameField = new TextField();
 				this.nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
 				UiUtils.addComponent(basicSearchBody, this.nameField,

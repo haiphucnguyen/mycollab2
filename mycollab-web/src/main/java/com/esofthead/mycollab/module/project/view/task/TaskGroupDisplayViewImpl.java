@@ -16,6 +16,8 @@
  */
 package com.esofthead.mycollab.module.project.view.task;
 
+import java.util.Arrays;
+
 import org.vaadin.hene.popupbutton.PopupButton;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
@@ -23,22 +25,36 @@ import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.eventmanager.ApplicationEvent;
+import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.file.resource.ExportTaskListStreamResource;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
+import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskListSearchCriteria;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
+import com.esofthead.mycollab.module.project.events.BugEvent;
+import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.events.TaskListEvent;
 import com.esofthead.mycollab.module.project.localization.TaskI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectTaskListService;
+import com.esofthead.mycollab.module.project.view.bug.BugListView;
+import com.esofthead.mycollab.module.project.view.bug.BugListViewImpl;
+import com.esofthead.mycollab.module.project.view.bug.BugSearchPanel;
+import com.esofthead.mycollab.module.project.view.bug.BugTableDisplay;
+import com.esofthead.mycollab.module.project.view.bug.BugTableFieldDef;
+import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
+import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.reporting.ReportExportType;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.vaadin.server.FileDownloader;
 import com.vaadin.server.Sizeable;
 import com.vaadin.server.StreamResource;
@@ -65,7 +81,11 @@ public class TaskGroupDisplayViewImpl extends AbstractPageView implements
 	private TaskGroupDisplayWidget taskLists;
 	private Button reOrderBtn;
 	private Button viewGanttChartBtn;
-
+	private TaskTableDisplay tableItem;
+	
+	
+	private VerticalLayout taskListLayout;
+	
 	private PopupButton exportButtonControl;
 	private VerticalLayout rightColumn;
 	private VerticalLayout leftColumn;
@@ -196,7 +216,7 @@ public class TaskGroupDisplayViewImpl extends AbstractPageView implements
 				.canWrite(ProjectRolePermissionCollections.TASKS));
 		this.reOrderBtn.setIcon(MyCollabResource
 				.newResource("icons/16/project/reorder.png"));
-		this.reOrderBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
+		this.reOrderBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		this.reOrderBtn.setDescription(LocalizationHelper
 				.getMessage(TaskI18nEnum.REODER_TASKGROUP_ACTION));
 		header.addComponent(this.reOrderBtn);
@@ -205,7 +225,7 @@ public class TaskGroupDisplayViewImpl extends AbstractPageView implements
 		this.addComponent(header);
 
 		exportButtonControl = new PopupButton();
-		exportButtonControl.addStyleName(UIConstants.THEME_GRAY_LINK);
+		exportButtonControl.addStyleName(UIConstants.THEME_BLUE_LINK);
 		exportButtonControl.setIcon(MyCollabResource
 				.newResource("icons/16/export.png"));
 		exportButtonControl.setDescription("Export to file");
@@ -254,7 +274,43 @@ public class TaskGroupDisplayViewImpl extends AbstractPageView implements
 		this.addComponent(mainLayout);
 
 	}
+	
+	private void generateDisplayTable() {
 
+		this.tableItem = new TaskTableDisplay(
+				TaskTableFieldDef.id, Arrays.asList(
+						TaskTableFieldDef.taskname, TaskTableFieldDef.startdate,
+						TaskTableFieldDef.duedate, TaskTableFieldDef.assignee,
+						TaskTableFieldDef.percentagecomplete));
+
+		this.tableItem
+				.addTableListener(new ApplicationEventListener<TableClickEvent>() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public Class<? extends ApplicationEvent> getEventType() {
+						return TableClickEvent.class;
+					}
+
+					@Override
+					public void handle(final TableClickEvent event) {
+						final SimpleTask task = (SimpleTask) event.getData();
+						if ("taskname".equals(event.getFieldName())) {
+							EventBus.getInstance().fireEvent(
+									new TaskListEvent.GotoRead(TaskGroupDisplayViewImpl.this,
+											task.getId()));
+						}
+					}
+				});
+		this.taskListLayout.addComponent(this.tableItem);
+	}
+	
+	
+	@Override
+	public HasSearchHandlers<TaskSearchCriteria> getSearchHandlers() {
+		return null;
+	}
+	
 	private StreamResource constructStreamResource(ReportExportType exportType) {
 		final String title = "Task report of Project "
 				+ ((CurrentProjectVariables.getProject() != null && CurrentProjectVariables
