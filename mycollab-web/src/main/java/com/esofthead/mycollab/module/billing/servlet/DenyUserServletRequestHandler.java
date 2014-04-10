@@ -41,14 +41,13 @@ import com.esofthead.mycollab.core.ResourceNotFoundException;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
-import com.esofthead.mycollab.module.project.servlet.AnnotatedDenyProjectMemberInvitationServletHandler.FeedBackPageGenerator;
+import com.esofthead.mycollab.module.project.servlet.DenyProjectMemberInvitationServletRequestHandler.FeedBackPageGenerator;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
 import com.esofthead.mycollab.module.user.service.UserService;
-import com.esofthead.mycollab.servlet.GenericHttpServletRequestHandler;
+import com.esofthead.mycollab.servlet.GenericServletRequestHandler;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.template.velocity.TemplateContext;
-import com.esofthead.template.velocity.TemplateEngine;
 
 /**
  * 
@@ -57,80 +56,14 @@ import com.esofthead.template.velocity.TemplateEngine;
  * 
  */
 @Component("denyUserInviteServlet")
-public class AnnotatedDenyUserServletRequestHandler extends GenericHttpServletRequestHandler {
+public class DenyUserServletRequestHandler extends
+		GenericServletRequestHandler {
 
 	private static String USER_DENY_FEEDBACK_TEMPLATE = "templates/page/user/UserDenyInvitationPage.mt";
 	private static String USER_HAS_DENIED_PAGE = "templates/page/user/UserDeniedPage.mt";
 
 	private static Logger log = LoggerFactory
-			.getLogger(AnnotatedDenyUserServletRequestHandler.class);
-
-	public static class PageUserNotExistGenerator {
-		public static void responeUserNotExistPage(
-				HttpServletResponse response, String loginURL)
-				throws IOException {
-			String pageNotFoundTemplate = "templates/page/UserNotExistPage.mt";
-			TemplateContext context = new TemplateContext();
-
-			Reader reader;
-			try {
-				reader = new InputStreamReader(PageUserNotExistGenerator.class
-						.getClassLoader().getResourceAsStream(
-								pageNotFoundTemplate), "UTF-8");
-			} catch (UnsupportedEncodingException e) {
-				reader = new InputStreamReader(PageUserNotExistGenerator.class
-						.getClassLoader().getResourceAsStream(
-								pageNotFoundTemplate));
-			}
-			context.put("loginURL", loginURL);
-			Map<String, String> defaultUrls = new HashMap<String, String>();
-
-			defaultUrls.put("cdn_url", SiteConfiguration.getCdnUrl());
-			context.put("defaultUrls", defaultUrls);
-
-			StringWriter writer = new StringWriter();
-			VelocityEngine templateEngine = ApplicationContextUtil
-					.getSpringBean(VelocityEngine.class);
-			templateEngine.evaluate(context.getVelocityContext(), writer,
-					"log task", reader);
-
-			String html = writer.toString();
-			PrintWriter out = response.getWriter();
-			out.println(html);
-		}
-	}
-
-	private String generateRefuseUserDenyActionPage(String loginURL,
-			String pageNotFoundTemplate) {
-		TemplateContext context = new TemplateContext();
-
-		Reader reader;
-		try {
-			reader = new InputStreamReader(
-					AnnotatedDenyUserServletRequestHandler.class
-							.getClassLoader().getResourceAsStream(
-									pageNotFoundTemplate), "UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			reader = new InputStreamReader(
-					AnnotatedDenyUserServletRequestHandler.class
-							.getClassLoader().getResourceAsStream(
-									pageNotFoundTemplate));
-		}
-		context.put("loginURL", loginURL);
-		Map<String, String> defaultUrls = new HashMap<String, String>();
-
-		defaultUrls.put("cdn_url", SiteConfiguration.getCdnUrl());
-		context.put("defaultUrls", defaultUrls);
-
-		StringWriter writer = new StringWriter();
-
-		VelocityEngine templateEngine = ApplicationContextUtil
-				.getSpringBean(VelocityEngine.class);
-		templateEngine.evaluate(context.getVelocityContext(), writer,
-				"log task", reader);
-
-		return writer.toString();
-	}
+			.getLogger(DenyUserServletRequestHandler.class);
 
 	@Override
 	protected void onHandleRequest(HttpServletRequest request,
@@ -168,8 +101,8 @@ public class AnnotatedDenyUserServletRequestHandler extends GenericHttpServletRe
 
 					if (checkUser == null) {
 						// this user no long exist on System page
-						PageUserNotExistGenerator.responeUserNotExistPage(
-								response, request.getContextPath() + "/");
+						PageGeneratorUtil.responeUserNotExistPage(response,
+								request.getContextPath() + "/");
 						return;
 					} else {
 						if (checkUser.getRegisterstatus().equals(
@@ -222,5 +155,37 @@ public class AnnotatedDenyUserServletRequestHandler extends GenericHttpServletRe
 			log.error("Error with userService", e);
 			throw new MyCollabException(e);
 		}
+	}
+
+	private String generateRefuseUserDenyActionPage(String loginURL,
+			String pageNotFoundTemplate) {
+		TemplateContext context = new TemplateContext();
+
+		Reader reader;
+		try {
+			reader = new InputStreamReader(
+					DenyUserServletRequestHandler.class
+							.getClassLoader().getResourceAsStream(
+									pageNotFoundTemplate), "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			reader = new InputStreamReader(
+					DenyUserServletRequestHandler.class
+							.getClassLoader().getResourceAsStream(
+									pageNotFoundTemplate));
+		}
+		context.put("loginURL", loginURL);
+		Map<String, String> defaultUrls = new HashMap<String, String>();
+
+		defaultUrls.put("cdn_url", SiteConfiguration.getCdnUrl());
+		context.put("defaultUrls", defaultUrls);
+
+		StringWriter writer = new StringWriter();
+
+		VelocityEngine templateEngine = ApplicationContextUtil
+				.getSpringBean(VelocityEngine.class);
+		templateEngine.evaluate(context.getVelocityContext(), writer,
+				"log task", reader);
+
+		return writer.toString();
 	}
 }

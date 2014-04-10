@@ -30,7 +30,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.core.utils.MimeTypesUtil;
-import com.esofthead.mycollab.servlet.GenericHttpServletRequestHandler;
+import com.esofthead.mycollab.servlet.GenericServletRequestHandler;
 
 /**
  * 
@@ -39,10 +39,10 @@ import com.esofthead.mycollab.servlet.GenericHttpServletRequestHandler;
  * 
  */
 @Component("assetsHandlerServlet")
-public class AnnotatedAssetHttpServletRequestHandler extends GenericHttpServletRequestHandler {
+public class AssetHttpServletRequestHandler extends GenericServletRequestHandler {
 
 	private static Logger log = LoggerFactory
-			.getLogger(AnnotatedAssetHttpServletRequestHandler.class);
+			.getLogger(AssetHttpServletRequestHandler.class);
 
 	@Override
 	protected void onHandleRequest(HttpServletRequest request,
@@ -50,12 +50,12 @@ public class AnnotatedAssetHttpServletRequestHandler extends GenericHttpServletR
 		String path = request.getPathInfo();
 		String resourcePath = "assets" + path;
 
-		InputStream inputStream = AnnotatedAssetHttpServletRequestHandler.class.getClassLoader()
+		InputStream inputStream = AssetHttpServletRequestHandler.class.getClassLoader()
 				.getResourceAsStream(resourcePath);
 
 		if (inputStream == null) {
 			resourcePath = "VAADIN/themes/mycollab" + path;
-			inputStream = AnnotatedAssetHttpServletRequestHandler.class.getClassLoader()
+			inputStream = AssetHttpServletRequestHandler.class.getClassLoader()
 					.getResourceAsStream(resourcePath);
 		}
 

@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.module.project.servlet;
+package com.esofthead.mycollab.module.billing.servlet;
 
 import java.io.IOException;
 
@@ -27,10 +27,17 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.configuration.PasswordEncryptHelper;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.UserInvalidInputException;
-import com.esofthead.mycollab.module.project.service.ProjectMemberService;
-import com.esofthead.mycollab.servlet.GenericHttpServletRequestHandler;
+import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
+import com.esofthead.mycollab.module.user.dao.UserMapper;
+import com.esofthead.mycollab.module.user.domain.User;
+import com.esofthead.mycollab.module.user.service.UserService;
+import com.esofthead.mycollab.servlet.GenericServletRequestHandler;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.utils.InvalidPasswordException;
 import com.esofthead.mycollab.utils.PasswordCheckerUtil;
 
@@ -38,41 +45,49 @@ import com.esofthead.mycollab.utils.PasswordCheckerUtil;
  * 
  * @author MyCollab Ltd.
  * @since 1.0
- *
+ * 
  */
-@Component("acceptMemberInvitationCreateAccountServlet")
-public class AnnotatedInviteOutsideMemberCreateAccountHandlerServlet extends
-		GenericHttpServletRequestHandler {
-
+@Component("updateUserInfoServlet")
+public class UserUpdateInfoHandlerServlet extends GenericServletRequestHandler {
 	private static Logger log = LoggerFactory
-			.getLogger(AnnotatedInviteOutsideMemberCreateAccountHandlerServlet.class);
+			.getLogger(UserUpdateInfoHandlerServlet.class);
 
 	@Autowired
-	private ProjectMemberService projectMemberService;
+	private UserMapper userMapper;
 
 	@Override
 	protected void onHandleRequest(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		// email , projectId, sAccountId, projectURL
-		Integer projectId = Integer.parseInt(request.getParameter("projectId"));
-		String email = request.getParameter("email");
+		String errMsg = "";
+
+		String username = request.getParameter("username");
+		int sAccountId = Integer.parseInt(request.getParameter("accountId"));
+
 		String password = request.getParameter("password");
-		Integer sAccountId = Integer.parseInt(request
-				.getParameter("sAccountId"));
-		Integer roleId = Integer.parseInt(request.getParameter("roleId"));
+
 		try {
 			PasswordCheckerUtil.checkValidPassword(password);
-			projectMemberService.acceptProjectInvitationByNewUser(email,
-					password, projectId, roleId, sAccountId);
-		} catch (NumberFormatException e) {
-			throw new UserInvalidInputException(
-					"Your request has been refused! Invalid input.");
 		} catch (InvalidPasswordException e) {
 			throw new UserInvalidInputException(e.getMessage());
+		}
+
+		User user = new User();
+		user.setPassword(PasswordEncryptHelper.encryptSaltPassword(password));
+		user.setUsername(username);
+
+		try {
+			log.debug("Update password of user {}", username);
+			UserService userService = ApplicationContextUtil
+					.getSpringBean(UserService.class);
+			userService.updateWithSession(user, username);
+
+			userService.updateUserAccountStatus(username, sAccountId,
+					RegisterStatusConstants.ACTIVE);
 		} catch (Exception e) {
-			log.error("Error while user try update user password", e);
-			throw new MyCollabException(
-					"Error in while create your account. We so sorry for this inconvenience");
+			log.error("Error when update user - userAccount", e);
+			errMsg = LocalizationHelper
+					.getMessage(GenericI18Enum.ERROR_USER_NOTICE_INFORMATION_MESSAGE);
+			throw new MyCollabException(errMsg);
 		}
 	}
 }

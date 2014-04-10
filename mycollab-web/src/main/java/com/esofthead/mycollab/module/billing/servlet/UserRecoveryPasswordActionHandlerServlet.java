@@ -24,7 +24,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
@@ -33,10 +32,9 @@ import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
-import com.esofthead.mycollab.module.user.dao.UserMapper;
-import com.esofthead.mycollab.module.user.domain.User;
+import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.service.UserService;
-import com.esofthead.mycollab.servlet.GenericHttpServletRequestHandler;
+import com.esofthead.mycollab.servlet.GenericServletRequestHandler;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.utils.InvalidPasswordException;
 import com.esofthead.mycollab.utils.PasswordCheckerUtil;
@@ -47,13 +45,11 @@ import com.esofthead.mycollab.utils.PasswordCheckerUtil;
  * @since 1.0
  * 
  */
-@Component("updateUserInfoServlet")
-public class AnnotatedUserUpdateInfoHandlerServlet extends GenericHttpServletRequestHandler {
+@Component("updateUserPasswordServlet")
+public class UserRecoveryPasswordActionHandlerServlet extends
+		GenericServletRequestHandler {
 	private static Logger log = LoggerFactory
-			.getLogger(AnnotatedUserUpdateInfoHandlerServlet.class);
-
-	@Autowired
-	private UserMapper userMapper;
+			.getLogger(UserRecoveryPasswordActionHandlerServlet.class);
 
 	@Override
 	protected void onHandleRequest(HttpServletRequest request,
@@ -61,7 +57,6 @@ public class AnnotatedUserUpdateInfoHandlerServlet extends GenericHttpServletReq
 		String errMsg = "";
 
 		String username = request.getParameter("username");
-		int sAccountId = Integer.parseInt(request.getParameter("accountId"));
 
 		String password = request.getParameter("password");
 
@@ -71,20 +66,18 @@ public class AnnotatedUserUpdateInfoHandlerServlet extends GenericHttpServletReq
 			throw new UserInvalidInputException(e.getMessage());
 		}
 
-		User user = new User();
-		user.setPassword(PasswordEncryptHelper.encryptSaltPassword(password));
-		user.setUsername(username);
+		SimpleUser simpleUser = new SimpleUser();
+		simpleUser.setPassword(PasswordEncryptHelper
+				.encryptSaltPassword(password));
+		simpleUser.setRegisterstatus(RegisterStatusConstants.ACTIVE);
+		simpleUser.setUsername(username);
 
 		try {
-			log.debug("Update password of user {}", username);
 			UserService userService = ApplicationContextUtil
 					.getSpringBean(UserService.class);
-			userService.updateWithSession(user, username);
-
-			userService.updateUserAccountStatus(username, sAccountId,
-					RegisterStatusConstants.ACTIVE);
+			userService.updateWithSession(simpleUser, username);
 		} catch (Exception e) {
-			log.error("Error when update user - userAccount", e);
+			log.error("Error with update userService", e);
 			errMsg = LocalizationHelper
 					.getMessage(GenericI18Enum.ERROR_USER_NOTICE_INFORMATION_MESSAGE);
 			throw new MyCollabException(errMsg);

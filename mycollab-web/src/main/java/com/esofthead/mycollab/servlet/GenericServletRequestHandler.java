@@ -34,7 +34,7 @@ import com.esofthead.mycollab.core.UserInvalidInputException;
  * @since 1.0
  * 
  */
-public abstract class GenericHttpServletRequestHandler implements
+public abstract class GenericServletRequestHandler implements
 		HttpRequestHandler {
 
 	@Override
