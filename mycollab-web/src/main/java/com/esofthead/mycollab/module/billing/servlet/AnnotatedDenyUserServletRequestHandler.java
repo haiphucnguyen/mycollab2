@@ -29,6 +29,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.velocity.app.VelocityEngine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -88,7 +89,10 @@ public class AnnotatedDenyUserServletRequestHandler extends GenericServlet {
 			context.put("defaultUrls", defaultUrls);
 
 			StringWriter writer = new StringWriter();
-			TemplateEngine.evaluate(context, writer, "log task", reader);
+			VelocityEngine templateEngine = ApplicationContextUtil
+					.getSpringBean(VelocityEngine.class);
+			templateEngine.evaluate(context.getVelocityContext(), writer,
+					"log task", reader);
 
 			String html = writer.toString();
 			PrintWriter out = response.getWriter();
@@ -119,7 +123,11 @@ public class AnnotatedDenyUserServletRequestHandler extends GenericServlet {
 		context.put("defaultUrls", defaultUrls);
 
 		StringWriter writer = new StringWriter();
-		TemplateEngine.evaluate(context, writer, "log task", reader);
+
+		VelocityEngine templateEngine = ApplicationContextUtil
+				.getSpringBean(VelocityEngine.class);
+		templateEngine.evaluate(context.getVelocityContext(), writer,
+				"log task", reader);
 
 		return writer.toString();
 	}
@@ -207,9 +215,9 @@ public class AnnotatedDenyUserServletRequestHandler extends GenericServlet {
 			}
 			throw new ResourceNotFoundException();
 		} catch (NumberFormatException e) {
-			throw new ResourceNotFoundException();
+			throw new ResourceNotFoundException(e);
 		} catch (ResourceNotFoundException e) {
-			throw new ResourceNotFoundException();
+			throw e;
 		} catch (Exception e) {
 			log.error("Error with userService", e);
 			throw new MyCollabException(e);

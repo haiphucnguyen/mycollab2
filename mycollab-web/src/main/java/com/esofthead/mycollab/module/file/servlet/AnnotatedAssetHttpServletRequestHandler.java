@@ -39,10 +39,10 @@ import com.esofthead.mycollab.servlet.GenericServlet;
  * 
  */
 @Component("assetsHandlerServlet")
-public class AnnotatedAssetServlet extends GenericServlet {
+public class AnnotatedAssetHttpServletRequestHandler extends GenericServlet {
 
 	private static Logger log = LoggerFactory
-			.getLogger(AnnotatedAssetServlet.class);
+			.getLogger(AnnotatedAssetHttpServletRequestHandler.class);
 
 	@Override
 	protected void onHandleRequest(HttpServletRequest request,
@@ -50,12 +50,12 @@ public class AnnotatedAssetServlet extends GenericServlet {
 		String path = request.getPathInfo();
 		String resourcePath = "assets" + path;
 
-		InputStream inputStream = AnnotatedAssetServlet.class.getClassLoader()
+		InputStream inputStream = AnnotatedAssetHttpServletRequestHandler.class.getClassLoader()
 				.getResourceAsStream(resourcePath);
 
 		if (inputStream == null) {
 			resourcePath = "VAADIN/themes/mycollab" + path;
-			inputStream = AnnotatedAssetServlet.class.getClassLoader()
+			inputStream = AnnotatedAssetHttpServletRequestHandler.class.getClassLoader()
 					.getResourceAsStream(resourcePath);
 		}
 

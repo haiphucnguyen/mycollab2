@@ -27,6 +27,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.velocity.app.VelocityEngine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,8 +42,8 @@ import com.esofthead.mycollab.module.billing.servlet.AnnotatedDenyUserServletReq
 import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.servlet.GenericServlet;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.template.velocity.TemplateContext;
-import com.esofthead.template.velocity.TemplateEngine;
 
 /**
  * 
@@ -84,7 +85,10 @@ public class AnnotatedUserRecoveryPasswordHandlerServlet extends GenericServlet 
 		context.put("defaultUrls", defaultUrls);
 
 		StringWriter writer = new StringWriter();
-		TemplateEngine.evaluate(context, writer, "log task", reader);
+		VelocityEngine templateEngine = ApplicationContextUtil
+				.getSpringBean(VelocityEngine.class);
+		templateEngine.evaluate(context.getVelocityContext(), writer,
+				"log task", reader);
 		return writer.toString();
 	}
 
@@ -119,12 +123,15 @@ public class AnnotatedUserRecoveryPasswordHandlerServlet extends GenericServlet 
 						return;
 					}
 				}
+			} else {
+				throw new ResourceNotFoundException(
+						"Can not recover user password with context "
+								+ pathInfo);
 			}
-			throw new ResourceNotFoundException();
 		} catch (IndexOutOfBoundsException e) {
-			throw new ResourceNotFoundException();
+			throw new ResourceNotFoundException(e);
 		} catch (ResourceNotFoundException e) {
-			throw new ResourceNotFoundException();
+			throw e;
 		} catch (Exception e) {
 			log.error("Error with userService", e);
 			throw new MyCollabException(e);

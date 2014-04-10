@@ -53,9 +53,9 @@ import com.esofthead.mycollab.vaadin.MyCollabSession;
  * 
  */
 @Component("dropboxAuthServlet")
-public class AnnotatedDropboxAuthServlet extends GenericServlet {
+public class AnnotatedDropboxAuthHttpServletRequestHandler extends GenericServlet {
 	private static Logger log = LoggerFactory
-			.getLogger(AnnotatedDropboxAuthServlet.class);
+			.getLogger(AnnotatedDropboxAuthHttpServletRequestHandler.class);
 
 	private DbxWebAuth getWebAuth(final HttpServletRequest request) {
 		java.util.Locale locale = new Locale(Locale.US.getLanguage(),
@@ -134,7 +134,7 @@ public class AnnotatedDropboxAuthServlet extends GenericServlet {
 		EventBus eventBus = (EventBus) cache.get(MyCollabSession.EVENT_BUS_VAL);
 		if (eventBus != null) {
 			eventBus.fireEvent(new CloudDriveOAuthCallbackEvent.ReceiveCloudDriveInfo(
-					AnnotatedDropboxAuthServlet.this, cloudDriveInfo));
+					AnnotatedDropboxAuthHttpServletRequestHandler.this, cloudDriveInfo));
 		} else {
 			log.error(
 					"Can not find eventbus for session id {}, this session is not initialized by user yet",

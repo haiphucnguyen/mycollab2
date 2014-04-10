@@ -45,10 +45,10 @@ import com.esofthead.mycollab.servlet.GenericServlet;
  * 
  */
 @Component("userAvatarFSServlet")
-public class AnnotatedUserAvatarServlet extends GenericServlet {
+public class AnnotatedUserAvatarHttpServletRequestHandler extends GenericServlet {
 
 	private static Logger log = LoggerFactory
-			.getLogger(AnnotatedUserAvatarServlet.class);
+			.getLogger(AnnotatedUserAvatarHttpServletRequestHandler.class);
 
 	@Autowired
 	private ContentService contentService;
@@ -92,7 +92,7 @@ public class AnnotatedUserAvatarServlet extends GenericServlet {
 		} else {
 			String userAvatarPath = "assets/images/default_user_avatar_" + size
 					+ ".png";
-			avatarInputStream = AnnotatedUserAvatarServlet.class
+			avatarInputStream = AnnotatedUserAvatarHttpServletRequestHandler.class
 					.getClassLoader().getResourceAsStream(userAvatarPath);
 		}
 

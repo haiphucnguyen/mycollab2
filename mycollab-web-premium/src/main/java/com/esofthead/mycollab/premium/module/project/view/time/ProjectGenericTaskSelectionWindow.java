@@ -70,25 +70,19 @@ class ProjectGenericTaskSelectionWindow extends Window {
 					}
 				});
 
-		/*searchCriteria = new ProjectGenericTaskSearchCriteria();
-		searchCriteria.setProjectId(new NumberSearchField(
-		CurrentProjectVariables.getProjectId()));
-		taskTableDisplay.setSearchCriteria(searchCriteria);*/
-		
-		
 		content.addComponent(constructTopPanel());
 		content.addComponent(taskTableDisplay);
-		
+
 		this.setContent(content);
 	}
-	
-	public ComponentContainer constructTopPanel() {
+
+	private ComponentContainer constructTopPanel() {
 		final HorizontalLayout basicSearchBody = new HorizontalLayout();
 		basicSearchBody.setSpacing(true);
 		basicSearchBody.setMargin(true);
 		UiUtils.addComponent(basicSearchBody, new Label("Name:"),
 				Alignment.MIDDLE_LEFT);
-		
+
 		this.nameField = new TextField();
 		this.nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
 		UiUtils.addComponent(basicSearchBody, this.nameField,
@@ -99,8 +93,7 @@ class ProjectGenericTaskSelectionWindow extends Window {
 				Alignment.MIDDLE_CENTER);
 
 		final Button searchBtn = new Button("Search");
-		searchBtn.setIcon(MyCollabResource
-				.newResource("icons/16/search.png"));
+		searchBtn.setIcon(MyCollabResource.newResource("icons/16/search.png"));
 		searchBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 
 		searchBtn.addClickListener(new Button.ClickListener() {
@@ -112,8 +105,7 @@ class ProjectGenericTaskSelectionWindow extends Window {
 			}
 		});
 		searchBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
-		UiUtils.addComponent(basicSearchBody, searchBtn,
-				Alignment.MIDDLE_LEFT);
+		UiUtils.addComponent(basicSearchBody, searchBtn, Alignment.MIDDLE_LEFT);
 
 		final Button cancelBtn = new Button("Clear");
 		cancelBtn.setStyleName(UIConstants.THEME_BLANK_LINK);
@@ -130,13 +122,12 @@ class ProjectGenericTaskSelectionWindow extends Window {
 
 		return basicSearchBody;
 	}
-	
-	public void callSearchAction() {
+
+	private void callSearchAction() {
 		searchCriteria = new ProjectGenericTaskSearchCriteria();
 		searchCriteria.setProjectId(new NumberSearchField(
 				CurrentProjectVariables.getProjectId()));
-		searchCriteria
-		.setName(new StringSearchField(this.nameField.getValue()
+		searchCriteria.setName(new StringSearchField(this.nameField.getValue()
 				.toString().trim()));
 		taskTableDisplay.setSearchCriteria(searchCriteria);
 	}
