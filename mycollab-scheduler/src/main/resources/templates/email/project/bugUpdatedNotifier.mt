@@ -4,12 +4,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>New bug created</title>
 </head>
-<body>
+<body style="background-color: rgb(235, 236, 237);">
 	#macro( hyperLink $displayName $webLink )
 		<a href="$webLink" style="color: rgb(36, 127, 211); font-size: 12px; text-decoration: none;">$displayName</a>
 	#end
 	
-    <table width="700" cellpadding="0" cellspacing="0" border="0" style="margin: 0px auto;">
+    <table width="700" cellpadding="0" cellspacing="0" border="0" style="margin: 0px auto; background-color: rgb(255, 255, 255);">
        <tr>
        		<td>
        			<div style="padding: 10px 50px; background-color: rgb(106, 201, 228);">
