@@ -29,7 +29,7 @@ class ProjectGenericTaskSelectionWindow extends Window {
 			final AddTimeEntryWindow timeEntryWindow) {
 		super("Select Assignments");
 		this.center();
-
+		this.setWidth("800px");
 		VerticalLayout content = new VerticalLayout();
 		content.setMargin(true);
 		content.setSpacing(true);

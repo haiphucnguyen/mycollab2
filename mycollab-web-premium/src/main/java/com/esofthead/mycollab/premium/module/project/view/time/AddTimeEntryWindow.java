@@ -7,14 +7,33 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import com.esofthead.mycollab.common.ui.components.ProjectTooltipGenerator;
 import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
+import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.ItemTimeLogging;
 import com.esofthead.mycollab.module.project.domain.ProjectGenericTask;
+import com.esofthead.mycollab.module.project.domain.SimpleProblem;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
+import com.esofthead.mycollab.module.project.domain.SimpleRisk;
+import com.esofthead.mycollab.module.project.domain.SimpleStandupReport;
+import com.esofthead.mycollab.module.project.domain.SimpleTask;
+import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
 import com.esofthead.mycollab.module.project.service.ItemTimeLoggingService;
+import com.esofthead.mycollab.module.project.service.ProblemService;
+import com.esofthead.mycollab.module.project.service.ProjectTaskListService;
+import com.esofthead.mycollab.module.project.service.ProjectTaskService;
+import com.esofthead.mycollab.module.project.service.RiskService;
+import com.esofthead.mycollab.module.project.service.StandupReportService;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberSelectionBox;
+import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
+import com.esofthead.mycollab.module.tracker.domain.SimpleComponent;
+import com.esofthead.mycollab.module.tracker.domain.SimpleVersion;
+import com.esofthead.mycollab.module.tracker.service.BugService;
+import com.esofthead.mycollab.module.tracker.service.ComponentService;
+import com.esofthead.mycollab.module.tracker.service.VersionService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.StyleCalendarFieldExp;
@@ -74,7 +93,7 @@ public class AddTimeEntryWindow extends Window {
 		grid.addComponent(new Label("Week:"), 1, 0);
 		HorizontalLayout isBillable = new HorizontalLayout();
 		isBillable.setSpacing(true);
-		isBillable.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
+		isBillable.setDefaultComponentAlignment(Alignment.BOTTOM_LEFT);
 		Label billableTitle = new Label("Is Billable:");
 		isBillable.addComponent(billableTitle);
 
@@ -173,11 +192,12 @@ public class AddTimeEntryWindow extends Window {
 		
 		final String taskName = selectionTask.getName();
 		taskLayout.removeAllComponents();
-		Button attachTaskBtn = new Button(taskName);
+		Label attachTaskBtn = new Label(StringUtils.trim(taskName, 80,true));
 	
-		attachTaskBtn.setStyleName(UIConstants.THEME_LINK);
 		attachTaskBtn.addStyleName("task-attached");
-//		attachTaskBtn.setDescription(generateTooltip(selectionTask.getType(), selectionTask.getTypeId()));
+		attachTaskBtn.setWidth("120px");
+		
+		attachTaskBtn.setDescription(generateTooltip(selectionTask.getType(), selectionTask.getTypeId()));
 		taskLayout.addComponent(attachTaskBtn);
 		this.selectionTask.getTypeId();
 		
@@ -197,8 +217,12 @@ public class AddTimeEntryWindow extends Window {
 	}
 	
 	private String generateTooltip(String type, int typeid) {
-		/*String html = "";
+		
+		String html = "";
 		int sAccountId = AppContext.getAccountId();
+		String timeZone = AppContext.getSession().getTimezone();
+		String siteURL = AppContext.getSiteUrl();
+		
 		 if (ProjectTypeConstants.TASK_LIST.equals(type)) {
 			ProjectTaskListService service = ApplicationContextUtil
 					.getSpringBean(ProjectTaskListService.class);
@@ -248,8 +272,9 @@ public class AddTimeEntryWindow extends Window {
 			SimpleStandupReport standup = service.findStandupReportById(
 					typeid, sAccountId);
 			html = ProjectTooltipGenerator.generateToolTipStandUp(standup,
-					siteURL, timeZone);*/
-		return null;
+					siteURL, timeZone);
+		}
+		return html;
 	}
 	
 	private void createLinkTaskButton() {
