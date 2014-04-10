@@ -90,7 +90,7 @@ import com.hp.gagawa.java.elements.Tr;
  * 
  */
 @Component("tooltipGeneratorServlet")
-public class AnnotatedTooltipGeneratorHandler extends GenericServlet {
+public class AnnotatedTooltipGeneratorHandler extends GenericHttpServletRequestHandler {
 	private static Logger log = LoggerFactory
 			.getLogger(AnnotatedTooltipGeneratorHandler.class);
 

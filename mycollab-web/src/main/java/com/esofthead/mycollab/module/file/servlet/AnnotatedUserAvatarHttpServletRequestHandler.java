@@ -36,7 +36,7 @@ import com.esofthead.mycollab.configuration.FileStorageConfiguration;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.file.service.ContentService;
-import com.esofthead.mycollab.servlet.GenericServlet;
+import com.esofthead.mycollab.servlet.GenericHttpServletRequestHandler;
 
 /**
  * 
@@ -45,7 +45,7 @@ import com.esofthead.mycollab.servlet.GenericServlet;
  * 
  */
 @Component("userAvatarFSServlet")
-public class AnnotatedUserAvatarHttpServletRequestHandler extends GenericServlet {
+public class AnnotatedUserAvatarHttpServletRequestHandler extends GenericHttpServletRequestHandler {
 
 	private static Logger log = LoggerFactory
 			.getLogger(AnnotatedUserAvatarHttpServletRequestHandler.class);

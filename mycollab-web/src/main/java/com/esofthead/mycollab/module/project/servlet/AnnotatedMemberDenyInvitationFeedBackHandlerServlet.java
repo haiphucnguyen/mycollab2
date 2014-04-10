@@ -28,7 +28,7 @@ import org.springframework.stereotype.Component;
 import com.esofthead.mycollab.core.ResourceNotFoundException;
 import com.esofthead.mycollab.module.mail.service.MailRelayService;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
-import com.esofthead.mycollab.servlet.GenericServlet;
+import com.esofthead.mycollab.servlet.GenericHttpServletRequestHandler;
 
 /**
  * 
@@ -38,7 +38,7 @@ import com.esofthead.mycollab.servlet.GenericServlet;
  */
 @Component("denyMemberInvitationFeedbackServlet")
 public class AnnotatedMemberDenyInvitationFeedBackHandlerServlet extends
-		GenericServlet {
+		GenericHttpServletRequestHandler {
 
 	@Autowired
 	private MailRelayService mailRelayService;

@@ -43,7 +43,7 @@ import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.ecm.StorageNames;
 import com.esofthead.mycollab.module.file.CloudDriveInfo;
 import com.esofthead.mycollab.module.file.events.CloudDriveOAuthCallbackEvent;
-import com.esofthead.mycollab.servlet.GenericServlet;
+import com.esofthead.mycollab.servlet.GenericHttpServletRequestHandler;
 import com.esofthead.mycollab.vaadin.MyCollabSession;
 
 /**
@@ -53,7 +53,7 @@ import com.esofthead.mycollab.vaadin.MyCollabSession;
  * 
  */
 @Component("dropboxAuthServlet")
-public class AnnotatedDropboxAuthHttpServletRequestHandler extends GenericServlet {
+public class AnnotatedDropboxAuthHttpServletRequestHandler extends GenericHttpServletRequestHandler {
 	private static Logger log = LoggerFactory
 			.getLogger(AnnotatedDropboxAuthHttpServletRequestHandler.class);
 

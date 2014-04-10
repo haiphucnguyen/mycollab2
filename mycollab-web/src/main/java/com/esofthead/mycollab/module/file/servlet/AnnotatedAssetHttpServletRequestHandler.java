@@ -30,7 +30,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.core.utils.MimeTypesUtil;
-import com.esofthead.mycollab.servlet.GenericServlet;
+import com.esofthead.mycollab.servlet.GenericHttpServletRequestHandler;
 
 /**
  * 
@@ -39,7 +39,7 @@ import com.esofthead.mycollab.servlet.GenericServlet;
  * 
  */
 @Component("assetsHandlerServlet")
-public class AnnotatedAssetHttpServletRequestHandler extends GenericServlet {
+public class AnnotatedAssetHttpServletRequestHandler extends GenericHttpServletRequestHandler {
 
 	private static Logger log = LoggerFactory
 			.getLogger(AnnotatedAssetHttpServletRequestHandler.class);

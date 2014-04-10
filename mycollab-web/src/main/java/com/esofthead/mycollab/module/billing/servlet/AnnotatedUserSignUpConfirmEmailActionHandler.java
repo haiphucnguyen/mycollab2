@@ -32,7 +32,7 @@ import com.esofthead.mycollab.module.billing.UserStatusConstants;
 import com.esofthead.mycollab.module.billing.servlet.AnnotatedDenyUserServletRequestHandler.PageUserNotExistGenerator;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.service.UserService;
-import com.esofthead.mycollab.servlet.GenericServlet;
+import com.esofthead.mycollab.servlet.GenericHttpServletRequestHandler;
 
 /**
  * 
@@ -42,7 +42,7 @@ import com.esofthead.mycollab.servlet.GenericServlet;
  */
 @Component("userconfirmsignupServlet")
 public class AnnotatedUserSignUpConfirmEmailActionHandler extends
-		GenericServlet {
+		GenericHttpServletRequestHandler {
 
 	@Autowired
 	private UserService userServices;

@@ -41,7 +41,7 @@ import com.esofthead.mycollab.core.ResourceNotFoundException;
 import com.esofthead.mycollab.module.billing.servlet.AnnotatedDenyUserServletRequestHandler.PageUserNotExistGenerator;
 import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.module.user.service.UserService;
-import com.esofthead.mycollab.servlet.GenericServlet;
+import com.esofthead.mycollab.servlet.GenericHttpServletRequestHandler;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.template.velocity.TemplateContext;
 
@@ -52,7 +52,7 @@ import com.esofthead.template.velocity.TemplateContext;
  * 
  */
 @Component("recoverUserPasswordServlet")
-public class AnnotatedUserRecoveryPasswordHandlerServlet extends GenericServlet {
+public class AnnotatedUserRecoveryPasswordHandlerServlet extends GenericHttpServletRequestHandler {
 
 	private static Logger log = LoggerFactory
 			.getLogger(AnnotatedUserRecoveryPasswordHandlerServlet.class);

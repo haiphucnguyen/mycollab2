@@ -45,7 +45,7 @@ import com.esofthead.mycollab.module.project.servlet.AnnotatedDenyProjectMemberI
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
 import com.esofthead.mycollab.module.user.service.UserService;
-import com.esofthead.mycollab.servlet.GenericServlet;
+import com.esofthead.mycollab.servlet.GenericHttpServletRequestHandler;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.template.velocity.TemplateContext;
 import com.esofthead.template.velocity.TemplateEngine;
@@ -57,7 +57,7 @@ import com.esofthead.template.velocity.TemplateEngine;
  * 
  */
 @Component("denyUserInviteServlet")
-public class AnnotatedDenyUserServletRequestHandler extends GenericServlet {
+public class AnnotatedDenyUserServletRequestHandler extends GenericHttpServletRequestHandler {
 
 	private static String USER_DENY_FEEDBACK_TEMPLATE = "templates/page/user/UserDenyInvitationPage.mt";
 	private static String USER_HAS_DENIED_PAGE = "templates/page/user/UserDeniedPage.mt";

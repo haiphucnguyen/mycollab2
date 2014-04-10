@@ -34,7 +34,7 @@ import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.service.UserService;
-import com.esofthead.mycollab.servlet.GenericServlet;
+import com.esofthead.mycollab.servlet.GenericHttpServletRequestHandler;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.utils.InvalidPasswordException;
 import com.esofthead.mycollab.utils.PasswordCheckerUtil;
@@ -47,7 +47,7 @@ import com.esofthead.mycollab.utils.PasswordCheckerUtil;
  */
 @Component("updateUserPasswordServlet")
 public class AnnotatedUserRecoveryPasswordActionHandlerServlet extends
-		GenericServlet {
+		GenericHttpServletRequestHandler {
 	private static Logger log = LoggerFactory
 			.getLogger(AnnotatedUserRecoveryPasswordActionHandlerServlet.class);
 

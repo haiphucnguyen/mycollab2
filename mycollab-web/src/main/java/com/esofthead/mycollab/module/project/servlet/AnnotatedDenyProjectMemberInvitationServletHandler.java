@@ -45,7 +45,7 @@ import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.schedule.email.project.ProjectMailLinkGenerator;
-import com.esofthead.mycollab.servlet.GenericServlet;
+import com.esofthead.mycollab.servlet.GenericHttpServletRequestHandler;
 import com.esofthead.template.velocity.TemplateContext;
 import com.esofthead.template.velocity.TemplateEngine;
 
@@ -57,7 +57,7 @@ import com.esofthead.template.velocity.TemplateEngine;
  */
 @Component("denyMemberInvitationServlet")
 public class AnnotatedDenyProjectMemberInvitationServletHandler extends
-		GenericServlet {
+		GenericHttpServletRequestHandler {
 
 	private static Logger log = LoggerFactory
 			.getLogger(AnnotatedDenyProjectMemberInvitationServletHandler.class);

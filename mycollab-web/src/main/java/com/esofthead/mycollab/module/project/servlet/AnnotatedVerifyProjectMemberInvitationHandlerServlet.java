@@ -54,7 +54,7 @@ import com.esofthead.mycollab.module.user.domain.UserAccount;
 import com.esofthead.mycollab.module.user.domain.UserAccountExample;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.schedule.email.project.ProjectMailLinkGenerator;
-import com.esofthead.mycollab.servlet.GenericServlet;
+import com.esofthead.mycollab.servlet.GenericHttpServletRequestHandler;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.template.velocity.TemplateContext;
 import com.esofthead.template.velocity.TemplateEngine;
@@ -67,7 +67,7 @@ import com.esofthead.template.velocity.TemplateEngine;
  */
 @Component("acceptMemberInvitationServlet")
 public class AnnotatedVerifyProjectMemberInvitationHandlerServlet extends
-		GenericServlet {
+		GenericHttpServletRequestHandler {
 
 	private static Logger log = LoggerFactory
 			.getLogger(AnnotatedVerifyProjectMemberInvitationHandlerServlet.class);

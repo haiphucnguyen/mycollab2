@@ -30,7 +30,7 @@ import org.springframework.stereotype.Component;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
-import com.esofthead.mycollab.servlet.GenericServlet;
+import com.esofthead.mycollab.servlet.GenericHttpServletRequestHandler;
 import com.esofthead.mycollab.utils.InvalidPasswordException;
 import com.esofthead.mycollab.utils.PasswordCheckerUtil;
 
@@ -42,7 +42,7 @@ import com.esofthead.mycollab.utils.PasswordCheckerUtil;
  */
 @Component("acceptMemberInvitationCreateAccountServlet")
 public class AnnotatedInviteOutsideMemberCreateAccountHandlerServlet extends
-		GenericServlet {
+		GenericHttpServletRequestHandler {
 
 	private static Logger log = LoggerFactory
 			.getLogger(AnnotatedInviteOutsideMemberCreateAccountHandlerServlet.class);
