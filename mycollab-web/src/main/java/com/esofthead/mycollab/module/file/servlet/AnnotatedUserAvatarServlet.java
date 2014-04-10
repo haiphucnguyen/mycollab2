@@ -31,12 +31,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.HttpRequestHandler;
 
 import com.esofthead.mycollab.configuration.FileStorageConfiguration;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.file.service.ContentService;
+import com.esofthead.mycollab.servlet.GenericServlet;
 
 /**
  * 
@@ -45,7 +45,7 @@ import com.esofthead.mycollab.module.file.service.ContentService;
  * 
  */
 @Component("userAvatarFSServlet")
-public class AnnotatedUserAvatarServlet implements HttpRequestHandler {
+public class AnnotatedUserAvatarServlet extends GenericServlet {
 
 	private static Logger log = LoggerFactory
 			.getLogger(AnnotatedUserAvatarServlet.class);
@@ -54,7 +54,7 @@ public class AnnotatedUserAvatarServlet implements HttpRequestHandler {
 	private ContentService contentService;
 
 	@Override
-	public void handleRequest(HttpServletRequest request,
+	protected void onHandleRequest(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		if (!SiteConfiguration.isSupportFileStorage()) {
 			throw new MyCollabException(

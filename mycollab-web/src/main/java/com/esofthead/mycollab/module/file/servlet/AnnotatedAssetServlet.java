@@ -28,9 +28,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import org.springframework.web.HttpRequestHandler;
 
 import com.esofthead.mycollab.core.utils.MimeTypesUtil;
+import com.esofthead.mycollab.servlet.GenericServlet;
 
 /**
  * 
@@ -39,13 +39,13 @@ import com.esofthead.mycollab.core.utils.MimeTypesUtil;
  * 
  */
 @Component("assetsHandlerServlet")
-public class AnnotatedAssetServlet implements HttpRequestHandler {
+public class AnnotatedAssetServlet extends GenericServlet {
 
 	private static Logger log = LoggerFactory
 			.getLogger(AnnotatedAssetServlet.class);
 
 	@Override
-	public void handleRequest(HttpServletRequest request,
+	protected void onHandleRequest(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		String path = request.getPathInfo();
 		String resourcePath = "assets" + path;
