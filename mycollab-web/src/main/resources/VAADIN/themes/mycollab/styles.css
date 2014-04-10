@@ -3585,6 +3585,7 @@ div.v-window-header {
 	margin-right: 2px;
 	color:white;
 	pointer:none;
+	overflow:hidden;
 
 }
 

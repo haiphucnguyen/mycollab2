@@ -192,14 +192,6 @@ public class AddTimeEntryWindow extends Window {
 		
 		final String taskName = selectionTask.getName();
 		taskLayout.removeAllComponents();
-		Label attachTaskBtn = new Label(StringUtils.trim(taskName, 80,true));
-	
-		attachTaskBtn.addStyleName("task-attached");
-		attachTaskBtn.setWidth("120px");
-		
-		attachTaskBtn.setDescription(generateTooltip(selectionTask.getType(), selectionTask.getTypeId()));
-		taskLayout.addComponent(attachTaskBtn);
-		this.selectionTask.getTypeId();
 		
 		Button detachTaskBtn = new Button("Detach",
 				new Button.ClickListener() {
@@ -212,6 +204,17 @@ public class AddTimeEntryWindow extends Window {
 				});
 		detachTaskBtn.setStyleName(UIConstants.THEME_RED_LINK);
 		taskLayout.addComponent(detachTaskBtn);
+		
+		Label attachTaskBtn = new Label(StringUtils.trim(taskName, 20,true));
+	
+		attachTaskBtn.addStyleName("task-attached");
+		attachTaskBtn.setWidth("200px");
+		
+		attachTaskBtn.setDescription(generateTooltip(selectionTask.getType(), selectionTask.getTypeId()));
+		taskLayout.addComponent(attachTaskBtn);
+		this.selectionTask.getTypeId();
+		
+		
 		
 		
 	}
