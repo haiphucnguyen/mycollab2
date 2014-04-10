@@ -85,7 +85,7 @@ public class AddTimeEntryWindow extends Window {
 		content.setSpacing(true);
 		content.setMargin(true);
 		GridLayout grid = new GridLayout(3, 2);
-		grid.setMargin(new MarginInfo(false,false,true,false));
+		grid.setMargin(new MarginInfo(false, false, true, false));
 		grid.setSpacing(true);
 		content.addComponent(grid);
 
@@ -96,8 +96,6 @@ public class AddTimeEntryWindow extends Window {
 		isBillable.setDefaultComponentAlignment(Alignment.BOTTOM_LEFT);
 		Label billableTitle = new Label("Is Billable:");
 		isBillable.addComponent(billableTitle);
-
-		
 
 		projectMemberSelectionBox = new ProjectMemberSelectionBox();
 		grid.addComponent(projectMemberSelectionBox, 0, 1);
@@ -148,9 +146,8 @@ public class AddTimeEntryWindow extends Window {
 		taskLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 		taskLayout.setSpacing(true);
 		createLinkTaskButton();
-		
+
 		footer.addComponent(taskLayout);
-		
 
 		HorizontalLayout controlsLayout = new HorizontalLayout();
 		controlsLayout.setSpacing(true);
@@ -165,7 +162,6 @@ public class AddTimeEntryWindow extends Window {
 		});
 		saveBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
 		controlsLayout.addComponent(saveBtn);
-		
 
 		Button cancelBtn = new Button("Cancel", new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
@@ -177,10 +173,9 @@ public class AddTimeEntryWindow extends Window {
 		});
 		cancelBtn.addStyleName(UIConstants.THEME_BLANK_LINK);
 		controlsLayout.addComponent(cancelBtn);
-		
 
 		footer.addComponent(controlsLayout);
-		footer.setSizeFull();	
+		footer.setSizeFull();
 		footer.setComponentAlignment(controlsLayout, Alignment.TOP_RIGHT);
 		content.addComponent(footer);
 		this.setContent(content);
@@ -189,49 +184,51 @@ public class AddTimeEntryWindow extends Window {
 
 	void setSelectionTask(ProjectGenericTask selectionTask) {
 		this.selectionTask = selectionTask;
-		
-		final String taskName = selectionTask.getName();
-		taskLayout.removeAllComponents();
-		
-		Button detachTaskBtn = new Button("Detach",
-				new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
+		if (this.selectionTask != null) {
+			final String taskName = this.selectionTask.getName();
+			taskLayout.removeAllComponents();
 
-					@Override
-					public void buttonClick(ClickEvent event) {
-						createLinkTaskButton();
-					}
-				});
-		detachTaskBtn.setStyleName(UIConstants.THEME_RED_LINK);
-		taskLayout.addComponent(detachTaskBtn);
-		
-		Label attachTaskBtn = new Label(StringUtils.trim(taskName, 20,true));
-	
-		attachTaskBtn.addStyleName("task-attached");
-		attachTaskBtn.setWidth("200px");
-		
-		attachTaskBtn.setDescription(generateTooltip(selectionTask.getType(), selectionTask.getTypeId()));
-		taskLayout.addComponent(attachTaskBtn);
-		this.selectionTask.getTypeId();
-		
-		
-		
-		
+			Button detachTaskBtn = new Button("Detach",
+					new Button.ClickListener() {
+
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void buttonClick(ClickEvent event) {
+							createLinkTaskButton();
+							setSelectionTask(null);
+						}
+					});
+			detachTaskBtn.setStyleName(UIConstants.THEME_RED_LINK);
+			taskLayout.addComponent(detachTaskBtn);
+
+			Label attachTaskBtn = new Label(
+					StringUtils.trim(taskName, 60, true));
+
+			attachTaskBtn.addStyleName("task-attached");
+			attachTaskBtn.setWidth("500px");
+
+			attachTaskBtn.setDescription(generateTooltip(
+					this.selectionTask.getType(), this.selectionTask.getTypeId()));
+			taskLayout.addComponent(attachTaskBtn);
+			this.selectionTask.getTypeId();
+		}
+
 	}
-	
+
 	private String generateTooltip(String type, int typeid) {
-		
+
 		String html = "";
 		int sAccountId = AppContext.getAccountId();
 		String timeZone = AppContext.getSession().getTimezone();
 		String siteURL = AppContext.getSiteUrl();
-		
-		 if (ProjectTypeConstants.TASK_LIST.equals(type)) {
+
+		if (ProjectTypeConstants.TASK_LIST.equals(type)) {
 			ProjectTaskListService service = ApplicationContextUtil
 					.getSpringBean(ProjectTaskListService.class);
 			SimpleTaskList taskList = service.findById(typeid, sAccountId);
-			html = ProjectTooltipGenerator.generateToolTipTaskList(
-					taskList, siteURL, timeZone);
+			html = ProjectTooltipGenerator.generateToolTipTaskList(taskList,
+					siteURL, timeZone);
 		} else if (ProjectTypeConstants.BUG.equals(type)) {
 			BugService service = ApplicationContextUtil
 					.getSpringBean(BugService.class);
@@ -242,14 +239,14 @@ public class AddTimeEntryWindow extends Window {
 			ProjectTaskService service = ApplicationContextUtil
 					.getSpringBean(ProjectTaskService.class);
 			SimpleTask task = service.findById(typeid, sAccountId);
-			html = ProjectTooltipGenerator.generateToolTipTask(task,
-					siteURL, timeZone);
+			html = ProjectTooltipGenerator.generateToolTipTask(task, siteURL,
+					timeZone);
 		} else if (ProjectTypeConstants.RISK.equals(type)) {
 			RiskService service = ApplicationContextUtil
 					.getSpringBean(RiskService.class);
 			SimpleRisk risk = service.findById(typeid, sAccountId);
-			html = ProjectTooltipGenerator.generateToolTipRisk(risk,
-					siteURL, timeZone);
+			html = ProjectTooltipGenerator.generateToolTipRisk(risk, siteURL,
+					timeZone);
 		} else if (ProjectTypeConstants.PROBLEM.equals(type)) {
 			ProblemService service = ApplicationContextUtil
 					.getSpringBean(ProblemService.class);
@@ -265,21 +262,20 @@ public class AddTimeEntryWindow extends Window {
 		} else if (ProjectTypeConstants.BUG_COMPONENT.equals(type)) {
 			ComponentService service = ApplicationContextUtil
 					.getSpringBean(ComponentService.class);
-			SimpleComponent component = service
-					.findById(typeid, sAccountId);
-			html = ProjectTooltipGenerator.generateToolTipComponent(
-					component, siteURL, timeZone);
+			SimpleComponent component = service.findById(typeid, sAccountId);
+			html = ProjectTooltipGenerator.generateToolTipComponent(component,
+					siteURL, timeZone);
 		} else if (ProjectTypeConstants.STANDUP.equals(type)) {
 			StandupReportService service = ApplicationContextUtil
 					.getSpringBean(StandupReportService.class);
-			SimpleStandupReport standup = service.findStandupReportById(
-					typeid, sAccountId);
+			SimpleStandupReport standup = service.findStandupReportById(typeid,
+					sAccountId);
 			html = ProjectTooltipGenerator.generateToolTipStandUp(standup,
 					siteURL, timeZone);
 		}
 		return html;
 	}
-	
+
 	private void createLinkTaskButton() {
 		taskLayout.removeAllComponents();
 		Button attachTaskBtn = new Button("Link with task",

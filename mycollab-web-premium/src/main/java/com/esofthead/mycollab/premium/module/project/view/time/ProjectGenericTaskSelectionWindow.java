@@ -69,10 +69,16 @@ class ProjectGenericTaskSelectionWindow extends Window {
 						}
 					}
 				});
+		
 
+		searchCriteria = new ProjectGenericTaskSearchCriteria();
+		searchCriteria.setProjectId(new NumberSearchField(
+		CurrentProjectVariables.getProjectId()));
+		taskTableDisplay.setSearchCriteria(searchCriteria);
+		
 		content.addComponent(constructTopPanel());
 		content.addComponent(taskTableDisplay);
-
+		
 		this.setContent(content);
 	}
 
@@ -86,10 +92,6 @@ class ProjectGenericTaskSelectionWindow extends Window {
 		this.nameField = new TextField();
 		this.nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
 		UiUtils.addComponent(basicSearchBody, this.nameField,
-				Alignment.MIDDLE_CENTER);
-
-		this.myItemCheckbox = new CheckBox("My Items");
-		UiUtils.addComponent(basicSearchBody, this.myItemCheckbox,
 				Alignment.MIDDLE_CENTER);
 
 		final Button searchBtn = new Button("Search");
@@ -124,9 +126,6 @@ class ProjectGenericTaskSelectionWindow extends Window {
 	}
 
 	private void callSearchAction() {
-		searchCriteria = new ProjectGenericTaskSearchCriteria();
-		searchCriteria.setProjectId(new NumberSearchField(
-				CurrentProjectVariables.getProjectId()));
 		searchCriteria.setName(new StringSearchField(this.nameField.getValue()
 				.toString().trim()));
 		taskTableDisplay.setSearchCriteria(searchCriteria);
