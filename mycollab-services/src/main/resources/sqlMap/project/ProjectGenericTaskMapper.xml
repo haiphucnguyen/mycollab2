@@ -177,7 +177,7 @@
 	</sql>
 
 	<select id="getTotalCountFromProblem" parameterType="ProjectGenericTaskSearchCriteria"
-		resultType="int">
+		resultType="int" lang="velocity">
 		SELECT count(*) as totalCount FROM m_prj_problem
 
 		#ifnotnull($_parameter.searchCriteria)
@@ -188,7 +188,7 @@
 	</select>
 
 	<select id="getTotalCountFromRisk" parameterType="ProjectGenericTaskSearchCriteria"
-		resultType="int">
+		resultType="int" lang="velocity">
 		SELECT count(*) as totalCount FROM m_prj_risk
 
 		#ifnotnull($_parameter.searchCriteria)
@@ -199,7 +199,7 @@
 	</select>
 
 	<select id="getTotalCountFromBug" parameterType="ProjectGenericTaskSearchCriteria"
-		resultType="int">
+		resultType="int" lang="velocity">
 		SELECT count(*) as totalCount FROM m_tracker_bug
 
 		#ifnotnull($_parameter.searchCriteria)
@@ -210,7 +210,7 @@
 	</select>
 
 	<select id="getTotalCountFromTask" parameterType="ProjectGenericTaskSearchCriteria"
-		resultType="int">
+		resultType="int" lang="velocity">
 		SELECT count(*) as totalCount FROM m_prj_task
 
 		#ifnotnull($_parameter.searchCriteria)
