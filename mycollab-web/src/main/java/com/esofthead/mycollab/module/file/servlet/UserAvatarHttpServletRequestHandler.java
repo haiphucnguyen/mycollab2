@@ -36,7 +36,7 @@ import com.esofthead.mycollab.configuration.FileStorageConfiguration;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.file.service.ContentService;
-import com.esofthead.mycollab.servlet.GenericServlet;
+import com.esofthead.mycollab.servlet.GenericServletRequestHandler;
 
 /**
  * 
@@ -45,10 +45,10 @@ import com.esofthead.mycollab.servlet.GenericServlet;
  * 
  */
 @Component("userAvatarFSServlet")
-public class AnnotatedUserAvatarServlet extends GenericServlet {
+public class UserAvatarHttpServletRequestHandler extends GenericServletRequestHandler {
 
 	private static Logger log = LoggerFactory
-			.getLogger(AnnotatedUserAvatarServlet.class);
+			.getLogger(UserAvatarHttpServletRequestHandler.class);
 
 	@Autowired
 	private ContentService contentService;
@@ -92,7 +92,7 @@ public class AnnotatedUserAvatarServlet extends GenericServlet {
 		} else {
 			String userAvatarPath = "assets/images/default_user_avatar_" + size
 					+ ".png";
-			avatarInputStream = AnnotatedUserAvatarServlet.class
+			avatarInputStream = UserAvatarHttpServletRequestHandler.class
 					.getClassLoader().getResourceAsStream(userAvatarPath);
 		}
 

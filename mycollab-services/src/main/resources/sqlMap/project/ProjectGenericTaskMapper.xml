@@ -32,6 +32,10 @@
         <![CDATA[
         #set($searchCriteria = $_parameter.searchCriteria)
         
+        #ifnotnull($searchCriteria.name)
+            ${searchCriteria.name.operation} m_prj_problem.issuename LIKE '%${searchCriteria.name.value}%'
+        #end
+        
         #ifnotnull($searchCriteria.saccountid)
             ${searchCriteria.saccountid.operation} m_prj_problem.sAccountId = @{searchCriteria.saccountid.value,jdbcType=NUMERIC}
         #end
@@ -53,6 +57,10 @@
 	<sql id="queryRiskSearchCriteria">
         <![CDATA[
         #set($searchCriteria = $_parameter.searchCriteria)
+        
+        #ifnotnull($searchCriteria.name)
+            ${searchCriteria.name.operation} m_prj_risk.riskname LIKE '%${searchCriteria.name.value}%'
+        #end
         
         #ifnotnull($searchCriteria.saccountid)
             ${searchCriteria.saccountid.operation} m_prj_risk.sAccountId = @{searchCriteria.saccountid.value,jdbcType=NUMERIC}
@@ -76,6 +84,10 @@
         <![CDATA[
         #set($searchCriteria = $_parameter.searchCriteria)
         
+        #ifnotnull($searchCriteria.name)
+            ${searchCriteria.name.operation} m_tracker_bug.summary LIKE '%${searchCriteria.name.value}%'
+        #end
+        
         #ifnotnull($searchCriteria.saccountid)
             ${searchCriteria.saccountid.operation} m_tracker_bug.sAccountId = @{searchCriteria.saccountid.value,jdbcType=NUMERIC}
         #end
@@ -97,6 +109,10 @@
 	<sql id="queryTaskSearchCriteria">
         <![CDATA[
         #set($searchCriteria = $_parameter.searchCriteria)
+        
+        #ifnotnull($searchCriteria.name)
+            ${searchCriteria.name.operation} m_prj_task.taskname LIKE '%${searchCriteria.name.value}%'
+        #end
         
         #ifnotnull($searchCriteria.saccountid)
             ${searchCriteria.saccountid.operation} m_prj_task.sAccountId = @{searchCriteria.saccountid.value,jdbcType=NUMERIC}
