@@ -91,6 +91,18 @@ public class GenericTaskTableDisplay
 			}
 		});
 
+		addGeneratedColumn("assignUser", new Table.ColumnGenerator() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public Object generateCell(Table source, Object itemId,
+					Object columnId) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+		});
+
 		addGeneratedColumn("dueDate", new Table.ColumnGenerator() {
 			private static final long serialVersionUID = 1L;
 
