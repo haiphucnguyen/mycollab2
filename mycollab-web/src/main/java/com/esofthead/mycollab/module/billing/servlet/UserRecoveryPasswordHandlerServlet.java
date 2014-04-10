@@ -38,10 +38,9 @@ import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.DeploymentMode;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.ResourceNotFoundException;
-import com.esofthead.mycollab.module.billing.servlet.AnnotatedDenyUserServletRequestHandler.PageUserNotExistGenerator;
 import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.module.user.service.UserService;
-import com.esofthead.mycollab.servlet.GenericServlet;
+import com.esofthead.mycollab.servlet.GenericServletRequestHandler;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.template.velocity.TemplateContext;
 
@@ -52,45 +51,14 @@ import com.esofthead.template.velocity.TemplateContext;
  * 
  */
 @Component("recoverUserPasswordServlet")
-public class AnnotatedUserRecoveryPasswordHandlerServlet extends GenericServlet {
+public class UserRecoveryPasswordHandlerServlet extends
+		GenericServletRequestHandler {
 
 	private static Logger log = LoggerFactory
-			.getLogger(AnnotatedUserRecoveryPasswordHandlerServlet.class);
+			.getLogger(UserRecoveryPasswordHandlerServlet.class);
+
 	@Autowired
 	private UserService userService;
-
-	private String generateUserRecoveryPasswordPage(String username,
-			String loginURL, String redirectURL) {
-		String template = "templates/page/user/UserRecoveryPasswordPage.mt";
-		TemplateContext context = new TemplateContext();
-		Reader reader;
-		try {
-			reader = new InputStreamReader(
-					AnnotatedUserRecoveryPasswordHandlerServlet.class
-							.getClassLoader().getResourceAsStream(template),
-					"UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			reader = new InputStreamReader(
-					AnnotatedUserRecoveryPasswordHandlerServlet.class
-							.getClassLoader().getResourceAsStream(template));
-		}
-
-		context.put("username", username);
-		context.put("loginURL", loginURL);
-		context.put("redirectURL", redirectURL);
-
-		Map<String, String> defaultUrls = new HashMap<String, String>();
-
-		defaultUrls.put("cdn_url", SiteConfiguration.getCdnUrl());
-		context.put("defaultUrls", defaultUrls);
-
-		StringWriter writer = new StringWriter();
-		VelocityEngine templateEngine = ApplicationContextUtil
-				.getSpringBean(VelocityEngine.class);
-		templateEngine.evaluate(context.getVelocityContext(), writer,
-				"log task", reader);
-		return writer.toString();
-	}
 
 	@Override
 	protected void onHandleRequest(HttpServletRequest request,
@@ -105,8 +73,8 @@ public class AnnotatedUserRecoveryPasswordHandlerServlet extends GenericServlet 
 					String username = pathInfo;
 					User user = userService.findUserByUserName(username);
 					if (user == null) {
-						PageUserNotExistGenerator.responeUserNotExistPage(
-								response, request.getContextPath() + "/");
+						PageGeneratorUtil.responeUserNotExistPage(response,
+								request.getContextPath() + "/");
 						return;
 					} else {
 						String loginURL = (SiteConfiguration
@@ -136,5 +104,38 @@ public class AnnotatedUserRecoveryPasswordHandlerServlet extends GenericServlet 
 			log.error("Error with userService", e);
 			throw new MyCollabException(e);
 		}
+	}
+
+	private String generateUserRecoveryPasswordPage(String username,
+			String loginURL, String redirectURL) {
+		String template = "templates/page/user/UserRecoveryPasswordPage.mt";
+		TemplateContext context = new TemplateContext();
+		Reader reader;
+		try {
+			reader = new InputStreamReader(
+					UserRecoveryPasswordHandlerServlet.class
+							.getClassLoader().getResourceAsStream(template),
+					"UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			reader = new InputStreamReader(
+					UserRecoveryPasswordHandlerServlet.class
+							.getClassLoader().getResourceAsStream(template));
+		}
+
+		context.put("username", username);
+		context.put("loginURL", loginURL);
+		context.put("redirectURL", redirectURL);
+
+		Map<String, String> defaultUrls = new HashMap<String, String>();
+
+		defaultUrls.put("cdn_url", SiteConfiguration.getCdnUrl());
+		context.put("defaultUrls", defaultUrls);
+
+		StringWriter writer = new StringWriter();
+		VelocityEngine templateEngine = ApplicationContextUtil
+				.getSpringBean(VelocityEngine.class);
+		templateEngine.evaluate(context.getVelocityContext(), writer,
+				"log task", reader);
+		return writer.toString();
 	}
 }
