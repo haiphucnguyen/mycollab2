@@ -30,6 +30,7 @@ import org.springframework.stereotype.Component;
 import com.esofthead.mycollab.common.domain.SimpleAuditLog;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
 import com.esofthead.mycollab.common.service.AuditLogService;
+import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.project.ProjectLinkUtils;
@@ -43,7 +44,6 @@ import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.Version;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
-import com.esofthead.mycollab.schedule.ScheduleUserTimeZoneUtils;
 import com.esofthead.mycollab.schedule.email.project.BugRelayEmailNotificationAction;
 import com.esofthead.mycollab.schedule.email.project.ProjectMailLinkGenerator;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
@@ -70,59 +70,6 @@ public class BugRelayEmailNotificationActionImpl extends
 		mapper = new BugFieldNameMapper();
 	}
 
-	private Map<String, String> constructHyperLinks(SimpleBug bug) {
-		Map<String, String> hyperLinks = new HashMap<String, String>();
-		ProjectMailLinkGenerator linkGenerator = new ProjectMailLinkGenerator(
-				bug.getProjectid());
-
-		hyperLinks.put("bugUrl",
-				linkGenerator.generateBugPreviewFullLink(bug.getId()));
-		hyperLinks.put("shortBugUrl", StringUtils.trim(bug.getSummary(), 150));
-		hyperLinks.put("projectUrl", linkGenerator.generateProjectFullLink());
-		if (bug.getLogby() != null) {
-			hyperLinks.put("loggedUserUrl",
-					linkGenerator.generateUserPreviewFullLink(bug.getLogby()));
-		}
-		if (bug.getAssignuser() != null) {
-			hyperLinks.put("assignUserUrl", linkGenerator
-					.generateUserPreviewFullLink(bug.getAssignuser()));
-		}
-
-		if (bug.getMilestoneid() != null) {
-			hyperLinks.put("milestoneUrl", linkGenerator
-					.generateMilestonePreviewFullLink(bug.getMilestoneid()));
-		}
-		return hyperLinks;
-	}
-
-	private void constructBugComponentVersionLink(SimpleBug bug,
-			TemplateGenerator templateGenerator) {
-		ProjectMailLinkGenerator linkGenerator = new ProjectMailLinkGenerator(
-				bug.getProjectid());
-		if (bug.getComponents() != null) {
-			List<BugLinkMapper> lstBugComponent = new ArrayList<BugRelayEmailNotificationActionImpl.BugLinkMapper>();
-			for (int i = 0; i < bug.getComponents().size(); i++) {
-				com.esofthead.mycollab.module.tracker.domain.Component bugComponent = bug
-						.getComponents().get(i);
-				lstBugComponent.add(new BugLinkMapper(linkGenerator
-						.generateBugComponentPreviewFullLink(bugComponent
-								.getId()), bugComponent.getComponentname()));
-			}
-			templateGenerator.putVariable("lstBugComponent", lstBugComponent);
-		}
-
-		if (bug.getComponents() != null) {
-			List<BugLinkMapper> lstBugVersion = new ArrayList<BugRelayEmailNotificationActionImpl.BugLinkMapper>();
-			for (int i = 0; i < bug.getAffectedVersions().size(); i++) {
-				Version bugVersion = bug.getAffectedVersions().get(i);
-				lstBugVersion.add(new BugLinkMapper(linkGenerator
-						.generateBugVersionPreviewFullLink(bugVersion.getId()),
-						bugVersion.getVersionname()));
-			}
-			templateGenerator.putVariable("lstBugVersion", lstBugVersion);
-		}
-	}
-
 	@Override
 	public TemplateGenerator templateGeneratorForCreateAction(
 			SimpleRelayEmailNotification emailNotification, SimpleUser user) {
@@ -132,23 +79,16 @@ public class BugRelayEmailNotificationActionImpl extends
 		if (bug != null) {
 			String subject = StringUtils.trim(bug.getSummary(), 100);
 
-			ProjectMailLinkGenerator linkGenerator = new ProjectMailLinkGenerator(
-					bug.getProjectid());
-
-			ScheduleUserTimeZoneUtils.formatDateTimeZone(bug,
-					user.getTimezone(), new String[] { "duedate" });
-
 			TemplateGenerator templateGenerator = new TemplateGenerator("["
 					+ bug.getProjectname() + "]: "
 					+ emailNotification.getChangeByUserFullName()
 					+ " has created the bug \"" + subject + "\"",
-					"templates/email/project/bugCreatedNotifier.mt");
+					"templates/email/project/itemCreatedNotifier.mt");
 
-			setupMailHeaders(bug, linkGenerator, emailNotification,
-					templateGenerator);
+			setupMailHeaders(bug, emailNotification, templateGenerator);
 
 			templateGenerator.putVariable("properties",
-					getListOfProperties(bug, linkGenerator));
+					getListOfProperties(bug, user));
 
 			return templateGenerator;
 		} else {
@@ -158,10 +98,12 @@ public class BugRelayEmailNotificationActionImpl extends
 	}
 
 	protected void setupMailHeaders(SimpleBug bug,
-			ProjectMailLinkGenerator linkGenerator,
 			SimpleRelayEmailNotification emailNotification,
 			TemplateGenerator templateGenerator) {
 		List<Map<String, String>> listOfTitles = new ArrayList<Map<String, String>>();
+
+		ProjectMailLinkGenerator linkGenerator = new ProjectMailLinkGenerator(
+				bug.getProjectid());
 
 		HashMap<String, String> currentProject = new HashMap<String, String>();
 		currentProject.put("displayName", bug.getProjectname());
@@ -192,8 +134,11 @@ public class BugRelayEmailNotificationActionImpl extends
 	}
 
 	protected Map<String, List<BugLinkMapper>> getListOfProperties(
-			SimpleBug bug, ProjectMailLinkGenerator linkGenerator) {
+			SimpleBug bug, SimpleUser user) {
 		Map<String, List<BugLinkMapper>> listOfDisplayProperties = new LinkedHashMap<String, List<BugLinkMapper>>();
+
+		ProjectMailLinkGenerator linkGenerator = new ProjectMailLinkGenerator(
+				bug.getProjectid());
 
 		listOfDisplayProperties.put(mapper.getFieldLabel("status"),
 				Arrays.asList(new BugLinkMapper(null, bug.getStatus())));
@@ -206,9 +151,10 @@ public class BugRelayEmailNotificationActionImpl extends
 		listOfDisplayProperties.put(mapper.getFieldLabel("status"),
 				Arrays.asList(new BugLinkMapper(null, bug.getStatus())));
 		if (bug.getDuedate() != null)
-			listOfDisplayProperties.put(mapper.getFieldLabel("duedate"),
-					Arrays.asList(new BugLinkMapper(null, bug.getDuedate()
-							.toString())));
+			listOfDisplayProperties.put(mapper.getFieldLabel("duedate"), Arrays
+					.asList(new BugLinkMapper(null, DateTimeUtils
+							.converToStringWithUserTimeZone(bug.getDuedate(),
+									user.getTimezone()))));
 		else {
 			listOfDisplayProperties.put(mapper.getFieldLabel("duedate"), null);
 		}
@@ -281,44 +227,21 @@ public class BugRelayEmailNotificationActionImpl extends
 
 		String subject = StringUtils.trim(bug.getSummary(), 100);
 
-		ProjectMailLinkGenerator linkGenerator = new ProjectMailLinkGenerator(
-				bug.getProjectid());
-
 		TemplateGenerator templateGenerator = new TemplateGenerator("["
 				+ bug.getProjectname() + "]: "
 				+ emailNotification.getChangeByUserFullName()
 				+ " has updated the bug \"" + subject + "\"",
-				"templates/email/project/bugUpdatedNotifier.mt");
-		/*
-		 * ScheduleUserTimeZoneUtils.formatDateTimeZone(bug, user.getTimezone(),
-		 * new String[] { "duedate" }); templateGenerator.putVariable("bug",
-		 * bug); templateGenerator.putVariable("hyperLinks",
-		 * constructHyperLinks(bug));
-		 */
+				"templates/email/project/itemUpdatedNotifier.mt");
 
-		/* constructBugComponentVersionLink(bug, templateGenerator); */
-
-		setupMailHeaders(bug, linkGenerator, emailNotification,
-				templateGenerator);
+		setupMailHeaders(bug, emailNotification, templateGenerator);
 
 		if (emailNotification.getTypeid() != null) {
 			SimpleAuditLog auditLog = auditLogService.findLatestLog(
 					emailNotification.getTypeid(),
 					emailNotification.getSaccountid());
-
-			/*
-			 * ScheduleUserTimeZoneUtils.formatDate(auditLog,
-			 * user.getTimezone(), new String[] { "duedate" });
-			 */
 			templateGenerator.putVariable("historyLog", auditLog);
 			templateGenerator.putVariable("mapper", mapper);
 		}
-
-		/*
-		 * templateGenerator.putVariable( "lstComment",
-		 * getListComment(bug.getSaccountid(), ProjectTypeConstants.PRJ_BUG,
-		 * bug.getId()));
-		 */
 
 		return templateGenerator;
 	}
@@ -329,18 +252,15 @@ public class BugRelayEmailNotificationActionImpl extends
 		int bugId = emailNotification.getTypeid();
 		SimpleBug bug = bugService.findById(bugId,
 				emailNotification.getSaccountid());
-		ProjectMailLinkGenerator linkGenerator = new ProjectMailLinkGenerator(
-				bug.getProjectid());
 
 		TemplateGenerator templateGenerator = new TemplateGenerator("["
 				+ bug.getProjectname() + "]: "
 				+ emailNotification.getChangeByUserFullName()
 				+ " has commented on the bug \""
 				+ StringUtils.trim(bug.getSummary(), 100) + "\"",
-				"templates/email/project/bugCommentNotifier.mt");
+				"templates/email/project/itemCommentNotifier.mt");
 
-		setupMailHeaders(bug, linkGenerator, emailNotification,
-				templateGenerator);
+		setupMailHeaders(bug, emailNotification, templateGenerator);
 
 		templateGenerator.putVariable("comment", emailNotification);
 
