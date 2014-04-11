@@ -61,7 +61,8 @@ import com.vaadin.ui.Window;
  * @since 4.0
  * 
  */
-public class AddTimeEntryWindow extends Window {
+public class AddTimeEntryWindow extends Window implements
+		AssignmentSelectableComp {
 	private static final long serialVersionUID = 1L;
 
 	private Date selectedDate;
@@ -182,8 +183,9 @@ public class AddTimeEntryWindow extends Window {
 		this.center();
 	}
 
-	void setSelectionTask(ProjectGenericTask selectionTask) {
-		this.selectionTask = selectionTask;
+	@Override
+	public void updateLinkTask(ProjectGenericTask task) {
+		this.selectionTask = task;
 		if (this.selectionTask != null) {
 			final String taskName = this.selectionTask.getName();
 			taskLayout.removeAllComponents();
@@ -196,7 +198,7 @@ public class AddTimeEntryWindow extends Window {
 						@Override
 						public void buttonClick(ClickEvent event) {
 							createLinkTaskButton();
-							setSelectionTask(null);
+							updateLinkTask(null);
 						}
 					});
 			detachTaskBtn.setStyleName(UIConstants.THEME_RED_LINK);
@@ -209,7 +211,8 @@ public class AddTimeEntryWindow extends Window {
 			attachTaskBtn.setWidth("500px");
 
 			attachTaskBtn.setDescription(generateTooltip(
-					this.selectionTask.getType(), this.selectionTask.getTypeId()));
+					this.selectionTask.getType(),
+					this.selectionTask.getTypeId()));
 			taskLayout.addComponent(attachTaskBtn);
 			this.selectionTask.getTypeId();
 		}
