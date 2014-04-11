@@ -41,7 +41,7 @@ class ProjectGenericTaskSelectionWindow extends Window {
 	private ProjectGenericTaskSearchCriteria searchCriteria;
 
 	public ProjectGenericTaskSelectionWindow(
-			final AddTimeEntryWindow timeEntryWindow) {
+			final AssignmentSelectableComp timeEntryWindow) {
 		super("Select Assignments");
 		this.center();
 		this.setWidth("800px");
@@ -64,21 +64,20 @@ class ProjectGenericTaskSelectionWindow extends Window {
 						final ProjectGenericTask task = (ProjectGenericTask) event
 								.getData();
 						if ("name".equals(event.getFieldName())) {
-							timeEntryWindow.setSelectionTask(task);
+							timeEntryWindow.updateLinkTask(task);
 							ProjectGenericTaskSelectionWindow.this.close();
 						}
 					}
 				});
-		
 
 		searchCriteria = new ProjectGenericTaskSearchCriteria();
 		searchCriteria.setProjectId(new NumberSearchField(
-		CurrentProjectVariables.getProjectId()));
+				CurrentProjectVariables.getProjectId()));
 		taskTableDisplay.setSearchCriteria(searchCriteria);
-		
+
 		content.addComponent(constructTopPanel());
 		content.addComponent(taskTableDisplay);
-		
+
 		this.setContent(content);
 	}
 
