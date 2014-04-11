@@ -18,7 +18,6 @@ import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
@@ -37,7 +36,6 @@ class ProjectGenericTaskSelectionWindow extends Window {
 
 	private GenericTaskTableDisplay taskTableDisplay;
 	private TextField nameField;
-	private CheckBox myItemCheckbox;
 	private ProjectGenericTaskSearchCriteria searchCriteria;
 
 	public ProjectGenericTaskSelectionWindow(
