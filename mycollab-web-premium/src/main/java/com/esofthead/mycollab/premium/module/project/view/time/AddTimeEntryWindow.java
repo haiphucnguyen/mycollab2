@@ -9,18 +9,23 @@ import java.util.List;
 
 import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
+import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.ItemTimeLogging;
+import com.esofthead.mycollab.module.project.domain.ProjectGenericTask;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.service.ItemTimeLoggingService;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberSelectionBox;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.StyleCalendarFieldExp;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.data.Item;
 import com.vaadin.data.Property;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
+import com.vaadin.shared.ui.MarginInfo;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CheckBox;
@@ -38,7 +43,8 @@ import com.vaadin.ui.Window;
  * @since 4.0
  * 
  */
-public class AddTimeEntryWindow extends Window {
+public class AddTimeEntryWindow extends Window implements
+		AssignmentSelectableComp {
 	private static final long serialVersionUID = 1L;
 
 	private Date selectedDate;
@@ -48,6 +54,8 @@ public class AddTimeEntryWindow extends Window {
 	private ProjectMemberSelectionBox projectMemberSelectionBox;
 	private RichTextArea descArea;
 	private TimeTrackingListView parentView;
+	private ProjectGenericTask selectionTask;
+	private HorizontalLayout taskLayout;
 
 	public AddTimeEntryWindow(TimeTrackingListView view) {
 		this.setModal(true);
@@ -60,14 +68,17 @@ public class AddTimeEntryWindow extends Window {
 		content.setSpacing(true);
 		content.setMargin(true);
 		GridLayout grid = new GridLayout(3, 2);
+		grid.setMargin(new MarginInfo(false, false, true, false));
 		grid.setSpacing(true);
 		content.addComponent(grid);
 
-		grid.addComponent(new Label("Who"), 0, 0);
-		grid.addComponent(new Label("Week"), 1, 0);
-		Label billableTitle = new Label("Is Billable");
-		billableTitle.setWidth("100px");
-		grid.addComponent(billableTitle, 2, 0);
+		grid.addComponent(new Label("Who:"), 0, 0);
+		grid.addComponent(new Label("Week:"), 1, 0);
+		HorizontalLayout isBillable = new HorizontalLayout();
+		isBillable.setSpacing(true);
+		isBillable.setDefaultComponentAlignment(Alignment.BOTTOM_LEFT);
+		Label billableTitle = new Label("Is Billable:");
+		isBillable.addComponent(billableTitle);
 
 		projectMemberSelectionBox = new ProjectMemberSelectionBox();
 		grid.addComponent(projectMemberSelectionBox, 0, 1);
@@ -88,7 +99,8 @@ public class AddTimeEntryWindow extends Window {
 		grid.addComponent(weekSelectionCalendar, 1, 1);
 
 		isBillableCheckBox = new CheckBox();
-		grid.addComponent(isBillableCheckBox, 2, 1);
+		isBillable.addComponent(isBillableCheckBox);
+		grid.addComponent(isBillable, 2, 1);
 
 		timeInputTable = new Table();
 		timeInputTable.setImmediate(true);
@@ -112,21 +124,13 @@ public class AddTimeEntryWindow extends Window {
 		descArea = new RichTextArea();
 		descArea.setWidth("100%");
 		content.addComponent(descArea);
+		HorizontalLayout footer = new HorizontalLayout();
+		taskLayout = new HorizontalLayout();
+		taskLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
+		taskLayout.setSpacing(true);
+		createLinkTaskButton();
 
-		HorizontalLayout taskLayout = new HorizontalLayout();
-		Button attachTaskBtn = new Button("Link with task",
-				new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
-
-					@Override
-					public void buttonClick(ClickEvent event) {
-						// TODO Auto-generated method stub
-
-					}
-				});
-
-		taskLayout.addComponent(attachTaskBtn);
-		content.addComponent(taskLayout);
+		footer.addComponent(taskLayout);
 
 		HorizontalLayout controlsLayout = new HorizontalLayout();
 		controlsLayout.setSpacing(true);
@@ -139,6 +143,7 @@ public class AddTimeEntryWindow extends Window {
 				AddTimeEntryWindow.this.close();
 			}
 		});
+		saveBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
 		controlsLayout.addComponent(saveBtn);
 
 		Button cancelBtn = new Button("Cancel", new Button.ClickListener() {
@@ -149,11 +154,70 @@ public class AddTimeEntryWindow extends Window {
 				AddTimeEntryWindow.this.close();
 			}
 		});
+		cancelBtn.addStyleName(UIConstants.THEME_BLANK_LINK);
 		controlsLayout.addComponent(cancelBtn);
 
-		content.addComponent(controlsLayout);
+		footer.addComponent(controlsLayout);
+		footer.setSizeFull();
+		footer.setComponentAlignment(controlsLayout, Alignment.TOP_RIGHT);
+		content.addComponent(footer);
 		this.setContent(content);
 		this.center();
+	}
+
+	@Override
+	public void updateLinkTask(ProjectGenericTask task) {
+		this.selectionTask = task;
+		if (this.selectionTask != null) {
+			final String taskName = this.selectionTask.getName();
+			taskLayout.removeAllComponents();
+
+			Button detachTaskBtn = new Button("Detach",
+					new Button.ClickListener() {
+
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void buttonClick(ClickEvent event) {
+							createLinkTaskButton();
+							updateLinkTask(null);
+						}
+					});
+			detachTaskBtn.setStyleName(UIConstants.THEME_RED_LINK);
+			taskLayout.addComponent(detachTaskBtn);
+
+			Label attachTaskBtn = new Label(
+					StringUtils.trim(taskName, 60, true));
+
+			attachTaskBtn.addStyleName("task-attached");
+			attachTaskBtn.setWidth("500px");
+
+			attachTaskBtn.setDescription(new ProjectGenericTaskTooltipGenerator(
+					this.selectionTask.getType(), this.selectionTask
+							.getTypeId()).getContent());
+			taskLayout.addComponent(attachTaskBtn);
+			this.selectionTask.getTypeId();
+		}
+
+	}
+
+	private void createLinkTaskButton() {
+		taskLayout.removeAllComponents();
+		Button attachTaskBtn = new Button("Link with task",
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void buttonClick(ClickEvent event) {
+						ProjectGenericTaskSelectionWindow selectionTaskWindow = new ProjectGenericTaskSelectionWindow(
+								AddTimeEntryWindow.this);
+						AddTimeEntryWindow.this.getUI().addWindow(
+								selectionTaskWindow);
+					}
+				});
+		attachTaskBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+
+		taskLayout.addComponent(attachTaskBtn);
 	}
 
 	private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
@@ -274,6 +338,10 @@ public class AddTimeEntryWindow extends Window {
 			timeLogging.setSaccountid(AppContext.getAccountId());
 			timeLogging.setCreatedtime(new GregorianCalendar().getTime());
 			timeLogging.setLastupdatedtime(new GregorianCalendar().getTime());
+			if (selectionTask != null) {
+				timeLogging.setType(selectionTask.getType());
+				timeLogging.setTypeid(selectionTask.getTypeId());
+			}
 			return timeLogging;
 		}
 	}

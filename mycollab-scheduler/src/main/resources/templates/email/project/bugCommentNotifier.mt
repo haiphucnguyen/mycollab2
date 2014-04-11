@@ -4,30 +4,38 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>New comment created</title>
 </head>
-<body>
-	<table width="650" cellpadding="0" cellspacing="0" border="0" style="margin: 0px auto;">
-		<tr>
-			<td style="background: url('${defaultUrls.cdn_url}border_large_top_new.png') no-repeat 0 0 transparent; font-size: 11px; line-height: 11px;" height="11">&nbsp;</td>
+<body style="background-color: rgb(235, 236, 237); font: 12px Arial, 'Times New Roman', sans-serif; color: #4e4e4e; padding: 20px 0px;">
+	#macro( hyperLink $displayName $webLink )
+		<a href="$webLink" style="color: rgb(36, 127, 211); font-size: 12px; text-decoration: none; white-space: normal;">$displayName</a>
+	#end
+	
+    <table width="700" cellpadding="0" cellspacing="0" border="0" style="margin: 20px auto; background-color: rgb(255, 255, 255);">
+       <tr>
+       		<td>
+       			<div style="padding: 10px 50px; background-color: rgb(106, 201, 228);">
+       				<img src="${defaultUrls.cdn_url}logo-email.png" alt="esofthead-logo" width="130" height="30" style="margin: 0px; padding: 0px;">
+       			</div>
+       		</td>			
 		</tr>
-		<tr>
-			<td style="background: url('${defaultUrls.cdn_url}border_large_center_orange.png') repeat-y 0 0 transparent; text-align: center; padding-bottom: 10px;"><div style="width: 440px; display: inline-block; vertical-align: middle; text-align: left;"><span style="font: bold 18px Tahoma, Geneva, sans-serif; color: white;">New Bug Comment</span></div><div style="width: 150px; display: inline-block; vertical-align: middle;"><img src="${defaultUrls.cdn_url}logo_new.png" alt="esofthead-logo" width="150" height="45" style="margin: 0px; padding: 0px;"></div>
-			</td>
-		</tr>
-		<tr>
-			<td style="background: url('${defaultUrls.cdn_url}border_large_center_new.png') repeat-y 0 0 transparent; color: #4e4e4e; font: 13px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif; padding: 10px 30px 0px;">
-				<div style="font-weight: bold; display: block; border-bottom: 1px solid rgb(212, 212, 212); padding-bottom: 5px; margin-bottom: 10px;">Hi $!userName,</div>
-				<div style="display: block; padding: 8px; background-color: rgb(247, 228, 221); line-height: 20px;">Just wanna let you know that a new comment has been created by <a href="$userComment" style="color: rgb(216, 121, 55); text-decoration: underline;">$!comment.changeByUserFullName</a> to the bug <a href="$!hyperLinks.bugUrl" style="color: rgb(216, 121, 55); text-decoration: underline;">$hyperLinks.shortBugUrl</a> in project <a href="$!hyperLinks.projectUrl" style="color: rgb(216, 121, 55); text-decoration: underline;">$!bug.projectname</a>. Here're details about it:</div>
-				<table width="588" cellpadding="0" cellspacing="0" border="0" style="margin: 0 auto 25px;">
-					<tr>
-						<td style="color: #5a5a5a; font: 10px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif; padding: 3px 10px;">
-							<table cellpadding="0" cellspacing="5" border="0" style="font-size: 10px; width: 100%;">
-								<tr>
-									<td style="text-align: left; word-wrap: break-word; white-space: normal; word-break: break-all;">$!comment.changecomment</td>
-								</tr>
-							</table>
-						</td>
-					</tr>
-				</table>
+        <tr>
+            <td style="color: #4e4e4e; padding: 10px 50px;">
+				<p><img src="${defaultUrls.cdn_url}default_user_avatar_16.png" width="16" height="16" style="display: inline-block; vertical-align: top;"/>$makeChangeUser <b>commented</b> $itemType on:</p>
+				<p>
+				#foreach( $title in $titles )
+					#if( $foreach.count > 1 )
+						<span style="color: rgb(36, 127, 211);">&#9474;</span>
+					#end
+					#hyperLink( $title.displayName $title.webLink )
+				#end
+				</p>
+				<p><b>
+				#hyperLink( $summary $summaryLink )
+				</b></p>
+				<div style="padding: 20px 15px; background-color: rgb(237, 248, 255); position: relative; color: rgb(71, 87, 116); text-align: left; word-wrap: break-word; white-space: normal; word-break: break-all;">
+					<div style="color: #A7DDF9; font-size: 25px; line-height: 10px; text-align: left;">&ldquo;</div>
+					<div style="padding:0px 15px;">$!comment.changecomment</div>
+					<div style="color: #A7DDF9; font-size: 25px; line-height: 10px; text-align: right;">&bdquo;</div>
+				</div>
 			</td>
 		</tr>
 		#parse("templates/email/footer.mt")

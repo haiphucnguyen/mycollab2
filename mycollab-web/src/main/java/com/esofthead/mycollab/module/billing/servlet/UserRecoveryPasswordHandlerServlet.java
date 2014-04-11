@@ -27,22 +27,22 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.velocity.app.VelocityEngine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.esofthead.mycollab.common.UrlEncodeDecoder;
+import com.esofthead.mycollab.common.UrlTokenizer;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.DeploymentMode;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.ResourceNotFoundException;
-import com.esofthead.mycollab.module.billing.servlet.AnnotatedDenyUserServletRequestHandler.PageUserNotExistGenerator;
 import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.module.user.service.UserService;
-import com.esofthead.mycollab.servlet.GenericServlet;
+import com.esofthead.mycollab.servlet.GenericServletRequestHandler;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.template.velocity.TemplateContext;
-import com.esofthead.template.velocity.TemplateEngine;
 
 /**
  * 
@@ -51,12 +51,55 @@ import com.esofthead.template.velocity.TemplateEngine;
  * 
  */
 @Component("recoverUserPasswordServlet")
-public class AnnotatedUserRecoveryPasswordHandlerServlet extends GenericServlet {
+public class UserRecoveryPasswordHandlerServlet extends
+		GenericServletRequestHandler {
 
 	private static Logger log = LoggerFactory
-			.getLogger(AnnotatedUserRecoveryPasswordHandlerServlet.class);
+			.getLogger(UserRecoveryPasswordHandlerServlet.class);
+
 	@Autowired
 	private UserService userService;
+
+	@Override
+	protected void onHandleRequest(HttpServletRequest request,
+			HttpServletResponse response) {
+		String pathInfo = request.getPathInfo();
+		try {
+			if (pathInfo != null) {
+				UrlTokenizer urlTokenizer = new UrlTokenizer(pathInfo);
+				String username = urlTokenizer.getString();
+				User user = userService.findUserByUserName(username);
+				if (user == null) {
+					PageGeneratorUtil.responeUserNotExistPage(response,
+							request.getContextPath() + "/");
+					return;
+				} else {
+					String loginURL = (SiteConfiguration.getDeploymentMode() == DeploymentMode.SITE) ? ("https://www.mycollab.com/signin?email=" + username)
+							: (request.getContextPath() + "/");
+
+					String redirectURL = request.getContextPath() + "/"
+							+ "user/recoverypassword/action";
+
+					String html = generateUserRecoveryPasswordPage(username,
+							loginURL, redirectURL);
+					PrintWriter out = response.getWriter();
+					out.print(html);
+					return;
+				}
+			} else {
+				throw new ResourceNotFoundException(
+						"Can not recover user password with context "
+								+ pathInfo);
+			}
+		} catch (IndexOutOfBoundsException e) {
+			throw new ResourceNotFoundException(e);
+		} catch (ResourceNotFoundException e) {
+			throw e;
+		} catch (Exception e) {
+			log.error("Error with userService", e);
+			throw new MyCollabException(e);
+		}
+	}
 
 	private String generateUserRecoveryPasswordPage(String username,
 			String loginURL, String redirectURL) {
@@ -65,13 +108,12 @@ public class AnnotatedUserRecoveryPasswordHandlerServlet extends GenericServlet 
 		Reader reader;
 		try {
 			reader = new InputStreamReader(
-					AnnotatedUserRecoveryPasswordHandlerServlet.class
-							.getClassLoader().getResourceAsStream(template),
-					"UTF-8");
+					UserRecoveryPasswordHandlerServlet.class.getClassLoader()
+							.getResourceAsStream(template), "UTF-8");
 		} catch (UnsupportedEncodingException e) {
 			reader = new InputStreamReader(
-					AnnotatedUserRecoveryPasswordHandlerServlet.class
-							.getClassLoader().getResourceAsStream(template));
+					UserRecoveryPasswordHandlerServlet.class.getClassLoader()
+							.getResourceAsStream(template));
 		}
 
 		context.put("username", username);
@@ -84,50 +126,10 @@ public class AnnotatedUserRecoveryPasswordHandlerServlet extends GenericServlet 
 		context.put("defaultUrls", defaultUrls);
 
 		StringWriter writer = new StringWriter();
-		TemplateEngine.evaluate(context, writer, "log task", reader);
+		VelocityEngine templateEngine = ApplicationContextUtil
+				.getSpringBean(VelocityEngine.class);
+		templateEngine.evaluate(context.getVelocityContext(), writer,
+				"log task", reader);
 		return writer.toString();
-	}
-
-	@Override
-	protected void onHandleRequest(HttpServletRequest request,
-			HttpServletResponse response) {
-		String pathInfo = request.getPathInfo();
-		try {
-			if (pathInfo != null) {
-				if (pathInfo.startsWith("/")) {
-					pathInfo = pathInfo.substring(1);
-					pathInfo = UrlEncodeDecoder.decode(pathInfo);
-
-					String username = pathInfo;
-					User user = userService.findUserByUserName(username);
-					if (user == null) {
-						PageUserNotExistGenerator.responeUserNotExistPage(
-								response, request.getContextPath() + "/");
-						return;
-					} else {
-						String loginURL = (SiteConfiguration
-								.getDeploymentMode() == DeploymentMode.SITE) ? ("https://www.mycollab.com/signin?email=" + username)
-								: (request.getContextPath() + "/");
-
-						String redirectURL = request.getContextPath() + "/"
-								+ "user/recoverypassword/action";
-
-						String html = generateUserRecoveryPasswordPage(
-								username, loginURL, redirectURL);
-						PrintWriter out = response.getWriter();
-						out.print(html);
-						return;
-					}
-				}
-			}
-			throw new ResourceNotFoundException();
-		} catch (IndexOutOfBoundsException e) {
-			throw new ResourceNotFoundException();
-		} catch (ResourceNotFoundException e) {
-			throw new ResourceNotFoundException();
-		} catch (Exception e) {
-			log.error("Error with userService", e);
-			throw new MyCollabException(e);
-		}
 	}
 }

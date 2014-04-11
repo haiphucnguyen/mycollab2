@@ -1482,6 +1482,9 @@ input.v-textfield-errorField {
 	border-style: solid;
 	border-width: 1px 1px 0px;
 }
+.addViewLayout .report-addview-layout {
+	border-bottom:1px solid #cfcfcf;
+}
 
 .addViewLayout .addViewTopControls {
 	-moz-box-sizing: border-box;
@@ -3569,13 +3572,26 @@ div.v-window-header {
 /* End no border Panel */
 
 /* Form Container View Field */
-.form-container div.v-button-link, .form-container div.v-button-link:active, .form-container div.v-button-link:focus {
+.form-container div.v-button-link, .form-container div.v-button-link:active, .form-container div.v-button-link:focus,
+ {
 	height: 18px;
 	/*border-radius: 8px 8px 8px 8px;*/
 	background: url("icons/grad-dark-bottom.png") repeat-x scroll left
 		bottom rgb(57, 71, 84);
 	padding: 0px 7px 1px;
 	margin-right: 2px;
+}
+
+.task-attached {
+	
+	/*border-radius: 8px 8px 8px 8px;*/
+	background: none;
+	padding: 0px 7px 1px;
+	margin-right: 2px;
+	color:rgb(51, 51, 236);
+	pointer:none;
+	
+
 }
 
 .form-container .v-button-link .v-button-caption {

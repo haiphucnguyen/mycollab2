@@ -25,14 +25,13 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.esofthead.mycollab.common.UrlEncodeDecoder;
+import com.esofthead.mycollab.common.UrlTokenizer;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.ResourceNotFoundException;
 import com.esofthead.mycollab.module.billing.UserStatusConstants;
-import com.esofthead.mycollab.module.billing.servlet.AnnotatedDenyUserServletRequestHandler.PageUserNotExistGenerator;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.service.UserService;
-import com.esofthead.mycollab.servlet.GenericServlet;
+import com.esofthead.mycollab.servlet.GenericServletRequestHandler;
 
 /**
  * 
@@ -41,8 +40,8 @@ import com.esofthead.mycollab.servlet.GenericServlet;
  * 
  */
 @Component("userconfirmsignupServlet")
-public class AnnotatedUserSignUpConfirmEmailActionHandler extends
-		GenericServlet {
+public class UserSignUpConfirmEmailActionHandler extends
+		GenericServletRequestHandler {
 
 	@Autowired
 	private UserService userServices;
@@ -53,29 +52,23 @@ public class AnnotatedUserSignUpConfirmEmailActionHandler extends
 		String pathInfo = request.getPathInfo();
 		try {
 			if (pathInfo != null) {
-				if (pathInfo.startsWith("/")) {
-					pathInfo = pathInfo.substring(1);
+				UrlTokenizer urlTokenizer = new UrlTokenizer(pathInfo);
 
-					pathInfo = UrlEncodeDecoder.decode(pathInfo);
+				String username = urlTokenizer.getString();
 
-					String username = pathInfo.substring(0,
-							pathInfo.indexOf("/"));
-					pathInfo = pathInfo.substring(username.length() + 1);
+				Integer accountId = urlTokenizer.getInt();
 
-					Integer accountId = Integer.parseInt(pathInfo);
-
-					SimpleUser user = userServices.findUserByUserNameInAccount(
-							username, accountId);
-					if (user != null) {
-						user.setStatus(UserStatusConstants.EMAIL_VERIFIED);
-						userServices.updateWithSession(user, username);
-						response.sendRedirect(request.getContextPath() + "/");
-						return;
-					} else {
-						PageUserNotExistGenerator.responeUserNotExistPage(
-								response, request.getContextPath() + "/");
-						return;
-					}
+				SimpleUser user = userServices.findUserByUserNameInAccount(
+						username, accountId);
+				if (user != null) {
+					user.setStatus(UserStatusConstants.EMAIL_VERIFIED);
+					userServices.updateWithSession(user, username);
+					response.sendRedirect(request.getContextPath() + "/");
+					return;
+				} else {
+					PageGeneratorUtil.responeUserNotExistPage(response,
+							request.getContextPath() + "/");
+					return;
 				}
 			}
 			throw new ResourceNotFoundException();

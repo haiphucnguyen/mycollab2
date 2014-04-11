@@ -18,23 +18,16 @@ package com.esofthead.mycollab.module.project.ui.components;
 
 import java.util.List;
 
-import com.esofthead.mycollab.eventmanager.EventBus;
-import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.ProjectResources;
 import com.esofthead.mycollab.module.project.domain.ProjectGenericTask;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectGenericTaskSearchCriteria;
-import com.esofthead.mycollab.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.module.project.service.ProjectGenericTaskService;
-import com.esofthead.mycollab.module.project.view.parameters.BugScreenData;
-import com.esofthead.mycollab.module.project.view.parameters.ProblemScreenData;
-import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData;
-import com.esofthead.mycollab.module.project.view.parameters.RiskScreenData;
-import com.esofthead.mycollab.module.project.view.parameters.TaskScreenData;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
+import com.esofthead.mycollab.vaadin.ui.UserLink;
 import com.esofthead.mycollab.vaadin.ui.table.DefaultPagedBeanTable;
+import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.ui.Alignment;
@@ -57,7 +50,8 @@ public class GenericTaskTableDisplay
 	private static final long serialVersionUID = 1L;
 
 	public GenericTaskTableDisplay(List<TableViewField> displayColumns) {
-		super(ApplicationContextUtil.getSpringBean(ProjectGenericTaskService.class),
+		super(ApplicationContextUtil
+				.getSpringBean(ProjectGenericTaskService.class),
 				ProjectGenericTask.class, displayColumns);
 
 		addGeneratedColumn("name", new Table.ColumnGenerator() {
@@ -83,45 +77,9 @@ public class GenericTaskTableDisplay
 
 							@Override
 							public void buttonClick(ClickEvent event) {
-								String taskType = task.getType();
-								PageActionChain chain = null;
-
-								if (ProjectContants.BUG.equals(taskType)) {
-									chain = new PageActionChain(
-											new ProjectScreenData.Goto(task
-													.getProjectId()),
-											new BugScreenData.Read(task
-													.getTypeId()));
-
-								} else if (ProjectContants.TASK
-										.equals(taskType)) {
-									chain = new PageActionChain(
-											new ProjectScreenData.Goto(task
-													.getProjectId()),
-											new TaskScreenData.Read(task
-													.getTypeId()));
-								} else if (ProjectContants.PROBLEM
-										.equals(taskType)) {
-									chain = new PageActionChain(
-											new ProjectScreenData.Goto(task
-													.getProjectId()),
-											new ProblemScreenData.Read(task
-													.getTypeId()));
-								} else if (ProjectContants.RISK
-										.equals(taskType)) {
-									chain = new PageActionChain(
-											new ProjectScreenData.Goto(task
-													.getProjectId()),
-											new RiskScreenData.Read(task
-													.getTypeId()));
-								}
-
-								if (chain != null) {
-									EventBus.getInstance().fireEvent(
-											new ProjectEvent.GotoMyProject(
-													this, chain));
-								}
-
+								fireTableEvent(new TableClickEvent(
+										GenericTaskTableDisplay.this, task,
+										"name"));
 							}
 						});
 
@@ -132,6 +90,21 @@ public class GenericTaskTableDisplay
 				layout.setWidth("100%");
 				return layout;
 			}
+		});
+
+		addGeneratedColumn("assignUser", new Table.ColumnGenerator() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public Object generateCell(Table source, Object itemId,
+					Object columnId) {
+				final ProjectGenericTask task = GenericTaskTableDisplay.this
+						.getBeanByIndex(itemId);
+				final UserLink b = new UserLink(task.getAssignUser(), task
+						.getAssignUserAvatarId(), task.getAssignUserFullName());
+				return b;
+			}
+
 		});
 
 		addGeneratedColumn("dueDate", new Table.ColumnGenerator() {

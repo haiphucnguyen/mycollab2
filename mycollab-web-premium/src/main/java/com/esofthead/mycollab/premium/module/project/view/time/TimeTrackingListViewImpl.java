@@ -4,7 +4,6 @@ import java.util.Arrays;
 
 import org.vaadin.dialogs.ConfirmDialog;
 
-import com.esofthead.mycollab.common.MonitorTypeConstants;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.arguments.RangeDateSearchField;
@@ -12,10 +11,9 @@ import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.eventmanager.ApplicationEvent;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBus;
-import com.esofthead.mycollab.module.crm.events.AccountEvent;
-import com.esofthead.mycollab.module.crm.service.AccountService;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ExportTimeLoggingStreamResource;
+import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleItemTimeLogging;
 import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
 import com.esofthead.mycollab.module.project.events.BugEvent;
@@ -170,12 +168,12 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements
 						final SimpleItemTimeLogging itemLogging = (SimpleItemTimeLogging) event
 								.getData();
 						if ("summary".equals(event.getFieldName())) {
-							if (MonitorTypeConstants.PRJ_BUG.equals(itemLogging
+							if (ProjectTypeConstants.BUG.equals(itemLogging
 									.getType())) {
 								EventBus.getInstance().fireEvent(
 										new BugEvent.GotoRead(this, itemLogging
 												.getTypeid()));
-							} else if (MonitorTypeConstants.PRJ_TASK
+							} else if (ProjectTypeConstants.TASK
 									.equals(itemLogging.getType())) {
 								EventBus.getInstance().fireEvent(
 										new TaskEvent.GotoRead(this,
@@ -207,13 +205,16 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements
 																.getUsername(),
 														AppContext
 																.getAccountId());
+
 												refresh();
 											}
 										}
 									});
 
 						} else if ("edit".equals(event.getFieldName())) {
-
+							TimeTrackingEditViewWindow timeTrackingEdit = new TimeTrackingEditViewWindow(
+									TimeTrackingListViewImpl.this, itemLogging);
+							UI.getCurrent().addWindow(timeTrackingEdit);
 						}
 					}
 				});

@@ -34,7 +34,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.esofthead.mycollab.common.UrlEncodeDecoder;
+import com.esofthead.mycollab.common.UrlTokenizer;
 import com.esofthead.mycollab.common.service.RelayEmailNotificationService;
 import com.esofthead.mycollab.configuration.SharingOptions;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
@@ -45,7 +45,7 @@ import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.schedule.email.project.ProjectMailLinkGenerator;
-import com.esofthead.mycollab.servlet.GenericServlet;
+import com.esofthead.mycollab.servlet.GenericServletRequestHandler;
 import com.esofthead.template.velocity.TemplateContext;
 import com.esofthead.template.velocity.TemplateEngine;
 
@@ -53,14 +53,14 @@ import com.esofthead.template.velocity.TemplateEngine;
  * 
  * @author MyCollab Ltd.
  * @since 1.0
- *
+ * 
  */
 @Component("denyMemberInvitationServlet")
-public class AnnotatedDenyProjectMemberInvitationServletHandler extends
-		GenericServlet {
+public class DenyProjectMemberInvitationServletRequestHandler extends
+		GenericServletRequestHandler {
 
 	private static Logger log = LoggerFactory
-			.getLogger(AnnotatedDenyProjectMemberInvitationServletHandler.class);
+			.getLogger(DenyProjectMemberInvitationServletRequestHandler.class);
 
 	private static String DENY_FEEDBACK_TEMPLATE = "templates/page/project/MemberDenyInvitationPage.mt";
 	private static String REFUSE_MEMBER_DENY_TEMPLATE = "templates/page/project/RefuseMemberDenyActionPage.mt";
@@ -74,18 +74,82 @@ public class AnnotatedDenyProjectMemberInvitationServletHandler extends
 	@Autowired
 	private ProjectService projectService;
 
+	@Override
+	protected void onHandleRequest(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		String pathInfo = request.getPathInfo();
+		try {
+			if (pathInfo != null) {
+				UrlTokenizer urlTokenizer = new UrlTokenizer(pathInfo);
+
+				String email = urlTokenizer.getString();
+				int projectId = urlTokenizer.getInt();
+				int sAccountId = urlTokenizer.getInt();
+				String inviterName = urlTokenizer.getString();
+				String inviterEmail = urlTokenizer.getString();
+				Integer projectRoleId = urlTokenizer.getInt();
+
+				String subdomain = projectService
+						.getSubdomainOfProject(projectId);
+				SimpleProject project = projectService.findById(projectId,
+						sAccountId);
+				if (project == null) {
+					ProjectRemovedGenerator.responePageProjectHasRemoved(
+							request, response);
+					return;
+				}
+
+				ProjectMember projectMember = projectMemberService
+						.findMemberByUsername(email, projectId, sAccountId);
+				if (projectMember != null) {
+					ProjectMailLinkGenerator linkGenerator = new ProjectMailLinkGenerator(
+							projectId);
+					String html = generateRefuseMemberDenyActionPage(linkGenerator
+							.generateProjectFullLink());
+					PrintWriter out = response.getWriter();
+					out.println(html);
+					return;
+				} else {
+					String redirectURL = SiteConfiguration
+							.getSiteUrl(subdomain) + "project/member/feedback/";
+
+					String html = FeedBackPageGenerator
+							.generateDenyFeedbacktoInviter(sAccountId,
+									projectId, inviterEmail, inviterName,
+									redirectURL, email, "You",
+									project.getName(), DENY_FEEDBACK_TEMPLATE,
+									projectRoleId);
+					PrintWriter out = response.getWriter();
+					out.println(html);
+					return;
+				}
+
+			}
+			throw new ResourceNotFoundException();
+		} catch (IndexOutOfBoundsException e) {
+			throw new ResourceNotFoundException();
+		} catch (ResourceNotFoundException e) {
+			throw new ResourceNotFoundException();
+		} catch (NumberFormatException e) {
+			throw new ResourceNotFoundException();
+		} catch (Exception e) {
+			log.error("Error with projectService", e);
+			throw new MyCollabException(e);
+		}
+	}
+
 	private String generateRefuseMemberDenyActionPage(String projectLinkURL) {
 		TemplateContext context = new TemplateContext();
 
 		Reader reader;
 		try {
 			reader = new InputStreamReader(
-					AnnotatedDenyProjectMemberInvitationServletHandler.class
+					DenyProjectMemberInvitationServletRequestHandler.class
 							.getClassLoader().getResourceAsStream(
 									REFUSE_MEMBER_DENY_TEMPLATE), "UTF-8");
 		} catch (UnsupportedEncodingException e) {
 			reader = new InputStreamReader(
-					AnnotatedDenyProjectMemberInvitationServletHandler.class
+					DenyProjectMemberInvitationServletRequestHandler.class
 							.getClassLoader().getResourceAsStream(
 									REFUSE_MEMBER_DENY_TEMPLATE));
 		}
@@ -117,12 +181,12 @@ public class AnnotatedDenyProjectMemberInvitationServletHandler extends
 			Reader reader;
 			try {
 				reader = new InputStreamReader(
-						AnnotatedDenyProjectMemberInvitationServletHandler.class
+						DenyProjectMemberInvitationServletRequestHandler.class
 								.getClassLoader().getResourceAsStream(
 										templateURL), "UTF-8");
 			} catch (UnsupportedEncodingException e) {
 				reader = new InputStreamReader(
-						AnnotatedDenyProjectMemberInvitationServletHandler.class
+						DenyProjectMemberInvitationServletRequestHandler.class
 								.getClassLoader().getResourceAsStream(
 										templateURL));
 			}
@@ -185,94 +249,6 @@ public class AnnotatedDenyProjectMemberInvitationServletHandler extends
 			String html = writer.toString();
 			PrintWriter out = response.getWriter();
 			out.println(html);
-		}
-	}
-
-	@Override
-	protected void onHandleRequest(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		String pathInfo = request.getPathInfo();
-		try {
-			if (pathInfo != null) {
-				if (pathInfo.startsWith("/")) {
-					pathInfo = pathInfo.substring(1);
-
-					// email, projectId, sAccountId , inviterName, inviterEmail
-					String pathVariables = UrlEncodeDecoder.decode(pathInfo);
-
-					String email = pathVariables.substring(0,
-							pathVariables.indexOf("/"));
-					pathVariables = pathVariables.substring(email.length() + 1);
-
-					int projectId = Integer.parseInt(pathVariables.substring(0,
-							pathVariables.indexOf("/")));
-					pathVariables = pathVariables.substring((projectId + "")
-							.length() + 1);
-
-					int sAccountId = Integer.parseInt(pathVariables.substring(
-							0, pathVariables.indexOf("/")));
-					pathVariables = pathVariables.substring((sAccountId + "")
-							.length() + 1);
-
-					String inviterName = pathVariables.substring(0,
-							pathVariables.indexOf("/"));
-					pathVariables = pathVariables.substring(inviterName
-							.length() + 1);
-
-					String inviterEmail = pathVariables.substring(0,
-							pathVariables.indexOf("/"));
-					pathVariables = pathVariables.substring(inviterName
-							.length() + 1);
-
-					Integer projectRoleId = Integer.parseInt(pathVariables);
-
-					String subdomain = projectService
-							.getSubdomainOfProject(projectId);
-					SimpleProject project = projectService.findById(projectId,
-							sAccountId);
-					if (project == null) {
-						ProjectRemovedGenerator.responePageProjectHasRemoved(
-								request, response);
-						return;
-					}
-
-					ProjectMember projectMember = projectMemberService
-							.findMemberByUsername(email, projectId, sAccountId);
-					if (projectMember != null) {
-						ProjectMailLinkGenerator linkGenerator = new ProjectMailLinkGenerator(
-								projectId);
-						String html = generateRefuseMemberDenyActionPage(linkGenerator
-								.generateProjectFullLink());
-						PrintWriter out = response.getWriter();
-						out.println(html);
-						return;
-					} else {
-						String redirectURL = SiteConfiguration
-								.getSiteUrl(subdomain)
-								+ "project/member/feedback/";
-
-						String html = FeedBackPageGenerator
-								.generateDenyFeedbacktoInviter(sAccountId,
-										projectId, inviterEmail, inviterName,
-										redirectURL, email, "You",
-										project.getName(),
-										DENY_FEEDBACK_TEMPLATE, projectRoleId);
-						PrintWriter out = response.getWriter();
-						out.println(html);
-						return;
-					}
-				}
-			}
-			throw new ResourceNotFoundException();
-		} catch (IndexOutOfBoundsException e) {
-			throw new ResourceNotFoundException();
-		} catch (ResourceNotFoundException e) {
-			throw new ResourceNotFoundException();
-		} catch (NumberFormatException e) {
-			throw new ResourceNotFoundException();
-		} catch (Exception e) {
-			log.error("Error with projectService", e);
-			throw new MyCollabException(e);
 		}
 	}
 }
