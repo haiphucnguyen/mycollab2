@@ -177,6 +177,8 @@ public class BugRelayEmailNotificationActionImpl extends
 		bugCode.put("webLink",
 				linkGenerator.generateBugPreviewFullLink(bug.getId()));
 
+		listOfTitles.add(bugCode);
+
 		String summary = bug.getSummary();
 		String summaryLink = ProjectLinkUtils.generateBugPreviewLink(
 				bug.getProjectid(), bug.getId());
@@ -330,17 +332,17 @@ public class BugRelayEmailNotificationActionImpl extends
 		ProjectMailLinkGenerator linkGenerator = new ProjectMailLinkGenerator(
 				bug.getProjectid());
 
-		TemplateGenerator templateGenerator = new TemplateGenerator(
-				"[$bug.projectname]: "
-						+ emailNotification.getChangeByUserFullName()
-						+ " has commented on the bug \""
-						+ StringUtils.trim(bug.getSummary(), 100) + "\"",
+		TemplateGenerator templateGenerator = new TemplateGenerator("["
+				+ bug.getProjectname() + "]: "
+				+ emailNotification.getChangeByUserFullName()
+				+ " has commented on the bug \""
+				+ StringUtils.trim(bug.getSummary(), 100) + "\"",
 				"templates/email/project/bugCommentNotifier.mt");
+
+		setupMailHeaders(bug, linkGenerator, emailNotification,
+				templateGenerator);
+
 		templateGenerator.putVariable("comment", emailNotification);
-		templateGenerator.putVariable("userComment", linkGenerator
-				.generateUserPreviewFullLink(emailNotification.getChangeby()));
-		templateGenerator.putVariable("bug", bug);
-		templateGenerator.putVariable("hyperLinks", constructHyperLinks(bug));
 
 		return templateGenerator;
 	}

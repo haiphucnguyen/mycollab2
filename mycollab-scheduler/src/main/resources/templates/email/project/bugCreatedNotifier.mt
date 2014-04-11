@@ -4,12 +4,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>New bug created</title>
 </head>
-<body style="background-color: rgb(235, 236, 237); color: #4e4e4e;">
+<body style="background-color: rgb(235, 236, 237); font: 12px Arial, 'Times New Roman', sans-serif; color: #4e4e4e; padding: 20px 0px;">
 	#macro( hyperLink $displayName $webLink )
-		<a href="$webLink" style="color: rgb(36, 127, 211); font-size: 12px; text-decoration: none;">$displayName</a>
+		<a href="$webLink" style="color: rgb(36, 127, 211); font-size: 12px; text-decoration: none; white-space: normal;">$displayName</a>
 	#end
 	
-	<table width="700" cellpadding="0" cellspacing="0" border="0" style="margin: 20px auto; background-color: rgb(255, 255, 255);">
+	<table width="700" cellpadding="0" cellspacing="0" border="0" style="font: 12px Arial, 'Times New Roman', sans-serif; color: #4e4e4e; margin: 20px auto; background-color: rgb(255, 255, 255);">
        <tr>
        		<td>
        			<div style="padding: 10px 50px; background-color: rgb(106, 201, 228);">
@@ -18,25 +18,31 @@
        		</td>			
 		</tr>
         <tr>
-            <td style="font: 12px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif; padding: 10px 50px 0px;">
-				<p>$makeChangeUser <b>created</b> $itemType on:</p>
+            <td style="padding: 10px 50px 0px;">
+				<p><img src="${defaultUrls.cdn_url}default_user_avatar_16.png" width="16" height="16" style="display: inline-block; vertical-align: top;"/>$makeChangeUser <b>created</b> $itemType on:</p>
 				<p>
 				#foreach( $title in $titles )
+					#if( $foreach.count > 1 )
+						<span style="color: rgb(36, 127, 211);">&#9474;</span>
+					#end
 					#hyperLink( $title.displayName $title.webLink )
 				#end
 				</p>
 				<p><b>
 				#hyperLink( $summary $summaryLink )
 				</b></p>
-                <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin: 10px 0px 25px; border-top: 1px solid #CFCFCF; padding-top: 5px;">
+                <table width="100%" cellpadding="0" cellspacing="0" border="0" style="font: 12px Arial, 'Times New Roman', sans-serif; color: #4e4e4e; margin: 10px 0px 25px; border-top: 1px solid #CFCFCF; padding-top: 5px;">
                 	#foreach( $key in $properties.keySet() )
                 		#if( $foreach.count % 2 != 0 )
                 			<tr>
                 		#end
-                		<td style="width: 125px; padding: 5px 5px 5px 0px; font-size: 12px;">$key</td>
-                		<td style="width: 125px; padding: 5px 5px 5px 0px; font-size: 12px;">
+                		<td style="width: 125px; padding: 5px 5px 5px 0px;">$key</td>
+                		<td style="width: 125px; padding: 5px 5px 5px 0px;">
                 		#if( $properties.get($key) )
 	                		#foreach( $item in $properties.get($key) )
+	                			#if( $foreach.count > 1 )
+	                			<br>
+	                			#end
 	                			#if( $item.WebLink )
 	                				#hyperLink( $item.DisplayName $item.WebLink )
 	                			#else
