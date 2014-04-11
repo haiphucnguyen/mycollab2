@@ -205,13 +205,16 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements
 																.getUsername(),
 														AppContext
 																.getAccountId());
+
 												refresh();
 											}
 										}
 									});
 
 						} else if ("edit".equals(event.getFieldName())) {
-
+							TimeTrackingReadViewWindow timeTrackingEdit = new TimeTrackingReadViewWindow(
+									TimeTrackingListViewImpl.this, itemLogging);
+							UI.getCurrent().addWindow(timeTrackingEdit);
 						}
 					}
 				});
