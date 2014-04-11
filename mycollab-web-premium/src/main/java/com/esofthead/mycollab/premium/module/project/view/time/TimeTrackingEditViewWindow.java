@@ -4,7 +4,9 @@ import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.project.domain.ProjectGenericTask;
 import com.esofthead.mycollab.module.project.domain.SimpleItemTimeLogging;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
+import com.esofthead.mycollab.module.project.service.ItemTimeLoggingService;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberSelectionBox;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.data.util.ObjectProperty;
@@ -97,7 +99,7 @@ public class TimeTrackingEditViewWindow extends Window implements
 		taskLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 		taskLayout.setSpacing(true);
 		createLinkTaskButton();
-		
+
 		String name = new String();
 		if (this.item.getType() != null && this.item.getTypeid() != null) {
 			ProjectGenericTask tempSelectionTask = new ProjectGenericTask();
@@ -109,7 +111,7 @@ public class TimeTrackingEditViewWindow extends Window implements
 			tempSelectionTask.setName(name);
 			updateLinkTask(tempSelectionTask);
 		}
-		
+
 		footer.addComponent(taskLayout);
 
 		HorizontalLayout controlsLayout = new HorizontalLayout();
@@ -171,9 +173,10 @@ public class TimeTrackingEditViewWindow extends Window implements
 			attachTaskBtn.addStyleName("task-attached");
 			attachTaskBtn.setWidth("300px");
 
-			attachTaskBtn.setDescription(new ProjectGenericTaskTooltipGenerator(
-					this.selectionTask.getType(), this.selectionTask
-							.getTypeId()).getContent());
+			attachTaskBtn
+					.setDescription(new ProjectGenericTaskTooltipGenerator(
+							this.selectionTask.getType(), this.selectionTask
+									.getTypeId()).getContent());
 			taskLayout.addComponent(attachTaskBtn);
 			this.selectionTask.getTypeId();
 		}
@@ -206,15 +209,28 @@ public class TimeTrackingEditViewWindow extends Window implements
 		item.setCreateduser(AppContext.getUsername());
 		item.setLoguser(user.getUsername());
 		item.setLogUserFullName(user.getMemberFullName());
-		item.setLogUserAvatarId(user.getMemberAvatarId());
+		if (user.getMemberAvatarId() != null) {
+			item.setLogUserAvatarId(user.getMemberAvatarId());
+		}
 		item.setLogforday(dateField.getValue());
 		item.setLogvalue(property.getValue());
 		item.setIsbillable(isBillableCheckBox.getValue());
 		item.setNote(descArea.getValue());
+		item.setSaccountid(AppContext.getAccountId());
 		if (selectionTask != null) {
 			item.setType(selectionTask.getType());
 			item.setTypeid(selectionTask.getTypeId());
+			item.setSummary(selectionTask.getName());
+		} else {
+			item.setType(null);
+			item.setTypeid(null);
+			item.setSummary(null);
 		}
+
+		ItemTimeLoggingService itemTimeLoggingService = ApplicationContextUtil
+				.getSpringBean(ItemTimeLoggingService.class);
+		itemTimeLoggingService
+				.updateWithSession(item, AppContext.getUsername());
 
 		parentView.refresh();
 	}
