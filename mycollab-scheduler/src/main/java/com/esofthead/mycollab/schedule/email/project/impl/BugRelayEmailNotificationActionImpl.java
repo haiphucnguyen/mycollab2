@@ -16,7 +16,6 @@
  */
 package com.esofthead.mycollab.schedule.email.project.impl;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -44,6 +43,7 @@ import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.Version;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
+import com.esofthead.mycollab.schedule.email.MailItemLink;
 import com.esofthead.mycollab.schedule.email.project.BugRelayEmailNotificationAction;
 import com.esofthead.mycollab.schedule.email.project.ProjectMailLinkGenerator;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
@@ -133,26 +133,26 @@ public class BugRelayEmailNotificationActionImpl extends
 		templateGenerator.putVariable("summaryLink", summaryLink);
 	}
 
-	protected Map<String, List<BugLinkMapper>> getListOfProperties(
+	protected Map<String, List<MailItemLink>> getListOfProperties(
 			SimpleBug bug, SimpleUser user) {
-		Map<String, List<BugLinkMapper>> listOfDisplayProperties = new LinkedHashMap<String, List<BugLinkMapper>>();
+		Map<String, List<MailItemLink>> listOfDisplayProperties = new LinkedHashMap<String, List<MailItemLink>>();
 
 		ProjectMailLinkGenerator linkGenerator = new ProjectMailLinkGenerator(
 				bug.getProjectid());
 
 		listOfDisplayProperties.put(mapper.getFieldLabel("status"),
-				Arrays.asList(new BugLinkMapper(null, bug.getStatus())));
+				Arrays.asList(new MailItemLink(null, bug.getStatus())));
 		listOfDisplayProperties.put(mapper.getFieldLabel("priority"),
-				Arrays.asList(new BugLinkMapper(null, bug.getPriority())));
+				Arrays.asList(new MailItemLink(null, bug.getPriority())));
 		listOfDisplayProperties.put(mapper.getFieldLabel("severity"),
-				Arrays.asList(new BugLinkMapper(null, bug.getSeverity())));
+				Arrays.asList(new MailItemLink(null, bug.getSeverity())));
 		listOfDisplayProperties.put(mapper.getFieldLabel("resolution"),
-				Arrays.asList(new BugLinkMapper(null, bug.getResolution())));
+				Arrays.asList(new MailItemLink(null, bug.getResolution())));
 		listOfDisplayProperties.put(mapper.getFieldLabel("status"),
-				Arrays.asList(new BugLinkMapper(null, bug.getStatus())));
+				Arrays.asList(new MailItemLink(null, bug.getStatus())));
 		if (bug.getDuedate() != null)
 			listOfDisplayProperties.put(mapper.getFieldLabel("duedate"), Arrays
-					.asList(new BugLinkMapper(null, DateTimeUtils
+					.asList(new MailItemLink(null, DateTimeUtils
 							.converToStringWithUserTimeZone(bug.getDuedate(),
 									user.getTimezone()))));
 		else {
@@ -161,7 +161,7 @@ public class BugRelayEmailNotificationActionImpl extends
 		if (bug.getMilestoneid() != null) {
 			listOfDisplayProperties
 					.put(mapper.getFieldLabel("milestone"), Arrays
-							.asList(new BugLinkMapper(linkGenerator
+							.asList(new MailItemLink(linkGenerator
 									.generateMilestonePreviewFullLink(bug
 											.getMilestoneid()), bug
 									.getMilestoneName())));
@@ -172,7 +172,7 @@ public class BugRelayEmailNotificationActionImpl extends
 
 		if (bug.getLogby() != null) {
 			listOfDisplayProperties.put(mapper.getFieldLabel("logby"), Arrays
-					.asList(new BugLinkMapper(linkGenerator
+					.asList(new MailItemLink(linkGenerator
 							.generateUserPreviewFullLink(bug.getLogby()), bug
 							.getLoguserFullName())));
 		} else {
@@ -181,7 +181,7 @@ public class BugRelayEmailNotificationActionImpl extends
 
 		if (bug.getAssignuser() != null) {
 			listOfDisplayProperties.put(mapper.getFieldLabel("assignuser"),
-					Arrays.asList(new BugLinkMapper(linkGenerator
+					Arrays.asList(new MailItemLink(linkGenerator
 							.generateUserPreviewFullLink(bug.getAssignuser()),
 							bug.getAssignuserFullName())));
 		} else {
@@ -190,11 +190,11 @@ public class BugRelayEmailNotificationActionImpl extends
 		}
 
 		if (bug.getComponents() != null) {
-			List<BugLinkMapper> lstBugComponent = new ArrayList<BugRelayEmailNotificationActionImpl.BugLinkMapper>();
+			List<MailItemLink> lstBugComponent = new ArrayList<MailItemLink>();
 			for (int i = 0; i < bug.getComponents().size(); i++) {
 				com.esofthead.mycollab.module.tracker.domain.Component bugComponent = bug
 						.getComponents().get(i);
-				lstBugComponent.add(new BugLinkMapper(linkGenerator
+				lstBugComponent.add(new MailItemLink(linkGenerator
 						.generateBugComponentPreviewFullLink(bugComponent
 								.getId()), bugComponent.getComponentname()));
 			}
@@ -204,10 +204,10 @@ public class BugRelayEmailNotificationActionImpl extends
 		}
 
 		if (bug.getComponents() != null) {
-			List<BugLinkMapper> lstBugVersion = new ArrayList<BugRelayEmailNotificationActionImpl.BugLinkMapper>();
+			List<MailItemLink> lstBugVersion = new ArrayList<MailItemLink>();
 			for (int i = 0; i < bug.getAffectedVersions().size(); i++) {
 				Version bugVersion = bug.getAffectedVersions().get(i);
-				lstBugVersion.add(new BugLinkMapper(linkGenerator
+				lstBugVersion.add(new MailItemLink(linkGenerator
 						.generateBugVersionPreviewFullLink(bugVersion.getId()),
 						bugVersion.getVersionname()));
 			}
@@ -292,34 +292,6 @@ public class BugRelayEmailNotificationActionImpl extends
 
 		public String getFieldLabel(String fieldName) {
 			return fieldNameMap.get(fieldName);
-		}
-	}
-
-	public class BugLinkMapper implements Serializable {
-		private static final long serialVersionUID = 2212688618608788187L;
-
-		private String link;
-		private String displayname;
-
-		public BugLinkMapper(String link, String displayname) {
-			this.link = link;
-			this.displayname = displayname;
-		}
-
-		public String getWebLink() {
-			return link;
-		}
-
-		public void setWebLink(String link) {
-			this.link = link;
-		}
-
-		public String getDisplayName() {
-			return displayname;
-		}
-
-		public void setDisplayName(String displayname) {
-			this.displayname = displayname;
 		}
 	}
 
