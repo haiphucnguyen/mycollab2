@@ -17,6 +17,8 @@ import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleItemTimeLogging;
 import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
 import com.esofthead.mycollab.module.project.events.BugEvent;
+import com.esofthead.mycollab.module.project.events.ProblemEvent;
+import com.esofthead.mycollab.module.project.events.RiskEvent;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.localization.TimeTrackingI18nEnum;
 import com.esofthead.mycollab.module.project.service.ItemTimeLoggingService;
@@ -178,6 +180,18 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements
 								EventBus.getInstance().fireEvent(
 										new TaskEvent.GotoRead(this,
 												itemLogging.getTypeid()));
+							}
+							 else if (ProjectTypeConstants.RISK
+										.equals(itemLogging.getType())) {
+									EventBus.getInstance().fireEvent(
+											new RiskEvent.GotoRead(this,
+													itemLogging.getTypeid()));
+							}
+							 else if (ProjectTypeConstants.PROBLEM
+										.equals(itemLogging.getType())) {
+									EventBus.getInstance().fireEvent(
+											new ProblemEvent.GotoRead(this,
+													itemLogging.getTypeid()));
 							}
 						} else if ("delete".equals(event.getFieldName())) {
 							ConfirmDialogExt.show(
