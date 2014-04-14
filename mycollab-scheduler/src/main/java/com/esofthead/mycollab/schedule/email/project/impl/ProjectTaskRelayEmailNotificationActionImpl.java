@@ -306,34 +306,6 @@ public class ProjectTaskRelayEmailNotificationActionImpl extends
 		}
 	}
 
-	public class TaskLinkMapper implements Serializable {
-		private static final long serialVersionUID = 2212688618608788187L;
-
-		private String link;
-		private String displayname;
-
-		public TaskLinkMapper(String link, String displayname) {
-			this.link = link;
-			this.displayname = displayname;
-		}
-
-		public String getWebLink() {
-			return link;
-		}
-
-		public void setWebLink(String link) {
-			this.link = link;
-		}
-
-		public String getDisplayName() {
-			return displayname;
-		}
-
-		public void setDisplayName(String displayname) {
-			this.displayname = displayname;
-		}
-	}
-
 	@Override
 	protected List<SimpleUser> getListNotififyUserWithFilter(
 			ProjectRelayEmailNotification notification) {
@@ -428,6 +400,34 @@ public class ProjectTaskRelayEmailNotificationActionImpl extends
 		}
 
 		return inListUsers;
+	}
+	
+	public class TaskLinkMapper implements Serializable {
+		private static final long serialVersionUID = 2212688618608788187L;
+
+		private String link;
+		private String displayname;
+
+		public TaskLinkMapper(String link, String displayname) {
+			this.link = link;
+			this.displayname = displayname;
+		}
+
+		public String getWebLink() {
+			return link;
+		}
+
+		public void setWebLink(String link) {
+			this.link = link;
+		}
+
+		public String getDisplayName() {
+			return displayname;
+		}
+
+		public void setDisplayName(String displayname) {
+			this.displayname = displayname;
+		}
 	}
 
 }
