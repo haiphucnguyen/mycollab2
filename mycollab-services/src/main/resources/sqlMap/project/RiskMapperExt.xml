@@ -95,7 +95,7 @@
           FROM m_prj_risk
               LEFT OUTER JOIN s_user as raisedUser ON (m_prj_risk.raisedbyuser=raisedUser.username)
               LEFT OUTER JOIN s_user as assignedUser ON ( m_prj_risk.assigntouser=assignedUser.username)
-              LEFT OUTER JOIN m_prj_project ON (m_prj_problem.projectid = m_prj_project.id)
+              LEFT OUTER JOIN m_prj_project ON (m_prj_risk.projectid = m_prj_project.id)
         ]]>
     </sql>
 
