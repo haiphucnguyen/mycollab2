@@ -91,7 +91,7 @@ public class ProjectRiskRelayEmailNotificationActionImpl extends
 
 		templateGenerator.putVariable("makeChangeUser",
 				emailNotification.getChangeByUserFullName());
-		templateGenerator.putVariable("itemType", "problem");
+		templateGenerator.putVariable("itemType", "risk");
 		templateGenerator.putVariable("titles", listOfTitles);
 		templateGenerator.putVariable("summary", summary);
 		templateGenerator.putVariable("summaryLink", summaryLink);
