@@ -36,6 +36,7 @@ import com.esofthead.mycollab.module.crm.service.AccountService;
 import com.esofthead.mycollab.module.crm.service.CrmNotificationSettingService;
 import com.esofthead.mycollab.module.crm.service.NoteService;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
+import com.esofthead.mycollab.module.user.UserLinkUtils;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.schedule.email.MailItemLink;
@@ -83,7 +84,7 @@ public class AccountRelayEmailNotificationActionImpl extends
 
 		templateGenerator.putVariable("makeChangeUser",
 				emailNotification.getChangeByUserFullName());
-		templateGenerator.putVariable("itemType", "phase");
+		templateGenerator.putVariable("itemType", "account");
 		templateGenerator.putVariable("summary", summary);
 		templateGenerator.putVariable("summaryLink", summaryLink);
 	}
@@ -163,7 +164,10 @@ public class AccountRelayEmailNotificationActionImpl extends
 
 		if (account.getAssignuser() != null) {
 			listOfDisplayProperties.put(mapper.getFieldLabel("assignuser"),
-					Arrays.asList(new MailItemLink(null, account
+					Arrays.asList(new MailItemLink(UserLinkUtils
+							.generatePreviewFullUserLink(
+									getSiteUrl(account.getSaccountid()),
+									account.getAssignuser()), account
 							.getAssignUserFullName())));
 		} else {
 			listOfDisplayProperties.put(mapper.getFieldLabel("assignuser"),
@@ -374,8 +378,9 @@ public class AccountRelayEmailNotificationActionImpl extends
 			fieldNameMap.put("city", "Billing City");
 			fieldNameMap.put("shippingcity", "Shipping City");
 			fieldNameMap.put("state", "Billing State");
-			fieldNameMap.put("shippingstate", "Shipping Address");
+			fieldNameMap.put("shippingstate", "Shipping State");
 			fieldNameMap.put("postalcode", "Billing Postal Code");
+			fieldNameMap.put("shippingpostalcode", "Shipping Postal Code");
 			fieldNameMap.put("billingcountry", "Billing Country");
 			fieldNameMap.put("shippingcountry", "Shipping Country");
 			fieldNameMap.put("description", "Description");
