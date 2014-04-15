@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.module.user.ui.components;
+package com.esofthead.mycollab.module.project.ui.components;
 
 import com.esofthead.mycollab.vaadin.ui.HistoryFieldFormat;
 import com.vaadin.ui.Component;
@@ -10,7 +10,7 @@ import com.vaadin.ui.Label;
  * @since 4.0
  * 
  */
-public class UserHistoryFieldFormat implements HistoryFieldFormat {
+public class ProjectMemberHistoryFieldFormat implements HistoryFieldFormat {
 
 	@Override
 	public Component formatField(String value) {
