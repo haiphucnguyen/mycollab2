@@ -14,13 +14,16 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.module.project.view;
+package com.esofthead.mycollab.module.project;
 
 import com.esofthead.mycollab.common.GenericLinkUtils;
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
-import com.esofthead.mycollab.module.project.ProjectLinkUtils;
-import com.esofthead.mycollab.module.project.ProjectTypeConstants;
+import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
+import com.esofthead.mycollab.module.project.service.ProjectTaskListService;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
+import com.hp.gagawa.java.elements.A;
+import com.hp.gagawa.java.elements.Text;
 
 /**
  * 
@@ -143,5 +146,22 @@ public class ProjectLinkBuilder {
 		}
 
 		return "#" + result;
+	}
+
+	public static String generateTaskGroupHtmlLink(int taskgroupId) {
+		ProjectTaskListService taskListService = ApplicationContextUtil
+				.getSpringBean(ProjectTaskListService.class);
+		SimpleTaskList taskList = taskListService.findById(taskgroupId,
+				AppContext.getAccountId());
+		if (taskList != null) {
+			A link = new A();
+			link.setHref(generateTaskGroupPreviewFullLink(
+					taskList.getProjectid(), taskList.getId()));
+			Text text = new Text(taskList.getName());
+			link.appendChild(text);
+			return link.write();
+		} else {
+			return null;
+		}
 	}
 }
