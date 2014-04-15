@@ -16,8 +16,6 @@
  */
 package com.esofthead.mycollab.module.project.view.task;
 
-import java.util.Arrays;
-
 import org.vaadin.hene.popupbutton.PopupButton;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
@@ -25,36 +23,22 @@ import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
-import com.esofthead.mycollab.eventmanager.ApplicationEvent;
-import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.file.resource.ExportTaskListStreamResource;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
-import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskListSearchCriteria;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
-import com.esofthead.mycollab.module.project.events.BugEvent;
-import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.events.TaskListEvent;
 import com.esofthead.mycollab.module.project.localization.TaskI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectTaskListService;
-import com.esofthead.mycollab.module.project.view.bug.BugListView;
-import com.esofthead.mycollab.module.project.view.bug.BugListViewImpl;
-import com.esofthead.mycollab.module.project.view.bug.BugSearchPanel;
-import com.esofthead.mycollab.module.project.view.bug.BugTableDisplay;
-import com.esofthead.mycollab.module.project.view.bug.BugTableFieldDef;
-import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
-import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.reporting.ReportExportType;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.vaadin.server.FileDownloader;
 import com.vaadin.server.Sizeable;
 import com.vaadin.server.StreamResource;
@@ -79,25 +63,25 @@ public class TaskGroupDisplayViewImpl extends AbstractPageView implements
 
 	private PopupButton taskGroupSelection;
 	private TaskGroupDisplayWidget taskLists;
+	
 	private Button reOrderBtn;
 	private Button viewGanttChartBtn;
-	private TaskTableDisplay tableItem;
-	
-	
-	private VerticalLayout taskListLayout;
-	
+
 	private PopupButton exportButtonControl;
 	private VerticalLayout rightColumn;
 	private VerticalLayout leftColumn;
+	private TaskListViewImpl taskListView;
 
 	public TaskGroupDisplayViewImpl() {
 		super();
 		this.setMargin(new MarginInfo(false, true, true, true));
 		this.setSpacing(true);
-
+		
+		
+		
 		this.constructUI();
 	}
-
+	
 	private void constructUI() {
 		final HorizontalLayout header = new HorizontalLayout();
 		header.setMargin(new MarginInfo(true, false, true, false));
@@ -105,6 +89,9 @@ public class TaskGroupDisplayViewImpl extends AbstractPageView implements
 		header.setSpacing(true);
 		header.setWidth("100%");
 		header.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
+		
+		
+		
 		this.taskGroupSelection = new PopupButton("Active Tasks");
 		this.taskGroupSelection.setEnabled(CurrentProjectVariables
 				.canRead(ProjectRolePermissionCollections.TASKS));
@@ -271,46 +258,17 @@ public class TaskGroupDisplayViewImpl extends AbstractPageView implements
 		mainLayout.addComponent(leftColumn);
 		mainLayout.addComponent(rightColumn);
 		mainLayout.setExpandRatio(leftColumn, 1.0f);
+
+		taskListView = new TaskListViewImpl();
+		
+		this.addComponent(taskListView);
 		this.addComponent(mainLayout);
 
 	}
-	
-	private void generateDisplayTable() {
 
-		this.tableItem = new TaskTableDisplay(
-				TaskTableFieldDef.id, Arrays.asList(
-						TaskTableFieldDef.taskname, TaskTableFieldDef.startdate,
-						TaskTableFieldDef.duedate, TaskTableFieldDef.assignee,
-						TaskTableFieldDef.percentagecomplete));
 
-		this.tableItem
-				.addTableListener(new ApplicationEventListener<TableClickEvent>() {
-					private static final long serialVersionUID = 1L;
+	
 
-					@Override
-					public Class<? extends ApplicationEvent> getEventType() {
-						return TableClickEvent.class;
-					}
-
-					@Override
-					public void handle(final TableClickEvent event) {
-						final SimpleTask task = (SimpleTask) event.getData();
-						if ("taskname".equals(event.getFieldName())) {
-							EventBus.getInstance().fireEvent(
-									new TaskListEvent.GotoRead(TaskGroupDisplayViewImpl.this,
-											task.getId()));
-						}
-					}
-				});
-		this.taskListLayout.addComponent(this.tableItem);
-	}
-	
-	
-	@Override
-	public HasSearchHandlers<TaskSearchCriteria> getSearchHandlers() {
-		return null;
-	}
-	
 	private StreamResource constructStreamResource(ReportExportType exportType) {
 		final String title = "Task report of Project "
 				+ ((CurrentProjectVariables.getProject() != null && CurrentProjectVariables

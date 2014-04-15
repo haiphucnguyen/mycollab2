@@ -26,6 +26,13 @@ import com.esofthead.mycollab.vaadin.mvp.ScreenData;
  * 
  */
 public class TaskScreenData {
+	public static class Search extends ScreenData<TaskFilterParameter> {
+		
+		public Search(TaskFilterParameter params) {
+			super(params);
+		}
+	}
+	
 	public static class Read extends ScreenData<Integer> {
 
 		public Read(Integer params) {

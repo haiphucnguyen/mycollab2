@@ -1026,6 +1026,7 @@ input.v-textfield-pagedtable-pagefield {
 .advSearch .advSearchBody {
 	border: 1px solid #CFCFCF;
 	background-color: #F7F7F7;
+	border-bottom: 0;
 }
 
 .advSearch .advSearchBody .v-label {

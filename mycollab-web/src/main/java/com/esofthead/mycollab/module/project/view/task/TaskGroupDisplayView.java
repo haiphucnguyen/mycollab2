@@ -17,8 +17,6 @@
 package com.esofthead.mycollab.module.project.view.task;
 
 import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
-import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
-import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.mvp.PageView;
 
 /**
@@ -27,9 +25,7 @@ import com.esofthead.mycollab.vaadin.mvp.PageView;
  * @since 1.0
  */
 public interface TaskGroupDisplayView extends PageView {
-	public static final String VIEW_DEF_ID = "project-task-list";
-    void insertTaskList(SimpleTaskList taskList);
-    public HasSearchHandlers<TaskSearchCriteria> getSearchHandlers();
+	void insertTaskList(SimpleTaskList taskList);
 
-    void displayTaskList();
+	void displayTaskList();
 }
