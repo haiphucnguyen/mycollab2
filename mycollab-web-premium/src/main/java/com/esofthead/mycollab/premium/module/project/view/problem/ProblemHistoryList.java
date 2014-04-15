@@ -2,6 +2,7 @@ package com.esofthead.mycollab.premium.module.project.view.problem;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.module.project.ui.components.ProjectMemberHistoryFieldFormat;
 import com.esofthead.mycollab.vaadin.ui.HistoryLogComponent;
 
 /**
@@ -18,11 +19,11 @@ public class ProblemHistoryList extends HistoryLogComponent {
 
 		this.generateFieldDisplayHandler("issuename", "Name");
 		this.generateFieldDisplayHandler("description", "Description");
-		this.generateFieldDisplayHandler("raisedbyuser", "Raised by");
-
-		this.generateFieldDisplayHandler("type", "Related to");
+		this.generateFieldDisplayHandler("raisedbyuser", "Raised by",
+				new ProjectMemberHistoryFieldFormat());
 		this.generateFieldDisplayHandler("assigntouser", LocalizationHelper
-				.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD));
+				.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD),
+				new ProjectMemberHistoryFieldFormat());
 		this.generateFieldDisplayHandler("impact", "Impact");
 
 		this.generateFieldDisplayHandler("datedue", "Date due",

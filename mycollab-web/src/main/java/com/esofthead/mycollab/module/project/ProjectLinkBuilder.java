@@ -18,7 +18,9 @@ package com.esofthead.mycollab.module.project;
 
 import com.esofthead.mycollab.common.GenericLinkUtils;
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
+import com.esofthead.mycollab.module.project.domain.SimpleMilestone;
 import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
+import com.esofthead.mycollab.module.project.service.MilestoneService;
 import com.esofthead.mycollab.module.project.service.ProjectTaskListService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -158,6 +160,23 @@ public class ProjectLinkBuilder {
 			link.setHref(generateTaskGroupPreviewFullLink(
 					taskList.getProjectid(), taskList.getId()));
 			Text text = new Text(taskList.getName());
+			link.appendChild(text);
+			return link.write();
+		} else {
+			return null;
+		}
+	}
+
+	public static String generateMilestoneHtmlLink(int milestoneId) {
+		MilestoneService milestoneService = ApplicationContextUtil
+				.getSpringBean(MilestoneService.class);
+		SimpleMilestone milestone = milestoneService.findById(milestoneId,
+				AppContext.getAccountId());
+		if (milestone != null) {
+			A link = new A();
+			link.setHref(generateMilestonePreviewFullLink(
+					milestone.getProjectid(), milestone.getId()));
+			Text text = new Text(milestone.getName());
 			link.appendChild(text);
 			return link.write();
 		} else {
