@@ -30,7 +30,6 @@ import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
 import com.esofthead.mycollab.common.service.AuditLogService;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.core.utils.StringUtils;
-import com.esofthead.mycollab.module.crm.CrmLinkGenerator;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.service.ContactService;
@@ -50,7 +49,7 @@ import com.esofthead.mycollab.schedule.email.crm.CrmMailLinkGenerator;
  */
 @Component
 public class ContactRelayEmailNotificationActionImpl extends
-		CrmDefaultSendingRelayEmailAction implements
+		CrmDefaultSendingRelayEmailAction<SimpleContact> implements
 		ContactRelayEmailNotificationAction {
 
 	@Autowired
@@ -373,32 +372,6 @@ public class ContactRelayEmailNotificationActionImpl extends
 		} else {
 			return null;
 		}
-	}
-
-	private Map<String, String> constructHyperLinks(SimpleContact simpleContact) {
-		Map<String, String> hyperLinks = new HashMap<String, String>();
-		hyperLinks
-				.put("contactURL",
-						getSiteUrl(simpleContact.getSaccountid())
-								+ CrmLinkGenerator.generateCrmItemLink(
-										CrmTypeConstants.CONTACT,
-										simpleContact.getId()));
-		if (simpleContact.getAccountid() != null) {
-			hyperLinks.put(
-					"accountURL",
-					getSiteUrl(simpleContact.getSaccountid())
-							+ CrmLinkGenerator.generateCrmItemLink(
-									CrmTypeConstants.ACCOUNT,
-									simpleContact.getAccountid()));
-		}
-
-		if (simpleContact.getAssignuser() != null) {
-			hyperLinks.put("assignUserURL", UserLinkUtils
-					.generatePreviewFullUserLink(
-							getSiteUrl(simpleContact.getSaccountid()),
-							simpleContact.getAssignuser()));
-		}
-		return hyperLinks;
 	}
 
 	@Override

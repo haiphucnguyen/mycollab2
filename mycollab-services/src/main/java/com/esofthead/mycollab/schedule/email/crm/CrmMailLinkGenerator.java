@@ -16,6 +16,16 @@ public class CrmMailLinkGenerator extends GenericLinkUtils {
 				+ CrmLinkGenerator.generateAccountPreviewLink(accountId);
 	}
 
+	public String generateCasePreviewFullLink(Integer caseId) {
+		return siteUrl + GenericLinkUtils.URL_PREFIX_PARAM
+				+ CrmLinkGenerator.generateCasePreviewLink(caseId);
+	}
+
+	public String generateCampainPreviewFullLilnk(Integer campaignId) {
+		return siteUrl + GenericLinkUtils.URL_PREFIX_PARAM
+				+ CrmLinkGenerator.generateCampaignPreviewLink(campaignId);
+	}
+
 	public String generateContactPreviewFullLink(Integer contactId) {
 		return siteUrl + GenericLinkUtils.URL_PREFIX_PARAM
 				+ CrmLinkGenerator.generateContactPreviewLink(contactId);

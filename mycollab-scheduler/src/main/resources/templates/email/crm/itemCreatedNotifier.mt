@@ -27,7 +27,7 @@
 		</tr>
         <tr>
             <td style="padding: 10px 50px">
-				<p><img src="${defaultUrls.cdn_url}default_user_avatar_16.png" width="16" height="16" style="display: inline-block; vertical-align: top;"/>$makeChangeUser <b>created</b> a new $itemType on:</p>
+				<p><img src="${defaultUrls.cdn_url}default_user_avatar_16.png" width="16" height="16" style="display: inline-block; vertical-align: top;"/>$makeChangeUser <b>created</b> a new ${itemType}:</p>
 				<p><b>
 				#hyperLink( $summary $summaryLink )
 				</b></p>
