@@ -16,6 +16,7 @@ public interface TaskSearchView extends PageView {
 	IPagedBeanTable<TaskSearchCriteria, SimpleTask> getPagedBeanTable();
 
 	void moveToAdvanceSearch();
+	void moveToBasicSearch();
 
 	void setSearchInputValue(String value);
 }

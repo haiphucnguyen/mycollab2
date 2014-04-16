@@ -137,9 +137,15 @@ public class TaskSearchViewImpl extends AbstractPageView implements
 		headerText.setValue(title);
 
 	}
-
+	
+	@Override
 	public void moveToAdvanceSearch() {
 		taskSearchPanel.getAdvanceSearch();
+	}
+	
+	@Override
+	public void moveToBasicSearch() {
+		taskSearchPanel.getBasicSearch();;
 	}
 
 }

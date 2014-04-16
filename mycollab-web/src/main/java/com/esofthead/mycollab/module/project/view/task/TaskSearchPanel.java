@@ -2,6 +2,7 @@ package com.esofthead.mycollab.module.project.view.task;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.db.query.Param;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
@@ -9,6 +10,7 @@ import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberListSelect;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.DefaultGenericSearchPanel;
 import com.esofthead.mycollab.vaadin.ui.DynamicQueryParamLayout;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
@@ -53,6 +55,10 @@ public class TaskSearchPanel extends
 	
 	public void getAdvanceSearch() {
 		moveToAdvancedSearchLayout();
+	}
+	
+	public void getBasicSearch() {
+		moveToBasicSearchLayout();
 	}
 
 	private class TaskBasicSearchLayout extends
@@ -147,6 +153,13 @@ public class TaskSearchPanel extends
 			TaskSearchPanel.this.searchCriteria
 					.setTaskName(new StringSearchField(this.nameField
 							.getValue().toString().trim()));
+			if (this.myItemCheckbox.getValue()) {
+				TaskSearchPanel.this.searchCriteria
+						.setAssignUser(new StringSearchField(SearchField.AND,
+								AppContext.getUsername()));
+			} else {
+				TaskSearchPanel.this.searchCriteria.setAssignUser(null);
+			}
 			return TaskSearchPanel.this.searchCriteria;
 		}
 
