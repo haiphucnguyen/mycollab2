@@ -58,11 +58,10 @@ import com.hp.gagawa.java.elements.Img;
 import com.hp.gagawa.java.elements.Td;
 import com.hp.gagawa.java.elements.Tr;
 import com.vaadin.server.Resource;
-import com.vaadin.ui.Alignment;
+import com.vaadin.server.Sizeable;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Embedded;
-import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.UI;
@@ -96,7 +95,7 @@ public class TaskTableDisplay extends
 				final SimpleTask task = TaskTableDisplay.this
 						.getBeanByIndex(itemId);
 
-				HorizontalLayout taskName = new HorizontalLayout();
+				CssLayout taskName = new CssLayout();
 
 				String taskname = "[%s-%s] %s";
 				taskname = String.format(taskname, CurrentProjectVariables
@@ -117,10 +116,8 @@ public class TaskTableDisplay extends
 				if (StringUtils.isNotNullOrEmpty(task.getPriority())) {
 					Resource iconPriority = TaskPriorityComboBox
 							.getIconResourceByPriority(task.getPriority());
-					Embedded icon = new Embedded(null, iconPriority);
-					taskName.addComponent(icon);
-					taskName.setComponentAlignment(icon,
-							Alignment.MIDDLE_CENTER);
+					b.setIcon(iconPriority);
+
 				}
 
 				if (task.getPercentagecomplete() != null
@@ -140,10 +137,10 @@ public class TaskTableDisplay extends
 						b.addStyleName(UIConstants.LINK_OVERDUE);
 					}
 				}
-				b.setWidth("100%");
+
 				taskName.addComponent(b);
-				taskName.setExpandRatio(b, 1.0f);
 				taskName.setWidth("100%");
+				taskName.setHeight(SIZE_UNDEFINED, Sizeable.Unit.PIXELS);
 				return taskName;
 
 			}

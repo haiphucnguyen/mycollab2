@@ -50,6 +50,10 @@ public class TaskSearchPanel extends
 			((TaskBasicSearchLayout) getCompositionRoot()).setNameField(name);
 		}
 	}
+	
+	public void getAdvanceSearch() {
+		moveToAdvancedSearchLayout();
+	}
 
 	private class TaskBasicSearchLayout extends
 			BasicSearchLayout<TaskSearchCriteria> {

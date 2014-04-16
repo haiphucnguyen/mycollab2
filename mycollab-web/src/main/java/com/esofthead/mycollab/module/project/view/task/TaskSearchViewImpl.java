@@ -20,11 +20,11 @@ import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Button.ClickEvent;
 
 @ViewComponent
 public class TaskSearchViewImpl extends AbstractPageView implements
@@ -33,7 +33,7 @@ public class TaskSearchViewImpl extends AbstractPageView implements
 	private static final long serialVersionUID = 1L;
 	private TaskSearchPanel taskSearchPanel;
 	private TaskSearchCriteria searchCriteria;
-	private TaskPagedTableDisplay tableItem;
+	private TaskSearchTableDisplay tableItem;
 	private final VerticalLayout taskListLayout;
 	private Label headerText;
 
@@ -92,7 +92,7 @@ public class TaskSearchViewImpl extends AbstractPageView implements
 
 	private void generateDisplayTable() {
 
-		this.tableItem = new TaskPagedTableDisplay(TaskTableFieldDef.id,
+		this.tableItem = new TaskSearchTableDisplay(TaskTableFieldDef.id,
 				Arrays.asList(TaskTableFieldDef.taskname,
 						TaskTableFieldDef.startdate, TaskTableFieldDef.duedate,
 						TaskTableFieldDef.assignee,
@@ -139,7 +139,7 @@ public class TaskSearchViewImpl extends AbstractPageView implements
 	}
 
 	public void moveToAdvanceSearch() {
-		taskSearchPanel.moveToAdvancedSearchLayout();
+		taskSearchPanel.getAdvanceSearch();
 	}
 
 }
