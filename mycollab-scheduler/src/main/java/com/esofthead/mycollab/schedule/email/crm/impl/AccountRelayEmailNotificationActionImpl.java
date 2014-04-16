@@ -353,6 +353,9 @@ public class AccountRelayEmailNotificationActionImpl extends
 						+ " has commented on the account \""
 						+ StringUtils.trim(simpleAccount.getAccountname(), 100)
 						+ "\"", "templates/email/crm/itemAddNoteNotifier.mt");
+
+		setupMailHeaders(simpleAccount, emailNotification, templateGenerator);
+
 		templateGenerator.putVariable("comment", emailNotification);
 
 		return templateGenerator;
