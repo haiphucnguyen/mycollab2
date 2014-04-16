@@ -14,18 +14,20 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-services.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.module.billing;
+package com.esofthead.mycollab.premium.module.billing;
 
-public class RegisterSourceConstants {
-	public static final String WEB = "Web";
+import com.esofthead.mycollab.core.UserInvalidInputException;
 
-	public static final String GOOGLE = "Google";
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
+public class ExistingUserRegisterException extends UserInvalidInputException {
+	private static final long serialVersionUID = 1L;
 
-	public static final String FACEBOOK = "Facebook";
-
-	public static final String LINKEDIN = "LinkedIn";
-
-	public static final String GITHUB = "GitHub";
-
-	public static final String GOOGLE_MARKET = "Google Market";
+	public ExistingUserRegisterException(String message) {
+		super(message);
+	}
 }
