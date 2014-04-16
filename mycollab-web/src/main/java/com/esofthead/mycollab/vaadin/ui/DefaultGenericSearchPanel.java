@@ -42,7 +42,7 @@ extends GenericSearchPanel<S> {
 		setCompositionRoot(layout);
 	}
 
-	protected void moveToAdvancedSearchLayout() {
+	public void moveToAdvancedSearchLayout() {
 		SearchLayout<S> layout = createAdvancedSearchLayout();
 		setCompositionRoot(layout);
 	}
