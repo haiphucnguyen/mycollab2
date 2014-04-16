@@ -16,7 +16,10 @@
  */
 package com.esofthead.mycollab.schedule.email.crm.impl;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +37,8 @@ import com.esofthead.mycollab.module.crm.service.LeadService;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.user.UserLinkUtils;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
+import com.esofthead.mycollab.schedule.email.MailItemLink;
+import com.esofthead.mycollab.schedule.email.crm.CrmMailLinkGenerator;
 import com.esofthead.mycollab.schedule.email.crm.LeadRelayEmailNotificationAction;
 
 /**
@@ -62,6 +67,134 @@ public class LeadRelayEmailNotificationActionImpl extends
 		mapper = new LeadFieldNameMapper();
 	}
 
+	protected void setupMailHeaders(SimpleLead lead,
+			SimpleRelayEmailNotification emailNotification,
+			TemplateGenerator templateGenerator) {
+
+		CrmMailLinkGenerator crmLinkGenerator = new CrmMailLinkGenerator(
+				getSiteUrl(lead.getSaccountid()));
+
+		String summary = lead.getLeadName();
+		String summaryLink = crmLinkGenerator
+				.generateContactPreviewFullLink(lead.getId());
+
+		templateGenerator.putVariable("makeChangeUser",
+				emailNotification.getChangeByUserFullName());
+		templateGenerator.putVariable("itemType", "lead");
+		templateGenerator.putVariable("summary", summary);
+		templateGenerator.putVariable("summaryLink", summaryLink);
+	}
+
+	protected Map<String, List<MailItemLink>> getListOfProperties(
+			SimpleLead lead) {
+		Map<String, List<MailItemLink>> listOfDisplayProperties = new LinkedHashMap<String, List<MailItemLink>>();
+
+		CrmMailLinkGenerator crmLinkGenerator = new CrmMailLinkGenerator(
+				getSiteUrl(lead.getSaccountid()));
+
+		if (lead.getFirstname() != null) {
+			listOfDisplayProperties.put(mapper.getFieldLabel("firstname"),
+					Arrays.asList(new MailItemLink(null, lead.getFirstname())));
+		} else {
+			listOfDisplayProperties
+					.put(mapper.getFieldLabel("firstname"), null);
+		}
+
+		if (lead.getEmail() != null) {
+			listOfDisplayProperties.put(mapper.getFieldLabel("email"), Arrays
+					.asList(new MailItemLink("mailto:" + lead.getEmail(), lead
+							.getEmail())));
+		} else {
+			listOfDisplayProperties.put(mapper.getFieldLabel("email"), null);
+		}
+
+		if (lead.getLastname() != null) {
+			listOfDisplayProperties.put(mapper.getFieldLabel("lastname"),
+					Arrays.asList(new MailItemLink(null, lead.getLastname())));
+		} else {
+			listOfDisplayProperties.put(mapper.getFieldLabel("lastname"), null);
+		}
+
+		if (lead.getOfficephone() != null) {
+			listOfDisplayProperties
+					.put(mapper.getFieldLabel("officephone"), Arrays
+							.asList(new MailItemLink(null, lead
+									.getOfficephone())));
+		} else {
+			listOfDisplayProperties.put(mapper.getFieldLabel("officephone"),
+					null);
+		}
+
+		if (lead.getTitle() != null) {
+			listOfDisplayProperties.put(mapper.getFieldLabel("title"),
+					Arrays.asList(new MailItemLink(null, lead.getTitle())));
+		} else {
+			listOfDisplayProperties.put(mapper.getFieldLabel("title"), null);
+		}
+
+		if (lead.getMobile() != null) {
+			listOfDisplayProperties.put(mapper.getFieldLabel("mobile"),
+					Arrays.asList(new MailItemLink(null, lead.getMobile())));
+		} else {
+			listOfDisplayProperties.put(mapper.getFieldLabel("mobile"), null);
+		}
+
+		if (lead.getDepartment() != null) {
+			listOfDisplayProperties
+					.put(mapper.getFieldLabel("department"),
+							Arrays.asList(new MailItemLink(null, lead
+									.getDepartment())));
+		} else {
+			listOfDisplayProperties.put(mapper.getFieldLabel("department"),
+					null);
+		}
+
+		if (lead.getOtherphone() != null) {
+			listOfDisplayProperties
+					.put(mapper.getFieldLabel("otherphone"),
+							Arrays.asList(new MailItemLink(null, lead
+									.getOtherphone())));
+		} else {
+			listOfDisplayProperties.put(mapper.getFieldLabel("otherphone"),
+					null);
+		}
+
+		if (lead.getAccountname() != null) {
+			listOfDisplayProperties
+					.put(mapper.getFieldLabel("accountname"), Arrays
+							.asList(new MailItemLink(null, lead
+									.getAccountname())));
+		} else {
+			listOfDisplayProperties.put(mapper.getFieldLabel("accountname"),
+					null);
+		}
+
+		if (lead.getFax() != null) {
+			listOfDisplayProperties.put(mapper.getFieldLabel("fax"),
+					Arrays.asList(new MailItemLink(null, lead.getFax())));
+		} else {
+			listOfDisplayProperties.put(mapper.getFieldLabel("fax"), null);
+		}
+
+		if (lead.getLeadsourcedesc() != null) {
+			listOfDisplayProperties.put(mapper.getFieldLabel("leadsourcedesc"),
+					Arrays.asList(new MailItemLink(null, lead
+							.getLeadsourcedesc())));
+		} else {
+			listOfDisplayProperties.put(mapper.getFieldLabel("leadsourcedesc"),
+					null);
+		}
+
+		if (lead.getWebsite() != null) {
+			listOfDisplayProperties.put(mapper.getFieldLabel("website"),
+					Arrays.asList(new MailItemLink(null, lead.getWebsite())));
+		} else {
+			listOfDisplayProperties.put(mapper.getFieldLabel("website"), null);
+		}
+
+		return listOfDisplayProperties;
+	}
+
 	@Override
 	protected TemplateGenerator templateGeneratorForCreateAction(
 			SimpleRelayEmailNotification emailNotification, SimpleUser user) {
@@ -69,8 +202,7 @@ public class LeadRelayEmailNotificationActionImpl extends
 				emailNotification.getTypeid(),
 				emailNotification.getSaccountid());
 		if (simpleLead != null) {
-			String subject = StringUtils.trim(simpleLead.getLeadName(),
-					150);
+			String subject = StringUtils.trim(simpleLead.getLeadName(), 150);
 
 			TemplateGenerator templateGenerator = new TemplateGenerator(
 					emailNotification.getChangeByUserFullName()
@@ -178,7 +310,7 @@ public class LeadRelayEmailNotificationActionImpl extends
 			fieldNameMap.put("otherphone", "Other Phone");
 			fieldNameMap.put("accountName", "Account Name");
 			fieldNameMap.put("fax", "Fax");
-			fieldNameMap.put("leadsource", "Lead Source");
+			fieldNameMap.put("leadsourcedesc", "Lead Source");
 			fieldNameMap.put("website", "Web Site");
 			fieldNameMap.put("industry", "Industry");
 			fieldNameMap.put("status", "Status");
