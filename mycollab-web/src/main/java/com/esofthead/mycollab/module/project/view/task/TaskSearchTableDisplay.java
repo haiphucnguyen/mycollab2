@@ -41,28 +41,27 @@ import com.hp.gagawa.java.elements.Img;
 import com.hp.gagawa.java.elements.Td;
 import com.hp.gagawa.java.elements.Tr;
 import com.vaadin.server.Resource;
-import com.vaadin.ui.Alignment;
+import com.vaadin.server.Sizeable;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.Embedded;
-import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Button.ClickEvent;
 
-public class TaskPagedTableDisplay
+public class TaskSearchTableDisplay
 		extends
 		DefaultPagedBeanTable<ProjectTaskService, TaskSearchCriteria, SimpleTask> {
 	private static final long serialVersionUID = 1L;
 	private static Logger log = LoggerFactory
-			.getLogger(TaskPagedTableDisplay.class);
+			.getLogger(TaskSearchTableDisplay.class);
 
-	public TaskPagedTableDisplay(List<TableViewField> displayColumns) {
+	public TaskSearchTableDisplay(List<TableViewField> displayColumns) {
 		this(null, displayColumns);
 	}
 
-	public TaskPagedTableDisplay(TableViewField requiredColumn,
+	public TaskSearchTableDisplay(TableViewField requiredColumn,
 			List<TableViewField> displayColumns) {
 		super(ApplicationContextUtil.getSpringBean(ProjectTaskService.class),
 				SimpleTask.class, requiredColumn, displayColumns);
@@ -73,10 +72,10 @@ public class TaskPagedTableDisplay
 			@Override
 			public com.vaadin.ui.Component generateCell(Table source,
 					final Object itemId, Object columnId) {
-				final SimpleTask task = TaskPagedTableDisplay.this
+				final SimpleTask task = TaskSearchTableDisplay.this
 						.getBeanByIndex(itemId);
 
-				HorizontalLayout taskName = new HorizontalLayout();
+				CssLayout taskName = new CssLayout();
 
 				String taskname = "[%s-%s] %s";
 				taskname = String.format(taskname, CurrentProjectVariables
@@ -89,7 +88,7 @@ public class TaskPagedTableDisplay
 							@Override
 							public void buttonClick(Button.ClickEvent event) {
 								fireTableEvent(new TableClickEvent(
-										TaskPagedTableDisplay.this, task,
+										TaskSearchTableDisplay.this, task,
 										"taskname"));
 							}
 						});
@@ -98,10 +97,8 @@ public class TaskPagedTableDisplay
 				if (StringUtils.isNotNullOrEmpty(task.getPriority())) {
 					Resource iconPriority = TaskPriorityComboBox
 							.getIconResourceByPriority(task.getPriority());
-					Embedded icon = new Embedded(null, iconPriority);
-					taskName.addComponent(icon);
-					taskName.setComponentAlignment(icon,
-							Alignment.MIDDLE_CENTER);
+					b.setIcon(iconPriority);
+
 				}
 
 				if (task.getPercentagecomplete() != null
@@ -121,10 +118,10 @@ public class TaskPagedTableDisplay
 						b.addStyleName(UIConstants.LINK_OVERDUE);
 					}
 				}
-				b.setWidth("100%");
+
 				taskName.addComponent(b);
-				taskName.setExpandRatio(b, 1.0f);
 				taskName.setWidth("100%");
+				taskName.setHeight(SIZE_UNDEFINED, Sizeable.Unit.PIXELS);
 				return taskName;
 
 			}
@@ -137,7 +134,7 @@ public class TaskPagedTableDisplay
 					@Override
 					public com.vaadin.ui.Component generateCell(Table source,
 							final Object itemId, Object columnId) {
-						final SimpleTask task = TaskPagedTableDisplay.this
+						final SimpleTask task = TaskSearchTableDisplay.this
 								.getBeanByIndex(itemId);
 						Double percomp = (task.getPercentagecomplete() == null) ? new Double(
 								0) : task.getPercentagecomplete();
@@ -154,7 +151,7 @@ public class TaskPagedTableDisplay
 			@Override
 			public com.vaadin.ui.Component generateCell(Table source,
 					final Object itemId, Object columnId) {
-				final SimpleTask task = TaskPagedTableDisplay.this
+				final SimpleTask task = TaskSearchTableDisplay.this
 						.getBeanByIndex(itemId);
 				return new Label(AppContext.formatDate(task.getStartdate()));
 
@@ -167,7 +164,7 @@ public class TaskPagedTableDisplay
 			@Override
 			public com.vaadin.ui.Component generateCell(Table source,
 					final Object itemId, Object columnId) {
-				final SimpleTask task = TaskPagedTableDisplay.this
+				final SimpleTask task = TaskSearchTableDisplay.this
 						.getBeanByIndex(itemId);
 				return new Label(AppContext.formatDate(task.getDeadline()));
 
@@ -180,7 +177,7 @@ public class TaskPagedTableDisplay
 			@Override
 			public com.vaadin.ui.Component generateCell(Table source,
 					final Object itemId, Object columnId) {
-				final SimpleTask task = TaskPagedTableDisplay.this
+				final SimpleTask task = TaskSearchTableDisplay.this
 						.getBeanByIndex(itemId);
 				PopupButton taskSettingPopupBtn = new PopupButton();
 				VerticalLayout filterBtnLayout = new VerticalLayout();
@@ -196,7 +193,7 @@ public class TaskPagedTableDisplay
 							public void buttonClick(ClickEvent event) {
 								EventBus.getInstance().fireEvent(
 										new TaskEvent.GotoEdit(
-												TaskPagedTableDisplay.this,
+												TaskSearchTableDisplay.this,
 												task));
 							}
 						});
@@ -223,7 +220,7 @@ public class TaskPagedTableDisplay
 											AppContext.getUsername());
 
 									fireTableEvent(new TableClickEvent(
-											TaskPagedTableDisplay.this, task,
+											TaskSearchTableDisplay.this, task,
 											"closeTask"));
 								}
 							});
@@ -246,7 +243,7 @@ public class TaskPagedTableDisplay
 									projectTaskService.updateWithSession(task,
 											AppContext.getUsername());
 									fireTableEvent(new TableClickEvent(
-											TaskPagedTableDisplay.this, task,
+											TaskSearchTableDisplay.this, task,
 											"reopenTask"));
 								}
 							});
@@ -272,7 +269,7 @@ public class TaskPagedTableDisplay
 										projectTaskService.updateWithSession(
 												task, AppContext.getUsername());
 										fireTableEvent(new TableClickEvent(
-												TaskPagedTableDisplay.this,
+												TaskSearchTableDisplay.this,
 												task, "pendingTask"));
 									}
 								});
@@ -297,7 +294,7 @@ public class TaskPagedTableDisplay
 											AppContext.getUsername());
 
 									fireTableEvent(new TableClickEvent(
-											TaskPagedTableDisplay.this, task,
+											TaskSearchTableDisplay.this, task,
 											"reopenTask"));
 								}
 							});
@@ -342,7 +339,7 @@ public class TaskPagedTableDisplay
 															AppContext
 																	.getAccountId());
 													fireTableEvent(new TableClickEvent(
-															TaskPagedTableDisplay.this,
+															TaskSearchTableDisplay.this,
 															task, "deleteTask"));
 												}
 											}
@@ -369,7 +366,7 @@ public class TaskPagedTableDisplay
 					@Override
 					public com.vaadin.ui.Component generateCell(Table source,
 							final Object itemId, Object columnId) {
-						final SimpleTask task = TaskPagedTableDisplay.this
+						final SimpleTask task = TaskSearchTableDisplay.this
 								.getBeanByIndex(itemId);
 						return new ProjectUserLink(task.getAssignuser(), task
 								.getAssignUserAvatarId(), task
