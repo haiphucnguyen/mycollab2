@@ -47,6 +47,10 @@ public class TaskSearchPresenter extends AbstractPresenter<TaskSearchView>
 			if (param.getAdvanceSearch()) {
 				view.moveToAdvanceSearch();
 			}
+			else 
+			{
+				view.moveToBasicSearch();
+			}
 
 			ProjectBreadcrumb breadcrumb = ViewManager
 					.getView(ProjectBreadcrumb.class);
@@ -58,6 +62,7 @@ public class TaskSearchPresenter extends AbstractPresenter<TaskSearchView>
 
 	@Override
 	public void doSearch(TaskSearchCriteria searchCriteria) {
+		if (searchCriteria.getTaskName() != null)
 		view.setSearchInputValue(searchCriteria.getTaskName().getValue());
 		view.getPagedBeanTable().setSearchCriteria(searchCriteria);
 	}

@@ -97,7 +97,7 @@ public class RiskSearchPanel extends
 		header.setMargin(new MarginInfo(true, false, true, false));
 		return header;
 	}
-
+	@SuppressWarnings("unchecked")
 	@Override
 	protected SearchLayout<RiskSearchCriteria> createBasicSearchLayout() {
 		return new RiskBasicSearchLayout();
