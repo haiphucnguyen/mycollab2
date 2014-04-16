@@ -29,13 +29,11 @@ import com.esofthead.mycollab.common.domain.SimpleAuditLog;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
 import com.esofthead.mycollab.common.service.AuditLogService;
 import com.esofthead.mycollab.core.utils.StringUtils;
-import com.esofthead.mycollab.module.crm.CrmLinkGenerator;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.module.crm.service.CrmNotificationSettingService;
 import com.esofthead.mycollab.module.crm.service.LeadService;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
-import com.esofthead.mycollab.module.user.UserLinkUtils;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.schedule.email.MailItemLink;
 import com.esofthead.mycollab.schedule.email.crm.CrmMailLinkGenerator;
@@ -192,6 +190,141 @@ public class LeadRelayEmailNotificationActionImpl extends
 			listOfDisplayProperties.put(mapper.getFieldLabel("website"), null);
 		}
 
+		if (lead.getIndustry() != null) {
+			listOfDisplayProperties.put(mapper.getFieldLabel("industry"),
+					Arrays.asList(new MailItemLink(null, lead.getIndustry())));
+		} else {
+			listOfDisplayProperties.put(mapper.getFieldLabel("industry"), null);
+		}
+
+		if (lead.getStatus() != null) {
+			listOfDisplayProperties.put(mapper.getFieldLabel("status"),
+					Arrays.asList(new MailItemLink(null, lead.getStatus())));
+		} else {
+			listOfDisplayProperties.put(mapper.getFieldLabel("status"), null);
+		}
+
+		if (lead.getNoemployees() != null) {
+			listOfDisplayProperties.put(mapper.getFieldLabel("noemployees"),
+					Arrays.asList(new MailItemLink(null, lead.getNoemployees()
+							.toString())));
+		} else {
+			listOfDisplayProperties.put(mapper.getFieldLabel("noemployees"),
+					null);
+		}
+
+		if (lead.getAssignuser() != null) {
+			listOfDisplayProperties.put(mapper.getFieldLabel("assignuser"),
+					Arrays.asList(new MailItemLink(crmLinkGenerator
+							.generateUserPreviewFullLink(lead.getAssignuser()),
+							lead.getAssignUserFullName())));
+		} else {
+			listOfDisplayProperties.put(mapper.getFieldLabel("assignuser"),
+					null);
+		}
+
+		if (lead.getPrimaddress() != null) {
+			listOfDisplayProperties
+					.put(mapper.getFieldLabel("primaddress"), Arrays
+							.asList(new MailItemLink(null, lead
+									.getPrimaddress())));
+		} else {
+			listOfDisplayProperties.put(mapper.getFieldLabel("primaddress"),
+					null);
+		}
+
+		if (lead.getOtheraddress() != null) {
+			listOfDisplayProperties
+					.put(mapper.getFieldLabel("otheraddress"), Arrays
+							.asList(new MailItemLink(null, lead
+									.getOtheraddress())));
+		} else {
+			listOfDisplayProperties.put(mapper.getFieldLabel("otheraddress"),
+					null);
+		}
+
+		if (lead.getPrimcity() != null) {
+			listOfDisplayProperties.put(mapper.getFieldLabel("primcity"),
+					Arrays.asList(new MailItemLink(null, lead.getPrimcity())));
+		} else {
+			listOfDisplayProperties.put(mapper.getFieldLabel("primcity"), null);
+		}
+
+		if (lead.getOthercity() != null) {
+			listOfDisplayProperties.put(mapper.getFieldLabel("othercity"),
+					Arrays.asList(new MailItemLink(null, lead.getOthercity())));
+		} else {
+			listOfDisplayProperties
+					.put(mapper.getFieldLabel("othercity"), null);
+		}
+
+		if (lead.getPrimstate() != null) {
+			listOfDisplayProperties.put(mapper.getFieldLabel("primstate"),
+					Arrays.asList(new MailItemLink(null, lead.getPrimstate())));
+		} else {
+			listOfDisplayProperties
+					.put(mapper.getFieldLabel("primstate"), null);
+		}
+
+		if (lead.getOtherstate() != null) {
+			listOfDisplayProperties
+					.put(mapper.getFieldLabel("otherstate"),
+							Arrays.asList(new MailItemLink(null, lead
+									.getOtherstate())));
+		} else {
+			listOfDisplayProperties.put(mapper.getFieldLabel("otherstate"),
+					null);
+		}
+
+		if (lead.getPrimpostalcode() != null) {
+			listOfDisplayProperties.put(mapper.getFieldLabel("primpostalcode"),
+					Arrays.asList(new MailItemLink(null, lead
+							.getPrimpostalcode())));
+		} else {
+			listOfDisplayProperties.put(mapper.getFieldLabel("primpostalcode"),
+					null);
+		}
+
+		if (lead.getOtherpostalcode() != null) {
+			listOfDisplayProperties.put(
+					mapper.getFieldLabel("otherpostalcode"), Arrays
+							.asList(new MailItemLink(null, lead
+									.getOtherpostalcode())));
+		} else {
+			listOfDisplayProperties.put(
+					mapper.getFieldLabel("otherpostalcode"), null);
+		}
+
+		if (lead.getPrimcountry() != null) {
+			listOfDisplayProperties
+					.put(mapper.getFieldLabel("primcountry"), Arrays
+							.asList(new MailItemLink(null, lead
+									.getPrimcountry())));
+		} else {
+			listOfDisplayProperties.put(mapper.getFieldLabel("primcountry"),
+					null);
+		}
+
+		if (lead.getOthercountry() != null) {
+			listOfDisplayProperties
+					.put(mapper.getFieldLabel("othercountry"), Arrays
+							.asList(new MailItemLink(null, lead
+									.getOthercountry())));
+		} else {
+			listOfDisplayProperties.put(mapper.getFieldLabel("othercountry"),
+					null);
+		}
+
+		if (lead.getDescription() != null) {
+			listOfDisplayProperties
+					.put(mapper.getFieldLabel("description"), Arrays
+							.asList(new MailItemLink(null, lead
+									.getDescription())));
+		} else {
+			listOfDisplayProperties.put(mapper.getFieldLabel("description"),
+					null);
+		}
+
 		return listOfDisplayProperties;
 	}
 
@@ -207,11 +340,12 @@ public class LeadRelayEmailNotificationActionImpl extends
 			TemplateGenerator templateGenerator = new TemplateGenerator(
 					emailNotification.getChangeByUserFullName()
 							+ " has created the lead \"" + subject + "\"",
-					"templates/email/crm/leadCreatedNotifier.mt");
+					"templates/email/crm/itemCreatedNotifier.mt");
+			setupMailHeaders(simpleLead, emailNotification, templateGenerator);
 
-			templateGenerator.putVariable("simpleLead", simpleLead);
-			templateGenerator.putVariable("hyperLinks",
-					constructHyperLinks(simpleLead));
+			templateGenerator.putVariable("properties",
+					getListOfProperties(simpleLead));
+
 			return templateGenerator;
 		} else {
 			return null;
@@ -232,19 +366,14 @@ public class LeadRelayEmailNotificationActionImpl extends
 		TemplateGenerator templateGenerator = new TemplateGenerator(
 				emailNotification.getChangeByUserFullName()
 						+ " has updated the lead \"" + subject + "\"",
-				"templates/email/crm/leadUpdatedNotifier.mt");
-		templateGenerator.putVariable("simpleLead", lead);
-		templateGenerator.putVariable("hyperLinks", constructHyperLinks(lead));
+				"templates/email/crm/itemUpdatedNotifier.mt");
+		setupMailHeaders(lead, emailNotification, templateGenerator);
 
 		if (emailNotification.getTypeid() != null) {
 			SimpleAuditLog auditLog = auditLogService.findLatestLog(
 					emailNotification.getTypeid(),
 					emailNotification.getSaccountid());
-			templateGenerator.putVariable(
-					"postedUserURL",
-					UserLinkUtils.generatePreviewFullUserLink(
-							getSiteUrl(lead.getSaccountid()),
-							auditLog.getPosteduser()));
+
 			templateGenerator.putVariable("historyLog", auditLog);
 
 			templateGenerator.putVariable("mapper", mapper);
@@ -263,35 +392,13 @@ public class LeadRelayEmailNotificationActionImpl extends
 				emailNotification.getChangeByUserFullName()
 						+ " has commented on the lead \""
 						+ StringUtils.trim(simpleLead.getLeadName(), 100)
-						+ "\"", "templates/email/crm/leadAddNoteNotifier.mt");
+						+ "\"", "templates/email/crm/itemAddNoteNotifier.mt");
+
+		setupMailHeaders(simpleLead, emailNotification, templateGenerator);
+
 		templateGenerator.putVariable("comment", emailNotification);
-		templateGenerator.putVariable("userComment", UserLinkUtils
-				.generatePreviewFullUserLink(
-						getSiteUrl(simpleLead.getSaccountid()),
-						emailNotification.getChangeby()));
-		templateGenerator.putVariable("simpleLead", simpleLead);
-		templateGenerator.putVariable("hyperLinks",
-				constructHyperLinks(simpleLead));
 
 		return templateGenerator;
-	}
-
-	private Map<String, String> constructHyperLinks(SimpleLead simpleLead) {
-		Map<String, String> hyperLinks = new HashMap<String, String>();
-		hyperLinks.put(
-				"leadURL",
-				getSiteUrl(simpleLead.getSaccountid())
-						+ CrmLinkGenerator.generateCrmItemLink(
-								CrmTypeConstants.LEAD, simpleLead.getId()));
-
-		if (simpleLead.getAssignuser() != null) {
-			hyperLinks.put("assignUserURL", UserLinkUtils
-					.generatePreviewFullUserLink(
-							getSiteUrl(simpleLead.getSaccountid()),
-							simpleLead.getAssignuser()));
-		}
-
-		return hyperLinks;
 	}
 
 	public class LeadFieldNameMapper {
@@ -315,6 +422,7 @@ public class LeadRelayEmailNotificationActionImpl extends
 			fieldNameMap.put("industry", "Industry");
 			fieldNameMap.put("status", "Status");
 			fieldNameMap.put("noemployees", "No of Employees");
+			fieldNameMap.put("assignuser", "Assignee");
 			fieldNameMap.put("primaddress", "Address");
 			fieldNameMap.put("otheraddress", "Other Address");
 			fieldNameMap.put("primcity", "City");

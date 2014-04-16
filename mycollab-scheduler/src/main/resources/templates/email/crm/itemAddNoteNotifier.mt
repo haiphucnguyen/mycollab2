@@ -27,7 +27,7 @@
 		</tr>
         <tr>
             <td style="color: #4e4e4e; padding: 10px 50px;">
-				<p><img src="${defaultUrls.cdn_url}default_user_avatar_16.png" width="16" height="16" style="display: inline-block; vertical-align: top;"/>$makeChangeUser <b>commented</b> on $itemType:</p>
+				<p><img src="${defaultUrls.cdn_url}default_user_avatar_16.png" width="16" height="16" style="display: inline-block; vertical-align: top;"/>$makeChangeUser <b>noted</b> on $itemType:</p>
 				<p>
 				#foreach( $title in $titles )
 					#if( $foreach.count > 1 )
