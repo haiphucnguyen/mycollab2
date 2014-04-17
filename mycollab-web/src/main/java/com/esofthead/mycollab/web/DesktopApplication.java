@@ -36,6 +36,8 @@ import com.esofthead.mycollab.shell.view.MainWindowContainer;
 import com.esofthead.mycollab.shell.view.NoSubDomainExistedWindow;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.MyCollabSession;
+import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
+import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Widgetset;
@@ -170,6 +172,8 @@ public class DesktopApplication extends UI {
 		if (AppContext.getInstance() != null) {
 			AppContext.getInstance().setSession(null, null, null);
 			initialUrl = "";
+			ViewManager.clearViewCaches();
+			PresenterResolver.clearCaches();
 		}
 	}
 

@@ -364,7 +364,7 @@ public class AccountRelayEmailNotificationActionImpl extends
 	public class AccountFieldNameMapper {
 		private final Map<String, String> fieldNameMap;
 
-		AccountFieldNameMapper() {
+		public AccountFieldNameMapper() {
 			fieldNameMap = new HashMap<String, String>();
 
 			fieldNameMap.put("accountname", "Account Name");
