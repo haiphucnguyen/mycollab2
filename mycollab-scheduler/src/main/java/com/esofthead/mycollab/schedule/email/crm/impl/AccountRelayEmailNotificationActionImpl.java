@@ -361,7 +361,7 @@ public class AccountRelayEmailNotificationActionImpl extends
 		return templateGenerator;
 	}
 
-	class AccountFieldNameMapper {
+	public class AccountFieldNameMapper {
 		private final Map<String, String> fieldNameMap;
 
 		AccountFieldNameMapper() {
