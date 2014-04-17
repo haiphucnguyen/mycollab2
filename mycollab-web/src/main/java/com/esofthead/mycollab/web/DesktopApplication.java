@@ -30,12 +30,17 @@ import com.esofthead.mycollab.core.DeploymentMode;
 import com.esofthead.mycollab.core.SecurityException;
 import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.billing.SubDomainNotExistException;
+import com.esofthead.mycollab.module.user.view.LoginPresenter;
+import com.esofthead.mycollab.module.user.view.LoginView;
+import com.esofthead.mycollab.shell.ShellController;
 import com.esofthead.mycollab.shell.view.FragmentNavigator;
 import com.esofthead.mycollab.shell.view.MainWindowContainer;
 import com.esofthead.mycollab.shell.view.NoSubDomainExistedWindow;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.MyCollabSession;
+import com.esofthead.mycollab.vaadin.mvp.ControllerRegistry;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
@@ -65,6 +70,8 @@ public class DesktopApplication extends UI {
 
 	private static Logger log = LoggerFactory
 			.getLogger(DesktopApplication.class);
+
+	private MainWindowContainer mainWindowContainer;
 
 	/**
 	 * Context of current logged in user
@@ -125,7 +132,8 @@ public class DesktopApplication extends UI {
 			return;
 		}
 
-		this.setContent(new MainWindowContainer());
+		mainWindowContainer = new MainWindowContainer();
+		this.setContent(mainWindowContainer);
 
 		getPage().addUriFragmentChangedListener(
 				new UriFragmentChangedListener() {
@@ -174,6 +182,32 @@ public class DesktopApplication extends UI {
 			initialUrl = "";
 			ViewManager.clearViewCaches();
 			PresenterResolver.clearCaches();
+			EventBus.getInstance().clear();
+			ControllerRegistry.reset();
+		}
+	}
+
+	public void redirectToLoginView() {
+		clearSession();
+
+		AppContext.addFragment("", "Login Page");
+		// clear cookie remember username/password if any
+		DesktopApplication.getInstance().unsetRememberPassword();
+
+		ControllerRegistry.addController(new ShellController(
+				mainWindowContainer));
+		LoginPresenter presenter = PresenterResolver
+				.getPresenter(LoginPresenter.class);
+		LoginView loginView = presenter.initView();
+
+		mainWindowContainer.setStyleName("loginView");
+
+		if (loginView.getParent() == null
+				|| loginView.getParent() == mainWindowContainer) {
+			((MainWindowContainer) mainWindowContainer).setAutoLogin(false);
+			((MainWindowContainer) mainWindowContainer).setContent(loginView);
+		} else {
+			presenter.go(mainWindowContainer, null);
 		}
 	}
 
