@@ -29,7 +29,7 @@ import com.esofthead.mycollab.core.db.query.DateParam;
 import com.esofthead.mycollab.core.db.query.Param;
 import com.esofthead.mycollab.core.db.query.StringListParam;
 import com.esofthead.mycollab.core.db.query.StringParam;
-import com.esofthead.mycollab.module.project.BugPriorityStatusConstants;
+import com.esofthead.mycollab.module.project.ProjectDataTypeFactory;
 
 /**
  * 
@@ -59,9 +59,9 @@ public class BugSearchCriteria extends SearchCriteria {
 			"m_tracker_bug", "duedate");
 
 	public static Param p_priority = new StringListParam("account-industry",
-			"Industry", "m_crm_account", "industry",
-			Arrays.asList(BugPriorityStatusConstants.VALUES));
-	
+			"Priority", "m_tracker_bug", "priority",
+			Arrays.asList(ProjectDataTypeFactory.getBugPriorityList()));
+
 	private StringSearchField assignuser;
 
 	private StringSearchField loguser;

@@ -46,15 +46,15 @@ public class BugPriorityComboBox extends ComboBox {
 		this.setContainerDataSource(ic);
 
 		this.setItemIcon(BugPriorityStatusConstants.BLOCKER, MyCollabResource
-				.newResource(ProjectResources.PRIORITY_BLOCKER_IMG_12));
+				.newResource(ProjectResources.B_PRIORITY_BLOCKER_IMG_12));
 		this.setItemIcon(BugPriorityStatusConstants.CRITICAL, MyCollabResource
-				.newResource(ProjectResources.PRIORITY_CRITICAL_IMG_12));
+				.newResource(ProjectResources.B_PRIORITY_CRITICAL_IMG_12));
 		this.setItemIcon(BugPriorityStatusConstants.MAJOR, MyCollabResource
-				.newResource(ProjectResources.PRIORITY_MAJOR_IMG_12));
+				.newResource(ProjectResources.B_PRIORITY_MAJOR_IMG_12));
 		this.setItemIcon(BugPriorityStatusConstants.MINOR, MyCollabResource
-				.newResource(ProjectResources.PRIORITY_MINOR_IMG_12));
+				.newResource(ProjectResources.B_PRIORITY_MINOR_IMG_12));
 		this.setItemIcon(BugPriorityStatusConstants.TRIVIAL, MyCollabResource
-				.newResource(ProjectResources.PRIORITY_TRIVIAL_IMG_12));
+				.newResource(ProjectResources.B_PRIORITY_TRIVIAL_IMG_12));
 		this.setNullSelectionAllowed(false);
 	}
 }
