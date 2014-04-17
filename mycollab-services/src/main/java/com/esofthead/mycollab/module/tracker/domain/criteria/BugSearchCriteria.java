@@ -16,6 +16,8 @@
  */
 package com.esofthead.mycollab.module.tracker.domain.criteria;
 
+import java.util.Arrays;
+
 import com.esofthead.mycollab.core.arguments.DateSearchField;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.RangeDateTimeSearchField;
@@ -25,7 +27,9 @@ import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.db.query.CompositionStringParam;
 import com.esofthead.mycollab.core.db.query.DateParam;
 import com.esofthead.mycollab.core.db.query.Param;
+import com.esofthead.mycollab.core.db.query.StringListParam;
 import com.esofthead.mycollab.core.db.query.StringParam;
+import com.esofthead.mycollab.module.project.BugPriorityStatusConstants;
 
 /**
  * 
@@ -37,7 +41,7 @@ public class BugSearchCriteria extends SearchCriteria {
 	private static final long serialVersionUID = 1L;
 
 	public static Param p_textDesc = new CompositionStringParam("bug-textDesc",
-			"Text", new StringParam[] {
+			"Summary or Detail", new StringParam[] {
 					new StringParam("", "", "m_tracker_bug", "summary"),
 					new StringParam("", "", "m_tracker_bug", "detail") });
 
@@ -54,6 +58,10 @@ public class BugSearchCriteria extends SearchCriteria {
 	public static Param p_duedate = new DateParam("bug-duedate", "Due Date",
 			"m_tracker_bug", "duedate");
 
+	public static Param p_priority = new StringListParam("account-industry",
+			"Industry", "m_crm_account", "industry",
+			Arrays.asList(BugPriorityStatusConstants.VALUES));
+	
 	private StringSearchField assignuser;
 
 	private StringSearchField loguser;
