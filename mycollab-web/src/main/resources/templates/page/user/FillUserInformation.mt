@@ -6,13 +6,9 @@
 <link rel="shortcut icon" href="https://www.mycollab.com/favicon.ico" type="image/x-icon">
 <link rel="stylesheet" type="text/css" href="${defaultUrls.app_url}assets/css/cssVelocityPage.css">
 <style media="screen" type="text/css">
-
-
 #container {
     background-image: url('${defaultUrls.cdn_url}footer-clouds.png');  background-repeat: no-repeat;  background-position: bottom right;
 }
-
-
 </style>
 <title>User accept the invitation page</title>
 </head>
@@ -60,26 +56,10 @@
 					 	</tr>
 					</table>
 				</div>
-				<hr size="1" style="margin: 1px 0 1px 0; ">
-				<div id="bottom">
-  
-			    <p>
-					<a javascrip="void(0);" href="https://www.mycollab.com" style="text-decoration : none;float:left"><span>Copyright 2014 MyCollab. All rights reserved.</span></a>
-			    	
-					<div style="text-align:right;">
-					<a javascrip="void(0);" href="https://www.mycollab.com/terms" style="text-decoration : none;"><span>Terms of Service</span></a> &nbsp;&nbsp;&nbsp;
-					<span>|</span>
-					&nbsp;&nbsp;&nbsp;<a javascrip="void(0);" href="https://www.mycollab.com/privacy" style="text-decoration : none;"><span >Privacy Policy</span></a>
-					</div>
-				</p>
-				</div>
+				
+				#parse("templates/page/pageFooter.mt")
 			</div>
 		</div>
-		
-		</div>
-			<div id="footer">
-		</div>
-		
 	</div>
 	<input type="hidden" id="username" value="$!username">
 	<input type="hidden" id="accountId" value="$!accountId">

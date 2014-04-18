@@ -45,7 +45,9 @@ public class PageGeneratorUtil {
 		Map<String, String> defaultUrls = new HashMap<String, String>();
 
 		defaultUrls.put("cdn_url", SiteConfiguration.getCdnUrl());
+		defaultUrls.put("app_url", SiteConfiguration.getAppUrl());
 		context.put("defaultUrls", defaultUrls);
+		
 
 		StringWriter writer = new StringWriter();
 		VelocityEngine templateEngine = ApplicationContextUtil

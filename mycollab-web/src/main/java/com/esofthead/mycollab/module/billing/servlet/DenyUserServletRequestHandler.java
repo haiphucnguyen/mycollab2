@@ -46,6 +46,7 @@ import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.servlet.GenericServletRequestHandler;
+import com.esofthead.mycollab.servlet.VelocityWebServletRequestHandler;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.template.velocity.TemplateContext;
 
@@ -56,7 +57,7 @@ import com.esofthead.template.velocity.TemplateContext;
  * 
  */
 @Component("denyUserInviteServlet")
-public class DenyUserServletRequestHandler extends GenericServletRequestHandler {
+public class DenyUserServletRequestHandler extends VelocityWebServletRequestHandler {
 
 	private static String USER_DENY_FEEDBACK_TEMPLATE = "templates/page/user/UserDenyInvitationPage.mt";
 	private static String USER_HAS_DENIED_PAGE = "templates/page/user/UserDeniedPage.mt";

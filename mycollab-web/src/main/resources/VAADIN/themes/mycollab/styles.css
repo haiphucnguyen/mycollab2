@@ -6748,8 +6748,10 @@ img.icon-btn {
 
 
 /*Project Members Widget */
-.project-member-widget .username .v-button-wrap {
-	padding: 0px;
+.project-member-widget .username .v-button-wrap,
+.project-member-widget .username:active .v-button-wrap,
+.project-member-widget .username:focus .v-button-wrap {
+    padding: 0px;
 }
 
 /*Navigation Buttons styles */
