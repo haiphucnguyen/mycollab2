@@ -206,6 +206,7 @@ public class DenyProjectMemberInvitationServletRequestHandler extends
 					.getSharingOptions();
 
 			defaultUrls.put("cdn_url", SiteConfiguration.getCdnUrl());
+			defaultUrls.put("app_url", SiteConfiguration.getAppUrl());
 			defaultUrls.put("facebook_url", sharingOptions.getFacebookUrl());
 			defaultUrls.put("google_url", sharingOptions.getGoogleplusUrl());
 			defaultUrls.put("linkedin_url", sharingOptions.getLinkedinUrl());
