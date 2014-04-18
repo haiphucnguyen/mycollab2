@@ -74,7 +74,7 @@ public class UserRecoveryPasswordHandlerServlet extends
 							request.getContextPath() + "/");
 					return;
 				} else {
-					String loginURL = (SiteConfiguration.getDeploymentMode() == DeploymentMode.SITE) ? ("https://www.mycollab.com/signin?email=" + username)
+					String loginURL = (SiteConfiguration.getDeploymentMode() == DeploymentMode.SITE) ? ("https://www.mycollab.com/sign-in?email=" + username)
 							: (request.getContextPath() + "/");
 
 					String redirectURL = request.getContextPath() + "/"
