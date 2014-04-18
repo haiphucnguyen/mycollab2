@@ -1237,7 +1237,7 @@ input.v-textfield-errorField {
 }
 
 #login-header {
-	margin: 0px auto 70px;
+	margin: 0px auto 50px;
 	width: 100%;
 	text-align: center;
 	font-size: 27px;
@@ -1253,9 +1253,26 @@ input.v-textfield-errorField {
 	float: left;
 }
 
+#login-header #social-links {
+	float: right;
+	margin-right: 150px;
+	height: 100%;
+}
+
+#login-header #social-links a {
+	display: inline-block;
+	vertical-align: middle;
+	height: 100%;
+	margin-right: 3px;
+}
+
+#login-header #social-links a img {
+	vertical-align: bottom;
+}
+
 #loginFormContainer {
 	width: 676px;
-	margin: 0px auto 20px;
+	margin: 0px auto;
 	background-color: white;
 	box-shadow: 0px 4px 4px #c8c8c8;
 	border: 1px solid #c8c8c8;
@@ -1269,8 +1286,7 @@ input.v-textfield-errorField {
 	font-size: 38px;
 	line-height: 23px;
 	color: rgb(34, 85, 128);
-	padding: 60px 0px 20px;
-	margin-bottom: 15px;
+	padding: 40px 0px 20px;
 	text-transform: uppercase;
 	text-align: center;
 	font-family: Georgia, "Times New Roman", sans-serif;
@@ -1529,7 +1545,7 @@ input.v-textfield-errorField {
 
 #login-footer #support-links {
 	text-align: center;
-	margin: 70px 0px 30px;
+	margin: 50px 0px 30px;
 }
 
 #login-footer #support-links .external-link {
