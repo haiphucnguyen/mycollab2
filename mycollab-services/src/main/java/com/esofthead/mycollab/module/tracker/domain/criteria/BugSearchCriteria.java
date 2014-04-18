@@ -27,6 +27,7 @@ import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.db.query.CompositionStringParam;
 import com.esofthead.mycollab.core.db.query.DateParam;
 import com.esofthead.mycollab.core.db.query.Param;
+import com.esofthead.mycollab.core.db.query.PropertyListParam;
 import com.esofthead.mycollab.core.db.query.StringListParam;
 import com.esofthead.mycollab.core.db.query.StringParam;
 import com.esofthead.mycollab.module.project.ProjectDataTypeFactory;
@@ -41,7 +42,7 @@ public class BugSearchCriteria extends SearchCriteria {
 	private static final long serialVersionUID = 1L;
 
 	public static Param p_textDesc = new CompositionStringParam("bug-textDesc",
-			"Summary or Detail", new StringParam[] {
+			"Summary, Detail or Environment", new StringParam[] {
 					new StringParam("", "", "m_tracker_bug", "summary"),
 					new StringParam("", "", "m_tracker_bug", "detail") });
 
@@ -58,9 +59,20 @@ public class BugSearchCriteria extends SearchCriteria {
 	public static Param p_duedate = new DateParam("bug-duedate", "Due Date",
 			"m_tracker_bug", "duedate");
 
-	public static Param p_priority = new StringListParam("account-industry",
+	public static Param p_priority = new StringListParam("bug-industry",
 			"Priority", "m_tracker_bug", "priority",
 			Arrays.asList(ProjectDataTypeFactory.getBugPriorityList()));
+
+	public static Param p_severity = new StringListParam("bug-severity",
+			"Severity", "m_tracker_bug", "severity",
+			Arrays.asList(ProjectDataTypeFactory.getBugSeverityList()));
+
+	public static Param p_status = new StringListParam("bug-status", "Status",
+			"m_tracker_bug", "status", Arrays.asList(ProjectDataTypeFactory
+					.getBugStatusList()));
+
+	public static Param p_assignee = new PropertyListParam("bug-assignuser",
+			"Assignee", "m_tracker_bug", "assignuser");
 
 	private StringSearchField assignuser;
 
