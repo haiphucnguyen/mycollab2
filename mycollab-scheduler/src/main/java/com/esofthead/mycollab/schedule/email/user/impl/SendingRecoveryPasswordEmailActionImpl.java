@@ -28,7 +28,7 @@ import com.esofthead.mycollab.common.domain.RelayEmailWithBLOBs;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.mail.service.ExtMailService;
-import com.esofthead.mycollab.module.user.domain.User;
+import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.schedule.email.user.SendingRecoveryPasswordEmailAction;
 
@@ -56,8 +56,8 @@ public class SendingRecoveryPasswordEmailActionImpl implements
 
 		String username = relayEmail.getRecipients();
 		if (username != null) {
-			User user = userService.findUserByUserName(username);
-			String subdomain = "api";
+			SimpleUser user = userService.findUserByUserName(username);
+			String subdomain = user.getSubdomain();
 			String recoveryPasswordURL = SiteConfiguration
 					.getSiteUrl(subdomain)
 					+ "user/recoverypassword/"
