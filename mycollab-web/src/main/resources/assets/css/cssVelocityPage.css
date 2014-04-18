@@ -17,6 +17,10 @@
 	position: relative;
 }
 
+.clear {
+	clear: both;
+}
+
 .header-mid {
 	display: block;
 	width: 936px;
@@ -31,7 +35,7 @@
 
 h1 {
 	color: #05ecfa;
-	font: 27px 'Georgia', sans-serif;;
+	font: 27px 'Georgia', sans-serif;
 }
 
 h3 {
@@ -56,16 +60,31 @@ h3 {
 #mainBody {
 	background-color: #22374b;
 	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
 	padding-left: 80px;
 	padding-right: 80px;
 	padding-bottom: 11px;
-	font-size: 12px;
 	text-align: left;
 	padding-top: 8px;
 	border: 1px solid rgb(169, 169, 169);
 	border-radius: 3px;
 	width: 936px;
 	margin: 0 auto;
+	color: #FFFFFF;
+	font: 20px 'Georgia', sans-serif;
+}
+
+#mainBody input[type="text"], #mainBody input[type="password"] {
+	width: 410px;
+	background: #FFFFFF;
+	border: 1px solid #BBB;
+	border-radius: 0px;
+	padding: 0em 0.2em;
+	line-height: 35px !important;
+	color: #4a4a4a;
+	height: 35px;
+	font-size: 17px;
 }
 
 #mainContent {
@@ -112,4 +131,41 @@ h3 {
 .v-button:hover {
 	border: 1px solid #093768;
 	opacity: 1;
+}
+#exclamation_mark {
+    color: #3474B0;
+    float: left;
+    font-family: "Lucida Bright",Arial,sans-serif;
+    font-size: 180px;
+    font-weight: bold;
+    line-height: 165px;
+}
+#error_display {
+    float: left;
+}
+#error_code {
+    color: #3474B0;
+    font-family: "Lucida Bright",Arial,sans-serif;
+    font-size: 130px;
+    font-weight: bold;
+    line-height: 130px;
+}
+#error_brief {
+    color: #FFFFFF;
+    font-size: 22px;
+    text-align: center;
+}
+#content {
+	color: #FFFFFF;
+	font: 20px 'Georgia',sans-serif;
+}
+#content_left {
+	float: left;
+}
+#content_right {
+    float: left;
+    width: 480px;
+}
+#error_excuse {
+    padding-left: 30px;
 }

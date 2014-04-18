@@ -1467,6 +1467,7 @@ input.v-textfield-errorField {
 	border-right: 1px solid #006DAC;
 	padding-right: 9px;
 	text-align: right;
+	line-height: 18px;
 }
 
 #loginForm .formFooterLinks #forgotLink {
