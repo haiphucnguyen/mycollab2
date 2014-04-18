@@ -7,6 +7,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.esofthead.mycollab.configuration.SharingOptions;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.module.billing.servlet.VerifyUserServletRequestHandler;
 import com.esofthead.template.velocity.TemplateContext;
@@ -46,6 +47,15 @@ public abstract class VelocityWebServletRequestHandler extends
 
 		defaultUrls.put("cdn_url", SiteConfiguration.getCdnUrl());
 		defaultUrls.put("app_url", SiteConfiguration.getAppUrl());
+		
+		SharingOptions sharingOptions = SiteConfiguration
+				.getSharingOptions();
+		
+		defaultUrls.put("facebook_url", sharingOptions.getFacebookUrl());
+		defaultUrls.put("google_url", sharingOptions.getGoogleplusUrl());
+		defaultUrls.put("linkedin_url", sharingOptions.getLinkedinUrl());
+		defaultUrls.put("twitter_url", sharingOptions.getTwitterUrl());
+		
 		pageContext.put("defaultUrls", defaultUrls);
 
 		StringWriter writer = new StringWriter();
