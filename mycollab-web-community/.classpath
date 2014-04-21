@@ -164,7 +164,7 @@
   <classpathentry kind="var" path="M2_REPO/org/vaadin/addons/tokenfield/7.0.1/tokenfield-7.0.1.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/vaadin/addons/stylecalendar/2.1.0/stylecalendar-2.1.0.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/vaadin/addon/easyuploads/7.0.2-SNAPSHOT/easyuploads-7.0.2-SNAPSHOT.jar" sourcepath="M2_REPO/org/vaadin/addon/easyuploads/7.0.2-SNAPSHOT/easyuploads-7.0.2-SNAPSHOT-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/vaadin/addons/contextmenu/4.2.1/contextmenu-4.2.1.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/vaadin/addons/contextmenu/4.4.0/contextmenu-4.4.0.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/lexaden/components/breadcrumb/1.7.3/breadcrumb-1.7.3.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/vaadin/vaadin-client-compiled/7.0.0/vaadin-client-compiled-7.0.0.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/vaadin/vaadin-themes/7.0.0/vaadin-themes-7.0.0.jar"/>
