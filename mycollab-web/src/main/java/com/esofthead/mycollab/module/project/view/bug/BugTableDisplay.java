@@ -24,8 +24,6 @@ import org.vaadin.peter.contextmenu.ContextMenu;
 import org.vaadin.peter.contextmenu.ContextMenu.ContextMenuItem;
 import org.vaadin.peter.contextmenu.ContextMenu.ContextMenuItemClickEvent;
 import org.vaadin.peter.contextmenu.ContextMenu.ContextMenuItemClickListener;
-import org.vaadin.peter.contextmenu.ContextMenu.ContextMenuOpenedListener.ComponentListener;
-import org.vaadin.peter.contextmenu.ContextMenu.ContextMenuOpenedOnComponentEvent;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
@@ -100,7 +98,6 @@ public class BugTableDisplay extends
 
 				final ContextMenu contextMenu = new ContextMenu();
 				contextMenu.setAsContextMenuOf(bugSettingBtn);
-				contextMenu.setOpenAutomatically(false);
 
 				contextMenu
 						.addItemClickListener(new ContextMenuItemClickListener() {
@@ -108,8 +105,15 @@ public class BugTableDisplay extends
 							@Override
 							public void contextMenuItemClicked(
 									ContextMenuItemClickEvent event) {
-								String category = "";
-								String value = "";
+								if (((ContextMenuItem) event.getSource())
+										.getData() == null) {
+									return;
+								}
+
+								String category = ((MenuItemData) ((ContextMenuItem) event
+										.getSource()).getData()).getAction();
+								String value = ((MenuItemData) ((ContextMenuItem) event
+										.getSource()).getData()).getKey();
 								if ("status".equals(category)) {
 									if (BugStatusConstants.VERIFIED
 											.equals(value)) {
@@ -201,16 +205,6 @@ public class BugTableDisplay extends
 
 				bugSettingBtn.setEnabled(CurrentProjectVariables
 						.canWrite(ProjectRolePermissionCollections.BUGS));
-
-				contextMenu
-						.addContextMenuComponentListener(new ComponentListener() {
-
-							public void onContextMenuOpenFromComponent(
-									ContextMenuOpenedOnComponentEvent event) {
-								displayContextMenuItem(contextMenu, bug,
-										event.getX(), event.getY());
-							}
-						});
 
 				bugSettingBtn.addClickListener(new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
