@@ -75,6 +75,7 @@ public class UnresolvedTaskByAssigneeWidget extends Depot {
 				final String assignUser = item.getGroupid();
 				final String assignUserFullName = (item.getGroupid() == null) ? "Undefined"
 						: item.getGroupname();
+				
 				final TaskAssigneeLink userLbl = new TaskAssigneeLink(
 						assignUser, item.getExtraValue(), assignUserFullName);
 				assigneeLayout.addComponent(userLbl);

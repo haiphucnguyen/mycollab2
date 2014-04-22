@@ -379,7 +379,6 @@ public class BugTableDisplay extends
 				bugname = ProjectLinkBuilder.generateBugPreviewFullLink(
 						bug.getProjectid(), bug.getId());
 				LabelLink b = new LabelLink(bug.getSummary(), bugname);
-				;
 
 				if (StringUtils.isNotNullOrEmpty(bug.getPriority())) {
 					Resource iconPriority = ProjectResources
@@ -475,9 +474,9 @@ public class BugTableDisplay extends
 
 		this.setWidth("100%");
 	}
-	
+
 	private void displayContextMenuItem(int locx, int locy) {
-		
+
 	}
 
 	private static class MenuItemData {
