@@ -33,7 +33,9 @@ import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.LabelLink;
 import com.esofthead.mycollab.module.project.ProjectDataTypeFactory;
+import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
 import com.esofthead.mycollab.module.project.ProjectResources;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.events.BugEvent;
@@ -44,12 +46,10 @@ import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.DefaultPagedBeanTable;
-import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 import com.vaadin.server.Resource;
 import com.vaadin.ui.Button;
@@ -375,27 +375,20 @@ public class BugTableDisplay extends
 						.getBeanByIndex(itemId);
 
 				String bugname = "[%s-%s] %s";
-				bugname = String.format(bugname, CurrentProjectVariables
-						.getProject().getShortname(), bug.getBugkey(), bug
-						.getSummary());
-
-				ButtonLink b = new ButtonLink(bugname,
-						new Button.ClickListener() {
-							private static final long serialVersionUID = 1L;
-
-							@Override
-							public void buttonClick(Button.ClickEvent event) {
-								fireTableEvent(new TableClickEvent(
-										BugTableDisplay.this, bug, "summary"));
-							}
-						});
-				b.setDescription(BugToolTipGenerator.generateToolTip(bug));
+				bugname = ProjectLinkBuilder.generateBugPreviewFullLink(
+						bug.getProjectid(), bug.getId());
+				LabelLink b = new LabelLink(bug.getSummary(), bugname);
+				;
 
 				if (StringUtils.isNotNullOrEmpty(bug.getPriority())) {
 					Resource iconPriority = ProjectResources
 							.getIconResource12ByBugSeverity(bug.getPriority());
+
 					b.setIcon(iconPriority);
+
 				}
+
+				b.setDescription(BugToolTipGenerator.generateToolTip(bug));
 
 				if (bug.isCompleted()) {
 					b.addStyleName(UIConstants.LINK_COMPLETED);
