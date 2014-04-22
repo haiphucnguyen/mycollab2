@@ -328,7 +328,8 @@ public class BugTableDisplay extends
 
 					@Override
 					public void buttonClick(ClickEvent event) {
-
+						contextMenu.open(event.getClientX() - 25,
+								event.getClientY());
 					}
 				});
 				return bugSettingBtn;
@@ -480,6 +481,10 @@ public class BugTableDisplay extends
 		});
 
 		this.setWidth("100%");
+	}
+	
+	private void displayContextMenuItem(int locx, int locy) {
+		
 	}
 
 	private static class MenuItemData {
