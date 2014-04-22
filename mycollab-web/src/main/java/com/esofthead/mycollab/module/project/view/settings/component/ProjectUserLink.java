@@ -21,6 +21,7 @@ import com.esofthead.mycollab.module.project.LabelLink;
 import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
+import com.vaadin.server.Resource;
 
 /**
  * 
@@ -44,12 +45,18 @@ public class ProjectUserLink extends LabelLink {
 	public ProjectUserLink(final String username, String userAvatarId,
 			final String displayName, boolean useWordWrap,
 			boolean isDisplayAvatar) {
+		
 		super(displayName, ProjectLinkBuilder.generateProjectMemberFullLink(
 				CurrentProjectVariables.getProjectId(), username));
 
 		if (isDisplayAvatar && username != null && !username.equals("")) {
-			this.setIcon(UserAvatarControlFactory.createAvatarResource(
-					userAvatarId, 16));
+			String link = UserAvatarControlFactory.getAvatarLink(
+					userAvatarId, 16);
+			Resource source = UserAvatarControlFactory.createAvatarResource(
+					userAvatarId, 16);
+			
+			
+			this.setIcon(source);
 		}
 
 		this.setStyleName("link");

@@ -4,6 +4,7 @@ import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.Img;
+import com.vaadin.server.FileResource;
 import com.vaadin.server.Resource;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Label;
@@ -30,18 +31,35 @@ public class LabelLink extends Label {
 
 	private void createContent(String title, String href) {
 		div = new Div();
-
-		link = new A().setHref(href);
-		link.appendText(title);
+		link = new A();
+		if (href != null) {
+			link.setHref(href);	
+		}
+		
+		if (title != null)
+		{
+			link.appendText(title);
+		}
 		div.appendChild(link);
 	}
 
 	@Override
 	public void setIcon(Resource source) {
-		String resourceLink = MyCollabResource.newResourceLink(source
+		String resourceLink = new String();
+		if (source instanceof FileResource)
+			resourceLink = ((FileResource)source).getSourceFile().getAbsolutePath();
+		else
+		resourceLink = MyCollabResource.newResourceLink(source
 				.toString());
-		Img img = new Img("", "");
-		img.setAttribute("src", resourceLink);
+		Img img = new Img("", resourceLink);
+		div.appendChild(0, img);
+		this.setValue(div.write());
+	}
+	
+	
+	public void setIcon(String source) {
+		
+		Img img = new Img("", source);
 		div.appendChild(0, img);
 		this.setValue(div.write());
 	}
