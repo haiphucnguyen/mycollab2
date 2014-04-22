@@ -190,7 +190,7 @@
   <classpathentry kind="var" path="M2_REPO/com/lexaden/components/organisationchart/1.7.1/organisationchart-1.7.1.jar" sourcepath="M2_REPO/com/lexaden/components/organisationchart/1.7.1/organisationchart-1.7.1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/google/gwt/google-apis/gwt-visualization/1.1.2/gwt-visualization-1.1.2.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/esofthead/vaadin/popupbutton/1.0.0-SNAPSHOT/popupbutton-1.0.0-SNAPSHOT.jar" sourcepath="M2_REPO/com/esofthead/vaadin/popupbutton/1.0.0-SNAPSHOT/popupbutton-1.0.0-SNAPSHOT-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/tltv/gantt/gantt-addon/0.1.1/gantt-addon-0.1.1.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/tltv/gantt/gantt-addon/0.2.0/gantt-addon-0.2.0.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/vaadin/addon/confirmdialog/2.0.4/confirmdialog-2.0.4.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/esofthead/vaadin/cropField/1.0-SNAPSHOT/cropField-1.0-SNAPSHOT.jar" sourcepath="M2_REPO/com/esofthead/vaadin/cropField/1.0-SNAPSHOT/cropField-1.0-SNAPSHOT-sources.jar">
     <attributes>
