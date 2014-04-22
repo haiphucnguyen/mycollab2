@@ -52,11 +52,8 @@ public class ProjectUserLink extends LabelLink {
 		if (isDisplayAvatar && username != null && !username.equals("")) {
 			String link = UserAvatarControlFactory.getAvatarLink(
 					userAvatarId, 16);
-			Resource source = UserAvatarControlFactory.createAvatarResource(
-					userAvatarId, 16);
 			
-			
-			this.setIcon(source);
+			this.setIcon(link);
 		}
 
 		this.setStyleName("link");

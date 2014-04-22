@@ -46,8 +46,10 @@ public class LabelLink extends Label {
 	@Override
 	public void setIcon(Resource source) {
 		String resourceLink = new String();
-		if (source instanceof FileResource)
+		if (source instanceof FileResource) {
+			
 			resourceLink = ((FileResource)source).getSourceFile().getAbsolutePath();
+		}
 		else
 		resourceLink = MyCollabResource.newResourceLink(source
 				.toString());

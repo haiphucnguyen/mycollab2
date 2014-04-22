@@ -349,7 +349,8 @@ public class BugTableDisplay extends
 							.getIconResource12ByBugSeverity(bug.getPriority());
 
 					b.setIcon(iconPriority);
-
+				
+					
 				}
 
 				b.setDescription(BugToolTipGenerator.generateToolTip(bug));
