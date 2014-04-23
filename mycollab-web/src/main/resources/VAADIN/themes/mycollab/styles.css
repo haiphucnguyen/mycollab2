@@ -57,6 +57,11 @@ a {
 	text-decoration: none;
 }
 
+/* IE img border fix */
+.v-ie img {
+	border: none;
+}
+
 .mycollab .v-richtextarea {
 	border: 1px solid #CFCFCF;
 }
@@ -486,7 +491,7 @@ div.v-button-link, div.v-button-link:focus, .v-button-link:active, div.v-disable
 }
 
 .v-button.v-button-orangebtn.selected, .v-button-orangebtn:hover, .v-button-orangebtn:active {
-	background-color: rgb(232, 82, 23);
+	background: none no-repeat left top rgb(232, 82, 23);
 }
 
 .v-button.v-button-orangebtn:active .v-button-wrap{

@@ -55,7 +55,7 @@ public class MassUpdateRiskWindow extends MassUpdateWindow<Risk> {
 			formLayout.addComponent(organizationHeader);
 
 			informationLayout = new GridFormLayoutHelper(2, 6, "100%", "167px",
-					Alignment.MIDDLE_LEFT);
+					Alignment.TOP_LEFT);
 
 			informationLayout.getLayout().setWidth("100%");
 			informationLayout.getLayout().setMargin(false);
