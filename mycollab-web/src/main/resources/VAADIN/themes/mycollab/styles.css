@@ -134,7 +134,7 @@ div.v-button .v-button-link .link .v-button-buttonlinkcenter .buttonlinkcenter .
 	overflow: auto;
 }
 
-.v-label.overdue {
+.v-label.overdue,.v-label.overdue a  {
 	color: red;
 }
 
@@ -162,8 +162,9 @@ div.v-button .v-button-link .link .v-button-buttonlinkcenter .buttonlinkcenter .
 	text-align: center;
 }
 
-.v-label img {
+.v-label.link img {
 	vertical-align: top;
+	margin-right:3px;
 }
 
 input.v-textfield,textarea.v-textarea,.v-filterselect {
@@ -4332,7 +4333,7 @@ div.v-csslayout.member-block {
 /* End Project Member Block */
 
 /* Label complete */
-.v-label.completed {
+.v-label.completed,  .v-label.completed a{
 	color: black;
 	text-decoration: line-through;
 }
