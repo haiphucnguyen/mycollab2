@@ -6571,9 +6571,8 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 
 /* case list no item */
 .case-noitem {
-	background-color:#FFFBF8;
-	box-shadow: 0 0 8px 0px rgb(114, 94, 94);
-	border-radius: 2px;
+	border-radius: 0 0px 4px 4px;
+	box-sizing: content-box;
 }
 
 /* change style for all button */
