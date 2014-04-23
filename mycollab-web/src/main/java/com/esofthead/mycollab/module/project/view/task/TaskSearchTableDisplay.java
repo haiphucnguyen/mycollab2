@@ -89,10 +89,9 @@ public class TaskSearchTableDisplay
 				b.setDescription(generateToolTip(task));
 
 				if (StringUtils.isNotNullOrEmpty(task.getPriority())) {
-					Resource iconPriority = ProjectResources
-							.getIconResource12ByTaskPriority(task.getPriority());
-					b.setIcon(MyCollabResource.newResourceLink(iconPriority
-							.toString()));
+					b.setIconLink(ProjectResources
+							.getIconResourceLink12ByTaskPriority(task
+									.getPriority()));
 
 				}
 

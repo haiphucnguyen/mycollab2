@@ -59,7 +59,6 @@ import com.hp.gagawa.java.elements.H3;
 import com.hp.gagawa.java.elements.Img;
 import com.hp.gagawa.java.elements.Td;
 import com.hp.gagawa.java.elements.Tr;
-import com.vaadin.server.Resource;
 import com.vaadin.server.Sizeable;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -110,10 +109,9 @@ public class TaskTableDisplay extends
 				b.setDescription(generateToolTip(task));
 
 				if (StringUtils.isNotNullOrEmpty(task.getPriority())) {
-					Resource iconPriority = ProjectResources
-							.getIconResource12ByTaskPriority(task.getPriority());
-					b.setIcon(MyCollabResource.newResourceLink(iconPriority
-							.toString()));
+					b.setIconLink(ProjectResources
+							.getIconResourceLink12ByTaskPriority(task
+									.getPriority()));
 
 				}
 

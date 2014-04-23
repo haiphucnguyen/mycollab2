@@ -43,7 +43,7 @@ public class LabelLink extends Label {
 		div.appendChild(link);
 	}
 
-	public void setIcon(String source) {
+	public void setIconLink(String source) {
 		
 		Img img = new Img("", source);
 		div.appendChild(0, img);
