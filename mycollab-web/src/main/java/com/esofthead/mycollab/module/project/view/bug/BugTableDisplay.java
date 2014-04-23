@@ -259,17 +259,20 @@ public class BugTableDisplay extends
 						.getBeanByIndex(itemId);
 
 				String bugname = "[%s-%s] %s";
-				bugname = ProjectLinkBuilder.generateBugPreviewFullLink(
-						bug.getProjectid(), bug.getId());
-				LabelLink b = new LabelLink(bug.getSummary(), bugname);
+				bugname = String.format(bugname, CurrentProjectVariables
+						.getProject().getShortname(), bug.getBugkey(), bug
+						.getSummary());
+				LabelLink b = new LabelLink(bugname, ProjectLinkBuilder
+						.generateBugPreviewFullLink(bug.getProjectid(),
+								bug.getId()));
 
 				if (StringUtils.isNotNullOrEmpty(bug.getPriority())) {
 					Resource iconPriority = ProjectResources
 							.getIconResource12ByBugPriority(bug.getPriority());
 
-					b.setIcon(MyCollabResource.newResourceLink(iconPriority.toString()));
+					b.setIcon(MyCollabResource.newResourceLink(iconPriority
+							.toString()));
 
-					
 				}
 
 				b.setDescription(BugToolTipGenerator.generateToolTip(bug));
