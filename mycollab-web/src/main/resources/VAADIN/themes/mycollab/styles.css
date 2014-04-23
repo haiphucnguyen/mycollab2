@@ -4306,6 +4306,10 @@ div.v-csslayout.member-block {
 	font-weight: bold;
 }
 
+.member-block div a  {
+	font-weight: bold;
+}
+
 .member-block .member-role {
 	padding-top: 3px;
 }

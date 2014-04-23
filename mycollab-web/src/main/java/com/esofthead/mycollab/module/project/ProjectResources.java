@@ -169,6 +169,29 @@ public class ProjectResources {
 		}
 		return iconseverity;
 	}
+	
+	public static String getIconResourceLink12ByBugPriority(String priority) {
+		String iconPriority = MyCollabResource
+				.newResourceLink(B_PRIORITY_MAJOR_IMG_12);
+
+		if (BugPriorityStatusConstants.BLOCKER.equals(priority)) {
+			iconPriority = MyCollabResource
+					.newResourceLink(B_PRIORITY_BLOCKER_IMG_12);
+		} else if (BugPriorityStatusConstants.CRITICAL.equals(priority)) {
+			iconPriority = MyCollabResource
+					.newResourceLink(B_PRIORITY_CRITICAL_IMG_12);
+		} else if (BugPriorityStatusConstants.MAJOR.equals(priority)) {
+			iconPriority = MyCollabResource
+					.newResourceLink(B_PRIORITY_MAJOR_IMG_12);
+		} else if (BugPriorityStatusConstants.MINOR.equals(priority)) {
+			iconPriority = MyCollabResource
+					.newResourceLink(B_PRIORITY_MINOR_IMG_12);
+		} else if (BugPriorityStatusConstants.TRIVIAL.equals(priority)) {
+			iconPriority = MyCollabResource
+					.newResourceLink(B_PRIORITY_TRIVIAL_IMG_12);
+		}
+		return iconPriority;
+	}
 
 	public static Resource getIconResource12ByBugPriority(String priority) {
 		Resource iconPriority = MyCollabResource
@@ -226,6 +249,23 @@ public class ProjectResources {
 			iconPriority = MyCollabResource.newResource(T_PRIORITY_MEDIUM_IMG);
 		} else if (TaskPriorityStatusContants.PRIORITY_NONE.equals(priority)) {
 			iconPriority = MyCollabResource.newResource(T_PRIORITY_NONE_IMG);
+		}
+		return iconPriority;
+	}
+	
+	public static String getIconResourceLink12ByTaskPriority(String priority) {
+		String iconPriority = MyCollabResource
+				.newResourceLink(T_PRIORITY_HIGHT_IMG);
+
+		if (TaskPriorityStatusContants.PRIORITY_URGENT.equals(priority)) {
+			iconPriority = MyCollabResource.newResourceLink(T_PRIORITY_URGENT_IMG);
+		} else if (TaskPriorityStatusContants.PRIORITY_HIGHT.equals(priority)) {
+			iconPriority = MyCollabResource.newResourceLink(T_PRIORITY_HIGHT_IMG);
+		} else if (TaskPriorityStatusContants.PRIORITY_MEDIUM
+				.endsWith(priority)) {
+			iconPriority = MyCollabResource.newResourceLink(T_PRIORITY_MEDIUM_IMG);
+		} else if (TaskPriorityStatusContants.PRIORITY_NONE.equals(priority)) {
+			iconPriority = MyCollabResource.newResourceLink(T_PRIORITY_NONE_IMG);
 		}
 		return iconPriority;
 	}

@@ -320,8 +320,8 @@ public class BugRelatedField extends CustomComponent {
 				LabelLink b = new LabelLink(bugname,ProjectLinkBuilder.generateBugPreviewFullLink(bug.getProjectid(),bug.getId()));
 
 				if (StringUtils.isNotNullOrEmpty(bug.getPriority())) {
-					Resource iconPriority = ProjectResources
-							.getIconResource12ByBugPriority(bug.getPriority());
+					String iconPriority = ProjectResources
+							.getIconResourceLink12ByBugPriority(bug.getPriority());
 
 					b.setIcon(iconPriority);
 				}
