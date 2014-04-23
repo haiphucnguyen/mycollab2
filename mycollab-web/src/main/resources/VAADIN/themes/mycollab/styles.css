@@ -172,13 +172,14 @@ div.v-button .v-button-link .link .v-button-buttonlinkcenter .buttonlinkcenter .
 	margin-right:3px;
 }
 
-input.v-textfield,textarea.v-textarea,.v-filterselect {
+input.v-textfield,textarea.v-textarea,.v-filterselect, .v-ie input.v-textfield, .v-ie textarea.v-textarea, .v-ie .v-filterselect {
 	background: none no-repeat left top #FFFFFF;
+	border-color: #CFCFCF;
 }
 
 input.v-widget.v-textfield[type="text"], .v-filterselect  {
 	height: 25px;
-	border-color: #CFCFCF;
+	
 }
 
 .v-app {
@@ -353,7 +354,7 @@ div.v-button-link, div.v-button-link:focus, .v-button-link:active, div.v-disable
 .v-ie .v-popupbutton:focus .v-button-wrap, 
 .v-popupbutton .v-button-wrap, 
 .v-popupbutton:active .v-button-wrap  {
-	padding:6px 8px;
+	padding:6px;
 }
 
 .v-button
@@ -5244,7 +5245,7 @@ div.v-ratingstars-bar {
 .myprojectlist .stream-content .projectlink-wrapper {
 	border-right: 1px solid #CFCFCF;
 	background-color: #F7F7F7;
-	padding: 10px 15px 15px;
+	padding: 10px 15px 25px;
 }
 
 .myprojectlist .stream-content .projectlink-wrapper .project-name .v-button-wrap,
