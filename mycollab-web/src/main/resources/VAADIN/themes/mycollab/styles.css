@@ -6574,7 +6574,7 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 	display: block;
 }
 .v-vertical.case-noitem {
-		border-radius: 0 0px 4px 4px;
+	border-radius: 0 0px 4px 4px;
 	box-sizing: content-box;
 }
 /* case list no item */
