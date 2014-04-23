@@ -267,11 +267,9 @@ public class BugTableDisplay extends
 								bug.getId()));
 
 				if (StringUtils.isNotNullOrEmpty(bug.getPriority())) {
-					String iconPriority = ProjectResources
-							.getIconResourceLink12ByBugPriority(bug.getPriority());
-
-					b.setIcon(iconPriority);
-
+					b.setIconLink(ProjectResources
+							.getIconResourceLink12ByBugPriority(bug
+									.getPriority()));
 				}
 
 				b.setDescription(BugToolTipGenerator.generateToolTip(bug));

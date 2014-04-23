@@ -46,7 +46,7 @@ public class CreateSectionWindow extends Window {
 		this.setContent(contentLayout);
 
 		GridFormLayoutHelper layoutHelper = new GridFormLayoutHelper(1, 2,
-				"100%", "167px", Alignment.MIDDLE_LEFT);
+				"100%", "167px", Alignment.TOP_LEFT);
 		layoutHelper.getLayout().setMargin(false);
 		layoutHelper.getLayout().setWidth("100%");
 		layoutHelper.getLayout().addStyleName(UIConstants.COLORED_GRIDLAYOUT);
@@ -73,7 +73,7 @@ public class CreateSectionWindow extends Window {
 					public void buttonClick(ClickEvent event) {
 						DynaSection section = new DynaSection();
 						section.setDeletedSection(false);
-						section.setHeader((String) sectionName.getValue());
+						section.setHeader(sectionName.getValue());
 						section.setLayoutType((LayoutType) sectionLayoutComboBox
 								.getValue());
 

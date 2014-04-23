@@ -42,10 +42,11 @@ public class TextDetailFieldInfoPanel extends
 			List<DynaSection> activeSections) {
 		super(candidateFieldName, activeSections);
 
-		GridFormLayoutHelper layoutHelper = new GridFormLayoutHelper(1, 3, "100%", "120px", Alignment.MIDDLE_LEFT );
-        layoutHelper.getLayout().setSpacing(true);
-        layoutHelper.getLayout().setMargin(false);
-        layoutHelper.getLayout().setWidth("100%");
+		GridFormLayoutHelper layoutHelper = new GridFormLayoutHelper(1, 3,
+				"100%", "120px", Alignment.TOP_LEFT);
+		layoutHelper.getLayout().setSpacing(true);
+		layoutHelper.getLayout().setMargin(false);
+		layoutHelper.getLayout().setWidth("100%");
 		layoutHelper.addComponent(labelField, "Label", 0, 0);
 		sectionList = new SectionSelectList(activeSections);
 		layoutHelper.addComponent(sectionList, "Section", 0, 1);
@@ -55,7 +56,7 @@ public class TextDetailFieldInfoPanel extends
 
 	@Override
 	public DynaSection updateCustomField() {
-		String displayName = (String) labelField.getValue();
+		String displayName = labelField.getValue();
 		DynaSection ownSection = (DynaSection) sectionList.getValue();
 
 		TextDynaField customField = new TextDynaField();

@@ -109,9 +109,9 @@ public class TaskTableDisplay extends
 				b.setDescription(generateToolTip(task));
 
 				if (StringUtils.isNotNullOrEmpty(task.getPriority())) {
-					String iconPriority = ProjectResources
-							.getIconResourceLink12ByTaskPriority(task.getPriority());
-					b.setIcon(iconPriority);
+					b.setIconLink(ProjectResources
+							.getIconResourceLink12ByTaskPriority(task
+									.getPriority()));
 
 				}
 

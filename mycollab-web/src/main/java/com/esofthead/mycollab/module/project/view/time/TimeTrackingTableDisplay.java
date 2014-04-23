@@ -101,7 +101,7 @@ public class TimeTrackingTableDisplay
 									itemLogging.getProjectid(),
 									itemLogging.getType(),
 									itemLogging.getTypeid()));
-					timeTrackingLink.setIcon(MyCollabResource
+					timeTrackingLink.setIconLink(MyCollabResource
 							.newResourceLink("icons/16/project/bug.png"));
 
 					if (BugStatusConstants.VERIFIED.equals(itemLogging
@@ -121,7 +121,7 @@ public class TimeTrackingTableDisplay
 									itemLogging.getType(),
 									itemLogging.getTypeid()));
 					
-					timeTrackingLink.setIcon(MyCollabResource
+					timeTrackingLink.setIconLink(MyCollabResource
 							.newResourceLink("icons/16/project/task.png"));
 
 					if (itemLogging.getPercentageComplete() != null
@@ -151,10 +151,10 @@ public class TimeTrackingTableDisplay
 									itemLogging.getTypeid()));
 
 					if (type.equals(ProjectTypeConstants.PROBLEM)) {
-						timeTrackingLink.setIcon(MyCollabResource
+						timeTrackingLink.setIconLink(MyCollabResource
 								.newResourceLink("icons/16/project/problem.png"));
 					} else if (type.equals(ProjectTypeConstants.RISK)) {
-						timeTrackingLink.setIcon(MyCollabResource
+						timeTrackingLink.setIconLink(MyCollabResource
 								.newResourceLink("icons/16/project/risk.png"));
 					}
 
