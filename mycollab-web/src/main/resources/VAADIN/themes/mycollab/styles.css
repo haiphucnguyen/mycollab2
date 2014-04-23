@@ -6570,7 +6570,8 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 }
 
 /* case list no item */
-.case-noitem {
+.v-vertical.v-margin-top.case-noitem {
+	padding-top:50px;
 	border-radius: 0 0px 4px 4px;
 	box-sizing: content-box;
 }
