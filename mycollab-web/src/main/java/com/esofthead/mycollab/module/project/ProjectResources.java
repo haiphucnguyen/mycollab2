@@ -170,47 +170,32 @@ public class ProjectResources {
 		return iconseverity;
 	}
 
-	public static Resource getIconResource12ByBugPriority(String priority) {
-		Resource iconPriority = MyCollabResource
-				.newResource(B_PRIORITY_MAJOR_IMG_12);
+	public static String getIconResourceLink12ByBugPriority(String priority) {
+		String iconPriority = MyCollabResource
+				.newResourceLink(B_PRIORITY_MAJOR_IMG_12);
 
 		if (BugPriorityStatusConstants.BLOCKER.equals(priority)) {
 			iconPriority = MyCollabResource
-					.newResource(B_PRIORITY_BLOCKER_IMG_12);
+					.newResourceLink(B_PRIORITY_BLOCKER_IMG_12);
 		} else if (BugPriorityStatusConstants.CRITICAL.equals(priority)) {
 			iconPriority = MyCollabResource
-					.newResource(B_PRIORITY_CRITICAL_IMG_12);
+					.newResourceLink(B_PRIORITY_CRITICAL_IMG_12);
 		} else if (BugPriorityStatusConstants.MAJOR.equals(priority)) {
 			iconPriority = MyCollabResource
-					.newResource(B_PRIORITY_MAJOR_IMG_12);
+					.newResourceLink(B_PRIORITY_MAJOR_IMG_12);
 		} else if (BugPriorityStatusConstants.MINOR.equals(priority)) {
 			iconPriority = MyCollabResource
-					.newResource(B_PRIORITY_MINOR_IMG_12);
+					.newResourceLink(B_PRIORITY_MINOR_IMG_12);
 		} else if (BugPriorityStatusConstants.TRIVIAL.equals(priority)) {
 			iconPriority = MyCollabResource
-					.newResource(B_PRIORITY_TRIVIAL_IMG_12);
+					.newResourceLink(B_PRIORITY_TRIVIAL_IMG_12);
 		}
 		return iconPriority;
 	}
-
-	public static Resource getIconResource16ByBugPriority(String priority) {
-		Resource iconPriority = MyCollabResource
-				.newResource(PRIORITY_MAJOR_IMG_16);
-		if (BugPriorityStatusConstants.BLOCKER.equals(priority)) {
-			iconPriority = MyCollabResource
-					.newResource(PRIORITY_BLOCKER_IMG_16);
-		} else if (BugPriorityStatusConstants.CRITICAL.equals(priority)) {
-			iconPriority = MyCollabResource
-					.newResource(PRIORITY_CRITICAL_IMG_16);
-		} else if (BugPriorityStatusConstants.MAJOR.equals(priority)) {
-			iconPriority = MyCollabResource.newResource(PRIORITY_MAJOR_IMG_16);
-		} else if (BugPriorityStatusConstants.MINOR.equals(priority)) {
-			iconPriority = MyCollabResource.newResource(PRIORITY_MINOR_IMG_16);
-		} else if (BugPriorityStatusConstants.TRIVIAL.equals(priority)) {
-			iconPriority = MyCollabResource
-					.newResource(PRIORITY_TRIVIAL_IMG_16);
-		}
-		return iconPriority;
+	
+	public static Resource getIconResource12ByBugPriority(String priority) {
+		String iconPriorityLink = getIconResourceLink12ByBugPriority(priority);
+		return null; 
 	}
 
 	public static Resource getIconResource12ByTaskPriority(String priority) {
