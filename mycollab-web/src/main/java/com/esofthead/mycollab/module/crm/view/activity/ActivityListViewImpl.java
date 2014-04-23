@@ -88,34 +88,6 @@ public class ActivityListViewImpl extends
 										.getMessage(TaskI18nEnum.TABLE_END_DATE_HEADER),
 								"endDate", UIConstants.TABLE_DATE_TIME_WIDTH)));
 
-		table.addTableListener(new ApplicationEventListener<TableClickEvent>() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public Class<? extends ApplicationEvent> getEventType() {
-				return TableClickEvent.class;
-			}
-
-			@Override
-			public void handle(final TableClickEvent event) {
-				final SimpleActivity simpleEvent = (SimpleActivity) event
-						.getData();
-				if ("Task".equals(simpleEvent.getEventType())) {
-					EventBus.getInstance().fireEvent(
-							new ActivityEvent.TaskRead(this, simpleEvent
-									.getId()));
-				} else if ("Event".equals(simpleEvent.getEventType())) {
-					EventBus.getInstance().fireEvent(
-							new ActivityEvent.MeetingRead(this, simpleEvent
-									.getId()));
-				} else if ("Call".equals(simpleEvent.getEventType())) {
-					EventBus.getInstance().fireEvent(
-							new ActivityEvent.CallRead(this, simpleEvent
-									.getId()));
-				}
-			}
-		});
-
 		return table;
 	}
 

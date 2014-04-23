@@ -25,9 +25,11 @@ import org.slf4j.LoggerFactory;
 
 import com.esofthead.mycollab.common.domain.Currency;
 import com.esofthead.mycollab.core.utils.StringUtils;
+import com.esofthead.mycollab.module.crm.data.CrmLinkBuilder;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.CampaignService;
+import com.esofthead.mycollab.module.project.LabelLink;
 import com.esofthead.mycollab.module.user.UserLinkUtils;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -112,17 +114,10 @@ public class CampaignTableDisplay
 					final Object itemId, Object columnId) {
 				final SimpleCampaign campaign = CampaignTableDisplay.this
 						.getBeanByIndex(itemId);
-				Button b = new Button(campaign.getCampaignname(),
-						new Button.ClickListener() {
-							private static final long serialVersionUID = 1L;
-
-							@Override
-							public void buttonClick(Button.ClickEvent event) {
-								fireTableEvent(new TableClickEvent(
-										CampaignTableDisplay.this, campaign,
-										"campaignname"));
-							}
-						});
+				
+				LabelLink b = new LabelLink(campaign.getCampaignname(),
+						CrmLinkBuilder.generateCampaignPreviewLinkFull(campaign
+								.getId()));									
 				b.setDescription(generateTooltip(campaign));
 				b.setStyleName("link");
 
