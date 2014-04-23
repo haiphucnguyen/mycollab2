@@ -6568,12 +6568,14 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
 .message-list > .v-slot > .v-verticallayout {
 	display: block;
 }
-
+.v-vertical.case-noitem {
+		border-radius: 0 0px 4px 4px;
+	box-sizing: content-box;
+}
 /* case list no item */
 .v-vertical.v-margin-top.case-noitem {
 	padding-top:50px;
-	border-radius: 0 0px 4px 4px;
-	box-sizing: content-box;
+
 }
 
 /* change style for all button */
