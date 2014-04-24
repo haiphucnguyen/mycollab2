@@ -17,9 +17,7 @@
 package com.esofthead.mycollab.schedule.email.project.impl;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -37,7 +35,7 @@ import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.project.service.ProjectTaskListService;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
-import com.esofthead.mycollab.schedule.email.MailItemLink;
+import com.esofthead.mycollab.schedule.email.MailContext;
 import com.esofthead.mycollab.schedule.email.project.ProjectMailLinkGenerator;
 import com.esofthead.mycollab.schedule.email.project.ProjectTaskGroupRelayEmailNotificationAction;
 
@@ -94,46 +92,6 @@ public class ProjectTaskGroupRelayEmailNotificationActionImpl extends
 		templateGenerator.putVariable("summaryLink", summaryLink);
 	}
 
-	protected Map<String, List<MailItemLink>> getListOfProperties(
-			SimpleTaskList tasklist) {
-		Map<String, List<MailItemLink>> listOfDisplayProperties = new LinkedHashMap<String, List<MailItemLink>>();
-
-		ProjectMailLinkGenerator linkGenerator = new ProjectMailLinkGenerator(
-				tasklist.getProjectid());
-
-		if (tasklist.getMilestoneid() != null)
-			listOfDisplayProperties.put(mapper.getFieldLabel("milestoneid"),
-					Arrays.asList(new MailItemLink(linkGenerator
-							.generateMilestonePreviewFullLink(tasklist
-									.getMilestoneid()), tasklist
-							.getMilestoneName())));
-		else {
-			listOfDisplayProperties.put(mapper.getFieldLabel("milestoneid"),
-					null);
-		}
-
-		if (tasklist.getOwner() != null) {
-
-			listOfDisplayProperties.put(mapper.getFieldLabel("owner"), Arrays
-					.asList(new MailItemLink(linkGenerator
-							.generateUserPreviewFullLink(tasklist.getOwner()),
-							tasklist.getOwnerFullName())));
-		} else {
-			listOfDisplayProperties.put(mapper.getFieldLabel("owner"), null);
-		}
-
-		if (tasklist.getDescription() != null) {
-			listOfDisplayProperties.put(mapper.getFieldLabel("description"),
-					Arrays.asList(new MailItemLink(null, tasklist
-							.getDescription())));
-		} else {
-			listOfDisplayProperties.put(mapper.getFieldLabel("description"),
-					null);
-		}
-
-		return listOfDisplayProperties;
-	}
-
 	@Override
 	public TemplateGenerator templateGeneratorForCreateAction(
 			SimpleRelayEmailNotification emailNotification, SimpleUser user) {
@@ -150,8 +108,9 @@ public class ProjectTaskGroupRelayEmailNotificationActionImpl extends
 				"templates/email/project/itemCreatedNotifier.mt");
 		setupMailHeaders(taskList, emailNotification, templateGenerator);
 
-		templateGenerator.putVariable("properties",
-				getListOfProperties(taskList));
+		templateGenerator.putVariable("context",
+				new MailContext<SimpleTaskList>(taskList, user));
+		templateGenerator.putVariable("mapper", mapper);
 
 		return templateGenerator;
 	}

@@ -16,10 +16,7 @@
  */
 package com.esofthead.mycollab.schedule.email.crm.impl;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +25,6 @@ import org.springframework.stereotype.Component;
 import com.esofthead.mycollab.common.domain.SimpleAuditLog;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
 import com.esofthead.mycollab.common.service.AuditLogService;
-import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
@@ -36,7 +32,7 @@ import com.esofthead.mycollab.module.crm.service.CampaignService;
 import com.esofthead.mycollab.module.crm.service.CrmNotificationSettingService;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
-import com.esofthead.mycollab.schedule.email.MailItemLink;
+import com.esofthead.mycollab.schedule.email.MailContext;
 import com.esofthead.mycollab.schedule.email.crm.CampaignRelayEmailNotificationAction;
 import com.esofthead.mycollab.schedule.email.crm.CrmMailLinkGenerator;
 
@@ -84,120 +80,6 @@ public class CampaignRelayEmailNotificationActionImpl extends
 		templateGenerator.putVariable("summaryLink", summaryLink);
 	}
 
-	protected Map<String, List<MailItemLink>> getListOfProperties(
-			SimpleCampaign campaign, SimpleUser user) {
-		Map<String, List<MailItemLink>> listOfDisplayProperties = new LinkedHashMap<String, List<MailItemLink>>();
-
-		CrmMailLinkGenerator crmLinkGenerator = new CrmMailLinkGenerator(
-				getSiteUrl(campaign.getSaccountid()));
-
-		if (campaign.getStatus() != null) {
-			listOfDisplayProperties
-					.put(mapper.getFieldLabel("status"),
-							Arrays.asList(new MailItemLink(null, campaign
-									.getStatus())));
-		} else {
-			listOfDisplayProperties.put(mapper.getFieldLabel("status"), null);
-		}
-
-		if (campaign.getType() != null) {
-			listOfDisplayProperties.put(mapper.getFieldLabel("type"),
-					Arrays.asList(new MailItemLink(null, campaign.getType())));
-		} else {
-			listOfDisplayProperties.put(mapper.getFieldLabel("type"), null);
-		}
-
-		if (campaign.getStartdate() != null) {
-			listOfDisplayProperties
-					.put(mapper.getFieldLabel("startdate"), Arrays
-							.asList(new MailItemLink(null, DateTimeUtils
-									.converToStringWithUserTimeZone(
-											campaign.getStartdate(),
-											user.getTimezone()))));
-		} else {
-			listOfDisplayProperties
-					.put(mapper.getFieldLabel("startdate"), null);
-		}
-
-		if (campaign.getEnddate() != null) {
-			listOfDisplayProperties
-					.put(mapper.getFieldLabel("enddate"), Arrays
-							.asList(new MailItemLink(null, DateTimeUtils
-									.converToStringWithUserTimeZone(
-											campaign.getEnddate(),
-											user.getTimezone()))));
-		} else {
-			listOfDisplayProperties.put(mapper.getFieldLabel("enddate"), null);
-		}
-
-		if (campaign.getAssignuser() != null) {
-			listOfDisplayProperties.put(mapper.getFieldLabel("assignuser"),
-					Arrays.asList(new MailItemLink(crmLinkGenerator
-							.generateUserPreviewFullLink(campaign
-									.getAssignuser()), campaign
-							.getAssignUserFullName())));
-		} else {
-			listOfDisplayProperties.put(mapper.getFieldLabel("assignuser"),
-					null);
-		}
-
-		if (campaign.getCurrencyid() != null) {
-			listOfDisplayProperties.put(mapper.getFieldLabel("currency"),
-					Arrays.asList(new MailItemLink(null, campaign.getCurrency()
-							.getIsocode())));
-		} else {
-			listOfDisplayProperties.put(mapper.getFieldLabel("currency"), null);
-		}
-
-		if (campaign.getBudget() != null) {
-			listOfDisplayProperties.put(mapper.getFieldLabel("budget"), Arrays
-					.asList(new MailItemLink(null, campaign.getBudget()
-							.toString())));
-		} else {
-			listOfDisplayProperties.put(mapper.getFieldLabel("budget"), null);
-		}
-
-		if (campaign.getExpectedcost() != null) {
-			listOfDisplayProperties.put(mapper.getFieldLabel("expectedcost"),
-					Arrays.asList(new MailItemLink(null, campaign
-							.getExpectedcost().toString())));
-		} else {
-			listOfDisplayProperties.put(mapper.getFieldLabel("expectedcost"),
-					null);
-		}
-
-		if (campaign.getExpectedrevenue() != null) {
-			listOfDisplayProperties.put(
-					mapper.getFieldLabel("expectedrevenue"), Arrays
-							.asList(new MailItemLink(null, campaign
-									.getExpectedrevenue().toString())));
-		} else {
-			listOfDisplayProperties.put(
-					mapper.getFieldLabel("expectedrevenue"), null);
-		}
-
-		if (campaign.getActualcost() != null) {
-			listOfDisplayProperties.put(mapper.getFieldLabel("actualcost"),
-					Arrays.asList(new MailItemLink(null, campaign
-							.getActualcost().toString())));
-		} else {
-			listOfDisplayProperties.put(mapper.getFieldLabel("actualcost"),
-					null);
-		}
-
-		if (campaign.getDescription() != null) {
-			listOfDisplayProperties.put(mapper.getFieldLabel("description"),
-					Arrays.asList(new MailItemLink(null, campaign
-							.getDescription())));
-		} else {
-			listOfDisplayProperties.put(mapper.getFieldLabel("description"),
-					null);
-		}
-
-		return listOfDisplayProperties;
-
-	}
-
 	@Override
 	protected TemplateGenerator templateGeneratorForCreateAction(
 			SimpleRelayEmailNotification emailNotification, SimpleUser user) {
@@ -216,8 +98,9 @@ public class CampaignRelayEmailNotificationActionImpl extends
 			setupMailHeaders(simpleCampaign, emailNotification,
 					templateGenerator);
 
-			templateGenerator.putVariable("properties",
-					getListOfProperties(simpleCampaign, user));
+			templateGenerator.putVariable("context",
+					new MailContext<SimpleCampaign>(simpleCampaign, user));
+			templateGenerator.putVariable("mapper", mapper);
 
 			return templateGenerator;
 		} else {

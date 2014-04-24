@@ -18,9 +18,7 @@ package com.esofthead.mycollab.schedule.email.project.impl;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -30,7 +28,6 @@ import org.springframework.stereotype.Component;
 import com.esofthead.mycollab.common.domain.SimpleAuditLog;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
 import com.esofthead.mycollab.common.service.AuditLogService;
-import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.project.ProjectLinkUtils;
@@ -40,6 +37,7 @@ import com.esofthead.mycollab.module.project.service.MilestoneService;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.schedule.ScheduleUserTimeZoneUtils;
+import com.esofthead.mycollab.schedule.email.MailContext;
 import com.esofthead.mycollab.schedule.email.project.ProjectMailLinkGenerator;
 import com.esofthead.mycollab.schedule.email.project.ProjectMilestoneRelayEmailNotificationAction;
 
@@ -113,59 +111,11 @@ public class ProjectMilestoneRelayEmailNotificationActionImpl extends
 
 		setupMailHeaders(milestone, emailNotification, templateGenerator);
 
-		templateGenerator.putVariable("properties",
-				getListOfProperties(milestone, user));
+		templateGenerator.putVariable("context",
+				new MailContext<SimpleMilestone>(milestone, user));
+		templateGenerator.putVariable("mapper", mapper);
 
 		return templateGenerator;
-	}
-
-	protected Map<String, List<MilestoneLinkMapper>> getListOfProperties(
-			SimpleMilestone milestone, SimpleUser user) {
-		Map<String, List<MilestoneLinkMapper>> listOfDisplayProperties = new LinkedHashMap<String, List<MilestoneLinkMapper>>();
-
-		ProjectMailLinkGenerator linkGenerator = new ProjectMailLinkGenerator(
-				milestone.getProjectid());
-
-		if (milestone.getStartdate() != null)
-			listOfDisplayProperties.put(mapper.getFieldLabel("startdate"),
-					Arrays.asList(new MilestoneLinkMapper(null, DateTimeUtils
-							.converToStringWithUserTimeZone(
-									milestone.getStartdate(),
-									user.getTimezone()))));
-		else {
-			listOfDisplayProperties
-					.put(mapper.getFieldLabel("startdate"), null);
-		}
-
-		listOfDisplayProperties.put(mapper.getFieldLabel("status"), Arrays
-				.asList(new MilestoneLinkMapper(null, milestone.getStatus())));
-
-		if (milestone.getEnddate() != null) {
-			listOfDisplayProperties
-					.put(mapper.getFieldLabel("enddate"), Arrays
-							.asList(new MilestoneLinkMapper(null, DateTimeUtils
-									.converToStringWithUserTimeZone(
-											milestone.getEnddate(),
-											user.getTimezone()))));
-		} else {
-			listOfDisplayProperties.put(mapper.getFieldLabel("enddate"), null);
-		}
-
-		listOfDisplayProperties.put(mapper.getFieldLabel("owner"), Arrays
-				.asList(new MilestoneLinkMapper(linkGenerator
-						.generateUserPreviewFullLink(milestone.getOwner()),
-						milestone.getOwnerFullName())));
-
-		if (milestone.getDescription() != null) {
-			listOfDisplayProperties.put(mapper.getFieldLabel("description"),
-					Arrays.asList(new MilestoneLinkMapper(null, milestone
-							.getDescription())));
-		} else {
-			listOfDisplayProperties.put(mapper.getFieldLabel("description"),
-					null);
-		}
-
-		return listOfDisplayProperties;
 	}
 
 	@Override
