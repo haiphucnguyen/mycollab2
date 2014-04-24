@@ -28,6 +28,7 @@ import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.BeanList;
 import com.esofthead.mycollab.vaadin.ui.BeanList.RowDisplayHandler;
+import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.StyleCalendarExp;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -303,16 +304,16 @@ public class StandupListViewImpl extends AbstractPageView implements
 			this.setStyleName("standup-block");
 
 			VerticalLayout userInfo = new VerticalLayout();
+			userInfo.setWidth("200px");
 			userInfo.setStyleName("user-info");
 			userInfo.setSpacing(true);
 			userInfo.setDefaultComponentAlignment(Alignment.TOP_CENTER);
-			userInfo.setSizeUndefined();
 			userInfo.setMargin(true);
 
 			userInfo.addComponent(UserAvatarControlFactory
 					.createUserAvatarEmbeddedComponent(
 							report.getLogByAvatarId(), 100));
-			Button userBtn = new Button(report.getLogByFullName(),
+			ButtonLink userBtn = new ButtonLink(report.getLogByFullName(),
 					new Button.ClickListener() {
 						private static final long serialVersionUID = 1L;
 
@@ -324,7 +325,6 @@ public class StandupListViewImpl extends AbstractPageView implements
 						}
 					});
 			userInfo.addComponent(userBtn);
-			userBtn.addStyleName("link");
 			this.addComponent(userInfo);
 
 			VerticalLayout reportContent = new VerticalLayout();
