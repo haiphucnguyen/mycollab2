@@ -58,6 +58,7 @@ import com.esofthead.mycollab.module.user.domain.BillingAccount;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.service.BillingAccountService;
 import com.esofthead.mycollab.module.user.service.UserService;
+import com.esofthead.mycollab.schedule.email.LinkUtils;
 import com.esofthead.mycollab.schedule.email.MailItemLink;
 import com.esofthead.mycollab.schedule.email.SendingRelayEmailNotificationAction;
 import com.esofthead.mycollab.schedule.email.crm.CrmMailLinkGenerator;
@@ -72,7 +73,6 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
  * @since 1.0
  * 
  */
-@SuppressWarnings("rawtypes")
 public abstract class CrmDefaultSendingRelayEmailAction<B extends ValuedBean>
 		implements SendingRelayEmailNotificationAction {
 
@@ -100,24 +100,25 @@ public abstract class CrmDefaultSendingRelayEmailAction<B extends ValuedBean>
 
 	protected String currentUserTimezone;
 
-	protected Map<String, FieldFormat<?>> fieldsFormat = new HashMap<String, FieldFormat<?>>();
+	protected Map<String, FieldFormat> fieldsFormat = new HashMap<String, FieldFormat>();
 
 	public CrmDefaultSendingRelayEmailAction(String crmType) {
 		this.crmType = crmType;
 	}
 
-	public void generateFieldDisplayHandler(String fieldname, String displayName) {
-		fieldsFormat.put(fieldname, new DefaultFieldFormat(displayName));
+	public void generateFieldDisplayHandler(String fieldName, String displayName) {
+		fieldsFormat.put(fieldName, new DefaultFieldFormat(fieldName,
+				displayName));
 	}
 
 	public void generateFieldDisplayHandler(String fieldname, FieldFormat format) {
 		fieldsFormat.put(fieldname, format);
 	}
 
-	public void generateFieldDisplayHandler(String fieldname,
+	public void generateFieldDisplayHandler(String fieldName,
 			String displayName, Type formatType) {
-		fieldsFormat.put(fieldname,
-				FieldFormat.createFieldFormat(formatType, displayName));
+		fieldsFormat.put(fieldName, FieldFormat.createFieldFormat(formatType,
+				fieldName, displayName));
 	}
 
 	@Override
@@ -293,20 +294,9 @@ public abstract class CrmDefaultSendingRelayEmailAction<B extends ValuedBean>
 		return false;
 	}
 
+	@Deprecated
 	protected String getSiteUrl(Integer sAccountId) {
-		String siteUrl = "";
-		if (SiteConfiguration.getDeploymentMode() == DeploymentMode.SITE) {
-			BillingAccountService billingAccountService = ApplicationContextUtil
-					.getSpringBean(BillingAccountService.class);
-			BillingAccount account = billingAccountService
-					.getAccountById(sAccountId);
-			if (account != null) {
-				siteUrl = SiteConfiguration.getSiteUrl(account.getSubdomain());
-			}
-		} else {
-			siteUrl = SiteConfiguration.getSiteUrl("");
-		}
-		return siteUrl;
+		return LinkUtils.getSiteUrl(sAccountId);
 	}
 
 	protected MailItemLink generateRelatedItem(String type, Integer typeId,

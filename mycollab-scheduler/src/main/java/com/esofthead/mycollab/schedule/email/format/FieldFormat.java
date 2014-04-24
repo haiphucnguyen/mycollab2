@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.schedule.email.format;
 
 import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.schedule.email.MailContext;
 
 /**
  * 
@@ -9,15 +10,17 @@ import com.esofthead.mycollab.core.MyCollabException;
  * 
  * @param <T>
  */
-public abstract class FieldFormat<T> {
+public abstract class FieldFormat {
 
 	public static enum Type {
 		DEFAULT, DATE, DATE_TIME, CURRENCY
 	}
 
+	protected String fieldName;
 	protected String displayName;
 
-	public FieldFormat(String displayName) {
+	public FieldFormat(String fieldName, String displayName) {
+		this.fieldName = fieldName;
 		this.displayName = displayName;
 	}
 
@@ -29,18 +32,26 @@ public abstract class FieldFormat<T> {
 		this.displayName = displayName;
 	}
 
-	abstract String formatField(T value, String timeZone);
+	public String getFieldName() {
+		return fieldName;
+	}
 
-	public static FieldFormat<?> createFieldFormat(Type fieldType,
-			String displayName) {
+	public void setFieldName(String fieldName) {
+		this.fieldName = fieldName;
+	}
+
+	abstract public String formatField(MailContext<?> context);
+
+	public static FieldFormat createFieldFormat(Type fieldType,
+			String fieldName, String displayName) {
 		if (fieldType == Type.DEFAULT) {
-			return new DefaultFieldFormat(displayName);
+			return new DefaultFieldFormat(fieldName, displayName);
 		} else if (fieldType == Type.DATE) {
-			return new DateFieldFormat(displayName);
+			return new DateFieldFormat(fieldName, displayName);
 		} else if (fieldType == Type.DATE_TIME) {
-			return new DateTimeFieldFormat(displayName);
+			return new DateTimeFieldFormat(fieldName, displayName);
 		} else if (fieldType == Type.CURRENCY) {
-			return new CurrencyFieldFormat(displayName);
+			return new CurrencyFieldFormat(fieldName, displayName);
 		} else {
 			throw new MyCollabException("Do not support field type "
 					+ fieldType);
