@@ -82,7 +82,7 @@ public class RelatedReadItemField extends CustomField {
 						AppContext.getAccountId());
 				if (account != null) {
 					relateItemName = account.getAccountname();
-					relatedLink =MyCollabResource
+					relatedLink = MyCollabResource
 							.newResourceLink("icons/16/crm/account.png");
 				}
 			} else if ("Campaign".equals(type)) {
@@ -92,7 +92,7 @@ public class RelatedReadItemField extends CustomField {
 						typeid, AppContext.getAccountId());
 				if (campaign != null) {
 					relateItemName = campaign.getCampaignname();
-					relatedLink =MyCollabResource
+					relatedLink = MyCollabResource
 							.newResourceLink("icons/16/crm/campaign.png");
 
 				}
@@ -103,7 +103,7 @@ public class RelatedReadItemField extends CustomField {
 						AppContext.getAccountId());
 				if (contact != null) {
 					relateItemName = contact.getContactName();
-					relatedLink =MyCollabResource
+					relatedLink = MyCollabResource
 							.newResourceLink("icons/16/crm/contact.png");
 
 				}
@@ -114,7 +114,7 @@ public class RelatedReadItemField extends CustomField {
 						AppContext.getAccountId());
 				if (lead != null) {
 					relateItemName = lead.getLeadName();
-					relatedLink =MyCollabResource
+					relatedLink = MyCollabResource
 							.newResourceLink("icons/16/crm/lead.png");
 
 				}
@@ -125,7 +125,7 @@ public class RelatedReadItemField extends CustomField {
 						.findById(typeid, AppContext.getAccountId());
 				if (opportunity != null) {
 					relateItemName = opportunity.getOpportunityname();
-					relatedLink =MyCollabResource
+					relatedLink = MyCollabResource
 							.newResourceLink("icons/16/crm/opportunity.png");
 
 				}
@@ -136,7 +136,7 @@ public class RelatedReadItemField extends CustomField {
 						AppContext.getAccountId());
 				if (cases != null) {
 					relateItemName = cases.getSubject();
-					relatedLink =MyCollabResource
+					relatedLink = MyCollabResource
 							.newResourceLink("icons/16/crm/case.png");
 
 				}
@@ -146,7 +146,7 @@ public class RelatedReadItemField extends CustomField {
 					CrmLinkBuilder
 							.generateActivityPreviewLinkFull(type, typeid));
 			if (relatedLink != null)
-			related.setIconLink(relatedLink);
+				related.setIconLink(relatedLink);
 
 			if (relatedLink != null) {
 				return related;
