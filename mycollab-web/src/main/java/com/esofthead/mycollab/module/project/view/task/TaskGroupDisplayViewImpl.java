@@ -390,6 +390,7 @@ public class TaskGroupDisplayViewImpl extends AbstractPageView implements
 						doSearch(criteria);
 					}
 				});
+		basicSearchView.removeComponent(basicSearchView.getComponent(0));
 	}
 
 	
@@ -554,9 +555,9 @@ public class TaskGroupDisplayViewImpl extends AbstractPageView implements
 
 		this.addComponent(header);
 		basicSearchView.setMargin(new MarginInfo(false, false, true, false));
-		basicSearchView.removeComponent(basicSearchView.getComponent(0));
+		
 
-		displayAllTasks();
+		displayActiveTasksOnly();
 		this.addComponent(basicSearchView.getWidget());
 
 	}
