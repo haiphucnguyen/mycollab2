@@ -17,12 +17,15 @@
 package com.esofthead.mycollab.schedule.email.crm.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.common.domain.SimpleAuditLog;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
 import com.esofthead.mycollab.common.service.AuditLogService;
 import com.esofthead.mycollab.core.utils.StringUtils;
+import com.esofthead.mycollab.module.crm.CrmResources;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.service.ContactService;
@@ -47,6 +50,7 @@ import com.hp.gagawa.java.elements.Span;
  * 
  */
 @Component
+@Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class ContactRelayEmailNotificationActionImpl extends
 		CrmDefaultSendingRelayEmailAction<SimpleContact> implements
 		ContactRelayEmailNotificationAction {
@@ -232,8 +236,16 @@ public class ContactRelayEmailNotificationActionImpl extends
 		public String formatField(MailContext<?> context) {
 			SimpleContact contact = (SimpleContact) context.getWrappedBean();
 			Span span = new Span();
-			String accountLink = "";
-			Img img = new Img("avatar", accountLink);
+			String accountIconLink = CrmResources
+					.getResourceLink(CrmTypeConstants.ACCOUNT);
+			Img img = new Img("avatar", accountIconLink);
+			span.appendChild(img);
+
+			A link = new A();
+
+			link.appendText(contact.getAssignUserFullName());
+			span.appendChild(link);
+
 			return span.write();
 		}
 

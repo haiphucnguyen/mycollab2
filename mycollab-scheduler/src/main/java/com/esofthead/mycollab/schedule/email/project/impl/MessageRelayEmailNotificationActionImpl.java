@@ -22,6 +22,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
@@ -42,6 +44,7 @@ import com.esofthead.mycollab.schedule.email.project.ProjectMailLinkGenerator;
  * 
  */
 @Service
+@Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class MessageRelayEmailNotificationActionImpl extends
 		SendMailToAllMembersAction implements
 		MessageRelayEmailNotificationAction {

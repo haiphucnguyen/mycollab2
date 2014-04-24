@@ -20,6 +20,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.common.domain.SimpleAuditLog;
@@ -32,6 +34,7 @@ import com.esofthead.mycollab.module.crm.service.CallService;
 import com.esofthead.mycollab.module.crm.service.CrmNotificationSettingService;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
+import com.esofthead.mycollab.schedule.email.LinkUtils;
 import com.esofthead.mycollab.schedule.email.MailContext;
 import com.esofthead.mycollab.schedule.email.crm.CallRelayEmailNotificationAction;
 import com.esofthead.mycollab.schedule.email.crm.CrmMailLinkGenerator;
@@ -43,6 +46,7 @@ import com.esofthead.mycollab.schedule.email.crm.CrmMailLinkGenerator;
  * 
  */
 @Component
+@Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class CallRelayEmailNotificationActionImpl extends
 		CrmDefaultSendingRelayEmailAction<SimpleCall> implements
 		CallRelayEmailNotificationAction {
@@ -67,6 +71,7 @@ public class CallRelayEmailNotificationActionImpl extends
 			TemplateGenerator templateGenerator) {
 
 		CrmMailLinkGenerator crmLinkGenerator = new CrmMailLinkGenerator(
+				LinkUtils.
 				getSiteUrl(call.getSaccountid()));
 
 		String summary = call.getSubject();

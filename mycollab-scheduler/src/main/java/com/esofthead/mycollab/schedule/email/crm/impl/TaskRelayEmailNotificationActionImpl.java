@@ -20,6 +20,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.common.domain.SimpleAuditLog;
@@ -32,6 +34,7 @@ import com.esofthead.mycollab.module.crm.service.CrmNotificationSettingService;
 import com.esofthead.mycollab.module.crm.service.TaskService;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
+import com.esofthead.mycollab.schedule.email.LinkUtils;
 import com.esofthead.mycollab.schedule.email.MailContext;
 import com.esofthead.mycollab.schedule.email.crm.CrmMailLinkGenerator;
 import com.esofthead.mycollab.schedule.email.crm.TaskRelayEmailNotificationAction;
@@ -43,6 +46,7 @@ import com.esofthead.mycollab.schedule.email.crm.TaskRelayEmailNotificationActio
  * 
  */
 @Component
+@Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class TaskRelayEmailNotificationActionImpl extends
 		CrmDefaultSendingRelayEmailAction<SimpleTask> implements
 		TaskRelayEmailNotificationAction {
@@ -66,7 +70,7 @@ public class TaskRelayEmailNotificationActionImpl extends
 			SimpleRelayEmailNotification emailNotification,
 			TemplateGenerator templateGenerator) {
 
-		CrmMailLinkGenerator crmLinkGenerator = new CrmMailLinkGenerator(
+		CrmMailLinkGenerator crmLinkGenerator = new CrmMailLinkGenerator(LinkUtils.
 				getSiteUrl(task.getSaccountid()));
 
 		String summary = task.getSubject();

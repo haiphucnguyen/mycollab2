@@ -20,6 +20,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.common.domain.SimpleAuditLog;
@@ -32,6 +34,7 @@ import com.esofthead.mycollab.module.crm.service.CrmNotificationSettingService;
 import com.esofthead.mycollab.module.crm.service.OpportunityService;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
+import com.esofthead.mycollab.schedule.email.LinkUtils;
 import com.esofthead.mycollab.schedule.email.MailContext;
 import com.esofthead.mycollab.schedule.email.crm.CrmMailLinkGenerator;
 import com.esofthead.mycollab.schedule.email.crm.OpportunityRelayEmailNotificationAction;
@@ -43,6 +46,7 @@ import com.esofthead.mycollab.schedule.email.crm.OpportunityRelayEmailNotificati
  * 
  */
 @Component
+@Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class OpportunityRelayEmailNotificationActionImpl extends
 		CrmDefaultSendingRelayEmailAction<SimpleOpportunity> implements
 		OpportunityRelayEmailNotificationAction {
@@ -67,7 +71,7 @@ public class OpportunityRelayEmailNotificationActionImpl extends
 			TemplateGenerator templateGenerator) {
 
 		CrmMailLinkGenerator crmLinkGenerator = new CrmMailLinkGenerator(
-				getSiteUrl(simpleOpportunity.getSaccountid()));
+				LinkUtils.getSiteUrl(simpleOpportunity.getSaccountid()));
 
 		String summary = simpleOpportunity.getOpportunityname();
 		String summaryLink = crmLinkGenerator
