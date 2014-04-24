@@ -267,12 +267,9 @@ public class BugTableDisplay extends
 								bug.getId()));
 
 				if (StringUtils.isNotNullOrEmpty(bug.getPriority())) {
-					Resource iconPriority = ProjectResources
-							.getIconResource12ByBugPriority(bug.getPriority());
-
-					b.setIcon(MyCollabResource.newResourceLink(iconPriority
-							.toString()));
-
+					b.setIconLink(ProjectResources
+							.getIconResourceLink12ByBugPriority(bug
+									.getPriority()));
 				}
 
 				b.setDescription(BugToolTipGenerator.generateToolTip(bug));

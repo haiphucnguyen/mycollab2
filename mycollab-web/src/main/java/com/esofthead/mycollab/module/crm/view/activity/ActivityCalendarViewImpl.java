@@ -247,7 +247,7 @@ public class ActivityCalendarViewImpl extends AbstractPageView implements
 			public void buttonClick(ClickEvent event) {
 				calendarActionBtn.setPopupVisible(false);
 				String caption = event.getButton().getCaption();
-				if (caption.equals("Create Todo")) {
+				if (caption.equals("Create Task")) {
 					EventBus.getInstance().fireEvent(
 							new ActivityEvent.TaskAdd(this, null));
 				} else if (caption.equals("Create Call")) {
@@ -260,7 +260,7 @@ public class ActivityCalendarViewImpl extends AbstractPageView implements
 			}
 		};
 
-		ButtonLink todoBtn = new ButtonLink("Create Todo", listener);
+		ButtonLink todoBtn = new ButtonLink("Create Task", listener);
 		actionBtnLayout.addComponent(todoBtn);
 		todoBtn.setIcon(MyCollabResource.newResource("icons/16/crm/task.png"));
 		todoBtn.setEnabled(AppContext

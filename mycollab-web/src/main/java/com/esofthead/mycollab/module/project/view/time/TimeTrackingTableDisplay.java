@@ -29,7 +29,6 @@ import com.esofthead.mycollab.module.project.view.settings.component.ProjectUser
 import com.esofthead.mycollab.module.tracker.BugStatusConstants;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.DefaultPagedBeanTable;
@@ -101,7 +100,7 @@ public class TimeTrackingTableDisplay
 									itemLogging.getProjectid(),
 									itemLogging.getType(),
 									itemLogging.getTypeid()));
-					timeTrackingLink.setIcon(MyCollabResource
+					timeTrackingLink.setIconLink(MyCollabResource
 							.newResourceLink("icons/16/project/bug.png"));
 
 					if (BugStatusConstants.VERIFIED.equals(itemLogging
@@ -121,7 +120,7 @@ public class TimeTrackingTableDisplay
 									itemLogging.getType(),
 									itemLogging.getTypeid()));
 					
-					timeTrackingLink.setIcon(MyCollabResource
+					timeTrackingLink.setIconLink(MyCollabResource
 							.newResourceLink("icons/16/project/task.png"));
 
 					if (itemLogging.getPercentageComplete() != null
@@ -151,10 +150,10 @@ public class TimeTrackingTableDisplay
 									itemLogging.getTypeid()));
 
 					if (type.equals(ProjectTypeConstants.PROBLEM)) {
-						timeTrackingLink.setIcon(MyCollabResource
+						timeTrackingLink.setIconLink(MyCollabResource
 								.newResourceLink("icons/16/project/problem.png"));
 					} else if (type.equals(ProjectTypeConstants.RISK)) {
-						timeTrackingLink.setIcon(MyCollabResource
+						timeTrackingLink.setIconLink(MyCollabResource
 								.newResourceLink("icons/16/project/risk.png"));
 					}
 
@@ -189,21 +188,13 @@ public class TimeTrackingTableDisplay
 					Object columnId) {
 				final SimpleItemTimeLogging itemLogging = TimeTrackingTableDisplay.this
 						.getBeanByIndex(itemId);
-				ButtonLink projectLink = new ButtonLink(itemLogging
-						.getProjectName(), new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
-
-					@Override
-					public void buttonClick(ClickEvent event) {
-						fireTableEvent(new TableClickEvent(
-								TimeTrackingTableDisplay.this, itemLogging,
-								"projectName"));
-
-					}
-				});
-				projectLink.setIcon(MyCollabResource
-						.newResource("icons/16/project/project.png"));
-				return projectLink;
+				
+				LabelLink b = new LabelLink(itemLogging
+						.getProjectName(),
+						ProjectLinkBuilder.generateProjectFullLink(itemLogging.getProjectid(), "#"));	
+				b.setIconLink(MyCollabResource
+						.newResourceLink("icons/16/project/project.png"));
+				return b;
 			}
 		});
 

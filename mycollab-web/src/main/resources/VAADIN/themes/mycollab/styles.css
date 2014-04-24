@@ -359,16 +359,9 @@ div.v-button-link, div.v-button-link:focus, .v-button-link:active, div.v-disable
 
 .v-button
 	{
-	/*background-image: url("icons/grad-dark-bottom2.png");*/
-	/*background-image:none;*/
-	/*background-repeat: repeat-x;*/
-	/*background-position: left bottom;*/
 	background-color: #F9F9F9;
 	border: 1px solid #6a6a6a;
-	/* color: #FFFFFF; */
-	/* text-shadow: 1px 1px 0px #1570cd; */
 	border-radius: 2px;
-	/* padding: 3px 13px; */
 	background-image:none;
 	padding:0;
 }
@@ -687,11 +680,6 @@ div.v-button-nonPopupIndicator div.v-popup-indicator {
 	border: 1px solid #093768;
 }
 
-/*.v-button-graybtn:hover {
-	background: url("icons/grad-dark-bottom.png") repeat-x left bottom
-		#b2b2b2;
-	border: 1px solid rgb(56, 56, 56);
-}*/
 
 .v-button-link.medium-text .v-button-caption {
 	font-size: 14px;
@@ -4315,6 +4303,10 @@ div.v-csslayout.member-block {
 	font-weight: bold;
 }
 
+.member-block div a  {
+	font-weight: bold;
+}
+
 .member-block .member-role {
 	padding-top: 3px;
 }
@@ -6832,7 +6824,7 @@ img.icon-btn {
 	color: #313131;
 }
 .standup-missing-comp .comp-body-wrap .v-label {
-	text-align: center;	
+	text-align: left;	
 }
 /* Popup select field */
 .v-popupbutton-popup.v-popupbutton-popup-select-bg {
