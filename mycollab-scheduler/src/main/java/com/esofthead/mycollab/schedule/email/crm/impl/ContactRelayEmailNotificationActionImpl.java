@@ -38,6 +38,7 @@ import com.esofthead.mycollab.schedule.email.ItemFieldMapper;
 import com.esofthead.mycollab.schedule.email.LinkUtils;
 import com.esofthead.mycollab.schedule.email.MailContext;
 import com.esofthead.mycollab.schedule.email.crm.ContactRelayEmailNotificationAction;
+import com.esofthead.mycollab.schedule.email.format.EmailLinkFieldFormat;
 import com.esofthead.mycollab.schedule.email.format.FieldFormat;
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Img;
@@ -174,7 +175,7 @@ public class ContactRelayEmailNotificationActionImpl extends
 			put("otherphone", "Other Phone");
 			put("department", "Department");
 			put("fax", "Fax");
-			put("email", "Email");
+			put("email", new EmailLinkFieldFormat("email", "Email"));
 			put("birthday", "Birthday");
 			put("assistant", "Assistant");
 			put("iscallable", "Callable");
@@ -214,9 +215,11 @@ public class ContactRelayEmailNotificationActionImpl extends
 
 			Span span = new Span();
 			Img img = new Img("avatar", userAvatarLink);
+			img.setStyle("vertical-align: middle; margin-right: 3px;");
 			span.appendChild(img);
 
 			A link = new A();
+			link.setStyle("text-decoration: none; color: rgb(36, 127, 211);");
 			link.setHref(userLink);
 			link.appendText(contact.getAssignUserFullName());
 			span.appendChild(link);
@@ -237,14 +240,16 @@ public class ContactRelayEmailNotificationActionImpl extends
 			String accountIconLink = CrmResources
 					.getResourceLink(CrmTypeConstants.ACCOUNT);
 			Img img = new Img("avatar", accountIconLink);
+			img.setStyle("vertical-align: middle; margin-right: 3px;");
 			span.appendChild(img);
 
 			A link = new A();
+			link.setStyle("text-decoration: none; color: rgb(36, 127, 211);");
 			String accountLink = CrmLinkGenerator
 					.generateAccountPreviewFullLink(context.getSiteUrl(),
 							contact.getAccountid());
 			link.setHref(accountLink);
-			link.appendText(contact.getAssignUserFullName());
+			link.appendText(contact.getAccountName());
 			span.appendChild(link);
 
 			return span.write();

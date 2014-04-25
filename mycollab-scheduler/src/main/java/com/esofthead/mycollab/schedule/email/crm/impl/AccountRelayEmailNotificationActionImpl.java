@@ -173,6 +173,7 @@ public class AccountRelayEmailNotificationActionImpl extends
 			super(fieldName, displayName);
 		}
 
+		@Override
 		public String formatField(MailContext<?> context) {
 			SimpleAccount account = (SimpleAccount) context.getWrappedBean();
 			String userLink = UserLinkUtils.generatePreviewFullUserLink(
@@ -183,9 +184,11 @@ public class AccountRelayEmailNotificationActionImpl extends
 
 			Span span = new Span();
 			Img img = new Img("avatar", userAvatarLink);
+			img.setStyle("vertical-align: middle; margin-right: 3px;");
 			span.appendChild(img);
 
 			A link = new A();
+			link.setStyle("text-decoration: none; color: rgb(36, 127, 211);");
 			link.setHref(userLink);
 			link.appendText(account.getAssignUserFullName());
 			span.appendChild(link);
