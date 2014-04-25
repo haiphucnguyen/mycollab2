@@ -30,9 +30,10 @@ import com.esofthead.mycollab.common.domain.SimpleAuditLog;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
 import com.esofthead.mycollab.common.service.AuditLogService;
 import com.esofthead.mycollab.core.utils.StringUtils;
-import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.project.ProjectLinkUtils;
+import com.esofthead.mycollab.module.project.ProjectResources;
+import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.ProjectNotificationSetting;
 import com.esofthead.mycollab.module.project.domain.ProjectNotificationSettingType;
 import com.esofthead.mycollab.module.project.domain.ProjectRelayEmailNotification;
@@ -292,7 +293,8 @@ public class BugRelayEmailNotificationActionImpl extends
 			put("priority", "Priority");
 			put("duedate", "Due Date");
 			put("logby", "Logged By");
-			put("milestoneid", "Milestone");
+			put("milestoneid", new MilestoneFieldFormat("milestoneid",
+					"Milestone"));
 		}
 	}
 
@@ -304,14 +306,21 @@ public class BugRelayEmailNotificationActionImpl extends
 
 		@Override
 		protected Img buildImage(MailContext<?> context) {
-			SimpleBug bug = (SimpleBug) context.getWrappedBean();
-			return null;
+			String milestoneIconLink = ProjectResources
+					.getResourceLink(ProjectTypeConstants.MILESTONE);
+			return new Img("icon", milestoneIconLink);
 		}
 
 		@Override
 		protected A buildLink(MailContext<?> context) {
-			// TODO Auto-generated method stub
-			return null;
+			SimpleBug bug = (SimpleBug) context.getWrappedBean();
+			A link = new A();
+			String milestoneLink = ProjectLinkUtils
+					.generateMilestonePreviewFullLink(context.getSiteUrl(),
+							bug.getProjectid(), bug.getMilestoneid());
+			link.setHref(milestoneLink);
+			link.appendText(bug.getMilestoneName());
+			return link;
 		}
 
 	}

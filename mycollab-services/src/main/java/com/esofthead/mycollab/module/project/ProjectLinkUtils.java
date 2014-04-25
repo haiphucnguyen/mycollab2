@@ -58,6 +58,12 @@ public class ProjectLinkUtils {
 						milestoneId });
 	}
 
+	public static String generateMilestonePreviewFullLink(String siteUrl,
+			int projectId, int milestoneId) {
+		return siteUrl + GenericLinkUtils.URL_PREFIX_PARAM
+				+ generateMilestonePreviewLink(projectId, milestoneId);
+	}
+
 	public static String generateProblemPreviewLink(Integer projectId,
 			Integer problemId) {
 		return "project/problem/preview/"
@@ -67,11 +73,8 @@ public class ProjectLinkUtils {
 
 	public static String generateProblemPreviewFullLink(String siteUrl,
 			Integer projectId, Integer problemId) {
-		return siteUrl
-				+ GenericLinkUtils.URL_PREFIX_PARAM
-				+ "project/problem/preview/"
-				+ GenericLinkUtils.encodeParam(new Object[] { projectId,
-						problemId });
+		return siteUrl + GenericLinkUtils.URL_PREFIX_PARAM
+				+ generateProblemPreviewLink(projectId, problemId);
 	}
 
 	public static String generateProjectMemberFullLink(String siteUrl,
