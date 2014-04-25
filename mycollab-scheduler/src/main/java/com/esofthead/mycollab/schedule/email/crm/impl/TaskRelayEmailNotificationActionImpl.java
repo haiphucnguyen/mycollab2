@@ -70,8 +70,8 @@ public class TaskRelayEmailNotificationActionImpl extends
 			SimpleRelayEmailNotification emailNotification,
 			TemplateGenerator templateGenerator) {
 
-		CrmMailLinkGenerator crmLinkGenerator = new CrmMailLinkGenerator(LinkUtils.
-				getSiteUrl(task.getSaccountid()));
+		CrmMailLinkGenerator crmLinkGenerator = new CrmMailLinkGenerator(
+				LinkUtils.getSiteUrl(task.getSaccountid()));
 
 		String summary = task.getSubject();
 		String summaryLink = crmLinkGenerator.generateTaskPreviewFullLink(task
@@ -100,7 +100,7 @@ public class TaskRelayEmailNotificationActionImpl extends
 			setupMailHeaders(simpleTask, emailNotification, templateGenerator);
 
 			templateGenerator.putVariable("context",
-					new MailContext<SimpleTask>(simpleTask, user));
+					new MailContext<SimpleTask>(simpleTask, user, siteUrl));
 			templateGenerator.putVariable("mapper", mapper);
 			return templateGenerator;
 		} else {

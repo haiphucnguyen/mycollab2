@@ -35,7 +35,7 @@ import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
-import com.esofthead.mycollab.schedule.email.SendingRelayEmailNotificationAction;
+import com.esofthead.mycollab.schedule.email.crm.impl.CrmDefaultSendingRelayEmailAction;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 
 /**
@@ -67,12 +67,12 @@ public class CrmSendingRelayEmailNotificationJob extends QuartzJobBean {
 				.findPagableListByCriteria(new SearchRequest<RelayEmailNotificationSearchCriteria>(
 						criteria, 0, Integer.MAX_VALUE));
 
-		SendingRelayEmailNotificationAction emailNotificationAction = null;
+		CrmDefaultSendingRelayEmailAction emailNotificationAction = null;
 
 		for (SimpleRelayEmailNotification notification : relayEmaiNotifications) {
 			try {
 				if (notification.getEmailhandlerbean() != null) {
-					emailNotificationAction = (SendingRelayEmailNotificationAction) ApplicationContextUtil
+					emailNotificationAction = (CrmDefaultSendingRelayEmailAction) ApplicationContextUtil
 							.getSpringBean(Class.forName(notification
 									.getEmailhandlerbean()));
 

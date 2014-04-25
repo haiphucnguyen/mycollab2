@@ -40,6 +40,7 @@ import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.mail.service.ExtMailService;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.service.UserService;
+import com.esofthead.mycollab.schedule.email.LinkUtils;
 import com.esofthead.mycollab.schedule.email.SendingRelayEmailNotificationAction;
 
 /**
@@ -70,6 +71,8 @@ public abstract class CrmDefaultSendingRelayEmailAction<B extends ValuedBean>
 
 	protected String currentUserTimezone;
 
+	protected String siteUrl;
+
 	public CrmDefaultSendingRelayEmailAction(String crmType) {
 		this.crmType = crmType;
 	}
@@ -80,6 +83,7 @@ public abstract class CrmDefaultSendingRelayEmailAction<B extends ValuedBean>
 		List<SimpleUser> notifiers = getListNotififyUserWithFilter(
 				notification, MonitorTypeConstants.CREATE_ACTION);
 		if ((notifiers != null) && !notifiers.isEmpty()) {
+			onInitAction(notification);
 			for (SimpleUser user : notifiers) {
 				currentUserTimezone = user.getTimezone();
 				TemplateGenerator templateGenerator = templateGeneratorForCreateAction(
@@ -117,6 +121,7 @@ public abstract class CrmDefaultSendingRelayEmailAction<B extends ValuedBean>
 		List<SimpleUser> notifiers = getListNotififyUserWithFilter(
 				notification, MonitorTypeConstants.UPDATE_ACTION);
 		if ((notifiers != null) && !notifiers.isEmpty()) {
+			onInitAction(notification);
 			for (SimpleUser user : notifiers) {
 				currentUserTimezone = user.getTimezone();
 				TemplateGenerator templateGenerator = templateGeneratorForUpdateAction(
@@ -152,6 +157,7 @@ public abstract class CrmDefaultSendingRelayEmailAction<B extends ValuedBean>
 		List<SimpleUser> notifiers = getListNotififyUserWithFilter(
 				notification, MonitorTypeConstants.ADD_COMMENT_ACTION);
 		if ((notifiers != null) && !notifiers.isEmpty()) {
+			onInitAction(notification);
 			for (SimpleUser user : notifiers) {
 				currentUserTimezone = user.getTimezone();
 				TemplateGenerator templateGenerator = templateGeneratorForCommentAction(
@@ -234,6 +240,10 @@ public abstract class CrmDefaultSendingRelayEmailAction<B extends ValuedBean>
 		}
 		return inListUsers;
 
+	}
+	
+	private void onInitAction(SimpleRelayEmailNotification notification) {
+		siteUrl = LinkUtils.getSiteUrl(notification.getSaccountid());
 	}
 
 	private boolean checkExistInList(List<SimpleUser> lst, SimpleUser user) {

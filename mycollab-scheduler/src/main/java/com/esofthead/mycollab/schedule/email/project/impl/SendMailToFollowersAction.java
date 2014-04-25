@@ -71,6 +71,8 @@ public abstract class SendMailToFollowersAction implements
 	
 	@Autowired
 	protected ProjectTaskListService projectTaskListService;
+	
+	protected String siteUrl;
 
 	@Override
 	public void sendNotificationForCreateAction(

@@ -115,7 +115,7 @@ public class ProjectMilestoneRelayEmailNotificationActionImpl extends
 		setupMailHeaders(milestone, emailNotification, templateGenerator);
 
 		templateGenerator.putVariable("context",
-				new MailContext<SimpleMilestone>(milestone, user));
+				new MailContext<SimpleMilestone>(milestone, user, siteUrl));
 		templateGenerator.putVariable("mapper", mapper);
 
 		return templateGenerator;

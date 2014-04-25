@@ -102,9 +102,9 @@ public class OpportunityRelayEmailNotificationActionImpl extends
 			setupMailHeaders(simpleOpportunity, emailNotification,
 					templateGenerator);
 
-			templateGenerator
-					.putVariable("context", new MailContext<SimpleOpportunity>(
-							simpleOpportunity, user));
+			templateGenerator.putVariable("context",
+					new MailContext<SimpleOpportunity>(simpleOpportunity, user,
+							siteUrl));
 			templateGenerator.putVariable("mapper", mapper);
 
 			return templateGenerator;

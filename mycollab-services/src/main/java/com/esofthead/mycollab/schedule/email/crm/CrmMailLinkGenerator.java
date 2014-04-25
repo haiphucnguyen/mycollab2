@@ -9,6 +9,7 @@ import com.esofthead.mycollab.module.crm.CrmLinkGenerator;
  * @since 1.0
  * 
  */
+@Deprecated
 public class CrmMailLinkGenerator {
 
 	private final String siteUrl;

@@ -100,7 +100,7 @@ public class CaseRelayEmailNotificationActionImpl extends
 			setupMailHeaders(simpleCase, emailNotification, templateGenerator);
 
 			templateGenerator.putVariable("context",
-					new MailContext<SimpleCase>(simpleCase, user));
+					new MailContext<SimpleCase>(simpleCase, user, siteUrl));
 			templateGenerator.putVariable("mapper", mapper);
 
 			return templateGenerator;

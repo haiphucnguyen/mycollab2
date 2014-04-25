@@ -25,6 +25,7 @@ import com.esofthead.mycollab.common.domain.SimpleAuditLog;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
 import com.esofthead.mycollab.common.service.AuditLogService;
 import com.esofthead.mycollab.core.utils.StringUtils;
+import com.esofthead.mycollab.module.crm.CrmLinkGenerator;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.service.AccountService;
@@ -38,7 +39,6 @@ import com.esofthead.mycollab.schedule.email.ItemFieldMapper;
 import com.esofthead.mycollab.schedule.email.LinkUtils;
 import com.esofthead.mycollab.schedule.email.MailContext;
 import com.esofthead.mycollab.schedule.email.crm.AccountRelayEmailNotificationAction;
-import com.esofthead.mycollab.schedule.email.crm.CrmMailLinkGenerator;
 import com.esofthead.mycollab.schedule.email.format.FieldFormat;
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Img;
@@ -80,12 +80,9 @@ public class AccountRelayEmailNotificationActionImpl extends
 			SimpleRelayEmailNotification emailNotification,
 			TemplateGenerator templateGenerator) {
 
-		CrmMailLinkGenerator crmLinkGenerator = new CrmMailLinkGenerator(
-				LinkUtils.getSiteUrl(account.getSaccountid()));
-
 		String summary = account.getAccountname();
-		String summaryLink = crmLinkGenerator
-				.generateAccountPreviewFullLink(account.getId());
+		String summaryLink = CrmLinkGenerator.generateAccountPreviewFullLink(
+				siteUrl, account.getId());
 
 		templateGenerator.putVariable("makeChangeUser",
 				emailNotification.getChangeByUserFullName());
@@ -112,8 +109,9 @@ public class AccountRelayEmailNotificationActionImpl extends
 			setupMailHeaders(simpleAccount, emailNotification,
 					templateGenerator);
 
-			templateGenerator.putVariable("context",
-					new MailContext<SimpleAccount>(simpleAccount, user));
+			templateGenerator
+					.putVariable("context", new MailContext<SimpleAccount>(
+							simpleAccount, user, siteUrl));
 			templateGenerator.putVariable("mapper", mapper);
 
 			return templateGenerator;

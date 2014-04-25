@@ -30,6 +30,11 @@ public class CrmLinkGenerator {
 				+ GenericLinkUtils.encodeParam(new Object[] { accountId });
 	}
 
+	public static String generateAccountPreviewFullLink(String siteUrl,
+			Integer accountId) {
+		return siteUrl + "#" + generateAccountPreviewLink(accountId);
+	}
+
 	public static String generateCampaignPreviewLink(Integer campaignId) {
 		return "crm/campaign/preview/"
 				+ GenericLinkUtils.encodeParam(new Object[] { campaignId });
@@ -43,6 +48,11 @@ public class CrmLinkGenerator {
 	public static String generateContactPreviewLink(Integer contactId) {
 		return "crm/contact/preview/"
 				+ GenericLinkUtils.encodeParam(new Object[] { contactId });
+	}
+
+	public static String generateContactPreviewFullLink(String siteUrl,
+			Integer contactId) {
+		return siteUrl + "#" + generateContactPreviewLink(contactId);
 	}
 
 	public static String generateLeadPreviewLink(Integer leadId) {

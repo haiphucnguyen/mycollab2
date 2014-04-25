@@ -71,8 +71,8 @@ public class MeetingRelayEmailNotificationActionImpl extends
 			SimpleRelayEmailNotification emailNotification,
 			TemplateGenerator templateGenerator) {
 
-		CrmMailLinkGenerator crmLinkGenerator = new CrmMailLinkGenerator(LinkUtils.
-				getSiteUrl(meeting.getSaccountid()));
+		CrmMailLinkGenerator crmLinkGenerator = new CrmMailLinkGenerator(
+				LinkUtils.getSiteUrl(meeting.getSaccountid()));
 
 		String summary = meeting.getSubject();
 		String summaryLink = crmLinkGenerator
@@ -100,8 +100,9 @@ public class MeetingRelayEmailNotificationActionImpl extends
 					"templates/email/crm/itemCreatedNotifier.mt");
 			setupMailHeaders(simpleMeeting, emailNotification,
 					templateGenerator);
-			templateGenerator.putVariable("context",
-					new MailContext<SimpleMeeting>(simpleMeeting, user));
+			templateGenerator
+					.putVariable("context", new MailContext<SimpleMeeting>(
+							simpleMeeting, user, siteUrl));
 			templateGenerator.putVariable("mapper", mapper);
 			return templateGenerator;
 		} else {

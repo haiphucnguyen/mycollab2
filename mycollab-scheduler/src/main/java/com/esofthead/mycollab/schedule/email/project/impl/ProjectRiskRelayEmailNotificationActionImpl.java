@@ -114,7 +114,7 @@ public class ProjectRiskRelayEmailNotificationActionImpl extends
 		setupMailHeaders(risk, emailNotification, templateGenerator);
 
 		templateGenerator.putVariable("context", new MailContext<SimpleRisk>(
-				risk, user));
+				risk, user, siteUrl));
 		templateGenerator.putVariable("mapper", mapper);
 
 		return templateGenerator;

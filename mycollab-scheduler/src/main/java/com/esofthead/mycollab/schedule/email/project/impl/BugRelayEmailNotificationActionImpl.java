@@ -87,7 +87,7 @@ public class BugRelayEmailNotificationActionImpl extends
 			setupMailHeaders(bug, emailNotification, templateGenerator);
 
 			templateGenerator.putVariable("context",
-					new MailContext<SimpleBug>(bug, user));
+					new MailContext<SimpleBug>(bug, user, siteUrl));
 			templateGenerator.putVariable("mapper", mapper);
 
 			return templateGenerator;

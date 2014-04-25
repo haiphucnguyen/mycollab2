@@ -100,7 +100,7 @@ public class LeadRelayEmailNotificationActionImpl extends
 			setupMailHeaders(simpleLead, emailNotification, templateGenerator);
 
 			templateGenerator.putVariable("context",
-					new MailContext<SimpleLead>(simpleLead, user));
+					new MailContext<SimpleLead>(simpleLead, user, siteUrl));
 			templateGenerator.putVariable("mapper", mapper);
 
 			return templateGenerator;

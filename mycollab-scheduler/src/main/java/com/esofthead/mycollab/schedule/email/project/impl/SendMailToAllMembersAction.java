@@ -58,6 +58,8 @@ public abstract class SendMailToAllMembersAction implements
 
 	@Autowired
 	private ProjectNotificationSettingService projectNotificationService;
+	
+	protected String siteUrl;
 
 	protected List<SimpleUser> getNotifyUsers(
 			ProjectRelayEmailNotification notification) {

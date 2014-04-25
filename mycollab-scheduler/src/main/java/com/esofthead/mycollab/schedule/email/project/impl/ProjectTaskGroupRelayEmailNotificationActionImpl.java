@@ -112,7 +112,7 @@ public class ProjectTaskGroupRelayEmailNotificationActionImpl extends
 		setupMailHeaders(taskList, emailNotification, templateGenerator);
 
 		templateGenerator.putVariable("context",
-				new MailContext<SimpleTaskList>(taskList, user));
+				new MailContext<SimpleTaskList>(taskList, user, siteUrl));
 		templateGenerator.putVariable("mapper", mapper);
 
 		return templateGenerator;

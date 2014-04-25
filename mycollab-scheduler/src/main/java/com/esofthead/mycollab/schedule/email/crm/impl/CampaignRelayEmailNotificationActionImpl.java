@@ -103,7 +103,7 @@ public class CampaignRelayEmailNotificationActionImpl extends
 					templateGenerator);
 
 			templateGenerator.putVariable("context",
-					new MailContext<SimpleCampaign>(simpleCampaign, user));
+					new MailContext<SimpleCampaign>(simpleCampaign, user, siteUrl));
 			templateGenerator.putVariable("mapper", mapper);
 
 			return templateGenerator;

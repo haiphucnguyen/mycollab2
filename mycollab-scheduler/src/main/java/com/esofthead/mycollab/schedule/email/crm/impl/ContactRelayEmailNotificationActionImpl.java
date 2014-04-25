@@ -25,6 +25,7 @@ import com.esofthead.mycollab.common.domain.SimpleAuditLog;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
 import com.esofthead.mycollab.common.service.AuditLogService;
 import com.esofthead.mycollab.core.utils.StringUtils;
+import com.esofthead.mycollab.module.crm.CrmLinkGenerator;
 import com.esofthead.mycollab.module.crm.CrmResources;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
@@ -37,7 +38,6 @@ import com.esofthead.mycollab.schedule.email.ItemFieldMapper;
 import com.esofthead.mycollab.schedule.email.LinkUtils;
 import com.esofthead.mycollab.schedule.email.MailContext;
 import com.esofthead.mycollab.schedule.email.crm.ContactRelayEmailNotificationAction;
-import com.esofthead.mycollab.schedule.email.crm.CrmMailLinkGenerator;
 import com.esofthead.mycollab.schedule.email.format.FieldFormat;
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Img;
@@ -73,12 +73,9 @@ public class ContactRelayEmailNotificationActionImpl extends
 			SimpleRelayEmailNotification emailNotification,
 			TemplateGenerator templateGenerator) {
 
-		CrmMailLinkGenerator crmLinkGenerator = new CrmMailLinkGenerator(
-				LinkUtils.getSiteUrl(contact.getSaccountid()));
-
 		String summary = contact.getContactName();
-		String summaryLink = crmLinkGenerator
-				.generateContactPreviewFullLink(contact.getId());
+		String summaryLink = CrmLinkGenerator.generateContactPreviewFullLink(
+				siteUrl, contact.getId());
 
 		templateGenerator.putVariable("makeChangeUser",
 				emailNotification.getChangeByUserFullName());
@@ -105,8 +102,9 @@ public class ContactRelayEmailNotificationActionImpl extends
 			setupMailHeaders(simpleContact, emailNotification,
 					templateGenerator);
 
-			templateGenerator.putVariable("context",
-					new MailContext<SimpleContact>(simpleContact, user));
+			templateGenerator
+					.putVariable("context", new MailContext<SimpleContact>(
+							simpleContact, user, siteUrl));
 			templateGenerator.putVariable("mapper", mapper);
 
 			return templateGenerator;
@@ -242,7 +240,10 @@ public class ContactRelayEmailNotificationActionImpl extends
 			span.appendChild(img);
 
 			A link = new A();
-
+			String accountLink = CrmLinkGenerator
+					.generateAccountPreviewFullLink(context.getSiteUrl(),
+							contact.getAccountid());
+			link.setHref(accountLink);
 			link.appendText(contact.getAssignUserFullName());
 			span.appendChild(link);
 

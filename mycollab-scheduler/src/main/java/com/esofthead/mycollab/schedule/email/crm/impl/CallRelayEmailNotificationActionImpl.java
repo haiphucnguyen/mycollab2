@@ -71,8 +71,7 @@ public class CallRelayEmailNotificationActionImpl extends
 			TemplateGenerator templateGenerator) {
 
 		CrmMailLinkGenerator crmLinkGenerator = new CrmMailLinkGenerator(
-				LinkUtils.
-				getSiteUrl(call.getSaccountid()));
+				LinkUtils.getSiteUrl(call.getSaccountid()));
 
 		String summary = call.getSubject();
 		String summaryLink = crmLinkGenerator.generateCallPreviewFullLink(call
@@ -101,7 +100,7 @@ public class CallRelayEmailNotificationActionImpl extends
 			setupMailHeaders(simpleCall, emailNotification, templateGenerator);
 
 			templateGenerator.putVariable("context",
-					new MailContext<SimpleCall>(simpleCall, user));
+					new MailContext<SimpleCall>(simpleCall, user, siteUrl));
 			templateGenerator.putVariable("mapper", mapper);
 
 			return templateGenerator;
