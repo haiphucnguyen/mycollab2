@@ -139,4 +139,9 @@ public class CrmLinkGenerator {
 		}
 		return "#" + result;
 	}
+
+	public static String generateCrmItemFullLink(String siteUrl, String type,
+			int typeid) {
+		return siteUrl + generateCrmItemLink(type, typeid);
+	}
 }

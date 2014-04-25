@@ -26,6 +26,17 @@ import com.esofthead.mycollab.common.GenericLinkUtils;
  */
 public class ProjectLinkUtils {
 
+	public static String generateProjectLink(int projectId) {
+		return "project/dashboard/"
+				+ GenericLinkUtils.encodeParam(new Object[] { projectId });
+	}
+
+	public static String generateProjectFullLink(String siteUrl,
+			Integer projectId) {
+		return siteUrl + GenericLinkUtils.URL_PREFIX_PARAM
+				+ generateProjectLink(projectId);
+	}
+
 	public static String generateTaskGroupPreviewLink(Integer projectId,
 			Integer taskgroupId) {
 		return "project/task/taskgroup/preview/"
@@ -54,6 +65,27 @@ public class ProjectLinkUtils {
 						problemId });
 	}
 
+	public static String generateProblemPreviewFullLink(String siteUrl,
+			Integer projectId, Integer problemId) {
+		return siteUrl
+				+ GenericLinkUtils.URL_PREFIX_PARAM
+				+ "project/problem/preview/"
+				+ GenericLinkUtils.encodeParam(new Object[] { projectId,
+						problemId });
+	}
+
+	public static String generateProjectMemberFullLink(String siteUrl,
+			int projectId, String memberName) {
+		if (memberName == null) {
+			return "";
+		}
+		return siteUrl
+				+ GenericLinkUtils.URL_PREFIX_PARAM
+				+ "project/user/preview/"
+				+ GenericLinkUtils.encodeParam(new Object[] { projectId,
+						memberName });
+	}
+
 	public static String generateRiskPreview(Integer projectId, Integer riskId) {
 		return "project/risk/preview/"
 				+ GenericLinkUtils
@@ -62,9 +94,6 @@ public class ProjectLinkUtils {
 
 	public static String generateMessagePreviewLink(Integer projectId,
 			Integer messageId) {
-		if (messageId == null) {
-			return "";
-		}
 		return "project/message/preview/"
 				+ GenericLinkUtils.encodeParam(new Object[] { projectId,
 						messageId });
@@ -72,27 +101,28 @@ public class ProjectLinkUtils {
 
 	public static String generateBugComponentPreviewLink(Integer projectId,
 			Integer componentId) {
-		if (componentId == null) {
-			return "";
-		}
 		return "project/bug/component/preview/"
 				+ GenericLinkUtils.encodeParam(new Object[] { projectId,
 						componentId });
 	}
 
+	public static String generateBugComponentPreviewFullLink(String siteUrl,
+			Integer projectId, Integer componentId) {
+		return siteUrl + GenericLinkUtils.URL_PREFIX_PARAM
+				+ generateBugComponentPreviewLink(projectId, componentId);
+	}
+
 	public static String generateBugVersionPreviewLink(Integer projectId,
 			Integer versionId) {
-		if (versionId == null) {
-			return "";
-		}
 		return "project/bug/version/preview/"
 				+ GenericLinkUtils.encodeParam(new Object[] { projectId,
 						versionId });
 	}
 
-	public static String generateProjectLink(int projectId) {
-		return "project/dashboard/"
-				+ GenericLinkUtils.encodeParam(new Object[] { projectId });
+	public static String generateBugVersionPreviewFullLink(String siteUrl,
+			Integer projectId, Integer versionId) {
+		return siteUrl + GenericLinkUtils.URL_PREFIX_PARAM
+				+ generateBugVersionPreviewLink(projectId, versionId);
 	}
 
 	public static String generateBugPreviewLink(int projectId, int bugId) {
@@ -101,8 +131,23 @@ public class ProjectLinkUtils {
 						.encodeParam(new Object[] { projectId, bugId });
 	}
 
+	public static String generateBugPreviewFullLink(String siteUrl,
+			int projectId, int bugId) {
+		return siteUrl + GenericLinkUtils.URL_PREFIX_PARAM
+				+ generateBugPreviewLink(projectId, bugId);
+	}
+
 	public static String generateRolePreviewLink(int projectId, int roleId) {
 		return "project/role/preview/"
+				+ GenericLinkUtils
+						.encodeParam(new Object[] { projectId, roleId });
+	}
+
+	public static String generateRolePreviewFullLink(String siteUrl,
+			int projectId, int roleId) {
+		return siteUrl
+				+ GenericLinkUtils.URL_PREFIX_PARAM
+				+ "project/role/preview/"
 				+ GenericLinkUtils
 						.encodeParam(new Object[] { projectId, roleId });
 	}
@@ -111,9 +156,11 @@ public class ProjectLinkUtils {
 		return "project/standup/list/"
 				+ GenericLinkUtils.encodeParam(new Object[] { projectId });
 	}
-	
-	public static String generateTimeTrackingPreviewLink(int projectId, int timeId) {
+
+	public static String generateTimeTrackingPreviewLink(int projectId,
+			int timeId) {
 		return "project/time/list/"
-				+ GenericLinkUtils.encodeParam(new Object[] { projectId, timeId  });
+				+ GenericLinkUtils
+						.encodeParam(new Object[] { projectId, timeId });
 	}
 }

@@ -31,6 +31,7 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
  * @author MyCollab Ltd.
  * @since 1.0
  */
+@Deprecated
 public class ProjectMailLinkGenerator {
 	private static Logger log = LoggerFactory
 			.getLogger(ProjectMailLinkGenerator.class);

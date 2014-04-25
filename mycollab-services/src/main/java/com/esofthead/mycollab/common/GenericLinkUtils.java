@@ -16,7 +16,6 @@
  */
 package com.esofthead.mycollab.common;
 
-import com.esofthead.mycollab.configuration.MyCollabAssets;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.DeploymentMode;
 import com.esofthead.mycollab.module.user.domain.BillingAccount;
