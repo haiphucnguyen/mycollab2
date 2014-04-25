@@ -84,6 +84,5 @@
 	<classpathentry kind="var" path="M2_REPO/org/ow2/asm/asm/4.1/asm-4.1.jar" sourcepath="M2_REPO/org/ow2/asm/asm/4.1/asm-4.1-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/ow2/asm/asm-commons/4.1/asm-commons-4.1.jar" sourcepath="M2_REPO/org/ow2/asm/asm-commons/4.1/asm-commons-4.1-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/ow2/asm/asm-tree/4.1/asm-tree-4.1.jar" sourcepath="M2_REPO/org/ow2/asm/asm-tree/4.1/asm-tree-4.1-sources.jar"/>
-	<classpathentry kind="var" path="ASPECTJRT_LIB"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
