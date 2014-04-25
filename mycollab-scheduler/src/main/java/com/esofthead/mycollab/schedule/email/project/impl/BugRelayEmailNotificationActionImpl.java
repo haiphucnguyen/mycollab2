@@ -41,9 +41,9 @@ import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
+import com.esofthead.mycollab.schedule.email.ItemFieldMapper;
 import com.esofthead.mycollab.schedule.email.MailContext;
 import com.esofthead.mycollab.schedule.email.project.BugRelayEmailNotificationAction;
-import com.esofthead.mycollab.schedule.email.project.ProjectMailLinkGenerator;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 
 /**
@@ -63,10 +63,9 @@ public class BugRelayEmailNotificationActionImpl extends
 	@Autowired
 	private ProjectService projectService;
 
-	private final BugFieldNameMapper mapper;
+	private static final BugFieldNameMapper mapper = new BugFieldNameMapper();
 
 	public BugRelayEmailNotificationActionImpl() {
-		mapper = new BugFieldNameMapper();
 	}
 
 	@Override
@@ -102,12 +101,12 @@ public class BugRelayEmailNotificationActionImpl extends
 			TemplateGenerator templateGenerator) {
 		List<Map<String, String>> listOfTitles = new ArrayList<Map<String, String>>();
 
-		ProjectMailLinkGenerator linkGenerator = new ProjectMailLinkGenerator(
-				bug.getProjectid());
-
 		HashMap<String, String> currentProject = new HashMap<String, String>();
 		currentProject.put("displayName", bug.getProjectname());
-		currentProject.put("webLink", linkGenerator.generateProjectFullLink());
+		currentProject.put(
+				"webLink",
+				ProjectLinkUtils.generateProjectFullLink(siteUrl,
+						bug.getProjectid()));
 
 		listOfTitles.add(currentProject);
 
@@ -116,14 +115,16 @@ public class BugRelayEmailNotificationActionImpl extends
 				bug.getProjectid(), emailNotification.getSaccountid());
 		bugCode.put("displayName", "[" + relatedProject.getShortname() + "-"
 				+ bug.getBugkey() + "]");
-		bugCode.put("webLink",
-				linkGenerator.generateBugPreviewFullLink(bug.getId()));
+		bugCode.put(
+				"webLink",
+				ProjectLinkUtils.generateBugPreviewFullLink(siteUrl,
+						bug.getProjectid(), bug.getId()));
 
 		listOfTitles.add(bugCode);
 
 		String summary = bug.getSummary();
-		String summaryLink = ProjectLinkUtils.generateBugPreviewLink(
-				bug.getProjectid(), bug.getId());
+		String summaryLink = ProjectLinkUtils.generateBugPreviewFullLink(
+				siteUrl, bug.getProjectid(), bug.getId());
 
 		templateGenerator.putVariable("makeChangeUser",
 				emailNotification.getChangeByUserFullName());
@@ -277,31 +278,20 @@ public class BugRelayEmailNotificationActionImpl extends
 		return inListUsers;
 	}
 
-	public class BugFieldNameMapper {
-		private final Map<String, String> fieldNameMap;
+	public static class BugFieldNameMapper extends ItemFieldMapper {
 
-		BugFieldNameMapper() {
-			fieldNameMap = new HashMap<String, String>();
-
-			fieldNameMap.put("summary", "Bug Summary");
-			fieldNameMap.put("description", "Description");
-			fieldNameMap.put("status", "Status");
-			fieldNameMap.put("assignuser", "Assigned to");
-			fieldNameMap.put("resolution", "Resolution");
-			fieldNameMap.put("severity", "Serverity");
-			fieldNameMap.put("environment", "Environment");
-			fieldNameMap.put("priority", "Priority");
-			fieldNameMap.put("duedate", "Due Date");
-			fieldNameMap.put("logby", "Logged By");
-			fieldNameMap.put("milestoneid", "Milestone");
-		}
-
-		public boolean hasField(String fieldName) {
-			return fieldNameMap.containsKey(fieldName);
-		}
-
-		public String getFieldLabel(String fieldName) {
-			return fieldNameMap.get(fieldName);
+		public BugFieldNameMapper() {
+			put("summary", "Bug Summary");
+			put("description", "Description");
+			put("status", "Status");
+			put("assignuser", "Assigned to");
+			put("resolution", "Resolution");
+			put("severity", "Serverity");
+			put("environment", "Environment");
+			put("priority", "Priority");
+			put("duedate", "Due Date");
+			put("logby", "Logged By");
+			put("milestoneid", "Milestone");
 		}
 	}
 }
