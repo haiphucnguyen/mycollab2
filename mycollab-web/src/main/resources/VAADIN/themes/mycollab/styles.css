@@ -1900,9 +1900,8 @@ input.v-textfield-errorField {
 }
 
 .projectDashboardView .navigator-wrap .project-list-comp .project-list-comp-hdr .v-popup-indicator {
-	position: absolute;
-	right: 19px;
-	top: 23px;
+	position: relative;
+	float: right;
 }
 
 .project-list-comp-content .project-name {
