@@ -94,7 +94,7 @@ public class ProjectMailLinkGenerator {
 
 	public String generateRiskPreviewFullLink(Integer riskId) {
 		return siteUrl + GenericLinkUtils.URL_PREFIX_PARAM
-				+ ProjectLinkUtils.generateRiskPreview(projectId, riskId);
+				+ ProjectLinkUtils.generateRiskPreviewLink(projectId, riskId);
 	}
 
 	public String generateProblemPreviewFullLink(Integer problemId) {

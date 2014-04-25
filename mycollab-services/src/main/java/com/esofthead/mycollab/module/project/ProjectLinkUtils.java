@@ -44,11 +44,23 @@ public class ProjectLinkUtils {
 						taskgroupId });
 	}
 
+	public static String generateTaskGroupPreviewFullLink(String siteUrl,
+			Integer projectId, Integer taskgroupId) {
+		return siteUrl + GenericLinkUtils.URL_PREFIX_PARAM
+				+ generateTaskGroupPreviewLink(projectId, taskgroupId);
+	}
+
 	public static String generateTaskPreviewLink(Integer projectId,
 			Integer taskId) {
 		return "project/task/task/preview/"
 				+ GenericLinkUtils
 						.encodeParam(new Object[] { projectId, taskId });
+	}
+
+	public static String generateTaskPreviewFullLink(String siteUrl,
+			Integer projectId, Integer taskId) {
+		return siteUrl + GenericLinkUtils.URL_PREFIX_PARAM
+				+ generateTaskPreviewLink(projectId, taskId);
 	}
 
 	public static String generateMilestonePreviewLink(int projectId,
@@ -89,10 +101,17 @@ public class ProjectLinkUtils {
 						memberName });
 	}
 
-	public static String generateRiskPreview(Integer projectId, Integer riskId) {
+	public static String generateRiskPreviewLink(Integer projectId,
+			Integer riskId) {
 		return "project/risk/preview/"
 				+ GenericLinkUtils
 						.encodeParam(new Object[] { projectId, riskId });
+	}
+
+	public static String generateRiskPreviewFullLink(String siteUrl,
+			Integer projectId, Integer riskId) {
+		return siteUrl + GenericLinkUtils.URL_PREFIX_PARAM
+				+ generateRiskPreviewLink(projectId, riskId);
 	}
 
 	public static String generateMessagePreviewLink(Integer projectId,

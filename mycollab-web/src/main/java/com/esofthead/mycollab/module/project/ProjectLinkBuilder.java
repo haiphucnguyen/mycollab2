@@ -215,7 +215,7 @@ public class ProjectLinkBuilder {
 			result = ProjectLinkUtils.generateProblemPreviewLink(projectId,
 					typeid);
 		} else if (ProjectTypeConstants.RISK.equals(type)) {
-			result = ProjectLinkUtils.generateRiskPreview(projectId, typeid);
+			result = ProjectLinkUtils.generateRiskPreviewLink(projectId, typeid);
 		} else if (ProjectTypeConstants.TASK.equals(type)) {
 			result = ProjectLinkUtils
 					.generateTaskPreviewLink(projectId, typeid);

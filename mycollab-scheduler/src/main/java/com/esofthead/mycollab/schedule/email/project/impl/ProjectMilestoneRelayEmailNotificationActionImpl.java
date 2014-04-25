@@ -36,12 +36,17 @@ import com.esofthead.mycollab.module.project.domain.SimpleMilestone;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.service.MilestoneService;
 import com.esofthead.mycollab.module.project.service.ProjectService;
+import com.esofthead.mycollab.module.user.UserLinkUtils;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.schedule.ScheduleUserTimeZoneUtils;
 import com.esofthead.mycollab.schedule.email.ItemFieldMapper;
+import com.esofthead.mycollab.schedule.email.LinkUtils;
 import com.esofthead.mycollab.schedule.email.MailContext;
-import com.esofthead.mycollab.schedule.email.project.ProjectMailLinkGenerator;
+import com.esofthead.mycollab.schedule.email.format.DateFieldFormat;
+import com.esofthead.mycollab.schedule.email.format.LinkFieldFormat;
 import com.esofthead.mycollab.schedule.email.project.ProjectMilestoneRelayEmailNotificationAction;
+import com.hp.gagawa.java.elements.A;
+import com.hp.gagawa.java.elements.Img;
 
 /**
  * 
@@ -65,29 +70,26 @@ public class ProjectMilestoneRelayEmailNotificationActionImpl extends
 
 	private static final MilestoneFieldNameMapper mapper = new MilestoneFieldNameMapper();
 
-	public ProjectMilestoneRelayEmailNotificationActionImpl() {
-	}
-
 	protected void setupMailHeaders(SimpleMilestone milestone,
 			SimpleRelayEmailNotification emailNotification,
 			TemplateGenerator templateGenerator) {
 		List<Map<String, String>> listOfTitles = new ArrayList<Map<String, String>>();
-
-		ProjectMailLinkGenerator linkGenerator = new ProjectMailLinkGenerator(
-				milestone.getProjectid());
 
 		SimpleProject relatedProject = projectService.findById(
 				milestone.getProjectid(), emailNotification.getSaccountid());
 
 		HashMap<String, String> currentProject = new HashMap<String, String>();
 		currentProject.put("displayName", relatedProject.getName());
-		currentProject.put("webLink", linkGenerator.generateProjectFullLink());
+		currentProject.put(
+				"webLink",
+				ProjectLinkUtils.generateProjectFullLink(siteUrl,
+						milestone.getProjectid()));
 
 		listOfTitles.add(currentProject);
 
 		String summary = milestone.getName();
-		String summaryLink = ProjectLinkUtils.generateMilestonePreviewLink(
-				milestone.getProjectid(), milestone.getId());
+		String summaryLink = ProjectLinkUtils.generateMilestonePreviewFullLink(
+				siteUrl, milestone.getProjectid(), milestone.getId());
 
 		templateGenerator.putVariable("makeChangeUser",
 				emailNotification.getChangeByUserFullName());
@@ -178,11 +180,42 @@ public class ProjectMilestoneRelayEmailNotificationActionImpl extends
 	public static class MilestoneFieldNameMapper extends ItemFieldMapper {
 		public MilestoneFieldNameMapper() {
 			put("name", "Phase Name");
-			put("startdate", "Start Date");
-			put("enddate", "End Date");
+			put("startdate", new DateFieldFormat("startdate", "Start Date"));
+			put("enddate", new DateFieldFormat("enddate", "End Date"));
 			put("status", "Status");
-			put("owner", "Responsible User");
+			put("owner", new AssigneeFieldFormat("owner", "Owner"));
 			put("description", "Description");
 		}
+	}
+
+	public static class AssigneeFieldFormat extends LinkFieldFormat {
+
+		public AssigneeFieldFormat(String fieldName, String displayName) {
+			super(fieldName, displayName);
+		}
+
+		@Override
+		protected Img buildImage(MailContext<?> context) {
+			SimpleMilestone milestone = (SimpleMilestone) context
+					.getWrappedBean();
+			String userAvatarLink = LinkUtils.getAvatarLink(
+					milestone.getOwnerAvatarId(), 16);
+			Img img = new Img("avatar", userAvatarLink);
+			return img;
+		}
+
+		@Override
+		protected A buildLink(MailContext<?> context) {
+			SimpleMilestone milestone = (SimpleMilestone) context
+					.getWrappedBean();
+			String userLink = UserLinkUtils.generatePreviewFullUserLink(
+					LinkUtils.getSiteUrl(milestone.getSaccountid()),
+					milestone.getOwner());
+			A link = new A();
+			link.setHref(userLink);
+			link.appendText(milestone.getOwnerFullName());
+			return link;
+		}
+
 	}
 }
