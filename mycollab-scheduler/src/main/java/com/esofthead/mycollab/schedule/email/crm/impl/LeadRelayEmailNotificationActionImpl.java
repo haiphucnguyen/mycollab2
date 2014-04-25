@@ -16,9 +16,6 @@
  */
 package com.esofthead.mycollab.schedule.email.crm.impl;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
@@ -28,16 +25,22 @@ import com.esofthead.mycollab.common.domain.SimpleAuditLog;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
 import com.esofthead.mycollab.common.service.AuditLogService;
 import com.esofthead.mycollab.core.utils.StringUtils;
+import com.esofthead.mycollab.module.crm.CrmLinkGenerator;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.module.crm.service.CrmNotificationSettingService;
 import com.esofthead.mycollab.module.crm.service.LeadService;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
+import com.esofthead.mycollab.module.user.UserLinkUtils;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
+import com.esofthead.mycollab.schedule.email.ItemFieldMapper;
 import com.esofthead.mycollab.schedule.email.LinkUtils;
 import com.esofthead.mycollab.schedule.email.MailContext;
-import com.esofthead.mycollab.schedule.email.crm.CrmMailLinkGenerator;
 import com.esofthead.mycollab.schedule.email.crm.LeadRelayEmailNotificationAction;
+import com.esofthead.mycollab.schedule.email.format.FieldFormat;
+import com.hp.gagawa.java.elements.A;
+import com.hp.gagawa.java.elements.Img;
+import com.hp.gagawa.java.elements.Span;
 
 /**
  * 
@@ -59,23 +62,19 @@ public class LeadRelayEmailNotificationActionImpl extends
 	@Autowired
 	private CrmNotificationSettingService notificationService;
 
-	private final LeadFieldNameMapper mapper;
+	private static final LeadFieldNameMapper mapper = new LeadFieldNameMapper();
 
 	public LeadRelayEmailNotificationActionImpl() {
 		super(CrmTypeConstants.LEAD);
-		mapper = new LeadFieldNameMapper();
 	}
 
 	protected void setupMailHeaders(SimpleLead lead,
 			SimpleRelayEmailNotification emailNotification,
 			TemplateGenerator templateGenerator) {
 
-		CrmMailLinkGenerator crmLinkGenerator = new CrmMailLinkGenerator(
-				LinkUtils.getSiteUrl(lead.getSaccountid()));
-
 		String summary = lead.getLeadName();
-		String summaryLink = crmLinkGenerator.generateLeadPreviewFullLink(lead
-				.getId());
+		String summaryLink = CrmLinkGenerator.generateLeadPreviewFullLink(
+				siteUrl, lead.getId());
 
 		templateGenerator.putVariable("makeChangeUser",
 				emailNotification.getChangeByUserFullName());
@@ -158,48 +157,65 @@ public class LeadRelayEmailNotificationActionImpl extends
 		return templateGenerator;
 	}
 
-	public class LeadFieldNameMapper {
-		private final Map<String, String> fieldNameMap;
+	public static class LeadFieldNameMapper extends ItemFieldMapper {
+		public LeadFieldNameMapper() {
 
-		LeadFieldNameMapper() {
-			fieldNameMap = new HashMap<String, String>();
-
-			fieldNameMap.put("firstname", "First Name");
-			fieldNameMap.put("email", "Email");
-			fieldNameMap.put("lastname", "Last Name");
-			fieldNameMap.put("officephone", "Office Phone");
-			fieldNameMap.put("title", "Title");
-			fieldNameMap.put("mobile", "Mobile");
-			fieldNameMap.put("department", "Department");
-			fieldNameMap.put("otherphone", "Other Phone");
-			fieldNameMap.put("accountName", "Account Name");
-			fieldNameMap.put("fax", "Fax");
-			fieldNameMap.put("leadsourcedesc", "Lead Source");
-			fieldNameMap.put("website", "Web Site");
-			fieldNameMap.put("industry", "Industry");
-			fieldNameMap.put("status", "Status");
-			fieldNameMap.put("noemployees", "No of Employees");
-			fieldNameMap.put("assignuser", "Assignee");
-			fieldNameMap.put("primaddress", "Address");
-			fieldNameMap.put("otheraddress", "Other Address");
-			fieldNameMap.put("primcity", "City");
-			fieldNameMap.put("othercity", "Other City");
-			fieldNameMap.put("state", "State");
-			fieldNameMap.put("otherstate", "Other State");
-			fieldNameMap.put("primpostalcode", "Postal Code");
-			fieldNameMap.put("otherpostalcode", "Other Postal Code");
-			fieldNameMap.put("primcountry", "Country");
-			fieldNameMap.put("othercountry", "Other Country");
-			fieldNameMap.put("description", "Description");
+			put("firstname", "First Name");
+			put("email", "Email");
+			put("lastname", "Last Name");
+			put("officephone", "Office Phone");
+			put("title", "Title");
+			put("mobile", "Mobile");
+			put("department", "Department");
+			put("otherphone", "Other Phone");
+			put("accountname", "Account Name");
+			put("fax", "Fax");
+			put("leadsourcedesc", "Lead Source");
+			put("website", "Web Site");
+			put("industry", "Industry");
+			put("status", "Status");
+			put("noemployees", "No of Employees");
+			put("assignuser", new LeadAssigneeFieldFormat("assignuser",
+					"Assignee"));
+			put("primaddress", "Address");
+			put("otheraddress", "Other Address");
+			put("primcity", "City");
+			put("othercity", "Other City");
+			put("primstate", "State");
+			put("otherstate", "Other State");
+			put("primpostalcode", "Postal Code");
+			put("otherpostalcode", "Other Postal Code");
+			put("primcountry", "Country");
+			put("othercountry", "Other Country");
+			put("description", "Description");
 
 		}
+	}
 
-		public boolean hasField(String fieldName) {
-			return fieldNameMap.containsKey(fieldName);
+	public static class LeadAssigneeFieldFormat extends FieldFormat {
+
+		public LeadAssigneeFieldFormat(String fieldName, String displayName) {
+			super(fieldName, displayName);
 		}
 
-		public String getFieldLabel(String fieldName) {
-			return fieldNameMap.get(fieldName);
+		@Override
+		public String formatField(MailContext<?> context) {
+			SimpleLead lead = (SimpleLead) context.getWrappedBean();
+			String userLink = UserLinkUtils.generatePreviewFullUserLink(
+					LinkUtils.getSiteUrl(lead.getSaccountid()),
+					lead.getAssignuser());
+			String userAvatarLink = LinkUtils.getAvatarLink(
+					lead.getAssignUserAvatarId(), 16);
+
+			Span span = new Span();
+			Img img = new Img("avatar", userAvatarLink);
+			span.appendChild(img);
+
+			A link = new A();
+			link.setHref(userLink);
+			link.appendText(lead.getAssignUserFullName());
+			span.appendChild(link);
+			return span.write();
 		}
 	}
 

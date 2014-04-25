@@ -16,9 +16,6 @@
  */
 package com.esofthead.mycollab.schedule.email.crm.impl;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
@@ -28,16 +25,25 @@ import com.esofthead.mycollab.common.domain.SimpleAuditLog;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
 import com.esofthead.mycollab.common.service.AuditLogService;
 import com.esofthead.mycollab.core.utils.StringUtils;
+import com.esofthead.mycollab.module.crm.CrmLinkGenerator;
+import com.esofthead.mycollab.module.crm.CrmResources;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.service.CrmNotificationSettingService;
 import com.esofthead.mycollab.module.crm.service.OpportunityService;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
+import com.esofthead.mycollab.module.user.UserLinkUtils;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
+import com.esofthead.mycollab.schedule.email.ItemFieldMapper;
 import com.esofthead.mycollab.schedule.email.LinkUtils;
 import com.esofthead.mycollab.schedule.email.MailContext;
-import com.esofthead.mycollab.schedule.email.crm.CrmMailLinkGenerator;
 import com.esofthead.mycollab.schedule.email.crm.OpportunityRelayEmailNotificationAction;
+import com.esofthead.mycollab.schedule.email.format.CurrencyFieldFormat;
+import com.esofthead.mycollab.schedule.email.format.DateFieldFormat;
+import com.esofthead.mycollab.schedule.email.format.FieldFormat;
+import com.hp.gagawa.java.elements.A;
+import com.hp.gagawa.java.elements.Img;
+import com.hp.gagawa.java.elements.Span;
 
 /**
  * 
@@ -59,23 +65,20 @@ public class OpportunityRelayEmailNotificationActionImpl extends
 	@Autowired
 	private CrmNotificationSettingService notificationService;
 
-	private final OpportunityFieldNameMapper mapper;
+	private static final OpportunityFieldNameMapper mapper = new OpportunityFieldNameMapper();
 
 	public OpportunityRelayEmailNotificationActionImpl() {
 		super(CrmTypeConstants.OPPORTUNITY);
-		mapper = new OpportunityFieldNameMapper();
 	}
 
 	protected void setupMailHeaders(SimpleOpportunity simpleOpportunity,
 			SimpleRelayEmailNotification emailNotification,
 			TemplateGenerator templateGenerator) {
 
-		CrmMailLinkGenerator crmLinkGenerator = new CrmMailLinkGenerator(
-				LinkUtils.getSiteUrl(simpleOpportunity.getSaccountid()));
-
 		String summary = simpleOpportunity.getOpportunityname();
-		String summaryLink = crmLinkGenerator
-				.generateOpportunityPreviewFullLink(simpleOpportunity.getId());
+		String summaryLink = CrmLinkGenerator
+				.generateOpportunityPreviewFullLink(siteUrl,
+						simpleOpportunity.getId());
 
 		templateGenerator.putVariable("makeChangeUser",
 				emailNotification.getChangeByUserFullName());
@@ -161,34 +164,109 @@ public class OpportunityRelayEmailNotificationActionImpl extends
 		return templateGenerator;
 	}
 
-	public class OpportunityFieldNameMapper {
-		private final Map<String, String> fieldNameMap;
+	public static class OpportunityFieldNameMapper extends ItemFieldMapper {
 
-		OpportunityFieldNameMapper() {
-			fieldNameMap = new HashMap<String, String>();
+		public OpportunityFieldNameMapper() {
+			put("opportunityname", "Opportunity Name");
+			put("accountid", new AccountFieldFormat("accountid", "Account"));
+			put("currencyid", new CurrencyFieldFormat("currency", "Currency"));
+			put("expectedcloseddate", new DateFieldFormat("expectedcloseddate",
+					"Expected Close Date"));
+			put("amount", "Amount");
+			put("opportunitytype", "Type");
+			put("salesstage", "Sales Stage");
+			put("source", "Lead Source");
+			put("probability", "Probability (%)");
+			put("campaignid", new CampaignFieldFormat("campaignid", "Campaign"));
+			put("nextstep", "Next Step");
+			put("assignuser", new AssigneeFieldFormat("assignuser", "Assignee"));
+			put("description", "Description");
+		}
+	}
 
-			fieldNameMap.put("opportunityname", "Opportunity Name");
-			fieldNameMap.put("accountid", "Account Name");
-			fieldNameMap.put("status", "Status");
-			fieldNameMap.put("currencyid", "Currency");
-			fieldNameMap.put("expectedcloseddate", "Expected Close Date");
-			fieldNameMap.put("amount", "Amount");
-			fieldNameMap.put("opportunitytype", "Type");
-			fieldNameMap.put("salesstage", "Sales Stage");
-			fieldNameMap.put("source", "Lead Source");
-			fieldNameMap.put("probability", "Probability (%)");
-			fieldNameMap.put("campaignid", "Campaign");
-			fieldNameMap.put("nextstep", "Next Step");
-			fieldNameMap.put("assignuser", "Assignee");
-			fieldNameMap.put("description", "Description");
+	public static class AccountFieldFormat extends FieldFormat {
+
+		public AccountFieldFormat(String fieldName, String displayName) {
+			super(fieldName, displayName);
 		}
 
-		public boolean hasField(String fieldName) {
-			return fieldNameMap.containsKey(fieldName);
+		@Override
+		public String formatField(MailContext<?> context) {
+			SimpleOpportunity opportunity = (SimpleOpportunity) context
+					.getWrappedBean();
+			Span span = new Span();
+			String accountIconLink = CrmResources
+					.getResourceLink(CrmTypeConstants.ACCOUNT);
+			Img img = new Img("avatar", accountIconLink);
+			span.appendChild(img);
+
+			A link = new A();
+			String accountLink = CrmLinkGenerator
+					.generateAccountPreviewFullLink(context.getSiteUrl(),
+							opportunity.getAccountid());
+			link.setHref(accountLink);
+			link.appendText(opportunity.getAssignUserFullName());
+			span.appendChild(link);
+
+			return span.write();
 		}
 
-		public String getFieldLabel(String fieldName) {
-			return fieldNameMap.get(fieldName);
+	}
+
+	public static class CampaignFieldFormat extends FieldFormat {
+
+		public CampaignFieldFormat(String fieldName, String displayName) {
+			super(fieldName, displayName);
+		}
+
+		@Override
+		public String formatField(MailContext<?> context) {
+			SimpleOpportunity opportunity = (SimpleOpportunity) context
+					.getWrappedBean();
+			Span span = new Span();
+			String campaignIconLink = CrmResources
+					.getResourceLink(CrmTypeConstants.CAMPAIGN);
+			Img img = new Img("avatar", campaignIconLink);
+			span.appendChild(img);
+
+			A link = new A();
+			String campaignLink = CrmLinkGenerator
+					.generateCampaignPreviewFullLink(context.getSiteUrl(),
+							opportunity.getCampaignid());
+			link.setHref(campaignLink);
+			link.appendText(opportunity.getCampaignName());
+			span.appendChild(link);
+
+			return span.write();
+		}
+
+	}
+
+	public static class AssigneeFieldFormat extends FieldFormat {
+
+		public AssigneeFieldFormat(String fieldName, String displayName) {
+			super(fieldName, displayName);
+		}
+
+		@Override
+		public String formatField(MailContext<?> context) {
+			SimpleOpportunity contact = (SimpleOpportunity) context
+					.getWrappedBean();
+			String userLink = UserLinkUtils.generatePreviewFullUserLink(
+					LinkUtils.getSiteUrl(contact.getSaccountid()),
+					contact.getAssignuser());
+			String userAvatarLink = LinkUtils.getAvatarLink(
+					contact.getAssignUserAvatarId(), 16);
+
+			Span span = new Span();
+			Img img = new Img("avatar", userAvatarLink);
+			span.appendChild(img);
+
+			A link = new A();
+			link.setHref(userLink);
+			link.appendText(contact.getAssignUserFullName());
+			span.appendChild(link);
+			return span.write();
 		}
 	}
 
