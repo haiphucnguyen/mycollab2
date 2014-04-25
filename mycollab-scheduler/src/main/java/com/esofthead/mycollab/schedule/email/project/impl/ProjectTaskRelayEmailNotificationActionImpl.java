@@ -190,7 +190,7 @@ public class ProjectTaskRelayEmailNotificationActionImpl extends
 				+ emailNotification.getChangeByUserFullName()
 				+ " has commented on the task \""
 				+ StringUtils.trim(task.getTaskname(), 100) + "\"",
-				"templates/email/project/taskCommentNotifier.mt");
+				"templates/email/project/itemCommentNotifier.mt");
 		setupMailHeaders(task, emailNotification, templateGenerator);
 
 		templateGenerator.putVariable("comment", emailNotification);
@@ -310,7 +310,8 @@ public class ProjectTaskRelayEmailNotificationActionImpl extends
 			put("notes", "Notes");
 			put("priority", "Priority");
 			put("deadline", new DateFieldFormat("deadline", "Deadline"));
-			put("tasklistid", "Task Group");
+			put("tasklistid", new TaskGroupFieldFormat("tasklistid",
+					"Task Group"));
 		}
 	}
 
