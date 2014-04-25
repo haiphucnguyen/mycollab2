@@ -28,7 +28,6 @@ import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.crm.CrmLinkGenerator;
 import com.esofthead.mycollab.module.crm.CrmResources;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
-import com.esofthead.mycollab.module.crm.domain.SimpleCase;
 import com.esofthead.mycollab.module.crm.domain.SimpleTask;
 import com.esofthead.mycollab.module.crm.service.CrmNotificationSettingService;
 import com.esofthead.mycollab.module.crm.service.TaskService;
@@ -40,10 +39,9 @@ import com.esofthead.mycollab.schedule.email.LinkUtils;
 import com.esofthead.mycollab.schedule.email.MailContext;
 import com.esofthead.mycollab.schedule.email.crm.TaskRelayEmailNotificationAction;
 import com.esofthead.mycollab.schedule.email.format.DateFieldFormat;
-import com.esofthead.mycollab.schedule.email.format.FieldFormat;
+import com.esofthead.mycollab.schedule.email.format.LinkFieldFormat;
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Img;
-import com.hp.gagawa.java.elements.Span;
 
 /**
  * 
@@ -169,58 +167,64 @@ public class TaskRelayEmailNotificationActionImpl extends
 		}
 	}
 
-	public static class ContactFieldFormat extends FieldFormat {
+	public static class ContactFieldFormat extends LinkFieldFormat {
 
 		public ContactFieldFormat(String fieldName, String displayName) {
 			super(fieldName, displayName);
 		}
 
 		@Override
-		public String formatField(MailContext<?> context) {
-			SimpleTask task = (SimpleTask) context.getWrappedBean();
-			Span span = new Span();
+		protected Img buildImage(MailContext<?> context) {
 			String contactIconLink = CrmResources
 					.getResourceLink(CrmTypeConstants.CONTACT);
 			Img img = new Img("avatar", contactIconLink);
-			span.appendChild(img);
+			return img;
+		}
 
+		@Override
+		protected A buildLink(MailContext<?> context) {
+			SimpleTask task = (SimpleTask) context.getWrappedBean();
 			A link = new A();
 			String contactLink = CrmLinkGenerator
 					.generateContactPreviewFullLink(context.getSiteUrl(),
 							task.getContactid());
 			link.setHref(contactLink);
 			link.appendText(task.getContactName());
-			span.appendChild(link);
-
-			return span.write();
+			return link;
 		}
 
 	}
 
-	public static class AssigneeFieldFormat extends FieldFormat {
+	public static class AssigneeFieldFormat extends LinkFieldFormat {
 
 		public AssigneeFieldFormat(String fieldName, String displayName) {
 			super(fieldName, displayName);
 		}
 
 		@Override
-		public String formatField(MailContext<?> context) {
+		protected Img buildImage(MailContext<?> context) {
+			SimpleTask task = (SimpleTask) context.getWrappedBean();
+
+			String userAvatarLink = LinkUtils.getAvatarLink(
+					task.getAssignUserAvatarId(), 16);
+
+			Img img = new Img("avatar", userAvatarLink);
+
+			return img;
+		}
+
+		@Override
+		protected A buildLink(MailContext<?> context) {
 			SimpleTask task = (SimpleTask) context.getWrappedBean();
 			String userLink = UserLinkUtils.generatePreviewFullUserLink(
 					LinkUtils.getSiteUrl(task.getSaccountid()),
 					task.getAssignuser());
-			String userAvatarLink = LinkUtils.getAvatarLink(
-					task.getAssignUserAvatarId(), 16);
-
-			Span span = new Span();
-			Img img = new Img("avatar", userAvatarLink);
-			span.appendChild(img);
 
 			A link = new A();
 			link.setHref(userLink);
 			link.appendText(task.getAssignUserFullName());
-			span.appendChild(link);
-			return span.write();
+
+			return link;
 		}
 	}
 

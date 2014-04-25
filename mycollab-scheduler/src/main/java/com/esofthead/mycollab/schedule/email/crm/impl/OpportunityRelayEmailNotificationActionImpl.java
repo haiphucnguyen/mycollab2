@@ -40,10 +40,9 @@ import com.esofthead.mycollab.schedule.email.MailContext;
 import com.esofthead.mycollab.schedule.email.crm.OpportunityRelayEmailNotificationAction;
 import com.esofthead.mycollab.schedule.email.format.CurrencyFieldFormat;
 import com.esofthead.mycollab.schedule.email.format.DateFieldFormat;
-import com.esofthead.mycollab.schedule.email.format.FieldFormat;
+import com.esofthead.mycollab.schedule.email.format.LinkFieldFormat;
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Img;
-import com.hp.gagawa.java.elements.Span;
 
 /**
  * 
@@ -184,89 +183,97 @@ public class OpportunityRelayEmailNotificationActionImpl extends
 		}
 	}
 
-	public static class AccountFieldFormat extends FieldFormat {
+	public static class AccountFieldFormat extends LinkFieldFormat {
 
 		public AccountFieldFormat(String fieldName, String displayName) {
 			super(fieldName, displayName);
 		}
 
 		@Override
-		public String formatField(MailContext<?> context) {
-			SimpleOpportunity opportunity = (SimpleOpportunity) context
-					.getWrappedBean();
-			Span span = new Span();
+		protected Img buildImage(MailContext<?> context) {
 			String accountIconLink = CrmResources
 					.getResourceLink(CrmTypeConstants.ACCOUNT);
 			Img img = new Img("avatar", accountIconLink);
-			span.appendChild(img);
+			return img;
+		}
 
+		@Override
+		protected A buildLink(MailContext<?> context) {
+			SimpleOpportunity opportunity = (SimpleOpportunity) context
+					.getWrappedBean();
 			A link = new A();
 			String accountLink = CrmLinkGenerator
 					.generateAccountPreviewFullLink(context.getSiteUrl(),
 							opportunity.getAccountid());
 			link.setHref(accountLink);
-			link.appendText(opportunity.getAssignUserFullName());
-			span.appendChild(link);
-
-			return span.write();
+			link.appendText(opportunity.getAccountName());
+			return link;
 		}
 
 	}
 
-	public static class CampaignFieldFormat extends FieldFormat {
+	public static class CampaignFieldFormat extends LinkFieldFormat {
 
 		public CampaignFieldFormat(String fieldName, String displayName) {
 			super(fieldName, displayName);
 		}
 
 		@Override
-		public String formatField(MailContext<?> context) {
-			SimpleOpportunity opportunity = (SimpleOpportunity) context
-					.getWrappedBean();
-			Span span = new Span();
+		protected Img buildImage(MailContext<?> context) {
+
 			String campaignIconLink = CrmResources
 					.getResourceLink(CrmTypeConstants.CAMPAIGN);
 			Img img = new Img("avatar", campaignIconLink);
-			span.appendChild(img);
+			return img;
+		}
 
+		@Override
+		protected A buildLink(MailContext<?> context) {
+			SimpleOpportunity opportunity = (SimpleOpportunity) context
+					.getWrappedBean();
 			A link = new A();
 			String campaignLink = CrmLinkGenerator
 					.generateCampaignPreviewFullLink(context.getSiteUrl(),
 							opportunity.getCampaignid());
 			link.setHref(campaignLink);
 			link.appendText(opportunity.getCampaignName());
-			span.appendChild(link);
-
-			return span.write();
+			return link;
 		}
 
 	}
 
-	public static class AssigneeFieldFormat extends FieldFormat {
+	public static class AssigneeFieldFormat extends LinkFieldFormat {
 
 		public AssigneeFieldFormat(String fieldName, String displayName) {
 			super(fieldName, displayName);
 		}
 
 		@Override
-		public String formatField(MailContext<?> context) {
-			SimpleOpportunity contact = (SimpleOpportunity) context
+		protected Img buildImage(MailContext<?> context) {
+			SimpleOpportunity opportunity = (SimpleOpportunity) context
+					.getWrappedBean();
+
+			String userAvatarLink = LinkUtils.getAvatarLink(
+					opportunity.getAssignUserAvatarId(), 16);
+
+			Img img = new Img("avatar", userAvatarLink);
+
+			return img;
+		}
+
+		@Override
+		protected A buildLink(MailContext<?> context) {
+			SimpleOpportunity opportunity = (SimpleOpportunity) context
 					.getWrappedBean();
 			String userLink = UserLinkUtils.generatePreviewFullUserLink(
-					LinkUtils.getSiteUrl(contact.getSaccountid()),
-					contact.getAssignuser());
-			String userAvatarLink = LinkUtils.getAvatarLink(
-					contact.getAssignUserAvatarId(), 16);
-
-			Span span = new Span();
-			Img img = new Img("avatar", userAvatarLink);
-			span.appendChild(img);
+					LinkUtils.getSiteUrl(opportunity.getSaccountid()),
+					opportunity.getAssignuser());
 
 			A link = new A();
 			link.setHref(userLink);
-			link.appendText(contact.getAssignUserFullName());
-			span.appendChild(link);
-			return span.write();
+			link.appendText(opportunity.getAssignUserFullName());
+
+			return link;
 		}
 	}
 

@@ -37,10 +37,10 @@ import com.esofthead.mycollab.schedule.email.ItemFieldMapper;
 import com.esofthead.mycollab.schedule.email.LinkUtils;
 import com.esofthead.mycollab.schedule.email.MailContext;
 import com.esofthead.mycollab.schedule.email.crm.LeadRelayEmailNotificationAction;
-import com.esofthead.mycollab.schedule.email.format.FieldFormat;
+import com.esofthead.mycollab.schedule.email.format.EmailLinkFieldFormat;
+import com.esofthead.mycollab.schedule.email.format.LinkFieldFormat;
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Img;
-import com.hp.gagawa.java.elements.Span;
 
 /**
  * 
@@ -161,7 +161,7 @@ public class LeadRelayEmailNotificationActionImpl extends
 		public LeadFieldNameMapper() {
 
 			put("firstname", "First Name");
-			put("email", "Email");
+			put("email", new EmailLinkFieldFormat("email", "Email"));
 			put("lastname", "Last Name");
 			put("officephone", "Office Phone");
 			put("title", "Title");
@@ -192,30 +192,36 @@ public class LeadRelayEmailNotificationActionImpl extends
 		}
 	}
 
-	public static class LeadAssigneeFieldFormat extends FieldFormat {
+	public static class LeadAssigneeFieldFormat extends LinkFieldFormat {
 
 		public LeadAssigneeFieldFormat(String fieldName, String displayName) {
 			super(fieldName, displayName);
 		}
 
 		@Override
-		public String formatField(MailContext<?> context) {
+		protected Img buildImage(MailContext<?> context) {
+			SimpleLead lead = (SimpleLead) context.getWrappedBean();
+
+			String userAvatarLink = LinkUtils.getAvatarLink(
+					lead.getAssignUserAvatarId(), 16);
+
+			Img img = new Img("avatar", userAvatarLink);
+
+			return img;
+		}
+
+		@Override
+		protected A buildLink(MailContext<?> context) {
 			SimpleLead lead = (SimpleLead) context.getWrappedBean();
 			String userLink = UserLinkUtils.generatePreviewFullUserLink(
 					LinkUtils.getSiteUrl(lead.getSaccountid()),
 					lead.getAssignuser());
-			String userAvatarLink = LinkUtils.getAvatarLink(
-					lead.getAssignUserAvatarId(), 16);
-
-			Span span = new Span();
-			Img img = new Img("avatar", userAvatarLink);
-			span.appendChild(img);
 
 			A link = new A();
 			link.setHref(userLink);
 			link.appendText(lead.getAssignUserFullName());
-			span.appendChild(link);
-			return span.write();
+
+			return link;
 		}
 	}
 

@@ -38,10 +38,9 @@ import com.esofthead.mycollab.schedule.email.LinkUtils;
 import com.esofthead.mycollab.schedule.email.MailContext;
 import com.esofthead.mycollab.schedule.email.crm.CallRelayEmailNotificationAction;
 import com.esofthead.mycollab.schedule.email.format.DateTimeFieldFormat;
-import com.esofthead.mycollab.schedule.email.format.FieldFormat;
+import com.esofthead.mycollab.schedule.email.format.LinkFieldFormat;
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Img;
-import com.hp.gagawa.java.elements.Span;
 
 /**
  * 
@@ -172,30 +171,36 @@ public class CallRelayEmailNotificationActionImpl extends
 		}
 	}
 
-	public static class AssigneeFieldFormat extends FieldFormat {
+	public static class AssigneeFieldFormat extends LinkFieldFormat {
 
 		public AssigneeFieldFormat(String fieldName, String displayName) {
 			super(fieldName, displayName);
 		}
 
 		@Override
-		public String formatField(MailContext<?> context) {
+		protected Img buildImage(MailContext<?> context) {
+			SimpleCall call = (SimpleCall) context.getWrappedBean();
+
+			String userAvatarLink = LinkUtils.getAvatarLink(
+					call.getAssignUserAvatarId(), 16);
+
+			Img img = new Img("avatar", userAvatarLink);
+
+			return img;
+		}
+
+		@Override
+		protected A buildLink(MailContext<?> context) {
 			SimpleCall call = (SimpleCall) context.getWrappedBean();
 			String userLink = UserLinkUtils.generatePreviewFullUserLink(
 					LinkUtils.getSiteUrl(call.getSaccountid()),
 					call.getAssignuser());
-			String userAvatarLink = LinkUtils.getAvatarLink(
-					call.getAssignUserAvatarId(), 16);
-
-			Span span = new Span();
-			Img img = new Img("avatar", userAvatarLink);
-			span.appendChild(img);
 
 			A link = new A();
 			link.setHref(userLink);
 			link.appendText(call.getAssignUserFullName());
-			span.appendChild(link);
-			return span.write();
+
+			return link;
 		}
 	}
 

@@ -39,10 +39,9 @@ import com.esofthead.mycollab.schedule.email.ItemFieldMapper;
 import com.esofthead.mycollab.schedule.email.LinkUtils;
 import com.esofthead.mycollab.schedule.email.MailContext;
 import com.esofthead.mycollab.schedule.email.crm.AccountRelayEmailNotificationAction;
-import com.esofthead.mycollab.schedule.email.format.FieldFormat;
+import com.esofthead.mycollab.schedule.email.format.LinkFieldFormat;
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Img;
-import com.hp.gagawa.java.elements.Span;
 
 /**
  * 
@@ -167,32 +166,31 @@ public class AccountRelayEmailNotificationActionImpl extends
 		return templateGenerator;
 	}
 
-	public static class AccountAssigneeFieldFormat extends FieldFormat {
+	public static class AccountAssigneeFieldFormat extends LinkFieldFormat {
 
 		public AccountAssigneeFieldFormat(String fieldName, String displayName) {
 			super(fieldName, displayName);
 		}
 
 		@Override
-		public String formatField(MailContext<?> context) {
+		protected Img buildImage(MailContext<?> context) {
+			SimpleAccount account = (SimpleAccount) context.getWrappedBean();
+			String userAvatarLink = LinkUtils.getAvatarLink(
+					account.getAssignUserAvatarId(), 16);
+			Img img = new Img("avatar", userAvatarLink);
+			return img;
+		}
+
+		@Override
+		protected A buildLink(MailContext<?> context) {
 			SimpleAccount account = (SimpleAccount) context.getWrappedBean();
 			String userLink = UserLinkUtils.generatePreviewFullUserLink(
 					LinkUtils.getSiteUrl(account.getSaccountid()),
 					account.getAssignuser());
-			String userAvatarLink = LinkUtils.getAvatarLink(
-					account.getAssignUserAvatarId(), 16);
-
-			Span span = new Span();
-			Img img = new Img("avatar", userAvatarLink);
-			img.setStyle("vertical-align: middle; margin-right: 3px;");
-			span.appendChild(img);
-
 			A link = new A();
-			link.setStyle("text-decoration: none; color: rgb(36, 127, 211);");
 			link.setHref(userLink);
 			link.appendText(account.getAssignUserFullName());
-			span.appendChild(link);
-			return span.write();
+			return link;
 		}
 
 	}

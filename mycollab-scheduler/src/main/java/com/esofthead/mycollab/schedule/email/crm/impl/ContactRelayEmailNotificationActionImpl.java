@@ -39,10 +39,9 @@ import com.esofthead.mycollab.schedule.email.LinkUtils;
 import com.esofthead.mycollab.schedule.email.MailContext;
 import com.esofthead.mycollab.schedule.email.crm.ContactRelayEmailNotificationAction;
 import com.esofthead.mycollab.schedule.email.format.EmailLinkFieldFormat;
-import com.esofthead.mycollab.schedule.email.format.FieldFormat;
+import com.esofthead.mycollab.schedule.email.format.LinkFieldFormat;
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Img;
-import com.hp.gagawa.java.elements.Span;
 
 /**
  * 
@@ -180,8 +179,7 @@ public class ContactRelayEmailNotificationActionImpl extends
 			put("assistant", "Assistant");
 			put("iscallable", "Callable");
 			put("assistantphone", "Assistant Phone");
-			put("assignuser", new AssigneeFieldFormat("assignuser",
-					"Assignee"));
+			put("assignuser", new AssigneeFieldFormat("assignuser", "Assignee"));
 			put("leadsource", "Lead Source");
 			put("primaddress", "Address");
 			put("primcity", "City");
@@ -198,61 +196,63 @@ public class ContactRelayEmailNotificationActionImpl extends
 		}
 	}
 
-	public static class AssigneeFieldFormat extends FieldFormat {
+	public static class AssigneeFieldFormat extends LinkFieldFormat {
 
 		public AssigneeFieldFormat(String fieldName, String displayName) {
 			super(fieldName, displayName);
 		}
 
 		@Override
-		public String formatField(MailContext<?> context) {
+		protected Img buildImage(MailContext<?> context) {
+			SimpleContact contact = (SimpleContact) context.getWrappedBean();
+
+			String userAvatarLink = LinkUtils.getAvatarLink(
+					contact.getAssignUserAvatarId(), 16);
+
+			Img img = new Img("avatar", userAvatarLink);
+
+			return img;
+		}
+
+		@Override
+		protected A buildLink(MailContext<?> context) {
 			SimpleContact contact = (SimpleContact) context.getWrappedBean();
 			String userLink = UserLinkUtils.generatePreviewFullUserLink(
 					LinkUtils.getSiteUrl(contact.getSaccountid()),
 					contact.getAssignuser());
-			String userAvatarLink = LinkUtils.getAvatarLink(
-					contact.getAssignUserAvatarId(), 16);
-
-			Span span = new Span();
-			Img img = new Img("avatar", userAvatarLink);
-			img.setStyle("vertical-align: middle; margin-right: 3px;");
-			span.appendChild(img);
 
 			A link = new A();
-			link.setStyle("text-decoration: none; color: rgb(36, 127, 211);");
 			link.setHref(userLink);
 			link.appendText(contact.getAssignUserFullName());
-			span.appendChild(link);
-			return span.write();
+
+			return link;
 		}
 	}
 
-	public static class AccountFieldFormat extends FieldFormat {
+	public static class AccountFieldFormat extends LinkFieldFormat {
 
 		public AccountFieldFormat(String fieldName, String displayName) {
 			super(fieldName, displayName);
 		}
 
 		@Override
-		public String formatField(MailContext<?> context) {
-			SimpleContact contact = (SimpleContact) context.getWrappedBean();
-			Span span = new Span();
+		protected Img buildImage(MailContext<?> context) {
 			String accountIconLink = CrmResources
 					.getResourceLink(CrmTypeConstants.ACCOUNT);
 			Img img = new Img("avatar", accountIconLink);
-			img.setStyle("vertical-align: middle; margin-right: 3px;");
-			span.appendChild(img);
+			return img;
+		}
 
+		@Override
+		protected A buildLink(MailContext<?> context) {
+			SimpleContact contact = (SimpleContact) context.getWrappedBean();
 			A link = new A();
-			link.setStyle("text-decoration: none; color: rgb(36, 127, 211);");
 			String accountLink = CrmLinkGenerator
 					.generateAccountPreviewFullLink(context.getSiteUrl(),
 							contact.getAccountid());
 			link.setHref(accountLink);
 			link.appendText(contact.getAccountName());
-			span.appendChild(link);
-
-			return span.write();
+			return link;
 		}
 
 	}

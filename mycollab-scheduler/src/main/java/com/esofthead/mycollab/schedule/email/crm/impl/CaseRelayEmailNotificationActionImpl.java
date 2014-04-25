@@ -38,10 +38,9 @@ import com.esofthead.mycollab.schedule.email.ItemFieldMapper;
 import com.esofthead.mycollab.schedule.email.LinkUtils;
 import com.esofthead.mycollab.schedule.email.MailContext;
 import com.esofthead.mycollab.schedule.email.crm.CaseRelayEmailNotificationAction;
-import com.esofthead.mycollab.schedule.email.format.FieldFormat;
+import com.esofthead.mycollab.schedule.email.format.LinkFieldFormat;
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Img;
-import com.hp.gagawa.java.elements.Span;
 
 /**
  * 
@@ -175,58 +174,64 @@ public class CaseRelayEmailNotificationActionImpl extends
 		}
 	}
 
-	public static class AccountFieldFormat extends FieldFormat {
+	public static class AccountFieldFormat extends LinkFieldFormat {
 
 		public AccountFieldFormat(String fieldName, String displayName) {
 			super(fieldName, displayName);
 		}
 
 		@Override
-		public String formatField(MailContext<?> context) {
-			SimpleCase cases = (SimpleCase) context.getWrappedBean();
-			Span span = new Span();
+		protected Img buildImage(MailContext<?> context) {
 			String accountIconLink = CrmResources
 					.getResourceLink(CrmTypeConstants.ACCOUNT);
 			Img img = new Img("avatar", accountIconLink);
-			span.appendChild(img);
+			return img;
+		}
 
+		@Override
+		protected A buildLink(MailContext<?> context) {
+			SimpleCase simpleCase = (SimpleCase) context.getWrappedBean();
 			A link = new A();
 			String accountLink = CrmLinkGenerator
 					.generateAccountPreviewFullLink(context.getSiteUrl(),
-							cases.getAccountid());
+							simpleCase.getAccountid());
 			link.setHref(accountLink);
-			link.appendText(cases.getAccountName());
-			span.appendChild(link);
-
-			return span.write();
+			link.appendText(simpleCase.getAccountName());
+			return link;
 		}
 
 	}
 
-	public static class AssigneeFieldFormat extends FieldFormat {
+	public static class AssigneeFieldFormat extends LinkFieldFormat {
 
 		public AssigneeFieldFormat(String fieldName, String displayName) {
 			super(fieldName, displayName);
 		}
 
 		@Override
-		public String formatField(MailContext<?> context) {
-			SimpleCase cases = (SimpleCase) context.getWrappedBean();
-			String userLink = UserLinkUtils.generatePreviewFullUserLink(
-					LinkUtils.getSiteUrl(cases.getSaccountid()),
-					cases.getAssignuser());
-			String userAvatarLink = LinkUtils.getAvatarLink(
-					cases.getAssignUserAvatarId(), 16);
+		protected Img buildImage(MailContext<?> context) {
+			SimpleCase simpleCase = (SimpleCase) context.getWrappedBean();
 
-			Span span = new Span();
+			String userAvatarLink = LinkUtils.getAvatarLink(
+					simpleCase.getAssignUserAvatarId(), 16);
+
 			Img img = new Img("avatar", userAvatarLink);
-			span.appendChild(img);
+
+			return img;
+		}
+
+		@Override
+		protected A buildLink(MailContext<?> context) {
+			SimpleCase simpleCase = (SimpleCase) context.getWrappedBean();
+			String userLink = UserLinkUtils.generatePreviewFullUserLink(
+					LinkUtils.getSiteUrl(simpleCase.getSaccountid()),
+					simpleCase.getAssignuser());
 
 			A link = new A();
 			link.setHref(userLink);
-			link.appendText(cases.getAssignUserFullName());
-			span.appendChild(link);
-			return span.write();
+			link.appendText(simpleCase.getAssignUserFullName());
+
+			return link;
 		}
 	}
 }

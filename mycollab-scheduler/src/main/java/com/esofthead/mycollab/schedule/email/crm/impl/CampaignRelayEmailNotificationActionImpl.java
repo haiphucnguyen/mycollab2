@@ -39,10 +39,9 @@ import com.esofthead.mycollab.schedule.email.MailContext;
 import com.esofthead.mycollab.schedule.email.crm.CampaignRelayEmailNotificationAction;
 import com.esofthead.mycollab.schedule.email.format.CurrencyFieldFormat;
 import com.esofthead.mycollab.schedule.email.format.DateFieldFormat;
-import com.esofthead.mycollab.schedule.email.format.FieldFormat;
+import com.esofthead.mycollab.schedule.email.format.LinkFieldFormat;
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Img;
-import com.hp.gagawa.java.elements.Span;
 
 /**
  * 
@@ -169,8 +168,7 @@ public class CampaignRelayEmailNotificationActionImpl extends
 			put("startdate", new DateFieldFormat("startdate", "Start Date"));
 			put("type", "Type");
 			put("enddate", new DateFieldFormat("enddate", "End Date"));
-			put("assignuser", new AssigneeFieldFormat("assignuser",
-					"Assignee"));
+			put("assignuser", new AssigneeFieldFormat("assignuser", "Assignee"));
 			put("currency", new CurrencyFieldFormat("currency", "Currency"));
 			put("budget", "Budget");
 			put("expectedcost", "Expected Cost");
@@ -180,30 +178,31 @@ public class CampaignRelayEmailNotificationActionImpl extends
 		}
 	}
 
-	public static class AssigneeFieldFormat extends FieldFormat {
+	public static class AssigneeFieldFormat extends LinkFieldFormat {
 
 		public AssigneeFieldFormat(String fieldName, String displayName) {
 			super(fieldName, displayName);
 		}
 
 		@Override
-		public String formatField(MailContext<?> context) {
+		protected Img buildImage(MailContext<?> context) {
+			SimpleCampaign campaign = (SimpleCampaign) context.getWrappedBean();
+			String userAvatarLink = LinkUtils.getAvatarLink(
+					campaign.getAssignUserAvatarId(), 16);
+			Img img = new Img("avatar", userAvatarLink);
+			return img;
+		}
+
+		@Override
+		protected A buildLink(MailContext<?> context) {
 			SimpleCampaign campaign = (SimpleCampaign) context.getWrappedBean();
 			String userLink = UserLinkUtils.generatePreviewFullUserLink(
 					LinkUtils.getSiteUrl(campaign.getSaccountid()),
 					campaign.getAssignuser());
-			String userAvatarLink = LinkUtils.getAvatarLink(
-					campaign.getAssignUserAvatarId(), 16);
-
-			Span span = new Span();
-			Img img = new Img("avatar", userAvatarLink);
-			span.appendChild(img);
-
 			A link = new A();
 			link.setHref(userLink);
 			link.appendText(campaign.getAssignUserFullName());
-			span.appendChild(link);
-			return span.write();
+			return link;
 		}
 	}
 
