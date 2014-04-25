@@ -17,19 +17,18 @@
 package com.esofthead.mycollab.schedule.email.project.impl;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.common.domain.SimpleAuditLog;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
 import com.esofthead.mycollab.common.service.AuditLogService;
-import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.project.ProjectLinkUtils;
@@ -40,10 +39,9 @@ import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
-import com.esofthead.mycollab.module.tracker.domain.Version;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
-import com.esofthead.mycollab.schedule.email.MailItemLink;
+import com.esofthead.mycollab.schedule.email.MailContext;
 import com.esofthead.mycollab.schedule.email.project.BugRelayEmailNotificationAction;
 import com.esofthead.mycollab.schedule.email.project.ProjectMailLinkGenerator;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
@@ -55,6 +53,7 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
  * 
  */
 @Component
+@Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class BugRelayEmailNotificationActionImpl extends
 		SendMailToFollowersAction implements BugRelayEmailNotificationAction {
 	@Autowired
@@ -87,8 +86,9 @@ public class BugRelayEmailNotificationActionImpl extends
 
 			setupMailHeaders(bug, emailNotification, templateGenerator);
 
-			templateGenerator.putVariable("properties",
-					getListOfProperties(bug, user));
+			templateGenerator.putVariable("context",
+					new MailContext<SimpleBug>(bug, user));
+			templateGenerator.putVariable("mapper", mapper);
 
 			return templateGenerator;
 		} else {
@@ -131,92 +131,6 @@ public class BugRelayEmailNotificationActionImpl extends
 		templateGenerator.putVariable("titles", listOfTitles);
 		templateGenerator.putVariable("summary", summary);
 		templateGenerator.putVariable("summaryLink", summaryLink);
-	}
-
-	protected Map<String, List<MailItemLink>> getListOfProperties(
-			SimpleBug bug, SimpleUser user) {
-		Map<String, List<MailItemLink>> listOfDisplayProperties = new LinkedHashMap<String, List<MailItemLink>>();
-
-		ProjectMailLinkGenerator linkGenerator = new ProjectMailLinkGenerator(
-				bug.getProjectid());
-
-		listOfDisplayProperties.put(mapper.getFieldLabel("status"),
-				Arrays.asList(new MailItemLink(null, bug.getStatus())));
-		listOfDisplayProperties.put(mapper.getFieldLabel("priority"),
-				Arrays.asList(new MailItemLink(null, bug.getPriority())));
-		listOfDisplayProperties.put(mapper.getFieldLabel("severity"),
-				Arrays.asList(new MailItemLink(null, bug.getSeverity())));
-		listOfDisplayProperties.put(mapper.getFieldLabel("resolution"),
-				Arrays.asList(new MailItemLink(null, bug.getResolution())));
-		listOfDisplayProperties.put(mapper.getFieldLabel("status"),
-				Arrays.asList(new MailItemLink(null, bug.getStatus())));
-		if (bug.getDuedate() != null)
-			listOfDisplayProperties.put(mapper.getFieldLabel("duedate"), Arrays
-					.asList(new MailItemLink(null, DateTimeUtils
-							.converToStringWithUserTimeZone(bug.getDuedate(),
-									user.getTimezone()))));
-		else {
-			listOfDisplayProperties.put(mapper.getFieldLabel("duedate"), null);
-		}
-		if (bug.getMilestoneid() != null) {
-			listOfDisplayProperties
-					.put(mapper.getFieldLabel("milestoneid"), Arrays
-							.asList(new MailItemLink(linkGenerator
-									.generateMilestonePreviewFullLink(bug
-											.getMilestoneid()), bug
-									.getMilestoneName())));
-		} else {
-			listOfDisplayProperties.put(mapper.getFieldLabel("milestoneid"),
-					null);
-		}
-
-		if (bug.getLogby() != null) {
-			listOfDisplayProperties.put(mapper.getFieldLabel("logby"), Arrays
-					.asList(new MailItemLink(linkGenerator
-							.generateUserPreviewFullLink(bug.getLogby()), bug
-							.getLoguserFullName())));
-		} else {
-			listOfDisplayProperties.put(mapper.getFieldLabel("logby"), null);
-		}
-
-		if (bug.getAssignuser() != null) {
-			listOfDisplayProperties.put(mapper.getFieldLabel("assignuser"),
-					Arrays.asList(new MailItemLink(linkGenerator
-							.generateUserPreviewFullLink(bug.getAssignuser()),
-							bug.getAssignuserFullName())));
-		} else {
-			listOfDisplayProperties.put(mapper.getFieldLabel("assignuser"),
-					null);
-		}
-
-		if (bug.getComponents() != null) {
-			List<MailItemLink> lstBugComponent = new ArrayList<MailItemLink>();
-			for (int i = 0; i < bug.getComponents().size(); i++) {
-				com.esofthead.mycollab.module.tracker.domain.Component bugComponent = bug
-						.getComponents().get(i);
-				lstBugComponent.add(new MailItemLink(linkGenerator
-						.generateBugComponentPreviewFullLink(bugComponent
-								.getId()), bugComponent.getComponentname()));
-			}
-			listOfDisplayProperties.put("Components", lstBugComponent);
-		} else {
-			listOfDisplayProperties.put("Components", null);
-		}
-
-		if (bug.getComponents() != null) {
-			List<MailItemLink> lstBugVersion = new ArrayList<MailItemLink>();
-			for (int i = 0; i < bug.getAffectedVersions().size(); i++) {
-				Version bugVersion = bug.getAffectedVersions().get(i);
-				lstBugVersion.add(new MailItemLink(linkGenerator
-						.generateBugVersionPreviewFullLink(bugVersion.getId()),
-						bugVersion.getVersionname()));
-			}
-			listOfDisplayProperties.put("Versions", lstBugVersion);
-		} else {
-			listOfDisplayProperties.put("Versions", null);
-		}
-
-		return listOfDisplayProperties;
 	}
 
 	@Override

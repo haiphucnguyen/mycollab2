@@ -869,7 +869,7 @@ input.v-textfield-pagedtable-pagefield {
 /* } */
 
 .v-textfield.v-readonly {
-	border: 1px solid rgb(161, 161, 161);
+	border: 1px solid #CFCFCF;
 }
 
 .v-textfield.noBorderRight {
@@ -3920,6 +3920,9 @@ div.v-lazyloadingwrapper-loading {
 .standup-block {
 	background-color: #F7F7F7;
 	border: 1px solid #CFCFCF;
+}
+.standup-block .user-info .v-button-link .v-button-caption {
+	text-align: center;
 }
 .standup-block .report-content {
 	border-left: 1px solid #CFCFCF;

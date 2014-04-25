@@ -3,7 +3,13 @@ package com.esofthead.mycollab.schedule.email.crm;
 import com.esofthead.mycollab.common.GenericLinkUtils;
 import com.esofthead.mycollab.module.crm.CrmLinkGenerator;
 
-public class CrmMailLinkGenerator extends GenericLinkUtils {
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
+public class CrmMailLinkGenerator {
 
 	private final String siteUrl;
 
@@ -56,12 +62,6 @@ public class CrmMailLinkGenerator extends GenericLinkUtils {
 	public String generateTaskPreviewFullLink(Integer taskId) {
 		return siteUrl + GenericLinkUtils.URL_PREFIX_PARAM
 				+ CrmLinkGenerator.generateTaskPreviewLink(taskId);
-	}
-
-	@Override
-	public String getSiteUrl() {
-
-		return this.siteUrl;
 	}
 
 }

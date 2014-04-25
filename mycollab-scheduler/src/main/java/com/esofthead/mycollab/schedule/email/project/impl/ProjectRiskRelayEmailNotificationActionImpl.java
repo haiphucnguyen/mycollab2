@@ -18,19 +18,18 @@ package com.esofthead.mycollab.schedule.email.project.impl;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.common.domain.SimpleAuditLog;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
 import com.esofthead.mycollab.common.service.AuditLogService;
-import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.project.ProjectLinkUtils;
@@ -39,6 +38,7 @@ import com.esofthead.mycollab.module.project.domain.SimpleRisk;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.project.service.RiskService;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
+import com.esofthead.mycollab.schedule.email.MailContext;
 import com.esofthead.mycollab.schedule.email.project.ProjectMailLinkGenerator;
 import com.esofthead.mycollab.schedule.email.project.ProjectRiskRelayEmailNotificationAction;
 
@@ -49,6 +49,7 @@ import com.esofthead.mycollab.schedule.email.project.ProjectRiskRelayEmailNotifi
  * 
  */
 @Component
+@Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class ProjectRiskRelayEmailNotificationActionImpl extends
 		SendMailToAllMembersAction implements
 		ProjectRiskRelayEmailNotificationAction {
@@ -97,65 +98,6 @@ public class ProjectRiskRelayEmailNotificationActionImpl extends
 		templateGenerator.putVariable("summaryLink", summaryLink);
 	}
 
-	protected Map<String, List<RiskLinkMapper>> getListOfProperties(
-			SimpleRisk risk, SimpleUser user) {
-		Map<String, List<RiskLinkMapper>> listOfDisplayProperties = new LinkedHashMap<String, List<RiskLinkMapper>>();
-
-		ProjectMailLinkGenerator linkGenerator = new ProjectMailLinkGenerator(
-				risk.getProjectid());
-
-		listOfDisplayProperties.put(mapper.getFieldLabel("raisedbyuser"),
-				Arrays.asList(new RiskLinkMapper(linkGenerator
-						.generateUserPreviewFullLink(risk.getRaisedbyuser()),
-						risk.getRaisedByUserFullName())));
-
-		if (risk.getAssigntouser() != null) {
-			listOfDisplayProperties.put(mapper.getFieldLabel("assigntouser"),
-					Arrays.asList(new RiskLinkMapper(
-							linkGenerator.generateUserPreviewFullLink(risk
-									.getAssigntouser()), risk
-									.getAssignedToUserFullName())));
-		} else {
-			listOfDisplayProperties.put(mapper.getFieldLabel("assigntouser"),
-					null);
-		}
-
-		if (risk.getConsequence() != null) {
-			listOfDisplayProperties.put(mapper.getFieldLabel("consequence"),
-					Arrays.asList(new RiskLinkMapper(null, risk
-							.getConsequence())));
-		} else {
-			listOfDisplayProperties.put(mapper.getFieldLabel("consequence"),
-					null);
-		}
-
-		if (risk.getProbalitity() != null) {
-			listOfDisplayProperties.put(mapper.getFieldLabel("probability"),
-					Arrays.asList(new RiskLinkMapper(null, risk
-							.getProbalitity())));
-		} else {
-			listOfDisplayProperties.put(mapper.getFieldLabel("probability"),
-					null);
-		}
-
-		if (risk.getDatedue() != null)
-			listOfDisplayProperties.put(mapper.getFieldLabel("datedue"), Arrays
-					.asList(new RiskLinkMapper(null, DateTimeUtils
-							.converToStringWithUserTimeZone(risk.getDatedue(),
-									user.getTimezone()))));
-		else {
-			listOfDisplayProperties.put(mapper.getFieldLabel("datedue"), null);
-		}
-
-		listOfDisplayProperties.put(mapper.getFieldLabel("status"),
-				Arrays.asList(new RiskLinkMapper(null, risk.getStatus())));
-
-		listOfDisplayProperties.put(mapper.getFieldLabel("description"),
-				Arrays.asList(new RiskLinkMapper(null, risk.getDescription())));
-
-		return listOfDisplayProperties;
-	}
-
 	@Override
 	protected TemplateGenerator templateGeneratorForCreateAction(
 			SimpleRelayEmailNotification emailNotification, SimpleUser user) {
@@ -171,8 +113,9 @@ public class ProjectRiskRelayEmailNotificationActionImpl extends
 				"templates/email/project/itemCreatedNotifier.mt");
 		setupMailHeaders(risk, emailNotification, templateGenerator);
 
-		templateGenerator.putVariable("properties",
-				getListOfProperties(risk, user));
+		templateGenerator.putVariable("context", new MailContext<SimpleRisk>(
+				risk, user));
+		templateGenerator.putVariable("mapper", mapper);
 
 		return templateGenerator;
 	}

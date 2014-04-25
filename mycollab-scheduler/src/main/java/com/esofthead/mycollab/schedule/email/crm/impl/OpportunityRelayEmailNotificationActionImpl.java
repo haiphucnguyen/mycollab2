@@ -16,19 +16,17 @@
  */
 package com.esofthead.mycollab.schedule.email.crm.impl;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.common.domain.SimpleAuditLog;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
 import com.esofthead.mycollab.common.service.AuditLogService;
-import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
@@ -36,7 +34,8 @@ import com.esofthead.mycollab.module.crm.service.CrmNotificationSettingService;
 import com.esofthead.mycollab.module.crm.service.OpportunityService;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
-import com.esofthead.mycollab.schedule.email.MailItemLink;
+import com.esofthead.mycollab.schedule.email.LinkUtils;
+import com.esofthead.mycollab.schedule.email.MailContext;
 import com.esofthead.mycollab.schedule.email.crm.CrmMailLinkGenerator;
 import com.esofthead.mycollab.schedule.email.crm.OpportunityRelayEmailNotificationAction;
 
@@ -47,6 +46,7 @@ import com.esofthead.mycollab.schedule.email.crm.OpportunityRelayEmailNotificati
  * 
  */
 @Component
+@Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class OpportunityRelayEmailNotificationActionImpl extends
 		CrmDefaultSendingRelayEmailAction<SimpleOpportunity> implements
 		OpportunityRelayEmailNotificationAction {
@@ -71,7 +71,7 @@ public class OpportunityRelayEmailNotificationActionImpl extends
 			TemplateGenerator templateGenerator) {
 
 		CrmMailLinkGenerator crmLinkGenerator = new CrmMailLinkGenerator(
-				getSiteUrl(simpleOpportunity.getSaccountid()));
+				LinkUtils.getSiteUrl(simpleOpportunity.getSaccountid()));
 
 		String summary = simpleOpportunity.getOpportunityname();
 		String summaryLink = crmLinkGenerator
@@ -82,126 +82,6 @@ public class OpportunityRelayEmailNotificationActionImpl extends
 		templateGenerator.putVariable("itemType", "opportunity");
 		templateGenerator.putVariable("summary", summary);
 		templateGenerator.putVariable("summaryLink", summaryLink);
-	}
-
-	protected Map<String, List<MailItemLink>> getListOfProperties(
-			SimpleOpportunity simpleOpportunity, SimpleUser user) {
-		Map<String, List<MailItemLink>> listOfDisplayProperties = new LinkedHashMap<String, List<MailItemLink>>();
-
-		CrmMailLinkGenerator crmLinkGenerator = new CrmMailLinkGenerator(
-				getSiteUrl(simpleOpportunity.getSaccountid()));
-
-		listOfDisplayProperties.put(mapper.getFieldLabel("accountid"), Arrays
-				.asList(new MailItemLink(crmLinkGenerator
-						.generateAccountPreviewFullLink(simpleOpportunity
-								.getAccountid()), simpleOpportunity
-						.getAccountName())));
-
-		if (simpleOpportunity.getOpportunitytype() != null) {
-			listOfDisplayProperties.put(
-					mapper.getFieldLabel("opportunitytype"), Arrays
-							.asList(new MailItemLink(null, simpleOpportunity
-									.getOpportunitytype())));
-		} else {
-			listOfDisplayProperties.put(
-					mapper.getFieldLabel("opportunitytype"), null);
-		}
-
-		if (simpleOpportunity.getCurrencyid() != null) {
-			listOfDisplayProperties.put(mapper.getFieldLabel("currencyid"),
-					Arrays.asList(new MailItemLink(null, simpleOpportunity
-							.getCurrency().getIsocode())));
-		} else {
-			listOfDisplayProperties.put(mapper.getFieldLabel("currencyid"),
-					null);
-		}
-
-		if (simpleOpportunity.getAmount() != null) {
-			listOfDisplayProperties.put(mapper.getFieldLabel("amount"), Arrays
-					.asList(new MailItemLink(null, simpleOpportunity
-							.getAmount().toString())));
-		} else {
-			listOfDisplayProperties.put(mapper.getFieldLabel("amount"), null);
-		}
-
-		if (simpleOpportunity.getExpectedcloseddate() != null) {
-			listOfDisplayProperties.put(mapper
-					.getFieldLabel("expectedcloseddate"), Arrays
-					.asList(new MailItemLink(null, DateTimeUtils
-							.converToStringWithUserTimeZone(
-									simpleOpportunity.getExpectedcloseddate(),
-									user.getTimezone()))));
-		} else {
-			listOfDisplayProperties.put(
-					mapper.getFieldLabel("expectedcloseddate"), null);
-		}
-
-		if (simpleOpportunity.getSalesstage() != null) {
-			listOfDisplayProperties.put(mapper.getFieldLabel("salesstage"),
-					Arrays.asList(new MailItemLink(null, simpleOpportunity
-							.getSalesstage())));
-		} else {
-			listOfDisplayProperties.put(mapper.getFieldLabel("salesstage"),
-					null);
-		}
-
-		if (simpleOpportunity.getSource() != null) {
-			listOfDisplayProperties.put(mapper.getFieldLabel("source"), Arrays
-					.asList(new MailItemLink(null, simpleOpportunity
-							.getSource())));
-		} else {
-			listOfDisplayProperties.put(mapper.getFieldLabel("source"), null);
-		}
-
-		if (simpleOpportunity.getProbability() != null) {
-			listOfDisplayProperties.put(mapper.getFieldLabel("probability"),
-					Arrays.asList(new MailItemLink(null, simpleOpportunity
-							.getProbability().toString())));
-		} else {
-			listOfDisplayProperties.put(mapper.getFieldLabel("probability"),
-					null);
-		}
-
-		if (simpleOpportunity.getCampaignid() != null) {
-			listOfDisplayProperties.put(mapper.getFieldLabel("campaignid"),
-					Arrays.asList(new MailItemLink(crmLinkGenerator
-							.generateCampainPreviewFullLilnk(simpleOpportunity
-									.getCampaignid()), simpleOpportunity
-							.getCampaignName())));
-		} else {
-			listOfDisplayProperties.put(mapper.getFieldLabel("campaignid"),
-					null);
-		}
-
-		if (simpleOpportunity.getNextstep() != null) {
-			listOfDisplayProperties.put(mapper.getFieldLabel("nextstep"),
-					Arrays.asList(new MailItemLink(null, simpleOpportunity
-							.getNextstep())));
-		} else {
-			listOfDisplayProperties.put(mapper.getFieldLabel("nextstep"), null);
-		}
-
-		if (simpleOpportunity.getAssignuser() != null) {
-			listOfDisplayProperties.put(mapper.getFieldLabel("assignuser"),
-					Arrays.asList(new MailItemLink(crmLinkGenerator
-							.generateUserPreviewFullLink(simpleOpportunity
-									.getAssignuser()), simpleOpportunity
-							.getAssignUserFullName())));
-		} else {
-			listOfDisplayProperties.put(mapper.getFieldLabel("assignuser"),
-					null);
-		}
-
-		if (simpleOpportunity.getDescription() != null) {
-			listOfDisplayProperties.put(mapper.getFieldLabel("description"),
-					Arrays.asList(new MailItemLink(null, simpleOpportunity
-							.getDescription())));
-		} else {
-			listOfDisplayProperties.put(mapper.getFieldLabel("description"),
-					null);
-		}
-
-		return listOfDisplayProperties;
 	}
 
 	@Override
@@ -222,8 +102,10 @@ public class OpportunityRelayEmailNotificationActionImpl extends
 			setupMailHeaders(simpleOpportunity, emailNotification,
 					templateGenerator);
 
-			templateGenerator.putVariable("properties",
-					getListOfProperties(simpleOpportunity, user));
+			templateGenerator
+					.putVariable("context", new MailContext<SimpleOpportunity>(
+							simpleOpportunity, user));
+			templateGenerator.putVariable("mapper", mapper);
 
 			return templateGenerator;
 		} else {

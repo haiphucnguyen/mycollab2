@@ -16,21 +16,19 @@
  */
 package com.esofthead.mycollab.schedule.email.project.impl;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import com.esofthead.mycollab.common.domain.SimpleAuditLog;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
 import com.esofthead.mycollab.common.service.AuditLogService;
-import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.project.ProjectLinkUtils;
@@ -44,6 +42,7 @@ import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.schedule.ScheduleUserTimeZoneUtils;
+import com.esofthead.mycollab.schedule.email.MailContext;
 import com.esofthead.mycollab.schedule.email.project.ProjectMailLinkGenerator;
 import com.esofthead.mycollab.schedule.email.project.ProjectTaskRelayEmailNotificationAction;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
@@ -55,6 +54,7 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
  * 
  */
 @Service
+@Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class ProjectTaskRelayEmailNotificationActionImpl extends
 		SendMailToFollowersAction implements
 		ProjectTaskRelayEmailNotificationAction {
@@ -108,92 +108,6 @@ public class ProjectTaskRelayEmailNotificationActionImpl extends
 		templateGenerator.putVariable("summaryLink", summaryLink);
 	}
 
-	protected Map<String, List<TaskLinkMapper>> getListOfProperties(
-			SimpleTask task, SimpleUser user) {
-		Map<String, List<TaskLinkMapper>> listOfDisplayProperties = new LinkedHashMap<String, List<TaskLinkMapper>>();
-
-		ProjectMailLinkGenerator linkGenerator = new ProjectMailLinkGenerator(
-				task.getProjectid());
-
-		if (task.getStartdate() != null)
-			listOfDisplayProperties.put(mapper.getFieldLabel("startdate"),
-					Arrays.asList(new TaskLinkMapper(null, DateTimeUtils
-							.converToStringWithUserTimeZone(
-									task.getStartdate(), user.getTimezone()))));
-		else {
-			listOfDisplayProperties
-					.put(mapper.getFieldLabel("startdate"), null);
-		}
-
-		if (task.getActualstartdate() != null)
-			listOfDisplayProperties.put(
-					mapper.getFieldLabel("actualstartdate"), Arrays
-							.asList(new TaskLinkMapper(null, DateTimeUtils
-									.converToStringWithUserTimeZone(
-											task.getActualstartdate(),
-											user.getTimezone()))));
-		else {
-			listOfDisplayProperties.put(
-					mapper.getFieldLabel("actualstartdate"), null);
-		}
-
-		if (task.getEnddate() != null)
-			listOfDisplayProperties.put(mapper.getFieldLabel("enddate"), Arrays
-					.asList(new TaskLinkMapper(null, DateTimeUtils
-							.converToStringWithUserTimeZone(task.getEnddate(),
-									user.getTimezone()))));
-		else {
-			listOfDisplayProperties.put(mapper.getFieldLabel("enddate"), null);
-		}
-
-		if (task.getActualenddate() != null)
-			listOfDisplayProperties
-					.put(mapper.getFieldLabel("actualenddate"), Arrays
-							.asList(new TaskLinkMapper(null, DateTimeUtils
-									.converToStringWithUserTimeZone(
-											task.getActualenddate(),
-											user.getTimezone()))));
-		else {
-			listOfDisplayProperties.put(mapper.getFieldLabel("actualenddate"),
-					null);
-		}
-
-		if (task.getDeadline() != null)
-			listOfDisplayProperties.put(mapper.getFieldLabel("deadline"),
-					Arrays.asList(new TaskLinkMapper(null, DateTimeUtils
-							.converToStringWithUserTimeZone(task.getDeadline(),
-									user.getTimezone()))));
-		else {
-			listOfDisplayProperties.put(mapper.getFieldLabel("deadline"), null);
-		}
-
-		if (task.getPriority() != null)
-			listOfDisplayProperties
-					.put(mapper.getFieldLabel("priority"),
-							Arrays.asList(new TaskLinkMapper(null, task
-									.getPriority())));
-		else {
-			listOfDisplayProperties.put(mapper.getFieldLabel("priority"), null);
-		}
-
-		if (task.getAssignuser() != null) {
-			listOfDisplayProperties.put(mapper.getFieldLabel("assignuser"),
-					Arrays.asList(new TaskLinkMapper(linkGenerator
-							.generateUserPreviewFullLink(task.getAssignuser()),
-							task.getAssignUserFullName())));
-		} else {
-			listOfDisplayProperties.put(mapper.getFieldLabel("assignuser"),
-					null);
-		}
-
-		listOfDisplayProperties.put(mapper.getFieldLabel("taskListName"),
-				Arrays.asList(new TaskLinkMapper(
-						linkGenerator.generateTaskGroupPreviewFullLink(task
-								.getTasklistid()), task.getTaskListName())));
-
-		return listOfDisplayProperties;
-	}
-
 	@Override
 	public TemplateGenerator templateGeneratorForCreateAction(
 			SimpleRelayEmailNotification emailNotification, SimpleUser user) {
@@ -214,8 +128,9 @@ public class ProjectTaskRelayEmailNotificationActionImpl extends
 
 		setupMailHeaders(task, emailNotification, templateGenerator);
 
-		templateGenerator.putVariable("properties",
-				getListOfProperties(task, user));
+		templateGenerator.putVariable("context", new MailContext<SimpleTask>(
+				task, user));
+		templateGenerator.putVariable("mapper", mapper);
 		return templateGenerator;
 	}
 
@@ -400,33 +315,4 @@ public class ProjectTaskRelayEmailNotificationActionImpl extends
 
 		return inListUsers;
 	}
-
-	public class TaskLinkMapper implements Serializable {
-		private static final long serialVersionUID = 2212688618608788187L;
-
-		private String link;
-		private String displayname;
-
-		public TaskLinkMapper(String link, String displayname) {
-			this.link = link;
-			this.displayname = displayname;
-		}
-
-		public String getWebLink() {
-			return link;
-		}
-
-		public void setWebLink(String link) {
-			this.link = link;
-		}
-
-		public String getDisplayName() {
-			return displayname;
-		}
-
-		public void setDisplayName(String displayname) {
-			this.displayname = displayname;
-		}
-	}
-
 }

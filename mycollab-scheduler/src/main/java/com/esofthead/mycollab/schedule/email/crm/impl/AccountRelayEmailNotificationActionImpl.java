@@ -17,6 +17,8 @@
 package com.esofthead.mycollab.schedule.email.crm.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.common.domain.SimpleAuditLog;
@@ -49,6 +51,7 @@ import com.hp.gagawa.java.elements.Span;
  * 
  */
 @Component
+@Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class AccountRelayEmailNotificationActionImpl extends
 		CrmDefaultSendingRelayEmailAction<SimpleAccount> implements
 		AccountRelayEmailNotificationAction {
