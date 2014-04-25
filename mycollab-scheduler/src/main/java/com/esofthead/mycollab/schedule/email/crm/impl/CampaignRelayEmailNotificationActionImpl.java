@@ -16,9 +16,6 @@
  */
 package com.esofthead.mycollab.schedule.email.crm.impl;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
@@ -28,16 +25,24 @@ import com.esofthead.mycollab.common.domain.SimpleAuditLog;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
 import com.esofthead.mycollab.common.service.AuditLogService;
 import com.esofthead.mycollab.core.utils.StringUtils;
+import com.esofthead.mycollab.module.crm.CrmLinkGenerator;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.service.CampaignService;
 import com.esofthead.mycollab.module.crm.service.CrmNotificationSettingService;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
+import com.esofthead.mycollab.module.user.UserLinkUtils;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
+import com.esofthead.mycollab.schedule.email.ItemFieldMapper;
 import com.esofthead.mycollab.schedule.email.LinkUtils;
 import com.esofthead.mycollab.schedule.email.MailContext;
 import com.esofthead.mycollab.schedule.email.crm.CampaignRelayEmailNotificationAction;
-import com.esofthead.mycollab.schedule.email.crm.CrmMailLinkGenerator;
+import com.esofthead.mycollab.schedule.email.format.CurrencyFieldFormat;
+import com.esofthead.mycollab.schedule.email.format.DateFieldFormat;
+import com.esofthead.mycollab.schedule.email.format.FieldFormat;
+import com.hp.gagawa.java.elements.A;
+import com.hp.gagawa.java.elements.Img;
+import com.hp.gagawa.java.elements.Span;
 
 /**
  * 
@@ -59,23 +64,19 @@ public class CampaignRelayEmailNotificationActionImpl extends
 	@Autowired
 	private CrmNotificationSettingService notificationService;
 
-	private final CampaignFieldNameMapper mapper;
+	private static final CampaignFieldNameMapper mapper = new CampaignFieldNameMapper();
 
 	public CampaignRelayEmailNotificationActionImpl() {
 		super(CrmTypeConstants.CAMPAIGN);
-		mapper = new CampaignFieldNameMapper();
 	}
 
 	protected void setupMailHeaders(SimpleCampaign campaign,
 			SimpleRelayEmailNotification emailNotification,
 			TemplateGenerator templateGenerator) {
 
-		CrmMailLinkGenerator crmLinkGenerator = new CrmMailLinkGenerator(
-				LinkUtils.getSiteUrl(campaign.getSaccountid()));
-
 		String summary = campaign.getCampaignname();
-		String summaryLink = crmLinkGenerator
-				.generateCasePreviewFullLink(campaign.getId());
+		String summaryLink = CrmLinkGenerator.generateCampaignPreviewFullLink(
+				siteUrl, campaign.getId());
 
 		templateGenerator.putVariable("makeChangeUser",
 				emailNotification.getChangeByUserFullName());
@@ -103,7 +104,8 @@ public class CampaignRelayEmailNotificationActionImpl extends
 					templateGenerator);
 
 			templateGenerator.putVariable("context",
-					new MailContext<SimpleCampaign>(simpleCampaign, user, siteUrl));
+					new MailContext<SimpleCampaign>(simpleCampaign, user,
+							siteUrl));
 			templateGenerator.putVariable("mapper", mapper);
 
 			return templateGenerator;
@@ -159,32 +161,49 @@ public class CampaignRelayEmailNotificationActionImpl extends
 		return templateGenerator;
 	}
 
-	public class CampaignFieldNameMapper {
-		private final Map<String, String> fieldNameMap;
+	public static class CampaignFieldNameMapper extends ItemFieldMapper {
 
-		CampaignFieldNameMapper() {
-			fieldNameMap = new HashMap<String, String>();
+		public CampaignFieldNameMapper() {
+			put("campaignname", "Name");
+			put("status", "Status");
+			put("startdate", new DateFieldFormat("startdate", "Start Date"));
+			put("type", "Type");
+			put("enddate", new DateFieldFormat("enddate", "End Date"));
+			put("assignuser", new AssigneeFieldFormat("assignuser",
+					"Assignee"));
+			put("currency", new CurrencyFieldFormat("currency", "Currency"));
+			put("budget", "Budget");
+			put("expectedcost", "Expected Cost");
+			put("expectedrevenue", "Expected Revenue");
+			put("actualcost", "Actual Cost");
+			put("description", "Description");
+		}
+	}
 
-			fieldNameMap.put("campaignname", "Name");
-			fieldNameMap.put("status", "Status");
-			fieldNameMap.put("startdate", "StartDate");
-			fieldNameMap.put("type", "Type");
-			fieldNameMap.put("enddate", "EndDate");
-			fieldNameMap.put("assignuser", "Assignee");
-			fieldNameMap.put("currency", "Currency");
-			fieldNameMap.put("budget", "Budget");
-			fieldNameMap.put("expectedcost", "Expected Cost");
-			fieldNameMap.put("expectedrevenue", "Expected Revenue");
-			fieldNameMap.put("actualcost", "Actual Cost");
-			fieldNameMap.put("description", "Description");
+	public static class AssigneeFieldFormat extends FieldFormat {
+
+		public AssigneeFieldFormat(String fieldName, String displayName) {
+			super(fieldName, displayName);
 		}
 
-		public boolean hasField(String fieldName) {
-			return fieldNameMap.containsKey(fieldName);
-		}
+		@Override
+		public String formatField(MailContext<?> context) {
+			SimpleCampaign campaign = (SimpleCampaign) context.getWrappedBean();
+			String userLink = UserLinkUtils.generatePreviewFullUserLink(
+					LinkUtils.getSiteUrl(campaign.getSaccountid()),
+					campaign.getAssignuser());
+			String userAvatarLink = LinkUtils.getAvatarLink(
+					campaign.getAssignUserAvatarId(), 16);
 
-		public String getFieldLabel(String fieldName) {
-			return fieldNameMap.get(fieldName);
+			Span span = new Span();
+			Img img = new Img("avatar", userAvatarLink);
+			span.appendChild(img);
+
+			A link = new A();
+			link.setHref(userLink);
+			link.appendText(campaign.getAssignUserFullName());
+			span.appendChild(link);
+			return span.write();
 		}
 	}
 

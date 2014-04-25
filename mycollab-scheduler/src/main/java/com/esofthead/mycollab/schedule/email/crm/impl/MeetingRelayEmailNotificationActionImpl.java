@@ -16,9 +16,6 @@
  */
 package com.esofthead.mycollab.schedule.email.crm.impl;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
@@ -28,6 +25,7 @@ import com.esofthead.mycollab.common.domain.SimpleAuditLog;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
 import com.esofthead.mycollab.common.service.AuditLogService;
 import com.esofthead.mycollab.core.utils.StringUtils;
+import com.esofthead.mycollab.module.crm.CrmLinkGenerator;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.SimpleMeeting;
 import com.esofthead.mycollab.module.crm.service.CrmNotificationSettingService;
@@ -35,10 +33,10 @@ import com.esofthead.mycollab.module.crm.service.MeetingService;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.schedule.ScheduleUserTimeZoneUtils;
-import com.esofthead.mycollab.schedule.email.LinkUtils;
+import com.esofthead.mycollab.schedule.email.ItemFieldMapper;
 import com.esofthead.mycollab.schedule.email.MailContext;
-import com.esofthead.mycollab.schedule.email.crm.CrmMailLinkGenerator;
 import com.esofthead.mycollab.schedule.email.crm.MeetingRelayEmailNotificationAction;
+import com.esofthead.mycollab.schedule.email.format.DateTimeFieldFormat;
 
 /**
  * 
@@ -60,23 +58,19 @@ public class MeetingRelayEmailNotificationActionImpl extends
 	@Autowired
 	private CrmNotificationSettingService notificationService;
 
-	private final MeetingFieldNameMapper mapper;
+	private static final MeetingFieldNameMapper mapper = new MeetingFieldNameMapper();
 
 	public MeetingRelayEmailNotificationActionImpl() {
 		super(CrmTypeConstants.MEETING);
-		mapper = new MeetingFieldNameMapper();
 	}
 
 	protected void setupMailHeaders(SimpleMeeting meeting,
 			SimpleRelayEmailNotification emailNotification,
 			TemplateGenerator templateGenerator) {
 
-		CrmMailLinkGenerator crmLinkGenerator = new CrmMailLinkGenerator(
-				LinkUtils.getSiteUrl(meeting.getSaccountid()));
-
 		String summary = meeting.getSubject();
-		String summaryLink = crmLinkGenerator
-				.generateMeetingPreviewFullLink(meeting.getId());
+		String summaryLink = CrmLinkGenerator.generateMeetingPreviewFullLink(
+				siteUrl, meeting.getId());
 
 		templateGenerator.putVariable("makeChangeUser",
 				emailNotification.getChangeByUserFullName());
@@ -156,27 +150,19 @@ public class MeetingRelayEmailNotificationActionImpl extends
 		return templateGenerator;
 	}
 
-	public class MeetingFieldNameMapper {
-		private final Map<String, String> fieldNameMap;
+	public static class MeetingFieldNameMapper extends ItemFieldMapper {
 
-		MeetingFieldNameMapper() {
-			fieldNameMap = new HashMap<String, String>();
+		public MeetingFieldNameMapper() {
 
-			fieldNameMap.put("subject", "Subject");
-			fieldNameMap.put("status", "Status");
-			fieldNameMap.put("startdate", "Start Date & Time");
-			fieldNameMap.put("typeid", "Related to");
-			fieldNameMap.put("enddate", "End Date & Time");
-			fieldNameMap.put("location", "Location");
-			fieldNameMap.put("description", "Description");
-		}
-
-		public boolean hasField(String fieldName) {
-			return fieldNameMap.containsKey(fieldName);
-		}
-
-		public String getFieldLabel(String fieldName) {
-			return fieldNameMap.get(fieldName);
+			put("subject", "Subject");
+			put("status", "Status");
+			put("startdate", new DateTimeFieldFormat("startdate",
+					"Start Date & Time"));
+			put("typeid", "Related to");
+			put("enddate",
+					new DateTimeFieldFormat("enddate", "End Date & Time"));
+			put("location", "Location");
+			put("description", "Description");
 		}
 	}
 

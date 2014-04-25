@@ -40,9 +40,19 @@ public class CrmLinkGenerator {
 				+ GenericLinkUtils.encodeParam(new Object[] { campaignId });
 	}
 
+	public static String generateCampaignPreviewFullLink(String siteUrl,
+			Integer campaignId) {
+		return siteUrl + "#" + generateCampaignPreviewLink(campaignId);
+	}
+
 	public static String generateCasePreviewLink(Integer caseId) {
 		return "crm/cases/preview/"
 				+ GenericLinkUtils.encodeParam(new Object[] { caseId });
+	}
+
+	public static String generateCasePreviewFullLink(String siteUrl,
+			Integer caseId) {
+		return siteUrl + "#" + generateCasePreviewLink(caseId);
 	}
 
 	public static String generateContactPreviewLink(Integer contactId) {
@@ -60,9 +70,19 @@ public class CrmLinkGenerator {
 				+ GenericLinkUtils.encodeParam(new Object[] { leadId });
 	}
 
+	public static String generateLeadPreviewFullLink(String siteUrl,
+			Integer leadId) {
+		return siteUrl + "#" + generateLeadPreviewLink(leadId);
+	}
+
 	public static String generateOpportunityPreviewLink(Integer opportunityId) {
 		return "crm/opportunity/preview/"
 				+ GenericLinkUtils.encodeParam(new Object[] { opportunityId });
+	}
+
+	public static String generateOpportunityPreviewFullLink(String siteUrl,
+			Integer opportunityId) {
+		return siteUrl + "#" + generateOpportunityPreviewLink(opportunityId);
 	}
 
 	public static String generateTaskPreviewLink(Integer taskId) {
@@ -70,14 +90,29 @@ public class CrmLinkGenerator {
 				+ GenericLinkUtils.encodeParam(new Object[] { taskId });
 	}
 
+	public static String generateTaskPreviewFullLink(String siteUrl,
+			Integer taskId) {
+		return siteUrl + "#" + generateTaskPreviewLink(taskId);
+	}
+
 	public static String generateMeetingPreviewLink(Integer meetingId) {
 		return "crm/activity/meeting/preview/"
 				+ GenericLinkUtils.encodeParam(new Object[] { meetingId });
 	}
 
+	public static String generateMeetingPreviewFullLink(String siteUrl,
+			Integer meetingId) {
+		return siteUrl + "#" + generateMeetingPreviewLink(meetingId);
+	}
+
 	public static String generateCallPreviewLink(Integer callId) {
 		return "crm/activity/call/preview/"
 				+ GenericLinkUtils.encodeParam(new Object[] { callId });
+	}
+
+	public static String generateCallPreviewFullLink(String siteUrl,
+			Integer callId) {
+		return siteUrl + "#" + generateCallPreviewLink(callId);
 	}
 
 	public static String generateCrmItemLink(String type, int typeid) {

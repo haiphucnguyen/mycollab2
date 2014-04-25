@@ -16,9 +16,6 @@
  */
 package com.esofthead.mycollab.schedule.email.crm.impl;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
@@ -28,16 +25,23 @@ import com.esofthead.mycollab.common.domain.SimpleAuditLog;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
 import com.esofthead.mycollab.common.service.AuditLogService;
 import com.esofthead.mycollab.core.utils.StringUtils;
+import com.esofthead.mycollab.module.crm.CrmLinkGenerator;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.SimpleCall;
 import com.esofthead.mycollab.module.crm.service.CallService;
 import com.esofthead.mycollab.module.crm.service.CrmNotificationSettingService;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
+import com.esofthead.mycollab.module.user.UserLinkUtils;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
+import com.esofthead.mycollab.schedule.email.ItemFieldMapper;
 import com.esofthead.mycollab.schedule.email.LinkUtils;
 import com.esofthead.mycollab.schedule.email.MailContext;
 import com.esofthead.mycollab.schedule.email.crm.CallRelayEmailNotificationAction;
-import com.esofthead.mycollab.schedule.email.crm.CrmMailLinkGenerator;
+import com.esofthead.mycollab.schedule.email.format.DateTimeFieldFormat;
+import com.esofthead.mycollab.schedule.email.format.FieldFormat;
+import com.hp.gagawa.java.elements.A;
+import com.hp.gagawa.java.elements.Img;
+import com.hp.gagawa.java.elements.Span;
 
 /**
  * 
@@ -59,23 +63,19 @@ public class CallRelayEmailNotificationActionImpl extends
 	@Autowired
 	private CrmNotificationSettingService notificationService;
 
-	private final CallFieldNameMapper mapper;
+	private static final CallFieldNameMapper mapper = new CallFieldNameMapper();
 
 	public CallRelayEmailNotificationActionImpl() {
 		super(CrmTypeConstants.CALL);
-		mapper = new CallFieldNameMapper();
 	}
 
 	protected void setupMailHeaders(SimpleCall call,
 			SimpleRelayEmailNotification emailNotification,
 			TemplateGenerator templateGenerator) {
 
-		CrmMailLinkGenerator crmLinkGenerator = new CrmMailLinkGenerator(
-				LinkUtils.getSiteUrl(call.getSaccountid()));
-
 		String summary = call.getSubject();
-		String summaryLink = crmLinkGenerator.generateCallPreviewFullLink(call
-				.getId());
+		String summaryLink = CrmLinkGenerator.generateCallPreviewFullLink(
+				siteUrl, call.getId());
 
 		templateGenerator.putVariable("makeChangeUser",
 				emailNotification.getChangeByUserFullName());
@@ -156,29 +156,46 @@ public class CallRelayEmailNotificationActionImpl extends
 		return templateGenerator;
 	}
 
-	public class CallFieldNameMapper {
-		private final Map<String, String> fieldNameMap;
+	public static class CallFieldNameMapper extends ItemFieldMapper {
 
-		CallFieldNameMapper() {
-			fieldNameMap = new HashMap<String, String>();
+		public CallFieldNameMapper() {
+			put("subject", "Subject");
+			put("status", "Status");
+			put("startdate", new DateTimeFieldFormat("startdate",
+					"Start Date & Time"));
+			put("typeid", "Related to");
+			put("durationinseconds", "Duration");
+			put("purpose", "Purpose");
+			put("assignuser", new AssigneeFieldFormat("assignuser", "Assignee"));
+			put("description", "Description");
+			put("result", "Result");
+		}
+	}
 
-			fieldNameMap.put("subject", "Subject");
-			fieldNameMap.put("status", "Status");
-			fieldNameMap.put("startdate", "Start Date & Time");
-			fieldNameMap.put("typeid", "Related to");
-			fieldNameMap.put("durationinseconds", "Duration");
-			fieldNameMap.put("purpose", "Purpose");
-			fieldNameMap.put("assignuser", "Assignee");
-			fieldNameMap.put("description", "Description");
-			fieldNameMap.put("result", "Result");
+	public static class AssigneeFieldFormat extends FieldFormat {
+
+		public AssigneeFieldFormat(String fieldName, String displayName) {
+			super(fieldName, displayName);
 		}
 
-		public boolean hasField(String fieldName) {
-			return fieldNameMap.containsKey(fieldName);
-		}
+		@Override
+		public String formatField(MailContext<?> context) {
+			SimpleCall call = (SimpleCall) context.getWrappedBean();
+			String userLink = UserLinkUtils.generatePreviewFullUserLink(
+					LinkUtils.getSiteUrl(call.getSaccountid()),
+					call.getAssignuser());
+			String userAvatarLink = LinkUtils.getAvatarLink(
+					call.getAssignUserAvatarId(), 16);
 
-		public String getFieldLabel(String fieldName) {
-			return fieldNameMap.get(fieldName);
+			Span span = new Span();
+			Img img = new Img("avatar", userAvatarLink);
+			span.appendChild(img);
+
+			A link = new A();
+			link.setHref(userLink);
+			link.appendText(call.getAssignUserFullName());
+			span.appendChild(link);
+			return span.write();
 		}
 	}
 

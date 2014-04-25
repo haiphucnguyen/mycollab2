@@ -180,7 +180,7 @@ public class ContactRelayEmailNotificationActionImpl extends
 			put("assistant", "Assistant");
 			put("iscallable", "Callable");
 			put("assistantphone", "Assistant Phone");
-			put("assignuser", new ContactAssigneeFieldFormat("assignuser",
+			put("assignuser", new AssigneeFieldFormat("assignuser",
 					"Assignee"));
 			put("leadsource", "Lead Source");
 			put("primaddress", "Address");
@@ -198,9 +198,9 @@ public class ContactRelayEmailNotificationActionImpl extends
 		}
 	}
 
-	public static class ContactAssigneeFieldFormat extends FieldFormat {
+	public static class AssigneeFieldFormat extends FieldFormat {
 
-		public ContactAssigneeFieldFormat(String fieldName, String displayName) {
+		public AssigneeFieldFormat(String fieldName, String displayName) {
 			super(fieldName, displayName);
 		}
 
