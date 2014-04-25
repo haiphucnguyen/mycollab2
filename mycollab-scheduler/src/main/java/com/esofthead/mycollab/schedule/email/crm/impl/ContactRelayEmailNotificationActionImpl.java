@@ -184,7 +184,7 @@ public class ContactRelayEmailNotificationActionImpl extends
 			put("leadsource", "Lead Source");
 			put("primaddress", "Address");
 			put("primcity", "City");
-			put("state", "State");
+			put("primstate", "State");
 			put("otheraddress", "Other Address");
 			put("othercity", "Other City");
 			put("otherstate", "Other State");
