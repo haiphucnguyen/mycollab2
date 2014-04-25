@@ -40,6 +40,7 @@ import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.vaadin.ui.BeanList;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.UiUtils;
 import com.vaadin.event.LayoutEvents.LayoutClickEvent;
 import com.vaadin.event.LayoutEvents.LayoutClickListener;
 import com.vaadin.shared.ui.MarginInfo;
@@ -94,11 +95,8 @@ public class ProjectListComponent extends VerticalLayout {
 		headerBar.addComponent(headerPopupButton);
 		
 		
-		if (AppContext.canWrite(RolePermissionCollections.CREATE_NEW_PROJECT)) {
-			Button addProject = createProjectButton();
-			addProject.setDescription("Create new Projet");
-			headerBar.addComponent(addProject);
-			headerBar.setComponentAlignment(addProject, Alignment.MIDDLE_RIGHT);
+		if (AppContext.canBeYes(RolePermissionCollections.CREATE_NEW_PROJECT)) {
+			UiUtils.addComponent(headerBar, createProjectButton(), Alignment.MIDDLE_RIGHT);
 		}
 		
 		headerBar.setWidth("100%");
@@ -132,6 +130,7 @@ public class ProjectListComponent extends VerticalLayout {
 			createProjectBtn.setIcon(MyCollabResource
 					.newResource("/icons/18/create.png"));
 			createProjectBtn.setStyleName(UIConstants.THEME_TRANSPARENT_LINK);
+			createProjectBtn.setDescription("Create new Projet");
 			
 			return createProjectBtn;
 	
