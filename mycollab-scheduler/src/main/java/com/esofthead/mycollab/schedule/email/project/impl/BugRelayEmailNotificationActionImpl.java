@@ -42,9 +42,12 @@ import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.service.BugService;
+import com.esofthead.mycollab.module.user.UserLinkUtils;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.schedule.email.ItemFieldMapper;
+import com.esofthead.mycollab.schedule.email.LinkUtils;
 import com.esofthead.mycollab.schedule.email.MailContext;
+import com.esofthead.mycollab.schedule.email.format.DateFieldFormat;
 import com.esofthead.mycollab.schedule.email.format.LinkFieldFormat;
 import com.esofthead.mycollab.schedule.email.project.BugRelayEmailNotificationAction;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
@@ -286,13 +289,13 @@ public class BugRelayEmailNotificationActionImpl extends
 			put("summary", "Bug Summary");
 			put("description", "Description");
 			put("status", "Status");
-			put("assignuser", "Assigned to");
+			put("assignuser", new AssigneeFieldFormat("assignuser", "Assignee"));
 			put("resolution", "Resolution");
 			put("severity", "Serverity");
 			put("environment", "Environment");
 			put("priority", "Priority");
-			put("duedate", "Due Date");
-			put("logby", "Logged By");
+			put("duedate", new DateFieldFormat("duedate", "Due Date"));
+			put("logby", new LogUserFieldFormat("logby", "Logged By"));
 			put("milestoneid", new MilestoneFieldFormat("milestoneid",
 					"Milestone"));
 		}
@@ -320,6 +323,62 @@ public class BugRelayEmailNotificationActionImpl extends
 							bug.getProjectid(), bug.getMilestoneid());
 			link.setHref(milestoneLink);
 			link.appendText(bug.getMilestoneName());
+			return link;
+		}
+	}
+
+	public static class AssigneeFieldFormat extends LinkFieldFormat {
+
+		public AssigneeFieldFormat(String fieldName, String displayName) {
+			super(fieldName, displayName);
+		}
+
+		@Override
+		protected Img buildImage(MailContext<?> context) {
+			SimpleBug bug = (SimpleBug) context.getWrappedBean();
+			String userAvatarLink = LinkUtils.getAvatarLink(
+					bug.getAssignUserAvatarId(), 16);
+			Img img = new Img("avatar", userAvatarLink);
+			return img;
+		}
+
+		@Override
+		protected A buildLink(MailContext<?> context) {
+			SimpleBug bug = (SimpleBug) context.getWrappedBean();
+			String userLink = UserLinkUtils.generatePreviewFullUserLink(
+					LinkUtils.getSiteUrl(bug.getSaccountid()),
+					bug.getAssignuser());
+			A link = new A();
+			link.setHref(userLink);
+			link.appendText(bug.getAssignuserFullName());
+			return link;
+		}
+
+	}
+
+	public static class LogUserFieldFormat extends LinkFieldFormat {
+
+		public LogUserFieldFormat(String fieldName, String displayName) {
+			super(fieldName, displayName);
+		}
+
+		@Override
+		protected Img buildImage(MailContext<?> context) {
+			SimpleBug bug = (SimpleBug) context.getWrappedBean();
+			String userAvatarLink = LinkUtils.getAvatarLink(
+					bug.getLoguserAvatarId(), 16);
+			Img img = new Img("avatar", userAvatarLink);
+			return img;
+		}
+
+		@Override
+		protected A buildLink(MailContext<?> context) {
+			SimpleBug bug = (SimpleBug) context.getWrappedBean();
+			String userLink = UserLinkUtils.generatePreviewFullUserLink(
+					LinkUtils.getSiteUrl(bug.getSaccountid()), bug.getLogby());
+			A link = new A();
+			link.setHref(userLink);
+			link.appendText(bug.getLoguserFullName());
 			return link;
 		}
 

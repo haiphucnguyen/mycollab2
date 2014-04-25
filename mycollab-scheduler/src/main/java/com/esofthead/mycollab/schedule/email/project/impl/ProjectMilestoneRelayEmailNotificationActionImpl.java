@@ -16,7 +16,6 @@
  */
 package com.esofthead.mycollab.schedule.email.project.impl;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -39,6 +38,7 @@ import com.esofthead.mycollab.module.project.service.MilestoneService;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.schedule.ScheduleUserTimeZoneUtils;
+import com.esofthead.mycollab.schedule.email.ItemFieldMapper;
 import com.esofthead.mycollab.schedule.email.MailContext;
 import com.esofthead.mycollab.schedule.email.project.ProjectMailLinkGenerator;
 import com.esofthead.mycollab.schedule.email.project.ProjectMilestoneRelayEmailNotificationAction;
@@ -63,10 +63,9 @@ public class ProjectMilestoneRelayEmailNotificationActionImpl extends
 	@Autowired
 	private ProjectService projectService;
 
-	private final ProjectFieldNameMapper mapper;
+	private static final MilestoneFieldNameMapper mapper = new MilestoneFieldNameMapper();
 
 	public ProjectMilestoneRelayEmailNotificationActionImpl() {
-		mapper = new ProjectFieldNameMapper();
 	}
 
 	protected void setupMailHeaders(SimpleMilestone milestone,
@@ -176,55 +175,14 @@ public class ProjectMilestoneRelayEmailNotificationActionImpl extends
 		return templateGenerator;
 	}
 
-	public class ProjectFieldNameMapper {
-		private final Map<String, String> fieldNameMap;
-
-		ProjectFieldNameMapper() {
-			fieldNameMap = new HashMap<String, String>();
-
-			fieldNameMap.put("name", "Phase Name");
-			fieldNameMap.put("startdate", "Start Date");
-			fieldNameMap.put("enddate", "End Date");
-			fieldNameMap.put("status", "Status");
-			fieldNameMap.put("owner", "Responsible User");
-			fieldNameMap.put("description", "Description");
-		}
-
-		public boolean hasField(String fieldName) {
-			return fieldNameMap.containsKey(fieldName);
-		}
-
-		public String getFieldLabel(String fieldName) {
-			return fieldNameMap.get(fieldName);
+	public static class MilestoneFieldNameMapper extends ItemFieldMapper {
+		public MilestoneFieldNameMapper() {
+			put("name", "Phase Name");
+			put("startdate", "Start Date");
+			put("enddate", "End Date");
+			put("status", "Status");
+			put("owner", "Responsible User");
+			put("description", "Description");
 		}
 	}
-
-	public class MilestoneLinkMapper implements Serializable {
-		private static final long serialVersionUID = 2212688618608788187L;
-
-		private String link;
-		private String displayname;
-
-		public MilestoneLinkMapper(String link, String displayname) {
-			this.link = link;
-			this.displayname = displayname;
-		}
-
-		public String getWebLink() {
-			return link;
-		}
-
-		public void setWebLink(String link) {
-			this.link = link;
-		}
-
-		public String getDisplayName() {
-			return displayname;
-		}
-
-		public void setDisplayName(String displayname) {
-			this.displayname = displayname;
-		}
-	}
-
 }

@@ -59,17 +59,17 @@ public class MessageRelayEmailNotificationActionImpl extends
 			TemplateGenerator templateGenerator) {
 		List<Map<String, String>> listOfTitles = new ArrayList<Map<String, String>>();
 
-		ProjectMailLinkGenerator linkGenerator = new ProjectMailLinkGenerator(
-				message.getProjectid());
-
 		HashMap<String, String> currentProject = new HashMap<String, String>();
 		currentProject.put("displayName", message.getProjectName());
-		currentProject.put("webLink", linkGenerator.generateProjectFullLink());
+		currentProject.put(
+				"webLink",
+				ProjectLinkUtils.generateProjectFullLink(siteUrl,
+						message.getProjectid()));
 
 		listOfTitles.add(currentProject);
 
 		String summary = message.getTitle();
-		String summaryLink = ProjectLinkUtils.generateMessagePreviewLink(
+		String summaryLink = ProjectLinkUtils.generateMessagePreviewFullLink(siteUrl,
 				message.getProjectid(), message.getId());
 
 		templateGenerator.putVariable("makeChangeUser",

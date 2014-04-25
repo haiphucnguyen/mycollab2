@@ -166,9 +166,9 @@ public class AccountRelayEmailNotificationActionImpl extends
 		return templateGenerator;
 	}
 
-	public static class AccountAssigneeFieldFormat extends LinkFieldFormat {
+	public static class AssigneeFieldFormat extends LinkFieldFormat {
 
-		public AccountAssigneeFieldFormat(String fieldName, String displayName) {
+		public AssigneeFieldFormat(String fieldName, String displayName) {
 			super(fieldName, displayName);
 		}
 
@@ -208,7 +208,7 @@ public class AccountRelayEmailNotificationActionImpl extends
 			put("email", "Email");
 			put("type", "Type");
 			put("ownership", "Ownership");
-			put("assignuser", new AccountAssigneeFieldFormat("assignuser",
+			put("assignuser", new AssigneeFieldFormat("assignuser",
 					"Assign User"));
 			put("annualrevenue", "Annual Revenue");
 			put("billingaddress", "Billing Address");

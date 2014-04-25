@@ -102,6 +102,12 @@ public class ProjectLinkUtils {
 						messageId });
 	}
 
+	public static String generateMessagePreviewFullLink(String siteUrl,
+			Integer projectId, Integer messageId) {
+		return siteUrl + GenericLinkUtils.URL_PREFIX_PARAM
+				+ generateMessagePreviewLink(projectId, messageId);
+	}
+
 	public static String generateBugComponentPreviewLink(Integer projectId,
 			Integer componentId) {
 		return "project/bug/component/preview/"
