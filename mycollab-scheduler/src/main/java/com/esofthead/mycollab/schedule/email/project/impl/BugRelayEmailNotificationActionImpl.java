@@ -30,6 +30,7 @@ import com.esofthead.mycollab.common.domain.SimpleAuditLog;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
 import com.esofthead.mycollab.common.service.AuditLogService;
 import com.esofthead.mycollab.core.utils.StringUtils;
+import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.project.ProjectLinkUtils;
 import com.esofthead.mycollab.module.project.domain.ProjectNotificationSetting;
@@ -43,8 +44,11 @@ import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.schedule.email.ItemFieldMapper;
 import com.esofthead.mycollab.schedule.email.MailContext;
+import com.esofthead.mycollab.schedule.email.format.LinkFieldFormat;
 import com.esofthead.mycollab.schedule.email.project.BugRelayEmailNotificationAction;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.hp.gagawa.java.elements.A;
+import com.hp.gagawa.java.elements.Img;
 
 /**
  * 
@@ -64,9 +68,6 @@ public class BugRelayEmailNotificationActionImpl extends
 	private ProjectService projectService;
 
 	private static final BugFieldNameMapper mapper = new BugFieldNameMapper();
-
-	public BugRelayEmailNotificationActionImpl() {
-	}
 
 	@Override
 	public TemplateGenerator templateGeneratorForCreateAction(
@@ -293,5 +294,25 @@ public class BugRelayEmailNotificationActionImpl extends
 			put("logby", "Logged By");
 			put("milestoneid", "Milestone");
 		}
+	}
+
+	public static class MilestoneFieldFormat extends LinkFieldFormat {
+
+		public MilestoneFieldFormat(String fieldName, String displayName) {
+			super(fieldName, displayName);
+		}
+
+		@Override
+		protected Img buildImage(MailContext<?> context) {
+			SimpleBug bug = (SimpleBug) context.getWrappedBean();
+			return null;
+		}
+
+		@Override
+		protected A buildLink(MailContext<?> context) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
 	}
 }
