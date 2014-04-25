@@ -18,19 +18,18 @@ package com.esofthead.mycollab.schedule.email.project.impl;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.common.domain.SimpleAuditLog;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
 import com.esofthead.mycollab.common.service.AuditLogService;
-import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.project.ProjectLinkUtils;
@@ -39,6 +38,7 @@ import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.service.ProblemService;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
+import com.esofthead.mycollab.schedule.email.MailContext;
 import com.esofthead.mycollab.schedule.email.project.ProjectMailLinkGenerator;
 import com.esofthead.mycollab.schedule.email.project.ProjectProblemRelayEmailNotificationAction;
 
@@ -49,6 +49,7 @@ import com.esofthead.mycollab.schedule.email.project.ProjectProblemRelayEmailNot
  * 
  */
 @Component
+@Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class ProjectProblemRelayEmailNotificationActionImpl extends
 		SendMailToAllMembersAction implements
 		ProjectProblemRelayEmailNotificationAction {
@@ -97,65 +98,6 @@ public class ProjectProblemRelayEmailNotificationActionImpl extends
 		templateGenerator.putVariable("summaryLink", summaryLink);
 	}
 
-	protected Map<String, List<ProblemLinkMapper>> getListOfProperties(
-			SimpleProblem problem, SimpleUser user) {
-		Map<String, List<ProblemLinkMapper>> listOfDisplayProperties = new LinkedHashMap<String, List<ProblemLinkMapper>>();
-
-		ProjectMailLinkGenerator linkGenerator = new ProjectMailLinkGenerator(
-				problem.getProjectid());
-
-		listOfDisplayProperties.put(mapper.getFieldLabel("raisedbyuser"),
-				Arrays.asList(new ProblemLinkMapper(
-						linkGenerator.generateUserPreviewFullLink(problem
-								.getRaisedbyuser()), problem
-								.getRaisedByUserFullName())));
-
-		if (problem.getAssigntouser() != null) {
-			listOfDisplayProperties.put(mapper.getFieldLabel("assigntouser"),
-					Arrays.asList(new ProblemLinkMapper(linkGenerator
-							.generateUserPreviewFullLink(problem
-									.getAssigntouser()), problem
-							.getAssignedUserFullName())));
-		}
-
-		if (problem.getDatedue() != null)
-			listOfDisplayProperties
-					.put(mapper.getFieldLabel("datedue"), Arrays
-							.asList(new ProblemLinkMapper(null, DateTimeUtils
-									.converToStringWithUserTimeZone(
-											problem.getDatedue(),
-											user.getTimezone()))));
-		else {
-			listOfDisplayProperties.put(mapper.getFieldLabel("datedue"), null);
-		}
-
-		listOfDisplayProperties
-				.put(mapper.getFieldLabel("status"),
-						Arrays.asList(new ProblemLinkMapper(null, problem
-								.getStatus())));
-
-		if (problem.getImpact() != null)
-			listOfDisplayProperties.put(mapper.getFieldLabel("impact"), Arrays
-					.asList(new ProblemLinkMapper(null, problem.getImpact())));
-		else {
-			listOfDisplayProperties.put(mapper.getFieldLabel("impact"), null);
-		}
-
-		listOfDisplayProperties.put(mapper.getFieldLabel("priority"), Arrays
-				.asList(new ProblemLinkMapper(null, problem.getPriority())));
-
-		if (problem.getDescription() != null) {
-			listOfDisplayProperties.put(mapper.getFieldLabel("description"),
-					Arrays.asList(new ProblemLinkMapper(null, problem
-							.getDescription())));
-		} else {
-			listOfDisplayProperties.put(mapper.getFieldLabel("description"),
-					null);
-		}
-
-		return listOfDisplayProperties;
-	}
-
 	@Override
 	protected TemplateGenerator templateGeneratorForCreateAction(
 			SimpleRelayEmailNotification emailNotification, SimpleUser user) {
@@ -171,8 +113,9 @@ public class ProjectProblemRelayEmailNotificationActionImpl extends
 
 		setupMailHeaders(problem, emailNotification, templateGenerator);
 
-		templateGenerator.putVariable("properties",
-				getListOfProperties(problem, user));
+		templateGenerator.putVariable("context",
+				new MailContext<SimpleProblem>(problem, user, siteUrl));
+		templateGenerator.putVariable("mapper", mapper);
 
 		return templateGenerator;
 	}
