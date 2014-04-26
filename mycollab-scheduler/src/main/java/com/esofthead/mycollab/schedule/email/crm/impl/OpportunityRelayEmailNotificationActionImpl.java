@@ -210,6 +210,12 @@ public class OpportunityRelayEmailNotificationActionImpl extends
 			return link;
 		}
 
+		@Override
+		public String formatField(MailContext<?> context, String value) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
 	}
 
 	public static class CampaignFieldFormat extends LinkFieldFormat {
@@ -238,6 +244,12 @@ public class OpportunityRelayEmailNotificationActionImpl extends
 			link.setHref(campaignLink);
 			link.appendText(opportunity.getCampaignName());
 			return link;
+		}
+
+		@Override
+		public String formatField(MailContext<?> context, String value) {
+			// TODO Auto-generated method stub
+			return null;
 		}
 
 	}
@@ -274,6 +286,12 @@ public class OpportunityRelayEmailNotificationActionImpl extends
 			link.appendText(opportunity.getAssignUserFullName());
 
 			return link;
+		}
+
+		@Override
+		public String formatField(MailContext<?> context, String value) {
+			// TODO Auto-generated method stub
+			return null;
 		}
 	}
 

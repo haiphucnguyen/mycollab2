@@ -325,6 +325,12 @@ public class BugRelayEmailNotificationActionImpl extends
 			link.appendText(bug.getMilestoneName());
 			return link;
 		}
+
+		@Override
+		public String formatField(MailContext<?> context, String value) {
+			// TODO Auto-generated method stub
+			return null;
+		}
 	}
 
 	public static class AssigneeFieldFormat extends LinkFieldFormat {
@@ -354,6 +360,12 @@ public class BugRelayEmailNotificationActionImpl extends
 			return link;
 		}
 
+		@Override
+		public String formatField(MailContext<?> context, String value) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
 	}
 
 	public static class LogUserFieldFormat extends LinkFieldFormat {
@@ -380,6 +392,12 @@ public class BugRelayEmailNotificationActionImpl extends
 			link.setHref(userLink);
 			link.appendText(bug.getLoguserFullName());
 			return link;
+		}
+
+		@Override
+		public String formatField(MailContext<?> context, String value) {
+			// TODO Auto-generated method stub
+			return null;
 		}
 
 	}

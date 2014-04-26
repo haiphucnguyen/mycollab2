@@ -200,6 +200,12 @@ public class CaseRelayEmailNotificationActionImpl extends
 			return link;
 		}
 
+		@Override
+		public String formatField(MailContext<?> context, String value) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
 	}
 
 	public static class AssigneeFieldFormat extends LinkFieldFormat {
@@ -232,6 +238,12 @@ public class CaseRelayEmailNotificationActionImpl extends
 			link.appendText(simpleCase.getAssignUserFullName());
 
 			return link;
+		}
+
+		@Override
+		public String formatField(MailContext<?> context, String value) {
+			// TODO Auto-generated method stub
+			return null;
 		}
 	}
 }

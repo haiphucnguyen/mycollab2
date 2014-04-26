@@ -217,6 +217,12 @@ public class ProjectProblemRelayEmailNotificationActionImpl extends
 			return link;
 		}
 
+		@Override
+		public String formatField(MailContext<?> context, String value) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
 	}
 
 	public static class RaisedByFieldFormat extends LinkFieldFormat {
@@ -244,6 +250,12 @@ public class ProjectProblemRelayEmailNotificationActionImpl extends
 			link.setHref(userLink);
 			link.appendText(problem.getRaisedByUserFullName());
 			return link;
+		}
+
+		@Override
+		public String formatField(MailContext<?> context, String value) {
+			// TODO Auto-generated method stub
+			return null;
 		}
 
 	}

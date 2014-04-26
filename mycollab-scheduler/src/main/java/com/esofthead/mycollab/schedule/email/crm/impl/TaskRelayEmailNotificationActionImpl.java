@@ -193,6 +193,12 @@ public class TaskRelayEmailNotificationActionImpl extends
 			return link;
 		}
 
+		@Override
+		public String formatField(MailContext<?> context, String value) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
 	}
 
 	public static class AssigneeFieldFormat extends LinkFieldFormat {
@@ -225,6 +231,12 @@ public class TaskRelayEmailNotificationActionImpl extends
 			link.appendText(task.getAssignUserFullName());
 
 			return link;
+		}
+
+		@Override
+		public String formatField(MailContext<?> context, String value) {
+			// TODO Auto-generated method stub
+			return null;
 		}
 	}
 

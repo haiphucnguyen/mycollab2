@@ -215,6 +215,12 @@ public class ProjectTaskGroupRelayEmailNotificationActionImpl extends
 			link.appendText(tasklist.getOwnerFullName());
 			return link;
 		}
+
+		@Override
+		public String formatField(MailContext<?> context, String value) {
+			// TODO Auto-generated method stub
+			return null;
+		}
 	}
 
 	public static class MilestoneFieldFormat extends LinkFieldFormat {
@@ -239,6 +245,12 @@ public class ProjectTaskGroupRelayEmailNotificationActionImpl extends
 					tasklist.getMilestoneid()));
 			link.appendText(tasklist.getMilestoneName());
 			return link;
+		}
+
+		@Override
+		public String formatField(MailContext<?> context, String value) {
+			// TODO Auto-generated method stub
+			return null;
 		}
 
 	}

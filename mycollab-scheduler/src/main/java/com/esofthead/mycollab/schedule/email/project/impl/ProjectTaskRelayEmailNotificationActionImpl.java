@@ -341,6 +341,12 @@ public class ProjectTaskRelayEmailNotificationActionImpl extends
 			link.appendText(task.getAssignUserFullName());
 			return link;
 		}
+
+		@Override
+		public String formatField(MailContext<?> context, String value) {
+			// TODO Auto-generated method stub
+			return null;
+		}
 	}
 
 	public static class TaskGroupFieldFormat extends LinkFieldFormat {
@@ -365,6 +371,12 @@ public class ProjectTaskRelayEmailNotificationActionImpl extends
 					task.getTasklistid()));
 			link.appendText(task.getTaskListName());
 			return link;
+		}
+
+		@Override
+		public String formatField(MailContext<?> context, String value) {
+			// TODO Auto-generated method stub
+			return null;
 		}
 
 	}

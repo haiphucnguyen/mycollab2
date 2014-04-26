@@ -40,8 +40,10 @@ import com.esofthead.mycollab.schedule.email.LinkUtils;
 import com.esofthead.mycollab.schedule.email.MailContext;
 import com.esofthead.mycollab.schedule.email.crm.AccountRelayEmailNotificationAction;
 import com.esofthead.mycollab.schedule.email.format.LinkFieldFormat;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Img;
+import com.hp.gagawa.java.elements.Span;
 
 /**
  * 
@@ -141,6 +143,9 @@ public class AccountRelayEmailNotificationActionImpl extends
 
 			templateGenerator.putVariable("historyLog", auditLog);
 
+			templateGenerator
+					.putVariable("context", new MailContext<SimpleAccount>(
+							simpleAccount, user, siteUrl));
 			templateGenerator.putVariable("mapper", mapper);
 		}
 		return templateGenerator;
@@ -191,6 +196,34 @@ public class AccountRelayEmailNotificationActionImpl extends
 			link.setHref(userLink);
 			link.appendText(account.getAssignUserFullName());
 			return link;
+		}
+
+		@Override
+		public String formatField(MailContext<?> context, String value) {
+			if (value == null || "".equals(value)) {
+				return "";
+			}
+
+			UserService userService = ApplicationContextUtil
+					.getSpringBean(UserService.class);
+			SimpleUser user = userService.findUserByUserNameInAccount(value,
+					context.getUser().getAccountId());
+			if (user != null) {
+				String userAvatarLink = LinkUtils.getAvatarLink(
+						user.getAvatarid(), 16);
+				String userLink = UserLinkUtils.generatePreviewFullUserLink(
+						LinkUtils.getSiteUrl(user.getAccountId()),
+						user.getUsername());
+				Span span = new Span();
+				span.appendChild(new Img("avatar", userAvatarLink));
+
+				A link = new A();
+				link.setHref(userLink);
+				link.appendText(user.getDisplayName());
+				span.appendChild(link);
+				return span.write();
+			}
+			return value;
 		}
 
 	}

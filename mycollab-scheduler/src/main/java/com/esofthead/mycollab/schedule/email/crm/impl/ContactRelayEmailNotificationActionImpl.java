@@ -227,6 +227,12 @@ public class ContactRelayEmailNotificationActionImpl extends
 
 			return link;
 		}
+
+		@Override
+		public String formatField(MailContext<?> context, String value) {
+			// TODO Auto-generated method stub
+			return null;
+		}
 	}
 
 	public static class AccountFieldFormat extends LinkFieldFormat {
@@ -253,6 +259,12 @@ public class ContactRelayEmailNotificationActionImpl extends
 			link.setHref(accountLink);
 			link.appendText(contact.getAccountName());
 			return link;
+		}
+
+		@Override
+		public String formatField(MailContext<?> context, String value) {
+			// TODO Auto-generated method stub
+			return null;
 		}
 
 	}

@@ -223,6 +223,12 @@ public class LeadRelayEmailNotificationActionImpl extends
 
 			return link;
 		}
+
+		@Override
+		public String formatField(MailContext<?> context, String value) {
+			// TODO Auto-generated method stub
+			return null;
+		}
 	}
 
 }
