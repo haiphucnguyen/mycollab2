@@ -147,6 +147,8 @@ public class ProjectProblemRelayEmailNotificationActionImpl extends
 					emailNotification.getSaccountid());
 
 			templateGenerator.putVariable("historyLog", auditLog);
+			templateGenerator.putVariable("context",
+					new MailContext<SimpleProblem>(problem, user, siteUrl));
 			templateGenerator.putVariable("mapper", mapper);
 		}
 

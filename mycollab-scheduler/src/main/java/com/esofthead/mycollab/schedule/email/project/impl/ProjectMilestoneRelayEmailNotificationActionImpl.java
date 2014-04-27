@@ -149,6 +149,8 @@ public class ProjectMilestoneRelayEmailNotificationActionImpl extends
 			ScheduleUserTimeZoneUtils.formatDate(auditLog, user.getTimezone(),
 					new String[] { "startdate", "enddate" });
 			templateGenerator.putVariable("historyLog", auditLog);
+			templateGenerator.putVariable("context",
+					new MailContext<SimpleMilestone>(milestone, user, siteUrl));
 			templateGenerator.putVariable("mapper", mapper);
 		}
 

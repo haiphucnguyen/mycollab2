@@ -131,7 +131,8 @@ public class CaseRelayEmailNotificationActionImpl extends
 					emailNotification.getSaccountid());
 
 			templateGenerator.putVariable("historyLog", auditLog);
-
+			templateGenerator.putVariable("context",
+					new MailContext<SimpleCase>(simpleCase, user, siteUrl));
 			templateGenerator.putVariable("mapper", mapper);
 		}
 		return templateGenerator;

@@ -170,6 +170,8 @@ public class ProjectTaskRelayEmailNotificationActionImpl extends
 					emailNotification.getSaccountid());
 
 			templateGenerator.putVariable("historyLog", auditLog);
+			templateGenerator.putVariable("context",
+					new MailContext<SimpleTask>(task, user, siteUrl));
 			templateGenerator.putVariable("mapper", mapper);
 		}
 

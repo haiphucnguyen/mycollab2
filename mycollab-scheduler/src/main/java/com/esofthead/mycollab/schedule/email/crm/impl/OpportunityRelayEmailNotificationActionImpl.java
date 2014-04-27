@@ -138,7 +138,9 @@ public class OpportunityRelayEmailNotificationActionImpl extends
 					emailNotification.getTypeid(),
 					emailNotification.getSaccountid());
 			templateGenerator.putVariable("historyLog", auditLog);
-
+			templateGenerator.putVariable("context",
+					new MailContext<SimpleOpportunity>(simpleOpportunity, user,
+							siteUrl));
 			templateGenerator.putVariable("mapper", mapper);
 		}
 		return templateGenerator;

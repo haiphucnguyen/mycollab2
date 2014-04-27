@@ -132,7 +132,8 @@ public class LeadRelayEmailNotificationActionImpl extends
 					emailNotification.getSaccountid());
 
 			templateGenerator.putVariable("historyLog", auditLog);
-
+			templateGenerator.putVariable("context",
+					new MailContext<SimpleLead>(lead, user, siteUrl));
 			templateGenerator.putVariable("mapper", mapper);
 		}
 		return templateGenerator;
