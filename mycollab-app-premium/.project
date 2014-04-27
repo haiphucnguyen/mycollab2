@@ -17,7 +17,6 @@
     <project>mycollab-ui</project>
     <project>mycollab-services-premium</project>
     <project>mycollab-caching-premium</project>
-    <project>mycollab-api</project>
     <project>mycollab-web-premium</project>
     <project>mycollab-web</project>
     <project>mycollab-esb</project>
