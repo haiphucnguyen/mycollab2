@@ -43,6 +43,7 @@ import com.esofthead.mycollab.schedule.email.ItemFieldMapper;
 import com.esofthead.mycollab.schedule.email.LinkUtils;
 import com.esofthead.mycollab.schedule.email.MailContext;
 import com.esofthead.mycollab.schedule.email.crm.ContactRelayEmailNotificationAction;
+import com.esofthead.mycollab.schedule.email.format.DateFieldFormat;
 import com.esofthead.mycollab.schedule.email.format.EmailLinkFieldFormat;
 import com.esofthead.mycollab.schedule.email.format.FieldFormat;
 import com.esofthead.mycollab.schedule.email.format.html.TagBuilder;
@@ -178,28 +179,28 @@ public class ContactRelayEmailNotificationActionImpl extends
 		ContactFieldNameMapper() {
 			put("firstname", "First Name");
 			put("officephone", "Office Phone");
-			
+
 			put("lastname", "Last Name");
 			put("mobile", "Mobile");
-			
+
 			put("accountid", new AccountFieldFormat("accountid", "Account"));
 			put("homephone", "Home Phone");
-			
+
 			put("title", "Title");
 			put("otherphone", "Other Phone");
-			
+
 			put("department", "Department");
 			put("fax", "Fax");
-			
+
 			put("email", new EmailLinkFieldFormat("email", "Email"));
-			put("birthday", "Birthday");
-			
+			put("birthday", new DateFieldFormat("birthday", "Birthday"));
+
 			put("assistant", "Assistant");
 			put("iscallable", "Callable");
-			
+
 			put("assistantphone", "Assistant Phone");
 			put("assignuser", new AssigneeFieldFormat("assignuser", "Assignee"));
-			
+
 			put("leadsource", "Lead Source");
 			put("primaddress", "Address");
 			put("primcity", "City");

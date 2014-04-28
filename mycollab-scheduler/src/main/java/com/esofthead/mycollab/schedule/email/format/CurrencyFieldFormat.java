@@ -53,7 +53,23 @@ public class CurrencyFieldFormat extends FieldFormat {
 
 	@Override
 	public String formatField(MailContext<?> context, String value) {
-		// TODO Auto-generated method stub
-		return null;
+		if (value == null || "".equals(value)) {
+			return "";
+		}
+
+		try {
+			CurrencyService currencyService = ApplicationContextUtil
+					.getSpringBean(CurrencyService.class);
+			int currencyId = Integer.parseInt(value);
+			Currency currency = currencyService.findByPrimaryKey(currencyId,
+					context.getUser().getAccountId());
+			if (currency != null) {
+				return currency.getFullname();
+			}
+		} catch (Exception e) {
+			log.error("Error", e);
+		}
+
+		return value;
 	}
 }

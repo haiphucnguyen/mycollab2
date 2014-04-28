@@ -170,7 +170,9 @@ public class CaseRelayEmailNotificationActionImpl extends
 	public static class CaseFieldNameMapper extends ItemFieldMapper {
 
 		public CaseFieldNameMapper() {
-			put("subject", "Subject");
+			put("subject", "Subject", true);
+			
+			put("description", "Description");
 			put("accountid", new AccountFieldFormat("accountid", "Account"));
 
 			put("priority", "Priority");
@@ -184,8 +186,7 @@ public class CaseRelayEmailNotificationActionImpl extends
 
 			put("origin", "Origin");
 			put("assignuser", new AssigneeFieldFormat("assignuser", "Assignee"));
-
-			put("description", "Description");
+			
 			put("resolution", "Resolution");
 		}
 	}

@@ -173,7 +173,7 @@ public class CampaignRelayEmailNotificationActionImpl extends
 			put("status", "Status");
 			
 			put("type", "Type");
-			put("currency", new CurrencyFieldFormat("currency", "Currency"));
+			put("currencyid", new CurrencyFieldFormat("currencyid", "Currency"));
 			
 			put("budget", "Budget");
 			put("expectedcost", "Expected Cost");
