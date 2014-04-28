@@ -39,6 +39,7 @@ ProjectSummaryView {
 	private final ProjectInformationComponent prjView;
 	private final ProjectMembersWidget membersWidget;
 	private final ProjectTaskStatusComponent highlightWidget;
+	private final ProjectTaskOverdueComponent taskOverdueWidget;
 	private final ProjectMessageListComponent messageWidget;
 
 	public ProjectSummaryViewImpl() {
@@ -74,8 +75,11 @@ ProjectSummaryView {
 
 		this.membersWidget = new ProjectMembersWidget();
 		this.highlightWidget = new ProjectTaskStatusComponent();
+		this.taskOverdueWidget = new ProjectTaskOverdueComponent();
+		
 		rightPanel.addComponent(this.membersWidget);
 		rightPanel.addComponent(this.highlightWidget);
+		rightPanel.addComponent(this.taskOverdueWidget);
 	}
 
 	@Override
@@ -84,6 +88,7 @@ ProjectSummaryView {
 		this.prjView.displayProjectInformation();
 		this.membersWidget.showInformation();
 		this.highlightWidget.showProjectTasksByStatus();
+		this.taskOverdueWidget.showOverdueTasks();
 		this.messageWidget.showLatestMessages();
 	}
 }
