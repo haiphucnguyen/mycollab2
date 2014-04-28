@@ -169,23 +169,24 @@ public class CampaignRelayEmailNotificationActionImpl extends
 	public static class CampaignFieldNameMapper extends ItemFieldMapper {
 
 		public CampaignFieldNameMapper() {
-			put("campaignname", "Name");
+			put("campaignname", "Name", true);
+
 			put("status", "Status");
-			
 			put("type", "Type");
+
 			put("currencyid", new CurrencyFieldFormat("currencyid", "Currency"));
-			
 			put("budget", "Budget");
+
 			put("expectedcost", "Expected Cost");
-			
 			put("expectedrevenue", "Expected Revenue");
+
 			put("actualcost", "Actual Cost");
-			
+			put("assignuser", new AssigneeFieldFormat("assignuser", "Assignee"));
+
 			put("startdate", new DateFieldFormat("startdate", "Start Date"));
 			put("enddate", new DateFieldFormat("enddate", "End Date"));
-			
-			put("assignuser", new AssigneeFieldFormat("assignuser", "Assignee"));
-			put("description", "Description");
+
+			put("description", "Description", true);
 		}
 	}
 

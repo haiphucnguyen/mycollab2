@@ -46,6 +46,14 @@ public abstract class FieldFormat {
 		this.fieldName = fieldName;
 	}
 
+	public boolean getIsColSpan() {
+		return isColSpan;
+	}
+
+	public void setColSpan(boolean isColSpan) {
+		this.isColSpan = isColSpan;
+	}
+
 	abstract public String formatField(MailContext<?> context);
 
 	abstract public String formatField(MailContext<?> context, String value);

@@ -159,14 +159,14 @@ public class MeetingRelayEmailNotificationActionImpl extends
 			put("subject", "Subject", true);
 
 			put("status", "Status");
-			put("location", "Location");
-
 			put("startdate", new DateTimeFieldFormat("startdate",
 					"Start Date & Time"));
-			put("typeid", "Related to");
+
+			put("location", "Location");
 			put("enddate",
 					new DateTimeFieldFormat("enddate", "End Date & Time"));
 
+			put("typeid", "Related to", true);
 			put("description", "Description", true);
 		}
 	}

@@ -201,18 +201,24 @@ public class ContactRelayEmailNotificationActionImpl extends
 			put("assistantphone", "Assistant Phone");
 			put("assignuser", new AssigneeFieldFormat("assignuser", "Assignee"));
 
-			put("leadsource", "Lead Source");
+			put("leadsource", "Lead Source", true);
+
 			put("primaddress", "Address");
-			put("primcity", "City");
-			put("primstate", "State");
 			put("otheraddress", "Other Address");
+
+			put("primcity", "City");
 			put("othercity", "Other City");
+
+			put("primstate", "State");
 			put("otherstate", "Other State");
+
 			put("primpostalcode", "Postal Code");
 			put("otherpostalcode", "Other Postal Code");
+
 			put("primcountry", "Country");
 			put("othercountry", "Other Country");
-			put("description", "Description");
+
+			put("description", "Description", true);
 
 		}
 	}

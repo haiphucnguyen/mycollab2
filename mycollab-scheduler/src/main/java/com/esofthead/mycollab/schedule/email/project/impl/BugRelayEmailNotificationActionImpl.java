@@ -297,11 +297,14 @@ public class BugRelayEmailNotificationActionImpl extends
 	public static class BugFieldNameMapper extends ItemFieldMapper {
 
 		public BugFieldNameMapper() {
-			put("summary", "Bug Summary");
-			put("assignuser", new AssigneeFieldFormat("assignuser", "Assignee"));
+			put("summary", "Bug Summary", true);
 			
-			put("environment", "Environment");
-			put("description", "Description");
+			put("assignuser", new AssigneeFieldFormat("assignuser", "Assignee"));
+			put("milestoneid", new MilestoneFieldFormat("milestoneid",
+					"Milestone"));
+			
+			put("environment", "Environment", true);
+			put("description", "Description", true);
 			
 			put("status", "Status");
 			put("resolution", "Resolution");
@@ -311,9 +314,6 @@ public class BugRelayEmailNotificationActionImpl extends
 			
 			put("duedate", new DateFieldFormat("duedate", "Due Date"));
 			put("logby", new LogUserFieldFormat("logby", "Logged By"));
-			
-			put("milestoneid", new MilestoneFieldFormat("milestoneid",
-					"Milestone"));
 		}
 	}
 
@@ -327,6 +327,9 @@ public class BugRelayEmailNotificationActionImpl extends
 		public String formatField(MailContext<?> context) {
 			SimpleBug bug = (SimpleBug) context.getWrappedBean();
 
+			if (bug.getMilestoneid() == null || bug.getMilestoneName() == null) {
+				return "";
+			}
 			String milestoneIconLink = ProjectResources
 					.getResourceLink(ProjectTypeConstants.MILESTONE);
 			Img img = TagBuilder.newImg("icon", milestoneIconLink);

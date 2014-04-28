@@ -309,19 +309,24 @@ public class ProjectTaskRelayEmailNotificationActionImpl extends
 
 		public TaskFieldNameMapper() {
 
-			put("taskname", "Task Name");
-			put("tasklistid", new TaskGroupFieldFormat("tasklistid",
-					"Task Group"));
+			put("taskname", "Task Name", true);
+
 			put("startdate", new DateFieldFormat("startdate", "Start Date"));
 			put("enddate", new DateFieldFormat("enddate", "End Date"));
+
 			put("actualstartdate", new DateFieldFormat("actualstartdate",
 					"Actual Start Date"));
 			put("actualenddate", new DateFieldFormat("actualenddate",
 					"Actual End Date"));
-			put("assignuser", new AssigneeFieldFormat("assignuser", "Assignee"));
-			put("percentagecomplete", "Complete (%)");
-			put("priority", "Priority");
+
 			put("deadline", new DateFieldFormat("deadline", "Deadline"));
+			put("percentagecomplete", "Complete (%)");
+
+			put("priority", "Priority");
+			put("assignuser", new AssigneeFieldFormat("assignuser", "Assignee"));
+
+			put("tasklistid", new TaskGroupFieldFormat("tasklistid",
+					"Task Group"));
 			put("notes", "Notes");
 		}
 	}

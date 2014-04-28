@@ -181,8 +181,9 @@ public class ProjectProblemRelayEmailNotificationActionImpl extends
 
 	public static class ProjectFieldNameMapper extends ItemFieldMapper {
 		public ProjectFieldNameMapper() {
-			put("issuename", "Issue name");
-			put("description", "Description");
+			put("issuename", "Issue name", true);
+
+			put("description", "Description", true);
 
 			put("datedue", new DateFieldFormat("datedue", "Due Date"));
 			put("status", "Status");
@@ -195,7 +196,7 @@ public class ProjectProblemRelayEmailNotificationActionImpl extends
 			put("raisedbyuser", new RaisedByFieldFormat("raisedbyuser",
 					"Raised By"));
 
-			put("resolution", "Resolution");
+			put("resolution", "Resolution", true);
 		}
 	}
 
