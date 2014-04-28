@@ -192,11 +192,13 @@ public class ProjectTaskGroupRelayEmailNotificationActionImpl extends
 
 		public ProjectFieldNameMapper() {
 
-			put("name", "Task Group Name");
+			put("name", "Task Group Name", true);
+
 			put("owner", new AssigneeFieldFormat("owner", "Owner"));
 			put("milestoneid", new MilestoneFieldFormat("milestoneid",
 					"Milestone"));
-			put("description", "Description");
+
+			put("description", "Description", true);
 
 		}
 	}

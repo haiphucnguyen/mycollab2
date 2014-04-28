@@ -167,17 +167,17 @@ public class TaskRelayEmailNotificationActionImpl extends
 
 		public TaskFieldNameMapper() {
 			put("subject", "Subject", true);
-			
+
 			put("status", "Status");
 			put("startdate", new DateFieldFormat("startdate", "Start Date"));
-			
-			put("typeid", "Related To");
+
+			put("assignuser", new AssigneeFieldFormat("assignuser", "Assignee"));
 			put("duedate", new DateFieldFormat("duedate", "Due Date"));
-			
+
 			put("contactid", new ContactFieldFormat("contactid", "Contact"));
 			put("priority", "Priority");
-			
-			put("assignuser", new AssigneeFieldFormat("assignuser", "Assignee"));
+
+			put("typeid", "Related To", true);
 			put("description", "Description", true);
 		}
 	}

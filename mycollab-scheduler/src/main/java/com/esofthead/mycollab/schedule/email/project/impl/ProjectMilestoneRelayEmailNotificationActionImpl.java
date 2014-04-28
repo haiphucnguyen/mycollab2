@@ -184,14 +184,15 @@ public class ProjectMilestoneRelayEmailNotificationActionImpl extends
 
 	public static class MilestoneFieldNameMapper extends ItemFieldMapper {
 		public MilestoneFieldNameMapper() {
-			put("name", "Phase Name");
+			put("name", "Name", true);
+
 			put("status", "Status");
-			
+			put("owner", new AssigneeFieldFormat("owner", "Owner"));
+
 			put("startdate", new DateFieldFormat("startdate", "Start Date"));
 			put("enddate", new DateFieldFormat("enddate", "End Date"));
-			
-			put("owner", new AssigneeFieldFormat("owner", "Owner"));
-			put("description", "Description");
+
+			put("description", "Description", true);
 		}
 	}
 

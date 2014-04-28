@@ -1,9 +1,11 @@
 package com.esofthead.mycollab.jetty;
 
 import org.eclipse.jetty.server.session.SessionHandler;
+import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.webapp.WebAppContext;
 
 import com.esofthead.mycollab.jetty.clustering.InfinispanSessionManager;
+import com.esofthead.mycollab.servlet.SetupServlet;
 
 /**
  * 
@@ -30,6 +32,8 @@ public class PremiumServerRunner extends GenericServerRunner {
 		sh.setSessionManager(sm);
 
 		webAppContext.setSessionHandler(sh);
+		
+		webAppContext.addServlet(new ServletHolder(new SetupServlet()), "/setup");
 		return webAppContext;
 	}
 
