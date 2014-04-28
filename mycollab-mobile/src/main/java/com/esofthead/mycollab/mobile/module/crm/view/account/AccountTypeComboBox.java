@@ -14,24 +14,18 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.module.crm.ui.components;
+package com.esofthead.mycollab.mobile.module.crm.view.account;
 
 import com.esofthead.mycollab.module.crm.CrmDataTypeFactory;
 import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
 
-/**
- * 
- * @author MyCollab Ltd.
- * @since 1.0
- * 
- */
-public class IndustryComboBox extends ValueComboBox {
-
+public class AccountTypeComboBox extends ValueComboBox {
 	private static final long serialVersionUID = 1L;
 
-	public IndustryComboBox() {
+	public AccountTypeComboBox() {
 		super();
 		setCaption(null);
-		loadData(CrmDataTypeFactory.getAccountIndustryList());
+		this.loadData(CrmDataTypeFactory.getAccountTypeList());
 	}
+
 }
