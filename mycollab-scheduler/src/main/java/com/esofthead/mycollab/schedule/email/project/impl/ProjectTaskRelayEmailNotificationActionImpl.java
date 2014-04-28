@@ -21,6 +21,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
@@ -39,11 +41,14 @@ import com.esofthead.mycollab.module.project.domain.ProjectNotificationSettingTy
 import com.esofthead.mycollab.module.project.domain.ProjectRelayEmailNotification;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
+import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.project.service.ProjectService;
+import com.esofthead.mycollab.module.project.service.ProjectTaskListService;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.user.UserLinkUtils;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
+import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.schedule.ScheduleUserTimeZoneUtils;
 import com.esofthead.mycollab.schedule.email.ItemFieldMapper;
 import com.esofthead.mycollab.schedule.email.LinkUtils;
@@ -67,6 +72,9 @@ import com.hp.gagawa.java.elements.Img;
 public class ProjectTaskRelayEmailNotificationActionImpl extends
 		SendMailToFollowersAction implements
 		ProjectTaskRelayEmailNotificationAction {
+
+	private static Logger log = LoggerFactory
+			.getLogger(ProjectTaskRelayEmailNotificationActionImpl.class);
 
 	@Autowired
 	private ProjectTaskService projectTaskService;
@@ -340,6 +348,24 @@ public class ProjectTaskRelayEmailNotificationActionImpl extends
 
 		@Override
 		public String formatField(MailContext<?> context, String value) {
+			if (value == null || "".equals(value)) {
+				return "";
+			}
+
+			UserService userService = ApplicationContextUtil
+					.getSpringBean(UserService.class);
+			SimpleUser user = userService.findUserByUserNameInAccount(value,
+					context.getUser().getAccountId());
+			if (user != null) {
+				String userAvatarLink = LinkUtils.getAvatarLink(
+						user.getAvatarid(), 16);
+				String userLink = UserLinkUtils.generatePreviewFullUserLink(
+						LinkUtils.getSiteUrl(user.getAccountId()),
+						user.getUsername());
+				Img img = TagBuilder.newImg("avatar", userAvatarLink);
+				A link = TagBuilder.newA(userLink, user.getDisplayName());
+				return TagBuilder.newLink(img, link).write();
+			}
 			return value;
 		}
 	}
@@ -367,7 +393,30 @@ public class ProjectTaskRelayEmailNotificationActionImpl extends
 
 		@Override
 		public String formatField(MailContext<?> context, String value) {
-			return value;
+			if (value == null || "".equals(value)) {
+				return "";
+			}
+
+			try {
+				int taskgroupId = Integer.parseInt(value);
+				ProjectTaskListService tasklistService = ApplicationContextUtil
+						.getSpringBean(ProjectTaskListService.class);
+				SimpleTaskList taskgroup = tasklistService.findById(
+						taskgroupId, context.getUser().getAccountId());
+
+				String taskgroupIconLink = ProjectResources
+						.getResourceLink(ProjectTypeConstants.TASK_LIST);
+				Img img = TagBuilder.newImg("icon", taskgroupIconLink);
+
+				String tasklistlink = ProjectLinkUtils
+						.generateTaskPreviewFullLink(context.getSiteUrl(),
+								taskgroup.getProjectid(), taskgroup.getId());
+				A link = TagBuilder.newA(tasklistlink, taskgroup.getName());
+				return TagBuilder.newLink(img, link).write();
+			} catch (Exception e) {
+				log.error("Error", e);
+				return value;
+			}
 		}
 
 	}
