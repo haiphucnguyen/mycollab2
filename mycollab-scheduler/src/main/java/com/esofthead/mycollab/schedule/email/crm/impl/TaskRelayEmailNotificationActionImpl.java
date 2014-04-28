@@ -211,18 +211,22 @@ public class TaskRelayEmailNotificationActionImpl extends
 				SimpleContact contact = contactService.findById(contactId,
 						context.getUser().getAccountId());
 
-				String contactIconLink = CrmResources
-						.getResourceLink(CrmTypeConstants.CONTACT);
-				Img img = TagBuilder.newImg("icon", contactIconLink);
-				String contactLink = CrmLinkGenerator
-						.generateContactPreviewFullLink(context.getSiteUrl(),
-								contact.getId());
-				A link = TagBuilder.newA(contactLink, contact.getDisplayName());
-				return TagBuilder.newLink(img, link).write();
+				if (contact != null) {
+					String contactIconLink = CrmResources
+							.getResourceLink(CrmTypeConstants.CONTACT);
+					Img img = TagBuilder.newImg("icon", contactIconLink);
+					String contactLink = CrmLinkGenerator
+							.generateContactPreviewFullLink(
+									context.getSiteUrl(), contact.getId());
+					A link = TagBuilder.newA(contactLink,
+							contact.getDisplayName());
+					return TagBuilder.newLink(img, link).write();
+				}
 			} catch (Exception e) {
 				log.error("Error", e);
-				return value;
 			}
+
+			return value;
 		}
 
 	}

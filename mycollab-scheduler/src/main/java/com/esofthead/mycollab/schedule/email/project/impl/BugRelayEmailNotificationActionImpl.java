@@ -298,15 +298,20 @@ public class BugRelayEmailNotificationActionImpl extends
 
 		public BugFieldNameMapper() {
 			put("summary", "Bug Summary");
-			put("description", "Description");
-			put("status", "Status");
 			put("assignuser", new AssigneeFieldFormat("assignuser", "Assignee"));
-			put("resolution", "Resolution");
-			put("severity", "Serverity");
+			
 			put("environment", "Environment");
+			put("description", "Description");
+			
+			put("status", "Status");
+			put("resolution", "Resolution");
+			
+			put("severity", "Serverity");
 			put("priority", "Priority");
+			
 			put("duedate", new DateFieldFormat("duedate", "Due Date"));
 			put("logby", new LogUserFieldFormat("logby", "Logged By"));
+			
 			put("milestoneid", new MilestoneFieldFormat("milestoneid",
 					"Milestone"));
 		}
@@ -345,19 +350,25 @@ public class BugRelayEmailNotificationActionImpl extends
 						.getSpringBean(MilestoneService.class);
 				SimpleMilestone milestone = milestoneService.findById(
 						milestoneId, context.getUser().getAccountId());
-				String milestoneIconLink = ProjectResources
-						.getResourceLink(ProjectTypeConstants.MILESTONE);
-				Img img = TagBuilder.newImg("icon", milestoneIconLink);
 
-				String milestoneLink = ProjectLinkUtils
-						.generateMilestonePreviewFullLink(context.getSiteUrl(),
-								milestone.getProjectid(), milestone.getId());
-				A link = TagBuilder.newA(milestoneLink, milestone.getName());
-				return TagBuilder.newLink(img, link).write();
+				if (milestone != null) {
+					String milestoneIconLink = ProjectResources
+							.getResourceLink(ProjectTypeConstants.MILESTONE);
+					Img img = TagBuilder.newImg("icon", milestoneIconLink);
+
+					String milestoneLink = ProjectLinkUtils
+							.generateMilestonePreviewFullLink(
+									context.getSiteUrl(),
+									milestone.getProjectid(), milestone.getId());
+					A link = TagBuilder
+							.newA(milestoneLink, milestone.getName());
+					return TagBuilder.newLink(img, link).write();
+				}
 			} catch (Exception e) {
 				log.error("Error", e);
-				return value;
 			}
+
+			return value;
 		}
 	}
 

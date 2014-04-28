@@ -280,19 +280,24 @@ public class ProjectTaskGroupRelayEmailNotificationActionImpl extends
 				SimpleMilestone milestone = milestoneService.findById(
 						milestoneId, context.getUser().getAccountId());
 
-				String milestoneIconLink = ProjectResources
-						.getResourceLink(ProjectTypeConstants.MILESTONE);
-				Img img = TagBuilder.newImg("icon", milestoneIconLink);
+				if (milestone != null) {
+					String milestoneIconLink = ProjectResources
+							.getResourceLink(ProjectTypeConstants.MILESTONE);
+					Img img = TagBuilder.newImg("icon", milestoneIconLink);
 
-				String milestoneLink = ProjectLinkUtils
-						.generateMilestonePreviewFullLink(context.getSiteUrl(),
-								milestone.getProjectid(), milestone.getId());
-				A link = TagBuilder.newA(milestoneLink, milestone.getName());
-				return TagBuilder.newLink(img, link).write();
+					String milestoneLink = ProjectLinkUtils
+							.generateMilestonePreviewFullLink(
+									context.getSiteUrl(),
+									milestone.getProjectid(), milestone.getId());
+					A link = TagBuilder
+							.newA(milestoneLink, milestone.getName());
+					return TagBuilder.newLink(img, link).write();
+				}
 			} catch (Exception e) {
 				log.error("Error", e);
-				return value;
 			}
+
+			return value;
 		}
 
 	}

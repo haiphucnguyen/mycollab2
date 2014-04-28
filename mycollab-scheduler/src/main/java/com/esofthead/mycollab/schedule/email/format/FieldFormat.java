@@ -18,10 +18,16 @@ public abstract class FieldFormat {
 
 	protected String fieldName;
 	protected String displayName;
+	protected boolean isColSpan = false;
 
 	public FieldFormat(String fieldName, String displayName) {
+		this(fieldName, displayName, false);
+	}
+
+	public FieldFormat(String fieldName, String displayName, boolean isColSpan) {
 		this.fieldName = fieldName;
 		this.displayName = displayName;
+		this.isColSpan = isColSpan;
 	}
 
 	public String getDisplayName() {
@@ -41,7 +47,7 @@ public abstract class FieldFormat {
 	}
 
 	abstract public String formatField(MailContext<?> context);
-	
+
 	abstract public String formatField(MailContext<?> context, String value);
 
 	public static FieldFormat createFieldFormat(Type fieldType,

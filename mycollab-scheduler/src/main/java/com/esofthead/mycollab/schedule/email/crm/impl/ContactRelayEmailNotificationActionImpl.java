@@ -178,20 +178,28 @@ public class ContactRelayEmailNotificationActionImpl extends
 		ContactFieldNameMapper() {
 			put("firstname", "First Name");
 			put("officephone", "Office Phone");
+			
 			put("lastname", "Last Name");
 			put("mobile", "Mobile");
+			
 			put("accountid", new AccountFieldFormat("accountid", "Account"));
 			put("homephone", "Home Phone");
+			
 			put("title", "Title");
 			put("otherphone", "Other Phone");
+			
 			put("department", "Department");
 			put("fax", "Fax");
+			
 			put("email", new EmailLinkFieldFormat("email", "Email"));
 			put("birthday", "Birthday");
+			
 			put("assistant", "Assistant");
 			put("iscallable", "Callable");
+			
 			put("assistantphone", "Assistant Phone");
 			put("assignuser", new AssigneeFieldFormat("assignuser", "Assignee"));
+			
 			put("leadsource", "Lead Source");
 			put("primaddress", "Address");
 			put("primcity", "City");
@@ -286,19 +294,22 @@ public class ContactRelayEmailNotificationActionImpl extends
 						.getSpringBean(AccountService.class);
 				SimpleAccount account = accountService.findById(accountId,
 						context.getUser().getAccountId());
-
-				String accountIconLink = CrmResources
-						.getResourceLink(CrmTypeConstants.ACCOUNT);
-				Img img = TagBuilder.newImg("icon", accountIconLink);
-				String accountLink = CrmLinkGenerator
-						.generateAccountPreviewFullLink(context.getSiteUrl(),
-								account.getId());
-				A link = TagBuilder.newA(accountLink, account.getAccountname());
-				return TagBuilder.newLink(img, link).write();
+				if (account != null) {
+					String accountIconLink = CrmResources
+							.getResourceLink(CrmTypeConstants.ACCOUNT);
+					Img img = TagBuilder.newImg("icon", accountIconLink);
+					String accountLink = CrmLinkGenerator
+							.generateAccountPreviewFullLink(
+									context.getSiteUrl(), account.getId());
+					A link = TagBuilder.newA(accountLink,
+							account.getAccountname());
+					return TagBuilder.newLink(img, link).write();
+				}
 			} catch (Exception e) {
 				log.error("Error", e);
-				return value;
 			}
+
+			return value;
 		}
 	}
 }

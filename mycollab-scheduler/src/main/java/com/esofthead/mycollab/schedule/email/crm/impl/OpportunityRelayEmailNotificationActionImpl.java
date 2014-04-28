@@ -257,21 +257,22 @@ public class OpportunityRelayEmailNotificationActionImpl extends
 				SimpleCampaign campaign = campaignService.findById(campaignId,
 						context.getUser().getAccountId());
 
-				String campaignIconLink = CrmResources
-						.getResourceLink(CrmTypeConstants.CAMPAIGN);
-				Img img = TagBuilder.newImg("icon", campaignIconLink);
+				if (campaign != null) {
+					String campaignIconLink = CrmResources
+							.getResourceLink(CrmTypeConstants.CAMPAIGN);
+					Img img = TagBuilder.newImg("icon", campaignIconLink);
 
-				String campaignLink = CrmLinkGenerator
-						.generateCampaignPreviewFullLink(context.getSiteUrl(),
-								campaign.getId());
-				A link = TagBuilder.newA(campaignLink,
-						campaign.getCampaignname());
-				return TagBuilder.newLink(img, link).write();
-
+					String campaignLink = CrmLinkGenerator
+							.generateCampaignPreviewFullLink(
+									context.getSiteUrl(), campaign.getId());
+					A link = TagBuilder.newA(campaignLink,
+							campaign.getCampaignname());
+					return TagBuilder.newLink(img, link).write();
+				}
 			} catch (Exception e) {
 				log.error("Error", e);
-				return value;
 			}
+			return value;
 		}
 	}
 
