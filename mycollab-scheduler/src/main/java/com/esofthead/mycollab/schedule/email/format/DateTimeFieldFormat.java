@@ -51,7 +51,11 @@ public class DateTimeFieldFormat extends FieldFormat {
 
 	@Override
 	public String formatField(MailContext<?> context, String value) {
-		// TODO Auto-generated method stub
-		return null;
+		if (value == null || "".equals(value)) {
+			return "";
+		}
+
+		return DateTimeUtils.converToStringWithUserTimeZone(value, context
+				.getUser().getTimezone());
 	}
 }

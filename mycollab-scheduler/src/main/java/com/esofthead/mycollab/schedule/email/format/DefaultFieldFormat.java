@@ -23,6 +23,11 @@ public class DefaultFieldFormat extends FieldFormat {
 		super(fieldname, displayName);
 	}
 
+	public DefaultFieldFormat(String fieldname, String displayName,
+			boolean isColspan) {
+		super(fieldname, displayName, isColspan);
+	}
+
 	@Override
 	public String formatField(MailContext<?> context) {
 		Object wrappedBean = context.getWrappedBean();

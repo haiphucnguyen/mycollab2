@@ -21,6 +21,11 @@ public class ItemFieldMapper {
 				displayName));
 	}
 
+	public void put(String fieldname, String displayName, boolean isColSpan) {
+		fieldNameMap.put(fieldname, new DefaultFieldFormat(fieldname,
+				displayName, isColSpan));
+	}
+
 	public void put(String fieldname, FieldFormat format) {
 		fieldNameMap.put(fieldname, format);
 	}

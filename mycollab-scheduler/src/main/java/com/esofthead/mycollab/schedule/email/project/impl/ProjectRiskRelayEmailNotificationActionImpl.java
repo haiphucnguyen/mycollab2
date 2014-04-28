@@ -186,16 +186,17 @@ public class ProjectRiskRelayEmailNotificationActionImpl extends
 
 		public ProjectFieldNameMapper() {
 			put("riskname", "Risk Name");
-			put("assigntouser", new AssigneeFieldFormat("assigntouser",
-					"Assignee"));
-			put("consequence", "Consequence");
-			put("probability", "Probability");
-			put("raisedbyuser", new RaisedByFieldFormat("raisedbyuser",
-					"Raised By"));
 			put("description", "Description");
+			put("probability", "Probability");
+			put("consequence", "Consequence");
 			put("datedue", new DateFieldFormat("datedue", "Due Date"));
 			put("status", "Status");
+			put("assigntouser", new AssigneeFieldFormat("assigntouser",
+					"Assignee"));
+			put("raisedbyuser", new RaisedByFieldFormat("raisedbyuser",
+					"Raised By"));
 			put("response", "Response");
+
 		}
 	}
 

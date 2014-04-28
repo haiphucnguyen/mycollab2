@@ -310,6 +310,8 @@ public class ProjectTaskRelayEmailNotificationActionImpl extends
 		public TaskFieldNameMapper() {
 
 			put("taskname", "Task Name");
+			put("tasklistid", new TaskGroupFieldFormat("tasklistid",
+					"Task Group"));
 			put("startdate", new DateFieldFormat("startdate", "Start Date"));
 			put("enddate", new DateFieldFormat("enddate", "End Date"));
 			put("actualstartdate", new DateFieldFormat("actualstartdate",
@@ -318,11 +320,9 @@ public class ProjectTaskRelayEmailNotificationActionImpl extends
 					"Actual End Date"));
 			put("assignuser", new AssigneeFieldFormat("assignuser", "Assignee"));
 			put("percentagecomplete", "Complete (%)");
-			put("notes", "Notes");
 			put("priority", "Priority");
 			put("deadline", new DateFieldFormat("deadline", "Deadline"));
-			put("tasklistid", new TaskGroupFieldFormat("tasklistid",
-					"Task Group"));
+			put("notes", "Notes");
 		}
 	}
 
@@ -404,19 +404,22 @@ public class ProjectTaskRelayEmailNotificationActionImpl extends
 				SimpleTaskList taskgroup = tasklistService.findById(
 						taskgroupId, context.getUser().getAccountId());
 
-				String taskgroupIconLink = ProjectResources
-						.getResourceLink(ProjectTypeConstants.TASK_LIST);
-				Img img = TagBuilder.newImg("icon", taskgroupIconLink);
+				if (taskgroup != null) {
+					String taskgroupIconLink = ProjectResources
+							.getResourceLink(ProjectTypeConstants.TASK_LIST);
+					Img img = TagBuilder.newImg("icon", taskgroupIconLink);
 
-				String tasklistlink = ProjectLinkUtils
-						.generateTaskPreviewFullLink(context.getSiteUrl(),
-								taskgroup.getProjectid(), taskgroup.getId());
-				A link = TagBuilder.newA(tasklistlink, taskgroup.getName());
-				return TagBuilder.newLink(img, link).write();
+					String tasklistlink = ProjectLinkUtils
+							.generateTaskPreviewFullLink(context.getSiteUrl(),
+									taskgroup.getProjectid(), taskgroup.getId());
+					A link = TagBuilder.newA(tasklistlink, taskgroup.getName());
+					return TagBuilder.newLink(img, link).write();
+				}
 			} catch (Exception e) {
 				log.error("Error", e);
-				return value;
 			}
+
+			return value;
 		}
 
 	}
