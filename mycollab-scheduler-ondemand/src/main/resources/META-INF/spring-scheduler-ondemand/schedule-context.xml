@@ -3,8 +3,8 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
     xmlns:aop="http://www.springframework.org/schema/aop" xmlns:task="http://www.springframework.org/schema/task"
     xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
-		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
                 http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.1.xsd">
 
     <!-- Schedule job -->
@@ -18,7 +18,7 @@
     <bean id="sendInviteUserEmailJob"
         class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
         <property name="jobClass"
-            value="com.esofthead.mycollab.schedule.jobs.SendUserInvitationEmailJob" />
+            value="com.esofthead.mycollab.schedule.email.user.impl.SendUserInvitationEmailJob" />
         <property name="durability" value="true" />
     </bean>
 
@@ -39,7 +39,7 @@
     <bean id="userSignUpNotificationEmailJob"
         class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
         <property name="jobClass"
-            value="com.esofthead.mycollab.schedule.jobs.UserSignUpEmailNotificationJob"></property>
+            value="com.esofthead.mycollab.schedule.email.user.impl.UserSignUpEmailNotificationJob"></property>
         <property name="durability" value="true" />
     </bean>
 
@@ -53,7 +53,7 @@
     <bean id="sendAccountBillingEmailJob"
         class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
         <property name="jobClass"
-            value="com.esofthead.mycollab.schedule.jobs.BillingSendingNotificationJobs" />
+            value="com.esofthead.mycollab.schedule.email.user.impl.BillingSendingNotificationJobs" />
         <property name="durability" value="true" />
     </bean>
 
@@ -104,7 +104,7 @@
     <bean id="sendAccountBillingEmailTrigger"
         class="com.esofthead.mycollab.schedule.PersistableCronTriggerFactoryBean">
         <property name="jobDetail" ref="sendAccountBillingEmailJob" />
-        <property name="cronExpression" value="0 * * * * ?" />
+        <property name="cronExpression" value="0 0 0 * * ?" />
     </bean>
 
     <bean id="sendingCountUserLoginByDateTrigger"
