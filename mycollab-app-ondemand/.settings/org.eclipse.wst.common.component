@@ -523,7 +523,7 @@
     <dependent-module archiveName="ratingstars-2.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/vaadin/addons/ratingstars/2.1/ratingstars-2.1.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="dragdroplayouts-1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/vaadin/addons/dragdroplayouts/1.0/dragdroplayouts-1.0.jar">
+    <dependent-module archiveName="dragdroplayouts-1.0.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/vaadin/addons/dragdroplayouts/1.0.1/dragdroplayouts-1.0.1.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="tokenfield-7.0.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/vaadin/addons/tokenfield/7.0.1/tokenfield-7.0.1.jar">
@@ -559,7 +559,7 @@
     <dependent-module archiveName="popupbutton-1.0.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/esofthead/vaadin/popupbutton/1.0.0-SNAPSHOT/popupbutton-1.0.0-SNAPSHOT.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="gantt-addon-0.2.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/tltv/gantt/gantt-addon/0.2.0/gantt-addon-0.2.0.jar">
+    <dependent-module archiveName="gantt-addon-0.2.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/tltv/gantt/gantt-addon/0.2.1/gantt-addon-0.2.1.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="confirmdialog-2.0.4.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/vaadin/addon/confirmdialog/2.0.4/confirmdialog-2.0.4.jar">
@@ -647,6 +647,9 @@
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="mycollab-mobile.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mycollab-mobile/mycollab-mobile">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="mycollab-scheduler-ondemand.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mycollab-scheduler-ondemand/mycollab-scheduler-ondemand">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <wb-resource deploy-path="/WEB-INF/classes" source-path="src/main/java"/>

@@ -36,6 +36,7 @@ import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.common.GenericLinkUtils;
 import com.esofthead.mycollab.common.domain.MailRecipientField;
+import com.esofthead.mycollab.module.billing.AccountReminderStatusContants;
 import com.esofthead.mycollab.module.billing.service.BillingService;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.mail.service.ExtMailService;
@@ -95,12 +96,15 @@ public class BillingSendingNotificationJobs extends QuartzJobBean {
 			for (BillingAccountWithOwners account : trialAccountsWithOwners) {
 				log.debug("Check whether account exceed 25 days to remind user upgrade account");
 				if (df.format(account.getCreatedtime()).equals(
-						df.format(dateRemind1st))) {
+						df.format(dateRemind1st))
+						&& (account.getReminderstatus() == null)) {
 					RemindUserUpdateBillingInformationAction notificationFactory = new RemindUserUpdateBillingInformationAction();
 					notificationFactory.sendingEmail(account,
 							DATE_REMIND_FOR_FREEPLAN_1ST);
 				} else if (df.format(account.getCreatedtime()).equals(
-						df.format(dateRemind2nd))) {
+						df.format(dateRemind2nd))
+						&& (account.getReminderstatus() == AccountReminderStatusContants.REMIND_ACCOUNT_IS_ABOUT_END_1ST_TIME || account
+								.getReminderstatus() == null)) {
 					log.debug("Check whether account exceed 30 days to inform him it is the end of day to upgrade account");
 					RemindUserUpdateBillingInformationAction notificationFactory = new RemindUserUpdateBillingInformationAction();
 					notificationFactory.sendingEmail(account,
@@ -152,11 +156,13 @@ public class BillingSendingNotificationJobs extends QuartzJobBean {
 						df.format(cal.getTime()));
 				templateGenerator.putVariable("userName", user.getUsername());
 				templateGenerator.putVariable("link", link);
+
 				extMailService.sendHTMLMail("noreply@mycollab.com", "MyCollab",
 						Arrays.asList(new MailRecipientField(user.getEmail(),
 								user.getDisplayName())), null, null,
 						templateGenerator.generateSubjectContent(),
 						templateGenerator.generateBodyContent(), null);
+
 			}
 		}
 	}
