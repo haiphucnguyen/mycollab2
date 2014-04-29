@@ -164,3 +164,4 @@ extras/vaadin/addons/ckeditor/bin/target/classes/.gitignore
 *.iml
 mycollab-test/src/main/resources/mycollab-test.properties
 mycollab-services/velocity.log
+mycollab-scheduler-ondemand/target
