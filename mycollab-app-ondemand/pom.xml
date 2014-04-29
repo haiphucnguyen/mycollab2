@@ -53,6 +53,12 @@
             <artifactId>mycollab-mobile</artifactId>
             <version>4.0.0</version>
         </dependency>
+        
+        <dependency>
+            <groupId>com.esofthead.mycollab</groupId>
+            <artifactId>mycollab-scheduler-ondemand</artifactId>
+            <version>4.0.0</version>
+        </dependency>
 
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
