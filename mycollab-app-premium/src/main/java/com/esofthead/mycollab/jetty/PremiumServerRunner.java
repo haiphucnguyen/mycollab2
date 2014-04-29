@@ -5,6 +5,7 @@ import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.webapp.WebAppContext;
 
 import com.esofthead.mycollab.jetty.clustering.InfinispanSessionManager;
+import com.esofthead.mycollab.servlet.InstallationServlet;
 import com.esofthead.mycollab.servlet.SetupServlet;
 
 /**
@@ -32,8 +33,11 @@ public class PremiumServerRunner extends GenericServerRunner {
 		sh.setSessionManager(sm);
 
 		webAppContext.setSessionHandler(sh);
-		
-		webAppContext.addServlet(new ServletHolder(new SetupServlet()), "/setup");
+
+		webAppContext.addServlet(new ServletHolder(new SetupServlet()),
+				"/setup");
+		webAppContext.addServlet(new ServletHolder(new InstallationServlet()),
+				"/install");
 		return webAppContext;
 	}
 
