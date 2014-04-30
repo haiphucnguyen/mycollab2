@@ -36,6 +36,7 @@ import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.common.GenericLinkUtils;
 import com.esofthead.mycollab.common.domain.MailRecipientField;
+import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.module.billing.AccountReminderStatusContants;
 import com.esofthead.mycollab.module.billing.service.BillingService;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
@@ -57,8 +58,8 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class BillingSendingNotificationJobs extends QuartzJobBean {
 
-	private static final Integer DATE_REMIND_FOR_FREEPLAN_1ST = 25;
-	private static final Integer DATE_REMIND_FOR_FREEPLAN_2ND = 30;
+	private static final Integer DATE_REMIND_FOR_FREEPLAN_1ST = 24;
+	private static final Integer DATE_REMIND_FOR_FREEPLAN_2ND = 29;
 	private static final Integer DATE_NOTIFY_EXPIRE = 32;
 	private static final Integer NUM_DAY_FREE_TRIAL = 30;
 
@@ -75,54 +76,74 @@ public class BillingSendingNotificationJobs extends QuartzJobBean {
 	protected void executeInternal(JobExecutionContext context)
 			throws JobExecutionException {
 
-//		List<BillingAccountWithOwners> trialAccountsWithOwners = billingService
-//				.getTrialAccountsWithOwners();
-//		DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
-//
-//		Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
-//		cal.add(Calendar.DATE, (-1) * DATE_REMIND_FOR_FREEPLAN_1ST);
-//		Date dateRemind1st = cal.getTime();
-//
-//		cal = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
-//		cal.add(Calendar.DATE, (-1) * DATE_REMIND_FOR_FREEPLAN_2ND);
-//		Date dateRemind2nd = cal.getTime();
-//
-//		cal = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
-//		cal.add(Calendar.DATE, (-1) * DATE_NOTIFY_EXPIRE);
-//		Date dateExpire = cal.getTime();
-//
-//		if (trialAccountsWithOwners != null
-//				&& trialAccountsWithOwners.size() > 0) {
-//			for (BillingAccountWithOwners account : trialAccountsWithOwners) {
-//				log.debug("Check whether account exceed 25 days to remind user upgrade account");
-//				if (df.format(account.getCreatedtime()).equals(
-//						df.format(dateRemind1st))
-//						&& (account.getReminderstatus() == null)) {
-//					RemindUserUpdateBillingInformationAction notificationFactory = new RemindUserUpdateBillingInformationAction();
-//					notificationFactory.sendingEmail(account,
-//							DATE_REMIND_FOR_FREEPLAN_1ST);
-//				} else if (df.format(account.getCreatedtime()).equals(
-//						df.format(dateRemind2nd))
-//						&& (account.getReminderstatus() == AccountReminderStatusContants.REMIND_ACCOUNT_IS_ABOUT_END_1ST_TIME || account
-//								.getReminderstatus() == null)) {
-//					log.debug("Check whether account exceed 30 days to inform him it is the end of day to upgrade account");
-//					RemindUserUpdateBillingInformationAction notificationFactory = new RemindUserUpdateBillingInformationAction();
-//					notificationFactory.sendingEmail(account,
-//							DATE_REMIND_FOR_FREEPLAN_2ND);
-//				} else if (df.format(account.getCreatedtime()).equals(
-//						df.format(dateExpire))) {
-//					log.debug("Check whether account exceed 32 days to convert to basic plan");
-//					BillingAccount billingAccount = billingAccountService
-//							.findByPrimaryKey(account.getId(), account.getId());
-//					BillingPlan freeBillingPlan = billingService
-//							.getFreeBillingPlan();
-//					billingAccount.setBillingplanid(freeBillingPlan.getId());
-//					billingAccountService.updateWithSession(billingAccount, "");
-//					InformAccountIsExpiredAction notificationFactory = new InformAccountIsExpiredAction();
-//					notificationFactory.sendingEmail(account);
-//				}
-//			}
-//		}
+		List<BillingAccountWithOwners> trialAccountsWithOwners = billingService
+				.getTrialAccountsWithOwners();
+
+		Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+		cal.add(Calendar.DATE, (-1) * DATE_REMIND_FOR_FREEPLAN_1ST);
+		Date dateRemind1st = DateTimeUtils.trimHMSOfDate(cal.getTime());
+
+		cal = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+		cal.add(Calendar.DATE, (-1) * DATE_REMIND_FOR_FREEPLAN_2ND);
+		Date dateRemind2nd = DateTimeUtils.trimHMSOfDate(cal.getTime());
+
+		cal = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+		cal.add(Calendar.DATE, (-1) * DATE_NOTIFY_EXPIRE);
+		Date dateExpire = DateTimeUtils.trimHMSOfDate(cal.getTime());
+
+		if (trialAccountsWithOwners != null
+				&& trialAccountsWithOwners.size() > 0) {
+			for (BillingAccountWithOwners account : trialAccountsWithOwners) {
+				log.debug("Check whether account exceed 25 days to remind user upgrade account");
+				Date accCreatedDate = DateTimeUtils.trimHMSOfDate(account
+						.getCreatedtime());
+
+				if (accCreatedDate.before(dateRemind1st)
+						&& (account.getReminderstatus() == null)) {
+					RemindUserUpdateBillingInformationAction notificationFactory = new RemindUserUpdateBillingInformationAction();
+					notificationFactory.sendingEmail(account,
+							DATE_REMIND_FOR_FREEPLAN_1ST);
+					// update billing account reminder status
+
+					BillingAccount billingAccount = new BillingAccount();
+					billingAccount.setId(account.getId());
+					billingAccount
+							.setReminderstatus(AccountReminderStatusContants.REMIND_ACCOUNT_IS_ABOUT_END_1ST_TIME);
+					billingAccountService.updateWithSessionWithSelective(
+							billingAccount, "");
+				} else if (accCreatedDate.before(dateRemind2nd)
+						&& (account.getReminderstatus() == AccountReminderStatusContants.REMIND_ACCOUNT_IS_ABOUT_END_1ST_TIME || account
+								.getReminderstatus() == null)) {
+					log.debug("Check whether account exceed 30 days to inform him it is the end of day to upgrade account");
+					RemindUserUpdateBillingInformationAction notificationFactory = new RemindUserUpdateBillingInformationAction();
+					notificationFactory.sendingEmail(account,
+							DATE_REMIND_FOR_FREEPLAN_2ND);
+
+					BillingAccount billingAccount = new BillingAccount();
+					billingAccount.setId(account.getId());
+					billingAccount
+							.setReminderstatus(AccountReminderStatusContants.REMIND_ACCOUNT_IS_ABOUT_END_2ST_TIME);
+					billingAccountService.updateWithSessionWithSelective(
+							billingAccount, "");
+				} else if (accCreatedDate.before(dateExpire)) {
+					log.debug("Check whether account exceed 32 days to convert to basic plan");
+
+					InformAccountIsExpiredAction notificationFactory = new InformAccountIsExpiredAction();
+					notificationFactory.sendingEmail(account);
+
+					BillingAccount billingAccount = new BillingAccount();
+					billingAccount.setId(account.getId());
+					BillingPlan freeBillingPlan = billingService
+							.getFreeBillingPlan();
+					billingAccount.setBillingplanid(freeBillingPlan.getId());
+
+					billingAccount
+							.setReminderstatus(AccountReminderStatusContants.REMIND_ACCOUNT_IS_CONVERTED_TO_FREE_PLAN);
+					billingAccountService.updateWithSessionWithSelective(
+							billingAccount, "");
+				}
+			}
+		}
 	}
 
 	private static class RemindUserUpdateBillingInformationAction {
@@ -162,8 +183,8 @@ public class BillingSendingNotificationJobs extends QuartzJobBean {
 								user.getDisplayName())), null, null,
 						templateGenerator.generateSubjectContent(),
 						templateGenerator.generateBodyContent(), null);
-
 			}
+
 		}
 	}
 
