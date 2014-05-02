@@ -1,21 +1,6 @@
-/**
- * This file is part of mycollab-services.
- *
- * mycollab-services is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-services is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-services.  If not, see <http://www.gnu.org/licenses/>.
- */
-package com.esofthead.mycollab.module.billing;
+package com.esofthead.mycollab.ondemand.module.billing.service.ibatis;
 
+import com.esofthead.mycollab.module.billing.service.BillingPlanCheckerService;
 import com.esofthead.mycollab.module.billing.service.BillingService;
 import com.esofthead.mycollab.module.ecm.domain.DriveInfo;
 import com.esofthead.mycollab.module.ecm.service.DriveInfoService;
@@ -27,12 +12,13 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
 /**
  * 
  * @author MyCollab Ltd.
- * @since 1.0
+ * @since 4.1
  * 
  */
-public class BillingPlanChecker {
+public class BillingPlanCheckerServiceImpl implements BillingPlanCheckerService {
 
-	public static boolean canCreateNewProject(int sAccountId) {
+	@Override
+	public boolean canCreateNewProject(Integer sAccountId) {
 		BillingService billingService = ApplicationContextUtil
 				.getSpringBean(BillingService.class);
 		BillingPlan billingPlan = billingService.findBillingPlan(sAccountId);
@@ -45,7 +31,8 @@ public class BillingPlanChecker {
 		return (numOfActiveProjects < billingPlan.getNumprojects());
 	}
 
-	public static boolean canCreateNewUser(int sAccountId) {
+	@Override
+	public boolean canCreateNewUser(Integer sAccountId) {
 		BillingService billingService = ApplicationContextUtil
 				.getSpringBean(BillingService.class);
 		BillingPlan billingPlan = billingService.findBillingPlan(sAccountId);
@@ -56,7 +43,8 @@ public class BillingPlanChecker {
 		return (numOfUsers < billingPlan.getNumusers());
 	}
 
-	public static boolean canUploadMoreFiles(int sAccountId, long extraBytes) {
+	@Override
+	public boolean canUploadMoreFiles(Integer sAccountId, long extraBytes) {
 		BillingService billingService = ApplicationContextUtil
 				.getSpringBean(BillingService.class);
 		BillingPlan billingPlan = billingService.findBillingPlan(sAccountId);
@@ -67,4 +55,5 @@ public class BillingPlanChecker {
 		return (driveInfo.getUsedvolume() + extraBytes <= billingPlan
 				.getVolume());
 	}
+
 }
