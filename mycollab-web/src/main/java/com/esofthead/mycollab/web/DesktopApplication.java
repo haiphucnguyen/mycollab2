@@ -18,6 +18,8 @@ package com.esofthead.mycollab.web;
 
 import static com.esofthead.mycollab.vaadin.MyCollabSession.CURRENT_APP;
 
+import java.util.Collection;
+
 import javax.servlet.http.Cookie;
 
 import org.slf4j.Logger;
@@ -59,6 +61,7 @@ import com.vaadin.server.VaadinService;
 import com.vaadin.server.VaadinServletRequest;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.UI;
+import com.vaadin.ui.Window;
 
 /**
  * 
@@ -140,6 +143,12 @@ public class DesktopApplication extends UI {
 											public void onClose(
 													ConfirmDialog dialog) {
 												if (dialog.isConfirmed()) {
+													Collection<Window> windowsList = UI
+															.getCurrent()
+															.getWindows();
+													for (Window window : windowsList) {
+														window.close();
+													}
 													EventBus.getInstance()
 															.fireEvent(
 																	new ShellEvent.GotoUserAccountModule(

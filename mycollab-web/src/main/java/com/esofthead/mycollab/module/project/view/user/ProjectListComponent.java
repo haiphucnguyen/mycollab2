@@ -92,14 +92,13 @@ public class ProjectListComponent extends VerticalLayout {
 				.newResource("icons/project_dropdown.png"));
 		headerBar.addComponent(headerPopupButton);
 
-		if (!AppContext.canBeYes(RolePermissionCollections.CREATE_NEW_PROJECT)) {
+		if (AppContext.canBeYes(RolePermissionCollections.CREATE_NEW_PROJECT)) {
 			final Button createProjectBtn = new Button("",
 					new Button.ClickListener() {
 						private static final long serialVersionUID = 1L;
 
 						@Override
 						public void buttonClick(final Button.ClickEvent event) {
-							AppContext.validateAccountCanCreateMoreProject();
 							final ProjectAddWindow projectNewWindow = new ProjectAddWindow();
 							UI.getCurrent().addWindow(projectNewWindow);
 						}

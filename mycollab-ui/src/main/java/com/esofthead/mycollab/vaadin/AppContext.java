@@ -303,30 +303,6 @@ public class AppContext implements Serializable {
 				.getBillingPlan().getHasstandupmeetingenable();
 	}
 
-	public static void validateAccountCanCreateMoreProject()
-			throws UsageExceedBillingPlanException {
-		BillingPlanCheckerService billingPlanCheckerService = ApplicationContextUtil
-				.getSpringBean(BillingPlanCheckerService.class);
-		billingPlanCheckerService
-				.validateAccountCanCreateMoreProject(AppContext.getAccountId());
-	}
-
-	public static void validateAccountCanCreateNewUser()
-			throws UsageExceedBillingPlanException {
-		BillingPlanCheckerService billingPlanCheckerService = ApplicationContextUtil
-				.getSpringBean(BillingPlanCheckerService.class);
-		billingPlanCheckerService.validateAccountCanCreateNewUser(AppContext
-				.getAccountId());
-	}
-
-	public static void validateAccountCanUploadMoreFiles(long extraBytes)
-			throws UsageExceedBillingPlanException {
-		BillingPlanCheckerService billingPlanCheckerService = ApplicationContextUtil
-				.getSpringBean(BillingPlanCheckerService.class);
-		billingPlanCheckerService.validateAccountCanUploadMoreFiles(
-				AppContext.getAccountId(), extraBytes);
-	}
-
 	/**
 	 * Check whether current user is admin or system
 	 * 

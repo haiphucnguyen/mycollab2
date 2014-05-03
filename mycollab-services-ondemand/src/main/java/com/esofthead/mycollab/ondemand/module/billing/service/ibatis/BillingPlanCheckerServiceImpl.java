@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.ondemand.module.billing.service.ibatis;
 
+import org.springframework.stereotype.Service;
+
 import com.esofthead.mycollab.module.billing.UsageExceedBillingPlanException;
 import com.esofthead.mycollab.module.billing.service.BillingPlanCheckerService;
 import com.esofthead.mycollab.module.billing.service.BillingService;
@@ -16,6 +18,7 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
  * @since 4.1
  * 
  */
+@Service
 public class BillingPlanCheckerServiceImpl implements BillingPlanCheckerService {
 
 	@Override

@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.esofthead.mycollab.common.service.MonitorItemService;
 import com.esofthead.mycollab.common.service.RelayEmailNotificationService;
+import com.esofthead.mycollab.module.billing.service.BillingPlanCheckerService;
 import com.esofthead.mycollab.module.ecm.service.ContentActivityLogService;
 import com.esofthead.mycollab.module.ecm.service.ExternalDriveService;
 import com.esofthead.mycollab.module.ecm.service.ExternalResourceService;
@@ -26,13 +27,14 @@ import com.esofthead.mycollab.module.user.service.UserService;
  */
 public class CacheServiceIgnoreList {
 	static List<Class> blacklistCls = Arrays.asList(new Class[] {
-			BillingAccountService.class, UserService.class,
-			RelayEmailNotificationService.class, RelatedBugService.class,
-			MonitorItemService.class, BugRelatedItemService.class,
-			RawContentServiceFactoryBean.class, ResourceService.class,
-			DeleteProjectCommand.class, DeleteProjectMemberCommand.class,
-			ExternalResourceService.class, ContentActivityLogService.class,
-			ExternalDriveService.class, ResourceMover.class });
+			BillingAccountService.class, BillingPlanCheckerService.class,
+			UserService.class, RelayEmailNotificationService.class,
+			RelatedBugService.class, MonitorItemService.class,
+			BugRelatedItemService.class, RawContentServiceFactoryBean.class,
+			ResourceService.class, DeleteProjectCommand.class,
+			DeleteProjectMemberCommand.class, ExternalResourceService.class,
+			ContentActivityLogService.class, ExternalDriveService.class,
+			ResourceMover.class });
 
 	static boolean isInBlackList(Class<?> cls) {
 		return blacklistCls.contains(cls);
