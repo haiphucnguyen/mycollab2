@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.ondemand.module.billing.service.ibatis;
 
+import com.esofthead.mycollab.module.billing.UsageExceedBillingPlanException;
 import com.esofthead.mycollab.module.billing.service.BillingPlanCheckerService;
 import com.esofthead.mycollab.module.billing.service.BillingService;
 import com.esofthead.mycollab.module.ecm.domain.DriveInfo;
@@ -18,7 +19,8 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
 public class BillingPlanCheckerServiceImpl implements BillingPlanCheckerService {
 
 	@Override
-	public boolean canCreateNewProject(Integer sAccountId) {
+	public void validateAccountCanCreateMoreProject(Integer sAccountId)
+			throws UsageExceedBillingPlanException {
 		BillingService billingService = ApplicationContextUtil
 				.getSpringBean(BillingService.class);
 		BillingPlan billingPlan = billingService.findBillingPlan(sAccountId);
@@ -28,11 +30,14 @@ public class BillingPlanCheckerServiceImpl implements BillingPlanCheckerService 
 		Integer numOfActiveProjects = projectService
 				.getTotalActiveProjectsInAccount(sAccountId);
 
-		return (numOfActiveProjects < billingPlan.getNumprojects());
+		if (numOfActiveProjects >= billingPlan.getNumprojects()) {
+			throw new UsageExceedBillingPlanException();
+		}
 	}
 
 	@Override
-	public boolean canCreateNewUser(Integer sAccountId) {
+	public void validateAccountCanCreateNewUser(Integer sAccountId)
+			throws UsageExceedBillingPlanException {
 		BillingService billingService = ApplicationContextUtil
 				.getSpringBean(BillingService.class);
 		BillingPlan billingPlan = billingService.findBillingPlan(sAccountId);
@@ -40,11 +45,15 @@ public class BillingPlanCheckerServiceImpl implements BillingPlanCheckerService 
 		UserService userService = ApplicationContextUtil
 				.getSpringBean(UserService.class);
 		int numOfUsers = userService.getTotalActiveUsersInAccount(sAccountId);
-		return (numOfUsers < billingPlan.getNumusers());
+		if (numOfUsers >= billingPlan.getNumusers()) {
+			throw new UsageExceedBillingPlanException();
+		}
+
 	}
 
 	@Override
-	public boolean canUploadMoreFiles(Integer sAccountId, long extraBytes) {
+	public void validateAccountCanUploadMoreFiles(Integer sAccountId,
+			long extraBytes) throws UsageExceedBillingPlanException {
 		BillingService billingService = ApplicationContextUtil
 				.getSpringBean(BillingService.class);
 		BillingPlan billingPlan = billingService.findBillingPlan(sAccountId);
@@ -52,8 +61,10 @@ public class BillingPlanCheckerServiceImpl implements BillingPlanCheckerService 
 		DriveInfoService driveInfoService = ApplicationContextUtil
 				.getSpringBean(DriveInfoService.class);
 		DriveInfo driveInfo = driveInfoService.getDriveInfo(sAccountId);
-		return (driveInfo.getUsedvolume() + extraBytes <= billingPlan
-				.getVolume());
+		if (driveInfo.getUsedvolume() + extraBytes >= billingPlan.getVolume()) {
+			throw new UsageExceedBillingPlanException();
+		}
+
 	}
 
 }

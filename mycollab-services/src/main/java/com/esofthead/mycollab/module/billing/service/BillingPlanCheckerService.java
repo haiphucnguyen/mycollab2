@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.module.billing.service;
 
+import com.esofthead.mycollab.module.billing.UsageExceedBillingPlanException;
+
 /**
  * 
  * @author MyCollab Ltd.
@@ -7,9 +9,12 @@ package com.esofthead.mycollab.module.billing.service;
  * 
  */
 public interface BillingPlanCheckerService {
-	boolean canCreateNewProject(Integer sAccountId);
+	void validateAccountCanCreateMoreProject(Integer sAccountId)
+			throws UsageExceedBillingPlanException;
 
-	boolean canCreateNewUser(Integer sAccountId);
+	void validateAccountCanCreateNewUser(Integer sAccountId)
+			throws UsageExceedBillingPlanException;
 
-	boolean canUploadMoreFiles(Integer sAccountId, long extraBytes);
+	void validateAccountCanUploadMoreFiles(Integer sAccountId, long extraBytes)
+			throws UsageExceedBillingPlanException;
 }

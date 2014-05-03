@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.premium.module.billing.service.ibatis;
 
+import com.esofthead.mycollab.module.billing.UsageExceedBillingPlanException;
 import com.esofthead.mycollab.module.billing.service.BillingPlanCheckerService;
 
 /**
@@ -11,18 +12,19 @@ import com.esofthead.mycollab.module.billing.service.BillingPlanCheckerService;
 public class BillingPlanCheckerServiceImpl implements BillingPlanCheckerService {
 
 	@Override
-	public boolean canCreateNewProject(Integer sAccountId) {
-		return true;
+	public void validateAccountCanCreateMoreProject(Integer sAccountId)
+			throws UsageExceedBillingPlanException {
+
 	}
 
 	@Override
-	public boolean canCreateNewUser(Integer sAccountId) {
-		return true;
+	public void validateAccountCanCreateNewUser(Integer sAccountId)
+			throws UsageExceedBillingPlanException {
+
 	}
 
 	@Override
-	public boolean canUploadMoreFiles(Integer sAccountId, long extraBytes) {
-		return true;
+	public void validateAccountCanUploadMoreFiles(Integer sAccountId,
+			long extraBytes) throws UsageExceedBillingPlanException {
 	}
-
 }

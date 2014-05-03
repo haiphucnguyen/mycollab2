@@ -42,6 +42,8 @@ import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.events.SessionEvent;
 import com.esofthead.mycollab.events.SessionEvent.UserProfileChangeEvent;
 import com.esofthead.mycollab.module.billing.SubDomainNotExistException;
+import com.esofthead.mycollab.module.billing.UsageExceedBillingPlanException;
+import com.esofthead.mycollab.module.billing.service.BillingPlanCheckerService;
 import com.esofthead.mycollab.module.user.domain.BillingAccount;
 import com.esofthead.mycollab.module.user.domain.SimpleBillingAccount;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
@@ -299,6 +301,30 @@ public class AppContext implements Serializable {
 		SimpleBillingAccount billingAccount = getBillingAccount();
 		return (billingAccount == null) ? false : billingAccount
 				.getBillingPlan().getHasstandupmeetingenable();
+	}
+
+	public static void canCreateNewProject()
+			throws UsageExceedBillingPlanException {
+		BillingPlanCheckerService billingPlanCheckerService = ApplicationContextUtil
+				.getSpringBean(BillingPlanCheckerService.class);
+		billingPlanCheckerService
+				.validateAccountCanCreateMoreProject(AppContext.getAccountId());
+	}
+
+	public static void canCreateNewUser()
+			throws UsageExceedBillingPlanException {
+		BillingPlanCheckerService billingPlanCheckerService = ApplicationContextUtil
+				.getSpringBean(BillingPlanCheckerService.class);
+		billingPlanCheckerService.validateAccountCanCreateNewUser(AppContext
+				.getAccountId());
+	}
+
+	public static void canUploadMoreFiles(long extraBytes)
+			throws UsageExceedBillingPlanException {
+		BillingPlanCheckerService billingPlanCheckerService = ApplicationContextUtil
+				.getSpringBean(BillingPlanCheckerService.class);
+		billingPlanCheckerService.validateAccountCanUploadMoreFiles(
+				AppContext.getAccountId(), extraBytes);
 	}
 
 	/**
