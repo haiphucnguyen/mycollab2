@@ -92,10 +92,24 @@ public class ProjectListComponent extends VerticalLayout {
 				.newResource("icons/project_dropdown.png"));
 		headerBar.addComponent(headerPopupButton);
 
-		Button createProject = createProjectButton();
-		UiUtils.addComponent(headerBar, createProject, Alignment.MIDDLE_RIGHT);
 		if (!AppContext.canBeYes(RolePermissionCollections.CREATE_NEW_PROJECT)) {
-			createProject.setEnabled(false);
+			final Button createProjectBtn = new Button("",
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void buttonClick(final Button.ClickEvent event) {
+							AppContext.validateAccountCanCreateMoreProject();
+							final ProjectAddWindow projectNewWindow = new ProjectAddWindow();
+							UI.getCurrent().addWindow(projectNewWindow);
+						}
+					});
+			createProjectBtn.setIcon(MyCollabResource
+					.newResource("icons/18/create.png"));
+			createProjectBtn.setStyleName(UIConstants.THEME_TRANSPARENT_LINK);
+			createProjectBtn.setDescription("Create new Project");
+			UiUtils.addComponent(headerBar, createProjectBtn,
+					Alignment.MIDDLE_RIGHT);
 		}
 
 		headerBar.setWidth("100%");
@@ -112,26 +126,6 @@ public class ProjectListComponent extends VerticalLayout {
 		projectDesc = new Label("", ContentMode.HTML);
 		projectDesc.setStyleName("project-description");
 		addComponent(projectDesc);
-	}
-
-	public Button createProjectButton() {
-		final Button createProjectBtn = new Button("",
-				new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
-
-					@Override
-					public void buttonClick(final Button.ClickEvent event) {
-						final ProjectAddWindow projectNewWindow = new ProjectAddWindow();
-						UI.getCurrent().addWindow(projectNewWindow);
-					}
-				});
-		createProjectBtn.setIcon(MyCollabResource
-				.newResource("icons/18/create.png"));
-		createProjectBtn.setStyleName(UIConstants.THEME_TRANSPARENT_LINK);
-		createProjectBtn.setDescription("Create new Projet");
-
-		return createProjectBtn;
-
 	}
 
 	public void showProjects() {

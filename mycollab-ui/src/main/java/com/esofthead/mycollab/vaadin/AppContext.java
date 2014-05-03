@@ -303,7 +303,7 @@ public class AppContext implements Serializable {
 				.getBillingPlan().getHasstandupmeetingenable();
 	}
 
-	public static void canCreateNewProject()
+	public static void validateAccountCanCreateMoreProject()
 			throws UsageExceedBillingPlanException {
 		BillingPlanCheckerService billingPlanCheckerService = ApplicationContextUtil
 				.getSpringBean(BillingPlanCheckerService.class);
@@ -311,7 +311,7 @@ public class AppContext implements Serializable {
 				.validateAccountCanCreateMoreProject(AppContext.getAccountId());
 	}
 
-	public static void canCreateNewUser()
+	public static void validateAccountCanCreateNewUser()
 			throws UsageExceedBillingPlanException {
 		BillingPlanCheckerService billingPlanCheckerService = ApplicationContextUtil
 				.getSpringBean(BillingPlanCheckerService.class);
@@ -319,7 +319,7 @@ public class AppContext implements Serializable {
 				.getAccountId());
 	}
 
-	public static void canUploadMoreFiles(long extraBytes)
+	public static void validateAccountCanUploadMoreFiles(long extraBytes)
 			throws UsageExceedBillingPlanException {
 		BillingPlanCheckerService billingPlanCheckerService = ApplicationContextUtil
 				.getSpringBean(BillingPlanCheckerService.class);
