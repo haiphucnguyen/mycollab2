@@ -31,7 +31,7 @@ h3 {
 
 
 </style>
-<title>User accept the invitation page</title>
+<title>Setup Mycollab</title>
 </head>
 <body style="height: 100%; margin: 0; padding: 0; width: 100%;">
 	<div id="container">
@@ -249,7 +249,7 @@ h3 {
 		}
 		
 		var urlValidate = "/validate";
-		$('#validate').html('<img src="${defaultUrls.app_url}assets/images/ajax-loader.gif" alt="Pulpit rock" >');
+		$('#validate').html('<img src="${defaultUrls.app_url}assets/images/ajax-loader.gif" alt="Pulpit rock" style="height:18px;" >');
 		$.ajax({
 		      type: 'GET',
 		      url: urlValidate,
@@ -305,7 +305,7 @@ h3 {
 			alert("Please enter database server adress");
 			return;
 		}
-		$('#post').html('<img src="${defaultUrls.app_url}assets/images/ajax-loader.gif" alt="Pulpit rock" >');
+		$('#post').html('<img src="${defaultUrls.app_url}assets/images/ajax-loader.gif" alt="Pulpit rock" style="height:18px;">');
 
 		var urlPost = "/install";
 		var tls = "";
