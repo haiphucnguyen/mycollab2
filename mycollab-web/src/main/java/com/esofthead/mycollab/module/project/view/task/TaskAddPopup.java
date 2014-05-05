@@ -20,7 +20,6 @@ package com.esofthead.mycollab.module.project.view.task;
 import org.vaadin.easyuploads.MultiFileUploadExt;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
-import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.module.file.AttachmentType;
 import com.esofthead.mycollab.module.file.AttachmentUtils;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;

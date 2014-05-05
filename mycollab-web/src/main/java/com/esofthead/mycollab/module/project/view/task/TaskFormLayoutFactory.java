@@ -18,8 +18,8 @@
 package com.esofthead.mycollab.module.project.view.task;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
-import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.module.project.localization.TaskI18nEnum;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.vaadin.ui.Alignment;

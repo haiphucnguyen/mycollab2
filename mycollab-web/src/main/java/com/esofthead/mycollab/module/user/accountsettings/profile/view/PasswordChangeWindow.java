@@ -18,7 +18,6 @@ package com.esofthead.mycollab.module.user.accountsettings.profile.view;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.configuration.PasswordEncryptHelper;
-import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.user.accountsettings.localization.UserI18nEnum;
 import com.esofthead.mycollab.module.user.accountsettings.view.events.ProfileEvent;

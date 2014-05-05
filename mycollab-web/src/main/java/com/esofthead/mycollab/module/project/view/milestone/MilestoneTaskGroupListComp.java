@@ -18,7 +18,6 @@ package com.esofthead.mycollab.module.project.view.milestone;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
-import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.eventmanager.ApplicationEvent;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
@@ -32,6 +31,7 @@ import com.esofthead.mycollab.module.project.view.task.TaskDisplayWidget;
 import com.esofthead.mycollab.module.project.view.task.TaskGroupAddWindow;
 import com.esofthead.mycollab.module.project.view.task.TaskGroupDisplayView;
 import com.esofthead.mycollab.module.project.view.task.TaskGroupDisplayWidget;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.ToggleButtonGroup;

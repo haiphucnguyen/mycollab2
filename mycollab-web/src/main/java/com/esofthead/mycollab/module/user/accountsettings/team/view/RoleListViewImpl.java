@@ -20,7 +20,6 @@ package com.esofthead.mycollab.module.user.accountsettings.team.view;
 import java.util.Arrays;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
-import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.eventmanager.ApplicationEvent;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBus;

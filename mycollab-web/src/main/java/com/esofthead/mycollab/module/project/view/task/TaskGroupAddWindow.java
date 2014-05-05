@@ -20,7 +20,6 @@ package com.esofthead.mycollab.module.project.view.task;
 import java.util.GregorianCalendar;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
-import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.domain.SimpleTaskList;

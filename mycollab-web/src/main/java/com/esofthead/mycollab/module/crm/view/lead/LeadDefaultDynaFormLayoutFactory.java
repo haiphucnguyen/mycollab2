@@ -17,17 +17,17 @@
 package com.esofthead.mycollab.module.crm.view.lead;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
-import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.form.view.builder.DynaSectionBuilder;
 import com.esofthead.mycollab.form.view.builder.EmailDynaFieldBuilder;
 import com.esofthead.mycollab.form.view.builder.IntDynaFieldBuilder;
 import com.esofthead.mycollab.form.view.builder.PhoneDynaFieldBuilder;
-import com.esofthead.mycollab.form.view.builder.TextDynaFieldBuilder;
 import com.esofthead.mycollab.form.view.builder.TextAreaDynaFieldBuilder;
+import com.esofthead.mycollab.form.view.builder.TextDynaFieldBuilder;
 import com.esofthead.mycollab.form.view.builder.UrlDynaFieldBuilder;
 import com.esofthead.mycollab.form.view.builder.type.DynaForm;
 import com.esofthead.mycollab.form.view.builder.type.DynaSection;
 import com.esofthead.mycollab.form.view.builder.type.DynaSection.LayoutType;
+import com.esofthead.mycollab.vaadin.AppContext;
 
 public class LeadDefaultDynaFormLayoutFactory {
 	public static final DynaForm defaultForm;

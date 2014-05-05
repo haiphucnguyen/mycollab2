@@ -45,7 +45,6 @@ import com.esofthead.mycollab.core.db.query.SearchFieldInfo;
 import com.esofthead.mycollab.core.db.query.StringListParam;
 import com.esofthead.mycollab.core.db.query.StringParam;
 import com.esofthead.mycollab.core.utils.JsonDeSerializer;
-import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.vaadin.data.Property.ValueChangeEvent;

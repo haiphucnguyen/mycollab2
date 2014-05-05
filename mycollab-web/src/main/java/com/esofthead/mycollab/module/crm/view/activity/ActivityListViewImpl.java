@@ -18,7 +18,6 @@ package com.esofthead.mycollab.module.crm.view.activity;
 
 import java.util.Arrays;
 
-import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.module.crm.domain.SimpleActivity;
 import com.esofthead.mycollab.module.crm.domain.criteria.ActivitySearchCriteria;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;

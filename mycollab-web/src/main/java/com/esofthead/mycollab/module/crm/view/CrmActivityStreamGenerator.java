@@ -18,10 +18,10 @@ package com.esofthead.mycollab.module.crm.view;
 
 import com.esofthead.mycollab.common.domain.SimpleActivityStream;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
-import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.utils.AuditLogShowHandler;
+import com.esofthead.mycollab.vaadin.AppContext;
 
 /**
  * 

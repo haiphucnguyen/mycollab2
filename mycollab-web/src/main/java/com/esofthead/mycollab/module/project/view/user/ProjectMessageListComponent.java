@@ -19,7 +19,6 @@ package com.esofthead.mycollab.module.project.view.user;
 import com.esofthead.mycollab.common.GenericLinkUtils;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
-import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
 import com.esofthead.mycollab.module.project.domain.SimpleMessage;
@@ -27,6 +26,7 @@ import com.esofthead.mycollab.module.project.domain.criteria.MessageSearchCriter
 import com.esofthead.mycollab.module.project.localization.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.service.MessageService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.DefaultBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;

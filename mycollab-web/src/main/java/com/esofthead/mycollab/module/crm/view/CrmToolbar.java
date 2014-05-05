@@ -20,7 +20,6 @@ import java.util.Iterator;
 
 import org.vaadin.hene.popupbutton.PopupButton;
 
-import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.eventmanager.ApplicationEvent;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBus;

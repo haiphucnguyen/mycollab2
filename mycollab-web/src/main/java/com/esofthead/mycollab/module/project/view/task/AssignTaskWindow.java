@@ -23,7 +23,6 @@ import com.esofthead.mycollab.common.CommentType;
 import com.esofthead.mycollab.common.domain.Comment;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.common.service.CommentService;
-import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.Task;

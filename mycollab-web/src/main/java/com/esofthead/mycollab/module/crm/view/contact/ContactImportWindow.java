@@ -21,7 +21,6 @@ import java.util.List;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
-import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.iexporter.CSVObjectEntityConverter.FieldMapperDef;
 import com.esofthead.mycollab.iexporter.csv.CSVBooleanFormatter;
@@ -33,6 +32,7 @@ import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.crm.service.ContactService;
 import com.esofthead.mycollab.module.crm.ui.components.EntityImportWindow;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
 
 /**
  * 

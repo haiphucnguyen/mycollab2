@@ -16,8 +16,8 @@
  */
 package com.esofthead.mycollab.module.project.view.bug;
 
-import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.module.project.localization.BugI18nEnum;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 

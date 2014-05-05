@@ -19,7 +19,6 @@ package com.esofthead.mycollab.module.crm.view.activity;
 
 import java.util.Arrays;
 
-import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.eventmanager.ApplicationEvent;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBus;

@@ -27,7 +27,6 @@ import com.esofthead.mycollab.common.domain.CustomViewStore;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.common.service.CustomViewStoreService;
 import com.esofthead.mycollab.core.utils.JsonDeSerializer;
-import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;

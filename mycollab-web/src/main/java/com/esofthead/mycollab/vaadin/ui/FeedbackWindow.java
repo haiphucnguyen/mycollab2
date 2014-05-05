@@ -27,7 +27,6 @@ import com.esofthead.mycollab.common.domain.MailRecipientField;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.utils.EmailValidator;
-import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.module.mail.EmailAttachementSource;
 import com.esofthead.mycollab.module.mail.FileEmailAttachmentSource;
 import com.esofthead.mycollab.module.mail.service.ExtMailService;

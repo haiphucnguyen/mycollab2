@@ -17,7 +17,6 @@
 package com.esofthead.mycollab.module.crm.view.activity;
 
 import com.esofthead.mycollab.core.utils.ClassUtils;
-import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
 import com.esofthead.mycollab.module.crm.view.CrmToolbar;
@@ -25,6 +24,7 @@ import com.esofthead.mycollab.module.crm.view.parameters.ActivityScreenData;
 import com.esofthead.mycollab.module.crm.view.parameters.AssignmentScreenData;
 import com.esofthead.mycollab.module.crm.view.parameters.CallScreenData;
 import com.esofthead.mycollab.module.crm.view.parameters.MeetingScreenData;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;

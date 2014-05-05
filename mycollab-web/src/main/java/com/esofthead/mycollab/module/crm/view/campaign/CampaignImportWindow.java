@@ -20,7 +20,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
-import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.iexporter.CSVObjectEntityConverter.FieldMapperDef;
 import com.esofthead.mycollab.iexporter.csv.CSVDateFormatter;
@@ -30,6 +29,7 @@ import com.esofthead.mycollab.module.crm.events.CampaignEvent;
 import com.esofthead.mycollab.module.crm.service.CampaignService;
 import com.esofthead.mycollab.module.crm.ui.components.EntityImportWindow;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
 
 public class CampaignImportWindow extends EntityImportWindow<SimpleCampaign> {
 	private static final long serialVersionUID = 1L;

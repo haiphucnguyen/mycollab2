@@ -16,8 +16,8 @@
  */
 package com.esofthead.mycollab.module.crm.view.opportunity;
 
-import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.module.crm.localization.OpportunityI18nEnum;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 

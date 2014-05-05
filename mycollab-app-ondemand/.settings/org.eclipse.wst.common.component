@@ -451,16 +451,16 @@
     <dependent-module archiveName="mycollab-ui.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mycollab-ui/mycollab-ui">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="vaadin-server-7.1.14.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/vaadin/vaadin-server/7.1.14/vaadin-server-7.1.14.jar">
+    <dependent-module archiveName="vaadin-server-7.1.15.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/vaadin/vaadin-server/7.1.15/vaadin-server-7.1.15.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="vaadin-shared-7.1.14.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/vaadin/vaadin-shared/7.1.14/vaadin-shared-7.1.14.jar">
+    <dependent-module archiveName="vaadin-shared-7.1.15.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/vaadin/vaadin-shared/7.1.15/vaadin-shared-7.1.15.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="vaadin-shared-deps-1.0.2.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/vaadin/vaadin-shared-deps/1.0.2/vaadin-shared-deps-1.0.2.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="vaadin-theme-compiler-7.1.14.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/vaadin/vaadin-theme-compiler/7.1.14/vaadin-theme-compiler-7.1.14.jar">
+    <dependent-module archiveName="vaadin-theme-compiler-7.1.15.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/vaadin/vaadin-theme-compiler/7.1.15/vaadin-theme-compiler-7.1.15.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="commons-jexl-2.1.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/apache/commons/commons-jexl/2.1.1/commons-jexl-2.1.1.jar">
@@ -478,7 +478,7 @@
     <dependent-module archiveName="vaadin-touchkit-agpl-4.0.0.alpha2.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/vaadin/addon/vaadin-touchkit-agpl/4.0.0.alpha2/vaadin-touchkit-agpl-4.0.0.alpha2.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="vaadin-client-7.1.14.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/vaadin/vaadin-client/7.1.14/vaadin-client-7.1.14.jar">
+    <dependent-module archiveName="vaadin-client-7.1.15.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/vaadin/vaadin-client/7.1.15/vaadin-client-7.1.15.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="validation-api-1.0.0.GA-sources.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/javax/validation/validation-api/1.0.0.GA/validation-api-1.0.0.GA-sources.jar">
@@ -532,7 +532,7 @@
     <dependent-module archiveName="stylecalendar-2.1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/vaadin/addons/stylecalendar/2.1.0/stylecalendar-2.1.0.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="easyuploads-7.0.2-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/vaadin/addon/easyuploads/7.0.2-SNAPSHOT/easyuploads-7.0.2-SNAPSHOT.jar">
+    <dependent-module archiveName="easyuploads-7.0.3-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/vaadin/addon/easyuploads/7.0.3-SNAPSHOT/easyuploads-7.0.3-SNAPSHOT.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="contextmenu-4.4.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/vaadin/addons/contextmenu/4.4.0/contextmenu-4.4.0.jar">

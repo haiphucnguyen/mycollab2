@@ -22,7 +22,6 @@ import java.util.Collection;
 import java.util.List;
 
 import com.esofthead.mycollab.core.persistence.service.ISearchableService;
-import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.module.project.domain.ProjectRole;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectRole;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectRoleSearchCriteria;

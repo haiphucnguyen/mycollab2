@@ -16,7 +16,6 @@
  */
 package com.esofthead.mycollab.module.crm.view.setting;
 
-import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.module.crm.domain.CrmNotificationSetting;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.crm.service.CrmNotificationSettingService;

@@ -36,7 +36,6 @@ import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.persistence.service.ICrudService;
-import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.iexporter.CSVImportEntityProcess;
 import com.esofthead.mycollab.iexporter.CSVObjectEntityConverter.FieldMapperDef;

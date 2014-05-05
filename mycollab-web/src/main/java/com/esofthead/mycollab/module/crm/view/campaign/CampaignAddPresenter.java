@@ -21,7 +21,6 @@ import java.util.GregorianCalendar;
 
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
-import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.crm.domain.CampaignLead;
 import com.esofthead.mycollab.module.crm.domain.CampaignWithBLOBs;

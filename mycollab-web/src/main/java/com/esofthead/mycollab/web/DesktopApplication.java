@@ -32,7 +32,6 @@ import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.DeploymentMode;
 import com.esofthead.mycollab.core.SecurityException;
 import com.esofthead.mycollab.core.UserInvalidInputException;
-import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.billing.SubDomainNotExistException;
 import com.esofthead.mycollab.module.billing.UsageExceedBillingPlanException;

@@ -26,7 +26,6 @@ import com.esofthead.mycollab.common.domain.Comment;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.common.service.CommentService;
 import com.esofthead.mycollab.common.ui.components.ReloadableComponent;
-import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.module.file.AttachmentUtils;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;

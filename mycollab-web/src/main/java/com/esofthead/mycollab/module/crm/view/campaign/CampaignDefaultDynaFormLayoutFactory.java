@@ -17,16 +17,16 @@
 package com.esofthead.mycollab.module.crm.view.campaign;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
-import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.form.view.builder.CurrencyDynaFieldBuilder;
 import com.esofthead.mycollab.form.view.builder.DateDynaFieldBuilder;
 import com.esofthead.mycollab.form.view.builder.DynaSectionBuilder;
 import com.esofthead.mycollab.form.view.builder.NumberDynaFieldBuilder;
-import com.esofthead.mycollab.form.view.builder.TextDynaFieldBuilder;
 import com.esofthead.mycollab.form.view.builder.TextAreaDynaFieldBuilder;
+import com.esofthead.mycollab.form.view.builder.TextDynaFieldBuilder;
 import com.esofthead.mycollab.form.view.builder.type.DynaForm;
 import com.esofthead.mycollab.form.view.builder.type.DynaSection;
 import com.esofthead.mycollab.form.view.builder.type.DynaSection.LayoutType;
+import com.esofthead.mycollab.vaadin.AppContext;
 
 /**
  * 

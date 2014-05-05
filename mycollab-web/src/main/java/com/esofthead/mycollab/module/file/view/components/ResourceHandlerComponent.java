@@ -34,7 +34,6 @@ import org.vaadin.peter.buttongroup.ButtonGroup;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.MyCollabException;
-import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.module.ecm.ResourceUtils;
 import com.esofthead.mycollab.module.ecm.StorageNames;
 import com.esofthead.mycollab.module.ecm.domain.Content;

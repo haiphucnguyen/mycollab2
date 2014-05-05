@@ -23,7 +23,6 @@ import com.esofthead.mycollab.common.service.MonitorItemService;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
-import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.project.events.FollowingTicketEvent;
 import com.esofthead.mycollab.module.project.events.TimeTrackingEvent;

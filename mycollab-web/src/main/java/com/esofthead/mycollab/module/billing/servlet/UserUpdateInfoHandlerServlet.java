@@ -31,7 +31,6 @@ import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.configuration.PasswordEncryptHelper;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.UserInvalidInputException;
-import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
 import com.esofthead.mycollab.module.user.dao.UserMapper;
 import com.esofthead.mycollab.module.user.domain.User;
@@ -40,6 +39,7 @@ import com.esofthead.mycollab.servlet.GenericServletRequestHandler;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.utils.InvalidPasswordException;
 import com.esofthead.mycollab.utils.PasswordCheckerUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
 
 /**
  * 
