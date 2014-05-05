@@ -165,7 +165,7 @@ public abstract class EntityImportWindow<E> extends Window {
 									UI.getCurrent(),
 									"Message information",
 									"You choose a vcf file. This step will import to database. Do you want to do it?",
-									"Import", "Cancel",
+									"Import", LocalizationHelper.getMessage(GenericI18Enum.BUTTON_CANCEL_LABEL),
 									new ConfirmDialog.Listener() {
 										private static final long serialVersionUID = 1L;
 
@@ -275,7 +275,7 @@ public abstract class EntityImportWindow<E> extends Window {
 			UiUtils.addComponent(controlGroupBtn, nextBtn,
 					Alignment.MIDDLE_CENTER);
 
-			Button cancelBtn = new Button("Cancel");
+			Button cancelBtn = new Button(LocalizationHelper.getMessage(GenericI18Enum.BUTTON_CANCEL_LABEL));
 			cancelBtn.addClickListener(new ClickListener() {
 				private static final long serialVersionUID = 1L;
 
@@ -541,7 +541,7 @@ public abstract class EntityImportWindow<E> extends Window {
 			UiUtils.addComponent(columnMappingCrmLayout, controlGroupBtn,
 					Alignment.MIDDLE_CENTER);
 
-			Button saveBtn = new Button("Save", new ClickListener() {
+			Button saveBtn = new Button(LocalizationHelper.getMessage(GenericI18Enum.BUTTON_SAVE_LABEL), new ClickListener() {
 				private static final long serialVersionUID = 1L;
 
 				@Override

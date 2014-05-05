@@ -139,7 +139,7 @@ public class ProjectMemberInviteViewImpl extends AbstractPageView implements
 		inviteBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 		controlButtons.addComponent(inviteBtn);
 
-		Button cancelBtn = new Button("Cancel", new Button.ClickListener() {
+		Button cancelBtn = new Button(LocalizationHelper.getMessage(GenericI18Enum.BUTTON_CANCEL_LABEL), new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override

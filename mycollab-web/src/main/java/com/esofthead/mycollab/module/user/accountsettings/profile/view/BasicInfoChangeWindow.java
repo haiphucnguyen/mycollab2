@@ -18,6 +18,8 @@ package com.esofthead.mycollab.module.user.accountsettings.profile.view;
 
 import static com.esofthead.mycollab.vaadin.MyCollabSession.USER_TIMEZONE;
 
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.core.utils.TimezoneMapper;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.user.accountsettings.view.events.ProfileEvent;
@@ -111,7 +113,9 @@ public class BasicInfoChangeWindow extends Window {
 		final HorizontalLayout hlayoutControls = new HorizontalLayout();
 		hlayoutControls.setSpacing(true);
 		hlayoutControls.setMargin(new MarginInfo(false, true, false, true));
-		final Button cancelBtn = new Button("Cancel",
+		final Button cancelBtn = new Button(
+				LocalizationHelper
+						.getMessage(GenericI18Enum.BUTTON_CANCEL_LABEL),
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
@@ -126,7 +130,7 @@ public class BasicInfoChangeWindow extends Window {
 		hlayoutControls.setComponentAlignment(cancelBtn,
 				Alignment.MIDDLE_CENTER);
 
-		final Button saveBtn = new Button("Save", new Button.ClickListener() {
+		final Button saveBtn = new Button(LocalizationHelper.getMessage(GenericI18Enum.BUTTON_SAVE_LABEL), new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override

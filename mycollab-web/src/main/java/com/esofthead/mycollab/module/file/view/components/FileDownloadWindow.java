@@ -19,6 +19,8 @@ package com.esofthead.mycollab.module.file.view.components;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.ecm.ResourceUtils;
 import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.module.ecm.domain.Resource;
@@ -115,7 +117,9 @@ public class FileDownloadWindow extends Window {
 		UiUtils.addComponent(buttonControls, downloadBtn,
 				Alignment.MIDDLE_CENTER);
 
-		final Button cancel = new Button("Cancel", new ClickListener() {
+		final Button cancel = new Button(
+				LocalizationHelper
+						.getMessage(GenericI18Enum.BUTTON_CANCEL_LABEL), new ClickListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override

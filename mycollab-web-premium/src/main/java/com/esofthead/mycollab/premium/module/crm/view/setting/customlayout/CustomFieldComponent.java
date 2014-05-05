@@ -18,6 +18,8 @@ package com.esofthead.mycollab.premium.module.crm.view.setting.customlayout;
 
 import org.vaadin.hene.popupbutton.PopupButton;
 
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.form.view.builder.type.AbstractDynaField;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -94,7 +96,8 @@ public class CustomFieldComponent extends CssLayout {
 				field.isRequired());
 		panelContentLayout.addComponent(isRequired);
 
-		Button saveBtn = new Button("Save", new Button.ClickListener() {
+		Button saveBtn = new Button(
+				LocalizationHelper.getMessage(GenericI18Enum.BUTTON_SAVE_LABEL), new Button.ClickListener() {
 
 			private static final long serialVersionUID = 1L;
 

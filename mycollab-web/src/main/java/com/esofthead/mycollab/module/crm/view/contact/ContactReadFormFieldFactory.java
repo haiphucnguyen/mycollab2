@@ -22,7 +22,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.module.crm.data.CrmLinkBuilder;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -90,9 +92,9 @@ public class ContactReadFormFieldFactory extends
 		} else if (propertyId.equals("iscallable")) {
 			if (attachForm.getBean().getIscallable() == null
 					|| Boolean.FALSE == attachForm.getBean().getIscallable()) {
-				return new FormViewField("No");
+				return new FormViewField(LocalizationHelper.getMessage(GenericI18Enum.BUTTON_NO_LABEL));
 			} else {
-				return new FormViewField("Yes");
+				return new FormViewField(LocalizationHelper.getMessage(GenericI18Enum.BUTTON_YES_LABEL));
 			}
 		} else if (propertyId.equals("birthday")) {
 			return new FormViewField(AppContext.formatDate(attachForm.getBean()

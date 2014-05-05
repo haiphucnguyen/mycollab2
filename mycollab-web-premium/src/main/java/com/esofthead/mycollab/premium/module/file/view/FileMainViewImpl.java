@@ -943,7 +943,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 				folderNameTextField.setValue(drive.getFoldername());
 				layout.addComponent(folderNameTextField);
 
-				Button saveBtn = new Button("Save", new ClickListener() {
+				Button saveBtn = new Button(LocalizationHelper.getMessage(GenericI18Enum.BUTTON_SAVE_LABEL), new ClickListener() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
@@ -1000,7 +1000,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 				saveBtn.setIcon(MyCollabResource.newResource("icons/16/save.png"));
 				layout.addComponent(saveBtn);
 
-				Button cancelBtn = new Button("Cancel", new ClickListener() {
+				Button cancelBtn = new Button(LocalizationHelper.getMessage(GenericI18Enum.BUTTON_CANCEL_LABEL), new ClickListener() {
 					private static final long serialVersionUID = 1L;
 
 					@Override

@@ -110,7 +110,7 @@ public class AssignTaskWindow extends Window {
 				controlsBtn.setMargin(new MarginInfo(true, true, true, false));
 				layout.addComponent(controlsBtn);
 
-				Button cancelBtn = new Button("Cancel",
+				Button cancelBtn = new Button(LocalizationHelper.getMessage(GenericI18Enum.BUTTON_CANCEL_LABEL),
 						new Button.ClickListener() {
 							private static final long serialVersionUID = 1L;
 

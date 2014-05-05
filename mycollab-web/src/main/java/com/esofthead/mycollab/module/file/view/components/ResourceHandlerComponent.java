@@ -973,7 +973,7 @@ public class ResourceHandlerComponent extends VerticalLayout {
 
 			final HorizontalLayout controlButton = new HorizontalLayout();
 			controlButton.setSpacing(true);
-			final Button save = new Button("Save", new ClickListener() {
+			final Button save = new Button(LocalizationHelper.getMessage(GenericI18Enum.BUTTON_SAVE_LABEL), new ClickListener() {
 				private static final long serialVersionUID = 1L;
 
 				@Override
@@ -1036,7 +1036,7 @@ public class ResourceHandlerComponent extends VerticalLayout {
 
 			UiUtils.addComponent(controlButton, save, Alignment.MIDDLE_CENTER);
 
-			final Button cancel = new Button("Cancel", new ClickListener() {
+			final Button cancel = new Button(LocalizationHelper.getMessage(GenericI18Enum.BUTTON_CANCEL_LABEL), new ClickListener() {
 				private static final long serialVersionUID = 1L;
 
 				@Override

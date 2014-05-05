@@ -116,7 +116,7 @@ public class ReOpenWindow extends Window {
 				controlsBtn.setMargin(new MarginInfo(true, true, true, false));
 				layout.addComponent(controlsBtn);
 
-				final Button cancelBtn = new Button("Cancel",
+				final Button cancelBtn = new Button(LocalizationHelper.getMessage(GenericI18Enum.BUTTON_CANCEL_LABEL),
 						new Button.ClickListener() {
 							@Override
 							public void buttonClick(
