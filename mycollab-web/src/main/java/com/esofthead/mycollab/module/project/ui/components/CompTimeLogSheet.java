@@ -24,7 +24,7 @@ import org.vaadin.dialogs.ConfirmDialog;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.arguments.ValuedBean;
-import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.SimpleItemTimeLogging;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
@@ -290,8 +290,8 @@ public abstract class CompTimeLogSheet<V extends ValuedBean> extends
 													UI.getCurrent(),
 													"Please Confirm:",
 													"Are you sure to delete this entry?",
-													LocalizationHelper.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
-													LocalizationHelper.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
+													AppContext.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
+													AppContext.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
 													new ConfirmDialog.Listener() {
 														private static final long serialVersionUID = 1L;
 

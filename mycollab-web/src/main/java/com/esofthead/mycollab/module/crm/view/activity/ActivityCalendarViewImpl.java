@@ -27,7 +27,7 @@ import org.vaadin.peter.buttongroup.ButtonGroup;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
-import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.MeetingWithBLOBs;
@@ -834,7 +834,7 @@ public class ActivityCalendarViewImpl extends AbstractPageView implements
 
 					layout.setSpacing(true);
 					layout.setStyleName("addNewControl");
-					Button saveBtn = new Button(LocalizationHelper.getMessage(GenericI18Enum.BUTTON_SAVE_LABEL),
+					Button saveBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SAVE_LABEL),
 							new Button.ClickListener() {
 								private static final long serialVersionUID = 1L;
 
@@ -860,7 +860,7 @@ public class ActivityCalendarViewImpl extends AbstractPageView implements
 					layout.setComponentAlignment(saveBtn,
 							Alignment.MIDDLE_CENTER);
 					Button cancelBtn = new Button(
-							LocalizationHelper
+							AppContext
 									.getMessage(GenericI18Enum.BUTTON_CANCEL_LABEL),
 							new ClickListener() {
 								private static final long serialVersionUID = 1L;

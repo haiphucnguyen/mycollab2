@@ -20,7 +20,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
-import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.iexporter.CSVObjectEntityConverter.FieldMapperDef;
 import com.esofthead.mycollab.module.crm.domain.Account;
@@ -52,7 +52,7 @@ public class AccountImportWindow extends EntityImportWindow<Account> {
 				new FieldMapperDef("website", "Website"),
 				new FieldMapperDef(
 						"phoneoffice",
-						LocalizationHelper
+						AppContext
 								.getMessage(CrmCommonI18nEnum.FORM_PHONE_OFFICE_FIELD)),
 				new FieldMapperDef("fax", "Fax"),
 				new FieldMapperDef("alternatephone", "Alternate Phone"),
@@ -69,7 +69,7 @@ public class AccountImportWindow extends EntityImportWindow<Account> {
 				new FieldMapperDef("shippingstate", "Shipping State"),
 				new FieldMapperDef("numemployees", "Number Employees"),
 				new FieldMapperDef("assignuser",
-						LocalizationHelper
+						AppContext
 								.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD)),
 				new FieldMapperDef("type", "Type"),
 				new FieldMapperDef("industry", "Industry"),

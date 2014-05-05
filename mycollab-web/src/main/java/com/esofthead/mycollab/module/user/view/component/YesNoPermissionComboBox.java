@@ -17,7 +17,7 @@
 package com.esofthead.mycollab.module.user.view.component;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
-import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.security.BooleanPermissionFlag;
 import com.esofthead.mycollab.vaadin.ui.KeyCaptionComboBox;
 
@@ -33,7 +33,7 @@ public class YesNoPermissionComboBox extends KeyCaptionComboBox {
 	public YesNoPermissionComboBox() {
 		super(false);
 
-		this.addItem(BooleanPermissionFlag.TRUE, LocalizationHelper.getMessage(GenericI18Enum.BUTTON_YES_LABEL));
-		this.addItem(BooleanPermissionFlag.FALSE, LocalizationHelper.getMessage(GenericI18Enum.BUTTON_NO_LABEL));
+		this.addItem(BooleanPermissionFlag.TRUE, AppContext.getMessage(GenericI18Enum.BUTTON_YES_LABEL));
+		this.addItem(BooleanPermissionFlag.FALSE, AppContext.getMessage(GenericI18Enum.BUTTON_NO_LABEL));
 	}
 }

@@ -20,7 +20,7 @@ package com.esofthead.mycollab.module.project.view.milestone;
 import com.esofthead.mycollab.common.CommentType;
 import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
-import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectResources;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
@@ -182,7 +182,7 @@ public class MilestoneReadViewImpl extends
 			} else if (propertyId.equals("enddate")) {
 				this.informationLayout.addComponent(field, "End Date", 0, 1);
 			} else if (propertyId.equals("owner")) {
-				this.informationLayout.addComponent(field, LocalizationHelper
+				this.informationLayout.addComponent(field, AppContext
 						.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD), 1, 0);
 			} else if (propertyId.equals("status")) {
 				this.informationLayout.addComponent(field, "Status", 1, 1);

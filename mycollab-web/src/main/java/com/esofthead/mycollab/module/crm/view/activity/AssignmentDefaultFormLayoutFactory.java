@@ -17,7 +17,7 @@
 package com.esofthead.mycollab.module.crm.view.activity;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
-import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.form.view.builder.DateDynaFieldBuilder;
 import com.esofthead.mycollab.form.view.builder.DynaSectionBuilder;
 import com.esofthead.mycollab.form.view.builder.TextDynaFieldBuilder;
@@ -68,7 +68,7 @@ public class AssignmentDefaultFormLayoutFactory {
 				.addField(new TextDynaFieldBuilder()
 						.fieldName("assignuser")
 						.displayName(
-								LocalizationHelper
+								AppContext
 										.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD))
 						.fieldIndex(7).build());
 

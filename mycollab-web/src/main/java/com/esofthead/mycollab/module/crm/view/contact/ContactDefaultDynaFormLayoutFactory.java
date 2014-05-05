@@ -17,7 +17,7 @@
 package com.esofthead.mycollab.module.crm.view.contact;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
-import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.form.view.builder.BooleanDynaFieldBuilder;
 import com.esofthead.mycollab.form.view.builder.DynaSectionBuilder;
 import com.esofthead.mycollab.form.view.builder.EmailDynaFieldBuilder;
@@ -52,7 +52,7 @@ public class ContactDefaultDynaFormLayoutFactory {
 				.addField(new PhoneDynaFieldBuilder()
 						.fieldName("officephone")
 						.displayName(
-								LocalizationHelper
+								AppContext
 										.getMessage(CrmCommonI18nEnum.FORM_PHONE_OFFICE_FIELD))
 						.fieldIndex(1).build());
 
@@ -108,7 +108,7 @@ public class ContactDefaultDynaFormLayoutFactory {
 				.addField(new TextDynaFieldBuilder()
 						.fieldName("assignuser")
 						.displayName(
-								LocalizationHelper
+								AppContext
 										.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD))
 						.fieldIndex(15).build());
 

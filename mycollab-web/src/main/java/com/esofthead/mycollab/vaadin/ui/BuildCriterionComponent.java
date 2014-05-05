@@ -45,7 +45,7 @@ import com.esofthead.mycollab.core.db.query.SearchFieldInfo;
 import com.esofthead.mycollab.core.db.query.StringListParam;
 import com.esofthead.mycollab.core.db.query.StringParam;
 import com.esofthead.mycollab.core.utils.JsonDeSerializer;
-import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.vaadin.data.Property.ValueChangeEvent;
@@ -173,7 +173,7 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends
 		queryTextField.setWidth("125px");
 		filterBox.addComponent(queryTextField);
 
-		Button saveBtn = new Button(LocalizationHelper.getMessage(GenericI18Enum.BUTTON_SAVE_LABEL), new Button.ClickListener() {
+		Button saveBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SAVE_LABEL), new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -187,7 +187,7 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends
 		filterBox.addComponent(saveBtn);
 
 		Button cancelBtn = new Button(
-				LocalizationHelper
+				AppContext
 						.getMessage(GenericI18Enum.BUTTON_CANCEL_LABEL), new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 

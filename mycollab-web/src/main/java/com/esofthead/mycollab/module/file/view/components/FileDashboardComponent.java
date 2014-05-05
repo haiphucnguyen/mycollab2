@@ -18,7 +18,7 @@ package com.esofthead.mycollab.module.file.view.components;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
-import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.module.ecm.domain.Folder;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
 import com.esofthead.mycollab.module.file.domain.criteria.FileSearchCriteria;
@@ -213,7 +213,7 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 				});
 				UiUtils.addComponent(basicSearchBody, searchBtn,
 						Alignment.MIDDLE_LEFT);
-				final Button cancelBtn = new Button(LocalizationHelper
+				final Button cancelBtn = new Button(AppContext
 						.getMessage(GenericI18Enum.BUTTON_CLEAR));
 
 

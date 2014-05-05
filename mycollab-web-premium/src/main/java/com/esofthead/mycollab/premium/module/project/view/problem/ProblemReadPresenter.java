@@ -6,7 +6,7 @@ import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
-import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
@@ -56,14 +56,14 @@ public class ProblemReadPresenter extends AbstractPresenter<ProblemReadView> {
 					public void onDelete(final SimpleProblem data) {
 						ConfirmDialogExt.show(
 								UI.getCurrent(),
-								LocalizationHelper.getMessage(
+								AppContext.getMessage(
 										GenericI18Enum.DELETE_DIALOG_TITLE,
 										SiteConfiguration.getSiteName()),
-								LocalizationHelper
+								AppContext
 										.getMessage(GenericI18Enum.CONFIRM_DELETE_RECORD_DIALOG_MESSAGE),
-								LocalizationHelper
+								AppContext
 										.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
-								LocalizationHelper
+								AppContext
 										.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
 								new ConfirmDialog.Listener() {
 									private static final long serialVersionUID = 1L;

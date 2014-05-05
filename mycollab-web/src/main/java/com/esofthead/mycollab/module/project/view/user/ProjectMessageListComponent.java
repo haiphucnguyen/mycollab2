@@ -19,7 +19,7 @@ package com.esofthead.mycollab.module.project.view.user;
 import com.esofthead.mycollab.common.GenericLinkUtils;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
-import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
 import com.esofthead.mycollab.module.project.domain.SimpleMessage;
@@ -61,7 +61,7 @@ public class ProjectMessageListComponent extends Depot {
 			final CssLayout header = new CssLayout();
 			header.setStyleName("stream-content");
 
-			final String content = LocalizationHelper.getMessage(
+			final String content = AppContext.getMessage(
 					ProjectCommonI18nEnum.FEED_PROJECT_MESSAGE_TITLE,
 					UserAvatarControlFactory.getAvatarLink(
 							message.getPostedUserAvatarId(), 16),

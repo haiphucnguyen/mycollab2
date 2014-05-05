@@ -12,7 +12,7 @@ import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
-import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.module.ecm.ResourceUtils;
 import com.esofthead.mycollab.module.ecm.StorageNames;
 import com.esofthead.mycollab.module.ecm.domain.Content;
@@ -663,7 +663,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 				UiUtils.addComponent(basicSearchBody, searchBtn,
 						Alignment.MIDDLE_LEFT);
 				
-				final Button cancelBtn = new Button(LocalizationHelper
+				final Button cancelBtn = new Button(AppContext
 						.getMessage(GenericI18Enum.BUTTON_CLEAR));
 			
 				cancelBtn.addClickListener(new Button.ClickListener() {
@@ -847,16 +847,16 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 									try {
 										ConfirmDialogExt.show(
 												UI.getCurrent(),
-												LocalizationHelper
+												AppContext
 														.getMessage(
 																GenericI18Enum.DELETE_DIALOG_TITLE,
 																SiteConfiguration
 																		.getSiteName()),
-												LocalizationHelper
+												AppContext
 														.getMessage(GenericI18Enum.DELETE_SINGLE_ITEM_DIALOG_MESSAGE),
-												LocalizationHelper
+												AppContext
 														.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
-												LocalizationHelper
+												AppContext
 														.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
 												new ConfirmDialog.Listener() {
 													private static final long serialVersionUID = 1L;
@@ -943,7 +943,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 				folderNameTextField.setValue(drive.getFoldername());
 				layout.addComponent(folderNameTextField);
 
-				Button saveBtn = new Button(LocalizationHelper.getMessage(GenericI18Enum.BUTTON_SAVE_LABEL), new ClickListener() {
+				Button saveBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SAVE_LABEL), new ClickListener() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
@@ -1000,7 +1000,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 				saveBtn.setIcon(MyCollabResource.newResource("icons/16/save.png"));
 				layout.addComponent(saveBtn);
 
-				Button cancelBtn = new Button(LocalizationHelper.getMessage(GenericI18Enum.BUTTON_CANCEL_LABEL), new ClickListener() {
+				Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL_LABEL), new ClickListener() {
 					private static final long serialVersionUID = 1L;
 
 					@Override

@@ -21,7 +21,7 @@ import java.util.List;
 import com.esofthead.mycollab.common.domain.GroupItem;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
-import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.project.events.BugEvent;
@@ -51,7 +51,7 @@ public class UnresolvedBugsByAssigneeWidget2 extends Depot {
 	private BugSearchCriteria bugSearchCriteria;
 
 	public UnresolvedBugsByAssigneeWidget2() {
-		super(LocalizationHelper
+		super(AppContext
 				.getMessage(BugI18nEnum.UNRESOLVED_BY_ASSIGNEE_WIDGET_TITLE),
 				new VerticalLayout());
 		this.setContentBorder(true);

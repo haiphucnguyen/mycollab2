@@ -22,7 +22,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
-import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.module.ecm.domain.ExternalDrive;
 import com.esofthead.mycollab.module.ecm.domain.ExternalFolder;
 import com.esofthead.mycollab.module.ecm.domain.Folder;
@@ -331,7 +331,7 @@ public abstract class AbstractResourceMovingWindow extends Window {
 		moveBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
 		controlGroupBtnLayout.addComponent(moveBtn);
 		Button cancelBtn = new Button(
-				LocalizationHelper
+				AppContext
 						.getMessage(GenericI18Enum.BUTTON_CANCEL_LABEL), new ClickListener() {
 			private static final long serialVersionUID = 1L;
 

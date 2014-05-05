@@ -21,7 +21,7 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
-import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
@@ -89,7 +89,7 @@ GenericSearchPanel<VersionSearchCriteria> {
 		layout.setExpandRatio(versionTitle, 1.0f);
 
 		final Button createBtn = new Button(
-				LocalizationHelper.getMessage(BugI18nEnum.NEW_VERSION_ACTION),
+				AppContext.getMessage(BugI18nEnum.NEW_VERSION_ACTION),
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 

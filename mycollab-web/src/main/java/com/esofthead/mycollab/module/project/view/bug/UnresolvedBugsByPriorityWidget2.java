@@ -20,7 +20,7 @@ import java.util.List;
 
 import com.esofthead.mycollab.common.domain.GroupItem;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
-import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.project.ProjectDataTypeFactory;
 import com.esofthead.mycollab.module.project.ProjectResources;
@@ -52,7 +52,7 @@ public class UnresolvedBugsByPriorityWidget2 extends Depot {
 	private BugSearchCriteria bugSearchCriteria;
 
 	public UnresolvedBugsByPriorityWidget2() {
-		super(LocalizationHelper
+		super(AppContext
 				.getMessage(BugI18nEnum.UNRESOLVED_BY_PRIORITY_WIDGET_TITLE),
 				new VerticalLayout());
 		this.setContentBorder(true);

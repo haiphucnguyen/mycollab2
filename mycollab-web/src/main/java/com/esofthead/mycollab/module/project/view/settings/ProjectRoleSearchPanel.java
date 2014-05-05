@@ -19,7 +19,7 @@ package com.esofthead.mycollab.module.project.view.settings;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchField;
-import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
@@ -144,7 +144,7 @@ GenericSearchPanel<ProjectRoleSearchCriteria> {
 			Label headerText = new Label("Role List");
 
 			final Button createBtn = new Button(
-					LocalizationHelper.getMessage(PeopleI18nEnum.NEW_ROLE_ACTION),
+					AppContext.getMessage(PeopleI18nEnum.NEW_ROLE_ACTION),
 					new Button.ClickListener() {
 						private static final long serialVersionUID = 1L;
 

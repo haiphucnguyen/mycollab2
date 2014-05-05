@@ -1,7 +1,7 @@
 package com.esofthead.mycollab.premium.module.project.view.risk;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
-import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.module.project.ui.components.ProjectMemberHistoryFieldFormat;
 import com.esofthead.mycollab.vaadin.ui.HistoryLogComponent;
 
@@ -21,7 +21,7 @@ public class RiskHistoryList extends HistoryLogComponent {
 		this.generateFieldDisplayHandler("description", "Description");
 		this.generateFieldDisplayHandler("raisedbyuser", "Raised by",
 				new ProjectMemberHistoryFieldFormat());
-		this.generateFieldDisplayHandler("assigntouser", LocalizationHelper
+		this.generateFieldDisplayHandler("assigntouser", AppContext
 				.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD),
 				new ProjectMemberHistoryFieldFormat());
 		this.generateFieldDisplayHandler("consequence", "Consequence");

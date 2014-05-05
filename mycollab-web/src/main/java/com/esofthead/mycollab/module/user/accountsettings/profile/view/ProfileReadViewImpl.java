@@ -22,7 +22,7 @@ import org.vaadin.easyuploads.UploadField.FieldType;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.utils.ImageUtil;
-import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.core.utils.TimezoneMapper;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.user.accountsettings.localization.UserI18nEnum;
@@ -105,7 +105,7 @@ public class ProfileReadViewImpl extends AbstractPageView implements
 		avatarAndPass.setWidth("100%");
 		avatarAndPass.addComponent(userAvatar);
 		final Button btnChangePassword = new Button(
-				LocalizationHelper
+				AppContext
 						.getMessage(UserI18nEnum.BUTTON_CHANGE_PASSWORD),
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
@@ -257,7 +257,7 @@ public class ProfileReadViewImpl extends AbstractPageView implements
 				layout.addComponent(basicInformationHeader);
 				layout.addComponent(this.basicInformation.getLayout());
 				final Button btnChangeBasicInfo = new Button(
-						LocalizationHelper
+						AppContext
 								.getMessage(GenericI18Enum.BUTTON_EDIT_LABEL),
 						new Button.ClickListener() {
 							private static final long serialVersionUID = 1L;
@@ -275,7 +275,7 @@ public class ProfileReadViewImpl extends AbstractPageView implements
 				layout.addComponent(contactInformationHeader);
 				layout.addComponent(this.contactInformation.getLayout());
 				final Button btnChangeContactInfo = new Button(
-						LocalizationHelper
+						AppContext
 								.getMessage(GenericI18Enum.BUTTON_EDIT_LABEL),
 						new Button.ClickListener() {
 							private static final long serialVersionUID = 1L;
@@ -293,7 +293,7 @@ public class ProfileReadViewImpl extends AbstractPageView implements
 				layout.addComponent(advanceInfoHeader);
 				layout.addComponent(this.advanceInformation.getLayout());
 				final Button btnChangeAdvanceInfo = new Button(
-						LocalizationHelper
+						AppContext
 								.getMessage(GenericI18Enum.BUTTON_EDIT_LABEL),
 						new Button.ClickListener() {
 							private static final long serialVersionUID = 1L;

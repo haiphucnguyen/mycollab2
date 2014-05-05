@@ -27,9 +27,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
-import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.eventmanager.ApplicationEvent;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.vaadin.mobilecomponent.MobileNavigationView;
 import com.vaadin.ui.ComponentContainer;
 
@@ -42,10 +42,10 @@ public abstract class AbstractMobilePageView extends MobileNavigationView implem
 	private static final long serialVersionUID = 1L;
 	
 	private static Logger log = LoggerFactory.getLogger(AbstractPageView.class);
-    public static String SAVE_ACTION = LocalizationHelper.getMessage(GenericI18Enum.BUTTON_SAVE_LABEL);
+    public static String SAVE_ACTION = AppContext.getMessage(GenericI18Enum.BUTTON_SAVE_LABEL);
     public static String SAVE_AND_NEW_ACTION = "Save & New";
     public static String EDIT_ACTION = "Edit";
-	public static String CANCEL_ACTION = LocalizationHelper
+	public static String CANCEL_ACTION = AppContext
 			.getMessage(GenericI18Enum.BUTTON_CANCEL_LABEL);
     public static String DELETE_ACTION = "Delete";
     public static String CLONE_ACTION = "Clone";

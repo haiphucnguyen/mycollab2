@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
-import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.module.ecm.ResourceUtils;
 import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.module.ecm.domain.Resource;
@@ -118,7 +118,7 @@ public class FileDownloadWindow extends Window {
 				Alignment.MIDDLE_CENTER);
 
 		final Button cancel = new Button(
-				LocalizationHelper
+				AppContext
 						.getMessage(GenericI18Enum.BUTTON_CANCEL_LABEL), new ClickListener() {
 			private static final long serialVersionUID = 1L;
 

@@ -36,7 +36,7 @@ import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.persistence.service.ICrudService;
-import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.iexporter.CSVImportEntityProcess;
 import com.esofthead.mycollab.iexporter.CSVObjectEntityConverter.FieldMapperDef;
@@ -153,7 +153,7 @@ public abstract class EntityImportWindow<E> extends Window {
 					try {
 						contentStream = uploadField.getContentAsStream();
 					} catch (Exception e) {
-						NotificationUtil.showWarningNotification(LocalizationHelper
+						NotificationUtil.showWarningNotification(AppContext
 								.getMessage(GenericI18Enum.NOT_ATTACH_FILE_WARNING));
 					}
 					if (contentStream != null) {
@@ -165,7 +165,7 @@ public abstract class EntityImportWindow<E> extends Window {
 									UI.getCurrent(),
 									"Message information",
 									"You choose a vcf file. This step will import to database. Do you want to do it?",
-									"Import", LocalizationHelper.getMessage(GenericI18Enum.BUTTON_CANCEL_LABEL),
+									"Import", AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL_LABEL),
 									new ConfirmDialog.Listener() {
 										private static final long serialVersionUID = 1L;
 
@@ -264,7 +264,7 @@ public abstract class EntityImportWindow<E> extends Window {
 							uploadFieldVerticalLayout.addComponent(uploadField,
 									uploadFieldIndex);
 
-							NotificationUtil.showWarningNotification(LocalizationHelper
+							NotificationUtil.showWarningNotification(AppContext
 									.getMessage(GenericI18Enum.CHOOSE_SUPPORT_FILE_TYPES_WARNING));
 
 						}
@@ -275,7 +275,7 @@ public abstract class EntityImportWindow<E> extends Window {
 			UiUtils.addComponent(controlGroupBtn, nextBtn,
 					Alignment.MIDDLE_CENTER);
 
-			Button cancelBtn = new Button(LocalizationHelper.getMessage(GenericI18Enum.BUTTON_CANCEL_LABEL));
+			Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL_LABEL));
 			cancelBtn.addClickListener(new ClickListener() {
 				private static final long serialVersionUID = 1L;
 
@@ -541,7 +541,7 @@ public abstract class EntityImportWindow<E> extends Window {
 			UiUtils.addComponent(columnMappingCrmLayout, controlGroupBtn,
 					Alignment.MIDDLE_CENTER);
 
-			Button saveBtn = new Button(LocalizationHelper.getMessage(GenericI18Enum.BUTTON_SAVE_LABEL), new ClickListener() {
+			Button saveBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SAVE_LABEL), new ClickListener() {
 				private static final long serialVersionUID = 1L;
 
 				@Override

@@ -17,7 +17,7 @@
 package com.esofthead.mycollab.module.crm.view.opportunity;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
-import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.form.view.builder.CurrencyDynaFieldBuilder;
 import com.esofthead.mycollab.form.view.builder.DateDynaFieldBuilder;
 import com.esofthead.mycollab.form.view.builder.DynaSectionBuilder;
@@ -84,7 +84,7 @@ public class OpportunityDefaultDynaFormLayoutFactory {
 				.addField(new TextDynaFieldBuilder()
 						.fieldName("assignuser")
 						.displayName(
-								LocalizationHelper
+								AppContext
 										.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD))
 						.fieldIndex(11).build());
 

@@ -30,7 +30,7 @@ import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.configuration.PasswordEncryptHelper;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.UserInvalidInputException;
-import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.service.UserService;
@@ -78,7 +78,7 @@ public class UserRecoveryPasswordActionHandlerServlet extends
 			userService.updateWithSession(simpleUser, username);
 		} catch (Exception e) {
 			log.error("Error with update userService", e);
-			errMsg = LocalizationHelper
+			errMsg = AppContext
 					.getMessage(GenericI18Enum.ERROR_USER_NOTICE_INFORMATION_MESSAGE);
 			throw new MyCollabException(errMsg);
 		}
