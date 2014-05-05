@@ -3720,6 +3720,9 @@ div.v-lazyloadingwrapper-loading {
 /* End Mail Panel */
 
 /* Progress Indicator */
+.v-progressbar {
+	width: 100%;
+}
 .v-progressbar-wrapper {
 	height: 18px;
 	background: none no-repeat 0 0 rgb(245, 245, 245);
