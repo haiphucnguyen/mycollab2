@@ -3246,7 +3246,9 @@ div.v-splitbutton,div.v-splitbutton .v-button {
 .message {
 	margin: 8px 0px;
 }
-
+.standup-block .user-name.v-button-link.v-button-wordWrap .v-button-wrap {
+	display: inline-block;
+}
 .message .user-name .v-button-caption, .standup-block .user-name .v-button-caption{
 	text-align: center;
 	display:inline-block;
