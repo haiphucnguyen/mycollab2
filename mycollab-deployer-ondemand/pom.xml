@@ -22,6 +22,7 @@
         <module>../mycollab-migration</module>
         <module>../mycollab-services</module>
         <module>../mycollab-services-premium</module>
+        <module>../mycollab-server-runner</module>
         <module>../mycollab-esb</module>
         <module>../mycollab-jetty-session-premium</module>
         <module>../mycollab-caching-premium</module>

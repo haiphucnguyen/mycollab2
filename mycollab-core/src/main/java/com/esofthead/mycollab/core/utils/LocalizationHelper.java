@@ -41,6 +41,9 @@ public class LocalizationHelper {
 	public static final String JAPANESE = "Japanese";
 	public static final String SPANISH = "Spanish";
 
+	public static final String[] SUPPORTED_LANGUAGE = { ENGLISH, JAPANESE,
+			SPANISH };
+
 	private static final Map<String, IMessageConveyor> languageMap;
 
 	static {
