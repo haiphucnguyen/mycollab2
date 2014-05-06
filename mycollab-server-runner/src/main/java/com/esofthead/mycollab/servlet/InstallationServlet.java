@@ -17,11 +17,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.esofthead.mycollab.core.MyCollabException;
-import com.esofthead.mycollab.jetty.GenericServerRunner;
 
 /**
  * 
@@ -31,14 +28,24 @@ import com.esofthead.mycollab.jetty.GenericServerRunner;
  */
 public class InstallationServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static Logger log = LoggerFactory
-			.getLogger(GenericServerRunner.class);
+	private boolean waitFlag = true;
 
+	public void setWaitFlag(boolean flag) {
+		this.waitFlag = flag;
+	}
 
-	
+	public void threadWait() {
+		while (waitFlag == true) {
+			try {
+				Thread.sleep(5000);
+			} catch (InterruptedException e) {
+				throw new MyCollabException(e);
+			}
+		}
+	}
+
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		
 		String sitename = request.getParameter("sitename");
 		String serverAddress = request.getParameter("serverAddress");
 		String databaseName = request.getParameter("databaseName");
@@ -73,16 +80,14 @@ public class InstallationServlet extends HttpServlet {
 		templateContext.put("smtpPassword", smtpPassword);
 		templateContext.put("smtpTLSEnable", tls);
 
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			Connection connection = DriverManager.getConnection(dbUrl,
-					dbUserName, dbPassword);
-			DatabaseMetaData metaData = connection.getMetaData();
-		} catch (Exception e) {
-			PrintWriter out = response.getWriter();
-			out.write("Cannot establish connection to database. Make sure your inputs are correct.");
-			return;
-		}
+		
+		  try { Class.forName("com.mysql.jdbc.Driver"); Connection connection =
+		  DriverManager.getConnection(dbUrl, dbUserName, dbPassword);
+		  DatabaseMetaData metaData = connection.getMetaData(); } catch
+		  (Exception e) { PrintWriter out = response.getWriter(); out.write(
+		 "Cannot establish connection to database. Make sure your inputs are correct."
+		 ); return; }
+		 
 
 		File confFolder = new File(System.getProperty("user.dir"), "conf");
 
@@ -110,6 +115,9 @@ public class InstallationServlet extends HttpServlet {
 				outStream.write(writer.toString().getBytes());
 				outStream.flush();
 				outStream.close();
+
+				threadWait();
+
 			} catch (Exception e) {
 				e.printStackTrace();
 				PrintWriter out = response.getWriter();
