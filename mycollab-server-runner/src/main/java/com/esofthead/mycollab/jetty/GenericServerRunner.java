@@ -23,9 +23,6 @@ import java.io.OutputStream;
 import java.io.StringWriter;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.sql.Connection;
-import java.sql.DatabaseMetaData;
-import java.sql.DriverManager;
 
 import javax.sql.DataSource;
 
@@ -38,6 +35,7 @@ import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.ContextHandlerCollection;
 import org.eclipse.jetty.server.handler.HandlerList;
+import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.webapp.Configuration;
 import org.eclipse.jetty.webapp.FragmentConfiguration;
 import org.eclipse.jetty.webapp.MetaInfConfiguration;
@@ -50,7 +48,9 @@ import org.slf4j.LoggerFactory;
 import com.esofthead.mycollab.configuration.DatabaseConfiguration;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.MyCollabException;
-import com.esofthead.mycollab.jetty.console.TextDevice;
+import com.esofthead.mycollab.servlet.DatabaseValidate;
+import com.esofthead.mycollab.servlet.InstallationServlet;
+import com.esofthead.mycollab.servlet.SetupServlet;
 import com.jolbox.bonecp.BoneCPDataSource;
 
 /**
@@ -189,192 +189,65 @@ public abstract class GenericServerRunner {
 		}
 	}
 
-	/**
-	 * Pre-Start server process
-	 */
-	protected void preStartServer() {
-		File file = detectConfigFile("mycollab.properties");
-		if (file == null) {
-			log.debug("Can not detect mycollab.properties file. It seems mycollab is in first use.");
-			isFirstTimeRunner = true;
-			VelocityContext templateContext = new VelocityContext();
+	
+	class WorkThread extends Thread {
+		private Server server;
+	    public WorkThread(Server server) {
+	    	this.server = server;
+	    }
+		
+		@Override
+	    public void run() {
 
-			System.out
-					.println("=====================================================");
-			System.out
-					.println("                    MYCOLLAB SETUP                   ");
-			System.out
-					.println("=====================================================");
+	    	
+	    	WebAppContext webAppContext = new WebAppContext();
+	    	webAppContext.setContextPath("/");
+	    	webAppContext.setResourceBase(".");
+	    	webAppContext.setClassLoader(Thread.currentThread().getContextClassLoader());
 
-			TextDevice device = TextDevice.defaultTextDevice();
-			System.out.println("Enter site name:");
-			String sitename = device.readLine();
-			templateContext.put("sitename", sitename);
-
-			System.out.println("Enter server address:");
-			String serverAddress = device.readLine();
-			templateContext.put("serveraddress", serverAddress);
-
-			System.out
-					.println("Enter server port (then you can access server with address)");
-
-			int serverPort = 0;
-
-			int numTries = 0;
-			while (numTries < 3) {
-				String serverPortVal = device.readLine();
-
-				try {
-					serverPort = Integer.parseInt(serverPortVal);
-					break;
-				} catch (Exception e) {
-					System.out.println("Port must be the number from 1-65000");
-					numTries++;
-					if (numTries == 3) {
-						System.exit(-1);
-					}
-				}
+	    	webAppContext.addServlet(new ServletHolder(new SetupServlet()), "/setup");
+			webAppContext.addServlet(new ServletHolder(new InstallationServlet()), "/install");
+			webAppContext.addServlet(new ServletHolder(new DatabaseValidate()), "/validate");
+	        server.setHandler(webAppContext);
+	        try {
+				server.start();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-
-			templateContext.put("serverport", serverPort + "");
-
-			System.out
-					.println("=====================================================");
-			System.out
-					.println("                  DATABASE SETUP                     ");
-			System.out
-					.println("=====================================================");
-
-			numTries = 0;
-			while (numTries < 3) {
-				templateContext.put("db.driverClassName",
-						"com.mysql.jdbc.Driver");
-
-				System.out.println("Enter database server address:");
-				String dbServerAddress = device.readLine();
-
-				System.out
-						.println("Enter database name (Database must be created before):");
-				String dbName = device.readLine();
-
-				String dbUrl = String.format(
-						"jdbc:mysql://%s/%s?useUnicode=true", dbServerAddress,
-						dbName);
-				templateContext.put("dbUrl", dbUrl);
-
-				System.out.println("Enter database user name:");
-				String dbUserName = device.readLine();
-				templateContext.put("dbUser", dbUserName);
-
-				System.out.println("Enter database user password:");
-				String dbPassword = new String(device.readPassword());
-				templateContext.put("dbPassword", dbPassword);
-
-				log.debug("Checking database connection ...");
-				try {
-					Class.forName("com.mysql.jdbc.Driver");
-					Connection connection = DriverManager.getConnection(dbUrl,
-							dbUserName, dbPassword);
-					DatabaseMetaData metaData = connection.getMetaData();
-					break;
-				} catch (Exception e) {
-					e.printStackTrace();
-					System.err.println("Can not set up database.");
-					numTries++;
-					if (numTries == 3) {
-						System.exit(-1);
-					}
-				}
+	        try {
+				server.join();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-
-			System.out
-					.println("=====================================================");
-			System.out
-					.println("                 EMAIL SETUP  (Optional)             ");
-			System.out
-					.println("=====================================================");
-
-			System.out
-					.println("We need your smtp email configuration to send system notifications such as bug assignment, new account created to your team. If you do not have any smtp account, you can ignore this setting section. Do you want continue to set up stmp settings (y/n):");
-
-			numTries = 0;
-			while (numTries < 3) {
-				String acceptContinue = device.readLine();
-				if ("y".equals(acceptContinue)) {
-					System.out.println("Outgoing server address:");
-					String stmpHost = device.readLine();
-					templateContext.put("smtpAddress", stmpHost);
-
-					System.out.println("Mail server port:");
-					int mailServerPort = 0;
-
-					while (true) {
-						String serverPortVal = device.readLine();
-
-						try {
-							mailServerPort = Integer.parseInt(serverPortVal);
-							break;
-						} catch (Exception e) {
-							System.out
-									.println("Port must be the number from 1-65000.");
-						}
-					}
-					templateContext.put("smtpPort", mailServerPort + "");
-
-					System.out.println("Mail user name:");
-					String mailUser = device.readLine();
-					templateContext.put("smtpUserName", mailUser);
-
-					System.out.println("Mail password:");
-					String mailPassword = device.readLine();
-					templateContext.put("smtpPassword", mailPassword);
-
-					System.out.println("Enable TLS (y/n):");
-					String tlsEnable = device.readLine();
-					if (tlsEnable.equals("y")) {
-						templateContext.put("smtpTLSEnable", "true");
-					} else {
-						templateContext.put("smtpTLSEnable", "false");
-					}
-					break;
-				} else if ("n".equals(acceptContinue)) {
-					System.out
-							.println("You can set up stmp account later in file %MYCOLLAB_HOME%/conf/mycollab.properties");
-					templateContext.put("smtpAddress", "");
-					templateContext.put("smtpPort", "1");
-					templateContext.put("smtpUserName", "");
-					templateContext.put("smtpPassword", "");
-					templateContext.put("smtpTLSEnable", "false");
-					break;
-				} else {
-					System.out.println("You must select y (yes) or n (no)");
-					numTries++;
-
-					if (numTries == 3) {
-						System.out
-								.println("You can set up stmp account later in file %MYCOLLAB_HOME%/conf/mycollab.properties");
-						templateContext.put("smtpAddress", "");
-						templateContext.put("smtpPort", "1");
-						templateContext.put("smtpUserName", "");
-						templateContext.put("smtpPassword", "");
-						templateContext.put("smtpTLSEnable", "false");
-					}
-				}
-			}
-
-			templateContext.put("error.sendTo", "hainguyen@esofthead.com");
-			templateContext.put("cdn.url", "http://%s:%d/assets/images/email/");
-			templateContext.put("app.url", "http://%s:%d/");
-
-			log.debug("Write to properties file");
-
-			File confFolder = new File(System.getProperty("user.dir"), "conf");
-
+	    }
+	}
+	
+	public void startSetupServer() throws Exception {
+		
+	}
+	
+	
+	public void execute() throws Exception {
+		Server server = new Server(9090);
+		WorkThread a = new WorkThread(server);
+		a.start();
+		while (detectConfigFile("mycollab.properties") == null) {
+			
+			Thread.sleep(5000);
+		}
+		server.stop();
+		
+		
+		//Create temporary mycollab.property avoid to parsing non int field
+		File confFolder = new File(System.getProperty("user.dir"), "conf");
+		
 			if (!confFolder.exists()) {
 				confFolder = new File(System.getProperty("user.dir"),
 						"src/main/conf");
 			}
-
+			
 			if (!confFolder.exists()) {
 				throw new MyCollabException("Can not detect webapp base folder");
 			} else {
@@ -384,31 +257,33 @@ public abstract class GenericServerRunner {
 					FileReader templateReader = new FileReader(templateFile);
 
 					StringWriter writer = new StringWriter();
-
+					
 					VelocityEngine engine = new VelocityEngine();
+					
+					VelocityContext templateContext = new VelocityContext();
+					
+					templateContext.put("serverport", "8080");
+					templateContext.put("smtpPort", 1);
+					
 					engine.evaluate(templateContext, writer, "log task",
 							templateReader);
-
 					FileOutputStream outStream = new FileOutputStream(new File(
 							confFolder, "mycollab.properties"));
 					outStream.write(writer.toString().getBytes());
 					outStream.flush();
 					outStream.close();
-				} catch (Exception e) {
-					e.printStackTrace();
-					System.err
-							.println("Can not write setting to config file. You should call mycollab support support@mycollab.com to solve this issue.");
-					System.exit(1);
+					
+					
+				}
+				catch (Exception e) {
+				e.printStackTrace();
+				return;
 				}
 			}
-
-		}
-	}
-
-	public void execute() throws Exception {
-		preStartServer();
+		
 		server = new Server((port > 0) ? port
-				: SiteConfiguration.getServerPort());
+			: SiteConfiguration.getServerPort());
+		
 		log.debug("Detect root folder webapp");
 		String webappDirLocation = detectWebApp();
 
@@ -429,8 +304,8 @@ public abstract class GenericServerRunner {
 		// </resource-ref>
 		// At runtime the webapp accesses this as
 		// java:comp/env/jdbc/mydatasource
-		org.eclipse.jetty.plus.jndi.Resource mydatasource = new org.eclipse.jetty.plus.jndi.Resource(
-				appContext, "jdbc/mycollabdatasource", buildDataSource());
+		//org.eclipse.jetty.plus.jndi.Resource mydatasource = new org.eclipse.jetty.plus.jndi.Resource(
+		//		appContext, "jdbc/mycollabdatasource", buildDataSource());
 
 		HandlerList handlers = new HandlerList();
 		handlers.setHandlers(new Handler[] { appContext });
