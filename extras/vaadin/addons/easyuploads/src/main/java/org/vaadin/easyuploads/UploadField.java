@@ -339,9 +339,9 @@ public class UploadField extends VerticalLayout implements Field,
 	public void uploadFinished(FinishedEvent event) {
 		progress.setVisible(false);
 		lastFileName = event.getFilename();
+        UI.getCurrent().setPollInterval(oldPollInterval);
 		updateDisplay();
-		fireValueChange();
-		UI.getCurrent().setPollInterval(oldPollInterval);
+		fireValueChange();		
 	}
 
 	protected void fireValueChange() {
