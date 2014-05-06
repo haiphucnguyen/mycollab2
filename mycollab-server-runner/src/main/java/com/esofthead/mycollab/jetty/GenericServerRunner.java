@@ -169,48 +169,20 @@ public abstract class GenericServerRunner {
 		server = new Server((port > 0) ? port
 				: SiteConfiguration.getServerPort());
 
-		// ServletContextHandler context = new ServletContextHandler(
-		// ServletContextHandler.SESSIONS);
-		// context.setContextPath("/");
-		// context.addServlet(new ServletHolder(new SetupServlet()), "/setup");
-		// context.addServlet(new ServletHolder(new InstallationServlet()),
-		// "/install");
-		// context.addServlet(new ServletHolder(new DatabaseValidate()),
-		// "/validate");
-		// context.addLifeCycleListener(new ServerLifeCycleListener(server));
+		ServletContextHandler context = new ServletContextHandler(
+				ServletContextHandler.SESSIONS);
+		context.setContextPath("/");
+		context.addServlet(new ServletHolder(new SetupServlet()), "/setup");
+		context.addServlet(new ServletHolder(new InstallationServlet()),
+				"/install");
+		context.addServlet(new ServletHolder(new DatabaseValidate()),
+				"/validate");
+		context.addLifeCycleListener(new ServerLifeCycleListener(server));
 
 		server.setStopAtShutdown(true);
 
-		String webappDirLocation = detectWebApp();
-		WebAppContext appContext = buildContext(webappDirLocation);
-		appContext.setServer(server);
-		appContext.setConfigurations(new Configuration[] {
-				new AnnotationConfiguration(), new WebXmlConfiguration(),
-				new WebInfConfiguration(), new PlusConfiguration(),
-				new MetaInfConfiguration(), new FragmentConfiguration(),
-				new EnvConfiguration() });
-
-		// Register a mock DataSource scoped to the webapp
-		// This must be linked to the webapp via an entry in
-		// web.xml:
-		// <resource-ref>
-		// <res-ref-name>jdbc/mydatasource</res-ref-name>
-		// <res-type>javax.sql.DataSource</res-type>
-		// <res-auth>Container</res-auth>
-		// </resource-ref>
-		// At runtime the webapp accesses this as
-		// java:comp/env/jdbc/mydatasource
-		try {
-			org.eclipse.jetty.plus.jndi.Resource mydatasource = new org.eclipse.jetty.plus.jndi.Resource(
-					appContext, "jdbc/mycollabdatasource", buildDataSource());
-
-			server.addBean(appContext);
-		} catch (NamingException e) {
-			throw new MyCollabException(e);
-		}
-
 		HandlerList handlers = new HandlerList();
-		handlers.setHandlers(new Handler[] { appContext });
+		handlers.setHandlers(new Handler[] { context });
 		server.setHandler(handlers);
 
 		server.start();
@@ -299,13 +271,6 @@ public abstract class GenericServerRunner {
 							}
 						}
 
-						Collection<Object> beans = server.getBeans();
-						for (Object b : beans) {
-							if (b instanceof HandlerList) {
-								((HandlerList) b).removeBeans();
-							}
-						}
-
 						String webappDirLocation = detectWebApp();
 						WebAppContext appContext = buildContext(webappDirLocation);
 						appContext.setServer(server);
@@ -332,7 +297,6 @@ public abstract class GenericServerRunner {
 							org.eclipse.jetty.plus.jndi.Resource mydatasource = new org.eclipse.jetty.plus.jndi.Resource(
 									appContext, "jdbc/mycollabdatasource",
 									buildDataSource());
-
 							server.addBean(appContext);
 						} catch (NamingException e) {
 							throw new MyCollabException(e);
