@@ -17,25 +17,22 @@
 package com.esofthead.mycollab.jetty;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.OutputStream;
-import java.io.StringWriter;
 import java.net.InetAddress;
 import java.net.Socket;
 
+import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import org.apache.velocity.VelocityContext;
-import org.apache.velocity.app.VelocityEngine;
 import org.eclipse.jetty.annotations.AnnotationConfiguration;
 import org.eclipse.jetty.plus.webapp.EnvConfiguration;
 import org.eclipse.jetty.plus.webapp.PlusConfiguration;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.server.handler.ContextHandlerCollection;
 import org.eclipse.jetty.server.handler.HandlerList;
+import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
+import org.eclipse.jetty.util.component.LifeCycle;
 import org.eclipse.jetty.webapp.Configuration;
 import org.eclipse.jetty.webapp.FragmentConfiguration;
 import org.eclipse.jetty.webapp.MetaInfConfiguration;
@@ -167,155 +164,25 @@ public abstract class GenericServerRunner {
 
 	}
 
-	/**
-	 * Detect localtion of config file
-	 * 
-	 * @param filename
-	 * @return
-	 */
-	private File detectConfigFile(String filename) {
-		File confFile = new File(System.getProperty("user.dir"), "conf/"
-				+ filename);
-
-		if (!confFile.exists()) {
-			confFile = new File(System.getProperty("user.dir"),
-					"src/main/conf/" + filename);
-		}
-
-		if (!confFile.exists()) {
-			return null;
-		} else {
-			return confFile;
-		}
-	}
-
-	
-	class WorkThread extends Thread {
-		private Server server;
-	    public WorkThread(Server server) {
-	    	this.server = server;
-	    }
-		
-		@Override
-	    public void run() {
-
-	    	
-	    	WebAppContext webAppContext = new WebAppContext();
-	    	webAppContext.setContextPath("/");
-	    	webAppContext.setResourceBase(".");
-	    	webAppContext.setClassLoader(Thread.currentThread().getContextClassLoader());
-
-	    	webAppContext.addServlet(new ServletHolder(new SetupServlet()), "/setup");
-			webAppContext.addServlet(new ServletHolder(new InstallationServlet()), "/install");
-			webAppContext.addServlet(new ServletHolder(new DatabaseValidate()), "/validate");
-	        server.setHandler(webAppContext);
-	        try {
-				server.start();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-	        try {
-				server.join();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-	    }
-	}
-	
-	public void startSetupServer() throws Exception {
-		
-	}
-	
-	
 	public void execute() throws Exception {
-		Server server = new Server(9090);
-		WorkThread a = new WorkThread(server);
-		a.start();
-		while (detectConfigFile("mycollab.properties") == null) {
-			
-			Thread.sleep(5000);
-		}
-		server.stop();
-		
-		
-		//Create temporary mycollab.property avoid to parsing non int field
-		File confFolder = new File(System.getProperty("user.dir"), "conf");
-		
-			if (!confFolder.exists()) {
-				confFolder = new File(System.getProperty("user.dir"),
-						"src/main/conf");
-			}
-			
-			if (!confFolder.exists()) {
-				throw new MyCollabException("Can not detect webapp base folder");
-			} else {
-				try {
-					File templateFile = new File(confFolder,
-							"mycollab.properties.template");
-					FileReader templateReader = new FileReader(templateFile);
-
-					StringWriter writer = new StringWriter();
-					
-					VelocityEngine engine = new VelocityEngine();
-					
-					VelocityContext templateContext = new VelocityContext();
-					
-					templateContext.put("serverport", "8080");
-					templateContext.put("smtpPort", 1);
-					
-					engine.evaluate(templateContext, writer, "log task",
-							templateReader);
-					FileOutputStream outStream = new FileOutputStream(new File(
-							confFolder, "mycollab.properties"));
-					outStream.write(writer.toString().getBytes());
-					outStream.flush();
-					outStream.close();
-					
-					
-				}
-				catch (Exception e) {
-				e.printStackTrace();
-				return;
-				}
-			}
-		
 		server = new Server((port > 0) ? port
-			: SiteConfiguration.getServerPort());
-		
-		log.debug("Detect root folder webapp");
-		String webappDirLocation = detectWebApp();
+				: SiteConfiguration.getServerPort());
 
-		WebAppContext appContext = buildContext(webappDirLocation);
-		appContext.setServer(server);
-		appContext.setConfigurations(new Configuration[] {
-				new AnnotationConfiguration(), new WebXmlConfiguration(),
-				new WebInfConfiguration(), new PlusConfiguration(),
-				new MetaInfConfiguration(), new FragmentConfiguration(),
-				new EnvConfiguration() });
-
-		// Register a mock DataSource scoped to the webapp
-		// This must be linked to the webapp via an entry in web.xml:
-		// <resource-ref>
-		// <res-ref-name>jdbc/mydatasource</res-ref-name>
-		// <res-type>javax.sql.DataSource</res-type>
-		// <res-auth>Container</res-auth>
-		// </resource-ref>
-		// At runtime the webapp accesses this as
-		// java:comp/env/jdbc/mydatasource
-		//org.eclipse.jetty.plus.jndi.Resource mydatasource = new org.eclipse.jetty.plus.jndi.Resource(
-		//		appContext, "jdbc/mycollabdatasource", buildDataSource());
-
-		HandlerList handlers = new HandlerList();
-		handlers.setHandlers(new Handler[] { appContext });
-		server.setHandler(handlers);
+		ServletContextHandler context = new ServletContextHandler(
+				ServletContextHandler.SESSIONS);
+		context.setContextPath("/");
+		context.addServlet(new ServletHolder(new SetupServlet()), "/setup");
+		context.addServlet(new ServletHolder(new InstallationServlet()),
+				"/install");
+		context.addServlet(new ServletHolder(new DatabaseValidate()),
+				"/validate");
+		context.addLifeCycleListener(new ServerLifeCycleListener(server));
 
 		server.setStopAtShutdown(true);
 
-		ContextHandlerCollection contextCollection = new ContextHandlerCollection();
-		contextCollection.setServer(server);
-		contextCollection.setHandlers(new Handler[] { appContext });
+		HandlerList handlers = new HandlerList();
+		handlers.setHandlers(new Handler[] { context });
+		server.setHandler(handlers);
 
 		server.start();
 
@@ -340,6 +207,7 @@ public abstract class GenericServerRunner {
 	}
 
 	private DataSource buildDataSource() {
+
 		DatabaseConfiguration dbConf = SiteConfiguration
 				.getDatabaseConfiguration();
 		BoneCPDataSource dataSource = new BoneCPDataSource();
@@ -356,5 +224,103 @@ public abstract class GenericServerRunner {
 		dataSource.setAcquireIncrement(3);
 		dataSource.setConnectionTestStatement("SELECT 1");
 		return dataSource;
+	}
+
+	private class ServerLifeCycleListener implements LifeCycle.Listener {
+
+		private Server server;
+
+		public ServerLifeCycleListener(Server server) {
+			this.server = server;
+		}
+
+		@Override
+		public void lifeCycleStarting(LifeCycle event) {
+
+		}
+
+		@Override
+		public void lifeCycleStarted(LifeCycle event) {
+			System.out.println("Started");
+
+			Runnable thread = new Runnable() {
+
+				@Override
+				public void run() {
+					log.debug("Detect root folder webapp");
+					File confFolder = new File(System.getProperty("user.dir"),
+							"conf");
+
+					if (!confFolder.exists()) {
+						confFolder = new File(System.getProperty("user.dir"),
+								"src/main/conf");
+					}
+
+					if (!confFolder.exists()) {
+						throw new MyCollabException(
+								"Can not detect webapp base folder");
+					} else {
+						File confFile = new File(confFolder,
+								"mycollab.properties");
+						while (!confFile.exists()) {
+							try {
+								Thread.sleep(5000);
+							} catch (InterruptedException e) {
+								throw new MyCollabException(e);
+							}
+						}
+						String webappDirLocation = detectWebApp();
+						WebAppContext appContext = buildContext(webappDirLocation);
+						appContext.setServer(server);
+						appContext.setConfigurations(new Configuration[] {
+								new AnnotationConfiguration(),
+								new WebXmlConfiguration(),
+								new WebInfConfiguration(),
+								new PlusConfiguration(),
+								new MetaInfConfiguration(),
+								new FragmentConfiguration(),
+								new EnvConfiguration() });
+
+						// Register a mock DataSource scoped to the webapp
+						// This must be linked to the webapp via an entry in
+						// web.xml:
+						// <resource-ref>
+						// <res-ref-name>jdbc/mydatasource</res-ref-name>
+						// <res-type>javax.sql.DataSource</res-type>
+						// <res-auth>Container</res-auth>
+						// </resource-ref>
+						// At runtime the webapp accesses this as
+						// java:comp/env/jdbc/mydatasource
+						try {
+							org.eclipse.jetty.plus.jndi.Resource mydatasource = new org.eclipse.jetty.plus.jndi.Resource(
+									appContext, "jdbc/mycollabdatasource",
+									buildDataSource());
+
+							server.addBean(appContext);
+						} catch (NamingException e) {
+							throw new MyCollabException(e);
+						}
+					}
+				}
+			};
+
+			new Thread(thread).start();
+		}
+
+		@Override
+		public void lifeCycleFailure(LifeCycle event, Throwable cause) {
+
+		}
+
+		@Override
+		public void lifeCycleStopping(LifeCycle event) {
+
+		}
+
+		@Override
+		public void lifeCycleStopped(LifeCycle event) {
+
+		}
+
 	}
 }
