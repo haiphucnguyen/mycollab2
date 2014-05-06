@@ -21,7 +21,6 @@ import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.AbstractField;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.ProgressBar;
@@ -33,6 +32,7 @@ import com.vaadin.ui.Upload.ProgressListener;
 import com.vaadin.ui.Upload.Receiver;
 import com.vaadin.ui.Upload.StartedEvent;
 import com.vaadin.ui.Upload.StartedListener;
+import com.vaadin.ui.VerticalLayout;
 
 /**
  * UploadField is a helper class that uses rather low level {@link Upload}
@@ -76,8 +76,8 @@ import com.vaadin.ui.Upload.StartedListener;
  * 
  */
 @SuppressWarnings({ "serial", "rawtypes", "unchecked" })
-public class UploadField extends CssLayout implements Field, StartedListener,
-		FinishedListener, ProgressListener {
+public class UploadField extends VerticalLayout implements Field,
+		StartedListener, FinishedListener, ProgressListener {
 	private static final int MAX_SHOWN_BYTES = 5;
 
 	private UploadFieldReceiver receiver;
@@ -117,7 +117,7 @@ public class UploadField extends CssLayout implements Field, StartedListener,
 		return upload.getButtonCaption();
 	}
 
-	public final CssLayout getRootLayout() {
+	public final VerticalLayout getRootLayout() {
 		return this;
 	}
 
