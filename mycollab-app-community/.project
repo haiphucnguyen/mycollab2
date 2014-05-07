@@ -6,7 +6,6 @@
     <project>mycollab-server-runner</project>
     <project>mycollab-config</project>
     <project>mycollab-core</project>
-    <project>mycollab-test</project>
     <project>mycollab-services-community</project>
     <project>mycollab-services</project>
     <project>mycollab-dao</project>
@@ -14,9 +13,10 @@
     <project>mycollab-reporting</project>
     <project>mycollab-caching</project>
     <project>mycollab-jackrabbit</project>
+    <project>mycollab-mobile</project>
+    <project>mycollab-ui</project>
     <project>mycollab-web-community</project>
     <project>mycollab-web</project>
-    <project>mycollab-ui</project>
     <project>mycollab-esb</project>
     <project>mycollab-scheduler</project>
   </projects>

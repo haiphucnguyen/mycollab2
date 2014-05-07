@@ -18,10 +18,13 @@ package com.esofthead.mycollab.web;
 
 import static com.esofthead.mycollab.vaadin.MyCollabSession.CURRENT_APP;
 
+import java.util.Collection;
+
 import javax.servlet.http.Cookie;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.vaadin.dialogs.ConfirmDialog;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.configuration.PasswordEncryptHelper;
@@ -29,12 +32,13 @@ import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.DeploymentMode;
 import com.esofthead.mycollab.core.SecurityException;
 import com.esofthead.mycollab.core.UserInvalidInputException;
-import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.billing.SubDomainNotExistException;
+import com.esofthead.mycollab.module.billing.UsageExceedBillingPlanException;
 import com.esofthead.mycollab.module.user.view.LoginPresenter;
 import com.esofthead.mycollab.module.user.view.LoginView;
 import com.esofthead.mycollab.shell.ShellController;
+import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.shell.view.FragmentNavigator;
 import com.esofthead.mycollab.shell.view.MainWindowContainer;
 import com.esofthead.mycollab.shell.view.NoSubDomainExistedWindow;
@@ -43,6 +47,7 @@ import com.esofthead.mycollab.vaadin.MyCollabSession;
 import com.esofthead.mycollab.vaadin.mvp.ControllerRegistry;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
+import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Widgetset;
@@ -55,6 +60,7 @@ import com.vaadin.server.VaadinService;
 import com.vaadin.server.VaadinServletRequest;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.UI;
+import com.vaadin.ui.Window;
 
 /**
  * 
@@ -102,7 +108,7 @@ public class DesktopApplication extends UI {
 				UserInvalidInputException invalidException = (UserInvalidInputException) getExceptionType(
 						e, UserInvalidInputException.class);
 				if (invalidException != null) {
-					NotificationUtil.showWarningNotification(LocalizationHelper
+					NotificationUtil.showWarningNotification(AppContext
 							.getMessage(
 									GenericI18Enum.ERROR_USER_INPUT_MESSAGE,
 									invalidException.getMessage()));
@@ -112,9 +118,55 @@ public class DesktopApplication extends UI {
 					if (securityException != null) {
 						NotificationUtil.showMessagePermissionAlert();
 					} else {
-						log.error("Error", e);
-						NotificationUtil.showErrorNotification(LocalizationHelper
-								.getMessage(GenericI18Enum.ERROR_USER_NOTICE_INFORMATION_MESSAGE));
+						UsageExceedBillingPlanException usageBillingException = (UsageExceedBillingPlanException) getExceptionType(
+								e, UsageExceedBillingPlanException.class);
+						if (usageBillingException != null) {
+							if (AppContext.isAdmin()) {
+								ConfirmDialogExt.show(
+										UI.getCurrent(),
+										AppContext
+												.getMessage(
+														GenericI18Enum.ATTENTION_WINDOW_TITLE,
+														SiteConfiguration
+																.getSiteName()),
+										AppContext
+												.getMessage(GenericI18Enum.EXCEED_BILLING_PLAN_MSG_FOR_ADMIN),
+										AppContext
+												.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
+										AppContext
+												.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
+										new ConfirmDialog.Listener() {
+											private static final long serialVersionUID = 1L;
+
+											@Override
+											public void onClose(
+													ConfirmDialog dialog) {
+												if (dialog.isConfirmed()) {
+													Collection<Window> windowsList = UI
+															.getCurrent()
+															.getWindows();
+													for (Window window : windowsList) {
+														window.close();
+													}
+													EventBus.getInstance()
+															.fireEvent(
+																	new ShellEvent.GotoUserAccountModule(
+																			this,
+																			new String[] { "billing" }));
+												}
+											}
+										});
+
+							} else {
+								NotificationUtil.showErrorNotification(AppContext
+										.getMessage(GenericI18Enum.EXCEED_BILLING_PLAN_MSG_FOR_USER));
+							}
+						} else {
+							log.error("Error", e);
+							NotificationUtil.showErrorNotification(AppContext
+									.getMessage(GenericI18Enum.ERROR_USER_NOTICE_INFORMATION_MESSAGE));
+						}
+
 					}
 				}
 
@@ -178,7 +230,7 @@ public class DesktopApplication extends UI {
 
 	public void clearSession() {
 		if (AppContext.getInstance() != null) {
-			AppContext.getInstance().setSession(null, null, null);
+			AppContext.getInstance().clearSession();
 			initialUrl = "";
 			ViewManager.clearViewCaches();
 			PresenterResolver.clearCaches();

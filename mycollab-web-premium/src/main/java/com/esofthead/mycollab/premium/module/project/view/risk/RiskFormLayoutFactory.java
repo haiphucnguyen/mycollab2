@@ -1,7 +1,7 @@
 package com.esofthead.mycollab.premium.module.project.view.risk;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
-import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.vaadin.ui.Alignment;
@@ -47,7 +47,7 @@ public class RiskFormLayoutFactory implements IFormLayoutFactory {
 		} else if (propertyId.equals("type")) {
 			this.informationLayout.addComponent(field, "Related to", 1, 2);
 		} else if (propertyId.equals("assigntouser")) {
-			this.informationLayout.addComponent(field, LocalizationHelper
+			this.informationLayout.addComponent(field, AppContext
 					.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD), 0, 3);
 		} else if (propertyId.equals("consequence")) {
 			this.informationLayout.addComponent(field, "Consequence", 1, 3);

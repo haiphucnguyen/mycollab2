@@ -20,7 +20,7 @@ import java.util.List;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.MyCollabException;
-import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.form.service.MasterFormService;
 import com.esofthead.mycollab.form.view.builder.type.DynaForm;
 import com.esofthead.mycollab.form.view.builder.type.DynaSection;
@@ -166,7 +166,7 @@ public class CrmCustomViewImpl extends AbstractPageView implements
 		buttonsLayout.setSpacing(true);
 		buttonsLayout.setMargin(new MarginInfo(true, false, true,false));
 		Button saveBtn = new Button(
-				LocalizationHelper.getMessage(GenericI18Enum.BUTTON_SAVE_LABEL),
+				AppContext.getMessage(GenericI18Enum.BUTTON_SAVE_LABEL),
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
@@ -185,7 +185,7 @@ public class CrmCustomViewImpl extends AbstractPageView implements
 		buttonsLayout.addComponent(saveBtn);
 
 		Button cancelBtn = new Button(
-				LocalizationHelper
+				AppContext
 						.getMessage(GenericI18Enum.BUTTON_CANCEL_LABEL),
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;

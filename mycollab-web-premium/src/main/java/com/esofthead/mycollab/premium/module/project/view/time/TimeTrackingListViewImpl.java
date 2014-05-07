@@ -7,7 +7,7 @@ import org.vaadin.dialogs.ConfirmDialog;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.arguments.RangeDateSearchField;
-import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.eventmanager.ApplicationEvent;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBus;
@@ -196,14 +196,14 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements
 						} else if ("delete".equals(event.getFieldName())) {
 							ConfirmDialogExt.show(
 									UI.getCurrent(),
-									LocalizationHelper.getMessage(
+									AppContext.getMessage(
 											GenericI18Enum.DELETE_DIALOG_TITLE,
 											SiteConfiguration.getSiteName()),
-									LocalizationHelper
+									AppContext
 											.getMessage(GenericI18Enum.CONFIRM_DELETE_RECORD_DIALOG_MESSAGE),
-									LocalizationHelper
+									AppContext
 											.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
-									LocalizationHelper
+									AppContext
 											.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
 									new ConfirmDialog.Listener() {
 										private static final long serialVersionUID = 1L;
@@ -263,11 +263,11 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements
 				.getTotalHoursByCriteria(this.itemTimeLogginSearchCriteria);
 
 		if (totalHour != null && totalHour > 0) {
-			this.lbTimeRange.setValue(LocalizationHelper.getMessage(
+			this.lbTimeRange.setValue(AppContext.getMessage(
 					TimeTrackingI18nEnum.TASK_LIST_RANGE_WITH_TOTAL_HOUR,
 					fromDate, toDate, totalHour));
 		} else {
-			this.lbTimeRange.setValue(LocalizationHelper.getMessage(
+			this.lbTimeRange.setValue(AppContext.getMessage(
 					TimeTrackingI18nEnum.TASK_LIST_RANGE, fromDate, toDate));
 		}
 	}

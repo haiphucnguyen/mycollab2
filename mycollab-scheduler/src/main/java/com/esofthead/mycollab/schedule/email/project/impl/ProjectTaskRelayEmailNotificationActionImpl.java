@@ -112,8 +112,8 @@ public class ProjectTaskRelayEmailNotificationActionImpl extends
 		listOfTitles.add(taskCode);
 
 		String summary = task.getTaskname();
-		String summaryLink = ProjectLinkUtils.generateTaskPreviewLink(
-				task.getProjectid(), task.getId());
+		String summaryLink = ProjectLinkUtils.generateTaskPreviewFullLink(
+				siteUrl, task.getProjectid(), task.getId());
 
 		templateGenerator.putVariable("makeChangeUser",
 				emailNotification.getChangeByUserFullName());
@@ -130,6 +130,10 @@ public class ProjectTaskRelayEmailNotificationActionImpl extends
 		SimpleTask task = projectTaskService.findById(taskId,
 				emailNotification.getSaccountid());
 
+		if (task == null) {
+			return null;
+		}
+		
 		String subject = StringUtils.trim(task.getTaskname(), 100);
 		ScheduleUserTimeZoneUtils.formatDateTimeZone(task, user.getTimezone(),
 				new String[] { "startdate", "enddate", "deadline",

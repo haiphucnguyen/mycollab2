@@ -324,6 +324,7 @@ public class StandupListViewImpl extends AbstractPageView implements
 											report.getLogby()));
 						}
 					});
+			userBtn.addStyleName("user-name");
 			userInfo.addComponent(userBtn);
 			this.addComponent(userInfo);
 

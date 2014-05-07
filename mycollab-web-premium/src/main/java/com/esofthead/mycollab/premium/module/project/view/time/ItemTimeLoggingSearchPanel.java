@@ -7,7 +7,7 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
-import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
 import com.esofthead.mycollab.module.project.localization.TimeTrackingI18nEnum;
@@ -83,7 +83,7 @@ class ItemTimeLoggingSearchPanel extends
 					MyCollabResource
 							.newResource("icons/22/project/time_selected.png"));
 			Label headerText = new Label(
-					LocalizationHelper
+					AppContext
 							.getMessage(TimeTrackingI18nEnum.SEARCH_TIME_TITLE));
 
 			createBtn = new Button("Log Time");
@@ -132,7 +132,7 @@ class ItemTimeLoggingSearchPanel extends
 			buttonControls.setSpacing(true);
 
 			final Button searchBtn = new Button(
-					LocalizationHelper
+					AppContext
 							.getMessage(GenericI18Enum.BUTTON_SEARCH_LABEL),
 					new Button.ClickListener() {
 						@Override
@@ -149,7 +149,7 @@ class ItemTimeLoggingSearchPanel extends
 					.newResource("icons/16/search.png"));
 
 			final Button clearBtn = new Button(
-					LocalizationHelper
+					AppContext
 							.getMessage(GenericI18Enum.BUTTON_CLEAR_LABEL),
 					new Button.ClickListener() {
 						@Override
