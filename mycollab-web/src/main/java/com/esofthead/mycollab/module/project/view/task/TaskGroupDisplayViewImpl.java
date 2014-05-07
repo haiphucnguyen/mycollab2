@@ -16,6 +16,13 @@
  */
 package com.esofthead.mycollab.module.project.view.task;
 
+import java.util.Calendar;
+import java.util.Date;
+
+import org.tltv.gantt.Gantt;
+import org.tltv.gantt.Gantt.MoveEvent;
+import org.tltv.gantt.Gantt.ResizeEvent;
+import org.tltv.gantt.client.shared.Step;
 import org.vaadin.hene.popupbutton.PopupButton;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
@@ -54,6 +61,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
@@ -73,7 +81,9 @@ public class TaskGroupDisplayViewImpl extends AbstractPageView implements
 	private TaskGroupDisplayWidget taskLists;
 
 	private Button reOrderBtn;
+	
 	private Button viewGanttChartBtn;
+	private Gantt gantt;
 
 	private PopupButton exportButtonControl;
 
@@ -83,13 +93,12 @@ public class TaskGroupDisplayViewImpl extends AbstractPageView implements
 
 	private TaskSearchViewImpl basicSearchView;
 
-
 	private HorizontalLayout header;
 	private HorizontalLayout mainLayout;
 	private Button advanceDisplay;
 	private Button simpleDisplay;
 	private ToggleButtonGroup viewButtons;
-	
+
 	private boolean isSimpleDisplay;
 
 	public TaskGroupDisplayViewImpl() {
@@ -98,7 +107,7 @@ public class TaskGroupDisplayViewImpl extends AbstractPageView implements
 		this.setSpacing(true);
 
 		this.constructUI();
-	
+
 		displayAdvancedView();
 		isSimpleDisplay = false;
 
@@ -287,6 +296,17 @@ public class TaskGroupDisplayViewImpl extends AbstractPageView implements
 		header.addComponent(newTaskListBtn);
 		header.setComponentAlignment(newTaskListBtn, Alignment.MIDDLE_RIGHT);
 
+		// Add gantt chart button
+		viewGanttChartBtn = new Button("View Gantt chart", new Button.ClickListener() {
+			
+			@Override
+			public void buttonClick(ClickEvent arg0) {
+				displayGanttChartView();
+				
+			}
+		});
+		UiUtils.addComponent(header, viewGanttChartBtn, Alignment.MIDDLE_RIGHT);
+
 		this.reOrderBtn = new Button(null, new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
@@ -345,17 +365,16 @@ public class TaskGroupDisplayViewImpl extends AbstractPageView implements
 			public void buttonClick(ClickEvent event) {
 				advanceDisplay.addStyleName(UIConstants.BTN_ACTIVE);
 				simpleDisplay.removeStyleName(UIConstants.BTN_ACTIVE);
-				if (isSimpleDisplay)
-				{
-				displayAdvancedView();
-				isSimpleDisplay = false;
+				if (isSimpleDisplay) {
+					displayAdvancedView();
+					isSimpleDisplay = false;
 				}
 			}
 		});
 		advanceDisplay.setIcon(MyCollabResource
 				.newResource("icons/16/project/advanced_display.png"));
 		advanceDisplay.addStyleName(UIConstants.BTN_ACTIVE);
-		advanceDisplay.setDescription("Advance View");
+		advanceDisplay.setDescription("Advanced View");
 
 		simpleDisplay = new Button(null, new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
@@ -364,16 +383,15 @@ public class TaskGroupDisplayViewImpl extends AbstractPageView implements
 			public void buttonClick(ClickEvent event) {
 				advanceDisplay.removeStyleName(UIConstants.BTN_ACTIVE);
 				simpleDisplay.addStyleName(UIConstants.BTN_ACTIVE);
-				if (!isSimpleDisplay)
-				{
-				displaySimpleView();
-				isSimpleDisplay = true;
+				if (!isSimpleDisplay) {
+					displaySimpleView();
+					isSimpleDisplay = true;
 				}
 			}
 		});
 		simpleDisplay.setIcon(MyCollabResource
 				.newResource("icons/16/project/list_display.png"));
-		simpleDisplay.setDescription("Simple View");
+		simpleDisplay.setDescription("List View");
 
 		viewButtons = new ToggleButtonGroup();
 		viewButtons.addButton(simpleDisplay);
@@ -408,9 +426,7 @@ public class TaskGroupDisplayViewImpl extends AbstractPageView implements
 		basicSearchView.removeComponent(basicSearchView.getComponent(0));
 	}
 
-	
-
-	public void doSearch(TaskSearchCriteria searchCriteria) {
+	private void doSearch(TaskSearchCriteria searchCriteria) {
 		basicSearchView.getPagedBeanTable().setSearchCriteria(searchCriteria);
 	}
 
@@ -570,7 +586,6 @@ public class TaskGroupDisplayViewImpl extends AbstractPageView implements
 
 		this.addComponent(header);
 		basicSearchView.setMargin(new MarginInfo(false, false, true, false));
-		
 
 		displayActiveTasksOnly();
 		this.addComponent(basicSearchView.getWidget());
@@ -585,7 +600,64 @@ public class TaskGroupDisplayViewImpl extends AbstractPageView implements
 		UiUtils.addComponent(header, viewButtons, Alignment.MIDDLE_RIGHT);
 		this.addComponent(mainLayout);
 	}
-	
+
+	private void displayGanttChartView() {
+		gantt = new Gantt();
+		gantt.setWidth(100, Unit.PERCENTAGE);
+		gantt.setHeight(500, Unit.PIXELS);
+		gantt.setResizableSteps(true);
+		gantt.setMovableSteps(true);
+		
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(new Date());
+		gantt.setStartDate(cal.getTime());
+		cal.add(Calendar.YEAR, 1);
+		gantt.setEndDate(cal.getTime());
+		
+		cal.setTime(new Date());
+		Step step1 = new Step("First step");
+		step1.setStartDate(cal.getTime().getTime());
+		cal.add(Calendar.MONTH, 2);
+		step1.setEndDate(cal.getTime().getTime());
+		
+		gantt.addStep(step1);
+
+
+		gantt.addClickListener(new Gantt.ClickListener() {
+
+			private static final long serialVersionUID = 1L;
+
+					@Override
+		            public void onGanttClick(org.tltv.gantt.Gantt.ClickEvent event) {
+		                Notification.show("Clicked" + event.getStep().getCaption());
+		            }
+		 });
+
+		gantt.addMoveListener(new Gantt.MoveListener() {
+
+
+			private static final long serialVersionUID = 1L;
+
+					@Override
+		            public void onGanttMove(MoveEvent event) {
+		                Notification.show("Moved " + event.getStep().getCaption());
+		            }
+		});
+
+		gantt.addResizeListener(new Gantt.ResizeListener() {
+
+
+			private static final long serialVersionUID = 1L;
+
+					@Override
+		            public void onGanttResize(ResizeEvent event) {
+		                Notification.show("Resized " + event.getStep().getCaption());
+		            }
+		});
+		
+		this.addComponent(gantt);
+	}
+	 
 	private void displayActiveTaskGroups() {
 		final TaskListSearchCriteria criteria = this.createBaseSearchCriteria();
 		criteria.setStatus(new StringSearchField("Open"));
