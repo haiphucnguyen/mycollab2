@@ -1,9 +1,7 @@
 package com.esofthead.mycollab.jetty;
 
-import org.eclipse.jetty.server.session.SessionHandler;
 import org.eclipse.jetty.webapp.WebAppContext;
-
-import com.esofthead.mycollab.jetty.clustering.InfinispanSessionManager;
+import org.infinispan.remoting.transport.jgroups.JGroupsTransport;
 
 /**
  * 
@@ -22,19 +20,11 @@ public class PremiumServerRunner extends GenericServerRunner {
 				.getContextClassLoader());
 		webAppContext.setResourceBase(baseDir);
 
-		// create a InfinispanSessionManager instance
-		InfinispanSessionManager sm = new InfinispanSessionManager();
-
-		// apply the session manager to the jetty server
-		SessionHandler sh = new SessionHandler();
-		sh.setSessionManager(sm);
-
-		webAppContext.setSessionHandler(sh);
-
 		return webAppContext;
 	}
 
 	public static void main(String[] args) throws Exception {
+		JGroupsTransport a;
 		new PremiumServerRunner().run(args);
 	}
 
