@@ -18,7 +18,7 @@ package com.esofthead.mycollab.premium.module.user.accountsettings.billing.view;
 
 import com.esofthead.mycollab.common.dao.CustomerFeedbackMapper;
 import com.esofthead.mycollab.common.domain.CustomerFeedbackWithBLOBs;
-import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.billing.service.BillingService;
 import com.esofthead.mycollab.module.user.accountsettings.localization.UserI18nEnum;
@@ -76,14 +76,14 @@ public class CancelAccountViewImpl extends AbstractPageView implements
 		header.addStyleName("cancelAccountHeader");
 
 		Label headerTopLine = new Label(
-				LocalizationHelper
+				AppContext
 						.getMessage(UserI18nEnum.CANCEL_ACCOUNT_FIRST_LINE));
 		headerTopLine.addStyleName("first-line");
 		header.addComponent(headerTopLine);
 		header.setComponentAlignment(headerTopLine, Alignment.MIDDLE_CENTER);
 
 		Label headerMsg = new Label(
-				LocalizationHelper
+				AppContext
 						.getMessage(UserI18nEnum.CANCEL_ACCOUNT_MESSAGE),
 				ContentMode.HTML);
 		headerMsg.addStyleName("header-content");
@@ -91,7 +91,7 @@ public class CancelAccountViewImpl extends AbstractPageView implements
 		header.setComponentAlignment(headerMsg, Alignment.MIDDLE_CENTER);
 
 		Label headerNote = new Label(
-				LocalizationHelper.getMessage(UserI18nEnum.CANCEL_ACCOUNT_NOTE));
+				AppContext.getMessage(UserI18nEnum.CANCEL_ACCOUNT_NOTE));
 		headerNote.addStyleName("header-note");
 		header.addComponent(headerNote);
 		header.setComponentAlignment(headerNote, Alignment.MIDDLE_CENTER);
@@ -187,7 +187,7 @@ public class CancelAccountViewImpl extends AbstractPageView implements
 				.setComponentAlignment(formControls, Alignment.MIDDLE_CENTER);
 
 		Label confirmNote = new Label(
-				LocalizationHelper
+				AppContext
 						.getMessage(UserI18nEnum.CANCEL_ACCOUNT_CONFIRM_NOTE),
 				ContentMode.HTML);
 		confirmNote.setWidth("600px");

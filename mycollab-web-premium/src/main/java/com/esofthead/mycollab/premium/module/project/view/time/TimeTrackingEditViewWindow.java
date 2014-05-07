@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.premium.module.project.view.time;
 
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.project.domain.ProjectGenericTask;
 import com.esofthead.mycollab.module.project.domain.SimpleItemTimeLogging;
@@ -128,7 +130,9 @@ public class TimeTrackingEditViewWindow extends Window implements
 		saveBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
 		controlsLayout.addComponent(saveBtn);
 
-		Button cancelBtn = new Button("Cancel", new Button.ClickListener() {
+		Button cancelBtn = new Button(
+				AppContext
+						.getMessage(GenericI18Enum.BUTTON_CANCEL_LABEL), new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override

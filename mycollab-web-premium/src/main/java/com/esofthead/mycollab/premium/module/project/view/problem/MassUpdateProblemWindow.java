@@ -1,7 +1,7 @@
 package com.esofthead.mycollab.premium.module.project.view.problem;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
-import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.module.project.domain.Problem;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
@@ -76,7 +76,7 @@ public class MassUpdateProblemWindow extends MassUpdateWindow<Problem> {
 			if (propertyId.equals("raisedbyuser")) {
 				this.informationLayout.addComponent(field, "Raised by", 0, 0);
 			} else if (propertyId.equals("assigntouser")) {
-				this.informationLayout.addComponent(field, LocalizationHelper
+				this.informationLayout.addComponent(field, AppContext
 						.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD), 1, 0);
 			} else if (propertyId.equals("datedue")) {
 				this.informationLayout.addComponent(field, "Date due", 0, 1);

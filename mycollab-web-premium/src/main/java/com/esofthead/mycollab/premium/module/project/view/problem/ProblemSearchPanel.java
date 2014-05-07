@@ -5,7 +5,7 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.db.query.Param;
-import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
@@ -73,7 +73,7 @@ public class ProblemSearchPanel extends
 		Label headerText = new Label("Problem List");
 
 		final Button createBtn = new Button(
-				LocalizationHelper
+				AppContext
 						.getMessage(ProblemI18nEnum.NEW_PROBLEM_ACTION),
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
@@ -151,7 +151,7 @@ public class ProblemSearchPanel extends
 					Alignment.MIDDLE_LEFT);
 
 			final Button cancelBtn = new Button(
-					LocalizationHelper.getMessage(GenericI18Enum.BUTTON_CLEAR));
+					AppContext.getMessage(GenericI18Enum.BUTTON_CLEAR));
 			cancelBtn.setStyleName(UIConstants.THEME_BLANK_LINK);
 			cancelBtn.addStyleName("cancel-button");
 			cancelBtn.addClickListener(new Button.ClickListener() {
@@ -166,7 +166,7 @@ public class ProblemSearchPanel extends
 					Alignment.MIDDLE_CENTER);
 
 			final Button advancedSearchBtn = new Button(
-					LocalizationHelper
+					AppContext
 							.getMessage(GenericI18Enum.BUTTON_ADVANCED_SEARCH),
 					new Button.ClickListener() {
 						private static final long serialVersionUID = 1L;

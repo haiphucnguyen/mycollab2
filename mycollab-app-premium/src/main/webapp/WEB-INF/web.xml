@@ -45,7 +45,7 @@
         <param-value>
             classpath:/META-INF/spring/*-context.xml
             classpath:/META-INF/spring-cache/*-context.xml
-            classpath:/META-INF/spring-scheduler/*-context.xml
+            classpath:/META-INF/spring-scheduler-standalone/*-context.xml
             classpath:/META-INF/spring-web/initialize-context.xml
         </param-value>
     </context-param>

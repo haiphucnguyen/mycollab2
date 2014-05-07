@@ -34,7 +34,6 @@ package com.esofthead.mycollab.mobile.module.crm.view.account;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
-import com.esofthead.mycollab.core.utils.LocalizationHelper;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.mobile.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.mobile.mvp.AbstractPresenter;
@@ -77,35 +76,29 @@ public class AccountReadPresenter extends AbstractPresenter<AccountReadView> {
 
 					@Override
 					public void onDelete(final SimpleAccount data) {
-						/*ConfirmDialogExt.show(
-								UI.getCurrent(),
-								LocalizationHelper.getMessage(
-										GenericI18Enum.DELETE_DIALOG_TITLE,
-										SiteConfiguration.getSiteName()),
-								LocalizationHelper
-										.getMessage(GenericI18Enum.CONFIRM_DELETE_RECORD_DIALOG_MESSAGE),
-								LocalizationHelper
-										.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
-								LocalizationHelper
-										.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
-								new ConfirmDialog.Listener() {
-									private static final long serialVersionUID = 1L;
-
-									@Override
-									public void onClose(ConfirmDialog dialog) {
-										if (dialog.isConfirmed()) {
-											AccountService accountService = ApplicationContextUtil
-													.getSpringBean(AccountService.class);
-											accountService.removeWithSession(
-													data.getId(),
-													AppContext.getUsername(),
-													AppContext.getAccountId());
-											EventBus.getInstance().fireEvent(
-													new AccountEvent.GotoList(
-															this, null));
-										}
-									}
-								});*/
+						/*
+						 * ConfirmDialogExt.show( UI.getCurrent(),
+						 * AppContext.getMessage(
+						 * GenericI18Enum.DELETE_DIALOG_TITLE,
+						 * SiteConfiguration.getSiteName()), AppContext
+						 * .getMessage(GenericI18Enum.
+						 * CONFIRM_DELETE_RECORD_DIALOG_MESSAGE),
+						 * AppContext
+						 * .getMessage(GenericI18Enum.BUTTON_YES_LABEL),
+						 * AppContext
+						 * .getMessage(GenericI18Enum.BUTTON_NO_LABEL), new
+						 * ConfirmDialog.Listener() { private static final long
+						 * serialVersionUID = 1L;
+						 * 
+						 * @Override public void onClose(ConfirmDialog dialog) {
+						 * if (dialog.isConfirmed()) { AccountService
+						 * accountService = ApplicationContextUtil
+						 * .getSpringBean(AccountService.class);
+						 * accountService.removeWithSession( data.getId(),
+						 * AppContext.getUsername(), AppContext.getAccountId());
+						 * EventBus.getInstance().fireEvent( new
+						 * AccountEvent.GotoList( this, null)); } } });
+						 */
 
 					}
 
@@ -163,7 +156,6 @@ public class AccountReadPresenter extends AbstractPresenter<AccountReadView> {
 					}
 				});
 
-
 	}
 
 	@Override
@@ -181,7 +173,7 @@ public class AccountReadPresenter extends AbstractPresenter<AccountReadView> {
 					view.previewItem(account);
 					AppContext.addFragment(CrmLinkGenerator
 							.generateAccountPreviewLink(account.getId()),
-							LocalizationHelper.getMessage(
+							AppContext.getMessage(
 									GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
 									"Account", account.getAccountname()));
 				} else {

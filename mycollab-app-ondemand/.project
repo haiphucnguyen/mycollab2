@@ -6,7 +6,6 @@
     <project>mycollab-server-runner</project>
     <project>mycollab-config</project>
     <project>mycollab-core</project>
-    <project>mycollab-test</project>
     <project>mycollab-services-ondemand</project>
     <project>mycollab-services</project>
     <project>mycollab-dao</project>
@@ -24,6 +23,7 @@
     <project>mycollab-scheduler</project>
     <project>mycollab-jetty-session-premium</project>
     <project>mycollab-mobile</project>
+    <project>mycollab-scheduler-ondemand</project>
   </projects>
   <buildSpec>
     <buildCommand>

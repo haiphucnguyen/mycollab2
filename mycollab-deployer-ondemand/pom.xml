@@ -33,6 +33,7 @@
         <module>../mycollab-api</module>
         <module>../mycollab-api-impl</module>
         <module>../mycollab-services-ondemand</module>
+        <module>../mycollab-scheduler-ondemand</module>
         <module>../mycollab-web-premium</module>
        
         <module>../mycollab-app-ondemand</module>

@@ -1,7 +1,7 @@
 package com.esofthead.mycollab.premium.module.project.view.problem;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
-import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.module.project.localization.ProblemI18nEnum;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
@@ -19,38 +19,38 @@ public interface ProblemTableFieldDef {
 	public static TableViewField action = new TableViewField("", "id");
 
 	public static TableViewField name = new TableViewField(
-			LocalizationHelper.getMessage(ProblemI18nEnum.FORM_NAME),
+			AppContext.getMessage(ProblemI18nEnum.FORM_NAME),
 			"issuename", UIConstants.TABLE_X_LABEL_WIDTH);
 
 	public static TableViewField description = new TableViewField(
-			LocalizationHelper.getMessage(ProblemI18nEnum.FORM_DESCRIPTION),
+			AppContext.getMessage(ProblemI18nEnum.FORM_DESCRIPTION),
 			"description", UIConstants.TABLE_EX_LABEL_WIDTH);
 
 	public static TableViewField raisedby = new TableViewField(
-			LocalizationHelper.getMessage(ProblemI18nEnum.FORM_RAISED_BY),
+			AppContext.getMessage(ProblemI18nEnum.FORM_RAISED_BY),
 			"raisedByUserFullName", UIConstants.TABLE_X_LABEL_WIDTH);
 
 	public static TableViewField assignUser = new TableViewField(
-			LocalizationHelper.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD),
+			AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD),
 			"assignedUserFullName", UIConstants.TABLE_X_LABEL_WIDTH);
 
 	public static TableViewField datedue = new TableViewField(
-			LocalizationHelper.getMessage(ProblemI18nEnum.FORM_DATE_DUE),
+			AppContext.getMessage(ProblemI18nEnum.FORM_DATE_DUE),
 			"datedue", UIConstants.TABLE_DATE_WIDTH);
 
 	public static TableViewField status = new TableViewField(
-			LocalizationHelper.getMessage(ProblemI18nEnum.FORM_STATUS),
+			AppContext.getMessage(ProblemI18nEnum.FORM_STATUS),
 			"status", UIConstants.TABLE_S_LABEL_WIDTH);
 
 	public static TableViewField impact = new TableViewField(
-			LocalizationHelper.getMessage(ProblemI18nEnum.FORM_IMPACT),
+			AppContext.getMessage(ProblemI18nEnum.FORM_IMPACT),
 			"impact", UIConstants.TABLE_S_LABEL_WIDTH);
 
 	public static TableViewField priority = new TableViewField(
-			LocalizationHelper.getMessage(ProblemI18nEnum.FORM_PRIORITY),
+			AppContext.getMessage(ProblemI18nEnum.FORM_PRIORITY),
 			"priority", UIConstants.TABLE_S_LABEL_WIDTH);
 
 	public static TableViewField rating = new TableViewField(
-			LocalizationHelper.getMessage(ProblemI18nEnum.FORM_RATING),
+			AppContext.getMessage(ProblemI18nEnum.FORM_RATING),
 			"level", UIConstants.TABLE_M_LABEL_WIDTH);
 }

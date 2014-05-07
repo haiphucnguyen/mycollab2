@@ -5,7 +5,7 @@ import com.esofthead.mycollab.module.project.view.ProjectView;
 import com.esofthead.mycollab.module.project.view.parameters.StandupScreenData;
 import com.esofthead.mycollab.module.project.view.standup.IStandupContainer;
 import com.esofthead.mycollab.module.project.view.standup.IStandupPresenter;
-import com.esofthead.mycollab.shell.BillingPlanCheckerContext;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
@@ -40,7 +40,7 @@ public class StandupPresenter extends AbstractPresenter<IStandupContainer>
 
 		AbstractPresenter presenter;
 
-		if (BillingPlanCheckerContext.isStandupComponentEnable()) {
+		if (AppContext.isStandupComponentEnable()) {
 			if (data instanceof StandupScreenData.Search) {
 				presenter = PresenterResolver
 						.getPresenter(StandupListPresenter.class);

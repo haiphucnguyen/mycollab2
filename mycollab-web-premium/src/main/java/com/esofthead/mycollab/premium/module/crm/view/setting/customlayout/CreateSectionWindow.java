@@ -17,7 +17,7 @@
 package com.esofthead.mycollab.premium.module.crm.view.setting.customlayout;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
-import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.form.view.builder.type.DynaSection;
 import com.esofthead.mycollab.form.view.builder.type.DynaSection.LayoutType;
 import com.esofthead.mycollab.module.crm.view.setting.ICrmCustomView;
@@ -65,7 +65,7 @@ public class CreateSectionWindow extends Window {
 		controlLayout.setSpacing(true);
 
 		Button saveBtn = new Button(
-				LocalizationHelper.getMessage(GenericI18Enum.BUTTON_SAVE_LABEL),
+				AppContext.getMessage(GenericI18Enum.BUTTON_SAVE_LABEL),
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
@@ -87,7 +87,7 @@ public class CreateSectionWindow extends Window {
 		controlLayout.setComponentAlignment(saveBtn, Alignment.MIDDLE_LEFT);
 
 		Button cancelBtn = new Button(
-				LocalizationHelper
+				AppContext
 						.getMessage(GenericI18Enum.BUTTON_CANCEL_LABEL),
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;

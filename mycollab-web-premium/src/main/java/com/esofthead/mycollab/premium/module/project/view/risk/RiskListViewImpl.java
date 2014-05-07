@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.vaadin.teemu.ratingstars.RatingStars;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
-import com.esofthead.mycollab.core.utils.LocalizationHelper;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
@@ -245,7 +245,7 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
 		layout.addComponent(this.selectOptionButton);
 
 		final Button deleteBtn = new Button(
-				LocalizationHelper.getMessage(GenericI18Enum.BUTTON_DELETE));
+				AppContext.getMessage(GenericI18Enum.BUTTON_DELETE));
 		deleteBtn.setEnabled(CurrentProjectVariables
 				.canAccess(ProjectRolePermissionCollections.RISKS));
 
@@ -516,7 +516,7 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
 		final HorizontalLayout layout = new HorizontalLayout();
 
 		final Button createBtn = new Button(
-				LocalizationHelper.getMessage(RiskI18nEnum.NEW_RISK_ACTION),
+				AppContext.getMessage(RiskI18nEnum.NEW_RISK_ACTION),
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
