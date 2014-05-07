@@ -77,8 +77,8 @@ public class SetupServlet extends HttpServlet {
 		
 		Map<String, String> defaultUrls = new HashMap<String, String>();
 		
-		defaultUrls.put("cdn_url", SiteConfiguration.getCdnUrl());
-		defaultUrls.put("app_url", SiteConfiguration.getAppUrl());
+		defaultUrls.put("cdn_url", "/assets/images/email/");
+		defaultUrls.put("app_url", "/");
 		
 		SharingOptions sharingOptions = SiteConfiguration
 				.getSharingOptions();

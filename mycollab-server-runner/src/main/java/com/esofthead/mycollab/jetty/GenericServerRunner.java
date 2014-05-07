@@ -20,7 +20,6 @@ import java.io.File;
 import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.util.Collection;
 
 import javax.naming.NamingException;
 import javax.sql.DataSource;
@@ -46,6 +45,7 @@ import org.slf4j.LoggerFactory;
 import com.esofthead.mycollab.configuration.DatabaseConfiguration;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.servlet.AssetHttpServletRequestHandler;
 import com.esofthead.mycollab.servlet.DatabaseValidate;
 import com.esofthead.mycollab.servlet.InstallationServlet;
 import com.esofthead.mycollab.servlet.SetupServlet;
@@ -64,6 +64,7 @@ public abstract class GenericServerRunner {
 	private Server server;
 	private int port = 0;
 	public static boolean isFirstTimeRunner = false;
+	private InstallationServlet install;
 
 	public abstract WebAppContext buildContext(String baseDir);
 
@@ -172,11 +173,16 @@ public abstract class GenericServerRunner {
 		ServletContextHandler context = new ServletContextHandler(
 				ServletContextHandler.SESSIONS);
 		context.setContextPath("/");
+		
+		install = new InstallationServlet();
 		context.addServlet(new ServletHolder(new SetupServlet()), "/setup");
-		context.addServlet(new ServletHolder(new InstallationServlet()),
+		context.addServlet(new ServletHolder(install),
 				"/install");
 		context.addServlet(new ServletHolder(new DatabaseValidate()),
 				"/validate");
+
+		context.addServlet(new ServletHolder(
+				new AssetHttpServletRequestHandler()), "/assets/*");
 		context.addLifeCycleListener(new ServerLifeCycleListener(server));
 
 		server.setStopAtShutdown(true);
@@ -190,6 +196,7 @@ public abstract class GenericServerRunner {
 		ShutdownMonitor.getInstance().start();
 
 		server.join();
+
 	}
 
 	public void usage(String error) {
@@ -298,6 +305,8 @@ public abstract class GenericServerRunner {
 									appContext, "jdbc/mycollabdatasource",
 									buildDataSource());
 							server.addBean(appContext);
+							install.setWaitFlag(false);
+						
 						} catch (NamingException e) {
 							throw new MyCollabException(e);
 						}
