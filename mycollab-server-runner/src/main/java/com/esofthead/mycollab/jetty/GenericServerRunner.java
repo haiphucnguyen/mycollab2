@@ -29,7 +29,7 @@ import org.eclipse.jetty.plus.webapp.EnvConfiguration;
 import org.eclipse.jetty.plus.webapp.PlusConfiguration;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.server.handler.HandlerList;
+import org.eclipse.jetty.server.handler.ContextHandlerCollection;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.util.component.LifeCycle;
@@ -64,7 +64,11 @@ public abstract class GenericServerRunner {
 	private Server server;
 	private int port = 0;
 	public static boolean isFirstTimeRunner = false;
+
 	private InstallationServlet install;
+
+	private ServletContextHandler installationContextHandler;
+	private ContextHandlerCollection contexts;
 
 	public abstract WebAppContext buildContext(String baseDir);
 
@@ -167,29 +171,31 @@ public abstract class GenericServerRunner {
 	}
 
 	public void execute() throws Exception {
-		server = new Server((port > 0) ? port
-				: SiteConfiguration.getServerPort());
+		server = new Server((port > 0) ? port : 8080);
 
-		ServletContextHandler context = new ServletContextHandler(
+		installationContextHandler = new ServletContextHandler(
 				ServletContextHandler.SESSIONS);
-		context.setContextPath("/");
-		
-		install = new InstallationServlet();
-		context.addServlet(new ServletHolder(new SetupServlet()), "/setup");
-		context.addServlet(new ServletHolder(install),
-				"/install");
-		context.addServlet(new ServletHolder(new DatabaseValidate()),
-				"/validate");
+		installationContextHandler.setContextPath("/");
 
-		context.addServlet(new ServletHolder(
+		install = new InstallationServlet();
+		installationContextHandler.addServlet(new ServletHolder(
+				new SetupServlet()), "/setup");
+		installationContextHandler.addServlet(new ServletHolder(install),
+				"/install");
+		installationContextHandler.addServlet(new ServletHolder(
+				new DatabaseValidate()), "/validate");
+
+		installationContextHandler.addServlet(new ServletHolder(
 				new AssetHttpServletRequestHandler()), "/assets/*");
-		context.addLifeCycleListener(new ServerLifeCycleListener(server));
+		installationContextHandler
+				.addLifeCycleListener(new ServerLifeCycleListener(server));
 
 		server.setStopAtShutdown(true);
 
-		HandlerList handlers = new HandlerList();
-		handlers.setHandlers(new Handler[] { context });
-		server.setHandler(handlers);
+		contexts = new ContextHandlerCollection();
+		contexts.setHandlers(new Handler[] { installationContextHandler });
+
+		server.setHandler(contexts);
 
 		server.start();
 
@@ -215,7 +221,7 @@ public abstract class GenericServerRunner {
 	}
 
 	private DataSource buildDataSource() {
-
+		SiteConfiguration.loadInstance();
 		DatabaseConfiguration dbConf = SiteConfiguration
 				.getDatabaseConfiguration();
 		BoneCPDataSource dataSource = new BoneCPDataSource();
@@ -304,9 +310,10 @@ public abstract class GenericServerRunner {
 							org.eclipse.jetty.plus.jndi.Resource mydatasource = new org.eclipse.jetty.plus.jndi.Resource(
 									appContext, "jdbc/mycollabdatasource",
 									buildDataSource());
-							server.addBean(appContext);
+							contexts.removeHandler(installationContextHandler);
+							contexts.addHandler(appContext);
 							install.setWaitFlag(false);
-						
+
 						} catch (NamingException e) {
 							throw new MyCollabException(e);
 						}

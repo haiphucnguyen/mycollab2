@@ -13,9 +13,10 @@
     <project>mycollab-reporting</project>
     <project>mycollab-caching</project>
     <project>mycollab-jackrabbit</project>
+    <project>mycollab-mobile</project>
+    <project>mycollab-ui</project>
     <project>mycollab-web-community</project>
     <project>mycollab-web</project>
-    <project>mycollab-ui</project>
     <project>mycollab-esb</project>
     <project>mycollab-scheduler</project>
   </projects>
