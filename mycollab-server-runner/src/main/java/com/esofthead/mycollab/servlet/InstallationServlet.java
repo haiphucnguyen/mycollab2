@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
+import org.apache.commons.mail.*;
 
 import com.esofthead.mycollab.core.MyCollabException;
 
@@ -80,14 +81,18 @@ public class InstallationServlet extends HttpServlet {
 		templateContext.put("smtpPassword", smtpPassword);
 		templateContext.put("smtpTLSEnable", tls);
 
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			Connection connection = DriverManager.getConnection(dbUrl,
+					dbUserName, dbPassword);
+			DatabaseMetaData metaData = connection.getMetaData();
+		} catch (Exception e) {
+			PrintWriter out = response.getWriter();
+			out.write("Cannot establish connection to database. Make sure your inputs are correct.");
+			return;
+		}
 		
-		  try { Class.forName("com.mysql.jdbc.Driver"); Connection connection =
-		  DriverManager.getConnection(dbUrl, dbUserName, dbPassword);
-		  DatabaseMetaData metaData = connection.getMetaData(); } catch
-		  (Exception e) { PrintWriter out = response.getWriter(); out.write(
-		 "Cannot establish connection to database. Make sure your inputs are correct."
-		 ); return; }
-		 
+		
 
 		File confFolder = new File(System.getProperty("user.dir"), "conf");
 
@@ -115,7 +120,28 @@ public class InstallationServlet extends HttpServlet {
 				outStream.write(writer.toString().getBytes());
 				outStream.flush();
 				outStream.close();
-
+				
+				try { 
+					Email email = new SimpleEmail();
+					email.setHostName(stmpHost);
+					email.setSmtpPort(mailServerPort);
+					email.setAuthenticator(new DefaultAuthenticator(smtpUserName,smtpPassword));
+					if (tls.equals("true"))
+					{
+						email.setSSLOnConnect(true);
+					}
+					else {
+						email.setSSLOnConnect(false);
+					}
+					email.setFrom("user@gmail.com");
+					email.setSubject("TestMail");
+					email.setMsg("This is a test mail ... :-)");
+					email.addTo("foo@bar.com");
+					email.send();
+				} catch (EmailException e){
+					PrintWriter out = response.getWriter();
+					out.write("Something wrong with Stmp. You can change your config later in the file src/main/conf/mycollab.properties.");
+				}
 				threadWait();
 
 			} catch (Exception e) {
