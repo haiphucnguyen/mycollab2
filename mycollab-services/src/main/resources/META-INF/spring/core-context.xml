@@ -13,7 +13,7 @@
     <!-- <context:component-scan base-package="com.esofthead.mycollab" /> -->
 
     <reflections:component-scan base-package="com.esofthead.mycollab"
-        collect="true" save="false" parallel="false">
+        collect="false" save="false" parallel="false">
 
         <!-- sorry for that, a little hackery until next version -->
         <reflections:exclude-filter type="regex"
