@@ -30,7 +30,17 @@
         <property name="typeAliases"
             value="com.esofthead.mycollab.core.persistence.VelocityDriverDeclare" />
         <property name="typeHandlersPackage" value="com.esofthead.mybatis.plugin.ext" />
-        <property name="mapperLocations" value="classpath*:sqlMap/**/*.xml" />
+        <property name="mapperLocations">
+            <list>
+                <value>classpath*:sqlMap/common/*.xml</value>
+                <value>classpath*:sqlMap/user/*.xml</value>
+                <value>classpath*:sqlMap/form/*.xml</value>
+                <value>classpath*:sqlMap/ecm/*.xml</value>
+                <value>classpath*:sqlMap/crm/*.xml</value>
+                <value>classpath*:sqlMap/project/*.xml</value>
+                <value>classpath*:sqlMap/tracker/*.xml</value>
+            </list>
+        </property>
     </bean>
 
     <bean class="org.mybatis.spring.SqlSessionTemplate" id="sqlMapClient">

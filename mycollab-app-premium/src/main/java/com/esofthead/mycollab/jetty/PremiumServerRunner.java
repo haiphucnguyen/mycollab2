@@ -1,7 +1,6 @@
 package com.esofthead.mycollab.jetty;
 
 import org.eclipse.jetty.webapp.WebAppContext;
-import org.infinispan.remoting.transport.jgroups.JGroupsTransport;
 
 /**
  * 
@@ -24,7 +23,6 @@ public class PremiumServerRunner extends GenericServerRunner {
 	}
 
 	public static void main(String[] args) throws Exception {
-		JGroupsTransport a;
 		new PremiumServerRunner().run(args);
 	}
 
