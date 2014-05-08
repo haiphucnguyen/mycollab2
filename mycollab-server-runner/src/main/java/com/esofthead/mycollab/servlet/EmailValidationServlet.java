@@ -13,7 +13,12 @@ import org.apache.commons.mail.Email;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.SimpleEmail;
 
-
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 4.1
+ * 
+ */
 public class EmailValidationServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	protected void doGet(HttpServletRequest request,
