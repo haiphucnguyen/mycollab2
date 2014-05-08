@@ -6,7 +6,6 @@
     <project>mycollab-server-runner</project>
     <project>mycollab-config</project>
     <project>mycollab-core</project>
-    <project>mycollab-test</project>
     <project>mycollab-mobile</project>
     <project>mycollab-services</project>
     <project>mycollab-dao</project>
