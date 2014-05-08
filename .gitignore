@@ -165,3 +165,5 @@ extras/vaadin/addons/ckeditor/bin/target/classes/.gitignore
 mycollab-test/src/main/resources/mycollab-test.properties
 mycollab-services/velocity.log
 mycollab-scheduler-ondemand/target
+mycollab-scheduler-ondemand/pom.xml.versionsBackup
+mycollab-scheduler-ondemand/pom.xml.versionsBackup
