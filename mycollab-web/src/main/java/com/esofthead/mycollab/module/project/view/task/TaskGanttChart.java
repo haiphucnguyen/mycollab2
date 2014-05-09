@@ -132,7 +132,7 @@ class TaskGanttChart extends VerticalLayout {
 					/* Add style for row block */
 					if (task.getPercentagecomplete() != null
 							&& 100d == task.getPercentagecomplete()) {
-						step.setBackgroundColor("7df968");
+						step.setBackgroundColor("53C540");
 						step.setStyleName("completed");
 					} else {
 						if ("Pending".equals(task.getStatus())) {
@@ -140,7 +140,7 @@ class TaskGanttChart extends VerticalLayout {
 						} else if ("Open".equals(task.getStatus())
 								&& endDate.before(new GregorianCalendar()
 										.getTime())) {
-							step.setBackgroundColor("fb4e5a");
+							step.setBackgroundColor("FC4350");
 						}
 					}
 
@@ -205,11 +205,13 @@ class TaskGanttChart extends VerticalLayout {
 		panel.setContent(controls);
 
 		start = new DateField("Start date");
+		start.setValue(gantt.getStartDate());
 		start.setResolution(Resolution.SECOND);
 		start.setImmediate(true);
 		start.addValueChangeListener(startDateValueChangeListener);
 
 		end = new DateField("End date");
+		end.setValue(gantt.getEndDate());
 		end.setResolution(Resolution.SECOND);
 		end.setImmediate(true);
 		end.addValueChangeListener(endDateValueChangeListener);

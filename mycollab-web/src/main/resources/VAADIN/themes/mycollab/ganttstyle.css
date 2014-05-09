@@ -188,6 +188,8 @@
 	border-radius: 0px;
 	height: 17px !important;
 }
+.gantt .bar a{
+}
 
 .gantt .bar-label img{
 	vertical-align: bottom;
