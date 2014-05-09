@@ -182,22 +182,16 @@ public class AppContext implements Serializable {
 	public static String getMessage(Enum key) {
 		try {
 			return getInstance().messageHelper.getMessage(key);
-		} catch (NullPointerException e) {
-			return LocalizationHelper.getMessage(key);
 		} catch (Exception e) {
-			log.error("Can not find resource key {}", key);
-			return "Undefined";
+			return LocalizationHelper.getMessage(key);
 		}
 	}
 
 	public static String getMessage(Enum key, Object... objects) {
 		try {
 			return getInstance().messageHelper.getMessage(key, objects);
-		} catch (NullPointerException e) {
-			return LocalizationHelper.getMessage(key, objects);
 		} catch (Exception e) {
-			log.error("Can not find resource key {}", key);
-			return "Undefined";
+			return LocalizationHelper.getMessage(key, objects);
 		}
 	}
 
