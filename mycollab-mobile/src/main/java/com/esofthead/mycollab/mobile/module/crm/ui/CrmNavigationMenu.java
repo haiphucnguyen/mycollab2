@@ -106,15 +106,26 @@ public class CrmNavigationMenu extends AbstractNavigationMenu {
 							new ContactEvent.GotoList(this, null));
 				}
 
-				for (final Iterator<MenuButton> it = CrmNavigationMenu.this
-						.buttonIterator(); it.hasNext();) {
-					final MenuButton btn = it.next();
-					btn.removeStyleName("isSelected");
-				}
-
-				event.getButton().addStyleName("isSelected");
+				/*
+				 * for (final Iterator<MenuButton> it = CrmNavigationMenu.this
+				 * .buttonIterator(); it.hasNext();) { final MenuButton btn =
+				 * it.next(); btn.removeStyleName("isSelected"); }
+				 * 
+				 * event.getButton().addStyleName("isSelected");
+				 */
 			}
 		};
+	}
+
+	public void selectButton(String caption) {
+		for (final Iterator<MenuButton> it = CrmNavigationMenu.this
+				.buttonIterator(); it.hasNext();) {
+			final MenuButton btn = it.next();
+			btn.removeStyleName("isSelected");
+			if (btn.getCaption().equals(caption)) {
+				btn.addStyleName("isSelected");
+			}
+		}
 	}
 
 	public Iterator<MenuButton> buttonIterator() {

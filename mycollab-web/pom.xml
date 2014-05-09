@@ -160,8 +160,8 @@
 
         <dependency>
             <groupId>org.tltv.gantt</groupId>
-            <artifactId>gantt-addon</artifactId>
-            <version>0.2.1</version>
+            <artifactId>gantt</artifactId>
+            <version>0.2.2-SNAPSHOT</version>
         </dependency>
 
         <dependency>
