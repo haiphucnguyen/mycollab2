@@ -5,7 +5,7 @@
     <name>mycollab-parent</name>
     <groupId>com.esofthead.mycollab</groupId>
     <artifactId>parent</artifactId>
-    <version>4.0.0</version>
+    <version>4.1.0</version>
     <packaging>pom</packaging>
     <properties>
         <springVersion>3.2.6.RELEASE</springVersion>
@@ -209,6 +209,27 @@
     </dependencies>
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.reflections</groupId>
+                <artifactId>reflections-maven</artifactId>
+                <version>0.9.9-RC1</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>reflections</goal>
+                        </goals>
+                        <phase>process-classes</phase>
+                    </execution>
+                </executions>
+                <configuration>
+                    <!-- Set com.esofthead.mycollab because it's the basePath for spring scanning! -->
+                    <destinations>${project.build.outputDirectory}/META-INF/reflections/com.esofthead.mycollab-reflections.xml</destinations>
+                    <includeExclude>+com.esofthead.mycollab.*</includeExclude>
+                    <parallel>true</parallel>
+                    <!-- <serializer>JavaCodeSerializer</serializer> -->
+                </configuration>
+            </plugin>
+
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>versions-maven-plugin</artifactId>

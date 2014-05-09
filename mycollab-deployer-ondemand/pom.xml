@@ -5,7 +5,7 @@
     <name>mycollab-deployer-ondemand</name>
     <groupId>com.esofthead.mycollab</groupId>
     <artifactId>mycollab-deployer-ondemand</artifactId>
-    <version>4.0.0</version>
+    <version>4.1.0</version>
     <packaging>pom</packaging>
     <modules>
         <module>../mycollab-parent</module>
@@ -21,7 +21,7 @@
         <module>../mycollab-jackrabbit</module>
         <module>../mycollab-migration</module>
         <module>../mycollab-services</module>
-        <module>../mycollab-services-premium</module>
+        <module>../mycollab-services-ondemand</module>
         <module>../mycollab-esb</module>
         <module>../mycollab-jetty-session-premium</module>
         <module>../mycollab-caching-premium</module>
@@ -32,7 +32,6 @@
         <module>../mycollab-web</module>
         <module>../mycollab-api</module>
         <module>../mycollab-api-impl</module>
-        <module>../mycollab-services-ondemand</module>
         <module>../mycollab-scheduler-ondemand</module>
         <module>../mycollab-web-premium</module>
        
