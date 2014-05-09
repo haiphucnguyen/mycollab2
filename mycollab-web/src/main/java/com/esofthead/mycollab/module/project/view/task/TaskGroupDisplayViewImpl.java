@@ -16,13 +16,6 @@
  */
 package com.esofthead.mycollab.module.project.view.task;
 
-import java.util.Calendar;
-import java.util.Date;
-
-import org.tltv.gantt.Gantt;
-import org.tltv.gantt.Gantt.MoveEvent;
-import org.tltv.gantt.Gantt.ResizeEvent;
-import org.tltv.gantt.client.shared.Step;
 import org.vaadin.hene.popupbutton.PopupButton;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
@@ -61,7 +54,6 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
-import com.vaadin.ui.Notification;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
@@ -81,9 +73,9 @@ public class TaskGroupDisplayViewImpl extends AbstractPageView implements
 	private TaskGroupDisplayWidget taskLists;
 
 	private Button reOrderBtn;
-	
+
 	private Button viewGanttChartBtn;
-	private Gantt gantt;
+	TaskGanttChart ganttChart;
 
 	private PopupButton exportButtonControl;
 
@@ -274,8 +266,7 @@ public class TaskGroupDisplayViewImpl extends AbstractPageView implements
 		this.taskGroupSelection.setContent(filterBtnLayout);
 
 		final Button newTaskListBtn = new Button(
-				AppContext
-						.getMessage(TaskI18nEnum.NEW_TASKGROUP_ACTION),
+				AppContext.getMessage(TaskI18nEnum.NEW_TASKGROUP_ACTION),
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
@@ -297,14 +288,16 @@ public class TaskGroupDisplayViewImpl extends AbstractPageView implements
 		header.setComponentAlignment(newTaskListBtn, Alignment.MIDDLE_RIGHT);
 
 		// Add gantt chart button
-		viewGanttChartBtn = new Button("View Gantt chart", new Button.ClickListener() {
-			
-			@Override
-			public void buttonClick(ClickEvent arg0) {
-				displayGanttChartView();
-				
-			}
-		});
+		viewGanttChartBtn = new Button("View Gantt chart",
+				new Button.ClickListener() {
+
+					@Override
+					public void buttonClick(ClickEvent arg0) {
+						displayGanttChartView();
+
+					}
+				});
+		viewGanttChartBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
 		UiUtils.addComponent(header, viewGanttChartBtn, Alignment.MIDDLE_RIGHT);
 
 		this.reOrderBtn = new Button(null, new Button.ClickListener() {
@@ -516,8 +509,7 @@ public class TaskGroupDisplayViewImpl extends AbstractPageView implements
 		UiUtils.addComponent(control, searchBtn, Alignment.MIDDLE_CENTER);
 
 		final Button advancedSearchBtn = new Button(
-				AppContext
-						.getMessage(GenericI18Enum.BUTTON_ADVANCED_SEARCH),
+				AppContext.getMessage(GenericI18Enum.BUTTON_ADVANCED_SEARCH),
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
@@ -602,62 +594,21 @@ public class TaskGroupDisplayViewImpl extends AbstractPageView implements
 	}
 
 	private void displayGanttChartView() {
-		gantt = new Gantt();
-		gantt.setWidth(100, Unit.PERCENTAGE);
-		gantt.setHeight(500, Unit.PIXELS);
-		gantt.setResizableSteps(true);
-		gantt.setMovableSteps(true);
-		
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(new Date());
-		gantt.setStartDate(cal.getTime());
-		cal.add(Calendar.YEAR, 1);
-		gantt.setEndDate(cal.getTime());
-		
-		cal.setTime(new Date());
-		Step step1 = new Step("First step");
-		step1.setStartDate(cal.getTime().getTime());
-		cal.add(Calendar.MONTH, 2);
-		step1.setEndDate(cal.getTime().getTime());
-		
-		gantt.addStep(step1);
 
+		if (this.getComponentIndex(ganttChart) < 0) {
+			viewGanttChartBtn.setStyleName(UIConstants.THEME_ORANGE_LINK);
+			
+			
+			ganttChart = new TaskGanttChart();
+			ganttChart.setStyleName(UIConstants.BORDER_BOX_2);
 
-		gantt.addClickListener(new Gantt.ClickListener() {
-
-			private static final long serialVersionUID = 1L;
-
-					@Override
-		            public void onGanttClick(org.tltv.gantt.Gantt.ClickEvent event) {
-		                Notification.show("Clicked" + event.getStep().getCaption());
-		            }
-		 });
-
-		gantt.addMoveListener(new Gantt.MoveListener() {
-
-
-			private static final long serialVersionUID = 1L;
-
-					@Override
-		            public void onGanttMove(MoveEvent event) {
-		                Notification.show("Moved " + event.getStep().getCaption());
-		            }
-		});
-
-		gantt.addResizeListener(new Gantt.ResizeListener() {
-
-
-			private static final long serialVersionUID = 1L;
-
-					@Override
-		            public void onGanttResize(ResizeEvent event) {
-		                Notification.show("Resized " + event.getStep().getCaption());
-		            }
-		});
-		
-		this.addComponent(gantt);
+			this.addComponent(ganttChart, 1);
+		} else {
+			this.removeComponent(ganttChart);
+			viewGanttChartBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
+		}
 	}
-	 
+
 	private void displayActiveTaskGroups() {
 		final TaskListSearchCriteria criteria = this.createBaseSearchCriteria();
 		criteria.setStatus(new StringSearchField("Open"));
