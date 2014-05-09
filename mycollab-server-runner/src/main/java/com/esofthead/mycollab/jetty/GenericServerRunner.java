@@ -49,7 +49,6 @@ import com.esofthead.mycollab.servlet.AssetHttpServletRequestHandler;
 import com.esofthead.mycollab.servlet.DatabaseValidate;
 import com.esofthead.mycollab.servlet.EmailValidationServlet;
 import com.esofthead.mycollab.servlet.InstallationServlet;
-import com.esofthead.mycollab.servlet.NotInstallInfoServlet;
 import com.esofthead.mycollab.servlet.SetupServlet;
 import com.jolbox.bonecp.BoneCPDataSource;
 
@@ -183,8 +182,6 @@ public abstract class GenericServerRunner {
 			installationContextHandler.setContextPath("/");
 
 			install = new InstallationServlet();
-			installationContextHandler.addServlet(new ServletHolder(
-					new SetupServlet()), "/setup");
 			installationContextHandler.addServlet(new ServletHolder(install),
 					"/install");
 			installationContextHandler.addServlet(new ServletHolder(
@@ -195,7 +192,7 @@ public abstract class GenericServerRunner {
 			installationContextHandler.addServlet(new ServletHolder(
 					new AssetHttpServletRequestHandler()), "/assets/*");
 			installationContextHandler.addServlet(new ServletHolder(
-					new NotInstallInfoServlet()), "/*");
+					new SetupServlet()), "/*");
 			installationContextHandler
 					.addLifeCycleListener(new ServerLifeCycleListener(server));
 
