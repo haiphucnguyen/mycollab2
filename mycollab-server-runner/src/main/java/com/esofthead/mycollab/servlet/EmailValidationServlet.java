@@ -25,7 +25,7 @@ public class EmailValidationServlet extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		String smtpUserName = request.getParameter("smtpUserName");
 		String smtpPassword = request.getParameter("smtpPassword");
-		String stmpHost = request.getParameter("stmpHost");
+		String smtpHost = request.getParameter("smtpHost");
 		String smtpPort = request.getParameter("smtpPort");
 		String tls = request.getParameter("tls");
 		
@@ -37,7 +37,7 @@ public class EmailValidationServlet extends HttpServlet {
 		}
 		try { 
 			Email email = new SimpleEmail();
-			email.setHostName(stmpHost);
+			email.setHostName(smtpHost);
 			email.setSmtpPort(mailServerPort);
 			email.setAuthenticator(new DefaultAuthenticator(smtpUserName,smtpPassword));
 			if (tls.equals("true"))
