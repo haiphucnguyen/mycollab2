@@ -297,7 +297,7 @@ public class TaskGroupDisplayViewImpl extends AbstractPageView implements
 
 					}
 				});
-		viewGanttChartBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
+		viewGanttChartBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 		UiUtils.addComponent(header, viewGanttChartBtn, Alignment.MIDDLE_RIGHT);
 
 		this.reOrderBtn = new Button(null, new Button.ClickListener() {
@@ -605,7 +605,7 @@ public class TaskGroupDisplayViewImpl extends AbstractPageView implements
 			this.addComponent(ganttChart, 1);
 		} else {
 			this.removeComponent(ganttChart);
-			viewGanttChartBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
+			viewGanttChartBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 		}
 	}
 

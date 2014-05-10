@@ -4,19 +4,19 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.UUID;
 
 import org.tltv.gantt.Gantt;
+import org.tltv.gantt.Gantt.MoveEvent;
 import org.tltv.gantt.Gantt.ResizeEvent;
 import org.tltv.gantt.client.shared.Step;
 import org.tltv.gantt.client.shared.Step.CaptionMode;
 import org.vaadin.dialogs.ConfirmDialog;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
-import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
-import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
 import com.esofthead.mycollab.module.project.ProjectResources;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
@@ -43,6 +43,7 @@ class TaskGanttChart extends VerticalLayout {
 	private Gantt gantt;
 	private List<SimpleTask> taskList;
 	List<Step> stepList;
+	LinkedHashMap<Step, SimpleTask> stepMap;
 	private NativeSelect reso;
 
 	private DateField start;
@@ -58,6 +59,7 @@ class TaskGanttChart extends VerticalLayout {
 	@SuppressWarnings("unchecked")
 	private void constructGanttChart() {
 		stepList = new ArrayList<Step>();
+		stepMap = new LinkedHashMap<Step, SimpleTask>();
 		final ProjectTaskService taskService = ApplicationContextUtil
 				.getSpringBean(ProjectTaskService.class);
 		TaskSearchCriteria criteria = new TaskSearchCriteria();
@@ -68,8 +70,8 @@ class TaskGanttChart extends VerticalLayout {
 		gantt = new Gantt();
 		gantt.setWidth(100, Unit.PERCENTAGE);
 		gantt.setHeight(350, Unit.PIXELS);
-		gantt.setResizableSteps(false);
-		gantt.setMovableSteps(false);
+		gantt.setResizableSteps(true);
+		gantt.setMovableSteps(true);
 
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(new Date());
@@ -79,19 +81,69 @@ class TaskGanttChart extends VerticalLayout {
 		cal.add(Calendar.DATE, 37);
 		gantt.setEndDate(cal.getTime());
 
-		
-
 		updateStepList();
+		gantt.addMoveListener(new Gantt.MoveListener() {
+
+			@Override
+			public void onGanttMove(MoveEvent event) {
+				// Notification.show("Moved " + event.getStep().getCaption());
+				SimpleTask task = stepMap.get(event.getStep());
+				Calendar cal = Calendar.getInstance();
+				cal.setTime(new Date());
+
+				GregorianCalendar gc = new GregorianCalendar();
+
+				/* check endate after deadline */
+				gc.setTimeInMillis(event.getEndDate());
+				if (task.getEnddate() != null
+						&& task.getEnddate().after(gc.getTime())) {
+					task.setEnddate(null);
+				}
+				task.setDeadline(gc.getTime());
+
+				gc.setTimeInMillis(event.getStartDate());
+				task.setStartdate(gc.getTime());
+
+				taskService.updateWithSession(task, AppContext.getUsername());
+			}
+		});
+
+		gantt.addResizeListener(new Gantt.ResizeListener() {
+
+			@Override
+			public void onGanttResize(ResizeEvent event) {
+				// Notification.show("Resized " + event.getStep().getCaption());
+				SimpleTask task = stepMap.get(event.getStep());
+				Calendar cal = Calendar.getInstance();
+				cal.setTime(new Date());
+
+				GregorianCalendar gc = new GregorianCalendar();
+
+				/* check endate after deadline */
+				gc.setTimeInMillis(event.getEndDate());
+				gc.setTimeInMillis(event.getEndDate());
+				if (task.getEnddate() != null
+						&& task.getEnddate().after(gc.getTime())) {
+					task.setEnddate(null);
+				}
+				task.setDeadline(gc.getTime());
+
+				gc.setTimeInMillis(event.getStartDate());
+				task.setStartdate(gc.getTime());
+
+				taskService.updateWithSession(task, AppContext.getUsername());
+			}
+		});
 	}
 
 	private void updateStepList() {
 
 		/* Clear current Gantt chart */
-		if (!stepList.isEmpty()) {
-			for (Step step : stepList) {
-				gantt.removeStep(step);
+		if (stepMap != null) {
+			for (Step key : stepMap.keySet()) {
+				gantt.removeStep(key);
 			}
-			stepList.clear();
+			stepMap = new LinkedHashMap<Step, SimpleTask>();
 		}
 
 		/* Add steps */
@@ -113,15 +165,11 @@ class TaskGanttChart extends VerticalLayout {
 					endDate = task.getDeadline();
 				} else if (task.getActualenddate() != null) {
 					endDate = task.getActualenddate();
-				} else if (endDate == null && startDate != null) {
-					GregorianCalendar gc = new GregorianCalendar();
-					gc.setTime(startDate);
-					gc.add(Calendar.YEAR, 1);
-					endDate = gc.getTime();
 				}
 
 				/* Add row block if both stardate and endate avalable */
-				if (startDate != null && gantt.getStartDate().before(startDate)
+				if (startDate != null && endDate != null
+						&& gantt.getStartDate().before(startDate)
 						&& gantt.getEndDate().after(startDate)) {
 					Step step = new Step();
 					step.setCaption(tooltipGenerate(task));
@@ -144,15 +192,16 @@ class TaskGanttChart extends VerticalLayout {
 						}
 					}
 
-					stepList.add(step);
+					// stepList.add(step);
+					stepMap.put(step, task);
 				}
 
 			}
 		}
 
-		if (!stepList.isEmpty()) {
-			for (Step step : stepList) {
-				gantt.addStep(step);
+		if (stepMap != null) {
+			for (Step key : stepMap.keySet()) {
+				gantt.addStep(key);
 			}
 		}
 
