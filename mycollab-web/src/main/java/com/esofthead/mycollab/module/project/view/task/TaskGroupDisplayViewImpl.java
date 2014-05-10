@@ -288,7 +288,7 @@ public class TaskGroupDisplayViewImpl extends AbstractPageView implements
 		header.setComponentAlignment(newTaskListBtn, Alignment.MIDDLE_RIGHT);
 
 		// Add gantt chart button
-		viewGanttChartBtn = new Button("View Gantt chart",
+		viewGanttChartBtn = new Button("Gantt chart",
 				new Button.ClickListener() {
 
 					@Override
@@ -298,6 +298,7 @@ public class TaskGroupDisplayViewImpl extends AbstractPageView implements
 					}
 				});
 		viewGanttChartBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+		viewGanttChartBtn.setDescription("Toggle Gantt chart view");
 		UiUtils.addComponent(header, viewGanttChartBtn, Alignment.MIDDLE_RIGHT);
 
 		this.reOrderBtn = new Button(null, new Button.ClickListener() {
