@@ -290,6 +290,7 @@ public class TaskGroupDisplayViewImpl extends AbstractPageView implements
 		// Add gantt chart button
 		viewGanttChartBtn = new Button("Gantt chart",
 				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
 
 					@Override
 					public void buttonClick(ClickEvent arg0) {
@@ -297,6 +298,7 @@ public class TaskGroupDisplayViewImpl extends AbstractPageView implements
 
 					}
 				});
+		
 		viewGanttChartBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 		viewGanttChartBtn.setDescription("Toggle Gantt chart view");
 		UiUtils.addComponent(header, viewGanttChartBtn, Alignment.MIDDLE_RIGHT);

@@ -1,6 +1,5 @@
 package com.esofthead.mycollab.module.project.view.task;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -38,12 +37,18 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 4.1
+ * 
+ */
 class TaskGanttChart extends VerticalLayout {
 	private static final long serialVersionUID = 1L;
-	private Gantt gantt;
 	private List<SimpleTask> taskList;
-	List<Step> stepList;
-	LinkedHashMap<Step, SimpleTask> stepMap;
+
+	private Gantt gantt;
+	private LinkedHashMap<Step, SimpleTask> stepMap;
 	private NativeSelect reso;
 
 	private DateField start;
@@ -58,7 +63,6 @@ class TaskGanttChart extends VerticalLayout {
 
 	@SuppressWarnings("unchecked")
 	private void constructGanttChart() {
-		stepList = new ArrayList<Step>();
 		stepMap = new LinkedHashMap<Step, SimpleTask>();
 		final ProjectTaskService taskService = ApplicationContextUtil
 				.getSpringBean(ProjectTaskService.class);
@@ -83,6 +87,7 @@ class TaskGanttChart extends VerticalLayout {
 
 		updateStepList();
 		gantt.addMoveListener(new Gantt.MoveListener() {
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void onGanttMove(MoveEvent event) {
@@ -109,6 +114,7 @@ class TaskGanttChart extends VerticalLayout {
 		});
 
 		gantt.addResizeListener(new Gantt.ResizeListener() {
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void onGanttResize(ResizeEvent event) {
@@ -255,13 +261,13 @@ class TaskGanttChart extends VerticalLayout {
 
 		start = new DateField("Start date");
 		start.setValue(gantt.getStartDate());
-		start.setResolution(Resolution.SECOND);
+		start.setResolution(Resolution.DAY);
 		start.setImmediate(true);
 		start.addValueChangeListener(startDateValueChangeListener);
 
 		end = new DateField("End date");
 		end.setValue(gantt.getEndDate());
-		end.setResolution(Resolution.SECOND);
+		end.setResolution(Resolution.DAY);
 		end.setImmediate(true);
 		end.addValueChangeListener(endDateValueChangeListener);
 
@@ -283,6 +289,7 @@ class TaskGanttChart extends VerticalLayout {
 	}
 
 	private ValueChangeListener startDateValueChangeListener = new ValueChangeListener() {
+		private static final long serialVersionUID = 1L;
 
 		@Override
 		public void valueChange(ValueChangeEvent event) {
@@ -292,6 +299,7 @@ class TaskGanttChart extends VerticalLayout {
 	};
 
 	private ValueChangeListener endDateValueChangeListener = new ValueChangeListener() {
+		private static final long serialVersionUID = 1L;
 
 		@Override
 		public void valueChange(ValueChangeEvent event) {
@@ -301,6 +309,7 @@ class TaskGanttChart extends VerticalLayout {
 	};
 
 	private ValueChangeListener resolutionValueChangeListener = new ValueChangeListener() {
+		private static final long serialVersionUID = 1L;
 
 		@Override
 		public void valueChange(ValueChangeEvent event) {
