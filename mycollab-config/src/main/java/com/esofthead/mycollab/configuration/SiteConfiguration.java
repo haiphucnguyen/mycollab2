@@ -67,8 +67,10 @@ public class SiteConfiguration {
 				ApplicationProperties.RUNNING_MODE, null);
 		if ("site".equals(runningMode)) {
 			instance.deploymentMode = DeploymentMode.SITE;
+		} else if ("standalone".equals(runningMode)) {
+			instance.deploymentMode = DeploymentMode.STANDALONE;
 		} else {
-			instance.deploymentMode = DeploymentMode.LOCAL;
+			instance.deploymentMode = DeploymentMode.DEV;
 		}
 
 		instance.cdnUrl = String.format(

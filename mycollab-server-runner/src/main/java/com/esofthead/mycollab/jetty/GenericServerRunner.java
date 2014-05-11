@@ -194,7 +194,7 @@ public abstract class GenericServerRunner {
 			installationContextHandler.addServlet(new ServletHolder(
 					new SetupServlet()), "/*");
 			installationContextHandler
-					.addLifeCycleListener(new ServerLifeCycleListener(server));
+					.addLifeCycleListener(new ServerLifeCycleListener());
 
 			server.setStopAtShutdown(true);
 			contexts.setHandlers(new Handler[] { installationContextHandler });
@@ -294,12 +294,6 @@ public abstract class GenericServerRunner {
 	}
 
 	private class ServerLifeCycleListener implements LifeCycle.Listener {
-
-		private Server server;
-
-		public ServerLifeCycleListener(Server server) {
-			this.server = server;
-		}
 
 		@Override
 		public void lifeCycleStarting(LifeCycle event) {
