@@ -8,7 +8,7 @@
         <groupId>com.esofthead.mycollab</groupId>
         <artifactId>parent-ondemand</artifactId>
         <version>4.1.0</version>
-        <relativePath>../mycollab-parent-parent-ondemand/pom.xml</relativePath>
+        <relativePath>../mycollab-parent-ondemand/pom.xml</relativePath>
     </parent>
     <packaging>jar</packaging>
     <dependencies>
