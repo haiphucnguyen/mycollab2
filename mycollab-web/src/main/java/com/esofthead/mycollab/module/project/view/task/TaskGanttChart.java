@@ -15,7 +15,9 @@ import org.tltv.gantt.client.shared.Step.CaptionMode;
 import org.vaadin.dialogs.ConfirmDialog;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
 import com.esofthead.mycollab.module.project.ProjectResources;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
@@ -67,6 +69,8 @@ class TaskGanttChart extends VerticalLayout {
 		final ProjectTaskService taskService = ApplicationContextUtil
 				.getSpringBean(ProjectTaskService.class);
 		TaskSearchCriteria criteria = new TaskSearchCriteria();
+		criteria.setProjectid(new NumberSearchField(CurrentProjectVariables
+				.getProjectId()));
 		taskList = taskService
 				.findPagableListByCriteria(new SearchRequest<TaskSearchCriteria>(
 						criteria, 0, Integer.MAX_VALUE));
