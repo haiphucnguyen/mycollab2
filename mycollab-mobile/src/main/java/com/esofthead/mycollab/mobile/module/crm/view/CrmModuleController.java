@@ -22,12 +22,10 @@ import com.esofthead.mycollab.eventmanager.ApplicationEvent;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.mobile.module.crm.events.AccountEvent;
-import com.esofthead.mycollab.mobile.module.crm.events.AccountEvent.GoToRelatedItems;
-import com.esofthead.mycollab.mobile.module.crm.events.AccountEvent.GotoRead;
 import com.esofthead.mycollab.mobile.module.crm.events.ContactEvent;
 import com.esofthead.mycollab.mobile.module.crm.events.CrmEvent;
-import com.esofthead.mycollab.mobile.module.crm.ui.AccountRelatedItemsScreenData;
 import com.esofthead.mycollab.mobile.module.crm.ui.CrmNavigationMenu;
+import com.esofthead.mycollab.mobile.module.crm.ui.CrmRelatedItemsScreenData;
 import com.esofthead.mycollab.mobile.module.crm.view.account.AccountAddPresenter;
 import com.esofthead.mycollab.mobile.module.crm.view.account.AccountListPresenter;
 import com.esofthead.mycollab.mobile.module.crm.view.account.AccountReadPresenter;
@@ -158,7 +156,7 @@ public class CrmModuleController implements IController {
 
 					@SuppressWarnings({ "rawtypes", "unchecked" })
 					@Override
-					public void handle(GotoRead event) {
+					public void handle(AccountEvent.GotoRead event) {
 						AccountReadPresenter presenter = PresenterResolver
 								.getPresenter(AccountReadPresenter.class);
 						presenter.go(crmViewNavigation, new ScreenData.Preview(
@@ -176,10 +174,10 @@ public class CrmModuleController implements IController {
 					}
 
 					@Override
-					public void handle(GoToRelatedItems event) {
-						if (event.getData() instanceof AccountRelatedItemsScreenData)
+					public void handle(AccountEvent.GoToRelatedItems event) {
+						if (event.getData() instanceof CrmRelatedItemsScreenData)
 							crmViewNavigation
-									.navigateTo(((AccountRelatedItemsScreenData) event
+									.navigateTo(((CrmRelatedItemsScreenData) event
 											.getData()).getParams());
 					}
 				});
@@ -250,6 +248,25 @@ public class CrmModuleController implements IController {
 						presenter.go(crmViewNavigation, new ScreenData.Preview(
 								event.getData()));
 					}
+				});
+
+		EventBus.getInstance().addListener(
+				new ApplicationEventListener<ContactEvent.GoToRelatedItems>() {
+					private static final long serialVersionUID = -8341031306697617759L;
+
+					@Override
+					public Class<? extends ApplicationEvent> getEventType() {
+						return ContactEvent.GoToRelatedItems.class;
+					}
+
+					@Override
+					public void handle(ContactEvent.GoToRelatedItems event) {
+						if (event.getData() instanceof CrmRelatedItemsScreenData)
+							crmViewNavigation
+									.navigateTo(((CrmRelatedItemsScreenData) event
+											.getData()).getParams());
+					}
+
 				});
 
 	}
