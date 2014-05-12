@@ -491,4 +491,41 @@
     		background-color: transparent;
     	}
     }
+    
+    /* Confirm Dialog */
+    .confirm-dialog {
+    	.v-window-outerheader {
+    		display: none;
+    	}
+    	
+    	.message-wrapper.v-margin-top {
+    		padding-top: 20px;
+    	}
+    	
+    	.message-wrapper.v-margin-bottom {
+    		padding-bottom: 20px;
+    	}
+    	
+    	.message-wrapper {
+    		.v-label {
+	    		text-align: center;
+	    	}
+    	}   	
+    	
+    	.v-button {
+    	
+	    	.v-button-wrap:before {
+	    		content: "";
+	    		display:inline-block;
+	    		vertical-align: middle;
+	    		height: 100%;
+	    	}
+	    	
+	    	.v-button-wrap {
+	    		display: inline-block;
+	    		vertical-align: middle;
+	    		height: 100%;
+	    	}
+		}
+    }
 }
