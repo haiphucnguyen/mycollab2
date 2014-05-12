@@ -220,6 +220,7 @@ public abstract class GenericServerRunner {
 		System.err.println("Server Options:");
 		System.err
 				.println(" --version                          - display version and exit");
+		System.err.println(" --port n                      - server port");
 		System.err
 				.println(" --stop-port n                      - port to listen for stop command");
 		System.err
@@ -228,7 +229,8 @@ public abstract class GenericServerRunner {
 	}
 
 	private DataSource buildDataSource() {
-		SiteConfiguration.loadInstance();
+		SiteConfiguration.loadInstance(port);
+
 		DatabaseConfiguration dbConf = SiteConfiguration
 				.getDatabaseConfiguration();
 		BoneCPDataSource dataSource = new BoneCPDataSource();

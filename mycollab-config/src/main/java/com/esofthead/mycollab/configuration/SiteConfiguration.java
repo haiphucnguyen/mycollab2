@@ -46,7 +46,7 @@ public class SiteConfiguration {
 	private String ggDriveCallbackUrl;
 	private String appUrl;
 
-	public static void loadInstance() {
+	public static void loadInstance(int serverPort) {
 		ApplicationProperties.loadProps();
 		instance = new SiteConfiguration();
 
@@ -59,8 +59,7 @@ public class SiteConfiguration {
 		instance.serverAddress = ApplicationProperties.getString(
 				ApplicationProperties.SERVER_ADDRESS, "localhost");
 
-		instance.serverPort = Integer.parseInt(ApplicationProperties.getString(
-				ApplicationProperties.SERVER_PORT, "8080"));
+		instance.serverPort = serverPort;
 
 		// load Deployment Mode
 		String runningMode = ApplicationProperties.getString(
