@@ -24,14 +24,17 @@ import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.mobile.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.mobile.module.crm.events.ContactEvent;
 import com.esofthead.mycollab.mobile.module.crm.events.CrmEvent;
+import com.esofthead.mycollab.mobile.module.crm.events.CrmEvent.PushView;
 import com.esofthead.mycollab.mobile.module.crm.ui.CrmNavigationMenu;
 import com.esofthead.mycollab.mobile.module.crm.ui.CrmRelatedItemsScreenData;
 import com.esofthead.mycollab.mobile.module.crm.view.account.AccountAddPresenter;
 import com.esofthead.mycollab.mobile.module.crm.view.account.AccountListPresenter;
 import com.esofthead.mycollab.mobile.module.crm.view.account.AccountReadPresenter;
+import com.esofthead.mycollab.mobile.module.crm.view.contact.ContactAddPresenter;
 import com.esofthead.mycollab.mobile.module.crm.view.contact.ContactListPresenter;
 import com.esofthead.mycollab.mobile.module.crm.view.contact.ContactReadPresenter;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
+import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -39,6 +42,7 @@ import com.esofthead.mycollab.vaadin.mvp.IController;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.vaadin.mobilecomponent.MobileNavigationManager;
+import com.esofthead.vaadin.mobilecomponent.MobileNavigationView;
 
 /**
  * @author MyCollab Ltd.
@@ -79,6 +83,25 @@ public class CrmModuleController implements IController {
 						ActivityStreamPresenter presenter = PresenterResolver
 								.getPresenter(ActivityStreamPresenter.class);
 						presenter.go(crmViewNavigation, null);
+					}
+				});
+
+		EventBus.getInstance().addListener(
+				new ApplicationEventListener<CrmEvent.PushView>() {
+					private static final long serialVersionUID = -7516440510015076475L;
+
+					@Override
+					public Class<? extends ApplicationEvent> getEventType() {
+						return CrmEvent.PushView.class;
+					}
+
+					@Override
+					public void handle(PushView event) {
+						if (event.getData() instanceof MobileNavigationView) {
+							crmViewNavigation
+									.navigateTo((MobileNavigationView) event
+											.getData());
+						}
 					}
 				});
 	}
@@ -207,29 +230,42 @@ public class CrmModuleController implements IController {
 					}
 				});
 
-		/*
-		 * EventBus.getInstance().addListener( new
-		 * ApplicationEventListener<ContactEvent.GotoAdd>() {
-		 * 
-		 * @Override public Class<? extends ApplicationEvent> getEventType() {
-		 * return ContactEvent.GotoAdd.class; }
-		 * 
-		 * @Override public void handle(ContactEvent.GotoAdd event) {
-		 * ContactAddPresenter presenter = PresenterResolver
-		 * .getPresenter(ContactAddPresenter.class); presenter.go(container, new
-		 * ScreenData.Add<SimpleContact>( new SimpleContact())); } });
-		 * 
-		 * EventBus.getInstance().addListener( new
-		 * ApplicationEventListener<ContactEvent.GotoEdit>() {
-		 * 
-		 * @Override public Class<? extends ApplicationEvent> getEventType() {
-		 * return ContactEvent.GotoEdit.class; }
-		 * 
-		 * @Override public void handle(ContactEvent.GotoEdit event) {
-		 * ContactAddPresenter presenter = PresenterResolver
-		 * .getPresenter(ContactAddPresenter.class); presenter.go(container, new
-		 * ScreenData.Edit<Object>( event.getData())); } });
-		 */
+		EventBus.getInstance().addListener(
+				new ApplicationEventListener<ContactEvent.GotoAdd>() {
+					private static final long serialVersionUID = -9082569633338794831L;
+
+					@Override
+					public Class<? extends ApplicationEvent> getEventType() {
+						return ContactEvent.GotoAdd.class;
+					}
+
+					@Override
+					public void handle(ContactEvent.GotoAdd event) {
+						ContactAddPresenter presenter = PresenterResolver
+								.getPresenter(ContactAddPresenter.class);
+						presenter.go(crmViewNavigation,
+								new ScreenData.Add<SimpleContact>(
+										new SimpleContact()));
+					}
+				});
+
+		EventBus.getInstance().addListener(
+				new ApplicationEventListener<ContactEvent.GotoEdit>() {
+					private static final long serialVersionUID = 1465740039647654585L;
+
+					@Override
+					public Class<? extends ApplicationEvent> getEventType() {
+						return ContactEvent.GotoEdit.class;
+					}
+
+					@Override
+					public void handle(ContactEvent.GotoEdit event) {
+						ContactAddPresenter presenter = PresenterResolver
+								.getPresenter(ContactAddPresenter.class);
+						presenter.go(crmViewNavigation,
+								new ScreenData.Edit<Object>(event.getData()));
+					}
+				});
 
 		EventBus.getInstance().addListener(
 				new ApplicationEventListener<ContactEvent.GotoRead>() {
