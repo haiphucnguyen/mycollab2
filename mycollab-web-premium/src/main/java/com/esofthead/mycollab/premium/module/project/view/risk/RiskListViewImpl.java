@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 import org.vaadin.teemu.ratingstars.RatingStars;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
-import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
@@ -245,7 +244,7 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
 		layout.addComponent(this.selectOptionButton);
 
 		final Button deleteBtn = new Button(
-				AppContext.getMessage(GenericI18Enum.BUTTON_DELETE));
+				AppContext.getMessage(GenericI18Enum.BUTTON_DELETE_LABEL));
 		deleteBtn.setEnabled(CurrentProjectVariables
 				.canAccess(ProjectRolePermissionCollections.RISKS));
 
