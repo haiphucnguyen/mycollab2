@@ -259,9 +259,9 @@
     </build>
     <repositories>
         <repository>
-            <id>mycollab</id>
-            <name>MyCollab Repository</name>
-            <url>http://build.mycollab.com:8080/nexus/content/groups/public/</url>
+            <id>Default Repo</id>
+            <name>Maven Default Repository</name>
+            <url> http://repo.maven.apache.org/maven2/</url>
         </repository>
     </repositories>
 
