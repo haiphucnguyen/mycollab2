@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-mobile.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.mobile.module.crm.view.account;
+package com.esofthead.mycollab.mobile.module.crm.view.campaign;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
@@ -25,31 +25,29 @@ import com.esofthead.mycollab.mobile.module.crm.events.ContactEvent;
 import com.esofthead.mycollab.mobile.module.crm.ui.AbstractRelatedListView;
 import com.esofthead.mycollab.mobile.module.crm.view.contact.ContactListDisplay;
 import com.esofthead.mycollab.mobile.ui.TableClickEvent;
-import com.esofthead.mycollab.module.crm.domain.Account;
+import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
 import com.esofthead.mycollab.vaadin.AppContext;
 
-public class AccountRelatedContactView extends
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 4.1
+ * 
+ */
+public class CampaignRelatedContactView extends
 		AbstractRelatedListView<SimpleContact, ContactSearchCriteria> {
-	private static final long serialVersionUID = 6290597056477524107L;
-	private Account account;
+	private static final long serialVersionUID = 366429952188752174L;
+	private SimpleCampaign campaign;
 
-	public AccountRelatedContactView() {
-		initUI();
-	}
-
-	public void displayContacts(final Account account) {
-		this.account = account;
-		loadContacts();
-	}
-
-	private void initUI() {
-		this.setCaption("Related Contacts");
+	public CampaignRelatedContactView() {
+		super();
+		setCaption("Related Contacts");
 		this.tableItem = new ContactListDisplay("contactName");
 		this.tableItem
 				.addTableListener(new ApplicationEventListener<TableClickEvent>() {
-					private static final long serialVersionUID = -1372359233836338759L;
+					private static final long serialVersionUID = 5068048766904442877L;
 
 					@Override
 					public Class<? extends ApplicationEvent> getEventType() {
@@ -63,21 +61,26 @@ public class AccountRelatedContactView extends
 						if ("contactName".equals(event.getFieldName())) {
 							EventBus.getInstance().fireEvent(
 									new ContactEvent.GotoRead(
-											AccountRelatedContactView.this,
+											CampaignRelatedContactView.this,
 											contact.getId()));
 						}
 					}
 				});
-		this.setContent(tableItem);
+		this.setContent(this.tableItem);
 	}
 
 	private void loadContacts() {
-		final ContactSearchCriteria criteria = new ContactSearchCriteria();
-		criteria.setSaccountid(new NumberSearchField(SearchField.AND,
+		final ContactSearchCriteria searchCriteria = new ContactSearchCriteria();
+		searchCriteria.setSaccountid(new NumberSearchField(SearchField.AND,
 				AppContext.getAccountId()));
-		criteria.setAccountId(new NumberSearchField(SearchField.AND, account
-				.getId()));
-		setSearchCriteria(criteria);
+		searchCriteria.setCampaignId(new NumberSearchField(SearchField.AND,
+				this.campaign.getId()));
+		this.tableItem.setSearchCriteria(searchCriteria);
+	}
+
+	public void displayContacts(SimpleCampaign campaign) {
+		this.campaign = campaign;
+		loadContacts();
 	}
 
 	@Override

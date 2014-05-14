@@ -14,37 +14,41 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-mobile.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.mobile.module.crm.view.account;
+package com.esofthead.mycollab.mobile.module.crm.view.campaign;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.eventmanager.ApplicationEvent;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBus;
-import com.esofthead.mycollab.mobile.module.crm.events.CaseEvent;
+import com.esofthead.mycollab.mobile.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.mobile.module.crm.ui.AbstractRelatedListView;
-import com.esofthead.mycollab.mobile.module.crm.view.cases.CaseListDisplay;
+import com.esofthead.mycollab.mobile.module.crm.view.account.AccountListDisplay;
 import com.esofthead.mycollab.mobile.ui.TableClickEvent;
-import com.esofthead.mycollab.module.crm.domain.Account;
-import com.esofthead.mycollab.module.crm.domain.SimpleCase;
-import com.esofthead.mycollab.module.crm.domain.criteria.CaseSearchCriteria;
+import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
+import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
+import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.esofthead.mycollab.vaadin.AppContext;
 
-public class AccountRelatedCaseView extends
-		AbstractRelatedListView<SimpleCase, CaseSearchCriteria> {
-	private static final long serialVersionUID = -4559344487784697088L;
-	private Account account;
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 4.1
+ * 
+ */
+public class CampaignRelatedAccountView extends
+		AbstractRelatedListView<SimpleAccount, AccountSearchCriteria> {
+	private static final long serialVersionUID = -6830593270870716952L;
+	private SimpleCampaign campaign;
 
-	public AccountRelatedCaseView() {
-		initUI();
-	}
+	public CampaignRelatedAccountView() {
+		super();
 
-	private void initUI() {
-		this.setCaption("Related Cases");
-		tableItem = new CaseListDisplay("subject");
-		tableItem
+		setCaption("Related Accounts");
+		this.tableItem = new AccountListDisplay("accountname");
+		this.tableItem
 				.addTableListener(new ApplicationEventListener<TableClickEvent>() {
-					private static final long serialVersionUID = 7535615742990786993L;
+					private static final long serialVersionUID = -6371770226928929910L;
 
 					@Override
 					public Class<? extends ApplicationEvent> getEventType() {
@@ -53,35 +57,36 @@ public class AccountRelatedCaseView extends
 
 					@Override
 					public void handle(TableClickEvent event) {
-						final SimpleCase myCase = (SimpleCase) event.getData();
-						if ("subject".equals(event.getFieldName())) {
+						final SimpleAccount account = (SimpleAccount) event
+								.getData();
+						if ("accountname".equals(event.getFieldName())) {
 							EventBus.getInstance().fireEvent(
-									new CaseEvent.GotoRead(
-											AccountRelatedCaseView.this, myCase
-													.getId()));
+									new AccountEvent.GotoRead(
+											CampaignRelatedAccountView.this,
+											account.getId()));
 						}
 					}
 				});
 		this.setContent(tableItem);
 	}
 
-	public void displayCases(final Account account) {
-		this.account = account;
-		loadCases();
+	public void displayAccounts(SimpleCampaign campaign) {
+		this.campaign = campaign;
+		loadAccounts();
 	}
 
-	private void loadCases() {
-		final CaseSearchCriteria criteria = new CaseSearchCriteria();
-		criteria.setSaccountid(new NumberSearchField(SearchField.AND,
+	private void loadAccounts() {
+		AccountSearchCriteria searchCriteria = new AccountSearchCriteria();
+		searchCriteria.setSaccountid(new NumberSearchField(SearchField.AND,
 				AppContext.getAccountId()));
-		criteria.setAccountId(new NumberSearchField(SearchField.AND, account
-				.getId()));
-		setSearchCriteria(criteria);
+		searchCriteria.setCampaignId(new NumberSearchField(SearchField.AND,
+				this.campaign.getId()));
+		this.tableItem.setSearchCriteria(searchCriteria);
 	}
 
 	@Override
 	public void refresh() {
-		loadCases();
+		loadAccounts();
 	}
 
 }

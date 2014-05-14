@@ -1,33 +1,31 @@
 /**
  * This file is part of mycollab-mobile.
  *
- * mycollab-web is free software: you can redistribute it and/or modify
+ * mycollab-mobile is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * mycollab-web is distributed in the hope that it will be useful,
+ * mycollab-mobile is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
+ * along with mycollab-mobile.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.mobile.module.crm.view.contact;
+package com.esofthead.mycollab.mobile.module.crm.view.campaign;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.eventmanager.EventBus;
-import com.esofthead.mycollab.mobile.module.crm.events.ContactEvent;
-import com.esofthead.mycollab.mobile.module.crm.localization.CrmCommonI18nEnum;
+import com.esofthead.mycollab.mobile.module.crm.events.CampaignEvent;
 import com.esofthead.mycollab.mobile.module.crm.ui.CrmGenericPresenter;
-import com.esofthead.mycollab.mobile.module.crm.ui.CrmNavigationMenu;
 import com.esofthead.mycollab.mobile.ui.ConfirmDialog;
 import com.esofthead.mycollab.module.crm.CrmLinkGenerator;
-import com.esofthead.mycollab.module.crm.domain.SimpleContact;
-import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
-import com.esofthead.mycollab.module.crm.service.ContactService;
+import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
+import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
+import com.esofthead.mycollab.module.crm.service.CampaignService;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -40,30 +38,29 @@ import com.vaadin.ui.UI;
 /**
  * 
  * @author MyCollab Ltd.
- * @since 4.0
+ * @since 4.1
  * 
  */
-public class ContactReadPresenter extends CrmGenericPresenter<ContactReadView> {
+public class CampaignReadPresenter extends
+		CrmGenericPresenter<CampaignReadView> {
+	private static final long serialVersionUID = 724501700304510910L;
 
-	private static final long serialVersionUID = 1L;
-
-	public ContactReadPresenter() {
-		super(ContactReadView.class);
+	public CampaignReadPresenter() {
+		super(CampaignReadView.class);
 	}
 
 	@Override
 	protected void postInitView() {
 		view.getPreviewFormHandlers().addFormHandler(
-				new DefaultPreviewFormHandler<SimpleContact>() {
+				new DefaultPreviewFormHandler<SimpleCampaign>() {
 					@Override
-					public void onEdit(SimpleContact data) {
+					public void onEdit(SimpleCampaign data) {
 						EventBus.getInstance().fireEvent(
-								new ContactEvent.GotoEdit(this, data));
+								new CampaignEvent.GotoEdit(this, data));
 					}
 
 					@Override
-					public void onDelete(final SimpleContact data) {
-
+					public void onDelete(final SimpleCampaign data) {
 						ConfirmDialog.show(
 								UI.getCurrent(),
 								AppContext
@@ -78,14 +75,14 @@ public class ContactReadPresenter extends CrmGenericPresenter<ContactReadView> {
 									@Override
 									public void onClose(ConfirmDialog dialog) {
 										if (dialog.isConfirmed()) {
-											ContactService ContactService = ApplicationContextUtil
-													.getSpringBean(ContactService.class);
-											ContactService.removeWithSession(
+											CampaignService campaignService = ApplicationContextUtil
+													.getSpringBean(CampaignService.class);
+											campaignService.removeWithSession(
 													data.getId(),
 													AppContext.getUsername(),
 													AppContext.getAccountId());
 											EventBus.getInstance().fireEvent(
-													new ContactEvent.GotoList(
+													new CampaignEvent.GotoList(
 															this, null));
 										}
 									}
@@ -93,24 +90,24 @@ public class ContactReadPresenter extends CrmGenericPresenter<ContactReadView> {
 					}
 
 					@Override
-					public void onClone(SimpleContact data) {
-						SimpleContact cloneData = (SimpleContact) data.copy();
+					public void onClone(SimpleCampaign data) {
+						SimpleCampaign cloneData = (SimpleCampaign) data.copy();
 						cloneData.setId(null);
 						EventBus.getInstance().fireEvent(
-								new ContactEvent.GotoEdit(this, cloneData));
+								new CampaignEvent.GotoEdit(this, cloneData));
 					}
 
 					@Override
 					public void onCancel() {
 						EventBus.getInstance().fireEvent(
-								new ContactEvent.GotoList(this, null));
+								new CampaignEvent.GotoList(this, null));
 					}
 
 					@Override
-					public void gotoNext(SimpleContact data) {
-						ContactService contactService = ApplicationContextUtil
-								.getSpringBean(ContactService.class);
-						ContactSearchCriteria criteria = new ContactSearchCriteria();
+					public void gotoNext(SimpleCampaign data) {
+						CampaignService contactService = ApplicationContextUtil
+								.getSpringBean(CampaignService.class);
+						CampaignSearchCriteria criteria = new CampaignSearchCriteria();
 						criteria.setSaccountid(new NumberSearchField(AppContext
 								.getAccountId()));
 						criteria.setId(new NumberSearchField(data.getId(),
@@ -119,7 +116,7 @@ public class ContactReadPresenter extends CrmGenericPresenter<ContactReadView> {
 								.getNextItemKey(criteria);
 						if (nextId != null) {
 							EventBus.getInstance().fireEvent(
-									new ContactEvent.GotoRead(this, nextId));
+									new CampaignEvent.GotoRead(this, nextId));
 						} else {
 							NotificationUtil.showGotoLastRecordNotification();
 						}
@@ -127,10 +124,10 @@ public class ContactReadPresenter extends CrmGenericPresenter<ContactReadView> {
 					}
 
 					@Override
-					public void gotoPrevious(SimpleContact data) {
-						ContactService contactService = ApplicationContextUtil
-								.getSpringBean(ContactService.class);
-						ContactSearchCriteria criteria = new ContactSearchCriteria();
+					public void gotoPrevious(SimpleCampaign data) {
+						CampaignService contactService = ApplicationContextUtil
+								.getSpringBean(CampaignService.class);
+						CampaignSearchCriteria criteria = new CampaignSearchCriteria();
 						criteria.setSaccountid(new NumberSearchField(AppContext
 								.getAccountId()));
 						criteria.setId(new NumberSearchField(data.getId(),
@@ -139,7 +136,7 @@ public class ContactReadPresenter extends CrmGenericPresenter<ContactReadView> {
 								.getPreviousItemKey(criteria);
 						if (nextId != null) {
 							EventBus.getInstance().fireEvent(
-									new ContactEvent.GotoRead(this, nextId));
+									new CampaignEvent.GotoRead(this, nextId));
 						} else {
 							NotificationUtil.showGotoFirstRecordNotification();
 						}
@@ -149,27 +146,21 @@ public class ContactReadPresenter extends CrmGenericPresenter<ContactReadView> {
 
 	@Override
 	protected void onGo(MobileNavigationManager container, ScreenData<?> data) {
-		if (AppContext.canRead(RolePermissionCollections.CRM_CONTACT)) {
-			CrmNavigationMenu crmToolbar = (CrmNavigationMenu) container
-					.getNavigationMenu();
-			crmToolbar.selectButton(AppContext
-					.getMessage(CrmCommonI18nEnum.TOOLBAR_CONTACTS_HEADER));
+		if (AppContext.canRead(RolePermissionCollections.CRM_CAMPAIGN)) {
 
 			if (data.getParams() instanceof Integer) {
-				ContactService contactService = ApplicationContextUtil
-						.getSpringBean(ContactService.class);
-				SimpleContact contact = contactService.findById(
+				CampaignService campaignService = ApplicationContextUtil
+						.getSpringBean(CampaignService.class);
+				SimpleCampaign campaign = campaignService.findById(
 						(Integer) data.getParams(), AppContext.getAccountId());
-				if (contact != null) {
+				if (campaign != null) {
 					super.onGo(container, data);
-					view.previewItem(contact);
-
+					view.previewItem(campaign);
 					AppContext.addFragment(CrmLinkGenerator
-							.generateContactPreviewLink(contact.getId()),
+							.generateCampaignPreviewLink(campaign.getId()),
 							AppContext.getMessage(
 									GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
-									"Contact", contact.getContactName()));
-
+									"Campaign", campaign.getCampaignname()));
 				} else {
 					NotificationUtil.showRecordNotExistNotification();
 					return;
@@ -178,6 +169,5 @@ public class ContactReadPresenter extends CrmGenericPresenter<ContactReadView> {
 		} else {
 			NotificationUtil.showMessagePermissionAlert();
 		}
-
 	}
 }

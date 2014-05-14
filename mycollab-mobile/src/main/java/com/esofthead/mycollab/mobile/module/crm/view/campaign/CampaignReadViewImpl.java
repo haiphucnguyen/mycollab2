@@ -14,14 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-mobile.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.mobile.module.crm.view.account;
+package com.esofthead.mycollab.mobile.module.crm.view.campaign;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.mobile.form.view.DynaFormLayout;
-import com.esofthead.mycollab.mobile.module.crm.events.AccountEvent;
+import com.esofthead.mycollab.mobile.module.crm.events.CampaignEvent;
 import com.esofthead.mycollab.mobile.module.crm.ui.AbstractPreviewItemComp;
 import com.esofthead.mycollab.mobile.module.crm.ui.CrmPreviewFormControlsGenerator;
 import com.esofthead.mycollab.mobile.module.crm.ui.CrmRelatedItemsScreenData;
@@ -31,7 +31,7 @@ import com.esofthead.mycollab.mobile.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.esofthead.mycollab.mobile.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.mobile.ui.IconConstants;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
-import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
+import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.domain.criteria.ActivitySearchCriteria;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -47,104 +47,100 @@ import com.vaadin.ui.HorizontalLayout;
 /**
  * 
  * @author MyCollab Ltd.
- * @since 4.0
+ * @since 4.1
  * 
  */
+
 @ViewComponent
-public class AccountReadViewImpl extends AbstractPreviewItemComp<SimpleAccount>
-		implements AccountReadView {
+public class CampaignReadViewImpl extends
+		AbstractPreviewItemComp<SimpleCampaign> implements CampaignReadView {
+	private static final long serialVersionUID = 1718241963843463323L;
 
-	private static final long serialVersionUID = -5987636662071328512L;
+	private NotesList associateNotes;
+	private ActivityRelatedItemView associateActivities;
+	private CampaignRelatedAccountView associateAccounts;
+	private CampaignRelatedContactView associateContacts;
+	private CampaignRelatedLeadView associateLeads;
 
-	protected NotesList associateNotes;
-	protected AccountRelatedContactView associateContacts;
-	protected AccountRelatedCaseView associateCases;
-	protected ActivityRelatedItemView associateActivities;
-	protected AccountRelatedLeadView associateLeads;
-	protected AccountRelatedOpportunityView associateOpportunities;
+	@Override
+	public HasPreviewFormHandlers<SimpleCampaign> getPreviewFormHandlers() {
+		return this.previewForm;
+	}
 
-	public NotesList getAssociateNotes() {
-		if (associateNotes == null)
+	private NotesList getAssociateNotes() {
+		if (associateNotes == null) {
 			associateNotes = new NotesList("Related Notes");
-		associateNotes.showNotes(CrmTypeConstants.ACCOUNT, beanItem.getId());
+		}
+		associateNotes.showNotes(CrmTypeConstants.CAMPAIGN, beanItem.getId());
 		return associateNotes;
 	}
 
-	public AccountRelatedContactView getAssociateContacts() {
+	private ActivityRelatedItemView getAssociateActivities() {
+		if (associateActivities == null) {
+			associateActivities = new ActivityRelatedItemView();
+		}
+		ActivitySearchCriteria searchCriteria = new ActivitySearchCriteria();
+		searchCriteria.setSaccountid(new NumberSearchField(SearchField.AND,
+				AppContext.getAccountId()));
+		searchCriteria.setType(new StringSearchField(SearchField.AND,
+				CrmTypeConstants.CAMPAIGN));
+		searchCriteria.setTypeid(new NumberSearchField(beanItem.getId()));
+
+		return associateActivities;
+	}
+
+	private CampaignRelatedAccountView getAssociateAccounts() {
+		if (associateAccounts == null)
+			associateAccounts = new CampaignRelatedAccountView();
+		associateAccounts.displayAccounts(beanItem);
+
+		return associateAccounts;
+	}
+
+	private CampaignRelatedContactView getAssociateContacts() {
 		if (associateContacts == null)
-			associateContacts = new AccountRelatedContactView();
+			associateContacts = new CampaignRelatedContactView();
 		associateContacts.displayContacts(beanItem);
 		return associateContacts;
 	}
 
-	public AccountRelatedCaseView getAssociateCases() {
-		if (associateCases == null)
-			associateCases = new AccountRelatedCaseView();
-		associateCases.displayCases(beanItem);
-		return associateCases;
-	}
-
-	public ActivityRelatedItemView getAssociateActivities() {
-		if (associateActivities == null)
-			associateActivities = new ActivityRelatedItemView();
-		final ActivitySearchCriteria criteria = new ActivitySearchCriteria();
-		criteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
-		criteria.setType(new StringSearchField(SearchField.AND,
-				CrmTypeConstants.ACCOUNT));
-		criteria.setTypeid(new NumberSearchField(beanItem.getId()));
-		associateActivities.setSearchCriteria(criteria);
-		return associateActivities;
-	}
-
-	public AccountRelatedLeadView getAssociateLeads() {
+	private CampaignRelatedLeadView getAssociateLeads() {
 		if (associateLeads == null)
-			associateLeads = new AccountRelatedLeadView();
+			associateLeads = new CampaignRelatedLeadView();
 		associateLeads.displayLeads(beanItem);
 		return associateLeads;
 	}
 
-	public AccountRelatedOpportunityView getAssociateOpportunities() {
-		if (associateOpportunities == null)
-			associateOpportunities = new AccountRelatedOpportunityView();
-		associateOpportunities.displayOpportunities(beanItem);
-		return associateOpportunities;
-	}
-
 	@Override
 	protected void onPreviewItem() {
-
+		// Do nothing
 	}
 
 	@Override
 	protected String initFormTitle() {
-		return beanItem.getAccountname();
+		return beanItem.getCampaignname();
 	}
 
 	@Override
-	protected AdvancedPreviewBeanForm<SimpleAccount> initPreviewForm() {
-		return new AdvancedPreviewBeanForm<SimpleAccount>();
+	protected AdvancedPreviewBeanForm<SimpleCampaign> initPreviewForm() {
+		return new AdvancedPreviewBeanForm<SimpleCampaign>();
 	}
 
 	@Override
 	protected IFormLayoutFactory initFormLayoutFactory() {
-		return new DynaFormLayout(CrmTypeConstants.ACCOUNT,
-				AccountDefaultDynaFormLayoutFactory.getForm());
+		return new DynaFormLayout(CrmTypeConstants.CAMPAIGN,
+				CampaignDefaultDynaFormLayoutFactory.getForm());
 	}
 
 	@Override
-	protected AbstractBeanFieldGroupViewFieldFactory<SimpleAccount> initBeanFormFieldFactory() {
-		return new AccountReadFormFieldFactory(previewForm);
-	}
-
-	@Override
-	public HasPreviewFormHandlers<SimpleAccount> getPreviewFormHandlers() {
-		return this.previewForm;
+	protected AbstractBeanFieldGroupViewFieldFactory<SimpleCampaign> initBeanFormFieldFactory() {
+		return new CampaignReadFormFieldFactory(this.previewForm);
 	}
 
 	@Override
 	protected ComponentContainer createButtonControls() {
-		return new CrmPreviewFormControlsGenerator<SimpleAccount>(previewForm)
-				.createButtonControls(RolePermissionCollections.CRM_ACCOUNT);
+		return new CrmPreviewFormControlsGenerator<SimpleCampaign>(previewForm)
+				.createButtonControls(RolePermissionCollections.CRM_CAMPAIGN);
 	}
 
 	@Override
@@ -152,6 +148,24 @@ public class AccountReadViewImpl extends AbstractPreviewItemComp<SimpleAccount>
 		HorizontalLayout toolbarLayout = new HorizontalLayout();
 		toolbarLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 		toolbarLayout.setSpacing(true);
+
+		Button relatedAccounts = new Button();
+		relatedAccounts.setCaption("<span aria-hidden=\"true\" data-icon=\""
+				+ IconConstants.CRM_ACCOUNT
+				+ "\"></span><div class=\"screen-reader-text\">Accounts</div>");
+		relatedAccounts.setHtmlContentAllowed(true);
+		relatedAccounts.addClickListener(new Button.ClickListener() {
+			private static final long serialVersionUID = 7589415773039335559L;
+
+			@Override
+			public void buttonClick(ClickEvent arg0) {
+				EventBus.getInstance().fireEvent(
+						new CampaignEvent.GoToRelatedItems(this,
+								new CrmRelatedItemsScreenData(
+										getAssociateAccounts())));
+			}
+		});
+		toolbarLayout.addComponent(relatedAccounts);
 
 		Button relatedContacts = new Button();
 		relatedContacts.setCaption("<span aria-hidden=\"true\" data-icon=\""
@@ -164,31 +178,12 @@ public class AccountReadViewImpl extends AbstractPreviewItemComp<SimpleAccount>
 			@Override
 			public void buttonClick(ClickEvent arg0) {
 				EventBus.getInstance().fireEvent(
-						new AccountEvent.GoToRelatedItems(this,
+						new CampaignEvent.GoToRelatedItems(this,
 								new CrmRelatedItemsScreenData(
 										getAssociateContacts())));
 			}
 		});
 		toolbarLayout.addComponent(relatedContacts);
-
-		Button relatedOpportunities = new Button();
-		relatedOpportunities
-				.setCaption("<span aria-hidden=\"true\" data-icon=\""
-						+ IconConstants.CRM_OPPORTUNITY
-						+ "\"></span><div class=\"screen-reader-text\">Opportunities</div>");
-		relatedOpportunities.setHtmlContentAllowed(true);
-		relatedOpportunities.addClickListener(new Button.ClickListener() {
-			private static final long serialVersionUID = 7589415773039335559L;
-
-			@Override
-			public void buttonClick(ClickEvent arg0) {
-				EventBus.getInstance().fireEvent(
-						new AccountEvent.GoToRelatedItems(this,
-								new CrmRelatedItemsScreenData(
-										getAssociateOpportunities())));
-			}
-		});
-		toolbarLayout.addComponent(relatedOpportunities);
 
 		Button relatedLeads = new Button();
 		relatedLeads.setCaption("<span aria-hidden=\"true\" data-icon=\""
@@ -201,7 +196,7 @@ public class AccountReadViewImpl extends AbstractPreviewItemComp<SimpleAccount>
 			@Override
 			public void buttonClick(ClickEvent arg0) {
 				EventBus.getInstance().fireEvent(
-						new AccountEvent.GoToRelatedItems(this,
+						new CampaignEvent.GoToRelatedItems(this,
 								new CrmRelatedItemsScreenData(
 										getAssociateLeads())));
 			}
@@ -219,7 +214,7 @@ public class AccountReadViewImpl extends AbstractPreviewItemComp<SimpleAccount>
 			@Override
 			public void buttonClick(ClickEvent arg0) {
 				EventBus.getInstance().fireEvent(
-						new AccountEvent.GoToRelatedItems(this,
+						new CampaignEvent.GoToRelatedItems(this,
 								new CrmRelatedItemsScreenData(
 										getAssociateNotes())));
 			}
@@ -238,7 +233,7 @@ public class AccountReadViewImpl extends AbstractPreviewItemComp<SimpleAccount>
 			@Override
 			public void buttonClick(ClickEvent arg0) {
 				EventBus.getInstance().fireEvent(
-						new AccountEvent.GoToRelatedItems(this,
+						new CampaignEvent.GoToRelatedItems(this,
 								new CrmRelatedItemsScreenData(
 										getAssociateActivities())));
 			}

@@ -14,37 +14,40 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-mobile.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.mobile.module.crm.view.account;
+package com.esofthead.mycollab.mobile.module.crm.view.campaign;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.eventmanager.ApplicationEvent;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBus;
-import com.esofthead.mycollab.mobile.module.crm.events.CaseEvent;
+import com.esofthead.mycollab.mobile.module.crm.events.LeadEvent;
 import com.esofthead.mycollab.mobile.module.crm.ui.AbstractRelatedListView;
-import com.esofthead.mycollab.mobile.module.crm.view.cases.CaseListDisplay;
+import com.esofthead.mycollab.mobile.module.crm.view.lead.LeadListDisplay;
 import com.esofthead.mycollab.mobile.ui.TableClickEvent;
-import com.esofthead.mycollab.module.crm.domain.Account;
-import com.esofthead.mycollab.module.crm.domain.SimpleCase;
-import com.esofthead.mycollab.module.crm.domain.criteria.CaseSearchCriteria;
+import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
+import com.esofthead.mycollab.module.crm.domain.SimpleLead;
+import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
 import com.esofthead.mycollab.vaadin.AppContext;
 
-public class AccountRelatedCaseView extends
-		AbstractRelatedListView<SimpleCase, CaseSearchCriteria> {
-	private static final long serialVersionUID = -4559344487784697088L;
-	private Account account;
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 4.1
+ * 
+ */
+public class CampaignRelatedLeadView extends
+		AbstractRelatedListView<SimpleLead, LeadSearchCriteria> {
+	private static final long serialVersionUID = -4503624862562854777L;
+	private SimpleCampaign campaign;
 
-	public AccountRelatedCaseView() {
-		initUI();
-	}
-
-	private void initUI() {
-		this.setCaption("Related Cases");
-		tableItem = new CaseListDisplay("subject");
-		tableItem
+	public CampaignRelatedLeadView() {
+		super();
+		setCaption("Related Leads");
+		this.tableItem = new LeadListDisplay("leadName");
+		this.tableItem
 				.addTableListener(new ApplicationEventListener<TableClickEvent>() {
-					private static final long serialVersionUID = 7535615742990786993L;
+					private static final long serialVersionUID = 5527577797731688683L;
 
 					@Override
 					public Class<? extends ApplicationEvent> getEventType() {
@@ -53,11 +56,11 @@ public class AccountRelatedCaseView extends
 
 					@Override
 					public void handle(TableClickEvent event) {
-						final SimpleCase myCase = (SimpleCase) event.getData();
-						if ("subject".equals(event.getFieldName())) {
+						final SimpleLead lead = (SimpleLead) event.getData();
+						if ("leadName".equals(event.getFieldName())) {
 							EventBus.getInstance().fireEvent(
-									new CaseEvent.GotoRead(
-											AccountRelatedCaseView.this, myCase
+									new LeadEvent.GotoRead(
+											CampaignRelatedLeadView.class, lead
 													.getId()));
 						}
 					}
@@ -65,23 +68,23 @@ public class AccountRelatedCaseView extends
 		this.setContent(tableItem);
 	}
 
-	public void displayCases(final Account account) {
-		this.account = account;
-		loadCases();
+	private void loadLeads() {
+		final LeadSearchCriteria searchCriteria = new LeadSearchCriteria();
+		searchCriteria.setSaccountid(new NumberSearchField(SearchField.AND,
+				AppContext.getAccountId()));
+		searchCriteria.setCampaignId(new NumberSearchField(SearchField.AND,
+				this.campaign.getId()));
+		this.tableItem.setSearchCriteria(searchCriteria);
 	}
 
-	private void loadCases() {
-		final CaseSearchCriteria criteria = new CaseSearchCriteria();
-		criteria.setSaccountid(new NumberSearchField(SearchField.AND,
-				AppContext.getAccountId()));
-		criteria.setAccountId(new NumberSearchField(SearchField.AND, account
-				.getId()));
-		setSearchCriteria(criteria);
+	public void displayLeads(SimpleCampaign campaign) {
+		this.campaign = campaign;
+		loadLeads();
 	}
 
 	@Override
 	public void refresh() {
-		loadCases();
+		loadLeads();
 	}
 
 }

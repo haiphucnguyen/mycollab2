@@ -27,7 +27,7 @@ import com.esofthead.mycollab.vaadin.mvp.PageView;
  * @param <S>
  * @param <B>
  */
-public interface ListView<S extends SearchCriteria, B> extends PageView {
+public interface IListView<S extends SearchCriteria, B> extends PageView {
 
 	AbstractPagedBeanList<S, B> getPagedBeanTable();
 }

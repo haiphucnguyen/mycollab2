@@ -14,19 +14,18 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-mobile.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.mobile.module.crm.view.account;
+package com.esofthead.mycollab.mobile.module.crm.view.cases;
 
-import com.esofthead.mycollab.mobile.ui.IListView;
-import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
-import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
+import com.esofthead.mycollab.module.crm.domain.SimpleCase;
+import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
+import com.esofthead.mycollab.vaadin.mvp.IPreviewView;
 
 /**
  * 
  * @author MyCollab Ltd.
- * @since 3.0
+ * @since 4.1
  * 
  */
-public interface AccountListView extends
-		IListView<AccountSearchCriteria, SimpleAccount> {
-
+public interface CaseReadView extends IPreviewView<SimpleCase> {
+	HasPreviewFormHandlers<SimpleCase> getPreviewFormHandlers();
 }
