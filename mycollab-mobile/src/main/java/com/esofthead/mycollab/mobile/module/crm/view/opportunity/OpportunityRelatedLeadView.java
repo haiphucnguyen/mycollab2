@@ -14,21 +14,21 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-mobile.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.mobile.module.crm.view.lead;
+package com.esofthead.mycollab.mobile.module.crm.view.opportunity;
 
+import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.eventmanager.ApplicationEvent;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.mobile.module.crm.events.LeadEvent;
-import com.esofthead.mycollab.mobile.ui.AbstractListViewComp;
-import com.esofthead.mycollab.mobile.ui.AbstractPagedBeanList;
+import com.esofthead.mycollab.mobile.module.crm.ui.AbstractRelatedListView;
+import com.esofthead.mycollab.mobile.module.crm.view.lead.LeadListDisplay;
 import com.esofthead.mycollab.mobile.ui.TableClickEvent;
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
+import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
-import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Component;
+import com.esofthead.mycollab.vaadin.AppContext;
 
 /**
  * 
@@ -36,26 +36,19 @@ import com.vaadin.ui.Component;
  * @since 4.1
  * 
  */
+public class OpportunityRelatedLeadView extends
+		AbstractRelatedListView<SimpleLead, LeadSearchCriteria> {
+	private static final long serialVersionUID = -7499398284109642141L;
+	private SimpleOpportunity opportunity;
 
-@ViewComponent
-public class LeadListViewImpl extends
-		AbstractListViewComp<LeadSearchCriteria, SimpleLead> implements
-		LeadListView {
-	private static final long serialVersionUID = -5311139413938817084L;
-
-	public LeadListViewImpl() {
+	public OpportunityRelatedLeadView() {
 		super();
 
-		setCaption("Leads");
-		setToggleButton(true);
-	}
-
-	@Override
-	protected AbstractPagedBeanList<LeadSearchCriteria, SimpleLead> createBeanTable() {
-		LeadListDisplay leadListDisplay = new LeadListDisplay("leadName");
-		leadListDisplay
+		setCaption("Related Leads");
+		this.tableItem = new LeadListDisplay("leadName");
+		this.tableItem
 				.addTableListener(new ApplicationEventListener<TableClickEvent>() {
-					private static final long serialVersionUID = 9195179759480776147L;
+					private static final long serialVersionUID = -8386994464238067308L;
 
 					@Override
 					public Class<? extends ApplicationEvent> getEventType() {
@@ -66,31 +59,33 @@ public class LeadListViewImpl extends
 					public void handle(TableClickEvent event) {
 						final SimpleLead lead = (SimpleLead) event.getData();
 						if ("leadName".equals(event.getFieldName())) {
-							EventBus.getInstance()
-									.fireEvent(
-											new LeadEvent.GotoRead(
-													LeadListViewImpl.this, lead
-															.getId()));
+							EventBus.getInstance().fireEvent(
+									new LeadEvent.GotoRead(
+											OpportunityRelatedLeadView.class,
+											lead.getId()));
 						}
-
 					}
 				});
-		return leadListDisplay;
+		this.setContent(this.tableItem);
+	}
+
+	private void loadLeads() {
+		final LeadSearchCriteria searchCriteria = new LeadSearchCriteria();
+		searchCriteria.setSaccountid(new NumberSearchField(SearchField.AND,
+				AppContext.getAccountId()));
+		searchCriteria.setOpportunityId(new NumberSearchField(SearchField.AND,
+				opportunity.getId()));
+		this.tableItem.setSearchCriteria(searchCriteria);
+	}
+
+	public void displayLeads(SimpleOpportunity opportunity) {
+		this.opportunity = opportunity;
+		loadLeads();
 	}
 
 	@Override
-	protected Component createRightComponent() {
-		Button addLead = new Button(null, new Button.ClickListener() {
-			private static final long serialVersionUID = -6024437571619598638L;
-
-			@Override
-			public void buttonClick(ClickEvent event) {
-				EventBus.getInstance().fireEvent(
-						new LeadEvent.GotoAdd(this, null));
-			}
-		});
-		addLead.setStyleName("add-btn");
-		return addLead;
+	public void refresh() {
+		loadLeads();
 	}
 
 }

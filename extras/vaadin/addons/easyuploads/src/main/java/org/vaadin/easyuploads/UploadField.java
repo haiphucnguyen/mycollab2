@@ -90,6 +90,7 @@ public class UploadField extends VerticalLayout implements Field,
 	private StorageMode storageMode;
 
 	private int oldPollInterval;
+	private int currentPollInterval = 1000;
 
 	public UploadField() {
 		this(StorageMode.FILE);
@@ -115,6 +116,14 @@ public class UploadField extends VerticalLayout implements Field,
 
 	public String getButtonCaption() {
 		return upload.getButtonCaption();
+	}
+
+	public int getCurrentPollInterval() {
+		return currentPollInterval;
+	}
+
+	public void setCurrentPollInterval(int desiredPollInterval) {
+		this.currentPollInterval = desiredPollInterval;
 	}
 
 	public final VerticalLayout getRootLayout() {
@@ -332,16 +341,16 @@ public class UploadField extends VerticalLayout implements Field,
 	public void uploadStarted(StartedEvent event) {
 		progress.setVisible(true);
 		progress.setValue(0f);
-		UI.getCurrent().setPollInterval(300);
+		UI.getCurrent().setPollInterval(currentPollInterval);
 	}
 
 	@Override
 	public void uploadFinished(FinishedEvent event) {
 		progress.setVisible(false);
 		lastFileName = event.getFilename();
-        UI.getCurrent().setPollInterval(oldPollInterval);
+		UI.getCurrent().setPollInterval(oldPollInterval);
 		updateDisplay();
-		fireValueChange();		
+		fireValueChange();
 	}
 
 	protected void fireValueChange() {
