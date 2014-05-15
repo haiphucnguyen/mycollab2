@@ -35,6 +35,7 @@ import com.esofthead.mycollab.mobile.module.crm.view.account.AccountAddPresenter
 import com.esofthead.mycollab.mobile.module.crm.view.account.AccountListPresenter;
 import com.esofthead.mycollab.mobile.module.crm.view.account.AccountReadPresenter;
 import com.esofthead.mycollab.mobile.module.crm.view.activity.ActivityListPresenter;
+import com.esofthead.mycollab.mobile.module.crm.view.activity.AssignmentReadPresenter;
 import com.esofthead.mycollab.mobile.module.crm.view.campaign.CampaignAddPresenter;
 import com.esofthead.mycollab.mobile.module.crm.view.campaign.CampaignListPresenter;
 import com.esofthead.mycollab.mobile.module.crm.view.campaign.CampaignReadPresenter;
@@ -251,6 +252,24 @@ public class CrmModuleController implements IController {
 						presenter.go(crmViewNavigation,
 								new ScreenData.Search<ActivitySearchCriteria>(
 										criteria));
+					}
+				});
+		EventBus.getInstance().addListener(
+				new ApplicationEventListener<ActivityEvent.TaskRead>() {
+
+					@Override
+					public Class<? extends ApplicationEvent> getEventType() {
+						// TODO Auto-generated method stub
+						return ActivityEvent.TaskRead.class;
+					}
+
+					@SuppressWarnings({ "unchecked", "rawtypes" })
+					@Override
+					public void handle(ActivityEvent.TaskRead event) {
+						AssignmentReadPresenter presenter = PresenterResolver
+								.getPresenter(AssignmentReadPresenter.class);
+						presenter.go(crmViewNavigation, new ScreenData.Preview(
+								event.getData()));
 					}
 				});
 	}
