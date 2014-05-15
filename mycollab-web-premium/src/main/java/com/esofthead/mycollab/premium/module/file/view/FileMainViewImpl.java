@@ -12,7 +12,6 @@ import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
-import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.module.ecm.ResourceUtils;
 import com.esofthead.mycollab.module.ecm.StorageNames;
 import com.esofthead.mycollab.module.ecm.domain.Content;
@@ -219,7 +218,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 		filterBtnLayout.addComponent(connectDropboxLayout);
 
 		linkBtn.setContent(filterBtnLayout);
-		
+
 		navButton.addButton(linkBtn);
 
 		Label usedVolumeInfo = new Label();
@@ -601,7 +600,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 			public FileBasicSearchLayout() {
 				super(FilterPanel.this);
 			}
-			
+
 			private static final long serialVersionUID = 1L;
 			private TextField nameField;
 			private CheckBox myItemCheckbox;
@@ -616,7 +615,8 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 				final HorizontalLayout basicSearchBody = new HorizontalLayout();
 				basicSearchBody.setSpacing(true);
 				basicSearchBody.setMargin(true);
-				UiUtils.addComponent(basicSearchBody,new Label("Name:"), Alignment.MIDDLE_LEFT);
+				UiUtils.addComponent(basicSearchBody, new Label("Name:"),
+						Alignment.MIDDLE_LEFT);
 				this.addStyleName("file-list-view");
 				this.nameField = new TextField();
 				this.nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
@@ -626,14 +626,14 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 				this.myItemCheckbox = new CheckBox("My Items");
 				UiUtils.addComponent(basicSearchBody, this.myItemCheckbox,
 						Alignment.MIDDLE_CENTER);
-				
+
 				final Button searchBtn = new Button("Search");
 				searchBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 				searchBtn.setIcon(MyCollabResource
 						.newResource("icons/16/search.png"));
 
 				searchBtn.addClickListener(new Button.ClickListener() {
-				
+
 					private static final long serialVersionUID = 1L;
 
 					@Override
@@ -662,10 +662,10 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 				});
 				UiUtils.addComponent(basicSearchBody, searchBtn,
 						Alignment.MIDDLE_LEFT);
-				
-				final Button cancelBtn = new Button(AppContext
-						.getMessage(GenericI18Enum.BUTTON_CLEAR));
-			
+
+				final Button cancelBtn = new Button(
+						AppContext.getMessage(GenericI18Enum.BUTTON_CLEAR));
+
 				cancelBtn.addClickListener(new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
@@ -677,7 +677,6 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 				cancelBtn.setStyleName(UIConstants.THEME_BLANK_LINK);
 				basicSearchBody.addComponent(cancelBtn);
 
-				
 				return basicSearchBody;
 			}
 
@@ -802,7 +801,6 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 					popupBtn.setIcon(MyCollabResource
 							.newResource("icons/16/item_settings_big.png"));
 					popupBtn.setStyleName(UIConstants.THEME_BLANK_LINK);
-					
 
 					final VerticalLayout popupOptionActionLayout = new VerticalLayout();
 					popupOptionActionLayout.setMargin(true);
@@ -838,7 +836,9 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 					editBtn.addStyleName("link");
 					popupOptionActionLayout.addComponent(editBtn);
 
-					Button deleteBtn = new Button("Delete",
+					Button deleteBtn = new Button(
+							AppContext
+									.getMessage(GenericI18Enum.BUTTON_DELETE_LABEL),
 							new Button.ClickListener() {
 								private static final long serialVersionUID = 1L;
 
@@ -943,72 +943,82 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 				folderNameTextField.setValue(drive.getFoldername());
 				layout.addComponent(folderNameTextField);
 
-				Button saveBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SAVE_LABEL), new ClickListener() {
-					private static final long serialVersionUID = 1L;
+				Button saveBtn = new Button(
+						AppContext.getMessage(GenericI18Enum.BUTTON_SAVE_LABEL),
+						new ClickListener() {
+							private static final long serialVersionUID = 1L;
 
-					@Override
-					public void buttonClick(ClickEvent event) {
-						String folderName = folderNameTextField.getValue()
-								.toString().trim();
-						try {
-							if (folderName != null && folderName.length() > 0) {
-								boolean checkingError = checkValidFolderName(folderName);
-								if (checkingError) {
-									NotificationUtil
-											.showErrorNotification("Please enter valid folder name except any follow characters : <>:&/\\|?*&");
-									return;
-								}
-								ExternalFolder res = (ExternalFolder) externalResourceService
-										.getCurrentResourceByPath(drive, "/");
+							@Override
+							public void buttonClick(ClickEvent event) {
+								String folderName = folderNameTextField
+										.getValue().toString().trim();
+								try {
+									if (folderName != null
+											&& folderName.length() > 0) {
+										boolean checkingError = checkValidFolderName(folderName);
+										if (checkingError) {
+											NotificationUtil
+													.showErrorNotification("Please enter valid folder name except any follow characters : <>:&/\\|?*&");
+											return;
+										}
+										ExternalFolder res = (ExternalFolder) externalResourceService
+												.getCurrentResourceByPath(
+														drive, "/");
 
-								Container dataSource = menuTree
-										.getContainerDataSource();
-								final Object[] dataCollectionArray = dataSource
-										.getItemIds().toArray();
-								for (int i = 0; i < dataCollectionArray.length; i++) {
-									Folder folder = (Folder) menuTree
-											.getContainerDataSource()
-											.getItemIds().toArray()[i];
-									if (folder.getName().equals(
-											res.getExternalDrive()
-													.getFoldername())
-											&& folder instanceof ExternalFolder) {
-										menuTree.collapseItem(rootECMFolder);
-										menuTree.expandItem(rootECMFolder);
-										break;
+										Container dataSource = menuTree
+												.getContainerDataSource();
+										final Object[] dataCollectionArray = dataSource
+												.getItemIds().toArray();
+										for (int i = 0; i < dataCollectionArray.length; i++) {
+											Folder folder = (Folder) menuTree
+													.getContainerDataSource()
+													.getItemIds().toArray()[i];
+											if (folder.getName().equals(
+													res.getExternalDrive()
+															.getFoldername())
+													&& folder instanceof ExternalFolder) {
+												menuTree.collapseItem(rootECMFolder);
+												menuTree.expandItem(rootECMFolder);
+												break;
+											}
+										}
+
+										ExternalDrive currentEditDrive = drive;
+										currentEditDrive
+												.setFoldername(folderName);
+										externalDriveService.updateWithSession(
+												currentEditDrive,
+												AppContext.getUsername());
+
+										foldernameLbl = new Label(folderName);
+										foldernameLbl.addStyleName("h3");
+
+										turnBackMainLayout(parentLayout,
+												foldernameLbl, layout,
+												externalDriveEditLayout);
 									}
+								} catch (Exception e) {
+									throw new MyCollabException(e);
 								}
-
-								ExternalDrive currentEditDrive = drive;
-								currentEditDrive.setFoldername(folderName);
-								externalDriveService.updateWithSession(
-										currentEditDrive,
-										AppContext.getUsername());
-
-								foldernameLbl = new Label(folderName);
-								foldernameLbl.addStyleName("h3");
-
-								turnBackMainLayout(parentLayout, foldernameLbl,
-										layout, externalDriveEditLayout);
 							}
-						} catch (Exception e) {
-							throw new MyCollabException(e);
-						}
-					}
-				});
+						});
 				saveBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
-				saveBtn.setIcon(MyCollabResource.newResource("icons/16/save.png"));
+				saveBtn.setIcon(MyCollabResource
+						.newResource("icons/16/save.png"));
 				layout.addComponent(saveBtn);
 
-				Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL_LABEL), new ClickListener() {
-					private static final long serialVersionUID = 1L;
+				Button cancelBtn = new Button(
+						AppContext
+								.getMessage(GenericI18Enum.BUTTON_CANCEL_LABEL),
+						new ClickListener() {
+							private static final long serialVersionUID = 1L;
 
-					@Override
-					public void buttonClick(ClickEvent event) {
-						turnBackMainLayout(parentLayout, lbl, layout,
-								externalDriveEditLayout);
-					}
-				});
+							@Override
+							public void buttonClick(ClickEvent event) {
+								turnBackMainLayout(parentLayout, lbl, layout,
+										externalDriveEditLayout);
+							}
+						});
 				cancelBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
 				layout.addComponent(cancelBtn);
 				return layout;
