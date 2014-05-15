@@ -21,7 +21,7 @@ import ch.qos.cal10n.Locale;
 import ch.qos.cal10n.LocaleData;
 
 @BaseName("localization/crm/common")
-@LocaleData({ @Locale("en_US") })
+@LocaleData({ @Locale("en_US"), @Locale("ja_JP") })
 public enum CrmCommonI18nEnum {
 	TABLE_OFFICE_PHONE_HEADER,
 	TABLE_CREATED_DATE_HEADER,
@@ -63,6 +63,7 @@ public enum CrmCommonI18nEnum {
 	TOOLBAR_MEETING_NEW_ACTION,
 	TOOLBAR_TASK_NEW_ACTION,
 	FORM_PHONE_OFFICE_FIELD,
+	CREATE_ACTION,
 	ACCOUNT,
 	CONTACT
 }
