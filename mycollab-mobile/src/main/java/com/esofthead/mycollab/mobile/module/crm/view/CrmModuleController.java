@@ -35,6 +35,7 @@ import com.esofthead.mycollab.mobile.module.crm.view.account.AccountAddPresenter
 import com.esofthead.mycollab.mobile.module.crm.view.account.AccountListPresenter;
 import com.esofthead.mycollab.mobile.module.crm.view.account.AccountReadPresenter;
 import com.esofthead.mycollab.mobile.module.crm.view.activity.ActivityListPresenter;
+import com.esofthead.mycollab.mobile.module.crm.view.campaign.CampaignAddPresenter;
 import com.esofthead.mycollab.mobile.module.crm.view.campaign.CampaignListPresenter;
 import com.esofthead.mycollab.mobile.module.crm.view.campaign.CampaignReadPresenter;
 import com.esofthead.mycollab.mobile.module.crm.view.cases.CaseListPresenter;
@@ -45,6 +46,7 @@ import com.esofthead.mycollab.mobile.module.crm.view.contact.ContactReadPresente
 import com.esofthead.mycollab.mobile.module.crm.view.lead.LeadListPresenter;
 import com.esofthead.mycollab.mobile.module.crm.view.opportunity.OpportunityListPresenter;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
+import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.esofthead.mycollab.module.crm.domain.criteria.ActivitySearchCriteria;
@@ -99,7 +101,7 @@ public class CrmModuleController implements IController {
 						 */
 						if (crmViewNavigation.getNavigationMenu() == null)
 							crmViewNavigation
-									.setNavigationMenu(new CrmNavigationMenu());
+							.setNavigationMenu(new CrmNavigationMenu());
 
 						ActivityStreamPresenter presenter = PresenterResolver
 								.getPresenter(ActivityStreamPresenter.class);
@@ -120,8 +122,8 @@ public class CrmModuleController implements IController {
 					public void handle(CrmEvent.PushView event) {
 						if (event.getData() instanceof MobileNavigationView) {
 							crmViewNavigation
-									.navigateTo((MobileNavigationView) event
-											.getData());
+							.navigateTo((MobileNavigationView) event
+									.getData());
 						}
 					}
 				});
@@ -221,8 +223,8 @@ public class CrmModuleController implements IController {
 					public void handle(AccountEvent.GoToRelatedItems event) {
 						if (event.getData() instanceof CrmRelatedItemsScreenData)
 							crmViewNavigation
-									.navigateTo(((CrmRelatedItemsScreenData) event
-											.getData()).getParams());
+							.navigateTo(((CrmRelatedItemsScreenData) event
+									.getData()).getParams());
 					}
 				});
 	}
@@ -344,8 +346,8 @@ public class CrmModuleController implements IController {
 					public void handle(ContactEvent.GoToRelatedItems event) {
 						if (event.getData() instanceof CrmRelatedItemsScreenData)
 							crmViewNavigation
-									.navigateTo(((CrmRelatedItemsScreenData) event
-											.getData()).getParams());
+							.navigateTo(((CrmRelatedItemsScreenData) event
+									.getData()).getParams());
 					}
 
 				});
@@ -376,39 +378,43 @@ public class CrmModuleController implements IController {
 					}
 				});
 
-		// EventBus.getInstance().addListener(
-		// new ApplicationEventListener<CampaignEvent.GotoAdd>() {
-		// @Override
-		// public Class<? extends ApplicationEvent> getEventType() {
-		// return CampaignEvent.GotoAdd.class;
-		// }
-		//
-		// @Override
-		// public void handle(CampaignEvent.GotoAdd event) {
-		// CampaignAddPresenter presenter = PresenterResolver
-		// .getPresenter(CampaignAddPresenter.class);
-		// presenter.go(container,
-		// new ScreenData.Add<SimpleCampaign>(
-		// new SimpleCampaign()));
-		// }
-		// });
-		//
-		// EventBus.getInstance().addListener(
-		// new ApplicationEventListener<CampaignEvent.GotoEdit>() {
-		// @Override
-		// public Class<? extends ApplicationEvent> getEventType() {
-		// return CampaignEvent.GotoEdit.class;
-		// }
-		//
-		// @Override
-		// public void handle(CampaignEvent.GotoEdit event) {
-		// CampaignAddPresenter presenter = PresenterResolver
-		// .getPresenter(CampaignAddPresenter.class);
-		// presenter.go(container, new ScreenData.Edit<Object>(
-		// event.getData()));
-		// }
-		// });
-		//
+		EventBus.getInstance().addListener(
+				new ApplicationEventListener<CampaignEvent.GotoAdd>() {
+					private static final long serialVersionUID = 1240143124315010237L;
+
+					@Override
+					public Class<? extends ApplicationEvent> getEventType() {
+						return CampaignEvent.GotoAdd.class;
+					}
+
+					@Override
+					public void handle(CampaignEvent.GotoAdd event) {
+						CampaignAddPresenter presenter = PresenterResolver
+								.getPresenter(CampaignAddPresenter.class);
+						presenter.go(crmViewNavigation,
+								new ScreenData.Add<SimpleCampaign>(
+										new SimpleCampaign()));
+					}
+				});
+
+		EventBus.getInstance().addListener(
+				new ApplicationEventListener<CampaignEvent.GotoEdit>() {
+					private static final long serialVersionUID = 7877885891797325699L;
+
+					@Override
+					public Class<? extends ApplicationEvent> getEventType() {
+						return CampaignEvent.GotoEdit.class;
+					}
+
+					@Override
+					public void handle(CampaignEvent.GotoEdit event) {
+						CampaignAddPresenter presenter = PresenterResolver
+								.getPresenter(CampaignAddPresenter.class);
+						presenter.go(crmViewNavigation, new ScreenData.Edit<Object>(
+								event.getData()));
+					}
+				});
+
 		EventBus.getInstance().addListener(
 				new ApplicationEventListener<CampaignEvent.GotoRead>() {
 					private static final long serialVersionUID = -9221302504462965422L;
@@ -441,8 +447,8 @@ public class CrmModuleController implements IController {
 					public void handle(CampaignEvent.GoToRelatedItems event) {
 						if (event.getData() instanceof CrmRelatedItemsScreenData)
 							crmViewNavigation
-									.navigateTo(((CrmRelatedItemsScreenData) event
-											.getData()).getParams());
+							.navigateTo(((CrmRelatedItemsScreenData) event
+									.getData()).getParams());
 					}
 				});
 	}
@@ -535,8 +541,8 @@ public class CrmModuleController implements IController {
 					public void handle(CaseEvent.GoToRelatedItems event) {
 						if (event.getData() instanceof CrmRelatedItemsScreenData)
 							crmViewNavigation
-									.navigateTo(((CrmRelatedItemsScreenData) event
-											.getData()).getParams());
+							.navigateTo(((CrmRelatedItemsScreenData) event
+									.getData()).getParams());
 					}
 				});
 	}
@@ -583,9 +589,9 @@ public class CrmModuleController implements IController {
 						searchCriteria.setAccountId(new NumberSearchField(
 								SearchField.AND, AppContext.getAccountId()));
 						presenter
-								.go(crmViewNavigation,
-										new ScreenData.Search<OpportunitySearchCriteria>(
-												searchCriteria));
+						.go(crmViewNavigation,
+								new ScreenData.Search<OpportunitySearchCriteria>(
+										searchCriteria));
 
 					}
 				});
