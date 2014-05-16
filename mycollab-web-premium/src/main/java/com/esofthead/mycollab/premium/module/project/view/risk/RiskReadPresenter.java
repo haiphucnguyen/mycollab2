@@ -7,7 +7,6 @@ import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
-import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
@@ -52,6 +51,12 @@ public class RiskReadPresenter extends AbstractPresenter<RiskReadView> {
 					public void onEdit(SimpleRisk data) {
 						EventBus.getInstance().fireEvent(
 								new RiskEvent.GotoEdit(this, data));
+					}
+
+					@Override
+					public void onAdd(SimpleRisk data) {
+						EventBus.getInstance().fireEvent(
+								new RiskEvent.GotoAdd(this, null));
 					}
 
 					@Override
