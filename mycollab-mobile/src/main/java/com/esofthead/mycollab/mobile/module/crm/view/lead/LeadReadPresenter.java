@@ -19,10 +19,12 @@ package com.esofthead.mycollab.mobile.module.crm.view.lead;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.eventmanager.EventBus;
+import com.esofthead.mycollab.mobile.module.crm.events.CampaignEvent;
 import com.esofthead.mycollab.mobile.module.crm.events.LeadEvent;
 import com.esofthead.mycollab.mobile.module.crm.ui.CrmGenericPresenter;
 import com.esofthead.mycollab.mobile.ui.ConfirmDialog;
 import com.esofthead.mycollab.module.crm.CrmLinkGenerator;
+import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.LeadService;
@@ -56,6 +58,12 @@ public class LeadReadPresenter extends CrmGenericPresenter<LeadReadView> {
 					public void onEdit(SimpleLead data) {
 						EventBus.getInstance().fireEvent(
 								new LeadEvent.GotoEdit(this, data));
+					}
+					
+					@Override
+					public void onAdd(SimpleLead data) {
+						EventBus.getInstance().fireEvent(
+								new LeadEvent.GotoAdd(this, null));
 					}
 
 					@Override

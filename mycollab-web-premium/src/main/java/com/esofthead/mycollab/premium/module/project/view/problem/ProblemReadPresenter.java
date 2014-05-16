@@ -6,7 +6,6 @@ import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
-import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
@@ -50,6 +49,12 @@ public class ProblemReadPresenter extends AbstractPresenter<ProblemReadView> {
 					public void onEdit(SimpleProblem data) {
 						EventBus.getInstance().fireEvent(
 								new ProblemEvent.GotoEdit(this, data));
+					}
+
+					@Override
+					public void onAdd(SimpleProblem data) {
+						EventBus.getInstance().fireEvent(
+								new ProblemEvent.GotoAdd(this, null));
 					}
 
 					@Override

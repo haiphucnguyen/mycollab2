@@ -60,6 +60,12 @@ public class OpportunityReadPresenter extends
 					}
 
 					@Override
+					public void onAdd(SimpleOpportunity data) {
+						EventBus.getInstance().fireEvent(
+								new OpportunityEvent.GotoAdd(this, null));
+					}
+
+					@Override
 					public void onDelete(final SimpleOpportunity data) {
 						ConfirmDialog.show(
 								UI.getCurrent(),

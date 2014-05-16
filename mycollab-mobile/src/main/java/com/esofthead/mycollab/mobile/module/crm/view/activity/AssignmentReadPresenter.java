@@ -62,6 +62,12 @@ public class AssignmentReadPresenter extends
 					}
 
 					@Override
+					public void onAdd(SimpleTask data) {
+						EventBus.getInstance().fireEvent(
+								new ActivityEvent.TaskAdd(this, null));
+					}
+
+					@Override
 					public void onDelete(final SimpleTask data) {
 						ConfirmDialog.show(
 								UI.getCurrent(),
