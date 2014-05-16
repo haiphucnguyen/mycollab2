@@ -120,8 +120,8 @@ public class CrmSettingContainer extends CssLayout implements PageView {
 
 	}
 
-	public Component gotoSubView(String name) {
-		PageView component = (PageView) settingTab.selectTab(name);
+	public Component gotoSubView(String viewId) {
+		PageView component = (PageView) settingTab.selectTab(viewId);
 		return component;
 	}
 

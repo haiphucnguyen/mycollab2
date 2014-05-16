@@ -26,6 +26,7 @@ import com.esofthead.mycollab.module.crm.domain.SimpleActivity;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.module.crm.domain.criteria.ActivitySearchCriteria;
+import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.crm.ui.components.AbstractPreviewItemComp;
 import com.esofthead.mycollab.module.crm.ui.components.CrmPreviewFormControlsGenerator;
 import com.esofthead.mycollab.module.crm.ui.components.DateInfoComp;
@@ -152,11 +153,12 @@ public class LeadReadViewImpl extends AbstractPreviewItemComp<SimpleLead>
 
 		navigatorWrapper.addComponentAsFirst(basicInfo);
 
-		previewItemContainer.addTab(previewContent, "about", "About");
+		previewItemContainer.addTab(previewContent, "about",
+				AppContext.getMessage(CrmCommonI18nEnum.ABOUT_SUB_VIEW));
 		previewItemContainer.addTab(associateCampaignList, "campaign",
-				"Campaigns");
+				AppContext.getMessage(CrmCommonI18nEnum.CAMPAIGN_SUB_VIEW));
 		previewItemContainer.addTab(associateActivityList, "activity",
-				"Activities");
+				AppContext.getMessage(CrmCommonI18nEnum.ACTIVITY_SUB_VIEW));
 	}
 
 	@Override
