@@ -44,7 +44,7 @@ import com.vaadin.ui.VerticalLayout;
  */
 @ViewComponent
 public class MeetingReadViewImpl extends AbstractPreviewItemComp<SimpleMeeting>
-implements MeetingReadView {
+		implements MeetingReadView {
 
 	private static final long serialVersionUID = 1L;
 	protected NoteListItems noteListItems;
@@ -108,8 +108,8 @@ implements MeetingReadView {
 
 		navigatorWrapper.addComponentAsFirst(basicInfo);
 
-		previewItemContainer.addTab(previewContent, "About");
-		previewItemContainer.selectTab("About");
+		previewItemContainer.addTab(previewContent, "about", "About");
+		previewItemContainer.selectTab("about");
 	}
 
 	@Override

@@ -54,7 +54,7 @@ import com.vaadin.ui.VerticalLayout;
  */
 @ViewComponent
 public class CaseReadViewImpl extends AbstractPreviewItemComp<SimpleCase>
-implements CaseReadView {
+		implements CaseReadView {
 
 	private static final long serialVersionUID = 1L;
 	protected CaseContactListComp associateContactList;
@@ -103,7 +103,7 @@ implements CaseReadView {
 		peopleInfoComp.displayEntryPeople(beanItem);
 		dateInfoComp.displayEntryDateTime(beanItem);
 
-		previewItemContainer.selectTab("About");
+		previewItemContainer.selectTab("about");
 	}
 
 	@Override
@@ -130,12 +130,13 @@ implements CaseReadView {
 		peopleInfoComp = new PeopleInfoComp();
 		basicInfo.addComponent(peopleInfoComp);
 
-
 		navigatorWrapper.addComponentAsFirst(basicInfo);
 
-		previewItemContainer.addTab(previewContent, "About");
-		previewItemContainer.addTab(associateContactList, "Contacts");
-		previewItemContainer.addTab(associateActivityList, "Activities");
+		previewItemContainer.addTab(previewContent, "about", "About");
+		previewItemContainer
+				.addTab(associateContactList, "contact", "Contacts");
+		previewItemContainer.addTab(associateActivityList, "activity",
+				"Activities");
 	}
 
 	@Override

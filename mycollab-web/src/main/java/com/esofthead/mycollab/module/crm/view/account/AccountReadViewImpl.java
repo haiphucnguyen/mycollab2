@@ -184,14 +184,17 @@ public class AccountReadViewImpl extends AbstractPreviewItemComp<SimpleAccount>
 
 		navigatorWrapper.addComponentAsFirst(basicInfo);
 
-		previewItemContainer.addTab(previewContent, "About");
-		previewItemContainer.addTab(associateContactList, "Contacts");
-		previewItemContainer.addTab(associateLeadList, "Leads");
-		previewItemContainer.addTab(associateOpportunityList, "Opportunities");
-		previewItemContainer.addTab(associateCaseList, "Cases");
-		previewItemContainer.addTab(associateActivityList, "Activities");
+		previewItemContainer.addTab(previewContent, "about", "About");
+		previewItemContainer
+				.addTab(associateContactList, "contact", "Contacts");
+		previewItemContainer.addTab(associateLeadList, "lead", "Leads");
+		previewItemContainer.addTab(associateOpportunityList, "opportunity",
+				"Opportunities");
+		previewItemContainer.addTab(associateCaseList, "case", "Cases");
+		previewItemContainer.addTab(associateActivityList, "activity",
+				"Activities");
 
-		previewItemContainer.selectTab("About");
+		previewItemContainer.selectTab("about");
 	}
 
 	@Override
@@ -217,7 +220,7 @@ public class AccountReadViewImpl extends AbstractPreviewItemComp<SimpleAccount>
 		peopleInfoComp.displayEntryPeople(beanItem);
 		dateInfoComp.displayEntryDateTime(beanItem);
 
-		previewItemContainer.selectTab("About");
+		previewItemContainer.selectTab("about");
 	}
 
 	@Override

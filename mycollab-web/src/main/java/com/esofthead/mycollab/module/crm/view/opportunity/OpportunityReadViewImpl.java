@@ -60,8 +60,8 @@ import com.vaadin.ui.VerticalLayout;
  */
 @ViewComponent
 public class OpportunityReadViewImpl extends
-AbstractPreviewItemComp<SimpleOpportunity> implements
-OpportunityReadView {
+		AbstractPreviewItemComp<SimpleOpportunity> implements
+		OpportunityReadView {
 
 	private static final long serialVersionUID = 1L;
 
@@ -114,7 +114,7 @@ OpportunityReadView {
 		dateInfoComp.displayEntryDateTime(beanItem);
 		peopleInfoComp.displayEntryPeople(beanItem);
 
-		previewItemContainer.selectTab("About");
+		previewItemContainer.selectTab("about");
 	}
 
 	@Override
@@ -128,12 +128,12 @@ OpportunityReadView {
 			return "<h2>"
 					+ beanItem.getOpportunityname()
 					+ AppContext
-					.getMessage(
-							LeadI18nEnum.CONVERT_FROM_LEAD_TITLE,
-							CrmResources
-							.getResourceLink(CrmTypeConstants.LEAD),
-							CrmLinkGenerator.generateCrmItemLink(
-									CrmTypeConstants.LEAD, lead.getId()),
+							.getMessage(
+									LeadI18nEnum.CONVERT_FROM_LEAD_TITLE,
+									CrmResources
+											.getResourceLink(CrmTypeConstants.LEAD),
+									CrmLinkGenerator.generateCrmItemLink(
+											CrmTypeConstants.LEAD, lead.getId()),
 									lead.getLeadName()) + "</h2>";
 		} else {
 			return beanItem.getOpportunityname();
@@ -160,13 +160,14 @@ OpportunityReadView {
 		peopleInfoComp = new PeopleInfoComp();
 		basicInfo.addComponent(peopleInfoComp);
 
-
 		navigatorWrapper.addComponentAsFirst(basicInfo);
 
-		previewItemContainer.addTab(previewContent, "About");
-		previewItemContainer.addTab(associateContactList, "Contacts");
-		previewItemContainer.addTab(associateLeadList, "Leads");
-		previewItemContainer.addTab(associateActivityList, "Activities");
+		previewItemContainer.addTab(previewContent, "about", "About");
+		previewItemContainer
+				.addTab(associateContactList, "contact", "Contacts");
+		previewItemContainer.addTab(associateLeadList, "lead", "Leads");
+		previewItemContainer.addTab(associateActivityList, "activity",
+				"Activities");
 	}
 
 	@Override

@@ -123,11 +123,14 @@ public class CampaignReadViewImpl extends
 
 		navigatorWrapper.addComponentAsFirst(basicInfo);
 
-		previewItemContainer.addTab(previewContent, "About");
-		previewItemContainer.addTab(associateAccountList, "Accounts");
-		previewItemContainer.addTab(associateContactList, "Contacts");
-		previewItemContainer.addTab(associateLeadList, "Leads");
-		previewItemContainer.addTab(associateActivityList, "Activities");
+		previewItemContainer.addTab(previewContent, "about", "About");
+		previewItemContainer
+				.addTab(associateAccountList, "account", "Accounts");
+		previewItemContainer
+				.addTab(associateContactList, "contact", "Contacts");
+		previewItemContainer.addTab(associateLeadList, "lead", "Leads");
+		previewItemContainer.addTab(associateActivityList, "activity",
+				"Activities");
 	}
 
 	protected void displayNotes() {
@@ -171,7 +174,7 @@ public class CampaignReadViewImpl extends
 		dateInfoComp.displayEntryDateTime(beanItem);
 		peopleInfoComp.displayEntryPeople(beanItem);
 
-		previewItemContainer.selectTab("About");
+		previewItemContainer.selectTab("about");
 	}
 
 	@Override

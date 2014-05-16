@@ -99,7 +99,7 @@ public class ProjectPreviewFormControlsGenerator<T> implements Serializable {
 		popupButtonsControl.setWidth("100px");
 		popupButtonsControl.setMargin(new MarginInfo(false, true, false, true));
 		popupButtonsControl.setSpacing(true);
-		
+
 		addBtn = new Button(
 				AppContext.getMessage(GenericI18Enum.BUTTON_ADD_LABEL),
 				new Button.ClickListener() {
@@ -245,6 +245,7 @@ public class ProjectPreviewFormControlsGenerator<T> implements Serializable {
 				assignBtn.setEnabled(canWrite);
 			}
 
+			addBtn.setEnabled(canWrite);
 			editBtn.setEnabled(canWrite);
 			cloneBtn.setEnabled(canWrite);
 			deleteBtn.setEnabled(canAccess);

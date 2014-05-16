@@ -44,7 +44,7 @@ import com.vaadin.ui.VerticalLayout;
  */
 @ViewComponent
 public class CallReadViewImpl extends AbstractPreviewItemComp<SimpleCall>
-implements CallReadView {
+		implements CallReadView {
 
 	private static final long serialVersionUID = 1L;
 
@@ -109,8 +109,8 @@ implements CallReadView {
 
 		navigatorWrapper.addComponentAsFirst(basicInfo);
 
-		previewItemContainer.addTab(previewContent, "About");
-		previewItemContainer.selectTab("About");
+		previewItemContainer.addTab(previewContent, "about", "About");
+		previewItemContainer.selectTab("about");
 	}
 
 	@Override
