@@ -25,6 +25,12 @@ import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.vaadin.ui.ComponentContainer;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 3.0
+ * 
+ */
 public class CrmCustomViewPresenter extends CrmGenericPresenter<ICrmCustomView>
 		implements ICrmCustomViewPresenter {
 	private static final long serialVersionUID = 1L;
@@ -36,7 +42,7 @@ public class CrmCustomViewPresenter extends CrmGenericPresenter<ICrmCustomView>
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		CrmSettingContainer settingContainer = (CrmSettingContainer) container;
-		settingContainer.gotoSubView("Custom Layouts");
+		settingContainer.gotoSubView("customlayout");
 
 		AppContext.addFragment("crm/setting/customlayout", "Custom Layouts");
 

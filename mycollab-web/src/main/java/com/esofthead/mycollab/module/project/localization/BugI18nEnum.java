@@ -21,7 +21,7 @@ import ch.qos.cal10n.Locale;
 import ch.qos.cal10n.LocaleData;
 
 @BaseName("localization/project/bug")
-@LocaleData({ @Locale("en_US") })
+@LocaleData({ @Locale("en_US"), @Locale("ja_JP") })
 public enum BugI18nEnum {
 	BUG_DASHBOARD_TITLE,
 	BUG_SEARCH_TITLE,

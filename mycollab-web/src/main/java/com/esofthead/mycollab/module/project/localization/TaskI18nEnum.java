@@ -21,7 +21,7 @@ import ch.qos.cal10n.Locale;
 import ch.qos.cal10n.LocaleData;
 
 @BaseName("localization/project/task")
-@LocaleData({ @Locale("en_US") })
+@LocaleData({ @Locale("en_US"), @Locale("ja_JP") })
 public enum TaskI18nEnum {
 	NEW_PHASE_ACTION,
 	NEW_TASKGROUP_ACTION,
@@ -39,5 +39,7 @@ public enum TaskI18nEnum {
 	FILTER_ALL_TASK_GROUPS_TITLE,
 	FILTER_ACTIVE_TASK_GROUPS_TITLE,
 	FILTER_ARCHIEVED_TASK_GROUPS_TITLE,
-	NEW_TASKGROUP_TITLE
+	NEW_TASKGROUP_TITLE,
+	UNRESOLVED_BY_ASSIGNEE_WIDGET_TITLE,
+	UNRESOLVED_BY_PRIORITY_WIDGET_TITLE
 }
