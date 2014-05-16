@@ -14,13 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-mobile.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.mobile.module.crm.view.account;
+package com.esofthead.mycollab.mobile.module.crm.view.campaign;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
-import com.esofthead.mycollab.module.crm.domain.Account;
-import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
-import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
+import com.esofthead.mycollab.module.crm.domain.CampaignWithBLOBs;
+import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
+import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.FieldSelection;
 import com.esofthead.vaadin.mobilecomponent.MobileNavigationView;
@@ -31,31 +31,34 @@ import com.vaadin.ui.VerticalLayout;
 /**
  * 
  * @author MyCollab Ltd.
- * @since 4.0
+ * @since 4.1
  * 
  */
-public class AccountSelectionView extends MobileNavigationView {
+public class CampaignSelectionView extends MobileNavigationView {
 
 	private static final long serialVersionUID = 1L;
-	private AccountSearchCriteria searchCriteria;
-	private AccountListDisplay tableItem;
-	private FieldSelection<Account> fieldSelection;
+	private CampaignSearchCriteria searchCriteria;
+	private CampaignListDisplay tableItem;
+	private FieldSelection<CampaignWithBLOBs> fieldSelection;
 
-	public AccountSelectionView(FieldSelection<Account> fieldSelection) {
+	public CampaignSelectionView(
+			FieldSelection<CampaignWithBLOBs> fieldSelection) {
 		super();
 		createUI();
-		this.setCaption("Account Name Lookup");
+		this.setCaption("Campaign Name Lookup");
 		this.fieldSelection = fieldSelection;
 	}
 
 	private void createUI() {
-		searchCriteria = new AccountSearchCriteria();
+		searchCriteria = new CampaignSearchCriteria();
 		searchCriteria.setSaccountid(new NumberSearchField(SearchField.AND,
 				AppContext.getAccountId()));
 
 		VerticalLayout layout = new VerticalLayout();
+		layout.setSpacing(true);
+		layout.setMargin(true);
 
-		createAccountList();
+		createCampaignList();
 
 		layout.addComponent(tableItem);
 		this.setContent(layout);
@@ -64,11 +67,12 @@ public class AccountSelectionView extends MobileNavigationView {
 	}
 
 	@SuppressWarnings("serial")
-	private void createAccountList() {
-		tableItem = new AccountListDisplay("accountname");
+	private void createCampaignList() {
+		tableItem = new CampaignListDisplay("campaignname");
 
 		tableItem.setWidth("100%");
-		tableItem.addGeneratedColumn("accountname",
+
+		tableItem.addGeneratedColumn("campaignname",
 				new Table.ColumnGenerator() {
 					private static final long serialVersionUID = 1L;
 
@@ -76,17 +80,18 @@ public class AccountSelectionView extends MobileNavigationView {
 					public com.vaadin.ui.Component generateCell(
 							final Table source, final Object itemId,
 							final Object columnId) {
-						final SimpleAccount account = tableItem
+						final SimpleCampaign campaign = tableItem
 								.getBeanByIndex(itemId);
 
-						Button b = new Button(account.getAccountname(),
+						Button b = new Button(campaign.getCampaignname(),
 								new Button.ClickListener() {
 
 									@Override
 									public void buttonClick(
 											final Button.ClickEvent event) {
-										fieldSelection.fireValueChange(account);
-										AccountSelectionView.this
+										fieldSelection
+												.fireValueChange(campaign);
+										CampaignSelectionView.this
 												.getNavigationManager()
 												.navigateBack();
 									}
@@ -94,6 +99,5 @@ public class AccountSelectionView extends MobileNavigationView {
 						return b;
 					}
 				});
-
 	}
 }
