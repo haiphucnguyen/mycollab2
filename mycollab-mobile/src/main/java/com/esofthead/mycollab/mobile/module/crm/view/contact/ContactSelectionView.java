@@ -14,13 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-mobile.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.mobile.module.crm.view.account;
+package com.esofthead.mycollab.mobile.module.crm.view.contact;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
-import com.esofthead.mycollab.module.crm.domain.Account;
-import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
-import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
+import com.esofthead.mycollab.module.crm.domain.SimpleContact;
+import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.FieldSelection;
 import com.esofthead.vaadin.mobilecomponent.MobileNavigationView;
@@ -31,31 +30,32 @@ import com.vaadin.ui.VerticalLayout;
 /**
  * 
  * @author MyCollab Ltd.
- * @since 4.0
+ * @since 4.1
  * 
  */
-public class AccountSelectionView extends MobileNavigationView {
+public class ContactSelectionView extends MobileNavigationView {
+	private static final long serialVersionUID = 7742786524816492321L;
+	private ContactSearchCriteria searchCriteria;
+	private ContactListDisplay tableItem;
+	private FieldSelection<SimpleContact> fieldSelection;
 
-	private static final long serialVersionUID = 1L;
-	private AccountSearchCriteria searchCriteria;
-	private AccountListDisplay tableItem;
-	private FieldSelection<Account> fieldSelection;
-
-	public AccountSelectionView(FieldSelection<Account> fieldSelection) {
+	public ContactSelectionView(FieldSelection<SimpleContact> fieldSelection) {
 		super();
 		createUI();
-		this.setCaption("Account Name Lookup");
+		this.setCaption("Contact Name Lookup");
 		this.fieldSelection = fieldSelection;
 	}
 
-	private void createUI() {
-		searchCriteria = new AccountSearchCriteria();
+	public void createUI() {
+		searchCriteria = new ContactSearchCriteria();
 		searchCriteria.setSaccountid(new NumberSearchField(SearchField.AND,
 				AppContext.getAccountId()));
 
 		VerticalLayout layout = new VerticalLayout();
+		layout.setSpacing(true);
+		layout.setMargin(true);
 
-		createAccountList();
+		createContactList();
 
 		layout.addComponent(tableItem);
 		this.setContent(layout);
@@ -64,11 +64,11 @@ public class AccountSelectionView extends MobileNavigationView {
 	}
 
 	@SuppressWarnings("serial")
-	private void createAccountList() {
-		tableItem = new AccountListDisplay("accountname");
-
+	private void createContactList() {
+		tableItem = new ContactListDisplay("contactName");
 		tableItem.setWidth("100%");
-		tableItem.addGeneratedColumn("accountname",
+
+		tableItem.addGeneratedColumn("contactName",
 				new Table.ColumnGenerator() {
 					private static final long serialVersionUID = 1L;
 
@@ -76,17 +76,17 @@ public class AccountSelectionView extends MobileNavigationView {
 					public com.vaadin.ui.Component generateCell(
 							final Table source, final Object itemId,
 							final Object columnId) {
-						final SimpleAccount account = tableItem
+						final SimpleContact contact = tableItem
 								.getBeanByIndex(itemId);
 
-						Button b = new Button(account.getAccountname(),
+						Button b = new Button(contact.getContactName(),
 								new Button.ClickListener() {
 
 									@Override
 									public void buttonClick(
 											final Button.ClickEvent event) {
-										fieldSelection.fireValueChange(account);
-										AccountSelectionView.this
+										fieldSelection.fireValueChange(contact);
+										ContactSelectionView.this
 												.getNavigationManager()
 												.navigateBack();
 									}
