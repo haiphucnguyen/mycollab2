@@ -27,7 +27,7 @@ import com.esofthead.mycollab.mobile.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.esofthead.mycollab.mobile.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.mobile.ui.IconConstants;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
-import com.esofthead.mycollab.module.crm.domain.SimpleTask;
+import com.esofthead.mycollab.module.crm.domain.SimpleMeeting;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
@@ -44,14 +44,15 @@ import com.vaadin.ui.HorizontalLayout;
  * @since 4.1
  * 
  */
+
 @ViewComponent
-public class AssignmentReadViewImpl extends AbstractPreviewItemComp<SimpleTask>
-		implements AssignmentReadView {
-	private static final long serialVersionUID = 5248815234910784599L;
+public class MeetingReadViewImpl extends AbstractPreviewItemComp<SimpleMeeting>
+		implements MeetingReadView {
+	private static final long serialVersionUID = -2176361946750466546L;
 	private NotesList associateNotes;
 
 	@Override
-	public HasPreviewFormHandlers<SimpleTask> getPreviewFormHandlers() {
+	public HasPreviewFormHandlers<SimpleMeeting> getPreviewFormHandlers() {
 		return this.previewForm;
 	}
 
@@ -66,32 +67,33 @@ public class AssignmentReadViewImpl extends AbstractPreviewItemComp<SimpleTask>
 	}
 
 	@Override
-	protected AdvancedPreviewBeanForm<SimpleTask> initPreviewForm() {
-		return new AdvancedPreviewBeanForm<SimpleTask>();
+	protected AdvancedPreviewBeanForm<SimpleMeeting> initPreviewForm() {
+		return new AdvancedPreviewBeanForm<SimpleMeeting>();
 	}
 
 	@Override
 	protected IFormLayoutFactory initFormLayoutFactory() {
-		return new DynaFormLayout(CrmTypeConstants.TASK,
-				AssignmentDefaultFormLayoutFactory.getForm());
+		return new DynaFormLayout(CrmTypeConstants.MEETING,
+				MeetingDefaultFormLayoutFactory.getForm());
 	}
 
 	@Override
-	protected AbstractBeanFieldGroupViewFieldFactory<SimpleTask> initBeanFormFieldFactory() {
-		return new AssignmentReadFormFieldFactory(previewForm);
+	protected AbstractBeanFieldGroupViewFieldFactory<SimpleMeeting> initBeanFormFieldFactory() {
+		return new MeetingReadFormFieldFactory(this.previewForm);
 	}
 
 	@Override
 	protected ComponentContainer createButtonControls() {
-		return new CrmPreviewFormControlsGenerator<SimpleTask>(previewForm)
-				.createButtonControls(RolePermissionCollections.CRM_TASK);
+		return new CrmPreviewFormControlsGenerator<SimpleMeeting>(
+				this.previewForm)
+				.createButtonControls(RolePermissionCollections.CRM_MEETING);
 	}
 
 	private NotesList getAssociateNotes() {
 		if (associateNotes == null) {
 			associateNotes = new NotesList("Related Notes");
 		}
-		associateNotes.showNotes(CrmTypeConstants.TASK, beanItem.getId());
+		associateNotes.showNotes(CrmTypeConstants.MEETING, beanItem.getId());
 		return associateNotes;
 	}
 
@@ -113,7 +115,7 @@ public class AssignmentReadViewImpl extends AbstractPreviewItemComp<SimpleTask>
 			public void buttonClick(ClickEvent event) {
 				EventBus.getInstance().fireEvent(
 						new ActivityEvent.GoToRelatedItems(
-								AssignmentReadViewImpl.this,
+								MeetingReadViewImpl.this,
 								new CrmRelatedItemsScreenData(
 										getAssociateNotes())));
 			}

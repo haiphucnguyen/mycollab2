@@ -70,10 +70,24 @@ public class ActivityListViewImpl extends
 								.getData();
 						if ("subject".equals(event.getFieldName())) {
 							if (activity.getEventType().equals(
-									CrmTypeConstants.TASK))
+									CrmTypeConstants.TASK)) {
 								EventBus.getInstance().fireEvent(
-										new ActivityEvent.TaskRead(this,
+										new ActivityEvent.TaskRead(
+												ActivityListViewImpl.this,
 												activity.getId()));
+							} else if (activity.getEventType().equals(
+									CrmTypeConstants.CALL)) {
+								EventBus.getInstance().fireEvent(
+										new ActivityEvent.CallRead(
+												ActivityListViewImpl.this,
+												activity.getId()));
+							} else if (activity.getEventType().equals(
+									CrmTypeConstants.MEETING)) {
+								EventBus.getInstance().fireEvent(
+										new ActivityEvent.MeetingRead(
+												ActivityListViewImpl.this,
+												activity.getId()));
+							}
 						}
 					}
 				});

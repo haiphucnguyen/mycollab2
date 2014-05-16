@@ -104,4 +104,13 @@ public class ActivityEvent {
 			super(source, data);
 		}
 	}
+
+	public static class GoToRelatedItems extends ApplicationEvent {
+		private static final long serialVersionUID = 6886861280155117098L;
+
+		public GoToRelatedItems(Object source, Object data) {
+			super(source, data);
+		}
+
+	}
 }

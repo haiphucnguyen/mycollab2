@@ -36,6 +36,8 @@ import com.esofthead.mycollab.mobile.module.crm.view.account.AccountListPresente
 import com.esofthead.mycollab.mobile.module.crm.view.account.AccountReadPresenter;
 import com.esofthead.mycollab.mobile.module.crm.view.activity.ActivityListPresenter;
 import com.esofthead.mycollab.mobile.module.crm.view.activity.AssignmentReadPresenter;
+import com.esofthead.mycollab.mobile.module.crm.view.activity.CallReadPresenter;
+import com.esofthead.mycollab.mobile.module.crm.view.activity.MeetingReadPresenter;
 import com.esofthead.mycollab.mobile.module.crm.view.campaign.CampaignAddPresenter;
 import com.esofthead.mycollab.mobile.module.crm.view.campaign.CampaignListPresenter;
 import com.esofthead.mycollab.mobile.module.crm.view.campaign.CampaignReadPresenter;
@@ -256,10 +258,10 @@ public class CrmModuleController implements IController {
 				});
 		EventBus.getInstance().addListener(
 				new ApplicationEventListener<ActivityEvent.TaskRead>() {
+					private static final long serialVersionUID = -3723195748802950651L;
 
 					@Override
 					public Class<? extends ApplicationEvent> getEventType() {
-						// TODO Auto-generated method stub
 						return ActivityEvent.TaskRead.class;
 					}
 
@@ -272,6 +274,64 @@ public class CrmModuleController implements IController {
 								event.getData()));
 					}
 				});
+
+		EventBus.getInstance().addListener(
+				new ApplicationEventListener<ActivityEvent.CallRead>() {
+					private static final long serialVersionUID = -3723195748802950651L;
+
+					@Override
+					public Class<? extends ApplicationEvent> getEventType() {
+						return ActivityEvent.CallRead.class;
+					}
+
+					@SuppressWarnings({ "unchecked", "rawtypes" })
+					@Override
+					public void handle(ActivityEvent.CallRead event) {
+						CallReadPresenter presenter = PresenterResolver
+								.getPresenter(CallReadPresenter.class);
+						presenter.go(crmViewNavigation, new ScreenData.Preview(
+								event.getData()));
+					}
+				});
+
+		EventBus.getInstance().addListener(
+				new ApplicationEventListener<ActivityEvent.MeetingRead>() {
+					private static final long serialVersionUID = -3723195748802950651L;
+
+					@Override
+					public Class<? extends ApplicationEvent> getEventType() {
+						return ActivityEvent.MeetingRead.class;
+					}
+
+					@SuppressWarnings({ "unchecked", "rawtypes" })
+					@Override
+					public void handle(ActivityEvent.MeetingRead event) {
+						MeetingReadPresenter presenter = PresenterResolver
+								.getPresenter(MeetingReadPresenter.class);
+						presenter.go(crmViewNavigation, new ScreenData.Preview(
+								event.getData()));
+					}
+				});
+
+		EventBus.getInstance().addListener(
+				new ApplicationEventListener<ActivityEvent.GoToRelatedItems>() {
+					private static final long serialVersionUID = -2245568910777045010L;
+
+					@Override
+					public Class<? extends ApplicationEvent> getEventType() {
+						return ActivityEvent.GoToRelatedItems.class;
+					}
+
+					@Override
+					public void handle(ActivityEvent.GoToRelatedItems event) {
+						if (event.getData() instanceof CrmRelatedItemsScreenData) {
+							crmViewNavigation
+									.navigateTo(((CrmRelatedItemsScreenData) event
+											.getData()).getParams());
+						}
+					}
+				});
+		;
 	}
 
 	private void bindContactEvents() {
