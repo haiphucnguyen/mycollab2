@@ -2,6 +2,7 @@ package com.esofthead.mycollab.premium.module.project.view.time;
 
 import java.util.Arrays;
 
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.eventmanager.ApplicationEvent;
@@ -11,6 +12,7 @@ import com.esofthead.mycollab.module.project.domain.ProjectGenericTask;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectGenericTaskSearchCriteria;
 import com.esofthead.mycollab.module.project.ui.components.GenericTaskTableDisplay;
 import com.esofthead.mycollab.module.project.ui.components.GenericTaskTableFieldDef;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
@@ -91,7 +93,8 @@ class ProjectGenericTaskSelectionWindow extends Window {
 		UiUtils.addComponent(basicSearchBody, this.nameField,
 				Alignment.MIDDLE_CENTER);
 
-		final Button searchBtn = new Button("Search");
+		final Button searchBtn = new Button(
+				AppContext.getMessage(GenericI18Enum.BUTTON_SEARCH_LABEL));
 		searchBtn.setIcon(MyCollabResource.newResource("icons/16/search.png"));
 		searchBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 

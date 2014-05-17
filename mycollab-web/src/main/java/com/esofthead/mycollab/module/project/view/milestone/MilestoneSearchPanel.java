@@ -17,6 +17,7 @@
 
 package com.esofthead.mycollab.module.project.view.milestone;
 
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchField;
@@ -28,6 +29,7 @@ import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.MilestoneSearchCriteria;
 import com.esofthead.mycollab.module.project.events.MilestoneEvent;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.MyCollabSession;
 import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
@@ -130,16 +132,19 @@ public class MilestoneSearchPanel extends
 			UiUtils.addComponent(basicSearchBody, myItemCheckbox,
 					Alignment.MIDDLE_CENTER);
 
-			Button searchBtn = new Button("Search", new Button.ClickListener() {
-				private static final long serialVersionUID = 1L;
+			Button searchBtn = new Button(
+					AppContext.getMessage(GenericI18Enum.BUTTON_SEARCH_LABEL),
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
 
-				@Override
-				public void buttonClick(Button.ClickEvent event) {
-					MilestoneBasicSearchLayout.this.callSearchAction();
-				}
-			});
+						@Override
+						public void buttonClick(Button.ClickEvent event) {
+							MilestoneBasicSearchLayout.this.callSearchAction();
+						}
+					});
 			searchBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
-			searchBtn.setIcon(MyCollabResource.newResource("icons/16/search.png"));
+			searchBtn.setIcon(MyCollabResource
+					.newResource("icons/16/search.png"));
 			basicSearchBody.addComponent(searchBtn);
 
 			Button clearBtn = new Button("Clear", new Button.ClickListener() {

@@ -97,6 +97,7 @@ public class RiskSearchPanel extends
 		header.setMargin(new MarginInfo(true, false, true, false));
 		return header;
 	}
+
 	@SuppressWarnings("unchecked")
 	@Override
 	protected SearchLayout<RiskSearchCriteria> createBasicSearchLayout() {
@@ -138,7 +139,8 @@ public class RiskSearchPanel extends
 			UiUtils.addComponent(basicSearchBody, this.myItemCheckbox,
 					Alignment.MIDDLE_CENTER);
 
-			final Button searchBtn = new Button("Search");
+			final Button searchBtn = new Button(
+					AppContext.getMessage(GenericI18Enum.BUTTON_SEARCH_LABEL));
 			searchBtn.setIcon(MyCollabResource
 					.newResource("icons/16/search.png"));
 			searchBtn.setStyleName(UIConstants.THEME_GREEN_LINK);

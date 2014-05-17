@@ -298,7 +298,7 @@ public class TaskGroupDisplayViewImpl extends AbstractPageView implements
 
 					}
 				});
-		
+
 		viewGanttChartBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 		viewGanttChartBtn.setDescription("Toggle Gantt chart view");
 		UiUtils.addComponent(header, viewGanttChartBtn, Alignment.MIDDLE_RIGHT);
@@ -490,7 +490,8 @@ public class TaskGroupDisplayViewImpl extends AbstractPageView implements
 		control.setSpacing(true);
 		control.setMargin(new MarginInfo(true, false, true, false));
 
-		final Button searchBtn = new Button("Search");
+		final Button searchBtn = new Button(
+				AppContext.getMessage(GenericI18Enum.BUTTON_SEARCH_LABEL));
 		searchBtn.setIcon(MyCollabResource.newResource("icons/16/search.png"));
 		searchBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 		searchBtn.addClickListener(new Button.ClickListener() {
@@ -600,8 +601,7 @@ public class TaskGroupDisplayViewImpl extends AbstractPageView implements
 
 		if (this.getComponentIndex(ganttChart) < 0) {
 			viewGanttChartBtn.setStyleName(UIConstants.THEME_ORANGE_LINK);
-			
-			
+
 			ganttChart = new TaskGanttChart();
 			ganttChart.setStyleName(UIConstants.BORDER_BOX_2);
 
