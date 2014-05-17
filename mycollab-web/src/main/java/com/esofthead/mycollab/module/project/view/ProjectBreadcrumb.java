@@ -299,7 +299,8 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
 
 	public void gotoProblemList() {
 		this.select(0);
-		this.addLink(new Button("Problems"));
+		this.addLink(new Button(AppContext
+				.getMessage(BreadcrumbI18nEnum.PROBLEMS)));
 		AppContext.addFragment(
 				"project/problem/list/"
 						+ UrlEncodeDecoder.encode(project.getId()),
@@ -308,7 +309,9 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
 
 	public void gotoProblemRead(Problem problem) {
 		this.select(0);
-		this.addLink(new Button("Problems", new GotoProblemListListener()));
+		this.addLink(new Button(AppContext
+				.getMessage(BreadcrumbI18nEnum.PROBLEMS),
+				new GotoProblemListListener()));
 		this.setLinkEnabled(true, 1);
 		this.addLink(generateBreadcrumbLink(problem.getIssuename()));
 		AppContext.addFragment(ProjectLinkUtils.generateProblemPreviewLink(
@@ -318,7 +321,9 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
 
 	public void gotoProblemEdit(final Problem problem) {
 		this.select(0);
-		this.addLink(new Button("Problems", new GotoProblemListListener()));
+		this.addLink(new Button(AppContext
+				.getMessage(BreadcrumbI18nEnum.PROBLEMS),
+				new GotoProblemListListener()));
 		this.setLinkEnabled(true, 1);
 		this.addLink(generateBreadcrumbLink(problem.getIssuename(),
 				new Button.ClickListener() {
@@ -333,7 +338,8 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
 					}
 				}));
 		this.setLinkEnabled(true, 2);
-		this.addLink(new Button("Edit"));
+		this.addLink(new Button(AppContext
+				.getMessage(GenericI18Enum.BUTTON_EDIT_LABEL)));
 		AppContext.addFragment(
 				"project/problem/edit/"
 						+ UrlEncodeDecoder.encode(project.getId() + "/"
@@ -343,9 +349,12 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
 
 	public void gotoProblemAdd() {
 		this.select(0);
-		this.addLink(new Button("Problems", new GotoProblemListListener()));
+		this.addLink(new Button(AppContext
+				.getMessage(BreadcrumbI18nEnum.PROBLEMS),
+				new GotoProblemListListener()));
 		this.setLinkEnabled(true, 1);
-		this.addLink(new Button("Add"));
+		this.addLink(new Button(AppContext
+				.getMessage(GenericI18Enum.BUTTON_ADD_LABEL)));
 		AppContext.addFragment(
 				"project/problem/add/"
 						+ UrlEncodeDecoder.encode(project.getId()),

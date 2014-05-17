@@ -7,5 +7,5 @@ import ch.qos.cal10n.LocaleData;
 @BaseName("localization/project/breadcrumb")
 @LocaleData({ @Locale("en_US"), @Locale("ja_JP") })
 public enum BreadcrumbI18nEnum {
-	DASHBOARD, MESSAGES, RISKS, PHASES
+	DASHBOARD, MESSAGES, RISKS, PHASES, PROBLEMS
 }
