@@ -16,6 +16,7 @@
  */
 package com.esofthead.mycollab.module.project.view.bug;
 
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.module.project.localization.BugI18nEnum;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -40,42 +41,42 @@ public interface BugTableFieldDef {
 			UIConstants.TABLE_EX_LABEL_WIDTH);
 
 	public static TableViewField description = new TableViewField(
-			AppContext.getMessage(BugI18nEnum.FORM_DESCRIPTION),
-			"description", UIConstants.TABLE_EX_LABEL_WIDTH);
+			AppContext.getMessage(BugI18nEnum.FORM_DESCRIPTION), "description",
+			UIConstants.TABLE_EX_LABEL_WIDTH);
 
 	public static TableViewField environment = new TableViewField(
-			AppContext.getMessage(BugI18nEnum.FORM_ENVIRONMENT),
-			"environment", UIConstants.TABLE_EX_LABEL_WIDTH);
+			AppContext.getMessage(BugI18nEnum.FORM_ENVIRONMENT), "environment",
+			UIConstants.TABLE_EX_LABEL_WIDTH);
 
 	public static TableViewField status = new TableViewField(
 			AppContext.getMessage(BugI18nEnum.FORM_STATUS), "status",
 			UIConstants.TABLE_M_LABEL_WIDTH);
 
 	public static TableViewField severity = new TableViewField(
-			AppContext.getMessage(BugI18nEnum.FORM_SEVERITY),
-			"severity", UIConstants.TABLE_M_LABEL_WIDTH);
+			AppContext.getMessage(BugI18nEnum.FORM_SEVERITY), "severity",
+			UIConstants.TABLE_M_LABEL_WIDTH);
 
 	public static TableViewField duedate = new TableViewField(
-			AppContext.getMessage(BugI18nEnum.FORM_DUE_DATE),
-			"duedate", UIConstants.TABLE_DATE_WIDTH);
+			AppContext.getMessage(BugI18nEnum.FORM_DUE_DATE), "duedate",
+			UIConstants.TABLE_DATE_WIDTH);
 
 	public static TableViewField logBy = new TableViewField(
-			AppContext.getMessage(BugI18nEnum.FORM_LOG_BY),
-			"loguserFullName", UIConstants.TABLE_X_LABEL_WIDTH);
+			AppContext.getMessage(BugI18nEnum.FORM_LOG_BY), "loguserFullName",
+			UIConstants.TABLE_X_LABEL_WIDTH);
 
 	public static TableViewField priority = new TableViewField(
-			AppContext.getMessage(BugI18nEnum.FORM_PRIORITY),
-			"priority", UIConstants.TABLE_M_LABEL_WIDTH);
+			AppContext.getMessage(BugI18nEnum.FORM_PRIORITY), "priority",
+			UIConstants.TABLE_M_LABEL_WIDTH);
 
 	public static TableViewField resolution = new TableViewField(
-			AppContext.getMessage(BugI18nEnum.FORM_RESOLUTION),
-			"resolution", UIConstants.TABLE_M_LABEL_WIDTH);
+			AppContext.getMessage(BugI18nEnum.FORM_RESOLUTION), "resolution",
+			UIConstants.TABLE_M_LABEL_WIDTH);
 
 	public static TableViewField createdTime = new TableViewField(
 			AppContext.getMessage(BugI18nEnum.FORM_CREATED_TIME),
 			"createdtime", UIConstants.TABLE_DATE_TIME_WIDTH);
 
 	public static TableViewField assignUser = new TableViewField(
-			AppContext.getMessage(BugI18nEnum.FORM_ASSIGN_USER),
+			AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD),
 			"assignuserFullName", UIConstants.TABLE_X_LABEL_WIDTH);
 }
