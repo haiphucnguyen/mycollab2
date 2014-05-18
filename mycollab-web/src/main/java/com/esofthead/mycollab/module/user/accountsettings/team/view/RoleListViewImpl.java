@@ -141,20 +141,26 @@ public class RoleListViewImpl extends AbstractPageView implements RoleListView {
 			tableActionControls.addActionItem(
 					MassItemActionHandler.DELETE_ACTION,
 					MyCollabResource.newResource("icons/16/action/delete.png"),
-					"delete");
+					"delete",
+					AppContext.getMessage(GenericI18Enum.BUTTON_DELETE_LABEL));
 		}
 		tableActionControls.addDownloadActionItem(
 				MassItemActionHandler.EXPORT_PDF_ACTION,
 				MyCollabResource.newResource("icons/16/action/pdf.png"),
-				"export", "export.pdf");
+				"export", "export.pdf",
+				AppContext.getMessage(GenericI18Enum.BUTTON_EXPORT_PDF));
+
 		tableActionControls.addDownloadActionItem(
 				MassItemActionHandler.EXPORT_EXCEL_ACTION,
 				MyCollabResource.newResource("icons/16/action/excel.png"),
-				"export", "export.xlsx");
+				"export", "export.xlsx",
+				AppContext.getMessage(GenericI18Enum.BUTTON_EXPORT_EXCEL));
+
 		tableActionControls.addDownloadActionItem(
 				MassItemActionHandler.EXPORT_CSV_ACTION,
 				MyCollabResource.newResource("icons/16/action/csv.png"),
-				"export", "export.csv");
+				"export", "export.csv",
+				AppContext.getMessage(GenericI18Enum.BUTTON_EXPORT_CSV));
 
 		layout.addComponent(this.tableActionControls);
 		layout.addComponent(this.selectedItemsNumberLabel);

@@ -255,31 +255,39 @@ public class ProblemListViewImpl extends AbstractPageView implements
 			tableActionControls.addActionItem(
 					MassItemActionHandler.DELETE_ACTION,
 					MyCollabResource.newResource("icons/16/action/delete.png"),
-					"delete");
+					"delete",
+					AppContext.getMessage(GenericI18Enum.BUTTON_DELETE_LABEL));
 		}
 
 		tableActionControls.addActionItem(MassItemActionHandler.MAIL_ACTION,
 				MyCollabResource.newResource("icons/16/action/mail.png"),
-				"mail");
+				"mail", AppContext.getMessage(GenericI18Enum.BUTTON_MAIL));
+
 		tableActionControls.addDownloadActionItem(
 				MassItemActionHandler.EXPORT_PDF_ACTION,
 				MyCollabResource.newResource("icons/16/action/pdf.png"),
-				"export", "export.pdf");
+				"export", "export.pdf",
+				AppContext.getMessage(GenericI18Enum.BUTTON_EXPORT_PDF));
+
 		tableActionControls.addDownloadActionItem(
 				MassItemActionHandler.EXPORT_EXCEL_ACTION,
 				MyCollabResource.newResource("icons/16/action/excel.png"),
-				"export", "export.xlsx");
+				"export", "export.xlsx",
+				AppContext.getMessage(GenericI18Enum.BUTTON_EXPORT_EXCEL));
+
 		tableActionControls.addDownloadActionItem(
 				MassItemActionHandler.EXPORT_CSV_ACTION,
 				MyCollabResource.newResource("icons/16/action/csv.png"),
-				"export", "export.csv");
+				"export", "export.csv",
+				AppContext.getMessage(GenericI18Enum.BUTTON_EXPORT_CSV));
 
 		if (CurrentProjectVariables
 				.canWrite(ProjectRolePermissionCollections.PROBLEMS)) {
 			tableActionControls.addActionItem(
 					MassItemActionHandler.MASS_UPDATE_ACTION, MyCollabResource
 							.newResource("icons/16/action/massupdate.png"),
-					"update");
+					"update", AppContext
+							.getMessage(GenericI18Enum.BUTTON_MASSUPDATE));
 		}
 
 		this.tableActionControls.setVisible(false);
