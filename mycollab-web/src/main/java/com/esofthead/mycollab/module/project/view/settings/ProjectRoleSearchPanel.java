@@ -94,7 +94,9 @@ public class ProjectRoleSearchPanel extends
 			this.nameField = new TextField();
 			this.nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
 			basicSearchBody.addComponent(this.nameField);
-			this.myItemCheckbox = new CheckBox("My Items");
+			this.myItemCheckbox = new CheckBox(
+					AppContext
+							.getMessage(GenericI18Enum.SEARCH_MYITEMS_CHECKBOX));
 			basicSearchBody.addComponent(this.myItemCheckbox);
 
 			final Button searchBtn = new Button(

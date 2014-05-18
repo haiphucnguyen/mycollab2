@@ -163,7 +163,9 @@ public class BugSearchPanel extends
 			UiUtils.addComponent(basicSearchBody, this.nameField,
 					Alignment.MIDDLE_CENTER);
 
-			this.myItemCheckbox = new CheckBox("My Items");
+			this.myItemCheckbox = new CheckBox(
+					AppContext
+							.getMessage(GenericI18Enum.SEARCH_MYITEMS_CHECKBOX));
 			UiUtils.addComponent(basicSearchBody, this.myItemCheckbox,
 					Alignment.MIDDLE_CENTER);
 

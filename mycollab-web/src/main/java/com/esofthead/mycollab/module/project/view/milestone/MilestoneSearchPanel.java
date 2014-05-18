@@ -130,7 +130,9 @@ public class MilestoneSearchPanel extends
 			nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
 			UiUtils.addComponent(basicSearchBody, nameField,
 					Alignment.MIDDLE_CENTER);
-			myItemCheckbox = new CheckBox("My Items");
+			myItemCheckbox = new CheckBox(
+					AppContext
+							.getMessage(GenericI18Enum.SEARCH_MYITEMS_CHECKBOX));
 			UiUtils.addComponent(basicSearchBody, myItemCheckbox,
 					Alignment.MIDDLE_CENTER);
 

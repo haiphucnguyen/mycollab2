@@ -73,8 +73,7 @@ public class ProblemSearchPanel extends
 		Label headerText = new Label("Problem List");
 
 		final Button createBtn = new Button(
-				AppContext
-						.getMessage(ProblemI18nEnum.NEW_PROBLEM_ACTION),
+				AppContext.getMessage(ProblemI18nEnum.NEW_PROBLEM_ACTION),
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
@@ -129,7 +128,9 @@ public class ProblemSearchPanel extends
 			UiUtils.addComponent(basicSearchBody, this.nameField,
 					Alignment.MIDDLE_CENTER);
 
-			this.myItemCheckbox = new CheckBox("My Items");
+			this.myItemCheckbox = new CheckBox(
+					AppContext
+							.getMessage(GenericI18Enum.SEARCH_MYITEMS_CHECKBOX));
 			this.myItemCheckbox.setWidth("75px");
 			UiUtils.addComponent(basicSearchBody, this.myItemCheckbox,
 					Alignment.MIDDLE_CENTER);
