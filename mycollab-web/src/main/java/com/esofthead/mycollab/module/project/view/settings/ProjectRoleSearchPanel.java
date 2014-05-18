@@ -26,7 +26,7 @@ import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectRoleSearchCriteria;
 import com.esofthead.mycollab.module.project.events.ProjectRoleEvent;
-import com.esofthead.mycollab.module.project.localization.PeopleI18nEnum;
+import com.esofthead.mycollab.module.project.localization.ProjectMemberI18nEnum;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.MyCollabSession;
 import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
@@ -146,7 +146,7 @@ public class ProjectRoleSearchPanel extends
 			Label headerText = new Label("Role List");
 
 			final Button createBtn = new Button(
-					AppContext.getMessage(PeopleI18nEnum.NEW_ROLE_ACTION),
+					AppContext.getMessage(ProjectMemberI18nEnum.NEW_ROLE_ACTION),
 					new Button.ClickListener() {
 						private static final long serialVersionUID = 1L;
 

@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.premium.module.project.view.standup;
 
+import com.esofthead.mycollab.module.project.localization.StandupI18nEnum;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
@@ -21,7 +23,7 @@ import com.vaadin.ui.VerticalLayout;
  * 
  */
 public abstract class StandupReportFormLayoutFactory implements
-IFormLayoutFactory {
+		IFormLayoutFactory {
 	private static final long serialVersionUID = 1L;
 
 	private StandupCustomField whatTodayField;
@@ -34,7 +36,7 @@ IFormLayoutFactory {
 
 	public StandupReportFormLayoutFactory(final String title) {
 		this.title = title;
-		
+
 	}
 
 	@Override
@@ -54,20 +56,21 @@ IFormLayoutFactory {
 		layoutField.setMargin(new MarginInfo(false, false, true, true));
 		layoutField.setWidth("100%");
 		final Label whatYesterdayLbl = new Label(
-				"What I did in the last day/week");
+				AppContext.getMessage(StandupI18nEnum.STANDUP_LASTDAY));
 		whatYesterdayLbl.setStyleName("h2");
 		layoutField.addComponent(whatYesterdayLbl);
 		this.whatYesterdayField = new StandupCustomField();
 		layoutField.addComponent(this.whatYesterdayField);
 
-		final Label whatTodayLbl = new Label("What I will do today/week");
+		final Label whatTodayLbl = new Label(
+				AppContext.getMessage(StandupI18nEnum.STANDUP_TODAY));
 		whatTodayLbl.setStyleName("h2");
 		layoutField.addComponent(whatTodayLbl);
 		this.whatTodayField = new StandupCustomField();
 		layoutField.addComponent(this.whatTodayField);
 
 		final Label roadblockLbl = new Label(
-				"Do you have roadblocks? If you have questions or you need help, please write your questions or needs here");
+				AppContext.getMessage(StandupI18nEnum.STANDUP_ISSUE));
 		roadblockLbl.addStyleName("h2");
 		roadblockLbl.addStyleName(UIConstants.WORD_WRAP);
 		layoutField.addComponent(roadblockLbl);
@@ -82,13 +85,13 @@ IFormLayoutFactory {
 		instructionLayout.setSpacing(true);
 
 		final Label instruct1Lbl = new Label(
-				"A stand-up meeting (or simply \"stand-up\") is a daily team-meeting held to provide a status update to the team members. The \"semi-real-time\" status allows participants to know about potential challenges as well as to coordinate efforts to resolve difficult and/or time-consuming issues.");
+				AppContext.getMessage(StandupI18nEnum.HINT1_MSG));
 
 		instruct1Lbl.addStyleName(UIConstants.WORD_WRAP);
 		instructionLayout.addComponent(instruct1Lbl);
 
 		final Label instruct1Lbl2 = new Label(
-				"With MyCollab standup meeting page, you do not need to attend a real time meeting involve all project members at once, this tool is convenient for distributed team works in different timezone where people can put his standup report at their appropriate time.");
+				AppContext.getMessage(StandupI18nEnum.HINT2_MG));
 		instruct1Lbl2.addStyleName(UIConstants.WORD_WRAP);
 		instructionLayout.addComponent(instruct1Lbl2);
 

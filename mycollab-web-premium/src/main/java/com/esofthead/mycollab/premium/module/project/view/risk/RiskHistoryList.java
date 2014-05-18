@@ -2,6 +2,7 @@ package com.esofthead.mycollab.premium.module.project.view.risk;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.module.project.localization.RiskI18nEnum;
 import com.esofthead.mycollab.module.project.ui.components.ProjectMemberHistoryFieldFormat;
 import com.esofthead.mycollab.vaadin.ui.HistoryLogComponent;
 
@@ -17,21 +18,30 @@ public class RiskHistoryList extends HistoryLogComponent {
 	public RiskHistoryList(String module, String type) {
 		super(module, type);
 
-		this.generateFieldDisplayHandler("riskname", "Name");
-		this.generateFieldDisplayHandler("description", "Description");
-		this.generateFieldDisplayHandler("raisedbyuser", "Raised by",
+		this.generateFieldDisplayHandler("riskname",
+				AppContext.getMessage(RiskI18nEnum.FORM_NAME));
+		this.generateFieldDisplayHandler("description",
+				AppContext.getMessage(RiskI18nEnum.FORM_DESCRIPTION));
+		this.generateFieldDisplayHandler("raisedbyuser",
+				AppContext.getMessage(RiskI18nEnum.FORM_RAISED_BY),
 				new ProjectMemberHistoryFieldFormat());
-		this.generateFieldDisplayHandler("assigntouser", AppContext
-				.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD),
+		this.generateFieldDisplayHandler("assigntouser",
+				AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD),
 				new ProjectMemberHistoryFieldFormat());
-		this.generateFieldDisplayHandler("consequence", "Consequence");
+		this.generateFieldDisplayHandler("consequence",
+				AppContext.getMessage(RiskI18nEnum.FORM_CONSEQUENCE));
 
-		this.generateFieldDisplayHandler("datedue", "Date due",
+		this.generateFieldDisplayHandler("datedue",
+				AppContext.getMessage(RiskI18nEnum.FORM_DATE_DUE),
 				HistoryLogComponent.DATE_FIELD);
-		this.generateFieldDisplayHandler("probalitity", "Probality");
-		this.generateFieldDisplayHandler("status", "Status");
-		this.generateFieldDisplayHandler("level", "Rating");
-		this.generateFieldDisplayHandler("response", "Response");
+		this.generateFieldDisplayHandler("probalitity",
+				AppContext.getMessage(RiskI18nEnum.FORM_PROBABILITY));
+		this.generateFieldDisplayHandler("status",
+				AppContext.getMessage(RiskI18nEnum.FORM_STATUS));
+		this.generateFieldDisplayHandler("level",
+				AppContext.getMessage(RiskI18nEnum.FORM_RATING));
+		this.generateFieldDisplayHandler("response",
+				AppContext.getMessage(RiskI18nEnum.FORM_RESPONSE));
 	}
 
 }

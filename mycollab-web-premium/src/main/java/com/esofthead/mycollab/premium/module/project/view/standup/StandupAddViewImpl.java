@@ -3,6 +3,7 @@ package com.esofthead.mycollab.premium.module.project.view.standup;
 import java.util.GregorianCalendar;
 
 import com.esofthead.mycollab.module.project.domain.StandupReportWithBLOBs;
+import com.esofthead.mycollab.module.project.localization.StandupI18nEnum;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
@@ -23,7 +24,7 @@ import com.vaadin.ui.RichTextArea;
  */
 @ViewComponent
 public class StandupAddViewImpl extends AbstractPageView implements
-StandupAddView {
+		StandupAddView {
 
 	private static final long serialVersionUID = 1L;
 	private final AdvancedEditBeanForm<StandupReportWithBLOBs> editForm;
@@ -38,12 +39,12 @@ StandupAddView {
 	public void editItem(final StandupReportWithBLOBs standupReport) {
 		this.editForm.setFormLayoutFactory(new FormLayoutFactory());
 		this.editForm
-		.setBeanFormFieldFactory(new EditFormFieldFactory(editForm));
+				.setBeanFormFieldFactory(new EditFormFieldFactory(editForm));
 		this.editForm.setBean(standupReport);
 	}
 
 	private class EditFormFieldFactory extends
-	AbstractBeanFieldGroupEditFieldFactory<StandupReportWithBLOBs> {
+			AbstractBeanFieldGroupEditFieldFactory<StandupReportWithBLOBs> {
 		private static final long serialVersionUID = 1L;
 
 		public EditFormFieldFactory(GenericBeanForm<StandupReportWithBLOBs> form) {
@@ -68,8 +69,8 @@ StandupAddView {
 		private static final long serialVersionUID = 1L;
 
 		public FormLayoutFactory() {
-			super("Create Standup Report for "
-					+ AppContext.formatDate(new GregorianCalendar().getTime()));
+			super(AppContext.getMessage(StandupI18nEnum.FORM_EDIT_TITLE,
+					AppContext.formatDate(new GregorianCalendar().getTime())));
 		}
 
 		private Layout createButtonControls() {

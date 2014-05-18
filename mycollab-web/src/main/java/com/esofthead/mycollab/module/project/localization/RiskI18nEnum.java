@@ -25,6 +25,7 @@ import ch.qos.cal10n.LocaleData;
 public enum RiskI18nEnum {
 	NEW_RISK_ACTION,
 	
+	FORM_READ_TITLE,
 	FORM_NAME,
 	FORM_DESCRIPTION,
 	FORM_RAISED_BY,

@@ -19,6 +19,7 @@ import com.esofthead.mycollab.module.project.domain.SimpleStandupReport;
 import com.esofthead.mycollab.module.project.domain.criteria.StandupReportSearchCriteria;
 import com.esofthead.mycollab.module.project.events.ProjectMemberEvent;
 import com.esofthead.mycollab.module.project.events.StandUpEvent;
+import com.esofthead.mycollab.module.project.localization.StandupI18nEnum;
 import com.esofthead.mycollab.module.project.service.StandupReportService;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
@@ -243,12 +244,14 @@ public class StandupListViewImpl extends AbstractPageView implements
 		headerLeft.addComponent(new Image(null, MyCollabResource
 				.newResource("icons/22/project/standup_selected.png")));
 
-		this.titleLbl = new Label("StandUp Reports for: ");
+		this.titleLbl = new Label(
+				AppContext.getMessage(StandupI18nEnum.VIEW_LIST_TITLE));
 		this.titleLbl.addStyleName("hdr-text");
 
 		headerLeft.addComponent(this.titleLbl);
 
-		this.dateChooser = new PopupButton("Choose date to view reports");
+		this.dateChooser = new PopupButton(
+				AppContext.getMessage(StandupI18nEnum.CHOOSE_REPORT_DATE));
 		this.dateChooser.setContent(this.standupCalendar);
 		this.dateChooser.setStyleName(UIConstants.THEME_BLANK_LINK);
 		headerLeft.addComponent(this.dateChooser);
@@ -259,7 +262,8 @@ public class StandupListViewImpl extends AbstractPageView implements
 		header.setComponentAlignment(headerLeft, Alignment.MIDDLE_LEFT);
 		header.setExpandRatio(headerLeft, 1.0f);
 
-		final Button addNewReport = new Button("Add/Edit Report",
+		final Button addNewReport = new Button(
+				AppContext.getMessage(StandupI18nEnum.BUTTON_ADD_REPORT_LABEL),
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
@@ -334,7 +338,7 @@ public class StandupListViewImpl extends AbstractPageView implements
 			reportContent.setSpacing(true);
 
 			final Label whatYesterdayLbl = new Label(
-					"What I did in the last day/week");
+					AppContext.getMessage(StandupI18nEnum.STANDUP_LASTDAY));
 			whatYesterdayLbl.setStyleName("h2");
 			reportContent.addComponent(whatYesterdayLbl);
 			final Label whatYesterdayField = new UrlDetectableLabel(
@@ -343,7 +347,8 @@ public class StandupListViewImpl extends AbstractPageView implements
 			whatYesterdayField.addStyleName(UIConstants.STANDUP_ROW_CONTENT);
 			reportContent.addComponent(whatYesterdayField);
 
-			final Label whatTodayLbl = new Label("What I will do today/week");
+			final Label whatTodayLbl = new Label(
+					AppContext.getMessage(StandupI18nEnum.STANDUP_TODAY));
 			whatTodayLbl.setStyleName("h2");
 			reportContent.addComponent(whatTodayLbl);
 			final Label whatTodayField = new UrlDetectableLabel(
@@ -353,7 +358,7 @@ public class StandupListViewImpl extends AbstractPageView implements
 			reportContent.addComponent(whatTodayField);
 
 			final Label roadblockLbl = new Label(
-					"Do you have roadblocks? If you have questions or you need help, please write your questions or needs here");
+					AppContext.getMessage(StandupI18nEnum.STANDUP_ISSUE));
 			roadblockLbl.setStyleName("h2");
 			reportContent.addComponent(roadblockLbl);
 			final Label whatProblemField = new UrlDetectableLabel(

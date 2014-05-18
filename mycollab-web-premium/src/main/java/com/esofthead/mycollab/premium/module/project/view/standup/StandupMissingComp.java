@@ -7,6 +7,7 @@ import java.util.List;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.LabelLink;
 import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
+import com.esofthead.mycollab.module.project.localization.StandupI18nEnum;
 import com.esofthead.mycollab.module.project.service.StandupReportService;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
@@ -18,6 +19,12 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 4.0
+ * 
+ */
 public class StandupMissingComp extends VerticalLayout {
 	private static final long serialVersionUID = 5332956503787026253L;
 
@@ -35,7 +42,9 @@ public class StandupMissingComp extends VerticalLayout {
 		CssLayout headerWrap = new CssLayout();
 		headerWrap.setStyleName("header-wrap");
 
-		headerLbl = new Label("Member haven't report yet");
+		headerLbl = new Label(
+				AppContext
+						.getMessage(StandupI18nEnum.STANDUP_MEMBER_NOT_REPORT));
 		headerLbl.setSizeUndefined();
 		headerWrap.addComponent(headerLbl);
 		this.addComponent(headerWrap);
@@ -53,7 +62,8 @@ public class StandupMissingComp extends VerticalLayout {
 				CurrentProjectVariables.getProjectId(), date,
 				AppContext.getAccountId());
 		if (someGuys.size() == 0) {
-			bodyWrap.addComponent(new Label("<< No item >>"));
+			bodyWrap.addComponent(new Label(AppContext
+					.getMessage(StandupI18nEnum.STANDUP_NO_ITEM)));
 		} else {
 			Iterator<SimpleUser> iterator = someGuys.iterator();
 			while (iterator.hasNext()) {

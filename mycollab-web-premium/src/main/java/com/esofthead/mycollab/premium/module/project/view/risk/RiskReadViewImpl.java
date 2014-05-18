@@ -8,6 +8,8 @@ import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleRisk;
+import com.esofthead.mycollab.module.project.localization.ProjectCommonI18nEnum;
+import com.esofthead.mycollab.module.project.localization.RiskI18nEnum;
 import com.esofthead.mycollab.module.project.ui.components.AbstractPreviewItemComp;
 import com.esofthead.mycollab.module.project.ui.components.CommentDisplay;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserFormLinkField;
@@ -44,8 +46,9 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk>
 	private RiskHistoryList historyList;
 
 	public RiskReadViewImpl() {
-		super("Risk Detail", MyCollabResource
-				.newResource("icons/22/project/risk_selected.png"));
+		super(AppContext.getMessage(RiskI18nEnum.FORM_READ_TITLE),
+				MyCollabResource
+						.newResource("icons/22/project/risk_selected.png"));
 	}
 
 	@Override
@@ -101,11 +104,15 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk>
 		final TabsheetLazyLoadComp tabContainer = new TabsheetLazyLoadComp();
 		tabContainer.setWidth("100%");
 
-		tabContainer.addTab(commentDisplay, "Comments", MyCollabResource
-				.newResource("icons/16/project/gray/comment.png"));
+		tabContainer.addTab(commentDisplay, AppContext
+				.getMessage(ProjectCommonI18nEnum.COMMENT_TAB),
+				MyCollabResource
+						.newResource("icons/16/project/gray/comment.png"));
 
-		tabContainer.addTab(historyList, "History", MyCollabResource
-				.newResource("icons/16/project/gray/history.png"));
+		tabContainer.addTab(historyList, AppContext
+				.getMessage(ProjectCommonI18nEnum.HISTORY_TAB),
+				MyCollabResource
+						.newResource("icons/16/project/gray/history.png"));
 		return tabContainer;
 	}
 
