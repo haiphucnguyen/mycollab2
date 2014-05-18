@@ -23,6 +23,9 @@ import ch.qos.cal10n.LocaleData;
 @BaseName("localization/crm/account")
 @LocaleData({ @Locale("en_US"), @Locale("ja_JP") })
 public enum AccountI18nEnum {
+	NO_ITEM_VIEW_TITLE,
+	NO_ITEM_VIEW_HINT,
+	
 	FORM_ACCOUNT_NAME,
 	FORM_WEBSITE,
 	FORM_FAX,

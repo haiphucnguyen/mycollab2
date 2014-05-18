@@ -34,7 +34,7 @@
         <dependency>
             <groupId>net.sourceforge.dynamicreports</groupId>
             <artifactId>dynamicreports-core</artifactId>
-            <version>3.2.0</version>
+            <version>3.2.1</version>
             <exclusions>
                 <exclusion>
                     <groupId>jfree</groupId>
