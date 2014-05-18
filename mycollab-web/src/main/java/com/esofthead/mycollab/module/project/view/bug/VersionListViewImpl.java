@@ -31,6 +31,7 @@ import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.LabelLink;
 import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
+import com.esofthead.mycollab.module.project.localization.VersionI18nEnum;
 import com.esofthead.mycollab.module.tracker.domain.SimpleVersion;
 import com.esofthead.mycollab.module.tracker.domain.Version;
 import com.esofthead.mycollab.module.tracker.domain.criteria.VersionSearchCriteria;
@@ -104,12 +105,14 @@ public class VersionListViewImpl extends AbstractPageView implements
 	private void generateDisplayTable() {
 		this.tableItem = new DefaultPagedBeanTable<VersionService, VersionSearchCriteria, SimpleVersion>(
 				ApplicationContextUtil.getSpringBean(VersionService.class),
-				SimpleVersion.class, new TableViewField("", "selected",
-						UIConstants.TABLE_CONTROL_WIDTH), Arrays.asList(
-						new TableViewField("Name", "versionname",
-								UIConstants.TABLE_EX_LABEL_WIDTH),
-						new TableViewField("Description", "description",
-								UIConstants.TABLE_EX_LABEL_WIDTH)));
+				SimpleVersion.class,
+				new TableViewField(null, "selected",
+						UIConstants.TABLE_CONTROL_WIDTH),
+				Arrays.asList(
+						new TableViewField(VersionI18nEnum.FORM_NAME,
+								"versionname", UIConstants.TABLE_EX_LABEL_WIDTH),
+						new TableViewField(VersionI18nEnum.FORM_DESCRIPTION,
+								"description", UIConstants.TABLE_EX_LABEL_WIDTH)));
 
 		this.tableItem.addGeneratedColumn("selected",
 				new Table.ColumnGenerator() {

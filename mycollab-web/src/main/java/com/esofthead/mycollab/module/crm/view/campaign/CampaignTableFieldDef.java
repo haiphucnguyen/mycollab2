@@ -19,7 +19,6 @@ package com.esofthead.mycollab.module.crm.view.campaign;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.module.crm.localization.CampaignI18nEnum;
 import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
-import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 
@@ -30,10 +29,10 @@ import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
  * 
  */
 public interface CampaignTableFieldDef {
-	public static TableViewField selected = new TableViewField("", "selected",
-			UIConstants.TABLE_CONTROL_WIDTH);
+	public static TableViewField selected = new TableViewField(null,
+			"selected", UIConstants.TABLE_CONTROL_WIDTH);
 
-	public static TableViewField action = new TableViewField("", "id",
+	public static TableViewField action = new TableViewField(null, "id",
 			UIConstants.TABLE_ACTION_CONTROL_WIDTH);
 
 	public static TableViewField actualcost = new TableViewField(

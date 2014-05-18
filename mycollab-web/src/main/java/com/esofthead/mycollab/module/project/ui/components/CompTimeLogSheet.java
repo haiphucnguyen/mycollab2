@@ -28,6 +28,7 @@ import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.SimpleItemTimeLogging;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
+import com.esofthead.mycollab.module.project.localization.TimeTrackingI18nEnum;
 import com.esofthead.mycollab.module.project.service.ItemTimeLoggingService;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserLink;
@@ -207,14 +208,18 @@ public abstract class CompTimeLogSheet<V extends ValuedBean> extends
 			CompTimeLogSheet.this.tableItem = new DefaultPagedBeanTable<ItemTimeLoggingService, ItemTimeLoggingSearchCriteria, SimpleItemTimeLogging>(
 					ApplicationContextUtil
 							.getSpringBean(ItemTimeLoggingService.class),
-					SimpleItemTimeLogging.class, Arrays.asList(
-							new TableViewField("User", "logUserFullName",
+					SimpleItemTimeLogging.class,
+					Arrays.asList(
+							new TableViewField(TimeTrackingI18nEnum.LOG_USER,
+									"logUserFullName",
 									UIConstants.TABLE_X_LABEL_WIDTH),
-							new TableViewField("Created Time", "createdtime",
+							new TableViewField(
+									TimeTrackingI18nEnum.LOG_CREATED_TIME,
+									"createdtime",
 									UIConstants.TABLE_DATE_TIME_WIDTH),
-							new TableViewField("Value", "logvalue",
-									UIConstants.TABLE_S_LABEL_WIDTH),
-							new TableViewField("", "id",
+							new TableViewField(TimeTrackingI18nEnum.LOG_VALUE,
+									"logvalue", UIConstants.TABLE_S_LABEL_WIDTH),
+							new TableViewField(null, "id",
 									UIConstants.TABLE_CONTROL_WIDTH)));
 
 			CompTimeLogSheet.this.tableItem.addGeneratedColumn(

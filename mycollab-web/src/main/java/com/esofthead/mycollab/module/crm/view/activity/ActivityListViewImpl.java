@@ -61,7 +61,7 @@ public class ActivityListViewImpl extends
 	@Override
 	protected AbstractPagedBeanTable<ActivitySearchCriteria, SimpleActivity> createBeanTable() {
 		ActivityTableDisplay table = new ActivityTableDisplay(
-				new TableViewField("", "selected",
+				new TableViewField(null, "selected",
 						UIConstants.TABLE_CONTROL_WIDTH),
 				Arrays.asList(new TableViewField(
 						TaskI18nEnum.TABLE_SUBJECT_HEADER, "subject",

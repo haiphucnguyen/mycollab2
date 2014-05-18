@@ -91,15 +91,13 @@ public class ProjectRoleListViewImpl extends AbstractPageView implements
 		this.tableItem = new DefaultPagedBeanTable<ProjectRoleService, ProjectRoleSearchCriteria, SimpleProjectRole>(
 				ApplicationContextUtil.getSpringBean(ProjectRoleService.class),
 				SimpleProjectRole.class,
-				new TableViewField("", "selected",
+				new TableViewField(null, "selected",
 						UIConstants.TABLE_CONTROL_WIDTH),
 				Arrays.asList(
-						new TableViewField(AppContext
-								.getMessage(ProjectRoleI18nEnum.FORM_NAME),
+						new TableViewField(ProjectRoleI18nEnum.FORM_NAME,
 								"rolename", UIConstants.TABLE_EX_LABEL_WIDTH),
 						new TableViewField(
-								AppContext
-										.getMessage(ProjectRoleI18nEnum.FORM_DESCRIPTION),
+								ProjectRoleI18nEnum.FORM_DESCRIPTION,
 								"description", UIConstants.TABLE_EX_LABEL_WIDTH)));
 
 		this.tableItem.addGeneratedColumn("selected",

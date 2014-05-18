@@ -30,6 +30,7 @@ import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.LabelLink;
 import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
+import com.esofthead.mycollab.module.project.localization.ComponentI18nEnum;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserLink;
 import com.esofthead.mycollab.module.tracker.domain.SimpleComponent;
 import com.esofthead.mycollab.module.tracker.domain.criteria.ComponentSearchCriteria;
@@ -105,14 +106,18 @@ public class ComponentListViewImpl extends AbstractPageView implements
 	private void generateDisplayTable() {
 		this.tableItem = new DefaultPagedBeanTable<ComponentService, ComponentSearchCriteria, SimpleComponent>(
 				ApplicationContextUtil.getSpringBean(ComponentService.class),
-				SimpleComponent.class, new TableViewField("", "selected",
-						UIConstants.TABLE_CONTROL_WIDTH), Arrays.asList(
-						new TableViewField("Name", "componentname",
+				SimpleComponent.class,
+				new TableViewField(null, "selected",
+						UIConstants.TABLE_CONTROL_WIDTH),
+				Arrays.asList(
+						new TableViewField(ComponentI18nEnum.FORM_NAME,
+								"componentname",
 								UIConstants.TABLE_EX_LABEL_WIDTH),
-						new TableViewField("Lead Name", "userLeadFullName",
+						new TableViewField(ComponentI18nEnum.FORM_LEAD,
+								"userLeadFullName",
 								UIConstants.TABLE_X_LABEL_WIDTH),
-						new TableViewField("Description", "description",
-								UIConstants.TABLE_EX_LABEL_WIDTH)));
+						new TableViewField(ComponentI18nEnum.FORM_DESCRIPTION,
+								"description", UIConstants.TABLE_EX_LABEL_WIDTH)));
 
 		this.tableItem.addGeneratedColumn("selected",
 				new Table.ColumnGenerator() {
