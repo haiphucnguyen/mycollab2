@@ -163,7 +163,8 @@ public abstract class CompTimeLogSheet<V extends ValuedBean> extends
 			addLayout.setComponentAlignment(this.isBillableField,
 					Alignment.MIDDLE_LEFT);
 
-			CompTimeLogSheet.this.btnAdd = new Button("Add",
+			CompTimeLogSheet.this.btnAdd = new Button(
+					AppContext.getMessage(GenericI18Enum.BUTTON_ADD_LABEL),
 					new Button.ClickListener() {
 						private static final long serialVersionUID = 1L;
 
@@ -289,8 +290,10 @@ public abstract class CompTimeLogSheet<V extends ValuedBean> extends
 													UI.getCurrent(),
 													"Please Confirm:",
 													"Are you sure to delete this entry?",
-													AppContext.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
-													AppContext.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
+													AppContext
+															.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
+													AppContext
+															.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
 													new ConfirmDialog.Listener() {
 														private static final long serialVersionUID = 1L;
 

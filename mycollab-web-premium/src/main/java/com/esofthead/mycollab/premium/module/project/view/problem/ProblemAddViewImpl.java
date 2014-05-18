@@ -4,7 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.esofthead.mycollab.module.project.domain.Problem;
+import com.esofthead.mycollab.module.project.localization.ProblemI18nEnum;
 import com.esofthead.mycollab.module.project.ui.components.AbstractEditItemComp;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.IFormAddView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
@@ -23,7 +25,7 @@ import com.vaadin.ui.Layout;
  */
 @ViewComponent
 public class ProblemAddViewImpl extends AbstractEditItemComp<Problem> implements
-ProblemAddView, IFormAddView<Problem> {
+		ProblemAddView, IFormAddView<Problem> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -44,13 +46,14 @@ ProblemAddView, IFormAddView<Problem> {
 
 	@Override
 	protected String initFormHeader() {
-		return (beanItem.getId() == null) ? "Create Problem" : "Problem Edit";
+		return (beanItem.getId() == null) ? AppContext
+				.getMessage(ProblemI18nEnum.FORM_NEW_TITLE) : AppContext
+				.getMessage(ProblemI18nEnum.FORM_EDIT_TITLE);
 	}
 
 	@Override
 	protected String initFormTitle() {
-		return (beanItem.getId() == null) ? null : beanItem
-				.getIssuename();
+		return (beanItem.getId() == null) ? null : beanItem.getIssuename();
 	}
 
 	@Override

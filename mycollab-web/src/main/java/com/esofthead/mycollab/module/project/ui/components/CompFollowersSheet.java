@@ -95,7 +95,8 @@ public abstract class CompFollowersSheet<V extends ValuedBean> extends
 		layoutAdd.addComponent(memberSelection);
 		layoutAdd.setComponentAlignment(memberSelection, Alignment.MIDDLE_LEFT);
 
-		btnSave = new Button("Add", new Button.ClickListener() {
+		btnSave = new Button(
+				AppContext.getMessage(GenericI18Enum.BUTTON_ADD_LABEL), new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override

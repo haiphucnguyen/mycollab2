@@ -3,6 +3,7 @@ package com.esofthead.mycollab.premium.module.project.view.risk;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.module.project.domain.Risk;
+import com.esofthead.mycollab.module.project.localization.RiskI18nEnum;
 import com.esofthead.mycollab.vaadin.mvp.MassUpdateCommand;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
@@ -74,18 +75,27 @@ public class MassUpdateRiskWindow extends MassUpdateWindow<Risk> {
 		@Override
 		public boolean attachField(Object propertyId, Field<?> field) {
 			if (propertyId.equals("raisedbyuser")) {
-				this.informationLayout.addComponent(field, "Raised by", 0, 0);
+				this.informationLayout.addComponent(field,
+						AppContext.getMessage(RiskI18nEnum.FORM_RAISED_BY), 0,
+						0);
 			} else if (propertyId.equals("assigntouser")) {
 				this.informationLayout.addComponent(field, AppContext
 						.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD), 1, 0);
 			} else if (propertyId.equals("consequence")) {
-				this.informationLayout.addComponent(field, "Consequence", 0, 1);
+				this.informationLayout.addComponent(field,
+						AppContext.getMessage(RiskI18nEnum.FORM_CONSEQUENCE),
+						0, 1);
 			} else if (propertyId.equals("datedue")) {
-				this.informationLayout.addComponent(field, "Date due", 1, 1);
+				this.informationLayout
+						.addComponent(field, AppContext
+								.getMessage(RiskI18nEnum.FORM_DATE_DUE), 1, 1);
 			} else if (propertyId.equals("probalitity")) {
-				this.informationLayout.addComponent(field, "Probality", 0, 2);
+				this.informationLayout.addComponent(field,
+						AppContext.getMessage(RiskI18nEnum.FORM_PROBABILITY),
+						0, 2);
 			} else if (propertyId.equals("status")) {
-				this.informationLayout.addComponent(field, "Status", 1, 2);
+				this.informationLayout.addComponent(field,
+						AppContext.getMessage(RiskI18nEnum.FORM_STATUS), 1, 2);
 			} else {
 				return false;
 			}

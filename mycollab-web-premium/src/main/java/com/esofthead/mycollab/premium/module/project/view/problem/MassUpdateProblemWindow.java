@@ -3,6 +3,7 @@ package com.esofthead.mycollab.premium.module.project.view.problem;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.module.project.domain.Problem;
+import com.esofthead.mycollab.module.project.localization.ProblemI18nEnum;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
@@ -74,16 +75,24 @@ public class MassUpdateProblemWindow extends MassUpdateWindow<Problem> {
 		@Override
 		public boolean attachField(final Object propertyId, final Field<?> field) {
 			if (propertyId.equals("raisedbyuser")) {
-				this.informationLayout.addComponent(field, "Raised by", 0, 0);
+				this.informationLayout.addComponent(field,
+						AppContext.getMessage(ProblemI18nEnum.FORM_RAISED_BY),
+						0, 0);
 			} else if (propertyId.equals("assigntouser")) {
 				this.informationLayout.addComponent(field, AppContext
 						.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD), 1, 0);
 			} else if (propertyId.equals("datedue")) {
-				this.informationLayout.addComponent(field, "Date due", 0, 1);
+				this.informationLayout.addComponent(field,
+						AppContext.getMessage(ProblemI18nEnum.FORM_DATE_DUE),
+						0, 1);
 			} else if (propertyId.equals("priority")) {
-				this.informationLayout.addComponent(field, "Priority", 1, 1);
+				this.informationLayout.addComponent(field,
+						AppContext.getMessage(ProblemI18nEnum.FORM_PRIORITY),
+						1, 1);
 			} else if (propertyId.equals("status")) {
-				this.informationLayout.addComponent(field, "Status", 0, 2);
+				this.informationLayout.addComponent(field,
+						AppContext.getMessage(ProblemI18nEnum.FORM_STATUS), 0,
+						2);
 			} else {
 				return false;
 			}
