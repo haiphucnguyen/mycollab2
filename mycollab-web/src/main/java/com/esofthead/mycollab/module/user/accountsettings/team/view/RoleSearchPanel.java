@@ -69,7 +69,8 @@ public class RoleSearchPanel extends GenericSearchPanel<RoleSearchCriteria> {
 		layout.addComponent(searchtitle);
 		layout.setExpandRatio(searchtitle, 1.0f);
 
-		final Button createBtn = new Button("Create",
+		final Button createBtn = new Button(
+				AppContext.getMessage(GenericI18Enum.BUTTON_CREATE_LABEL),
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 

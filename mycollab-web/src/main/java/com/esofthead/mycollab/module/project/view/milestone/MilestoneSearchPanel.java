@@ -81,15 +81,17 @@ public class MilestoneSearchPanel extends
 		searchtitle.setStyleName(Reindeer.LABEL_H2);
 		layout.addComponent(searchtitle);
 
-		Button createBtn = new Button("Create", new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
+		Button createBtn = new Button(
+				AppContext.getMessage(GenericI18Enum.BUTTON_CREATE_LABEL),
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
 
-			@Override
-			public void buttonClick(Button.ClickEvent event) {
-				EventBus.getInstance().fireEvent(
-						new MilestoneEvent.GotoAdd(this, null));
-			}
-		});
+					@Override
+					public void buttonClick(Button.ClickEvent event) {
+						EventBus.getInstance().fireEvent(
+								new MilestoneEvent.GotoAdd(this, null));
+					}
+				});
 		createBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 		createBtn.setIcon(MyCollabResource
 				.newResource("icons/16/addRecord.png"));
