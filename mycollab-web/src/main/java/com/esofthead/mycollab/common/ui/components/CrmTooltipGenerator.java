@@ -38,6 +38,7 @@ import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.H3;
 import com.hp.gagawa.java.elements.Img;
+import com.hp.gagawa.java.elements.Table;
 import com.hp.gagawa.java.elements.Td;
 import com.hp.gagawa.java.elements.Tr;
 
@@ -48,31 +49,33 @@ import com.hp.gagawa.java.elements.Tr;
  * 
  */
 public class CrmTooltipGenerator {
+	
 	private static Logger log = LoggerFactory
 			.getLogger(CrmTooltipGenerator.class);
 
-	public static String generateTolltipNull(){
+	public static String generateTolltipNull() {
 		Div div = new Div();
-		com.hp.gagawa.java.elements.Table table = new com.hp.gagawa.java.elements.Table();
+		Table table = new Table();
 		table.setStyle("padding-left:10px;  color: #5a5a5a; font-size:11px;");
-		
+
 		Tr trRow1 = new Tr();
-		trRow1.appendChild(
-				new Td().setStyle(
-						"vertical-align: top; text-align: left;")
-						.appendText("The item is not existed"));
-		
+		trRow1.appendChild(new Td().setStyle(
+				"vertical-align: top; text-align: left;").appendText(
+				"The item is not existed"));
+
 		table.appendChild(trRow1);
 		div.appendChild(table);
-		
+
 		return div.write();
 	}
-	
+
 	public static String generateToolTipAccount(SimpleAccount account,
-			String siteURL, String timeZone) {
+			String siteURL) {
+		if (account == null) {
+			return generateTolltipNull();
+		}
+
 		try {
-			if (account == null)
-				return generateTolltipNull();
 			Div div = new Div()
 					.setStyle("font: 12px Arial, Verdana, Helvetica, sans-serif !important;line-height: normal;");
 			H3 accountName = new H3();
@@ -80,7 +83,7 @@ public class CrmTooltipGenerator {
 					.appendText(Jsoup.parse(account.getAccountname()).html());
 			div.appendChild(accountName);
 
-			com.hp.gagawa.java.elements.Table table = new com.hp.gagawa.java.elements.Table();
+			Table table = new Table();
 			table.setStyle("padding-left:10px; width :500px; color: #5a5a5a; font-size:11px;");
 			Tr trRow1 = new Tr();
 			trRow1.appendChild(
@@ -213,7 +216,7 @@ public class CrmTooltipGenerator {
 					.appendText(Jsoup.parse(contact.getContactName()).html());
 			div.appendChild(contactName);
 
-			com.hp.gagawa.java.elements.Table table = new com.hp.gagawa.java.elements.Table();
+			Table table = new Table();
 			table.setStyle("padding-left:10px; width :500px; color: #5a5a5a; font-size:11px;");
 			Tr trRow1 = new Tr();
 			trRow1.appendChild(
@@ -396,7 +399,7 @@ public class CrmTooltipGenerator {
 			campaginName.appendText(campagin.getCampaignname());
 			div.appendChild(campaginName);
 
-			com.hp.gagawa.java.elements.Table table = new com.hp.gagawa.java.elements.Table();
+			Table table = new Table();
 			table.setStyle("padding-left:10px; width :500px; color: #5a5a5a; font-size:11px;");
 			Tr trRow1 = new Tr();
 			trRow1.appendChild(
@@ -576,7 +579,7 @@ public class CrmTooltipGenerator {
 			leadName.appendText(Jsoup.parse(lead.getLeadName()).html());
 			div.appendChild(leadName);
 
-			com.hp.gagawa.java.elements.Table table = new com.hp.gagawa.java.elements.Table();
+			Table table = new Table();
 			table.setStyle("padding-left:10px; width :500px; color: #5a5a5a; font-size:11px;");
 			Tr trRow1 = new Tr();
 			trRow1.appendChild(
@@ -831,7 +834,7 @@ public class CrmTooltipGenerator {
 					opportunity.getOpportunityname()).html());
 			div.appendChild(opportunityName);
 
-			com.hp.gagawa.java.elements.Table table = new com.hp.gagawa.java.elements.Table();
+			Table table = new Table();
 			table.setStyle("padding-left:10px; width :500px; color: #5a5a5a; font-size:11px;");
 			Tr trRow1 = new Tr();
 			trRow1.appendChild(
@@ -1031,7 +1034,7 @@ public class CrmTooltipGenerator {
 			caseName.appendText(Jsoup.parse(cases.getSubject()).html());
 			div.appendChild(caseName);
 
-			com.hp.gagawa.java.elements.Table table = new com.hp.gagawa.java.elements.Table();
+			Table table = new Table();
 			table.setStyle("padding-left:10px; width :500px; color: #5a5a5a; font-size:11px;");
 			Tr trRow1 = new Tr();
 			trRow1.appendChild(
@@ -1211,7 +1214,7 @@ public class CrmTooltipGenerator {
 			eventName.appendText(meeting.getSubject());
 			div.appendChild(eventName);
 
-			com.hp.gagawa.java.elements.Table table = new com.hp.gagawa.java.elements.Table();
+			Table table = new Table();
 			table.setStyle("padding-left:10px; width :500px; color: #5a5a5a; font-size:11px;");
 			Tr trRow1 = new Tr();
 			trRow1.appendChild(
@@ -1303,7 +1306,7 @@ public class CrmTooltipGenerator {
 			callName.appendText(call.getSubject());
 			div.appendChild(callName);
 
-			com.hp.gagawa.java.elements.Table table = new com.hp.gagawa.java.elements.Table();
+			Table table = new Table();
 			table.setStyle("padding-left:10px; width :500px; color: #5a5a5a; font-size:11px;");
 			Tr trRow1 = new Tr();
 			trRow1.appendChild(
@@ -1403,7 +1406,7 @@ public class CrmTooltipGenerator {
 			eventName.appendText(Jsoup.parse(task.getSubject()).html());
 			div.appendChild(eventName);
 
-			com.hp.gagawa.java.elements.Table table = new com.hp.gagawa.java.elements.Table();
+			Table table = new Table();
 			table.setStyle("padding-left:10px; width :500px; color: #5a5a5a; font-size:11px;");
 			Tr trRow1 = new Tr();
 			trRow1.appendChild(
