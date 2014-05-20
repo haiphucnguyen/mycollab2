@@ -44,7 +44,7 @@ public class RiskAddViewImpl extends AbstractEditItemComp<Risk> implements
 
 	@Override
 	protected String initFormHeader() {
-		return (beanItem.getId() == null) ? "Create Risk" : "Risk Edit";
+		return (beanItem.getId() == null) ? "New Risk" : "Edit Risk";
 	}
 
 	@Override

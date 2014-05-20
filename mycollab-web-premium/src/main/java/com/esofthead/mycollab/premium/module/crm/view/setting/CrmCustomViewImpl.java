@@ -137,7 +137,7 @@ public class CrmCustomViewImpl extends AbstractPageView implements
 		controlLayout.setComponentAlignment(createCustomFieldBtn,
 				Alignment.MIDDLE_LEFT);
 
-		Button createSectionBtn = new Button("Create Section",
+		Button createSectionBtn = new Button("New Section",
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 

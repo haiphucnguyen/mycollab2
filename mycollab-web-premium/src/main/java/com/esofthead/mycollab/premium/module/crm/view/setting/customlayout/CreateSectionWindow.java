@@ -37,7 +37,7 @@ public class CreateSectionWindow extends Window {
 	private static final long serialVersionUID = 1L;
 
 	public CreateSectionWindow(final ICrmCustomView customView) {
-		super("Create Section");
+		super("New Section");
 		center();
 		this.setWidth("600px");
 

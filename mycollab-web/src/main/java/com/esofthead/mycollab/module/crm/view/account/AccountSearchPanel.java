@@ -86,7 +86,7 @@ public class AccountSearchPanel extends
 		layout.setExpandRatio(searchtitle, 1.0f);
 		layout.setComponentAlignment(searchtitle, Alignment.MIDDLE_LEFT);
 
-		final Button createAccountBtn = new Button("Create Account",
+		final Button createAccountBtn = new Button("New Account",
 				new Button.ClickListener() {
 					@Override
 					public void buttonClick(final ClickEvent event) {

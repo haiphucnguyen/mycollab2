@@ -87,7 +87,7 @@ public class ContactSearchPanel extends
 		layout.setExpandRatio(searchtitle, 1.0f);
 		layout.setComponentAlignment(searchtitle, Alignment.MIDDLE_LEFT);
 
-		final Button createAccountBtn = new Button("Create Contact",
+		final Button createAccountBtn = new Button("New Contact",
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
