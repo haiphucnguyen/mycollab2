@@ -54,8 +54,8 @@ public interface OpportunityTableFieldDef {
 			UIConstants.TABLE_X_LABEL_WIDTH);
 
 	public static TableViewField expectedCloseDate = new TableViewField(
-			OpportunityI18nEnum.FORM_CLOSE_DATE, "expectedcloseddate",
-			UIConstants.TABLE_DATE_WIDTH);
+			OpportunityI18nEnum.FORM_EXPECTED_CLOSE_DATE, "expectedcloseddate",
+			UIConstants.TABLE_DATE_TIME_WIDTH);
 
 	public static TableViewField type = new TableViewField(
 			OpportunityI18nEnum.FORM_TYPE, "type",

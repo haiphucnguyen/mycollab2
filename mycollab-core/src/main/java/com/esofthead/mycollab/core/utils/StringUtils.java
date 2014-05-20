@@ -96,11 +96,6 @@ public class StringUtils {
 						"<a href=\"$0\">$0</a>");
 	}
 
-	public static String getStringBaseNullCondition(String condition,
-			String value1, String value2) {
-		return (condition != null) ? value1 : value2;
-	}
-
 	public static String getStringFieldValue(Object o) {
 		if (o == null) {
 			return "";
@@ -113,7 +108,7 @@ public class StringUtils {
 		}
 	}
 
-	public static String getStringRemoveHtmlTag(Object o) {
+	public static String trimHtmlTags(Object o) {
 		if (o == null) {
 			return "";
 		} else {

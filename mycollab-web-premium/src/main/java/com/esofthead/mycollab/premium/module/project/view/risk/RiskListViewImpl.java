@@ -364,7 +364,7 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
 					.setStyle(
 							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 					.appendText(
-							StringUtils.getStringRemoveHtmlTag(risk
+							StringUtils.trimHtmlTags(risk
 									.getDescription()));
 			trRow5_value.setAttribute("colspan", "3");
 
@@ -488,7 +488,7 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
 					.setStyle(
 							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 					.appendText(
-							StringUtils.getStringRemoveHtmlTag(risk
+							StringUtils.trimHtmlTags(risk
 									.getResponse()));
 			trRow6_value.setAttribute("colspan", "3");
 

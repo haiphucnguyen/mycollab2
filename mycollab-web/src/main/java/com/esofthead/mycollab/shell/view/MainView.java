@@ -270,6 +270,7 @@ public final class MainView extends AbstractPageView {
 				}
 			}
 		}
+
 		NotificationButton notificationButton = new NotificationButton();
 		accountLayout.addComponent(notificationButton);
 		if (AppContext.getSession().getTimezone() == null) {
