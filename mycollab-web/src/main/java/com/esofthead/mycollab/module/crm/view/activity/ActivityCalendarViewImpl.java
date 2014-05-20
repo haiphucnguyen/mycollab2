@@ -823,7 +823,7 @@ public class ActivityCalendarViewImpl extends AbstractPageView implements
 				private static final long serialVersionUID = 1L;
 
 				public FormLayoutFactory() {
-					super(meeting.getId() == null ? "Create Meeting" : meeting
+					super(meeting.getId() == null ? "New Meeting" : meeting
 							.getSubject());
 				}
 
@@ -910,7 +910,7 @@ public class ActivityCalendarViewImpl extends AbstractPageView implements
 						if (isValidateForm) {
 							tf.setNullRepresentation("");
 							tf.setRequired(true);
-							tf.setRequiredError("Subject must not be null");
+							tf.setRequiredError("Subject must be not null");
 						}
 
 						return tf;

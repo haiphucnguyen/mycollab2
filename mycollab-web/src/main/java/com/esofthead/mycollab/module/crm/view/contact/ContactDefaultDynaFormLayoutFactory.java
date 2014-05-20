@@ -105,9 +105,9 @@ public class ContactDefaultDynaFormLayoutFactory {
 						AppContext.getMessage(ContactI18nEnum.FORM_DEPARTMENT))
 				.fieldIndex(8).build());
 
-		contactSection.addField(new PhoneDynaFieldBuilder()
-				.fieldName(AppContext.getMessage(ContactI18nEnum.FORM_FAX))
-				.displayName("Fax").fieldIndex(9).build());
+		contactSection.addField(new PhoneDynaFieldBuilder().fieldName("fax")
+				.displayName(AppContext.getMessage(ContactI18nEnum.FORM_FAX))
+				.fieldIndex(9).build());
 
 		contactSection.addField(new EmailDynaFieldBuilder().fieldName("email")
 				.displayName(AppContext.getMessage(ContactI18nEnum.FORM_EMAIL))
