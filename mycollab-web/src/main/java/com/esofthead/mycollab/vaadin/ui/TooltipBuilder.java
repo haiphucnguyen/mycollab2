@@ -4,6 +4,7 @@ import com.esofthead.mycollab.core.utils.StringUtils;
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.H3;
+import com.hp.gagawa.java.elements.Img;
 import com.hp.gagawa.java.elements.Table;
 import com.hp.gagawa.java.elements.Td;
 import com.hp.gagawa.java.elements.Tr;
@@ -21,6 +22,7 @@ public class TooltipBuilder {
 
 	public TooltipBuilder() {
 		div = new Div();
+		div.setStyle("font: 12px Arial, Verdana, Helvetica, sans-serif !important;line-height: normal;");
 		table = new Table();
 		table.setStyle("padding-left:10px; width :500px; color: #5a5a5a; font-size:11px;");
 		div.appendChild(table);
@@ -45,7 +47,7 @@ public class TooltipBuilder {
 	public static class TdUtil {
 		public static Td buildCellName(String name) {
 			return new Td().setStyle(
-					"width: 70px; vertical-align: top; text-align: right;")
+					"width: 100px; vertical-align: top; text-align: right;")
 					.appendText(name + ": ");
 		}
 
@@ -57,12 +59,30 @@ public class TooltipBuilder {
 					.appendText(cutNameVal);
 		}
 
+		public static Td buildCellValue(Number value) {
+			return (value == null) ? buildCellValue("") : buildCellValue(value
+					.toString());
+
+		}
+
 		public static Td buildCellLink(String href, String name) {
 			String cutNameVal = StringUtils.getStringFieldValue(name);
 			return new Td()
 					.setStyle(
-							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+							"width:200px;word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 					.appendChild(new A().setHref(href).appendText(cutNameVal));
+		}
+
+		public static Td buildCellLink(String href, String imageLink,
+				String name) {
+			String cutNameVal = StringUtils.getStringFieldValue(name);
+			return new Td()
+					.setStyle(
+							"width:200px;word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+					.appendChild(
+							new A().setHref(href)
+									.appendChild(new Img("", imageLink))
+									.appendText(cutNameVal));
 		}
 	}
 }

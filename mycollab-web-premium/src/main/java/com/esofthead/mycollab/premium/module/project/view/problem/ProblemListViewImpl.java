@@ -371,7 +371,7 @@ public class ProblemListViewImpl extends AbstractPageView implements
 					.setStyle(
 							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 					.appendText(
-							StringUtils.getStringRemoveHtmlTag(problem
+							StringUtils.trimHtmlTags(problem
 									.getDescription()));
 			trRow5_value.setAttribute("colspan", "3");
 
@@ -494,7 +494,7 @@ public class ProblemListViewImpl extends AbstractPageView implements
 					.setStyle(
 							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 					.appendText(
-							StringUtils.getStringRemoveHtmlTag(problem
+							StringUtils.trimHtmlTags(problem
 									.getResolution()));
 			trRow6_value.setAttribute("colspan", "3");
 
