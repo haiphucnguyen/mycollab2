@@ -7070,3 +7070,10 @@ div.v-csslayout.bean-block.olive-block, .list-note-block .note-label.olive-block
 #topNavigation .v-button.notification-button .v-popup-indicator {
 	display: none;
 }
+.notification-type {
+	text-transform: uppercase;
+	font-weight: bold;
+}
+.notification-type.notification-type-warning {
+	color: #c31616;
+}
