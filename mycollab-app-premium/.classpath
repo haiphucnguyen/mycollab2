@@ -163,7 +163,7 @@
   <classpathentry kind="var" path="M2_REPO/org/quartz-scheduler/quartz/2.2.1/quartz-2.2.1.jar" sourcepath="M2_REPO/org/quartz-scheduler/quartz/2.2.1/quartz-2.2.1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/c3p0/c3p0/0.9.1.1/c3p0-0.9.1.1.jar" sourcepath="M2_REPO/c3p0/c3p0/0.9.1.1/c3p0-0.9.1.1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/vaadin/addons/buttongroup/2.3/buttongroup-2.3.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/vaadin/addons/popupbutton/2.2.1/popupbutton-2.2.1.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/vaadin/addons/popupbutton/2.3.0/popupbutton-2.3.0.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/vaadin/addons/ratingstars/2.1/ratingstars-2.1.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/vaadin/addons/dragdroplayouts/1.0.1/dragdroplayouts-1.0.1.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/vaadin/addons/tokenfield/7.0.1/tokenfield-7.0.1.jar"/>
