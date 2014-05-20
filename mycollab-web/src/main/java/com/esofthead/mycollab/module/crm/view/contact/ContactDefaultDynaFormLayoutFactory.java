@@ -45,7 +45,7 @@ public class ContactDefaultDynaFormLayoutFactory {
 				.layoutType(LayoutType.TWO_COLUMN)
 				.orderIndex(0)
 				.header(AppContext
-						.getMessage(ContactI18nEnum.FORM_INFO_SECTION)).build();
+						.getMessage(ContactI18nEnum.SECTION_INFORMATION)).build();
 
 		contactSection.addField(new TextDynaFieldBuilder()
 				.fieldName("firstname")
@@ -163,7 +163,7 @@ public class ContactDefaultDynaFormLayoutFactory {
 				.layoutType(LayoutType.TWO_COLUMN)
 				.orderIndex(1)
 				.header(AppContext
-						.getMessage(ContactI18nEnum.FORM_ADDRESS_SECTION))
+						.getMessage(ContactI18nEnum.SECTION_ADDRESS))
 				.build();
 
 		addressSection
@@ -249,7 +249,7 @@ public class ContactDefaultDynaFormLayoutFactory {
 				.layoutType(LayoutType.ONE_COLUMN)
 				.orderIndex(2)
 				.header(AppContext
-						.getMessage(ContactI18nEnum.FORM_DESC_SECTION)).build();
+						.getMessage(ContactI18nEnum.SECTION_DESCRIPTION)).build();
 
 		descSection
 				.addField(new TextDynaFieldBuilder()
