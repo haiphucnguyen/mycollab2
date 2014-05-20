@@ -18,24 +18,24 @@ package com.esofthead.mycollab.premium.module.crm.view.setting.customlayout;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.MyCollabException;
-import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.form.view.builder.type.DynaSection;
 import com.esofthead.mycollab.module.crm.view.setting.ICrmCustomView;
 import com.esofthead.mycollab.premium.module.crm.view.setting.customlayout.fieldinfo.DetailFieldInfoPanel;
 import com.esofthead.mycollab.premium.module.crm.view.setting.customlayout.fieldinfo.IntegerDetailFieldInfoPanel;
 import com.esofthead.mycollab.premium.module.crm.view.setting.customlayout.fieldinfo.TextDetailFieldInfoPanel;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.server.Resource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Table.ColumnHeaderMode;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
+import com.vaadin.ui.Table.ColumnHeaderMode;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
@@ -116,14 +116,12 @@ public class CreateCustomFieldWindow extends Window {
 		this.setWidth("600px");
 
 		VerticalLayout content = new VerticalLayout();
-		content.setSizeFull();
 		content.setStyleName("createCustomFieldWindow");
 		this.setContent(content);
 		content.setSpacing(true);
 		content.setMargin(true);
 
 		HorizontalLayout body = new HorizontalLayout();
-		body.setSizeFull();
 		body.setSpacing(true);
 		body.addComponent(constructLeftBodyPanel());
 		VerticalLayout rightPanel = constructRightBodyPanel();
@@ -134,6 +132,7 @@ public class CreateCustomFieldWindow extends Window {
 		content.setExpandRatio(body, 1.0f);
 
 		HorizontalLayout buttonControls = new HorizontalLayout();
+		buttonControls.setSpacing(true);
 		Button saveBtn = new Button(
 				AppContext.getMessage(GenericI18Enum.BUTTON_SAVE_LABEL),
 				new Button.ClickListener() {
@@ -152,8 +151,7 @@ public class CreateCustomFieldWindow extends Window {
 		buttonControls.setComponentAlignment(saveBtn, Alignment.MIDDLE_CENTER);
 
 		Button cancelBtn = new Button(
-				AppContext
-						.getMessage(GenericI18Enum.BUTTON_CANCEL_LABEL),
+				AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL_LABEL),
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
@@ -218,7 +216,7 @@ public class CreateCustomFieldWindow extends Window {
 		panel.addComponent(title);
 
 		fieldLayoutWrapper = new CssLayout();
-		fieldLayoutWrapper.setSizeFull();
+		fieldLayoutWrapper.setWidth("100%");
 		panel.addComponent(fieldLayoutWrapper);
 		return panel;
 	}
