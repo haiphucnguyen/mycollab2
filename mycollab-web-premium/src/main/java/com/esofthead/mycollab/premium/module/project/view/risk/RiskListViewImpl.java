@@ -3,25 +3,18 @@ package com.esofthead.mycollab.premium.module.project.view.risk;
 import java.util.Arrays;
 import java.util.GregorianCalendar;
 
-import org.jsoup.Jsoup;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.vaadin.teemu.ratingstars.RatingStars;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
-import com.esofthead.mycollab.core.utils.StringUtils;
-import com.esofthead.mycollab.eventmanager.EventBus;
+import com.esofthead.mycollab.common.ui.components.ProjectTooltipGenerator;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.LabelLink;
 import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleRisk;
 import com.esofthead.mycollab.module.project.domain.criteria.RiskSearchCriteria;
-import com.esofthead.mycollab.module.project.events.RiskEvent;
-import com.esofthead.mycollab.module.project.localization.RiskI18nEnum;
 import com.esofthead.mycollab.module.project.service.RiskService;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserLink;
-import com.esofthead.mycollab.module.user.UserLinkUtils;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.HasMassItemActionHandlers;
@@ -36,16 +29,8 @@ import com.esofthead.mycollab.vaadin.ui.DefaultMassItemActionHandlersContainer;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.vaadin.ui.UiUtils;
-import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.vaadin.ui.table.AbstractPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.DefaultPagedBeanTable;
-import com.hp.gagawa.java.elements.A;
-import com.hp.gagawa.java.elements.Div;
-import com.hp.gagawa.java.elements.H3;
-import com.hp.gagawa.java.elements.Img;
-import com.hp.gagawa.java.elements.Td;
-import com.hp.gagawa.java.elements.Tr;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.server.Sizeable;
@@ -78,7 +63,6 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
 	private final VerticalLayout riskListLayout;
 	private DefaultMassItemActionHandlersContainer tableActionControls;
 	private final Label selectedItemsNumberLabel = new Label();
-	private static Logger log = LoggerFactory.getLogger(RiskListViewImpl.class);
 
 	public RiskListViewImpl() {
 		this.setMargin(new MarginInfo(false, true, false, true));
@@ -149,7 +133,9 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
 						b.addStyleName(UIConstants.LINK_OVERDUE);
 					}
 				}
-				b.setDescription(generateToolTip(risk));
+				b.setDescription(ProjectTooltipGenerator.generateToolTipRisk(
+						risk, AppContext.getSiteUrl(),
+						AppContext.getTimezoneId()));
 				return b;
 
 			}
@@ -347,192 +333,5 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
 	@Override
 	public AbstractPagedBeanTable<RiskSearchCriteria, SimpleRisk> getPagedBeanTable() {
 		return this.tableItem;
-	}
-
-	private String generateToolTip(SimpleRisk risk) {
-		try {
-			Div div = new Div();
-			H3 riskName = new H3();
-			riskName.appendText(Jsoup.parse(risk.getRiskname()).html());
-			div.appendChild(riskName);
-
-			com.hp.gagawa.java.elements.Table table = new com.hp.gagawa.java.elements.Table();
-			table.setStyle("padding-left:10px; width :500px; color: #5a5a5a; font-size:11px;");
-
-			Tr trRow5 = new Tr();
-			Td trRow5_value = new Td()
-					.setStyle(
-							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
-					.appendText(
-							StringUtils.trimHtmlTags(risk
-									.getDescription()));
-			trRow5_value.setAttribute("colspan", "3");
-
-			trRow5.appendChild(
-					new Td().setStyle(
-							"width: 70px; vertical-align: top; text-align: right;")
-							.appendText("Description:")).appendChild(
-					trRow5_value);
-
-			Tr trRow1 = new Tr();
-			trRow1.appendChild(
-					new Td().setStyle(
-							"width: 70px; vertical-align: top; text-align: right;")
-							.appendText("Raised by:"))
-					.appendChild(
-							new Td().setStyle(
-									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
-									.appendChild(
-											new A().setHref(
-													(risk.getRaisedbyuser() != null) ? UserLinkUtils
-															.generatePreviewFullUserLink(
-																	AppContext
-																			.getSiteUrl(),
-																	risk.getRaisedbyuser())
-															: "")
-													.appendChild(
-															new Img(
-																	"",
-																	UserAvatarControlFactory
-																			.getAvatarLink(
-																					risk.getRaisedByUserAvatarId(),
-																					16)))
-													.appendText(
-															StringUtils
-																	.getStringFieldValue(risk
-																			.getRaisedByUserFullName()))));
-			trRow1.appendChild(
-					new Td().setStyle(
-							"width: 80px; vertical-align: top; text-align: right;")
-							.appendText("Consequence:"))
-					.appendChild(
-							new Td().setStyle(
-									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
-									.appendText(
-											StringUtils
-													.getStringFieldValue(risk
-															.getConsequence())));
-
-			Tr trRow2 = new Tr();
-			trRow2.appendChild(
-					new Td().setStyle(
-							"width: 80px; vertical-align: top; text-align: right;")
-							.appendText("Assignee:"))
-					.appendChild(
-							new Td().setStyle(
-									"width:150px;word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
-									.appendChild(
-											new A().setHref(
-													(risk.getAssigntouser() != null) ? UserLinkUtils
-															.generatePreviewFullUserLink(
-																	AppContext
-																			.getSiteUrl(),
-																	risk.getAssigntouser())
-															: "")
-													.appendChild(
-															new Img(
-																	"",
-																	UserAvatarControlFactory
-																			.getAvatarLink(
-																					risk.getAssignToUserAvatarId(),
-																					16)))
-													.appendText(
-															StringUtils
-																	.getStringFieldValue(risk
-																			.getAssignedToUserFullName()))));
-			trRow2.appendChild(
-					new Td().setStyle(
-							"width: 110px; vertical-align: top; text-align: right;")
-							.appendText("Probability:"))
-					.appendChild(
-							new Td().setStyle(
-									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
-									.appendText(
-											StringUtils
-													.getStringFieldValue(risk
-															.getProbalitity())));
-
-			Tr trRow3 = new Tr();
-			trRow3.appendChild(
-					new Td().setStyle(
-							"width: 70px; vertical-align: top; text-align: right;")
-							.appendText("Date due:"))
-					.appendChild(
-							new Td().appendText(AppContext.formatDate(risk
-									.getDatedue())));
-			trRow3.appendChild(
-					new Td().setStyle(
-							"width: 110px; vertical-align: top; text-align: right;")
-							.appendText("Rating:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(risk
-							.getLevel())));
-
-			Tr trRow4 = new Tr();
-			trRow4.appendChild(
-					new Td().setStyle(
-							"width: 70px; vertical-align: top; text-align: right;")
-							.appendText("Status:")).appendChild(
-					new Td().appendText(StringUtils.getStringFieldValue(risk
-							.getStatus())));
-			trRow4.appendChild(
-					new Td().setStyle(
-							"width: 110px; vertical-align: top; text-align: right;")
-							.appendText("Related to:"))
-					.appendChild(
-							new Td().setStyle(
-									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
-									.appendText(""));
-
-			Tr trRow6 = new Tr();
-			Td trRow6_value = new Td()
-					.setStyle(
-							"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
-					.appendText(
-							StringUtils.trimHtmlTags(risk
-									.getResponse()));
-			trRow6_value.setAttribute("colspan", "3");
-
-			trRow6.appendChild(
-					new Td().setStyle(
-							"width: 70px; vertical-align: top; text-align: right;")
-							.appendText("Response:")).appendChild(trRow6_value);
-
-			table.appendChild(trRow5);
-			table.appendChild(trRow1);
-			table.appendChild(trRow2);
-			table.appendChild(trRow3);
-			table.appendChild(trRow4);
-			table.appendChild(trRow6);
-			div.appendChild(table);
-			return div.write();
-		} catch (Exception e) {
-			log.error("Error while generate tooltip for Risk", e);
-			return "";
-		}
-	}
-
-	private HorizontalLayout createHeaderRight() {
-		final HorizontalLayout layout = new HorizontalLayout();
-
-		final Button createBtn = new Button(
-				AppContext.getMessage(RiskI18nEnum.NEW_RISK_ACTION),
-				new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
-
-					@Override
-					public void buttonClick(final ClickEvent event) {
-						EventBus.getInstance().fireEvent(
-								new RiskEvent.GotoAdd(this, null));
-					}
-				});
-		createBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
-		createBtn.setIcon(MyCollabResource
-				.newResource("icons/16/addRecord.png"));
-		createBtn.setEnabled(CurrentProjectVariables
-				.canWrite(ProjectRolePermissionCollections.RISKS));
-
-		UiUtils.addComponent(layout, createBtn, Alignment.MIDDLE_RIGHT);
-
-		return layout;
 	}
 }
