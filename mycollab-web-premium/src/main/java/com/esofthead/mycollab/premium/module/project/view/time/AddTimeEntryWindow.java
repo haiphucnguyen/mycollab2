@@ -10,7 +10,6 @@ import java.util.List;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
-import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.ItemTimeLogging;
@@ -61,6 +60,7 @@ public class AddTimeEntryWindow extends Window implements
 
 	public AddTimeEntryWindow(TimeTrackingListView view) {
 		this.setModal(true);
+		this.setResizable(false);
 		this.parentView = view;
 		this.setCaption("Log time on this project");
 
@@ -148,14 +148,16 @@ public class AddTimeEntryWindow extends Window implements
 		saveBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
 		controlsLayout.addComponent(saveBtn);
 
-		Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL_LABEL), new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
+		Button cancelBtn = new Button(
+				AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL_LABEL),
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
 
-			@Override
-			public void buttonClick(ClickEvent event) {
-				AddTimeEntryWindow.this.close();
-			}
-		});
+					@Override
+					public void buttonClick(ClickEvent event) {
+						AddTimeEntryWindow.this.close();
+					}
+				});
 		cancelBtn.addStyleName(UIConstants.THEME_BLANK_LINK);
 		controlsLayout.addComponent(cancelBtn);
 
@@ -194,9 +196,10 @@ public class AddTimeEntryWindow extends Window implements
 			attachTaskBtn.addStyleName("task-attached");
 			attachTaskBtn.setWidth("500px");
 
-			attachTaskBtn.setDescription(new ProjectGenericTaskTooltipGenerator(
-					this.selectionTask.getType(), this.selectionTask
-							.getTypeId()).getContent());
+			attachTaskBtn
+					.setDescription(new ProjectGenericTaskTooltipGenerator(
+							this.selectionTask.getType(), this.selectionTask
+									.getTypeId()).getContent());
 			taskLayout.addComponent(attachTaskBtn);
 			this.selectionTask.getTypeId();
 		}
@@ -323,7 +326,7 @@ public class AddTimeEntryWindow extends Window implements
 
 	private ItemTimeLogging buildItemTimeLogging(String headerId,
 			Calendar calendar, SimpleProjectMember logForMember) {
-		Item timeEntries = (Item) timeInputTable.getItem("timeEntry");
+		Item timeEntries = timeInputTable.getItem("timeEntry");
 		Property<?> itemProperty = timeEntries.getItemProperty(headerId);
 		Double timeVal = (Double) itemProperty.getValue();
 		if (timeVal == null || timeVal == 0) {

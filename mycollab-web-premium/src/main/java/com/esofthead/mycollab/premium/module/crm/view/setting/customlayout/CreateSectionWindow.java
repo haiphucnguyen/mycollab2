@@ -17,10 +17,10 @@
 package com.esofthead.mycollab.premium.module.crm.view.setting.customlayout;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
-import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.form.view.builder.type.DynaSection;
 import com.esofthead.mycollab.form.view.builder.type.DynaSection.LayoutType;
 import com.esofthead.mycollab.module.crm.view.setting.ICrmCustomView;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -40,6 +40,7 @@ public class CreateSectionWindow extends Window {
 		super("New Section");
 		center();
 		this.setWidth("600px");
+		this.setResizable(false);
 
 		VerticalLayout contentLayout = new VerticalLayout();
 		contentLayout.setMargin(false);
@@ -87,8 +88,7 @@ public class CreateSectionWindow extends Window {
 		controlLayout.setComponentAlignment(saveBtn, Alignment.MIDDLE_LEFT);
 
 		Button cancelBtn = new Button(
-				AppContext
-						.getMessage(GenericI18Enum.BUTTON_CANCEL_LABEL),
+				AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL_LABEL),
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 

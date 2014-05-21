@@ -9,7 +9,6 @@ import org.vaadin.artur.icepush.ICEPush;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.utils.BeanUtility;
-import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.eventmanager.ApplicationEvent;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBus;
@@ -63,6 +62,7 @@ public abstract class CloudDriveIntegrationOAuthWindow extends Window {
 		super(title);
 		this.setWidth("420px");
 		this.setHeight("280px");
+		this.setResizable(false);
 		this.center();
 		constructBody();
 		registerListeners();
@@ -199,8 +199,7 @@ public abstract class CloudDriveIntegrationOAuthWindow extends Window {
 		controllGroupBtn.addComponent(doneBtn);
 
 		Button cancelBtn = new Button(
-				AppContext
-						.getMessage(GenericI18Enum.BUTTON_CANCEL_LABEL),
+				AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL_LABEL),
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 

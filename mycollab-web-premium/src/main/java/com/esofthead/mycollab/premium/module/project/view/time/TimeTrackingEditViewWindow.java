@@ -1,7 +1,6 @@
 package com.esofthead.mycollab.premium.module.project.view.time;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
-import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.project.domain.ProjectGenericTask;
 import com.esofthead.mycollab.module.project.domain.SimpleItemTimeLogging;
@@ -51,6 +50,7 @@ public class TimeTrackingEditViewWindow extends Window implements
 			SimpleItemTimeLogging itemInput) {
 		this.item = itemInput;
 		this.setModal(true);
+		this.setResizable(false);
 		this.parentView = view;
 
 		this.setCaption("Log time on this project");
@@ -131,15 +131,15 @@ public class TimeTrackingEditViewWindow extends Window implements
 		controlsLayout.addComponent(saveBtn);
 
 		Button cancelBtn = new Button(
-				AppContext
-						.getMessage(GenericI18Enum.BUTTON_CANCEL_LABEL), new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
+				AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL_LABEL),
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
 
-			@Override
-			public void buttonClick(ClickEvent event) {
-				TimeTrackingEditViewWindow.this.close();
-			}
-		});
+					@Override
+					public void buttonClick(ClickEvent event) {
+						TimeTrackingEditViewWindow.this.close();
+					}
+				});
 		cancelBtn.addStyleName(UIConstants.THEME_BLANK_LINK);
 		controlsLayout.addComponent(cancelBtn);
 
@@ -151,6 +151,7 @@ public class TimeTrackingEditViewWindow extends Window implements
 		this.center();
 	}
 
+	@Override
 	public void updateLinkTask(ProjectGenericTask selectionTask) {
 		this.selectionTask = selectionTask;
 		if (this.selectionTask != null) {

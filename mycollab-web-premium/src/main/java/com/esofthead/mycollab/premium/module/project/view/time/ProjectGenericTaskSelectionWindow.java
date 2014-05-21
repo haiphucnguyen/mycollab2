@@ -44,6 +44,7 @@ class ProjectGenericTaskSelectionWindow extends Window {
 			final AssignmentSelectableComp timeEntryWindow) {
 		super("Select Assignments");
 		this.center();
+		this.setResizable(false);
 		this.setWidth("800px");
 		VerticalLayout content = new VerticalLayout();
 		content.setMargin(true);

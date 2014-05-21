@@ -22,7 +22,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
-import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.billing.service.BillingService;
 import com.esofthead.mycollab.module.ecm.ResourceUtils;
@@ -317,6 +316,7 @@ public class BillingSummaryViewImpl extends AbstractPageView implements
 			this.chosenPlan = billingPlan;
 			this.addStyleName("updateplan-window");
 			this.setWidth("400px");
+			this.setResizable(false);
 
 			contentLayout = new VerticalLayout();
 			contentLayout.setSpacing(true);
@@ -358,7 +358,8 @@ public class BillingSummaryViewImpl extends AbstractPageView implements
 			HorizontalLayout controlBtns = new HorizontalLayout();
 			controlBtns.setSpacing(true);
 			controlBtns.setMargin(true);
-			final Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL_LABEL),
+			final Button cancelBtn = new Button(
+					AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL_LABEL),
 					new Button.ClickListener() {
 						private static final long serialVersionUID = 1L;
 
@@ -374,8 +375,7 @@ public class BillingSummaryViewImpl extends AbstractPageView implements
 					Alignment.MIDDLE_CENTER);
 
 			final Button saveBtn = new Button(
-					AppContext
-							.getMessage(GenericI18Enum.BUTTON_OK_LABEL),
+					AppContext.getMessage(GenericI18Enum.BUTTON_OK_LABEL),
 					new Button.ClickListener() {
 						private static final long serialVersionUID = 1L;
 
