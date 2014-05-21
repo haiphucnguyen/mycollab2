@@ -264,7 +264,7 @@ public class VMultiUpload extends SimplePanel implements Paintable {
 	 * @return
 	 */
 	private String serialize(VHtml5File file) {
-		int size = file.getSize();
+		double size = file.getSize();
 		String name = file.getName();
 		String type = file.getType();
 		return size + DELIM + name + DELIM + type + DELIM;

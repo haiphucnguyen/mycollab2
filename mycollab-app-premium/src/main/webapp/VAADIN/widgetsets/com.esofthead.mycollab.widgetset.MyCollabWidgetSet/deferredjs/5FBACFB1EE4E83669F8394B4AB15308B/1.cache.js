@@ -1,0 +1,1 @@
+$wnd.com_esofthead_mycollab_widgetset_MyCollabWidgetSet.runAsyncCallback1('mtb(1578,1,see);_.we=function Rxc(){Kic((!Fic&&(Fic=new Lic),Fic),this.b.e)};_Xd(ys)(1);\n//# sourceURL=com.esofthead.mycollab.widgetset.MyCollabWidgetSet-1.js\n')
