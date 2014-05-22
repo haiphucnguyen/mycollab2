@@ -5,6 +5,7 @@ import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.project.domain.ProjectGenericTask;
 import com.esofthead.mycollab.module.project.domain.SimpleItemTimeLogging;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
+import com.esofthead.mycollab.module.project.localization.TimeTrackingI18nEnum;
 import com.esofthead.mycollab.module.project.service.ItemTimeLoggingService;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberSelectionBox;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
@@ -49,6 +50,7 @@ public class TimeTrackingEditViewWindow extends Window implements
 	public TimeTrackingEditViewWindow(TimeTrackingListView view,
 			SimpleItemTimeLogging itemInput) {
 		this.item = itemInput;
+		this.setWidth("800px");
 		this.setModal(true);
 		this.setResizable(false);
 		this.parentView = view;
@@ -62,7 +64,8 @@ public class TimeTrackingEditViewWindow extends Window implements
 
 		projectMemberSelectionBox = new ProjectMemberSelectionBox();
 		projectMemberSelectionBox.setValue(this.item.getLoguser());
-		projectMemberSelectionBox.setCaption("Who:");
+		projectMemberSelectionBox.setCaption(AppContext
+				.getMessage(TimeTrackingI18nEnum.FORM_WHO));
 
 		isBillableCheckBox = new CheckBox();
 		isBillableCheckBox.setValue(this.item.getIsbillable());
@@ -70,26 +73,27 @@ public class TimeTrackingEditViewWindow extends Window implements
 		VerticalLayout content = new VerticalLayout();
 		content.setSpacing(true);
 		content.setMargin(true);
-		GridLayout grid = new GridLayout(4, 1);
-		grid.setMargin(new MarginInfo(false, false, true, false));
+		HorizontalLayout grid = new HorizontalLayout();
 		grid.setSpacing(true);
 
 		HorizontalLayout isBillable = new HorizontalLayout();
 		isBillable.setSpacing(true);
 		isBillable.setDefaultComponentAlignment(Alignment.BOTTOM_LEFT);
-		Label billableTitle = new Label("Is Billable:");
+		Label billableTitle = new Label(
+				AppContext.getMessage(TimeTrackingI18nEnum.FORM_IS_BILLABLE));
 		isBillable.addComponent(billableTitle);
 		isBillable.addComponent(isBillableCheckBox);
 		isBillable.setCaption("");
 
-		grid.addComponent(projectMemberSelectionBox, 0, 0);
-		grid.addComponent(dateField, 1, 0);
-		grid.addComponent(timeField, 2, 0);
-		grid.addComponent(isBillable, 3, 0);
+		grid.addComponent(projectMemberSelectionBox);
+		grid.addComponent(dateField);
+		grid.addComponent(timeField);
+		grid.addComponent(isBillable);
 
 		content.addComponent(grid);
 
-		Label descriptionLbl = new Label("Description");
+		Label descriptionLbl = new Label(
+				AppContext.getMessage(GenericI18Enum.FORM_DESCRIPTION));
 		content.addComponent(descriptionLbl);
 
 		descArea = new RichTextArea();
@@ -118,15 +122,17 @@ public class TimeTrackingEditViewWindow extends Window implements
 
 		HorizontalLayout controlsLayout = new HorizontalLayout();
 		controlsLayout.setSpacing(true);
-		Button saveBtn = new Button("Log time", new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
+		Button saveBtn = new Button(
+				AppContext.getMessage(TimeTrackingI18nEnum.LOG_TIME_ACTION),
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
 
-			@Override
-			public void buttonClick(ClickEvent event) {
-				saveTimeLoggingItems();
-				TimeTrackingEditViewWindow.this.close();
-			}
-		});
+					@Override
+					public void buttonClick(ClickEvent event) {
+						saveTimeLoggingItems();
+						TimeTrackingEditViewWindow.this.close();
+					}
+				});
 		saveBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
 		controlsLayout.addComponent(saveBtn);
 
@@ -158,7 +164,9 @@ public class TimeTrackingEditViewWindow extends Window implements
 			final String taskName = this.selectionTask.getName();
 			taskLayout.removeAllComponents();
 
-			Button detachTaskBtn = new Button("Detach",
+			Button detachTaskBtn = new Button(
+					AppContext
+							.getMessage(TimeTrackingI18nEnum.DETACH_TASK_ACTION),
 					new Button.ClickListener() {
 
 						private static final long serialVersionUID = 1L;
@@ -189,7 +197,8 @@ public class TimeTrackingEditViewWindow extends Window implements
 
 	private void createLinkTaskButton() {
 		taskLayout.removeAllComponents();
-		Button attachTaskBtn = new Button("Link with task",
+		Button attachTaskBtn = new Button(
+				AppContext.getMessage(TimeTrackingI18nEnum.LINK_TASK_ACTION),
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 

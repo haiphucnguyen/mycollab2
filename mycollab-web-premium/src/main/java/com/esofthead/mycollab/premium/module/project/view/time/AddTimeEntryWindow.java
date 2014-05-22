@@ -15,6 +15,7 @@ import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.ItemTimeLogging;
 import com.esofthead.mycollab.module.project.domain.ProjectGenericTask;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
+import com.esofthead.mycollab.module.project.localization.TimeTrackingI18nEnum;
 import com.esofthead.mycollab.module.project.service.ItemTimeLoggingService;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberSelectionBox;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
@@ -74,12 +75,17 @@ public class AddTimeEntryWindow extends Window implements
 		grid.setSpacing(true);
 		content.addComponent(grid);
 
-		grid.addComponent(new Label("Who:"), 0, 0);
-		grid.addComponent(new Label("Week:"), 1, 0);
+		grid.addComponent(
+				new Label(AppContext.getMessage(TimeTrackingI18nEnum.FORM_WHO)),
+				0, 0);
+		grid.addComponent(
+				new Label(AppContext.getMessage(TimeTrackingI18nEnum.FORM_WEEK)),
+				1, 0);
 		HorizontalLayout isBillable = new HorizontalLayout();
 		isBillable.setSpacing(true);
 		isBillable.setDefaultComponentAlignment(Alignment.BOTTOM_LEFT);
-		Label billableTitle = new Label("Is Billable:");
+		Label billableTitle = new Label(
+				AppContext.getMessage(TimeTrackingI18nEnum.FORM_IS_BILLABLE));
 		isBillable.addComponent(billableTitle);
 
 		projectMemberSelectionBox = new ProjectMemberSelectionBox();
@@ -120,7 +126,8 @@ public class AddTimeEntryWindow extends Window implements
 		updateTimeTableHeader();
 		content.addComponent(timeInputTable);
 
-		Label descriptionLbl = new Label("Description");
+		Label descriptionLbl = new Label(
+				AppContext.getMessage(GenericI18Enum.FORM_DESCRIPTION));
 		content.addComponent(descriptionLbl);
 
 		descArea = new RichTextArea();
@@ -136,15 +143,17 @@ public class AddTimeEntryWindow extends Window implements
 
 		HorizontalLayout controlsLayout = new HorizontalLayout();
 		controlsLayout.setSpacing(true);
-		Button saveBtn = new Button("Log time", new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
+		Button saveBtn = new Button(
+				AppContext.getMessage(TimeTrackingI18nEnum.LOG_TIME_ACTION),
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
 
-			@Override
-			public void buttonClick(ClickEvent event) {
-				saveTimeLoggingItems();
-				AddTimeEntryWindow.this.close();
-			}
-		});
+					@Override
+					public void buttonClick(ClickEvent event) {
+						saveTimeLoggingItems();
+						AddTimeEntryWindow.this.close();
+					}
+				});
 		saveBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
 		controlsLayout.addComponent(saveBtn);
 
@@ -176,7 +185,9 @@ public class AddTimeEntryWindow extends Window implements
 			final String taskName = this.selectionTask.getName();
 			taskLayout.removeAllComponents();
 
-			Button detachTaskBtn = new Button("Detach",
+			Button detachTaskBtn = new Button(
+					AppContext
+							.getMessage(TimeTrackingI18nEnum.DETACH_TASK_ACTION),
 					new Button.ClickListener() {
 
 						private static final long serialVersionUID = 1L;
@@ -208,7 +219,8 @@ public class AddTimeEntryWindow extends Window implements
 
 	private void createLinkTaskButton() {
 		taskLayout.removeAllComponents();
-		Button attachTaskBtn = new Button("Link with task",
+		Button attachTaskBtn = new Button(
+				AppContext.getMessage(TimeTrackingI18nEnum.LINK_TASK_ACTION),
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
@@ -233,32 +245,39 @@ public class AddTimeEntryWindow extends Window implements
 		Calendar calendar = new GregorianCalendar();
 		calendar.setTime(monday);
 
-		timeInputTable.setColumnHeader("Monday",
-				"Monday (" + simpleDateFormat.format(calendar.getTime()) + ")");
+		timeInputTable.setColumnHeader("Monday", AppContext.getMessage(
+				TimeTrackingI18nEnum.MONDAY_FIELD,
+				simpleDateFormat.format(calendar.getTime())));
 
 		calendar.add(Calendar.DAY_OF_YEAR, 1);
-		timeInputTable.setColumnHeader("Tuesday", "Tuesday ("
-				+ simpleDateFormat.format(calendar.getTime()) + ")");
+		timeInputTable.setColumnHeader("Tuesday", AppContext.getMessage(
+				TimeTrackingI18nEnum.SATURDAY_FIELD,
+				simpleDateFormat.format(calendar.getTime())));
 
 		calendar.add(Calendar.DAY_OF_YEAR, 1);
-		timeInputTable.setColumnHeader("Wednesday", "Wednesday ("
-				+ simpleDateFormat.format(calendar.getTime()) + ")");
+		timeInputTable.setColumnHeader("Wednesday", AppContext.getMessage(
+				TimeTrackingI18nEnum.WEDNESDAY_FIELD,
+				simpleDateFormat.format(calendar.getTime())));
 
 		calendar.add(Calendar.DAY_OF_YEAR, 1);
-		timeInputTable.setColumnHeader("Thursday", "Thursday ("
-				+ simpleDateFormat.format(calendar.getTime()) + ")");
+		timeInputTable.setColumnHeader("Thursday", AppContext.getMessage(
+				TimeTrackingI18nEnum.THURSDAY_FIELD,
+				simpleDateFormat.format(calendar.getTime())));
 
 		calendar.add(Calendar.DAY_OF_YEAR, 1);
-		timeInputTable.setColumnHeader("Friday",
-				"Friday (" + simpleDateFormat.format(calendar.getTime()) + ")");
+		timeInputTable.setColumnHeader("Friday", AppContext.getMessage(
+				TimeTrackingI18nEnum.FRIDAY_FIELD,
+				simpleDateFormat.format(calendar.getTime())));
 
 		calendar.add(Calendar.DAY_OF_YEAR, 1);
-		timeInputTable.setColumnHeader("Saturday", "Saturday ("
-				+ simpleDateFormat.format(calendar.getTime()) + ")");
+		timeInputTable.setColumnHeader("Saturday", AppContext.getMessage(
+				TimeTrackingI18nEnum.SATURDAY_FIELD,
+				simpleDateFormat.format(calendar.getTime())));
 
 		calendar.add(Calendar.DAY_OF_YEAR, 1);
-		timeInputTable.setColumnHeader("Sunday",
-				"Sunday (" + simpleDateFormat.format(calendar.getTime()) + ")");
+		timeInputTable.setColumnHeader("Sunday", AppContext.getMessage(
+				TimeTrackingI18nEnum.SUNDAY_FIELD,
+				simpleDateFormat.format(calendar.getTime())));
 
 	}
 

@@ -21,6 +21,12 @@ import com.esofthead.mycollab.module.tracker.service.VersionService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 4.0.0
+ * 
+ */
 public class ProjectGenericTaskTooltipGenerator {
 
 	private String html;
@@ -35,7 +41,7 @@ public class ProjectGenericTaskTooltipGenerator {
 		if (ProjectTypeConstants.TASK_LIST.equals(type)) {
 			ProjectTaskListService service = ApplicationContextUtil
 					.getSpringBean(ProjectTaskListService.class);
-			
+
 			SimpleTaskList taskList = service.findById(typeid, sAccountId);
 			html = ProjectTooltipGenerator.generateToolTipTaskList(taskList,
 					siteURL, timeZone);

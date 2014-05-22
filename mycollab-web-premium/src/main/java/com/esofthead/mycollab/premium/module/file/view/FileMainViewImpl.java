@@ -668,7 +668,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 						Alignment.MIDDLE_LEFT);
 
 				final Button cancelBtn = new Button(
-						AppContext.getMessage(GenericI18Enum.BUTTON_CLEAR));
+						AppContext.getMessage(GenericI18Enum.BUTTON_CLEAR_LABEL));
 
 				cancelBtn.addClickListener(new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
