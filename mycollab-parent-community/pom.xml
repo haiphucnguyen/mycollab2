@@ -9,7 +9,7 @@
     <version>4.1.0</version>
     <packaging>pom</packaging>
     <properties>
-        <springVersion>3.2.6.RELEASE</springVersion>
+        <springVersion>4.0.5.RELEASE</springVersion>
         <aspectjVersion>1.7.4</aspectjVersion>
         <javaVersion>1.7</javaVersion>
         <slf4jVersion>1.6.4</slf4jVersion>
@@ -90,6 +90,11 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
+            <version>${springVersion}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
             <version>${springVersion}</version>
         </dependency>
         <dependency>
