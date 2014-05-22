@@ -42,6 +42,7 @@ public class ProjectPreviewFormControlsGenerator<T> implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private final AdvancedPreviewBeanForm<T> previewForm;
+	private boolean hasAddBtn;
 	private Button addBtn;
 	private Button editBtn;
 	private Button deleteBtn;
@@ -83,10 +84,6 @@ public class ProjectPreviewFormControlsGenerator<T> implements Serializable {
 
 					@Override
 					public void buttonClick(ClickEvent event) {
-						/*
-						 * if (optionBtn.getPopupVisible())
-						 * optionBtn.setPopupVisible(false); else
-						 */
 						optionBtn.setPopupVisible(true);
 					}
 				});
@@ -100,23 +97,26 @@ public class ProjectPreviewFormControlsGenerator<T> implements Serializable {
 		popupButtonsControl.setMargin(new MarginInfo(false, true, false, true));
 		popupButtonsControl.setSpacing(true);
 
-		addBtn = new Button(
-				AppContext.getMessage(GenericI18Enum.BUTTON_ADD_LABEL),
-				new Button.ClickListener() {
+		if (hasAddBtn) {
+			addBtn = new Button(
+					AppContext.getMessage(GenericI18Enum.BUTTON_ADD_LABEL),
+					new Button.ClickListener() {
 
-					private static final long serialVersionUID = 1L;
+						private static final long serialVersionUID = 1L;
 
-					@Override
-					public void buttonClick(final ClickEvent event) {
-						optionBtn.setPopupVisible(false);
-						final T item = previewForm.getBean();
-						previewForm.fireAddForm(item);
-					}
-				});
-		addBtn.setIcon(MyCollabResource.newResource("icons/16/addRecord.png"));
-		addBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
-		editButtons.addComponent(addBtn);
-		editButtons.setComponentAlignment(addBtn, Alignment.MIDDLE_CENTER);
+						@Override
+						public void buttonClick(final ClickEvent event) {
+							optionBtn.setPopupVisible(false);
+							final T item = previewForm.getBean();
+							previewForm.fireAddForm(item);
+						}
+					});
+			addBtn.setIcon(MyCollabResource
+					.newResource("icons/16/addRecord.png"));
+			addBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+			editButtons.addComponent(addBtn);
+			editButtons.setComponentAlignment(addBtn, Alignment.MIDDLE_CENTER);
+		}
 
 		editBtn = new Button(
 				AppContext.getMessage(GenericI18Enum.BUTTON_EDIT_LABEL),
@@ -234,8 +234,6 @@ public class ProjectPreviewFormControlsGenerator<T> implements Serializable {
 		}
 
 		if (permissionItem != null) {
-			final boolean canRead = CurrentProjectVariables
-					.canRead(permissionItem);
 			final boolean canWrite = CurrentProjectVariables
 					.canWrite(permissionItem);
 			final boolean canAccess = CurrentProjectVariables

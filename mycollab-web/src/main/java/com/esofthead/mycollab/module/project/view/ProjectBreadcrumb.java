@@ -978,7 +978,8 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
 
 	public void gotoProjectEdit() {
 		this.select(0);
-		this.addLink(new Button("Edit"));
+		this.addLink(new Button(AppContext
+				.getMessage(GenericI18Enum.BUTTON_EDIT_LABEL)));
 		AppContext.addFragment(
 				"project/edit/" + UrlEncodeDecoder.encode(project.getId()),
 				"Edit Project: " + project.getName());

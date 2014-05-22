@@ -44,6 +44,7 @@ import com.esofthead.mycollab.module.project.domain.criteria.StandupReportSearch
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
+import com.esofthead.mycollab.module.project.localization.ProjectMemberI18nEnum;
 import com.esofthead.mycollab.module.project.view.AbstractProjectPageView;
 import com.esofthead.mycollab.module.project.view.bug.BugTableDisplay;
 import com.esofthead.mycollab.module.project.view.bug.BugTableFieldDef;
@@ -110,7 +111,8 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView
 	private ComponentContainer bottomPanel;
 
 	public ProjectMemberReadViewImpl() {
-		super("Member Detail", "user.png");
+		super(AppContext.getMessage(ProjectMemberI18nEnum.READ_VIEW_TITLE),
+				"user.png");
 
 		previewForm = initPreviewForm();
 
@@ -276,7 +278,9 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView
 			if (RegisterStatusConstants.SENT_VERIFICATION_EMAIL.equals(beanItem
 					.getStatus())) {
 				final VerticalLayout waitingNotLayout = new VerticalLayout();
-				Label infoStatus = new Label("Waiting for accept invitation");
+				Label infoStatus = new Label(
+						AppContext
+								.getMessage(ProjectMemberI18nEnum.WAITING_ACCEPT_INVITATION));
 				infoStatus.addStyleName("member-email");
 				waitingNotLayout.addComponent(infoStatus);
 
@@ -293,7 +297,8 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView
 										.updateByPrimaryKeySelective(beanItem);
 								waitingNotLayout.removeAllComponents();
 								Label statusEmail = new Label(
-										"Sending invitation email");
+										AppContext
+												.getMessage(ProjectMemberI18nEnum.SENDING_EMAIL_INVITATION));
 								statusEmail.addStyleName("member-email");
 								waitingNotLayout.addComponent(statusEmail);
 							}
@@ -311,7 +316,9 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView
 				memberInfo.addComponent(lastAccessTimeLbl);
 			} else if (RegisterStatusConstants.VERIFICATING.equals(beanItem
 					.getStatus())) {
-				Label infoStatus = new Label("Sending invitation email");
+				Label infoStatus = new Label(
+						AppContext
+								.getMessage(ProjectMemberI18nEnum.WAITING_ACCEPT_INVITATION));
 				infoStatus.addStyleName("member-email");
 				memberInfo.addComponent(infoStatus);
 			}
@@ -340,7 +347,6 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView
 
 		@Override
 		public boolean attachField(Object propertyId, Field<?> field) {
-			// TODO Auto-generated method stub
 			return false;
 		}
 
@@ -361,12 +367,12 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView
 			if (propertyId.equals("projectroleid")) {
 				if (attachForm.getBean().getIsadmin() != null
 						&& attachForm.getBean().getIsadmin() == Boolean.FALSE) {
-					FormLinkViewField roleLink = 
-					new FormLinkViewField(attachForm.getBean().getRoleName(),
-							ProjectLinkBuilder.generateRolePreviewFullLink(attachForm.getBean().getProjectid()
-									, attachForm
-									.getBean()
-									.getProjectroleid()),null);
+					FormLinkViewField roleLink = new FormLinkViewField(
+							attachForm.getBean().getRoleName(),
+							ProjectLinkBuilder.generateRolePreviewFullLink(
+									attachForm.getBean().getProjectid(),
+									attachForm.getBean().getProjectroleid()),
+							null);
 					return roleLink;
 				} else {
 					return new DefaultFormViewFieldFactory.FormViewField(
