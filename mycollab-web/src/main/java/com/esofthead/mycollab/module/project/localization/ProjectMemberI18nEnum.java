@@ -19,7 +19,6 @@ package com.esofthead.mycollab.module.project.localization;
 import ch.qos.cal10n.BaseName;
 import ch.qos.cal10n.Locale;
 import ch.qos.cal10n.LocaleData;
-import ch.qos.cal10n.util.Parser;
 
 @BaseName("localization/project/people")
 @LocaleData({ @Locale("en_US"), @Locale("ja_JP") })
