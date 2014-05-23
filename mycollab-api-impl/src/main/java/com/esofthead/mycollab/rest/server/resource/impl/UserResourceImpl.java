@@ -23,7 +23,7 @@ import javax.ws.rs.core.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.module.billing.service.BillingService;
@@ -31,7 +31,7 @@ import com.esofthead.mycollab.rest.server.resource.UserResource;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-@Component
+@Service
 public class UserResourceImpl implements UserResource {
 
 	private static Logger log = LoggerFactory.getLogger(UserResourceImpl.class);

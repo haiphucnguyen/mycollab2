@@ -394,16 +394,10 @@
     <dependent-module archiveName="mycollab-api.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mycollab-api/mycollab-api">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="resteasy-jaxrs-3.0.6.Final.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/jboss/resteasy/resteasy-jaxrs/3.0.6.Final/resteasy-jaxrs-3.0.6.Final.jar">
+    <dependent-module archiveName="resteasy-jaxrs-3.0.7.Final.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/jboss/resteasy/resteasy-jaxrs/3.0.7.Final/resteasy-jaxrs-3.0.7.Final.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="jaxrs-api-3.0.6.Final.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/jboss/resteasy/jaxrs-api/3.0.6.Final/jaxrs-api-3.0.6.Final.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="scannotation-1.0.3.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/scannotation/scannotation/1.0.3/scannotation-1.0.3.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="javassist-3.12.1.GA.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/javassist/javassist/3.12.1.GA/javassist-3.12.1.GA.jar">
+    <dependent-module archiveName="jaxrs-api-3.0.7.Final.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/jboss/resteasy/jaxrs-api/3.0.7.Final/jaxrs-api-3.0.7.Final.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="jboss-annotations-api_1.1_spec-1.0.1.Final.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/jboss/spec/javax/annotation/jboss-annotations-api_1.1_spec/1.0.1.Final/jboss-annotations-api_1.1_spec-1.0.1.Final.jar">
@@ -412,22 +406,22 @@
     <dependent-module archiveName="jcip-annotations-1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/net/jcip/jcip-annotations/1.0/jcip-annotations-1.0.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="resteasy-client-3.0.6.Final.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/jboss/resteasy/resteasy-client/3.0.6.Final/resteasy-client-3.0.6.Final.jar">
+    <dependent-module archiveName="resteasy-client-3.0.7.Final.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/jboss/resteasy/resteasy-client/3.0.7.Final/resteasy-client-3.0.7.Final.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="resteasy-servlet-initializer-3.0.6.Final.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/jboss/resteasy/resteasy-servlet-initializer/3.0.6.Final/resteasy-servlet-initializer-3.0.6.Final.jar">
+    <dependent-module archiveName="resteasy-servlet-initializer-3.0.7.Final.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/jboss/resteasy/resteasy-servlet-initializer/3.0.7.Final/resteasy-servlet-initializer-3.0.7.Final.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="async-http-servlet-3.0-3.0.6.Final.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/jboss/resteasy/async-http-servlet-3.0/3.0.6.Final/async-http-servlet-3.0-3.0.6.Final.jar">
+    <dependent-module archiveName="async-http-servlet-3.0-3.0.7.Final.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/jboss/resteasy/async-http-servlet-3.0/3.0.7.Final/async-http-servlet-3.0-3.0.7.Final.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="resteasy-spring-3.0.6.Final.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/jboss/resteasy/resteasy-spring/3.0.6.Final/resteasy-spring-3.0.6.Final.jar">
+    <dependent-module archiveName="resteasy-spring-3.0.7.Final.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/jboss/resteasy/resteasy-spring/3.0.7.Final/resteasy-spring-3.0.7.Final.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="resteasy-jettison-provider-3.0.6.Final.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/jboss/resteasy/resteasy-jettison-provider/3.0.6.Final/resteasy-jettison-provider-3.0.6.Final.jar">
+    <dependent-module archiveName="resteasy-jettison-provider-3.0.7.Final.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/jboss/resteasy/resteasy-jettison-provider/3.0.7.Final/resteasy-jettison-provider-3.0.7.Final.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="resteasy-jaxb-provider-3.0.6.Final.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/jboss/resteasy/resteasy-jaxb-provider/3.0.6.Final/resteasy-jaxb-provider-3.0.6.Final.jar">
+    <dependent-module archiveName="resteasy-jaxb-provider-3.0.7.Final.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/jboss/resteasy/resteasy-jaxb-provider/3.0.7.Final/resteasy-jaxb-provider-3.0.7.Final.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="jettison-1.3.2.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/codehaus/jettison/jettison/1.3.2/jettison-1.3.2.jar">
