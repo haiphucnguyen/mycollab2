@@ -23,14 +23,14 @@ import org.jboss.resteasy.annotations.Form;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.module.billing.service.BillingService;
 import com.esofthead.mycollab.rest.server.domain.SignupForm;
 import com.esofthead.mycollab.rest.server.resource.AccountResource;
 
-@Component
+@Service
 public class AccountResourceImpl implements AccountResource {
 	private static Logger log = LoggerFactory
 			.getLogger(AccountResourceImpl.class);
@@ -56,7 +56,8 @@ public class AccountResourceImpl implements AccountResource {
 		String siteUrl = SiteConfiguration.getSiteUrl(subdomain);
 		log.debug("Return site url {} to sign up user {}", siteUrl, email);
 
-		Response response = Response.status(200).entity(siteUrl).type(MediaType.TEXT_PLAIN_TYPE).build();
+		Response response = Response.status(200).entity(siteUrl)
+				.type(MediaType.TEXT_PLAIN_TYPE).build();
 		response.getHeaders().add("Access-Control-Allow-Origin", "*");
 		return response;
 	}
