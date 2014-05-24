@@ -32,7 +32,7 @@
     ============
     
     1. Download MyCollab - http://www.mycollab.com/pricing/download/
-    2. Follow installation guideline at here http://wiki.mycollab.com/Installation_Guideline
+    2. Follow installation guideline for here http://wiki.mycollab.com/Installation_Guideline
 
     If you need more MyCollab advanced configuration, please visit link http://wiki.mycollab.com/Configuration
  
