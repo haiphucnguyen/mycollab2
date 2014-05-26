@@ -89,10 +89,10 @@
   <classpathentry kind="src" path="/mycollab-services-ondemand"/>
   <classpathentry kind="src" path="/mycollab-services"/>
   <classpathentry kind="src" path="/mycollab-dao"/>
-  <classpathentry kind="var" path="M2_REPO/org/mybatis/mybatis/3.2.6/mybatis-3.2.6.jar" sourcepath="M2_REPO/org/mybatis/mybatis/3.2.6/mybatis-3.2.6-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/mybatis/mybatis/3.2.7/mybatis-3.2.7.jar" sourcepath="M2_REPO/org/mybatis/mybatis/3.2.7/mybatis-3.2.7-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/mybatis/mybatis-spring/1.2.2/mybatis-spring-1.2.2.jar" sourcepath="M2_REPO/org/mybatis/mybatis-spring/1.2.2/mybatis-spring-1.2.2-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/mybatis/scripting/mybatis-velocity/1.1/mybatis-velocity-1.1.jar" sourcepath="M2_REPO/org/mybatis/scripting/mybatis-velocity/1.1/mybatis-velocity-1.1-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/mysql/mysql-connector-java/5.1.29/mysql-connector-java-5.1.29.jar"/>
+  <classpathentry kind="var" path="M2_REPO/mysql/mysql-connector-java/5.1.30/mysql-connector-java-5.1.30.jar"/>
   <classpathentry kind="src" path="/mycollab-migration"/>
   <classpathentry kind="var" path="M2_REPO/org/flywaydb/flyway-core/3.0/flyway-core-3.0.jar" sourcepath="M2_REPO/org/flywaydb/flyway-core/3.0/flyway-core-3.0-sources.jar"/>
   <classpathentry kind="src" path="/mycollab-reporting"/>
@@ -118,13 +118,15 @@
   <classpathentry kind="var" path="M2_REPO/org/jboss/marshalling/jboss-marshalling-river/1.4.4.Final/jboss-marshalling-river-1.4.4.Final.jar" sourcepath="M2_REPO/org/jboss/marshalling/jboss-marshalling-river/1.4.4.Final/jboss-marshalling-river-1.4.4.Final-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/jboss/marshalling/jboss-marshalling/1.4.4.Final/jboss-marshalling-1.4.4.Final.jar" sourcepath="M2_REPO/org/jboss/marshalling/jboss-marshalling/1.4.4.Final/jboss-marshalling-1.4.4.Final-sources.jar"/>
   <classpathentry kind="src" path="/mycollab-jackrabbit"/>
-  <classpathentry kind="var" path="M2_REPO/org/apache/jackrabbit/jackrabbit-core/2.6.5/jackrabbit-core-2.6.5.jar" sourcepath="M2_REPO/org/apache/jackrabbit/jackrabbit-core/2.6.5/jackrabbit-core-2.6.5-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/apache/jackrabbit/jackrabbit-core/2.8.0/jackrabbit-core-2.8.0.jar" sourcepath="M2_REPO/org/apache/jackrabbit/jackrabbit-core/2.8.0/jackrabbit-core-2.8.0-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/concurrent/concurrent/1.3.4/concurrent-1.3.4.jar" sourcepath="M2_REPO/concurrent/concurrent/1.3.4/concurrent-1.3.4-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/commons-dbcp/commons-dbcp/1.3/commons-dbcp-1.3.jar" sourcepath="M2_REPO/commons-dbcp/commons-dbcp/1.3/commons-dbcp-1.3-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/commons-pool/commons-pool/1.5.4/commons-pool-1.5.4.jar" sourcepath="M2_REPO/commons-pool/commons-pool/1.5.4/commons-pool-1.5.4-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/apache/jackrabbit/jackrabbit-api/2.6.5/jackrabbit-api-2.6.5.jar" sourcepath="M2_REPO/org/apache/jackrabbit/jackrabbit-api/2.6.5/jackrabbit-api-2.6.5-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/apache/jackrabbit/jackrabbit-jcr-commons/2.6.5/jackrabbit-jcr-commons-2.6.5.jar" sourcepath="M2_REPO/org/apache/jackrabbit/jackrabbit-jcr-commons/2.6.5/jackrabbit-jcr-commons-2.6.5-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/apache/jackrabbit/jackrabbit-spi-commons/2.6.5/jackrabbit-spi-commons-2.6.5.jar" sourcepath="M2_REPO/org/apache/jackrabbit/jackrabbit-spi-commons/2.6.5/jackrabbit-spi-commons-2.6.5-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/apache/jackrabbit/jackrabbit-api/2.8.0/jackrabbit-api-2.8.0.jar" sourcepath="M2_REPO/org/apache/jackrabbit/jackrabbit-api/2.8.0/jackrabbit-api-2.8.0-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/apache/jackrabbit/jackrabbit-jcr-commons/2.8.0/jackrabbit-jcr-commons-2.8.0.jar" sourcepath="M2_REPO/org/apache/jackrabbit/jackrabbit-jcr-commons/2.8.0/jackrabbit-jcr-commons-2.8.0-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/apache/jackrabbit/jackrabbit-data/2.8.0/jackrabbit-data-2.8.0.jar" sourcepath="M2_REPO/org/apache/jackrabbit/jackrabbit-data/2.8.0/jackrabbit-data-2.8.0-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/apache/jackrabbit/jackrabbit-data/2.8.0/jackrabbit-data-2.8.0-tests.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/apache/jackrabbit/jackrabbit-spi-commons/2.8.0/jackrabbit-spi-commons-2.8.0.jar" sourcepath="M2_REPO/org/apache/jackrabbit/jackrabbit-spi-commons/2.8.0/jackrabbit-spi-commons-2.8.0-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/apache/jackrabbit/jackrabbit-spi/2.8.0/jackrabbit-spi-2.8.0.jar" sourcepath="M2_REPO/org/apache/jackrabbit/jackrabbit-spi/2.8.0/jackrabbit-spi-2.8.0-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/apache/lucene/lucene-core/3.6.0/lucene-core-3.6.0.jar" sourcepath="M2_REPO/org/apache/lucene/lucene-core/3.6.0/lucene-core-3.6.0-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/commons-codec/commons-codec/1.9/commons-codec-1.9.jar" sourcepath="M2_REPO/commons-codec/commons-codec/1.9/commons-codec-1.9-sources.jar"/>
@@ -188,9 +190,9 @@
   <classpathentry kind="var" path="M2_REPO/com/lexaden/components/organisationchart/1.7.1/organisationchart-1.7.1.jar" sourcepath="M2_REPO/com/lexaden/components/organisationchart/1.7.1/organisationchart-1.7.1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/google/gwt/google-apis/gwt-visualization/1.1.2/gwt-visualization-1.1.2.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/esofthead/vaadin/popupbutton/1.0.0-SNAPSHOT/popupbutton-1.0.0-SNAPSHOT.jar" sourcepath="M2_REPO/com/esofthead/vaadin/popupbutton/1.0.0-SNAPSHOT/popupbutton-1.0.0-SNAPSHOT-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/tltv/gantt/gantt/0.2.2-SNAPSHOT/gantt-0.2.2-SNAPSHOT.jar" sourcepath="M2_REPO/org/tltv/gantt/gantt/0.2.2-SNAPSHOT/gantt-0.2.2-SNAPSHOT-sources.jar">
+  <classpathentry kind="var" path="M2_REPO/org/tltv/gantt/gantt-addon/0.3.0/gantt-addon-0.3.0.jar" sourcepath="M2_REPO/org/tltv/gantt/gantt-addon/0.3.0/gantt-addon-0.3.0-sources.jar">
     <attributes>
-      <attribute value="jar:file:/Users/haiphucnguyen/.m2/repository/org/tltv/gantt/gantt/0.2.2-SNAPSHOT/gantt-0.2.2-SNAPSHOT-javadoc.jar!/" name="javadoc_location"/>
+      <attribute value="jar:file:/Users/haiphucnguyen/.m2/repository/org/tltv/gantt/gantt-addon/0.3.0/gantt-addon-0.3.0-javadoc.jar!/" name="javadoc_location"/>
     </attributes>
   </classpathentry>
   <classpathentry kind="var" path="M2_REPO/org/vaadin/addon/confirmdialog/2.0.4/confirmdialog-2.0.4.jar"/>
@@ -207,17 +209,10 @@
   <classpathentry kind="var" path="M2_REPO/org/apache/xmlgraphics/batik-awt-util/1.7/batik-awt-util-1.7.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/apache/xmlgraphics/batik-util/1.7/batik-util-1.7.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/scribe/scribe/1.3.5/scribe-1.3.5.jar" sourcepath="M2_REPO/org/scribe/scribe/1.3.5/scribe-1.3.5-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/com/h2database/h2/1.4.177/h2-1.4.177.jar" sourcepath="M2_REPO/com/h2database/h2/1.4.177/h2-1.4.177-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/info/bliki/wiki/bliki-core/3.0.19/bliki-core-3.0.19.jar" sourcepath="M2_REPO/info/bliki/wiki/bliki-core/3.0.19/bliki-core-3.0.19-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/apache/commons/commons-compress/1.4.1/commons-compress-1.4.1.jar" sourcepath="M2_REPO/org/apache/commons/commons-compress/1.4.1/commons-compress-1.4.1-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/tukaani/xz/1.0/xz-1.0.jar" sourcepath="M2_REPO/org/tukaani/xz/1.0/xz-1.0-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/uk/com/robust-it/cloning/1.9.0/cloning-1.9.0.jar" sourcepath="M2_REPO/uk/com/robust-it/cloning/1.9.0/cloning-1.9.0-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/objenesis/objenesis/1.2/objenesis-1.2.jar" sourcepath="M2_REPO/org/objenesis/objenesis/1.2/objenesis-1.2-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/apache/poi/poi/3.9/poi-3.9.jar" sourcepath="M2_REPO/org/apache/poi/poi/3.9/poi-3.9-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/fr/xebia/web/xebia-servlet-extras/1.0.8/xebia-servlet-extras-1.0.8.jar" sourcepath="M2_REPO/fr/xebia/web/xebia-servlet-extras/1.0.8/xebia-servlet-extras-1.0.8-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/com/maxmind/geoip2/geoip2/0.7.0/geoip2-0.7.0.jar" sourcepath="M2_REPO/com/maxmind/geoip2/geoip2/0.7.0/geoip2-0.7.0-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/com/maxmind/db/maxmind-db/0.3.1/maxmind-db-0.3.1.jar" sourcepath="M2_REPO/com/maxmind/db/maxmind-db/0.3.1/maxmind-db-0.3.1-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/com/google/http-client/google-http-client/1.17.0-rc/google-http-client-1.17.0-rc.jar" sourcepath="M2_REPO/com/google/http-client/google-http-client/1.17.0-rc/google-http-client-1.17.0-rc-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/googlecode/ez-vcard/ez-vcard/0.8.2/ez-vcard-0.8.2.jar" sourcepath="M2_REPO/com/googlecode/ez-vcard/ez-vcard/0.8.2/ez-vcard-0.8.2-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/freemarker/freemarker/2.3.19/freemarker-2.3.19.jar" sourcepath="M2_REPO/org/freemarker/freemarker/2.3.19/freemarker-2.3.19-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/net/sf/opencsv/opencsv/2.0/opencsv-2.0.jar" sourcepath="M2_REPO/net/sf/opencsv/opencsv/2.0/opencsv-2.0-sources.jar"/>

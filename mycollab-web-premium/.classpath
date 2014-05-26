@@ -75,7 +75,7 @@
   <classpathentry kind="var" path="M2_REPO/org/jsoup/jsoup/1.7.3/jsoup-1.7.3.jar" sourcepath="M2_REPO/org/jsoup/jsoup/1.7.3/jsoup-1.7.3-sources.jar"/>
   <classpathentry kind="src" path="/mycollab-ui"/>
   <classpathentry kind="src" path="/mycollab-dao"/>
-  <classpathentry kind="var" path="M2_REPO/org/mybatis/mybatis/3.2.7/mybatis-3.2.7.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/mybatis/mybatis/3.2.7/mybatis-3.2.7.jar" sourcepath="M2_REPO/org/mybatis/mybatis/3.2.7/mybatis-3.2.7-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/mybatis/mybatis-spring/1.2.2/mybatis-spring-1.2.2.jar" sourcepath="M2_REPO/org/mybatis/mybatis-spring/1.2.2/mybatis-spring-1.2.2-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/mybatis/scripting/mybatis-velocity/1.1/mybatis-velocity-1.1.jar" sourcepath="M2_REPO/org/mybatis/scripting/mybatis-velocity/1.1/mybatis-velocity-1.1-sources.jar"/>
   <classpathentry kind="src" path="/mycollab-services"/>
@@ -107,15 +107,15 @@
   <classpathentry kind="var" path="M2_REPO/org/jboss/marshalling/jboss-marshalling-river/1.4.4.Final/jboss-marshalling-river-1.4.4.Final.jar" sourcepath="M2_REPO/org/jboss/marshalling/jboss-marshalling-river/1.4.4.Final/jboss-marshalling-river-1.4.4.Final-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/jboss/marshalling/jboss-marshalling/1.4.4.Final/jboss-marshalling-1.4.4.Final.jar" sourcepath="M2_REPO/org/jboss/marshalling/jboss-marshalling/1.4.4.Final/jboss-marshalling-1.4.4.Final-sources.jar"/>
   <classpathentry kind="src" path="/mycollab-jackrabbit"/>
-  <classpathentry kind="var" path="M2_REPO/org/apache/jackrabbit/jackrabbit-core/2.8.0/jackrabbit-core-2.8.0.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/apache/jackrabbit/jackrabbit-core/2.8.0/jackrabbit-core-2.8.0.jar" sourcepath="M2_REPO/org/apache/jackrabbit/jackrabbit-core/2.8.0/jackrabbit-core-2.8.0-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/concurrent/concurrent/1.3.4/concurrent-1.3.4.jar" sourcepath="M2_REPO/concurrent/concurrent/1.3.4/concurrent-1.3.4-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/commons-dbcp/commons-dbcp/1.3/commons-dbcp-1.3.jar" sourcepath="M2_REPO/commons-dbcp/commons-dbcp/1.3/commons-dbcp-1.3-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/commons-pool/commons-pool/1.5.4/commons-pool-1.5.4.jar" sourcepath="M2_REPO/commons-pool/commons-pool/1.5.4/commons-pool-1.5.4-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/apache/jackrabbit/jackrabbit-api/2.8.0/jackrabbit-api-2.8.0.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/apache/jackrabbit/jackrabbit-jcr-commons/2.8.0/jackrabbit-jcr-commons-2.8.0.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/apache/jackrabbit/jackrabbit-data/2.8.0/jackrabbit-data-2.8.0.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/apache/jackrabbit/jackrabbit-api/2.8.0/jackrabbit-api-2.8.0.jar" sourcepath="M2_REPO/org/apache/jackrabbit/jackrabbit-api/2.8.0/jackrabbit-api-2.8.0-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/apache/jackrabbit/jackrabbit-jcr-commons/2.8.0/jackrabbit-jcr-commons-2.8.0.jar" sourcepath="M2_REPO/org/apache/jackrabbit/jackrabbit-jcr-commons/2.8.0/jackrabbit-jcr-commons-2.8.0-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/apache/jackrabbit/jackrabbit-data/2.8.0/jackrabbit-data-2.8.0.jar" sourcepath="M2_REPO/org/apache/jackrabbit/jackrabbit-data/2.8.0/jackrabbit-data-2.8.0-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/apache/jackrabbit/jackrabbit-data/2.8.0/jackrabbit-data-2.8.0-tests.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/apache/jackrabbit/jackrabbit-spi-commons/2.8.0/jackrabbit-spi-commons-2.8.0.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/apache/jackrabbit/jackrabbit-spi-commons/2.8.0/jackrabbit-spi-commons-2.8.0.jar" sourcepath="M2_REPO/org/apache/jackrabbit/jackrabbit-spi-commons/2.8.0/jackrabbit-spi-commons-2.8.0-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/apache/jackrabbit/jackrabbit-spi/2.8.0/jackrabbit-spi-2.8.0.jar" sourcepath="M2_REPO/org/apache/jackrabbit/jackrabbit-spi/2.8.0/jackrabbit-spi-2.8.0-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/apache/lucene/lucene-core/3.6.0/lucene-core-3.6.0.jar" sourcepath="M2_REPO/org/apache/lucene/lucene-core/3.6.0/lucene-core-3.6.0-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/commons-codec/commons-codec/1.9/commons-codec-1.9.jar" sourcepath="M2_REPO/commons-codec/commons-codec/1.9/commons-codec-1.9-sources.jar"/>
