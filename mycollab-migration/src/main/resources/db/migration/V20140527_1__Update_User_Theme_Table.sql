@@ -12,8 +12,8 @@ ADD COLUMN `clearBtnText` VARCHAR(6) NULL AFTER `clearBtn`,
 ADD COLUMN `controlBtn` VARCHAR(6) NULL AFTER `clearBtnText`,
 ADD COLUMN `controlBtnText` VARCHAR(6) NULL AFTER `controlBtn`,
 ADD COLUMN `dangerBtn` VARCHAR(6) NULL AFTER `controlBtnText`,
-ADD COLUMN `dangerBtnText` VARCHAR(6) NULL AFTER `dangerBtn`;
+ADD COLUMN `dangerBtnText` VARCHAR(6) NULL AFTER `dangerBtn`,
 ADD COLUMN `toggleBtn` VARCHAR(6) NULL AFTER `dangerBtnText`,
-ADD COLUMN `toggleBtnSelected` VARCHAR(6) NULL AFTER `toggleBtn`;
+ADD COLUMN `toggleBtnSelected` VARCHAR(6) NULL AFTER `toggleBtn`,
 ADD COLUMN `toggleBtnText` VARCHAR(6) NULL AFTER `toggleBtnSelected`,
 ADD COLUMN `toggleBtnTextSelected` VARCHAR(6) NULL AFTER `toggleBtnText`;
