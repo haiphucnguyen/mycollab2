@@ -100,18 +100,209 @@ public class ThemeManager {
 
 		/* Tabsheet */
 
-		// if (userTheme.getTopmenubg() != null) {
-		// Page.getCurrent()
-		// .getStyles()
-		// .add("#topNavigation { background-color: #"
-		// + userTheme.getTopmenubg() + "; }");
-		// }
-		//
-		// if (userTheme.getTopmenubg() != null) {
-		// Page.getCurrent()
-		// .getStyles()
-		// .add("#topNavigation { background-color: #"
-		// + userTheme.getTopmenubg() + "; }");
-		// }
+		if (accountTheme.getTabsheetbg() != null) {
+			Page.getCurrent()
+					.getStyles()
+					.add(".tab-style3 > .v-tabsheet-tabcontainer > .v-tabsheet-tabs > tbody > tr > .v-tabsheet-tabitemcell > .v-tabsheet-tabitem { background-color: #"
+							+ accountTheme.getTabsheetbg() + "; }");
+		}
+
+		if (accountTheme.getTabsheetbgselected() != null) {
+			Page.getCurrent()
+					.getStyles()
+					.add(".tab-style3 > .v-tabsheet-tabcontainer > .v-tabsheet-tabs > tbody > tr > .v-tabsheet-tabitemcell.v-tabsheet-tabitemcell-selected > .v-tabsheet-tabitem { background-color: #"
+							+ accountTheme.getTabsheetbgselected() + "; }");
+		}
+
+		if (accountTheme.getTabsheettext() != null) {
+			Page.getCurrent()
+					.getStyles()
+					.add(".tab-style3 > .v-tabsheet-tabcontainer > .v-tabsheet-tabs > tbody > tr > .v-tabsheet-tabitemcell > .v-tabsheet-tabitem .v-caption .v-captiontext { color: #"
+							+ accountTheme.getTabsheettext() + "; }");
+		}
+
+		if (accountTheme.getTabsheettextselected() != null) {
+			Page.getCurrent()
+					.getStyles()
+					.add(".tab-style3 > .v-tabsheet-tabcontainer > .v-tabsheet-tabs > tbody > tr > .v-tabsheet-tabitemcell > .v-tabsheet-tabitem.v-tabsheet-tabitem-selected .v-caption .v-captiontext { color: #"
+							+ accountTheme.getTabsheettextselected() + "; }");
+		}
+
+		/* Horizontal Top Menu */
+
+		if (accountTheme.getHtopmenubg() != null) {
+			Page.getCurrent()
+					.getStyles()
+					.add(".h-sidebar-menu, .projectfeed-hdr-wrapper { background-color: #"
+							+ accountTheme.getHtopmenubg() + "; }");
+		}
+
+		if (accountTheme.getHtopmenubgselected() != null) {
+			Page.getCurrent()
+					.getStyles()
+					.add(".h-sidebar-menu .v-button.v-button-link.isSelected { background-color: #"
+							+ accountTheme.getHtopmenubgselected() + "; }");
+		}
+
+		if (accountTheme.getHtopmenutext() != null) {
+			Page.getCurrent()
+					.getStyles()
+					.add(".h-sidebar-menu .v-button.v-button-link:focus .v-button-caption, .h-sidebar-menu .v-button.v-button-link:active .v-button-caption { color: #"
+							+ accountTheme.getHtopmenutext() + "; }");
+		}
+
+		if (accountTheme.getHtopmenutextselected() != null) {
+			Page.getCurrent()
+					.getStyles()
+					.add(".h-sidebar-menu .v-button.v-button-link.isSelected .v-button-caption, .h-sidebar-menu .v-button.v-button-link.isSelected .v-button-caption:hover { color: #"
+							+ accountTheme.getHtopmenutextselected() + "; }");
+		}
+
+		/* Action Buttons */
+
+		if (accountTheme.getActionbtn() != null) {
+			Page.getCurrent()
+					.getStyles()
+					.add(".v-button.v-button-greenbtn, .v-button-greenbtn:focus { background-color: #"
+							+ accountTheme.getActionbtn()
+							+ "; border-color: #"
+							+ getBorderColor(accountTheme.getActionbtn())
+							+ "; }");
+		}
+
+		if (accountTheme.getActionbtntext() != null) {
+			Page.getCurrent()
+					.getStyles()
+					.add(".v-button.v-button-greenbtn, .v-button-greenbtn:focus { color: #"
+							+ accountTheme.getActionbtntext() + "; }");
+		}
+
+		/* Control Buttons */
+
+		if (accountTheme.getControlbtn() != null) {
+			Page.getCurrent()
+					.getStyles()
+					.add(".v-button.v-button-brownbtn, .v-button-brownbtn:focus { background-color: #"
+							+ accountTheme.getControlbtn()
+							+ "; border-color: #"
+							+ getBorderColor(accountTheme.getControlbtn())
+							+ "; }");
+		}
+
+		if (accountTheme.getControlbtntext() != null) {
+			Page.getCurrent()
+					.getStyles()
+					.add(".v-button.v-button-brownbtn, .v-button-brownbtn:focus { color: #"
+							+ accountTheme.getControlbtntext() + "; }");
+		}
+
+		/* Option Buttons */
+
+		if (accountTheme.getOptionbtn() != null) {
+			Page.getCurrent()
+					.getStyles()
+					.add(".v-button.v-button-graybtn, .v-button-graybtn:focus { background-color: #"
+							+ accountTheme.getOptionbtn()
+							+ "; border-color: #"
+							+ getBorderColor(accountTheme.getOptionbtn())
+							+ "; }");
+		}
+
+		if (accountTheme.getOptionbtntext() != null) {
+			Page.getCurrent()
+					.getStyles()
+					.add(".v-button.v-button-graybtn, .v-button-graybtn:focus { color: #"
+							+ accountTheme.getOptionbtntext() + "; }");
+		}
+
+		/* Danger Buttons */
+
+		if (accountTheme.getDangerbtn() != null) {
+			Page.getCurrent()
+					.getStyles()
+					.add(".v-button.v-button-redbtn, .v-button-redbtn:focus { background-color: #"
+							+ accountTheme.getDangerbtn()
+							+ "; border-color: #"
+							+ getBorderColor(accountTheme.getDangerbtn())
+							+ "; }");
+		}
+
+		if (accountTheme.getDangerbtntext() != null) {
+			Page.getCurrent()
+					.getStyles()
+					.add(".v-button.v-button-redbtn, .v-button-redbtn:focus { color: #"
+							+ accountTheme.getDangerbtntext() + "; }");
+		}
+
+		/* Clear Buttons */
+
+		if (accountTheme.getClearbtn() != null) {
+			Page.getCurrent()
+					.getStyles()
+					.add(".v-button.v-button-blankbtn, .v-button-blankbtn:focus { background-color: #"
+							+ accountTheme.getClearbtn()
+							+ "; border-color: #"
+							+ getBorderColor(accountTheme.getClearbtn())
+							+ "; }");
+		}
+
+		if (accountTheme.getClearbtntext() != null) {
+			Page.getCurrent()
+					.getStyles()
+					.add(".v-button.v-button-blankbtn, .v-button-blankbtn:focus { color: #"
+							+ accountTheme.getClearbtntext() + "; }");
+		}
+
+		/* Toggle Buttons */
+
+		if (accountTheme.getTogglebtn() != null) {
+			Page.getCurrent()
+					.getStyles()
+					.add(".v-buttongroup.toggle-btn-group .v-button { background-color: #"
+							+ accountTheme.getTogglebtn()
+							+ "; border-color: #"
+							+ getBorderColor(accountTheme.getTogglebtn())
+							+ "; }");
+		}
+
+		if (accountTheme.getTogglebtntext() != null) {
+			Page.getCurrent()
+					.getStyles()
+					.add(".v-buttongroup.toggle-btn-group .v-button { color: #"
+							+ accountTheme.getTogglebtntext() + "; }");
+		}
+
+		if (accountTheme.getTogglebtnselected() != null) {
+			Page.getCurrent()
+					.getStyles()
+					.add(".v-button.v-button-bluebtn, .v-button-bluebtn:focus, .v-buttongroup.toggle-btn-group .v-button.active { background-color: #"
+							+ accountTheme.getTogglebtnselected()
+							+ "; border-color: #"
+							+ getBorderColor(accountTheme
+									.getTogglebtnselected()) + "; }");
+		}
+
+		if (accountTheme.getTogglebtntextselected() != null) {
+			Page.getCurrent()
+					.getStyles()
+					.add(".v-button.v-button-bluebtn, .v-button-bluebtn:focus, .v-buttongroup.toggle-btn-group .v-button.active { color: #"
+							+ accountTheme.getTogglebtntextselected() + "; }");
+		}
+
 	}
+
+	private static String getBorderColor(String bgColor) {
+
+		// convert to decimal and change luminosity
+		String rgb = "";
+		Long c;
+		for (int i = 0; i < 3; i++) {
+			c = Long.valueOf(bgColor.substring(i * 2, i * 2 + 2), 16);
+			c = Math.round(Math.min(Math.max(0, c - (c * 0.2)), 255));
+			rgb += Long.toHexString(c.longValue());
+		}
+
+		return rgb;
+	}
+
 }
