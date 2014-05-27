@@ -2,7 +2,7 @@
     About MyCollab
     ==============
     
-    MyCollab is a Collaboration Platform, Project Management System, Customer Management
+    MyCollab is a Collaboration Platform of Project Management System, Customer Management
     and Document Management.
 
     MyCollab is licensed under the Affero GPL 3 license.
@@ -14,7 +14,8 @@
       * http://wiki.mycollab.com/
     
     Contact the MyCollab team at:
-      * You contact us via email support@mycollab.com or our web form https://www.mycollab.com/support/
+      * Our email support@mycollab.com
+      * Our web form https://www.mycollab.com/support/
     
     
     System requirements
@@ -24,7 +25,7 @@
     in PATH environment and MySQL (InnoDB support recommended).
 
     
-    Please have a look at our requirements here:
+    Please have a look at MyCollab requirements:
       http://wiki.mycollab.com/Installation_Guideline#System_Requirements
 
 
@@ -32,11 +33,11 @@
     ============
     
     1. Download MyCollab - http://www.mycollab.com/pricing/download/
-    2. Follow installation guideline for here http://wiki.mycollab.com/Installation_Guideline
+    2. Follow installation guideline at http://wiki.mycollab.com/Installation_Guideline
 
-    If you need more MyCollab advanced configuration, please visit link http://wiki.mycollab.com/Configuration
+    If you need to understand more MyCollab advanced configuration settings, please visit link http://wiki.mycollab.com/Configuration
  
-    You should be finished in a matter of minutes.
+    You will finish reading and understanding in a matter of minutes.
     
     Changelog from MyCollab 4.1.0
     =============================

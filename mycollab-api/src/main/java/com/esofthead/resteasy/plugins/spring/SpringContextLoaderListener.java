@@ -7,6 +7,12 @@ import org.jboss.resteasy.plugins.spring.SpringContextLoaderSupport;
 import org.springframework.web.context.ConfigurableWebApplicationContext;
 import org.springframework.web.context.ContextLoaderListener;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 4.1.1
+ * 
+ */
 public class SpringContextLoaderListener extends ContextLoaderListener {
 
 	private SpringContextLoaderSupport springContextLoaderSupport = new SpringContextLoaderSupport();
