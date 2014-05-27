@@ -1862,9 +1862,6 @@ input.v-textfield-errorField {
     padding-bottom: 0;
 }
 
-.navigator-wrap {
-    background-color: #7B7B7B;
-}
 .projectDashboardView .navigator-wrap .project-list-comp {
     padding: 13px 7px 0px;
 }
@@ -6298,8 +6295,8 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
     /* border-bottom: 1px solid #CFCFCF; */
 }
 .tab-style3 > .v-tabsheet-tabcontainer > .v-tabsheet-tabs > tbody > tr > .v-tabsheet-tabitemcell > .v-tabsheet-tabitem {
-    background: url(icons/tab-bg.jpg) repeat-x scroll left bottom #F7F7F7;
-    border-width: 0px 1px 0px 0px;
+    background: none repeat-x scroll left bottom #F7F7F7;
+    border-width: 0px 1px 1px 0px;
     border-style: solid;
     border-color: #CFCFCF;
     position: relative;
@@ -6317,9 +6314,15 @@ div.v-button-link.buttonPagingcurrent,div.v-button-link.buttonPaging:hover
     color: rgb(94, 94, 94);
 } 
 .tab-style3 > .v-tabsheet-tabcontainer > .v-tabsheet-tabs > tbody > tr > .v-tabsheet-tabitemcell.v-tabsheet-tabitemcell-selected > .v-tabsheet-tabitem {
-    background: url(icons/tab-bg-selected.jpg) repeat-x scroll left bottom #1c7dce;
+    background: none repeat-x scroll left bottom #1c7dce;
 }
-.tab-style3 > .v-tabsheet-tabcontainer > .v-tabsheet-tabs > tbody > tr > .v-tabsheet-tabitemcell > .v-tabsheet-tabitem-selected .v-caption {
+.tab-style3 > .v-tabsheet-tabcontainer > .v-tabsheet-tabs > tbody > tr > .v-tabsheet-tabitemcell > .v-tabsheet-tabitem-selected .v-caption:after {
+	content: "";
+	position: absolute;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+	height: 8px;
     background: url(icons/tab-selected-indicator.png) no-repeat center bottom transparent;
     cursor: pointer;
 }
