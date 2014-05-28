@@ -24,7 +24,7 @@ import com.vaadin.server.Page;
 /**
  * 
  * @author MyCollab Ltd.
- * @since 4.1
+ * @since 4.1.2
  * 
  */
 public class ThemeManager {

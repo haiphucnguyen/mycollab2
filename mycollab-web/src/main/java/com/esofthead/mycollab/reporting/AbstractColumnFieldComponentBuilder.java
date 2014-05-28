@@ -40,7 +40,5 @@ public abstract class AbstractColumnFieldComponentBuilder implements
 		return fieldName;
 	}
 
-
-
 	public abstract ComponentBuilder getComponentBuilder();
 }
