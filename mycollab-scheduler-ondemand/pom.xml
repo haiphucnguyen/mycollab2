@@ -33,10 +33,5 @@
             <artifactId>mycollab-scheduler</artifactId>
             <version>4.1.1</version>
         </dependency>
-        <dependency>
-            <groupId>com.esofthead.mycollab</groupId>
-            <artifactId>mycollab-extra-lib</artifactId>
-            <version>1.0</version>
-        </dependency>
     </dependencies>
 </project>
