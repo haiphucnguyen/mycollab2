@@ -14,10 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web-premium.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.premium.module.user.accountsettings.theme.view;
+package com.esofthead.mycollab.premium.module.user.accountsettings.customize.view;
 
-import com.esofthead.mycollab.module.user.accountsettings.theme.view.IThemeContainer;
-import com.esofthead.mycollab.module.user.accountsettings.theme.view.IThemePresenter;
+import com.esofthead.mycollab.module.user.accountsettings.customize.view.ICustomizeContainer;
+import com.esofthead.mycollab.module.user.accountsettings.customize.view.ICustomizePresenter;
 import com.esofthead.mycollab.module.user.accountsettings.view.AccountModule;
 import com.esofthead.mycollab.module.user.accountsettings.view.AccountSettingBreadcrumb;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
@@ -31,23 +31,23 @@ import com.vaadin.ui.ComponentContainer;
  * @since 4.1
  * 
  */
-public class ThemePresenter extends AbstractPresenter<IThemeContainer>
-implements IThemePresenter {
+public class CustomizePresenter extends AbstractPresenter<ICustomizeContainer>
+		implements ICustomizePresenter {
 	private static final long serialVersionUID = -4221018940384221262L;
 
-	public ThemePresenter() {
-		super(IThemeContainer.class);
+	public CustomizePresenter() {
+		super(ICustomizeContainer.class);
 	}
 
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		AccountModule accountContainer = (AccountModule) container;
 
-		accountContainer.gotoSubView("theme");
+		accountContainer.gotoSubView("customize");
 
 		AccountSettingBreadcrumb breadcrumb = ViewManager
 				.getView(AccountSettingBreadcrumb.class);
-		breadcrumb.gotoThemePage();
+		breadcrumb.gotoCustomizationPage();
 	}
 
 }

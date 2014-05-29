@@ -28,6 +28,7 @@ import com.esofthead.mycollab.module.user.dao.AccountThemeMapper;
 import com.esofthead.mycollab.module.user.domain.AccountSettings;
 import com.esofthead.mycollab.module.user.domain.AccountSettingsExample;
 import com.esofthead.mycollab.module.user.domain.AccountTheme;
+import com.esofthead.mycollab.module.user.domain.AccountThemeExample;
 import com.esofthead.mycollab.module.user.service.AccountThemeService;
 
 /**
@@ -68,6 +69,18 @@ public class AccountThemeServiceImpl extends
 				.selectByPrimaryKey(accountSettings.get(0).getDefaultthemeid());
 
 		return accountTheme;
+	}
+
+	@Override
+	public AccountTheme getDefaultTheme() {
+		AccountThemeExample ex = new AccountThemeExample();
+		ex.createCriteria().andIsdefaultEqualTo(true);
+		List<AccountTheme> defaultThemes = userThemeMapper.selectByExample(ex);
+		if (defaultThemes == null || defaultThemes.size() == 0) {
+			return null;
+		}
+
+		return defaultThemes.get(0);
 	}
 
 }

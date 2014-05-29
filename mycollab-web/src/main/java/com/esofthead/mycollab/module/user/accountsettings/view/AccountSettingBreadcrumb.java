@@ -43,7 +43,7 @@ import com.vaadin.ui.Button.ClickEvent;
  */
 @ViewComponent
 public class AccountSettingBreadcrumb extends Breadcrumb implements
-CacheableComponent {
+		CacheableComponent {
 	private static final long serialVersionUID = 1L;
 
 	private static LabelStringGenerator menuLinkGenerator = new BreadcrumbLabelStringGenerator();
@@ -101,7 +101,7 @@ CacheableComponent {
 		AppContext.addFragment(
 				"account/user/preview/"
 						+ UrlEncodeDecoder.encode(user.getUsername()),
-						"Preview User " + user.getDisplayName());
+				"Preview User " + user.getDisplayName());
 	}
 
 	public void gotoUserAdd() {
@@ -123,30 +123,30 @@ CacheableComponent {
 		this.setLinkEnabled(true, 1);
 		this.addLink(generateBreadcrumbLink(user.getDisplayName(),
 				new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
+					private static final long serialVersionUID = 1L;
 
-			@Override
-			public void buttonClick(ClickEvent event) {
-				EventBus.getInstance().fireEvent(
-						new UserEvent.GotoRead(this, user));
+					@Override
+					public void buttonClick(ClickEvent event) {
+						EventBus.getInstance().fireEvent(
+								new UserEvent.GotoRead(this, user));
 
-			}
-		}));
+					}
+				}));
 		this.setLinkEnabled(true, 2);
 		this.addLink(new Button(AppContext
 				.getMessage(GenericI18Enum.BUTTON_EDIT_LABEL)));
 		AppContext.addFragment(
 				"account/user/edit/"
 						+ UrlEncodeDecoder.encode(user.getUsername()),
-						"Edit User " + user.getUsername());
+				"Edit User " + user.getUsername());
 	}
 
-	public void gotoThemePage() {
+	public void gotoCustomizationPage() {
 		this.select(0);
 		this.addLink(new Button(AppContext
-				.getMessage(AccountBreadcrumbI18nEnum.THEME)));
-		AppContext.addFragment("account/theme", AppContext
-				.getMessage(AccountBreadcrumbI18nEnum.THEME));
+				.getMessage(AccountBreadcrumbI18nEnum.CUSTOMIZE)));
+		AppContext.addFragment("account/customization",
+				AppContext.getMessage(AccountBreadcrumbI18nEnum.CUSTOMIZE));
 	}
 
 	private static class GotoUserListListener implements Button.ClickListener {
@@ -155,7 +155,7 @@ CacheableComponent {
 		@Override
 		public void buttonClick(ClickEvent event) {
 			EventBus.getInstance()
-			.fireEvent(new UserEvent.GotoList(this, null));
+					.fireEvent(new UserEvent.GotoList(this, null));
 		}
 	}
 
@@ -185,9 +185,9 @@ CacheableComponent {
 		this.setLinkEnabled(true, 1);
 		this.addLink(generateBreadcrumbLink(role.getRolename()));
 		AppContext
-		.addFragment(
-				"account/role/preview/"
-						+ UrlEncodeDecoder.encode(role.getId()),
+				.addFragment(
+						"account/role/preview/"
+								+ UrlEncodeDecoder.encode(role.getId()),
 						"Preview Role " + role.getRolename());
 	}
 
@@ -199,15 +199,15 @@ CacheableComponent {
 		this.setLinkEnabled(true, 1);
 		this.addLink(generateBreadcrumbLink(role.getRolename(),
 				new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
+					private static final long serialVersionUID = 1L;
 
-			@Override
-			public void buttonClick(ClickEvent event) {
-				EventBus.getInstance().fireEvent(
-						new RoleEvent.GotoRead(this, role.getId()));
+					@Override
+					public void buttonClick(ClickEvent event) {
+						EventBus.getInstance().fireEvent(
+								new RoleEvent.GotoRead(this, role.getId()));
 
-			}
-		}));
+					}
+				}));
 		this.setLinkEnabled(true, 2);
 		this.addLink(new Button(AppContext
 				.getMessage(GenericI18Enum.BUTTON_EDIT_LABEL)));
@@ -222,7 +222,7 @@ CacheableComponent {
 		@Override
 		public void buttonClick(ClickEvent event) {
 			EventBus.getInstance()
-			.fireEvent(new RoleEvent.GotoList(this, null));
+					.fireEvent(new RoleEvent.GotoList(this, null));
 		}
 	}
 
@@ -238,7 +238,7 @@ CacheableComponent {
 	}
 
 	private static class BreadcrumbLabelStringGenerator implements
-	LabelStringGenerator {
+			LabelStringGenerator {
 
 		@Override
 		public String handleText(String value) {

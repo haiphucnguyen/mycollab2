@@ -18,10 +18,10 @@ package com.esofthead.mycollab.module.user.accountsettings.view;
 
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.user.accountsettings.billing.view.IBillingPresenter;
+import com.esofthead.mycollab.module.user.accountsettings.customize.view.ICustomizePresenter;
 import com.esofthead.mycollab.module.user.accountsettings.localization.UserI18nEnum;
 import com.esofthead.mycollab.module.user.accountsettings.profile.view.ProfilePresenter;
 import com.esofthead.mycollab.module.user.accountsettings.team.view.UserPermissionManagementPresenter;
-import com.esofthead.mycollab.module.user.accountsettings.theme.view.IThemePresenter;
 import com.esofthead.mycollab.module.user.accountsettings.view.events.ProfileEvent;
 import com.esofthead.mycollab.module.user.accountsettings.view.parameters.BillingScreenData;
 import com.esofthead.mycollab.module.user.ui.components.UserVerticalTabsheet;
@@ -50,7 +50,7 @@ import com.vaadin.ui.VerticalLayout;
  */
 @ViewComponent
 public class AccountModuleImpl extends AbstractCssPageView implements
-AccountModule {
+		AccountModule {
 	private static final long serialVersionUID = 1L;
 
 	private final UserVerticalTabsheet accountTab;
@@ -58,7 +58,7 @@ AccountModule {
 	private ProfilePresenter profilePresenter;
 	private UserPermissionManagementPresenter userPermissionPresenter;
 	private IBillingPresenter billingPresenter;
-	private IThemePresenter themePresenter;
+	private ICustomizePresenter customizePresenter;
 
 	private final AccountSettingBreadcrumb breadcrumb;
 
@@ -97,7 +97,7 @@ AccountModule {
 
 		this.accountTab.getNavigatorWrapper().setWidth("250px");
 		this.accountTab.getNavigatorWrapper()
-		.addComponentAsFirst(introTextWrap);
+				.addComponentAsFirst(introTextWrap);
 
 		this.buildComponents();
 
@@ -119,32 +119,32 @@ AccountModule {
 		this.accountTab.addTab(this.constructUserRoleComponent(), "users",
 				AppContext.getMessage(UserI18nEnum.USERS_VIEW));
 
-		this.accountTab.addTab(this.constructThemeComponent(), "theme",
-				AppContext.getMessage(UserI18nEnum.THEME_VIEW));
+		this.accountTab.addTab(this.constructThemeComponent(), "customize",
+				AppContext.getMessage(UserI18nEnum.CUSTOMIZE_VIEW));
 
 		this.accountTab
-		.addSelectedTabChangeListener(new SelectedTabChangeListener() {
-			private static final long serialVersionUID = 1L;
+				.addSelectedTabChangeListener(new SelectedTabChangeListener() {
+					private static final long serialVersionUID = 1L;
 
-			@Override
-			public void selectedTabChange(SelectedTabChangeEvent event) {
-				final Tab tab = ((VerticalTabsheet) event.getSource())
-						.getSelectedTab();
-				final String tabId = ((TabImpl) tab).getTabId();
-				if ("profile".equals(tabId)) {
-					profilePresenter.go(AccountModuleImpl.this, null);
-				} else if ("billing".equals(tabId)) {
-					billingPresenter.go(AccountModuleImpl.this,
-							new BillingScreenData.BillingSummary());
-				} else if ("users".equals(tabId)) {
-					userPermissionPresenter.go(AccountModuleImpl.this,
-							null);
-				} else if ("theme".equals(tabId)) {
-					themePresenter.go(AccountModuleImpl.this, null);
-				}
+					@Override
+					public void selectedTabChange(SelectedTabChangeEvent event) {
+						final Tab tab = ((VerticalTabsheet) event.getSource())
+								.getSelectedTab();
+						final String tabId = ((TabImpl) tab).getTabId();
+						if ("profile".equals(tabId)) {
+							profilePresenter.go(AccountModuleImpl.this, null);
+						} else if ("billing".equals(tabId)) {
+							billingPresenter.go(AccountModuleImpl.this,
+									new BillingScreenData.BillingSummary());
+						} else if ("users".equals(tabId)) {
+							userPermissionPresenter.go(AccountModuleImpl.this,
+									null);
+						} else if ("customize".equals(tabId)) {
+							customizePresenter.go(AccountModuleImpl.this, null);
+						}
 
-			}
-		});
+					}
+				});
 	}
 
 	private ComponentContainer constructAccountSettingsComponent() {
@@ -166,9 +166,9 @@ AccountModule {
 	}
 
 	private ComponentContainer constructThemeComponent() {
-		this.themePresenter = PresenterResolver
-				.getPresenter(IThemePresenter.class);
-		return this.themePresenter.initView();
+		this.customizePresenter = PresenterResolver
+				.getPresenter(ICustomizePresenter.class);
+		return this.customizePresenter.initView();
 	}
 
 	@Override

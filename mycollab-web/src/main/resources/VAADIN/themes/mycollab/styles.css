@@ -6945,3 +6945,15 @@ div.v-csslayout.bean-block.olive-block, .list-note-block .note-label.olive-block
 .verticaltabsheet-fix.is-left {
 	left: 0px;
 }
+
+.v-colorpicker-popup .v-button .v-button-wrap, .v-colorpicker-popup .v-button:active .v-button-wrap {
+	padding: 3px 10px;
+}
+
+/* gridlayout without border fixes */
+.addview-layout-body .v-gridlayout.no-border {
+	border: none;
+}
+.addview-layout-body .v-gridlayout.no-border .v-gridlayout-slot > div {
+	border: none;
+}

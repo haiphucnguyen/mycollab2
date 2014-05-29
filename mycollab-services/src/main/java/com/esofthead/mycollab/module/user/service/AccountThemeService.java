@@ -28,4 +28,6 @@ import com.esofthead.mycollab.module.user.domain.AccountTheme;
 public interface AccountThemeService extends
 		ICrudService<Integer, AccountTheme> {
 	AccountTheme getAccountTheme(int saccountid);
+
+	AccountTheme getDefaultTheme();
 }
