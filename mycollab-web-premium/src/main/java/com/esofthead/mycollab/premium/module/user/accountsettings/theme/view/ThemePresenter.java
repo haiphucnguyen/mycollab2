@@ -19,7 +19,9 @@ package com.esofthead.mycollab.premium.module.user.accountsettings.theme.view;
 import com.esofthead.mycollab.module.user.accountsettings.theme.view.IThemeContainer;
 import com.esofthead.mycollab.module.user.accountsettings.theme.view.IThemePresenter;
 import com.esofthead.mycollab.module.user.accountsettings.view.AccountModule;
+import com.esofthead.mycollab.module.user.accountsettings.view.AccountSettingBreadcrumb;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
+import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.AbstractPresenter;
 import com.vaadin.ui.ComponentContainer;
 
@@ -30,7 +32,7 @@ import com.vaadin.ui.ComponentContainer;
  * 
  */
 public class ThemePresenter extends AbstractPresenter<IThemeContainer>
-		implements IThemePresenter {
+implements IThemePresenter {
 	private static final long serialVersionUID = -4221018940384221262L;
 
 	public ThemePresenter() {
@@ -42,6 +44,10 @@ public class ThemePresenter extends AbstractPresenter<IThemeContainer>
 		AccountModule accountContainer = (AccountModule) container;
 
 		accountContainer.gotoSubView("theme");
+
+		AccountSettingBreadcrumb breadcrumb = ViewManager
+				.getView(AccountSettingBreadcrumb.class);
+		breadcrumb.gotoThemePage();
 	}
 
 }

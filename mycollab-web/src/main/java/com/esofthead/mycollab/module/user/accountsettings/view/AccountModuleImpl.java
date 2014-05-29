@@ -50,7 +50,7 @@ import com.vaadin.ui.VerticalLayout;
  */
 @ViewComponent
 public class AccountModuleImpl extends AbstractCssPageView implements
-		AccountModule {
+AccountModule {
 	private static final long serialVersionUID = 1L;
 
 	private final UserVerticalTabsheet accountTab;
@@ -97,7 +97,7 @@ public class AccountModuleImpl extends AbstractCssPageView implements
 
 		this.accountTab.getNavigatorWrapper().setWidth("250px");
 		this.accountTab.getNavigatorWrapper()
-				.addComponentAsFirst(introTextWrap);
+		.addComponentAsFirst(introTextWrap);
 
 		this.buildComponents();
 
@@ -123,26 +123,28 @@ public class AccountModuleImpl extends AbstractCssPageView implements
 				AppContext.getMessage(UserI18nEnum.THEME_VIEW));
 
 		this.accountTab
-				.addSelectedTabChangeListener(new SelectedTabChangeListener() {
-					private static final long serialVersionUID = 1L;
+		.addSelectedTabChangeListener(new SelectedTabChangeListener() {
+			private static final long serialVersionUID = 1L;
 
-					@Override
-					public void selectedTabChange(SelectedTabChangeEvent event) {
-						final Tab tab = ((VerticalTabsheet) event.getSource())
-								.getSelectedTab();
-						final String tabId = ((TabImpl) tab).getTabId();
-						if ("profile".equals(tabId)) {
-							profilePresenter.go(AccountModuleImpl.this, null);
-						} else if ("billing".equals(tabId)) {
-							billingPresenter.go(AccountModuleImpl.this,
-									new BillingScreenData.BillingSummary());
-						} else if ("users".equals(tabId)) {
-							userPermissionPresenter.go(AccountModuleImpl.this,
-									null);
-						}
+			@Override
+			public void selectedTabChange(SelectedTabChangeEvent event) {
+				final Tab tab = ((VerticalTabsheet) event.getSource())
+						.getSelectedTab();
+				final String tabId = ((TabImpl) tab).getTabId();
+				if ("profile".equals(tabId)) {
+					profilePresenter.go(AccountModuleImpl.this, null);
+				} else if ("billing".equals(tabId)) {
+					billingPresenter.go(AccountModuleImpl.this,
+							new BillingScreenData.BillingSummary());
+				} else if ("users".equals(tabId)) {
+					userPermissionPresenter.go(AccountModuleImpl.this,
+							null);
+				} else if ("theme".equals(tabId)) {
+					themePresenter.go(AccountModuleImpl.this, null);
+				}
 
-					}
-				});
+			}
+		});
 	}
 
 	private ComponentContainer constructAccountSettingsComponent() {
