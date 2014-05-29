@@ -43,7 +43,7 @@ import com.vaadin.ui.VerticalLayout;
  */
 @ViewComponent
 public class CustomizeContainer extends AbstractPageView implements
-		ICustomizeContainer {
+ICustomizeContainer {
 	private static final long serialVersionUID = 3149432226222905621L;
 
 	private final AccountThemeService themeService;
@@ -63,7 +63,7 @@ public class CustomizeContainer extends AbstractPageView implements
 
 		AddViewLayout2 mainLayout = new AddViewLayout2(
 				AppContext.getMessage(UserI18nEnum.CUSTOMIZE_VIEW),
-				MyCollabResource.newResource("icons/24/user/theme.png"));
+				MyCollabResource.newResource("icons/24/user/customize.png"));
 		mainLayout.setWidth("100%");
 		mainLayout.setStyleName("readview-layout");
 
