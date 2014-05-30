@@ -35,7 +35,7 @@ public class ThemeManager {
 
 		AccountTheme accountTheme = themeService.getAccountTheme(saccountid);
 
-		if (accountTheme == null)
+		if (accountTheme == null || accountTheme.getId() == null)
 			return;
 
 		/* Top Menu */
