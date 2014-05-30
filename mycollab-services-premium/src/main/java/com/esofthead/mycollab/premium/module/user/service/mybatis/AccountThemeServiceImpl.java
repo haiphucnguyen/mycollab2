@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-services.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.module.user.service.mybatis;
+package com.esofthead.mycollab.premium.module.user.service.mybatis;
 
 import java.util.List;
 
@@ -25,6 +25,7 @@ import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultCrudService;
 import com.esofthead.mycollab.module.user.dao.AccountSettingsMapper;
 import com.esofthead.mycollab.module.user.dao.AccountThemeMapper;
+import com.esofthead.mycollab.module.user.dao.AccountThemeMapperExt;
 import com.esofthead.mycollab.module.user.domain.AccountSettings;
 import com.esofthead.mycollab.module.user.domain.AccountSettingsExample;
 import com.esofthead.mycollab.module.user.domain.AccountTheme;
@@ -47,6 +48,9 @@ public class AccountThemeServiceImpl extends
 	private AccountThemeMapper userThemeMapper;
 
 	@Autowired
+	private AccountThemeMapperExt accountThemeMapperExt;
+
+	@Autowired
 	private AccountSettingsMapper accountSettingsMapper;
 
 	@Override
@@ -62,7 +66,15 @@ public class AccountThemeServiceImpl extends
 				.selectByExample(accountEx);
 		if (accountSettings == null || accountSettings.size() == 0
 				|| accountSettings.get(0).getDefaultthemeid() == null) {
-			return null;
+			AccountTheme defaultTheme = getDefaultTheme();
+			if (defaultTheme != null) {
+				AccountTheme result = (AccountTheme) defaultTheme.copy();
+				result.setId(null);
+				result.setIsdefault(false);
+				return result;
+			} else {
+				return null;
+			}
 		}
 
 		AccountTheme accountTheme = userThemeMapper
@@ -81,6 +93,27 @@ public class AccountThemeServiceImpl extends
 		}
 
 		return defaultThemes.get(0);
+	}
+
+	@Override
+	public void saveAccountTheme(AccountTheme theme, int saccountid) {
+		if (theme.getId() == null) {
+			int result = accountThemeMapperExt.saveAccountTheme(theme);
+			if (result == 1) {
+				AccountSettingsExample ex = new AccountSettingsExample();
+				ex.createCriteria().andSaccountidEqualTo(saccountid);
+				List<AccountSettings> accountSettings = accountSettingsMapper
+						.selectByExample(ex);
+				if (accountSettings == null || accountSettings.size() == 0) {
+					return;
+				}
+				AccountSettings accountSetting = accountSettings.get(0);
+				accountSetting.setDefaultthemeid(theme.getId());
+				accountSettingsMapper.updateByPrimaryKey(accountSetting);
+			}
+		} else {
+			userThemeMapper.updateByPrimaryKey(theme);
+		}
 	}
 
 }

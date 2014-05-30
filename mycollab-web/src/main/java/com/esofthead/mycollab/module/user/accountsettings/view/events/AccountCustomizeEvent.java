@@ -41,4 +41,12 @@ public class AccountCustomizeEvent {
 			super(source, data);
 		}
 	}
+
+	public static class SaveTheme extends ApplicationEvent {
+		private static final long serialVersionUID = 1045585990446557122L;
+
+		public SaveTheme(Object source, Object data) {
+			super(source, data);
+		}
+	}
 }
