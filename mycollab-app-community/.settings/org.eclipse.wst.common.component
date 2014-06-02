@@ -484,6 +484,21 @@
     <dependent-module archiveName="jetty-continuation-9.1.5.v20140505.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/jetty-continuation/9.1.5.v20140505/jetty-continuation-9.1.5.v20140505.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
+    <dependent-module archiveName="websocket-server-9.1.5.v20140505.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/websocket/websocket-server/9.1.5.v20140505/websocket-server-9.1.5.v20140505.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="websocket-common-9.1.5.v20140505.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/websocket/websocket-common/9.1.5.v20140505/websocket-common-9.1.5.v20140505.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="websocket-api-9.1.5.v20140505.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/websocket/websocket-api/9.1.5.v20140505/websocket-api-9.1.5.v20140505.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="websocket-client-9.1.5.v20140505.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/websocket/websocket-client/9.1.5.v20140505/websocket-client-9.1.5.v20140505.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="websocket-servlet-9.1.5.v20140505.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/websocket/websocket-servlet/9.1.5.v20140505/websocket-servlet-9.1.5.v20140505.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
     <dependent-module archiveName="vaadin-push-7.2.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/vaadin/vaadin-push/7.2.1/vaadin-push-7.2.1.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
