@@ -1,10 +1,17 @@
 package com.esofthead.mycollab.module.crm.reporting;
 
+import static net.sf.dynamicreports.report.builder.DynamicReports.stl;
+
+import java.awt.Color;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
 
 import net.sf.dynamicreports.report.base.expression.AbstractSimpleExpression;
 import net.sf.dynamicreports.report.builder.component.ComponentBuilder;
+import net.sf.dynamicreports.report.builder.style.ConditionalStyleBuilder;
+import net.sf.dynamicreports.report.builder.style.StyleBuilder;
 import net.sf.dynamicreports.report.definition.ReportParameters;
 import net.sf.dynamicreports.report.definition.expression.DRIExpression;
 
@@ -15,13 +22,18 @@ import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.module.crm.CrmLinkGenerator;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
+import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.domain.SimpleCase;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
+import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.user.AccountLinkUtils;
 import com.esofthead.mycollab.reporting.ColumnBuilderClassMapper;
 import com.esofthead.mycollab.reporting.ComponentBuilderWrapper;
+import com.esofthead.mycollab.reporting.DateExpression;
 import com.esofthead.mycollab.reporting.DateTimeExpression;
+import com.esofthead.mycollab.reporting.MailExpression;
+import com.esofthead.mycollab.reporting.ReportTemplateFactory;
 import com.esofthead.mycollab.reporting.StringExpression;
 import com.esofthead.mycollab.vaadin.AppContext;
 
@@ -40,7 +52,8 @@ public class CrmColumnBuilderMapper implements InitializingBean {
 	public void afterPropertiesSet() throws Exception {
 		ColumnBuilderClassMapper.put(SimpleAccount.class, buildAccountMap());
 		ColumnBuilderClassMapper.put(SimpleContact.class, buildContactMap());
-		ColumnBuilderClassMapper.put(SimpleContact.class, buildLeadMap());
+		ColumnBuilderClassMapper.put(SimpleCampaign.class, buildCampaignMap());
+		ColumnBuilderClassMapper.put(SimpleLead.class, buildLeadMap());
 		ColumnBuilderClassMapper.put(SimpleOpportunity.class,
 				buildOpportunityMap());
 		ColumnBuilderClassMapper.put(SimpleCase.class, buildCaseMap());
@@ -177,12 +190,15 @@ public class CrmColumnBuilderMapper implements InitializingBean {
 			@Override
 			public String evaluate(ReportParameters reportParameters) {
 				Integer campaignid = reportParameters.getFieldValue("id");
-				return CrmLinkGenerator.generateCallPreviewFullLink(
+				return CrmLinkGenerator.generateCampaignPreviewFullLink(
 						AppContext.getSiteUrl(), campaignid);
 			}
 		};
 		map.put("campaignname", ComponentBuilderWrapper.buildHyperLink(
 				campaignTitleExpr, campaignHrefExpr));
+
+		map.put("enddate", ComponentBuilderWrapper
+				.buildDateText(new DateExpression("enddate")));
 		return map;
 	}
 
@@ -223,6 +239,9 @@ public class CrmColumnBuilderMapper implements InitializingBean {
 		};
 		map.put("leadName", ComponentBuilderWrapper.buildHyperLink(
 				leadTitleExpr, leadHrefExpr));
+
+		map.put("email",
+				ComponentBuilderWrapper.buildEmail(new MailExpression("email")));
 		return map;
 	}
 
@@ -262,8 +281,59 @@ public class CrmColumnBuilderMapper implements InitializingBean {
 						AppContext.getSiteUrl(), opportunityid);
 			}
 		};
-		map.put("opportunityname", ComponentBuilderWrapper.buildHyperLink(
-				opportunityTitleExpr, opportunityHrefExpr));
+
+		AbstractSimpleExpression<Boolean> overDueExpr = new AbstractSimpleExpression<Boolean>() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public Boolean evaluate(ReportParameters reportParameters) {
+				Date expectedCloseDate = reportParameters
+						.getFieldValue("expectedcloseddate");
+				if (expectedCloseDate != null
+						&& (expectedCloseDate.before(new GregorianCalendar()
+								.getTime()))) {
+					String saleStage = reportParameters
+							.getFieldValue("salesstage");
+					if ("Closed Won".equals(saleStage)
+							|| "Closed Lost".equals(saleStage)) {
+						return false;
+					}
+					return true;
+				}
+				return false;
+			}
+		};
+
+		AbstractSimpleExpression<Boolean> isCompleteExpr = new AbstractSimpleExpression<Boolean>() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public Boolean evaluate(ReportParameters reportParameters) {
+				String saleStage = reportParameters.getFieldValue("salesstage");
+				if ("Closed Won".equals(saleStage)
+						|| "Closed Lost".equals(saleStage)) {
+					return true;
+				}
+				return false;
+			}
+		};
+
+		ConditionalStyleBuilder overDueStyle = stl
+				.conditionalStyle(overDueExpr).setForegroundColor(Color.RED);
+		ConditionalStyleBuilder isCompleteStyle = stl.conditionalStyle(
+				isCompleteExpr).setStrikeThrough(true);
+
+		StyleBuilder styleBuilder = stl
+				.style(ReportTemplateFactory.getTemplate().getUnderlineStyle())
+				.addConditionalStyle(overDueStyle)
+				.addConditionalStyle(isCompleteStyle);
+
+		map.put("opportunityname",
+				ComponentBuilderWrapper.buildHyperLink(opportunityTitleExpr,
+						opportunityHrefExpr).setStyle(styleBuilder));
+
+		map.put("expectedcloseddate", ComponentBuilderWrapper
+				.buildDateText(new DateExpression("expectedcloseddate")));
 		return map;
 	}
 

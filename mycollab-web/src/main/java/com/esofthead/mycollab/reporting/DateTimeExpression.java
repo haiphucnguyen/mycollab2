@@ -12,7 +12,7 @@ import com.esofthead.mycollab.vaadin.AppContext;
  * @since 4.1.2
  * 
  */
-public class DateTimeExpression extends AbstractExpression {
+public class DateTimeExpression extends AbstractFieldExpression {
 	private static final long serialVersionUID = 1L;
 
 	public DateTimeExpression(String field) {

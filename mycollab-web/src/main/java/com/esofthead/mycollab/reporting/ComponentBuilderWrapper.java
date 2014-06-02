@@ -24,4 +24,12 @@ public class ComponentBuilderWrapper {
 	public static ComponentBuilder buildDateTimeText(DateTimeExpression dateExpr) {
 		return cmp.text(dateExpr);
 	}
+
+	public static ComponentBuilder buildDateText(DateExpression dateExpr) {
+		return cmp.text(dateExpr);
+	}
+
+	public static ComponentBuilder buildEmail(MailExpression mailExpr) {
+		return cmp.text(mailExpr);
+	}
 }
