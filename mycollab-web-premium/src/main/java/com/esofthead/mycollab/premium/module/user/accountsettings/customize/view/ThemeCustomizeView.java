@@ -16,9 +16,8 @@
  */
 package com.esofthead.mycollab.premium.module.user.accountsettings.customize.view;
 
-import com.esofthead.mycollab.module.user.accountsettings.customize.view.ICustomizeContainer;
-import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
-import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
+import com.esofthead.mycollab.module.user.domain.AccountTheme;
+import com.esofthead.mycollab.vaadin.mvp.PageView;
 
 /**
  * 
@@ -26,9 +25,6 @@ import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
  * @since 4.1
  * 
  */
-@ViewComponent
-public class CustomizeContainer extends AbstractPageView implements
-		ICustomizeContainer {
-	private static final long serialVersionUID = -1923841035522809056L;
-
+public interface ThemeCustomizeView extends PageView {
+	public void customizeTheme(AccountTheme accountTheme);
 }

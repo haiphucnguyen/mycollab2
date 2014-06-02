@@ -17,8 +17,11 @@
 package com.esofthead.mycollab.premium.module.user.accountsettings.customize.view;
 
 import com.esofthead.mycollab.module.user.accountsettings.customize.view.ICustomizeContainer;
-import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
-import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
+import com.esofthead.mycollab.module.user.accountsettings.view.parameters.CustomizeScreenData;
+import com.esofthead.mycollab.module.user.domain.AccountTheme;
+import com.esofthead.mycollab.vaadin.mvp.ScreenData;
+import com.esofthead.mycollab.vaadin.ui.AbstractPresenter;
+import com.vaadin.ui.ComponentContainer;
 
 /**
  * 
@@ -26,9 +29,23 @@ import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
  * @since 4.1
  * 
  */
-@ViewComponent
-public class CustomizeContainer extends AbstractPageView implements
-		ICustomizeContainer {
-	private static final long serialVersionUID = -1923841035522809056L;
+public class LogoUploadPresenter extends AbstractPresenter<LogoUploadView> {
+	private static final long serialVersionUID = 2528130438109089209L;
+
+	public LogoUploadPresenter() {
+		super(LogoUploadView.class);
+	}
+
+	@Override
+	protected void onGo(ComponentContainer container, ScreenData<?> data) {
+		ICustomizeContainer customizeContainer = (ICustomizeContainer) container;
+		customizeContainer.removeAllComponents();
+		customizeContainer.addComponent(view.getWidget());
+
+		AccountTheme accountTheme = (AccountTheme) ((CustomizeScreenData.LogoUpload) data)
+				.getExtraParam();
+		view.editPhoto((byte[]) data.getParams(), accountTheme);
+
+	}
 
 }

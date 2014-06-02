@@ -3,6 +3,7 @@ package com.esofthead.mycollab.common.interceptor.aspect.cache;
 import java.util.Arrays;
 import java.util.List;
 
+import com.esofthead.mycollab.cache.IgnoreServiceEntity;
 import com.esofthead.mycollab.common.service.MonitorItemService;
 import com.esofthead.mycollab.common.service.RelayEmailNotificationService;
 import com.esofthead.mycollab.module.billing.service.BillingPlanCheckerService;
@@ -34,7 +35,7 @@ public class CacheServiceIgnoreList {
 			ResourceService.class, DeleteProjectCommand.class,
 			DeleteProjectMemberCommand.class, ExternalResourceService.class,
 			ContentActivityLogService.class, ExternalDriveService.class,
-			ResourceMover.class });
+			ResourceMover.class, IgnoreServiceEntity.class });
 
 	static boolean isInBlackList(Class<?> cls) {
 		return blacklistCls.contains(cls);

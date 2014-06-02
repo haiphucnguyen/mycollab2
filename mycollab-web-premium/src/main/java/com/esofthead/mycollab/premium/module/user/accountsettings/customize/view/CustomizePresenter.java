@@ -22,17 +22,11 @@ import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.user.accountsettings.customize.view.ICustomizeContainer;
 import com.esofthead.mycollab.module.user.accountsettings.customize.view.ICustomizePresenter;
 import com.esofthead.mycollab.module.user.accountsettings.view.AccountModule;
-import com.esofthead.mycollab.module.user.accountsettings.view.AccountSettingBreadcrumb;
 import com.esofthead.mycollab.module.user.accountsettings.view.events.AccountCustomizeEvent;
-import com.esofthead.mycollab.module.user.accountsettings.view.events.AccountCustomizeEvent.SaveTheme;
-import com.esofthead.mycollab.module.user.domain.AccountTheme;
-import com.esofthead.mycollab.module.user.service.AccountThemeService;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.module.user.accountsettings.view.parameters.CustomizeScreenData;
+import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
-import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.AbstractPresenter;
-import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.vaadin.ui.ComponentContainer;
 
 /**
@@ -42,7 +36,7 @@ import com.vaadin.ui.ComponentContainer;
  * 
  */
 public class CustomizePresenter extends AbstractPresenter<ICustomizeContainer>
-implements ICustomizePresenter {
+		implements ICustomizePresenter {
 	private static final long serialVersionUID = -4221018940384221262L;
 
 	public CustomizePresenter() {
@@ -52,24 +46,29 @@ implements ICustomizePresenter {
 	@Override
 	protected void postInitView() {
 		EventBus.getInstance()
-		.addListener(
-				new ApplicationEventListener<AccountCustomizeEvent.SaveTheme>() {
-					private static final long serialVersionUID = -1060182248184670399L;
+				.addListener(
+						new ApplicationEventListener<AccountCustomizeEvent.GotoUploadLogo>() {
+							private static final long serialVersionUID = 7232775383781008850L;
 
-					@Override
-					public Class<? extends ApplicationEvent> getEventType() {
-						return AccountCustomizeEvent.SaveTheme.class;
-					}
+							@Override
+							public Class<? extends ApplicationEvent> getEventType() {
+								return AccountCustomizeEvent.GotoUploadLogo.class;
+							}
 
-					@Override
-					public void handle(SaveTheme event) {
-						if (event.getData() instanceof AccountTheme) {
-							saveTheme((AccountTheme) event.getData());
-							NotificationUtil
-							.showNotification("Save theme successfully! Please sign in again to see changes.");
-						}
-					}
-				});
+							@Override
+							public void handle(
+									AccountCustomizeEvent.GotoUploadLogo event) {
+								LogoUploadPresenter presenter = PresenterResolver
+										.getPresenter(LogoUploadPresenter.class);
+								if (event.getData() != null) {
+									presenter.go(
+											view.getWidget(),
+											(CustomizeScreenData.LogoUpload) event
+													.getData());
+								}
+
+							}
+						});
 	}
 
 	@Override
@@ -78,15 +77,14 @@ implements ICustomizePresenter {
 
 		accountContainer.gotoSubView("customize");
 
-		AccountSettingBreadcrumb breadcrumb = ViewManager
-				.getView(AccountSettingBreadcrumb.class);
-		breadcrumb.gotoCustomizationPage();
-	}
-
-	private void saveTheme(AccountTheme accountTheme) {
-		AccountThemeService service = ApplicationContextUtil
-				.getSpringBean(AccountThemeService.class);
-		service.saveAccountTheme(accountTheme, AppContext.getAccountId());
+		AbstractPresenter<?> presenter = null;
+		if (data instanceof CustomizeScreenData.ThemeCustomize) {
+			presenter = PresenterResolver
+					.getPresenter(ThemeCustomizePresenter.class);
+		}
+		if (presenter != null) {
+			presenter.go(view.getWidget(), data);
+		}
 	}
 
 }

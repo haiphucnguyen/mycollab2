@@ -112,7 +112,7 @@ public class AccountThemeServiceImpl extends
 				accountSettingsMapper.updateByPrimaryKey(accountSetting);
 			}
 		} else {
-			userThemeMapper.updateByPrimaryKey(theme);
+			userThemeMapper.updateByPrimaryKeySelective(theme);
 		}
 	}
 
