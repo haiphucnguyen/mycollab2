@@ -93,24 +93,22 @@ public class ProblemListViewImpl extends AbstractPageView implements
 			@Override
 			public Object generateCell(final Table source, final Object itemId,
 					final Object columnId) {
-				final CheckBoxDecor cb = new CheckBoxDecor("", false);
+				final SimpleProblem problem = ProblemListViewImpl.this.tableItem
+						.getBeanByIndex(itemId);
+				final CheckBoxDecor cb = new CheckBoxDecor("", problem
+						.isSelected());
 				cb.setImmediate(true);
 				cb.addValueChangeListener(new ValueChangeListener() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
 					public void valueChange(ValueChangeEvent event) {
-						final SimpleProblem account = ProblemListViewImpl.this.tableItem
-								.getBeanByIndex(itemId);
 						ProblemListViewImpl.this.tableItem
-								.fireSelectItemEvent(account);
-
+								.fireSelectItemEvent(problem);
 					}
 				});
 
-				final SimpleProblem account = ProblemListViewImpl.this.tableItem
-						.getBeanByIndex(itemId);
-				account.setExtraData(cb);
+				problem.setExtraData(cb);
 				return cb;
 			}
 		});
