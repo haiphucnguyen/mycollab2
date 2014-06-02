@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.module.crm.CrmLinkGenerator;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
+import com.esofthead.mycollab.module.user.UserLinkUtils;
 import com.esofthead.mycollab.reporting.ColumnBuilderClassMapper;
 import com.esofthead.mycollab.reporting.ComponentBuilderWrapper;
 import com.esofthead.mycollab.reporting.StringExpression;
@@ -35,18 +36,41 @@ public class CrmColumnBuilderMapper implements InitializingBean {
 	private Map<String, ComponentBuilder> buildContactMap() {
 		Map<String, ComponentBuilder> map = new HashMap<String, ComponentBuilder>();
 
-		DRIExpression titleExpr = new StringExpression("accountName");
-		DRIExpression hrefExpr = new AbstractSimpleExpression() {
+		DRIExpression<String> accountTitleExpr = new StringExpression(
+				"accountName");
+		DRIExpression<String> accountHrefExpr = new AbstractSimpleExpression<String>() {
+			private static final long serialVersionUID = 1L;
 
 			@Override
-			public Object evaluate(ReportParameters reportParameters) {
+			public String evaluate(ReportParameters reportParameters) {
 				Integer accountid = reportParameters.getFieldValue("accountid");
 				return CrmLinkGenerator.generateAccountPreviewFullLink(
 						AppContext.getSiteUrl(), accountid);
 			}
 		};
-		map.put("accountName",
-				ComponentBuilderWrapper.buildHyperLink(titleExpr, hrefExpr));
+		map.put("accountName", ComponentBuilderWrapper.buildHyperLink(
+				accountTitleExpr, accountHrefExpr));
+
+		DRIExpression<String> assigneeTitleExpr = new StringExpression(
+				"assignUserFullName");
+		DRIExpression<String> assigneeHrefExpr = new AbstractSimpleExpression<String>() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public String evaluate(ReportParameters reportParameters) {
+				String assignUser = reportParameters
+						.getFieldValue("assignuser");
+				if (assignUser != null) {
+					return UserLinkUtils.generatePreviewFullUserLink(
+							AppContext.getSiteUrl(), assignUser);
+				}
+
+				return "";
+			}
+		};
+
+		map.put("assignUserFullName", ComponentBuilderWrapper.buildHyperLink(
+				assigneeTitleExpr, assigneeHrefExpr));
 		return map;
 	}
 }

@@ -205,7 +205,7 @@ public class BugRelayEmailNotificationActionImpl extends
 	}
 
 	@Override
-	protected List<SimpleUser> getListNotififyUserWithFilter(
+	protected List<SimpleUser> getListNotifyUsersWithFilter(
 			ProjectRelayEmailNotification notification) {
 		List<ProjectNotificationSetting> notificationSettings = projectNotificationService
 				.findNotifications(notification.getProjectId(),
