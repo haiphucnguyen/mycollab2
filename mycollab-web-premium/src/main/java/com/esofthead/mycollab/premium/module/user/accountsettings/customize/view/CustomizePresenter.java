@@ -42,7 +42,7 @@ import com.vaadin.ui.ComponentContainer;
  * 
  */
 public class CustomizePresenter extends AbstractPresenter<ICustomizeContainer>
-		implements ICustomizePresenter {
+implements ICustomizePresenter {
 	private static final long serialVersionUID = -4221018940384221262L;
 
 	public CustomizePresenter() {
@@ -52,24 +52,24 @@ public class CustomizePresenter extends AbstractPresenter<ICustomizeContainer>
 	@Override
 	protected void postInitView() {
 		EventBus.getInstance()
-				.addListener(
-						new ApplicationEventListener<AccountCustomizeEvent.SaveTheme>() {
-							private static final long serialVersionUID = -1060182248184670399L;
+		.addListener(
+				new ApplicationEventListener<AccountCustomizeEvent.SaveTheme>() {
+					private static final long serialVersionUID = -1060182248184670399L;
 
-							@Override
-							public Class<? extends ApplicationEvent> getEventType() {
-								return AccountCustomizeEvent.SaveTheme.class;
-							}
+					@Override
+					public Class<? extends ApplicationEvent> getEventType() {
+						return AccountCustomizeEvent.SaveTheme.class;
+					}
 
-							@Override
-							public void handle(SaveTheme event) {
-								if (event.getData() instanceof AccountTheme) {
-									saveTheme((AccountTheme) event.getData());
-									NotificationUtil
-											.showNotification("Save theme successfully!");
-								}
-							}
-						});
+					@Override
+					public void handle(SaveTheme event) {
+						if (event.getData() instanceof AccountTheme) {
+							saveTheme((AccountTheme) event.getData());
+							NotificationUtil
+							.showNotification("Save theme successfully! Please sign in again to see changes.");
+						}
+					}
+				});
 	}
 
 	@Override

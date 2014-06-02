@@ -30,8 +30,8 @@ import com.vaadin.ui.ColorPickerArea;
 public class CustomColorPickerArea extends ColorPickerArea {
 	private static final long serialVersionUID = -8631349584720412229L;
 
-	public CustomColorPickerArea(String caption, Color initialColor) {
-		super(caption, initialColor);
+	public CustomColorPickerArea(String caption, String initialColor) {
+		super(caption, new Color(Integer.parseInt(initialColor, 16)));
 
 		this.setWidth("55px");
 		this.setHeight("25px");
