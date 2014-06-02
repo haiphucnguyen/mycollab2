@@ -20,4 +20,8 @@ public class ComponentBuilderWrapper {
 				.setStyle(
 						ReportTemplateFactory.getTemplate(null).underlineStyle);
 	}
+
+	public static ComponentBuilder buildDateTimeText(DateTimeExpression dateExpr) {
+		return cmp.text(dateExpr);
+	}
 }
