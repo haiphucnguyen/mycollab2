@@ -57,6 +57,14 @@
                 <include>**/*</include>
             </includes>
         </fileSet>
+        
+        <fileSet>
+            <directory>src/main/newrelic</directory>
+            <outputDirectory>newrelic</outputDirectory>
+            <includes>
+                <include>**/*</include>
+            </includes>
+        </fileSet>
 
         <fileSet>
             <directory>src/main/logs</directory>
