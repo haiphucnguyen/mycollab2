@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.module.crm.CrmLinkGenerator;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
-import com.esofthead.mycollab.module.user.UserLinkUtils;
+import com.esofthead.mycollab.module.user.AccountLinkUtils;
 import com.esofthead.mycollab.reporting.ColumnBuilderClassMapper;
 import com.esofthead.mycollab.reporting.ComponentBuilderWrapper;
 import com.esofthead.mycollab.reporting.StringExpression;
@@ -61,7 +61,7 @@ public class CrmColumnBuilderMapper implements InitializingBean {
 				String assignUser = reportParameters
 						.getFieldValue("assignuser");
 				if (assignUser != null) {
-					return UserLinkUtils.generatePreviewFullUserLink(
+					return AccountLinkUtils.generatePreviewFullUserLink(
 							AppContext.getSiteUrl(), assignUser);
 				}
 
