@@ -17,7 +17,7 @@ import com.esofthead.mycollab.module.ecm.domain.SimpleContentActivityLog;
 import com.esofthead.mycollab.module.ecm.domain.criteria.ContentActivityLogSearchCriteria;
 import com.esofthead.mycollab.module.ecm.service.ContentActivityLogService;
 import com.esofthead.mycollab.module.file.domain.criteria.FileSearchCriteria;
-import com.esofthead.mycollab.module.user.UserLinkUtils;
+import com.esofthead.mycollab.module.user.AccountLinkUtils;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
@@ -124,7 +124,7 @@ public class FileActivityStreamPagedList
 					streamInfoLayout.addComponent(button);
 				}
 				String userLinkStr = "<a href=\""
-						+ UserLinkUtils.generatePreviewFullUserLink(
+						+ AccountLinkUtils.generatePreviewFullUserLink(
 								AppContext.getSiteUrl(),
 								activityStream.getCreateduser()) + "\">"
 						+ activityStream.getUserFullName() + "</a>";

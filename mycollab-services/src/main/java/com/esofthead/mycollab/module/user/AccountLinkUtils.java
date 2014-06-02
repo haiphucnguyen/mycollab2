@@ -14,7 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-services.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.premium.module.billing;
+package com.esofthead.mycollab.module.user;
+
+import com.esofthead.mycollab.common.GenericLinkUtils;
+import com.esofthead.mycollab.common.UrlEncodeDecoder;
 
 /**
  * 
@@ -22,16 +25,16 @@ package com.esofthead.mycollab.premium.module.billing;
  * @since 1.0
  * 
  */
-public class RegisterSourceConstants {
-	public static final String WEB = "Web";
+public class AccountLinkUtils {
+	public static String generateUserRoleLink(Integer userRoleId) {
+		return GenericLinkUtils.URL_PREFIX_PARAM + "account/role/preview/"
+				+ UrlEncodeDecoder.encode(userRoleId);
+	}
 
-	public static final String GOOGLE = "Google";
-
-	public static final String FACEBOOK = "Facebook";
-
-	public static final String LINKEDIN = "LinkedIn";
-
-	public static final String GITHUB = "GitHub";
-
-	public static final String GOOGLE_MARKET = "Google Market";
+	public static String generatePreviewFullUserLink(String siteUrl,
+			String username) {
+		return siteUrl + GenericLinkUtils.URL_PREFIX_PARAM
+				+ "account/user/preview/"
+				+ GenericLinkUtils.encodeParam(new Object[] { username });
+	}
 }

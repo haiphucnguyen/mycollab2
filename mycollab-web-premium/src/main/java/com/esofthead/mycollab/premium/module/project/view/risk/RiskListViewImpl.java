@@ -90,23 +90,21 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
 			@Override
 			public Object generateCell(final Table source, final Object itemId,
 					final Object columnId) {
-				final CheckBoxDecor cb = new CheckBoxDecor("", false);
+				final SimpleRisk item = RiskListViewImpl.this.tableItem
+						.getBeanByIndex(itemId);
+				final CheckBoxDecor cb = new CheckBoxDecor("", item
+						.isSelected());
 				cb.setImmediate(true);
 				cb.addValueChangeListener(new ValueChangeListener() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
 					public void valueChange(ValueChangeEvent event) {
-						final SimpleRisk item = RiskListViewImpl.this.tableItem
-								.getBeanByIndex(itemId);
 						RiskListViewImpl.this.tableItem
 								.fireSelectItemEvent(item);
-
 					}
 				});
 
-				final SimpleRisk item = RiskListViewImpl.this.tableItem
-						.getBeanByIndex(itemId);
 				item.setExtraData(cb);
 				return cb;
 			}
