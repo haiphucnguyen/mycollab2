@@ -5,15 +5,15 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultCrudService;
-import com.esofthead.mycollab.module.user.dao.AccountSettingsMapper;
 import com.esofthead.mycollab.module.user.dao.AccountThemeMapper;
 import com.esofthead.mycollab.module.user.dao.AccountThemeMapperExt;
 import com.esofthead.mycollab.module.user.domain.AccountSettings;
-import com.esofthead.mycollab.module.user.domain.AccountSettingsExample;
 import com.esofthead.mycollab.module.user.domain.AccountTheme;
 import com.esofthead.mycollab.module.user.domain.AccountThemeExample;
+import com.esofthead.mycollab.module.user.service.AccountSettingService;
 import com.esofthead.mycollab.module.user.service.AccountThemeService;
 
 /**
@@ -35,7 +35,7 @@ public class AccountThemeServiceImpl extends
 	private AccountThemeMapperExt accountThemeMapperExt;
 
 	@Autowired
-	private AccountSettingsMapper accountSettingsMapper;
+	private AccountSettingService accountSettingService;
 
 	@Override
 	public ICrudGenericDAO<Integer, AccountTheme> getCrudMapper() {
@@ -44,12 +44,10 @@ public class AccountThemeServiceImpl extends
 
 	@Override
 	public AccountTheme getAccountTheme(int saccountid) {
-		AccountSettingsExample accountEx = new AccountSettingsExample();
-		accountEx.createCriteria().andSaccountidEqualTo(saccountid);
-		List<AccountSettings> accountSettings = accountSettingsMapper
-				.selectByExample(accountEx);
-		if (accountSettings == null || accountSettings.size() == 0
-				|| accountSettings.get(0).getDefaultthemeid() == null) {
+		AccountSettings accountSetting = accountSettingService
+				.findAccountSetting(saccountid);
+
+		if (accountSetting.getDefaultthemeid() == null) {
 			AccountTheme defaultTheme = getDefaultTheme();
 			if (defaultTheme != null) {
 				AccountTheme result = (AccountTheme) defaultTheme.copy();
@@ -57,14 +55,13 @@ public class AccountThemeServiceImpl extends
 				result.setIsdefault(false);
 				return result;
 			} else {
-				return null;
+				throw new MyCollabException("Can not find default theme");
 			}
+		} else {
+			AccountTheme accountTheme = userThemeMapper
+					.selectByPrimaryKey(accountSetting.getDefaultthemeid());
+			return accountTheme;
 		}
-
-		AccountTheme accountTheme = userThemeMapper
-				.selectByPrimaryKey(accountSettings.get(0).getDefaultthemeid());
-
-		return accountTheme;
 	}
 
 	@Override
@@ -73,7 +70,7 @@ public class AccountThemeServiceImpl extends
 		ex.createCriteria().andIsdefaultEqualTo(true);
 		List<AccountTheme> defaultThemes = userThemeMapper.selectByExample(ex);
 		if (defaultThemes == null || defaultThemes.size() == 0) {
-			return null;
+			throw new MyCollabException("Can not find default theme");
 		}
 
 		return defaultThemes.get(0);
@@ -84,16 +81,11 @@ public class AccountThemeServiceImpl extends
 		if (theme.getId() == null) {
 			int result = accountThemeMapperExt.saveAccountTheme(theme);
 			if (result == 1) {
-				AccountSettingsExample ex = new AccountSettingsExample();
-				ex.createCriteria().andSaccountidEqualTo(saccountid);
-				List<AccountSettings> accountSettings = accountSettingsMapper
-						.selectByExample(ex);
-				if (accountSettings == null || accountSettings.size() == 0) {
-					return;
-				}
-				AccountSettings accountSetting = accountSettings.get(0);
+
+				AccountSettings accountSetting = accountSettingService
+						.findAccountSetting(saccountid);
 				accountSetting.setDefaultthemeid(theme.getId());
-				accountSettingsMapper.updateByPrimaryKey(accountSetting);
+				accountSettingService.updateWithSession(accountSetting, "");
 			}
 		} else {
 			userThemeMapper.updateByPrimaryKey(theme);
