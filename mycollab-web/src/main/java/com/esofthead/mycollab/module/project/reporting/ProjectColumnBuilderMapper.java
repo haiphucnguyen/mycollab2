@@ -20,6 +20,7 @@ import org.springframework.stereotype.Component;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
 import com.esofthead.mycollab.module.project.domain.SimpleProblem;
+import com.esofthead.mycollab.module.project.domain.SimpleProjectRole;
 import com.esofthead.mycollab.module.project.domain.SimpleRisk;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.SimpleComponent;
@@ -51,6 +52,7 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
 		ColumnBuilderClassMapper.put(SimpleVersion.class, buildVersionMap());
 		ColumnBuilderClassMapper.put(SimpleRisk.class, buildRiskMap());
 		ColumnBuilderClassMapper.put(SimpleProblem.class, buildProblemMap());
+		ColumnBuilderClassMapper.put(SimpleProjectRole.class, buildRoleMap());
 	}
 
 	private Map<String, ComponentBuilder> buildBugMap() {
@@ -313,6 +315,27 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
 		map.put("datedue", ComponentBuilderWrapper
 				.buildDateText(new DateExpression("datedue")));
 
+		return map;
+	}
+
+	private Map<String, ComponentBuilder> buildRoleMap() {
+		log.debug("Build report mapper for project::role module");
+
+		Map<String, ComponentBuilder> map = new HashMap<String, ComponentBuilder>();
+		DRIExpression<String> summaryTitleExpr = new StringExpression(
+				"rolename");
+		DRIExpression<String> summaryHrefExpr = new AbstractSimpleExpression<String>() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public String evaluate(ReportParameters reportParameters) {
+				Integer roleid = reportParameters.getFieldValue("id");
+				return ProjectLinkBuilder.generateRolePreviewFullLink(
+						CurrentProjectVariables.getProjectId(), roleid);
+			}
+		};
+		map.put("rolename", ComponentBuilderWrapper.buildHyperLink(
+				summaryTitleExpr, summaryHrefExpr));
 		return map;
 	}
 
