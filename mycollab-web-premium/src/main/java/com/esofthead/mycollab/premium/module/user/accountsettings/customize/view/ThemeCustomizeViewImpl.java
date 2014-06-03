@@ -38,6 +38,7 @@ import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.ServiceMenu;
 import com.esofthead.mycollab.vaadin.ui.ThemeManager;
+import com.esofthead.mycollab.vaadin.ui.ToggleButtonGroup;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.VerticalTabsheet;
 import com.esofthead.mycollab.web.CustomLayoutLoader;
@@ -94,6 +95,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements
 	@Override
 	public void customizeTheme(AccountTheme theme) {
 		accountTheme = theme;
+		ThemeManager.loadDemoTheme(accountTheme);
 		mainLayout.getBody().removeAllComponents();
 
 		VerticalLayout mainBody = new VerticalLayout();
@@ -109,17 +111,36 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements
 		HorizontalLayout controlButton = new HorizontalLayout();
 		controlButton.setWidth("100%");
 		controlButton.setMargin(true);
-		controlButton.addComponent(new Button("Save",
+		controlButton.setSpacing(true);
+		Button saveBtn = new Button("Save", new Button.ClickListener() {
+			private static final long serialVersionUID = -6901103392231786935L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				EventBus.getInstance()
+						.fireEvent(
+								new AccountCustomizeEvent.SaveTheme(this,
+										accountTheme));
+			}
+		});
+		saveBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+		controlButton.addComponent(saveBtn);
+
+		Button resetToDefaultBtn = new Button("Reset to Default",
 				new Button.ClickListener() {
-					private static final long serialVersionUID = -6901103392231786935L;
+					private static final long serialVersionUID = 5182152510759528123L;
 
 					@Override
 					public void buttonClick(ClickEvent event) {
 						EventBus.getInstance().fireEvent(
-								new AccountCustomizeEvent.SaveTheme(this,
-										accountTheme));
+								new AccountCustomizeEvent.ResetTheme(
+										ThemeCustomizeViewImpl.this, null));
 					}
-				}));
+				});
+		resetToDefaultBtn.setStyleName(UIConstants.THEME_RED_LINK);
+		controlButton.addComponent(resetToDefaultBtn);
+		controlButton.setExpandRatio(resetToDefaultBtn, 1.0f);
+
 		mainBody.addComponent(controlButton);
 
 		mainLayout.addBody(mainBody);
@@ -655,14 +676,19 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements
 		blockBody.setMargin(new MarginInfo(false, true, false, true));
 		blockLayout.addComponent(blockBody);
 
-		// GridLayout propertyLayout = new GridLayout(3, 2);
+		GridLayout propertyLayout = new GridLayout(3, 2);
+		propertyLayout.setStyleName("example-block");
+		propertyLayout.addStyleName("no-border");
+		propertyLayout.setSpacing(true);
+		blockBody.addComponent(propertyLayout);
+
+		// Action Button
 
 		VerticalLayout actionBtnPanel = new VerticalLayout();
-		actionBtnPanel.setStyleName("example-block");
 		actionBtnPanel.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
 		actionBtnPanel.setSizeUndefined();
 		actionBtnPanel.setSpacing(true);
-		blockBody.addComponent(actionBtnPanel);
+		propertyLayout.addComponent(actionBtnPanel, 0, 0);
 
 		Button exampleActionBtn = new Button("Button");
 		exampleActionBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
@@ -704,7 +730,298 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements
 		});
 		actionBtnColorPane.addComponent(actionBtnText);
 
+		// Option Button
+
+		VerticalLayout optionBtnPanel = new VerticalLayout();
+		optionBtnPanel.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
+		optionBtnPanel.setSizeUndefined();
+		optionBtnPanel.setSpacing(true);
+		optionBtnPanel.setMargin(new MarginInfo(false, false, false, true));
+		propertyLayout.addComponent(optionBtnPanel, 1, 0);
+
+		Button exampleOptionBtn = new Button("Button");
+		exampleOptionBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
+		optionBtnPanel.addComponent(exampleOptionBtn);
+
+		HorizontalLayout optionBtnColorPane = new HorizontalLayout();
+		optionBtnColorPane
+				.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
+		optionBtnColorPane.setSpacing(true);
+		optionBtnPanel.addComponent(optionBtnColorPane);
+
+		CustomColorPickerArea optionBtnBg = new CustomColorPickerArea(
+				"Button Background", accountTheme.getOptionbtn());
+		optionBtnBg.addColorChangeListener(new ColorChangeListener() {
+			private static final long serialVersionUID = -3852566371241071966L;
+
+			@Override
+			public void colorChanged(ColorChangeEvent event) {
+				String colorHexString = event.getColor().getCSS().substring(1)
+						.toUpperCase();
+				accountTheme.setOptionbtn(colorHexString);
+				ThemeManager.loadDemoTheme(accountTheme);
+			}
+		});
+		optionBtnColorPane.addComponent(optionBtnBg);
+
+		CustomColorPickerArea optionBtnText = new CustomColorPickerArea(
+				"Button Text", accountTheme.getOptionbtntext());
+		optionBtnText.addColorChangeListener(new ColorChangeListener() {
+			private static final long serialVersionUID = 7947045019055649130L;
+
+			@Override
+			public void colorChanged(ColorChangeEvent event) {
+				String colorHexString = event.getColor().getCSS().substring(1)
+						.toUpperCase();
+				accountTheme.setOptionbtntext(colorHexString);
+				ThemeManager.loadDemoTheme(accountTheme);
+			}
+		});
+		optionBtnColorPane.addComponent(optionBtnText);
+
+		// Control Button
+
+		VerticalLayout controlBtnPanel = new VerticalLayout();
+		controlBtnPanel.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
+		controlBtnPanel.setSizeUndefined();
+		controlBtnPanel.setSpacing(true);
+		controlBtnPanel.setMargin(new MarginInfo(false, false, false, true));
+		propertyLayout.addComponent(controlBtnPanel, 2, 0);
+
+		Button exampleControlBtn = new Button("Button");
+		exampleControlBtn.setStyleName(UIConstants.THEME_BROWN_LINK);
+		controlBtnPanel.addComponent(exampleControlBtn);
+
+		HorizontalLayout controlBtnColorPane = new HorizontalLayout();
+		controlBtnColorPane
+				.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
+		controlBtnColorPane.setSpacing(true);
+		controlBtnPanel.addComponent(controlBtnColorPane);
+
+		CustomColorPickerArea controlBtnBg = new CustomColorPickerArea(
+				"Button Background", accountTheme.getControlbtn());
+		controlBtnBg.addColorChangeListener(new ColorChangeListener() {
+			private static final long serialVersionUID = -3852566371241071966L;
+
+			@Override
+			public void colorChanged(ColorChangeEvent event) {
+				String colorHexString = event.getColor().getCSS().substring(1)
+						.toUpperCase();
+				accountTheme.setControlbtn(colorHexString);
+				ThemeManager.loadDemoTheme(accountTheme);
+			}
+		});
+		controlBtnColorPane.addComponent(controlBtnBg);
+
+		CustomColorPickerArea controlBtnText = new CustomColorPickerArea(
+				"Button Text", accountTheme.getControlbtntext());
+		controlBtnText.addColorChangeListener(new ColorChangeListener() {
+			private static final long serialVersionUID = 7947045019055649130L;
+
+			@Override
+			public void colorChanged(ColorChangeEvent event) {
+				String colorHexString = event.getColor().getCSS().substring(1)
+						.toUpperCase();
+				accountTheme.setControlbtntext(colorHexString);
+				ThemeManager.loadDemoTheme(accountTheme);
+			}
+		});
+		controlBtnColorPane.addComponent(controlBtnText);
+
+		// Danger Button
+
+		VerticalLayout dangerBtnPanel = new VerticalLayout();
+		dangerBtnPanel.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
+		dangerBtnPanel.setSizeUndefined();
+		dangerBtnPanel.setSpacing(true);
+		dangerBtnPanel.setMargin(new MarginInfo(true, false, false, false));
+		propertyLayout.addComponent(dangerBtnPanel, 0, 1);
+
+		Button exampleDangerBtn = new Button("Button");
+		exampleDangerBtn.setStyleName(UIConstants.THEME_RED_LINK);
+		dangerBtnPanel.addComponent(exampleDangerBtn);
+
+		HorizontalLayout dangerBtnColorPane = new HorizontalLayout();
+		dangerBtnColorPane
+				.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
+		dangerBtnColorPane.setSpacing(true);
+		dangerBtnPanel.addComponent(dangerBtnColorPane);
+
+		CustomColorPickerArea dangerBtnBg = new CustomColorPickerArea(
+				"Button Background", accountTheme.getDangerbtn());
+		dangerBtnBg.addColorChangeListener(new ColorChangeListener() {
+			private static final long serialVersionUID = -3852566371241071966L;
+
+			@Override
+			public void colorChanged(ColorChangeEvent event) {
+				String colorHexString = event.getColor().getCSS().substring(1)
+						.toUpperCase();
+				accountTheme.setDangerbtn(colorHexString);
+				ThemeManager.loadDemoTheme(accountTheme);
+			}
+		});
+		dangerBtnColorPane.addComponent(dangerBtnBg);
+
+		CustomColorPickerArea dangerBtnText = new CustomColorPickerArea(
+				"Button Text", accountTheme.getDangerbtntext());
+		dangerBtnText.addColorChangeListener(new ColorChangeListener() {
+			private static final long serialVersionUID = 7947045019055649130L;
+
+			@Override
+			public void colorChanged(ColorChangeEvent event) {
+				String colorHexString = event.getColor().getCSS().substring(1)
+						.toUpperCase();
+				accountTheme.setDangerbtntext(colorHexString);
+				ThemeManager.loadDemoTheme(accountTheme);
+			}
+		});
+		dangerBtnColorPane.addComponent(dangerBtnText);
+
+		// Clear Button
+
+		VerticalLayout clearBtnPanel = new VerticalLayout();
+		clearBtnPanel.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
+		clearBtnPanel.setSizeUndefined();
+		clearBtnPanel.setSpacing(true);
+		clearBtnPanel.setMargin(new MarginInfo(true, false, false, true));
+		propertyLayout.addComponent(clearBtnPanel, 1, 1);
+
+		Button exampleClearBtn = new Button("Button");
+		exampleClearBtn.setStyleName(UIConstants.THEME_BLANK_LINK);
+		clearBtnPanel.addComponent(exampleClearBtn);
+
+		HorizontalLayout clearBtnColorPane = new HorizontalLayout();
+		clearBtnColorPane.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
+		clearBtnColorPane.setSpacing(true);
+		clearBtnPanel.addComponent(clearBtnColorPane);
+
+		CustomColorPickerArea clearBtnBg = new CustomColorPickerArea(
+				"Button Background", accountTheme.getClearbtn());
+		clearBtnBg.addColorChangeListener(new ColorChangeListener() {
+			private static final long serialVersionUID = -3852566371241071966L;
+
+			@Override
+			public void colorChanged(ColorChangeEvent event) {
+				String colorHexString = event.getColor().getCSS().substring(1)
+						.toUpperCase();
+				accountTheme.setClearbtn(colorHexString);
+				ThemeManager.loadDemoTheme(accountTheme);
+			}
+		});
+		clearBtnColorPane.addComponent(clearBtnBg);
+
+		CustomColorPickerArea clearBtnText = new CustomColorPickerArea(
+				"Button Text", accountTheme.getClearbtntext());
+		clearBtnText.addColorChangeListener(new ColorChangeListener() {
+			private static final long serialVersionUID = 7947045019055649130L;
+
+			@Override
+			public void colorChanged(ColorChangeEvent event) {
+				String colorHexString = event.getColor().getCSS().substring(1)
+						.toUpperCase();
+				accountTheme.setClearbtntext(colorHexString);
+				ThemeManager.loadDemoTheme(accountTheme);
+			}
+		});
+		clearBtnColorPane.addComponent(clearBtnText);
+
+		// Toggle Button
+
+		VerticalLayout toggleBtnPanel = new VerticalLayout();
+		toggleBtnPanel.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
+		toggleBtnPanel.setSizeUndefined();
+		toggleBtnPanel.setSpacing(true);
+		toggleBtnPanel.setMargin(new MarginInfo(true, false, false, true));
+		propertyLayout.addComponent(toggleBtnPanel, 2, 1);
+
+		final ToggleButtonGroup exampleToggleBtn = new ToggleButtonGroup();
+		toggleBtnPanel.addComponent(exampleToggleBtn);
+
+		// Button.ClickListener toggleListener = new Button.ClickListener() {
+		// private static final long serialVersionUID = -4588278785150734304L;
+		//
+		// @Override
+		// public void buttonClick(ClickEvent event) {
+		// Iterator<Component> iterator = exampleToggleBtn.iterator();
+		// while (iterator.hasNext()) {
+		// iterator.next().removeStyleName(UIConstants.BTN_ACTIVE);
+		// }
+		// event.getButton().addStyleName(UIConstants.BTN_ACTIVE);
+		// }
+		// };
+		Button firstBtn = new Button("Button 1");
+		firstBtn.addStyleName(UIConstants.BTN_ACTIVE);
+		exampleToggleBtn.addButton(firstBtn);
+		exampleToggleBtn.addButton(new Button("Button 2"));
+
+		GridLayout toggleBtnColorPane = new GridLayout(2, 2);
+		toggleBtnColorPane
+				.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
+		toggleBtnColorPane.setSpacing(true);
+		toggleBtnColorPane.addStyleName("no-border");
+		toggleBtnPanel.addComponent(toggleBtnColorPane);
+
+		CustomColorPickerArea toggleBtnBgSelected = new CustomColorPickerArea(
+				"Selected Button Background",
+				accountTheme.getTogglebtnselected());
+		toggleBtnBgSelected.addColorChangeListener(new ColorChangeListener() {
+			private static final long serialVersionUID = -3852566371241071966L;
+
+			@Override
+			public void colorChanged(ColorChangeEvent event) {
+				String colorHexString = event.getColor().getCSS().substring(1)
+						.toUpperCase();
+				accountTheme.setTogglebtnselected(colorHexString);
+				ThemeManager.loadDemoTheme(accountTheme);
+			}
+		});
+		toggleBtnColorPane.addComponent(toggleBtnBgSelected, 0, 0);
+
+		CustomColorPickerArea toggleBtnBg = new CustomColorPickerArea(
+				"Button Background", accountTheme.getTogglebtn());
+		toggleBtnBg.addColorChangeListener(new ColorChangeListener() {
+			private static final long serialVersionUID = -3852566371241071966L;
+
+			@Override
+			public void colorChanged(ColorChangeEvent event) {
+				String colorHexString = event.getColor().getCSS().substring(1)
+						.toUpperCase();
+				accountTheme.setTogglebtn(colorHexString);
+				ThemeManager.loadDemoTheme(accountTheme);
+			}
+		});
+		toggleBtnColorPane.addComponent(toggleBtnBg, 1, 0);
+
+		CustomColorPickerArea toggleBtnText = new CustomColorPickerArea(
+				"Button Text", accountTheme.getTogglebtntext());
+		toggleBtnText.addColorChangeListener(new ColorChangeListener() {
+			private static final long serialVersionUID = 7947045019055649130L;
+
+			@Override
+			public void colorChanged(ColorChangeEvent event) {
+				String colorHexString = event.getColor().getCSS().substring(1)
+						.toUpperCase();
+				accountTheme.setTogglebtntext(colorHexString);
+				ThemeManager.loadDemoTheme(accountTheme);
+			}
+		});
+		toggleBtnColorPane.addComponent(toggleBtnText, 0, 1);
+
+		CustomColorPickerArea toggleBtnTextSelected = new CustomColorPickerArea(
+				"Selected Button Text", accountTheme.getTogglebtntextselected());
+		toggleBtnTextSelected.addColorChangeListener(new ColorChangeListener() {
+			private static final long serialVersionUID = 7947045019055649130L;
+
+			@Override
+			public void colorChanged(ColorChangeEvent event) {
+				String colorHexString = event.getColor().getCSS().substring(1)
+						.toUpperCase();
+				accountTheme.setTogglebtntextselected(colorHexString);
+				ThemeManager.loadDemoTheme(accountTheme);
+			}
+		});
+		toggleBtnColorPane.addComponent(toggleBtnTextSelected, 1, 1);
+
 		return blockLayout;
 	}
-
 }
