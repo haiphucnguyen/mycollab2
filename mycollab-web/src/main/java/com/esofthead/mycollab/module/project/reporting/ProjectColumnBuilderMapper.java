@@ -19,6 +19,8 @@ import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
+import com.esofthead.mycollab.module.project.ProjectTypeConstants;
+import com.esofthead.mycollab.module.project.domain.SimpleItemTimeLogging;
 import com.esofthead.mycollab.module.project.domain.SimpleProblem;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectRole;
 import com.esofthead.mycollab.module.project.domain.SimpleRisk;
@@ -31,6 +33,7 @@ import com.esofthead.mycollab.reporting.ComponentBuilderWrapper;
 import com.esofthead.mycollab.reporting.DateExpression;
 import com.esofthead.mycollab.reporting.StringExpression;
 import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 
 /**
  * 
@@ -53,6 +56,8 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
 		ColumnBuilderClassMapper.put(SimpleRisk.class, buildRiskMap());
 		ColumnBuilderClassMapper.put(SimpleProblem.class, buildProblemMap());
 		ColumnBuilderClassMapper.put(SimpleProjectRole.class, buildRoleMap());
+		ColumnBuilderClassMapper.put(SimpleItemTimeLogging.class,
+				buildTimeTrackingMap());
 	}
 
 	private Map<String, ComponentBuilder> buildBugMap() {
@@ -336,6 +341,106 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
 		};
 		map.put("rolename", ComponentBuilderWrapper.buildHyperLink(
 				summaryTitleExpr, summaryHrefExpr));
+		return map;
+	}
+
+	private Map<String, ComponentBuilder> buildTimeTrackingMap() {
+		log.debug("Build report mapper for project::timetracking module");
+
+		Map<String, ComponentBuilder> map = new HashMap<String, ComponentBuilder>();
+		DRIExpression<String> logUserTitleExpr = new StringExpression(
+				"logUserFullName");
+		DRIExpression<String> logUserHrefExpr = new AbstractSimpleExpression<String>() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public String evaluate(ReportParameters reportParameters) {
+				String assignUser = reportParameters.getFieldValue("loguser");
+				if (assignUser != null) {
+					return AccountLinkUtils.generatePreviewFullUserLink(
+							AppContext.getSiteUrl(), assignUser);
+				}
+
+				return "";
+			}
+		};
+
+		map.put("logUserFullName", ComponentBuilderWrapper.buildHyperLink(
+				logUserTitleExpr, logUserHrefExpr));
+
+		DRIExpression<String> projectTitleExpr = new StringExpression(
+				"projectName");
+		DRIExpression<String> projectHrefExpr = new AbstractSimpleExpression<String>() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public String evaluate(ReportParameters reportParameters) {
+				Integer projectid = reportParameters.getFieldValue("projectid");
+				if (projectid != null) {
+					return ProjectLinkBuilder
+							.generateProjectFullLink(projectid);
+				}
+
+				return "";
+			}
+		};
+
+		map.put("projectName", ComponentBuilderWrapper.buildHyperLink(
+				projectTitleExpr, projectHrefExpr));
+
+		map.put("logforday", ComponentBuilderWrapper
+				.buildDateText(new DateExpression("logforday")));
+
+		AbstractSimpleExpression<String> billingExpr = new AbstractSimpleExpression<String>() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public String evaluate(ReportParameters param) {
+				Boolean level = param.getFieldValue("isbillable");
+				if (level != null && level == Boolean.TRUE) {
+					return "images/yes.png";
+				} else {
+					return "images/no.png";
+				}
+			}
+		};
+		HorizontalListBuilder ratingBuilder = cmp.horizontalList()
+				.setFixedWidth(120);
+		ImageBuilder imgBuilder = cmp.image(billingExpr).setFixedDimension(80,
+				15);
+		ratingBuilder.add(imgBuilder);
+		map.put("isbillable", ratingBuilder);
+
+		DRIExpression<String> summaryTitleExpr = new StringExpression("summary");
+		DRIExpression<String> summaryHrefExpr = new AbstractSimpleExpression<String>() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public String evaluate(ReportParameters reportParameters) {
+				String type = reportParameters.getFieldValue("type");
+				Integer typeid = reportParameters.getFieldValue("typeid");
+
+				if (type == null) {
+					return "";
+				} else if (type.equals(ProjectTypeConstants.BUG)) {
+					return ProjectLinkBuilder.generateBugPreviewFullLink(
+							CurrentProjectVariables.getProjectId(), typeid);
+				} else if (type.equals(ProjectTypeConstants.TASK)) {
+					return ProjectLinkBuilder.generateTaskPreviewFullLink(
+							CurrentProjectVariables.getProjectId(), typeid);
+				} else if (type.equals(ProjectTypeConstants.PROBLEM)) {
+					return ProjectLinkBuilder.generateProblemPreviewFullLink(
+							CurrentProjectVariables.getProjectId(), typeid);
+				} else if (type.equals(ProjectTypeConstants.RISK)) {
+					return ProjectLinkBuilder.generateRiskPreviewFullLink(
+							CurrentProjectVariables.getProjectId(), typeid);
+				}
+				return type;
+			}
+		};
+		map.put("summary", ComponentBuilderWrapper.buildHyperLink(
+				summaryTitleExpr, summaryHrefExpr));
+
 		return map;
 	}
 

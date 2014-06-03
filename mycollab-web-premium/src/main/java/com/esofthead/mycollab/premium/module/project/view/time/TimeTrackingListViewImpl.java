@@ -7,7 +7,6 @@ import org.vaadin.dialogs.ConfirmDialog;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.arguments.RangeDateSearchField;
-import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.eventmanager.ApplicationEvent;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBus;
