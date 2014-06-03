@@ -25,6 +25,7 @@ import com.esofthead.mycollab.module.project.domain.SimpleItemTimeLogging;
 import com.esofthead.mycollab.module.project.domain.SimpleProblem;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectRole;
 import com.esofthead.mycollab.module.project.domain.SimpleRisk;
+import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.SimpleComponent;
 import com.esofthead.mycollab.module.tracker.domain.SimpleVersion;
@@ -49,6 +50,7 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
 
 	@Override
 	public void afterPropertiesSet() throws Exception {
+		ColumnBuilderClassMapper.put(SimpleTask.class, buildTaskMap());
 		ColumnBuilderClassMapper.put(SimpleBug.class, buildBugMap());
 		ColumnBuilderClassMapper
 				.put(SimpleComponent.class, buildComponentMap());
@@ -60,6 +62,53 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
 				buildTimeTrackingMap());
 		ColumnBuilderClassMapper.put(FollowingTicket.class,
 				buildTFollowingTicketMap());
+	}
+
+	private Map<String, ComponentBuilder> buildTaskMap() {
+		log.debug("Build report mapper for project::task module");
+		Map<String, ComponentBuilder> map = new HashMap<String, ComponentBuilder>();
+		DRIExpression<String> taskNameTitleExpr = new StringExpression(
+				"taskname");
+		DRIExpression<String> taskNameHrefExpr = new AbstractSimpleExpression<String>() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public String evaluate(ReportParameters reportParameters) {
+				Integer taskid = reportParameters.getFieldValue("id");
+				return ProjectLinkBuilder.generateTaskPreviewFullLink(
+						CurrentProjectVariables.getProjectId(), taskid);
+			}
+		};
+		map.put("taskname", ComponentBuilderWrapper.buildHyperLink(
+				taskNameTitleExpr, taskNameHrefExpr));
+
+		map.put("startdate", ComponentBuilderWrapper
+				.buildDateText(new DateExpression("startdate")));
+
+		map.put("deadline", ComponentBuilderWrapper
+				.buildDateText(new DateExpression("deadline")));
+
+		DRIExpression<String> assigneeTitleExpr = new StringExpression(
+				"assignUserFullName");
+		DRIExpression<String> assigneeHrefExpr = new AbstractSimpleExpression<String>() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public String evaluate(ReportParameters reportParameters) {
+				String assignUser = reportParameters
+						.getFieldValue("assignuser");
+				if (assignUser != null) {
+					return AccountLinkUtils.generatePreviewFullUserLink(
+							AppContext.getSiteUrl(), assignUser);
+				}
+
+				return "";
+			}
+		};
+
+		map.put("assignUserFullName", ComponentBuilderWrapper.buildHyperLink(
+				assigneeTitleExpr, assigneeHrefExpr));
+		return map;
 	}
 
 	private Map<String, ComponentBuilder> buildBugMap() {
