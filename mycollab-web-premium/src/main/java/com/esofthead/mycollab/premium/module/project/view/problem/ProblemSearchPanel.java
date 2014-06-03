@@ -5,7 +5,6 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.db.query.Param;
-import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
@@ -70,7 +69,7 @@ public class ProblemSearchPanel extends
 		Image titleIcon = new Image(null,
 				MyCollabResource
 						.newResource("icons/22/project/problem_selected.png"));
-		Label headerText = new Label("Problem List");
+		Label headerText = new Label("Problems");
 
 		final Button createBtn = new Button(
 				AppContext.getMessage(ProblemI18nEnum.NEW_PROBLEM_ACTION),
