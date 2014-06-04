@@ -73,7 +73,7 @@ public class MassUpdateRiskWindow extends MassUpdateWindow<Risk> {
 
 		// Raised By, Assign To, Date Due, Status, Consequence, Probability
 		@Override
-		public boolean attachField(Object propertyId, Field<?> field) {
+		public void attachField(Object propertyId, Field<?> field) {
 			if (propertyId.equals("raisedbyuser")) {
 				this.informationLayout.addComponent(field,
 						AppContext.getMessage(RiskI18nEnum.FORM_RAISED_BY), 0,
@@ -96,11 +96,7 @@ public class MassUpdateRiskWindow extends MassUpdateWindow<Risk> {
 			} else if (propertyId.equals("status")) {
 				this.informationLayout.addComponent(field,
 						AppContext.getMessage(RiskI18nEnum.FORM_STATUS), 1, 2);
-			} else {
-				return false;
 			}
-
-			return true;
 		}
 	}
 }

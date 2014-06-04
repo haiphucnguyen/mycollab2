@@ -38,7 +38,7 @@ public class ProblemFormLayoutFactory implements IFormLayoutFactory {
 	}
 
 	@Override
-	public boolean attachField(final Object propertyId, final Field<?> field) {
+	public void attachField(final Object propertyId, final Field<?> field) {
 		if (propertyId.equals("issuename")) {
 			this.informationLayout.addComponent(field,
 					AppContext.getMessage(ProblemI18nEnum.FORM_NAME), 0, 0, 2,
@@ -77,10 +77,6 @@ public class ProblemFormLayoutFactory implements IFormLayoutFactory {
 			this.informationLayout.addComponent(field,
 					AppContext.getMessage(ProblemI18nEnum.FORM_RESOLUTION), 0,
 					6, 2, "100%");
-		} else {
-			return false;
 		}
-
-		return true;
 	}
 }

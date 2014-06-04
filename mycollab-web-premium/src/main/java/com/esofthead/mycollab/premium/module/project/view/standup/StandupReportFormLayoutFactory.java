@@ -112,18 +112,14 @@ public abstract class StandupReportFormLayoutFactory implements
 	}
 
 	@Override
-	public boolean attachField(final Object propertyId, final Field<?> field) {
+	public void attachField(final Object propertyId, final Field<?> field) {
 		if (propertyId.equals("whatlastday")) {
 			this.whatYesterdayField.setContentComp(field);
 		} else if (propertyId.equals("whattoday")) {
 			this.whatTodayField.setContentComp(field);
 		} else if (propertyId.equals("whatproblem")) {
 			this.whatProblemField.setContentComp(field);
-		} else {
-			return false;
 		}
-
-		return true;
 	}
 
 	protected abstract Layout createTopPanel();

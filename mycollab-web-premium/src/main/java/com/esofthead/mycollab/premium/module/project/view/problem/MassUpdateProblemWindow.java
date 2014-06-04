@@ -73,7 +73,7 @@ public class MassUpdateProblemWindow extends MassUpdateWindow<Problem> {
 
 		// Raised By, Assign To, Date Due, Status, Probability
 		@Override
-		public boolean attachField(final Object propertyId, final Field<?> field) {
+		public void attachField(final Object propertyId, final Field<?> field) {
 			if (propertyId.equals("raisedbyuser")) {
 				this.informationLayout.addComponent(field,
 						AppContext.getMessage(ProblemI18nEnum.FORM_RAISED_BY),
@@ -93,11 +93,7 @@ public class MassUpdateProblemWindow extends MassUpdateWindow<Problem> {
 				this.informationLayout.addComponent(field,
 						AppContext.getMessage(ProblemI18nEnum.FORM_STATUS), 0,
 						2);
-			} else {
-				return false;
 			}
-
-			return true;
 		}
 	}
 }
