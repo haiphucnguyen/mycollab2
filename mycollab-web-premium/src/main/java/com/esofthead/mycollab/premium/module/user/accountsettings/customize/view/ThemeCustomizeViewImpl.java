@@ -89,6 +89,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements
 				MyCollabResource.newResource("icons/24/user/customize.png"));
 		mainLayout.setWidth("100%");
 		mainLayout.setStyleName("readview-layout");
+		mainLayout.addStyleName("theme-customize-view");
 
 		return mainLayout;
 	}
