@@ -87,11 +87,11 @@ public class RiskListPresenter
 			riskContainer.removeAllComponents();
 			riskContainer.addComponent(view.getWidget());
 
-			int totalCount = riskService
-					.getTotalCount((RiskSearchCriteria) data.getParams());
+			searchCriteria = (RiskSearchCriteria) data.getParams();
+			int totalCount = riskService.getTotalCount(searchCriteria);
 
 			if (totalCount > 0) {
-				doSearch((RiskSearchCriteria) data.getParams());
+				doSearch(searchCriteria);
 				displayListView(container, data);
 			} else {
 				displayNoExistItems(container, data);

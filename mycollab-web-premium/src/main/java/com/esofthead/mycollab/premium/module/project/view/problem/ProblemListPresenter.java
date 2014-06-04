@@ -87,11 +87,11 @@ public class ProblemListPresenter
 			problemContainer.removeAllComponents();
 			problemContainer.addComponent(view.getWidget());
 
-			int totalCount = problemService
-					.getTotalCount((ProblemSearchCriteria) data.getParams());
+			searchCriteria = (ProblemSearchCriteria) data.getParams();
+			int totalCount = problemService.getTotalCount(searchCriteria);
 
 			if (totalCount > 0) {
-				doSearch((ProblemSearchCriteria) data.getParams());
+				doSearch(searchCriteria);
 				displayListView(container, data);
 			} else {
 				displayNoExistItems(container, data);
