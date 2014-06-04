@@ -12,13 +12,11 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.data.util.ObjectProperty;
-import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.DateField;
-import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.RichTextArea;
@@ -146,7 +144,7 @@ public class TimeTrackingEditViewWindow extends Window implements
 						TimeTrackingEditViewWindow.this.close();
 					}
 				});
-		cancelBtn.addStyleName(UIConstants.THEME_BLANK_LINK);
+		cancelBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
 		controlsLayout.addComponent(cancelBtn);
 
 		footer.addComponent(controlsLayout);

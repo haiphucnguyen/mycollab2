@@ -679,7 +679,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 						FileBasicSearchLayout.this.nameField.setValue("");
 					}
 				});
-				cancelBtn.setStyleName(UIConstants.THEME_BLANK_LINK);
+				cancelBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
 				basicSearchBody.addComponent(cancelBtn);
 
 				return basicSearchBody;
@@ -1026,7 +1026,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 										externalDriveEditLayout);
 							}
 						});
-				cancelBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+				cancelBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
 				layout.addComponent(cancelBtn);
 				return layout;
 			}

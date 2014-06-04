@@ -195,7 +195,7 @@ public class TaskGroupAddWindow extends Window {
 								TaskGroupAddWindow.this.close();
 							}
 						});
-				cancelBtn.setStyleName(UIConstants.THEME_BLANK_LINK);
+				cancelBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
 				layout.addComponent(cancelBtn);
 
 				return layout;

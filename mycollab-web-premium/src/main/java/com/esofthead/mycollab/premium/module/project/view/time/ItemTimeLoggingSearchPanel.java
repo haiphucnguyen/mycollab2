@@ -7,7 +7,6 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
-import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
 import com.esofthead.mycollab.module.project.localization.TimeTrackingI18nEnum;
@@ -132,8 +131,7 @@ class ItemTimeLoggingSearchPanel extends
 			buttonControls.setSpacing(true);
 
 			final Button searchBtn = new Button(
-					AppContext
-							.getMessage(GenericI18Enum.BUTTON_SEARCH_LABEL),
+					AppContext.getMessage(GenericI18Enum.BUTTON_SEARCH_LABEL),
 					new Button.ClickListener() {
 						@Override
 						public void buttonClick(final ClickEvent event) {
@@ -149,8 +147,7 @@ class ItemTimeLoggingSearchPanel extends
 					.newResource("icons/16/search.png"));
 
 			final Button clearBtn = new Button(
-					AppContext
-							.getMessage(GenericI18Enum.BUTTON_CLEAR_LABEL),
+					AppContext.getMessage(GenericI18Enum.BUTTON_CLEAR_LABEL),
 					new Button.ClickListener() {
 						@Override
 						public void buttonClick(final ClickEvent event) {
@@ -160,7 +157,7 @@ class ItemTimeLoggingSearchPanel extends
 									.setDefaultValue();
 						}
 					});
-			clearBtn.setStyleName(UIConstants.THEME_BLANK_LINK);
+			clearBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
 			UiUtils.addComponent(buttonControls, clearBtn,
 					Alignment.MIDDLE_LEFT);
 			buttonControls.setExpandRatio(clearBtn, 1.0f);

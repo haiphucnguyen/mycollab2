@@ -20,7 +20,6 @@ import java.util.List;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.MyCollabException;
-import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.form.service.MasterFormService;
 import com.esofthead.mycollab.form.view.builder.type.DynaForm;
 import com.esofthead.mycollab.form.view.builder.type.DynaSection;
@@ -75,27 +74,24 @@ public class CrmCustomViewImpl extends AbstractPageView implements
 		VerticalLayout headerBox = new VerticalLayout();
 		headerBox.setWidth("100%");
 		headerBox.setSpacing(true);
-		//headerBox.addStyleName(UIConstants.HEADER_VIEW);
+		// headerBox.addStyleName(UIConstants.HEADER_VIEW);
 
 		headerLbl = new Label("abcd");
 		Image titleIcon = new Image(null,
 				MyCollabResource.newResource("icons/22/crm/layout.png"));
-		
+
 		HorizontalLayout headerTitle = new HorizontalLayout();
 		headerTitle.setWidth("100%");
 		headerTitle.setMargin(false);
 		headerTitle.setSpacing(true);
 		headerTitle.addStyleName(UIConstants.HEADER_VIEW);
 		headerTitle.setMargin(new MarginInfo(true, false, true, false));
-		
-	
-		
-		UiUtils.addComponent(headerTitle,titleIcon, Alignment.MIDDLE_LEFT);
+
+		UiUtils.addComponent(headerTitle, titleIcon, Alignment.MIDDLE_LEFT);
 		headerTitle.addComponent(headerLbl);
 		headerTitle.setComponentAlignment(headerLbl, Alignment.MIDDLE_LEFT);
 		headerTitle.setExpandRatio(headerLbl, 1.0f);
-		
-		
+
 		headerBox.addComponent(headerTitle);
 
 		VerticalLayout headerContent = new VerticalLayout();
@@ -164,7 +160,7 @@ public class CrmCustomViewImpl extends AbstractPageView implements
 
 		HorizontalLayout buttonsLayout = new HorizontalLayout();
 		buttonsLayout.setSpacing(true);
-		buttonsLayout.setMargin(new MarginInfo(true, false, true,false));
+		buttonsLayout.setMargin(new MarginInfo(true, false, true, false));
 		Button saveBtn = new Button(
 				AppContext.getMessage(GenericI18Enum.BUTTON_SAVE_LABEL),
 				new Button.ClickListener() {
@@ -185,8 +181,7 @@ public class CrmCustomViewImpl extends AbstractPageView implements
 		buttonsLayout.addComponent(saveBtn);
 
 		Button cancelBtn = new Button(
-				AppContext
-						.getMessage(GenericI18Enum.BUTTON_CANCEL_LABEL),
+				AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL_LABEL),
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
@@ -196,7 +191,7 @@ public class CrmCustomViewImpl extends AbstractPageView implements
 
 					}
 				});
-		cancelBtn.addStyleName(UIConstants.THEME_BLANK_LINK);
+		cancelBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
 		buttonsLayout.addComponent(cancelBtn);
 
 		headerContent.addComponent(buttonsLayout);
@@ -208,7 +203,7 @@ public class CrmCustomViewImpl extends AbstractPageView implements
 	public void display(String moduleName) {
 		this.moduleName = moduleName;
 		headerLbl.setValue(moduleName + ": Edit Page Layout (Beta)");
-		
+
 		headerLbl.setStyleName(UIConstants.HEADER_TEXT);
 		moduleComboBox.select(moduleName);
 

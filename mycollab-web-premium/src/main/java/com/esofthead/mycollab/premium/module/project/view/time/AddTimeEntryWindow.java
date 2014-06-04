@@ -167,7 +167,7 @@ public class AddTimeEntryWindow extends Window implements
 						AddTimeEntryWindow.this.close();
 					}
 				});
-		cancelBtn.addStyleName(UIConstants.THEME_BLANK_LINK);
+		cancelBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
 		controlsLayout.addComponent(cancelBtn);
 
 		footer.addComponent(controlsLayout);

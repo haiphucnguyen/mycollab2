@@ -61,7 +61,6 @@ public abstract class CloudDriveIntegrationOAuthWindow extends Window {
 	public CloudDriveIntegrationOAuthWindow(String title) {
 		super(title);
 		this.setWidth("420px");
-		this.setHeight("280px");
 		this.setResizable(false);
 		this.center();
 		constructBody();
@@ -108,9 +107,10 @@ public abstract class CloudDriveIntegrationOAuthWindow extends Window {
 		mainLayout = new VerticalLayout();
 		mainLayout.setWidth("100%");
 		mainLayout.setSpacing(true);
-		mainLayout.setMargin(true);
+		mainLayout.setMargin(new MarginInfo(true, true, false, true));
 
 		messageBox = new VerticalLayout();
+		messageBox.setSpacing(true);
 		mainLayout.addComponent(messageBox);
 
 		Label messageInfoLbl = new Label(
@@ -208,7 +208,7 @@ public abstract class CloudDriveIntegrationOAuthWindow extends Window {
 						CloudDriveIntegrationOAuthWindow.this.close();
 					}
 				});
-		cancelBtn.addStyleName(UIConstants.THEME_BLANK_LINK);
+		cancelBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
 		controllGroupBtn.addComponent(cancelBtn);
 
 		mainLayout.addComponent(controllGroupBtn);

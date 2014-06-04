@@ -369,7 +369,7 @@ public class BillingSummaryViewImpl extends AbstractPageView implements
 						}
 					});
 
-			cancelBtn.setStyleName(UIConstants.THEME_BLANK_LINK);
+			cancelBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
 			controlBtns.addComponent(cancelBtn);
 			controlBtns.setComponentAlignment(cancelBtn,
 					Alignment.MIDDLE_CENTER);
