@@ -12,10 +12,10 @@ import com.esofthead.mycollab.module.project.domain.SimpleRisk;
 import com.esofthead.mycollab.module.project.domain.criteria.RiskSearchCriteria;
 import com.esofthead.mycollab.module.project.service.RiskService;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
+import com.esofthead.mycollab.module.project.view.ProjectGenericListPresenter;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.desktop.ui.DefaultMassEditActionHandler;
-import com.esofthead.mycollab.vaadin.desktop.ui.ListSelectionPresenter;
 import com.esofthead.mycollab.vaadin.events.MassItemActionHandler;
 import com.esofthead.mycollab.vaadin.mvp.ListCommand;
 import com.esofthead.mycollab.vaadin.mvp.MassUpdateCommand;
@@ -32,22 +32,23 @@ import com.vaadin.ui.UI;
  * @since 1.0
  * 
  */
-public class RiskListPresenter extends
-		ListSelectionPresenter<RiskListView, RiskSearchCriteria, SimpleRisk>
+public class RiskListPresenter
+		extends
+		ProjectGenericListPresenter<RiskListView, RiskSearchCriteria, SimpleRisk>
 		implements ListCommand<RiskSearchCriteria>, MassUpdateCommand<Risk> {
 
 	private static final long serialVersionUID = 1L;
 	private RiskService riskService;
 
 	public RiskListPresenter() {
-		super(RiskListView.class);
+		super(RiskListView.class, RiskListNoItemView.class);
+
+		riskService = ApplicationContextUtil.getSpringBean(RiskService.class);
 	}
 
 	@Override
 	protected void postInitView() {
 		super.postInitView();
-
-		riskService = ApplicationContextUtil.getSpringBean(RiskService.class);
 
 		view.getPopupActionHandlers().addMassItemActionHandler(
 				new DefaultMassEditActionHandler(this) {
@@ -85,7 +86,16 @@ public class RiskListPresenter extends
 			RiskContainer riskContainer = (RiskContainer) container;
 			riskContainer.removeAllComponents();
 			riskContainer.addComponent(view.getWidget());
-			doSearch((RiskSearchCriteria) data.getParams());
+
+			int totalCount = riskService
+					.getTotalCount((RiskSearchCriteria) data.getParams());
+
+			if (totalCount > 0) {
+				doSearch((RiskSearchCriteria) data.getParams());
+				displayListView(container, data);
+			} else {
+				displayNoExistItems(container, data);
+			}
 
 			ProjectBreadcrumb breadCrumb = ViewManager
 					.getView(ProjectBreadcrumb.class);
@@ -110,13 +120,19 @@ public class RiskListPresenter extends
 			if (keyList.size() > 0) {
 				riskService.massRemoveWithSession(keyList,
 						AppContext.getUsername(), AppContext.getAccountId());
-				doSearch(searchCriteria);
-				checkWhetherEnableTableActionControl();
 			}
 		} else {
 			riskService.removeByCriteria(searchCriteria,
 					AppContext.getAccountId());
+		}
+
+		int totalCount = riskService.getTotalCount(searchCriteria);
+
+		if (totalCount > 0) {
 			doSearch(searchCriteria);
+			displayListView((ComponentContainer) view.getParent(), null);
+		} else {
+			displayNoExistItems((ComponentContainer) view.getParent(), null);
 		}
 
 	}

@@ -20,10 +20,12 @@ package com.esofthead.mycollab.module.project.view.task;
 import java.util.GregorianCalendar;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
 import com.esofthead.mycollab.module.project.domain.TaskList;
+import com.esofthead.mycollab.module.project.events.TaskListEvent;
 import com.esofthead.mycollab.module.project.localization.TaskGroupI18nEnum;
 import com.esofthead.mycollab.module.project.localization.TaskI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectTaskListService;
@@ -87,7 +89,12 @@ public class TaskGroupAddWindow extends Window {
 	}
 
 	private void notifyToReloadTaskList() {
-		this.taskView.insertTaskList(this.taskList);
+		if (this.taskView != null) {
+			this.taskView.insertTaskList(this.taskList);
+		} else {
+			EventBus.getInstance().fireEvent(
+					new TaskListEvent.GotoTaskListScreen(this, null));
+		}
 	}
 
 	private class TaskListForm extends AdvancedEditBeanForm<TaskList> {

@@ -12,10 +12,10 @@ import com.esofthead.mycollab.module.project.domain.SimpleProblem;
 import com.esofthead.mycollab.module.project.domain.criteria.ProblemSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ProblemService;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
+import com.esofthead.mycollab.module.project.view.ProjectGenericListPresenter;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.desktop.ui.DefaultMassEditActionHandler;
-import com.esofthead.mycollab.vaadin.desktop.ui.ListSelectionPresenter;
 import com.esofthead.mycollab.vaadin.events.MassItemActionHandler;
 import com.esofthead.mycollab.vaadin.mvp.MassUpdateCommand;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
@@ -33,22 +33,22 @@ import com.vaadin.ui.UI;
  */
 public class ProblemListPresenter
 		extends
-		ListSelectionPresenter<ProblemListView, ProblemSearchCriteria, SimpleProblem>
+		ProjectGenericListPresenter<ProblemListView, ProblemSearchCriteria, SimpleProblem>
 		implements MassUpdateCommand<Problem> {
 
 	private static final long serialVersionUID = 1L;
-	private ProblemService problemService;
+	private final ProblemService problemService;
 
 	public ProblemListPresenter() {
-		super(ProblemListView.class);
+		super(ProblemListView.class, ProblemListNoItemView.class);
+
+		problemService = ApplicationContextUtil
+				.getSpringBean(ProblemService.class);
 	}
 
 	@Override
 	protected void postInitView() {
 		super.postInitView();
-
-		problemService = ApplicationContextUtil
-				.getSpringBean(ProblemService.class);
 
 		view.getPopupActionHandlers().addMassItemActionHandler(
 				new DefaultMassEditActionHandler(this) {
@@ -87,7 +87,15 @@ public class ProblemListPresenter
 			problemContainer.removeAllComponents();
 			problemContainer.addComponent(view.getWidget());
 
-			doSearch((ProblemSearchCriteria) data.getParams());
+			int totalCount = problemService
+					.getTotalCount((ProblemSearchCriteria) data.getParams());
+
+			if (totalCount > 0) {
+				doSearch((ProblemSearchCriteria) data.getParams());
+				displayListView(container, data);
+			} else {
+				displayNoExistItems(container, data);
+			}
 
 			ProjectBreadcrumb breadcrumb = ViewManager
 					.getView(ProjectBreadcrumb.class);
@@ -112,13 +120,19 @@ public class ProblemListPresenter
 			if (keyList.size() > 0) {
 				problemService.massRemoveWithSession(keyList,
 						AppContext.getUsername(), AppContext.getAccountId());
-				doSearch(searchCriteria);
-				checkWhetherEnableTableActionControl();
 			}
 		} else {
 			problemService.removeByCriteria(searchCriteria,
 					AppContext.getAccountId());
+		}
+
+		int totalCount = problemService.getTotalCount(searchCriteria);
+
+		if (totalCount > 0) {
 			doSearch(searchCriteria);
+			displayListView((ComponentContainer) view.getParent(), null);
+		} else {
+			displayNoExistItems((ComponentContainer) view.getParent(), null);
 		}
 
 	}
@@ -148,6 +162,6 @@ public class ProblemListPresenter
 
 	@Override
 	public ISearchableService<ProblemSearchCriteria> getSearchService() {
-		return ApplicationContextUtil.getSpringBean(ProblemService.class);
+		return problemService;
 	}
 }
