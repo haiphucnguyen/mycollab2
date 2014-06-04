@@ -18,7 +18,8 @@
 package com.esofthead.mycollab.module.user.accountsettings.team.view;
 
 import com.esofthead.mycollab.core.utils.TimezoneMapper;
-import com.esofthead.mycollab.module.user.accountsettings.profile.view.ProfileFormLayoutFactory;
+import com.esofthead.mycollab.module.user.accountsettings.localization.UserI18nEnum;
+import com.esofthead.mycollab.module.user.accountsettings.profile.view.ProfileFormLayoutFactory.UserInformationLayout;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.view.component.RoleComboBox;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -32,6 +33,7 @@ import com.esofthead.mycollab.vaadin.ui.CountryComboBox;
 import com.esofthead.mycollab.vaadin.ui.DateComboboxSelectionField;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
+import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.TimeZoneSelectionField;
@@ -43,12 +45,13 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CustomField;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.VerticalLayout;
 
 /**
  * 
@@ -78,7 +81,7 @@ public class UserAddViewImpl extends AbstractPageView implements UserAddView {
 		this.user = item;
 		this.removeAllComponents();
 		this.addComponent(this.editUserForm);
-		this.editUserForm.setBean(this.user);
+		this.editUserForm.displayBasicForm(this.user);
 	}
 
 	@Override
@@ -89,8 +92,14 @@ public class UserAddViewImpl extends AbstractPageView implements UserAddView {
 	private class EditUserForm extends AdvancedEditBeanForm<SimpleUser> {
 		private static final long serialVersionUID = 1L;
 
-		@Override
-		public void setBean(final SimpleUser newDataSource) {
+		public void displayBasicForm(final SimpleUser newDataSource) {
+			this.setFormLayoutFactory(new BasicFormLayoutFactory());
+			this.setBeanFormFieldFactory(new BasicEditFormFieldFactory(
+					editUserForm));
+			super.setBean(newDataSource);
+		}
+
+		public void displayAdvancedForm(final SimpleUser newDataSource) {
 			this.setFormLayoutFactory(new AdvancedFormLayoutFactory());
 			this.setBeanFormFieldFactory(new AdvancedEditFormFieldFactory(
 					editUserForm));
@@ -101,16 +110,78 @@ public class UserAddViewImpl extends AbstractPageView implements UserAddView {
 	private class BasicFormLayoutFactory implements IFormLayoutFactory {
 		private static final long serialVersionUID = 1L;
 
+		private GridFormLayoutHelper basicInformationLayout;
+
 		@Override
 		public Layout getLayout() {
-			// TODO Auto-generated method stub
-			return null;
+			String title = (user.getUsername() == null) ? "New User" : user
+					.getDisplayName();
+			final AddViewLayout formAddLayout = new AddViewLayout(title,
+					MyCollabResource.newResource("icons/24/project/user.png"));
+
+			final VerticalLayout layout = new VerticalLayout();
+			final Label organizationHeader = new Label(
+					AppContext
+							.getMessage(UserI18nEnum.SECTION_BASIC_INFORMATION));
+			organizationHeader.setStyleName("h2");
+			layout.addComponent(organizationHeader);
+
+			this.basicInformationLayout = new GridFormLayoutHelper(2, 1,
+					"100%", "167px", Alignment.TOP_LEFT);
+			this.basicInformationLayout.getLayout().setWidth("100%");
+			this.basicInformationLayout.getLayout().setMargin(false);
+			this.basicInformationLayout.getLayout().addStyleName(
+					UIConstants.COLORED_GRIDLAYOUT);
+
+			layout.addComponent(this.basicInformationLayout.getLayout());
+
+			formAddLayout.addHeaderRight(createButtonControls());
+			formAddLayout.addBody(layout);
+			formAddLayout.addBottomControls(createBottomPanel());
+			return formAddLayout;
+		}
+
+		private Layout createButtonControls() {
+			final HorizontalLayout controlPanel = new HorizontalLayout();
+			final Layout controlButtons = (new EditFormControlsGenerator<SimpleUser>(
+					editUserForm)).createButtonControls();
+			controlButtons.setSizeUndefined();
+			controlPanel.addComponent(controlButtons);
+			controlPanel.setComponentAlignment(controlButtons,
+					Alignment.MIDDLE_CENTER);
+			return controlPanel;
+		}
+
+		private Layout createBottomPanel() {
+			final HorizontalLayout controlPanel = new HorizontalLayout();
+			controlPanel.setMargin(true);
+			controlPanel.setStyleName("more-info");
+			controlPanel.setHeight("40px");
+			controlPanel.setWidth("100%");
+			Button moreInfoBtn = new Button("More information...",
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void buttonClick(ClickEvent event) {
+							editUserForm.displayAdvancedForm(user);
+						}
+					});
+			moreInfoBtn.addStyleName(UIConstants.THEME_LINK);
+			controlPanel.addComponent(moreInfoBtn);
+			controlPanel.setComponentAlignment(moreInfoBtn,
+					Alignment.MIDDLE_LEFT);
+			return controlPanel;
 		}
 
 		@Override
 		public void attachField(Object propertyId, Field<?> field) {
-			// TODO Auto-generated method stub
-			
+			if (propertyId.equals("email")) {
+				basicInformationLayout.addComponent(field, "Email", 0, 0);
+			} else if (propertyId.equals("roleid")) {
+				basicInformationLayout.addComponent(field, "Role", 1, 0);
+			}
+
 		}
 
 	}
@@ -140,49 +211,25 @@ public class UserAddViewImpl extends AbstractPageView implements UserAddView {
 
 	}
 
-	private class AdvancedFormLayoutFactory extends ProfileFormLayoutFactory {
+	private class AdvancedFormLayoutFactory implements IFormLayoutFactory {
 
 		private static final long serialVersionUID = 1L;
-		private Button moreInfoBtn;
-
-		public AdvancedFormLayoutFactory() {
-			super(
-					(UserAddViewImpl.this.user.getUsername() == null) ? "New User"
-							: (user.getDisplayName()));
-			this.setAvatarLink(user.getAvatarid());
-		}
+		private UserInformationLayout userInformationLayout;
 
 		@Override
 		public Layout getLayout() {
-			final AddViewLayout formAddLayout = new AddViewLayout(
-					initFormHeader(),
+			String title = (user.getUsername() == null) ? "New User" : user
+					.getDisplayName();
+			final AddViewLayout formAddLayout = new AddViewLayout(title,
 					MyCollabResource.newResource("icons/24/project/user.png"));
 
-			final ComponentContainer topLayout = createButtonControls();
-			if (topLayout != null) {
-				formAddLayout.addHeaderRight(topLayout);
-			}
-
-			formAddLayout.setTitle(initFormTitle());
+			formAddLayout.addHeaderRight(createButtonControls());
 
 			userInformationLayout = new UserInformationLayout();
 
 			formAddLayout.addBody(userInformationLayout.getLayout());
 
-			final ComponentContainer bottomPanel = createBottomPanel();
-			if (bottomPanel != null) {
-				formAddLayout.addBottomControls(bottomPanel);
-			}
-
 			return formAddLayout;
-		}
-
-		protected String initFormHeader() {
-			return (user.getUsername() == null) ? "New User" : "Edit User";
-		}
-
-		protected String initFormTitle() {
-			return (user.getUsername() == null) ? null : user.getDisplayName();
 		}
 
 		private Layout createButtonControls() {
@@ -197,26 +244,9 @@ public class UserAddViewImpl extends AbstractPageView implements UserAddView {
 		}
 
 		@Override
-		protected Layout createBottomPanel() {
-			final HorizontalLayout controlPanel = new HorizontalLayout();
-			controlPanel.setMargin(true);
-			controlPanel.setStyleName("more-info");
-			controlPanel.setHeight("40px");
-			controlPanel.setWidth("100%");
-			moreInfoBtn = new Button("More information...",
-					new Button.ClickListener() {
-						private static final long serialVersionUID = 1L;
+		public void attachField(Object propertyId, Field<?> field) {
+			userInformationLayout.attachField(propertyId, field);
 
-						@Override
-						public void buttonClick(ClickEvent event) {
-
-						}
-					});
-			moreInfoBtn.addStyleName(UIConstants.THEME_LINK);
-			controlPanel.addComponent(moreInfoBtn);
-			controlPanel.setComponentAlignment(moreInfoBtn,
-					Alignment.MIDDLE_LEFT);
-			return controlPanel;
 		}
 	}
 
