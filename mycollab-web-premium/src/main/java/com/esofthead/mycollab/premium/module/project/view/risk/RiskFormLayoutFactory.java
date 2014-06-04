@@ -37,7 +37,7 @@ public class RiskFormLayoutFactory implements IFormLayoutFactory {
 	}
 
 	@Override
-	public boolean attachField(final Object propertyId, final Field<?> field) {
+	public void attachField(final Object propertyId, final Field<?> field) {
 		if (propertyId.equals("riskname")) {
 			this.informationLayout.addComponent(field,
 					AppContext.getMessage(RiskI18nEnum.FORM_NAME), 0, 0, 2,
@@ -75,10 +75,6 @@ public class RiskFormLayoutFactory implements IFormLayoutFactory {
 			this.informationLayout.addComponent(field,
 					AppContext.getMessage(RiskI18nEnum.FORM_RESPONSE), 0, 6, 2,
 					"100%");
-		} else {
-			return false;
 		}
-
-		return true;
 	}
 }

@@ -29,6 +29,7 @@ import com.esofthead.mycollab.module.user.accountsettings.localization.UserI18nE
 import com.esofthead.mycollab.module.user.accountsettings.view.events.AccountCustomizeEvent;
 import com.esofthead.mycollab.module.user.accountsettings.view.parameters.CustomizeScreenData;
 import com.esofthead.mycollab.module.user.domain.AccountTheme;
+import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
@@ -61,7 +62,7 @@ import com.vaadin.ui.components.colorpicker.ColorChangeListener;
 /**
  * 
  * @author MyCollab Ltd.
- * @since 4.1
+ * @since 4.1.2
  * 
  */
 
@@ -112,18 +113,22 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements
 		controlButton.setWidth("100%");
 		controlButton.setMargin(true);
 		controlButton.setSpacing(true);
-		Button saveBtn = new Button("Save", new Button.ClickListener() {
-			private static final long serialVersionUID = -6901103392231786935L;
 
-			@Override
-			public void buttonClick(ClickEvent event) {
-				EventBus.getInstance()
-						.fireEvent(
+		Button saveBtn = new Button(
+				AppContext.getMessage(GenericI18Enum.BUTTON_SAVE_LABEL),
+				new Button.ClickListener() {
+					private static final long serialVersionUID = -6901103392231786935L;
+
+					@Override
+					public void buttonClick(ClickEvent event) {
+						EventBus.getInstance().fireEvent(
 								new AccountCustomizeEvent.SaveTheme(this,
 										accountTheme));
-			}
-		});
+					}
+				});
 		saveBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+		saveBtn.setEnabled(AppContext
+				.canBeYes(RolePermissionCollections.ACCOUNT_THEME));
 		controlButton.addComponent(saveBtn);
 
 		Button resetToDefaultBtn = new Button("Reset to Default",
@@ -138,6 +143,8 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements
 					}
 				});
 		resetToDefaultBtn.setStyleName(UIConstants.THEME_RED_LINK);
+		resetToDefaultBtn.setEnabled(AppContext
+				.canBeYes(RolePermissionCollections.ACCOUNT_THEME));
 		controlButton.addComponent(resetToDefaultBtn);
 		controlButton.setExpandRatio(resetToDefaultBtn, 1.0f);
 
@@ -192,6 +199,8 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements
 		logoUploadField.setButtonCaption("Change logo");
 		logoUploadField.setSizeUndefined();
 		logoUploadField.setFieldType(FieldType.BYTE_ARRAY);
+		logoUploadField.setEnabled(AppContext
+				.canBeYes(RolePermissionCollections.ACCOUNT_THEME));
 
 		GridLayout propertyLayout = new GridLayout(2, 5);
 		propertyLayout.setSpacing(true);
