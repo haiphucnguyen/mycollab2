@@ -380,7 +380,7 @@ div.v-button-link, div.v-button-link:focus, .v-button-link:active, div.v-disable
 	background-color: rgba(0, 0, 0, 0.1);
 }
 
-.v-button.link:hover .v-button-wrap {
+.v-button.link:hover .v-button-wrap, .v-button.transparentbtn:hover .v-button-wrap {
 	background-color: transparent;
 }
 
@@ -1803,6 +1803,9 @@ input.v-textfield-errorField {
 .projectDashboardView .navigator-wrap .project-list-comp .project-list-comp-hdr .v-button-wrap {
     text-align: left;
     font-size: 13px;
+    position: relative;
+    padding-right: 20px;
+    text-overflow: ellipsis;
 }
 
 .projectDashboardView .navigator-wrap .project-list-comp .project-list-comp-hdr .v-button-wrap .v-icon {
@@ -1831,7 +1834,7 @@ input.v-textfield-errorField {
     float: right;
     position: absolute;
     right: 7px;
-    top: 10px;
+    top: 7px;
 }
 
 
