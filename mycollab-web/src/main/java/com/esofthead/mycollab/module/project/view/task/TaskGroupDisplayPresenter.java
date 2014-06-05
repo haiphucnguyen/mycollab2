@@ -71,8 +71,8 @@ public class TaskGroupDisplayPresenter
 			int totalCount = taskListService.getTotalCount(criteria);
 
 			if (totalCount > 0) {
-				view.lazyLoadView();
 				displayListView(container, data);
+				view.lazyLoadView();
 			} else {
 				displayNoExistItems(container, data);
 			}
