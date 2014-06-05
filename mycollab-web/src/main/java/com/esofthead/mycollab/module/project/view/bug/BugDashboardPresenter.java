@@ -44,10 +44,10 @@ public class BugDashboardPresenter extends AbstractPresenter<BugDashboardView> {
 		trackerContainer.gotoSubView(AppContext
 				.getMessage(BugI18nEnum.DASHBOARD_TAB));
 
-		view.displayDashboard();
-
 		ProjectBreadcrumb breadcrumb = ViewManager
 				.getView(ProjectBreadcrumb.class);
 		breadcrumb.gotoBugDashboard();
+
+		view.lazyLoadView();
 	}
 }

@@ -35,6 +35,7 @@ import com.esofthead.mycollab.module.project.localization.BugI18nEnum;
 import com.esofthead.mycollab.module.tracker.BugStatusConstants;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.mvp.AbstractLazyPageView;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
@@ -48,6 +49,7 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 /**
@@ -58,7 +60,7 @@ import com.vaadin.ui.VerticalLayout;
  */
 @SuppressWarnings("serial")
 @ViewComponent
-public class BugDashboardViewImpl extends AbstractPageView implements
+public class BugDashboardViewImpl extends AbstractLazyPageView implements
 		BugDashboardView {
 
 	private VerticalLayout leftColumn, rightColumn;
@@ -165,17 +167,17 @@ public class BugDashboardViewImpl extends AbstractPageView implements
 	}
 
 	@Override
-	public void displayDashboard() {
+	protected void displayView() {
 		initHeader();
-		this.leftColumn.removeAllComponents();
-		this.rightColumn.removeAllComponents();
+		BugDashboardViewImpl.this.leftColumn.removeAllComponents();
+		BugDashboardViewImpl.this.rightColumn.removeAllComponents();
 
-		this.rightColumn.setWidth("400px");
+		BugDashboardViewImpl.this.rightColumn.setWidth("400px");
 
 		final SimpleProject project = CurrentProjectVariables.getProject();
 
 		final MyBugListWidget myBugListWidget = new MyBugListWidget();
-		this.leftColumn.addComponent(myBugListWidget);
+		BugDashboardViewImpl.this.leftColumn.addComponent(myBugListWidget);
 		final BugSearchCriteria myBugsSearchCriteria = new BugSearchCriteria();
 		myBugsSearchCriteria
 				.setProjectId(new NumberSearchField(project.getId()));
@@ -189,7 +191,7 @@ public class BugDashboardViewImpl extends AbstractPageView implements
 		myBugListWidget.setSearchCriteria(myBugsSearchCriteria);
 
 		final DueBugWidget dueBugWidget = new DueBugWidget();
-		this.leftColumn.addComponent(dueBugWidget);
+		BugDashboardViewImpl.this.leftColumn.addComponent(dueBugWidget);
 		final BugSearchCriteria dueDefectsCriteria = new BugSearchCriteria();
 		dueDefectsCriteria.setProjectId(new NumberSearchField(project.getId()));
 		dueDefectsCriteria.setDueDate(new DateSearchField(SearchField.AND,
@@ -202,7 +204,7 @@ public class BugDashboardViewImpl extends AbstractPageView implements
 		dueBugWidget.setSearchCriteria(dueDefectsCriteria);
 
 		final RecentBugUpdateWidget updateBugWidget = new RecentBugUpdateWidget();
-		this.leftColumn.addComponent(updateBugWidget);
+		BugDashboardViewImpl.this.leftColumn.addComponent(updateBugWidget);
 
 		// Unresolved by assignee
 		final UnresolvedBugsByAssigneeWidget2 unresolvedByAssigneeWidget = new UnresolvedBugsByAssigneeWidget2();
@@ -216,7 +218,8 @@ public class BugDashboardViewImpl extends AbstractPageView implements
 								BugStatusConstants.REOPENNED }));
 		unresolvedByAssigneeWidget
 				.setSearchCriteria(unresolvedByAssigneeSearchCriteria);
-		this.rightColumn.addComponent(unresolvedByAssigneeWidget);
+		BugDashboardViewImpl.this.rightColumn
+				.addComponent(unresolvedByAssigneeWidget);
 
 		// Unresolve by priority widget
 		final UnresolvedBugsByPriorityWidget2 unresolvedByPriorityWidget = new UnresolvedBugsByPriorityWidget2();
@@ -230,7 +233,8 @@ public class BugDashboardViewImpl extends AbstractPageView implements
 								BugStatusConstants.REOPENNED }));
 		unresolvedByPriorityWidget
 				.setSearchCriteria(unresolvedByPrioritySearchCriteria);
-		this.rightColumn.addComponent(unresolvedByPriorityWidget);
+		BugDashboardViewImpl.this.rightColumn
+				.addComponent(unresolvedByPriorityWidget);
 
 		// bug chart
 		final BugSearchCriteria recentDefectsCriteria = new BugSearchCriteria();
@@ -243,7 +247,6 @@ public class BugDashboardViewImpl extends AbstractPageView implements
 				CurrentProjectVariables.getProjectId()));
 		BugChartComponent bugChartComponent = null;
 		bugChartComponent = new BugChartComponent(chartSearchCriteria, 400, 200);
-		this.rightColumn.addComponent(bugChartComponent);
-
+		BugDashboardViewImpl.this.rightColumn.addComponent(bugChartComponent);
 	}
 }

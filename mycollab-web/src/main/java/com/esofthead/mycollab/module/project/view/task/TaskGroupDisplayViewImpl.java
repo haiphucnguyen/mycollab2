@@ -45,7 +45,7 @@ import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
-import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractLazyPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.ToggleButtonGroup;
@@ -71,7 +71,7 @@ import com.vaadin.ui.VerticalLayout;
  * @since 1.0
  */
 @ViewComponent
-public class TaskGroupDisplayViewImpl extends AbstractPageView implements
+public class TaskGroupDisplayViewImpl extends AbstractLazyPageView implements
 		TaskGroupDisplayView {
 	private static final long serialVersionUID = 1L;
 
@@ -486,7 +486,7 @@ public class TaskGroupDisplayViewImpl extends AbstractPageView implements
 	}
 
 	@Override
-	public void displayTaskList() {
+	protected void displayView() {
 		displayActiveTaskGroups();
 		displayTaskStatistic();
 	}
