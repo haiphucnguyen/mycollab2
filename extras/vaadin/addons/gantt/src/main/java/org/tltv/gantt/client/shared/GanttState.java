@@ -3,13 +3,14 @@ package org.tltv.gantt.client.shared;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.vaadin.shared.Connector;
 import com.vaadin.shared.annotations.DelegateToWidget;
 
 public class GanttState extends com.vaadin.shared.AbstractComponentState {
 
     public String locale;
 
-    public Long timeZoneOffset = Long.valueOf(0);
+    public Long timeZoneOffset;
 
     @DelegateToWidget
     public Resolution resolution = Resolution.Day;
@@ -21,10 +22,10 @@ public class GanttState extends com.vaadin.shared.AbstractComponentState {
     public int firstHourOfRange;
 
     @DelegateToWidget
-    public Long startDate = Long.valueOf(-1);
+    public Long startDate;
 
     @DelegateToWidget
-    public Long endDate = Long.valueOf(-1);
+    public Long endDate;
 
     @DelegateToWidget
     public boolean resizableSteps = true;
@@ -51,5 +52,7 @@ public class GanttState extends com.vaadin.shared.AbstractComponentState {
     public String yearFormat;
 
     public List<Step> steps = new LinkedList<Step>();
+
+    public Connector verticalScrollDelegateTarget;
 
 }

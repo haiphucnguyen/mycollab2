@@ -64,7 +64,7 @@
     <dependent-module archiveName="el-api-2.2.1-b04.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/javax/el/el-api/2.2.1-b04/el-api-2.2.1-b04.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="camel-core-2.13.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/apache/camel/camel-core/2.13.0/camel-core-2.13.0.jar">
+    <dependent-module archiveName="camel-core-2.13.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/apache/camel/camel-core/2.13.1/camel-core-2.13.1.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="slf4j-api-1.7.7.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/slf4j/slf4j-api/1.7.7/slf4j-api-1.7.7.jar">
@@ -73,7 +73,7 @@
     <dependent-module archiveName="jaxb-impl-2.2.6.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/sun/xml/bind/jaxb-impl/2.2.6/jaxb-impl-2.2.6.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="camel-spring-2.13.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/apache/camel/camel-spring/2.13.0/camel-spring-2.13.0.jar">
+    <dependent-module archiveName="camel-spring-2.13.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/apache/camel/camel-spring/2.13.1/camel-spring-2.13.1.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="spring-context-4.0.5.RELEASE.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/springframework/spring-context/4.0.5.RELEASE/spring-context-4.0.5.RELEASE.jar">
@@ -484,6 +484,33 @@
     <dependent-module archiveName="c3p0-0.9.1.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/c3p0/c3p0/0.9.1.1/c3p0-0.9.1.1.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
+    <dependent-module archiveName="vaadin-push-7.2.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/vaadin/vaadin-push/7.2.1/vaadin-push-7.2.1.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="atmosphere-runtime-2.1.2.vaadin2.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/vaadin/external/atmosphere/atmosphere-runtime/2.1.2.vaadin2/atmosphere-runtime-2.1.2.vaadin2.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="vaadin-slf4j-jdk14-1.6.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/vaadin/external/slf4j/vaadin-slf4j-jdk14/1.6.1/vaadin-slf4j-jdk14-1.6.1.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="jetty-continuation-9.1.5.v20140505.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/jetty-continuation/9.1.5.v20140505/jetty-continuation-9.1.5.v20140505.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="websocket-server-9.1.5.v20140505.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/websocket/websocket-server/9.1.5.v20140505/websocket-server-9.1.5.v20140505.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="websocket-common-9.1.5.v20140505.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/websocket/websocket-common/9.1.5.v20140505/websocket-common-9.1.5.v20140505.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="websocket-api-9.1.5.v20140505.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/websocket/websocket-api/9.1.5.v20140505/websocket-api-9.1.5.v20140505.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="websocket-client-9.1.5.v20140505.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/websocket/websocket-client/9.1.5.v20140505/websocket-client-9.1.5.v20140505.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="websocket-servlet-9.1.5.v20140505.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/websocket/websocket-servlet/9.1.5.v20140505/websocket-servlet-9.1.5.v20140505.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
     <dependent-module archiveName="buttongroup-2.3.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/vaadin/addons/buttongroup/2.3/buttongroup-2.3.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
@@ -526,7 +553,7 @@
     <dependent-module archiveName="popupbutton-1.0.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/esofthead/vaadin/popupbutton/1.0.0-SNAPSHOT/popupbutton-1.0.0-SNAPSHOT.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="gantt-addon-0.3.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/tltv/gantt/gantt-addon/0.3.0/gantt-addon-0.3.0.jar">
+    <dependent-module archiveName="gantt-addon-0.3.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/tltv/gantt/gantt-addon/0.3.1-SNAPSHOT/gantt-addon-0.3.1-SNAPSHOT.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="confirmdialog-2.0.4.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/vaadin/addon/confirmdialog/2.0.4/confirmdialog-2.0.4.jar">
