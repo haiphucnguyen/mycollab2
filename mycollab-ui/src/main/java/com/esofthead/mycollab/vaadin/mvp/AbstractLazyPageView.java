@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.vaadin.mvp;
 
 import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.ui.GenericUI;
 import com.vaadin.ui.UI;
 
 /**
@@ -15,9 +16,11 @@ public abstract class AbstractLazyPageView extends AbstractPageView implements
 
 	private boolean isRunning = false;
 
+	@Override
 	public void lazyLoadView() {
 		if (!isRunning) {
 			isRunning = true;
+			((GenericUI) UI.getCurrent()).displayProgressWindow();
 			new InitializerThread().start();
 		}
 	}
@@ -35,6 +38,7 @@ public abstract class AbstractLazyPageView extends AbstractPageView implements
 						return;
 					}
 					displayView();
+					((GenericUI) UI.getCurrent()).hideProgressWindow();
 					UI.getCurrent().push();
 					isRunning = false;
 				}

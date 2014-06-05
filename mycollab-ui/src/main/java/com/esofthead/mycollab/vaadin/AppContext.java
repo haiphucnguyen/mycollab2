@@ -188,7 +188,6 @@ public class AppContext implements Serializable {
 		session = null;
 		userPreference = null;
 		billingAccount = null;
-		uiOwner.getPushConfiguration().setPushMode(PushMode.DISABLED);
 	}
 
 	public boolean isClosed() {
