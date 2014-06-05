@@ -264,7 +264,9 @@ public abstract class AbstractBeanPagedList<S extends SearchCriteria, T>
 
 		searchRequest = new SearchRequest<S>(searchCriteria, currentPage,
 				defaultNumberSearchItems);
-		doSearch();
+		do {
+			doSearch();
+		} while (false);
 	}
 
 	protected void setTotalPage(final int totalPage) {

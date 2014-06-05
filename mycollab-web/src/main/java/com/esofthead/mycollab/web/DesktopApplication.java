@@ -178,7 +178,7 @@ public class DesktopApplication extends UI {
 
 		initialUrl = this.getPage().getUriFragment();
 		MyCollabSession.putVariable(CURRENT_APP, this);
-		currentContext = new AppContext();
+		currentContext = new AppContext(this);
 		postSetupApp(request);
 		try {
 			currentContext.initDomain(initialSubDomain);
@@ -227,7 +227,8 @@ public class DesktopApplication extends UI {
 		log.debug("Application is closed. Clean all resources");
 		clearSession();
 		currentContext = null;
-		VaadinSession.getCurrent().close();
+		this.getSession().getPendingAccessQueue().clear();
+		this.getSession().close();
 		super.close();
 	}
 

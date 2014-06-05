@@ -70,13 +70,10 @@ public abstract class ProjectGenericListPresenter<V extends ListView<S, B>, S ex
 
 	private void displayView(ComponentContainer container, ScreenData<?> data) {
 		container.removeAllComponents();
-		long time = System.currentTimeMillis();
 		if (candidateView instanceof LazyPageView) {
 			candidateView.removeAllComponents();
 		}
-		System.out.println("DER1: " + (System.currentTimeMillis() - time));
 		container.addComponent(candidateView);
-		System.out.println("DER2: " + (System.currentTimeMillis() - time));
 	}
 
 }

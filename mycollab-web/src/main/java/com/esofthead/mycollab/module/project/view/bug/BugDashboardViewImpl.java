@@ -68,11 +68,10 @@ public class BugDashboardViewImpl extends AbstractLazyPageView implements
 
 	public BugDashboardViewImpl() {
 		super();
-		this.setMargin(new MarginInfo(false, true, false, true));
-		this.initUI();
 	}
 
 	private void initUI() {
+		this.setMargin(new MarginInfo(false, true, false, true));
 		header = new HorizontalLayout();
 		header.setWidth("100%");
 		header.addStyleName("hdr-view");
@@ -98,11 +97,11 @@ public class BugDashboardViewImpl extends AbstractLazyPageView implements
 		body.setComponentAlignment(this.rightColumn, Alignment.TOP_RIGHT);
 
 		this.addComponent(body);
+
+		initHeader();
 	}
 
 	private void initHeader() {
-		header.removeAllComponents();
-
 		final Label title = new Label(
 				AppContext.getMessage(BugI18nEnum.BUG_DASHBOARD_TITLE));
 		title.setStyleName("hdr-text");
@@ -168,7 +167,7 @@ public class BugDashboardViewImpl extends AbstractLazyPageView implements
 
 	@Override
 	protected void displayView() {
-		initHeader();
+		initUI();
 		BugDashboardViewImpl.this.leftColumn.removeAllComponents();
 		BugDashboardViewImpl.this.rightColumn.removeAllComponents();
 

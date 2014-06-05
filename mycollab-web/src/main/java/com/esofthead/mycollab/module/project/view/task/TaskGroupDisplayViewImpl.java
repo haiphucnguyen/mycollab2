@@ -487,12 +487,6 @@ public class TaskGroupDisplayViewImpl extends AbstractLazyPageView implements
 	@Override
 	protected void displayView() {
 		constructUI();
-		try {
-			Thread.sleep(10000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		displayActiveTaskGroups();
 		displayTaskStatistic();
 	}
