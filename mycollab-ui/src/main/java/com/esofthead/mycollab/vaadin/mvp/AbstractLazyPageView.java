@@ -12,8 +12,13 @@ public abstract class AbstractLazyPageView extends AbstractPageView implements
 		LazyPageView {
 	private static final long serialVersionUID = 1L;
 
+	private boolean isRunning = false;
+
 	public void lazyLoadView() {
-		new InitializerThread().start();
+		if (!isRunning) {
+			isRunning = true;
+			new InitializerThread().start();
+		}
 	}
 
 	abstract protected void displayView();
@@ -27,6 +32,7 @@ public abstract class AbstractLazyPageView extends AbstractPageView implements
 				public void run() {
 					displayView();
 					UI.getCurrent().push();
+					isRunning = false;
 				}
 
 			});

@@ -102,14 +102,6 @@ public class TaskGroupDisplayViewImpl extends AbstractLazyPageView implements
 
 	public TaskGroupDisplayViewImpl() {
 		super();
-		this.setMargin(new MarginInfo(false, true, true, true));
-		this.setSpacing(true);
-
-		this.constructUI();
-
-		displayAdvancedView();
-		isSimpleDisplay = false;
-
 	}
 
 	private void implementTaskFilterButton() {
@@ -195,6 +187,10 @@ public class TaskGroupDisplayViewImpl extends AbstractLazyPageView implements
 	}
 
 	private void constructUI() {
+		this.removeAllComponents();
+		this.setMargin(new MarginInfo(false, true, true, true));
+		this.setSpacing(true);
+
 		header = new HorizontalLayout();
 		header.setMargin(new MarginInfo(true, false, true, false));
 		header.setStyleName("hdr-view");
@@ -438,6 +434,9 @@ public class TaskGroupDisplayViewImpl extends AbstractLazyPageView implements
 					}
 				});
 		basicSearchView.removeComponent(basicSearchView.getComponent(0));
+
+		displayAdvancedView();
+		isSimpleDisplay = false;
 	}
 
 	private void doSearch(TaskSearchCriteria searchCriteria) {
@@ -487,6 +486,7 @@ public class TaskGroupDisplayViewImpl extends AbstractLazyPageView implements
 
 	@Override
 	protected void displayView() {
+		constructUI();
 		try {
 			Thread.sleep(10000);
 		} catch (InterruptedException e) {

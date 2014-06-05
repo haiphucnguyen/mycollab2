@@ -20,6 +20,7 @@ import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.ValuedBean;
 import com.esofthead.mycollab.vaadin.desktop.ui.ListSelectionPresenter;
 import com.esofthead.mycollab.vaadin.desktop.ui.ListView;
+import com.esofthead.mycollab.vaadin.mvp.LazyPageView;
 import com.esofthead.mycollab.vaadin.mvp.PageView;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
@@ -69,7 +70,13 @@ public abstract class ProjectGenericListPresenter<V extends ListView<S, B>, S ex
 
 	private void displayView(ComponentContainer container, ScreenData<?> data) {
 		container.removeAllComponents();
+		long time = System.currentTimeMillis();
+		if (candidateView instanceof LazyPageView) {
+			candidateView.removeAllComponents();
+		}
+		System.out.println("DER1: " + (System.currentTimeMillis() - time));
 		container.addComponent(candidateView);
+		System.out.println("DER2: " + (System.currentTimeMillis() - time));
 	}
 
 }
