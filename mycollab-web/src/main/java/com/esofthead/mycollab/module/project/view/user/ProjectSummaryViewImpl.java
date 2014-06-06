@@ -43,7 +43,6 @@ public class ProjectSummaryViewImpl extends AbstractLazyPageView implements
 
 	@Override
 	protected void displayView() {
-		this.removeAllComponents();
 		this.setMargin(new MarginInfo(true, false, false, false));
 		this.setSpacing(true);
 
