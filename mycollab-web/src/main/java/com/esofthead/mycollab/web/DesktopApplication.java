@@ -333,9 +333,7 @@ public class DesktopApplication extends UI implements GenericUI {
 
 	@Override
 	public void displayProgressWindow() {
-		if (progressIndicator.isAttached()) {
-			progressIndicator.setVisible(true);
-		} else {
+		if (progressIndicator.getParent() == null) {
 			this.addWindow(progressIndicator);
 		}
 	}

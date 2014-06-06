@@ -1,6 +1,5 @@
 package com.esofthead.mycollab.vaadin.mvp;
 
-import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.GenericUI;
 import com.vaadin.ui.UI;
 
@@ -34,9 +33,6 @@ public abstract class AbstractLazyPageView extends AbstractPageView implements
 
 				@Override
 				public void run() {
-					if (AppContext.getInstance().isClosed()) {
-						return;
-					}
 					displayView();
 					((GenericUI) UI.getCurrent()).hideProgressWindow();
 					UI.getCurrent().push();
