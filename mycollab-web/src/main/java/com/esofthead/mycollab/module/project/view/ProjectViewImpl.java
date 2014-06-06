@@ -541,9 +541,7 @@ public class ProjectViewImpl extends AbstractCssPageView implements ProjectView 
 
 	@Override
 	public Component gotoSubView(String viewId) {
-		long time = System.currentTimeMillis();
 		PageView component = (PageView) myProjectTab.selectTab(viewId);
-		System.out.println("SWITCH: " + (System.currentTimeMillis() - time));
 		return component;
 	}
 
