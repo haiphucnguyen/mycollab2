@@ -84,7 +84,6 @@ public class TaskGroupAddWindow extends Window {
 		this.taskListForm = new TaskListForm();
 		this.taskListForm.setBean(this.taskList);
 		this.setContent(this.taskListForm);
-
 		this.center();
 	}
 
