@@ -151,7 +151,7 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
 								.getBeanByIndex(itemId);
 						return new ProjectUserLink(risk.getAssigntouser(), risk
 								.getAssignToUserAvatarId(), risk
-								.getAssignedToUserFullName(), true, true);
+								.getAssignedToUserFullName());
 
 					}
 				});
@@ -168,7 +168,7 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
 								.getBeanByIndex(itemId);
 						return new ProjectUserLink(risk.getRaisedbyuser(), risk
 								.getRaisedByUserAvatarId(), risk
-								.getRaisedByUserFullName(), true, true);
+								.getRaisedByUserFullName());
 
 					}
 				});

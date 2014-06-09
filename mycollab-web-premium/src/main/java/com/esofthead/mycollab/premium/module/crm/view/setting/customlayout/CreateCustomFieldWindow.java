@@ -112,6 +112,7 @@ public class CreateCustomFieldWindow extends Window {
 	public CreateCustomFieldWindow(final ICrmCustomView crmCustomView) {
 		super("Custom Field");
 		this.setResizable(false);
+		this.setModal(true);
 		this.viewParent = crmCustomView;
 		center();
 		this.setWidth("600px");
