@@ -155,7 +155,7 @@ public class ProblemListViewImpl extends AbstractPageView implements
 								.getBeanByIndex(itemId);
 						return new ProjectUserLink(problem.getAssigntouser(),
 								problem.getAssignUserAvatarId(), problem
-										.getAssignedUserFullName(), true, true);
+										.getAssignedUserFullName());
 
 					}
 				});
@@ -172,7 +172,7 @@ public class ProblemListViewImpl extends AbstractPageView implements
 								.getBeanByIndex(itemId);
 						return new ProjectUserLink(problem.getAssigntouser(),
 								problem.getRaisedByUserAvatarId(), problem
-										.getRaisedByUserFullName(), true, true);
+										.getRaisedByUserFullName());
 
 					}
 				});
