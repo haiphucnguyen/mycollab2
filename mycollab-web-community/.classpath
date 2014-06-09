@@ -199,6 +199,7 @@
     </attributes>
   </classpathentry>
   <classpathentry kind="var" path="M2_REPO/com/esofthead/vaadin/calendarext/1.0.0-SNAPSHOT/calendarext-1.0.0-SNAPSHOT.jar" sourcepath="M2_REPO/com/esofthead/vaadin/calendarext/1.0.0-SNAPSHOT/calendarext-1.0.0-SNAPSHOT-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/vaadin/addons/animator/2.0.0/animator-2.0.0.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/jfree/jfreechart/1.0.15/jfreechart-1.0.15.jar" sourcepath="M2_REPO/org/jfree/jfreechart/1.0.15/jfreechart-1.0.15-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/jfree/jcommon/1.0.17/jcommon-1.0.17.jar" sourcepath="M2_REPO/org/jfree/jcommon/1.0.17/jcommon-1.0.17-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/bouncycastle/bcmail-jdk14/138/bcmail-jdk14-138.jar"/>
