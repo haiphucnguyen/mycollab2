@@ -45,6 +45,7 @@ class ProjectGenericTaskSelectionWindow extends Window {
 		super("Select Assignments");
 		this.center();
 		this.setResizable(false);
+		this.setModal(true);
 		this.setWidth("800px");
 		VerticalLayout content = new VerticalLayout();
 		content.setMargin(true);

@@ -317,6 +317,7 @@ public class BillingSummaryViewImpl extends AbstractPageView implements
 			this.addStyleName("updateplan-window");
 			this.setWidth("400px");
 			this.setResizable(false);
+			this.setModal(true);
 
 			contentLayout = new VerticalLayout();
 			contentLayout.setSpacing(true);

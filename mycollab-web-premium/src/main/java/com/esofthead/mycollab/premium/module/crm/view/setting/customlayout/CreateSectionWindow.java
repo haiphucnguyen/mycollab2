@@ -41,6 +41,7 @@ public class CreateSectionWindow extends Window {
 		center();
 		this.setWidth("600px");
 		this.setResizable(false);
+		this.setModal(true);
 
 		VerticalLayout contentLayout = new VerticalLayout();
 		contentLayout.setMargin(false);
