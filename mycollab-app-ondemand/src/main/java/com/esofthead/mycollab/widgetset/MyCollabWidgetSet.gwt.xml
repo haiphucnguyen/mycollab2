@@ -5,6 +5,7 @@
 <module>
 
     <!-- WS Compiler: manually edited -->
+
     <inherits name="org.vaadin.teemu.ratingstars.gwt.RatingStarsWidgetset" />
 
     <inherits name="org.vaadin.peter.contextmenu.ContextmenuWidgetset" />
@@ -19,16 +20,11 @@
     <inherits
         name="org.vaadin.risto.stylecalendar.widgetset.StyleCalendarWidgetset" />
 
-    <inherits name="com.vaadin.addon.calendar.gwt.CalendarWidgetset" />
-
-    <inherits name="com.vaadin.addon.timeline.gwt.TimelineWidgetSet" />
-
     <inherits name="com.vaadin.addon.charts.Widgetset" />
 
     <inherits name="com.vaadin.DefaultWidgetSet" />
 
     <inherits name="org.vaadin.peter.buttongroup.ButtonGroupWidgetset" />
-
 
     <inherits name="com.lexaden.breadcrumb.gwt.BreadcrumbWidgetset" />
 
@@ -42,4 +38,10 @@
     <inherits name="org.tltv.gantt.WidgetSet" />
 
     <inherits name="org.vaadin.artur.icepush.IcepushaddonWidgetset" />
+
+    <inherits name="com.esofthead.vaadin.popupbutton.WidgetSet" />
+
+    <inherits name="com.vaadin.addon.timeline.gwt.TimelineWidgetSet" />
+
+    <inherits name="com.esofthead.vaadin.calendarext.WidgetSet" />
 </module>

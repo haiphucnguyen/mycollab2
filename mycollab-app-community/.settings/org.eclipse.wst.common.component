@@ -430,10 +430,10 @@
     <dependent-module archiveName="mycollab-ui.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mycollab-ui/mycollab-ui">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="vaadin-touchkit-agpl-4.0.0.alpha3.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/vaadin/addon/vaadin-touchkit-agpl/4.0.0.alpha3/vaadin-touchkit-agpl-4.0.0.alpha3.jar">
+    <dependent-module archiveName="vaadin-touchkit-agpl-4.0.0.beta1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/vaadin/addon/vaadin-touchkit-agpl/4.0.0.beta1/vaadin-touchkit-agpl-4.0.0.beta1.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="vaadin-themes-7.2.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/vaadin/vaadin-themes/7.2.0/vaadin-themes-7.2.0.jar">
+    <dependent-module archiveName="vaadin-themes-7.2.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/vaadin/vaadin-themes/7.2.1/vaadin-themes-7.2.1.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="vaadin-client-7.2.2.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/vaadin/vaadin-client/7.2.2/vaadin-client-7.2.2.jar">
@@ -541,12 +541,6 @@
     <dependent-module archiveName="listbuilder-0.7.3.v7.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/vaadin/addons/listbuilder/0.7.3.v7/listbuilder-0.7.3.v7.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="organisationchart-1.7.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/lexaden/components/organisationchart/1.7.1/organisationchart-1.7.1.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="gwt-visualization-1.1.2.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/google/gwt/google-apis/gwt-visualization/1.1.2/gwt-visualization-1.1.2.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
     <dependent-module archiveName="popupbutton-1.0.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/esofthead/vaadin/popupbutton/1.0.0-SNAPSHOT/popupbutton-1.0.0-SNAPSHOT.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
@@ -563,6 +557,9 @@
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="animator-2.0.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/vaadin/addons/animator/2.0.0/animator-2.0.0.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="dom-0.1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/vaadin/addons/dom/0.1.0/dom-0.1.0.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="jfreechart-1.0.15.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/jfree/jfreechart/1.0.15/jfreechart-1.0.15.jar">

@@ -216,11 +216,11 @@
 		</resources>
 		
 	</build>
+
 <distributionManagement>
         <repository>
             <id>releaseNexus</id>
-            <name>My 
-        releases</name>
+            <name>My releases</name>
             <url>http://build.mycollab.com:8080/nexus/content/repositories/releases</url>
         </repository>
         <snapshotRepository>

@@ -137,7 +137,7 @@
   <classpathentry kind="var" path="M2_REPO/com/vaadin/external/streamhtmlparser/streamhtmlparser-jsilver/0.0.10.vaadin1/streamhtmlparser-jsilver-0.0.10.vaadin1.jar" sourcepath="M2_REPO/com/vaadin/external/streamhtmlparser/streamhtmlparser-jsilver/0.0.10.vaadin1/streamhtmlparser-jsilver-0.0.10.vaadin1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/vaadin/external/google/guava/16.0.1.vaadin1/guava-16.0.1.vaadin1.jar" sourcepath="M2_REPO/com/vaadin/external/google/guava/16.0.1.vaadin1/guava-16.0.1.vaadin1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/vaadin/external/google/android-json/0.0.20131108.vaadin1/android-json-0.0.20131108.vaadin1.jar" sourcepath="M2_REPO/com/vaadin/external/google/android-json/0.0.20131108.vaadin1/android-json-0.0.20131108.vaadin1-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/com/vaadin/addon/vaadin-touchkit-agpl/4.0.0.alpha3/vaadin-touchkit-agpl-4.0.0.alpha3.jar" sourcepath="M2_REPO/com/vaadin/addon/vaadin-touchkit-agpl/4.0.0.alpha3/vaadin-touchkit-agpl-4.0.0.alpha3-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/vaadin/addon/vaadin-touchkit-agpl/4.0.0.beta1/vaadin-touchkit-agpl-4.0.0.beta1.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/vaadin/vaadin-themes/7.0.0/vaadin-themes-7.0.0.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/vaadin/vaadin-client/7.2.2/vaadin-client-7.2.2.jar" sourcepath="M2_REPO/com/vaadin/vaadin-client/7.2.2/vaadin-client-7.2.2-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/vaadin/addons/icepush/0.5.5/icepush-0.5.5.jar"/>
@@ -184,8 +184,6 @@
   <classpathentry kind="var" path="M2_REPO/com/lexaden/components/breadcrumb/1.7.3/breadcrumb-1.7.3.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/vaadin/vaadin-client-compiled/7.0.0/vaadin-client-compiled-7.0.0.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/vaadin/addons/listbuilder/0.7.3.v7/listbuilder-0.7.3.v7.jar"/>
-  <classpathentry kind="var" path="M2_REPO/com/lexaden/components/organisationchart/1.7.1/organisationchart-1.7.1.jar" sourcepath="M2_REPO/com/lexaden/components/organisationchart/1.7.1/organisationchart-1.7.1-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/com/google/gwt/google-apis/gwt-visualization/1.1.2/gwt-visualization-1.1.2.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/esofthead/vaadin/popupbutton/1.0.0-SNAPSHOT/popupbutton-1.0.0-SNAPSHOT.jar" sourcepath="M2_REPO/com/esofthead/vaadin/popupbutton/1.0.0-SNAPSHOT/popupbutton-1.0.0-SNAPSHOT-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/tltv/gantt/gantt-addon/0.3.1-SNAPSHOT/gantt-addon-0.3.1-SNAPSHOT.jar" sourcepath="M2_REPO/org/tltv/gantt/gantt-addon/0.3.1-SNAPSHOT/gantt-addon-0.3.1-SNAPSHOT-sources.jar">
     <attributes>
@@ -200,6 +198,7 @@
   </classpathentry>
   <classpathentry kind="var" path="M2_REPO/com/esofthead/vaadin/calendarext/1.0.0-SNAPSHOT/calendarext-1.0.0-SNAPSHOT.jar" sourcepath="M2_REPO/com/esofthead/vaadin/calendarext/1.0.0-SNAPSHOT/calendarext-1.0.0-SNAPSHOT-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/vaadin/addons/animator/2.0.0/animator-2.0.0.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/vaadin/addons/dom/0.1.0/dom-0.1.0.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/jfree/jfreechart/1.0.15/jfreechart-1.0.15.jar" sourcepath="M2_REPO/org/jfree/jfreechart/1.0.15/jfreechart-1.0.15-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/jfree/jcommon/1.0.17/jcommon-1.0.17.jar" sourcepath="M2_REPO/org/jfree/jcommon/1.0.17/jcommon-1.0.17-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/bouncycastle/bcmail-jdk14/138/bcmail-jdk14-138.jar"/>
