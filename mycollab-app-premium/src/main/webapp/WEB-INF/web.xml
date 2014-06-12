@@ -16,7 +16,7 @@
     <listener>
         <listener-class>org.icepush.util.ExtensionRegistry</listener-class>
     </listener>
-    
+
     <servlet>
         <servlet-name>ICEPush Servlet</servlet-name>
         <servlet-class>org.vaadin.artur.icepush.ICEPushServlet</servlet-class>
@@ -65,7 +65,7 @@
         <description>
         Vaadin production mode</description>
         <param-name>productionMode</param-name>
-        <param-value>true</param-value>
+        <param-value>false</param-value>
     </context-param>
 
     <servlet>
@@ -301,4 +301,8 @@
         <res-auth>Container</res-auth>
         <res-sharing-scope>Shareable</res-sharing-scope>
     </resource-ref>
+
+    <session-config>
+        <session-timeout>30</session-timeout>
+    </session-config>
 </web-app>
