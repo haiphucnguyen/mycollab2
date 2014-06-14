@@ -4,11 +4,14 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.dom.client.Style.Overflow;
 import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HumanInputEvent;
 import com.google.gwt.event.dom.client.MouseDownEvent;
 import com.google.gwt.event.dom.client.MouseDownHandler;
@@ -26,8 +29,8 @@ import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Timer;
-import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.vaadin.addon.touchkit.gwt.client.ui.TouchButton;
 import com.vaadin.addon.touchkit.gwt.client.ui.VNavigationView;
 import com.vaadin.client.BrowserInfo;
 import com.vaadin.client.Util;
@@ -37,7 +40,7 @@ public class VMobileNavigationView extends VNavigationView {
 	private static Logger log = Logger.getLogger(VMobileNavigationView.class
 			.getName());
 
-	private final SimplePanel toggleNavBtn;
+	private final TouchButton toggleNavBtn;
 	private VMobileNavigationManager viewNavigationManager;
 
 	private static final double SPEED_THRESHOLD = 0.35;
@@ -62,9 +65,8 @@ public class VMobileNavigationView extends VNavigationView {
 		getElement().getStyle().setProperty("MozUserSelect", "none");
 		getElement().getStyle().setProperty("MsUserSelect", "none");
 
-		toggleNavBtn = new SimplePanel();
+		toggleNavBtn = GWT.create(TouchButton.class);
 		toggleNavBtn.setStylePrimaryName("toggle-nav-btn");
-		toggleNavBtn.sinkEvents(Event.MOUSEEVENTS);
 
 		scrollElement = getElement();
 		Style style = scrollElement.getStyle();
@@ -115,15 +117,15 @@ public class VMobileNavigationView extends VNavigationView {
 	}
 
 	protected void initHandlers(Widget content) {
-		toggleNavBtn.addHandler(new MouseDownHandler() {
+		toggleNavBtn.addHandler(new ClickHandler() {
 
 			@Override
-			public void onMouseDown(MouseDownEvent event) {
+			public void onClick(ClickEvent event) {
 				if (viewNavigationManager != null) {
 					viewNavigationManager.toggleMenu();
 				}
 			}
-		}, MouseDownEvent.getType());
+		}, ClickEvent.getType());
 
 		content.addHandler(new TouchStartHandler() {
 			@Override
