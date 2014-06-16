@@ -14,6 +14,7 @@
         <module>../mycollab-dao</module>
         <module>../mycollab-config</module>
         <module>../mycollab-test</module>
+        <module>../mycollab-localization</module>
         <module>../mycollab-caching</module>
         <module>../mycollab-jackrabbit</module>
         <module>../mycollab-migration</module>

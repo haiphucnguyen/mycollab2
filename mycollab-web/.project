@@ -5,6 +5,7 @@
   <projects>
     <project>mycollab-core</project>
     <project>mycollab-test</project>
+    <project>mycollab-localization</project>
     <project>mycollab-ui</project>
     <project>mycollab-dao</project>
     <project>mycollab-services</project>

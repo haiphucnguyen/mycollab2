@@ -1,20 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-  <name>mycollab-services-ondemand</name>
+  <name>mycollab-localization</name>
   <comment>NO_M2ECLIPSE_SUPPORT: Project files created with the maven-eclipse-plugin are not supported in M2Eclipse.</comment>
   <projects>
-    <project>mycollab-services</project>
     <project>mycollab-core</project>
     <project>mycollab-test</project>
-    <project>mycollab-dao</project>
-    <project>mycollab-migration</project>
-    <project>mycollab-config</project>
-    <project>mycollab-reporting</project>
-    <project>mycollab-caching</project>
-    <project>mycollab-jackrabbit</project>
-    <project>mycollab-api</project>
-    <project>mycollab-api-impl</project>
-    <project>mycollab-localization</project>
   </projects>
   <buildSpec>
     <buildCommand>
