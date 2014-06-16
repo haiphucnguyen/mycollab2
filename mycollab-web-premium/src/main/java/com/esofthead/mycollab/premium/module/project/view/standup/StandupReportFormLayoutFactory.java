@@ -1,6 +1,6 @@
 package com.esofthead.mycollab.premium.module.project.view.standup;
 
-import com.esofthead.mycollab.module.project.localization.StandupI18nEnum;
+import com.esofthead.mycollab.module.project.i18n.StandupI18nEnum;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;

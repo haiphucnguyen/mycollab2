@@ -3,7 +3,7 @@ package com.esofthead.mycollab.premium.module.project.view.standup;
 import java.util.GregorianCalendar;
 
 import com.esofthead.mycollab.module.project.domain.StandupReportWithBLOBs;
-import com.esofthead.mycollab.module.project.localization.StandupI18nEnum;
+import com.esofthead.mycollab.module.project.i18n.StandupI18nEnum;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;

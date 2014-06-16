@@ -430,6 +430,9 @@
     <dependent-module archiveName="mycollab-ui.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mycollab-ui/mycollab-ui">
       <dependency-type>uses</dependency-type>
     </dependent-module>
+    <dependent-module archiveName="mycollab-localization.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mycollab-localization/mycollab-localization">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
     <dependent-module archiveName="vaadin-touchkit-agpl-4.0.0.beta1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/vaadin/addon/vaadin-touchkit-agpl/4.0.0.beta1/vaadin-touchkit-agpl-4.0.0.beta1.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>

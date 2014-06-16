@@ -6,7 +6,6 @@ import com.esofthead.mycollab.module.file.view.components.FileSearchResultCompon
 import com.esofthead.mycollab.module.project.events.ProjectContentEvent;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
-import com.vaadin.shared.ui.MarginInfo;
 
 @ViewComponent
 public class FileSearchResultViewImpl extends AbstractPageView implements

@@ -17,8 +17,6 @@
 package com.esofthead.mycollab.premium.module.crm.view.setting.customlayout;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import com.esofthead.mycollab.form.view.builder.DynaSectionBuilder;

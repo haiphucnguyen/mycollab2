@@ -18,7 +18,6 @@ package com.esofthead.mycollab.premium.module.user.accountsettings.billing.view;
 
 import com.esofthead.mycollab.common.dao.CustomerFeedbackMapper;
 import com.esofthead.mycollab.common.domain.CustomerFeedbackWithBLOBs;
-import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.billing.service.BillingService;
 import com.esofthead.mycollab.module.user.accountsettings.localization.UserI18nEnum;

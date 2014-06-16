@@ -15,6 +15,7 @@
     <project>mycollab-jackrabbit</project>
     <project>mycollab-mobile</project>
     <project>mycollab-ui</project>
+    <project>mycollab-localization</project>
     <project>mycollab-web-community</project>
     <project>mycollab-web</project>
     <project>mycollab-esb</project>
