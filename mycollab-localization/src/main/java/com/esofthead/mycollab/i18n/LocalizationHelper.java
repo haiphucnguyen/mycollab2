@@ -23,6 +23,8 @@ public class LocalizationHelper {
 
 	private static final Map<Locale, IMessageConveyor> languageMap;
 
+	public static final Locale defaultLocale = Locale.US;
+
 	static {
 		languageMap = new HashMap<Locale, IMessageConveyor>();
 		languageMap.put(Locale.US, new MessageConveyor(Locale.US));
@@ -45,18 +47,10 @@ public class LocalizationHelper {
 	// LOCALIZATION
 	private static IMessageConveyor english = new MessageConveyor(Locale.US);
 
-	public static String getMessage(Enum key) {
+	public static String getMessage(Locale locale, Enum key, Object... objects) {
 		try {
-			return english.getMessage(key);
-		} catch (Exception e) {
-			log.error("Can not find resource key " + key, e);
-			return "Undefined";
-		}
-	}
-
-	public static String getMessage(Enum key, Object... objects) {
-		try {
-			return english.getMessage(key, objects);
+			IMessageConveyor messageConveyor = getMessageConveyor(locale);
+			return messageConveyor.getMessage(key, objects);
 		} catch (Exception e) {
 			log.error("Can not find resource key " + key, e);
 			return "Undefined";

@@ -196,7 +196,8 @@ public class AppContext implements Serializable {
 		try {
 			return getInstance().messageHelper.getMessage(key);
 		} catch (Exception e) {
-			return LocalizationHelper.getMessage(key);
+			return LocalizationHelper.getMessage(
+					LocalizationHelper.defaultLocale, key);
 		}
 	}
 
@@ -204,7 +205,8 @@ public class AppContext implements Serializable {
 		try {
 			return getInstance().messageHelper.getMessage(key, objects);
 		} catch (Exception e) {
-			return LocalizationHelper.getMessage(key, objects);
+			return LocalizationHelper.getMessage(
+					LocalizationHelper.defaultLocale, key, objects);
 		}
 	}
 
