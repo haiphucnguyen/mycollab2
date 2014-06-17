@@ -43,7 +43,7 @@
 				</div>
 			</td>
 		</tr>
-		#parse("templates/email/footer.mt")
+		#parse("templates/email/footer_ja_JP.mt")
 	</table>
 </body>
 </html>	

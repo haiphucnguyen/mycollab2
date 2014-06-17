@@ -12,14 +12,14 @@
     <table width="800" cellpadding="0" cellspacing="0" border="0" style="font: 13px Arial, 'Times New Roman', sans-serif; color: #4e4e4e; margin: 20px auto; background-color: rgb(255, 255, 255);">
        <tr>
        		<td>
-       			<div style="padding: 10px 50px; background-color: rgb(106, 201, 228);">
+       			<div style="padding: 10px 30px; background-color: rgb(106, 201, 228);">
        				<img src="${defaultUrls.cdn_url}logo-email.png" alt="esofthead-logo" width="130" height="30" style="margin: 0px; padding: 0px;">
        			</div>
        		</td>			
 		</tr>
         <tr>
             <td style="padding: 10px 30px 0px;">
-				<p><img src="${defaultUrls.cdn_url}default_user_avatar_16.png" width="16" height="16" style="display: inline-block; vertical-align: top;"/>$makeChangeUser <b>updated</b> ${itemType}:</p>
+				<p><img src="${defaultUrls.cdn_url}default_user_avatar_16.png" width="16" height="16" style="display: inline-block; vertical-align: top;"/>$makeChangeUser <b>updated</b> $itemType on:</p>
 				<p>
 				#foreach( $title in $titles )
 					#if( $foreach.count > 1 )
@@ -41,11 +41,11 @@
                     				<td style="font-weight: bold; border-bottom: 1px solid rgb(169, 169, 169); width:250px; padding: 10px; border-width: 0px 0px 1px 1px; border-style: solid; border-color: rgb(211, 239, 253);">Old Value</td>
                     				<td style="font-weight: bold; border-bottom: 1px solid rgb(169, 169, 169); width:250px; padding: 10px; border-width: 0px 0px 1px 1px; border-style: solid; border-color: rgb(211, 239, 253);">New Value</td>
                     			</tr>
-                    			#foreach ($item in $historyLog.ChangeItems)
+                    			#foreach ($item in $historyLog.changeItems)
                     				#if ($mapper.hasField($item.field))
                     				#set($fieldFormat=$mapper.getFieldLabel($item.field))
                     				<tr>
-                    					<td valign="top" style="width:240px; padding: 10px; background-color: rgb(232, 246, 255); border-width: 0px 0px 1px 1px; border-style: solid; border-color: rgb(211, 239, 253);">
+                    					<td valign="top" style="width:240px; padding: 10px 20px; background-color: rgb(232, 246, 255); border-width: 0px 0px 1px 1px; border-style: solid; border-color: rgb(211, 239, 253);">
                     						$fieldFormat.DisplayName
                     					</td>
                     					<td valign="top" style="width: 250px ;word-wrap: break-word; white-space: normal; word-break: break-all; padding: 10px; border-width: 0px 0px 1px 1px; border-style: solid; border-color: rgb(211, 239, 253);">
@@ -63,7 +63,7 @@
                 </table>
             </td>
         </tr>
-        #parse("templates/email/footer.mt")
+        #parse("templates/email/footer_ja_JP.mt")
     </table>
 </body>
 </html>

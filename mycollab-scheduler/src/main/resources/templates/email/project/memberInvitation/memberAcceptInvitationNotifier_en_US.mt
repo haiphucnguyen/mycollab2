@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>New bug created</title>
+<title>New user accepted your invitation</title>
 </head>
 <body>
 	<table width="650" cellpadding="0" cellspacing="0" border="0" style="margin: 0px auto;">
@@ -19,7 +19,7 @@
 				<div style="display: block; padding: 8px; background-color: rgb(247, 228, 221);">User "$!notification.changecomment" has accepted for the invitation of project <a href="$!projectUrl" style="color: rgb(216, 121, 55); text-decoration: underline;">$!project.name</a>.</div>
 			</td>
 		</tr>
-		#parse("templates/email/footer.mt")
+		#parse("templates/email/footer_en_US.mt")
 	</table>
 </body>
 </html>

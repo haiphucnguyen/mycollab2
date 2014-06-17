@@ -7,8 +7,6 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.esofthead.mycollab.core.LanguageSupport;
-
 import ch.qos.cal10n.IMessageConveyor;
 import ch.qos.cal10n.MessageConveyor;
 
@@ -23,23 +21,21 @@ public class LocalizationHelper {
 	private static Logger log = LoggerFactory
 			.getLogger(LocalizationHelper.class);
 
-	private static final Map<LanguageSupport, IMessageConveyor> languageMap;
+	private static final Map<Locale, IMessageConveyor> languageMap;
 
 	static {
-		languageMap = new HashMap<LanguageSupport, IMessageConveyor>();
-		languageMap
-				.put(LanguageSupport.ENGLISH, new MessageConveyor(Locale.US));
-		languageMap.put(LanguageSupport.JAPAN,
-				new MessageConveyor(Locale.JAPAN));
+		languageMap = new HashMap<Locale, IMessageConveyor>();
+		languageMap.put(Locale.US, new MessageConveyor(Locale.US));
+		languageMap.put(Locale.JAPANESE, new MessageConveyor(Locale.JAPAN));
 	}
 
-	public static IMessageConveyor getMessageConveyor(LanguageSupport language) {
+	public static IMessageConveyor getMessageConveyor(Locale language) {
 		if (language == null) {
-			return languageMap.get(LanguageSupport.ENGLISH);
+			return languageMap.get(Locale.US);
 		} else {
 			IMessageConveyor messageConveyor = languageMap.get(language);
 			if (messageConveyor == null) {
-				return languageMap.get(LanguageSupport.ENGLISH);
+				return languageMap.get(Locale.US);
 			}
 
 			return messageConveyor;

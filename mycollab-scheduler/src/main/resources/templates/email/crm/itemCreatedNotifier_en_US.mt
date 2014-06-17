@@ -60,7 +60,7 @@
                 #end
             </td>
         </tr>
-        #parse("templates/email/footer.mt")
+        #parse("templates/email/footer_en_US.mt")
     </table>
 </body>
 </html>

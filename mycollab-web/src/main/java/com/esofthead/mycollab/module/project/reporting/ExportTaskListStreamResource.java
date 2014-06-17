@@ -93,7 +93,7 @@ public class ExportTaskListStreamResource<T, S extends SearchCriteria> extends
 	public ExportTaskListStreamResource(String reportTitle,
 			ReportExportType outputForm, ISearchableService searchService,
 			S searchCriteria, RpParameterBuilder parameters) {
-		super(AppContext.getLanguageSupport(), reportTitle, outputForm);
+		super(AppContext.getUserLocale(), reportTitle, outputForm);
 		this.searchCriteria = searchCriteria;
 		this.searchService = searchService;
 		List<TableViewField> fields = Arrays.asList(TaskTableFieldDef.taskname,

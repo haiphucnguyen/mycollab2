@@ -31,7 +31,7 @@ import com.esofthead.mycollab.module.project.domain.ProjectRelayEmailNotificatio
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.project.service.ProjectNotificationSettingService;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
-import com.esofthead.mycollab.schedule.email.LinkUtils;
+import com.esofthead.mycollab.schedule.email.MailUtils;
 import com.esofthead.mycollab.schedule.email.SendingRelayEmailNotificationAction;
 
 /**
@@ -167,7 +167,7 @@ public abstract class SendMailToAllMembersAction implements
 	}
 
 	private void onInitAction(SimpleRelayEmailNotification notification) {
-		siteUrl = LinkUtils.getSiteUrl(notification.getSaccountid());
+		siteUrl = MailUtils.getSiteUrl(notification.getSaccountid());
 	}
 
 	protected abstract TemplateGenerator templateGeneratorForCreateAction(

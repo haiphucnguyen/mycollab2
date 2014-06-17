@@ -36,8 +36,8 @@ import com.esofthead.mycollab.module.user.AccountLinkUtils;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.schedule.email.ItemFieldMapper;
-import com.esofthead.mycollab.schedule.email.LinkUtils;
 import com.esofthead.mycollab.schedule.email.MailContext;
+import com.esofthead.mycollab.schedule.email.MailUtils;
 import com.esofthead.mycollab.schedule.email.crm.AccountRelayEmailNotificationAction;
 import com.esofthead.mycollab.schedule.email.format.FieldFormat;
 import com.esofthead.mycollab.schedule.email.format.html.TagBuilder;
@@ -80,7 +80,6 @@ public class AccountRelayEmailNotificationActionImpl extends
 	protected void setupMailHeaders(SimpleAccount account,
 			SimpleRelayEmailNotification emailNotification,
 			TemplateGenerator templateGenerator) {
-
 		String summary = account.getAccountname();
 		String summaryLink = CrmLinkGenerator.generateAccountPreviewFullLink(
 				siteUrl, account.getId());
@@ -194,11 +193,11 @@ public class AccountRelayEmailNotificationActionImpl extends
 		public String formatField(MailContext<?> context) {
 			SimpleAccount account = (SimpleAccount) context.getWrappedBean();
 			if (account.getAssignuser() != null) {
-				String userAvatarLink = LinkUtils.getAvatarLink(
+				String userAvatarLink = MailUtils.getAvatarLink(
 						account.getAssignUserAvatarId(), 16);
 				Img img = TagBuilder.newImg("avatar", userAvatarLink);
 				String userLink = AccountLinkUtils.generatePreviewFullUserLink(
-						LinkUtils.getSiteUrl(account.getSaccountid()),
+						MailUtils.getSiteUrl(account.getSaccountid()),
 						account.getAssignuser());
 
 				A link = TagBuilder.newA(userLink,
@@ -221,10 +220,10 @@ public class AccountRelayEmailNotificationActionImpl extends
 			SimpleUser user = userService.findUserByUserNameInAccount(value,
 					context.getUser().getAccountId());
 			if (user != null) {
-				String userAvatarLink = LinkUtils.getAvatarLink(
+				String userAvatarLink = MailUtils.getAvatarLink(
 						user.getAvatarid(), 16);
 				String userLink = AccountLinkUtils.generatePreviewFullUserLink(
-						LinkUtils.getSiteUrl(user.getAccountId()),
+						MailUtils.getSiteUrl(user.getAccountId()),
 						user.getUsername());
 				Img img = TagBuilder.newImg("avatar", userAvatarLink);
 				A link = TagBuilder.newA(userLink, user.getDisplayName());
