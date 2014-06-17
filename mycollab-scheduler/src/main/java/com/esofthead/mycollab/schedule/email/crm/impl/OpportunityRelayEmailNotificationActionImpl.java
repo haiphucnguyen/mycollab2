@@ -32,6 +32,7 @@ import com.esofthead.mycollab.module.crm.CrmResources;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
+import com.esofthead.mycollab.module.crm.i18n.OpportunityI18nEnum;
 import com.esofthead.mycollab.module.crm.service.CampaignService;
 import com.esofthead.mycollab.module.crm.service.CrmNotificationSettingService;
 import com.esofthead.mycollab.module.crm.service.OpportunityService;
@@ -98,25 +99,23 @@ public class OpportunityRelayEmailNotificationActionImpl extends
 
 	@Override
 	protected TemplateGenerator templateGeneratorForCreateAction(
-			SimpleRelayEmailNotification emailNotification, SimpleUser user) {
+			MailContext<SimpleOpportunity> context) {
 		SimpleOpportunity simpleOpportunity = opportunityService.findById(
-				emailNotification.getTypeid(),
-				emailNotification.getSaccountid());
+				context.getTypeid(), context.getSaccountid());
 		if (simpleOpportunity != null) {
+			context.setWrappedBean(simpleOpportunity);
 			String subject = StringUtils.trim(
 					simpleOpportunity.getOpportunityname(), 100);
 
 			TemplateGenerator templateGenerator = new TemplateGenerator(
-					emailNotification.getChangeByUserFullName()
-							+ " has created the opportunity \"" + subject
-							+ "\"",
-					"templates/email/crm/itemCreatedNotifier.mt");
-			setupMailHeaders(simpleOpportunity, emailNotification,
+					context.getMessage(
+							OpportunityI18nEnum.MAIL_CREATE_ITEM_SUBJECT,
+							context.getChangeByUserFullName(), subject),
+					context.templatePath("templates/email/crm/itemCreatedNotifier.mt"));
+			setupMailHeaders(simpleOpportunity, context.getEmailNotification(),
 					templateGenerator);
 
-			templateGenerator.putVariable("context",
-					new MailContext<SimpleOpportunity>(simpleOpportunity, user,
-							siteUrl));
+			templateGenerator.putVariable("context", context);
 			templateGenerator.putVariable("mapper", mapper);
 
 			return templateGenerator;
@@ -127,32 +126,30 @@ public class OpportunityRelayEmailNotificationActionImpl extends
 
 	@Override
 	protected TemplateGenerator templateGeneratorForUpdateAction(
-			SimpleRelayEmailNotification emailNotification, SimpleUser user) {
+			MailContext<SimpleOpportunity> context) {
 		SimpleOpportunity simpleOpportunity = opportunityService.findById(
-				emailNotification.getTypeid(),
-				emailNotification.getSaccountid());
+				context.getTypeid(), context.getSaccountid());
 
 		if (simpleOpportunity == null) {
 			return null;
 		}
+		context.setWrappedBean(simpleOpportunity);
 		String subject = StringUtils.trim(
 				simpleOpportunity.getOpportunityname(), 100);
 
 		TemplateGenerator templateGenerator = new TemplateGenerator(
-				emailNotification.getChangeByUserFullName()
-						+ " has updated the opportunity \"" + subject + "\"",
-				"templates/email/crm/itemUpdatedNotifier.mt");
-		setupMailHeaders(simpleOpportunity, emailNotification,
+				context.getMessage(
+						OpportunityI18nEnum.MAIL_UPDATE_ITEM_SUBJECT,
+						context.getChangeByUserFullName(), subject),
+				context.templatePath("templates/email/crm/itemUpdatedNotifier.mt"));
+		setupMailHeaders(simpleOpportunity, context.getEmailNotification(),
 				templateGenerator);
 
-		if (emailNotification.getTypeid() != null) {
+		if (context.getTypeid() != null) {
 			SimpleAuditLog auditLog = auditLogService.findLatestLog(
-					emailNotification.getTypeid(),
-					emailNotification.getSaccountid());
+					context.getTypeid(), context.getSaccountid());
 			templateGenerator.putVariable("historyLog", auditLog);
-			templateGenerator.putVariable("context",
-					new MailContext<SimpleOpportunity>(simpleOpportunity, user,
-							siteUrl));
+			templateGenerator.putVariable("context", context);
 			templateGenerator.putVariable("mapper", mapper);
 		}
 		return templateGenerator;
@@ -160,23 +157,23 @@ public class OpportunityRelayEmailNotificationActionImpl extends
 
 	@Override
 	protected TemplateGenerator templateGeneratorForCommentAction(
-			SimpleRelayEmailNotification emailNotification, SimpleUser user) {
-		int accountRecordId = emailNotification.getTypeid();
+			MailContext<SimpleOpportunity> context) {
 		SimpleOpportunity simpleOpportunity = opportunityService.findById(
-				accountRecordId, emailNotification.getSaccountid());
+				context.getTypeid(), context.getSaccountid());
 
 		if (simpleOpportunity == null) {
 			return null;
 		}
 		TemplateGenerator templateGenerator = new TemplateGenerator(
-				emailNotification.getChangeByUserFullName()
-						+ " has commented on the opportunity \""
-						+ StringUtils.trim(
-								simpleOpportunity.getOpportunityname(), 100)
-						+ "\"", "templates/email/crm/itemAddNoteNotifier.mt");
-		setupMailHeaders(simpleOpportunity, emailNotification,
+				context.getMessage(
+						OpportunityI18nEnum.MAIL_COMMENT_ITEM_SUBJECT, context
+								.getChangeByUserFullName(), StringUtils.trim(
+								simpleOpportunity.getOpportunityname(), 100)),
+				context.templatePath("templates/email/crm/itemAddNoteNotifier.mt"));
+		setupMailHeaders(simpleOpportunity, context.getEmailNotification(),
 				templateGenerator);
-		templateGenerator.putVariable("comment", emailNotification);
+		templateGenerator
+				.putVariable("comment", context.getEmailNotification());
 
 		return templateGenerator;
 	}

@@ -48,7 +48,8 @@ public class MailUtils {
 	}
 
 	public static String templatePath(String path, Locale locale) {
-		String key = (locale != null) ? (path + locale) : (path + Locale.US);
+		String key = (locale != null) ? (path + locale) : (path + Locale.US
+				.toString());
 		String filePath = cacheFile.get(key);
 		if (filePath != null) {
 			return filePath;
@@ -59,7 +60,13 @@ public class MailUtils {
 						+ path);
 			}
 			filePath = path.substring(0, index - 1);
-			return String.format("%s%s.mt", filePath, locale);
+			filePath = String.format("%s_%s.mt", filePath, locale);
+			cacheFile.put(key, filePath);
+			return filePath;
 		}
+	}
+
+	public static void main(String[] args) {
+		System.out.println(Locale.US);
 	}
 }

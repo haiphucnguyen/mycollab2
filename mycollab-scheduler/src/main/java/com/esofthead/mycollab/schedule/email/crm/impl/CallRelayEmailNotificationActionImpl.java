@@ -28,6 +28,7 @@ import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.crm.CrmLinkGenerator;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.SimpleCall;
+import com.esofthead.mycollab.module.crm.i18n.CallI18nEnum;
 import com.esofthead.mycollab.module.crm.service.CallService;
 import com.esofthead.mycollab.module.crm.service.CrmNotificationSettingService;
 import com.esofthead.mycollab.module.mail.MailUtils;
@@ -88,21 +89,21 @@ public class CallRelayEmailNotificationActionImpl extends
 
 	@Override
 	protected TemplateGenerator templateGeneratorForCreateAction(
-			SimpleRelayEmailNotification emailNotification, SimpleUser user) {
-		SimpleCall simpleCall = callService.findById(
-				emailNotification.getTypeid(),
-				emailNotification.getSaccountid());
+			MailContext<SimpleCall> context) {
+		SimpleCall simpleCall = callService.findById(context.getTypeid(),
+				context.getSaccountid());
 		if (simpleCall != null) {
 			String subject = StringUtils.trim(simpleCall.getSubject(), 100);
 
 			TemplateGenerator templateGenerator = new TemplateGenerator(
-					emailNotification.getChangeByUserFullName()
-							+ "has created the call \"" + subject + "\"",
-					"templates/email/crm/itemCreatedNotifier.mt");
-			setupMailHeaders(simpleCall, emailNotification, templateGenerator);
+					context.getMessage(CallI18nEnum.MAIL_CREATE_ITEM_SUBJECT,
+							context.getChangeByUserFullName(), subject),
+					context.templatePath("templates/email/crm/itemCreatedNotifier.mt"));
+			setupMailHeaders(simpleCall, context.getEmailNotification(),
+					templateGenerator);
 
-			templateGenerator.putVariable("context",
-					new MailContext<SimpleCall>(simpleCall, user, siteUrl));
+			context.setWrappedBean(simpleCall);
+			templateGenerator.putVariable("context", context);
 			templateGenerator.putVariable("mapper", mapper);
 
 			return templateGenerator;
@@ -113,29 +114,28 @@ public class CallRelayEmailNotificationActionImpl extends
 
 	@Override
 	protected TemplateGenerator templateGeneratorForUpdateAction(
-			SimpleRelayEmailNotification emailNotification, SimpleUser user) {
-		SimpleCall simpleCall = callService.findById(
-				emailNotification.getTypeid(),
-				emailNotification.getSaccountid());
+			MailContext<SimpleCall> context) {
+		SimpleCall simpleCall = callService.findById(context.getTypeid(),
+				context.getSaccountid());
 
 		if (simpleCall != null) {
 			String subject = StringUtils.trim(simpleCall.getSubject(), 150);
 
 			TemplateGenerator templateGenerator = new TemplateGenerator(
-					emailNotification.getChangeByUserFullName()
-							+ " has updated the call \"" + subject + "\"",
-					"templates/email/crm/itemUpdatedNotifier.mt");
+					context.getMessage(CallI18nEnum.MAIL_UPDATE_ITEM_SUBJECT,
+							context.getChangeByUserFullName(), subject),
+					context.templatePath("templates/email/crm/itemUpdatedNotifier.mt"));
 
-			setupMailHeaders(simpleCall, emailNotification, templateGenerator);
+			setupMailHeaders(simpleCall, context.getEmailNotification(),
+					templateGenerator);
 
-			if (emailNotification.getTypeid() != null) {
+			if (context.getTypeid() != null) {
 				SimpleAuditLog auditLog = auditLogService.findLatestLog(
-						emailNotification.getTypeid(),
-						emailNotification.getSaccountid());
+						context.getTypeid(), context.getSaccountid());
 
 				templateGenerator.putVariable("historyLog", auditLog);
-				templateGenerator.putVariable("context",
-						new MailContext<SimpleCall>(simpleCall, user, siteUrl));
+				context.setWrappedBean(simpleCall);
+				templateGenerator.putVariable("context", context);
 				templateGenerator.putVariable("mapper", mapper);
 			}
 			return templateGenerator;
@@ -146,21 +146,21 @@ public class CallRelayEmailNotificationActionImpl extends
 
 	@Override
 	protected TemplateGenerator templateGeneratorForCommentAction(
-			SimpleRelayEmailNotification emailNotification, SimpleUser user) {
-		SimpleCall simpleCall = callService.findById(
-				emailNotification.getTypeid(),
-				emailNotification.getSaccountid());
+			MailContext<SimpleCall> context) {
+		SimpleCall simpleCall = callService.findById(context.getTypeid(),
+				context.getSaccountid());
 
 		if (simpleCall != null) {
 			TemplateGenerator templateGenerator = new TemplateGenerator(
-					emailNotification.getChangeByUserFullName()
-							+ " has commented on the call \""
-							+ StringUtils.trim(simpleCall.getSubject(), 100)
-							+ "\"",
-					"templates/email/crm/itemAddNoteNotifier.mt");
-			setupMailHeaders(simpleCall, emailNotification, templateGenerator);
+					context.getMessage(CallI18nEnum.MAIL_COMMENT_ITEM_SUBJECT,
+							context.getChangeByUserFullName(),
+							StringUtils.trim(simpleCall.getSubject(), 100)),
+					context.templatePath("templates/email/crm/itemAddNoteNotifier.mt"));
+			setupMailHeaders(simpleCall, context.getEmailNotification(),
+					templateGenerator);
 
-			templateGenerator.putVariable("comment", emailNotification);
+			templateGenerator.putVariable("comment",
+					context.getEmailNotification());
 
 			return templateGenerator;
 		} else {

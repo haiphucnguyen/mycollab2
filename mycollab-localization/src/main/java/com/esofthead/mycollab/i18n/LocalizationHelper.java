@@ -53,4 +53,15 @@ public class LocalizationHelper {
 			return "Undefined";
 		}
 	}
+
+	public static String getMessage(String language, Enum key,
+			Object... objects) {
+		try {
+			Locale locale = LocaleUtils.toLocale(language);
+			return getMessage(locale, key, objects);
+		} catch (Exception e) {
+			log.error("Can not find resource key " + key, e);
+			return "Undefined";
+		}
+	}
 }

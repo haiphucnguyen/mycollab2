@@ -35,6 +35,7 @@ import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.project.ProjectLinkUtils;
 import com.esofthead.mycollab.module.project.domain.SimpleMilestone;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
+import com.esofthead.mycollab.module.project.i18n.MilestoneI18nEnum;
 import com.esofthead.mycollab.module.project.service.MilestoneService;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.user.AccountLinkUtils;
@@ -59,7 +60,7 @@ import com.hp.gagawa.java.elements.Img;
 @Component
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class ProjectMilestoneRelayEmailNotificationActionImpl extends
-		SendMailToAllMembersAction implements
+		SendMailToAllMembersAction<SimpleMilestone> implements
 		ProjectMilestoneRelayEmailNotificationAction {
 	@Autowired
 	private MilestoneService milestoneService;
@@ -103,26 +104,26 @@ public class ProjectMilestoneRelayEmailNotificationActionImpl extends
 
 	@Override
 	protected TemplateGenerator templateGeneratorForCreateAction(
-			SimpleRelayEmailNotification emailNotification, SimpleUser user) {
-		int milestoneId = emailNotification.getTypeid();
-		SimpleMilestone milestone = milestoneService.findById(milestoneId,
-				emailNotification.getSaccountid());
+			MailContext<SimpleMilestone> context) {
+		SimpleMilestone milestone = milestoneService.findById(
+				context.getTypeid(), context.getSaccountid());
 
 		if (milestone == null) {
 			return null;
 		}
 
-		TemplateGenerator templateGenerator = new TemplateGenerator("["
-				+ milestone.getProjectName() + "]: "
-				+ emailNotification.getChangeByUserFullName()
-				+ " has created the phase \""
-				+ StringUtils.trim(milestone.getName(), 100) + "\"",
-				"templates/email/project/itemCreatedNotifier.mt");
+		context.setWrappedBean(milestone);
+		TemplateGenerator templateGenerator = new TemplateGenerator(
+				context.getMessage(MilestoneI18nEnum.MAIL_CREATE_ITEM_SUBJECT,
+						milestone.getProjectName(),
+						context.getChangeByUserFullName(),
+						StringUtils.trim(milestone.getName(), 100)),
+				context.templatePath("templates/email/project/itemCreatedNotifier.mt"));
 
-		setupMailHeaders(milestone, emailNotification, templateGenerator);
+		setupMailHeaders(milestone, context.getEmailNotification(),
+				templateGenerator);
 
-		templateGenerator.putVariable("context",
-				new MailContext<SimpleMilestone>(milestone, user, siteUrl));
+		templateGenerator.putVariable("context", context);
 		templateGenerator.putVariable("mapper", mapper);
 
 		return templateGenerator;
@@ -130,30 +131,28 @@ public class ProjectMilestoneRelayEmailNotificationActionImpl extends
 
 	@Override
 	protected TemplateGenerator templateGeneratorForUpdateAction(
-			SimpleRelayEmailNotification emailNotification, SimpleUser user) {
-		int milestoneId = emailNotification.getTypeid();
-		SimpleMilestone milestone = milestoneService.findById(milestoneId,
-				emailNotification.getSaccountid());
+			MailContext<SimpleMilestone> context) {
+		SimpleMilestone milestone = milestoneService.findById(
+				context.getTypeid(), context.getSaccountid());
 		if (milestone == null) {
 			return null;
 		}
-
+		context.setWrappedBean(milestone);
 		String subject = StringUtils.trim(milestone.getName(), 100);
-		TemplateGenerator templateGenerator = new TemplateGenerator("["
-				+ milestone.getProjectName() + "]: "
-				+ emailNotification.getChangeByUserFullName()
-				+ " has updated the phase \"" + subject + "\"",
-				"templates/email/project/itemUpdatedNotifier.mt");
+		TemplateGenerator templateGenerator = new TemplateGenerator(
+				context.getMessage(MilestoneI18nEnum.MAIL_UPDATE_ITEM_SUBJECT,
+						milestone.getProjectName(),
+						context.getChangeByUserFullName(), subject),
+				context.templatePath("templates/email/project/itemUpdatedNotifier.mt"));
 
-		setupMailHeaders(milestone, emailNotification, templateGenerator);
+		setupMailHeaders(milestone, context.getEmailNotification(),
+				templateGenerator);
 
-		if (emailNotification.getTypeid() != null) {
+		if (context.getTypeid() != null) {
 			SimpleAuditLog auditLog = auditLogService.findLatestLog(
-					emailNotification.getTypeid(),
-					emailNotification.getSaccountid());
+					context.getTypeid(), context.getSaccountid());
 			templateGenerator.putVariable("historyLog", auditLog);
-			templateGenerator.putVariable("context",
-					new MailContext<SimpleMilestone>(milestone, user, siteUrl));
+			templateGenerator.putVariable("context", context);
 			templateGenerator.putVariable("mapper", mapper);
 		}
 
@@ -162,24 +161,25 @@ public class ProjectMilestoneRelayEmailNotificationActionImpl extends
 
 	@Override
 	protected TemplateGenerator templateGeneratorForCommentAction(
-			SimpleRelayEmailNotification emailNotification) {
-		int milestoneId = emailNotification.getTypeid();
-		SimpleMilestone milestone = milestoneService.findById(milestoneId,
-				emailNotification.getSaccountid());
+			MailContext<SimpleMilestone> context) {
+		SimpleMilestone milestone = milestoneService.findById(
+				context.getTypeid(), context.getSaccountid());
 		if (milestone == null) {
 			return null;
 		}
 
-		TemplateGenerator templateGenerator = new TemplateGenerator("["
-				+ milestone.getProjectName() + "]: "
-				+ emailNotification.getChangeByUserFullName()
-				+ "  has commented on phase \""
-				+ StringUtils.trim(milestone.getName(), 100) + "\"",
-				"templates/email/project/itemCommentNotifier.mt");
+		TemplateGenerator templateGenerator = new TemplateGenerator(
+				context.getMessage(MilestoneI18nEnum.MAIL_COMMENT_ITEM_SUBJECT,
+						milestone.getProjectName(),
+						context.getChangeByUserFullName(),
+						StringUtils.trim(milestone.getName(), 100)),
+				context.templatePath("templates/email/project/itemCommentNotifier.mt"));
 
-		setupMailHeaders(milestone, emailNotification, templateGenerator);
+		setupMailHeaders(milestone, context.getEmailNotification(),
+				templateGenerator);
 
-		templateGenerator.putVariable("comment", emailNotification);
+		templateGenerator
+				.putVariable("comment", context.getEmailNotification());
 		return templateGenerator;
 	}
 
@@ -215,7 +215,8 @@ public class ProjectMilestoneRelayEmailNotificationActionImpl extends
 				String userLink = AccountLinkUtils.generatePreviewFullUserLink(
 						MailUtils.getSiteUrl(milestone.getSaccountid()),
 						milestone.getOwner());
-				A link = TagBuilder.newA(userLink, milestone.getOwnerFullName());
+				A link = TagBuilder
+						.newA(userLink, milestone.getOwnerFullName());
 				return TagBuilder.newLink(img, link).write();
 			} else {
 				return "";
@@ -236,7 +237,7 @@ public class ProjectMilestoneRelayEmailNotificationActionImpl extends
 				String userAvatarLink = MailUtils.getAvatarLink(
 						user.getAvatarid(), 16);
 				String userLink = AccountLinkUtils.generatePreviewFullUserLink(
-		MailUtils.getSiteUrl(user.getAccountId()),
+						MailUtils.getSiteUrl(user.getAccountId()),
 						user.getUsername());
 				Img img = TagBuilder.newImg("avatar", userAvatarLink);
 				A link = TagBuilder.newA(userLink, user.getDisplayName());

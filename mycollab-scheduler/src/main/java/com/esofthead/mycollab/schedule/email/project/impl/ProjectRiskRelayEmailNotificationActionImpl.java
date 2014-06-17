@@ -35,6 +35,7 @@ import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.project.ProjectLinkUtils;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.SimpleRisk;
+import com.esofthead.mycollab.module.project.i18n.RiskI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.project.service.RiskService;
 import com.esofthead.mycollab.module.user.AccountLinkUtils;
@@ -59,7 +60,7 @@ import com.hp.gagawa.java.elements.Img;
 @Component
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class ProjectRiskRelayEmailNotificationActionImpl extends
-		SendMailToAllMembersAction implements
+		SendMailToAllMembersAction<SimpleRisk> implements
 		ProjectRiskRelayEmailNotificationAction {
 
 	@Autowired
@@ -104,25 +105,24 @@ public class ProjectRiskRelayEmailNotificationActionImpl extends
 
 	@Override
 	protected TemplateGenerator templateGeneratorForCreateAction(
-			SimpleRelayEmailNotification emailNotification, SimpleUser user) {
-		int riskId = emailNotification.getTypeid();
-		SimpleRisk risk = riskService.findById(riskId,
-				emailNotification.getSaccountid());
+			MailContext<SimpleRisk> context) {
+		SimpleRisk risk = riskService.findById(context.getTypeid(),
+				context.getSaccountid());
 
 		if (risk == null) {
 			return null;
 		}
+		context.setWrappedBean(risk);
+		TemplateGenerator templateGenerator = new TemplateGenerator(
+				context.getMessage(RiskI18nEnum.MAIL_CREATE_ITEM_SUBJECT,
+						risk.getProjectName(),
+						context.getChangeByUserFullName(),
+						StringUtils.trim(risk.getRiskname(), 100)),
+				context.templatePath("templates/email/project/itemCreatedNotifier.mt"));
+		setupMailHeaders(risk, context.getEmailNotification(),
+				templateGenerator);
 
-		TemplateGenerator templateGenerator = new TemplateGenerator("["
-				+ risk.getProjectName() + "]: "
-				+ emailNotification.getChangeByUserFullName()
-				+ " has created the risk \""
-				+ StringUtils.trim(risk.getRiskname(), 100) + "\"",
-				"templates/email/project/itemCreatedNotifier.mt");
-		setupMailHeaders(risk, emailNotification, templateGenerator);
-
-		templateGenerator.putVariable("context", new MailContext<SimpleRisk>(
-				risk, user, siteUrl));
+		templateGenerator.putVariable("context", context);
 		templateGenerator.putVariable("mapper", mapper);
 
 		return templateGenerator;
@@ -130,32 +130,30 @@ public class ProjectRiskRelayEmailNotificationActionImpl extends
 
 	@Override
 	protected TemplateGenerator templateGeneratorForUpdateAction(
-			SimpleRelayEmailNotification emailNotification, SimpleUser user) {
-		int riskId = emailNotification.getTypeid();
-		SimpleRisk risk = riskService.findById(riskId,
-				emailNotification.getSaccountid());
+			MailContext<SimpleRisk> context) {
+		SimpleRisk risk = riskService.findById(context.getTypeid(),
+				context.getSaccountid());
 		if (risk == null) {
 			return null;
 		}
-
+		context.setWrappedBean(risk);
 		String subject = StringUtils.trim(risk.getRiskname(), 100);
 
-		TemplateGenerator templateGenerator = new TemplateGenerator("["
-				+ risk.getProjectName() + "]: "
-				+ emailNotification.getChangeByUserFullName()
-				+ " has updated the risk \"" + subject + "\"",
-				"templates/email/project/itemUpdatedNotifier.mt");
+		TemplateGenerator templateGenerator = new TemplateGenerator(
+				context.getMessage(RiskI18nEnum.MAIL_UPDATE_ITEM_SUBJECT,
+						risk.getProjectName(),
+						context.getChangeByUserFullName(), subject),
+				context.templatePath("templates/email/project/itemUpdatedNotifier.mt"));
 
-		setupMailHeaders(risk, emailNotification, templateGenerator);
+		setupMailHeaders(risk, context.getEmailNotification(),
+				templateGenerator);
 
-		if (emailNotification.getTypeid() != null) {
+		if (context.getTypeid() != null) {
 			SimpleAuditLog auditLog = auditLogService.findLatestLog(
-					emailNotification.getTypeid(),
-					emailNotification.getSaccountid());
+					context.getTypeid(), context.getSaccountid());
 
 			templateGenerator.putVariable("historyLog", auditLog);
-			templateGenerator.putVariable("context",
-					new MailContext<SimpleRisk>(risk, user, siteUrl));
+			templateGenerator.putVariable("context", context);
 			templateGenerator.putVariable("mapper", mapper);
 		}
 
@@ -164,24 +162,25 @@ public class ProjectRiskRelayEmailNotificationActionImpl extends
 
 	@Override
 	protected TemplateGenerator templateGeneratorForCommentAction(
-			SimpleRelayEmailNotification emailNotification) {
-		int riskId = emailNotification.getTypeid();
-		SimpleRisk risk = riskService.findById(riskId,
-				emailNotification.getSaccountid());
+			MailContext<SimpleRisk> context) {
+		SimpleRisk risk = riskService.findById(context.getTypeid(),
+				context.getSaccountid());
 		if (risk == null) {
 			return null;
 		}
 
-		TemplateGenerator templateGenerator = new TemplateGenerator("["
-				+ risk.getProjectName() + "]: "
-				+ emailNotification.getChangeByUserFullName()
-				+ " has commented the risk \""
-				+ StringUtils.trim(risk.getRiskname(), 100) + "\"",
-				"templates/email/project/itemCommentNotifier.mt");
+		TemplateGenerator templateGenerator = new TemplateGenerator(
+				context.getMessage(RiskI18nEnum.MAIL_COMMENT_ITEM_SUBJECT,
+						risk.getProjectName(),
+						context.getChangeByUserFullName(),
+						StringUtils.trim(risk.getRiskname(), 100)),
+				context.templatePath("templates/email/project/itemCommentNotifier.mt"));
 
-		setupMailHeaders(risk, emailNotification, templateGenerator);
+		setupMailHeaders(risk, context.getEmailNotification(),
+				templateGenerator);
 
-		templateGenerator.putVariable("comment", emailNotification);
+		templateGenerator
+				.putVariable("comment", context.getEmailNotification());
 
 		return templateGenerator;
 	}

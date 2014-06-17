@@ -32,6 +32,7 @@ import com.esofthead.mycollab.module.crm.CrmResources;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.SimpleCase;
+import com.esofthead.mycollab.module.crm.i18n.CaseI18nEnum;
 import com.esofthead.mycollab.module.crm.service.AccountService;
 import com.esofthead.mycollab.module.crm.service.CaseService;
 import com.esofthead.mycollab.module.crm.service.CrmNotificationSettingService;
@@ -95,21 +96,21 @@ public class CaseRelayEmailNotificationActionImpl extends
 
 	@Override
 	protected TemplateGenerator templateGeneratorForCreateAction(
-			SimpleRelayEmailNotification emailNotification, SimpleUser user) {
-		SimpleCase simpleCase = caseService.findById(
-				emailNotification.getTypeid(),
-				emailNotification.getSaccountid());
+			MailContext<SimpleCase> context) {
+		SimpleCase simpleCase = caseService.findById(context.getTypeid(),
+				context.getSaccountid());
 		if (simpleCase != null) {
+			context.setWrappedBean(simpleCase);
 			String subject = StringUtils.trim(simpleCase.getSubject(), 100);
 
 			TemplateGenerator templateGenerator = new TemplateGenerator(
-					emailNotification.getChangeByUserFullName()
-							+ "has created the case \"" + subject + "\"",
-					"templates/email/crm/itemCreatedNotifier.mt");
-			setupMailHeaders(simpleCase, emailNotification, templateGenerator);
+					context.getMessage(CaseI18nEnum.MAIL_CREATE_ITEM_SUBJECT,
+							context.getChangeByUserFullName(), subject),
+					context.templatePath("templates/email/crm/itemCreatedNotifier.mt"));
+			setupMailHeaders(simpleCase, context.getEmailNotification(),
+					templateGenerator);
 
-			templateGenerator.putVariable("context",
-					new MailContext<SimpleCase>(simpleCase, user, siteUrl));
+			templateGenerator.putVariable("context", context);
 			templateGenerator.putVariable("mapper", mapper);
 
 			return templateGenerator;
@@ -120,29 +121,28 @@ public class CaseRelayEmailNotificationActionImpl extends
 
 	@Override
 	protected TemplateGenerator templateGeneratorForUpdateAction(
-			SimpleRelayEmailNotification emailNotification, SimpleUser user) {
-		SimpleCase simpleCase = caseService.findById(
-				emailNotification.getTypeid(),
-				emailNotification.getSaccountid());
+			MailContext<SimpleCase> context) {
+		SimpleCase simpleCase = caseService.findById(context.getTypeid(),
+				context.getSaccountid());
 
 		if (simpleCase != null) {
+			context.setWrappedBean(simpleCase);
 			String subject = StringUtils.trim(simpleCase.getSubject(), 100);
 
 			TemplateGenerator templateGenerator = new TemplateGenerator(
-					emailNotification.getChangeByUserFullName()
-							+ " has updated the case \"" + subject + "\"",
-					"templates/email/crm/itemUpdatedNotifier.mt");
+					context.getMessage(CaseI18nEnum.MAIL_UPDATE_ITEM_SUBJECT,
+							context.getChangeByUserFullName(), subject),
+					context.templatePath("templates/email/crm/itemUpdatedNotifier.mt"));
 
-			setupMailHeaders(simpleCase, emailNotification, templateGenerator);
+			setupMailHeaders(simpleCase, context.getEmailNotification(),
+					templateGenerator);
 
-			if (emailNotification.getTypeid() != null) {
+			if (context.getTypeid() != null) {
 				SimpleAuditLog auditLog = auditLogService.findLatestLog(
-						emailNotification.getTypeid(),
-						emailNotification.getSaccountid());
+						context.getTypeid(), context.getSaccountid());
 
 				templateGenerator.putVariable("historyLog", auditLog);
-				templateGenerator.putVariable("context",
-						new MailContext<SimpleCase>(simpleCase, user, siteUrl));
+				templateGenerator.putVariable("context", context);
 				templateGenerator.putVariable("mapper", mapper);
 			}
 			return templateGenerator;
@@ -153,22 +153,23 @@ public class CaseRelayEmailNotificationActionImpl extends
 
 	@Override
 	protected TemplateGenerator templateGeneratorForCommentAction(
-			SimpleRelayEmailNotification emailNotification, SimpleUser user) {
-		SimpleCase simpleCase = caseService.findById(
-				emailNotification.getTypeid(),
-				emailNotification.getSaccountid());
+			MailContext<SimpleCase> context) {
+		SimpleCase simpleCase = caseService.findById(context.getTypeid(),
+				context.getSaccountid());
 
 		if (simpleCase != null) {
+			context.setWrappedBean(simpleCase);
 			TemplateGenerator templateGenerator = new TemplateGenerator(
-					emailNotification.getChangeByUserFullName()
-							+ " has commented on case \""
-							+ StringUtils.trim(simpleCase.getSubject(), 100)
-							+ "\"",
-					"templates/email/crm/itemAddNoteNotifier.mt");
+					context.getMessage(CaseI18nEnum.MAIL_COMMENT_ITEM_SUBJECT,
+							context.getChangeByUserFullName(),
+							StringUtils.trim(simpleCase.getSubject(), 100)),
+					context.templatePath("templates/email/crm/itemAddNoteNotifier.mt"));
 
-			setupMailHeaders(simpleCase, emailNotification, templateGenerator);
+			setupMailHeaders(simpleCase, context.getEmailNotification(),
+					templateGenerator);
 
-			templateGenerator.putVariable("comment", emailNotification);
+			templateGenerator.putVariable("comment",
+					context.getEmailNotification());
 
 			return templateGenerator;
 		} else {

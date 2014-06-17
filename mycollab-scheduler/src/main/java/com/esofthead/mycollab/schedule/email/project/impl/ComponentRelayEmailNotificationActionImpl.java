@@ -18,6 +18,7 @@ import com.esofthead.mycollab.module.mail.MailUtils;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.project.ProjectLinkUtils;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
+import com.esofthead.mycollab.module.project.i18n.ComponentI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.tracker.domain.SimpleComponent;
 import com.esofthead.mycollab.module.tracker.service.ComponentService;
@@ -42,7 +43,7 @@ import com.hp.gagawa.java.elements.Img;
 @Service
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class ComponentRelayEmailNotificationActionImpl extends
-		SendMailToAllMembersAction implements
+		SendMailToAllMembersAction<SimpleComponent> implements
 		ComponentRelayEmailNotificationAction {
 
 	@Autowired
@@ -85,30 +86,31 @@ public class ComponentRelayEmailNotificationActionImpl extends
 
 	@Override
 	protected TemplateGenerator templateGeneratorForCreateAction(
-			SimpleRelayEmailNotification emailNotification, SimpleUser user) {
-		int componentId = emailNotification.getTypeid();
-		SimpleComponent component = componentService.findById(componentId,
-				emailNotification.getSaccountid());
+			MailContext<SimpleComponent> context) {
+		SimpleComponent component = componentService.findById(
+				context.getTypeid(), context.getSaccountid());
 
 		if (component == null) {
 			return null;
 		}
 
+		context.setWrappedBean(component);
+
 		SimpleProject project = projectService.findById(
-				component.getProjectid(), emailNotification.getSaccountid());
+				component.getProjectid(), context.getSaccountid());
 
 		String subject = StringUtils.trim(component.getDescription(), 100);
 
-		TemplateGenerator templateGenerator = new TemplateGenerator("["
-				+ project.getName() + "]: "
-				+ emailNotification.getChangeByUserFullName()
-				+ " has created new component \"" + subject + "\"",
-				"templates/email/project/itemCreatedNotifier.mt");
+		TemplateGenerator templateGenerator = new TemplateGenerator(
+				context.getMessage(ComponentI18nEnum.MAIL_CREATE_ITEM_SUBJECT,
+						project.getName(), context.getChangeByUserFullName(),
+						subject),
+				context.templatePath("templates/email/project/itemCreatedNotifier.mt"));
 
-		setupMailHeaders(component, emailNotification, templateGenerator);
+		setupMailHeaders(component, context.getEmailNotification(),
+				templateGenerator);
 
-		templateGenerator.putVariable("context",
-				new MailContext<SimpleComponent>(component, user, siteUrl));
+		templateGenerator.putVariable("context", context);
 		templateGenerator.putVariable("mapper", mapper);
 
 		return templateGenerator;
@@ -116,34 +118,33 @@ public class ComponentRelayEmailNotificationActionImpl extends
 
 	@Override
 	protected TemplateGenerator templateGeneratorForUpdateAction(
-			SimpleRelayEmailNotification emailNotification, SimpleUser user) {
+			MailContext<SimpleComponent> context) {
 		SimpleComponent component = componentService.findById(
-				emailNotification.getTypeid(),
-				emailNotification.getSaccountid());
+				context.getTypeid(), context.getSaccountid());
 		if (component == null) {
 			return null;
 		}
 
+		context.setWrappedBean(component);
 		SimpleProject project = projectService.findById(
-				component.getProjectid(), emailNotification.getSaccountid());
+				component.getProjectid(), context.getSaccountid());
 
 		String subject = StringUtils.trim(component.getDescription(), 100);
 
-		TemplateGenerator templateGenerator = new TemplateGenerator("["
-				+ project.getName() + "]: "
-				+ emailNotification.getChangeByUserFullName()
-				+ " has updated the component \"" + subject + "\"",
-				"templates/email/project/itemUpdatedNotifier.mt");
+		TemplateGenerator templateGenerator = new TemplateGenerator(
+				context.getMessage(ComponentI18nEnum.MAIL_UPDATE_ITEM_SUBJECT,
+						project.getName(), context.getChangeByUserFullName(),
+						subject),
+				context.templatePath("templates/email/project/itemUpdatedNotifier.mt"));
 
-		setupMailHeaders(component, emailNotification, templateGenerator);
+		setupMailHeaders(component, context.getEmailNotification(),
+				templateGenerator);
 
-		if (emailNotification.getTypeid() != null) {
+		if (context.getTypeid() != null) {
 			SimpleAuditLog auditLog = auditLogService.findLatestLog(
-					emailNotification.getTypeid(),
-					emailNotification.getSaccountid());
+					context.getTypeid(), context.getSaccountid());
 			templateGenerator.putVariable("historyLog", auditLog);
-			templateGenerator.putVariable("context",
-					new MailContext<SimpleComponent>(component, user, siteUrl));
+			templateGenerator.putVariable("context", context);
 			templateGenerator.putVariable("mapper", mapper);
 		}
 
@@ -152,7 +153,7 @@ public class ComponentRelayEmailNotificationActionImpl extends
 
 	@Override
 	protected TemplateGenerator templateGeneratorForCommentAction(
-			SimpleRelayEmailNotification emailNotification) {
+			MailContext<SimpleComponent> context) {
 		return null;
 	}
 

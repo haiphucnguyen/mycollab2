@@ -28,6 +28,7 @@ import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.crm.CrmLinkGenerator;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
+import com.esofthead.mycollab.module.crm.i18n.AccountI18nEnum;
 import com.esofthead.mycollab.module.crm.service.AccountService;
 import com.esofthead.mycollab.module.crm.service.CrmNotificationSettingService;
 import com.esofthead.mycollab.module.crm.service.NoteService;
@@ -77,7 +78,7 @@ public class AccountRelayEmailNotificationActionImpl extends
 		super(CrmTypeConstants.ACCOUNT);
 	}
 
-	protected void setupMailHeaders(SimpleAccount account,
+	private void setupMailHeaders(SimpleAccount account,
 			SimpleRelayEmailNotification emailNotification,
 			TemplateGenerator templateGenerator) {
 		String summary = account.getAccountname();
@@ -93,25 +94,28 @@ public class AccountRelayEmailNotificationActionImpl extends
 
 	@Override
 	protected TemplateGenerator templateGeneratorForCreateAction(
-			SimpleRelayEmailNotification emailNotification, SimpleUser user) {
-		int recordAccountId = emailNotification.getTypeid();
-		simpleAccount = accountService.findById(recordAccountId,
-				emailNotification.getSaccountid());
+			MailContext<SimpleAccount> context) {
+		int recordAccountId = context.getEmailNotification().getTypeid();
+		simpleAccount = accountService.findById(recordAccountId, context
+				.getEmailNotification().getSaccountid());
 		if (simpleAccount != null) {
 			String subject = StringUtils.trim(simpleAccount.getAccountname(),
 					100);
 
 			TemplateGenerator templateGenerator = new TemplateGenerator(
-					emailNotification.getChangeByUserFullName()
-							+ " has created the account  \"" + subject + "\"",
-					"templates/email/crm/itemCreatedNotifier.mt");
+					context.getMessage(
+							AccountI18nEnum.MAIL_CREATE_ITEM_SUBJECT, context
+									.getEmailNotification()
+									.getChangeByUserFullName(), subject),
+					MailUtils.templatePath(
+							"templates/email/crm/itemCreatedNotifier.mt",
+							context.getUser().getLanguage()));
 
-			setupMailHeaders(simpleAccount, emailNotification,
+			setupMailHeaders(simpleAccount, context.getEmailNotification(),
 					templateGenerator);
 
-			templateGenerator
-					.putVariable("context", new MailContext<SimpleAccount>(
-							simpleAccount, user, siteUrl));
+			context.setWrappedBean(simpleAccount);
+			templateGenerator.putVariable("context", context);
 			templateGenerator.putVariable("mapper", mapper);
 
 			return templateGenerator;
@@ -122,31 +126,28 @@ public class AccountRelayEmailNotificationActionImpl extends
 
 	@Override
 	protected TemplateGenerator templateGeneratorForUpdateAction(
-			SimpleRelayEmailNotification emailNotification, SimpleUser user) {
-		simpleAccount = accountService.findById(emailNotification.getTypeid(),
-				emailNotification.getSaccountid());
+			MailContext<SimpleAccount> context) {
+		simpleAccount = accountService.findById(context.getTypeid(),
+				context.getSaccountid());
 		if (simpleAccount != null) {
 			String subject = StringUtils.trim(simpleAccount.getAccountname(),
 					100);
 
 			TemplateGenerator templateGenerator = new TemplateGenerator(
-					emailNotification.getChangeByUserFullName()
-							+ " has updated the account \"" + subject + "\"",
-					"templates/email/crm/itemUpdatedNotifier.mt");
+					context.getMessage(
+							AccountI18nEnum.MAIL_UPDATE_ITEM_SUBJECT, subject),
+					context.templatePath("templates/email/crm/itemUpdatedNotifier.mt"));
 
-			setupMailHeaders(simpleAccount, emailNotification,
+			setupMailHeaders(simpleAccount, context.getEmailNotification(),
 					templateGenerator);
 
-			if (emailNotification.getTypeid() != null) {
+			if (context.getTypeid() != null) {
 				SimpleAuditLog auditLog = auditLogService.findLatestLog(
-						emailNotification.getTypeid(),
-						emailNotification.getSaccountid());
+						context.getTypeid(), context.getSaccountid());
 
 				templateGenerator.putVariable("historyLog", auditLog);
-
-				templateGenerator.putVariable("context",
-						new MailContext<SimpleAccount>(simpleAccount, user,
-								siteUrl));
+				context.setWrappedBean(simpleAccount);
+				templateGenerator.putVariable("context", context);
 				templateGenerator.putVariable("mapper", mapper);
 			}
 			return templateGenerator;
@@ -158,23 +159,23 @@ public class AccountRelayEmailNotificationActionImpl extends
 
 	@Override
 	protected TemplateGenerator templateGeneratorForCommentAction(
-			SimpleRelayEmailNotification emailNotification, SimpleUser user) {
-		int accountRecordId = emailNotification.getTypeid();
+			MailContext<SimpleAccount> context) {
+		int accountRecordId = context.getTypeid();
 		simpleAccount = accountService.findById(accountRecordId,
-				emailNotification.getSaccountid());
+				context.getSaccountid());
 
 		if (simpleAccount != null) {
 			TemplateGenerator templateGenerator = new TemplateGenerator(
-					emailNotification.getChangeByUserFullName()
-							+ " has commented on the account \""
-							+ StringUtils.trim(simpleAccount.getAccountname(),
-									100) + "\"",
-					"templates/email/crm/itemAddNoteNotifier.mt");
+					context.getMessage(
+							AccountI18nEnum.MAIL_COMMENT_ITEM_SUBJECT,
+							context.getChangeByUserFullName()),
+					context.templatePath("templates/email/crm/itemAddNoteNotifier.mt"));
 
-			setupMailHeaders(simpleAccount, emailNotification,
+			setupMailHeaders(simpleAccount, context.getEmailNotification(),
 					templateGenerator);
 
-			templateGenerator.putVariable("comment", emailNotification);
+			templateGenerator.putVariable("comment",
+					context.getEmailNotification());
 
 			return templateGenerator;
 		} else {

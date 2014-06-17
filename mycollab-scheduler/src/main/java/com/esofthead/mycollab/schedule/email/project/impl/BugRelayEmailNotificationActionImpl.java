@@ -42,6 +42,7 @@ import com.esofthead.mycollab.module.project.domain.ProjectNotificationSettingTy
 import com.esofthead.mycollab.module.project.domain.ProjectRelayEmailNotification;
 import com.esofthead.mycollab.module.project.domain.SimpleMilestone;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
+import com.esofthead.mycollab.module.project.i18n.BugI18nEnum;
 import com.esofthead.mycollab.module.project.service.MilestoneService;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.project.service.ProjectService;
@@ -69,7 +70,8 @@ import com.hp.gagawa.java.elements.Img;
 @Component
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class BugRelayEmailNotificationActionImpl extends
-		SendMailToFollowersAction implements BugRelayEmailNotificationAction {
+		SendMailToFollowersAction<SimpleBug> implements
+		BugRelayEmailNotificationAction {
 	private static Logger log = LoggerFactory
 			.getLogger(BugRelayEmailNotificationActionImpl.class);
 
@@ -84,23 +86,23 @@ public class BugRelayEmailNotificationActionImpl extends
 
 	@Override
 	public TemplateGenerator templateGeneratorForCreateAction(
-			SimpleRelayEmailNotification emailNotification, SimpleUser user) {
-		int bugId = emailNotification.getTypeid();
-		SimpleBug bug = bugService.findById(bugId,
-				emailNotification.getSaccountid());
+			MailContext<SimpleBug> context) {
+		SimpleBug bug = bugService.findById(context.getTypeid(),
+				context.getSaccountid());
 		if (bug != null) {
+			context.setWrappedBean(bug);
 			String subject = StringUtils.trim(bug.getSummary(), 100);
 
-			TemplateGenerator templateGenerator = new TemplateGenerator("["
-					+ bug.getProjectname() + "]: "
-					+ emailNotification.getChangeByUserFullName()
-					+ " has created the bug \"" + subject + "\"",
-					"templates/email/project/itemCreatedNotifier.mt");
+			TemplateGenerator templateGenerator = new TemplateGenerator(
+					context.getMessage(BugI18nEnum.MAIL_CREATE_ITEM_SUBJECT,
+							bug.getProjectname(),
+							context.getChangeByUserFullName(), subject),
+					context.templatePath("templates/email/project/itemCreatedNotifier.mt"));
 
-			setupMailHeaders(bug, emailNotification, templateGenerator);
+			setupMailHeaders(bug, context.getEmailNotification(),
+					templateGenerator);
 
-			templateGenerator.putVariable("context",
-					new MailContext<SimpleBug>(bug, user, siteUrl));
+			templateGenerator.putVariable("context", context);
 			templateGenerator.putVariable("mapper", mapper);
 
 			return templateGenerator;
@@ -150,30 +152,28 @@ public class BugRelayEmailNotificationActionImpl extends
 
 	@Override
 	public TemplateGenerator templateGeneratorForUpdateAction(
-			SimpleRelayEmailNotification emailNotification, SimpleUser user) {
-		SimpleBug bug = bugService.findById(emailNotification.getTypeid(),
-				emailNotification.getSaccountid());
+			MailContext<SimpleBug> context) {
+		SimpleBug bug = bugService.findById(context.getTypeid(),
+				context.getSaccountid());
 		if (bug == null) {
 			return null;
 		}
-
+		context.setWrappedBean(bug);
 		String subject = StringUtils.trim(bug.getSummary(), 100);
 
-		TemplateGenerator templateGenerator = new TemplateGenerator("["
-				+ bug.getProjectname() + "]: "
-				+ emailNotification.getChangeByUserFullName()
-				+ " has updated the bug \"" + subject + "\"",
-				"templates/email/project/itemUpdatedNotifier.mt");
+		TemplateGenerator templateGenerator = new TemplateGenerator(
+				context.getMessage(BugI18nEnum.MAIL_UPDATE_ITEM_SUBJECT,
+						bug.getProjectname(),
+						context.getChangeByUserFullName(), subject),
+				context.templatePath("templates/email/project/itemUpdatedNotifier.mt"));
 
-		setupMailHeaders(bug, emailNotification, templateGenerator);
+		setupMailHeaders(bug, context.getEmailNotification(), templateGenerator);
 
-		if (emailNotification.getTypeid() != null) {
+		if (context.getTypeid() != null) {
 			SimpleAuditLog auditLog = auditLogService.findLatestLog(
-					emailNotification.getTypeid(),
-					emailNotification.getSaccountid());
+					context.getTypeid(), context.getSaccountid());
 			templateGenerator.putVariable("historyLog", auditLog);
-			templateGenerator.putVariable("context",
-					new MailContext<SimpleBug>(bug, user, siteUrl));
+			templateGenerator.putVariable("context", context);
 			templateGenerator.putVariable("mapper", mapper);
 		}
 
@@ -182,24 +182,24 @@ public class BugRelayEmailNotificationActionImpl extends
 
 	@Override
 	public TemplateGenerator templateGeneratorForCommentAction(
-			SimpleRelayEmailNotification emailNotification) {
-		int bugId = emailNotification.getTypeid();
-		SimpleBug bug = bugService.findById(bugId,
-				emailNotification.getSaccountid());
+			MailContext<SimpleBug> context) {
+		SimpleBug bug = bugService.findById(context.getTypeid(),
+				context.getSaccountid());
 		if (bug == null) {
 			return null;
 		}
 
-		TemplateGenerator templateGenerator = new TemplateGenerator("["
-				+ bug.getProjectname() + "]: "
-				+ emailNotification.getChangeByUserFullName()
-				+ " has commented on the bug \""
-				+ StringUtils.trim(bug.getSummary(), 100) + "\"",
-				"templates/email/project/itemCommentNotifier.mt");
+		TemplateGenerator templateGenerator = new TemplateGenerator(
+				context.getMessage(BugI18nEnum.MAIL_COMMENT_ITEM_SUBJECT,
+						bug.getProjectname(),
+						context.getChangeByUserFullName(),
+						StringUtils.trim(bug.getSummary(), 100)),
+				context.templatePath("templates/email/project/itemCommentNotifier.mt"));
 
-		setupMailHeaders(bug, emailNotification, templateGenerator);
+		setupMailHeaders(bug, context.getEmailNotification(), templateGenerator);
 
-		templateGenerator.putVariable("comment", emailNotification);
+		templateGenerator
+				.putVariable("comment", context.getEmailNotification());
 
 		return templateGenerator;
 	}

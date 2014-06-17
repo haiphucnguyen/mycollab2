@@ -32,6 +32,7 @@ import com.esofthead.mycollab.module.crm.CrmResources;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.SimpleTask;
+import com.esofthead.mycollab.module.crm.i18n.TaskI18nEnum;
 import com.esofthead.mycollab.module.crm.service.ContactService;
 import com.esofthead.mycollab.module.crm.service.CrmNotificationSettingService;
 import com.esofthead.mycollab.module.crm.service.TaskService;
@@ -96,21 +97,21 @@ public class TaskRelayEmailNotificationActionImpl extends
 
 	@Override
 	protected TemplateGenerator templateGeneratorForCreateAction(
-			SimpleRelayEmailNotification emailNotification, SimpleUser user) {
-		SimpleTask simpleTask = taskService.findById(
-				emailNotification.getTypeid(),
-				emailNotification.getSaccountid());
+			MailContext<SimpleTask> context) {
+		SimpleTask simpleTask = taskService.findById(context.getTypeid(),
+				context.getSaccountid());
 		if (simpleTask != null) {
+			context.setWrappedBean(simpleTask);
 			String subject = StringUtils.trim(simpleTask.getSubject(), 100);
 
 			TemplateGenerator templateGenerator = new TemplateGenerator(
-					emailNotification.getChangeByUserFullName()
-							+ " has created the task \"" + subject + "\"",
-					"templates/email/crm/itemCreatedNotifier.mt");
-			setupMailHeaders(simpleTask, emailNotification, templateGenerator);
+					context.getMessage(TaskI18nEnum.MAIL_CREATE_ITEM_SUBJECT,
+							context.getChangeByUserFullName(), subject),
+					context.templatePath("templates/email/crm/itemCreatedNotifier.mt"));
+			setupMailHeaders(simpleTask, context.getEmailNotification(),
+					templateGenerator);
 
-			templateGenerator.putVariable("context",
-					new MailContext<SimpleTask>(simpleTask, user, siteUrl));
+			templateGenerator.putVariable("context", context);
 			templateGenerator.putVariable("mapper", mapper);
 			return templateGenerator;
 		} else {
@@ -120,29 +121,29 @@ public class TaskRelayEmailNotificationActionImpl extends
 
 	@Override
 	protected TemplateGenerator templateGeneratorForUpdateAction(
-			SimpleRelayEmailNotification emailNotification, SimpleUser user) {
-		SimpleTask simpleTask = taskService.findById(
-				emailNotification.getTypeid(),
-				emailNotification.getSaccountid());
+			MailContext<SimpleTask> context) {
+		SimpleTask simpleTask = taskService.findById(context.getTypeid(),
+				context.getSaccountid());
 
 		if (simpleTask == null) {
 			return null;
 		}
+
+		context.setWrappedBean(simpleTask);
 		String subject = StringUtils.trim(simpleTask.getSubject(), 100);
 
 		TemplateGenerator templateGenerator = new TemplateGenerator(
-				emailNotification.getChangeByUserFullName()
-						+ " has updated the task \"" + subject + "\"",
+				context.getMessage(TaskI18nEnum.MAIL_UPDATE_ITEM_SUBJECT,
+						context.getChangeByUserFullName(), subject),
 				"templates/email/crm/itemUpdatedNotifier.mt");
-		setupMailHeaders(simpleTask, emailNotification, templateGenerator);
+		setupMailHeaders(simpleTask, context.getEmailNotification(),
+				templateGenerator);
 
-		if (emailNotification.getTypeid() != null) {
+		if (context.getTypeid() != null) {
 			SimpleAuditLog auditLog = auditLogService.findLatestLog(
-					emailNotification.getTypeid(),
-					emailNotification.getSaccountid());
+					context.getTypeid(), context.getSaccountid());
 			templateGenerator.putVariable("historyLog", auditLog);
-			templateGenerator.putVariable("context",
-					new MailContext<SimpleTask>(simpleTask, user, siteUrl));
+			templateGenerator.putVariable("context", context);
 			templateGenerator.putVariable("mapper", mapper);
 		}
 		return templateGenerator;
@@ -150,21 +151,22 @@ public class TaskRelayEmailNotificationActionImpl extends
 
 	@Override
 	protected TemplateGenerator templateGeneratorForCommentAction(
-			SimpleRelayEmailNotification emailNotification, SimpleUser user) {
-		SimpleTask simpleTask = taskService.findById(
-				emailNotification.getTypeid(),
-				emailNotification.getSaccountid());
+			MailContext<SimpleTask> context) {
+		SimpleTask simpleTask = taskService.findById(context.getTypeid(),
+				context.getSaccountid());
 
 		if (simpleTask == null) {
 			return null;
 		}
 		TemplateGenerator templateGenerator = new TemplateGenerator(
-				emailNotification.getChangeByUserFullName()
-						+ " has commented on the task \""
-						+ StringUtils.trim(simpleTask.getSubject(), 100) + "\"",
-				"templates/email/crm/itemAddNoteNotifier.mt");
-		setupMailHeaders(simpleTask, emailNotification, templateGenerator);
-		templateGenerator.putVariable("comment", emailNotification);
+				context.getMessage(TaskI18nEnum.MAIL_COMMENT_ITEM_SUBJECT,
+						context.getChangeByUserFullName(),
+						StringUtils.trim(simpleTask.getSubject(), 100)),
+				context.templatePath("templates/email/crm/itemAddNoteNotifier.mt"));
+		setupMailHeaders(simpleTask, context.getEmailNotification(),
+				templateGenerator);
+		templateGenerator
+				.putVariable("comment", context.getEmailNotification());
 
 		return templateGenerator;
 	}
