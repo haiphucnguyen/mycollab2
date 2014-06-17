@@ -25,6 +25,7 @@ import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.common.domain.SimpleAuditLog;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
+import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.service.AuditLogService;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.crm.CrmLinkGenerator;
@@ -181,32 +182,36 @@ public class OpportunityRelayEmailNotificationActionImpl extends
 	public static class OpportunityFieldNameMapper extends ItemFieldMapper {
 
 		public OpportunityFieldNameMapper() {
-			put("opportunityname", "Opportunity Name");
-			put("accountid", new AccountFieldFormat("accountid", "Account"));
+			put("opportunityname", OpportunityI18nEnum.FORM_NAME);
+			put("accountid", new AccountFieldFormat("accountid",
+					OpportunityI18nEnum.FORM_ACCOUNT_NAME));
 
-			put("currencyid", new CurrencyFieldFormat("currency", "Currency"));
+			put("currencyid", new CurrencyFieldFormat("currency",
+					OpportunityI18nEnum.FORM_CURRENCY));
 			put("expectedcloseddate", new DateFieldFormat("expectedcloseddate",
-					"Expected Close Date"));
+					OpportunityI18nEnum.FORM_EXPECTED_CLOSE_DATE));
 
-			put("amount", "Amount");
-			put("opportunitytype", "Type");
+			put("amount", OpportunityI18nEnum.FORM_AMOUNT);
+			put("opportunitytype", OpportunityI18nEnum.FORM_TYPE);
 
-			put("salesstage", "Sales Stage");
-			put("source", "Lead Source");
+			put("salesstage", OpportunityI18nEnum.FORM_SALE_STAGE);
+			put("source", OpportunityI18nEnum.FORM_LEAD_SOURCE);
 
-			put("probability", "Probability (%)");
-			put("campaignid", new CampaignFieldFormat("campaignid", "Campaign"));
+			put("probability", OpportunityI18nEnum.FORM_PROBABILITY);
+			put("campaignid", new CampaignFieldFormat("campaignid",
+					OpportunityI18nEnum.FORM_CAMPAIGN_NAME));
 
-			put("nextstep", "Next Step");
-			put("assignuser", new AssigneeFieldFormat("assignuser", "Assignee"));
+			put("nextstep", OpportunityI18nEnum.FORM_NEXT_STEP);
+			put("assignuser", new AssigneeFieldFormat("assignuser",
+					GenericI18Enum.FORM_ASSIGNEE_FIELD));
 
-			put("description", "Description", true);
+			put("description", GenericI18Enum.FORM_DESCRIPTION, true);
 		}
 	}
 
 	public static class AccountFieldFormat extends FieldFormat {
 
-		public AccountFieldFormat(String fieldName, String displayName) {
+		public AccountFieldFormat(String fieldName, Enum displayName) {
 			super(fieldName, displayName);
 		}
 
@@ -233,7 +238,7 @@ public class OpportunityRelayEmailNotificationActionImpl extends
 
 	public static class CampaignFieldFormat extends FieldFormat {
 
-		public CampaignFieldFormat(String fieldName, String displayName) {
+		public CampaignFieldFormat(String fieldName, Enum displayName) {
 			super(fieldName, displayName);
 		}
 
@@ -292,7 +297,7 @@ public class OpportunityRelayEmailNotificationActionImpl extends
 
 	public static class AssigneeFieldFormat extends FieldFormat {
 
-		public AssigneeFieldFormat(String fieldName, String displayName) {
+		public AssigneeFieldFormat(String fieldName, Enum displayName) {
 			super(fieldName, displayName);
 		}
 

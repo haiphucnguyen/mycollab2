@@ -23,6 +23,7 @@ import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.common.domain.SimpleAuditLog;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
+import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.service.AuditLogService;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.crm.CrmLinkGenerator;
@@ -179,30 +180,34 @@ public class CampaignRelayEmailNotificationActionImpl extends
 	public static class CampaignFieldNameMapper extends ItemFieldMapper {
 
 		public CampaignFieldNameMapper() {
-			put("campaignname", "Name", true);
+			put("campaignname", CampaignI18nEnum.FORM_CAMPAIGN_NAME, true);
 
-			put("status", "Status");
-			put("type", "Type");
+			put("status", CampaignI18nEnum.FORM_STATUS);
+			put("type", CampaignI18nEnum.FORM_TYPE);
 
-			put("currencyid", new CurrencyFieldFormat("currencyid", "Currency"));
-			put("budget", "Budget");
+			put("currencyid", new CurrencyFieldFormat("currencyid",
+					CampaignI18nEnum.FORM_CURRENCY));
+			put("budget", CampaignI18nEnum.FORM_BUDGET);
 
-			put("expectedcost", "Expected Cost");
-			put("expectedrevenue", "Expected Revenue");
+			put("expectedcost", CampaignI18nEnum.FORM_EXPECTED_COST);
+			put("expectedrevenue", CampaignI18nEnum.FORM_EXPECTED_REVENUE);
 
-			put("actualcost", "Actual Cost");
-			put("assignuser", new AssigneeFieldFormat("assignuser", "Assignee"));
+			put("actualcost", CampaignI18nEnum.FORM_ACTUAL_COST);
+			put("assignuser", new AssigneeFieldFormat("assignuser",
+					GenericI18Enum.FORM_ASSIGNEE_FIELD));
 
-			put("startdate", new DateFieldFormat("startdate", "Start Date"));
-			put("enddate", new DateFieldFormat("enddate", "End Date"));
+			put("startdate", new DateFieldFormat("startdate",
+					CampaignI18nEnum.FORM_START_DATE));
+			put("enddate", new DateFieldFormat("enddate",
+					CampaignI18nEnum.FORM_END_DATE));
 
-			put("description", "Description", true);
+			put("description", GenericI18Enum.FORM_DESCRIPTION, true);
 		}
 	}
 
 	public static class AssigneeFieldFormat extends FieldFormat {
 
-		public AssigneeFieldFormat(String fieldName, String displayName) {
+		public AssigneeFieldFormat(String fieldName, Enum displayName) {
 			super(fieldName, displayName);
 		}
 

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.esofthead.mycollab.common.domain.SimpleAuditLog;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
+import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.service.AuditLogService;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.mail.MailUtils;
@@ -159,15 +160,16 @@ public class ComponentRelayEmailNotificationActionImpl extends
 
 	public static class ComponentFieldNameMapper extends ItemFieldMapper {
 		public ComponentFieldNameMapper() {
-			put("description", "Description", true);
+			put("description", GenericI18Enum.FORM_DESCRIPTION, true);
 
-			put("userlead", new LeadFieldFormat("userlead", "Lead"));
+			put("userlead", new LeadFieldFormat("userlead",
+					ComponentI18nEnum.FORM_LEAD));
 		}
 	}
 
 	public static class LeadFieldFormat extends FieldFormat {
 
-		public LeadFieldFormat(String fieldName, String displayName) {
+		public LeadFieldFormat(String fieldName, Enum displayName) {
 			super(fieldName, displayName, true);
 		}
 

@@ -25,6 +25,7 @@ import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.common.domain.SimpleAuditLog;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
+import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.service.AuditLogService;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.crm.CrmLinkGenerator;
@@ -180,30 +181,32 @@ public class CaseRelayEmailNotificationActionImpl extends
 	public static class CaseFieldNameMapper extends ItemFieldMapper {
 
 		public CaseFieldNameMapper() {
-			put("subject", "Subject", true);
+			put("subject", CaseI18nEnum.FORM_SUBJECT, true);
 
-			put("description", "Description");
-			put("accountid", new AccountFieldFormat("accountid", "Account"));
+			put("description", GenericI18Enum.FORM_DESCRIPTION);
+			put("accountid", new AccountFieldFormat("accountid",
+					CaseI18nEnum.FORM_ACCOUNT));
 
-			put("priority", "Priority");
-			put("type", "Type");
+			put("priority", CaseI18nEnum.FORM_PRIORITY);
+			put("type", CaseI18nEnum.FORM_TYPE);
 
-			put("status", "Status");
-			put("reason", "Reason");
+			put("status", CaseI18nEnum.FORM_STATUS);
+			put("reason", CaseI18nEnum.FORM_REASON);
 
-			put("phonenumber", "Phone");
-			put("email", "Email");
+			put("phonenumber", CaseI18nEnum.FORM_PHONE);
+			put("email", CaseI18nEnum.FORM_EMAIL);
 
-			put("origin", "Origin");
-			put("assignuser", new AssigneeFieldFormat("assignuser", "Assignee"));
+			put("origin", CaseI18nEnum.FORM_ORIGIN);
+			put("assignuser", new AssigneeFieldFormat("assignuser",
+					GenericI18Enum.FORM_ASSIGNEE_FIELD));
 
-			put("resolution", "Resolution", true);
+			put("resolution", CaseI18nEnum.FORM_RESOLUTION, true);
 		}
 	}
 
 	public static class AccountFieldFormat extends FieldFormat {
 
-		public AccountFieldFormat(String fieldName, String displayName) {
+		public AccountFieldFormat(String fieldName, Enum displayName) {
 			super(fieldName, displayName);
 		}
 
@@ -260,7 +263,7 @@ public class CaseRelayEmailNotificationActionImpl extends
 
 	public static class AssigneeFieldFormat extends FieldFormat {
 
-		public AssigneeFieldFormat(String fieldName, String displayName) {
+		public AssigneeFieldFormat(String fieldName, Enum displayName) {
 			super(fieldName, displayName);
 		}
 

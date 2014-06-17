@@ -28,6 +28,7 @@ import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.common.domain.SimpleAuditLog;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
+import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.service.AuditLogService;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.mail.MailUtils;
@@ -188,28 +189,29 @@ public class ProjectRiskRelayEmailNotificationActionImpl extends
 	public static class ProjectFieldNameMapper extends ItemFieldMapper {
 
 		public ProjectFieldNameMapper() {
-			put("riskname", "Risk Name", true);
-			put("description", "Description", true);
+			put("riskname", RiskI18nEnum.FORM_NAME, true);
+			put("description", GenericI18Enum.FORM_DESCRIPTION, true);
 
-			put("probability", "Probability");
-			put("consequence", "Consequence");
+			put("probability", RiskI18nEnum.FORM_PROBABILITY);
+			put("consequence", RiskI18nEnum.FORM_CONSEQUENCE);
 
-			put("datedue", new DateFieldFormat("datedue", "Due Date"));
-			put("status", "Status");
+			put("datedue", new DateFieldFormat("datedue",
+					RiskI18nEnum.FORM_DATE_DUE));
+			put("status", RiskI18nEnum.FORM_STATUS);
 
 			put("assigntouser", new AssigneeFieldFormat("assigntouser",
-					"Assignee"));
+					GenericI18Enum.FORM_ASSIGNEE_FIELD));
 			put("raisedbyuser", new RaisedByFieldFormat("raisedbyuser",
-					"Raised By"));
+					RiskI18nEnum.FORM_RAISED_BY));
 
-			put("response", "Response", true);
+			put("response", RiskI18nEnum.FORM_RESPONSE, true);
 
 		}
 	}
 
 	public static class AssigneeFieldFormat extends FieldFormat {
 
-		public AssigneeFieldFormat(String fieldName, String displayName) {
+		public AssigneeFieldFormat(String fieldName, Enum displayName) {
 			super(fieldName, displayName);
 		}
 
@@ -258,7 +260,7 @@ public class ProjectRiskRelayEmailNotificationActionImpl extends
 
 	public static class RaisedByFieldFormat extends FieldFormat {
 
-		public RaisedByFieldFormat(String fieldName, String displayName) {
+		public RaisedByFieldFormat(String fieldName, Enum displayName) {
 			super(fieldName, displayName);
 		}
 

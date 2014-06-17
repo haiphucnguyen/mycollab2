@@ -37,16 +37,16 @@
                     		<p><u><i>Changes:</i></u></p>
                     		<table border="0" cellspacing="0" style="font: 11px Arial, 'Times New Roman', sans-serif; color: #4e4e4e; width:100%; border-width: 1px 1px 0px 0px; border-style: solid; border-color: rgb(211, 239, 253);">
                     			<tr>
-                    				<td style="font-weight: bold; border-bottom: 1px solid rgb(169, 169, 169); width:240px; padding: 10px; border-width: 0px 0px 1px 1px; border-style: solid; border-color: rgb(211, 239, 253);">Fields</td>
-                    				<td style="font-weight: bold; border-bottom: 1px solid rgb(169, 169, 169); width:250px; padding: 10px; border-width: 0px 0px 1px 1px; border-style: solid; border-color: rgb(211, 239, 253);">Old Value</td>
-                    				<td style="font-weight: bold; border-bottom: 1px solid rgb(169, 169, 169); width:250px; padding: 10px; border-width: 0px 0px 1px 1px; border-style: solid; border-color: rgb(211, 239, 253);">New Value</td>
+                    				<td style="font-weight: bold; border-bottom: 1px solid rgb(169, 169, 169); width:240px; padding: 10px; border-width: 0px 0px 1px 1px; border-style: solid; border-color: rgb(211, 239, 253);">フィールド</td>
+                    				<td style="font-weight: bold; border-bottom: 1px solid rgb(169, 169, 169); width:250px; padding: 10px; border-width: 0px 0px 1px 1px; border-style: solid; border-color: rgb(211, 239, 253);">古い値</td>
+                    				<td style="font-weight: bold; border-bottom: 1px solid rgb(169, 169, 169); width:250px; padding: 10px; border-width: 0px 0px 1px 1px; border-style: solid; border-color: rgb(211, 239, 253);">新しい値</td>
                     			</tr>
                     			#foreach ($item in $historyLog.changeItems)
                     				#if ($mapper.hasField($item.field))
                     				#set($fieldFormat=$mapper.getFieldLabel($item.field))
                     				<tr>
                     					<td valign="top" style="width:240px; padding: 10px 20px; background-color: rgb(232, 246, 255); border-width: 0px 0px 1px 1px; border-style: solid; border-color: rgb(211, 239, 253);">
-                    						$fieldFormat.DisplayName
+                    						$context.getMessage($fieldFormat.DisplayName)
                     					</td>
                     					<td valign="top" style="width: 250px ;word-wrap: break-word; white-space: normal; word-break: break-all; padding: 10px; border-width: 0px 0px 1px 1px; border-style: solid; border-color: rgb(211, 239, 253);">
                     						$fieldFormat.formatField($context, $item.oldvalue)

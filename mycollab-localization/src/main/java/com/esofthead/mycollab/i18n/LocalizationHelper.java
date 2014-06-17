@@ -28,7 +28,7 @@ public class LocalizationHelper {
 	static {
 		languageMap = new HashMap<Locale, IMessageConveyor>();
 		languageMap.put(Locale.US, new MessageConveyor(Locale.US));
-		languageMap.put(Locale.JAPANESE, new MessageConveyor(Locale.JAPAN));
+		languageMap.put(Locale.JAPAN, new MessageConveyor(Locale.JAPAN));
 	}
 
 	public static IMessageConveyor getMessageConveyor(Locale language) {

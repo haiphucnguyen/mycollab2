@@ -15,7 +15,7 @@ public class LocaleUtils {
 		}
 
 		if ("Japanese".equals(language)) {
-			return Locale.JAPANESE;
+			return Locale.JAPAN;
 		}
 
 		return Locale.US;

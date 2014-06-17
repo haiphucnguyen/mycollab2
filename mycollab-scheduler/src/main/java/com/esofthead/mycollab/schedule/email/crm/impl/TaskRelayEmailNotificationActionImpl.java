@@ -25,6 +25,7 @@ import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.common.domain.SimpleAuditLog;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
+import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.service.AuditLogService;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.crm.CrmLinkGenerator;
@@ -174,25 +175,29 @@ public class TaskRelayEmailNotificationActionImpl extends
 	public static class TaskFieldNameMapper extends ItemFieldMapper {
 
 		public TaskFieldNameMapper() {
-			put("subject", "Subject", true);
+			put("subject", TaskI18nEnum.FORM_SUBJECT, true);
 
-			put("status", "Status");
-			put("startdate", new DateFieldFormat("startdate", "Start Date"));
+			put("status", TaskI18nEnum.FORM_STATUS);
+			put("startdate", new DateFieldFormat("startdate",
+					TaskI18nEnum.FORM_START_DATE));
 
-			put("assignuser", new AssigneeFieldFormat("assignuser", "Assignee"));
-			put("duedate", new DateFieldFormat("duedate", "Due Date"));
+			put("assignuser", new AssigneeFieldFormat("assignuser",
+					GenericI18Enum.FORM_ASSIGNEE_FIELD));
+			put("duedate", new DateFieldFormat("duedate",
+					TaskI18nEnum.FORM_DUE_DATE));
 
-			put("contactid", new ContactFieldFormat("contactid", "Contact"));
-			put("priority", "Priority");
+			put("contactid", new ContactFieldFormat("contactid",
+					TaskI18nEnum.FORM_CONTACT));
+			put("priority", TaskI18nEnum.FORM_PRIORITY);
 
-			put("typeid", "Related To", true);
-			put("description", "Description", true);
+			// put("typeid", TaskI18nEnum.FORM_RELATED_TO, true);
+			put("description", GenericI18Enum.FORM_DESCRIPTION, true);
 		}
 	}
 
 	public static class ContactFieldFormat extends FieldFormat {
 
-		public ContactFieldFormat(String fieldName, String displayName) {
+		public ContactFieldFormat(String fieldName, Enum displayName) {
 			super(fieldName, displayName);
 		}
 
@@ -249,7 +254,7 @@ public class TaskRelayEmailNotificationActionImpl extends
 
 	public static class AssigneeFieldFormat extends FieldFormat {
 
-		public AssigneeFieldFormat(String fieldName, String displayName) {
+		public AssigneeFieldFormat(String fieldName, Enum displayName) {
 			super(fieldName, displayName);
 		}
 

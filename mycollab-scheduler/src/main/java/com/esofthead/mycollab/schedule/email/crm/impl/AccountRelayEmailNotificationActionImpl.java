@@ -23,6 +23,7 @@ import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.common.domain.SimpleAuditLog;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
+import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.service.AuditLogService;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.crm.CrmLinkGenerator;
@@ -95,21 +96,17 @@ public class AccountRelayEmailNotificationActionImpl extends
 	@Override
 	protected TemplateGenerator templateGeneratorForCreateAction(
 			MailContext<SimpleAccount> context) {
-		int recordAccountId = context.getEmailNotification().getTypeid();
-		simpleAccount = accountService.findById(recordAccountId, context
-				.getEmailNotification().getSaccountid());
+		simpleAccount = accountService.findById(context.getTypeid(),
+				context.getSaccountid());
 		if (simpleAccount != null) {
 			String subject = StringUtils.trim(simpleAccount.getAccountname(),
 					100);
 
 			TemplateGenerator templateGenerator = new TemplateGenerator(
 					context.getMessage(
-							AccountI18nEnum.MAIL_CREATE_ITEM_SUBJECT, context
-									.getEmailNotification()
-									.getChangeByUserFullName(), subject),
-					MailUtils.templatePath(
-							"templates/email/crm/itemCreatedNotifier.mt",
-							context.getUser().getLanguage()));
+							AccountI18nEnum.MAIL_CREATE_ITEM_SUBJECT,
+							context.getChangeByUserFullName(), subject),
+					context.templatePath("templates/email/crm/itemCreatedNotifier.mt"));
 
 			setupMailHeaders(simpleAccount, context.getEmailNotification(),
 					templateGenerator);
@@ -135,7 +132,8 @@ public class AccountRelayEmailNotificationActionImpl extends
 
 			TemplateGenerator templateGenerator = new TemplateGenerator(
 					context.getMessage(
-							AccountI18nEnum.MAIL_UPDATE_ITEM_SUBJECT, subject),
+							AccountI18nEnum.MAIL_UPDATE_ITEM_SUBJECT,
+							context.getChangeByUserFullName(), subject),
 					context.templatePath("templates/email/crm/itemUpdatedNotifier.mt"));
 
 			setupMailHeaders(simpleAccount, context.getEmailNotification(),
@@ -167,8 +165,9 @@ public class AccountRelayEmailNotificationActionImpl extends
 		if (simpleAccount != null) {
 			TemplateGenerator templateGenerator = new TemplateGenerator(
 					context.getMessage(
-							AccountI18nEnum.MAIL_COMMENT_ITEM_SUBJECT,
-							context.getChangeByUserFullName()),
+							AccountI18nEnum.MAIL_COMMENT_ITEM_SUBJECT, context
+									.getChangeByUserFullName(), StringUtils
+									.trim(simpleAccount.getAccountname(), 100)),
 					context.templatePath("templates/email/crm/itemAddNoteNotifier.mt"));
 
 			setupMailHeaders(simpleAccount, context.getEmailNotification(),
@@ -186,7 +185,7 @@ public class AccountRelayEmailNotificationActionImpl extends
 
 	public static class AssigneeFieldFormat extends FieldFormat {
 
-		public AssigneeFieldFormat(String fieldName, String displayName) {
+		public AssigneeFieldFormat(String fieldName, Enum displayName) {
 			super(fieldName, displayName);
 		}
 
@@ -237,41 +236,41 @@ public class AccountRelayEmailNotificationActionImpl extends
 	public static class AccountFieldNameMapper extends ItemFieldMapper {
 
 		public AccountFieldNameMapper() {
-			put("accountname", "Name");
-			put("phoneoffice", "Office Phone");
+			put("accountname", AccountI18nEnum.FORM_ACCOUNT_NAME);
+			put("phoneoffice", AccountI18nEnum.FORM_OFFICE_PHONE);
 
-			put("website", "Website");
-			put("numemployees", "Employees");
+			put("website", AccountI18nEnum.FORM_WEBSITE);
+			put("numemployees", AccountI18nEnum.FORM_EMPLOYEES);
 
-			put("fax", "Fax");
-			put("alternatephone", "Other Phone");
+			put("fax", AccountI18nEnum.FORM_FAX);
+			put("alternatephone", AccountI18nEnum.FORM_OTHER_PHONE);
 
-			put("industry", "Industry");
-			put("email", "Email");
+			put("industry", AccountI18nEnum.FORM_INDUSTRY);
+			put("email", AccountI18nEnum.FORM_EMAIL);
 
-			put("type", "Type");
-			put("ownership", "Ownership");
+			put("type", AccountI18nEnum.FORM_TYPE);
+			put("ownership", AccountI18nEnum.FORM_OWNERSHIP);
 
 			put("assignuser", new AssigneeFieldFormat("assignuser",
-					"Assign User"));
-			put("annualrevenue", "Annual Revenue");
+					GenericI18Enum.FORM_ASSIGNEE_FIELD));
+			put("annualrevenue", AccountI18nEnum.FORM_ANNUAL_REVENUE);
 
-			put("billingaddress", "Billing Address");
-			put("shippingaddress", "Shipping Address");
+			put("billingaddress", AccountI18nEnum.FORM_BILLING_ADDRESS);
+			put("shippingaddress", AccountI18nEnum.FORM_SHIPPING_ADDRESS);
 
-			put("city", "Billing City");
-			put("shippingcity", "Shipping City");
+			put("city", AccountI18nEnum.FORM_BILLING_CITY);
+			put("shippingcity", AccountI18nEnum.FORM_SHIPPING_CITY);
 
-			put("state", "Billing State");
-			put("shippingstate", "Shipping State");
+			put("state", AccountI18nEnum.FORM_BILLING_STATE);
+			put("shippingstate", AccountI18nEnum.FORM_SHIPPING_STATE);
 
-			put("postalcode", "Billing Postal Code");
-			put("shippingpostalcode", "Shipping Postal Code");
+			put("postalcode", AccountI18nEnum.FORM_BILLING_POSTAL_CODE);
+			put("shippingpostalcode", AccountI18nEnum.FORM_SHIPPING_POSTAL_CODE);
 
-			put("billingcountry", "Billing Country");
-			put("shippingcountry", "Shipping Country");
+			put("billingcountry", AccountI18nEnum.FORM_BILLING_COUNTRY);
+			put("shippingcountry", AccountI18nEnum.FORM_SHIPPING_COUNTRY);
 
-			put("description", "Description", true);
+			put("description", GenericI18Enum.FORM_DESCRIPTION, true);
 		}
 	}
 }

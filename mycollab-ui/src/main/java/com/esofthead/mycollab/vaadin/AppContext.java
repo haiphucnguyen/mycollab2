@@ -31,7 +31,7 @@ import org.slf4j.LoggerFactory;
 
 import ch.qos.cal10n.IMessageConveyor;
 
-import com.esofthead.mycollab.common.localization.WebExceptionI18nEnum;
+import com.esofthead.mycollab.common.i18n.WebExceptionI18nEnum;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.arguments.GroupIdProvider;
 import com.esofthead.mycollab.core.utils.BeanUtility;

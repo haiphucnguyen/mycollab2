@@ -30,6 +30,7 @@ import org.springframework.stereotype.Service;
 
 import com.esofthead.mycollab.common.domain.SimpleAuditLog;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
+import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.service.AuditLogService;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.mail.MailUtils;
@@ -305,31 +306,35 @@ public class ProjectTaskRelayEmailNotificationActionImpl extends
 
 		public TaskFieldNameMapper() {
 
-			put("taskname", "Task Name", true);
+			put("taskname", TaskI18nEnum.FORM_TASK_NAME, true);
 
-			put("startdate", new DateFieldFormat("startdate", "Start Date"));
-			put("enddate", new DateFieldFormat("enddate", "End Date"));
+			put("startdate", new DateFieldFormat("startdate",
+					TaskI18nEnum.FORM_START_DATE));
+			put("enddate", new DateFieldFormat("enddate",
+					TaskI18nEnum.FORM_END_DATE));
 
 			put("actualstartdate", new DateFieldFormat("actualstartdate",
-					"Actual Start Date"));
+					TaskI18nEnum.FORM_ACTUAL_START_DATE));
 			put("actualenddate", new DateFieldFormat("actualenddate",
-					"Actual End Date"));
+					TaskI18nEnum.FORM_ACTUAL_END_DATE));
 
-			put("deadline", new DateFieldFormat("deadline", "Deadline"));
-			put("percentagecomplete", "Complete (%)");
+			put("deadline", new DateFieldFormat("deadline",
+					TaskI18nEnum.FORM_DEADLINE));
+			put("percentagecomplete", TaskI18nEnum.FORM_PERCENTAGE_COMPLETE);
 
-			put("priority", "Priority");
-			put("assignuser", new AssigneeFieldFormat("assignuser", "Assignee"));
+			put("priority", TaskI18nEnum.FORM_PRIORITY);
+			put("assignuser", new AssigneeFieldFormat("assignuser",
+					GenericI18Enum.FORM_ASSIGNEE_FIELD));
 
 			put("tasklistid", new TaskGroupFieldFormat("tasklistid",
-					"Task Group"));
-			put("notes", "Notes");
+					TaskI18nEnum.FORM_TASKGROUP_FIELD));
+			put("notes", TaskI18nEnum.FORM_NOTES_FIELD);
 		}
 	}
 
 	public static class AssigneeFieldFormat extends FieldFormat {
 
-		public AssigneeFieldFormat(String fieldName, String displayName) {
+		public AssigneeFieldFormat(String fieldName, Enum displayName) {
 			super(fieldName, displayName);
 		}
 
@@ -378,7 +383,7 @@ public class ProjectTaskRelayEmailNotificationActionImpl extends
 
 	public static class TaskGroupFieldFormat extends FieldFormat {
 
-		public TaskGroupFieldFormat(String fieldName, String displayName) {
+		public TaskGroupFieldFormat(String fieldName, Enum displayName) {
 			super(fieldName, displayName);
 		}
 

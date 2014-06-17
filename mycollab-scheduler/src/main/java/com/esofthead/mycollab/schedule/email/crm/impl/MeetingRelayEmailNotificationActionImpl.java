@@ -23,6 +23,7 @@ import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.common.domain.SimpleAuditLog;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
+import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.service.AuditLogService;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.crm.CrmLinkGenerator;
@@ -158,18 +159,18 @@ public class MeetingRelayEmailNotificationActionImpl extends
 
 		public MeetingFieldNameMapper() {
 
-			put("subject", "Subject", true);
+			put("subject", MeetingI18nEnum.FORM_SUBJECT, true);
 
-			put("status", "Status");
+			put("status", MeetingI18nEnum.FORM_STATUS);
 			put("startdate", new DateTimeFieldFormat("startdate",
-					"Start Date & Time"));
+					MeetingI18nEnum.FORM_START_DATE_TIME));
 
-			put("location", "Location");
-			put("enddate",
-					new DateTimeFieldFormat("enddate", "End Date & Time"));
+			put("location", MeetingI18nEnum.FORM_LOCATION);
+			put("enddate", new DateTimeFieldFormat("enddate",
+					MeetingI18nEnum.FORM_END_DATE_TIME));
 
-			put("typeid", "Related to", true);
-			put("description", "Description", true);
+			// put("typeid", "Related to", true);
+			put("description", GenericI18Enum.FORM_DESCRIPTION, true);
 		}
 	}
 

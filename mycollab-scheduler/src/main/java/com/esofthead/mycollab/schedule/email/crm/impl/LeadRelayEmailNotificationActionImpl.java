@@ -23,6 +23,7 @@ import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.common.domain.SimpleAuditLog;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
+import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.service.AuditLogService;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.crm.CrmLinkGenerator;
@@ -170,54 +171,55 @@ public class LeadRelayEmailNotificationActionImpl extends
 	public static class LeadFieldNameMapper extends ItemFieldMapper {
 		public LeadFieldNameMapper() {
 
-			put("firstname", "First Name");
-			put("email", new EmailLinkFieldFormat("email", "Email"));
+			put("firstname", LeadI18nEnum.FORM_FIRSTNAME);
+			put("email", new EmailLinkFieldFormat("email",
+					LeadI18nEnum.FORM_EMAIL));
 
-			put("lastname", "Last Name");
-			put("officephone", "Office Phone");
+			put("lastname", LeadI18nEnum.FORM_LASTNAME);
+			put("officephone", LeadI18nEnum.FORM_OFFICE_PHONE);
 
-			put("title", "Title");
-			put("mobile", "Mobile");
+			put("title", LeadI18nEnum.FORM_TITLE);
+			put("mobile", LeadI18nEnum.FORM_MOBILE);
 
-			put("department", "Department");
-			put("otherphone", "Other Phone");
+			put("department", LeadI18nEnum.FORM_DEPARTMENT);
+			put("otherphone", LeadI18nEnum.FORM_OTHER_PHONE);
 
-			put("accountname", "Account Name");
-			put("fax", "Fax");
+			put("accountname", LeadI18nEnum.FORM_ACCOUNT_NAME);
+			put("fax", LeadI18nEnum.FORM_FAX);
 
-			put("leadsourcedesc", "Lead Source");
-			put("website", "Web Site");
+			put("leadsourcedesc", LeadI18nEnum.FORM_LEAD_SOURCE);
+			put("website", LeadI18nEnum.FORM_WEBSITE);
 
-			put("industry", "Industry");
-			put("status", "Status");
+			put("industry", LeadI18nEnum.FORM_INDUSTRY);
+			put("status", LeadI18nEnum.FORM_STATUS);
 
-			put("noemployees", "No of Employees");
+			put("noemployees", LeadI18nEnum.FORM_NO_EMPLOYEES);
 			put("assignuser", new LeadAssigneeFieldFormat("assignuser",
-					"Assignee"));
+					GenericI18Enum.FORM_ASSIGNEE_FIELD));
 
-			put("primaddress", "Address");
-			put("otheraddress", "Other Address");
+			put("primaddress", LeadI18nEnum.FORM_PRIMARY_ADDRESS);
+			put("otheraddress", LeadI18nEnum.FORM_OTHER_ADDRESS);
 
-			put("primcity", "City");
-			put("othercity", "Other City");
+			put("primcity", LeadI18nEnum.FORM_PRIMARY_CITY);
+			put("othercity", LeadI18nEnum.FORM_OTHER_CITY);
 
-			put("primstate", "State");
-			put("otherstate", "Other State");
+			put("primstate", LeadI18nEnum.FORM_PRIMARY_STATE);
+			put("otherstate", LeadI18nEnum.FORM_OTHER_STATE);
 
-			put("primpostalcode", "Postal Code");
-			put("otherpostalcode", "Other Postal Code");
+			put("primpostalcode", LeadI18nEnum.FORM_PRIMARY_POSTAL_CODE);
+			put("otherpostalcode", LeadI18nEnum.FORM_OTHER_POSTAL_CODE);
 
-			put("primcountry", "Country");
-			put("othercountry", "Other Country");
+			put("primcountry", LeadI18nEnum.FORM_PRIMARY_COUNTRY);
+			put("othercountry", LeadI18nEnum.FORM_OTHER_COUNTRY);
 
-			put("description", "Description", true);
+			put("description", GenericI18Enum.FORM_DESCRIPTION, true);
 
 		}
 	}
 
 	public static class LeadAssigneeFieldFormat extends FieldFormat {
 
-		public LeadAssigneeFieldFormat(String fieldName, String displayName) {
+		public LeadAssigneeFieldFormat(String fieldName, Enum displayName) {
 			super(fieldName, displayName);
 		}
 

@@ -28,6 +28,7 @@ import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.common.domain.SimpleAuditLog;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
+import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.service.AuditLogService;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.mail.MailUtils;
@@ -188,28 +189,29 @@ public class ProjectProblemRelayEmailNotificationActionImpl extends
 
 	public static class ProjectFieldNameMapper extends ItemFieldMapper {
 		public ProjectFieldNameMapper() {
-			put("issuename", "Issue name", true);
+			put("issuename", ProblemI18nEnum.FORM_NAME, true);
 
-			put("description", "Description", true);
+			put("description", GenericI18Enum.FORM_DESCRIPTION, true);
 
-			put("datedue", new DateFieldFormat("datedue", "Due Date"));
-			put("status", "Status");
+			put("datedue", new DateFieldFormat("datedue",
+					ProblemI18nEnum.FORM_DATE_DUE));
+			put("status", ProblemI18nEnum.FORM_STATUS);
 
-			put("impact", "Impact");
-			put("priority", "Priority");
+			put("impact", ProblemI18nEnum.FORM_IMPACT);
+			put("priority", ProblemI18nEnum.FORM_PRIORITY);
 
 			put("assigntouser", new AssigneeFieldFormat("assigntouser",
-					"Assignee"));
+					GenericI18Enum.FORM_ASSIGNEE_FIELD));
 			put("raisedbyuser", new RaisedByFieldFormat("raisedbyuser",
-					"Raised By"));
+					ProblemI18nEnum.FORM_RAISED_BY));
 
-			put("resolution", "Resolution", true);
+			put("resolution", ProblemI18nEnum.FORM_RESOLUTION, true);
 		}
 	}
 
 	public static class AssigneeFieldFormat extends FieldFormat {
 
-		public AssigneeFieldFormat(String fieldName, String displayName) {
+		public AssigneeFieldFormat(String fieldName, Enum displayName) {
 			super(fieldName, displayName);
 		}
 
@@ -258,7 +260,7 @@ public class ProjectProblemRelayEmailNotificationActionImpl extends
 
 	public static class RaisedByFieldFormat extends FieldFormat {
 
-		public RaisedByFieldFormat(String fieldName, String displayName) {
+		public RaisedByFieldFormat(String fieldName, Enum displayName) {
 			super(fieldName, displayName);
 		}
 

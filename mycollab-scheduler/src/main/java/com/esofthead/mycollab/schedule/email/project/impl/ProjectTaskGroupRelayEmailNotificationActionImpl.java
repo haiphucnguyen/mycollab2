@@ -30,6 +30,7 @@ import org.springframework.stereotype.Service;
 
 import com.esofthead.mycollab.common.domain.SimpleAuditLog;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
+import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.service.AuditLogService;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.mail.MailUtils;
@@ -150,7 +151,7 @@ public class ProjectTaskGroupRelayEmailNotificationActionImpl extends
 				context.getMessage(TaskGroupI18nEnum.MAIL_UPDATE_ITEM_SUBJECT,
 						taskList.getProjectName(),
 						context.getChangeByUserFullName(), subject),
-				"templates/email/project/itemUpdatedNotifier.mt");
+				context.templatePath("templates/email/project/itemUpdatedNotifier.mt"));
 
 		setupMailHeaders(taskList, context.getEmailNotification(),
 				templateGenerator);
@@ -195,22 +196,23 @@ public class ProjectTaskGroupRelayEmailNotificationActionImpl extends
 
 		public ProjectFieldNameMapper() {
 
-			put("name", "Task Group Name", true);
+			put("name", TaskGroupI18nEnum.FORM_NAME_FIELD, true);
 
-			put("owner", new AssigneeFieldFormat("owner", "Owner"));
-			put("status", "Status");
+			put("owner", new AssigneeFieldFormat("owner",
+					GenericI18Enum.FORM_ASSIGNEE_FIELD));
+			put("status", TaskGroupI18nEnum.FORM_STATUS);
 
 			put("milestoneid", new MilestoneFieldFormat("milestoneid",
-					"Milestone", true));
+					TaskGroupI18nEnum.FORM_MILESTONE_FIELD, true));
 
-			put("description", "Description", true);
+			put("description", GenericI18Enum.FORM_DESCRIPTION, true);
 
 		}
 	}
 
 	public static class AssigneeFieldFormat extends FieldFormat {
 
-		public AssigneeFieldFormat(String fieldName, String displayName) {
+		public AssigneeFieldFormat(String fieldName, Enum displayName) {
 			super(fieldName, displayName);
 		}
 
@@ -259,7 +261,7 @@ public class ProjectTaskGroupRelayEmailNotificationActionImpl extends
 
 	public static class MilestoneFieldFormat extends FieldFormat {
 
-		public MilestoneFieldFormat(String fieldName, String displayName,
+		public MilestoneFieldFormat(String fieldName, Enum displayName,
 				boolean isColSpan) {
 			super(fieldName, displayName, isColSpan);
 		}

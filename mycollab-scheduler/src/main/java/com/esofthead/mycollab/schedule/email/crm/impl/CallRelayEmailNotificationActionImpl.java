@@ -23,6 +23,7 @@ import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.common.domain.SimpleAuditLog;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
+import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.service.AuditLogService;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.crm.CrmLinkGenerator;
@@ -172,27 +173,28 @@ public class CallRelayEmailNotificationActionImpl extends
 	public static class CallFieldNameMapper extends ItemFieldMapper {
 
 		public CallFieldNameMapper() {
-			put("subject", "Subject", true);
+			put("subject", CallI18nEnum.FORM_SUBJECT, true);
 
-			put("status", "Status");
+			put("status", CallI18nEnum.FORM_STATUS);
 			put("startdate", new DateTimeFieldFormat("startdate",
-					"Start Date & Time"));
+					CallI18nEnum.FORM_START_DATE_TIME));
 
-			put("typeid", "Related to");
-			put("durationinseconds", "Duration");
+			put("typeid", CallI18nEnum.FORM_RELATED);
+			put("durationinseconds", CallI18nEnum.FORM_DURATION);
 
-			put("purpose", "Purpose");
-			put("assignuser", new AssigneeFieldFormat("assignuser", "Assignee"));
+			put("purpose", CallI18nEnum.FORM_PURPOSE);
+			put("assignuser", new AssigneeFieldFormat("assignuser",
+					GenericI18Enum.FORM_ASSIGNEE_FIELD));
 
-			put("description", "Description", true);
+			put("description", GenericI18Enum.FORM_DESCRIPTION, true);
 
-			put("result", "Result", true);
+			put("result", CallI18nEnum.FORM_RESULT, true);
 		}
 	}
 
 	public static class AssigneeFieldFormat extends FieldFormat {
 
-		public AssigneeFieldFormat(String fieldName, String displayName) {
+		public AssigneeFieldFormat(String fieldName, Enum displayName) {
 			super(fieldName, displayName);
 		}
 

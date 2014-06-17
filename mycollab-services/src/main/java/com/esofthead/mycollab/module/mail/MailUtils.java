@@ -48,8 +48,8 @@ public class MailUtils {
 	}
 
 	public static String templatePath(String path, Locale locale) {
-		String key = (locale != null) ? (path + locale) : (path + Locale.US
-				.toString());
+		String key = (locale != null) ? (path + locale.toString())
+				: (path + Locale.US.toString());
 		String filePath = cacheFile.get(key);
 		if (filePath != null) {
 			return filePath;

@@ -25,6 +25,7 @@ import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.common.domain.SimpleAuditLog;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
+import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.service.AuditLogService;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.crm.CrmLinkGenerator;
@@ -189,55 +190,59 @@ public class ContactRelayEmailNotificationActionImpl extends
 	public static class ContactFieldNameMapper extends ItemFieldMapper {
 
 		ContactFieldNameMapper() {
-			put("firstname", "First Name");
-			put("officephone", "Office Phone");
+			put("firstname", ContactI18nEnum.FORM_FIRSTNAME);
+			put("officephone", ContactI18nEnum.FORM_OFFICE_PHONE);
 
-			put("lastname", "Last Name");
-			put("mobile", "Mobile");
+			put("lastname", ContactI18nEnum.FORM_LASTNAME);
+			put("mobile", ContactI18nEnum.FORM_MOBILE);
 
-			put("accountid", new AccountFieldFormat("accountid", "Account"));
-			put("homephone", "Home Phone");
+			put("accountid", new AccountFieldFormat("accountid",
+					ContactI18nEnum.FORM_ACCOUNTS));
+			put("homephone", ContactI18nEnum.FORM_HOME_PHONE);
 
-			put("title", "Title");
-			put("otherphone", "Other Phone");
+			put("title", ContactI18nEnum.FORM_TITLE);
+			put("otherphone", ContactI18nEnum.FORM_OTHER_PHONE);
 
-			put("department", "Department");
-			put("fax", "Fax");
+			put("department", ContactI18nEnum.FORM_DEPARTMENT);
+			put("fax", ContactI18nEnum.FORM_FAX);
 
-			put("email", new EmailLinkFieldFormat("email", "Email"));
-			put("birthday", new DateFieldFormat("birthday", "Birthday"));
+			put("email", new EmailLinkFieldFormat("email",
+					ContactI18nEnum.FORM_EMAIL));
+			put("birthday", new DateFieldFormat("birthday",
+					ContactI18nEnum.FORM_BIRTHDAY));
 
-			put("assistant", "Assistant");
-			put("iscallable", "Callable");
+			put("assistant", ContactI18nEnum.FORM_ASSISTANT);
+			put("iscallable", ContactI18nEnum.FORM_IS_CALLABLE);
 
-			put("assistantphone", "Assistant Phone");
-			put("assignuser", new AssigneeFieldFormat("assignuser", "Assignee"));
+			put("assistantphone", ContactI18nEnum.FORM_ASSISTANT_PHONE);
+			put("assignuser", new AssigneeFieldFormat("assignuser",
+					GenericI18Enum.FORM_ASSIGNEE_FIELD));
 
-			put("leadsource", "Lead Source", true);
+			put("leadsource", ContactI18nEnum.FORM_LEAD_SOURCE, true);
 
-			put("primaddress", "Address");
-			put("otheraddress", "Other Address");
+			put("primaddress", ContactI18nEnum.FORM_PRIMARY_ADDRESS);
+			put("otheraddress", ContactI18nEnum.FORM_OTHER_ADDRESS);
 
-			put("primcity", "City");
-			put("othercity", "Other City");
+			put("primcity", ContactI18nEnum.FORM_PRIMARY_CITY);
+			put("othercity", ContactI18nEnum.FORM_OTHER_CITY);
 
-			put("primstate", "State");
-			put("otherstate", "Other State");
+			put("primstate", ContactI18nEnum.FORM_PRIMARY_STATE);
+			put("otherstate", ContactI18nEnum.FORM_OTHER_STATE);
 
-			put("primpostalcode", "Postal Code");
-			put("otherpostalcode", "Other Postal Code");
+			put("primpostalcode", ContactI18nEnum.FORM_PRIMARY_POSTAL_CODE);
+			put("otherpostalcode", ContactI18nEnum.FORM_OTHER_POSTAL_CODE);
 
-			put("primcountry", "Country");
-			put("othercountry", "Other Country");
+			put("primcountry", ContactI18nEnum.FORM_PRIMARY_COUNTRY);
+			put("othercountry", ContactI18nEnum.FORM_OTHER_COUNTRY);
 
-			put("description", "Description", true);
+			put("description", GenericI18Enum.FORM_DESCRIPTION, true);
 
 		}
 	}
 
 	public static class AssigneeFieldFormat extends FieldFormat {
 
-		public AssigneeFieldFormat(String fieldName, String displayName) {
+		public AssigneeFieldFormat(String fieldName, Enum displayName) {
 			super(fieldName, displayName);
 		}
 
@@ -287,7 +292,7 @@ public class ContactRelayEmailNotificationActionImpl extends
 
 	public static class AccountFieldFormat extends FieldFormat {
 
-		public AccountFieldFormat(String fieldName, String displayName) {
+		public AccountFieldFormat(String fieldName, Enum displayName) {
 			super(fieldName, displayName);
 		}
 

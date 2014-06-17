@@ -30,6 +30,7 @@ import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.common.domain.SimpleAuditLog;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
+import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.service.AuditLogService;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.mail.MailUtils;
@@ -303,30 +304,33 @@ public class BugRelayEmailNotificationActionImpl extends
 	public static class BugFieldNameMapper extends ItemFieldMapper {
 
 		public BugFieldNameMapper() {
-			put("summary", "Bug Summary", true);
+			put("summary", BugI18nEnum.FORM_SUMMARY, true);
 
-			put("environment", "Environment", true);
+			put("environment", BugI18nEnum.FORM_ENVIRONMENT, true);
 
-			put("description", "Description", true);
+			put("description", GenericI18Enum.FORM_DESCRIPTION, true);
 
-			put("assignuser", new AssigneeFieldFormat("assignuser", "Assignee"));
+			put("assignuser", new AssigneeFieldFormat("assignuser",
+					GenericI18Enum.FORM_ASSIGNEE_FIELD));
 			put("milestoneid", new MilestoneFieldFormat("milestoneid",
-					"Milestone"));
+					BugI18nEnum.FORM_PHASE));
 
-			put("status", "Status");
-			put("resolution", "Resolution");
+			put("status", BugI18nEnum.FORM_STATUS);
+			put("resolution", BugI18nEnum.FORM_RESOLUTION);
 
-			put("severity", "Serverity");
-			put("priority", "Priority");
+			put("severity", BugI18nEnum.FORM_SEVERITY);
+			put("priority", BugI18nEnum.FORM_PRIORITY);
 
-			put("duedate", new DateFieldFormat("duedate", "Due Date"));
-			put("logby", new LogUserFieldFormat("logby", "Logged By"));
+			put("duedate", new DateFieldFormat("duedate",
+					BugI18nEnum.FORM_DUE_DATE));
+			put("logby", new LogUserFieldFormat("logby",
+					BugI18nEnum.FORM_LOG_BY));
 		}
 	}
 
 	public static class MilestoneFieldFormat extends FieldFormat {
 
-		public MilestoneFieldFormat(String fieldName, String displayName) {
+		public MilestoneFieldFormat(String fieldName, Enum displayName) {
 			super(fieldName, displayName);
 		}
 
@@ -384,7 +388,7 @@ public class BugRelayEmailNotificationActionImpl extends
 
 	public static class AssigneeFieldFormat extends FieldFormat {
 
-		public AssigneeFieldFormat(String fieldName, String displayName) {
+		public AssigneeFieldFormat(String fieldName, Enum displayName) {
 			super(fieldName, displayName);
 		}
 
@@ -432,7 +436,7 @@ public class BugRelayEmailNotificationActionImpl extends
 
 	public static class LogUserFieldFormat extends FieldFormat {
 
-		public LogUserFieldFormat(String fieldName, String displayName) {
+		public LogUserFieldFormat(String fieldName, Enum displayName) {
 			super(fieldName, displayName);
 		}
 
