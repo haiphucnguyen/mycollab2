@@ -192,15 +192,6 @@ public class AppContext implements Serializable {
 		return getInstance().userLocale;
 	}
 
-	public static String getMessage(Enum key) {
-		try {
-			return getInstance().messageHelper.getMessage(key);
-		} catch (Exception e) {
-			return LocalizationHelper.getMessage(
-					LocalizationHelper.defaultLocale, key);
-		}
-	}
-
 	public static String getMessage(Enum key, Object... objects) {
 		try {
 			return getInstance().messageHelper.getMessage(key, objects);

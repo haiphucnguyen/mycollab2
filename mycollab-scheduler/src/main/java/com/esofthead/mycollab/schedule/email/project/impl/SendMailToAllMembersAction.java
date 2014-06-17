@@ -23,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.esofthead.mycollab.common.domain.MailRecipientField;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
+import com.esofthead.mycollab.module.mail.MailUtils;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.mail.service.ExtMailService;
 import com.esofthead.mycollab.module.project.domain.ProjectNotificationSetting;
@@ -31,7 +32,6 @@ import com.esofthead.mycollab.module.project.domain.ProjectRelayEmailNotificatio
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.project.service.ProjectNotificationSettingService;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
-import com.esofthead.mycollab.schedule.email.MailUtils;
 import com.esofthead.mycollab.schedule.email.SendingRelayEmailNotificationAction;
 
 /**

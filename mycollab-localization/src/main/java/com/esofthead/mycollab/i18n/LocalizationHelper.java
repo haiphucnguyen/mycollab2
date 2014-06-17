@@ -44,9 +44,6 @@ public class LocalizationHelper {
 		}
 	}
 
-	// LOCALIZATION
-	private static IMessageConveyor english = new MessageConveyor(Locale.US);
-
 	public static String getMessage(Locale locale, Enum key, Object... objects) {
 		try {
 			IMessageConveyor messageConveyor = getMessageConveyor(locale);
