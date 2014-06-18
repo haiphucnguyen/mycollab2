@@ -409,7 +409,7 @@ public class ProjectViewImpl extends AbstractCssPageView implements ProjectView 
 		popupButtonsControl.addComponent(createPhaseBtn);
 
 		Button createBugBtn = new Button(
-				AppContext.getMessage(BugI18nEnum.NEW_BUG_ACTION),
+				AppContext.getMessage(BugI18nEnum.BUTTON_NEW_BUG),
 				new Button.ClickListener() {
 					@Override
 					public void buttonClick(ClickEvent event) {

@@ -403,15 +403,15 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug>
 						.newResource("icons/16/project/gray/history.png"));
 
 		tabBugDetail.addTab(bugRelatedField,
-				AppContext.getMessage(BugI18nEnum.RELATED_BUGS_TAB),
+				AppContext.getMessage(BugI18nEnum.TAB_RELATED_BUGS),
 				MyCollabResource.newResource("icons/16/project/gray/bug.png"));
 
 		tabBugDetail.addTab(bugFollowersList, AppContext
-				.getMessage(BugI18nEnum.FOLLOWERS_TAB), MyCollabResource
+				.getMessage(BugI18nEnum.TAB_FOLLOWERS), MyCollabResource
 				.newResource("icons/16/project/gray/follow.png"));
 
 		tabBugDetail.addTab(bugTimeLogList,
-				AppContext.getMessage(BugI18nEnum.TIME_TAB),
+				AppContext.getMessage(BugI18nEnum.TAB_TIME),
 				MyCollabResource.newResource("icons/16/project/gray/time.png"));
 
 		return tabBugDetail;
