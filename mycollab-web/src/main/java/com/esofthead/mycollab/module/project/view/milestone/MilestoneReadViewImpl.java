@@ -127,18 +127,18 @@ public class MilestoneReadViewImpl extends
 		tabContainer.setWidth("100%");
 
 		tabContainer.addTab(this.associateCommentListComp, AppContext
-				.getMessage(ProjectCommonI18nEnum.COMMENT_TAB),
+				.getMessage(ProjectCommonI18nEnum.TAB_COMMENT),
 				MyCollabResource
 						.newResource("icons/16/project/gray/comment.png"));
 		tabContainer.addTab(historyList, AppContext
-				.getMessage(ProjectCommonI18nEnum.HISTORY_TAB),
+				.getMessage(ProjectCommonI18nEnum.TAB_HISTORY),
 				MyCollabResource
 						.newResource("icons/16/project/gray/history.png"));
 		tabContainer.addTab(this.associateTaskGroupListComp,
-				AppContext.getMessage(MilestoneI18nEnum.RELATED_TASKS_TAB),
+				AppContext.getMessage(MilestoneI18nEnum.TAB_RELATED_TASKS),
 				MyCollabResource.newResource("icons/16/project/gray/task.png"));
 		tabContainer.addTab(this.associateBugListComp,
-				AppContext.getMessage(MilestoneI18nEnum.RELATED_BUGS_TAB),
+				AppContext.getMessage(MilestoneI18nEnum.TAB_RELATED_BUGS),
 				MyCollabResource.newResource("icons/16/project/gray/bug.png"));
 
 		return tabContainer;
@@ -150,7 +150,7 @@ public class MilestoneReadViewImpl extends
 		simpleViewBottom.setStyleName("phase-simple-view");
 
 		Label taskListLbl = new Label(
-				AppContext.getMessage(MilestoneI18nEnum.RELATED_TASKS_TAB));
+				AppContext.getMessage(MilestoneI18nEnum.TAB_RELATED_TASKS));
 		taskListLbl.addStyleName("h2");
 		simpleViewBottom.addComponent(taskListLbl);
 		TaskSearchCriteria criteria = new TaskSearchCriteria();
@@ -163,7 +163,7 @@ public class MilestoneReadViewImpl extends
 		taskDisplayWidget.setSearchCriteria(criteria);
 
 		Label bugListLbl = new Label(
-				AppContext.getMessage(MilestoneI18nEnum.RELATED_BUGS_TAB));
+				AppContext.getMessage(MilestoneI18nEnum.TAB_RELATED_BUGS));
 		bugListLbl.addStyleName("h2");
 		simpleViewBottom.addComponent(bugListLbl);
 		final BugSearchCriteria bugCriteria = new BugSearchCriteria();

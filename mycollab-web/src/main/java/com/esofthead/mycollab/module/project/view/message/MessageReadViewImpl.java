@@ -195,7 +195,7 @@ public class MessageReadViewImpl extends AbstractPageView implements
 			HorizontalLayout isSticky = new HorizontalLayout();
 			isSticky.setSpacing(true);
 			Label isStickyText = new Label(
-					AppContext.getMessage(MessageI18nEnum.FORM_IS_STICK_FIELD));
+					AppContext.getMessage(MessageI18nEnum.FORM_IS_STICK));
 			isSticky.setStyleName("hdr-text");
 			stickyCheck = new CheckBox("", message.getIsstick());
 

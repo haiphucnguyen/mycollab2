@@ -48,14 +48,14 @@ public class RecentBugUpdateWidget extends BugDisplayWidget {
 	private static final long serialVersionUID = 1L;
 
 	public RecentBugUpdateWidget() {
-		super(AppContext.getMessage(BugI18nEnum.UPDATED_RECENTLY_WIDGET_TITLE),
+		super(AppContext.getMessage(BugI18nEnum.WIDGET_UPDATED_RECENTLY_TITLE),
 				RecentBugRowDisplayHandler.class);
 	}
 
 	@Override
 	protected BugFilterParameter constructMoreDisplayFilter() {
 		return new BugFilterParameter(
-				AppContext.getMessage(BugI18nEnum.RECENT_BUGS_WIDGET_TITLE),
+				AppContext.getMessage(BugI18nEnum.WIDGET_RECENT_BUGS_TITLE),
 				searchCriteria);
 	}
 

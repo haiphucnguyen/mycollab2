@@ -121,7 +121,7 @@ public class TimeTrackingEditViewWindow extends Window implements
 		HorizontalLayout controlsLayout = new HorizontalLayout();
 		controlsLayout.setSpacing(true);
 		Button saveBtn = new Button(
-				AppContext.getMessage(TimeTrackingI18nEnum.LOG_TIME_ACTION),
+				AppContext.getMessage(TimeTrackingI18nEnum.BUTTON_LOG_TIME),
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
@@ -164,7 +164,7 @@ public class TimeTrackingEditViewWindow extends Window implements
 
 			Button detachTaskBtn = new Button(
 					AppContext
-							.getMessage(TimeTrackingI18nEnum.DETACH_TASK_ACTION),
+							.getMessage(TimeTrackingI18nEnum.BUTTON_DETACH_TASK),
 					new Button.ClickListener() {
 
 						private static final long serialVersionUID = 1L;
@@ -196,7 +196,7 @@ public class TimeTrackingEditViewWindow extends Window implements
 	private void createLinkTaskButton() {
 		taskLayout.removeAllComponents();
 		Button attachTaskBtn = new Button(
-				AppContext.getMessage(TimeTrackingI18nEnum.LINK_TASK_ACTION),
+				AppContext.getMessage(TimeTrackingI18nEnum.BUTTON_LINK_TASK),
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 

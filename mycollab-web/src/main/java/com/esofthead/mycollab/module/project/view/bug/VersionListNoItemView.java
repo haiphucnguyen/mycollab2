@@ -57,18 +57,18 @@ public class VersionListNoItemView extends AbstractPageView {
 		layout.addComponent(image);
 
 		Label title = new Label(
-				AppContext.getMessage(VersionI18nEnum.NO_ITEM_VIEW_TITLE));
+				AppContext.getMessage(VersionI18nEnum.VIEW_NO_ITEM_TITLE));
 		title.addStyleName("h2");
 		title.setWidth(SIZE_UNDEFINED, Sizeable.Unit.PIXELS);
 		layout.addComponent(title);
 
 		Label body = new Label(
-				AppContext.getMessage(VersionI18nEnum.NO_ITEM_VIEW_HINT));
+				AppContext.getMessage(VersionI18nEnum.VIEW_NO_ITEM_HINT));
 		body.setWidth(SIZE_UNDEFINED, Sizeable.Unit.PIXELS);
 		layout.addComponent(body);
 
 		Button createVersionBtn = new Button(
-				AppContext.getMessage(BugI18nEnum.NEW_VERSION_ACTION),
+				AppContext.getMessage(BugI18nEnum.BUTTON_NEW_VERSION),
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 

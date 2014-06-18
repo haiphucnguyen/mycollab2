@@ -56,18 +56,18 @@ public class RiskListNoItemView extends AbstractPageView {
 		layout.addComponent(image);
 
 		Label title = new Label(
-				AppContext.getMessage(RiskI18nEnum.NO_ITEM_VIEW_TITLE));
+				AppContext.getMessage(RiskI18nEnum.VIEW_NO_ITEM_TITLE));
 		title.addStyleName("h2");
 		title.setWidth(SIZE_UNDEFINED, Sizeable.Unit.PIXELS);
 		layout.addComponent(title);
 
 		Label body = new Label(
-				AppContext.getMessage(RiskI18nEnum.NO_ITEM_VIEW_HINT));
+				AppContext.getMessage(RiskI18nEnum.VIEW_NO_ITEM_HINT));
 		body.setWidth(SIZE_UNDEFINED, Sizeable.Unit.PIXELS);
 		layout.addComponent(body);
 
 		Button createRiskBtn = new Button(
-				AppContext.getMessage(RiskI18nEnum.NEW_RISK_ACTION),
+				AppContext.getMessage(RiskI18nEnum.BUTTON_NEW_RISK),
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 

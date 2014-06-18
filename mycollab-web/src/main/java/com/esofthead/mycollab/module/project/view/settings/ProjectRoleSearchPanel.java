@@ -146,11 +146,11 @@ public class ProjectRoleSearchPanel extends
 			Image titleIcon = new Image(null,
 					MyCollabResource.newResource("icons/24/project/user.png"));
 			Label headerText = new Label(
-					AppContext.getMessage(ProjectRoleI18nEnum.LIST_VIEW_TITLE));
+					AppContext.getMessage(ProjectRoleI18nEnum.VIEW_LIST_TITLE));
 
 			final Button createBtn = new Button(
 					AppContext
-							.getMessage(ProjectMemberI18nEnum.NEW_ROLE_ACTION),
+							.getMessage(ProjectMemberI18nEnum.BUTTON_NEW_ROLE),
 					new Button.ClickListener() {
 						private static final long serialVersionUID = 1L;
 

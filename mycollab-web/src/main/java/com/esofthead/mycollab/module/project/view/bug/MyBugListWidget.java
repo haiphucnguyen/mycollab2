@@ -48,7 +48,7 @@ public class MyBugListWidget extends BugDisplayWidget {
 	private static final long serialVersionUID = 1L;
 
 	public MyBugListWidget() {
-		super(AppContext.getMessage(BugI18nEnum.MY_OPEN_BUGS_WIDGET_TITLE),
+		super(AppContext.getMessage(BugI18nEnum.WIDGET_MY_OPEN_BUGS_TITLE),
 				MyBugRowDisplayHandler.class);
 	}
 
@@ -126,7 +126,7 @@ public class MyBugListWidget extends BugDisplayWidget {
 	@Override
 	protected BugFilterParameter constructMoreDisplayFilter() {
 		return new BugFilterParameter(
-				AppContext.getMessage(BugI18nEnum.MY_BUGS_WIDGET_TITLE),
+				AppContext.getMessage(BugI18nEnum.WIDGET_MY_BUGS_TITLE),
 				searchCriteria);
 	}
 }

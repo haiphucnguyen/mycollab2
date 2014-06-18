@@ -72,7 +72,7 @@ public class TaskGroupAddWindow extends Window {
 
 	public TaskGroupAddWindow(final TaskGroupDisplayView taskView,
 			final SimpleTaskList taskList) {
-		super(AppContext.getMessage(TaskI18nEnum.NEW_TASKGROUP_TITLE));
+		super(AppContext.getMessage(TaskI18nEnum.DIALOG_NEW_TASKGROUP_TITLE));
 		this.setModal(true);
 		this.setResizable(false);
 		this.taskView = taskView;
