@@ -135,8 +135,8 @@ public class ProblemListViewImpl extends AbstractPageView implements
 					}
 				}
 				b.setDescription(ProjectTooltipGenerator
-						.generateToolTipProblem(problem,
-								AppContext.getSiteUrl(),
+						.generateToolTipProblem(AppContext.getUserLocale(),
+								problem, AppContext.getSiteUrl(),
 								AppContext.getTimezoneId()));
 				return b;
 
