@@ -192,7 +192,7 @@ public class AssignTaskWindow extends Window {
 			public void attachField(Object propertyId, Field<?> field) {
 				if (propertyId.equals("assignuser")) {
 					informationLayout.addComponent(field, AppContext
-							.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD), 0,
+							.getMessage(GenericI18Enum.FORM_ASSIGNEE), 0,
 							0);
 				} else if (propertyId.equals("comment")) {
 					informationLayout.addComponent(field, AppContext

@@ -26,7 +26,7 @@ public class ProblemHistoryList extends HistoryLogComponent {
 				AppContext.getMessage(ProblemI18nEnum.FORM_RAISED_BY),
 				new ProjectMemberHistoryFieldFormat());
 		this.generateFieldDisplayHandler("assigntouser",
-				AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD),
+				AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE),
 				new ProjectMemberHistoryFieldFormat());
 		this.generateFieldDisplayHandler("impact",
 				AppContext.getMessage(ProblemI18nEnum.FORM_IMPACT));

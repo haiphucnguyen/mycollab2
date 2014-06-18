@@ -856,11 +856,11 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 												UI.getCurrent(),
 												AppContext
 														.getMessage(
-																GenericI18Enum.DELETE_DIALOG_TITLE,
+																GenericI18Enum.DIALOG_DELETE_TITLE,
 																SiteConfiguration
 																		.getSiteName()),
 												AppContext
-														.getMessage(GenericI18Enum.DELETE_SINGLE_ITEM_DIALOG_MESSAGE),
+														.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
 												AppContext
 														.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
 												AppContext

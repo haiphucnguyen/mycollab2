@@ -30,7 +30,7 @@ public interface RiskTableFieldDef {
 			UIConstants.TABLE_X_LABEL_WIDTH);
 
 	public static TableViewField assignUser = new TableViewField(
-			GenericI18Enum.FORM_ASSIGNEE_FIELD, "assignedToUserFullName",
+			GenericI18Enum.FORM_ASSIGNEE, "assignedToUserFullName",
 			UIConstants.TABLE_X_LABEL_WIDTH);
 
 	public static TableViewField datedue = new TableViewField(

@@ -97,7 +97,7 @@ public class MyBugListWidget extends BugDisplayWidget {
 			HorizontalLayout hLayoutAssigneeInfo = new HorizontalLayout();
 			hLayoutAssigneeInfo.setSpacing(true);
 			Label assignee = new Label(
-					AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD)
+					AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE)
 							+ ": ");
 			assignee.setStyleName(UIConstants.WIDGET_ROW_METADATA);
 			hLayoutAssigneeInfo.addComponent(assignee);

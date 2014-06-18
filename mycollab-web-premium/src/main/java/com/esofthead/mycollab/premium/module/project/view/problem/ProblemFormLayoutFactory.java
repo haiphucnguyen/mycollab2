@@ -56,7 +56,7 @@ public class ProblemFormLayoutFactory implements IFormLayoutFactory {
 					AppContext.getMessage(ProblemI18nEnum.FORM_RELATED), 1, 2);
 		} else if (propertyId.equals("assigntouser")) {
 			this.informationLayout.addComponent(field,
-					AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD),
+					AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE),
 					0, 3);
 		} else if (propertyId.equals("impact")) {
 			this.informationLayout.addComponent(field,

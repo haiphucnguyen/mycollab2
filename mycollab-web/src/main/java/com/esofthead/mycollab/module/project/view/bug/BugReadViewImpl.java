@@ -460,7 +460,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug>
 						AppContext.getMessage(BugI18nEnum.FORM_LOG_BY), 0, 6);
 			} else if (propertyId.equals("assignuserFullName")) {
 				this.informationLayout.addComponent(field, AppContext
-						.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD), 1, 6);
+						.getMessage(GenericI18Enum.FORM_ASSIGNEE), 1, 6);
 			} else if (propertyId.equals("milestoneName")) {
 				this.informationLayout.addComponent(field,
 						AppContext.getMessage(BugI18nEnum.FORM_PHASE), 0, 7, 2,

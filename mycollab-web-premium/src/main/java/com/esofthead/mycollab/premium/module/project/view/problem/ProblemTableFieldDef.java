@@ -30,7 +30,7 @@ public interface ProblemTableFieldDef {
 			UIConstants.TABLE_X_LABEL_WIDTH);
 
 	public static TableViewField assignUser = new TableViewField(
-			GenericI18Enum.FORM_ASSIGNEE_FIELD, "assignedUserFullName",
+			GenericI18Enum.FORM_ASSIGNEE, "assignedUserFullName",
 			UIConstants.TABLE_X_LABEL_WIDTH);
 
 	public static TableViewField datedue = new TableViewField(

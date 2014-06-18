@@ -70,7 +70,7 @@ public class NotificationUtil {
 		showNotification(
 				AppContext.getMessage(WindowI18nEnum.INFORMATION_WINDOW_TITLE),
 				AppContext
-						.getMessage(GenericI18Enum.INFORMATION_GOTO_LAST_RECORD),
+						.getMessage(GenericI18Enum.NOTIFICATION_GOTO_LAST_RECORD),
 				Type.HUMANIZED_MESSAGE);
 	}
 
@@ -78,7 +78,7 @@ public class NotificationUtil {
 		showNotification(
 				AppContext.getMessage(WindowI18nEnum.INFORMATION_WINDOW_TITLE),
 				AppContext
-						.getMessage(GenericI18Enum.INFORMATION_GOTO_FIRST_RECORD),
+						.getMessage(GenericI18Enum.NOTIFICATION_GOTO_FIRST_RECORD),
 				Type.HUMANIZED_MESSAGE);
 	}
 
@@ -86,7 +86,7 @@ public class NotificationUtil {
 		showNotification(
 				AppContext.getMessage(WindowI18nEnum.INFORMATION_WINDOW_TITLE),
 				AppContext
-						.getMessage(GenericI18Enum.INFORMATION_RECORD_IS_NOT_EXISTED_MESSAGE),
+						.getMessage(GenericI18Enum.NOTIFICATION_RECORD_IS_NOT_EXISTED),
 				Type.HUMANIZED_MESSAGE);
 	}
 
