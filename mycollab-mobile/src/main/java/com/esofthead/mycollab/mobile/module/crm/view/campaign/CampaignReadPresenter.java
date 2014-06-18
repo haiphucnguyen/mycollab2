@@ -32,7 +32,7 @@ import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
-import com.esofthead.vaadin.mobilecomponent.MobileNavigationManager;
+import com.vaadin.addon.touchkit.ui.NavigationManager;
 import com.vaadin.ui.UI;
 
 /**
@@ -151,7 +151,7 @@ public class CampaignReadPresenter extends
 	}
 
 	@Override
-	protected void onGo(MobileNavigationManager container, ScreenData<?> data) {
+	protected void onGo(NavigationManager container, ScreenData<?> data) {
 		if (AppContext.canRead(RolePermissionCollections.CRM_CAMPAIGN)) {
 
 			if (data.getParams() instanceof Integer) {

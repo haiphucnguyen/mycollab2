@@ -36,9 +36,7 @@ import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.mobile.module.crm.events.ContactEvent;
-import com.esofthead.mycollab.mobile.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.mobile.module.crm.ui.CrmGenericPresenter;
-import com.esofthead.mycollab.mobile.module.crm.ui.CrmNavigationMenu;
 import com.esofthead.mycollab.mobile.ui.ConfirmDialog;
 import com.esofthead.mycollab.module.crm.CrmLinkGenerator;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
@@ -50,7 +48,7 @@ import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
-import com.esofthead.vaadin.mobilecomponent.MobileNavigationManager;
+import com.vaadin.addon.touchkit.ui.NavigationManager;
 import com.vaadin.ui.UI;
 
 /**
@@ -170,12 +168,13 @@ public class ContactReadPresenter extends CrmGenericPresenter<ContactReadView> {
 	}
 
 	@Override
-	protected void onGo(MobileNavigationManager container, ScreenData<?> data) {
+	protected void onGo(NavigationManager container, ScreenData<?> data) {
 		if (AppContext.canRead(RolePermissionCollections.CRM_CONTACT)) {
-			CrmNavigationMenu crmToolbar = (CrmNavigationMenu) container
-					.getNavigationMenu();
-			crmToolbar.selectButton(AppContext
-					.getMessage(CrmCommonI18nEnum.TOOLBAR_CONTACTS_HEADER));
+			/*
+			 * CrmNavigationMenu crmToolbar = (CrmNavigationMenu) container
+			 * .getNavigationMenu(); crmToolbar.selectButton(AppContext
+			 * .getMessage(CrmCommonI18nEnum.TOOLBAR_CONTACTS_HEADER));
+			 */
 
 			if (data.getParams() instanceof Integer) {
 				ContactService contactService = ApplicationContextUtil
