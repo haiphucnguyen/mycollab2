@@ -222,7 +222,7 @@ public class TaskGroupDisplayWidget
 			this.taskListActionControl.setContent(actionBtnLayout);
 
 			final Button readBtn = new Button(
-					AppContext.getMessage(GenericI18Enum.BUTTON_VIEW_LABEL),
+					AppContext.getMessage(GenericI18Enum.BUTTON_VIEW),
 					new Button.ClickListener() {
 						private static final long serialVersionUID = 1L;
 
