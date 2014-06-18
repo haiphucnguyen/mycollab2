@@ -259,7 +259,7 @@ public class MilestoneReadViewImpl extends
 						1);
 			} else if (propertyId.equals("owner")) {
 				this.informationLayout.addComponent(field, AppContext
-						.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD), 1, 0);
+						.getMessage(GenericI18Enum.FORM_ASSIGNEE), 1, 0);
 			} else if (propertyId.equals("status")) {
 				this.informationLayout.addComponent(field, AppContext
 						.getMessage(MilestoneI18nEnum.FORM_STATUS_FIELD), 1, 1);

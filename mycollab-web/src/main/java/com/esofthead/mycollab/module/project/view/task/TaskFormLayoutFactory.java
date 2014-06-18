@@ -82,7 +82,7 @@ public class TaskFormLayoutFactory implements IFormLayoutFactory {
 					AppContext.getMessage(TaskI18nEnum.FORM_PRIORITY), 1, 3);
 		} else if (propertyId.equals("assignuser")) {
 			this.informationLayout.addComponent(field,
-					AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD),
+					AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE),
 					0, 4);
 		} else if (propertyId.equals("tasklistid")) {
 			this.informationLayout.addComponent(field,

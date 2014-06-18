@@ -214,7 +214,7 @@ class TaskAddPopup extends CustomComponent {
 								.getMessage(TaskI18nEnum.FORM_PRIORITY), 1, 3);
 			} else if (propertyId.equals("assignuser")) {
 				this.informationLayout.addComponent(field, AppContext
-						.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD), 0, 4);
+						.getMessage(GenericI18Enum.FORM_ASSIGNEE), 0, 4);
 			} else if (propertyId.equals("percentagecomplete")) {
 				this.informationLayout.addComponent(field, AppContext
 						.getMessage(TaskI18nEnum.FORM_PERCENTAGE_COMPLETE), 1,

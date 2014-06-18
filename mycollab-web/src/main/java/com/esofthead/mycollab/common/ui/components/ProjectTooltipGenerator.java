@@ -142,7 +142,7 @@ public class ProjectTooltipGenerator {
 
 			Tr trRow4 = new Tr();
 			Td cell41 = buildCellName(LocalizationHelper.getMessage(locale,
-					GenericI18Enum.FORM_ASSIGNEE_FIELD));
+					GenericI18Enum.FORM_ASSIGNEE));
 			String assignUserLink = (task.getAssignuser() != null) ? AccountLinkUtils
 					.generatePreviewFullUserLink(siteURL, task.getAssignuser())
 					: "";
@@ -255,7 +255,7 @@ public class ProjectTooltipGenerator {
 			Td cell62 = buildCellLink(logbyUserLink, logbyAvatarLink,
 					bug.getLoguserFullName());
 			Td cell63 = buildCellName(LocalizationHelper.getMessage(locale,
-					GenericI18Enum.FORM_ASSIGNEE_FIELD));
+					GenericI18Enum.FORM_ASSIGNEE));
 			String assignUserLink = (bug.getAssignuser() != null) ? AccountLinkUtils
 					.generatePreviewFullUserLink(siteURL, bug.getAssignuser())
 					: "";
@@ -320,7 +320,7 @@ public class ProjectTooltipGenerator {
 
 			Tr trRow2 = new Tr();
 			Td cell21 = buildCellName(LocalizationHelper.getMessage(locale,
-					GenericI18Enum.FORM_ASSIGNEE_FIELD));
+					GenericI18Enum.FORM_ASSIGNEE));
 			String assignUserLink = (risk.getAssigntouser() != null) ? AccountLinkUtils
 					.generatePreviewFullUserLink(siteURL,
 							risk.getAssigntouser()) : "";
@@ -404,7 +404,7 @@ public class ProjectTooltipGenerator {
 
 			Tr trRow2 = new Tr();
 			Td cell21 = buildCellName(LocalizationHelper.getMessage(locale,
-					GenericI18Enum.FORM_ASSIGNEE_FIELD));
+					GenericI18Enum.FORM_ASSIGNEE));
 			String assignUserLink = (problem.getAssigntouser() != null) ? AccountLinkUtils
 					.generatePreviewFullUserLink(siteURL,
 							problem.getAssigntouser()) : "";
@@ -546,7 +546,7 @@ public class ProjectTooltipGenerator {
 			// Assignee
 			Tr trRow3 = new Tr();
 			Td cell31 = buildCellName(LocalizationHelper.getMessage(locale,
-					GenericI18Enum.FORM_ASSIGNEE_FIELD));
+					GenericI18Enum.FORM_ASSIGNEE));
 			String ownerLink = (taskList.getOwner() != null) ? AccountLinkUtils
 					.generatePreviewFullUserLink(siteURL, taskList.getOwner())
 					: "";
@@ -678,7 +678,7 @@ public class ProjectTooltipGenerator {
 					milestone.getStartdate(), timeZone);
 			Td cell22 = buildCellValue(startDate);
 			Td cell23 = buildCellName(LocalizationHelper.getMessage(locale,
-					GenericI18Enum.FORM_ASSIGNEE_FIELD));
+					GenericI18Enum.FORM_ASSIGNEE));
 			String assignUserLink = (milestone.getOwner() != null) ? AccountLinkUtils
 					.generatePreviewFullUserLink(siteURL, milestone.getOwner())
 					: "";

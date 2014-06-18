@@ -58,7 +58,7 @@ public class TaskHistoryList extends HistoryLogComponent {
 		this.generateFieldDisplayHandler("isestimated",
 				AppContext.getMessage(TaskI18nEnum.FORM_IS_ESTIMATED_FIELD));
 		this.generateFieldDisplayHandler("assignuser",
-				AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD),
+				AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE),
 				new UserHistoryFieldFormat());
 		this.generateFieldDisplayHandler("tasklistid",
 				AppContext.getMessage(TaskI18nEnum.FORM_TASKGROUP_FIELD),

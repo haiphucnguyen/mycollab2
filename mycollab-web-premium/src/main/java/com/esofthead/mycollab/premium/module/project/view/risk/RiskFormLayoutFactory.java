@@ -54,7 +54,7 @@ public class RiskFormLayoutFactory implements IFormLayoutFactory {
 					AppContext.getMessage(RiskI18nEnum.FORM_RELATED), 1, 2);
 		} else if (propertyId.equals("assigntouser")) {
 			this.informationLayout.addComponent(field,
-					AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD),
+					AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE),
 					0, 3);
 		} else if (propertyId.equals("consequence")) {
 			this.informationLayout.addComponent(field,

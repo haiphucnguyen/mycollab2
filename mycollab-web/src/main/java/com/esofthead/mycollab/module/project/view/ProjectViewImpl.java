@@ -489,7 +489,7 @@ public class ProjectViewImpl extends AbstractCssPageView implements ProjectView 
 							ConfirmDialogExt.show(
 									UI.getCurrent(),
 									AppContext.getMessage(
-											GenericI18Enum.DELETE_DIALOG_TITLE,
+											GenericI18Enum.DIALOG_DELETE_TITLE,
 											SiteConfiguration.getSiteName()),
 									AppContext
 											.getMessage(ProjectCommonI18nEnum.CONFIRM_PROJECT_DELETE_MESSAGE),

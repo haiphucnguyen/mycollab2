@@ -26,7 +26,7 @@ public class RiskHistoryList extends HistoryLogComponent {
 				AppContext.getMessage(RiskI18nEnum.FORM_RAISED_BY),
 				new ProjectMemberHistoryFieldFormat());
 		this.generateFieldDisplayHandler("assigntouser",
-				AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD),
+				AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE),
 				new ProjectMemberHistoryFieldFormat());
 		this.generateFieldDisplayHandler("consequence",
 				AppContext.getMessage(RiskI18nEnum.FORM_CONSEQUENCE));

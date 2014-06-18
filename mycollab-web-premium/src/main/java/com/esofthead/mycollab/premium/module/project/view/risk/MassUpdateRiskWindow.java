@@ -80,7 +80,7 @@ public class MassUpdateRiskWindow extends MassUpdateWindow<Risk> {
 						0);
 			} else if (propertyId.equals("assigntouser")) {
 				this.informationLayout.addComponent(field, AppContext
-						.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD), 1, 0);
+						.getMessage(GenericI18Enum.FORM_ASSIGNEE), 1, 0);
 			} else if (propertyId.equals("consequence")) {
 				this.informationLayout.addComponent(field,
 						AppContext.getMessage(RiskI18nEnum.FORM_CONSEQUENCE),

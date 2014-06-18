@@ -223,7 +223,7 @@ public class MilestoneListViewImpl extends AbstractProjectPageView implements
 				milestone.getOwnerAvatarId(), milestone.getOwnerFullName(),
 				false, true));
 		layoutHelper.addComponent(linkWrapper,
-				AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD), 0,
+				AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE), 0,
 				2, Alignment.MIDDLE_LEFT);
 
 		final ProgressBarIndicator progressTask = new ProgressBarIndicator(

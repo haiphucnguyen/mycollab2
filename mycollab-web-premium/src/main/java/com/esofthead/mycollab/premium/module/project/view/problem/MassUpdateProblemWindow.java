@@ -80,7 +80,7 @@ public class MassUpdateProblemWindow extends MassUpdateWindow<Problem> {
 						0, 0);
 			} else if (propertyId.equals("assigntouser")) {
 				this.informationLayout.addComponent(field, AppContext
-						.getMessage(GenericI18Enum.FORM_ASSIGNEE_FIELD), 1, 0);
+						.getMessage(GenericI18Enum.FORM_ASSIGNEE), 1, 0);
 			} else if (propertyId.equals("datedue")) {
 				this.informationLayout.addComponent(field,
 						AppContext.getMessage(ProblemI18nEnum.FORM_DATE_DUE),
