@@ -59,7 +59,7 @@ public class AssignTaskWindow extends Window {
 	private final EditForm editForm;
 
 	public AssignTaskWindow(Task task) {
-		super(AppContext.getMessage(TaskI18nEnum.ASSIGN_TASK_TITLE,
+		super(AppContext.getMessage(TaskI18nEnum.DIALOG_ASSIGN_TASK_TITLE,
 				task.getTaskname()));
 
 		VerticalLayout contentLayout = new VerticalLayout();
@@ -196,7 +196,7 @@ public class AssignTaskWindow extends Window {
 							0);
 				} else if (propertyId.equals("comment")) {
 					informationLayout.addComponent(field, AppContext
-							.getMessage(TaskI18nEnum.FORM_COMMENT_FIELD), 0, 1,
+							.getMessage(TaskI18nEnum.FORM_COMMENT), 0, 1,
 							2, "100%", Alignment.MIDDLE_LEFT);
 				}
 			}

@@ -66,7 +66,7 @@ public class RiskSearchPanel extends
 		Label headerText = new Label("Risks");
 
 		final Button createBtn = new Button(
-				AppContext.getMessage(RiskI18nEnum.NEW_RISK_ACTION),
+				AppContext.getMessage(RiskI18nEnum.BUTTON_NEW_RISK),
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 

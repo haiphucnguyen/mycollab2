@@ -151,7 +151,7 @@ public class ProjectTooltipGenerator {
 			Td cell42 = buildCellLink(assignUserLink, assignUserAvatarLink,
 					task.getAssignUserFullName());
 			Td cell43 = buildCellName(LocalizationHelper.getMessage(locale,
-					TaskI18nEnum.FORM_TASKGROUP_FIELD));
+					TaskI18nEnum.FORM_TASKGROUP));
 			String taskgroupLink = (task.getTaskListName() != null) ? ProjectLinkUtils
 					.generateTaskGroupPreviewFullLink(siteURL,
 							task.getProjectid(), task.getTasklistid()) : "";
@@ -168,7 +168,7 @@ public class ProjectTooltipGenerator {
 
 			Tr trRow6 = new Tr();
 			Td cell61 = buildCellName(LocalizationHelper.getMessage(locale,
-					TaskI18nEnum.FORM_NOTES_FIELD));
+					TaskI18nEnum.FORM_NOTES));
 			Td cell62 = buildCellValue(trimHtmlTags(task.getNotes()));
 			cell62.setAttribute("colspan", "3");
 			trRow6.appendChild(cell61, cell62);

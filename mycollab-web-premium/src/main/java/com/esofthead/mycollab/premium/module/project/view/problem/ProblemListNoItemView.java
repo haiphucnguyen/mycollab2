@@ -56,18 +56,18 @@ public class ProblemListNoItemView extends AbstractPageView {
 		layout.addComponent(image);
 
 		Label title = new Label(
-				AppContext.getMessage(ProblemI18nEnum.NO_ITEM_VIEW_TITLE));
+				AppContext.getMessage(ProblemI18nEnum.VIEW_NO_ITEM_TITLE));
 		title.addStyleName("h2");
 		title.setWidth(SIZE_UNDEFINED, Sizeable.Unit.PIXELS);
 		layout.addComponent(title);
 
 		Label body = new Label(
-				AppContext.getMessage(ProblemI18nEnum.NO_ITEM_VIEW_HINT));
+				AppContext.getMessage(ProblemI18nEnum.VIEW_NO_ITEM_HINT));
 		body.setWidth(SIZE_UNDEFINED, Sizeable.Unit.PIXELS);
 		layout.addComponent(body);
 
 		Button createProblemBtn = new Button(
-				AppContext.getMessage(ProblemI18nEnum.NEW_PROBLEM_ACTION),
+				AppContext.getMessage(ProblemI18nEnum.BUTTON_NEW_PROBLEM),
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 

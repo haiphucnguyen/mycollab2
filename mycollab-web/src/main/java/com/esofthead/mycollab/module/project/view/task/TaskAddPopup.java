@@ -77,7 +77,7 @@ class TaskAddPopup extends CustomComponent {
 		popupHeader.addStyleName("popup-header");
 
 		final Label titleLbl = new Label(
-				AppContext.getMessage(TaskI18nEnum.NEW_TASK_TITLE));
+				AppContext.getMessage(TaskI18nEnum.DIALOG_NEW_TASK_TITLE));
 		titleLbl.addStyleName("bold");
 		popupHeader.addComponent(titleLbl);
 		taskLayout.addComponent(popupHeader);
@@ -92,7 +92,7 @@ class TaskAddPopup extends CustomComponent {
 		this.taskNoteComponent = new TaskNoteLayout();
 		this.taskContainer
 				.addTab(this.taskNoteComponent, AppContext
-						.getMessage(TaskI18nEnum.FORM_NOTES_ATTACHMENT_FIELD));
+						.getMessage(TaskI18nEnum.FORM_NOTES_ATTACHMENT));
 
 		taskLayout.addComponent(this.taskContainer);
 

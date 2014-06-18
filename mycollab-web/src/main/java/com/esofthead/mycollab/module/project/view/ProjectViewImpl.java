@@ -391,7 +391,7 @@ public class ProjectViewImpl extends AbstractCssPageView implements ProjectView 
 		popupButtonsControl.setWidth("150px");
 
 		Button createPhaseBtn = new Button(
-				AppContext.getMessage(MilestoneI18nEnum.NEW_PHASE_ACTION),
+				AppContext.getMessage(MilestoneI18nEnum.BUTTON_NEW_PHASE),
 				new Button.ClickListener() {
 					@Override
 					public void buttonClick(ClickEvent event) {
@@ -426,7 +426,7 @@ public class ProjectViewImpl extends AbstractCssPageView implements ProjectView 
 		popupButtonsControl.addComponent(createBugBtn);
 
 		Button createRiskBtn = new Button(
-				AppContext.getMessage(RiskI18nEnum.NEW_RISK_ACTION),
+				AppContext.getMessage(RiskI18nEnum.BUTTON_NEW_RISK),
 				new Button.ClickListener() {
 					@Override
 					public void buttonClick(ClickEvent event) {
@@ -443,7 +443,7 @@ public class ProjectViewImpl extends AbstractCssPageView implements ProjectView 
 		popupButtonsControl.addComponent(createRiskBtn);
 
 		Button createProblemBtn = new Button(
-				AppContext.getMessage(ProblemI18nEnum.NEW_PROBLEM_ACTION),
+				AppContext.getMessage(ProblemI18nEnum.BUTTON_NEW_PROBLEM),
 				new Button.ClickListener() {
 					@Override
 					public void buttonClick(ClickEvent event) {

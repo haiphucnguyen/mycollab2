@@ -72,7 +72,7 @@ public class ProblemSearchPanel extends
 		Label headerText = new Label("Problems");
 
 		final Button createBtn = new Button(
-				AppContext.getMessage(ProblemI18nEnum.NEW_PROBLEM_ACTION),
+				AppContext.getMessage(ProblemI18nEnum.BUTTON_NEW_PROBLEM),
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 

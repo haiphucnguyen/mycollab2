@@ -59,7 +59,7 @@ public class AssignTaskGroupWindow extends Window {
 	private final EditForm editForm;
 
 	public AssignTaskGroupWindow(TaskList task) {
-		super(AppContext.getMessage(TaskI18nEnum.ASSIGN_TASKGROUP_TITLE,
+		super(AppContext.getMessage(TaskI18nEnum.DIALOG_ASSIGN_TASKGROUP_TITLE,
 				task.getName()));
 		this.taskList = task;
 		this.setWidth("750px");
@@ -195,7 +195,7 @@ public class AssignTaskGroupWindow extends Window {
 							0);
 				} else if (propertyId.equals("comment")) {
 					informationLayout.addComponent(field, AppContext
-							.getMessage(TaskI18nEnum.FORM_COMMENT_FIELD), 0, 1,
+							.getMessage(TaskI18nEnum.FORM_COMMENT), 0, 1,
 							2, "100%");
 				}
 			}

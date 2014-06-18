@@ -167,7 +167,7 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
 				.addFragment(
 						"project/risk/list/"
 								+ UrlEncodeDecoder.encode(project.getId()),
-						AppContext.getMessage(RiskI18nEnum.LIST_VIEW_TITLE));
+						AppContext.getMessage(RiskI18nEnum.VIEW_LIST_TITLE));
 	}
 
 	public void gotoRiskRead(Risk risk) {
@@ -237,7 +237,7 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
 		AppContext.addFragment(
 				"project/milestone/list/"
 						+ UrlEncodeDecoder.encode(project.getId()),
-				AppContext.getMessage(MilestoneI18nEnum.LIST_VIEW_TITLE));
+				AppContext.getMessage(MilestoneI18nEnum.VIEW_LIST_TITLE));
 	}
 
 	public void gotoMilestoneRead(Milestone milestone) {
@@ -311,7 +311,7 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
 		AppContext.addFragment(
 				"project/problem/list/"
 						+ UrlEncodeDecoder.encode(project.getId()),
-				AppContext.getMessage(ProblemI18nEnum.LIST_VIEW_TITLE));
+				AppContext.getMessage(ProblemI18nEnum.VIEW_LIST_TITLE));
 	}
 
 	public void gotoProblemRead(Problem problem) {
