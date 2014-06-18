@@ -1,20 +1,4 @@
-/**
- * This file is part of mycollab-scheduler.
- *
- * mycollab-scheduler is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-scheduler is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-scheduler.  If not, see <http://www.gnu.org/licenses/>.
- */
-package com.esofthead.mycollab.schedule.email;
+package com.esofthead.mycollab.module.mail;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -64,7 +48,8 @@ public class MailUtils {
 	}
 
 	public static String templatePath(String path, Locale locale) {
-		String key = (locale != null) ? (path + locale) : (path + Locale.US);
+		String key = (locale != null) ? (path + locale.toString())
+				: (path + Locale.US.toString());
 		String filePath = cacheFile.get(key);
 		if (filePath != null) {
 			return filePath;
@@ -75,7 +60,13 @@ public class MailUtils {
 						+ path);
 			}
 			filePath = path.substring(0, index - 1);
-			return String.format("%s%s.mt", filePath, locale);
+			filePath = String.format("%s_%s.mt", filePath, locale);
+			cacheFile.put(key, filePath);
+			return filePath;
 		}
+	}
+
+	public static void main(String[] args) {
+		System.out.println(Locale.US);
 	}
 }

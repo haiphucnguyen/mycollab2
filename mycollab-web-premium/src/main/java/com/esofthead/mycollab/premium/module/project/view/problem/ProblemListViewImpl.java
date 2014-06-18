@@ -5,7 +5,7 @@ import java.util.GregorianCalendar;
 
 import org.vaadin.teemu.ratingstars.RatingStars;
 
-import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.ui.components.ProjectTooltipGenerator;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.LabelLink;
@@ -135,8 +135,8 @@ public class ProblemListViewImpl extends AbstractPageView implements
 					}
 				}
 				b.setDescription(ProjectTooltipGenerator
-						.generateToolTipProblem(problem,
-								AppContext.getSiteUrl(),
+						.generateToolTipProblem(AppContext.getUserLocale(),
+								problem, AppContext.getSiteUrl(),
 								AppContext.getTimezoneId()));
 				return b;
 

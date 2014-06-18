@@ -111,6 +111,7 @@ public class BillingServiceImpl implements BillingService {
 		if (ACCOUNT_BLACK_LIST.contains(subdomain)) {
 			throw new SubdomainExistedException(
 					LocalizationHelper.getMessage(
+							LocalizationHelper.defaultLocale,
 							ExceptionI18nEnum.EXISTING_DOMAIN_REGISTER_ERROR,
 							subdomain));
 		}
@@ -122,6 +123,7 @@ public class BillingServiceImpl implements BillingService {
 		if (this.userMapper.countByExample(userEx) > 0) {
 			throw new ExistingUserRegisterException(
 					LocalizationHelper.getMessage(
+							LocalizationHelper.defaultLocale,
 							ExceptionI18nEnum.EXISTING_USER_REGISTER_ERROR,
 							username));
 		}
@@ -131,6 +133,7 @@ public class BillingServiceImpl implements BillingService {
 		if (this.userMapper.countByExample(userEx) > 0) {
 			throw new ExistingEmailRegisterException(
 					LocalizationHelper.getMessage(
+							LocalizationHelper.defaultLocale,
 							ExceptionI18nEnum.EXISTING_EMAIL_REGISTER_ERROR,
 							username));
 		}
@@ -141,6 +144,7 @@ public class BillingServiceImpl implements BillingService {
 		if (this.billingAccountMapper.countByExample(billingEx) > 0) {
 			throw new SubdomainExistedException(
 					LocalizationHelper.getMessage(
+							LocalizationHelper.defaultLocale,
 							ExceptionI18nEnum.EXISTING_DOMAIN_REGISTER_ERROR,
 							subdomain));
 		}

@@ -31,7 +31,7 @@ import org.slf4j.LoggerFactory;
 
 import ch.qos.cal10n.IMessageConveyor;
 
-import com.esofthead.mycollab.common.localization.WebExceptionI18nEnum;
+import com.esofthead.mycollab.common.i18n.WebExceptionI18nEnum;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.arguments.GroupIdProvider;
 import com.esofthead.mycollab.core.utils.BeanUtility;
@@ -192,19 +192,12 @@ public class AppContext implements Serializable {
 		return getInstance().userLocale;
 	}
 
-	public static String getMessage(Enum key) {
-		try {
-			return getInstance().messageHelper.getMessage(key);
-		} catch (Exception e) {
-			return LocalizationHelper.getMessage(key);
-		}
-	}
-
 	public static String getMessage(Enum key, Object... objects) {
 		try {
 			return getInstance().messageHelper.getMessage(key, objects);
 		} catch (Exception e) {
-			return LocalizationHelper.getMessage(key, objects);
+			return LocalizationHelper.getMessage(
+					LocalizationHelper.defaultLocale, key, objects);
 		}
 	}
 

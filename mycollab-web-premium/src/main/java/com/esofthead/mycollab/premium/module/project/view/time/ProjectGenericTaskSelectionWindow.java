@@ -2,7 +2,7 @@ package com.esofthead.mycollab.premium.module.project.view.time;
 
 import java.util.Arrays;
 
-import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.eventmanager.ApplicationEvent;

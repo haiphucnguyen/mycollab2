@@ -9,13 +9,13 @@
     <project>mycollab-services-community</project>
     <project>mycollab-services</project>
     <project>mycollab-dao</project>
+    <project>mycollab-localization</project>
     <project>mycollab-migration</project>
     <project>mycollab-reporting</project>
     <project>mycollab-caching</project>
     <project>mycollab-jackrabbit</project>
     <project>mycollab-mobile</project>
     <project>mycollab-ui</project>
-    <project>mycollab-localization</project>
     <project>mycollab-web-community</project>
     <project>mycollab-web</project>
     <project>mycollab-esb</project>

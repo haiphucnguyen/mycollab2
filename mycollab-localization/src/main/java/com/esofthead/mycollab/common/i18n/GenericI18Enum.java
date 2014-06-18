@@ -1,26 +1,10 @@
-/**
- * This file is part of mycollab-ui.
- *
- * mycollab-ui is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-ui is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-ui.  If not, see <http://www.gnu.org/licenses/>.
- */
-package com.esofthead.mycollab.common.localization;
+package com.esofthead.mycollab.common.i18n;
 
 import ch.qos.cal10n.BaseName;
 import ch.qos.cal10n.Locale;
 import ch.qos.cal10n.LocaleData;
 
-@BaseName("localization/generic")
+@BaseName("localization/common/generic")
 @LocaleData({ @Locale("en_US"), @Locale("ja_JP") })
 public enum GenericI18Enum {
 	INFORMATION_GOTO_FIRST_RECORD,
@@ -49,16 +33,19 @@ public enum GenericI18Enum {
 	BUTTON_SELECT_LABEL,
 	BUTTON_NEW_FILTER_LABEL,
 	BUTTON_ADD_CRITERIA_LABEL,
+	BUTTON_YES_LABEL,
+	BUTTON_OK_LABEL,
+	BUTTON_NO_LABEL,
+	BUTTON_SEARCH_LABEL,
+	BUTTON_CLEAR_LABEL,
+	
 	DELETE_DIALOG_TITLE,
 	DELETE_SINGLE_ITEM_DIALOG_MESSAGE,
 	DELETE_MULTIPLE_ITEMS_DIALOG_MESSAGE,
 	CONFIRM_DELETE_RECORD_DIALOG_MESSAGE,
-	BUTTON_YES_LABEL,
-	BUTTON_OK_LABEL,
-	BUTTON_NO_LABEL,
+	
 	FORM_DESCRIPTION,
-	BUTTON_SEARCH_LABEL,
-	BUTTON_CLEAR_LABEL,
+	
 	CONFIRM_DELETE_ATTACHMENT,
 	MASS_UPDATE_WINDOW_TITLE,
 	WARNING_NOT_VALID_EMAIL,
@@ -87,5 +74,7 @@ public enum GenericI18Enum {
 
 	CRM_MODULE,
 	PROJECT_MODULE,
-	DOCUMENT_MODULE
+	DOCUMENT_MODULE,
+	
+	TOOLTIP_NO_ITEM_EXISTED
 }

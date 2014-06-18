@@ -23,7 +23,7 @@ import java.util.List;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.hene.popupbutton.PopupButton;
 
-import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.ui.components.ProjectTooltipGenerator;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.utils.StringUtils;
@@ -94,8 +94,8 @@ public class TaskTableDisplay extends
 						.generateTaskPreviewFullLink(task.getProjectid(),
 								task.getId()));
 				b.setDescription(ProjectTooltipGenerator.generateToolTipTask(
-						task, AppContext.getSiteUrl(),
-						AppContext.getTimezoneId()));
+						AppContext.getUserLocale(), task,
+						AppContext.getSiteUrl(), AppContext.getTimezoneId()));
 
 				if (StringUtils.isNotNullOrEmpty(task.getPriority())) {
 					b.setIconLink(ProjectResources
