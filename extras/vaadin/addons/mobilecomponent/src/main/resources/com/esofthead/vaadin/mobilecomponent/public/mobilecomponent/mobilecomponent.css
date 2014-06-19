@@ -78,12 +78,15 @@ div.v-cache-loading-indicator {
 .mobilenavview {
 	background-color: rgb(255, 255, 255);
 }
-.mobilenavview .v-touchkit-navbar {
+.mobilenavview .v-touchkit-navbar, .v-touchkit-navpanel-wrapper .v-touchkit-navpanel-placeholder > div {
 	height: 4rem;
 	box-shadow: none;
 	background-color: #49a3e1;
+	border: none;
+	color: #FFFFFF;
+	font-size: 1.6rem;
 }
-.mobilenavview .v-touchkit-navbar:after {
+.mobilenavview .v-touchkit-navbar:after, .v-touchkit-navpanel-wrapper .v-touchkit-navpanel-placeholder > div:after {
 	content: "";
 	display: block;
 	height: 0.3rem;
@@ -139,5 +142,6 @@ div.v-cache-loading-indicator {
 }
 /* InfiniteScrollLayout */
 .v-csslayout.v-scrolllayout {
-	overflow-y: auto;
+	overflow: auto;
+	-webkit-overflow-scrolling: touch;
 }

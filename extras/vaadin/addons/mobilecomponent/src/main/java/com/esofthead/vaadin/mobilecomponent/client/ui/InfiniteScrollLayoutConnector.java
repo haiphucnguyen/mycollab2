@@ -9,7 +9,9 @@ import com.vaadin.client.ComponentConnector;
 import com.vaadin.client.ServerConnector;
 import com.vaadin.client.communication.RpcProxy;
 import com.vaadin.client.extensions.AbstractExtensionConnector;
+import com.vaadin.client.ui.TouchScrollDelegate;
 import com.vaadin.client.ui.VCssLayout;
+import com.vaadin.client.ui.TouchScrollDelegate.TouchScrollHandler;
 import com.vaadin.shared.ui.Connect;
 
 @Connect(InfiniteScrollLayout.class)
@@ -42,6 +44,7 @@ public class InfiniteScrollLayoutConnector extends AbstractExtensionConnector im
 		layout = (VCssLayout) ((ComponentConnector) target).getWidget();
 		layout.addStyleName(CLASSNAME);
 		contentEl = layout.getElement();
+		TouchScrollDelegate.enableTouchScrolling(layout, contentEl);
 		layout.addAttachHandler(this);
 	}
 

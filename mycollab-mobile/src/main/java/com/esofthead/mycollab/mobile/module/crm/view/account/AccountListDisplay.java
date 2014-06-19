@@ -17,14 +17,12 @@
 package com.esofthead.mycollab.mobile.module.crm.view.account;
 
 import com.esofthead.mycollab.mobile.ui.DefaultPagedBeanList;
-import com.esofthead.mycollab.mobile.ui.MobileNavigationButton;
 import com.esofthead.mycollab.mobile.ui.TableClickEvent;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.AccountService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.vaadin.addon.touchkit.ui.NavigationButton.NavigationButtonClickEvent;
-import com.vaadin.addon.touchkit.ui.NavigationButton.NavigationButtonClickListener;
+import com.vaadin.addon.touchkit.ui.NavigationButton;
 import com.vaadin.ui.Table;
 
 /**
@@ -51,14 +49,14 @@ public class AccountListDisplay
 				final SimpleAccount account = AccountListDisplay.this
 						.getBeanByIndex(itemId);
 
-				final MobileNavigationButton b = new MobileNavigationButton(
-						account.getAccountname(), AccountReadView.class);
-				b.addClickListener(new NavigationButtonClickListener() {
+				final NavigationButton b = new NavigationButton(account
+						.getAccountname());
+				b.addClickListener(new NavigationButton.NavigationButtonClickListener() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
 					public void buttonClick(
-							final NavigationButtonClickEvent event) {
+							final NavigationButton.NavigationButtonClickEvent event) {
 						fireTableEvent(new TableClickEvent(
 								AccountListDisplay.this, account, "accountname"));
 					}
