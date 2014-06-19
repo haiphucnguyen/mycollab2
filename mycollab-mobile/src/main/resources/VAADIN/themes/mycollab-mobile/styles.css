@@ -91,9 +91,6 @@ div.v-vertical > .v-spacing, div.v-vertical > .v-expand > .v-spacing {
   /* Message Row */
   /* Confirm Dialog */
 }
-.mycollab-mobile .v-scrollable {
-	-webkit-overflow-scrolling: touch;
-}
 .mycollab-mobile .v-table-body {
   border: none;
 }
