@@ -36,9 +36,11 @@ import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.common.GenericLinkUtils;
 import com.esofthead.mycollab.common.domain.MailRecipientField;
+import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.module.billing.AccountReminderStatusContants;
 import com.esofthead.mycollab.module.billing.service.BillingService;
+import com.esofthead.mycollab.module.mail.MailUtils;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.mail.service.ExtMailService;
 import com.esofthead.mycollab.module.user.domain.BillingAccount;
@@ -160,8 +162,9 @@ public class BillingSendingNotificationJobs extends QuartzJobBean {
 						+ "days for username {} , mail {}", user.getUsername(),
 						user.getEmail());
 				TemplateGenerator templateGenerator = new TemplateGenerator(
-						"Your trial is about to end",
-						remindAccountIsAboutEndTemplate);
+						"Your trial is about to end", MailUtils.templatePath(
+								remindAccountIsAboutEndTemplate,
+								SiteConfiguration.getDefaultLocale()));
 				templateGenerator.putVariable("account", account);
 
 				String link = GenericLinkUtils
@@ -200,7 +203,9 @@ public class BillingSendingNotificationJobs extends QuartzJobBean {
 				log.info("Send mail after 32 days for username {} , mail {}",
 						user.getUsername(), user.getEmail());
 				TemplateGenerator templateGenerator = new TemplateGenerator(
-						"Your trial has ended", informAccountIsExpiredTemplate);
+						"Your trial has ended", MailUtils.templatePath(
+								informAccountIsExpiredTemplate,
+								SiteConfiguration.getDefaultLocale()));
 				templateGenerator.putVariable("account", account);
 				templateGenerator.putVariable("userName", user.getUsername());
 				String link = GenericLinkUtils

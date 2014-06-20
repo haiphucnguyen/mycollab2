@@ -64,4 +64,7 @@
   <classpathentry kind="var" path="M2_REPO/org/apache/tika/tika-core/1.5/tika-core-1.5.jar" sourcepath="M2_REPO/org/apache/tika/tika-core/1.5/tika-core-1.5-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/google/code/gson/gson/2.2.4/gson-2.2.4.jar" sourcepath="M2_REPO/com/google/code/gson/gson/2.2.4/gson-2.2.4-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/jsoup/jsoup/1.7.3/jsoup-1.7.3.jar" sourcepath="M2_REPO/org/jsoup/jsoup/1.7.3/jsoup-1.7.3-sources.jar"/>
+  <classpathentry kind="src" path="/mycollab-config"/>
+  <classpathentry kind="var" path="M2_REPO/org/jasypt/jasypt/1.9.1/jasypt-1.9.1.jar" sourcepath="M2_REPO/org/jasypt/jasypt/1.9.1/jasypt-1.9.1-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/jasypt/jasypt-spring31/1.9.1/jasypt-spring31-1.9.1.jar" sourcepath="M2_REPO/org/jasypt/jasypt-spring31/1.9.1/jasypt-spring31-1.9.1-sources.jar"/>
 </classpath>

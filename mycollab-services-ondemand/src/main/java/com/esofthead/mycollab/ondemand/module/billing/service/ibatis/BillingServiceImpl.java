@@ -317,8 +317,10 @@ public class BillingServiceImpl implements BillingService {
 		if (billingAccount != null) {
 			Integer billingplanid = billingAccount.getBillingplanid();
 			return billingPlanMapper.selectByPrimaryKey(billingplanid);
+		} else {
+			log.error("Can not find billing plan with account {}", sAccountId);
+			return getFreeBillingPlan();
 		}
-		return null;
 	}
 
 	@Override
