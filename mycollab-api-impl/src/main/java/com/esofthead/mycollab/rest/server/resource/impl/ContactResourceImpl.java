@@ -24,6 +24,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import com.esofthead.mycollab.configuration.SiteConfiguration;
+import com.esofthead.mycollab.module.mail.MailUtils;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.mail.service.MailRelayService;
 import com.esofthead.mycollab.rest.server.domain.ContactForm;
@@ -49,7 +51,8 @@ public class ContactResourceImpl implements ContactResource {
 		log.debug("Message: " + entity.getMessage());
 		// -----------------------------------------------------------
 		TemplateGenerator templateGenerator = new TemplateGenerator(
-				"Contact Us submit", contactUsTemplate);
+				"Contact Us submit", MailUtils.templatePath(contactUsTemplate,
+						SiteConfiguration.getDefaultLocale()));
 		templateGenerator.putVariable("name", entity.getName());
 		templateGenerator.putVariable("email", entity.getEmail());
 		templateGenerator.putVariable("company", entity.getCompany());
@@ -64,7 +67,8 @@ public class ContactResourceImpl implements ContactResource {
 				new String[] { "hainguyen@esofthead.com" },
 				"New guy wanna contact you!",
 				templateGenerator.generateBodyContent());
-		Response response = Response.status(200).entity("OK").type(MediaType.TEXT_PLAIN_TYPE).build();
+		Response response = Response.status(200).entity("OK")
+				.type(MediaType.TEXT_PLAIN_TYPE).build();
 		response.getHeaders().add("Access-Control-Allow-Origin", "*");
 		return response;
 	}
