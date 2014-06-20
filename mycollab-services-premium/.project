@@ -7,8 +7,9 @@
     <project>mycollab-core</project>
     <project>mycollab-test</project>
     <project>mycollab-dao</project>
-    <project>mycollab-migration</project>
+    <project>mycollab-localization</project>
     <project>mycollab-config</project>
+    <project>mycollab-migration</project>
     <project>mycollab-reporting</project>
     <project>mycollab-caching</project>
     <project>mycollab-jackrabbit</project>
