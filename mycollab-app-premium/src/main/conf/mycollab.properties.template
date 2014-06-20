@@ -1,3 +1,4 @@
+site.defaultLocale=English
 site.name=${sitename}
 running.mode=development
 server.address=${serveraddress}

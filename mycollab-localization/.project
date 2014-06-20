@@ -5,6 +5,7 @@
   <projects>
     <project>mycollab-core</project>
     <project>mycollab-test</project>
+    <project>mycollab-config</project>
   </projects>
   <buildSpec>
     <buildCommand>
