@@ -13,8 +13,7 @@ import com.esofthead.mycollab.mobile.ui.AbstractTabPageView;
 import com.esofthead.mycollab.mobile.ui.IconConstants;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
-import com.esofthead.mycollab.module.crm.i18n.AccountI18nEnum;
-import com.esofthead.mycollab.module.crm.i18n.ContactI18nEnum;
+import com.esofthead.mycollab.module.crm.i18n.CrmCommonI18nEnum;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ControllerRegistry;
 import com.esofthead.mycollab.vaadin.mvp.IModule;
@@ -57,7 +56,7 @@ public class CrmModule extends AbstractTabPageView implements IModule {
 						+ IconConstants.CRM_ACCOUNT
 						+ "\"></span><div class=\"screen-reader-text\">"
 						+ AppContext
-								.getMessage(AccountI18nEnum.VIEW_LIST_TITLE)
+								.getMessage(CrmCommonI18nEnum.TOOLBAR_ACCOUNTS_HEADER)
 						+ "</div>");
 		this.addTab(
 				getContactTab(),
@@ -65,7 +64,7 @@ public class CrmModule extends AbstractTabPageView implements IModule {
 						+ IconConstants.CRM_CONTACT
 						+ "\"></span><div class=\"screen-reader-text\">"
 						+ AppContext
-								.getMessage(ContactI18nEnum.VIEW_LIST_TITLE)
+								.getMessage(CrmCommonI18nEnum.TOOLBAR_CONTACTS_HEADER)
 						+ "</div>");
 
 		this.addListener(new SelectedTabChangeListener() {
