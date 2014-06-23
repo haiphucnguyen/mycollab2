@@ -319,6 +319,10 @@
 			@extend .v-table-row;
 			background-color: rgb(255, 255, 255);
 		}
+		.v-touchkit-navbutton {
+			color: rgb(142, 142, 142);
+			font-size: 1.3rem;
+		}
 		.v-button {
 			text-align: left;
 			
@@ -328,8 +332,7 @@
 				white-space: normal;
 				
 				.v-button-caption {
-					color: rgb(142, 142, 142);
-					font-size: 1.3rem;
+					@extend .v-touchkit-navbutton;
 				}
 			}
 		}
