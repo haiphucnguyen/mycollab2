@@ -8,6 +8,7 @@ import ch.qos.cal10n.LocaleData;
 @LocaleData({ @Locale("en_US"), @Locale("ja_JP") })
 public enum CallI18nEnum {
 	VIEW_NEW_TITLE,
+	BUTTON_NEW_CALL,
 	
 	FORM_SUBJECT,
 	FORM_STATUS,

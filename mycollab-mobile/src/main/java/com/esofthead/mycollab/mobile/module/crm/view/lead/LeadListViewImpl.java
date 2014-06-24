@@ -48,7 +48,7 @@ public class LeadListViewImpl extends
 	public LeadListViewImpl() {
 		super();
 
-		setCaption(AppContext.getMessage(LeadI18nEnum.LIST_VIEW_TITLE));
+		setCaption(AppContext.getMessage(LeadI18nEnum.VIEW_LIST_TITLE));
 	}
 
 	@Override
@@ -83,7 +83,7 @@ public class LeadListViewImpl extends
 	protected Component createRightComponent() {
 		MobileNavigationButton addLead = new MobileNavigationButton();
 		addLead.setTargetViewCaption(AppContext
-				.getMessage(LeadI18nEnum.FORM_NEW_TITLE));
+				.getMessage(LeadI18nEnum.VIEW_NEW_TITLE));
 		addLead.addClickListener(new NavigationButton.NavigationButtonClickListener() {
 			private static final long serialVersionUID = -6024437571619598638L;
 

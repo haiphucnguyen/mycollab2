@@ -8,6 +8,7 @@ import ch.qos.cal10n.LocaleData;
 @LocaleData({ @Locale("en_US"), @Locale("ja_JP") })
 public enum TaskI18nEnum {
 	VIEW_NEW_TITLE,
+	BUTTON_NEW_TASK,
 	
 	FORM_SUBJECT,
 	FORM_START_DATE,
@@ -15,7 +16,6 @@ public enum TaskI18nEnum {
 	FORM_DUE_DATE,
 	FORM_CONTACT,
 	FORM_PRIORITY,
-	TABLE_SUBJECT_HEADER,
 	TABLE_TYPE_HEADER,
 	TABLE_END_DATE_HEADER,
 	

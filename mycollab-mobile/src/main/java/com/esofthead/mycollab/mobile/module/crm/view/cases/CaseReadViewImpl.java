@@ -109,7 +109,7 @@ public class CaseReadViewImpl extends AbstractPreviewItemComp<SimpleCase>
 		relatedContacts.setCaption("<span aria-hidden=\"true\" data-icon=\""
 				+ IconConstants.CRM_CONTACT
 				+ "\"></span><div class=\"screen-reader-text\">"
-				+ AppContext.getMessage(CrmCommonI18nEnum.CONTACT_SUB_VIEW)
+				+ AppContext.getMessage(CrmCommonI18nEnum.TAB_CONTACT)
 				+ "</div>");
 		relatedContacts.setHtmlContentAllowed(true);
 		relatedContacts.addClickListener(new Button.ClickListener() {
@@ -129,8 +129,7 @@ public class CaseReadViewImpl extends AbstractPreviewItemComp<SimpleCase>
 		relatedNotes.setCaption("<span aria-hidden=\"true\" data-icon=\""
 				+ IconConstants.CRM_DOCUMENT
 				+ "\"></span><div class=\"screen-reader-text\">"
-				+ AppContext.getMessage(CrmCommonI18nEnum.NOTE_SUB_VIEW)
-				+ "</div>");
+				+ AppContext.getMessage(CrmCommonI18nEnum.TAB_NOTE) + "</div>");
 		relatedNotes.setHtmlContentAllowed(true);
 		relatedNotes.addClickListener(new Button.ClickListener() {
 			private static final long serialVersionUID = 7589415773039335559L;
@@ -149,7 +148,7 @@ public class CaseReadViewImpl extends AbstractPreviewItemComp<SimpleCase>
 		relatedActivities.setCaption("<span aria-hidden=\"true\" data-icon=\""
 				+ IconConstants.CRM_ACTIVITY
 				+ "\"></span><div class=\"screen-reader-text\">"
-				+ AppContext.getMessage(CrmCommonI18nEnum.ACTIVITY_SUB_VIEW)
+				+ AppContext.getMessage(CrmCommonI18nEnum.TAB_ACTIVITY)
 				+ "</div>");
 		relatedActivities.setHtmlContentAllowed(true);
 		relatedActivities.addClickListener(new Button.ClickListener() {

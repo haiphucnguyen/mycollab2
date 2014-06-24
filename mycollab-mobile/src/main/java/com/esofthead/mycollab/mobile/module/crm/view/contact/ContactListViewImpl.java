@@ -84,7 +84,7 @@ public class ContactListViewImpl extends
 	protected Component createRightComponent() {
 		MobileNavigationButton addContact = new MobileNavigationButton();
 		addContact.setTargetViewCaption(AppContext
-				.getMessage(ContactI18nEnum.FORM_NEW_TITLE));
+				.getMessage(ContactI18nEnum.VIEW_NEW_TITLE));
 		addContact
 				.addClickListener(new NavigationButton.NavigationButtonClickListener() {
 					private static final long serialVersionUID = 1L;

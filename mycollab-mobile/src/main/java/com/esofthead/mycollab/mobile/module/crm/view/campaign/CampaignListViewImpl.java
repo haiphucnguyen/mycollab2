@@ -48,7 +48,7 @@ public class CampaignListViewImpl extends
 	public CampaignListViewImpl() {
 		super();
 
-		setCaption(AppContext.getMessage(CampaignI18nEnum.LIST_VIEW_TITLE));
+		setCaption(AppContext.getMessage(CampaignI18nEnum.VIEW_LIST_TITLE));
 	}
 
 	@Override
@@ -83,7 +83,7 @@ public class CampaignListViewImpl extends
 	protected Component createRightComponent() {
 		MobileNavigationButton addCampaign = new MobileNavigationButton();
 		addCampaign.setTargetViewCaption(AppContext
-				.getMessage(CampaignI18nEnum.FORM_NEW_TITLE));
+				.getMessage(CampaignI18nEnum.VIEW_NEW_TITLE));
 		addCampaign
 				.addClickListener(new NavigationButton.NavigationButtonClickListener() {
 					private static final long serialVersionUID = 1L;

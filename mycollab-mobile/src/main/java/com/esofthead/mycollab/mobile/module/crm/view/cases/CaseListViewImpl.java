@@ -48,7 +48,7 @@ public class CaseListViewImpl extends
 	public CaseListViewImpl() {
 		super();
 
-		setCaption(AppContext.getMessage(CaseI18nEnum.FORM_NEW_TITLE));
+		setCaption(AppContext.getMessage(CaseI18nEnum.VIEW_NEW_TITLE));
 	}
 
 	@Override
@@ -81,7 +81,7 @@ public class CaseListViewImpl extends
 	protected Component createRightComponent() {
 		MobileNavigationButton addCase = new MobileNavigationButton();
 		addCase.setTargetViewCaption(AppContext
-				.getMessage(CaseI18nEnum.FORM_NEW_TITLE));
+				.getMessage(CaseI18nEnum.VIEW_NEW_TITLE));
 		addCase.addClickListener(new NavigationButton.NavigationButtonClickListener() {
 			private static final long serialVersionUID = 1L;
 

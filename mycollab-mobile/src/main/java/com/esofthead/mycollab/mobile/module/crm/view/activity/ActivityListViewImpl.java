@@ -27,7 +27,9 @@ import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.SimpleActivity;
 import com.esofthead.mycollab.module.crm.domain.criteria.ActivitySearchCriteria;
 import com.esofthead.mycollab.module.crm.i18n.ActivityI18nEnum;
-import com.esofthead.mycollab.module.crm.i18n.CrmCommonI18nEnum;
+import com.esofthead.mycollab.module.crm.i18n.CallI18nEnum;
+import com.esofthead.mycollab.module.crm.i18n.MeetingI18nEnum;
+import com.esofthead.mycollab.module.crm.i18n.TaskI18nEnum;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.vaadin.addon.touchkit.ui.NavigationButton;
@@ -54,8 +56,7 @@ public class ActivityListViewImpl extends
 	public ActivityListViewImpl() {
 		super();
 
-		setCaption(AppContext
-				.getMessage(ActivityI18nEnum.ACTIVITY_LIST_TAB_TITLE));
+		setCaption(AppContext.getMessage(ActivityI18nEnum.TAB_ACTIVITY_TITLE));
 	}
 
 	@Override
@@ -114,8 +115,7 @@ public class ActivityListViewImpl extends
 		addButtons.addStyleName("edit-btn-layout");
 
 		NavigationButton addTask = new NavigationButton(
-				AppContext
-						.getMessage(CrmCommonI18nEnum.TOOLBAR_TASK_NEW_ACTION));
+				AppContext.getMessage(TaskI18nEnum.BUTTON_NEW_TASK));
 		addTask.addClickListener(new NavigationButton.NavigationButtonClickListener() {
 			private static final long serialVersionUID = 1920289198458066344L;
 
@@ -130,8 +130,7 @@ public class ActivityListViewImpl extends
 		addButtons.addComponent(addTask);
 
 		NavigationButton addCall = new NavigationButton(
-				AppContext
-						.getMessage(CrmCommonI18nEnum.TOOLBAR_CALL_NEW_ACTION));
+				AppContext.getMessage(CallI18nEnum.BUTTON_NEW_CALL));
 		addCall.addClickListener(new NavigationButton.NavigationButtonClickListener() {
 			private static final long serialVersionUID = -279151189261011902L;
 
@@ -146,8 +145,7 @@ public class ActivityListViewImpl extends
 		addButtons.addComponent(addCall);
 
 		NavigationButton addMeeting = new NavigationButton(
-				AppContext
-						.getMessage(CrmCommonI18nEnum.TOOLBAR_MEETING_NEW_ACTION));
+				AppContext.getMessage(MeetingI18nEnum.BUTTON_NEW_MEETING));
 		addMeeting
 				.addClickListener(new NavigationButton.NavigationButtonClickListener() {
 					private static final long serialVersionUID = 4770664404728700960L;
