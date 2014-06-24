@@ -85,7 +85,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements
 		this.setMargin(new MarginInfo(false, true, true, true));
 
 		AddViewLayout2 mainLayout = new AddViewLayout2(
-				AppContext.getMessage(UserI18nEnum.CUSTOMIZE_VIEW),
+				AppContext.getMessage(UserI18nEnum.VIEW_CUSTOMIZE),
 				MyCollabResource.newResource("icons/24/user/customize.png"));
 		mainLayout.setWidth("100%");
 		mainLayout.setStyleName("readview-layout");
