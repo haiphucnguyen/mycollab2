@@ -111,7 +111,7 @@ public class ActivityRelatedItemListComp extends
 		}
 
 		tableItem = new ActivityTableDisplay(Arrays.asList(new TableViewField(
-				TaskI18nEnum.TABLE_SUBJECT_HEADER, "subject",
+				ActivityI18nEnum.FORM_SUBJECT, "subject",
 				UIConstants.TABLE_EX_LABEL_WIDTH), new TableViewField(
 				ActivityI18nEnum.FORM_STATUS, "status",
 				UIConstants.TABLE_S_LABEL_WIDTH), new TableViewField(

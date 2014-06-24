@@ -63,17 +63,17 @@ public class ActivityListViewImpl extends
 		ActivityTableDisplay table = new ActivityTableDisplay(
 				new TableViewField(null, "selected",
 						UIConstants.TABLE_CONTROL_WIDTH),
-				Arrays.asList(new TableViewField(
-						TaskI18nEnum.TABLE_SUBJECT_HEADER, "subject",
-						UIConstants.TABLE_EX_LABEL_WIDTH), new TableViewField(
-						ActivityI18nEnum.FORM_STATUS, "status",
-						UIConstants.TABLE_S_LABEL_WIDTH), new TableViewField(
-						TaskI18nEnum.TABLE_TYPE_HEADER, "eventType",
-						UIConstants.TABLE_S_LABEL_WIDTH), new TableViewField(
-						TaskI18nEnum.FORM_START_DATE, "startDate",
-						UIConstants.TABLE_DATE_TIME_WIDTH), new TableViewField(
-						TaskI18nEnum.TABLE_END_DATE_HEADER, "endDate",
-						UIConstants.TABLE_DATE_TIME_WIDTH)));
+				Arrays.asList(
+						new TableViewField(ActivityI18nEnum.FORM_SUBJECT,
+								"subject", UIConstants.TABLE_EX_LABEL_WIDTH),
+						new TableViewField(ActivityI18nEnum.FORM_STATUS,
+								"status", UIConstants.TABLE_S_LABEL_WIDTH),
+						new TableViewField(TaskI18nEnum.TABLE_TYPE_HEADER,
+								"eventType", UIConstants.TABLE_S_LABEL_WIDTH),
+						new TableViewField(TaskI18nEnum.FORM_START_DATE,
+								"startDate", UIConstants.TABLE_DATE_TIME_WIDTH),
+						new TableViewField(TaskI18nEnum.TABLE_END_DATE_HEADER,
+								"endDate", UIConstants.TABLE_DATE_TIME_WIDTH)));
 
 		return table;
 	}
