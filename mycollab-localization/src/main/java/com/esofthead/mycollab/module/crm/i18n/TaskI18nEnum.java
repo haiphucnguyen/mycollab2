@@ -7,6 +7,8 @@ import ch.qos.cal10n.LocaleData;
 @BaseName("localization/crm/assignment")
 @LocaleData({ @Locale("en_US"), @Locale("ja_JP") })
 public enum TaskI18nEnum {
+	BUTTON_NEW_TASK,
+	
 	FORM_SUBJECT,
 	FORM_START_DATE,
 	FORM_STATUS,

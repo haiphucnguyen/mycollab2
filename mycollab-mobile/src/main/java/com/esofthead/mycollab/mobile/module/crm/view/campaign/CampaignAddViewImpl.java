@@ -40,7 +40,7 @@ public class CampaignAddViewImpl extends AbstractEditItemComp<SimpleCampaign>
 	@Override
 	protected String initFormTitle() {
 		return beanItem.getCampaignname() != null ? beanItem.getCampaignname()
-				: AppContext.getMessage(CampaignI18nEnum.FORM_NEW_TITLE);
+				: AppContext.getMessage(CampaignI18nEnum.VIEW_NEW_TITLE);
 	}
 
 	@Override

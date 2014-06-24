@@ -28,7 +28,6 @@ import com.esofthead.mycollab.eventmanager.EventBus;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.LeadEvent;
-import com.esofthead.mycollab.module.crm.i18n.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.crm.i18n.LeadI18nEnum;
 import com.esofthead.mycollab.module.user.ui.components.ActiveUserListSelect;
 import com.esofthead.mycollab.security.RolePermissionCollections;
@@ -96,8 +95,7 @@ public class LeadSearchPanel extends
 		layout.setComponentAlignment(searchtitle, Alignment.MIDDLE_LEFT);
 
 		final Button createAccountBtn = new Button(
-				AppContext
-						.getMessage(CrmCommonI18nEnum.TOOLBAR_LEAD_NEW_ACTION),
+				AppContext.getMessage(LeadI18nEnum.BUTTON_NEW_LEAD),
 				new Button.ClickListener() {
 
 					@Override

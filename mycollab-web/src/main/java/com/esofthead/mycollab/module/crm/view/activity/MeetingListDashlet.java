@@ -22,7 +22,7 @@ import java.util.Arrays;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.module.crm.domain.criteria.MeetingSearchCriteria;
-import com.esofthead.mycollab.module.crm.i18n.CrmCommonI18nEnum;
+import com.esofthead.mycollab.module.crm.i18n.ActivityI18nEnum;
 import com.esofthead.mycollab.module.crm.i18n.TaskI18nEnum;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.Depot;
@@ -50,7 +50,7 @@ public class MeetingListDashlet extends Depot {
 				UIConstants.TABLE_X_LABEL_WIDTH), new TableViewField(
 				TaskI18nEnum.FORM_START_DATE, "startdate",
 				UIConstants.TABLE_DATE_TIME_WIDTH), new TableViewField(
-				CrmCommonI18nEnum.TABLE_STATUS_HEADER, "status",
+				ActivityI18nEnum.FORM_STATUS, "status",
 				UIConstants.TABLE_S_LABEL_WIDTH)));
 
 		bodyContent.addComponent(tableItem);
