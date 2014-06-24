@@ -309,7 +309,7 @@ public final class MainView extends AbstractPageView {
 		final PopupButton accountMenu = new PopupButton(AppContext.getSession()
 				.getDisplayName());
 		final VerticalLayout accLayout = new VerticalLayout();
-		accLayout.setWidth("120px");
+		accLayout.setWidth("140px");
 
 		final Button myProfileBtn = new Button(
 				AppContext.getMessage(UserI18nEnum.VIEW_PROFILE),

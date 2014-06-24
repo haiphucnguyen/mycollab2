@@ -9,7 +9,6 @@ import ch.qos.cal10n.LocaleData;
 public enum CaseI18nEnum {
 	VIEW_NO_ITEM_TITLE,
 	VIEW_NO_ITEM_HINT,
-	
 	VIEW_LIST_TITLE,
 	VIEW_NEW_TITLE,
 	
