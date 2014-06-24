@@ -26,7 +26,11 @@ import com.esofthead.mycollab.mobile.ui.TableClickEvent;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.SimpleActivity;
 import com.esofthead.mycollab.module.crm.domain.criteria.ActivitySearchCriteria;
+import com.esofthead.mycollab.module.crm.i18n.ActivityI18nEnum;
+import com.esofthead.mycollab.module.crm.i18n.CrmCommonI18nEnum;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
+import com.vaadin.addon.touchkit.ui.NavigationButton;
 import com.vaadin.addon.touchkit.ui.Popover;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -50,8 +54,8 @@ public class ActivityListViewImpl extends
 	public ActivityListViewImpl() {
 		super();
 
-		setCaption("Activities");
-		// setToggleButton(true);
+		setCaption(AppContext
+				.getMessage(ActivityI18nEnum.ACTIVITY_LIST_TAB_TITLE));
 	}
 
 	@Override
@@ -109,11 +113,15 @@ public class ActivityListViewImpl extends
 		addButtons.setMargin(true);
 		addButtons.addStyleName("edit-btn-layout");
 
-		Button addTask = new Button("Add Task", new Button.ClickListener() {
+		NavigationButton addTask = new NavigationButton(
+				AppContext
+						.getMessage(CrmCommonI18nEnum.TOOLBAR_TASK_NEW_ACTION));
+		addTask.addClickListener(new NavigationButton.NavigationButtonClickListener() {
 			private static final long serialVersionUID = 1920289198458066344L;
 
 			@Override
-			public void buttonClick(ClickEvent event) {
+			public void buttonClick(
+					NavigationButton.NavigationButtonClickEvent event) {
 				controlBtns.close();
 				EventBus.getInstance().fireEvent(
 						new ActivityEvent.TaskAdd(this, null));
@@ -121,11 +129,15 @@ public class ActivityListViewImpl extends
 		});
 		addButtons.addComponent(addTask);
 
-		Button addCall = new Button("Add Call", new Button.ClickListener() {
+		NavigationButton addCall = new NavigationButton(
+				AppContext
+						.getMessage(CrmCommonI18nEnum.TOOLBAR_CALL_NEW_ACTION));
+		addCall.addClickListener(new NavigationButton.NavigationButtonClickListener() {
 			private static final long serialVersionUID = -279151189261011902L;
 
 			@Override
-			public void buttonClick(ClickEvent event) {
+			public void buttonClick(
+					NavigationButton.NavigationButtonClickEvent event) {
 				controlBtns.close();
 				EventBus.getInstance().fireEvent(
 						new ActivityEvent.CallAdd(this, null));
@@ -133,12 +145,16 @@ public class ActivityListViewImpl extends
 		});
 		addButtons.addComponent(addCall);
 
-		Button addMeeting = new Button("Add Meeting",
-				new Button.ClickListener() {
+		NavigationButton addMeeting = new NavigationButton(
+				AppContext
+						.getMessage(CrmCommonI18nEnum.TOOLBAR_MEETING_NEW_ACTION));
+		addMeeting
+				.addClickListener(new NavigationButton.NavigationButtonClickListener() {
 					private static final long serialVersionUID = 4770664404728700960L;
 
 					@Override
-					public void buttonClick(ClickEvent event) {
+					public void buttonClick(
+							NavigationButton.NavigationButtonClickEvent event) {
 						controlBtns.close();
 						EventBus.getInstance().fireEvent(
 								new ActivityEvent.MeetingAdd(this, null));

@@ -33,6 +33,7 @@ import com.esofthead.mycollab.mobile.ui.IconConstants;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.domain.criteria.ActivitySearchCriteria;
+import com.esofthead.mycollab.module.crm.i18n.CrmCommonI18nEnum;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
@@ -108,7 +109,9 @@ public class OpportunityReadViewImpl extends
 		Button relatedContacts = new Button();
 		relatedContacts.setCaption("<span aria-hidden=\"true\" data-icon=\""
 				+ IconConstants.CRM_CONTACT
-				+ "\"></span><div class=\"screen-reader-text\">Contacts</div>");
+				+ "\"></span><div class=\"screen-reader-text\">"
+				+ AppContext.getMessage(CrmCommonI18nEnum.CONTACT_SUB_VIEW)
+				+ "</div>");
 		relatedContacts.setHtmlContentAllowed(true);
 		relatedContacts.addClickListener(new Button.ClickListener() {
 			private static final long serialVersionUID = 7589415773039335559L;
@@ -126,7 +129,9 @@ public class OpportunityReadViewImpl extends
 		Button relatedLeads = new Button();
 		relatedLeads.setCaption("<span aria-hidden=\"true\" data-icon=\""
 				+ IconConstants.CRM_LEAD
-				+ "\"></span><div class=\"screen-reader-text\">Leads</div>");
+				+ "\"></span><div class=\"screen-reader-text\">"
+				+ AppContext.getMessage(CrmCommonI18nEnum.LEAD_SUB_VIEW)
+				+ "</div>");
 		relatedLeads.setHtmlContentAllowed(true);
 		relatedLeads.addClickListener(new Button.ClickListener() {
 			private static final long serialVersionUID = 7589415773039335559L;
@@ -144,7 +149,9 @@ public class OpportunityReadViewImpl extends
 		Button relatedNotes = new Button();
 		relatedNotes.setCaption("<span aria-hidden=\"true\" data-icon=\""
 				+ IconConstants.CRM_DOCUMENT
-				+ "\"></span><div class=\"screen-reader-text\">Notes</div>");
+				+ "\"></span><div class=\"screen-reader-text\">"
+				+ AppContext.getMessage(CrmCommonI18nEnum.NOTE_SUB_VIEW)
+				+ "</div>");
 		relatedNotes.setHtmlContentAllowed(true);
 		relatedNotes.addClickListener(new Button.ClickListener() {
 			private static final long serialVersionUID = 7589415773039335559L;
@@ -160,10 +167,11 @@ public class OpportunityReadViewImpl extends
 		toolbarLayout.addComponent(relatedNotes);
 
 		Button relatedActivities = new Button();
-		relatedActivities
-				.setCaption("<span aria-hidden=\"true\" data-icon=\""
-						+ IconConstants.CRM_ACTIVITY
-						+ "\"></span><div class=\"screen-reader-text\">Activities</div>");
+		relatedActivities.setCaption("<span aria-hidden=\"true\" data-icon=\""
+				+ IconConstants.CRM_ACTIVITY
+				+ "\"></span><div class=\"screen-reader-text\">"
+				+ AppContext.getMessage(CrmCommonI18nEnum.ACTIVITY_SUB_VIEW)
+				+ "</div>");
 		relatedActivities.setHtmlContentAllowed(true);
 		relatedActivities.addClickListener(new Button.ClickListener() {
 			private static final long serialVersionUID = 7589415773039335559L;
