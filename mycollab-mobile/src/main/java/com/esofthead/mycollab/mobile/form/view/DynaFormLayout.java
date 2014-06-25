@@ -116,7 +116,7 @@ public class DynaFormLayout implements IFormLayoutFactory {
 
 			// if (section.getLayoutType() == LayoutType.ONE_COLUMN) {
 			gridLayout = new GridFormLayoutHelper(2, section.getFieldCount(),
-					"100%", "150px", Alignment.MIDDLE_RIGHT);
+					"100%", "150px", Alignment.TOP_RIGHT);
 			/*
 			 * } else if (section.getLayoutType() == LayoutType.TWO_COLUMN) {
 			 * gridLayout = new GridFormLayoutHelper(2, (section.getFieldCount()
@@ -145,8 +145,7 @@ public class DynaFormLayout implements IFormLayoutFactory {
 
 			// if (section.getLayoutType() == LayoutType.ONE_COLUMN) {
 			gridLayout.addComponent(field, dynaField.getDisplayName(), 0,
-					dynaField.getFieldIndex(), 2, "100%",
-					Alignment.MIDDLE_RIGHT);
+					dynaField.getFieldIndex(), 2, "100%", Alignment.TOP_RIGHT);
 			/*
 			 * } else if (section.getLayoutType() == LayoutType.TWO_COLUMN) {
 			 * gridLayout.addComponent(field, dynaField.getDisplayName(),

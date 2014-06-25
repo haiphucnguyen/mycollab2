@@ -482,6 +482,7 @@ div.v-vertical > .v-spacing, div.v-vertical > .v-expand > .v-spacing {
 }
 .mycollab-mobile .readview-layout .v-label, .mycollab-mobile .editview-layout .v-label {
   font-size: 1.3rem;
+  line-height: 1.8rem;
 }
 .mycollab-mobile .readview-layout .v-label.h2, .mycollab-mobile .editview-layout .v-label.h2 {
   font-size: 1.2rem;
@@ -509,7 +510,7 @@ div.v-vertical > .v-spacing, div.v-vertical > .v-expand > .v-spacing {
   color: #8C8C8C;
 }
 .mycollab-mobile .readview-layout .v-gridlayout .gridform-field .v-label, .mycollab-mobile .editview-layout .v-gridlayout .gridform-field .v-label {
-  line-height: 2.3rem;
+  line-height: 1.8rem;
   font-size: 1.4rem;
 }
 .mycollab-mobile .readview-layout .v-gridlayout .gridform-field .v-label:after, .mycollab-mobile .editview-layout .v-gridlayout .gridform-field .v-label:after {
@@ -517,12 +518,20 @@ div.v-vertical > .v-spacing, div.v-vertical > .v-expand > .v-spacing {
   position: relative;
   display: inline-block;
 }
+.mycollab-mobile .editview-layout .v-caption {
+  font-size: 1.3rem;
+}
+.mycollab-mobile .editview-layout .v-caption .v-required-field-indicator {
+  font-size: 1.3rem;
+  line-height: 1.8rem;
+}
 .mycollab-mobile .editview-layout input.v-textfield, .mycollab-mobile .editview-layout .v-filterselect, .mycollab-mobile .editview-layout .v-textarea {
   border: none;
   color: #8C8C8C;
   border-radius: 0px;
-  font-size: 1.5rem;
-  line-height: 2.3rem;
+  font-size: 1.4rem;
+  line-height: 1.8rem;
+  padding: 0px 1px;
 }
 .mycollab-mobile .editview-layout .v-filterselect-button {
   font-family: 'icomoon';
@@ -545,9 +554,10 @@ div.v-vertical > .v-spacing, div.v-vertical > .v-expand > .v-spacing {
   -webkit-box-sizing: border-box;
 }
 .mycollab-mobile .editview-layout .v-select select.v-select-select {
-  font-size: 1.5rem;
-  line-height: 2.3rem;
+  font-size: 1.4rem;
+  line-height: 1.8rem;
   color: #8C8C8C;
+  min-height: 1.8rem;
 }
 .mycollab-mobile .editview-layout .v-select:after {
   font-family: 'icomoon';
@@ -556,7 +566,7 @@ div.v-vertical > .v-spacing, div.v-vertical > .v-expand > .v-spacing {
   color: #8C8C8C;
 }
 .mycollab-mobile .editview-layout .v-datefield.v-datefield-popupcalendar {
-  font-size: 1.5rem;
+  font-size: 1.4rem;
 }
 .mycollab-mobile .editview-layout .v-datefield.v-datefield-popupcalendar input.v-textfield.v-datefield-textfield {
   border: none;
@@ -565,8 +575,8 @@ div.v-vertical > .v-spacing, div.v-vertical > .v-expand > .v-spacing {
   line-height: normal;
 }
 .mycollab-mobile .editview-layout .v-touchkit-datepicker .v-select-select {
-  font-size: 1.5rem;
-  line-height: 2.3rem;
+  font-size: 1.4rem;
+  line-height: 1.8rem;
 }
 .mycollab-mobile .v-filterselect {
   overflow: hidden;
