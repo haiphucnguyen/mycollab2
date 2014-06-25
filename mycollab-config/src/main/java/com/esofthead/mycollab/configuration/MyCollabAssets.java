@@ -16,6 +16,9 @@
  */
 package com.esofthead.mycollab.configuration;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.esofthead.mycollab.core.DeploymentMode;
 
 /**
@@ -25,6 +28,7 @@ import com.esofthead.mycollab.core.DeploymentMode;
  * 
  */
 public abstract class MyCollabAssets {
+	private static Logger log = LoggerFactory.getLogger(MyCollabAssets.class);
 	private static MyCollabAssets impl;
 
 	static {
@@ -57,11 +61,13 @@ public abstract class MyCollabAssets {
 
 		@Override
 		protected String generateResourceLink(String resourceId) {
-			return String.format(ApplicationProperties
+			String res = String.format(ApplicationProperties
 					.getString(ApplicationProperties.APP_URL),
 					SiteConfiguration.getServerAddress(), SiteConfiguration
 							.getServerPort())
 					+ "assets/" + resourceId;
+			log.debug("Asset {}", res);
+			return res;
 		}
 
 	}
