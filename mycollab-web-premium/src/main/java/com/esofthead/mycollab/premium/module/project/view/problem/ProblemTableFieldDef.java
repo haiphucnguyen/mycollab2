@@ -22,7 +22,7 @@ public interface ProblemTableFieldDef {
 			UIConstants.TABLE_X_LABEL_WIDTH);
 
 	public static TableViewField description = new TableViewField(
-			ProblemI18nEnum.FORM_DESCRIPTION, "description",
+			GenericI18Enum.FORM_DESCRIPTION, "description",
 			UIConstants.TABLE_EX_LABEL_WIDTH);
 
 	public static TableViewField raisedby = new TableViewField(
