@@ -45,7 +45,7 @@ public class ProblemFormLayoutFactory implements IFormLayoutFactory {
 					"100%");
 		} else if (propertyId.equals("description")) {
 			this.informationLayout.addComponent(field,
-					AppContext.getMessage(ProblemI18nEnum.FORM_DESCRIPTION), 0,
+					AppContext.getMessage(GenericI18Enum.FORM_DESCRIPTION), 0,
 					1, 2, "100%");
 		} else if (propertyId.equals("raisedbyuser")) {
 			this.informationLayout
@@ -56,8 +56,7 @@ public class ProblemFormLayoutFactory implements IFormLayoutFactory {
 					AppContext.getMessage(ProblemI18nEnum.FORM_RELATED), 1, 2);
 		} else if (propertyId.equals("assigntouser")) {
 			this.informationLayout.addComponent(field,
-					AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE),
-					0, 3);
+					AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE), 0, 3);
 		} else if (propertyId.equals("impact")) {
 			this.informationLayout.addComponent(field,
 					AppContext.getMessage(ProblemI18nEnum.FORM_IMPACT), 1, 3);
