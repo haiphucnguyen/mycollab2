@@ -29,6 +29,7 @@ import org.vaadin.peter.buttongroup.ButtonGroup;
 import com.esofthead.mycollab.common.ActivityStreamConstants;
 import com.esofthead.mycollab.common.domain.SimpleActivityStream;
 import com.esofthead.mycollab.common.domain.criteria.ActivityStreamSearchCriteria;
+import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
 import com.esofthead.mycollab.module.project.ProjectResources;
@@ -159,7 +160,8 @@ public class ProjectActivityStreamPagedList
 				String arg21 = "'" + activityStream.getSaccountid() + "'";
 				String arg22 = "'" + AppContext.getSiteUrl() + "'";
 				String arg23 = AppContext.getSession().getTimezone();
-				String arg24 = "'" + AppContext.getUserLocale().toString() + "'";
+				String arg24 = "'" + AppContext.getUserLocale().toString()
+						+ "'";
 				String arg25 = activityStream.getNamefield();
 				String arg26 = idStickyToolTipDiv;
 				String arg27 = idToopTipDiv;
@@ -242,30 +244,34 @@ public class ProjectActivityStreamPagedList
 		this.controlBarWrapper.setStyleName("page-controls");
 		ButtonGroup controlBtns = new ButtonGroup();
 		controlBtns.setStyleName(UIConstants.THEME_GREEN_LINK);
-		Button prevBtn = new Button("Newer", new Button.ClickListener() {
-			private static final long serialVersionUID = -94021599166105307L;
+		Button prevBtn = new Button(
+				AppContext.getMessage(GenericI18Enum.BUTTON_NAV_NEWER),
+				new Button.ClickListener() {
+					private static final long serialVersionUID = -94021599166105307L;
 
-			@Override
-			public void buttonClick(ClickEvent event) {
-				ProjectActivityStreamPagedList.this
-						.pageChange(ProjectActivityStreamPagedList.this.currentPage - 1);
-			}
-		});
+					@Override
+					public void buttonClick(ClickEvent event) {
+						ProjectActivityStreamPagedList.this
+								.pageChange(ProjectActivityStreamPagedList.this.currentPage - 1);
+					}
+				});
 		if (currentPage == 1) {
 			prevBtn.setEnabled(false);
 		}
 		prevBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 		prevBtn.setWidth("64px");
 
-		Button nextBtn = new Button("Older", new Button.ClickListener() {
-			private static final long serialVersionUID = 3095522916508256018L;
+		Button nextBtn = new Button(
+				AppContext.getMessage(GenericI18Enum.BUTTON_NAV_OLDER),
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 3095522916508256018L;
 
-			@Override
-			public void buttonClick(ClickEvent event) {
-				ProjectActivityStreamPagedList.this
-						.pageChange(ProjectActivityStreamPagedList.this.currentPage + 1);
-			}
-		});
+					@Override
+					public void buttonClick(ClickEvent event) {
+						ProjectActivityStreamPagedList.this
+								.pageChange(ProjectActivityStreamPagedList.this.currentPage + 1);
+					}
+				});
 		if (currentPage == totalPage) {
 			nextBtn.setEnabled(false);
 		}
