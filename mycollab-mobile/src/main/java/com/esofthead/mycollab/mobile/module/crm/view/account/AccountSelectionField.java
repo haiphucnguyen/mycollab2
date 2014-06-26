@@ -41,12 +41,6 @@ public class AccountSelectionField extends CustomField<Integer> implements
 	private MobileNavigationButton accountName = new MobileNavigationButton();
 	private Account account = null;
 
-	private void clearValue() {
-		accountName.setCaption("");
-		this.account = null;
-		this.setInternalValue(null);
-	}
-
 	@Override
 	public void setPropertyDataSource(Property newDataSource) {
 		Object value = newDataSource.getValue();
@@ -87,12 +81,8 @@ public class AccountSelectionField extends CustomField<Integer> implements
 	@Override
 	public void fireValueChange(Account data) {
 		account = data;
-		if (account != null) {
-			accountName.setCaption(account.getAccountname());
-			setInternalValue(account.getId());
-		} else {
-			this.clearValue();
-		}
+		accountName.setCaption(account.getAccountname());
+		setInternalValue(account.getId());
 	}
 
 	@Override

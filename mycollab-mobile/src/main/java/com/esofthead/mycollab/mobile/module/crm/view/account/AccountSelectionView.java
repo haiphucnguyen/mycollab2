@@ -61,6 +61,9 @@ public class AccountSelectionView extends AbstractMobilePageView {
 		this.setContent(layout);
 
 		tableItem.setSearchCriteria(searchCriteria);
+
+		SimpleAccount clearAccount = new SimpleAccount();
+		tableItem.getBeanContainer().addItemAt(0, clearAccount);
 	}
 
 	@SuppressWarnings("serial")
