@@ -18,12 +18,11 @@ package com.esofthead.mycollab.mobile.module.crm.view.account;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
+import com.esofthead.mycollab.mobile.ui.AbstractSelectionView;
 import com.esofthead.mycollab.module.crm.domain.Account;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.mvp.AbstractMobilePageView;
-import com.esofthead.mycollab.vaadin.ui.FieldSelection;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.VerticalLayout;
@@ -34,18 +33,16 @@ import com.vaadin.ui.VerticalLayout;
  * @since 4.0
  * 
  */
-public class AccountSelectionView extends AbstractMobilePageView {
+public class AccountSelectionView extends AbstractSelectionView<Account> {
 
 	private static final long serialVersionUID = 1L;
 	private AccountSearchCriteria searchCriteria;
 	private AccountListDisplay tableItem;
-	private FieldSelection<Account> fieldSelection;
 
-	public AccountSelectionView(FieldSelection<Account> fieldSelection) {
+	public AccountSelectionView() {
 		super();
 		createUI();
 		this.setCaption("Account Name Lookup");
-		this.fieldSelection = fieldSelection;
 	}
 
 	private void createUI() {
@@ -88,7 +85,7 @@ public class AccountSelectionView extends AbstractMobilePageView {
 									@Override
 									public void buttonClick(
 											final Button.ClickEvent event) {
-										fieldSelection.fireValueChange(account);
+										selectionField.fireValueChange(account);
 										AccountSelectionView.this
 												.getNavigationManager()
 												.navigateBack();

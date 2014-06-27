@@ -90,12 +90,12 @@ public class RelatedEditItemField extends CustomField<String> implements
 							NavigationButton.NavigationButtonClickEvent event) {
 						String type = (String) relatedItemComboBox.getValue();
 						if ("Account".equals(type)) {
-							AccountSelectionView accountView = new AccountSelectionView(
-									RelatedEditItemField.this);
-							EventBus.getInstance().fireEvent(
-									new CrmEvent.PushView(
-											RelatedEditItemField.this,
-											accountView));
+//							AccountSelectionView accountView = new AccountSelectionView(
+//									RelatedEditItemField.this);
+//							EventBus.getInstance().fireEvent(
+//									new CrmEvent.PushView(
+//											RelatedEditItemField.this,
+//											accountView));
 						} else if ("Campaign".equals(type)) {
 							CampaignSelectionView campaignView = new CampaignSelectionView(
 									RelatedEditItemField.this);
