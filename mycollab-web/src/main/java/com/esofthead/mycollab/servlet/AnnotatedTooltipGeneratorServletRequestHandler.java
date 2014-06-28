@@ -244,7 +244,7 @@ public class AnnotatedTooltipGeneratorServletRequestHandler extends
 						.getSpringBean(UserService.class);
 				SimpleUser user = service.findUserByUserNameInAccount(username,
 						sAccountId);
-				html = generateTooltipUser(user, siteURL, timeZone);
+				html = generateTooltipUser(user, siteURL, timeZone, locale);
 			} else {
 				log.error("Can not generate tooltip for item has type " + type);
 			}
@@ -266,7 +266,7 @@ public class AnnotatedTooltipGeneratorServletRequestHandler extends
 	}
 
 	private String generateTooltipUser(SimpleUser user, String siteURL,
-			String timeZone) {
+			String timeZone, Locale locale) {
 		try {
 			if (user == null)
 				return null;
@@ -340,8 +340,9 @@ public class AnnotatedTooltipGeneratorServletRequestHandler extends
 							new Td().setStyle(
 									"word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
 									.appendText(
-											DateTimeUtils.getStringDateFromNow(user
-													.getLastaccessedtime())));
+											DateTimeUtils.getStringDateFromNow(
+													user.getLastaccessedtime(),
+													locale)));
 			table.appendChild(trRow1);
 			table.appendChild(trRow2);
 			table.appendChild(trRow3);

@@ -28,6 +28,7 @@ import com.esofthead.mycollab.module.project.domain.criteria.ProjectMemberSearch
 import com.esofthead.mycollab.module.project.events.ProjectMemberEvent;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.BeanList;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
@@ -57,7 +58,7 @@ public class ProjectMembersWidget extends Depot {
 
 		memberList = new BeanList<ProjectMemberService, ProjectMemberSearchCriteria, SimpleProjectMember>(
 				ApplicationContextUtil
-				.getSpringBean(ProjectMemberService.class),
+						.getSpringBean(ProjectMemberService.class),
 				MemberRowDisplayHandler.class);
 		this.addStyleName("activity-panel");
 		((VerticalLayout) this.bodyContent).setMargin(false);
@@ -75,30 +76,33 @@ public class ProjectMembersWidget extends Depot {
 	}
 
 	public static class MemberRowDisplayHandler implements
-	BeanList.RowDisplayHandler<SimpleProjectMember> {
+			BeanList.RowDisplayHandler<SimpleProjectMember> {
 		private static final long serialVersionUID = 1L;
 
 		@Override
-		public Component generateRow(final SimpleProjectMember member, int rowIndex) {
+		public Component generateRow(final SimpleProjectMember member,
+				int rowIndex) {
 			HorizontalLayout layout = new HorizontalLayout();
 			layout.setWidth("100%");
 			layout.setStyleName("activity-stream");
 			layout.addStyleName("odd");
 			layout.setSpacing(true);
-			layout.addComponent(new Image(null, UserAvatarControlFactory.createAvatarResource(
-					member.getMemberAvatarId(), 48)));
+			layout.addComponent(new Image(null, UserAvatarControlFactory
+					.createAvatarResource(member.getMemberAvatarId(), 48)));
 
 			VerticalLayout content = new VerticalLayout();
 			content.setStyleName("stream-content");
-			Button userLink = new Button(member.getDisplayName(), new Button.ClickListener() {
-				private static final long serialVersionUID = 1L;
+			Button userLink = new Button(member.getDisplayName(),
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
 
-				@Override
-				public void buttonClick(ClickEvent event) {
-					EventBus.getInstance().fireEvent(
-							new ProjectMemberEvent.GotoRead(this, member.getUsername()));
-				}
-			});
+						@Override
+						public void buttonClick(ClickEvent event) {
+							EventBus.getInstance().fireEvent(
+									new ProjectMemberEvent.GotoRead(this,
+											member.getUsername()));
+						}
+					});
 			userLink.addStyleName("link");
 			userLink.addStyleName("username");
 			content.addComponent(userLink);
@@ -118,7 +122,8 @@ public class ProjectMembersWidget extends Depot {
 				textRole = member.getRoleName();
 			}
 			textRole += "<br/><span>Joined from "
-					+ DateTimeUtils.getStringDateFromNow(member.getJoindate()) + "</span>";
+					+ DateTimeUtils.getStringDateFromNow(member.getJoindate(),
+							AppContext.getUserLocale()) + "</span>";
 			memberRole.setValue(textRole);
 
 			footer.addComponent(memberRole);

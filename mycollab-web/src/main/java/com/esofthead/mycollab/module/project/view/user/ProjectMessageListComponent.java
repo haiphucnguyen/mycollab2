@@ -81,9 +81,11 @@ public class ProjectMessageListComponent extends Depot {
 
 			final CssLayout body = new CssLayout();
 			body.setStyleName("activity-date");
-			final Label dateLbl = new Label("From "
-					+ DateTimeUtils.getStringDateFromNow(message
-							.getPosteddate()));
+			final Label dateLbl = new Label(
+					"From "
+							+ DateTimeUtils.getStringDateFromNow(
+									message.getPosteddate(),
+									AppContext.getUserLocale()));
 			body.addComponent(dateLbl);
 
 			layout.addComponent(body);
