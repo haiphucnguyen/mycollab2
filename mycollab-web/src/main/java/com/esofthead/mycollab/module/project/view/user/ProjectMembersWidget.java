@@ -26,6 +26,7 @@ import com.esofthead.mycollab.module.project.ProjectMemberStatusConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectMemberSearchCriteria;
 import com.esofthead.mycollab.module.project.events.ProjectMemberEvent;
+import com.esofthead.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -53,7 +54,10 @@ public class ProjectMembersWidget extends Depot {
 	private BeanList<ProjectMemberService, ProjectMemberSearchCriteria, SimpleProjectMember> memberList;
 
 	public ProjectMembersWidget() {
-		super("Members", new VerticalLayout());
+		super(
+				AppContext
+						.getMessage(ProjectCommonI18nEnum.WIDGET_MEMBERS_TITLE),
+				new VerticalLayout());
 		this.addStyleName("project-member-widget");
 
 		memberList = new BeanList<ProjectMemberService, ProjectMemberSearchCriteria, SimpleProjectMember>(

@@ -28,8 +28,10 @@ import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
 import com.esofthead.mycollab.module.project.ProjectResources;
 import com.esofthead.mycollab.module.project.domain.ProjectGenericTask;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectGenericTaskSearchCriteria;
+import com.esofthead.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectGenericTaskService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.DefaultBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -53,7 +55,9 @@ public class ProjectTaskOverdueComponent extends Depot {
 	private final DefaultBeanPagedList<ProjectGenericTaskService, ProjectGenericTaskSearchCriteria, ProjectGenericTask> taskList;
 
 	public ProjectTaskOverdueComponent() {
-		super("Overdue Tasks", new VerticalLayout());
+		super(AppContext
+				.getMessage(ProjectCommonI18nEnum.WIDGET_OVERDUE_TASKS_TITLE),
+				new VerticalLayout());
 
 		taskList = new DefaultBeanPagedList<ProjectGenericTaskService, ProjectGenericTaskSearchCriteria, ProjectGenericTask>(
 				ApplicationContextUtil
