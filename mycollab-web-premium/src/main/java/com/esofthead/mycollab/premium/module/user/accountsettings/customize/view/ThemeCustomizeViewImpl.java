@@ -25,6 +25,7 @@ import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.utils.ImageUtil;
 import com.esofthead.mycollab.eventmanager.EventBus;
+import com.esofthead.mycollab.module.user.accountsettings.localization.SettingCommonI18nEnum;
 import com.esofthead.mycollab.module.user.accountsettings.localization.UserI18nEnum;
 import com.esofthead.mycollab.module.user.accountsettings.view.events.AccountCustomizeEvent;
 import com.esofthead.mycollab.module.user.accountsettings.view.parameters.CustomizeScreenData;
@@ -132,7 +133,9 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements
 				.canBeYes(RolePermissionCollections.ACCOUNT_THEME));
 		controlButton.addComponent(saveBtn);
 
-		Button resetToDefaultBtn = new Button("Reset to Default",
+		Button resetToDefaultBtn = new Button(
+				AppContext
+						.getMessage(SettingCommonI18nEnum.BUTTON_RESET_DEFAULT),
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 5182152510759528123L;
 
@@ -156,7 +159,8 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements
 
 	private Component constructTopMenuCustomizeBlock() {
 		VerticalLayout blockLayout = new VerticalLayout();
-		Label blockHeader = new Label("Top Menu");
+		Label blockHeader = new Label(
+				AppContext.getMessage(SettingCommonI18nEnum.FORM_TOP_MENU));
 		blockHeader.setStyleName("block-hdr");
 		blockHeader.addStyleName("h2");
 		blockLayout.addComponent(blockHeader);
@@ -197,7 +201,8 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements
 				}
 			}
 		};
-		logoUploadField.setButtonCaption("Change logo");
+		logoUploadField.setButtonCaption(AppContext
+				.getMessage(SettingCommonI18nEnum.BUTTON_CHANGE_LOGO));
 		logoUploadField.setSizeUndefined();
 		logoUploadField.setFieldType(FieldType.BYTE_ARRAY);
 		logoUploadField.setEnabled(AppContext
@@ -215,7 +220,8 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements
 				Alignment.TOP_LEFT);
 
 		CustomColorPickerArea topMenuBg = new CustomColorPickerArea(
-				"Normal Tab", accountTheme.getTopmenubg());
+				AppContext.getMessage(SettingCommonI18nEnum.FORM_NORMAL_TAB),
+				accountTheme.getTopmenubg());
 		topMenuBg.addColorChangeListener(new ColorChangeListener() {
 			private static final long serialVersionUID = -3462278784149813444L;
 
@@ -226,11 +232,16 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements
 				ThemeManager.loadDemoTheme(accountTheme);
 			}
 		});
-		propertyLayout.addComponent(new Label("Normal Menu"), 0, 1);
+		propertyLayout.addComponent(
+				new Label(AppContext
+						.getMessage(SettingCommonI18nEnum.FORM_NORMAL_MENU)),
+				0, 1);
 		propertyLayout.addComponent(topMenuBg, 1, 1);
 
 		CustomColorPickerArea topMenuText = new CustomColorPickerArea(
-				"Normal Tab Text", accountTheme.getTopmenutext());
+				AppContext
+						.getMessage(SettingCommonI18nEnum.FORM_NORMAL_TAB_TEXT),
+				accountTheme.getTopmenutext());
 		topMenuText.addColorChangeListener(new ColorChangeListener() {
 			private static final long serialVersionUID = -1370026552930193996L;
 
@@ -241,7 +252,12 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements
 				ThemeManager.loadDemoTheme(accountTheme);
 			}
 		});
-		propertyLayout.addComponent(new Label("Normal Menu Text"), 0, 2);
+		propertyLayout
+				.addComponent(
+						new Label(
+								AppContext
+										.getMessage(SettingCommonI18nEnum.FORM_NORMAL_MENU_TEXT)),
+						0, 2);
 		propertyLayout.addComponent(topMenuText, 1, 2);
 
 		CustomColorPickerArea topMenuBgSelected = new CustomColorPickerArea(

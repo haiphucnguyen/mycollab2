@@ -69,7 +69,8 @@ public class BasicInfoChangeWindow extends Window {
 		this.setModal(true);
 		this.initUI();
 		this.center();
-		this.setCaption("Change your basic information");
+		this.setCaption(AppContext
+				.getMessage(UserI18nEnum.WINDOW_CHANGE_BASIC_INFO_TITLE));
 	}
 
 	private void initUI() {

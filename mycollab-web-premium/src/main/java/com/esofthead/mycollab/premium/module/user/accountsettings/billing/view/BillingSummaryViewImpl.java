@@ -27,6 +27,7 @@ import com.esofthead.mycollab.module.billing.service.BillingService;
 import com.esofthead.mycollab.module.ecm.ResourceUtils;
 import com.esofthead.mycollab.module.ecm.service.DriveInfoService;
 import com.esofthead.mycollab.module.project.service.ProjectService;
+import com.esofthead.mycollab.module.user.accountsettings.localization.BillingI18nEnum;
 import com.esofthead.mycollab.module.user.accountsettings.view.events.AccountBillingEvent;
 import com.esofthead.mycollab.module.user.domain.BillingPlan;
 import com.esofthead.mycollab.module.user.service.UserService;
@@ -107,7 +108,9 @@ public class BillingSummaryViewImpl extends AbstractPageView implements
 		FAQLayout.setSpacing(true);
 
 		if (AppContext.isAdmin()) {
-			Button cancelBtn = new Button("Cancel entire account",
+			Button cancelBtn = new Button(
+					AppContext
+							.getMessage(BillingI18nEnum.BUTTON_CANCEL_ACCOUNT),
 					new Button.ClickListener() {
 
 						@Override
@@ -124,12 +127,13 @@ public class BillingSummaryViewImpl extends AbstractPageView implements
 
 		FAQLayout.setWidth("285px");
 		FAQLayout.addStyleName("faq-layout");
-		Label header = new Label("Question?");
+		Label header = new Label(
+				AppContext.getMessage(BillingI18nEnum.HELP_QUESTION));
 		header.addStyleName("faq-header");
 		FAQLayout.addComponent(header);
 
 		Label contentText = new Label(
-				"For specific questions related to billing, features, plans, upgrades, downgrades or cancellations, please send email to <a href=\"mailto:support@mycollab.com\">support@mycollab.com</a>",
+				AppContext.getMessage(BillingI18nEnum.HELP_INFO),
 				ContentMode.HTML);
 		contentText.addStyleName("faq-content");
 		FAQLayout.addComponent(contentText);
@@ -160,8 +164,6 @@ public class BillingSummaryViewImpl extends AbstractPageView implements
 
 			Label billingType = new Label(plan.getBillingtype());
 			billingType.addStyleName("billing-type");
-			// billingType.setWidth(Sizeable.SIZE_UNDEFINED,
-			// Sizeable.Unit.PIXELS);
 			singlePlan.addComponent(billingType);
 
 			Label billingPrice = new Label("<span class='billing-price'>$"
@@ -227,14 +229,16 @@ public class BillingSummaryViewImpl extends AbstractPageView implements
 					Sizeable.Unit.PIXELS);
 			singlePlan.addComponent(billingStandup);
 
-			Button selectThisPlan = new Button("Select", new ClickListener() {
+			Button selectThisPlan = new Button(
+					AppContext.getMessage(GenericI18Enum.BUTTON_SELECT_LABEL),
+					new ClickListener() {
 
-				@Override
-				public void buttonClick(ClickEvent event) {
-					UI.getCurrent()
-							.addWindow(new UpdateBillingPlanWindow(plan));
-				}
-			});
+						@Override
+						public void buttonClick(ClickEvent event) {
+							UI.getCurrent().addWindow(
+									new UpdateBillingPlanWindow(plan));
+						}
+					});
 			selectThisPlan.addStyleName(UIConstants.THEME_GREEN_LINK);
 			singlePlan.addComponent(selectThisPlan);
 
@@ -326,12 +330,13 @@ public class BillingSummaryViewImpl extends AbstractPageView implements
 			initUI();
 
 			this.center();
-			this.setCaption("Change your current billing plan");
+			this.setCaption(AppContext
+					.getMessage(BillingI18nEnum.VIEW_CHANGE_BILLING_PLAN_TITLE));
 		}
 
 		private void initUI() {
 			Label header = new Label(
-					"Are you sure you want to change your current billing plan to the following billing plan?");
+					AppContext.getMessage(BillingI18nEnum.QUESTION_CHANGE_PLAN));
 			header.addStyleName("updateplan-hdr");
 			header.setWidth("300px");
 
@@ -346,9 +351,9 @@ public class BillingSummaryViewImpl extends AbstractPageView implements
 			chosenPlanType.addStyleName("billing-type");
 			chosenPlanInfo.addComponent(chosenPlanType);
 
-			Label chosenPlanPrice = new Label("<span class='billing-price'>$"
-					+ this.chosenPlan.getPricing() + "</span>/month",
-					ContentMode.HTML);
+			Label chosenPlanPrice = new Label(AppContext.getMessage(
+					BillingI18nEnum.FORM_BILLING_PRICE,
+					this.chosenPlan.getPricing()), ContentMode.HTML);
 			chosenPlanPrice.addStyleName("billing-price-lbl");
 			chosenPlanInfo.addComponent(chosenPlanPrice);
 
