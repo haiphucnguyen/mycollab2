@@ -100,6 +100,7 @@ public class DenyProjectMemberInvitationServletRequestHandler extends
 
 				ProjectMember projectMember = projectMemberService
 						.findMemberByUsername(email, projectId, sAccountId);
+
 				if (projectMember != null) {
 					Map<String, Object> context = new HashMap<String, Object>();
 					context.put("projectLinkURL", ProjectLinkUtils
