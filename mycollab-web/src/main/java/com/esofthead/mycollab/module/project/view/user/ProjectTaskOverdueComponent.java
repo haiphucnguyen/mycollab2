@@ -18,6 +18,7 @@ package com.esofthead.mycollab.module.project.view.user;
 
 import java.util.GregorianCalendar;
 
+import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.arguments.DateSearchField;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
@@ -35,7 +36,6 @@ import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.DefaultBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
@@ -125,7 +125,7 @@ public class ProjectTaskOverdueComponent extends Depot {
 							genericTask.getProjectId(),
 							genericTask.getAssignUser()));
 			if (genericTask.getAssignUser() != null) {
-				assignee.setIconLink(UserAvatarControlFactory.getAvatarLink(
+				assignee.setIconLink(SiteConfiguration.getAvatarLink(
 						genericTask.getAssignUserAvatarId(), 16));
 				body.addComponent(assigneeLabel);
 			}

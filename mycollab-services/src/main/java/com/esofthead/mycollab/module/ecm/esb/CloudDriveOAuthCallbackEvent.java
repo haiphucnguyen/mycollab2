@@ -14,15 +14,23 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.utils;
+package com.esofthead.mycollab.module.ecm.esb;
 
-import com.esofthead.mycollab.core.UserInvalidInputException;
+import com.esofthead.mycollab.eventmanager.ApplicationEvent;
 
-public class InvalidPasswordException extends UserInvalidInputException {
-	private static final long serialVersionUID = 1L;
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ *
+ */
+public class CloudDriveOAuthCallbackEvent {
 
-	public InvalidPasswordException(String message) {
-		super(message);
+	public static class ReceiveCloudDriveInfo extends ApplicationEvent {
+		private static final long serialVersionUID = 1L;
+
+		public ReceiveCloudDriveInfo(Object source, Object data) {
+			super(source, data);
+		}
 	}
-
 }

@@ -17,6 +17,7 @@
 package com.esofthead.mycollab.module.billing.servlet;
 
 import java.io.IOException;
+import java.util.Locale;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -31,15 +32,15 @@ import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.configuration.PasswordEncryptHelper;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.UserInvalidInputException;
+import com.esofthead.mycollab.core.utils.InvalidPasswordException;
+import com.esofthead.mycollab.core.utils.PasswordCheckerUtil;
+import com.esofthead.mycollab.i18n.LocalizationHelper;
 import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
 import com.esofthead.mycollab.module.user.dao.UserMapper;
 import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.servlet.GenericServletRequestHandler;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.utils.InvalidPasswordException;
-import com.esofthead.mycollab.utils.PasswordCheckerUtil;
-import com.esofthead.mycollab.vaadin.AppContext;
 
 /**
  * 
@@ -85,8 +86,8 @@ public class UpdateUserInfoAction extends GenericServletRequestHandler {
 					RegisterStatusConstants.ACTIVE);
 		} catch (Exception e) {
 			log.error("Error when update user - userAccount", e);
-			errMsg = AppContext
-					.getMessage(GenericI18Enum.ERROR_USER_NOTICE_INFORMATION_MESSAGE);
+			errMsg = LocalizationHelper.getMessage(Locale.US,
+					GenericI18Enum.ERROR_USER_NOTICE_INFORMATION_MESSAGE);
 			throw new MyCollabException(errMsg);
 		}
 	}

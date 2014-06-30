@@ -35,11 +35,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import sun.awt.AppContext;
+
 import com.esofthead.mycollab.common.UrlTokenizer;
+import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.ResourceNotFoundException;
 import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
-import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
+import com.esofthead.mycollab.module.project.ProjectLinkUtils;
 import com.esofthead.mycollab.module.project.domain.ProjectMember;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
@@ -50,7 +53,6 @@ import com.esofthead.mycollab.module.user.domain.UserAccount;
 import com.esofthead.mycollab.module.user.domain.UserAccountExample;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.servlet.VelocityWebServletRequestHandler;
-import com.esofthead.mycollab.vaadin.AppContext;
 
 /**
  * 
@@ -118,16 +120,22 @@ public class VerifyProjectMemberInvitationServletRequestHandler extends
 						out.println(html);
 						return;
 					}
+
+					String subdomain = projectService
+							.getSubdomainOfProject(projectId);
+					String siteUrl = SiteConfiguration.getSiteUrl(subdomain);
+
 					log.debug("Checking Member status --------");
 					User user = userService.findUserByUserName(email);
 					if (user != null) { // user exit
 						log.debug("User exist on System -------------");
-						handleMemberInviteWithExistAccount(email, projectId,
-								sAccountId, projectRoleId, response);
+						handleMemberInviteWithExistAccount(siteUrl, email,
+								projectId, sAccountId, projectRoleId, response);
 					} else {
 						log.debug("User not exist on System --------- to enter password'Page");
-						handleOutSideMemberInvite(email, projectId, sAccountId,
-								projectRoleId, inviterName, response, request);
+						handleOutSideMemberInvite(siteUrl, email, projectId,
+								sAccountId, projectRoleId, inviterName,
+								response, request);
 					}
 					return;
 				} else {
@@ -142,9 +150,10 @@ public class VerifyProjectMemberInvitationServletRequestHandler extends
 		throw new ResourceNotFoundException();
 	}
 
-	private void handleMemberInviteWithExistAccount(String username,
-			Integer projectId, Integer sAccountId, Integer projectRoleId,
-			HttpServletResponse response) throws IOException {
+	private void handleMemberInviteWithExistAccount(String siteUrl,
+			String username, Integer projectId, Integer sAccountId,
+			Integer projectRoleId, HttpServletResponse response)
+			throws IOException {
 
 		// search has in table User account
 		UserAccountExample example = new UserAccountExample();
@@ -179,27 +188,27 @@ public class VerifyProjectMemberInvitationServletRequestHandler extends
 				projectMember.setSaccountid(sAccountId);
 				projectMember.setIsadmin(false);
 				projectMember.setStatus(RegisterStatusConstants.ACTIVE);
-				projectMemberService.saveWithSession(projectMember,
-						AppContext.getUsername());
+				projectMemberService.saveWithSession(projectMember, "");
 			} else if (member != null) {
 				member.setStatus(RegisterStatusConstants.ACTIVE);
 				member.setSaccountid(sAccountId);
 				member.setProjectroleid(projectRoleId);
 				projectMemberService.updateWithSession(member, "");
 			}
-			String projectLink = ProjectLinkBuilder
-					.generateProjectFullLink(projectId);
+			String projectLink = ProjectLinkUtils.generateProjectFullLink(
+					siteUrl, projectId);
 			response.sendRedirect(projectLink);
 		} catch (Exception e) {
 			throw new MyCollabException(e);
 		}
 	}
 
-	private void handleOutSideMemberInvite(String email, Integer projectId,
-			Integer sAccountId, Integer projectRoleId, String inviterName,
-			HttpServletResponse response, HttpServletRequest request) {
-		String projectLinkURL = ProjectLinkBuilder
-				.generateProjectFullLink(projectId);
+	private void handleOutSideMemberInvite(String siteUrl, String email,
+			Integer projectId, Integer sAccountId, Integer projectRoleId,
+			String inviterName, HttpServletResponse response,
+			HttpServletRequest request) {
+		String projectLinkURL = ProjectLinkUtils.generateProjectFullLink(
+				siteUrl, projectId);
 
 		String handelCreateAccountURL = request.getContextPath() + "/"
 				+ "project/outside/createAccount/";

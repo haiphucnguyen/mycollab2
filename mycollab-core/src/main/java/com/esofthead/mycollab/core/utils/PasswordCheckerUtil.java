@@ -14,8 +14,15 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.utils;
+package com.esofthead.mycollab.core.utils;
 
+
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ * 
+ */
 public class PasswordCheckerUtil {
 
 	public static final String[] partialRegexChecks = { ".*[a-z]+.*", // lower

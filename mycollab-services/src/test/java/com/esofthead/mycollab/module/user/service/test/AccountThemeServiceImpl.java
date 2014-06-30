@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import com.esofthead.mycollab.module.user.domain.AccountTheme;
 import com.esofthead.mycollab.module.user.service.AccountThemeService;
 
-@Service
+
 public class AccountThemeServiceImpl implements AccountThemeService {
 
 	@Override

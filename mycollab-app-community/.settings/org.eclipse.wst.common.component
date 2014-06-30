@@ -253,6 +253,9 @@
     <dependent-module archiveName="jsp-api-2.2.1-b03.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/javax/servlet/jsp/jsp-api/2.2.1-b03/jsp-api-2.2.1-b03.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
+    <dependent-module archiveName="mycollab-servlet.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mycollab-servlet/mycollab-servlet">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
     <dependent-module archiveName="mycollab-services-community.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mycollab-services-community/mycollab-services-community">
       <dependency-type>uses</dependency-type>
     </dependent-module>

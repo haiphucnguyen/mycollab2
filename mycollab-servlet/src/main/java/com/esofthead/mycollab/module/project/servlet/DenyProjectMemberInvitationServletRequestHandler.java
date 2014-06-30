@@ -35,7 +35,7 @@ import com.esofthead.mycollab.common.service.RelayEmailNotificationService;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.ResourceNotFoundException;
-import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
+import com.esofthead.mycollab.module.project.ProjectLinkUtils;
 import com.esofthead.mycollab.module.project.domain.ProjectMember;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
@@ -102,8 +102,10 @@ public class DenyProjectMemberInvitationServletRequestHandler extends
 						.findMemberByUsername(email, projectId, sAccountId);
 				if (projectMember != null) {
 					Map<String, Object> context = new HashMap<String, Object>();
-					context.put("projectLinkURL", ProjectLinkBuilder
-							.generateProjectFullLink(projectId));
+					context.put("projectLinkURL", ProjectLinkUtils
+							.generateProjectFullLink(
+									SiteConfiguration.getSiteUrl(subdomain),
+									projectId));
 
 					String html = generatePageByTemplate(
 							REFUSE_MEMBER_DENY_TEMPLATE, context);

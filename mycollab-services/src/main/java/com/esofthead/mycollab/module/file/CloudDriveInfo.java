@@ -14,23 +14,47 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.module.file.events;
-
-import com.esofthead.mycollab.eventmanager.ApplicationEvent;
+package com.esofthead.mycollab.module.file;
 
 /**
  * 
  * @author MyCollab Ltd.
  * @since 1.0
- *
+ * 
  */
-public class CloudDriveOAuthCallbackEvent {
+public class CloudDriveInfo {
+	private String storageName;
 
-	public static class ReceiveCloudDriveInfo extends ApplicationEvent {
-		private static final long serialVersionUID = 1L;
+	private String accessToken;
 
-		public ReceiveCloudDriveInfo(Object source, Object data) {
-			super(source, data);
-		}
+	private String folderName;
+
+	public CloudDriveInfo(String storageName, String accessToken) {
+		this.storageName = storageName;
+		this.accessToken = accessToken;
+	}
+
+	public String getStorageName() {
+		return storageName;
+	}
+
+	public void setStorageName(String storageName) {
+		this.storageName = storageName;
+	}
+
+	public String getAccessToken() {
+		return accessToken;
+	}
+
+	public void setAccessToken(String accessToken) {
+		this.accessToken = accessToken;
+	}
+
+	public String getFolderName() {
+		return folderName;
+	}
+
+	public void setFolderName(String folderName) {
+		this.folderName = folderName;
 	}
 }

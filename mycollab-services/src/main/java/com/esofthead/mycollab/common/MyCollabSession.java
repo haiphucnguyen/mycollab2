@@ -14,12 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-ui.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.vaadin;
+package com.esofthead.mycollab.common;
 
 import org.infinispan.commons.api.BasicCache;
 
 import com.esofthead.mycollab.cache.LocalCacheManager;
-import com.vaadin.ui.UI;
 
 /**
  * 
@@ -86,7 +85,7 @@ public class MyCollabSession {
 	}
 
 	public static String getSessionId() {
-		return UI.getCurrent().toString();
+		return SessionIdGenerator.getSessionId();
 	}
 
 }

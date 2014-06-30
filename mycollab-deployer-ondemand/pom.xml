@@ -28,6 +28,7 @@
         <module>../mycollab-caching-premium</module>
         <module>../mycollab-reporting</module>
         <module>../mycollab-scheduler</module>
+        <module>../mycollab-servlet</module>
         <module>../mycollab-ui</module>
         <module>../mycollab-mobile</module>
         <module>../mycollab-web</module>
@@ -35,7 +36,7 @@
         <module>../mycollab-api-impl</module>
         <module>../mycollab-scheduler-ondemand</module>
         <module>../mycollab-web-premium</module>
-       
+
         <module>../mycollab-app-ondemand</module>
     </modules>
 </project>

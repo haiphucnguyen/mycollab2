@@ -12,9 +12,9 @@ import com.dropbox.core.DbxSessionStore;
 import com.dropbox.core.DbxStandardSessionStore;
 import com.dropbox.core.DbxWebAuth;
 import com.esofthead.mycollab.cache.LocalCacheManager;
+import com.esofthead.mycollab.common.MyCollabSession;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.module.ecm.StorageNames;
-import com.esofthead.mycollab.vaadin.MyCollabSession;
 import com.vaadin.server.VaadinService;
 import com.vaadin.server.WrappedHttpSession;
 

@@ -6,7 +6,13 @@
     <project>mycollab-server-runner</project>
     <project>mycollab-config</project>
     <project>mycollab-core</project>
+    <project>mycollab-servlet</project>
     <project>mycollab-services-ondemand</project>
+    <project>mycollab-caching-premium</project>
+    <project>mycollab-web-premium</project>
+    <project>mycollab-jetty-session-premium</project>
+    <project>mycollab-api</project>
+    <project>mycollab-mobile</project>
     <project>mycollab-services</project>
     <project>mycollab-dao</project>
     <project>mycollab-localization</project>
@@ -14,17 +20,9 @@
     <project>mycollab-reporting</project>
     <project>mycollab-caching</project>
     <project>mycollab-jackrabbit</project>
-    <project>mycollab-api</project>
-    <project>mycollab-api-impl</project>
-    <project>mycollab-caching-premium</project>
-    <project>mycollab-web-premium</project>
-    <project>mycollab-web</project>
     <project>mycollab-ui</project>
-    <project>mycollab-esb</project>
-    <project>mycollab-scheduler</project>
-    <project>mycollab-jetty-session-premium</project>
-    <project>mycollab-mobile</project>
     <project>mycollab-scheduler-ondemand</project>
+    <project>mycollab-api-impl</project>
   </projects>
   <buildSpec>
     <buildCommand>

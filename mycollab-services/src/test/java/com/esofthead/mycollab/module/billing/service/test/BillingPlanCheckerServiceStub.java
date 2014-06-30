@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import com.esofthead.mycollab.module.billing.UsageExceedBillingPlanException;
 import com.esofthead.mycollab.module.billing.service.BillingPlanCheckerService;
 
-@Service
+
 public class BillingPlanCheckerServiceStub implements BillingPlanCheckerService {
 
 	@Override
