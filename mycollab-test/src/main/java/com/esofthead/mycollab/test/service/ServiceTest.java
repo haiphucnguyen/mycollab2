@@ -22,8 +22,6 @@ import java.util.TimeZone;
 
 import org.apache.log4j.PropertyConfigurator;
 import org.joda.time.DateTimeZone;
-import org.junit.Before;
-import org.mockito.MockitoAnnotations;
 import org.springframework.test.context.ContextConfiguration;
 
 /**
@@ -39,6 +37,7 @@ import org.springframework.test.context.ContextConfiguration;
 		"classpath:META-INF/spring/project-context.xml",
 		"classpath:META-INF/spring/tracker-context.xml",
 		"classpath:META-INF/spring/user-context.xml",
+		"classpath:META-INF/spring/mail-context.xml",
 		"classpath:META-INF/spring-test/datasource-context-test.xml",
 		"classpath:META-INF/spring-test/service-context-test.xml" })
 public class ServiceTest {
@@ -52,10 +51,6 @@ public class ServiceTest {
 		if (resourceUrl != null) {
 			PropertyConfigurator.configure(resourceUrl);
 		}
-	}
 
-	@Before
-	public void init() {
-		MockitoAnnotations.initMocks(this);
 	}
 }
