@@ -33,8 +33,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.configuration.SiteConfiguration;
-import com.esofthead.template.velocity.TemplateContext;
-import com.esofthead.template.velocity.TemplateEngine;
+import com.esofthead.mycollab.template.velocity.TemplateContext;
+import com.esofthead.mycollab.template.velocity.TemplateEngine;
 
 /**
  * 

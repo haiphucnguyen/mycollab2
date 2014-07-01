@@ -27,7 +27,7 @@ import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.module.project.ProjectLinkGenerator;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.project.service.ProjectService;
-import com.esofthead.template.velocity.TemplateEngine;
+import com.esofthead.mycollab.template.velocity.TemplateEngine;
 
 @RunWith(MockitoJUnitRunner.class)
 public class DenyProjectMemberInvitationServletRequestHandlerTest {

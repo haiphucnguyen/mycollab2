@@ -1,4 +1,4 @@
-package com.esofthead.template.velocity;
+package com.esofthead.mycollab.template.velocity;
 
 import java.io.Reader;
 import java.io.Writer;

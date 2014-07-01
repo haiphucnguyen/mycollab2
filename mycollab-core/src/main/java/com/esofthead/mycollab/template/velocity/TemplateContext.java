@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.template.velocity;
+package com.esofthead.mycollab.template.velocity;
 
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.tools.Scope;

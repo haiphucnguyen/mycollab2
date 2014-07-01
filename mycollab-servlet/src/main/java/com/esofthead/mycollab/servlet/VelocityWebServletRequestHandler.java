@@ -29,8 +29,8 @@ import com.esofthead.mycollab.configuration.SharingOptions;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.module.billing.servlet.AcceptInvitationAction;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.template.velocity.TemplateContext;
-import com.esofthead.template.velocity.TemplateEngine;
+import com.esofthead.mycollab.template.velocity.TemplateContext;
+import com.esofthead.mycollab.template.velocity.TemplateEngine;
 
 /**
  * 
