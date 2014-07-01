@@ -47,8 +47,8 @@ public class ProblemAddViewImpl extends AbstractEditItemComp<Problem> implements
 	@Override
 	protected String initFormHeader() {
 		return (beanItem.getId() == null) ? AppContext
-				.getMessage(ProblemI18nEnum.FORM_NEW_TITLE) : AppContext
-				.getMessage(ProblemI18nEnum.FORM_EDIT_TITLE);
+				.getMessage(ProblemI18nEnum.VIEW_NEW_TITLE) : AppContext
+				.getMessage(ProblemI18nEnum.VIEW_EDIT_TITLE);
 	}
 
 	@Override
