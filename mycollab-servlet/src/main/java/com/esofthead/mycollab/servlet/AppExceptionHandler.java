@@ -17,11 +17,23 @@
 package com.esofthead.mycollab.servlet;
 
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.io.Reader;
+import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.esofthead.mycollab.configuration.SiteConfiguration;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.template.velocity.TemplateContext;
+import com.esofthead.template.velocity.TemplateEngine;
 
 /**
  * 
@@ -55,10 +67,71 @@ public class AppExceptionHandler extends HttpServlet {
 		}
 
 		if (status_code == 404) {
-			PageCommonResponseUtils.responsePage404(response);
+			responsePage404(response);
 		} else {
-			PageCommonResponseUtils.responsePage500(response);
+			responsePage500(response);
 		}
+	}
+
+	public void responsePage404(HttpServletResponse response)
+			throws IOException {
+
+		String pageNotFoundTemplate = "templates/page/404Page.mt";
+		TemplateContext context = new TemplateContext();
+
+		Reader reader;
+		try {
+			reader = new InputStreamReader(
+					AppExceptionHandler.class.getClassLoader()
+							.getResourceAsStream(pageNotFoundTemplate), "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			reader = new InputStreamReader(AppExceptionHandler.class
+					.getClassLoader().getResourceAsStream(pageNotFoundTemplate));
+		}
+		Map<String, String> defaultUrls = new HashMap<String, String>();
+
+		defaultUrls.put("cdn_url", SiteConfiguration.getCdnUrl());
+		defaultUrls.put("app_url", SiteConfiguration.getAppUrl());
+		context.put("defaultUrls", defaultUrls);
+
+		StringWriter writer = new StringWriter();
+		TemplateEngine templateEngine = ApplicationContextUtil
+				.getSpringBean(TemplateEngine.class);
+		templateEngine.evaluate(context, writer, "log task", reader);
+
+		String html = writer.toString();
+		PrintWriter out = response.getWriter();
+		out.println(html);
+	}
+
+	private void responsePage500(HttpServletResponse response)
+			throws IOException {
+		String pageNotFoundTemplate = "templates/page/500Page.mt";
+		TemplateContext context = new TemplateContext();
+
+		Reader reader;
+		try {
+			reader = new InputStreamReader(
+					AppExceptionHandler.class.getClassLoader()
+							.getResourceAsStream(pageNotFoundTemplate), "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			reader = new InputStreamReader(AppExceptionHandler.class
+					.getClassLoader().getResourceAsStream(pageNotFoundTemplate));
+		}
+		Map<String, String> defaultUrls = new HashMap<String, String>();
+
+		defaultUrls.put("cdn_url", SiteConfiguration.getCdnUrl());
+		defaultUrls.put("app_url", SiteConfiguration.getAppUrl());
+		context.put("defaultUrls", defaultUrls);
+
+		StringWriter writer = new StringWriter();
+		TemplateEngine templateEngine = ApplicationContextUtil
+				.getSpringBean(TemplateEngine.class);
+		templateEngine.evaluate(context, writer, "log task", reader);
+
+		String html = writer.toString();
+		PrintWriter out = response.getWriter();
+		out.println(html);
 	}
 
 }

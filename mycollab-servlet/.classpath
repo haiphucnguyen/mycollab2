@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
+  <classpathentry kind="src" path="src/test/java" output="target/test-classes" including="**/*.java"/>
   <classpathentry kind="src" path="src/main/java" including="**/*.java"/>
   <classpathentry kind="src" path="src/main/resources" excluding="**/*.java"/>
   <classpathentry kind="output" path="target/classes"/>
@@ -76,6 +77,7 @@
   <classpathentry kind="var" path="M2_REPO/org/apache/tika/tika-core/1.5/tika-core-1.5.jar" sourcepath="M2_REPO/org/apache/tika/tika-core/1.5/tika-core-1.5-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/google/code/gson/gson/2.2.4/gson-2.2.4.jar" sourcepath="M2_REPO/com/google/code/gson/gson/2.2.4/gson-2.2.4-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/jsoup/jsoup/1.7.3/jsoup-1.7.3.jar" sourcepath="M2_REPO/org/jsoup/jsoup/1.7.3/jsoup-1.7.3-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/ocpsoft/prettytime/prettytime/3.2.5.Final/prettytime-3.2.5.Final.jar"/>
   <classpathentry kind="src" path="/mycollab-services"/>
   <classpathentry kind="src" path="/mycollab-dao"/>
   <classpathentry kind="var" path="M2_REPO/org/mybatis/mybatis/3.2.7/mybatis-3.2.7.jar" sourcepath="M2_REPO/org/mybatis/mybatis/3.2.7/mybatis-3.2.7-sources.jar"/>

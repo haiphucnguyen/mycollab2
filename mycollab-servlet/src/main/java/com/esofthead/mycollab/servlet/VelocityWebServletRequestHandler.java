@@ -26,6 +26,7 @@ import java.util.Map;
 import com.esofthead.mycollab.configuration.SharingOptions;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.module.billing.servlet.AcceptInvitationAction;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.template.velocity.TemplateContext;
 import com.esofthead.template.velocity.TemplateEngine;
 
@@ -44,13 +45,12 @@ public abstract class VelocityWebServletRequestHandler extends
 			Map<String, Object> params) {
 		Reader reader = null;
 		try {
-			reader = new InputStreamReader(
-					AcceptInvitationAction.class.getClassLoader()
-							.getResourceAsStream(templatePath), "UTF-8");
+			reader = new InputStreamReader(AcceptInvitationAction.class
+					.getClassLoader().getResourceAsStream(templatePath),
+					"UTF-8");
 		} catch (UnsupportedEncodingException e) {
-			reader = new InputStreamReader(
-					AcceptInvitationAction.class.getClassLoader()
-							.getResourceAsStream(templatePath));
+			reader = new InputStreamReader(AcceptInvitationAction.class
+					.getClassLoader().getResourceAsStream(templatePath));
 		}
 
 		if (params != null) {
@@ -75,7 +75,9 @@ public abstract class VelocityWebServletRequestHandler extends
 		pageContext.put("defaultUrls", defaultUrls);
 
 		StringWriter writer = new StringWriter();
-		TemplateEngine.evaluate(pageContext, writer, "log task", reader);
+		TemplateEngine templateEngine = ApplicationContextUtil
+				.getSpringBean(TemplateEngine.class);
+		templateEngine.evaluate(pageContext, writer, "log task", reader);
 		return writer.toString();
 	}
 }

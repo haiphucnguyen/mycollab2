@@ -35,7 +35,7 @@ import com.esofthead.mycollab.common.service.RelayEmailNotificationService;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.ResourceNotFoundException;
-import com.esofthead.mycollab.module.project.ProjectLinkUtils;
+import com.esofthead.mycollab.module.project.ProjectLinkGenerator;
 import com.esofthead.mycollab.module.project.domain.ProjectMember;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
@@ -75,12 +75,12 @@ public class DenyProjectMemberInvitationServletRequestHandler extends
 			if (pathInfo != null) {
 				UrlTokenizer urlTokenizer = new UrlTokenizer(pathInfo);
 
-				String email = urlTokenizer.getString();
-				int projectId = urlTokenizer.getInt();
 				int sAccountId = urlTokenizer.getInt();
+				int projectId = urlTokenizer.getInt();
+				int memberId = urlTokenizer.getInt();
+
 				String inviterName = urlTokenizer.getString();
 				String inviterEmail = urlTokenizer.getString();
-				Integer projectRoleId = urlTokenizer.getInt();
 
 				String subdomain = projectService
 						.getSubdomainOfProject(projectId);
@@ -98,12 +98,12 @@ public class DenyProjectMemberInvitationServletRequestHandler extends
 					return;
 				}
 
-				ProjectMember projectMember = projectMemberService
-						.findMemberByUsername(email, projectId, sAccountId);
+				ProjectMember projectMember = projectMemberService.findById(
+						memberId, sAccountId);
 
 				if (projectMember != null) {
 					Map<String, Object> context = new HashMap<String, Object>();
-					context.put("projectLinkURL", ProjectLinkUtils
+					context.put("projectLinkURL", ProjectLinkGenerator
 							.generateProjectFullLink(
 									SiteConfiguration.getSiteUrl(subdomain),
 									projectId));
@@ -119,13 +119,12 @@ public class DenyProjectMemberInvitationServletRequestHandler extends
 					Map<String, Object> context = new HashMap<String, Object>();
 					context.put("inviterEmail", inviterEmail);
 					context.put("redirectURL", redirectURL);
-					context.put("toEmail", email);
+					context.put("toEmail", inviterEmail);
 					context.put("toName", "You");
 					context.put("inviterName", inviterName);
 					context.put("projectName", project.getName());
 					context.put("sAccountId", sAccountId);
 					context.put("projectId", projectId);
-					context.put("projectRoleId", projectRoleId);
 
 					String html = generatePageByTemplate(
 							DENY_FEEDBACK_TEMPLATE, context);
