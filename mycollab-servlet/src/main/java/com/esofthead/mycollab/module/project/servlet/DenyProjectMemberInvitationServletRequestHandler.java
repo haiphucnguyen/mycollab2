@@ -55,8 +55,9 @@ public class DenyProjectMemberInvitationServletRequestHandler extends
 	private static Logger log = LoggerFactory
 			.getLogger(DenyProjectMemberInvitationServletRequestHandler.class);
 
-	private static String DENY_FEEDBACK_TEMPLATE = "templates/page/project/MemberDenyInvitationPage.mt";
-	private static String REFUSE_MEMBER_DENY_TEMPLATE = "templates/page/project/RefuseMemberDenyActionPage.mt";
+	static String DENY_FEEDBACK_TEMPLATE = "templates/page/project/MemberDenyInvitationPage.mt";
+	static String REFUSE_MEMBER_DENY_TEMPLATE = "templates/page/project/RefuseMemberDenyActionPage.mt";
+	static String PROJECT_NOT_AVAILABLE_TEMPLATE = "templates/page/project/ProjectNotAvaiablePage.mt";
 
 	@Autowired
 	private ProjectMemberService projectMemberService;
@@ -91,8 +92,7 @@ public class DenyProjectMemberInvitationServletRequestHandler extends
 					context.put("loginURL", request.getContextPath() + "/");
 
 					String html = generatePageByTemplate(
-							"templates/page/project/ProjectNotAvaiablePage.mt",
-							context);
+							PROJECT_NOT_AVAILABLE_TEMPLATE, context);
 					PrintWriter out = response.getWriter();
 					out.println(html);
 					return;

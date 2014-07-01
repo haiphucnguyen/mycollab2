@@ -26,12 +26,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.esofthead.mycollab.configuration.SiteConfiguration;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.template.velocity.TemplateContext;
 import com.esofthead.template.velocity.TemplateEngine;
 
@@ -41,23 +42,15 @@ import com.esofthead.template.velocity.TemplateEngine;
  * @since 1.0
  * 
  */
-public class AppExceptionHandler extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+@Component("appExceptionHandlerServlet")
+public class AppExceptionHandler extends GenericServletRequestHandler {
+
+	@Autowired
+	private TemplateEngine templateEngine;
 
 	@Override
-	protected void doGet(HttpServletRequest request,
+	protected void onHandleRequest(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		processError(request, response);
-	}
-
-	@Override
-	protected void doPost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		processError(request, response);
-	}
-
-	private void processError(HttpServletRequest request,
-			HttpServletResponse response) throws IOException {
 		Integer status_code = (Integer) request
 				.getAttribute("javax.servlet.error.status_code");
 		String requestUri = (String) request
@@ -73,7 +66,7 @@ public class AppExceptionHandler extends HttpServlet {
 		}
 	}
 
-	public void responsePage404(HttpServletResponse response)
+	private void responsePage404(HttpServletResponse response)
 			throws IOException {
 
 		String pageNotFoundTemplate = "templates/page/404Page.mt";
@@ -95,8 +88,6 @@ public class AppExceptionHandler extends HttpServlet {
 		context.put("defaultUrls", defaultUrls);
 
 		StringWriter writer = new StringWriter();
-		TemplateEngine templateEngine = ApplicationContextUtil
-				.getSpringBean(TemplateEngine.class);
 		templateEngine.evaluate(context, writer, "log task", reader);
 
 		String html = writer.toString();
@@ -125,13 +116,10 @@ public class AppExceptionHandler extends HttpServlet {
 		context.put("defaultUrls", defaultUrls);
 
 		StringWriter writer = new StringWriter();
-		TemplateEngine templateEngine = ApplicationContextUtil
-				.getSpringBean(TemplateEngine.class);
 		templateEngine.evaluate(context, writer, "log task", reader);
 
 		String html = writer.toString();
 		PrintWriter out = response.getWriter();
 		out.println(html);
 	}
-
 }

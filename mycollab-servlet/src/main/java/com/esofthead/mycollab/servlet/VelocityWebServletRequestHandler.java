@@ -23,6 +23,8 @@ import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.esofthead.mycollab.configuration.SharingOptions;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.module.billing.servlet.AcceptInvitationAction;
@@ -39,9 +41,12 @@ import com.esofthead.template.velocity.TemplateEngine;
 public abstract class VelocityWebServletRequestHandler extends
 		GenericServletRequestHandler {
 
+	@Autowired
+	private TemplateEngine templateEngine;
+
 	protected TemplateContext pageContext = new TemplateContext();
 
-	protected String generatePageByTemplate(String templatePath,
+	public String generatePageByTemplate(String templatePath,
 			Map<String, Object> params) {
 		Reader reader = null;
 		try {
@@ -75,8 +80,6 @@ public abstract class VelocityWebServletRequestHandler extends
 		pageContext.put("defaultUrls", defaultUrls);
 
 		StringWriter writer = new StringWriter();
-		TemplateEngine templateEngine = ApplicationContextUtil
-				.getSpringBean(TemplateEngine.class);
 		templateEngine.evaluate(pageContext, writer, "log task", reader);
 		return writer.toString();
 	}
