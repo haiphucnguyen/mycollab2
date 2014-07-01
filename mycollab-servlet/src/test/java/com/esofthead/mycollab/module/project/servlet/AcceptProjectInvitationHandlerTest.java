@@ -1,7 +1,6 @@
 package com.esofthead.mycollab.module.project.servlet;
 
 import static org.mockito.Matchers.any;
-
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -21,7 +20,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
-import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -119,5 +117,16 @@ public class AcceptProjectInvitationHandlerTest extends GenericServletTest {
 		when(response.getWriter()).thenReturn(mock(PrintWriter.class));
 
 		verifyPrjMemberHandler.onHandleRequest(request, response);
+
+		ArgumentCaptor<String> strArgument = ArgumentCaptor
+				.forClass(String.class);
+
+		ArgumentCaptor<Map> mapArgument = ArgumentCaptor.forClass(Map.class);
+
+		verify(verifyPrjMemberHandler).generatePageByTemplate(
+				strArgument.capture(), mapArgument.capture());
+		Assert.assertEquals(
+				AcceptProjectInvitationHandler.OUTSIDE_MEMBER_WELCOME_PAGE,
+				strArgument.getValue());
 	}
 }
