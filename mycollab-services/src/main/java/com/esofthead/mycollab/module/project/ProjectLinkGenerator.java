@@ -17,7 +17,6 @@
 package com.esofthead.mycollab.module.project;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import com.esofthead.mycollab.common.GenericLinkUtils;
@@ -208,6 +207,9 @@ public class ProjectLinkGenerator {
 			int sAccountId, int projectId, int memberId, int projectRoleId,
 			String inviteUserEmail, String inviteUsername,
 			GregorianCalendar currentDate) {
+		System.out.println(inviteeEmail + "-" + sAccountId + "-" + projectId
+				+ "-" + memberId + "-" + projectRoleId + "-" + inviteUserEmail
+				+ "-" + inviteUsername + "-" + currentDate);
 		SimpleDateFormat format = new SimpleDateFormat("MM-dd-yyyy");
 		String formatDate = format.format(currentDate.getTime());
 		return UrlEncodeDecoder.encode(inviteeEmail + "/" + sAccountId + "/"
