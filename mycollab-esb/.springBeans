@@ -20,7 +20,7 @@
 		<config>java:com.esofthead.mycollab.module.project.esb.impl.DeleteProjectTaskListCommandImpl</config>
 		<config>java:com.esofthead.mycollab.module.project.esb.impl.DeleteProjectVersionCommandImpl</config>
 		<config>java:com.esofthead.mycollab.module.ecm.esb.impl.DeleteResourcesCommandImpl</config>
-		<config>java:com.esofthead.mycollab.module.project.esb.impl.InviteOutsideProjectCommandListenerImpl</config>
+		<config>java:com.esofthead.mycollab.module.project.esb.impl.InviteProjectMembersCommandImpl</config>
 		<config>java:com.esofthead.mycollab.module.ecm.esb.impl.SaveContentCommandImpl</config>
 		<config>java:com.esofthead.mycollab.module.user.esb.impl.UserRemovedCommandImpl</config>
 	</configs>

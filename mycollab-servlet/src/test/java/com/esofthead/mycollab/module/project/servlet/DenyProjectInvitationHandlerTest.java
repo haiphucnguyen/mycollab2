@@ -47,8 +47,9 @@ public class DenyProjectInvitationHandlerTest extends GenericServletTest {
 
 	@Test
 	public void testCannotFindProject() throws ServletException, IOException {
-		String pathInfo = ProjectLinkGenerator.generateDenyInvitationParams(1,
-				1, 1, "hainguyen@esofthead.com", "hainguyen@esofthead.com");
+		String pathInfo = ProjectLinkGenerator.generateDenyInvitationParams(
+				"hainguyen@mycollab.com", 1, 1, "hainguyen@esofthead.com",
+				"hainguyen@esofthead.com");
 		when(request.getPathInfo()).thenReturn(pathInfo);
 		when(response.getWriter()).thenReturn(mock(PrintWriter.class));
 
@@ -69,8 +70,9 @@ public class DenyProjectInvitationHandlerTest extends GenericServletTest {
 	@Test
 	public void testDenyWithProjectMember() throws ServletException,
 			IOException {
-		String pathInfo = ProjectLinkGenerator.generateDenyInvitationParams(1,
-				1, 1, "hainguyen@esofthead.com", "hainguyen@esofthead.com");
+		String pathInfo = ProjectLinkGenerator.generateDenyInvitationParams(
+				"hainguyen@mycollab.com", 1, 1, "hainguyen@esofthead.com",
+				"hainguyen@esofthead.com");
 		when(request.getPathInfo()).thenReturn(pathInfo);
 		when(response.getWriter()).thenReturn(mock(PrintWriter.class));
 
@@ -95,8 +97,9 @@ public class DenyProjectInvitationHandlerTest extends GenericServletTest {
 	@Test
 	public void testDenyNotFoundProjectMember() throws ServletException,
 			IOException {
-		String pathInfo = ProjectLinkGenerator.generateDenyInvitationParams(1,
-				1, 1, "hainguyen@esofthead.com", "hainguyen@esofthead.com");
+		String pathInfo = ProjectLinkGenerator.generateDenyInvitationParams(
+				"hainguyen@mycollab.com", 1, 1, "hainguyen@esofthead.com",
+				"hainguyen@esofthead.com");
 		when(request.getPathInfo()).thenReturn(pathInfo);
 		when(response.getWriter()).thenReturn(mock(PrintWriter.class));
 
