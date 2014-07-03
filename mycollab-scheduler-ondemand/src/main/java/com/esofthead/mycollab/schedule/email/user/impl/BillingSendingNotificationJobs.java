@@ -31,7 +31,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
-import org.springframework.scheduling.quartz.QuartzJobBean;
 import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.common.GenericLinkUtils;
@@ -48,6 +47,7 @@ import com.esofthead.mycollab.module.user.domain.BillingAccountWithOwners;
 import com.esofthead.mycollab.module.user.domain.BillingPlan;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.service.BillingAccountService;
+import com.esofthead.mycollab.schedule.jobs.GenericQuartzJobBean;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 
 /**
@@ -58,15 +58,18 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
  */
 @Component
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-public class BillingSendingNotificationJobs extends QuartzJobBean {
+public class BillingSendingNotificationJobs extends GenericQuartzJobBean {
+
+	private static Logger log = LoggerFactory
+			.getLogger(BillingSendingNotificationJobs.class);
 
 	private static final Integer DATE_REMIND_FOR_FREEPLAN_1ST = 24;
 	private static final Integer DATE_REMIND_FOR_FREEPLAN_2ND = 29;
 	private static final Integer DATE_NOTIFY_EXPIRE = 32;
 	private static final Integer NUM_DAY_FREE_TRIAL = 30;
 
-	private static Logger log = LoggerFactory
-			.getLogger(BillingSendingNotificationJobs.class);
+	static final String INFORM_EXPIRE_ACCOUNT_TEMPLATE = "templates/email/billing/informAccountIsExpiredNotification.mt";
+	static final String INFORM_FILLING_BILLING_INFORMATION_TEMPLATE = "templates/email/billing/remindAccountIsAboutExpiredNotification.mt";
 
 	@Autowired
 	private BillingService billingService;
@@ -75,7 +78,7 @@ public class BillingSendingNotificationJobs extends QuartzJobBean {
 	private BillingAccountService billingAccountService;
 
 	@Override
-	protected void executeInternal(JobExecutionContext context)
+	protected void executeJob(JobExecutionContext context)
 			throws JobExecutionException {
 
 		List<BillingAccountWithOwners> trialAccountsWithOwners = billingService
@@ -102,8 +105,7 @@ public class BillingSendingNotificationJobs extends QuartzJobBean {
 
 				if (accCreatedDate.before(dateRemind1st)
 						&& (account.getReminderstatus() == null)) {
-					RemindUserUpdateBillingInformationAction notificationFactory = new RemindUserUpdateBillingInformationAction();
-					notificationFactory.sendingEmail(account,
+					sendRemindEmailAskUpdateBillingAccount(account,
 							DATE_REMIND_FOR_FREEPLAN_1ST);
 					// update billing account reminder status
 
@@ -117,8 +119,7 @@ public class BillingSendingNotificationJobs extends QuartzJobBean {
 						&& (account.getReminderstatus() == AccountReminderStatusContants.REMIND_ACCOUNT_IS_ABOUT_END_1ST_TIME || account
 								.getReminderstatus() == null)) {
 					log.debug("Check whether account exceed 30 days to inform him it is the end of day to upgrade account");
-					RemindUserUpdateBillingInformationAction notificationFactory = new RemindUserUpdateBillingInformationAction();
-					notificationFactory.sendingEmail(account,
+					sendRemindEmailAskUpdateBillingAccount(account,
 							DATE_REMIND_FOR_FREEPLAN_2ND);
 
 					BillingAccount billingAccount = new BillingAccount();
@@ -129,9 +130,7 @@ public class BillingSendingNotificationJobs extends QuartzJobBean {
 							billingAccount, "");
 				} else if (accCreatedDate.before(dateExpire)) {
 					log.debug("Check whether account exceed 32 days to convert to basic plan");
-
-					InformAccountIsExpiredAction notificationFactory = new InformAccountIsExpiredAction();
-					notificationFactory.sendingEmail(account);
+					sendingEmailInformConvertToFreePlan(account);
 
 					BillingAccount billingAccount = new BillingAccount();
 					billingAccount.setId(account.getId());
@@ -148,78 +147,71 @@ public class BillingSendingNotificationJobs extends QuartzJobBean {
 		}
 	}
 
-	private static class RemindUserUpdateBillingInformationAction {
-		private static final String remindAccountIsAboutEndTemplate = "templates/email/billing/remindAccountIsAboutExpiredNotification.mt";
+	private void sendingEmailInformConvertToFreePlan(
+			BillingAccountWithOwners account) {
+		ExtMailService extMailService = ApplicationContextUtil
+				.getSpringBean(ExtMailService.class);
 
-		public void sendingEmail(BillingAccountWithOwners account,
-				Integer afterDay) {
-			ExtMailService extMailService = ApplicationContextUtil
-					.getSpringBean(ExtMailService.class);
-			DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+		for (SimpleUser user : account.getOwners()) {
+			log.info("Send mail after 32 days for username {} , mail {}",
+					user.getUsername(), user.getEmail());
+			TemplateGenerator templateGenerator = new TemplateGenerator(
+					"Your trial has ended", MailUtils.templatePath(
+							INFORM_EXPIRE_ACCOUNT_TEMPLATE,
+							SiteConfiguration.getDefaultLocale()));
+			templateGenerator.putVariable("account", account);
+			templateGenerator.putVariable("userName", user.getUsername());
+			String link = GenericLinkUtils.generateSiteUrlByAccountId(account
+					.getId())
+					+ GenericLinkUtils.URL_PREFIX_PARAM
+					+ "account/billing";
+			templateGenerator.putVariable("link", link);
 
-			for (SimpleUser user : account.getOwners()) {
-				log.info("Send mail after " + afterDay
-						+ "days for username {} , mail {}", user.getUsername(),
-						user.getEmail());
-				TemplateGenerator templateGenerator = new TemplateGenerator(
-						"Your trial is about to end", MailUtils.templatePath(
-								remindAccountIsAboutEndTemplate,
-								SiteConfiguration.getDefaultLocale()));
-				templateGenerator.putVariable("account", account);
-
-				String link = GenericLinkUtils
-						.generateSiteUrlByAccountId(account.getId())
-						+ GenericLinkUtils.URL_PREFIX_PARAM + "account/billing";
-
-				Calendar cal = Calendar
-						.getInstance(TimeZone.getTimeZone("UTC"));
-				cal.setTime(account.getCreatedtime());
-				cal.add(Calendar.DATE, NUM_DAY_FREE_TRIAL);
-
-				templateGenerator.putVariable("expireDay",
-						df.format(cal.getTime()));
-				templateGenerator.putVariable("userName", user.getUsername());
-				templateGenerator.putVariable("link", link);
-
-				extMailService.sendHTMLMail("noreply@mycollab.com", "MyCollab",
-						Arrays.asList(new MailRecipientField(user.getEmail(),
-								user.getDisplayName())), null, null,
-						templateGenerator.generateSubjectContent(),
-						templateGenerator.generateBodyContent(), null);
-			}
+			extMailService.sendHTMLMail("noreply@mycollab.com", "MyCollab",
+					Arrays.asList(new MailRecipientField(user.getEmail(), user
+							.getDisplayName())), null, null, templateGenerator
+							.generateSubjectContent(), templateGenerator
+							.generateBodyContent(), null);
 
 		}
 	}
 
-	private static class InformAccountIsExpiredAction {
+	private void sendRemindEmailAskUpdateBillingAccount(
+			BillingAccountWithOwners account, Integer afterDay) {
+		ExtMailService extMailService = ApplicationContextUtil
+				.getSpringBean(ExtMailService.class);
+		DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
 
-		private static final String informAccountIsExpiredTemplate = "templates/email/billing/informAccountIsExpiredNotification.mt";
+		for (SimpleUser user : account.getOwners()) {
+			log.info("Send mail after " + afterDay
+					+ "days for username {} , mail {}", user.getUsername(),
+					user.getEmail());
+			TemplateGenerator templateGenerator = new TemplateGenerator(
+					"Your trial is about to end", MailUtils.templatePath(
+							INFORM_FILLING_BILLING_INFORMATION_TEMPLATE,
+							SiteConfiguration.getDefaultLocale()));
+			templateGenerator.putVariable("account", account);
 
-		public void sendingEmail(BillingAccountWithOwners account) {
-			ExtMailService extMailService = ApplicationContextUtil
-					.getSpringBean(ExtMailService.class);
+			String link = GenericLinkUtils.generateSiteUrlByAccountId(account
+					.getId())
+					+ GenericLinkUtils.URL_PREFIX_PARAM
+					+ "account/billing";
 
-			for (SimpleUser user : account.getOwners()) {
-				log.info("Send mail after 32 days for username {} , mail {}",
-						user.getUsername(), user.getEmail());
-				TemplateGenerator templateGenerator = new TemplateGenerator(
-						"Your trial has ended", MailUtils.templatePath(
-								informAccountIsExpiredTemplate,
-								SiteConfiguration.getDefaultLocale()));
-				templateGenerator.putVariable("account", account);
-				templateGenerator.putVariable("userName", user.getUsername());
-				String link = GenericLinkUtils
-						.generateSiteUrlByAccountId(account.getId())
-						+ GenericLinkUtils.URL_PREFIX_PARAM + "account/billing";
-				templateGenerator.putVariable("link", link);
+			Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+			cal.setTime(account.getCreatedtime());
+			cal.add(Calendar.DATE, NUM_DAY_FREE_TRIAL);
 
-				extMailService.sendHTMLMail("noreply@mycollab.com", "MyCollab",
-						Arrays.asList(new MailRecipientField(user.getEmail(),
-								user.getDisplayName())), null, null,
-						templateGenerator.generateSubjectContent(),
-						templateGenerator.generateBodyContent(), null);
+			templateGenerator
+					.putVariable("expireDay", df.format(cal.getTime()));
+			templateGenerator.putVariable("userName", user.getUsername());
+			templateGenerator.putVariable("link", link);
 
-			}
+			extMailService.sendHTMLMail("noreply@mycollab.com", "MyCollab",
+					Arrays.asList(new MailRecipientField(user.getEmail(), user
+							.getDisplayName())), null, null, templateGenerator
+							.generateSubjectContent(), templateGenerator
+							.generateBodyContent(), null);
 		}
+
 	}
 }

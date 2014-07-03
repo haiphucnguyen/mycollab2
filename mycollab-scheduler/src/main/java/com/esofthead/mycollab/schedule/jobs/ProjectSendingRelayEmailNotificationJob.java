@@ -42,12 +42,13 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
  */
 @Component
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-public class ProjectSendingRelayEmailNotificationJob extends QuartzJobBean {
+public class ProjectSendingRelayEmailNotificationJob extends
+		GenericQuartzJobBean {
 	private static Logger log = LoggerFactory
 			.getLogger(ProjectSendingRelayEmailNotificationJob.class);
 
 	@Override
-	protected void executeInternal(JobExecutionContext context) {
+	protected void executeJob(JobExecutionContext context) {
 		ProjectService projectService = (ProjectService) ApplicationContextUtil
 				.getSpringBean(ProjectService.class);
 		List<ProjectRelayEmailNotification> relayEmaiNotifications = projectService
@@ -58,6 +59,10 @@ public class ProjectSendingRelayEmailNotificationJob extends QuartzJobBean {
 		log.debug("Get " + relayEmaiNotifications.size()
 				+ " relay email notifications");
 		SendingRelayEmailNotificationAction emailNotificationAction = null;
+
+		if (1 == 1) {
+			throw new MyCollabException("AAA");
+		}
 
 		for (ProjectRelayEmailNotification notification : relayEmaiNotifications) {
 			try {
