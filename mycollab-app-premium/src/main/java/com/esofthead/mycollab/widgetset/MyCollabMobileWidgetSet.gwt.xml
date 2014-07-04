@@ -10,4 +10,8 @@
     <inherits name="com.esofthead.vaadin.mobilecomponent.WidgetSet" />
 
     <inherits name="com.vaadin.DefaultWidgetSet" />
+    
+    <replace-with class="com.esofthead.vaadin.mobilecomponent.client.ui.TouchScrollHandlerExt">
+        <when-type-is class="com.vaadin.client.ui.TouchScrollDelegate.TouchScrollHandler" />
+    </replace-with>
 </module>
