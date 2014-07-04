@@ -36,7 +36,6 @@ import com.esofthead.mycollab.module.crm.domain.SimpleCase;
 import com.esofthead.mycollab.module.crm.i18n.CaseI18nEnum;
 import com.esofthead.mycollab.module.crm.service.AccountService;
 import com.esofthead.mycollab.module.crm.service.CaseService;
-import com.esofthead.mycollab.module.crm.service.CrmNotificationSettingService;
 import com.esofthead.mycollab.module.mail.MailUtils;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.user.AccountLinkUtils;
@@ -70,9 +69,6 @@ public class CaseRelayEmailNotificationActionImpl extends
 	private AuditLogService auditLogService;
 	@Autowired
 	private CaseService caseService;
-
-	@Autowired
-	private CrmNotificationSettingService notificationService;
 
 	private static final CaseFieldNameMapper mapper = new CaseFieldNameMapper();
 
@@ -206,7 +202,7 @@ public class CaseRelayEmailNotificationActionImpl extends
 
 	public static class AccountFieldFormat extends FieldFormat {
 
-		public AccountFieldFormat(String fieldName, Enum displayName) {
+		public AccountFieldFormat(String fieldName, Enum<?> displayName) {
 			super(fieldName, displayName);
 		}
 
@@ -263,7 +259,7 @@ public class CaseRelayEmailNotificationActionImpl extends
 
 	public static class AssigneeFieldFormat extends FieldFormat {
 
-		public AssigneeFieldFormat(String fieldName, Enum displayName) {
+		public AssigneeFieldFormat(String fieldName, Enum<?> displayName) {
 			super(fieldName, displayName);
 		}
 

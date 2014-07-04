@@ -35,7 +35,6 @@ import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.SimpleTask;
 import com.esofthead.mycollab.module.crm.i18n.TaskI18nEnum;
 import com.esofthead.mycollab.module.crm.service.ContactService;
-import com.esofthead.mycollab.module.crm.service.CrmNotificationSettingService;
 import com.esofthead.mycollab.module.crm.service.TaskService;
 import com.esofthead.mycollab.module.mail.MailUtils;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
@@ -69,11 +68,9 @@ public class TaskRelayEmailNotificationActionImpl extends
 
 	@Autowired
 	private AuditLogService auditLogService;
-	@Autowired
-	private TaskService taskService;
 
 	@Autowired
-	private CrmNotificationSettingService notificationService;
+	private TaskService taskService;
 
 	private static final TaskFieldNameMapper mapper = new TaskFieldNameMapper();
 
@@ -197,7 +194,7 @@ public class TaskRelayEmailNotificationActionImpl extends
 
 	public static class ContactFieldFormat extends FieldFormat {
 
-		public ContactFieldFormat(String fieldName, Enum displayName) {
+		public ContactFieldFormat(String fieldName, Enum<?> displayName) {
 			super(fieldName, displayName);
 		}
 
@@ -254,7 +251,7 @@ public class TaskRelayEmailNotificationActionImpl extends
 
 	public static class AssigneeFieldFormat extends FieldFormat {
 
-		public AssigneeFieldFormat(String fieldName, Enum displayName) {
+		public AssigneeFieldFormat(String fieldName, Enum<?> displayName) {
 			super(fieldName, displayName);
 		}
 

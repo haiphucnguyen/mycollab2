@@ -31,7 +31,6 @@ import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.i18n.CampaignI18nEnum;
 import com.esofthead.mycollab.module.crm.service.CampaignService;
-import com.esofthead.mycollab.module.crm.service.CrmNotificationSettingService;
 import com.esofthead.mycollab.module.mail.MailUtils;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.user.AccountLinkUtils;
@@ -62,11 +61,9 @@ public class CampaignRelayEmailNotificationActionImpl extends
 
 	@Autowired
 	private AuditLogService auditLogService;
-	@Autowired
-	private CampaignService campaignService;
 
 	@Autowired
-	private CrmNotificationSettingService notificationService;
+	private CampaignService campaignService;
 
 	private static final CampaignFieldNameMapper mapper = new CampaignFieldNameMapper();
 
@@ -207,7 +204,7 @@ public class CampaignRelayEmailNotificationActionImpl extends
 
 	public static class AssigneeFieldFormat extends FieldFormat {
 
-		public AssigneeFieldFormat(String fieldName, Enum displayName) {
+		public AssigneeFieldFormat(String fieldName, Enum<?> displayName) {
 			super(fieldName, displayName);
 		}
 

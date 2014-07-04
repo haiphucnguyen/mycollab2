@@ -32,7 +32,6 @@ import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.i18n.AccountI18nEnum;
 import com.esofthead.mycollab.module.crm.i18n.OptionI18nEnum.AccountType;
 import com.esofthead.mycollab.module.crm.service.AccountService;
-import com.esofthead.mycollab.module.crm.service.CrmNotificationSettingService;
 import com.esofthead.mycollab.module.crm.service.NoteService;
 import com.esofthead.mycollab.module.mail.MailUtils;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
@@ -73,12 +72,7 @@ public class AccountRelayEmailNotificationActionImpl extends
 	@Autowired
 	private NoteService noteService;
 
-	@Autowired
-	private CrmNotificationSettingService notificationService;
-
 	private static AccountFieldNameMapper mapper = new AccountFieldNameMapper();
-
-	private SimpleAccount simpleAccount;
 
 	public AccountRelayEmailNotificationActionImpl() {
 		super(CrmTypeConstants.ACCOUNT);
@@ -101,8 +95,8 @@ public class AccountRelayEmailNotificationActionImpl extends
 	@Override
 	protected TemplateGenerator templateGeneratorForCreateAction(
 			MailContext<SimpleAccount> context) {
-		simpleAccount = accountService.findById(context.getTypeid(),
-				context.getSaccountid());
+		SimpleAccount simpleAccount = accountService.findById(
+				context.getTypeid(), context.getSaccountid());
 		if (simpleAccount != null) {
 			String subject = StringUtils.trim(simpleAccount.getAccountname(),
 					100);
@@ -129,8 +123,8 @@ public class AccountRelayEmailNotificationActionImpl extends
 	@Override
 	protected TemplateGenerator templateGeneratorForUpdateAction(
 			MailContext<SimpleAccount> context) {
-		simpleAccount = accountService.findById(context.getTypeid(),
-				context.getSaccountid());
+		SimpleAccount simpleAccount = accountService.findById(
+				context.getTypeid(), context.getSaccountid());
 		if (simpleAccount != null) {
 			String subject = StringUtils.trim(simpleAccount.getAccountname(),
 					100);
@@ -164,7 +158,7 @@ public class AccountRelayEmailNotificationActionImpl extends
 	protected TemplateGenerator templateGeneratorForCommentAction(
 			MailContext<SimpleAccount> context) {
 		int accountRecordId = context.getTypeid();
-		simpleAccount = accountService.findById(accountRecordId,
+		SimpleAccount simpleAccount = accountService.findById(accountRecordId,
 				context.getSaccountid());
 
 		if (simpleAccount != null) {
@@ -190,7 +184,7 @@ public class AccountRelayEmailNotificationActionImpl extends
 
 	public static class AssigneeFieldFormat extends FieldFormat {
 
-		public AssigneeFieldFormat(String fieldName, Enum displayName) {
+		public AssigneeFieldFormat(String fieldName, Enum<?> displayName) {
 			super(fieldName, displayName);
 		}
 

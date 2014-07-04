@@ -57,7 +57,7 @@ public class SendingCountUserLoginByDateJob extends GenericQuartzJobBean {
 	@Autowired
 	private ExtMailService extMailService;
 
-	private static final String countUserLoginByDateTemplate = "templates/email/user/countUserLoginByDate.mt";
+	static final String COUNT_USER_LOGIN_TEMPLATE = "templates/email/user/countUserLoginByDate.mt";
 
 	@Override
 	protected void executeJob(JobExecutionContext context)
@@ -71,7 +71,7 @@ public class SendingCountUserLoginByDateJob extends GenericQuartzJobBean {
 						criteria, 0, Integer.MAX_VALUE));
 		if (lstSimpleUsers != null && lstSimpleUsers.size() > 0) {
 			TemplateGenerator templateGenerator = new TemplateGenerator(
-					"Today system-logins count", countUserLoginByDateTemplate);
+					"Today system-logins count", COUNT_USER_LOGIN_TEMPLATE);
 			templateGenerator.putVariable("lstUser", lstSimpleUsers);
 			templateGenerator.putVariable("count", lstSimpleUsers.size());
 

@@ -36,7 +36,6 @@ import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.i18n.ContactI18nEnum;
 import com.esofthead.mycollab.module.crm.service.AccountService;
 import com.esofthead.mycollab.module.crm.service.ContactService;
-import com.esofthead.mycollab.module.crm.service.CrmNotificationSettingService;
 import com.esofthead.mycollab.module.mail.MailUtils;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.user.AccountLinkUtils;
@@ -70,11 +69,9 @@ public class ContactRelayEmailNotificationActionImpl extends
 
 	@Autowired
 	private AuditLogService auditLogService;
-	@Autowired
-	private ContactService contactService;
 
 	@Autowired
-	private CrmNotificationSettingService notificationService;
+	private ContactService contactService;
 
 	private static final ContactFieldNameMapper mapper = new ContactFieldNameMapper();
 
@@ -242,7 +239,7 @@ public class ContactRelayEmailNotificationActionImpl extends
 
 	public static class AssigneeFieldFormat extends FieldFormat {
 
-		public AssigneeFieldFormat(String fieldName, Enum displayName) {
+		public AssigneeFieldFormat(String fieldName, Enum<?> displayName) {
 			super(fieldName, displayName);
 		}
 
@@ -292,7 +289,7 @@ public class ContactRelayEmailNotificationActionImpl extends
 
 	public static class AccountFieldFormat extends FieldFormat {
 
-		public AccountFieldFormat(String fieldName, Enum displayName) {
+		public AccountFieldFormat(String fieldName, Enum<?> displayName) {
 			super(fieldName, displayName);
 		}
 

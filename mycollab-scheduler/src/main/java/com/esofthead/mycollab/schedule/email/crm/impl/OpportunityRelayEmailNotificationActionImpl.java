@@ -35,7 +35,6 @@ import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.i18n.OpportunityI18nEnum;
 import com.esofthead.mycollab.module.crm.service.CampaignService;
-import com.esofthead.mycollab.module.crm.service.CrmNotificationSettingService;
 import com.esofthead.mycollab.module.crm.service.OpportunityService;
 import com.esofthead.mycollab.module.mail.MailUtils;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
@@ -70,11 +69,9 @@ public class OpportunityRelayEmailNotificationActionImpl extends
 
 	@Autowired
 	private AuditLogService auditLogService;
-	@Autowired
-	private OpportunityService opportunityService;
 
 	@Autowired
-	private CrmNotificationSettingService notificationService;
+	private OpportunityService opportunityService;
 
 	private static final OpportunityFieldNameMapper mapper = new OpportunityFieldNameMapper();
 
@@ -211,7 +208,7 @@ public class OpportunityRelayEmailNotificationActionImpl extends
 
 	public static class AccountFieldFormat extends FieldFormat {
 
-		public AccountFieldFormat(String fieldName, Enum displayName) {
+		public AccountFieldFormat(String fieldName, Enum<?> displayName) {
 			super(fieldName, displayName);
 		}
 
@@ -238,7 +235,7 @@ public class OpportunityRelayEmailNotificationActionImpl extends
 
 	public static class CampaignFieldFormat extends FieldFormat {
 
-		public CampaignFieldFormat(String fieldName, Enum displayName) {
+		public CampaignFieldFormat(String fieldName, Enum<?> displayName) {
 			super(fieldName, displayName);
 		}
 
@@ -297,7 +294,7 @@ public class OpportunityRelayEmailNotificationActionImpl extends
 
 	public static class AssigneeFieldFormat extends FieldFormat {
 
-		public AssigneeFieldFormat(String fieldName, Enum displayName) {
+		public AssigneeFieldFormat(String fieldName, Enum<?> displayName) {
 			super(fieldName, displayName);
 		}
 

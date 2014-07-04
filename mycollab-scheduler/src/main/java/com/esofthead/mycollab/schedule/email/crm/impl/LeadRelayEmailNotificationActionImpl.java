@@ -30,7 +30,6 @@ import com.esofthead.mycollab.module.crm.CrmLinkGenerator;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.module.crm.i18n.LeadI18nEnum;
-import com.esofthead.mycollab.module.crm.service.CrmNotificationSettingService;
 import com.esofthead.mycollab.module.crm.service.LeadService;
 import com.esofthead.mycollab.module.mail.MailUtils;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
@@ -63,9 +62,6 @@ public class LeadRelayEmailNotificationActionImpl extends
 	private AuditLogService auditLogService;
 	@Autowired
 	private LeadService leadService;
-
-	@Autowired
-	private CrmNotificationSettingService notificationService;
 
 	private static final LeadFieldNameMapper mapper = new LeadFieldNameMapper();
 
@@ -219,7 +215,7 @@ public class LeadRelayEmailNotificationActionImpl extends
 
 	public static class LeadAssigneeFieldFormat extends FieldFormat {
 
-		public LeadAssigneeFieldFormat(String fieldName, Enum displayName) {
+		public LeadAssigneeFieldFormat(String fieldName, Enum<?> displayName) {
 			super(fieldName, displayName);
 		}
 

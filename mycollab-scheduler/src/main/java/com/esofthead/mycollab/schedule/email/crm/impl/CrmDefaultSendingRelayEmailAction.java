@@ -26,6 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.esofthead.mycollab.common.MonitorTypeConstants;
 import com.esofthead.mycollab.common.domain.MailRecipientField;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
+import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
@@ -70,8 +71,6 @@ public abstract class CrmDefaultSendingRelayEmailAction<B extends ValuedBean>
 
 	protected String crmType;
 
-	protected String currentUserTimezone;
-
 	protected String siteUrl;
 
 	public CrmDefaultSendingRelayEmailAction(String crmType) {
@@ -86,7 +85,6 @@ public abstract class CrmDefaultSendingRelayEmailAction<B extends ValuedBean>
 		if ((notifiers != null) && !notifiers.isEmpty()) {
 			onInitAction(notification);
 			for (SimpleUser user : notifiers) {
-				currentUserTimezone = user.getTimezone();
 				MailContext<B> context = new MailContext<B>(notification, user,
 						siteUrl);
 				TemplateGenerator templateGenerator = templateGeneratorForCreateAction(context);
@@ -108,7 +106,7 @@ public abstract class CrmDefaultSendingRelayEmailAction<B extends ValuedBean>
 					lst.add(userMail);
 
 					extMailService.sendHTMLMail("noreply@mycollab.com",
-							"MyCollab", lst, null, null,
+							SiteConfiguration.getSiteName(), lst, null, null,
 							templateGenerator.generateSubjectContent(),
 							templateGenerator.generateBodyContent(), null);
 				}
@@ -125,7 +123,6 @@ public abstract class CrmDefaultSendingRelayEmailAction<B extends ValuedBean>
 		if ((notifiers != null) && !notifiers.isEmpty()) {
 			onInitAction(notification);
 			for (SimpleUser user : notifiers) {
-				currentUserTimezone = user.getTimezone();
 				MailContext<B> context = new MailContext<B>(notification, user,
 						siteUrl);
 				TemplateGenerator templateGenerator = templateGeneratorForUpdateAction(context);
@@ -146,7 +143,7 @@ public abstract class CrmDefaultSendingRelayEmailAction<B extends ValuedBean>
 					lst.add(userMail);
 
 					extMailService.sendHTMLMail("noreply@mycollab.com",
-							"MyCollab", lst, null, null,
+							SiteConfiguration.getSiteName(), lst, null, null,
 							templateGenerator.generateSubjectContent(),
 							templateGenerator.generateBodyContent(), null);
 				}
@@ -162,7 +159,6 @@ public abstract class CrmDefaultSendingRelayEmailAction<B extends ValuedBean>
 		if ((notifiers != null) && !notifiers.isEmpty()) {
 			onInitAction(notification);
 			for (SimpleUser user : notifiers) {
-				currentUserTimezone = user.getTimezone();
 				MailContext<B> context = new MailContext<B>(notification, user,
 						siteUrl);
 				TemplateGenerator templateGenerator = templateGeneratorForCommentAction(context);
@@ -183,7 +179,7 @@ public abstract class CrmDefaultSendingRelayEmailAction<B extends ValuedBean>
 					lst.add(userMail);
 
 					extMailService.sendHTMLMail("noreply@mycollab.com",
-							"MyCollab", lst, null, null,
+							SiteConfiguration.getSiteName(), lst, null, null,
 							templateGenerator.generateSubjectContent(),
 							templateGenerator.generateBodyContent(), null);
 				}

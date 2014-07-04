@@ -23,7 +23,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
-import org.springframework.scheduling.quartz.QuartzJobBean;
 import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.common.MonitorTypeConstants;
@@ -59,10 +58,6 @@ public class ProjectSendingRelayEmailNotificationJob extends
 		log.debug("Get " + relayEmaiNotifications.size()
 				+ " relay email notifications");
 		SendingRelayEmailNotificationAction emailNotificationAction = null;
-
-		if (1 == 1) {
-			throw new MyCollabException("AAA");
-		}
 
 		for (ProjectRelayEmailNotification notification : relayEmaiNotifications) {
 			try {

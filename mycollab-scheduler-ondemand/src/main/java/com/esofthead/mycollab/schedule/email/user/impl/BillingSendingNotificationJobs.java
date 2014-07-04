@@ -39,6 +39,7 @@ import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.module.billing.AccountReminderStatusContants;
 import com.esofthead.mycollab.module.billing.service.BillingService;
+import com.esofthead.mycollab.module.mail.IContentGenerator;
 import com.esofthead.mycollab.module.mail.MailUtils;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.mail.service.ExtMailService;
@@ -48,7 +49,6 @@ import com.esofthead.mycollab.module.user.domain.BillingPlan;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.service.BillingAccountService;
 import com.esofthead.mycollab.schedule.jobs.GenericQuartzJobBean;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
 
 /**
  * 
@@ -77,6 +77,12 @@ public class BillingSendingNotificationJobs extends GenericQuartzJobBean {
 	@Autowired
 	private BillingAccountService billingAccountService;
 
+	@Autowired
+	private ExtMailService extMailService;
+
+	@Autowired
+	private IContentGenerator contentGenerator;
+
 	@Override
 	protected void executeJob(JobExecutionContext context)
 			throws JobExecutionException {
@@ -96,8 +102,7 @@ public class BillingSendingNotificationJobs extends GenericQuartzJobBean {
 		cal.add(Calendar.DATE, (-1) * DATE_NOTIFY_EXPIRE);
 		Date dateExpire = DateTimeUtils.trimHMSOfDate(cal.getTime());
 
-		if (trialAccountsWithOwners != null
-				&& trialAccountsWithOwners.size() > 0) {
+		if (trialAccountsWithOwners != null) {
 			for (BillingAccountWithOwners account : trialAccountsWithOwners) {
 				log.debug("Check whether account exceed 25 days to remind user upgrade account");
 				Date accCreatedDate = DateTimeUtils.trimHMSOfDate(account
@@ -149,8 +154,6 @@ public class BillingSendingNotificationJobs extends GenericQuartzJobBean {
 
 	private void sendingEmailInformConvertToFreePlan(
 			BillingAccountWithOwners account) {
-		ExtMailService extMailService = ApplicationContextUtil
-				.getSpringBean(ExtMailService.class);
 
 		for (SimpleUser user : account.getOwners()) {
 			log.info("Send mail after 32 days for username {} , mail {}",
@@ -178,8 +181,6 @@ public class BillingSendingNotificationJobs extends GenericQuartzJobBean {
 
 	private void sendRemindEmailAskUpdateBillingAccount(
 			BillingAccountWithOwners account, Integer afterDay) {
-		ExtMailService extMailService = ApplicationContextUtil
-				.getSpringBean(ExtMailService.class);
 		DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
 
 		for (SimpleUser user : account.getOwners()) {

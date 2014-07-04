@@ -30,7 +30,6 @@ import com.esofthead.mycollab.module.crm.CrmLinkGenerator;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.SimpleMeeting;
 import com.esofthead.mycollab.module.crm.i18n.MeetingI18nEnum;
-import com.esofthead.mycollab.module.crm.service.CrmNotificationSettingService;
 import com.esofthead.mycollab.module.crm.service.MeetingService;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.schedule.email.ItemFieldMapper;
@@ -52,11 +51,9 @@ public class MeetingRelayEmailNotificationActionImpl extends
 
 	@Autowired
 	private AuditLogService auditLogService;
-	@Autowired
-	private MeetingService meetingService;
 
 	@Autowired
-	private CrmNotificationSettingService notificationService;
+	private MeetingService meetingService;
 
 	private static final MeetingFieldNameMapper mapper = new MeetingFieldNameMapper();
 
