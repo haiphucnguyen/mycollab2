@@ -27,7 +27,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
-import org.springframework.scheduling.quartz.QuartzJobBean;
 import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.common.domain.MailRecipientField;
@@ -48,7 +47,7 @@ import com.esofthead.mycollab.module.user.service.UserService;
  */
 @Component
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-public class SendingCountUserLoginByDateJob extends QuartzJobBean {
+public class SendingCountUserLoginByDateJob extends GenericQuartzJobBean {
 	private static Logger log = LoggerFactory
 			.getLogger(SendingCountUserLoginByDateJob.class);
 
@@ -61,7 +60,7 @@ public class SendingCountUserLoginByDateJob extends QuartzJobBean {
 	private static final String countUserLoginByDateTemplate = "templates/email/user/countUserLoginByDate.mt";
 
 	@Override
-	protected void executeInternal(JobExecutionContext context)
+	protected void executeJob(JobExecutionContext context)
 			throws JobExecutionException {
 		UserSearchCriteria criteria = new UserSearchCriteria();
 		criteria.setSaccountid(null);

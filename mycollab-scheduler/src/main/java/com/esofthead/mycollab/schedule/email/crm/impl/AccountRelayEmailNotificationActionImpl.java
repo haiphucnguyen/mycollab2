@@ -63,10 +63,13 @@ public class AccountRelayEmailNotificationActionImpl extends
 
 	@Autowired
 	private AuditLogService auditLogService;
+
 	@Autowired
 	private AccountService accountService;
+
 	@Autowired
 	private UserService userService;
+
 	@Autowired
 	private NoteService noteService;
 

@@ -46,7 +46,7 @@ public class ProblemReadViewImpl extends AbstractPreviewItemComp<SimpleProblem>
 	private ProblemHistoryList historyList;
 
 	public ProblemReadViewImpl() {
-		super(AppContext.getMessage(ProblemI18nEnum.FORM_READ_TITLE),
+		super(AppContext.getMessage(ProblemI18nEnum.VIEW_READ_TITLE),
 				MyCollabResource
 						.newResource("icons/22/project/problem_selected.png"));
 	}

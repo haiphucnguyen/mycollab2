@@ -9,9 +9,8 @@
         username="hai79" password="123" email="hainguyen@esofthead.com"
         avatarId="1" />
 
-    <s_user firstname="Duong" lastname="Linh" middlename=""
-        username="linhduong" password="123" email="linhduong@esofthead.com"
-        avatarId="1" />
+    <s_user firstname="Duong" lastname="Linh" username="linhduong"
+        password="123" email="linhduong@esofthead.com" avatarId="1" />
 
     <s_user_account id="1" isAccountOwner="true"
         registerStatus="active" username="hai79" accountId="1"

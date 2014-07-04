@@ -1,18 +1,18 @@
 /**
- * This file is part of mycollab-web.
+ * This file is part of mycollab-servlet.
  *
- * mycollab-web is free software: you can redistribute it and/or modify
+ * mycollab-servlet is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * mycollab-web is distributed in the hope that it will be useful,
+ * mycollab-servlet is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
+ * along with mycollab-servlet.  If not, see <http://www.gnu.org/licenses/>.
  */
 package com.esofthead.mycollab.servlet;
 
@@ -23,11 +23,13 @@ import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.esofthead.mycollab.configuration.SharingOptions;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.module.billing.servlet.AcceptInvitationAction;
-import com.esofthead.template.velocity.TemplateContext;
-import com.esofthead.template.velocity.TemplateEngine;
+import com.esofthead.mycollab.template.velocity.TemplateContext;
+import com.esofthead.mycollab.template.velocity.TemplateEngine;
 
 /**
  * 
@@ -38,19 +40,21 @@ import com.esofthead.template.velocity.TemplateEngine;
 public abstract class VelocityWebServletRequestHandler extends
 		GenericServletRequestHandler {
 
+	@Autowired
+	private TemplateEngine templateEngine;
+
 	protected TemplateContext pageContext = new TemplateContext();
 
-	protected String generatePageByTemplate(String templatePath,
+	public String generatePageByTemplate(String templatePath,
 			Map<String, Object> params) {
 		Reader reader = null;
 		try {
-			reader = new InputStreamReader(
-					AcceptInvitationAction.class.getClassLoader()
-							.getResourceAsStream(templatePath), "UTF-8");
+			reader = new InputStreamReader(AcceptInvitationAction.class
+					.getClassLoader().getResourceAsStream(templatePath),
+					"UTF-8");
 		} catch (UnsupportedEncodingException e) {
-			reader = new InputStreamReader(
-					AcceptInvitationAction.class.getClassLoader()
-							.getResourceAsStream(templatePath));
+			reader = new InputStreamReader(AcceptInvitationAction.class
+					.getClassLoader().getResourceAsStream(templatePath));
 		}
 
 		if (params != null) {
@@ -75,7 +79,7 @@ public abstract class VelocityWebServletRequestHandler extends
 		pageContext.put("defaultUrls", defaultUrls);
 
 		StringWriter writer = new StringWriter();
-		TemplateEngine.evaluate(pageContext, writer, "log task", reader);
+		templateEngine.evaluate(pageContext, writer, "log task", reader);
 		return writer.toString();
 	}
 }

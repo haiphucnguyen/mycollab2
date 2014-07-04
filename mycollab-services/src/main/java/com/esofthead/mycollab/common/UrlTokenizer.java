@@ -38,10 +38,10 @@ public class UrlTokenizer {
 	public int getInt() throws InvalidTokenException {
 		if (urlTokenizer.hasMoreTokens()) {
 			try {
-				int intVal = Integer.parseInt(urlTokenizer.nextToken());
-				return intVal;
+				return Integer.parseInt(urlTokenizer.nextToken());
 			} catch (NumberFormatException e) {
-				throw new InvalidTokenException(e);
+				throw new InvalidTokenException("Invalid token " + internalVal,
+						e);
 			}
 		} else {
 			throw new InvalidTokenException("Invalid token " + internalVal);

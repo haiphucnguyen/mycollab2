@@ -1,18 +1,18 @@
 /**
- * This file is part of mycollab-web.
+ * This file is part of mycollab-servlet.
  *
- * mycollab-web is free software: you can redistribute it and/or modify
+ * mycollab-servlet is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * mycollab-web is distributed in the hope that it will be useful,
+ * mycollab-servlet is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
+ * along with mycollab-servlet.  If not, see <http://www.gnu.org/licenses/>.
  */
 package com.esofthead.mycollab.module.billing.servlet;
 
@@ -50,8 +50,7 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
  * 
  */
 @Component("denyUserInviteServlet")
-public class DenyInvitationPage extends
-		VelocityWebServletRequestHandler {
+public class DenyInvitationPage extends VelocityWebServletRequestHandler {
 
 	private static String USER_DENY_FEEDBACK_TEMPLATE = "templates/page/user/UserDenyInvitationPage.mt";
 	private static String USER_HAS_DENIED_PAGE = "templates/page/user/UserDeniedPage.mt";
@@ -90,7 +89,7 @@ public class DenyInvitationPage extends
 
 					if (checkUser.getRegisterstatus().equals(
 							RegisterStatusConstants.ACTIVE)) {
-						// You cant deny , Userhas active , go to login Page
+						// You cant deny , User has active , go to login Page
 						Map<String, Object> context = new HashMap<String, Object>();
 						context.put("loginURL", request.getContextPath() + "/");
 						String html = generatePageByTemplate(
