@@ -23,7 +23,6 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import com.esofthead.mycollab.common.domain.SimpleAuditLog;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.service.AuditLogService;
@@ -37,7 +36,6 @@ import com.esofthead.mycollab.module.crm.i18n.TaskI18nEnum;
 import com.esofthead.mycollab.module.crm.service.ContactService;
 import com.esofthead.mycollab.module.crm.service.TaskService;
 import com.esofthead.mycollab.module.mail.MailUtils;
-import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.user.AccountLinkUtils;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.service.UserService;
@@ -99,6 +97,11 @@ public class TaskRelayEmailNotificationActionImpl extends
 	}
 
 	@Override
+	protected Enum<?> getCommentSubjectKey() {
+		return TaskI18nEnum.MAIL_COMMENT_ITEM_SUBJECT;
+	}
+
+	@Override
 	protected String getItemName() {
 		return StringUtils.trim(bean.getSubject(), 100);
 	}
@@ -106,52 +109,6 @@ public class TaskRelayEmailNotificationActionImpl extends
 	@Override
 	protected ItemFieldMapper getItemFieldMapper() {
 		return mapper;
-	}
-
-	@Override
-	protected TemplateGenerator templateGeneratorForUpdateAction(
-			MailContext<SimpleTask> context) {
-		SimpleTask simpleTask = getBeanInContext(context);
-
-		if (simpleTask == null) {
-			return null;
-		}
-
-		context.setWrappedBean(simpleTask);
-		String subject = StringUtils.trim(simpleTask.getSubject(), 100);
-
-		TemplateGenerator templateGenerator = new TemplateGenerator(
-				context.getMessage(TaskI18nEnum.MAIL_UPDATE_ITEM_SUBJECT,
-						context.getChangeByUserFullName(), subject),
-				context.templatePath("templates/email/crm/itemUpdatedNotifier.mt"));
-
-		if (context.getTypeid() != null) {
-			SimpleAuditLog auditLog = auditLogService.findLatestLog(
-					context.getTypeid(), context.getSaccountid());
-			templateGenerator.putVariable("historyLog", auditLog);
-			templateGenerator.putVariable("context", context);
-			templateGenerator.putVariable("mapper", mapper);
-		}
-		return templateGenerator;
-	}
-
-	@Override
-	protected TemplateGenerator templateGeneratorForCommentAction(
-			MailContext<SimpleTask> context) {
-		SimpleTask simpleTask = getBeanInContext(context);
-
-		if (simpleTask == null) {
-			return null;
-		}
-		TemplateGenerator templateGenerator = new TemplateGenerator(
-				context.getMessage(TaskI18nEnum.MAIL_COMMENT_ITEM_SUBJECT,
-						context.getChangeByUserFullName(),
-						StringUtils.trim(simpleTask.getSubject(), 100)),
-				context.templatePath("templates/email/crm/itemAddNoteNotifier.mt"));
-		templateGenerator
-				.putVariable("comment", context.getEmailNotification());
-
-		return templateGenerator;
 	}
 
 	@Override

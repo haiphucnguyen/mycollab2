@@ -21,7 +21,6 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import com.esofthead.mycollab.common.domain.SimpleAuditLog;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.service.AuditLogService;
@@ -33,7 +32,6 @@ import com.esofthead.mycollab.module.crm.i18n.OptionI18nEnum.AccountType;
 import com.esofthead.mycollab.module.crm.service.AccountService;
 import com.esofthead.mycollab.module.crm.service.NoteService;
 import com.esofthead.mycollab.module.mail.MailUtils;
-import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.user.AccountLinkUtils;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.service.UserService;
@@ -84,6 +82,11 @@ public class AccountRelayEmailNotificationActionImpl extends
 	}
 
 	@Override
+	protected Enum<?> getCommentSubjectKey() {
+		return AccountI18nEnum.MAIL_COMMENT_ITEM_SUBJECT;
+	}
+
+	@Override
 	protected String getItemName() {
 		return StringUtils.trim(bean.getAccountname(), 100);
 	}
@@ -100,58 +103,6 @@ public class AccountRelayEmailNotificationActionImpl extends
 		contentGenerator.putVariable("itemType", "account");
 		contentGenerator.putVariable("summary", summary);
 		contentGenerator.putVariable("summaryLink", summaryLink);
-	}
-
-	@Override
-	protected TemplateGenerator templateGeneratorForUpdateAction(
-			MailContext<SimpleAccount> context) {
-		SimpleAccount simpleAccount = getBeanInContext(context);
-		if (simpleAccount != null) {
-			String subject = StringUtils.trim(simpleAccount.getAccountname(),
-					100);
-
-			TemplateGenerator templateGenerator = new TemplateGenerator(
-					context.getMessage(
-							AccountI18nEnum.MAIL_UPDATE_ITEM_SUBJECT,
-							context.getChangeByUserFullName(), subject),
-					context.templatePath("templates/email/crm/itemUpdatedNotifier.mt"));
-
-			if (context.getTypeid() != null) {
-				SimpleAuditLog auditLog = auditLogService.findLatestLog(
-						context.getTypeid(), context.getSaccountid());
-
-				templateGenerator.putVariable("historyLog", auditLog);
-				context.setWrappedBean(simpleAccount);
-				templateGenerator.putVariable("context", context);
-				templateGenerator.putVariable("mapper", mapper);
-			}
-			return templateGenerator;
-		} else {
-			return null;
-		}
-
-	}
-
-	@Override
-	protected TemplateGenerator templateGeneratorForCommentAction(
-			MailContext<SimpleAccount> context) {
-		SimpleAccount simpleAccount = getBeanInContext(context);
-
-		if (simpleAccount != null) {
-			TemplateGenerator templateGenerator = new TemplateGenerator(
-					context.getMessage(
-							AccountI18nEnum.MAIL_COMMENT_ITEM_SUBJECT, context
-									.getChangeByUserFullName(), StringUtils
-									.trim(simpleAccount.getAccountname(), 100)),
-					context.templatePath("templates/email/crm/itemAddNoteNotifier.mt"));
-
-			templateGenerator.putVariable("comment",
-					context.getEmailNotification());
-
-			return templateGenerator;
-		} else {
-			return null;
-		}
 	}
 
 	@Override

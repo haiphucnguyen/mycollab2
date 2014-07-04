@@ -21,7 +21,6 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import com.esofthead.mycollab.common.domain.SimpleAuditLog;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.service.AuditLogService;
@@ -31,7 +30,6 @@ import com.esofthead.mycollab.module.crm.domain.SimpleCall;
 import com.esofthead.mycollab.module.crm.i18n.CallI18nEnum;
 import com.esofthead.mycollab.module.crm.service.CallService;
 import com.esofthead.mycollab.module.mail.MailUtils;
-import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.user.AccountLinkUtils;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.service.UserService;
@@ -90,6 +88,11 @@ public class CallRelayEmailNotificationActionImpl extends
 	}
 
 	@Override
+	protected Enum<?> getCommentSubjectKey() {
+		return CallI18nEnum.MAIL_COMMENT_ITEM_SUBJECT;
+	}
+
+	@Override
 	protected String getItemName() {
 		return StringUtils.trim(bean.getSubject(), 100);
 	}
@@ -97,56 +100,6 @@ public class CallRelayEmailNotificationActionImpl extends
 	@Override
 	protected ItemFieldMapper getItemFieldMapper() {
 		return mapper;
-	}
-
-	@Override
-	protected TemplateGenerator templateGeneratorForUpdateAction(
-			MailContext<SimpleCall> context) {
-		SimpleCall simpleCall = getBeanInContext(context);
-
-		if (simpleCall != null) {
-			String subject = StringUtils.trim(simpleCall.getSubject(), 150);
-
-			TemplateGenerator templateGenerator = new TemplateGenerator(
-					context.getMessage(CallI18nEnum.MAIL_UPDATE_ITEM_SUBJECT,
-							context.getChangeByUserFullName(), subject),
-					context.templatePath("templates/email/crm/itemUpdatedNotifier.mt"));
-
-			if (context.getTypeid() != null) {
-				SimpleAuditLog auditLog = auditLogService.findLatestLog(
-						context.getTypeid(), context.getSaccountid());
-
-				templateGenerator.putVariable("historyLog", auditLog);
-				context.setWrappedBean(simpleCall);
-				templateGenerator.putVariable("context", context);
-				templateGenerator.putVariable("mapper", mapper);
-			}
-			return templateGenerator;
-		} else {
-			return null;
-		}
-	}
-
-	@Override
-	protected TemplateGenerator templateGeneratorForCommentAction(
-			MailContext<SimpleCall> context) {
-		SimpleCall simpleCall = getBeanInContext(context);
-
-		if (simpleCall != null) {
-			TemplateGenerator templateGenerator = new TemplateGenerator(
-					context.getMessage(CallI18nEnum.MAIL_COMMENT_ITEM_SUBJECT,
-							context.getChangeByUserFullName(),
-							StringUtils.trim(simpleCall.getSubject(), 100)),
-					context.templatePath("templates/email/crm/itemAddNoteNotifier.mt"));
-
-			templateGenerator.putVariable("comment",
-					context.getEmailNotification());
-
-			return templateGenerator;
-		} else {
-			return null;
-		}
-
 	}
 
 	@Override

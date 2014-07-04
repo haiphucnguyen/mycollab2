@@ -21,7 +21,6 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import com.esofthead.mycollab.common.domain.SimpleAuditLog;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.service.AuditLogService;
@@ -31,7 +30,6 @@ import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.module.crm.i18n.LeadI18nEnum;
 import com.esofthead.mycollab.module.crm.service.LeadService;
 import com.esofthead.mycollab.module.mail.MailUtils;
-import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.user.AccountLinkUtils;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.service.UserService;
@@ -90,6 +88,11 @@ public class LeadRelayEmailNotificationActionImpl extends
 	}
 
 	@Override
+	protected Enum<?> getCommentSubjectKey() {
+		return LeadI18nEnum.MAIL_COMMENT_ITEM_SUBJECT;
+	}
+
+	@Override
 	protected String getItemName() {
 		return StringUtils.trim(bean.getLeadName(), 100);
 	}
@@ -97,54 +100,6 @@ public class LeadRelayEmailNotificationActionImpl extends
 	@Override
 	protected ItemFieldMapper getItemFieldMapper() {
 		return mapper;
-	}
-
-	@Override
-	protected TemplateGenerator templateGeneratorForUpdateAction(
-			MailContext<SimpleLead> context) {
-		SimpleLead lead = getBeanInContext(context);
-		if (lead == null) {
-			return null;
-		}
-
-		context.setWrappedBean(lead);
-		String subject = StringUtils.trim(lead.getLeadName(), 150);
-
-		TemplateGenerator templateGenerator = new TemplateGenerator(
-				context.getMessage(LeadI18nEnum.MAIL_UPDATE_ITEM_SUBJECT,
-						context.getChangeByUserFullName(), subject),
-				context.templatePath("templates/email/crm/itemUpdatedNotifier.mt"));
-
-		if (context.getTypeid() != null) {
-			SimpleAuditLog auditLog = auditLogService.findLatestLog(
-					context.getTypeid(), context.getSaccountid());
-
-			templateGenerator.putVariable("historyLog", auditLog);
-			templateGenerator.putVariable("context", context);
-			templateGenerator.putVariable("mapper", mapper);
-		}
-		return templateGenerator;
-	}
-
-	@Override
-	protected TemplateGenerator templateGeneratorForCommentAction(
-			MailContext<SimpleLead> context) {
-		SimpleLead simpleLead = getBeanInContext(context);
-
-		if (simpleLead == null) {
-			return null;
-		}
-
-		TemplateGenerator templateGenerator = new TemplateGenerator(
-				context.getMessage(LeadI18nEnum.MAIL_COMMENT_ITEM_SUBJECT,
-						context.getChangeByUserFullName(),
-						StringUtils.trim(simpleLead.getLeadName(), 100)),
-				context.templatePath("templates/email/crm/itemAddNoteNotifier.mt"));
-
-		templateGenerator
-				.putVariable("comment", context.getEmailNotification());
-
-		return templateGenerator;
 	}
 
 	@Override

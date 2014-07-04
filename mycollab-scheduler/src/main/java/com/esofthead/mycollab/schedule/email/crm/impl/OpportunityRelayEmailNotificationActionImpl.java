@@ -23,7 +23,6 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import com.esofthead.mycollab.common.domain.SimpleAuditLog;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.service.AuditLogService;
@@ -37,7 +36,6 @@ import com.esofthead.mycollab.module.crm.i18n.OpportunityI18nEnum;
 import com.esofthead.mycollab.module.crm.service.CampaignService;
 import com.esofthead.mycollab.module.crm.service.OpportunityService;
 import com.esofthead.mycollab.module.mail.MailUtils;
-import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.user.AccountLinkUtils;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.service.UserService;
@@ -100,6 +98,11 @@ public class OpportunityRelayEmailNotificationActionImpl extends
 	}
 
 	@Override
+	protected Enum<?> getCommentSubjectKey() {
+		return OpportunityI18nEnum.MAIL_COMMENT_ITEM_SUBJECT;
+	}
+
+	@Override
 	protected String getItemName() {
 		return StringUtils.trim(bean.getOpportunityname(), 100);
 	}
@@ -107,54 +110,6 @@ public class OpportunityRelayEmailNotificationActionImpl extends
 	@Override
 	protected ItemFieldMapper getItemFieldMapper() {
 		return mapper;
-	}
-
-	@Override
-	protected TemplateGenerator templateGeneratorForUpdateAction(
-			MailContext<SimpleOpportunity> context) {
-		SimpleOpportunity simpleOpportunity = getBeanInContext(context);
-
-		if (simpleOpportunity == null) {
-			return null;
-		}
-		context.setWrappedBean(simpleOpportunity);
-		String subject = StringUtils.trim(
-				simpleOpportunity.getOpportunityname(), 100);
-
-		TemplateGenerator templateGenerator = new TemplateGenerator(
-				context.getMessage(
-						OpportunityI18nEnum.MAIL_UPDATE_ITEM_SUBJECT,
-						context.getChangeByUserFullName(), subject),
-				context.templatePath("templates/email/crm/itemUpdatedNotifier.mt"));
-
-		if (context.getTypeid() != null) {
-			SimpleAuditLog auditLog = auditLogService.findLatestLog(
-					context.getTypeid(), context.getSaccountid());
-			templateGenerator.putVariable("historyLog", auditLog);
-			templateGenerator.putVariable("context", context);
-			templateGenerator.putVariable("mapper", mapper);
-		}
-		return templateGenerator;
-	}
-
-	@Override
-	protected TemplateGenerator templateGeneratorForCommentAction(
-			MailContext<SimpleOpportunity> context) {
-		SimpleOpportunity simpleOpportunity = getBeanInContext(context);
-
-		if (simpleOpportunity == null) {
-			return null;
-		}
-		TemplateGenerator templateGenerator = new TemplateGenerator(
-				context.getMessage(
-						OpportunityI18nEnum.MAIL_COMMENT_ITEM_SUBJECT, context
-								.getChangeByUserFullName(), StringUtils.trim(
-								simpleOpportunity.getOpportunityname(), 100)),
-				context.templatePath("templates/email/crm/itemAddNoteNotifier.mt"));
-		templateGenerator
-				.putVariable("comment", context.getEmailNotification());
-
-		return templateGenerator;
 	}
 
 	@Override
