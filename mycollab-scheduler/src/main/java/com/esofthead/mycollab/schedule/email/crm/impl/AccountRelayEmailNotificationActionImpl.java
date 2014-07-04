@@ -73,50 +73,33 @@ public class AccountRelayEmailNotificationActionImpl extends
 
 	private static AccountFieldNameMapper mapper = new AccountFieldNameMapper();
 
-	private void setupMailHeaders(SimpleAccount account,
-			SimpleRelayEmailNotification emailNotification,
-			TemplateGenerator templateGenerator) {
-		String summary = account.getAccountname();
-		String summaryLink = CrmLinkGenerator.generateAccountPreviewFullLink(
-				siteUrl, account.getId());
-
-		templateGenerator.putVariable("makeChangeUser",
-				emailNotification.getChangeByUserFullName());
-		templateGenerator.putVariable("itemType", "account");
-		templateGenerator.putVariable("summary", summary);
-		templateGenerator.putVariable("summaryLink", summaryLink);
-	}
-
-	@Override
-	protected TemplateGenerator templateGeneratorForCreateAction(
-			MailContext<SimpleAccount> context) {
-		SimpleAccount simpleAccount = getBeanInContext(context);
-		if (simpleAccount != null) {
-			String subject = StringUtils.trim(simpleAccount.getAccountname(),
-					100);
-
-			TemplateGenerator templateGenerator = new TemplateGenerator(
-					context.getMessage(
-							AccountI18nEnum.MAIL_CREATE_ITEM_SUBJECT,
-							context.getChangeByUserFullName(), subject),
-					context.templatePath("templates/email/crm/itemCreatedNotifier.mt"));
-
-			setupMailHeaders(simpleAccount, context.getEmailNotification(),
-					templateGenerator);
-
-			context.setWrappedBean(simpleAccount);
-			templateGenerator.putVariable("context", context);
-			templateGenerator.putVariable("mapper", mapper);
-
-			return templateGenerator;
-		} else {
-			return null;
-		}
-	}
-
 	@Override
 	protected Enum<?> getCreateSubjectKey() {
 		return AccountI18nEnum.MAIL_CREATE_ITEM_SUBJECT;
+	}
+
+	@Override
+	protected Enum<?> getUpdateSubjectKey() {
+		return AccountI18nEnum.MAIL_UPDATE_ITEM_SUBJECT;
+	}
+
+	@Override
+	protected String getItemName() {
+		return StringUtils.trim(bean.getAccountname(), 100);
+	}
+
+	@Override
+	protected void buildExtraTemplateVariables(
+			SimpleRelayEmailNotification emailNotification) {
+		String summary = bean.getAccountname();
+		String summaryLink = CrmLinkGenerator.generateAccountPreviewFullLink(
+				siteUrl, bean.getId());
+
+		contentGenerator.putVariable("makeChangeUser",
+				emailNotification.getChangeByUserFullName());
+		contentGenerator.putVariable("itemType", "account");
+		contentGenerator.putVariable("summary", summary);
+		contentGenerator.putVariable("summaryLink", summaryLink);
 	}
 
 	@Override
@@ -132,9 +115,6 @@ public class AccountRelayEmailNotificationActionImpl extends
 							AccountI18nEnum.MAIL_UPDATE_ITEM_SUBJECT,
 							context.getChangeByUserFullName(), subject),
 					context.templatePath("templates/email/crm/itemUpdatedNotifier.mt"));
-
-			setupMailHeaders(simpleAccount, context.getEmailNotification(),
-					templateGenerator);
 
 			if (context.getTypeid() != null) {
 				SimpleAuditLog auditLog = auditLogService.findLatestLog(
@@ -165,9 +145,6 @@ public class AccountRelayEmailNotificationActionImpl extends
 									.trim(simpleAccount.getAccountname(), 100)),
 					context.templatePath("templates/email/crm/itemAddNoteNotifier.mt"));
 
-			setupMailHeaders(simpleAccount, context.getEmailNotification(),
-					templateGenerator);
-
 			templateGenerator.putVariable("comment",
 					context.getEmailNotification());
 
@@ -181,6 +158,11 @@ public class AccountRelayEmailNotificationActionImpl extends
 	protected SimpleAccount getBeanInContext(MailContext<SimpleAccount> context) {
 		return accountService.findById(context.getTypeid(),
 				context.getSaccountid());
+	}
+
+	@Override
+	protected ItemFieldMapper getItemFieldMapper() {
+		return mapper;
 	}
 
 	public static class AssigneeFieldFormat extends FieldFormat {

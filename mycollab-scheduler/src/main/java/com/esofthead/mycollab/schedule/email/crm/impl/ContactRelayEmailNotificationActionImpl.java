@@ -75,51 +75,38 @@ public class ContactRelayEmailNotificationActionImpl extends
 
 	private static final ContactFieldNameMapper mapper = new ContactFieldNameMapper();
 
-	protected void setupMailHeaders(SimpleContact contact,
-			SimpleRelayEmailNotification emailNotification,
-			TemplateGenerator templateGenerator) {
-
-		String summary = contact.getContactName();
-		String summaryLink = CrmLinkGenerator.generateContactPreviewFullLink(
-				siteUrl, contact.getId());
-
-		templateGenerator.putVariable("makeChangeUser",
-				emailNotification.getChangeByUserFullName());
-		templateGenerator.putVariable("itemType", "contact");
-		templateGenerator.putVariable("summary", summary);
-		templateGenerator.putVariable("summaryLink", summaryLink);
-	}
-
 	@Override
-	protected TemplateGenerator templateGeneratorForCreateAction(
-			MailContext<SimpleContact> context) {
-		SimpleContact simpleContact = getBeanInContext(context);
-		if (simpleContact != null) {
-			context.setWrappedBean(simpleContact);
-			String subject = StringUtils.trim(simpleContact.getContactName(),
-					100);
+	protected void buildExtraTemplateVariables(
+			SimpleRelayEmailNotification emailNotification) {
+		String summary = bean.getContactName();
+		String summaryLink = CrmLinkGenerator.generateContactPreviewFullLink(
+				siteUrl, bean.getId());
 
-			TemplateGenerator templateGenerator = new TemplateGenerator(
-					context.getMessage(
-							ContactI18nEnum.MAIL_CREATE_ITEM_SUBJECT,
-							context.getChangeByUserFullName(), subject),
-					context.templatePath("templates/email/crm/itemCreatedNotifier.mt"));
-
-			setupMailHeaders(simpleContact, context.getEmailNotification(),
-					templateGenerator);
-
-			templateGenerator.putVariable("context", context);
-			templateGenerator.putVariable("mapper", mapper);
-
-			return templateGenerator;
-		} else {
-			return null;
-		}
+		contentGenerator.putVariable("makeChangeUser",
+				emailNotification.getChangeByUserFullName());
+		contentGenerator.putVariable("itemType", "contact");
+		contentGenerator.putVariable("summary", summary);
+		contentGenerator.putVariable("summaryLink", summaryLink);
 	}
 
 	@Override
 	protected Enum<?> getCreateSubjectKey() {
 		return ContactI18nEnum.MAIL_CREATE_ITEM_SUBJECT;
+	}
+
+	@Override
+	protected Enum<?> getUpdateSubjectKey() {
+		return ContactI18nEnum.MAIL_UPDATE_ITEM_SUBJECT;
+	}
+
+	@Override
+	protected String getItemName() {
+		return StringUtils.trim(bean.getContactName(), 100);
+	}
+
+	@Override
+	protected ItemFieldMapper getItemFieldMapper() {
+		return mapper;
 	}
 
 	@Override
@@ -137,9 +124,6 @@ public class ContactRelayEmailNotificationActionImpl extends
 							ContactI18nEnum.MAIL_UPDATE_ITEM_SUBJECT,
 							context.getChangeByUserFullName(), subject),
 					context.templatePath("templates/email/crm/itemUpdatedNotifier.mt"));
-
-			setupMailHeaders(simpleContact, context.getEmailNotification(),
-					templateGenerator);
 
 			if (context.getTypeid() != null) {
 				SimpleAuditLog auditLog = auditLogService.findLatestLog(
@@ -168,9 +152,6 @@ public class ContactRelayEmailNotificationActionImpl extends
 									.getChangeByUserFullName(), StringUtils
 									.trim(simpleContact.getContactName(), 100)),
 					context.templatePath("templates/email/crm/itemAddNoteNotifier.mt"));
-
-			setupMailHeaders(simpleContact, context.getEmailNotification(),
-					templateGenerator);
 
 			templateGenerator.putVariable("comment",
 					context.getEmailNotification());

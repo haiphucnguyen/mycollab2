@@ -75,52 +75,38 @@ public class OpportunityRelayEmailNotificationActionImpl extends
 
 	private static final OpportunityFieldNameMapper mapper = new OpportunityFieldNameMapper();
 
-	protected void setupMailHeaders(SimpleOpportunity simpleOpportunity,
-			SimpleRelayEmailNotification emailNotification,
-			TemplateGenerator templateGenerator) {
-
-		String summary = simpleOpportunity.getOpportunityname();
-		String summaryLink = CrmLinkGenerator
-				.generateOpportunityPreviewFullLink(siteUrl,
-						simpleOpportunity.getId());
-
-		templateGenerator.putVariable("makeChangeUser",
-				emailNotification.getChangeByUserFullName());
-		templateGenerator.putVariable("itemType", "opportunity");
-		templateGenerator.putVariable("summary", summary);
-		templateGenerator.putVariable("summaryLink", summaryLink);
-	}
-
 	@Override
-	protected TemplateGenerator templateGeneratorForCreateAction(
-			MailContext<SimpleOpportunity> context) {
-		SimpleOpportunity simpleOpportunity = getBeanInContext(context);
+	protected void buildExtraTemplateVariables(
+			SimpleRelayEmailNotification emailNotification) {
+		String summary = bean.getOpportunityname();
+		String summaryLink = CrmLinkGenerator
+				.generateOpportunityPreviewFullLink(siteUrl, bean.getId());
 
-		if (simpleOpportunity != null) {
-			context.setWrappedBean(simpleOpportunity);
-			String subject = StringUtils.trim(
-					simpleOpportunity.getOpportunityname(), 100);
-
-			TemplateGenerator templateGenerator = new TemplateGenerator(
-					context.getMessage(
-							OpportunityI18nEnum.MAIL_CREATE_ITEM_SUBJECT,
-							context.getChangeByUserFullName(), subject),
-					context.templatePath("templates/email/crm/itemCreatedNotifier.mt"));
-			setupMailHeaders(simpleOpportunity, context.getEmailNotification(),
-					templateGenerator);
-
-			templateGenerator.putVariable("context", context);
-			templateGenerator.putVariable("mapper", mapper);
-
-			return templateGenerator;
-		} else {
-			return null;
-		}
+		contentGenerator.putVariable("makeChangeUser",
+				emailNotification.getChangeByUserFullName());
+		contentGenerator.putVariable("itemType", "opportunity");
+		contentGenerator.putVariable("summary", summary);
+		contentGenerator.putVariable("summaryLink", summaryLink);
 	}
 
 	@Override
 	protected Enum<?> getCreateSubjectKey() {
 		return OpportunityI18nEnum.MAIL_CREATE_ITEM_SUBJECT;
+	}
+
+	@Override
+	protected Enum<?> getUpdateSubjectKey() {
+		return OpportunityI18nEnum.MAIL_UPDATE_ITEM_SUBJECT;
+	}
+
+	@Override
+	protected String getItemName() {
+		return StringUtils.trim(bean.getOpportunityname(), 100);
+	}
+
+	@Override
+	protected ItemFieldMapper getItemFieldMapper() {
+		return mapper;
 	}
 
 	@Override
@@ -140,8 +126,6 @@ public class OpportunityRelayEmailNotificationActionImpl extends
 						OpportunityI18nEnum.MAIL_UPDATE_ITEM_SUBJECT,
 						context.getChangeByUserFullName(), subject),
 				context.templatePath("templates/email/crm/itemUpdatedNotifier.mt"));
-		setupMailHeaders(simpleOpportunity, context.getEmailNotification(),
-				templateGenerator);
 
 		if (context.getTypeid() != null) {
 			SimpleAuditLog auditLog = auditLogService.findLatestLog(
@@ -167,8 +151,6 @@ public class OpportunityRelayEmailNotificationActionImpl extends
 								.getChangeByUserFullName(), StringUtils.trim(
 								simpleOpportunity.getOpportunityname(), 100)),
 				context.templatePath("templates/email/crm/itemAddNoteNotifier.mt"));
-		setupMailHeaders(simpleOpportunity, context.getEmailNotification(),
-				templateGenerator);
 		templateGenerator
 				.putVariable("comment", context.getEmailNotification());
 
