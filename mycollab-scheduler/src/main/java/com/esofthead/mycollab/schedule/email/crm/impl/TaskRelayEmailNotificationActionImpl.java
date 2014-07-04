@@ -74,10 +74,6 @@ public class TaskRelayEmailNotificationActionImpl extends
 
 	private static final TaskFieldNameMapper mapper = new TaskFieldNameMapper();
 
-	public TaskRelayEmailNotificationActionImpl() {
-		super(CrmTypeConstants.TASK);
-	}
-
 	protected void setupMailHeaders(SimpleTask task,
 			SimpleRelayEmailNotification emailNotification,
 			TemplateGenerator templateGenerator) {
@@ -114,6 +110,11 @@ public class TaskRelayEmailNotificationActionImpl extends
 		} else {
 			return null;
 		}
+	}
+
+	@Override
+	protected Enum<?> getCreateSubjectKey() {
+		return TaskI18nEnum.MAIL_CREATE_ITEM_SUBJECT;
 	}
 
 	@Override

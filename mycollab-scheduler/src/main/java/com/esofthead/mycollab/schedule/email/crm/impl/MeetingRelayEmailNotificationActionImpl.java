@@ -27,7 +27,6 @@ import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.service.AuditLogService;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.crm.CrmLinkGenerator;
-import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.SimpleMeeting;
 import com.esofthead.mycollab.module.crm.i18n.MeetingI18nEnum;
 import com.esofthead.mycollab.module.crm.service.MeetingService;
@@ -56,10 +55,6 @@ public class MeetingRelayEmailNotificationActionImpl extends
 	private MeetingService meetingService;
 
 	private static final MeetingFieldNameMapper mapper = new MeetingFieldNameMapper();
-
-	public MeetingRelayEmailNotificationActionImpl() {
-		super(CrmTypeConstants.MEETING);
-	}
 
 	protected void setupMailHeaders(SimpleMeeting meeting,
 			SimpleRelayEmailNotification emailNotification,
@@ -98,6 +93,11 @@ public class MeetingRelayEmailNotificationActionImpl extends
 		} else {
 			return null;
 		}
+	}
+
+	@Override
+	protected Enum<?> getCreateSubjectKey() {
+		return MeetingI18nEnum.MAIL_CREATE_ITEM_SUBJECT;
 	}
 
 	@Override

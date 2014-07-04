@@ -75,10 +75,6 @@ public class ContactRelayEmailNotificationActionImpl extends
 
 	private static final ContactFieldNameMapper mapper = new ContactFieldNameMapper();
 
-	public ContactRelayEmailNotificationActionImpl() {
-		super(CrmTypeConstants.CONTACT);
-	}
-
 	protected void setupMailHeaders(SimpleContact contact,
 			SimpleRelayEmailNotification emailNotification,
 			TemplateGenerator templateGenerator) {
@@ -119,6 +115,11 @@ public class ContactRelayEmailNotificationActionImpl extends
 		} else {
 			return null;
 		}
+	}
+
+	@Override
+	protected Enum<?> getCreateSubjectKey() {
+		return ContactI18nEnum.MAIL_CREATE_ITEM_SUBJECT;
 	}
 
 	@Override

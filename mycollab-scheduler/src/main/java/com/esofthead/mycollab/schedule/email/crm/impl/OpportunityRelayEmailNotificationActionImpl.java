@@ -75,10 +75,6 @@ public class OpportunityRelayEmailNotificationActionImpl extends
 
 	private static final OpportunityFieldNameMapper mapper = new OpportunityFieldNameMapper();
 
-	public OpportunityRelayEmailNotificationActionImpl() {
-		super(CrmTypeConstants.OPPORTUNITY);
-	}
-
 	protected void setupMailHeaders(SimpleOpportunity simpleOpportunity,
 			SimpleRelayEmailNotification emailNotification,
 			TemplateGenerator templateGenerator) {
@@ -120,6 +116,11 @@ public class OpportunityRelayEmailNotificationActionImpl extends
 		} else {
 			return null;
 		}
+	}
+
+	@Override
+	protected Enum<?> getCreateSubjectKey() {
+		return OpportunityI18nEnum.MAIL_CREATE_ITEM_SUBJECT;
 	}
 
 	@Override

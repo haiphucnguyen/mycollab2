@@ -27,7 +27,6 @@ import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.service.AuditLogService;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.crm.CrmLinkGenerator;
-import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.i18n.CampaignI18nEnum;
 import com.esofthead.mycollab.module.crm.service.CampaignService;
@@ -66,10 +65,6 @@ public class CampaignRelayEmailNotificationActionImpl extends
 	private CampaignService campaignService;
 
 	private static final CampaignFieldNameMapper mapper = new CampaignFieldNameMapper();
-
-	public CampaignRelayEmailNotificationActionImpl() {
-		super(CrmTypeConstants.CAMPAIGN);
-	}
 
 	protected void setupMailHeaders(SimpleCampaign campaign,
 			SimpleRelayEmailNotification emailNotification,
@@ -112,6 +107,11 @@ public class CampaignRelayEmailNotificationActionImpl extends
 		} else {
 			return null;
 		}
+	}
+
+	@Override
+	protected Enum<?> getCreateSubjectKey() {
+		return CampaignI18nEnum.MAIL_CREATE_ITEM_SUBJECT;
 	}
 
 	@Override

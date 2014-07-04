@@ -67,14 +67,11 @@ public class CaseRelayEmailNotificationActionImpl extends
 
 	@Autowired
 	private AuditLogService auditLogService;
+
 	@Autowired
 	private CaseService caseService;
 
 	private static final CaseFieldNameMapper mapper = new CaseFieldNameMapper();
-
-	public CaseRelayEmailNotificationActionImpl() {
-		super(CrmTypeConstants.CASE);
-	}
 
 	protected void setupMailHeaders(SimpleCase simpleCase,
 			SimpleRelayEmailNotification emailNotification,
@@ -114,6 +111,11 @@ public class CaseRelayEmailNotificationActionImpl extends
 		} else {
 			return null;
 		}
+	}
+
+	@Override
+	protected Enum<?> getCreateSubjectKey() {
+		return CaseI18nEnum.MAIL_CREATE_ITEM_SUBJECT;
 	}
 
 	@Override

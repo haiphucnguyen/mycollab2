@@ -73,13 +73,7 @@ public abstract class CrmDefaultSendingRelayEmailAction<B extends ValuedBean>
 	@Autowired
 	protected IContentGenerator contentGenerator;
 
-	protected String crmType;
-
 	protected String siteUrl;
-
-	public CrmDefaultSendingRelayEmailAction(String crmType) {
-		this.crmType = crmType;
-	}
 
 	@Override
 	public void sendNotificationForCreateAction(
@@ -201,7 +195,8 @@ public abstract class CrmDefaultSendingRelayEmailAction<B extends ValuedBean>
 		// "need sending notifications"
 		// ---------------------------------------------------------------
 		NoteSearchCriteria noteSearchCriteria = new NoteSearchCriteria();
-		noteSearchCriteria.setType(new StringSearchField(crmType));
+		noteSearchCriteria
+				.setType(new StringSearchField(notification.getType()));
 		noteSearchCriteria.setTypeid(new NumberSearchField(notification
 				.getTypeid()));
 		noteSearchCriteria.setSaccountid(new NumberSearchField(notification
@@ -262,6 +257,12 @@ public abstract class CrmDefaultSendingRelayEmailAction<B extends ValuedBean>
 	}
 
 	protected abstract B getBeanInContext(MailContext<B> context);
+
+	protected String getCreateContentPath() {
+		return "templates/email/crm/itemCreatedNotifier.mt";
+	}
+
+	protected abstract Enum<?> getCreateSubjectKey();
 
 	protected abstract TemplateGenerator templateGeneratorForCreateAction(
 			MailContext<B> context);

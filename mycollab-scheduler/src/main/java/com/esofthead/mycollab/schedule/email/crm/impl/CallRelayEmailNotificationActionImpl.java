@@ -27,7 +27,6 @@ import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.service.AuditLogService;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.crm.CrmLinkGenerator;
-import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.SimpleCall;
 import com.esofthead.mycollab.module.crm.i18n.CallI18nEnum;
 import com.esofthead.mycollab.module.crm.service.CallService;
@@ -66,10 +65,6 @@ public class CallRelayEmailNotificationActionImpl extends
 
 	private static final CallFieldNameMapper mapper = new CallFieldNameMapper();
 
-	public CallRelayEmailNotificationActionImpl() {
-		super(CrmTypeConstants.CALL);
-	}
-
 	protected void setupMailHeaders(SimpleCall call,
 			SimpleRelayEmailNotification emailNotification,
 			TemplateGenerator templateGenerator) {
@@ -107,6 +102,11 @@ public class CallRelayEmailNotificationActionImpl extends
 		} else {
 			return null;
 		}
+	}
+	
+	@Override
+	protected Enum<?> getCreateSubjectKey() {
+		return CallI18nEnum.MAIL_CREATE_ITEM_SUBJECT;
 	}
 
 	@Override
