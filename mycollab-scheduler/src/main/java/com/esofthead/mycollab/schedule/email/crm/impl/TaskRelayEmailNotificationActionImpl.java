@@ -96,8 +96,7 @@ public class TaskRelayEmailNotificationActionImpl extends
 	@Override
 	protected TemplateGenerator templateGeneratorForCreateAction(
 			MailContext<SimpleTask> context) {
-		SimpleTask simpleTask = taskService.findById(context.getTypeid(),
-				context.getSaccountid());
+		SimpleTask simpleTask = getBeanInContext(context);
 		if (simpleTask != null) {
 			context.setWrappedBean(simpleTask);
 			String subject = StringUtils.trim(simpleTask.getSubject(), 100);
@@ -120,8 +119,7 @@ public class TaskRelayEmailNotificationActionImpl extends
 	@Override
 	protected TemplateGenerator templateGeneratorForUpdateAction(
 			MailContext<SimpleTask> context) {
-		SimpleTask simpleTask = taskService.findById(context.getTypeid(),
-				context.getSaccountid());
+		SimpleTask simpleTask = getBeanInContext(context);
 
 		if (simpleTask == null) {
 			return null;
@@ -150,8 +148,7 @@ public class TaskRelayEmailNotificationActionImpl extends
 	@Override
 	protected TemplateGenerator templateGeneratorForCommentAction(
 			MailContext<SimpleTask> context) {
-		SimpleTask simpleTask = taskService.findById(context.getTypeid(),
-				context.getSaccountid());
+		SimpleTask simpleTask = getBeanInContext(context);
 
 		if (simpleTask == null) {
 			return null;
@@ -167,6 +164,12 @@ public class TaskRelayEmailNotificationActionImpl extends
 				.putVariable("comment", context.getEmailNotification());
 
 		return templateGenerator;
+	}
+
+	@Override
+	protected SimpleTask getBeanInContext(MailContext<SimpleTask> context) {
+		return taskService.findById(context.getTypeid(),
+				context.getSaccountid());
 	}
 
 	public static class TaskFieldNameMapper extends ItemFieldMapper {
@@ -299,5 +302,4 @@ public class TaskRelayEmailNotificationActionImpl extends
 			return value;
 		}
 	}
-
 }

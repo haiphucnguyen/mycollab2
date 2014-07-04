@@ -88,8 +88,7 @@ public class CallRelayEmailNotificationActionImpl extends
 	@Override
 	protected TemplateGenerator templateGeneratorForCreateAction(
 			MailContext<SimpleCall> context) {
-		SimpleCall simpleCall = callService.findById(context.getTypeid(),
-				context.getSaccountid());
+		SimpleCall simpleCall = getBeanInContext(context);
 		if (simpleCall != null) {
 			String subject = StringUtils.trim(simpleCall.getSubject(), 100);
 
@@ -113,8 +112,7 @@ public class CallRelayEmailNotificationActionImpl extends
 	@Override
 	protected TemplateGenerator templateGeneratorForUpdateAction(
 			MailContext<SimpleCall> context) {
-		SimpleCall simpleCall = callService.findById(context.getTypeid(),
-				context.getSaccountid());
+		SimpleCall simpleCall = getBeanInContext(context);
 
 		if (simpleCall != null) {
 			String subject = StringUtils.trim(simpleCall.getSubject(), 150);
@@ -145,8 +143,7 @@ public class CallRelayEmailNotificationActionImpl extends
 	@Override
 	protected TemplateGenerator templateGeneratorForCommentAction(
 			MailContext<SimpleCall> context) {
-		SimpleCall simpleCall = callService.findById(context.getTypeid(),
-				context.getSaccountid());
+		SimpleCall simpleCall = getBeanInContext(context);
 
 		if (simpleCall != null) {
 			TemplateGenerator templateGenerator = new TemplateGenerator(
@@ -165,6 +162,12 @@ public class CallRelayEmailNotificationActionImpl extends
 			return null;
 		}
 
+	}
+
+	@Override
+	protected SimpleCall getBeanInContext(MailContext<SimpleCall> context) {
+		return callService.findById(context.getTypeid(),
+				context.getSaccountid());
 	}
 
 	public static class CallFieldNameMapper extends ItemFieldMapper {
@@ -239,5 +242,4 @@ public class CallRelayEmailNotificationActionImpl extends
 			return value;
 		}
 	}
-
 }

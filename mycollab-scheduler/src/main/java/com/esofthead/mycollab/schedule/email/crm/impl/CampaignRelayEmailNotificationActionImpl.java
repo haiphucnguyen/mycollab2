@@ -89,8 +89,7 @@ public class CampaignRelayEmailNotificationActionImpl extends
 	@Override
 	protected TemplateGenerator templateGeneratorForCreateAction(
 			MailContext<SimpleCampaign> context) {
-		SimpleCampaign simpleCampaign = campaignService.findById(
-				context.getTypeid(), context.getSaccountid());
+		SimpleCampaign simpleCampaign = getBeanInContext(context);
 		if (simpleCampaign != null) {
 			String subject = StringUtils.trim(simpleCampaign.getCampaignname(),
 					100);
@@ -118,8 +117,7 @@ public class CampaignRelayEmailNotificationActionImpl extends
 	@Override
 	protected TemplateGenerator templateGeneratorForUpdateAction(
 			MailContext<SimpleCampaign> context) {
-		SimpleCampaign simpleCampaign = campaignService.findById(
-				context.getTypeid(), context.getSaccountid());
+		SimpleCampaign simpleCampaign = getBeanInContext(context);
 
 		if (simpleCampaign != null) {
 			String subject = StringUtils.trim(simpleCampaign.getCampaignname(),
@@ -152,8 +150,7 @@ public class CampaignRelayEmailNotificationActionImpl extends
 	@Override
 	protected TemplateGenerator templateGeneratorForCommentAction(
 			MailContext<SimpleCampaign> context) {
-		SimpleCampaign simpleCampaign = campaignService.findById(
-				context.getTypeid(), context.getSaccountid());
+		SimpleCampaign simpleCampaign = getBeanInContext(context);
 		if (simpleCampaign != null) {
 			TemplateGenerator templateGenerator = new TemplateGenerator(
 					context.getMessage(
@@ -172,6 +169,13 @@ public class CampaignRelayEmailNotificationActionImpl extends
 		} else {
 			return null;
 		}
+	}
+
+	@Override
+	protected SimpleCampaign getBeanInContext(
+			MailContext<SimpleCampaign> context) {
+		return campaignService.findById(context.getTypeid(),
+				context.getSaccountid());
 	}
 
 	public static class CampaignFieldNameMapper extends ItemFieldMapper {
@@ -250,5 +254,4 @@ public class CampaignRelayEmailNotificationActionImpl extends
 			return value;
 		}
 	}
-
 }

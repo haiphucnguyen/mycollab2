@@ -79,8 +79,8 @@ public class MeetingRelayEmailNotificationActionImpl extends
 	@Override
 	protected TemplateGenerator templateGeneratorForCreateAction(
 			MailContext<SimpleMeeting> context) {
-		SimpleMeeting simpleMeeting = meetingService.findById(
-				context.getTypeid(), context.getSaccountid());
+		SimpleMeeting simpleMeeting = getBeanInContext(context);
+
 		if (simpleMeeting != null) {
 			context.setWrappedBean(simpleMeeting);
 			String subject = StringUtils.trim(simpleMeeting.getSubject(), 150);
@@ -103,8 +103,7 @@ public class MeetingRelayEmailNotificationActionImpl extends
 	@Override
 	protected TemplateGenerator templateGeneratorForUpdateAction(
 			MailContext<SimpleMeeting> context) {
-		SimpleMeeting simpleMeeting = meetingService.findById(
-				context.getTypeid(), context.getSaccountid());
+		SimpleMeeting simpleMeeting = getBeanInContext(context);
 
 		if (simpleMeeting == null) {
 			return null;
@@ -132,8 +131,7 @@ public class MeetingRelayEmailNotificationActionImpl extends
 	@Override
 	protected TemplateGenerator templateGeneratorForCommentAction(
 			MailContext<SimpleMeeting> context) {
-		SimpleMeeting simpleMeeting = meetingService.findById(
-				context.getTypeid(), context.getSaccountid());
+		SimpleMeeting simpleMeeting = getBeanInContext(context);
 
 		if (simpleMeeting == null) {
 			return null;
@@ -152,6 +150,12 @@ public class MeetingRelayEmailNotificationActionImpl extends
 		return templateGenerator;
 	}
 
+	@Override
+	protected SimpleMeeting getBeanInContext(MailContext<SimpleMeeting> context) {
+		return meetingService.findById(context.getTypeid(),
+				context.getSaccountid());
+	}
+
 	public static class MeetingFieldNameMapper extends ItemFieldMapper {
 
 		public MeetingFieldNameMapper() {
@@ -166,9 +170,7 @@ public class MeetingRelayEmailNotificationActionImpl extends
 			put("enddate", new DateTimeFieldFormat("enddate",
 					MeetingI18nEnum.FORM_END_DATE_TIME));
 
-			// put("typeid", "Related to", true);
 			put("description", GenericI18Enum.FORM_DESCRIPTION, true);
 		}
 	}
-
 }

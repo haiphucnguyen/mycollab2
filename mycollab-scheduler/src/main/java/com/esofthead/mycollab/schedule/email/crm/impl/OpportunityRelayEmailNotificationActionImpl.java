@@ -98,8 +98,8 @@ public class OpportunityRelayEmailNotificationActionImpl extends
 	@Override
 	protected TemplateGenerator templateGeneratorForCreateAction(
 			MailContext<SimpleOpportunity> context) {
-		SimpleOpportunity simpleOpportunity = opportunityService.findById(
-				context.getTypeid(), context.getSaccountid());
+		SimpleOpportunity simpleOpportunity = getBeanInContext(context);
+
 		if (simpleOpportunity != null) {
 			context.setWrappedBean(simpleOpportunity);
 			String subject = StringUtils.trim(
@@ -125,8 +125,7 @@ public class OpportunityRelayEmailNotificationActionImpl extends
 	@Override
 	protected TemplateGenerator templateGeneratorForUpdateAction(
 			MailContext<SimpleOpportunity> context) {
-		SimpleOpportunity simpleOpportunity = opportunityService.findById(
-				context.getTypeid(), context.getSaccountid());
+		SimpleOpportunity simpleOpportunity = getBeanInContext(context);
 
 		if (simpleOpportunity == null) {
 			return null;
@@ -156,8 +155,7 @@ public class OpportunityRelayEmailNotificationActionImpl extends
 	@Override
 	protected TemplateGenerator templateGeneratorForCommentAction(
 			MailContext<SimpleOpportunity> context) {
-		SimpleOpportunity simpleOpportunity = opportunityService.findById(
-				context.getTypeid(), context.getSaccountid());
+		SimpleOpportunity simpleOpportunity = getBeanInContext(context);
 
 		if (simpleOpportunity == null) {
 			return null;
@@ -174,6 +172,13 @@ public class OpportunityRelayEmailNotificationActionImpl extends
 				.putVariable("comment", context.getEmailNotification());
 
 		return templateGenerator;
+	}
+
+	@Override
+	protected SimpleOpportunity getBeanInContext(
+			MailContext<SimpleOpportunity> context) {
+		return opportunityService.findById(context.getTypeid(),
+				context.getSaccountid());
 	}
 
 	public static class OpportunityFieldNameMapper extends ItemFieldMapper {
@@ -343,5 +348,4 @@ public class OpportunityRelayEmailNotificationActionImpl extends
 			return value;
 		}
 	}
-
 }

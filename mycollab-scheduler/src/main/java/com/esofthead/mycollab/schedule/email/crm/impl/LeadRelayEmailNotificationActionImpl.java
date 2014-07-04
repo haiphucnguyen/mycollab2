@@ -60,6 +60,7 @@ public class LeadRelayEmailNotificationActionImpl extends
 
 	@Autowired
 	private AuditLogService auditLogService;
+
 	@Autowired
 	private LeadService leadService;
 
@@ -87,8 +88,7 @@ public class LeadRelayEmailNotificationActionImpl extends
 	@Override
 	protected TemplateGenerator templateGeneratorForCreateAction(
 			MailContext<SimpleLead> context) {
-		SimpleLead simpleLead = leadService.findById(context.getTypeid(),
-				context.getSaccountid());
+		SimpleLead simpleLead = getBeanInContext(context);
 		if (simpleLead != null) {
 			context.setWrappedBean(simpleLead);
 			String subject = StringUtils.trim(simpleLead.getLeadName(), 150);
@@ -112,8 +112,7 @@ public class LeadRelayEmailNotificationActionImpl extends
 	@Override
 	protected TemplateGenerator templateGeneratorForUpdateAction(
 			MailContext<SimpleLead> context) {
-		SimpleLead lead = leadService.findById(context.getTypeid(),
-				context.getSaccountid());
+		SimpleLead lead = getBeanInContext(context);
 		if (lead == null) {
 			return null;
 		}
@@ -142,8 +141,7 @@ public class LeadRelayEmailNotificationActionImpl extends
 	@Override
 	protected TemplateGenerator templateGeneratorForCommentAction(
 			MailContext<SimpleLead> context) {
-		SimpleLead simpleLead = leadService.findById(context.getTypeid(),
-				context.getSaccountid());
+		SimpleLead simpleLead = getBeanInContext(context);
 
 		if (simpleLead == null) {
 			return null;
@@ -162,6 +160,12 @@ public class LeadRelayEmailNotificationActionImpl extends
 				.putVariable("comment", context.getEmailNotification());
 
 		return templateGenerator;
+	}
+
+	@Override
+	protected SimpleLead getBeanInContext(MailContext<SimpleLead> context) {
+		return leadService.findById(context.getTypeid(),
+				context.getSaccountid());
 	}
 
 	public static class LeadFieldNameMapper extends ItemFieldMapper {
@@ -262,5 +266,4 @@ public class LeadRelayEmailNotificationActionImpl extends
 			return value;
 		}
 	}
-
 }

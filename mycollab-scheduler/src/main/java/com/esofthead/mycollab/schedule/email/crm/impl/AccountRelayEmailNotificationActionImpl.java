@@ -95,8 +95,7 @@ public class AccountRelayEmailNotificationActionImpl extends
 	@Override
 	protected TemplateGenerator templateGeneratorForCreateAction(
 			MailContext<SimpleAccount> context) {
-		SimpleAccount simpleAccount = accountService.findById(
-				context.getTypeid(), context.getSaccountid());
+		SimpleAccount simpleAccount = getBeanInContext(context);
 		if (simpleAccount != null) {
 			String subject = StringUtils.trim(simpleAccount.getAccountname(),
 					100);
@@ -123,8 +122,7 @@ public class AccountRelayEmailNotificationActionImpl extends
 	@Override
 	protected TemplateGenerator templateGeneratorForUpdateAction(
 			MailContext<SimpleAccount> context) {
-		SimpleAccount simpleAccount = accountService.findById(
-				context.getTypeid(), context.getSaccountid());
+		SimpleAccount simpleAccount = getBeanInContext(context);
 		if (simpleAccount != null) {
 			String subject = StringUtils.trim(simpleAccount.getAccountname(),
 					100);
@@ -157,9 +155,7 @@ public class AccountRelayEmailNotificationActionImpl extends
 	@Override
 	protected TemplateGenerator templateGeneratorForCommentAction(
 			MailContext<SimpleAccount> context) {
-		int accountRecordId = context.getTypeid();
-		SimpleAccount simpleAccount = accountService.findById(accountRecordId,
-				context.getSaccountid());
+		SimpleAccount simpleAccount = getBeanInContext(context);
 
 		if (simpleAccount != null) {
 			TemplateGenerator templateGenerator = new TemplateGenerator(
@@ -179,7 +175,12 @@ public class AccountRelayEmailNotificationActionImpl extends
 		} else {
 			return null;
 		}
+	}
 
+	@Override
+	protected SimpleAccount getBeanInContext(MailContext<SimpleAccount> context) {
+		return accountService.findById(context.getTypeid(),
+				context.getSaccountid());
 	}
 
 	public static class AssigneeFieldFormat extends FieldFormat {

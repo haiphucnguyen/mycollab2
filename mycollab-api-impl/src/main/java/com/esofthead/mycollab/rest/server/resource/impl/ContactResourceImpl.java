@@ -49,6 +49,7 @@ public class ContactResourceImpl implements ContactResource {
 		log.debug("Budget: " + entity.getBudget());
 		log.debug("Subject: " + entity.getSubject());
 		log.debug("Message: " + entity.getMessage());
+
 		// -----------------------------------------------------------
 		TemplateGenerator templateGenerator = new TemplateGenerator(
 				"Contact Us submit", MailUtils.templatePath(contactUsTemplate,

@@ -37,6 +37,7 @@ import com.esofthead.mycollab.module.crm.domain.SimpleNote;
 import com.esofthead.mycollab.module.crm.domain.criteria.NoteSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.CrmNotificationSettingService;
 import com.esofthead.mycollab.module.crm.service.NoteService;
+import com.esofthead.mycollab.module.mail.IContentGenerator;
 import com.esofthead.mycollab.module.mail.MailUtils;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.mail.service.ExtMailService;
@@ -68,6 +69,9 @@ public abstract class CrmDefaultSendingRelayEmailAction<B extends ValuedBean>
 
 	@Autowired
 	protected CrmNotificationSettingService notificationService;
+
+	@Autowired
+	protected IContentGenerator contentGenerator;
 
 	protected String crmType;
 
@@ -256,6 +260,8 @@ public abstract class CrmDefaultSendingRelayEmailAction<B extends ValuedBean>
 		}
 		return false;
 	}
+
+	protected abstract B getBeanInContext(MailContext<B> context);
 
 	protected abstract TemplateGenerator templateGeneratorForCreateAction(
 			MailContext<B> context);

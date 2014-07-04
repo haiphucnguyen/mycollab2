@@ -97,8 +97,7 @@ public class ContactRelayEmailNotificationActionImpl extends
 	@Override
 	protected TemplateGenerator templateGeneratorForCreateAction(
 			MailContext<SimpleContact> context) {
-		SimpleContact simpleContact = contactService.findById(
-				context.getTypeid(), context.getSaccountid());
+		SimpleContact simpleContact = getBeanInContext(context);
 		if (simpleContact != null) {
 			context.setWrappedBean(simpleContact);
 			String subject = StringUtils.trim(simpleContact.getContactName(),
@@ -125,8 +124,7 @@ public class ContactRelayEmailNotificationActionImpl extends
 	@Override
 	protected TemplateGenerator templateGeneratorForUpdateAction(
 			MailContext<SimpleContact> context) {
-		SimpleContact simpleContact = contactService.findById(
-				context.getTypeid(), context.getSaccountid());
+		SimpleContact simpleContact = getBeanInContext(context);
 
 		if (simpleContact != null) {
 			context.setWrappedBean(simpleContact);
@@ -160,8 +158,7 @@ public class ContactRelayEmailNotificationActionImpl extends
 	@Override
 	protected TemplateGenerator templateGeneratorForCommentAction(
 			MailContext<SimpleContact> context) {
-		SimpleContact simpleContact = contactService.findById(
-				context.getTypeid(), context.getSaccountid());
+		SimpleContact simpleContact = getBeanInContext(context);
 
 		if (simpleContact != null) {
 			TemplateGenerator templateGenerator = new TemplateGenerator(
@@ -182,6 +179,12 @@ public class ContactRelayEmailNotificationActionImpl extends
 			return null;
 		}
 
+	}
+
+	@Override
+	protected SimpleContact getBeanInContext(MailContext<SimpleContact> context) {
+		return contactService.findById(context.getTypeid(),
+				context.getSaccountid());
 	}
 
 	public static class ContactFieldNameMapper extends ItemFieldMapper {

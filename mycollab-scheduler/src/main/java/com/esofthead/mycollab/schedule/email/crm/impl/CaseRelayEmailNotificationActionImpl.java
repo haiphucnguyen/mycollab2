@@ -94,8 +94,8 @@ public class CaseRelayEmailNotificationActionImpl extends
 	@Override
 	protected TemplateGenerator templateGeneratorForCreateAction(
 			MailContext<SimpleCase> context) {
-		SimpleCase simpleCase = caseService.findById(context.getTypeid(),
-				context.getSaccountid());
+		SimpleCase simpleCase = getBeanInContext(context);
+
 		if (simpleCase != null) {
 			context.setWrappedBean(simpleCase);
 			String subject = StringUtils.trim(simpleCase.getSubject(), 100);
@@ -119,8 +119,7 @@ public class CaseRelayEmailNotificationActionImpl extends
 	@Override
 	protected TemplateGenerator templateGeneratorForUpdateAction(
 			MailContext<SimpleCase> context) {
-		SimpleCase simpleCase = caseService.findById(context.getTypeid(),
-				context.getSaccountid());
+		SimpleCase simpleCase = getBeanInContext(context);
 
 		if (simpleCase != null) {
 			context.setWrappedBean(simpleCase);
@@ -151,8 +150,7 @@ public class CaseRelayEmailNotificationActionImpl extends
 	@Override
 	protected TemplateGenerator templateGeneratorForCommentAction(
 			MailContext<SimpleCase> context) {
-		SimpleCase simpleCase = caseService.findById(context.getTypeid(),
-				context.getSaccountid());
+		SimpleCase simpleCase = getBeanInContext(context);
 
 		if (simpleCase != null) {
 			context.setWrappedBean(simpleCase);
@@ -172,6 +170,12 @@ public class CaseRelayEmailNotificationActionImpl extends
 		} else {
 			return null;
 		}
+	}
+
+	@Override
+	protected SimpleCase getBeanInContext(MailContext<SimpleCase> context) {
+		return caseService.findById(context.getTypeid(),
+				context.getSaccountid());
 	}
 
 	public static class CaseFieldNameMapper extends ItemFieldMapper {
