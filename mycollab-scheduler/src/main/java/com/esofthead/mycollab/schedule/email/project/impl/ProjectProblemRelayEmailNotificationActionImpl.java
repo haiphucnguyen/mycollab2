@@ -188,6 +188,12 @@ public class ProjectProblemRelayEmailNotificationActionImpl extends
 		return templateGenerator;
 	}
 
+	@Override
+	protected SimpleProblem getBeanInContext(MailContext<SimpleProblem> context) {
+		return problemService.findById(context.getTypeid(),
+				context.getSaccountid());
+	}
+
 	public static class ProjectFieldNameMapper extends ItemFieldMapper {
 		public ProjectFieldNameMapper() {
 			put("issuename", ProblemI18nEnum.FORM_NAME, true);

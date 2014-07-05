@@ -163,6 +163,12 @@ public class VersionRelayEmailNotificationActionImpl extends
 		return null;
 	}
 
+	@Override
+	protected SimpleVersion getBeanInContext(MailContext<SimpleVersion> context) {
+		return versionService.findById(context.getTypeid(),
+				context.getSaccountid());
+	}
+
 	public static class VersionFieldNameMapper extends ItemFieldMapper {
 		public VersionFieldNameMapper() {
 			put("description", GenericI18Enum.FORM_DESCRIPTION, true);
@@ -171,5 +177,4 @@ public class VersionRelayEmailNotificationActionImpl extends
 					VersionI18nEnum.FORM_DUE_DATE));
 		}
 	}
-
 }

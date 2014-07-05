@@ -185,6 +185,13 @@ public class ProjectMilestoneRelayEmailNotificationActionImpl extends
 		return templateGenerator;
 	}
 
+	@Override
+	protected SimpleMilestone getBeanInContext(
+			MailContext<SimpleMilestone> context) {
+		return milestoneService.findById(context.getTypeid(),
+				context.getSaccountid());
+	}
+
 	public static class MilestoneFieldNameMapper extends ItemFieldMapper {
 		public MilestoneFieldNameMapper() {
 			put("name", MilestoneI18nEnum.FORM_NAME_FIELD, true);

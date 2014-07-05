@@ -69,8 +69,9 @@ public class MessageRelayEmailNotificationActionImpl extends
 		listOfTitles.add(currentProject);
 
 		String summary = message.getTitle();
-		String summaryLink = ProjectLinkGenerator.generateMessagePreviewFullLink(
-				siteUrl, message.getProjectid(), message.getId());
+		String summaryLink = ProjectLinkGenerator
+				.generateMessagePreviewFullLink(siteUrl,
+						message.getProjectid(), message.getId());
 
 		templateGenerator.putVariable("makeChangeUser",
 				emailNotification.getChangeByUserFullName());
@@ -151,6 +152,12 @@ public class MessageRelayEmailNotificationActionImpl extends
 				.putVariable("comment", context.getEmailNotification());
 
 		return templateGenerator;
+	}
+
+	@Override
+	protected SimpleMessage getBeanInContext(MailContext<SimpleMessage> context) {
+		return messageService.findMessageById(context.getTypeid(),
+				context.getSaccountid());
 	}
 
 }

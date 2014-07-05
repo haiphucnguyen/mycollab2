@@ -186,6 +186,12 @@ public class ProjectRiskRelayEmailNotificationActionImpl extends
 		return templateGenerator;
 	}
 
+	@Override
+	protected SimpleRisk getBeanInContext(MailContext<SimpleRisk> context) {
+		return riskService.findById(context.getTypeid(),
+				context.getSaccountid());
+	}
+
 	public static class ProjectFieldNameMapper extends ItemFieldMapper {
 
 		public ProjectFieldNameMapper() {

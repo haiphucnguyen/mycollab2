@@ -193,6 +193,13 @@ public class ProjectTaskGroupRelayEmailNotificationActionImpl extends
 		return templateGenerator;
 	}
 
+	@Override
+	protected SimpleTaskList getBeanInContext(
+			MailContext<SimpleTaskList> context) {
+		return projectTaskListService.findById(context.getTypeid(),
+				context.getSaccountid());
+	}
+
 	public static class ProjectFieldNameMapper extends ItemFieldMapper {
 
 		public ProjectFieldNameMapper() {

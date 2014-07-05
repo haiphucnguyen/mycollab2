@@ -65,8 +65,10 @@ public class ComponentRelayEmailNotificationActionImpl extends
 
 	@Autowired
 	private ComponentService componentService;
+
 	@Autowired
 	private AuditLogService auditLogService;
+
 	@Autowired
 	private ProjectService projectService;
 
@@ -174,6 +176,13 @@ public class ComponentRelayEmailNotificationActionImpl extends
 		return null;
 	}
 
+	@Override
+	protected SimpleComponent getBeanInContext(
+			MailContext<SimpleComponent> context) {
+		return componentService.findById(context.getTypeid(),
+				context.getSaccountid());
+	}
+
 	public static class ComponentFieldNameMapper extends ItemFieldMapper {
 		public ComponentFieldNameMapper() {
 			put("description", GenericI18Enum.FORM_DESCRIPTION, true);
@@ -233,5 +242,4 @@ public class ComponentRelayEmailNotificationActionImpl extends
 		}
 
 	}
-
 }
