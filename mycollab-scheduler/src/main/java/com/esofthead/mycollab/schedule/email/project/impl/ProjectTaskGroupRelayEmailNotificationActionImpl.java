@@ -81,36 +81,6 @@ public class ProjectTaskGroupRelayEmailNotificationActionImpl extends
 
 	private static final ProjectFieldNameMapper mapper = new ProjectFieldNameMapper();
 
-	protected void setupMailHeaders(SimpleTaskList tasklist,
-			SimpleRelayEmailNotification emailNotification,
-			TemplateGenerator templateGenerator) {
-		List<Map<String, String>> listOfTitles = new ArrayList<Map<String, String>>();
-
-		SimpleProject relatedProject = projectService.findById(
-				tasklist.getProjectid(), emailNotification.getSaccountid());
-
-		HashMap<String, String> currentProject = new HashMap<String, String>();
-		currentProject.put("displayName", relatedProject.getName());
-		currentProject.put(
-				"webLink",
-				ProjectLinkGenerator.generateProjectFullLink(siteUrl,
-						tasklist.getProjectid()));
-
-		listOfTitles.add(currentProject);
-
-		String summary = tasklist.getName();
-		String summaryLink = ProjectLinkGenerator
-				.generateTaskGroupPreviewFullLink(siteUrl,
-						tasklist.getProjectid(), tasklist.getId());
-
-		templateGenerator.putVariable("makeChangeUser",
-				emailNotification.getChangeByUserFullName());
-		templateGenerator.putVariable("itemType", "task group");
-		templateGenerator.putVariable("titles", listOfTitles);
-		templateGenerator.putVariable("summary", summary);
-		templateGenerator.putVariable("summaryLink", summaryLink);
-	}
-
 	@Override
 	public TemplateGenerator templateGeneratorForCreateAction(
 			MailContext<SimpleTaskList> context) {
@@ -128,13 +98,24 @@ public class ProjectTaskGroupRelayEmailNotificationActionImpl extends
 						taskList.getProjectName(),
 						context.getChangeByUserFullName(), subject),
 				context.templatePath("templates/email/project/itemCreatedNotifier.mt"));
-		setupMailHeaders(taskList, context.getEmailNotification(),
-				templateGenerator);
+		buildExtraTemplateVariables(context.getEmailNotification());
 
 		templateGenerator.putVariable("context", context);
 		templateGenerator.putVariable("mapper", mapper);
 
 		return templateGenerator;
+	}
+
+	@Override
+	protected String getItemName() {
+		return StringUtils.trim(bean.getName(), 100);
+	}
+
+	@Override
+	protected String getCreateSubject(MailContext<SimpleTaskList> context) {
+		return context.getMessage(TaskGroupI18nEnum.MAIL_CREATE_ITEM_SUBJECT,
+				bean.getProjectName(), context.getChangeByUserFullName(),
+				getItemName());
 	}
 
 	@Override
@@ -154,8 +135,7 @@ public class ProjectTaskGroupRelayEmailNotificationActionImpl extends
 						context.getChangeByUserFullName(), subject),
 				context.templatePath("templates/email/project/itemUpdatedNotifier.mt"));
 
-		setupMailHeaders(taskList, context.getEmailNotification(),
-				templateGenerator);
+		buildExtraTemplateVariables(context.getEmailNotification());
 
 		if (context.getTypeid() != null) {
 			SimpleAuditLog auditLog = auditLogService.findLatestLog(
@@ -184,8 +164,7 @@ public class ProjectTaskGroupRelayEmailNotificationActionImpl extends
 						context.getChangeByUserFullName(),
 						StringUtils.trim(taskList.getName(), 100)),
 				context.templatePath("templates/email/project/itemCommentNotifier.mt"));
-		setupMailHeaders(taskList, context.getEmailNotification(),
-				templateGenerator);
+		buildExtraTemplateVariables(context.getEmailNotification());
 
 		templateGenerator
 				.putVariable("comment", context.getEmailNotification());
@@ -198,6 +177,36 @@ public class ProjectTaskGroupRelayEmailNotificationActionImpl extends
 			MailContext<SimpleTaskList> context) {
 		return projectTaskListService.findById(context.getTypeid(),
 				context.getSaccountid());
+	}
+
+	@Override
+	protected void buildExtraTemplateVariables(
+			SimpleRelayEmailNotification emailNotification) {
+		List<Map<String, String>> listOfTitles = new ArrayList<Map<String, String>>();
+
+		SimpleProject relatedProject = projectService.findById(
+				bean.getProjectid(), emailNotification.getSaccountid());
+
+		HashMap<String, String> currentProject = new HashMap<String, String>();
+		currentProject.put("displayName", relatedProject.getName());
+		currentProject.put(
+				"webLink",
+				ProjectLinkGenerator.generateProjectFullLink(siteUrl,
+						bean.getProjectid()));
+
+		listOfTitles.add(currentProject);
+
+		String summary = bean.getName();
+		String summaryLink = ProjectLinkGenerator
+				.generateTaskGroupPreviewFullLink(siteUrl, bean.getProjectid(),
+						bean.getId());
+
+		contentGenerator.putVariable("makeChangeUser",
+				emailNotification.getChangeByUserFullName());
+		contentGenerator.putVariable("itemType", "task group");
+		contentGenerator.putVariable("titles", listOfTitles);
+		contentGenerator.putVariable("summary", summary);
+		contentGenerator.putVariable("summaryLink", summaryLink);
 	}
 
 	public static class ProjectFieldNameMapper extends ItemFieldMapper {

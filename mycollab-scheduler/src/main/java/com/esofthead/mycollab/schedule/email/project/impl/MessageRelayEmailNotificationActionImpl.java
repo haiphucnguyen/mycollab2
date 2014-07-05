@@ -54,33 +54,6 @@ public class MessageRelayEmailNotificationActionImpl extends
 	@Autowired
 	private ProjectService projectService;
 
-	protected void setupMailHeaders(SimpleMessage message,
-			SimpleRelayEmailNotification emailNotification,
-			TemplateGenerator templateGenerator) {
-		List<Map<String, String>> listOfTitles = new ArrayList<Map<String, String>>();
-
-		HashMap<String, String> currentProject = new HashMap<String, String>();
-		currentProject.put("displayName", message.getProjectName());
-		currentProject.put(
-				"webLink",
-				ProjectLinkGenerator.generateProjectFullLink(siteUrl,
-						message.getProjectid()));
-
-		listOfTitles.add(currentProject);
-
-		String summary = message.getTitle();
-		String summaryLink = ProjectLinkGenerator
-				.generateMessagePreviewFullLink(siteUrl,
-						message.getProjectid(), message.getId());
-
-		templateGenerator.putVariable("makeChangeUser",
-				emailNotification.getChangeByUserFullName());
-		templateGenerator.putVariable("itemType", "message");
-		templateGenerator.putVariable("titles", listOfTitles);
-		templateGenerator.putVariable("summary", summary);
-		templateGenerator.putVariable("summaryLink", summaryLink);
-	}
-
 	@Override
 	protected TemplateGenerator templateGeneratorForCreateAction(
 			MailContext<SimpleMessage> context) {
@@ -99,11 +72,22 @@ public class MessageRelayEmailNotificationActionImpl extends
 						StringUtils.trim(message.getTitle(), 100)),
 				context.templatePath("templates/email/project/itemCreatedNotifier.mt"));
 
-		setupMailHeaders(message, context.getEmailNotification(),
-				templateGenerator);
+		buildExtraTemplateVariables(context.getEmailNotification());
 
 		templateGenerator.putVariable("message", message.getMessage());
 		return templateGenerator;
+	}
+
+	@Override
+	protected String getItemName() {
+		return StringUtils.trim(bean.getTitle(), 100);
+	}
+
+	@Override
+	protected String getCreateSubject(MailContext<SimpleMessage> context) {
+		return context.getMessage(MessageI18nEnum.MAIL_CREATE_ITEM_SUBJECT,
+				bean.getProjectName(), context.getChangeByUserFullName(),
+				getItemName());
 	}
 
 	@Override
@@ -122,8 +106,7 @@ public class MessageRelayEmailNotificationActionImpl extends
 						context.getChangeByUserFullName(),
 						StringUtils.trim(message.getTitle(), 100)),
 				context.templatePath("templates/email/project/itemCreatedNotifier.mt"));
-		setupMailHeaders(message, context.getEmailNotification(),
-				templateGenerator);
+		buildExtraTemplateVariables(context.getEmailNotification());
 
 		templateGenerator.putVariable("message", message.getMessage());
 		return templateGenerator;
@@ -145,8 +128,7 @@ public class MessageRelayEmailNotificationActionImpl extends
 						context.getChangeByUserFullName(),
 						StringUtils.trim(message.getTitle(), 100)),
 				context.templatePath("templates/email/project/itemCommentNotifier.mt"));
-		setupMailHeaders(message, context.getEmailNotification(),
-				templateGenerator);
+		buildExtraTemplateVariables(context.getEmailNotification());
 
 		templateGenerator
 				.putVariable("comment", context.getEmailNotification());
@@ -160,4 +142,31 @@ public class MessageRelayEmailNotificationActionImpl extends
 				context.getSaccountid());
 	}
 
+	@Override
+	protected void buildExtraTemplateVariables(
+			SimpleRelayEmailNotification emailNotification) {
+		List<Map<String, String>> listOfTitles = new ArrayList<Map<String, String>>();
+
+		HashMap<String, String> currentProject = new HashMap<String, String>();
+		currentProject.put("displayName", bean.getProjectName());
+		currentProject.put(
+				"webLink",
+				ProjectLinkGenerator.generateProjectFullLink(siteUrl,
+						bean.getProjectid()));
+
+		listOfTitles.add(currentProject);
+
+		String summary = bean.getTitle();
+		String summaryLink = ProjectLinkGenerator
+				.generateMessagePreviewFullLink(siteUrl, bean.getProjectid(),
+						bean.getId());
+
+		contentGenerator.putVariable("makeChangeUser",
+				emailNotification.getChangeByUserFullName());
+		contentGenerator.putVariable("itemType", "message");
+		contentGenerator.putVariable("titles", listOfTitles);
+		contentGenerator.putVariable("summary", summary);
+		contentGenerator.putVariable("summaryLink", summaryLink);
+
+	}
 }

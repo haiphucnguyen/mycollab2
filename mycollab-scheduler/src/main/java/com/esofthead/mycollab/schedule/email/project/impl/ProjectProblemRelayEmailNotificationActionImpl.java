@@ -76,36 +76,6 @@ public class ProjectProblemRelayEmailNotificationActionImpl extends
 
 	private static final ProjectFieldNameMapper mapper = new ProjectFieldNameMapper();
 
-	protected void setupMailHeaders(SimpleProblem problem,
-			SimpleRelayEmailNotification emailNotification,
-			TemplateGenerator templateGenerator) {
-		List<Map<String, String>> listOfTitles = new ArrayList<Map<String, String>>();
-
-		SimpleProject relatedProject = projectService.findById(
-				problem.getProjectid(), emailNotification.getSaccountid());
-
-		HashMap<String, String> currentProject = new HashMap<String, String>();
-		currentProject.put("displayName", relatedProject.getName());
-		currentProject.put(
-				"webLink",
-				ProjectLinkGenerator.generateProjectFullLink(siteUrl,
-						problem.getProjectid()));
-
-		listOfTitles.add(currentProject);
-
-		String summary = problem.getIssuename();
-		String summaryLink = ProjectLinkGenerator
-				.generateProblemPreviewFullLink(siteUrl,
-						problem.getProjectid(), problem.getId());
-
-		templateGenerator.putVariable("makeChangeUser",
-				emailNotification.getChangeByUserFullName());
-		templateGenerator.putVariable("itemType", "problem");
-		templateGenerator.putVariable("titles", listOfTitles);
-		templateGenerator.putVariable("summary", summary);
-		templateGenerator.putVariable("summaryLink", summaryLink);
-	}
-
 	@Override
 	protected TemplateGenerator templateGeneratorForCreateAction(
 			MailContext<SimpleProblem> context) {
@@ -123,13 +93,24 @@ public class ProjectProblemRelayEmailNotificationActionImpl extends
 						StringUtils.trim(problem.getIssuename(), 100)),
 				context.templatePath("templates/email/project/itemCreatedNotifier.mt"));
 
-		setupMailHeaders(problem, context.getEmailNotification(),
-				templateGenerator);
+		buildExtraTemplateVariables(context.getEmailNotification());
 
 		templateGenerator.putVariable("context", context);
 		templateGenerator.putVariable("mapper", mapper);
 
 		return templateGenerator;
+	}
+
+	@Override
+	protected String getItemName() {
+		return StringUtils.trim(bean.getIssuename(), 100);
+	}
+
+	@Override
+	protected String getCreateSubject(MailContext<SimpleProblem> context) {
+		return context.getMessage(ProblemI18nEnum.MAIL_CREATE_ITEM_SUBJECT,
+				bean.getProjectName(), context.getChangeByUserFullName(),
+				getItemName());
 	}
 
 	@Override
@@ -149,8 +130,7 @@ public class ProjectProblemRelayEmailNotificationActionImpl extends
 						context.getChangeByUserFullName(), subject),
 				context.templatePath("templates/email/project/itemUpdatedNotifier.mt"));
 
-		setupMailHeaders(problem, context.getEmailNotification(),
-				templateGenerator);
+		buildExtraTemplateVariables(context.getEmailNotification());
 
 		if (context.getTypeid() != null) {
 			SimpleAuditLog auditLog = auditLogService.findLatestLog(
@@ -179,8 +159,7 @@ public class ProjectProblemRelayEmailNotificationActionImpl extends
 						context.getChangeByUserFullName(),
 						StringUtils.trim(problem.getIssuename(), 100)),
 				context.templatePath("templates/email/project/itemCommentNotifier.mt"));
-		setupMailHeaders(problem, context.getEmailNotification(),
-				templateGenerator);
+		buildExtraTemplateVariables(context.getEmailNotification());
 
 		templateGenerator
 				.putVariable("comment", context.getEmailNotification());
@@ -192,6 +171,37 @@ public class ProjectProblemRelayEmailNotificationActionImpl extends
 	protected SimpleProblem getBeanInContext(MailContext<SimpleProblem> context) {
 		return problemService.findById(context.getTypeid(),
 				context.getSaccountid());
+	}
+
+	@Override
+	protected void buildExtraTemplateVariables(
+			SimpleRelayEmailNotification emailNotification) {
+		List<Map<String, String>> listOfTitles = new ArrayList<Map<String, String>>();
+
+		SimpleProject relatedProject = projectService.findById(
+				bean.getProjectid(), emailNotification.getSaccountid());
+
+		HashMap<String, String> currentProject = new HashMap<String, String>();
+		currentProject.put("displayName", relatedProject.getName());
+		currentProject.put(
+				"webLink",
+				ProjectLinkGenerator.generateProjectFullLink(siteUrl,
+						bean.getProjectid()));
+
+		listOfTitles.add(currentProject);
+
+		String summary = bean.getIssuename();
+		String summaryLink = ProjectLinkGenerator
+				.generateProblemPreviewFullLink(siteUrl, bean.getProjectid(),
+						bean.getId());
+
+		contentGenerator.putVariable("makeChangeUser",
+				emailNotification.getChangeByUserFullName());
+		contentGenerator.putVariable("itemType", "problem");
+		contentGenerator.putVariable("titles", listOfTitles);
+		contentGenerator.putVariable("summary", summary);
+		contentGenerator.putVariable("summaryLink", summaryLink);
+
 	}
 
 	public static class ProjectFieldNameMapper extends ItemFieldMapper {

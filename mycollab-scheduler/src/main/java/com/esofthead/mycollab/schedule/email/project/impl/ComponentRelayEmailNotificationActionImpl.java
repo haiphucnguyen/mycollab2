@@ -74,33 +74,34 @@ public class ComponentRelayEmailNotificationActionImpl extends
 
 	private static final ComponentFieldNameMapper mapper = new ComponentFieldNameMapper();
 
-	protected void setupMailHeaders(SimpleComponent component,
-			SimpleRelayEmailNotification emailNotification,
-			TemplateGenerator templateGenerator) {
+	@Override
+	protected void buildExtraTemplateVariables(
+			SimpleRelayEmailNotification emailNotification) {
 		List<Map<String, String>> listOfTitles = new ArrayList<Map<String, String>>();
 
 		HashMap<String, String> currentProject = new HashMap<String, String>();
-		SimpleProject project = projectService.findById(
-				component.getProjectid(), emailNotification.getSaccountid());
+		SimpleProject project = projectService.findById(bean.getProjectid(),
+				emailNotification.getSaccountid());
 		currentProject.put("displayName", project.getName());
 		currentProject.put(
 				"webLink",
 				ProjectLinkGenerator.generateProjectFullLink(siteUrl,
-						component.getProjectid()));
+						bean.getProjectid()));
 
 		listOfTitles.add(currentProject);
 
-		String summary = component.getComponentname();
+		String summary = bean.getComponentname();
 		String summaryLink = ProjectLinkGenerator
 				.generateBugComponentPreviewFullLink(siteUrl,
-						component.getProjectid(), component.getId());
+						bean.getProjectid(), bean.getId());
 
-		templateGenerator.putVariable("makeChangeUser",
+		contentGenerator.putVariable("makeChangeUser",
 				emailNotification.getChangeByUserFullName());
-		templateGenerator.putVariable("itemType", "component");
-		templateGenerator.putVariable("titles", listOfTitles);
-		templateGenerator.putVariable("summary", summary);
-		templateGenerator.putVariable("summaryLink", summaryLink);
+		contentGenerator.putVariable("itemType", "component");
+		contentGenerator.putVariable("titles", listOfTitles);
+		contentGenerator.putVariable("summary", summary);
+		contentGenerator.putVariable("summaryLink", summaryLink);
+
 	}
 
 	@Override
@@ -115,19 +116,15 @@ public class ComponentRelayEmailNotificationActionImpl extends
 
 		context.setWrappedBean(component);
 
-		SimpleProject project = projectService.findById(
-				component.getProjectid(), context.getSaccountid());
-
 		String subject = StringUtils.trim(component.getDescription(), 100);
 
 		TemplateGenerator templateGenerator = new TemplateGenerator(
 				context.getMessage(ComponentI18nEnum.MAIL_CREATE_ITEM_SUBJECT,
-						project.getName(), context.getChangeByUserFullName(),
-						subject),
+						component.getProjectName(),
+						context.getChangeByUserFullName(), subject),
 				context.templatePath("templates/email/project/itemCreatedNotifier.mt"));
 
-		setupMailHeaders(component, context.getEmailNotification(),
-				templateGenerator);
+		buildExtraTemplateVariables(context.getEmailNotification());
 
 		templateGenerator.putVariable("context", context);
 		templateGenerator.putVariable("mapper", mapper);
@@ -145,19 +142,16 @@ public class ComponentRelayEmailNotificationActionImpl extends
 		}
 
 		context.setWrappedBean(component);
-		SimpleProject project = projectService.findById(
-				component.getProjectid(), context.getSaccountid());
 
 		String subject = StringUtils.trim(component.getDescription(), 100);
 
 		TemplateGenerator templateGenerator = new TemplateGenerator(
 				context.getMessage(ComponentI18nEnum.MAIL_UPDATE_ITEM_SUBJECT,
-						project.getName(), context.getChangeByUserFullName(),
-						subject),
+						component.getProjectName(),
+						context.getChangeByUserFullName(), subject),
 				context.templatePath("templates/email/project/itemUpdatedNotifier.mt"));
 
-		setupMailHeaders(component, context.getEmailNotification(),
-				templateGenerator);
+		buildExtraTemplateVariables(context.getEmailNotification());
 
 		if (context.getTypeid() != null) {
 			SimpleAuditLog auditLog = auditLogService.findLatestLog(
@@ -181,6 +175,18 @@ public class ComponentRelayEmailNotificationActionImpl extends
 			MailContext<SimpleComponent> context) {
 		return componentService.findById(context.getTypeid(),
 				context.getSaccountid());
+	}
+
+	@Override
+	protected String getItemName() {
+		return StringUtils.trim(bean.getDescription(), 100);
+	}
+
+	@Override
+	protected String getCreateSubject(MailContext<SimpleComponent> context) {
+		return context.getMessage(ComponentI18nEnum.MAIL_CREATE_ITEM_SUBJECT,
+				bean.getProjectName(), context.getChangeByUserFullName(),
+				getItemName());
 	}
 
 	public static class ComponentFieldNameMapper extends ItemFieldMapper {

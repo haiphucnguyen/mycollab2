@@ -74,36 +74,6 @@ public class ProjectMilestoneRelayEmailNotificationActionImpl extends
 
 	private static final MilestoneFieldNameMapper mapper = new MilestoneFieldNameMapper();
 
-	protected void setupMailHeaders(SimpleMilestone milestone,
-			SimpleRelayEmailNotification emailNotification,
-			TemplateGenerator templateGenerator) {
-		List<Map<String, String>> listOfTitles = new ArrayList<Map<String, String>>();
-
-		SimpleProject relatedProject = projectService.findById(
-				milestone.getProjectid(), emailNotification.getSaccountid());
-
-		HashMap<String, String> currentProject = new HashMap<String, String>();
-		currentProject.put("displayName", relatedProject.getName());
-		currentProject.put(
-				"webLink",
-				ProjectLinkGenerator.generateProjectFullLink(siteUrl,
-						milestone.getProjectid()));
-
-		listOfTitles.add(currentProject);
-
-		String summary = milestone.getName();
-		String summaryLink = ProjectLinkGenerator
-				.generateMilestonePreviewFullLink(siteUrl,
-						milestone.getProjectid(), milestone.getId());
-
-		templateGenerator.putVariable("makeChangeUser",
-				emailNotification.getChangeByUserFullName());
-		templateGenerator.putVariable("itemType", "phase");
-		templateGenerator.putVariable("titles", listOfTitles);
-		templateGenerator.putVariable("summary", summary);
-		templateGenerator.putVariable("summaryLink", summaryLink);
-	}
-
 	@Override
 	protected TemplateGenerator templateGeneratorForCreateAction(
 			MailContext<SimpleMilestone> context) {
@@ -122,13 +92,24 @@ public class ProjectMilestoneRelayEmailNotificationActionImpl extends
 						StringUtils.trim(milestone.getName(), 100)),
 				context.templatePath("templates/email/project/itemCreatedNotifier.mt"));
 
-		setupMailHeaders(milestone, context.getEmailNotification(),
-				templateGenerator);
+		buildExtraTemplateVariables(context.getEmailNotification());
 
 		templateGenerator.putVariable("context", context);
 		templateGenerator.putVariable("mapper", mapper);
 
 		return templateGenerator;
+	}
+
+	@Override
+	protected String getItemName() {
+		return StringUtils.trim(bean.getName(), 100);
+	}
+
+	@Override
+	protected String getCreateSubject(MailContext<SimpleMilestone> context) {
+		return context.getMessage(MilestoneI18nEnum.MAIL_CREATE_ITEM_SUBJECT,
+				bean.getProjectName(), context.getChangeByUserFullName(),
+				getItemName());
 	}
 
 	@Override
@@ -147,8 +128,7 @@ public class ProjectMilestoneRelayEmailNotificationActionImpl extends
 						context.getChangeByUserFullName(), subject),
 				context.templatePath("templates/email/project/itemUpdatedNotifier.mt"));
 
-		setupMailHeaders(milestone, context.getEmailNotification(),
-				templateGenerator);
+		buildExtraTemplateVariables(context.getEmailNotification());
 
 		if (context.getTypeid() != null) {
 			SimpleAuditLog auditLog = auditLogService.findLatestLog(
@@ -177,8 +157,7 @@ public class ProjectMilestoneRelayEmailNotificationActionImpl extends
 						StringUtils.trim(milestone.getName(), 100)),
 				context.templatePath("templates/email/project/itemCommentNotifier.mt"));
 
-		setupMailHeaders(milestone, context.getEmailNotification(),
-				templateGenerator);
+		buildExtraTemplateVariables(context.getEmailNotification());
 
 		templateGenerator
 				.putVariable("comment", context.getEmailNotification());
@@ -257,5 +236,36 @@ public class ProjectMilestoneRelayEmailNotificationActionImpl extends
 			}
 			return value;
 		}
+	}
+
+	@Override
+	protected void buildExtraTemplateVariables(
+			SimpleRelayEmailNotification emailNotification) {
+		List<Map<String, String>> listOfTitles = new ArrayList<Map<String, String>>();
+
+		SimpleProject relatedProject = projectService.findById(
+				bean.getProjectid(), emailNotification.getSaccountid());
+
+		HashMap<String, String> currentProject = new HashMap<String, String>();
+		currentProject.put("displayName", relatedProject.getName());
+		currentProject.put(
+				"webLink",
+				ProjectLinkGenerator.generateProjectFullLink(siteUrl,
+						bean.getProjectid()));
+
+		listOfTitles.add(currentProject);
+
+		String summary = bean.getName();
+		String summaryLink = ProjectLinkGenerator
+				.generateMilestonePreviewFullLink(siteUrl, bean.getProjectid(),
+						bean.getId());
+
+		contentGenerator.putVariable("makeChangeUser",
+				emailNotification.getChangeByUserFullName());
+		contentGenerator.putVariable("itemType", "phase");
+		contentGenerator.putVariable("titles", listOfTitles);
+		contentGenerator.putVariable("summary", summary);
+		contentGenerator.putVariable("summaryLink", summaryLink);
+
 	}
 }

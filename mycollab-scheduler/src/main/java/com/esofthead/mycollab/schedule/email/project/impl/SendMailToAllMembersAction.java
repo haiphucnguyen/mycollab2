@@ -183,6 +183,13 @@ public abstract class SendMailToAllMembersAction<B> implements
 
 	protected abstract B getBeanInContext(MailContext<B> context);
 
+	protected abstract void buildExtraTemplateVariables(
+			SimpleRelayEmailNotification emailNotification);
+	
+	protected abstract String getItemName();
+
+	protected abstract String getCreateSubject(MailContext<B> context);
+
 	protected abstract TemplateGenerator templateGeneratorForCreateAction(
 			MailContext<B> context);
 

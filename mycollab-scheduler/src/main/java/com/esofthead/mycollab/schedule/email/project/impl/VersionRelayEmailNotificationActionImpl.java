@@ -64,33 +64,33 @@ public class VersionRelayEmailNotificationActionImpl extends
 
 	private VersionFieldNameMapper mapper = new VersionFieldNameMapper();
 
-	protected void setupMailHeaders(SimpleVersion version,
-			SimpleRelayEmailNotification emailNotification,
-			TemplateGenerator templateGenerator) {
+	@Override
+	protected void buildExtraTemplateVariables(
+			SimpleRelayEmailNotification emailNotification) {
 		List<Map<String, String>> listOfTitles = new ArrayList<Map<String, String>>();
 
 		HashMap<String, String> currentProject = new HashMap<String, String>();
-		SimpleProject project = projectService.findById(version.getProjectid(),
+		SimpleProject project = projectService.findById(bean.getProjectid(),
 				emailNotification.getSaccountid());
 		currentProject.put("displayName", project.getName());
 		currentProject.put(
 				"webLink",
 				ProjectLinkGenerator.generateProjectFullLink(siteUrl,
-						version.getProjectid()));
+						bean.getProjectid()));
 
 		listOfTitles.add(currentProject);
 
-		String summary = version.getVersionname();
+		String summary = bean.getVersionname();
 		String summaryLink = ProjectLinkGenerator
 				.generateBugComponentPreviewFullLink(siteUrl,
-						version.getProjectid(), version.getId());
+						bean.getProjectid(), bean.getId());
 
-		templateGenerator.putVariable("makeChangeUser",
+		contentGenerator.putVariable("makeChangeUser",
 				emailNotification.getChangeByUserFullName());
-		templateGenerator.putVariable("itemType", "version");
-		templateGenerator.putVariable("titles", listOfTitles);
-		templateGenerator.putVariable("summary", summary);
-		templateGenerator.putVariable("summaryLink", summaryLink);
+		contentGenerator.putVariable("itemType", "version");
+		contentGenerator.putVariable("titles", listOfTitles);
+		contentGenerator.putVariable("summary", summary);
+		contentGenerator.putVariable("summaryLink", summaryLink);
 	}
 
 	@Override
@@ -114,13 +114,24 @@ public class VersionRelayEmailNotificationActionImpl extends
 						subject),
 				context.templatePath("templates/email/project/itemCreatedNotifier.mt"));
 
-		setupMailHeaders(version, context.getEmailNotification(),
-				templateGenerator);
+		buildExtraTemplateVariables(context.getEmailNotification());
 
 		templateGenerator.putVariable("context", context);
 		templateGenerator.putVariable("mapper", mapper);
 
 		return templateGenerator;
+	}
+
+	@Override
+	protected String getItemName() {
+		return StringUtils.trim(bean.getDescription(), 100);
+	}
+
+	@Override
+	protected String getCreateSubject(MailContext<SimpleVersion> context) {
+		return context.getMessage(VersionI18nEnum.MAIL_CREATE_ITEM_SUBJECT,
+				bean.getProjectName(), context.getChangeByUserFullName(),
+				getItemName());
 	}
 
 	@Override
@@ -143,8 +154,7 @@ public class VersionRelayEmailNotificationActionImpl extends
 						subject),
 				context.templatePath("templates/email/project/itemUpdatedNotifier.mt"));
 
-		setupMailHeaders(version, context.getEmailNotification(),
-				templateGenerator);
+		buildExtraTemplateVariables(context.getEmailNotification());
 
 		if (context.getTypeid() != null) {
 			SimpleAuditLog auditLog = auditLogService.findLatestLog(
