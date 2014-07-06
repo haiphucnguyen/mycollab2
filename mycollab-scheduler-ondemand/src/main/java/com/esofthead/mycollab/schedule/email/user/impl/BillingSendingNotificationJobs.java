@@ -165,7 +165,7 @@ public class BillingSendingNotificationJobs extends GenericQuartzJobBean {
 					+ "account/billing";
 			contentGenerator.putVariable("link", link);
 
-			extMailService.sendHTMLMail("noreply@mycollab.com",
+			extMailService.sendHTMLMail(SiteConfiguration.getNoReplyEmail(),
 					SiteConfiguration.getSiteName(), Arrays
 							.asList(new MailRecipientField(user.getEmail(),
 									user.getDisplayName())), null, null,
@@ -205,7 +205,7 @@ public class BillingSendingNotificationJobs extends GenericQuartzJobBean {
 
 			extMailService
 					.sendHTMLMail(
-							"noreply@mycollab.com",
+							SiteConfiguration.getNoReplyEmail(),
 							SiteConfiguration.getSiteName(),
 							Arrays.asList(new MailRecipientField(user
 									.getEmail(), user.getDisplayName())),

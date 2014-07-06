@@ -30,6 +30,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.common.domain.MailRecipientField;
+import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.arguments.DateSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
@@ -79,8 +80,8 @@ public class SendingCountUserLoginByDateJob extends GenericQuartzJobBean {
 			try {
 				extMailService
 						.sendHTMLMail(
-								"noreply@mycollab.com",
-								"noreply@mycollab.com",
+								SiteConfiguration.getNoReplyEmail(),
+								SiteConfiguration.getNoReplyEmail(),
 								Arrays.asList(new MailRecipientField(
 										"hainguyen@esofthead.com", "Hai Nguyen")),
 								null,
