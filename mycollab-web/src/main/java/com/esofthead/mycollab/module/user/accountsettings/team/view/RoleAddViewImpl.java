@@ -34,7 +34,6 @@ import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
-import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
@@ -275,17 +274,11 @@ public class RoleAddViewImpl extends AbstractPageView implements RoleAddView {
 					textArea.setNullRepresentation("");
 					return textArea;
 				} else if (propertyId.equals("rolename")) {
-					if (role.getIssystemrole() != null
-							&& role.getIssystemrole() == Boolean.TRUE) {
-						return new DefaultFormViewFieldFactory.FormViewField(
-								role.getRolename());
-					} else {
-						final TextField tf = new TextField();
-						tf.setNullRepresentation("");
-						tf.setRequired(true);
-						tf.setRequiredError("Please enter a role name");
-						return tf;
-					}
+					final TextField tf = new TextField();
+					tf.setNullRepresentation("");
+					tf.setRequired(true);
+					tf.setRequiredError("Please enter a role name");
+					return tf;
 
 				}
 				return null;

@@ -25,8 +25,8 @@ import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.utils.ImageUtil;
 import com.esofthead.mycollab.eventmanager.EventBus;
+import com.esofthead.mycollab.module.user.accountsettings.localization.AdminI18nEnum;
 import com.esofthead.mycollab.module.user.accountsettings.localization.SettingCommonI18nEnum;
-import com.esofthead.mycollab.module.user.accountsettings.localization.UserI18nEnum;
 import com.esofthead.mycollab.module.user.accountsettings.view.events.AccountCustomizeEvent;
 import com.esofthead.mycollab.module.user.accountsettings.view.parameters.CustomizeScreenData;
 import com.esofthead.mycollab.module.user.domain.AccountTheme;
@@ -86,7 +86,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements
 		this.setMargin(new MarginInfo(false, true, true, true));
 
 		AddViewLayout2 mainLayout = new AddViewLayout2(
-				AppContext.getMessage(UserI18nEnum.VIEW_CUSTOMIZE),
+				AppContext.getMessage(AdminI18nEnum.VIEW_CUSTOMIZE),
 				MyCollabResource.newResource("icons/24/user/customize.png"));
 		mainLayout.setWidth("100%");
 		mainLayout.setStyleName("readview-layout");
