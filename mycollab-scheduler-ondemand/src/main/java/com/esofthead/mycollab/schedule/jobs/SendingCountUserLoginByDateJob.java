@@ -33,7 +33,7 @@ import com.esofthead.mycollab.common.domain.MailRecipientField;
 import com.esofthead.mycollab.core.arguments.DateSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
-import com.esofthead.mycollab.module.mail.TemplateGenerator;
+import com.esofthead.mycollab.module.mail.IContentGenerator;
 import com.esofthead.mycollab.module.mail.service.ExtMailService;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
@@ -57,6 +57,9 @@ public class SendingCountUserLoginByDateJob extends GenericQuartzJobBean {
 	@Autowired
 	private ExtMailService extMailService;
 
+	@Autowired
+	private IContentGenerator contentGenerator;
+
 	static final String COUNT_USER_LOGIN_TEMPLATE = "templates/email/user/countUserLoginByDate.mt";
 
 	@Override
@@ -70,18 +73,23 @@ public class SendingCountUserLoginByDateJob extends GenericQuartzJobBean {
 				.findPagableListByCriteria(new SearchRequest<UserSearchCriteria>(
 						criteria, 0, Integer.MAX_VALUE));
 		if (lstSimpleUsers != null && lstSimpleUsers.size() > 0) {
-			TemplateGenerator templateGenerator = new TemplateGenerator(
-					"Today system-logins count", COUNT_USER_LOGIN_TEMPLATE);
-			templateGenerator.putVariable("lstUser", lstSimpleUsers);
-			templateGenerator.putVariable("count", lstSimpleUsers.size());
+			contentGenerator.putVariable("lstUser", lstSimpleUsers);
+			contentGenerator.putVariable("count", lstSimpleUsers.size());
 
 			try {
-				extMailService.sendHTMLMail("noreply@mycollab.com",
-						"noreply@mycollab.com",
-						Arrays.asList(new MailRecipientField(
-								"hainguyen@esofthead.com", "Hai Nguyen")),
-						null, null, templateGenerator.generateSubjectContent(),
-						templateGenerator.generateBodyContent(), null);
+				extMailService
+						.sendHTMLMail(
+								"noreply@mycollab.com",
+								"noreply@mycollab.com",
+								Arrays.asList(new MailRecipientField(
+										"hainguyen@esofthead.com", "Hai Nguyen")),
+								null,
+								null,
+								contentGenerator
+										.generateSubjectContent("Today system-logins count"),
+								contentGenerator
+										.generateBodyContent(COUNT_USER_LOGIN_TEMPLATE),
+								null);
 			} catch (Exception e) {
 				log.error("Error whle generate template", e);
 			}

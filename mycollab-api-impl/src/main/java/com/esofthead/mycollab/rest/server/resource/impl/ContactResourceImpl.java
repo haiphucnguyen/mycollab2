@@ -22,11 +22,12 @@ import javax.ws.rs.core.Response;
 import org.jboss.resteasy.annotations.Form;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.configuration.SiteConfiguration;
+import com.esofthead.mycollab.module.mail.IContentGenerator;
 import com.esofthead.mycollab.module.mail.MailUtils;
-import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.mail.service.MailRelayService;
 import com.esofthead.mycollab.rest.server.domain.ContactForm;
 import com.esofthead.mycollab.rest.server.resource.ContactResource;
@@ -37,6 +38,9 @@ public class ContactResourceImpl implements ContactResource {
 	private static Logger log = LoggerFactory
 			.getLogger(ContactResourceImpl.class);
 	private static final String contactUsTemplate = "contactUs.mt";
+
+	@Autowired
+	private IContentGenerator contentGenerator;
 
 	@Override
 	public Response submit(@Form final ContactForm entity) {
@@ -51,23 +55,26 @@ public class ContactResourceImpl implements ContactResource {
 		log.debug("Message: " + entity.getMessage());
 
 		// -----------------------------------------------------------
-		TemplateGenerator templateGenerator = new TemplateGenerator(
-				"Contact Us submit", MailUtils.templatePath(contactUsTemplate,
-						SiteConfiguration.getDefaultLocale()));
-		templateGenerator.putVariable("name", entity.getName());
-		templateGenerator.putVariable("email", entity.getEmail());
-		templateGenerator.putVariable("company", entity.getCompany());
-		templateGenerator.putVariable("role", entity.getRole());
-		templateGenerator.putVariable("industry", entity.getIndustry());
-		templateGenerator.putVariable("budget", entity.getBudget());
-		templateGenerator.putVariable("subject", entity.getSubject());
-		templateGenerator.putVariable("message", entity.getMessage());
+
+		contentGenerator.putVariable("name", entity.getName());
+		contentGenerator.putVariable("email", entity.getEmail());
+		contentGenerator.putVariable("company", entity.getCompany());
+		contentGenerator.putVariable("role", entity.getRole());
+		contentGenerator.putVariable("industry", entity.getIndustry());
+		contentGenerator.putVariable("budget", entity.getBudget());
+		contentGenerator.putVariable("subject", entity.getSubject());
+		contentGenerator.putVariable("message", entity.getMessage());
 		MailRelayService mailRelayService = ApplicationContextUtil
 				.getSpringBean(MailRelayService.class);
-		mailRelayService.saveRelayEmail(new String[] { "Sir" },
-				new String[] { "hainguyen@esofthead.com" },
-				"New guy wanna contact you!",
-				templateGenerator.generateBodyContent());
+		mailRelayService
+				.saveRelayEmail(
+						new String[] { "Sir" },
+						new String[] { "hainguyen@esofthead.com" },
+						contentGenerator
+								.generateSubjectContent("New guy wanna contact you!"),
+						contentGenerator.generateBodyContent(MailUtils
+								.templatePath(contactUsTemplate,
+										SiteConfiguration.getDefaultLocale())));
 		Response response = Response.status(200).entity("OK")
 				.type(MediaType.TEXT_PLAIN_TYPE).build();
 		response.getHeaders().add("Access-Control-Allow-Origin", "*");
