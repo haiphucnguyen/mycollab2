@@ -33,5 +33,7 @@ public class YesNoPermissionComboBox extends KeyCaptionComboBox {
 
 		this.addItem(BooleanPermissionFlag.TRUE, "Yes");
 		this.addItem(BooleanPermissionFlag.FALSE, "No");
+
+		this.setValue(BooleanPermissionFlag.FALSE);
 	}
 }
