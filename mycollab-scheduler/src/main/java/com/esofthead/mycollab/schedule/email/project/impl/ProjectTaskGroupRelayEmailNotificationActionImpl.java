@@ -28,13 +28,10 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
-import com.esofthead.mycollab.common.domain.SimpleAuditLog;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
-import com.esofthead.mycollab.common.service.AuditLogService;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.mail.MailUtils;
-import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.project.ProjectLinkGenerator;
 import com.esofthead.mycollab.module.project.ProjectResources;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
@@ -74,37 +71,11 @@ public class ProjectTaskGroupRelayEmailNotificationActionImpl extends
 
 	@Autowired
 	private ProjectTaskListService projectTaskListService;
-	@Autowired
-	private AuditLogService auditLogService;
+
 	@Autowired
 	private ProjectService projectService;
 
 	private static final ProjectFieldNameMapper mapper = new ProjectFieldNameMapper();
-
-	@Override
-	public TemplateGenerator templateGeneratorForCreateAction(
-			MailContext<SimpleTaskList> context) {
-		SimpleTaskList taskList = projectTaskListService.findById(
-				context.getTypeid(), context.getSaccountid());
-
-		if (taskList == null) {
-			return null;
-		}
-		context.setWrappedBean(taskList);
-		String subject = StringUtils.trim(taskList.getName(), 100);
-
-		TemplateGenerator templateGenerator = new TemplateGenerator(
-				context.getMessage(TaskGroupI18nEnum.MAIL_CREATE_ITEM_SUBJECT,
-						taskList.getProjectName(),
-						context.getChangeByUserFullName(), subject),
-				context.templatePath("templates/email/project/itemCreatedNotifier.mt"));
-		buildExtraTemplateVariables(context.getEmailNotification());
-
-		templateGenerator.putVariable("context", context);
-		templateGenerator.putVariable("mapper", mapper);
-
-		return templateGenerator;
-	}
 
 	@Override
 	protected String getItemName() {
@@ -119,57 +90,22 @@ public class ProjectTaskGroupRelayEmailNotificationActionImpl extends
 	}
 
 	@Override
-	public TemplateGenerator templateGeneratorForUpdateAction(
-			MailContext<SimpleTaskList> context) {
-		SimpleTaskList taskList = projectTaskListService.findById(
-				context.getTypeid(), context.getSaccountid());
-		if (taskList == null) {
-			return null;
-		}
-		context.setWrappedBean(taskList);
-		String subject = StringUtils.trim(taskList.getName(), 100);
-
-		TemplateGenerator templateGenerator = new TemplateGenerator(
-				context.getMessage(TaskGroupI18nEnum.MAIL_UPDATE_ITEM_SUBJECT,
-						taskList.getProjectName(),
-						context.getChangeByUserFullName(), subject),
-				context.templatePath("templates/email/project/itemUpdatedNotifier.mt"));
-
-		buildExtraTemplateVariables(context.getEmailNotification());
-
-		if (context.getTypeid() != null) {
-			SimpleAuditLog auditLog = auditLogService.findLatestLog(
-					context.getTypeid(), context.getSaccountid());
-
-			templateGenerator.putVariable("historyLog", auditLog);
-			templateGenerator.putVariable("context", context);
-			templateGenerator.putVariable("mapper", mapper);
-		}
-
-		return templateGenerator;
+	protected String getUpdateSubject(MailContext<SimpleTaskList> context) {
+		return context.getMessage(TaskGroupI18nEnum.MAIL_UPDATE_ITEM_SUBJECT,
+				bean.getProjectName(), context.getChangeByUserFullName(),
+				getItemName());
 	}
 
 	@Override
-	public TemplateGenerator templateGeneratorForCommentAction(
-			MailContext<SimpleTaskList> context) {
-		SimpleTaskList taskList = projectTaskListService.findById(
-				context.getTypeid(), context.getSaccountid());
-		if (taskList == null) {
-			return null;
-		}
+	protected String getCommentSubject(MailContext<SimpleTaskList> context) {
+		return context.getMessage(TaskGroupI18nEnum.MAIL_COMMENT_ITEM_SUBJECT,
+				bean.getProjectName(), context.getChangeByUserFullName(),
+				getItemName());
+	}
 
-		TemplateGenerator templateGenerator = new TemplateGenerator(
-				context.getMessage(TaskGroupI18nEnum.MAIL_COMMENT_ITEM_SUBJECT,
-						taskList.getProjectName(),
-						context.getChangeByUserFullName(),
-						StringUtils.trim(taskList.getName(), 100)),
-				context.templatePath("templates/email/project/itemCommentNotifier.mt"));
-		buildExtraTemplateVariables(context.getEmailNotification());
-
-		templateGenerator
-				.putVariable("comment", context.getEmailNotification());
-
-		return templateGenerator;
+	@Override
+	protected ItemFieldMapper getItemFieldMapper() {
+		return mapper;
 	}
 
 	@Override

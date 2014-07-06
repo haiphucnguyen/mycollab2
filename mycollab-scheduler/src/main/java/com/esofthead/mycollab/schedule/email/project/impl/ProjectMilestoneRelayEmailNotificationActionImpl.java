@@ -26,13 +26,10 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import com.esofthead.mycollab.common.domain.SimpleAuditLog;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
-import com.esofthead.mycollab.common.service.AuditLogService;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.mail.MailUtils;
-import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.project.ProjectLinkGenerator;
 import com.esofthead.mycollab.module.project.domain.SimpleMilestone;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
@@ -67,38 +64,9 @@ public class ProjectMilestoneRelayEmailNotificationActionImpl extends
 	private MilestoneService milestoneService;
 
 	@Autowired
-	private AuditLogService auditLogService;
-
-	@Autowired
 	private ProjectService projectService;
 
 	private static final MilestoneFieldNameMapper mapper = new MilestoneFieldNameMapper();
-
-	@Override
-	protected TemplateGenerator templateGeneratorForCreateAction(
-			MailContext<SimpleMilestone> context) {
-		SimpleMilestone milestone = milestoneService.findById(
-				context.getTypeid(), context.getSaccountid());
-
-		if (milestone == null) {
-			return null;
-		}
-
-		context.setWrappedBean(milestone);
-		TemplateGenerator templateGenerator = new TemplateGenerator(
-				context.getMessage(MilestoneI18nEnum.MAIL_CREATE_ITEM_SUBJECT,
-						milestone.getProjectName(),
-						context.getChangeByUserFullName(),
-						StringUtils.trim(milestone.getName(), 100)),
-				context.templatePath("templates/email/project/itemCreatedNotifier.mt"));
-
-		buildExtraTemplateVariables(context.getEmailNotification());
-
-		templateGenerator.putVariable("context", context);
-		templateGenerator.putVariable("mapper", mapper);
-
-		return templateGenerator;
-	}
 
 	@Override
 	protected String getItemName() {
@@ -113,55 +81,22 @@ public class ProjectMilestoneRelayEmailNotificationActionImpl extends
 	}
 
 	@Override
-	protected TemplateGenerator templateGeneratorForUpdateAction(
-			MailContext<SimpleMilestone> context) {
-		SimpleMilestone milestone = milestoneService.findById(
-				context.getTypeid(), context.getSaccountid());
-		if (milestone == null) {
-			return null;
-		}
-		context.setWrappedBean(milestone);
-		String subject = StringUtils.trim(milestone.getName(), 100);
-		TemplateGenerator templateGenerator = new TemplateGenerator(
-				context.getMessage(MilestoneI18nEnum.MAIL_UPDATE_ITEM_SUBJECT,
-						milestone.getProjectName(),
-						context.getChangeByUserFullName(), subject),
-				context.templatePath("templates/email/project/itemUpdatedNotifier.mt"));
-
-		buildExtraTemplateVariables(context.getEmailNotification());
-
-		if (context.getTypeid() != null) {
-			SimpleAuditLog auditLog = auditLogService.findLatestLog(
-					context.getTypeid(), context.getSaccountid());
-			templateGenerator.putVariable("historyLog", auditLog);
-			templateGenerator.putVariable("context", context);
-			templateGenerator.putVariable("mapper", mapper);
-		}
-
-		return templateGenerator;
+	protected String getUpdateSubject(MailContext<SimpleMilestone> context) {
+		return context.getMessage(MilestoneI18nEnum.MAIL_UPDATE_ITEM_SUBJECT,
+				bean.getProjectName(), context.getChangeByUserFullName(),
+				getItemName());
 	}
 
 	@Override
-	protected TemplateGenerator templateGeneratorForCommentAction(
-			MailContext<SimpleMilestone> context) {
-		SimpleMilestone milestone = milestoneService.findById(
-				context.getTypeid(), context.getSaccountid());
-		if (milestone == null) {
-			return null;
-		}
+	protected String getCommentSubject(MailContext<SimpleMilestone> context) {
+		return context.getMessage(MilestoneI18nEnum.MAIL_COMMENT_ITEM_SUBJECT,
+				bean.getProjectName(), context.getChangeByUserFullName(),
+				getItemName());
+	}
 
-		TemplateGenerator templateGenerator = new TemplateGenerator(
-				context.getMessage(MilestoneI18nEnum.MAIL_COMMENT_ITEM_SUBJECT,
-						milestone.getProjectName(),
-						context.getChangeByUserFullName(),
-						StringUtils.trim(milestone.getName(), 100)),
-				context.templatePath("templates/email/project/itemCommentNotifier.mt"));
-
-		buildExtraTemplateVariables(context.getEmailNotification());
-
-		templateGenerator
-				.putVariable("comment", context.getEmailNotification());
-		return templateGenerator;
+	@Override
+	protected ItemFieldMapper getItemFieldMapper() {
+		return mapper;
 	}
 
 	@Override

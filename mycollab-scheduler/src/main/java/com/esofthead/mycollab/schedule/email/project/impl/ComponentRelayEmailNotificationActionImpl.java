@@ -26,13 +26,10 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
-import com.esofthead.mycollab.common.domain.SimpleAuditLog;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
-import com.esofthead.mycollab.common.service.AuditLogService;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.mail.MailUtils;
-import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.project.ProjectLinkGenerator;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.i18n.ComponentI18nEnum;
@@ -65,9 +62,6 @@ public class ComponentRelayEmailNotificationActionImpl extends
 
 	@Autowired
 	private ComponentService componentService;
-
-	@Autowired
-	private AuditLogService auditLogService;
 
 	@Autowired
 	private ProjectService projectService;
@@ -105,69 +99,10 @@ public class ComponentRelayEmailNotificationActionImpl extends
 	}
 
 	@Override
-	protected TemplateGenerator templateGeneratorForCreateAction(
-			MailContext<SimpleComponent> context) {
-		SimpleComponent component = componentService.findById(
-				context.getTypeid(), context.getSaccountid());
-
-		if (component == null) {
-			return null;
-		}
-
-		context.setWrappedBean(component);
-
-		String subject = StringUtils.trim(component.getDescription(), 100);
-
-		TemplateGenerator templateGenerator = new TemplateGenerator(
-				context.getMessage(ComponentI18nEnum.MAIL_CREATE_ITEM_SUBJECT,
-						component.getProjectName(),
-						context.getChangeByUserFullName(), subject),
-				context.templatePath("templates/email/project/itemCreatedNotifier.mt"));
-
-		buildExtraTemplateVariables(context.getEmailNotification());
-
-		templateGenerator.putVariable("context", context);
-		templateGenerator.putVariable("mapper", mapper);
-
-		return templateGenerator;
-	}
-
-	@Override
-	protected TemplateGenerator templateGeneratorForUpdateAction(
-			MailContext<SimpleComponent> context) {
-		SimpleComponent component = componentService.findById(
-				context.getTypeid(), context.getSaccountid());
-		if (component == null) {
-			return null;
-		}
-
-		context.setWrappedBean(component);
-
-		String subject = StringUtils.trim(component.getDescription(), 100);
-
-		TemplateGenerator templateGenerator = new TemplateGenerator(
-				context.getMessage(ComponentI18nEnum.MAIL_UPDATE_ITEM_SUBJECT,
-						component.getProjectName(),
-						context.getChangeByUserFullName(), subject),
-				context.templatePath("templates/email/project/itemUpdatedNotifier.mt"));
-
-		buildExtraTemplateVariables(context.getEmailNotification());
-
-		if (context.getTypeid() != null) {
-			SimpleAuditLog auditLog = auditLogService.findLatestLog(
-					context.getTypeid(), context.getSaccountid());
-			templateGenerator.putVariable("historyLog", auditLog);
-			templateGenerator.putVariable("context", context);
-			templateGenerator.putVariable("mapper", mapper);
-		}
-
-		return templateGenerator;
-	}
-
-	@Override
-	protected TemplateGenerator templateGeneratorForCommentAction(
-			MailContext<SimpleComponent> context) {
-		return null;
+	protected String getUpdateSubject(MailContext<SimpleComponent> context) {
+		return context.getMessage(ComponentI18nEnum.MAIL_UPDATE_ITEM_SUBJECT,
+				bean.getProjectName(), context.getChangeByUserFullName(),
+				getItemName());
 	}
 
 	@Override
@@ -187,6 +122,18 @@ public class ComponentRelayEmailNotificationActionImpl extends
 		return context.getMessage(ComponentI18nEnum.MAIL_CREATE_ITEM_SUBJECT,
 				bean.getProjectName(), context.getChangeByUserFullName(),
 				getItemName());
+	}
+
+	@Override
+	protected String getCommentSubject(MailContext<SimpleComponent> context) {
+		return context.getMessage(ComponentI18nEnum.MAIL_COMMENT_ITEM_SUBJECT,
+				bean.getProjectName(), context.getChangeByUserFullName(),
+				getItemName());
+	}
+
+	@Override
+	protected ItemFieldMapper getItemFieldMapper() {
+		return mapper;
 	}
 
 	public static class ComponentFieldNameMapper extends ItemFieldMapper {

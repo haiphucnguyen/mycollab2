@@ -26,12 +26,9 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
-import com.esofthead.mycollab.common.domain.SimpleAuditLog;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
-import com.esofthead.mycollab.common.service.AuditLogService;
 import com.esofthead.mycollab.core.utils.StringUtils;
-import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.project.ProjectLinkGenerator;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.i18n.VersionI18nEnum;
@@ -57,8 +54,7 @@ public class VersionRelayEmailNotificationActionImpl extends
 
 	@Autowired
 	private VersionService versionService;
-	@Autowired
-	private AuditLogService auditLogService;
+
 	@Autowired
 	private ProjectService projectService;
 
@@ -94,35 +90,6 @@ public class VersionRelayEmailNotificationActionImpl extends
 	}
 
 	@Override
-	protected TemplateGenerator templateGeneratorForCreateAction(
-			MailContext<SimpleVersion> context) {
-		SimpleVersion version = versionService.findById(context.getTypeid(),
-				context.getSaccountid());
-
-		if (version == null) {
-			return null;
-		}
-		context.setWrappedBean(version);
-		SimpleProject project = projectService.findById(version.getProjectid(),
-				context.getSaccountid());
-
-		String subject = StringUtils.trim(version.getDescription(), 100);
-
-		TemplateGenerator templateGenerator = new TemplateGenerator(
-				context.getMessage(VersionI18nEnum.MAIL_CREATE_ITEM_SUBJECT,
-						project.getName(), context.getChangeByUserFullName(),
-						subject),
-				context.templatePath("templates/email/project/itemCreatedNotifier.mt"));
-
-		buildExtraTemplateVariables(context.getEmailNotification());
-
-		templateGenerator.putVariable("context", context);
-		templateGenerator.putVariable("mapper", mapper);
-
-		return templateGenerator;
-	}
-
-	@Override
 	protected String getItemName() {
 		return StringUtils.trim(bean.getDescription(), 100);
 	}
@@ -135,42 +102,22 @@ public class VersionRelayEmailNotificationActionImpl extends
 	}
 
 	@Override
-	protected TemplateGenerator templateGeneratorForUpdateAction(
-			MailContext<SimpleVersion> context) {
-		SimpleVersion version = versionService.findById(context.getTypeid(),
-				context.getSaccountid());
-		if (version == null) {
-			return null;
-		}
-		context.setWrappedBean(version);
-		SimpleProject project = projectService.findById(version.getProjectid(),
-				context.getSaccountid());
-
-		String subject = StringUtils.trim(version.getDescription(), 100);
-
-		TemplateGenerator templateGenerator = new TemplateGenerator(
-				context.getMessage(VersionI18nEnum.MAIL_UPDATE_ITEM_SUBJECT,
-						project.getName(), context.getChangeByUserFullName(),
-						subject),
-				context.templatePath("templates/email/project/itemUpdatedNotifier.mt"));
-
-		buildExtraTemplateVariables(context.getEmailNotification());
-
-		if (context.getTypeid() != null) {
-			SimpleAuditLog auditLog = auditLogService.findLatestLog(
-					context.getTypeid(), context.getSaccountid());
-			templateGenerator.putVariable("historyLog", auditLog);
-			templateGenerator.putVariable("context", context);
-			templateGenerator.putVariable("mapper", mapper);
-		}
-
-		return templateGenerator;
+	protected String getUpdateSubject(MailContext<SimpleVersion> context) {
+		return context.getMessage(VersionI18nEnum.MAIL_UPDATE_ITEM_SUBJECT,
+				bean.getProjectName(), context.getChangeByUserFullName(),
+				getItemName());
 	}
 
 	@Override
-	protected TemplateGenerator templateGeneratorForCommentAction(
-			MailContext<SimpleVersion> context) {
-		return null;
+	protected String getCommentSubject(MailContext<SimpleVersion> context) {
+		return context.getMessage(VersionI18nEnum.MAIL_COMMENT_ITEM_SUBJECT,
+				bean.getProjectName(), context.getChangeByUserFullName(),
+				getItemName());
+	}
+
+	@Override
+	protected ItemFieldMapper getItemFieldMapper() {
+		return mapper;
 	}
 
 	@Override
