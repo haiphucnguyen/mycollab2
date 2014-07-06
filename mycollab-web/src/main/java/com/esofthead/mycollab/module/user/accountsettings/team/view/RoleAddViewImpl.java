@@ -62,7 +62,8 @@ import com.vaadin.ui.VerticalLayout;
 public class RoleAddViewImpl extends AbstractPageView implements RoleAddView {
 
 	private static final long serialVersionUID = 1L;
-	private final RoleAddViewImpl.EditForm editForm;
+
+	private final EditForm editForm;
 	private Role role;
 
 	public RoleAddViewImpl() {
@@ -92,8 +93,8 @@ public class RoleAddViewImpl extends AbstractPageView implements RoleAddView {
 
 		@Override
 		public void setBean(final Role item) {
-			this.setFormLayoutFactory(new RoleAddViewImpl.EditForm.FormLayoutFactory());
-			this.setBeanFormFieldFactory(new ReadFormFieldFactory(EditForm.this));
+			this.setFormLayoutFactory(new EditForm.FormLayoutFactory());
+			this.setBeanFormFieldFactory(new EditFormFieldFactory(EditForm.this));
 			super.setBean(item);
 		}
 
@@ -157,7 +158,8 @@ public class RoleAddViewImpl extends AbstractPageView implements RoleAddView {
 			protected Layout createBottomPanel() {
 				final VerticalLayout permissionsPanel = new VerticalLayout();
 				final Label organizationHeader = new Label(
-						AppContext.getMessage(RoleI18nEnum.FORM_PERMISSION_HEADER));
+						AppContext
+								.getMessage(RoleI18nEnum.FORM_PERMISSION_HEADER));
 				organizationHeader.setStyleName(UIConstants.H2_STYLE2);
 				permissionsPanel.addComponent(organizationHeader);
 
@@ -193,21 +195,25 @@ public class RoleAddViewImpl extends AbstractPageView implements RoleAddView {
 							permissionDefItem.getCaption(), 0, i);
 				}
 
+				permissionsPanel
+						.addComponent(constructGridLayout(
+								AppContext
+										.getMessage(RoleI18nEnum.SECTION_PROJECT_MANAGEMENT_TITLE),
+								perMap,
+								RolePermissionCollections.PROJECT_PERMISSION_ARR));
+				permissionsPanel.addComponent(constructGridLayout(
+						AppContext.getMessage(RoleI18nEnum.SECTION_CRM_TITLE),
+						perMap, RolePermissionCollections.CRM_PERMISSIONS_ARR));
 				permissionsPanel.addComponent(constructGridLayout(AppContext
-						.getMessage(RoleI18nEnum.SECTION_PROJECT_MANAGEMENT_TITLE),
-						perMap,
-						RolePermissionCollections.PROJECT_PERMISSION_ARR));
-				permissionsPanel.addComponent(constructGridLayout(
-						AppContext.getMessage(RoleI18nEnum.SECTION_CRM_TITLE), perMap,
-						RolePermissionCollections.CRM_PERMISSIONS_ARR));
-				permissionsPanel.addComponent(constructGridLayout(
-						AppContext.getMessage(RoleI18nEnum.SECTION_DOCUMENT_TITLE),
+						.getMessage(RoleI18nEnum.SECTION_DOCUMENT_TITLE),
 						perMap,
 						RolePermissionCollections.DOCUMENT_PERMISSION_ARR));
-				permissionsPanel.addComponent(constructGridLayout(AppContext
-						.getMessage(RoleI18nEnum.SECTION_ACCOUNT_MANAGEMENT_TITLE),
-						perMap,
-						RolePermissionCollections.ACCOUNT_PERMISSION_ARR));
+				permissionsPanel
+						.addComponent(constructGridLayout(
+								AppContext
+										.getMessage(RoleI18nEnum.SECTION_ACCOUNT_MANAGEMENT_TITLE),
+								perMap,
+								RolePermissionCollections.ACCOUNT_PERMISSION_ARR));
 
 				return permissionsPanel;
 			}
@@ -254,11 +260,11 @@ public class RoleAddViewImpl extends AbstractPageView implements RoleAddView {
 			return permissionMap;
 		}
 
-		private class ReadFormFieldFactory extends
+		private class EditFormFieldFactory extends
 				AbstractBeanFieldGroupEditFieldFactory<Role> {
 			private static final long serialVersionUID = 1L;
 
-			public ReadFormFieldFactory(GenericBeanForm<Role> form) {
+			public EditFormFieldFactory(GenericBeanForm<Role> form) {
 				super(form);
 			}
 
@@ -277,7 +283,7 @@ public class RoleAddViewImpl extends AbstractPageView implements RoleAddView {
 						final TextField tf = new TextField();
 						tf.setNullRepresentation("");
 						tf.setRequired(true);
-						tf.setRequiredError("Please enter a Role name");
+						tf.setRequiredError("Please enter a role name");
 						return tf;
 					}
 
