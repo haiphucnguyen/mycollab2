@@ -70,8 +70,12 @@ public abstract class SendMailToFollowersAction<B> implements
 				if (bean != null) {
 					context.setWrappedBean(bean);
 					buildExtraTemplateVariables(notification);
+					contentGenerator.putVariable("context", context);
+					contentGenerator
+							.putVariable("mapper", getItemFieldMapper());
 					contentGenerator.putVariable("userName",
 							user.getDisplayName());
+
 					MailRecipientField userMail = new MailRecipientField(
 							user.getEmail(), user.getUsername());
 					List<MailRecipientField> lst = new ArrayList<MailRecipientField>();
