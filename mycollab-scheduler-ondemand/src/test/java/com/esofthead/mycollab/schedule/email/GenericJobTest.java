@@ -6,6 +6,9 @@ import org.mockito.MockitoAnnotations;
 import org.quartz.JobExecutionContext;
 
 import com.esofthead.mycollab.configuration.SiteConfiguration;
+import com.esofthead.mycollab.module.mail.IContentGenerator;
+import com.esofthead.mycollab.module.mail.service.ExtMailService;
+import com.esofthead.mycollab.module.user.service.BillingAccountService;
 
 /**
  * 
@@ -17,6 +20,15 @@ public class GenericJobTest {
 
 	@Mock
 	protected JobExecutionContext context;
+
+	@Mock
+	protected IContentGenerator contentGenerator;
+
+	@Mock
+	protected ExtMailService extMailService;
+
+	@Mock
+	protected BillingAccountService billingAccountService;
 
 	@Before
 	public void setUp() {

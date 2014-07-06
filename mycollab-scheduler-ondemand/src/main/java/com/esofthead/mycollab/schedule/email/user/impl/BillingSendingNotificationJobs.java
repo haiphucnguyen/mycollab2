@@ -41,7 +41,6 @@ import com.esofthead.mycollab.module.billing.AccountReminderStatusContants;
 import com.esofthead.mycollab.module.billing.service.BillingService;
 import com.esofthead.mycollab.module.mail.IContentGenerator;
 import com.esofthead.mycollab.module.mail.MailUtils;
-import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.mail.service.ExtMailService;
 import com.esofthead.mycollab.module.user.domain.BillingAccount;
 import com.esofthead.mycollab.module.user.domain.BillingAccountWithOwners;
@@ -158,23 +157,24 @@ public class BillingSendingNotificationJobs extends GenericQuartzJobBean {
 		for (SimpleUser user : account.getOwners()) {
 			log.info("Send mail after 32 days for username {} , mail {}",
 					user.getUsername(), user.getEmail());
-			TemplateGenerator templateGenerator = new TemplateGenerator(
-					"Your trial has ended", MailUtils.templatePath(
-							INFORM_EXPIRE_ACCOUNT_TEMPLATE,
-							SiteConfiguration.getDefaultLocale()));
-			templateGenerator.putVariable("account", account);
-			templateGenerator.putVariable("userName", user.getUsername());
+			contentGenerator.putVariable("account", account);
+			contentGenerator.putVariable("userName", user.getUsername());
 			String link = GenericLinkUtils.generateSiteUrlByAccountId(account
 					.getId())
 					+ GenericLinkUtils.URL_PREFIX_PARAM
 					+ "account/billing";
-			templateGenerator.putVariable("link", link);
+			contentGenerator.putVariable("link", link);
 
-			extMailService.sendHTMLMail("noreply@mycollab.com", "MyCollab",
-					Arrays.asList(new MailRecipientField(user.getEmail(), user
-							.getDisplayName())), null, null, templateGenerator
-							.generateSubjectContent(), templateGenerator
-							.generateBodyContent(), null);
+			extMailService.sendHTMLMail("noreply@mycollab.com",
+					SiteConfiguration.getSiteName(), Arrays
+							.asList(new MailRecipientField(user.getEmail(),
+									user.getDisplayName())), null, null,
+					contentGenerator
+							.generateSubjectContent("Your trial has ended"),
+					contentGenerator.generateBodyContent(MailUtils
+							.templatePath(INFORM_EXPIRE_ACCOUNT_TEMPLATE,
+									SiteConfiguration.getDefaultLocale())),
+					null);
 
 		}
 	}
@@ -187,11 +187,8 @@ public class BillingSendingNotificationJobs extends GenericQuartzJobBean {
 			log.info("Send mail after " + afterDay
 					+ "days for username {} , mail {}", user.getUsername(),
 					user.getEmail());
-			TemplateGenerator templateGenerator = new TemplateGenerator(
-					"Your trial is about to end", MailUtils.templatePath(
-							INFORM_FILLING_BILLING_INFORMATION_TEMPLATE,
-							SiteConfiguration.getDefaultLocale()));
-			templateGenerator.putVariable("account", account);
+
+			contentGenerator.putVariable("account", account);
 
 			String link = GenericLinkUtils.generateSiteUrlByAccountId(account
 					.getId())
@@ -202,16 +199,25 @@ public class BillingSendingNotificationJobs extends GenericQuartzJobBean {
 			cal.setTime(account.getCreatedtime());
 			cal.add(Calendar.DATE, NUM_DAY_FREE_TRIAL);
 
-			templateGenerator
-					.putVariable("expireDay", df.format(cal.getTime()));
-			templateGenerator.putVariable("userName", user.getUsername());
-			templateGenerator.putVariable("link", link);
+			contentGenerator.putVariable("expireDay", df.format(cal.getTime()));
+			contentGenerator.putVariable("userName", user.getUsername());
+			contentGenerator.putVariable("link", link);
 
-			extMailService.sendHTMLMail("noreply@mycollab.com", "MyCollab",
-					Arrays.asList(new MailRecipientField(user.getEmail(), user
-							.getDisplayName())), null, null, templateGenerator
-							.generateSubjectContent(), templateGenerator
-							.generateBodyContent(), null);
+			extMailService
+					.sendHTMLMail(
+							"noreply@mycollab.com",
+							SiteConfiguration.getSiteName(),
+							Arrays.asList(new MailRecipientField(user
+									.getEmail(), user.getDisplayName())),
+							null,
+							null,
+							contentGenerator
+									.generateSubjectContent("Your trial is about to end"),
+							contentGenerator.generateBodyContent(MailUtils
+									.templatePath(
+											INFORM_FILLING_BILLING_INFORMATION_TEMPLATE,
+											SiteConfiguration
+													.getDefaultLocale())), null);
 		}
 
 	}
