@@ -31,7 +31,6 @@ import com.esofthead.mycollab.module.mail.MailUtils;
 import com.esofthead.mycollab.module.mail.service.MailRelayService;
 import com.esofthead.mycollab.rest.server.domain.ContactForm;
 import com.esofthead.mycollab.rest.server.resource.ContactResource;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
 
 @Component
 public class ContactResourceImpl implements ContactResource {
@@ -41,6 +40,9 @@ public class ContactResourceImpl implements ContactResource {
 
 	@Autowired
 	private IContentGenerator contentGenerator;
+
+	@Autowired
+	private MailRelayService mailRelayService;
 
 	@Override
 	public Response submit(@Form final ContactForm entity) {
@@ -64,8 +66,7 @@ public class ContactResourceImpl implements ContactResource {
 		contentGenerator.putVariable("budget", entity.getBudget());
 		contentGenerator.putVariable("subject", entity.getSubject());
 		contentGenerator.putVariable("message", entity.getMessage());
-		MailRelayService mailRelayService = ApplicationContextUtil
-				.getSpringBean(MailRelayService.class);
+
 		mailRelayService
 				.saveRelayEmail(
 						new String[] { "Sir" },
