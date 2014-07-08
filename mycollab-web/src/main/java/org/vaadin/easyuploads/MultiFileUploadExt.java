@@ -21,10 +21,7 @@ import java.io.File;
 import java.io.OutputStream;
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import com.esofthead.mycollab.vaadin.ui.AttachmentUploadComponent;
 import com.vaadin.event.dd.DragAndDropEvent;
@@ -86,7 +83,6 @@ public class MultiFileUploadExt extends CssLayout implements DropHandler {
 			@Override
 			public void streamingStarted(
 					StreamVariable.StreamingStartEvent event) {
-				UI.getCurrent().setPollInterval(1000);
 			}
 
 			@Override
@@ -94,18 +90,20 @@ public class MultiFileUploadExt extends CssLayout implements DropHandler {
 				if (!indicators.isEmpty()) {
 					progressBars.removeComponent(indicators.remove(0));
 				}
+
+				if (indicators.size() == 0) {
+					UI.getCurrent().setPollInterval(-1);
+				}
+
 				File file = receiver.getFile();
 
 				handleFile(file, event.getFileName(), event.getMimeType(),
 						event.getBytesReceived());
 				receiver.setValue(null);
-				UI.getCurrent().setPollInterval(-1);
 			}
 
 			@Override
 			public void streamingFailed(StreamVariable.StreamingErrorEvent event) {
-				Logger.getLogger(getClass().getName()).log(Level.FINE,
-						"Streaming failed", event.getException());
 
 				for (ProgressBar progressIndicator : indicators) {
 					progressBars.removeComponent(progressIndicator);
@@ -132,6 +130,7 @@ public class MultiFileUploadExt extends CssLayout implements DropHandler {
 			@Override
 			public void filesQueued(
 					Collection<MultiUpload.FileDetail> pendingFileNames) {
+				UI.getCurrent().setPollInterval(500);
 				if (indicators == null) {
 					indicators = new LinkedList<ProgressBar>();
 				}
@@ -139,6 +138,7 @@ public class MultiFileUploadExt extends CssLayout implements DropHandler {
 					ProgressBar pi = createProgressIndicator();
 					progressBars.addComponent(pi);
 					pi.setCaption(f.getFileName());
+					pi.setEnabled(true);
 					pi.setVisible(true);
 					indicators.add(pi);
 				}
@@ -150,7 +150,7 @@ public class MultiFileUploadExt extends CssLayout implements DropHandler {
 			}
 		};
 		upload.setHandler(handler);
-		upload.setButtonCaption(getUploadButtonCaption());
+		upload.setButtonCaption(uploadButtonCaption);
 		uploads.addComponent(upload);
 
 	}
@@ -159,24 +159,6 @@ public class MultiFileUploadExt extends CssLayout implements DropHandler {
 		ProgressBar progressIndicator = new ProgressBar();
 		progressIndicator.setValue(0f);
 		return progressIndicator;
-	}
-
-	public String getUploadButtonCaption() {
-		return uploadButtonCaption;
-	}
-
-	public void setUploadButtonCaption(String uploadButtonCaption) {
-		this.uploadButtonCaption = uploadButtonCaption;
-		Iterator<Component> componentIterator = uploads.iterator();
-		while (componentIterator.hasNext()) {
-			Component next = componentIterator.next();
-			if (next instanceof MultiUpload) {
-				MultiUpload upload = (MultiUpload) next;
-				if (upload.isVisible()) {
-					upload.setButtonCaption(getUploadButtonCaption());
-				}
-			}
-		}
 	}
 
 	private FileFactory fileFactory;
