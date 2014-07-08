@@ -50,12 +50,12 @@ import com.vaadin.ui.VerticalLayout;
  */
 public class MultiFileUploadExt extends CssLayout implements DropHandler {
 	private static final long serialVersionUID = 1L;
+
 	private AttachmentUploadComponent attachmentDisplayComponent;
 	private VerticalLayout progressBars = new VerticalLayout();
 	private CssLayout uploads = new CssLayout();
 	private String uploadButtonCaption = "Attach File(s)";
 	private MultiUpload upload;
-	private int oldPollInterval;
 
 	public MultiFileUploadExt(
 			AttachmentUploadComponent attachmentDisplayComponent) {
@@ -67,7 +67,6 @@ public class MultiFileUploadExt extends CssLayout implements DropHandler {
 		uploads.setStyleName("v-multifileupload-uploads");
 		addComponent(uploads);
 		prepareUpload();
-		oldPollInterval = UI.getCurrent().getPollInterval();
 	}
 
 	public void removeAndReInitMultiUpload() {
@@ -100,7 +99,7 @@ public class MultiFileUploadExt extends CssLayout implements DropHandler {
 				handleFile(file, event.getFileName(), event.getMimeType(),
 						event.getBytesReceived());
 				receiver.setValue(null);
-				UI.getCurrent().setPollInterval(oldPollInterval);
+				UI.getCurrent().setPollInterval(-1);
 			}
 
 			@Override
@@ -111,7 +110,7 @@ public class MultiFileUploadExt extends CssLayout implements DropHandler {
 				for (ProgressBar progressIndicator : indicators) {
 					progressBars.removeComponent(progressIndicator);
 				}
-				UI.getCurrent().setPollInterval(oldPollInterval);
+				UI.getCurrent().setPollInterval(-1);
 			}
 
 			@Override
@@ -147,7 +146,6 @@ public class MultiFileUploadExt extends CssLayout implements DropHandler {
 
 			@Override
 			public boolean isInterrupted() {
-				// TODO Auto-generated method stub
 				return false;
 			}
 		};
@@ -330,14 +328,12 @@ public class MultiFileUploadExt extends CssLayout implements DropHandler {
 					handleFile(receiver.getFile(), html5File.getFileName(),
 							html5File.getType(), html5File.getFileSize());
 					receiver.setValue(null);
-					UI.getCurrent().setPollInterval(oldPollInterval);
 				}
 
 				@Override
 				public void streamingFailed(
 						StreamVariable.StreamingErrorEvent event) {
 					progressBars.removeComponent(pi);
-					UI.getCurrent().setPollInterval(oldPollInterval);
 				}
 
 				@Override
