@@ -19,6 +19,7 @@ package com.esofthead.mycollab.reporting;
 import static net.sf.dynamicreports.report.builder.DynamicReports.cmp;
 import static net.sf.dynamicreports.report.builder.DynamicReports.hyperLink;
 
+import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.reporting.expression.DateExpression;
 import com.esofthead.mycollab.reporting.expression.DateTimeExpression;
 import com.esofthead.mycollab.reporting.expression.MailExpression;
@@ -39,7 +40,8 @@ public class ComponentBuilderWrapper {
 				.text(titleExpr)
 				.setHyperLink(hyperLink(hrefExpr))
 				.setStyle(
-						ReportTemplateFactory.getTemplate(null).underlineStyle);
+						ReportTemplateFactory.getTemplate(SiteConfiguration
+								.getDefaultLocale()).underlineStyle);
 	}
 
 	public static ComponentBuilder buildDateTimeText(DateTimeExpression dateExpr) {

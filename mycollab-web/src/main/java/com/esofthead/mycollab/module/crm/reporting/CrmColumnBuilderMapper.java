@@ -36,6 +36,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Component;
 
+import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.module.crm.CrmLinkGenerator;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
@@ -340,8 +341,9 @@ public class CrmColumnBuilderMapper implements InitializingBean {
 				isCompleteExpr).setStrikeThrough(true);
 
 		StyleBuilder styleBuilder = stl
-				.style(ReportTemplateFactory.getTemplate(null).getUnderlineStyle())
-				.addConditionalStyle(overDueStyle)
+				.style(ReportTemplateFactory.getTemplate(
+						SiteConfiguration.getDefaultLocale())
+						.getUnderlineStyle()).addConditionalStyle(overDueStyle)
 				.addConditionalStyle(isCompleteStyle);
 
 		map.put("opportunityname",

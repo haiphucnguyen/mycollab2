@@ -19,6 +19,8 @@ package com.esofthead.mycollab.reporting;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.esofthead.mycollab.configuration.SiteConfiguration;
+
 import net.sf.dynamicreports.report.builder.component.ComponentBuilder;
 
 /**
@@ -31,7 +33,7 @@ public class ColumnBuilderClassMapper {
 	private static Map<Class, Map<String, ComponentBuilder>> mapInjection = new HashMap<Class, Map<String, ComponentBuilder>>();
 
 	static {
-		ReportTemplateFactory.getTemplate(null);
+		ReportTemplateFactory.getTemplate(SiteConfiguration.getDefaultLocale());
 	}
 
 	public static void put(Class cls, Map<String, ComponentBuilder> columns) {

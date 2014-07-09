@@ -10,7 +10,6 @@
     <project>mycollab-config</project>
     <project>mycollab-services</project>
     <project>mycollab-migration</project>
-    <project>mycollab-reporting</project>
     <project>mycollab-caching</project>
     <project>mycollab-jackrabbit</project>
   </projects>
