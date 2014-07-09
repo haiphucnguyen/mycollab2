@@ -32,7 +32,7 @@ public class ReportTemplateFactory {
 		if (Locale.JAPANESE.equals(language)) {
 			return jpReport;
 		} else {
-			return enReport;
+			return jpReport;
 		}
 	}
 }
