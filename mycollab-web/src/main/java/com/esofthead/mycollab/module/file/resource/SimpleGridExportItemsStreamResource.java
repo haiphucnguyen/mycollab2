@@ -34,11 +34,11 @@ import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.persistence.service.ISearchableService;
 import com.esofthead.mycollab.core.utils.ClassUtils;
 import com.esofthead.mycollab.reporting.BeanDataSource;
-import com.esofthead.mycollab.reporting.ColumnBuilderClassMapper;
 import com.esofthead.mycollab.reporting.GroupIteratorDataSource;
 import com.esofthead.mycollab.reporting.ReportExportType;
-import com.esofthead.mycollab.reporting.RpParameterBuilder;
-import com.esofthead.mycollab.reporting.TableViewFieldDecorator;
+import com.esofthead.mycollab.reporting.expression.ColumnBuilderClassMapper;
+import com.esofthead.mycollab.reporting.expression.RpParameterBuilder;
+import com.esofthead.mycollab.reporting.expression.TableViewFieldDecorator;
 import com.esofthead.mycollab.vaadin.AppContext;
 
 /**
@@ -101,7 +101,8 @@ public abstract class SimpleGridExportItemsStreamResource<T> extends
 			log.debug("Construct component builder {} and width {}",
 					field.getField(), field.getDefaultWidth());
 			ComponentColumnBuilder columnBuilder = col.componentColumn(
-					field.getDesc(), field.getComponentBuilder()).setWidth(
+					AppContext.getMessage(field.getDescKey()),
+					field.getComponentBuilder()).setWidth(
 					field.getDefaultWidth());
 
 			reportBuilder.addColumn(columnBuilder);

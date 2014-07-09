@@ -9,7 +9,6 @@
     <project>mycollab-localization</project>
     <project>mycollab-config</project>
     <project>mycollab-migration</project>
-    <project>mycollab-reporting</project>
     <project>mycollab-caching</project>
     <project>mycollab-jackrabbit</project>
   </projects>
@@ -17,8 +16,12 @@
     <buildCommand>
       <name>org.eclipse.jdt.core.javabuilder</name>
     </buildCommand>
+    <buildCommand>
+      <name>org.springframework.ide.eclipse.core.springbuilder</name>
+    </buildCommand>
   </buildSpec>
   <natures>
+    <nature>org.springframework.ide.eclipse.core.springnature</nature>
     <nature>org.eclipse.jdt.core.javanature</nature>
   </natures>
 </projectDescription>

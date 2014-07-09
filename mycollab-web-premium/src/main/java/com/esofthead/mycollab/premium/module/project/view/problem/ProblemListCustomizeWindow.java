@@ -3,9 +3,9 @@ package com.esofthead.mycollab.premium.module.project.view.problem;
 import java.util.Arrays;
 import java.util.Collection;
 
+import com.esofthead.mycollab.common.TableViewField;
 import com.esofthead.mycollab.vaadin.ui.table.AbstractPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.CustomizedTableWindow;
-import com.esofthead.mycollab.vaadin.ui.table.TableViewField;
 
 /**
  * 

@@ -14,21 +14,34 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-reporting.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.reporting;
+package com.esofthead.mycollab.reporting.expression;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.esofthead.mycollab.common.TableViewField;
 
 /**
  * 
  * @author MyCollab Ltd.
- * @since 3.0
+ * @since 1.0
  * 
  */
-@Target(value = { ElementType.FIELD })
-@Retention(RetentionPolicy.RUNTIME)
-public @interface NotInReport {
+public class RpParameterBuilder {
+	private List<TableViewFieldDecorator> viewFields;
+
+	public RpParameterBuilder(List<TableViewField> fields) {
+		viewFields = new ArrayList<TableViewFieldDecorator>();
+
+		for (TableViewField field : fields) {
+			TableViewFieldDecorator fieldDecorator = new TableViewFieldDecorator(
+					field);
+			viewFields.add(fieldDecorator);
+		}
+	}
+
+	public List<TableViewFieldDecorator> getFields() {
+		return viewFields;
+	}
 
 }

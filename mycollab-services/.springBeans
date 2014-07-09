@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beansProjectDescription>
 	<version>1</version>
-	<pluginVersion><![CDATA[3.4.0.201310051539-RELEASE]]></pluginVersion>
+	<pluginVersion><![CDATA[3.5.1.201404300732-RELEASE]]></pluginVersion>
 	<configSuffixes>
 		<configSuffix><![CDATA[xml]]></configSuffix>
 	</configSuffixes>
@@ -27,7 +27,11 @@
 		<config>java:com.esofthead.mycollab.common.interceptor.aspect.TraceableAspect</config>
 		<config>java:com.esofthead.mycollab.module.user.esb.UserRouteBuilder</config>
 		<config>src/main/resources/META-INF/spring/mail-context.xml</config>
+		<config>java:com.esofthead.mycollab.module.mail.ContentGenerator</config>
+		<config>java:com.esofthead.mycollab.module.mail.service.impl.MailTemplateServiceImpl</config>
 	</configs>
+	<autoconfigs>
+	</autoconfigs>
 	<configSets>
 	</configSets>
 </beansProjectDescription>
