@@ -34,11 +34,11 @@ import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.persistence.service.ISearchableService;
 import com.esofthead.mycollab.core.utils.ClassUtils;
 import com.esofthead.mycollab.reporting.BeanDataSource;
+import com.esofthead.mycollab.reporting.ColumnBuilderClassMapper;
 import com.esofthead.mycollab.reporting.GroupIteratorDataSource;
 import com.esofthead.mycollab.reporting.ReportExportType;
-import com.esofthead.mycollab.reporting.expression.ColumnBuilderClassMapper;
-import com.esofthead.mycollab.reporting.expression.RpParameterBuilder;
-import com.esofthead.mycollab.reporting.expression.TableViewFieldDecorator;
+import com.esofthead.mycollab.reporting.RpParameterBuilder;
+import com.esofthead.mycollab.reporting.TableViewFieldDecorator;
 import com.esofthead.mycollab.vaadin.AppContext;
 
 /**

@@ -14,12 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-reporting.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.reporting.expression;
+package com.esofthead.mycollab.reporting;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import com.esofthead.mycollab.reporting.ReportTemplateFactory;
 
 import net.sf.dynamicreports.report.builder.component.ComponentBuilder;
 
