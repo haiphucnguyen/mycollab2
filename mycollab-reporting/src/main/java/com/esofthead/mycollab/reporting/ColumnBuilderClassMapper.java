@@ -20,8 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.esofthead.mycollab.configuration.SiteConfiguration;
-
-import net.sf.dynamicreports.report.builder.component.ComponentBuilder;
+import com.esofthead.mycollab.reporting.expression.MValue;
 
 /**
  * 
@@ -30,17 +29,17 @@ import net.sf.dynamicreports.report.builder.component.ComponentBuilder;
  * 
  */
 public class ColumnBuilderClassMapper {
-	private static Map<Class, Map<String, ComponentBuilder>> mapInjection = new HashMap<Class, Map<String, ComponentBuilder>>();
+	private static Map<Class, Map<String, MValue>> mapInjection = new HashMap<Class, Map<String, MValue>>();
 
 	static {
 		ReportTemplateFactory.getTemplate(SiteConfiguration.getDefaultLocale());
 	}
 
-	public static void put(Class cls, Map<String, ComponentBuilder> columns) {
+	public static void put(Class cls, Map<String, MValue> columns) {
 		mapInjection.put(cls, columns);
 	}
 
-	public static Map<String, ComponentBuilder> getListFieldBuilder(Class cls) {
+	public static Map<String, MValue> getListFieldBuilder(Class cls) {
 		return mapInjection.get(cls);
 	}
 }
