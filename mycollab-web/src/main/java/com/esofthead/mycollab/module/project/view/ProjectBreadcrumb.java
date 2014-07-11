@@ -523,8 +523,7 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
 		this.select(0);
 		this.addLink(new Button(AppContext.getMessage(BreadcrumbI18nEnum.BUGS)));
 		AppContext.addFragment(
-				"project/bug/dashboard/"
-						+ UrlEncodeDecoder.encode(project.getId()),
+				ProjectLinkGenerator.generateBugDashboardLink(project.getId()),
 				"Bug Dashboard");
 	}
 
@@ -750,19 +749,17 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
 		this.select(0);
 		this.addLink(new Button(AppContext
 				.getMessage(BreadcrumbI18nEnum.TIME_TRACKING)));
-		AppContext
-				.addFragment(
-						"project/time/list/"
-								+ UrlEncodeDecoder.encode(project.getId()),
-						"Time Tracking");
+		AppContext.addFragment(
+				ProjectLinkGenerator.generateTimeReportLink(project.getId()),
+				"Time Tracking");
 	}
 
 	public void gotoFileList() {
 		this.select(0);
 		this.addLink(new Button(AppContext.getMessage(BreadcrumbI18nEnum.FILES)));
-		AppContext.addFragment(
-				"project/file/dashboard/"
-						+ UrlEncodeDecoder.encode(project.getId()), "Files");
+		AppContext
+				.addFragment(ProjectLinkGenerator
+						.generateFileDashboardLink(project.getId()), "Files");
 	}
 
 	public void gotoStandupList(Date onDate) {
@@ -805,11 +802,9 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
 	public void gotoUserList() {
 		this.select(0);
 		this.addLink(new Button(AppContext.getMessage(BreadcrumbI18nEnum.USERS)));
-		AppContext
-				.addFragment(
-						"project/user/list/"
-								+ UrlEncodeDecoder.encode(project.getId()),
-						"Members");
+		AppContext.addFragment(
+				ProjectLinkGenerator.generateUsersLink(project.getId()),
+				"Members");
 	}
 
 	public void gotoUserAdd() {

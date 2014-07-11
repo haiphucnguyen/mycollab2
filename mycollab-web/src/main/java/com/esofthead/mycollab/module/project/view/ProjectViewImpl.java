@@ -155,11 +155,20 @@ public class ProjectViewImpl extends AbstractCssPageView implements ProjectView 
 								+ ProjectLinkGenerator
 										.generateTaskDashboardLink(prjId));
 
-		myProjectTab.addTab(constructProjectBugComponent(), "bug",
-				AppContext.getMessage(ProjectCommonI18nEnum.VIEW_BUG));
+		myProjectTab.addTab(
+				constructProjectBugComponent(),
+				"bug",
+				AppContext.getMessage(ProjectCommonI18nEnum.VIEW_BUG),
+				GenericLinkUtils.URL_PREFIX_PARAM
+						+ ProjectLinkGenerator.generateProjectLink(prjId));
 
-		myProjectTab.addTab(constructProjectFileComponent(), "file",
-				AppContext.getMessage(ProjectCommonI18nEnum.VIEW_FILE));
+		myProjectTab
+				.addTab(constructProjectFileComponent(),
+						"file",
+						AppContext.getMessage(ProjectCommonI18nEnum.VIEW_FILE),
+						GenericLinkUtils.URL_PREFIX_PARAM
+								+ ProjectLinkGenerator
+										.generateFileDashboardLink(prjId));
 
 		myProjectTab.addTab(
 				constructProjectRiskComponent(),
@@ -175,14 +184,27 @@ public class ProjectViewImpl extends AbstractCssPageView implements ProjectView 
 				GenericLinkUtils.URL_PREFIX_PARAM
 						+ ProjectLinkGenerator.generateProblemsLink(prjId));
 
-		myProjectTab.addTab(constructTimeTrackingComponent(), "time",
-				AppContext.getMessage(ProjectCommonI18nEnum.VIEW_TIME));
+		myProjectTab.addTab(
+				constructTimeTrackingComponent(),
+				"time",
+				AppContext.getMessage(ProjectCommonI18nEnum.VIEW_TIME),
+				GenericLinkUtils.URL_PREFIX_PARAM
+						+ ProjectLinkGenerator.generateTimeReportLink(prjId));
 
-		myProjectTab.addTab(constructProjectStandupMeeting(), "standup",
-				AppContext.getMessage(ProjectCommonI18nEnum.VIEW_STANDAUP));
+		myProjectTab.addTab(
+				constructProjectStandupMeeting(),
+				"standup",
+				AppContext.getMessage(ProjectCommonI18nEnum.VIEW_STANDAUP),
+				GenericLinkUtils.URL_PREFIX_PARAM
+						+ ProjectLinkGenerator
+								.generateStandupDashboardLink(prjId));
 
-		myProjectTab.addTab(constructProjectUsers(), "member",
-				AppContext.getMessage(ProjectCommonI18nEnum.VIEW_MEMBER));
+		myProjectTab.addTab(
+				constructProjectUsers(),
+				"member",
+				AppContext.getMessage(ProjectCommonI18nEnum.VIEW_MEMBER),
+				GenericLinkUtils.URL_PREFIX_PARAM
+						+ ProjectLinkGenerator.generateUsersLink(prjId));
 
 		myProjectTab
 				.addSelectedTabChangeListener(new SelectedTabChangeListener() {

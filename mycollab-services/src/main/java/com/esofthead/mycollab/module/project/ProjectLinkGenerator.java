@@ -177,6 +177,10 @@ public class ProjectLinkGenerator {
 				+ generateBugVersionPreviewLink(projectId, versionId);
 	}
 
+	public static String generateBugDashboardLink(int projectId) {
+		return "project/bug/dashboard/" + UrlEncodeDecoder.encode(projectId);
+	}
+
 	public static String generateBugPreviewLink(int projectId, int bugId) {
 		return "project/bug/preview/"
 				+ GenericLinkUtils
@@ -187,6 +191,14 @@ public class ProjectLinkGenerator {
 			int projectId, int bugId) {
 		return siteUrl + GenericLinkUtils.URL_PREFIX_PARAM
 				+ generateBugPreviewLink(projectId, bugId);
+	}
+
+	public static String generateFileDashboardLink(int projectId) {
+		return "project/file/dashboard/" + UrlEncodeDecoder.encode(projectId);
+	}
+
+	public static String generateTimeReportLink(int projectId) {
+		return "project/time/list/" + UrlEncodeDecoder.encode(projectId);
 	}
 
 	public static String generateRolePreviewLink(int projectId, int roleId) {
@@ -214,6 +226,14 @@ public class ProjectLinkGenerator {
 		return "project/time/list/"
 				+ GenericLinkUtils
 						.encodeParam(new Object[] { projectId, timeId });
+	}
+
+	public static String generateStandupDashboardLink(int projectId) {
+		return "project/standup/list/" + UrlEncodeDecoder.encode(projectId);
+	}
+
+	public static String generateUsersLink(int projectId) {
+		return "project/user/list/" + UrlEncodeDecoder.encode(projectId);
 	}
 
 	public static String generateDenyInvitationParams(String inviteeEmail,
