@@ -23,15 +23,20 @@ import java.util.Iterator;
 import java.util.Map;
 
 import com.esofthead.mycollab.core.MyCollabException;
+import com.vaadin.event.LayoutEvents.LayoutClickEvent;
+import com.vaadin.event.LayoutEvents.LayoutClickListener;
 import com.vaadin.server.ErrorMessage;
 import com.vaadin.server.Resource;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.shared.EventId;
+import com.vaadin.shared.MouseEventDetails.MouseButton;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Image;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.TabSheet.SelectedTabChangeEvent;
 import com.vaadin.ui.TabSheet.SelectedTabChangeListener;
@@ -51,9 +56,9 @@ public class VerticalTabsheet extends CustomComponent {
 	private VerticalLayout contentWrapper;
 	private CssLayout navigatorWrapper;
 
-	private Map<Button, Tab> compMap = new HashMap<Button, Tab>();
+	private Map<Component, Tab> compMap = new HashMap<Component, Tab>();
 
-	private Button selectedButton = null;
+	private Component selectedButton = null;
 	private Tab selectedComp = null;
 
 	private final String TABSHEET_STYLENAME = "vertical-tabsheet";
@@ -94,17 +99,28 @@ public class VerticalTabsheet extends CustomComponent {
 	}
 
 	public void addTab(Component component, String id, String caption) {
-		addTab(component, id, caption, null);
+		addTab(component, id, caption, null, null);
+	}
+
+	public void addTab(Component component, String id, String caption,
+			String link) {
+		addTab(component, id, caption, link, null);
 	}
 
 	public void addTab(Component component, String id, String caption,
 			Resource resource) {
-		final ButtonTabImpl button = new ButtonTabImpl(id, caption);
-		button.addClickListener(new Button.ClickListener() {
+		addTab(component, id, caption, null, resource);
+	}
+
+	public void addTab(Component component, String id, String caption,
+			String link, Resource resource) {
+		final ButtonTabImpl button = new ButtonTabImpl(id, caption, link);
+
+		button.addLayoutClickListener(new LayoutClickListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void buttonClick(ClickEvent event) {
+			public void layoutClick(LayoutClickEvent event) {
 				if (selectedButton != button) {
 					clearTabSelection(true);
 					selectedButton = button;
@@ -113,6 +129,7 @@ public class VerticalTabsheet extends CustomComponent {
 				}
 				fireTabChangeEvent(new SelectedTabChangeEvent(
 						VerticalTabsheet.this));
+
 			}
 		});
 
@@ -158,8 +175,8 @@ public class VerticalTabsheet extends CustomComponent {
 	}
 
 	public Component selectTab(String viewId) {
-		Collection<Button> tabs = compMap.keySet();
-		for (Button btn : tabs) {
+		Collection<Component> tabs = compMap.keySet();
+		for (Component btn : tabs) {
 			TabImpl tab = (TabImpl) compMap.get(btn);
 			if (tab.getTabId().equals(viewId)) {
 				selectedButton = btn;
@@ -217,16 +234,16 @@ public class VerticalTabsheet extends CustomComponent {
 	}
 
 	private void clearTabSelection(boolean setDefaultIcon) {
-		Collection<Button> tabs = compMap.keySet();
+		Collection<Component> tabs = compMap.keySet();
 		if (setDefaultIcon == true) {
-			for (Button btn : tabs) {
+			for (Component btn : tabs) {
 				if (btn.getStyleName().contains(TAB_SELECTED_STYLENAME)) {
 					btn.removeStyleName(TAB_SELECTED_STYLENAME);
 					setDefaulButtonIcon(btn, false);
 				}
 			}
 		} else {
-			for (Button btn : tabs) {
+			for (Component btn : tabs) {
 				if (btn.getStyleName().contains(TAB_SELECTED_STYLENAME)) {
 					btn.removeStyleName(TAB_SELECTED_STYLENAME);
 				}
@@ -243,7 +260,7 @@ public class VerticalTabsheet extends CustomComponent {
 		return this.navigatorWrapper;
 	}
 
-	protected void setDefaulButtonIcon(Button btn, Boolean selected) {
+	protected void setDefaulButtonIcon(Component btn, Boolean selected) {
 
 	}
 
@@ -264,13 +281,57 @@ public class VerticalTabsheet extends CustomComponent {
 		contentWrapper.addComponent(newContainer);
 	}
 
-	public static class ButtonTabImpl extends Button {
+	public static class ButtonTabImpl extends CustomComponent {
 		private static final long serialVersionUID = 1L;
+		private HorizontalLayout innerLayout;
+
+		private Image image;
+		private Label label;
+
 		private String tabId;
 
-		public ButtonTabImpl(String id, String caption) {
-			super(caption);
+		public ButtonTabImpl(String id, String caption, String link) {
 			this.tabId = id;
+			innerLayout = new HorizontalLayout();
+
+			if (link != null) {
+				label = new Label(String.format("<a href='%s'>%s</a>", link,
+						caption), ContentMode.HTML);
+			} else {
+				label = new Label(caption);
+			}
+
+			innerLayout.addComponent(label);
+			this.setCompositionRoot(innerLayout);
+
+			innerLayout.addLayoutClickListener(new LayoutClickListener() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void layoutClick(LayoutClickEvent event) {
+					if (event.getButton() == MouseButton.LEFT
+							&& (!event.isMetaKey() && !event.isCtrlKey())) {
+						ButtonTabImpl.this.fireEvent(new LayoutClickEvent(
+								ButtonTabImpl.this, null, null, null));
+					}
+
+				}
+			});
+		}
+
+		public void addLayoutClickListener(LayoutClickListener listener) {
+			addListener(EventId.LAYOUT_CLICK_EVENT_IDENTIFIER,
+					LayoutClickEvent.class, listener,
+					LayoutClickListener.clickMethod);
+		}
+
+		@Override
+		public void setIcon(Resource icon) {
+			if (image == null) {
+				image = new Image();
+				innerLayout.addComponent(image, 0);
+			}
+			image.setIcon(icon);
 		}
 
 		public String getTabId() {
@@ -391,7 +452,7 @@ public class VerticalTabsheet extends CustomComponent {
 		@Override
 		public void setDefaultFocusComponent(Focusable component) {
 			throw new MyCollabException("Do not support");
-			
+
 		}
 
 		@Override
@@ -417,7 +478,7 @@ public class VerticalTabsheet extends CustomComponent {
 		@Override
 		public void setId(String id) {
 			throw new MyCollabException("Do not support");
-			
+
 		}
 
 		@Override

@@ -54,6 +54,10 @@ public class ProjectLinkGenerator {
 				+ generateTaskGroupPreviewLink(projectId, taskgroupId);
 	}
 
+	public static String generateTaskDashboardLink(Integer projectId) {
+		return "project/task/dashboard/" + UrlEncodeDecoder.encode(projectId);
+	}
+
 	public static String generateTaskPreviewLink(Integer projectId,
 			Integer taskId) {
 		return "project/task/task/preview/"
@@ -67,6 +71,10 @@ public class ProjectLinkGenerator {
 				+ generateTaskPreviewLink(projectId, taskId);
 	}
 
+	public static String generateMilestonesLink(int projectId) {
+		return "project/milestone/list/" + UrlEncodeDecoder.encode(projectId);
+	}
+
 	public static String generateMilestonePreviewLink(int projectId,
 			int milestoneId) {
 		return "project/milestone/preview/"
@@ -78,6 +86,10 @@ public class ProjectLinkGenerator {
 			int projectId, int milestoneId) {
 		return siteUrl + GenericLinkUtils.URL_PREFIX_PARAM
 				+ generateMilestonePreviewLink(projectId, milestoneId);
+	}
+
+	public static String generateProblemsLink(Integer projectId) {
+		return "project/problem/list/" + UrlEncodeDecoder.encode(projectId);
 	}
 
 	public static String generateProblemPreviewLink(Integer projectId,
@@ -105,6 +117,10 @@ public class ProjectLinkGenerator {
 						memberName });
 	}
 
+	public static String generateRisksLink(Integer projectId) {
+		return "project/risk/list/" + UrlEncodeDecoder.encode(projectId);
+	}
+
 	public static String generateRiskPreviewLink(Integer projectId,
 			Integer riskId) {
 		return "project/risk/preview/"
@@ -116,6 +132,10 @@ public class ProjectLinkGenerator {
 			Integer projectId, Integer riskId) {
 		return siteUrl + GenericLinkUtils.URL_PREFIX_PARAM
 				+ generateRiskPreviewLink(projectId, riskId);
+	}
+
+	public static String generateMessagesLink(Integer projectId) {
+		return "project/message/list/" + UrlEncodeDecoder.encode(projectId);
 	}
 
 	public static String generateMessagePreviewLink(Integer projectId,

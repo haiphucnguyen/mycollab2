@@ -136,8 +136,7 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
 		this.addLink(new Button(AppContext
 				.getMessage(BreadcrumbI18nEnum.MESSAGES)));
 		AppContext.addFragment(
-				"project/message/list/"
-						+ UrlEncodeDecoder.encode(project.getId()),
+				ProjectLinkGenerator.generateMessagesLink(project.getId()),
 				AppContext.getMessage(MessageI18nEnum.VIEW_LIST_TITLE));
 	}
 
@@ -164,11 +163,9 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
 	public void gotoRiskList() {
 		this.select(0);
 		this.addLink(new Button(AppContext.getMessage(BreadcrumbI18nEnum.RISKS)));
-		AppContext
-				.addFragment(
-						"project/risk/list/"
-								+ UrlEncodeDecoder.encode(project.getId()),
-						AppContext.getMessage(RiskI18nEnum.VIEW_LIST_TITLE));
+		AppContext.addFragment(
+				ProjectLinkGenerator.generateRisksLink(project.getId()),
+				AppContext.getMessage(RiskI18nEnum.VIEW_LIST_TITLE));
 	}
 
 	public void gotoRiskRead(Risk risk) {
@@ -178,9 +175,9 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
 				new GotoRiskListListener()));
 		this.setLinkEnabled(true, 1);
 		this.addLink(generateBreadcrumbLink(risk.getRiskname()));
-		AppContext.addFragment(
-				ProjectLinkGenerator.generateRiskPreviewLink(project.getId(),
-						risk.getId()), "Preview Risk: " + risk.getRiskname());
+		AppContext.addFragment(ProjectLinkGenerator.generateRiskPreviewLink(
+				project.getId(), risk.getId()),
+				"Preview Risk: " + risk.getRiskname());
 	}
 
 	public void gotoRiskEdit(final Risk risk) {
@@ -236,8 +233,7 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
 		this.addLink(new Button(AppContext
 				.getMessage(BreadcrumbI18nEnum.PHASES)));
 		AppContext.addFragment(
-				"project/milestone/list/"
-						+ UrlEncodeDecoder.encode(project.getId()),
+				ProjectLinkGenerator.generateMilestonesLink(project.getId()),
 				AppContext.getMessage(MilestoneI18nEnum.VIEW_LIST_TITLE));
 	}
 
@@ -248,9 +244,10 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
 				new GotoMilestoneListListener()));
 		this.setLinkEnabled(true, 1);
 		this.addLink(generateBreadcrumbLink(milestone.getName()));
-		AppContext.addFragment(ProjectLinkGenerator.generateMilestonePreviewLink(
-				project.getId(), milestone.getId()), "Preview Phase: "
-				+ milestone.getName());
+		AppContext.addFragment(
+				ProjectLinkGenerator.generateMilestonePreviewLink(
+						project.getId(), milestone.getId()), "Preview Phase: "
+						+ milestone.getName());
 	}
 
 	public void gotoMilestoneEdit(final Milestone milestone) {
@@ -310,8 +307,7 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
 		this.addLink(new Button(AppContext
 				.getMessage(BreadcrumbI18nEnum.PROBLEMS)));
 		AppContext.addFragment(
-				"project/problem/list/"
-						+ UrlEncodeDecoder.encode(project.getId()),
+				ProjectLinkGenerator.generateProblemsLink(project.getId()),
 				AppContext.getMessage(ProblemI18nEnum.VIEW_LIST_TITLE));
 	}
 
@@ -383,10 +379,10 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
 	public void gotoTaskDashboard() {
 		this.select(0);
 		this.addLink(new Button(AppContext.getMessage(BreadcrumbI18nEnum.TASKS)));
-		AppContext.addFragment(
-				"project/task/dashboard/"
-						+ UrlEncodeDecoder.encode(project.getId()),
-				"Task Dashboard");
+		AppContext
+				.addFragment(ProjectLinkGenerator
+						.generateTaskDashboardLink(project.getId()),
+						"Task Dashboard");
 	}
 
 	public void gotoTaskListReorder() {
@@ -421,9 +417,10 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
 				new GotoTaskAssignmentDashboard()));
 		this.setLinkEnabled(true, 1);
 		this.addLink(generateBreadcrumbLink("Task Group: " + taskList.getName()));
-		AppContext.addFragment(ProjectLinkGenerator.generateTaskGroupPreviewLink(
-				project.getId(), taskList.getId()),
-				"TaskGroup: " + taskList.getName());
+		AppContext.addFragment(
+				ProjectLinkGenerator.generateTaskGroupPreviewLink(
+						project.getId(), taskList.getId()), "TaskGroup: "
+						+ taskList.getName());
 	}
 
 	public void gotoTaskGroupEdit(final TaskList taskList) {
@@ -482,9 +479,8 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
 				new GotoTaskAssignmentDashboard()));
 		this.setLinkEnabled(true, 1);
 		this.addLink(generateBreadcrumbLink("Task: " + task.getTaskname()));
-		AppContext.addFragment(
-				ProjectLinkGenerator.generateTaskPreviewLink(project.getId(),
-						task.getId()), "Task: " + task.getTaskname());
+		AppContext.addFragment(ProjectLinkGenerator.generateTaskPreviewLink(
+				project.getId(), task.getId()), "Task: " + task.getTaskname());
 	}
 
 	public void gotoTaskEdit(final Task task) {
@@ -586,9 +582,9 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
 				new GotoBugDashboardListener()));
 		this.setLinkEnabled(true, 1);
 		this.addLink(generateBreadcrumbLink(bug.getSummary()));
-		AppContext.addFragment(
-				ProjectLinkGenerator.generateBugPreviewLink(bug.getProjectid(),
-						bug.getId()), "Preview Bug: " + bug.getSummary());
+		AppContext.addFragment(ProjectLinkGenerator.generateBugPreviewLink(
+				bug.getProjectid(), bug.getId()),
+				"Preview Bug: " + bug.getSummary());
 	}
 
 	public void gotoVersionList() {
@@ -660,9 +656,10 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
 				new GotoVersionListener()));
 		this.setLinkEnabled(true, 2);
 		this.addLink(generateBreadcrumbLink(version.getVersionname()));
-		AppContext.addFragment(ProjectLinkGenerator.generateBugVersionPreviewLink(
-				project.getId(), version.getId()), "Preview Version: "
-				+ version.getVersionname());
+		AppContext.addFragment(
+				ProjectLinkGenerator.generateBugVersionPreviewLink(
+						project.getId(), version.getId()), "Preview Version: "
+						+ version.getVersionname());
 	}
 
 	private class GotoVersionListener implements Button.ClickListener {
