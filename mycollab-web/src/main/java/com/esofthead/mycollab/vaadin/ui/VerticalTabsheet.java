@@ -23,20 +23,17 @@ import java.util.Iterator;
 import java.util.Map;
 
 import com.esofthead.mycollab.core.MyCollabException;
-import com.vaadin.event.LayoutEvents.LayoutClickEvent;
-import com.vaadin.event.LayoutEvents.LayoutClickListener;
 import com.vaadin.server.ErrorMessage;
+import com.vaadin.server.Page;
 import com.vaadin.server.Resource;
-import com.vaadin.shared.EventId;
-import com.vaadin.shared.MouseEventDetails.MouseButton;
-import com.vaadin.shared.ui.label.ContentMode;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Image;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.TabSheet.SelectedTabChangeEvent;
 import com.vaadin.ui.TabSheet.SelectedTabChangeListener;
@@ -116,19 +113,23 @@ public class VerticalTabsheet extends CustomComponent {
 			String link, Resource resource) {
 		final ButtonTabImpl button = new ButtonTabImpl(id, caption, link);
 
-		button.addLayoutClickListener(new LayoutClickListener() {
+		button.addClickListener(new ClickListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void layoutClick(LayoutClickEvent event) {
-				if (selectedButton != button) {
-					clearTabSelection(true);
-					selectedButton = button;
-					selectedButton.addStyleName(TAB_SELECTED_STYLENAME);
-					selectedComp = compMap.get(selectedButton);
+			public void buttonClick(ClickEvent event) {
+				if (!event.isCtrlKey() && !event.isMetaKey()) {
+					if (selectedButton != button) {
+						clearTabSelection(true);
+						selectedButton = button;
+						selectedButton.addStyleName(TAB_SELECTED_STYLENAME);
+						selectedComp = compMap.get(selectedButton);
+					}
+					fireTabChangeEvent(new SelectedTabChangeEvent(
+							VerticalTabsheet.this));
+				} else {
+					Page.getCurrent().open(button.link, "_blank", false);
 				}
-				fireTabChangeEvent(new SelectedTabChangeEvent(
-						VerticalTabsheet.this));
 
 			}
 		});
@@ -281,57 +282,16 @@ public class VerticalTabsheet extends CustomComponent {
 		contentWrapper.addComponent(newContainer);
 	}
 
-	public static class ButtonTabImpl extends CustomComponent {
+	public static class ButtonTabImpl extends Button {
 		private static final long serialVersionUID = 1L;
-		private HorizontalLayout innerLayout;
-
-		private Image image;
-		private Label label;
 
 		private String tabId;
+		String link;
 
 		public ButtonTabImpl(String id, String caption, String link) {
+			super(caption);
 			this.tabId = id;
-			innerLayout = new HorizontalLayout();
-
-			if (link != null) {
-				label = new Label(String.format("<a href='%s'>%s</a>", link,
-						caption), ContentMode.HTML);
-			} else {
-				label = new Label(caption);
-			}
-
-			innerLayout.addComponent(label);
-			this.setCompositionRoot(innerLayout);
-
-			innerLayout.addLayoutClickListener(new LayoutClickListener() {
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public void layoutClick(LayoutClickEvent event) {
-					if (event.getButton() == MouseButton.LEFT
-							&& (!event.isMetaKey() && !event.isCtrlKey())) {
-						ButtonTabImpl.this.fireEvent(new LayoutClickEvent(
-								ButtonTabImpl.this, null, null, null));
-					}
-
-				}
-			});
-		}
-
-		public void addLayoutClickListener(LayoutClickListener listener) {
-			addListener(EventId.LAYOUT_CLICK_EVENT_IDENTIFIER,
-					LayoutClickEvent.class, listener,
-					LayoutClickListener.clickMethod);
-		}
-
-		@Override
-		public void setIcon(Resource icon) {
-			if (image == null) {
-				image = new Image();
-				innerLayout.addComponent(image, 0);
-			}
-			image.setIcon(icon);
+			this.link = link;
 		}
 
 		public String getTabId() {
