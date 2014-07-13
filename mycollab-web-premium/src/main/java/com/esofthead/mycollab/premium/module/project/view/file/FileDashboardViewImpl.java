@@ -1,6 +1,6 @@
 package com.esofthead.mycollab.premium.module.project.view.file;
 
-import com.esofthead.mycollab.eventmanager.EventBus;
+import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.file.domain.criteria.FileSearchCriteria;
 import com.esofthead.mycollab.module.file.view.components.FileDashboardComponent;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
@@ -25,7 +25,7 @@ FileDashboardView {
 
 			@Override
 			protected void doSearch(FileSearchCriteria searchCriteria) {
-				EventBus.getInstance().fireEvent(
+				EventBusFactory.getInstance().post(
 						new ProjectContentEvent.Search(
 								FileDashboardViewImpl.this, searchCriteria));
 

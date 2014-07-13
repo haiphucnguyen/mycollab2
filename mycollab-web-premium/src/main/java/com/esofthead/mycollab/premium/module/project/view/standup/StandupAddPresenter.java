@@ -3,7 +3,7 @@ package com.esofthead.mycollab.premium.module.project.view.standup;
 import java.util.GregorianCalendar;
 
 import com.esofthead.mycollab.core.MyCollabException;
-import com.esofthead.mycollab.eventmanager.EventBus;
+import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.StandupReportWithBLOBs;
 import com.esofthead.mycollab.module.project.events.StandUpEvent;
@@ -45,7 +45,7 @@ public class StandupAddPresenter extends AbstractPresenter<StandupAddView> {
 						saveStandupReport(standupReport);
 						ViewState viewState = HistoryViewManager.back();
 						if (viewState instanceof NullViewState) {
-							EventBus.getInstance().fireEvent(
+							EventBusFactory.getInstance().post(
 									new StandUpEvent.GotoList(this, null));
 						}
 					}
@@ -54,7 +54,7 @@ public class StandupAddPresenter extends AbstractPresenter<StandupAddView> {
 					public void onCancel() {
 						ViewState viewState = HistoryViewManager.back();
 						if (viewState instanceof NullViewState) {
-							EventBus.getInstance().fireEvent(
+							EventBusFactory.getInstance().post(
 									new StandUpEvent.GotoList(this, null));
 						}
 					}

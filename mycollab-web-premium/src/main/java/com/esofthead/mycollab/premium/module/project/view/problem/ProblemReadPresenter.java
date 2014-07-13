@@ -7,7 +7,7 @@ import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
-import com.esofthead.mycollab.eventmanager.EventBus;
+import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleProblem;
@@ -47,13 +47,13 @@ public class ProblemReadPresenter extends AbstractPresenter<ProblemReadView> {
 				new DefaultPreviewFormHandler<SimpleProblem>() {
 					@Override
 					public void onEdit(SimpleProblem data) {
-						EventBus.getInstance().fireEvent(
+						EventBusFactory.getInstance().post(
 								new ProblemEvent.GotoEdit(this, data));
 					}
 
 					@Override
 					public void onAdd(SimpleProblem data) {
-						EventBus.getInstance().fireEvent(
+						EventBusFactory.getInstance().post(
 								new ProblemEvent.GotoAdd(this, null));
 					}
 
@@ -82,7 +82,7 @@ public class ProblemReadPresenter extends AbstractPresenter<ProblemReadView> {
 													data.getId(),
 													AppContext.getUsername(),
 													AppContext.getAccountId());
-											EventBus.getInstance().fireEvent(
+											EventBusFactory.getInstance().post(
 													new ProblemEvent.GotoList(
 															this, null));
 										}
@@ -94,13 +94,13 @@ public class ProblemReadPresenter extends AbstractPresenter<ProblemReadView> {
 					public void onClone(SimpleProblem data) {
 						SimpleProblem cloneData = (SimpleProblem) data.copy();
 						cloneData.setId(null);
-						EventBus.getInstance().fireEvent(
+						EventBusFactory.getInstance().post(
 								new ProblemEvent.GotoEdit(this, cloneData));
 					}
 
 					@Override
 					public void onCancel() {
-						EventBus.getInstance().fireEvent(
+						EventBusFactory.getInstance().post(
 								new ProblemEvent.GotoList(this, null));
 					}
 
@@ -118,7 +118,7 @@ public class ProblemReadPresenter extends AbstractPresenter<ProblemReadView> {
 						Integer nextId = problemService
 								.getNextItemKey(criteria);
 						if (nextId != null) {
-							EventBus.getInstance().fireEvent(
+							EventBusFactory.getInstance().post(
 									new ProblemEvent.GotoRead(this, nextId));
 						} else {
 							NotificationUtil.showGotoLastRecordNotification();
@@ -140,7 +140,7 @@ public class ProblemReadPresenter extends AbstractPresenter<ProblemReadView> {
 						Integer nextId = problemService
 								.getPreviousItemKey(criteria);
 						if (nextId != null) {
-							EventBus.getInstance().fireEvent(
+							EventBusFactory.getInstance().post(
 									new ProblemEvent.GotoRead(this, nextId));
 						} else {
 							NotificationUtil.showGotoFirstRecordNotification();

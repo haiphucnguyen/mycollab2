@@ -8,7 +8,7 @@ import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
-import com.esofthead.mycollab.eventmanager.EventBus;
+import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.Risk;
@@ -49,13 +49,13 @@ public class RiskReadPresenter extends AbstractPresenter<RiskReadView> {
 				new DefaultPreviewFormHandler<SimpleRisk>() {
 					@Override
 					public void onEdit(SimpleRisk data) {
-						EventBus.getInstance().fireEvent(
+						EventBusFactory.getInstance().post(
 								new RiskEvent.GotoEdit(this, data));
 					}
 
 					@Override
 					public void onAdd(SimpleRisk data) {
-						EventBus.getInstance().fireEvent(
+						EventBusFactory.getInstance().post(
 								new RiskEvent.GotoAdd(this, null));
 					}
 
@@ -85,7 +85,7 @@ public class RiskReadPresenter extends AbstractPresenter<RiskReadView> {
 													data.getId(),
 													AppContext.getUsername(),
 													AppContext.getAccountId());
-											EventBus.getInstance().fireEvent(
+											EventBusFactory.getInstance().post(
 													new RiskEvent.GotoList(
 															this, null));
 										}
@@ -97,13 +97,13 @@ public class RiskReadPresenter extends AbstractPresenter<RiskReadView> {
 					public void onClone(SimpleRisk data) {
 						Risk cloneData = (Risk) data.copy();
 						cloneData.setId(null);
-						EventBus.getInstance().fireEvent(
+						EventBusFactory.getInstance().post(
 								new RiskEvent.GotoEdit(this, cloneData));
 					}
 
 					@Override
 					public void onCancel() {
-						EventBus.getInstance().fireEvent(
+						EventBusFactory.getInstance().post(
 								new RiskEvent.GotoList(this, null));
 					}
 
@@ -120,7 +120,7 @@ public class RiskReadPresenter extends AbstractPresenter<RiskReadView> {
 								NumberSearchField.GREATER));
 						Integer nextId = riskeService.getNextItemKey(criteria);
 						if (nextId != null) {
-							EventBus.getInstance().fireEvent(
+							EventBusFactory.getInstance().post(
 									new RiskEvent.GotoRead(this, nextId));
 						} else {
 							NotificationUtil.showGotoLastRecordNotification();
@@ -142,7 +142,7 @@ public class RiskReadPresenter extends AbstractPresenter<RiskReadView> {
 						Integer nextId = riskeService
 								.getPreviousItemKey(criteria);
 						if (nextId != null) {
-							EventBus.getInstance().fireEvent(
+							EventBusFactory.getInstance().post(
 									new RiskEvent.GotoRead(this, nextId));
 						} else {
 							NotificationUtil.showGotoFirstRecordNotification();

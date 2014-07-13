@@ -20,8 +20,6 @@ package com.esofthead.mycollab.premium.module.crm.view.opportunity;
 import java.util.List;
 
 import com.esofthead.mycollab.common.domain.GroupItem;
-import com.esofthead.mycollab.eventmanager.ApplicationEvent;
-import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.module.crm.CrmDataTypeFactory;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
 import com.esofthead.mycollab.module.crm.service.OpportunityService;
@@ -111,19 +109,6 @@ public class OpportunityLeadSourceDashboard extends CssLayout implements
 	}
 
 	@Override
-	public void addViewListener(
-			ApplicationEventListener<? extends ApplicationEvent> listener) {
+	public void addViewListener(ViewListener listener) {
 	}
-
-	// @Override
-	// protected void onClickedDescription(final String key) {
-	// final OpportunitySearchCriteria searchCriteria = new
-	// OpportunitySearchCriteria();
-	// searchCriteria.setSaccountid(new NumberSearchField(SearchField.AND,
-	// AppContext.getAccountId()));
-	// searchCriteria.setLeadSources(new SetSearchField<String>(
-	// SearchField.AND, new String[] { key }));
-	// EventBus.getInstance().fireEvent(
-	// new OpportunityEvent.GotoList(this, searchCriteria));
-	// }
 }

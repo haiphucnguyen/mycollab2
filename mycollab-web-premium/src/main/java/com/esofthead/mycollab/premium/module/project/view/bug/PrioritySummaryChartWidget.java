@@ -19,8 +19,6 @@ package com.esofthead.mycollab.premium.module.project.view.bug;
 import java.util.List;
 
 import com.esofthead.mycollab.common.domain.GroupItem;
-import com.esofthead.mycollab.eventmanager.ApplicationEvent;
-import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.module.project.ProjectDataTypeFactory;
 import com.esofthead.mycollab.module.project.view.bug.IPrioritySummaryChartWidget;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
@@ -112,8 +110,7 @@ public class PrioritySummaryChartWidget extends CssLayout implements
 	}
 
 	@Override
-	public void addViewListener(
-			ApplicationEventListener<? extends ApplicationEvent> listener) {
+	public void addViewListener(ViewListener listener) {
 
 	}
 }

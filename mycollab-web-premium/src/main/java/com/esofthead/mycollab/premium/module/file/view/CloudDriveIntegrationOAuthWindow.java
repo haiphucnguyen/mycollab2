@@ -9,9 +9,8 @@ import org.vaadin.artur.icepush.ICEPush;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.utils.BeanUtility;
-import com.esofthead.mycollab.eventmanager.ApplicationEvent;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
-import com.esofthead.mycollab.eventmanager.EventBus;
+import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.ecm.domain.ExternalDrive;
 import com.esofthead.mycollab.module.ecm.esb.CloudDriveOAuthCallbackEvent;
 import com.esofthead.mycollab.module.ecm.esb.CloudDriveOAuthCallbackEvent.ReceiveCloudDriveInfo;
@@ -22,6 +21,7 @@ import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.google.common.eventbus.Subscribe;
 import com.vaadin.server.BrowserWindowOpener;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.shared.ui.MarginInfo;
@@ -73,6 +73,7 @@ public abstract class CloudDriveIntegrationOAuthWindow extends Window {
 		listener = new ApplicationEventListener<CloudDriveOAuthCallbackEvent.ReceiveCloudDriveInfo>() {
 			private static final long serialVersionUID = 1L;
 
+			@Subscribe
 			@Override
 			public void handle(ReceiveCloudDriveInfo event) {
 				cloudDriveInfo = (CloudDriveInfo) event.getData();
@@ -86,19 +87,14 @@ public abstract class CloudDriveIntegrationOAuthWindow extends Window {
 				// Push changes to client
 				pusher.push();
 			}
-
-			@Override
-			public Class<? extends ApplicationEvent> getEventType() {
-				return CloudDriveOAuthCallbackEvent.ReceiveCloudDriveInfo.class;
-			}
 		};
-		EventBus.getInstance().addListener(listener);
+		EventBusFactory.getInstance().register(listener);
 	}
 
 	@Override
 	public void close() {
 		if (listener != null) {
-			EventBus.getInstance().removeListener(listener);
+			EventBusFactory.getInstance().unregister(listener);
 		}
 		super.close();
 	}

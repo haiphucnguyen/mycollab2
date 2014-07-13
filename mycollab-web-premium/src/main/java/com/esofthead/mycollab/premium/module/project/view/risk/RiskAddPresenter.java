@@ -1,6 +1,6 @@
 package com.esofthead.mycollab.premium.module.project.view.risk;
 
-import com.esofthead.mycollab.eventmanager.EventBus;
+import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.Risk;
@@ -43,7 +43,7 @@ public class RiskAddPresenter extends AbstractPresenter<RiskAddView> {
 				saveRisk(risk);
 				ViewState viewState = HistoryViewManager.back();
 				if (viewState instanceof NullViewState) {
-					EventBus.getInstance().fireEvent(
+					EventBusFactory.getInstance().post(
 							new RiskEvent.GotoList(this, null));
 				}
 			}
@@ -52,7 +52,7 @@ public class RiskAddPresenter extends AbstractPresenter<RiskAddView> {
 			public void onCancel() {
 				ViewState viewState = HistoryViewManager.back();
 				if (viewState instanceof NullViewState) {
-					EventBus.getInstance().fireEvent(
+					EventBusFactory.getInstance().post(
 							new RiskEvent.GotoList(this, null));
 				}
 			}
@@ -60,7 +60,7 @@ public class RiskAddPresenter extends AbstractPresenter<RiskAddView> {
 			@Override
 			public void onSaveAndNew(final Risk risk) {
 				saveRisk(risk);
-				EventBus.getInstance().fireEvent(
+				EventBusFactory.getInstance().post(
 						new RiskEvent.GotoAdd(this, null));
 			}
 		});

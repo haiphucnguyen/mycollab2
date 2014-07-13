@@ -7,9 +7,7 @@ import org.vaadin.dialogs.ConfirmDialog;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.arguments.RangeDateSearchField;
-import com.esofthead.mycollab.eventmanager.ApplicationEvent;
-import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
-import com.esofthead.mycollab.eventmanager.EventBus;
+import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleItemTimeLogging;
@@ -33,7 +31,8 @@ import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.SplitButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
+import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable.TableClickEvent;
+import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable.TableClickListener;
 import com.vaadin.server.FileDownloader;
 import com.vaadin.server.StreamResource;
 import com.vaadin.shared.ui.MarginInfo;
@@ -156,41 +155,34 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements
 				TimeTableFieldDef.logForDate, TimeTableFieldDef.id));
 
 		this.tableItem
-				.addTableListener(new ApplicationEventListener<TableClickEvent>() {
+				.addTableListener(new TableClickListener() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
-					public Class<? extends ApplicationEvent> getEventType() {
-						return TableClickEvent.class;
-					}
-
-					@Override
-					public void handle(final TableClickEvent event) {
+					public void itemClick(final TableClickEvent event) {
 						final SimpleItemTimeLogging itemLogging = (SimpleItemTimeLogging) event
 								.getData();
 						if ("summary".equals(event.getFieldName())) {
 							if (ProjectTypeConstants.BUG.equals(itemLogging
 									.getType())) {
-								EventBus.getInstance().fireEvent(
+								EventBusFactory.getInstance().post(
 										new BugEvent.GotoRead(this, itemLogging
 												.getTypeid()));
 							} else if (ProjectTypeConstants.TASK
 									.equals(itemLogging.getType())) {
-								EventBus.getInstance().fireEvent(
+								EventBusFactory.getInstance().post(
 										new TaskEvent.GotoRead(this,
 												itemLogging.getTypeid()));
-							}
-							 else if (ProjectTypeConstants.RISK
-										.equals(itemLogging.getType())) {
-									EventBus.getInstance().fireEvent(
-											new RiskEvent.GotoRead(this,
-													itemLogging.getTypeid()));
-							}
-							 else if (ProjectTypeConstants.PROBLEM
-										.equals(itemLogging.getType())) {
-									EventBus.getInstance().fireEvent(
-											new ProblemEvent.GotoRead(this,
-													itemLogging.getTypeid()));
+							} else if (ProjectTypeConstants.RISK
+									.equals(itemLogging.getType())) {
+								EventBusFactory.getInstance().post(
+										new RiskEvent.GotoRead(this,
+												itemLogging.getTypeid()));
+							} else if (ProjectTypeConstants.PROBLEM
+									.equals(itemLogging.getType())) {
+								EventBusFactory.getInstance().post(
+										new ProblemEvent.GotoRead(this,
+												itemLogging.getTypeid()));
 							}
 						} else if ("delete".equals(event.getFieldName())) {
 							ConfirmDialogExt.show(

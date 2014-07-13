@@ -24,7 +24,7 @@ import org.vaadin.easyuploads.UploadField.FieldType;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.utils.ImageUtil;
-import com.esofthead.mycollab.eventmanager.EventBus;
+import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.user.accountsettings.localization.AdminI18nEnum;
 import com.esofthead.mycollab.module.user.accountsettings.localization.SettingCommonI18nEnum;
 import com.esofthead.mycollab.module.user.accountsettings.view.events.AccountCustomizeEvent;
@@ -123,7 +123,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements
 
 					@Override
 					public void buttonClick(ClickEvent event) {
-						EventBus.getInstance().fireEvent(
+						EventBusFactory.getInstance().post(
 								new AccountCustomizeEvent.SaveTheme(this,
 										accountTheme));
 					}
@@ -141,7 +141,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements
 
 					@Override
 					public void buttonClick(ClickEvent event) {
-						EventBus.getInstance().fireEvent(
+						EventBusFactory.getInstance().post(
 								new AccountCustomizeEvent.ResetTheme(
 										ThemeCustomizeViewImpl.this, null));
 					}
@@ -190,7 +190,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements
 				}
 
 				if (mimeType.equals("image/png")) {
-					EventBus.getInstance().fireEvent(
+					EventBusFactory.getInstance().post(
 							new AccountCustomizeEvent.GotoUploadLogo(
 									ThemeCustomizeViewImpl.this,
 									new CustomizeScreenData.LogoUpload(

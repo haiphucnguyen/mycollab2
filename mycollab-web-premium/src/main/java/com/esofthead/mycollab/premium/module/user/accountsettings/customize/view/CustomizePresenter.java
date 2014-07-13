@@ -16,9 +16,8 @@
  */
 package com.esofthead.mycollab.premium.module.user.accountsettings.customize.view;
 
-import com.esofthead.mycollab.eventmanager.ApplicationEvent;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
-import com.esofthead.mycollab.eventmanager.EventBus;
+import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.user.accountsettings.customize.view.ICustomizeContainer;
 import com.esofthead.mycollab.module.user.accountsettings.customize.view.ICustomizePresenter;
 import com.esofthead.mycollab.module.user.accountsettings.view.AccountModule;
@@ -27,6 +26,7 @@ import com.esofthead.mycollab.module.user.accountsettings.view.parameters.Custom
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.ui.AbstractPresenter;
+import com.google.common.eventbus.Subscribe;
 import com.vaadin.ui.ComponentContainer;
 
 /**
@@ -37,7 +37,7 @@ import com.vaadin.ui.ComponentContainer;
  */
 public class CustomizePresenter extends AbstractPresenter<ICustomizeContainer>
 		implements ICustomizePresenter {
-	private static final long serialVersionUID = -4221018940384221262L;
+	private static final long serialVersionUID = 1L;
 
 	public CustomizePresenter() {
 		super(ICustomizeContainer.class);
@@ -45,16 +45,13 @@ public class CustomizePresenter extends AbstractPresenter<ICustomizeContainer>
 
 	@Override
 	protected void postInitView() {
-		EventBus.getInstance()
-				.addListener(
+		EventBusFactory
+				.getInstance()
+				.register(
 						new ApplicationEventListener<AccountCustomizeEvent.GotoUploadLogo>() {
 							private static final long serialVersionUID = 7232775383781008850L;
 
-							@Override
-							public Class<? extends ApplicationEvent> getEventType() {
-								return AccountCustomizeEvent.GotoUploadLogo.class;
-							}
-
+							@Subscribe
 							@Override
 							public void handle(
 									AccountCustomizeEvent.GotoUploadLogo event) {

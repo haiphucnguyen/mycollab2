@@ -19,9 +19,8 @@ package com.esofthead.mycollab.premium.module.user.accountsettings.customize.vie
 import org.vaadin.dialogs.ConfirmDialog;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
-import com.esofthead.mycollab.eventmanager.ApplicationEvent;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
-import com.esofthead.mycollab.eventmanager.EventBus;
+import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.user.accountsettings.customize.view.ICustomizeContainer;
 import com.esofthead.mycollab.module.user.accountsettings.view.AccountSettingBreadcrumb;
 import com.esofthead.mycollab.module.user.accountsettings.view.events.AccountCustomizeEvent;
@@ -36,6 +35,7 @@ import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
+import com.google.common.eventbus.Subscribe;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.UI;
 
@@ -59,16 +59,13 @@ public class ThemeCustomizePresenter extends
 
 	@Override
 	protected void postInitView() {
-		EventBus.getInstance()
-				.addListener(
+		EventBusFactory
+				.getInstance()
+				.register(
 						new ApplicationEventListener<AccountCustomizeEvent.SaveTheme>() {
 							private static final long serialVersionUID = -1060182248184670399L;
 
-							@Override
-							public Class<? extends ApplicationEvent> getEventType() {
-								return AccountCustomizeEvent.SaveTheme.class;
-							}
-
+							@Subscribe
 							@Override
 							public void handle(SaveTheme event) {
 								if (event.getData() instanceof AccountTheme) {
@@ -78,16 +75,13 @@ public class ThemeCustomizePresenter extends
 								}
 							}
 						});
-		EventBus.getInstance()
-				.addListener(
+		EventBusFactory
+				.getInstance()
+				.register(
 						new ApplicationEventListener<AccountCustomizeEvent.ResetTheme>() {
 							private static final long serialVersionUID = 1594676526731151824L;
 
-							@Override
-							public Class<? extends ApplicationEvent> getEventType() {
-								return AccountCustomizeEvent.ResetTheme.class;
-							}
-
+							@Subscribe
 							@Override
 							public void handle(ResetTheme event) {
 								ConfirmDialogExt.show(

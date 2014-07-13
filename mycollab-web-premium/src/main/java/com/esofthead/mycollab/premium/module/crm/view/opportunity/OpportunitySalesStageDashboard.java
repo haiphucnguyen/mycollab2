@@ -20,8 +20,6 @@ package com.esofthead.mycollab.premium.module.crm.view.opportunity;
 import java.util.List;
 
 import com.esofthead.mycollab.common.domain.GroupItem;
-import com.esofthead.mycollab.eventmanager.ApplicationEvent;
-import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.module.crm.CrmDataTypeFactory;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
 import com.esofthead.mycollab.module.crm.service.OpportunityService;
@@ -51,7 +49,8 @@ import com.vaadin.ui.CssLayout;
  * @author MyCollab Ltd.
  */
 @ViewComponent
-public class OpportunitySalesStageDashboard extends CssLayout implements IOpportunitySalesStageDashboard {
+public class OpportunitySalesStageDashboard extends CssLayout implements
+		IOpportunitySalesStageDashboard {
 	private static final long serialVersionUID = 1L;
 
 	public OpportunitySalesStageDashboard() {
@@ -130,19 +129,7 @@ public class OpportunitySalesStageDashboard extends CssLayout implements IOpport
 	}
 
 	@Override
-	public void addViewListener(
-			ApplicationEventListener<? extends ApplicationEvent> listener) {
-		
-	}
+	public void addViewListener(ViewListener listener) {
 
-	// protected void onClickedDescription(final String key) {
-	// final OpportunitySearchCriteria searchCriteria = new
-	// OpportunitySearchCriteria();
-	// searchCriteria.setSaccountid(new NumberSearchField(SearchField.AND,
-	// AppContext.getAccountId()));
-	// searchCriteria.setSalesStages(new SetSearchField<String>(
-	// SearchField.AND, new String[] { key }));
-	// EventBus.getInstance().fireEvent(
-	// new OpportunityEvent.GotoList(this, searchCriteria));
-	// }
+	}
 }

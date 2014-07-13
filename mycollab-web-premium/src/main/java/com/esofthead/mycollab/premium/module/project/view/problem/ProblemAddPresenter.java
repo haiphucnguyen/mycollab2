@@ -1,6 +1,6 @@
 package com.esofthead.mycollab.premium.module.project.view.problem;
 
-import com.esofthead.mycollab.eventmanager.EventBus;
+import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.Problem;
@@ -66,7 +66,7 @@ public class ProblemAddPresenter extends AbstractPresenter<ProblemAddView> {
 						saveProblem(problem);
 						ViewState viewState = HistoryViewManager.back();
 						if (viewState instanceof NullViewState) {
-							EventBus.getInstance().fireEvent(
+							EventBusFactory.getInstance().post(
 									new ProblemEvent.GotoList(this, null));
 						}
 					}
@@ -75,7 +75,7 @@ public class ProblemAddPresenter extends AbstractPresenter<ProblemAddView> {
 					public void onCancel() {
 						ViewState viewState = HistoryViewManager.back();
 						if (viewState instanceof NullViewState) {
-							EventBus.getInstance().fireEvent(
+							EventBusFactory.getInstance().post(
 									new ProblemEvent.GotoList(this, null));
 						}
 					}
@@ -83,7 +83,7 @@ public class ProblemAddPresenter extends AbstractPresenter<ProblemAddView> {
 					@Override
 					public void onSaveAndNew(final Problem problem) {
 						saveProblem(problem);
-						EventBus.getInstance().fireEvent(
+						EventBusFactory.getInstance().post(
 								new ProblemEvent.GotoAdd(this, null));
 					}
 				});

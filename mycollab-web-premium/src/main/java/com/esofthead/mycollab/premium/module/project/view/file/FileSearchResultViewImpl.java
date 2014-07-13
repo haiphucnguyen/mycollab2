@@ -1,6 +1,6 @@
 package com.esofthead.mycollab.premium.module.project.view.file;
 
-import com.esofthead.mycollab.eventmanager.EventBus;
+import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.file.domain.criteria.FileSearchCriteria;
 import com.esofthead.mycollab.module.file.view.components.FileSearchResultComponent;
 import com.esofthead.mycollab.module.project.events.ProjectContentEvent;
@@ -20,7 +20,7 @@ public class FileSearchResultViewImpl extends AbstractPageView implements
 
 			@Override
 			protected void backView() {
-				EventBus.getInstance().fireEvent(
+				EventBusFactory.getInstance().post(
 						new ProjectContentEvent.GotoDashboard(
 								FileSearchResultViewImpl.this));
 
