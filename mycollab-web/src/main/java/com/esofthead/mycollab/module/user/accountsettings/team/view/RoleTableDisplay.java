@@ -21,7 +21,7 @@ import java.util.List;
 
 import com.esofthead.mycollab.common.TableViewField;
 import com.esofthead.mycollab.module.project.LabelLink;
-import com.esofthead.mycollab.module.user.AccountLinkUtils;
+import com.esofthead.mycollab.module.user.AccountLinkGenerator;
 import com.esofthead.mycollab.module.user.domain.Role;
 import com.esofthead.mycollab.module.user.domain.SimpleRole;
 import com.esofthead.mycollab.module.user.domain.criteria.RoleSearchCriteria;
@@ -82,7 +82,7 @@ public class RoleTableDisplay extends
 						.getBeanByIndex(itemId);
 
 				LabelLink b = new LabelLink(role.getRolename(),
-						AccountLinkUtils.generateUserRoleLink(role.getId()));
+						AccountLinkGenerator.generateUserRoleLink(role.getId()));
 				return b;
 
 			}

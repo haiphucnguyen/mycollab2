@@ -32,7 +32,7 @@ import com.hp.gagawa.java.elements.Text;
 public class AccountLinkBuilder {
 
 	public static String generatePreviewFullUserLink(String username) {
-		return AccountLinkUtils.generatePreviewFullUserLink(
+		return AccountLinkGenerator.generatePreviewFullUserLink(
 				AppContext.getSiteUrl(), username);
 	}
 
