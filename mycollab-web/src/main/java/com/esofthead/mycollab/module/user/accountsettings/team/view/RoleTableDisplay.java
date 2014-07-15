@@ -19,6 +19,7 @@ package com.esofthead.mycollab.module.user.accountsettings.team.view;
 
 import java.util.List;
 
+import com.esofthead.mycollab.common.GenericLinkUtils;
 import com.esofthead.mycollab.common.TableViewField;
 import com.esofthead.mycollab.module.project.LabelLink;
 import com.esofthead.mycollab.module.user.AccountLinkGenerator;
@@ -82,7 +83,9 @@ public class RoleTableDisplay extends
 						.getBeanByIndex(itemId);
 
 				LabelLink b = new LabelLink(role.getRolename(),
-						AccountLinkGenerator.generateUserRoleLink(role.getId()));
+						GenericLinkUtils.URL_PREFIX_PARAM
+								+ AccountLinkGenerator.generateRoleLink(role
+										.getId()));
 				return b;
 
 			}

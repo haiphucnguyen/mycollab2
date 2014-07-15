@@ -10,7 +10,6 @@
     <project>mycollab-dao</project>
     <project>mycollab-localization</project>
     <project>mycollab-migration</project>
-    <project>mycollab-reporting</project>
     <project>mycollab-caching</project>
     <project>mycollab-jackrabbit</project>
     <project>mycollab-scheduler</project>

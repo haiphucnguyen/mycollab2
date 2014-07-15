@@ -36,6 +36,11 @@ public class AccountLinkBuilder {
 				AppContext.getSiteUrl(), username);
 	}
 
+	public static String generatePreviewFullRoleLink(Integer userRoleId) {
+		return AccountLinkGenerator.generatePreviewFullRoleLink(
+				AppContext.getSiteUrl(), userRoleId);
+	}
+
 	public static String generateUserHtmlLink(String username) {
 		UserService userService = ApplicationContextUtil
 				.getSpringBean(UserService.class);
