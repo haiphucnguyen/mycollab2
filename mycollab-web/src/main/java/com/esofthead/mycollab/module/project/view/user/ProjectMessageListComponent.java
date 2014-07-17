@@ -32,6 +32,10 @@ import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.DefaultBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
+import com.hp.gagawa.java.Node;
+import com.hp.gagawa.java.elements.A;
+import com.hp.gagawa.java.elements.Div;
+import com.hp.gagawa.java.elements.Img;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
@@ -64,16 +68,7 @@ public class ProjectMessageListComponent extends Depot {
 
 			final String content = AppContext.getMessage(
 					ProjectCommonI18nEnum.FEED_PROJECT_MESSAGE_TITLE,
-					SiteConfiguration.getAvatarLink(
-							message.getPostedUserAvatarId(), 16),
-					ProjectLinkBuilder.generateProjectMemberFullLink(
-							message.getProjectid(), message.getPosteduser()),
-					message.getFullPostedUserName(), MyCollabResource
-							.newResourceLink("icons/16/project/message.png"),
-					ProjectLinkBuilder.generateMessagePreviewFullLink(
-							message.getProjectid(), message.getId(),
-							GenericLinkUtils.URL_PREFIX_PARAM), message
-							.getTitle());
+					buildAssigneeValue(message), buildMessage(message));
 			final Label actionLbl = new Label(content, ContentMode.HTML);
 
 			header.addComponent(actionLbl);
@@ -90,6 +85,43 @@ public class ProjectMessageListComponent extends Depot {
 
 			layout.addComponent(body);
 			return layout;
+		}
+
+		private String buildAssigneeValue(SimpleMessage message) {
+			Div div = new Div();
+			Img avatar = new Img("", SiteConfiguration.getAvatarLink(
+					message.getPostedUserAvatarId(), 16));
+			A assigneeLink = new A();
+			assigneeLink.setHref(ProjectLinkBuilder
+					.generateProjectMemberFullLink(message.getProjectid(),
+							message.getPosteduser()));
+			assigneeLink.appendText(message.getFullPostedUserName());
+			div.appendChild(avatar, assigneeLink);
+			return write(div);
+		}
+
+		private String buildMessage(SimpleMessage message) {
+			Div div = new Div();
+			Img messageIcon = new Img("",
+					MyCollabResource
+							.newResourceLink("icons/16/project/message.png"));
+			A msgLink = new A();
+			msgLink.setHref(ProjectLinkBuilder.generateMessagePreviewFullLink(
+					message.getProjectid(), message.getId(),
+					GenericLinkUtils.URL_PREFIX_PARAM));
+			msgLink.appendText(message.getTitle());
+			div.appendChild(messageIcon, msgLink);
+			return write(div);
+		}
+
+		private static String write(Div div) {
+			StringBuffer b = new StringBuffer();
+			if ((div.children != null) && (div.children.size() > 0)) {
+				for (Node child : div.children) {
+					b.append(child.write());
+				}
+			}
+			return b.toString();
 		}
 	}
 
