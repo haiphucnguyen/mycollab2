@@ -20,6 +20,7 @@ import com.esofthead.mycollab.common.GenericLinkUtils;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
+import com.esofthead.mycollab.html.DivLessFormatter;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
 import com.esofthead.mycollab.module.project.domain.SimpleMessage;
@@ -32,9 +33,7 @@ import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.DefaultBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
-import com.hp.gagawa.java.Node;
 import com.hp.gagawa.java.elements.A;
-import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.Img;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Component;
@@ -88,7 +87,7 @@ public class ProjectMessageListComponent extends Depot {
 		}
 
 		private String buildAssigneeValue(SimpleMessage message) {
-			Div div = new Div();
+			DivLessFormatter div = new DivLessFormatter();
 			Img avatar = new Img("", SiteConfiguration.getAvatarLink(
 					message.getPostedUserAvatarId(), 16));
 			A assigneeLink = new A();
@@ -97,11 +96,11 @@ public class ProjectMessageListComponent extends Depot {
 							message.getPosteduser()));
 			assigneeLink.appendText(message.getFullPostedUserName());
 			div.appendChild(avatar, assigneeLink);
-			return write(div);
+			return div.write();
 		}
 
 		private String buildMessage(SimpleMessage message) {
-			Div div = new Div();
+			DivLessFormatter div = new DivLessFormatter();
 			Img messageIcon = new Img("",
 					MyCollabResource
 							.newResourceLink("icons/16/project/message.png"));
@@ -111,17 +110,7 @@ public class ProjectMessageListComponent extends Depot {
 					GenericLinkUtils.URL_PREFIX_PARAM));
 			msgLink.appendText(message.getTitle());
 			div.appendChild(messageIcon, msgLink);
-			return write(div);
-		}
-
-		private static String write(Div div) {
-			StringBuffer b = new StringBuffer();
-			if ((div.children != null) && (div.children.size() > 0)) {
-				for (Node child : div.children) {
-					b.append(child.write());
-				}
-			}
-			return b.toString();
+			return div.write();
 		}
 	}
 
