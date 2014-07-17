@@ -18,6 +18,7 @@
   <classpathentry kind="src" path="/mycollab-server-runner"/>
   <classpathentry kind="src" path="/mycollab-config"/>
   <classpathentry kind="src" path="/mycollab-core"/>
+  <classpathentry kind="var" path="M2_REPO/com/esofthead/mycollab/mycollab-extra-lib/1.0/mycollab-extra-lib-1.0.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/mortennobel/java-image-scaling/0.8.5/java-image-scaling-0.8.5.jar" sourcepath="M2_REPO/com/mortennobel/java-image-scaling/0.8.5/java-image-scaling-0.8.5-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/jhlabs/filters/2.0.235/filters-2.0.235.jar" sourcepath="M2_REPO/com/jhlabs/filters/2.0.235/filters-2.0.235-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/ch/qos/cal10n/cal10n-api/0.8.1/cal10n-api-0.8.1.jar" sourcepath="M2_REPO/ch/qos/cal10n/cal10n-api/0.8.1/cal10n-api-0.8.1-sources.jar"/>
@@ -93,7 +94,6 @@
   <classpathentry kind="var" path="M2_REPO/org/ow2/asm/asm-commons/4.1/asm-commons-4.1.jar" sourcepath="M2_REPO/org/ow2/asm/asm-commons/4.1/asm-commons-4.1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/ow2/asm/asm-tree/4.1/asm-tree-4.1.jar" sourcepath="M2_REPO/org/ow2/asm/asm-tree/4.1/asm-tree-4.1-sources.jar"/>
   <classpathentry kind="src" path="/mycollab-servlet"/>
-  <classpathentry kind="var" path="M2_REPO/com/esofthead/mycollab/mycollab-extra-lib/1.0/mycollab-extra-lib-1.0.jar"/>
   <classpathentry kind="src" path="/mycollab-services"/>
   <classpathentry kind="src" path="/mycollab-dao"/>
   <classpathentry kind="var" path="M2_REPO/org/mybatis/mybatis/3.2.7/mybatis-3.2.7.jar" sourcepath="M2_REPO/org/mybatis/mybatis/3.2.7/mybatis-3.2.7-sources.jar"/>
