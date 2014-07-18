@@ -897,7 +897,8 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
 
 	public void gotoNotificationSetting(ProjectNotificationSetting notify) {
 		this.select(0);
-		this.addLink(new Button("Notification Setting",
+		this.addLink(new Button(AppContext
+				.getMessage(BreadcrumbI18nEnum.FRA_NOTIFICATION_SETTING),
 				new GotoNotificationSetttingListener()));
 		AppContext.addFragment("project/setting/notification/"
 				+ UrlEncodeDecoder.encode(project.getId()), AppContext
