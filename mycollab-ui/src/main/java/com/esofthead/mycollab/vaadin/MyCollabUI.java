@@ -74,7 +74,6 @@ public abstract class MyCollabUI extends UI {
 		log.debug("Application is closed. Clean all resources");
 		currentContext.clearSession();
 		currentContext = null;
-		VaadinSession.getCurrent().close();
 		super.close();
 	}
 }

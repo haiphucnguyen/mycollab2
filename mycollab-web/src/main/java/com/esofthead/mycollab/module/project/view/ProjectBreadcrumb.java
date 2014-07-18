@@ -199,9 +199,8 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
 		this.addLink(new Button(AppContext
 				.getMessage(GenericI18Enum.BUTTON_EDIT_LABEL)));
 		AppContext.addFragment(
-				"project/risk/edit/"
-						+ UrlEncodeDecoder.encode(project.getId() + "/"
-								+ risk.getId()),
+				ProjectLinkGenerator.generateRiskEditLink(project.getId(),
+						risk.getId()),
 				AppContext.getMessage(BreadcrumbI18nEnum.FRA_RISK_EDIT,
 						risk.getRiskname()));
 	}
@@ -215,7 +214,7 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
 		this.addLink(new Button(AppContext
 				.getMessage(GenericI18Enum.BUTTON_ADD_LABEL)));
 		AppContext.addFragment(
-				"project/risk/add/" + UrlEncodeDecoder.encode(project.getId()),
+				ProjectLinkGenerator.generateRiskAddLink(project.getId()),
 				AppContext.getMessage(BreadcrumbI18nEnum.FRA_RISK_NEW));
 	}
 
