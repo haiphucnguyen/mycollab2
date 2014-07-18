@@ -137,7 +137,6 @@
   <classpathentry kind="var" path="M2_REPO/org/vaadin/addons/icepush/0.5.5/icepush-0.5.5.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/icepush/icepush/3.3.0/icepush-3.3.0.jar" sourcepath="M2_REPO/org/icepush/icepush/3.3.0/icepush-3.3.0-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/icepush/icepush-gwt/2.0.0-alpha3/icepush-gwt-2.0.0-alpha3.jar"/>
-  <classpathentry kind="var" path="M2_REPO/com/esofthead/vaadin/mobilecomponent/1.0.0-SNAPSHOT/mobilecomponent-1.0.0-SNAPSHOT.jar" sourcepath="M2_REPO/com/esofthead/vaadin/mobilecomponent/1.0.0-SNAPSHOT/mobilecomponent-1.0.0-SNAPSHOT-sources.jar"/>
   <classpathentry kind="src" path="/mycollab-reporting"/>
   <classpathentry kind="var" path="M2_REPO/net/sourceforge/dynamicreports/dynamicreports-core/3.2.1/dynamicreports-core-3.2.1.jar" sourcepath="M2_REPO/net/sourceforge/dynamicreports/dynamicreports-core/3.2.1/dynamicreports-core-3.2.1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/net/sf/jasperreports/jasperreports/5.5.1/jasperreports-5.5.1.jar" sourcepath="M2_REPO/net/sf/jasperreports/jasperreports/5.5.1/jasperreports-5.5.1-sources.jar"/>

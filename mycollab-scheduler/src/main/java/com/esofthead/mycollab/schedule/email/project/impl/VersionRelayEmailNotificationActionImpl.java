@@ -129,7 +129,8 @@ public class VersionRelayEmailNotificationActionImpl extends
 	public static class VersionFieldNameMapper extends ItemFieldMapper {
 		public VersionFieldNameMapper() {
 			put("description", GenericI18Enum.FORM_DESCRIPTION, true);
-
+			put("status", VersionI18nEnum.FORM_STATUS);
+			put("versionname", VersionI18nEnum.FORM_NAME);
 			put("duedate", new DateFieldFormat("duedate",
 					VersionI18nEnum.FORM_DUE_DATE));
 		}
