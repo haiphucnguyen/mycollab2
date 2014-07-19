@@ -112,7 +112,8 @@ public class LeadConvertInfoWindow extends Window {
 		layout.setSpacing(true);
 		layout.setStyleName("addNewControl");
 
-		Button convertButton = new Button("Convert",
+		Button convertButton = new Button(
+				AppContext.getMessage(LeadI18nEnum.BUTTON_CONVERT_LEAD),
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
