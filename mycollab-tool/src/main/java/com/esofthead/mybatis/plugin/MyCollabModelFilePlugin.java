@@ -210,6 +210,8 @@ public class MyCollabModelFilePlugin extends
 				.addFileCommentLine(String.format(commentLine,
 						introspectedTable
 								.getAliasedFullyQualifiedTableNameAtRuntime()));
+		topLevelClass.addAnnotation("@SuppressWarnings(\"ucd\")");
+
 		if (!isBlobDomainGenerated(introspectedTable)) {
 			topLevelClass.setVisibility(JavaVisibility.PUBLIC);
 		} else {
@@ -226,8 +228,18 @@ public class MyCollabModelFilePlugin extends
 	}
 
 	@Override
+	public boolean modelExampleClassGenerated(TopLevelClass topLevelClass,
+			IntrospectedTable introspectedTable) {
+		topLevelClass.addAnnotation("@SuppressWarnings(\"ucd\")");
+		return super.modelExampleClassGenerated(topLevelClass,
+				introspectedTable);
+	}
+
+	@Override
 	public boolean clientGenerated(Interface interfaze,
 			TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
+
+		interfaze.addAnnotation("@SuppressWarnings(\"ucd\")");
 
 		if (isTableHasIdPrimaryKey(introspectedTable)) {
 			generateInsertAndReturnKeyMethod(interfaze, introspectedTable);
