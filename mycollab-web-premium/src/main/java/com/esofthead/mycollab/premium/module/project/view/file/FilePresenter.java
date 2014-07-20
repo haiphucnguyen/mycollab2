@@ -30,7 +30,7 @@ public class FilePresenter extends AbstractPresenter<IFileContainer> implements
 		projectViewContainer.gotoSubView("file");
 
 		view.removeAllComponents();
-		AbstractPresenter presenter = null;
+		AbstractPresenter<?> presenter = null;
 
 		if (data instanceof FileScreenData.GotoDashboard) {
 			presenter = PresenterResolver

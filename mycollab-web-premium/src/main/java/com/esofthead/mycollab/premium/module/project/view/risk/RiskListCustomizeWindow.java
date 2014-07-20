@@ -16,6 +16,7 @@ import com.esofthead.mycollab.vaadin.ui.table.CustomizedTableWindow;
 public class RiskListCustomizeWindow extends CustomizedTableWindow {
 	private static final long serialVersionUID = 1L;
 
+	@SuppressWarnings("rawtypes")
 	public RiskListCustomizeWindow(String viewId, AbstractPagedBeanTable table) {
 		super(viewId, table);
 	}

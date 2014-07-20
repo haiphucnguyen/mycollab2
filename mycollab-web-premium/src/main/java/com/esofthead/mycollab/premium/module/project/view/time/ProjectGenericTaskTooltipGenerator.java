@@ -1,7 +1,5 @@
 package com.esofthead.mycollab.premium.module.project.view.time;
 
-import java.util.Locale;
-
 import com.esofthead.mycollab.module.project.ProjectTooltipGenerator;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleProblem;

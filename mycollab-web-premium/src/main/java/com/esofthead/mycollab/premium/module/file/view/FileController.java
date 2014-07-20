@@ -1,6 +1,5 @@
 package com.esofthead.mycollab.premium.module.file.view;
 
-import com.esofthead.mycollab.eventmanager.ApplicationEvent;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.file.events.FileEvent;
