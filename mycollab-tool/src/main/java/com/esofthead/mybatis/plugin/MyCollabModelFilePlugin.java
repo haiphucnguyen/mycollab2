@@ -6,6 +6,7 @@ import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.dom.java.Field;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
+import org.mybatis.generator.api.dom.java.InnerClass;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.api.dom.java.Method;
@@ -211,6 +212,13 @@ public class MyCollabModelFilePlugin extends
 						introspectedTable
 								.getAliasedFullyQualifiedTableNameAtRuntime()));
 		topLevelClass.addAnnotation("@SuppressWarnings(\"ucd\")");
+		Field staticField = new Field("serialVersionUID",
+				new FullyQualifiedJavaType("long"));
+		staticField.setInitializationString("1");
+		staticField.setStatic(true);
+		staticField.setFinal(true);
+		staticField.setVisibility(JavaVisibility.PRIVATE);
+		topLevelClass.addField(staticField);
 
 		if (!isBlobDomainGenerated(introspectedTable)) {
 			topLevelClass.setVisibility(JavaVisibility.PUBLIC);
@@ -228,9 +236,30 @@ public class MyCollabModelFilePlugin extends
 	}
 
 	@Override
+	public boolean modelRecordWithBLOBsClassGenerated(
+			TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
+		topLevelClass.addAnnotation("@SuppressWarnings(\"ucd\")");
+
+		Field staticField = new Field("serialVersionUID",
+				new FullyQualifiedJavaType("long"));
+		staticField.setInitializationString("1");
+		staticField.setStatic(true);
+		staticField.setFinal(true);
+		staticField.setVisibility(JavaVisibility.PRIVATE);
+		topLevelClass.addField(staticField);
+
+		return super.modelRecordWithBLOBsClassGenerated(topLevelClass,
+				introspectedTable);
+	}
+
+	@Override
 	public boolean modelExampleClassGenerated(TopLevelClass topLevelClass,
 			IntrospectedTable introspectedTable) {
 		topLevelClass.addAnnotation("@SuppressWarnings(\"ucd\")");
+		List<InnerClass> innerClasses = topLevelClass.getInnerClasses();
+		for (InnerClass innerClass : innerClasses) {
+			innerClass.addAnnotation("@SuppressWarnings(\"ucd\")");
+		}
 		return super.modelExampleClassGenerated(topLevelClass,
 				introspectedTable);
 	}
@@ -239,7 +268,7 @@ public class MyCollabModelFilePlugin extends
 	public boolean clientGenerated(Interface interfaze,
 			TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
 
-		interfaze.addAnnotation("@SuppressWarnings(\"ucd\")");
+		interfaze.addAnnotation("@SuppressWarnings({ \"ucd\", \"rawtypes\" })");
 
 		if (isTableHasIdPrimaryKey(introspectedTable)) {
 			generateInsertAndReturnKeyMethod(interfaze, introspectedTable);
