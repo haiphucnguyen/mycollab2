@@ -9,7 +9,7 @@ import org.eclipse.jetty.webapp.WebAppContext;
  * 
  */
 public class PremiumServerRunner extends GenericServerRunner {
-
+	
 	@Override
 	public WebAppContext buildContext(String baseDir) {
 		WebAppContext webAppContext = new WebAppContext();
