@@ -72,6 +72,6 @@
   <classpathentry kind="var" path="M2_REPO/com/google/code/gson/gson/2.2.4/gson-2.2.4.jar" sourcepath="M2_REPO/com/google/code/gson/gson/2.2.4/gson-2.2.4-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/jsoup/jsoup/1.7.3/jsoup-1.7.3.jar" sourcepath="M2_REPO/org/jsoup/jsoup/1.7.3/jsoup-1.7.3-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/ocpsoft/prettytime/prettytime/3.2.5.Final/prettytime-3.2.5.Final.jar" sourcepath="M2_REPO/org/ocpsoft/prettytime/prettytime/3.2.5.Final/prettytime-3.2.5.Final-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/jasypt/jasypt/1.9.1/jasypt-1.9.1.jar" sourcepath="M2_REPO/org/jasypt/jasypt/1.9.1/jasypt-1.9.1-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/jasypt/jasypt-spring31/1.9.1/jasypt-spring31-1.9.1.jar" sourcepath="M2_REPO/org/jasypt/jasypt-spring31/1.9.1/jasypt-spring31-1.9.1-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/jasypt/jasypt/1.9.2/jasypt-1.9.2.jar" sourcepath="M2_REPO/org/jasypt/jasypt/1.9.2/jasypt-1.9.2-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/jasypt/jasypt-spring31/1.9.2/jasypt-spring31-1.9.2.jar" sourcepath="M2_REPO/org/jasypt/jasypt-spring31/1.9.2/jasypt-spring31-1.9.2-sources.jar"/>
 </classpath>

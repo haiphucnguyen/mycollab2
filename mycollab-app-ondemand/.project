@@ -26,6 +26,7 @@
     <project>mycollab-jetty-session-premium</project>
     <project>mycollab-mobile</project>
     <project>mycollab-scheduler-ondemand</project>
+    <project>mycollab-search</project>
   </projects>
   <buildSpec>
     <buildCommand>

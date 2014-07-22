@@ -43,6 +43,12 @@
             <artifactId>mycollab-services-premium</artifactId>
             <version>4.3.1</version>
         </dependency>
+        
+        <dependency>
+            <groupId>com.esofthead.mycollab</groupId>
+            <artifactId>mycollab-search-server</artifactId>
+            <version>4.3.1</version>
+        </dependency>
 
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>

@@ -16,6 +16,8 @@
     <project>mycollab-mobile</project>
     <project>mycollab-ui</project>
     <project>mycollab-services-premium</project>
+    <project>mycollab-search-server</project>
+    <project>mycollab-search</project>
     <project>mycollab-caching-premium</project>
     <project>mycollab-web-premium</project>
     <project>mycollab-web</project>

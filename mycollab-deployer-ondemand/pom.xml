@@ -23,6 +23,7 @@
         <module>../mycollab-migration</module>
         <module>../mycollab-services</module>
         <module>../mycollab-services-ondemand</module>
+        <module>../mycollab-search</module>
         <module>../mycollab-esb</module>
         <module>../mycollab-jetty-session-premium</module>
         <module>../mycollab-caching-premium</module>
@@ -36,7 +37,6 @@
         <module>../mycollab-api-impl</module>
         <module>../mycollab-scheduler-ondemand</module>
         <module>../mycollab-web-premium</module>
-
         <module>../mycollab-app-ondemand</module>
     </modules>
 </project>
