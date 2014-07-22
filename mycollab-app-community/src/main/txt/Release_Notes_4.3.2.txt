@@ -43,7 +43,8 @@
     =============================
     Improvements
         - Update Japanese localization
-        - Upgrade libraries
+        - Upgrade Jasypt library up to 1.9.2
+        - Add the generic search module by using Solr
         
     Bug Fixes
         - Add more tracked fields in version notification email.
