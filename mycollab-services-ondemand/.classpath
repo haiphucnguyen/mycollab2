@@ -129,4 +129,6 @@
   <classpathentry kind="var" path="M2_REPO/org/jboss/resteasy/resteasy-jettison-provider/3.0.7.Final/resteasy-jettison-provider-3.0.7.Final.jar" sourcepath="M2_REPO/org/jboss/resteasy/resteasy-jettison-provider/3.0.7.Final/resteasy-jettison-provider-3.0.7.Final-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/jboss/resteasy/resteasy-jaxb-provider/3.0.7.Final/resteasy-jaxb-provider-3.0.7.Final.jar" sourcepath="M2_REPO/org/jboss/resteasy/resteasy-jaxb-provider/3.0.7.Final/resteasy-jaxb-provider-3.0.7.Final-sources.jar"/>
   <classpathentry kind="src" path="/mycollab-api-impl"/>
+  <classpathentry kind="var" path="M2_REPO/net/nicholaswilliams/java/licensing/licensing-licensor-base/1.1.0/licensing-licensor-base-1.1.0.jar" sourcepath="M2_REPO/net/nicholaswilliams/java/licensing/licensing-licensor-base/1.1.0/licensing-licensor-base-1.1.0-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/net/nicholaswilliams/java/licensing/licensing-core/1.1.0/licensing-core-1.1.0.jar" sourcepath="M2_REPO/net/nicholaswilliams/java/licensing/licensing-core/1.1.0/licensing-core-1.1.0-sources.jar"/>
 </classpath>
