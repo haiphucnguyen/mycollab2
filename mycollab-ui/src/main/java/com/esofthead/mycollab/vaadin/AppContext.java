@@ -451,7 +451,7 @@ public class AppContext implements Serializable {
 		if (perVal == null) {
 			return getMessage(SecurityI18nEnum.NO_ACCESS);
 		} else {
-			return AccessPermissionFlag.toString(perVal);
+			return AppContext.getMessage(AccessPermissionFlag.toKey(perVal));
 		}
 	}
 
