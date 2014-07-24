@@ -37,7 +37,9 @@
 			</td>
 		</tr>
 		<tr>
+		<td>
 		#messageBlock( $inviteMessage )
+		</td>
 		</tr>
 		#parse("templates/email/footer_en_US.mt")
 	</table>
