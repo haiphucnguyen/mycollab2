@@ -115,7 +115,8 @@ class ProjectRoleReadComp extends AbstractPreviewItemComp<SimpleProjectRole> {
 							permissionMap, AppContext
 									.getMessage(RolePermissionI18nEnum
 											.valueOf(permissionPath)))),
-					permissionPath, 0, i);
+					AppContext.getMessage(RolePermissionI18nEnum
+							.valueOf(permissionPath)), 0, i);
 		}
 
 	}
