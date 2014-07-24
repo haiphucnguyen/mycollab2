@@ -51,6 +51,12 @@
             <artifactId>resteasy-spring</artifactId>
             <version>${restVersion}</version>
         </dependency>
+        
+        <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-client</artifactId>
+            <version>${restVersion}</version>
+        </dependency>
 
         <dependency>
             <groupId>com.google.code.gson</groupId>
