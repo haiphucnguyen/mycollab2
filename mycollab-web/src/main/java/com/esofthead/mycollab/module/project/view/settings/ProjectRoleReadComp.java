@@ -112,8 +112,9 @@ class ProjectRoleReadComp extends AbstractPreviewItemComp<SimpleProjectRole> {
 		for (int i = 0; i < ProjectRolePermissionCollections.PROJECT_PERMISSIONS.length; i++) {
 			final String permissionPath = ProjectRolePermissionCollections.PROJECT_PERMISSIONS[i];
 			projectFormHelper.addComponent(
-					new Label(this.getValueFromPerPath(permissionMap,
-							permissionPath)), permissionPath, 0, i);
+					new Label(AppContext.getPermissionCaptionValue(
+							permissionMap, permissionPath)), permissionPath, 0,
+					i);
 		}
 
 	}
@@ -139,15 +140,5 @@ class ProjectRoleReadComp extends AbstractPreviewItemComp<SimpleProjectRole> {
 				return null;
 			}
 		};
-	}
-
-	private String getValueFromPerPath(final PermissionMap permissionMap,
-			final String permissionItem) {
-		final Integer perVal = permissionMap.get(permissionItem);
-		if (perVal == null) {
-			return AppContext.getMessage(SecurityI18nEnum.NO_ACCESS);
-		} else {
-			return AccessPermissionFlag.toString(perVal);
-		}
 	}
 }
