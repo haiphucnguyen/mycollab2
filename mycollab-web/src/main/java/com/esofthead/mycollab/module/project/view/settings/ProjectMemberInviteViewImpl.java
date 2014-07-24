@@ -24,6 +24,7 @@ import org.apache.commons.validator.routines.EmailValidator;
 import org.vaadin.tokenfield.TokenField;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
+import com.esofthead.mycollab.common.i18n.SecurityI18nEnum;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
@@ -33,6 +34,7 @@ import com.esofthead.mycollab.module.project.events.ProjectMemberEvent;
 import com.esofthead.mycollab.module.project.events.ProjectMemberEvent.InviteProjectMembers;
 import com.esofthead.mycollab.module.project.i18n.ProjectMemberI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.ProjectRoleI18nEnum;
+import com.esofthead.mycollab.module.project.i18n.RolePermissionI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.project.service.ProjectRoleService;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectRoleComboBox;
@@ -227,14 +229,17 @@ public class ProjectMemberInviteViewImpl extends AbstractPageView implements
 					final String permissionPath = ProjectRolePermissionCollections.PROJECT_PERMISSIONS[i];
 					projectFormHelper.addComponent(
 							new Label(AppContext.getPermissionCaptionValue(
-									permissionMap, permissionPath)),
-							permissionPath, 0, i);
+									permissionMap, permissionPath)), AppContext
+									.getMessage(RolePermissionI18nEnum
+											.valueOf(permissionPath)), 0, i);
 				}
 			}
 		} else {
 			for (int i = 0; i < ProjectRolePermissionCollections.PROJECT_PERMISSIONS.length; i++) {
 				final String permissionPath = ProjectRolePermissionCollections.PROJECT_PERMISSIONS[i];
-				projectFormHelper.addComponent(new Label("Access"),
+				projectFormHelper.addComponent(
+						new Label(AppContext
+								.getMessage(SecurityI18nEnum.ACCESS)),
 						permissionPath, 0, i);
 			}
 		}
