@@ -136,7 +136,8 @@ public class RoleReadViewImpl extends AbstractPageView implements RoleReadView {
 				return AppContext
 						.getMessage(AccessPermissionFlag.toKey(perVal));
 			} else if (PermissionChecker.isBooleanPermission(perVal)) {
-				return BooleanPermissionFlag.toString(perVal);
+				return AppContext.getMessage(BooleanPermissionFlag
+						.toKey(perVal));
 			} else {
 				throw new MyCollabException("Do not support permission value "
 						+ perVal);
