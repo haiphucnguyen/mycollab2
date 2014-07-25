@@ -153,12 +153,7 @@ public class AcceptInvitationHandler extends VelocityWebServletRequestHandler {
 				}
 			}
 			throw new ResourceNotFoundException();
-		} catch (NumberFormatException e) {
-			throw new ResourceNotFoundException();
-		} catch (ResourceNotFoundException e) {
-			throw new ResourceNotFoundException();
 		} catch (Exception e) {
-			log.error("Error when delete UserAccountInvitation", e);
 			throw new MyCollabException(e);
 		}
 
