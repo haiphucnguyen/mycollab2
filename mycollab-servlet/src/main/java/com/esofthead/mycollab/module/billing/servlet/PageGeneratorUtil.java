@@ -42,7 +42,7 @@ import com.esofthead.mycollab.template.velocity.TemplateContext;
 public class PageGeneratorUtil {
 
 	public static void responeUserNotExistPage(HttpServletResponse response,
-			String loginURL) throws IOException {
+			String username, String loginURL) throws IOException {
 		String pageNotFoundTemplate = "templates/page/UserNotExistPage.mt";
 		TemplateContext context = new TemplateContext();
 
@@ -50,6 +50,7 @@ public class PageGeneratorUtil {
 				SiteConfiguration.getDefaultLocale());
 
 		context.put("loginURL", loginURL);
+		context.put("username", username);
 		Map<String, String> defaultUrls = new HashMap<String, String>();
 		SharingOptions sharingOptions = SharingOptions
 				.getDefaultSharingOptions();

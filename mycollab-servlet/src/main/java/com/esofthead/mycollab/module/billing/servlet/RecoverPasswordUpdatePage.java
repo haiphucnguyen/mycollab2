@@ -58,7 +58,7 @@ public class RecoverPasswordUpdatePage extends VelocityWebServletRequestHandler 
 				User user = userService.findUserByUserName(username);
 				if (user == null) {
 					PageGeneratorUtil.responeUserNotExistPage(response,
-							request.getContextPath() + "/");
+							username, request.getContextPath() + "/");
 					return;
 				} else {
 					String loginURL = (SiteConfiguration.getDeploymentMode() == DeploymentMode.SITE) ? ("https://www.mycollab.com/sign-in?username=" + username)

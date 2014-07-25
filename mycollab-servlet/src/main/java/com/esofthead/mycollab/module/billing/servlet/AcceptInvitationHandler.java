@@ -97,7 +97,7 @@ public class AcceptInvitationHandler extends VelocityWebServletRequestHandler {
 
 				if (user == null || userInAccount == null) {
 					PageGeneratorUtil.responeUserNotExistPage(response,
-							request.getContextPath() + "/");
+							username, request.getContextPath() + "/");
 					return;
 				} else {
 					if (userInAccount.getRegisterstatus().equals(
