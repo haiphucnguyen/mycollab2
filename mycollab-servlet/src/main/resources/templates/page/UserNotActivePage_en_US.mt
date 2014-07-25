@@ -31,7 +31,7 @@
 				<div style="text-align:right;">
 					<button class="v-button v-button-orangebtn" type="button" onclick="return login();"><span style="font-family: 'verdana';font-size: 15px;">Login</span></button>
 				</div>
-				#parse("templates/page/pageFooter.mt")
+				#parse("templates/page/pageFooter_en_US.mt")
 		</div>
 	</div>
 </body>

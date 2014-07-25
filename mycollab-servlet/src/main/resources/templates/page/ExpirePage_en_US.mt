@@ -5,39 +5,41 @@
 <link rel="icon" href="https://www.mycollab.com/favicon.ico" type="image/x-icon">
 <link rel="shortcut icon" href="https://www.mycollab.com/favicon.ico" type="image/x-icon">
 <link rel="stylesheet" type="text/css" href="${defaultUrls.app_url}assets/css/cssVelocityPage.css">
-<style>
-
+<style media="screen" type="text/css">
 #container {
     background-image: url('${defaultUrls.cdn_url}footer-clouds.png');  background-repeat: no-repeat;  background-position: bottom right;
 }
+
 </style>
-<title>User has denied</title>
+<title>Expire to registry</title>
 </head>
-<body style="height: 100%; margin: 0; padding: 0; width: 100%;">
-	<div id="container" style="height:100%;">
+<body>
+	<div id="container">
 		#parse("templates/page/pageHeader.mt")
 		<div id="body">
 			<div id="spacing"></div>
 			<div id="mainBody">
 				<div id="title">
-					<h1>User has denied</h1>
+					<h1>The invitation is expired</h1>
+				</div>
 				<hr size="1">
-				<div >
-					<h3>
-						Oops! Sorry, Maybe you has denied the invitation. We're very glad to show you what things which My Collab Online Tools can help your business. Welcome and take a look. 
+				<div>
+					h3>
+						Sorry! You can only accept this invitation within 7 days. Please ask your Project Admin to resend the invitation.
 					</h3>
 				</div>
-				<div style="text-align:right;">
-					<button class="v-button v-button-orangebtn" type="button" onclick="return login();"><span style="font-family: 'verdana';font-size: 15px;">Take a look</span></button>
+				<div class="right">
+					<button class="v-button v-button-orangebtn" type="button" onclick="return login();"><span>Login</span></button>
 				</div>
-				#parse("templates/page/pageFooter.mt")
+				#parse("templates/page/pageFooter_en_US.mt")
+			</div>
 		</div>
 	</div>
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script>
 	function login(){
-		window.location.assign("https://www.mycollab.com");
+		window.location.assign("$!loginURL");
 	}
-</script>				
+</script>
 </html>

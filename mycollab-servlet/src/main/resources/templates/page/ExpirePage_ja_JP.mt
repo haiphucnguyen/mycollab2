@@ -31,7 +31,7 @@
 				<div class="right">
 					<button class="v-button v-button-orangebtn" type="button" onclick="return login();"><span>Login</span></button>
 				</div>
-				#parse("templates/page/pageFooter.mt")
+				#parse("templates/page/pageFooter_ja_JP.mt")
 			</div>
 		</div>
 	</div>

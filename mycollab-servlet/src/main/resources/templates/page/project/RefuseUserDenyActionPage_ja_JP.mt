@@ -20,18 +20,18 @@
 			<div id="spacing" "></div>
 			<div id="mainBody">
 				<div id="title">
-					<h1>Your account has already activated</h1>
+					<h1>Your account has already been activated</h1>
 				</div>
 				<hr size="1">
 				<div >
 					<h3>
-						Sorry! Your account has already activated. Please contact your project admin if you have any question.
+						Your account has already been activated.
 					</h3>
 				</div>
 				<div class="right">
 					<button class="v-button v-button-orangebtn" type="button" onclick="return login();"><span>Login</span></button>
 				</div>
-				#parse("templates/page/pageFooter.mt")
+				#parse("templates/page/pageFooter_ja_JP.mt")
 			</div>
 		</div>
 	</div>

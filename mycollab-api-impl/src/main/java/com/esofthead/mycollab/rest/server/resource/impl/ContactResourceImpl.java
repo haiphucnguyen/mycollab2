@@ -26,8 +26,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.configuration.SiteConfiguration;
+import com.esofthead.mycollab.i18n.LocalizationHelper;
 import com.esofthead.mycollab.module.mail.IContentGenerator;
-import com.esofthead.mycollab.module.mail.MailUtils;
 import com.esofthead.mycollab.module.mail.service.MailRelayService;
 import com.esofthead.mycollab.rest.server.domain.ContactForm;
 import com.esofthead.mycollab.rest.server.resource.ContactResource;
@@ -73,7 +73,7 @@ public class ContactResourceImpl implements ContactResource {
 						new String[] { "hainguyen@esofthead.com" },
 						contentGenerator
 								.generateSubjectContent("New guy wanna contact you!"),
-						contentGenerator.generateBodyContent(MailUtils
+						contentGenerator.generateBodyContent(LocalizationHelper
 								.templatePath(contactUsTemplate,
 										SiteConfiguration.getDefaultLocale())));
 		Response response = Response.status(200).entity("OK")
