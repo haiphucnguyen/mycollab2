@@ -68,53 +68,28 @@ public class CampaignReadViewImpl extends
 		return this.previewForm;
 	}
 
-	private NotesList getAssociateNotes() {
-		if (associateNotes == null) {
-			associateNotes = new NotesList("Related Notes");
-		}
-		associateNotes.showNotes(CrmTypeConstants.CAMPAIGN, beanItem.getId());
-		return associateNotes;
+	@Override
+	protected void initRelatedComponents() {
+		associateNotes = new NotesList("Related Notes");
+		associateActivities = new ActivityRelatedItemView();
+		associateAccounts = new CampaignRelatedAccountView();
+		associateContacts = new CampaignRelatedContactView();
+		associateLeads = new CampaignRelatedLeadView();
 	}
 
-	private ActivityRelatedItemView getAssociateActivities() {
-		if (associateActivities == null) {
-			associateActivities = new ActivityRelatedItemView();
-		}
+	@Override
+	protected void onPreviewItem() {
+		associateNotes.showNotes(CrmTypeConstants.CAMPAIGN, beanItem.getId());
 		ActivitySearchCriteria searchCriteria = new ActivitySearchCriteria();
 		searchCriteria.setSaccountid(new NumberSearchField(SearchField.AND,
 				AppContext.getAccountId()));
 		searchCriteria.setType(new StringSearchField(SearchField.AND,
 				CrmTypeConstants.CAMPAIGN));
 		searchCriteria.setTypeid(new NumberSearchField(beanItem.getId()));
-
-		return associateActivities;
-	}
-
-	private CampaignRelatedAccountView getAssociateAccounts() {
-		if (associateAccounts == null)
-			associateAccounts = new CampaignRelatedAccountView();
+		associateActivities.setSearchCriteria(searchCriteria);
 		associateAccounts.displayAccounts(beanItem);
-
-		return associateAccounts;
-	}
-
-	private CampaignRelatedContactView getAssociateContacts() {
-		if (associateContacts == null)
-			associateContacts = new CampaignRelatedContactView();
 		associateContacts.displayContacts(beanItem);
-		return associateContacts;
-	}
-
-	private CampaignRelatedLeadView getAssociateLeads() {
-		if (associateLeads == null)
-			associateLeads = new CampaignRelatedLeadView();
 		associateLeads.displayLeads(beanItem);
-		return associateLeads;
-	}
-
-	@Override
-	protected void onPreviewItem() {
-		// Do nothing
 	}
 
 	@Override
@@ -162,10 +137,11 @@ public class CampaignReadViewImpl extends
 
 			@Override
 			public void buttonClick(ClickEvent arg0) {
-				EventBusFactory.getInstance().post(
-						new CampaignEvent.GoToRelatedItems(this,
-								new CrmRelatedItemsScreenData(
-										getAssociateAccounts())));
+				EventBusFactory
+						.getInstance()
+						.post(new CampaignEvent.GoToRelatedItems(
+								this,
+								new CrmRelatedItemsScreenData(associateAccounts)));
 			}
 		});
 		toolbarLayout.addComponent(relatedAccounts);
@@ -182,10 +158,11 @@ public class CampaignReadViewImpl extends
 
 			@Override
 			public void buttonClick(ClickEvent arg0) {
-				EventBusFactory.getInstance().post(
-						new CampaignEvent.GoToRelatedItems(this,
-								new CrmRelatedItemsScreenData(
-										getAssociateContacts())));
+				EventBusFactory
+						.getInstance()
+						.post(new CampaignEvent.GoToRelatedItems(
+								this,
+								new CrmRelatedItemsScreenData(associateContacts)));
 			}
 		});
 		toolbarLayout.addComponent(relatedContacts);
@@ -203,8 +180,7 @@ public class CampaignReadViewImpl extends
 			public void buttonClick(ClickEvent arg0) {
 				EventBusFactory.getInstance().post(
 						new CampaignEvent.GoToRelatedItems(this,
-								new CrmRelatedItemsScreenData(
-										getAssociateLeads())));
+								new CrmRelatedItemsScreenData(associateLeads)));
 			}
 		});
 		toolbarLayout.addComponent(relatedLeads);
@@ -222,8 +198,7 @@ public class CampaignReadViewImpl extends
 			public void buttonClick(ClickEvent arg0) {
 				EventBusFactory.getInstance().post(
 						new CampaignEvent.GoToRelatedItems(this,
-								new CrmRelatedItemsScreenData(
-										getAssociateNotes())));
+								new CrmRelatedItemsScreenData(associateNotes)));
 			}
 		});
 		toolbarLayout.addComponent(relatedNotes);
@@ -243,7 +218,7 @@ public class CampaignReadViewImpl extends
 				EventBusFactory.getInstance().post(
 						new CampaignEvent.GoToRelatedItems(this,
 								new CrmRelatedItemsScreenData(
-										getAssociateActivities())));
+										associateActivities)));
 			}
 		});
 		toolbarLayout.addComponent(relatedActivities);

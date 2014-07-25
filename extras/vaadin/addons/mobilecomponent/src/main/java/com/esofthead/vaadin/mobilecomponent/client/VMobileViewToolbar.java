@@ -6,6 +6,7 @@ import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.Overflow;
+import com.google.gwt.dom.client.Style.TextAlign;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ScrollEvent;
 import com.google.gwt.event.dom.client.ScrollHandler;
@@ -42,6 +43,7 @@ public class VMobileViewToolbar extends ScrollPanel implements ScrollHandler {
 		Style style = getContainerElement().getStyle();
 		style.setOverflow(Overflow.AUTO);
 		style.setHeight(100, Unit.PCT);
+		style.setTextAlign(TextAlign.CENTER);
 
 		DOM.sinkEvents(getElement(), Event.ONSCROLL);
 	}
