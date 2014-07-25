@@ -37,10 +37,10 @@ import com.esofthead.mycollab.common.GenericLinkUtils;
 import com.esofthead.mycollab.common.domain.MailRecipientField;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
+import com.esofthead.mycollab.i18n.LocalizationHelper;
 import com.esofthead.mycollab.module.billing.AccountReminderStatusContants;
 import com.esofthead.mycollab.module.billing.service.BillingService;
 import com.esofthead.mycollab.module.mail.IContentGenerator;
-import com.esofthead.mycollab.module.mail.MailUtils;
 import com.esofthead.mycollab.module.mail.service.ExtMailService;
 import com.esofthead.mycollab.module.user.domain.BillingAccount;
 import com.esofthead.mycollab.module.user.domain.BillingAccountWithOwners;
@@ -171,7 +171,7 @@ public class BillingSendingNotificationJobs extends GenericQuartzJobBean {
 									user.getDisplayName())), null, null,
 					contentGenerator
 							.generateSubjectContent("Your trial has ended"),
-					contentGenerator.generateBodyContent(MailUtils
+					contentGenerator.generateBodyContent(LocalizationHelper
 							.templatePath(INFORM_EXPIRE_ACCOUNT_TEMPLATE,
 									SiteConfiguration.getDefaultLocale())),
 					null);
@@ -213,7 +213,7 @@ public class BillingSendingNotificationJobs extends GenericQuartzJobBean {
 							null,
 							contentGenerator
 									.generateSubjectContent("Your trial is about to end"),
-							contentGenerator.generateBodyContent(MailUtils
+							contentGenerator.generateBodyContent(LocalizationHelper
 									.templatePath(
 											INFORM_FILLING_BILLING_INFORMATION_TEMPLATE,
 											SiteConfiguration

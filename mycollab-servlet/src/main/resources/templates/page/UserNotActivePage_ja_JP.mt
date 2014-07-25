@@ -11,7 +11,7 @@
 }
 
 </style>
-<title>Page not found</title>
+<title>User is not active</title>
 </head>
 <body style="height: 100%; margin: 0; padding: 0; width: 100%;">
 	<div id="container" style="height:100%;">
@@ -20,32 +20,25 @@
 			<div id="spacing" "></div>
 			<div id="mainBody">
 				<div id="title">
-					<h1>Error</h1>
+					<h1>Your account is not activated yet</h1>
 				</div>
 				<hr size="1">
-				<div id="content" style="padding-top: 20px">
-					<div id="content_left">
-						<div id="exclamation_mark">&#33;</div>
-						<div id="error_display">
-							<div id="error_code">500</div>
-							<div id="error_brief">Sever error, sorry</div>
-						</div>
-						<div class="clear"></div>
-					</div>
-					<div id="content_right">
-						<div id="error_excuse">
-							An unexpected error has occurred. We apologize for the inconvenience. Our team has been notified and will investigate the issue right away. 
-						</div>
-						<div id="back_to_home" style="padding-left:30px;padding-top:20px;">
-							<a class="v-button v-button-orangebtn" style="text-decoration : none;" href="https://www.mycollab.com">Go back to home page</a>
-						</div>
-						<div class="clear"></div>
-					</div>
-					<div class="clear"></div>
+				<div >
+					<h3>
+						Your account has not been activated yet. Please click on the link in the email we sent to activate or you can contact our Customer Support team for assistance.
+					</h3>
 				</div>
-				#parse("templates/page/pageFooter.mt")
+				<div style="text-align:right;">
+					<button class="v-button v-button-orangebtn" type="button" onclick="return login();"><span style="font-family: 'verdana';font-size: 15px;">Login</span></button>
 				</div>
+				#parse("templates/page/pageFooter_ja_JP.mt")
 		</div>
 	</div>
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script>
+	function login(){
+		window.location.assign("$!loginURL");
+	}
+</script>
 </html>

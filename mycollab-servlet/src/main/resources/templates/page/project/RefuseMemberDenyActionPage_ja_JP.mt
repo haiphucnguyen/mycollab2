@@ -20,18 +20,18 @@
 			<div id="spacing" "></div>
 			<div id="mainBody">
 				<div id="title">
-					<h1>You Can Not Leave This Project</h1>
+					<h1>This action is denied!</h1>
 				</div>
 				<hr size="1">
 				<div >
 					<h3>
-						Sorry! You can not leave this project by yourself. Please request your project admin remove you out of project if you like so.
+						You can not leave this project by yourself. Please request your project administrator to remove you out of project if you like so.
 					</h3>
 				</div>
 				<div style="text-align:right;">
 					<button class="v-button v-button-orangebtn" type="button" onclick="return login();"><span style="font-family: 'verdana';font-size: 15px;">Login</span></button>
 				</div>
-			#parse("templates/page/pageFooter.mt")
+			#parse("templates/page/pageFooter_ja_JP.mt")
 		</div>
 	</div>
 </body>
