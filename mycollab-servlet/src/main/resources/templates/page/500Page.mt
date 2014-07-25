@@ -34,7 +34,7 @@
 					</div>
 					<div id="content_right">
 						<div id="error_excuse">
-							Oops! Sorry for this inconvenience. This error has been logged to database. We will fix it soon. 
+							An unexpected error has occurred. We apologize for the inconvenience. Our team has been notified and will investigate the issue right away. 
 						</div>
 						<div id="back_to_home" style="padding-left:30px;padding-top:20px;">
 							<a class="v-button v-button-orangebtn" style="text-decoration : none;" href="https://www.mycollab.com">Go back to home page</a>
@@ -44,8 +44,8 @@
 					<div class="clear"></div>
 				</div>
 				#parse("templates/page/pageFooter.mt")
-				</div>			
+				</div>
 		</div>
 	</div>
 </body>
-</html>	
+</html>

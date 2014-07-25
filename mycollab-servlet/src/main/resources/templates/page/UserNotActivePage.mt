@@ -11,7 +11,7 @@
 }
 
 </style>
-<title>User not active</title>
+<title>User is not active</title>
 </head>
 <body style="height: 100%; margin: 0; padding: 0; width: 100%;">
 	<div id="container" style="height:100%;">
@@ -20,12 +20,12 @@
 			<div id="spacing" "></div>
 			<div id="mainBody">
 				<div id="title">
-					<h1>User Not Active</h1>
+					<h1>Your account is not activated yet</h1>
 				</div>
 				<hr size="1">
 				<div >
 					<h3>
-						Sorry! Your account has not been activated yet. Please click on the link in the email we sent to activate or you can contact our Customer Support team for assistance.
+						Your account has not been activated yet. Please click on the link in the email we sent to activate or you can contact our Customer Support team for assistance.
 					</h3>
 				</div>
 				<div style="text-align:right;">
@@ -40,5 +40,5 @@
 	function login(){
 		window.location.assign("$!loginURL");
 	}
-</script>				
+</script>
 </html>

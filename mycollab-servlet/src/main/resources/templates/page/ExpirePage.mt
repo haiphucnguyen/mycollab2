@@ -20,7 +20,7 @@
 			<div id="spacing"></div>
 			<div id="mainBody">
 				<div id="title">
-					<h1>Expire To Registry</h1>
+					<h1>The invitation is expired</h1>
 				</div>
 				<hr size="1">
 				<div>
@@ -41,5 +41,5 @@
 	function login(){
 		window.location.assign("$!loginURL");
 	}
-</script>				
+</script>
 </html>

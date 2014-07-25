@@ -17,15 +17,15 @@
 	<div id="container" style="height:100%;">
 		#parse("templates/page/pageHeader.mt")
 		<div id="body" >
-			<div id="spacing" "></div>
+			<div id="spacing"></div>
 			<div id="mainBody">
 				<div id="title">
-					<h1>User Not Exist</h1>
+					<h1>User is not existed</h1>
 				</div>
 				<hr size="1">
 				<div >
 					<h3>
-						Sorry! This account does not exist in the system. Please enter the registered email to be able to receive the information helping you to recover the password.
+						The user ${username} is not existed in our database system. 
 					</h3>
 				</div>
 				<div style="text-align:right;">
@@ -33,7 +33,7 @@
 				</div>
 				#parse("templates/page/pageFooter.mt")
 			</div>
-			
+
 		</div>
 	</div>
 </body>
@@ -42,5 +42,5 @@
 	function login(){
 		window.location.assign("$!loginURL");
 	}
-</script>				
+</script>
 </html>
