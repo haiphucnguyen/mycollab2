@@ -3,11 +3,11 @@ package com.esofthead.mycollab.billing.rest.client.impl;
 import org.apache.http.HttpHost;
 import org.apache.http.auth.AuthScheme;
 import org.apache.http.client.AuthCache;
-import org.apache.http.client.protocol.ClientContext;
+import org.apache.http.client.protocol.HttpClientContext;
 import org.apache.http.impl.auth.BasicScheme;
 import org.apache.http.impl.client.BasicAuthCache;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.protocol.BasicHttpContext;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.jboss.resteasy.client.jaxrs.ResteasyClient;
 import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
 import org.jboss.resteasy.client.jaxrs.ResteasyWebTarget;
@@ -42,13 +42,13 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 		authCache.put(new HttpHost("https://api.fastspring.com"), basicAuth);
 
 		// 3. Add AuthCache to the execution context
-		BasicHttpContext localContext = new BasicHttpContext();
-		localContext.setAttribute(ClientContext.AUTH_CACHE, authCache);
+		HttpClientContext context = HttpClientContext.create();
+		context.setAuthCache(authCache);
 
 		// 4. Create client executor and proxy
-		DefaultHttpClient httpClient = new DefaultHttpClient();
+		CloseableHttpClient httpClient = HttpClientBuilder.create().build();
 		ApacheHttpClient4Engine engine = new ApacheHttpClient4Engine(
-				httpClient, localContext);
+				httpClient, context);
 		ResteasyClient client = new ResteasyClientBuilder().httpEngine(engine)
 				.build();
 
