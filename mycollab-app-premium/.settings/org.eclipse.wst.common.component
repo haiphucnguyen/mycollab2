@@ -415,15 +415,6 @@
     <dependent-module archiveName="validation-api-1.0.0.GA-sources.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/javax/validation/validation-api/1.0.0.GA/validation-api-1.0.0.GA-sources.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="icepush-0.5.5.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/vaadin/addons/icepush/0.5.5/icepush-0.5.5.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="icepush-3.3.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/icepush/icepush/3.3.0/icepush-3.3.0.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="icepush-gwt-2.0.0-alpha3.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/icepush/icepush-gwt/2.0.0-alpha3/icepush-gwt-2.0.0-alpha3.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
     <dependent-module archiveName="mobilecomponent-1.0.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/esofthead/vaadin/mobilecomponent/1.0.0-SNAPSHOT/mobilecomponent-1.0.0-SNAPSHOT.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>

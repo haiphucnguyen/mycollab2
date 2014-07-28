@@ -34,8 +34,6 @@ import com.esofthead.mycollab.rest.server.resource.ContactResource;
 
 @Component
 public class ContactResourceImpl implements ContactResource {
-	private static Logger log = LoggerFactory
-			.getLogger(ContactResourceImpl.class);
 	private static final String contactUsTemplate = "contactUs.mt";
 
 	@Autowired
@@ -46,17 +44,6 @@ public class ContactResourceImpl implements ContactResource {
 
 	@Override
 	public Response submit(@Form final ContactForm entity) {
-		log.debug("Start handling form request");
-		log.debug("Name: " + entity.getName());
-		log.debug("Email: " + entity.getEmail());
-		log.debug("Company: " + entity.getCompany());
-		log.debug("Role: " + entity.getRole());
-		log.debug("Industry: " + entity.getIndustry());
-		log.debug("Budget: " + entity.getBudget());
-		log.debug("Subject: " + entity.getSubject());
-		log.debug("Message: " + entity.getMessage());
-
-		// -----------------------------------------------------------
 
 		contentGenerator.putVariable("name", entity.getName());
 		contentGenerator.putVariable("email", entity.getEmail());
@@ -67,15 +54,12 @@ public class ContactResourceImpl implements ContactResource {
 		contentGenerator.putVariable("subject", entity.getSubject());
 		contentGenerator.putVariable("message", entity.getMessage());
 
-		mailRelayService
-				.saveRelayEmail(
-						new String[] { "Sir" },
-						new String[] { "hainguyen@esofthead.com" },
-						contentGenerator
-								.generateSubjectContent("New guy wanna contact you!"),
-						contentGenerator.generateBodyContent(LocalizationHelper
-								.templatePath(contactUsTemplate,
-										SiteConfiguration.getDefaultLocale())));
+		mailRelayService.saveRelayEmail(new String[] { "Sir" },
+				new String[] { "hainguyen@esofthead.com" }, contentGenerator
+						.generateSubjectContent("New guy wanna contact you!"),
+				contentGenerator.generateBodyContent(LocalizationHelper
+						.templatePath(contactUsTemplate,
+								SiteConfiguration.getDefaultLocale())));
 		Response response = Response.status(200).entity("OK")
 				.type(MediaType.TEXT_PLAIN_TYPE).build();
 		response.getHeaders().add("Access-Control-Allow-Origin", "*");

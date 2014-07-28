@@ -11,7 +11,6 @@
   <classpathentry kind="var" path="M2_REPO/javax/activation/activation/1.1.1/activation-1.1.1.jar" sourcepath="M2_REPO/javax/activation/activation/1.1.1/activation-1.1.1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/javax/validation/validation-api/1.0.0.GA/validation-api-1.0.0.GA-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/javax/servlet/javax.servlet-api/3.1.0/javax.servlet-api-3.1.0.jar" sourcepath="M2_REPO/javax/servlet/javax.servlet-api/3.1.0/javax.servlet-api-3.1.0-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/javax/servlet/jsp/jsp-api/2.0/jsp-api-2.0.jar" sourcepath="M2_REPO/javax/servlet/jsp/jsp-api/2.0/jsp-api-2.0-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/javax/persistence/persistence-api/1.0/persistence-api-1.0.jar" sourcepath="M2_REPO/javax/persistence/persistence-api/1.0/persistence-api-1.0-sources.jar"/>
   <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
   <classpathentry kind="var" path="M2_REPO/com/vaadin/vaadin-server/7.2.5/vaadin-server-7.2.5.jar" sourcepath="M2_REPO/com/vaadin/vaadin-server/7.2.5/vaadin-server-7.2.5-sources.jar"/>
@@ -131,9 +130,6 @@
   <classpathentry kind="var" path="M2_REPO/com/vaadin/addon/vaadin-touchkit-agpl/4.0.0.beta1/vaadin-touchkit-agpl-4.0.0.beta1.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/vaadin/vaadin-themes/7.2.1/vaadin-themes-7.2.1.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/vaadin/vaadin-client/7.2.5/vaadin-client-7.2.5.jar" sourcepath="M2_REPO/com/vaadin/vaadin-client/7.2.5/vaadin-client-7.2.5-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/vaadin/addons/icepush/0.5.5/icepush-0.5.5.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/icepush/icepush/3.3.0/icepush-3.3.0.jar" sourcepath="M2_REPO/org/icepush/icepush/3.3.0/icepush-3.3.0-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/icepush/icepush-gwt/2.0.0-alpha3/icepush-gwt-2.0.0-alpha3.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/esofthead/vaadin/mobilecomponent/1.0.0-SNAPSHOT/mobilecomponent-1.0.0-SNAPSHOT.jar" sourcepath="M2_REPO/com/esofthead/vaadin/mobilecomponent/1.0.0-SNAPSHOT/mobilecomponent-1.0.0-SNAPSHOT-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/googlecode/ez-vcard/ez-vcard/0.8.2/ez-vcard-0.8.2.jar" sourcepath="M2_REPO/com/googlecode/ez-vcard/ez-vcard/0.8.2/ez-vcard-0.8.2-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/freemarker/freemarker/2.3.19/freemarker-2.3.19.jar" sourcepath="M2_REPO/org/freemarker/freemarker/2.3.19/freemarker-2.3.19-sources.jar"/>
