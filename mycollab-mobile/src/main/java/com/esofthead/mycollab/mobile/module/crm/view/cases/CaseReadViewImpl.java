@@ -16,9 +16,6 @@
  */
 package com.esofthead.mycollab.mobile.module.crm.view.cases;
 
-import com.esofthead.mycollab.core.arguments.NumberSearchField;
-import com.esofthead.mycollab.core.arguments.SearchField;
-import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.mobile.form.view.DynaFormLayout;
 import com.esofthead.mycollab.mobile.module.crm.events.CaseEvent;
@@ -34,7 +31,6 @@ import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.SimpleActivity;
 import com.esofthead.mycollab.module.crm.domain.SimpleCase;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
-import com.esofthead.mycollab.module.crm.domain.criteria.ActivitySearchCriteria;
 import com.esofthead.mycollab.module.crm.i18n.CrmCommonI18nEnum;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -72,19 +68,14 @@ public class CaseReadViewImpl extends AbstractPreviewItemComp<SimpleCase>
 	@Override
 	protected void initRelatedComponents() {
 		associateNotes = new NotesList("Related Notes");
-		associateActivities = new ActivityRelatedItemView();
+		associateActivities = new ActivityRelatedItemView(CrmTypeConstants.CASE);
 		associateContacts = new CaseRelatedContactView();
 	}
 
 	@Override
 	protected void onPreviewItem() {
 		associateNotes.showNotes(CrmTypeConstants.CASE, beanItem.getId());
-		final ActivitySearchCriteria criteria = new ActivitySearchCriteria();
-		criteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
-		criteria.setType(new StringSearchField(SearchField.AND,
-				CrmTypeConstants.CASE));
-		criteria.setTypeid(new NumberSearchField(beanItem.getId()));
-		associateActivities.setSearchCriteria(criteria);
+		associateActivities.displayActivity(beanItem.getId());
 		associateContacts.displayContacts(beanItem);
 	}
 

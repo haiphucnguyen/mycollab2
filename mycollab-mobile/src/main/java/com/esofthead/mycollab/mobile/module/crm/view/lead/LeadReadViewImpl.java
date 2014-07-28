@@ -16,9 +16,6 @@
  */
 package com.esofthead.mycollab.mobile.module.crm.view.lead;
 
-import com.esofthead.mycollab.core.arguments.NumberSearchField;
-import com.esofthead.mycollab.core.arguments.SearchField;
-import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.mobile.form.view.DynaFormLayout;
 import com.esofthead.mycollab.mobile.module.crm.events.LeadEvent;
@@ -34,7 +31,6 @@ import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.SimpleActivity;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
-import com.esofthead.mycollab.module.crm.domain.criteria.ActivitySearchCriteria;
 import com.esofthead.mycollab.module.crm.i18n.CrmCommonI18nEnum;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -72,21 +68,15 @@ public class LeadReadViewImpl extends AbstractPreviewItemComp<SimpleLead>
 	protected void initRelatedComponents() {
 		associateCampaigns = new LeadRelatedCampaignView();
 		associateNotes = new NotesList("Related Notes");
-		associateActivities = new ActivityRelatedItemView();
+		associateActivities = new ActivityRelatedItemView(
+				CrmTypeConstants.CAMPAIGN);
 	}
 
 	@Override
 	protected void onPreviewItem() {
 		associateCampaigns.displayCampaign(beanItem);
 		associateNotes.showNotes(CrmTypeConstants.LEAD, beanItem.getId());
-		final ActivitySearchCriteria searchCriteria = new ActivitySearchCriteria();
-		searchCriteria.setSaccountid(new NumberSearchField(SearchField.AND,
-				AppContext.getAccountId()));
-		searchCriteria.setType(new StringSearchField(SearchField.AND,
-				CrmTypeConstants.LEAD));
-		searchCriteria.setTypeid(new NumberSearchField(SearchField.AND,
-				beanItem.getId()));
-		associateActivities.setSearchCriteria(searchCriteria);
+		associateActivities.displayActivity(beanItem.getId());
 	}
 
 	@Override
