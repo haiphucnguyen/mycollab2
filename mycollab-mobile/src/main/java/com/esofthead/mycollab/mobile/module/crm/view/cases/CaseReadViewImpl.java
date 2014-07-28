@@ -31,7 +31,9 @@ import com.esofthead.mycollab.mobile.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.esofthead.mycollab.mobile.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.mobile.ui.IconConstants;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
+import com.esofthead.mycollab.module.crm.domain.SimpleActivity;
 import com.esofthead.mycollab.module.crm.domain.SimpleCase;
+import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.criteria.ActivitySearchCriteria;
 import com.esofthead.mycollab.module.crm.i18n.CrmCommonI18nEnum;
 import com.esofthead.mycollab.security.RolePermissionCollections;
@@ -39,6 +41,7 @@ import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
+import com.esofthead.mycollab.vaadin.ui.IRelatedListHandlers;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -178,6 +181,16 @@ public class CaseReadViewImpl extends AbstractPreviewItemComp<SimpleCase>
 		toolbarLayout.addComponent(relatedActivities);
 
 		return toolbarLayout;
+	}
+
+	@Override
+	public IRelatedListHandlers<SimpleActivity> getRelatedActivityHandlers() {
+		return associateActivities;
+	}
+
+	@Override
+	public IRelatedListHandlers<SimpleContact> getRelatedContactHandlers() {
+		return associateContacts;
 	}
 
 }

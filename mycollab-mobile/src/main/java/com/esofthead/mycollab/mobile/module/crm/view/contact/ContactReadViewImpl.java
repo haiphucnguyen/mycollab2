@@ -49,8 +49,10 @@ import com.esofthead.mycollab.mobile.ui.IconConstants;
 import com.esofthead.mycollab.module.crm.CrmLinkGenerator;
 import com.esofthead.mycollab.module.crm.CrmResources;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
+import com.esofthead.mycollab.module.crm.domain.SimpleActivity;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
+import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.domain.criteria.ActivitySearchCriteria;
 import com.esofthead.mycollab.module.crm.i18n.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.crm.i18n.LeadI18nEnum;
@@ -61,6 +63,7 @@ import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
+import com.esofthead.mycollab.vaadin.ui.IRelatedListHandlers;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -225,5 +228,15 @@ public class ContactReadViewImpl extends AbstractPreviewItemComp<SimpleContact>
 	@Override
 	public HasPreviewFormHandlers<SimpleContact> getPreviewFormHandlers() {
 		return previewForm;
+	}
+
+	@Override
+	public IRelatedListHandlers<SimpleActivity> getRelatedActivityHandlers() {
+		return associateActivityList;
+	}
+
+	@Override
+	public IRelatedListHandlers<SimpleOpportunity> getRelatedOpportunityHandlers() {
+		return associateOpportunityList;
 	}
 }
