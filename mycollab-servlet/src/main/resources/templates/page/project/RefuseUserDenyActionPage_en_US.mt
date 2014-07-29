@@ -11,7 +11,7 @@
 }
 
 </style>
-<title>Refuse deny action page</title>
+<title>Deny the invitation</title>
 </head>
 <body>
 	<div id="container">
