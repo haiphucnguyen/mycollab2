@@ -13,9 +13,6 @@
     <dependent-module archiveName="mycollab-core.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mycollab-core/mycollab-core">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="mycollab-extra-lib-1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/esofthead/mycollab/mycollab-extra-lib/1.0/mycollab-extra-lib-1.0.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
     <dependent-module archiveName="imgscalr-lib-4.2.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/imgscalr/imgscalr-lib/4.2/imgscalr-lib-4.2.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
