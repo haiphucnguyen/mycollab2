@@ -6567,6 +6567,12 @@ img.icon-btn {
     border-style: solid;
     border-width: 0px 1px 1px;
 }
+.member-preview-bottom .v-table-header-wrap {
+	border-width: 1px 0px;
+}
+.member-preview-bottom .v-table-body-wrapper.v-table-body {
+	border-width: 0px;
+}
 /* Standup Missing Comp */
 .standup-missing-comp {
     border: 1px solid #CFCFCF
