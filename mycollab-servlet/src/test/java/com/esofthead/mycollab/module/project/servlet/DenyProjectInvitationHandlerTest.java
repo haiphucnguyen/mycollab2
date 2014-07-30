@@ -135,7 +135,7 @@ public class DenyProjectInvitationHandlerTest extends GenericServletTest {
 				strArgument.getValue());
 	}
 
-	@Test(expected = ResourceNotFoundException.class)
+	@Test(expected = MyCollabException.class)
 	public void testNullParam() throws ServletException, IOException {
 		when(request.getPathInfo()).thenReturn(null);
 		denyInvitationHandler.onHandleRequest(request, response);
