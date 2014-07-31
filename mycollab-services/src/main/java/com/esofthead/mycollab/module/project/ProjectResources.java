@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.esofthead.mycollab.configuration.MyCollabAssets;
+import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.BugPriority;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.MilestoneStatus;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.TaskPriority;
 
@@ -150,19 +151,19 @@ public class ProjectResources {
 		String iconPriority = MyCollabAssets
 				.newResourceLink(B_PRIORITY_MAJOR_IMG_12);
 
-		if (BugPriorityStatusConstants.BLOCKER.equals(priority)) {
+		if (BugPriority.Blocker.name().equals(priority)) {
 			iconPriority = MyCollabAssets
 					.newResourceLink(B_PRIORITY_BLOCKER_IMG_12);
-		} else if (BugPriorityStatusConstants.CRITICAL.equals(priority)) {
+		} else if (BugPriority.Critical.name().equals(priority)) {
 			iconPriority = MyCollabAssets
 					.newResourceLink(B_PRIORITY_CRITICAL_IMG_12);
-		} else if (BugPriorityStatusConstants.MAJOR.equals(priority)) {
+		} else if (BugPriority.Major.name().equals(priority)) {
 			iconPriority = MyCollabAssets
 					.newResourceLink(B_PRIORITY_MAJOR_IMG_12);
-		} else if (BugPriorityStatusConstants.MINOR.equals(priority)) {
+		} else if (BugPriority.Minor.name().equals(priority)) {
 			iconPriority = MyCollabAssets
 					.newResourceLink(B_PRIORITY_MINOR_IMG_12);
-		} else if (BugPriorityStatusConstants.TRIVIAL.equals(priority)) {
+		} else if (BugPriority.Trivial.name().equals(priority)) {
 			iconPriority = MyCollabAssets
 					.newResourceLink(B_PRIORITY_TRIVIAL_IMG_12);
 		}

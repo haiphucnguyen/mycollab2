@@ -19,6 +19,10 @@ public class OptionI18nEnum {
 			BugStatus.InProgress, BugStatus.Verified, BugStatus.Resolved,
 			BugStatus.ReOpened };
 
+	public static BugPriority[] bug_priorities = { BugPriority.Blocker,
+			BugPriority.Critical, BugPriority.Major, BugPriority.Minor,
+			BugPriority.Trivial };
+
 	@BaseName("localization/project/milestone_status")
 	@LocaleData({ @Locale("en_US"), @Locale("ja_JP") })
 	public static enum MilestoneStatus {
@@ -35,5 +39,11 @@ public class OptionI18nEnum {
 	@LocaleData({ @Locale("en_US"), @Locale("ja_JP") })
 	public static enum BugStatus {
 		Open, InProgress, Verified, Resolved, ReOpened
+	}
+
+	@BaseName("localization/project/bug_priority")
+	@LocaleData({ @Locale("en_US"), @Locale("ja_JP") })
+	public static enum BugPriority {
+		Blocker, Critical, Major, Minor, Trivial
 	}
 }

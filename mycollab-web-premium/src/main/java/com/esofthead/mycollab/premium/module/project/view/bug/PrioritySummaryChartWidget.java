@@ -19,11 +19,13 @@ package com.esofthead.mycollab.premium.module.project.view.bug;
 import java.util.List;
 
 import com.esofthead.mycollab.common.domain.GroupItem;
-import com.esofthead.mycollab.module.project.ProjectDataTypeFactory;
+import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum;
+import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.BugPriority;
 import com.esofthead.mycollab.module.project.view.bug.IPrioritySummaryChartWidget;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.vaadin.addon.charts.Chart;
 import com.vaadin.addon.charts.model.ChartType;
@@ -63,19 +65,21 @@ public class PrioritySummaryChartWidget extends CssLayout implements
 
 		List<GroupItem> groupItems = bugService
 				.getPrioritySummary(searchCriteria);
-		String[] bugPriorities = ProjectDataTypeFactory.getBugPriorityList();
-		for (String priority : bugPriorities) {
+		BugPriority[] bugPriorities = OptionI18nEnum.bug_priorities;
+		for (BugPriority priority : bugPriorities) {
 			boolean isFound = false;
 			for (GroupItem item : groupItems) {
-				if (priority.equals(item.getGroupid())) {
-					series.add(new DataSeriesItem(priority, item.getValue()));
+				if (priority.name().equals(item.getGroupid())) {
+					series.add(new DataSeriesItem(AppContext
+							.getMessage(priority), item.getValue()));
 					isFound = true;
 					break;
 				}
 			}
 
 			if (!isFound) {
-				series.add(new DataSeriesItem(priority, 0));
+				series.add(new DataSeriesItem(AppContext.getMessage(priority),
+						0));
 			}
 		}
 

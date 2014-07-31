@@ -39,6 +39,8 @@ import com.esofthead.mycollab.module.project.ProjectResources;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.ProjectTooltipGenerator;
 import com.esofthead.mycollab.module.project.events.BugEvent;
+import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum;
+import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.BugPriority;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.BugStatus;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserLink;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
@@ -403,12 +405,12 @@ public class BugTableDisplay extends
 
 		// Show bug priority
 		ContextMenuItem priorityMenuItem = contextMenu.addItem("Priority");
-		for (String bugPriority : ProjectDataTypeFactory.getBugPriorityList()) {
+		for (BugPriority bugPriority : OptionI18nEnum.bug_priorities) {
 			ContextMenuItem prioritySubMenuItem = priorityMenuItem
-					.addItem(bugPriority);
-			prioritySubMenuItem.setData(new MenuItemData("priority",
-					bugPriority));
-			if (bugPriority.equals(bug.getPriority())) {
+					.addItem(AppContext.getMessage(bugPriority));
+			prioritySubMenuItem.setData(new MenuItemData("priority", AppContext
+					.getMessage(bugPriority)));
+			if (bugPriority.name().equals(bug.getPriority())) {
 				prioritySubMenuItem.setEnabled(false);
 			}
 		}
