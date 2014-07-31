@@ -6972,3 +6972,28 @@ div.v-csslayout.bean-block.olive-block, .list-note-block .note-label.olive-block
 	line-height: 20px;
 	font-weight: bold;
 	color: #FFFFFF;
+}
+/* CRM toolbar quick add button */
+.crm-toolbar .quickadd-btn .v-button-caption:before {
+	content: "+";
+	width: 20px;
+	height: 20px;
+	background-color: #17D61B;
+	border-radius: 10px;
+	border: none;
+	color: #FFFFFF;
+	margin-right: 5px;
+	text-align: center;
+	line-height: 20px;
+	font-size: 16px;
+	font-weight: bold;
+	vertical-align: top;
+}
+.crm-toolbar .quickadd-btn .v-button-caption {
+	line-height: 20px;
+	display: inline-block;
+	vertical-align: middle;
+}
+.v-ie9 .crm-toolbar .quickadd-btn .v-button-caption, .v-ie9 .crm-toolbar .quickadd-btn .v-button-caption:before {
+	line-height: 22px;
+}
