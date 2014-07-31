@@ -3504,6 +3504,8 @@ div.v-button-link.xbreadcrumbbutton .v-button-wrap {
     padding: 0px;
     margin: 0px;
     border-width: 0px;
+    height: 100%;
+    border-radius: 0px;
 }
 /* End Background has SELECT icon */
 
