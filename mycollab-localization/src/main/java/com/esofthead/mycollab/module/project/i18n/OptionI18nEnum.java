@@ -23,6 +23,9 @@ public class OptionI18nEnum {
 			BugPriority.Critical, BugPriority.Major, BugPriority.Minor,
 			BugPriority.Trivial };
 
+	public static BugSeverity[] bug_severities = { BugSeverity.Critical,
+			BugSeverity.Major, BugSeverity.Minor, BugSeverity.Trivial };
+
 	@BaseName("localization/project/milestone_status")
 	@LocaleData({ @Locale("en_US"), @Locale("ja_JP") })
 	public static enum MilestoneStatus {
@@ -45,5 +48,11 @@ public class OptionI18nEnum {
 	@LocaleData({ @Locale("en_US"), @Locale("ja_JP") })
 	public static enum BugPriority {
 		Blocker, Critical, Major, Minor, Trivial
+	}
+
+	@BaseName("localization/project/bug_severity")
+	@LocaleData({ @Locale("en_US"), @Locale("ja_JP") })
+	public static enum BugSeverity {
+		Critical, Major, Minor, Trivial
 	}
 }

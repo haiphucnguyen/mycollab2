@@ -30,7 +30,6 @@ import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
-import com.esofthead.mycollab.module.project.BugSeverityConstants;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.LabelLink;
 import com.esofthead.mycollab.module.project.ProjectDataTypeFactory;
@@ -52,6 +51,7 @@ import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.DefaultPagedBeanTable;
+import com.vaadin.server.ExternalResource;
 import com.vaadin.server.Resource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -299,28 +299,8 @@ public class BugTableDisplay extends
 				final SimpleBug bug = BugTableDisplay.this
 						.getBeanByIndex(itemId);
 
-				Resource iconPriority = MyCollabResource
-						.newResource(BugSeverityConstants.MAJOR_IMG_12);
-				if (StringUtils.isNotNullOrEmpty(bug.getSeverity())) {
-
-					if (BugSeverityConstants.CRITICAL.equals(bug.getSeverity())) {
-						iconPriority = MyCollabResource
-								.newResource(BugSeverityConstants.CRITICAL_IMG_12);
-					} else if (BugSeverityConstants.MAJOR.equals(bug
-							.getSeverity())) {
-						iconPriority = MyCollabResource
-								.newResource(BugSeverityConstants.MAJOR_IMG_12);
-					} else if (BugSeverityConstants.MINOR.equals(bug
-							.getSeverity())) {
-						iconPriority = MyCollabResource
-								.newResource(BugSeverityConstants.MINOR_IMG_12);
-					} else if (BugSeverityConstants.TRIVIAL.equals(bug
-							.getSeverity())) {
-						iconPriority = MyCollabResource
-								.newResource(BugSeverityConstants.TRIVIAL_IMG_12);
-					}
-
-				}
+				Resource iconPriority = new ExternalResource(ProjectResources
+						.getIconResourceLink12ByBugSeverity(bug.getPriority()));
 
 				Embedded iconEmbedded = new Embedded(null, iconPriority);
 				Label lbPriority = new Label(bug.getSeverity());

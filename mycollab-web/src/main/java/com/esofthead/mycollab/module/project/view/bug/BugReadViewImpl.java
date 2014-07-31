@@ -34,6 +34,7 @@ import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.project.events.BugVersionEvent;
 import com.esofthead.mycollab.module.project.i18n.BugI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.BugPriority;
+import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.BugSeverity;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.BugStatus;
 import com.esofthead.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.ui.components.AbstractPreviewItemComp;
@@ -657,7 +658,8 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug>
 											.getSeverity()));
 					final Image iconEmbedded = new Image();
 					iconEmbedded.setSource(iconPriority);
-					final Label lbPriority = new Label(beanItem.getSeverity());
+					final Label lbPriority = new Label(AppContext.getMessage(
+							BugSeverity.class, beanItem.getSeverity()));
 
 					final FormContainerHorizontalViewField containerField = new FormContainerHorizontalViewField();
 					containerField.addComponentField(iconEmbedded);
