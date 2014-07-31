@@ -20,10 +20,13 @@ import java.util.List;
 
 import com.esofthead.mycollab.common.domain.GroupItem;
 import com.esofthead.mycollab.module.project.ProjectDataTypeFactory;
+import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum;
+import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.BugStatus;
 import com.esofthead.mycollab.module.project.view.bug.IStatusSummaryChartWidget;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.vaadin.addon.charts.Chart;
 import com.vaadin.addon.charts.model.ChartType;
@@ -56,19 +59,20 @@ public class StatusSummaryChartWidget extends CssLayout implements
 
 		List<GroupItem> groupItems = bugService
 				.getStatusSummary(searchCriteria);
-		String[] bugPriorities = ProjectDataTypeFactory.getBugStatusList();
-		for (String status : bugPriorities) {
+		BugStatus[] bugStatues = OptionI18nEnum.bug_statuses;
+		for (BugStatus status : bugStatues) {
 			boolean isFound = false;
 			for (GroupItem item : groupItems) {
-				if (status.equals(item.getGroupid())) {
-					series.add(new DataSeriesItem(status, item.getValue()));
+				if (status.name().equals(item.getGroupid())) {
+					series.add(new DataSeriesItem(
+							AppContext.getMessage(status), item.getValue()));
 					isFound = true;
 					break;
 				}
 			}
 
 			if (!isFound) {
-				series.add(new DataSeriesItem(status, 0));
+				series.add(new DataSeriesItem(AppContext.getMessage(status), 0));
 			}
 		}
 

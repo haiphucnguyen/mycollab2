@@ -89,6 +89,18 @@ public class LocalizationHelper {
 		}
 	}
 
+	public static String getMessage(Locale locale, Class<? extends Enum> cls,
+			String option, Object... objects) {
+		try {
+			Enum key = Enum.valueOf(cls, option);
+			IMessageConveyor messageConveyor = getMessageConveyor(locale);
+			return messageConveyor.getMessage(key, objects);
+		} catch (Exception e) {
+			log.error("Can not find resource key " + cls + "---" + option, e);
+			return "Undefined";
+		}
+	}
+
 	private static Map<String, String> cacheFile = new HashMap<String, String>();
 
 	public static String templatePath(String fileTemplatePath, Locale locale) {
@@ -121,7 +133,7 @@ public class LocalizationHelper {
 			reader = new InputStreamReader(LocalizationHelper.class
 					.getClassLoader().getResourceAsStream(templatePath));
 		}
-		
+
 		return reader;
 	}
 }
