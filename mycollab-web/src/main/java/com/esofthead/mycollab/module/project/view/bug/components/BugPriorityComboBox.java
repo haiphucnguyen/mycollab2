@@ -16,7 +16,10 @@
  */
 package com.esofthead.mycollab.module.project.view.bug.components;
 
+import java.util.Arrays;
+
 import com.esofthead.mycollab.module.project.ProjectResources;
+import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.BugPriority;
 import com.esofthead.mycollab.vaadin.ui.I18nValueComboBox;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
@@ -35,6 +38,7 @@ public class BugPriorityComboBox extends I18nValueComboBox {
 		super();
 		this.setNullSelectionAllowed(false);
 		this.setCaption(null);
+		this.loadData(Arrays.asList(OptionI18nEnum.bug_priorities));
 		this.setItemIcon(BugPriority.Blocker.name(), MyCollabResource
 				.newResource(ProjectResources.B_PRIORITY_BLOCKER_IMG_12));
 		this.setItemIcon(BugPriority.Critical.name(), MyCollabResource
