@@ -2965,9 +2965,9 @@ div.v-splitbutton,div.v-splitbutton .v-button {
     background: url("icons/sprites.png") no-repeat scroll -5px -10px
         transparent;
 }
-/* .v-popupbutton .v-button-wrap img {
-    margin-right:0;
-} */
+.mycollab .v-popupbutton .v-button-wrap * {
+    float: none;
+}
 /* End Split button*/
 
 /* New Table */
