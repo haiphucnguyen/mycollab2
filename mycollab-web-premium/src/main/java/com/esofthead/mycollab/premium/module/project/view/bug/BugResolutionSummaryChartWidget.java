@@ -20,11 +20,13 @@ package com.esofthead.mycollab.premium.module.project.view.bug;
 import java.util.List;
 
 import com.esofthead.mycollab.common.domain.GroupItem;
-import com.esofthead.mycollab.module.project.ProjectDataTypeFactory;
+import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum;
+import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.BugResolution;
 import com.esofthead.mycollab.module.project.view.bug.IBugResolutionSummaryChartWidget;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.vaadin.addon.charts.Chart;
 import com.vaadin.addon.charts.model.ChartType;
@@ -41,6 +43,7 @@ import com.vaadin.ui.CssLayout;
 /**
  * 
  * @author MyCollab Ltd.
+ * @since 1.0
  */
 @ViewComponent
 public class BugResolutionSummaryChartWidget extends CssLayout implements
@@ -63,19 +66,21 @@ public class BugResolutionSummaryChartWidget extends CssLayout implements
 
 		List<GroupItem> groupItems = bugService
 				.getResolutionDefectsSummary(searchCriteria);
-		String[] bugPriorities = ProjectDataTypeFactory.getBugResolutionList();
-		for (String resolution : bugPriorities) {
+		BugResolution[] bugResolutions = OptionI18nEnum.bug_resolutions;
+		for (BugResolution resolution : bugResolutions) {
 			boolean isFound = false;
 			for (GroupItem item : groupItems) {
-				if (resolution.equals(item.getGroupid())) {
-					series.add(new DataSeriesItem(resolution, item.getValue()));
+				if (resolution.name().equals(item.getGroupid())) {
+					series.add(new DataSeriesItem(AppContext
+							.getMessage(resolution), item.getValue()));
 					isFound = true;
 					break;
 				}
 			}
 
 			if (!isFound) {
-				series.add(new DataSeriesItem(resolution, 0));
+				series.add(new DataSeriesItem(
+						AppContext.getMessage(resolution), 0));
 			}
 		}
 
