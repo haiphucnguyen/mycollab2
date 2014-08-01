@@ -302,8 +302,8 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
 	@Override
 	public void enableActionControls(final int numOfSelectedItems) {
 		this.tableActionControls.setVisible(true);
-		this.selectedItemsNumberLabel.setValue("Selected: "
-				+ numOfSelectedItems);
+		this.selectedItemsNumberLabel.setValue(AppContext.getMessage(
+				GenericI18Enum.TABLE_SELECTED_ITEM_TITLE, numOfSelectedItems));
 	}
 
 	@Override
