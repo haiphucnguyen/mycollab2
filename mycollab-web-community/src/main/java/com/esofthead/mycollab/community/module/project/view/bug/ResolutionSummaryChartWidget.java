@@ -21,7 +21,6 @@ import java.util.List;
 import org.jfree.data.general.DefaultPieDataset;
 
 import com.esofthead.mycollab.common.domain.GroupItem;
-import com.esofthead.mycollab.community.ui.chart.PieChartDescriptionBox;
 import com.esofthead.mycollab.community.ui.chart.PieChartWrapper;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
@@ -116,11 +115,6 @@ public class ResolutionSummaryChartWidget extends
 				searchCriteria);
 		EventBusFactory.getInstance().post(
 				new BugEvent.GotoList(this, new BugScreenData.Search(param)));
-	}
-
-	@Override
-	protected ComponentContainer createLegendBox() {
-		return PieChartDescriptionBox.createLegendBox(this, pieDataSet);
 	}
 
 }

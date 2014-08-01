@@ -30,6 +30,17 @@ import org.jfree.ui.RectangleInsets;
 import org.jfree.util.Rotation;
 
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
+import com.esofthead.mycollab.web.CustomLayoutLoader;
+import com.vaadin.shared.ui.MarginInfo;
+import com.vaadin.shared.ui.label.ContentMode;
+import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.CssLayout;
+import com.vaadin.ui.CustomLayout;
+import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.Button.ClickEvent;
 
 /**
  * 
@@ -109,5 +120,53 @@ public abstract class PieChartWrapper<S extends SearchCriteria> extends
 				PieDataset dataset, Comparable key) {
 			throw new UnsupportedOperationException("Not supported yet.");
 		}
+	}
+
+	@Override
+	protected final ComponentContainer createLegendBox() {
+		final CustomLayout boxWrapper = CustomLayoutLoader
+				.createLayout("legendBox");
+		final CssLayout mainLayout = new CssLayout();
+
+		mainLayout.setSizeUndefined();
+		final List keys = pieDataSet.getKeys();
+
+		for (int i = 0; i < keys.size(); i++) {
+			final HorizontalLayout layout = new HorizontalLayout();
+			layout.setMargin(new MarginInfo(false, false, false, true));
+			layout.addStyleName("inline-block");
+			final Comparable key = (Comparable) keys.get(i);
+			final String color = "<div style = \" width:8px;height:8px;border-radius:5px;background: #"
+					+ GenericChartWrapper.CHART_COLOR_STR[i
+							% GenericChartWrapper.CHART_COLOR_STR.length]
+					+ "\" />";
+			final Label lblCircle = new Label(color);
+			lblCircle.setContentMode(ContentMode.HTML);
+
+			final Button btnLink = new Button(
+					key
+							+ "("
+							+ String.valueOf(pieDataSet.getValue(key)
+									.intValue()) + ")",
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void buttonClick(final ClickEvent event) {
+							PieChartWrapper.this.onClickedDescription(key
+									.toString());
+						}
+					});
+			btnLink.addStyleName("link");
+			layout.addComponent(lblCircle);
+			layout.setComponentAlignment(lblCircle, Alignment.MIDDLE_CENTER);
+			layout.addComponent(btnLink);
+			layout.setComponentAlignment(btnLink, Alignment.MIDDLE_CENTER);
+			layout.setSizeUndefined();
+			mainLayout.addComponent(layout);
+		}
+		boxWrapper.setWidth("100%");
+		boxWrapper.addComponent(mainLayout, "legendBoxContent");
+		return boxWrapper;
 	}
 }
