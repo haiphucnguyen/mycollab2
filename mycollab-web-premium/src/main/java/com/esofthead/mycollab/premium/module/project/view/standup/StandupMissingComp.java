@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.LabelLink;
 import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
@@ -63,7 +64,7 @@ public class StandupMissingComp extends VerticalLayout {
 				AppContext.getAccountId());
 		if (someGuys.size() == 0) {
 			bodyWrap.addComponent(new Label(AppContext
-					.getMessage(StandupI18nEnum.STANDUP_NO_ITEM)));
+					.getMessage(GenericI18Enum.EXT_NO_ITEM)));
 		} else {
 			Iterator<SimpleUser> iterator = someGuys.iterator();
 			while (iterator.hasNext()) {
