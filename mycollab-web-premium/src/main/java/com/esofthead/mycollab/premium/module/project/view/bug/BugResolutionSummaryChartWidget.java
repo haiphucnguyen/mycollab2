@@ -88,7 +88,7 @@ public class BugResolutionSummaryChartWidget extends CssLayout implements
 
 		Configuration conf = chart.getConfiguration();
 
-		conf.setTitle("Resolution Distribution");
+		conf.setTitle("");
 		conf.setCredits(new Credits(""));
 
 		Tooltip tooltip = new Tooltip();

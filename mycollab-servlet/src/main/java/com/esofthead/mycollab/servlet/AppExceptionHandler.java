@@ -63,7 +63,8 @@ public class AppExceptionHandler extends GenericServletRequestHandler {
 		}
 
 		try {
-			if (status_code == 404) {
+			if ((status_code != null && status_code == 404)
+					|| ("404".equals(request.getParameter("param")))) {
 				responsePage404(response);
 			} else {
 				responsePage500(response);
