@@ -4,7 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.esofthead.mycollab.module.project.domain.Risk;
+import com.esofthead.mycollab.module.project.i18n.RiskI18nEnum;
 import com.esofthead.mycollab.module.project.ui.components.AbstractEditItemComp;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
@@ -44,7 +46,9 @@ public class RiskAddViewImpl extends AbstractEditItemComp<Risk> implements
 
 	@Override
 	protected String initFormHeader() {
-		return (beanItem.getId() == null) ? "New Risk" : "Edit Risk";
+		return (beanItem.getId() == null) ? AppContext
+				.getMessage(RiskI18nEnum.VIEW_NEW_TITLE) : AppContext
+				.getMessage(RiskI18nEnum.VIEW_EDIT_TITLE);
 	}
 
 	@Override

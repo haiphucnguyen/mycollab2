@@ -49,17 +49,17 @@ import com.vaadin.ui.ComponentContainer;
  * 
  */
 @ViewComponent
-public class BugResolutionSummaryChartWidget extends
+public class ResolutionSummaryChartWidget extends
 		PieChartWrapper<BugSearchCriteria> implements
 		IBugResolutionSummaryChartWidget {
 	private static final long serialVersionUID = 1L;
 
-	public BugResolutionSummaryChartWidget(int width, int height) {
+	public ResolutionSummaryChartWidget(int width, int height) {
 		super(AppContext.getMessage(BugI18nEnum.WIDGET_CHART_RESOLUTION_TITLE),
 				width, height);
 	}
 
-	public BugResolutionSummaryChartWidget() {
+	public ResolutionSummaryChartWidget() {
 		super(AppContext.getMessage(BugI18nEnum.WIDGET_CHART_RESOLUTION_TITLE),
 				400, 280);
 

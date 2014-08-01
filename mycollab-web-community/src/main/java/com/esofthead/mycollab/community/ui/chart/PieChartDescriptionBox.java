@@ -16,9 +16,7 @@
  */
 package com.esofthead.mycollab.community.ui.chart;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.jfree.data.general.DefaultPieDataset;
 
@@ -41,8 +39,6 @@ import com.vaadin.ui.Label;
  */
 @SuppressWarnings("rawtypes")
 public class PieChartDescriptionBox {
-
-	private static Map<String, Comparable> mapKeyStatus = new HashMap<String, Comparable>();
 
 	public static ComponentContainer createLegendBox(
 			final PieChartWrapper pieChartHost,
@@ -76,17 +72,9 @@ public class PieChartDescriptionBox {
 
 						@Override
 						public void buttonClick(final ClickEvent event) {
-							final String caption = event.getButton()
-									.getCaption();
-							if (PieChartDescriptionBox.mapKeyStatus
-									.containsKey(caption)) {
-								final String keyStatus = PieChartDescriptionBox.mapKeyStatus
-										.get(caption) + "";
-								pieChartHost.onClickedDescription(keyStatus);
-							}
+							pieChartHost.onClickedDescription(key.toString());
 						}
 					});
-			PieChartDescriptionBox.mapKeyStatus.put(btnLink.getCaption(), key);
 			btnLink.addStyleName("link");
 			layout.addComponent(lblCircle);
 			layout.setComponentAlignment(lblCircle, Alignment.MIDDLE_CENTER);

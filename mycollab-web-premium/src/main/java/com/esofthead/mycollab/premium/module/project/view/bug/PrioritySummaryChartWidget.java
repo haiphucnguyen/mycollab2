@@ -87,7 +87,7 @@ public class PrioritySummaryChartWidget extends CssLayout implements
 
 		Configuration conf = chart.getConfiguration();
 
-		conf.setTitle("Priority Distribution");
+		conf.setTitle("");
 		conf.setCredits(new Credits(""));
 
 		Tooltip tooltip = new Tooltip();

@@ -17,12 +17,15 @@
 package com.esofthead.mycollab.community.ui.chart;
 
 import java.awt.Color;
+import java.text.AttributedString;
 import java.util.List;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.labels.PieSectionLabelGenerator;
 import org.jfree.chart.plot.PiePlot3D;
 import org.jfree.data.general.DefaultPieDataset;
+import org.jfree.data.general.PieDataset;
 import org.jfree.ui.RectangleInsets;
 import org.jfree.util.Rotation;
 
@@ -83,4 +86,28 @@ public abstract class PieChartWrapper<S extends SearchCriteria> extends
 	protected abstract DefaultPieDataset createDataset();
 
 	protected abstract void onClickedDescription(String key);
+
+	class JFreeChartLabelCustom implements PieSectionLabelGenerator {
+
+		@Override
+		public String generateSectionLabel(PieDataset dataset, Comparable key) {
+			String result = null;
+			if (dataset != null) {
+				int value = dataset.getValue(key).intValue();
+				if (value == 0) {
+					return null;
+				}
+
+				result = key.toString() + " ("
+						+ dataset.getValue(key).intValue() + ")";
+			}
+			return result;
+		}
+
+		@Override
+		public AttributedString generateAttributedSectionLabel(
+				PieDataset dataset, Comparable key) {
+			throw new UnsupportedOperationException("Not supported yet.");
+		}
+	}
 }

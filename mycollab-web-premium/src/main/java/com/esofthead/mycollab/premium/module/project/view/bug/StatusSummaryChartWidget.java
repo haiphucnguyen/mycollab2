@@ -19,7 +19,6 @@ package com.esofthead.mycollab.premium.module.project.view.bug;
 import java.util.List;
 
 import com.esofthead.mycollab.common.domain.GroupItem;
-import com.esofthead.mycollab.module.project.ProjectDataTypeFactory;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.BugStatus;
 import com.esofthead.mycollab.module.project.view.bug.IStatusSummaryChartWidget;
@@ -80,7 +79,7 @@ public class StatusSummaryChartWidget extends CssLayout implements
 
 		Configuration conf = chart.getConfiguration();
 
-		conf.setTitle("Status Distribution");
+		conf.setTitle("");
 		conf.setCredits(new Credits(""));
 
 		Tooltip tooltip = new Tooltip();
