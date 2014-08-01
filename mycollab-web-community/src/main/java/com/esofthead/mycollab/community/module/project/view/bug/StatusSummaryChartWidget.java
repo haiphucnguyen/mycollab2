@@ -54,12 +54,12 @@ public class StatusSummaryChartWidget extends
 
 	public StatusSummaryChartWidget(int width, int height) {
 		super(AppContext.getMessage(BugI18nEnum.WIDGET_CHART_STATUS_TITLE),
-				width, height);
+				BugStatus.class, width, height);
 	}
 
 	public StatusSummaryChartWidget() {
 		super(AppContext.getMessage(BugI18nEnum.WIDGET_CHART_STATUS_TITLE),
-				400, 280);
+				BugStatus.class, 400, 280);
 	}
 
 	@Override
@@ -87,15 +87,14 @@ public class StatusSummaryChartWidget extends
 			boolean isFound = false;
 			for (GroupItem item : groupItems) {
 				if (status.name().equals(item.getGroupid())) {
-					dataset.setValue(AppContext.getMessage(status),
-							item.getValue());
+					dataset.setValue(status.name(), item.getValue());
 					isFound = true;
 					break;
 				}
 			}
 
 			if (!isFound) {
-				dataset.setValue(status, 0);
+				dataset.setValue(status.name(), 0);
 			}
 		}
 

@@ -55,12 +55,12 @@ public class ResolutionSummaryChartWidget extends
 
 	public ResolutionSummaryChartWidget(int width, int height) {
 		super(AppContext.getMessage(BugI18nEnum.WIDGET_CHART_RESOLUTION_TITLE),
-				width, height);
+				BugResolution.class, width, height);
 	}
 
 	public ResolutionSummaryChartWidget() {
 		super(AppContext.getMessage(BugI18nEnum.WIDGET_CHART_RESOLUTION_TITLE),
-				400, 280);
+				BugResolution.class, 400, 280);
 
 	}
 
@@ -89,15 +89,14 @@ public class ResolutionSummaryChartWidget extends
 			boolean isFound = false;
 			for (GroupItem item : groupItems) {
 				if (resolution.name().equals(item.getGroupid())) {
-					dataset.setValue(AppContext.getMessage(resolution),
-							item.getValue());
+					dataset.setValue(resolution.name(), item.getValue());
 					isFound = true;
 					break;
 				}
 			}
 
 			if (!isFound) {
-				dataset.setValue(AppContext.getMessage(resolution), 0);
+				dataset.setValue(resolution.name(), 0);
 			}
 		}
 

@@ -30,6 +30,7 @@ import org.jfree.ui.RectangleInsets;
 import org.jfree.util.Rotation;
 
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.web.CustomLayoutLoader;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
@@ -53,8 +54,16 @@ public abstract class PieChartWrapper<S extends SearchCriteria> extends
 
 	protected DefaultPieDataset pieDataSet;
 
+	private Class<? extends Enum<?>> enumKeyCls;
+
 	public PieChartWrapper(final String title, final int width, final int height) {
 		super(title, width, height);
+	}
+
+	public PieChartWrapper(final String title,
+			Class<? extends Enum<?>> emumKey, final int width, final int height) {
+		super(title, width, height);
+		this.enumKeyCls = emumKey;
 	}
 
 	@Override
@@ -109,8 +118,13 @@ public abstract class PieChartWrapper<S extends SearchCriteria> extends
 					return null;
 				}
 
-				result = key.toString() + " ("
-						+ dataset.getValue(key).intValue() + ")";
+				if (enumKeyCls == null) {
+					return String.format("%s (%d)", key.toString(), value);
+				} else {
+					return String.format("%s (%d)",
+							AppContext.getMessage(enumKeyCls, key.toString()),
+							value);
+				}
 			}
 			return result;
 		}
@@ -143,11 +157,16 @@ public abstract class PieChartWrapper<S extends SearchCriteria> extends
 			final Label lblCircle = new Label(color);
 			lblCircle.setContentMode(ContentMode.HTML);
 
-			final Button btnLink = new Button(
-					key
-							+ "("
-							+ String.valueOf(pieDataSet.getValue(key)
-									.intValue()) + ")",
+			String btnCaption = "";
+			if (enumKeyCls == null) {
+				btnCaption = String.format("%s(%d)", key,
+						pieDataSet.getValue(key).intValue());
+			} else {
+				btnCaption = String.format("%s(%d)",
+						AppContext.getMessage(enumKeyCls, key.toString()),
+						pieDataSet.getValue(key).intValue());
+			}
+			final Button btnLink = new Button(btnCaption,
 					new Button.ClickListener() {
 						private static final long serialVersionUID = 1L;
 
