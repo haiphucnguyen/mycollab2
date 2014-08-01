@@ -23,19 +23,18 @@ import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.i18n.BugI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.ComponentI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.MilestoneI18nEnum;
-import com.esofthead.mycollab.module.project.i18n.ProblemI18nEnum;
-import com.esofthead.mycollab.module.project.i18n.RiskI18nEnum;
-import com.esofthead.mycollab.module.project.i18n.TaskGroupI18nEnum;
-import com.esofthead.mycollab.module.project.i18n.TaskI18nEnum;
-import com.esofthead.mycollab.module.project.i18n.VersionI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.BugPriority;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.BugResolution;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.BugSeverity;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.BugStatus;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.MilestoneStatus;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.TaskPriority;
+import com.esofthead.mycollab.module.project.i18n.ProblemI18nEnum;
+import com.esofthead.mycollab.module.project.i18n.RiskI18nEnum;
+import com.esofthead.mycollab.module.project.i18n.TaskGroupI18nEnum;
+import com.esofthead.mycollab.module.project.i18n.TaskI18nEnum;
+import com.esofthead.mycollab.module.project.i18n.VersionI18nEnum;
 import com.esofthead.mycollab.utils.AuditLogShowHandler;
-import com.esofthead.mycollab.utils.AuditLogShowHandler.I18nHistoryFieldFormat;
 
 /**
  * 
