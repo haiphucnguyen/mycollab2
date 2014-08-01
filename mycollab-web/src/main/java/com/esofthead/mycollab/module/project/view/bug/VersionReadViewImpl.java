@@ -19,6 +19,7 @@ package com.esofthead.mycollab.module.project.view.bug;
 
 import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
+import com.esofthead.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
@@ -93,7 +94,8 @@ public class VersionReadViewImpl extends AbstractPreviewItemComp<Version>
 		relatedBugComp.displayBugReports();
 		historyLogList.loadHistory(beanItem.getId());
 
-		if (beanItem.getStatus() == null || beanItem.getStatus().equals("Open")) {
+		if (beanItem.getStatus() == null
+				|| beanItem.getStatus().equals(StatusI18nEnum.Open.name())) {
 			removeLayoutStyleName(UIConstants.LINK_COMPLETED);
 			quickActionStatusBtn.setCaption(AppContext
 					.getMessage(GenericI18Enum.BUTTON_CLOSE_LABEL));
@@ -154,8 +156,9 @@ public class VersionReadViewImpl extends AbstractPreviewItemComp<Version>
 			@Override
 			public void buttonClick(ClickEvent event) {
 				if (beanItem.getStatus() != null
-						&& beanItem.getStatus().equals("Close")) {
-					beanItem.setStatus("Open");
+						&& beanItem.getStatus().equals(
+								StatusI18nEnum.Closed.name())) {
+					beanItem.setStatus(StatusI18nEnum.Open.name());
 					VersionReadViewImpl.this
 							.removeLayoutStyleName(UIConstants.LINK_COMPLETED);
 					quickActionStatusBtn.setCaption(AppContext
@@ -163,7 +166,7 @@ public class VersionReadViewImpl extends AbstractPreviewItemComp<Version>
 					quickActionStatusBtn.setIcon(MyCollabResource
 							.newResource("icons/16/project/closeTask.png"));
 				} else {
-					beanItem.setStatus("Close");
+					beanItem.setStatus(StatusI18nEnum.Closed.name());
 
 					VersionReadViewImpl.this
 							.addLayoutStyleName(UIConstants.LINK_COMPLETED);
