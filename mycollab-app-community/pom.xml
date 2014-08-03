@@ -54,8 +54,10 @@
             <artifactId>mycollab-web-community</artifactId>
             <version>4.3.3</version>
         </dependency>
+        <!-- 
            <dependency> <groupId>com.vaadin</groupId> <artifactId>vaadin-client-compiler</artifactId> 
-            <version>${vaadinVersion}</version> <scope>provided</scope> </dependency> 
+            <version>${vaadinVersion}</version> <scope>provided</scope> </dependency>
+            --> 
     </dependencies>
     <build>
         <plugins>
