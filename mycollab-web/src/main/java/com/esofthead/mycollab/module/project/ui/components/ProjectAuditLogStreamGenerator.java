@@ -42,7 +42,7 @@ import com.esofthead.mycollab.utils.AuditLogShowHandler;
  * @since 1.0
  * 
  */
-public class ProjectActivityStreamGenerator {
+public class ProjectAuditLogStreamGenerator {
 	private static AuditLogShowHandler bugHandler = new BugAuditLogShowHandler();
 	private static AuditLogShowHandler taskHandler = new TaskAuditLogShowHandler();
 	private static AuditLogShowHandler taskListHandler = new TaskListAuditLogShowHandler();
