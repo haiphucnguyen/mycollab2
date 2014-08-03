@@ -21,6 +21,8 @@ import com.vaadin.ui.VerticalLayout;
  *
  */
 public class DateInfoComp extends VerticalLayout {
+	private static final long serialVersionUID = 1L;
+	
 	private static Logger log = LoggerFactory.getLogger(DateInfoComp.class);
 
 	public void displayEntryDateTime(ValuedBean bean) {

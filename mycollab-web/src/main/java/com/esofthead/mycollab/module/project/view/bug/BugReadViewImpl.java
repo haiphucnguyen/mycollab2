@@ -328,7 +328,6 @@ public class BugReadViewImpl extends AbstractPreviewItemComp2<SimpleBug>
 		historyList = new BugHistoryList();
 		bugFollowersList = new BugFollowersSheet(this.beanItem);
 
-		bugTimeLogList = new BugTimeLogSheet(this.beanItem);
 		bugRelatedField = new BugRelatedField();
 
 		dateInfoComp = new DateInfoComp();
@@ -336,13 +335,16 @@ public class BugReadViewImpl extends AbstractPreviewItemComp2<SimpleBug>
 
 		peopleInfoComp = new PeopleInfoComp();
 		addToSideBar(peopleInfoComp);
+		
+		bugTimeLogList = new BugTimeLogSheet();
+		addToSideBar(bugTimeLogList);
 	}
 
 	@Override
 	protected void onPreviewItem() {
 		commentList.loadComments(this.beanItem.getId());
 		historyList.loadHistory(this.beanItem.getId());
-		bugTimeLogList.loadTimeValue(this.beanItem);
+		bugTimeLogList.displayTime(this.beanItem);
 
 		bugFollowersList.displayMonitorItems();
 		bugRelatedField.displayRelatedBugs(this.beanItem);
@@ -435,10 +437,6 @@ public class BugReadViewImpl extends AbstractPreviewItemComp2<SimpleBug>
 		tabBugDetail.addTab(bugFollowersList, AppContext
 				.getMessage(BugI18nEnum.TAB_FOLLOWERS), MyCollabResource
 				.newResource("icons/16/project/gray/follow.png"));
-
-		tabBugDetail.addTab(bugTimeLogList,
-				AppContext.getMessage(BugI18nEnum.TAB_TIME),
-				MyCollabResource.newResource("icons/16/project/gray/time.png"));
 
 		return tabBugDetail;
 	}
