@@ -63,7 +63,8 @@ public class AddTimeEntryWindow extends Window implements
 		this.setModal(true);
 		this.setResizable(false);
 		this.parentView = view;
-		this.setCaption("Log time on this project");
+		this.setCaption(AppContext
+				.getMessage(TimeTrackingI18nEnum.DIALOG_LOG_TIME_ENTRY_TITLE));
 
 		selectedDate = new GregorianCalendar().getTime();
 
@@ -251,7 +252,7 @@ public class AddTimeEntryWindow extends Window implements
 
 		calendar.add(Calendar.DAY_OF_YEAR, 1);
 		timeInputTable.setColumnHeader("Tuesday", AppContext.getMessage(
-				TimeTrackingI18nEnum.SATURDAY_FIELD,
+				TimeTrackingI18nEnum.TUESDAY_FIELD,
 				simpleDateFormat.format(calendar.getTime())));
 
 		calendar.add(Calendar.DAY_OF_YEAR, 1);
