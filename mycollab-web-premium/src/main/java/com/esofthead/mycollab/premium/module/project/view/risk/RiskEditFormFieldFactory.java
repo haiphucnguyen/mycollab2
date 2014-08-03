@@ -2,11 +2,13 @@ package com.esofthead.mycollab.premium.module.project.view.risk;
 
 import org.vaadin.teemu.ratingstars.RatingStars;
 
+import com.esofthead.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 import com.esofthead.mycollab.module.project.domain.Risk;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberSelectionField;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
+import com.esofthead.mycollab.vaadin.ui.I18nValueComboBox;
 import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
 import com.vaadin.data.Property;
 import com.vaadin.ui.Field;
@@ -67,9 +69,10 @@ class RiskEditFormFieldFactory<B extends Risk> extends
 			return box;
 		} else if (propertyId.equals("status")) {
 			if (risk.getStatus() == null) {
-				risk.setStatus("Open");
+				risk.setStatus(StatusI18nEnum.Open.name());
 			}
-			final ValueComboBox box = new ValueComboBox(false, "Open", "Closed");
+			final I18nValueComboBox box = new I18nValueComboBox(false,
+					StatusI18nEnum.Open, StatusI18nEnum.Closed);
 			return box;
 		} else if (propertyId.equals("level")) {
 			final RatingStars ratingField = new RatingStars();

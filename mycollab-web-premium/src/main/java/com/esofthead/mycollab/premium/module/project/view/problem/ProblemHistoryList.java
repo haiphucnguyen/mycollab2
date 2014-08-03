@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.premium.module.project.view.problem;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
+import com.esofthead.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.ProblemI18nEnum;
 import com.esofthead.mycollab.module.project.ui.format.ProjectMemberHistoryFieldFormat;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -37,7 +38,8 @@ public class ProblemHistoryList extends HistoryLogComponent {
 		this.generateFieldDisplayHandler("priority",
 				AppContext.getMessage(ProblemI18nEnum.FORM_PRIORITY));
 		this.generateFieldDisplayHandler("status",
-				AppContext.getMessage(ProblemI18nEnum.FORM_STATUS));
+				AppContext.getMessage(ProblemI18nEnum.FORM_STATUS),
+				new I18nHistoryFieldFormat(StatusI18nEnum.class));
 		this.generateFieldDisplayHandler("level",
 				AppContext.getMessage(ProblemI18nEnum.FORM_RATING));
 		this.generateFieldDisplayHandler("resolution",

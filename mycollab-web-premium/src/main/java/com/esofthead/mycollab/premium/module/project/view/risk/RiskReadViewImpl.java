@@ -4,6 +4,7 @@ import org.vaadin.teemu.ratingstars.RatingStars;
 
 import com.esofthead.mycollab.common.CommentType;
 import com.esofthead.mycollab.common.ModuleNameConstants;
+import com.esofthead.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
@@ -21,6 +22,7 @@ import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormDetectAndDisplayUrlViewField;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormViewField;
+import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.I18nFormViewField;
 import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
@@ -81,7 +83,7 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk>
 
 	@Override
 	protected void onPreviewItem() {
-		if ("Closed".equals(beanItem.getStatus())) {
+		if (StatusI18nEnum.Closed.name().equals(beanItem.getStatus())) {
 			addLayoutStyleName(UIConstants.LINK_COMPLETED);
 		}
 
@@ -136,7 +138,8 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk>
 				tinyRs.setReadOnly(true);
 				return tinyRs;
 			} else if (propertyId.equals("status")) {
-				return new FormViewField(risk.getStatus());
+				return new I18nFormViewField(risk.getStatus(),
+						StatusI18nEnum.class);
 			} else if (propertyId.equals("datedue")) {
 				return new FormViewField(AppContext.formatDate(risk
 						.getDatedue()));

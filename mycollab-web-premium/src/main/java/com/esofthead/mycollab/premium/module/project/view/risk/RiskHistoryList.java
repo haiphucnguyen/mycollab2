@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.premium.module.project.view.risk;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
+import com.esofthead.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.RiskI18nEnum;
 import com.esofthead.mycollab.module.project.ui.format.ProjectMemberHistoryFieldFormat;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -37,7 +38,8 @@ public class RiskHistoryList extends HistoryLogComponent {
 		this.generateFieldDisplayHandler("probalitity",
 				AppContext.getMessage(RiskI18nEnum.FORM_PROBABILITY));
 		this.generateFieldDisplayHandler("status",
-				AppContext.getMessage(RiskI18nEnum.FORM_STATUS));
+				AppContext.getMessage(RiskI18nEnum.FORM_STATUS),
+				new I18nHistoryFieldFormat(StatusI18nEnum.class));
 		this.generateFieldDisplayHandler("level",
 				AppContext.getMessage(RiskI18nEnum.FORM_RATING));
 		this.generateFieldDisplayHandler("response",

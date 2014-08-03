@@ -4,6 +4,7 @@ import org.vaadin.teemu.ratingstars.RatingStars;
 
 import com.esofthead.mycollab.common.CommentType;
 import com.esofthead.mycollab.common.ModuleNameConstants;
+import com.esofthead.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
@@ -21,6 +22,7 @@ import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormDetectAndDisplayUrlViewField;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormViewField;
+import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.I18nFormViewField;
 import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
@@ -76,7 +78,7 @@ public class ProblemReadViewImpl extends AbstractPreviewItemComp<SimpleProblem>
 
 	@Override
 	protected void onPreviewItem() {
-		if ("Closed".equals(beanItem.getStatus())) {
+		if (StatusI18nEnum.Closed.name().equals(beanItem.getStatus())) {
 			addLayoutStyleName(UIConstants.LINK_COMPLETED);
 		}
 		commentList.loadComments(beanItem.getId());
@@ -136,6 +138,9 @@ public class ProblemReadViewImpl extends AbstractPreviewItemComp<SimpleProblem>
 				tinyRs.setValue(problem.getLevel());
 				tinyRs.setReadOnly(true);
 				return tinyRs;
+			} else if (propertyId.equals("status")) {
+				return new I18nFormViewField(problem.getStatus(),
+						StatusI18nEnum.class);
 			} else if (propertyId.equals("datedue")) {
 				return new FormViewField(AppContext.formatDate(problem
 						.getDatedue()));
