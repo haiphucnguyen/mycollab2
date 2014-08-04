@@ -30,7 +30,7 @@ import com.esofthead.mycollab.vaadin.ui.HistoryLogComponent;
  * @since 1.0
  * 
  */
-class MilestoneHistoryLogList extends HistoryLogComponent {
+public class MilestoneHistoryLogList extends HistoryLogComponent {
 	private static final long serialVersionUID = 1L;
 
 	public static final FieldGroupFomatter milestoneFormatter;

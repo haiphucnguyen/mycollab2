@@ -9,7 +9,9 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.esofthead.mycollab.common.domain.AuditChangeItem;
 import com.esofthead.mycollab.common.domain.Currency;
+import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.service.CurrencyService;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
@@ -53,14 +55,14 @@ public class FieldGroupFomatter {
 		fieldsFormat.put(fieldname, new FieldDisplayHandler(displayName));
 	}
 
-	public void generateFieldDisplayHandler(String fieldname,
-			Enum displayName, HistoryFieldFormat format) {
+	public void generateFieldDisplayHandler(String fieldname, Enum displayName,
+			HistoryFieldFormat format) {
 		fieldsFormat.put(fieldname,
 				new FieldDisplayHandler(displayName, format));
 	}
 
-	public void generateFieldDisplayHandler(String fieldname,
-			Enum displayName, String formatName) {
+	public void generateFieldDisplayHandler(String fieldname, Enum displayName,
+			String formatName) {
 		fieldsFormat.put(fieldname, new FieldDisplayHandler(displayName,
 				defaultFieldHandlers.get(formatName)));
 	}
@@ -90,24 +92,60 @@ public class FieldGroupFomatter {
 		public HistoryFieldFormat getFormat() {
 			return format;
 		}
+
+		public String generateLogItem(AuditChangeItem item) {
+			StringBuffer str = new StringBuffer();
+			str.append("<li>");
+			str.append(AppContext.getMessage(displayName)).append(": ")
+					.append("<i>")
+					.append(this.getFormat().toString(item.getOldvalue()))
+					.append("</i>").append("&nbsp; &rarr; &nbsp; ")
+					.append("<i>")
+					.append(this.getFormat().toString(item.getNewvalue()))
+					.append("</i>");
+			str.append("</li>");
+			return str.toString();
+		}
 	}
 
 	public static class DefaultHistoryFieldFormat implements HistoryFieldFormat {
 
 		@Override
-		public Component formatField(String value) {
+		public Component toVaadinComponent(String value) {
 			LabelHTMLDisplayWidget lbHtml = new LabelHTMLDisplayWidget(value);
 			lbHtml.setWidth("90%");
 			return lbHtml;
+		}
+
+		@Override
+		public String toString(String value) {
+			if (value != null && !value.trim().equals("")) {
+				return (value.length() > 200) ? (value.substring(0, 150) + "...")
+						: value;
+			} else {
+				return AppContext.getMessage(GenericI18Enum.FORM_EMPTY);
+			}
 		}
 	}
 
 	public static class DateHistoryFieldFormat implements HistoryFieldFormat {
 
 		@Override
-		public Component formatField(String value) {
+		public Component toVaadinComponent(String value) {
 			Date formatDate = DateTimeUtils.convertDateByFormatW3C(value);
 			return new Label(AppContext.formatDate(formatDate));
+		}
+
+		@Override
+		public String toString(String value) {
+			if (value != null && !value.trim().equals("")) {
+				Date formatDate = DateTimeUtils.convertDateByFormatW3C(value);
+				SimpleDateFormat simpleDateTimeFormat = new SimpleDateFormat(
+						"MM/dd/yyyy");
+				return simpleDateTimeFormat.format(formatDate);
+			} else {
+				return AppContext.getMessage(GenericI18Enum.FORM_EMPTY);
+			}
 		}
 	}
 
@@ -115,7 +153,7 @@ public class FieldGroupFomatter {
 			HistoryFieldFormat {
 
 		@Override
-		public Component formatField(String value) {
+		public Component toVaadinComponent(String value) {
 			if (value != null && !value.trim().equals("")) {
 				Date formatDate = DateTimeUtils.convertDateByFormatW3C(value);
 				SimpleDateFormat simpleDateTimeFormat = new SimpleDateFormat(
@@ -134,13 +172,34 @@ public class FieldGroupFomatter {
 				return new Label();
 			}
 		}
+
+		@Override
+		public String toString(String value) {
+			if (value != null && !value.trim().equals("")) {
+				Date formatDate = DateTimeUtils.convertDateByFormatW3C(value);
+				Calendar calendar = Calendar.getInstance();
+				calendar.setTime(formatDate);
+				int timeFormat = calendar.get(Calendar.AM_PM);
+				if (timeFormat == 1) {
+					calendar.add(Calendar.HOUR_OF_DAY, -12);
+				}
+				SimpleDateFormat simpleDateTimeFormat = new SimpleDateFormat(
+						"MM/dd/yyyy HH:mm");
+				String dateStr = simpleDateTimeFormat
+						.format(calendar.getTime())
+						+ ((timeFormat == 0) ? " AM" : " PM");
+				return dateStr;
+			} else {
+				return AppContext.getMessage(GenericI18Enum.FORM_EMPTY);
+			}
+		}
 	}
 
 	public static class CurrencyHistoryFieldFormat implements
 			HistoryFieldFormat {
 
 		@Override
-		public Component formatField(String value) {
+		public Component toVaadinComponent(String value) {
 			if (value != null && !"".equals(value)) {
 				try {
 					Integer currencyid = Integer.parseInt(value);
@@ -156,6 +215,24 @@ public class FieldGroupFomatter {
 
 			return new Label("");
 		}
+
+		@Override
+		public String toString(String value) {
+			if (value != null && !"".equals(value)) {
+				try {
+					Integer currencyid = Integer.parseInt(value);
+					CurrencyService currencyService = ApplicationContextUtil
+							.getSpringBean(CurrencyService.class);
+					Currency currency = currencyService.getCurrency(currencyid);
+					return currency.getSymbol();
+				} catch (Exception e) {
+					log.error("Error while get currency id" + value, e);
+					return AppContext.getMessage(GenericI18Enum.FORM_EMPTY);
+				}
+			}
+
+			return AppContext.getMessage(GenericI18Enum.FORM_EMPTY);
+		}
 	}
 
 	public static class I18nHistoryFieldFormat implements HistoryFieldFormat {
@@ -167,7 +244,7 @@ public class FieldGroupFomatter {
 		}
 
 		@Override
-		public Component formatField(String value) {
+		public Component toVaadinComponent(String value) {
 			try {
 				if (value != null && !"".equals(value)) {
 					return new Label(AppContext.getMessage(Enum.valueOf(
@@ -177,6 +254,19 @@ public class FieldGroupFomatter {
 				return new Label("");
 			} catch (Exception e) {
 				return new Label(value);
+			}
+		}
+
+		@Override
+		public String toString(String value) {
+			try {
+				if (value != null && !"".equals(value)) {
+					return AppContext.getMessage(Enum.valueOf(enumCls, value));
+				}
+
+				return "";
+			} catch (Exception e) {
+				return value;
 			}
 		}
 

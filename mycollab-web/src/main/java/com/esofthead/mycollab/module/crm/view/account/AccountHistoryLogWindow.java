@@ -30,7 +30,7 @@ import com.esofthead.mycollab.utils.FieldGroupFomatter.I18nHistoryFieldFormat;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-class AccountHistoryLogWindow extends HistoryLogWindow {
+public class AccountHistoryLogWindow extends HistoryLogWindow {
 	private static final long serialVersionUID = 1L;
 
 	public static final FieldGroupFomatter accountFormatter;

@@ -116,10 +116,10 @@ public abstract class HistoryLogComponent extends VerticalLayout {
 												.getDisplayName())), 0,
 								visibleRows + 2);
 						gridLayout.addComponent(fieldDisplayHandler.getFormat()
-								.formatField(item.getOldvalue()), 1,
+								.toVaadinComponent(item.getOldvalue()), 1,
 								visibleRows + 2);
 						gridLayout.addComponent(fieldDisplayHandler.getFormat()
-								.formatField(item.getNewvalue()), 2,
+								.toVaadinComponent(item.getNewvalue()), 2,
 								visibleRows + 2);
 						visibleRows++;
 					}

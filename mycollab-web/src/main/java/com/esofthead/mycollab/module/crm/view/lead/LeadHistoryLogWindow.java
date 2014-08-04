@@ -28,7 +28,7 @@ import com.esofthead.mycollab.utils.FieldGroupFomatter;
  * @since 1.0
  * 
  */
-class LeadHistoryLogWindow extends HistoryLogWindow {
+public class LeadHistoryLogWindow extends HistoryLogWindow {
 	private static final long serialVersionUID = 1L;
 
 	public static final FieldGroupFomatter leadFormatter;

@@ -28,7 +28,7 @@ import com.esofthead.mycollab.utils.FieldGroupFomatter;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-class CampaignHistoryLogWindow extends HistoryLogWindow {
+public class CampaignHistoryLogWindow extends HistoryLogWindow {
 	private static final long serialVersionUID = 1L;
 
 	public static final FieldGroupFomatter campaignFormatter;
