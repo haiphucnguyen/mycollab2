@@ -137,7 +137,7 @@ public class ProjectAuditLogStreamGenerator {
 			this.generateFieldDisplayHandler("actualenddate",
 					TaskI18nEnum.FORM_ACTUAL_END_DATE,
 					AuditLogShowHandler.DATE_FIELD);
-			this.generateFieldDisplayHandler("assignUserFullName",
+			this.generateFieldDisplayHandler("assignuser",
 					GenericI18Enum.FORM_ASSIGNEE);
 		}
 	}
