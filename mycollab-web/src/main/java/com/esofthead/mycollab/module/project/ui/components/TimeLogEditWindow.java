@@ -11,10 +11,10 @@ import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.SimpleItemTimeLogging;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
-import com.esofthead.mycollab.module.project.i18n.TimeTrackingI18nEnum;
 import com.esofthead.mycollab.module.project.service.ItemTimeLoggingService;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserLink;
+import com.esofthead.mycollab.module.project.view.time.TimeTableFieldDef;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
@@ -88,14 +88,12 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends Window {
 		this.tableItem = new DefaultPagedBeanTable<ItemTimeLoggingService, ItemTimeLoggingSearchCriteria, SimpleItemTimeLogging>(
 				ApplicationContextUtil
 						.getSpringBean(ItemTimeLoggingService.class),
-				SimpleItemTimeLogging.class, Arrays.asList(new TableViewField(
-						TimeTrackingI18nEnum.LOG_USER, "logUserFullName",
-						UIConstants.TABLE_X_LABEL_WIDTH), new TableViewField(
-						TimeTrackingI18nEnum.LOG_FOR_DATE, "createdtime",
-						UIConstants.TABLE_DATE_TIME_WIDTH), new TableViewField(
-						TimeTrackingI18nEnum.LOG_VALUE, "logvalue",
-						UIConstants.TABLE_S_LABEL_WIDTH), new TableViewField(
-						null, "id", UIConstants.TABLE_CONTROL_WIDTH)));
+				SimpleItemTimeLogging.class, Arrays.asList(
+						TimeTableFieldDef.logUser,
+						TimeTableFieldDef.logForDate,
+						TimeTableFieldDef.logValue, TimeTableFieldDef.billable,
+						new TableViewField(null, "id",
+								UIConstants.TABLE_CONTROL_WIDTH)));
 
 		this.tableItem.addGeneratedColumn("logUserFullName",
 				new Table.ColumnGenerator() {
@@ -116,7 +114,7 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends Window {
 					}
 				});
 
-		this.tableItem.addGeneratedColumn("createdtime", new ColumnGenerator() {
+		this.tableItem.addGeneratedColumn("logforday", new ColumnGenerator() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -125,8 +123,7 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends Window {
 				final SimpleItemTimeLogging monitorItem = TimeLogEditWindow.this.tableItem
 						.getBeanByIndex(itemId);
 				final Label l = new Label();
-				l.setValue(AppContext.formatDateTime(monitorItem
-						.getCreatedtime()));
+				l.setValue(AppContext.formatDate(monitorItem.getLogforday()));
 				return l;
 			}
 		});
@@ -142,6 +139,27 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends Window {
 				final Label l = new Label();
 				l.setValue(itemTimeLogging.getLogvalue() + "");
 				return l;
+			}
+		});
+
+		this.tableItem.addGeneratedColumn("isbillable", new ColumnGenerator() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public Object generateCell(Table source, Object itemId,
+					Object columnId) {
+				final SimpleItemTimeLogging monitorItem = tableItem
+						.getBeanByIndex(itemId);
+				Button icon = new Button();
+				if (monitorItem.getIsbillable().booleanValue()) {
+					icon.setIcon(MyCollabResource
+							.newResource("icons/16/yes.png"));
+				} else {
+					icon.setIcon(MyCollabResource
+							.newResource("icons/16/no.png"));
+				}
+				icon.setStyleName("link");
+				return icon;
 			}
 		});
 
@@ -200,7 +218,7 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends Window {
 		totalLayout.addStyleName("boxTotal");
 		totalLayout.setWidth("100%");
 		spentTimePanel.addComponent(totalLayout);
-		final Label lbTimeInstructTotal = new Label("Total Spent Time");
+		final Label lbTimeInstructTotal = new Label("Total Spent Hours");
 		totalLayout.addComponent(lbTimeInstructTotal);
 		this.totalSpentTimeLbl = new Label("_");
 		this.totalSpentTimeLbl.addStyleName("numberTotal");
@@ -334,6 +352,7 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends Window {
 				.getItemSearchCriteria();
 		TimeLogEditWindow.this.tableItem.setSearchCriteria(searchCriteria);
 		this.setTotalTimeValue();
+		this.setUpdateTimeValue();
 	}
 
 	private double getTotalInvest() {

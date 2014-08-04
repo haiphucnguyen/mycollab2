@@ -39,7 +39,7 @@
         #end
         
         #ifnotnull($searchCriteria.isBillable)
-            ${searchCriteria.isBillable.operation} m_prj_time_logging.isBillable = @{searchCriteria.typeId.value,jdbcType=BOOLEAN}
+            ${searchCriteria.isBillable.operation} m_prj_time_logging.isBillable = @{searchCriteria.isBillable.value,jdbcType=BOOLEAN}
         #end
         
         #ifnotnull($searchCriteria.rangeDate)

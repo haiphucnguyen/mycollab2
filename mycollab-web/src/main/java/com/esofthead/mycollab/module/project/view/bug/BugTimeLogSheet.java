@@ -85,11 +85,19 @@ public class BugTimeLogSheet extends TimeLogComp<SimpleBug> {
 
 	}
 
-	private static class BugTimeLogEditWindow extends
-			TimeLogEditWindow<SimpleBug> {
+	private class BugTimeLogEditWindow extends TimeLogEditWindow<SimpleBug> {
 		public BugTimeLogEditWindow(SimpleBug bean) {
 			super(bean);
-			this.setCaption("Bug Time Log");
+			this.setCaption("Log Time");
+			this.setModal(true);
+			this.addCloseListener(new CloseListener() {
+
+				@Override
+				public void windowClose(CloseEvent e) {
+					BugTimeLogSheet.this
+							.displayTime(BugTimeLogEditWindow.this.bean);
+				}
+			});
 		}
 
 		@Override

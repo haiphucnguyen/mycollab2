@@ -64,11 +64,11 @@ public abstract class TimeLogComp<V extends ValuedBean> extends VerticalLayout {
 		double billableHours = getTotalBillableHours(bean);
 		double nonBillableHours = getTotalNonBillableHours(bean);
 		double remainHours = getRemainedHours(bean);
-		layout.addComponent(new Label(String.format("Billable Hours: %g",
+		layout.addComponent(new Label(String.format("Billable Hours: %.2g",
 				billableHours)));
-		layout.addComponent(new Label(String.format("Non-Billable Hours: %g",
+		layout.addComponent(new Label(String.format("Non-Billable Hours: %.2g",
 				nonBillableHours)));
-		layout.addComponent(new Label(String.format("Remaining Hours: %g",
+		layout.addComponent(new Label(String.format("Remaining Hours: %.2g",
 				remainHours)));
 		this.addComponent(layout);
 	}
