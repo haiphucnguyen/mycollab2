@@ -110,11 +110,11 @@ public abstract class HistoryLogComponent extends VerticalLayout {
 					FieldDisplayHandler fieldDisplayHandler = groupFormatter
 							.getFieldDisplayHandler(fieldName);
 					if (fieldDisplayHandler != null) {
-						gridLayout
-								.addComponent(
-										new Label(fieldDisplayHandler
-												.getDisplayName()), 0,
-										visibleRows + 2);
+						gridLayout.addComponent(
+								new Label(AppContext
+										.getMessage(fieldDisplayHandler
+												.getDisplayName())), 0,
+								visibleRows + 2);
 						gridLayout.addComponent(fieldDisplayHandler.getFormat()
 								.formatField(item.getOldvalue()), 1,
 								visibleRows + 2);

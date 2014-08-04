@@ -22,8 +22,6 @@ import com.esofthead.mycollab.module.crm.i18n.CampaignI18nEnum;
 import com.esofthead.mycollab.module.crm.ui.components.HistoryLogWindow;
 import com.esofthead.mycollab.module.user.ui.components.UserHistoryFieldFormat;
 import com.esofthead.mycollab.utils.FieldGroupFomatter;
-import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.ui.HistoryLogComponent;
 
 /**
  * 
@@ -39,33 +37,32 @@ class CampaignHistoryLogWindow extends HistoryLogWindow {
 		campaignFormatter = new FieldGroupFomatter();
 
 		campaignFormatter.generateFieldDisplayHandler("campaignname",
-				AppContext.getMessage(CampaignI18nEnum.FORM_CAMPAIGN_NAME));
-		campaignFormatter.generateFieldDisplayHandler("startdate",
-				AppContext.getMessage(CampaignI18nEnum.FORM_START_DATE),
-				FieldGroupFomatter.DATE_FIELD);
+				CampaignI18nEnum.FORM_CAMPAIGN_NAME);
+		campaignFormatter
+				.generateFieldDisplayHandler("startdate",
+						CampaignI18nEnum.FORM_START_DATE,
+						FieldGroupFomatter.DATE_FIELD);
 		campaignFormatter.generateFieldDisplayHandler("enddate",
-				AppContext.getMessage(CampaignI18nEnum.FORM_END_DATE),
-				FieldGroupFomatter.DATE_FIELD);
+				CampaignI18nEnum.FORM_END_DATE, FieldGroupFomatter.DATE_FIELD);
 		campaignFormatter.generateFieldDisplayHandler("status",
-				AppContext.getMessage(CampaignI18nEnum.FORM_STATUS));
+				CampaignI18nEnum.FORM_STATUS);
 		campaignFormatter.generateFieldDisplayHandler("type",
-				AppContext.getMessage(CampaignI18nEnum.FORM_TYPE));
+				CampaignI18nEnum.FORM_TYPE);
 		campaignFormatter.generateFieldDisplayHandler("currencyid",
-				AppContext.getMessage(CampaignI18nEnum.FORM_CURRENCY),
+				CampaignI18nEnum.FORM_CURRENCY,
 				FieldGroupFomatter.CURRENCY_FIELD);
 		campaignFormatter.generateFieldDisplayHandler("budget",
-				AppContext.getMessage(CampaignI18nEnum.FORM_BUDGET));
+				CampaignI18nEnum.FORM_BUDGET);
 		campaignFormatter.generateFieldDisplayHandler("expectedcost",
-				AppContext.getMessage(CampaignI18nEnum.FORM_EXPECTED_COST));
+				CampaignI18nEnum.FORM_EXPECTED_COST);
 		campaignFormatter.generateFieldDisplayHandler("actualcost",
-				AppContext.getMessage(CampaignI18nEnum.FORM_ACTUAL_COST));
+				CampaignI18nEnum.FORM_ACTUAL_COST);
 		campaignFormatter.generateFieldDisplayHandler("expectedrevenue",
-				AppContext.getMessage(CampaignI18nEnum.FORM_EXPECTED_REVENUE));
+				CampaignI18nEnum.FORM_EXPECTED_REVENUE);
 		campaignFormatter.generateFieldDisplayHandler("assignuser",
-				AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE),
-				new UserHistoryFieldFormat());
+				GenericI18Enum.FORM_ASSIGNEE, new UserHistoryFieldFormat());
 		campaignFormatter.generateFieldDisplayHandler("description",
-				AppContext.getMessage(GenericI18Enum.FORM_DESCRIPTION));
+				GenericI18Enum.FORM_DESCRIPTION);
 	}
 
 	public CampaignHistoryLogWindow(String module, String type) {

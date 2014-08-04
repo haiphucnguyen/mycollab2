@@ -17,9 +17,9 @@
 package com.esofthead.mycollab.module.crm.view.activity;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
+import com.esofthead.mycollab.module.crm.i18n.TaskI18nEnum;
 import com.esofthead.mycollab.module.crm.ui.components.HistoryLogWindow;
 import com.esofthead.mycollab.utils.FieldGroupFomatter;
-import com.esofthead.mycollab.vaadin.AppContext;
 
 /**
  * 
@@ -35,16 +35,20 @@ class AssignmentHistoryLogWindow extends HistoryLogWindow {
 	static {
 		assignmentFormatter = new FieldGroupFomatter();
 
-		assignmentFormatter.generateFieldDisplayHandler("subject", "Subject");
+		assignmentFormatter.generateFieldDisplayHandler("subject",
+				TaskI18nEnum.FORM_SUBJECT);
 		assignmentFormatter.generateFieldDisplayHandler("startdate",
-				"Start Date");
-		assignmentFormatter.generateFieldDisplayHandler("duedate", "Due Date");
-		assignmentFormatter.generateFieldDisplayHandler("status", "Status");
+				TaskI18nEnum.FORM_START_DATE);
+		assignmentFormatter.generateFieldDisplayHandler("duedate",
+				TaskI18nEnum.FORM_DUE_DATE);
+		assignmentFormatter.generateFieldDisplayHandler("status",
+				TaskI18nEnum.FORM_STATUS);
 		assignmentFormatter.generateFieldDisplayHandler("assignuser",
-				AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE));
-		assignmentFormatter.generateFieldDisplayHandler("priority", "Priority");
+				GenericI18Enum.FORM_ASSIGNEE);
+		assignmentFormatter.generateFieldDisplayHandler("priority",
+				TaskI18nEnum.FORM_PRIORITY);
 		assignmentFormatter.generateFieldDisplayHandler("description",
-				"Description");
+				GenericI18Enum.FORM_DESCRIPTION);
 	}
 
 	public AssignmentHistoryLogWindow(String module, String type) {

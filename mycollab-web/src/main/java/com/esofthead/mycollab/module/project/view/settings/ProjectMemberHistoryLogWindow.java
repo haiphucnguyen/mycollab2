@@ -18,6 +18,7 @@
 package com.esofthead.mycollab.module.project.view.settings;
 
 import com.esofthead.mycollab.module.crm.ui.components.HistoryLogWindow;
+import com.esofthead.mycollab.module.project.i18n.ProjectMemberI18nEnum;
 import com.esofthead.mycollab.utils.FieldGroupFomatter;
 
 /**
@@ -33,10 +34,12 @@ class ProjectMemberHistoryLogWindow extends HistoryLogWindow {
 	static {
 		projectMememberFormatter = new FieldGroupFomatter();
 
-		projectMememberFormatter
-				.generateFieldDisplayHandler("username", "User");
-		projectMememberFormatter.generateFieldDisplayHandler("isadmin",
-				"Is Admin");
+		projectMememberFormatter.generateFieldDisplayHandler("username",
+				ProjectMemberI18nEnum.FORM_USER);
+
+		// TODO: Display role name in history
+		projectMememberFormatter.generateFieldDisplayHandler("projectroleid",
+				ProjectMemberI18nEnum.FORM_ROLE);
 	}
 
 	public ProjectMemberHistoryLogWindow(String module, String type) {

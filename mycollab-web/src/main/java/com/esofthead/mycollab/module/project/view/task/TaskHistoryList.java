@@ -25,7 +25,6 @@ import com.esofthead.mycollab.module.project.ui.format.TaskGroupHistoryFieldForm
 import com.esofthead.mycollab.module.user.ui.components.UserHistoryFieldFormat;
 import com.esofthead.mycollab.utils.FieldGroupFomatter;
 import com.esofthead.mycollab.utils.FieldGroupFomatter.I18nHistoryFieldFormat;
-import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.HistoryLogComponent;
 
 /**
@@ -42,37 +41,32 @@ public class TaskHistoryList extends HistoryLogComponent {
 	static {
 		taskFormatter = new FieldGroupFomatter();
 		taskFormatter.generateFieldDisplayHandler("taskname",
-				AppContext.getMessage(TaskI18nEnum.FORM_TASK_NAME));
+				TaskI18nEnum.FORM_TASK_NAME);
 		taskFormatter.generateFieldDisplayHandler("startdate",
-				AppContext.getMessage(TaskI18nEnum.FORM_START_DATE),
-				FieldGroupFomatter.DATE_FIELD);
+				TaskI18nEnum.FORM_START_DATE, FieldGroupFomatter.DATE_FIELD);
 		taskFormatter.generateFieldDisplayHandler("enddate",
-				AppContext.getMessage(TaskI18nEnum.FORM_END_DATE),
-				FieldGroupFomatter.DATE_FIELD);
+				TaskI18nEnum.FORM_END_DATE, FieldGroupFomatter.DATE_FIELD);
 		taskFormatter.generateFieldDisplayHandler("actualstartdate",
-				AppContext.getMessage(TaskI18nEnum.FORM_ACTUAL_START_DATE),
+				TaskI18nEnum.FORM_ACTUAL_START_DATE,
 				FieldGroupFomatter.DATE_FIELD);
 		taskFormatter.generateFieldDisplayHandler("actualenddate",
-				AppContext.getMessage(TaskI18nEnum.FORM_ACTUAL_END_DATE),
+				TaskI18nEnum.FORM_ACTUAL_END_DATE,
 				FieldGroupFomatter.DATE_FIELD);
 		taskFormatter.generateFieldDisplayHandler("deadline",
-				AppContext.getMessage(TaskI18nEnum.FORM_DEADLINE),
-				FieldGroupFomatter.DATE_FIELD);
+				TaskI18nEnum.FORM_DEADLINE, FieldGroupFomatter.DATE_FIELD);
 		taskFormatter.generateFieldDisplayHandler("priority",
-				AppContext.getMessage(TaskI18nEnum.FORM_PRIORITY),
-				new I18nHistoryFieldFormat(TaskPriority.class));
+				TaskI18nEnum.FORM_PRIORITY, new I18nHistoryFieldFormat(
+						TaskPriority.class));
 		taskFormatter.generateFieldDisplayHandler("isestimated",
-				AppContext.getMessage(TaskI18nEnum.FORM_IS_ESTIMATED));
+				TaskI18nEnum.FORM_IS_ESTIMATED);
 		taskFormatter.generateFieldDisplayHandler("assignuser",
-				AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE),
-				new UserHistoryFieldFormat());
+				GenericI18Enum.FORM_ASSIGNEE, new UserHistoryFieldFormat());
 		taskFormatter.generateFieldDisplayHandler("tasklistid",
-				AppContext.getMessage(TaskI18nEnum.FORM_TASKGROUP),
-				new TaskGroupHistoryFieldFormat());
+				TaskI18nEnum.FORM_TASKGROUP, new TaskGroupHistoryFieldFormat());
 		taskFormatter.generateFieldDisplayHandler("percentagecomplete",
-				AppContext.getMessage(TaskI18nEnum.FORM_PERCENTAGE_COMPLETE));
+				TaskI18nEnum.FORM_PERCENTAGE_COMPLETE);
 		taskFormatter.generateFieldDisplayHandler("notes",
-				AppContext.getMessage(TaskI18nEnum.FORM_NOTES));
+				TaskI18nEnum.FORM_NOTES);
 	}
 
 	public TaskHistoryList() {

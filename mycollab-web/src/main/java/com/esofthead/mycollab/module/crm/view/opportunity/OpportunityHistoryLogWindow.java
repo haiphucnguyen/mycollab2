@@ -21,7 +21,6 @@ import com.esofthead.mycollab.module.crm.i18n.OpportunityI18nEnum;
 import com.esofthead.mycollab.module.crm.ui.components.HistoryLogWindow;
 import com.esofthead.mycollab.module.user.ui.components.UserHistoryFieldFormat;
 import com.esofthead.mycollab.utils.FieldGroupFomatter;
-import com.esofthead.mycollab.vaadin.AppContext;
 
 /**
  * 
@@ -38,37 +37,33 @@ class OpportunityHistoryLogWindow extends HistoryLogWindow {
 		opportunityFormatter = new FieldGroupFomatter();
 
 		opportunityFormatter.generateFieldDisplayHandler("opportunityname",
-				AppContext.getMessage(OpportunityI18nEnum.FORM_NAME));
+				OpportunityI18nEnum.FORM_NAME);
 		opportunityFormatter.generateFieldDisplayHandler("currencyid",
-				AppContext.getMessage(OpportunityI18nEnum.FORM_CURRENCY),
+				OpportunityI18nEnum.FORM_CURRENCY,
 				FieldGroupFomatter.CURRENCY_FIELD);
 		opportunityFormatter.generateFieldDisplayHandler("amount",
-				AppContext.getMessage(OpportunityI18nEnum.FORM_AMOUNT));
+				OpportunityI18nEnum.FORM_AMOUNT);
 		opportunityFormatter.generateFieldDisplayHandler("salesstage",
-				AppContext.getMessage(OpportunityI18nEnum.FORM_SALE_STAGE));
+				OpportunityI18nEnum.FORM_SALE_STAGE);
 		opportunityFormatter.generateFieldDisplayHandler("probability",
-				AppContext.getMessage(OpportunityI18nEnum.FORM_SALE_STAGE));
+				OpportunityI18nEnum.FORM_SALE_STAGE);
 		opportunityFormatter.generateFieldDisplayHandler("nextstep",
-				AppContext.getMessage(OpportunityI18nEnum.FORM_NEXT_STEP));
+				OpportunityI18nEnum.FORM_NEXT_STEP);
 		opportunityFormatter.generateFieldDisplayHandler("accountid",
-				AppContext.getMessage(OpportunityI18nEnum.FORM_ACCOUNT_NAME));
-		opportunityFormatter
-				.generateFieldDisplayHandler(
-						"expectedcloseddate",
-						AppContext
-								.getMessage(OpportunityI18nEnum.FORM_EXPECTED_CLOSE_DATE),
-						FieldGroupFomatter.DATE_FIELD);
+				OpportunityI18nEnum.FORM_ACCOUNT_NAME);
+		opportunityFormatter.generateFieldDisplayHandler("expectedcloseddate",
+				OpportunityI18nEnum.FORM_EXPECTED_CLOSE_DATE,
+				FieldGroupFomatter.DATE_FIELD);
 		opportunityFormatter.generateFieldDisplayHandler("opportunitytype",
-				AppContext.getMessage(OpportunityI18nEnum.FORM_TYPE));
+				OpportunityI18nEnum.FORM_TYPE);
 		opportunityFormatter.generateFieldDisplayHandler("source",
-				AppContext.getMessage(OpportunityI18nEnum.FORM_LEAD_SOURCE));
+				OpportunityI18nEnum.FORM_LEAD_SOURCE);
 		opportunityFormatter.generateFieldDisplayHandler("campaignid",
-				AppContext.getMessage(OpportunityI18nEnum.FORM_CAMPAIGN_NAME));
+				OpportunityI18nEnum.FORM_CAMPAIGN_NAME);
 		opportunityFormatter.generateFieldDisplayHandler("assignuser",
-				AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE),
-				new UserHistoryFieldFormat());
+				GenericI18Enum.FORM_ASSIGNEE, new UserHistoryFieldFormat());
 		opportunityFormatter.generateFieldDisplayHandler("description",
-				AppContext.getMessage(GenericI18Enum.FORM_DESCRIPTION));
+				GenericI18Enum.FORM_DESCRIPTION);
 	}
 
 	public OpportunityHistoryLogWindow(String module, String type) {

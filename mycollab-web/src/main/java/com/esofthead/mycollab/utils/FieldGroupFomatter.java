@@ -49,18 +49,18 @@ public class FieldGroupFomatter {
 				new CurrencyHistoryFieldFormat());
 	}
 
-	public void generateFieldDisplayHandler(String fieldname, String displayName) {
+	public void generateFieldDisplayHandler(String fieldname, Enum displayName) {
 		fieldsFormat.put(fieldname, new FieldDisplayHandler(displayName));
 	}
 
 	public void generateFieldDisplayHandler(String fieldname,
-			String displayName, HistoryFieldFormat format) {
+			Enum displayName, HistoryFieldFormat format) {
 		fieldsFormat.put(fieldname,
 				new FieldDisplayHandler(displayName, format));
 	}
 
 	public void generateFieldDisplayHandler(String fieldname,
-			String displayName, String formatName) {
+			Enum displayName, String formatName) {
 		fieldsFormat.put(fieldname, new FieldDisplayHandler(displayName,
 				defaultFieldHandlers.get(formatName)));
 	}
@@ -71,19 +71,19 @@ public class FieldGroupFomatter {
 
 	public static class FieldDisplayHandler {
 
-		private String displayName;
+		private Enum displayName;
 		private HistoryFieldFormat format;
 
-		public FieldDisplayHandler(String displayName) {
+		public FieldDisplayHandler(Enum displayName) {
 			this(displayName, new DefaultHistoryFieldFormat());
 		}
 
-		public FieldDisplayHandler(String displayName, HistoryFieldFormat format) {
+		public FieldDisplayHandler(Enum displayName, HistoryFieldFormat format) {
 			this.displayName = displayName;
 			this.format = format;
 		}
 
-		public String getDisplayName() {
+		public Enum getDisplayName() {
 			return displayName;
 		}
 

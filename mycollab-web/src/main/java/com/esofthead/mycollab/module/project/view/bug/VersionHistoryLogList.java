@@ -21,7 +21,6 @@ import com.esofthead.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.VersionI18nEnum;
 import com.esofthead.mycollab.utils.FieldGroupFomatter;
 import com.esofthead.mycollab.utils.FieldGroupFomatter.I18nHistoryFieldFormat;
-import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.HistoryLogComponent;
 
 /**
@@ -39,15 +38,14 @@ public class VersionHistoryLogList extends HistoryLogComponent {
 		versionFormatter = new FieldGroupFomatter();
 
 		versionFormatter.generateFieldDisplayHandler("versionname",
-				AppContext.getMessage(VersionI18nEnum.FORM_NAME));
+				VersionI18nEnum.FORM_NAME);
 		versionFormatter.generateFieldDisplayHandler("status",
-				AppContext.getMessage(VersionI18nEnum.FORM_STATUS),
-				new I18nHistoryFieldFormat(StatusI18nEnum.class));
+				VersionI18nEnum.FORM_STATUS, new I18nHistoryFieldFormat(
+						StatusI18nEnum.class));
 		versionFormatter.generateFieldDisplayHandler("description",
-				AppContext.getMessage(GenericI18Enum.FORM_DESCRIPTION));
+				GenericI18Enum.FORM_DESCRIPTION);
 		versionFormatter.generateFieldDisplayHandler("duedate",
-				AppContext.getMessage(VersionI18nEnum.FORM_DUE_DATE),
-				FieldGroupFomatter.DATE_FIELD);
+				VersionI18nEnum.FORM_DUE_DATE, FieldGroupFomatter.DATE_FIELD);
 	}
 
 	public VersionHistoryLogList(String module, String type) {

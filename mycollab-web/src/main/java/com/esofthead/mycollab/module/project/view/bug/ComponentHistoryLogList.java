@@ -21,7 +21,6 @@ import com.esofthead.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.ComponentI18nEnum;
 import com.esofthead.mycollab.utils.FieldGroupFomatter;
 import com.esofthead.mycollab.utils.FieldGroupFomatter.I18nHistoryFieldFormat;
-import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.HistoryLogComponent;
 
 /**
@@ -39,14 +38,14 @@ public class ComponentHistoryLogList extends HistoryLogComponent {
 		componentFormatter = new FieldGroupFomatter();
 
 		componentFormatter.generateFieldDisplayHandler("componentname",
-				AppContext.getMessage(ComponentI18nEnum.FORM_NAME));
+				ComponentI18nEnum.FORM_NAME);
 		componentFormatter.generateFieldDisplayHandler("description",
-				AppContext.getMessage(GenericI18Enum.FORM_DESCRIPTION));
+				GenericI18Enum.FORM_DESCRIPTION);
 		componentFormatter.generateFieldDisplayHandler("userlead",
-				AppContext.getMessage(ComponentI18nEnum.FORM_LEAD));
+				ComponentI18nEnum.FORM_LEAD);
 		componentFormatter.generateFieldDisplayHandler("status",
-				AppContext.getMessage(ComponentI18nEnum.FORM_STATUS),
-				new I18nHistoryFieldFormat(StatusI18nEnum.class));
+				ComponentI18nEnum.FORM_STATUS, new I18nHistoryFieldFormat(
+						StatusI18nEnum.class));
 	}
 
 	public ComponentHistoryLogList(String module, String type) {

@@ -24,7 +24,6 @@ import com.esofthead.mycollab.module.crm.ui.components.HistoryLogWindow;
 import com.esofthead.mycollab.module.user.ui.components.UserHistoryFieldFormat;
 import com.esofthead.mycollab.utils.FieldGroupFomatter;
 import com.esofthead.mycollab.utils.FieldGroupFomatter.I18nHistoryFieldFormat;
-import com.esofthead.mycollab.vaadin.AppContext;
 
 /**
  * 
@@ -40,52 +39,49 @@ class AccountHistoryLogWindow extends HistoryLogWindow {
 		accountFormatter = new FieldGroupFomatter();
 
 		accountFormatter.generateFieldDisplayHandler("accountname",
-				AppContext.getMessage(AccountI18nEnum.FORM_ACCOUNT_NAME));
+				AccountI18nEnum.FORM_ACCOUNT_NAME);
 
 		accountFormatter.generateFieldDisplayHandler("assignuser",
-				AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE),
-				new UserHistoryFieldFormat());
+				GenericI18Enum.FORM_ASSIGNEE, new UserHistoryFieldFormat());
 		accountFormatter.generateFieldDisplayHandler("phoneoffice",
-				AppContext.getMessage(AccountI18nEnum.FORM_OFFICE_PHONE));
+				AccountI18nEnum.FORM_OFFICE_PHONE);
 		accountFormatter.generateFieldDisplayHandler("website",
-				AppContext.getMessage(AccountI18nEnum.FORM_WEBSITE));
+				AccountI18nEnum.FORM_WEBSITE);
 		accountFormatter.generateFieldDisplayHandler("fax",
-				AppContext.getMessage(AccountI18nEnum.FORM_FAX));
+				AccountI18nEnum.FORM_FAX);
 		accountFormatter.generateFieldDisplayHandler("numemployees",
-				AppContext.getMessage(AccountI18nEnum.FORM_EMPLOYEES));
+				AccountI18nEnum.FORM_EMPLOYEES);
 		accountFormatter.generateFieldDisplayHandler("alternatephone",
-				AppContext.getMessage(AccountI18nEnum.FORM_OTHER_PHONE));
+				AccountI18nEnum.FORM_OTHER_PHONE);
 		accountFormatter.generateFieldDisplayHandler("industry",
-				AppContext.getMessage(AccountI18nEnum.FORM_INDUSTRY));
+				AccountI18nEnum.FORM_INDUSTRY);
 		accountFormatter.generateFieldDisplayHandler("email",
-				AppContext.getMessage(AccountI18nEnum.FORM_EMAIL));
+				AccountI18nEnum.FORM_EMAIL);
 		accountFormatter.generateFieldDisplayHandler("type",
-				AppContext.getMessage(AccountI18nEnum.FORM_TYPE),
-				new I18nHistoryFieldFormat(AccountType.class));
+				AccountI18nEnum.FORM_TYPE, new I18nHistoryFieldFormat(
+						AccountType.class));
 		accountFormatter.generateFieldDisplayHandler("ownership",
-				AppContext.getMessage(AccountI18nEnum.FORM_OWNERSHIP));
+				AccountI18nEnum.FORM_OWNERSHIP);
 		accountFormatter.generateFieldDisplayHandler("annualrevenue",
-				AppContext.getMessage(AccountI18nEnum.FORM_ANNUAL_REVENUE));
+				AccountI18nEnum.FORM_ANNUAL_REVENUE);
 		accountFormatter.generateFieldDisplayHandler("billingaddress",
-				AppContext.getMessage(AccountI18nEnum.FORM_BILLING_ADDRESS));
+				AccountI18nEnum.FORM_BILLING_ADDRESS);
 		accountFormatter.generateFieldDisplayHandler("shippingaddress",
-				AppContext.getMessage(AccountI18nEnum.FORM_SHIPPING_ADDRESS));
+				AccountI18nEnum.FORM_SHIPPING_ADDRESS);
 		accountFormatter.generateFieldDisplayHandler("city",
-				AppContext.getMessage(AccountI18nEnum.FORM_BILLING_CITY));
+				AccountI18nEnum.FORM_BILLING_CITY);
 		accountFormatter.generateFieldDisplayHandler("shippingcity",
-				AppContext.getMessage(AccountI18nEnum.FORM_SHIPPING_CITY));
+				AccountI18nEnum.FORM_SHIPPING_CITY);
 		accountFormatter.generateFieldDisplayHandler("state",
-				AppContext.getMessage(AccountI18nEnum.FORM_BILLING_STATE));
+				AccountI18nEnum.FORM_BILLING_STATE);
 		accountFormatter.generateFieldDisplayHandler("shippingstate",
-				AppContext.getMessage(AccountI18nEnum.FORM_SHIPPING_STATE));
-		accountFormatter
-				.generateFieldDisplayHandler("postalcode", AppContext
-						.getMessage(AccountI18nEnum.FORM_BILLING_POSTAL_CODE));
+				AccountI18nEnum.FORM_SHIPPING_STATE);
+		accountFormatter.generateFieldDisplayHandler("postalcode",
+				AccountI18nEnum.FORM_BILLING_POSTAL_CODE);
 		accountFormatter.generateFieldDisplayHandler("shippingpostalcode",
-				AppContext
-						.getMessage(AccountI18nEnum.FORM_SHIPPING_POSTAL_CODE));
+				AccountI18nEnum.FORM_SHIPPING_POSTAL_CODE);
 		accountFormatter.generateFieldDisplayHandler("description",
-				AppContext.getMessage(GenericI18Enum.FORM_DESCRIPTION));
+				GenericI18Enum.FORM_DESCRIPTION);
 	}
 
 	public AccountHistoryLogWindow(String module, String type, int typeid) {

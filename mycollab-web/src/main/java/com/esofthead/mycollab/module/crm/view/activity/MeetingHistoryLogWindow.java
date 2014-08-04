@@ -16,6 +16,7 @@
  */
 package com.esofthead.mycollab.module.crm.view.activity;
 
+import com.esofthead.mycollab.module.crm.i18n.MeetingI18nEnum;
 import com.esofthead.mycollab.module.crm.ui.components.HistoryLogWindow;
 import com.esofthead.mycollab.utils.FieldGroupFomatter;
 
@@ -33,14 +34,18 @@ class MeetingHistoryLogWindow extends HistoryLogWindow {
 	static {
 		meetingFormatter = new FieldGroupFomatter();
 
-		meetingFormatter.generateFieldDisplayHandler("subject", "Subject");
-		meetingFormatter.generateFieldDisplayHandler("status", "Status");
-		meetingFormatter.generateFieldDisplayHandler("type", "Type");
-		meetingFormatter.generateFieldDisplayHandler("startdate", "Start Date",
+		meetingFormatter.generateFieldDisplayHandler("subject",
+				MeetingI18nEnum.FORM_SUBJECT);
+		meetingFormatter.generateFieldDisplayHandler("status",
+				MeetingI18nEnum.FORM_STATUS);
+		meetingFormatter.generateFieldDisplayHandler("startdate",
+				MeetingI18nEnum.FORM_START_DATE_TIME,
 				FieldGroupFomatter.DATETIME_FIELD);
-		meetingFormatter.generateFieldDisplayHandler("enddate", "End Date",
+		meetingFormatter.generateFieldDisplayHandler("enddate",
+				MeetingI18nEnum.FORM_END_DATE_TIME,
 				FieldGroupFomatter.DATETIME_FIELD);
-		meetingFormatter.generateFieldDisplayHandler("location", "Location");
+		meetingFormatter.generateFieldDisplayHandler("location",
+				MeetingI18nEnum.FORM_LOCATION);
 	}
 
 	public MeetingHistoryLogWindow(String module, String type) {
