@@ -21,7 +21,6 @@ import com.esofthead.mycollab.module.crm.i18n.ContactI18nEnum;
 import com.esofthead.mycollab.module.crm.ui.components.HistoryLogWindow;
 import com.esofthead.mycollab.module.user.ui.components.UserHistoryFieldFormat;
 import com.esofthead.mycollab.utils.FieldGroupFomatter;
-import com.esofthead.mycollab.vaadin.AppContext;
 
 /**
  * 
@@ -38,62 +37,59 @@ class ContactHistoryLogWindow extends HistoryLogWindow {
 		contactFormatter = new FieldGroupFomatter();
 
 		contactFormatter.generateFieldDisplayHandler("firstname",
-				AppContext.getMessage(ContactI18nEnum.FORM_FIRSTNAME));
+				ContactI18nEnum.FORM_FIRSTNAME);
 		contactFormatter.generateFieldDisplayHandler("lastname",
-				AppContext.getMessage(ContactI18nEnum.FORM_LASTNAME));
+				ContactI18nEnum.FORM_LASTNAME);
 		contactFormatter.generateFieldDisplayHandler("accountId",
-				AppContext.getMessage(ContactI18nEnum.FORM_ACCOUNTS));
+				ContactI18nEnum.FORM_ACCOUNTS);
 		contactFormatter.generateFieldDisplayHandler("title",
-				AppContext.getMessage(ContactI18nEnum.FORM_TITLE));
+				ContactI18nEnum.FORM_TITLE);
 		contactFormatter.generateFieldDisplayHandler("department",
-				AppContext.getMessage(ContactI18nEnum.FORM_DEPARTMENT));
+				ContactI18nEnum.FORM_DEPARTMENT);
 		contactFormatter.generateFieldDisplayHandler("email",
-				AppContext.getMessage(ContactI18nEnum.FORM_EMAIL));
+				ContactI18nEnum.FORM_EMAIL);
 		contactFormatter.generateFieldDisplayHandler("assistant",
-				AppContext.getMessage(ContactI18nEnum.FORM_ASSISTANT));
+				ContactI18nEnum.FORM_ASSISTANT);
 		contactFormatter.generateFieldDisplayHandler("assistantphone",
-				AppContext.getMessage(ContactI18nEnum.FORM_ASSISTANT_PHONE));
+				ContactI18nEnum.FORM_ASSISTANT_PHONE);
 		contactFormatter.generateFieldDisplayHandler("leadsource",
-				AppContext.getMessage(ContactI18nEnum.FORM_LEAD_SOURCE));
+				ContactI18nEnum.FORM_LEAD_SOURCE);
 		contactFormatter.generateFieldDisplayHandler("officephone",
-				AppContext.getMessage(ContactI18nEnum.FORM_OFFICE_PHONE));
+				ContactI18nEnum.FORM_OFFICE_PHONE);
 		contactFormatter.generateFieldDisplayHandler("mobile",
-				AppContext.getMessage(ContactI18nEnum.FORM_MOBILE));
+				ContactI18nEnum.FORM_MOBILE);
 		contactFormatter.generateFieldDisplayHandler("homephone",
-				AppContext.getMessage(ContactI18nEnum.FORM_HOME_PHONE));
+				ContactI18nEnum.FORM_HOME_PHONE);
 		contactFormatter.generateFieldDisplayHandler("otherphone",
-				AppContext.getMessage(ContactI18nEnum.FORM_OTHER_PHONE));
+				ContactI18nEnum.FORM_OTHER_PHONE);
 		contactFormatter.generateFieldDisplayHandler("birthday",
-				AppContext.getMessage(ContactI18nEnum.FORM_BIRTHDAY),
-				FieldGroupFomatter.DATE_FIELD);
+				ContactI18nEnum.FORM_BIRTHDAY, FieldGroupFomatter.DATE_FIELD);
 		contactFormatter.generateFieldDisplayHandler("iscallable",
-				AppContext.getMessage(ContactI18nEnum.FORM_IS_CALLABLE));
+				ContactI18nEnum.FORM_IS_CALLABLE);
 		contactFormatter.generateFieldDisplayHandler("assignuser",
-				AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE),
-				new UserHistoryFieldFormat());
+				GenericI18Enum.FORM_ASSIGNEE, new UserHistoryFieldFormat());
 		contactFormatter.generateFieldDisplayHandler("primaddress",
-				AppContext.getMessage(ContactI18nEnum.FORM_PRIMARY_ADDRESS));
+				ContactI18nEnum.FORM_PRIMARY_ADDRESS);
 		contactFormatter.generateFieldDisplayHandler("primcity",
-				AppContext.getMessage(ContactI18nEnum.FORM_PRIMARY_CITY));
+				ContactI18nEnum.FORM_PRIMARY_CITY);
 		contactFormatter.generateFieldDisplayHandler("primstate",
-				AppContext.getMessage(ContactI18nEnum.FORM_PRIMARY_STATE));
-		contactFormatter
-				.generateFieldDisplayHandler("primpostalcode", AppContext
-						.getMessage(ContactI18nEnum.FORM_PRIMARY_POSTAL_CODE));
+				ContactI18nEnum.FORM_PRIMARY_STATE);
+		contactFormatter.generateFieldDisplayHandler("primpostalcode",
+				ContactI18nEnum.FORM_PRIMARY_POSTAL_CODE);
 		contactFormatter.generateFieldDisplayHandler("primcountry",
-				AppContext.getMessage(ContactI18nEnum.FORM_PRIMARY_COUNTRY));
+				ContactI18nEnum.FORM_PRIMARY_COUNTRY);
 		contactFormatter.generateFieldDisplayHandler("otheraddress",
-				AppContext.getMessage(ContactI18nEnum.FORM_OTHER_ADDRESS));
+				ContactI18nEnum.FORM_OTHER_ADDRESS);
 		contactFormatter.generateFieldDisplayHandler("othercity",
-				AppContext.getMessage(ContactI18nEnum.FORM_OTHER_CITY));
+				ContactI18nEnum.FORM_OTHER_CITY);
 		contactFormatter.generateFieldDisplayHandler("otherstate",
-				AppContext.getMessage(ContactI18nEnum.FORM_OTHER_STATE));
+				ContactI18nEnum.FORM_OTHER_STATE);
 		contactFormatter.generateFieldDisplayHandler("otherpostalcode",
-				AppContext.getMessage(ContactI18nEnum.FORM_OTHER_POSTAL_CODE));
+				ContactI18nEnum.FORM_OTHER_POSTAL_CODE);
 		contactFormatter.generateFieldDisplayHandler("othercountry",
-				AppContext.getMessage(ContactI18nEnum.FORM_OTHER_COUNTRY));
+				ContactI18nEnum.FORM_OTHER_COUNTRY);
 		contactFormatter.generateFieldDisplayHandler("description",
-				AppContext.getMessage(GenericI18Enum.FORM_DESCRIPTION));
+				GenericI18Enum.FORM_DESCRIPTION);
 	}
 
 	public ContactHistoryLogWindow(String module, String type) {

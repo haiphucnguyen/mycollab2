@@ -24,7 +24,6 @@ import com.esofthead.mycollab.module.project.i18n.TaskGroupI18nEnum;
 import com.esofthead.mycollab.module.project.ui.format.MilestoneHistoryFieldFormat;
 import com.esofthead.mycollab.module.project.ui.format.ProjectMemberHistoryFieldFormat;
 import com.esofthead.mycollab.utils.FieldGroupFomatter;
-import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.HistoryLogComponent;
 
 /**
@@ -34,26 +33,26 @@ import com.esofthead.mycollab.vaadin.ui.HistoryLogComponent;
  */
 public class TaskGroupHistoryLogList extends HistoryLogComponent {
 	private static final long serialVersionUID = 1L;
-	
+
 	public static final FieldGroupFomatter tasklistFormatter;
-	
+
 	static {
 		tasklistFormatter = new FieldGroupFomatter();
-		
+
 		tasklistFormatter.generateFieldDisplayHandler("name",
-				AppContext.getMessage(TaskGroupI18nEnum.FORM_NAME_FIELD));
+				TaskGroupI18nEnum.FORM_NAME_FIELD);
 		tasklistFormatter.generateFieldDisplayHandler("description",
-				AppContext.getMessage(TaskGroupI18nEnum.FORM_DESCRIPTION_FIELD));
+				TaskGroupI18nEnum.FORM_DESCRIPTION_FIELD);
 		tasklistFormatter.generateFieldDisplayHandler("owner",
-				AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE),
+				GenericI18Enum.FORM_ASSIGNEE,
 				new ProjectMemberHistoryFieldFormat());
 		tasklistFormatter.generateFieldDisplayHandler("milestoneid",
-				AppContext.getMessage(TaskGroupI18nEnum.FORM_PHASE_FIELD),
+				TaskGroupI18nEnum.FORM_PHASE_FIELD,
 				new MilestoneHistoryFieldFormat());
 		tasklistFormatter.generateFieldDisplayHandler("percentageComplete",
-				AppContext.getMessage(TaskGroupI18nEnum.FORM_PROGRESS_FIELD));
+				TaskGroupI18nEnum.FORM_PROGRESS_FIELD);
 		tasklistFormatter.generateFieldDisplayHandler("numOpenTasks",
-				AppContext.getMessage(TaskGroupI18nEnum.FORM_OPEN_TASKS_FIELD));
+				TaskGroupI18nEnum.FORM_OPEN_TASKS_FIELD);
 	}
 
 	public TaskGroupHistoryLogList() {

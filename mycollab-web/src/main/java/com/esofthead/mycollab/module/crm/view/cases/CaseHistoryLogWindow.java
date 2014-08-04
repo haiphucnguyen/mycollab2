@@ -21,7 +21,6 @@ import com.esofthead.mycollab.module.crm.i18n.CaseI18nEnum;
 import com.esofthead.mycollab.module.crm.ui.components.HistoryLogWindow;
 import com.esofthead.mycollab.module.user.ui.components.UserHistoryFieldFormat;
 import com.esofthead.mycollab.utils.FieldGroupFomatter;
-import com.esofthead.mycollab.vaadin.AppContext;
 
 /**
  * 
@@ -38,30 +37,29 @@ class CaseHistoryLogWindow extends HistoryLogWindow {
 		caseFormatter = new FieldGroupFomatter();
 
 		caseFormatter.generateFieldDisplayHandler("priority",
-				AppContext.getMessage(CaseI18nEnum.FORM_PRIORITY));
+				CaseI18nEnum.FORM_PRIORITY);
 		caseFormatter.generateFieldDisplayHandler("status",
-				AppContext.getMessage(CaseI18nEnum.FORM_STATUS));
+				CaseI18nEnum.FORM_STATUS);
 		caseFormatter.generateFieldDisplayHandler("accountid",
-				AppContext.getMessage(CaseI18nEnum.FORM_ACCOUNT));
+				CaseI18nEnum.FORM_ACCOUNT);
 		caseFormatter.generateFieldDisplayHandler("phonenumber",
-				AppContext.getMessage(CaseI18nEnum.FORM_PHONE));
+				CaseI18nEnum.FORM_PHONE);
 		caseFormatter.generateFieldDisplayHandler("origin",
-				AppContext.getMessage(CaseI18nEnum.FORM_ORIGIN));
+				CaseI18nEnum.FORM_ORIGIN);
 		caseFormatter.generateFieldDisplayHandler("type",
-				AppContext.getMessage(CaseI18nEnum.FORM_TYPE));
+				CaseI18nEnum.FORM_TYPE);
 		caseFormatter.generateFieldDisplayHandler("reason",
-				AppContext.getMessage(CaseI18nEnum.FORM_REASON));
+				CaseI18nEnum.FORM_REASON);
 		caseFormatter.generateFieldDisplayHandler("subject",
-				AppContext.getMessage(CaseI18nEnum.FORM_SUBJECT));
+				CaseI18nEnum.FORM_SUBJECT);
 		caseFormatter.generateFieldDisplayHandler("email",
-				AppContext.getMessage(CaseI18nEnum.FORM_EMAIL));
+				CaseI18nEnum.FORM_EMAIL);
 		caseFormatter.generateFieldDisplayHandler("assignuser",
-				AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE),
-				new UserHistoryFieldFormat());
+				GenericI18Enum.FORM_ASSIGNEE, new UserHistoryFieldFormat());
 		caseFormatter.generateFieldDisplayHandler("description",
-				AppContext.getMessage(GenericI18Enum.FORM_DESCRIPTION));
+				GenericI18Enum.FORM_DESCRIPTION);
 		caseFormatter.generateFieldDisplayHandler("resolution",
-				AppContext.getMessage(CaseI18nEnum.FORM_RESOLUTION));
+				CaseI18nEnum.FORM_RESOLUTION);
 	}
 
 	public CaseHistoryLogWindow(String module, String type) {

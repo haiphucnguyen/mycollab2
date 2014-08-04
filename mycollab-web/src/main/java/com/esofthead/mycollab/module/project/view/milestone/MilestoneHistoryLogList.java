@@ -22,7 +22,6 @@ import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.MilestoneStatus
 import com.esofthead.mycollab.module.project.ui.format.ProjectMemberHistoryFieldFormat;
 import com.esofthead.mycollab.utils.FieldGroupFomatter;
 import com.esofthead.mycollab.utils.FieldGroupFomatter.I18nHistoryFieldFormat;
-import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.HistoryLogComponent;
 
 /**
@@ -40,18 +39,18 @@ class MilestoneHistoryLogList extends HistoryLogComponent {
 		milestoneFormatter = new FieldGroupFomatter();
 
 		milestoneFormatter.generateFieldDisplayHandler("name",
-				AppContext.getMessage(MilestoneI18nEnum.FORM_NAME_FIELD));
+				MilestoneI18nEnum.FORM_NAME_FIELD);
 		milestoneFormatter.generateFieldDisplayHandler("status",
-				AppContext.getMessage(MilestoneI18nEnum.FORM_STATUS_FIELD),
+				MilestoneI18nEnum.FORM_STATUS_FIELD,
 				new I18nHistoryFieldFormat(MilestoneStatus.class));
 		milestoneFormatter.generateFieldDisplayHandler("owner",
-				AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE),
+				GenericI18Enum.FORM_ASSIGNEE,
 				new ProjectMemberHistoryFieldFormat());
 		milestoneFormatter.generateFieldDisplayHandler("startdate",
-				AppContext.getMessage(MilestoneI18nEnum.FORM_START_DATE_FIELD),
+				MilestoneI18nEnum.FORM_START_DATE_FIELD,
 				FieldGroupFomatter.DATE_FIELD);
 		milestoneFormatter.generateFieldDisplayHandler("enddate",
-				AppContext.getMessage(MilestoneI18nEnum.FORM_END_DATE_FIELD),
+				MilestoneI18nEnum.FORM_END_DATE_FIELD,
 				FieldGroupFomatter.DATE_FIELD);
 	}
 
