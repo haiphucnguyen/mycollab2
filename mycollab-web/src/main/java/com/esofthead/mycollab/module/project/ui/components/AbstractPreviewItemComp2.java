@@ -41,7 +41,6 @@ public abstract class AbstractPreviewItemComp2<B> extends VerticalLayout
 	abstract protected void initRelatedComponents();
 
 	public AbstractPreviewItemComp2(String headerText, Resource iconResource) {
-
 		this.titleIcon = new Image(null, iconResource);
 		this.headerText = new Label(headerText);
 		this.headerText.setSizeUndefined();
@@ -78,6 +77,18 @@ public abstract class AbstractPreviewItemComp2<B> extends VerticalLayout
 
 		this.addComponent(contentWrapper);
 	}
+	
+	public void previewItem(final B item) {
+		this.beanItem = item;
+		initLayout();
+		previewLayout.setTitle(initFormTitle());
+
+		previewForm.setFormLayoutFactory(initFormLayoutFactory());
+		previewForm.setBeanFormFieldFactory(initBeanFormFieldFactory());
+		previewForm.setBean(item);
+
+		onPreviewItem();
+	}
 
 	private void initLayout() {
 		initRelatedComponents();
@@ -105,18 +116,6 @@ public abstract class AbstractPreviewItemComp2<B> extends VerticalLayout
 
 	public void addHeaderRightContent(Component c) {
 		header.addComponent(c);
-	}
-
-	public void previewItem(final B item) {
-		this.beanItem = item;
-		initLayout();
-		previewLayout.setTitle(initFormTitle());
-
-		previewForm.setFormLayoutFactory(initFormLayoutFactory());
-		previewForm.setBeanFormFieldFactory(initBeanFormFieldFactory());
-		previewForm.setBean(item);
-
-		onPreviewItem();
 	}
 
 	public void addToSideBar(Component component) {
