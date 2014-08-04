@@ -17,7 +17,7 @@
 package com.esofthead.mycollab.module.crm.view.activity;
 
 import com.esofthead.mycollab.module.crm.ui.components.HistoryLogWindow;
-import com.esofthead.mycollab.vaadin.ui.HistoryLogComponent;
+import com.esofthead.mycollab.utils.FieldGroupFomatter;
 
 /**
  * 
@@ -28,17 +28,28 @@ import com.esofthead.mycollab.vaadin.ui.HistoryLogComponent;
 class MeetingHistoryLogWindow extends HistoryLogWindow {
 	private static final long serialVersionUID = 1L;
 
+	public static final FieldGroupFomatter meetingFormatter;
+
+	static {
+		meetingFormatter = new FieldGroupFomatter();
+
+		meetingFormatter.generateFieldDisplayHandler("subject", "Subject");
+		meetingFormatter.generateFieldDisplayHandler("status", "Status");
+		meetingFormatter.generateFieldDisplayHandler("type", "Type");
+		meetingFormatter.generateFieldDisplayHandler("startdate", "Start Date",
+				FieldGroupFomatter.DATETIME_FIELD);
+		meetingFormatter.generateFieldDisplayHandler("enddate", "End Date",
+				FieldGroupFomatter.DATETIME_FIELD);
+		meetingFormatter.generateFieldDisplayHandler("location", "Location");
+	}
+
 	public MeetingHistoryLogWindow(String module, String type) {
 		super(module, type);
+	}
 
-		this.generateFieldDisplayHandler("subject", "Subject");
-		this.generateFieldDisplayHandler("status", "Status");
-		this.generateFieldDisplayHandler("type", "Type");
-		this.generateFieldDisplayHandler("startdate", "Start Date",
-				HistoryLogComponent.DATETIME_FIELD);
-		this.generateFieldDisplayHandler("enddate", "End Date",
-				HistoryLogComponent.DATETIME_FIELD);
-		this.generateFieldDisplayHandler("location", "Location");
+	@Override
+	protected FieldGroupFomatter buildFormatter() {
+		return meetingFormatter;
 	}
 
 }

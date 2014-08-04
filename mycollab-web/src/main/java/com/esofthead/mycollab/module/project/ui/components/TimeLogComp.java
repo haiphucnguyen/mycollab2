@@ -35,7 +35,7 @@ public abstract class TimeLogComp<V extends ValuedBean> extends VerticalLayout {
 
 		HorizontalLayout header = new HorizontalLayout();
 		Label dateInfoHeader = new Label("Time");
-		dateInfoHeader.setStyleName("info-hdr");
+		header.setStyleName("info-hdr");
 		header.addComponent(dateInfoHeader);
 
 		if (hasEditPermission()) {

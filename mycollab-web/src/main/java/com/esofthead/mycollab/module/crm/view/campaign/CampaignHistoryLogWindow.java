@@ -21,6 +21,7 @@ import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.module.crm.i18n.CampaignI18nEnum;
 import com.esofthead.mycollab.module.crm.ui.components.HistoryLogWindow;
 import com.esofthead.mycollab.module.user.ui.components.UserHistoryFieldFormat;
+import com.esofthead.mycollab.utils.FieldGroupFomatter;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.HistoryLogComponent;
 
@@ -32,36 +33,47 @@ import com.esofthead.mycollab.vaadin.ui.HistoryLogComponent;
 class CampaignHistoryLogWindow extends HistoryLogWindow {
 	private static final long serialVersionUID = 1L;
 
-	public CampaignHistoryLogWindow(String module, String type) {
-		super(module, type);
+	public static final FieldGroupFomatter campaignFormatter;
 
-		this.generateFieldDisplayHandler("campaignname",
+	static {
+		campaignFormatter = new FieldGroupFomatter();
+
+		campaignFormatter.generateFieldDisplayHandler("campaignname",
 				AppContext.getMessage(CampaignI18nEnum.FORM_CAMPAIGN_NAME));
-		this.generateFieldDisplayHandler("startdate",
+		campaignFormatter.generateFieldDisplayHandler("startdate",
 				AppContext.getMessage(CampaignI18nEnum.FORM_START_DATE),
-				HistoryLogComponent.DATE_FIELD);
-		this.generateFieldDisplayHandler("enddate",
+				FieldGroupFomatter.DATE_FIELD);
+		campaignFormatter.generateFieldDisplayHandler("enddate",
 				AppContext.getMessage(CampaignI18nEnum.FORM_END_DATE),
-				HistoryLogComponent.DATE_FIELD);
-		this.generateFieldDisplayHandler("status",
+				FieldGroupFomatter.DATE_FIELD);
+		campaignFormatter.generateFieldDisplayHandler("status",
 				AppContext.getMessage(CampaignI18nEnum.FORM_STATUS));
-		this.generateFieldDisplayHandler("type",
+		campaignFormatter.generateFieldDisplayHandler("type",
 				AppContext.getMessage(CampaignI18nEnum.FORM_TYPE));
-		this.generateFieldDisplayHandler("currencyid",
+		campaignFormatter.generateFieldDisplayHandler("currencyid",
 				AppContext.getMessage(CampaignI18nEnum.FORM_CURRENCY),
-				HistoryLogComponent.CURRENCY_FIELD);
-		this.generateFieldDisplayHandler("budget",
+				FieldGroupFomatter.CURRENCY_FIELD);
+		campaignFormatter.generateFieldDisplayHandler("budget",
 				AppContext.getMessage(CampaignI18nEnum.FORM_BUDGET));
-		this.generateFieldDisplayHandler("expectedcost",
+		campaignFormatter.generateFieldDisplayHandler("expectedcost",
 				AppContext.getMessage(CampaignI18nEnum.FORM_EXPECTED_COST));
-		this.generateFieldDisplayHandler("actualcost",
+		campaignFormatter.generateFieldDisplayHandler("actualcost",
 				AppContext.getMessage(CampaignI18nEnum.FORM_ACTUAL_COST));
-		this.generateFieldDisplayHandler("expectedrevenue",
+		campaignFormatter.generateFieldDisplayHandler("expectedrevenue",
 				AppContext.getMessage(CampaignI18nEnum.FORM_EXPECTED_REVENUE));
-		this.generateFieldDisplayHandler("assignuser",
+		campaignFormatter.generateFieldDisplayHandler("assignuser",
 				AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE),
 				new UserHistoryFieldFormat());
-		this.generateFieldDisplayHandler("description",
+		campaignFormatter.generateFieldDisplayHandler("description",
 				AppContext.getMessage(GenericI18Enum.FORM_DESCRIPTION));
+	}
+
+	public CampaignHistoryLogWindow(String module, String type) {
+		super(module, type);
+	}
+
+	@Override
+	protected FieldGroupFomatter buildFormatter() {
+		return campaignFormatter;
 	}
 }

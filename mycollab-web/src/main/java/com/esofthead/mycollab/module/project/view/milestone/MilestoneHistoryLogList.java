@@ -20,6 +20,8 @@ import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.module.project.i18n.MilestoneI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.MilestoneStatus;
 import com.esofthead.mycollab.module.project.ui.format.ProjectMemberHistoryFieldFormat;
+import com.esofthead.mycollab.utils.FieldGroupFomatter;
+import com.esofthead.mycollab.utils.FieldGroupFomatter.I18nHistoryFieldFormat;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.HistoryLogComponent;
 
@@ -32,23 +34,34 @@ import com.esofthead.mycollab.vaadin.ui.HistoryLogComponent;
 class MilestoneHistoryLogList extends HistoryLogComponent {
 	private static final long serialVersionUID = 1L;
 
-	public MilestoneHistoryLogList(String module, String type) {
-		super(module, type);
+	public static final FieldGroupFomatter milestoneFormatter;
 
-		this.generateFieldDisplayHandler("name",
+	static {
+		milestoneFormatter = new FieldGroupFomatter();
+
+		milestoneFormatter.generateFieldDisplayHandler("name",
 				AppContext.getMessage(MilestoneI18nEnum.FORM_NAME_FIELD));
-		this.generateFieldDisplayHandler("status",
+		milestoneFormatter.generateFieldDisplayHandler("status",
 				AppContext.getMessage(MilestoneI18nEnum.FORM_STATUS_FIELD),
 				new I18nHistoryFieldFormat(MilestoneStatus.class));
-		this.generateFieldDisplayHandler("owner",
+		milestoneFormatter.generateFieldDisplayHandler("owner",
 				AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE),
 				new ProjectMemberHistoryFieldFormat());
-		this.generateFieldDisplayHandler("startdate",
+		milestoneFormatter.generateFieldDisplayHandler("startdate",
 				AppContext.getMessage(MilestoneI18nEnum.FORM_START_DATE_FIELD),
-				HistoryLogComponent.DATE_FIELD);
-		this.generateFieldDisplayHandler("enddate",
+				FieldGroupFomatter.DATE_FIELD);
+		milestoneFormatter.generateFieldDisplayHandler("enddate",
 				AppContext.getMessage(MilestoneI18nEnum.FORM_END_DATE_FIELD),
-				HistoryLogComponent.DATE_FIELD);
+				FieldGroupFomatter.DATE_FIELD);
+	}
+
+	public MilestoneHistoryLogList(String module, String type) {
+		super(module, type);
+	}
+
+	@Override
+	protected FieldGroupFomatter buildFormatter() {
+		return milestoneFormatter;
 	}
 
 }

@@ -19,6 +19,8 @@ package com.esofthead.mycollab.module.project.view.bug;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.ComponentI18nEnum;
+import com.esofthead.mycollab.utils.FieldGroupFomatter;
+import com.esofthead.mycollab.utils.FieldGroupFomatter.I18nHistoryFieldFormat;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.HistoryLogComponent;
 
@@ -31,18 +33,29 @@ import com.esofthead.mycollab.vaadin.ui.HistoryLogComponent;
 public class ComponentHistoryLogList extends HistoryLogComponent {
 	private static final long serialVersionUID = 1L;
 
-	public ComponentHistoryLogList(String module, String type) {
-		super(module, type);
+	public static final FieldGroupFomatter componentFormatter;
 
-		this.generateFieldDisplayHandler("componentname",
+	static {
+		componentFormatter = new FieldGroupFomatter();
+
+		componentFormatter.generateFieldDisplayHandler("componentname",
 				AppContext.getMessage(ComponentI18nEnum.FORM_NAME));
-		this.generateFieldDisplayHandler("description",
+		componentFormatter.generateFieldDisplayHandler("description",
 				AppContext.getMessage(GenericI18Enum.FORM_DESCRIPTION));
-		this.generateFieldDisplayHandler("userlead",
+		componentFormatter.generateFieldDisplayHandler("userlead",
 				AppContext.getMessage(ComponentI18nEnum.FORM_LEAD));
-		this.generateFieldDisplayHandler("status",
+		componentFormatter.generateFieldDisplayHandler("status",
 				AppContext.getMessage(ComponentI18nEnum.FORM_STATUS),
 				new I18nHistoryFieldFormat(StatusI18nEnum.class));
+	}
+
+	public ComponentHistoryLogList(String module, String type) {
+		super(module, type);
+	}
+
+	@Override
+	protected FieldGroupFomatter buildFormatter() {
+		return componentFormatter;
 	}
 
 }

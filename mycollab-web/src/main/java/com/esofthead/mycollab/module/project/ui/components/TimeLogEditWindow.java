@@ -62,6 +62,8 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends Window {
 		this.bean = bean;
 		this.center();
 		content = new VerticalLayout();
+		this.setResizable(false);
+		this.setModal(true);
 		this.setContent(content);
 		content.setMargin(true);
 		content.setSpacing(true);
@@ -389,7 +391,7 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends Window {
 		protected void setValue(final String newValue,
 				final boolean repaintIsNotNeeded) {
 			try {
-				final String d = Double.parseDouble((String) newValue) + "";
+				final String d = Double.parseDouble(newValue) + "";
 				super.setValue(d, repaintIsNotNeeded);
 			} catch (final Exception e) {
 				super.setValue("0.0", repaintIsNotNeeded);

@@ -63,6 +63,7 @@ public abstract class AbstractPreviewItemComp2<B> extends VerticalLayout
 
 		bodyContainer = new HorizontalLayout();
 		bodyContainer.setSizeFull();
+		bodyContainer.setStyleName("readview-body-wrap");
 
 		bodyContent = new VerticalLayout();
 		bodyContent.addComponent(previewForm);
@@ -71,6 +72,8 @@ public abstract class AbstractPreviewItemComp2<B> extends VerticalLayout
 
 		sidebarContent = new VerticalLayout();
 		sidebarContent.setWidth("300px");
+		sidebarContent.setSpacing(true);
+		sidebarContent.setStyleName("readview-sidebar");
 		bodyContainer.addComponent(sidebarContent);
 
 		previewLayout.addBody(bodyContainer);
@@ -91,6 +94,7 @@ public abstract class AbstractPreviewItemComp2<B> extends VerticalLayout
 	}
 
 	private void initLayout() {
+		sidebarContent.removeAllComponents();
 		initRelatedComponents();
 		ComponentContainer bottomPanel = createBottomPanel();
 		if (bottomPanel != null) {

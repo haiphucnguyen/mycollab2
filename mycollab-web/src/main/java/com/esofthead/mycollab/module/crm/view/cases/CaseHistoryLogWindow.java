@@ -20,6 +20,7 @@ import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.module.crm.i18n.CaseI18nEnum;
 import com.esofthead.mycollab.module.crm.ui.components.HistoryLogWindow;
 import com.esofthead.mycollab.module.user.ui.components.UserHistoryFieldFormat;
+import com.esofthead.mycollab.utils.FieldGroupFomatter;
 import com.esofthead.mycollab.vaadin.AppContext;
 
 /**
@@ -31,34 +32,45 @@ import com.esofthead.mycollab.vaadin.AppContext;
 class CaseHistoryLogWindow extends HistoryLogWindow {
 	private static final long serialVersionUID = 1L;
 
-	public CaseHistoryLogWindow(String module, String type) {
-		super(module, type);
+	public static final FieldGroupFomatter caseFormatter;
 
-		this.generateFieldDisplayHandler("priority",
+	static {
+		caseFormatter = new FieldGroupFomatter();
+
+		caseFormatter.generateFieldDisplayHandler("priority",
 				AppContext.getMessage(CaseI18nEnum.FORM_PRIORITY));
-		this.generateFieldDisplayHandler("status",
+		caseFormatter.generateFieldDisplayHandler("status",
 				AppContext.getMessage(CaseI18nEnum.FORM_STATUS));
-		this.generateFieldDisplayHandler("accountid",
+		caseFormatter.generateFieldDisplayHandler("accountid",
 				AppContext.getMessage(CaseI18nEnum.FORM_ACCOUNT));
-		this.generateFieldDisplayHandler("phonenumber",
+		caseFormatter.generateFieldDisplayHandler("phonenumber",
 				AppContext.getMessage(CaseI18nEnum.FORM_PHONE));
-		this.generateFieldDisplayHandler("origin",
+		caseFormatter.generateFieldDisplayHandler("origin",
 				AppContext.getMessage(CaseI18nEnum.FORM_ORIGIN));
-		this.generateFieldDisplayHandler("type",
+		caseFormatter.generateFieldDisplayHandler("type",
 				AppContext.getMessage(CaseI18nEnum.FORM_TYPE));
-		this.generateFieldDisplayHandler("reason",
+		caseFormatter.generateFieldDisplayHandler("reason",
 				AppContext.getMessage(CaseI18nEnum.FORM_REASON));
-		this.generateFieldDisplayHandler("subject",
+		caseFormatter.generateFieldDisplayHandler("subject",
 				AppContext.getMessage(CaseI18nEnum.FORM_SUBJECT));
-		this.generateFieldDisplayHandler("email",
+		caseFormatter.generateFieldDisplayHandler("email",
 				AppContext.getMessage(CaseI18nEnum.FORM_EMAIL));
-		this.generateFieldDisplayHandler("assignuser",
+		caseFormatter.generateFieldDisplayHandler("assignuser",
 				AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE),
 				new UserHistoryFieldFormat());
-		this.generateFieldDisplayHandler("description",
+		caseFormatter.generateFieldDisplayHandler("description",
 				AppContext.getMessage(GenericI18Enum.FORM_DESCRIPTION));
-		this.generateFieldDisplayHandler("resolution",
+		caseFormatter.generateFieldDisplayHandler("resolution",
 				AppContext.getMessage(CaseI18nEnum.FORM_RESOLUTION));
+	}
+
+	public CaseHistoryLogWindow(String module, String type) {
+		super(module, type);
+	}
+
+	@Override
+	protected FieldGroupFomatter buildFormatter() {
+		return caseFormatter;
 	}
 
 }

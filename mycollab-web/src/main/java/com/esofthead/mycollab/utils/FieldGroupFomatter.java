@@ -65,7 +65,11 @@ public class FieldGroupFomatter {
 				defaultFieldHandlers.get(formatName)));
 	}
 
-	private static class FieldDisplayHandler {
+	public FieldDisplayHandler getFieldDisplayHandler(String fieldname) {
+		return fieldsFormat.get(fieldname);
+	}
+
+	public static class FieldDisplayHandler {
 
 		private String displayName;
 		private HistoryFieldFormat format;
