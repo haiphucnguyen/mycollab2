@@ -6998,3 +6998,23 @@ div.v-csslayout.bean-block.olive-block, .list-note-block .note-label.olive-block
 .v-ie9 .crm-toolbar .quickadd-btn .v-button-caption, .v-ie9 .crm-toolbar .quickadd-btn .v-button-caption:before {
 	line-height: 22px;
 }
+/* experimental sidebar */
+.readview-body-wrap > .v-expand {
+	position: relative;
+}
+.readview-body-wrap > .v-expand > .v-slot.v-slot-readview-sidebar {
+	position: static;
+}
+.v-slot-readview-sidebar:before {
+	content: "";
+	position: absolute;
+	top: 0px;
+	bottom: 0px;
+	border-left: 1px solid #C8C8C8;
+	width: 299px;
+	background-color: #FCFCFC;
+}
+.readview-body-wrap .readview-sidebar .info-hdr {
+	font-weight: bold;
+	padding-top: 15px;
+}

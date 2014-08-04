@@ -89,6 +89,7 @@ public class BugTimeLogSheet extends TimeLogComp<SimpleBug> {
 			TimeLogEditWindow<SimpleBug> {
 		public BugTimeLogEditWindow(SimpleBug bean) {
 			super(bean);
+			this.setCaption("Bug Time Log");
 		}
 
 		@Override
@@ -103,7 +104,8 @@ public class BugTimeLogSheet extends TimeLogComp<SimpleBug> {
 			item.setLogforday(new GregorianCalendar().getTime());
 			item.setIsbillable(isBillableHours());
 
-			itemTimeLoggingService.saveWithSession(item, AppContext.getUsername());
+			itemTimeLoggingService.saveWithSession(item,
+					AppContext.getUsername());
 
 		}
 
