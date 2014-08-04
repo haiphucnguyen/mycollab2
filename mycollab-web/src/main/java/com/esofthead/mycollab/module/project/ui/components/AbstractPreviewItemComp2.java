@@ -97,9 +97,15 @@ public abstract class AbstractPreviewItemComp2<B> extends VerticalLayout
 		sidebarContent.removeAllComponents();
 		initRelatedComponents();
 		ComponentContainer bottomPanel = createBottomPanel();
-		if (bottomPanel != null && bodyContent.getComponentCount() >= 2) {
-			bodyContent.replaceComponent(bodyContent.getComponent(bodyContent
-					.getComponentCount() - 1), bottomPanel);
+		if (bottomPanel != null) {
+			if (bodyContent.getComponentCount() >= 2) {
+				bodyContent.replaceComponent(bodyContent
+						.getComponent(bodyContent.getComponentCount() - 1),
+						bottomPanel);
+			} else {
+				bodyContent.addComponent(bottomPanel);
+			}
+
 		}
 	}
 
