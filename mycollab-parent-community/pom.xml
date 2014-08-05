@@ -257,8 +257,8 @@
                         <email>support@mycollab.com</email>
                     </properties>
                     <includes>
-                        <include>src/main/java/**/*.java</include>
-                        <include>src/test/java/**/*.java</include>
+                        <include>src/main/java/com/esofthead/**/*.java</include>
+                        <include>src/test/java/com/esofthead/**/*.java</include>
                     </includes>
                 </configuration>
                 <executions>
