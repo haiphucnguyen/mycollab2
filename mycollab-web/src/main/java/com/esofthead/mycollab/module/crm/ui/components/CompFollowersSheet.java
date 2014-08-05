@@ -1,9 +1,8 @@
-package com.esofthead.mycollab.module.project.ui.components;
+package com.esofthead.mycollab.module.crm.ui.components;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.GregorianCalendar;
-import java.util.List;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.slf4j.Logger;
@@ -19,15 +18,11 @@ import com.esofthead.mycollab.common.service.MonitorItemService;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.arguments.ValuedBean;
-import com.esofthead.mycollab.module.project.CurrentProjectVariables;
-import com.esofthead.mycollab.module.project.domain.ProjectMember;
-import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
-import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberMultiSelectComp;
-import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserLink;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.UserLink;
 import com.esofthead.mycollab.vaadin.ui.table.DefaultPagedBeanTable;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Button;
@@ -171,11 +166,11 @@ public class CompFollowersSheet<V extends ValuedBean> extends VerticalLayout {
 	}
 
 	private boolean hasReadPermission() {
-		return CurrentProjectVariables.canRead(permissionItem);
+		return AppContext.canRead(permissionItem);
 	}
 
 	private boolean hasEditPermission() {
-		return CurrentProjectVariables.canWrite(permissionItem);
+		return AppContext.canWrite(permissionItem);
 	}
 
 	private void showEditWatchersWindow(V bean) {
@@ -261,43 +256,44 @@ public class CompFollowersSheet<V extends ValuedBean> extends VerticalLayout {
 				headerPanel.setSpacing(true);
 				content.addComponent(headerPanel);
 
-				final ProjectMemberMultiSelectComp memberSelection = new ProjectMemberMultiSelectComp();
-				headerPanel.addComponent(memberSelection);
-				Button btnSave = new Button(
-						AppContext.getMessage(GenericI18Enum.BUTTON_ADD_LABEL),
-						new Button.ClickListener() {
-							private static final long serialVersionUID = 1L;
+				// final ProjectMemberMultiSelectComp memberSelection = new
+				// ProjectMemberMultiSelectComp();
+				// headerPanel.addComponent(memberSelection);
+				// Button btnSave = new Button(
+				// AppContext.getMessage(GenericI18Enum.BUTTON_ADD_LABEL),
+				// new Button.ClickListener() {
+				// private static final long serialVersionUID = 1L;
+				//
+				// @Override
+				// public void buttonClick(ClickEvent event) {
+				//
+				// List<SimpleProjectMember> members = memberSelection
+				// .getSelectedItems();
+				//
+				// for (ProjectMember member : members) {
+				// CompFollowersSheet.this.followItem(
+				// member.getUsername(), bean);
+				// }
+				//
+				// memberSelection.resetComp();
+				// loadMonitorItems();
+				// }
+				// });
 
-							@Override
-							public void buttonClick(ClickEvent event) {
-
-								List<SimpleProjectMember> members = memberSelection
-										.getSelectedItems();
-
-								for (ProjectMember member : members) {
-									CompFollowersSheet.this.followItem(
-											member.getUsername(), bean);
-								}
-
-								memberSelection.resetComp();
-								loadMonitorItems();
-							}
-						});
-
-				btnSave.setStyleName(UIConstants.THEME_GREEN_LINK);
-				btnSave.setIcon(MyCollabResource
-						.newResource("icons/16/addRecord.png"));
-
-				headerPanel.addComponent(btnSave);
-
-				this.addCloseListener(new CloseListener() {
-					private static final long serialVersionUID = 1L;
-
-					@Override
-					public void windowClose(CloseEvent e) {
-						displayFollowers(bean);
-					}
-				});
+				// btnSave.setStyleName(UIConstants.THEME_GREEN_LINK);
+				// btnSave.setIcon(MyCollabResource
+				// .newResource("icons/16/addRecord.png"));
+				//
+				// headerPanel.addComponent(btnSave);
+				//
+				// this.addCloseListener(new CloseListener() {
+				// private static final long serialVersionUID = 1L;
+				//
+				// @Override
+				// public void windowClose(CloseEvent e) {
+				// displayFollowers(bean);
+				// }
+				// });
 			}
 
 			tableItem = new DefaultPagedBeanTable<MonitorItemService, MonitorSearchCriteria, SimpleMonitorItem>(
@@ -322,9 +318,8 @@ public class CompFollowersSheet<V extends ValuedBean> extends VerticalLayout {
 					final SimpleMonitorItem monitorItem = tableItem
 							.getBeanByIndex(itemId);
 
-					return new ProjectUserLink(monitorItem.getUser(),
-							monitorItem.getUserAvatarId(), monitorItem
-									.getUserFullname());
+					return new UserLink(monitorItem.getUser(), monitorItem
+							.getUserAvatarId(), monitorItem.getUserFullname());
 
 				}
 			});
