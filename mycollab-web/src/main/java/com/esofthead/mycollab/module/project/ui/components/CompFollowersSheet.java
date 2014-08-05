@@ -19,7 +19,6 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.arguments.ValuedBean;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
-import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.ProjectMember;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.i18n.FollowerI18nEnum;
@@ -417,8 +416,7 @@ public class CompFollowersSheet<V extends ValuedBean> extends VerticalLayout {
 				MonitorSearchCriteria searchCriteria = new MonitorSearchCriteria();
 				searchCriteria.setTypeId(new NumberSearchField(
 						(int) PropertyUtils.getProperty(bean, "id")));
-				searchCriteria.setType(new StringSearchField(
-						ProjectTypeConstants.TASK));
+				searchCriteria.setType(new StringSearchField(type));
 				tableItem.setSearchCriteria(searchCriteria);
 			} catch (IllegalAccessException | InvocationTargetException
 					| NoSuchMethodException e) {
