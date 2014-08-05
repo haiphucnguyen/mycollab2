@@ -84,7 +84,7 @@ public class ProjectFollowersComp<V extends ValuedBean> extends VerticalLayout {
 		header.setSpacing(true);
 		Label followerHeader = new Label(
 				AppContext.getMessage(FollowerI18nEnum.SUB_INFO_WATCHERS));
-		header.setStyleName("info-hdr");
+		followerHeader.setStyleName("info-hdr");
 		header.addComponent(followerHeader);
 
 		if (hasEditPermission()) {
@@ -100,6 +100,7 @@ public class ProjectFollowersComp<V extends ValuedBean> extends VerticalLayout {
 						}
 					});
 			editBtn.setStyleName("link");
+			editBtn.addStyleName("info-hdr");
 			header.addComponent(editBtn);
 		}
 
@@ -110,6 +111,7 @@ public class ProjectFollowersComp<V extends ValuedBean> extends VerticalLayout {
 
 		final Button toogleWatching = new Button("");
 		toogleWatching.setStyleName("link");
+		toogleWatching.addStyleName("info-hdr");
 		toogleWatching.addClickListener(new ClickListener() {
 			private static final long serialVersionUID = 1L;
 

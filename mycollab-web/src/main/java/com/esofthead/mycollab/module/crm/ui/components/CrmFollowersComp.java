@@ -81,7 +81,7 @@ public class CrmFollowersComp<V extends ValuedBean> extends VerticalLayout {
 		header.setSpacing(true);
 		Label followerHeader = new Label(
 				AppContext.getMessage(FollowerI18nEnum.SUB_INFO_WATCHERS));
-		header.setStyleName("info-hdr");
+		followerHeader.setStyleName("info-hdr");
 		header.addComponent(followerHeader);
 
 		if (hasEditPermission()) {
