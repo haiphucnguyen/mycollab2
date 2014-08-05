@@ -89,6 +89,7 @@ public class BugTimeLogSheet extends TimeLogComp<SimpleBug> {
 	private class BugTimeLogEditWindow extends TimeLogEditWindow<SimpleBug> {
 		public BugTimeLogEditWindow(SimpleBug bean) {
 			super(bean);
+			this.setModal(true);
 			this.setCaption(AppContext
 					.getMessage(TimeTrackingI18nEnum.DIALOG_LOG_TIME_ENTRY_TITLE));
 			this.setModal(true);
