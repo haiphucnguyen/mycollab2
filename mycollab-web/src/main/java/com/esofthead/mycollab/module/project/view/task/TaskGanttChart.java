@@ -41,6 +41,7 @@ import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.project.i18n.ProjectCommonI18nEnum;
+import com.esofthead.mycollab.module.project.i18n.TaskI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -304,13 +305,14 @@ class TaskGanttChart extends VerticalLayout {
 		controls.setMargin(true);
 		panel.setContent(controls);
 
-		start = new DateField("Start date");
+		start = new DateField(
+				AppContext.getMessage(TaskI18nEnum.FORM_START_DATE));
 		start.setValue(gantt.getStartDate());
 		start.setResolution(Resolution.DAY);
 		start.setImmediate(true);
 		start.addValueChangeListener(startDateValueChangeListener);
 
-		end = new DateField("End date");
+		end = new DateField(AppContext.getMessage(TaskI18nEnum.FORM_END_DATE));
 		end.setValue(gantt.getEndDate());
 		end.setResolution(Resolution.DAY);
 		end.setImmediate(true);

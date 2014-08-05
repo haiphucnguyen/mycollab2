@@ -10,7 +10,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<vaadin.version>7.2.0</vaadin.version>
+		<vaadin.version>7.2.4</vaadin.version>
 		<vaadin.plugin.version>${vaadin.version}</vaadin.plugin.version>
 
 		<!-- ZIP Manifest fields -->
@@ -23,12 +23,12 @@
 		<Vaadin-Stylesheets>VAADIN/addons/gantt/gantt.scss</Vaadin-Stylesheets>
 	</properties>
 
-    <!--     
+    <!--
 	<organization>
 		<name>My Name</name>
 		<url>https://github.com/mygithubaccount/Gantt/</url>
 	</organization>
-    
+
 	<scm>
 		<url>git://github.com/mygithubaccount/Gantt.git</url>
 		<connection>scm:git:git://github.com/mygithubaccount/Gantt.git</connection>
@@ -92,7 +92,7 @@
 			<version>${vaadin.version}</version>
 			<scope>provided</scope>
 		</dependency>
-		
+
 		<!-- This can be replaced with TestNG or some other test framework supported by the surefire plugin -->
 		<dependency>
 			<groupId>junit</groupId>
@@ -100,14 +100,14 @@
 			<version>4.8.1</version>
 			<scope>test</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>joda-time</groupId>
 			<artifactId>joda-time</artifactId>
 			<version>2.3</version>
 			<scope>test</scope>
 		</dependency>
-		
+
 	</dependencies>
 
 	<build>
@@ -144,7 +144,7 @@
 					</archive>
 				</configuration>
 			</plugin>
-			
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
@@ -201,7 +201,7 @@
 			</plugin>
 		</plugins>
 
-		<!-- This is needed for the sources required by the client-side compiler to be 
+		<!-- This is needed for the sources required by the client-side compiler to be
 			included in the produced JARs -->
 		<resources>
 			<resource>
@@ -214,19 +214,19 @@
 				<directory>src/main/resources</directory>
 			</resource>
 		</resources>
-		
+
 	</build>
 
-<distributionManagement>
-        <repository>
-            <id>releaseNexus</id>
-            <name>My releases</name>
-            <url>http://build.mycollab.com:8080/nexus/content/repositories/releases</url>
-        </repository>
-        <snapshotRepository>
-            <id>snapshotNexus</id>
-            <name>My snapshots</name>
-            <url>http://build.mycollab.com:8080/nexus/content/repositories/snapshots</url>
-        </snapshotRepository>
-    </distributionManagement>
+   <distributionManagement>
+							<repository>
+									<id>releaseNexus</id>
+									<name>My releases</name>
+									<url>http://build.mycollab.com:8080/nexus/content/repositories/releases</url>
+							</repository>
+							<snapshotRepository>
+									<id>snapshotNexus</id>
+									<name>My snapshots</name>
+									<url>http://build.mycollab.com:8080/nexus/content/repositories/snapshots</url>
+							</snapshotRepository>
+					</distributionManagement>
 </project>

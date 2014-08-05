@@ -190,8 +190,9 @@ public class BeanList<SearchService extends ISearchableService<S>, S extends Sea
 	 * 
 	 * @param <T>
 	 */
-	public static interface RowDisplayHandler<T> extends Serializable {
+	public static abstract class RowDisplayHandler<T> implements Serializable {
+		private static final long serialVersionUID = 1L;
 
-		Component generateRow(T obj, int rowIndex);
+		public abstract Component generateRow(T obj, int rowIndex);
 	}
 }

@@ -284,7 +284,7 @@ public class StandupListViewImpl extends AbstractPageView implements
 		this.addComponent(header);
 	}
 
-	public static class StandupReportRowDisplay implements
+	public static class StandupReportRowDisplay extends
 			RowDisplayHandler<SimpleStandupReport> {
 		private static final long serialVersionUID = 1L;
 

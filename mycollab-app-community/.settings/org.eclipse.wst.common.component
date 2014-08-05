@@ -22,7 +22,7 @@
     <dependent-module archiveName="velocity-1.7.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/apache/velocity/velocity/1.7/velocity-1.7.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="commons-collections-3.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/commons-collections/commons-collections/3.1/commons-collections-3.1.jar">
+    <dependent-module archiveName="commons-collections-3.2.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/commons-collections/commons-collections/3.2.1/commons-collections-3.2.1.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="commons-lang-2.6.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/commons-lang/commons-lang/2.6/commons-lang-2.6.jar">
@@ -202,7 +202,7 @@
     <dependent-module archiveName="jetty-http-9.1.5.v20140505.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/jetty-http/9.1.5.v20140505/jetty-http-9.1.5.v20140505.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="jetty-util-8.1.12.v20130726.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/jetty-util/8.1.12.v20130726/jetty-util-8.1.12.v20130726.jar">
+    <dependent-module archiveName="jetty-util-9.1.5.v20140505.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/jetty-util/9.1.5.v20140505/jetty-util-9.1.5.v20140505.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="jetty-io-9.1.5.v20140505.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/jetty-io/9.1.5.v20140505/jetty-io-9.1.5.v20140505.jar">
@@ -343,7 +343,7 @@
     <dependent-module archiveName="jackrabbit-spi-2.8.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/apache/jackrabbit/jackrabbit-spi/2.8.0/jackrabbit-spi-2.8.0.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="commons-codec-1.8.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/commons-codec/commons-codec/1.8/commons-codec-1.8.jar">
+    <dependent-module archiveName="commons-codec-1.9.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/commons-codec/commons-codec/1.9/commons-codec-1.9.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="hibernate-validator-5.1.1.Final.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/hibernate/hibernate-validator/5.1.1.Final/hibernate-validator-5.1.1.Final.jar">
@@ -568,7 +568,7 @@
     <dependent-module archiveName="bcprov-jdk14-138.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/bouncycastle/bcprov-jdk14/138/bcprov-jdk14-138.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="xml-apis-1.4.01.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/xml-apis/xml-apis/1.4.01/xml-apis-1.4.01.jar">
+    <dependent-module archiveName="xml-apis-1.3.04.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/xml-apis/xml-apis/1.3.04/xml-apis-1.3.04.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="jdtcore-3.1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/eclipse/jdtcore/3.1.0/jdtcore-3.1.0.jar">
