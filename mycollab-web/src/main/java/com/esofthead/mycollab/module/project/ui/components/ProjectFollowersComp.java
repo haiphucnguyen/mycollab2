@@ -105,7 +105,9 @@ public class ProjectFollowersComp<V extends ValuedBean> extends VerticalLayout {
 		}
 
 		this.addComponent(header);
-		header.addComponent(new Label("/"));
+		Label sep = new Label("/");
+		sep.setStyleName("info-hdr");
+		header.addComponent(sep);
 
 		currentUserFollow = isUserWatching(bean);
 
