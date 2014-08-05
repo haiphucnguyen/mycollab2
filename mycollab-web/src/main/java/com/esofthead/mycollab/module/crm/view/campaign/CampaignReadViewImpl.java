@@ -30,7 +30,7 @@ import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.module.crm.domain.criteria.ActivitySearchCriteria;
 import com.esofthead.mycollab.module.crm.i18n.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.crm.ui.components.AbstractPreviewItemComp;
-import com.esofthead.mycollab.module.crm.ui.components.CompFollowersSheet;
+import com.esofthead.mycollab.module.crm.ui.components.CrmFollowersComp;
 import com.esofthead.mycollab.module.crm.ui.components.CrmPreviewFormControlsGenerator;
 import com.esofthead.mycollab.module.crm.ui.components.DateInfoComp;
 import com.esofthead.mycollab.module.crm.ui.components.NoteListItems;
@@ -70,7 +70,7 @@ public class CampaignReadViewImpl extends
 
 	private PeopleInfoComp peopleInfoComp;
 	private DateInfoComp dateInfoComp;
-	private CompFollowersSheet<SimpleCampaign> compFollowers;
+	private CrmFollowersComp<SimpleCampaign> compFollowers;
 
 	public CampaignReadViewImpl() {
 		super(MyCollabResource.newResource("icons/22/crm/campaign.png"));
@@ -125,7 +125,7 @@ public class CampaignReadViewImpl extends
 		peopleInfoComp = new PeopleInfoComp();
 		basicInfo.addComponent(peopleInfoComp);
 
-		compFollowers = new CompFollowersSheet<SimpleCampaign>(
+		compFollowers = new CrmFollowersComp<SimpleCampaign>(
 				CrmTypeConstants.CAMPAIGN,
 				RolePermissionCollections.CRM_CAMPAIGN);
 		basicInfo.addComponent(compFollowers);

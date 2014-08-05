@@ -3,6 +3,7 @@ package com.esofthead.mycollab.module.crm.ui.components;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.slf4j.Logger;
@@ -18,6 +19,8 @@ import com.esofthead.mycollab.common.service.MonitorItemService;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.arguments.ValuedBean;
+import com.esofthead.mycollab.module.user.domain.SimpleUser;
+import com.esofthead.mycollab.module.user.ui.components.ActiveUserMultiSelectComp;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
@@ -42,11 +45,10 @@ import com.vaadin.ui.Window;
  * @since 4.3.3
  *
  */
-public class CompFollowersSheet<V extends ValuedBean> extends VerticalLayout {
+public class CrmFollowersComp<V extends ValuedBean> extends VerticalLayout {
 	private static final long serialVersionUID = 1L;
 
-	private static Logger log = LoggerFactory
-			.getLogger(CompFollowersSheet.class);
+	private static Logger log = LoggerFactory.getLogger(CrmFollowersComp.class);
 
 	protected MonitorItemService monitorItemService;
 
@@ -60,7 +62,7 @@ public class CompFollowersSheet<V extends ValuedBean> extends VerticalLayout {
 
 	private Button followersBtn;
 
-	public CompFollowersSheet(String type, String permissionItem) {
+	public CrmFollowersComp(String type, String permissionItem) {
 		super();
 		monitorItemService = ApplicationContextUtil
 				.getSpringBean(MonitorItemService.class);
@@ -256,44 +258,43 @@ public class CompFollowersSheet<V extends ValuedBean> extends VerticalLayout {
 				headerPanel.setSpacing(true);
 				content.addComponent(headerPanel);
 
-				// final ProjectMemberMultiSelectComp memberSelection = new
-				// ProjectMemberMultiSelectComp();
-				// headerPanel.addComponent(memberSelection);
-				// Button btnSave = new Button(
-				// AppContext.getMessage(GenericI18Enum.BUTTON_ADD_LABEL),
-				// new Button.ClickListener() {
-				// private static final long serialVersionUID = 1L;
-				//
-				// @Override
-				// public void buttonClick(ClickEvent event) {
-				//
-				// List<SimpleProjectMember> members = memberSelection
-				// .getSelectedItems();
-				//
-				// for (ProjectMember member : members) {
-				// CompFollowersSheet.this.followItem(
-				// member.getUsername(), bean);
-				// }
-				//
-				// memberSelection.resetComp();
-				// loadMonitorItems();
-				// }
-				// });
+				final ActiveUserMultiSelectComp memberSelection = new ActiveUserMultiSelectComp();
+				headerPanel.addComponent(memberSelection);
+				Button btnSave = new Button(
+						AppContext.getMessage(FollowerI18nEnum.BUTTON_FOLLOW),
+						new Button.ClickListener() {
+							private static final long serialVersionUID = 1L;
 
-				// btnSave.setStyleName(UIConstants.THEME_GREEN_LINK);
-				// btnSave.setIcon(MyCollabResource
-				// .newResource("icons/16/addRecord.png"));
-				//
-				// headerPanel.addComponent(btnSave);
-				//
-				// this.addCloseListener(new CloseListener() {
-				// private static final long serialVersionUID = 1L;
-				//
-				// @Override
-				// public void windowClose(CloseEvent e) {
-				// displayFollowers(bean);
-				// }
-				// });
+							@Override
+							public void buttonClick(ClickEvent event) {
+
+								List<SimpleUser> members = memberSelection
+										.getSelectedItems();
+
+								for (SimpleUser member : members) {
+									CrmFollowersComp.this.followItem(
+											member.getUsername(), bean);
+								}
+
+								memberSelection.resetComp();
+								loadMonitorItems();
+							}
+						});
+
+				btnSave.setStyleName(UIConstants.THEME_GREEN_LINK);
+				btnSave.setIcon(MyCollabResource
+						.newResource("icons/16/addRecord.png"));
+
+				headerPanel.addComponent(btnSave);
+
+				this.addCloseListener(new CloseListener() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void windowClose(CloseEvent e) {
+						displayFollowers(bean);
+					}
+				});
 			}
 
 			tableItem = new DefaultPagedBeanTable<MonitorItemService, MonitorSearchCriteria, SimpleMonitorItem>(

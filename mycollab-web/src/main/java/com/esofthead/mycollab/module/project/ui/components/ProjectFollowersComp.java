@@ -47,11 +47,11 @@ import com.vaadin.ui.Window;
  * @since 4.3.3
  *
  */
-public class CompFollowersSheet<V extends ValuedBean> extends VerticalLayout {
+public class ProjectFollowersComp<V extends ValuedBean> extends VerticalLayout {
 	private static final long serialVersionUID = 1L;
 
 	private static Logger log = LoggerFactory
-			.getLogger(CompFollowersSheet.class);
+			.getLogger(ProjectFollowersComp.class);
 
 	protected MonitorItemService monitorItemService;
 
@@ -65,7 +65,7 @@ public class CompFollowersSheet<V extends ValuedBean> extends VerticalLayout {
 
 	private Button followersBtn;
 
-	public CompFollowersSheet(String type, String permissionItem) {
+	public ProjectFollowersComp(String type, String permissionItem) {
 		super();
 		monitorItemService = ApplicationContextUtil
 				.getSpringBean(MonitorItemService.class);
@@ -264,7 +264,7 @@ public class CompFollowersSheet<V extends ValuedBean> extends VerticalLayout {
 				final ProjectMemberMultiSelectComp memberSelection = new ProjectMemberMultiSelectComp();
 				headerPanel.addComponent(memberSelection);
 				Button btnSave = new Button(
-						AppContext.getMessage(GenericI18Enum.BUTTON_ADD_LABEL),
+						AppContext.getMessage(FollowerI18nEnum.BUTTON_FOLLOW),
 						new Button.ClickListener() {
 							private static final long serialVersionUID = 1L;
 
@@ -275,7 +275,7 @@ public class CompFollowersSheet<V extends ValuedBean> extends VerticalLayout {
 										.getSelectedItems();
 
 								for (ProjectMember member : members) {
-									CompFollowersSheet.this.followItem(
+									ProjectFollowersComp.this.followItem(
 											member.getUsername(), bean);
 								}
 

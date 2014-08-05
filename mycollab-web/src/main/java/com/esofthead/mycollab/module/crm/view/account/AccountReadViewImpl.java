@@ -35,7 +35,7 @@ import com.esofthead.mycollab.module.crm.i18n.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.crm.i18n.LeadI18nEnum;
 import com.esofthead.mycollab.module.crm.service.LeadService;
 import com.esofthead.mycollab.module.crm.ui.components.AbstractPreviewItemComp;
-import com.esofthead.mycollab.module.crm.ui.components.CompFollowersSheet;
+import com.esofthead.mycollab.module.crm.ui.components.CrmFollowersComp;
 import com.esofthead.mycollab.module.crm.ui.components.CrmPreviewFormControlsGenerator;
 import com.esofthead.mycollab.module.crm.ui.components.DateInfoComp;
 import com.esofthead.mycollab.module.crm.ui.components.NoteListItems;
@@ -77,7 +77,7 @@ public class AccountReadViewImpl extends AbstractPreviewItemComp<SimpleAccount>
 
 	private DateInfoComp dateInfoComp;
 	private PeopleInfoComp peopleInfoComp;
-	private CompFollowersSheet<SimpleAccount> compFollowers;
+	private CrmFollowersComp<SimpleAccount> compFollowers;
 
 	public AccountReadViewImpl() {
 		super(MyCollabResource.newResource("icons/22/crm/account.png"));
@@ -186,7 +186,7 @@ public class AccountReadViewImpl extends AbstractPreviewItemComp<SimpleAccount>
 		peopleInfoComp = new PeopleInfoComp();
 		basicInfo.addComponent(peopleInfoComp);
 
-		compFollowers = new CompFollowersSheet<SimpleAccount>(
+		compFollowers = new CrmFollowersComp<SimpleAccount>(
 				CrmTypeConstants.ACCOUNT, RolePermissionCollections.CRM_ACCOUNT);
 		basicInfo.addComponent(compFollowers);
 
