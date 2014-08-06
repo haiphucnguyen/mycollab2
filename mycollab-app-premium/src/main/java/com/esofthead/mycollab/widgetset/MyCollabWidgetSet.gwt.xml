@@ -44,4 +44,6 @@
     <inherits name="com.esofthead.vaadin.calendarext.WidgetSet" />
 
     <inherits name="org.vaadin.jouni.animator.AnimatorWidgetset" />
+    
+    <inherits name="com.esofthead.vaadin.floatingcomponent.WidgetSet" />
 </module>
