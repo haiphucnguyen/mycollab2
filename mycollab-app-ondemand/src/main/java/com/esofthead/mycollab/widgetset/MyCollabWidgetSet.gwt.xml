@@ -44,4 +44,6 @@
     <inherits name="com.vaadin.addon.timeline.gwt.TimelineWidgetSet" />
 
     <inherits name="com.esofthead.vaadin.calendarext.WidgetSet" />
+    
+    <inherits name="com.esofthead.vaadin.floatingcomponent.WidgetSet" />
 </module>
