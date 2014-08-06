@@ -144,6 +144,20 @@ public class AddTimeEntryWindow extends Window implements
 
 		HorizontalLayout controlsLayout = new HorizontalLayout();
 		controlsLayout.setSpacing(true);
+		
+		Button cancelBtn = new Button(
+				AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL_LABEL),
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void buttonClick(ClickEvent event) {
+						AddTimeEntryWindow.this.close();
+					}
+				});
+		cancelBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
+		controlsLayout.addComponent(cancelBtn);
+		
 		Button saveBtn = new Button(
 				AppContext.getMessage(TimeTrackingI18nEnum.BUTTON_LOG_TIME),
 				new Button.ClickListener() {
@@ -157,19 +171,6 @@ public class AddTimeEntryWindow extends Window implements
 				});
 		saveBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
 		controlsLayout.addComponent(saveBtn);
-
-		Button cancelBtn = new Button(
-				AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL_LABEL),
-				new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
-
-					@Override
-					public void buttonClick(ClickEvent event) {
-						AddTimeEntryWindow.this.close();
-					}
-				});
-		cancelBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
-		controlsLayout.addComponent(cancelBtn);
 
 		footer.addComponent(controlsLayout);
 		footer.setSizeFull();

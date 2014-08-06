@@ -85,7 +85,8 @@ class ItemTimeLoggingSearchPanel extends
 					AppContext
 							.getMessage(TimeTrackingI18nEnum.SEARCH_TIME_TITLE));
 
-			createBtn = new Button("Log Time");
+			createBtn = new Button(
+					AppContext.getMessage(TimeTrackingI18nEnum.BUTTON_LOG_TIME));
 			createBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 			createBtn.setIcon(MyCollabResource
 					.newResource("icons/16/project/add_time.png"));
