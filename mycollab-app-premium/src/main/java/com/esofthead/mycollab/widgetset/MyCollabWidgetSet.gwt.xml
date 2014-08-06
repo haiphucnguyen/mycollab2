@@ -6,6 +6,7 @@
 
     <!-- WS Compiler: manually edited -->
 
+
     <inherits name="org.vaadin.teemu.ratingstars.gwt.RatingStarsWidgetset" />
 
     <inherits name="org.vaadin.peter.contextmenu.ContextmenuWidgetset" />
@@ -23,6 +24,8 @@
         name="org.vaadin.risto.stylecalendar.widgetset.StyleCalendarWidgetset" />
 
     <inherits name="com.vaadin.DefaultWidgetSet" />
+    
+    <set-property name="vaadin.profiler" value="false" />
 
     <inherits name="org.vaadin.peter.buttongroup.ButtonGroupWidgetset" />
 
@@ -44,6 +47,6 @@
     <inherits name="com.esofthead.vaadin.calendarext.WidgetSet" />
 
     <inherits name="org.vaadin.jouni.animator.AnimatorWidgetset" />
-    
+
     <inherits name="com.esofthead.vaadin.floatingcomponent.WidgetSet" />
 </module>
