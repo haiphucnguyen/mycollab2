@@ -53,7 +53,8 @@ public class TimeTrackingEditViewWindow extends Window implements
 		this.setResizable(false);
 		this.parentView = view;
 
-		this.setCaption("Log time on this project");
+		this.setCaption(AppContext
+				.getMessage(TimeTrackingI18nEnum.DIALOG_LOG_TIME_ENTRY_TITLE));
 
 		dateField = new DateField("Select date:", this.item.getLogforday());
 
@@ -120,6 +121,20 @@ public class TimeTrackingEditViewWindow extends Window implements
 
 		HorizontalLayout controlsLayout = new HorizontalLayout();
 		controlsLayout.setSpacing(true);
+		
+		Button cancelBtn = new Button(
+				AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL_LABEL),
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void buttonClick(ClickEvent event) {
+						TimeTrackingEditViewWindow.this.close();
+					}
+				});
+		cancelBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
+		controlsLayout.addComponent(cancelBtn);
+		
 		Button saveBtn = new Button(
 				AppContext.getMessage(TimeTrackingI18nEnum.BUTTON_LOG_TIME),
 				new Button.ClickListener() {
@@ -133,19 +148,6 @@ public class TimeTrackingEditViewWindow extends Window implements
 				});
 		saveBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
 		controlsLayout.addComponent(saveBtn);
-
-		Button cancelBtn = new Button(
-				AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL_LABEL),
-				new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
-
-					@Override
-					public void buttonClick(ClickEvent event) {
-						TimeTrackingEditViewWindow.this.close();
-					}
-				});
-		cancelBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
-		controlsLayout.addComponent(cancelBtn);
 
 		footer.addComponent(controlsLayout);
 		footer.setSizeFull();
