@@ -164,12 +164,6 @@ public class ProjectViewImpl extends AbstractCssPageView implements ProjectView 
 				GenericLinkUtils.URL_PREFIX_PARAM
 						+ ProjectLinkGenerator.generateProjectLink(prjId));
 
-		myProjectTab.addTab(
-				constructProjectPageComponent(),
-				"page",
-				AppContext.getMessage(ProjectCommonI18nEnum.VIEW_PAGE),
-				GenericLinkUtils.URL_PREFIX_PARAM
-						+ ProjectLinkGenerator.generateProjectLink(prjId));
 
 		myProjectTab
 				.addTab(constructProjectFileComponent(),
@@ -527,50 +521,6 @@ public class ProjectViewImpl extends AbstractCssPageView implements ProjectView 
 				.newResource("icons/16/project/edit.png"));
 		editProjectBtn.setStyleName("link");
 		popupButtonsControl.addComponent(editProjectBtn);
-
-		Button archieveProjectBtn = new Button(
-				AppContext
-						.getMessage(ProjectCommonI18nEnum.BUTTON_ARCHIVE_PROJECT),
-				new Button.ClickListener() {
-					@Override
-					public void buttonClick(ClickEvent event) {
-						controlsBtn.setPopupVisible(false);
-						ConfirmDialogExt.show(
-								UI.getCurrent(),
-								AppContext.getMessage(
-										GenericI18Enum.WINDOW_WARNING_TITLE,
-										SiteConfiguration.getSiteName()),
-								AppContext
-										.getMessage(ProjectCommonI18nEnum.DIALOG_ARCHIVE_PROJECT_TITLE),
-								AppContext
-										.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
-								AppContext
-										.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
-								new ConfirmDialog.Listener() {
-									private static final long serialVersionUID = 1L;
-
-									@Override
-									public void onClose(ConfirmDialog dialog) {
-										if (dialog.isConfirmed()) {
-											ProjectService projectService = ApplicationContextUtil
-													.getSpringBean(ProjectService.class);
-											// TODO: set project status is
-											// archieve
-											EventBusFactory
-													.getInstance()
-													.post(new ShellEvent.GotoProjectModule(
-															this, null));
-										}
-									}
-								});
-					}
-				});
-		archieveProjectBtn.setEnabled(CurrentProjectVariables
-				.canAccess(ProjectRolePermissionCollections.PROJECT));
-		archieveProjectBtn.setIcon(MyCollabResource
-				.newResource("icons/16/project/archive.png"));
-		archieveProjectBtn.setStyleName("link");
-		popupButtonsControl.addComponent(archieveProjectBtn);
 
 		if (CurrentProjectVariables
 				.canAccess(ProjectRolePermissionCollections.PROJECT)) {
