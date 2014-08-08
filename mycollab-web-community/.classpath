@@ -129,7 +129,6 @@
   <classpathentry kind="var" path="M2_REPO/com/vaadin/external/google/guava/16.0.1.vaadin1/guava-16.0.1.vaadin1.jar" sourcepath="M2_REPO/com/vaadin/external/google/guava/16.0.1.vaadin1/guava-16.0.1.vaadin1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/vaadin/external/google/android-json/0.0.20131108.vaadin1/android-json-0.0.20131108.vaadin1.jar" sourcepath="M2_REPO/com/vaadin/external/google/android-json/0.0.20131108.vaadin1/android-json-0.0.20131108.vaadin1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/vaadin/addon/vaadin-touchkit-agpl/4.0.0.beta1/vaadin-touchkit-agpl-4.0.0.beta1.jar"/>
-  <classpathentry kind="var" path="M2_REPO/com/vaadin/vaadin-themes/7.2.6/vaadin-themes-7.2.6.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/vaadin/vaadin-client/7.2.6/vaadin-client-7.2.6.jar" sourcepath="M2_REPO/com/vaadin/vaadin-client/7.2.6/vaadin-client-7.2.6-sources.jar"/>
   <classpathentry kind="src" path="/mycollab-reporting"/>
   <classpathentry kind="var" path="M2_REPO/net/sourceforge/dynamicreports/dynamicreports-core/3.2.1/dynamicreports-core-3.2.1.jar" sourcepath="M2_REPO/net/sourceforge/dynamicreports/dynamicreports-core/3.2.1/dynamicreports-core-3.2.1-sources.jar"/>
@@ -162,6 +161,7 @@
   <classpathentry kind="var" path="M2_REPO/org/eclipse/jetty/jetty-jndi/9.1.5.v20140505/jetty-jndi-9.1.5.v20140505.jar" sourcepath="M2_REPO/org/eclipse/jetty/jetty-jndi/9.1.5.v20140505/jetty-jndi-9.1.5.v20140505-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/ow2/asm/asm-commons/4.1/asm-commons-4.1.jar" sourcepath="M2_REPO/org/ow2/asm/asm-commons/4.1/asm-commons-4.1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/ow2/asm/asm-tree/4.1/asm-tree-4.1.jar" sourcepath="M2_REPO/org/ow2/asm/asm-tree/4.1/asm-tree-4.1-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/vaadin/vaadin-themes/7.2.6/vaadin-themes-7.2.6.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/eclipse/jetty/jetty-continuation/9.1.5.v20140505/jetty-continuation-9.1.5.v20140505.jar" sourcepath="M2_REPO/org/eclipse/jetty/jetty-continuation/9.1.5.v20140505/jetty-continuation-9.1.5.v20140505-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/eclipse/jetty/websocket/websocket-server/9.1.5.v20140505/websocket-server-9.1.5.v20140505.jar" sourcepath="M2_REPO/org/eclipse/jetty/websocket/websocket-server/9.1.5.v20140505/websocket-server-9.1.5.v20140505-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/eclipse/jetty/websocket/websocket-common/9.1.5.v20140505/websocket-common-9.1.5.v20140505.jar" sourcepath="M2_REPO/org/eclipse/jetty/websocket/websocket-common/9.1.5.v20140505/websocket-common-9.1.5.v20140505-sources.jar"/>
@@ -208,4 +208,6 @@
   <classpathentry kind="var" path="M2_REPO/org/freemarker/freemarker/2.3.19/freemarker-2.3.19.jar" sourcepath="M2_REPO/org/freemarker/freemarker/2.3.19/freemarker-2.3.19-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/net/sf/opencsv/opencsv/2.0/opencsv-2.0.jar" sourcepath="M2_REPO/net/sf/opencsv/opencsv/2.0/opencsv-2.0-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/springframework/spring-webmvc/4.0.6.RELEASE/spring-webmvc-4.0.6.RELEASE.jar" sourcepath="M2_REPO/org/springframework/spring-webmvc/4.0.6.RELEASE/spring-webmvc-4.0.6.RELEASE-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/esofthead/vaadin/floatingcomponent/0.0.1-SNAPSHOT/floatingcomponent-0.0.1-SNAPSHOT.jar" sourcepath="M2_REPO/com/esofthead/vaadin/floatingcomponent/0.0.1-SNAPSHOT/floatingcomponent-0.0.1-SNAPSHOT-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/vaadin/addons/ckeditor-wrapper-for-vaadin/7.9.2/ckeditor-wrapper-for-vaadin-7.9.2.jar"/>
 </classpath>

@@ -127,7 +127,6 @@
   <classpathentry kind="var" path="M2_REPO/com/dropbox/core/dropbox-core-sdk/1.7.6/dropbox-core-sdk-1.7.6.jar" sourcepath="M2_REPO/com/dropbox/core/dropbox-core-sdk/1.7.6/dropbox-core-sdk-1.7.6-sources.jar"/>
   <classpathentry kind="src" path="/mycollab-ui"/>
   <classpathentry kind="var" path="M2_REPO/com/vaadin/addon/vaadin-touchkit-agpl/4.0.0.beta1/vaadin-touchkit-agpl-4.0.0.beta1.jar"/>
-  <classpathentry kind="var" path="M2_REPO/com/vaadin/vaadin-themes/7.2.1/vaadin-themes-7.2.1.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/vaadin/vaadin-client/7.2.6/vaadin-client-7.2.6.jar" sourcepath="M2_REPO/com/vaadin/vaadin-client/7.2.6/vaadin-client-7.2.6-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/esofthead/vaadin/mobilecomponent/1.0.0-SNAPSHOT/mobilecomponent-1.0.0-SNAPSHOT.jar" sourcepath="M2_REPO/com/esofthead/vaadin/mobilecomponent/1.0.0-SNAPSHOT/mobilecomponent-1.0.0-SNAPSHOT-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/googlecode/ez-vcard/ez-vcard/0.8.2/ez-vcard-0.8.2.jar" sourcepath="M2_REPO/com/googlecode/ez-vcard/ez-vcard/0.8.2/ez-vcard-0.8.2-sources.jar"/>
