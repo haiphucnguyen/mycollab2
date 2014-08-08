@@ -1,6 +1,5 @@
 package com.esofthead.mycollab.module.wiki.domain;
 
-
 /**
  * 
  * @author MyCollab Ltd.
@@ -20,7 +19,7 @@ public class Page extends WikiResource {
 
 	private boolean isLock;
 
-	private String[] category;
+	private String category;
 
 	private String status;
 
@@ -48,11 +47,11 @@ public class Page extends WikiResource {
 		this.isLock = isLock;
 	}
 
-	public String[] getCategory() {
+	public String getCategory() {
 		return category;
 	}
 
-	public void setCategory(String[] category) {
+	public void setCategory(String category) {
 		this.category = category;
 	}
 
