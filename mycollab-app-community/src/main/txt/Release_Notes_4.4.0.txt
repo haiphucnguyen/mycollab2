@@ -50,9 +50,8 @@ Version 4.4.0
 
 **Bug Fixes**
 
-* User switch language but the tooltip still display the previous selected language
+* Tooptip use the default system language instead of user defined language
 * Component and Version do not show the marker of complete right
-* Progress dialog has a ugly border
 
 Version 4.3.3
 -----------------------------
