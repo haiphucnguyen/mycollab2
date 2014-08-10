@@ -5,6 +5,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.dom.client.Style.Overflow;
@@ -26,7 +27,6 @@ import com.google.gwt.event.dom.client.TouchMoveHandler;
 import com.google.gwt.event.dom.client.TouchStartEvent;
 import com.google.gwt.event.dom.client.TouchStartHandler;
 import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.Widget;
@@ -35,6 +35,7 @@ import com.vaadin.addon.touchkit.gwt.client.ui.VNavigationView;
 import com.vaadin.client.BrowserInfo;
 import com.vaadin.client.Util;
 
+@SuppressWarnings("rawtypes")
 public class VMobileNavigationView extends VNavigationView {
 
 	private static Logger log = Logger.getLogger(VMobileNavigationView.class
@@ -224,6 +225,7 @@ public class VMobileNavigationView extends VNavigationView {
 			}
 			int x = Util.getTouchOrMouseClientX(ne);
 			int y = Util.getTouchOrMouseClientY(ne);
+
 			long time = new Date().getTime();
 			// screens per second
 			double screenwidths = (x - lastX) / (double) getOffsetWidth();
@@ -232,30 +234,38 @@ public class VMobileNavigationView extends VNavigationView {
 			lastX = x;
 			lastTs = time;
 			int deltaX = x - dragstartX;
+			if (deltaX > 0 && viewNavigationManager.getMenuVisibility())
+				return;
 			if (swiping) {
 				viewNavigationManager.setHorizontalOffsetExt(deltaX, false);
 				ne.preventDefault(); // prevent page scroll
 			} else if (dragging) {
 				Event.setCapture(getContent().getElement());
 				int dragY = dragstartY - y;
+
 				if (Math.abs(deltaX / (double) dragY) > 2) {
 					swiping = true;
 					viewNavigationManager.setHorizontalOffsetExt(deltaX, false);
 					ne.preventDefault(); // prevent page scroll
 				}
-				/*
-				 * if (BrowserInfo.get().requiresTouchScrollDelegate()) { if
-				 * (Math.abs(deltaX / (double) dragY) < 0.5) { if
-				 * (Event.as(event.getNativeEvent()).getTypeInt() ==
-				 * Event.ONTOUCHMOVE) {
-				 * 
-				 * We'll "lazyly" activate touchScrollDelegate if the direction
-				 * is enough down.
-				 * 
-				 * dragStartEvent.setNativeEvent(event .getNativeEvent()); //
-				 * touchScrollDelegate.onTouchStart(dragStartEvent); dragging =
-				 * false; } } }
-				 */
+
+				// if (BrowserInfo.get().requiresTouchScrollDelegate()) {
+				// if (Math.abs(deltaX / (double) dragY) < 0.5) {
+				// if (Event.as(event.getNativeEvent()).getTypeInt() ==
+				// Event.ONTOUCHMOVE) {
+				//
+				// // We'll "lazyly" activate touchScrollDelegate if
+				// // the direction
+				// // is enough down.
+				//
+				// dragStartEvent.setNativeEvent(event
+				// .getNativeEvent()); //
+				// touchScrollDelegate.onTouchStart(dragStartEvent);
+				// dragging = false;
+				// }
+				// }
+				// }
+
 			}
 		}
 	}
