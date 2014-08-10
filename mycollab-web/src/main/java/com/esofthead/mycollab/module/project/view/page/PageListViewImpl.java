@@ -10,7 +10,13 @@ import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
  *
  */
 @ViewComponent
-public class PageListViewImpl extends AbstractPageView {
+public class PageListViewImpl extends AbstractPageView implements PageListView {
 	private static final long serialVersionUID = 1L;
+
+	@Override
+	public void displayPages() {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

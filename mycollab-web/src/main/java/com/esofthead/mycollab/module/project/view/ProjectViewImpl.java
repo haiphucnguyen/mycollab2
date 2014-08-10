@@ -57,6 +57,7 @@ import com.esofthead.mycollab.module.project.view.milestone.MilestonePresenter;
 import com.esofthead.mycollab.module.project.view.page.PagePresenter;
 import com.esofthead.mycollab.module.project.view.parameters.FileScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.MilestoneScreenData;
+import com.esofthead.mycollab.module.project.view.parameters.PageScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.ProblemScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectMemberScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData;
@@ -246,6 +247,9 @@ public class ProjectViewImpl extends AbstractCssPageView implements ProjectView 
 						} else if ("file".equals(caption)) {
 							filePresenter.go(ProjectViewImpl.this,
 									new FileScreenData.GotoDashboard());
+						} else if ("page".equals(caption)) {
+							pagePresenter.go(ProjectViewImpl.this,
+									new PageScreenData.Search());
 						} else if ("problem".equals(caption)) {
 							ProblemSearchCriteria searchCriteria = new ProblemSearchCriteria();
 							searchCriteria.setProjectId(new NumberSearchField(

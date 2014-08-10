@@ -88,6 +88,10 @@ public class ProjectLinkGenerator {
 				+ generateMilestonePreviewLink(projectId, milestoneId);
 	}
 
+	public static String generatePagesLink(int projectId) {
+		return "project/page/list/" + UrlEncodeDecoder.encode(projectId);
+	}
+
 	public static String generateProblemsLink(Integer projectId) {
 		return "project/problem/list/" + UrlEncodeDecoder.encode(projectId);
 	}

@@ -53,6 +53,7 @@ import com.esofthead.mycollab.module.project.i18n.BugI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.ComponentI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.MessageI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.MilestoneI18nEnum;
+import com.esofthead.mycollab.module.project.i18n.Page18InEnum;
 import com.esofthead.mycollab.module.project.i18n.ProblemI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.ProjectMemberI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.RiskI18nEnum;
@@ -301,6 +302,14 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
 			EventBusFactory.getInstance().post(
 					new MilestoneEvent.GotoList(this, null));
 		}
+	}
+
+	public void gotoPageList() {
+		this.select(0);
+		this.addLink(new Button(AppContext.getMessage(BreadcrumbI18nEnum.PAGES)));
+		AppContext.addFragment(
+				ProjectLinkGenerator.generatePagesLink(project.getId()),
+				AppContext.getMessage(Page18InEnum.VIEW_LIST_TITLE));
 	}
 
 	public void gotoProblemList() {
