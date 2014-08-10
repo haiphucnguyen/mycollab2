@@ -303,6 +303,11 @@ public class ProjectViewImpl extends AbstractCssPageView implements ProjectView 
 	}
 
 	@Override
+	public void gotoPageView(ScreenData<?> data) {
+		pagePresenter.go(ProjectViewImpl.this, data);
+	}
+
+	@Override
 	public void gotoRiskView(ScreenData<?> data) {
 		riskPresenter.go(ProjectViewImpl.this, data);
 	}

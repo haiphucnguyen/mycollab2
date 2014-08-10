@@ -31,6 +31,8 @@ public class PagePresenter extends AbstractPresenter<PageContainer> {
 		AbstractPresenter presenter = null;
 		if (data instanceof PageScreenData.Search) {
 			presenter = PresenterResolver.getPresenter(PageListPresenter.class);
+		} else if (data instanceof PageScreenData.Add) {
+			presenter = PresenterResolver.getPresenter(PageAddPresenter.class);
 		} else {
 			throw new MyCollabException("Do not support screen data " + data);
 		}
