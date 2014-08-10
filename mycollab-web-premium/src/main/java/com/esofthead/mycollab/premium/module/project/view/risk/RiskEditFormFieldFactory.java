@@ -31,10 +31,6 @@ class RiskEditFormFieldFactory<B extends Risk> extends
 		super(form);
 	}
 
-	RiskEditFormFieldFactory(GenericBeanForm<B> form, boolean isValidateForm) {
-		super(form, isValidateForm);
-	}
-
 	@Override
 	protected Field<?> onCreateField(Object propertyId) {
 		Risk risk = attachForm.getBean();

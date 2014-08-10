@@ -7,7 +7,7 @@
         class="org.springframework.extensions.jcr.jackrabbit.RepositoryFactoryBean"
         p:configuration="classpath:/wiki-repo.xml" p:homeDir="file:repo2/wiki-workspace">
     </bean>
-    <bean id="pageJcrSessionFactory"
+    <bean id="pageJcrSessionFactory" name="pageSessionFactory"
         class="com.esofthead.mycollab.module.wiki.WikiSessionFactory">
         <property name="repository" ref="repository" />
         <property name="credentials">
@@ -17,7 +17,7 @@
             </bean>
         </property>
     </bean>
-    <bean id="jcrTemplate" class="org.springframework.extensions.jcr.JcrTemplate">
+    <bean id="pageJcrTemplate" class="org.springframework.extensions.jcr.JcrTemplate">
         <property name="sessionFactory" ref="pageJcrSessionFactory" />
         <property name="allowCreate" value="true" />
     </bean>

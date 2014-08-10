@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.module.wiki.domain;
 
+import com.esofthead.mycollab.core.arguments.NotBindable;
+
 /**
  * 
  * @author MyCollab Ltd.
@@ -12,11 +14,14 @@ public class Page extends WikiResource {
 	public static final String PRIVATE = "private";
 
 	public static final String ARCHIEVED = "archieved";
+	
+	protected String path = "";
 
 	private String subject;
 
 	private String content;
 
+	@NotBindable
 	private boolean isLock;
 
 	private String category;
@@ -61,5 +66,13 @@ public class Page extends WikiResource {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
 	}
 }
