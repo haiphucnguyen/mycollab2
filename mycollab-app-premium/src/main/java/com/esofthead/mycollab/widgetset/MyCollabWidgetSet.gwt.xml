@@ -14,6 +14,9 @@
     <inherits name="fi.jasoft.dragdroplayouts.DragDropLayoutsWidgetSet" />
 
     <inherits
+        name="org.vaadin.openesignforms.ckeditor.widgetset.VaadinCKEditorWidgetset" />
+
+    <inherits
         name="org.vaadin.hene.popupbutton.widgetset.PopupbuttonWidgetset" />
 
     <inherits name="com.vaadin.addon.charts.Widgetset" />
@@ -24,7 +27,7 @@
         name="org.vaadin.risto.stylecalendar.widgetset.StyleCalendarWidgetset" />
 
     <inherits name="com.vaadin.DefaultWidgetSet" />
-    
+
     <set-property name="vaadin.profiler" value="false" />
 
     <inherits name="org.vaadin.peter.buttongroup.ButtonGroupWidgetset" />
