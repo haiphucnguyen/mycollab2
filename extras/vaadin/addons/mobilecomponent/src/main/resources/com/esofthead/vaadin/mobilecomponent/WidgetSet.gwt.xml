@@ -15,5 +15,7 @@
 	<replace-with class="com.esofthead.vaadin.mobilecomponent.client.ui.TouchScrollHandlerExt">
         <when-type-is class="com.vaadin.client.ui.TouchScrollDelegate.TouchScrollHandler" />
     </replace-with>
+    
+    <stylesheet src="mobilecomponent/mobilecomponent.css"></stylesheet>
 
 </module>

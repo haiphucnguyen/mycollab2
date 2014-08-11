@@ -11,7 +11,6 @@ import com.vaadin.client.communication.RpcProxy;
 import com.vaadin.client.extensions.AbstractExtensionConnector;
 import com.vaadin.client.ui.TouchScrollDelegate;
 import com.vaadin.client.ui.VCssLayout;
-import com.vaadin.client.ui.TouchScrollDelegate.TouchScrollHandler;
 import com.vaadin.shared.ui.Connect;
 
 @Connect(InfiniteScrollLayout.class)

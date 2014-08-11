@@ -6,7 +6,7 @@ import java.util.List;
 import com.esofthead.vaadin.mobilecomponent.client.shared.ScrollReachBottomRpc;
 import com.vaadin.server.AbstractClientConnector;
 import com.vaadin.server.AbstractExtension;
-import com.vaadin.ui.CssLayout;
+import com.vaadin.ui.AbstractComponentContainer;
 
 public class InfiniteScrollLayout extends AbstractExtension {
 	private static final long serialVersionUID = -6811662900005441558L;
@@ -33,7 +33,7 @@ public class InfiniteScrollLayout extends AbstractExtension {
 		registerRpc(scrollReachBottomRpc);
 	}
 
-	public static InfiniteScrollLayout extend(CssLayout layout) {
+	public static InfiniteScrollLayout extend(AbstractComponentContainer layout) {
 		InfiniteScrollLayout scrollLayout = new InfiniteScrollLayout();
 		scrollLayout.extend((AbstractClientConnector) layout);
 		return scrollLayout;

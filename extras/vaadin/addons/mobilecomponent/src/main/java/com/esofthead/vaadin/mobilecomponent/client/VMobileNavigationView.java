@@ -187,7 +187,7 @@ public class VMobileNavigationView extends VNavigationView {
 			dragging = true;
 			touchDrag = Event.as(ne).getTypeInt() == Event.ONTOUCHSTART;
 			dragstartX = Util.getTouchOrMouseClientX(ne);
-			if (dragstartX < 20 && !viewNavigationManager.getMenuVisibility()) {
+			if (dragstartX < 10 && !viewNavigationManager.getMenuVisibility()) {
 				dragging = false;
 				ne.preventDefault();
 				return;
