@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.esofthead.mycollab.common.i18n.WikiI18nEnum;
 import com.esofthead.mycollab.module.wiki.domain.Page;
 import com.esofthead.mycollab.test.MyCollabClassRunner;
 import com.esofthead.mycollab.test.service.ServiceTest;
@@ -25,7 +26,7 @@ public class WikiServiceTest extends ServiceTest {
 		page.setCreatedUser("hainguyen@esofthead.com");
 		page.setCategory("abc");
 		page.setPath("1/page/document_1");
-		page.setStatus(Page.PUBLIC);
+		page.setStatus(WikiI18nEnum.status_public.name());
 		page.setSubject("Hello world");
 		page.setContent("My name is <b>Hai Nguyen</b>");
 		wikiService.savePage(page, "hainguyen@esofthead.com");
@@ -49,7 +50,7 @@ public class WikiServiceTest extends ServiceTest {
 		page.setCreatedUser("hainguyen@esofthead.com");
 		page.setCategory("abc");
 		page.setPath("1/page/document_2");
-		page.setStatus(Page.PUBLIC);
+		page.setStatus(WikiI18nEnum.status_public.name());
 		page.setSubject("Hello world 2");
 		page.setContent("My name is <b>Bao Han</b>");
 		wikiService.savePage(page, "hainguyen@esofthead.com");
@@ -58,6 +59,6 @@ public class WikiServiceTest extends ServiceTest {
 	@Test
 	public void testGetResources() {
 		savePage2();
-		
+
 	}
 }

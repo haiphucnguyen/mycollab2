@@ -25,6 +25,8 @@ public class PageAddViewImpl extends AbstractEditItemComp<Page> implements
 		PageAddView {
 	private static final long serialVersionUID = 1L;
 
+	private String currentPath;
+
 	@Override
 	protected String initFormHeader() {
 		return AppContext.getMessage(Page18InEnum.VIEW_NEW_TITLE);
@@ -62,5 +64,4 @@ public class PageAddViewImpl extends AbstractEditItemComp<Page> implements
 	protected AbstractBeanFieldGroupEditFieldFactory<Page> initBeanFormFieldFactory() {
 		return new PageEditFormFieldFactory(editForm);
 	}
-
 }
