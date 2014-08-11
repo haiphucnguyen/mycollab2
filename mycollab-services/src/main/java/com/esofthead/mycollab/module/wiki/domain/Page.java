@@ -9,11 +9,6 @@ import com.esofthead.mycollab.core.arguments.NotBindable;
  *
  */
 public class Page extends WikiResource {
-	public static final String PUBLIC = "public";
-
-	public static final String PRIVATE = "private";
-
-	public static final String ARCHIEVED = "archieved";
 
 	private String subject;
 
