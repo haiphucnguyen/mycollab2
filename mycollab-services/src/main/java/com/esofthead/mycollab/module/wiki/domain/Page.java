@@ -14,8 +14,6 @@ public class Page extends WikiResource {
 	public static final String PRIVATE = "private";
 
 	public static final String ARCHIEVED = "archieved";
-	
-	protected String path = "";
 
 	private String subject;
 
@@ -66,13 +64,5 @@ public class Page extends WikiResource {
 
 	public void setStatus(String status) {
 		this.status = status;
-	}
-
-	public String getPath() {
-		return path;
-	}
-
-	public void setPath(String path) {
-		this.path = path;
 	}
 }
