@@ -60,7 +60,7 @@ public class WikiSessionFactory extends JcrSessionFactory {
 				.createNodeTypeTemplate(hierachyNode);
 
 		pageTypeTemplate.setAbstract(false);
-		pageTypeTemplate.setMixin(true);
+		pageTypeTemplate.setMixin(false);
 		pageTypeTemplate.setName("wiki:page");
 		pageTypeTemplate.setPrimaryItemName("page");
 		pageTypeTemplate
@@ -120,7 +120,7 @@ public class WikiSessionFactory extends JcrSessionFactory {
 				.createPropertyDefinitionTemplate();
 		categoryPropertyTemplate.setMultiple(false);
 		categoryPropertyTemplate.setName("wiki:category");
-		categoryPropertyTemplate.setMandatory(true);
+		categoryPropertyTemplate.setMandatory(false);
 		categoryPropertyTemplate.setRequiredType(PropertyType.STRING);
 		pageTypeTemplate.getPropertyDefinitionTemplates().add(
 				categoryPropertyTemplate);
@@ -134,7 +134,7 @@ public class WikiSessionFactory extends JcrSessionFactory {
 		NodeTypeTemplate folderTypeTemplate = manager.createNodeTypeTemplate();
 
 		folderTypeTemplate.setAbstract(false);
-		folderTypeTemplate.setMixin(true);
+		folderTypeTemplate.setMixin(false);
 		folderTypeTemplate.setName("wiki:folder");
 		folderTypeTemplate.setPrimaryItemName("folder");
 		folderTypeTemplate
