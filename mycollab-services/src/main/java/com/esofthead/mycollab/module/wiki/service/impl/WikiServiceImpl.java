@@ -86,9 +86,11 @@ public class WikiServiceImpl implements WikiService {
 								}
 							} else {
 								// add node
-								childNode = JcrUtils.getOrAddNode(parentNode,
-										pathStr[i], "wiki:folder");
-								childNode.setProperty("wiki:createdUser",
+								childNode = parentNode
+										.addNode(pathStr[i],
+												"{http://www.esofthead.com/wiki}folder");
+								childNode.addMixin(NodeType.MIX_CREATED);
+								childNode.setProperty("jcr:created",
 										createdUser);
 							}
 							parentNode = childNode;
@@ -264,7 +266,7 @@ public class WikiServiceImpl implements WikiService {
 							log.debug("Create new folder {} of sub node {}",
 									pathStr[i], parentNode.getPath());
 							childNode = JcrUtils.getOrAddNode(parentNode,
-									pathStr[i], "mycollab:folder");
+									pathStr[i], "wiki:folder");
 							childNode.setProperty("mycollab:createdUser",
 									createdUser);
 							session.save();
@@ -288,7 +290,7 @@ public class WikiServiceImpl implements WikiService {
 	private static Node convertPageToNode(Node node, Page page,
 			String createdUser) {
 		try {
-			node.addMixin(NodeType.MIX_LAST_MODIFIED);
+			node.addMixin(NodeType.MIX_CREATED);
 			node.addMixin(NodeType.MIX_VERSIONABLE);
 
 			node.setProperty("wiki:subject", page.getSubject());
@@ -296,8 +298,7 @@ public class WikiServiceImpl implements WikiService {
 			node.setProperty("wiki:status", page.getStatus());
 			node.setProperty("wiki:category", page.getCategory());
 			node.setProperty("wiki:isLock", page.isLock());
-			node.setProperty("wiki:createdUser", createdUser);
-			node.setProperty("jcr:lastModifiedBy", createdUser);
+			node.setProperty("jcr:createdBy", createdUser);
 			return node;
 		} catch (Exception e) {
 			throw new MyCollabException(e);

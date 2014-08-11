@@ -71,15 +71,6 @@ public class WikiSessionFactory extends JcrSessionFactory {
 				pageTypeTemplate.getDeclaredPropertyDefinitions().length,
 				pageTypeTemplate.getDeclaredChildNodeDefinitions().length);
 
-		PropertyDefinitionTemplate createdUserPropertyTemplate = manager
-				.createPropertyDefinitionTemplate();
-		createdUserPropertyTemplate.setMultiple(false);
-		createdUserPropertyTemplate.setName("wiki:createdUser");
-		createdUserPropertyTemplate.setMandatory(true);
-		createdUserPropertyTemplate.setRequiredType(PropertyType.STRING);
-		pageTypeTemplate.getPropertyDefinitionTemplates().add(
-				createdUserPropertyTemplate);
-
 		PropertyDefinitionTemplate subjectPropertyTemplate = manager
 				.createPropertyDefinitionTemplate();
 		subjectPropertyTemplate.setMultiple(false);

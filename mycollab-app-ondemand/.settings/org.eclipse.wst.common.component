@@ -538,6 +538,21 @@
     <dependent-module archiveName="ratingstars-2.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/vaadin/addons/ratingstars/2.1/ratingstars-2.1.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
+    <dependent-module archiveName="vaadin-autocomplete-1.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/zybnet/vaadin-autocomplete/1.0-SNAPSHOT/vaadin-autocomplete-1.0-SNAPSHOT.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="vaadin-client-compiled-7.2.6.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/vaadin/vaadin-client-compiled/7.2.6/vaadin-client-compiled-7.2.6.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="vaadin-push-7.2.6.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/vaadin/vaadin-push/7.2.6/vaadin-push-7.2.6.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="atmosphere-runtime-2.1.2.vaadin3.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/vaadin/external/atmosphere/atmosphere-runtime/2.1.2.vaadin3/atmosphere-runtime-2.1.2.vaadin3.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="vaadin-slf4j-jdk14-1.6.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/vaadin/external/slf4j/vaadin-slf4j-jdk14/1.6.1/vaadin-slf4j-jdk14-1.6.1.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
     <dependent-module archiveName="dragdroplayouts-1.0.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/vaadin/addons/dragdroplayouts/1.0.1/dragdroplayouts-1.0.1.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
