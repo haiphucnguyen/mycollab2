@@ -20,7 +20,6 @@
         <Implementation-Vendor>${project.organization.name}</Implementation-Vendor>
         <Vaadin-License-Title>Apache License 2.0</Vaadin-License-Title>
         <Vaadin-Addon>${project.artifactId}-${project.version}.jar</Vaadin-Addon>
-        <Vaadin-Stylesheets>VAADIN/mobilecomponent/mobilecomponent.scss</Vaadin-Stylesheets>
     </properties>
 
     <licenses>
@@ -80,7 +79,6 @@
 							<Vaadin-Package-Version>1</Vaadin-Package-Version>
 							<Vaadin-License-Title>${Vaadin-License-Title}</Vaadin-License-Title>
 							<Vaadin-Widgetsets>com.esofthead.vaadin.mobilecomponent.WidgetSet</Vaadin-Widgetsets>
-							<Vaadin-Stylesheets>${Vaadin-Stylesheets}</Vaadin-Stylesheets>
 						</manifestEntries>
 					</archive>
 				</configuration>
