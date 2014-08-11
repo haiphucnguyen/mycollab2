@@ -5,7 +5,6 @@ import java.util.List;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
-import com.esofthead.mycollab.module.project.view.milestone.MilestoneContainer;
 import com.esofthead.mycollab.module.wiki.domain.WikiResource;
 import com.esofthead.mycollab.module.wiki.service.WikiService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;

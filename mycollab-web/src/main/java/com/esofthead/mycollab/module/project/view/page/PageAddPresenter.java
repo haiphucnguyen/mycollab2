@@ -90,6 +90,8 @@ public class PageAddPresenter extends AbstractPresenter<PageAddView> {
 		String pagePath = CurrentProjectVariables.getCurrentPagePath();
 		page.setPath(pagePath + "/" + page.getSubject());
 		wikiService.savePage(page, AppContext.getUsername());
+		EventBusFactory.getInstance().post(
+				new PageEvent.GotoAdd(PageAddPresenter.this, null));
 	}
 
 }

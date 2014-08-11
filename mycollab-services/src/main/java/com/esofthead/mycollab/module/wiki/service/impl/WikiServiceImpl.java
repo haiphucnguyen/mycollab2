@@ -101,6 +101,7 @@ public class WikiServiceImpl implements WikiService {
 						session.save();
 					} catch (Exception e) {
 						log.error("error in convertToNode Method", e);
+						throw new MyCollabException(e);
 					}
 				}
 				return null;
@@ -265,7 +266,8 @@ public class WikiServiceImpl implements WikiService {
 									pathStr[i], parentNode.getPath());
 							childNode = parentNode.addNode(pathStr[i],
 									"{http://www.esofthead.com/wiki}folder");
-							childNode.setProperty("wiki:createdUser", createdUser);
+							childNode.setProperty("wiki:createdUser",
+									createdUser);
 							session.save();
 						}
 
@@ -326,7 +328,8 @@ public class WikiServiceImpl implements WikiService {
 		try {
 			Folder folder = new Folder();
 			folder.setCreatedTime(node.getProperty("jcr:created").getDate());
-			folder.setCreatedUser(node.getProperty("wiki:createdUser").getString());
+			folder.setCreatedUser(node.getProperty("wiki:createdUser")
+					.getString());
 
 			String folderPath = node.getPath();
 			if (folderPath.startsWith("/")) {

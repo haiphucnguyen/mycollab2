@@ -41,6 +41,7 @@ class PageEditFormFieldFactory<B extends Page> extends
 					config);
 			return ckEditorTextField;
 		} else if (propertyId.equals("status")) {
+			page.setStatus(WikiI18nEnum.status_public.name());
 			return new I18nValueComboBox(false, WikiI18nEnum.status_public,
 					WikiI18nEnum.status_private, WikiI18nEnum.status_archieved);
 		}

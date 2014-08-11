@@ -7,6 +7,8 @@ import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.events.PageEvent;
 import com.esofthead.mycollab.module.project.i18n.Page18InEnum;
+import com.esofthead.mycollab.module.wiki.domain.Folder;
+import com.esofthead.mycollab.module.wiki.domain.Page;
 import com.esofthead.mycollab.module.wiki.domain.WikiResource;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
@@ -89,9 +91,28 @@ public class PageListViewImpl extends AbstractPageView implements PageListView {
 	public void displayPages(List<WikiResource> resources) {
 		pagesLayout.removeAllComponents();
 		if (resources != null) {
-
+			for (WikiResource resource : resources) {
+				VerticalLayout resourceBlock = (resource instanceof Page) ? displayPageBlock((Page) resource)
+						: displayFolderBlock((Folder) resource);
+				pagesLayout.addComponent(resourceBlock);
+			}
 		}
 
+	}
+
+	private VerticalLayout displayFolderBlock(Folder resource) {
+		VerticalLayout block = new VerticalLayout();
+		return block;
+	}
+
+	private VerticalLayout displayPageBlock(Page resource) {
+		VerticalLayout block = new VerticalLayout();
+		HorizontalLayout headerPanel = new HorizontalLayout();
+		Button pageLink = new Button(resource.getSubject());
+		headerPanel.addComponent(pageLink);
+
+		block.addComponent(headerPanel);
+		return block;
 	}
 
 }
