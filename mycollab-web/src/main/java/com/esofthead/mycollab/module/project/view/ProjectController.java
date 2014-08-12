@@ -776,7 +776,8 @@ public class ProjectController implements IController {
 			public void handle(PageEvent.GotoEdit event) {
 				ProjectView projectView = ViewManager
 						.getView(ProjectView.class);
-				PageScreenData.Edit data = new PageScreenData.Edit(new Page());
+				PageScreenData.Edit data = new PageScreenData.Edit((Page) event
+						.getData());
 				projectView.gotoPageView(data);
 			}
 		});
