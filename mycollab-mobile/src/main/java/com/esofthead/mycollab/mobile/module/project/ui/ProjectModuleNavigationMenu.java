@@ -1,13 +1,15 @@
 package com.esofthead.mycollab.mobile.module.project.ui;
 
 import com.esofthead.mycollab.mobile.ui.AbstractNavigationMenu;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 
 /**
  * @author MyCollab Ltd.
- *
+ * 
  * @since 4.4.0
- *
+ * 
  */
 public class ProjectModuleNavigationMenu extends AbstractNavigationMenu {
 
@@ -29,8 +31,15 @@ public class ProjectModuleNavigationMenu extends AbstractNavigationMenu {
 
 	@Override
 	protected ClickListener createDefaultButtonClickListener() {
-		// TODO Auto-generated method stub
-		return null;
+		return new Button.ClickListener() {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(final ClickEvent event) {
+				// TODO: Handle button click
+			}
+		};
 	}
 
 }

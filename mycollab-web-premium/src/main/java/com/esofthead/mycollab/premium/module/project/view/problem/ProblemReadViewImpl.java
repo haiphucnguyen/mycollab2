@@ -104,7 +104,7 @@ public class ProblemReadViewImpl extends
 		if (StatusI18nEnum.Closed.name().equals(beanItem.getStatus())) {
 			addLayoutStyleName(UIConstants.LINK_COMPLETED);
 		}
-		commentList.loadComments(beanItem.getId());
+		commentList.loadComments("" + beanItem.getId());
 		historyList.loadHistory(beanItem.getId());
 
 		dateInfoComp.displayEntryDateTime(beanItem);
