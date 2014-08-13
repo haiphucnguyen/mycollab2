@@ -110,7 +110,7 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp2<SimpleRisk>
 			addLayoutStyleName(UIConstants.LINK_COMPLETED);
 		}
 
-		commentDisplay.loadComments(beanItem.getId());
+		commentDisplay.loadComments("" + beanItem.getId());
 		historyList.loadHistory(beanItem.getId());
 
 		dateInfoComp.displayEntryDateTime(beanItem);

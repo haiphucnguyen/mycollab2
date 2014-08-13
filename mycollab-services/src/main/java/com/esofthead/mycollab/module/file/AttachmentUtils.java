@@ -122,38 +122,38 @@ public class AttachmentUtils {
 	}
 
 	public static String getProjectEntityCommentAttachmentPath(
-			CommentType type, int accountId, int projectId, int typeid,
+			CommentType type, int accountId, int projectId, String typeid,
 			int commentId) {
 		String attachmentPath = "";
 
 		if (CommentType.PRJ_BUG.equals(type)) {
 			attachmentPath = AttachmentUtils
 					.getProjectBugCommentAttachmentPath(accountId, projectId,
-							typeid, commentId);
+							Integer.parseInt(typeid), commentId);
 		} else if (CommentType.PRJ_MESSAGE.equals(type)) {
 			attachmentPath = AttachmentUtils
 					.getProjectMessageCommentAttachmentPath(accountId,
-							projectId, typeid, commentId);
+							projectId, Integer.parseInt(typeid), commentId);
 		} else if (CommentType.PRJ_MILESTONE.equals(type)) {
 			attachmentPath = AttachmentUtils
 					.getProjectMilestoneCommentAttachmentPath(accountId,
-							projectId, typeid, commentId);
+							projectId, Integer.parseInt(typeid), commentId);
 		} else if (CommentType.PRJ_PROBLEM.equals(type)) {
 			attachmentPath = AttachmentUtils
 					.getProjectProblemCommentAttachmentPath(accountId,
-							projectId, typeid, commentId);
+							projectId, Integer.parseInt(typeid), commentId);
 		} else if (CommentType.PRJ_RISK.equals(type)) {
 			attachmentPath = AttachmentUtils
 					.getProjectRiskCommentAttachmentPath(accountId, projectId,
-							typeid, commentId);
+							Integer.parseInt(typeid), commentId);
 		} else if (CommentType.PRJ_TASK.equals(type)) {
 			attachmentPath = AttachmentUtils
 					.getProjectTaskCommentAttachmentPath(accountId, projectId,
-							typeid, commentId);
+							Integer.parseInt(typeid), commentId);
 		} else if (CommentType.PRJ_TASK_LIST.equals(type)) {
 			attachmentPath = AttachmentUtils
 					.getProjectTaskListCommentAttachmentPath(accountId,
-							projectId, typeid, commentId);
+							projectId, Integer.parseInt(typeid), commentId);
 		} else {
 			log.error("Do not support comment attachment path " + type);
 		}
