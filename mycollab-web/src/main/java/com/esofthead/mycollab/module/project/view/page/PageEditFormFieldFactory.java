@@ -31,14 +31,23 @@ class PageEditFormFieldFactory<B extends Page> extends
 		if (propertyId.equals("content")) {
 			CKEditorConfig config = new CKEditorConfig();
 			config.useCompactTags();
-			config.disableElementsPath();
 			config.setResizeDir(CKEditorConfig.RESIZE_DIR.HORIZONTAL);
 			config.disableSpellChecker();
-			config.setToolbarCanCollapse(false);
+			config.disableResizeEditor();
+			config.disableElementsPath();
+			config.setToolbarCanCollapse(true);
 			config.setWidth("100%");
+			
+			config.setFilebrowserBrowseUrl("a" + "/ckeditorFileBrowser.jsp?ccid=");
+			config.setFilebrowserWindowWidth("500"); // 4/27/2012 believe there's a bug for any value less than 640 being ignored
+			config.setFilebrowserWindowHeight("500");
+			config.setFilebrowserImageBrowseUrl("a" + "/ckeditorImageBrowser.jsp?ccid=");
+			config.setFilebrowserImageWindowWidth("600");
+			config.setFilebrowserImageWindowHeight("500");
 
 			final CKEditorTextField ckEditorTextField = new CKEditorTextField(
 					config);
+			ckEditorTextField.setHeight("450px");
 			return ckEditorTextField;
 		} else if (propertyId.equals("status")) {
 			page.setStatus(WikiI18nEnum.status_public.name());
