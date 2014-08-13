@@ -98,10 +98,12 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 							if (childNode != null) {
 								if (!isNodeFolder(childNode)) {
 									// node must is folder
-									String errorString = "Invalid path. User want to create a content has path %s but there is a folder has path %s";
+									String errorString = "Invalid path. User want to create a content has path %s but there is a content has path %s. This node has type %s";
 									throw new ContentException(String.format(
 											errorString, content.getPath(),
-											childNode.getPath()));
+											childNode.getPath(), childNode
+													.getPrimaryNodeType()
+													.getName()));
 								}
 							} else {
 								// add node
