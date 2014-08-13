@@ -31,6 +31,7 @@ import org.apache.jackrabbit.commons.JcrUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.extensions.jcr.JcrCallback;
 import org.springframework.extensions.jcr.JcrTemplate;
 import org.springframework.stereotype.Repository;
@@ -52,6 +53,7 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 	private static Logger log = LoggerFactory
 			.getLogger(ContentJcrDaoImpl.class);
 
+	@Qualifier("jcrTemplate")
 	@Autowired
 	private JcrTemplate jcrTemplate;
 
