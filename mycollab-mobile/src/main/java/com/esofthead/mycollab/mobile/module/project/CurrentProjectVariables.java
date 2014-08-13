@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.mobile.module.project.events;
+package com.esofthead.mycollab.mobile.module.project;
 
 import java.util.List;
 
