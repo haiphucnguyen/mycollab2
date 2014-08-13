@@ -70,6 +70,7 @@ public class PageReadViewImpl extends AbstractPreviewItemComp2<Page> implements
 
 	@Override
 	protected void onPreviewItem() {
+		commentListComp.loadComments(beanItem.getId());
 		pageInfoComp.displayEntryInfo();
 	}
 

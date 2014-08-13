@@ -296,11 +296,13 @@ public class ProjectTaskRelayEmailNotificationActionImpl extends
 
 			put("startdate", new DateFieldFormat("startdate",
 					TaskI18nEnum.FORM_START_DATE));
-			put("enddate", new DateFieldFormat("enddate",
-					TaskI18nEnum.FORM_END_DATE));
 
 			put("actualstartdate", new DateFieldFormat("actualstartdate",
 					TaskI18nEnum.FORM_ACTUAL_START_DATE));
+
+			put("enddate", new DateFieldFormat("enddate",
+					TaskI18nEnum.FORM_END_DATE));
+
 			put("actualenddate", new DateFieldFormat("actualenddate",
 					TaskI18nEnum.FORM_ACTUAL_END_DATE));
 

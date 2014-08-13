@@ -111,6 +111,11 @@ public class SimpleComment extends Comment {
 							.getProjectTaskListCommentAttachmentPath(
 									getSaccountid(), getExtratypeid(),
 									Integer.parseInt(getTypeid()), getId());
+				} else if (CommentType.PRJ_PAGE.toString().equals(getType())) {
+					commentPath = AttachmentUtils
+							.getProjectPageCommentAttachmentPath(
+									getSaccountid(), getExtratypeid(),
+									getTypeid(), getId());
 				} else if (CommentType.CRM_NOTE.toString().equals(getType())) {
 					commentPath = AttachmentUtils
 							.getCrmNoteCommentAttachmentPath(getSaccountid(),
