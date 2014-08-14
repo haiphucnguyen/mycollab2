@@ -14,6 +14,11 @@ import com.esofthead.mycollab.module.wiki.domain.WikiResource;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
+import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
+import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
+import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
+import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
+import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
@@ -22,9 +27,11 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Layout;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
@@ -155,59 +162,132 @@ public class PageListViewImpl extends AbstractPageView implements PageListView {
 	private class NewGroupWindow extends Window {
 		private static final long serialVersionUID = 1L;
 
+		private Folder folder;
+
 		public NewGroupWindow() {
 			super(AppContext.getMessage(Page18InEnum.DIALOG_NEW_GROUP_TITLE));
 			this.setModal(true);
 			this.setWidth("600px");
-			this.setResizable(true);
+			this.setResizable(false);
 			this.center();
 			VerticalLayout content = new VerticalLayout();
 			content.setSpacing(true);
-			content.setMargin(true);
+			content.setMargin(new MarginInfo(false, false, true, false));
 
-			HorizontalLayout inputPanel = new HorizontalLayout();
-			inputPanel.setWidth("100%");
-			inputPanel.addComponent(new Label(AppContext
-					.getMessage(Page18InEnum.FIELD_GROUP)));
-			TextField groupNameField = new TextField();
-			inputPanel.addComponent(groupNameField);
-			inputPanel.setExpandRatio(groupNameField, 1);
-			content.addComponent(inputPanel);
+			EditForm editForm = new EditForm();
 
-			HorizontalLayout controlPanel = new HorizontalLayout();
-			controlPanel.setSpacing(true);
-			Button cancelBtn = new Button(
-					AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL_LABEL),
-					new ClickListener() {
-						private static final long serialVersionUID = 1L;
+			folder = new Folder();
+			editForm.setBean(folder);
+			content.addComponent(editForm);
 
-						@Override
-						public void buttonClick(ClickEvent event) {
-							NewGroupWindow.this.close();
-
-						}
-					});
-			cancelBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
-			UiUtils.addComponent(controlPanel, cancelBtn,
-					Alignment.MIDDLE_RIGHT);
-
-			Button saveBtn = new Button(
-					AppContext.getMessage(GenericI18Enum.BUTTON_SAVE_LABEL),
-					new ClickListener() {
-						private static final long serialVersionUID = 1L;
-
-						@Override
-						public void buttonClick(ClickEvent event) {
-							// TODO Auto-generated method stub
-
-						}
-					});
-			saveBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
-			UiUtils.addComponent(controlPanel, saveBtn, Alignment.MIDDLE_RIGHT);
-
-			content.addComponent(controlPanel);
-			content.setComponentAlignment(controlPanel, Alignment.MIDDLE_RIGHT);
 			this.setContent(content);
+		}
+
+		private class EditForm extends AdvancedEditBeanForm<Folder> {
+
+			@Override
+			public void setBean(final Folder item) {
+				this.setFormLayoutFactory(new FormLayoutFactory());
+				this.setBeanFormFieldFactory(new EditFormFieldFactory(
+						EditForm.this));
+				super.setBean(item);
+			}
+
+			class FormLayoutFactory implements IFormLayoutFactory {
+
+				private static final long serialVersionUID = 1L;
+				private GridFormLayoutHelper informationLayout;
+
+				@Override
+				public Layout getLayout() {
+					final VerticalLayout layout = new VerticalLayout();
+					this.informationLayout = new GridFormLayoutHelper(2, 2,
+							"100%", "167px", Alignment.TOP_LEFT);
+					this.informationLayout.getLayout().setWidth("100%");
+					this.informationLayout.getLayout().setMargin(false);
+					this.informationLayout.getLayout().addStyleName(
+							"colored-gridlayout");
+
+					layout.addComponent(this.informationLayout.getLayout());
+
+					final HorizontalLayout controlsBtn = new HorizontalLayout();
+					controlsBtn.setSpacing(true);
+					controlsBtn.setMargin(new MarginInfo(true, true, true,
+							false));
+					layout.addComponent(controlsBtn);
+
+					final Button cancelBtn = new Button(
+							AppContext
+									.getMessage(GenericI18Enum.BUTTON_CANCEL_LABEL),
+							new Button.ClickListener() {
+								private static final long serialVersionUID = 1L;
+
+								@Override
+								public void buttonClick(
+										final Button.ClickEvent event) {
+									NewGroupWindow.this.close();
+								}
+							});
+					cancelBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
+					controlsBtn.addComponent(cancelBtn);
+					controlsBtn.setComponentAlignment(cancelBtn,
+							Alignment.MIDDLE_LEFT);
+
+					final Button saveBtn = new Button(
+							AppContext
+									.getMessage(GenericI18Enum.BUTTON_SAVE_LABEL),
+							new Button.ClickListener() {
+								private static final long serialVersionUID = 1L;
+
+								@Override
+								public void buttonClick(
+										final Button.ClickEvent event) {
+
+									if (EditForm.this.validateForm()) {
+
+										NewGroupWindow.this.close();
+									}
+								}
+							});
+					saveBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+					controlsBtn.addComponent(saveBtn);
+					controlsBtn.setComponentAlignment(saveBtn,
+							Alignment.MIDDLE_RIGHT);
+
+					layout.setComponentAlignment(controlsBtn,
+							Alignment.MIDDLE_RIGHT);
+
+					return layout;
+				}
+
+				@Override
+				public void attachField(Object propertyId, Field<?> field) {
+					if (propertyId.equals("name")) {
+						this.informationLayout.addComponent(field,
+								AppContext.getMessage(Page18InEnum.FORM_GROUP),
+								0, 0);
+					} else if (propertyId.equals("description")) {
+						this.informationLayout.addComponent(field, AppContext
+								.getMessage(GenericI18Enum.FORM_DESCRIPTION),
+								0, 1, 2, "100%", Alignment.MIDDLE_LEFT);
+					}
+
+				}
+			}
+		}
+
+		private class EditFormFieldFactory extends
+				AbstractBeanFieldGroupEditFieldFactory<Folder> {
+			private static final long serialVersionUID = 1L;
+
+			public EditFormFieldFactory(GenericBeanForm<Folder> form) {
+				super(form);
+			}
+
+			@Override
+			protected Field<?> onCreateField(final Object propertyId) {
+				return null;
+			}
 		}
 	}
 

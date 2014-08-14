@@ -103,6 +103,8 @@ public class WikiServiceImpl implements WikiService {
 												"{http://www.esofthead.com/wiki}folder");
 								childNode.setProperty("wiki:createdUser",
 										createdUser);
+								childNode.setProperty("wiki:name", pathStr[i]);
+								childNode.setProperty("wiki:description", "");
 							}
 							parentNode = childNode;
 						}
@@ -338,6 +340,7 @@ public class WikiServiceImpl implements WikiService {
 									createdUser);
 							childNode.setProperty("wiki:description",
 									folder.getDescription());
+							childNode.setProperty("wiki:name", folder.getName());
 							session.save();
 						}
 
@@ -400,6 +403,9 @@ public class WikiServiceImpl implements WikiService {
 			folder.setCreatedTime(node.getProperty("jcr:created").getDate());
 			folder.setCreatedUser(node.getProperty("wiki:createdUser")
 					.getString());
+			folder.setDescription(node.getProperty("wiki:description")
+					.getString());
+			folder.setName(node.getProperty("wiki:name").getString());
 
 			String folderPath = node.getPath();
 			if (folderPath.startsWith("/")) {
