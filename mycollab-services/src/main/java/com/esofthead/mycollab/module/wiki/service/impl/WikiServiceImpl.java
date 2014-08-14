@@ -251,7 +251,7 @@ public class WikiServiceImpl implements WikiService {
 										+ " and its path is " + path);
 					}
 				}
-				return null;
+				return new ArrayList<Page>();
 			}
 		});
 	}
@@ -293,7 +293,7 @@ public class WikiServiceImpl implements WikiService {
 				}
 
 				log.debug("There is no resource in path {}", path);
-				return null;
+				return new ArrayList<WikiResource>();
 			}
 		});
 	}
