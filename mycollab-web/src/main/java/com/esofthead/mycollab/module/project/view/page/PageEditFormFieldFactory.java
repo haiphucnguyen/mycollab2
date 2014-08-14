@@ -4,6 +4,7 @@ import org.vaadin.openesignforms.ckeditor.CKEditorConfig;
 import org.vaadin.openesignforms.ckeditor.CKEditorTextField;
 
 import com.esofthead.mycollab.common.i18n.WikiI18nEnum;
+import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.module.wiki.domain.Page;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
@@ -37,13 +38,15 @@ class PageEditFormFieldFactory<B extends Page> extends
 			config.disableElementsPath();
 			config.setToolbarCanCollapse(true);
 			config.setWidth("100%");
-			
-			config.setFilebrowserBrowseUrl("a" + "/ckeditorFileBrowser.jsp?ccid=");
-			config.setFilebrowserWindowWidth("500"); // 4/27/2012 believe there's a bug for any value less than 640 being ignored
-			config.setFilebrowserWindowHeight("500");
-			config.setFilebrowserImageBrowseUrl("a" + "/ckeditorImageBrowser.jsp?ccid=");
-			config.setFilebrowserImageWindowWidth("600");
-			config.setFilebrowserImageWindowHeight("500");
+
+			String appUrl = SiteConfiguration.getAppUrl();
+			if (appUrl.endsWith("/")) {
+				config.setFilebrowserUploadUrl(SiteConfiguration.getAppUrl()
+						+ "page/upload");
+			} else {
+				config.setFilebrowserUploadUrl(SiteConfiguration.getAppUrl()
+						+ "/page/upload");
+			}
 
 			final CKEditorTextField ckEditorTextField = new CKEditorTextField(
 					config);

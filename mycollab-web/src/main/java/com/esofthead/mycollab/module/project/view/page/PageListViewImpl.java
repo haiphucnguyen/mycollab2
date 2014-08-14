@@ -2,6 +2,7 @@ package com.esofthead.mycollab.module.project.view.page;
 
 import java.util.List;
 
+import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
@@ -24,7 +25,10 @@ import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.TextField;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Window;
 
 /**
  * 
@@ -39,6 +43,8 @@ public class PageListViewImpl extends AbstractPageView implements PageListView {
 	private HorizontalLayout headerLayout;
 
 	private VerticalLayout pagesLayout;
+
+	private List<WikiResource> resources;
 
 	public PageListViewImpl() {
 		this.setMargin(new MarginInfo(false, true, false, true));
@@ -58,7 +64,28 @@ public class PageListViewImpl extends AbstractPageView implements PageListView {
 		Label headerText = new Label(
 				AppContext.getMessage(Page18InEnum.VIEW_LIST_TITLE));
 
-		final Button createBtn = new Button(
+		UiUtils.addComponent(headerLayout, titleIcon, Alignment.MIDDLE_LEFT);
+		UiUtils.addComponent(headerLayout, headerText, Alignment.MIDDLE_LEFT);
+		headerLayout.setExpandRatio(headerText, 1.0f);
+
+		final Button newGroupBtn = new Button(
+				AppContext.getMessage(Page18InEnum.BUTTON_NEW_GROUP),
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void buttonClick(final ClickEvent event) {
+						UI.getCurrent().addWindow(new NewGroupWindow());
+					}
+				});
+		newGroupBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+		newGroupBtn.setIcon(MyCollabResource
+				.newResource("icons/16/addRecord.png"));
+		newGroupBtn.setEnabled(CurrentProjectVariables
+				.canWrite(ProjectRolePermissionCollections.PAGES));
+		UiUtils.addComponent(headerLayout, newGroupBtn, Alignment.MIDDLE_RIGHT);
+
+		final Button newPageBtn = new Button(
 				AppContext.getMessage(Page18InEnum.BUTTON_NEW_PAGE),
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
@@ -69,18 +96,15 @@ public class PageListViewImpl extends AbstractPageView implements PageListView {
 								new PageEvent.GotoAdd(this, null));
 					}
 				});
-		createBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
-		createBtn.setIcon(MyCollabResource
+		newPageBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+		newPageBtn.setIcon(MyCollabResource
 				.newResource("icons/16/addRecord.png"));
-		createBtn.setEnabled(CurrentProjectVariables
+		newPageBtn.setEnabled(CurrentProjectVariables
 				.canWrite(ProjectRolePermissionCollections.PAGES));
 
 		headerText.setStyleName(UIConstants.HEADER_TEXT);
 
-		UiUtils.addComponent(headerLayout, titleIcon, Alignment.MIDDLE_LEFT);
-		UiUtils.addComponent(headerLayout, headerText, Alignment.MIDDLE_LEFT);
-		UiUtils.addComponent(headerLayout, createBtn, Alignment.MIDDLE_RIGHT);
-		headerLayout.setExpandRatio(headerText, 1.0f);
+		UiUtils.addComponent(headerLayout, newPageBtn, Alignment.MIDDLE_RIGHT);
 
 		headerLayout.setStyleName(UIConstants.HEADER_VIEW);
 		headerLayout.setWidth("100%");
@@ -90,6 +114,7 @@ public class PageListViewImpl extends AbstractPageView implements PageListView {
 
 	@Override
 	public void displayPages(List<WikiResource> resources) {
+		this.resources = resources;
 		pagesLayout.removeAllComponents();
 		if (resources != null) {
 			for (WikiResource resource : resources) {
@@ -125,6 +150,65 @@ public class PageListViewImpl extends AbstractPageView implements PageListView {
 
 		block.addComponent(headerPanel);
 		return block;
+	}
+
+	private class NewGroupWindow extends Window {
+		private static final long serialVersionUID = 1L;
+
+		public NewGroupWindow() {
+			super(AppContext.getMessage(Page18InEnum.DIALOG_NEW_GROUP_TITLE));
+			this.setModal(true);
+			this.setWidth("600px");
+			this.setResizable(true);
+			this.center();
+			VerticalLayout content = new VerticalLayout();
+			content.setSpacing(true);
+			content.setMargin(true);
+
+			HorizontalLayout inputPanel = new HorizontalLayout();
+			inputPanel.setWidth("100%");
+			inputPanel.addComponent(new Label(AppContext
+					.getMessage(Page18InEnum.FIELD_GROUP)));
+			TextField groupNameField = new TextField();
+			inputPanel.addComponent(groupNameField);
+			inputPanel.setExpandRatio(groupNameField, 1);
+			content.addComponent(inputPanel);
+
+			HorizontalLayout controlPanel = new HorizontalLayout();
+			controlPanel.setSpacing(true);
+			Button cancelBtn = new Button(
+					AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL_LABEL),
+					new ClickListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void buttonClick(ClickEvent event) {
+							NewGroupWindow.this.close();
+
+						}
+					});
+			cancelBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
+			UiUtils.addComponent(controlPanel, cancelBtn,
+					Alignment.MIDDLE_RIGHT);
+
+			Button saveBtn = new Button(
+					AppContext.getMessage(GenericI18Enum.BUTTON_SAVE_LABEL),
+					new ClickListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void buttonClick(ClickEvent event) {
+							// TODO Auto-generated method stub
+
+						}
+					});
+			saveBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+			UiUtils.addComponent(controlPanel, saveBtn, Alignment.MIDDLE_RIGHT);
+
+			content.addComponent(controlPanel);
+			content.setComponentAlignment(controlPanel, Alignment.MIDDLE_RIGHT);
+			this.setContent(content);
+		}
 	}
 
 }
