@@ -125,6 +125,26 @@ public class WikiServiceImpl implements WikiService {
 
 	}
 
+	@Override
+	public Page getPage(final String path) {
+		return jcrTemplate.execute(new JcrCallback<Page>() {
+
+			@Override
+			public Page doInJcr(Session session) throws IOException,
+					RepositoryException {
+				Node rootNode = session.getRootNode();
+				Node node = getNode(rootNode, path);
+				if (node != null) {
+					if (isNodePage(node)) {
+						return convertNodeToPage(node);
+					}
+				}
+
+				return null;
+			}
+		});
+	}
+
 	private static Node getNode(Node node, String path) {
 		try {
 			return node.getNode(path);
