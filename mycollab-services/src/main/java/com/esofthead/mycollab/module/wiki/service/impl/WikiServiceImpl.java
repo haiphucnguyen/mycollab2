@@ -145,6 +145,26 @@ public class WikiServiceImpl implements WikiService {
 		});
 	}
 
+	@Override
+	public Folder getFolder(final String path) {
+		return jcrTemplate.execute(new JcrCallback<Folder>() {
+
+			@Override
+			public Folder doInJcr(Session session) throws IOException,
+					RepositoryException {
+				Node rootNode = session.getRootNode();
+				Node node = getNode(rootNode, path);
+				if (node != null) {
+					if (isNodeFolder(node)) {
+						return convertNodeToFolder(node);
+					}
+				}
+
+				return null;
+			}
+		});
+	}
+
 	private static Node getNode(Node node, String path) {
 		try {
 			return node.getNode(path);

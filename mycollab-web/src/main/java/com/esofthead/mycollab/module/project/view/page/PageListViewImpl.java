@@ -346,7 +346,9 @@ public class PageListViewImpl extends AbstractPageView implements PageListView {
 			@Override
 			protected Field<?> onCreateField(final Object propertyId) {
 				if (propertyId.equals("description")) {
-					return new RichTextArea();
+					RichTextArea descrArea = new RichTextArea();
+					descrArea.setNullRepresentation("");
+					return descrArea;
 				}
 
 				return null;

@@ -16,7 +16,6 @@
  */
 package com.esofthead.mycollab.common;
 
-
 /**
  * 
  * @author MyCollab Ltd.
@@ -35,7 +34,7 @@ public class UrlTokenizer {
 	}
 
 	public int getInt() throws InvalidTokenException {
-		if (!remainStrVal.equals("")) {
+		if (hasMoreTokens()) {
 			return Integer.parseInt(getNextToken());
 		} else {
 			throw new InvalidTokenException("Invalid token " + internalVal);
@@ -43,11 +42,15 @@ public class UrlTokenizer {
 	}
 
 	public String getString() throws InvalidTokenException {
-		if (!remainStrVal.equals("")) {
+		if (hasMoreTokens()) {
 			return getNextToken();
 		} else {
 			throw new InvalidTokenException("Invalid token " + internalVal);
 		}
+	}
+
+	public boolean hasMoreTokens() {
+		return !remainStrVal.equals("");
 	}
 
 	private String getNextToken() {

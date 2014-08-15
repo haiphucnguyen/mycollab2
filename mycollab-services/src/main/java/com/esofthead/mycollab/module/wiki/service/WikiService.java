@@ -28,6 +28,13 @@ public interface WikiService {
 	 * @return
 	 */
 	Page getPage(String path);
+	
+	/**
+	 * 
+	 * @param path
+	 * @return
+	 */
+	Folder getFolder(String path);
 
 	/**
 	 * 

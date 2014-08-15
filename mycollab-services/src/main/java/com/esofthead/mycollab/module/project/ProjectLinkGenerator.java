@@ -106,6 +106,12 @@ public class ProjectLinkGenerator {
 						pagePath });
 	}
 
+	public static String generatePageEdit(int projectId, String pagePath) {
+		return "project/page/edit/"
+				+ GenericLinkUtils.encodeParam(new Object[] { projectId,
+						pagePath });
+	}
+
 	public static String generateProblemsLink(Integer projectId) {
 		return "project/problem/list/" + UrlEncodeDecoder.encode(projectId);
 	}

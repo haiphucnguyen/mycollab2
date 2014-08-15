@@ -63,7 +63,10 @@ import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData;
 import com.esofthead.mycollab.module.tracker.domain.BugWithBLOBs;
 import com.esofthead.mycollab.module.tracker.domain.Component;
 import com.esofthead.mycollab.module.tracker.domain.Version;
+import com.esofthead.mycollab.module.wiki.domain.Folder;
 import com.esofthead.mycollab.module.wiki.domain.Page;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.module.wiki.service.WikiService;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.CacheableComponent;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
@@ -306,9 +309,40 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
 		}
 	}
 
+	private void buildPageBreadcrumbChain() {
+		String basePath = CurrentProjectVariables.getBasePagePath();
+		String currentPath = CurrentProjectVariables.getCurrentPagePath();
+
+		this.addLink(new Button(
+				AppContext.getMessage(BreadcrumbI18nEnum.PAGES),
+				new GotoPageListListener(basePath)));
+		this.setLinkEnabled(true, 1);
+
+		String extraPath = currentPath.substring(basePath.length() + 1);
+		if (!extraPath.equals("")) {
+			WikiService wikiService = ApplicationContextUtil
+					.getSpringBean(WikiService.class);
+
+			String[] subPath = extraPath.split("/");
+			StringBuffer tempPath = new StringBuffer();
+			for (String var : subPath) {
+				tempPath.append(var);
+				String folderPath = basePath + "/" + tempPath.toString();
+				Folder folder = wikiService.getFolder(folderPath);
+				if (folder != null) {
+					this.addLink(new Button(folder.getName(),
+							new GotoPageListListener(folderPath)));
+				} else {
+					return;
+				}
+
+			}
+		}
+	}
+
 	public void gotoPageList() {
 		this.select(0);
-		this.addLink(new Button(AppContext.getMessage(BreadcrumbI18nEnum.PAGES)));
+		buildPageBreadcrumbChain();
 		AppContext.addFragment(ProjectLinkGenerator.generatePagesLink(
 				project.getId(), CurrentProjectVariables.getCurrentPagePath()),
 				AppContext.getMessage(Page18InEnum.VIEW_LIST_TITLE));
@@ -316,36 +350,33 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
 
 	public void gotoPageAdd() {
 		this.select(0);
-		this.addLink(new Button(
-				AppContext.getMessage(BreadcrumbI18nEnum.PAGES),
-				new GotoPageListListener(null)));
-		this.setLinkEnabled(true, 1);
+		buildPageBreadcrumbChain();
 		this.addLink(new Button(AppContext
 				.getMessage(Page18InEnum.VIEW_NEW_TITLE)));
 		AppContext.addFragment(ProjectLinkGenerator.generatePageAdd(
 				project.getId(), CurrentProjectVariables.getCurrentPagePath()),
 				AppContext.getMessage(Page18InEnum.VIEW_NEW_TITLE));
 	}
-	
+
 	public void gotoPageRead(Page page) {
 		this.select(0);
-		this.addLink(new Button(
-				AppContext.getMessage(BreadcrumbI18nEnum.PAGES),
-				new GotoPageListListener(null)));
-		this.setLinkEnabled(true, 1);
+		buildPageBreadcrumbChain();
 		this.addLink(new Button(AppContext
 				.getMessage(Page18InEnum.VIEW_NEW_TITLE)));
-		AppContext.addFragment(ProjectLinkGenerator.generatePageRead(
-				project.getId(), page.getPath()),
+		AppContext.addFragment(
+				ProjectLinkGenerator.generatePageRead(project.getId(),
+						page.getPath()),
 				AppContext.getMessage(Page18InEnum.VIEW_NEW_TITLE));
 	}
 
 	public void gotoPageEdit(Page page) {
 		this.select(0);
-		this.addLink(new Button(
-				AppContext.getMessage(BreadcrumbI18nEnum.PAGES),
-				new GotoPageListListener(null)));
-		this.setLinkEnabled(true, 1);
+		buildPageBreadcrumbChain();
+
+		AppContext.addFragment(
+				ProjectLinkGenerator.generatePageEdit(project.getId(),
+						page.getPath()),
+				AppContext.getMessage(Page18InEnum.VIEW_NEW_TITLE));
 	}
 
 	private static class GotoPageListListener implements Button.ClickListener {
