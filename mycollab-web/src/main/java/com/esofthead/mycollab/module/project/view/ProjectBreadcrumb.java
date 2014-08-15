@@ -318,7 +318,10 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
 				new GotoPageListListener(basePath)));
 		this.setLinkEnabled(true, 1);
 
-		String extraPath = currentPath.substring(basePath.length() + 1);
+		String extraPath = currentPath.substring(basePath.length());
+		if (extraPath.startsWith("/")) {
+			extraPath = extraPath.substring(1);
+		}
 		if (!extraPath.equals("")) {
 			WikiService wikiService = ApplicationContextUtil
 					.getSpringBean(WikiService.class);
@@ -326,8 +329,8 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
 			String[] subPath = extraPath.split("/");
 			StringBuffer tempPath = new StringBuffer();
 			for (String var : subPath) {
-				tempPath.append(var);
-				String folderPath = basePath + "/" + tempPath.toString();
+				tempPath.append("/").append(var);
+				String folderPath = basePath + tempPath.toString();
 				Folder folder = wikiService.getFolder(folderPath);
 				if (folder != null) {
 					this.addLink(new Button(folder.getName(),

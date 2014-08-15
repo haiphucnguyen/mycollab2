@@ -378,8 +378,11 @@ public class WikiServiceImpl implements WikiService {
 									"{http://www.esofthead.com/wiki}folder");
 							childNode.setProperty("wiki:createdUser",
 									createdUser);
-							childNode.setProperty("wiki:description",
-									folder.getDescription());
+							String desc = folder.getDescription();
+							if (desc == null) {
+								desc = "";
+							}
+							childNode.setProperty("wiki:description", desc);
 							childNode.setProperty("wiki:name", folder.getName());
 							session.save();
 						}

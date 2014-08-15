@@ -295,7 +295,6 @@ public class PageListViewImpl extends AbstractPageView implements PageListView {
 								@Override
 								public void buttonClick(
 										final Button.ClickEvent event) {
-
 									if (EditForm.this.validateForm()) {
 
 										WikiService wikiService = ApplicationContextUtil
