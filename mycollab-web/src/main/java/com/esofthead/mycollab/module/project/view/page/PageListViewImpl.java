@@ -295,7 +295,6 @@ public class PageListViewImpl extends AbstractPageView implements PageListView {
 								@Override
 								public void buttonClick(
 										final Button.ClickEvent event) {
-
 									if (EditForm.this.validateForm()) {
 
 										WikiService wikiService = ApplicationContextUtil
@@ -346,7 +345,9 @@ public class PageListViewImpl extends AbstractPageView implements PageListView {
 			@Override
 			protected Field<?> onCreateField(final Object propertyId) {
 				if (propertyId.equals("description")) {
-					return new RichTextArea();
+					RichTextArea descrArea = new RichTextArea();
+					descrArea.setNullRepresentation("");
+					return descrArea;
 				}
 
 				return null;

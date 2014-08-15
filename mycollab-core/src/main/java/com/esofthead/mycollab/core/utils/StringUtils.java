@@ -84,23 +84,11 @@ public class StringUtils {
 						"<a href=\"$0\">$0</a>");
 	}
 
-	public static String getStringFieldValue(Object o) {
+	public static String trimHtmlTags(String o) {
 		if (o == null) {
 			return "";
 		} else {
-			String str = Jsoup.parse(o.toString()).html();
-			if (str.length() > 200) {
-				str = str.substring(0, 200);
-			}
-			return str;
-		}
-	}
-
-	public static String trimHtmlTags(Object o) {
-		if (o == null) {
-			return "";
-		} else {
-			String str = Jsoup.parse(o.toString()).text();
+			String str = Jsoup.parse(o).text();
 			if (str.length() > 200) {
 				str = str.substring(0, 200);
 			}
