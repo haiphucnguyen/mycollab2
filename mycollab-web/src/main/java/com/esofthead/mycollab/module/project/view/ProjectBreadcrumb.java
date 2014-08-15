@@ -21,6 +21,7 @@ import java.util.Date;
 
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
+import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectLinkGenerator;
@@ -364,8 +365,7 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
 	public void gotoPageRead(Page page) {
 		this.select(0);
 		buildPageBreadcrumbChain();
-		this.addLink(new Button(AppContext
-				.getMessage(Page18InEnum.VIEW_NEW_TITLE)));
+		this.addLink(new Button(StringUtils.trim(page.getSubject(), 50)));
 		AppContext.addFragment(
 				ProjectLinkGenerator.generatePageRead(project.getId(),
 						page.getPath()),
