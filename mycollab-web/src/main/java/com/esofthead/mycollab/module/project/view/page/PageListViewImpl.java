@@ -1,7 +1,6 @@
 package com.esofthead.mycollab.module.project.view.page;
 
 import java.util.List;
-import java.util.UUID;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.core.utils.StringUtils;
@@ -139,7 +138,7 @@ public class PageListViewImpl extends AbstractPageView implements PageListView {
 
 	private Layout displayFolderBlock(final Folder resource) {
 		HorizontalLayout container = new HorizontalLayout();
-		container.setWidth("100%");
+		container.setWidth("600px");
 		container.setSpacing(true);
 		Image iconResource = new Image("",
 				MyCollabResource.newResource("icons/48/project/folder.png"));
@@ -174,7 +173,7 @@ public class PageListViewImpl extends AbstractPageView implements PageListView {
 
 	private Layout displayPageBlock(final Page resource) {
 		HorizontalLayout container = new HorizontalLayout();
-		container.setWidth("100%");
+		container.setWidth("600px");
 		container.setSpacing(true);
 
 		Image iconResource = new Image("",
@@ -227,7 +226,7 @@ public class PageListViewImpl extends AbstractPageView implements PageListView {
 
 			folder = new Folder();
 			String pagePath = CurrentProjectVariables.getCurrentPagePath();
-			folder.setPath(pagePath + "/" + UUID.randomUUID().toString());
+			folder.setPath(pagePath + "/" + StringUtils.generateSoftUniqueId());
 
 			editForm.setBean(folder);
 			content.addComponent(editForm);

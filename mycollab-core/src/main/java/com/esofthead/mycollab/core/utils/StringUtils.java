@@ -16,6 +16,9 @@
  */
 package com.esofthead.mycollab.core.utils;
 
+import java.util.GregorianCalendar;
+import java.util.Random;
+
 import org.jsoup.Jsoup;
 
 /**
@@ -94,6 +97,15 @@ public class StringUtils {
 			}
 			return str;
 		}
+	}
+
+	public static String generateSoftUniqueId() {
+		return "" + (new GregorianCalendar().getTimeInMillis())
+				+ new Random().nextInt(10);
+	}
+
+	public static void main(String[] args) {
+		System.out.println(generateSoftUniqueId());
 	}
 
 	public static String extractNameFromEmail(String value) {
