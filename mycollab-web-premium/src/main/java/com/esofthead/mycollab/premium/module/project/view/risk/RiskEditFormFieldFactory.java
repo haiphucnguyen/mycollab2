@@ -22,12 +22,12 @@ import com.vaadin.ui.TextField;
  * 
  * @param <B>
  */
-class RiskEditFormFieldFactory<B extends Risk> extends
-		AbstractBeanFieldGroupEditFieldFactory<B> {
+class RiskEditFormFieldFactory extends
+		AbstractBeanFieldGroupEditFieldFactory<Risk> {
 
 	private static final long serialVersionUID = 1L;
 
-	RiskEditFormFieldFactory(GenericBeanForm<B> form) {
+	RiskEditFormFieldFactory(GenericBeanForm<Risk> form) {
 		super(form);
 	}
 
