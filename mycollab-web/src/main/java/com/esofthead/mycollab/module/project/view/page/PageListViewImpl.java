@@ -24,6 +24,7 @@ import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
+import com.esofthead.mycollab.vaadin.ui.SortButton;
 import com.esofthead.mycollab.vaadin.ui.ToggleButtonGroup;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
@@ -46,7 +47,7 @@ import com.vaadin.ui.Window;
  * 
  * @author MyCollab Ltd.
  * @since 4.4.0
- *
+ * 
  */
 @ViewComponent
 public class PageListViewImpl extends AbstractPageView implements PageListView {
@@ -89,7 +90,7 @@ public class PageListViewImpl extends AbstractPageView implements PageListView {
 		ToggleButtonGroup sortGroup = new ToggleButtonGroup();
 		UiUtils.addComponent(headerLayout, sortGroup, Alignment.MIDDLE_RIGHT);
 
-		Button sortDateBtn = new Button(
+		SortButton sortDateBtn = new SortButton(
 				AppContext.getMessage(Page18InEnum.OPT_SORT_BY_DATE),
 				new Button.ClickListener() {
 
@@ -103,7 +104,7 @@ public class PageListViewImpl extends AbstractPageView implements PageListView {
 				});
 		sortGroup.addButton(sortDateBtn);
 
-		Button sortNameBtn = new Button(
+		SortButton sortNameBtn = new SortButton(
 				AppContext.getMessage(Page18InEnum.OPT_SORT_BY_NAME),
 				new Button.ClickListener() {
 
@@ -117,7 +118,7 @@ public class PageListViewImpl extends AbstractPageView implements PageListView {
 				});
 		sortGroup.addButton(sortNameBtn);
 
-		Button sortKindBtn = new Button(
+		SortButton sortKindBtn = new SortButton(
 				AppContext.getMessage(Page18InEnum.OPT_SORT_BY_KIND),
 				new Button.ClickListener() {
 
@@ -184,7 +185,7 @@ public class PageListViewImpl extends AbstractPageView implements PageListView {
 		pagesLayout.removeAllComponents();
 		if (resources != null) {
 			for (WikiResource resource : resources) {
-				Layout resourceBlock = (resource instanceof Page) ? displayPageBlock((Page) resource)
+				Layout resourceBlock = resource instanceof Page ? displayPageBlock((Page) resource)
 						: displayFolderBlock((Folder) resource);
 				pagesLayout.addComponent(resourceBlock);
 			}
