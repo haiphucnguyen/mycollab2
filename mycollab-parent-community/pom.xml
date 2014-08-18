@@ -221,27 +221,7 @@
                     <source>${javaVersion}</source>
                     <target>${javaVersion}</target>
                     <compilerArgument>-proc:none</compilerArgument>
-                    <!-- Turn on error-prone -->
-                    <compilerId>javac-with-errorprone</compilerId>
-                    <forceJavacCompilerUse>true</forceJavacCompilerUse>
                 </configuration>
-                <dependencies>
-                    <dependency>
-                        <groupId>com.google.errorprone</groupId>
-                        <artifactId>error_prone_core</artifactId>
-                        <version>1.1.2</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.codehaus.plexus</groupId>
-                        <artifactId>plexus-compiler-javac</artifactId>
-                        <version>2.3</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.codehaus.plexus</groupId>
-                        <artifactId>plexus-compiler-javac-errorprone</artifactId>
-                        <version>2.3</version>
-                    </dependency>
-                </dependencies>
             </plugin>
 
             <plugin>
