@@ -17,6 +17,8 @@
 package com.esofthead.mycollab.premium.module.project.view.risk;
 
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.events.RiskEvent;
 import com.esofthead.mycollab.module.project.i18n.RiskI18nEnum;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -77,6 +79,8 @@ public class RiskListNoItemView extends AbstractPageView {
 								new RiskEvent.GotoAdd(this, null));
 					}
 				});
+		createRiskBtn.setEnabled(CurrentProjectVariables
+				.canWrite(ProjectRolePermissionCollections.RISKS));
 
 		HorizontalLayout links = new HorizontalLayout();
 

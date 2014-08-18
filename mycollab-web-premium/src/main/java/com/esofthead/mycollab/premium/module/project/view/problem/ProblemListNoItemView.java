@@ -17,6 +17,8 @@
 package com.esofthead.mycollab.premium.module.project.view.problem;
 
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.events.ProblemEvent;
 import com.esofthead.mycollab.module.project.i18n.ProblemI18nEnum;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -77,6 +79,8 @@ public class ProblemListNoItemView extends AbstractPageView {
 								new ProblemEvent.GotoAdd(this, null));
 					}
 				});
+		createProblemBtn.setEnabled(CurrentProjectVariables
+				.canWrite(ProjectRolePermissionCollections.PROBLEMS));
 
 		HorizontalLayout links = new HorizontalLayout();
 

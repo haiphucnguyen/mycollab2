@@ -121,10 +121,6 @@ public class CurrentProjectVariables {
 			return true;
 		}
 
-		if (isProjectArchived()) {
-			return false;
-		}
-
 		try {
 			PermissionMap permissionMap = getProjectMember()
 					.getPermissionMaps();
@@ -140,12 +136,12 @@ public class CurrentProjectVariables {
 	}
 
 	public static boolean canWrite(String permissionItem) {
-		if (isAdmin()) {
-			return true;
-		}
-		
 		if (isProjectArchived()) {
 			return false;
+		}
+		
+		if (isAdmin()) {
+			return true;
 		}
 
 		try {
@@ -163,12 +159,12 @@ public class CurrentProjectVariables {
 	}
 
 	public static boolean canAccess(String permissionItem) {
-		if (isAdmin()) {
-			return true;
-		}
-		
 		if (isProjectArchived()) {
 			return false;
+		}
+		
+		if (isAdmin()) {
+			return true;
 		}
 
 		try {

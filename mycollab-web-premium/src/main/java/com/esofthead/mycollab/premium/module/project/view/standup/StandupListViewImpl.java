@@ -278,6 +278,7 @@ public class StandupListViewImpl extends AbstractPageView implements
 		addNewReport.setStyleName(UIConstants.THEME_GREEN_LINK);
 		addNewReport.setIcon(MyCollabResource
 				.newResource("icons/16/addRecord.png"));
+		addNewReport.setEnabled(!CurrentProjectVariables.isProjectArchived());
 
 		header.addComponent(addNewReport);
 
