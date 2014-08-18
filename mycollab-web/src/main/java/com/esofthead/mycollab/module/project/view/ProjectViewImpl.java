@@ -23,6 +23,7 @@ import org.vaadin.hene.popupbutton.PopupButton;
 
 import com.esofthead.mycollab.common.GenericLinkUtils;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
+import com.esofthead.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.arguments.DateSearchField;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
@@ -553,7 +554,7 @@ public class ProjectViewImpl extends AbstractCssPageView implements ProjectView 
 										GenericI18Enum.WINDOW_WARNING_TITLE,
 										SiteConfiguration.getSiteName()),
 								AppContext
-										.getMessage(ProjectCommonI18nEnum.DIALOG_ARCHIVE_PROJECT_TITLE),
+										.getMessage(ProjectCommonI18nEnum.DIALOG_CONFIRM_PROJECT_ARCHIVE_MESSAGE),
 								AppContext
 										.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
 								AppContext
@@ -566,8 +567,14 @@ public class ProjectViewImpl extends AbstractCssPageView implements ProjectView 
 										if (dialog.isConfirmed()) {
 											ProjectService projectService = ApplicationContextUtil
 													.getSpringBean(ProjectService.class);
-											// TODO: set project status is
-											// archieve
+											project.setProjectstatus(StatusI18nEnum.Archived
+													.name());
+											projectService
+													.updateWithSessionWithSelective(
+															project,
+															AppContext
+																	.getUsername());
+
 											EventBusFactory
 													.getInstance()
 													.post(new ShellEvent.GotoProjectModule(

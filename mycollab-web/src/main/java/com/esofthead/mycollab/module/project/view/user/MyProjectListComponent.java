@@ -18,13 +18,13 @@ package com.esofthead.mycollab.module.project.view.user;
 
 import java.util.List;
 
+import com.esofthead.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.LabelLink;
 import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
-import com.esofthead.mycollab.module.project.ProjectStatusConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectSearchCriteria;
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
@@ -68,12 +68,16 @@ public class MyProjectListComponent extends Depot {
 	public MyProjectListComponent() {
 		super(AppContext
 				.getMessage(ProjectCommonI18nEnum.WIDGET_MY_PROJECTS_TITLE),
-				new VerticalLayout());
+				new HorizontalLayout(), new VerticalLayout());
 
 		this.projectList = new ProjectPagedList();
 		this.addStyleName("activity-panel");
 		this.addStyleName("myprojectlist");
 		((VerticalLayout) this.bodyContent).setMargin(false);
+
+		Button allProjectsBtn = new Button("All Projects");
+		allProjectsBtn.setStyleName("link");
+		this.addHeaderElement(allProjectsBtn);
 	}
 
 	public void showProjects(final List<Integer> prjKeys) {
@@ -83,7 +87,7 @@ public class MyProjectListComponent extends Depot {
 		searchCriteria.setInvolvedMember(new StringSearchField(SearchField.AND,
 				AppContext.getUsername()));
 		searchCriteria.setProjectStatuses(new SetSearchField<String>(
-				new String[] { ProjectStatusConstants.OPEN }));
+				new String[] { StatusI18nEnum.Open.name() }));
 		this.projectList.setSearchCriteria(searchCriteria);
 	}
 
