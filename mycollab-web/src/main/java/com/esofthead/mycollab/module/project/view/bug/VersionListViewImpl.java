@@ -23,7 +23,6 @@ import java.util.GregorianCalendar;
 
 import com.esofthead.mycollab.common.TableViewField;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
-import com.esofthead.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.LabelLink;
 import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
@@ -150,8 +149,7 @@ public class VersionListViewImpl extends AbstractPageView implements
 										bugVersion.getProjectid(),
 										bugVersion.getId()));
 						if (bugVersion.getStatus() != null
-								&& bugVersion.getStatus().equals(
-										StatusI18nEnum.Closed.name())) {
+								&& bugVersion.getStatus().equals("Close")) {
 							b.addStyleName(UIConstants.LINK_COMPLETED);
 						} else if (bugVersion.getDuedate() != null
 								&& (bugVersion.getDuedate()
