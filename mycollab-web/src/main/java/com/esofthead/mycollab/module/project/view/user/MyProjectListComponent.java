@@ -16,9 +16,6 @@
  */
 package com.esofthead.mycollab.module.project.view.user;
 
-import com.vaadin.server.Sizeable;
-import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.ui.*;
 import org.vaadin.hene.popupbutton.PopupButton;
 
 import com.esofthead.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
@@ -47,8 +44,16 @@ import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.Component;
+import com.vaadin.ui.CssLayout;
+import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.ProgressBar;
+import com.vaadin.ui.VerticalLayout;
 
 /**
  * 

@@ -2,6 +2,7 @@ package com.esofthead.mycollab.module.project.view.page;
 
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.vaadin.dialogs.ConfirmDialog;
@@ -615,6 +616,9 @@ public class PageListViewImpl extends AbstractPageView implements PageListView {
 												.getSpringBean(WikiService.class);
 										wikiService.createFolder(folder,
 												AppContext.getUsername());
+										folder.setCreatedTime(new GregorianCalendar());
+										folder.setCreatedUser(AppContext
+												.getUsername());
 										if (isEditMode == false) {
 											resources.add(folder);
 										}
