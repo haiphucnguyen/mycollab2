@@ -96,7 +96,7 @@ public class StandupAddPresenter extends AbstractPresenter<StandupAddView> {
 		view.editItem(standupReport);
 
 		ProjectBreadcrumb breadCrumb = ViewManager
-				.getView(ProjectBreadcrumb.class);
+				.getCacheComponent(ProjectBreadcrumb.class);
 		breadCrumb.gotoStandupAdd(new GregorianCalendar().getTime());
 	}
 

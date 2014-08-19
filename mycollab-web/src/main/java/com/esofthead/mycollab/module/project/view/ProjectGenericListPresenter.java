@@ -64,7 +64,8 @@ public abstract class ProjectGenericListPresenter<V extends ListView<S, B>, S ex
 
 	public void displayNoExistItems(ComponentContainer container,
 			ScreenData<?> data) {
-		this.candidateView = ViewManager.getView(noItemFallbackViewClass);
+		this.candidateView = ViewManager
+				.getCacheComponent(noItemFallbackViewClass);
 		displayView(container, data);
 	}
 

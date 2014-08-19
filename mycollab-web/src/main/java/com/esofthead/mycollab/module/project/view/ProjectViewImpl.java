@@ -412,7 +412,7 @@ public class ProjectViewImpl extends AbstractCssPageView implements ProjectView 
 		this.addStyleName("projectDashboardView");
 		this.setVerticalTabsheetFix(true);
 
-		breadCrumb = ViewManager.getView(ProjectBreadcrumb.class);
+		breadCrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
 
 		topPanel = new HorizontalLayout();
 		topPanel.setWidth("100%");

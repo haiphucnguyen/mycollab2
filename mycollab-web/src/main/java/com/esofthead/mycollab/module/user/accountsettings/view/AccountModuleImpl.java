@@ -74,7 +74,8 @@ public class AccountModuleImpl extends AbstractCssPageView implements
 		topPanel.setMargin(true);
 		topPanel.setStyleName("top-panel");
 
-		this.breadcrumb = ViewManager.getView(AccountSettingBreadcrumb.class);
+		this.breadcrumb = ViewManager
+				.getCacheComponent(AccountSettingBreadcrumb.class);
 
 		topPanel.addComponent(this.breadcrumb);
 

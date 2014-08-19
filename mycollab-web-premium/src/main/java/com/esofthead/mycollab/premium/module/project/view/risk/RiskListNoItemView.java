@@ -24,6 +24,7 @@ import com.esofthead.mycollab.module.project.i18n.RiskI18nEnum;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
+import com.esofthead.mycollab.vaadin.mvp.ViewScope;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.server.Sizeable;
@@ -42,7 +43,7 @@ import com.vaadin.ui.VerticalLayout;
  * 
  */
 
-@ViewComponent
+@ViewComponent(scope=ViewScope.PROTOTYPE)
 public class RiskListNoItemView extends AbstractPageView {
 	private static final long serialVersionUID = -2154602282175183516L;
 

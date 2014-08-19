@@ -134,7 +134,7 @@ public class ThemeCustomizePresenter extends
 		view.customizeTheme(accountTheme);
 
 		AccountSettingBreadcrumb breadcrumb = ViewManager
-				.getView(AccountSettingBreadcrumb.class);
+				.getCacheComponent(AccountSettingBreadcrumb.class);
 		breadcrumb.gotoCustomizationPage();
 	}
 

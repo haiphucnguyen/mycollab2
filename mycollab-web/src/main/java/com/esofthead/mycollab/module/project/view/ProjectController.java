@@ -148,7 +148,7 @@ public class ProjectController implements IController {
 			@Override
 			public void handle(ProjectEvent.GotoEdit event) {
 				ProjectView projectView = ViewManager
-						.getView(ProjectView.class);
+						.getCacheComponent(ProjectView.class);
 
 				SimpleProject project = (SimpleProject) event.getData();
 				CurrentProjectVariables.setProject(project);
@@ -209,7 +209,7 @@ public class ProjectController implements IController {
 			@Override
 			public void handle(TaskListEvent.GotoRead event) {
 				ProjectView projectView = ViewManager
-						.getView(ProjectView.class);
+						.getCacheComponent(ProjectView.class);
 				TaskGroupScreenData.Read data = new TaskGroupScreenData.Read(
 						(Integer) event.getData());
 				projectView.gotoTaskList(data);
@@ -223,7 +223,7 @@ public class ProjectController implements IController {
 			@Override
 			public void handle(TaskListEvent.GotoEdit event) {
 				ProjectView projectView = ViewManager
-						.getView(ProjectView.class);
+						.getCacheComponent(ProjectView.class);
 				TaskGroupScreenData.Edit data = new TaskGroupScreenData.Edit(
 						(TaskList) event.getData());
 				projectView.gotoTaskList(data);
@@ -237,7 +237,7 @@ public class ProjectController implements IController {
 			@Override
 			public void handle(TaskListEvent.GotoAdd event) {
 				ProjectView projectView = ViewManager
-						.getView(ProjectView.class);
+						.getCacheComponent(ProjectView.class);
 				TaskList taskList = new TaskList();
 				taskList.setProjectid(CurrentProjectVariables.getProjectId());
 				taskList.setStatus(StatusI18nEnum.Open.name());
@@ -254,7 +254,7 @@ public class ProjectController implements IController {
 			@Override
 			public void handle(TaskListEvent.GotoTaskListScreen event) {
 				ProjectView projectView = ViewManager
-						.getView(ProjectView.class);
+						.getCacheComponent(ProjectView.class);
 				projectView.gotoTaskList(null);
 			}
 		});
@@ -266,7 +266,7 @@ public class ProjectController implements IController {
 			@Override
 			public void handle(TaskListEvent.ReoderTaskList event) {
 				ProjectView projectView = ViewManager
-						.getView(ProjectView.class);
+						.getCacheComponent(ProjectView.class);
 				TaskGroupScreenData.ReorderTaskListRequest data = new TaskGroupScreenData.ReorderTaskListRequest();
 				projectView.gotoTaskList(data);
 			}
@@ -279,7 +279,7 @@ public class ProjectController implements IController {
 			@Override
 			public void handle(TaskListEvent.GotoGanttChartView event) {
 				ProjectView projectView = ViewManager
-						.getView(ProjectView.class);
+						.getCacheComponent(ProjectView.class);
 				TaskGroupScreenData.GotoGanttChartView data = new TaskGroupScreenData.GotoGanttChartView();
 				projectView.gotoTaskList(data);
 			}
@@ -295,7 +295,7 @@ public class ProjectController implements IController {
 			@Override
 			public void handle(TaskEvent.GotoRead event) {
 				ProjectView projectView = ViewManager
-						.getView(ProjectView.class);
+						.getCacheComponent(ProjectView.class);
 				TaskScreenData.Read data = new TaskScreenData.Read(
 						(Integer) event.getData());
 				projectView.gotoTaskList(data);
@@ -309,7 +309,7 @@ public class ProjectController implements IController {
 			@Override
 			public void handle(TaskEvent.GotoAdd event) {
 				ProjectView projectView = ViewManager
-						.getView(ProjectView.class);
+						.getCacheComponent(ProjectView.class);
 				TaskScreenData.Add data = new TaskScreenData.Add(new Task());
 				projectView.gotoTaskList(data);
 			}
@@ -322,7 +322,7 @@ public class ProjectController implements IController {
 			@Override
 			public void handle(TaskEvent.GotoEdit event) {
 				ProjectView projectView = ViewManager
-						.getView(ProjectView.class);
+						.getCacheComponent(ProjectView.class);
 				TaskScreenData.Edit data = new TaskScreenData.Edit((Task) event
 						.getData());
 				projectView.gotoTaskList(data);
@@ -336,7 +336,7 @@ public class ProjectController implements IController {
 			@Override
 			public void handle(TaskEvent.Filter event) {
 				ProjectView projectView = ViewManager
-						.getView(ProjectView.class);
+						.getCacheComponent(ProjectView.class);
 				TaskScreenData.Filter data = new TaskScreenData.Filter(
 						(TaskFilterParameter) event.getData());
 				projectView.gotoTaskList(data);
@@ -350,7 +350,7 @@ public class ProjectController implements IController {
 			@Override
 			public void handle(TaskEvent.Search event) {
 				ProjectView projectView = ViewManager
-						.getView(ProjectView.class);
+						.getCacheComponent(ProjectView.class);
 				TaskScreenData.Search data = new TaskScreenData.Search(
 						(TaskFilterParameter) event.getData());
 				projectView.gotoTaskList(data);
@@ -367,7 +367,7 @@ public class ProjectController implements IController {
 			@Override
 			public void handle(RiskEvent.GotoAdd event) {
 				ProjectView projectView = ViewManager
-						.getView(ProjectView.class);
+						.getCacheComponent(ProjectView.class);
 				RiskScreenData.Add data = new RiskScreenData.Add(new Risk());
 				projectView.gotoRiskView(data);
 			}
@@ -378,7 +378,7 @@ public class ProjectController implements IController {
 			@Override
 			public void handle(RiskEvent.GotoEdit event) {
 				ProjectView projectView = ViewManager
-						.getView(ProjectView.class);
+						.getCacheComponent(ProjectView.class);
 				RiskScreenData.Edit data = new RiskScreenData.Edit((Risk) event
 						.getData());
 				projectView.gotoRiskView(data);
@@ -390,7 +390,7 @@ public class ProjectController implements IController {
 			@Override
 			public void handle(RiskEvent.GotoRead event) {
 				ProjectView projectView = ViewManager
-						.getView(ProjectView.class);
+						.getCacheComponent(ProjectView.class);
 				RiskScreenData.Read data = new RiskScreenData.Read(
 						(Integer) event.getData());
 				projectView.gotoRiskView(data);
@@ -402,7 +402,7 @@ public class ProjectController implements IController {
 			@Override
 			public void handle(RiskEvent.GotoList event) {
 				ProjectView projectView = ViewManager
-						.getView(ProjectView.class);
+						.getCacheComponent(ProjectView.class);
 
 				RiskSearchCriteria criteria = new RiskSearchCriteria();
 
@@ -420,7 +420,7 @@ public class ProjectController implements IController {
 			@Override
 			public void handle(ProblemEvent.GotoAdd event) {
 				ProjectView projectView = ViewManager
-						.getView(ProjectView.class);
+						.getCacheComponent(ProjectView.class);
 				ProblemScreenData.Add data = new ProblemScreenData.Add(
 						new Problem());
 				IProblemPresenter presenter = PresenterResolver
@@ -434,7 +434,7 @@ public class ProjectController implements IController {
 			@Override
 			public void handle(ProblemEvent.GotoRead event) {
 				ProjectView projectView = ViewManager
-						.getView(ProjectView.class);
+						.getCacheComponent(ProjectView.class);
 				ProblemScreenData.Read data = new ProblemScreenData.Read(
 						(Integer) event.getData());
 				IProblemPresenter presenter = PresenterResolver
@@ -448,7 +448,7 @@ public class ProjectController implements IController {
 			@Override
 			public void handle(ProblemEvent.GotoList event) {
 				ProjectView projectView = ViewManager
-						.getView(ProjectView.class);
+						.getCacheComponent(ProjectView.class);
 
 				ProblemSearchCriteria criteria = new ProblemSearchCriteria();
 
@@ -467,7 +467,7 @@ public class ProjectController implements IController {
 			@Override
 			public void handle(ProblemEvent.GotoEdit event) {
 				ProjectView projectView = ViewManager
-						.getView(ProjectView.class);
+						.getCacheComponent(ProjectView.class);
 				ProblemScreenData.Edit data = new ProblemScreenData.Edit(
 						(Problem) event.getData());
 				IProblemPresenter presenter = PresenterResolver
@@ -484,7 +484,7 @@ public class ProjectController implements IController {
 			@Override
 			public void handle(BugEvent.GotoDashboard event) {
 				ProjectView projectView = ViewManager
-						.getView(ProjectView.class);
+						.getCacheComponent(ProjectView.class);
 				projectView.gotoBugView(null);
 			}
 		});
@@ -494,7 +494,7 @@ public class ProjectController implements IController {
 			@Override
 			public void handle(BugEvent.GotoAdd event) {
 				ProjectView projectView = ViewManager
-						.getView(ProjectView.class);
+						.getCacheComponent(ProjectView.class);
 				BugScreenData.Add data = new BugScreenData.Add(new SimpleBug());
 				projectView.gotoBugView(data);
 			}
@@ -505,7 +505,7 @@ public class ProjectController implements IController {
 			@Override
 			public void handle(BugEvent.GotoEdit event) {
 				ProjectView projectView = ViewManager
-						.getView(ProjectView.class);
+						.getCacheComponent(ProjectView.class);
 				BugScreenData.Edit data = new BugScreenData.Edit(
 						(SimpleBug) event.getData());
 				projectView.gotoBugView(data);
@@ -517,7 +517,7 @@ public class ProjectController implements IController {
 			@Override
 			public void handle(BugEvent.GotoRead event) {
 				ProjectView projectView = ViewManager
-						.getView(ProjectView.class);
+						.getCacheComponent(ProjectView.class);
 				BugScreenData.Read data = new BugScreenData.Read(
 						(Integer) event.getData());
 				projectView.gotoBugView(data);
@@ -529,7 +529,7 @@ public class ProjectController implements IController {
 			@Override
 			public void handle(BugEvent.GotoList event) {
 				ProjectView projectView = ViewManager
-						.getView(ProjectView.class);
+						.getCacheComponent(ProjectView.class);
 
 				Object params = event.getData();
 				if (params == null) {
@@ -562,7 +562,7 @@ public class ProjectController implements IController {
 			@Override
 			public void handle(BugComponentEvent.GotoAdd event) {
 				ProjectView projectView = ViewManager
-						.getView(ProjectView.class);
+						.getCacheComponent(ProjectView.class);
 				ComponentScreenData.Add data = new ComponentScreenData.Add(
 						new Component());
 				projectView.gotoBugView(data);
@@ -574,7 +574,7 @@ public class ProjectController implements IController {
 			@Override
 			public void handle(BugComponentEvent.GotoEdit event) {
 				ProjectView projectView = ViewManager
-						.getView(ProjectView.class);
+						.getCacheComponent(ProjectView.class);
 				ComponentScreenData.Edit data = new ComponentScreenData.Edit(
 						(Component) event.getData());
 				projectView.gotoBugView(data);
@@ -586,7 +586,7 @@ public class ProjectController implements IController {
 			@Override
 			public void handle(BugComponentEvent.GotoRead event) {
 				ProjectView projectView = ViewManager
-						.getView(ProjectView.class);
+						.getCacheComponent(ProjectView.class);
 				ComponentScreenData.Read data = new ComponentScreenData.Read(
 						(Integer) event.getData());
 				projectView.gotoBugView(data);
@@ -598,7 +598,7 @@ public class ProjectController implements IController {
 			@Override
 			public void handle(BugComponentEvent.GotoList event) {
 				ProjectView projectView = ViewManager
-						.getView(ProjectView.class);
+						.getCacheComponent(ProjectView.class);
 				ComponentSearchCriteria criteria = new ComponentSearchCriteria();
 				criteria.setProjectid(new NumberSearchField(
 						CurrentProjectVariables.getProjectId()));
@@ -612,7 +612,7 @@ public class ProjectController implements IController {
 			@Override
 			public void handle(BugVersionEvent.GotoAdd event) {
 				ProjectView projectView = ViewManager
-						.getView(ProjectView.class);
+						.getCacheComponent(ProjectView.class);
 				VersionScreenData.Add data = new VersionScreenData.Add(
 						new Version());
 				projectView.gotoBugView(data);
@@ -624,7 +624,7 @@ public class ProjectController implements IController {
 			@Override
 			public void handle(BugVersionEvent.GotoEdit event) {
 				ProjectView projectView = ViewManager
-						.getView(ProjectView.class);
+						.getCacheComponent(ProjectView.class);
 				VersionScreenData.Edit data = new VersionScreenData.Edit(
 						(Version) event.getData());
 				projectView.gotoBugView(data);
@@ -636,7 +636,7 @@ public class ProjectController implements IController {
 			@Override
 			public void handle(BugVersionEvent.GotoRead event) {
 				ProjectView projectView = ViewManager
-						.getView(ProjectView.class);
+						.getCacheComponent(ProjectView.class);
 				VersionScreenData.Read data = new VersionScreenData.Read(
 						(Integer) event.getData());
 				projectView.gotoBugView(data);
@@ -648,7 +648,7 @@ public class ProjectController implements IController {
 			@Override
 			public void handle(BugVersionEvent.GotoList event) {
 				ProjectView projectView = ViewManager
-						.getView(ProjectView.class);
+						.getCacheComponent(ProjectView.class);
 				VersionSearchCriteria criteria = new VersionSearchCriteria();
 				criteria.setProjectId(new NumberSearchField(
 						CurrentProjectVariables.getProjectId()));
@@ -665,7 +665,7 @@ public class ProjectController implements IController {
 			@Override
 			public void handle(MessageEvent.GotoRead event) {
 				ProjectView projectView = ViewManager
-						.getView(ProjectView.class);
+						.getCacheComponent(ProjectView.class);
 				MessageScreenData.Read data = new MessageScreenData.Read(
 						(Integer) event.getData());
 				MessagePresenter presenter = PresenterResolver
@@ -681,7 +681,7 @@ public class ProjectController implements IController {
 			@Override
 			public void handle(MessageEvent.GotoList event) {
 				ProjectView projectView = ViewManager
-						.getView(ProjectView.class);
+						.getCacheComponent(ProjectView.class);
 				MessageSearchCriteria searchCriteria = new MessageSearchCriteria();
 				searchCriteria.setProjectids(new SetSearchField<Integer>(
 						CurrentProjectVariables.getProjectId()));
@@ -702,7 +702,7 @@ public class ProjectController implements IController {
 			@Override
 			public void handle(MilestoneEvent.GotoAdd event) {
 				ProjectView projectView = ViewManager
-						.getView(ProjectView.class);
+						.getCacheComponent(ProjectView.class);
 				MilestoneScreenData.Add data = new MilestoneScreenData.Add(
 						new Milestone());
 				projectView.gotoMilestoneView(data);
@@ -716,7 +716,7 @@ public class ProjectController implements IController {
 			@Override
 			public void handle(MilestoneEvent.GotoRead event) {
 				ProjectView projectView = ViewManager
-						.getView(ProjectView.class);
+						.getCacheComponent(ProjectView.class);
 				MilestoneScreenData.Read data = new MilestoneScreenData.Read(
 						(Integer) event.getData());
 				projectView.gotoMilestoneView(data);
@@ -730,7 +730,7 @@ public class ProjectController implements IController {
 			@Override
 			public void handle(MilestoneEvent.GotoList event) {
 				ProjectView projectView = ViewManager
-						.getView(ProjectView.class);
+						.getCacheComponent(ProjectView.class);
 
 				MilestoneSearchCriteria criteria = new MilestoneSearchCriteria();
 
@@ -748,7 +748,7 @@ public class ProjectController implements IController {
 			@Override
 			public void handle(MilestoneEvent.GotoEdit event) {
 				ProjectView projectView = ViewManager
-						.getView(ProjectView.class);
+						.getCacheComponent(ProjectView.class);
 				MilestoneScreenData.Edit data = new MilestoneScreenData.Edit(
 						(Milestone) event.getData());
 				projectView.gotoMilestoneView(data);
@@ -764,7 +764,7 @@ public class ProjectController implements IController {
 			@Override
 			public void handle(PageEvent.GotoAdd event) {
 				ProjectView projectView = ViewManager
-						.getView(ProjectView.class);
+						.getCacheComponent(ProjectView.class);
 				String pagePath = (String) event.getData();
 				if (pagePath == null || pagePath.equals("")) {
 					pagePath = CurrentProjectVariables.getCurrentPagePath()
@@ -786,7 +786,7 @@ public class ProjectController implements IController {
 			@Override
 			public void handle(PageEvent.GotoEdit event) {
 				ProjectView projectView = ViewManager
-						.getView(ProjectView.class);
+						.getCacheComponent(ProjectView.class);
 				PageScreenData.Edit data = new PageScreenData.Edit((Page) event
 						.getData());
 				projectView.gotoPageView(data);
@@ -800,7 +800,7 @@ public class ProjectController implements IController {
 			@Override
 			public void handle(PageEvent.GotoRead event) {
 				ProjectView projectView = ViewManager
-						.getView(ProjectView.class);
+						.getCacheComponent(ProjectView.class);
 				PageScreenData.Read data = new PageScreenData.Read((Page) event
 						.getData());
 				projectView.gotoPageView(data);
@@ -814,7 +814,7 @@ public class ProjectController implements IController {
 			@Override
 			public void handle(PageEvent.GotoList event) {
 				ProjectView projectView = ViewManager
-						.getView(ProjectView.class);
+						.getCacheComponent(ProjectView.class);
 
 				projectView.gotoPageView(new PageScreenData.Search(
 						(String) event.getData()));
@@ -830,7 +830,7 @@ public class ProjectController implements IController {
 			@Override
 			public void handle(StandUpEvent.GotoAdd event) {
 				ProjectView projectView = ViewManager
-						.getView(ProjectView.class);
+						.getCacheComponent(ProjectView.class);
 				StandupReportService reportService = ApplicationContextUtil
 						.getSpringBean(StandupReportService.class);
 				SimpleStandupReport report = reportService
@@ -854,7 +854,7 @@ public class ProjectController implements IController {
 			@Override
 			public void handle(StandUpEvent.GotoRead event) {
 				ProjectView projectView = ViewManager
-						.getView(ProjectView.class);
+						.getCacheComponent(ProjectView.class);
 				StandupScreenData.Read data = new StandupScreenData.Read(
 						(Integer) event.getData());
 				projectView.gotoStandupReportView(data);
@@ -868,7 +868,7 @@ public class ProjectController implements IController {
 			@Override
 			public void handle(StandUpEvent.GotoList event) {
 				ProjectView projectView = ViewManager
-						.getView(ProjectView.class);
+						.getCacheComponent(ProjectView.class);
 
 				StandupReportSearchCriteria criteria = new StandupReportSearchCriteria();
 
@@ -892,7 +892,7 @@ public class ProjectController implements IController {
 				IFilePresenter presenter = PresenterResolver
 						.getPresenter(IFilePresenter.class);
 				ProjectView projectView = ViewManager
-						.getView(ProjectView.class);
+						.getCacheComponent(ProjectView.class);
 				presenter.go(projectView, new FileScreenData.GotoDashboard());
 			}
 
@@ -907,7 +907,7 @@ public class ProjectController implements IController {
 				IFilePresenter presenter = PresenterResolver
 						.getPresenter(IFilePresenter.class);
 				ProjectView projectView = ViewManager
-						.getView(ProjectView.class);
+						.getCacheComponent(ProjectView.class);
 				presenter.go(projectView, new FileScreenData.Search(
 						(FileSearchCriteria) event.getData()));
 			}
@@ -924,7 +924,7 @@ public class ProjectController implements IController {
 			@Override
 			public void handle(ProjectRoleEvent.GotoList event) {
 				ProjectView projectView = ViewManager
-						.getView(ProjectView.class);
+						.getCacheComponent(ProjectView.class);
 
 				SimpleProject project = CurrentProjectVariables.getProject();
 				ProjectRoleSearchCriteria criteria = new ProjectRoleSearchCriteria();
@@ -941,7 +941,7 @@ public class ProjectController implements IController {
 			@Override
 			public void handle(ProjectRoleEvent.GotoAdd event) {
 				ProjectView projectView = ViewManager
-						.getView(ProjectView.class);
+						.getCacheComponent(ProjectView.class);
 				ProjectRoleScreenData.Add data = new ProjectRoleScreenData.Add(
 						new ProjectRole());
 				projectView.gotoUsersAndGroup(data);
@@ -955,7 +955,7 @@ public class ProjectController implements IController {
 			@Override
 			public void handle(ProjectRoleEvent.GotoEdit event) {
 				ProjectView projectView = ViewManager
-						.getView(ProjectView.class);
+						.getCacheComponent(ProjectView.class);
 				ProjectRoleScreenData.Add data = new ProjectRoleScreenData.Add(
 						(ProjectRole) event.getData());
 				projectView.gotoUsersAndGroup(data);
@@ -969,7 +969,7 @@ public class ProjectController implements IController {
 			@Override
 			public void handle(ProjectRoleEvent.GotoRead event) {
 				ProjectView projectView = ViewManager
-						.getView(ProjectView.class);
+						.getCacheComponent(ProjectView.class);
 				ProjectRoleScreenData.Read data = new ProjectRoleScreenData.Read(
 						(Integer) event.getData());
 				projectView.gotoUsersAndGroup(data);
@@ -983,7 +983,7 @@ public class ProjectController implements IController {
 			@Override
 			public void handle(ProjectMemberEvent.GotoList event) {
 				ProjectView projectView = ViewManager
-						.getView(ProjectView.class);
+						.getCacheComponent(ProjectView.class);
 
 				SimpleProject project = CurrentProjectVariables.getProject();
 				ProjectMemberSearchCriteria criteria = new ProjectMemberSearchCriteria();
@@ -1005,7 +1005,7 @@ public class ProjectController implements IController {
 			@Override
 			public void handle(ProjectMemberEvent.GotoRead event) {
 				ProjectView projectView = ViewManager
-						.getView(ProjectView.class);
+						.getCacheComponent(ProjectView.class);
 				ProjectMemberScreenData.Read data = new ProjectMemberScreenData.Read(
 						event.getData());
 				projectView.gotoUsersAndGroup(data);
@@ -1019,7 +1019,7 @@ public class ProjectController implements IController {
 			@Override
 			public void handle(ProjectMemberEvent.GotoInviteMembers event) {
 				ProjectView projectView = ViewManager
-						.getView(ProjectView.class);
+						.getCacheComponent(ProjectView.class);
 				ProjectMemberScreenData.InviteProjectMembers data = new ProjectMemberScreenData.InviteProjectMembers();
 				projectView.gotoUsersAndGroup(data);
 			}
@@ -1032,7 +1032,7 @@ public class ProjectController implements IController {
 			@Override
 			public void handle(ProjectMemberEvent.GotoEdit event) {
 				ProjectView projectView = ViewManager
-						.getView(ProjectView.class);
+						.getCacheComponent(ProjectView.class);
 				ProjectMemberScreenData.Add data = new ProjectMemberScreenData.Add(
 						(ProjectMember) event.getData());
 				projectView.gotoUsersAndGroup(data);

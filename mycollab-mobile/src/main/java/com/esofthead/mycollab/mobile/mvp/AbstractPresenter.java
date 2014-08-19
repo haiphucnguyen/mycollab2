@@ -55,7 +55,7 @@ public abstract class AbstractPresenter<V extends PageView> implements
 	@Override
 	public V getView() {
 		if (view == null) {
-			view = ViewManager.getView(viewClass);
+			view = ViewManager.getCacheComponent(viewClass);
 			postInitView();
 		}
 		return view;

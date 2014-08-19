@@ -77,7 +77,7 @@ public class RiskAddPresenter extends AbstractPresenter<RiskAddView> {
 			view.editItem(risk);
 
 			ProjectBreadcrumb breadCrumb = ViewManager
-					.getView(ProjectBreadcrumb.class);
+					.getCacheComponent(ProjectBreadcrumb.class);
 			if (risk.getId() == null) {
 				breadCrumb.gotoRiskAdd();
 			} else {
