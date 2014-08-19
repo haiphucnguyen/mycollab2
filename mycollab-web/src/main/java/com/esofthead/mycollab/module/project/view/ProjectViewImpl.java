@@ -338,69 +338,69 @@ public class ProjectViewImpl extends AbstractCssPageView implements ProjectView 
 	private Component constructProjectDashboardComponent() {
 		dashboardPresenter = PresenterResolver
 				.getPresenter(ProjectDashboardPresenter.class);
-		return dashboardPresenter.initView();
+		return dashboardPresenter.getView();
 	}
 
 	private Component constructProjectUsers() {
 		userPresenter = PresenterResolver
 				.getPresenter(UserSettingPresenter.class);
-		return userPresenter.initView();
+		return userPresenter.getView();
 	}
 
 	private Component constructProjectMessageComponent() {
 		messagePresenter = PresenterResolver
 				.getPresenter(MessagePresenter.class);
-		return messagePresenter.initView();
+		return messagePresenter.getView();
 	}
 
 	private Component constructProjectPageComponent() {
 		pagePresenter = PresenterResolver.getPresenter(PagePresenter.class);
-		return pagePresenter.initView();
+		return pagePresenter.getView();
 	}
 
 	private Component constructProjectMilestoneComponent() {
 		milestonesPresenter = PresenterResolver
 				.getPresenter(MilestonePresenter.class);
-		return milestonesPresenter.initView();
+		return milestonesPresenter.getView();
 	}
 
 	private Component constructProjectRiskComponent() {
 		riskPresenter = PresenterResolver.getPresenter(IRiskPresenter.class);
-		return riskPresenter.initView();
+		return riskPresenter.getView();
 	}
 
 	private Component constructProjectProblemComponent() {
 		problemPresenter = PresenterResolver
 				.getPresenter(IProblemPresenter.class);
-		return problemPresenter.initView();
+		return problemPresenter.getView();
 	}
 
 	private Component constructTimeTrackingComponent() {
 		timePresenter = PresenterResolver
 				.getPresenter(ITimeTrackingPresenter.class);
-		return timePresenter.initView();
+		return timePresenter.getView();
 	}
 
 	private Component constructProjectStandupMeeting() {
 		standupPresenter = PresenterResolver
 				.getPresenter(IStandupPresenter.class);
-		return standupPresenter.initView();
+		return standupPresenter.getView();
 	}
 
 	private Component constructTaskDashboardComponent() {
 		taskPresenter = PresenterResolver.getPresenter(TaskPresenter.class);
-		return taskPresenter.initView();
+		return taskPresenter.getView();
 	}
 
 	private Component constructProjectBugComponent() {
 		trackerPresenter = PresenterResolver
 				.getPresenter(TrackerPresenter.class);
-		return trackerPresenter.initView();
+		return trackerPresenter.getView();
 	}
 
 	private Component constructProjectFileComponent() {
 		filePresenter = PresenterResolver.getPresenter(IFilePresenter.class);
-		return filePresenter.initView();
+		return filePresenter.getView();
 	}
 
 	@Override

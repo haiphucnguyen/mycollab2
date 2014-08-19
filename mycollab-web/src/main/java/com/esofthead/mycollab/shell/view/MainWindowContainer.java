@@ -62,7 +62,7 @@ public class MainWindowContainer extends CssLayout {
 	private final void setDefaultView() {
 		final LoginPresenter presenter = PresenterResolver
 				.getPresenter(LoginPresenter.class);
-		LoginView loginView = presenter.initView();
+		LoginView loginView = presenter.getView();
 		this.setStyleName("loginView");
 		this.setSizeFull();
 		this.setContent(loginView.getWidget());

@@ -118,11 +118,11 @@ public class ProjectRoleReadViewImpl extends
 			final String permissionPath = ProjectRolePermissionCollections.PROJECT_PERMISSIONS[i];
 			projectFormHelper.addComponent(
 					new Label(AppContext.getPermissionCaptionValue(
-							permissionMap, AppContext
-									.getMessage(RolePermissionI18nEnum
-											.valueOf(permissionPath)))),
-					AppContext.getMessage(RolePermissionI18nEnum
-							.valueOf(permissionPath)), 0, i);
+							permissionMap,
+							RolePermissionI18nEnum.valueOf(permissionPath)
+									.name())), AppContext
+							.getMessage(RolePermissionI18nEnum
+									.valueOf(permissionPath)), 0, i);
 		}
 
 	}

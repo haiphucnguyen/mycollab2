@@ -53,8 +53,8 @@ public abstract class CrmGenericListPresenter<V extends ListView<S, B>, S extend
 	}
 
 	@Override
-	public V initView() {
-		super.initView();
+	public V getView() {
+		super.getView();
 		this.candidateView = view;
 		return view;
 	}

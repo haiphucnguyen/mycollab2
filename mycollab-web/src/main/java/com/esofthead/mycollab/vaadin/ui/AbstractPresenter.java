@@ -53,12 +53,16 @@ public abstract class AbstractPresenter<V extends PageView> implements
 	}
 
 	@Override
-	public V initView() {
+	public V getView() {
+		initView();
+		return view;
+	}
+
+	private void initView() {
 		if (view == null) {
 			view = ViewManager.getView(viewClass);
 			postInitView();
 		}
-		return view;
 	}
 
 	protected void postInitView() {
@@ -86,8 +90,6 @@ public abstract class AbstractPresenter<V extends PageView> implements
 				log.debug(str.toString());
 			}
 			HistoryViewManager.addHistory(state);
-		} else {
-			log.debug("Disable history track for " + this);
 		}
 
 		if (checkPermissionAccessIfAny()) {

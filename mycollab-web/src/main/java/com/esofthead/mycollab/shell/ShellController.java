@@ -60,7 +60,7 @@ public class ShellController implements IController {
 			public void handle(GotoMainPage event) {
 				MainViewPresenter mainViewPresenter = PresenterResolver
 						.getPresenter(MainViewPresenter.class);
-				MainView mainView = mainViewPresenter.initView();
+				MainView mainView = mainViewPresenter.getView();
 				((MainWindowContainer) container).setContent(mainView);
 
 				container.setStyleName("mainView");

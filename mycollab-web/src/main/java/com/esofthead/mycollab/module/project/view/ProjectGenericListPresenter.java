@@ -51,8 +51,8 @@ public abstract class ProjectGenericListPresenter<V extends ListView<S, B>, S ex
 	}
 
 	@Override
-	public V initView() {
-		super.initView();
+	public V getView() {
+		super.getView();
 		this.candidateView = view;
 		return view;
 	}

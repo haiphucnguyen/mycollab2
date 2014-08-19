@@ -17,16 +17,13 @@
 
 package com.esofthead.mycollab.vaadin.mvp;
 
+import static com.esofthead.mycollab.common.MyCollabSession.VIEW_MANAGER_VAL;
+
 import java.util.HashMap;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.esofthead.mycollab.common.MyCollabSession;
 import com.esofthead.mycollab.core.MyCollabException;
-
-import static com.esofthead.mycollab.common.MyCollabSession.VIEW_MANAGER_VAL;
 
 /**
  * 
@@ -35,46 +32,54 @@ import static com.esofthead.mycollab.common.MyCollabSession.VIEW_MANAGER_VAL;
  * 
  */
 class ViewManagerImpl extends ViewManager {
-	private static Logger log = LoggerFactory.getLogger(ViewManagerImpl.class);
 
 	@SuppressWarnings("unchecked")
 	@Override
 	protected <T extends CacheableComponent> T getViewInstance(
 			final Class<T> viewClass) {
-		try {
-			Map<Class<?>, Object> viewMap = (Map<Class<?>, Object>) MyCollabSession
-					.getVariable(VIEW_MANAGER_VAL);
-			if (viewMap == null) {
-				viewMap = new HashMap<Class<?>, Object>();
-				MyCollabSession.putVariable(VIEW_MANAGER_VAL, viewMap);
-			}
 
-			T value = (T) viewMap.get(viewClass);
-			if (value != null) {
-				log.debug("Get implementation of view " + viewClass.getName()
-						+ " is " + value.getClass().getName());
-				return value;
-			} else {
-				for (Class<?> classInstance : viewClasses) {
-					if (viewClass.isAssignableFrom(classInstance)) {
-
-						value = (T) classInstance.newInstance();
-						viewMap.put(viewClass, value);
-						log.debug("Get implementation of view "
-								+ viewClass.getName() + " is "
-								+ value.getClass().getName());
-						return value;
-					}
-				}
-
-				throw new MyCollabException(
-						"Can not find implementation of view class: "
-								+ viewClass.getName());
-			}
-		} catch (Throwable e) {
-			throw new MyCollabException("Can not create view class: "
-					+ viewClass.getName(), e);
+		Map<Class<?>, Object> viewMap = (Map<Class<?>, Object>) MyCollabSession
+				.getVariable(VIEW_MANAGER_VAL);
+		if (viewMap == null) {
+			viewMap = new HashMap<Class<?>, Object>();
+			MyCollabSession.putVariable(VIEW_MANAGER_VAL, viewMap);
 		}
+
+		Class<?> implCls = getImplCls(viewClass);
+		if (implCls != null) {
+			ViewComponent annotation = implCls
+					.getAnnotation(ViewComponent.class);
+			ViewScope scope = annotation.scope();
+
+			try {
+				if (scope == ViewScope.PROTOTYPE) {
+					return (T) implCls.newInstance();
+				} else {
+					T value = (T) viewMap.get(viewClass);
+					if (value == null) {
+						value = (T) implCls.newInstance();
+						viewMap.put(viewClass, value);
+					}
+					return value;
+				}
+			} catch (Exception e) {
+				throw new MyCollabException("Can not create view: "
+						+ viewClass.getName(), e);
+			}
+		} else {
+			throw new MyCollabException(
+					"Can not find the implementation class of view: "
+							+ viewClass.getName());
+		}
+	}
+
+	private Class<?> getImplCls(Class<?> viewClass) {
+		for (Class<?> classInstance : viewClasses) {
+			if (viewClass.isAssignableFrom(classInstance)) {
+				return classInstance;
+			}
+		}
+		return null;
 	}
 
 	@Override
