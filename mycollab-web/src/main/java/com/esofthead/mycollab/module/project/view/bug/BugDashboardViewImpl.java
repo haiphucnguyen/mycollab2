@@ -58,7 +58,7 @@ import com.vaadin.ui.VerticalLayout;
  * 
  */
 @SuppressWarnings("serial")
-@ViewComponent(scope=ViewScope.PROTOTYPE)
+@ViewComponent
 public class BugDashboardViewImpl extends AbstractLazyPageView implements
 		BugDashboardView {
 

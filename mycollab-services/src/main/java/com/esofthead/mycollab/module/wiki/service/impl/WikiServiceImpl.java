@@ -25,6 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.esofthead.mycollab.common.service.RelayEmailNotificationService;
 import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.ecm.ContentException;
 import com.esofthead.mycollab.module.ecm.NodesUtil;
 import com.esofthead.mycollab.module.wiki.domain.Folder;
@@ -118,8 +119,7 @@ public class WikiServiceImpl implements WikiService {
 								"{http://www.esofthead.com/wiki}page");
 						convertPageToNode(addNode, page, createdUser);
 						session.save();
-						
-						
+
 					} catch (Exception e) {
 						log.error("error in convertToNode Method", e);
 						throw new MyCollabException(e);
@@ -376,6 +376,20 @@ public class WikiServiceImpl implements WikiService {
 							} else {
 								log.debug("Found folder node {}",
 										childNode.getPath());
+
+								if (i == pathStr.length - 1) {
+									childNode.setProperty("wiki:createdUser",
+											createdUser);
+									childNode
+											.setProperty(
+													"wiki:description",
+													StringUtils
+															.getStrOptionalNullValue(folder
+																	.getDescription()));
+									childNode.setProperty("wiki:name",
+											folder.getName());
+									session.save();
+								}
 							}
 						} else { // add node
 							log.debug("Create new folder {} of sub node {}",
@@ -384,11 +398,9 @@ public class WikiServiceImpl implements WikiService {
 									"{http://www.esofthead.com/wiki}folder");
 							childNode.setProperty("wiki:createdUser",
 									createdUser);
-							String desc = folder.getDescription();
-							if (desc == null) {
-								desc = "";
-							}
-							childNode.setProperty("wiki:description", desc);
+							childNode.setProperty("wiki:description",
+									StringUtils.getStrOptionalNullValue(folder
+											.getDescription()));
 							childNode.setProperty("wiki:name", folder.getName());
 							session.save();
 						}
