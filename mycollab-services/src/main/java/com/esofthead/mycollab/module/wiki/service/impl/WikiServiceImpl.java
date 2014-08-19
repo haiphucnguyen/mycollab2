@@ -4,8 +4,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.jcr.Item;
 import javax.jcr.Node;
 import javax.jcr.NodeIterator;
+import javax.jcr.PropertyIterator;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
 import javax.jcr.nodetype.NodeType;
@@ -193,6 +195,27 @@ public class WikiServiceImpl implements WikiService {
 		} catch (RepositoryException e) {
 			return false;
 		}
+	}
+
+	private Version getLatestVersion(final String path) {
+		return jcrTemplate.execute(new JcrCallback<Version>() {
+
+			@Override
+			public Version doInJcr(Session session) throws IOException,
+					RepositoryException {
+				Node rootNode = session.getRootNode();
+				Node node = getNode(rootNode, path);
+				if (node != null) {
+					VersionManager vm = session.getWorkspace()
+							.getVersionManager();
+					VersionHistory history = vm.getVersionHistory("/" + path);
+					VersionIterator versions = history.getAllLinearVersions();
+					Version lastVersion = versions.nextVersion();
+					return lastVersion;
+				}
+				return null;
+			}
+		});
 	}
 
 	@Override
@@ -437,7 +460,7 @@ public class WikiServiceImpl implements WikiService {
 		}
 	}
 
-	private static Page convertNodeToPage(Node node) {
+	private Page convertNodeToPage(Node node) {
 		try {
 			Page page = new Page();
 			String contentPath = node.getPath();
@@ -453,13 +476,15 @@ public class WikiServiceImpl implements WikiService {
 			page.setCreatedTime(node.getProperty("jcr:created").getDate());
 			page.setCreatedUser(NodesUtil.getString(node, "wiki:createdUser"));
 			page.setNew(false);
+			page.setLastUpdatedTime(page.getCreatedTime());
+			page.setLastUpdatedUser(page.getCreatedUser());
 			return page;
 		} catch (Exception e) {
 			throw new MyCollabException(e);
 		}
 	}
 
-	private static Folder convertNodeToFolder(Node node) {
+	private Folder convertNodeToFolder(Node node) {
 		try {
 			Folder folder = new Folder();
 			folder.setCreatedTime(node.getProperty("jcr:created").getDate());

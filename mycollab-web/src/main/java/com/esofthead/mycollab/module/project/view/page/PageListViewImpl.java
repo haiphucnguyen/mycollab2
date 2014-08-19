@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.module.project.view.page;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.vaadin.dialogs.ConfirmDialog;
@@ -33,6 +35,7 @@ import com.esofthead.mycollab.vaadin.ui.SortButton;
 import com.esofthead.mycollab.vaadin.ui.ToggleButtonGroup;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
+import com.google.common.collect.Ordering;
 import com.vaadin.server.Sizeable;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
@@ -63,6 +66,46 @@ public class PageListViewImpl extends AbstractPageView implements PageListView {
 	private VerticalLayout pagesLayout;
 
 	private List<WikiResource> resources;
+
+	private static Comparator<WikiResource> dateSort = new Comparator<WikiResource>() {
+
+		@Override
+		public int compare(WikiResource o1, WikiResource o2) {
+			return o1.getCreatedTime().compareTo(o2.getCreatedTime());
+		}
+	};
+
+	private static Comparator<WikiResource> kindSort = new Comparator<WikiResource>() {
+
+		@Override
+		public int compare(WikiResource o1, WikiResource o2) {
+			if (o1.getClass() == o2.getClass()) {
+				return 0;
+			} else {
+				if ((o1 instanceof Folder) && (o2 instanceof Page)) {
+					return 1;
+				} else {
+					return -1;
+				}
+			}
+		}
+	};
+
+	private static Comparator<WikiResource> nameSort = new Comparator<WikiResource>() {
+
+		@Override
+		public int compare(WikiResource o1, WikiResource o2) {
+			String name1 = (o1 instanceof Folder) ? ((Folder) o1).getName()
+					: ((Page) o1).getSubject();
+			String name2 = (o2 instanceof Folder) ? ((Folder) o2).getName()
+					: ((Page) o2).getSubject();
+			return name1.compareTo(name2);
+		}
+	};
+
+	private boolean dateSourceAscend = true;
+	private boolean nameSortAscend = true;
+	private boolean kindSortAscend = true;
 
 	public PageListViewImpl() {
 		this.setMargin(new MarginInfo(false, true, false, true));
@@ -103,7 +146,15 @@ public class PageListViewImpl extends AbstractPageView implements PageListView {
 
 					@Override
 					public void buttonClick(Button.ClickEvent event) {
-						// TODO Auto-generated method stub
+						dateSourceAscend = !dateSourceAscend;
+						if (dateSourceAscend) {
+							Collections
+									.sort(resources, Ordering.from(dateSort));
+						} else {
+							Collections.sort(resources, Ordering.from(dateSort)
+									.reverse());
+						}
+						displayPages(resources);
 
 					}
 				});
@@ -117,7 +168,15 @@ public class PageListViewImpl extends AbstractPageView implements PageListView {
 
 					@Override
 					public void buttonClick(Button.ClickEvent event) {
-						// TODO Auto-generated method stub
+						nameSortAscend = !nameSortAscend;
+						if (nameSortAscend) {
+							Collections
+									.sort(resources, Ordering.from(nameSort));
+						} else {
+							Collections.sort(resources, Ordering.from(nameSort)
+									.reverse());
+						}
+						displayPages(resources);
 
 					}
 				});
@@ -131,7 +190,15 @@ public class PageListViewImpl extends AbstractPageView implements PageListView {
 
 					@Override
 					public void buttonClick(Button.ClickEvent event) {
-						// TODO Auto-generated method stub
+						kindSortAscend = !kindSortAscend;
+						if (kindSortAscend) {
+							Collections
+									.sort(resources, Ordering.from(kindSort));
+						} else {
+							Collections.sort(resources, Ordering.from(kindSort)
+									.reverse());
+						}
+						displayPages(resources);
 
 					}
 				});
@@ -184,8 +251,7 @@ public class PageListViewImpl extends AbstractPageView implements PageListView {
 		headerLayout.setMargin(new MarginInfo(true, false, true, false));
 	}
 
-	@Override
-	public void displayPages(List<WikiResource> resources) {
+	private void displayPages(List<WikiResource> resources) {
 		this.resources = resources;
 		pagesLayout.removeAllComponents();
 		if (resources != null) {
@@ -195,7 +261,12 @@ public class PageListViewImpl extends AbstractPageView implements PageListView {
 				pagesLayout.addComponent(resourceBlock);
 			}
 		}
+	}
 
+	@Override
+	public void displayDefaultPages(List<WikiResource> resources) {
+		Collections.sort(resources, Ordering.from(dateSort));
+		displayPages(resources);
 	}
 
 	private Layout displayFolderBlock(final Folder resource) {
@@ -229,6 +300,16 @@ public class PageListViewImpl extends AbstractPageView implements PageListView {
 		block.addComponent(headerPanel);
 		block.addComponent(new Label(StringUtils.trimHtmlTags(resource
 				.getDescription())));
+
+		Label lastUpdateInfo = new Label(
+				AppContext.getMessage(Page18InEnum.LABEL_LAST_UPDATE,
+						ProjectLinkBuilder.generateProjectMemberHtmlLink(
+								resource.getCreatedUser(),
+								CurrentProjectVariables.getProjectId()),
+						AppContext.formatDateTime(resource.getCreatedTime()
+								.getTime())), ContentMode.HTML);
+		lastUpdateInfo.addStyleName("last-update-info");
+		block.addComponent(lastUpdateInfo);
 
 		HorizontalLayout controlBtns = new HorizontalLayout();
 		controlBtns.setSpacing(true);
@@ -342,12 +423,12 @@ public class PageListViewImpl extends AbstractPageView implements PageListView {
 				.getContent())));
 
 		Label lastUpdateInfo = new Label(AppContext.getMessage(
-				Page18InEnum.LABEL_LAST_UPDATE,
-				ProjectLinkBuilder.generateProjectMemberHtmlLink(
-						resource.getLastUpdatedUser(),
-						CurrentProjectVariables.getProjectId()),
-				AppContext.formatDate(resource.getLastUpdatedTime()),
-				ContentMode.HTML));
+				Page18InEnum.LABEL_LAST_UPDATE, ProjectLinkBuilder
+						.generateProjectMemberHtmlLink(
+								resource.getLastUpdatedUser(),
+								CurrentProjectVariables.getProjectId()),
+				AppContext.formatDateTime(resource.getLastUpdatedTime()
+						.getTime())), ContentMode.HTML);
 		lastUpdateInfo.addStyleName("last-update-info");
 		block.addComponent(lastUpdateInfo);
 
