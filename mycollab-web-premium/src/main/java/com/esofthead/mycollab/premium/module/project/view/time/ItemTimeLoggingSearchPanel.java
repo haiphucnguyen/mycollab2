@@ -90,6 +90,7 @@ class ItemTimeLoggingSearchPanel extends
 			createBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 			createBtn.setIcon(MyCollabResource
 					.newResource("icons/16/project/add_time.png"));
+			createBtn.setEnabled(!CurrentProjectVariables.isProjectArchived());
 			createBtn.addStyleName("v-button-caption-bool");
 
 			HorizontalLayout header = new HorizontalLayout();

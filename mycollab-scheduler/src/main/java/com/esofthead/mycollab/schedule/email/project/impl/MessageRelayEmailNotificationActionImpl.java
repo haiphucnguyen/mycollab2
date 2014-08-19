@@ -56,6 +56,7 @@ public class MessageRelayEmailNotificationActionImpl extends
 
 	@Autowired
 	private MessageService messageService;
+	
 	@Autowired
 	private ProjectService projectService;
 
@@ -95,7 +96,8 @@ public class MessageRelayEmailNotificationActionImpl extends
 
 	@Override
 	protected SimpleMessage getBeanInContext(MailContext<SimpleMessage> context) {
-		return messageService.findMessageById(context.getTypeid(),
+		return messageService.findMessageById(
+				Integer.parseInt(context.getTypeid()),
 				context.getSaccountid());
 	}
 

@@ -29,7 +29,7 @@ public class TimeTrackingListPresenter extends
 		view.setSearchCriteria((ItemTimeLoggingSearchCriteria) data.getParams());
 
 		ProjectBreadcrumb breadCrumb = ViewManager
-				.getView(ProjectBreadcrumb.class);
+				.getCacheComponent(ProjectBreadcrumb.class);
 		breadCrumb.gotoTimeTrackingList();
 	}
 }

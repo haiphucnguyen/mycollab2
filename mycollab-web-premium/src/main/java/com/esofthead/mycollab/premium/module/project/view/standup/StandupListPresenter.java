@@ -38,7 +38,7 @@ public class StandupListPresenter extends AbstractPresenter<StandupListView>
 			showDate = searchCriteria.getOnDate().getValue();
 		}
 		ProjectBreadcrumb breadCrumb = ViewManager
-				.getView(ProjectBreadcrumb.class);
+				.getCacheComponent(ProjectBreadcrumb.class);
 		breadCrumb.gotoStandupList(showDate);
 	}
 

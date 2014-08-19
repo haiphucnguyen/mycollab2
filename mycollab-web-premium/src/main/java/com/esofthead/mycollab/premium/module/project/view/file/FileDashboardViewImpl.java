@@ -8,11 +8,18 @@ import com.esofthead.mycollab.module.project.events.ProjectContentEvent;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
+import com.esofthead.mycollab.vaadin.mvp.ViewScope;
 import com.vaadin.shared.ui.MarginInfo;
 
-@ViewComponent
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ *
+ */
+@ViewComponent(scope = ViewScope.PROTOTYPE)
 public class FileDashboardViewImpl extends AbstractPageView implements
-FileDashboardView {
+		FileDashboardView {
 	private static final long serialVersionUID = 1L;
 
 	private FileDashboardComponent dashboardComponent;

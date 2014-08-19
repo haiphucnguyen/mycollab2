@@ -17,11 +17,14 @@
 package com.esofthead.mycollab.module.project.view.milestone;
 
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.events.MilestoneEvent;
 import com.esofthead.mycollab.module.project.i18n.MilestoneI18nEnum;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
+import com.esofthead.mycollab.vaadin.mvp.ViewScope;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.server.Sizeable;
@@ -40,7 +43,7 @@ import com.vaadin.ui.VerticalLayout;
  * 
  */
 
-@ViewComponent
+@ViewComponent(scope = ViewScope.PROTOTYPE)
 public class MilestoneListNoItemView extends AbstractPageView {
 	private static final long serialVersionUID = 740826537581761743L;
 
@@ -77,6 +80,8 @@ public class MilestoneListNoItemView extends AbstractPageView {
 								new MilestoneEvent.GotoAdd(this, null));
 					}
 				});
+		createMilestoneBtn.setEnabled(CurrentProjectVariables
+				.canWrite(ProjectRolePermissionCollections.MILESTONES));
 
 		HorizontalLayout links = new HorizontalLayout();
 

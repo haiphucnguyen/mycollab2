@@ -165,7 +165,7 @@ public class ProblemReadPresenter extends AbstractPresenter<ProblemReadView> {
 					view.previewItem(problem);
 
 					ProjectBreadcrumb breadcrumb = ViewManager
-							.getView(ProjectBreadcrumb.class);
+							.getCacheComponent(ProjectBreadcrumb.class);
 					breadcrumb.gotoProblemRead(problem);
 				} else {
 					NotificationUtil.showRecordNotExistNotification();

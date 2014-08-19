@@ -44,7 +44,7 @@ public class ProblemAddPresenter extends AbstractPresenter<ProblemAddView> {
 			view.editItem(problem);
 
 			ProjectBreadcrumb breadcrumb = ViewManager
-					.getView(ProjectBreadcrumb.class);
+					.getCacheComponent(ProjectBreadcrumb.class);
 			if (problem.getId() == null) {
 				breadcrumb.gotoProblemAdd();
 			} else {

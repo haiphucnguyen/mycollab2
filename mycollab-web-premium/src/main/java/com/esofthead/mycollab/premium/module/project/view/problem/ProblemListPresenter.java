@@ -98,7 +98,7 @@ public class ProblemListPresenter
 			}
 
 			ProjectBreadcrumb breadcrumb = ViewManager
-					.getView(ProjectBreadcrumb.class);
+					.getCacheComponent(ProjectBreadcrumb.class);
 			breadcrumb.gotoProblemList();
 		} else {
 			NotificationUtil.showMessagePermissionAlert();

@@ -43,7 +43,7 @@
             <artifactId>mycollab-services-premium</artifactId>
             <version>4.3.3</version>
         </dependency>
-        
+
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-search-server</artifactId>
@@ -67,9 +67,10 @@
             <artifactId>mycollab-jetty-session-premium</artifactId>
             <version>4.3.3</version>
         </dependency>
-        <!-- <dependency> <groupId>com.vaadin</groupId> <artifactId>vaadin-client-compiler</artifactId> 
-            <version>${vaadinVersion}</version> <scope>provided</scope> </dependency> -->
-
+        <!-- 
+         <dependency> <groupId>com.vaadin</groupId> <artifactId>vaadin-client-compiler</artifactId> 
+            <version>${vaadinVersion}</version> <scope>provided</scope> </dependency>
+            --> 
     </dependencies>
     <build>
         <plugins>

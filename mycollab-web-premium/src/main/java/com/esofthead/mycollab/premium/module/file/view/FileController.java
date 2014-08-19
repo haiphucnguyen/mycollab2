@@ -1,9 +1,8 @@
 package com.esofthead.mycollab.premium.module.file.view;
 
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
-import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.file.events.FileEvent;
-import com.esofthead.mycollab.vaadin.mvp.IController;
+import com.esofthead.mycollab.vaadin.mvp.AbstractController;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.google.common.eventbus.Subscribe;
 
@@ -13,7 +12,7 @@ import com.google.common.eventbus.Subscribe;
  * @since 1.0
  * 
  */
-public class FileController implements IController {
+public class FileController extends AbstractController {
 	private static final long serialVersionUID = 1L;
 
 	private FileModule container;
@@ -25,18 +24,17 @@ public class FileController implements IController {
 	}
 
 	private void bindFileEvents() {
-		EventBusFactory.getInstance().register(
-				new ApplicationEventListener<FileEvent.GotoList>() {
-					private static final long serialVersionUID = 1L;
+		this.register(new ApplicationEventListener<FileEvent.GotoList>() {
+			private static final long serialVersionUID = 1L;
 
-					@Subscribe
-					@Override
-					public void handle(FileEvent.GotoList event) {
-						FileMainPresenter presenter = PresenterResolver
-								.getPresenter(FileMainPresenter.class);
-						presenter.go(container, null);
-					}
-				});
+			@Subscribe
+			@Override
+			public void handle(FileEvent.GotoList event) {
+				FileMainPresenter presenter = PresenterResolver
+						.getPresenter(FileMainPresenter.class);
+				presenter.go(container, null);
+			}
+		});
 	}
 
 }

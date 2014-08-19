@@ -1,6 +1,10 @@
 package com.esofthead.mycollab.mobile.module.project.view;
 
+import com.esofthead.mycollab.eventmanager.EventBusFactory;
+import com.esofthead.mycollab.mobile.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.mobile.module.project.ui.ProjectGenericPresenter;
+import com.esofthead.mycollab.vaadin.mvp.ScreenData;
+import com.vaadin.ui.ComponentContainer;
 
 /**
  * @author MyCollab Inc.
@@ -14,6 +18,12 @@ public class ProjectModulePresenter extends
 
 	public ProjectModulePresenter() {
 		super(ProjectModule.class);
+	}
+
+	@Override
+	protected void onGo(ComponentContainer navigator, ScreenData<?> data) {
+		EventBusFactory.getInstance().post(
+				new ProjectEvent.GotoProjectList(this, null));
 	}
 
 }

@@ -1,5 +1,9 @@
 package com.esofthead.mycollab.module.wiki.domain;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
+import com.esofthead.mycollab.core.arguments.NotBindable;
 
 /**
  * 
@@ -8,21 +12,28 @@ package com.esofthead.mycollab.module.wiki.domain;
  *
  */
 public class Page extends WikiResource {
-	public static final String PUBLIC = "public";
-
-	public static final String PRIVATE = "private";
-
-	public static final String ARCHIEVED = "archieved";
 
 	private String subject;
 
 	private String content;
 
+	@NotBindable
 	private boolean isLock;
 
-	private String[] category;
+	@NotBindable
+	private boolean isNew = true;
+
+	private String category;
 
 	private String status;
+
+	private String lastUpdatedUser;
+
+	private Calendar lastUpdatedTime;
+
+	public Page() {
+		super();
+	}
 
 	public String getSubject() {
 		return subject;
@@ -48,11 +59,11 @@ public class Page extends WikiResource {
 		this.isLock = isLock;
 	}
 
-	public String[] getCategory() {
+	public String getCategory() {
 		return category;
 	}
 
-	public void setCategory(String[] category) {
+	public void setCategory(String category) {
 		this.category = category;
 	}
 
@@ -62,5 +73,34 @@ public class Page extends WikiResource {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public String getId() {
+		int index = this.path.lastIndexOf("/");
+		return (index < 0) ? this.path : this.path.substring(index + 1);
+	}
+
+	public boolean isNew() {
+		return isNew;
+	}
+
+	public void setNew(boolean isNew) {
+		this.isNew = isNew;
+	}
+
+	public String getLastUpdatedUser() {
+		return lastUpdatedUser;
+	}
+
+	public void setLastUpdatedUser(String lastUpdatedUser) {
+		this.lastUpdatedUser = lastUpdatedUser;
+	}
+
+	public Calendar getLastUpdatedTime() {
+		return lastUpdatedTime;
+	}
+
+	public void setLastUpdatedTime(Calendar lastUpdatedTime) {
+		this.lastUpdatedTime = lastUpdatedTime;
 	}
 }

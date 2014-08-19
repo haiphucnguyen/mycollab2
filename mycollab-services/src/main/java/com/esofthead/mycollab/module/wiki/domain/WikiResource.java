@@ -1,6 +1,8 @@
 package com.esofthead.mycollab.module.wiki.domain;
 
-import java.util.Date;
+import java.util.Calendar;
+
+import com.esofthead.mycollab.core.arguments.NotBindable;
 
 /**
  * 
@@ -9,26 +11,21 @@ import java.util.Date;
  *
  */
 public class WikiResource {
-	private Date createdTime;
+	@NotBindable
+	private Calendar createdTime;
 
-	private Date lastUpdatedTime;
-
+	@NotBindable
 	private String createdUser;
 
-	public Date getCreatedTime() {
+	@NotBindable
+	protected String path = "";
+
+	public Calendar getCreatedTime() {
 		return createdTime;
 	}
 
-	public void setCreatedTime(Date createdTime) {
+	public void setCreatedTime(Calendar createdTime) {
 		this.createdTime = createdTime;
-	}
-
-	public Date getLastUpdatedTime() {
-		return lastUpdatedTime;
-	}
-
-	public void setLastUpdatedTime(Date lastUpdatedTime) {
-		this.lastUpdatedTime = lastUpdatedTime;
 	}
 
 	public String getCreatedUser() {
@@ -37,5 +34,13 @@ public class WikiResource {
 
 	public void setCreatedUser(String createdUser) {
 		this.createdUser = createdUser;
+	}
+
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
 	}
 }

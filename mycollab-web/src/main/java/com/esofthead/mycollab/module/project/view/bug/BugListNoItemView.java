@@ -17,11 +17,14 @@
 package com.esofthead.mycollab.module.project.view.bug;
 
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.project.i18n.BugI18nEnum;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
+import com.esofthead.mycollab.vaadin.mvp.ViewScope;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.server.Sizeable;
@@ -39,7 +42,7 @@ import com.vaadin.ui.VerticalLayout;
  * @since 4.1
  * 
  */
-@ViewComponent
+@ViewComponent(scope=ViewScope.PROTOTYPE)
 public class BugListNoItemView extends AbstractPageView {
 	private static final long serialVersionUID = 7964672404043432755L;
 
@@ -77,6 +80,8 @@ public class BugListNoItemView extends AbstractPageView {
 								new BugEvent.GotoAdd(this, null));
 					}
 				});
+		createBugBtn.setEnabled(CurrentProjectVariables
+				.canWrite(ProjectRolePermissionCollections.BUGS));
 
 		HorizontalLayout links = new HorizontalLayout();
 

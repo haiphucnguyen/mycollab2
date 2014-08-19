@@ -27,6 +27,7 @@ import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
+import com.esofthead.mycollab.vaadin.mvp.ViewScope;
 import com.esofthead.mycollab.vaadin.ui.BeanList;
 import com.esofthead.mycollab.vaadin.ui.BeanList.RowDisplayHandler;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
@@ -53,7 +54,7 @@ import com.vaadin.ui.VerticalLayout;
  * @since 1.0
  * 
  */
-@ViewComponent
+@ViewComponent(scope=ViewScope.PROTOTYPE)
 public class StandupListViewImpl extends AbstractPageView implements
 		StandupListView {
 	private static final long serialVersionUID = 1L;
@@ -126,7 +127,7 @@ public class StandupListViewImpl extends AbstractPageView implements
 								.setPopupVisible(false);
 
 						ProjectBreadcrumb breadCrumb = ViewManager
-								.getView(ProjectBreadcrumb.class);
+								.getCacheComponent(ProjectBreadcrumb.class);
 						breadCrumb.gotoStandupList(selectedDate);
 					}
 				});
@@ -278,6 +279,7 @@ public class StandupListViewImpl extends AbstractPageView implements
 		addNewReport.setStyleName(UIConstants.THEME_GREEN_LINK);
 		addNewReport.setIcon(MyCollabResource
 				.newResource("icons/16/addRecord.png"));
+		addNewReport.setEnabled(!CurrentProjectVariables.isProjectArchived());
 
 		header.addComponent(addNewReport);
 

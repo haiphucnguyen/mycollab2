@@ -20,6 +20,12 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.core.MediaType;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ *
+ */
 public interface ErrorReportingResource {
 	@POST
 	@Consumes(MediaType.TEXT_PLAIN)

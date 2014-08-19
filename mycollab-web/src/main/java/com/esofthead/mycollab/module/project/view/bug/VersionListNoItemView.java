@@ -17,12 +17,15 @@
 package com.esofthead.mycollab.module.project.view.bug;
 
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.events.BugVersionEvent;
 import com.esofthead.mycollab.module.project.i18n.BugI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.VersionI18nEnum;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
+import com.esofthead.mycollab.vaadin.mvp.ViewScope;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.server.Sizeable;
@@ -41,7 +44,7 @@ import com.vaadin.ui.VerticalLayout;
  * 
  */
 
-@ViewComponent
+@ViewComponent(scope=ViewScope.PROTOTYPE)
 public class VersionListNoItemView extends AbstractPageView {
 	private static final long serialVersionUID = -232678105178329204L;
 
@@ -78,6 +81,8 @@ public class VersionListNoItemView extends AbstractPageView {
 								new BugVersionEvent.GotoAdd(this, null));
 					}
 				});
+		createVersionBtn.setEnabled(CurrentProjectVariables
+				.canWrite(ProjectRolePermissionCollections.VERSIONS));
 
 		HorizontalLayout links = new HorizontalLayout();
 
