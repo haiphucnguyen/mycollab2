@@ -2,7 +2,10 @@ package com.esofthead.mycollab.module.project.view.page;
 
 import java.util.List;
 
+import org.vaadin.dialogs.ConfirmDialog;
+
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
+import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
@@ -21,6 +24,7 @@ import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.mvp.ViewScope;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
+import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
@@ -50,7 +54,7 @@ import com.vaadin.ui.Window;
  * @since 4.4.0
  * 
  */
-@ViewComponent(scope=ViewScope.PROTOTYPE)
+@ViewComponent(scope = ViewScope.PROTOTYPE)
 public class PageListViewImpl extends AbstractPageView implements PageListView {
 	private static final long serialVersionUID = 1L;
 
@@ -244,6 +248,8 @@ public class PageListViewImpl extends AbstractPageView implements PageListView {
 		editBtn.setIcon(MyCollabResource
 				.newResource("icons/12/project/edit.png"));
 		editBtn.setStyleName("link");
+		editBtn.setEnabled(CurrentProjectVariables
+				.canWrite(ProjectRolePermissionCollections.PAGES));
 		controlBtns.addComponent(editBtn);
 
 		Button deleteBtn = new Button(
@@ -254,10 +260,37 @@ public class PageListViewImpl extends AbstractPageView implements PageListView {
 
 					@Override
 					public void buttonClick(Button.ClickEvent event) {
-						// TODO Delete this Folder
+						ConfirmDialogExt.show(
+								UI.getCurrent(),
+								AppContext.getMessage(
+										GenericI18Enum.DIALOG_DELETE_TITLE,
+										SiteConfiguration.getSiteName()),
+								AppContext
+										.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
+								AppContext
+										.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
+								AppContext
+										.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
+								new ConfirmDialog.Listener() {
+									private static final long serialVersionUID = 1L;
+
+									@Override
+									public void onClose(ConfirmDialog dialog) {
+										if (dialog.isConfirmed()) {
+											WikiService wikiService = ApplicationContextUtil
+													.getSpringBean(WikiService.class);
+											wikiService.removeResource(resource
+													.getPath());
+											resources.remove(resource);
+											displayPages(resources);
+										}
+									}
+								});
 
 					}
 				});
+		deleteBtn.setEnabled(CurrentProjectVariables
+				.canAccess(ProjectRolePermissionCollections.PAGES));
 		deleteBtn.setIcon(MyCollabResource
 				.newResource("icons/12/project/delete.png"));
 		deleteBtn.setStyleName("link");
@@ -334,6 +367,8 @@ public class PageListViewImpl extends AbstractPageView implements PageListView {
 										resource));
 					}
 				});
+		editBtn.setEnabled(CurrentProjectVariables
+				.canWrite(ProjectRolePermissionCollections.PAGES));
 		editBtn.setIcon(MyCollabResource
 				.newResource("icons/12/project/edit.png"));
 		editBtn.setStyleName("link");
@@ -347,10 +382,37 @@ public class PageListViewImpl extends AbstractPageView implements PageListView {
 
 					@Override
 					public void buttonClick(Button.ClickEvent event) {
-						// TODO Auto-generated method stub
+						ConfirmDialogExt.show(
+								UI.getCurrent(),
+								AppContext.getMessage(
+										GenericI18Enum.DIALOG_DELETE_TITLE,
+										SiteConfiguration.getSiteName()),
+								AppContext
+										.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
+								AppContext
+										.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
+								AppContext
+										.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
+								new ConfirmDialog.Listener() {
+									private static final long serialVersionUID = 1L;
+
+									@Override
+									public void onClose(ConfirmDialog dialog) {
+										if (dialog.isConfirmed()) {
+											WikiService wikiService = ApplicationContextUtil
+													.getSpringBean(WikiService.class);
+											wikiService.removeResource(resource
+													.getPath());
+											resources.remove(resource);
+											displayPages(resources);
+										}
+									}
+								});
 
 					}
 				});
+		deleteBtn.setEnabled(CurrentProjectVariables
+				.canAccess(ProjectRolePermissionCollections.PAGES));
 		deleteBtn.setIcon(MyCollabResource
 				.newResource("icons/12/project/delete.png"));
 		deleteBtn.setStyleName("link");
@@ -367,8 +429,7 @@ public class PageListViewImpl extends AbstractPageView implements PageListView {
 		private static final long serialVersionUID = 1L;
 
 		private Folder folder;
-
-		private boolean editMode = false;
+		private boolean isEditMode = false;
 
 		public PageGroupWindow(Folder editFolder) {
 			super();
@@ -386,15 +447,15 @@ public class PageListViewImpl extends AbstractPageView implements PageListView {
 				folder = new Folder();
 				this.setCaption(AppContext
 						.getMessage(Page18InEnum.DIALOG_NEW_GROUP_TITLE));
-				editMode = false;
+				String pagePath = CurrentProjectVariables.getCurrentPagePath();
+				folder.setPath(pagePath + "/"
+						+ StringUtils.generateSoftUniqueId());
 			} else {
 				folder = editFolder;
+				isEditMode = true;
 				this.setCaption(AppContext
 						.getMessage(Page18InEnum.DIALOG_EDIT_GROUP_TITLE));
-				editMode = true;
 			}
-			String pagePath = CurrentProjectVariables.getCurrentPagePath();
-			folder.setPath(pagePath + "/" + StringUtils.generateSoftUniqueId());
 
 			editForm.setBean(folder);
 			content.addComponent(editForm);
@@ -469,14 +530,14 @@ public class PageListViewImpl extends AbstractPageView implements PageListView {
 										final Button.ClickEvent event) {
 									if (EditForm.this.validateForm()) {
 
-										// FIXME: if editMode is true, update
-										// folder instead of create new one
-
 										WikiService wikiService = ApplicationContextUtil
 												.getSpringBean(WikiService.class);
 										wikiService.createFolder(folder,
 												AppContext.getUsername());
-										resources.add(folder);
+										if (isEditMode == false) {
+											resources.add(folder);
+										}
+
 										PageGroupWindow.this.close();
 										displayPages(resources);
 									}
