@@ -17,6 +17,7 @@
 package com.esofthead.mycollab.module.project.service.ibatis;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultCrudService;
@@ -30,6 +31,7 @@ import com.esofthead.mycollab.module.project.service.ProjectCustomizeViewService
  * @since 4.4.0
  *
  */
+@Service
 public class ProjectCustomizeViewServiceImpl extends
 		DefaultCrudService<Integer, ProjectCustomizeView> implements
 		ProjectCustomizeViewService {
