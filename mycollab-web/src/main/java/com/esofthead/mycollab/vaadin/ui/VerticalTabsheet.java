@@ -95,23 +95,24 @@ public class VerticalTabsheet extends CustomComponent {
 	}
 
 	public void addTab(Component component, String id, String caption) {
-		addTab(component, id, caption, null, null);
+		addTab(component, id, 0, caption, null, null);
 	}
 
-	public void addTab(Component component, String id, String caption,
-			String link) {
-		addTab(component, id, caption, link, null);
+	public void addTab(Component component, String id, int level,
+			String caption, String link) {
+		addTab(component, id, level, caption, link, null);
 	}
 
 	public void addTab(Component component, String id, String caption,
 			Resource resource) {
-		addTab(component, id, caption, null, resource);
+		addTab(component, id, 0, caption, null, resource);
 	}
 
-	public void addTab(Component component, String id, String caption,
-			String link, Resource resource) {
+	public void addTab(Component component, String id, int level,
+			String caption, String link, Resource resource) {
 		if (!hasTab(id)) {
-			final ButtonTabImpl button = new ButtonTabImpl(id, caption, link);
+			final ButtonTabImpl button = new ButtonTabImpl(id, level, caption,
+					link);
 
 			button.addClickListener(new ClickListener() {
 				private static final long serialVersionUID = 1L;
@@ -142,10 +143,21 @@ public class VerticalTabsheet extends CustomComponent {
 			button.setStyleName(TAB_STYLENAME);
 			button.setWidth("100%");
 
-			tabNavigator.addComponent(button);
-
-			tabContainer.removeAllComponents();
-			tabContainer.addComponent(component);
+			if (button.getLevel() > 0) {
+				int insertIndex = 0;
+				for (int i = 0; i < tabNavigator.getComponentCount(); i++) {
+					ButtonTabImpl buttonTmp = (ButtonTabImpl) tabNavigator
+							.getComponent(i);
+					if (buttonTmp.getLevel() > level) {
+						break;
+					} else {
+						insertIndex++;
+					}
+				}
+				tabNavigator.addComponent(button, insertIndex);
+			} else {
+				tabNavigator.addComponent(button);
+			}
 
 			TabImpl tabImpl = new TabImpl(id, caption, component);
 			compMap.put(id, tabImpl);
@@ -314,20 +326,22 @@ public class VerticalTabsheet extends CustomComponent {
 		private static final long serialVersionUID = 1L;
 
 		private String tabId;
+		private int level;
 		String link;
 
-		public ButtonTabImpl(String id, String caption, String link) {
+		public ButtonTabImpl(String id, int level, String caption, String link) {
 			super(caption);
 			this.tabId = id;
 			this.link = link;
+			this.level = level;
 		}
 
 		public String getTabId() {
 			return tabId;
 		}
 
-		public void setTabId(String tabId) {
-			this.tabId = tabId;
+		public int getLevel() {
+			return level;
 		}
 	}
 

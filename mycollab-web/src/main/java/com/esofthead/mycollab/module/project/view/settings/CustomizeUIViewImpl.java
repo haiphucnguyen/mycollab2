@@ -62,6 +62,7 @@ public class CustomizeUIViewImpl extends AbstractPageView implements
 
 	@Override
 	public void showFeatures() {
+		
 		final ProjectCustomizeView customizeView = CurrentProjectVariables
 				.getFeatures();
 
