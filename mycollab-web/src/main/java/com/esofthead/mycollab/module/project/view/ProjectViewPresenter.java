@@ -159,7 +159,8 @@ public class ProjectViewPresenter extends AbstractPresenter<ProjectView> {
 				ProjectRoleScreenData.Search.class,
 				ProjectRoleScreenData.Add.class,
 				ProjectRoleScreenData.Read.class,
-				ProjectSettingScreenData.ViewNotification.class)) {
+				ProjectSettingScreenData.ViewNotification.class,
+				ProjectSettingScreenData.CustomizeView.class)) {
 			presenter = PresenterResolver
 					.getPresenter(UserSettingPresenter.class);
 		} else if (ClassUtils.instanceOf(pageAction,

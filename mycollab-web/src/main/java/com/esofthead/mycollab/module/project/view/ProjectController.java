@@ -638,18 +638,6 @@ public class ProjectController extends AbstractController {
 			}
 		});
 
-		this.register(new ApplicationEventListener<StandUpEvent.GotoRead>() {
-			private static final long serialVersionUID = 1L;
-
-			@Subscribe
-			@Override
-			public void handle(StandUpEvent.GotoRead event) {
-				StandupScreenData.Read data = new StandupScreenData.Read(
-						(Integer) event.getData());
-				projectView.gotoStandupReportView(data);
-			}
-		});
-
 		this.register(new ApplicationEventListener<StandUpEvent.GotoList>() {
 			private static final long serialVersionUID = 1L;
 

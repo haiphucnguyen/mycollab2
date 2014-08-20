@@ -31,4 +31,11 @@ public class ProjectSettingScreenData {
 			super(null);
 		}
 	}
+
+	public static class CustomizeView extends ScreenData {
+
+		public CustomizeView() {
+			super(null);
+		}
+	}
 }

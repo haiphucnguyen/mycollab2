@@ -51,6 +51,7 @@ public class UserSettingViewImpl extends AbstractPageView implements
 	private ProjectUserPresenter userPresenter;
 	private ProjectRolePresenter rolePresenter;
 	private ProjectNotificationSettingPresenter notificationSettingPresenter;
+	private CustomizeUIPresenter featurePresenter;
 
 	private final TabsheetDecor myProjectTab;
 
@@ -81,6 +82,11 @@ public class UserSettingViewImpl extends AbstractPageView implements
 				.addTab(this.notificationSettingPresenter.getView(),
 						AppContext
 								.getMessage(ProjectCommonI18nEnum.VIEW_NOTIFICATION_SETTINGS));
+
+		this.featurePresenter = PresenterResolver
+				.getPresenter(CustomizeUIPresenter.class);
+		this.myProjectTab.addTab(this.featurePresenter.getView(),
+				AppContext.getMessage(ProjectCommonI18nEnum.VIEW_CUSTOMIZE_UI));
 
 		this.myProjectTab
 				.addSelectedTabChangeListener(new SelectedTabChangeListener() {
@@ -121,6 +127,10 @@ public class UserSettingViewImpl extends AbstractPageView implements
 								.equals(caption)) {
 							notificationSettingPresenter.go(
 									UserSettingViewImpl.this, null);
+						} else if (AppContext.getMessage(
+								ProjectCommonI18nEnum.VIEW_CUSTOMIZE_UI)
+								.equals(caption)) {
+							featurePresenter.go(UserSettingViewImpl.this, null);
 						}
 
 					}

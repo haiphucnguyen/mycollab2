@@ -27,6 +27,7 @@ import org.slf4j.LoggerFactory;
 import com.esofthead.mycollab.common.MyCollabSession;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.project.dao.ProjectRolePermissionMapper;
+import com.esofthead.mycollab.module.project.domain.ProjectCustomizeView;
 import com.esofthead.mycollab.module.project.domain.ProjectMember;
 import com.esofthead.mycollab.module.project.domain.ProjectRolePermission;
 import com.esofthead.mycollab.module.project.domain.ProjectRolePermissionExample;
@@ -139,7 +140,7 @@ public class CurrentProjectVariables {
 		if (isProjectArchived()) {
 			return false;
 		}
-		
+
 		if (isAdmin()) {
 			return true;
 		}
@@ -162,7 +163,7 @@ public class CurrentProjectVariables {
 		if (isProjectArchived()) {
 			return false;
 		}
-		
+
 		if (isAdmin()) {
 			return true;
 		}
@@ -179,6 +180,25 @@ public class CurrentProjectVariables {
 			log.error("Error while checking permission", e);
 			return false;
 		}
+	}
+
+	public static ProjectCustomizeView getFeatures() {
+		ProjectCustomizeView customizeView = getProject().getCustomizeView();
+		if (customizeView == null) {
+			customizeView = new ProjectCustomizeView();
+			customizeView.setProjectid(CurrentProjectVariables.getProjectId());
+			customizeView.setDisplaybug(true);
+			customizeView.setDisplaymessage(true);
+			customizeView.setDisplaymilestone(true);
+			customizeView.setDisplaypage(true);
+			customizeView.setDisplayproblem(true);
+			customizeView.setDisplayrisk(true);
+			customizeView.setDisplaystandup(true);
+			customizeView.setDisplaytask(true);
+			customizeView.setDisplaytimelogging(true);
+			customizeView.setDisplayfile(true);
+		}
+		return customizeView;
 	}
 
 	public static String getCurrentPagePath() {

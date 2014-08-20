@@ -251,7 +251,7 @@
                     <execution>
                         <goals>
                             <!-- <goal>remove</goal> -->
-                            <!-- <goal>format</goal> -->
+                            <goal>format</goal>
                         </goals>
                         <phase>compile</phase>
                     </execution>

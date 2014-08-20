@@ -135,11 +135,12 @@
         (SELECT SUM(m_prj_time_logging.logValue) FROM m_prj_time_logging WHERE m_prj_time_logging.projectId = m_prj_project.id AND m_prj_time_logging.isBillable = 0) AS totalNonBillableHours,
         s_currency.id, s_currency.shortname AS curr_shortname, s_currency.fullname AS curr_fullname, s_currency.isocode AS curr_isocode, 
         s_currency.symbol AS curr_symbol, s_currency.conversionrate AS curr_conversionrate,
+        m_prj_customize_view.id AS view_id,
         m_prj_customize_view.displayMessage AS view_displayMessage, m_prj_customize_view.displayMilestone AS view_displayMilestone,
         m_prj_customize_view.displayTask AS view_displayTask, m_prj_customize_view.displayBug AS view_displayBug,
         m_prj_customize_view.displayStandup AS view_displayStandup, m_prj_customize_view.displayProblem AS view_displayProblem,
         m_prj_customize_view.displayRisk AS view_displayRisk, m_prj_customize_view.displayTimeLogging AS view_displayTimeLogging,
-        m_prj_customize_view.displayPage AS view_displayPage
+        m_prj_customize_view.displayPage AS view_displayPage, m_prj_customize_view.displayFile AS view_displayFile
         FROM m_prj_project 
             LEFT OUTER JOIN m_crm_account ON (m_crm_account.id=m_prj_project.account) 
             LEFT OUTER JOIN s_user ON (m_prj_project.owner = s_user.username) 
