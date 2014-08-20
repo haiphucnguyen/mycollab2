@@ -769,7 +769,7 @@ public class ProjectController extends AbstractController {
 			@Subscribe
 			@Override
 			public void handle(CustomizeUIEvent.UpdateFeaturesList event) {
-
+				projectView.updateProjectFeatures();
 			}
 		});
 	}
