@@ -50,8 +50,7 @@ public class UserSettingViewImpl extends AbstractPageView implements
 
 	private ProjectUserPresenter userPresenter;
 	private ProjectRolePresenter rolePresenter;
-	private ProjectNotificationSettingPresenter notificationSettingPresenter;
-	private CustomizeUIPresenter featurePresenter;
+	private ProjectSettingPresenter settingPresenter;
 
 	private final TabsheetDecor myProjectTab;
 
@@ -76,17 +75,10 @@ public class UserSettingViewImpl extends AbstractPageView implements
 		this.myProjectTab.addTab(this.rolePresenter.getView(),
 				AppContext.getMessage(ProjectCommonI18nEnum.VIEW_ROLES));
 
-		this.notificationSettingPresenter = PresenterResolver
-				.getPresenter(ProjectNotificationSettingPresenter.class);
-		this.myProjectTab
-				.addTab(this.notificationSettingPresenter.getView(),
-						AppContext
-								.getMessage(ProjectCommonI18nEnum.VIEW_NOTIFICATION_SETTINGS));
-
-		this.featurePresenter = PresenterResolver
-				.getPresenter(CustomizeUIPresenter.class);
-		this.myProjectTab.addTab(this.featurePresenter.getView(),
-				AppContext.getMessage(ProjectCommonI18nEnum.VIEW_CUSTOMIZE_UI));
+		this.settingPresenter = PresenterResolver
+				.getPresenter(ProjectSettingPresenter.class);
+		this.myProjectTab.addTab(this.settingPresenter.getView(),
+				AppContext.getMessage(ProjectCommonI18nEnum.VIEW_SETTINGS));
 
 		this.myProjectTab
 				.addSelectedTabChangeListener(new SelectedTabChangeListener() {
@@ -121,16 +113,10 @@ public class UserSettingViewImpl extends AbstractPageView implements
 							UserSettingViewImpl.this.rolePresenter.go(
 									UserSettingViewImpl.this,
 									new ProjectRoleScreenData.Search(criteria));
-						} else if (AppContext
-								.getMessage(
-										ProjectCommonI18nEnum.VIEW_NOTIFICATION_SETTINGS)
-								.equals(caption)) {
-							notificationSettingPresenter.go(
-									UserSettingViewImpl.this, null);
 						} else if (AppContext.getMessage(
-								ProjectCommonI18nEnum.VIEW_CUSTOMIZE_UI)
-								.equals(caption)) {
-							featurePresenter.go(UserSettingViewImpl.this, null);
+								ProjectCommonI18nEnum.VIEW_SETTINGS).equals(
+								caption)) {
+							settingPresenter.go(UserSettingViewImpl.this, null);
 						}
 
 					}

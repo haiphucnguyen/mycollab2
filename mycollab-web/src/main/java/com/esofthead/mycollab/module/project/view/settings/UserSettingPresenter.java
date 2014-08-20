@@ -70,17 +70,11 @@ public class UserSettingPresenter extends AbstractPresenter<UserSettingView> {
 			presenter = PresenterResolver
 					.getPresenter(ProjectUserPresenter.class);
 		} else if (ClassUtils.instanceOf(data,
-				ProjectSettingScreenData.ViewNotification.class)) {
+				ProjectSettingScreenData.ViewSettings.class)) {
 			view.gotoSubView(AppContext
-					.getMessage(ProjectCommonI18nEnum.VIEW_NOTIFICATION_SETTINGS));
+					.getMessage(ProjectCommonI18nEnum.VIEW_SETTINGS));
 			presenter = PresenterResolver
-					.getPresenter(ProjectNotificationSettingPresenter.class);
-		} else if (ClassUtils.instanceOf(data,
-				ProjectSettingScreenData.CustomizeView.class)) {
-			view.gotoSubView(AppContext
-					.getMessage(ProjectCommonI18nEnum.VIEW_CUSTOMIZE_UI));
-			presenter = PresenterResolver
-					.getPresenter(CustomizeUIPresenter.class);
+					.getPresenter(ProjectSettingPresenter.class);
 		} else {
 			throw new MyCollabException("No support screen data: " + data);
 		}

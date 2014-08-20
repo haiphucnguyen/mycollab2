@@ -7184,3 +7184,22 @@ div.v-csslayout.bean-block.olive-block, .list-note-block .note-label.olive-block
 .feature-select-box {
 	background-color: #EEE;
 }
+
+/* Block Widget */
+.block-widget .block-header {
+	padding: 7px 10px;
+	background-color: rgb(241, 241, 241);
+	font-size: 14px;
+	color: rgb(49, 49, 49);
+	border: 1px solid rgb(207, 207, 207);
+}
+.block-widget .block-body {
+	border-width: 0px 1px 1px;
+	border-color: rgb(207, 207, 207);
+	border-style: solid;
+}
+
+/* Medium Spacing Layouts */
+.v-horizontal.medium-spacing > .v-expand > .v-spacing {
+	width: 15px;
+}

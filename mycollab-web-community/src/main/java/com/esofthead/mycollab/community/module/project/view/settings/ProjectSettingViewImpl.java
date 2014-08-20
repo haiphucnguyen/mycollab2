@@ -1,5 +1,5 @@
 /**
- * This file is part of mycollab-web.
+ * This file is part of mycollab-web-community.
  *
  * mycollab-web is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,13 +14,16 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.module.project.view.settings;
+package com.esofthead.mycollab.community.module.project.view.settings;
 
 import com.esofthead.mycollab.module.project.domain.ProjectNotificationSetting;
 import com.esofthead.mycollab.module.project.service.ProjectNotificationSettingService;
+import com.esofthead.mycollab.module.project.view.settings.NotificationSettingViewComponent;
+import com.esofthead.mycollab.module.project.view.settings.ProjectSettingView;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
+import com.vaadin.ui.HorizontalLayout;
 
 /**
  * 
@@ -29,19 +32,31 @@ import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
  * 
  */
 @ViewComponent
-public class ProjectNotificationSettingViewImpl extends AbstractPageView
-		implements ProjectNotificationSettingView {
+public class ProjectSettingViewImpl extends AbstractPageView implements
+		ProjectSettingView {
 	private static final long serialVersionUID = 1L;
 
 	private NotificationSettingViewComponent<ProjectNotificationSetting, ProjectNotificationSettingService> component;
 
-	public ProjectNotificationSettingViewImpl() {
-		this.setMargin(true);
+	private final HorizontalLayout mainBody;
+
+	public ProjectSettingViewImpl() {
+		this.setWidth("100%");
+		this.setSpacing(true);
+		this.addStyleName("readview-layout");
+
+		mainBody = new HorizontalLayout();
+		mainBody.setMargin(true);
+		mainBody.setSpacing(true);
+		mainBody.setWidth("100%");
+		mainBody.addStyleName("medium-spacing");
+
+		this.addComponent(mainBody);
 	}
 
 	@Override
 	public void showNotificationSettings(ProjectNotificationSetting notification) {
-		this.removeAllComponents();
+		mainBody.removeAllComponents();
 
 		if (notification == null) {
 			notification = new ProjectNotificationSetting();
@@ -52,6 +67,6 @@ public class ProjectNotificationSettingViewImpl extends AbstractPageView
 						.getSpringBean(ProjectNotificationSettingService.class)) {
 			private static final long serialVersionUID = 1L;
 		};
-		this.addComponent(component);
+		mainBody.addComponent(component);
 	}
 }

@@ -43,7 +43,7 @@ public class SettingUrlResolver extends ProjectUrlResolver {
 
 			PageActionChain chain = new PageActionChain(
 					new ProjectScreenData.Goto(projectId),
-					new ProjectSettingScreenData.ViewNotification());
+					new ProjectSettingScreenData.ViewSettings());
 			EventBusFactory.getInstance().post(
 					new ProjectEvent.GotoMyProject(this, chain));
 		}
