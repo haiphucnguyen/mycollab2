@@ -108,7 +108,7 @@ public class AccountModuleImpl extends AbstractCssPageView implements
 
 	private Label generateIntroText() {
 		return new Label(
-				"Update your personal and account settings. Please note that all actions can not be undone");
+				"It is all about you, billing information, account management and site customization.");
 	}
 
 	private void buildComponents() {

@@ -508,6 +508,7 @@ public class ProjectViewImpl extends AbstractCssPageView implements ProjectView 
 		myProjectTab.addTab(
 				constructProjectDashboardComponent(),
 				"dashboard",
+				1,
 				AppContext.getMessage(ProjectCommonI18nEnum.VIEW_DASHBOARD),
 				GenericLinkUtils.URL_PREFIX_PARAM
 						+ ProjectLinkGenerator.generateProjectLink(prjId));
@@ -516,6 +517,7 @@ public class ProjectViewImpl extends AbstractCssPageView implements ProjectView 
 			myProjectTab.addTab(
 					constructProjectMessageComponent(),
 					"message",
+					2,
 					AppContext.getMessage(ProjectCommonI18nEnum.VIEW_MESSAGE),
 					GenericLinkUtils.URL_PREFIX_PARAM
 							+ ProjectLinkGenerator.generateMessagesLink(prjId));
@@ -523,75 +525,124 @@ public class ProjectViewImpl extends AbstractCssPageView implements ProjectView 
 			myProjectTab.removeTab("message");
 		}
 
-		myProjectTab.addTab(
-				constructProjectMilestoneComponent(),
-				"milestone",
-				AppContext.getMessage(ProjectCommonI18nEnum.VIEW_MILESTONE),
-				GenericLinkUtils.URL_PREFIX_PARAM
-						+ ProjectLinkGenerator.generateMilestonesLink(prjId));
+		if (CurrentProjectVariables.hasPhaseFeature()) {
+			myProjectTab
+					.addTab(constructProjectMilestoneComponent(),
+							"milestone",
+							3,
+							AppContext
+									.getMessage(ProjectCommonI18nEnum.VIEW_MILESTONE),
+							GenericLinkUtils.URL_PREFIX_PARAM
+									+ ProjectLinkGenerator
+											.generateMilestonesLink(prjId));
+		} else {
+			myProjectTab.removeTab("milestone");
+		}
 
-		myProjectTab
-				.addTab(constructTaskDashboardComponent(),
-						"task",
-						AppContext.getMessage(ProjectCommonI18nEnum.VIEW_TASK),
-						GenericLinkUtils.URL_PREFIX_PARAM
-								+ ProjectLinkGenerator
-										.generateTaskDashboardLink(prjId));
+		if (CurrentProjectVariables.hasTaskFeature()) {
+			myProjectTab.addTab(
+					constructTaskDashboardComponent(),
+					"task",
+					4,
+					AppContext.getMessage(ProjectCommonI18nEnum.VIEW_TASK),
+					GenericLinkUtils.URL_PREFIX_PARAM
+							+ ProjectLinkGenerator
+									.generateTaskDashboardLink(prjId));
+		} else {
+			myProjectTab.removeTab("task");
+		}
 
-		myProjectTab.addTab(
-				constructProjectBugComponent(),
-				"bug",
-				AppContext.getMessage(ProjectCommonI18nEnum.VIEW_BUG),
-				GenericLinkUtils.URL_PREFIX_PARAM
-						+ ProjectLinkGenerator.generateProjectLink(prjId));
+		if (CurrentProjectVariables.hasBugFeature()) {
+			myProjectTab.addTab(
+					constructProjectBugComponent(),
+					"bug",
+					5,
+					AppContext.getMessage(ProjectCommonI18nEnum.VIEW_BUG),
+					GenericLinkUtils.URL_PREFIX_PARAM
+							+ ProjectLinkGenerator.generateProjectLink(prjId));
+		} else {
+			myProjectTab.removeTab("bug");
+		}
 
-		myProjectTab.addTab(
-				constructProjectPageComponent(),
-				"page",
-				AppContext.getMessage(ProjectCommonI18nEnum.VIEW_PAGE),
-				GenericLinkUtils.URL_PREFIX_PARAM
-						+ ProjectLinkGenerator.generateProjectLink(prjId));
+		if (CurrentProjectVariables.hasPageFeature()) {
+			myProjectTab.addTab(
+					constructProjectPageComponent(),
+					"page",
+					6,
+					AppContext.getMessage(ProjectCommonI18nEnum.VIEW_PAGE),
+					GenericLinkUtils.URL_PREFIX_PARAM
+							+ ProjectLinkGenerator.generateProjectLink(prjId));
+		} else {
+			myProjectTab.removeTab("page");
+		}
 
-		myProjectTab
-				.addTab(constructProjectFileComponent(),
-						"file",
-						AppContext.getMessage(ProjectCommonI18nEnum.VIEW_FILE),
-						GenericLinkUtils.URL_PREFIX_PARAM
-								+ ProjectLinkGenerator
-										.generateFileDashboardLink(prjId));
+		if (CurrentProjectVariables.hasFileFeature()) {
+			myProjectTab.addTab(
+					constructProjectFileComponent(),
+					"file",
+					7,
+					AppContext.getMessage(ProjectCommonI18nEnum.VIEW_FILE),
+					GenericLinkUtils.URL_PREFIX_PARAM
+							+ ProjectLinkGenerator
+									.generateFileDashboardLink(prjId));
+		} else {
+			myProjectTab.removeTab("file");
+		}
 
-		myProjectTab.addTab(
-				constructProjectRiskComponent(),
-				"risk",
-				AppContext.getMessage(ProjectCommonI18nEnum.VIEW_RISK),
-				GenericLinkUtils.URL_PREFIX_PARAM
-						+ ProjectLinkGenerator.generateRisksLink(prjId));
+		if (CurrentProjectVariables.hasRiskFeature()) {
+			myProjectTab.addTab(
+					constructProjectRiskComponent(),
+					"risk",
+					8,
+					AppContext.getMessage(ProjectCommonI18nEnum.VIEW_RISK),
+					GenericLinkUtils.URL_PREFIX_PARAM
+							+ ProjectLinkGenerator.generateRisksLink(prjId));
+		} else {
+			myProjectTab.removeTab("risk");
+		}
 
-		myProjectTab.addTab(
-				constructProjectProblemComponent(),
-				"problem",
-				AppContext.getMessage(ProjectCommonI18nEnum.VIEW_PROBLEM),
-				GenericLinkUtils.URL_PREFIX_PARAM
-						+ ProjectLinkGenerator.generateProblemsLink(prjId));
+		if (CurrentProjectVariables.hasProblemFeature()) {
+			myProjectTab.addTab(
+					constructProjectProblemComponent(),
+					"problem",
+					9,
+					AppContext.getMessage(ProjectCommonI18nEnum.VIEW_PROBLEM),
+					GenericLinkUtils.URL_PREFIX_PARAM
+							+ ProjectLinkGenerator.generateProblemsLink(prjId));
+		} else {
+			myProjectTab.removeTab("problem");
+		}
 
-		myProjectTab.addTab(
-				constructTimeTrackingComponent(),
-				"time",
-				AppContext.getMessage(ProjectCommonI18nEnum.VIEW_TIME),
-				GenericLinkUtils.URL_PREFIX_PARAM
-						+ ProjectLinkGenerator.generateTimeReportLink(prjId));
+		if (CurrentProjectVariables.hasTimeFeature()) {
+			myProjectTab.addTab(
+					constructTimeTrackingComponent(),
+					"time",
+					10,
+					AppContext.getMessage(ProjectCommonI18nEnum.VIEW_TIME),
+					GenericLinkUtils.URL_PREFIX_PARAM
+							+ ProjectLinkGenerator
+									.generateTimeReportLink(prjId));
+		} else {
+			myProjectTab.removeTab("time");
+		}
 
-		myProjectTab.addTab(
-				constructProjectStandupMeeting(),
-				"standup",
-				AppContext.getMessage(ProjectCommonI18nEnum.VIEW_STANDAUP),
-				GenericLinkUtils.URL_PREFIX_PARAM
-						+ ProjectLinkGenerator
-								.generateStandupDashboardLink(prjId));
+		if (CurrentProjectVariables.hasStandupFeature()) {
+			myProjectTab.addTab(
+					constructProjectStandupMeeting(),
+					"standup",
+					11,
+					AppContext.getMessage(ProjectCommonI18nEnum.VIEW_STANDAUP),
+					GenericLinkUtils.URL_PREFIX_PARAM
+							+ ProjectLinkGenerator
+									.generateStandupDashboardLink(prjId));
+		} else {
+			myProjectTab.removeTab("standup");
+		}
 
 		myProjectTab.addTab(
 				constructProjectUsers(),
 				"member",
+				12,
 				AppContext.getMessage(ProjectCommonI18nEnum.VIEW_MEMBER),
 				GenericLinkUtils.URL_PREFIX_PARAM
 						+ ProjectLinkGenerator.generateUsersLink(prjId));
