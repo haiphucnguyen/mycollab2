@@ -17,7 +17,6 @@
 package com.esofthead.mycollab.vaadin.ui;
 
 import java.lang.reflect.Method;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -53,7 +52,7 @@ public class VerticalTabsheet extends CustomComponent {
 	private VerticalLayout contentWrapper;
 	private CssLayout navigatorWrapper;
 
-	private Map<Component, Tab> compMap = new HashMap<Component, Tab>();
+	private Map<String, Tab> compMap = new HashMap<String, Tab>();
 
 	private Component selectedButton = null;
 	private Tab selectedComp = null;
@@ -111,44 +110,73 @@ public class VerticalTabsheet extends CustomComponent {
 
 	public void addTab(Component component, String id, String caption,
 			String link, Resource resource) {
-		final ButtonTabImpl button = new ButtonTabImpl(id, caption, link);
+		if (!hasTab(id)) {
+			final ButtonTabImpl button = new ButtonTabImpl(id, caption, link);
 
-		button.addClickListener(new ClickListener() {
-			private static final long serialVersionUID = 1L;
+			button.addClickListener(new ClickListener() {
+				private static final long serialVersionUID = 1L;
 
-			@Override
-			public void buttonClick(ClickEvent event) {
-				if (!event.isCtrlKey() && !event.isMetaKey()) {
-					if (selectedButton != button) {
-						clearTabSelection(true);
-						selectedButton = button;
-						selectedButton.addStyleName(TAB_SELECTED_STYLENAME);
-						selectedComp = compMap.get(selectedButton);
+				@Override
+				public void buttonClick(ClickEvent event) {
+					if (!event.isCtrlKey() && !event.isMetaKey()) {
+						if (selectedButton != button) {
+							clearTabSelection(true);
+							selectedButton = button;
+							selectedButton.addStyleName(TAB_SELECTED_STYLENAME);
+							selectedComp = compMap.get(button.getTabId());
+						}
+						fireTabChangeEvent(new SelectedTabChangeEvent(
+								VerticalTabsheet.this));
+					} else {
+						Page.getCurrent().open(button.link, "_blank", false);
 					}
-					fireTabChangeEvent(new SelectedTabChangeEvent(
-							VerticalTabsheet.this));
-				} else {
-					Page.getCurrent().open(button.link, "_blank", false);
+
 				}
+			});
 
+			if (resource == null) {
+				setDefaulButtonIcon(button, false);
+			} else {
+				button.setIcon(resource);
 			}
-		});
+			button.setStyleName(TAB_STYLENAME);
+			button.setWidth("100%");
 
-		if (resource == null) {
-			setDefaulButtonIcon(button, false);
-		} else {
-			button.setIcon(resource);
+			tabNavigator.addComponent(button);
+
+			tabContainer.removeAllComponents();
+			tabContainer.addComponent(component);
+
+			TabImpl tabImpl = new TabImpl(id, caption, component);
+			compMap.put(id, tabImpl);
 		}
-		button.setStyleName(TAB_STYLENAME);
-		button.setWidth("100%");
 
-		tabNavigator.addComponent(button);
+	}
 
-		tabContainer.removeAllComponents();
-		tabContainer.addComponent(component);
+	public boolean hasTab(String viewId) {
+		return compMap.containsKey(viewId);
+	}
 
-		TabImpl tabImpl = new TabImpl(id, caption, component);
-		compMap.put(button, tabImpl);
+	public void removeTab(String viewId) {
+		Tab tabImpl = compMap.get(viewId);
+		if (tabImpl != null) {
+			ButtonTabImpl button = getButtonById(viewId);
+			if (button != null) {
+				tabNavigator.removeComponent(button);
+				compMap.remove(viewId);
+			}
+		}
+	}
+
+	private ButtonTabImpl getButtonById(String viewId) {
+		for (int i = 0; i < tabNavigator.getComponentCount(); i++) {
+			ButtonTabImpl button = (ButtonTabImpl) tabNavigator.getComponent(i);
+			if (viewId.equals(button.getTabId())) {
+				return button;
+			}
+		}
+
+		return null;
 	}
 
 	private void fireTabChangeEvent(SelectedTabChangeEvent event) {
@@ -176,21 +204,20 @@ public class VerticalTabsheet extends CustomComponent {
 	}
 
 	public Component selectTab(String viewId) {
-		Collection<Component> tabs = compMap.keySet();
-		for (Component btn : tabs) {
-			TabImpl tab = (TabImpl) compMap.get(btn);
-			if (tab.getTabId().equals(viewId)) {
-				selectedButton = btn;
-				clearTabSelection(true);
-				selectedButton.addStyleName(TAB_SELECTED_STYLENAME);
-				setDefaulButtonIcon(selectedButton, true);
-				selectedComp = tab;
-				tabContainer.removeAllComponents();
-				tabContainer.addComponent(tab.getComponent());
-				return tab.getComponent();
-			}
+		Tab tab = compMap.get(viewId);
+		Button btn = getButtonById(viewId);
+		if (btn != null) {
+			selectedButton = btn;
+			clearTabSelection(true);
+			selectedButton.addStyleName(TAB_SELECTED_STYLENAME);
+			setDefaulButtonIcon(selectedButton, true);
+			selectedComp = tab;
+			tabContainer.removeAllComponents();
+			tabContainer.addComponent(tab.getComponent());
+			return tab.getComponent();
+		} else {
+			return null;
 		}
-		return null;
 	}
 
 	public Tab getSelectedTab() {
@@ -235,22 +262,23 @@ public class VerticalTabsheet extends CustomComponent {
 	}
 
 	private void clearTabSelection(boolean setDefaultIcon) {
-		Collection<Component> tabs = compMap.keySet();
+		Iterator<Component> iterator = tabNavigator.iterator();
 		if (setDefaultIcon == true) {
-			for (Component btn : tabs) {
+			while (iterator.hasNext()) {
+				Component btn = iterator.next();
 				if (btn.getStyleName().contains(TAB_SELECTED_STYLENAME)) {
 					btn.removeStyleName(TAB_SELECTED_STYLENAME);
 					setDefaulButtonIcon(btn, false);
 				}
 			}
 		} else {
-			for (Component btn : tabs) {
+			while (iterator.hasNext()) {
+				Component btn = iterator.next();
 				if (btn.getStyleName().contains(TAB_SELECTED_STYLENAME)) {
 					btn.removeStyleName(TAB_SELECTED_STYLENAME);
 				}
 			}
 		}
-
 	}
 
 	public VerticalLayout getContentWrapper() {

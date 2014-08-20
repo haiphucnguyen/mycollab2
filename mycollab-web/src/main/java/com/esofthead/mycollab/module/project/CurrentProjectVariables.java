@@ -201,6 +201,46 @@ public class CurrentProjectVariables {
 		return customizeView;
 	}
 
+	public static boolean hasMessageFeature() {
+		return getFeatures().getDisplaymessage();
+	}
+
+	public static boolean hasPhaseFeature() {
+		return getFeatures().getDisplaymilestone();
+	}
+
+	public static boolean hasTaskFeature() {
+		return getFeatures().getDisplaytask();
+	}
+
+	public static boolean hasBugFeature() {
+		return getFeatures().getDisplaybug();
+	}
+
+	public static boolean hasPageFeature() {
+		return getFeatures().getDisplaypage();
+	}
+
+	public static boolean hasProblemFeature() {
+		return getFeatures().getDisplayproblem();
+	}
+
+	public static boolean hasRiskFeature() {
+		return getFeatures().getDisplayrisk();
+	}
+
+	public static boolean hasFileFeature() {
+		return getFeatures().getDisplayfile();
+	}
+
+	public static boolean hasTimeFeature() {
+		return getFeatures().getDisplaytimelogging();
+	}
+
+	public static boolean hasStandupFeature() {
+		return getFeatures().getDisplaystandup();
+	}
+
 	public static String getCurrentPagePath() {
 		String path = (String) MyCollabSession.getVariable(CURRENT_PAGE_VAR);
 		if (path == null) {

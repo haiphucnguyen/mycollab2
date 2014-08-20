@@ -50,6 +50,7 @@ import com.esofthead.mycollab.module.project.domain.criteria.StandupReportSearch
 import com.esofthead.mycollab.module.project.events.BugComponentEvent;
 import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.project.events.BugVersionEvent;
+import com.esofthead.mycollab.module.project.events.CustomizeUIEvent;
 import com.esofthead.mycollab.module.project.events.MessageEvent;
 import com.esofthead.mycollab.module.project.events.MilestoneEvent;
 import com.esofthead.mycollab.module.project.events.PageEvent;
@@ -759,6 +760,16 @@ public class ProjectController extends AbstractController {
 				ProjectMemberScreenData.Add data = new ProjectMemberScreenData.Add(
 						(ProjectMember) event.getData());
 				projectView.gotoUsersAndGroup(data);
+			}
+		});
+
+		this.register(new ApplicationEventListener<CustomizeUIEvent.UpdateFeaturesList>() {
+			private static final long serialVersionUID = 1L;
+
+			@Subscribe
+			@Override
+			public void handle(CustomizeUIEvent.UpdateFeaturesList event) {
+
 			}
 		});
 	}
