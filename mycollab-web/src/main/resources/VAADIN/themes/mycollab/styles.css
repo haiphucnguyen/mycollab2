@@ -7179,3 +7179,8 @@ div.v-csslayout.bean-block.olive-block, .list-note-block .note-label.olive-block
 .v-buttongroup.toggle-btn-group .v-button.sort-btn.active.asc:after {
 	background-position: left top;
 }
+
+/* Feature Select Box */
+.feature-select-box {
+	background-color: #EEE;
+}

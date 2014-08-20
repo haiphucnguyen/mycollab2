@@ -65,69 +65,83 @@ public class CustomizeUIViewImpl extends AbstractPageView implements
 		final ProjectCustomizeView customizeView = CurrentProjectVariables
 				.getFeatures();
 
-		VerticalLayout layout = new VerticalLayout();
+		HorizontalLayout layout = new HorizontalLayout();
 		layout.setSpacing(true);
+		layout.setMargin(new MarginInfo(true, false, true, false));
+		layout.setWidth("300px");
+
+		VerticalLayout leftColLayout = new VerticalLayout();
+		leftColLayout.setSpacing(true);
+		leftColLayout.setWidth("100%");
 
 		final SelectionBox displayMsgSelection = new SelectionBox(
 				MyCollabResource.newResource("icons/16/project/message.png"),
 				AppContext.getMessage(ProjectCommonI18nEnum.VIEW_MESSAGE),
 				customizeView.getDisplaymessage());
-		layout.addComponent(displayMsgSelection);
+		leftColLayout.addComponent(displayMsgSelection);
 
 		final SelectionBox displayPhaseSelection = new SelectionBox(
 				MyCollabResource.newResource("icons/16/project/milestone.png"),
 				AppContext.getMessage(ProjectCommonI18nEnum.VIEW_MILESTONE),
 				customizeView.getDisplaymilestone());
-		layout.addComponent(displayPhaseSelection);
+		leftColLayout.addComponent(displayPhaseSelection);
 
 		final SelectionBox displayTaskSelection = new SelectionBox(
 				MyCollabResource.newResource("icons/16/project/task.png"),
 				AppContext.getMessage(ProjectCommonI18nEnum.VIEW_TASK),
 				customizeView.getDisplaytask());
-		layout.addComponent(displayTaskSelection);
+		leftColLayout.addComponent(displayTaskSelection);
 
 		final SelectionBox displayBugSelection = new SelectionBox(
 				MyCollabResource.newResource("icons/16/project/bug.png"),
 				AppContext.getMessage(ProjectCommonI18nEnum.VIEW_BUG),
 				customizeView.getDisplaybug());
-		layout.addComponent(displayBugSelection);
+		leftColLayout.addComponent(displayBugSelection);
 
 		final SelectionBox displayPageSelection = new SelectionBox(
 				MyCollabResource.newResource("icons/16/project/page.png"),
 				AppContext.getMessage(ProjectCommonI18nEnum.VIEW_PAGE),
 				customizeView.getDisplaypage());
-		layout.addComponent(displayPageSelection);
+		leftColLayout.addComponent(displayPageSelection);
+
+		layout.addComponent(leftColLayout);
+
+		VerticalLayout rightColLayout = new VerticalLayout();
+		rightColLayout.setWidth("100%");
+		rightColLayout.setSpacing(true);
 
 		final SelectionBox displayFileSelection = new SelectionBox(
 				MyCollabResource.newResource("icons/16/project/File.png"),
 				AppContext.getMessage(ProjectCommonI18nEnum.VIEW_FILE),
 				customizeView.getDisplayfile());
-		layout.addComponent(displayFileSelection);
+		rightColLayout.addComponent(displayFileSelection);
 
 		final SelectionBox displayRiskSelection = new SelectionBox(
 				MyCollabResource.newResource("icons/16/project/risk.png"),
 				AppContext.getMessage(ProjectCommonI18nEnum.VIEW_RISK),
 				customizeView.getDisplayrisk());
-		layout.addComponent(displayRiskSelection);
+		rightColLayout.addComponent(displayRiskSelection);
 
 		final SelectionBox displayProblemSelection = new SelectionBox(
 				MyCollabResource.newResource("icons/16/project/problem.png"),
 				AppContext.getMessage(ProjectCommonI18nEnum.VIEW_PROBLEM),
 				customizeView.getDisplayproblem());
-		layout.addComponent(displayProblemSelection);
+		rightColLayout.addComponent(displayProblemSelection);
 
 		final SelectionBox displayTimeSelection = new SelectionBox(
 				MyCollabResource
 						.newResource("icons/16/project/time_tracking.png"),
 				AppContext.getMessage(ProjectCommonI18nEnum.VIEW_TIME),
 				customizeView.getDisplaytimelogging());
-		layout.addComponent(displayTimeSelection);
+		rightColLayout.addComponent(displayTimeSelection);
 
 		final SelectionBox displayStandupSelection = new SelectionBox(
 				MyCollabResource.newResource("icons/16/project/standup.png"),
 				AppContext.getMessage(ProjectCommonI18nEnum.VIEW_STANDAUP),
 				customizeView.getDisplaystandup());
-		layout.addComponent(displayStandupSelection);
+		rightColLayout.addComponent(displayStandupSelection);
+
+		layout.addComponent(rightColLayout);
 
 		this.addComponent(layout);
 
@@ -180,6 +194,7 @@ public class CustomizeUIViewImpl extends AbstractPageView implements
 
 					}
 				});
+		updateFeaturesBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		this.addComponent(updateFeaturesBtn);
 	}
 
@@ -191,12 +206,15 @@ public class CustomizeUIViewImpl extends AbstractPageView implements
 		public SelectionBox(Resource iconResource, String caption,
 				Boolean selected) {
 			this.setSpacing(true);
-			this.setMargin(new MarginInfo(true, true, false, true));
-			Image image = new Image("", iconResource);
+			this.setMargin(true);
+			this.setWidth("100%");
+			this.setStyleName("feature-select-box");
+			Image image = new Image(null, iconResource);
 			this.addComponent(image);
 			this.setComponentAlignment(image, Alignment.MIDDLE_LEFT);
 			Label captionLbl = new Label(caption);
 			this.addComponent(captionLbl);
+			this.setExpandRatio(captionLbl, 1.0f);
 			this.setComponentAlignment(captionLbl, Alignment.MIDDLE_LEFT);
 			checkbox = new CheckBox("", selected);
 			this.addComponent(checkbox);
