@@ -16,6 +16,7 @@
  */
 package com.esofthead.mycollab.module.project.view.page;
 
+import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.module.project.i18n.Page18InEnum;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
@@ -59,8 +60,8 @@ public class PageFormLayoutFactory implements IFormLayoutFactory {
 					"100%");
 		} else if (propertyId.equals("content")) {
 			this.informationLayout.addComponent(field,
-					AppContext.getMessage(Page18InEnum.FORM_DESCRIPTION), 0, 1,
-					2, "100%");
+					AppContext.getMessage(GenericI18Enum.FORM_DESCRIPTION), 0,
+					1, 2, "100%");
 		} else if (propertyId.equals("status")) {
 			this.informationLayout.addComponent(field,
 					AppContext.getMessage(Page18InEnum.FORM_VISIBILITY), 0, 2);

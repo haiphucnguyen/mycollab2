@@ -11,6 +11,7 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
+import com.esofthead.mycollab.vaadin.mvp.ViewScope;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -33,7 +34,7 @@ import com.vaadin.ui.VerticalLayout;
  * @since 4.4.0
  *
  */
-@ViewComponent
+@ViewComponent(scope = ViewScope.PROTOTYPE)
 public class CustomizeUIViewImpl extends AbstractPageView implements
 		CustomizeUIView {
 	private static final long serialVersionUID = 1L;
