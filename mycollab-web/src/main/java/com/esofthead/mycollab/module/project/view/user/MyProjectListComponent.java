@@ -372,13 +372,14 @@ public class MyProjectListComponent extends Depot {
 			closePhaseBtn.setStyleName("phase-status-btn");
 			phaseStatus.addComponent(closePhaseBtn);
 
-			Button inProgressPhaseBtn = new Button(project.getNumClosedPhase()
-					+ "<small>In Progress</small>", goToPhaseListener);
+			Button inProgressPhaseBtn = new Button(
+					project.getNumInProgressPhase()
+							+ "<small>In Progress</small>", goToPhaseListener);
 			inProgressPhaseBtn.setHtmlContentAllowed(true);
 			inProgressPhaseBtn.setStyleName("phase-status-btn");
 			phaseStatus.addComponent(inProgressPhaseBtn);
 
-			Button futurePhaseBtn = new Button(project.getNumClosedPhase()
+			Button futurePhaseBtn = new Button(project.getNumFuturePhase()
 					+ "<small>Future</small>", goToPhaseListener);
 			futurePhaseBtn.setHtmlContentAllowed(true);
 			futurePhaseBtn.setStyleName("phase-status-btn");
