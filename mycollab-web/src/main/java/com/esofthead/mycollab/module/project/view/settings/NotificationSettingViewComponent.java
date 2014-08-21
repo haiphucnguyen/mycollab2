@@ -26,7 +26,7 @@ import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.ValuedBean;
 import com.esofthead.mycollab.core.persistence.service.ICrudService;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
-import com.esofthead.mycollab.module.project.i18n.NotificationSettingI18nEnum;
+import com.esofthead.mycollab.module.project.i18n.ProjectSettingI18nEnum;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.BlockWidget;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
@@ -64,18 +64,18 @@ public abstract class NotificationSettingViewComponent<B extends ValuedBean, S e
 	protected String level;
 
 	public NotificationSettingViewComponent(B bean, S service) {
-		super(AppContext.getMessage(NotificationSettingI18nEnum.VIEW_TITLE));
+		super(AppContext.getMessage(ProjectSettingI18nEnum.VIEW_TITLE));
 		this.bean = bean;
 		this.service = service;
 
 		levels.put("Default", AppContext
-				.getMessage(NotificationSettingI18nEnum.OPT_DEFAULT_SETTING));
+				.getMessage(ProjectSettingI18nEnum.OPT_DEFAULT_SETTING));
 		levels.put("None", AppContext
-				.getMessage(NotificationSettingI18nEnum.OPT_NONE_SETTING));
+				.getMessage(ProjectSettingI18nEnum.OPT_NONE_SETTING));
 		levels.put("Minimal", AppContext
-				.getMessage(NotificationSettingI18nEnum.OPT_MINIMUM_SETTING));
+				.getMessage(ProjectSettingI18nEnum.OPT_MINIMUM_SETTING));
 		levels.put("Full", AppContext
-				.getMessage(NotificationSettingI18nEnum.OPT_MAXIMUM_SETTING));
+				.getMessage(ProjectSettingI18nEnum.OPT_MAXIMUM_SETTING));
 
 		constructBody();
 	}
@@ -94,7 +94,7 @@ public abstract class NotificationSettingViewComponent<B extends ValuedBean, S e
 		notificationLabelWrapper.setStyleName("notification-label");
 
 		Label notificationLabel = new Label(
-				AppContext.getMessage(NotificationSettingI18nEnum.EXT_LEVEL));
+				AppContext.getMessage(ProjectSettingI18nEnum.EXT_LEVEL));
 		notificationLabel.addStyleName("h2");
 
 		notificationLabel.setHeight(Sizeable.SIZE_UNDEFINED,
@@ -170,7 +170,7 @@ public abstract class NotificationSettingViewComponent<B extends ValuedBean, S e
 													AppContext.getUsername());
 								}
 								NotificationUtil.showNotification(AppContext
-										.getMessage(NotificationSettingI18nEnum.DIALOG_UPDATE_SUCCESS));
+										.getMessage(ProjectSettingI18nEnum.DIALOG_UPDATE_SUCCESS));
 							} catch (Exception e) {
 								throw new MyCollabException(e);
 							}
