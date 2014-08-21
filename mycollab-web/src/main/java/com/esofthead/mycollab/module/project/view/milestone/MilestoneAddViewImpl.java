@@ -18,7 +18,7 @@
 package com.esofthead.mycollab.module.project.view.milestone;
 
 import com.esofthead.mycollab.module.project.domain.Milestone;
-import com.esofthead.mycollab.module.project.i18n.Project18nEnum;
+import com.esofthead.mycollab.module.project.i18n.Milestone18nEnum;
 import com.esofthead.mycollab.module.project.ui.components.AbstractEditItemComp;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
@@ -51,8 +51,8 @@ public class MilestoneAddViewImpl extends AbstractEditItemComp<Milestone>
 	@Override
 	protected String initFormHeader() {
 		return (beanItem.getId() == null) ? AppContext
-				.getMessage(Project18nEnum.FORM_NEW_TITLE) : AppContext
-				.getMessage(Project18nEnum.FORM_EDIT_TITLE);
+				.getMessage(Milestone18nEnum.FORM_NEW_TITLE) : AppContext
+				.getMessage(Milestone18nEnum.FORM_EDIT_TITLE);
 	}
 
 	@Override

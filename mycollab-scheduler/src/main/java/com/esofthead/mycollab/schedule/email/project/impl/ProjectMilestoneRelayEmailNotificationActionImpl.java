@@ -36,7 +36,7 @@ import com.esofthead.mycollab.module.project.ProjectLinkGenerator;
 import com.esofthead.mycollab.module.project.domain.SimpleMilestone;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
-import com.esofthead.mycollab.module.project.i18n.Project18nEnum;
+import com.esofthead.mycollab.module.project.i18n.Milestone18nEnum;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.MilestoneStatus;
 import com.esofthead.mycollab.module.project.service.MilestoneService;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
@@ -85,21 +85,21 @@ public class ProjectMilestoneRelayEmailNotificationActionImpl extends
 
 	@Override
 	protected String getCreateSubject(MailContext<SimpleMilestone> context) {
-		return context.getMessage(Project18nEnum.MAIL_CREATE_ITEM_SUBJECT,
+		return context.getMessage(Milestone18nEnum.MAIL_CREATE_ITEM_SUBJECT,
 				bean.getProjectName(), context.getChangeByUserFullName(),
 				getItemName());
 	}
 
 	@Override
 	protected String getUpdateSubject(MailContext<SimpleMilestone> context) {
-		return context.getMessage(Project18nEnum.MAIL_UPDATE_ITEM_SUBJECT,
+		return context.getMessage(Milestone18nEnum.MAIL_UPDATE_ITEM_SUBJECT,
 				bean.getProjectName(), context.getChangeByUserFullName(),
 				getItemName());
 	}
 
 	@Override
 	protected String getCommentSubject(MailContext<SimpleMilestone> context) {
-		return context.getMessage(Project18nEnum.MAIL_COMMENT_ITEM_SUBJECT,
+		return context.getMessage(Milestone18nEnum.MAIL_COMMENT_ITEM_SUBJECT,
 				bean.getProjectName(), context.getChangeByUserFullName(),
 				getItemName());
 	}
@@ -118,17 +118,17 @@ public class ProjectMilestoneRelayEmailNotificationActionImpl extends
 
 	public static class MilestoneFieldNameMapper extends ItemFieldMapper {
 		public MilestoneFieldNameMapper() {
-			put("name", Project18nEnum.FORM_NAME_FIELD, true);
+			put("name", Milestone18nEnum.FORM_NAME_FIELD, true);
 
 			put("status", new I18nFieldFormat("status",
-					Project18nEnum.FORM_STATUS_FIELD, MilestoneStatus.class));
+					Milestone18nEnum.FORM_STATUS_FIELD, MilestoneStatus.class));
 			put("owner", new AssigneeFieldFormat("owner",
 					GenericI18Enum.FORM_ASSIGNEE));
 
 			put("startdate", new DateFieldFormat("startdate",
-					Project18nEnum.FORM_START_DATE_FIELD));
+					Milestone18nEnum.FORM_START_DATE_FIELD));
 			put("enddate", new DateFieldFormat("enddate",
-					Project18nEnum.FORM_END_DATE_FIELD));
+					Milestone18nEnum.FORM_END_DATE_FIELD));
 
 			put("description", GenericI18Enum.FORM_DESCRIPTION, true);
 		}
@@ -232,18 +232,18 @@ public class ProjectMilestoneRelayEmailNotificationActionImpl extends
 				.getAction())) {
 			contentGenerator
 					.putVariable("actionHeading", context.getMessage(
-							Project18nEnum.MAIL_CREATE_ITEM_HEADING,
+							Milestone18nEnum.MAIL_CREATE_ITEM_HEADING,
 							makeChangeUser));
 		} else if (MonitorTypeConstants.UPDATE_ACTION.equals(emailNotification
 				.getAction())) {
 			contentGenerator
 					.putVariable("actionHeading", context.getMessage(
-							Project18nEnum.MAIL_UPDATE_ITEM_HEADING,
+							Milestone18nEnum.MAIL_UPDATE_ITEM_HEADING,
 							makeChangeUser));
 		} else if (MonitorTypeConstants.ADD_COMMENT_ACTION
 				.equals(emailNotification.getAction())) {
 			contentGenerator.putVariable("actionHeading", context
-					.getMessage(Project18nEnum.MAIL_COMMENT_ITEM_HEADING,
+					.getMessage(Milestone18nEnum.MAIL_COMMENT_ITEM_HEADING,
 							makeChangeUser));
 		}
 

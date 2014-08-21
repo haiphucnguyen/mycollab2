@@ -54,7 +54,7 @@ import com.esofthead.mycollab.module.project.i18n.BreadcrumbI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.BugI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.ComponentI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.MessageI18nEnum;
-import com.esofthead.mycollab.module.project.i18n.Project18nEnum;
+import com.esofthead.mycollab.module.project.i18n.Milestone18nEnum;
 import com.esofthead.mycollab.module.project.i18n.Page18InEnum;
 import com.esofthead.mycollab.module.project.i18n.ProblemI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.ProjectMemberI18nEnum;
@@ -241,7 +241,7 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
 				.getMessage(BreadcrumbI18nEnum.PHASES)));
 		AppContext.addFragment(
 				ProjectLinkGenerator.generateMilestonesLink(project.getId()),
-				AppContext.getMessage(Project18nEnum.VIEW_LIST_TITLE));
+				AppContext.getMessage(Milestone18nEnum.VIEW_LIST_TITLE));
 	}
 
 	public void gotoMilestoneRead(Milestone milestone) {
@@ -292,7 +292,7 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
 				new GotoMilestoneListListener()));
 		this.setLinkEnabled(true, 1);
 		this.addLink(new Button(AppContext
-				.getMessage(Project18nEnum.VIEW_NEW_TITLE)));
+				.getMessage(Milestone18nEnum.VIEW_NEW_TITLE)));
 		AppContext.addFragment(
 				"project/milestone/add/"
 						+ UrlEncodeDecoder.encode(project.getId()),
