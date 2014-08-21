@@ -57,7 +57,7 @@ public class ProjectSettingPresenter extends
 
 		ProjectBreadcrumb breadCrumb = ViewManager
 				.getCacheComponent(ProjectBreadcrumb.class);
-		breadCrumb.gotoNotificationSetting(notification);
+		breadCrumb.gotoProjectSetting();
 		view.showNotificationSettings(notification);
 	}
 }
