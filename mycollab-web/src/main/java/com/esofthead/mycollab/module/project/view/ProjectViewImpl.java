@@ -47,7 +47,7 @@ import com.esofthead.mycollab.module.project.events.ProblemEvent;
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.module.project.events.RiskEvent;
 import com.esofthead.mycollab.module.project.i18n.BugI18nEnum;
-import com.esofthead.mycollab.module.project.i18n.Milestone18nEnum;
+import com.esofthead.mycollab.module.project.i18n.MilestoneI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.ProblemI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.RiskI18nEnum;
@@ -289,7 +289,7 @@ public class ProjectViewImpl extends AbstractCssPageView implements ProjectView 
 			popupButtonsControl.setWidth("150px");
 
 			Button createPhaseBtn = new Button(
-					AppContext.getMessage(Milestone18nEnum.BUTTON_NEW_PHASE),
+					AppContext.getMessage(MilestoneI18nEnum.BUTTON_NEW_PHASE),
 					new Button.ClickListener() {
 						@Override
 						public void buttonClick(ClickEvent event) {

@@ -44,7 +44,7 @@ import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
 import com.esofthead.mycollab.module.project.i18n.BugI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.ComponentI18nEnum;
-import com.esofthead.mycollab.module.project.i18n.Milestone18nEnum;
+import com.esofthead.mycollab.module.project.i18n.MilestoneI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.BugPriority;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.BugResolution;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.BugSeverity;
@@ -687,7 +687,7 @@ public class ProjectTooltipGenerator {
 
 			Tr trRow2 = new Tr();
 			Td cell21 = buildCellName(LocalizationHelper.getMessage(locale,
-					Milestone18nEnum.FORM_START_DATE_FIELD));
+					MilestoneI18nEnum.FORM_START_DATE_FIELD));
 			String startDate = DateTimeUtils.converToStringWithUserTimeZone(
 					milestone.getStartdate(), timeZone);
 			Td cell22 = buildCellValue(startDate);
@@ -705,12 +705,12 @@ public class ProjectTooltipGenerator {
 
 			Tr trRow3 = new Tr();
 			Td cell31 = buildCellName(LocalizationHelper.getMessage(locale,
-					Milestone18nEnum.FORM_END_DATE_FIELD));
+					MilestoneI18nEnum.FORM_END_DATE_FIELD));
 			String endDate = DateTimeUtils.converToStringWithUserTimeZone(
 					milestone.getEnddate(), timeZone);
 			Td cell32 = buildCellValue(endDate);
 			Td cell33 = buildCellName(LocalizationHelper.getMessage(locale,
-					Milestone18nEnum.FORM_STATUS_FIELD));
+					MilestoneI18nEnum.FORM_STATUS_FIELD));
 			Td cell34 = buildCellValue(LocalizationHelper.getMessage(locale,
 					MilestoneStatus.class, milestone.getStatus()));
 			trRow3.appendChild(cell31, cell32, cell33, cell34);
@@ -718,10 +718,10 @@ public class ProjectTooltipGenerator {
 
 			Tr trRow4 = new Tr();
 			Td cell41 = buildCellName(LocalizationHelper.getMessage(locale,
-					Milestone18nEnum.FORM_TASK_FIELD));
+					MilestoneI18nEnum.FORM_TASK_FIELD));
 			Td cell42 = buildCellValue(milestone.getNumTasks());
 			Td cell43 = buildCellName(LocalizationHelper.getMessage(locale,
-					Milestone18nEnum.FORM_BUG_FIELD));
+					MilestoneI18nEnum.FORM_BUG_FIELD));
 			Td cell44 = buildCellValue(milestone.getNumBugs());
 			trRow4.appendChild(cell41, cell42, cell43, cell44);
 			tooltipManager.appendRow(trRow4);

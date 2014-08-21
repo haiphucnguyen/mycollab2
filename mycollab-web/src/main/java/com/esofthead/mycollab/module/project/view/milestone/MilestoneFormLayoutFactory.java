@@ -18,7 +18,7 @@
 package com.esofthead.mycollab.module.project.view.milestone;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
-import com.esofthead.mycollab.module.project.i18n.Milestone18nEnum;
+import com.esofthead.mycollab.module.project.i18n.MilestoneI18nEnum;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
@@ -41,28 +41,28 @@ public class MilestoneFormLayoutFactory implements IFormLayoutFactory {
 	public void attachField(final Object propertyId, final Field<?> field) {
 		if (propertyId.equals("name")) {
 			this.informationLayout.addComponent(field,
-					AppContext.getMessage(Milestone18nEnum.FORM_NAME_FIELD),
+					AppContext.getMessage(MilestoneI18nEnum.FORM_NAME_FIELD),
 					0, 0, 2, "100%");
 		} else if (propertyId.equals("startdate")) {
 			this.informationLayout.addComponent(field, AppContext
-					.getMessage(Milestone18nEnum.FORM_START_DATE_FIELD), 0, 1);
+					.getMessage(MilestoneI18nEnum.FORM_START_DATE_FIELD), 0, 1);
 		} else if (propertyId.equals("enddate")) {
 			this.informationLayout.addComponent(field, AppContext
-					.getMessage(Milestone18nEnum.FORM_END_DATE_FIELD), 0, 2);
+					.getMessage(MilestoneI18nEnum.FORM_END_DATE_FIELD), 0, 2);
 		} else if (propertyId.equals("owner")) {
 			this.informationLayout.addComponent(field,
 					AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE), 1, 1);
 		} else if (propertyId.equals("status")) {
 			this.informationLayout.addComponent(field,
-					AppContext.getMessage(Milestone18nEnum.FORM_STATUS_FIELD),
+					AppContext.getMessage(MilestoneI18nEnum.FORM_STATUS_FIELD),
 					1, 2);
 		} else if (propertyId.equals("numOpenTasks")) {
 			this.informationLayout.addComponent(field,
-					AppContext.getMessage(Milestone18nEnum.FORM_TASK_FIELD),
+					AppContext.getMessage(MilestoneI18nEnum.FORM_TASK_FIELD),
 					0, 3);
 		} else if (propertyId.equals("numOpenBugs")) {
 			this.informationLayout.addComponent(field,
-					AppContext.getMessage(Milestone18nEnum.FORM_BUG_FIELD), 1,
+					AppContext.getMessage(MilestoneI18nEnum.FORM_BUG_FIELD), 1,
 					3);
 		} else if (propertyId.equals("description")) {
 			this.informationLayout.addComponent(field,

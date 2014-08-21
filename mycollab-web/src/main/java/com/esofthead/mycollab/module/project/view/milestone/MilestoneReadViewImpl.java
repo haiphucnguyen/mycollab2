@@ -34,7 +34,7 @@ import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleMilestone;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
-import com.esofthead.mycollab.module.project.i18n.Milestone18nEnum;
+import com.esofthead.mycollab.module.project.i18n.MilestoneI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.MilestoneStatus;
 import com.esofthead.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.ui.components.AbstractPreviewItemComp2;
@@ -104,7 +104,7 @@ public class MilestoneReadViewImpl extends
 	private boolean isSimpleView = false;
 
 	public MilestoneReadViewImpl() {
-		super(AppContext.getMessage(Milestone18nEnum.VIEW_DETAIL_TITLE),
+		super(AppContext.getMessage(MilestoneI18nEnum.VIEW_DETAIL_TITLE),
 				MyCollabResource.newResource("icons/24/project/phase.png"));
 	}
 
@@ -154,10 +154,10 @@ public class MilestoneReadViewImpl extends
 				MyCollabResource
 						.newResource("icons/16/project/gray/history.png"));
 		tabContainer.addTab(this.associateTaskGroupListComp,
-				AppContext.getMessage(Milestone18nEnum.TAB_RELATED_TASKS),
+				AppContext.getMessage(MilestoneI18nEnum.TAB_RELATED_TASKS),
 				MyCollabResource.newResource("icons/16/project/gray/task.png"));
 		tabContainer.addTab(this.associateBugListComp,
-				AppContext.getMessage(Milestone18nEnum.TAB_RELATED_BUGS),
+				AppContext.getMessage(MilestoneI18nEnum.TAB_RELATED_BUGS),
 				MyCollabResource.newResource("icons/16/project/gray/bug.png"));
 
 		return tabContainer;
@@ -169,7 +169,7 @@ public class MilestoneReadViewImpl extends
 		simpleViewBottom.setStyleName("phase-simple-view");
 
 		Label taskListLbl = new Label(
-				AppContext.getMessage(Milestone18nEnum.TAB_RELATED_TASKS));
+				AppContext.getMessage(MilestoneI18nEnum.TAB_RELATED_TASKS));
 		taskListLbl.addStyleName("h2");
 		simpleViewBottom.addComponent(taskListLbl);
 		TaskSearchCriteria criteria = new TaskSearchCriteria();
@@ -182,7 +182,7 @@ public class MilestoneReadViewImpl extends
 		taskDisplayWidget.setSearchCriteria(criteria);
 
 		Label bugListLbl = new Label(
-				AppContext.getMessage(Milestone18nEnum.TAB_RELATED_BUGS));
+				AppContext.getMessage(MilestoneI18nEnum.TAB_RELATED_BUGS));
 		bugListLbl.addStyleName("h2");
 		simpleViewBottom.addComponent(bugListLbl);
 		final BugSearchCriteria bugCriteria = new BugSearchCriteria();
@@ -266,11 +266,11 @@ public class MilestoneReadViewImpl extends
 		public void attachField(final Object propertyId, final Field<?> field) {
 			if (propertyId.equals("startdate")) {
 				this.informationLayout.addComponent(field, AppContext
-						.getMessage(Milestone18nEnum.FORM_START_DATE_FIELD),
+						.getMessage(MilestoneI18nEnum.FORM_START_DATE_FIELD),
 						0, 0);
 			} else if (propertyId.equals("enddate")) {
 				this.informationLayout.addComponent(field, AppContext
-						.getMessage(Milestone18nEnum.FORM_END_DATE_FIELD), 0,
+						.getMessage(MilestoneI18nEnum.FORM_END_DATE_FIELD), 0,
 						1);
 			} else if (propertyId.equals("owner")) {
 				this.informationLayout.addComponent(field,
@@ -278,14 +278,14 @@ public class MilestoneReadViewImpl extends
 						0);
 			} else if (propertyId.equals("status")) {
 				this.informationLayout.addComponent(field, AppContext
-						.getMessage(Milestone18nEnum.FORM_STATUS_FIELD), 1, 1);
+						.getMessage(MilestoneI18nEnum.FORM_STATUS_FIELD), 1, 1);
 			} else if (propertyId.equals("numOpenTasks")) {
 				this.informationLayout.addComponent(field, AppContext
-						.getMessage(Milestone18nEnum.FORM_TASK_FIELD), 0, 2);
+						.getMessage(MilestoneI18nEnum.FORM_TASK_FIELD), 0, 2);
 			} else if (propertyId.equals("numOpenBugs")) {
 				this.informationLayout
 						.addComponent(field, AppContext
-								.getMessage(Milestone18nEnum.FORM_BUG_FIELD),
+								.getMessage(MilestoneI18nEnum.FORM_BUG_FIELD),
 								1, 2);
 			} else if (propertyId.equals("description")) {
 				this.informationLayout.addComponent(field,

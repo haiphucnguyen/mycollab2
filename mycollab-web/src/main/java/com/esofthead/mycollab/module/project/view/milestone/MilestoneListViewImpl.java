@@ -32,7 +32,7 @@ import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleMilestone;
 import com.esofthead.mycollab.module.project.domain.criteria.MilestoneSearchCriteria;
 import com.esofthead.mycollab.module.project.events.MilestoneEvent;
-import com.esofthead.mycollab.module.project.i18n.Milestone18nEnum;
+import com.esofthead.mycollab.module.project.i18n.MilestoneI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.MilestoneStatus;
 import com.esofthead.mycollab.module.project.service.MilestoneService;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserLink;
@@ -122,7 +122,7 @@ public class MilestoneListViewImpl extends AbstractLazyPageView implements
 		this.titleIcon = new Image(null,
 				MyCollabResource.newResource("icons/24/project/phase.png"));
 		Label headerText = new Label(
-				AppContext.getMessage(Milestone18nEnum.VIEW_LIST_TITLE));
+				AppContext.getMessage(MilestoneI18nEnum.VIEW_LIST_TITLE));
 
 		HorizontalLayout header = new HorizontalLayout();
 		UiUtils.addComponent(header, titleIcon, Alignment.MIDDLE_LEFT);
@@ -142,7 +142,7 @@ public class MilestoneListViewImpl extends AbstractLazyPageView implements
 		final HorizontalLayout layout = new HorizontalLayout();
 
 		this.createBtn = new Button(
-				AppContext.getMessage(Milestone18nEnum.BUTTON_NEW_PHASE),
+				AppContext.getMessage(MilestoneI18nEnum.BUTTON_NEW_PHASE),
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
@@ -182,7 +182,7 @@ public class MilestoneListViewImpl extends AbstractLazyPageView implements
 
 		final Label closedHeader = new Label(
 				AppContext
-						.getMessage(Milestone18nEnum.WIDGET_CLOSED_PHASE_TITLE));
+						.getMessage(MilestoneI18nEnum.WIDGET_CLOSED_PHASE_TITLE));
 		closedHeader.setSizeUndefined();
 		closedHeaderLayout.addComponent(closedHeader);
 		closedHeaderLayout.setComponentAlignment(closedHeader,
@@ -204,7 +204,7 @@ public class MilestoneListViewImpl extends AbstractLazyPageView implements
 				Alignment.MIDDLE_CENTER);
 		final Label inProgressHeader = new Label(
 				AppContext
-						.getMessage(Milestone18nEnum.WIDGET_INPROGRESS_PHASE_TITLE));
+						.getMessage(MilestoneI18nEnum.WIDGET_INPROGRESS_PHASE_TITLE));
 		inProgressHeader.setSizeUndefined();
 		inProgressHeaderLayout.addComponent(inProgressHeader);
 		inProgressHeaderLayout.setComponentAlignment(inProgressHeader,
@@ -227,7 +227,7 @@ public class MilestoneListViewImpl extends AbstractLazyPageView implements
 				Alignment.MIDDLE_CENTER);
 		final Label futureHeader = new Label(
 				AppContext
-						.getMessage(Milestone18nEnum.WIDGET_FUTURE_PHASE_TITLE));
+						.getMessage(MilestoneI18nEnum.WIDGET_FUTURE_PHASE_TITLE));
 		futureHeader.setSizeUndefined();
 		futureHeaderLayout.addComponent(futureHeader);
 		futureHeaderLayout.setComponentAlignment(futureHeader,
@@ -345,12 +345,12 @@ public class MilestoneListViewImpl extends AbstractLazyPageView implements
 		layoutHelper.addComponent(
 				new Label(AppContext.formatDate(milestone.getStartdate(),
 						AppContext.getMessage(GenericI18Enum.FORM_EMPTY))),
-				AppContext.getMessage(Milestone18nEnum.FORM_START_DATE_FIELD),
+				AppContext.getMessage(MilestoneI18nEnum.FORM_START_DATE_FIELD),
 				0, 0, Alignment.MIDDLE_LEFT);
 		layoutHelper.addComponent(
 				new Label(AppContext.formatDate(milestone.getEnddate(),
 						AppContext.getMessage(GenericI18Enum.FORM_EMPTY))),
-				AppContext.getMessage(Milestone18nEnum.FORM_END_DATE_FIELD),
+				AppContext.getMessage(MilestoneI18nEnum.FORM_END_DATE_FIELD),
 				0, 1, Alignment.MIDDLE_LEFT);
 
 		CssLayout linkWrapper = new CssLayout();
@@ -367,7 +367,7 @@ public class MilestoneListViewImpl extends AbstractLazyPageView implements
 		progressTask.setWidth("100%");
 
 		layoutHelper.addComponent(progressTask,
-				AppContext.getMessage(Milestone18nEnum.FORM_TASK_FIELD), 0, 3,
+				AppContext.getMessage(MilestoneI18nEnum.FORM_TASK_FIELD), 0, 3,
 				Alignment.MIDDLE_LEFT);
 
 		final ProgressBarIndicator progressBug = new ProgressBarIndicator(
@@ -375,7 +375,7 @@ public class MilestoneListViewImpl extends AbstractLazyPageView implements
 		progressBug.setWidth("100%");
 
 		layoutHelper.addComponent(progressBug,
-				AppContext.getMessage(Milestone18nEnum.FORM_BUG_FIELD), 0, 4,
+				AppContext.getMessage(MilestoneI18nEnum.FORM_BUG_FIELD), 0, 4,
 				Alignment.MIDDLE_LEFT);
 		final GridLayout milestoneInfoLayout = layoutHelper.getLayout();
 		milestoneInfoLayout.setWidth("100%");

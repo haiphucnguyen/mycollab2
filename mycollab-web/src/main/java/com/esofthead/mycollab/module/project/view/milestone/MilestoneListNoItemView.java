@@ -20,7 +20,7 @@ import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.events.MilestoneEvent;
-import com.esofthead.mycollab.module.project.i18n.Milestone18nEnum;
+import com.esofthead.mycollab.module.project.i18n.MilestoneI18nEnum;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
@@ -59,18 +59,18 @@ public class MilestoneListNoItemView extends AbstractPageView {
 		layout.addComponent(image);
 
 		Label title = new Label(
-				AppContext.getMessage(Milestone18nEnum.VIEW_NO_ITEM_TITLE));
+				AppContext.getMessage(MilestoneI18nEnum.VIEW_NO_ITEM_TITLE));
 		title.addStyleName("h2");
 		title.setWidth(SIZE_UNDEFINED, Sizeable.Unit.PIXELS);
 		layout.addComponent(title);
 
 		Label body = new Label(
-				AppContext.getMessage(Milestone18nEnum.VIEW_NO_ITEM_HINT));
+				AppContext.getMessage(MilestoneI18nEnum.VIEW_NO_ITEM_HINT));
 		body.setWidth(SIZE_UNDEFINED, Sizeable.Unit.PIXELS);
 		layout.addComponent(body);
 
 		Button createMilestoneBtn = new Button(
-				AppContext.getMessage(Milestone18nEnum.BUTTON_NEW_PHASE),
+				AppContext.getMessage(MilestoneI18nEnum.BUTTON_NEW_PHASE),
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
