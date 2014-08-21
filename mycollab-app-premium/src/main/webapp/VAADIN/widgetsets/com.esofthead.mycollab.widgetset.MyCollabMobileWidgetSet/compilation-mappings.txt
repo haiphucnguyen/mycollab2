@@ -1,4 +1,4 @@
-52B28775F18AEE722AE7AD3C414085CE.cache.js
+9915483FBA54C4BF5C19357492D54F7B.cache.js
 ClientBundle.enableInlining true
 audioElementSupport maybe
 canvasElementSupport maybe
@@ -32,7 +32,7 @@ videoElementSupport maybe
 webApiUsage modern
 webkitvariant std
 
-52B28775F18AEE722AE7AD3C414085CE.cache.js
+9915483FBA54C4BF5C19357492D54F7B.cache.js
 ClientBundle.enableInlining true
 audioElementSupport maybe
 canvasElementSupport maybe
@@ -66,7 +66,7 @@ videoElementSupport maybe
 webApiUsage modern
 webkitvariant std
 
-52B28775F18AEE722AE7AD3C414085CE.cache.js
+9915483FBA54C4BF5C19357492D54F7B.cache.js
 ClientBundle.enableInlining true
 audioElementSupport maybe
 canvasElementSupport maybe
@@ -100,7 +100,7 @@ videoElementSupport maybe
 webApiUsage modern
 webkitvariant std
 
-52B28775F18AEE722AE7AD3C414085CE.cache.js
+9915483FBA54C4BF5C19357492D54F7B.cache.js
 ClientBundle.enableInlining true
 audioElementSupport maybe
 canvasElementSupport maybe
@@ -134,7 +134,7 @@ videoElementSupport maybe
 webApiUsage modern
 webkitvariant android2
 
-52B28775F18AEE722AE7AD3C414085CE.cache.js
+9915483FBA54C4BF5C19357492D54F7B.cache.js
 ClientBundle.enableInlining true
 audioElementSupport maybe
 canvasElementSupport maybe
@@ -168,7 +168,41 @@ videoElementSupport maybe
 webApiUsage modern
 webkitvariant ios7hswa
 
-52B28775F18AEE722AE7AD3C414085CE.cache.js
+9915483FBA54C4BF5C19357492D54F7B.cache.js
+ClientBundle.enableInlining true
+audioElementSupport maybe
+canvasElementSupport maybe
+compiler.emulatedStack false
+compiler.predeclare.cross.fragment.references false
+compiler.stackMode native
+compiler.useSourceMaps false
+compiler.useSymbolMaps false
+dragEventSupport maybe
+geolocationSupport maybe
+gwt.enableDebugId false
+gwt.forceBidi false
+gwt.logging.consoleHandler ENABLED
+gwt.logging.developmentModeHandler ENABLED
+gwt.logging.enabled TRUE
+gwt.logging.firebugHandler DISABLED
+gwt.logging.hasWidgetsHandler ENABLED
+gwt.logging.logLevel INFO
+gwt.logging.popupHandler DISABLED
+gwt.logging.simpleRemoteHandler DISABLED
+gwt.logging.systemHandler ENABLED
+gwt.suppressNonStaticFinalFieldWarnings false
+gwt.unloadEnabled false
+locale default
+modernie none
+superdevmode off
+touchEventSupport maybe
+user.agent safari
+vaadin.profiler false
+videoElementSupport maybe
+webApiUsage modern
+webkitvariant ios7safari
+
+9915483FBA54C4BF5C19357492D54F7B.cache.js
 ClientBundle.enableInlining true
 audioElementSupport maybe
 canvasElementSupport maybe
