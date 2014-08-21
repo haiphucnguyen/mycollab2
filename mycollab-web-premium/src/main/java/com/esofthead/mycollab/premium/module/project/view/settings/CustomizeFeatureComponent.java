@@ -6,12 +6,12 @@ import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.ProjectCustomizeView;
 import com.esofthead.mycollab.module.project.events.CustomizeUIEvent;
 import com.esofthead.mycollab.module.project.i18n.ProjectCommonI18nEnum;
+import com.esofthead.mycollab.module.project.i18n.ProjectSettingI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectCustomizeViewService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.BlockWidget;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
-import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.server.Resource;
 import com.vaadin.shared.ui.MarginInfo;
@@ -23,7 +23,6 @@ import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.VerticalLayout;
 
 /**
@@ -37,7 +36,8 @@ public class CustomizeFeatureComponent extends BlockWidget {
 	private static final long serialVersionUID = 1L;
 
 	public CustomizeFeatureComponent() {
-		super("Customize Project Features");
+		super(AppContext
+				.getMessage(ProjectSettingI18nEnum.WIDGET_CUSTOMIZE_FEATURES));
 		constructBody();
 	}
 
@@ -174,8 +174,6 @@ public class CustomizeFeatureComponent extends BlockWidget {
 						EventBusFactory.getInstance().post(
 								new CustomizeUIEvent.UpdateFeaturesList(
 										CustomizeFeatureComponent.this));
-						NotificationUtil.showNotification("Information",
-								"Update successfully", Type.HUMANIZED_MESSAGE);
 
 					}
 				});

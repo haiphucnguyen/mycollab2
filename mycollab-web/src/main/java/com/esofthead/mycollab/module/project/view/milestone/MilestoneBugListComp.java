@@ -21,7 +21,7 @@ import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.Milestone;
-import com.esofthead.mycollab.module.project.i18n.MilestoneI18nEnum;
+import com.esofthead.mycollab.module.project.i18n.Project18nEnum;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.BugStatus;
 import com.esofthead.mycollab.module.project.view.bug.BugChartComponent;
 import com.esofthead.mycollab.module.project.view.bug.BugListWidget;
@@ -65,7 +65,7 @@ public class MilestoneBugListComp extends VerticalLayout implements
 		header.setSpacing(true);
 		header.setWidth("100%");
 		final Label taskGroupSelection = new Label(
-				AppContext.getMessage(MilestoneI18nEnum.TAB_RELATED_BUGS));
+				AppContext.getMessage(Project18nEnum.TAB_RELATED_BUGS));
 		taskGroupSelection.addStyleName("h2");
 		taskGroupSelection.addStyleName(UIConstants.THEME_NO_BORDER);
 		header.addComponent(taskGroupSelection);

@@ -17,7 +17,7 @@
 package com.esofthead.mycollab.module.project.view.milestone;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
-import com.esofthead.mycollab.module.project.i18n.MilestoneI18nEnum;
+import com.esofthead.mycollab.module.project.i18n.Project18nEnum;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.MilestoneStatus;
 import com.esofthead.mycollab.module.project.ui.format.ProjectMemberHistoryFieldFormat;
 import com.esofthead.mycollab.utils.FieldGroupFomatter;
@@ -39,18 +39,18 @@ public class MilestoneHistoryLogList extends HistoryLogComponent {
 		milestoneFormatter = new FieldGroupFomatter();
 
 		milestoneFormatter.generateFieldDisplayHandler("name",
-				MilestoneI18nEnum.FORM_NAME_FIELD);
+				Project18nEnum.FORM_NAME_FIELD);
 		milestoneFormatter.generateFieldDisplayHandler("status",
-				MilestoneI18nEnum.FORM_STATUS_FIELD,
+				Project18nEnum.FORM_STATUS_FIELD,
 				new I18nHistoryFieldFormat(MilestoneStatus.class));
 		milestoneFormatter.generateFieldDisplayHandler("owner",
 				GenericI18Enum.FORM_ASSIGNEE,
 				new ProjectMemberHistoryFieldFormat());
 		milestoneFormatter.generateFieldDisplayHandler("startdate",
-				MilestoneI18nEnum.FORM_START_DATE_FIELD,
+				Project18nEnum.FORM_START_DATE_FIELD,
 				FieldGroupFomatter.DATE_FIELD);
 		milestoneFormatter.generateFieldDisplayHandler("enddate",
-				MilestoneI18nEnum.FORM_END_DATE_FIELD,
+				Project18nEnum.FORM_END_DATE_FIELD,
 				FieldGroupFomatter.DATE_FIELD);
 	}
 
