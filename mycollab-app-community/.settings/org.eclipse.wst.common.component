@@ -31,7 +31,7 @@
     <dependent-module archiveName="velocity-tools-2.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/apache/velocity/velocity-tools/2.0/velocity-tools-2.0.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="commons-beanutils-1.8.3.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/commons-beanutils/commons-beanutils/1.8.3/commons-beanutils-1.8.3.jar">
+    <dependent-module archiveName="commons-beanutils-1.9.2.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/commons-beanutils/commons-beanutils/1.9.2/commons-beanutils-1.9.2.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="commons-logging-1.1.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/commons-logging/commons-logging/1.1.1/commons-logging-1.1.1.jar">
@@ -112,7 +112,7 @@
     <dependent-module archiveName="tika-core-1.5.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/apache/tika/tika-core/1.5/tika-core-1.5.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="gson-2.2.4.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/google/code/gson/gson/2.2.4/gson-2.2.4.jar">
+    <dependent-module archiveName="gson-2.3.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/google/code/gson/gson/2.3/gson-2.3.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="jsoup-1.7.3.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/jsoup/jsoup/1.7.3/jsoup-1.7.3.jar">
@@ -136,10 +136,10 @@
     <dependent-module archiveName="commons-io-2.4.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/commons-io/commons-io/2.4/commons-io-2.4.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="commons-lang3-3.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/apache/commons/commons-lang3/3.1/commons-lang3-3.1.jar">
+    <dependent-module archiveName="commons-lang3-3.3.2.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/apache/commons/commons-lang3/3.3.2/commons-lang3-3.3.2.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="httpclient-4.3.4.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/apache/httpcomponents/httpclient/4.3.4/httpclient-4.3.4.jar">
+    <dependent-module archiveName="httpclient-4.3.5.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/apache/httpcomponents/httpclient/4.3.5/httpclient-4.3.5.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="httpcore-4.3.2.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/apache/httpcomponents/httpcore/4.3.2/httpcore-4.3.2.jar">
@@ -160,10 +160,10 @@
     <dependent-module archiveName="spring-aspects-4.0.6.RELEASE.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/springframework/spring-aspects/4.0.6.RELEASE/spring-aspects-4.0.6.RELEASE.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="aspectjweaver-1.7.4.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/aspectj/aspectjweaver/1.7.4/aspectjweaver-1.7.4.jar">
+    <dependent-module archiveName="aspectjweaver-1.8.2.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/aspectj/aspectjweaver/1.8.2/aspectjweaver-1.8.2.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="aspectjrt-1.7.4.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/aspectj/aspectjrt/1.7.4/aspectjrt-1.7.4.jar">
+    <dependent-module archiveName="aspectjrt-1.8.2.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/aspectj/aspectjrt/1.8.2/aspectjrt-1.8.2.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="cglib-3.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/cglib/cglib/3.1/cglib-3.1.jar">
@@ -172,16 +172,16 @@
     <dependent-module archiveName="asm-4.2.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/ow2/asm/asm/4.2/asm-4.2.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="aws-java-sdk-1.7.5.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/amazonaws/aws-java-sdk/1.7.5/aws-java-sdk-1.7.5.jar">
+    <dependent-module archiveName="aws-java-sdk-1.8.9.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/amazonaws/aws-java-sdk/1.8.9.1/aws-java-sdk-1.8.9.1.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="jackson-core-2.2.3.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/fasterxml/jackson/core/jackson-core/2.2.3/jackson-core-2.2.3.jar">
+    <dependent-module archiveName="jackson-core-2.4.2.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/fasterxml/jackson/core/jackson-core/2.4.2/jackson-core-2.4.2.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="jackson-databind-2.2.3.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/fasterxml/jackson/core/jackson-databind/2.2.3/jackson-databind-2.2.3.jar">
+    <dependent-module archiveName="jackson-databind-2.4.2.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/fasterxml/jackson/core/jackson-databind/2.4.2/jackson-databind-2.4.2.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="jackson-annotations-2.2.3.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/fasterxml/jackson/core/jackson-annotations/2.2.3/jackson-annotations-2.2.3.jar">
+    <dependent-module archiveName="jackson-annotations-2.4.2.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/fasterxml/jackson/core/jackson-annotations/2.4.2/jackson-annotations-2.4.2.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="HikariCP-1.4.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/zaxxer/HikariCP/1.4.0/HikariCP-1.4.0.jar">
@@ -217,7 +217,7 @@
     <dependent-module archiveName="jetty-security-9.2.2.v20140723.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/jetty-security/9.2.2.v20140723/jetty-security-9.2.2.v20140723.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="commons-email-1.3.2.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/apache/commons/commons-email/1.3.2/commons-email-1.3.2.jar">
+    <dependent-module archiveName="commons-email-1.3.3.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/apache/commons/commons-email/1.3.3/commons-email-1.3.3.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="mail-1.4.5.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/javax/mail/mail/1.4.5/mail-1.4.5.jar">
@@ -301,7 +301,7 @@
     <dependent-module archiveName="jboss-logging-3.1.3.GA.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/jboss/logging/jboss-logging/3.1.3.GA/jboss-logging-3.1.3.GA.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="jgroups-3.4.3.Final.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/jgroups/jgroups/3.4.3.Final/jgroups-3.4.3.Final.jar">
+    <dependent-module archiveName="jgroups-3.4.5.Final.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/jgroups/jgroups/3.4.5.Final/jgroups-3.4.5.Final.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="jboss-transaction-api_1.1_spec-1.0.1.Final.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/jboss/spec/javax/transaction/jboss-transaction-api_1.1_spec/1.0.1.Final/jboss-transaction-api_1.1_spec-1.0.1.Final.jar">
@@ -349,7 +349,7 @@
     <dependent-module archiveName="commons-codec-1.9.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/commons-codec/commons-codec/1.9/commons-codec-1.9.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="hibernate-validator-5.1.1.Final.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/hibernate/hibernate-validator/5.1.1.Final/hibernate-validator-5.1.1.Final.jar">
+    <dependent-module archiveName="hibernate-validator-5.1.2.Final.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/hibernate/hibernate-validator/5.1.2.Final/hibernate-validator-5.1.2.Final.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="classmate-1.0.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/fasterxml/classmate/1.0.0/classmate-1.0.0.jar">
@@ -526,7 +526,7 @@
     <dependent-module archiveName="mycollab-ui.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mycollab-ui/mycollab-ui">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="vaadin-touchkit-agpl-4.0.0.beta1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/vaadin/addon/vaadin-touchkit-agpl/4.0.0.beta1/vaadin-touchkit-agpl-4.0.0.beta1.jar">
+    <dependent-module archiveName="vaadin-touchkit-agpl-4.0.0.beta2.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/vaadin/addon/vaadin-touchkit-agpl/4.0.0.beta2/vaadin-touchkit-agpl-4.0.0.beta2.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="vaadin-client-7.2.6.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/vaadin/vaadin-client/7.2.6/vaadin-client-7.2.6.jar">
@@ -536,12 +536,6 @@
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="mobilecomponent-1.0.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/esofthead/vaadin/mobilecomponent/1.0.0-SNAPSHOT/mobilecomponent-1.0.0-SNAPSHOT.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="ez-vcard-0.8.2.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/googlecode/ez-vcard/ez-vcard/0.8.2/ez-vcard-0.8.2.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="freemarker-2.3.19.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/freemarker/freemarker/2.3.19/freemarker-2.3.19.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="mycollab-web-community.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mycollab-web-community/mycollab-web-community">
@@ -559,7 +553,7 @@
     <dependent-module archiveName="jasperreports-5.5.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/net/sf/jasperreports/jasperreports/5.5.1/jasperreports-5.5.1.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="itext-2.1.5.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/lowagie/itext/2.1.5/itext-2.1.5.jar">
+    <dependent-module archiveName="itext-2.1.7.js2.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/lowagie/itext/2.1.7.js2/itext-2.1.7.js2.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="bcprov-jdk14-138.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/bouncycastle/bcprov-jdk14/138/bcprov-jdk14-138.jar">
@@ -667,13 +661,10 @@
     <dependent-module archiveName="dom-0.1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/vaadin/addons/dom/0.1.0/dom-0.1.0.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="jfreechart-1.0.15.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/jfree/jfreechart/1.0.15/jfreechart-1.0.15.jar">
+    <dependent-module archiveName="jfreechart-1.0.19.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/jfree/jfreechart/1.0.19/jfreechart-1.0.19.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="jcommon-1.0.17.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/jfree/jcommon/1.0.17/jcommon-1.0.17.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="bcmail-jdk14-138.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/bouncycastle/bcmail-jdk14/138/bcmail-jdk14-138.jar">
+    <dependent-module archiveName="jcommon-1.0.23.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/jfree/jcommon/1.0.23/jcommon-1.0.23.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="batik-svggen-1.7.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/apache/xmlgraphics/batik-svggen/1.7/batik-svggen-1.7.jar">
@@ -694,13 +685,19 @@
     <dependent-module archiveName="objenesis-1.2.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/objenesis/objenesis/1.2/objenesis-1.2.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="poi-3.9.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/apache/poi/poi/3.9/poi-3.9.jar">
+    <dependent-module archiveName="poi-3.10.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/apache/poi/poi/3.10.1/poi-3.10.1.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="xebia-servlet-extras-1.0.8.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/fr/xebia/web/xebia-servlet-extras/1.0.8/xebia-servlet-extras-1.0.8.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="opencsv-2.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/net/sf/opencsv/opencsv/2.0/opencsv-2.0.jar">
+    <dependent-module archiveName="ez-vcard-0.9.5.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/googlecode/ez-vcard/ez-vcard/0.9.5/ez-vcard-0.9.5.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="freemarker-2.3.20.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/freemarker/freemarker/2.3.20/freemarker-2.3.20.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="opencsv-2.3.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/net/sf/opencsv/opencsv/2.3/opencsv-2.3.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="spring-webmvc-4.0.6.RELEASE.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/springframework/spring-webmvc/4.0.6.RELEASE/spring-webmvc-4.0.6.RELEASE.jar">
