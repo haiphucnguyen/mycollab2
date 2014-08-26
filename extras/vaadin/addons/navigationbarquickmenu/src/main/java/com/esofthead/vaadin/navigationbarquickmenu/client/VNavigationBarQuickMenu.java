@@ -23,6 +23,7 @@ import com.google.gwt.event.dom.client.TouchStartHandler;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.EventListener;
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.vaadin.addon.touchkit.gwt.client.ui.Css3Propertynames;
@@ -300,16 +301,30 @@ public class VNavigationBarQuickMenu extends SimplePanel implements
 
 	private void toggleMenu(boolean value) {
 		this.expanded = value;
-		Style style = containerElement.getStyle();
+		final Style style = containerElement.getStyle();
 		if (this.expanded) {
 			this.addStyleName(EXPANDED);
+			style.setOpacity(1);
 			style.setProperty(Css3Propertynames.transform(),
 					"translate3d(0, 0, 0)");
+
 			showOverlays();
 		} else {
 			this.removeStyleName(EXPANDED);
+
 			style.setProperty(Css3Propertynames.transform(), "translate3d(0, -"
 					+ containerElement.getOffsetHeight() + "px, 0)");
+
+			// Workaround: Exposing menu while navigating between views in
+			// Safari
+			Timer timer = new Timer() {
+				@Override
+				public void run() {
+					style.setOpacity(0);
+				}
+			};
+			timer.schedule(250);
+
 			hideOverlays();
 		}
 	}
