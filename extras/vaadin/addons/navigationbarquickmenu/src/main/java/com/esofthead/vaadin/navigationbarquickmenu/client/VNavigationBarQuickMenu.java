@@ -7,6 +7,8 @@ import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.dom.client.Style;
+import com.google.gwt.dom.client.Style.Display;
+import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -46,6 +48,9 @@ public class VNavigationBarQuickMenu extends SimplePanel implements
 	private boolean touchStarted = false;
 	private Date fastClickAt;
 
+	private final Element overlayElement1;
+	private final Element overlayElement2;
+
 	public VNavigationBarQuickMenu() {
 		setStylePrimaryName(CLASSNAME);
 		this.addStyleName(CLASSNAME + "-button");
@@ -54,6 +59,10 @@ public class VNavigationBarQuickMenu extends SimplePanel implements
 		this.addDomHandler(this, TouchEndEvent.getType());
 		this.addDomHandler(this, TouchCancelEvent.getType());
 		this.addDomHandler(this, ClickEvent.getType());
+
+		Style style = this.getElement().getStyle();
+		style.setZIndex(2);
+
 		containerElement = DOM.createDiv();
 		containerElement.setClassName(CLASSNAME + "-content");
 		Event.sinkEvents(containerElement, Event.ONCLICK);
@@ -66,6 +75,99 @@ public class VNavigationBarQuickMenu extends SimplePanel implements
 				}
 			}
 		});
+
+		EventListener overlayListener = new EventListener() {
+
+			@Override
+			public void onBrowserEvent(Event event) {
+				switch (event.getTypeInt()) {
+				case Event.ONTOUCHSTART:
+					touchStarted = true;
+					fastClickAt = null;
+					getElement().focus();
+					break;
+
+				case Event.ONTOUCHMOVE:
+					touchStarted = false;
+					break;
+
+				case Event.ONTOUCHCANCEL:
+					touchStarted = false;
+					;
+					break;
+
+				case Event.ONTOUCHEND:
+					if (touchStarted) {
+						event.preventDefault();
+						event.stopPropagation();
+						NativeEvent evt = Document.get().createClickEvent(1,
+								event.getScreenX(), event.getScreenY(),
+								event.getClientX(), event.getClientY(), false,
+								false, false, false);
+						getElement().dispatchEvent(evt);
+						touchStarted = false;
+						fastClickAt = new Date();
+					}
+					break;
+
+				case Event.ONCLICK:
+					if (enabled) {
+						if (fastClickAt != null
+								&& (new Date().getTime() - fastClickAt
+										.getTime()) < IGNORE_SIMULATED_CLICKS_THRESHOLD) {
+							fastClickAt = null;
+							break;
+						}
+						toggleMenu(false);
+					}
+					break;
+				}
+			}
+		};
+
+		overlayElement1 = DOM.createDiv();
+		overlayElement1.setClassName(CLASSNAME + "-overlay");
+		Event.sinkEvents(overlayElement1, Event.ONCLICK | Event.TOUCHEVENTS);
+		Event.setEventListener(overlayElement1, overlayListener);
+		style = overlayElement1.getStyle();
+		style.setBackgroundColor("transparent");
+		style.setPosition(Position.ABSOLUTE);
+		style.setTop(0, Unit.PX);
+		style.setLeft(0, Unit.PX);
+		style.setWidth(100, Unit.PCT);
+		style.setHeight(100, Unit.PCT);
+		style.setZIndex(0);
+		style.setDisplay(Display.NONE);
+
+		overlayElement2 = DOM.createDiv();
+		overlayElement2.setClassName(CLASSNAME + "-overlay");
+		Event.sinkEvents(overlayElement2, Event.ONCLICK | Event.TOUCHEVENTS);
+		Event.setEventListener(overlayElement2, overlayListener);
+		style = overlayElement2.getStyle();
+		style.setBackgroundColor("transparent");
+		style.setPosition(Position.ABSOLUTE);
+		style.setTop(0, Unit.PX);
+		style.setLeft(0, Unit.PX);
+		style.setWidth(100, Unit.PCT);
+		style.setHeight(100, Unit.PCT);
+		style.setZIndex(1);
+		style.setDisplay(Display.NONE);
+	}
+
+	private void showOverlays() {
+		Style style = overlayElement1.getStyle();
+		style.clearDisplay();
+
+		style = overlayElement2.getStyle();
+		style.clearDisplay();
+	}
+
+	private void hideOverlays() {
+		Style style = overlayElement1.getStyle();
+		style.setDisplay(Display.NONE);
+
+		style = overlayElement2.getStyle();
+		style.setDisplay(Display.NONE);
 	}
 
 	@Override
@@ -87,6 +189,8 @@ public class VNavigationBarQuickMenu extends SimplePanel implements
 			}
 			if (parent == null)
 				return;
+			parent.getElement().appendChild(overlayElement1);
+			getParent().getElement().appendChild(overlayElement2);
 			parent.getElement().appendChild(containerElement);
 			Style style = containerElement.getStyle();
 			style.setOpacity(0);
@@ -98,6 +202,8 @@ public class VNavigationBarQuickMenu extends SimplePanel implements
 				}
 			});
 		} else {
+			parent.getElement().removeChild(overlayElement1);
+			getParent().getElement().removeChild(overlayElement2);
 			parent.getElement().removeChild(containerElement);
 			parent = null;
 		}
@@ -128,8 +234,7 @@ public class VNavigationBarQuickMenu extends SimplePanel implements
 		if (containerElement.getOffsetHeight() != 0) {
 			style.setTop(getParent().getOffsetHeight(), Unit.PX);
 			style.setProperty(Css3Propertynames.transition(), "none");
-			style.setProperty(Css3Propertynames.transform(), "translate3d(0, -"
-					+ containerElement.getOffsetHeight() + "px, 0)");
+			toggleMenu(false);
 			Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
 
 				@Override
@@ -184,22 +289,28 @@ public class VNavigationBarQuickMenu extends SimplePanel implements
 				fastClickAt = null;
 				return;
 			}
-			getElement().focus();
+			// getElement().focus();
 			toggleMenu();
 		}
 	}
 
 	private void toggleMenu() {
-		this.expanded = !this.expanded;
+		toggleMenu(!this.expanded);
+	}
+
+	private void toggleMenu(boolean value) {
+		this.expanded = value;
 		Style style = containerElement.getStyle();
 		if (this.expanded) {
 			this.addStyleName(EXPANDED);
 			style.setProperty(Css3Propertynames.transform(),
 					"translate3d(0, 0, 0)");
+			showOverlays();
 		} else {
 			this.removeStyleName(EXPANDED);
 			style.setProperty(Css3Propertynames.transform(), "translate3d(0, -"
 					+ containerElement.getOffsetHeight() + "px, 0)");
+			hideOverlays();
 		}
 	}
 
