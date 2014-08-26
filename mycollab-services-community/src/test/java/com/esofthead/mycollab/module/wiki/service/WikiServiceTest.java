@@ -50,7 +50,7 @@ public class WikiServiceTest extends ServiceTest {
 
 	@After
 	public void teardown() {
-		wikiService.removeResource("/");
+		wikiService.removeResource("");
 	}
 
 	@Test
@@ -70,7 +70,16 @@ public class WikiServiceTest extends ServiceTest {
 		page.setStatus(WikiI18nEnum.status_public.name());
 		page.setSubject("Hello world 2");
 		page.setContent("My name is <b>Bao Han</b>");
+		page.setStatus(WikiI18nEnum.status_private.name());
 		wikiService.savePage(page, "hainguyen@esofthead.com");
+	}
+
+	@Test
+	public void testGetResources() {
+		savePage2();
+		List<Page> pages = wikiService.getPages("1/page",
+				"hainguyen@esofthead.com");
+		Assert.assertEquals(2, pages.size());
 	}
 
 	@Test
@@ -93,9 +102,4 @@ public class WikiServiceTest extends ServiceTest {
 		wikiService.getPageVersions("1/page/document_1");
 	}
 
-	@Test
-	public void testGetResources() {
-		savePage2();
-
-	}
 }

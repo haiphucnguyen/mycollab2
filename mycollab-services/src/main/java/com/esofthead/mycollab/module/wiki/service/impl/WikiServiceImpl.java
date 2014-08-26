@@ -301,11 +301,23 @@ public class WikiServiceImpl implements WikiService {
 			public Object doInJcr(Session session) throws IOException,
 					RepositoryException {
 				Node rootNode = session.getRootNode();
-				Node node = getNode(rootNode, path);
-				if (node != null) {
-					node.remove();
+				if ("".equals(path) || "/".equals(path)) {
+					NodeIterator nodes = rootNode.getNodes();
+					while (nodes.hasNext()) {
+						Node node = nodes.nextNode();
+						if (isNodeFolder(node) || isNodePage(node)) {
+							node.remove();
+						}
+					}
 					session.save();
+				} else {
+					Node node = getNode(rootNode, path);
+					if (node != null) {
+						node.remove();
+						session.save();
+					}
 				}
+
 				return null;
 			}
 		});

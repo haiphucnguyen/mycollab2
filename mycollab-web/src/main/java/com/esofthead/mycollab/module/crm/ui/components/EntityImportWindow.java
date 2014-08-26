@@ -71,7 +71,7 @@ import com.vaadin.ui.Window;
 public abstract class EntityImportWindow<E> extends Window {
 	private static final long serialVersionUID = 1L;
 
-	public static final String[] fileType = { "CSV", "VCard" };
+	private static final String[] fileType = { "CSV", "VCard" };
 
 	private FileConfigurationLayout fileConfigurationLayout;
 	private MappingCrmConfigurationLayout mappingCrmFieldLayout;
