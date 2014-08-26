@@ -18,6 +18,9 @@ package com.esofthead.mycollab.module.wiki.service;
 
 import java.util.List;
 
+import javax.jcr.RepositoryException;
+import javax.jcr.version.Version;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -27,6 +30,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.esofthead.mycollab.common.i18n.WikiI18nEnum;
 import com.esofthead.mycollab.module.wiki.domain.Page;
+import com.esofthead.mycollab.module.wiki.domain.PageVersion;
 import com.esofthead.mycollab.test.MyCollabClassRunner;
 import com.esofthead.mycollab.test.service.ServiceTest;
 
@@ -83,7 +87,7 @@ public class WikiServiceTest extends ServiceTest {
 	}
 
 	@Test
-	public void testUpdatePage() {
+	public void testUpdatePage() throws RepositoryException {
 		Page page = new Page();
 		page.setCreatedUser("hainguyen@esofthead.com");
 		page.setCategory("abc");
@@ -98,8 +102,28 @@ public class WikiServiceTest extends ServiceTest {
 		Assert.assertEquals(1, pages.size());
 		page = pages.get(0);
 		Assert.assertEquals("Hello world 2", page.getSubject());
+	}
 
-		wikiService.getPageVersions("1/page/document_1");
+	@Test
+	public void testGetVersions() {
+		Page page = new Page();
+		page.setCreatedUser("hainguyen@esofthead.com");
+		page.setCategory("abc");
+		page.setPath("1/page/document_1");
+		page.setStatus(WikiI18nEnum.status_public.name());
+		page.setSubject("Hello world 2");
+		page.setContent("My name is <b>Bao Han</b>");
+		wikiService.savePage(page, "hainguyen@esofthead.com");
+
+		page.setSubject("Hello world 3");
+		wikiService.savePage(page, "hainguyen@esofthead.com");
+
+		List<PageVersion> versions = wikiService
+				.getPageVersions("1/page/document_1");
+		Assert.assertEquals(3, versions.size());
+
+		page = wikiService.getPageByVersion("1/page/document_1", "1.0");
+		Assert.assertEquals("Hello world 2", page.getSubject());
 	}
 
 }
