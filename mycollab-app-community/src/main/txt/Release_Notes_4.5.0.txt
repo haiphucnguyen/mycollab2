@@ -52,6 +52,8 @@ Version 4.4.0
 
 **Bug Fixes**
 
+* Page path is cached across projects
+* Milestone simple view display wrongly
 * Display date time field correctly with user custom timezone
 
 Version 4.4.0
