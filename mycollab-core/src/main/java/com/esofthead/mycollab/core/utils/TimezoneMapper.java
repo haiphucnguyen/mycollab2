@@ -1008,9 +1008,10 @@ public class TimezoneMapper {
 		TimezoneExt timeZoneExt = null;
 		if (mycollabId == null || mycollabId.equals("")) {
 			timeZoneExt = timeMap.get("3");
+		} else {
+			timeZoneExt = timeMap.get(mycollabId);
 		}
 
-		timeZoneExt = timeMap.get(mycollabId);
 		if (timeZoneExt == null) {
 			throw new MyCollabException("Can not find the timezone with id "
 					+ mycollabId);
