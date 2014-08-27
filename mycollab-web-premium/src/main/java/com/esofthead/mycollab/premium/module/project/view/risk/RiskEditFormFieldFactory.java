@@ -75,6 +75,9 @@ class RiskEditFormFieldFactory extends
 			ratingField.setMaxValue(5);
 			ratingField.setImmediate(true);
 			ratingField.setDescription("Risk level");
+			if (risk.getLevel() != null) {
+				ratingField.setValue(risk.getLevel());
+			}
 			ratingField.setValueCaption(RiskAddViewImpl.getValueCaptions()
 					.values().toArray(new String[5]));
 
