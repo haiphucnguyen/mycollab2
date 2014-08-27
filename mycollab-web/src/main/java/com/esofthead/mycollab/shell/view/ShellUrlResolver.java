@@ -37,6 +37,13 @@ public class ShellUrlResolver extends UrlResolver {
 		this.addSubResolver("document", new FileUrlResolver().build());
 	}
 
+	public void navigateByFragement(String fragement) {
+		if (fragement != null && fragement.length() > 0) {
+			String[] tokens = fragement.split("/");
+			this.handle(tokens);
+		}
+	}
+
 	@Override
 	protected void defaultPageErrorHandler() {
 	}
