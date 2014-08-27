@@ -54,7 +54,7 @@ import com.vaadin.ui.VerticalLayout;
  * @since 1.0
  * 
  */
-@ViewComponent(scope=ViewScope.PROTOTYPE)
+@ViewComponent(scope = ViewScope.PROTOTYPE)
 public class ProblemListViewImpl extends AbstractPageView implements
 		ProblemListView {
 
@@ -138,7 +138,7 @@ public class ProblemListViewImpl extends AbstractPageView implements
 				b.setDescription(ProjectTooltipGenerator
 						.generateToolTipProblem(AppContext.getUserLocale(),
 								problem, AppContext.getSiteUrl(),
-								AppContext.getTimezoneId()));
+								AppContext.getTimezone()));
 				return b;
 
 			}

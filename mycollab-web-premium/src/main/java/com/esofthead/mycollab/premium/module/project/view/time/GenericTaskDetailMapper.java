@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.premium.module.project.view.time;
 
+import java.util.TimeZone;
+
 import org.jsoup.Jsoup;
 
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
@@ -36,7 +38,7 @@ public class GenericTaskDetailMapper {
 	public GenericTaskDetailMapper(String type, int typeid) {
 
 		int sAccountId = AppContext.getAccountId();
-		String timeZone = AppContext.getSession().getTimezone();
+		TimeZone timeZone = AppContext.getTimezone();
 
 		if (ProjectTypeConstants.TASK_LIST.equals(type)) {
 			ProjectTaskListService service = ApplicationContextUtil

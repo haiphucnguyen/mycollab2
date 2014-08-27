@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.premium.module.project.view.time;
 
+import java.util.TimeZone;
+
 import com.esofthead.mycollab.module.project.ProjectTooltipGenerator;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleProblem;
@@ -35,7 +37,7 @@ class ProjectGenericTaskTooltipGenerator {
 
 		html = "";
 		int sAccountId = AppContext.getAccountId();
-		String timeZone = AppContext.getSession().getTimezone();
+		TimeZone timeZone = AppContext.getTimezone();
 		String siteURL = AppContext.getSiteUrl();
 
 		if (ProjectTypeConstants.TASK_LIST.equals(type)) {
