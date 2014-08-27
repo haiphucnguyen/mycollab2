@@ -88,7 +88,7 @@ public class RiskAddPresenter extends AbstractPresenter<RiskAddView> {
 		}
 	}
 
-	public void saveRisk(Risk risk) {
+	private void saveRisk(Risk risk) {
 		RiskService riskService = ApplicationContextUtil
 				.getSpringBean(RiskService.class);
 		risk.setProjectid(CurrentProjectVariables.getProjectId());
