@@ -476,7 +476,11 @@ public class AppContext implements Serializable {
 	}
 
 	public static TimeZone getTimezone() {
-		return (TimeZone) MyCollabSession.getVariable(USER_TIMEZONE);
+		try {
+			return (TimeZone) MyCollabSession.getVariable(USER_TIMEZONE);
+		} catch (Exception e) {
+			return TimeZone.getDefault();
+		}
 	}
 
 	public static String getUserShortDateFormat() {

@@ -110,7 +110,7 @@ public abstract class AbstractBeanFieldGroupEditFieldFactory<B> implements
 			} else if (formField instanceof RichTextArea) {
 				((RichTextArea) formField).setNullRepresentation("");
 			} else if (formField instanceof DateField) {
-
+				((DateField) formField).setTimeZone(AppContext.getTimezone());
 				((DateField) formField).setDateFormat(AppContext
 						.getUserShortDateFormat());
 			}
