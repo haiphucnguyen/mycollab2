@@ -538,6 +538,9 @@
     <dependent-module archiveName="mobilecomponent-1.0.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/esofthead/vaadin/mobilecomponent/1.0.0-SNAPSHOT/mobilecomponent-1.0.0-SNAPSHOT.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
+    <dependent-module archiveName="navigationbar-quickmenu-1.0.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/esofthead/vaadin/navigationbar-quickmenu/1.0.0-SNAPSHOT/navigationbar-quickmenu-1.0.0-SNAPSHOT.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
     <dependent-module archiveName="mycollab-web-community.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mycollab-web-community/mycollab-web-community">
       <dependency-type>uses</dependency-type>
     </dependent-module>

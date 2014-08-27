@@ -185,11 +185,7 @@
     </attributes>
   </classpathentry>
   <classpathentry kind="var" path="M2_REPO/org/vaadin/addon/confirmdialog/2.0.5/confirmdialog-2.0.5.jar" sourcepath="M2_REPO/org/vaadin/addon/confirmdialog/2.0.5/confirmdialog-2.0.5-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/com/esofthead/vaadin/cropField/1.0-SNAPSHOT/cropField-1.0-SNAPSHOT.jar" sourcepath="M2_REPO/com/esofthead/vaadin/cropField/1.0-SNAPSHOT/cropField-1.0-SNAPSHOT-sources.jar">
-    <attributes>
-      <attribute value="jar:file:/Users/haiphucnguyen/.m2/repository/com/esofthead/vaadin/cropField/1.0-SNAPSHOT/cropField-1.0-SNAPSHOT-javadoc.jar!/" name="javadoc_location"/>
-    </attributes>
-  </classpathentry>
+  <classpathentry kind="var" path="M2_REPO/com/esofthead/vaadin/cropField/1.0-SNAPSHOT/cropField-1.0-SNAPSHOT.jar" sourcepath="M2_REPO/com/esofthead/vaadin/cropField/1.0-SNAPSHOT/cropField-1.0-SNAPSHOT-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/esofthead/vaadin/calendarext/1.0.0-SNAPSHOT/calendarext-1.0.0-SNAPSHOT.jar" sourcepath="M2_REPO/com/esofthead/vaadin/calendarext/1.0.0-SNAPSHOT/calendarext-1.0.0-SNAPSHOT-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/vaadin/addons/animator/2.0.0/animator-2.0.0.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/vaadin/addons/dom/0.1.0/dom-0.1.0.jar"/>

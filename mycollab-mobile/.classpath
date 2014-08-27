@@ -129,5 +129,5 @@
   <classpathentry kind="var" path="M2_REPO/com/vaadin/addon/vaadin-touchkit-agpl/4.0.0.beta2/vaadin-touchkit-agpl-4.0.0.beta2.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/vaadin/vaadin-client/7.2.6/vaadin-client-7.2.6.jar" sourcepath="M2_REPO/com/vaadin/vaadin-client/7.2.6/vaadin-client-7.2.6-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/esofthead/vaadin/mobilecomponent/1.0.0-SNAPSHOT/mobilecomponent-1.0.0-SNAPSHOT.jar" sourcepath="M2_REPO/com/esofthead/vaadin/mobilecomponent/1.0.0-SNAPSHOT/mobilecomponent-1.0.0-SNAPSHOT-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/com/esofthead/vaadin/navigationbar-quickmenu/1.0.0-SNAPSHOT/navigationbar-quickmenu-1.0.0-SNAPSHOT.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/esofthead/vaadin/navigationbar-quickmenu/1.0.0-SNAPSHOT/navigationbar-quickmenu-1.0.0-SNAPSHOT.jar" sourcepath="M2_REPO/com/esofthead/vaadin/navigationbar-quickmenu/1.0.0-SNAPSHOT/navigationbar-quickmenu-1.0.0-SNAPSHOT-sources.jar"/>
 </classpath>

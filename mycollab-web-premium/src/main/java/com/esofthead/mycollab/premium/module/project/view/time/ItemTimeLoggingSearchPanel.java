@@ -123,7 +123,7 @@ class ItemTimeLoggingSearchPanel extends
 
 			this.dateRangeField = (DateRangeField) gridLayout.addComponent(
 					new DateRangeField(), null, 0, 0);
-			this.dateRangeField.setDateFormat(AppContext.getDateFormat());
+			this.dateRangeField.setDateFormat(AppContext.getUserDateFormat());
 
 			this.userField = (ProjectMemberListSelect) gridLayout.addComponent(
 					new ProjectMemberListSelect(), "User", 1, 0);

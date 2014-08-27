@@ -54,7 +54,7 @@ import com.vaadin.ui.VerticalLayout;
  * @since 1.0
  * 
  */
-@ViewComponent(scope=ViewScope.PROTOTYPE)
+@ViewComponent(scope = ViewScope.PROTOTYPE)
 public class StandupListViewImpl extends AbstractPageView implements
 		StandupListView {
 	private static final long serialVersionUID = 1L;
@@ -199,7 +199,7 @@ public class StandupListViewImpl extends AbstractPageView implements
 
 		for (final GroupItem groupItem : reportsCount) {
 			final Date date = DateTimeUtils.convertDateByString(
-					groupItem.getGroupname(), AppContext.getDateFormat());
+					groupItem.getGroupname(), AppContext.getUserDateFormat());
 			this.standupCalendar.addSelectedDate(date);
 		}
 	}

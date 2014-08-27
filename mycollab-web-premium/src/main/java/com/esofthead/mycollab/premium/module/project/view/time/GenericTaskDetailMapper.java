@@ -23,6 +23,12 @@ import com.esofthead.mycollab.module.tracker.service.VersionService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 4.0.0
+ *
+ */
 public class GenericTaskDetailMapper {
 
 	private String name;
@@ -90,7 +96,9 @@ public class GenericTaskDetailMapper {
 			if (standup != null) {
 				name = Jsoup.parse(
 						DateTimeUtils.converToStringWithUserTimeZone(
-								standup.getCreatedtime(), timeZone)).html();
+								standup.getCreatedtime(),
+								AppContext.getUserDateTimeFormat(), timeZone))
+						.html();
 			}
 		}
 	}
