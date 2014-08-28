@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.mobile.module.crm.view;
+package com.esofthead.mycollab.mobile.module.project.view;
 
 import com.esofthead.mycollab.mobile.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
@@ -11,12 +11,12 @@ import com.vaadin.ui.ComponentContainer;
  * @since 4.4.0
  *
  */
-public class CrmLoginPresenter extends AbstractPresenter<CrmLoginView> {
+public class ProjectLoginPresenter extends AbstractPresenter<ProjectLoginView> {
 
 	private static final long serialVersionUID = -750325026975907368L;
 
-	public CrmLoginPresenter() {
-		super(CrmLoginView.class);
+	public ProjectLoginPresenter() {
+		super(ProjectLoginView.class);
 	}
 
 	@Override

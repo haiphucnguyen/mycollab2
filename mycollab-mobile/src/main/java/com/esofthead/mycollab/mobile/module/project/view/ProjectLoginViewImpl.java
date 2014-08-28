@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.mobile.module.crm.view;
+package com.esofthead.mycollab.mobile.module.project.view;
 
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.mobile.UIConstants;
@@ -24,12 +24,12 @@ import com.vaadin.ui.VerticalLayout;
  */
 
 @ViewComponent
-public class CrmLoginViewImpl extends AbstractMobileMainView implements
-		CrmLoginView {
+public class ProjectLoginViewImpl extends AbstractMobileMainView implements
+		ProjectLoginView {
 
 	private static final long serialVersionUID = 2079094611178305339L;
 
-	public CrmLoginViewImpl() {
+	public ProjectLoginViewImpl() {
 
 		initUI();
 	}
@@ -57,7 +57,7 @@ public class CrmLoginViewImpl extends AbstractMobileMainView implements
 		welcomeTextWrapper.setStyleName("welcometext-wrapper");
 		welcomeTextWrapper.setWidth("100%");
 		welcomeTextWrapper.setHeight("15px");
-		Label welcomeText = new Label("Login to CRM");
+		Label welcomeText = new Label("Login to Projects");
 		welcomeText.setWidth("150px");
 		welcomeTextWrapper.addComponent(welcomeText);
 		contentLayout.addComponent(welcomeTextWrapper);

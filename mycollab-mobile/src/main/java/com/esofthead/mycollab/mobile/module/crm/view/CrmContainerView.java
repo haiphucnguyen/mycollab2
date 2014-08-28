@@ -8,6 +8,6 @@ import com.esofthead.mycollab.vaadin.mvp.PageView;
  * @since 4.4.0
  *
  */
-public interface CrmDashboardView extends PageView {
+public interface CrmContainerView extends PageView {
 
 }

@@ -33,8 +33,8 @@ import com.vaadin.ui.Component;
  */
 
 @ViewComponent
-public class CrmDashboardViewImpl extends AbstractMobileTabPageView implements
-		CrmDashboardView {
+public class CrmContainerViewImpl extends AbstractMobileTabPageView implements
+		CrmContainerView {
 
 	private static final long serialVersionUID = 5251742381187041492L;
 
@@ -46,7 +46,7 @@ public class CrmDashboardViewImpl extends AbstractMobileTabPageView implements
 	private OpportunityListPresenter opportunityPresenter;
 	private CaseListPresenter casePresenter;
 
-	public CrmDashboardViewImpl() {
+	public CrmContainerViewImpl() {
 		buildComponents();
 	}
 
@@ -119,21 +119,21 @@ public class CrmDashboardViewImpl extends AbstractMobileTabPageView implements
 					AccountSearchCriteria criteria = new AccountSearchCriteria();
 					criteria.setSaccountid(new NumberSearchField(
 							SearchField.AND, AppContext.getAccountId()));
-					accountPresenter.go(CrmDashboardViewImpl.this,
+					accountPresenter.go(CrmContainerViewImpl.this,
 							new ScreenData.Search<AccountSearchCriteria>(
 									criteria));
 				} else if (currentComponent == getContactTab()) {
 					ContactSearchCriteria criteria = new ContactSearchCriteria();
 					criteria.setSaccountid(new NumberSearchField(
 							SearchField.AND, AppContext.getAccountId()));
-					contactPresenter.go(CrmDashboardViewImpl.this,
+					contactPresenter.go(CrmContainerViewImpl.this,
 							new ScreenData.Search<ContactSearchCriteria>(
 									criteria));
 				} else if (currentComponent == getCampaignTab()) {
 					CampaignSearchCriteria criteria = new CampaignSearchCriteria();
 					criteria.setSaccountid(new NumberSearchField(
 							SearchField.AND, AppContext.getAccountId()));
-					campaignPresenter.go(CrmDashboardViewImpl.this,
+					campaignPresenter.go(CrmContainerViewImpl.this,
 							new ScreenData.Search<CampaignSearchCriteria>(
 									criteria));
 				} else if (currentComponent == getLeadTab()) {
@@ -141,14 +141,14 @@ public class CrmDashboardViewImpl extends AbstractMobileTabPageView implements
 					criteria.setSaccountid(new NumberSearchField(
 							SearchField.AND, AppContext.getAccountId()));
 					leadPresenter
-							.go(CrmDashboardViewImpl.this,
+							.go(CrmContainerViewImpl.this,
 									new ScreenData.Search<LeadSearchCriteria>(
 											criteria));
 				} else if (currentComponent == getOpportunityTab()) {
 					OpportunitySearchCriteria criteria = new OpportunitySearchCriteria();
 					criteria.setSaccountid(new NumberSearchField(
 							SearchField.AND, AppContext.getAccountId()));
-					opportunityPresenter.go(CrmDashboardViewImpl.this,
+					opportunityPresenter.go(CrmContainerViewImpl.this,
 							new ScreenData.Search<OpportunitySearchCriteria>(
 									criteria));
 				} else if (currentComponent == getCaseTab()) {
@@ -156,14 +156,14 @@ public class CrmDashboardViewImpl extends AbstractMobileTabPageView implements
 					criteria.setSaccountid(new NumberSearchField(
 							SearchField.AND, AppContext.getAccountId()));
 					casePresenter
-							.go(CrmDashboardViewImpl.this,
+							.go(CrmContainerViewImpl.this,
 									new ScreenData.Search<CaseSearchCriteria>(
 											criteria));
 				} else if (currentComponent == getActivityTab()) {
 					ActivitySearchCriteria criteria = new ActivitySearchCriteria();
 					criteria.setSaccountid(new NumberSearchField(
 							SearchField.AND, AppContext.getAccountId()));
-					activityPresenter.go(CrmDashboardViewImpl.this,
+					activityPresenter.go(CrmContainerViewImpl.this,
 							new ScreenData.Search<ActivitySearchCriteria>(
 									criteria));
 				}
