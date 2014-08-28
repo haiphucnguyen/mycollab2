@@ -14,6 +14,7 @@ import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.arguments.RangeDateSearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
+import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
@@ -60,7 +61,7 @@ import com.vaadin.ui.VerticalLayout;
  * @since 2.0
  * 
  */
-@ViewComponent(scope=ViewScope.PROTOTYPE)
+@ViewComponent(scope = ViewScope.PROTOTYPE)
 public class TimeTrackingListViewImpl extends AbstractPageView implements
 		TimeTrackingListView {
 	private static final DateFormat DATE_FORMAT = new SimpleDateFormat(
@@ -166,7 +167,8 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements
 
 		this.layoutItem = new VerticalLayout();
 		this.layoutItem.setWidth("100%");
-		this.addComponent(this.layoutItem);	}
+		this.addComponent(this.layoutItem);
+	}
 
 	private StreamResource constructStreamResource(ReportExportType exportType) {
 		final String title = "Time of Project "
@@ -236,12 +238,13 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements
 
 			List<SimpleItemTimeLogging> list = new ArrayList<SimpleItemTimeLogging>();
 			for (SimpleItemTimeLogging itemTimeLogging : itemTimeLoggingList) {
-				if (itemTimeLogging.getDueDate().compareTo(date) == 0) {
+				if (DateTimeUtils.compareByDate(itemTimeLogging.getLogforday(),
+						date) == 0) {
 					list.add(itemTimeLogging);
-					billable += itemTimeLogging.getIsbillable()
-							? itemTimeLogging.getLogvalue() : 0;
-					nonbillable += !itemTimeLogging.getIsbillable()
-							? itemTimeLogging.getLogvalue() : 0;
+					billable += itemTimeLogging.getIsbillable() ? itemTimeLogging
+							.getLogvalue() : 0;
+					nonbillable += !itemTimeLogging.getIsbillable() ? itemTimeLogging
+							.getLogvalue() : 0;
 				}
 			}
 
@@ -251,9 +254,12 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements
 						ContentMode.HTML));
 
 				TimeTrackingTableDisplay table = new TimeTrackingTableDisplay(
-						Arrays.asList(TimeTableFieldDef.summary, TimeTableFieldDef.logUser,
-								TimeTableFieldDef.logValue, TimeTableFieldDef.billable,
-								TimeTableFieldDef.logForDate, TimeTableFieldDef.id));
+						Arrays.asList(TimeTableFieldDef.summary,
+								TimeTableFieldDef.logUser,
+								TimeTableFieldDef.logValue,
+								TimeTableFieldDef.billable,
+								TimeTableFieldDef.logForDate,
+								TimeTableFieldDef.id));
 				table.addTableListener(this.tableClickListener);
 				table.setCurrentDataList(list);
 				this.layoutItem.addComponent(table);
