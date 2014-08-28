@@ -1,12 +1,19 @@
 package com.esofthead.mycollab.premium.module.project.view.time;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 
+import org.joda.time.DateTime;
 import org.vaadin.dialogs.ConfirmDialog;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.arguments.RangeDateSearchField;
+import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
@@ -55,9 +62,14 @@ import com.vaadin.ui.VerticalLayout;
 @ViewComponent
 public class TimeTrackingListViewImpl extends AbstractPageView implements
 		TimeTrackingListView {
+	private static final DateFormat DATE_FORMAT = new SimpleDateFormat(
+			"EEEE, dd MMMM yyyy");
+	private static final String TEXT_RIGHT = "<span style=\"float: right;\">%s</span>";
+	private static final String TEXT_BOLD_RIGHT = "<span style=\"float: right; font-weight: bold;\">%s</span>";
+	private static final String TEXT_BOLD_BIG = "<span style=\"font-size:20px;  font-weight: bold; padding-top: 10px;\">%s</span>";
+
 	private static final long serialVersionUID = 3742030333599796165L;
 
-	private TimeTrackingTableDisplay tableItem;
 	private ItemTimeLoggingSearchPanel itemTimeLoggingPanel;
 	private ItemTimeLoggingSearchCriteria itemTimeLogginSearchCriteria;
 
@@ -65,6 +77,8 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements
 	private final ItemTimeLoggingService itemTimeLoggingService;
 
 	private final Label lbTimeRange;
+
+	private VerticalLayout layoutItem;
 
 	public TimeTrackingListViewImpl() {
 		this.setMargin(new MarginInfo(false, true, false, true));
@@ -149,83 +163,9 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements
 				Alignment.MIDDLE_RIGHT);
 		this.addComponent(headerWrapper);
 
-		this.tableItem = new TimeTrackingTableDisplay(Arrays.asList(
-				TimeTableFieldDef.summary, TimeTableFieldDef.logUser,
-				TimeTableFieldDef.logValue, TimeTableFieldDef.billable,
-				TimeTableFieldDef.logForDate, TimeTableFieldDef.id));
-
-		this.tableItem
-				.addTableListener(new TableClickListener() {
-					private static final long serialVersionUID = 1L;
-
-					@Override
-					public void itemClick(final TableClickEvent event) {
-						final SimpleItemTimeLogging itemLogging = (SimpleItemTimeLogging) event
-								.getData();
-						if ("summary".equals(event.getFieldName())) {
-							if (ProjectTypeConstants.BUG.equals(itemLogging
-									.getType())) {
-								EventBusFactory.getInstance().post(
-										new BugEvent.GotoRead(this, itemLogging
-												.getTypeid()));
-							} else if (ProjectTypeConstants.TASK
-									.equals(itemLogging.getType())) {
-								EventBusFactory.getInstance().post(
-										new TaskEvent.GotoRead(this,
-												itemLogging.getTypeid()));
-							} else if (ProjectTypeConstants.RISK
-									.equals(itemLogging.getType())) {
-								EventBusFactory.getInstance().post(
-										new RiskEvent.GotoRead(this,
-												itemLogging.getTypeid()));
-							} else if (ProjectTypeConstants.PROBLEM
-									.equals(itemLogging.getType())) {
-								EventBusFactory.getInstance().post(
-										new ProblemEvent.GotoRead(this,
-												itemLogging.getTypeid()));
-							}
-						} else if ("delete".equals(event.getFieldName())) {
-							ConfirmDialogExt.show(
-									UI.getCurrent(),
-									AppContext.getMessage(
-											GenericI18Enum.DIALOG_DELETE_TITLE,
-											SiteConfiguration.getSiteName()),
-									AppContext
-											.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
-									AppContext
-											.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
-									AppContext
-											.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
-									new ConfirmDialog.Listener() {
-										private static final long serialVersionUID = 1L;
-
-										@Override
-										public void onClose(ConfirmDialog dialog) {
-											if (dialog.isConfirmed()) {
-												ItemTimeLoggingService itemTimeLoggingService = ApplicationContextUtil
-														.getSpringBean(ItemTimeLoggingService.class);
-												itemTimeLoggingService.removeWithSession(
-														itemLogging.getId(),
-														AppContext
-																.getUsername(),
-														AppContext
-																.getAccountId());
-
-												refresh();
-											}
-										}
-									});
-
-						} else if ("edit".equals(event.getFieldName())) {
-							TimeTrackingEditViewWindow timeTrackingEdit = new TimeTrackingEditViewWindow(
-									TimeTrackingListViewImpl.this, itemLogging);
-							UI.getCurrent().addWindow(timeTrackingEdit);
-						}
-					}
-				});
-
-		this.addComponent(this.tableItem);
-	}
+		this.layoutItem = new VerticalLayout();
+		this.layoutItem.setWidth("100%");
+		this.addComponent(this.layoutItem);	}
 
 	private StreamResource constructStreamResource(ReportExportType exportType) {
 		final String title = "Time of Project "
@@ -273,7 +213,135 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements
 	@Override
 	public void refresh() {
 		this.setTimeRange();
-		this.tableItem.setSearchCriteria(itemTimeLogginSearchCriteria);
 
+		this.layoutItem.removeAllComponents();
+
+		@SuppressWarnings("unchecked")
+		List<SimpleItemTimeLogging> itemTimeLoggingList = itemTimeLoggingService
+				.findPagableListByCriteria(new SearchRequest<ItemTimeLoggingSearchCriteria>(
+						itemTimeLogginSearchCriteria));
+		// TODO
+		final RangeDateSearchField rangeField = this.itemTimeLogginSearchCriteria
+				.getRangeDate();
+
+		Date start = rangeField.getFrom();
+		Date end = rangeField.getTo();
+		DateTime current = new DateTime(start);
+
+		while (current.toDate().compareTo(end) <= 0) {
+			Date date = current.toDate();
+			double billable = 0;
+			double nonbillable = 0;
+
+			List<SimpleItemTimeLogging> list = new ArrayList<SimpleItemTimeLogging>();
+			for (SimpleItemTimeLogging itemTimeLogging : itemTimeLoggingList) {
+				if (itemTimeLogging.getDueDate().compareTo(date) == 0) {
+					list.add(itemTimeLogging);
+					billable += itemTimeLogging.getIsbillable()
+							? itemTimeLogging.getLogvalue() : 0;
+					nonbillable += !itemTimeLogging.getIsbillable()
+							? itemTimeLogging.getLogvalue() : 0;
+				}
+			}
+
+			if (list.size() != 0) {
+				this.layoutItem.addComponent(new Label(String.format(
+						TEXT_BOLD_BIG, DATE_FORMAT.format(date)),
+						ContentMode.HTML));
+
+				TimeTrackingTableDisplay table = new TimeTrackingTableDisplay(
+						Arrays.asList(TimeTableFieldDef.summary, TimeTableFieldDef.logUser,
+								TimeTableFieldDef.logValue, TimeTableFieldDef.billable,
+								TimeTableFieldDef.logForDate, TimeTableFieldDef.id));
+				table.addTableListener(this.tableClickListener);
+				table.setCurrentDataList(list);
+				this.layoutItem.addComponent(table);
+
+				VerticalLayout layoutTime = new VerticalLayout();
+
+				layoutTime.addComponent(new Label(String.format(
+						TEXT_BOLD_RIGHT,
+						("Total Time: " + (billable + nonbillable))),
+						ContentMode.HTML));
+
+				layoutTime.addComponent(new Label(String.format(TEXT_RIGHT,
+						("Billable: " + billable)), ContentMode.HTML));
+
+				layoutTime.addComponent(new Label(String.format(TEXT_RIGHT,
+						("Non Billable: " + nonbillable)), ContentMode.HTML));
+
+				this.layoutItem.addComponent(layoutTime);
+				this.layoutItem.setComponentAlignment(layoutTime,
+						Alignment.MIDDLE_RIGHT);
+			}
+
+			current = current.plusDays(1);
+		}
 	}
+
+	private TableClickListener tableClickListener = new TableClickListener() {
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		public void itemClick(final TableClickEvent event) {
+			final SimpleItemTimeLogging itemLogging = (SimpleItemTimeLogging) event
+					.getData();
+			if ("summary".equals(event.getFieldName())) {
+				if (ProjectTypeConstants.BUG.equals(itemLogging.getType())) {
+					EventBusFactory.getInstance()
+							.post(new BugEvent.GotoRead(this, itemLogging
+									.getTypeid()));
+				} else if (ProjectTypeConstants.TASK.equals(itemLogging
+						.getType())) {
+					EventBusFactory.getInstance().post(
+							new TaskEvent.GotoRead(this, itemLogging
+									.getTypeid()));
+				} else if (ProjectTypeConstants.RISK.equals(itemLogging
+						.getType())) {
+					EventBusFactory.getInstance().post(
+							new RiskEvent.GotoRead(this, itemLogging
+									.getTypeid()));
+				} else if (ProjectTypeConstants.PROBLEM.equals(itemLogging
+						.getType())) {
+					EventBusFactory.getInstance().post(
+							new ProblemEvent.GotoRead(this, itemLogging
+									.getTypeid()));
+				}
+			} else if ("delete".equals(event.getFieldName())) {
+				ConfirmDialogExt
+						.show(UI.getCurrent(),
+								AppContext.getMessage(
+										GenericI18Enum.DIALOG_DELETE_TITLE,
+										SiteConfiguration.getSiteName()),
+								AppContext
+										.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
+								AppContext
+										.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
+								AppContext
+										.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
+								new ConfirmDialog.Listener() {
+									private static final long serialVersionUID = 1L;
+
+									@Override
+									public void onClose(ConfirmDialog dialog) {
+										if (dialog.isConfirmed()) {
+											ItemTimeLoggingService itemTimeLoggingService = ApplicationContextUtil
+													.getSpringBean(ItemTimeLoggingService.class);
+											itemTimeLoggingService.removeWithSession(
+													itemLogging.getId(),
+													AppContext.getUsername(),
+													AppContext.getAccountId());
+
+											refresh();
+										}
+									}
+								});
+
+			} else if ("edit".equals(event.getFieldName())) {
+				TimeTrackingEditViewWindow timeTrackingEdit = new TimeTrackingEditViewWindow(
+						TimeTrackingListViewImpl.this, itemLogging);
+				UI.getCurrent().addWindow(timeTrackingEdit);
+			}
+		}
+	};
 }
