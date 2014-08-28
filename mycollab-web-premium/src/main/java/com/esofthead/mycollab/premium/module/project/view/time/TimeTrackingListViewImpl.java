@@ -70,8 +70,7 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements
 	private static final String TEXT_BOLD_RIGHT = "<span style=\"float: right; font-weight: bold;\">%s</span>";
 	private static final String TEXT_BOLD_BIG = "<span style=\"font-size:20px;  font-weight: bold; padding-top: 10px;\">%s</span>";
 	private static final List<TableViewField> FIELDS = Arrays.asList(TimeTableFieldDef.summary, TimeTableFieldDef.logUser,
-			TimeTableFieldDef.logValue, TimeTableFieldDef.billable,
-			TimeTableFieldDef.logForDate, TimeTableFieldDef.id);
+			TimeTableFieldDef.logValue, TimeTableFieldDef.billable, TimeTableFieldDef.id);
 
 	private static final long serialVersionUID = 3742030333599796165L;
 
@@ -226,63 +225,55 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements
 		List<SimpleItemTimeLogging> itemTimeLoggingList = itemTimeLoggingService
 				.findPagableListByCriteria(new SearchRequest<ItemTimeLoggingSearchCriteria>(
 						itemTimeLogginSearchCriteria));
-		// TODO
-		Date current = new Date(0), last;
-
-		VerticalLayout layoutTime = new VerticalLayout();
-		TimeTrackingTableDisplay table = new TimeTrackingTableDisplay(
-				FIELDS);
-		table.addTableListener(this.tableClickListener);
-
+		Date current = new Date(0);
 		double billable = 0, nonbillable = 0;
 		List<SimpleItemTimeLogging> list = new ArrayList<SimpleItemTimeLogging>();
+
 		for (SimpleItemTimeLogging itemTimeLogging : itemTimeLoggingList) {
 			if (DateTimeUtils.compareByDate(itemTimeLogging.getLogforday(),
 					current) > 0) {
-				// Show last table
-				last = current;
-				if (list.size() > 0) {
-					this.layoutItem.addComponent(new Label(String.format(
-							TEXT_BOLD_BIG, DATE_FORMAT.format(last)),
-							ContentMode.HTML));
+				showRecord(current, list, billable, nonbillable);
 
-					table.setCurrentDataList(list);
-					this.layoutItem.addComponent(table);
-
-					layoutTime = new VerticalLayout();
-
-					layoutTime.addComponent(new Label(String.format(
-							TEXT_BOLD_RIGHT,
-							("Total Time: " + (billable + nonbillable))),
-							ContentMode.HTML));
-
-					layoutTime.addComponent(new Label(String.format(TEXT_RIGHT,
-							("Billable: " + billable)), ContentMode.HTML));
-
-					layoutTime
-							.addComponent(new Label(String.format(TEXT_RIGHT,
-									("Non Billable: " + nonbillable)),
-									ContentMode.HTML));
-
-					this.layoutItem.addComponent(layoutTime);
-					this.layoutItem.setComponentAlignment(layoutTime,
-							Alignment.MIDDLE_RIGHT);
-				}
-
-				// Create new table
 				current = itemTimeLogging.getLogforday();
 				list.clear();
 				billable = nonbillable = 0;
-
-				table = new TimeTrackingTableDisplay(FIELDS);
-				table.addTableListener(this.tableClickListener);
 			}
 
 			list.add(itemTimeLogging);
-			billable += itemTimeLogging.getIsbillable()
-					? itemTimeLogging.getLogvalue() : 0;
-			nonbillable += !itemTimeLogging.getIsbillable()
-					? itemTimeLogging.getLogvalue() : 0;
+			billable += itemTimeLogging.getIsbillable() ? itemTimeLogging
+					.getLogvalue() : 0;
+			nonbillable += !itemTimeLogging.getIsbillable() ? itemTimeLogging
+					.getLogvalue() : 0;
+		}
+        showRecord(current, list, billable, nonbillable);
+	}
+	
+	private void showRecord(Date date, List<SimpleItemTimeLogging> list,
+			Double billable, Double nonbillable) {
+		if (list.size() > 0) {
+			this.layoutItem.addComponent(new Label(String.format(TEXT_BOLD_BIG,
+					DATE_FORMAT.format(date)), ContentMode.HTML));
+
+			TimeTrackingTableDisplay table = new TimeTrackingTableDisplay(FIELDS);
+			table.addTableListener(this.tableClickListener);
+			table.setCurrentDataList(list);
+			this.layoutItem.addComponent(table);
+
+			VerticalLayout layoutTime = new VerticalLayout();
+
+			layoutTime.addComponent(new Label(String.format(TEXT_BOLD_RIGHT,
+					("Total Time: " + (billable + nonbillable))),
+					ContentMode.HTML));
+
+			layoutTime.addComponent(new Label(String.format(TEXT_RIGHT,
+					("Billable: " + billable)), ContentMode.HTML));
+
+			layoutTime.addComponent(new Label(String.format(TEXT_RIGHT,
+					("Non Billable: " + nonbillable)), ContentMode.HTML));
+
+			this.layoutItem.addComponent(layoutTime);
+			this.layoutItem.setComponentAlignment(layoutTime,
+					Alignment.MIDDLE_RIGHT);
 		}
 	}
 
