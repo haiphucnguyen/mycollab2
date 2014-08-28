@@ -72,6 +72,10 @@ class ProblemEditFormFieldFactory<B extends Problem> extends
 			ratingField.setDescription("Problem level");
 			ratingField.setValueCaption(ProblemAddViewImpl.getValueCaptions()
 					.values().toArray(new String[5]));
+			
+			if (problem.getLevel() != null) {
+				ratingField.setValue(problem.getLevel());
+			}
 
 			ratingField
 					.addValueChangeListener(new Property.ValueChangeListener() {

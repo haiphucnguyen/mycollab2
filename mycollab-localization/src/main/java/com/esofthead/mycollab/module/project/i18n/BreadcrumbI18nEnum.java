@@ -27,6 +27,7 @@ public enum BreadcrumbI18nEnum {
 	MESSAGES,
 	RISKS,
 	PHASES,
+	PAGES,
 	PROBLEMS,
 	TASKS,
 	BUGS,
@@ -78,5 +79,5 @@ public enum BreadcrumbI18nEnum {
 	FRA_ROLE_NEW,
 	FRA_ROLE_READ,
 	FRA_ROLE_EDIT,
-	FRA_NOTIFICATION_SETTING
+	FRA_SETTING
 }

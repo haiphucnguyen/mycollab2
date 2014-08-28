@@ -4,11 +4,11 @@
     <modelVersion>4.0.0</modelVersion>
     <name>mycollab-web</name>
     <artifactId>mycollab-web</artifactId>
-    <version>4.3.3</version>
+    <version>4.4.0</version>
     <parent>
         <groupId>com.esofthead.mycollab</groupId>
         <artifactId>parent-community</artifactId>
-        <version>4.3.3</version>
+        <version>4.4.0</version>
         <relativePath>../mycollab-parent-community/pom.xml</relativePath>
     </parent>
     <packaging>jar</packaging>
@@ -18,68 +18,68 @@
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-core</artifactId>
-            <version>4.3.3</version>
+            <version>4.4.0</version>
         </dependency>
 
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-localization</artifactId>
-            <version>4.3.3</version>
+            <version>4.4.0</version>
         </dependency>
 
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-ui</artifactId>
-            <version>4.3.3</version>
+            <version>4.4.0</version>
         </dependency>
 
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-config</artifactId>
-            <version>4.3.3</version>
+            <version>4.4.0</version>
         </dependency>
 
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-caching</artifactId>
-            <version>4.3.3</version>
+            <version>4.4.0</version>
         </dependency>
 
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-reporting</artifactId>
-            <version>4.3.3</version>
+            <version>4.4.0</version>
         </dependency>
 
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-services</artifactId>
-            <version>4.3.3</version>
+            <version>4.4.0</version>
         </dependency>
 
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-esb</artifactId>
-            <version>4.3.3</version>
+            <version>4.4.0</version>
         </dependency>
 
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-scheduler</artifactId>
-            <version>4.3.3</version>
+            <version>4.4.0</version>
         </dependency>
 
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-test</artifactId>
-            <version>4.3.3</version>
+            <version>4.4.0</version>
             <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-server-runner</artifactId>
-            <version>4.3.3</version>
+            <version>4.4.0</version>
         </dependency>
 
         <dependency>
@@ -133,6 +133,14 @@
             <artifactId>ratingstars</artifactId>
             <version>2.1</version>
         </dependency>
+<!-- 
+        <dependency>
+            <groupId>com.zybnet</groupId>
+            <artifactId>vaadin-autocomplete</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        -->
+
         <dependency>
             <groupId>org.vaadin.addons</groupId>
             <artifactId>dragdroplayouts</artifactId>
@@ -226,7 +234,7 @@
         <dependency>
             <groupId>org.jfree</groupId>
             <artifactId>jfreechart</artifactId>
-            <version>1.0.15</version>
+            <version>1.0.19</version>
         </dependency>
 
         <dependency>
@@ -256,7 +264,7 @@
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi</artifactId>
-            <version>3.9</version>
+            <version>3.10.1</version>
             <exclusions>
                 <exclusion>
                     <groupId>commons-codec</groupId>
@@ -275,13 +283,13 @@
         <dependency>
             <groupId>com.googlecode.ez-vcard</groupId>
             <artifactId>ez-vcard</artifactId>
-            <version>0.8.2</version>
+            <version>0.9.5</version>
         </dependency>
 
         <dependency>
             <groupId>net.sf.opencsv</groupId>
             <artifactId>opencsv</artifactId>
-            <version>2.0</version>
+            <version>2.3</version>
         </dependency>
 
         <dependency>

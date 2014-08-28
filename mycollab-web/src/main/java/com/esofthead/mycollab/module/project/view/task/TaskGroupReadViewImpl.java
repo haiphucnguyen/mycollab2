@@ -42,11 +42,12 @@ import com.esofthead.mycollab.schedule.email.project.ProjectTaskGroupRelayEmailN
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
+import com.esofthead.mycollab.vaadin.mvp.ViewScope;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormContainerHorizontalViewField;
-import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormDetectAndDisplayUrlViewField;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormLinkViewField;
+import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormViewField;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.ProgressPercentageIndicator;
@@ -57,6 +58,7 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UserLink;
 import com.vaadin.server.Sizeable;
 import com.vaadin.shared.ui.MarginInfo;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComponentContainer;
@@ -71,7 +73,7 @@ import com.vaadin.ui.VerticalLayout;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-@ViewComponent
+@ViewComponent(scope=ViewScope.PROTOTYPE)
 public class TaskGroupReadViewImpl extends
 		AbstractPreviewItemComp2<SimpleTaskList> implements TaskGroupReadView {
 	private static final long serialVersionUID = 1L;
@@ -116,14 +118,14 @@ public class TaskGroupReadViewImpl extends
 
 		dateInfoComp = new DateInfoComp();
 		addToSideBar(dateInfoComp);
-		
+
 		peopleInfoComp = new PeopleInfoComp();
 		addToSideBar(peopleInfoComp);
 	}
 
 	@Override
 	protected void onPreviewItem() {
-		commentList.loadComments(beanItem.getId());
+		commentList.loadComments("" + beanItem.getId());
 		historyList.loadHistory(beanItem.getId());
 
 		peopleInfoComp.displayEntryPeople(beanItem);
@@ -344,8 +346,8 @@ public class TaskGroupReadViewImpl extends
 					fieldContainer.addComponentField(progressField);
 					return fieldContainer;
 				} else if (propertyId.equals("description")) {
-					return new FormDetectAndDisplayUrlViewField(
-							beanItem.getDescription());
+					return new FormViewField(beanItem.getDescription(),
+							ContentMode.HTML);
 				} else if (propertyId.equals("numOpenTasks")) {
 					final FormContainerHorizontalViewField fieldContainer = new FormContainerHorizontalViewField();
 					final Label numTaskLbl = new Label("("

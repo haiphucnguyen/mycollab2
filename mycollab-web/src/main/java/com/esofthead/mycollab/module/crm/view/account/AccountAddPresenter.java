@@ -95,7 +95,8 @@ public class AccountAddPresenter extends CrmGenericPresenter<AccountAddView> {
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		if (AppContext.canWrite(RolePermissionCollections.CRM_ACCOUNT)) {
-			CrmToolbar crmToolbar = ViewManager.getView(CrmToolbar.class);
+			CrmToolbar crmToolbar = ViewManager
+					.getCacheComponent(CrmToolbar.class);
 			crmToolbar.gotoItem(AppContext
 					.getMessage(CrmCommonI18nEnum.TOOLBAR_ACCOUNTS_HEADER));
 
@@ -140,20 +141,6 @@ public class AccountAddPresenter extends CrmGenericPresenter<AccountAddView> {
 		account.setSaccountid(AppContext.getAccountId());
 		if (account.getId() == null) {
 			accountService.saveWithSession(account, AppContext.getUsername());
-
-			if (account.getExtraData() != null
-					&& account.getExtraData() instanceof SimpleCampaign) {
-				CampaignAccount assoAccount = new CampaignAccount();
-				assoAccount.setAccountid(account.getId());
-				assoAccount.setCampaignid(((SimpleCampaign) account
-						.getExtraData()).getId());
-				assoAccount.setCreatedtime(new GregorianCalendar().getTime());
-
-				CampaignService campaignService = ApplicationContextUtil
-						.getSpringBean(CampaignService.class);
-				campaignService.saveCampaignAccountRelationship(
-						Arrays.asList(assoAccount), AppContext.getAccountId());
-			}
 		} else {
 			accountService.updateWithSession(account, AppContext.getUsername());
 		}

@@ -49,7 +49,7 @@ public class MyBugListWidget extends BugDisplayWidget {
 
 	public MyBugListWidget() {
 		super(AppContext.getMessage(BugI18nEnum.WIDGET_MY_OPEN_BUGS_TITLE),
-				MyBugRowDisplayHandler.class);
+				true, MyBugRowDisplayHandler.class);
 	}
 
 	public static class MyBugRowDisplayHandler extends
@@ -73,10 +73,9 @@ public class MyBugListWidget extends BugDisplayWidget {
 					ProjectLinkBuilder.generateBugPreviewFullLink(
 							bug.getProjectid(), bug.getId()));
 			defectLink.setWidth("100%");
-			defectLink
-					.setDescription(ProjectTooltipGenerator.generateToolTipBug(
-							AppContext.getUserLocale(), bug,
-							AppContext.getSiteUrl(), AppContext.getTimezoneId()));
+			defectLink.setDescription(ProjectTooltipGenerator
+					.generateToolTipBug(AppContext.getUserLocale(), bug,
+							AppContext.getSiteUrl(), AppContext.getTimezone()));
 
 			if (bug.isOverdue()) {
 				defectLink.addStyleName(UIConstants.LINK_OVERDUE);

@@ -1,4 +1,4 @@
-EB5D0FD66BC13D3FACA0FF15B86ED0B0.cache.js
+73D5B4DC73AA32B491B72CC4BAA14A16.cache.js
 ClientBundle.enableInlining true
 audioElementSupport maybe
 canvasElementSupport maybe
@@ -27,11 +27,11 @@ modernie none
 superdevmode off
 touchEventSupport maybe
 user.agent gecko1_8
-vaadin.profiler true
+vaadin.profiler false
 videoElementSupport maybe
 webApiUsage modern
 
-EB5D0FD66BC13D3FACA0FF15B86ED0B0.cache.js
+73D5B4DC73AA32B491B72CC4BAA14A16.cache.js
 ClientBundle.enableInlining true
 audioElementSupport maybe
 canvasElementSupport maybe
@@ -60,11 +60,11 @@ modernie yes
 superdevmode off
 touchEventSupport maybe
 user.agent gecko1_8
-vaadin.profiler true
+vaadin.profiler false
 videoElementSupport maybe
 webApiUsage modern
 
-EB5D0FD66BC13D3FACA0FF15B86ED0B0.cache.js
+73D5B4DC73AA32B491B72CC4BAA14A16.cache.js
 ClientBundle.enableInlining true
 audioElementSupport maybe
 canvasElementSupport maybe
@@ -93,11 +93,11 @@ modernie none
 superdevmode off
 touchEventSupport maybe
 user.agent ie10
-vaadin.profiler true
+vaadin.profiler false
 videoElementSupport maybe
 webApiUsage modern
 
-EB5D0FD66BC13D3FACA0FF15B86ED0B0.cache.js
+73D5B4DC73AA32B491B72CC4BAA14A16.cache.js
 ClientBundle.enableInlining true
 audioElementSupport no
 canvasElementSupport no
@@ -126,11 +126,11 @@ modernie none
 superdevmode off
 touchEventSupport maybe
 user.agent ie8
-vaadin.profiler true
+vaadin.profiler false
 videoElementSupport no
 webApiUsage modern
 
-EB5D0FD66BC13D3FACA0FF15B86ED0B0.cache.js
+73D5B4DC73AA32B491B72CC4BAA14A16.cache.js
 ClientBundle.enableInlining true
 audioElementSupport maybe
 canvasElementSupport maybe
@@ -159,11 +159,11 @@ modernie none
 superdevmode off
 touchEventSupport maybe
 user.agent ie9
-vaadin.profiler true
+vaadin.profiler false
 videoElementSupport maybe
 webApiUsage modern
 
-EB5D0FD66BC13D3FACA0FF15B86ED0B0.cache.js
+73D5B4DC73AA32B491B72CC4BAA14A16.cache.js
 ClientBundle.enableInlining true
 audioElementSupport maybe
 canvasElementSupport maybe
@@ -192,11 +192,11 @@ modernie none
 superdevmode off
 touchEventSupport maybe
 user.agent opera
-vaadin.profiler true
+vaadin.profiler false
 videoElementSupport maybe
 webApiUsage modern
 
-EB5D0FD66BC13D3FACA0FF15B86ED0B0.cache.js
+73D5B4DC73AA32B491B72CC4BAA14A16.cache.js
 ClientBundle.enableInlining true
 audioElementSupport maybe
 canvasElementSupport maybe
@@ -225,7 +225,7 @@ modernie none
 superdevmode off
 touchEventSupport maybe
 user.agent safari
-vaadin.profiler true
+vaadin.profiler false
 videoElementSupport maybe
 webApiUsage modern
 

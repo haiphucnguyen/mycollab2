@@ -27,9 +27,8 @@ import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
 import com.esofthead.mycollab.module.crm.i18n.ContactI18nEnum;
 import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.vaadin.navigationbarquickmenu.NavigationBarQuickMenu;
 import com.vaadin.addon.touchkit.ui.NavigationButton;
-import com.vaadin.addon.touchkit.ui.Popover;
-import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.VerticalLayout;
 
@@ -45,7 +44,8 @@ public class CaseRelatedContactView extends
 	private CaseWithBLOBs myCase;
 
 	public CaseRelatedContactView() {
-		this.setCaption("Related Contacts");
+		this.setCaption(AppContext
+				.getMessage(ContactI18nEnum.M_TITLE_RELATED_CONTACTS));
 		itemList = new ContactListDisplay();
 		this.setContent(itemList);
 	}
@@ -71,9 +71,8 @@ public class CaseRelatedContactView extends
 
 	@Override
 	protected Component createRightComponent() {
-		final Popover controlBtns = new Popover();
-		controlBtns.setClosable(true);
-		controlBtns.setStyleName("controls-popover");
+		final NavigationBarQuickMenu addContact = new NavigationBarQuickMenu();
+		addContact.setStyleName("add-btn");
 
 		VerticalLayout addBtns = new VerticalLayout();
 		addBtns.setWidth("100%");
@@ -91,7 +90,6 @@ public class CaseRelatedContactView extends
 					@Override
 					public void buttonClick(
 							NavigationButton.NavigationButtonClickEvent arg0) {
-						controlBtns.close();
 						fireNewRelatedItem("");
 					}
 				});
@@ -107,7 +105,6 @@ public class CaseRelatedContactView extends
 					@Override
 					public void buttonClick(
 							NavigationButton.NavigationButtonClickEvent event) {
-						controlBtns.close();
 						CaseContactSelectionView contactSelectionView = new CaseContactSelectionView(
 								CaseRelatedContactView.this);
 						ContactSearchCriteria criteria = new ContactSearchCriteria();
@@ -122,22 +119,8 @@ public class CaseRelatedContactView extends
 				});
 		addBtns.addComponent(selectContact);
 
-		controlBtns.setContent(addBtns);
+		addContact.setContent(addBtns);
 
-		final Button addContact = new Button();
-		addContact.addClickListener(new Button.ClickListener() {
-
-			private static final long serialVersionUID = 5613014658624957253L;
-
-			@Override
-			public void buttonClick(Button.ClickEvent event) {
-				if (!controlBtns.isAttached())
-					controlBtns.showRelativeTo(addContact);
-				else
-					controlBtns.close();
-			}
-		});
-		addContact.setStyleName("add-btn");
 		return addContact;
 	}
 

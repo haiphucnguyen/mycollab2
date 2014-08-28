@@ -20,6 +20,7 @@ import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.user.accountsettings.billing.view.IBillingPresenter;
 import com.esofthead.mycollab.module.user.accountsettings.customize.view.ICustomizePresenter;
 import com.esofthead.mycollab.module.user.accountsettings.localization.AdminI18nEnum;
+import com.esofthead.mycollab.module.user.accountsettings.localization.SettingCommonI18nEnum;
 import com.esofthead.mycollab.module.user.accountsettings.profile.view.ProfilePresenter;
 import com.esofthead.mycollab.module.user.accountsettings.team.view.UserPermissionManagementPresenter;
 import com.esofthead.mycollab.module.user.accountsettings.view.events.ProfileEvent;
@@ -74,7 +75,8 @@ public class AccountModuleImpl extends AbstractCssPageView implements
 		topPanel.setMargin(true);
 		topPanel.setStyleName("top-panel");
 
-		this.breadcrumb = ViewManager.getView(AccountSettingBreadcrumb.class);
+		this.breadcrumb = ViewManager
+				.getCacheComponent(AccountSettingBreadcrumb.class);
 
 		topPanel.addComponent(this.breadcrumb);
 
@@ -107,7 +109,7 @@ public class AccountModuleImpl extends AbstractCssPageView implements
 
 	private Label generateIntroText() {
 		return new Label(
-				"Update your personal and account settings. Please note that all actions can not be undone");
+				AppContext.getMessage(SettingCommonI18nEnum.OPT_ADVER_INFO));
 	}
 
 	private void buildComponents() {
@@ -152,25 +154,25 @@ public class AccountModuleImpl extends AbstractCssPageView implements
 	private ComponentContainer constructAccountSettingsComponent() {
 		this.billingPresenter = PresenterResolver
 				.getPresenter(IBillingPresenter.class);
-		return this.billingPresenter.initView();
+		return this.billingPresenter.getView();
 	}
 
 	private ComponentContainer constructUserInformationComponent() {
 		this.profilePresenter = PresenterResolver
 				.getPresenter(ProfilePresenter.class);
-		return this.profilePresenter.initView();
+		return this.profilePresenter.getView();
 	}
 
 	private ComponentContainer constructUserRoleComponent() {
 		this.userPermissionPresenter = PresenterResolver
 				.getPresenter(UserPermissionManagementPresenter.class);
-		return this.userPermissionPresenter.initView();
+		return this.userPermissionPresenter.getView();
 	}
 
 	private ComponentContainer constructThemeComponent() {
 		this.customizePresenter = PresenterResolver
 				.getPresenter(ICustomizePresenter.class);
-		return this.customizePresenter.initView();
+		return this.customizePresenter.getView();
 	}
 
 	@Override

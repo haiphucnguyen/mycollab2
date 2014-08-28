@@ -63,7 +63,8 @@ public class RiskSearchPanel extends
 		Image titleIcon = new Image(null,
 				MyCollabResource
 						.newResource("icons/22/project/risk_selected.png"));
-		Label headerText = new Label("Risks");
+		Label headerText = new Label(
+				AppContext.getMessage(RiskI18nEnum.VIEW_LIST_TITLE));
 
 		final Button createBtn = new Button(
 				AppContext.getMessage(RiskI18nEnum.BUTTON_NEW_RISK),

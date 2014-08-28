@@ -49,7 +49,7 @@ public class RecentBugUpdateWidget extends BugDisplayWidget {
 
 	public RecentBugUpdateWidget() {
 		super(AppContext.getMessage(BugI18nEnum.WIDGET_UPDATED_RECENTLY_TITLE),
-				RecentBugRowDisplayHandler.class);
+				false, RecentBugRowDisplayHandler.class);
 	}
 
 	@Override
@@ -79,10 +79,9 @@ public class RecentBugUpdateWidget extends BugDisplayWidget {
 					ProjectLinkBuilder.generateBugPreviewFullLink(
 							bug.getProjectid(), bug.getId()));
 			defectLink.setWidth("100%");
-			defectLink
-					.setDescription(ProjectTooltipGenerator.generateToolTipBug(
-							AppContext.getUserLocale(), bug,
-							AppContext.getSiteUrl(), AppContext.getTimezoneId()));
+			defectLink.setDescription(ProjectTooltipGenerator
+					.generateToolTipBug(AppContext.getUserLocale(), bug,
+							AppContext.getSiteUrl(), AppContext.getTimezone()));
 
 			if (bug.isCompleted()) {
 				defectLink.addStyleName(UIConstants.LINK_COMPLETED);

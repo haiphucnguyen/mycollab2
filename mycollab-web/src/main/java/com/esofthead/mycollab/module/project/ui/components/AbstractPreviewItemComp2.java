@@ -67,9 +67,8 @@ public abstract class AbstractPreviewItemComp2<B> extends VerticalLayout
 		ComponentContainer actionControls = createButtonControls();
 		if (actionControls != null) {
 			actionControls.addStyleName("control-buttons");
+			addHeaderRightContent(actionControls);
 		}
-
-		addHeaderRightContent(actionControls);
 
 		CssLayout contentWrapper = new CssLayout();
 		contentWrapper.setStyleName("content-wrapper");
@@ -118,15 +117,18 @@ public abstract class AbstractPreviewItemComp2<B> extends VerticalLayout
 		sidebarContent.removeAllComponents();
 		initRelatedComponents();
 		ComponentContainer bottomPanel = createBottomPanel();
-		if (bottomPanel != null) {
+		addBottomPanel(bottomPanel);
+	}
+
+	protected void addBottomPanel(ComponentContainer container) {
+		if (container != null) {
 			if (bodyContent.getComponentCount() >= 2) {
 				bodyContent.replaceComponent(bodyContent
 						.getComponent(bodyContent.getComponentCount() - 1),
-						bottomPanel);
+						container);
 			} else {
-				bodyContent.addComponent(bottomPanel);
+				bodyContent.addComponent(container);
 			}
-
 		}
 	}
 

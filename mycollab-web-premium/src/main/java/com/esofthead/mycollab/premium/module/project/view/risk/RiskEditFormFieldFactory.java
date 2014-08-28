@@ -22,17 +22,13 @@ import com.vaadin.ui.TextField;
  * 
  * @param <B>
  */
-class RiskEditFormFieldFactory<B extends Risk> extends
-		AbstractBeanFieldGroupEditFieldFactory<B> {
+class RiskEditFormFieldFactory extends
+		AbstractBeanFieldGroupEditFieldFactory<Risk> {
 
 	private static final long serialVersionUID = 1L;
 
-	RiskEditFormFieldFactory(GenericBeanForm<B> form) {
+	RiskEditFormFieldFactory(GenericBeanForm<Risk> form) {
 		super(form);
-	}
-
-	RiskEditFormFieldFactory(GenericBeanForm<B> form, boolean isValidateForm) {
-		super(form, isValidateForm);
 	}
 
 	@Override
@@ -79,6 +75,9 @@ class RiskEditFormFieldFactory<B extends Risk> extends
 			ratingField.setMaxValue(5);
 			ratingField.setImmediate(true);
 			ratingField.setDescription("Risk level");
+			if (risk.getLevel() != null) {
+				ratingField.setValue(risk.getLevel());
+			}
 			ratingField.setValueCaption(RiskAddViewImpl.getValueCaptions()
 					.values().toArray(new String[5]));
 

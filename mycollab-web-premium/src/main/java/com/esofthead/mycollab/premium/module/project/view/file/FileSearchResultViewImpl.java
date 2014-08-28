@@ -6,8 +6,15 @@ import com.esofthead.mycollab.module.file.view.components.FileSearchResultCompon
 import com.esofthead.mycollab.module.project.events.ProjectContentEvent;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
+import com.esofthead.mycollab.vaadin.mvp.ViewScope;
 
-@ViewComponent
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ *
+ */
+@ViewComponent(scope = ViewScope.PROTOTYPE)
 public class FileSearchResultViewImpl extends AbstractPageView implements
 		FileSearchResultView {
 	private static final long serialVersionUID = 1L;

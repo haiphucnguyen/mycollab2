@@ -49,7 +49,7 @@ public class BillingSummaryPresenter extends
 
 		view.loadCurrentPlan();
 		AccountSettingBreadcrumb breadcrumb = ViewManager
-				.getView(AccountSettingBreadcrumb.class);
+				.getCacheComponent(AccountSettingBreadcrumb.class);
 		breadcrumb.gotoBillingPage();
 
 	}

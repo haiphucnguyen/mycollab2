@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.premium.module.project.view.time;
 
+import java.util.TimeZone;
+
 import org.jsoup.Jsoup;
 
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
@@ -23,6 +25,12 @@ import com.esofthead.mycollab.module.tracker.service.VersionService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 4.0.0
+ *
+ */
 public class GenericTaskDetailMapper {
 
 	private String name;
@@ -30,7 +38,7 @@ public class GenericTaskDetailMapper {
 	public GenericTaskDetailMapper(String type, int typeid) {
 
 		int sAccountId = AppContext.getAccountId();
-		String timeZone = AppContext.getSession().getTimezone();
+		TimeZone timeZone = AppContext.getTimezone();
 
 		if (ProjectTypeConstants.TASK_LIST.equals(type)) {
 			ProjectTaskListService service = ApplicationContextUtil
@@ -90,7 +98,9 @@ public class GenericTaskDetailMapper {
 			if (standup != null) {
 				name = Jsoup.parse(
 						DateTimeUtils.converToStringWithUserTimeZone(
-								standup.getCreatedtime(), timeZone)).html();
+								standup.getCreatedtime(),
+								AppContext.getUserDateTimeFormat(), timeZone))
+						.html();
 			}
 		}
 	}

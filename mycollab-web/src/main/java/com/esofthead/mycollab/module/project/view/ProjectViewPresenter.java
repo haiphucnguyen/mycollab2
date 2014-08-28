@@ -24,11 +24,13 @@ import com.esofthead.mycollab.module.project.view.bug.TrackerPresenter;
 import com.esofthead.mycollab.module.project.view.file.IFilePresenter;
 import com.esofthead.mycollab.module.project.view.message.MessagePresenter;
 import com.esofthead.mycollab.module.project.view.milestone.MilestonePresenter;
+import com.esofthead.mycollab.module.project.view.page.PagePresenter;
 import com.esofthead.mycollab.module.project.view.parameters.BugScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.ComponentScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.FileScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.MessageScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.MilestoneScreenData;
+import com.esofthead.mycollab.module.project.view.parameters.PageScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.ProblemScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectMemberScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectRoleScreenData;
@@ -55,7 +57,6 @@ import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.ui.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
 
 /**
@@ -76,17 +77,16 @@ public class ProjectViewPresenter extends AbstractPresenter<ProjectView> {
 	public void onGo(ComponentContainer container, ScreenData<?> data) {
 		ProjectModule prjContainer = (ProjectModule) container;
 		prjContainer.removeAllComponents();
-		prjContainer.addComponent((Component) view);
-		prjContainer.setComponentAlignment((Component) view,
-				Alignment.TOP_CENTER);
+		prjContainer.addComponent(view);
+		prjContainer.setComponentAlignment(view, Alignment.TOP_CENTER);
 
 		if (data == null) {
 			// do nothing
 		}
 		if (data.getParams() instanceof Integer) {
-			ProjectService projectService = (ProjectService) ApplicationContextUtil
+			ProjectService projectService = ApplicationContextUtil
 					.getSpringBean(ProjectService.class);
-			SimpleProject project = (SimpleProject) projectService.findById(
+			SimpleProject project = projectService.findById(
 					(Integer) data.getParams(), AppContext.getAccountId());
 
 			if (project == null) {
@@ -121,6 +121,10 @@ public class ProjectViewPresenter extends AbstractPresenter<ProjectView> {
 				MessageScreenData.Read.class, MessageScreenData.Search.class)) {
 			presenter = PresenterResolver.getPresenter(MessagePresenter.class);
 		} else if (ClassUtils.instanceOf(pageAction,
+				PageScreenData.Search.class, PageScreenData.Add.class,
+				PageScreenData.Read.class, PageScreenData.Edit.class)) {
+			presenter = PresenterResolver.getPresenter(PagePresenter.class);
+		} else if (ClassUtils.instanceOf(pageAction,
 				ProblemScreenData.Read.class, ProblemScreenData.Search.class,
 				ProblemScreenData.Add.class, ProblemScreenData.Edit.class)) {
 			presenter = PresenterResolver.getPresenter(IProblemPresenter.class);
@@ -153,7 +157,7 @@ public class ProjectViewPresenter extends AbstractPresenter<ProjectView> {
 				ProjectRoleScreenData.Search.class,
 				ProjectRoleScreenData.Add.class,
 				ProjectRoleScreenData.Read.class,
-				ProjectSettingScreenData.ViewNotification.class)) {
+				ProjectSettingScreenData.ViewSettings.class)) {
 			presenter = PresenterResolver
 					.getPresenter(UserSettingPresenter.class);
 		} else if (ClassUtils.instanceOf(pageAction,

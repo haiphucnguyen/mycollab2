@@ -17,11 +17,14 @@
 package com.esofthead.mycollab.premium.module.project.view.problem;
 
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.events.ProblemEvent;
 import com.esofthead.mycollab.module.project.i18n.ProblemI18nEnum;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
+import com.esofthead.mycollab.vaadin.mvp.ViewScope;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.server.Sizeable;
@@ -40,7 +43,7 @@ import com.vaadin.ui.VerticalLayout;
  * 
  */
 
-@ViewComponent
+@ViewComponent(scope=ViewScope.PROTOTYPE)
 public class ProblemListNoItemView extends AbstractPageView {
 	private static final long serialVersionUID = -5309904764815118311L;
 
@@ -77,6 +80,8 @@ public class ProblemListNoItemView extends AbstractPageView {
 								new ProblemEvent.GotoAdd(this, null));
 					}
 				});
+		createProblemBtn.setEnabled(CurrentProjectVariables
+				.canWrite(ProjectRolePermissionCollections.PROBLEMS));
 
 		HorizontalLayout links = new HorizontalLayout();
 

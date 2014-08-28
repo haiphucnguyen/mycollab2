@@ -27,9 +27,8 @@ import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.esofthead.mycollab.module.crm.i18n.AccountI18nEnum;
 import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.vaadin.navigationbarquickmenu.NavigationBarQuickMenu;
 import com.vaadin.addon.touchkit.ui.NavigationButton;
-import com.vaadin.addon.touchkit.ui.Popover;
-import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.VerticalLayout;
 
@@ -47,7 +46,8 @@ public class CampaignRelatedAccountView extends
 	public CampaignRelatedAccountView() {
 		super();
 
-		setCaption("Related Accounts");
+		setCaption(AppContext
+				.getMessage(AccountI18nEnum.M_TITLE_RELATED_ACCOUNTS));
 		this.itemList = new AccountListDisplay();
 		this.setContent(itemList);
 	}
@@ -73,9 +73,8 @@ public class CampaignRelatedAccountView extends
 
 	@Override
 	protected Component createRightComponent() {
-		final Popover controlBtns = new Popover();
-		controlBtns.setClosable(true);
-		controlBtns.setStyleName("controls-popover");
+		final NavigationBarQuickMenu addAccount = new NavigationBarQuickMenu();
+		addAccount.setStyleName("add-btn");
 
 		VerticalLayout addButtons = new VerticalLayout();
 		addButtons.setSpacing(true);
@@ -93,7 +92,6 @@ public class CampaignRelatedAccountView extends
 					@Override
 					public void buttonClick(
 							NavigationButton.NavigationButtonClickEvent arg0) {
-						controlBtns.close();
 						fireNewRelatedItem("");
 					}
 				});
@@ -109,7 +107,6 @@ public class CampaignRelatedAccountView extends
 					@Override
 					public void buttonClick(
 							NavigationButton.NavigationButtonClickEvent event) {
-						controlBtns.close();
 						CampaignAccountSelectionView accountSelectionView = new CampaignAccountSelectionView(
 								CampaignRelatedAccountView.this);
 						AccountSearchCriteria criteria = new AccountSearchCriteria();
@@ -124,21 +121,7 @@ public class CampaignRelatedAccountView extends
 				});
 		addButtons.addComponent(selectAccount);
 
-		controlBtns.setContent(addButtons);
-
-		final Button addAccount = new Button();
-		addAccount.addClickListener(new Button.ClickListener() {
-
-			@Override
-			public void buttonClick(Button.ClickEvent event) {
-				if (!controlBtns.isAttached())
-					controlBtns.showRelativeTo(addAccount);
-				else
-					controlBtns.close();
-
-			}
-		});
-		addAccount.setStyleName("add-btn");
+		addAccount.setContent(addButtons);
 
 		return addAccount;
 	}

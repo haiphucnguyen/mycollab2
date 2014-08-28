@@ -11,8 +11,11 @@
 	<replace-with class="com.esofthead.vaadin.mobilecomponent.client.VMobileNavigationBar">
 		<when-type-is class="com.vaadin.addon.touchkit.gwt.client.ui.VNavigationBar" />
 	</replace-with>
-
-	<!-- Widget styles in public -directory -->
-	<stylesheet src="mobilecomponent/mobilecomponent.css"/>
+	
+	<replace-with class="com.esofthead.vaadin.mobilecomponent.client.ui.TouchScrollHandlerExt">
+        <when-type-is class="com.vaadin.client.ui.TouchScrollDelegate.TouchScrollHandler" />
+    </replace-with>
+    
+    <stylesheet src="mobilecomponent/mobilecomponent.css"></stylesheet>
 
 </module>

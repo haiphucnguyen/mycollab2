@@ -252,7 +252,8 @@
 	    			.edit-btn, .save-btn {
 	    				border: 1px solid #2482c2; 
 		   				color: rgb(255, 255, 255);
-		   				padding-top: 0.5rem;
+		   				padding: 0.4rem 1.2rem 0rem;
+		   				border-radius: 0.3rem;
 		   				font-size: 1.3rem;
 		   				height: 2.8rem;
 		   				line-height: normal;
@@ -260,6 +261,9 @@
 		   				.v-button-wrap {
 		   					padding: 0 12px;
 		   				}
+	    			}
+	    			.save-btn {
+	    				padding: 0.5rem 0 0;
 	    			}
 	    			.add-btn {
 	    			
@@ -273,8 +277,9 @@
 	    					}
 	    				}
     					
-    					.v-button-caption {
+    					&.v-navbar-quickmenu-button {
 	    					@include icomoon;
+	    					padding: 0px 1.2rem;
 	    					
 	    					&:before {
 								content: "\e60e";
@@ -319,29 +324,26 @@
 	    }
 	}
 	
-	/* Controls Popover */
-	.controls-popover {
-		top: 4rem !important;
-		
-		.v-window-contents {
-			background-color: #252c34;
+	/* Controls QuickMenu */
+	.v-navbar-quickmenu-content {
+		width: 100%;
+		background-color: #252c34;
 			
-			.v-button {
-				background-color: #515a62;
-				color: #FFFFFF;
-				
-				.v-button-wrap {
-					padding: 5px 0px;
-				}
-			}
+		.v-button {
+			background-color: #515a62;
+			color: #FFFFFF;
 			
-			.v-touchkit-navbutton {
-				background-color: #515a62;
-				color: #FFFFFF;
+			.v-button-wrap {
 				padding: 5px 0px;
-				border-radius: 3px;
-				text-align: center;
 			}
+		}
+		
+		.v-touchkit-navbutton {
+			background-color: #515a62;
+			color: #FFFFFF;
+			padding: 5px 0px;
+			border-radius: 3px;
+			text-align: center;
 		}
 	}
 	
@@ -368,7 +370,7 @@
 			margin: 0px;
 			
 			.v-button-wrap {
-				padding: 10px 27px 10px 14px;
+				padding: 1rem 2.7rem 1rem 1.4rem;
 				word-wrap: break-word;
 				white-space: normal;
 				border-bottom: 1px solid #DDDDDD;
@@ -394,10 +396,10 @@
 						font-family: "icomoon";
 						color: #49A3E1;
 						position: absolute;
-						right: 20px;
+						right: 2rem;
 						display: inline-block;
-						font-size: 16px;
-						line-height: 16px;
+						font-size: 1.6rem;
+						line-height: 1.6rem;
 					}
 				}
 			}			
@@ -409,8 +411,8 @@
 		background-color: #F3F1F0;
 		
 		.v-label {
-			font-size: 1.3rem;
-			line-height: 1.8rem;
+			font-size: 1.5rem;
+			line-height: 2rem;
 			
 			&.h2 {
 				font-size: 1.2rem;
@@ -429,13 +431,13 @@
 				
 				&.v-horizontallayout{
 					&.v-margin-top {
-						padding-top: 13px;
+						padding-top: 1.3rem;
 					}
 					&.v-margin-bottom {
-						padding-bottom: 13px;
+						padding-bottom: 1.3rem;
 					}
 					&.v-margin-left {
-						padding-left: 0px;
+						padding-left: 0rem;
 					}
 				}
 			}
@@ -449,8 +451,8 @@
 			.gridform-field {
 				color: #8C8C8C;
 				.v-label {
-					line-height: 1.8rem;
-					font-size: 1.4rem;
+					line-height: 2rem;
+					font-size: 1.5rem;
 					&:after {
 						content: "";
 						position: relative;
@@ -472,8 +474,8 @@
 				.v-button-caption {
 					vertical-align: middle;
 					padding-left: 3px;
-					font-size: 1.4rem;
-					line-height: 1.8rem;
+					font-size: 1.5rem;
+					line-height: 2rem;
 				}
 			}
 		}
@@ -483,11 +485,11 @@
 	
 	.editview-layout {
 		.v-caption {
-			font-size: 1.3rem;
+			font-size: 1.5rem;
 			
 			.v-required-field-indicator {
 				font-size: 1.3rem;
-				line-height: 1.8rem;
+				line-height: 2rem;
 			}
 		}
 		input.v-textfield, .v-filterselect, .v-textarea {
@@ -497,6 +499,7 @@
 			border-radius: 0px;
 			padding: 0px 1px;
 			vertical-align: top;
+			margin: 0px;
 		}
 			
 		.v-filterselect-button {
@@ -513,7 +516,7 @@
 			
 			select.v-select-select {
 				@include editform-field;
-				min-height: 1.8rem;
+				min-height: 2rem;
 				
 				option {
 					padding: 0px;
@@ -527,7 +530,7 @@
 			}
 		}
 		.v-datefield.v-datefield-popupcalendar {
-			font-size: 1.4rem;
+			font-size: 1.5rem;
 			
 			input.v-textfield.v-datefield-textfield {
 				border: none;
@@ -540,7 +543,7 @@
 		.v-touchkit-datepicker .v-select-select {
 			@include editform-field;
 			
-			min-height: 1.8rem;
+			min-height: 2rem;
 		}
 		
 		.v-touchkit-navbutton.combo-box {
@@ -565,16 +568,16 @@
 	/* Filterselect */
 	.v-filterselect {
 		overflow: hidden;
-		padding-right: 16px;
+		padding-right: 1.6rem;
 		
 		.v-icon {
-			height: 16px;
+			height: 1.6rem;
 			position: relative;
 			vertical-align: middle;
 		}
 		
 		.v-filterselect-input {
-			height: 16px;
+			height: 1.6rem;
 			vertical-align: middle;
 			box-sizing: border-box;
 			-moz-box-sizing: border-box;
@@ -582,13 +585,13 @@
 			position: relative;
 		}
 		.v-icon + .v-filterselect-input {
-			padding-left: 18px;
-			margin-left: -16px;
+			padding-left: 1.8rem;
+			margin-left: -1.6rem;
 		}
 		.v-filterselect-button {
-			height: 16px;
-			width: 16px;
-			margin-right: -16px;
+			height: 1.6rem;
+			width: 1.6rem;
+			margin-right: -1.6rem;
 			position: relative;
 			display: inline-block;
 			vertical-align: middle;
@@ -627,13 +630,13 @@
         cursor: pointer;
         
         &.big-btn {
-	        font-size: 15px;
+	        font-size: 1.5rem;
 	
 	        .v-button-wrap {
-	            padding: 10px 0px;
+	            padding: 1rem 0rem;
 	
 	            .v-button-caption {
-	                font-size: 15px;
+	                font-size: 1.5rem;
 	            }
 	        }
 	    }
@@ -675,10 +678,6 @@
         border-radius: 4px;
         border: 1px solid #c7c7c7;
         outline: none;
-        
-        &.v-textfield-focus {
-	        box-shadow: 0px 0px 3px 1px #49a3e1;
-	    }
     }
     
     /* Confirm Dialog */

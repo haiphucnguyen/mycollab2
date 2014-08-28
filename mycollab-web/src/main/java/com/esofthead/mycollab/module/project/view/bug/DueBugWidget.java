@@ -48,7 +48,7 @@ public class DueBugWidget extends BugDisplayWidget {
 	private static final long serialVersionUID = 1L;
 
 	public DueBugWidget() {
-		super(AppContext.getMessage(BugI18nEnum.WIDGET_DUE_BUGS_TITLE),
+		super(AppContext.getMessage(BugI18nEnum.WIDGET_DUE_BUGS_TITLE), true,
 				DueBugRowDisplayHandler.class);
 	}
 
@@ -77,10 +77,9 @@ public class DueBugWidget extends BugDisplayWidget {
 					ProjectLinkBuilder.generateBugPreviewFullLink(
 							bug.getProjectid(), bug.getId()));
 			defectLink.setWidth("100%");
-			defectLink
-					.setDescription(ProjectTooltipGenerator.generateToolTipBug(
-							AppContext.getUserLocale(), bug,
-							AppContext.getSiteUrl(), AppContext.getTimezoneId()));
+			defectLink.setDescription(ProjectTooltipGenerator
+					.generateToolTipBug(AppContext.getUserLocale(), bug,
+							AppContext.getSiteUrl(), AppContext.getTimezone()));
 
 			if (bug.isOverdue()) {
 				defectLink.addStyleName(UIConstants.LINK_OVERDUE);

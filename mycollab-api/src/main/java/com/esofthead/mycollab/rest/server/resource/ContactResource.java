@@ -11,6 +11,12 @@ import org.jboss.resteasy.annotations.Form;
 
 import com.esofthead.mycollab.rest.server.domain.ContactForm;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ *
+ */
 @Path("/contact-us")
 public interface ContactResource {
 	@POST

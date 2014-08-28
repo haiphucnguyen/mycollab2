@@ -27,6 +27,12 @@ import org.jboss.resteasy.annotations.Form;
 
 import com.esofthead.mycollab.rest.server.domain.SignupForm;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ *
+ */
 @Path("/account")
 public interface AccountResource {
 	@POST

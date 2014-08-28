@@ -167,7 +167,7 @@ public class RiskReadPresenter extends AbstractPresenter<RiskReadView> {
 					view.previewItem(risk);
 
 					ProjectBreadcrumb breadCrumb = ViewManager
-							.getView(ProjectBreadcrumb.class);
+							.getCacheComponent(ProjectBreadcrumb.class);
 					breadCrumb.gotoRiskRead(risk);
 				} else {
 					NotificationUtil.showRecordNotExistNotification();

@@ -90,6 +90,7 @@ class ItemTimeLoggingSearchPanel extends
 			createBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 			createBtn.setIcon(MyCollabResource
 					.newResource("icons/16/project/add_time.png"));
+			createBtn.setEnabled(!CurrentProjectVariables.isProjectArchived());
 			createBtn.addStyleName("v-button-caption-bool");
 
 			HorizontalLayout header = new HorizontalLayout();
@@ -122,7 +123,7 @@ class ItemTimeLoggingSearchPanel extends
 
 			this.dateRangeField = (DateRangeField) gridLayout.addComponent(
 					new DateRangeField(), null, 0, 0);
-			this.dateRangeField.setDateFormat(AppContext.getDateFormat());
+			this.dateRangeField.setDateFormat(AppContext.getUserDateFormat());
 
 			this.userField = (ProjectMemberListSelect) gridLayout.addComponent(
 					new ProjectMemberListSelect(), "User", 1, 0);

@@ -52,9 +52,9 @@ import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
-import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.shared.ui.combobox.FilteringMode;
 import com.vaadin.ui.AbstractSelect.ItemCaptionMode;
 import com.vaadin.ui.Alignment;
@@ -153,24 +153,6 @@ public class ProjectMemberInviteViewImpl extends AbstractPageView implements
 		final HorizontalLayout controlButtons = new HorizontalLayout();
 		controlButtons.setSpacing(true);
 
-		Button inviteBtn = new Button(
-				AppContext.getMessage(ProjectMemberI18nEnum.BUTTON_NEW_INVITEE),
-				new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
-
-					@Override
-					public void buttonClick(ClickEvent event) {
-						roleId = (Integer) roleComboBox.getValue();
-						ProjectMemberInviteViewImpl.this.fireEvent(new ViewEvent<InviteProjectMembers>(
-								ProjectMemberInviteViewImpl.this,
-								new InviteProjectMembers(inviteEmails, roleId,
-										messageArea.getValue())));
-
-					}
-				});
-		inviteBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
-		controlButtons.addComponent(inviteBtn);
-
 		Button cancelBtn = new Button(
 				AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL_LABEL),
 				new Button.ClickListener() {
@@ -189,6 +171,24 @@ public class ProjectMemberInviteViewImpl extends AbstractPageView implements
 				});
 		cancelBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
 		controlButtons.addComponent(cancelBtn);
+
+		Button inviteBtn = new Button(
+				AppContext.getMessage(ProjectMemberI18nEnum.BUTTON_NEW_INVITEE),
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void buttonClick(ClickEvent event) {
+						roleId = (Integer) roleComboBox.getValue();
+						ProjectMemberInviteViewImpl.this.fireEvent(new ViewEvent<InviteProjectMembers>(
+								ProjectMemberInviteViewImpl.this,
+								new InviteProjectMembers(inviteEmails, roleId,
+										messageArea.getValue())));
+
+					}
+				});
+		inviteBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+		controlButtons.addComponent(inviteBtn);
 
 		controlButtons.setSizeUndefined();
 		return controlButtons;
@@ -267,12 +267,15 @@ public class ProjectMemberInviteViewImpl extends AbstractPageView implements
 							CurrentProjectVariables.getProjectId(),
 							AppContext.getAccountId());
 
-			BeanItemContainer<SimpleUser> dsContainer = new BeanItemContainer<SimpleUser>(
-					SimpleUser.class, users);
-			this.setContainerDataSource(dsContainer);
-
-			this.setTokenCaptionMode(ItemCaptionMode.PROPERTY);
-			this.setTokenCaptionPropertyId("displayName");
+			this.setTokenCaptionMode(ItemCaptionMode.EXPLICIT);
+			for (SimpleUser user : users) {
+				this.cb.addItem(user);
+				this.cb.setItemCaption(user, user.getDisplayName());
+				this.cb.setItemIcon(
+						user,
+						UserAvatarControlFactory.createAvatarResource(
+								user.getAvatarid(), 16));
+			}
 		}
 
 		@Override

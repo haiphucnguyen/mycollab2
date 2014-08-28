@@ -30,10 +30,14 @@ import com.vaadin.ui.Component;
 public interface ProjectView extends PageView {
 
 	void initView(SimpleProject project);
+	
+	void updateProjectFeatures();
 
 	void gotoUsersAndGroup(ScreenData<?> data);
 
 	void gotoMilestoneView(ScreenData<?> data);
+	
+	void gotoPageView(ScreenData<?> data);
 
 	void gotoStandupReportView(ScreenData<?> data);
 

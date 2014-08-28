@@ -963,18 +963,6 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements
 		final ToggleButtonGroup exampleToggleBtn = new ToggleButtonGroup();
 		toggleBtnPanel.addComponent(exampleToggleBtn);
 
-		// Button.ClickListener toggleListener = new Button.ClickListener() {
-		// private static final long serialVersionUID = -4588278785150734304L;
-		//
-		// @Override
-		// public void buttonClick(ClickEvent event) {
-		// Iterator<Component> iterator = exampleToggleBtn.iterator();
-		// while (iterator.hasNext()) {
-		// iterator.next().removeStyleName(UIConstants.BTN_ACTIVE);
-		// }
-		// event.getButton().addStyleName(UIConstants.BTN_ACTIVE);
-		// }
-		// };
 		Button firstBtn = new Button("Button 1");
 		firstBtn.addStyleName(UIConstants.BTN_ACTIVE);
 		exampleToggleBtn.addButton(firstBtn);

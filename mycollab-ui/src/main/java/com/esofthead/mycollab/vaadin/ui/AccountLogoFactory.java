@@ -38,11 +38,6 @@ public class AccountLogoFactory {
 
 	}
 
-	public static String getLogoLink(String logoId, int size) {
-		return SiteConfiguration.getStorageConfiguration().generateAvatarPath(
-				logoId, size);
-	}
-
 	public static Resource createLogoResource(String logoId, int size) {
 		Resource logoRes = null;
 
@@ -62,7 +57,7 @@ public class AccountLogoFactory {
 
 		} else if (SiteConfiguration.isSupportS3Storage()) {
 			logoRes = new ExternalResource(SiteConfiguration
-					.getStorageConfiguration().generateLogoPath(logoId, size));
+					.getStorageConfiguration().getLogoPath(logoId, size));
 		}
 
 		return logoRes;

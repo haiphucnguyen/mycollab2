@@ -54,6 +54,7 @@ import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
+import com.esofthead.mycollab.vaadin.mvp.ViewScope;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanPagedList.RowDisplayHandler;
 import com.esofthead.mycollab.vaadin.ui.AttachmentPanel;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
@@ -91,7 +92,7 @@ import com.vaadin.ui.VerticalLayout;
  * @since 1.0
  * 
  */
-@ViewComponent
+@ViewComponent(scope=ViewScope.PROTOTYPE)
 public class MessageListViewImpl extends AbstractPageView implements
 		MessageListView, HasEditFormHandlers<Message> {
 
@@ -665,9 +666,10 @@ public class MessageListViewImpl extends AbstractPageView implements
 							MessageListViewImpl.this.createAddMessageLayout();
 						}
 					});
+			createMessageBtn.setEnabled(CurrentProjectVariables
+					.canWrite(ProjectRolePermissionCollections.MESSAGES));
 
 			HorizontalLayout links = new HorizontalLayout();
-
 			links.addComponent(createMessageBtn);
 			createMessageBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
 			links.setSpacing(true);

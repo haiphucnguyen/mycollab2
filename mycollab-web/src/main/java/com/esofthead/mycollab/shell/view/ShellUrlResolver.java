@@ -20,7 +20,7 @@ import com.esofthead.mycollab.module.crm.view.CrmUrlResolver;
 import com.esofthead.mycollab.module.file.view.FileUrlResolver;
 import com.esofthead.mycollab.module.project.view.ProjectUrlResolver;
 import com.esofthead.mycollab.module.user.accountsettings.view.AccountUrlResolver;
-import com.esofthead.mycollab.vaadin.desktop.ui.UrlResolver;
+import com.esofthead.mycollab.vaadin.mvp.UrlResolver;
 
 /**
  * 
@@ -35,6 +35,13 @@ public class ShellUrlResolver extends UrlResolver {
 		this.addSubResolver("project", new ProjectUrlResolver().build());
 		this.addSubResolver("account", new AccountUrlResolver().build());
 		this.addSubResolver("document", new FileUrlResolver().build());
+	}
+
+	public void navigateByFragement(String fragement) {
+		if (fragement != null && fragement.length() > 0) {
+			String[] tokens = fragement.split("/");
+			this.handle(tokens);
+		}
 	}
 
 	@Override

@@ -24,6 +24,7 @@ import com.esofthead.mycollab.schedule.email.project.ProjectRiskRelayEmailNotifi
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
+import com.esofthead.mycollab.vaadin.mvp.ViewScope;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormDetectAndDisplayUrlViewField;
@@ -49,7 +50,7 @@ import com.vaadin.ui.VerticalLayout;
  * @since 1.0
  * 
  */
-@ViewComponent
+@ViewComponent(scope = ViewScope.PROTOTYPE)
 public class RiskReadViewImpl extends AbstractPreviewItemComp2<SimpleRisk>
 		implements RiskReadView {
 
@@ -110,7 +111,7 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp2<SimpleRisk>
 			addLayoutStyleName(UIConstants.LINK_COMPLETED);
 		}
 
-		commentDisplay.loadComments(beanItem.getId());
+		commentDisplay.loadComments("" + beanItem.getId());
 		historyList.loadHistory(beanItem.getId());
 
 		dateInfoComp.displayEntryDateTime(beanItem);

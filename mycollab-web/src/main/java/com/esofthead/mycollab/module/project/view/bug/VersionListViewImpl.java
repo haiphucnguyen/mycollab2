@@ -23,6 +23,7 @@ import java.util.GregorianCalendar;
 
 import com.esofthead.mycollab.common.TableViewField;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
+import com.esofthead.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.LabelLink;
 import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
@@ -42,6 +43,7 @@ import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
 import com.esofthead.mycollab.vaadin.events.MassItemActionHandler;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
+import com.esofthead.mycollab.vaadin.mvp.ViewScope;
 import com.esofthead.mycollab.vaadin.ui.CheckBoxDecor;
 import com.esofthead.mycollab.vaadin.ui.DefaultMassItemActionHandlersContainer;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
@@ -66,7 +68,7 @@ import com.vaadin.ui.VerticalLayout;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-@ViewComponent
+@ViewComponent(scope = ViewScope.PROTOTYPE)
 public class VersionListViewImpl extends AbstractPageView implements
 		VersionListView {
 
@@ -148,7 +150,8 @@ public class VersionListViewImpl extends AbstractPageView implements
 										bugVersion.getProjectid(),
 										bugVersion.getId()));
 						if (bugVersion.getStatus() != null
-								&& bugVersion.getStatus().equals("Close")) {
+								&& bugVersion.getStatus().equals(
+										StatusI18nEnum.Closed.name())) {
 							b.addStyleName(UIConstants.LINK_COMPLETED);
 						} else if (bugVersion.getDuedate() != null
 								&& (bugVersion.getDuedate()
@@ -160,7 +163,7 @@ public class VersionListViewImpl extends AbstractPageView implements
 								.generateToolTipVersion(
 										AppContext.getUserLocale(), bugVersion,
 										AppContext.getSiteUrl(),
-										AppContext.getTimezoneId()));
+										AppContext.getTimezone()));
 						return b;
 
 					}

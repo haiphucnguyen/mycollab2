@@ -27,9 +27,8 @@ import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
 import com.esofthead.mycollab.module.crm.i18n.OpportunityI18nEnum;
 import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.vaadin.navigationbarquickmenu.NavigationBarQuickMenu;
 import com.vaadin.addon.touchkit.ui.NavigationButton;
-import com.vaadin.addon.touchkit.ui.Popover;
-import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.VerticalLayout;
 
@@ -49,7 +48,8 @@ public class ContactRelatedOpportunityView extends
 	}
 
 	private void initUI() {
-		this.setCaption("Related Opportunities");
+		this.setCaption(AppContext
+				.getMessage(OpportunityI18nEnum.M_TITLE_RELATED_OPPORTUNITIES));
 		itemList = new OpportunityListDisplay();
 		this.setContent(itemList);
 	}
@@ -75,9 +75,8 @@ public class ContactRelatedOpportunityView extends
 
 	@Override
 	protected Component createRightComponent() {
-		final Popover controlBtns = new Popover();
-		controlBtns.setStyleName("controls-popover");
-		controlBtns.setClosable(true);
+		final NavigationBarQuickMenu addOpportunity = new NavigationBarQuickMenu();
+		addOpportunity.setStyleName("add-btn");
 
 		VerticalLayout addBtns = new VerticalLayout();
 		addBtns.setStyleName("edit-btn-layout");
@@ -95,7 +94,6 @@ public class ContactRelatedOpportunityView extends
 					@Override
 					public void buttonClick(
 							NavigationButton.NavigationButtonClickEvent event) {
-						controlBtns.close();
 						fireNewRelatedItem("");
 					}
 				});
@@ -111,7 +109,6 @@ public class ContactRelatedOpportunityView extends
 					@Override
 					public void buttonClick(
 							NavigationButton.NavigationButtonClickEvent event) {
-						controlBtns.close();
 						ContactOpportunitySelectionView opportunitySelectionView = new ContactOpportunitySelectionView(
 								ContactRelatedOpportunityView.this);
 						OpportunitySearchCriteria criteria = new OpportunitySearchCriteria();
@@ -126,22 +123,8 @@ public class ContactRelatedOpportunityView extends
 				});
 		addBtns.addComponent(selectOpportunity);
 
-		controlBtns.setContent(addBtns);
+		addOpportunity.setContent(addBtns);
 
-		final Button addOpportunity = new Button();
-		addOpportunity.addClickListener(new Button.ClickListener() {
-
-			private static final long serialVersionUID = -7867472804987706563L;
-
-			@Override
-			public void buttonClick(Button.ClickEvent event) {
-				if (!controlBtns.isAttached())
-					controlBtns.showRelativeTo(addOpportunity);
-				else
-					controlBtns.close();
-			}
-		});
-		addOpportunity.setStyleName("add-btn");
 		return addOpportunity;
 	}
 

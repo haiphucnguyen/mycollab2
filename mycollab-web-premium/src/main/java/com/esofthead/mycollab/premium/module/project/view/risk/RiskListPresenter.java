@@ -98,7 +98,7 @@ public class RiskListPresenter
 			}
 
 			ProjectBreadcrumb breadCrumb = ViewManager
-					.getView(ProjectBreadcrumb.class);
+					.getCacheComponent(ProjectBreadcrumb.class);
 			breadCrumb.gotoRiskList();
 		} else {
 			NotificationUtil.showMessagePermissionAlert();

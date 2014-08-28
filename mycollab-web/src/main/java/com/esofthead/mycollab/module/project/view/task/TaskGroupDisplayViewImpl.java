@@ -20,6 +20,7 @@ import org.vaadin.hene.popupbutton.PopupButton;
 
 import com.esofthead.mycollab.common.i18n.FileI18nEnum;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
+import com.esofthead.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
@@ -47,6 +48,7 @@ import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.mvp.AbstractLazyPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
+import com.esofthead.mycollab.vaadin.mvp.ViewScope;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.ToggleButtonGroup;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -70,7 +72,7 @@ import com.vaadin.ui.VerticalLayout;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-@ViewComponent
+@ViewComponent(scope = ViewScope.PROTOTYPE)
 public class TaskGroupDisplayViewImpl extends AbstractLazyPageView implements
 		TaskGroupDisplayView {
 	private static final long serialVersionUID = 1L;
@@ -349,15 +351,11 @@ public class TaskGroupDisplayViewImpl extends AbstractLazyPageView implements
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				advanceDisplay.addStyleName(UIConstants.BTN_ACTIVE);
-				simpleDisplay.removeStyleName(UIConstants.BTN_ACTIVE);
-				chartDisplay.removeStyleName(UIConstants.BTN_ACTIVE);
 				displayAdvancedView();
 			}
 		});
 		advanceDisplay.setIcon(MyCollabResource
 				.newResource("icons/16/project/advanced_display.png"));
-		advanceDisplay.addStyleName(UIConstants.BTN_ACTIVE);
 		advanceDisplay.setDescription(AppContext
 				.getMessage(TaskGroupI18nEnum.ADVANCED_VIEW_TOOLTIP));
 
@@ -366,9 +364,6 @@ public class TaskGroupDisplayViewImpl extends AbstractLazyPageView implements
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				advanceDisplay.removeStyleName(UIConstants.BTN_ACTIVE);
-				chartDisplay.removeStyleName(UIConstants.BTN_ACTIVE);
-				simpleDisplay.addStyleName(UIConstants.BTN_ACTIVE);
 				displaySimpleView();
 			}
 		});
@@ -382,9 +377,6 @@ public class TaskGroupDisplayViewImpl extends AbstractLazyPageView implements
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				advanceDisplay.removeStyleName(UIConstants.BTN_ACTIVE);
-				simpleDisplay.removeStyleName(UIConstants.BTN_ACTIVE);
-				chartDisplay.addStyleName(UIConstants.BTN_ACTIVE);
 				displayGanttChartView();
 			}
 		});
@@ -395,6 +387,7 @@ public class TaskGroupDisplayViewImpl extends AbstractLazyPageView implements
 		viewButtons.addButton(simpleDisplay);
 		viewButtons.addButton(advanceDisplay);
 		viewButtons.addButton(chartDisplay);
+		viewButtons.setDefaultButton(advanceDisplay);
 
 		mainLayout = new HorizontalLayout();
 		mainLayout.setSizeFull();
@@ -546,8 +539,8 @@ public class TaskGroupDisplayViewImpl extends AbstractLazyPageView implements
 	}
 
 	void moveToTaskSearch(TaskFilterParameter taskFilter) {
-		EventBusFactory.getInstance()
-				.post(new TaskEvent.Search(this, taskFilter));
+		EventBusFactory.getInstance().post(
+				new TaskEvent.Search(this, taskFilter));
 	};
 
 	private void displayTaskStatistic() {
@@ -561,7 +554,7 @@ public class TaskGroupDisplayViewImpl extends AbstractLazyPageView implements
 		searchCriteria.setProjectid(new NumberSearchField(
 				CurrentProjectVariables.getProjectId()));
 		searchCriteria.setStatuses(new SetSearchField<String>(SearchField.AND,
-				new String[] { "Open" }));
+				new String[] { StatusI18nEnum.Open.name() }));
 
 		unresolvedTaskByAssigneeWidget.setSearchCriteria(searchCriteria);
 

@@ -48,7 +48,7 @@ public class CancelAccountPresenter extends
 		accountContainer.addComponent(view.getWidget());
 
 		AccountSettingBreadcrumb breadcrumb = ViewManager
-				.getView(AccountSettingBreadcrumb.class);
+				.getCacheComponent(AccountSettingBreadcrumb.class);
 		breadcrumb.gotoCancelAccountPage();
 	}
 

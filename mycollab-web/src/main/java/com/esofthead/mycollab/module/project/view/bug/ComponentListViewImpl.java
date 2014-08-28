@@ -21,6 +21,7 @@ import java.util.Arrays;
 
 import com.esofthead.mycollab.common.TableViewField;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
+import com.esofthead.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.LabelLink;
 import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
@@ -40,6 +41,7 @@ import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
 import com.esofthead.mycollab.vaadin.events.MassItemActionHandler;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
+import com.esofthead.mycollab.vaadin.mvp.ViewScope;
 import com.esofthead.mycollab.vaadin.ui.CheckBoxDecor;
 import com.esofthead.mycollab.vaadin.ui.DefaultMassItemActionHandlersContainer;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
@@ -63,7 +65,7 @@ import com.vaadin.ui.VerticalLayout;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-@ViewComponent
+@ViewComponent(scope = ViewScope.PROTOTYPE)
 public class ComponentListViewImpl extends AbstractPageView implements
 		ComponentListView {
 
@@ -148,14 +150,15 @@ public class ComponentListViewImpl extends AbstractPageView implements
 										bugComponent.getProjectid(),
 										bugComponent.getId()));
 						if (bugComponent.getStatus() != null
-								&& bugComponent.getStatus().equals("Close")) {
+								&& bugComponent.getStatus().equals(
+										StatusI18nEnum.Closed.name())) {
 							b.addStyleName(UIConstants.LINK_COMPLETED);
 						}
 						b.setDescription(ProjectTooltipGenerator
 								.generateToolTipComponent(
 										AppContext.getUserLocale(),
 										bugComponent, AppContext.getSiteUrl(),
-										AppContext.getTimezoneId()));
+										AppContext.getTimezone()));
 						return b;
 
 					}

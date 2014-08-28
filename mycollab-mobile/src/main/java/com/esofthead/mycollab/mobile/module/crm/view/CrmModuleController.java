@@ -16,10 +16,19 @@
  */
 package com.esofthead.mycollab.mobile.module.crm.view;
 
+import java.util.Date;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.esofthead.mycollab.configuration.PasswordEncryptHelper;
+import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
+import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
+import com.esofthead.mycollab.mobile.MobileApplication;
 import com.esofthead.mycollab.mobile.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.mobile.module.crm.events.ActivityEvent;
 import com.esofthead.mycollab.mobile.module.crm.events.ActivityEvent.CallEdit;
@@ -71,27 +80,36 @@ import com.esofthead.mycollab.module.crm.domain.criteria.CaseSearchCriteria;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
 import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
+import com.esofthead.mycollab.module.user.domain.SimpleBillingAccount;
+import com.esofthead.mycollab.module.user.domain.SimpleUser;
+import com.esofthead.mycollab.module.user.domain.UserPreference;
+import com.esofthead.mycollab.module.user.service.BillingAccountService;
+import com.esofthead.mycollab.module.user.service.UserPreferenceService;
+import com.esofthead.mycollab.module.user.service.UserService;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.mvp.IController;
+import com.esofthead.mycollab.vaadin.mvp.AbstractController;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
-import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
+import com.vaadin.addon.touchkit.extensions.LocalStorage;
 import com.vaadin.addon.touchkit.ui.NavigationManager;
 import com.vaadin.addon.touchkit.ui.NavigationView;
+import com.vaadin.ui.UI;
 
 /**
  * @author MyCollab Ltd.
  * @since 3.0
  */
-public class CrmModuleController implements IController {
+public class CrmModuleController extends AbstractController {
 	private static final long serialVersionUID = 6995176903239247669L;
 	final private NavigationManager crmViewNavigation;
-	private EventBus eventBus;
+
+	private static Logger log = LoggerFactory
+			.getLogger(CrmModuleController.class);
 
 	public CrmModuleController(NavigationManager navigationManager) {
 		this.crmViewNavigation = navigationManager;
-		this.eventBus = EventBusFactory.getInstance();
 
 		bindCrmEvents();
 		bindAccountEvents();
@@ -105,7 +123,50 @@ public class CrmModuleController implements IController {
 
 	private void bindCrmEvents() {
 
-		eventBus.register(new ApplicationEventListener<CrmEvent.PushView>() {
+		this.register(new ApplicationEventListener<CrmEvent.GotoLogin>() {
+
+			private static final long serialVersionUID = 8085525190643870881L;
+
+			@Subscribe
+			@Override
+			public void handle(CrmEvent.GotoLogin event) {
+				CrmLoginPresenter presenter = PresenterResolver
+						.getPresenter(CrmLoginPresenter.class);
+				presenter.go(crmViewNavigation, null);
+			}
+		});
+
+		this.register(new ApplicationEventListener<CrmEvent.PlainLogin>() {
+
+			private static final long serialVersionUID = 916898284643597069L;
+
+			@Subscribe
+			@Override
+			public void handle(CrmEvent.PlainLogin event) {
+				String[] data = (String[]) event.getData();
+				try {
+					doLogin(data[0], data[1], Boolean.valueOf(data[2]));
+				} catch (MyCollabException exception) {
+					EventBusFactory.getInstance().post(
+							new CrmEvent.GotoLogin(this, null));
+				}
+			}
+		});
+
+		this.register(new ApplicationEventListener<CrmEvent.GotoDashboard>() {
+
+			private static final long serialVersionUID = -3626315180394209108L;
+
+			@Subscribe
+			@Override
+			public void handle(CrmEvent.GotoDashboard event) {
+				CrmDashboardPresenter presenter = PresenterResolver
+						.getPresenter(CrmDashboardPresenter.class);
+				presenter.go(crmViewNavigation, null);
+			}
+		});
+
+		this.register(new ApplicationEventListener<CrmEvent.PushView>() {
 			private static final long serialVersionUID = -7516440510015076475L;
 
 			@Subscribe
@@ -118,7 +179,7 @@ public class CrmModuleController implements IController {
 			}
 		});
 
-		eventBus.register(new ApplicationEventListener<CrmEvent.NavigateBack>() {
+		this.register(new ApplicationEventListener<CrmEvent.NavigateBack>() {
 			private static final long serialVersionUID = -8816255344013825447L;
 
 			@Subscribe
@@ -130,7 +191,7 @@ public class CrmModuleController implements IController {
 	}
 
 	private void bindAccountEvents() {
-		eventBus.register(new ApplicationEventListener<AccountEvent.GotoList>() {
+		this.register(new ApplicationEventListener<AccountEvent.GotoList>() {
 			private static final long serialVersionUID = -3451799893080539849L;
 
 			@Subscribe
@@ -147,7 +208,7 @@ public class CrmModuleController implements IController {
 
 		});
 
-		eventBus.register(new ApplicationEventListener<AccountEvent.GotoAdd>() {
+		this.register(new ApplicationEventListener<AccountEvent.GotoAdd>() {
 			private static final long serialVersionUID = -3309942209489453346L;
 
 			@Subscribe
@@ -160,7 +221,7 @@ public class CrmModuleController implements IController {
 			}
 		});
 
-		eventBus.register(new ApplicationEventListener<AccountEvent.GotoEdit>() {
+		this.register(new ApplicationEventListener<AccountEvent.GotoEdit>() {
 			private static final long serialVersionUID = 5328513173395719936L;
 
 			@Subscribe
@@ -173,7 +234,7 @@ public class CrmModuleController implements IController {
 			}
 		});
 
-		eventBus.register(new ApplicationEventListener<AccountEvent.GotoRead>() {
+		this.register(new ApplicationEventListener<AccountEvent.GotoRead>() {
 			private static final long serialVersionUID = -5805283303669877715L;
 
 			@Subscribe
@@ -187,7 +248,7 @@ public class CrmModuleController implements IController {
 			}
 		});
 
-		eventBus.register(new ApplicationEventListener<AccountEvent.GoToRelatedItems>() {
+		this.register(new ApplicationEventListener<AccountEvent.GoToRelatedItems>() {
 			private static final long serialVersionUID = 259904372741221966L;
 
 			@Subscribe
@@ -202,7 +263,7 @@ public class CrmModuleController implements IController {
 	}
 
 	private void bindActivityEvents() {
-		eventBus.register(new ApplicationEventListener<ActivityEvent.GotoList>() {
+		this.register(new ApplicationEventListener<ActivityEvent.GotoList>() {
 			private static final long serialVersionUID = 6101515891859134103L;
 
 			@Subscribe
@@ -219,7 +280,7 @@ public class CrmModuleController implements IController {
 										criteria));
 			}
 		});
-		eventBus.register(new ApplicationEventListener<ActivityEvent.TaskRead>() {
+		this.register(new ApplicationEventListener<ActivityEvent.TaskRead>() {
 			private static final long serialVersionUID = -3723195748802950651L;
 
 			@Subscribe
@@ -233,7 +294,7 @@ public class CrmModuleController implements IController {
 			}
 		});
 
-		eventBus.register(new ApplicationEventListener<ActivityEvent.TaskAdd>() {
+		this.register(new ApplicationEventListener<ActivityEvent.TaskAdd>() {
 			private static final long serialVersionUID = -670224728085519779L;
 
 			@Subscribe
@@ -246,7 +307,7 @@ public class CrmModuleController implements IController {
 			}
 		});
 
-		eventBus.register(new ApplicationEventListener<ActivityEvent.TaskEdit>() {
+		this.register(new ApplicationEventListener<ActivityEvent.TaskEdit>() {
 			private static final long serialVersionUID = -670224728085519779L;
 
 			@Subscribe
@@ -259,7 +320,7 @@ public class CrmModuleController implements IController {
 			}
 		});
 
-		eventBus.register(new ApplicationEventListener<ActivityEvent.CallRead>() {
+		this.register(new ApplicationEventListener<ActivityEvent.CallRead>() {
 			private static final long serialVersionUID = -3723195748802950651L;
 
 			@Subscribe
@@ -273,7 +334,7 @@ public class CrmModuleController implements IController {
 			}
 		});
 
-		eventBus.register(new ApplicationEventListener<ActivityEvent.CallAdd>() {
+		this.register(new ApplicationEventListener<ActivityEvent.CallAdd>() {
 			private static final long serialVersionUID = 8759218728614616964L;
 
 			@Subscribe
@@ -286,7 +347,7 @@ public class CrmModuleController implements IController {
 			}
 		});
 
-		eventBus.register(new ApplicationEventListener<ActivityEvent.CallEdit>() {
+		this.register(new ApplicationEventListener<ActivityEvent.CallEdit>() {
 			private static final long serialVersionUID = -5416887922292705051L;
 
 			@Subscribe
@@ -299,7 +360,7 @@ public class CrmModuleController implements IController {
 			}
 		});
 
-		eventBus.register(new ApplicationEventListener<ActivityEvent.MeetingRead>() {
+		this.register(new ApplicationEventListener<ActivityEvent.MeetingRead>() {
 			private static final long serialVersionUID = -3723195748802950651L;
 
 			@Subscribe
@@ -313,7 +374,7 @@ public class CrmModuleController implements IController {
 			}
 		});
 
-		eventBus.register(new ApplicationEventListener<ActivityEvent.MeetingAdd>() {
+		this.register(new ApplicationEventListener<ActivityEvent.MeetingAdd>() {
 			private static final long serialVersionUID = -7369637977421183110L;
 
 			@Subscribe
@@ -326,7 +387,7 @@ public class CrmModuleController implements IController {
 			}
 		});
 
-		eventBus.register(new ApplicationEventListener<ActivityEvent.MeetingEdit>() {
+		this.register(new ApplicationEventListener<ActivityEvent.MeetingEdit>() {
 			private static final long serialVersionUID = 1784955912645269021L;
 
 			@Subscribe
@@ -339,7 +400,7 @@ public class CrmModuleController implements IController {
 			}
 		});
 
-		eventBus.register(new ApplicationEventListener<ActivityEvent.GoToRelatedItems>() {
+		this.register(new ApplicationEventListener<ActivityEvent.GoToRelatedItems>() {
 			private static final long serialVersionUID = -2245568910777045010L;
 
 			@Subscribe
@@ -356,7 +417,7 @@ public class CrmModuleController implements IController {
 	}
 
 	private void bindContactEvents() {
-		eventBus.register(new ApplicationEventListener<ContactEvent.GotoList>() {
+		this.register(new ApplicationEventListener<ContactEvent.GotoList>() {
 			private static final long serialVersionUID = 3327061919614830145L;
 
 			@Subscribe
@@ -374,7 +435,7 @@ public class CrmModuleController implements IController {
 			}
 		});
 
-		eventBus.register(new ApplicationEventListener<ContactEvent.GotoAdd>() {
+		this.register(new ApplicationEventListener<ContactEvent.GotoAdd>() {
 			private static final long serialVersionUID = -9082569633338794831L;
 
 			@Subscribe
@@ -387,7 +448,7 @@ public class CrmModuleController implements IController {
 			}
 		});
 
-		eventBus.register(new ApplicationEventListener<ContactEvent.GotoEdit>() {
+		this.register(new ApplicationEventListener<ContactEvent.GotoEdit>() {
 			private static final long serialVersionUID = 1465740039647654585L;
 
 			@Subscribe
@@ -400,7 +461,7 @@ public class CrmModuleController implements IController {
 			}
 		});
 
-		eventBus.register(new ApplicationEventListener<ContactEvent.GotoRead>() {
+		this.register(new ApplicationEventListener<ContactEvent.GotoRead>() {
 			private static final long serialVersionUID = -5099988781106338890L;
 
 			@Subscribe
@@ -414,7 +475,7 @@ public class CrmModuleController implements IController {
 			}
 		});
 
-		eventBus.register(new ApplicationEventListener<ContactEvent.GoToRelatedItems>() {
+		this.register(new ApplicationEventListener<ContactEvent.GoToRelatedItems>() {
 			private static final long serialVersionUID = -8341031306697617759L;
 
 			@Subscribe
@@ -431,7 +492,7 @@ public class CrmModuleController implements IController {
 	}
 
 	private void bindCampaignEvents() {
-		eventBus.register(new ApplicationEventListener<CampaignEvent.GotoList>() {
+		this.register(new ApplicationEventListener<CampaignEvent.GotoList>() {
 			private static final long serialVersionUID = 1553727404269228168L;
 
 			@Subscribe
@@ -449,7 +510,7 @@ public class CrmModuleController implements IController {
 			}
 		});
 
-		eventBus.register(new ApplicationEventListener<CampaignEvent.GotoAdd>() {
+		this.register(new ApplicationEventListener<CampaignEvent.GotoAdd>() {
 			private static final long serialVersionUID = 1240143124315010237L;
 
 			@Subscribe
@@ -464,7 +525,7 @@ public class CrmModuleController implements IController {
 			}
 		});
 
-		eventBus.register(new ApplicationEventListener<CampaignEvent.GotoEdit>() {
+		this.register(new ApplicationEventListener<CampaignEvent.GotoEdit>() {
 			private static final long serialVersionUID = 7877885891797325699L;
 
 			@Subscribe
@@ -477,7 +538,7 @@ public class CrmModuleController implements IController {
 			}
 		});
 
-		eventBus.register(new ApplicationEventListener<CampaignEvent.GotoRead>() {
+		this.register(new ApplicationEventListener<CampaignEvent.GotoRead>() {
 			private static final long serialVersionUID = -9221302504462965422L;
 
 			@Subscribe
@@ -491,7 +552,7 @@ public class CrmModuleController implements IController {
 			}
 		});
 
-		eventBus.register(new ApplicationEventListener<CampaignEvent.GoToRelatedItems>() {
+		this.register(new ApplicationEventListener<CampaignEvent.GoToRelatedItems>() {
 			private static final long serialVersionUID = -1867638793934682142L;
 
 			@Subscribe
@@ -506,7 +567,7 @@ public class CrmModuleController implements IController {
 	}
 
 	private void bindCaseEvents() {
-		eventBus.register(new ApplicationEventListener<CaseEvent.GotoList>() {
+		this.register(new ApplicationEventListener<CaseEvent.GotoList>() {
 			private static final long serialVersionUID = -3618797051826954301L;
 
 			@Subscribe
@@ -524,7 +585,7 @@ public class CrmModuleController implements IController {
 			}
 		});
 
-		eventBus.register(new ApplicationEventListener<CaseEvent.GotoAdd>() {
+		this.register(new ApplicationEventListener<CaseEvent.GotoAdd>() {
 			private static final long serialVersionUID = 1735667150147480819L;
 
 			@Subscribe
@@ -537,7 +598,7 @@ public class CrmModuleController implements IController {
 			}
 		});
 
-		eventBus.register(new ApplicationEventListener<CaseEvent.GotoEdit>() {
+		this.register(new ApplicationEventListener<CaseEvent.GotoEdit>() {
 			private static final long serialVersionUID = 2353880791537378472L;
 
 			@Subscribe
@@ -550,7 +611,7 @@ public class CrmModuleController implements IController {
 			}
 		});
 
-		eventBus.register(new ApplicationEventListener<CaseEvent.GotoRead>() {
+		this.register(new ApplicationEventListener<CaseEvent.GotoRead>() {
 			private static final long serialVersionUID = -5491126759925853548L;
 
 			@Subscribe
@@ -564,7 +625,7 @@ public class CrmModuleController implements IController {
 			}
 		});
 
-		eventBus.register(new ApplicationEventListener<CaseEvent.GoToRelatedItems>() {
+		this.register(new ApplicationEventListener<CaseEvent.GoToRelatedItems>() {
 			private static final long serialVersionUID = 1019540906038925888L;
 
 			@Subscribe
@@ -579,7 +640,7 @@ public class CrmModuleController implements IController {
 	}
 
 	private void bindLeadEvents() {
-		eventBus.register(new ApplicationEventListener<LeadEvent.GotoList>() {
+		this.register(new ApplicationEventListener<LeadEvent.GotoList>() {
 			private static final long serialVersionUID = 9037270302083265873L;
 
 			@Subscribe
@@ -596,7 +657,7 @@ public class CrmModuleController implements IController {
 			}
 		});
 
-		eventBus.register(new ApplicationEventListener<LeadEvent.GotoRead>() {
+		this.register(new ApplicationEventListener<LeadEvent.GotoRead>() {
 			private static final long serialVersionUID = 9113847281543934181L;
 
 			@Subscribe
@@ -610,7 +671,7 @@ public class CrmModuleController implements IController {
 			}
 		});
 
-		eventBus.register(new ApplicationEventListener<LeadEvent.GotoAdd>() {
+		this.register(new ApplicationEventListener<LeadEvent.GotoAdd>() {
 			private static final long serialVersionUID = -211740720642515595L;
 
 			@Subscribe
@@ -623,7 +684,7 @@ public class CrmModuleController implements IController {
 			}
 		});
 
-		eventBus.register(new ApplicationEventListener<LeadEvent.GotoEdit>() {
+		this.register(new ApplicationEventListener<LeadEvent.GotoEdit>() {
 			private static final long serialVersionUID = 915856771120600013L;
 
 			@Subscribe
@@ -636,7 +697,7 @@ public class CrmModuleController implements IController {
 			}
 		});
 
-		eventBus.register(new ApplicationEventListener<LeadEvent.GoToRelatedItems>() {
+		this.register(new ApplicationEventListener<LeadEvent.GoToRelatedItems>() {
 			private static final long serialVersionUID = -1655170606113750709L;
 
 			@Subscribe
@@ -651,7 +712,7 @@ public class CrmModuleController implements IController {
 	}
 
 	private void bindOpportunityEvents() {
-		eventBus.register(new ApplicationEventListener<OpportunityEvent.GotoList>() {
+		this.register(new ApplicationEventListener<OpportunityEvent.GotoList>() {
 			private static final long serialVersionUID = -2575430958965270606L;
 
 			@Subscribe
@@ -669,7 +730,7 @@ public class CrmModuleController implements IController {
 			}
 		});
 
-		eventBus.register(new ApplicationEventListener<OpportunityEvent.GotoRead>() {
+		this.register(new ApplicationEventListener<OpportunityEvent.GotoRead>() {
 			private static final long serialVersionUID = -4783961655267073679L;
 
 			@Subscribe
@@ -683,7 +744,7 @@ public class CrmModuleController implements IController {
 			}
 		});
 
-		eventBus.register(new ApplicationEventListener<OpportunityEvent.GotoAdd>() {
+		this.register(new ApplicationEventListener<OpportunityEvent.GotoAdd>() {
 			private static final long serialVersionUID = -1102539216312225338L;
 
 			@Subscribe
@@ -697,7 +758,7 @@ public class CrmModuleController implements IController {
 			}
 		});
 
-		eventBus.register(new ApplicationEventListener<OpportunityEvent.GotoEdit>() {
+		this.register(new ApplicationEventListener<OpportunityEvent.GotoEdit>() {
 			private static final long serialVersionUID = -5752644127546011966L;
 
 			@Subscribe
@@ -710,7 +771,7 @@ public class CrmModuleController implements IController {
 			}
 		});
 
-		eventBus.register(new ApplicationEventListener<OpportunityEvent.GoToRelatedItems>() {
+		this.register(new ApplicationEventListener<OpportunityEvent.GoToRelatedItems>() {
 			private static final long serialVersionUID = 2389909957063829985L;
 
 			@Subscribe
@@ -722,5 +783,43 @@ public class CrmModuleController implements IController {
 									.getData()).getParams());
 			}
 		});
+	}
+
+	public static void doLogin(String username, String password,
+			boolean isRememberPassword) throws MyCollabException {
+		UserService userService = ApplicationContextUtil
+				.getSpringBean(UserService.class);
+		SimpleUser user = userService.authentication(username, password,
+				AppContext.getSubDomain(), false);
+
+		BillingAccountService billingAccountService = ApplicationContextUtil
+				.getSpringBean(BillingAccountService.class);
+
+		SimpleBillingAccount billingAccount = billingAccountService
+				.getBillingAccountById(AppContext.getAccountId());
+
+		log.debug("Get billing account successfully: "
+				+ BeanUtility.printBeanObj(billingAccount));
+
+		UserPreferenceService preferenceService = ApplicationContextUtil
+				.getSpringBean(UserPreferenceService.class);
+		UserPreference pref = preferenceService.getPreferenceOfUser(username,
+				AppContext.getAccountId());
+
+		log.debug("Login to system successfully. Save user and preference "
+				+ pref + " to session");
+
+		if (isRememberPassword) {
+			LocalStorage storage = LocalStorage.get();
+			String storeVal = username + "$"
+					+ PasswordEncryptHelper.encyptText(password);
+			storage.put(MobileApplication.LOGIN_DATA, storeVal);
+		}
+
+		AppContext.getInstance().setSession(user, pref, billingAccount);
+		pref.setLastaccessedtime(new Date());
+		preferenceService.updateWithSession(pref, AppContext.getUsername());
+		EventBusFactory.getInstance().post(
+				new CrmEvent.GotoDashboard(UI.getCurrent(), null));
 	}
 }

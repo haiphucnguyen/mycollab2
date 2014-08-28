@@ -7,7 +7,7 @@
     <parent>
         <groupId>com.esofthead.mycollab</groupId>
         <artifactId>parent-community</artifactId>
-        <version>4.3.3</version>
+        <version>4.4.0</version>
         <relativePath>../mycollab-parent-community/pom.xml</relativePath>
     </parent>
     <packaging>jar</packaging>
@@ -15,7 +15,7 @@
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-test</artifactId>
-            <version>4.3.3</version>
+            <version>4.4.0</version>
         </dependency>
 
         <dependency>
@@ -103,7 +103,7 @@
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
-            <version>2.2.4</version>
+            <version>2.3</version>
         </dependency>
 
         <dependency>

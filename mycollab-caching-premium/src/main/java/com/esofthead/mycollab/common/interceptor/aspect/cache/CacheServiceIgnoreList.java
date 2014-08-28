@@ -15,6 +15,7 @@ import com.esofthead.mycollab.module.ecm.service.ResourceService;
 import com.esofthead.mycollab.module.file.service.RawContentServiceFactoryBean;
 import com.esofthead.mycollab.module.project.esb.DeleteProjectCommand;
 import com.esofthead.mycollab.module.project.esb.DeleteProjectMemberCommand;
+import com.esofthead.mycollab.module.project.service.ProjectCustomizeViewService;
 import com.esofthead.mycollab.module.tracker.service.BugRelatedItemService;
 import com.esofthead.mycollab.module.tracker.service.RelatedBugService;
 import com.esofthead.mycollab.module.user.service.BillingAccountService;
@@ -35,7 +36,8 @@ public class CacheServiceIgnoreList {
 			ResourceService.class, DeleteProjectCommand.class,
 			DeleteProjectMemberCommand.class, ExternalResourceService.class,
 			ContentActivityLogService.class, ExternalDriveService.class,
-			ResourceMover.class, IgnoreServiceEntity.class });
+			ResourceMover.class, IgnoreServiceEntity.class,
+			ProjectCustomizeViewService.class });
 
 	static boolean isInBlackList(Class<?> cls) {
 		return blacklistCls.contains(cls);

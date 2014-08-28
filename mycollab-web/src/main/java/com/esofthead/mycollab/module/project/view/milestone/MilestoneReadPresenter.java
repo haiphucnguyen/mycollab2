@@ -100,10 +100,10 @@ public class MilestoneReadPresenter extends
 													data.getId(),
 													AppContext.getUsername(),
 													AppContext.getAccountId());
-											EventBusFactory.getInstance()
-													.post(
-															new MilestoneEvent.GotoList(
-																	this, null));
+											EventBusFactory
+													.getInstance()
+													.post(new MilestoneEvent.GotoList(
+															this, null));
 										}
 									}
 								});
@@ -174,9 +174,9 @@ public class MilestoneReadPresenter extends
 		if (CurrentProjectVariables
 				.canRead(ProjectRolePermissionCollections.MILESTONES)) {
 			if (data.getParams() instanceof Integer) {
-				MilestoneService riskService = ApplicationContextUtil
+				MilestoneService milestoneService = ApplicationContextUtil
 						.getSpringBean(MilestoneService.class);
-				SimpleMilestone milestone = riskService.findById(
+				SimpleMilestone milestone = milestoneService.findById(
 						(Integer) data.getParams(), AppContext.getAccountId());
 				if (milestone != null) {
 					MilestoneContainer milestoneContainer = (MilestoneContainer) container;
@@ -185,7 +185,7 @@ public class MilestoneReadPresenter extends
 					view.previewItem(milestone);
 
 					ProjectBreadcrumb breadcrumb = ViewManager
-							.getView(ProjectBreadcrumb.class);
+							.getCacheComponent(ProjectBreadcrumb.class);
 					breadcrumb.gotoMilestoneRead(milestone);
 				} else {
 					NotificationUtil.showRecordNotExistNotification();
