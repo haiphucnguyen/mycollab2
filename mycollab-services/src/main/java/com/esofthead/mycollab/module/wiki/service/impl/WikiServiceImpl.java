@@ -218,27 +218,6 @@ public class WikiServiceImpl implements WikiService {
 		}
 	}
 
-	private Version getLatestVersion(final String path) {
-		return jcrTemplate.execute(new JcrCallback<Version>() {
-
-			@Override
-			public Version doInJcr(Session session) throws IOException,
-					RepositoryException {
-				Node rootNode = session.getRootNode();
-				Node node = getNode(rootNode, path);
-				if (node != null) {
-					VersionManager vm = session.getWorkspace()
-							.getVersionManager();
-					VersionHistory history = vm.getVersionHistory("/" + path);
-					VersionIterator versions = history.getAllLinearVersions();
-					Version lastVersion = versions.nextVersion();
-					return lastVersion;
-				}
-				return null;
-			}
-		});
-	}
-
 	@Override
 	public List<PageVersion> getPageVersions(final String path) {
 		return jcrTemplate.execute(new JcrCallback<List<PageVersion>>() {
@@ -256,7 +235,9 @@ public class WikiServiceImpl implements WikiService {
 					for (VersionIterator it = history.getAllVersions(); it
 							.hasNext();) {
 						Version version = (Version) it.next();
-						versions.add(convertNodeToPageVersion(version));
+						if (!"jcr:rootVersion".equals(version.getName())) {
+							versions.add(convertNodeToPageVersion(version));
+						}
 					}
 					return versions;
 				} else {
@@ -271,6 +252,7 @@ public class WikiServiceImpl implements WikiService {
 			PageVersion version = new PageVersion();
 			version.setName(node.getName());
 			version.setIndex(node.getIndex());
+			version.setCreatedTime(node.getCreated());
 			return version;
 		} catch (Exception e) {
 			log.error("Error while get detail node version");
