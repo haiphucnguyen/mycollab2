@@ -140,7 +140,7 @@ class ContactInfoChangeWindow extends Window {
 
 					@Override
 					public void buttonClick(final ClickEvent event) {
-						ContactInfoChangeWindow.this.changeUserInfo();
+						changeUserInfo();
 					}
 				});
 		saveBtn.setStyleName(UIConstants.THEME_GREEN_LINK);

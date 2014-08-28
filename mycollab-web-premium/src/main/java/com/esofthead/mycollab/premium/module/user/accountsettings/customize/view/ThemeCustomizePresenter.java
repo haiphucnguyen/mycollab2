@@ -34,8 +34,8 @@ import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
-import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.google.common.eventbus.Subscribe;
+import com.vaadin.server.Page;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.UI;
 
@@ -70,8 +70,10 @@ public class ThemeCustomizePresenter extends
 							public void handle(SaveTheme event) {
 								if (event.getData() instanceof AccountTheme) {
 									saveTheme((AccountTheme) event.getData());
-									NotificationUtil
-											.showNotification("Save theme successfully! Please sign in again to see changes.");
+									Page.getCurrent()
+											.getJavaScript()
+											.execute(
+													"window.location.reload();");
 								}
 							}
 						});
@@ -108,8 +110,10 @@ public class ThemeCustomizePresenter extends
 																	AppContext
 																			.getAccountId());
 													view.customizeTheme(defaultTheme);
-													NotificationUtil
-															.showNotification("Save theme successfully! Please sign in again to see changes.");
+													Page.getCurrent()
+															.getJavaScript()
+															.execute(
+																	"window.location.reload();");
 												}
 											}
 										});

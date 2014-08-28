@@ -52,7 +52,7 @@ import com.vaadin.ui.Window;
  * 
  */
 @SuppressWarnings("serial")
-public class BasicInfoChangeWindow extends Window {
+class BasicInfoChangeWindow extends Window {
 
 	private TextField txtFirstName;
 	private TextField txtLastName;
