@@ -7,9 +7,9 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-import org.joda.time.DateTime;
 import org.vaadin.dialogs.ConfirmDialog;
 
+import com.esofthead.mycollab.common.TableViewField;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.arguments.RangeDateSearchField;
@@ -69,6 +69,9 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements
 	private static final String TEXT_RIGHT = "<span style=\"float: right;\">%s</span>";
 	private static final String TEXT_BOLD_RIGHT = "<span style=\"float: right; font-weight: bold;\">%s</span>";
 	private static final String TEXT_BOLD_BIG = "<span style=\"font-size:20px;  font-weight: bold; padding-top: 10px;\">%s</span>";
+	private static final List<TableViewField> FIELDS = Arrays.asList(TimeTableFieldDef.summary, TimeTableFieldDef.logUser,
+			TimeTableFieldDef.logValue, TimeTableFieldDef.billable,
+			TimeTableFieldDef.logForDate, TimeTableFieldDef.id);
 
 	private static final long serialVersionUID = 3742030333599796165L;
 
@@ -224,65 +227,62 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements
 				.findPagableListByCriteria(new SearchRequest<ItemTimeLoggingSearchCriteria>(
 						itemTimeLogginSearchCriteria));
 		// TODO
-		final RangeDateSearchField rangeField = this.itemTimeLogginSearchCriteria
-				.getRangeDate();
+		Date current = new Date(0), last;
 
-		Date start = rangeField.getFrom();
-		Date end = rangeField.getTo();
-		DateTime current = new DateTime(start);
+		VerticalLayout layoutTime = new VerticalLayout();
+		TimeTrackingTableDisplay table = new TimeTrackingTableDisplay(
+				FIELDS);
+		table.addTableListener(this.tableClickListener);
 
-		while (current.toDate().compareTo(end) <= 0) {
-			Date date = current.toDate();
-			double billable = 0;
-			double nonbillable = 0;
+		double billable = 0, nonbillable = 0;
+		List<SimpleItemTimeLogging> list = new ArrayList<SimpleItemTimeLogging>();
+		for (SimpleItemTimeLogging itemTimeLogging : itemTimeLoggingList) {
+			if (DateTimeUtils.compareByDate(itemTimeLogging.getLogforday(),
+					current) > 0) {
+				// Show last table
+				last = current;
+				if (list.size() > 0) {
+					this.layoutItem.addComponent(new Label(String.format(
+							TEXT_BOLD_BIG, DATE_FORMAT.format(last)),
+							ContentMode.HTML));
 
-			List<SimpleItemTimeLogging> list = new ArrayList<SimpleItemTimeLogging>();
-			for (SimpleItemTimeLogging itemTimeLogging : itemTimeLoggingList) {
-				if (DateTimeUtils.compareByDate(itemTimeLogging.getLogforday(),
-						date) == 0) {
-					list.add(itemTimeLogging);
-					billable += itemTimeLogging.getIsbillable() ? itemTimeLogging
-							.getLogvalue() : 0;
-					nonbillable += !itemTimeLogging.getIsbillable() ? itemTimeLogging
-							.getLogvalue() : 0;
+					table.setCurrentDataList(list);
+					this.layoutItem.addComponent(table);
+
+					layoutTime = new VerticalLayout();
+
+					layoutTime.addComponent(new Label(String.format(
+							TEXT_BOLD_RIGHT,
+							("Total Time: " + (billable + nonbillable))),
+							ContentMode.HTML));
+
+					layoutTime.addComponent(new Label(String.format(TEXT_RIGHT,
+							("Billable: " + billable)), ContentMode.HTML));
+
+					layoutTime
+							.addComponent(new Label(String.format(TEXT_RIGHT,
+									("Non Billable: " + nonbillable)),
+									ContentMode.HTML));
+
+					this.layoutItem.addComponent(layoutTime);
+					this.layoutItem.setComponentAlignment(layoutTime,
+							Alignment.MIDDLE_RIGHT);
 				}
-			}
 
-			if (list.size() != 0) {
-				this.layoutItem.addComponent(new Label(String.format(
-						TEXT_BOLD_BIG, DATE_FORMAT.format(date)),
-						ContentMode.HTML));
+				// Create new table
+				current = itemTimeLogging.getLogforday();
+				list.clear();
+				billable = nonbillable = 0;
 
-				TimeTrackingTableDisplay table = new TimeTrackingTableDisplay(
-						Arrays.asList(TimeTableFieldDef.summary,
-								TimeTableFieldDef.logUser,
-								TimeTableFieldDef.logValue,
-								TimeTableFieldDef.billable,
-								TimeTableFieldDef.logForDate,
-								TimeTableFieldDef.id));
+				table = new TimeTrackingTableDisplay(FIELDS);
 				table.addTableListener(this.tableClickListener);
-				table.setCurrentDataList(list);
-				this.layoutItem.addComponent(table);
-
-				VerticalLayout layoutTime = new VerticalLayout();
-
-				layoutTime.addComponent(new Label(String.format(
-						TEXT_BOLD_RIGHT,
-						("Total Time: " + (billable + nonbillable))),
-						ContentMode.HTML));
-
-				layoutTime.addComponent(new Label(String.format(TEXT_RIGHT,
-						("Billable: " + billable)), ContentMode.HTML));
-
-				layoutTime.addComponent(new Label(String.format(TEXT_RIGHT,
-						("Non Billable: " + nonbillable)), ContentMode.HTML));
-
-				this.layoutItem.addComponent(layoutTime);
-				this.layoutItem.setComponentAlignment(layoutTime,
-						Alignment.MIDDLE_RIGHT);
 			}
 
-			current = current.plusDays(1);
+			list.add(itemTimeLogging);
+			billable += itemTimeLogging.getIsbillable()
+					? itemTimeLogging.getLogvalue() : 0;
+			nonbillable += !itemTimeLogging.getIsbillable()
+					? itemTimeLogging.getLogvalue() : 0;
 		}
 	}
 
