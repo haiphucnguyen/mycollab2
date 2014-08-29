@@ -12,6 +12,7 @@ import org.vaadin.dialogs.ConfirmDialog;
 import com.esofthead.mycollab.common.TableViewField;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
+import com.esofthead.mycollab.core.arguments.BooleanSearchField;
 import com.esofthead.mycollab.core.arguments.RangeDateSearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
@@ -49,7 +50,6 @@ import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
@@ -80,10 +80,11 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements
 	private final Label lbTimeRange;
 
 	private VerticalLayout layoutItem;
+	private MarginInfo marginInfo = new MarginInfo(true, false, false, false);
 
 	public TimeTrackingListViewImpl() {
 		this.setMargin(new MarginInfo(false, true, false, true));
-		final CssLayout headerWrapper = new CssLayout();
+		final HorizontalLayout headerWrapper = new HorizontalLayout();
 
 		this.itemTimeLoggingService = ApplicationContextUtil
 				.getSpringBean(ItemTimeLoggingService.class);
@@ -112,13 +113,14 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements
 		});
 
 		headerWrapper.setWidth("100%");
-		headerWrapper.addStyleName(UIConstants.TABLE_ACTION_CONTROLS);
+		headerWrapper.addStyleName(UIConstants.LAYOUT_LOG);
 
 		final HorizontalLayout headerLayout = new HorizontalLayout();
 		headerLayout.setWidth("100%");
 		headerLayout.setSpacing(true);
 		headerWrapper.addComponent(headerLayout);
 		this.lbTimeRange = new Label("", ContentMode.HTML);
+		this.lbTimeRange.addStyleName(UIConstants.TEXT_LOG_DATE_FULL);
 		headerLayout.addComponent(this.lbTimeRange);
 		headerLayout.setComponentAlignment(this.lbTimeRange,
 				Alignment.MIDDLE_LEFT);
@@ -165,7 +167,7 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements
 		this.addComponent(headerWrapper);
 
 		this.layoutItem = new VerticalLayout();
-		this.layoutItem.addStyleName("layout_log");
+		this.layoutItem.addStyleName(UIConstants.LAYOUT_LOG);
 		this.layoutItem.setWidth("100%");
 		this.addComponent(this.layoutItem);
 	}
@@ -193,13 +195,30 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements
 		final String fromDate = AppContext.formatDate(rangeField.getFrom());
 		final String toDate = AppContext.formatDate(rangeField.getTo());
 
+		this.itemTimeLogginSearchCriteria.setIsBillable(new BooleanSearchField(true));
+		Double billableHour = this.itemTimeLoggingService
+				.getTotalHoursByCriteria(this.itemTimeLogginSearchCriteria);
+		if (billableHour == null || billableHour < 0) {
+			billableHour = 0d;
+		}
+
+		this.itemTimeLogginSearchCriteria.setIsBillable(new BooleanSearchField(false));
+		Double nonbillableHour = this.itemTimeLoggingService
+				.getTotalHoursByCriteria(this.itemTimeLogginSearchCriteria);
+		if (nonbillableHour == null || nonbillableHour < 0) {
+			nonbillableHour = 0d;
+		}
+
+		
+		this.itemTimeLogginSearchCriteria.setIsBillable(null);
 		final Double totalHour = this.itemTimeLoggingService
 				.getTotalHoursByCriteria(this.itemTimeLogginSearchCriteria);
 
+		// TODO: check Japanese sentence, remove todo after fix
 		if (totalHour != null && totalHour > 0) {
 			this.lbTimeRange.setValue(AppContext.getMessage(
 					TimeTrackingI18nEnum.TASK_LIST_RANGE_WITH_TOTAL_HOUR,
-					fromDate, toDate, totalHour));
+							fromDate, toDate, totalHour, billableHour, nonbillableHour));
 		} else {
 			this.lbTimeRange.setValue(AppContext.getMessage(
 					TimeTrackingI18nEnum.TASK_LIST_RANGE, fromDate, toDate));
@@ -250,24 +269,26 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements
 			Double billable, Double nonbillable) {
 		if (list.size() > 0) {
 			Label logForDay = new Label(DATE_FORMAT.format(date));
-			logForDay.addStyleName("text_log_date");
+			logForDay.addStyleName(UIConstants.TEXT_LOG_DATE);
 			this.layoutItem.addComponent(logForDay);
 
 			TimeTrackingTableDisplay table = new TimeTrackingTableDisplay(FIELDS);
+			table.addStyleName(UIConstants.FULL_BORDER_TABLE);
+			table.setMargin(marginInfo);
 			table.addTableListener(this.tableClickListener);
 			table.setCurrentDataList(list);
 			this.layoutItem.addComponent(table);
 
 			Label labelTotalHours = new Label(("Total Hours: " + (billable + nonbillable)));
-			labelTotalHours.addStyleName("text_log_hours_total");
+			labelTotalHours.addStyleName(UIConstants.TEXT_LOG_HOURS_TOTAL);
 			this.layoutItem.addComponent(labelTotalHours);
 
 			Label labelBillableHours = new Label(("Billable Hours: " + billable));
-			labelBillableHours.setStyleName("text_log_hours");
+			labelBillableHours.setStyleName(UIConstants.TEXT_LOG_HOURS);
 			this.layoutItem.addComponent(labelBillableHours);
 
 			Label labelNonbillableHours = new Label(("Non Billable Hours: " + nonbillable));
-			labelNonbillableHours.setStyleName("text_log_hours");
+			labelNonbillableHours.setStyleName(UIConstants.TEXT_LOG_HOURS);
 			this.layoutItem.addComponent(labelNonbillableHours);
 		}
 	}
