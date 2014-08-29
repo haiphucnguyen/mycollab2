@@ -66,9 +66,6 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements
 		TimeTrackingListView {
 	private static final DateFormat DATE_FORMAT = new SimpleDateFormat(
 			"EEEE, dd MMMM yyyy");
-	private static final String TEXT_RIGHT = "<span style=\"float: right;\">%s</span>";
-	private static final String TEXT_BOLD_RIGHT = "<span style=\"float: right; font-weight: bold;\">%s</span>";
-	private static final String TEXT_BOLD_BIG = "<span style=\"font-size:20px;  font-weight: bold; padding-top: 10px;\">%s</span>";
 	private static final List<TableViewField> FIELDS = Arrays.asList(TimeTableFieldDef.summary, TimeTableFieldDef.logUser,
 			TimeTableFieldDef.logValue, TimeTableFieldDef.billable, TimeTableFieldDef.id);
 
@@ -168,6 +165,7 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements
 		this.addComponent(headerWrapper);
 
 		this.layoutItem = new VerticalLayout();
+		this.layoutItem.addStyleName("layout_log");
 		this.layoutItem.setWidth("100%");
 		this.addComponent(this.layoutItem);
 	}
@@ -251,29 +249,26 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements
 	private void showRecord(Date date, List<SimpleItemTimeLogging> list,
 			Double billable, Double nonbillable) {
 		if (list.size() > 0) {
-			this.layoutItem.addComponent(new Label(String.format(TEXT_BOLD_BIG,
-					DATE_FORMAT.format(date)), ContentMode.HTML));
+			Label logForDay = new Label(DATE_FORMAT.format(date));
+			logForDay.addStyleName("text_log_date");
+			this.layoutItem.addComponent(logForDay);
 
 			TimeTrackingTableDisplay table = new TimeTrackingTableDisplay(FIELDS);
 			table.addTableListener(this.tableClickListener);
 			table.setCurrentDataList(list);
 			this.layoutItem.addComponent(table);
 
-			VerticalLayout layoutTime = new VerticalLayout();
+			Label labelTotalHours = new Label(("Total Hours: " + (billable + nonbillable)));
+			labelTotalHours.addStyleName("text_log_hours_total");
+			this.layoutItem.addComponent(labelTotalHours);
 
-			layoutTime.addComponent(new Label(String.format(TEXT_BOLD_RIGHT,
-					("Total Time: " + (billable + nonbillable))),
-					ContentMode.HTML));
+			Label labelBillableHours = new Label(("Billable Hours: " + billable));
+			labelBillableHours.setStyleName("text_log_hours");
+			this.layoutItem.addComponent(labelBillableHours);
 
-			layoutTime.addComponent(new Label(String.format(TEXT_RIGHT,
-					("Billable: " + billable)), ContentMode.HTML));
-
-			layoutTime.addComponent(new Label(String.format(TEXT_RIGHT,
-					("Non Billable: " + nonbillable)), ContentMode.HTML));
-
-			this.layoutItem.addComponent(layoutTime);
-			this.layoutItem.setComponentAlignment(layoutTime,
-					Alignment.MIDDLE_RIGHT);
+			Label labelNonbillableHours = new Label(("Non Billable Hours: " + nonbillable));
+			labelNonbillableHours.setStyleName("text_log_hours");
+			this.layoutItem.addComponent(labelNonbillableHours);
 		}
 	}
 
