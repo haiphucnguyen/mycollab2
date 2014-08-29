@@ -7206,11 +7206,8 @@ div.v-csslayout.bean-block.olive-block, .list-note-block .note-label.olive-block
 
 /* Version Selection Box */
 .version-selection-box {
-	border-width: 0px 0px 0px 1px;
-	border-style: solid;
-	border-color: rgb(221, 221, 221);
-	border-radius: 0px;
-	padding-left: 6px;
+	border: none;
+	padding-left: 0px;
 }
 
 .version-selection-box:before {
@@ -7220,9 +7217,14 @@ div.v-csslayout.bean-block.olive-block, .list-note-block .note-label.olive-block
 	height: 100%;
 	line-height: 100%;
 }
-.version-selection-box input.v-filterselect-input {
+.version-selection-box input.v-filterselect-input[type="text"] {
 	vertical-align: middle;
 	float: none;
+	line-height: 1.4em !important;
+	font-size: 14px !important;
+	font-weight: bold !important;
+	color: #525252;
+	height: auto;
 }
 .version-selection-box input:focus {
 	-webkit-box-shadow: none;
