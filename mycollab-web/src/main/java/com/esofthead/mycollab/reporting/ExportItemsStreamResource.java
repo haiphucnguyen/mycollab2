@@ -43,6 +43,7 @@ import com.esofthead.mycollab.core.MyCollabThread;
 import com.esofthead.mycollab.reporting.AbstractReportTemplate;
 import com.esofthead.mycollab.reporting.ReportExportType;
 import com.esofthead.mycollab.reporting.ReportTemplateFactory;
+import com.esofthead.mycollab.web.DesktopApplication;
 import com.vaadin.server.StreamResource;
 
 /**
@@ -133,8 +134,7 @@ public abstract class ExportItemsStreamResource<T> implements
 					}
 
 				} catch (Exception e) {
-					log.error("Exception while generating report ", e);
-					throw new MyCollabException(e);
+					DesktopApplication.handleException(e);
 				} finally {
 					try {
 						outStream.close();
