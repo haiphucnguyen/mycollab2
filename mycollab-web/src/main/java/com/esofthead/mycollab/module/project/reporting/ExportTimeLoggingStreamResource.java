@@ -75,6 +75,7 @@ public class ExportTimeLoggingStreamResource extends
 
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	protected void fillReport() throws Exception {
 		reportBuilder.setDataSource(new GroupIteratorDataSource(searchService,
