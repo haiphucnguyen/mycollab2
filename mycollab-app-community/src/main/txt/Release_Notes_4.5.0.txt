@@ -51,6 +51,8 @@ Version 4.4.0
 * Support date format associate to user's locale
 * Break mobile app into 2 sub apps: CRM and Project Management
 * Reload site after user change information to make this change is applied immediately
+* Improve error handling in event bus implementation
+* The project time tracking views support multiple views
 
 **Bug Fixes**
 
