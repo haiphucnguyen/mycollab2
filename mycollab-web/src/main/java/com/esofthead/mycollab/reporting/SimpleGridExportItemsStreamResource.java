@@ -29,16 +29,9 @@ import net.sf.dynamicreports.report.exception.DRException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.persistence.service.ISearchableService;
 import com.esofthead.mycollab.core.utils.ClassUtils;
-import com.esofthead.mycollab.reporting.BeanDataSource;
-import com.esofthead.mycollab.reporting.ColumnBuilderClassMapper;
-import com.esofthead.mycollab.reporting.GroupIteratorDataSource;
-import com.esofthead.mycollab.reporting.ReportExportType;
-import com.esofthead.mycollab.reporting.RpParameterBuilder;
-import com.esofthead.mycollab.reporting.TableViewFieldDecorator;
 import com.esofthead.mycollab.reporting.expression.MValue;
 import com.esofthead.mycollab.vaadin.AppContext;
 
@@ -132,7 +125,6 @@ public abstract class SimpleGridExportItemsStreamResource<T> extends
 		protected void fillReport() {
 			reportBuilder.setDataSource(new GroupIteratorDataSource(
 					searchService, searchCriteria));
-			throw new MyCollabException("eee");
 		}
 
 	}
@@ -153,7 +145,6 @@ public abstract class SimpleGridExportItemsStreamResource<T> extends
 		protected void fillReport() {
 			BeanDataSource ds = new BeanDataSource(data);
 			reportBuilder.setDataSource(ds);
-			throw new MyCollabException("eee");
 		}
 	}
 }
