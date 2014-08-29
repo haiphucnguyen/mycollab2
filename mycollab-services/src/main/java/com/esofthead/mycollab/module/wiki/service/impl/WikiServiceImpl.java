@@ -30,6 +30,7 @@ import javax.jcr.version.VersionHistory;
 import javax.jcr.version.VersionIterator;
 import javax.jcr.version.VersionManager;
 
+import org.apache.jackrabbit.commons.JcrUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,7 +69,7 @@ public class WikiServiceImpl implements WikiService {
 
 	@Autowired
 	private RelayEmailNotificationService relayEmailNotificationService;
-
+	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public void savePage(final Page page, final String createdUser) {
@@ -78,7 +79,7 @@ public class WikiServiceImpl implements WikiService {
 			public Object doInJcr(Session session) throws IOException,
 					RepositoryException {
 				Node rootNode = session.getRootNode();
-				Node node = getNode(rootNode, page.getPath());
+				Node node = JcrUtils.getNodeIfExists(rootNode, page.getPath());
 				// forward to current path
 				if (node != null) {
 					if (isNodeFolder(node)) {
@@ -110,7 +111,8 @@ public class WikiServiceImpl implements WikiService {
 						// create folder note
 						for (int i = 0; i < pathStr.length - 1; i++) {
 							// move to lastest node of the path
-							Node childNode = getNode(parentNode, pathStr[i]);
+							Node childNode = JcrUtils.getNodeIfExists(
+									parentNode, pathStr[i]);
 							if (childNode != null) {
 								if (!isNodeFolder(childNode)) {
 									// node must is folder
@@ -157,7 +159,7 @@ public class WikiServiceImpl implements WikiService {
 			public Page doInJcr(Session session) throws IOException,
 					RepositoryException {
 				Node rootNode = session.getRootNode();
-				Node node = getNode(rootNode, path);
+				Node node = JcrUtils.getNodeIfExists(rootNode, path);
 				if (node != null) {
 					if (isNodePage(node)) {
 						if (isAccessible(node, requestedUser)) {
@@ -182,7 +184,7 @@ public class WikiServiceImpl implements WikiService {
 			public Folder doInJcr(Session session) throws IOException,
 					RepositoryException {
 				Node rootNode = session.getRootNode();
-				Node node = getNode(rootNode, path);
+				Node node = JcrUtils.getNodeIfExists(rootNode, path);
 				if (node != null) {
 					if (isNodeFolder(node)) {
 						return convertNodeToFolder(node);
@@ -192,14 +194,6 @@ public class WikiServiceImpl implements WikiService {
 				return null;
 			}
 		});
-	}
-
-	private static Node getNode(Node node, String path) {
-		try {
-			return node.getNode(path);
-		} catch (Exception e) {
-			return null;
-		}
 	}
 
 	private static boolean isNodeFolder(Node node) {
@@ -226,7 +220,7 @@ public class WikiServiceImpl implements WikiService {
 			public List<PageVersion> doInJcr(Session session)
 					throws IOException, RepositoryException {
 				Node rootNode = session.getRootNode();
-				Node node = getNode(rootNode, path);
+				Node node = JcrUtils.getNodeIfExists(rootNode, path);
 				if (node != null) {
 					VersionManager vm = session.getWorkspace()
 							.getVersionManager();
@@ -268,7 +262,7 @@ public class WikiServiceImpl implements WikiService {
 			public Page doInJcr(Session session) throws IOException,
 					RepositoryException {
 				Node rootNode = session.getRootNode();
-				Node node = getNode(rootNode, path);
+				Node node = JcrUtils.getNodeIfExists(rootNode, path);
 				if (node != null) {
 					VersionManager vm = session.getWorkspace()
 							.getVersionManager();
@@ -306,7 +300,7 @@ public class WikiServiceImpl implements WikiService {
 					}
 					session.save();
 				} else {
-					Node node = getNode(rootNode, path);
+					Node node = JcrUtils.getNodeIfExists(rootNode, path);
 					if (node != null
 							&& (isNodeFolder(node) || isNodePage(node))) {
 						node.remove();
@@ -327,7 +321,7 @@ public class WikiServiceImpl implements WikiService {
 			public List<Page> doInJcr(Session session) throws IOException,
 					RepositoryException {
 				Node rootNode = session.getRootNode();
-				Node node = getNode(rootNode, path);
+				Node node = JcrUtils.getNodeIfExists(rootNode, path);
 				if (node != null) {
 					if (isNodeFolder(node)) {
 						List<Page> pages = new ArrayList<Page>();
@@ -364,7 +358,7 @@ public class WikiServiceImpl implements WikiService {
 			public List<WikiResource> doInJcr(Session session)
 					throws IOException, RepositoryException {
 				Node rootNode = session.getRootNode();
-				Node node = getNode(rootNode, path);
+				Node node = JcrUtils.getNodeIfExists(rootNode, path);
 				if (node != null) {
 					if (isNodeFolder(node)) {
 						List<WikiResource> resources = new ArrayList<WikiResource>();
@@ -419,7 +413,8 @@ public class WikiServiceImpl implements WikiService {
 							continue;
 						}
 						// move to lastest node of the path
-						Node childNode = getNode(parentNode, pathStr[i]);
+						Node childNode = JcrUtils.getNodeIfExists(parentNode,
+								pathStr[i]);
 						if (childNode != null) {
 							log.debug("Found node with path {} in sub node ",
 									pathStr[i], parentNode.getPath());
@@ -464,8 +459,10 @@ public class WikiServiceImpl implements WikiService {
 						parentNode = childNode;
 					}
 
-					log.debug("Node path {} is existed {}", folderPath,
-							(getNode(rootNode, folderPath) != null));
+					log.debug(
+							"Node path {} is existed {}",
+							folderPath,
+							(JcrUtils.getNodeIfExists(rootNode, folderPath) != null));
 				} catch (Exception e) {
 					String errorString = "Error while create folder with path %s";
 					throw new MyCollabException(String.format(errorString,
