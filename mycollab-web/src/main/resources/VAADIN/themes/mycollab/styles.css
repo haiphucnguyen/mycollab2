@@ -7075,7 +7075,7 @@ div.v-csslayout.bean-block.olive-block, .list-note-block .note-label.olive-block
 	color: #FFFFFF;
 	margin-right: 5px;
 	text-align: center;
-	line-height: 20px;
+	line-height: 22px;
 	font-size: 16px;
 	font-weight: bold;
 	vertical-align: top;
@@ -7202,4 +7202,33 @@ div.v-csslayout.bean-block.olive-block, .list-note-block .note-label.olive-block
 /* Medium Spacing Layouts */
 .v-horizontal.medium-spacing > .v-expand > .v-spacing {
 	width: 15px;
+}
+
+/* Version Selection Box */
+.version-selection-box {
+	border-width: 0px 0px 0px 1px;
+	border-style: solid;
+	border-color: rgb(221, 221, 221);
+	border-radius: 0px;
+	padding-left: 6px;
+}
+
+.version-selection-box:before {
+	content: "";
+	display: inline-block;
+	vertical-align: middle;
+	height: 100%;
+	line-height: 100%;
+}
+.version-selection-box input.v-filterselect-input {
+	vertical-align: middle;
+	float: none;
+}
+.version-selection-box input:focus {
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	box-shadow: none;
+}
+.version-selection-box .v-filterselect-button {
+	vertical-align: middle;
 }

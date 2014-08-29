@@ -1,8 +1,24 @@
+/**
+ * This file is part of mycollab-mobile.
+ *
+ * mycollab-mobile is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * mycollab-mobile is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with mycollab-mobile.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package com.esofthead.mycollab.mobile.module.project.view;
 
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.mobile.UIConstants;
-import com.esofthead.mycollab.mobile.module.crm.events.CrmEvent;
+import com.esofthead.mycollab.mobile.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.mobile.ui.AbstractMobileMainView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.vaadin.addon.touchkit.ui.EmailField;
@@ -56,7 +72,6 @@ public class ProjectLoginViewImpl extends AbstractMobileMainView implements
 		CssLayout welcomeTextWrapper = new CssLayout();
 		welcomeTextWrapper.setStyleName("welcometext-wrapper");
 		welcomeTextWrapper.setWidth("100%");
-		welcomeTextWrapper.setHeight("15px");
 		Label welcomeText = new Label("Login to Projects");
 		welcomeText.setWidth("150px");
 		welcomeTextWrapper.addComponent(welcomeText);
@@ -90,7 +105,7 @@ public class ProjectLoginViewImpl extends AbstractMobileMainView implements
 			@Override
 			public void buttonClick(Button.ClickEvent event) {
 				EventBusFactory.getInstance().post(
-						new CrmEvent.PlainLogin(this, new String[] {
+						new ProjectEvent.PlainLogin(this, new String[] {
 								emailField.getValue(), pwdField.getValue(),
 								String.valueOf(rememberPassword.getValue()) }));
 			}

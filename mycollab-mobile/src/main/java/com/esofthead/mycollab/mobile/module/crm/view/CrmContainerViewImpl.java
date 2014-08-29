@@ -1,3 +1,19 @@
+/**
+ * This file is part of mycollab-mobile.
+ *
+ * mycollab-mobile is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * mycollab-mobile is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with mycollab-mobile.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package com.esofthead.mycollab.mobile.module.crm.view;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
@@ -21,7 +37,6 @@ import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriter
 import com.esofthead.mycollab.module.crm.i18n.CrmCommonI18nEnum;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
-import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.vaadin.ui.Component;
 
@@ -119,53 +134,44 @@ public class CrmContainerViewImpl extends AbstractMobileTabPageView implements
 					AccountSearchCriteria criteria = new AccountSearchCriteria();
 					criteria.setSaccountid(new NumberSearchField(
 							SearchField.AND, AppContext.getAccountId()));
-					accountPresenter.go(CrmContainerViewImpl.this,
-							new ScreenData.Search<AccountSearchCriteria>(
-									criteria));
+					accountPresenter.getView().getPagedBeanTable()
+							.setSearchCriteria(criteria);
 				} else if (currentComponent == getContactTab()) {
 					ContactSearchCriteria criteria = new ContactSearchCriteria();
 					criteria.setSaccountid(new NumberSearchField(
 							SearchField.AND, AppContext.getAccountId()));
-					contactPresenter.go(CrmContainerViewImpl.this,
-							new ScreenData.Search<ContactSearchCriteria>(
-									criteria));
+					contactPresenter.getView().getPagedBeanTable()
+							.setSearchCriteria(criteria);
 				} else if (currentComponent == getCampaignTab()) {
 					CampaignSearchCriteria criteria = new CampaignSearchCriteria();
 					criteria.setSaccountid(new NumberSearchField(
 							SearchField.AND, AppContext.getAccountId()));
-					campaignPresenter.go(CrmContainerViewImpl.this,
-							new ScreenData.Search<CampaignSearchCriteria>(
-									criteria));
+					campaignPresenter.getView().getPagedBeanTable()
+							.setSearchCriteria(criteria);
 				} else if (currentComponent == getLeadTab()) {
 					LeadSearchCriteria criteria = new LeadSearchCriteria();
 					criteria.setSaccountid(new NumberSearchField(
 							SearchField.AND, AppContext.getAccountId()));
-					leadPresenter
-							.go(CrmContainerViewImpl.this,
-									new ScreenData.Search<LeadSearchCriteria>(
-											criteria));
+					leadPresenter.getView().getPagedBeanTable()
+							.setSearchCriteria(criteria);
 				} else if (currentComponent == getOpportunityTab()) {
 					OpportunitySearchCriteria criteria = new OpportunitySearchCriteria();
 					criteria.setSaccountid(new NumberSearchField(
 							SearchField.AND, AppContext.getAccountId()));
-					opportunityPresenter.go(CrmContainerViewImpl.this,
-							new ScreenData.Search<OpportunitySearchCriteria>(
-									criteria));
+					opportunityPresenter.getView().getPagedBeanTable()
+							.setSearchCriteria(criteria);
 				} else if (currentComponent == getCaseTab()) {
 					CaseSearchCriteria criteria = new CaseSearchCriteria();
 					criteria.setSaccountid(new NumberSearchField(
 							SearchField.AND, AppContext.getAccountId()));
-					casePresenter
-							.go(CrmContainerViewImpl.this,
-									new ScreenData.Search<CaseSearchCriteria>(
-											criteria));
+					casePresenter.getView().getPagedBeanTable()
+							.setSearchCriteria(criteria);
 				} else if (currentComponent == getActivityTab()) {
 					ActivitySearchCriteria criteria = new ActivitySearchCriteria();
 					criteria.setSaccountid(new NumberSearchField(
 							SearchField.AND, AppContext.getAccountId()));
-					activityPresenter.go(CrmContainerViewImpl.this,
-							new ScreenData.Search<ActivitySearchCriteria>(
-									criteria));
+					activityPresenter.getView().getPagedBeanTable()
+							.setSearchCriteria(criteria);
 				}
 			}
 		});
