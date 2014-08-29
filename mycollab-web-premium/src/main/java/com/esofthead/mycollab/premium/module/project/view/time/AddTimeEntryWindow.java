@@ -144,7 +144,7 @@ public class AddTimeEntryWindow extends Window implements
 
 		HorizontalLayout controlsLayout = new HorizontalLayout();
 		controlsLayout.setSpacing(true);
-		
+
 		Button cancelBtn = new Button(
 				AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL_LABEL),
 				new Button.ClickListener() {
@@ -157,7 +157,7 @@ public class AddTimeEntryWindow extends Window implements
 				});
 		cancelBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
 		controlsLayout.addComponent(cancelBtn);
-		
+
 		Button saveBtn = new Button(
 				AppContext.getMessage(TimeTrackingI18nEnum.BUTTON_LOG_TIME),
 				new Button.ClickListener() {
@@ -357,7 +357,8 @@ public class AddTimeEntryWindow extends Window implements
 			timeLogging.setIsbillable(isBillableCheckBox.getValue());
 			timeLogging.setLoguser(logForMember.getUsername());
 			timeLogging.setCreateduser(AppContext.getUsername());
-			timeLogging.setLogforday(calendar.getTime());
+			timeLogging.setLogforday(DateTimeUtils.trimHMSOfDate(calendar
+					.getTime()));
 			timeLogging.setLogvalue(timeVal);
 			timeLogging.setNote(descArea.getValue());
 			timeLogging.setProjectid(CurrentProjectVariables.getProjectId());
