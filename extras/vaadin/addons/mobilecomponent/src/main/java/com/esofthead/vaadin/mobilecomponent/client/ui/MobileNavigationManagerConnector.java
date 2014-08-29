@@ -12,35 +12,37 @@ import com.vaadin.shared.ui.Connect;
 
 @Connect(MobileNavigationManager.class)
 public class MobileNavigationManagerConnector extends
-        NavigationManagerConnector {
+		NavigationManagerConnector {
 
 	private static final long serialVersionUID = 2649671282085312270L;
 
 	@Override
-    protected Widget createWidget() {
-        return GWT.create(VMobileNavigationManager.class);
-    }
+	protected Widget createWidget() {
+		return GWT.create(VMobileNavigationManager.class);
+	}
 
-    @Override
-    public VMobileNavigationManager getWidget() {
-        return (VMobileNavigationManager) super.getWidget();
-    }
+	@Override
+	public VMobileNavigationManager getWidget() {
+		return (VMobileNavigationManager) super.getWidget();
+	}
 
-    @Override
-    public MobileNavigationManagerState getState() {
-        return (MobileNavigationManagerState) super.getState();
-    }
+	@Override
+	public MobileNavigationManagerState getState() {
+		return (MobileNavigationManagerState) super.getState();
+	}
 
-    @Override
-    public void onStateChanged(StateChangeEvent stateChangeEvent) {
+	@Override
+	public void onStateChanged(StateChangeEvent stateChangeEvent) {
 
-        if (getState().navigationMenu != null) {
-            Widget navMenu = ((ComponentConnector) getState().navigationMenu)
-                    .getWidget();
-            getWidget().setNavigationMenu(navMenu);
-        }
+		if (getState().navigationMenu != null) {
+			Widget navMenu = ((ComponentConnector) getState().navigationMenu)
+					.getWidget();
+			getWidget().setNavigationMenu(navMenu);
+		} else {
+			getWidget().setNavigationMenu(null);
+		}
 
-        super.onStateChanged(stateChangeEvent);
-    }
+		super.onStateChanged(stateChangeEvent);
+	}
 
 }
