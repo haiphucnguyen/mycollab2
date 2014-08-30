@@ -186,23 +186,20 @@ public class ProblemSearchPanel extends
 
 		@Override
 		protected ProblemSearchCriteria fillupSearchCriteria() {
-			ProblemSearchPanel.this.searchCriteria = new ProblemSearchCriteria();
-			ProblemSearchPanel.this.searchCriteria
-					.setProjectId(new NumberSearchField(SearchField.AND,
-							ProblemSearchPanel.this.project.getId()));
+			searchCriteria = new ProblemSearchCriteria();
+			searchCriteria.setProjectId(new NumberSearchField(SearchField.AND,
+					ProblemSearchPanel.this.project.getId()));
 
-			ProblemSearchPanel.this.searchCriteria
-					.setProblemname(new StringSearchField(this.nameField
-							.getValue().toString().trim()));
+			searchCriteria.setProblemname(new StringSearchField(this.nameField
+					.getValue().toString().trim()));
 
 			if (this.myItemCheckbox.getValue()) {
-				ProblemSearchPanel.this.searchCriteria
-						.setAssignToUser(new StringSearchField(SearchField.AND,
-								AppContext.getUsername()));
+				searchCriteria.setAssignToUser(new StringSearchField(
+						SearchField.AND, AppContext.getUsername()));
 			} else {
-				ProblemSearchPanel.this.searchCriteria.setAssignToUser(null);
+				searchCriteria.setAssignToUser(null);
 			}
-			return ProblemSearchPanel.this.searchCriteria;
+			return searchCriteria;
 		}
 
 		@Override
@@ -242,6 +239,14 @@ public class ProblemSearchPanel extends
 				return new ProjectMemberListSelect();
 			}
 			return null;
+		}
+
+		@Override
+		protected ProblemSearchCriteria fillupSearchCriteria() {
+			searchCriteria = super.fillupSearchCriteria();
+			searchCriteria.setProjectId(new NumberSearchField(SearchField.AND,
+					ProblemSearchPanel.this.project.getId()));
+			return searchCriteria;
 		}
 	}
 }
