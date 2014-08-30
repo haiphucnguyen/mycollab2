@@ -192,22 +192,19 @@ public class RiskSearchPanel extends
 
 		@Override
 		protected SearchCriteria fillupSearchCriteria() {
-			RiskSearchPanel.this.searchCriteria = new RiskSearchCriteria();
-			RiskSearchPanel.this.searchCriteria
-					.setProjectId(new NumberSearchField(SearchField.AND,
-							RiskSearchPanel.this.project.getId()));
-			RiskSearchPanel.this.searchCriteria
-					.setRiskname(new StringSearchField(this.nameField
-							.getValue().toString().trim()));
+			searchCriteria = new RiskSearchCriteria();
+			searchCriteria.setProjectId(new NumberSearchField(SearchField.AND,
+					project.getId()));
+			searchCriteria.setRiskname(new StringSearchField(this.nameField
+					.getValue().toString().trim()));
 
 			if (this.myItemCheckbox.getValue()) {
-				RiskSearchPanel.this.searchCriteria
-						.setAssignToUser(new StringSearchField(SearchField.AND,
-								AppContext.getUsername()));
+				searchCriteria.setAssignToUser(new StringSearchField(
+						SearchField.AND, AppContext.getUsername()));
 			} else {
-				RiskSearchPanel.this.searchCriteria.setAssignToUser(null);
+				searchCriteria.setAssignToUser(null);
 			}
-			return RiskSearchPanel.this.searchCriteria;
+			return searchCriteria;
 		}
 
 		@Override
@@ -248,5 +245,14 @@ public class RiskSearchPanel extends
 			}
 			return null;
 		}
+
+		@Override
+		protected RiskSearchCriteria fillupSearchCriteria() {
+			searchCriteria = super.fillupSearchCriteria();
+			searchCriteria.setProjectId(new NumberSearchField(SearchField.AND,
+					project.getId()));
+			return searchCriteria;
+		}
+
 	}
 }
