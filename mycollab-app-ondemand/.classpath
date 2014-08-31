@@ -156,7 +156,7 @@
   <classpathentry kind="var" path="M2_REPO/com/vaadin/external/streamhtmlparser/streamhtmlparser-jsilver/0.0.10.vaadin1/streamhtmlparser-jsilver-0.0.10.vaadin1.jar" sourcepath="M2_REPO/com/vaadin/external/streamhtmlparser/streamhtmlparser-jsilver/0.0.10.vaadin1/streamhtmlparser-jsilver-0.0.10.vaadin1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/vaadin/external/google/guava/16.0.1.vaadin1/guava-16.0.1.vaadin1.jar" sourcepath="M2_REPO/com/vaadin/external/google/guava/16.0.1.vaadin1/guava-16.0.1.vaadin1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/vaadin/external/google/android-json/0.0.20131108.vaadin1/android-json-0.0.20131108.vaadin1.jar" sourcepath="M2_REPO/com/vaadin/external/google/android-json/0.0.20131108.vaadin1/android-json-0.0.20131108.vaadin1-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/com/vaadin/addon/vaadin-touchkit-agpl/4.0.0.beta2/vaadin-touchkit-agpl-4.0.0.beta2.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/vaadin/addon/vaadin-touchkit-agpl/4.0.0.rc1/vaadin-touchkit-agpl-4.0.0.rc1.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/vaadin/vaadin-client/7.2.6/vaadin-client-7.2.6.jar" sourcepath="M2_REPO/com/vaadin/vaadin-client/7.2.6/vaadin-client-7.2.6-sources.jar"/>
   <classpathentry kind="src" path="/mycollab-reporting"/>
   <classpathentry kind="var" path="M2_REPO/net/sourceforge/dynamicreports/dynamicreports-core/3.2.1/dynamicreports-core-3.2.1.jar" sourcepath="M2_REPO/net/sourceforge/dynamicreports/dynamicreports-core/3.2.1/dynamicreports-core-3.2.1-sources.jar"/>
@@ -198,11 +198,7 @@
     </attributes>
   </classpathentry>
   <classpathentry kind="var" path="M2_REPO/org/vaadin/addon/confirmdialog/2.0.5/confirmdialog-2.0.5.jar" sourcepath="M2_REPO/org/vaadin/addon/confirmdialog/2.0.5/confirmdialog-2.0.5-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/com/esofthead/vaadin/cropField/1.0-SNAPSHOT/cropField-1.0-SNAPSHOT.jar" sourcepath="M2_REPO/com/esofthead/vaadin/cropField/1.0-SNAPSHOT/cropField-1.0-SNAPSHOT-sources.jar">
-    <attributes>
-      <attribute value="jar:file:/Users/haiphucnguyen/.m2/repository/com/esofthead/vaadin/cropField/1.0-SNAPSHOT/cropField-1.0-SNAPSHOT-javadoc.jar!/" name="javadoc_location"/>
-    </attributes>
-  </classpathentry>
+  <classpathentry kind="var" path="M2_REPO/com/esofthead/vaadin/cropField/1.0-SNAPSHOT/cropField-1.0-SNAPSHOT.jar" sourcepath="M2_REPO/com/esofthead/vaadin/cropField/1.0-SNAPSHOT/cropField-1.0-SNAPSHOT-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/esofthead/vaadin/calendarext/1.0.0-SNAPSHOT/calendarext-1.0.0-SNAPSHOT.jar" sourcepath="M2_REPO/com/esofthead/vaadin/calendarext/1.0.0-SNAPSHOT/calendarext-1.0.0-SNAPSHOT-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/vaadin/addons/animator/2.0.0/animator-2.0.0.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/vaadin/addons/dom/0.1.0/dom-0.1.0.jar"/>
@@ -221,11 +217,12 @@
   <classpathentry kind="var" path="M2_REPO/net/sf/opencsv/opencsv/2.3/opencsv-2.3.jar" sourcepath="M2_REPO/net/sf/opencsv/opencsv/2.3/opencsv-2.3-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/springframework/spring-webmvc/4.0.6.RELEASE/spring-webmvc-4.0.6.RELEASE.jar" sourcepath="M2_REPO/org/springframework/spring-webmvc/4.0.6.RELEASE/spring-webmvc-4.0.6.RELEASE-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/esofthead/vaadin/floatingcomponent/0.0.1-SNAPSHOT/floatingcomponent-0.0.1-SNAPSHOT.jar" sourcepath="M2_REPO/com/esofthead/vaadin/floatingcomponent/0.0.1-SNAPSHOT/floatingcomponent-0.0.1-SNAPSHOT-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/vaadin/addons/ckeditor-wrapper-for-vaadin/7.9.2/ckeditor-wrapper-for-vaadin-7.9.2.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/vaadin/addons/ckeditor-wrapper-for-vaadin/7.9.3/ckeditor-wrapper-for-vaadin-7.9.3.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/vaadin/addon/vaadin-charts/1.1.6/vaadin-charts-1.1.6.jar" sourcepath="M2_REPO/com/vaadin/addon/vaadin-charts/1.1.6/vaadin-charts-1.1.6-sources.jar"/>
   <classpathentry kind="src" path="/mycollab-jetty-session-premium"/>
   <classpathentry kind="src" path="/mycollab-mobile"/>
   <classpathentry kind="var" path="M2_REPO/com/esofthead/vaadin/mobilecomponent/1.0.0-SNAPSHOT/mobilecomponent-1.0.0-SNAPSHOT.jar" sourcepath="M2_REPO/com/esofthead/vaadin/mobilecomponent/1.0.0-SNAPSHOT/mobilecomponent-1.0.0-SNAPSHOT-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/esofthead/vaadin/navigationbar-quickmenu/1.0.0-SNAPSHOT/navigationbar-quickmenu-1.0.0-SNAPSHOT.jar" sourcepath="M2_REPO/com/esofthead/vaadin/navigationbar-quickmenu/1.0.0-SNAPSHOT/navigationbar-quickmenu-1.0.0-SNAPSHOT-sources.jar"/>
   <classpathentry kind="src" path="/mycollab-scheduler-ondemand"/>
   <classpathentry kind="src" path="/mycollab-search"/>
   <classpathentry kind="var" path="M2_REPO/org/springframework/data/spring-data-solr/1.2.1.RELEASE/spring-data-solr-1.2.1.RELEASE.jar" sourcepath="M2_REPO/org/springframework/data/spring-data-solr/1.2.1.RELEASE/spring-data-solr-1.2.1.RELEASE-sources.jar"/>
