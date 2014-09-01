@@ -26,7 +26,7 @@ public class NoValueSearchField extends SearchField {
 	private static final long serialVersionUID = 1L;
 
 	private String queryCount;
-	
+
 	private String querySelect;
 
 	public NoValueSearchField(String oper, String expression) {

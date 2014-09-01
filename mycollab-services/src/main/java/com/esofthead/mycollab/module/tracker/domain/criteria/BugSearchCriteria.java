@@ -130,10 +130,15 @@ public class BugSearchCriteria extends SearchCriteria {
 						WHERE("m_tracker_bug_related_item.bugid=m_tracker_bug.id");
 					}
 				}.toString();
-				sqlResult.append("(").append(result).append(") = 0");
+				sqlResult.append("(").append(result).append(") > 0");
 				if (i < array.length - 1) {
-					sqlResult.append(" AND ");
+					sqlResult.append(" OR ");
 				}
+			}
+			
+			if (array.length >1) {
+				sqlResult.insert(0, '(');
+				sqlResult.append(')');
 			}
 
 			return new NoValueSearchField(oper, sqlResult.toString());
@@ -163,12 +168,16 @@ public class BugSearchCriteria extends SearchCriteria {
 						WHERE("m_tracker_bug_related_item.bugid=m_tracker_bug.id");
 					}
 				}.toString();
-				sqlResult.append("(").append(result).append(") > 0");
+				sqlResult.append("(").append(result).append(") = 0");
 				if (i < array.length - 1) {
-					sqlResult.append(" OR ");
+					sqlResult.append(" AND ");
 				}
 			}
-
+			
+			if (array.length >1) {
+				sqlResult.insert(0, '(');
+				sqlResult.append(')');
+			}
 			return new NoValueSearchField(oper, sqlResult.toString());
 		}
 
