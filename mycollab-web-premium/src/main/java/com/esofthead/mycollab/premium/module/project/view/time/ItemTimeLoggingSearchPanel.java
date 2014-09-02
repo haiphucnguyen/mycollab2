@@ -182,8 +182,8 @@ class ItemTimeLoggingSearchPanel extends
 		protected SearchCriteria fillupSearchCriteria() {
 			ItemTimeLoggingSearchPanel.this.searchCriteria = new ItemTimeLoggingSearchCriteria();
 			ItemTimeLoggingSearchPanel.this.searchCriteria
-					.setProjectId(new NumberSearchField(CurrentProjectVariables
-							.getProjectId()));
+					.setProjectIds(new SetSearchField<Integer>(
+							CurrentProjectVariables.getProjectId()));
 
 			ItemTimeLoggingSearchPanel.this.searchCriteria
 					.setRangeDate(this.dateRangeField.getRangeSearchValue());
