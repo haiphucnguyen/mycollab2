@@ -239,8 +239,8 @@ public class AddTimeEntryWindow extends Window implements
 		taskLayout.addComponent(attachTaskBtn);
 	}
 
-	private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
-			"MM/dd");
+	private SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
+			AppContext.getUserDayMonthFormat());
 
 	private void updateTimeTableHeader() {
 		Date monday = DateTimeUtils.getBounceDateofWeek(selectedDate)[0];
