@@ -18,7 +18,6 @@ package com.esofthead.mycollab.vaadin.mvp;
 
 import java.io.Serializable;
 
-import com.esofthead.mycollab.vaadin.mvp.PageView.ViewListener;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.VerticalLayout;
 
@@ -42,7 +41,7 @@ public abstract class AbstractPageView extends VerticalLayout implements
 	}
 
 	@Override
-	public <E> void addViewListener(ViewListener<E> listener) {
+	public void addViewListener(ViewListener listener) {
 		addListener(ViewEvent.VIEW_IDENTIFIER, ViewEvent.class, listener,
 				ViewListener.viewInitMethod);
 	}
