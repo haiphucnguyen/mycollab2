@@ -381,7 +381,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 
 		Separator separator = new Separator();
 		separator.setHeight("100%");
-		separator.setWidth(SIZE_UNDEFINED, Sizeable.Unit.PIXELS);
+		separator.setWidthUndefined();
 		mainView.addComponent(separator);
 		mainView.setComponentAlignment(separator, Alignment.TOP_LEFT);
 

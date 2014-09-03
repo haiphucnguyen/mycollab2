@@ -25,6 +25,7 @@ public class TimeTrackingPresenter extends
 		super(ITimeTrackingContainer.class);
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		ProjectView projectViewContainer = (ProjectView) container;
