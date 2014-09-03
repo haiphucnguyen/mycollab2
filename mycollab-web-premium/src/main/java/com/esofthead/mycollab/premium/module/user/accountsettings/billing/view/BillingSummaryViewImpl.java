@@ -37,7 +37,6 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.vaadin.server.Sizeable;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
@@ -169,14 +168,13 @@ public class BillingSummaryViewImpl extends AbstractPageView implements
 			Label billingPrice = new Label("<span class='billing-price'>$"
 					+ plan.getPricing() + "</span>/month", ContentMode.HTML);
 			billingPrice.addStyleName("billing-price-lbl");
-			billingPrice
-					.setWidth(Sizeable.SIZE_UNDEFINED, Sizeable.Unit.PIXELS);
+			billingPrice.setWidthUndefined();
 			singlePlan.addComponent(billingPrice);
 
 			Label billingUser = new Label("<span class='billing-user'>"
 					+ plan.getNumusers() + "</span>&nbsp;Users",
 					ContentMode.HTML);
-			billingUser.setWidth(Sizeable.SIZE_UNDEFINED, Sizeable.Unit.PIXELS);
+			billingUser.setWidthUndefined();
 			singlePlan.addComponent(billingUser);
 
 			String planVolume = ResourceUtils
@@ -184,15 +182,13 @@ public class BillingSummaryViewImpl extends AbstractPageView implements
 
 			Label billingStorage = new Label("<span class='billing-storage'>"
 					+ planVolume + "</span>&nbsp;Storage", ContentMode.HTML);
-			billingStorage.setWidth(Sizeable.SIZE_UNDEFINED,
-					Sizeable.Unit.PIXELS);
+			billingStorage.setWidthUndefined();
 			singlePlan.addComponent(billingStorage);
 
 			Label billingProject = new Label("<span class='billing-project'>"
 					+ plan.getNumprojects() + "</span>&nbsp;Project"
 					+ (plan.getNumprojects() > 1 ? "s" : ""), ContentMode.HTML);
-			billingProject.setWidth(Sizeable.SIZE_UNDEFINED,
-					Sizeable.Unit.PIXELS);
+			billingProject.setWidthUndefined();
 			singlePlan.addComponent(billingProject);
 
 			Label billingBugTracking;
@@ -203,8 +199,7 @@ public class BillingSummaryViewImpl extends AbstractPageView implements
 				billingBugTracking = new Label("&nbsp;", ContentMode.HTML);
 			}
 			billingBugTracking.addStyleName("billing-bug-feature");
-			billingBugTracking.setWidth(Sizeable.SIZE_UNDEFINED,
-					Sizeable.Unit.PIXELS);
+			billingBugTracking.setWidthUndefined();
 			singlePlan.addComponent(billingBugTracking);
 
 			Label billingTimeTracking;
@@ -214,8 +209,7 @@ public class BillingSummaryViewImpl extends AbstractPageView implements
 				billingTimeTracking = new Label("&nbsp;", ContentMode.HTML);
 			}
 			billingTimeTracking.addStyleName("billing-timetrack-feature");
-			billingTimeTracking.setWidth(Sizeable.SIZE_UNDEFINED,
-					Sizeable.Unit.PIXELS);
+			billingTimeTracking.setWidthUndefined();
 			singlePlan.addComponent(billingTimeTracking);
 
 			Label billingStandup;
@@ -225,8 +219,7 @@ public class BillingSummaryViewImpl extends AbstractPageView implements
 				billingStandup = new Label("&nbsp;", ContentMode.HTML);
 			}
 			billingStandup.addStyleName("billing-standup-feature");
-			billingStandup.setWidth(Sizeable.SIZE_UNDEFINED,
-					Sizeable.Unit.PIXELS);
+			billingStandup.setWidthUndefined();
 			singlePlan.addComponent(billingStandup);
 
 			Button selectThisPlan = new Button(
@@ -271,8 +264,7 @@ public class BillingSummaryViewImpl extends AbstractPageView implements
 				+ currentBillingPlan.getPricing() + "</span>/Month",
 				ContentMode.HTML);
 		currentBillingPrice.setStyleName("current-price-lbl");
-		currentBillingPrice.setWidth(Sizeable.SIZE_UNDEFINED,
-				Sizeable.Unit.PIXELS);
+		currentBillingPrice.setWidthUndefined();
 		currentBillingPrice.setImmediate(true);
 		currentPlan.addComponent(currentBillingPrice);
 
@@ -307,7 +299,7 @@ public class BillingSummaryViewImpl extends AbstractPageView implements
 
 		Label currentUsage = new Label(planInfo, ContentMode.HTML);
 		currentUsage.addStyleName("current-usage");
-		currentUsage.setWidth(Sizeable.SIZE_UNDEFINED, Sizeable.Unit.PIXELS);
+		currentUsage.setWidthUndefined();
 		currentPlan.addComponent(currentUsage);
 	}
 
