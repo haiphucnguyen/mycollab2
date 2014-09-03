@@ -117,7 +117,7 @@ public class BillingSendingNotificationJobs extends GenericQuartzJobBean {
 					billingAccount.setId(account.getId());
 					billingAccount
 							.setReminderstatus(AccountReminderStatusContants.REMIND_ACCOUNT_IS_ABOUT_END_1ST_TIME);
-					billingAccountService.updateWithSessionWithSelective(
+					billingAccountService.updateSelectiveWithSession(
 							billingAccount, "");
 				} else if (accCreatedDate.before(dateRemind2nd)
 						&& (account.getReminderstatus() == AccountReminderStatusContants.REMIND_ACCOUNT_IS_ABOUT_END_1ST_TIME || account
@@ -130,7 +130,7 @@ public class BillingSendingNotificationJobs extends GenericQuartzJobBean {
 					billingAccount.setId(account.getId());
 					billingAccount
 							.setReminderstatus(AccountReminderStatusContants.REMIND_ACCOUNT_IS_ABOUT_END_2ST_TIME);
-					billingAccountService.updateWithSessionWithSelective(
+					billingAccountService.updateSelectiveWithSession(
 							billingAccount, "");
 				} else if (accCreatedDate.before(dateExpire)) {
 					log.debug("Check whether account exceed 32 days to convert to basic plan");
@@ -144,7 +144,7 @@ public class BillingSendingNotificationJobs extends GenericQuartzJobBean {
 
 					billingAccount
 							.setReminderstatus(AccountReminderStatusContants.REMIND_ACCOUNT_IS_CONVERTED_TO_FREE_PLAN);
-					billingAccountService.updateWithSessionWithSelective(
+					billingAccountService.updateSelectiveWithSession(
 							billingAccount, "");
 				}
 			}

@@ -55,7 +55,7 @@ public class BillingSendingNotificationJobsTest extends GenericJobTest {
 		ArgumentCaptor<String> strArgument = ArgumentCaptor
 				.forClass(String.class);
 
-		verify(billingAccountService).updateWithSessionWithSelective(
+		verify(billingAccountService).updateSelectiveWithSession(
 				billingAccountArgument.capture(), strArgument.capture());
 		Assert.assertEquals("", strArgument.getValue());
 		Assert.assertEquals(
@@ -86,7 +86,7 @@ public class BillingSendingNotificationJobsTest extends GenericJobTest {
 		ArgumentCaptor<String> strArgument = ArgumentCaptor
 				.forClass(String.class);
 
-		verify(billingAccountService).updateWithSessionWithSelective(
+		verify(billingAccountService).updateSelectiveWithSession(
 				billingAccountArgument.capture(), strArgument.capture());
 		Assert.assertEquals("", strArgument.getValue());
 		Assert.assertEquals(
@@ -121,7 +121,7 @@ public class BillingSendingNotificationJobsTest extends GenericJobTest {
 		ArgumentCaptor<String> strArgument = ArgumentCaptor
 				.forClass(String.class);
 
-		verify(billingAccountService).updateWithSessionWithSelective(
+		verify(billingAccountService).updateSelectiveWithSession(
 				billingAccountArgument.capture(), strArgument.capture());
 		Assert.assertEquals("", strArgument.getValue());
 		Assert.assertEquals(
