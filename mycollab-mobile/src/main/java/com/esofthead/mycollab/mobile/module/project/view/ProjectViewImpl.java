@@ -16,11 +16,8 @@
  */
 package com.esofthead.mycollab.mobile.module.project.view;
 
-import com.esofthead.mycollab.mobile.module.project.ui.InsideProjectNavigationMenu;
 import com.esofthead.mycollab.mobile.ui.AbstractMobilePageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
-import com.esofthead.vaadin.mobilecomponent.MobileNavigationManager;
-import com.vaadin.ui.UI;
 
 /**
  * @author MyCollab Ltd.
@@ -33,7 +30,6 @@ public class ProjectViewImpl extends AbstractMobilePageView implements
 	private static final long serialVersionUID = -5411890906862175950L;
 
 	public ProjectViewImpl() {
-		((MobileNavigationManager) UI.getCurrent().getContent())
-				.setNavigationMenu(new InsideProjectNavigationMenu());
+
 	}
 }
