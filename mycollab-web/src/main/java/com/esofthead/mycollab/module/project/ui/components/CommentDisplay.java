@@ -21,11 +21,11 @@ import com.esofthead.mycollab.common.domain.SimpleComment;
 import com.esofthead.mycollab.common.domain.criteria.CommentSearchCriteria;
 import com.esofthead.mycollab.common.service.CommentService;
 import com.esofthead.mycollab.common.ui.components.CommentRowDisplayHandler;
-import com.esofthead.mycollab.common.ui.components.ReloadableComponent;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.schedule.email.SendingRelayEmailNotificationAction;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.BeanList;
+import com.esofthead.mycollab.vaadin.ui.ReloadableComponent;
 import com.vaadin.ui.VerticalLayout;
 
 /**
