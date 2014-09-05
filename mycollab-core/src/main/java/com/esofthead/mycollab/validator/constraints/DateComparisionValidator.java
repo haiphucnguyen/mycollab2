@@ -45,17 +45,13 @@ public class DateComparisionValidator implements
 	@Override
 	public boolean isValid(Object value, ConstraintValidatorContext context) {
 		try {
-			Date firstDate = DateTimeUtils.trimHMSOfDate((Date) PropertyUtils
-					.getProperty(value, firstDateField));
-			Date lastDate = DateTimeUtils.trimHMSOfDate((Date) PropertyUtils
-					.getProperty(value, lastDateField));
+			Date firstDate = (Date) PropertyUtils.getProperty(value,
+					firstDateField);
+			Date lastDate = (Date) PropertyUtils.getProperty(value,
+					lastDateField);
 
-			if (firstDate == null || lastDate == null) {
-				return true;
-			} else {
-
-				return (firstDate.compareTo(lastDate) > 0) ? false : true;
-			}
+			return (DateTimeUtils.compareByDate(firstDate, lastDate) > 0) ? false
+					: true;
 		} catch (Exception ex) {
 			return true;
 		}
