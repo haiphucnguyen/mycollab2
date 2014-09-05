@@ -24,6 +24,6 @@ package com.esofthead.mycollab.core;
  */
 public class MyCollabVersion {
 	public static String getVersion() {
-		return "4.4.0";
+		return "4.5.0";
 	}
 }
