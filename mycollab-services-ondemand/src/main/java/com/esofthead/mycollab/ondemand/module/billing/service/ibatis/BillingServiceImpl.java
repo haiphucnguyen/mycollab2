@@ -26,7 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.esofthead.mycollab.common.localization.ExceptionI18nEnum;
+import com.esofthead.mycollab.common.i18n.WebExceptionI18nEnum;
 import com.esofthead.mycollab.configuration.PasswordEncryptHelper;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.UserInvalidInputException;
@@ -56,12 +56,9 @@ import com.esofthead.mycollab.module.user.domain.Role;
 import com.esofthead.mycollab.module.user.domain.SimpleRole;
 import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.module.user.domain.UserAccount;
-import com.esofthead.mycollab.module.user.domain.UserExample;
 import com.esofthead.mycollab.module.user.service.RoleService;
 import com.esofthead.mycollab.ondemand.module.billing.AccountPaymentTypeConstants;
-import com.esofthead.mycollab.ondemand.module.billing.ExistingUserRegisterException;
 import com.esofthead.mycollab.ondemand.module.billing.RegisterSourceConstants;
-import com.esofthead.mycollab.rest.server.signup.ExistingEmailRegisterException;
 import com.esofthead.mycollab.rest.server.signup.SubdomainExistedException;
 import com.esofthead.mycollab.security.PermissionMap;
 
@@ -109,22 +106,20 @@ public class BillingServiceImpl implements BillingService {
 
 		// check subdomain belong to keyword list
 		if (ACCOUNT_BLACK_LIST.contains(subdomain)) {
-			throw new SubdomainExistedException(
-					LocalizationHelper.getMessage(
-							LocalizationHelper.defaultLocale,
-							ExceptionI18nEnum.EXISTING_DOMAIN_REGISTER_ERROR,
-							subdomain));
+			throw new SubdomainExistedException(LocalizationHelper.getMessage(
+					LocalizationHelper.defaultLocale,
+					WebExceptionI18nEnum.EXISTING_DOMAIN_REGISTER_ERROR,
+					subdomain));
 		}
 
 		log.debug("Check whether subdomain {} is existed", subdomain);
 		final BillingAccountExample billingEx = new BillingAccountExample();
 		billingEx.createCriteria().andSubdomainEqualTo(subdomain);
 		if (this.billingAccountMapper.countByExample(billingEx) > 0) {
-			throw new SubdomainExistedException(
-					LocalizationHelper.getMessage(
-							LocalizationHelper.defaultLocale,
-							ExceptionI18nEnum.EXISTING_DOMAIN_REGISTER_ERROR,
-							subdomain));
+			throw new SubdomainExistedException(LocalizationHelper.getMessage(
+					LocalizationHelper.defaultLocale,
+					WebExceptionI18nEnum.EXISTING_DOMAIN_REGISTER_ERROR,
+					subdomain));
 		}
 
 		final BillingPlan billingPlan = this.billingPlanMapper
