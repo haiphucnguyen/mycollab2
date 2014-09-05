@@ -116,28 +116,6 @@ public class BillingServiceImpl implements BillingService {
 							subdomain));
 		}
 
-		// check whether username is already existed
-		log.debug("Check whether username {} is existed", username);
-		final UserExample userEx = new UserExample();
-		userEx.createCriteria().andUsernameEqualTo(username);
-		if (this.userMapper.countByExample(userEx) > 0) {
-			throw new ExistingUserRegisterException(
-					LocalizationHelper.getMessage(
-							LocalizationHelper.defaultLocale,
-							ExceptionI18nEnum.EXISTING_USER_REGISTER_ERROR,
-							username));
-		}
-
-		log.debug("Check whether email {} is existed", email);
-		userEx.createCriteria().andUsernameEqualTo(email);
-		if (this.userMapper.countByExample(userEx) > 0) {
-			throw new ExistingEmailRegisterException(
-					LocalizationHelper.getMessage(
-							LocalizationHelper.defaultLocale,
-							ExceptionI18nEnum.EXISTING_EMAIL_REGISTER_ERROR,
-							username));
-		}
-
 		log.debug("Check whether subdomain {} is existed", subdomain);
 		final BillingAccountExample billingEx = new BillingAccountExample();
 		billingEx.createCriteria().andSubdomainEqualTo(subdomain);
@@ -196,15 +174,7 @@ public class BillingServiceImpl implements BillingService {
 		}
 
 		if (user.getLastname() == null) {
-			if (user.getFirstname().equals("")) {
-				int index = email.lastIndexOf("@");
-				if (index > 0) {
-					user.setLastname(email.substring(0, index));
-				}
-				user.setLastname(email);
-			} else {
-				user.setLastname("");
-			}
+			user.setLastname(StringUtils.extractNameFromEmail(email));
 		}
 		this.userMapper.insert(user);
 

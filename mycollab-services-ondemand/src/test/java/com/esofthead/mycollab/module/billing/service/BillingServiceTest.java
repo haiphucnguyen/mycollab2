@@ -19,12 +19,16 @@ package com.esofthead.mycollab.module.billing.service;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.user.domain.BillingAccountWithOwners;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
+import com.esofthead.mycollab.rest.server.signup.SubdomainExistedException;
 import com.esofthead.mycollab.test.DataSet;
 import com.esofthead.mycollab.test.MyCollabClassRunner;
 import com.esofthead.mycollab.test.service.ServiceTest;
@@ -34,6 +38,9 @@ public class BillingServiceTest extends ServiceTest {
 
 	@Autowired
 	private BillingService billingService;
+
+	@Rule
+	public ExpectedException expectedEx = ExpectedException.none();
 
 	@Test
 	@DataSet
@@ -48,5 +55,23 @@ public class BillingServiceTest extends ServiceTest {
 
 		SimpleUser user = account.getOwners().get(0);
 		Assert.assertEquals("hai79", user.getUsername());
+	}
+
+	@Test
+	@DataSet
+	public void registerAccountFailedBecauseDomainIsNotAsciiString() {
+		expectedEx.expect(MyCollabException.class);
+		expectedEx.expectMessage("Subdomain must be an ascii string");
+
+		billingService.registerAccount("ANguyễnHai", 1,
+				"hainguyen@esofthead.com", "123", "hainguyen@esofthead.com",
+				"3", false);
+	}
+
+	@Test(expected = SubdomainExistedException.class)
+	@DataSet
+	public void registerAccountFailedBecauseSubDomainExisted() {
+		billingService.registerAccount("abc", 1, "haiphucnguyen@gmail.com",
+				"123", "haiphucnguyen@gmail.com", "3", false);
 	}
 }
