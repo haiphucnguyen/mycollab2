@@ -27,7 +27,8 @@ import com.esofthead.mycollab.module.user.service.UserService;
  * @since 1.0
  * 
  */
-public class CacheServiceIgnoreList {
+class CacheServiceIgnoreList {
+	@SuppressWarnings("rawtypes")
 	static List<Class> blacklistCls = Arrays.asList(new Class[] {
 			BillingAccountService.class, BillingPlanCheckerService.class,
 			UserService.class, RelayEmailNotificationService.class,

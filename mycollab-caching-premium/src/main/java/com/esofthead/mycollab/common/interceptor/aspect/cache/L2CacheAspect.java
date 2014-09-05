@@ -4,7 +4,6 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
@@ -40,112 +39,99 @@ public class L2CacheAspect {
 
 		Advised advised = (Advised) pjp.getThis();
 		Class<?> cls = advised.getTargetSource().getTargetClass();
+		MethodSignature ms = (MethodSignature) pjp.getSignature();
+		Method method = ms.getMethod();
+		if (method.getAnnotation(Cacheable.class) == null) {
+			return pjp.proceed();
+		}
+
 		if (CacheServiceIgnoreList.isInBlackList(CacheUtils
 				.getEnclosingServiceInterface(cls))) {
 			return pjp.proceed();
 		}
 
-		final Signature signature = pjp.getStaticPart().getSignature();
-		Cacheable cacheable = null;
-		if (signature instanceof MethodSignature) {
-			final MethodSignature ms = (MethodSignature) signature;
-			Method method = ms.getMethod();
-			cacheable = method.getAnnotation(Cacheable.class);
-
-			if (cacheable != null) {
-				Object[] args = pjp.getArgs();
-				if (args != null && args.length > 0) {
-					Annotation[][] parameterAnnotations = method
-							.getParameterAnnotations();
-					for (int i = 0; i < parameterAnnotations.length; i++) {
-						Annotation[] annos = parameterAnnotations[i];
-						for (Annotation paramAnno : annos) {
-							if (paramAnno instanceof CacheKey) {
-								Object arg = args[i];
-								Integer groupId = null;
-								try {
-									if (arg instanceof Integer) {
-										groupId = (Integer) arg;
-									} else if (arg instanceof SearchCriteria
-											&& (((SearchCriteria) arg)
-													.getSaccountid() != null)) {
-										groupId = (Integer) ((SearchCriteria) arg)
-												.getSaccountid().getValue();
-									} else if (arg instanceof SearchRequest) {
-										SearchCriteria criteria = ((SearchRequest) arg)
-												.getSearchCriteria();
-										if (criteria instanceof SearchCriteria
-												&& (((SearchCriteria) criteria)
-														.getSaccountid() != null)) {
-											groupId = (Integer) ((SearchCriteria) criteria)
-													.getSaccountid().getValue();
-										} else {
-											return pjp.proceed();
-										}
-									} else {
-										log.error(
-												"Cache key must be one of types [Integer, GroupableSearchCriteria, SearchRequest], now it has type {}",
-												arg);
-										return pjp.proceed();
-									}
-								} catch (Exception e) {
-									log.error(
-											"Error when retrieve cache key with "
-													+ BeanUtility
-															.printBeanObj(arg)
-													+ " in service class "
-													+ cls.getName() + "."
-													+ method.getName(), e);
+		Object[] args = pjp.getArgs();
+		if (args != null && args.length > 0) {
+			Annotation[][] parameterAnnotations = method
+					.getParameterAnnotations();
+			for (int i = 0; i < parameterAnnotations.length; i++) {
+				Annotation[] annos = parameterAnnotations[i];
+				for (Annotation paramAnno : annos) {
+					if (paramAnno instanceof CacheKey) {
+						Object arg = args[i];
+						Integer groupId = null;
+						try {
+							if (arg instanceof Integer) {
+								groupId = (Integer) arg;
+							} else if (arg instanceof SearchCriteria
+									&& (((SearchCriteria) arg).getSaccountid() != null)) {
+								groupId = (Integer) ((SearchCriteria) arg)
+										.getSaccountid().getValue();
+							} else if (arg instanceof SearchRequest) {
+								SearchCriteria criteria = ((SearchRequest) arg)
+										.getSearchCriteria();
+								if (criteria instanceof SearchCriteria
+										&& (((SearchCriteria) criteria)
+												.getSaccountid() != null)) {
+									groupId = (Integer) ((SearchCriteria) criteria)
+											.getSaccountid().getValue();
+								} else {
 									return pjp.proceed();
 								}
+							} else {
+								log.error(
+										"Cache key must be one of types [Integer, GroupableSearchCriteria, SearchRequest], now it has type {}",
+										arg);
+								return pjp.proceed();
+							}
+						} catch (Exception e) {
+							log.error("Error when retrieve cache key with "
+									+ BeanUtility.printBeanObj(arg)
+									+ " in service class " + cls.getName()
+									+ "." + method.getName(), e);
+							return pjp.proceed();
+						}
 
-								String key = String
-										.format("%s-%s-%s",
-												CacheUtils
-														.getEnclosingServiceInterfaceName(cls),
-												method.getName(),
-												CacheUtils
-														.constructParamsKey(args));
-								BasicCache<String, Object> cache = LocalCacheManager
-										.getCache(groupId.toString());
-								Object returnVal = cache.get(key);
+						String key = String
+								.format("%s-%s-%s", CacheUtils
+										.getEnclosingServiceInterfaceName(cls),
+										method.getName(), CacheUtils
+												.constructParamsKey(args));
+						BasicCache<String, Object> cache = LocalCacheManager
+								.getCache(groupId.toString());
+						Object returnVal = cache.get(key);
+						if (returnVal == null) {
+							returnVal = pjp.proceed();
+							try {
 								if (returnVal == null) {
-									returnVal = pjp.proceed();
-									try {
-										if (returnVal == null) {
-											return returnVal;
-										}
-										cache.put(key, returnVal);
-										log.debug(
-												"There is no exist value of key {}, query from database then put it to cache",
-												key);
-									} catch (Exception e) {
-										log.error("Error while put to cache", e);
-									}
-									return returnVal;
-								} else {
-									log.debug(
-											"There is exist value of key {}, no need to query from database",
-											key);
 									return returnVal;
 								}
+								cache.put(key, returnVal);
+								log.debug(
+										"There is no exist value of key {}, query from database then put it to cache",
+										key);
+							} catch (Exception e) {
+								log.error("Error while put to cache", e);
 							}
+							return returnVal;
+						} else {
+							log.debug(
+									"There is exist value of key {}, no need to query from database",
+									key);
+							return returnVal;
 						}
 					}
-
-					log.error(
-							"Can not cache class {}, method {} because we can not detect cache key with args {}",
-							new String[] { cls.getName(), method.getName(),
-									BeanUtility.printBeanObj(args) });
-					return pjp.proceed();
-				} else {
-					return pjp.proceed();
 				}
-			} else {
-				return pjp.proceed();
 			}
+
+			log.error(
+					"Can not cache class {}, method {} because we can not detect cache key with args {}",
+					new Object[] { cls.getName(), method.getName(),
+							BeanUtility.printBeanObj(args) });
+			return pjp.proceed();
 		} else {
 			return pjp.proceed();
 		}
+
 	}
 }
