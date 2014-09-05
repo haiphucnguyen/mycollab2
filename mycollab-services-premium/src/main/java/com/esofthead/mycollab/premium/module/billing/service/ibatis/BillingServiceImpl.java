@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.core.UnsupportedFeatureException;
 import com.esofthead.mycollab.core.cache.CacheKey;
 import com.esofthead.mycollab.module.billing.service.BillingService;
 import com.esofthead.mycollab.module.user.dao.AccountSettingsMapper;
@@ -52,31 +53,31 @@ public class BillingServiceImpl implements BillingService {
 			final String password, final String email, final String timezoneId,
 			boolean isEmailVerified) {
 
-		throw new MyCollabException(
+		throw new UnsupportedFeatureException(
 				"This feature is not supported except onsite mode");
 	}
 
 	@Override
 	public List<String> getSubdomainsOfUser(final String username) {
-		throw new MyCollabException(
+		throw new UnsupportedFeatureException(
 				"This feature is not supported except onsite mode");
 	}
 
 	@Override
 	public List<BillingPlan> getAvailablePlans() {
-		throw new MyCollabException(
+		throw new UnsupportedFeatureException(
 				"This feature is not supported except onsite mode");
 	}
 
 	@Override
 	public void updateBillingPlan(Integer accountid, int newBillingPlanId) {
-		throw new MyCollabException(
+		throw new UnsupportedFeatureException(
 				"This feature is not supported except onsite mode");
 	}
 
 	@Override
 	public void cancelAccount(Integer accountid) {
-		throw new MyCollabException(
+		throw new UnsupportedFeatureException(
 				"This feature is not supported except onsite mode");
 	}
 
