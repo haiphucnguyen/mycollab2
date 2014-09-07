@@ -98,7 +98,6 @@
 
             <build>
                 <plugins>
-                    <!-- Configure Maven site plugin to perform stage -->
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-site-plugin</artifactId>

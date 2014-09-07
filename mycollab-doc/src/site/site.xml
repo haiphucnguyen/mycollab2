@@ -5,7 +5,7 @@
     <bannerLeft>
         <!-- Reflow Maven Skin, but with "Reflow" highlighted -->
         <name><![CDATA[
-      <span class="color-highlight">MyCollab</span> Open Source
+      <h1>Project, CRM, Document and more</h1>
       ]]>
     </name>
         <href>http://esofthead.github.io/mycollab</href>
@@ -26,7 +26,7 @@
                 URLs -->
             <protocolRelativeURLs>false</protocolRelativeURLs>
             <smoothScroll>true</smoothScroll>
-            <theme>default</theme>
+            <theme>bootswatch-united</theme>
             <highlightJs>true</highlightJs>
             <highlightJsTheme>github</highlightJsTheme>
             <absoluteResourceURL>http://esofthead.github.io/mycollab
@@ -35,14 +35,14 @@
                 <!-- Brand text in top-left part of the site -->
                 <name>
           <![CDATA[
-          <span class="color-highlight">MyCollab</span> Community
+          MyCollab Community
           ]]>
                 </name>
                 <href>http://esofthead.github.io/mycollab
                 </href>
             </brand>
-            <slogan>Responsive Apache Maven skin to reflow the standard
-                Maven site with a modern feel ddd
+            <slogan>A must tool for small or mid size of any distributed
+                team
             </slogan>
             <titleTemplate>%2$s | %1$s</titleTemplate>
             <!-- Use Table of Contents at the top of the page (max 6 elements) -->
@@ -59,7 +59,7 @@
             </bottomNav>
             <bottomDescription>
         <![CDATA[
-          <span class="color-highlight">MyCollab</span> is an open source product
+          MyCollab is the stable and high performance business platform which host useful extensions to daily operations of teams, companies such as Project, CRM, Document Management and more.
         ]]>
             </bottomDescription>
             <pages>
@@ -114,8 +114,9 @@
         </head>
 
         <links>
+            <item name="Screenshots" href="screenshots.html" />
             <item name="Download"
-                href="https://sourceforge.net/projects/mycollab/files/latest" />
+                href="download.html" />
             <item name="Documentation" href="document.html" />
             <item name="Blog" href="http://www.mycollab.com" />
             <item name="Contact Us" href="https://www.mycollab.com/support" />
@@ -127,14 +128,12 @@
 
         <menu name="Main" inherit="top">
             <item name="Home" href="./" />
-            <item name="GitHub project"
-                href="https://github.com/esofthead/mycollab" />
-            <item name="Blog"
-                href="http://www.mycollab.com/blog/" />
+            <item name="GitHub project" href="https://github.com/esofthead/mycollab" />
+            <item name="Blog" href="http://www.mycollab.com/blog/" />
             <item name="Release notes" href="release-notes.html" />
         </menu>
         <menu name="Download">
-            <item name="Download" href="skin/index.html#Usage" />
+            <item name="Download" href="download.html" />
             <item name="License" href="license.html" />
         </menu>
         <menu name="Contribute" inherit="top">
