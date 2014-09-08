@@ -26,6 +26,12 @@ import com.esofthead.mycollab.vaadin.mvp.ScreenData;
  *
  */
 public class MessageScreenData {
+	public static class Add extends ScreenData<Integer> {
+		public Add() {
+			super(null);
+		}
+	}
+
 	public static class Read extends ScreenData<Integer> {
 
 		public Read(Integer params) {
