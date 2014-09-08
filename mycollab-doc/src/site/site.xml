@@ -55,6 +55,7 @@
             <bottomNav maxSpan="9">
                 <column>Main</column>
                 <column>Download</column>
+                <column>Documentation</column>
                 <column>Contribute</column>
             </bottomNav>
             <bottomDescription>
@@ -63,7 +64,7 @@
         ]]>
             </bottomDescription>
             <pages>
-                <index project="reflow-parent">
+                <index project="mycollab-doc">
                     <!-- Override the title -->
                     <titleTemplate>MyCollab</titleTemplate>
                     <!-- no breadcrumbs on the main index page -->
@@ -73,8 +74,8 @@
                     <markPageHeader>false</markPageHeader>
                     <sections>
                         <carousel />
-                        <columns>2</columns>
-                        <body />
+                        <columns>1</columns>
+                        <body/>
                         <sidebar />
                     </sections>
                 </index>
@@ -115,26 +116,27 @@
 
         <links>
             <item name="Screenshots" href="screenshots.html" />
-            <item name="Download"
-                href="download.html" />
-            <item name="Documentation" href="document.html" />
-            <item name="Blog" href="http://www.mycollab.com" />
-            <item name="Contact Us" href="https://www.mycollab.com/support" />
+            <item name="Download" href="download.html" />
         </links>
 
         <breadcrumbs>
-            <item name="MyCollab" href="/" />
+            <item name="Home" href="/" />
         </breadcrumbs>
 
         <menu name="Main" inherit="top">
             <item name="Home" href="./" />
             <item name="GitHub project" href="https://github.com/esofthead/mycollab" />
             <item name="Blog" href="http://www.mycollab.com/blog/" />
-            <item name="Release notes" href="release-notes.html" />
+            <item name="Contact Us" href="https://www.mycollab.com/support" />
         </menu>
-        <menu name="Download">
+        <menu name="Download" inherit="top">
             <item name="Download" href="download.html" />
             <item name="License" href="license.html" />
+        </menu>
+        <menu name="Documentation" inherit="bottom">
+            <item name="Installation" href="installation.html" />
+            <item name="Administrator Guideline" href="administrator.html" />
+            <item name="Development Guideline" href="development.html" />
         </menu>
         <menu name="Contribute" inherit="top">
             <item name="Contribute" href="contribute.html" />
