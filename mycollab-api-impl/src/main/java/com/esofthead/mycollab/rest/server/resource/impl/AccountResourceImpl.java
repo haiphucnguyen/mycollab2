@@ -26,6 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.esofthead.mycollab.configuration.SiteConfiguration;
+import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.module.billing.service.BillingService;
 import com.esofthead.mycollab.rest.server.domain.SignupForm;
 import com.esofthead.mycollab.rest.server.resource.AccountResource;
@@ -40,26 +41,38 @@ public class AccountResourceImpl implements AccountResource {
 
 	@Override
 	public Response signup(@Form SignupForm entity) {
-		log.debug("Start handling form request");
-		String subdomain = entity.getSubdomain();
-		int planId = entity.getPlanId();
-		String password = entity.getPassword();
-		String email = entity.getEmail();
-		String timezoneId = entity.getTimezoneId();
-		boolean isEmailVerified = entity.isEmailVerified();
+		try {
+			log.debug("Start handling form request");
+			String subdomain = entity.getSubdomain();
+			int planId = entity.getPlanId();
+			String password = entity.getPassword();
+			String email = entity.getEmail();
+			String timezoneId = entity.getTimezoneId();
+			boolean isEmailVerified = entity.isEmailVerified();
 
-		log.debug("Register account with subdomain {}, username {}", subdomain,
-				email);
-		this.billingService.registerAccount(subdomain, planId, email, password,
-				email, timezoneId, isEmailVerified);
+			log.debug("Register account with subdomain {}, username {}",
+					subdomain, email);
+			this.billingService.registerAccount(subdomain, planId, email,
+					password, email, timezoneId, isEmailVerified);
 
-		String siteUrl = SiteConfiguration.getSiteUrl(subdomain);
-		log.debug("Return site url {} to sign up user {}", siteUrl, email);
+			String siteUrl = SiteConfiguration.getSiteUrl(subdomain);
+			log.debug("Return site url {} to sign up user {}", siteUrl, email);
 
-		Response response = Response.status(200).entity(siteUrl)
-				.type(MediaType.TEXT_PLAIN_TYPE).build();
-		response.getHeaders().add("Access-Control-Allow-Origin", "*");
-		return response;
+			Response response = Response.status(200).entity(siteUrl)
+					.type(MediaType.TEXT_PLAIN_TYPE).build();
+			response.getHeaders().add("Access-Control-Allow-Origin", "*");
+			return response;
+		} catch (UserInvalidInputException e) {
+			Response response = Response.status(400).entity(e.getMessage())
+					.type(MediaType.TEXT_PLAIN_TYPE).build();
+			response.getHeaders().add("Access-Control-Allow-Origin", "*");
+			return response;
+		} catch (Exception e) {
+			log.error("Error while sign up", e);
+			Response response = Response.status(500).entity(e.getMessage())
+					.type(MediaType.TEXT_PLAIN_TYPE).build();
+			response.getHeaders().add("Access-Control-Allow-Origin", "*");
+			return response;
+		}
 	}
-
 }

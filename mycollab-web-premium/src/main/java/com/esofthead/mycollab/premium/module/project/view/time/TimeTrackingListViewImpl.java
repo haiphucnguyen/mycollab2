@@ -1,21 +1,13 @@
 package com.esofthead.mycollab.premium.module.project.view.time;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
 
 import org.vaadin.dialogs.ConfirmDialog;
 
-import com.esofthead.mycollab.common.TableViewField;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.arguments.BooleanSearchField;
 import com.esofthead.mycollab.core.arguments.RangeDateSearchField;
-import com.esofthead.mycollab.core.arguments.SearchRequest;
-import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
@@ -28,8 +20,8 @@ import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.i18n.TimeTrackingI18nEnum;
 import com.esofthead.mycollab.module.project.reporting.ExportTimeLoggingStreamResource;
 import com.esofthead.mycollab.module.project.service.ItemTimeLoggingService;
+import com.esofthead.mycollab.module.project.view.TimeTrackingComponent;
 import com.esofthead.mycollab.module.project.view.time.TimeTableFieldDef;
-import com.esofthead.mycollab.module.project.view.time.TimeTrackingTableDisplay;
 import com.esofthead.mycollab.reporting.ReportExportType;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -64,11 +56,6 @@ import com.vaadin.ui.VerticalLayout;
 @ViewComponent(scope = ViewScope.PROTOTYPE)
 public class TimeTrackingListViewImpl extends AbstractPageView implements
 		TimeTrackingListView {
-	private static final DateFormat DATE_FORMAT = new SimpleDateFormat(
-			"EEEE, dd MMMM yyyy");
-	private static final List<TableViewField> FIELDS = Arrays.asList(TimeTableFieldDef.summary, TimeTableFieldDef.logUser,
-			TimeTableFieldDef.logValue, TimeTableFieldDef.billable, TimeTableFieldDef.id);
-
 	private static final long serialVersionUID = 3742030333599796165L;
 
 	private ItemTimeLoggingSearchPanel itemTimeLoggingPanel;
@@ -79,8 +66,7 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements
 
 	private final Label lbTimeRange;
 
-	private VerticalLayout layoutItem;
-	private MarginInfo marginInfo = new MarginInfo(true, false, false, false);
+	private TimeTrackingComponent layoutItem;
 
 	public TimeTrackingListViewImpl() {
 		this.setMargin(new MarginInfo(false, true, false, true));
@@ -166,8 +152,11 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements
 				Alignment.MIDDLE_RIGHT);
 		this.addComponent(headerWrapper);
 
-		this.layoutItem = new VerticalLayout();
-		this.layoutItem.addStyleName(UIConstants.LAYOUT_LOG);
+		this.layoutItem = new TimeTrackingComponent(itemTimeLoggingService,
+				Arrays.asList(TimeTableFieldDef.summary,
+						TimeTableFieldDef.logUser, TimeTableFieldDef.logValue,
+						TimeTableFieldDef.billable, TimeTableFieldDef.id),
+				this.tableClickListener);
 		this.layoutItem.setWidth("100%");
 		this.addComponent(this.layoutItem);
 	}
@@ -235,62 +224,7 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements
 	@Override
 	public void refresh() {
 		this.setTimeRange();
-
-		this.layoutItem.removeAllComponents();
-
-		@SuppressWarnings("unchecked")
-		List<SimpleItemTimeLogging> itemTimeLoggingList = itemTimeLoggingService
-				.findPagableListByCriteria(new SearchRequest<ItemTimeLoggingSearchCriteria>(
-						itemTimeLogginSearchCriteria));
-		Date current = new Date(0);
-		double billable = 0, nonbillable = 0;
-		List<SimpleItemTimeLogging> list = new ArrayList<SimpleItemTimeLogging>();
-
-		for (SimpleItemTimeLogging itemTimeLogging : itemTimeLoggingList) {
-			if (DateTimeUtils.compareByDate(itemTimeLogging.getLogforday(),
-					current) > 0) {
-				showRecord(current, list, billable, nonbillable);
-
-				current = itemTimeLogging.getLogforday();
-				list.clear();
-				billable = nonbillable = 0;
-			}
-
-			list.add(itemTimeLogging);
-			billable += itemTimeLogging.getIsbillable() ? itemTimeLogging
-					.getLogvalue() : 0;
-			nonbillable += !itemTimeLogging.getIsbillable() ? itemTimeLogging
-					.getLogvalue() : 0;
-		}
-        showRecord(current, list, billable, nonbillable);
-	}
-	
-	private void showRecord(Date date, List<SimpleItemTimeLogging> list,
-			Double billable, Double nonbillable) {
-		if (list.size() > 0) {
-			Label logForDay = new Label(DATE_FORMAT.format(date));
-			logForDay.addStyleName(UIConstants.TEXT_LOG_DATE);
-			this.layoutItem.addComponent(logForDay);
-
-			TimeTrackingTableDisplay table = new TimeTrackingTableDisplay(FIELDS);
-			table.addStyleName(UIConstants.FULL_BORDER_TABLE);
-			table.setMargin(marginInfo);
-			table.addTableListener(this.tableClickListener);
-			table.setCurrentDataList(list);
-			this.layoutItem.addComponent(table);
-
-			Label labelTotalHours = new Label(("Total Hours: " + (billable + nonbillable)));
-			labelTotalHours.addStyleName(UIConstants.TEXT_LOG_HOURS_TOTAL);
-			this.layoutItem.addComponent(labelTotalHours);
-
-			Label labelBillableHours = new Label(("Billable Hours: " + billable));
-			labelBillableHours.setStyleName(UIConstants.TEXT_LOG_HOURS);
-			this.layoutItem.addComponent(labelBillableHours);
-
-			Label labelNonbillableHours = new Label(("Non Billable Hours: " + nonbillable));
-			labelNonbillableHours.setStyleName(UIConstants.TEXT_LOG_HOURS);
-			this.layoutItem.addComponent(labelNonbillableHours);
-		}
+		this.layoutItem.show(itemTimeLogginSearchCriteria);
 	}
 
 	private TableClickListener tableClickListener = new TableClickListener() {
