@@ -1,50 +1,19 @@
-#### [Bootstrap themes from Bootswatch][themes]
-
-[![Bootswatch themes](images/slides/macbook_1.png)][themes]
-
-Select a free theme for your website from an excellent gallery at [Bootswatch][bootswatch].
-Out of the box support for these and other custom [Bootstrap][bootstrap] themes.
-
-
-#### [Page layouts][reflow-layouts]
-
-[![Page layouts](images/slides/macbook_2.png)][reflow-layouts]
-
-Write plain text in Markdown or APT, then set different layouts to your page sections.
-
-
-#### [Modern skin][reflow-misc]
-
-[![Modern skin](images/slides/macbook_3.png)][reflow-misc]
-
-Reflow skin uses modern components from Bootstrap and other libraries, upgrades Maven generated
-site and provides further enhancements.
-
-
-#### [New Velocity tools][reflow-tools]
-
-[![Reflow Velocity tools](images/slides/macbook_4.png)][reflow-tools]
-
-The skin adds a library of new Velocity tools to use in your own Maven template: rewrite HTML code,
-support per-page configurations and more!
-
-
-[bootswatch]: http://bootswatch.com
-[bootstrap]: http://getbootstrap.com
-[themes]: skin/themes/
-[reflow-layouts]: skin/layouts.html
-[reflow-misc]: skin/misc.html
-[reflow-tools]: reflow-velocity-tools/
-
-
----
-
 ## Welcome to MyCollab
 The MyCollab Platform offers developers the exact business application platform they’ve been looking for, by combining the tools they need. Built in Java and bundles of open source frameworks and libraries, it seamlessly integrates into MyCollab CRM, MyCollab-Project or Document Management. Developing custom business applications has never been so easy.
 
 Developers can extend MyCollab modules in ways we can’t now imagine, technology partners can integrate in meaningful ways that deliver value for their customers, and System Integrators can deliver total solutions for their customers.
 
 MyCollab has bundle three existing modules: Project Management, CRM and Document Management. In future, we can add more modules on MyCollab platform or we develop the marketplace allows developers can extend MyCollab and sell them to MyCollab users.
+
+---
+
+#### [Download and use MyCollab for free](download.html)
+
+[!["Hello World"](images/slides/macbook_1.png)](screenshots.html)
+
+Stable, high performance, and secure system that is accessible over all devices with the same experience.
+
+---
 
 ### Features
 MyCollab provides the rich set features of Project Management, Customer Management module and online collaboration methods.
@@ -83,4 +52,8 @@ We use MyCollab in our daily jobs to manage our customers information, projects.
 ---
 
 #### About
-dddd
+MyCollab is licensed with Affero GPL v3. For license terms, see [http://www.gnu.org/licenses/agpl-3.0.html](http://www.gnu.org/licenses/agpl-3.0.html)
+
+[Contribute](contribute.html) by reporting issues, suggesting new features, or forking the Git repository on GitHub and adding some good code!
+
+Need the premium service, and having richer features of MyCollab, please ask us for a quote [here](https://mycollab.com/support)

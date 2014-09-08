@@ -19,7 +19,7 @@ MyCollab needs a database to run, you must create a MySQL schema by following co
 
 *CREATE SCHEMA "mycollab_aa" DEFAULT CHARACTER SET utf8mb4 ;*
 
-**Note**: We use character set uft8mb4 instead of utf8, you can review the difference of them at [http://dev.mysql.com/doc/refman/5.5/en/charset-unicode-utf8mb4.html](http://dev.mysql.com/doc/refman/5.5/en/charset-unicode-utf8mb4.html]
+**Note**: We use character set uft8mb4 instead of utf8, you can review the difference of them at [http://dev.mysql.com/doc/refman/5.5/en/charset-unicode-utf8mb4.html](http://dev.mysql.com/doc/refman/5.5/en/charset-unicode-utf8mb4.html)
 
 #### Run MyCollab
 Open your terminal, go to MyCollab folder and click **startup.bat** (On Windows) or **startup.sh** (on Unix, MacOS), MyCollab will initate service, and you open the browser then type [http://serveraddress:8080](http://serveraddress:8080) to setup MyCollab
@@ -50,7 +50,7 @@ Then we will ask you give us a SMTP configuration in order MyCollab can send sys
 
 **Mail server port**: ``<Your smtp server port>`` (Example: *465*)
 
-**Mail user name**: ``<Your mail user name>`` (Example:  *mycollab@gmail.com*)
+**Mail user name**: ``<Your mail user name>`` (Example:  *[mycollab@gmail.com](mycollab@gmail.com)*)
 
 **Mail password**: ``<Your mail password>`` (Example: *Your gmail password*)
 
