@@ -20,7 +20,7 @@ import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.i18n.TimeTrackingI18nEnum;
 import com.esofthead.mycollab.module.project.reporting.ExportTimeLoggingStreamResource;
 import com.esofthead.mycollab.module.project.service.ItemTimeLoggingService;
-import com.esofthead.mycollab.module.project.view.TimeTrackingComponent;
+import com.esofthead.mycollab.module.project.ui.components.TimeTrackingDateOrderComponent;
 import com.esofthead.mycollab.module.project.view.time.TimeTableFieldDef;
 import com.esofthead.mycollab.reporting.ReportExportType;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
@@ -66,7 +66,7 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements
 
 	private final Label lbTimeRange;
 
-	private TimeTrackingComponent layoutItem;
+	private TimeTrackingDateOrderComponent layoutItem;
 
 	public TimeTrackingListViewImpl() {
 		this.setMargin(new MarginInfo(false, true, false, true));
@@ -152,11 +152,10 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements
 				Alignment.MIDDLE_RIGHT);
 		this.addComponent(headerWrapper);
 
-		this.layoutItem = new TimeTrackingComponent(itemTimeLoggingService,
-				Arrays.asList(TimeTableFieldDef.summary,
-						TimeTableFieldDef.logUser, TimeTableFieldDef.logValue,
-						TimeTableFieldDef.billable, TimeTableFieldDef.id),
-				this.tableClickListener);
+		this.layoutItem = new TimeTrackingDateOrderComponent(Arrays.asList(
+				TimeTableFieldDef.summary, TimeTableFieldDef.logUser,
+				TimeTableFieldDef.logValue, TimeTableFieldDef.billable,
+				TimeTableFieldDef.id), this.tableClickListener);
 		this.layoutItem.setWidth("100%");
 		this.addComponent(this.layoutItem);
 	}
@@ -184,30 +183,34 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements
 		final String fromDate = AppContext.formatDate(rangeField.getFrom());
 		final String toDate = AppContext.formatDate(rangeField.getTo());
 
-		this.itemTimeLogginSearchCriteria.setIsBillable(new BooleanSearchField(true));
+		this.itemTimeLogginSearchCriteria.setIsBillable(new BooleanSearchField(
+				true));
 		Double billableHour = this.itemTimeLoggingService
 				.getTotalHoursByCriteria(this.itemTimeLogginSearchCriteria);
 		if (billableHour == null || billableHour < 0) {
 			billableHour = 0d;
 		}
 
-		this.itemTimeLogginSearchCriteria.setIsBillable(new BooleanSearchField(false));
+		this.itemTimeLogginSearchCriteria.setIsBillable(new BooleanSearchField(
+				false));
 		Double nonbillableHour = this.itemTimeLoggingService
 				.getTotalHoursByCriteria(this.itemTimeLogginSearchCriteria);
 		if (nonbillableHour == null || nonbillableHour < 0) {
 			nonbillableHour = 0d;
 		}
 
-		
 		this.itemTimeLogginSearchCriteria.setIsBillable(null);
 		final Double totalHour = this.itemTimeLoggingService
 				.getTotalHoursByCriteria(this.itemTimeLogginSearchCriteria);
 
 		// TODO: check Japanese sentence, remove todo after fix
 		if (totalHour != null && totalHour > 0) {
-			this.lbTimeRange.setValue(AppContext.getMessage(
-					TimeTrackingI18nEnum.TASK_LIST_RANGE_WITH_TOTAL_HOUR,
-							fromDate, toDate, totalHour, billableHour, nonbillableHour));
+			this.lbTimeRange
+					.setValue(AppContext
+							.getMessage(
+									TimeTrackingI18nEnum.TASK_LIST_RANGE_WITH_TOTAL_HOUR,
+									fromDate, toDate, totalHour, billableHour,
+									nonbillableHour));
 		} else {
 			this.lbTimeRange.setValue(AppContext.getMessage(
 					TimeTrackingI18nEnum.TASK_LIST_RANGE, fromDate, toDate));

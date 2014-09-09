@@ -74,4 +74,11 @@ public class BillingServiceTest extends ServiceTest {
 		billingService.registerAccount("abc", 1, "haiphucnguyen@gmail.com",
 				"123", "haiphucnguyen@gmail.com", "3", false);
 	}
+
+	@Test
+	@DataSet
+	public void registerSameUserInDifferentAccounts() {
+		billingService.registerAccount("xyz", 1, "hainguyen@esofthead.com",
+				"123", "hainguyen@esofthead.com", "1", true);
+	}
 }

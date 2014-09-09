@@ -1,4 +1,20 @@
-package com.esofthead.mycollab.module.project.view;
+/**
+ * This file is part of mycollab-web.
+ *
+ * mycollab-web is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * mycollab-web is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
+ */
+package com.esofthead.mycollab.module.project.ui.components;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -13,13 +29,20 @@ import com.esofthead.mycollab.module.project.domain.SimpleItemTimeLogging;
 import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ItemTimeLoggingService;
 import com.esofthead.mycollab.module.project.view.time.TimeTrackingTableDisplay;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable.TableClickListener;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
-public class TimeTrackingComponent extends VerticalLayout {
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 4.5.1
+ *
+ */
+public class TimeTrackingDateOrderComponent extends VerticalLayout {
 
 	private static final long serialVersionUID = 1L;
 
@@ -30,19 +53,20 @@ public class TimeTrackingComponent extends VerticalLayout {
 	private TableClickListener tableClickListener;
 	private ItemTimeLoggingService itemTimeLoggingService;
 
-	public TimeTrackingComponent(ItemTimeLoggingService itemTimeLoggingService,
-			List<TableViewField> fields, TableClickListener tableClickListener) {
+	public TimeTrackingDateOrderComponent(List<TableViewField> fields,
+			TableClickListener tableClickListener) {
 		super();
 		addStyleName(UIConstants.LAYOUT_LOG);
 
 		this.visibleFields = fields;
 		this.tableClickListener = tableClickListener;
-		this.itemTimeLoggingService = itemTimeLoggingService;
+		this.itemTimeLoggingService = ApplicationContextUtil
+				.getSpringBean(ItemTimeLoggingService.class);
 	}
 
 	public void show(ItemTimeLoggingSearchCriteria searchCriteria) {
 		removeAllComponents();
-		
+
 		@SuppressWarnings("unchecked")
 		List<SimpleItemTimeLogging> itemTimeLoggingList = itemTimeLoggingService
 				.findPagableListByCriteria(new SearchRequest<ItemTimeLoggingSearchCriteria>(
