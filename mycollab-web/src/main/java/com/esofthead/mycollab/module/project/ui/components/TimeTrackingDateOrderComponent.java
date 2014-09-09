@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.module.project.view;
+package com.esofthead.mycollab.module.project.ui.components;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -13,13 +13,20 @@ import com.esofthead.mycollab.module.project.domain.SimpleItemTimeLogging;
 import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ItemTimeLoggingService;
 import com.esofthead.mycollab.module.project.view.time.TimeTrackingTableDisplay;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable.TableClickListener;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
-public class TimeTrackingComponent extends VerticalLayout {
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 4.5.1
+ *
+ */
+public class TimeTrackingDateOrderComponent extends VerticalLayout {
 
 	private static final long serialVersionUID = 1L;
 
@@ -30,19 +37,20 @@ public class TimeTrackingComponent extends VerticalLayout {
 	private TableClickListener tableClickListener;
 	private ItemTimeLoggingService itemTimeLoggingService;
 
-	public TimeTrackingComponent(ItemTimeLoggingService itemTimeLoggingService,
-			List<TableViewField> fields, TableClickListener tableClickListener) {
+	public TimeTrackingDateOrderComponent(List<TableViewField> fields,
+			TableClickListener tableClickListener) {
 		super();
 		addStyleName(UIConstants.LAYOUT_LOG);
 
 		this.visibleFields = fields;
 		this.tableClickListener = tableClickListener;
-		this.itemTimeLoggingService = itemTimeLoggingService;
+		this.itemTimeLoggingService = ApplicationContextUtil
+				.getSpringBean(ItemTimeLoggingService.class);
 	}
 
 	public void show(ItemTimeLoggingSearchCriteria searchCriteria) {
 		removeAllComponents();
-		
+
 		@SuppressWarnings("unchecked")
 		List<SimpleItemTimeLogging> itemTimeLoggingList = itemTimeLoggingService
 				.findPagableListByCriteria(new SearchRequest<ItemTimeLoggingSearchCriteria>(

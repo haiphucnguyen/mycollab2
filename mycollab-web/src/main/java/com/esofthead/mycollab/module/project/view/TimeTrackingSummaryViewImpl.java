@@ -36,6 +36,7 @@ import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSear
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.module.project.i18n.TimeTrackingI18nEnum;
 import com.esofthead.mycollab.module.project.service.ItemTimeLoggingService;
+import com.esofthead.mycollab.module.project.ui.components.TimeTrackingDateOrderComponent;
 import com.esofthead.mycollab.module.project.view.parameters.BugScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.TaskScreenData;
@@ -58,7 +59,6 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable.TableClickEvent;
 import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable.TableClickListener;
 import com.vaadin.server.FileDownloader;
-import com.vaadin.server.Sizeable;
 import com.vaadin.server.StreamResource;
 import com.vaadin.server.StreamResource.StreamSource;
 import com.vaadin.shared.ui.MarginInfo;
@@ -100,7 +100,7 @@ public class TimeTrackingSummaryViewImpl extends AbstractPageView implements
 	private Date fromDate, toDate;
 	private ItemTimeLoggingService itemTimeLoggingService;
 
-	private TimeTrackingComponent layoutItem;
+	private TimeTrackingDateOrderComponent layoutItem;
 
 	public TimeTrackingSummaryViewImpl() {
 		this.setWidth("100%");
@@ -224,8 +224,7 @@ public class TimeTrackingSummaryViewImpl extends AbstractPageView implements
 			}
 		});
 		exportButtonControl = new SplitButton(exportBtn);
-		exportButtonControl.setWidth(Sizeable.SIZE_UNDEFINED,
-				Sizeable.Unit.PIXELS);
+		exportButtonControl.setWidthUndefined();
 		exportButtonControl.addStyleName(UIConstants.THEME_GRAY_LINK);
 		exportButtonControl.setIcon(MyCollabResource
 				.newResource("icons/16/export.png"));
@@ -257,8 +256,7 @@ public class TimeTrackingSummaryViewImpl extends AbstractPageView implements
 		controlBtns.setComponentAlignment(backBtn, Alignment.TOP_LEFT);
 		controlBtns.setSizeFull();
 
-		this.layoutItem = new TimeTrackingComponent(itemTimeLoggingService,
-				FIELDS, tableClickListener);
+		this.layoutItem = new TimeTrackingDateOrderComponent(FIELDS, tableClickListener);
 		this.layoutItem.setWidth("100%");
 		contentWrapper.addComponent(this.layoutItem);
 	}
@@ -296,7 +294,7 @@ public class TimeTrackingSummaryViewImpl extends AbstractPageView implements
 
 		searchCriteria = new ItemTimeLoggingSearchCriteria();
 		searchCriteria.setLogUsers(new SetSearchField<String>(SearchField.AND,
-				new String[]{AppContext.getUsername()}));
+				new String[] { AppContext.getUsername() }));
 		searchCriteria.setProjectIds(new SetSearchField<Integer>(
 				((Integer[]) projectIds.toArray(new Integer[0]))));
 		searchCriteria.setRangeDate(new RangeDateSearchField(fromDate, toDate));
