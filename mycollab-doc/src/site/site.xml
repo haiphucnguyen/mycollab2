@@ -35,7 +35,7 @@
                 <!-- Brand text in top-left part of the site -->
                 <name>
           <![CDATA[
-          MyCollab Community
+          <img src="logo.png" alt="Logo"/>
           ]]>
                 </name>
                 <href>http://esofthead.github.io/mycollab
@@ -43,6 +43,7 @@
             </brand>
             <slogan>A must tool for small or mid size of any distributed
                 team
+                <![CDATA[<a href="https://travis-ci.org/esofthead/mycollab"><img src="https://travis-ci.org/esofthead/mycollab.svg?branch=master"/></a> <a href="https://www.openhub.net/p/mycollab"><img src="https://www.openhub.net/p/mycollab/widgets/project_thin_badge.gif"/></a>]]>
             </slogan>
             <titleTemplate>%2$s | %1$s</titleTemplate>
             <!-- Use Table of Contents at the top of the page (max 6 elements) -->
@@ -74,7 +75,7 @@
                     <markPageHeader>false</markPageHeader>
                     <sections>
                         <body />
-                        <sidebar/>
+                        <sidebar />
                         <columns>1</columns>
                         <body />
                         <sidebar />
