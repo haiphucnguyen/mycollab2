@@ -26,13 +26,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.esofthead.mycollab.common.domain.CustomerFeedbackWithBLOBs;
 import com.esofthead.mycollab.common.i18n.WebExceptionI18nEnum;
 import com.esofthead.mycollab.configuration.PasswordEncryptHelper;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.cache.CacheKey;
 import com.esofthead.mycollab.core.utils.StringUtils;
-import com.esofthead.mycollab.esb.BeanProxyBuilder;
+import com.esofthead.mycollab.esb.CamelEndPointService;
 import com.esofthead.mycollab.i18n.LocalizationHelper;
 import com.esofthead.mycollab.module.billing.AccountStatusConstants;
 import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
@@ -255,12 +256,13 @@ public class BillingServiceImpl implements BillingService {
 	}
 
 	@Override
-	public void cancelAccount(Integer accountid) {
-		AccountDeletedCommand accountDeletedCommand = new BeanProxyBuilder()
+	public void cancelAccount(Integer accountid,
+			CustomerFeedbackWithBLOBs feedback) {
+		AccountDeletedCommand accountDeletedCommand = new CamelEndPointService()
 				.build(BillingEndpoints.ACCOUNT_DELETED_ENDPOINT,
 						AccountDeletedCommand.class);
 		billingAccountMapper.deleteByPrimaryKey(accountid);
-		accountDeletedCommand.accountDeleted(accountid);
+		accountDeletedCommand.accountDeleted(accountid, feedback);
 	}
 
 	@Override

@@ -16,7 +16,6 @@
  */
 package com.esofthead.mycollab.premium.module.user.accountsettings.billing.view;
 
-import com.esofthead.mycollab.common.dao.CustomerFeedbackMapper;
 import com.esofthead.mycollab.common.domain.CustomerFeedbackWithBLOBs;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.billing.service.BillingService;
@@ -75,15 +74,13 @@ public class CancelAccountViewImpl extends AbstractPageView implements
 		header.addStyleName("cancelAccountHeader");
 
 		Label headerTopLine = new Label(
-				AppContext
-						.getMessage(UserI18nEnum.CANCEL_ACCOUNT_FIRST_LINE));
+				AppContext.getMessage(UserI18nEnum.CANCEL_ACCOUNT_FIRST_LINE));
 		headerTopLine.addStyleName("first-line");
 		header.addComponent(headerTopLine);
 		header.setComponentAlignment(headerTopLine, Alignment.MIDDLE_CENTER);
 
 		Label headerMsg = new Label(
-				AppContext
-						.getMessage(UserI18nEnum.CANCEL_ACCOUNT_MESSAGE),
+				AppContext.getMessage(UserI18nEnum.CANCEL_ACCOUNT_MESSAGE),
 				ContentMode.HTML);
 		headerMsg.addStyleName("header-content");
 		header.addComponent(headerMsg);
@@ -126,11 +123,8 @@ public class CancelAccountViewImpl extends AbstractPageView implements
 		layoutHelper.addComponentNoWrapper(optionGroupField,
 				"Do any of these apply?", 0, 1);
 
-		layoutHelper
-				.addComponentNoWrapper(
-						new TextField(),
-						"Are you considering any other online CRM or sales tracking tools?",
-						0, 2);
+		layoutHelper.addComponentNoWrapper(new TextField(),
+				"Are you considering any other alternative tools?", 0, 2);
 
 		layoutHelper.addComponentNoWrapper(new TextArea(),
 				"What would it take to have you back?", 0, 3);
@@ -148,18 +142,17 @@ public class CancelAccountViewImpl extends AbstractPageView implements
 					@Override
 					public void buttonClick(ClickEvent event) {
 						// Save cancel account reason
-						CustomerFeedbackMapper customerFeedbackMapper = ApplicationContextUtil
-								.getSpringBean(CustomerFeedbackMapper.class);
 						CustomerFeedbackWithBLOBs feedback = new CustomerFeedbackWithBLOBs();
 
 						BillingService billingService = ApplicationContextUtil
 								.getSpringBean(BillingService.class);
-						billingService.cancelAccount(AppContext.getAccountId());
+						billingService.cancelAccount(AppContext.getAccountId(),
+								feedback);
 						UI.getCurrent().getPage()
 								.setLocation("http://www.mycollab.com");
 					}
 				});
-		submitBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+		submitBtn.addStyleName(UIConstants.THEME_RED_LINK);
 
 		Button cancelBtn = new Button("Never mind, go back",
 				new Button.ClickListener() {
@@ -172,7 +165,7 @@ public class CancelAccountViewImpl extends AbstractPageView implements
 										CancelAccountViewImpl.this, null));
 					}
 				});
-		cancelBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
+		cancelBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
 
 		HorizontalLayout formControls = new HorizontalLayout();
 		formControls.setSpacing(true);
@@ -186,8 +179,7 @@ public class CancelAccountViewImpl extends AbstractPageView implements
 				.setComponentAlignment(formControls, Alignment.MIDDLE_CENTER);
 
 		Label confirmNote = new Label(
-				AppContext
-						.getMessage(UserI18nEnum.CANCEL_ACCOUNT_CONFIRM_NOTE),
+				AppContext.getMessage(UserI18nEnum.CANCEL_ACCOUNT_CONFIRM_NOTE),
 				ContentMode.HTML);
 		confirmNote.setWidth("600px");
 		innerLayout.addComponent(confirmNote);

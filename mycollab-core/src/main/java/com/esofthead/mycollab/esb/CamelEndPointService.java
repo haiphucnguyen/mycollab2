@@ -29,7 +29,7 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-public class BeanProxyBuilder {
+public class CamelEndPointService {
 
 	public <S> S build(String endpoint, Class<S> buildCls) {
 		try {

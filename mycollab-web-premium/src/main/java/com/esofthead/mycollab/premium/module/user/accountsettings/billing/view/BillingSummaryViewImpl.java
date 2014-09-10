@@ -36,6 +36,7 @@ import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
+import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
@@ -102,9 +103,9 @@ public class BillingSummaryViewImpl extends AbstractPageView implements
 		topLayout.setComponentAlignment(currentPlan, Alignment.MIDDLE_CENTER);
 		topLayout.setExpandRatio(currentPlan, 1.0f);
 
-		VerticalLayout FAQLayout = new VerticalLayout();
-		FAQLayout.setMargin(new MarginInfo(false, true, false, true));
-		FAQLayout.setSpacing(true);
+		VerticalLayout faqLayout = new VerticalLayout();
+		faqLayout.setMargin(new MarginInfo(false, true, false, true));
+		faqLayout.setSpacing(true);
 
 		if (AppContext.isAdmin()) {
 			Button cancelBtn = new Button(
@@ -121,24 +122,24 @@ public class BillingSummaryViewImpl extends AbstractPageView implements
 					});
 			cancelBtn.setStyleName(UIConstants.THEME_BLANK_LINK);
 
-			FAQLayout.addComponent(cancelBtn);
+			faqLayout.addComponent(cancelBtn);
 		}
 
-		FAQLayout.setWidth("285px");
-		FAQLayout.addStyleName("faq-layout");
+		faqLayout.setWidth("285px");
+		faqLayout.addStyleName("faq-layout");
 		Label header = new Label(
 				AppContext.getMessage(BillingI18nEnum.HELP_QUESTION));
 		header.addStyleName("faq-header");
-		FAQLayout.addComponent(header);
+		faqLayout.addComponent(header);
 
 		Label contentText = new Label(
 				AppContext.getMessage(BillingI18nEnum.HELP_INFO),
 				ContentMode.HTML);
 		contentText.addStyleName("faq-content");
-		FAQLayout.addComponent(contentText);
+		faqLayout.addComponent(contentText);
 
-		topLayout.addComponent(FAQLayout);
-		topLayout.setComponentAlignment(FAQLayout, Alignment.MIDDLE_CENTER);
+		topLayout.addComponent(faqLayout);
+		topLayout.setComponentAlignment(faqLayout, Alignment.MIDDLE_CENTER);
 
 		layout.addComponent(topLayout);
 
@@ -193,7 +194,7 @@ public class BillingSummaryViewImpl extends AbstractPageView implements
 
 			Label billingBugTracking;
 			if (plan.getHasbugenable()) {
-				billingBugTracking = new Label("Bugs Tracking",
+				billingBugTracking = new Label("Issues Tracker",
 						ContentMode.HTML);
 			} else {
 				billingBugTracking = new Label("&nbsp;", ContentMode.HTML);
@@ -204,7 +205,7 @@ public class BillingSummaryViewImpl extends AbstractPageView implements
 
 			Label billingTimeTracking;
 			if (plan.getHastimetracking()) {
-				billingTimeTracking = new Label("Time Tracking");
+				billingTimeTracking = new Label("Time Tracker");
 			} else {
 				billingTimeTracking = new Label("&nbsp;", ContentMode.HTML);
 			}
@@ -367,7 +368,7 @@ public class BillingSummaryViewImpl extends AbstractPageView implements
 						}
 					});
 
-			cancelBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
+			cancelBtn.setStyleName(UIConstants.THEME_RED_LINK);
 			controlBtns.addComponent(cancelBtn);
 			controlBtns.setComponentAlignment(cancelBtn,
 					Alignment.MIDDLE_CENTER);
@@ -379,19 +380,12 @@ public class BillingSummaryViewImpl extends AbstractPageView implements
 
 						@Override
 						public void buttonClick(final ClickEvent event) {
-							log.debug("Check choose plan valid");
-
-							if (chosenPlan.getNumprojects() < numOfActiveProjects) {
-								UpdateBillingPlanWindow.this.close();
-								return;
-							}
-
-							if (chosenPlan.getNumusers() < numOfActiveUsers) {
-								UpdateBillingPlanWindow.this.close();
-								return;
-							}
-
-							if (chosenPlan.getVolume() * 1000 < usedStorageVolume) {
+							if (chosenPlan.getNumprojects() < numOfActiveProjects
+									|| chosenPlan.getNumusers() < numOfActiveUsers
+									|| chosenPlan.getVolume() * 1000 < usedStorageVolume
+									|| chosenPlan.getVolume() * 1000 < usedStorageVolume) {
+								NotificationUtil.showErrorNotification(AppContext
+										.getMessage(BillingI18nEnum.OPT_CANNOT_CHANGE_PLAN));
 								UpdateBillingPlanWindow.this.close();
 								return;
 							}

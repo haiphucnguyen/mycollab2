@@ -40,7 +40,7 @@ import com.esofthead.mycollab.core.cache.CacheKey;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
-import com.esofthead.mycollab.esb.BeanProxyBuilder;
+import com.esofthead.mycollab.esb.CamelEndPointService;
 import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
 import com.esofthead.mycollab.module.billing.service.BillingPlanCheckerService;
 import com.esofthead.mycollab.module.file.service.UserAvatarService;
@@ -409,7 +409,7 @@ public class UserServiceDBImpl extends
 		userAccountMapper.updateByExampleSelective(userAccount, userAccountEx);
 
 		// notify users are "deleted"
-		UserRemovedCommand userRemovedCommand = new BeanProxyBuilder().build(
+		UserRemovedCommand userRemovedCommand = new CamelEndPointService().build(
 				UserEndpoints.USER_REMOVE_ENDPOINT, UserRemovedCommand.class);
 		userRemovedCommand.userRemoved(username, accountId);
 	}
