@@ -32,7 +32,7 @@ import com.esofthead.mycollab.core.cache.CacheKey;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
-import com.esofthead.mycollab.esb.CamelEndPointService;
+import com.esofthead.mycollab.esb.CamelProxyBuilderUtil;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.esb.DeleteProjectBugCommand;
 import com.esofthead.mycollab.module.project.esb.ProjectEndPoints;
@@ -114,7 +114,7 @@ public class BugServiceImpl extends
 				ProjectGenericTaskService.class, ProjectMemberService.class,
 				ProjectActivityStreamService.class,
 				ItemTimeLoggingService.class);
-		DeleteProjectBugCommand deleteProjectBugCommand = new CamelEndPointService()
+		DeleteProjectBugCommand deleteProjectBugCommand = CamelProxyBuilderUtil
 				.build(ProjectEndPoints.PROJECT_BUG_REMOVE_ENDPOINT,
 						DeleteProjectBugCommand.class);
 		SimpleBug bug = findById(primaryKey, accountId);

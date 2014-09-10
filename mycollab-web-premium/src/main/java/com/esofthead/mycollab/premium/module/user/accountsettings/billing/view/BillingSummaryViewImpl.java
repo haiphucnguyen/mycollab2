@@ -120,7 +120,7 @@ public class BillingSummaryViewImpl extends AbstractPageView implements
 											BillingSummaryViewImpl.this, null));
 						}
 					});
-			cancelBtn.setStyleName(UIConstants.THEME_BLANK_LINK);
+			cancelBtn.setStyleName(UIConstants.THEME_RED_LINK);
 
 			faqLayout.addComponent(cancelBtn);
 		}

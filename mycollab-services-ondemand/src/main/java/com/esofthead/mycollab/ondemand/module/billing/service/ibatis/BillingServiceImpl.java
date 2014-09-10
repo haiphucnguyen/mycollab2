@@ -33,7 +33,7 @@ import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.cache.CacheKey;
 import com.esofthead.mycollab.core.utils.StringUtils;
-import com.esofthead.mycollab.esb.CamelEndPointService;
+import com.esofthead.mycollab.esb.CamelProxyBuilderUtil;
 import com.esofthead.mycollab.i18n.LocalizationHelper;
 import com.esofthead.mycollab.module.billing.AccountStatusConstants;
 import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
@@ -258,7 +258,7 @@ public class BillingServiceImpl implements BillingService {
 	@Override
 	public void cancelAccount(Integer accountid,
 			CustomerFeedbackWithBLOBs feedback) {
-		AccountDeletedCommand accountDeletedCommand = new CamelEndPointService()
+		AccountDeletedCommand accountDeletedCommand = CamelProxyBuilderUtil
 				.build(BillingEndpoints.ACCOUNT_DELETED_ENDPOINT,
 						AccountDeletedCommand.class);
 		billingAccountMapper.deleteByPrimaryKey(accountid);
