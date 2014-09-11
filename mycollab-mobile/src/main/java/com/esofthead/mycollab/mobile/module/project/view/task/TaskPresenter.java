@@ -29,7 +29,7 @@ public class TaskPresenter extends AbstractPresenter<TaskContainer> {
 					.getPresenter(TaskGroupListPresenter.class);
 		}
 
-		presenter.go(view, data);
+		presenter.go(container, data);
 	}
 
 }
