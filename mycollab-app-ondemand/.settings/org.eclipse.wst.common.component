@@ -190,6 +190,9 @@
     <dependent-module archiveName="javassist-3.18.1-GA.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/javassist/javassist/3.18.1-GA/javassist-3.18.1-GA.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
+    <dependent-module archiveName="javax.servlet-api-3.1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/javax/servlet/javax.servlet-api/3.1.0/javax.servlet-api-3.1.0.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
     <dependent-module archiveName="jasypt-1.9.2.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/jasypt/jasypt/1.9.2/jasypt-1.9.2.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
@@ -197,9 +200,6 @@
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="jetty-server-9.2.2.v20140723.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/jetty-server/9.2.2.v20140723/jetty-server-9.2.2.v20140723.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="javax.servlet-api-3.1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/javax/servlet/javax.servlet-api/3.1.0/javax.servlet-api-3.1.0.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="jetty-http-9.2.2.v20140723.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/jetty-http/9.2.2.v20140723/jetty-http-9.2.2.v20140723.jar">
@@ -365,6 +365,9 @@
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="dropbox-core-sdk-1.7.7.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/dropbox/core/dropbox-core-sdk/1.7.7/dropbox-core-sdk-1.7.7.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="mycollab-servlet-ondemand.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mycollab-servlet-ondemand/mycollab-servlet-ondemand">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="mycollab-services-ondemand.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mycollab-services-ondemand/mycollab-services-ondemand">

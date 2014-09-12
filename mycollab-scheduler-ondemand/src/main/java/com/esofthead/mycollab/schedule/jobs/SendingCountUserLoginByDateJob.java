@@ -68,8 +68,7 @@ public class SendingCountUserLoginByDateJob extends GenericQuartzJobBean {
 			throws JobExecutionException {
 		UserSearchCriteria criteria = new UserSearchCriteria();
 		criteria.setSaccountid(null);
-		criteria.setLastAccessedTime(new DateSearchField(SearchField.AND,
-				new Date()));
+
 		List<SimpleUser> lstSimpleUsers = userService
 				.findPagableListByCriteria(new SearchRequest<UserSearchCriteria>(
 						criteria, 0, Integer.MAX_VALUE));

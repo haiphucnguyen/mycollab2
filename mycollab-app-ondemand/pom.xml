@@ -30,6 +30,12 @@
             <artifactId>mycollab-servlet</artifactId>
             <version>4.5.0</version>
         </dependency>
+        
+        <dependency>
+            <groupId>com.esofthead.mycollab</groupId>
+            <artifactId>mycollab-servlet-ondemand</artifactId>
+            <version>4.5.0</version>
+        </dependency>
 
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>

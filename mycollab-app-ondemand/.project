@@ -13,6 +13,7 @@
     <project>mycollab-migration</project>
     <project>mycollab-caching</project>
     <project>mycollab-jackrabbit</project>
+    <project>mycollab-servlet-ondemand</project>
     <project>mycollab-services-ondemand</project>
     <project>mycollab-api</project>
     <project>mycollab-api-impl</project>
