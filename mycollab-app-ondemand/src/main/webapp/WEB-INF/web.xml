@@ -278,6 +278,17 @@
         <servlet-name>acceptMemberInvitationCreateAccountServlet</servlet-name>
         <url-pattern>/project/outside/createAccount/*</url-pattern>
     </servlet-mapping>
+    
+    <servlet>
+        <display-name>ActivateBillingAccountServlet</display-name>
+        <servlet-name>activateBillingAccountServlet</servlet-name>
+        <servlet-class>org.springframework.web.context.support.HttpRequestHandlerServlet</servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>activateBillingAccountServlet</servlet-name>
+        <url-pattern>/billing/activate</url-pattern>
+    </servlet-mapping>
 
     <servlet>
         <display-name>TooltipGeneratorServlet</display-name>
