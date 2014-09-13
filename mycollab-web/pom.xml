@@ -1,313 +1,331 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<name>mycollab-web</name>
-	<artifactId>mycollab-web</artifactId>
-	<version>4.5.0</version>
-	<parent>
-		<groupId>com.esofthead.mycollab</groupId>
-		<artifactId>parent-community</artifactId>
-		<version>4.5.0</version>
-		<relativePath>../mycollab-parent-community/pom.xml</relativePath>
-	</parent>
-	<packaging>jar</packaging>
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <name>mycollab-web</name>
+    <artifactId>mycollab-web</artifactId>
+    <version>4.5.0</version>
+    <parent>
+        <groupId>com.esofthead.mycollab</groupId>
+        <artifactId>parent-community</artifactId>
+        <version>4.5.0</version>
+        <relativePath>../mycollab-parent-community/pom.xml</relativePath>
+    </parent>
+    <packaging>jar</packaging>
 
-	<dependencies>
+    <dependencies>
 
-		<dependency>
-			<groupId>com.esofthead.mycollab</groupId>
-			<artifactId>mycollab-core</artifactId>
-			<version>4.5.0</version>
-		</dependency>
+        <dependency>
+            <groupId>com.esofthead.mycollab</groupId>
+            <artifactId>mycollab-core</artifactId>
+            <version>4.5.0</version>
+        </dependency>
 
-		<dependency>
-			<groupId>com.esofthead.mycollab</groupId>
-			<artifactId>mycollab-localization</artifactId>
-			<version>4.5.0</version>
-		</dependency>
+        <dependency>
+            <groupId>com.esofthead.mycollab</groupId>
+            <artifactId>mycollab-localization</artifactId>
+            <version>4.5.0</version>
+        </dependency>
 
-		<dependency>
-			<groupId>com.esofthead.mycollab</groupId>
-			<artifactId>mycollab-ui</artifactId>
-			<version>4.5.0</version>
-		</dependency>
+        <dependency>
+            <groupId>com.esofthead.mycollab</groupId>
+            <artifactId>mycollab-ui</artifactId>
+            <version>4.5.0</version>
+        </dependency>
 
-		<dependency>
-			<groupId>com.esofthead.mycollab</groupId>
-			<artifactId>mycollab-config</artifactId>
-			<version>4.5.0</version>
-		</dependency>
+        <dependency>
+            <groupId>com.esofthead.mycollab</groupId>
+            <artifactId>mycollab-config</artifactId>
+            <version>4.5.0</version>
+        </dependency>
 
-		<dependency>
-			<groupId>com.esofthead.mycollab</groupId>
-			<artifactId>mycollab-caching</artifactId>
-			<version>4.5.0</version>
-		</dependency>
+        <dependency>
+            <groupId>com.esofthead.mycollab</groupId>
+            <artifactId>mycollab-caching</artifactId>
+            <version>4.5.0</version>
+        </dependency>
 
-		<dependency>
-			<groupId>com.esofthead.mycollab</groupId>
-			<artifactId>mycollab-reporting</artifactId>
-			<version>4.5.0</version>
-		</dependency>
+        <dependency>
+            <groupId>com.esofthead.mycollab</groupId>
+            <artifactId>mycollab-reporting</artifactId>
+            <version>4.5.0</version>
+        </dependency>
 
-		<dependency>
-			<groupId>com.esofthead.mycollab</groupId>
-			<artifactId>mycollab-services</artifactId>
-			<version>4.5.0</version>
-		</dependency>
+        <dependency>
+            <groupId>com.esofthead.mycollab</groupId>
+            <artifactId>mycollab-services</artifactId>
+            <version>4.5.0</version>
+        </dependency>
 
-		<dependency>
-			<groupId>com.esofthead.mycollab</groupId>
-			<artifactId>mycollab-esb</artifactId>
-			<version>4.5.0</version>
-		</dependency>
+        <dependency>
+            <groupId>com.esofthead.mycollab</groupId>
+            <artifactId>mycollab-esb</artifactId>
+            <version>4.5.0</version>
+        </dependency>
 
-		<dependency>
-			<groupId>com.esofthead.mycollab</groupId>
-			<artifactId>mycollab-scheduler</artifactId>
-			<version>4.5.0</version>
-		</dependency>
+        <dependency>
+            <groupId>com.esofthead.mycollab</groupId>
+            <artifactId>mycollab-scheduler</artifactId>
+            <version>4.5.0</version>
+        </dependency>
 
-		<dependency>
-			<groupId>com.esofthead.mycollab</groupId>
-			<artifactId>mycollab-test</artifactId>
-			<version>4.5.0</version>
-			<scope>test</scope>
-		</dependency>
+        <dependency>
+            <groupId>com.esofthead.mycollab</groupId>
+            <artifactId>mycollab-test</artifactId>
+            <version>4.5.0</version>
+            <scope>test</scope>
+        </dependency>
 
-		<dependency>
-			<groupId>com.esofthead.mycollab</groupId>
-			<artifactId>mycollab-server-runner</artifactId>
-			<version>4.5.0</version>
-		</dependency>
+        <dependency>
+            <groupId>com.esofthead.mycollab</groupId>
+            <artifactId>mycollab-server-runner</artifactId>
+            <version>4.5.0</version>
+        </dependency>
 
-		<dependency>
-			<groupId>com.vaadin</groupId>
-			<artifactId>vaadin-server</artifactId>
-			<version>${vaadinVersion}</version>
-		</dependency>
+        <dependency>
+            <groupId>com.vaadin</groupId>
+            <artifactId>vaadin-server</artifactId>
+            <version>${vaadinVersion}</version>
+        </dependency>
 
-		<dependency>
-			<groupId>com.vaadin</groupId>
-			<artifactId>vaadin-themes</artifactId>
-			<version>${vaadinVersion}</version>
-		</dependency>
+        <dependency>
+            <groupId>com.vaadin</groupId>
+            <artifactId>vaadin-themes</artifactId>
+            <version>${vaadinVersion}</version>
+        </dependency>
 
-		<dependency>
-			<groupId>com.vaadin</groupId>
-			<artifactId>vaadin-client</artifactId>
-			<version>${vaadinVersion}</version>
-		</dependency>
+        <dependency>
+            <groupId>com.vaadin</groupId>
+            <artifactId>vaadin-client</artifactId>
+            <version>${vaadinVersion}</version>
+        </dependency>
 
-		<!-- <dependency> <groupId>com.vaadin</groupId> <artifactId>vaadin-push</artifactId> 
-			<version>${vaadinVersion}</version> </dependency> -->
-		<dependency>
-			<groupId>org.eclipse.jetty</groupId>
-			<artifactId>jetty-continuation</artifactId>
-			<version>${jettyVersion}</version>
-		</dependency>
+        <!-- <dependency> <groupId>com.vaadin</groupId> <artifactId>vaadin-push</artifactId> 
+            <version>${vaadinVersion}</version> </dependency> -->
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-continuation</artifactId>
+            <version>${jettyVersion}</version>
+        </dependency>
 
-		<dependency>
-			<groupId>org.eclipse.jetty.websocket</groupId>
-			<artifactId>websocket-server</artifactId>
-			<version>${jettyVersion}</version>
-		</dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty.websocket</groupId>
+            <artifactId>websocket-server</artifactId>
+            <version>${jettyVersion}</version>
+        </dependency>
 
 
-		<!-- VAADIN ADDONS -->
-		<dependency>
-			<groupId>org.vaadin.addons</groupId>
-			<artifactId>buttongroup</artifactId>
-			<version>2.3</version>
-		</dependency>
+        <!-- VAADIN ADDONS -->
+        <dependency>
+            <groupId>org.vaadin.addons</groupId>
+            <artifactId>buttongroup</artifactId>
+            <version>2.3</version>
+        </dependency>
 
-		<dependency>
-			<groupId>org.vaadin.addons</groupId>
-			<artifactId>popupbutton</artifactId>
-			<version>2.3.0</version>
-		</dependency>
+        <dependency>
+            <groupId>org.vaadin.addons</groupId>
+            <artifactId>popupbutton</artifactId>
+            <version>2.3.0</version>
+        </dependency>
 
-		<dependency>
-			<groupId>org.vaadin.addons</groupId>
-			<artifactId>ratingstars</artifactId>
-			<version>2.1</version>
-		</dependency>
-		<!-- <dependency> <groupId>com.zybnet</groupId> <artifactId>vaadin-autocomplete</artifactId> 
-			<version>1.0-SNAPSHOT</version> </dependency> -->
+        <dependency>
+            <groupId>org.vaadin.addons</groupId>
+            <artifactId>ratingstars</artifactId>
+            <version>2.1</version>
+        </dependency>
+        <!-- <dependency> <groupId>com.zybnet</groupId> <artifactId>vaadin-autocomplete</artifactId> 
+            <version>1.0-SNAPSHOT</version> </dependency> -->
 
-		<dependency>
-			<groupId>org.vaadin.addons</groupId>
-			<artifactId>dragdroplayouts</artifactId>
-			<version>1.0.1</version>
-		</dependency>
-		<dependency>
-			<groupId>org.vaadin.addons</groupId>
-			<artifactId>tokenfield</artifactId>
-			<version>7.0.1</version>
-		</dependency>
-		<dependency>
-			<groupId>org.vaadin.addons</groupId>
-			<artifactId>stylecalendar</artifactId>
-			<version>2.1.0</version>
-		</dependency>
-		<dependency>
-			<groupId>org.vaadin.addon</groupId>
-			<artifactId>easyuploads</artifactId>
-			<version>7.0.3-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>org.vaadin.addons</groupId>
-			<artifactId>contextmenu</artifactId>
-			<version>4.5.0</version>
-		</dependency>
-		<dependency>
-			<groupId>com.lexaden.components</groupId>
-			<artifactId>breadcrumb</artifactId>
-			<version>1.7.3</version>
-			<exclusions>
-				<exclusion>
-					<groupId>com.vaadin</groupId>
-					<artifactId>vaadin-client-compiled</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>org.vaadin.addons</groupId>
-			<artifactId>listbuilder</artifactId>
-			<version>0.7.3.v7</version>
-		</dependency>
+        <dependency>
+            <groupId>org.vaadin.addons</groupId>
+            <artifactId>dragdroplayouts</artifactId>
+            <version>1.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.vaadin.addons</groupId>
+            <artifactId>tokenfield</artifactId>
+            <version>7.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.vaadin.addons</groupId>
+            <artifactId>stylecalendar</artifactId>
+            <version>2.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.vaadin.addon</groupId>
+            <artifactId>easyuploads</artifactId>
+            <version>7.0.3-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.vaadin.addons</groupId>
+            <artifactId>contextmenu</artifactId>
+            <version>4.5.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.lexaden.components</groupId>
+            <artifactId>breadcrumb</artifactId>
+            <version>1.7.3</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.vaadin</groupId>
+                    <artifactId>vaadin-client-compiled</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.vaadin.addons</groupId>
+            <artifactId>listbuilder</artifactId>
+            <version>0.7.3.v7</version>
+        </dependency>
 
-		<dependency>
-			<groupId>com.esofthead.vaadin</groupId>
-			<artifactId>popupbutton</artifactId>
-			<version>1.0.0-SNAPSHOT</version>
-		</dependency>
+        <dependency>
+            <groupId>org.vaadin.addons</groupId>
+            <artifactId>formsender</artifactId>
+            <version>2.1.0</version>
+        </dependency>
 
-		<dependency>
-			<groupId>org.tltv.gantt</groupId>
-			<artifactId>gantt-addon</artifactId>
-			<version>0.3.1-SNAPSHOT</version>
-		</dependency>
+        <dependency>
+            <groupId>com.esofthead.vaadin</groupId>
+            <artifactId>popupbutton</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
 
-		<dependency>
-			<groupId>org.vaadin.addon</groupId>
-			<artifactId>confirmdialog</artifactId>
-			<version>2.0.5</version>
-		</dependency>
+        <dependency>
+            <groupId>org.tltv.gantt</groupId>
+            <artifactId>gantt-addon</artifactId>
+            <version>0.3.1-SNAPSHOT</version>
+        </dependency>
 
-		<dependency>
-			<groupId>com.esofthead.vaadin</groupId>
-			<artifactId>cropField</artifactId>
-			<version>1.0-SNAPSHOT</version>
-		</dependency>
+        <dependency>
+            <groupId>org.vaadin.addon</groupId>
+            <artifactId>confirmdialog</artifactId>
+            <version>2.0.5</version>
+        </dependency>
 
-		<dependency>
-			<groupId>com.esofthead.vaadin</groupId>
-			<artifactId>calendarext</artifactId>
-			<version>1.0.0-SNAPSHOT</version>
-		</dependency>
+        <dependency>
+            <groupId>com.esofthead.vaadin</groupId>
+            <artifactId>cropField</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
 
-		<dependency>
-			<groupId>org.vaadin.addons</groupId>
-			<artifactId>animator</artifactId>
-			<version>2.0.0</version>
-		</dependency>
+        <dependency>
+            <groupId>com.esofthead.vaadin</groupId>
+            <artifactId>calendarext</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
 
-		<dependency>
-			<groupId>org.vaadin.addons</groupId>
-			<artifactId>dom</artifactId>
-			<version>0.1.0</version>
-		</dependency>
+        <dependency>
+            <groupId>org.vaadin.addons</groupId>
+            <artifactId>animator</artifactId>
+            <version>2.0.0</version>
+        </dependency>
 
-		<dependency>
-			<groupId>org.jfree</groupId>
-			<artifactId>jfreechart</artifactId>
-			<version>1.0.19</version>
-		</dependency>
+        <dependency>
+            <groupId>org.vaadin.addons</groupId>
+            <artifactId>dom</artifactId>
+            <version>0.1.0</version>
+        </dependency>
 
-		<dependency>
-			<groupId>org.apache.xmlgraphics</groupId>
-			<artifactId>batik-svggen</artifactId>
-			<version>1.7</version>
-		</dependency>
+        <dependency>
+            <groupId>org.jfree</groupId>
+            <artifactId>jfreechart</artifactId>
+            <version>1.0.19</version>
+        </dependency>
 
-		<dependency>
-			<groupId>org.scribe</groupId>
-			<artifactId>scribe</artifactId>
-			<version>1.3.5</version>
-		</dependency>
+        <dependency>
+            <groupId>org.apache.xmlgraphics</groupId>
+            <artifactId>batik-svggen</artifactId>
+            <version>1.7</version>
+        </dependency>
 
-		<dependency>
-			<groupId>uk.com.robust-it</groupId>
-			<artifactId>cloning</artifactId>
-			<version>1.9.0</version>
-		</dependency>
+        <dependency>
+            <groupId>org.scribe</groupId>
+            <artifactId>scribe</artifactId>
+            <version>1.3.5</version>
+        </dependency>
 
-		<dependency>
-			<groupId>commons-validator</groupId>
-			<artifactId>commons-validator</artifactId>
-			<version>1.4.0</version>
-		</dependency>
+        <dependency>
+            <groupId>uk.com.robust-it</groupId>
+            <artifactId>cloning</artifactId>
+            <version>1.9.0</version>
+        </dependency>
 
-		<dependency>
-			<groupId>org.apache.poi</groupId>
-			<artifactId>poi</artifactId>
-			<version>3.10.1</version>
-			<exclusions>
-				<exclusion>
-					<groupId>commons-codec</groupId>
-					<artifactId>commons-codec</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
+        <dependency>
+            <groupId>commons-validator</groupId>
+            <artifactId>commons-validator</artifactId>
+            <version>1.4.0</version>
+        </dependency>
 
-		<dependency>
-			<groupId>fr.xebia.web</groupId>
-			<artifactId>xebia-servlet-extras</artifactId>
-			<version>1.0.8</version>
-			<scope>runtime</scope>
-		</dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>3.10.1</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-codec</groupId>
+                    <artifactId>commons-codec</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
 
-		<dependency>
-			<groupId>com.googlecode.ez-vcard</groupId>
-			<artifactId>ez-vcard</artifactId>
-			<version>0.9.5</version>
-		</dependency>
+        <dependency>
+            <groupId>fr.xebia.web</groupId>
+            <artifactId>xebia-servlet-extras</artifactId>
+            <version>1.0.8</version>
+            <scope>runtime</scope>
+        </dependency>
 
-		<dependency>
-			<groupId>net.sf.opencsv</groupId>
-			<artifactId>opencsv</artifactId>
-			<version>2.3</version>
-		</dependency>
+        <dependency>
+            <groupId>com.googlecode.ez-vcard</groupId>
+            <artifactId>ez-vcard</artifactId>
+            <version>0.9.5</version>
+        </dependency>
 
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-webmvc</artifactId>
-			<version>${springVersion}</version>
-		</dependency>
+        <dependency>
+            <groupId>net.sf.opencsv</groupId>
+            <artifactId>opencsv</artifactId>
+            <version>2.3</version>
+        </dependency>
 
-		<dependency>
-			<groupId>com.esofthead.vaadin</groupId>
-			<artifactId>floatingcomponent</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>${springVersion}</version>
+        </dependency>
 
-		<dependency>
-			<groupId>org.vaadin.addons</groupId>
-			<artifactId>ckeditor-wrapper-for-vaadin</artifactId>
-			<version>7.9.3</version>
-		</dependency>
-	</dependencies>
+        <dependency>
+            <groupId>org.xhtmlrenderer</groupId>
+            <artifactId>flying-saucer-pdf</artifactId>
+            <version>9.0.6</version>
+        </dependency>
 
-	<repositories>
-		<repository>
-			<id>vaadin-addons</id>
-			<url>http://maven.vaadin.com/vaadin-addons</url>
-		</repository>
-		<repository>
-			<id>mycollab-repo</id>
-			<url>https://raw.githubusercontent.com/esofthead/mycollab-maven-repo/master</url>
-		</repository>
-	</repositories>
+        <dependency>
+            <groupId>com.esofthead.vaadin</groupId>
+            <artifactId>floatingcomponent</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.vaadin.addons</groupId>
+            <artifactId>ckeditor-wrapper-for-vaadin</artifactId>
+            <version>7.9.3</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.vaadin.addons</groupId>
+            <artifactId>formsender</artifactId>
+            <version>2.1.0</version>
+        </dependency>
+    </dependencies>
+
+    <repositories>
+        <repository>
+            <id>vaadin-addons</id>
+            <url>http://maven.vaadin.com/vaadin-addons</url>
+        </repository>
+        <repository>
+            <id>mycollab-repo</id>
+            <url>https://raw.githubusercontent.com/esofthead/mycollab-maven-repo/master</url>
+        </repository>
+    </repositories>
 </project>
