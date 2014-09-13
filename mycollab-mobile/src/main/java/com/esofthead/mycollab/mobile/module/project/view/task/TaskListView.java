@@ -17,8 +17,8 @@
 package com.esofthead.mycollab.mobile.module.project.view.task;
 
 import com.esofthead.mycollab.mobile.ui.IListView;
-import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
-import com.esofthead.mycollab.module.project.domain.criteria.TaskListSearchCriteria;
+import com.esofthead.mycollab.module.project.domain.SimpleTask;
+import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 
 /**
  * @author MyCollab Ltd.
@@ -26,7 +26,6 @@ import com.esofthead.mycollab.module.project.domain.criteria.TaskListSearchCrite
  * @since 4.5.0
  *
  */
-public interface TaskListView extends
-		IListView<TaskListSearchCriteria, SimpleTaskList> {
+public interface TaskListView extends IListView<TaskSearchCriteria, SimpleTask> {
 
 }
