@@ -17,7 +17,9 @@
 package com.esofthead.mycollab.schedule.jobs;
 
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.quartz.JobExecutionContext;
@@ -67,7 +69,12 @@ public class SendingCountUserLoginByDateJob extends GenericQuartzJobBean {
 	protected void executeJob(JobExecutionContext context)
 			throws JobExecutionException {
 		UserSearchCriteria criteria = new UserSearchCriteria();
+		GregorianCalendar calendar = new GregorianCalendar();
+		Date to = calendar.getTime();
+		calendar.add(Calendar.DATE, -1);
+		Date from = calendar.getTime();
 		criteria.setSaccountid(null);
+		criteria.setLastAccessTimeRange(from, to);
 
 		List<SimpleUser> lstSimpleUsers = userService
 				.findPagableListByCriteria(new SearchRequest<UserSearchCriteria>(
