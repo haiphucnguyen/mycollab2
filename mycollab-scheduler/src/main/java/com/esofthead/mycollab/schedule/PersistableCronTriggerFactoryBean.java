@@ -16,24 +16,25 @@
  */
 package com.esofthead.mycollab.schedule;
 
+import java.text.ParseException;
+
 import org.springframework.scheduling.quartz.CronTriggerFactoryBean;
-import org.springframework.scheduling.quartz.JobDetailAwareTrigger;
 
 /**
  * Needed to set Quartz useProperties=true when using Spring classes, because
  * Spring sets an object reference on JobDataMap that is not a String
  * 
- * @see http
+ * @see http 
  *      ://site.trimplement.com/using-spring-and-quartz-with-jobstore-properties
- * @see http
+ * @see http 
  *      ://forum.springsource.org/showthread.php?130984-Quartz-error-IOException
  */
 public class PersistableCronTriggerFactoryBean extends CronTriggerFactoryBean {
 	@Override
-	public void afterPropertiesSet() {
+	public void afterPropertiesSet() throws ParseException {
 		super.afterPropertiesSet();
 
 		// Remove the JobDetail element
-		getJobDataMap().remove(JobDetailAwareTrigger.JOB_DETAIL_KEY);
+		// getJobDataMap().remove(JobDetailAwareTrigger.JOB_DETAIL_KEY);
 	}
 }

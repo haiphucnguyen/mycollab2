@@ -33,8 +33,6 @@ import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.common.domain.MailRecipientField;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
-import com.esofthead.mycollab.core.arguments.DateSearchField;
-import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.module.mail.IContentGenerator;
 import com.esofthead.mycollab.module.mail.service.ExtMailService;
@@ -65,6 +63,7 @@ public class SendingCountUserLoginByDateJob extends GenericQuartzJobBean {
 
 	static final String COUNT_USER_LOGIN_TEMPLATE = "templates/email/user/countUserLoginByDate.mt";
 
+	@SuppressWarnings("unchecked")
 	@Override
 	protected void executeJob(JobExecutionContext context)
 			throws JobExecutionException {

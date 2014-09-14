@@ -170,7 +170,7 @@ public class BillingSendingNotificationJobs extends GenericQuartzJobBean {
 							.asList(new MailRecipientField(user.getEmail(),
 									user.getDisplayName())), null, null,
 					contentGenerator
-							.generateSubjectContent("Your trial has ended"),
+							.generateSubjectContent("Your trial has been ended"),
 					contentGenerator.generateBodyContent(LocalizationHelper
 							.templatePath(INFORM_EXPIRE_ACCOUNT_TEMPLATE,
 									SiteConfiguration.getDefaultLocale())),
