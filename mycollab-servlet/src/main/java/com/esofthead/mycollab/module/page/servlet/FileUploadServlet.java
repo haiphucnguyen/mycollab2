@@ -59,7 +59,6 @@ public class FileUploadServlet extends GenericServletRequestHandler {
 		String path = request.getParameter("path");
 
 		String ckEditorFuncNum = request.getParameter("CKEditorFuncNum");
-		// http://st.f1.vnecdn.net/responsive/i/v9/graphics/img_logo_vne_web.gif
 
 		// Create path components to save the file
 		final Part filePart = request.getPart("upload");
