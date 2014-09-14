@@ -50,6 +50,7 @@ Version 4.5.1
 * Adding scheduler unit tests
 * Project page could be exported into pdf format
 * Project time logging is displayed in multiple layouts
+* User can add comment to project component and project version
 
 **Bug Fixes**
 
