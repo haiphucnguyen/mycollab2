@@ -20,7 +20,7 @@ import org.vaadin.openesignforms.ckeditor.CKEditorConfig;
 import org.vaadin.openesignforms.ckeditor.CKEditorTextField;
 
 import com.esofthead.mycollab.common.i18n.WikiI18nEnum;
-import com.esofthead.mycollab.module.wiki.domain.Page;
+import com.esofthead.mycollab.module.page.domain.Page;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;

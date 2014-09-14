@@ -20,6 +20,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.util.GregorianCalendar;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -63,6 +64,9 @@ public class FileUploadServlet extends GenericServletRequestHandler {
 		// Create path components to save the file
 		final Part filePart = request.getPart("upload");
 		final String fileName = getFileName(filePart);
+		if (fileName == null) {
+			return;
+		}
 		InputStream filecontent = null;
 		final PrintWriter writer = response.getWriter();
 
@@ -109,8 +113,15 @@ public class FileUploadServlet extends GenericServletRequestHandler {
 	private String getFileName(final Part part) {
 		for (String content : part.getHeader("content-disposition").split(";")) {
 			if (content.trim().startsWith("filename")) {
-				return content.substring(content.indexOf('=') + 1).trim()
-						.replace("\"", "");
+				String fileName = content.substring(content.indexOf('=') + 1)
+						.trim().replace("\"", "");
+				int index;
+				if ((index = fileName.lastIndexOf(".")) != -1) {
+					fileName = fileName.substring(0, index - 1)
+							+ (new GregorianCalendar().getTimeInMillis())
+							+ fileName.substring(index);
+					return fileName;
+				}
 			}
 		}
 		return null;
