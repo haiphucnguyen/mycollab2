@@ -175,6 +175,8 @@ public class BillingSendingNotificationJobs extends GenericQuartzJobBean {
 							.templatePath(INFORM_EXPIRE_ACCOUNT_TEMPLATE,
 									SiteConfiguration.getDefaultLocale())),
 					null);
+			
+			
 
 		}
 	}

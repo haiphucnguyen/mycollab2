@@ -25,6 +25,7 @@
         <module>../mycollab-services-ondemand</module>
         <module>../mycollab-search</module>
         <module>../mycollab-esb</module>
+        <module>../mycollab-esb-ondemand</module>
         <module>../mycollab-jetty-session-premium</module>
         <module>../mycollab-caching-premium</module>
         <module>../mycollab-reporting</module>
