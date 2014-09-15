@@ -69,7 +69,7 @@ public class BillingServiceImpl implements BillingService {
 			.getLogger(BillingServiceImpl.class);
 
 	private static List<String> ACCOUNT_BLACK_LIST = Arrays.asList("api",
-			"esofthead", "blog", "forum", "wiki", "support");
+			"esofthead", "blog", "forum", "wiki", "support", "community");
 
 	@Autowired
 	private BillingPlanMapper billingPlanMapper;

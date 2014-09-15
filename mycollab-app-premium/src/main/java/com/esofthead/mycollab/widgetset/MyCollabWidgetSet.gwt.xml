@@ -52,4 +52,6 @@
     <inherits name="org.vaadin.jouni.animator.AnimatorWidgetset" />
 
     <inherits name="com.esofthead.vaadin.floatingcomponent.WidgetSet" />
+    
+    <inherits name="org.vaadin.risto.formsender.widgetset.FormSenderWidgetset" />
 </module>
