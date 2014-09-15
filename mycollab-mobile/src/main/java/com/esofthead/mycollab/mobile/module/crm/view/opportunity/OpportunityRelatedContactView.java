@@ -29,6 +29,7 @@ import com.esofthead.mycollab.module.crm.i18n.ContactI18nEnum;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.vaadin.navigationbarquickmenu.NavigationBarQuickMenu;
 import com.vaadin.addon.touchkit.ui.NavigationButton;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.VerticalLayout;
 
@@ -82,19 +83,15 @@ public class OpportunityRelatedContactView extends
 		addBtns.setMargin(true);
 		addBtns.setWidth("100%");
 
-		NavigationButton newContact = new NavigationButton();
-		newContact.setTargetViewCaption(AppContext
-				.getMessage(ContactI18nEnum.VIEW_NEW_TITLE));
-		newContact
-				.addClickListener(new NavigationButton.NavigationButtonClickListener() {
-					private static final long serialVersionUID = 1L;
+		Button newContact = new Button();
+		newContact.addClickListener(new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
 
-					@Override
-					public void buttonClick(
-							NavigationButton.NavigationButtonClickEvent arg0) {
-						fireNewRelatedItem("");
-					}
-				});
+			@Override
+			public void buttonClick(Button.ClickEvent arg0) {
+				fireNewRelatedItem("");
+			}
+		});
 		addBtns.addComponent(newContact);
 
 		NavigationButton selectContact = new NavigationButton();

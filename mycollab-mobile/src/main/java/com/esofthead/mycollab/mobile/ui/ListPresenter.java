@@ -63,7 +63,7 @@ public abstract class ListPresenter<V extends IListView<S, B>, S extends SearchC
 			targetView = view;
 		}
 
-		if (view == currentNav.getPreviousComponent())
+		if (targetView == currentNav.getPreviousComponent())
 			currentNav.navigateBack();
 		else
 			currentNav.navigateTo(targetView);

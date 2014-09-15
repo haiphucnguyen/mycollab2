@@ -272,12 +272,11 @@
 	    				padding: 0.5rem 0 0;
 	    			}
 	    			.add-btn {
-	    			
-	    				&.v-touchkit-navbutton {
-	    					@include icomoon;
+	    				.v-button-wrap {
 	    					padding: 0rem 1rem;
 	    					
-	    					&:before {
+	    					.v-button-caption:before {
+	    						@include icomoon;
 								content: "\e60e";
 								font-size: 2rem;
 	    					}
@@ -285,7 +284,7 @@
     					
     					&.v-navbar-quickmenu-button {
 	    					@include icomoon;
-	    					padding: 0px 1.2rem;
+	    					padding: 0rem 1.2rem;
 	    					
 	    					&:before {
 								content: "\e60e";
@@ -419,12 +418,24 @@
 					}
 				}			
 			}
+			.v-button {
+				text-align: left;
+				margin: 0rem;
+				.v-button-wrap {
+					padding: 0rem;
+					.v-button-caption {
+						font-size: 1.3rem;
+					}
+				}				
+			}
 			&.task-list-layout {
 				padding: 1rem 2.5rem 1rem 1.4rem;
 				border-bottom: 0.1rem solid #DDDDDD;
 				color: #8C8C8C;
 				.task-list-name {
-					font-size: 1.4rem;
+					.v-button-caption {
+						font-size: 1.4rem;
+					}
 				}
 				.last-updated-time {
 					font-size: 1.1rem;
@@ -447,6 +458,11 @@
 					color: rgb(255, 255, 255);
 					background-color: $gray-text;
 					text-transform: uppercase;
+				}
+				.task-name {
+					padding-top: 0.3rem;
+					text-overflow: ellipsis;
+					white-space: nowrap;
 				}
 			}
 		}

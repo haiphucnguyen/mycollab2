@@ -26,7 +26,7 @@ import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.TaskPriority;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.vaadin.addon.touchkit.ui.NavigationButton;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
@@ -61,16 +61,14 @@ public class TaskListDisplay
 
 			HorizontalLayout topRow = new HorizontalLayout();
 			topRow.setWidth("100%");
-			NavigationButton b = new NavigationButton(CurrentProjectVariables
-					.getProject().getShortname() + "-" + task.getTaskkey());
-			b.setTargetViewCaption(task.getTaskname());
-			b.addClickListener(new NavigationButton.NavigationButtonClickListener() {
+			Button b = new Button(CurrentProjectVariables.getProject()
+					.getShortname() + "-" + task.getTaskkey());
+			b.addClickListener(new Button.ClickListener() {
 
 				private static final long serialVersionUID = 5483571157334944410L;
 
 				@Override
-				public void buttonClick(
-						NavigationButton.NavigationButtonClickEvent event) {
+				public void buttonClick(Button.ClickEvent event) {
 					EventBusFactory.getInstance().post(
 							new TaskEvent.GotoRead(this, task.getId()));
 				}
@@ -94,7 +92,8 @@ public class TaskListDisplay
 			layout.addComponent(topRow);
 
 			Label taskName = new Label(task.getTaskname());
-			taskName.setWidthUndefined();
+			taskName.setWidth("100%");
+			taskName.setStyleName("task-name");
 			layout.addComponent(taskName);
 
 			return layout;
