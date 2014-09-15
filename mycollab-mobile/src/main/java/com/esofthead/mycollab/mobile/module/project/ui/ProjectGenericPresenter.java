@@ -38,13 +38,11 @@ public class ProjectGenericPresenter<V extends PageView> extends
 
 	@Override
 	protected void onGo(ComponentContainer navigator, ScreenData<?> data) {
-		if (!view.isAttached()) {
-			if (navigator instanceof NavigationManager)
-				((NavigationManager) navigator).navigateTo(view.getWidget());
-			else {
-				navigator.removeAllComponents();
-				navigator.addComponent(view.getWidget());
-			}
+		if (navigator instanceof NavigationManager)
+			((NavigationManager) navigator).navigateTo(view.getWidget());
+		else {
+			navigator.removeAllComponents();
+			navigator.addComponent(view.getWidget());
 		}
 	}
 

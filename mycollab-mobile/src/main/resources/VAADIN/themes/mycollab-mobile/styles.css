@@ -581,6 +581,11 @@ div.v-vertical > .v-spacing, div.v-vertical > .v-expand > .v-spacing {
   padding: 0.2rem 0.5rem;
   border-radius: 0.3rem;
 }
+.mycollab-mobile .data-list-view .list-item.task-layout {
+  padding: 1rem 2.5rem 1rem 1.4rem;
+  border-bottom: 0.1rem solid #DDDDDD;
+  color: #8C8C8C;
+}
 .mycollab-mobile .readview-layout, .mycollab-mobile .editview-layout {
   background-color: #F3F1F0;
 }

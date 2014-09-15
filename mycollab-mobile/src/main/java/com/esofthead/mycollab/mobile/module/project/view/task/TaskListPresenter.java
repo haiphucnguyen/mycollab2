@@ -68,7 +68,12 @@ public class TaskListPresenter extends
 				criteria.setStatuses(new SetSearchField<String>(
 						SearchField.AND, new String[] { "Open" }));
 
-				((NavigationManager) container).navigateTo(view.getWidget());
+				NavigationManager currentNav = (NavigationManager) container;
+				if (view == currentNav.getPreviousComponent())
+					currentNav.navigateBack();
+				else
+					currentNav.navigateTo(view.getWidget());
+
 				doSearch(criteria);
 
 				AppContext.addFragment(

@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-mobile.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.mobile;
+package com.esofthead.mycollab.mobile.ui;
 
 /**
  * @author MyCollab Ltd.
@@ -27,4 +27,8 @@ public class UIConstants {
 	public static final String COLOR_BLUE = "blue";
 	public static final String LINK_COMPLETED = "completed";
 	public static final String LINK_OVERDUE = "overdue";
+	public static final String LBL_URGENT = "priority-lbl urgent-lbl";
+	public static final String LBL_HIGH = "priority-lbl high-lbl";
+	public static final String LBL_MEDIUM = "priority-lbl medium-lbl";
+	public static final String LBL_LOW = "priority-lbl low-lbl";
 }

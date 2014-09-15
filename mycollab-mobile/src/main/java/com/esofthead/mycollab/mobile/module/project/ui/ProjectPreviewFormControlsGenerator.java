@@ -1,20 +1,4 @@
-/**
- * This file is part of mycollab-mobile.
- *
- * mycollab-mobile is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-mobile is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-mobile.  If not, see <http://www.gnu.org/licenses/>.
- */
-package com.esofthead.mycollab.mobile.module.crm.ui;
+package com.esofthead.mycollab.mobile.module.project.ui;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.mobile.ui.AdvancedPreviewBeanForm;
@@ -27,21 +11,22 @@ import com.vaadin.ui.VerticalLayout;
 /**
  * 
  * @author MyCollab Ltd.
- * @since 1.0
+ * @since 4.5.0
  * 
  */
-public class CrmPreviewFormControlsGenerator<T> {
+public class ProjectPreviewFormControlsGenerator<T> {
 
 	public static int EDIT_BTN_PRESENTED = 2;
 	public static int DELETE_BTN_PRESENTED = 4;
 	public static int CLONE_BTN_PRESENTED = 8;
+	public static int ASSIGN_BTN_PRESENTED = 16;
 
-	private Button deleteBtn, editBtn, cloneBtn;
+	private Button deleteBtn, editBtn, cloneBtn, assignBtn;
 	private AdvancedPreviewBeanForm<T> previewForm;
 
 	private VerticalLayout editButtons;
 
-	public CrmPreviewFormControlsGenerator(
+	public ProjectPreviewFormControlsGenerator(
 			final AdvancedPreviewBeanForm<T> editForm) {
 		this.previewForm = editForm;
 
@@ -50,6 +35,7 @@ public class CrmPreviewFormControlsGenerator<T> {
 		editButtons.setWidth("100%");
 		editButtons.setMargin(true);
 		editButtons.addStyleName("edit-btn-layout");
+		editButtons.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
 	}
 
 	public void insertToControlBlock(Button button) {
@@ -64,11 +50,9 @@ public class CrmPreviewFormControlsGenerator<T> {
 	public VerticalLayout createButtonControls(int buttonEnableFlags,
 			final String permissionItem) {
 
-		boolean canRead = true;
 		boolean canWrite = true;
 		boolean canAccess = true;
 		if (permissionItem != null) {
-			canRead = AppContext.canRead(permissionItem);
 			canWrite = AppContext.canWrite(permissionItem);
 			canAccess = AppContext.canAccess(permissionItem);
 		}
@@ -87,7 +71,6 @@ public class CrmPreviewFormControlsGenerator<T> {
 			});
 			editBtn.setWidth("100%");
 			editButtons.addComponent(editBtn);
-			editButtons.setComponentAlignment(editBtn, Alignment.MIDDLE_CENTER);
 			editBtn.setEnabled(canWrite);
 		}
 
@@ -105,8 +88,6 @@ public class CrmPreviewFormControlsGenerator<T> {
 					});
 			deleteBtn.setWidth("100%");
 			editButtons.addComponent(deleteBtn);
-			editButtons.setComponentAlignment(deleteBtn,
-					Alignment.MIDDLE_CENTER);
 			deleteBtn.setEnabled(canAccess);
 		}
 
@@ -124,9 +105,25 @@ public class CrmPreviewFormControlsGenerator<T> {
 			});
 			cloneBtn.setWidth("100%");
 			editButtons.addComponent(cloneBtn);
-			editButtons
-					.setComponentAlignment(cloneBtn, Alignment.MIDDLE_CENTER);
 			cloneBtn.setEnabled(canWrite);
+		}
+
+		if ((buttonEnableFlags & ASSIGN_BTN_PRESENTED) == ASSIGN_BTN_PRESENTED) {
+			assignBtn = new Button(
+					AppContext.getMessage(GenericI18Enum.BUTTON_ASSIGN_LABEL));
+			assignBtn.addClickListener(new Button.ClickListener() {
+
+				private static final long serialVersionUID = 6882405297466892069L;
+
+				@Override
+				public void buttonClick(Button.ClickEvent event) {
+					final T item = previewForm.getBean();
+					previewForm.fireAssignForm(item);
+				}
+			});
+			assignBtn.setWidth("100%");
+			editButtons.addComponent(assignBtn);
+			editButtons.setEnabled(canWrite);
 		}
 
 		return editButtons;
