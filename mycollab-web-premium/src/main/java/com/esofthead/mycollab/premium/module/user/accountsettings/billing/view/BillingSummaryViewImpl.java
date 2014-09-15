@@ -20,6 +20,8 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.vaadin.risto.formsender.FormSenderBuilder;
+import org.vaadin.risto.formsender.widgetset.client.shared.Method;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
@@ -390,10 +392,36 @@ public class BillingSummaryViewImpl extends AbstractPageView implements
 								return;
 							}
 
+							if (chosenPlan.getBillingtype().equals(
+									AppContext.getBillingAccount()
+											.getBillingPlan().getBillingtype())) {
+								NotificationUtil
+										.showErrorNotification("Selected plan is the same with the current plan");
+								return;
+							}
+
 							log.debug("It is possible to update plan");
 							billingService.updateBillingPlan(
 									AppContext.getAccountId(),
 									chosenPlan.getId());
+
+							log.debug("Update the billing service");
+							FormSenderBuilder
+									.create()
+									.withUI(getUI())
+									.withAction(
+											"http://sites.fastspring.com/esofthead/api/order")
+									.withMethod(Method.POST)
+									.withValue("operation", "create")
+									.withValue("destination", "contents")
+									.withValue("contact_fname", "Nguyen")
+									.withValue("contact_lname", "Hai")
+									.withValue("contact_company", "")
+									.withValue("contact_email",
+											AppContext.getUsername())
+									.withValue("product_1_path",
+											"/mycollabmicro").submit();
+
 							UpdateBillingPlanWindow.this.updateBillingPlan();
 							UpdateBillingPlanWindow.this.close();
 						}
