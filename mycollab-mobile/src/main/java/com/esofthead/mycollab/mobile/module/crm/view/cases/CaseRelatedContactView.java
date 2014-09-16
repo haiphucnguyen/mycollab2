@@ -80,7 +80,8 @@ public class CaseRelatedContactView extends
 		addBtns.setMargin(true);
 		addBtns.setStyleName("edit-btn-layout");
 
-		Button newContact = new Button();
+		Button newContact = new Button(
+				AppContext.getMessage(ContactI18nEnum.VIEW_NEW_TITLE));
 		newContact.addClickListener(new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
@@ -91,7 +92,8 @@ public class CaseRelatedContactView extends
 		});
 		addBtns.addComponent(newContact);
 
-		Button selectContact = new Button();
+		Button selectContact = new Button(
+				AppContext.getMessage(ContactI18nEnum.M_TITLE_SELECT_CONTACTS));
 		selectContact.addClickListener(new Button.ClickListener() {
 
 			private static final long serialVersionUID = 5491307760254926146L;

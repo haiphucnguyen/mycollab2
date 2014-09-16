@@ -84,7 +84,8 @@ public class ContactRelatedOpportunityView extends
 		addBtns.setSpacing(true);
 		addBtns.setMargin(true);
 
-		Button newOpportunity = new Button();
+		Button newOpportunity = new Button(
+				AppContext.getMessage(OpportunityI18nEnum.VIEW_NEW_TITLE));
 		newOpportunity.addClickListener(new Button.ClickListener() {
 			private static final long serialVersionUID = 7172838996944732255L;
 
@@ -95,7 +96,9 @@ public class ContactRelatedOpportunityView extends
 		});
 		addBtns.addComponent(newOpportunity);
 
-		Button selectOpportunity = new Button();
+		Button selectOpportunity = new Button(
+				AppContext
+						.getMessage(OpportunityI18nEnum.M_TITLE_SELECT_OPPORTUNITIES));
 		selectOpportunity.addClickListener(new Button.ClickListener() {
 
 			private static final long serialVersionUID = -8732749124902402042L;

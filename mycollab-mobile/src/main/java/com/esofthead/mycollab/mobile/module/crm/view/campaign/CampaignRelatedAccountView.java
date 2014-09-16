@@ -82,7 +82,8 @@ public class CampaignRelatedAccountView extends
 		addButtons.setMargin(true);
 		addButtons.addStyleName("edit-btn-layout");
 
-		Button newAccount = new Button();
+		Button newAccount = new Button(
+				AppContext.getMessage(AccountI18nEnum.VIEW_NEW_TITLE));
 		newAccount.addClickListener(new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
@@ -93,7 +94,8 @@ public class CampaignRelatedAccountView extends
 		});
 		addButtons.addComponent(newAccount);
 
-		Button selectAccount = new Button();
+		Button selectAccount = new Button(
+				AppContext.getMessage(AccountI18nEnum.M_TITLE_SELECT_ACCOUNTS));
 		selectAccount.addClickListener(new Button.ClickListener() {
 
 			private static final long serialVersionUID = 270503987054356318L;

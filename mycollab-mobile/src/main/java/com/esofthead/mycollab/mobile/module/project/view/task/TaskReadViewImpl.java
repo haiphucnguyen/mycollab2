@@ -27,6 +27,7 @@ import com.esofthead.mycollab.mobile.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.mobile.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.mobile.ui.DefaultFormViewFieldFactory.FormContainerHorizontalViewField;
 import com.esofthead.mycollab.mobile.ui.DefaultFormViewFieldFactory.FormDetectAndDisplayUrlViewField;
+import com.esofthead.mycollab.mobile.ui.UIConstants;
 import com.esofthead.mycollab.module.project.ProjectResources;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
@@ -38,7 +39,6 @@ import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
-import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.server.Resource;
 import com.vaadin.ui.Alignment;
@@ -78,10 +78,11 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask>
 		if (StatusI18nEnum.Open.name().equals(beanItem.getStatus())) {
 			quickActionStatusBtn.setCaption(AppContext
 					.getMessage(GenericI18Enum.BUTTON_CLOSE_LABEL));
+			this.removeStyleName(UIConstants.STATUS_DISABLED);
 		} else {
 			quickActionStatusBtn.setCaption(AppContext
 					.getMessage(GenericI18Enum.BUTTON_REOPEN_LABEL));
-
+			this.addStyleName(UIConstants.STATUS_DISABLED);
 		}
 	}
 
@@ -133,21 +134,17 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask>
 								StatusI18nEnum.Closed.name())) {
 					beanItem.setStatus(StatusI18nEnum.Open.name());
 					beanItem.setPercentagecomplete(0d);
-					// TODO: add visual change for user know this task was
-					// re-opened
+					TaskReadViewImpl.this
+							.removeStyleName(UIConstants.STATUS_DISABLED);
 					quickActionStatusBtn.setCaption(AppContext
 							.getMessage(GenericI18Enum.BUTTON_CLOSE_LABEL));
-					quickActionStatusBtn.setIcon(MyCollabResource
-							.newResource("icons/16/project/closeTask.png"));
 				} else {
 					beanItem.setStatus(StatusI18nEnum.Closed.name());
 					beanItem.setPercentagecomplete(100d);
-					// TODO: add visual change for user know this task was
-					// closed
+					TaskReadViewImpl.this
+							.addStyleName(UIConstants.STATUS_DISABLED);
 					quickActionStatusBtn.setCaption(AppContext
 							.getMessage(GenericI18Enum.BUTTON_REOPEN_LABEL));
-					quickActionStatusBtn.setIcon(MyCollabResource
-							.newResource("icons/16/project/reopenTask.png"));
 				}
 
 				ProjectTaskService service = ApplicationContextUtil

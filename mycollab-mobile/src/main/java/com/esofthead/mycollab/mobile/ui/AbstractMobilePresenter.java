@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-mobile.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.mobile.module.project.ui;
+package com.esofthead.mycollab.mobile.ui;
 
 import com.esofthead.mycollab.mobile.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.PageView;
@@ -23,16 +23,18 @@ import com.vaadin.addon.touchkit.ui.NavigationManager;
 import com.vaadin.ui.ComponentContainer;
 
 /**
- * @author MyCollab Inc.
  * 
- * @since 4.3.1
+ * @author MyCollab Ltd.
+ * @since 4.5.0
+ * 
  */
-public class ProjectGenericPresenter<V extends PageView> extends
+
+public abstract class AbstractMobilePresenter<V extends PageView> extends
 		AbstractPresenter<V> {
 
-	private static final long serialVersionUID = 2162143696476839340L;
+	private static final long serialVersionUID = 1L;
 
-	public ProjectGenericPresenter(Class<V> viewClass) {
+	public AbstractMobilePresenter(Class<V> viewClass) {
 		super(viewClass);
 	}
 
@@ -45,5 +47,4 @@ public class ProjectGenericPresenter<V extends PageView> extends
 			navigator.addComponent(view.getWidget());
 		}
 	}
-
 }

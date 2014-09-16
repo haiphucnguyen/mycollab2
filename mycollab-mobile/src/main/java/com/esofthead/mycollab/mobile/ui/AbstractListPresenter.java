@@ -14,25 +14,33 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-mobile.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.mobile.module.crm.view.campaign;
+package com.esofthead.mycollab.mobile.ui;
 
-import com.esofthead.mycollab.mobile.module.crm.ui.CrmListPresenter;
-import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
-import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
+import com.esofthead.mycollab.core.arguments.SearchCriteria;
+import com.esofthead.mycollab.core.arguments.ValuedBean;
 
 /**
  * 
  * @author MyCollab Ltd.
- * @since 4.0
+ * @since 4.5.0
  * 
+ * @param <V>
+ * @param <S>
+ * @param <B>
  */
-public class CampaignListPresenter extends
-		CrmListPresenter<CampaignListView, CampaignSearchCriteria, SimpleCampaign> {
+public abstract class AbstractListPresenter<V extends IListView<S, B>, S extends SearchCriteria, B extends ValuedBean>
+		extends AbstractMobilePresenter<V> {
+	private static final long serialVersionUID = -2202567598255893303L;
 
-	private static final long serialVersionUID = 1327621011652399974L;
+	protected S searchCriteria;
 
-	public CampaignListPresenter() {
-		super(CampaignListView.class);
+	public AbstractListPresenter(Class<V> viewClass) {
+		super(viewClass);
+	}
+
+	public void doSearch(S searchCriteria) {
+		this.searchCriteria = searchCriteria;
+		view.getPagedBeanTable().setSearchCriteria(searchCriteria);
 	}
 
 }
