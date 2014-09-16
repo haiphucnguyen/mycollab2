@@ -1,6 +1,8 @@
 package com.esofthead.mycollab.premium.module.project.view.time;
 
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
@@ -21,6 +23,7 @@ import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
@@ -35,8 +38,9 @@ import com.vaadin.ui.VerticalLayout;
  * @since 2.0
  * 
  */
-class ItemTimeLoggingSearchPanel extends
-		GenericSearchPanel<ItemTimeLoggingSearchCriteria> {
+class ItemTimeLoggingSearchPanel
+		extends
+			GenericSearchPanel<ItemTimeLoggingSearchCriteria> {
 
 	private static final long serialVersionUID = 1L;
 	protected ItemTimeLoggingSearchCriteria searchCriteria;
@@ -59,12 +63,23 @@ class ItemTimeLoggingSearchPanel extends
 		layout.bodyWrap.removeComponent(c);
 	}
 
-	@SuppressWarnings({ "serial", "rawtypes" })
+	public String getGroupBy() {
+		String groupBy = (String) layout.groupField.getValue();
+		return groupBy == null ? "Date" : groupBy;
+	}
+
+	public String getOrderBy() {
+		String orderBy = (String) layout.orderField.getValue();
+		return orderBy == null ? "Ascending" : orderBy;
+	}
+
+	@SuppressWarnings({"serial", "rawtypes"})
 	private class TimeLoggingAdvancedSearchLayout extends AdvancedSearchLayout {
 
 		private DateRangeField dateRangeField;
 
 		private ProjectMemberListSelect userField;
+		private GroupOrderCombobox groupField, orderField;
 		private HorizontalLayout buttonControls;
 		private Button createBtn;
 		private VerticalLayout bodyWrap;
@@ -111,8 +126,8 @@ class ItemTimeLoggingSearchPanel extends
 		public ComponentContainer constructBody() {
 			bodyWrap = new VerticalLayout();
 
-			GridFormLayoutHelper gridLayout = new GridFormLayoutHelper(3, 1,
-					"350px", "50px");
+			GridFormLayoutHelper gridLayout = new GridFormLayoutHelper(3, 2,
+					"300px", "50px");
 
 			String nameFieldWidth = "300px";
 
@@ -127,6 +142,29 @@ class ItemTimeLoggingSearchPanel extends
 			this.userField = (ProjectMemberListSelect) gridLayout.addComponent(
 					new ProjectMemberListSelect(), "User", 1, 0);
 			this.userField.setWidth(nameFieldWidth);
+
+			HorizontalLayout groupSortFields = new HorizontalLayout();
+			groupSortFields.setWidth(nameFieldWidth);
+
+			this.groupField = new GroupOrderCombobox(Arrays.asList("Date",
+					"User"));
+			this.groupField.setWidth("80px");
+			Label groupLb = new Label("Group:");
+			groupLb.setWidth("40px");
+			UiUtils.addComponent(groupSortFields, groupLb,
+					Alignment.MIDDLE_CENTER);
+			groupSortFields.addComponent(this.groupField);
+
+			this.orderField = new GroupOrderCombobox(Arrays.asList("Ascending",
+					"Descending"));
+			this.orderField.setWidth("80px");
+			Label sortLb = new Label("Sort:");
+			sortLb.setWidth("40px");
+			UiUtils.addComponent(groupSortFields, sortLb,
+					Alignment.MIDDLE_CENTER);
+			groupSortFields.addComponent(this.orderField);
+
+			gridLayout.addComponent(groupSortFields, null, 2, 0);
 
 			buttonControls = new HorizontalLayout();
 			buttonControls.setSpacing(true);
@@ -163,7 +201,7 @@ class ItemTimeLoggingSearchPanel extends
 					Alignment.MIDDLE_LEFT);
 			buttonControls.setExpandRatio(clearBtn, 1.0f);
 
-			gridLayout.addComponent(buttonControls, null, 2, 0);
+			gridLayout.addComponent(buttonControls, null, 1, 1);
 
 			bodyWrap.addComponent(gridLayout.getLayout());
 
@@ -197,6 +235,20 @@ class ItemTimeLoggingSearchPanel extends
 			}
 
 			return ItemTimeLoggingSearchPanel.this.searchCriteria;
+		}
+	}
+
+	private class GroupOrderCombobox extends ComboBox {
+		private static final long serialVersionUID = 1L;
+
+		public GroupOrderCombobox(List<String> items) {
+			this.setItemCaptionMode(ItemCaptionMode.EXPLICIT);
+			this.setNullSelectionAllowed(false);
+			for (String item : items) {
+				this.addItem(item);
+				this.setItemCaption(item, item);
+			}
+			this.select(items.get(0));
 		}
 	}
 }

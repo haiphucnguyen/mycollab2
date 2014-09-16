@@ -19,6 +19,8 @@ package com.esofthead.mycollab.module.project.ui.components;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -28,6 +30,8 @@ import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.module.project.domain.SimpleItemTimeLogging;
 import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ItemTimeLoggingService;
+import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserLink;
+import com.esofthead.mycollab.module.project.view.time.TimeTableFieldDef;
 import com.esofthead.mycollab.module.project.view.time.TimeTrackingTableDisplay;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -40,20 +44,32 @@ import com.vaadin.ui.VerticalLayout;
  * 
  * @author MyCollab Ltd.
  * @since 4.5.1
- *
+ * 
  */
-public class TimeTrackingDateOrderComponent extends VerticalLayout {
+public class TimeTrackingComponent extends VerticalLayout {
 
 	private static final long serialVersionUID = 1L;
 
 	private static final DateFormat DATE_FORMAT = new SimpleDateFormat(
 			"EEEE, dd MMMM yyyy");
+	private static final String ORDERBY_ASCENDING = "Ascending";
+	private static final String ORDERBY_DESCENDING = "Descending";
+	private static final String GROUPBY_USER = "User";
+	private static final String GROUPBY_DATE = "Date";
 
 	private List<TableViewField> visibleFields;
 	private TableClickListener tableClickListener;
 	private ItemTimeLoggingService itemTimeLoggingService;
 
-	public TimeTrackingDateOrderComponent(List<TableViewField> fields,
+	private String groupBy;
+	private double billable = 0, nonbillable = 0;
+
+	private Date current = new Date(0);
+	private String username = "", avatar = "", fullname = "";
+
+	private List<SimpleItemTimeLogging> list = new ArrayList<SimpleItemTimeLogging>();
+
+	public TimeTrackingComponent(List<TableViewField> fields,
 			TableClickListener tableClickListener) {
 		super();
 		addStyleName(UIConstants.LAYOUT_LOG);
@@ -64,45 +80,94 @@ public class TimeTrackingDateOrderComponent extends VerticalLayout {
 				.getSpringBean(ItemTimeLoggingService.class);
 	}
 
-	public void show(ItemTimeLoggingSearchCriteria searchCriteria) {
-		removeAllComponents();
+	public void show(ItemTimeLoggingSearchCriteria searchCriteria,
+			final String groupBy, final String orderBy) {
+		this.removeAllComponents();
+		this.list.clear();
+		this.billable = this.nonbillable = 0;
+		this.groupBy = groupBy;
 
 		@SuppressWarnings("unchecked")
 		List<SimpleItemTimeLogging> itemTimeLoggingList = itemTimeLoggingService
 				.findPagableListByCriteria(new SearchRequest<ItemTimeLoggingSearchCriteria>(
 						searchCriteria));
-		Date current = new Date(0);
-		double billable = 0, nonbillable = 0;
-		List<SimpleItemTimeLogging> list = new ArrayList<SimpleItemTimeLogging>();
 
-		for (SimpleItemTimeLogging itemTimeLogging : itemTimeLoggingList) {
-			if (DateTimeUtils.compareByDate(itemTimeLogging.getLogforday(),
-					current) > 0) {
-				showRecord(current, list, billable, nonbillable);
+		Collections.sort(itemTimeLoggingList,
+				new Comparator<SimpleItemTimeLogging>() {
+					@Override
+					public int compare(SimpleItemTimeLogging item1,
+							SimpleItemTimeLogging item2) {
+						if (groupBy.equals(GROUPBY_USER)) {
+							return item1.getCreateduser().compareTo(
+									item2.getCreateduser());
+						} else {
+							return item1.getLogforday().compareTo(
+									item2.getLogforday());
+						}
+					}
+				});
 
-				current = itemTimeLogging.getLogforday();
-				list.clear();
-				billable = nonbillable = 0;
+		if (orderBy.equals(ORDERBY_ASCENDING)) {
+			for (int i = 0; i < itemTimeLoggingList.size(); i++) {
+				addItem(itemTimeLoggingList.get(i));
 			}
-
-			list.add(itemTimeLogging);
-			billable += itemTimeLogging.getIsbillable() ? itemTimeLogging
-					.getLogvalue() : 0;
-			nonbillable += !itemTimeLogging.getIsbillable() ? itemTimeLogging
-					.getLogvalue() : 0;
+		} else if (orderBy.equals(ORDERBY_DESCENDING)) {
+			for (int i = itemTimeLoggingList.size() - 1; i >= 0; i--) {
+				addItem(itemTimeLoggingList.get(i));
+			}
 		}
-		showRecord(current, list, billable, nonbillable);
+		showRecord();
 	}
 
-	private void showRecord(Date date, List<SimpleItemTimeLogging> list,
-			Double billable, Double nonbillable) {
+	private void addItem(SimpleItemTimeLogging itemTimeLogging) {
+		if (groupBy.equals(GROUPBY_DATE)
+				&& (DateTimeUtils.compareByDate(itemTimeLogging.getLogforday(),
+						current) != 0)) {
+			showRecord();
+			refreshData(itemTimeLogging);
+		} else if (groupBy.equals(GROUPBY_USER)
+				&& !itemTimeLogging.getLoguser().equals(username)) {
+			showRecord();
+			refreshData(itemTimeLogging);
+		}
+
+		list.add(itemTimeLogging);
+		billable += itemTimeLogging.getIsbillable() ? itemTimeLogging
+				.getLogvalue() : 0;
+		nonbillable += !itemTimeLogging.getIsbillable() ? itemTimeLogging
+				.getLogvalue() : 0;
+	}
+
+	private void refreshData(SimpleItemTimeLogging itemTimeLogging) {
+		current = itemTimeLogging.getLogforday();
+		username = itemTimeLogging.getLoguser();
+		avatar = itemTimeLogging.getLogUserAvatarId();
+		fullname = itemTimeLogging.getLogUserFullName();
+		list.clear();
+		billable = nonbillable = 0;
+	}
+
+	private void showRecord() {
 		if (list.size() > 0) {
-			Label logForDay = new Label(DATE_FORMAT.format(date));
-			logForDay.addStyleName(UIConstants.TEXT_LOG_DATE);
-			addComponent(logForDay);
+			if (groupBy.equals(GROUPBY_DATE)) {
+				Label label = new Label(DATE_FORMAT.format(current));
+				label.addStyleName(UIConstants.TEXT_LOG_DATE);
+				addComponent(label);
+			} else {
+				addComponent(new ProjectUserLink(username, avatar, fullname));
+			}
+			List<TableViewField> fields = new ArrayList<TableViewField>();
+			for (TableViewField field : visibleFields) {
+				if ((groupBy.equals(GROUPBY_DATE) && !field
+						.equals(TimeTableFieldDef.logForDate))
+						|| (groupBy.equals(GROUPBY_USER) && !field
+								.equals(TimeTableFieldDef.logUser))) {
+					fields.add(field);
+				}
+			}
 
 			TimeTrackingTableDisplay table = new TimeTrackingTableDisplay(
-					visibleFields);
+					fields);
 			table.addStyleName(UIConstants.FULL_BORDER_TABLE);
 			table.setMargin(new MarginInfo(true, false, false, false));
 			table.addTableListener(this.tableClickListener);

@@ -20,7 +20,7 @@ import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.i18n.TimeTrackingI18nEnum;
 import com.esofthead.mycollab.module.project.reporting.ExportTimeLoggingStreamResource;
 import com.esofthead.mycollab.module.project.service.ItemTimeLoggingService;
-import com.esofthead.mycollab.module.project.ui.components.TimeTrackingDateOrderComponent;
+import com.esofthead.mycollab.module.project.ui.components.TimeTrackingComponent;
 import com.esofthead.mycollab.module.project.view.time.TimeTableFieldDef;
 import com.esofthead.mycollab.reporting.ReportExportType;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
@@ -66,7 +66,8 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements
 
 	private final Label lbTimeRange;
 
-	private TimeTrackingDateOrderComponent layoutItem;
+	private TimeTrackingComponent layoutItem;
+
 
 	public TimeTrackingListViewImpl() {
 		this.setMargin(new MarginInfo(false, true, false, true));
@@ -152,10 +153,11 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements
 				Alignment.MIDDLE_RIGHT);
 		this.addComponent(headerWrapper);
 
-		this.layoutItem = new TimeTrackingDateOrderComponent(Arrays.asList(
-				TimeTableFieldDef.summary, TimeTableFieldDef.logUser,
-				TimeTableFieldDef.logValue, TimeTableFieldDef.billable,
-				TimeTableFieldDef.id), this.tableClickListener);
+		this.layoutItem = new TimeTrackingComponent(Arrays.asList(
+				TimeTableFieldDef.summary, TimeTableFieldDef.logForDate,
+				TimeTableFieldDef.logUser, TimeTableFieldDef.logValue,
+				TimeTableFieldDef.billable, TimeTableFieldDef.id),
+				this.tableClickListener);
 		this.layoutItem.setWidth("100%");
 		this.addComponent(this.layoutItem);
 	}
@@ -227,7 +229,9 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements
 	@Override
 	public void refresh() {
 		this.setTimeRange();
-		this.layoutItem.show(itemTimeLogginSearchCriteria);
+		this.layoutItem.show(itemTimeLogginSearchCriteria,
+				this.itemTimeLoggingPanel.getGroupBy(),
+				this.itemTimeLoggingPanel.getOrderBy());
 	}
 
 	private TableClickListener tableClickListener = new TableClickListener() {
