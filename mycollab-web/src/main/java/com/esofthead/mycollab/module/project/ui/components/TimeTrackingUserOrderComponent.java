@@ -16,17 +16,14 @@
  */
 package com.esofthead.mycollab.module.project.ui.components;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 
 import com.esofthead.mycollab.common.TableViewField;
-import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.module.project.domain.SimpleItemTimeLogging;
 import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
+import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserLink;
 import com.esofthead.mycollab.module.project.view.time.TimeTrackingTableDisplay;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable.TableClickListener;
@@ -39,16 +36,13 @@ import com.vaadin.ui.Label;
  * @since 4.5.1
  * 
  */
-public class TimeTrackingDateOrderComponent extends TimeTrackingAbstractComponent {
+public class TimeTrackingUserOrderComponent extends TimeTrackingAbstractComponent {
 
 	private static final long serialVersionUID = 1L;
 
-	private static final DateFormat DATE_FORMAT = new SimpleDateFormat(
-			"EEEE, dd MMMM yyyy");
+	private String username = "", avatar = "", fullname = "";
 
-	private Date current = new Date(0);
-
-	public TimeTrackingDateOrderComponent(List<TableViewField> fields,
+	public TimeTrackingUserOrderComponent(List<TableViewField> fields,
 			TableClickListener tableClickListener) {
 		super(fields, tableClickListener);
 	}
@@ -64,8 +58,8 @@ public class TimeTrackingDateOrderComponent extends TimeTrackingAbstractComponen
 					@Override
 					public int compare(SimpleItemTimeLogging item1,
 							SimpleItemTimeLogging item2) {
-						return item1.getLogforday().compareTo(
-								item2.getLogforday());
+						return item1.getCreateduser().compareTo(
+								item2.getCreateduser());
 					}
 				});
 		return itemTimeLoggingList;
@@ -73,11 +67,12 @@ public class TimeTrackingDateOrderComponent extends TimeTrackingAbstractComponen
 
 	@Override
 	protected void addItem(SimpleItemTimeLogging itemTimeLogging) {
-		if (DateTimeUtils
-				.compareByDate(itemTimeLogging.getLogforday(), current) != 0) {
+		if (!itemTimeLogging.getLoguser().equals(username)) {
 			showRecord();
-			current = itemTimeLogging.getLogforday();
 			refreshData();
+			username = itemTimeLogging.getLoguser();
+			avatar = itemTimeLogging.getLogUserAvatarId();
+			fullname = itemTimeLogging.getLogUserFullName();
 		}
 
 		list.add(itemTimeLogging);
@@ -90,10 +85,8 @@ public class TimeTrackingDateOrderComponent extends TimeTrackingAbstractComponen
 	@Override
 	protected void showRecord() {
 		if (list.size() > 0) {
-			Label label = new Label(DATE_FORMAT.format(current));
-			label.addStyleName(UIConstants.TEXT_LOG_DATE);
-			addComponent(label);
-
+			addComponent(new ProjectUserLink(username, avatar, fullname));
+			
 			TimeTrackingTableDisplay table = new TimeTrackingTableDisplay(
 					visibleFields);
 			table.addStyleName(UIConstants.FULL_BORDER_TABLE);
