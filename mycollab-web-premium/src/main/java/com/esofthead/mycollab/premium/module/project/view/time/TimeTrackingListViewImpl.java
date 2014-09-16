@@ -20,7 +20,10 @@ import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.i18n.TimeTrackingI18nEnum;
 import com.esofthead.mycollab.module.project.reporting.ExportTimeLoggingStreamResource;
 import com.esofthead.mycollab.module.project.service.ItemTimeLoggingService;
-import com.esofthead.mycollab.module.project.ui.components.TimeTrackingComponent;
+import com.esofthead.mycollab.module.project.ui.components.TimeTrackingDateOrderComponent;
+import com.esofthead.mycollab.module.project.ui.components.TimeTrackingUserOrderComponent;
+import com.esofthead.mycollab.module.project.view.AddTimeEntryWindow;
+import com.esofthead.mycollab.module.project.view.ItemTimeLoggingSearchPanel;
 import com.esofthead.mycollab.module.project.view.time.TimeTableFieldDef;
 import com.esofthead.mycollab.reporting.ReportExportType;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
@@ -54,20 +57,21 @@ import com.vaadin.ui.VerticalLayout;
  * 
  */
 @ViewComponent(scope = ViewScope.PROTOTYPE)
-public class TimeTrackingListViewImpl extends AbstractPageView implements
-		TimeTrackingListView {
+public class TimeTrackingListViewImpl extends AbstractPageView
+		implements
+			TimeTrackingListView {
 	private static final long serialVersionUID = 3742030333599796165L;
 
 	private ItemTimeLoggingSearchPanel itemTimeLoggingPanel;
-	private ItemTimeLoggingSearchCriteria itemTimeLogginSearchCriteria;
+	private TimeTrackingDateOrderComponent dateOrderLayoutItem;
+	private TimeTrackingUserOrderComponent userOrderLayoutItem;
 
-	private SplitButton exportButtonControl;
 	private final ItemTimeLoggingService itemTimeLoggingService;
+	private ItemTimeLoggingSearchCriteria itemTimeLogginSearchCriteria;
+	
+	private SplitButton exportButtonControl;
 
 	private final Label lbTimeRange;
-
-	private TimeTrackingComponent layoutItem;
-
 
 	public TimeTrackingListViewImpl() {
 		this.setMargin(new MarginInfo(false, true, false, true));
@@ -153,20 +157,27 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements
 				Alignment.MIDDLE_RIGHT);
 		this.addComponent(headerWrapper);
 
-		this.layoutItem = new TimeTrackingComponent(Arrays.asList(
-				TimeTableFieldDef.summary, TimeTableFieldDef.logForDate,
-				TimeTableFieldDef.logUser, TimeTableFieldDef.logValue,
-				TimeTableFieldDef.billable, TimeTableFieldDef.id),
+		this.dateOrderLayoutItem = new TimeTrackingDateOrderComponent(
+				Arrays.asList(TimeTableFieldDef.summary,
+						TimeTableFieldDef.logUser, TimeTableFieldDef.logValue,
+						TimeTableFieldDef.billable, TimeTableFieldDef.id),
 				this.tableClickListener);
-		this.layoutItem.setWidth("100%");
-		this.addComponent(this.layoutItem);
+		this.dateOrderLayoutItem.setWidth("100%");
+
+		this.userOrderLayoutItem = new TimeTrackingUserOrderComponent(
+				Arrays.asList(TimeTableFieldDef.summary,
+						TimeTableFieldDef.logForDate,
+						TimeTableFieldDef.logValue, TimeTableFieldDef.billable,
+						TimeTableFieldDef.id), this.tableClickListener);
+		this.userOrderLayoutItem.setWidth("100%");
 	}
 
 	private StreamResource constructStreamResource(ReportExportType exportType) {
 		final String title = "Time of Project "
 				+ ((CurrentProjectVariables.getProject() != null && CurrentProjectVariables
-						.getProject().getName() != null) ? CurrentProjectVariables
-						.getProject().getName() : "");
+						.getProject().getName() != null)
+						? CurrentProjectVariables.getProject().getName()
+						: "");
 		ExportTimeLoggingStreamResource exportStream = new ExportTimeLoggingStreamResource(
 				title, exportType,
 				ApplicationContextUtil
@@ -229,9 +240,18 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements
 	@Override
 	public void refresh() {
 		this.setTimeRange();
-		this.layoutItem.show(itemTimeLogginSearchCriteria,
-				this.itemTimeLoggingPanel.getGroupBy(),
-				this.itemTimeLoggingPanel.getOrderBy());
+
+		if (this.itemTimeLoggingPanel.getGroupBy().equals("Date")) {
+			this.dateOrderLayoutItem.show(itemTimeLogginSearchCriteria,
+					this.itemTimeLoggingPanel.getOrderBy());
+			this.addComponent(this.dateOrderLayoutItem);
+			this.removeComponent(this.userOrderLayoutItem);
+		} else {
+			this.userOrderLayoutItem.show(itemTimeLogginSearchCriteria,
+					this.itemTimeLoggingPanel.getOrderBy());
+			this.addComponent(this.userOrderLayoutItem);
+			this.removeComponent(this.dateOrderLayoutItem);
+		}
 	}
 
 	private TableClickListener tableClickListener = new TableClickListener() {
