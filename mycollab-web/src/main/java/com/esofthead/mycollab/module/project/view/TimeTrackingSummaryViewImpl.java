@@ -36,7 +36,7 @@ import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSear
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.module.project.i18n.TimeTrackingI18nEnum;
 import com.esofthead.mycollab.module.project.service.ItemTimeLoggingService;
-import com.esofthead.mycollab.module.project.ui.components.TimeTrackingComponent;
+import com.esofthead.mycollab.module.project.ui.components.TimeTrackingDateOrderComponent;
 import com.esofthead.mycollab.module.project.view.parameters.BugScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.TaskScreenData;
@@ -100,7 +100,7 @@ public class TimeTrackingSummaryViewImpl extends AbstractPageView implements
 	private Date fromDate, toDate;
 	private ItemTimeLoggingService itemTimeLoggingService;
 
-	private TimeTrackingComponent layoutItem;
+	private TimeTrackingDateOrderComponent layoutItem;
 
 	public TimeTrackingSummaryViewImpl() {
 		this.setWidth("100%");
@@ -256,7 +256,7 @@ public class TimeTrackingSummaryViewImpl extends AbstractPageView implements
 		controlBtns.setComponentAlignment(backBtn, Alignment.TOP_LEFT);
 		controlBtns.setSizeFull();
 
-		this.layoutItem = new TimeTrackingComponent(FIELDS, tableClickListener);
+		this.layoutItem = new TimeTrackingDateOrderComponent(FIELDS, tableClickListener);
 		this.layoutItem.setWidth("100%");
 		contentWrapper.addComponent(this.layoutItem);
 	}
@@ -329,8 +329,8 @@ public class TimeTrackingSummaryViewImpl extends AbstractPageView implements
 									fromDate, toDate, totalHour, billableHour,
 									nonbillableHour));
 		}
-// TODO:
-		this.layoutItem.show(searchCriteria, "Date", "Ascending");
+		// TODO:
+		this.layoutItem.show(searchCriteria, "Ascending");
 	}
 
 	private TableClickListener tableClickListener = new TableClickListener() {

@@ -22,8 +22,6 @@ import com.esofthead.mycollab.module.project.reporting.ExportTimeLoggingStreamRe
 import com.esofthead.mycollab.module.project.service.ItemTimeLoggingService;
 import com.esofthead.mycollab.module.project.ui.components.TimeTrackingDateOrderComponent;
 import com.esofthead.mycollab.module.project.ui.components.TimeTrackingUserOrderComponent;
-import com.esofthead.mycollab.module.project.view.AddTimeEntryWindow;
-import com.esofthead.mycollab.module.project.view.ItemTimeLoggingSearchPanel;
 import com.esofthead.mycollab.module.project.view.time.TimeTableFieldDef;
 import com.esofthead.mycollab.reporting.ReportExportType;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
