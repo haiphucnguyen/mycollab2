@@ -44,7 +44,9 @@
                     </dependency>
                 </dependencies>
                 <configuration>
-                    <generateReports>true</generateReports>
+                    <generateSitemap>true</generateSitemap>
+                    <generateReports>false</generateReports>
+                    <generateProjectInfo>false</generateProjectInfo>
                     <inputEncoding>UTF-8</inputEncoding>
                     <outputEncoding>UTF-8</outputEncoding>
                     <!-- Site deployment done using GitHub site plugin -->

@@ -412,6 +412,7 @@ public class BillingSummaryViewImpl extends AbstractPageView implements
 									.withAction(
 											"http://sites.fastspring.com/esofthead/api/order")
 									.withMethod(Method.POST)
+									.withTarget("_blank")
 									.withValue("operation", "create")
 									.withValue("destination", "contents")
 									.withValue("contact_fname", "Nguyen")
