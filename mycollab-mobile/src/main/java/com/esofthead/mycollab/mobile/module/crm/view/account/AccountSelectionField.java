@@ -33,7 +33,7 @@ import com.vaadin.data.Property;
  */
 
 public class AccountSelectionField extends
-		AbstractSelectionCustomField<Account> implements
+		AbstractSelectionCustomField<Integer, Account> implements
 		FieldSelection<Account> {
 	private static final long serialVersionUID = 1L;
 
@@ -46,11 +46,8 @@ public class AccountSelectionField extends
 		Object value = newDataSource.getValue();
 		if (value instanceof Integer) {
 			setAccountByVal((Integer) value);
-
-			super.setPropertyDataSource(newDataSource);
-		} else {
-			super.setPropertyDataSource(newDataSource);
 		}
+		super.setPropertyDataSource(newDataSource);
 	}
 
 	@Override
@@ -69,7 +66,7 @@ public class AccountSelectionField extends
 		}
 	}
 
-	private void setInternalAccount(SimpleAccount account) {
+	private void setInternalAccount(Account account) {
 		this.beanItem = account;
 		navButton.setCaption(account.getAccountname());
 	}
@@ -80,8 +77,7 @@ public class AccountSelectionField extends
 
 	@Override
 	public void fireValueChange(Account data) {
-		beanItem = data;
-		navButton.setCaption(beanItem.getAccountname());
+		setInternalAccount(data);
 		setInternalValue(beanItem.getId());
 	}
 

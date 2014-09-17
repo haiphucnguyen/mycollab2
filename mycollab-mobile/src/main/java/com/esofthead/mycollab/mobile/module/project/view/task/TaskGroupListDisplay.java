@@ -48,6 +48,7 @@ public class TaskGroupListDisplay
 		super(ApplicationContextUtil
 				.getSpringBean(ProjectTaskListService.class),
 				new TaskGroupRowDisplayHandler());
+		this.addStyleName("task-group-list");
 	}
 
 	private static class TaskGroupRowDisplayHandler implements

@@ -16,7 +16,7 @@
  */
 package com.esofthead.mycollab.mobile.module.project.view.parameters;
 
-import com.esofthead.mycollab.module.crm.domain.SimpleTask;
+import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 
 /**
@@ -32,9 +32,9 @@ public class TaskScreenData {
 		}
 	}
 
-	public static class Add extends ScreenData<Integer> {
+	public static class Add extends ScreenData<SimpleTask> {
 		public Add() {
-			super(null);
+			super(new SimpleTask());
 		}
 	}
 
