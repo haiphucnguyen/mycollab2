@@ -21,8 +21,8 @@ import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.mobile.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.mobile.module.project.events.TaskEvent;
-import com.esofthead.mycollab.mobile.module.project.ui.ProjectGenericPresenter;
 import com.esofthead.mycollab.mobile.shell.events.ShellEvent;
+import com.esofthead.mycollab.mobile.ui.AbstractMobilePresenter;
 import com.esofthead.mycollab.mobile.ui.ConfirmDialog;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
@@ -41,7 +41,7 @@ import com.vaadin.ui.UI;
  * @author MyCollab Ltd.
  * @since 4.5.0
  */
-public class TaskReadPresenter extends ProjectGenericPresenter<TaskReadView> {
+public class TaskReadPresenter extends AbstractMobilePresenter<TaskReadView> {
 
 	private static final long serialVersionUID = 1L;
 

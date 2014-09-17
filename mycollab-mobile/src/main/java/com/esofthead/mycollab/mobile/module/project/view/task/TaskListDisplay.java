@@ -77,18 +77,22 @@ public class TaskListDisplay
 			topRow.addComponent(b);
 			topRow.setExpandRatio(b, 1.0f);
 
-			Label priorityLbl = new Label(task.getPriority());
-			if (task.getPriority().equals(TaskPriority.High.name())) {
-				priorityLbl.setStyleName(UIConstants.LBL_HIGH);
-			} else if (task.getPriority().equals(TaskPriority.Urgent.name())) {
-				priorityLbl.setStyleName(UIConstants.LBL_URGENT);
-			} else if (task.getPriority().equals(TaskPriority.Medium.name())) {
-				priorityLbl.setStyleName(UIConstants.LBL_MEDIUM);
-			} else if (task.getPriority().equals(TaskPriority.Low.name())) {
-				priorityLbl.setStyleName(UIConstants.LBL_LOW);
+			if (!task.getPriority().equals(TaskPriority.None.name())) {
+				Label priorityLbl = new Label(task.getPriority());
+				if (task.getPriority().equals(TaskPriority.High.name())) {
+					priorityLbl.setStyleName(UIConstants.LBL_HIGH);
+				} else if (task.getPriority()
+						.equals(TaskPriority.Urgent.name())) {
+					priorityLbl.setStyleName(UIConstants.LBL_URGENT);
+				} else if (task.getPriority()
+						.equals(TaskPriority.Medium.name())) {
+					priorityLbl.setStyleName(UIConstants.LBL_MEDIUM);
+				} else if (task.getPriority().equals(TaskPriority.Low.name())) {
+					priorityLbl.setStyleName(UIConstants.LBL_LOW);
+				}
+				priorityLbl.setWidthUndefined();
+				topRow.addComponent(priorityLbl);
 			}
-			priorityLbl.setWidthUndefined();
-			topRow.addComponent(priorityLbl);
 			layout.addComponent(topRow);
 
 			Label taskName = new Label(task.getTaskname());

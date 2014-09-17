@@ -82,7 +82,8 @@ public class LeadRelatedCampaignView extends
 		addBtns.setMargin(true);
 		addBtns.setWidth("100%");
 
-		Button newCampaign = new Button();
+		Button newCampaign = new Button(
+				AppContext.getMessage(CampaignI18nEnum.VIEW_NEW_TITLE));
 		newCampaign.addClickListener(new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
@@ -93,7 +94,9 @@ public class LeadRelatedCampaignView extends
 		});
 		addBtns.addComponent(newCampaign);
 
-		Button selectCampaign = new Button();
+		Button selectCampaign = new Button(
+				AppContext
+						.getMessage(CampaignI18nEnum.M_TITLE_SELECT_CAMPAIGNS));
 		selectCampaign.addClickListener(new Button.ClickListener() {
 
 			private static final long serialVersionUID = 6803421194441320713L;

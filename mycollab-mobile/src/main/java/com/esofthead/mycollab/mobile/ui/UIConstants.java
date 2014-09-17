@@ -31,4 +31,5 @@ public class UIConstants {
 	public static final String LBL_HIGH = "priority-lbl high-lbl";
 	public static final String LBL_MEDIUM = "priority-lbl medium-lbl";
 	public static final String LBL_LOW = "priority-lbl low-lbl";
+	public static final String STATUS_DISABLED = "disabled";
 }

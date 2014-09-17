@@ -84,7 +84,8 @@ public class AccountRelatedLeadView extends
 		addButtons.setMargin(true);
 		addButtons.addStyleName("edit-btn-layout");
 
-		Button newLead = new Button();
+		Button newLead = new Button(
+				AppContext.getMessage(LeadI18nEnum.VIEW_NEW_TITLE));
 		newLead.addClickListener(new Button.ClickListener() {
 
 			private static final long serialVersionUID = 8228954365650824438L;
@@ -96,7 +97,8 @@ public class AccountRelatedLeadView extends
 		});
 		addButtons.addComponent(newLead);
 
-		Button selectLead = new Button();
+		Button selectLead = new Button(
+				AppContext.getMessage(LeadI18nEnum.M_TITLE_SELECT_LEADS));
 		selectLead.addClickListener(new Button.ClickListener() {
 
 			private static final long serialVersionUID = 9076596614526838523L;

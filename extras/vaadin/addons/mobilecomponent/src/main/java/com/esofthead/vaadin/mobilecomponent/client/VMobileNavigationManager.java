@@ -25,7 +25,6 @@ public class VMobileNavigationManager extends VNavigationManager {
 		wrapper = new SimplePanel();
 		wrapper.setStylePrimaryName("v-mobilecomponent");
 
-
 		navigationMenu = new SimplePanel();
 		navigationMenu.setStyleName(getStyleName() + "-navigation");
 
@@ -35,9 +34,9 @@ public class VMobileNavigationManager extends VNavigationManager {
 	}
 
 	public void setNavigationMenu(Widget widget) {
-		if(!navigationMenu.isAttached()) {
+		if (!navigationMenu.isAttached()) {
 			add(navigationMenu, wrapper.getElement());
-		}   		
+		}
 
 		navigationMenu.setWidget(widget);
 	}
@@ -79,8 +78,7 @@ public class VMobileNavigationManager extends VNavigationManager {
 		if (tmpOffset >= getNavigationMenuWidth()) {
 			tmpOffset = getNavigationMenuWidth();
 			menuVisibility = true;
-		}    		
-		else if (tmpOffset <= 0) { 
+		} else if (tmpOffset <= 0) {
 			tmpOffset = 0;
 			menuVisibility = false;
 		}
@@ -90,9 +88,10 @@ public class VMobileNavigationManager extends VNavigationManager {
 
 	public void moveLeft(int pos, boolean animate) {
 		final Style style = content.getStyle();
-		if(!animate)
+		if (!animate)
 			style.setProperty(Css3Propertynames.transition(), "none");
 
-		style.setProperty(Css3Propertynames.transform(), "translateX(" + pos + "px)");
+		style.setProperty(Css3Propertynames.transform(), "translateX(" + pos
+				+ "px)");
 	}
 }

@@ -81,7 +81,8 @@ public class CampaignRelatedContactView extends
 		addButtons.setMargin(true);
 		addButtons.setStyleName("edit-btn-layout");
 
-		Button newContact = new Button();
+		Button newContact = new Button(
+				AppContext.getMessage(ContactI18nEnum.VIEW_NEW_TITLE));
 		newContact.addClickListener(new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
@@ -92,7 +93,8 @@ public class CampaignRelatedContactView extends
 		});
 		addButtons.addComponent(newContact);
 
-		Button selectContact = new Button();
+		Button selectContact = new Button(
+				AppContext.getMessage(ContactI18nEnum.M_TITLE_SELECT_CONTACTS));
 		selectContact.addClickListener(new Button.ClickListener() {
 
 			private static final long serialVersionUID = -429296782998301810L;
