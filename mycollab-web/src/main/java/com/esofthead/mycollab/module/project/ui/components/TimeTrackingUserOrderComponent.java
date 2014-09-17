@@ -16,17 +16,15 @@
  */
 package com.esofthead.mycollab.module.project.ui.components;
 
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import com.esofthead.mycollab.common.TableViewField;
 import com.esofthead.mycollab.module.project.domain.SimpleItemTimeLogging;
-import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserLink;
 import com.esofthead.mycollab.module.project.view.time.TimeTrackingTableDisplay;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable.TableClickListener;
+import com.google.common.collect.Ordering;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Label;
 
@@ -36,64 +34,53 @@ import com.vaadin.ui.Label;
  * @since 4.5.1
  * 
  */
-public class TimeTrackingUserOrderComponent extends TimeTrackingAbstractComponent {
+public class TimeTrackingUserOrderComponent extends
+		AbstractTimeTrackingDisplayComp {
 
 	private static final long serialVersionUID = 1L;
-
-	private String username = "", avatar = "", fullname = "";
 
 	public TimeTrackingUserOrderComponent(List<TableViewField> fields,
 			TableClickListener tableClickListener) {
 		super(fields, tableClickListener);
+		this.setWidth("100%");
 	}
 
 	@Override
-	protected List<SimpleItemTimeLogging> getData(
-			ItemTimeLoggingSearchCriteria searchCriteria, String orderBy) {
-		List<SimpleItemTimeLogging> itemTimeLoggingList = super.getData(
-				searchCriteria, orderBy);
-
-		Collections.sort(itemTimeLoggingList,
-				new Comparator<SimpleItemTimeLogging>() {
-					@Override
-					public int compare(SimpleItemTimeLogging item1,
-							SimpleItemTimeLogging item2) {
-						return item1.getCreateduser().compareTo(
-								item2.getCreateduser());
-					}
-				});
-		return itemTimeLoggingList;
-	}
-
-	@Override
-	protected void addItem(SimpleItemTimeLogging itemTimeLogging) {
-		if (!itemTimeLogging.getLoguser().equals(username)) {
-			showRecord();
-			refreshData();
-			username = itemTimeLogging.getLoguser();
-			avatar = itemTimeLogging.getLogUserAvatarId();
-			fullname = itemTimeLogging.getLogUserFullName();
+	protected void addItem(SimpleItemTimeLogging itemTimeLogging,
+			List<SimpleItemTimeLogging> timeLoggingEntries) {
+		if (timeLoggingEntries.size() > 0
+				&& !itemTimeLogging.getLoguser().equals(
+						timeLoggingEntries.get(0).getLoguser())) {
+			displayGroupItems(timeLoggingEntries);
+			timeLoggingEntries.clear();
 		}
 
-		list.add(itemTimeLogging);
-		billable += itemTimeLogging.getIsbillable() ? itemTimeLogging
-				.getLogvalue() : 0;
-		nonbillable += !itemTimeLogging.getIsbillable() ? itemTimeLogging
-				.getLogvalue() : 0;
+		timeLoggingEntries.add(itemTimeLogging);
 	}
 
 	@Override
-	protected void showRecord() {
-		if (list.size() > 0) {
+	protected void displayGroupItems(
+			List<SimpleItemTimeLogging> timeLoggingEntries) {
+		if (timeLoggingEntries.size() > 0) {
+			String username = timeLoggingEntries.get(0).getLoguser();
+			String avatar = timeLoggingEntries.get(0).getLogUserAvatarId();
+			String fullname = timeLoggingEntries.get(0).getLogUserFullName();
+
 			addComponent(new ProjectUserLink(username, avatar, fullname));
-			
+
 			TimeTrackingTableDisplay table = new TimeTrackingTableDisplay(
 					visibleFields);
 			table.addStyleName(UIConstants.FULL_BORDER_TABLE);
 			table.setMargin(new MarginInfo(true, false, false, false));
 			table.addTableListener(this.tableClickListener);
-			table.setCurrentDataList(list);
+			table.setCurrentDataList(timeLoggingEntries);
 			addComponent(table);
+
+			double billable = 0, nonbillable = 0;
+			for (SimpleItemTimeLogging item : timeLoggingEntries) {
+				billable += item.getIsbillable() ? item.getLogvalue() : 0;
+				nonbillable += !item.getIsbillable() ? item.getLogvalue() : 0;
+			}
 
 			Label labelTotalHours = new Label(
 					("Total Hours: " + (billable + nonbillable)));
@@ -110,5 +97,18 @@ public class TimeTrackingUserOrderComponent extends TimeTrackingAbstractComponen
 			labelNonbillableHours.setStyleName(UIConstants.TEXT_LOG_HOURS);
 			addComponent(labelNonbillableHours);
 		}
+	}
+
+	@Override
+	protected Ordering<SimpleItemTimeLogging> sortEntries() {
+		Ordering<SimpleItemTimeLogging> ordering = Ordering.from(
+				new UserComparator()).compound(new DateComparator());
+		return ordering;
+
+	}
+
+	@Override
+	Object getGroupCriteria(SimpleItemTimeLogging timeEntry) {
+		return timeEntry.getLoguser();
 	}
 }

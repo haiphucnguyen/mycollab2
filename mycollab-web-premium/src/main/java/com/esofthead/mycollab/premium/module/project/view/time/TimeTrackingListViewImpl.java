@@ -6,6 +6,7 @@ import org.vaadin.dialogs.ConfirmDialog;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
+import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.BooleanSearchField;
 import com.esofthead.mycollab.core.arguments.RangeDateSearchField;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
@@ -20,6 +21,7 @@ import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.i18n.TimeTrackingI18nEnum;
 import com.esofthead.mycollab.module.project.reporting.ExportTimeLoggingStreamResource;
 import com.esofthead.mycollab.module.project.service.ItemTimeLoggingService;
+import com.esofthead.mycollab.module.project.ui.components.AbstractTimeTrackingDisplayComp;
 import com.esofthead.mycollab.module.project.ui.components.TimeTrackingDateOrderComponent;
 import com.esofthead.mycollab.module.project.ui.components.TimeTrackingUserOrderComponent;
 import com.esofthead.mycollab.module.project.view.time.TimeTableFieldDef;
@@ -55,18 +57,17 @@ import com.vaadin.ui.VerticalLayout;
  * 
  */
 @ViewComponent(scope = ViewScope.PROTOTYPE)
-public class TimeTrackingListViewImpl extends AbstractPageView
-		implements
-			TimeTrackingListView {
+public class TimeTrackingListViewImpl extends AbstractPageView implements
+		TimeTrackingListView {
 	private static final long serialVersionUID = 3742030333599796165L;
 
 	private ItemTimeLoggingSearchPanel itemTimeLoggingPanel;
-	private TimeTrackingDateOrderComponent dateOrderLayoutItem;
-	private TimeTrackingUserOrderComponent userOrderLayoutItem;
+
+	private VerticalLayout timeTrackingWrapper;
 
 	private final ItemTimeLoggingService itemTimeLoggingService;
 	private ItemTimeLoggingSearchCriteria itemTimeLogginSearchCriteria;
-	
+
 	private SplitButton exportButtonControl;
 
 	private final Label lbTimeRange;
@@ -155,27 +156,16 @@ public class TimeTrackingListViewImpl extends AbstractPageView
 				Alignment.MIDDLE_RIGHT);
 		this.addComponent(headerWrapper);
 
-		this.dateOrderLayoutItem = new TimeTrackingDateOrderComponent(
-				Arrays.asList(TimeTableFieldDef.summary,
-						TimeTableFieldDef.logUser, TimeTableFieldDef.logValue,
-						TimeTableFieldDef.billable, TimeTableFieldDef.id),
-				this.tableClickListener);
-		this.dateOrderLayoutItem.setWidth("100%");
-
-		this.userOrderLayoutItem = new TimeTrackingUserOrderComponent(
-				Arrays.asList(TimeTableFieldDef.summary,
-						TimeTableFieldDef.logForDate,
-						TimeTableFieldDef.logValue, TimeTableFieldDef.billable,
-						TimeTableFieldDef.id), this.tableClickListener);
-		this.userOrderLayoutItem.setWidth("100%");
+		timeTrackingWrapper = new VerticalLayout();
+		timeTrackingWrapper.setWidth("100%");
+		this.addComponent(timeTrackingWrapper);
 	}
 
 	private StreamResource constructStreamResource(ReportExportType exportType) {
 		final String title = "Time of Project "
 				+ ((CurrentProjectVariables.getProject() != null && CurrentProjectVariables
-						.getProject().getName() != null)
-						? CurrentProjectVariables.getProject().getName()
-						: "");
+						.getProject().getName() != null) ? CurrentProjectVariables
+						.getProject().getName() : "");
 		ExportTimeLoggingStreamResource exportStream = new ExportTimeLoggingStreamResource(
 				title, exportType,
 				ApplicationContextUtil
@@ -238,17 +228,29 @@ public class TimeTrackingListViewImpl extends AbstractPageView
 	@Override
 	public void refresh() {
 		this.setTimeRange();
+		timeTrackingWrapper.removeAllComponents();
 
-		if (this.itemTimeLoggingPanel.getGroupBy().equals("Date")) {
-			this.dateOrderLayoutItem.show(itemTimeLogginSearchCriteria,
-					this.itemTimeLoggingPanel.getOrderBy());
-			this.addComponent(this.dateOrderLayoutItem);
-			this.removeComponent(this.userOrderLayoutItem);
+		AbstractTimeTrackingDisplayComp timeDisplayComp = buildTimeTrackingComp(this.itemTimeLoggingPanel
+				.getGroupBy());
+		timeTrackingWrapper.addComponent(timeDisplayComp);
+		timeDisplayComp.queryData(itemTimeLogginSearchCriteria,
+				this.itemTimeLoggingPanel.getOrderBy());
+	}
+
+	private AbstractTimeTrackingDisplayComp buildTimeTrackingComp(String groupBy) {
+		if ("Date".equals(groupBy)) {
+			return new TimeTrackingDateOrderComponent(Arrays.asList(
+					TimeTableFieldDef.summary, TimeTableFieldDef.logUser,
+					TimeTableFieldDef.logValue, TimeTableFieldDef.billable,
+					TimeTableFieldDef.id), this.tableClickListener);
+
+		} else if ("User".equals(groupBy)) {
+			return new TimeTrackingUserOrderComponent(Arrays.asList(
+					TimeTableFieldDef.summary, TimeTableFieldDef.logForDate,
+					TimeTableFieldDef.logValue, TimeTableFieldDef.billable,
+					TimeTableFieldDef.id), this.tableClickListener);
 		} else {
-			this.userOrderLayoutItem.show(itemTimeLogginSearchCriteria,
-					this.itemTimeLoggingPanel.getOrderBy());
-			this.addComponent(this.userOrderLayoutItem);
-			this.removeComponent(this.dateOrderLayoutItem);
+			throw new MyCollabException("Do not support view type: " + groupBy);
 		}
 	}
 
