@@ -17,6 +17,8 @@
 package com.esofthead.mycollab.module.project.ui.components;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import com.esofthead.mycollab.common.TableViewField;
@@ -45,10 +47,7 @@ public abstract class TimeTrackingAbstractComponent extends VerticalLayout {
 	protected List<TableViewField> visibleFields;
 	protected TableClickListener tableClickListener;
 	protected ItemTimeLoggingService itemTimeLoggingService;
-
-	protected double billable = 0, nonbillable = 0;
-
-	protected List<SimpleItemTimeLogging> list = new ArrayList<SimpleItemTimeLogging>();
+	protected Comparator<SimpleItemTimeLogging> comparator;
 
 	public TimeTrackingAbstractComponent(List<TableViewField> fields,
 			TableClickListener tableClickListener) {
@@ -61,39 +60,39 @@ public abstract class TimeTrackingAbstractComponent extends VerticalLayout {
 				.getSpringBean(ItemTimeLoggingService.class);
 	}
 
-	public void show(ItemTimeLoggingSearchCriteria searchCriteria,
+	public void queryData(ItemTimeLoggingSearchCriteria searchCriteria,
 			final String orderBy) {
 		this.removeAllComponents();
-		this.refreshData();
-		
-		List<SimpleItemTimeLogging> itemTimeLoggingList = getData(searchCriteria, orderBy);
-		
+
+		List<SimpleItemTimeLogging> itemTimeLoggingList = getData(
+				searchCriteria, orderBy);
+		List<SimpleItemTimeLogging> temp = new ArrayList<SimpleItemTimeLogging>();
+
 		if (orderBy.equals(ORDERBY_ASCENDING)) {
 			for (int i = 0; i < itemTimeLoggingList.size(); i++) {
-				addItem(itemTimeLoggingList.get(i));
+				addItem(itemTimeLoggingList.get(i), temp);
 			}
 		} else if (orderBy.equals(ORDERBY_DESCENDING)) {
 			for (int i = itemTimeLoggingList.size() - 1; i >= 0; i--) {
-				addItem(itemTimeLoggingList.get(i));
+				addItem(itemTimeLoggingList.get(i), temp);
 			}
 		}
-		showRecord();
-	}
-	
-	@SuppressWarnings("unchecked")
-	protected List<SimpleItemTimeLogging> getData(ItemTimeLoggingSearchCriteria searchCriteria,
-			final String orderBy) {
-		return itemTimeLoggingService
-				.findPagableListByCriteria(new SearchRequest<ItemTimeLoggingSearchCriteria>(
-						searchCriteria));
+		displayList(temp);
 	}
 
-	protected void refreshData() {
-		list.clear();
-		billable = nonbillable = 0;
+	@SuppressWarnings("unchecked")
+	protected List<SimpleItemTimeLogging> getData(
+			ItemTimeLoggingSearchCriteria searchCriteria, final String orderBy) {
+		List<SimpleItemTimeLogging> list = itemTimeLoggingService
+				.findPagableListByCriteria(new SearchRequest<ItemTimeLoggingSearchCriteria>(
+						searchCriteria));
+		Collections.sort(list, comparator);
+
+		return list;
 	}
-	
-	protected abstract void addItem(SimpleItemTimeLogging itemTimeLogging);
-	
-	protected abstract void showRecord();
+
+	protected abstract void addItem(SimpleItemTimeLogging itemTimeLogging,
+			List<SimpleItemTimeLogging> list);
+
+	protected abstract void displayList(List<SimpleItemTimeLogging> list);
 }

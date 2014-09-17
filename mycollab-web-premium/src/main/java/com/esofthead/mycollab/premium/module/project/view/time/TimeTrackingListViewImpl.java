@@ -240,12 +240,12 @@ public class TimeTrackingListViewImpl extends AbstractPageView
 		this.setTimeRange();
 
 		if (this.itemTimeLoggingPanel.getGroupBy().equals("Date")) {
-			this.dateOrderLayoutItem.show(itemTimeLogginSearchCriteria,
+			this.dateOrderLayoutItem.queryData(itemTimeLogginSearchCriteria,
 					this.itemTimeLoggingPanel.getOrderBy());
 			this.addComponent(this.dateOrderLayoutItem);
 			this.removeComponent(this.userOrderLayoutItem);
 		} else {
-			this.userOrderLayoutItem.show(itemTimeLogginSearchCriteria,
+			this.userOrderLayoutItem.queryData(itemTimeLogginSearchCriteria,
 					this.itemTimeLoggingPanel.getOrderBy());
 			this.addComponent(this.userOrderLayoutItem);
 			this.removeComponent(this.dateOrderLayoutItem);

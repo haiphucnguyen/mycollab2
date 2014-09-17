@@ -1,25 +1,29 @@
 package com.esofthead.mycollab.premium.module.project.view.time;
 
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
+import com.esofthead.mycollab.core.arguments.RangeDateSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
+import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
 import com.esofthead.mycollab.module.project.i18n.TimeTrackingI18nEnum;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberListSelect;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.ui.DateRangeField;
 import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
 import com.vaadin.shared.ui.MarginInfo;
+import com.vaadin.shared.ui.datefield.Resolution;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -27,6 +31,8 @@ import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
+import com.vaadin.ui.DateField;
+import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
@@ -76,7 +82,7 @@ class ItemTimeLoggingSearchPanel
 	@SuppressWarnings({"serial", "rawtypes"})
 	private class TimeLoggingAdvancedSearchLayout extends AdvancedSearchLayout {
 
-		private DateRangeField dateRangeField;
+		private DateField dateStart, dateEnd;
 
 		private ProjectMemberListSelect userField;
 		private GroupOrderCombobox groupField, orderField;
@@ -126,7 +132,7 @@ class ItemTimeLoggingSearchPanel
 		public ComponentContainer constructBody() {
 			bodyWrap = new VerticalLayout();
 
-			GridFormLayoutHelper gridLayout = new GridFormLayoutHelper(3, 2,
+			GridFormLayoutHelper gridLayout = new GridFormLayoutHelper(3, 1,
 					"300px", "50px");
 
 			String nameFieldWidth = "300px";
@@ -135,36 +141,49 @@ class ItemTimeLoggingSearchPanel
 			gridLayout.getLayout().setSpacing(true);
 			gridLayout.getLayout().setMargin(true);
 
-			this.dateRangeField = (DateRangeField) gridLayout.addComponent(
-					new DateRangeField(), null, 0, 0);
-			this.dateRangeField.setDateFormat(AppContext.getUserDateFormat());
+			GridLayout grid = new GridLayout(4, 2);
+			grid.setWidth(nameFieldWidth);
+			grid.setSpacing(true);
+
+			this.dateStart = new DateField();
+			this.dateEnd = new DateField();
+			
+			setDateFormat(AppContext.getUserDateFormat());
+
+			setDateWidth(100);
+			setDefaultValue();
+
+			this.groupField = new GroupOrderCombobox(Arrays.asList("Date",
+					"User"));
+			this.groupField.setWidth("100px");
+
+			this.orderField = new GroupOrderCombobox(Arrays.asList("Ascending",
+					"Descending"));
+			this.orderField.setWidth("100px");
+
+			Label dateStartLb = new Label("From:");
+			Label dateEndLb = new Label("To:");
+
+			Label groupLb = new Label("Group:");
+			groupLb.setWidth("40px");
+			Label sortLb = new Label("Sort:");
+			sortLb.setWidth("40px");
+
+			grid.addComponent(dateStartLb, 0, 0);
+			grid.addComponent(dateEndLb, 2, 0);
+			grid.addComponent(groupLb, 0, 1);
+			grid.addComponent(sortLb, 2, 1);
+
+			grid.addComponent(this.dateStart, 1, 0);
+			grid.addComponent(this.dateEnd, 3, 0);
+			grid.addComponent(this.groupField, 1, 1);
+			grid.addComponent(this.orderField, 3, 1);
+
+			gridLayout.addComponent(grid, null, 0, 0);
 
 			this.userField = (ProjectMemberListSelect) gridLayout.addComponent(
 					new ProjectMemberListSelect(), "User", 1, 0);
 			this.userField.setWidth(nameFieldWidth);
-
-			HorizontalLayout groupSortFields = new HorizontalLayout();
-			groupSortFields.setWidth(nameFieldWidth);
-
-			this.groupField = new GroupOrderCombobox(Arrays.asList("Date",
-					"User"));
-			this.groupField.setWidth("80px");
-			Label groupLb = new Label("Group:");
-			groupLb.setWidth("40px");
-			UiUtils.addComponent(groupSortFields, groupLb,
-					Alignment.MIDDLE_CENTER);
-			groupSortFields.addComponent(this.groupField);
-
-			this.orderField = new GroupOrderCombobox(Arrays.asList("Ascending",
-					"Descending"));
-			this.orderField.setWidth("80px");
-			Label sortLb = new Label("Sort:");
-			sortLb.setWidth("40px");
-			UiUtils.addComponent(groupSortFields, sortLb,
-					Alignment.MIDDLE_CENTER);
-			groupSortFields.addComponent(this.orderField);
-
-			gridLayout.addComponent(groupSortFields, null, 2, 0);
 
 			buttonControls = new HorizontalLayout();
 			buttonControls.setSpacing(true);
@@ -192,8 +211,7 @@ class ItemTimeLoggingSearchPanel
 						public void buttonClick(final ClickEvent event) {
 							TimeLoggingAdvancedSearchLayout.this.userField
 									.setValue(null);
-							TimeLoggingAdvancedSearchLayout.this.dateRangeField
-									.setDefaultValue();
+							setDefaultValue();
 						}
 					});
 			clearBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
@@ -201,7 +219,7 @@ class ItemTimeLoggingSearchPanel
 					Alignment.MIDDLE_LEFT);
 			buttonControls.setExpandRatio(clearBtn, 1.0f);
 
-			gridLayout.addComponent(buttonControls, null, 1, 1);
+			gridLayout.addComponent(buttonControls, null, 2, 0);
 
 			bodyWrap.addComponent(gridLayout.getLayout());
 
@@ -224,7 +242,7 @@ class ItemTimeLoggingSearchPanel
 							CurrentProjectVariables.getProjectId()));
 
 			ItemTimeLoggingSearchPanel.this.searchCriteria
-					.setRangeDate(this.dateRangeField.getRangeSearchValue());
+					.setRangeDate(getRangeSearchValue());
 
 			final Collection<String> types = (Collection<String>) this.userField
 					.getValue();
@@ -235,6 +253,39 @@ class ItemTimeLoggingSearchPanel
 			}
 
 			return ItemTimeLoggingSearchPanel.this.searchCriteria;
+		}
+
+		private RangeDateSearchField getRangeSearchValue() {
+			Date fDate = (Date) dateStart.getValue();
+			Date tDate = (Date) dateEnd.getValue();
+
+			if (fDate == null || tDate == null)
+				return null;
+
+			return new RangeDateSearchField(fDate, tDate);
+		}
+
+		private void setDateFormat(String dateFormat) {
+			dateStart.setDateFormat(dateFormat);
+			dateEnd.setDateFormat(dateFormat);
+		}
+
+		private void setDefaultValue() {
+			Calendar c = Calendar.getInstance();
+			c.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+
+			Date fDate = c.getTime();
+			Date tDate = DateTimeUtils.subtractOrAddDayDuration(fDate, 7);
+
+			dateStart.setValue(fDate);
+			dateEnd.setValue(tDate);
+		}
+
+		private void setDateWidth(float width) {
+			dateStart.setWidth(width, Unit.PIXELS);
+			dateEnd.setWidth(width, Unit.PIXELS);
+			dateStart.setResolution(Resolution.DAY);
+			dateEnd.setResolution(Resolution.DAY);
 		}
 	}
 

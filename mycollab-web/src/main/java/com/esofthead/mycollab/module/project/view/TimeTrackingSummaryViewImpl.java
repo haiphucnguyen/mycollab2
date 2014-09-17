@@ -330,7 +330,7 @@ public class TimeTrackingSummaryViewImpl extends AbstractPageView implements
 									nonbillableHour));
 		}
 		// TODO:
-		this.layoutItem.show(searchCriteria, "Ascending");
+		this.layoutItem.queryData(searchCriteria, "Ascending");
 	}
 
 	private TableClickListener tableClickListener = new TableClickListener() {
