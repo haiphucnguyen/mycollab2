@@ -22,6 +22,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import com.esofthead.mycollab.common.TableViewField;
+import com.esofthead.mycollab.core.arguments.Order;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.module.project.domain.SimpleItemTimeLogging;
 import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
@@ -29,6 +30,7 @@ import com.esofthead.mycollab.module.project.service.ItemTimeLoggingService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable.TableClickListener;
+import com.google.common.collect.Ordering;
 import com.vaadin.ui.VerticalLayout;
 
 /**
@@ -41,13 +43,9 @@ public abstract class AbstractTimeTrackingDisplayComp extends VerticalLayout {
 
 	private static final long serialVersionUID = 1L;
 
-	public static final String ORDERBY_ASCENDING = "Ascending";
-	public static final String ORDERBY_DESCENDING = "Descending";
-
 	protected List<TableViewField> visibleFields;
 	protected TableClickListener tableClickListener;
 	protected ItemTimeLoggingService itemTimeLoggingService;
-	protected Comparator<SimpleItemTimeLogging> comparator;
 
 	public AbstractTimeTrackingDisplayComp(List<TableViewField> fields,
 			TableClickListener tableClickListener) {
@@ -60,39 +58,65 @@ public abstract class AbstractTimeTrackingDisplayComp extends VerticalLayout {
 				.getSpringBean(ItemTimeLoggingService.class);
 	}
 
+	@SuppressWarnings({ "unchecked" })
 	public void queryData(ItemTimeLoggingSearchCriteria searchCriteria,
-			final String orderBy) {
+			Order orderBy) {
 		this.removeAllComponents();
 
-		List<SimpleItemTimeLogging> itemTimeLoggingList = getData(
-				searchCriteria, orderBy);
-		List<SimpleItemTimeLogging> temp = new ArrayList<SimpleItemTimeLogging>();
-
-		if (orderBy.equals(ORDERBY_ASCENDING)) {
-			for (int i = 0; i < itemTimeLoggingList.size(); i++) {
-				addItem(itemTimeLoggingList.get(i), temp);
-			}
-		} else if (orderBy.equals(ORDERBY_DESCENDING)) {
-			for (int i = itemTimeLoggingList.size() - 1; i >= 0; i--) {
-				addItem(itemTimeLoggingList.get(i), temp);
-			}
-		}
-		displayList(temp);
-	}
-
-	@SuppressWarnings("unchecked")
-	protected List<SimpleItemTimeLogging> getData(
-			ItemTimeLoggingSearchCriteria searchCriteria, final String orderBy) {
-		List<SimpleItemTimeLogging> list = itemTimeLoggingService
+		List<SimpleItemTimeLogging> timeLoggingEntries = itemTimeLoggingService
 				.findPagableListByCriteria(new SearchRequest<ItemTimeLoggingSearchCriteria>(
 						searchCriteria));
-		Collections.sort(list, comparator);
 
-		return list;
+		Ordering<SimpleItemTimeLogging> ordering = sortEntries();
+		if (orderBy == Order.DESCENDING) {
+			Collections.sort(timeLoggingEntries, ordering.reverse());
+		} else {
+			Collections.sort(timeLoggingEntries, ordering);
+		}
+
+		List<SimpleItemTimeLogging> groupLogEntries = new ArrayList<SimpleItemTimeLogging>();
+		Object groupCriteria = null;
+
+		for (SimpleItemTimeLogging timeLoggingEntry : timeLoggingEntries) {
+			Object itemCriteria = getGroupCriteria(timeLoggingEntry);
+
+			if (itemCriteria.equals(groupCriteria)) {
+				groupLogEntries.add(timeLoggingEntry);
+			} else {
+				displayGroupItems(groupLogEntries);
+				groupLogEntries.clear();
+				groupCriteria = itemCriteria;
+			}
+		}
+
+		if (groupLogEntries.size() > 0) {
+			displayGroupItems(timeLoggingEntries);
+		}
 	}
+
+	abstract protected Ordering<SimpleItemTimeLogging> sortEntries();
+
+	abstract Object getGroupCriteria(SimpleItemTimeLogging timeEntry);
 
 	protected abstract void addItem(SimpleItemTimeLogging itemTimeLogging,
 			List<SimpleItemTimeLogging> list);
 
-	protected abstract void displayList(List<SimpleItemTimeLogging> list);
+	protected abstract void displayGroupItems(List<SimpleItemTimeLogging> list);
+
+	static class UserComparator implements Comparator<SimpleItemTimeLogging> {
+
+		@Override
+		public int compare(SimpleItemTimeLogging o1, SimpleItemTimeLogging o2) {
+			return o1.getLoguser().compareTo(o2.getLoguser());
+		}
+	}
+
+	static class DateComparator implements Comparator<SimpleItemTimeLogging> {
+
+		@Override
+		public int compare(SimpleItemTimeLogging o1, SimpleItemTimeLogging o2) {
+			return o1.getLogforday().compareTo(o2.getLogforday());
+		}
+
+	}
 }

@@ -18,7 +18,6 @@ package com.esofthead.mycollab.module.project.ui.components;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -28,6 +27,7 @@ import com.esofthead.mycollab.module.project.domain.SimpleItemTimeLogging;
 import com.esofthead.mycollab.module.project.view.time.TimeTrackingTableDisplay;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable.TableClickListener;
+import com.google.common.collect.Ordering;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Label;
 
@@ -37,9 +37,8 @@ import com.vaadin.ui.Label;
  * @since 4.5.1
  * 
  */
-public class TimeTrackingDateOrderComponent
-		extends
-			AbstractTimeTrackingDisplayComp {
+public class TimeTrackingDateOrderComponent extends
+		AbstractTimeTrackingDisplayComp {
 
 	private static final long serialVersionUID = 1L;
 
@@ -49,32 +48,27 @@ public class TimeTrackingDateOrderComponent
 	public TimeTrackingDateOrderComponent(List<TableViewField> fields,
 			TableClickListener tableClickListener) {
 		super(fields, tableClickListener);
-		comparator = new Comparator<SimpleItemTimeLogging>() {
-			@Override
-			public int compare(SimpleItemTimeLogging item1,
-					SimpleItemTimeLogging item2) {
-				return item1.getLogforday().compareTo(item2.getLogforday());
-			}
-		};
+		this.setWidth("100%");
 	}
 
 	@Override
 	protected void addItem(SimpleItemTimeLogging itemTimeLogging,
-			List<SimpleItemTimeLogging> list) {
-		if (list.size() > 0
+			List<SimpleItemTimeLogging> timeLoggingEntries) {
+		if (timeLoggingEntries.size() > 0
 				&& DateTimeUtils.compareByDate(itemTimeLogging.getLogforday(),
-						list.get(0).getLogforday()) != 0) {
-			displayList(list);
-			list.clear();
+						timeLoggingEntries.get(0).getLogforday()) != 0) {
+			displayGroupItems(timeLoggingEntries);
+			timeLoggingEntries.clear();
 		}
 
-		list.add(itemTimeLogging);
+		timeLoggingEntries.add(itemTimeLogging);
 	}
 
 	@Override
-	protected void displayList(List<SimpleItemTimeLogging> list) {
-		if (list.size() > 0) {
-			Date current = list.get(0).getLogforday();
+	protected void displayGroupItems(
+			List<SimpleItemTimeLogging> timeLoggingEntries) {
+		if (timeLoggingEntries.size() > 0) {
+			Date current = timeLoggingEntries.get(0).getLogforday();
 			Label label = new Label(DATE_FORMAT.format(current));
 			label.addStyleName(UIConstants.TEXT_LOG_DATE);
 			addComponent(label);
@@ -84,11 +78,11 @@ public class TimeTrackingDateOrderComponent
 			table.addStyleName(UIConstants.FULL_BORDER_TABLE);
 			table.setMargin(new MarginInfo(true, false, false, false));
 			table.addTableListener(this.tableClickListener);
-			table.setCurrentDataList(list);
+			table.setCurrentDataList(timeLoggingEntries);
 			addComponent(table);
 
 			double billable = 0, nonbillable = 0;
-			for (SimpleItemTimeLogging item : list) {
+			for (SimpleItemTimeLogging item : timeLoggingEntries) {
 				billable += item.getIsbillable() ? item.getLogvalue() : 0;
 				nonbillable += !item.getIsbillable() ? item.getLogvalue() : 0;
 			}
@@ -108,5 +102,17 @@ public class TimeTrackingDateOrderComponent
 			labelNonbillableHours.setStyleName(UIConstants.TEXT_LOG_HOURS);
 			addComponent(labelNonbillableHours);
 		}
+	}
+
+	@Override
+	protected Ordering<SimpleItemTimeLogging> sortEntries() {
+		Ordering<SimpleItemTimeLogging> ordering = Ordering.from(
+				new DateComparator()).compound(new UserComparator());
+		return ordering;
+	}
+
+	@Override
+	Object getGroupCriteria(SimpleItemTimeLogging timeEntry) {
+		return DateTimeUtils.formatDate(timeEntry.getLogforday(), "yyyy/MM/dd");
 	}
 }

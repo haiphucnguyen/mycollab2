@@ -1,12 +1,11 @@
 package com.esofthead.mycollab.premium.module.project.view.time;
 
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
+import com.esofthead.mycollab.core.arguments.Order;
 import com.esofthead.mycollab.core.arguments.RangeDateSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchField;
@@ -22,6 +21,7 @@ import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
+import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.datefield.Resolution;
 import com.vaadin.ui.Alignment;
@@ -44,11 +44,11 @@ import com.vaadin.ui.VerticalLayout;
  * @since 2.0
  * 
  */
-class ItemTimeLoggingSearchPanel
-		extends
-			GenericSearchPanel<ItemTimeLoggingSearchCriteria> {
+class ItemTimeLoggingSearchPanel extends
+		GenericSearchPanel<ItemTimeLoggingSearchCriteria> {
 
 	private static final long serialVersionUID = 1L;
+
 	protected ItemTimeLoggingSearchCriteria searchCriteria;
 	private final TimeLoggingAdvancedSearchLayout layout;
 
@@ -74,18 +74,17 @@ class ItemTimeLoggingSearchPanel
 		return groupBy == null ? "Date" : groupBy;
 	}
 
-	public String getOrderBy() {
-		String orderBy = (String) layout.orderField.getValue();
-		return orderBy == null ? "Ascending" : orderBy;
+	public Order getOrderBy() {
+		return (Order) layout.orderField.getValue();
 	}
 
-	@SuppressWarnings({"serial", "rawtypes"})
+	@SuppressWarnings({ "serial", "rawtypes" })
 	private class TimeLoggingAdvancedSearchLayout extends AdvancedSearchLayout {
 
 		private DateField dateStart, dateEnd;
 
 		private ProjectMemberListSelect userField;
-		private GroupOrderCombobox groupField, orderField;
+		private ComboBox groupField, orderField;
 		private HorizontalLayout buttonControls;
 		private Button createBtn;
 		private VerticalLayout bodyWrap;
@@ -147,18 +146,16 @@ class ItemTimeLoggingSearchPanel
 
 			this.dateStart = new DateField();
 			this.dateEnd = new DateField();
-			
+
 			setDateFormat(AppContext.getUserDateFormat());
 
 			setDateWidth(100);
 			setDefaultValue();
 
-			this.groupField = new GroupOrderCombobox(Arrays.asList("Date",
-					"User"));
+			this.groupField = new ValueComboBox(false, "Date", "User");
 			this.groupField.setWidth("100px");
 
-			this.orderField = new GroupOrderCombobox(Arrays.asList("Ascending",
-					"Descending"));
+			this.orderField = new ItemOrderComboBox();
 			this.orderField.setWidth("100px");
 
 			Label dateStartLb = new Label("From:");
@@ -244,12 +241,13 @@ class ItemTimeLoggingSearchPanel
 			ItemTimeLoggingSearchPanel.this.searchCriteria
 					.setRangeDate(getRangeSearchValue());
 
-			final Collection<String> types = (Collection<String>) this.userField
+			final Collection<String> selectedUsers = (Collection<String>) this.userField
 					.getValue();
 
-			if (types != null && types.size() > 0) {
+			if (selectedUsers != null && selectedUsers.size() > 0) {
 				ItemTimeLoggingSearchPanel.this.searchCriteria
-						.setLogUsers(new SetSearchField(SearchField.AND, types));
+						.setLogUsers(new SetSearchField(SearchField.AND,
+								selectedUsers));
 			}
 
 			return ItemTimeLoggingSearchPanel.this.searchCriteria;
@@ -289,17 +287,18 @@ class ItemTimeLoggingSearchPanel
 		}
 	}
 
-	private class GroupOrderCombobox extends ComboBox {
+	private class ItemOrderComboBox extends ComboBox {
 		private static final long serialVersionUID = 1L;
 
-		public GroupOrderCombobox(List<String> items) {
+		public ItemOrderComboBox() {
 			this.setItemCaptionMode(ItemCaptionMode.EXPLICIT);
 			this.setNullSelectionAllowed(false);
-			for (String item : items) {
-				this.addItem(item);
-				this.setItemCaption(item, item);
-			}
-			this.select(items.get(0));
+			this.addItem(Order.ASCENDING);
+			this.setItemCaption(Order.ASCENDING, "Ascending");
+
+			this.addItem(Order.DESCENDING);
+			this.setItemCaption(Order.DESCENDING, "Descending");
+			this.select(Order.ASCENDING);
 		}
 	}
 }
