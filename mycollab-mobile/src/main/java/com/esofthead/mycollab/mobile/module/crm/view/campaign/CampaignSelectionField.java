@@ -32,7 +32,7 @@ import com.vaadin.data.Property;
  */
 @SuppressWarnings("serial")
 public class CampaignSelectionField extends
-		AbstractSelectionCustomField<CampaignWithBLOBs> {
+		AbstractSelectionCustomField<Integer, CampaignWithBLOBs> {
 
 	public CampaignSelectionField() {
 		super(CampaignSelectionView.class);
@@ -43,11 +43,8 @@ public class CampaignSelectionField extends
 		Object value = newDataSource.getValue();
 		if (value instanceof Integer) {
 			setCampaignByVal((Integer) value);
-
-			super.setPropertyDataSource(newDataSource);
-		} else {
-			super.setPropertyDataSource(newDataSource);
 		}
+		super.setPropertyDataSource(newDataSource);
 	}
 
 	@Override
@@ -66,15 +63,14 @@ public class CampaignSelectionField extends
 		}
 	}
 
-	private void setInternalCampaign(SimpleCampaign campaign) {
+	private void setInternalCampaign(CampaignWithBLOBs campaign) {
 		this.beanItem = campaign;
 		navButton.setCaption(beanItem.getCampaignname());
 	}
 
 	@Override
 	public void fireValueChange(CampaignWithBLOBs data) {
-		this.beanItem = data;
-		navButton.setCaption(beanItem.getCampaignname());
+		setInternalCampaign(data);
 		setInternalValue(data.getId());
 	}
 
