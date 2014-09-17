@@ -27,10 +27,13 @@ import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.module.project.domain.SimpleItemTimeLogging;
 import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ItemTimeLoggingService;
+import com.esofthead.mycollab.module.project.view.time.TimeTrackingTableDisplay;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable.TableClickListener;
 import com.google.common.collect.Ordering;
+import com.vaadin.shared.ui.MarginInfo;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
 /**
@@ -58,7 +61,7 @@ public abstract class AbstractTimeTrackingDisplayComp extends VerticalLayout {
 				.getSpringBean(ItemTimeLoggingService.class);
 	}
 
-	@SuppressWarnings({ "unchecked" })
+	@SuppressWarnings({"unchecked"})
 	public void queryData(ItemTimeLoggingSearchCriteria searchCriteria,
 			Order orderBy) {
 		this.removeAllComponents();
@@ -70,53 +73,109 @@ public abstract class AbstractTimeTrackingDisplayComp extends VerticalLayout {
 		Ordering<SimpleItemTimeLogging> ordering = sortEntries();
 		if (orderBy == Order.DESCENDING) {
 			Collections.sort(timeLoggingEntries, ordering.reverse());
-		} else {
+		} else if (orderBy == Order.ASCENDING) {
 			Collections.sort(timeLoggingEntries, ordering);
 		}
 
 		List<SimpleItemTimeLogging> groupLogEntries = new ArrayList<SimpleItemTimeLogging>();
-		Object groupCriteria = null;
+		String groupCriteria = null;
 
 		for (SimpleItemTimeLogging timeLoggingEntry : timeLoggingEntries) {
-			Object itemCriteria = getGroupCriteria(timeLoggingEntry);
+			String itemCriteria = getGroupCriteria(timeLoggingEntry);
 
-			if (itemCriteria.equals(groupCriteria)) {
-				groupLogEntries.add(timeLoggingEntry);
-			} else {
+			if (!itemCriteria.equals(groupCriteria)) {
 				displayGroupItems(groupLogEntries);
 				groupLogEntries.clear();
 				groupCriteria = itemCriteria;
 			}
+			
+			groupLogEntries.add(timeLoggingEntry);
 		}
 
 		if (groupLogEntries.size() > 0) {
-			displayGroupItems(timeLoggingEntries);
+			displayGroupItems(groupLogEntries);
 		}
 	}
 
 	abstract protected Ordering<SimpleItemTimeLogging> sortEntries();
 
-	abstract Object getGroupCriteria(SimpleItemTimeLogging timeEntry);
+	abstract String getGroupCriteria(SimpleItemTimeLogging timeEntry);
 
 	protected abstract void addItem(SimpleItemTimeLogging itemTimeLogging,
 			List<SimpleItemTimeLogging> list);
 
 	protected abstract void displayGroupItems(List<SimpleItemTimeLogging> list);
 
-	static class UserComparator implements Comparator<SimpleItemTimeLogging> {
-
+	protected static class UserComparator implements Comparator<SimpleItemTimeLogging> {
 		@Override
 		public int compare(SimpleItemTimeLogging o1, SimpleItemTimeLogging o2) {
 			return o1.getLoguser().compareTo(o2.getLoguser());
 		}
 	}
 
-	static class DateComparator implements Comparator<SimpleItemTimeLogging> {
-
+	protected static class DateComparator implements Comparator<SimpleItemTimeLogging> {
 		@Override
 		public int compare(SimpleItemTimeLogging o1, SimpleItemTimeLogging o2) {
 			return o1.getLogforday().compareTo(o2.getLogforday());
 		}
+	}
 
+	protected static class BillableComparator implements Comparator<SimpleItemTimeLogging> {
+		@Override
+		public int compare(SimpleItemTimeLogging o1, SimpleItemTimeLogging o2) {
+			return o1.getIsbillable().compareTo(o2.getIsbillable());
+		}
+	}
+
+	protected static class ValueComparator implements Comparator<SimpleItemTimeLogging> {
+		@Override
+		public int compare(SimpleItemTimeLogging o1, SimpleItemTimeLogging o2) {
+			return o1.getLogvalue().compareTo(o2.getLogvalue());
+		}
+	}
+
+	protected static class SummaryComparator implements Comparator<SimpleItemTimeLogging> {
+		@Override
+		public int compare(SimpleItemTimeLogging o1, SimpleItemTimeLogging o2) {
+			return o1.getSummary().compareTo(o2.getSummary());
+		}
+	}
+
+	protected static class TimeLoggingBockLayout extends VerticalLayout {
+
+		private static final long serialVersionUID = 1L;
+
+		public TimeLoggingBockLayout(List<TableViewField> visibleFields,
+				TableClickListener tableClickListener,
+				List<SimpleItemTimeLogging> timeLoggingEntries) {
+			TimeTrackingTableDisplay table = new TimeTrackingTableDisplay(
+					visibleFields);
+			table.addStyleName(UIConstants.FULL_BORDER_TABLE);
+			table.setMargin(new MarginInfo(true, false, false, false));
+			table.addTableListener(tableClickListener);
+			table.setCurrentDataList(timeLoggingEntries);
+			addComponent(table);
+
+			double billable = 0, nonbillable = 0;
+			for (SimpleItemTimeLogging item : timeLoggingEntries) {
+				billable += item.getIsbillable() ? item.getLogvalue() : 0;
+				nonbillable += !item.getIsbillable() ? item.getLogvalue() : 0;
+			}
+
+			Label labelTotalHours = new Label(
+					("Total Hours: " + (billable + nonbillable)));
+			labelTotalHours.addStyleName(UIConstants.TEXT_LOG_HOURS_TOTAL);
+			addComponent(labelTotalHours);
+
+			Label labelBillableHours = new Label(
+					("Billable Hours: " + billable));
+			labelBillableHours.setStyleName(UIConstants.TEXT_LOG_HOURS);
+			addComponent(labelBillableHours);
+
+			Label labelNonbillableHours = new Label(
+					("Non Billable Hours: " + nonbillable));
+			labelNonbillableHours.setStyleName(UIConstants.TEXT_LOG_HOURS);
+			addComponent(labelNonbillableHours);
+		}
 	}
 }
