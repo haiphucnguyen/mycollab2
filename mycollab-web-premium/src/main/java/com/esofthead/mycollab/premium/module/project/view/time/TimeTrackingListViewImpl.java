@@ -20,6 +20,7 @@ import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.i18n.TimeTrackingI18nEnum;
 import com.esofthead.mycollab.module.project.reporting.ExportTimeLoggingStreamResource;
 import com.esofthead.mycollab.module.project.service.ItemTimeLoggingService;
+import com.esofthead.mycollab.module.project.ui.components.AbstractTimeTrackingDisplayComp;
 import com.esofthead.mycollab.module.project.ui.components.TimeTrackingDateOrderComponent;
 import com.esofthead.mycollab.module.project.ui.components.TimeTrackingUserOrderComponent;
 import com.esofthead.mycollab.module.project.view.time.TimeTableFieldDef;
@@ -43,6 +44,7 @@ import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
@@ -55,18 +57,18 @@ import com.vaadin.ui.VerticalLayout;
  * 
  */
 @ViewComponent(scope = ViewScope.PROTOTYPE)
-public class TimeTrackingListViewImpl extends AbstractPageView
-		implements
-			TimeTrackingListView {
+public class TimeTrackingListViewImpl extends AbstractPageView implements
+		TimeTrackingListView {
 	private static final long serialVersionUID = 3742030333599796165L;
 
 	private ItemTimeLoggingSearchPanel itemTimeLoggingPanel;
-	private TimeTrackingDateOrderComponent dateOrderLayoutItem;
-	private TimeTrackingUserOrderComponent userOrderLayoutItem;
+	
+	private CustomComponent timeTrackingWrapper;
+	private AbstractTimeTrackingDisplayComp timeTrackingDisplayComp;
 
 	private final ItemTimeLoggingService itemTimeLoggingService;
 	private ItemTimeLoggingSearchCriteria itemTimeLogginSearchCriteria;
-	
+
 	private SplitButton exportButtonControl;
 
 	private final Label lbTimeRange;
@@ -154,28 +156,13 @@ public class TimeTrackingListViewImpl extends AbstractPageView
 		headerLayout.setComponentAlignment(this.exportButtonControl,
 				Alignment.MIDDLE_RIGHT);
 		this.addComponent(headerWrapper);
-
-		this.dateOrderLayoutItem = new TimeTrackingDateOrderComponent(
-				Arrays.asList(TimeTableFieldDef.summary,
-						TimeTableFieldDef.logUser, TimeTableFieldDef.logValue,
-						TimeTableFieldDef.billable, TimeTableFieldDef.id),
-				this.tableClickListener);
-		this.dateOrderLayoutItem.setWidth("100%");
-
-		this.userOrderLayoutItem = new TimeTrackingUserOrderComponent(
-				Arrays.asList(TimeTableFieldDef.summary,
-						TimeTableFieldDef.logForDate,
-						TimeTableFieldDef.logValue, TimeTableFieldDef.billable,
-						TimeTableFieldDef.id), this.tableClickListener);
-		this.userOrderLayoutItem.setWidth("100%");
 	}
 
 	private StreamResource constructStreamResource(ReportExportType exportType) {
 		final String title = "Time of Project "
 				+ ((CurrentProjectVariables.getProject() != null && CurrentProjectVariables
-						.getProject().getName() != null)
-						? CurrentProjectVariables.getProject().getName()
-						: "");
+						.getProject().getName() != null) ? CurrentProjectVariables
+						.getProject().getName() : "");
 		ExportTimeLoggingStreamResource exportStream = new ExportTimeLoggingStreamResource(
 				title, exportType,
 				ApplicationContextUtil

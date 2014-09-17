@@ -37,7 +37,7 @@ import com.vaadin.ui.VerticalLayout;
  * @since 4.5.1
  * 
  */
-public abstract class TimeTrackingAbstractComponent extends VerticalLayout {
+public abstract class AbstractTimeTrackingDisplayComp extends VerticalLayout {
 
 	private static final long serialVersionUID = 1L;
 
@@ -49,7 +49,7 @@ public abstract class TimeTrackingAbstractComponent extends VerticalLayout {
 	protected ItemTimeLoggingService itemTimeLoggingService;
 	protected Comparator<SimpleItemTimeLogging> comparator;
 
-	public TimeTrackingAbstractComponent(List<TableViewField> fields,
+	public AbstractTimeTrackingDisplayComp(List<TableViewField> fields,
 			TableClickListener tableClickListener) {
 		super();
 		addStyleName(UIConstants.LAYOUT_LOG);

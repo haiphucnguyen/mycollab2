@@ -36,7 +36,7 @@ import com.vaadin.ui.Label;
  */
 public class TimeTrackingUserOrderComponent
 		extends
-			TimeTrackingAbstractComponent {
+			AbstractTimeTrackingDisplayComp {
 
 	private static final long serialVersionUID = 1L;
 
