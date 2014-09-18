@@ -30,6 +30,7 @@ import com.esofthead.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 import com.esofthead.mycollab.common.interceptor.aspect.Traceable;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.DeploymentMode;
+import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
@@ -46,6 +47,7 @@ import com.esofthead.mycollab.module.project.dao.ProjectMapper;
 import com.esofthead.mycollab.module.project.dao.ProjectMapperExt;
 import com.esofthead.mycollab.module.project.dao.ProjectMemberMapper;
 import com.esofthead.mycollab.module.project.domain.Project;
+import com.esofthead.mycollab.module.project.domain.ProjectExample;
 import com.esofthead.mycollab.module.project.domain.ProjectMember;
 import com.esofthead.mycollab.module.project.domain.ProjectRelayEmailNotification;
 import com.esofthead.mycollab.module.project.domain.ProjectRole;
@@ -105,9 +107,19 @@ public class ProjectServiceImpl extends
 	}
 
 	@Override
+	public int updateWithSession(Project record, String username) {
+		assertExistProjectShortnameInAccount(record.getShortname(),
+				record.getSaccountid());
+		return super.updateWithSession(record, username);
+	}
+
+	@Override
 	public int saveWithSession(Project record, String username) {
 		billingPlanCheckerService.validateAccountCanCreateMoreProject(record
 				.getSaccountid());
+
+		assertExistProjectShortnameInAccount(record.getShortname(),
+				record.getSaccountid());
 
 		int projectid = super.saveWithSession(record, username);
 
@@ -208,6 +220,18 @@ public class ProjectServiceImpl extends
 		taskListService.saveWithSession(taskList, username);
 
 		return projectid;
+	}
+
+	private void assertExistProjectShortnameInAccount(String shortname,
+			int sAccountId) {
+		ProjectExample ex = new ProjectExample();
+		ex.createCriteria().andShortnameEqualTo(shortname)
+				.andSaccountidEqualTo(sAccountId);
+		if (projectMapper.countByExample(ex) > 0) {
+			throw new UserInvalidInputException(
+					"There is already project in the account has short name "
+							+ shortname);
+		}
 	}
 
 	private ProjectRole createProjectRole(int projectId, int sAccountId,
