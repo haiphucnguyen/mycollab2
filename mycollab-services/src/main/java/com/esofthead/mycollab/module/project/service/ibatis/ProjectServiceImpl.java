@@ -273,17 +273,6 @@ public class ProjectServiceImpl extends
 	}
 
 	@Override
-	public List<SimpleProject> getActiveProjectsInAccount(Integer sAccountId) {
-		ProjectSearchCriteria criteria = new ProjectSearchCriteria();
-		criteria.setSaccountid(new NumberSearchField(sAccountId));
-		criteria.setProjectStatuses(new SetSearchField<String>(
-				new String[] { StatusI18nEnum.Open.name() }));
-		return (List<SimpleProject>) projectMapperExt
-				.findPagableListByCriteria(criteria, new RowBounds(0,
-						Integer.MAX_VALUE));
-	}
-
-	@Override
 	public List<ProjectRelayEmailNotification> findProjectRelayEmailNotifications() {
 		return projectMapperExt.findProjectRelayEmailNotifications();
 	}

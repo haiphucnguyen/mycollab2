@@ -45,9 +45,6 @@ public interface ProjectService extends
 	@Cacheable
 	Integer getTotalActiveProjectsInAccount(@CacheKey Integer sAccountId);
 
-	@Cacheable
-	List<SimpleProject> getActiveProjectsInAccount(@CacheKey Integer sAccountId);
-
 	String getSubdomainOfProject(int projectId);
 
 	List<ProjectRelayEmailNotification> findProjectRelayEmailNotifications();
