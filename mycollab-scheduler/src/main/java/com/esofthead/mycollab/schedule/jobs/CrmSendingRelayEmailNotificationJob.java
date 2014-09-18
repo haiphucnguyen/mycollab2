@@ -49,6 +49,7 @@ public class CrmSendingRelayEmailNotificationJob extends GenericQuartzJobBean {
 	private static Logger log = LoggerFactory
 			.getLogger(CrmSendingRelayEmailNotificationJob.class);
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	protected void executeJob(JobExecutionContext context) {
 		RelayEmailNotificationService relayEmailService = (RelayEmailNotificationService) ApplicationContextUtil
