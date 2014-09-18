@@ -43,7 +43,7 @@
             </brand>
             <slogan>A must tool for small or mid size of any distributed
                 team
-                <![CDATA[<a href="https://travis-ci.org/esofthead/mycollab" target="_blank"><img src="https://travis-ci.org/esofthead/mycollab.svg?branch=master"/></a> <a href="https://www.openhub.net/p/mycollab"  target="_blank"><img src="https://www.openhub.net/p/mycollab/widgets/project_thin_badge.gif"/></a>]]>
+                <![CDATA[<a href="http://www.gnu.org/copyleft/gpl.html" target="_blank"><img src="http://img.shields.io/badge/License-GPL-orange.svg"/></a> <a href="https://travis-ci.org/esofthead/mycollab" target="_blank"><img src="https://travis-ci.org/esofthead/mycollab.svg?branch=master"/></a> <a href="https://www.openhub.net/p/mycollab"  target="_blank"><img src="https://www.openhub.net/p/mycollab/widgets/project_thin_badge.gif"/></a>]]>
             </slogan>
             <titleTemplate>%2$s | %1$s</titleTemplate>
             <!-- Use Table of Contents at the top of the page (max 6 elements) -->
