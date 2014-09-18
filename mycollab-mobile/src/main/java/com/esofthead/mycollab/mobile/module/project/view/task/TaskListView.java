@@ -17,7 +17,9 @@
 package com.esofthead.mycollab.mobile.module.project.view.task;
 
 import com.esofthead.mycollab.mobile.ui.IListView;
+import com.esofthead.mycollab.mobile.ui.PreviewBeanForm;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
+import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 
 /**
@@ -26,6 +28,8 @@ import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
  * @since 4.5.0
  *
  */
-public interface TaskListView extends IListView<TaskSearchCriteria, SimpleTask> {
+public interface TaskListView extends
+		IListView<TaskSearchCriteria, SimpleTask>,
+		PreviewBeanForm<SimpleTaskList> {
 
 }
