@@ -177,6 +177,7 @@ public class CustomizeFeatureComponent extends BlockWidget {
 
 					}
 				});
+		updateFeaturesBtn.setEnabled(CurrentProjectVariables.isAdmin());
 		updateFeaturesBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 		updateFeaturesBtn.setIcon(MyCollabResource
 				.newResource("icons/16/crm/refresh.png"));
