@@ -16,6 +16,7 @@
  */
 package com.esofthead.mycollab.module.project.service;
 
+import static org.assertj.core.api.Assertions.*;
 import java.util.List;
 
 import org.junit.Assert;
@@ -86,7 +87,9 @@ public class ProjectServiceTest extends ServiceTest {
 		List projects = projectService
 				.findPagableListByCriteria(new SearchRequest<ProjectSearchCriteria>(
 						criteria, 0, Integer.MAX_VALUE));
-		Assert.assertEquals(2, projects.size());
+		
+		assertThat(projects.size()).isEqualTo(2);
+		
 	}
 
 	@DataSet
@@ -95,5 +98,8 @@ public class ProjectServiceTest extends ServiceTest {
 		List<SimpleProject> projects = projectService.getProjectsUserInvolved(
 				"admin", 1);
 		Assert.assertEquals(2, projects.size());
+		assertThat(projects.size()).isEqualTo(2);
+		assertThat(projects).extracting("id", "name").contains(tuple(1, "A"),
+				tuple(2, "B"));
 	}
 }
