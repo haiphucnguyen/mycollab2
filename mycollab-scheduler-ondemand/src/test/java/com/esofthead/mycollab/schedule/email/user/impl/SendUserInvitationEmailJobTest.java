@@ -35,6 +35,7 @@ public class SendUserInvitationEmailJobTest extends GenericJobTest {
 	@Mock
 	private UserAccountInvitationMapperExt userAccountInvitationMapperExt;
 
+	@SuppressWarnings("unchecked")
 	@Test
 	public void testSendInvitation() throws JobExecutionException {
 		SimpleUserAccountInvitation accountInvitation = new SimpleUserAccountInvitation();

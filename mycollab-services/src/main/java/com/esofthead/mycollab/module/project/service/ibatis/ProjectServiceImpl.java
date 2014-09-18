@@ -19,7 +19,6 @@ package com.esofthead.mycollab.module.project.service.ibatis;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-import org.apache.ibatis.session.RowBounds;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -227,7 +226,8 @@ public class ProjectServiceImpl extends
 	}
 
 	@Override
-	public List<Integer> getUserProjectKeys(String username, Integer sAccountId) {
+	public List<Integer> getProjectKeysUserInvolved(String username,
+			Integer sAccountId) {
 		ProjectSearchCriteria searchCriteria = new ProjectSearchCriteria();
 		searchCriteria.setInvolvedMember(new StringSearchField(username));
 		searchCriteria.setProjectStatuses(new SetSearchField<String>(
@@ -275,5 +275,11 @@ public class ProjectServiceImpl extends
 	@Override
 	public List<ProjectRelayEmailNotification> findProjectRelayEmailNotifications() {
 		return projectMapperExt.findProjectRelayEmailNotifications();
+	}
+
+	@Override
+	public List<SimpleProject> getProjectsUserInvolved(String username,
+			Integer sAccountId) {
+		return projectMapperExt.getProjectsUserInvolved(username, sAccountId);
 	}
 }

@@ -32,6 +32,7 @@ public class UserSignUpEmailNotificationJobTest extends GenericJobTest {
 	@Mock
 	private UserService userService;
 
+	@SuppressWarnings("unchecked")
 	@Test
 	public void testSendConfirmEmail() throws JobExecutionException {
 		SimpleUser user = new SimpleUser();
