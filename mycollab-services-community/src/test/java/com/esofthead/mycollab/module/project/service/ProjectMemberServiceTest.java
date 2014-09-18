@@ -16,6 +16,7 @@
  */
 package com.esofthead.mycollab.module.project.service;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Assert;
@@ -69,5 +70,13 @@ public class ProjectMemberServiceTest extends ServiceTest {
 		List<SimpleUser> users = projectMemberService
 				.getUsersNotInProject(1, 1);
 		Assert.assertEquals(2, users.size());
+	}
+
+	@DataSet
+	@Test
+	public void testGetProjectMembersInProjects() {
+		List<SimpleUser> users = projectMemberService.getActiveUsersInProjects(
+				Arrays.asList(1, 2), 1);
+		Assert.assertEquals(3, users.size());
 	}
 }
