@@ -101,9 +101,8 @@ import com.vaadin.ui.VerticalLayout;
  * 
  */
 @ViewComponent(scope = ViewScope.PROTOTYPE)
-public class TimeTrackingSummaryViewImpl extends AbstractPageView
-		implements
-			TimeTrackingSummaryView {
+public class TimeTrackingSummaryViewImpl extends AbstractPageView implements
+		TimeTrackingSummaryView {
 	private static final long serialVersionUID = 1L;
 
 	private ProjectListSelect projectField;
@@ -214,8 +213,7 @@ public class TimeTrackingSummaryViewImpl extends AbstractPageView
 		selectionLayout.addComponent(this.projectField, 5, 0, 5, 1);
 
 		selectionLayout.addComponent(new Label("  User:  "), 6, 0);
-		this.userField = new MyProjectMemberListSelect(
-				projectField.getProjectList());
+		this.userField = new MyProjectMemberListSelect();
 		this.userField.setWidth("300px");
 		selectionLayout.addComponent(this.userField, 7, 0, 7, 1);
 
@@ -358,7 +356,7 @@ public class TimeTrackingSummaryViewImpl extends AbstractPageView
 	}
 
 	@Override
-	@SuppressWarnings({"unchecked", "rawtypes"})
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void display(Collection<Integer> projectIds) {
 		Calendar date = new GregorianCalendar();
 		date.set(Calendar.DAY_OF_MONTH, 1);
@@ -375,12 +373,12 @@ public class TimeTrackingSummaryViewImpl extends AbstractPageView
 		searchCriteria.setLogUsers(new SetSearchField(SearchField.AND,
 				this.userField.getUserList()));
 		searchCriteria.setProjectIds(new SetSearchField(SearchField.AND,
-				this.projectField.getProjectList()));
+				this.projectField.getProjectKeys()));
 
 		searchCriteria.setRangeDate(new RangeDateSearchField(fromDate, toDate));
 	}
 
-	@SuppressWarnings({"unchecked", "rawtypes"})
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void searchTimeReporting() {
 		final Collection<String> selectedUsers = (Collection<String>) this.userField
 				.getValue();
@@ -425,7 +423,6 @@ public class TimeTrackingSummaryViewImpl extends AbstractPageView
 									nonbillableHour));
 		}
 
-		// TODO
 		layoutItemWrapper.removeAllComponents();
 
 		AbstractTimeTrackingDisplayComp timeDisplayComp = buildTimeTrackingComp();
@@ -503,8 +500,13 @@ public class TimeTrackingSummaryViewImpl extends AbstractPageView
 			loadProjectList(projectList);
 		}
 
-		public List<SimpleProject> getProjectList() {
-			return projectList;
+		public List<Integer> getProjectKeys() {
+
+			List<Integer> keys = new ArrayList<Integer>();
+			for (SimpleProject project : projectList) {
+				keys.add(project.getId());
+			}
+			return keys;
 		}
 
 		private void loadProjectList(List<SimpleProject> projectList) {
@@ -517,13 +519,13 @@ public class TimeTrackingSummaryViewImpl extends AbstractPageView
 		}
 	}
 
-	private class MyProjectMemberListSelect extends ProjectMemberListSelect {
+	private class MyProjectMemberListSelect extends ListSelect {
 		private static final long serialVersionUID = 1L;
 
 		private List<SimpleProjectMember> userList;
 
-		public MyProjectMemberListSelect(List<SimpleProject> projectList) {
-			this(projectList, true);
+		public MyProjectMemberListSelect() {
+
 		}
 
 		public List<SimpleProjectMember> getUserList() {
@@ -536,31 +538,6 @@ public class TimeTrackingSummaryViewImpl extends AbstractPageView
 			this.setItemCaptionMode(ItemCaptionMode.EXPLICIT);
 			this.setNullSelectionAllowed(false);
 			this.setMultiSelect(true);
-
-			userList = new ArrayList<SimpleProjectMember>();
-			for (SimpleProject simpleProject : projectList) {
-				ProjectMemberSearchCriteria criteria = new ProjectMemberSearchCriteria();
-				criteria.setProjectId(new NumberSearchField(simpleProject
-						.getId()));
-
-				if (listActiveMembersOnly) {
-					criteria.setStatus(new StringSearchField(
-							ProjectMemberStatusConstants.ACTIVE));
-				}
-
-				ProjectMemberService userService = ApplicationContextUtil
-						.getSpringBean(ProjectMemberService.class);
-				List<SimpleProjectMember> memberList = userService
-						.findPagableListByCriteria(new SearchRequest<ProjectMemberSearchCriteria>(
-								criteria, 0, Integer.MAX_VALUE));
-
-				for (SimpleProjectMember member : memberList) {
-					if (!userList.contains(member)) {
-						userList.add(member);
-					}
-				}
-			}
-			loadUserList(userList);
 		}
 	}
 }
