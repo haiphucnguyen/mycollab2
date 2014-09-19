@@ -258,6 +258,7 @@ public class TimeTrackingSummaryViewImpl extends AbstractPageView
 		userLb.setWidthUndefined();
 		UiUtils.addComponent(userLbWrapper, userLb, Alignment.TOP_RIGHT);
 		selectionLayout.addComponent(userLbWrapper, 6, 0);
+
 		this.userField = new UserInvolvedProjectsMemberListSelect(
 				projectField.getProjectIds());
 		initListSelectStyle(this.userField);
@@ -285,7 +286,6 @@ public class TimeTrackingSummaryViewImpl extends AbstractPageView
 		selectionLayout.addComponent(queryBtnWrapper, 8, 0);
 
 		controlsPanel.setWidth("100%");
-		controlsPanel.setHeight("60px");
 		controlsPanel.setSpacing(true);
 
 		loggingPanel.setWidth("100%");
