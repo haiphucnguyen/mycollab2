@@ -28,21 +28,15 @@ import com.esofthead.mycollab.common.TableViewField;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.BooleanSearchField;
-import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.Order;
 import com.esofthead.mycollab.core.arguments.RangeDateSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
-import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
-import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
-import com.esofthead.mycollab.module.project.ProjectMemberStatusConstants;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleItemTimeLogging;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
-import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
-import com.esofthead.mycollab.module.project.domain.criteria.ProjectMemberSearchCriteria;
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.module.project.i18n.TimeTrackingI18nEnum;
 import com.esofthead.mycollab.module.project.service.ItemTimeLoggingService;
@@ -55,8 +49,8 @@ import com.esofthead.mycollab.module.project.ui.components.TimeTrackingUserOrder
 import com.esofthead.mycollab.module.project.view.parameters.BugScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.TaskScreenData;
-import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberListSelect;
 import com.esofthead.mycollab.module.project.view.time.TimeTableFieldDef;
+import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.reporting.ExportItemsStreamResource;
 import com.esofthead.mycollab.reporting.ReportExportType;
 import com.esofthead.mycollab.reporting.RpParameterBuilder;
@@ -107,7 +101,7 @@ public class TimeTrackingSummaryViewImpl extends AbstractPageView
 	private static final long serialVersionUID = 1L;
 
 	private ProjectListSelect projectField;
-	private MyProjectMemberListSelect userField;
+	private UserListSelect userField;
 	private PopupDateField fromDateField, toDateField;
 	private ComboBox groupField, orderField;
 
@@ -181,8 +175,8 @@ public class TimeTrackingSummaryViewImpl extends AbstractPageView
 
 		final GridLayout selectionLayout = new GridLayout(9, 2);
 		selectionLayout.setSpacing(true);
-		selectionLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
-		selectionLayout.setMargin(new MarginInfo(false, false, true, false));
+		selectionLayout.setDefaultComponentAlignment(Alignment.TOP_LEFT);
+		selectionLayout.setMargin(true);
 		controlsPanel.addComponent(selectionLayout);
 
 		selectionLayout.addComponent(new Label("From:  "), 0, 0);
@@ -214,8 +208,7 @@ public class TimeTrackingSummaryViewImpl extends AbstractPageView
 		selectionLayout.addComponent(this.projectField, 5, 0, 5, 1);
 
 		selectionLayout.addComponent(new Label("  User:  "), 6, 0);
-		this.userField = new MyProjectMemberListSelect(
-				projectField.getProjectList());
+		this.userField = new UserListSelect(projectField.getProjectIds());
 		this.userField.setWidth("300px");
 		selectionLayout.addComponent(this.userField, 7, 0, 7, 1);
 
@@ -373,9 +366,9 @@ public class TimeTrackingSummaryViewImpl extends AbstractPageView
 
 		searchCriteria = new ItemTimeLoggingSearchCriteria();
 		searchCriteria.setLogUsers(new SetSearchField(SearchField.AND,
-				this.userField.getUserList()));
+				this.userField.getUsernameList()));
 		searchCriteria.setProjectIds(new SetSearchField(SearchField.AND,
-				this.projectField.getProjectList()));
+				this.projectField.getProjectIds()));
 
 		searchCriteria.setRangeDate(new RangeDateSearchField(fromDate, toDate));
 	}
@@ -425,7 +418,6 @@ public class TimeTrackingSummaryViewImpl extends AbstractPageView
 									nonbillableHour));
 		}
 
-		// TODO
 		layoutItemWrapper.removeAllComponents();
 
 		AbstractTimeTrackingDisplayComp timeDisplayComp = buildTimeTrackingComp();
@@ -503,12 +495,15 @@ public class TimeTrackingSummaryViewImpl extends AbstractPageView
 			loadProjectList(projectList);
 		}
 
-		public List<SimpleProject> getProjectList() {
-			return projectList;
+		public List<Integer> getProjectIds() {
+			List<Integer> keys = new ArrayList<Integer>();
+			for (SimpleProject project : projectList) {
+				keys.add(project.getId());
+			}
+			return keys;
 		}
 
 		private void loadProjectList(List<SimpleProject> projectList) {
-
 			for (SimpleProject project : projectList) {
 				this.addItem(project.getId());
 				this.setItemCaption(project.getId(), project.getName());
@@ -517,50 +512,39 @@ public class TimeTrackingSummaryViewImpl extends AbstractPageView
 		}
 	}
 
-	private class MyProjectMemberListSelect extends ProjectMemberListSelect {
+	private class UserListSelect extends ListSelect {
 		private static final long serialVersionUID = 1L;
 
-		private List<SimpleProjectMember> userList;
+		private List<SimpleUser> userList;
 
-		public MyProjectMemberListSelect(List<SimpleProject> projectList) {
-			this(projectList, true);
-		}
-
-		public List<SimpleProjectMember> getUserList() {
-			return userList;
-		}
-
-		@SuppressWarnings("unchecked")
-		public MyProjectMemberListSelect(List<SimpleProject> projectList,
-				boolean listActiveMembersOnly) {
+		public UserListSelect(List<Integer> projectIds) {
 			this.setItemCaptionMode(ItemCaptionMode.EXPLICIT);
 			this.setNullSelectionAllowed(false);
 			this.setMultiSelect(true);
 
-			userList = new ArrayList<SimpleProjectMember>();
-			for (SimpleProject simpleProject : projectList) {
-				ProjectMemberSearchCriteria criteria = new ProjectMemberSearchCriteria();
-				criteria.setProjectId(new NumberSearchField(simpleProject
-						.getId()));
+			ProjectMemberService userService = ApplicationContextUtil
+					.getSpringBean(ProjectMemberService.class);
 
-				if (listActiveMembersOnly) {
-					criteria.setStatus(new StringSearchField(
-							ProjectMemberStatusConstants.ACTIVE));
-				}
+			userList = userService.getActiveUsersInProjects(projectIds,
+					AppContext.getAccountId());
 
-				ProjectMemberService userService = ApplicationContextUtil
-						.getSpringBean(ProjectMemberService.class);
-				List<SimpleProjectMember> memberList = userService
-						.findPagableListByCriteria(new SearchRequest<ProjectMemberSearchCriteria>(
-								criteria, 0, Integer.MAX_VALUE));
-
-				for (SimpleProjectMember member : memberList) {
-					if (!userList.contains(member)) {
-						userList.add(member);
-					}
-				}
-			}
 			loadUserList(userList);
+		}
+
+		public List<String> getUsernameList() {
+			List<String> keys = new ArrayList<String>();
+			for (SimpleUser user : userList) {
+				keys.add(user.getUsername());
+			}
+			return keys;
+		}
+
+		private void loadUserList(List<SimpleUser> userList) {
+			for (SimpleUser user : userList) {
+				this.addItem(user.getUsername());
+				this.setItemCaption(user.getUsername(), user.getDisplayName());
+			}
+			this.setRows(4);
 		}
 	}
 }
