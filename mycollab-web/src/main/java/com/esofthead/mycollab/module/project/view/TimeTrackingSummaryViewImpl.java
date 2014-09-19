@@ -95,9 +95,8 @@ import com.vaadin.ui.VerticalLayout;
  * 
  */
 @ViewComponent(scope = ViewScope.PROTOTYPE)
-public class TimeTrackingSummaryViewImpl extends AbstractPageView
-		implements
-			TimeTrackingSummaryView {
+public class TimeTrackingSummaryViewImpl extends AbstractPageView implements
+		TimeTrackingSummaryView {
 	private static final long serialVersionUID = 1L;
 
 	private ProjectListSelect projectField;
@@ -351,7 +350,7 @@ public class TimeTrackingSummaryViewImpl extends AbstractPageView
 	}
 
 	@Override
-	@SuppressWarnings({"unchecked", "rawtypes"})
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void display(Collection<Integer> projectIds) {
 		Calendar date = new GregorianCalendar();
 		date.set(Calendar.DAY_OF_MONTH, 1);
@@ -373,7 +372,7 @@ public class TimeTrackingSummaryViewImpl extends AbstractPageView
 		searchCriteria.setRangeDate(new RangeDateSearchField(fromDate, toDate));
 	}
 
-	@SuppressWarnings({"unchecked", "rawtypes"})
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void searchTimeReporting() {
 		final Collection<String> selectedUsers = (Collection<String>) this.userField
 				.getValue();
