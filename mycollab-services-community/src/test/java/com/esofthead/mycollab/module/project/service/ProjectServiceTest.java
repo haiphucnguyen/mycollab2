@@ -50,10 +50,10 @@ public class ProjectServiceTest extends ServiceTest {
 		project.setProjectstatus("Open");
 		project.setShortname("abc");
 		int projectId = projectService.saveWithSession(project, "admin");
-		Assert.assertEquals(true, (projectId > 0));
+		assertThat(projectId).isGreaterThan(0);
 	}
 
-	@SuppressWarnings("rawtypes")
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@DataSet
 	@Test
 	public void testGetListProjects() {
@@ -61,9 +61,10 @@ public class ProjectServiceTest extends ServiceTest {
 				.findPagableListByCriteria(new SearchRequest<ProjectSearchCriteria>(
 						null, 0, Integer.MAX_VALUE));
 		Assert.assertEquals(4, projects.size());
+		assertThat(projects).extracting("id").contains(1, 2, 3, 4);
 	}
 
-	@SuppressWarnings("rawtypes")
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@DataSet
 	@Test
 	public void testGetListProjectsByCriteria() {
@@ -73,23 +74,27 @@ public class ProjectServiceTest extends ServiceTest {
 		List projects = projectService
 				.findPagableListByCriteria(new SearchRequest<ProjectSearchCriteria>(
 						criteria, 0, Integer.MAX_VALUE));
-		Assert.assertEquals(4, projects.size());
+		assertThat(projects.size()).isEqualTo(4);
+		assertThat(projects).extracting("id").contains(1, 2, 3, 4);
 	}
 
-	@SuppressWarnings("rawtypes")
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@DataSet
 	@Test
 	public void testGetListProjectsByUsername() {
 		ProjectSearchCriteria criteria = new ProjectSearchCriteria();
-		criteria.setUsername(new StringSearchField(SearchField.AND, "admin"));
+		criteria.setInvolvedMember(new StringSearchField(SearchField.AND,
+				"admin"));
 		criteria.setSaccountid(new NumberSearchField(1));
 
 		List projects = projectService
 				.findPagableListByCriteria(new SearchRequest<ProjectSearchCriteria>(
 						criteria, 0, Integer.MAX_VALUE));
-		
+
 		assertThat(projects.size()).isEqualTo(2);
-		
+		assertThat(projects).extracting("id", "name").contains(tuple(1, "A"),
+				tuple(2, "B"));
+
 	}
 
 	@DataSet
