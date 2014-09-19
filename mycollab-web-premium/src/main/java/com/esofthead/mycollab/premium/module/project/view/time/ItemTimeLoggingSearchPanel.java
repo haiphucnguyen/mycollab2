@@ -14,6 +14,7 @@ import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
 import com.esofthead.mycollab.module.project.i18n.TimeTrackingI18nEnum;
+import com.esofthead.mycollab.module.project.ui.components.ItemOrderComboBox;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberListSelect;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
@@ -284,21 +285,6 @@ class ItemTimeLoggingSearchPanel extends
 			dateEnd.setWidth(width, Unit.PIXELS);
 			dateStart.setResolution(Resolution.DAY);
 			dateEnd.setResolution(Resolution.DAY);
-		}
-	}
-
-	private class ItemOrderComboBox extends ComboBox {
-		private static final long serialVersionUID = 1L;
-
-		public ItemOrderComboBox() {
-			this.setItemCaptionMode(ItemCaptionMode.EXPLICIT);
-			this.setNullSelectionAllowed(false);
-			this.addItem(Order.ASCENDING);
-			this.setItemCaption(Order.ASCENDING, "Ascending");
-
-			this.addItem(Order.DESCENDING);
-			this.setItemCaption(Order.DESCENDING, "Descending");
-			this.select(Order.ASCENDING);
 		}
 	}
 }
