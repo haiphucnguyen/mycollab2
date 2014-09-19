@@ -16,6 +16,7 @@
  */
 package com.esofthead.mycollab.module.project.view;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
@@ -25,22 +26,36 @@ import java.util.List;
 
 import com.esofthead.mycollab.common.TableViewField;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
+import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.BooleanSearchField;
+import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.Order;
 import com.esofthead.mycollab.core.arguments.RangeDateSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
+import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
+import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
+import com.esofthead.mycollab.module.project.ProjectMemberStatusConstants;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleItemTimeLogging;
+import com.esofthead.mycollab.module.project.domain.SimpleProject;
+import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
+import com.esofthead.mycollab.module.project.domain.criteria.ProjectMemberSearchCriteria;
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.module.project.i18n.TimeTrackingI18nEnum;
 import com.esofthead.mycollab.module.project.service.ItemTimeLoggingService;
+import com.esofthead.mycollab.module.project.service.ProjectMemberService;
+import com.esofthead.mycollab.module.project.service.ProjectService;
+import com.esofthead.mycollab.module.project.ui.components.AbstractTimeTrackingDisplayComp;
 import com.esofthead.mycollab.module.project.ui.components.TimeTrackingDateOrderComponent;
+import com.esofthead.mycollab.module.project.ui.components.TimeTrackingProjectOrderComponent;
+import com.esofthead.mycollab.module.project.ui.components.TimeTrackingUserOrderComponent;
 import com.esofthead.mycollab.module.project.view.parameters.BugScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.TaskScreenData;
+import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberListSelect;
 import com.esofthead.mycollab.module.project.view.time.TimeTableFieldDef;
 import com.esofthead.mycollab.reporting.ExportItemsStreamResource;
 import com.esofthead.mycollab.reporting.ReportExportType;
@@ -89,15 +104,10 @@ import com.vaadin.ui.VerticalLayout;
 public class TimeTrackingSummaryViewImpl extends AbstractPageView
 		implements
 			TimeTrackingSummaryView {
-	private static final List<TableViewField> FIELDS = Arrays.asList(
-			TimeTableFieldDef.summary, TimeTableFieldDef.logForDate,
-			TimeTableFieldDef.logUser, TimeTableFieldDef.project,
-			TimeTableFieldDef.logValue, TimeTableFieldDef.billable);
-
 	private static final long serialVersionUID = 1L;
 
-	private ListSelect userField;
-	private ListSelect projectField;
+	private ProjectListSelect projectField;
+	private MyProjectMemberListSelect userField;
 	private PopupDateField fromDateField, toDateField;
 	private ComboBox groupField, orderField;
 
@@ -108,7 +118,7 @@ public class TimeTrackingSummaryViewImpl extends AbstractPageView
 	private Date fromDate, toDate;
 	private ItemTimeLoggingService itemTimeLoggingService;
 
-	private TimeTrackingDateOrderComponent layoutItem;
+	private VerticalLayout layoutItemWrapper;
 
 	public TimeTrackingSummaryViewImpl() {
 		this.setWidth("100%");
@@ -172,10 +182,11 @@ public class TimeTrackingSummaryViewImpl extends AbstractPageView
 		final GridLayout selectionLayout = new GridLayout(9, 2);
 		selectionLayout.setSpacing(true);
 		selectionLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
-		selectionLayout.setMargin(new MarginInfo(true, false, true, false));
+		selectionLayout.setMargin(new MarginInfo(false, false, true, false));
 		controlsPanel.addComponent(selectionLayout);
 
 		selectionLayout.addComponent(new Label("From:  "), 0, 0);
+
 		this.fromDateField = new PopupDateField();
 		this.fromDateField.setResolution(Resolution.DAY);
 		this.fromDateField.setWidth("120px");
@@ -188,7 +199,7 @@ public class TimeTrackingSummaryViewImpl extends AbstractPageView
 		selectionLayout.addComponent(this.toDateField, 3, 0);
 
 		selectionLayout.addComponent(new Label("Group:  "), 0, 1);
-		this.groupField = new ValueComboBox(false, "Date", "User");
+		this.groupField = new ValueComboBox(false, "Project", "Date", "User");
 		this.groupField.setWidth("120px");
 		selectionLayout.addComponent(this.groupField, 1, 1);
 
@@ -198,12 +209,13 @@ public class TimeTrackingSummaryViewImpl extends AbstractPageView
 		selectionLayout.addComponent(this.orderField, 3, 1);
 
 		selectionLayout.addComponent(new Label("  Project:  "), 4, 0);
-		this.projectField = new ListSelect();
+		this.projectField = new ProjectListSelect();
 		this.projectField.setWidth("300px");
 		selectionLayout.addComponent(this.projectField, 5, 0, 5, 1);
 
 		selectionLayout.addComponent(new Label("  User:  "), 6, 0);
-		this.userField = new ListSelect();
+		this.userField = new MyProjectMemberListSelect(
+				projectField.getProjectList());
 		this.userField.setWidth("300px");
 		selectionLayout.addComponent(this.userField, 7, 0, 7, 1);
 
@@ -226,11 +238,11 @@ public class TimeTrackingSummaryViewImpl extends AbstractPageView
 		selectionLayout.addComponent(queryBtn, 8, 0);
 
 		controlsPanel.setWidth("100%");
-		controlsPanel.setHeight("30px");
+		controlsPanel.setHeight("60px");
 		controlsPanel.setSpacing(true);
 
 		loggingPanel.setWidth("100%");
-		loggingPanel.setHeight("30px");
+		loggingPanel.setHeight("50px");
 		loggingPanel.setSpacing(true);
 
 		totalHoursLoggingLabel = new Label("Total Hours Logging: 0 Hrs",
@@ -284,10 +296,9 @@ public class TimeTrackingSummaryViewImpl extends AbstractPageView
 		controlBtns.setComponentAlignment(backBtn, Alignment.TOP_LEFT);
 		controlBtns.setSizeFull();
 
-		this.layoutItem = new TimeTrackingDateOrderComponent(FIELDS,
-				tableClickListener);
-		this.layoutItem.setWidth("100%");
-		contentWrapper.addComponent(this.layoutItem);
+		this.layoutItemWrapper = new VerticalLayout();
+		this.layoutItemWrapper.setWidth("100%");
+		contentWrapper.addComponent(this.layoutItemWrapper);
 	}
 
 	private StreamResource constructStreamResource(
@@ -298,8 +309,9 @@ public class TimeTrackingSummaryViewImpl extends AbstractPageView
 			@Override
 			protected StreamSource buildStreamSource() {
 				return new SimpleGridExportItemsStreamResource.AllItems<ItemTimeLoggingSearchCriteria, SimpleItemTimeLogging>(
-						"Time Tracking Report", new RpParameterBuilder(FIELDS),
-						exportType, itemTimeLoggingService, searchCriteria,
+						"Time Tracking Report", new RpParameterBuilder(
+								getVisibleFields()), exportType,
+						itemTimeLoggingService, searchCriteria,
 						SimpleItemTimeLogging.class);
 			}
 		};
@@ -308,7 +320,45 @@ public class TimeTrackingSummaryViewImpl extends AbstractPageView
 		return res;
 	}
 
+	private AbstractTimeTrackingDisplayComp buildTimeTrackingComp() {
+		String groupBy = (String) groupField.getValue();
+
+		if (groupBy.equals("Project")) {
+			return new TimeTrackingProjectOrderComponent(getVisibleFields(),
+					this.tableClickListener);
+		} else if (groupBy.equals("Date")) {
+			return new TimeTrackingDateOrderComponent(getVisibleFields(),
+					this.tableClickListener);
+		} else if (groupBy.equals("User")) {
+			return new TimeTrackingUserOrderComponent(getVisibleFields(),
+					this.tableClickListener);
+		} else {
+			throw new MyCollabException("Do not support view type: " + groupBy);
+		}
+	}
+
+	private List<TableViewField> getVisibleFields() {
+		String groupBy = (String) groupField.getValue();
+
+		if (groupBy.equals("Project")) {
+			return Arrays.asList(TimeTableFieldDef.summary,
+					TimeTableFieldDef.logForDate, TimeTableFieldDef.logUser,
+					TimeTableFieldDef.logValue, TimeTableFieldDef.billable);
+		} else if (groupBy.equals("Date")) {
+			return Arrays.asList(TimeTableFieldDef.summary,
+					TimeTableFieldDef.logUser, TimeTableFieldDef.project,
+					TimeTableFieldDef.logValue, TimeTableFieldDef.billable);
+		} else if (groupBy.equals("User")) {
+			return Arrays.asList(TimeTableFieldDef.summary,
+					TimeTableFieldDef.logForDate, TimeTableFieldDef.project,
+					TimeTableFieldDef.logValue, TimeTableFieldDef.billable);
+		} else {
+			throw new MyCollabException("Do not support view type: " + groupBy);
+		}
+	}
+
 	@Override
+	@SuppressWarnings({"unchecked", "rawtypes"})
 	public void display(Collection<Integer> projectIds) {
 		Calendar date = new GregorianCalendar();
 		date.set(Calendar.DAY_OF_MONTH, 1);
@@ -322,14 +372,30 @@ public class TimeTrackingSummaryViewImpl extends AbstractPageView
 		toDateField.setValue(toDate);
 
 		searchCriteria = new ItemTimeLoggingSearchCriteria();
-		searchCriteria.setLogUsers(new SetSearchField<String>(SearchField.AND,
-				new String[]{AppContext.getUsername()}));
-		searchCriteria.setProjectIds(new SetSearchField<Integer>(
-				((Integer[]) projectIds.toArray(new Integer[0]))));
+		searchCriteria.setLogUsers(new SetSearchField(SearchField.AND,
+				this.userField.getUserList()));
+		searchCriteria.setProjectIds(new SetSearchField(SearchField.AND,
+				this.projectField.getProjectList()));
+
 		searchCriteria.setRangeDate(new RangeDateSearchField(fromDate, toDate));
 	}
 
+	@SuppressWarnings({"unchecked", "rawtypes"})
 	private void searchTimeReporting() {
+		final Collection<String> selectedUsers = (Collection<String>) this.userField
+				.getValue();
+		if (selectedUsers != null && selectedUsers.size() > 0) {
+			searchCriteria.setLogUsers(new SetSearchField(SearchField.AND,
+					selectedUsers));
+		}
+
+		final Collection<String> selectedProjects = (Collection<String>) this.projectField
+				.getValue();
+		if (selectedProjects != null && selectedProjects.size() > 0) {
+			searchCriteria.setProjectIds(new SetSearchField(SearchField.AND,
+					selectedProjects));
+		}
+
 		searchCriteria.setIsBillable(new BooleanSearchField(true));
 		Double billableHour = this.itemTimeLoggingService
 				.getTotalHoursByCriteria(searchCriteria);
@@ -358,8 +424,14 @@ public class TimeTrackingSummaryViewImpl extends AbstractPageView
 									fromDate, toDate, totalHour, billableHour,
 									nonbillableHour));
 		}
-		// TODO:
-		this.layoutItem.queryData(searchCriteria, Order.ASCENDING);
+
+		// TODO
+		layoutItemWrapper.removeAllComponents();
+
+		AbstractTimeTrackingDisplayComp timeDisplayComp = buildTimeTrackingComp();
+		layoutItemWrapper.addComponent(timeDisplayComp);
+		timeDisplayComp.queryData(searchCriteria,
+				(Order) this.orderField.getValue());
 	}
 
 	private TableClickListener tableClickListener = new TableClickListener() {
@@ -408,6 +480,87 @@ public class TimeTrackingSummaryViewImpl extends AbstractPageView
 			this.addItem(Order.DESCENDING);
 			this.setItemCaption(Order.DESCENDING, "Descending");
 			this.select(Order.ASCENDING);
+		}
+	}
+
+	private class ProjectListSelect extends ListSelect {
+		private static final long serialVersionUID = 1L;
+
+		private List<SimpleProject> projectList;
+
+		public ProjectListSelect() {
+			this(true);
+		}
+
+		public ProjectListSelect(boolean listActiveMembersOnly) {
+			this.setItemCaptionMode(ItemCaptionMode.EXPLICIT);
+			this.setNullSelectionAllowed(false);
+			this.setMultiSelect(true);
+
+			projectList = ApplicationContextUtil.getSpringBean(
+					ProjectService.class).getProjectsUserInvolved(
+					AppContext.getUsername(), AppContext.getAccountId());
+			loadProjectList(projectList);
+		}
+
+		public List<SimpleProject> getProjectList() {
+			return projectList;
+		}
+
+		private void loadProjectList(List<SimpleProject> projectList) {
+
+			for (SimpleProject project : projectList) {
+				this.addItem(project.getId());
+				this.setItemCaption(project.getId(), project.getName());
+			}
+			this.setRows(4);
+		}
+	}
+
+	private class MyProjectMemberListSelect extends ProjectMemberListSelect {
+		private static final long serialVersionUID = 1L;
+
+		private List<SimpleProjectMember> userList;
+
+		public MyProjectMemberListSelect(List<SimpleProject> projectList) {
+			this(projectList, true);
+		}
+
+		public List<SimpleProjectMember> getUserList() {
+			return userList;
+		}
+
+		@SuppressWarnings("unchecked")
+		public MyProjectMemberListSelect(List<SimpleProject> projectList,
+				boolean listActiveMembersOnly) {
+			this.setItemCaptionMode(ItemCaptionMode.EXPLICIT);
+			this.setNullSelectionAllowed(false);
+			this.setMultiSelect(true);
+
+			userList = new ArrayList<SimpleProjectMember>();
+			for (SimpleProject simpleProject : projectList) {
+				ProjectMemberSearchCriteria criteria = new ProjectMemberSearchCriteria();
+				criteria.setProjectId(new NumberSearchField(simpleProject
+						.getId()));
+
+				if (listActiveMembersOnly) {
+					criteria.setStatus(new StringSearchField(
+							ProjectMemberStatusConstants.ACTIVE));
+				}
+
+				ProjectMemberService userService = ApplicationContextUtil
+						.getSpringBean(ProjectMemberService.class);
+				List<SimpleProjectMember> memberList = userService
+						.findPagableListByCriteria(new SearchRequest<ProjectMemberSearchCriteria>(
+								criteria, 0, Integer.MAX_VALUE));
+
+				for (SimpleProjectMember member : memberList) {
+					if (!userList.contains(member)) {
+						userList.add(member);
+					}
+				}
+			}
+			loadUserList(userList);
 		}
 	}
 }
