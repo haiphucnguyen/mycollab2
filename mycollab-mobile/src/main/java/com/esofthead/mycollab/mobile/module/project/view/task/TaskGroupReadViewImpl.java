@@ -1,10 +1,29 @@
+/**
+ * This file is part of mycollab-mobile.
+ *
+ * mycollab-mobile is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * mycollab-mobile is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with mycollab-mobile.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package com.esofthead.mycollab.mobile.module.project.view.task;
 
+import com.esofthead.mycollab.mobile.module.project.ui.ProjectPreviewFormControlsGenerator;
 import com.esofthead.mycollab.mobile.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.esofthead.mycollab.mobile.ui.AbstractPreviewItemComp;
 import com.esofthead.mycollab.mobile.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.mobile.ui.DefaultFormViewFieldFactory.FormViewField;
+import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
+import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
@@ -40,8 +59,7 @@ public class TaskGroupReadViewImpl extends
 
 	@Override
 	protected void initRelatedComponents() {
-		// TODO Auto-generated method stub
-
+		// TODO Add related comments
 	}
 
 	@Override
@@ -56,8 +74,9 @@ public class TaskGroupReadViewImpl extends
 
 	@Override
 	protected ComponentContainer createButtonControls() {
-		// TODO Auto-generated method stub
-		return null;
+		return new ProjectPreviewFormControlsGenerator<SimpleTaskList>(
+				this.previewForm)
+				.createButtonControls(ProjectRolePermissionCollections.TASKS);
 	}
 
 	@Override
@@ -99,6 +118,11 @@ public class TaskGroupReadViewImpl extends
 			return null;
 		}
 
+	}
+
+	@Override
+	public HasPreviewFormHandlers<SimpleTaskList> getPreviewFormHandlers() {
+		return this.previewForm;
 	}
 
 }

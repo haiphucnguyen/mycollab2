@@ -39,9 +39,9 @@ public class TaskGroupScreenData {
 
 	}
 
-	public static class Add extends ScreenData<Integer> {
+	public static class Add extends ScreenData<SimpleTaskList> {
 		public Add() {
-			super(null);
+			super(new SimpleTaskList());
 		}
 	}
 

@@ -30,6 +30,7 @@ import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
+import com.esofthead.mycollab.module.project.i18n.TaskI18nEnum;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.PreviewFormHandler;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
@@ -58,6 +59,7 @@ public class TaskListViewImpl extends
 
 	public TaskListViewImpl() {
 		this.addStyleName("task-list-view");
+		this.setToggleButton(false);
 	}
 
 	@Override
@@ -93,7 +95,25 @@ public class TaskListViewImpl extends
 		viewTaskList.setEnabled(CurrentProjectVariables
 				.canWrite(ProjectRolePermissionCollections.TASKS));
 
+		Button addNewTask = new Button(
+				AppContext.getMessage(TaskI18nEnum.BUTTON_NEW_TASK),
+				new Button.ClickListener() {
+
+					private static final long serialVersionUID = -8074297964143853121L;
+
+					@Override
+					public void buttonClick(Button.ClickEvent event) {
+						EventBusFactory.getInstance().post(
+								new TaskEvent.GotoAdd(this, currentTaskList
+										.getId()));
+					}
+				});
+		addNewTask.setWidth("100%");
+		addNewTask.setEnabled(CurrentProjectVariables
+				.canWrite(ProjectRolePermissionCollections.TASKS));
+
 		controlsGenerator.insertToControlBlock(viewTaskList);
+		controlsGenerator.insertToControlBlock(addNewTask);
 		editBtn.setContent(menuContent);
 
 		return editBtn;
