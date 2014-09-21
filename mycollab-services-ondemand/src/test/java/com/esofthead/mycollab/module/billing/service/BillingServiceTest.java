@@ -16,9 +16,10 @@
  */
 package com.esofthead.mycollab.module.billing.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.util.List;
 
-import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -48,13 +49,14 @@ public class BillingServiceTest extends ServiceTest {
 		List<BillingAccountWithOwners> accounts = billingService
 				.getTrialAccountsWithOwners();
 
-		Assert.assertEquals(1, accounts.size());
+		assertThat(accounts.size()).isEqualTo(1);
 
 		BillingAccountWithOwners account = accounts.get(0);
-		Assert.assertEquals(1, account.getOwners().size());
+
+		assertThat(account.getOwners().size()).isEqualTo(1);
 
 		SimpleUser user = account.getOwners().get(0);
-		Assert.assertEquals("hai79", user.getUsername());
+		assertThat(user.getUsername()).isEqualTo("hainguyen@esofthead.com");
 	}
 
 	@Test
@@ -81,4 +83,5 @@ public class BillingServiceTest extends ServiceTest {
 		billingService.registerAccount("xyz", 1, "hainguyen@esofthead.com",
 				"123", "hainguyen@esofthead.com", "1", true);
 	}
+
 }
