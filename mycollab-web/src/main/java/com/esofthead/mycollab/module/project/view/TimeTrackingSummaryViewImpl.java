@@ -24,6 +24,8 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
+
 import com.esofthead.mycollab.common.TableViewField;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.core.MyCollabException;
@@ -98,9 +100,8 @@ import com.vaadin.ui.VerticalLayout;
  * 
  */
 @ViewComponent(scope = ViewScope.PROTOTYPE)
-public class TimeTrackingSummaryViewImpl extends AbstractPageView
-		implements
-			TimeTrackingSummaryView {
+public class TimeTrackingSummaryViewImpl extends AbstractPageView implements
+		TimeTrackingSummaryView {
 	private static final long serialVersionUID = 1L;
 
 	private static final String GROUPBY_PROJECT = "Project";
@@ -430,11 +431,11 @@ public class TimeTrackingSummaryViewImpl extends AbstractPageView
 		searchCriteria.setRangeDate(new RangeDateSearchField(fromDate, toDate));
 	}
 
-	@SuppressWarnings({"unchecked", "rawtypes"})
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void searchTimeReporting() {
 		final Collection<String> selectedUsers = (Collection<String>) this.userField
 				.getValue();
-		if (selectedUsers != null && selectedUsers.size() > 0) {
+		if (CollectionUtils.isNotEmpty(selectedUsers)) {
 			searchCriteria.setLogUsers(new SetSearchField(SearchField.AND,
 					selectedUsers));
 		} else {
@@ -444,7 +445,7 @@ public class TimeTrackingSummaryViewImpl extends AbstractPageView
 
 		final Collection<Integer> selectedProjects = (Collection<Integer>) this.projectField
 				.getValue();
-		if (selectedProjects != null && selectedProjects.size() > 0) {
+		if (CollectionUtils.isNotEmpty(selectedProjects)) {
 			searchCriteria.setProjectIds(new SetSearchField(SearchField.AND,
 					selectedProjects));
 		} else {

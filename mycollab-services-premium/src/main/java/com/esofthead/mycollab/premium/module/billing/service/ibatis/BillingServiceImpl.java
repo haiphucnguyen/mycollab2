@@ -2,6 +2,7 @@ package com.esofthead.mycollab.premium.module.billing.service.ibatis;
 
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -88,7 +89,7 @@ public class BillingServiceImpl implements BillingService {
 		BillingPlanExample ex = new BillingPlanExample();
 		ex.createCriteria().andBillingtypeEqualTo("Free");
 		List<BillingPlan> billingPlans = billingPlanMapper.selectByExample(ex);
-		if (billingPlans != null && billingPlans.size() == 1) {
+		if (CollectionUtils.isNotEmpty(billingPlans)) {
 			return billingPlans.get(0);
 		} else {
 			throw new MyCollabException("Can not query free billing plan");

@@ -4,6 +4,8 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 
+import org.apache.commons.collections.CollectionUtils;
+
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.Order;
 import com.esofthead.mycollab.core.arguments.RangeDateSearchField;
@@ -245,7 +247,7 @@ class ItemTimeLoggingSearchPanel extends
 			final Collection<String> selectedUsers = (Collection<String>) this.userField
 					.getValue();
 
-			if (selectedUsers != null && selectedUsers.size() > 0) {
+			if (CollectionUtils.isNotEmpty(selectedUsers)) {
 				ItemTimeLoggingSearchPanel.this.searchCriteria
 						.setLogUsers(new SetSearchField(SearchField.AND,
 								selectedUsers));

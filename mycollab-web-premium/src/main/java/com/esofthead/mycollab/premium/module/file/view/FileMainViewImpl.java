@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.hene.popupbutton.PopupButton;
 import org.vaadin.peter.buttongroup.ButtonGroup;
@@ -647,7 +648,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 								.searchResourcesByName(
 										FileMainViewImpl.this.rootPath,
 										nameField.getValue().toString().trim());
-						if (lstResource != null && lstResource.size() > 0) {
+						if (CollectionUtils.isNotEmpty(lstResource)) {
 							resourceHandlerLayout
 									.constructBodyItemContainerSearchActionResult(
 											lstResource, nameField.getValue()

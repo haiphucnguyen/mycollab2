@@ -19,10 +19,9 @@ package com.esofthead.mycollab.schedule.email.user.impl;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
@@ -76,42 +75,10 @@ public class UserSignUpEmailNotificationJob extends GenericQuartzJobBean {
 		List<SimpleUser> users = userService
 				.findPagableListByCriteria(new SearchRequest<UserSearchCriteria>(
 						criteria, 0, Integer.MAX_VALUE));
-		
-		if (users != null && users.size() > 0) {
+
+		if (CollectionUtils.isNotEmpty(users)) {
 			for (SimpleUser user : users) {
-
-				contentGenerator.putVariable("user", user);
-
-				String siteUrl = GenericLinkUtils
-						.generateSiteUrlByAccountId(user.getAccountId());
-
-				contentGenerator.putVariable("siteUrl", siteUrl);
-
-				String linkComfirm = siteUrl
-						+ "user/confirm_signup/"
-						+ UrlEncodeDecoder.encode(user.getUsername() + "/"
-								+ user.getAccountId());
-				contentGenerator.putVariable("linkConfirm", linkComfirm);
-
-				extMailService
-						.sendHTMLMail(
-								SiteConfiguration.getNoReplyEmail(),
-								SiteConfiguration.getSiteName(),
-								Arrays.asList(new MailRecipientField(user
-										.getEmail(), user.getDisplayName())),
-								null,
-								null,
-								contentGenerator
-										.generateSubjectContent(LocalizationHelper.getMessage(
-												SiteConfiguration
-														.getDefaultLocale(),
-												UserI18nEnum.MAIL_CONFIRM_PASSWORD_SUBJECT)),
-								contentGenerator.generateBodyContent(LocalizationHelper
-										.templatePath(CONFIRM_EMAIL_TEMPLATE,
-												SiteConfiguration
-														.getDefaultLocale())),
-								null);
-
+				sendConfirmEmailToUser(user);
 				user.setStatus(UserStatusConstants.EMAIL_VERIFIED_REQUEST);
 				userService.updateWithSession(user, user.getUsername());
 			}
@@ -119,6 +86,28 @@ public class UserSignUpEmailNotificationJob extends GenericQuartzJobBean {
 	}
 
 	void sendConfirmEmailToUser(SimpleUser user) {
+		contentGenerator.putVariable("user", user);
 
+		String siteUrl = GenericLinkUtils.generateSiteUrlByAccountId(user
+				.getAccountId());
+
+		contentGenerator.putVariable("siteUrl", siteUrl);
+
+		String linkComfirm = siteUrl
+				+ "user/confirm_signup/"
+				+ UrlEncodeDecoder.encode(user.getUsername() + "/"
+						+ user.getAccountId());
+		contentGenerator.putVariable("linkConfirm", linkComfirm);
+
+		extMailService.sendHTMLMail(SiteConfiguration.getNoReplyEmail(),
+				SiteConfiguration.getSiteName(), Arrays
+						.asList(new MailRecipientField(user.getEmail(), user
+								.getDisplayName())), null, null,
+				contentGenerator.generateSubjectContent(LocalizationHelper
+						.getMessage(SiteConfiguration.getDefaultLocale(),
+								UserI18nEnum.MAIL_CONFIRM_PASSWORD_SUBJECT)),
+				contentGenerator.generateBodyContent(LocalizationHelper
+						.templatePath(CONFIRM_EMAIL_TEMPLATE,
+								SiteConfiguration.getDefaultLocale())), null);
 	}
 }
