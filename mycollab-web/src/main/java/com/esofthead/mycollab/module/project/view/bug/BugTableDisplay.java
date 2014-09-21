@@ -19,6 +19,7 @@ package com.esofthead.mycollab.module.project.view.bug;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.peter.contextmenu.ContextMenu;
 import org.vaadin.peter.contextmenu.ContextMenu.ContextMenuItem;
@@ -28,7 +29,6 @@ import org.vaadin.peter.contextmenu.ContextMenu.ContextMenuItemClickListener;
 import com.esofthead.mycollab.common.TableViewField;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
-import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.LabelLink;
@@ -271,7 +271,7 @@ public class BugTableDisplay extends
 						.generateBugPreviewFullLink(bug.getProjectid(),
 								bug.getId()));
 
-				if (StringUtils.isNotNullOrEmpty(bug.getPriority())) {
+				if (StringUtils.isNotBlank(bug.getPriority())) {
 					b.setIconLink(ProjectResources
 							.getIconResourceLink12ByBugPriority(bug
 									.getPriority()));

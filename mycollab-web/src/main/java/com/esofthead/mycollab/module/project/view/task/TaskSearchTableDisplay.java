@@ -19,13 +19,13 @@ package com.esofthead.mycollab.module.project.view.task;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.hene.popupbutton.PopupButton;
 
 import com.esofthead.mycollab.common.TableViewField;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
-import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.LabelLink;
@@ -96,7 +96,7 @@ public class TaskSearchTableDisplay
 						AppContext.getUserLocale(), task,
 						AppContext.getSiteUrl(), AppContext.getTimezone()));
 
-				if (StringUtils.isNotNullOrEmpty(task.getPriority())) {
+				if (StringUtils.isNotBlank(task.getPriority())) {
 					b.setIconLink(ProjectResources
 							.getIconResourceLink12ByTaskPriority(task
 									.getPriority()));
