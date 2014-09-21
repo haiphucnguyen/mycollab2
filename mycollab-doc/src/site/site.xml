@@ -135,6 +135,7 @@
         <menu name="Download" inherit="top">
             <item name="Download" href="download.html" />
             <item name="License" href="license.html" />
+            <item name="Third Parties Licenses" href="third-parties.html"/>
         </menu>
         <menu name="Documentation" inherit="bottom">
             <item name="Installation" href="installation.html" />
