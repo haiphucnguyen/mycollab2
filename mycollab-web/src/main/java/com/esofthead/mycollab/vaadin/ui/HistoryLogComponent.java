@@ -145,7 +145,7 @@ public abstract class HistoryLogComponent extends VerticalLayout {
 							Alignment.MIDDLE_LEFT);
 
 					Label lbDate = new Label("changed "
-							+ DateTimeUtils.getStringDateFromNow(DateTimeUtils
+							+ DateTimeUtils.getPrettyDateValue(DateTimeUtils
 									.convertDateByFormatW3C(strDate),
 									AppContext.getUserLocale()));
 					header.addComponent(lbDate);
