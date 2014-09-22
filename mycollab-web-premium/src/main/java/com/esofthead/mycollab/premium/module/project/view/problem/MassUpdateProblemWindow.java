@@ -36,6 +36,7 @@ public class MassUpdateProblemWindow extends MassUpdateWindow<Problem> {
 		return new MassUpdateProblemFormLayoutFactory();
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	protected AbstractBeanFieldGroupEditFieldFactory<Problem> buildBeanFormFieldFactory() {
 		return new ProblemEditFormFieldFactory(updateForm, false);

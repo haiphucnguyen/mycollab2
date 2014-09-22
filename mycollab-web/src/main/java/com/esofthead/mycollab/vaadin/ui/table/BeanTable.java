@@ -42,6 +42,7 @@ import com.vaadin.ui.Table;
  * @param <S>
  * @param <T>
  */
+@SuppressWarnings("rawtypes")
 public class BeanTable<SearchService extends ISearchableService<S>, S extends SearchCriteria, T>
 		extends Table implements IBeanTable {
 

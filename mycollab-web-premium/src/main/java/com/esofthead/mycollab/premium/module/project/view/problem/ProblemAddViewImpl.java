@@ -81,6 +81,7 @@ public class ProblemAddViewImpl extends AbstractEditItemComp<Problem> implements
 		return new ProblemFormLayoutFactory();
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	protected AbstractBeanFieldGroupEditFieldFactory<Problem> initBeanFormFieldFactory() {
 		return new ProblemEditFormFieldFactory(editForm);

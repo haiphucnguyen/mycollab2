@@ -112,6 +112,7 @@ public class CreateCustomFieldWindow extends Window {
 					AUTO_NUMBER } };
 
 	private CssLayout fieldLayoutWrapper;
+	@SuppressWarnings("rawtypes")
 	private DetailFieldInfoPanel fieldPanel;
 	private ICrmCustomView viewParent;
 
