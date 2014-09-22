@@ -124,7 +124,6 @@ public class BeanTable<SearchService extends ISearchableService<S>, S extends Se
 	}
 
 	protected void fireTableEvent(ApplicationEvent event) {
-
 		fireEvent(event);
 	}
 }
