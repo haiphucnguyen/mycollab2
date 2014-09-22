@@ -227,6 +227,10 @@ public class ProjectLinkGenerator {
 		return String.format("project/bug/preview/%s-%d", prjShortname, bugKey);
 	}
 
+	public static String generateBugEditLink(int bugkey, String prjShortname) {
+		return String.format("project/bug/edit/%s-%d", prjShortname, bugkey);
+	}
+
 	public static String generateBugPreviewFullLink(String siteUrl, int bugKey,
 			String prjShortname) {
 		return siteUrl + GenericLinkUtils.URL_PREFIX_PARAM

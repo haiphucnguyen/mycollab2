@@ -81,18 +81,28 @@ public class TaskUrlResolver extends ProjectUrlResolver {
 	private static class EditUrlResolver extends ProjectUrlResolver {
 		@Override
 		protected void handlePage(String... params) {
-			String decodeUrl = UrlEncodeDecoder.decode(params[0]);
-			String[] tokens = decodeUrl.split("/");
-
-			int projectId = Integer.parseInt(tokens[0]);
-			int taskId = Integer.parseInt(tokens[1]);
-
+			SimpleTask task;
 			ProjectTaskService taskService = ApplicationContextUtil
 					.getSpringBean(ProjectTaskService.class);
-			SimpleTask task = taskService.findById(taskId,
-					AppContext.getAccountId());
+
+			if (ProjectLinkParams.isValidParam(params[0])) {
+				String prjShortName = ProjectLinkParams
+						.getProjectShortName(params[0]);
+				int itemKey = ProjectLinkParams.getItemKey(params[0]);
+
+				task = taskService.findByProjectAndTaskKey(itemKey,
+						prjShortName, AppContext.getAccountId());
+			} else {
+				String decodeUrl = UrlEncodeDecoder.decode(params[0]);
+				String[] tokens = decodeUrl.split("/");
+
+				int taskId = Integer.parseInt(tokens[1]);
+
+				task = taskService.findById(taskId, AppContext.getAccountId());
+			}
+
 			PageActionChain chain = new PageActionChain(
-					new ProjectScreenData.Goto(projectId),
+					new ProjectScreenData.Goto(task.getProjectid()),
 					new TaskScreenData.Edit(task));
 			EventBusFactory.getInstance().post(
 					new ProjectEvent.GotoMyProject(this, chain));
