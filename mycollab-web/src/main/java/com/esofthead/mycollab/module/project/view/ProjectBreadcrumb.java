@@ -63,7 +63,6 @@ import com.esofthead.mycollab.module.project.i18n.ProjectMemberI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.RiskI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.VersionI18nEnum;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData;
-import com.esofthead.mycollab.module.tracker.domain.BugWithBLOBs;
 import com.esofthead.mycollab.module.tracker.domain.Component;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.Version;
@@ -667,7 +666,7 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
 				AppContext.getMessage(BreadcrumbI18nEnum.FRA_BUG_NEW));
 	}
 
-	public void gotoBugEdit(final BugWithBLOBs bug) {
+	public void gotoBugEdit(final SimpleBug bug) {
 		this.select(0);
 		this.addLink(new Button(AppContext
 				.getMessage(BreadcrumbI18nEnum.BUGS_DASHBOARD),
@@ -691,9 +690,8 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
 		this.addLink(new Button(AppContext
 				.getMessage(GenericI18Enum.BUTTON_EDIT_LABEL)));
 		AppContext.addFragment(
-				"project/bug/edit/"
-						+ UrlEncodeDecoder.encode(project.getId() + "/"
-								+ bug.getId()),
+				ProjectLinkGenerator.generateBugEditLink(bug.getBugkey(),
+						bug.getProjectShortName()),
 				AppContext.getMessage(BreadcrumbI18nEnum.FRA_BUG_EDIT,
 						bug.getSummary()));
 	}

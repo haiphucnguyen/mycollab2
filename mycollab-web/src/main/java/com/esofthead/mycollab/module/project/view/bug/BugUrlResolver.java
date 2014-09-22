@@ -78,7 +78,9 @@ public class BugUrlResolver extends ProjectUrlResolver {
 					projectId = bug.getProjectid();
 					bugId = bug.getId();
 				} else {
-					throw new ResourceNotFoundException();
+					throw new ResourceNotFoundException(
+							"Can not get bug with bugkey " + itemKey
+									+ " and project short name " + prjShortName);
 				}
 			} else {
 				String decodeUrl = UrlEncodeDecoder.decode(params[0]);
@@ -96,6 +98,43 @@ public class BugUrlResolver extends ProjectUrlResolver {
 		}
 	}
 
+	private static class EditUrlResolver extends ProjectUrlResolver {
+		@Override
+		protected void handlePage(String... params) {
+			SimpleBug bug;
+
+			if (ProjectLinkParams.isValidParam(params[0])) {
+				String prjShortName = ProjectLinkParams
+						.getProjectShortName(params[0]);
+				int itemKey = ProjectLinkParams.getItemKey(params[0]);
+				BugService bugService = ApplicationContextUtil
+						.getSpringBean(BugService.class);
+				bug = bugService.findByProjectAndBugKey(itemKey, prjShortName,
+						AppContext.getAccountId());
+
+			} else {
+				String decodeUrl = UrlEncodeDecoder.decode(params[0]);
+				String[] tokens = decodeUrl.split("/");
+
+				int bugId = Integer.parseInt(tokens[1]);
+
+				BugService bugService = ApplicationContextUtil
+						.getSpringBean(BugService.class);
+				bug = bugService.findById(bugId, AppContext.getAccountId());
+			}
+
+			if (bug == null) {
+				throw new ResourceNotFoundException();
+			}
+
+			PageActionChain chain = new PageActionChain(
+					new ProjectScreenData.Goto(bug.getProjectid()),
+					new BugScreenData.Edit(bug));
+			EventBusFactory.getInstance().post(
+					new ProjectEvent.GotoMyProject(this, chain));
+		}
+	}
+
 	private static class AddUrlResolver extends ProjectUrlResolver {
 		@Override
 		protected void handlePage(String... params) {
@@ -105,27 +144,6 @@ public class BugUrlResolver extends ProjectUrlResolver {
 			PageActionChain chain = new PageActionChain(
 					new ProjectScreenData.Goto(projectId),
 					new BugScreenData.Add(new SimpleBug()));
-			EventBusFactory.getInstance().post(
-					new ProjectEvent.GotoMyProject(this, chain));
-		}
-	}
-
-	private static class EditUrlResolver extends ProjectUrlResolver {
-		@Override
-		protected void handlePage(String... params) {
-			String decodeUrl = UrlEncodeDecoder.decode(params[0]);
-			String[] tokens = decodeUrl.split("/");
-
-			int projectId = Integer.parseInt(tokens[0]);
-			int bugId = Integer.parseInt(tokens[1]);
-
-			BugService bugService = ApplicationContextUtil
-					.getSpringBean(BugService.class);
-			SimpleBug bug = bugService.findById(bugId,
-					AppContext.getAccountId());
-			PageActionChain chain = new PageActionChain(
-					new ProjectScreenData.Goto(projectId),
-					new BugScreenData.Edit(bug));
 			EventBusFactory.getInstance().post(
 					new ProjectEvent.GotoMyProject(this, chain));
 		}
