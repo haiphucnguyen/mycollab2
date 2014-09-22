@@ -101,7 +101,7 @@ class GanttChartTaskContainer extends VerticalLayout {
 				TaskTableFieldDef.taskname, TaskTableFieldDef.startdate,
 				TaskTableFieldDef.duedate, TaskTableFieldDef.assignee));
 		taskTable.setWidth("100%");
-		taskTable.setHeight(Sizeable.SIZE_UNDEFINED, Sizeable.Unit.PIXELS);
+		taskTable.setHeightUndefined();
 		taskTable.addStyleName("gantt-table");
 
 		gantt = new Gantt();

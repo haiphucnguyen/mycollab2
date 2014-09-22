@@ -45,7 +45,6 @@ import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.ProgressPercentageIndicator;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.DefaultPagedBeanTable;
-import com.vaadin.server.Sizeable;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CssLayout;
@@ -123,7 +122,7 @@ public class TaskSearchTableDisplay
 
 				taskName.addComponent(b);
 				taskName.setWidth("100%");
-				taskName.setHeight(SIZE_UNDEFINED, Sizeable.Unit.PIXELS);
+				taskName.setHeightUndefined();
 				return taskName;
 
 			}

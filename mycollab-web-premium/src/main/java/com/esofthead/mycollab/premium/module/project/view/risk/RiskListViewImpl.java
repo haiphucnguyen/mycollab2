@@ -34,7 +34,6 @@ import com.esofthead.mycollab.vaadin.ui.table.AbstractPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.DefaultPagedBeanTable;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
-import com.vaadin.server.Sizeable;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -225,7 +224,7 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
 		layoutWrapper.addComponent(layout);
 
 		this.selectOptionButton = new SelectionOptionButton(this.tableItem);
-		this.selectOptionButton.setWidth(Sizeable.SIZE_UNDEFINED, Unit.PIXELS);
+		this.selectOptionButton.setWidthUndefined();
 		layout.addComponent(this.selectOptionButton);
 
 		final Button deleteBtn = new Button(
@@ -268,7 +267,7 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
 		}
 
 		this.tableActionControls.setVisible(false);
-		this.tableActionControls.setWidth(Sizeable.SIZE_UNDEFINED, Unit.PIXELS);
+		this.tableActionControls.setWidthUndefined();
 		this.tableActionControls.addStyleName(UIConstants.THEME_SMALL_PADDING);
 
 		layout.addComponent(this.tableActionControls);
