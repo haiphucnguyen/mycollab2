@@ -89,8 +89,8 @@ public class TaskSearchTableDisplay
 						.getProject().getShortname(), task.getTaskkey(), task
 						.getTaskname());
 				LabelLink b = new LabelLink(taskname, ProjectLinkBuilder
-						.generateTaskPreviewFullLink(task.getProjectid(),
-								task.getId()));
+						.generateTaskPreviewFullLink(task.getTaskkey(),
+								task.getProjectShortname()));
 				b.setDescription(ProjectTooltipGenerator.generateToolTipTask(
 						AppContext.getUserLocale(), task,
 						AppContext.getSiteUrl(), AppContext.getTimezone()));

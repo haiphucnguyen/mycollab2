@@ -312,8 +312,8 @@ public class BugRelatedField extends CustomComponent {
 						relatedItem.getRelatedid(), AppContext.getAccountId());
 
 				LabelLink b = new LabelLink(bugname, ProjectLinkBuilder
-						.generateBugPreviewFullLink(bug.getProjectid(),
-								bug.getId()));
+						.generateBugPreviewFullLink(bug.getBugkey(),
+								bug.getProjectShortName()));
 
 				if (StringUtils.isNotBlank(bug.getPriority())) {
 					String iconPriority = ProjectResources

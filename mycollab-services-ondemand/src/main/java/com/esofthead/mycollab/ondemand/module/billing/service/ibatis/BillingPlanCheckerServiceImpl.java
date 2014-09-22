@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.ondemand.module.billing.service.ibatis;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.esofthead.mycollab.module.billing.UsageExceedBillingPlanException;
@@ -20,6 +22,8 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
  */
 @Service
 public class BillingPlanCheckerServiceImpl implements BillingPlanCheckerService {
+	private static Logger log = LoggerFactory
+			.getLogger(BillingPlanCheckerServiceImpl.class);
 
 	@Override
 	public void validateAccountCanCreateMoreProject(Integer sAccountId)
@@ -60,6 +64,11 @@ public class BillingPlanCheckerServiceImpl implements BillingPlanCheckerService 
 		BillingService billingService = ApplicationContextUtil
 				.getSpringBean(BillingService.class);
 		BillingPlan billingPlan = billingService.findBillingPlan(sAccountId);
+		if (billingPlan == null) {
+			log.error("Can not define the billing plan for account ",
+					sAccountId);
+			return;
+		}
 
 		DriveInfoService driveInfoService = ApplicationContextUtil
 				.getSpringBean(DriveInfoService.class);
@@ -69,5 +78,4 @@ public class BillingPlanCheckerServiceImpl implements BillingPlanCheckerService 
 		}
 
 	}
-
 }

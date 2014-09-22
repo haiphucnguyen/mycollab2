@@ -17,7 +17,9 @@
 package com.esofthead.mycollab.module.project.view.bug;
 
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
+import com.esofthead.mycollab.core.ResourceNotFoundException;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
+import com.esofthead.mycollab.module.project.ProjectLinkParams;
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.module.project.view.ProjectUrlResolver;
 import com.esofthead.mycollab.module.project.view.parameters.BugScreenData;
@@ -62,11 +64,30 @@ public class BugUrlResolver extends ProjectUrlResolver {
 	private static class PreviewUrlResolver extends ProjectUrlResolver {
 		@Override
 		protected void handlePage(String... params) {
-			String decodeUrl = UrlEncodeDecoder.decode(params[0]);
-			String[] tokens = decodeUrl.split("/");
+			int projectId, bugId;
 
-			int projectId = Integer.parseInt(tokens[0]);
-			int bugId = Integer.parseInt(tokens[1]);
+			if (ProjectLinkParams.isValidParam(params[0])) {
+				String prjShortName = ProjectLinkParams
+						.getProjectShortName(params[0]);
+				int itemKey = ProjectLinkParams.getItemKey(params[0]);
+				BugService bugService = ApplicationContextUtil
+						.getSpringBean(BugService.class);
+				SimpleBug bug = bugService.findByProjectAndBugKey(itemKey,
+						prjShortName, AppContext.getAccountId());
+				if (bug != null) {
+					projectId = bug.getProjectid();
+					bugId = bug.getId();
+				} else {
+					throw new ResourceNotFoundException();
+				}
+			} else {
+				String decodeUrl = UrlEncodeDecoder.decode(params[0]);
+				String[] tokens = decodeUrl.split("/");
+
+				projectId = Integer.parseInt(tokens[0]);
+				bugId = Integer.parseInt(tokens[1]);
+			}
+
 			PageActionChain chain = new PageActionChain(
 					new ProjectScreenData.Goto(projectId),
 					new BugScreenData.Read(bugId));
@@ -98,7 +119,8 @@ public class BugUrlResolver extends ProjectUrlResolver {
 			int projectId = Integer.parseInt(tokens[0]);
 			int bugId = Integer.parseInt(tokens[1]);
 
-			BugService bugService = ApplicationContextUtil.getSpringBean(BugService.class);
+			BugService bugService = ApplicationContextUtil
+					.getSpringBean(BugService.class);
 			SimpleBug bug = bugService.findById(bugId,
 					AppContext.getAccountId());
 			PageActionChain chain = new PageActionChain(

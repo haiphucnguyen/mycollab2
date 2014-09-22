@@ -268,8 +268,8 @@ public class BugTableDisplay extends
 						.getProject().getShortname(), bug.getBugkey(), bug
 						.getSummary());
 				LabelLink b = new LabelLink(bugname, ProjectLinkBuilder
-						.generateBugPreviewFullLink(bug.getProjectid(),
-								bug.getId()));
+						.generateBugPreviewFullLink(bug.getBugkey(),
+								bug.getProjectShortName()));
 
 				if (StringUtils.isNotBlank(bug.getPriority())) {
 					b.setIconLink(ProjectResources
