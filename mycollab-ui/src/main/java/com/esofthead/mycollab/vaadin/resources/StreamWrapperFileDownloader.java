@@ -30,7 +30,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.vaadin.resource;
+package com.esofthead.mycollab.vaadin.resources;
 
 import com.vaadin.server.FileDownloader;
 

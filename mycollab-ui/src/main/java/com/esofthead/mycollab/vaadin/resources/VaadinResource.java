@@ -9,5 +9,12 @@ import com.vaadin.server.Resource;
  *
  */
 public interface VaadinResource {
+
 	Resource getStreamResource(String documentPath);
+
+	Resource getImagePreviewResource(String documentPath);
+
+	Resource getLogoResource(String logoId, int size);
+	
+	Resource getAvatarResource(String avatarId, int size);
 }

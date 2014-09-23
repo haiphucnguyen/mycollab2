@@ -16,13 +16,7 @@
  */
 package com.esofthead.mycollab.vaadin.ui;
 
-import java.io.File;
-
-import com.esofthead.mycollab.configuration.FileStorageConfiguration;
-import com.esofthead.mycollab.configuration.SiteConfiguration;
-import com.esofthead.mycollab.configuration.StorageManager;
-import com.vaadin.server.ExternalResource;
-import com.vaadin.server.FileResource;
+import com.esofthead.mycollab.vaadin.resources.VaadinResourceManager;
 import com.vaadin.server.Resource;
 import com.vaadin.ui.Image;
 
@@ -40,27 +34,12 @@ public class AccountLogoFactory {
 	}
 
 	public static Resource createLogoResource(String logoId, int size) {
-		Resource logoRes = null;
 
 		if (logoId == null) {
 			return MyCollabResource.newResource("icons/logo.png");
 		}
 
-		if (StorageManager.isFileStorage()) {
-			FileStorageConfiguration fileStorageConfiguration = (FileStorageConfiguration) SiteConfiguration
-					.getStorageConfiguration();
-			File logoFile = fileStorageConfiguration.getLogoFile(logoId, size);
-			if (logoFile != null) {
-				logoRes = new FileResource(logoFile);
-			} else {
-				logoRes = MyCollabResource.newResource("icons/logo.png");
-			}
-
-		} else if (StorageManager.isS3Storage()) {
-			logoRes = new ExternalResource(SiteConfiguration
-					.getStorageConfiguration().getLogoPath(logoId, size));
-		}
-
-		return logoRes;
+		return VaadinResourceManager.getResourceManager().getLogoResource(
+				logoId, size);
 	}
 }

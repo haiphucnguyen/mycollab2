@@ -16,18 +16,10 @@
  */
 package com.esofthead.mycollab.vaadin.resources;
 
-import java.io.File;
 import java.util.List;
 
-import com.esofthead.mycollab.configuration.SiteConfiguration;
-import com.esofthead.mycollab.configuration.StorageConfiguration;
-import com.esofthead.mycollab.configuration.StorageManager;
-import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.module.ecm.domain.Folder;
-import com.vaadin.server.ExternalResource;
-import com.vaadin.server.FileResource;
-import com.vaadin.server.Resource;
 import com.vaadin.server.StreamResource;
 import com.vaadin.server.StreamResource.StreamSource;
 
@@ -75,21 +67,6 @@ public class StreamDownloadResourceUtil {
 		} else {
 			return new StreamDownloadResourceSupportExtDrive(lstRes,
 					isSearchAction);
-		}
-	}
-
-	public static Resource getImagePreviewResource(String documentPath) {
-		StorageConfiguration storageConfiguration = SiteConfiguration
-				.getStorageConfiguration();
-		if (StorageManager.isFileStorage()) {
-			return new FileResource(new File(
-					storageConfiguration.getResourcePath(documentPath)));
-		} else if (StorageManager.isS3Storage()) {
-			return new ExternalResource(
-					storageConfiguration.getResourcePath(documentPath));
-		} else {
-			throw new MyCollabException(
-					"Do not support storage system setting. Accept file or s3 only");
 		}
 	}
 }
