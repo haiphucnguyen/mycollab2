@@ -43,9 +43,9 @@ public class S3StorageConfiguration implements StorageConfiguration {
 	private String awsKey;
 	private String awsSecretKey;
 	private String bucket;
-	
 
-	private S3StorageConfiguration(Properties props) {
+	public S3StorageConfiguration() {
+		Properties props = ApplicationProperties.getAppProperties();
 		awsKey = props.getProperty(AWS_KEY);
 		awsSecretKey = props.getProperty(AWS_SECRET_KEY);
 		bucket = props.getProperty(BUCKET);
@@ -60,10 +60,6 @@ public class S3StorageConfiguration implements StorageConfiguration {
 		AWSCredentials myCredentials = new BasicAWSCredentials(awsKey,
 				awsSecretKey);
 		return new AmazonS3Client(myCredentials);
-	}
-
-	static S3StorageConfiguration build(Properties props) {
-		return new S3StorageConfiguration(props);
 	}
 
 	public String getBucket() {
