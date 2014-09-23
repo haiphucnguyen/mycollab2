@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-config.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.configuration;
+package com.esofthead.mycollab.ondemand.configuration;
 
 import java.util.Properties;
 
@@ -22,6 +22,9 @@ import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
+import com.esofthead.mycollab.configuration.ApplicationProperties;
+import com.esofthead.mycollab.configuration.MyCollabAssets;
+import com.esofthead.mycollab.configuration.StorageConfiguration;
 
 /**
  * Amazon S3 Configuration
@@ -41,7 +44,8 @@ public class S3StorageConfiguration implements StorageConfiguration {
 	private String awsSecretKey;
 	private String bucket;
 
-	private S3StorageConfiguration(Properties props) {
+	public S3StorageConfiguration() {
+		Properties props = ApplicationProperties.getAppProperties();
 		awsKey = props.getProperty(AWS_KEY);
 		awsSecretKey = props.getProperty(AWS_SECRET_KEY);
 		bucket = props.getProperty(BUCKET);
@@ -56,10 +60,6 @@ public class S3StorageConfiguration implements StorageConfiguration {
 		AWSCredentials myCredentials = new BasicAWSCredentials(awsKey,
 				awsSecretKey);
 		return new AmazonS3Client(myCredentials);
-	}
-
-	static S3StorageConfiguration build(Properties props) {
-		return new S3StorageConfiguration(props);
 	}
 
 	public String getBucket() {

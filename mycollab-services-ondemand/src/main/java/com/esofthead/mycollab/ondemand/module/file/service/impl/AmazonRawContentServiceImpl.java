@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-services.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.module.file.service.impl;
+package com.esofthead.mycollab.ondemand.module.file.service.impl;
 
 import java.io.InputStream;
 
@@ -28,10 +28,10 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
-import com.esofthead.mycollab.configuration.S3StorageConfiguration;
-import com.esofthead.mycollab.configuration.SiteConfiguration;
+import com.esofthead.mycollab.configuration.StorageManager;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.file.service.RawContentService;
+import com.esofthead.mycollab.ondemand.configuration.S3StorageConfiguration;
 
 /**
  * 
@@ -44,8 +44,8 @@ public class AmazonRawContentServiceImpl implements RawContentService {
 	private S3StorageConfiguration storageConfiguration;
 
 	public AmazonRawContentServiceImpl() {
-		storageConfiguration = (S3StorageConfiguration) SiteConfiguration
-				.getStorageConfiguration();
+		storageConfiguration = (S3StorageConfiguration) StorageManager
+				.getConfiguration();
 	}
 
 	@Override

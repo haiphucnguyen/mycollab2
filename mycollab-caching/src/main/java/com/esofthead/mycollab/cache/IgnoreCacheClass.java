@@ -16,15 +16,18 @@
  */
 package com.esofthead.mycollab.cache;
 
-import com.esofthead.mycollab.core.persistence.service.IService;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
  * 
- * 
  * @author MyCollab Ltd.
- * @since 4.1.2
- * 
+ * @since 4.5.1
  */
-public class IgnoreServiceEntity implements IService {
+@Retention(value = RetentionPolicy.RUNTIME)
+@Target({ ElementType.TYPE })
+public @interface IgnoreCacheClass {
 
 }

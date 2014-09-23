@@ -30,9 +30,12 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.vaadin.resource;
+package com.esofthead.mycollab.vaadin.resources;
+
+import java.io.InputStream;
 
 import com.vaadin.server.StreamResource;
+import com.vaadin.server.StreamResource.StreamSource;
 
 /**
  * 
@@ -40,6 +43,19 @@ import com.vaadin.server.StreamResource;
  * @since 3.0
  * 
  */
-public interface StreamResourceFactory {
-	StreamResource getStreamResource();
+public abstract class LazyStreamSource implements StreamResource.StreamSource {
+	private static final long serialVersionUID = 1L;
+
+	@Override
+	public InputStream getStream() {
+		StreamSource streamSource = buildStreamSource();
+		return streamSource.getStream();
+	}
+
+	public String getFilename() {
+		return null;
+	}
+
+	abstract protected StreamSource buildStreamSource();
+
 }

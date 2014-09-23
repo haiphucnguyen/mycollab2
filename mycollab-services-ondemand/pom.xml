@@ -7,36 +7,65 @@
     <parent>
         <groupId>com.esofthead.mycollab</groupId>
         <artifactId>parent-ondemand</artifactId>
-        <version>4.5.0</version>
+        <version>4.5.1</version>
         <relativePath>../mycollab-parent-ondemand/pom.xml</relativePath>
     </parent>
     <packaging>jar</packaging>
     <dependencies>
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
+            <artifactId>mycollab-config</artifactId>
+            <version>4.5.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-services</artifactId>
-            <version>4.5.0</version>
+            <version>4.5.1</version>
         </dependency>
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-api</artifactId>
-            <version>4.5.0</version>
+            <version>4.5.1</version>
         </dependency>
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-api-impl</artifactId>
-            <version>4.5.0</version>
+            <version>4.5.1</version>
         </dependency>
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-localization</artifactId>
-            <version>4.5.0</version>
+            <version>4.5.1</version>
         </dependency>
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-test</artifactId>
-            <version>4.5.0</version>
+            <version>4.5.1</version>
             <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-java-sdk</artifactId>
+            <version>1.8.10.1</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-codec</groupId>
+                    <artifactId>commons-codec</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-core</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-databind</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-annotations</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 </project>

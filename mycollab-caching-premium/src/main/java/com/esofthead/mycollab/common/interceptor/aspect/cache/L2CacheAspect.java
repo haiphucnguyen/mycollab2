@@ -45,7 +45,7 @@ public class L2CacheAspect {
 			return pjp.proceed();
 		}
 
-		if (CacheServiceIgnoreList.isInBlackList(CacheUtils
+		if (CacheUtils.isInBlackList(CacheUtils
 				.getEnclosingServiceInterface(cls))) {
 			return pjp.proceed();
 		}

@@ -7,7 +7,7 @@ import java.util.List;
 
 import org.apache.commons.lang3.time.DateUtils;
 
-import com.esofthead.mycollab.configuration.SiteConfiguration;
+import com.esofthead.mycollab.configuration.StorageManager;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.ecm.domain.ContentActivityLogAction;
 import com.esofthead.mycollab.module.ecm.domain.ContentActivityLogAction.Create;
@@ -112,7 +112,7 @@ public class FileActivityStreamPagedList
 
 				if (activityStream.getUserAvatarId() != null) {
 					Label IconEmbedded = new Label("<img src=\""
-							+ SiteConfiguration.getAvatarLink(
+							+ StorageManager.getAvatarLink(
 									activityStream.getUserAvatarId(), 16)
 							+ "\" alt=\"\">", ContentMode.HTML);
 					streamInfoLayout.addComponent(IconEmbedded);

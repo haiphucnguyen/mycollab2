@@ -8,10 +8,10 @@
     <project>mycollab-core</project>
     <project>mycollab-servlet</project>
     <project>mycollab-services</project>
+    <project>mycollab-caching</project>
     <project>mycollab-dao</project>
     <project>mycollab-localization</project>
     <project>mycollab-migration</project>
-    <project>mycollab-caching</project>
     <project>mycollab-jackrabbit</project>
     <project>mycollab-search-server</project>
     <project>mycollab-search</project>

@@ -29,7 +29,7 @@ import org.apache.commons.lang3.time.DateUtils;
 import com.esofthead.mycollab.common.ActivityStreamConstants;
 import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.common.domain.criteria.ActivityStreamSearchCriteria;
-import com.esofthead.mycollab.configuration.SiteConfiguration;
+import com.esofthead.mycollab.configuration.StorageManager;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
@@ -192,7 +192,7 @@ public class ActivityStreamComponent extends CssLayout {
 		private String buildAssigneeValue(ProjectActivityStream activityStream,
 				String uid) {
 			DivLessFormatter div = new DivLessFormatter();
-			Img userAvatar = new Img("", SiteConfiguration.getAvatarLink(
+			Img userAvatar = new Img("", StorageManager.getAvatarLink(
 					activityStream.getCreatedUserAvatarId(), 16));
 			A userLink = new A();
 			userLink.setId("projectusertagA" + uid);
@@ -246,10 +246,20 @@ public class ActivityStreamComponent extends CssLayout {
 					ProjectResources.getResourceLink(activityStream.getType()));
 			A itemLink = new A();
 			itemLink.setId("projectOverViewtagA" + uid);
-			itemLink.setHref(ProjectLinkBuilder.generateProjectItemLink(
-					activityStream.getProjectShortName(),
-					activityStream.getExtratypeid(), activityStream.getType(),
-					activityStream.getTypeid()));
+
+			if (ProjectTypeConstants.TASK.equals(activityStream.getType())
+					|| ProjectTypeConstants.BUG
+							.equals(activityStream.getType())) {
+				itemLink.setHref(ProjectLinkBuilder.generateProjectItemLink(
+						activityStream.getProjectShortName(),
+						activityStream.getExtratypeid(),
+						activityStream.getType(), activityStream.getItemKey()));
+			} else {
+				itemLink.setHref(ProjectLinkBuilder.generateProjectItemLink(
+						activityStream.getProjectShortName(),
+						activityStream.getExtratypeid(),
+						activityStream.getType(), activityStream.getTypeid()));
+			}
 
 			String arg17 = "'" + uid + "'";
 			String arg18 = "'" + activityStream.getType() + "'";
