@@ -108,6 +108,8 @@ public class CommentRowDisplayHandler extends
 				GenericI18Enum.EXT_ADDED_COMMENT, comment.getOwnerFullName(),
 				DateTimeUtils.getPrettyDateValue(comment.getCreatedtime(),
 						AppContext.getUserLocale())), ContentMode.HTML);
+		timePostLbl.setDescription(AppContext.formatDateTime(comment
+				.getCreatedtime()));
 
 		timePostLbl.setSizeUndefined();
 		timePostLbl.setStyleName("time-post");

@@ -57,6 +57,7 @@ import com.esofthead.mycollab.module.user.domain.Role;
 import com.esofthead.mycollab.module.user.domain.SimpleRole;
 import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.module.user.domain.UserAccount;
+import com.esofthead.mycollab.module.user.domain.UserExample;
 import com.esofthead.mycollab.module.user.service.RoleService;
 import com.esofthead.mycollab.ondemand.module.billing.AccountPaymentTypeConstants;
 import com.esofthead.mycollab.ondemand.module.billing.RegisterSourceConstants;
@@ -150,11 +151,16 @@ public class BillingServiceImpl implements BillingService {
 		accountSettings.setDefaulttimezone(timezoneId);
 		this.accountSettingMapper.insert(accountSettings);
 
+		// Check whether user has registered to the system before
+		String encryptedPassword = PasswordEncryptHelper
+				.encryptSaltPassword(password);
+		UserExample ex = new UserExample();
+
 		// Register the new user to this account
 		log.debug("Create new user {} in database", username);
 		final User user = new User();
 		user.setEmail(email);
-		user.setPassword(PasswordEncryptHelper.encryptSaltPassword(password));
+		user.setPassword(encryptedPassword);
 		user.setTimezone(timezoneId);
 		user.setUsername(username);
 		user.setLastaccessedtime(new GregorianCalendar().getTime());
