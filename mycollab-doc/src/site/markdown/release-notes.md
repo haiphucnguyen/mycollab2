@@ -1,5 +1,24 @@
-
 #Release Notes
+
+##Version 4.5.1
+
+###Improvements
+
+* Upgrade Spring framework to 4.1.0.RELEASE
+* Upgrade Vaadin libraries
+* Adding scheduler unit tests
+* Project page could be exported into pdf format
+* Project time logging is displayed in multiple layouts
+* User can add comment to project component and project version
+* Validate project shortname is unique in every account account
+* Make links of bug and task are readable
+* Add date tooltip to pretty time display
+
+###Bug Fixes
+
+* Save task in task read view throws exception
+* Inconsistent time logging permission
+* Throws exception if user saves an empty search criteria
 
 ##Version 4.5.0
 

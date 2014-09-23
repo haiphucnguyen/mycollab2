@@ -104,17 +104,7 @@ public class SiteConfiguration {
 			instance.appUrl += "/";
 		}
 
-		// Load storage configuration
-		String storageSystem = ApplicationProperties.getString(
-				ApplicationProperties.STORAGE_SYSTEM, "file");
-		if (StorageConfiguration.FILE_STORAGE_SYSTEM.equals(storageSystem)) {
-			log.debug("MyCollab uses file storage system");
-			instance.storageConfiguration = FileStorageConfiguration.build();
-		} else {
-			log.debug("MyCollab uses amazon s3 system");
-			instance.storageConfiguration = S3StorageConfiguration
-					.build(ApplicationProperties.getAppProperties());
-		}
+		StorageManager.loadStorageConfig();
 
 		instance.endecryptPassword = ApplicationProperties.getString(
 				ApplicationProperties.BI_ENDECRYPT_PASSWORD, "esofthead321");
@@ -232,14 +222,6 @@ public class SiteConfiguration {
 
 	public static Map<String, Locale> getSupportedLanguages() {
 		return getInstance().supportedLanguages;
-	}
-
-	public static boolean isSupportFileStorage() {
-		return getInstance().storageConfiguration instanceof FileStorageConfiguration;
-	}
-
-	public static boolean isSupportS3Storage() {
-		return getInstance().storageConfiguration instanceof S3StorageConfiguration;
 	}
 
 	public static String getSiteUrl(String subdomain) {

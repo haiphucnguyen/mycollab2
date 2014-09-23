@@ -20,6 +20,7 @@ import java.io.File;
 
 import com.esofthead.mycollab.configuration.FileStorageConfiguration;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
+import com.esofthead.mycollab.configuration.StorageManager;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.server.FileResource;
 import com.vaadin.server.Resource;
@@ -45,7 +46,7 @@ public class AccountLogoFactory {
 			return MyCollabResource.newResource("icons/logo.png");
 		}
 
-		if (SiteConfiguration.isSupportFileStorage()) {
+		if (StorageManager.isFileStorage()) {
 			FileStorageConfiguration fileStorageConfiguration = (FileStorageConfiguration) SiteConfiguration
 					.getStorageConfiguration();
 			File logoFile = fileStorageConfiguration.getLogoFile(logoId, size);
@@ -55,7 +56,7 @@ public class AccountLogoFactory {
 				logoRes = MyCollabResource.newResource("icons/logo.png");
 			}
 
-		} else if (SiteConfiguration.isSupportS3Storage()) {
+		} else if (StorageManager.isS3Storage()) {
 			logoRes = new ExternalResource(SiteConfiguration
 					.getStorageConfiguration().getLogoPath(logoId, size));
 		}

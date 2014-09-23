@@ -37,11 +37,14 @@ We use MyCollab in our daily jobs to manage our customers information, projects.
 ---
 
 ### MyCollab News
+* **Sep 23th, 2014: MyCollab 4.5.1 released**
+
+    This release  is an incremental feature release based on and compatible with earlier stable MyCollab releases. See the [release notes](release-notes.html) for more information.
 * **Sep 5th, 2014: MyCollab 4.5.0 released**
 
     MyCollab development team is proud to announce the availability of MyCollab 4.5.0.
 
-    This release mostly focus into internal API improvements, minor bug fixes and other various UI polishes and improvements.
+    This release mostly focuses into internal API improvements, minor bug fixes and other various UI polishes and improvements.
     See the [release notes](release-notes.html) for more information.
 * **August 21st, 2014: MyCollab 4.4.0 released**
 * **August 6th, 2014: MyCollab 4.3.3 released**

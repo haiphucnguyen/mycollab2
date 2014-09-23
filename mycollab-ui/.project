@@ -9,8 +9,8 @@
     <project>mycollab-localization</project>
     <project>mycollab-config</project>
     <project>mycollab-services</project>
-    <project>mycollab-migration</project>
     <project>mycollab-caching</project>
+    <project>mycollab-migration</project>
     <project>mycollab-jackrabbit</project>
   </projects>
   <buildSpec>

@@ -14,13 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.module.file.resource;
+package com.esofthead.mycollab.vaadin.resources;
 
 import java.io.File;
 import java.util.List;
 
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.configuration.StorageConfiguration;
+import com.esofthead.mycollab.configuration.StorageManager;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.module.ecm.domain.Folder;
@@ -37,17 +38,6 @@ import com.vaadin.server.StreamResource.StreamSource;
  * 
  */
 public class StreamDownloadResourceUtil {
-
-	public static Resource getStreamResource(String documentPath) {
-		if (SiteConfiguration.isSupportFileStorage()) {
-			return new FileStreamDownloadResource(documentPath);
-		} else if (SiteConfiguration.isSupportS3Storage()) {
-			return new S3StreamDownloadResource(documentPath);
-		} else {
-			throw new MyCollabException(
-					"Do not support storage system setting. Accept file or s3 only");
-		}
-	}
 
 	public static String getDownloadFileName(
 			List<com.esofthead.mycollab.module.ecm.domain.Resource> lstRes,
@@ -91,10 +81,10 @@ public class StreamDownloadResourceUtil {
 	public static Resource getImagePreviewResource(String documentPath) {
 		StorageConfiguration storageConfiguration = SiteConfiguration
 				.getStorageConfiguration();
-		if (SiteConfiguration.isSupportFileStorage()) {
+		if (StorageManager.isFileStorage()) {
 			return new FileResource(new File(
 					storageConfiguration.getResourcePath(documentPath)));
-		} else if (SiteConfiguration.isSupportS3Storage()) {
+		} else if (StorageManager.isS3Storage()) {
 			return new ExternalResource(
 					storageConfiguration.getResourcePath(documentPath));
 		} else {

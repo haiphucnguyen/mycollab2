@@ -20,6 +20,7 @@ import java.io.File;
 
 import com.esofthead.mycollab.configuration.FileStorageConfiguration;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
+import com.esofthead.mycollab.configuration.StorageManager;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.server.FileResource;
 import com.vaadin.server.Resource;
@@ -48,7 +49,7 @@ public class UserAvatarControlFactory {
 					+ size + ".png");
 		}
 
-		if (SiteConfiguration.isSupportFileStorage()) {
+		if (StorageManager.isFileStorage()) {
 			FileStorageConfiguration fileStorageConfiguration = (FileStorageConfiguration) SiteConfiguration
 					.getStorageConfiguration();
 			File avatarFile = fileStorageConfiguration.getAvatarFile(avatarId,
@@ -61,10 +62,9 @@ public class UserAvatarControlFactory {
 								+ ".png");
 			}
 
-		} else if (SiteConfiguration.isSupportS3Storage()) {
+		} else if (StorageManager.isS3Storage()) {
 			avatarRes = new ExternalResource(SiteConfiguration
-					.getStorageConfiguration().getAvatarPath(avatarId,
-							size));
+					.getStorageConfiguration().getAvatarPath(avatarId, size));
 		}
 
 		return avatarRes;

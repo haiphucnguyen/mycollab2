@@ -15,16 +15,16 @@
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.esofthead.mycollab.module.file.resource;
+package com.esofthead.mycollab.vaadin.resources.s3;
 
 import java.io.InputStream;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
-import com.esofthead.mycollab.configuration.S3StorageConfiguration;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.ondemand.configuration.S3StorageConfiguration;
 import com.vaadin.server.DownloadStream;
 import com.vaadin.server.StreamResource;
 import com.vaadin.util.FileTypeResolver;
@@ -34,7 +34,7 @@ import com.vaadin.util.FileTypeResolver;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-class S3StreamDownloadResource extends StreamResource {
+public class S3StreamDownloadResource extends StreamResource {
 
 	private static final long serialVersionUID = 1L;
 

@@ -39,7 +39,7 @@ public class L2CacheEvictAspect {
 		Advised advised = (Advised) pjp.getThis();
 		Class<?> cls = advised.getTargetSource().getTargetClass();
 
-		if (CacheServiceIgnoreList.isInBlackList(CacheUtils
+		if (CacheUtils.isInBlackList(CacheUtils
 				.getEnclosingServiceInterface(cls))) {
 			return;
 		}
