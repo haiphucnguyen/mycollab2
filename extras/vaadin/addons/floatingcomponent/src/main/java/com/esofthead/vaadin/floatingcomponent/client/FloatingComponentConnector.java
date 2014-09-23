@@ -9,6 +9,7 @@ import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ScrollEvent;
 import com.google.gwt.event.dom.client.ScrollHandler;
+import com.google.gwt.event.logical.shared.AttachEvent;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.EventListener;
@@ -49,6 +50,15 @@ public class FloatingComponentConnector extends AbstractExtensionConnector
 	@Override
 	protected void extend(ServerConnector target) {
 		targetWidget = ((ComponentConnector) target).getWidget();
+		targetWidget.addAttachHandler(new AttachEvent.Handler() {
+
+			@Override
+			public void onAttachOrDetach(AttachEvent event) {
+				if (!event.isAttached() && handlerRegistration != null) {
+					handlerRegistration.removeHandler();
+				}
+			}
+		});
 		currentStyle = targetWidget.getElement().getStyle();
 	}
 
@@ -84,21 +94,34 @@ public class FloatingComponentConnector extends AbstractExtensionConnector
 	@Override
 	public void onStateChanged(StateChangeEvent stateChangeEvent) {
 		super.onStateChanged(stateChangeEvent);
-		if (handlerRegistration != null)
-			handlerRegistration.removeHandler();
+		if (stateChangeEvent.hasPropertyChanged("containerId")) {
+			if (getState().containerId != null)
+				container = getWidget(DOM
+						.getElementById(getState().containerId));
+			else
+				container = RootPanel.get();
 
-		if (getState().containerId != null)
-			container = getWidget(DOM.getElementById(getState().containerId));
-		else
-			container = RootPanel.get();
+			if (handlerRegistration != null)
+				handlerRegistration.removeHandler();
 
-		handlerRegistration = (container != null ? container : RootPanel.get())
-				.addDomHandler(this, ScrollEvent.getType());
+			handlerRegistration = (container != null ? container : RootPanel
+					.get()).addDomHandler(FloatingComponentConnector.this,
+					ScrollEvent.getType());
+		}
 
 		containerOffset = container.getElement().getAbsoluteTop();
 
-		originalOffset = targetWidget.getElement().getAbsoluteTop()
-				- containerOffset;
-
+		originalOffset = getAbsoluteTopFromContainer(targetWidget.getElement(),
+				container.getElement());
 	}
+
+	protected native int getAbsoluteTopFromContainer(Element target,
+			Element container) /*-{
+		var top = 0;
+		while (target != container && target != null) {
+			top += target.offsetTop;
+			target = target.offsetParent;
+		}
+		return top | 0;
+	}-*/;
 }
