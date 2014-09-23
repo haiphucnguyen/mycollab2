@@ -79,8 +79,8 @@ public class FileUploadServlet extends GenericServletRequestHandler {
 			resourceService.saveContent(content, "", filecontent, 1);
 
 			String filePath = "";
-			StorageConfiguration storageConfiguration = SiteConfiguration
-					.getStorageConfiguration();
+			StorageConfiguration storageConfiguration = StorageManager
+					.getConfiguration();
 			if (StorageManager.isFileStorage()) {
 				filePath = SiteConfiguration.getAppUrl() + "file/"
 						+ content.getPath();

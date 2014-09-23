@@ -28,7 +28,7 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
-import com.esofthead.mycollab.configuration.SiteConfiguration;
+import com.esofthead.mycollab.configuration.StorageManager;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.file.service.RawContentService;
 import com.esofthead.mycollab.ondemand.configuration.S3StorageConfiguration;
@@ -44,8 +44,8 @@ public class AmazonRawContentServiceImpl implements RawContentService {
 	private S3StorageConfiguration storageConfiguration;
 
 	public AmazonRawContentServiceImpl() {
-		storageConfiguration = (S3StorageConfiguration) SiteConfiguration
-				.getStorageConfiguration();
+		storageConfiguration = (S3StorageConfiguration) StorageManager
+				.getConfiguration();
 	}
 
 	@Override

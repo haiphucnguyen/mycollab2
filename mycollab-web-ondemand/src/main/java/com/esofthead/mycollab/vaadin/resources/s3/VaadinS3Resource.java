@@ -1,7 +1,7 @@
 package com.esofthead.mycollab.vaadin.resources.s3;
 
-import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.configuration.StorageConfiguration;
+import com.esofthead.mycollab.configuration.StorageManager;
 import com.esofthead.mycollab.vaadin.resources.VaadinResource;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.server.Resource;
@@ -21,8 +21,8 @@ public class VaadinS3Resource implements VaadinResource {
 
 	@Override
 	public Resource getImagePreviewResource(String documentPath) {
-		StorageConfiguration storageConfiguration = SiteConfiguration
-				.getStorageConfiguration();
+		StorageConfiguration storageConfiguration = StorageManager
+				.getConfiguration();
 
 		return new ExternalResource(
 				storageConfiguration.getResourcePath(documentPath));
@@ -30,13 +30,13 @@ public class VaadinS3Resource implements VaadinResource {
 
 	@Override
 	public Resource getLogoResource(String logoId, int size) {
-		return new ExternalResource(SiteConfiguration.getStorageConfiguration()
+		return new ExternalResource(StorageManager.getConfiguration()
 				.getLogoPath(logoId, size));
 	}
 
 	@Override
 	public Resource getAvatarResource(String avatarId, int size) {
-		return new ExternalResource(SiteConfiguration.getStorageConfiguration()
+		return new ExternalResource(StorageManager.getConfiguration()
 				.getAvatarPath(avatarId, size));
 	}
 

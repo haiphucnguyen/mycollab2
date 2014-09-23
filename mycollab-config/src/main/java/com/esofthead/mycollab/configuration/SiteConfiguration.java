@@ -40,7 +40,6 @@ public class SiteConfiguration {
 	private static SiteConfiguration instance;
 
 	private DeploymentMode deploymentMode;
-	private StorageConfiguration storageConfiguration;
 	private String sentErrorEmail;
 	private String siteName;
 	private String serverAddress;
@@ -212,10 +211,6 @@ public class SiteConfiguration {
 		return getInstance().sentErrorEmail;
 	}
 
-	public static StorageConfiguration getStorageConfiguration() {
-		return getInstance().storageConfiguration;
-	}
-
 	public static Locale getDefaultLocale() {
 		return getInstance().defaultLocale;
 	}
@@ -265,11 +260,6 @@ public class SiteConfiguration {
 		Map<String, Locale> nativeLanguages = LocaleHelper.getNativeLanguages();
 		Locale locale = nativeLanguages.get(language);
 		return (locale != null) ? locale : Locale.US;
-	}
-
-	public static String getAvatarLink(String userAvatarId, int size) {
-		return getInstance().storageConfiguration.getAvatarPath(userAvatarId,
-				size);
 	}
 
 	private static Map<String, Locale> getSupportedLocales(String languageVal) {

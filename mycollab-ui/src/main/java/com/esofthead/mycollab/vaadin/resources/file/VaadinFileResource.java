@@ -5,6 +5,7 @@ import java.io.File;
 import com.esofthead.mycollab.configuration.FileStorageConfiguration;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.configuration.StorageConfiguration;
+import com.esofthead.mycollab.configuration.StorageManager;
 import com.esofthead.mycollab.vaadin.resources.VaadinResource;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.vaadin.server.FileResource;
@@ -25,8 +26,8 @@ public class VaadinFileResource implements VaadinResource {
 
 	@Override
 	public Resource getImagePreviewResource(String documentPath) {
-		StorageConfiguration storageConfiguration = SiteConfiguration
-				.getStorageConfiguration();
+		StorageConfiguration storageConfiguration = StorageManager
+				.getConfiguration();
 
 		return new FileResource(new File(
 				storageConfiguration.getResourcePath(documentPath)));
@@ -34,8 +35,8 @@ public class VaadinFileResource implements VaadinResource {
 
 	@Override
 	public Resource getLogoResource(String logoId, int size) {
-		FileStorageConfiguration fileStorageConfiguration = (FileStorageConfiguration) SiteConfiguration
-				.getStorageConfiguration();
+		FileStorageConfiguration fileStorageConfiguration = (FileStorageConfiguration) StorageManager
+				.getConfiguration();
 		File logoFile = fileStorageConfiguration.getLogoFile(logoId, size);
 		return (logoFile != null) ? new FileResource(logoFile)
 				: MyCollabResource.newResource("icons/logo.png");
@@ -43,8 +44,8 @@ public class VaadinFileResource implements VaadinResource {
 
 	@Override
 	public Resource getAvatarResource(String avatarId, int size) {
-		FileStorageConfiguration fileStorageConfiguration = (FileStorageConfiguration) SiteConfiguration
-				.getStorageConfiguration();
+		FileStorageConfiguration fileStorageConfiguration = (FileStorageConfiguration) StorageManager
+				.getConfiguration();
 		File avatarFile = fileStorageConfiguration
 				.getAvatarFile(avatarId, size);
 		return (avatarFile != null) ? new FileResource(avatarFile)

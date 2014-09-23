@@ -69,6 +69,14 @@ public class StorageManager {
 		}
 	}
 
+	public static String getAvatarLink(String userAvatarId, int size) {
+		return instance.storageConf.getAvatarPath(userAvatarId, size);
+	}
+
+	public static StorageConfiguration getConfiguration() {
+		return instance.storageConf;
+	}
+
 	public static boolean isFileStorage() {
 		return StorageConfiguration.FILE_STORAGE_SYSTEM
 				.equals(instance.storageSystem);
