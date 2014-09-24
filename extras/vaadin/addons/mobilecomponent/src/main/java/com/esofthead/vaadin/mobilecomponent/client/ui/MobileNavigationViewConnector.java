@@ -1,6 +1,7 @@
 package com.esofthead.vaadin.mobilecomponent.client.ui;
 
 import com.esofthead.vaadin.mobilecomponent.MobileNavigationView;
+import com.esofthead.vaadin.mobilecomponent.client.VMobileNavigationManager;
 import com.esofthead.vaadin.mobilecomponent.client.VMobileNavigationView;
 import com.esofthead.vaadin.mobilecomponent.client.shared.MobileNavigationViewState;
 import com.google.gwt.core.client.GWT;
@@ -22,7 +23,6 @@ public class MobileNavigationViewConnector extends NavigationViewConnector {
 		return GWT.create(VMobileNavigationView.class);
 	}
 
-	
 	// We must implement getWidget() to cast to correct type
 	@Override
 	public VMobileNavigationView getWidget() {
@@ -39,11 +39,11 @@ public class MobileNavigationViewConnector extends NavigationViewConnector {
 	public void onStateChanged(StateChangeEvent stateChangeEvent) {
 		super.onStateChanged(stateChangeEvent);
 
-        if(getState().showToggleButton) {
-            getWidget().addToggleButton();
-        } else {
-            getWidget().removeToggleButton();
-        }
+		if (getState().showToggleButton && !VMobileNavigationManager.IS_TABLET) {
+			getWidget().addToggleButton();
+		} else {
+			getWidget().removeToggleButton();
+		}
 	}
 
 }
