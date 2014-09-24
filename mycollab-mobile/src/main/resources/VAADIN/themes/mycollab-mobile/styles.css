@@ -277,9 +277,6 @@ div.v-vertical > .v-spacing, div.v-vertical > .v-expand > .v-spacing {
 .mycollab-mobile .main-view .module-button.document {
   background-image: url("icons/document_icon.png");
 }
-.mycollab-mobile .v-touchkit-navpanel-navigation {
-  width: 100%;
-}
 .mycollab-mobile .v-touchkit-navpanel-navigation .navigation-menu {
   overflow-y: auto;
 }
