@@ -27,6 +27,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.module.user.domain.BillingAccountWithOwners;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.rest.server.signup.SubdomainExistedException;
@@ -70,18 +71,21 @@ public class BillingServiceTest extends ServiceTest {
 				"3", false);
 	}
 
+	@Test
+	@DataSet
+	public void registerTheExistingUsernameAndDifferentPassword() {
+		expectedEx.expect(UserInvalidInputException.class);
+		expectedEx
+				.expectMessage("There is already user hainguyen@esofthead.com in the MyCollab database. If it is yours, you must enter the same password you registered to MyCollab. Otherwise you must use the different email.");
+		billingService.registerAccount("xyz", 1, "hainguyen@esofthead.com",
+				"abc", "hainguyen@esofthead.com", "3", false);
+	}
+
 	@Test(expected = SubdomainExistedException.class)
 	@DataSet
 	public void registerAccountFailedBecauseSubDomainExisted() {
 		billingService.registerAccount("abc", 1, "haiphucnguyen@gmail.com",
 				"123", "haiphucnguyen@gmail.com", "3", false);
-	}
-
-	@Test
-	@DataSet
-	public void registerSameUserInDifferentAccounts() {
-		billingService.registerAccount("xyz", 1, "hainguyen@esofthead.com",
-				"123", "hainguyen@esofthead.com", "1", true);
 	}
 
 }

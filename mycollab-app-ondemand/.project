@@ -8,10 +8,10 @@
     <project>mycollab-core</project>
     <project>mycollab-servlet</project>
     <project>mycollab-services</project>
+    <project>mycollab-caching</project>
     <project>mycollab-dao</project>
     <project>mycollab-localization</project>
     <project>mycollab-migration</project>
-    <project>mycollab-caching</project>
     <project>mycollab-jackrabbit</project>
     <project>mycollab-esb-ondemand</project>
     <project>mycollab-services-ondemand</project>
@@ -25,6 +25,7 @@
     <project>mycollab-reporting</project>
     <project>mycollab-esb</project>
     <project>mycollab-scheduler</project>
+    <project>mycollab-web-ondemand</project>
     <project>mycollab-jetty-session-premium</project>
     <project>mycollab-mobile</project>
     <project>mycollab-scheduler-ondemand</project>

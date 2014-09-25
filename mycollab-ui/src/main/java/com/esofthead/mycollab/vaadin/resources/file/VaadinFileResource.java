@@ -19,7 +19,6 @@ package com.esofthead.mycollab.vaadin.resources.file;
 import java.io.File;
 
 import com.esofthead.mycollab.configuration.FileStorageConfiguration;
-import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.configuration.StorageConfiguration;
 import com.esofthead.mycollab.configuration.StorageManager;
 import com.esofthead.mycollab.vaadin.resources.VaadinResource;

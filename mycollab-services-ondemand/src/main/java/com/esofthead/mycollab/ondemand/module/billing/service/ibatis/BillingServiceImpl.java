@@ -20,6 +20,7 @@ import java.util.Arrays;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -155,30 +156,43 @@ public class BillingServiceImpl implements BillingService {
 		String encryptedPassword = PasswordEncryptHelper
 				.encryptSaltPassword(password);
 		UserExample ex = new UserExample();
+		ex.createCriteria().andUsernameEqualTo(username);
+		List<User> users = userMapper.selectByExample(ex);
 
-		// Register the new user to this account
-		log.debug("Create new user {} in database", username);
-		final User user = new User();
-		user.setEmail(email);
-		user.setPassword(encryptedPassword);
-		user.setTimezone(timezoneId);
-		user.setUsername(username);
-		user.setLastaccessedtime(new GregorianCalendar().getTime());
-
-		if (isEmailVerified) {
-			user.setStatus(UserStatusConstants.EMAIL_VERIFIED);
+		if (CollectionUtils.isNotEmpty(users)) {
+			for (User tmpUser : users) {
+				if (!encryptedPassword.equals(tmpUser.getPassword())) {
+					throw new UserInvalidInputException(
+							"There is already user "
+									+ email
+									+ " in the MyCollab database. If it is yours, you must enter the same password you registered to MyCollab. Otherwise you must use the different email.");
+				}
+			}
 		} else {
-			user.setStatus(UserStatusConstants.EMAIL_NOT_VERIFIED);
-		}
+			// Register the new user to this account
+			log.debug("Create new user {} in database", username);
+			final User user = new User();
+			user.setEmail(email);
+			user.setPassword(encryptedPassword);
+			user.setTimezone(timezoneId);
+			user.setUsername(username);
+			user.setLastaccessedtime(new GregorianCalendar().getTime());
 
-		if (user.getFirstname() == null) {
-			user.setFirstname("");
-		}
+			if (isEmailVerified) {
+				user.setStatus(UserStatusConstants.EMAIL_VERIFIED);
+			} else {
+				user.setStatus(UserStatusConstants.EMAIL_NOT_VERIFIED);
+			}
 
-		if (user.getLastname() == null) {
-			user.setLastname(StringUtils.extractNameFromEmail(email));
+			if (user.getFirstname() == null) {
+				user.setFirstname("");
+			}
+
+			if (user.getLastname() == null) {
+				user.setLastname(StringUtils.extractNameFromEmail(email));
+			}
+			this.userMapper.insert(user);
 		}
-		this.userMapper.insert(user);
 
 		// save default roles
 		log.debug("Save default roles for account of subdomain {}", subdomain);

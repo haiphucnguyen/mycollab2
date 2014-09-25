@@ -253,4 +253,5 @@
   <classpathentry kind="var" path="M2_REPO/org/xhtmlrenderer/flying-saucer-core/9.0.6/flying-saucer-core-9.0.6.jar" sourcepath="M2_REPO/org/xhtmlrenderer/flying-saucer-core/9.0.6/flying-saucer-core-9.0.6-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/esofthead/vaadin/floatingcomponent/0.0.1-SNAPSHOT/floatingcomponent-0.0.1-SNAPSHOT.jar" sourcepath="M2_REPO/com/esofthead/vaadin/floatingcomponent/0.0.1-SNAPSHOT/floatingcomponent-0.0.1-SNAPSHOT-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/vaadin/addons/ckeditor-wrapper-for-vaadin/7.9.3/ckeditor-wrapper-for-vaadin-7.9.3.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/codehaus/izpack/izpack-standalone-compiler/4.3.5/izpack-standalone-compiler-4.3.5.jar"/>
 </classpath>
