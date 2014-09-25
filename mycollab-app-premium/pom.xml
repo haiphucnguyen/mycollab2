@@ -1,183 +1,212 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <name>mycollab-app-premium</name>
-    <artifactId>mycollab-app-premium</artifactId>
-    <parent>
-        <groupId>com.esofthead.mycollab</groupId>
-        <artifactId>parent-premium</artifactId>
-        <version>4.5.1</version>
-        <relativePath>../mycollab-parent-premium/pom.xml</relativePath>
-    </parent>
-    <packaging>war</packaging>
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<name>mycollab-app-premium</name>
+	<artifactId>mycollab-app-premium</artifactId>
+	<parent>
+		<groupId>com.esofthead.mycollab</groupId>
+		<artifactId>parent-premium</artifactId>
+		<version>4.5.1</version>
+		<relativePath>../mycollab-parent-premium/pom.xml</relativePath>
+	</parent>
+	<packaging>war</packaging>
 
-    <dependencies>
+	<dependencies>
 
-        <dependency>
-            <groupId>org.rzo.yajsw</groupId>
-            <artifactId>wrapper</artifactId>
-            <version>11.11</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>slf4j-jdk14</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
+		<dependency>
+			<groupId>com.esofthead.mycollab</groupId>
+			<artifactId>yajsw-wrapper</artifactId>
+			<version>11.11</version>
+		</dependency>
 
-        <dependency>
-            <groupId>org.rzo.yajsw</groupId>
-            <artifactId>wrapperApp</artifactId>
-            <version>11.11</version>
-        </dependency>
+		<dependency>
+			<groupId>com.esofthead.mycollab</groupId>
+			<artifactId>yajsw-wrapperApp</artifactId>
+			<version>11.11</version>
+		</dependency>
 
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-vfs2</artifactId>
-            <version>2.0</version>
-        </dependency>
+		<dependency>
+			<groupId>commons-configuration</groupId>
+			<artifactId>commons-configuration</artifactId>
+			<version>1.9</version>
+		</dependency>
 
-        <dependency>
-            <groupId>com.esofthead.mycollab</groupId>
-            <artifactId>mycollab-server-runner</artifactId>
-            <version>4.5.1</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.esofthead.mycollab</groupId>
-                    <artifactId>mycollab-test</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-vfs2</artifactId>
+			<version>2.0</version>
+		</dependency>
 
-        <dependency>
-            <groupId>com.esofthead.mycollab</groupId>
-            <artifactId>mycollab-servlet</artifactId>
-            <version>4.5.1</version>
-        </dependency>
+		<dependency>
+			<groupId>io.netty</groupId>
+			<artifactId>netty</artifactId>
+			<version>3.6.6.Final</version>
+		</dependency>
 
-        <dependency>
-            <groupId>com.esofthead.mycollab</groupId>
-            <artifactId>mycollab-mobile</artifactId>
-            <version>4.5.1</version>
-        </dependency>
+		<dependency>
+			<groupId>org.codehaus.groovy</groupId>
+			<artifactId>groovy-all</artifactId>
+			<version>2.3.6</version>
+		</dependency>
+
+		<dependency>
+			<groupId>net.java.dev.jna</groupId>
+			<artifactId>jna</artifactId>
+			<version>3.4.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>net.java.dev.jna</groupId>
+			<artifactId>platform</artifactId>
+			<version>3.4.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>jrexx</groupId>
+			<artifactId>jrexx</artifactId>
+			<version>1.1.1</version>
+		</dependency>
 
 
-        <dependency>
-            <groupId>com.esofthead.mycollab</groupId>
-            <artifactId>mycollab-services-premium</artifactId>
-            <version>4.5.1</version>
-        </dependency>
 
-        <dependency>
-            <groupId>com.esofthead.mycollab</groupId>
-            <artifactId>mycollab-search-server</artifactId>
-            <version>4.5.1</version>
-        </dependency>
+		<dependency>
+			<groupId>com.esofthead.mycollab</groupId>
+			<artifactId>mycollab-server-runner</artifactId>
+			<version>4.5.1</version>
+			<exclusions>
+				<exclusion>
+					<groupId>com.esofthead.mycollab</groupId>
+					<artifactId>mycollab-test</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
 
-        <dependency>
-            <groupId>com.esofthead.mycollab</groupId>
-            <artifactId>mycollab-caching-premium</artifactId>
-            <version>4.5.1</version>
-        </dependency>
+		<dependency>
+			<groupId>com.esofthead.mycollab</groupId>
+			<artifactId>mycollab-servlet</artifactId>
+			<version>4.5.1</version>
+		</dependency>
 
-        <dependency>
-            <groupId>com.esofthead.mycollab</groupId>
-            <artifactId>mycollab-web-premium</artifactId>
-            <version>4.5.1</version>
-        </dependency>
+		<dependency>
+			<groupId>com.esofthead.mycollab</groupId>
+			<artifactId>mycollab-mobile</artifactId>
+			<version>4.5.1</version>
+		</dependency>
 
-        <dependency>
-            <groupId>com.esofthead.mycollab</groupId>
-            <artifactId>mycollab-jetty-session-premium</artifactId>
-            <version>4.5.1</version>
-        </dependency>
-        <!-- <dependency> <groupId>com.vaadin</groupId> <artifactId>vaadin-client-compiler</artifactId> 
-            <version>${vaadinVersion}</version> <scope>provided</scope> </dependency> -->
-    </dependencies>
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
-                <version>2.3</version>
-            </plugin>
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-eclipse-plugin</artifactId>
-                <version>2.9</version>
-                <configuration>
-                    <wtpversion>2.0</wtpversion>
-                </configuration>
-            </plugin>
+		<dependency>
+			<groupId>com.esofthead.mycollab</groupId>
+			<artifactId>mycollab-services-premium</artifactId>
+			<version>4.5.1</version>
+		</dependency>
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>2.3.1</version>
-                <!-- The configuration of the plugin -->
-                <executions>
-                    <execution>
-                        <id>make-a-jar</id>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                        <configuration>
-                            <finalName>runner</finalName>
-                            <!-- Configuration of the archiver -->
-                            <archive>
-                                <!-- Manifest specific configuration -->
-                                <manifest>
-                                    <!-- Classpath is added to the manifest 
-                                        of the created jar file. -->
-                                    <addClasspath>true</addClasspath>
-                                    <!-- Configures the classpath prefix. 
-                                        This configuration option is used to specify that all needed libraries are 
-                                        found under lib/ directory. -->
-                                    <classpathPrefix>lib/</classpathPrefix>
-                                    <!-- Specifies the main class of the 
-                                        application -->
-                                    <mainClass>com.esofthead.mycollab.jetty.PremiumServerRunner</mainClass>
-                                </manifest>
-                            </archive>
-                        </configuration>
-                    </execution>
-                </executions>
+		<dependency>
+			<groupId>com.esofthead.mycollab</groupId>
+			<artifactId>mycollab-search-server</artifactId>
+			<version>4.5.1</version>
+		</dependency>
 
-            </plugin>
+		<dependency>
+			<groupId>com.esofthead.mycollab</groupId>
+			<artifactId>mycollab-caching-premium</artifactId>
+			<version>4.5.1</version>
+		</dependency>
 
-            <!-- START SNIPPET: assembly -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <configuration>
-                    <descriptors>
-                        <descriptor>src/main/assembly/src.xml</descriptor>
-                    </descriptors>
-                </configuration>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
+		<dependency>
+			<groupId>com.esofthead.mycollab</groupId>
+			<artifactId>mycollab-web-premium</artifactId>
+			<version>4.5.1</version>
+		</dependency>
 
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-war-plugin</artifactId>
-                    <configuration>
-                        <failOnMissingWebXml>false</failOnMissingWebXml>
-                    </configuration>
-                </plugin>
-            </plugins>
-        </pluginManagement>
-    </build>
+		<dependency>
+			<groupId>com.esofthead.mycollab</groupId>
+			<artifactId>mycollab-jetty-session-premium</artifactId>
+			<version>4.5.1</version>
+		</dependency>
+		<!-- <dependency> <groupId>com.vaadin</groupId> <artifactId>vaadin-client-compiler</artifactId> 
+			<version>${vaadinVersion}</version> <scope>provided</scope> </dependency> -->
+	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.3</version>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-eclipse-plugin</artifactId>
+				<version>2.9</version>
+				<configuration>
+					<wtpversion>2.0</wtpversion>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.3.1</version>
+				<!-- The configuration of the plugin -->
+				<executions>
+					<execution>
+						<id>make-a-jar</id>
+						<phase>compile</phase>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+						<configuration>
+							<finalName>runner</finalName>
+							<!-- Configuration of the archiver -->
+							<archive>
+								<!-- Manifest specific configuration -->
+								<manifest>
+									<!-- Classpath is added to the manifest of the created jar file. -->
+									<addClasspath>true</addClasspath>
+									<!-- Configures the classpath prefix. This configuration option 
+										is used to specify that all needed libraries are found under lib/ directory. -->
+									<classpathPrefix>lib/</classpathPrefix>
+									<!-- Specifies the main class of the application -->
+									<mainClass>com.esofthead.mycollab.jetty.PremiumServerRunner</mainClass>
+								</manifest>
+							</archive>
+						</configuration>
+					</execution>
+				</executions>
+
+			</plugin>
+
+			<!-- START SNIPPET: assembly -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<descriptors>
+						<descriptor>src/main/assembly/src.xml</descriptor>
+					</descriptors>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-war-plugin</artifactId>
+					<configuration>
+						<failOnMissingWebXml>false</failOnMissingWebXml>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
 </project>
