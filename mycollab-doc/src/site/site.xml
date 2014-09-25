@@ -128,9 +128,10 @@
 
         <menu name="Main" inherit="top">
             <item name="Home" href="./" />
-            <item name="GitHub project" href="https://github.com/esofthead/mycollab" />
+            <item name="Editions" href="editions.html" />
             <item name="Blog" href="http://www.mycollab.com/blog/" />
             <item name="Contact Us" href="https://www.mycollab.com/support" />
+            <item name="Sitemap" href="sitemap.html" />
         </menu>
         <menu name="Download" inherit="top">
             <item name="Download" href="download.html" />

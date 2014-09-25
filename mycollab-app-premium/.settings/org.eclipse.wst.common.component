@@ -55,6 +55,12 @@
     <dependent-module archiveName="sslext-1.2-0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/sslext/sslext/1.2-0/sslext-1.2-0.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
+    <dependent-module archiveName="janino-2.7.5.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/codehaus/janino/janino/2.7.5/janino-2.7.5.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="commons-compiler-2.7.5.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/codehaus/janino/commons-compiler/2.7.5/commons-compiler-2.7.5.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
     <dependent-module archiveName="xstream-1.4.7.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/thoughtworks/xstream/xstream/1.4.7/xstream-1.4.7.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
@@ -172,12 +178,6 @@
     <dependent-module archiveName="asm-4.2.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/ow2/asm/asm/4.2/asm-4.2.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="aws-java-sdk-1.8.10.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/amazonaws/aws-java-sdk/1.8.10.1/aws-java-sdk-1.8.10.1.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="aws-java-sdk-core-1.8.10.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/amazonaws/aws-java-sdk-core/1.8.10.1/aws-java-sdk-core-1.8.10.1.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
     <dependent-module archiveName="jackson-core-2.4.2.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/fasterxml/jackson/core/jackson-core/2.4.2/jackson-core-2.4.2.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
@@ -265,6 +265,9 @@
     <dependent-module archiveName="mycollab-services.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mycollab-services/mycollab-services">
       <dependency-type>uses</dependency-type>
     </dependent-module>
+    <dependent-module archiveName="mycollab-caching.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mycollab-caching/mycollab-caching">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
     <dependent-module archiveName="mycollab-dao.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mycollab-dao/mycollab-dao">
       <dependency-type>uses</dependency-type>
     </dependent-module>
@@ -286,15 +289,6 @@
     <dependent-module archiveName="jta-1.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/javax/transaction/jta/1.1/jta-1.1.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="mycollab-migration.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mycollab-migration/mycollab-migration">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="flyway-core-3.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/flywaydb/flyway-core/3.0/flyway-core-3.0.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="mycollab-caching.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mycollab-caching/mycollab-caching">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
     <dependent-module archiveName="infinispan-core-6.0.2.Final.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/infinispan/infinispan-core/6.0.2.Final/infinispan-core-6.0.2.Final.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
@@ -304,7 +298,7 @@
     <dependent-module archiveName="jboss-logging-3.1.3.GA.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/jboss/logging/jboss-logging/3.1.3.GA/jboss-logging-3.1.3.GA.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="jgroups-3.5.0.Final.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/jgroups/jgroups/3.5.0.Final/jgroups-3.5.0.Final.jar">
+    <dependent-module archiveName="jgroups-3.4.1.Final.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/jgroups/jgroups/3.4.1.Final/jgroups-3.4.1.Final.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="jboss-transaction-api_1.1_spec-1.0.1.Final.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/jboss/spec/javax/transaction/jboss-transaction-api_1.1_spec/1.0.1.Final/jboss-transaction-api_1.1_spec-1.0.1.Final.jar">
@@ -314,6 +308,12 @@
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="jboss-marshalling-1.4.4.Final.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/jboss/marshalling/jboss-marshalling/1.4.4.Final/jboss-marshalling-1.4.4.Final.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="mycollab-migration.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mycollab-migration/mycollab-migration">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="flyway-core-3.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/flywaydb/flyway-core/3.0/flyway-core-3.0.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="mycollab-jackrabbit.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mycollab-jackrabbit/mycollab-jackrabbit">
@@ -416,9 +416,6 @@
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="mycollab-services-premium.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mycollab-services-premium/mycollab-services-premium">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="licensing-core-1.1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/net/nicholaswilliams/java/licensing/licensing-core/1.1.0/licensing-core-1.1.0.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="mycollab-search-server.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mycollab-search-server/mycollab-search-server">

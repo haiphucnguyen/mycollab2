@@ -7,11 +7,11 @@
     <project>mycollab-test</project>
     <project>mycollab-api</project>
     <project>mycollab-services</project>
+    <project>mycollab-caching</project>
     <project>mycollab-dao</project>
     <project>mycollab-localization</project>
     <project>mycollab-config</project>
     <project>mycollab-migration</project>
-    <project>mycollab-caching</project>
     <project>mycollab-jackrabbit</project>
   </projects>
   <buildSpec>
