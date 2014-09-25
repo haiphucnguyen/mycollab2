@@ -10,6 +10,15 @@
     <dependent-module archiveName="yajsw-wrapperApp-11.11.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/esofthead/mycollab/yajsw-wrapperApp/11.11/yajsw-wrapperApp-11.11.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
+    <dependent-module archiveName="hessian4-11.11.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/rzo/yajsw/hessian4/11.11/hessian4-11.11.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="netty-3.6.6.Final.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/io/netty/netty/3.6.6.Final/netty-3.6.6.Final.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="ahessian-11.11.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/rzo/yajsw/ahessian/11.11/ahessian-11.11.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
     <dependent-module archiveName="commons-configuration-1.9.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/commons-configuration/commons-configuration/1.9/commons-configuration-1.9.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
@@ -35,9 +44,6 @@
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="regexp-1.3.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/regexp/regexp/1.3/regexp-1.3.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="netty-3.6.6.Final.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/io/netty/netty/3.6.6.Final/netty-3.6.6.Final.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="groovy-all-2.3.6.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/codehaus/groovy/groovy-all/2.3.6/groovy-all-2.3.6.jar">
