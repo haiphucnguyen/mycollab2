@@ -71,7 +71,9 @@ public class MobileNavigationManagerConnector extends
 			VMobileNavigationManager.IS_TABLET = false;
 
 		getWidget().beResponsive();
+
 		this.getLayoutManager().setNeedsMeasureRecursively(this);
+
 	}
 
 	@Override

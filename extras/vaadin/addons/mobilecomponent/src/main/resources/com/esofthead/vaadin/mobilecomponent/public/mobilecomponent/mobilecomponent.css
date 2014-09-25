@@ -95,6 +95,11 @@ div.v-cache-loading-indicator {
     top: 0;
     left: 0;
 }
+.mobilenavview .v-touchkit-navbar .v-touchkit-navbar-caption {
+	position: absolute;
+	box-sizing: border-box;
+	left: 0;
+}
 .mobilenavview .toggle-nav-btn {
     height: 4rem;
     width: 4.5rem;
