@@ -59,4 +59,4 @@ MyCollab is licensed with Affero GPL v3. For license terms, see [http://www.gnu.
 
 [Contribute](contribute.html) by reporting issues, suggesting new features, or forking the Git repository on GitHub and adding some good code!
 
-Need the premium service, and having richer features of MyCollab, please ask us for a quote [here](https://mycollab.com/support)
+Need the premium service, and having richer features of MyCollab, please ask us for a quote [here](https://www.mycollab.com/contact)

@@ -1,6 +1,6 @@
 ## Installation Guideline
 
-We do very hard to make the installation ease for you. If you need any help during installation process, please send us a request via our form [https://www.mycollab.com/support/] (https://www.mycollab.com/support/), we will try response to you as soon as possible. If there is any missing in our guidelines, we will update this page per your feedback to help our instruction precise and easy for all cases.
+We do very hard to make the installation ease for you. If you need any help during installation process, please send us a request via our form [https://www.mycollab.com/contact] (https://www.mycollab.com/contact), we will try response to you as soon as possible. If there is any missing in our guidelines, we will update this page per your feedback to help our instruction precise and easy for all cases.
 
 ### System Requirements
 * **Java Runtime Environment 7+**: If you do not have installed java, you can get it here [http://java.com/en/download/index.jsp] (http://java.com/en/download/index.jsp), you should use the latest java version.
