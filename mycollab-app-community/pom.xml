@@ -63,6 +63,7 @@
             <groupId>org.codehaus.izpack</groupId>
             <artifactId>izpack-standalone-compiler</artifactId>
             <version>${izpackVersion}</version>
+            <scope>provided</scope>
         </dependency>
 
         <!-- <dependency> <groupId>com.vaadin</groupId> <artifactId>vaadin-client-compiler</artifactId> 
@@ -118,14 +119,26 @@
                         </configuration>
                     </execution>
                 </executions>
-
             </plugin>
 
             <!-- START SNIPPET: assembly -->
-            <!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-assembly-plugin</artifactId> 
-                <configuration> <descriptors> <descriptor>src/main/assembly/src.xml</descriptor> 
-                </descriptors> </configuration> <executions> <execution> <phase>package</phase> 
-                <goals> <goal>single</goal> </goals> </execution> </executions> </plugin> -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                    <descriptors>
+                        <descriptor>src/main/assembly/src.xml</descriptor>
+                    </descriptors>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
             <!-- END SNIPPET: assembly -->
 
             <plugin>
@@ -150,7 +163,8 @@
                                     <fileset dir="${basedir}/src/main/logs" />
                                 </copy>
                                 <copy todir="${staging.dir}/scripts">
-                                    <fileset dir="${basedir}/src/main/scripts" />
+                                    <fileset
+                                        dir="${basedir}/src/main/scripts" />
                                 </copy>
                                 <copy todir="${staging.dir}/txt">
                                     <fileset dir="${basedir}/src/main/txt" />

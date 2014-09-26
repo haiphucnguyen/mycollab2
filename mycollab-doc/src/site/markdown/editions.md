@@ -351,9 +351,9 @@ Note: Please bear in mind that there are actually more differences, but not all 
 
 #### On-demand Edition
 
-We ensure immediate support on any issue, access to MyCollab development team, new features and versions, as well as advice to get the most out of MyCollab and recommendations to avoid common problems. In this case you can reach us via support@mycollab.com or our contact page https://www.mycollab.com/support/ for further information.
+We ensure immediate support on any issue, access to MyCollab development team, new features and versions, as well as advice to get the most out of MyCollab and recommendations to avoid common problems. In this case you can reach us via support@mycollab.com or our contact page https://www.mycollab.com/contact for further information.
 
 ### I cannot decide which is the best edition for my business needs
 
-If you need any features unlisted here and feel unsure whether or not MyCollab provides or will provide them, send us a feature inquiry via our contact form https://www.mycollab.com/support/ or check our road map for more information.
+If you need any features unlisted here and feel unsure whether or not MyCollab provides or will provide them, send us a feature inquiry via our contact form https://www.mycollab.com/contact or check our road map for more information.
 Last but not least, we encourage you to use professional or on-demand edition. We are the author of MyCollab and we offer very competitive rate of customization for community and premium edition, so please do not hesitate to contact us if you need a unique solution for your business with low cost.
