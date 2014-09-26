@@ -14,7 +14,7 @@ import org.rzo.yajsw.wrapper.WrappedProcessFactory;
  */
 public class WrappedService {
 
-	private static final String APP_NAME = "MyCollab Premium";
+	private static final String APP_NAME = "MyCollab";
 	private static final String PATH = "target/mycollab-app-premium-4.5.1-mycollab-dist/mycollab-app-premium-4.5.1/";
 
 	public static void main(String... args) {
@@ -47,11 +47,14 @@ public class WrappedService {
 		configuration.put("wrapper.on_exit.0", "SHUTDOWN");
 		configuration.put("wrapper.on_exit.default", "RESTART");
 
-		configuration.put("wrapper.working.dir", System.getProperty("user.dir"));
-		configuration.put("wrapper.java.app.mainclass", "com.esofthead.mycollab.jetty.PremiumServerRunner");
+		configuration
+				.put("wrapper.working.dir", System.getProperty("user.dir"));
+		configuration.put("wrapper.java.app.mainclass",
+				"com.esofthead.mycollab.jetty.PremiumServerRunner");
 
 		configuration.put("wrapper.java.classpath.1", PATH + "runner.jar");
-		configuration.put("wrapper.java.classpath.2", PATH + "lib/yajsw-wrapper-11.11.jar");
+		configuration.put("wrapper.java.classpath.2", PATH
+				+ "lib/yajsw-wrapper-11.11.jar");
 
 		configuration.put("placeHolderSoGenPropsComeHere", "");
 		configuration.put("wrapper.app.parameter.1", "--port");
@@ -59,10 +62,13 @@ public class WrappedService {
 		configuration.put("wrapper.java.additional.1", "-Xmx1024m");
 		configuration.put("wrapper.java.additional.2", "-Xms512m");
 		configuration.put("wrapper.java.additional.3", "-XX:MaxPermSize=256m");
-		configuration.put("wrapper.java.additional.4", "-Dfile.encoding=Cp1258");
-		configuration.put("wrapper.java.additional.5", "-Djava.net.preferIPv4Stack=true");
-		
-		WrappedProcess wrappedProcess = (WrappedProcess) WrappedProcessFactory.createProcess(configuration, true);
+		configuration
+				.put("wrapper.java.additional.4", "-Dfile.encoding=Cp1258");
+		configuration.put("wrapper.java.additional.5",
+				"-Djava.net.preferIPv4Stack=true");
+
+		WrappedProcess wrappedProcess = (WrappedProcess) WrappedProcessFactory
+				.createProcess(configuration, true);
 		wrappedProcess.start();
 	}
 }
