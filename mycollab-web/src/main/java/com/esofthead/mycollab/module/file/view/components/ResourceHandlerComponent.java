@@ -136,7 +136,6 @@ public class ResourceHandlerComponent extends VerticalLayout {
 
 		// file bread Crum ---------------------
 		fileBreadCrumb = new FileBreadcrumb(rootPath);
-		fileBreadCrumb.setCurrentBreadCrumbFolder(baseFolder);
 		mainBodyLayout.addComponent(fileBreadCrumb);
 
 		// Construct controllGroupBtn
@@ -260,7 +259,7 @@ public class ResourceHandlerComponent extends VerticalLayout {
 				.newResource("icons/16/ecm/upload.png"));
 		uploadBtn.addStyleName(UIConstants.THEME_BROWN_LINK);
 		uploadBtn.setDescription("Upload");
-		;
+
 		uploadBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.PUBLIC_DOCUMENT_ACCESS));
 		navButton.addButton(uploadBtn);
@@ -340,6 +339,7 @@ public class ResourceHandlerComponent extends VerticalLayout {
 		deleteBtn.setDescription("Delele");
 		deleteBtn.setEnabled(AppContext
 				.canAccess(RolePermissionCollections.PUBLIC_DOCUMENT_ACCESS));
+
 		navButton.addButton(deleteBtn);
 		controllGroupBtn.addComponent(navButton);
 
@@ -362,7 +362,7 @@ public class ResourceHandlerComponent extends VerticalLayout {
 	}
 
 	/**
-	 * this method show Component when star loading
+	 * this method show Component when start loading
 	 * 
 	 * @param baseFolder
 	 */
@@ -377,12 +377,11 @@ public class ResourceHandlerComponent extends VerticalLayout {
 		this.rootFolder = baseFolder;
 		this.rootPath = rootPath;
 		this.rootFolderName = rootFolderName;
-		this.fileBreadCrumb.setRootFolderPath(rootPath);
 		this.fileBreadCrumb.initBreadcrumb();
 		this.itemResourceContainerLayout.constructBody(this.baseFolder);
 	}
 
-	protected void deleteResourceAction() {
+	private void deleteResourceAction() {
 		ConfirmDialogExt.show(UI.getCurrent(), AppContext.getMessage(
 				GenericI18Enum.DIALOG_DELETE_TITLE,
 				SiteConfiguration.getSiteName()), AppContext

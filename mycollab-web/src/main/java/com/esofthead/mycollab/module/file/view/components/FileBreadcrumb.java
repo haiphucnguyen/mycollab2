@@ -19,6 +19,7 @@ package com.esofthead.mycollab.module.file.view.components;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.ecm.StorageNames;
 import com.esofthead.mycollab.module.ecm.domain.ExternalFolder;
 import com.esofthead.mycollab.module.ecm.domain.Folder;
@@ -48,20 +49,17 @@ public class FileBreadcrumb extends Breadcrumb implements CacheableComponent,
 	private static final long serialVersionUID = 1L;
 	private static LabelStringGenerator menuLinkGenerator = new BreadcrumbLabelStringGenerator();
 	private List<SearchHandler<FileSearchCriteria>> handers;
-	private Folder currentBreadCrumbFolder;
+
 	private String rootFolderPath;
 
-	public void setRootFolderPath(String rootPath) {
-		this.rootFolderPath = rootPath;
-	}
-
 	public FileBreadcrumb(String rootFolderPath) {
+		this.rootFolderPath = rootFolderPath;
 		this.setShowAnimationSpeed(Breadcrumb.AnimSpeed.SLOW);
 		this.setHideAnimationSpeed(Breadcrumb.AnimSpeed.SLOW);
 		this.setUseDefaultClickBehaviour(false);
 	}
 
-	public void initBreadcrumb() {
+	void initBreadcrumb() {
 		// home Btn ----------------
 		this.addLink(new Button(null, new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
@@ -71,7 +69,7 @@ public class FileBreadcrumb extends Breadcrumb implements CacheableComponent,
 				FileSearchCriteria criteria = new FileSearchCriteria();
 				criteria.setBaseFolder(rootFolderPath);
 				criteria.setRootFolder(rootFolderPath);
-				notifySelectHandler(criteria);
+				notifySearchHandler(criteria);
 			}
 		}));
 		this.setHeight(25, Unit.PIXELS);
@@ -86,7 +84,7 @@ public class FileBreadcrumb extends Breadcrumb implements CacheableComponent,
 						FileSearchCriteria criteria = new FileSearchCriteria();
 						criteria.setBaseFolder(rootFolderPath);
 						criteria.setRootFolder(rootFolderPath);
-						notifySelectHandler(criteria);
+						notifySearchHandler(criteria);
 					}
 				});
 		documentBtnLink.addStyleName("link");
@@ -94,9 +92,8 @@ public class FileBreadcrumb extends Breadcrumb implements CacheableComponent,
 		this.setLinkEnabled(true, 1);
 	}
 
-	public void gotoFolder(final Folder folder) {
+	void gotoFolder(final Folder folder) {
 		initBreadcrumb();
-		currentBreadCrumbFolder = folder;
 		String[] path;
 		String headPath = "";
 
@@ -115,11 +112,12 @@ public class FileBreadcrumb extends Breadcrumb implements CacheableComponent,
 
 		boolean isNeedAdd3dot = (path.length > 6) ? true : false;
 		int holder = 0;
+
 		// Home folder
 		if (folder instanceof ExternalFolder && path.length == 0) {
-			Button btn = new Button(((ExternalFolder) folder)
+			Button folderLink = new Button(((ExternalFolder) folder)
 					.getExternalDrive().getFoldername());
-			btn.addClickListener(new Button.ClickListener() {
+			folderLink.addClickListener(new Button.ClickListener() {
 				private static final long serialVersionUID = 1L;
 
 				@Override
@@ -130,11 +128,11 @@ public class FileBreadcrumb extends Breadcrumb implements CacheableComponent,
 					criteria.setStorageName(StorageNames.DROPBOX);
 					criteria.setExternalDrive(((ExternalFolder) folder)
 							.getExternalDrive());
-					notifySelectHandler(criteria);
+					notifySearchHandler(criteria);
 				}
 			});
 			this.select(1);
-			this.addLink(btn);
+			this.addLink(folderLink);
 			this.setLinkEnabled(true, 2);
 			return;
 		}
@@ -160,11 +158,7 @@ public class FileBreadcrumb extends Breadcrumb implements CacheableComponent,
 			if (!pathName.equals(AppContext.getAccountId().toString())
 					|| folder instanceof ExternalFolder) {
 				final Button btn = new Button();
-				if (pathName.length() > 25) {
-					btn.setCaption(pathName.substring(0, 20) + "...");
-				} else {
-					btn.setCaption(pathName);
-				}
+				btn.setCaption(StringUtils.trim(pathName, 25, true));
 				btn.setDescription(pathName);
 				final String currentResourcePath = curPath.toString();
 				btn.addClickListener(new Button.ClickListener() {
@@ -187,7 +181,7 @@ public class FileBreadcrumb extends Breadcrumb implements CacheableComponent,
 						} else {
 							criteria.setRootFolder(rootFolderPath);
 						}
-						notifySelectHandler(criteria);
+						notifySearchHandler(criteria);
 					}
 				});
 
@@ -234,7 +228,7 @@ public class FileBreadcrumb extends Breadcrumb implements CacheableComponent,
 		this.handers.add(handler);
 	}
 
-	public void notifySelectHandler(final FileSearchCriteria criteria) {
+	private void notifySearchHandler(final FileSearchCriteria criteria) {
 		if (this.handers != null) {
 			for (final SearchHandler<FileSearchCriteria> handler : this.handers) {
 				handler.onSearch(criteria);
@@ -242,23 +236,12 @@ public class FileBreadcrumb extends Breadcrumb implements CacheableComponent,
 		}
 	}
 
-	public Folder getCurrentBreadCrumbFolder() {
-		return currentBreadCrumbFolder;
-	}
-
-	public void setCurrentBreadCrumbFolder(Folder currentBreamCrumbFolder) {
-		this.currentBreadCrumbFolder = currentBreamCrumbFolder;
-	}
-
 	private static class BreadcrumbLabelStringGenerator implements
 			LabelStringGenerator {
 
 		@Override
 		public String handleText(String value) {
-			if (value.length() > 35) {
-				return value.substring(0, 35) + "...";
-			}
-			return value;
+			return StringUtils.trim(value, 35, true);
 		}
 
 	}

@@ -49,7 +49,6 @@ import com.vaadin.ui.VerticalLayout;
 public abstract class FileDashboardComponent extends VerticalLayout {
 	private static final long serialVersionUID = 1L;
 	private String rootPath;
-	private String rootFolderName;
 
 	private final FileSearchPanel fileSearchPanel;
 	private ResourceHandlerComponent resourceHandlerComponent;
@@ -84,19 +83,14 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 
 	abstract protected void doSearch(FileSearchCriteria searchCriteria);
 
-	private void displayResourcesInTable(final Folder folder) {
-		resourceHandlerComponent.displayComponent(folder, rootPath,
-				rootFolderName, false);
-	}
-
 	public void displayResources(String rootPath, String rootFolderName) {
 		this.rootPath = rootPath;
-		this.rootFolderName = rootFolderName;
 
 		this.baseFolder = new Folder();
 		this.baseFolder.setPath(this.rootPath);
 
-		this.displayResourcesInTable(this.baseFolder);
+		resourceHandlerComponent.displayComponent(this.baseFolder, rootPath,
+				rootFolderName, false);
 
 		resourceHandlerComponent
 				.addSearchHandlerToBreadCrumb(new SearchHandler<FileSearchCriteria>() {
@@ -121,7 +115,6 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 		private static final long serialVersionUID = 1L;
 		protected FileSearchCriteria searchCriteria;
 		private ComponentContainer menuBar = null;
-		private HorizontalLayout basicSearchBody;
 
 		public FileSearchPanel(final ComponentContainer menuBar) {
 			this.menuBar = menuBar;
