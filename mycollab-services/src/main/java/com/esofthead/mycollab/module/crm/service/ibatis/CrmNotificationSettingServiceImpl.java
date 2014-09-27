@@ -62,7 +62,10 @@ public class CrmNotificationSettingServiceImpl extends
 		if (CollectionUtils.isNotEmpty(notifications)) {
 			return notifications.get(0);
 		} else {
-			return null;
+			CrmNotificationSetting notification = new CrmNotificationSetting();
+			notification.setSaccountid(sAccountId);
+			notification.setUsername(username);
+			return notification;
 		}
 	}
 

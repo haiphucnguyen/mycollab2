@@ -13,8 +13,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
 
+import com.esofthead.mycollab.common.NotificationType;
 import com.esofthead.mycollab.module.project.domain.ProjectNotificationSetting;
-import com.esofthead.mycollab.module.project.domain.ProjectNotificationSettingType;
 import com.esofthead.mycollab.module.project.domain.ProjectRelayEmailNotification;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.project.service.ProjectNotificationSettingService;
@@ -42,7 +42,7 @@ public class BugRelayEmailNotificationActionImplTest extends GenericJobTest {
 		prjRelayNotification.setNotifyUsers(notifyUsers);
 
 		ProjectNotificationSetting noSetting1 = new ProjectNotificationSetting();
-		noSetting1.setLevel(ProjectNotificationSettingType.NONE);
+		noSetting1.setLevel(NotificationType.None.name());
 		noSetting1.setUsername("hainguyen@esofthead.com");
 
 		when(projectNotificationService.findNotifications(anyInt(), anyInt()))
