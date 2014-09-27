@@ -66,19 +66,21 @@ public abstract class CloudDriveIntegrationOAuthWindow extends Window {
 
 	private void registerListeners() {
 
+		final UI ui = UI.getCurrent();
+
 		listener = new ApplicationEventListener<CloudDriveOAuthCallbackEvent.ReceiveCloudDriveInfo>() {
 			private static final long serialVersionUID = 1L;
 
 			@Subscribe
 			@Override
 			public void handle(ReceiveCloudDriveInfo event) {
-				UI.getCurrent().setPollInterval(1000);
+				ui.setPollInterval(1000);
 				cloudDriveInfo = (CloudDriveInfo) event.getData();
 
 				log.debug("Receive cloud drive info: "
 						+ BeanUtility.printBeanObj(cloudDriveInfo));
 
-				UI.getCurrent().access(new Runnable() {
+				ui.access(new Runnable() {
 					@Override
 					public void run() {
 						CloudDriveIntegrationOAuthWindow.this
@@ -86,7 +88,7 @@ public abstract class CloudDriveIntegrationOAuthWindow extends Window {
 						messageBox.removeAllComponents();
 						messageBox.addComponent(new Label(
 								"Access token retrieved"));
-						UI.getCurrent().setPollInterval(-1);
+						ui.setPollInterval(-1);
 					}
 
 				});
