@@ -22,6 +22,7 @@ import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,7 +67,7 @@ public class ResourceServiceImpl implements ResourceService {
 	@Override
 	public List<Resource> getResources(String path) {
 		List<Resource> resources = contentJcrDao.getResources(path);
-		if (resources != null) {
+		if (CollectionUtils.isNotEmpty(resources)) {
 			Collections.sort(resources);
 		}
 

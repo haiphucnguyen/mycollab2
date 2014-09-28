@@ -28,6 +28,8 @@ import com.esofthead.mycollab.module.file.domain.criteria.FileSearchCriteria;
 import com.esofthead.mycollab.module.file.view.FileMainView;
 import com.esofthead.mycollab.module.file.view.components.FileDownloadWindow;
 import com.esofthead.mycollab.module.file.view.components.FileSearchPanel;
+import com.esofthead.mycollab.module.file.view.components.FileSearchPanel.SearchResourceEvent;
+import com.esofthead.mycollab.module.file.view.components.FileSearchPanel.SearchResourceListener;
 import com.esofthead.mycollab.module.file.view.components.ResourcesDisplayComponent;
 import com.esofthead.mycollab.module.user.domain.BillingPlan;
 import com.esofthead.mycollab.premium.module.file.view.FolderNavigatorMenu.SelectFolderEvent;
@@ -294,6 +296,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 		mainBodyResourceLayout.removeAllComponents();
 		if (fileActivityStreamComponent == null) {
 			fileActivityStreamComponent = new FileActivityStreamComponent();
+
 			// and Folder - handeler
 			fileActivityStreamComponent
 					.addSelectedHandlerToPageList(new SearchHandler<FileSearchCriteria>() {
@@ -355,6 +358,15 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 		mainBodyResourceLayout.setSpacing(true);
 
 		resourceSearchPanel = new FileSearchPanel(rootPath);
+		resourceSearchPanel.addSearchResourcesListener(new SearchResourceListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void searchResources(SearchResourceEvent event) {
+				FileSearchCriteria fileSearchCriteria = event.getData();
+				
+			}
+		});
 
 		mainBodyResourceLayout.addComponent(resourceSearchPanel);
 		mainBodyResourceLayout.addComponent(resourceHandlerLayout);

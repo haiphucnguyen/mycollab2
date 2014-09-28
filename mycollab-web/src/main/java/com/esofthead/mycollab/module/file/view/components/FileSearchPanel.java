@@ -5,7 +5,6 @@ import java.lang.reflect.Method;
 import java.util.EventListener;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
-import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.eventmanager.ApplicationEvent;
 import com.esofthead.mycollab.module.file.domain.criteria.FileSearchCriteria;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -47,10 +46,8 @@ public class FileSearchPanel extends GenericSearchPanel<FileSearchCriteria> {
 		this.setCompositionRoot(new FileBasicSearchLayout());
 	}
 
-	@SuppressWarnings("rawtypes")
-	class FileBasicSearchLayout extends BasicSearchLayout {
+	class FileBasicSearchLayout extends BasicSearchLayout<FileSearchCriteria> {
 
-		@SuppressWarnings("unchecked")
 		public FileBasicSearchLayout() {
 			super(FileSearchPanel.this);
 		}
@@ -111,27 +108,8 @@ public class FileSearchPanel extends GenericSearchPanel<FileSearchCriteria> {
 
 				@Override
 				public void buttonClick(final ClickEvent event) {
-
-					// resourceHandlerLayout.setCurrentBaseFolder(baseFolder);
-					// List<Resource> resources = resourceService
-					// .searchResourcesByName(rootPath,
-					// nameField.getValue().toString().trim());
-					// if (CollectionUtils.isNotEmpty(resources)) {
-					// resourceHandlerLayout
-					// .constructBodyItemContainerSearchActionResult(
-					// resources, nameField.getValue()
-					// .toString().trim());
-					// resourceHandlerLayout.initBreadCrumb();
-					// resourceHandlerLayout
-					// .setCurrentBaseFolder((Folder)
-					// FileMainViewImpl.this.resourceService
-					// .getResource(rootPath));
-					// } else {
-					// resourceHandlerLayout
-					// .constructBodyItemContainerSearchActionResult(
-					// resources, nameField.getValue()
-					// .toString().trim());
-					// }
+					fireEvent(new SearchResourceEvent(FileSearchPanel.this,
+							fillupSearchCriteria()));
 				}
 			});
 			UiUtils.addComponent(basicSearchBody, searchBtn,
@@ -155,7 +133,7 @@ public class FileSearchPanel extends GenericSearchPanel<FileSearchCriteria> {
 		}
 
 		@Override
-		protected SearchCriteria fillupSearchCriteria() {
+		protected FileSearchCriteria fillupSearchCriteria() {
 			FileSearchPanel.this.searchCriteria = new FileSearchCriteria();
 			FileSearchPanel.this.searchCriteria.setRootFolder(rootPath);
 			FileSearchPanel.this.searchCriteria.setFileName(this.nameField

@@ -25,6 +25,12 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.vaadin.shared.ui.MarginInfo;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ *
+ */
 @ViewComponent
 public class FileDashboardViewImpl extends AbstractPageView implements
 		FileDashboardView {
