@@ -5,6 +5,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.hene.popupbutton.PopupButton;
 import org.vaadin.peter.buttongroup.ButtonGroup;
@@ -74,6 +76,9 @@ import com.vaadin.ui.themes.Reindeer;
 @ViewComponent
 public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 	private static final long serialVersionUID = 1L;
+
+	private static Logger log = LoggerFactory.getLogger(FileMainViewImpl.class);
+
 	private static final String illegalFileNamePattern = "[<>:&/\\|?*&]";
 
 	private final Tree menuTree;
@@ -522,25 +527,37 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 				.addSearchHandlerToBreadCrumb(new SearchHandler<FileSearchCriteria>() {
 					@Override
 					public void onSearch(FileSearchCriteria criteria) {
-						Folder selectedFolder = null;
-						if (criteria.getStorageName() != null
-								&& criteria.getStorageName().equals(
-										StorageNames.DROPBOX)) {
-							selectedFolder = (Folder) externalResourceService
+						Resource selectedFolder = null;
+						if (StorageNames.DROPBOX.equals(criteria
+								.getStorageName())) {
+							selectedFolder = externalResourceService
 									.getCurrentResourceByPath(
 											criteria.getExternalDrive(),
 											criteria.getBaseFolder());
 						} else {
-							selectedFolder = (Folder) FileMainViewImpl.this.resourceService
+							selectedFolder = FileMainViewImpl.this.resourceService
 									.getResource(criteria.getBaseFolder());
 						}
-						resourceHandlerLayout
-								.constructBodyItemContainer(selectedFolder);
-						resourceHandlerLayout
-								.gotoFolderBreadCumb(selectedFolder);
-						FileMainViewImpl.this.baseFolder = selectedFolder;
-						resourceHandlerLayout
-								.setCurrentBaseFolder(selectedFolder);
+
+						if (selectedFolder == null) {
+							log.error("Can not find folder with path "
+									+ criteria.getBaseFolder() + "--"
+									+ criteria.getRootFolder());
+						} else if (!(selectedFolder instanceof Folder)) {
+							log.error("Expect folder but the result is file "
+									+ criteria.getBaseFolder() + "--"
+									+ criteria.getRootFolder());
+						} else {
+							Folder resultFolder = (Folder) selectedFolder;
+							resourceHandlerLayout
+									.constructBodyItemContainer(resultFolder);
+							resourceHandlerLayout
+									.gotoFolderBreadCumb(resultFolder);
+							FileMainViewImpl.this.baseFolder = resultFolder;
+							resourceHandlerLayout
+									.setCurrentBaseFolder(resultFolder);
+						}
+
 					}
 				});
 	}
