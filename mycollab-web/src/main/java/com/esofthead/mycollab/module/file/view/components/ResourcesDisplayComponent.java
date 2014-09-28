@@ -105,19 +105,19 @@ public class ResourcesDisplayComponent extends VerticalLayout {
 	private ExternalDriveService externalDriveService;
 
 	private HorizontalLayout controllGroupBtn;
-	private Button deleteBtn;
-	private Button selectAllBtn;
+
 	private FileBreadcrumb fileBreadCrumb;
-	private ItemResourceContainerLayout itemResourceContainerLayout;
+	private ResourcesContainer resourcesContainer;
+	private ResourcePagingNavigator pagingResourceWapper;
+	
 	private Folder baseFolder;
 	private Folder rootFolder;
 	private String rootFolderName;
 	private String rootPath;
+	
 	private List<Resource> selectedResourcesList;
 	private Tree menuTree;
 
-	private PagingResourceWapper pagingResourceWapper;
-	private boolean isNeedLoadExternalDirve = false;
 
 	public ResourcesDisplayComponent(final Folder baseFolder,
 			final String rootPath, Tree menuTree) {
@@ -146,7 +146,7 @@ public class ResourcesDisplayComponent extends VerticalLayout {
 		controllGroupBtn.setSpacing(true);
 		controllGroupBtn.addStyleName(UIConstants.THEME_SMALL_PADDING);
 
-		selectAllBtn = new Button();
+		final Button selectAllBtn = new Button();
 		selectAllBtn.addStyleName(UIConstants.THEME_BROWN_LINK);
 		selectAllBtn.setIcon(MyCollabResource
 				.newResource("icons/16/checkbox_empty.png"));
@@ -163,24 +163,12 @@ public class ResourcesDisplayComponent extends VerticalLayout {
 					selectAllBtn.setIcon(MyCollabResource
 							.newResource("icons/16/checkbox.png"));
 					selectAllBtn.setData(true);
-					if (itemResourceContainerLayout.getListAllCheckBox() != null) {
-						for (CheckBox cb : itemResourceContainerLayout
-								.getListAllCheckBox()) {
-							if (!(Boolean) cb.getValue())
-								cb.setValue(true);
-						}
-					}
+					resourcesContainer.setAllValues(true);
 				} else {
 					selectAllBtn.setData(false);
 					selectAllBtn.setIcon(MyCollabResource
 							.newResource("icons/16/checkbox_empty.png"));
-					if (itemResourceContainerLayout.getListAllCheckBox() != null) {
-						for (CheckBox cb : itemResourceContainerLayout
-								.getListAllCheckBox()) {
-							if (cb.getValue())
-								cb.setValue(false);
-						}
-					}
+					resourcesContainer.setAllValues(false);
 				}
 			}
 		});
@@ -217,7 +205,7 @@ public class ResourcesDisplayComponent extends VerticalLayout {
 					parentFolder = rootFolder;
 				}
 				selectedResourcesList = new ArrayList<Resource>();
-				itemResourceContainerLayout.constructBody(parentFolder);
+				resourcesContainer.constructBody(parentFolder);
 				ResourcesDisplayComponent.this.baseFolder = parentFolder;
 				fileBreadCrumb
 						.gotoFolder(ResourcesDisplayComponent.this.baseFolder);
@@ -275,14 +263,14 @@ public class ResourcesDisplayComponent extends VerticalLayout {
 			protected StreamSource buildStreamSource() {
 				return StreamDownloadResourceUtil
 						.getStreamSourceSupportExtDrive(selectedResourcesList,
-								itemResourceContainerLayout.isSearchAction);
+								resourcesContainer.isSearchAction);
 			}
 
 			@Override
 			public String getFilename() {
 				return StreamDownloadResourceUtil.getDownloadFileName(
 						selectedResourcesList,
-						itemResourceContainerLayout.isSearchAction);
+						resourcesContainer.isSearchAction);
 			}
 		};
 		OnDemandFileDownloader downloaderExt = new OnDemandFileDownloader(
@@ -304,8 +292,7 @@ public class ResourcesDisplayComponent extends VerticalLayout {
 			public void buttonClick(ClickEvent event) {
 				if (selectedResourcesList.size() > 0) {
 					MoveResourceWindow moveResourceWindow = new MoveResourceWindow(
-							selectedResourcesList,
-							ResourcesDisplayComponent.this.isNeedLoadExternalDirve);
+							selectedResourcesList);
 					UI.getCurrent().addWindow(moveResourceWindow);
 				} else {
 					NotificationUtil
@@ -321,19 +308,21 @@ public class ResourcesDisplayComponent extends VerticalLayout {
 		moveToBtn.setDescription("Move to");
 		navButton.addButton(moveToBtn);
 
-		deleteBtn = new Button("Delete", new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
+		Button deleteBtn = new Button(
+				AppContext.getMessage(GenericI18Enum.BUTTON_DELETE_LABEL),
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
 
-			@Override
-			public void buttonClick(ClickEvent event) {
-				if (selectedResourcesList.size() == 0) {
-					NotificationUtil
-							.showWarningNotification("Please select at least one item to delete");
-				} else {
-					deleteResourceAction();
-				}
-			}
-		});
+					@Override
+					public void buttonClick(ClickEvent event) {
+						if (selectedResourcesList.size() == 0) {
+							NotificationUtil
+									.showWarningNotification("Please select at least one item to delete");
+						} else {
+							deleteResourceAction();
+						}
+					}
+				});
 		deleteBtn.setIcon(MyCollabResource
 				.newResource("icons/16/ecm/delete.png"));
 		deleteBtn.addStyleName(UIConstants.THEME_RED_LINK);
@@ -347,11 +336,10 @@ public class ResourcesDisplayComponent extends VerticalLayout {
 
 		mainBodyLayout.addComponent(controllGroupBtn);
 
-		itemResourceContainerLayout = new ItemResourceContainerLayout(
-				baseFolder, resourceService);
-		itemResourceContainerLayout.setWidth("100%");
+		resourcesContainer = new ResourcesContainer(baseFolder, resourceService);
+		resourcesContainer.setWidth("100%");
 
-		mainBodyLayout.addComponent(itemResourceContainerLayout);
+		mainBodyLayout.addComponent(resourcesContainer);
 		this.addComponent(mainBodyLayout);
 	}
 
@@ -369,18 +357,13 @@ public class ResourcesDisplayComponent extends VerticalLayout {
 	 * @param baseFolder
 	 */
 	public void displayComponent(Folder baseFolder, String rootPath,
-			String rootFolderName, boolean isNeedLoadExternalDrive) {
-		this.isNeedLoadExternalDirve = isNeedLoadExternalDrive;
-		if (isNeedLoadExternalDrive == false) {
-			externalResourceService = null;
-			externalDriveService = null;
-		}
+			String rootFolderName) {
 		this.baseFolder = baseFolder;
 		this.rootFolder = baseFolder;
 		this.rootPath = rootPath;
 		this.rootFolderName = rootFolderName;
 		this.fileBreadCrumb.initBreadcrumb();
-		this.itemResourceContainerLayout.constructBody(this.baseFolder);
+		this.resourcesContainer.constructBody(this.baseFolder);
 	}
 
 	private void deleteResourceAction() {
@@ -427,16 +410,14 @@ public class ResourcesDisplayComponent extends VerticalLayout {
 												AppContext.getAccountId());
 									}
 								}
-								if (itemResourceContainerLayout.isSearchAction) {
-									itemResourceContainerLayout
+								if (resourcesContainer.isSearchAction) {
+									resourcesContainer
 											.constructBody((Folder) resourceService
 													.getResource(rootPath));
 								} else {
-									itemResourceContainerLayout
+									resourcesContainer
 											.constructBody(baseFolder);
 								}
-								if ((Boolean) selectAllBtn.getData())
-									selectAllBtn.click();
 
 								if (menuTree != null) {
 									ResourcesDisplayComponent.this.menuTree
@@ -463,14 +444,13 @@ public class ResourcesDisplayComponent extends VerticalLayout {
 	public void constructBodyItemContainer(Folder folder) {
 		this.selectedResourcesList.clear();
 		this.baseFolder = folder;
-		itemResourceContainerLayout.constructBody(folder);
+		resourcesContainer.constructBody(folder);
 	}
 
 	public void constructBodyItemContainerSearchActionResult(
 			List<Resource> lst, String criteria) {
 		this.selectedResourcesList.clear();
-		itemResourceContainerLayout.constructBodySearchActionResult(lst,
-				criteria);
+		resourcesContainer.constructBodySearchActionResult(lst, criteria);
 	}
 
 	public void addSearchHandlerToBreadCrumb(
@@ -482,33 +462,31 @@ public class ResourcesDisplayComponent extends VerticalLayout {
 		fileBreadCrumb.initBreadcrumb();
 	}
 
-	private class ItemResourceContainerLayout extends VerticalLayout {
+	private class ResourcesContainer extends VerticalLayout {
 		private static final long serialVersionUID = 1L;
-		private final List<CheckBox> listAllCheckBox;
-		private VerticalLayout mainLayout;
+
+		private final List<CheckBox> checkboxes;
 		private boolean isSearchAction = false;
 
-		public List<CheckBox> getListAllCheckBox() {
-			return listAllCheckBox;
+		public ResourcesContainer(Folder folder, ResourceService resourceService) {
+			selectedResourcesList = new ArrayList<Resource>();
+			checkboxes = new ArrayList<CheckBox>();
+			this.setMargin(true);
+			this.setSpacing(false);
 		}
 
-		public ItemResourceContainerLayout(Folder folder,
-				ResourceService resourceService) {
-			selectedResourcesList = new ArrayList<Resource>();
-			listAllCheckBox = new ArrayList<CheckBox>();
-			this.setMargin(true);
+		private void setAllValues(boolean value) {
+			for (CheckBox checkbox : checkboxes) {
+				checkbox.setValue(value);
+			}
 		}
 
 		private void constructBody(Folder currentFolder) {
 			isSearchAction = false;
-			if (mainLayout != null) {
-				this.removeAllComponents();
-			}
+			this.removeAllComponents();
+			this.addComponent(new Hr());
 
-			mainLayout = new VerticalLayout();
-			mainLayout.setSpacing(false);
-
-			List<Resource> lstResource = new ArrayList<Resource>();
+			List<Resource> lstResource;
 			if (currentFolder instanceof ExternalFolder) {
 				lstResource = externalResourceService.getResources(
 						((ExternalFolder) currentFolder).getExternalDrive(),
@@ -517,13 +495,13 @@ public class ResourcesDisplayComponent extends VerticalLayout {
 				lstResource = resourceService.getResources(currentFolder
 						.getPath());
 			}
-			if (currentFolder.getPath().equals(rootPath)
-					&& ResourcesDisplayComponent.this.isNeedLoadExternalDirve) {
-				List<ExternalDrive> lst = externalDriveService
+
+			if (currentFolder.getPath().equals(rootPath)) {
+				List<ExternalDrive> externalDrives = externalDriveService
 						.getExternalDrivesOfUser(AppContext.getUsername());
-				if (lst != null && lst.size() > 0) {
-					for (ExternalDrive drive : lst) {
-						if (drive.getStoragename().equals(StorageNames.DROPBOX)) {
+				if (CollectionUtils.isNotEmpty(externalDrives)) {
+					for (ExternalDrive drive : externalDrives) {
+						if (StorageNames.DROPBOX.equals(drive.getStoragename())) {
 							try {
 								Resource res = externalResourceService
 										.getCurrentResourceByPath(drive, "/");
@@ -532,51 +510,40 @@ public class ResourcesDisplayComponent extends VerticalLayout {
 							} catch (Exception e) {
 								log.error("Error while query resource", e);
 							}
+						} else {
+							throw new MyCollabException(
+									"Do not support any external drive different than Dropbox");
 						}
 					}
 				}
 			}
-			this.addComponent(new Hr());
-			if (lstResource != null && lstResource.size() > 0) {
-				if (lstResource.size() <= PagingResourceWapper.pageItemNum) {
+
+			if (CollectionUtils.isNotEmpty(lstResource)) {
+				if (lstResource.size() <= ResourcePagingNavigator.pageItemNum) {
 					for (Resource res : lstResource) {
-						mainLayout.addComponent(constructOneItemResourceLayout(
-								res, false));
-						mainLayout.addComponent(new Hr());
+						this.addComponent(buildResourceRowComp(res, false));
+						this.addComponent(new Hr());
 					}
-				} else if (lstResource.size() > PagingResourceWapper.pageItemNum) {
-					for (int i = 0; i < PagingResourceWapper.pageItemNum; i++) {
+				} else if (lstResource.size() > ResourcePagingNavigator.pageItemNum) {
+					for (int i = 0; i < ResourcePagingNavigator.pageItemNum; i++) {
 						Resource res = lstResource.get(i);
-						mainLayout.addComponent(constructOneItemResourceLayout(
-								res, false));
-						mainLayout.addComponent(new Hr());
+						this.addComponent(buildResourceRowComp(res, false));
+						this.addComponent(new Hr());
 					}
-					pagingResourceWapper = new PagingResourceWapper(lstResource);
+					pagingResourceWapper = new ResourcePagingNavigator(lstResource);
 					pagingResourceWapper.setWidth("100%");
-					mainLayout.addComponent(pagingResourceWapper);
-					mainLayout.setComponentAlignment(pagingResourceWapper,
+					this.addComponent(pagingResourceWapper);
+					this.setComponentAlignment(pagingResourceWapper,
 							Alignment.MIDDLE_CENTER);
 				}
 			}
-			this.addComponent(mainLayout);
 		}
 
 		private void constructBodySearchActionResult(
 				List<Resource> lstResource, String criteria) {
 			isSearchAction = true;
-			if (mainLayout != null) {
-				this.removeAllComponents();
-			}
-			if (selectedResourcesList != null
-					&& selectedResourcesList.size() > 0)
-				selectedResourcesList.clear();
-			if (listAllCheckBox != null && listAllCheckBox.size() > 0) {
-				listAllCheckBox.clear();
-			}
-			mainLayout = new VerticalLayout();
-			mainLayout.setSpacing(false);
 
-			if (lstResource == null || lstResource.size() == 0) {
+			if (CollectionUtils.isEmpty(lstResource)) {
 				VerticalLayout bodyLayout = new VerticalLayout();
 				bodyLayout.setSpacing(true);
 				bodyLayout.setMargin(true);
@@ -598,9 +565,8 @@ public class ResourcesDisplayComponent extends VerticalLayout {
 				bodyLayout
 						.addComponent(new Label("-Try more general keywords."));
 				bodyLayout.addComponent(new Label("-Try fewer keywords."));
-				mainLayout.addComponent(bodyLayout);
+				this.addComponent(bodyLayout);
 				this.addComponent(new Hr());
-				this.addComponent(mainLayout);
 				return;
 			}
 
@@ -624,16 +590,14 @@ public class ResourcesDisplayComponent extends VerticalLayout {
 			this.addComponent(new Hr());
 			if (lstResource != null && lstResource.size() > 0) {
 				for (Resource res : lstResource) {
-					mainLayout.addComponent(constructOneItemResourceLayout(res,
-							true));
-					mainLayout.addComponent(new Hr());
+					this.addComponent(buildResourceRowComp(res, true));
+					this.addComponent(new Hr());
 				}
 			}
-			this.addComponent(mainLayout);
 		}
 
-		private HorizontalLayout constructOneItemResourceLayout(
-				final Resource res, final boolean isSearchAction) {
+		private HorizontalLayout buildResourceRowComp(final Resource res,
+				final boolean isSearchAction) {
 			final HorizontalLayout layout = new HorizontalLayout();
 			layout.setWidth("100%");
 			layout.setSpacing(true);
@@ -644,7 +608,7 @@ public class ResourcesDisplayComponent extends VerticalLayout {
 			checkbox.setWidth("25px");
 			checkbox.setImmediate(true);
 			checkbox.setStyleName(UIConstants.THEME_ROUND_BUTTON);
-			listAllCheckBox.add(checkbox);
+			checkboxes.add(checkbox);
 
 			checkbox.addValueChangeListener(new ValueChangeListener() {
 				private static final long serialVersionUID = 1L;
@@ -708,8 +672,7 @@ public class ResourcesDisplayComponent extends VerticalLayout {
 						public void buttonClick(ClickEvent event) {
 							if (res instanceof Folder) {
 								ResourcesDisplayComponent.this.baseFolder = (Folder) res;
-								itemResourceContainerLayout
-										.constructBody((Folder) res);
+								resourcesContainer.constructBody((Folder) res);
 								ResourcesDisplayComponent.this.fileBreadCrumb
 										.gotoFolder((Folder) res);
 							} else {
@@ -828,15 +791,15 @@ public class ResourcesDisplayComponent extends VerticalLayout {
 						@Override
 						public void buttonClick(ClickEvent event) {
 							MoveResourceWindow moveResourceWindow = new MoveResourceWindow(
-									res,
-									ResourcesDisplayComponent.this.isNeedLoadExternalDirve);
+									res);
 							UI.getCurrent().addWindow(moveResourceWindow);
 						}
 					});
 			moveBtn.addStyleName("link");
 			filterBtnLayout.addComponent(moveBtn);
 
-			final Button deleteBtn = new Button("Delete",
+			final Button deleteBtn = new Button(
+					AppContext.getMessage(GenericI18Enum.BUTTON_DELETE_LABEL),
 					new Button.ClickListener() {
 						private static final long serialVersionUID = 1L;
 
@@ -927,8 +890,7 @@ public class ResourcesDisplayComponent extends VerticalLayout {
 							.getParentFolder(res.getPath());
 					if (menuTree != null)
 						menuTree.expandItem(containFolder);
-					itemResourceContainerLayout
-							.constructBody((Folder) containFolder);
+					resourcesContainer.constructBody((Folder) containFolder);
 					baseFolder = (Folder) containFolder;
 					fileBreadCrumb.gotoFolder(baseFolder);
 				}
@@ -1031,8 +993,7 @@ public class ResourcesDisplayComponent extends VerticalLayout {
 									}
 								}
 							}
-							itemResourceContainerLayout
-									.constructBody(baseFolder);
+							resourcesContainer.constructBody(baseFolder);
 
 							if ((resource instanceof ExternalFolder || resource instanceof ExternalContent)
 									&& (pagingResourceWapper != null && pagingResourceWapper
@@ -1125,7 +1086,7 @@ public class ResourcesDisplayComponent extends VerticalLayout {
 
 								String baseFolderPath = (baseFolder == null) ? rootPath
 										: baseFolder.getPath();
-								if (itemResourceContainerLayout.isSearchAction) {
+								if (resourcesContainer.isSearchAction) {
 									baseFolderPath = rootPath;
 									baseFolder = (Folder) resourceService
 											.getResource(rootPath);
@@ -1160,8 +1121,7 @@ public class ResourcesDisplayComponent extends VerticalLayout {
 														.newResource("icons/16/ecm/folder_close.png"));
 									}
 								}
-								itemResourceContainerLayout
-										.constructBody(baseFolder);
+								resourcesContainer.constructBody(baseFolder);
 								AddNewFolderWindow.this.close();
 							}
 						}
@@ -1274,8 +1234,7 @@ public class ResourcesDisplayComponent extends VerticalLayout {
 										throw new MyCollabException(e);
 									}
 								}
-								itemResourceContainerLayout
-										.constructBody(baseFolder);
+								resourcesContainer.constructBody(baseFolder);
 								MultiUploadContentWindow.this.close();
 								NotificationUtil
 										.showNotification("Upload successfully.");
@@ -1310,7 +1269,7 @@ public class ResourcesDisplayComponent extends VerticalLayout {
 
 	}
 
-	private class PagingResourceWapper extends CssLayout {
+	private class ResourcePagingNavigator extends CssLayout {
 		private static final long serialVersionUID = 1L;
 		private final int totalItem;
 		public static final int pageItemNum = 15;
@@ -1322,7 +1281,7 @@ public class ResourcesDisplayComponent extends VerticalLayout {
 		private Button currentBtn;
 		private final HorizontalLayout controlBar;
 
-		public PagingResourceWapper(List<Resource> lstResource) {
+		public ResourcePagingNavigator(List<Resource> lstResource) {
 			this.totalItem = lstResource.size();
 			this.currentPage = 1;
 			this.totalPage = (totalItem / pageItemNum) + 1;
@@ -1457,7 +1416,7 @@ public class ResourcesDisplayComponent extends VerticalLayout {
 
 		public void pageChange(int currentPage) {
 			this.currentPage = currentPage;
-			itemResourceContainerLayout.mainLayout.removeAllComponents();
+			resourcesContainer.removeAllComponents();
 			int index = currentPage - 1;
 			int start = (index == 0) ? index : index * pageItemNum;
 			int end = ((start + pageItemNum) > lstResource.size()) ? lstResource
@@ -1465,13 +1424,12 @@ public class ResourcesDisplayComponent extends VerticalLayout {
 
 			for (int i = start; i < end; i++) {
 				Resource res = lstResource.get(i);
-				itemResourceContainerLayout.mainLayout
-						.addComponent(itemResourceContainerLayout
-								.constructOneItemResourceLayout(res, false));
-				itemResourceContainerLayout.mainLayout.addComponent(new Hr());
+				resourcesContainer.addComponent(resourcesContainer
+						.buildResourceRowComp(res, false));
+				resourcesContainer.addComponent(new Hr());
 			}
 			createPageControls();
-			itemResourceContainerLayout.mainLayout.addComponent(this);
+			resourcesContainer.addComponent(this);
 		}
 
 		public int getCurrentPage() {
@@ -1482,20 +1440,18 @@ public class ResourcesDisplayComponent extends VerticalLayout {
 	private class MoveResourceWindow extends AbstractResourceMovingWindow {
 		private static final long serialVersionUID = 1L;
 
-		public MoveResourceWindow(Resource resource,
-				boolean isNeedLoadExternalDrive) {
-			super(resource, isNeedLoadExternalDrive);
+		public MoveResourceWindow(Resource resource) {
+			super(resource);
 		}
 
-		public MoveResourceWindow(List<Resource> lstResource,
-				boolean isNeedLoadExternalDrive) {
-			super(lstResource, isNeedLoadExternalDrive);
+		public MoveResourceWindow(List<Resource> lstResource) {
+			super(lstResource);
 		}
 
 		@Override
 		public void displayAfterMoveSuccess(Folder folder, boolean checking) {
 			fileBreadCrumb.gotoFolder(folder);
-			itemResourceContainerLayout.constructBody(folder);
+			resourcesContainer.constructBody(folder);
 			if (!checking) {
 				NotificationUtil
 						.showNotification("Move asset(s) successfully.");
@@ -1531,9 +1487,6 @@ public class ResourcesDisplayComponent extends VerticalLayout {
 					}
 				}
 			}
-
-			if ((Boolean) ResourcesDisplayComponent.this.selectAllBtn.getData())
-				ResourcesDisplayComponent.this.selectAllBtn.click();
 		}
 
 		@Override

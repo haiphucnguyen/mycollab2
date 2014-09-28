@@ -358,15 +358,16 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 		mainBodyResourceLayout.setSpacing(true);
 
 		resourceSearchPanel = new FileSearchPanel(rootPath);
-		resourceSearchPanel.addSearchResourcesListener(new SearchResourceListener() {
-			private static final long serialVersionUID = 1L;
+		resourceSearchPanel
+				.addSearchResourcesListener(new SearchResourceListener() {
+					private static final long serialVersionUID = 1L;
 
-			@Override
-			public void searchResources(SearchResourceEvent event) {
-				FileSearchCriteria fileSearchCriteria = event.getData();
-				
-			}
-		});
+					@Override
+					public void searchResources(SearchResourceEvent event) {
+						FileSearchCriteria fileSearchCriteria = event.getData();
+
+					}
+				});
 
 		mainBodyResourceLayout.addComponent(resourceSearchPanel);
 		mainBodyResourceLayout.addComponent(resourceHandlerLayout);
@@ -392,7 +393,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 		this.folderNavigator.collapseItem(this.baseFolder);
 
 		resourceHandlerLayout.displayComponent(this.baseFolder, rootPath,
-				rootFolderName, true);
+				rootFolderName);
 
 		resourceHandlerLayout
 				.addSearchHandlerToBreadCrumb(new SearchHandler<FileSearchCriteria>() {

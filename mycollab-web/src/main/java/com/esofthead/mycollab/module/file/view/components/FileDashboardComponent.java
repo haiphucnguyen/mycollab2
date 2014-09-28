@@ -75,7 +75,7 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 		this.baseFolder.setPath(this.rootPath);
 
 		resourceHandlerComponent.displayComponent(this.baseFolder, rootPath,
-				rootFolderName, false);
+				rootFolderName);
 
 		resourceHandlerComponent
 				.addSearchHandlerToBreadCrumb(new SearchHandler<FileSearchCriteria>() {
