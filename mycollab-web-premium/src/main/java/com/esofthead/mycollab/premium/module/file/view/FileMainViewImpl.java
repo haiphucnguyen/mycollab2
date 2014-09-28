@@ -36,6 +36,7 @@ import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
+import com.esofthead.mycollab.vaadin.mvp.ViewScope;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
 import com.esofthead.mycollab.vaadin.ui.Hr;
@@ -45,7 +46,6 @@ import com.esofthead.mycollab.vaadin.ui.Separator;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
 import com.vaadin.data.Container;
-import com.vaadin.event.ItemClickEvent;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
@@ -60,9 +60,6 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
-import com.vaadin.ui.Tree;
-import com.vaadin.ui.Tree.CollapseEvent;
-import com.vaadin.ui.Tree.ExpandEvent;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.Reindeer;
@@ -73,7 +70,7 @@ import com.vaadin.ui.themes.Reindeer;
  * @since 1.0
  * 
  */
-@ViewComponent
+@ViewComponent(scope = ViewScope.PROTOTYPE)
 public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 	private static final long serialVersionUID = 1L;
 
@@ -81,7 +78,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 
 	private static final String illegalFileNamePattern = "[<>:&/\\|?*&]";
 
-	private final Tree menuTree;
+	private final FolderNavigatorMenu folderNavigator;
 
 	private Folder baseFolder;
 	private Folder rootECMFolder;
@@ -174,8 +171,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 			public void buttonClick(ClickEvent event) {
 				mainBodyResourceLayout.removeAllComponents();
 
-				settingConnectionDrive = new SettingConnectionDrive(
-						externalDriveService, externalResourceService);
+				settingConnectionDrive = new SettingConnectionDrive();
 				mainBodyResourceLayout.addComponent(settingConnectionDrive);
 			}
 		});
@@ -211,7 +207,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 							@Override
 							protected void addExternalDrive(
 									ExternalDrive externalDrive) {
-								FileMainViewImpl.this.menuTree
+								FileMainViewImpl.this.folderNavigator
 										.expandItem(rootECMFolder);
 							}
 						};
@@ -249,136 +245,9 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 
 		menuLayout.addComponent(topControlMenuWrapper);
 
-		this.menuTree = new Tree();
-		this.menuTree.setMultiSelect(false);
-		this.menuTree.setSelectable(true);
-		this.menuTree.setImmediate(true);
+		this.folderNavigator = new FolderNavigatorMenu(rootPath);
 
-		menuLayout.addComponent(this.menuTree);
-
-		this.menuTree.addExpandListener(new Tree.ExpandListener() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void nodeExpand(final ExpandEvent event) {
-				Object object = event.getItemId();
-				if (object instanceof Folder) {
-					final Folder expandFolder = (Folder) event.getItemId();
-
-					// if expand folder is root, will load external drives also
-					if (rootPath.equals(expandFolder.getPath())) {
-						List<ExternalDrive> externalDrives = externalDriveService
-								.getExternalDrivesOfUser(AppContext
-										.getUsername());
-						for (ExternalDrive externalDrive : externalDrives) {
-							ExternalFolder externalMapFolder = new ExternalFolder();
-							externalMapFolder.setStorageName(externalDrive
-									.getStoragename());
-							externalMapFolder.setExternalDrive(externalDrive);
-							externalMapFolder.setPath("/");
-							externalMapFolder.setName(externalDrive
-									.getFoldername());
-							expandFolder.addChild(externalMapFolder);
-							menuTree.addItem(externalMapFolder);
-
-							menuTree.setItemIcon(
-									externalMapFolder,
-									MyCollabResource
-											.newResource("icons/16/ecm/dropbox.png"));
-							menuTree.setItemCaption(externalMapFolder,
-									externalMapFolder.getName());
-							menuTree.setParent(externalMapFolder, expandFolder);
-						}
-					}
-					if (expandFolder instanceof ExternalFolder) {
-						List<ExternalFolder> subFolders = externalResourceService
-								.getSubFolders(((ExternalFolder) expandFolder)
-										.getExternalDrive(), expandFolder
-										.getPath());
-						for (final Folder subFolder : subFolders) {
-							expandFolder.addChild(subFolder);
-							menuTree.addItem(subFolder);
-
-							menuTree.setItemIcon(
-									subFolder,
-									MyCollabResource
-											.newResource("icons/16/ecm/dropbox_subfolder.png"));
-							menuTree.setItemCaption(subFolder,
-									subFolder.getName());
-							menuTree.setParent(subFolder, expandFolder);
-						}
-					} else {
-						final List<Folder> subFolders = resourceService
-								.getSubFolders(expandFolder.getPath());
-
-						menuTree.setItemIcon(expandFolder, MyCollabResource
-								.newResource("icons/16/ecm/folder_open.png"));
-
-						if (subFolders != null) {
-							for (final Folder subFolder : subFolders) {
-								expandFolder.addChild(subFolder);
-								menuTree.addItem(subFolder);
-
-								menuTree.setItemIcon(
-										subFolder,
-										MyCollabResource
-												.newResource("icons/16/ecm/folder_close.png"));
-								menuTree.setItemCaption(subFolder,
-										subFolder.getName());
-								menuTree.setParent(subFolder, expandFolder);
-							}
-						}
-					}
-				}
-			}
-		});
-
-		this.menuTree.addCollapseListener(new Tree.CollapseListener() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void nodeCollapse(final CollapseEvent event) {
-				final Folder collapseFolder = (Folder) event.getItemId();
-				Container dataSource = menuTree.getContainerDataSource();
-				final Object[] dataCollectionArray = dataSource.getItemIds()
-						.toArray();
-				for (Object id : dataCollectionArray) {
-					Folder folder = (Folder) id;
-					if (folder.getPath().contains(collapseFolder.getPath())
-							&& !folder.getPath().equals(
-									collapseFolder.getPath())
-							|| collapseFolder.getPath().equals(rootPath)) {
-						if (!folder.getPath().equals(rootPath)) {
-							if (collapseFolder instanceof ExternalFolder
-									&& folder instanceof ExternalFolder) {
-								if (((ExternalFolder) folder)
-										.getExternalDrive()
-										.getAccesstoken()
-										.equals(((ExternalFolder) folder)
-												.getExternalDrive()
-												.getAccesstoken()))
-									dataSource.removeItem(folder);
-							} else if (!(collapseFolder instanceof ExternalFolder)) {
-								dataSource.removeItem(folder);
-							}
-						}
-					}
-				}
-				FileMainViewImpl.this.menuTree
-						.setContainerDataSource(dataSource);
-			}
-		});
-
-		this.menuTree
-				.addItemClickListener(new ItemClickEvent.ItemClickListener() {
-					private static final long serialVersionUID = 1L;
-
-					@Override
-					public void itemClick(final ItemClickEvent event) {
-						final Folder item = (Folder) event.getItemId();
-						gotoFileMainViewPage(item);
-					}
-				});
+		menuLayout.addComponent(this.folderNavigator);
 
 		mainView.addComponent(menuBarContainerHorizontalLayout);
 		mainView.setComponentAlignment(menuBarContainerHorizontalLayout,
@@ -402,14 +271,14 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 		mainBodyResourceLayout.addComponent(filterWapper);
 
 		// this is component handler Resource-----------
-		FileMainViewImpl.this.rootPath = String.format("%d/Documents",
-				AppContext.getAccountId());
-		FileMainViewImpl.this.baseFolder = new Folder();
-		FileMainViewImpl.this.baseFolder.setPath(rootPath);
-		FileMainViewImpl.this.rootECMFolder = baseFolder;
+		this.rootPath = String
+				.format("%d/Documents", AppContext.getAccountId());
+		this.baseFolder = new Folder();
+		this.baseFolder.setPath(rootPath);
+		this.rootECMFolder = baseFolder;
 
 		resourceHandlerLayout = new ResourceHandlerComponent(
-				FileMainViewImpl.this.baseFolder, rootPath, menuTree);
+				FileMainViewImpl.this.baseFolder, rootPath, folderNavigator);
 		mainBodyResourceLayout.addComponent(resourceHandlerLayout);
 
 		mainView.addComponent(mainBodyResourceLayout);
@@ -508,17 +377,17 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 				.newResource("icons/16/ecm/event.png"));
 	}
 
-	public void displayResources(String rootPath, String rootFolderName) {
+	private void displayResources(String rootPath, String rootFolderName) {
 		this.baseFolder = new Folder();
 		this.baseFolder.setPath(rootPath);
 		this.rootECMFolder = this.baseFolder;
 
-		this.menuTree.removeAllItems();
-		this.menuTree.addItem(this.baseFolder);
-		this.menuTree.setItemCaption(this.baseFolder, rootFolderName);
-		this.menuTree.setItemIcon(this.baseFolder,
+		this.folderNavigator.removeAllItems();
+		this.folderNavigator.addItem(this.baseFolder);
+		this.folderNavigator.setItemCaption(this.baseFolder, rootFolderName);
+		this.folderNavigator.setItemIcon(this.baseFolder,
 				MyCollabResource.newResource("icons/16/ecm/folder_close.png"));
-		this.menuTree.collapseItem(this.baseFolder);
+		this.folderNavigator.collapseItem(this.baseFolder);
 
 		resourceHandlerLayout.displayComponent(this.baseFolder, rootPath,
 				rootFolderName, true);
@@ -715,14 +584,8 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 		private final Button connectAccountBtn;
 		private final VerticalLayout bodyLayout;
 		private final VerticalLayout mainLayout;
-		private final ExternalDriveService externalDriveService;
-		private final ExternalResourceService externalResourceService;
 
-		public SettingConnectionDrive(
-				ExternalDriveService externalDriveService,
-				ExternalResourceService externalResourceService) {
-			this.externalDriveService = externalDriveService;
-			this.externalResourceService = externalResourceService;
+		public SettingConnectionDrive() {
 			mainLayout = new VerticalLayout();
 			mainLayout.setSpacing(true);
 			mainLayout.setWidth("100%");
@@ -740,9 +603,9 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 								@Override
 								protected void addExternalDrive(
 										ExternalDrive externalDrive) {
-									FileMainViewImpl.this.menuTree
+									FileMainViewImpl.this.folderNavigator
 											.collapseItem(rootECMFolder);
-									FileMainViewImpl.this.menuTree
+									FileMainViewImpl.this.folderNavigator
 											.expandItem(rootECMFolder);
 									OneDriveConnectionBodyLayout layout = new OneDriveConnectionBodyLayout(
 											externalDrive);
@@ -908,9 +771,8 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 																	.getCurrentResourceByPath(
 																			drive,
 																			"/");
-															if (res != null
-																	&& res instanceof Folder) {
-																Container dataSource = menuTree
+															if (res instanceof Folder) {
+																Container dataSource = FileMainViewImpl.this.folderNavigator
 																		.getContainerDataSource();
 																final Object[] dataCollectionArray = dataSource
 																		.getItemIds()
@@ -927,7 +789,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 																				.removeItem(folder);
 																	}
 																}
-																FileMainViewImpl.this.menuTree
+																FileMainViewImpl.this.folderNavigator
 																		.setContainerDataSource(dataSource);
 															}
 														}
@@ -989,20 +851,22 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 												.getCurrentResourceByPath(
 														drive, "/");
 
-										Container dataSource = menuTree
+										Container dataSource = FileMainViewImpl.this.folderNavigator
 												.getContainerDataSource();
 										final Object[] dataCollectionArray = dataSource
 												.getItemIds().toArray();
 										for (int i = 0; i < dataCollectionArray.length; i++) {
-											Folder folder = (Folder) menuTree
+											Folder folder = (Folder) FileMainViewImpl.this.folderNavigator
 													.getContainerDataSource()
 													.getItemIds().toArray()[i];
 											if (folder.getName().equals(
 													res.getExternalDrive()
 															.getFoldername())
 													&& folder instanceof ExternalFolder) {
-												menuTree.collapseItem(rootECMFolder);
-												menuTree.expandItem(rootECMFolder);
+												FileMainViewImpl.this.folderNavigator
+														.collapseItem(rootECMFolder);
+												FileMainViewImpl.this.folderNavigator
+														.expandItem(rootECMFolder);
 												break;
 											}
 										}
