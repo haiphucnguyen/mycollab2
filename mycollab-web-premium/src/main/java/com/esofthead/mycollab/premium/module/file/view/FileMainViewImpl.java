@@ -31,6 +31,8 @@ import com.esofthead.mycollab.module.file.view.FileMainView;
 import com.esofthead.mycollab.module.file.view.components.FileDownloadWindow;
 import com.esofthead.mycollab.module.file.view.components.ResourceHandlerComponent;
 import com.esofthead.mycollab.module.user.domain.BillingPlan;
+import com.esofthead.mycollab.premium.module.file.view.FolderNavigatorMenu.SelectFolderEvent;
+import com.esofthead.mycollab.premium.module.file.view.FolderNavigatorMenu.SelectedFolderListener;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
@@ -97,6 +99,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 	private final ExternalResourceService externalResourceService;
 
 	public FileMainViewImpl() {
+
 		resourceService = ApplicationContextUtil
 				.getSpringBean(ResourceService.class);
 		externalDriveService = ApplicationContextUtil
@@ -245,6 +248,9 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 
 		menuLayout.addComponent(topControlMenuWrapper);
 
+		this.rootPath = String
+				.format("%d/Documents", AppContext.getAccountId());
+
 		this.folderNavigator = new FolderNavigatorMenu(rootPath);
 
 		menuLayout.addComponent(this.folderNavigator);
@@ -271,8 +277,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 		mainBodyResourceLayout.addComponent(filterWapper);
 
 		// this is component handler Resource-----------
-		this.rootPath = String
-				.format("%d/Documents", AppContext.getAccountId());
+
 		this.baseFolder = new Folder();
 		this.baseFolder.setPath(rootPath);
 		this.rootECMFolder = baseFolder;
@@ -291,7 +296,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 
 	}
 
-	public boolean checkValidFolderName(String value) {
+	private boolean checkValidFolderName(String value) {
 		Pattern pattern = Pattern.compile(illegalFileNamePattern);
 		Matcher matcher = pattern.matcher(value);
 		return matcher.find();
@@ -433,6 +438,18 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 
 	@Override
 	public void display() {
+		folderNavigator.addSelectFolderListener(new SelectedFolderListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void selectFolder(SelectFolderEvent event) {
+				Folder folder = (Folder) event.getData();
+				if (folder != null) {
+					gotoFileMainViewPage(folder);
+				}
+
+			}
+		});
 		displayResources(rootPath, "Documents");
 	}
 

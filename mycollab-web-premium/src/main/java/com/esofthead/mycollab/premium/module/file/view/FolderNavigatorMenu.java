@@ -1,7 +1,11 @@
 package com.esofthead.mycollab.premium.module.file.view;
 
+import java.io.Serializable;
+import java.lang.reflect.Method;
+import java.util.EventListener;
 import java.util.List;
 
+import com.esofthead.mycollab.eventmanager.ApplicationEvent;
 import com.esofthead.mycollab.module.ecm.domain.ExternalDrive;
 import com.esofthead.mycollab.module.ecm.domain.ExternalFolder;
 import com.esofthead.mycollab.module.ecm.domain.Folder;
@@ -14,6 +18,7 @@ import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.vaadin.data.Container;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.ui.Tree;
+import com.vaadin.util.ReflectTools;
 
 /**
  * 
@@ -34,7 +39,7 @@ public class FolderNavigatorMenu extends Tree {
 
 		final ExternalResourceService externalResourceService = ApplicationContextUtil
 				.getSpringBean(ExternalResourceService.class);
-		
+
 		this.setMultiSelect(false);
 		this.setSelectable(true);
 		this.setImmediate(true);
@@ -165,8 +170,33 @@ public class FolderNavigatorMenu extends Tree {
 			@Override
 			public void itemClick(final ItemClickEvent event) {
 				final Folder item = (Folder) event.getItemId();
-//				gotoFileMainViewPage(item);
+				fireEvent(new SelectFolderEvent(FolderNavigatorMenu.this, item));
 			}
 		});
+	}
+
+	public void addSelectFolderListener(SelectedFolderListener listener) {
+		this.addListener(SelectFolderEvent.VIEW_IDENTIFIER,
+				SelectFolderEvent.class, listener,
+				SelectedFolderListener.viewInitMethod);
+	}
+
+	public static interface SelectedFolderListener extends EventListener,
+			Serializable {
+		public static final Method viewInitMethod = ReflectTools.findMethod(
+				SelectedFolderListener.class, "selectFolder",
+				SelectFolderEvent.class);
+
+		void selectFolder(SelectFolderEvent event);
+	}
+
+	public static class SelectFolderEvent extends ApplicationEvent {
+		private static final long serialVersionUID = 1L;
+
+		public static final String VIEW_IDENTIFIER = "selectfolder";
+
+		public SelectFolderEvent(Object source, Folder data) {
+			super(source, data);
+		}
 	}
 }
