@@ -27,6 +27,7 @@ import com.esofthead.mycollab.module.ecm.service.ResourceService;
 import com.esofthead.mycollab.module.file.domain.criteria.FileSearchCriteria;
 import com.esofthead.mycollab.module.file.view.FileMainView;
 import com.esofthead.mycollab.module.file.view.components.FileDownloadWindow;
+import com.esofthead.mycollab.module.file.view.components.FileSearchPanel;
 import com.esofthead.mycollab.module.file.view.components.ResourcesDisplayComponent;
 import com.esofthead.mycollab.module.user.domain.BillingPlan;
 import com.esofthead.mycollab.premium.module.file.view.FolderNavigatorMenu.SelectFolderEvent;
@@ -82,7 +83,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 
 	private final ResourcesDisplayComponent resourceHandlerLayout;
 	private FileActivityStreamComponent fileActivityStreamComponent;
-	private FileSearchPanel filterPanel;
+	private FileSearchPanel resourceSearchPanel;
 	private final Button switchViewBtn;
 
 	private SettingConnectionDrive settingConnectionDrive;
@@ -353,12 +354,9 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 		mainBodyResourceLayout.removeAllComponents();
 		mainBodyResourceLayout.setSpacing(true);
 
-		VerticalLayout filterWapper = new VerticalLayout();
-		filterWapper.setSpacing(true);
-		filterPanel = new FileSearchPanel(rootPath);
-		filterWapper.addComponent(filterPanel);
+		resourceSearchPanel = new FileSearchPanel(rootPath);
 
-		mainBodyResourceLayout.addComponent(filterWapper);
+		mainBodyResourceLayout.addComponent(resourceSearchPanel);
 		mainBodyResourceLayout.addComponent(resourceHandlerLayout);
 
 		resourceHandlerLayout.gotoFolderBreadCumb(baseFolder);

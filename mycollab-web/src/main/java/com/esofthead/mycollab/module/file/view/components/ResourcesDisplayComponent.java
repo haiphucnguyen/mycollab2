@@ -115,6 +115,7 @@ public class ResourcesDisplayComponent extends VerticalLayout {
 	private String rootPath;
 	private List<Resource> selectedResourcesList;
 	private Tree menuTree;
+
 	private PagingResourceWapper pagingResourceWapper;
 	private boolean isNeedLoadExternalDirve = false;
 

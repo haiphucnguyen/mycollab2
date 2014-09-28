@@ -190,7 +190,7 @@ public class FolderNavigatorMenu extends Tree {
 		void selectFolder(SelectFolderEvent event);
 	}
 
-	public static class SelectFolderEvent extends ApplicationEvent {
+	public static class SelectFolderEvent extends ApplicationEvent<Folder> {
 		private static final long serialVersionUID = 1L;
 
 		public static final String VIEW_IDENTIFIER = "selectfolder";

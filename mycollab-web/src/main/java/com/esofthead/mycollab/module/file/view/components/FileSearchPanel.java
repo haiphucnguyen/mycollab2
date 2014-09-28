@@ -1,10 +1,13 @@
-package com.esofthead.mycollab.premium.module.file.view;
+package com.esofthead.mycollab.module.file.view.components;
+
+import java.io.Serializable;
+import java.lang.reflect.Method;
+import java.util.EventListener;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
-import com.esofthead.mycollab.module.ecm.service.ResourceService;
+import com.esofthead.mycollab.eventmanager.ApplicationEvent;
 import com.esofthead.mycollab.module.file.domain.criteria.FileSearchCriteria;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
@@ -20,6 +23,7 @@ import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.themes.Reindeer;
+import com.vaadin.util.ReflectTools;
 
 /**
  * 
@@ -29,8 +33,9 @@ import com.vaadin.ui.themes.Reindeer;
  */
 public class FileSearchPanel extends GenericSearchPanel<FileSearchCriteria> {
 	private static final long serialVersionUID = 1L;
-	
+
 	private String rootPath;
+	private FileSearchCriteria searchCriteria;
 	private HorizontalLayout basicSearchBody;
 
 	public HorizontalLayout getBasicSearchBody() {
@@ -61,8 +66,7 @@ public class FileSearchPanel extends GenericSearchPanel<FileSearchCriteria> {
 			layout.setSpacing(true);
 			layout.setMargin(true);
 
-			final Image titleIcon = new Image(
-					null,
+			final Image titleIcon = new Image(null,
 					MyCollabResource
 							.newResource("icons/24/ecm/document_preview.png"));
 			layout.addComponent(titleIcon);
@@ -96,8 +100,7 @@ public class FileSearchPanel extends GenericSearchPanel<FileSearchCriteria> {
 					Alignment.MIDDLE_CENTER);
 
 			final Button searchBtn = new Button(
-					AppContext
-							.getMessage(GenericI18Enum.BUTTON_SEARCH_LABEL));
+					AppContext.getMessage(GenericI18Enum.BUTTON_SEARCH_LABEL));
 			searchBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 			searchBtn.setIcon(MyCollabResource
 					.newResource("icons/16/search.png"));
@@ -108,34 +111,34 @@ public class FileSearchPanel extends GenericSearchPanel<FileSearchCriteria> {
 
 				@Override
 				public void buttonClick(final ClickEvent event) {
-					ResourceService resourceService = ApplicationContextUtil.getSpringBean(ResourceService.class);
-//					resourceHandlerLayout.setCurrentBaseFolder(baseFolder);
-//					List<Resource> resources = resourceService
-//							.searchResourcesByName(rootPath,
-//									nameField.getValue().toString().trim());
-//					if (CollectionUtils.isNotEmpty(resources)) {
-//						resourceHandlerLayout
-//								.constructBodyItemContainerSearchActionResult(
-//										resources, nameField.getValue()
-//												.toString().trim());
-//						resourceHandlerLayout.initBreadCrumb();
-//						resourceHandlerLayout
-//								.setCurrentBaseFolder((Folder) FileMainViewImpl.this.resourceService
-//										.getResource(rootPath));
-//					} else {
-//						resourceHandlerLayout
-//								.constructBodyItemContainerSearchActionResult(
-//										resources, nameField.getValue()
-//												.toString().trim());
-//					}
+
+					// resourceHandlerLayout.setCurrentBaseFolder(baseFolder);
+					// List<Resource> resources = resourceService
+					// .searchResourcesByName(rootPath,
+					// nameField.getValue().toString().trim());
+					// if (CollectionUtils.isNotEmpty(resources)) {
+					// resourceHandlerLayout
+					// .constructBodyItemContainerSearchActionResult(
+					// resources, nameField.getValue()
+					// .toString().trim());
+					// resourceHandlerLayout.initBreadCrumb();
+					// resourceHandlerLayout
+					// .setCurrentBaseFolder((Folder)
+					// FileMainViewImpl.this.resourceService
+					// .getResource(rootPath));
+					// } else {
+					// resourceHandlerLayout
+					// .constructBodyItemContainerSearchActionResult(
+					// resources, nameField.getValue()
+					// .toString().trim());
+					// }
 				}
 			});
 			UiUtils.addComponent(basicSearchBody, searchBtn,
 					Alignment.MIDDLE_LEFT);
 
 			final Button cancelBtn = new Button(
-					AppContext
-							.getMessage(GenericI18Enum.BUTTON_CLEAR_LABEL));
+					AppContext.getMessage(GenericI18Enum.BUTTON_CLEAR_LABEL));
 
 			cancelBtn.addClickListener(new Button.ClickListener() {
 				private static final long serialVersionUID = 1L;
@@ -153,7 +156,39 @@ public class FileSearchPanel extends GenericSearchPanel<FileSearchCriteria> {
 
 		@Override
 		protected SearchCriteria fillupSearchCriteria() {
-			return null;
+			FileSearchPanel.this.searchCriteria = new FileSearchCriteria();
+			FileSearchPanel.this.searchCriteria.setRootFolder(rootPath);
+			FileSearchPanel.this.searchCriteria.setFileName(this.nameField
+					.getValue().toString().trim());
+			FileSearchPanel.this.searchCriteria.setBaseFolder(rootPath);
+
+			return FileSearchPanel.this.searchCriteria;
+		}
+	}
+
+	public void addSearchResourcesListener(SearchResourceListener listener) {
+		this.addListener(SearchResourceEvent.VIEW_IDENTIFIER,
+				SearchResourceEvent.class, listener,
+				SearchResourceListener.viewInitMethod);
+	}
+
+	public static interface SearchResourceListener extends EventListener,
+			Serializable {
+		public static final Method viewInitMethod = ReflectTools.findMethod(
+				SearchResourceListener.class, "searchResources",
+				SearchResourceEvent.class);
+
+		void searchResources(SearchResourceEvent event);
+	}
+
+	public static class SearchResourceEvent extends
+			ApplicationEvent<FileSearchCriteria> {
+		private static final long serialVersionUID = 1L;
+
+		public static final String VIEW_IDENTIFIER = "searchResources";
+
+		public SearchResourceEvent(Object source, FileSearchCriteria criteria) {
+			super(source, criteria);
 		}
 	}
 
