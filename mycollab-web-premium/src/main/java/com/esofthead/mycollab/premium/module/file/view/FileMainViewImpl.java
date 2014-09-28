@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vaadin.dialogs.ConfirmDialog;
@@ -14,7 +13,6 @@ import org.vaadin.peter.buttongroup.ButtonGroup;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.MyCollabException;
-import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.module.ecm.ResourceUtils;
 import com.esofthead.mycollab.module.ecm.StorageNames;
 import com.esofthead.mycollab.module.ecm.domain.Content;
@@ -29,7 +27,7 @@ import com.esofthead.mycollab.module.ecm.service.ResourceService;
 import com.esofthead.mycollab.module.file.domain.criteria.FileSearchCriteria;
 import com.esofthead.mycollab.module.file.view.FileMainView;
 import com.esofthead.mycollab.module.file.view.components.FileDownloadWindow;
-import com.esofthead.mycollab.module.file.view.components.ResourceHandlerComponent;
+import com.esofthead.mycollab.module.file.view.components.ResourcesDisplayComponent;
 import com.esofthead.mycollab.module.user.domain.BillingPlan;
 import com.esofthead.mycollab.premium.module.file.view.FolderNavigatorMenu.SelectFolderEvent;
 import com.esofthead.mycollab.premium.module.file.view.FolderNavigatorMenu.SelectedFolderListener;
@@ -40,7 +38,6 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.mvp.ViewScope;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
-import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
 import com.esofthead.mycollab.vaadin.ui.Hr;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
@@ -54,8 +51,6 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.CheckBox;
-import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
@@ -64,7 +59,6 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.themes.Reindeer;
 
 /**
  * 
@@ -86,9 +80,9 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 	private Folder rootECMFolder;
 	private String rootPath;
 
-	private final ResourceHandlerComponent resourceHandlerLayout;
+	private final ResourcesDisplayComponent resourceHandlerLayout;
 	private FileActivityStreamComponent fileActivityStreamComponent;
-	private FilterPanel filterPanel;
+	private FileSearchPanel filterPanel;
 	private final Button switchViewBtn;
 
 	private SettingConnectionDrive settingConnectionDrive;
@@ -269,20 +263,13 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 		mainBodyResourceLayout = new VerticalLayout();
 		mainBodyResourceLayout.setSpacing(true);
 
-		VerticalLayout filterWapper = new VerticalLayout();
-		filterWapper.setSpacing(true);
-		filterPanel = new FilterPanel();
-		filterWapper.addComponent(filterPanel);
-
-		mainBodyResourceLayout.addComponent(filterWapper);
-
 		// this is component handler Resource-----------
 
 		this.baseFolder = new Folder();
 		this.baseFolder.setPath(rootPath);
 		this.rootECMFolder = baseFolder;
 
-		resourceHandlerLayout = new ResourceHandlerComponent(
+		resourceHandlerLayout = new ResourcesDisplayComponent(
 				FileMainViewImpl.this.baseFolder, rootPath, folderNavigator);
 		mainBodyResourceLayout.addComponent(resourceHandlerLayout);
 
@@ -368,7 +355,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 
 		VerticalLayout filterWapper = new VerticalLayout();
 		filterWapper.setSpacing(true);
-		filterPanel = new FilterPanel();
+		filterPanel = new FileSearchPanel(rootPath);
 		filterWapper.addComponent(filterPanel);
 
 		mainBodyResourceLayout.addComponent(filterWapper);
@@ -451,148 +438,6 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 			}
 		});
 		displayResources(rootPath, "Documents");
-	}
-
-	class FilterPanel extends GenericSearchPanel<FileSearchCriteria> {
-		private static final long serialVersionUID = 1L;
-		protected FileSearchCriteria searchCriteria;
-		private HorizontalLayout basicSearchBody;
-
-		public HorizontalLayout getBasicSearchBody() {
-			return basicSearchBody;
-		}
-
-		public FilterPanel() {
-		}
-
-		@Override
-		public void attach() {
-			super.attach();
-			this.createBasicSearchLayout();
-		}
-
-		private void createBasicSearchLayout() {
-
-			this.setCompositionRoot(new FileBasicSearchLayout());
-		}
-
-		private HorizontalLayout createSearchTopPanel() {
-			final HorizontalLayout layout = new HorizontalLayout();
-			layout.setWidth("100%");
-			layout.setSpacing(true);
-			layout.setMargin(true);
-
-			final Image titleIcon = new Image(null,
-					MyCollabResource
-							.newResource("icons/24/ecm/document_preview.png"));
-			layout.addComponent(titleIcon);
-			layout.setComponentAlignment(titleIcon, Alignment.MIDDLE_LEFT);
-
-			final Label searchtitle = new Label("Files");
-			searchtitle.setStyleName(Reindeer.LABEL_H2);
-			layout.addComponent(searchtitle);
-			layout.setComponentAlignment(searchtitle, Alignment.MIDDLE_LEFT);
-			layout.setExpandRatio(searchtitle, 1.0f);
-			return layout;
-		}
-
-		@SuppressWarnings("rawtypes")
-		class FileBasicSearchLayout extends BasicSearchLayout {
-
-			@SuppressWarnings("unchecked")
-			public FileBasicSearchLayout() {
-				super(FilterPanel.this);
-			}
-
-			private static final long serialVersionUID = 1L;
-			private TextField nameField;
-			private CheckBox myItemCheckbox;
-
-			@Override
-			public ComponentContainer constructHeader() {
-				return FilterPanel.this.createSearchTopPanel();
-			}
-
-			@Override
-			public ComponentContainer constructBody() {
-				final HorizontalLayout basicSearchBody = new HorizontalLayout();
-				basicSearchBody.setSpacing(true);
-				basicSearchBody.setMargin(true);
-				UiUtils.addComponent(basicSearchBody, new Label("Name:"),
-						Alignment.MIDDLE_LEFT);
-				this.addStyleName("file-list-view");
-				this.nameField = new TextField();
-				this.nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
-				UiUtils.addComponent(basicSearchBody, this.nameField,
-						Alignment.MIDDLE_CENTER);
-
-				this.myItemCheckbox = new CheckBox(
-						AppContext
-								.getMessage(GenericI18Enum.SEARCH_MYITEMS_CHECKBOX));
-				UiUtils.addComponent(basicSearchBody, this.myItemCheckbox,
-						Alignment.MIDDLE_CENTER);
-
-				final Button searchBtn = new Button(
-						AppContext
-								.getMessage(GenericI18Enum.BUTTON_SEARCH_LABEL));
-				searchBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
-				searchBtn.setIcon(MyCollabResource
-						.newResource("icons/16/search.png"));
-
-				searchBtn.addClickListener(new Button.ClickListener() {
-
-					private static final long serialVersionUID = 1L;
-
-					@Override
-					public void buttonClick(final ClickEvent event) {
-						resourceHandlerLayout.setCurrentBaseFolder(baseFolder);
-						List<Resource> lstResource = FileMainViewImpl.this.resourceService
-								.searchResourcesByName(
-										FileMainViewImpl.this.rootPath,
-										nameField.getValue().toString().trim());
-						if (CollectionUtils.isNotEmpty(lstResource)) {
-							resourceHandlerLayout
-									.constructBodyItemContainerSearchActionResult(
-											lstResource, nameField.getValue()
-													.toString().trim());
-							resourceHandlerLayout.initBreadCrumb();
-							resourceHandlerLayout
-									.setCurrentBaseFolder((Folder) FileMainViewImpl.this.resourceService
-											.getResource(rootPath));
-						} else {
-							resourceHandlerLayout
-									.constructBodyItemContainerSearchActionResult(
-											lstResource, nameField.getValue()
-													.toString().trim());
-						}
-					}
-				});
-				UiUtils.addComponent(basicSearchBody, searchBtn,
-						Alignment.MIDDLE_LEFT);
-
-				final Button cancelBtn = new Button(
-						AppContext
-								.getMessage(GenericI18Enum.BUTTON_CLEAR_LABEL));
-
-				cancelBtn.addClickListener(new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
-
-					@Override
-					public void buttonClick(final ClickEvent event) {
-						FileBasicSearchLayout.this.nameField.setValue("");
-					}
-				});
-				cancelBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
-				basicSearchBody.addComponent(cancelBtn);
-
-				return basicSearchBody;
-			}
-
-			@Override
-			protected SearchCriteria fillupSearchCriteria() {
-				return null;
-			}
-		}
 	}
 
 	protected class SettingConnectionDrive extends VerticalLayout {
