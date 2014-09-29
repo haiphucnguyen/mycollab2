@@ -18,6 +18,8 @@ package com.esofthead.mycollab.vaadin.resources;
 
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
+
 import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.module.ecm.domain.Folder;
 import com.esofthead.mycollab.module.ecm.domain.Resource;
@@ -54,11 +56,9 @@ public class StreamDownloadResourceUtil {
 
 	public static StreamSource getStreamSourceSupportExtDrive(
 			List<Resource> lstRes) {
-		if (lstRes == null || lstRes.isEmpty()) {
+		if (CollectionUtils.isEmpty(lstRes)) {
 			throw new UserInvalidInputException(
 					"You must select at least one file");
-		} else if (lstRes.size() == 1) {
-			return new StreamDownloadResourceSupportExtDrive(lstRes);
 		} else {
 			return new StreamDownloadResourceSupportExtDrive(lstRes);
 		}

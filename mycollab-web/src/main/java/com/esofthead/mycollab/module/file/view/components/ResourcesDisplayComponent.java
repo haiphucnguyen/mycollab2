@@ -264,15 +264,13 @@ public class ResourcesDisplayComponent extends VerticalLayout {
 			@Override
 			protected StreamSource buildStreamSource() {
 				return StreamDownloadResourceUtil
-						.getStreamSourceSupportExtDrive(selectedResourcesList,
-								resourcesContainer.isSearchAction);
+						.getStreamSourceSupportExtDrive(selectedResourcesList);
 			}
 
 			@Override
 			public String getFilename() {
-				return StreamDownloadResourceUtil.getDownloadFileName(
-						selectedResourcesList,
-						resourcesContainer.isSearchAction);
+				return StreamDownloadResourceUtil
+						.getDownloadFileName(selectedResourcesList);
 			}
 		};
 		OnDemandFileDownloader downloaderExt = new OnDemandFileDownloader(
@@ -403,14 +401,7 @@ public class ResourcesDisplayComponent extends VerticalLayout {
 									}
 								}
 
-								if (resourcesContainer.isSearchAction) {
-									resourcesContainer
-											.constructBody((Folder) resourceService
-													.getResource(rootPath));
-								} else {
-									resourcesContainer
-											.constructBody(baseFolder);
-								}
+								resourcesContainer.constructBody(baseFolder);
 
 								NotificationUtil
 										.showNotification("Delete content successfully.");
@@ -431,7 +422,6 @@ public class ResourcesDisplayComponent extends VerticalLayout {
 	public void constructBodyItemContainerSearchActionResult(
 			List<Resource> lst, String criteria) {
 		this.selectedResourcesList.clear();
-		resourcesContainer.constructBodySearchActionResult(lst, criteria);
 	}
 
 	public void addSearchHandlerToBreadCrumb(
@@ -447,7 +437,6 @@ public class ResourcesDisplayComponent extends VerticalLayout {
 		private static final long serialVersionUID = 1L;
 
 		private final List<CheckBox> checkboxes;
-		private boolean isSearchAction = false;
 
 		public ResourcesContainer(Folder folder, ResourceService resourceService) {
 			selectedResourcesList = new ArrayList<Resource>();
@@ -463,7 +452,6 @@ public class ResourcesDisplayComponent extends VerticalLayout {
 		}
 
 		private void constructBody(Folder currentFolder) {
-			isSearchAction = false;
 			this.removeAllComponents();
 			this.addComponent(new Hr());
 
@@ -521,62 +509,62 @@ public class ResourcesDisplayComponent extends VerticalLayout {
 			}
 		}
 
-		private void constructBodySearchActionResult(
-				List<Resource> lstResource, String criteria) {
-			isSearchAction = true;
-
-			if (CollectionUtils.isEmpty(lstResource)) {
-				VerticalLayout bodyLayout = new VerticalLayout();
-				bodyLayout.setSpacing(true);
-				bodyLayout.setMargin(true);
-				bodyLayout.setWidth("100%");
-
-				HorizontalLayout messageLayout = new HorizontalLayout();
-				messageLayout.setSpacing(true);
-				messageLayout.addComponent(new Label("Your search- "));
-				Label strSearchLabel = new Label(criteria);
-				strSearchLabel.addStyleName("h2");
-				messageLayout.addComponent(strSearchLabel);
-				messageLayout.addComponent(new Label(
-						" -did not match any documents."));
-				bodyLayout.addComponent(messageLayout);
-				bodyLayout.addComponent(new Label("Suggesstion:"));
-				bodyLayout.addComponent(new Label(
-						"-Make sure that all words are spelled correctly."));
-				bodyLayout.addComponent(new Label("-Try different keywords."));
-				bodyLayout
-						.addComponent(new Label("-Try more general keywords."));
-				bodyLayout.addComponent(new Label("-Try fewer keywords."));
-				this.addComponent(bodyLayout);
-				this.addComponent(new Hr());
-				return;
-			}
-
-			HorizontalLayout messageSearchLayout = new HorizontalLayout();
-			messageSearchLayout.setWidth("100%");
-			Label titleLabel = new Label("Search result: ");
-			titleLabel.setWidth("115px");
-			titleLabel.addStyleName("h3");
-			messageSearchLayout.addComponent(titleLabel);
-
-			Label nameLabel = new Label("Name");
-			nameLabel.addStyleName("h3");
-			nameLabel.setWidth("350px");
-			messageSearchLayout.addComponent(nameLabel);
-			Label pathLabel = new Label("Path");
-			pathLabel.addStyleName("h3");
-			messageSearchLayout.addComponent(pathLabel);
-			messageSearchLayout.setExpandRatio(pathLabel, 1.0f);
-
-			this.addComponent(messageSearchLayout);
-			this.addComponent(new Hr());
-			if (lstResource != null && lstResource.size() > 0) {
-				for (Resource res : lstResource) {
-					this.addComponent(buildResourceRowComp(res, true));
-					this.addComponent(new Hr());
-				}
-			}
-		}
+		// private void constructBodySearchActionResult(
+		// List<Resource> lstResource, String criteria) {
+		// isSearchAction = true;
+		//
+		// if (CollectionUtils.isEmpty(lstResource)) {
+		// VerticalLayout bodyLayout = new VerticalLayout();
+		// bodyLayout.setSpacing(true);
+		// bodyLayout.setMargin(true);
+		// bodyLayout.setWidth("100%");
+		//
+		// HorizontalLayout messageLayout = new HorizontalLayout();
+		// messageLayout.setSpacing(true);
+		// messageLayout.addComponent(new Label("Your search- "));
+		// Label strSearchLabel = new Label(criteria);
+		// strSearchLabel.addStyleName("h2");
+		// messageLayout.addComponent(strSearchLabel);
+		// messageLayout.addComponent(new Label(
+		// " -did not match any documents."));
+		// bodyLayout.addComponent(messageLayout);
+		// bodyLayout.addComponent(new Label("Suggesstion:"));
+		// bodyLayout.addComponent(new Label(
+		// "-Make sure that all words are spelled correctly."));
+		// bodyLayout.addComponent(new Label("-Try different keywords."));
+		// bodyLayout
+		// .addComponent(new Label("-Try more general keywords."));
+		// bodyLayout.addComponent(new Label("-Try fewer keywords."));
+		// this.addComponent(bodyLayout);
+		// this.addComponent(new Hr());
+		// return;
+		// }
+		//
+		// HorizontalLayout messageSearchLayout = new HorizontalLayout();
+		// messageSearchLayout.setWidth("100%");
+		// Label titleLabel = new Label("Search result: ");
+		// titleLabel.setWidth("115px");
+		// titleLabel.addStyleName("h3");
+		// messageSearchLayout.addComponent(titleLabel);
+		//
+		// Label nameLabel = new Label("Name");
+		// nameLabel.addStyleName("h3");
+		// nameLabel.setWidth("350px");
+		// messageSearchLayout.addComponent(nameLabel);
+		// Label pathLabel = new Label("Path");
+		// pathLabel.addStyleName("h3");
+		// messageSearchLayout.addComponent(pathLabel);
+		// messageSearchLayout.setExpandRatio(pathLabel, 1.0f);
+		//
+		// this.addComponent(messageSearchLayout);
+		// this.addComponent(new Hr());
+		// if (lstResource != null && lstResource.size() > 0) {
+		// for (Resource res : lstResource) {
+		// this.addComponent(buildResourceRowComp(res, true));
+		// this.addComponent(new Hr());
+		// }
+		// }
+		// }
 
 		private HorizontalLayout buildResourceRowComp(final Resource res,
 				final boolean isSearchAction) {
@@ -750,7 +738,7 @@ public class ResourcesDisplayComponent extends VerticalLayout {
 					List<Resource> lstRes = new ArrayList<Resource>();
 					lstRes.add(res);
 					return StreamDownloadResourceUtil
-							.getStreamSourceSupportExtDrive(lstRes, false);
+							.getStreamSourceSupportExtDrive(lstRes);
 				}
 
 				@Override
@@ -1052,25 +1040,17 @@ public class ResourcesDisplayComponent extends VerticalLayout {
 
 								String baseFolderPath = (baseFolder == null) ? rootPath
 										: baseFolder.getPath();
-								if (resourcesContainer.isSearchAction) {
-									baseFolderPath = rootPath;
-									baseFolder = (Folder) resourceService
-											.getResource(rootPath);
-								}
-								Folder newFolder = null;
+
 								if (baseFolder instanceof ExternalFolder) {
 									String path = baseFolder.getPath() + "/"
 											+ folderVal;
-									newFolder = externalResourceService
-											.createFolder(
-													((ExternalFolder) baseFolder)
-															.getExternalDrive(),
-													path);
+									externalResourceService.createFolder(
+											((ExternalFolder) baseFolder)
+													.getExternalDrive(), path);
 								} else {
-									newFolder = resourceService
-											.createNewFolder(baseFolderPath,
-													folderVal,
-													AppContext.getUsername());
+									resourceService.createNewFolder(
+											baseFolderPath, folderVal,
+											AppContext.getUsername());
 								}
 								resourcesContainer.constructBody(baseFolder);
 								AddNewFolderWindow.this.close();

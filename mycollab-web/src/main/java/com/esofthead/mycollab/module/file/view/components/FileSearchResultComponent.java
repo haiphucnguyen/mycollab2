@@ -184,7 +184,7 @@ public abstract class FileSearchResultComponent extends VerticalLayout {
 					lstRes.add(resource);
 
 					final StreamResource downloadResource = StreamDownloadResourceUtil
-							.getStreamResourceSupportExtDrive(lstRes, false);
+							.getStreamResourceSupportExtDrive(lstRes);
 					FileDownloader fileDownloader = new FileDownloader(
 							downloadResource);
 					fileDownloader.extend(downloadBtn);
@@ -442,7 +442,8 @@ public abstract class FileSearchResultComponent extends VerticalLayout {
 					});
 			saveBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
 
-			UiUtils.addComponent(controlButton, saveBtn, Alignment.MIDDLE_CENTER);
+			UiUtils.addComponent(controlButton, saveBtn,
+					Alignment.MIDDLE_CENTER);
 
 			final Button cancelBtn = new Button(
 					AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL_LABEL),
@@ -455,7 +456,8 @@ public abstract class FileSearchResultComponent extends VerticalLayout {
 						}
 					});
 			cancelBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
-			UiUtils.addComponent(controlButton, cancelBtn, Alignment.MIDDLE_CENTER);
+			UiUtils.addComponent(controlButton, cancelBtn,
+					Alignment.MIDDLE_CENTER);
 			UiUtils.addComponent(layout, controlButton, Alignment.MIDDLE_CENTER);
 			this.setContent(layout);
 		}
