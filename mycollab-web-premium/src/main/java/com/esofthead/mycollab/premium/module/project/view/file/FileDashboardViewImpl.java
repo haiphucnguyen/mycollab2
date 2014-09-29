@@ -22,12 +22,16 @@ public class FileDashboardViewImpl extends AbstractPageView implements
 		FileDashboardView {
 	private static final long serialVersionUID = 1L;
 
-	private FileDashboardComponent dashboardComponent;
-
-	public FileDashboardViewImpl() {
+	@Override
+	public void displayProjectFiles() {
 		this.setWidth("100%");
 		this.setMargin(new MarginInfo(false, true, false, true));
-		dashboardComponent = new FileDashboardComponent() {
+		final int projectId = CurrentProjectVariables.getProjectId();
+		String rootPath = String.format("%d/project/%d",
+				AppContext.getAccountId(), projectId);
+
+		FileDashboardComponent dashboardComponent = new FileDashboardComponent(
+				rootPath) {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -41,15 +45,8 @@ public class FileDashboardViewImpl extends AbstractPageView implements
 		};
 		dashboardComponent.setWidth("100%");
 		this.addComponent(dashboardComponent);
-	}
 
-	@Override
-	public void displayProjectFiles() {
-		final int projectId = CurrentProjectVariables.getProjectId();
-		String rootPath = String.format("%d/project/%d",
-				AppContext.getAccountId(), projectId);
-		String rootName = CurrentProjectVariables.getProject().getName();
-		dashboardComponent.displayResources(rootPath, rootName);
+		dashboardComponent.displayResources();
 	}
 
 }

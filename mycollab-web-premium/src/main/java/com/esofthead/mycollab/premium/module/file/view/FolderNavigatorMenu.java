@@ -59,11 +59,11 @@ public class FolderNavigatorMenu extends Tree {
 								.getExternalDrivesOfUser(AppContext
 										.getUsername());
 						for (ExternalDrive externalDrive : externalDrives) {
-							ExternalFolder externalMapFolder = new ExternalFolder();
+							ExternalFolder externalMapFolder = new ExternalFolder(
+									"/");
 							externalMapFolder.setStorageName(externalDrive
 									.getStoragename());
 							externalMapFolder.setExternalDrive(externalDrive);
-							externalMapFolder.setPath("/");
 							externalMapFolder.setName(externalDrive
 									.getFoldername());
 							expandFolder.addChild(externalMapFolder);
@@ -190,7 +190,7 @@ public class FolderNavigatorMenu extends Tree {
 		void selectFolder(SelectFolderEvent event);
 	}
 
-	public static class SelectFolderEvent extends ApplicationEvent<Folder> {
+	public static class SelectFolderEvent extends ApplicationEvent {
 		private static final long serialVersionUID = 1L;
 
 		public static final String VIEW_IDENTIFIER = "selectfolder";

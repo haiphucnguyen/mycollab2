@@ -104,13 +104,13 @@ public class FileDownloadWindow extends Window {
 		final HorizontalLayout buttonControls = new HorizontalLayout();
 		buttonControls.setSpacing(true);
 		buttonControls.setMargin(new MarginInfo(true, false, true, false));
-		
+
 		final Button downloadBtn = new Button("Download");
 		List<Resource> resources = new ArrayList<Resource>();
 		resources.add(content);
 
 		StreamResource downloadResource = StreamDownloadResourceUtil
-				.getStreamResourceSupportExtDrive(resources, false);
+				.getStreamResourceSupportExtDrive(resources);
 
 		FileDownloader fileDownloader = new FileDownloader(downloadResource);
 		fileDownloader.extend(downloadBtn);

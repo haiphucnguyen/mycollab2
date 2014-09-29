@@ -33,16 +33,21 @@ import com.vaadin.ui.VerticalLayout;
  */
 public abstract class FileDashboardComponent extends VerticalLayout {
 	private static final long serialVersionUID = 1L;
+
 	private String rootPath;
+	private Folder baseFolder;
 
 	private final FileSearchPanel fileSearchPanel;
-	private ResourcesDisplayComponent resourceHandlerComponent;
-	private Folder baseFolder;
+	private ResourcesDisplayComponent resourceDisplayComponent;
 	private HorizontalLayout resourceContainer;
 
 	private final ResourceService resourceService;
 
-	public FileDashboardComponent() {
+	public FileDashboardComponent(String rootPath) {
+		this.rootPath = rootPath;
+
+		this.baseFolder = new Folder(this.rootPath);
+
 		this.setWidth("100%");
 		this.setSpacing(true);
 		this.resourceService = ApplicationContextUtil
@@ -54,13 +59,14 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 		resourceContainer = new HorizontalLayout();
 		resourceContainer.setSizeFull();
 
-		this.resourceHandlerComponent = new ResourcesDisplayComponent(
-				baseFolder, rootPath, null);
-		this.resourceHandlerComponent.setSpacing(true);
-		resourceContainer.addComponent(resourceHandlerComponent);
-		resourceContainer.setComponentAlignment(resourceHandlerComponent,
+		this.resourceDisplayComponent = new ResourcesDisplayComponent(rootPath,
+				baseFolder);
+
+		this.resourceDisplayComponent.setSpacing(true);
+		resourceContainer.addComponent(resourceDisplayComponent);
+		resourceContainer.setComponentAlignment(resourceDisplayComponent,
 				Alignment.TOP_LEFT);
-		resourceContainer.setExpandRatio(resourceHandlerComponent, 1.0f);
+		resourceContainer.setExpandRatio(resourceDisplayComponent, 1.0f);
 
 		this.addComponent(resourceContainer);
 
@@ -68,29 +74,20 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 
 	abstract protected void doSearch(FileSearchCriteria searchCriteria);
 
-	public void displayResources(String rootPath, String rootFolderName) {
-		this.rootPath = rootPath;
+	public void displayResources() {
+		resourceDisplayComponent.displayComponent(baseFolder, rootPath,
+				"Documents");
 
-		this.baseFolder = new Folder();
-		this.baseFolder.setPath(this.rootPath);
-
-		resourceHandlerComponent.displayComponent(this.baseFolder, rootPath,
-				rootFolderName);
-
-		resourceHandlerComponent
+		resourceDisplayComponent
 				.addSearchHandlerToBreadCrumb(new SearchHandler<FileSearchCriteria>() {
 					@Override
 					public void onSearch(FileSearchCriteria criteria) {
 						Folder selectedFolder = null;
-						selectedFolder = (Folder) FileDashboardComponent.this.resourceService
+						selectedFolder = (Folder) resourceService
 								.getResource(criteria.getBaseFolder());
-						resourceHandlerComponent
+						resourceDisplayComponent
 								.constructBodyItemContainer(selectedFolder);
-						resourceHandlerComponent
-								.gotoFolderBreadCumb(selectedFolder);
 						FileDashboardComponent.this.baseFolder = selectedFolder;
-						resourceHandlerComponent
-								.setCurrentBaseFolder(selectedFolder);
 					}
 				});
 	}

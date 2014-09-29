@@ -268,12 +268,11 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 
 		// this is component handler Resource-----------
 
-		this.baseFolder = new Folder();
-		this.baseFolder.setPath(rootPath);
+		this.baseFolder = new Folder(rootPath);
 		this.rootECMFolder = baseFolder;
 
-		resourceHandlerLayout = new ResourcesDisplayComponent(
-				FileMainViewImpl.this.baseFolder, rootPath, folderNavigator);
+		resourceHandlerLayout = new ResourcesDisplayComponent(rootPath,
+				baseFolder);
 		mainBodyResourceLayout.addComponent(resourceHandlerLayout);
 
 		mainView.addComponent(mainBodyResourceLayout);
@@ -364,7 +363,8 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 
 					@Override
 					public void searchResources(SearchResourceEvent event) {
-						FileSearchCriteria fileSearchCriteria = event.getData();
+						FileSearchCriteria fileSearchCriteria = (FileSearchCriteria) event
+								.getData();
 
 					}
 				});
@@ -372,7 +372,6 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 		mainBodyResourceLayout.addComponent(resourceSearchPanel);
 		mainBodyResourceLayout.addComponent(resourceHandlerLayout);
 
-		resourceHandlerLayout.gotoFolderBreadCumb(baseFolder);
 		resourceHandlerLayout.constructBodyItemContainer(baseFolder);
 
 		switchViewBtn.setDescription("Event");
@@ -381,8 +380,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 	}
 
 	private void displayResources(String rootPath, String rootFolderName) {
-		this.baseFolder = new Folder();
-		this.baseFolder.setPath(rootPath);
+		this.baseFolder = new Folder(rootPath);
 		this.rootECMFolder = this.baseFolder;
 
 		this.folderNavigator.removeAllItems();
@@ -423,11 +421,8 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 							Folder resultFolder = (Folder) selectedFolder;
 							resourceHandlerLayout
 									.constructBodyItemContainer(resultFolder);
-							resourceHandlerLayout
-									.gotoFolderBreadCumb(resultFolder);
+
 							FileMainViewImpl.this.baseFolder = resultFolder;
-							resourceHandlerLayout
-									.setCurrentBaseFolder(resultFolder);
 						}
 
 					}
