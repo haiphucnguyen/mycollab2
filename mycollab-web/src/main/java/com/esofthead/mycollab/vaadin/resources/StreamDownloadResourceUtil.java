@@ -35,12 +35,12 @@ import com.vaadin.server.StreamResource.StreamSource;
 public class StreamDownloadResourceUtil {
 
 	public static String getDownloadFileName(List<Resource> lstRes) {
-		if (lstRes == null || lstRes.isEmpty()) {
-			return "";
+		if (CollectionUtils.isEmpty(lstRes)) {
+			throw new UserInvalidInputException("No selected file to download");
 		} else if (lstRes.size() == 1) {
-			String name = (lstRes.get(0) instanceof Folder) ? lstRes.get(0)
-					.getName() + ".zip" : lstRes.get(0).getName();
-			return name;
+			Resource resource = lstRes.get(0);
+			return (resource instanceof Folder) ? resource + ".zip" : resource
+					.getName();
 		} else {
 			return "out.zip";
 		}

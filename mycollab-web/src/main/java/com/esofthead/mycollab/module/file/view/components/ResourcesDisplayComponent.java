@@ -701,13 +701,7 @@ public class ResourcesDisplayComponent extends VerticalLayout {
 			layout.setComponentAlignment(informationLayout,
 					Alignment.MIDDLE_LEFT);
 
-			if (isSearchAction) {
-				HorizontalLayout resourcePathLayout = constructBreadcrumbPathLayout(res);
-				layout.addComponent(resourcePathLayout);
-				layout.setExpandRatio(resourcePathLayout, 1.0f);
-			} else {
-				layout.setExpandRatio(informationLayout, 1.0f);
-			}
+			layout.setExpandRatio(informationLayout, 1.0f);
 
 			final PopupButton resourceSettingPopupBtn = new PopupButton();
 
@@ -797,77 +791,6 @@ public class ResourcesDisplayComponent extends VerticalLayout {
 			layout.addComponent(resourceSettingPopupBtn);
 			layout.setComponentAlignment(resourceSettingPopupBtn,
 					Alignment.MIDDLE_RIGHT);
-			return layout;
-		}
-
-		private HorizontalLayout constructBreadcrumbPathLayout(
-				final Resource res) {
-			HorizontalLayout layout = new HorizontalLayout();
-			layout.setSpacing(true);
-
-			String parentFolderPath = resourceService.getParentFolder(
-					res.getPath()).getPath();
-			StringBuffer parentFolderPathStrBuffer;
-			if (parentFolderPath.equals(rootPath)) {
-				parentFolderPathStrBuffer = new StringBuffer(rootFolderName);
-			} else
-				parentFolderPathStrBuffer = new StringBuffer(rootFolderName
-						+ parentFolderPath.substring(parentFolderPath.indexOf(
-								"/", 2)));
-			if (parentFolderPathStrBuffer.toString().split("/").length > 6) {
-				String[] parentFolderPathArray = parentFolderPath.split("/");
-				parentFolderPathStrBuffer = new StringBuffer("");
-				parentFolderPathStrBuffer
-						.append(rootFolderName)
-						.append("/")
-						.append((parentFolderPathArray[2].length() > 25) ? parentFolderPathArray[2]
-								.substring(0, 10) + "..."
-								: parentFolderPathArray[2])
-						.append("/")
-						.append((parentFolderPathArray[3].length() > 25) ? parentFolderPathArray[3]
-								.substring(0, 10) + "..."
-								: parentFolderPathArray[3])
-						.append("/")
-						.append("...")
-						.append("/")
-						.append((parentFolderPathArray[parentFolderPathArray.length - 2]
-								.length() > 25) ? parentFolderPathArray[parentFolderPathArray.length - 2]
-								.substring(0, 10) + "..."
-								: parentFolderPathArray[parentFolderPathArray.length - 2])
-						.append("/")
-						.append((parentFolderPathArray[parentFolderPathArray.length - 1]
-								.length() > 25) ? parentFolderPathArray[parentFolderPathArray.length - 1]
-								.substring(0, 10) + "..."
-								: parentFolderPathArray[parentFolderPathArray.length - 1]);
-			}
-			Label pathLabel = new Label(parentFolderPathStrBuffer.toString());
-			pathLabel.addStyleName("h3");
-			UiUtils.addComponent(layout, pathLabel, Alignment.MIDDLE_CENTER);
-
-			HorizontalLayout iconWapper = new HorizontalLayout();
-			iconWapper.setMargin(new MarginInfo(false, false, true, false));
-
-			Button toContainFolder = new Button();
-			toContainFolder.setIcon(MyCollabResource
-					.newResource("icons/48/ecm/folder_arrow_right.png"));
-			toContainFolder.setDescription("Go to folder");
-			toContainFolder.addClickListener(new Button.ClickListener() {
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public void buttonClick(ClickEvent event) {
-					Resource containFolder = resourceService
-							.getParentFolder(res.getPath());
-
-					resourcesContainer.constructBody((Folder) containFolder);
-					baseFolder = (Folder) containFolder;
-					fileBreadCrumb.gotoFolder(baseFolder);
-				}
-			});
-			toContainFolder.addStyleName("link");
-			iconWapper.addComponent(toContainFolder);
-			UiUtils.addComponent(layout, iconWapper, Alignment.MIDDLE_CENTER);
-
 			return layout;
 		}
 	}
