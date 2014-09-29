@@ -364,7 +364,8 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 
 					@Override
 					public void searchResources(SearchResourceEvent event) {
-						FileSearchCriteria fileSearchCriteria = event.getData();
+						FileSearchCriteria fileSearchCriteria = (FileSearchCriteria) event
+								.getData();
 
 					}
 				});

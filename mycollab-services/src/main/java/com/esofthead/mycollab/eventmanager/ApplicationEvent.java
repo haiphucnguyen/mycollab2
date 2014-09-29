@@ -26,17 +26,17 @@ import java.util.EventObject;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-public class ApplicationEvent<T> extends EventObject {
+public class ApplicationEvent extends EventObject {
 	private static final long serialVersionUID = 1L;
 
-	private T data;
+	private Object data;
 
-	public ApplicationEvent(Object source, T data) {
+	public ApplicationEvent(Object source, Object data) {
 		super(source);
 		this.data = data;
 	}
 
-	public T getData() {
+	public Object getData() {
 		return data;
 	}
 }
