@@ -178,6 +178,7 @@ public class ResourcesDisplayComponent extends VerticalLayout {
 		Button goUpBtn = new Button("Up");
 		goUpBtn.setIcon(MyCollabResource
 				.newResource("icons/16/ecm/up_to_root.png"));
+		
 		goUpBtn.addClickListener(new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 

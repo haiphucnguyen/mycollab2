@@ -23,6 +23,7 @@ import com.esofthead.mycollab.module.file.view.components.FileDashboardComponent
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
+import com.esofthead.mycollab.vaadin.mvp.ViewScope;
 import com.vaadin.shared.ui.MarginInfo;
 
 /**
@@ -31,17 +32,18 @@ import com.vaadin.shared.ui.MarginInfo;
  * @since 1.0
  *
  */
-@ViewComponent
+@ViewComponent(scope = ViewScope.PROTOTYPE)
 public class FileDashboardViewImpl extends AbstractPageView implements
 		FileDashboardView {
 	private static final long serialVersionUID = 1L;
 
-	private FileDashboardComponent dashboardComponent;
-
-	public FileDashboardViewImpl() {
+	@Override
+	public void displayFiles() {
 		this.setWidth("100%");
 		this.setMargin(new MarginInfo(false, true, false, true));
-		dashboardComponent = new FileDashboardComponent() {
+		String rootPath = String.format("%d/.crm", AppContext.getAccountId());
+		FileDashboardComponent dashboardComponent = new FileDashboardComponent(
+				rootPath) {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -55,11 +57,6 @@ public class FileDashboardViewImpl extends AbstractPageView implements
 		dashboardComponent.setWidth("100%");
 		this.addComponent(dashboardComponent);
 
-	}
-
-	@Override
-	public void displayFiles() {
-		String rootPath = String.format("%d/.crm", AppContext.getAccountId());
-		dashboardComponent.displayResources(rootPath, "Documents");
+		dashboardComponent.displayResources();
 	}
 }

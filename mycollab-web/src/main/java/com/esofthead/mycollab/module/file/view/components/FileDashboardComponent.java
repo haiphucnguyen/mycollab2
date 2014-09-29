@@ -33,16 +33,22 @@ import com.vaadin.ui.VerticalLayout;
  */
 public abstract class FileDashboardComponent extends VerticalLayout {
 	private static final long serialVersionUID = 1L;
+
 	private String rootPath;
+	private Folder baseFolder;
 
 	private final FileSearchPanel fileSearchPanel;
 	private ResourcesDisplayComponent resourceDisplayComponent;
-	private Folder baseFolder;
 	private HorizontalLayout resourceContainer;
 
 	private final ResourceService resourceService;
 
-	public FileDashboardComponent() {
+	public FileDashboardComponent(String rootPath) {
+		this.rootPath = rootPath;
+
+		this.baseFolder = new Folder();
+		this.baseFolder.setPath(this.rootPath);
+
 		this.setWidth("100%");
 		this.setSpacing(true);
 		this.resourceService = ApplicationContextUtil
@@ -56,6 +62,7 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 
 		this.resourceDisplayComponent = new ResourcesDisplayComponent(
 				baseFolder, rootPath);
+
 		this.resourceDisplayComponent.setSpacing(true);
 		resourceContainer.addComponent(resourceDisplayComponent);
 		resourceContainer.setComponentAlignment(resourceDisplayComponent,
@@ -68,21 +75,16 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 
 	abstract protected void doSearch(FileSearchCriteria searchCriteria);
 
-	public void displayResources(String rootPath, String rootFolderName) {
-		this.rootPath = rootPath;
-
-		this.baseFolder = new Folder();
-		this.baseFolder.setPath(this.rootPath);
-
-		resourceDisplayComponent.displayComponent(this.baseFolder, rootPath,
-				rootFolderName);
+	public void displayResources() {
+		resourceDisplayComponent.displayComponent(baseFolder, rootPath,
+				"Documents");
 
 		resourceDisplayComponent
 				.addSearchHandlerToBreadCrumb(new SearchHandler<FileSearchCriteria>() {
 					@Override
 					public void onSearch(FileSearchCriteria criteria) {
 						Folder selectedFolder = null;
-						selectedFolder = (Folder) FileDashboardComponent.this.resourceService
+						selectedFolder = (Folder) resourceService
 								.getResource(criteria.getBaseFolder());
 						resourceDisplayComponent
 								.constructBodyItemContainer(selectedFolder);
