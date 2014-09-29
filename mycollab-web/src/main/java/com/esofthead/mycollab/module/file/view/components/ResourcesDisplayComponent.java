@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.EventListener;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -69,6 +70,8 @@ import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.vaadin.ui.Separator;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
+import com.google.common.base.Predicate;
+import com.google.common.collect.Collections2;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.event.LayoutEvents.LayoutClickEvent;
@@ -254,12 +257,14 @@ public class ResourcesDisplayComponent extends VerticalLayout {
 
 			@Override
 			protected StreamSource buildStreamSource() {
+				Collection<Resource> selectedResources = getSelectedResources();
 				return StreamDownloadResourceUtil
 						.getStreamSourceSupportExtDrive(selectedResources);
 			}
 
 			@Override
 			public String getFilename() {
+				Collection<Resource> selectedResources = getSelectedResources();
 				return StreamDownloadResourceUtil
 						.getDownloadFileName(selectedResources);
 			}
@@ -281,13 +286,14 @@ public class ResourcesDisplayComponent extends VerticalLayout {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				if (selectedResources.size() > 0) {
+				Collection<Resource> selectedResources = getSelectedResources();
+				if (CollectionUtils.isNotEmpty(selectedResources)) {
 					MoveResourceWindow moveResourceWindow = new MoveResourceWindow(
 							selectedResources);
 					UI.getCurrent().addWindow(moveResourceWindow);
 				} else {
 					NotificationUtil
-							.showWarningNotification("Please select item to move");
+							.showWarningNotification("Please select at least one item to move");
 				}
 			}
 		});
@@ -306,7 +312,8 @@ public class ResourcesDisplayComponent extends VerticalLayout {
 
 					@Override
 					public void buttonClick(ClickEvent event) {
-						if (selectedResources.size() == 0) {
+						Collection<Resource> selectedResources = getSelectedResources();
+						if (CollectionUtils.isEmpty(selectedResources)) {
 							NotificationUtil
 									.showWarningNotification("Please select at least one item to delete");
 						} else {
@@ -359,30 +366,22 @@ public class ResourcesDisplayComponent extends VerticalLayout {
 
 					@Override
 					public void onClose(final ConfirmDialog dialog) {
-						if (dialog.isConfirmed()) {
-							if (CollectionUtils.isNotEmpty(selectedResources)) {
+						Collection<Resource> selectedResources = getSelectedResources();
+						if (CollectionUtils.isNotEmpty(selectedResources)) {
+							if (dialog.isConfirmed()) {
 								for (Resource res : selectedResources) {
-									if (res instanceof ExternalFolder
-											|| res instanceof ExternalContent) {
-										if (res instanceof ExternalFolder) {
-											ResourcesDisplayComponent.this.externalResourceService
-													.deleteResource(
-															((ExternalFolder) res)
-																	.getExternalDrive(),
-															res.getPath());
-										} else
-											ResourcesDisplayComponent.this.externalResourceService
-													.deleteResource(
-															((ExternalContent) res)
-																	.getExternalDrive(),
-															res.getPath());
+									if (res.isExternalResource()) {
+										externalResourceService.deleteResource(
+												((ExternalFolder) res)
+														.getExternalDrive(),
+												res.getPath());
 									} else {
 										if (res instanceof Folder) {
 											fireEvent(new ResourceRemovedEvent(
 													ResourcesDisplayComponent.this,
 													res));
 										}
-										ResourcesDisplayComponent.this.resourceService.removeResource(
+										resourceService.removeResource(
 												res.getPath(),
 												AppContext.getUsername(),
 												AppContext.getAccountId());
@@ -417,6 +416,10 @@ public class ResourcesDisplayComponent extends VerticalLayout {
 
 	public void initBreadCrumb() {
 		fileBreadCrumb.initBreadcrumb();
+	}
+
+	public Collection<Resource> getSelectedResources() {
+		return resourcesContainer.getSelectedResourceCollection();
 	}
 
 	private class ResourcesContainer extends VerticalLayout {
@@ -718,6 +721,17 @@ public class ResourcesDisplayComponent extends VerticalLayout {
 			layout.setComponentAlignment(resourceSettingPopupBtn,
 					Alignment.MIDDLE_RIGHT);
 			return layout;
+		}
+
+		Collection<Resource> getSelectedResourceCollection() {
+			Collection<Resource> selectedResources = Collections2.filter(
+					resources, new Predicate<Resource>() {
+						@Override
+						public boolean apply(Resource input) {
+							return (input.isSelected() == true);
+						}
+					});
+			return selectedResources;
 		}
 	}
 
@@ -1200,7 +1214,7 @@ public class ResourcesDisplayComponent extends VerticalLayout {
 			super(resource);
 		}
 
-		public MoveResourceWindow(List<Resource> lstResource) {
+		public MoveResourceWindow(Collection<Resource> lstResource) {
 			super(lstResource);
 		}
 
