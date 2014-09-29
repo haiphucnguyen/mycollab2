@@ -79,8 +79,9 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 
 	private final FolderNavigatorMenu folderNavigator;
 
-	private Folder baseFolder;
 	private Folder rootECMFolder;
+
+	private Folder rootFolder;
 	private String rootPath;
 
 	private final ResourcesDisplayComponent resourceHandlerLayout;
@@ -154,7 +155,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 					switchViewBtn.setDescription("Event");
 					switchViewBtn.setIcon(MyCollabResource
 							.newResource("icons/16/ecm/event.png"));
-					gotoFileMainViewPage(baseFolder);
+					gotoFileMainViewPage(rootFolder);
 				}
 			}
 		});
@@ -268,11 +269,11 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 
 		// this is component handler Resource-----------
 
-		this.baseFolder = new Folder(rootPath);
-		this.rootECMFolder = baseFolder;
+		this.rootFolder = new Folder(rootPath);
+		this.rootECMFolder = rootFolder;
 
 		resourceHandlerLayout = new ResourcesDisplayComponent(rootPath,
-				baseFolder);
+				rootFolder);
 		mainBodyResourceLayout.addComponent(resourceHandlerLayout);
 
 		mainView.addComponent(mainBodyResourceLayout);
@@ -351,7 +352,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 	}
 
 	private void gotoFileMainViewPage(Folder baseFolder) {
-		this.baseFolder = baseFolder;
+		this.rootFolder = baseFolder;
 
 		mainBodyResourceLayout.removeAllComponents();
 		mainBodyResourceLayout.setSpacing(true);
@@ -380,17 +381,17 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 	}
 
 	private void displayResources(String rootPath, String rootFolderName) {
-		this.baseFolder = new Folder(rootPath);
-		this.rootECMFolder = this.baseFolder;
+		this.rootFolder = new Folder(rootPath);
+		this.rootECMFolder = this.rootFolder;
 
 		this.folderNavigator.removeAllItems();
-		this.folderNavigator.addItem(this.baseFolder);
-		this.folderNavigator.setItemCaption(this.baseFolder, rootFolderName);
-		this.folderNavigator.setItemIcon(this.baseFolder,
+		this.folderNavigator.addItem(this.rootFolder);
+		this.folderNavigator.setItemCaption(this.rootFolder, rootFolderName);
+		this.folderNavigator.setItemIcon(this.rootFolder,
 				MyCollabResource.newResource("icons/16/ecm/folder_close.png"));
-		this.folderNavigator.collapseItem(this.baseFolder);
+		this.folderNavigator.collapseItem(this.rootFolder);
 
-		resourceHandlerLayout.displayComponent(this.baseFolder, rootPath,
+		resourceHandlerLayout.displayComponent(this.rootFolder, rootPath,
 				rootFolderName);
 
 		resourceHandlerLayout
@@ -422,7 +423,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 							resourceHandlerLayout
 									.constructBodyItemContainer(resultFolder);
 
-							FileMainViewImpl.this.baseFolder = resultFolder;
+							FileMainViewImpl.this.rootFolder = resultFolder;
 						}
 
 					}
@@ -446,7 +447,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 		displayResources(rootPath, "Documents");
 	}
 
-	protected class SettingConnectionDrive extends VerticalLayout {
+	private class SettingConnectionDrive extends VerticalLayout {
 		private static final long serialVersionUID = 1L;
 
 		private final Button connectAccountBtn;

@@ -35,7 +35,7 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 	private static final long serialVersionUID = 1L;
 
 	private String rootPath;
-	private Folder baseFolder;
+	private Folder rootFolder;
 
 	private final FileSearchPanel fileSearchPanel;
 	private ResourcesDisplayComponent resourceDisplayComponent;
@@ -46,7 +46,7 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 	public FileDashboardComponent(String rootPath) {
 		this.rootPath = rootPath;
 
-		this.baseFolder = new Folder(this.rootPath);
+		this.rootFolder = new Folder(this.rootPath);
 
 		this.setWidth("100%");
 		this.setSpacing(true);
@@ -60,7 +60,7 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 		resourceContainer.setSizeFull();
 
 		this.resourceDisplayComponent = new ResourcesDisplayComponent(rootPath,
-				baseFolder);
+				rootFolder);
 
 		this.resourceDisplayComponent.setSpacing(true);
 		resourceContainer.addComponent(resourceDisplayComponent);
@@ -75,7 +75,7 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 	abstract protected void doSearch(FileSearchCriteria searchCriteria);
 
 	public void displayResources() {
-		resourceDisplayComponent.displayComponent(baseFolder, rootPath,
+		resourceDisplayComponent.displayComponent(rootFolder, rootPath,
 				"Documents");
 
 		resourceDisplayComponent
@@ -87,7 +87,7 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 								.getResource(criteria.getBaseFolder());
 						resourceDisplayComponent
 								.constructBodyItemContainer(selectedFolder);
-						FileDashboardComponent.this.baseFolder = selectedFolder;
+						FileDashboardComponent.this.rootFolder = selectedFolder;
 					}
 				});
 	}
