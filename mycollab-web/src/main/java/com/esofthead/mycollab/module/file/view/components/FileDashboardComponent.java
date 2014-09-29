@@ -36,7 +36,7 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 	private String rootPath;
 
 	private final FileSearchPanel fileSearchPanel;
-	private ResourcesDisplayComponent resourceHandlerComponent;
+	private ResourcesDisplayComponent resourceDisplayComponent;
 	private Folder baseFolder;
 	private HorizontalLayout resourceContainer;
 
@@ -54,13 +54,13 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 		resourceContainer = new HorizontalLayout();
 		resourceContainer.setSizeFull();
 
-		this.resourceHandlerComponent = new ResourcesDisplayComponent(
-				baseFolder, rootPath, null);
-		this.resourceHandlerComponent.setSpacing(true);
-		resourceContainer.addComponent(resourceHandlerComponent);
-		resourceContainer.setComponentAlignment(resourceHandlerComponent,
+		this.resourceDisplayComponent = new ResourcesDisplayComponent(
+				baseFolder, rootPath);
+		this.resourceDisplayComponent.setSpacing(true);
+		resourceContainer.addComponent(resourceDisplayComponent);
+		resourceContainer.setComponentAlignment(resourceDisplayComponent,
 				Alignment.TOP_LEFT);
-		resourceContainer.setExpandRatio(resourceHandlerComponent, 1.0f);
+		resourceContainer.setExpandRatio(resourceDisplayComponent, 1.0f);
 
 		this.addComponent(resourceContainer);
 
@@ -74,22 +74,22 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 		this.baseFolder = new Folder();
 		this.baseFolder.setPath(this.rootPath);
 
-		resourceHandlerComponent.displayComponent(this.baseFolder, rootPath,
+		resourceDisplayComponent.displayComponent(this.baseFolder, rootPath,
 				rootFolderName);
 
-		resourceHandlerComponent
+		resourceDisplayComponent
 				.addSearchHandlerToBreadCrumb(new SearchHandler<FileSearchCriteria>() {
 					@Override
 					public void onSearch(FileSearchCriteria criteria) {
 						Folder selectedFolder = null;
 						selectedFolder = (Folder) FileDashboardComponent.this.resourceService
 								.getResource(criteria.getBaseFolder());
-						resourceHandlerComponent
+						resourceDisplayComponent
 								.constructBodyItemContainer(selectedFolder);
-						resourceHandlerComponent
+						resourceDisplayComponent
 								.gotoFolderBreadCumb(selectedFolder);
 						FileDashboardComponent.this.baseFolder = selectedFolder;
-						resourceHandlerComponent
+						resourceDisplayComponent
 								.setCurrentBaseFolder(selectedFolder);
 					}
 				});

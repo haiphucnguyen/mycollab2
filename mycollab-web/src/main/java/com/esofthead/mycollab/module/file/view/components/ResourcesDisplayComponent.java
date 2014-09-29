@@ -19,7 +19,10 @@ package com.esofthead.mycollab.module.file.view.components;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.Serializable;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.EventListener;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -35,6 +38,7 @@ import org.vaadin.peter.buttongroup.ButtonGroup;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.eventmanager.ApplicationEvent;
 import com.esofthead.mycollab.module.ecm.ResourceUtils;
 import com.esofthead.mycollab.module.ecm.StorageNames;
 import com.esofthead.mycollab.module.ecm.domain.Content;
@@ -64,7 +68,6 @@ import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.vaadin.ui.Separator;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
-import com.vaadin.data.Container;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.event.LayoutEvents.LayoutClickEvent;
@@ -81,10 +84,10 @@ import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
-import com.vaadin.ui.Tree;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
+import com.vaadin.util.ReflectTools;
 
 /**
  * 
@@ -109,19 +112,16 @@ public class ResourcesDisplayComponent extends VerticalLayout {
 	private FileBreadcrumb fileBreadCrumb;
 	private ResourcesContainer resourcesContainer;
 	private ResourcePagingNavigator pagingResourceWapper;
-	
+
 	private Folder baseFolder;
 	private Folder rootFolder;
 	private String rootFolderName;
 	private String rootPath;
-	
-	private List<Resource> selectedResourcesList;
-	private Tree menuTree;
 
+	private List<Resource> selectedResourcesList;
 
 	public ResourcesDisplayComponent(final Folder baseFolder,
-			final String rootPath, Tree menuTree) {
-		this.menuTree = menuTree;
+			final String rootPath) {
 		this.baseFolder = baseFolder;
 		this.rootPath = rootPath;
 		this.rootFolder = baseFolder;
@@ -397,12 +397,10 @@ public class ResourcesDisplayComponent extends VerticalLayout {
 																	.getExternalDrive(),
 															res.getPath());
 									} else {
-										if (res instanceof Folder
-												&& menuTree != null) {
-											ResourcesDisplayComponent.this.menuTree
-													.collapseItem(ResourcesDisplayComponent.this.baseFolder);
-											ResourcesDisplayComponent.this.menuTree
-													.expandItem(ResourcesDisplayComponent.this.baseFolder);
+										if (res instanceof Folder) {
+											fireEvent(new ResourceRemovedEvent(
+													ResourcesDisplayComponent.this,
+													res));
 										}
 										ResourcesDisplayComponent.this.resourceService.removeResource(
 												res.getPath(),
@@ -410,6 +408,7 @@ public class ResourcesDisplayComponent extends VerticalLayout {
 												AppContext.getAccountId());
 									}
 								}
+
 								if (resourcesContainer.isSearchAction) {
 									resourcesContainer
 											.constructBody((Folder) resourceService
@@ -417,13 +416,6 @@ public class ResourcesDisplayComponent extends VerticalLayout {
 								} else {
 									resourcesContainer
 											.constructBody(baseFolder);
-								}
-
-								if (menuTree != null) {
-									ResourcesDisplayComponent.this.menuTree
-											.collapseItem(ResourcesDisplayComponent.this.baseFolder);
-									ResourcesDisplayComponent.this.menuTree
-											.expandItem(ResourcesDisplayComponent.this.baseFolder);
 								}
 
 								NotificationUtil
@@ -530,7 +522,8 @@ public class ResourcesDisplayComponent extends VerticalLayout {
 						this.addComponent(buildResourceRowComp(res, false));
 						this.addComponent(new Hr());
 					}
-					pagingResourceWapper = new ResourcePagingNavigator(lstResource);
+					pagingResourceWapper = new ResourcePagingNavigator(
+							lstResource);
 					pagingResourceWapper.setWidth("100%");
 					this.addComponent(pagingResourceWapper);
 					this.setComponentAlignment(pagingResourceWapper,
@@ -888,8 +881,7 @@ public class ResourcesDisplayComponent extends VerticalLayout {
 				public void buttonClick(ClickEvent event) {
 					Resource containFolder = resourceService
 							.getParentFolder(res.getPath());
-					if (menuTree != null)
-						menuTree.expandItem(containFolder);
+
 					resourcesContainer.constructBody((Folder) containFolder);
 					baseFolder = (Folder) containFolder;
 					fileBreadCrumb.gotoFolder(baseFolder);
@@ -936,9 +928,9 @@ public class ResourcesDisplayComponent extends VerticalLayout {
 
 			UiUtils.addComponent(layout, topRename, Alignment.MIDDLE_CENTER);
 
-			final HorizontalLayout controlButton = new HorizontalLayout();
-			controlButton.setSpacing(true);
-			final Button save = new Button(
+			final HorizontalLayout controlButtons = new HorizontalLayout();
+			controlButtons.setSpacing(true);
+			final Button saveBtn = new Button(
 					AppContext.getMessage(GenericI18Enum.BUTTON_SAVE_LABEL),
 					new ClickListener() {
 						private static final long serialVersionUID = 1L;
@@ -974,24 +966,6 @@ public class ResourcesDisplayComponent extends VerticalLayout {
 								RenameResourceWindow.this.service.rename(
 										oldPath, newPath,
 										AppContext.getUsername());
-								if (menuTree != null) {
-									final List<Folder> childs = baseFolder
-											.getChilds();
-									for (final Folder folder : childs) {
-										if (folder
-												.getName()
-												.equals(RenameResourceWindow.this.resource
-														.getName())) {
-											menuTree.removeItem(folder);
-											folder.setPath(newPath);
-											menuTree.addItem(folder);
-											menuTree.setParent(folder,
-													baseFolder);
-											menuTree.setItemCaption(folder,
-													newNameValue);
-										}
-									}
-								}
 							}
 							resourcesContainer.constructBody(baseFolder);
 
@@ -1004,9 +978,10 @@ public class ResourcesDisplayComponent extends VerticalLayout {
 							RenameResourceWindow.this.close();
 						}
 					});
-			save.addStyleName(UIConstants.THEME_GREEN_LINK);
+			saveBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
 
-			UiUtils.addComponent(controlButton, save, Alignment.MIDDLE_CENTER);
+			UiUtils.addComponent(controlButtons, saveBtn,
+					Alignment.MIDDLE_CENTER);
 
 			final Button cancel = new Button(
 					AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL_LABEL),
@@ -1019,8 +994,10 @@ public class ResourcesDisplayComponent extends VerticalLayout {
 						}
 					});
 			cancel.addStyleName(UIConstants.THEME_GRAY_LINK);
-			UiUtils.addComponent(controlButton, cancel, Alignment.MIDDLE_CENTER);
-			UiUtils.addComponent(layout, controlButton, Alignment.MIDDLE_CENTER);
+			UiUtils.addComponent(controlButtons, cancel,
+					Alignment.MIDDLE_CENTER);
+			UiUtils.addComponent(layout, controlButtons,
+					Alignment.MIDDLE_CENTER);
 
 			this.setContent(layout);
 		}
@@ -1105,21 +1082,6 @@ public class ResourcesDisplayComponent extends VerticalLayout {
 											.createNewFolder(baseFolderPath,
 													folderVal,
 													AppContext.getUsername());
-								}
-								if (menuTree != null) {
-									if (!menuTree.isExpanded(baseFolder)) {
-										menuTree.expandItem(baseFolder);
-									} else {
-										menuTree.addItem(newFolder);
-										menuTree.setItemCaption(newFolder,
-												newFolder.getName());
-										menuTree.setParent(newFolder,
-												baseFolder);
-										menuTree.setItemIcon(
-												newFolder,
-												MyCollabResource
-														.newResource("icons/16/ecm/folder_close.png"));
-									}
 								}
 								resourcesContainer.constructBody(baseFolder);
 								AddNewFolderWindow.this.close();
@@ -1460,33 +1422,6 @@ public class ResourcesDisplayComponent extends VerticalLayout {
 						.showNotification("Move finish, some items can't move to destination. Please check duplicated file-name and try again.");
 			}
 			ResourcesDisplayComponent.this.selectedResourcesList = new ArrayList<Resource>();
-
-			if (menuTree != null) {
-				Container dataSource = ResourcesDisplayComponent.this.menuTree
-						.getContainerDataSource();
-				Object[] dataSourceArray = dataSource.getItemIds().toArray();
-
-				for (Object item : dataSourceArray) {
-					if (((Folder) item).getPath().equals(folder.getPath())) {
-						ResourcesDisplayComponent.this.menuTree
-								.collapseItem(item);
-						ResourcesDisplayComponent.this.menuTree
-								.expandItem(item);
-						break;
-					}
-				}
-				for (Object item : dataSourceArray) {
-					if (((Folder) item).getPath()
-							.equals(ResourcesDisplayComponent.this.baseFolder
-									.getPath())) {
-						ResourcesDisplayComponent.this.menuTree
-								.collapseItem(item);
-						ResourcesDisplayComponent.this.menuTree
-								.expandItem(item);
-						break;
-					}
-				}
-			}
 		}
 
 		@Override
@@ -1503,6 +1438,31 @@ public class ResourcesDisplayComponent extends VerticalLayout {
 					ResourcesDisplayComponent.this.rootFolderName);
 
 			this.folderTree.setCollapsed(this.baseFolder, false);
+		}
+	}
+
+	public void addResourceRemovedListener(ResourceRemovedListener listener) {
+		this.addListener(ResourceRemovedEvent.VIEW_IDENTIFIER,
+				ResourceRemovedEvent.class, listener,
+				ResourceRemovedListener.viewInitMethod);
+	}
+
+	public static interface ResourceRemovedListener extends EventListener,
+			Serializable {
+		public static final Method viewInitMethod = ReflectTools.findMethod(
+				ResourceRemovedListener.class, "removedResource",
+				ResourceRemovedEvent.class);
+
+		void removedResource(ResourceRemovedEvent event);
+	}
+
+	public static class ResourceRemovedEvent extends ApplicationEvent {
+		private static final long serialVersionUID = 1L;
+
+		public static final String VIEW_IDENTIFIER = "resourceRemoved";
+
+		public ResourceRemovedEvent(Object source, Resource data) {
+			super(source, data);
 		}
 	}
 

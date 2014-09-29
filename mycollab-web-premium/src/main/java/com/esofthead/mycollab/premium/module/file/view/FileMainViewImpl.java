@@ -272,8 +272,8 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 		this.baseFolder.setPath(rootPath);
 		this.rootECMFolder = baseFolder;
 
-		resourceHandlerLayout = new ResourcesDisplayComponent(
-				FileMainViewImpl.this.baseFolder, rootPath, folderNavigator);
+		resourceHandlerLayout = new ResourcesDisplayComponent(this.baseFolder,
+				rootPath);
 		mainBodyResourceLayout.addComponent(resourceHandlerLayout);
 
 		mainView.addComponent(mainBodyResourceLayout);
