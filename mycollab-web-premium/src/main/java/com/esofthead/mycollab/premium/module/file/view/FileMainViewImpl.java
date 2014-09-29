@@ -372,7 +372,6 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 		mainBodyResourceLayout.addComponent(resourceSearchPanel);
 		mainBodyResourceLayout.addComponent(resourceHandlerLayout);
 
-		resourceHandlerLayout.gotoFolderBreadCumb(baseFolder);
 		resourceHandlerLayout.constructBodyItemContainer(baseFolder);
 
 		switchViewBtn.setDescription("Event");
@@ -422,11 +421,8 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 							Folder resultFolder = (Folder) selectedFolder;
 							resourceHandlerLayout
 									.constructBodyItemContainer(resultFolder);
-							resourceHandlerLayout
-									.gotoFolderBreadCumb(resultFolder);
+
 							FileMainViewImpl.this.baseFolder = resultFolder;
-							resourceHandlerLayout
-									.setCurrentBaseFolder(resultFolder);
 						}
 
 					}

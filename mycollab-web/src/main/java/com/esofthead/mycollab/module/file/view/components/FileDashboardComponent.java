@@ -87,11 +87,7 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 								.getResource(criteria.getBaseFolder());
 						resourceDisplayComponent
 								.constructBodyItemContainer(selectedFolder);
-						resourceDisplayComponent
-								.gotoFolderBreadCumb(selectedFolder);
 						FileDashboardComponent.this.baseFolder = selectedFolder;
-						resourceDisplayComponent
-								.setCurrentBaseFolder(selectedFolder);
 					}
 				});
 	}

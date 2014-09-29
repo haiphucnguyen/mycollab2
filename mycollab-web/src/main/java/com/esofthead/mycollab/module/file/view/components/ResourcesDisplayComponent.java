@@ -28,6 +28,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vaadin.dialogs.ConfirmDialog;
@@ -344,14 +345,6 @@ public class ResourcesDisplayComponent extends VerticalLayout {
 		this.addComponent(mainBodyLayout);
 	}
 
-	public void setCurrentBaseFolder(Folder baseFolder) {
-		this.baseFolder = baseFolder;
-	}
-
-	public Folder getCurrentBaseFolder() {
-		return baseFolder;
-	}
-
 	/**
 	 * this method show Component when start loading
 	 * 
@@ -428,15 +421,10 @@ public class ResourcesDisplayComponent extends VerticalLayout {
 				});
 	}
 
-	public void gotoFolderBreadCumb(Folder folder) {
-		selectedResourcesList.clear();
-		this.baseFolder = folder;
-		fileBreadCrumb.gotoFolder(folder);
-	}
-
 	public void constructBodyItemContainer(Folder folder) {
 		this.selectedResourcesList.clear();
 		this.baseFolder = folder;
+		fileBreadCrumb.gotoFolder(folder);
 		resourcesContainer.constructBody(folder);
 	}
 
@@ -1161,8 +1149,8 @@ public class ResourcesDisplayComponent extends VerticalLayout {
 									&& lstFileAttachments.size() > 0) {
 								for (File file : lstFileAttachments) {
 									try {
-										if (file.getName() != null
-												&& file.getName().length() > 0) {
+										if (StringUtils.isNotBlank(file
+												.getName())) {
 											Pattern pattern = Pattern
 													.compile(illegalFileNamePattern);
 											Matcher matcher = pattern

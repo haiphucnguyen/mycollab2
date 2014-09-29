@@ -20,6 +20,7 @@ import java.util.List;
 
 import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.module.ecm.domain.Folder;
+import com.esofthead.mycollab.module.ecm.domain.Resource;
 import com.vaadin.server.StreamResource;
 import com.vaadin.server.StreamResource.StreamSource;
 
@@ -31,9 +32,7 @@ import com.vaadin.server.StreamResource.StreamSource;
  */
 public class StreamDownloadResourceUtil {
 
-	public static String getDownloadFileName(
-			List<com.esofthead.mycollab.module.ecm.domain.Resource> lstRes,
-			boolean isSearchAction) {
+	public static String getDownloadFileName(List<Resource> lstRes) {
 		if (lstRes == null || lstRes.isEmpty()) {
 			return "";
 		} else if (lstRes.size() == 1) {
@@ -47,26 +46,21 @@ public class StreamDownloadResourceUtil {
 	}
 
 	public static StreamResource getStreamResourceSupportExtDrive(
-			List<com.esofthead.mycollab.module.ecm.domain.Resource> lstRes,
-			boolean isSearchAction) {
-		String filename = getDownloadFileName(lstRes, isSearchAction);
-		StreamSource streamSource = getStreamSourceSupportExtDrive(lstRes,
-				isSearchAction);
+			List<Resource> lstRes) {
+		String filename = getDownloadFileName(lstRes);
+		StreamSource streamSource = getStreamSourceSupportExtDrive(lstRes);
 		return new StreamResource(streamSource, filename);
 	}
 
 	public static StreamSource getStreamSourceSupportExtDrive(
-			List<com.esofthead.mycollab.module.ecm.domain.Resource> lstRes,
-			boolean isSearchAction) {
+			List<Resource> lstRes) {
 		if (lstRes == null || lstRes.isEmpty()) {
 			throw new UserInvalidInputException(
 					"You must select at least one file");
 		} else if (lstRes.size() == 1) {
-			return new StreamDownloadResourceSupportExtDrive(lstRes,
-					isSearchAction);
+			return new StreamDownloadResourceSupportExtDrive(lstRes);
 		} else {
-			return new StreamDownloadResourceSupportExtDrive(lstRes,
-					isSearchAction);
+			return new StreamDownloadResourceSupportExtDrive(lstRes);
 		}
 	}
 }
