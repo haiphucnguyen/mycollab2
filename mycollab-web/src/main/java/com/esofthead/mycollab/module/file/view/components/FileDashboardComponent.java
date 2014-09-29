@@ -46,8 +46,7 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 	public FileDashboardComponent(String rootPath) {
 		this.rootPath = rootPath;
 
-		this.baseFolder = new Folder();
-		this.baseFolder.setPath(this.rootPath);
+		this.baseFolder = new Folder(this.rootPath);
 
 		this.setWidth("100%");
 		this.setSpacing(true);
@@ -60,8 +59,8 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 		resourceContainer = new HorizontalLayout();
 		resourceContainer.setSizeFull();
 
-		this.resourceDisplayComponent = new ResourcesDisplayComponent(
-				baseFolder, rootPath);
+		this.resourceDisplayComponent = new ResourcesDisplayComponent(rootPath,
+				baseFolder);
 
 		this.resourceDisplayComponent.setSpacing(true);
 		resourceContainer.addComponent(resourceDisplayComponent);

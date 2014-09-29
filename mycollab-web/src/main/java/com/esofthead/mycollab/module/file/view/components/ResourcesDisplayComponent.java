@@ -120,8 +120,8 @@ public class ResourcesDisplayComponent extends VerticalLayout {
 
 	private List<Resource> selectedResourcesList;
 
-	public ResourcesDisplayComponent(final Folder baseFolder,
-			final String rootPath) {
+	public ResourcesDisplayComponent(final String rootPath,
+			final Folder baseFolder) {
 		this.baseFolder = baseFolder;
 		this.rootPath = rootPath;
 		this.rootFolder = baseFolder;
@@ -178,7 +178,7 @@ public class ResourcesDisplayComponent extends VerticalLayout {
 		Button goUpBtn = new Button("Up");
 		goUpBtn.setIcon(MyCollabResource
 				.newResource("icons/16/ecm/up_to_root.png"));
-		
+
 		goUpBtn.addClickListener(new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
@@ -1173,9 +1173,9 @@ public class ResourcesDisplayComponent extends VerticalLayout {
 												return;
 											}
 										}
-										final Content content = new Content();
-										content.setPath(baseFolder.getPath()
-												+ "/" + file.getName());
+										final Content content = new Content(
+												baseFolder.getPath() + "/"
+														+ file.getName());
 										content.setSize(file.length());
 										FileInputStream fileInputStream = new FileInputStream(
 												file);
@@ -1429,8 +1429,8 @@ public class ResourcesDisplayComponent extends VerticalLayout {
 		protected void displayFiles() {
 			this.folderTree.removeAllItems();
 
-			this.baseFolder = new Folder();
-			baseFolder.setPath(ResourcesDisplayComponent.this.rootPath);
+			this.baseFolder = new Folder(
+					ResourcesDisplayComponent.this.rootPath);
 			this.rootPath = ResourcesDisplayComponent.this.rootPath;
 			this.folderTree.addItem(new Object[] {
 					ResourcesDisplayComponent.this.rootFolderName, "" },

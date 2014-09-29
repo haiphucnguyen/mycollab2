@@ -268,12 +268,11 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 
 		// this is component handler Resource-----------
 
-		this.baseFolder = new Folder();
-		this.baseFolder.setPath(rootPath);
+		this.baseFolder = new Folder(rootPath);
 		this.rootECMFolder = baseFolder;
 
-		resourceHandlerLayout = new ResourcesDisplayComponent(this.baseFolder,
-				rootPath);
+		resourceHandlerLayout = new ResourcesDisplayComponent(rootPath,
+				baseFolder);
 		mainBodyResourceLayout.addComponent(resourceHandlerLayout);
 
 		mainView.addComponent(mainBodyResourceLayout);
@@ -382,8 +381,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 	}
 
 	private void displayResources(String rootPath, String rootFolderName) {
-		this.baseFolder = new Folder();
-		this.baseFolder.setPath(rootPath);
+		this.baseFolder = new Folder(rootPath);
 		this.rootECMFolder = this.baseFolder;
 
 		this.folderNavigator.removeAllItems();

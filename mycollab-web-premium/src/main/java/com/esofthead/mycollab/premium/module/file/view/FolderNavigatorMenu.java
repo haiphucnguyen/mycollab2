@@ -59,11 +59,11 @@ public class FolderNavigatorMenu extends Tree {
 								.getExternalDrivesOfUser(AppContext
 										.getUsername());
 						for (ExternalDrive externalDrive : externalDrives) {
-							ExternalFolder externalMapFolder = new ExternalFolder();
+							ExternalFolder externalMapFolder = new ExternalFolder(
+									"/");
 							externalMapFolder.setStorageName(externalDrive
 									.getStoragename());
 							externalMapFolder.setExternalDrive(externalDrive);
-							externalMapFolder.setPath("/");
 							externalMapFolder.setName(externalDrive
 									.getFoldername());
 							expandFolder.addChild(externalMapFolder);

@@ -140,11 +140,11 @@ public abstract class AbstractResourceMovingWindow extends Window {
 					List<ExternalDrive> externalDrives = externalDriveService
 							.getExternalDrivesOfUser(AppContext.getUsername());
 					for (ExternalDrive externalDrive : externalDrives) {
-						ExternalFolder externalMapFolder = new ExternalFolder();
+						ExternalFolder externalMapFolder = new ExternalFolder(
+								"/");
 						externalMapFolder.setStorageName(externalDrive
 								.getStoragename());
 						externalMapFolder.setExternalDrive(externalDrive);
-						externalMapFolder.setPath("/");
 						externalMapFolder.setName(externalDrive.getFoldername());
 
 						Calendar cal = GregorianCalendar.getInstance();
