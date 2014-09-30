@@ -35,9 +35,6 @@ public class FilePresenter extends AbstractPresenter<IFileContainer> implements
 		if (data instanceof FileScreenData.GotoDashboard) {
 			presenter = PresenterResolver
 					.getPresenter(FileDashboardPresenter.class);
-		} else if (data instanceof FileScreenData.Search) {
-			presenter = PresenterResolver
-					.getPresenter(FileSearchResultPresenter.class);
 		} else {
 			throw new MyCollabException("No support screen data " + data);
 		}

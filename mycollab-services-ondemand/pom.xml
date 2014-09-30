@@ -32,16 +32,30 @@
             <artifactId>mycollab-api-impl</artifactId>
             <version>4.5.1</version>
         </dependency>
+
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-localization</artifactId>
             <version>4.5.1</version>
         </dependency>
+
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-test</artifactId>
             <version>4.5.1</version>
             <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.dropbox.core</groupId>
+            <artifactId>dropbox-core-sdk</artifactId>
+            <version>[1.7,1.8)</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-core</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>

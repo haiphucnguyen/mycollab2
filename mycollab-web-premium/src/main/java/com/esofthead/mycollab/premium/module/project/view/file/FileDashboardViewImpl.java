@@ -1,10 +1,7 @@
 package com.esofthead.mycollab.premium.module.project.view.file;
 
-import com.esofthead.mycollab.eventmanager.EventBusFactory;
-import com.esofthead.mycollab.module.file.domain.criteria.FileSearchCriteria;
 import com.esofthead.mycollab.module.file.view.components.FileDashboardComponent;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
-import com.esofthead.mycollab.module.project.events.ProjectContentEvent;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
@@ -31,18 +28,7 @@ public class FileDashboardViewImpl extends AbstractPageView implements
 				AppContext.getAccountId(), projectId);
 
 		FileDashboardComponent dashboardComponent = new FileDashboardComponent(
-				rootPath) {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected void doSearch(FileSearchCriteria searchCriteria) {
-				EventBusFactory.getInstance().post(
-						new ProjectContentEvent.Search(
-								FileDashboardViewImpl.this, searchCriteria));
-
-			}
-
-		};
+				rootPath);
 		dashboardComponent.setWidth("100%");
 		this.addComponent(dashboardComponent);
 

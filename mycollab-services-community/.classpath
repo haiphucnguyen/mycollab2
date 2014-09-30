@@ -118,5 +118,4 @@
   <classpathentry kind="var" path="M2_REPO/com/google/code/findbugs/annotations/2.0.1/annotations-2.0.1.jar"/>
   <classpathentry kind="var" path="M2_REPO/xml-apis/xml-apis/1.0.b2/xml-apis-1.0.b2.jar" sourcepath="M2_REPO/xml-apis/xml-apis/1.0.b2/xml-apis-1.0.b2-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/reflections/reflections-spring/0.9.9-RC1/reflections-spring-0.9.9-RC1.jar" sourcepath="M2_REPO/org/reflections/reflections-spring/0.9.9-RC1/reflections-spring-0.9.9-RC1-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/com/dropbox/core/dropbox-core-sdk/1.7.7/dropbox-core-sdk-1.7.7.jar" sourcepath="M2_REPO/com/dropbox/core/dropbox-core-sdk/1.7.7/dropbox-core-sdk-1.7.7-sources.jar"/>
 </classpath>

@@ -18,7 +18,13 @@
             <artifactId>mycollab-servlet</artifactId>
             <version>4.5.1</version>
         </dependency>
-        
+
+        <dependency>
+            <groupId>com.esofthead.mycollab</groupId>
+            <artifactId>mycollab-services-ondemand</artifactId>
+            <version>4.5.1</version>
+        </dependency>
+
     </dependencies>
 
 </project>
