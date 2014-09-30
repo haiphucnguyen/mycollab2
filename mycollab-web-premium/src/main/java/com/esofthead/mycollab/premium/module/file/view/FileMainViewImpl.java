@@ -18,7 +18,6 @@ import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.ecm.ResourceUtils;
 import com.esofthead.mycollab.module.ecm.StorageNames;
-import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.module.ecm.domain.ExternalDrive;
 import com.esofthead.mycollab.module.ecm.domain.ExternalFolder;
 import com.esofthead.mycollab.module.ecm.domain.Folder;
@@ -29,7 +28,6 @@ import com.esofthead.mycollab.module.ecm.service.ExternalResourceService;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
 import com.esofthead.mycollab.module.file.domain.criteria.FileSearchCriteria;
 import com.esofthead.mycollab.module.file.view.FileMainView;
-import com.esofthead.mycollab.module.file.view.components.FileDownloadWindow;
 import com.esofthead.mycollab.module.file.view.components.ResourcesDisplayComponent;
 import com.esofthead.mycollab.module.user.domain.BillingPlan;
 import com.esofthead.mycollab.premium.module.file.view.FolderNavigatorMenu.SelectFolderEvent;
@@ -87,8 +85,6 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 	private String rootPath;
 
 	private ResourcesDisplayComponent resourceHandlerLayout;
-	private FileActivityStreamComponent fileActivityStreamComponent;
-//	private Button switchViewBtn;
 
 	private SettingConnectionDrive settingConnectionDrive;
 	private VerticalLayout mainBodyResourceLayout;
@@ -98,7 +94,6 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 	private ExternalResourceService externalResourceService;
 
 	public FileMainViewImpl() {
-
 		resourceService = ApplicationContextUtil
 				.getSpringBean(ResourceService.class);
 		externalDriveService = ApplicationContextUtil
@@ -195,32 +190,6 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 		ButtonGroup navButton = new ButtonGroup();
 		navButton.addStyleName(UIConstants.THEME_GRAY_LINK);
 		UiUtils.addComponent(topControlMenu, navButton, Alignment.MIDDLE_RIGHT);
-
-		// switchViewBtn = new Button();
-		// switchViewBtn.setDescription("Event");
-		// switchViewBtn.setIcon(MyCollabResource
-		// .newResource("icons/16/ecm/event.png"));
-		// switchViewBtn.addClickListener(new Button.ClickListener() {
-		// private static final long serialVersionUID = 1L;
-		//
-		// @Override
-		// public void buttonClick(ClickEvent event) {
-		// if (switchViewBtn.getDescription().equals("Event")) {
-		// switchViewBtn.setDescription("File Management");
-		// switchViewBtn.setIcon(MyCollabResource
-		// .newResource("icons/16/ecm/file_managerment.png"));
-		// gotoActionLogPage();
-		// } else if (switchViewBtn.getDescription().equals(
-		// "FileManagement")) {
-		// switchViewBtn.setDescription("Event");
-		// switchViewBtn.setIcon(MyCollabResource
-		// .newResource("icons/16/ecm/event.png"));
-		// gotoFileMainViewPage(rootFolder);
-		// }
-		// }
-		// });
-		// switchViewBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
-		// navButton.addButton(switchViewBtn);
 
 		Button settingBtn = new Button();
 		settingBtn.setIcon(MyCollabResource
@@ -326,65 +295,6 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 		return matcher.find();
 	}
 
-	private void gotoActionLogPage() {
-		mainBodyResourceLayout.removeAllComponents();
-		if (fileActivityStreamComponent == null) {
-			fileActivityStreamComponent = new FileActivityStreamComponent();
-
-			// and Folder - handeler
-			fileActivityStreamComponent
-					.addSelectedHandlerToPageList(new SearchHandler<FileSearchCriteria>() {
-						@Override
-						public void onSearch(FileSearchCriteria criteria) {
-							Resource res = resourceService.getResource(criteria
-									.getBaseFolder());
-							if (res == null) {
-								gotoEnclosingFoder(res, criteria);
-								return;
-							}
-							gotoFileMainViewPage((Folder) res);
-						}
-					});
-			// add File - handeler
-			fileActivityStreamComponent
-					.addSelectedHandlerToPageList(new SearchHandler<FileSearchCriteria>() {
-						@Override
-						public void onSearch(FileSearchCriteria criteria) {
-							Resource res = resourceService.getResource(criteria
-									.getBaseFolder());
-							if (res == null) {
-								gotoEnclosingFoder(res, criteria);
-								return;
-							}
-							UI.getCurrent().addWindow(
-									new FileDownloadWindow((Content) res));
-						}
-					});
-			// add handele
-			fileActivityStreamComponent
-					.addSelectedHandlerToPageList(new SearchHandler<FileSearchCriteria>() {
-						@Override
-						public void onSearch(FileSearchCriteria criteria) {
-						}
-					});
-		}
-		mainBodyResourceLayout.addComponent(fileActivityStreamComponent);
-		fileActivityStreamComponent.showContentFeeds();
-	}
-
-	private void gotoEnclosingFoder(Resource res, FileSearchCriteria criteria) {
-		String path = criteria.getBaseFolder().substring(0,
-				criteria.getBaseFolder().lastIndexOf("/"));
-		Resource parentFolder = resourceService.getResource(path);
-		if (parentFolder != null) {
-			gotoFileMainViewPage((Folder) parentFolder);
-		} else {
-			String message = (res instanceof Folder) ? "Folder's location has been moved successfully"
-					: "File's location has been moved successfully";
-			NotificationUtil.showNotification(message);
-		}
-	}
-
 	private void gotoFileMainViewPage(Folder baseFolder) {
 		this.rootFolder = baseFolder;
 
@@ -393,10 +303,6 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 		mainBodyResourceLayout.addComponent(resourceHandlerLayout);
 
 		resourceHandlerLayout.constructBodyItemContainer(rootFolder);
-
-//		switchViewBtn.setDescription("Event");
-//		switchViewBtn.setIcon(MyCollabResource
-//				.newResource("icons/16/ecm/event.png"));
 	}
 
 	private void displayResources(String rootPath, String rootFolderName) {
