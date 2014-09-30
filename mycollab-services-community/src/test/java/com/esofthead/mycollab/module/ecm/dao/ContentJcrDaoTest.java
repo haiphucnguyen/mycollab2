@@ -146,6 +146,17 @@ public class ContentJcrDaoTest extends ServiceTest {
 	}
 
 	@Test
+	public void testMoveResource() {
+		Folder folder = new Folder("xy/yz/zx");
+		contentJcrDao.createFolder(folder, "abc");
+
+		contentJcrDao.moveResource("xy/yz/zx", "ab/bc/ca");
+		Resource resource = contentJcrDao.getResource("ab/bc/ca");
+		assertThat(resource).isExactlyInstanceOf(Folder.class);
+		assertThat(resource.getPath()).isEqualTo("ab/bc/ca");
+	}
+
+	@Test
 	public void testGetContents() {
 		Content pageContent = new Content("example/e/a");
 		pageContent.setCreatedBy("hainguyen");
