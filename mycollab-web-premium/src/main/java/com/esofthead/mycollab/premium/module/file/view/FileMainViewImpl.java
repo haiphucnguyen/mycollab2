@@ -88,7 +88,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 
 	private ResourcesDisplayComponent resourceHandlerLayout;
 	private FileActivityStreamComponent fileActivityStreamComponent;
-	private Button switchViewBtn;
+//	private Button switchViewBtn;
 
 	private SettingConnectionDrive settingConnectionDrive;
 	private VerticalLayout mainBodyResourceLayout;
