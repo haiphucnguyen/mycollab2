@@ -11,6 +11,9 @@ import org.vaadin.hene.popupbutton.PopupButton;
 import org.vaadin.peter.buttongroup.ButtonGroup;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
+import com.esofthead.mycollab.common.ui.components.AbstractCloudDriveOAuthWindow;
+import com.esofthead.mycollab.common.ui.components.AbstractCloudDriveOAuthWindow.ExternalDriveConnectedEvent;
+import com.esofthead.mycollab.common.ui.components.AbstractCloudDriveOAuthWindow.ExternalDriveConnectedListener;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.ecm.ResourceUtils;
@@ -27,9 +30,6 @@ import com.esofthead.mycollab.module.ecm.service.ResourceService;
 import com.esofthead.mycollab.module.file.domain.criteria.FileSearchCriteria;
 import com.esofthead.mycollab.module.file.view.FileMainView;
 import com.esofthead.mycollab.module.file.view.components.FileDownloadWindow;
-import com.esofthead.mycollab.module.file.view.components.FileSearchPanel;
-import com.esofthead.mycollab.module.file.view.components.FileSearchPanel.SearchResourceEvent;
-import com.esofthead.mycollab.module.file.view.components.FileSearchPanel.SearchResourceListener;
 import com.esofthead.mycollab.module.file.view.components.ResourcesDisplayComponent;
 import com.esofthead.mycollab.module.user.domain.BillingPlan;
 import com.esofthead.mycollab.premium.module.file.view.FolderNavigatorMenu.SelectFolderEvent;
@@ -40,6 +40,7 @@ import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.mvp.ViewScope;
+import com.esofthead.mycollab.vaadin.ui.ComponentManagerFactory;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.Hr;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
@@ -86,7 +87,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 
 	private final ResourcesDisplayComponent resourceHandlerLayout;
 	private FileActivityStreamComponent fileActivityStreamComponent;
-	private FileSearchPanel resourceSearchPanel;
+	// private FileSearchPanel resourceSearchPanel;
 	private final Button switchViewBtn;
 
 	private SettingConnectionDrive settingConnectionDrive;
@@ -202,17 +203,21 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 					@Override
 					public void buttonClick(ClickEvent event) {
 						linkBtn.setPopupVisible(false);
-						DropBoxOAuthWindow dropboxConnectWindow = new DropBoxOAuthWindow() {
-							private static final long serialVersionUID = 1L;
+						AbstractCloudDriveOAuthWindow cloudDriveOAuthWindow = ComponentManagerFactory
+								.getCloudDriveOAuthWindow("Add Dropbox");
+						cloudDriveOAuthWindow
+								.addExternalDriveConnectedListener(new ExternalDriveConnectedListener() {
+									private static final long serialVersionUID = 1L;
 
-							@Override
-							protected void addExternalDrive(
-									ExternalDrive externalDrive) {
-								FileMainViewImpl.this.folderNavigator
-										.expandItem(rootECMFolder);
-							}
-						};
-						UI.getCurrent().addWindow(dropboxConnectWindow);
+									@Override
+									public void connectedSuccess(
+											ExternalDriveConnectedEvent event) {
+										folderNavigator
+												.expandItem(rootECMFolder);
+
+									}
+								});
+						UI.getCurrent().addWindow(cloudDriveOAuthWindow);
 					}
 				});
 		uploadDropboxBtn.addStyleName("link");
@@ -357,20 +362,20 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 		mainBodyResourceLayout.removeAllComponents();
 		mainBodyResourceLayout.setSpacing(true);
 
-		resourceSearchPanel = new FileSearchPanel(rootPath);
-		resourceSearchPanel
-				.addSearchResourcesListener(new SearchResourceListener() {
-					private static final long serialVersionUID = 1L;
-
-					@Override
-					public void searchResources(SearchResourceEvent event) {
-						FileSearchCriteria fileSearchCriteria = (FileSearchCriteria) event
-								.getData();
-
-					}
-				});
-
-		mainBodyResourceLayout.addComponent(resourceSearchPanel);
+		// resourceSearchPanel = new FileSearchPanel(rootPath);
+		// resourceSearchPanel
+		// .addSearchResourcesListener(new SearchResourceListener() {
+		// private static final long serialVersionUID = 1L;
+		//
+		// @Override
+		// public void searchResources(SearchResourceEvent event) {
+		// FileSearchCriteria fileSearchCriteria = (FileSearchCriteria) event
+		// .getData();
+		//
+		// }
+		// });
+		//
+		// mainBodyResourceLayout.addComponent(resourceSearchPanel);
 		mainBodyResourceLayout.addComponent(resourceHandlerLayout);
 
 		resourceHandlerLayout.constructBodyItemContainer(baseFolder);
@@ -466,25 +471,31 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 
 						@Override
 						public void buttonClick(ClickEvent event) {
-							DropBoxOAuthWindow dropboxConnectWindow = new DropBoxOAuthWindow() {
-								private static final long serialVersionUID = 1L;
+							AbstractCloudDriveOAuthWindow cloudDriveOAuthWindow = ComponentManagerFactory
+									.getCloudDriveOAuthWindow("Add Dropbox");
+							cloudDriveOAuthWindow
+									.addExternalDriveConnectedListener(new ExternalDriveConnectedListener() {
+										private static final long serialVersionUID = 1L;
 
-								@Override
-								protected void addExternalDrive(
-										ExternalDrive externalDrive) {
-									FileMainViewImpl.this.folderNavigator
-											.collapseItem(rootECMFolder);
-									FileMainViewImpl.this.folderNavigator
-											.expandItem(rootECMFolder);
-									OneDriveConnectionBodyLayout layout = new OneDriveConnectionBodyLayout(
-											externalDrive);
-									bodyLayout.addComponent(layout);
-									bodyLayout.setComponentAlignment(layout,
-											Alignment.MIDDLE_LEFT);
-									bodyLayout.addComponent(new Hr());
-								}
-							};
-							UI.getCurrent().addWindow(dropboxConnectWindow);
+										@Override
+										public void connectedSuccess(
+												ExternalDriveConnectedEvent event) {
+											FileMainViewImpl.this.folderNavigator
+													.collapseItem(rootECMFolder);
+											FileMainViewImpl.this.folderNavigator
+													.expandItem(rootECMFolder);
+											OneDriveConnectionBodyLayout layout = new OneDriveConnectionBodyLayout(
+													(ExternalDrive) event
+															.getData());
+											bodyLayout.addComponent(layout);
+											bodyLayout.setComponentAlignment(
+													layout,
+													Alignment.MIDDLE_LEFT);
+											bodyLayout.addComponent(new Hr());
+
+										}
+									});
+							UI.getCurrent().addWindow(cloudDriveOAuthWindow);
 						}
 					});
 			connectAccountBtn.addStyleName(UIConstants.THEME_GRAY_LINK);

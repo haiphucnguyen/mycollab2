@@ -37,7 +37,7 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 	private String rootPath;
 	private Folder rootFolder;
 
-	private final FileSearchPanel fileSearchPanel;
+//	private FileSearchPanel fileSearchPanel;
 	private ResourcesDisplayComponent resourceDisplayComponent;
 	private HorizontalLayout resourceContainer;
 
@@ -52,9 +52,9 @@ public abstract class FileDashboardComponent extends VerticalLayout {
 		this.setSpacing(true);
 		this.resourceService = ApplicationContextUtil
 				.getSpringBean(ResourceService.class);
-		this.fileSearchPanel = new FileSearchPanel(rootPath);
-
-		this.addComponent(this.fileSearchPanel);
+		// this.fileSearchPanel = new FileSearchPanel(rootPath);
+		//
+		// this.addComponent(this.fileSearchPanel);
 
 		resourceContainer = new HorizontalLayout();
 		resourceContainer.setSizeFull();

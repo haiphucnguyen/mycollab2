@@ -137,17 +137,6 @@
     </servlet-mapping>
 
     <servlet>
-        <display-name>DroboxCallbackServlet</display-name>
-        <servlet-name>dropboxAuthServlet</servlet-name>
-        <servlet-class>org.springframework.web.context.support.HttpRequestHandlerServlet</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>dropboxAuthServlet</servlet-name>
-        <url-pattern>/drive/dropboxAuth</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
         <display-name>DenyUserInviteServlet</display-name>
         <servlet-name>denyUserInviteServlet</servlet-name>
         <servlet-class>org.springframework.web.context.support.HttpRequestHandlerServlet</servlet-class>
