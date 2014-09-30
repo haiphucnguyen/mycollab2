@@ -58,8 +58,6 @@ public class CrmHomeViewImpl extends AbstractLazyPageView implements
 
 	@Override
 	protected void displayView() {
-		this.removeAllComponents();
-
 		HorizontalLayout contentLayout = new HorizontalLayout();
 		contentLayout.setSpacing(true);
 		contentLayout.setWidth("100%");
