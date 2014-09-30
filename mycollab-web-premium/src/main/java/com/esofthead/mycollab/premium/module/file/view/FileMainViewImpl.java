@@ -63,6 +63,7 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.themes.Reindeer;
 
 /**
  * 
@@ -78,24 +79,23 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 
 	private static final String illegalFileNamePattern = "[<>:&/\\|?*&]";
 
-	private final FolderNavigatorMenu folderNavigator;
+	private FolderNavigatorMenu folderNavigator;
 
 	private Folder rootECMFolder;
 
 	private Folder rootFolder;
 	private String rootPath;
 
-	private final ResourcesDisplayComponent resourceHandlerLayout;
+	private ResourcesDisplayComponent resourceHandlerLayout;
 	private FileActivityStreamComponent fileActivityStreamComponent;
-	// private FileSearchPanel resourceSearchPanel;
-	private final Button switchViewBtn;
+	private Button switchViewBtn;
 
 	private SettingConnectionDrive settingConnectionDrive;
-	private final VerticalLayout mainBodyResourceLayout;
+	private VerticalLayout mainBodyResourceLayout;
 
-	private final ResourceService resourceService;
-	private final ExternalDriveService externalDriveService;
-	private final ExternalResourceService externalResourceService;
+	private ResourceService resourceService;
+	private ExternalDriveService externalDriveService;
+	private ExternalResourceService externalResourceService;
 
 	public FileMainViewImpl() {
 
@@ -109,11 +109,69 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 		this.setSpacing(true);
 		this.setMargin(false);
 		this.setStyleName("file-list-view");
+
 		HorizontalLayout mainView = new HorizontalLayout();
 		mainView.setSpacing(true);
 		mainView.setMargin(true);
 		mainView.setWidth("100%");
 
+		HorizontalLayout menuBarContainerHorizontalLayout = buildLeftColumn();
+		mainView.addComponent(menuBarContainerHorizontalLayout);
+		mainView.setComponentAlignment(menuBarContainerHorizontalLayout,
+				Alignment.TOP_LEFT);
+
+		Separator separator = new Separator();
+		separator.setHeight("100%");
+		separator.setWidthUndefined();
+		mainView.addComponent(separator);
+		mainView.setComponentAlignment(separator, Alignment.TOP_LEFT);
+
+		this.rootFolder = new Folder(rootPath);
+		this.rootECMFolder = rootFolder;
+
+		// here for MainBodyResourceLayout class
+		VerticalLayout rightColumn = new VerticalLayout();
+		rightColumn.addComponent(constructHeader());
+
+		mainBodyResourceLayout = new VerticalLayout();
+		mainBodyResourceLayout.setSpacing(true);
+
+		resourceHandlerLayout = new ResourcesDisplayComponent(rootPath,
+				rootFolder);
+		mainBodyResourceLayout.addComponent(resourceHandlerLayout);
+
+		rightColumn.addComponent(mainBodyResourceLayout);
+
+		mainView.addComponent(rightColumn);
+		mainView.setComponentAlignment(rightColumn, Alignment.TOP_LEFT);
+		mainView.setExpandRatio(rightColumn, 1.0f);
+
+		this.addComponent(mainView);
+		this.setComponentAlignment(mainView, Alignment.MIDDLE_CENTER);
+
+	}
+
+	private HorizontalLayout constructHeader() {
+		final HorizontalLayout layout = new HorizontalLayout();
+		layout.setWidth("100%");
+		layout.setSpacing(true);
+		layout.setMargin(true);
+
+		final Image titleIcon = new Image(null,
+				MyCollabResource
+						.newResource("icons/24/ecm/document_preview.png"));
+		layout.addComponent(titleIcon);
+		layout.setComponentAlignment(titleIcon, Alignment.MIDDLE_LEFT);
+
+		final Label searchtitle = new Label("Files");
+		searchtitle.setStyleName(Reindeer.LABEL_H2);
+		layout.addComponent(searchtitle);
+		layout.setComponentAlignment(searchtitle, Alignment.MIDDLE_LEFT);
+		layout.setExpandRatio(searchtitle, 1.0f);
+		return layout;
+	}
+
+	private HorizontalLayout buildLeftColumn() {
 		final HorizontalLayout menuBarContainerHorizontalLayout = new HorizontalLayout();
 		menuBarContainerHorizontalLayout.setMargin(new MarginInfo(false, true,
 				true, true));
@@ -121,6 +179,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 		final VerticalLayout menuLayout = new VerticalLayout();
 		menuLayout.setSpacing(true);
 		menuLayout.setWidth("250px");
+
 		menuBarContainerHorizontalLayout.addComponent(menuLayout);
 
 		VerticalLayout topControlMenuWrapper = new VerticalLayout();
@@ -137,31 +196,31 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 		navButton.addStyleName(UIConstants.THEME_GRAY_LINK);
 		UiUtils.addComponent(topControlMenu, navButton, Alignment.MIDDLE_RIGHT);
 
-		switchViewBtn = new Button();
-		switchViewBtn.setDescription("Event");
-		switchViewBtn.setIcon(MyCollabResource
-				.newResource("icons/16/ecm/event.png"));
-		switchViewBtn.addClickListener(new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void buttonClick(ClickEvent event) {
-				if (switchViewBtn.getDescription().equals("Event")) {
-					switchViewBtn.setDescription("File Management");
-					switchViewBtn.setIcon(MyCollabResource
-							.newResource("icons/16/ecm/file_managerment.png"));
-					gotoActionLogPage();
-				} else if (switchViewBtn.getDescription().equals(
-						"FileManagement")) {
-					switchViewBtn.setDescription("Event");
-					switchViewBtn.setIcon(MyCollabResource
-							.newResource("icons/16/ecm/event.png"));
-					gotoFileMainViewPage(rootFolder);
-				}
-			}
-		});
-		switchViewBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
-		navButton.addButton(switchViewBtn);
+		// switchViewBtn = new Button();
+		// switchViewBtn.setDescription("Event");
+		// switchViewBtn.setIcon(MyCollabResource
+		// .newResource("icons/16/ecm/event.png"));
+		// switchViewBtn.addClickListener(new Button.ClickListener() {
+		// private static final long serialVersionUID = 1L;
+		//
+		// @Override
+		// public void buttonClick(ClickEvent event) {
+		// if (switchViewBtn.getDescription().equals("Event")) {
+		// switchViewBtn.setDescription("File Management");
+		// switchViewBtn.setIcon(MyCollabResource
+		// .newResource("icons/16/ecm/file_managerment.png"));
+		// gotoActionLogPage();
+		// } else if (switchViewBtn.getDescription().equals(
+		// "FileManagement")) {
+		// switchViewBtn.setDescription("Event");
+		// switchViewBtn.setIcon(MyCollabResource
+		// .newResource("icons/16/ecm/event.png"));
+		// gotoFileMainViewPage(rootFolder);
+		// }
+		// }
+		// });
+		// switchViewBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
+		// navButton.addButton(switchViewBtn);
 
 		Button settingBtn = new Button();
 		settingBtn.setIcon(MyCollabResource
@@ -258,37 +317,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 
 		menuLayout.addComponent(this.folderNavigator);
 
-		mainView.addComponent(menuBarContainerHorizontalLayout);
-		mainView.setComponentAlignment(menuBarContainerHorizontalLayout,
-				Alignment.TOP_LEFT);
-
-		Separator separator = new Separator();
-		separator.setHeight("100%");
-		separator.setWidthUndefined();
-		mainView.addComponent(separator);
-		mainView.setComponentAlignment(separator, Alignment.TOP_LEFT);
-
-		// here for MainBodyResourceLayout class
-		mainBodyResourceLayout = new VerticalLayout();
-		mainBodyResourceLayout.setSpacing(true);
-
-		// this is component handler Resource-----------
-
-		this.rootFolder = new Folder(rootPath);
-		this.rootECMFolder = rootFolder;
-
-		resourceHandlerLayout = new ResourcesDisplayComponent(rootPath,
-				rootFolder);
-		mainBodyResourceLayout.addComponent(resourceHandlerLayout);
-
-		mainView.addComponent(mainBodyResourceLayout);
-		mainView.setComponentAlignment(mainBodyResourceLayout,
-				Alignment.TOP_LEFT);
-		mainView.setExpandRatio(mainBodyResourceLayout, 1.0f);
-
-		this.addComponent(mainView);
-		this.setComponentAlignment(mainView, Alignment.MIDDLE_CENTER);
-
+		return menuBarContainerHorizontalLayout;
 	}
 
 	private boolean checkValidFolderName(String value) {
@@ -361,24 +390,9 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 
 		mainBodyResourceLayout.removeAllComponents();
 		mainBodyResourceLayout.setSpacing(true);
-
-		// resourceSearchPanel = new FileSearchPanel(rootPath);
-		// resourceSearchPanel
-		// .addSearchResourcesListener(new SearchResourceListener() {
-		// private static final long serialVersionUID = 1L;
-		//
-		// @Override
-		// public void searchResources(SearchResourceEvent event) {
-		// FileSearchCriteria fileSearchCriteria = (FileSearchCriteria) event
-		// .getData();
-		//
-		// }
-		// });
-		//
-		// mainBodyResourceLayout.addComponent(resourceSearchPanel);
 		mainBodyResourceLayout.addComponent(resourceHandlerLayout);
 
-		resourceHandlerLayout.constructBodyItemContainer(baseFolder);
+		resourceHandlerLayout.constructBodyItemContainer(rootFolder);
 
 		switchViewBtn.setDescription("Event");
 		switchViewBtn.setIcon(MyCollabResource

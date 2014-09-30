@@ -123,6 +123,7 @@ public class ResourcesDisplayComponent extends VerticalLayout {
 
 	public ResourcesDisplayComponent(final String rootPath,
 			final Folder rootFolder) {
+		this.setSpacing(true);
 		this.baseFolder = rootFolder;
 		this.rootPath = rootPath;
 		externalResourceService = ApplicationContextUtil
@@ -136,9 +137,13 @@ public class ResourcesDisplayComponent extends VerticalLayout {
 		mainBodyLayout.setSpacing(true);
 		mainBodyLayout.addStyleName("box-no-border-left");
 
-		// file bread Crum ---------------------
+		// file breadcrum ---------------------
+		HorizontalLayout breadcrumbContainer = new HorizontalLayout();
+		breadcrumbContainer
+				.setMargin(new MarginInfo(false, false, false, true));
 		fileBreadCrumb = new FileBreadcrumb(rootPath);
-		mainBodyLayout.addComponent(fileBreadCrumb);
+		breadcrumbContainer.addComponent(fileBreadCrumb);
+		mainBodyLayout.addComponent(breadcrumbContainer);
 
 		// Construct controllGroupBtn
 		controllGroupBtn = new HorizontalLayout();
