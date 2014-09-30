@@ -394,9 +394,9 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 
 		resourceHandlerLayout.constructBodyItemContainer(rootFolder);
 
-		switchViewBtn.setDescription("Event");
-		switchViewBtn.setIcon(MyCollabResource
-				.newResource("icons/16/ecm/event.png"));
+//		switchViewBtn.setDescription("Event");
+//		switchViewBtn.setIcon(MyCollabResource
+//				.newResource("icons/16/ecm/event.png"));
 	}
 
 	private void displayResources(String rootPath, String rootFolderName) {
