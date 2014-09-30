@@ -592,8 +592,7 @@ public class ResourcesDisplayComponent extends VerticalLayout {
 			// define the
 			// created user so we do not need to display, then we assume the
 			// current user is created user
-			if (res.getCreatedBy() == null
-					|| res.getCreatedBy().trim().equals("")) {
+			if (StringUtils.isEmpty(res.getCreatedBy())) {
 				Label usernameLbl = new Label(AppContext.getUsername());
 				usernameLbl.addStyleName("grayLabel");
 				moreInfoAboutResLayout.addComponent(usernameLbl);

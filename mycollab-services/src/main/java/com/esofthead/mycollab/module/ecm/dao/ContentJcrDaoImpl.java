@@ -257,6 +257,7 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 					RepositoryException {
 				Node rootNode = session.getRootNode();
 				Node node = getNode(rootNode, path);
+
 				if (node != null) {
 					node.remove();
 					session.save();
@@ -470,12 +471,15 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 				Node currentNode = getNode(rootNode, oldPath);
 				if (getNode(rootNode, newPath) != null) {
 					throw new ContentException(
-							"Folder/file has already existed.");
+							"Folder/file has already existed: " + newPath);
 				}
 				if (currentNode != null) {
 					currentNode.getSession().move(currentNode.getPath(),
 							"/" + newPath);
 					currentNode.getSession().save();
+				} else {
+					throw new MyCollabException("Resource path " + oldPath
+							+ " not found");
 				}
 				return null;
 			}
