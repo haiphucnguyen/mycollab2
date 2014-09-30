@@ -3,8 +3,8 @@ package com.esofthead.mycollab.os.service;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.rzo.yajsw.wrapper.WrappedProcess;
-import org.rzo.yajsw.wrapper.WrappedProcessFactory;
+import org.rzo.yajsw.wrapper.WrappedService;
+import org.rzo.yajsw.wrapper.WrappedServiceFactory;
 
 /**
  * 
@@ -12,13 +12,21 @@ import org.rzo.yajsw.wrapper.WrappedProcessFactory;
  * @since 4.5.2
  * 
  */
-public class WrappedService {
+public class ServiceWrapper {
 
 	private static final String APP_NAME = "MyCollab";
 	private static final String PATH = "target/mycollab-app-premium-4.5.1-mycollab-dist/mycollab-app-premium-4.5.1/";
 
 	public static void main(String... args) {
 
+		WrappedService service = getOsService();
+		
+//		service.install();
+//		service.start();
+		service.uninstall();
+	}
+	
+	private static WrappedService getOsService() {
 		Map<String, String> configuration = new HashMap<String, String>();
 		configuration.put("wrapper.java.command", "java");
 
@@ -67,8 +75,7 @@ public class WrappedService {
 		configuration.put("wrapper.java.additional.5",
 				"-Djava.net.preferIPv4Stack=true");
 
-		WrappedProcess wrappedProcess = (WrappedProcess) WrappedProcessFactory
-				.createProcess(configuration, true);
-		wrappedProcess.start();
+		return (WrappedService) WrappedServiceFactory
+				.createService(configuration);
 	}
 }
