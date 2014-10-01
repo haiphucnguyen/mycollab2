@@ -34,14 +34,9 @@ import com.esofthead.mycollab.core.format.JpDateFormat;
  */
 public class LocaleHelper {
 
-	private static Map<String, Locale> languageBase = new HashMap<String, Locale>();
-
 	private static Map<Locale, IDateFormat> dateFormats = new HashMap<Locale, IDateFormat>();
 
 	static {
-		languageBase.put(Locale.JAPAN.toString(), Locale.JAPAN);
-		languageBase.put(Locale.US.toString(), Locale.US);
-
 		dateFormats.put(Locale.JAPAN, new JpDateFormat());
 		dateFormats.put(Locale.US, new DefaultDateFormat());
 	}
@@ -56,18 +51,26 @@ public class LocaleHelper {
 	}
 
 	public static String getShortDateFormatAssociateToLocale(Locale locale) {
-		return dateFormats.get(locale).getShortDateFormat();
+		return getDateFormatInstance(locale).getShortDateFormat();
 	}
 
 	public static String getDateFormatAssociateToLocale(Locale locale) {
-		return dateFormats.get(locale).getDateFormat();
+		return getDateFormatInstance(locale).getDateFormat();
 	}
 
 	public static String getDateTimeFormatAssociateToLocale(Locale locale) {
-		return dateFormats.get(locale).getDateTimeFormat();
+		return getDateFormatInstance(locale).getDateTimeFormat();
 	}
 
 	public static String getDayMonthFormatAssociateToLocale(Locale locale) {
-		return dateFormats.get(locale).getDayMonthFormat();
+		return getDateFormatInstance(locale).getDayMonthFormat();
+	}
+
+	private static IDateFormat getDateFormatInstance(Locale locale) {
+		IDateFormat dateFormat = dateFormats.get(locale);
+		if (dateFormat == null) {
+			dateFormat = dateFormats.get(Locale.US);
+		}
+		return dateFormat;
 	}
 }
