@@ -43,6 +43,7 @@ import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.SplitButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
+import com.esofthead.mycollab.vaadin.ui.WebResourceIds;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -117,7 +118,7 @@ public class TaskGroupDisplayWidget
 
 					});
 			parentTaskListFilterButton.setIcon(MyCollabResource
-					.newResource("icons/12/project/task_filter.png"));
+					.newResource(WebResourceIds._12_project_task_filter));
 
 			taskListFilterControl = new SplitButton(parentTaskListFilterButton);
 			taskListFilterControl.addStyleName(UIConstants.THEME_BLANK_LINK);

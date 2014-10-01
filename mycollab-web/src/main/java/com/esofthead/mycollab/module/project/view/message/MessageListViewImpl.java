@@ -66,9 +66,9 @@ import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
+import com.esofthead.mycollab.vaadin.ui.WebResourceIds;
 import com.vaadin.event.FieldEvents.TextChangeEvent;
 import com.vaadin.event.FieldEvents.TextChangeListener;
-import com.vaadin.server.Sizeable;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.AbstractTextField.TextChangeEventMode;
@@ -331,7 +331,7 @@ public class MessageListViewImpl extends AbstractPageView implements
 				}
 			});
 			deleteBtn.setIcon(MyCollabResource
-					.newResource("icons/12/project/icon_x.png"));
+					.newResource(WebResourceIds._12_project_icon_x));
 			deleteBtn.addStyleName("link");
 			deleteBtn.setEnabled(CurrentProjectVariables
 					.canAccess(ProjectRolePermissionCollections.MESSAGES));

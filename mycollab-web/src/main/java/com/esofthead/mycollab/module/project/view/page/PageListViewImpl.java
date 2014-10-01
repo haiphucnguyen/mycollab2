@@ -52,6 +52,7 @@ import com.esofthead.mycollab.vaadin.ui.SortButton;
 import com.esofthead.mycollab.vaadin.ui.ToggleButtonGroup;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
+import com.esofthead.mycollab.vaadin.ui.WebResourceIds;
 import com.google.common.collect.Ordering;
 import com.vaadin.server.Sizeable;
 import com.vaadin.shared.ui.MarginInfo;
@@ -344,7 +345,7 @@ public class PageListViewImpl extends AbstractPageView implements PageListView {
 					}
 				});
 		editBtn.setIcon(MyCollabResource
-				.newResource("icons/12/project/edit.png"));
+				.newResource(WebResourceIds._12_project_edit));
 		editBtn.setStyleName("link");
 		editBtn.setEnabled(CurrentProjectVariables
 				.canWrite(ProjectRolePermissionCollections.PAGES));
@@ -390,7 +391,7 @@ public class PageListViewImpl extends AbstractPageView implements PageListView {
 		deleteBtn.setEnabled(CurrentProjectVariables
 				.canAccess(ProjectRolePermissionCollections.PAGES));
 		deleteBtn.setIcon(MyCollabResource
-				.newResource("icons/12/project/delete.png"));
+				.newResource(WebResourceIds._12_project_delete));
 		deleteBtn.setStyleName("link");
 		controlBtns.addComponent(deleteBtn);
 
@@ -468,7 +469,7 @@ public class PageListViewImpl extends AbstractPageView implements PageListView {
 		editBtn.setEnabled(CurrentProjectVariables
 				.canWrite(ProjectRolePermissionCollections.PAGES));
 		editBtn.setIcon(MyCollabResource
-				.newResource("icons/12/project/edit.png"));
+				.newResource(WebResourceIds._12_project_edit));
 		editBtn.setStyleName("link");
 		controlBtns.addComponent(editBtn);
 
@@ -512,7 +513,7 @@ public class PageListViewImpl extends AbstractPageView implements PageListView {
 		deleteBtn.setEnabled(CurrentProjectVariables
 				.canAccess(ProjectRolePermissionCollections.PAGES));
 		deleteBtn.setIcon(MyCollabResource
-				.newResource("icons/12/project/delete.png"));
+				.newResource(WebResourceIds._12_project_delete));
 		deleteBtn.setStyleName("link");
 		controlBtns.addComponent(deleteBtn);
 

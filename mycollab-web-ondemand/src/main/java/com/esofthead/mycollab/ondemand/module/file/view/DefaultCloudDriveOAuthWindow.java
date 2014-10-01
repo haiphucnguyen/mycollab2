@@ -2,6 +2,7 @@ package com.esofthead.mycollab.ondemand.module.file.view;
 
 import java.util.GregorianCalendar;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,6 +22,7 @@ import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.WebResourceIds;
 import com.google.common.eventbus.Subscribe;
 import com.vaadin.server.BrowserWindowOpener;
 import com.vaadin.server.ExternalResource;
@@ -137,7 +139,7 @@ public abstract class DefaultCloudDriveOAuthWindow extends
 		Button dropboxIconBtn = new Button();
 		dropboxIconBtn.setStyleName("dropbox-icon-button");
 		dropboxIconBtn.setIcon(MyCollabResource
-				.newResource("icons/12/ecm/dropbox.png"));
+				.newResource(WebResourceIds._12_ecm_dropbox));
 		folderNameLayout.addComponent(dropboxIconBtn);
 
 		folderName = new TextField();
@@ -170,7 +172,7 @@ public abstract class DefaultCloudDriveOAuthWindow extends
 						try {
 							String name = folderName.getValue().toString()
 									.trim();
-							if (name.equals("")) {
+							if (StringUtils.isBlank(name)) {
 								NotificationUtil
 										.showWarningNotification("Please enter folder name");
 								return;

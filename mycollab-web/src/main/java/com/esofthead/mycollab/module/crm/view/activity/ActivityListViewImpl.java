@@ -33,6 +33,7 @@ import com.esofthead.mycollab.vaadin.ui.DefaultMassItemActionHandlersContainer;
 import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.WebResourceIds;
 import com.esofthead.mycollab.vaadin.ui.table.AbstractPagedBeanTable;
 
 /**
@@ -109,7 +110,7 @@ public class ActivityListViewImpl extends
 
 		container.addDownloadActionItem(
 				MassItemActionHandler.EXPORT_CSV_ACTION,
-				MyCollabResource.newResource("icons/16/action/csv.png"),
+				MyCollabResource.newResource(WebResourceIds._16_action_csv),
 				"export", "export.csv",
 				AppContext.getMessage(GenericI18Enum.BUTTON_EXPORT_CSV));
 

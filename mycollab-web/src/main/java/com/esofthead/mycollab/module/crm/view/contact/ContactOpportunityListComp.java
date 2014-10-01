@@ -39,6 +39,7 @@ import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.SplitButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.WebResourceIds;
 import com.vaadin.event.MouseEvents;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
@@ -167,7 +168,7 @@ public class ContactOpportunityListComp
 			opportunityInfo.setSpacing(true);
 
 			Image btnDelete = new Image(null,
-					MyCollabResource.newResource("icons/12/project/icon_x.png"));
+					MyCollabResource.newResource(WebResourceIds._12_project_icon_x));
 			btnDelete.addClickListener(new MouseEvents.ClickListener() {
 				private static final long serialVersionUID = 1L;
 

@@ -69,6 +69,7 @@ import com.esofthead.mycollab.vaadin.ui.ReloadableComponent;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UrlDetectableLabel;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
+import com.esofthead.mycollab.vaadin.ui.WebResourceIds;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
@@ -304,7 +305,7 @@ public class NoteListItems extends VerticalLayout {
 					}
 				});
 				msgDeleteBtn.setIcon(MyCollabResource
-						.newResource("icons/12/project/icon_x.png"));
+						.newResource(WebResourceIds._12_project_icon_x));
 				msgDeleteBtn.setStyleName("delete-btn");
 				messageHeader.addComponent(msgDeleteBtn);
 			}
