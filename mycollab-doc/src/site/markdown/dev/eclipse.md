@@ -75,4 +75,4 @@ You run this main application, MyCollab will need you input at the first time yo
 
 We will request you enter smtp email configuration in order MyCollab can send notifications to you if there is any changes in tasks, bugs, etc but it is too soon for you to know all settings. You should skip this step by selecting 'no' for the first time to run MyCollab. For advanced developers, you can read more MyCollab configuration at [here](../admin/configuration.html)
 
-After MyCollab run successfully, the web browser will automatically lead you to MyCollab site. You use the default account **admin@mycollab.com** and password **admin123** to access MyCollab. Remember to change your email and password for the next login
+After MyCollab run successfully, the web browser will automatically lead you to MyCollab site. You use the default account [admin@mycollab.com](mailto:admin@mycollab.com) and password ***admin123*** to access MyCollab. Remember to change your email and password for the next login
