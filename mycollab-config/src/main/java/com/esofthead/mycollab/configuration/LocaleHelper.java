@@ -20,6 +20,8 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import org.apache.commons.lang3.LocaleUtils;
+
 import com.esofthead.mycollab.core.format.DefaultDateFormat;
 import com.esofthead.mycollab.core.format.IDateFormat;
 import com.esofthead.mycollab.core.format.JpDateFormat;
@@ -31,19 +33,12 @@ import com.esofthead.mycollab.core.format.JpDateFormat;
  * 
  */
 public class LocaleHelper {
-	private static final String JAPANESE = "Japanese";
-	private static final String ENGLISH = "English";
-
-	private static Map<String, Locale> languages = new HashMap<String, Locale>();
 
 	private static Map<String, Locale> languageBase = new HashMap<String, Locale>();
 
 	private static Map<Locale, IDateFormat> dateFormats = new HashMap<Locale, IDateFormat>();
 
 	static {
-		languages.put(JAPANESE, Locale.JAPAN);
-		languages.put(ENGLISH, Locale.US);
-
 		languageBase.put(Locale.JAPAN.toString(), Locale.JAPAN);
 		languageBase.put(Locale.US.toString(), Locale.US);
 
@@ -51,19 +46,12 @@ public class LocaleHelper {
 		dateFormats.put(Locale.US, new DefaultDateFormat());
 	}
 
-	static Map<String, Locale> getNativeLanguages() {
-		return languages;
-	}
-
 	public static Locale toLocale(String language) {
 		if (language == null) {
 			return Locale.US;
 		}
 
-		Locale locale = languages.get(language);
-		if (locale == null) {
-			locale = languageBase.get(language);
-		}
+		Locale locale = LocaleUtils.toLocale(language);
 		return (locale != null) ? locale : SiteConfiguration.getDefaultLocale();
 	}
 
