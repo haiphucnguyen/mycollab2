@@ -94,7 +94,7 @@ public class PreviewFormControlsGenerator<B> {
 		popupButtonsControl.addComponent(editBtn);
 
 		deleteBtn = new Button(
-				AppContext.getMessage(GenericI18Enum.BUTTON_DELETE_LABEL),
+				AppContext.getMessage(GenericI18Enum.BUTTON_DELETE),
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 

@@ -67,7 +67,7 @@ public class CreateSectionWindow extends Window {
 		controlLayout.setSpacing(true);
 
 		Button saveBtn = new Button(
-				AppContext.getMessage(GenericI18Enum.BUTTON_SAVE_LABEL),
+				AppContext.getMessage(GenericI18Enum.BUTTON_SAVE),
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
@@ -89,7 +89,7 @@ public class CreateSectionWindow extends Window {
 		controlLayout.setComponentAlignment(saveBtn, Alignment.MIDDLE_LEFT);
 
 		Button cancelBtn = new Button(
-				AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL_LABEL),
+				AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL),
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 

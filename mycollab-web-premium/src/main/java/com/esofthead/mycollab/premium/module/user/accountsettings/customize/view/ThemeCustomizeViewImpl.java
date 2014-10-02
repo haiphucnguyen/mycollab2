@@ -117,7 +117,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements
 		controlButton.setSpacing(true);
 
 		Button saveBtn = new Button(
-				AppContext.getMessage(GenericI18Enum.BUTTON_SAVE_LABEL),
+				AppContext.getMessage(GenericI18Enum.BUTTON_SAVE),
 				new Button.ClickListener() {
 					private static final long serialVersionUID = -6901103392231786935L;
 

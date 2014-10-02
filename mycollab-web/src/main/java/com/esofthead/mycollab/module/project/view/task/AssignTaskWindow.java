@@ -115,7 +115,7 @@ public class AssignTaskWindow extends Window {
 
 				Button cancelBtn = new Button(
 						AppContext
-								.getMessage(GenericI18Enum.BUTTON_CANCEL_LABEL),
+								.getMessage(GenericI18Enum.BUTTON_CANCEL),
 						new Button.ClickListener() {
 							private static final long serialVersionUID = 1L;
 

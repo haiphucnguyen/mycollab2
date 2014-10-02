@@ -145,7 +145,7 @@ public class ProjectPreviewFormControlsGenerator<T> implements Serializable {
 
 		if ((buttonEnableFlags & DELETE_BTN_PRESENTED) == DELETE_BTN_PRESENTED) {
 			deleteBtn = new Button(
-					AppContext.getMessage(GenericI18Enum.BUTTON_DELETE_LABEL),
+					AppContext.getMessage(GenericI18Enum.BUTTON_DELETE),
 					new Button.ClickListener() {
 
 						private static final long serialVersionUID = 1L;

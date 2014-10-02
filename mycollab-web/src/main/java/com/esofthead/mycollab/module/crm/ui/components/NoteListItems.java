@@ -474,7 +474,7 @@ public class NoteListItems extends VerticalLayout {
 			controls.setExpandRatio(emptySpace, 1.0f);
 
 			final Button cancelBtn = new Button(
-					AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL_LABEL),
+					AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL),
 					new Button.ClickListener() {
 						private static final long serialVersionUID = 1L;
 

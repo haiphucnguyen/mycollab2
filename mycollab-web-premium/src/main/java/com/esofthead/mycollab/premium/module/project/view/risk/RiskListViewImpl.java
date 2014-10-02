@@ -229,7 +229,7 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
 		layout.addComponent(this.selectOptionButton);
 
 		final Button deleteBtn = new Button(
-				AppContext.getMessage(GenericI18Enum.BUTTON_DELETE_LABEL));
+				AppContext.getMessage(GenericI18Enum.BUTTON_DELETE));
 		deleteBtn.setEnabled(CurrentProjectVariables
 				.canAccess(ProjectRolePermissionCollections.RISKS));
 

@@ -261,7 +261,7 @@ public class TaskGroupDisplayWidget
 			actionBtnLayout.addComponent(editBtn);
 
 			final Button closeBtn = new Button(
-					AppContext.getMessage(GenericI18Enum.BUTTON_CLOSE_LABEL),
+					AppContext.getMessage(GenericI18Enum.BUTTON_CLOSE),
 					new Button.ClickListener() {
 						private static final long serialVersionUID = 1L;
 
@@ -293,7 +293,7 @@ public class TaskGroupDisplayWidget
 			actionBtnLayout.addComponent(closeBtn);
 
 			final Button deleteBtn = new Button(
-					AppContext.getMessage(GenericI18Enum.BUTTON_DELETE_LABEL),
+					AppContext.getMessage(GenericI18Enum.BUTTON_DELETE),
 					new Button.ClickListener() {
 						private static final long serialVersionUID = 1L;
 

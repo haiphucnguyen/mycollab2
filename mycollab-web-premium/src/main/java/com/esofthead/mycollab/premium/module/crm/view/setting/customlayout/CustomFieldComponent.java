@@ -97,7 +97,7 @@ public class CustomFieldComponent extends CssLayout {
 		panelContentLayout.addComponent(isRequired);
 
 		Button saveBtn = new Button(
-				AppContext.getMessage(GenericI18Enum.BUTTON_SAVE_LABEL), new Button.ClickListener() {
+				AppContext.getMessage(GenericI18Enum.BUTTON_SAVE), new Button.ClickListener() {
 
 			private static final long serialVersionUID = 1L;
 

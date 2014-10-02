@@ -352,7 +352,7 @@ public class PageListViewImpl extends AbstractPageView implements PageListView {
 		controlBtns.addComponent(editBtn);
 
 		Button deleteBtn = new Button(
-				AppContext.getMessage(GenericI18Enum.BUTTON_DELETE_LABEL),
+				AppContext.getMessage(GenericI18Enum.BUTTON_DELETE),
 				new Button.ClickListener() {
 
 					private static final long serialVersionUID = -5387015552598157076L;
@@ -474,7 +474,7 @@ public class PageListViewImpl extends AbstractPageView implements PageListView {
 		controlBtns.addComponent(editBtn);
 
 		Button deleteBtn = new Button(
-				AppContext.getMessage(GenericI18Enum.BUTTON_DELETE_LABEL),
+				AppContext.getMessage(GenericI18Enum.BUTTON_DELETE),
 				new Button.ClickListener() {
 
 					private static final long serialVersionUID = 2575434171770462361L;
@@ -603,7 +603,7 @@ public class PageListViewImpl extends AbstractPageView implements PageListView {
 
 					final Button cancelBtn = new Button(
 							AppContext
-									.getMessage(GenericI18Enum.BUTTON_CANCEL_LABEL),
+									.getMessage(GenericI18Enum.BUTTON_CANCEL),
 							new Button.ClickListener() {
 								private static final long serialVersionUID = 1L;
 
@@ -620,7 +620,7 @@ public class PageListViewImpl extends AbstractPageView implements PageListView {
 
 					final Button saveBtn = new Button(
 							AppContext
-									.getMessage(GenericI18Enum.BUTTON_SAVE_LABEL),
+									.getMessage(GenericI18Enum.BUTTON_SAVE),
 							new Button.ClickListener() {
 								private static final long serialVersionUID = 1L;
 

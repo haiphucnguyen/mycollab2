@@ -209,7 +209,7 @@ public class TaskTableDisplay extends
 						.getPercentagecomplete() != 100)
 						|| task.getPercentagecomplete() == null) {
 					Button closeBtn = new Button(AppContext
-							.getMessage(GenericI18Enum.BUTTON_CLOSE_LABEL),
+							.getMessage(GenericI18Enum.BUTTON_CLOSE),
 							new Button.ClickListener() {
 								private static final long serialVersionUID = 1L;
 
@@ -314,7 +314,7 @@ public class TaskTableDisplay extends
 				}
 
 				Button deleteBtn = new Button(AppContext
-						.getMessage(GenericI18Enum.BUTTON_DELETE_LABEL),
+						.getMessage(GenericI18Enum.BUTTON_DELETE),
 						new Button.ClickListener() {
 							private static final long serialVersionUID = 1L;
 

@@ -525,7 +525,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 
 					Button deleteBtn = new Button(
 							AppContext
-									.getMessage(GenericI18Enum.BUTTON_DELETE_LABEL),
+									.getMessage(GenericI18Enum.BUTTON_DELETE),
 							new Button.ClickListener() {
 								private static final long serialVersionUID = 1L;
 
@@ -630,7 +630,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 				layout.addComponent(folderNameTextField);
 
 				Button saveBtn = new Button(
-						AppContext.getMessage(GenericI18Enum.BUTTON_SAVE_LABEL),
+						AppContext.getMessage(GenericI18Enum.BUTTON_SAVE),
 						new ClickListener() {
 							private static final long serialVersionUID = 1L;
 
@@ -697,7 +697,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 
 				Button cancelBtn = new Button(
 						AppContext
-								.getMessage(GenericI18Enum.BUTTON_CANCEL_LABEL),
+								.getMessage(GenericI18Enum.BUTTON_CANCEL),
 						new ClickListener() {
 							private static final long serialVersionUID = 1L;
 

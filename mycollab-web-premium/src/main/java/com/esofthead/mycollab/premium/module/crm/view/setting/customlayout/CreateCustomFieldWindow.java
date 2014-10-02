@@ -143,7 +143,7 @@ public class CreateCustomFieldWindow extends Window {
 		HorizontalLayout buttonControls = new HorizontalLayout();
 		buttonControls.setSpacing(true);
 		Button saveBtn = new Button(
-				AppContext.getMessage(GenericI18Enum.BUTTON_SAVE_LABEL),
+				AppContext.getMessage(GenericI18Enum.BUTTON_SAVE),
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
@@ -160,7 +160,7 @@ public class CreateCustomFieldWindow extends Window {
 		buttonControls.setComponentAlignment(saveBtn, Alignment.MIDDLE_CENTER);
 
 		Button cancelBtn = new Button(
-				AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL_LABEL),
+				AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL),
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 

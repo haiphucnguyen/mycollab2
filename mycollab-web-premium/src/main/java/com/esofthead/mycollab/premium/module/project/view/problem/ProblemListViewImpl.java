@@ -234,7 +234,7 @@ public class ProblemListViewImpl extends AbstractPageView implements
 		layout.addComponent(this.selectOptionButton);
 
 		final Button deleteBtn = new Button(
-				AppContext.getMessage(GenericI18Enum.BUTTON_DELETE_LABEL));
+				AppContext.getMessage(GenericI18Enum.BUTTON_DELETE));
 		deleteBtn.setEnabled(CurrentProjectVariables
 				.canAccess(ProjectRolePermissionCollections.PROBLEMS));
 
@@ -246,7 +246,7 @@ public class ProblemListViewImpl extends AbstractPageView implements
 					MassItemActionHandler.DELETE_ACTION, MyCollabResource
 							.newResource(WebResourceIds._16_action_delete),
 					"delete", AppContext
-							.getMessage(GenericI18Enum.BUTTON_DELETE_LABEL));
+							.getMessage(GenericI18Enum.BUTTON_DELETE));
 		}
 
 		tableActionControls.addActionItem(MassItemActionHandler.MAIL_ACTION,

@@ -93,7 +93,7 @@ public class ThemeCustomizePresenter extends
 										AppContext
 												.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
 										AppContext
-												.getMessage(GenericI18Enum.BUTTON_CANCEL_LABEL),
+												.getMessage(GenericI18Enum.BUTTON_CANCEL),
 										new ConfirmDialog.Listener() {
 											private static final long serialVersionUID = 2086515060473457749L;
 

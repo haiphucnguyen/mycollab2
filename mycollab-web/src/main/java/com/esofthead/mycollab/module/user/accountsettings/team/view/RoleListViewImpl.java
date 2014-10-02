@@ -125,7 +125,7 @@ public class RoleListViewImpl extends AbstractPageView implements RoleListView {
 		layout.addComponent(this.selectOptionButton);
 
 		final Button deleteBtn = new Button(
-				AppContext.getMessage(GenericI18Enum.BUTTON_DELETE_LABEL));
+				AppContext.getMessage(GenericI18Enum.BUTTON_DELETE));
 		deleteBtn.setEnabled(AppContext
 				.canAccess(RolePermissionCollections.ACCOUNT_ROLE));
 
@@ -135,7 +135,7 @@ public class RoleListViewImpl extends AbstractPageView implements RoleListView {
 					MassItemActionHandler.DELETE_ACTION, MyCollabResource
 							.newResource(WebResourceIds._16_action_delete),
 					"delete", AppContext
-							.getMessage(GenericI18Enum.BUTTON_DELETE_LABEL));
+							.getMessage(GenericI18Enum.BUTTON_DELETE));
 		}
 		tableActionControls.addDownloadActionItem(
 				MassItemActionHandler.EXPORT_PDF_ACTION,

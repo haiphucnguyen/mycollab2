@@ -94,7 +94,7 @@ public class AccountListViewImpl extends
 					MyCollabResource
 							.newResource(WebResourceIds._16_action_delete),
 					"delete", AppContext
-							.getMessage(GenericI18Enum.BUTTON_DELETE_LABEL));
+							.getMessage(GenericI18Enum.BUTTON_DELETE));
 		}
 
 		container.addActionItem(MassItemActionHandler.MAIL_ACTION,

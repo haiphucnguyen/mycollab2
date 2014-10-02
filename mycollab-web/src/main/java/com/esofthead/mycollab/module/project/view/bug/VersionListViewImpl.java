@@ -219,7 +219,7 @@ public class VersionListViewImpl extends AbstractPageView implements
 					MassItemActionHandler.DELETE_ACTION, MyCollabResource
 							.newResource(WebResourceIds._16_action_delete),
 					"delete", AppContext
-							.getMessage(GenericI18Enum.BUTTON_DELETE_LABEL));
+							.getMessage(GenericI18Enum.BUTTON_DELETE));
 		}
 
 		tableActionControls.addActionItem(MassItemActionHandler.MAIL_ACTION,

@@ -178,7 +178,7 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp2<SimpleTask>
 
 		if (StatusI18nEnum.Open.name().equals(beanItem.getStatus())) {
 			quickActionStatusBtn.setCaption(AppContext
-					.getMessage(GenericI18Enum.BUTTON_CLOSE_LABEL));
+					.getMessage(GenericI18Enum.BUTTON_CLOSE));
 			quickActionStatusBtn.setIcon(MyCollabResource
 					.newResource("icons/16/project/closeTask.png"));
 		} else {
@@ -246,7 +246,7 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp2<SimpleTask>
 					TaskReadViewImpl.this
 							.removeLayoutStyleName(UIConstants.LINK_COMPLETED);
 					quickActionStatusBtn.setCaption(AppContext
-							.getMessage(GenericI18Enum.BUTTON_CLOSE_LABEL));
+							.getMessage(GenericI18Enum.BUTTON_CLOSE));
 					quickActionStatusBtn.setIcon(MyCollabResource
 							.newResource("icons/16/project/closeTask.png"));
 				} else {

@@ -307,7 +307,7 @@ public class TaskSearchTableDisplay
 				}
 
 				Button deleteBtn = new Button(AppContext
-						.getMessage(GenericI18Enum.BUTTON_DELETE_LABEL),
+						.getMessage(GenericI18Enum.BUTTON_DELETE),
 						new Button.ClickListener() {
 							private static final long serialVersionUID = 1L;
 

@@ -153,7 +153,7 @@ public class ComponentReadViewImpl extends
 				|| beanItem.getStatus().equals(StatusI18nEnum.Open.name())) {
 			removeLayoutStyleName(UIConstants.LINK_COMPLETED);
 			quickActionStatusBtn.setCaption(AppContext
-					.getMessage(GenericI18Enum.BUTTON_CLOSE_LABEL));
+					.getMessage(GenericI18Enum.BUTTON_CLOSE));
 			quickActionStatusBtn.setIcon(MyCollabResource
 					.newResource("icons/16/project/closeTask.png"));
 		} else {
@@ -208,7 +208,7 @@ public class ComponentReadViewImpl extends
 					ComponentReadViewImpl.this
 							.removeLayoutStyleName(UIConstants.LINK_COMPLETED);
 					quickActionStatusBtn.setCaption(AppContext
-							.getMessage(GenericI18Enum.BUTTON_CLOSE_LABEL));
+							.getMessage(GenericI18Enum.BUTTON_CLOSE));
 					quickActionStatusBtn.setIcon(MyCollabResource
 							.newResource("icons/16/project/closeTask.png"));
 				} else {
