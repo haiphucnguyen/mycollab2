@@ -36,7 +36,7 @@ import ch.qos.cal10n.BaseName;
 import ch.qos.cal10n.Locale;
 import ch.qos.cal10n.LocaleData;
 
-@BaseName("localization/common/shell")
+@BaseName("localization/common_shell")
 @LocaleData({ @Locale("en_US"), @Locale("ja_JP") })
 public enum ShellI18nEnum {
 	BUTTON_BACK_HOME_PAGE,
