@@ -57,10 +57,11 @@ public class ComponentServiceTest extends ServiceTest {
 
 		assertThat(components.size()).isEqualTo(4);
 		assertThat(components).extracting("id", "description", "status",
-				"componentname").contains(tuple(1, "aaaaaaa", "Open", "com 1"),
-				tuple(2, "bbbbbbb", "Closed", "com 2"),
-				tuple(3, "ccccccc", "Closed", "com 3"),
-				tuple(4, "ddddddd", "Open", "com 4"));
+				"componentname", "numBugs", "numOpenBugs").contains(
+				tuple(1, "aaaaaaa", "Open", "com 1", 1, 1),
+				tuple(2, "bbbbbbb", "Closed", "com 2", 2, 1),
+				tuple(3, "ccccccc", "Closed", "com 3", 1, 1),
+				tuple(4, "ddddddd", "Open", "com 4", 0, 0));
 	}
 
 	@SuppressWarnings("unchecked")
@@ -86,7 +87,8 @@ public class ComponentServiceTest extends ServiceTest {
 						criteria, 0, Integer.MAX_VALUE));
 		assertThat(components.size()).isEqualTo(1);
 		assertThat(components).extracting("id", "description", "status",
-				"componentname").contains(tuple(1, "aaaaaaa", "Open", "com 1"));
+				"componentname", "numBugs", "numOpenBugs").contains(
+				tuple(1, "aaaaaaa", "Open", "com 1", 1, 1));
 	}
 
 	@SuppressWarnings("unchecked")
@@ -103,6 +105,7 @@ public class ComponentServiceTest extends ServiceTest {
 						criteria, 0, Integer.MAX_VALUE));
 		assertThat(components.size()).isEqualTo(1);
 		assertThat(components).extracting("id", "description", "status",
-				"componentname").contains(tuple(1, "aaaaaaa", "Open", "com 1"));
+				"componentname", "numBugs", "numOpenBugs").contains(
+				tuple(1, "aaaaaaa", "Open", "com 1", 1, 1));
 	}
 }
