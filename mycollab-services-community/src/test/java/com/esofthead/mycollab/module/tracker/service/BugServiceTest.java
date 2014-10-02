@@ -25,8 +25,6 @@ import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.esofthead.mycollab.common.domain.GroupItem;
@@ -45,9 +43,6 @@ import com.esofthead.mycollab.test.service.ServiceTest;
 
 @RunWith(MyCollabClassRunner.class)
 public class BugServiceTest extends ServiceTest {
-
-	private static final Logger LOG = LoggerFactory
-			.getLogger(BugServiceTest.class);
 
 	@Autowired
 	protected BugService bugService;
@@ -139,23 +134,6 @@ public class BugServiceTest extends ServiceTest {
 
 	@DataSet
 	@Test
-	public void testSearchByVersions2() {
-		// BugSearchCriteria criteria = new BugSearchCriteria();
-		// criteria.setVersionids(new SetSearchField<Integer>(1, 2));
-		//
-		// Assert.assertEquals(1, bugService.getTotalCount(criteria));
-		//
-		// List<SimpleBug> bugList = (List<SimpleBug>) bugService
-		// .findPagableListByCriteria(new SearchRequest<BugSearchCriteria>(
-		// criteria, 0, Integer.MAX_VALUE));
-		// Assert.assertEquals(1, bugList.size());
-		// SimpleBug bug = bugList.get(0);
-		// Assert.assertEquals(1, bug.getAffectedVersions().size());
-		// Assert.assertEquals(2, bug.getFixedVersions().size());
-	}
-
-	@DataSet
-	@Test
 	public void testSearchByAssignedUser() {
 		BugSearchCriteria criteria = new BugSearchCriteria();
 		List<GroupItem> assignedDefectsSummary = bugService
@@ -204,8 +182,7 @@ public class BugServiceTest extends ServiceTest {
 		bug.setProjectid(1);
 		bug.setSaccountid(1);
 		int bugId = bugService.saveWithSession(bug, "admin");
-		assertThat(bugId).isGreaterThan(0);
-		LOG.info(String.valueOf(bugId));
+
 		assertThat(bugService.findById(bugId, 1).getSummary()).isEqualTo(
 				"summary4");
 	}
