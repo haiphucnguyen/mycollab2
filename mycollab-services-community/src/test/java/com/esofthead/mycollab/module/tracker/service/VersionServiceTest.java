@@ -28,84 +28,83 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
-import com.esofthead.mycollab.module.tracker.domain.SimpleComponent;
-import com.esofthead.mycollab.module.tracker.domain.criteria.ComponentSearchCriteria;
+import com.esofthead.mycollab.module.tracker.domain.SimpleVersion;
+import com.esofthead.mycollab.module.tracker.domain.criteria.VersionSearchCriteria;
 import com.esofthead.mycollab.test.DataSet;
 import com.esofthead.mycollab.test.MyCollabClassRunner;
 import com.esofthead.mycollab.test.service.ServiceTest;
 
 @RunWith(MyCollabClassRunner.class)
-public class ComponentServiceTest extends ServiceTest {
+public class VersionServiceTest extends ServiceTest {
 
 	@Autowired
-	protected ComponentService componentService;
+	protected VersionService versionService;
 
-	private ComponentSearchCriteria getCriteria() {
-		ComponentSearchCriteria criteria = new ComponentSearchCriteria();
-		criteria.setProjectid(new NumberSearchField(1));
+	private VersionSearchCriteria getCriteria() {
+		VersionSearchCriteria criteria = new VersionSearchCriteria();
 		criteria.setSaccountid(new NumberSearchField(1));
+		criteria.setProjectId(new NumberSearchField(1));
 		return criteria;
 	}
 
 	@SuppressWarnings("unchecked")
 	@DataSet
 	@Test
-	public void testGetListComponents() {
-		List<SimpleComponent> components = componentService
-				.findPagableListByCriteria(new SearchRequest<ComponentSearchCriteria>(
+	public void testGetListVersions() {
+		List<SimpleVersion> versions = versionService
+				.findPagableListByCriteria(new SearchRequest<VersionSearchCriteria>(
 						getCriteria(), 0, Integer.MAX_VALUE));
 
-		assertThat(components.size()).isEqualTo(4);
-		assertThat(components).extracting("id", "description", "status",
-				"componentname", "numBugs", "numOpenBugs").contains(
-				tuple(1, "aaaaaaa", "Open", "com 1", 1, 1),
-				tuple(2, "bbbbbbb", "Closed", "com 2", 2, 1),
-				tuple(3, "ccccccc", "Closed", "com 3", 1, 1),
-				tuple(4, "ddddddd", "Open", "com 4", 0, 0));
+		assertThat(versions.size()).isEqualTo(4);
+		assertThat(versions).extracting("id", "description", "status",
+				"versionname", "numBugs", "numOpenBugs").contains(
+				tuple(4, "Version 4.0.0", "Open", "4.0.0", 0, 0),
+				tuple(3, "Version 3.0.0", "Closed", "3.0.0", 1, 1),
+				tuple(2, "Version 2.0.0", "Closed", "2.0.0", 2, 1),
+				tuple(1, "Version 1.0.0", "Open", "1.0.0", 1, 1));
 	}
 
 	@SuppressWarnings("unchecked")
 	@DataSet
 	@Test
 	public void testTotalCount() {
-		List<SimpleComponent> components = componentService
-				.findPagableListByCriteria(new SearchRequest<ComponentSearchCriteria>(
+		List<SimpleVersion> versions = versionService
+				.findPagableListByCriteria(new SearchRequest<VersionSearchCriteria>(
 						getCriteria(), 0, Integer.MAX_VALUE));
 
-		assertThat(components.size()).isEqualTo(4);
+		assertThat(versions.size()).isEqualTo(4);
 	}
 
 	@SuppressWarnings("unchecked")
 	@DataSet
 	@Test
-	public void testFindComponentById() {
-		ComponentSearchCriteria criteria = new ComponentSearchCriteria();
+	public void testFindVersionById() {
+		VersionSearchCriteria criteria = new VersionSearchCriteria();
 		criteria.setId(new NumberSearchField(1));
 
-		List<SimpleComponent> components = componentService
-				.findPagableListByCriteria(new SearchRequest<ComponentSearchCriteria>(
+		List<SimpleVersion> versions = versionService
+				.findPagableListByCriteria(new SearchRequest<VersionSearchCriteria>(
 						criteria, 0, Integer.MAX_VALUE));
-		assertThat(components.size()).isEqualTo(1);
-		assertThat(components).extracting("id", "description", "status",
-				"componentname", "numBugs", "numOpenBugs").contains(
-				tuple(1, "aaaaaaa", "Open", "com 1", 1, 1));
+		assertThat(versions.size()).isEqualTo(1);
+		assertThat(versions).extracting("id", "description", "status",
+				"versionname", "numBugs", "numOpenBugs").contains(
+				tuple(1, "Version 1.0.0", "Open", "1.0.0", 1, 1));
 	}
 
 	@SuppressWarnings("unchecked")
 	@DataSet
 	@Test
 	public void testFindByCriteria() {
-		ComponentSearchCriteria criteria = getCriteria();
+		VersionSearchCriteria criteria = getCriteria();
 		criteria.setId(new NumberSearchField(2));
-		criteria.setComponentName(new StringSearchField("com 2"));
 		criteria.setStatus(new StringSearchField("Closed"));
 
-		List<SimpleComponent> components = componentService
-				.findPagableListByCriteria(new SearchRequest<ComponentSearchCriteria>(
+		List<SimpleVersion> versions = versionService
+				.findPagableListByCriteria(new SearchRequest<VersionSearchCriteria>(
 						criteria, 0, Integer.MAX_VALUE));
-		assertThat(components.size()).isEqualTo(1);
-		assertThat(components).extracting("id", "description", "status",
-				"componentname", "numBugs", "numOpenBugs").contains(
-				tuple(2, "bbbbbbb", "Closed", "com 2", 2, 1));
+		assertThat(versions.size()).isEqualTo(1);
+		assertThat(versions).extracting("id", "description", "status",
+				"versionname", "numBugs", "numOpenBugs").contains(
+				tuple(2, "Version 2.0.0", "Closed", "2.0.0", 2, 1));
 	}
 }
