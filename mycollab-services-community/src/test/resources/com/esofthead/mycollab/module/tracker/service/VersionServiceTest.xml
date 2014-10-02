@@ -24,28 +24,28 @@
 		assignuser="nghiemle" createdTime="2014-10-01 06:45:22" sAccountId="1" />
 
 	<m_tracker_bug_related_item id="1" bugid="1"
-		type="Component" typeid="1" />
+		type="AffVersion" typeid="1" />
 	<m_tracker_bug_related_item id="2" bugid="2"
-		type="Component" typeid="2" />
+		type="Fix Version" typeid="2" />
 	<m_tracker_bug_related_item id="3" bugid="3"
-		type="Component" typeid="3" />
+		type="Fix Version" typeid="3" />
 	<m_tracker_bug_related_item id="4" bugid="4"
-		type="Component" typeid="2" />
+		type="AffVersion" typeid="2" />
 
-	<m_tracker_component id="1" componentname="com 1"
-		projectid="1" sAccountId="1" status="Open" userleads="hai79"
-		createduser="hai79" description="aaaaaaa" lastUpdatedTime="2014-10-02 06:45:22"
-		createTime="2014-10-02 06:45:22" prjKey="1" />
-	<m_tracker_component id="2" componentname="com 2"
-		projectid="1" sAccountId="1" status="Closed" userleads="nghiemle"
-		createduser="nghiemle" description="bbbbbbb" lastUpdatedTime="2014-10-02 07:45:22"
-		createTime="2014-10-02 07:45:22" prjKey="1" />
-	<m_tracker_component id="3" componentname="com 3"
-		projectid="1" sAccountId="1" status="Closed" userleads="hai79"
-		createduser="hai79" description="ccccccc" lastUpdatedTime="2014-10-03 06:45:22"
-		createTime="2014-10-03 06:45:22" prjKey="1" />
-	<m_tracker_component id="4" componentname="com 4"
-		projectid="1" sAccountId="1" status="Open" userleads="nghiemle"
-		createduser="nghiemle" description="ddddddd" lastUpdatedTime="2014-10-02 06:32:22"
-		createTime="2014-10-02 06:32:22" prjKey="1" />
+	<m_tracker_version id="1" projectid="1" sAccountId="1"
+		versionname="1.0.0" createdTime="2014-06-10 10:10:10" lastUpdatedTime="2014-06-10 10:10:10"
+		duedate="2014-09-10 10:10:10" description="Version 1.0.0" createdUser="hai79"
+		status="Open" prjKey="1" />
+	<m_tracker_version id="2" projectid="1" sAccountId="1"
+		versionname="2.0.0" createdTime="2014-07-10 10:10:10" lastUpdatedTime="2014-07-10 10:10:10"
+		duedate="2014-09-12 10:10:10" description="Version 2.0.0" createdUser="nghiemle"
+		status="Closed" prjKey="1" />
+	<m_tracker_version id="3" projectid="1" sAccountId="1"
+		versionname="3.0.0" createdTime="2014-08-10 10:10:10" lastUpdatedTime="2014-08-10 10:10:10"
+		duedate="2014-09-15 10:10:10" description="Version 3.0.0" createdUser="hai79"
+		status="Closed" prjKey="1" />
+	<m_tracker_version id="4" projectid="1" sAccountId="1"
+		versionname="4.0.0" createdTime="2014-09-10 10:10:10" lastUpdatedTime="2014-09-10 10:10:10"
+		duedate="2014-09-17 10:10:10" description="Version 4.0.0" createdUser="nghiemle"
+		status="Open" prjKey="1" />
 </dataset>
