@@ -91,7 +91,7 @@ public class ThemeCustomizePresenter extends
 										"Reset to Default Theme",
 										"This action will reset all your customizations to default. Are you really want to do this?",
 										AppContext
-												.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
+												.getMessage(GenericI18Enum.BUTTON_YES),
 										AppContext
 												.getMessage(GenericI18Enum.BUTTON_CANCEL),
 										new ConfirmDialog.Listener() {

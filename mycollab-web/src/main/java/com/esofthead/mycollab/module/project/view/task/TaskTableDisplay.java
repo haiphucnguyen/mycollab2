@@ -189,7 +189,7 @@ public class TaskTableDisplay extends
 				filterBtnLayout.setWidth("100px");
 
 				Button editButton = new Button(AppContext
-						.getMessage(GenericI18Enum.BUTTON_EDIT_LABEL),
+						.getMessage(GenericI18Enum.BUTTON_EDIT),
 						new Button.ClickListener() {
 							private static final long serialVersionUID = 1L;
 
@@ -330,9 +330,9 @@ public class TaskTableDisplay extends
 										AppContext
 												.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
 										AppContext
-												.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
+												.getMessage(GenericI18Enum.BUTTON_YES),
 										AppContext
-												.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
+												.getMessage(GenericI18Enum.BUTTON_NO),
 										new ConfirmDialog.Listener() {
 											private static final long serialVersionUID = 1L;
 

@@ -102,7 +102,7 @@ public class CrmFollowersComp<V extends ValuedBean> extends VerticalLayout {
 
 		if (hasEditPermission()) {
 			Button editBtn = new Button(
-					AppContext.getMessage(GenericI18Enum.BUTTON_EDIT_LABEL),
+					AppContext.getMessage(GenericI18Enum.BUTTON_EDIT),
 					new Button.ClickListener() {
 						private static final long serialVersionUID = 1L;
 

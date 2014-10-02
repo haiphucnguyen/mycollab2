@@ -226,7 +226,7 @@ public class BillingSummaryViewImpl extends AbstractPageView implements
 			singlePlan.addComponent(billingStandup);
 
 			Button selectThisPlan = new Button(
-					AppContext.getMessage(GenericI18Enum.BUTTON_SELECT_LABEL),
+					AppContext.getMessage(GenericI18Enum.BUTTON_SELECT),
 					new ClickListener() {
 
 						@Override
@@ -376,7 +376,7 @@ public class BillingSummaryViewImpl extends AbstractPageView implements
 					Alignment.MIDDLE_CENTER);
 
 			final Button saveBtn = new Button(
-					AppContext.getMessage(GenericI18Enum.BUTTON_OK_LABEL),
+					AppContext.getMessage(GenericI18Enum.BUTTON_OK),
 					new Button.ClickListener() {
 						private static final long serialVersionUID = 1L;
 

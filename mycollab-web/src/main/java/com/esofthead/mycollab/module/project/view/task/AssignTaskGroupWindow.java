@@ -129,7 +129,7 @@ public class AssignTaskGroupWindow extends Window {
 
 				Button approveBtn = new Button(
 						AppContext
-								.getMessage(GenericI18Enum.BUTTON_ASSIGN_LABEL),
+								.getMessage(GenericI18Enum.BUTTON_ASSIGN),
 						new Button.ClickListener() {
 							private static final long serialVersionUID = 1L;
 

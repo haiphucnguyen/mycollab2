@@ -159,7 +159,7 @@ public class ComponentReadViewImpl extends
 		} else {
 			addLayoutStyleName(UIConstants.LINK_COMPLETED);
 			quickActionStatusBtn.setCaption(AppContext
-					.getMessage(GenericI18Enum.BUTTON_REOPEN_LABEL));
+					.getMessage(GenericI18Enum.BUTTON_REOPEN));
 			quickActionStatusBtn.setIcon(MyCollabResource
 					.newResource("icons/16/project/reopenTask.png"));
 
@@ -217,7 +217,7 @@ public class ComponentReadViewImpl extends
 					ComponentReadViewImpl.this
 							.addLayoutStyleName(UIConstants.LINK_COMPLETED);
 					quickActionStatusBtn.setCaption(AppContext
-							.getMessage(GenericI18Enum.BUTTON_REOPEN_LABEL));
+							.getMessage(GenericI18Enum.BUTTON_REOPEN));
 					quickActionStatusBtn.setIcon(MyCollabResource
 							.newResource("icons/16/project/reopenTask.png"));
 				}

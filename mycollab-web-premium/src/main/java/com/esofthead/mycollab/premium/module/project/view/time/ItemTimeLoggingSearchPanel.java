@@ -189,7 +189,7 @@ class ItemTimeLoggingSearchPanel extends
 			buttonControls.setSpacing(true);
 
 			final Button searchBtn = new Button(
-					AppContext.getMessage(GenericI18Enum.BUTTON_SEARCH_LABEL),
+					AppContext.getMessage(GenericI18Enum.BUTTON_SEARCH),
 					new Button.ClickListener() {
 						@Override
 						public void buttonClick(final ClickEvent event) {
@@ -205,7 +205,7 @@ class ItemTimeLoggingSearchPanel extends
 					.newResource("icons/16/search.png"));
 
 			final Button clearBtn = new Button(
-					AppContext.getMessage(GenericI18Enum.BUTTON_CLEAR_LABEL),
+					AppContext.getMessage(GenericI18Enum.BUTTON_CLEAR),
 					new Button.ClickListener() {
 						@Override
 						public void buttonClick(final ClickEvent event) {

@@ -123,7 +123,7 @@ public class RoleSearchPanel extends GenericSearchPanel<RoleSearchCriteria> {
 			basicSearchBody.addComponent(this.nameField);
 
 			final Button searchBtn = new Button(
-					AppContext.getMessage(GenericI18Enum.BUTTON_SEARCH_LABEL));
+					AppContext.getMessage(GenericI18Enum.BUTTON_SEARCH));
 			searchBtn.setIcon(MyCollabResource
 					.newResource("icons/16/search.png"));
 			searchBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
@@ -140,7 +140,7 @@ public class RoleSearchPanel extends GenericSearchPanel<RoleSearchCriteria> {
 			basicSearchBody.addComponent(searchBtn);
 
 			final Button clearBtn = new Button(
-					AppContext.getMessage(GenericI18Enum.BUTTON_CLEAR_LABEL),
+					AppContext.getMessage(GenericI18Enum.BUTTON_CLEAR),
 					new Button.ClickListener() {
 						private static final long serialVersionUID = 1L;
 

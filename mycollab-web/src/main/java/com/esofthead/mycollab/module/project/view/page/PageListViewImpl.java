@@ -333,7 +333,7 @@ public class PageListViewImpl extends AbstractPageView implements PageListView {
 		controlBtns.setSpacing(true);
 		controlBtns.setStyleName("control-btns");
 		Button editBtn = new Button(
-				AppContext.getMessage(GenericI18Enum.BUTTON_EDIT_LABEL),
+				AppContext.getMessage(GenericI18Enum.BUTTON_EDIT),
 				new Button.ClickListener() {
 
 					private static final long serialVersionUID = -5387015552598157076L;
@@ -367,9 +367,9 @@ public class PageListViewImpl extends AbstractPageView implements PageListView {
 								AppContext
 										.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
 								AppContext
-										.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
+										.getMessage(GenericI18Enum.BUTTON_YES),
 								AppContext
-										.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
+										.getMessage(GenericI18Enum.BUTTON_NO),
 								new ConfirmDialog.Listener() {
 									private static final long serialVersionUID = 1L;
 
@@ -454,7 +454,7 @@ public class PageListViewImpl extends AbstractPageView implements PageListView {
 		controlBtns.setSpacing(true);
 		controlBtns.setStyleName("control-btns");
 		Button editBtn = new Button(
-				AppContext.getMessage(GenericI18Enum.BUTTON_EDIT_LABEL),
+				AppContext.getMessage(GenericI18Enum.BUTTON_EDIT),
 				new Button.ClickListener() {
 
 					private static final long serialVersionUID = -5387015552598157076L;
@@ -489,9 +489,9 @@ public class PageListViewImpl extends AbstractPageView implements PageListView {
 								AppContext
 										.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
 								AppContext
-										.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
+										.getMessage(GenericI18Enum.BUTTON_YES),
 								AppContext
-										.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
+										.getMessage(GenericI18Enum.BUTTON_NO),
 								new ConfirmDialog.Listener() {
 									private static final long serialVersionUID = 1L;
 

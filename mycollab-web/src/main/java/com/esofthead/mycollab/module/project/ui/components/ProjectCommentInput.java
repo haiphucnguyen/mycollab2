@@ -149,7 +149,7 @@ public class ProjectCommentInput extends HorizontalLayout {
 		}
 
 		final Button newCommentBtn = new Button(
-				AppContext.getMessage(GenericI18Enum.BUTTON_POST_LABEL),
+				AppContext.getMessage(GenericI18Enum.BUTTON_POST),
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 

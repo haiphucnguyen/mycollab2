@@ -123,7 +123,7 @@ public class VersionReadViewImpl extends AbstractPreviewItemComp2<Version>
 		} else {
 			addLayoutStyleName(UIConstants.LINK_COMPLETED);
 			quickActionStatusBtn.setCaption(AppContext
-					.getMessage(GenericI18Enum.BUTTON_REOPEN_LABEL));
+					.getMessage(GenericI18Enum.BUTTON_REOPEN));
 			quickActionStatusBtn.setIcon(MyCollabResource
 					.newResource("icons/16/project/reopenTask.png"));
 
@@ -190,7 +190,7 @@ public class VersionReadViewImpl extends AbstractPreviewItemComp2<Version>
 					VersionReadViewImpl.this
 							.addLayoutStyleName(UIConstants.LINK_COMPLETED);
 					quickActionStatusBtn.setCaption(AppContext
-							.getMessage(GenericI18Enum.BUTTON_REOPEN_LABEL));
+							.getMessage(GenericI18Enum.BUTTON_REOPEN));
 					quickActionStatusBtn.setIcon(MyCollabResource
 							.newResource("icons/16/project/reopenTask.png"));
 				}

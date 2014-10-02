@@ -163,7 +163,7 @@ public abstract class DefaultCloudDriveOAuthWindow extends
 		controllGroupBtn.setMargin(new MarginInfo(true, false, false, false));
 
 		Button doneBtn = new Button(
-				AppContext.getMessage(GenericI18Enum.BUTTON_OK_LABEL),
+				AppContext.getMessage(GenericI18Enum.BUTTON_OK),
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 

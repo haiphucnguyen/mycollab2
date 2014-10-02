@@ -134,7 +134,7 @@ class ReOpenWindow extends Window {
 
 				final Button wonFixBtn = new Button(
 						AppContext
-								.getMessage(GenericI18Enum.BUTTON_REOPEN_LABEL),
+								.getMessage(GenericI18Enum.BUTTON_REOPEN),
 						new Button.ClickListener() {
 							@Override
 							public void buttonClick(

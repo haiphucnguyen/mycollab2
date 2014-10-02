@@ -134,7 +134,7 @@ public class LogoUploadViewImpl extends AbstractPageView implements
 		controlBtns.setComponentAlignment(cancelBtn, Alignment.MIDDLE_LEFT);
 
 		Button acceptBtn = new Button(
-				AppContext.getMessage(GenericI18Enum.BUTTON_ACCEPT_LABEL),
+				AppContext.getMessage(GenericI18Enum.BUTTON_ACCEPT),
 				new Button.ClickListener() {
 
 					@Override
