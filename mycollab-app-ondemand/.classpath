@@ -128,7 +128,6 @@
   <classpathentry kind="var" path="M2_REPO/org/reflections/reflections/0.9.9-RC2/reflections-0.9.9-RC2.jar" sourcepath="M2_REPO/org/reflections/reflections/0.9.9-RC2/reflections-0.9.9-RC2-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/google/code/findbugs/annotations/2.0.1/annotations-2.0.1.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/reflections/reflections-spring/0.9.9-RC1/reflections-spring-0.9.9-RC1.jar" sourcepath="M2_REPO/org/reflections/reflections-spring/0.9.9-RC1/reflections-spring-0.9.9-RC1-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/com/dropbox/core/dropbox-core-sdk/1.7.7/dropbox-core-sdk-1.7.7.jar" sourcepath="M2_REPO/com/dropbox/core/dropbox-core-sdk/1.7.7/dropbox-core-sdk-1.7.7-sources.jar"/>
   <classpathentry kind="src" path="/mycollab-esb-ondemand"/>
   <classpathentry kind="src" path="/mycollab-services-ondemand"/>
   <classpathentry kind="src" path="/mycollab-api"/>
@@ -145,6 +144,7 @@
   <classpathentry kind="src" path="/mycollab-api-impl"/>
   <classpathentry kind="var" path="M2_REPO/net/nicholaswilliams/java/licensing/licensing-licensor-base/1.1.0/licensing-licensor-base-1.1.0.jar" sourcepath="M2_REPO/net/nicholaswilliams/java/licensing/licensing-licensor-base/1.1.0/licensing-licensor-base-1.1.0-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/net/nicholaswilliams/java/licensing/licensing-core/1.1.0/licensing-core-1.1.0.jar" sourcepath="M2_REPO/net/nicholaswilliams/java/licensing/licensing-core/1.1.0/licensing-core-1.1.0-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/dropbox/core/dropbox-core-sdk/1.7.7/dropbox-core-sdk-1.7.7.jar" sourcepath="M2_REPO/com/dropbox/core/dropbox-core-sdk/1.7.7/dropbox-core-sdk-1.7.7-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/amazonaws/aws-java-sdk/1.8.10.1/aws-java-sdk-1.8.10.1.jar" sourcepath="M2_REPO/com/amazonaws/aws-java-sdk/1.8.10.1/aws-java-sdk-1.8.10.1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/amazonaws/aws-java-sdk-core/1.8.10.1/aws-java-sdk-core-1.8.10.1.jar" sourcepath="M2_REPO/com/amazonaws/aws-java-sdk-core/1.8.10.1/aws-java-sdk-core-1.8.10.1-sources.jar"/>
   <classpathentry kind="src" path="/mycollab-servlet-ondemand"/>
@@ -152,21 +152,21 @@
   <classpathentry kind="src" path="/mycollab-web-premium"/>
   <classpathentry kind="src" path="/mycollab-web"/>
   <classpathentry kind="src" path="/mycollab-ui"/>
-  <classpathentry kind="var" path="M2_REPO/com/vaadin/vaadin-server/7.3.1/vaadin-server-7.3.1.jar" sourcepath="M2_REPO/com/vaadin/vaadin-server/7.3.1/vaadin-server-7.3.1-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/vaadin/vaadin-server/7.3.2/vaadin-server-7.3.2.jar" sourcepath="M2_REPO/com/vaadin/vaadin-server/7.3.2/vaadin-server-7.3.2-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/vaadin/vaadin-sass-compiler/0.9.10/vaadin-sass-compiler-0.9.10.jar" sourcepath="M2_REPO/com/vaadin/vaadin-sass-compiler/0.9.10/vaadin-sass-compiler-0.9.10-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/w3c/css/sac/1.3/sac-1.3.jar" sourcepath="M2_REPO/org/w3c/css/sac/1.3/sac-1.3-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/vaadin/external/flute/flute/1.3.0.gg2/flute-1.3.0.gg2.jar" sourcepath="M2_REPO/com/vaadin/external/flute/flute/1.3.0.gg2/flute-1.3.0.gg2-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/com/vaadin/vaadin-shared/7.3.1/vaadin-shared-7.3.1.jar" sourcepath="M2_REPO/com/vaadin/vaadin-shared/7.3.1/vaadin-shared-7.3.1-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/vaadin/vaadin-shared/7.3.2/vaadin-shared-7.3.2.jar" sourcepath="M2_REPO/com/vaadin/vaadin-shared/7.3.2/vaadin-shared-7.3.2-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/vaadin/external/streamhtmlparser/streamhtmlparser-jsilver/0.0.10.vaadin1/streamhtmlparser-jsilver-0.0.10.vaadin1.jar" sourcepath="M2_REPO/com/vaadin/external/streamhtmlparser/streamhtmlparser-jsilver/0.0.10.vaadin1/streamhtmlparser-jsilver-0.0.10.vaadin1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/vaadin/external/google/guava/16.0.1.vaadin1/guava-16.0.1.vaadin1.jar" sourcepath="M2_REPO/com/vaadin/external/google/guava/16.0.1.vaadin1/guava-16.0.1.vaadin1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/vaadin/external/json/json/0.0.20080701/json-0.0.20080701.jar" sourcepath="M2_REPO/com/vaadin/external/json/json/0.0.20080701/json-0.0.20080701-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/vaadin/addon/vaadin-touchkit-agpl/4.0.0/vaadin-touchkit-agpl-4.0.0.jar"/>
-  <classpathentry kind="var" path="M2_REPO/com/vaadin/vaadin-client/7.3.1/vaadin-client-7.3.1.jar" sourcepath="M2_REPO/com/vaadin/vaadin-client/7.3.1/vaadin-client-7.3.1-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/vaadin/vaadin-client/7.3.2/vaadin-client-7.3.2.jar" sourcepath="M2_REPO/com/vaadin/vaadin-client/7.3.2/vaadin-client-7.3.2-sources.jar"/>
   <classpathentry kind="src" path="/mycollab-reporting"/>
   <classpathentry kind="var" path="M2_REPO/net/sourceforge/dynamicreports/dynamicreports-core/3.2.1/dynamicreports-core-3.2.1.jar" sourcepath="M2_REPO/net/sourceforge/dynamicreports/dynamicreports-core/3.2.1/dynamicreports-core-3.2.1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/net/sf/jasperreports/jasperreports/5.5.1/jasperreports-5.5.1.jar" sourcepath="M2_REPO/net/sf/jasperreports/jasperreports/5.5.1/jasperreports-5.5.1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/lowagie/itext/2.1.7/itext-2.1.7.jar" sourcepath="M2_REPO/com/lowagie/itext/2.1.7/itext-2.1.7-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/bouncycastle/bcprov-jdk14/138/bcprov-jdk14-138.jar"/>
+  <classpathentry kind="var" path="M2_REPO/bouncycastle/bcprov-jdk14/138/bcprov-jdk14-138.jar" sourcepath="M2_REPO/bouncycastle/bcprov-jdk14/138/bcprov-jdk14-138-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/xml-apis/xml-apis/1.3.04/xml-apis-1.3.04.jar" sourcepath="M2_REPO/xml-apis/xml-apis/1.3.04/xml-apis-1.3.04-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/eclipse/jdtcore/3.1.0/jdtcore-3.1.0.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/codehaus/castor/castor/1.2/castor-1.2.jar" sourcepath="M2_REPO/org/codehaus/castor/castor/1.2/castor-1.2-sources.jar"/>
@@ -178,7 +178,7 @@
   <classpathentry kind="src" path="/mycollab-scheduler"/>
   <classpathentry kind="var" path="M2_REPO/org/quartz-scheduler/quartz/2.2.1/quartz-2.2.1.jar" sourcepath="M2_REPO/org/quartz-scheduler/quartz/2.2.1/quartz-2.2.1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/c3p0/c3p0/0.9.1.1/c3p0-0.9.1.1.jar" sourcepath="M2_REPO/c3p0/c3p0/0.9.1.1/c3p0-0.9.1.1-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/com/vaadin/vaadin-themes/7.3.1/vaadin-themes-7.3.1.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/vaadin/vaadin-themes/7.3.2/vaadin-themes-7.3.2.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/eclipse/jetty/jetty-continuation/9.2.3.v20140905/jetty-continuation-9.2.3.v20140905.jar" sourcepath="M2_REPO/org/eclipse/jetty/jetty-continuation/9.2.3.v20140905/jetty-continuation-9.2.3.v20140905-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/eclipse/jetty/websocket/websocket-server/9.2.3.v20140905/websocket-server-9.2.3.v20140905.jar" sourcepath="M2_REPO/org/eclipse/jetty/websocket/websocket-server/9.2.3.v20140905/websocket-server-9.2.3.v20140905-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/eclipse/jetty/websocket/websocket-common/9.2.3.v20140905/websocket-common-9.2.3.v20140905.jar" sourcepath="M2_REPO/org/eclipse/jetty/websocket/websocket-common/9.2.3.v20140905/websocket-common-9.2.3.v20140905-sources.jar"/>
@@ -197,11 +197,7 @@
   <classpathentry kind="var" path="M2_REPO/org/vaadin/addons/listbuilder/0.7.3.v7/listbuilder-0.7.3.v7.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/vaadin/addons/formsender/2.1.0/formsender-2.1.0.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/esofthead/vaadin/popupbutton/1.0.0-SNAPSHOT/popupbutton-1.0.0-SNAPSHOT.jar" sourcepath="M2_REPO/com/esofthead/vaadin/popupbutton/1.0.0-SNAPSHOT/popupbutton-1.0.0-SNAPSHOT-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/tltv/gantt/gantt-addon/0.3.1-SNAPSHOT/gantt-addon-0.3.1-SNAPSHOT.jar" sourcepath="M2_REPO/org/tltv/gantt/gantt-addon/0.3.1-SNAPSHOT/gantt-addon-0.3.1-SNAPSHOT-sources.jar">
-    <attributes>
-      <attribute value="jar:file:/Users/haiphucnguyen/.m2/repository/org/tltv/gantt/gantt-addon/0.3.1-SNAPSHOT/gantt-addon-0.3.1-SNAPSHOT-javadoc.jar!/" name="javadoc_location"/>
-    </attributes>
-  </classpathentry>
+  <classpathentry kind="var" path="M2_REPO/org/tltv/gantt/gantt-addon/0.4.0/gantt-addon-0.4.0.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/vaadin/addon/confirmdialog/2.0.5/confirmdialog-2.0.5.jar" sourcepath="M2_REPO/org/vaadin/addon/confirmdialog/2.0.5/confirmdialog-2.0.5-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/esofthead/vaadin/cropField/1.0-SNAPSHOT/cropField-1.0-SNAPSHOT.jar" sourcepath="M2_REPO/com/esofthead/vaadin/cropField/1.0-SNAPSHOT/cropField-1.0-SNAPSHOT-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/esofthead/vaadin/calendarext/1.0.0-SNAPSHOT/calendarext-1.0.0-SNAPSHOT.jar" sourcepath="M2_REPO/com/esofthead/vaadin/calendarext/1.0.0-SNAPSHOT/calendarext-1.0.0-SNAPSHOT-sources.jar"/>
@@ -227,7 +223,11 @@
   <classpathentry kind="var" path="M2_REPO/org/bouncycastle/bcprov-jdk14/1.38/bcprov-jdk14-1.38.jar" sourcepath="M2_REPO/org/bouncycastle/bcprov-jdk14/1.38/bcprov-jdk14-1.38-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/bouncycastle/bcmail-jdk14/1.38/bcmail-jdk14-1.38.jar" sourcepath="M2_REPO/org/bouncycastle/bcmail-jdk14/1.38/bcmail-jdk14-1.38-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/xhtmlrenderer/flying-saucer-core/9.0.6/flying-saucer-core-9.0.6.jar" sourcepath="M2_REPO/org/xhtmlrenderer/flying-saucer-core/9.0.6/flying-saucer-core-9.0.6-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/com/esofthead/vaadin/floatingcomponent/0.0.1-SNAPSHOT/floatingcomponent-0.0.1-SNAPSHOT.jar" sourcepath="M2_REPO/com/esofthead/vaadin/floatingcomponent/0.0.1-SNAPSHOT/floatingcomponent-0.0.1-SNAPSHOT-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/esofthead/vaadin/floatingcomponent/0.0.1-SNAPSHOT/floatingcomponent-0.0.1-SNAPSHOT.jar" sourcepath="M2_REPO/com/esofthead/vaadin/floatingcomponent/0.0.1-SNAPSHOT/floatingcomponent-0.0.1-SNAPSHOT-sources.jar">
+    <attributes>
+      <attribute value="jar:file:/C:/Users/lvnghiem/.m2/repository/com/esofthead/vaadin/floatingcomponent/0.0.1-SNAPSHOT/floatingcomponent-0.0.1-SNAPSHOT-javadoc.jar!/" name="javadoc_location"/>
+    </attributes>
+  </classpathentry>
   <classpathentry kind="var" path="M2_REPO/org/vaadin/addons/ckeditor-wrapper-for-vaadin/7.9.3/ckeditor-wrapper-for-vaadin-7.9.3.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/vaadin/addon/vaadin-charts/1.1.6/vaadin-charts-1.1.6.jar" sourcepath="M2_REPO/com/vaadin/addon/vaadin-charts/1.1.6/vaadin-charts-1.1.6-sources.jar"/>
   <classpathentry kind="src" path="/mycollab-web-ondemand"/>
