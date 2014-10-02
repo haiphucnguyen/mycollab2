@@ -238,8 +238,8 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
 		if (CurrentProjectVariables
 				.canAccess(ProjectRolePermissionCollections.RISKS)) {
 			tableActionControls.addActionItem(
-					MassItemActionHandler.DELETE_ACTION,
-					MyCollabResource.newResource("icons/16/action/delete.png"),
+					MassItemActionHandler.DELETE_ACTION, MyCollabResource
+							.newResource(WebResourceIds._16_action_delete),
 					"delete", "Delete");
 		}
 
@@ -252,7 +252,7 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
 				"export", "export.pdf", "Export pdf");
 		tableActionControls.addDownloadActionItem(
 				MassItemActionHandler.EXPORT_EXCEL_ACTION,
-				MyCollabResource.newResource("icons/16/action/excel.png"),
+				MyCollabResource.newResource(WebResourceIds._16_action_excel),
 				"export", "export.xlsx", "Export excel");
 		tableActionControls.addDownloadActionItem(
 				MassItemActionHandler.EXPORT_CSV_ACTION,

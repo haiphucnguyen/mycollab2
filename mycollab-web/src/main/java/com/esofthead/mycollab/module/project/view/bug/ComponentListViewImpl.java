@@ -209,10 +209,10 @@ public class ComponentListViewImpl extends AbstractPageView implements
 		if (CurrentProjectVariables
 				.canAccess(ProjectRolePermissionCollections.COMPONENTS)) {
 			tableActionControls.addActionItem(
-					MassItemActionHandler.DELETE_ACTION,
-					MyCollabResource.newResource("icons/16/action/delete.png"),
-					"delete",
-					AppContext.getMessage(GenericI18Enum.BUTTON_DELETE_LABEL));
+					MassItemActionHandler.DELETE_ACTION, MyCollabResource
+							.newResource(WebResourceIds._16_action_delete),
+					"delete", AppContext
+							.getMessage(GenericI18Enum.BUTTON_DELETE_LABEL));
 		}
 
 		tableActionControls.addActionItem(MassItemActionHandler.MAIL_ACTION,
@@ -227,7 +227,7 @@ public class ComponentListViewImpl extends AbstractPageView implements
 
 		tableActionControls.addDownloadActionItem(
 				MassItemActionHandler.EXPORT_EXCEL_ACTION,
-				MyCollabResource.newResource("icons/16/action/excel.png"),
+				MyCollabResource.newResource(WebResourceIds._16_action_excel),
 				"export", "export.xlsx",
 				AppContext.getMessage(GenericI18Enum.BUTTON_EXPORT_EXCEL));
 
