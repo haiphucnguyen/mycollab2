@@ -14,8 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.common.ui.components;
+package com.esofthead.mycollab.common.ui.components.notification;
 
+import com.esofthead.mycollab.common.ui.components.AbstractNotification;
 import com.esofthead.mycollab.module.user.AccountLinkGenerator;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.hp.gagawa.java.elements.A;

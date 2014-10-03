@@ -36,6 +36,7 @@ import com.esofthead.mycollab.vaadin.ui.StyleCalendarExp;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UrlDetectableLabel;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
+import com.esofthead.mycollab.vaadin.ui.WebResourceIds;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.shared.ui.MarginInfo;
@@ -278,7 +279,7 @@ public class StandupListViewImpl extends AbstractPageView implements
 				});
 		addNewReport.setStyleName(UIConstants.THEME_GREEN_LINK);
 		addNewReport.setIcon(MyCollabResource
-				.newResource("icons/16/addRecord.png"));
+				.newResource(WebResourceIds._16_addRecord));
 		addNewReport.setEnabled(!CurrentProjectVariables.isProjectArchived());
 
 		header.addComponent(addNewReport);
