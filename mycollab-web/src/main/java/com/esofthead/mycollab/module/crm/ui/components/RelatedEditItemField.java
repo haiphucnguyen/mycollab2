@@ -83,7 +83,7 @@ public class RelatedEditItemField extends CustomField<String> implements
 		itemField.setEnabled(true);
 
 		browseBtn = new Image(null,
-				MyCollabResource.newResource("icons/16/browseItem.png"));
+				MyCollabResource.newResource("WebResourceIds._16_browseItem"));
 		browseBtn.addClickListener(new MouseEvents.ClickListener() {
 			private static final long serialVersionUID = 1L;
 

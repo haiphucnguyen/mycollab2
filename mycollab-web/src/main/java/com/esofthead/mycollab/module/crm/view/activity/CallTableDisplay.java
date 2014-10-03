@@ -89,7 +89,7 @@ public class CallTableDisplay extends
 								CallTableDisplay.this, call, "isClosed"));
 					}
 				});
-				b.setIcon(MyCollabResource.newResource("icons/16/close.png"));
+				b.setIcon(MyCollabResource.newResource("WebResourceIds._16_close"));
 				b.setStyleName("link");
 				b.setDescription("Close this call");
 				return b;

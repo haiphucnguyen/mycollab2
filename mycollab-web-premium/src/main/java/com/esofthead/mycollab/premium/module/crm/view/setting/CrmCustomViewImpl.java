@@ -128,7 +128,7 @@ public class CrmCustomViewImpl extends AbstractPageView implements
 				});
 		createCustomFieldBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
 		createCustomFieldBtn.setIcon(MyCollabResource
-				.newResource("icons/16/addRecord.png"));
+				.newResource("WebResourceIds._16_addRecord"));
 		controlLayout.addComponent(createCustomFieldBtn);
 		controlLayout.setComponentAlignment(createCustomFieldBtn,
 				Alignment.MIDDLE_LEFT);
@@ -147,7 +147,7 @@ public class CrmCustomViewImpl extends AbstractPageView implements
 				});
 		createSectionBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
 		createSectionBtn.setIcon(MyCollabResource
-				.newResource("icons/16/addRecord.png"));
+				.newResource("WebResourceIds._16_addRecord"));
 		controlLayout.addComponent(createSectionBtn);
 		controlLayout.setComponentAlignment(createSectionBtn,
 				Alignment.MIDDLE_LEFT);

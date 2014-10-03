@@ -93,7 +93,7 @@ public class ActivitySearchPanel extends
 				|| AppContext.canWrite(RolePermissionCollections.CRM_MEETING));
 		controlsBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
 		controlsBtn.setIcon(MyCollabResource
-				.newResource("icons/16/addRecord.png"));
+				.newResource("WebResourceIds._16_addRecord"));
 		controlsBtn.setCaption("New Task");
 		controlsBtn
 				.addClickListener(new SplitButton.SplitButtonClickListener() {

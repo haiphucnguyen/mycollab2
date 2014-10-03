@@ -44,7 +44,7 @@ public class SelectionOptionButton extends SplitButton implements
 	private final HasSelectableItemHandlers selectableItemHandlers;
 
 	private static Resource selectIcon = MyCollabResource
-			.newResource("icons/16/checkbox.png");
+			.newResource("WebResourceIds._16_checkbox");
 	private static Resource unSelectIcon = MyCollabResource
 			.newResource("icons/16/checkbox_empty.png");
 

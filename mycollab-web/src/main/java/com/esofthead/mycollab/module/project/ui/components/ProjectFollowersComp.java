@@ -306,7 +306,7 @@ public class ProjectFollowersComp<V extends ValuedBean> extends VerticalLayout {
 
 				btnSave.setStyleName(UIConstants.THEME_GREEN_LINK);
 				btnSave.setIcon(MyCollabResource
-						.newResource("icons/16/addRecord.png"));
+						.newResource("WebResourceIds._16_addRecord"));
 
 				headerPanel.addComponent(btnSave);
 

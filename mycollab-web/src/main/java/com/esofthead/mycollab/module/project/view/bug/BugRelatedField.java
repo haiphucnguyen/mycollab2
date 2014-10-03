@@ -144,7 +144,7 @@ public class BugRelatedField extends CustomComponent {
 			}
 		});
 		browseBtn.setIcon(MyCollabResource
-				.newResource("icons/16/browseItem.png"));
+				.newResource("WebResourceIds._16_browseItem"));
 		browseBtn.setStyleName("link");
 
 		layoutAdd.addComponent(browseBtn);
@@ -176,7 +176,7 @@ public class BugRelatedField extends CustomComponent {
 		btnRelate = new Button("Relate");
 		btnRelate.setStyleName(UIConstants.THEME_GREEN_LINK);
 		btnRelate.setIcon(MyCollabResource
-				.newResource("icons/16/addRecord.png"));
+				.newResource("WebResourceIds._16_addRecord"));
 
 		ProjectMemberService memberService = ApplicationContextUtil
 				.getSpringBean(ProjectMemberService.class);

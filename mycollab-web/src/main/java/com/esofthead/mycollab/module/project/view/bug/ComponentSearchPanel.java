@@ -106,7 +106,7 @@ public class ComponentSearchPanel extends
 				.canWrite(ProjectRolePermissionCollections.COMPONENTS));
 		createBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 		createBtn.setIcon(MyCollabResource
-				.newResource("icons/16/addRecord.png"));
+				.newResource("WebResourceIds._16_addRecord"));
 
 		UiUtils.addComponent(layout, createBtn, Alignment.MIDDLE_RIGHT);
 

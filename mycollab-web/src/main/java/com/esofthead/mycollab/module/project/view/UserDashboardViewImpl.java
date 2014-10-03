@@ -129,7 +129,7 @@ public class UserDashboardViewImpl extends AbstractLazyPageView implements
 						}
 					});
 			createProjectBtn.setIcon(MyCollabResource
-					.newResource("icons/16/addRecord.png"));
+					.newResource("WebResourceIds._16_addRecord"));
 			createProjectBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 			headerContentTop.addComponent(createProjectBtn);
 			headerContentTop.setComponentAlignment(createProjectBtn,

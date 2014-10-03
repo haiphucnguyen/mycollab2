@@ -45,7 +45,6 @@ public final class WebResourceIds {
 	public static final String _16_action_pdf = "icons/16/action/pdf.png";
 	public static final String _16_add = "icons/16/add.png";
 	public static final String _16_addRecord = "icons/16/addRecord.png";
-	public static final String _16_addRecordGreen = "icons/16/addRecordGreen.png";
 	public static final String _16_arrow_down = "icons/16/arrow_down.png";
 	public static final String _16_arrow_up = "icons/16/arrow_up.png";
 	public static final String _16_assign = "icons/16/assign.png";
@@ -56,7 +55,6 @@ public final class WebResourceIds {
 	public static final String _16_cal_year_next = "icons/16/cal_year_next.png";
 	public static final String _16_cal_year_pre = "icons/16/cal_year_pre.png";
 	public static final String _16_cancel = "icons/16/cancel.png";
-	public static final String _16_cancel2 = "icons/16/cancel2.png";
 	public static final String _16_cancel_black = "icons/16/cancel_black.png";
 	public static final String _16_checkbox = "icons/16/checkbox.png";
 	public static final String _16_checkbox_empty = "icons/16/checkbox_empty.png";

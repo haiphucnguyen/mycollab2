@@ -79,7 +79,7 @@ public class UserSearchPanel extends GenericSearchPanel<UserSearchCriteria> {
 				});
 		createBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 		createBtn.setIcon(MyCollabResource
-				.newResource("icons/16/addRecord.png"));
+				.newResource("WebResourceIds._16_addRecord"));
 		createBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.ACCOUNT_USER));
 

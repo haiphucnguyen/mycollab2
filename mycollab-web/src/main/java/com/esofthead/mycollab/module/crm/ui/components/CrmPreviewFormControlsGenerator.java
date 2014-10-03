@@ -126,7 +126,7 @@ public class CrmPreviewFormControlsGenerator<T> {
 						}
 					});
 			addBtn.setIcon(MyCollabResource
-					.newResource("icons/16/addRecord.png"));
+					.newResource("WebResourceIds._16_addRecord"));
 			addBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 			addBtn.setEnabled(canWrite);
 			layout.addComponent(addBtn);
@@ -184,7 +184,7 @@ public class CrmPreviewFormControlsGenerator<T> {
 							previewForm.fireCloneForm(item);
 						}
 					});
-			cloneBtn.setIcon(MyCollabResource.newResource("icons/16/clone.png"));
+			cloneBtn.setIcon(MyCollabResource.newResource("WebResourceIds._16_clone"));
 			cloneBtn.setStyleName("link");
 			popupButtonsControl.addComponent(cloneBtn);
 		}

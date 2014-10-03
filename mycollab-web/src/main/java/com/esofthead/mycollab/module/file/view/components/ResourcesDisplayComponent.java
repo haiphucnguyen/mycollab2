@@ -166,7 +166,7 @@ public class ResourcesDisplayComponent extends VerticalLayout {
 			public void buttonClick(ClickEvent event) {
 				if (!(Boolean) selectAllBtn.getData()) {
 					selectAllBtn.setIcon(MyCollabResource
-							.newResource("icons/16/checkbox.png"));
+							.newResource("WebResourceIds._16_checkbox"));
 					selectAllBtn.setData(true);
 					resourcesContainer.setAllValues(true);
 				} else {

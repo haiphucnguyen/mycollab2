@@ -244,11 +244,11 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
 		}
 
 		tableActionControls.addActionItem(MassItemActionHandler.MAIL_ACTION,
-				MyCollabResource.newResource("icons/16/action/mail.png"),
+				MyCollabResource.newResource(WebResourceIds._16_action_mail),
 				"mail", "Mail");
 		tableActionControls.addDownloadActionItem(
 				MassItemActionHandler.EXPORT_PDF_ACTION,
-				MyCollabResource.newResource("icons/16/action/pdf.png"),
+				MyCollabResource.newResource(WebResourceIds._16_action_pdf),
 				"export", "export.pdf", "Export pdf");
 		tableActionControls.addDownloadActionItem(
 				MassItemActionHandler.EXPORT_EXCEL_ACTION,
@@ -263,7 +263,7 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
 				.canWrite(ProjectRolePermissionCollections.RISKS)) {
 			tableActionControls.addActionItem(
 					MassItemActionHandler.MASS_UPDATE_ACTION, MyCollabResource
-							.newResource("icons/16/action/massupdate.png"),
+							.newResource(WebResourceIds._16_action_massupdate),
 					"update", "Update");
 		}
 

@@ -135,7 +135,8 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends
 				});
 		addCriteriaBtn.setStyleName(UIConstants.THEME_BROWN_LINK);
 		addCriteriaBtn
-				.setIcon(MyCollabResource.newResource("icons/16/add.png"));
+.setIcon(MyCollabResource
+				.newResource(WebResourceIds._16_add));
 		UiUtils.addComponent(this, addCriteriaBtn, Alignment.MIDDLE_CENTER);
 
 		controlsBtn.addComponent(addCriteriaBtn);
@@ -163,7 +164,7 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends
 				});
 		saveSearchBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
 		saveSearchBtn.setIcon(MyCollabResource
-				.newResource("icons/16/addRecord.png"));
+				.newResource("WebResourceIds._16_addRecord"));
 		filterBox.addComponent(saveSearchBtn);
 
 		if (queryname != null) {

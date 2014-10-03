@@ -250,12 +250,12 @@ public class ProblemListViewImpl extends AbstractPageView implements
 		}
 
 		tableActionControls.addActionItem(MassItemActionHandler.MAIL_ACTION,
-				MyCollabResource.newResource("icons/16/action/mail.png"),
+				MyCollabResource.newResource(WebResourceIds._16_action_mail),
 				"mail", AppContext.getMessage(GenericI18Enum.BUTTON_MAIL));
 
 		tableActionControls.addDownloadActionItem(
 				MassItemActionHandler.EXPORT_PDF_ACTION,
-				MyCollabResource.newResource("icons/16/action/pdf.png"),
+				MyCollabResource.newResource(WebResourceIds._16_action_pdf),
 				"export", "export.pdf",
 				AppContext.getMessage(GenericI18Enum.BUTTON_EXPORT_PDF));
 
@@ -275,7 +275,7 @@ public class ProblemListViewImpl extends AbstractPageView implements
 				.canWrite(ProjectRolePermissionCollections.PROBLEMS)) {
 			tableActionControls.addActionItem(
 					MassItemActionHandler.MASS_UPDATE_ACTION, MyCollabResource
-							.newResource("icons/16/action/massupdate.png"),
+							.newResource(WebResourceIds._16_action_massupdate),
 					"update", AppContext
 							.getMessage(GenericI18Enum.TOOLTIP_MASS_UPDATE));
 		}

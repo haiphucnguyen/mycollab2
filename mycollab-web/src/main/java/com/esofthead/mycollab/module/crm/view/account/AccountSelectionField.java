@@ -116,7 +116,7 @@ public class AccountSelectionField extends CustomField<Integer> implements
 		layout.setComponentAlignment(accountName, Alignment.MIDDLE_LEFT);
 
 		browseBtn = new Image(null,
-				MyCollabResource.newResource("icons/16/browseItem.png"));
+				MyCollabResource.newResource("WebResourceIds._16_browseItem"));
 		layout.addComponent(browseBtn);
 		layout.setComponentAlignment(browseBtn, Alignment.MIDDLE_LEFT);
 

@@ -214,7 +214,7 @@ public abstract class TimeLogEditView<V extends ValuedBean> extends
 		//
 		// this.btnAdd.setEnabled(TimeLogEditView.this.isEnableAdd());
 		// this.btnAdd.setIcon(MyCollabResource
-		// .newResource("icons/16/addRecord.png"));
+		// .newResource("WebResourceIds._16_addRecord"));
 		// addLayout.addComponent(this.btnAdd);
 		// addLayout.setComponentAlignment(this.btnAdd, Alignment.MIDDLE_LEFT);
 	}

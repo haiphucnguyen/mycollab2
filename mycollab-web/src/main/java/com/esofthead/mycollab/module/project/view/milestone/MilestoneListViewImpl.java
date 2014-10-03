@@ -155,7 +155,7 @@ public class MilestoneListViewImpl extends AbstractLazyPageView implements
 				});
 
 		this.createBtn.setIcon(MyCollabResource
-				.newResource("icons/16/addRecord.png"));
+				.newResource("WebResourceIds._16_addRecord"));
 		this.createBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 		this.createBtn.setEnabled(CurrentProjectVariables
 				.canWrite(ProjectRolePermissionCollections.MILESTONES));

@@ -454,9 +454,9 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, B>
 			this.tableItem.setColumnIcon(
 					this.sortColumnId,
 					this.isAscending ? MyCollabResource
-							.newResource("icons/16/arrow_down.png")
+							.newResource("WebResourceIds._16_arrow_down")
 							: MyCollabResource
-									.newResource("icons/16/arrow_up.png"));
+									.newResource("WebResourceIds._16_arrow_up"));
 		}
 
 		this.tableItem.addHeaderClickListener(new Table.HeaderClickListener() {

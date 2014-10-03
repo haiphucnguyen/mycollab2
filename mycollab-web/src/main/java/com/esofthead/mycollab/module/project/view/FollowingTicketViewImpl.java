@@ -130,7 +130,7 @@ public class FollowingTicketViewImpl extends AbstractPageView implements
 		});
 
 		backBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
-		backBtn.setIcon(MyCollabResource.newResource("icons/16/back.png"));
+		backBtn.setIcon(MyCollabResource.newResource("WebResourceIds._16_back"));
 
 		controlBtns.setMargin(new MarginInfo(true, false, true, false));
 		controlBtns.setWidth("100%");

@@ -100,7 +100,7 @@ public class TaskSearchViewImpl extends AbstractPageView implements
 				});
 		backtoTaskListBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 		backtoTaskListBtn.setIcon(MyCollabResource
-				.newResource("icons/16/back.png"));
+				.newResource("WebResourceIds._16_back"));
 
 		UiUtils.addComponent(header, titleIcon, Alignment.TOP_LEFT);
 		UiUtils.addComponent(header, headerText, Alignment.MIDDLE_LEFT);

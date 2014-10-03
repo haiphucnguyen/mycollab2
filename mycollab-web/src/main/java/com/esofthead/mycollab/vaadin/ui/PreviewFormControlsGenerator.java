@@ -121,7 +121,7 @@ public class PreviewFormControlsGenerator<B> {
 						previewForm.fireCloneForm(item);
 					}
 				});
-		cloneBtn.setIcon(MyCollabResource.newResource("icons/16/clone.png"));
+		cloneBtn.setIcon(MyCollabResource.newResource("WebResourceIds._16_clone"));
 		cloneBtn.setStyleName("link");
 		popupButtonsControl.addComponent(cloneBtn);
 
