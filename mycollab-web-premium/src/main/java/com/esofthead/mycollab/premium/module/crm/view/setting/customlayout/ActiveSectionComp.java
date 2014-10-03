@@ -24,6 +24,7 @@ import com.esofthead.mycollab.form.view.builder.type.AbstractDynaField;
 import com.esofthead.mycollab.form.view.builder.type.DynaSection;
 import com.esofthead.mycollab.form.view.builder.type.DynaSection.LayoutType;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
+import com.esofthead.mycollab.vaadin.ui.WebResourceIds;
 import com.vaadin.event.dd.DragAndDropEvent;
 import com.vaadin.event.dd.DropHandler;
 import com.vaadin.event.dd.acceptcriteria.AcceptCriterion;
@@ -70,7 +71,7 @@ class ActiveSectionComp extends GenericSectionComp {
 
 		Button editTitleBtn = new Button();
 		editTitleBtn.setDescription("Edit Section's Title");
-		editTitleBtn.setIcon(MyCollabResource.newResource("icons/16/edit.png"));
+		editTitleBtn.setIcon(MyCollabResource.newResource(WebResourceIds._16_edit));
 		editTitleBtn.setStyleName("link");
 		header.addComponent(editTitleBtn);
 

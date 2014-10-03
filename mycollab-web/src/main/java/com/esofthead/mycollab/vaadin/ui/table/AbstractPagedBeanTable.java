@@ -40,6 +40,7 @@ import com.esofthead.mycollab.vaadin.events.PagableHandler;
 import com.esofthead.mycollab.vaadin.events.SelectableItemHandler;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
+import com.esofthead.mycollab.vaadin.ui.WebResourceIds;
 import com.vaadin.data.Container;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.util.BeanItemContainer;
@@ -307,6 +308,7 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, B>
 			ss1.addStyleName("buttonPaging");
 			this.pageManagement.addComponent(ss1);
 		}
+
 		if (this.currentPage > 3) {
 			final Button previous2 = new ButtonLink(
 					"" + (this.currentPage - 2), new ClickListener() {
@@ -454,9 +456,9 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, B>
 			this.tableItem.setColumnIcon(
 					this.sortColumnId,
 					this.isAscending ? MyCollabResource
-							.newResource("WebResourceIds._16_arrow_down")
+							.newResource(WebResourceIds._16_arrow_down)
 							: MyCollabResource
-									.newResource("WebResourceIds._16_arrow_up"));
+									.newResource(WebResourceIds._16_arrow_up));
 		}
 
 		this.tableItem.addHeaderClickListener(new Table.HeaderClickListener() {

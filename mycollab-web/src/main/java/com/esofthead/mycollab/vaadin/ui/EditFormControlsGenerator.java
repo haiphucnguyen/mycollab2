@@ -109,7 +109,7 @@ public class EditFormControlsGenerator<T> implements Serializable {
 						}
 					});
 			cancelBtn.setIcon(MyCollabResource
-					.newResource("WebResourceIds._16_cancel"));
+					.newResource(WebResourceIds._16_cancel));
 			cancelBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
 			layout.addComponent(cancelBtn);
 			layout.setComponentAlignment(cancelBtn, Alignment.MIDDLE_CENTER);

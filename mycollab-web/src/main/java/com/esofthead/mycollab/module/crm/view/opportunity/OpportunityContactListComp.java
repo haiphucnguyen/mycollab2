@@ -129,7 +129,7 @@ public class OpportunityContactListComp
 		controlsBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
 		controlsBtn.setCaption("Add/Edit Contacts' Role");
 		controlsBtn.setIcon(MyCollabResource
-				.newResource("WebResourceIds._16_addRecord"));
+				.newResource(WebResourceIds._16_addRecord));
 		controlsBtn
 				.addClickListener(new SplitButton.SplitButtonClickListener() {
 					private static final long serialVersionUID = 1L;

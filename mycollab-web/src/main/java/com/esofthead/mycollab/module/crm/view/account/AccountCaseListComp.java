@@ -122,7 +122,7 @@ public class AccountCaseListComp extends
 		createBtn.setCaption(AppContext
 				.getMessage(CaseI18nEnum.BUTTON_NEW_CASE));
 		createBtn.setIcon(MyCollabResource
-				.newResource("WebResourceIds._16_addRecord"));
+				.newResource(WebResourceIds._16_addRecord));
 		createBtn.addClickListener(new Button.ClickListener() {
 			private static final long serialVersionUID = -8725970955325733072L;
 

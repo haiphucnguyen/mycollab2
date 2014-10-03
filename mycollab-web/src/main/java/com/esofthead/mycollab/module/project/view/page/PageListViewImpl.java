@@ -236,7 +236,7 @@ public class PageListViewImpl extends AbstractPageView implements PageListView {
 				});
 		newGroupBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 		newGroupBtn.setIcon(MyCollabResource
-				.newResource("WebResourceIds._16_addRecord"));
+				.newResource(WebResourceIds._16_addRecord));
 		newGroupBtn.setEnabled(CurrentProjectVariables
 				.canWrite(ProjectRolePermissionCollections.PAGES));
 		UiUtils.addComponent(headerLayout, newGroupBtn, Alignment.MIDDLE_RIGHT);
@@ -254,7 +254,7 @@ public class PageListViewImpl extends AbstractPageView implements PageListView {
 				});
 		newPageBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 		newPageBtn.setIcon(MyCollabResource
-				.newResource("WebResourceIds._16_addRecord"));
+				.newResource(WebResourceIds._16_addRecord));
 		newPageBtn.setEnabled(CurrentProjectVariables
 				.canWrite(ProjectRolePermissionCollections.PAGES));
 

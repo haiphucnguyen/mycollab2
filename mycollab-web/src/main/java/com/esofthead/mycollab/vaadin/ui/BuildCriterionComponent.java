@@ -134,8 +134,7 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends
 					}
 				});
 		addCriteriaBtn.setStyleName(UIConstants.THEME_BROWN_LINK);
-		addCriteriaBtn
-.setIcon(MyCollabResource
+		addCriteriaBtn.setIcon(MyCollabResource
 				.newResource(WebResourceIds._16_add));
 		UiUtils.addComponent(this, addCriteriaBtn, Alignment.MIDDLE_CENTER);
 
@@ -164,7 +163,7 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends
 				});
 		saveSearchBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
 		saveSearchBtn.setIcon(MyCollabResource
-				.newResource("WebResourceIds._16_addRecord"));
+				.newResource(WebResourceIds._16_addRecord));
 		filterBox.addComponent(saveSearchBtn);
 
 		if (queryname != null) {
@@ -837,9 +836,8 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends
 										}
 									});
 
-							Button deleteBtn = new Button(
-									AppContext
-											.getMessage(GenericI18Enum.BUTTON_DELETE),
+							Button deleteBtn = new Button(AppContext
+									.getMessage(GenericI18Enum.BUTTON_DELETE),
 									new Button.ClickListener() {
 										private static final long serialVersionUID = 1L;
 

@@ -112,7 +112,7 @@ public class ProjectMemberListViewImpl extends AbstractPageView implements
 				.canWrite(ProjectRolePermissionCollections.USERS));
 		createBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 		createBtn.setIcon(MyCollabResource
-				.newResource("WebResourceIds._16_addRecord"));
+				.newResource(WebResourceIds._16_addRecord));
 
 		viewHeader.addComponent(createBtn);
 

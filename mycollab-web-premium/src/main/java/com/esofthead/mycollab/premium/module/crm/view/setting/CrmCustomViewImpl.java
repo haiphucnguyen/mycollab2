@@ -45,6 +45,7 @@ import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
 import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
+import com.esofthead.mycollab.vaadin.ui.WebResourceIds;
 import com.vaadin.data.Property;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
@@ -128,7 +129,7 @@ public class CrmCustomViewImpl extends AbstractPageView implements
 				});
 		createCustomFieldBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
 		createCustomFieldBtn.setIcon(MyCollabResource
-				.newResource("WebResourceIds._16_addRecord"));
+				.newResource(WebResourceIds._16_addRecord));
 		controlLayout.addComponent(createCustomFieldBtn);
 		controlLayout.setComponentAlignment(createCustomFieldBtn,
 				Alignment.MIDDLE_LEFT);
@@ -147,7 +148,7 @@ public class CrmCustomViewImpl extends AbstractPageView implements
 				});
 		createSectionBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
 		createSectionBtn.setIcon(MyCollabResource
-				.newResource("WebResourceIds._16_addRecord"));
+				.newResource(WebResourceIds._16_addRecord));
 		controlLayout.addComponent(createSectionBtn);
 		controlLayout.setComponentAlignment(createSectionBtn,
 				Alignment.MIDDLE_LEFT);

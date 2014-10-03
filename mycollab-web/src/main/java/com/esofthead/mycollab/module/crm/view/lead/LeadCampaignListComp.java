@@ -99,7 +99,7 @@ public class LeadCampaignListComp
 		controlsBtn.setCaption(AppContext
 				.getMessage(CampaignI18nEnum.BUTTON_NEW_CAMPAIGN));
 		controlsBtn.setIcon(MyCollabResource
-				.newResource("WebResourceIds._16_addRecord"));
+				.newResource(WebResourceIds._16_addRecord));
 		controlsBtn
 				.addClickListener(new SplitButton.SplitButtonClickListener() {
 					private static final long serialVersionUID = 1099580202385205069L;

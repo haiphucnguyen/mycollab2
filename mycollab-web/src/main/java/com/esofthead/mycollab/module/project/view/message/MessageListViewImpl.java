@@ -614,7 +614,7 @@ public class MessageListViewImpl extends AbstractPageView implements
 						.canWrite(ProjectRolePermissionCollections.MESSAGES));
 				createMessageBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 				createMessageBtn.setIcon(MyCollabResource
-						.newResource("WebResourceIds._16_addRecord"));
+						.newResource(WebResourceIds._16_addRecord));
 				createMessageBtn.setEnabled(CurrentProjectVariables
 						.canWrite(ProjectRolePermissionCollections.MESSAGES));
 

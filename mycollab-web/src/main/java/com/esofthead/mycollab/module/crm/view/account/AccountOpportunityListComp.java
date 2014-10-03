@@ -134,7 +134,7 @@ public class AccountOpportunityListComp
 				.canWrite(RolePermissionCollections.CRM_OPPORTUNITY));
 		createBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
 		createBtn.setIcon(MyCollabResource
-				.newResource("WebResourceIds._16_addRecord"));
+				.newResource(WebResourceIds._16_addRecord));
 
 		controlsBtnWrap.addComponent(createBtn);
 		controlsBtnWrap

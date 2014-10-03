@@ -23,6 +23,7 @@ import com.esofthead.mycollab.form.view.builder.type.AbstractDynaField;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.WebResourceIds;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -72,7 +73,7 @@ public class CustomFieldComponent extends CssLayout {
 			editFieldBtn.addStyleName("editFieldBtn");
 			editFieldBtn.addStyleName("link");
 			editFieldBtn.setIcon(MyCollabResource
-					.newResource("icons/16/edit.png"));
+					.newResource(WebResourceIds._16_edit));
 
 			fieldEditPanel = new Panel();
 			panelContentLayout = new VerticalLayout();

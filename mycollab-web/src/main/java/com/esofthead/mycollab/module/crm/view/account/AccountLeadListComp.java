@@ -82,7 +82,7 @@ public class AccountLeadListComp extends
 		controlsBtn.setCaption(AppContext
 				.getMessage(LeadI18nEnum.BUTTON_NEW_LEAD));
 		controlsBtn.setIcon(MyCollabResource
-				.newResource("WebResourceIds._16_addRecord"));
+				.newResource(WebResourceIds._16_addRecord));
 		controlsBtn
 				.addClickListener(new SplitButton.SplitButtonClickListener() {
 					private static final long serialVersionUID = 1L;
