@@ -118,5 +118,4 @@
   <classpathentry kind="var" path="M2_REPO/com/google/code/findbugs/annotations/2.0.1/annotations-2.0.1.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/reflections/reflections-spring/0.9.9-RC1/reflections-spring-0.9.9-RC1.jar" sourcepath="M2_REPO/org/reflections/reflections-spring/0.9.9-RC1/reflections-spring-0.9.9-RC1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/quartz-scheduler/quartz/2.2.1/quartz-2.2.1.jar" sourcepath="M2_REPO/org/quartz-scheduler/quartz/2.2.1/quartz-2.2.1-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/c3p0/c3p0/0.9.1.1/c3p0-0.9.1.1.jar" sourcepath="M2_REPO/c3p0/c3p0/0.9.1.1/c3p0-0.9.1.1-sources.jar"/>
 </classpath>
