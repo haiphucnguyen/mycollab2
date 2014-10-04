@@ -23,6 +23,7 @@
         <module>../mycollab-jetty-session-premium</module>
         <module>../mycollab-caching-premium</module>
         <module>../mycollab-reporting</module>
+        <module>../mycollab-reporting-premium</module>
         <module>../mycollab-scheduler</module>
         <module>../mycollab-server-runner</module>
         <module>../mycollab-search</module>

@@ -23,10 +23,6 @@ MyCollab uses Jackrabbit as an abstract layer to keep content meta data. We say 
 
 MyCollab uses Infinispan as the cache layer to keep in memory all frequent data in used. We tune the 2nd level cache layer fit to MyCollab to ensure it captures the right data in every account. Infinispan is also used to cluster MyCollab in many nodes - This feature is only existed in the Commercial Distribution.
 
-* [Apache Solr](http://lucene.apache.org/solr/)
-
-Solr is used as the search engine in MyCollab, it indexes all MyCollab documents - the generic term of all MyCollab entities includes assets, or project item, account item etc. Solr helps MyCollab give the flexible search with multiple criteria to its user. Several advanced features are only existed in the Commercial Distribution.
-
 * [Apache Camel](http://camel.apache.org/)
 
 MyCollab targets to be a modular system, with services are loose coupling with other services, and lost one service may not cause any corruption in other services. For instance, we have CRM and Project Management modules. In fact, these two modules can play together but also we can deliver only CRM module to our customer will not cause problem because the lack of Project Management module. The magic behind of our solution is Apache Camel.
@@ -42,7 +38,9 @@ Testing is one of the most important tasks in our daily development time. All cr
 We love to write good code. We develop MyCollab in modular approach follow Object Oriented principle. We seriously follow package principle [http://en.wikipedia.org/wiki/Package_principles](http://en.wikipedia.org/wiki/Package_principles) and we may move our source codes from one project to another project. But there are projects they never change their names and responsibilities, you should know them before getting any extension of MyCollab.
 
 #### MyCollab Core
+
 Project contains core classes used across MyCollab module, classes are played as base classes and not specific for any business. There are some responsibilities of classes in core package:
+
 * Caching
 * Utility classes
 * Utility classes for Spring, Camel or so, which use in Spring loader or control life cycle of integration patterns etc

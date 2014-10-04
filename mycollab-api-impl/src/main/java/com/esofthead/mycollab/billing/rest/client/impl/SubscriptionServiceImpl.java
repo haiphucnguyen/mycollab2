@@ -32,7 +32,7 @@ import com.esofthead.mycollab.rest.server.resource.UserResource;
 public class SubscriptionServiceImpl implements SubscriptionService {
 
 	@Override
-	public Subscription getSubscription(String company, String referemce) {
+	public Subscription getSubscription(String company, String reference) {
 		// TODO Auto-generated method stub
 		return null;
 	}
