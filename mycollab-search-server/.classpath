@@ -88,22 +88,22 @@
   <classpathentry kind="var" path="M2_REPO/org/apache/zookeeper/zookeeper/3.4.6/zookeeper-3.4.6.jar" sourcepath="M2_REPO/org/apache/zookeeper/zookeeper/3.4.6/zookeeper-3.4.6-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/codehaus/woodstox/wstx-asl/3.2.7/wstx-asl-3.2.7.jar" sourcepath="M2_REPO/org/codehaus/woodstox/wstx-asl/3.2.7/wstx-asl-3.2.7-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/noggit/noggit/0.5/noggit-0.5.jar" sourcepath="M2_REPO/org/noggit/noggit/0.5/noggit-0.5-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/apache/solr/solr-core/4.10.1/solr-core-4.10.1.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/apache/lucene/lucene-analyzers-common/4.10.1/lucene-analyzers-common-4.10.1.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/apache/lucene/lucene-analyzers-kuromoji/4.10.1/lucene-analyzers-kuromoji-4.10.1.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/apache/lucene/lucene-analyzers-phonetic/4.10.1/lucene-analyzers-phonetic-4.10.1.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/apache/lucene/lucene-codecs/4.10.1/lucene-codecs-4.10.1.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/apache/lucene/lucene-core/4.10.1/lucene-core-4.10.1.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/apache/lucene/lucene-expressions/4.10.1/lucene-expressions-4.10.1.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/apache/lucene/lucene-grouping/4.10.1/lucene-grouping-4.10.1.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/apache/lucene/lucene-highlighter/4.10.1/lucene-highlighter-4.10.1.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/apache/lucene/lucene-join/4.10.1/lucene-join-4.10.1.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/apache/lucene/lucene-memory/4.10.1/lucene-memory-4.10.1.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/apache/lucene/lucene-misc/4.10.1/lucene-misc-4.10.1.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/apache/lucene/lucene-queries/4.10.1/lucene-queries-4.10.1.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/apache/lucene/lucene-queryparser/4.10.1/lucene-queryparser-4.10.1.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/apache/lucene/lucene-spatial/4.10.1/lucene-spatial-4.10.1.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/apache/lucene/lucene-suggest/4.10.1/lucene-suggest-4.10.1.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/apache/solr/solr-core/4.10.1/solr-core-4.10.1.jar" sourcepath="M2_REPO/org/apache/solr/solr-core/4.10.1/solr-core-4.10.1-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/apache/lucene/lucene-analyzers-common/4.10.1/lucene-analyzers-common-4.10.1.jar" sourcepath="M2_REPO/org/apache/lucene/lucene-analyzers-common/4.10.1/lucene-analyzers-common-4.10.1-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/apache/lucene/lucene-analyzers-kuromoji/4.10.1/lucene-analyzers-kuromoji-4.10.1.jar" sourcepath="M2_REPO/org/apache/lucene/lucene-analyzers-kuromoji/4.10.1/lucene-analyzers-kuromoji-4.10.1-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/apache/lucene/lucene-analyzers-phonetic/4.10.1/lucene-analyzers-phonetic-4.10.1.jar" sourcepath="M2_REPO/org/apache/lucene/lucene-analyzers-phonetic/4.10.1/lucene-analyzers-phonetic-4.10.1-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/apache/lucene/lucene-codecs/4.10.1/lucene-codecs-4.10.1.jar" sourcepath="M2_REPO/org/apache/lucene/lucene-codecs/4.10.1/lucene-codecs-4.10.1-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/apache/lucene/lucene-core/4.10.1/lucene-core-4.10.1.jar" sourcepath="M2_REPO/org/apache/lucene/lucene-core/4.10.1/lucene-core-4.10.1-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/apache/lucene/lucene-expressions/4.10.1/lucene-expressions-4.10.1.jar" sourcepath="M2_REPO/org/apache/lucene/lucene-expressions/4.10.1/lucene-expressions-4.10.1-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/apache/lucene/lucene-grouping/4.10.1/lucene-grouping-4.10.1.jar" sourcepath="M2_REPO/org/apache/lucene/lucene-grouping/4.10.1/lucene-grouping-4.10.1-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/apache/lucene/lucene-highlighter/4.10.1/lucene-highlighter-4.10.1.jar" sourcepath="M2_REPO/org/apache/lucene/lucene-highlighter/4.10.1/lucene-highlighter-4.10.1-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/apache/lucene/lucene-join/4.10.1/lucene-join-4.10.1.jar" sourcepath="M2_REPO/org/apache/lucene/lucene-join/4.10.1/lucene-join-4.10.1-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/apache/lucene/lucene-memory/4.10.1/lucene-memory-4.10.1.jar" sourcepath="M2_REPO/org/apache/lucene/lucene-memory/4.10.1/lucene-memory-4.10.1-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/apache/lucene/lucene-misc/4.10.1/lucene-misc-4.10.1.jar" sourcepath="M2_REPO/org/apache/lucene/lucene-misc/4.10.1/lucene-misc-4.10.1-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/apache/lucene/lucene-queries/4.10.1/lucene-queries-4.10.1.jar" sourcepath="M2_REPO/org/apache/lucene/lucene-queries/4.10.1/lucene-queries-4.10.1-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/apache/lucene/lucene-queryparser/4.10.1/lucene-queryparser-4.10.1.jar" sourcepath="M2_REPO/org/apache/lucene/lucene-queryparser/4.10.1/lucene-queryparser-4.10.1-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/apache/lucene/lucene-spatial/4.10.1/lucene-spatial-4.10.1.jar" sourcepath="M2_REPO/org/apache/lucene/lucene-spatial/4.10.1/lucene-spatial-4.10.1-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/apache/lucene/lucene-suggest/4.10.1/lucene-suggest-4.10.1.jar" sourcepath="M2_REPO/org/apache/lucene/lucene-suggest/4.10.1/lucene-suggest-4.10.1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/carrotsearch/hppc/0.5.2/hppc-0.5.2.jar" sourcepath="M2_REPO/com/carrotsearch/hppc/0.5.2/hppc-0.5.2-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/google/protobuf/protobuf-java/2.5.0/protobuf-java-2.5.0.jar" sourcepath="M2_REPO/com/google/protobuf/protobuf-java/2.5.0/protobuf-java-2.5.0-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/googlecode/concurrentlinkedhashmap/concurrentlinkedhashmap-lru/1.2/concurrentlinkedhashmap-lru-1.2.jar" sourcepath="M2_REPO/com/googlecode/concurrentlinkedhashmap/concurrentlinkedhashmap-lru/1.2/concurrentlinkedhashmap-lru-1.2-sources.jar"/>

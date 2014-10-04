@@ -146,7 +146,6 @@
   <classpathentry kind="src" path="/mycollab-esb"/>
   <classpathentry kind="src" path="/mycollab-scheduler"/>
   <classpathentry kind="var" path="M2_REPO/org/quartz-scheduler/quartz/2.2.1/quartz-2.2.1.jar" sourcepath="M2_REPO/org/quartz-scheduler/quartz/2.2.1/quartz-2.2.1-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/c3p0/c3p0/0.9.1.1/c3p0-0.9.1.1.jar" sourcepath="M2_REPO/c3p0/c3p0/0.9.1.1/c3p0-0.9.1.1-sources.jar"/>
   <classpathentry kind="src" path="/mycollab-server-runner"/>
   <classpathentry kind="var" path="M2_REPO/org/eclipse/jetty/jetty-server/9.2.3.v20140905/jetty-server-9.2.3.v20140905.jar" sourcepath="M2_REPO/org/eclipse/jetty/jetty-server/9.2.3.v20140905/jetty-server-9.2.3.v20140905-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/eclipse/jetty/jetty-http/9.2.3.v20140905/jetty-http-9.2.3.v20140905.jar" sourcepath="M2_REPO/org/eclipse/jetty/jetty-http/9.2.3.v20140905/jetty-http-9.2.3.v20140905-sources.jar"/>

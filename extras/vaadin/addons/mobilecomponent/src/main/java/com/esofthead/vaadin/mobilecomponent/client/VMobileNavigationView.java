@@ -82,8 +82,12 @@ public class VMobileNavigationView extends VNavigationView {
 	protected void onAttach() {
 		super.onAttach();
 		Widget parent = getParent();
-		if (parent instanceof VMobileNavigationManager) {
-			viewNavigationManager = (VMobileNavigationManager) parent;
+		while (parent != null) {
+			if (parent instanceof VMobileNavigationManager) {
+				viewNavigationManager = (VMobileNavigationManager) parent;
+				break;
+			}
+			parent = parent.getParent();
 		}
 	}
 

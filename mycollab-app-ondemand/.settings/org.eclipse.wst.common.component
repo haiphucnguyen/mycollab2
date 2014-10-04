@@ -682,10 +682,10 @@
     <dependent-module archiveName="mycollab-search.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mycollab-search/mycollab-search">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="spring-data-solr-1.2.1.RELEASE.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/springframework/data/spring-data-solr/1.2.1.RELEASE/spring-data-solr-1.2.1.RELEASE.jar">
+    <dependent-module archiveName="spring-data-solr-1.3.0.RELEASE.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/springframework/data/spring-data-solr/1.3.0.RELEASE/spring-data-solr-1.3.0.RELEASE.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="spring-data-commons-1.8.1.RELEASE.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/springframework/data/spring-data-commons/1.8.1.RELEASE/spring-data-commons-1.8.1.RELEASE.jar">
+    <dependent-module archiveName="spring-data-commons-1.9.0.RELEASE.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/springframework/data/spring-data-commons/1.9.0.RELEASE/spring-data-commons-1.9.0.RELEASE.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="httpmime-4.2.2.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/apache/httpcomponents/httpmime/4.2.2/httpmime-4.2.2.jar">
@@ -694,7 +694,7 @@
     <dependent-module archiveName="httpclient-cache-4.2.2.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/apache/httpcomponents/httpclient-cache/4.2.2/httpclient-cache-4.2.2.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="solr-solrj-4.9.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/apache/solr/solr-solrj/4.9.0/solr-solrj-4.9.0.jar">
+    <dependent-module archiveName="solr-solrj-4.10.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/apache/solr/solr-solrj/4.10.1/solr-solrj-4.10.1.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="zookeeper-3.4.6.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/apache/zookeeper/zookeeper/3.4.6/zookeeper-3.4.6.jar">
