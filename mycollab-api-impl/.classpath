@@ -81,16 +81,16 @@
   <classpathentry kind="var" path="M2_REPO/org/jsoup/jsoup/1.7.3/jsoup-1.7.3.jar" sourcepath="M2_REPO/org/jsoup/jsoup/1.7.3/jsoup-1.7.3-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/ocpsoft/prettytime/prettytime/3.2.5.Final/prettytime-3.2.5.Final.jar" sourcepath="M2_REPO/org/ocpsoft/prettytime/prettytime/3.2.5.Final/prettytime-3.2.5.Final-sources.jar"/>
   <classpathentry kind="src" path="/mycollab-api"/>
-  <classpathentry kind="var" path="M2_REPO/org/jboss/resteasy/resteasy-jaxrs/3.0.7.Final/resteasy-jaxrs-3.0.7.Final.jar" sourcepath="M2_REPO/org/jboss/resteasy/resteasy-jaxrs/3.0.7.Final/resteasy-jaxrs-3.0.7.Final-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/jboss/resteasy/jaxrs-api/3.0.7.Final/jaxrs-api-3.0.7.Final.jar" sourcepath="M2_REPO/org/jboss/resteasy/jaxrs-api/3.0.7.Final/jaxrs-api-3.0.7.Final-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/jboss/resteasy/resteasy-jaxrs/3.0.9.Final/resteasy-jaxrs-3.0.9.Final.jar" sourcepath="M2_REPO/org/jboss/resteasy/resteasy-jaxrs/3.0.9.Final/resteasy-jaxrs-3.0.9.Final-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/jboss/resteasy/jaxrs-api/3.0.9.Final/jaxrs-api-3.0.9.Final.jar" sourcepath="M2_REPO/org/jboss/resteasy/jaxrs-api/3.0.9.Final/jaxrs-api-3.0.9.Final-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/jboss/spec/javax/annotation/jboss-annotations-api_1.1_spec/1.0.1.Final/jboss-annotations-api_1.1_spec-1.0.1.Final.jar" sourcepath="M2_REPO/org/jboss/spec/javax/annotation/jboss-annotations-api_1.1_spec/1.0.1.Final/jboss-annotations-api_1.1_spec-1.0.1.Final-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/net/jcip/jcip-annotations/1.0/jcip-annotations-1.0.jar" sourcepath="M2_REPO/net/jcip/jcip-annotations/1.0/jcip-annotations-1.0-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/jboss/resteasy/resteasy-client/3.0.7.Final/resteasy-client-3.0.7.Final.jar" sourcepath="M2_REPO/org/jboss/resteasy/resteasy-client/3.0.7.Final/resteasy-client-3.0.7.Final-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/jboss/resteasy/resteasy-servlet-initializer/3.0.7.Final/resteasy-servlet-initializer-3.0.7.Final.jar" sourcepath="M2_REPO/org/jboss/resteasy/resteasy-servlet-initializer/3.0.7.Final/resteasy-servlet-initializer-3.0.7.Final-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/jboss/resteasy/async-http-servlet-3.0/3.0.7.Final/async-http-servlet-3.0-3.0.7.Final.jar" sourcepath="M2_REPO/org/jboss/resteasy/async-http-servlet-3.0/3.0.7.Final/async-http-servlet-3.0-3.0.7.Final-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/jboss/resteasy/resteasy-spring/3.0.7.Final/resteasy-spring-3.0.7.Final.jar" sourcepath="M2_REPO/org/jboss/resteasy/resteasy-spring/3.0.7.Final/resteasy-spring-3.0.7.Final-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/jboss/resteasy/resteasy-jettison-provider/3.0.7.Final/resteasy-jettison-provider-3.0.7.Final.jar" sourcepath="M2_REPO/org/jboss/resteasy/resteasy-jettison-provider/3.0.7.Final/resteasy-jettison-provider-3.0.7.Final-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/jboss/resteasy/resteasy-jaxb-provider/3.0.7.Final/resteasy-jaxb-provider-3.0.7.Final.jar" sourcepath="M2_REPO/org/jboss/resteasy/resteasy-jaxb-provider/3.0.7.Final/resteasy-jaxb-provider-3.0.7.Final-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/jboss/resteasy/resteasy-client/3.0.9.Final/resteasy-client-3.0.9.Final.jar" sourcepath="M2_REPO/org/jboss/resteasy/resteasy-client/3.0.9.Final/resteasy-client-3.0.9.Final-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/jboss/resteasy/resteasy-servlet-initializer/3.0.9.Final/resteasy-servlet-initializer-3.0.9.Final.jar" sourcepath="M2_REPO/org/jboss/resteasy/resteasy-servlet-initializer/3.0.9.Final/resteasy-servlet-initializer-3.0.9.Final-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/jboss/resteasy/async-http-servlet-3.0/3.0.9.Final/async-http-servlet-3.0-3.0.9.Final.jar" sourcepath="M2_REPO/org/jboss/resteasy/async-http-servlet-3.0/3.0.9.Final/async-http-servlet-3.0-3.0.9.Final-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/jboss/resteasy/resteasy-spring/3.0.9.Final/resteasy-spring-3.0.9.Final.jar" sourcepath="M2_REPO/org/jboss/resteasy/resteasy-spring/3.0.9.Final/resteasy-spring-3.0.9.Final-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/jboss/resteasy/resteasy-jettison-provider/3.0.9.Final/resteasy-jettison-provider-3.0.9.Final.jar" sourcepath="M2_REPO/org/jboss/resteasy/resteasy-jettison-provider/3.0.9.Final/resteasy-jettison-provider-3.0.9.Final-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/jboss/resteasy/resteasy-jaxb-provider/3.0.9.Final/resteasy-jaxb-provider-3.0.9.Final.jar" sourcepath="M2_REPO/org/jboss/resteasy/resteasy-jaxb-provider/3.0.9.Final/resteasy-jaxb-provider-3.0.9.Final-sources.jar"/>
   <classpathentry kind="src" path="/mycollab-services"/>
   <classpathentry kind="src" path="/mycollab-caching"/>
   <classpathentry kind="src" path="/mycollab-dao"/>
@@ -113,8 +113,6 @@
   <classpathentry kind="src" path="/mycollab-jackrabbit"/>
   <classpathentry kind="var" path="M2_REPO/org/apache/jackrabbit/jackrabbit-core/2.8.0/jackrabbit-core-2.8.0.jar" sourcepath="M2_REPO/org/apache/jackrabbit/jackrabbit-core/2.8.0/jackrabbit-core-2.8.0-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/concurrent/concurrent/1.3.4/concurrent-1.3.4.jar" sourcepath="M2_REPO/concurrent/concurrent/1.3.4/concurrent-1.3.4-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/commons-dbcp/commons-dbcp/1.3/commons-dbcp-1.3.jar" sourcepath="M2_REPO/commons-dbcp/commons-dbcp/1.3/commons-dbcp-1.3-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/commons-pool/commons-pool/1.5.4/commons-pool-1.5.4.jar" sourcepath="M2_REPO/commons-pool/commons-pool/1.5.4/commons-pool-1.5.4-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/apache/jackrabbit/jackrabbit-api/2.8.0/jackrabbit-api-2.8.0.jar" sourcepath="M2_REPO/org/apache/jackrabbit/jackrabbit-api/2.8.0/jackrabbit-api-2.8.0-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/apache/jackrabbit/jackrabbit-jcr-commons/2.8.0/jackrabbit-jcr-commons-2.8.0.jar" sourcepath="M2_REPO/org/apache/jackrabbit/jackrabbit-jcr-commons/2.8.0/jackrabbit-jcr-commons-2.8.0-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/apache/jackrabbit/jackrabbit-data/2.8.0/jackrabbit-data-2.8.0.jar" sourcepath="M2_REPO/org/apache/jackrabbit/jackrabbit-data/2.8.0/jackrabbit-data-2.8.0-sources.jar"/>

@@ -13,8 +13,6 @@
     <project>mycollab-localization</project>
     <project>mycollab-migration</project>
     <project>mycollab-jackrabbit</project>
-    <project>mycollab-search-server</project>
-    <project>mycollab-search</project>
     <project>mycollab-services-community</project>
     <project>mycollab-mobile</project>
     <project>mycollab-ui</project>
