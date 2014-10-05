@@ -35,18 +35,18 @@ import com.esofthead.mycollab.solr.service.SolrItemRepository;
 public class SearchableItemIndexServiceImpl implements
 		SearchableItemIndexService {
 
-	@Resource
-	private SolrItemRepository repository;
+	@Resource(name = "solrRepository")
+	private SolrItemRepository solrRepository;
 
 	@Override
 	public void addToIndex(SearchableItem item) {
-		repository.save(item);
+		// solrRepository.save(item);
 	}
 
 	@Transactional
 	@Override
 	public void deleteFromIndex(Long index) {
-		repository.delete(index.toString());
+		// solrRepository.delete(index.toString());
 
 	}
 

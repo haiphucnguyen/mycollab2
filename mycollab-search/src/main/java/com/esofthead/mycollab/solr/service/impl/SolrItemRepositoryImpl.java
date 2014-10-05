@@ -30,7 +30,7 @@ import com.esofthead.mycollab.solr.service.SolrItemRepository;
  * @since 4.5.2
  *
  */
-@Repository
+@Repository("solrRepository")
 public class SolrItemRepositoryImpl implements SolrItemRepository {
 
 	@Override
