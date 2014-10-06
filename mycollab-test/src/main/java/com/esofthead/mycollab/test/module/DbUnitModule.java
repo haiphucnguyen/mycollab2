@@ -24,8 +24,10 @@ import java.io.InputStream;
 import org.dbunit.IDatabaseTester;
 import org.dbunit.JdbcDatabaseTester;
 import org.dbunit.database.DatabaseConfig;
+import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
+import org.dbunit.ext.mysql.MySqlDataTypeFactory;
 import org.dbunit.operation.DatabaseOperation;
 import org.junit.Assert;
 import org.slf4j.Logger;
@@ -78,15 +80,10 @@ public final class DbUnitModule extends AbstractMyCollabTestModule {
 
 		try {
 			TestDbConfiguration dbConf = new TestDbConfiguration();
-			this.databaseTester = new JdbcDatabaseTester(
-					dbConf.getDriverClassName(), dbConf.getJdbcUrl(),
-					dbConf.getUsername(), dbConf.getPassword());
-			this.databaseTester
-					.getConnection()
-					.getConfig()
-					.setProperty(
-							DatabaseConfig.FEATURE_CASE_SENSITIVE_TABLE_NAMES,
-							true);
+			this.databaseTester = new DbUnitTester(dbConf.getDriverClassName(),
+					dbConf.getJdbcUrl(), dbConf.getUsername(),
+					dbConf.getPassword());
+
 			this.databaseTester
 					.setSetUpOperation(DatabaseOperation.CLEAN_INSERT);
 			this.databaseTester.setDataSet(dataSet);
@@ -105,5 +102,24 @@ public final class DbUnitModule extends AbstractMyCollabTestModule {
 			throw new TestException(e);
 		}
 
+	}
+
+	private static class DbUnitTester extends JdbcDatabaseTester {
+
+		public DbUnitTester(String driverClass, String connectionUrl,
+				String username, String password) throws ClassNotFoundException {
+			super(driverClass, connectionUrl, username, password);
+		}
+
+		public IDatabaseConnection getConnection() throws Exception {
+			IDatabaseConnection connection = super.getConnection();
+			DatabaseConfig config = connection.getConfig();
+
+			config.setProperty(
+					DatabaseConfig.FEATURE_CASE_SENSITIVE_TABLE_NAMES, true);
+			config.setProperty(DatabaseConfig.PROPERTY_DATATYPE_FACTORY,
+					new MySqlDataTypeFactory());
+			return connection;
+		}
 	}
 }
