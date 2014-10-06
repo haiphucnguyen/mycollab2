@@ -19,12 +19,12 @@ package com.esofthead.mycollab.form.service;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.esofthead.mycollab.test.MyCollabSpringRunner;
-import com.esofthead.mycollab.test.service.ServiceTest;
+import com.esofthead.mycollab.test.service.IntergrationServiceTest;
 
-@RunWith(MyCollabSpringRunner.class)
-public class MasterFormServiceTest extends ServiceTest {
+@RunWith(SpringJUnit4ClassRunner.class)
+public class MasterFormServiceTest extends IntergrationServiceTest {
 
 	@Autowired
 	private MasterFormService masterFormService;

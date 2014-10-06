@@ -6,6 +6,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
@@ -14,11 +15,10 @@ import com.esofthead.mycollab.module.user.dao.UserAccountMapper;
 import com.esofthead.mycollab.module.user.domain.UserAccount;
 import com.esofthead.mycollab.module.user.domain.UserAccountExample;
 import com.esofthead.mycollab.test.DataSet;
-import com.esofthead.mycollab.test.MyCollabSpringRunner;
-import com.esofthead.mycollab.test.service.ServiceTest;
+import com.esofthead.mycollab.test.service.IntergrationServiceTest;
 
-@RunWith(MyCollabSpringRunner.class)
-public class ProjectMemberServiceImplTest extends ServiceTest {
+@RunWith(SpringJUnit4ClassRunner.class)
+public class ProjectMemberServiceImplTest extends IntergrationServiceTest {
 
 	@Autowired
 	private ProjectMemberService projectMemberService;

@@ -25,6 +25,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.UserInvalidInputException;
@@ -32,11 +33,10 @@ import com.esofthead.mycollab.module.user.domain.BillingAccountWithOwners;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.ondemand.module.billing.SubdomainExistedException;
 import com.esofthead.mycollab.test.DataSet;
-import com.esofthead.mycollab.test.MyCollabSpringRunner;
-import com.esofthead.mycollab.test.service.ServiceTest;
+import com.esofthead.mycollab.test.service.IntergrationServiceTest;
 
-@RunWith(MyCollabSpringRunner.class)
-public class BillingServiceTest extends ServiceTest {
+@RunWith(SpringJUnit4ClassRunner.class)
+public class BillingServiceTest extends IntergrationServiceTest {
 
 	@Autowired
 	private BillingService billingService;

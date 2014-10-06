@@ -24,6 +24,7 @@ import java.util.List;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
@@ -33,11 +34,10 @@ import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
 import com.esofthead.mycollab.test.DataSet;
-import com.esofthead.mycollab.test.MyCollabSpringRunner;
-import com.esofthead.mycollab.test.service.ServiceTest;
+import com.esofthead.mycollab.test.service.IntergrationServiceTest;
 
-@RunWith(MyCollabSpringRunner.class)
-public class OpportunityServiceTest extends ServiceTest {
+@RunWith(SpringJUnit4ClassRunner.class)
+public class OpportunityServiceTest extends IntergrationServiceTest {
 
 	@Autowired
 	protected OpportunityService opportunityService;
