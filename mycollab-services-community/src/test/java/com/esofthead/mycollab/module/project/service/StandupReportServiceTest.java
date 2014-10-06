@@ -38,10 +38,10 @@ import com.esofthead.mycollab.module.project.domain.SimpleStandupReport;
 import com.esofthead.mycollab.module.project.domain.criteria.StandupReportSearchCriteria;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.test.DataSet;
-import com.esofthead.mycollab.test.MyCollabClassRunner;
+import com.esofthead.mycollab.test.MyCollabSpringRunner;
 import com.esofthead.mycollab.test.service.ServiceTest;
 
-@RunWith(MyCollabClassRunner.class)
+@RunWith(MyCollabSpringRunner.class)
 public class StandupReportServiceTest extends ServiceTest {
 	@Autowired
 	protected StandupReportService reportService;

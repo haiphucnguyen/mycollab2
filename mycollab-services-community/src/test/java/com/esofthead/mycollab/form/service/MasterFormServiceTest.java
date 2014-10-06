@@ -20,10 +20,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.esofthead.mycollab.test.MyCollabClassRunner;
+import com.esofthead.mycollab.test.MyCollabSpringRunner;
 import com.esofthead.mycollab.test.service.ServiceTest;
 
-@RunWith(MyCollabClassRunner.class)
+@RunWith(MyCollabSpringRunner.class)
 public class MasterFormServiceTest extends ServiceTest {
 
 	@Autowired

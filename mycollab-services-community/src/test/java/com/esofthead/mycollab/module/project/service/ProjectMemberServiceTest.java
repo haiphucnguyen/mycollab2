@@ -30,10 +30,10 @@ import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.test.DataSet;
-import com.esofthead.mycollab.test.MyCollabClassRunner;
+import com.esofthead.mycollab.test.MyCollabSpringRunner;
 import com.esofthead.mycollab.test.service.ServiceTest;
 
-@RunWith(MyCollabClassRunner.class)
+@RunWith(MyCollabSpringRunner.class)
 public class ProjectMemberServiceTest extends ServiceTest {
 	@Autowired
 	private ProjectMemberService projectMemberService;

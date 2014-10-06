@@ -35,10 +35,10 @@ import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.module.project.domain.ProjectGenericTask;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectGenericTaskSearchCriteria;
 import com.esofthead.mycollab.test.DataSet;
-import com.esofthead.mycollab.test.MyCollabClassRunner;
+import com.esofthead.mycollab.test.MyCollabSpringRunner;
 import com.esofthead.mycollab.test.service.ServiceTest;
 
-@RunWith(MyCollabClassRunner.class)
+@RunWith(MyCollabSpringRunner.class)
 public class GenericTaskServiceTest extends ServiceTest {
 	@Autowired
 	protected ProjectGenericTaskService genericTaskService;

@@ -31,10 +31,10 @@ import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.project.domain.SimpleProblem;
 import com.esofthead.mycollab.module.project.domain.criteria.ProblemSearchCriteria;
 import com.esofthead.mycollab.test.DataSet;
-import com.esofthead.mycollab.test.MyCollabClassRunner;
+import com.esofthead.mycollab.test.MyCollabSpringRunner;
 import com.esofthead.mycollab.test.service.ServiceTest;
 
-@RunWith(MyCollabClassRunner.class)
+@RunWith(MyCollabSpringRunner.class)
 public class ProblemServiceTest extends ServiceTest {
 
 	@Autowired

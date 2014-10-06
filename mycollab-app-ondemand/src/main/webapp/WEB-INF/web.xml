@@ -52,7 +52,6 @@
             classpath:/META-INF/spring/tracker-context.xml
             classpath:/META-INF/spring/user-context.xml
             classpath:/META-INF/spring-cache/*-context.xml
-            classpath:/META-INF/spring-rest/*-context.xml
             classpath:/META-INF/spring-scheduler-ondemand/*-context.xml
         </param-value>
     </context-param>

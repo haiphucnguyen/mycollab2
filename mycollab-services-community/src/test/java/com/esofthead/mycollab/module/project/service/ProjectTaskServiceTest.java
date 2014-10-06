@@ -24,10 +24,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.test.DataSet;
-import com.esofthead.mycollab.test.MyCollabClassRunner;
+import com.esofthead.mycollab.test.MyCollabSpringRunner;
 import com.esofthead.mycollab.test.service.ServiceTest;
 
-@RunWith(MyCollabClassRunner.class)
+@RunWith(MyCollabSpringRunner.class)
 public class ProjectTaskServiceTest extends ServiceTest {
 
 	@Autowired

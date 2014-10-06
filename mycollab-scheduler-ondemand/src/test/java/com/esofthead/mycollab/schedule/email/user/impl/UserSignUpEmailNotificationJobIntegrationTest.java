@@ -5,10 +5,10 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
-import com.esofthead.mycollab.test.MyCollabClassRunner;
+import com.esofthead.mycollab.test.MyCollabSpringRunner;
 import com.esofthead.mycollab.test.service.ServiceTest;
 
-@RunWith(MyCollabClassRunner.class)
+@RunWith(MyCollabSpringRunner.class)
 public class UserSignUpEmailNotificationJobIntegrationTest extends ServiceTest {
 	@Autowired
 	private UserSignUpEmailNotificationJob userSignupNotificationJob;

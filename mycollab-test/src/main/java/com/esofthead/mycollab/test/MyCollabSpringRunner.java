@@ -16,15 +16,20 @@
  */
 package com.esofthead.mycollab.test;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TimeZone;
 
+import org.apache.log4j.PropertyConfigurator;
+import org.joda.time.DateTimeZone;
 import org.junit.runners.model.FrameworkMethod;
 import org.junit.runners.model.InitializationError;
 import org.junit.runners.model.Statement;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.esofthead.mycollab.test.module.DbUnitModule;
+import com.esofthead.mycollab.test.module.db.DbUnitModule;
+import com.esofthead.mycollab.test.service.ServiceTest;
 
 /**
  * 
@@ -32,12 +37,25 @@ import com.esofthead.mycollab.test.module.DbUnitModule;
  * @since 1.0
  * 
  */
-public class MyCollabClassRunner extends SpringJUnit4ClassRunner {
+public class MyCollabSpringRunner extends SpringJUnit4ClassRunner {
 
 	private List<MyCollabTestModule> testModules;
 
-	public MyCollabClassRunner(Class<?> clazz) throws InitializationError {
+	public MyCollabSpringRunner(Class<?> clazz) throws InitializationError {
 		super(clazz);
+	}
+
+	@Override
+	protected Statement withBeforeClasses(Statement statement) {
+		TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
+		DateTimeZone.setDefault(DateTimeZone.UTC);
+
+		URL resourceUrl = ServiceTest.class.getClassLoader().getResource(
+				"log4j-test.properties");
+		if (resourceUrl != null) {
+			PropertyConfigurator.configure(resourceUrl);
+		}
+		return super.withBeforeClasses(statement);
 	}
 
 	@Override

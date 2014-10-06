@@ -14,10 +14,10 @@ import com.esofthead.mycollab.module.user.dao.UserAccountMapper;
 import com.esofthead.mycollab.module.user.domain.UserAccount;
 import com.esofthead.mycollab.module.user.domain.UserAccountExample;
 import com.esofthead.mycollab.test.DataSet;
-import com.esofthead.mycollab.test.MyCollabClassRunner;
+import com.esofthead.mycollab.test.MyCollabSpringRunner;
 import com.esofthead.mycollab.test.service.ServiceTest;
 
-@RunWith(MyCollabClassRunner.class)
+@RunWith(MyCollabSpringRunner.class)
 public class ProjectMemberServiceImplTest extends ServiceTest {
 
 	@Autowired

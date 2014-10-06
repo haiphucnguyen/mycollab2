@@ -12,8 +12,6 @@
     <project>mycollab-localization</project>
     <project>mycollab-migration</project>
     <project>mycollab-jackrabbit</project>
-    <project>mycollab-api</project>
-    <project>mycollab-api-impl</project>
   </projects>
   <buildSpec>
     <buildCommand>

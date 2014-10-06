@@ -62,7 +62,7 @@ import com.esofthead.mycollab.module.user.domain.UserExample;
 import com.esofthead.mycollab.module.user.service.RoleService;
 import com.esofthead.mycollab.ondemand.module.billing.AccountPaymentTypeConstants;
 import com.esofthead.mycollab.ondemand.module.billing.RegisterSourceConstants;
-import com.esofthead.mycollab.rest.server.signup.SubdomainExistedException;
+import com.esofthead.mycollab.ondemand.module.billing.SubdomainExistedException;
 import com.esofthead.mycollab.security.PermissionMap;
 
 @Service(value = "billingService")

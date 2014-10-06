@@ -33,10 +33,10 @@ import com.esofthead.mycollab.common.i18n.WikiI18nEnum;
 import com.esofthead.mycollab.module.page.domain.Page;
 import com.esofthead.mycollab.module.page.domain.PageVersion;
 import com.esofthead.mycollab.module.page.service.PageService;
-import com.esofthead.mycollab.test.MyCollabClassRunner;
+import com.esofthead.mycollab.test.MyCollabSpringRunner;
 import com.esofthead.mycollab.test.service.ServiceTest;
 
-@RunWith(MyCollabClassRunner.class)
+@RunWith(MyCollabSpringRunner.class)
 public class PageServiceTest extends ServiceTest {
 
 	@Autowired

@@ -30,12 +30,12 @@ import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.module.user.domain.BillingAccountWithOwners;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
-import com.esofthead.mycollab.rest.server.signup.SubdomainExistedException;
+import com.esofthead.mycollab.ondemand.module.billing.SubdomainExistedException;
 import com.esofthead.mycollab.test.DataSet;
-import com.esofthead.mycollab.test.MyCollabClassRunner;
+import com.esofthead.mycollab.test.MyCollabSpringRunner;
 import com.esofthead.mycollab.test.service.ServiceTest;
 
-@RunWith(MyCollabClassRunner.class)
+@RunWith(MyCollabSpringRunner.class)
 public class BillingServiceTest extends ServiceTest {
 
 	@Autowired

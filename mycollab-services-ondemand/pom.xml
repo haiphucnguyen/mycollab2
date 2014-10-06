@@ -22,16 +22,6 @@
             <artifactId>mycollab-services</artifactId>
             <version>4.5.1</version>
         </dependency>
-        <dependency>
-            <groupId>com.esofthead.mycollab</groupId>
-            <artifactId>mycollab-api</artifactId>
-            <version>4.5.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.esofthead.mycollab</groupId>
-            <artifactId>mycollab-api-impl</artifactId>
-            <version>4.5.1</version>
-        </dependency>
 
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>

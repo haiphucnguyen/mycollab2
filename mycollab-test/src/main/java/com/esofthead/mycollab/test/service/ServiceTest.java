@@ -17,11 +17,6 @@
 
 package com.esofthead.mycollab.test.service;
 
-import java.net.URL;
-import java.util.TimeZone;
-
-import org.apache.log4j.PropertyConfigurator;
-import org.joda.time.DateTimeZone;
 import org.springframework.test.context.ContextConfiguration;
 
 /**
@@ -42,16 +37,4 @@ import org.springframework.test.context.ContextConfiguration;
 		"classpath:META-INF/spring-test/datasource-context-test.xml",
 		"classpath:META-INF/spring-test/service-context-test.xml" })
 public class ServiceTest {
-	static {
-		// Set timezone
-		TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
-		DateTimeZone.setDefault(DateTimeZone.UTC);
-
-		URL resourceUrl = ServiceTest.class.getClassLoader().getResource(
-				"log4j-test.properties");
-		if (resourceUrl != null) {
-			PropertyConfigurator.configure(resourceUrl);
-		}
-
-	}
 }

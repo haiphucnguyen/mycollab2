@@ -42,6 +42,12 @@
 
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
+            <artifactId>mycollab-services-ondemand</artifactId>
+            <version>4.5.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-test</artifactId>
             <version>4.5.1</version>
             <scope>test</scope>
