@@ -27,7 +27,7 @@
   <classpathentry kind="var" path="M2_REPO/commons-logging/commons-logging/1.1.1/commons-logging-1.1.1.jar" sourcepath="M2_REPO/commons-logging/commons-logging/1.1.1/commons-logging-1.1.1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/commons-configuration/commons-configuration/1.9/commons-configuration-1.9.jar" sourcepath="M2_REPO/commons-configuration/commons-configuration/1.9/commons-configuration-1.9-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/apache/commons/commons-vfs2/2.0/commons-vfs2-2.0.jar" sourcepath="M2_REPO/org/apache/commons/commons-vfs2/2.0/commons-vfs2-2.0-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/codehaus/groovy/groovy-all/2.3.6/groovy-all-2.3.6.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/codehaus/groovy/groovy-all/2.3.6/groovy-all-2.3.6.jar" sourcepath="M2_REPO/org/codehaus/groovy/groovy-all/2.3.6/groovy-all-2.3.6-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/net/java/dev/jna/jna/3.4.0/jna-3.4.0.jar" sourcepath="M2_REPO/net/java/dev/jna/jna/3.4.0/jna-3.4.0-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/net/java/dev/jna/platform/3.4.0/platform-3.4.0.jar" sourcepath="M2_REPO/net/java/dev/jna/platform/3.4.0/platform-3.4.0-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/jrexx/jrexx/1.1.1/jrexx-1.1.1.jar"/>
@@ -212,7 +212,11 @@
   <classpathentry kind="var" path="M2_REPO/org/springframework/spring-webmvc/4.1.1.RELEASE/spring-webmvc-4.1.1.RELEASE.jar" sourcepath="M2_REPO/org/springframework/spring-webmvc/4.1.1.RELEASE/spring-webmvc-4.1.1.RELEASE-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/xhtmlrenderer/flying-saucer-pdf/9.0.6/flying-saucer-pdf-9.0.6.jar" sourcepath="M2_REPO/org/xhtmlrenderer/flying-saucer-pdf/9.0.6/flying-saucer-pdf-9.0.6-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/xhtmlrenderer/flying-saucer-core/9.0.6/flying-saucer-core-9.0.6.jar" sourcepath="M2_REPO/org/xhtmlrenderer/flying-saucer-core/9.0.6/flying-saucer-core-9.0.6-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/com/esofthead/vaadin/floatingcomponent/0.0.1-SNAPSHOT/floatingcomponent-0.0.1-SNAPSHOT.jar" sourcepath="M2_REPO/com/esofthead/vaadin/floatingcomponent/0.0.1-SNAPSHOT/floatingcomponent-0.0.1-SNAPSHOT-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/esofthead/vaadin/floatingcomponent/0.0.1-SNAPSHOT/floatingcomponent-0.0.1-SNAPSHOT.jar" sourcepath="M2_REPO/com/esofthead/vaadin/floatingcomponent/0.0.1-SNAPSHOT/floatingcomponent-0.0.1-SNAPSHOT-sources.jar">
+    <attributes>
+      <attribute value="jar:file:/C:/Users/lvnghiem/.m2/repository/com/esofthead/vaadin/floatingcomponent/0.0.1-SNAPSHOT/floatingcomponent-0.0.1-SNAPSHOT-javadoc.jar!/" name="javadoc_location"/>
+    </attributes>
+  </classpathentry>
   <classpathentry kind="var" path="M2_REPO/org/vaadin/addons/ckeditor-wrapper-for-vaadin/7.9.3/ckeditor-wrapper-for-vaadin-7.9.3.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/vaadin/vaadin-client/7.3.2/vaadin-client-7.3.2.jar" sourcepath="M2_REPO/com/vaadin/vaadin-client/7.3.2/vaadin-client-7.3.2-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/codehaus/izpack/izpack-standalone-compiler/4.3.5/izpack-standalone-compiler-4.3.5.jar" sourcepath="M2_REPO/org/codehaus/izpack/izpack-standalone-compiler/4.3.5/izpack-standalone-compiler-4.3.5-sources.jar"/>
