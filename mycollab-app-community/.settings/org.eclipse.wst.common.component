@@ -4,10 +4,22 @@
     <property name="context-root" value="mycollab-app-community"/>
     <wb-resource deploy-path="/" source-path="src/main/webapp"/>
     <property name="java-output-path" value="/target/classes"/>
-    <dependent-module archiveName="yajsw-wrapper-11.11.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/esofthead/mycollab/yajsw-wrapper/11.11/yajsw-wrapper-11.11.jar">
+    <dependent-module archiveName="yajsw-wrapper-11.11-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/esofthead/mycollab/yajsw-wrapper/11.11-SNAPSHOT/yajsw-wrapper-11.11-SNAPSHOT.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="yajsw-wrapperApp-11.11.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/esofthead/mycollab/yajsw-wrapperApp/11.11/yajsw-wrapperApp-11.11.jar">
+    <dependent-module archiveName="yajsw-wrapperApp-11.11-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/esofthead/mycollab/yajsw-wrapperApp/11.11-SNAPSHOT/yajsw-wrapperApp-11.11-SNAPSHOT.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="abeille-formsrt-11.11-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/esofthead/mycollab/abeille-formsrt/11.11-SNAPSHOT/abeille-formsrt-11.11-SNAPSHOT.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="commons-cli-2.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/commons-cli/commons-cli/2.0-SNAPSHOT/commons-cli-2.0-SNAPSHOT.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="srvmgr-11.11.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/rzo/yajsw/srvmgr/11.11/srvmgr-11.11.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="ahessian-11.11.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/rzo/yajsw/ahessian/11.11/ahessian-11.11.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="hessian4-11.11.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/rzo/yajsw/hessian4/11.11/hessian4-11.11.jar">
@@ -16,19 +28,34 @@
     <dependent-module archiveName="netty-3.6.6.Final.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/io/netty/netty/3.6.6.Final/netty-3.6.6.Final.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="ahessian-11.11.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/rzo/yajsw/ahessian/11.11/ahessian-11.11.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="commons-configuration-1.9.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/commons-configuration/commons-configuration/1.9/commons-configuration-1.9.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="commons-lang-2.6.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/commons-lang/commons-lang/2.6/commons-lang-2.6.jar">
+    <dependent-module archiveName="commons-beanutils-1.9.2.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/commons-beanutils/commons-beanutils/1.9.2/commons-beanutils-1.9.2.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="commons-logging-1.1.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/commons-logging/commons-logging/1.1.1/commons-logging-1.1.1.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
+    <dependent-module archiveName="commons-configuration-1.9.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/commons-configuration/commons-configuration/1.9/commons-configuration-1.9.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
     <dependent-module archiveName="commons-vfs2-2.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/apache/commons/commons-vfs2/2.0/commons-vfs2-2.0.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="groovy-all-2.3.6.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/codehaus/groovy/groovy-all/2.3.6/groovy-all-2.3.6.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="jna-3.4.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/net/java/dev/jna/jna/3.4.0/jna-3.4.0.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="platform-3.4.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/net/java/dev/jna/platform/3.4.0/platform-3.4.0.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="jrexx-1.1.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/jrexx/jrexx/1.1.1/jrexx-1.1.1.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="forms-1.2.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/jgoodies/forms/1.2.0/forms-1.2.0.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="glazedlists_java15-1.8.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/net/java/dev/glazedlists/glazedlists_java15/1.8.0/glazedlists_java15-1.8.0.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="mycollab-server-runner.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mycollab-server-runner/mycollab-server-runner">
@@ -52,10 +79,10 @@
     <dependent-module archiveName="commons-collections-3.2.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/commons-collections/commons-collections/3.2.1/commons-collections-3.2.1.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="velocity-tools-2.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/apache/velocity/velocity-tools/2.0/velocity-tools-2.0.jar">
+    <dependent-module archiveName="commons-lang-2.4.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/commons-lang/commons-lang/2.4/commons-lang-2.4.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="commons-beanutils-1.9.2.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/commons-beanutils/commons-beanutils/1.9.2/commons-beanutils-1.9.2.jar">
+    <dependent-module archiveName="velocity-tools-2.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/apache/velocity/velocity-tools/2.0/velocity-tools-2.0.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="commons-digester-1.8.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/commons-digester/commons-digester/1.8/commons-digester-1.8.jar">
@@ -433,6 +460,9 @@
     <dependent-module archiveName="mycollab-reporting.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mycollab-reporting/mycollab-reporting">
       <dependency-type>uses</dependency-type>
     </dependent-module>
+    <dependent-module archiveName="dynamicreports-adhoc-3.2.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/net/sourceforge/dynamicreports/dynamicreports-adhoc/3.2.1/dynamicreports-adhoc-3.2.1.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
     <dependent-module archiveName="dynamicreports-core-3.2.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/net/sourceforge/dynamicreports/dynamicreports-core/3.2.1/dynamicreports-core-3.2.1.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
@@ -455,9 +485,6 @@
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="avalon-framework-impl-4.2.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/avalon-framework/avalon-framework-impl/4.2.0/avalon-framework-impl-4.2.0.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="dynamicreports-adhoc-3.2.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/net/sourceforge/dynamicreports/dynamicreports-adhoc/3.2.1/dynamicreports-adhoc-3.2.1.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="dynamicreports-googlecharts-3.2.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/net/sourceforge/dynamicreports/dynamicreports-googlecharts/3.2.1/dynamicreports-googlecharts-3.2.1.jar">
@@ -502,7 +529,7 @@
     <dependent-module archiveName="ratingstars-2.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/vaadin/addons/ratingstars/2.1/ratingstars-2.1.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="dragdroplayouts-1.0.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/vaadin/addons/dragdroplayouts/1.0.1/dragdroplayouts-1.0.1.jar">
+    <dependent-module archiveName="dragdroplayouts-1.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/vaadin/addons/dragdroplayouts/1.1/dragdroplayouts-1.1.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="tokenfield-7.0.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/vaadin/addons/tokenfield/7.0.1/tokenfield-7.0.1.jar">
