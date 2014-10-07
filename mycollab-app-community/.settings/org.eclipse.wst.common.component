@@ -4,7 +4,7 @@
     <property name="context-root" value="mycollab-app-community"/>
     <wb-resource deploy-path="/" source-path="src/main/webapp"/>
     <property name="java-output-path" value="/target/classes"/>
-    <dependent-module archiveName="yajsw-wrapper-11.11-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/esofthead/mycollab/yajsw-wrapper/11.11-SNAPSHOT/yajsw-wrapper-11.11-SNAPSHOT.jar">
+    <dependent-module archiveName="yajsw-wrapper-11.11.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/esofthead/mycollab/yajsw-wrapper/11.11/yajsw-wrapper-11.11.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="yajsw-wrapperApp-11.11.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/esofthead/mycollab/yajsw-wrapperApp/11.11/yajsw-wrapperApp-11.11.jar">

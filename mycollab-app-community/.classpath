@@ -15,7 +15,7 @@
   <classpathentry kind="var" path="M2_REPO/javax/validation/validation-api/1.0.0.GA/validation-api-1.0.0.GA-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/javax/persistence/persistence-api/1.0.2/persistence-api-1.0.2.jar" sourcepath="M2_REPO/javax/persistence/persistence-api/1.0.2/persistence-api-1.0.2-sources.jar"/>
   <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-  <classpathentry kind="var" path="M2_REPO/com/esofthead/mycollab/yajsw-wrapper/11.11-SNAPSHOT/yajsw-wrapper-11.11-SNAPSHOT.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/esofthead/mycollab/yajsw-wrapper/11.11/yajsw-wrapper-11.11.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/esofthead/mycollab/yajsw-wrapperApp/11.11/yajsw-wrapperApp-11.11.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/esofthead/mycollab/abeille-formsrt/11.11/abeille-formsrt-11.11.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/esofthead/mycollab/commons-cli/1.4/commons-cli-1.4.jar"/>
