@@ -1,0 +1,36 @@
+package com.esofthead.mycollab.mobile.module.project.view.bug;
+
+import com.esofthead.mycollab.mobile.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.mobile.ui.AbstractListPresenter;
+import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
+import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
+import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
+import com.esofthead.mycollab.vaadin.mvp.ScreenData;
+import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
+import com.vaadin.ui.ComponentContainer;
+
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 4.5.2
+ * 
+ */
+public class BugListPresenter extends
+		AbstractListPresenter<BugListView, BugSearchCriteria, SimpleBug> {
+
+	private static final long serialVersionUID = -3814540725962187693L;
+
+	public BugListPresenter() {
+		super(BugListView.class);
+	}
+
+	@Override
+	protected void onGo(ComponentContainer container, ScreenData<?> data) {
+		if (CurrentProjectVariables
+				.canRead(ProjectRolePermissionCollections.BUGS)) {
+
+		} else {
+			NotificationUtil.showMessagePermissionAlert();
+		}
+	}
+}

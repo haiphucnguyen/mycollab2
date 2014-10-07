@@ -235,10 +235,8 @@ public class ProjectModuleController extends AbstractController {
 			@Subscribe
 			@Override
 			public void handle(MilestoneEvent.GotoAdd event) {
-				SimpleMilestone milestone = new SimpleMilestone();
-				milestone.setProjectid(CurrentProjectVariables.getProjectId());
 				MilestoneScreenData.Add data = new MilestoneScreenData.Add(
-						milestone);
+						new SimpleMilestone());
 				MilestonePresenter presenter = PresenterResolver
 						.getPresenter(MilestonePresenter.class);
 				presenter.go(navManager, data);
