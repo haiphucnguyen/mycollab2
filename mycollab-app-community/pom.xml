@@ -1,388 +1,415 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<name>mycollab-app-community</name>
-	<artifactId>mycollab-app-community</artifactId>
-	<parent>
-		<groupId>com.esofthead.mycollab</groupId>
-		<artifactId>parent-community</artifactId>
-		<version>4.5.1</version>
-		<relativePath>../mycollab-parent-community/pom.xml</relativePath>
-	</parent>
-	<packaging>war</packaging>
-	<properties>
-		<izpackVersion>4.3.5</izpackVersion>
-		<staging.dir>${project.build.directory}/staging</staging.dir>
-	</properties>
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <name>mycollab-app-community</name>
+    <artifactId>mycollab-app-community</artifactId>
+    <parent>
+        <groupId>com.esofthead.mycollab</groupId>
+        <artifactId>parent-community</artifactId>
+        <version>4.5.1</version>
+        <relativePath>../mycollab-parent-community/pom.xml</relativePath>
+    </parent>
+    <packaging>war</packaging>
+    <properties>
+        <izpackVersion>4.3.5</izpackVersion>
+        <staging.dir>${project.build.directory}/staging</staging.dir>
+    </properties>
 
-	<dependencies>
+    <dependencies>
+        <!-- START ADD DEPENDENCIES FOR RUNNING SERVICES -->
+        <dependency>
+            <groupId>com.esofthead.mycollab</groupId>
+            <artifactId>yajsw-wrapper</artifactId>
+            <version>11.11-SNAPSHOT</version>
+        </dependency>
 
-		<dependency>
-			<groupId>com.esofthead.mycollab</groupId>
-			<artifactId>yajsw-wrapper</artifactId>
-			<version>11.11</version>
-		</dependency>
+        <dependency>
+            <groupId>com.esofthead.mycollab</groupId>
+            <artifactId>yajsw-wrapperApp</artifactId>
+            <version>11.11-SNAPSHOT</version>
+        </dependency>
 
-		<dependency>
-			<groupId>com.esofthead.mycollab</groupId>
-			<artifactId>yajsw-wrapperApp</artifactId>
-			<version>11.11</version>
-		</dependency>
+        <dependency>
+            <groupId>com.esofthead.mycollab</groupId>
+            <artifactId>abeille-formsrt</artifactId>
+            <version>11.11-SNAPSHOT</version>
+        </dependency>
 
-		<dependency>
-			<groupId>org.rzo.yajsw</groupId>
-			<artifactId>srvmgr</artifactId>
-			<version>11.11</version>
-		</dependency>
+        <dependency>
+            <groupId>commons-cli</groupId>
+            <artifactId>commons-cli</artifactId>
+            <version>2.0-SNAPSHOT</version>
+        </dependency>
 
-		<dependency>
-			<groupId>org.rzo.yajsw</groupId>
-			<artifactId>hessian4</artifactId>
-			<version>11.11</version>
-		</dependency>
+        <dependency>
+            <groupId>org.rzo.yajsw</groupId>
+            <artifactId>srvmgr</artifactId>
+            <version>11.11</version>
+        </dependency>
 
-		<dependency>
-			<groupId>org.rzo.yajsw</groupId>
-			<artifactId>ahessian</artifactId>
-			<version>11.11</version>
-		</dependency>
+        <dependency>
+            <groupId>org.rzo.yajsw</groupId>
+            <artifactId>hessian4</artifactId>
+            <version>11.11</version>
+        </dependency>
 
-		<dependency>
-			<groupId>commons-configuration</groupId>
-			<artifactId>commons-configuration</artifactId>
-			<version>1.9</version>
-			<exclusions>
-				<exclusion>
-					<groupId>commons-lang</groupId>
-					<artifactId>commons-lang</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
+        <dependency>
+            <groupId>org.rzo.yajsw</groupId>
+            <artifactId>ahessian</artifactId>
+            <version>11.11</version>
+        </dependency>
 
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-vfs2</artifactId>
-			<version>2.0</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.apache.maven.scm</groupId>
-					<artifactId>maven-scm-api</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.apache.maven.scm</groupId>
-					<artifactId>maven-scm-provider-svnexe</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
+        <dependency>
+            <groupId>commons-configuration</groupId>
+            <artifactId>commons-configuration</artifactId>
+            <version>1.9</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-lang</groupId>
+                    <artifactId>commons-lang</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
 
-		<dependency>
-			<groupId>io.netty</groupId>
-			<artifactId>netty</artifactId>
-			<version>3.6.6.Final</version>
-		</dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-vfs2</artifactId>
+            <version>2.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.maven.scm</groupId>
+                    <artifactId>maven-scm-api</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.maven.scm</groupId>
+                    <artifactId>maven-scm-provider-svnexe</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
 
-		<dependency>
-			<groupId>org.codehaus.groovy</groupId>
-			<artifactId>groovy-all</artifactId>
-			<version>2.3.6</version>
-		</dependency>
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty</artifactId>
+            <version>3.6.6.Final</version>
+        </dependency>
 
-		<dependency>
-			<groupId>net.java.dev.jna</groupId>
-			<artifactId>jna</artifactId>
-			<version>3.4.0</version>
-		</dependency>
+        <dependency>
+            <groupId>org.codehaus.groovy</groupId>
+            <artifactId>groovy-all</artifactId>
+            <version>2.3.6</version>
+        </dependency>
 
-		<dependency>
-			<groupId>net.java.dev.jna</groupId>
-			<artifactId>platform</artifactId>
-			<version>3.4.0</version>
-		</dependency>
+        <dependency>
+            <groupId>net.java.dev.jna</groupId>
+            <artifactId>jna</artifactId>
+            <version>3.4.0</version>
+        </dependency>
 
-		<dependency>
-			<groupId>jrexx</groupId>
-			<artifactId>jrexx</artifactId>
-			<version>1.1.1</version>
-		</dependency>
+        <dependency>
+            <groupId>net.java.dev.jna</groupId>
+            <artifactId>platform</artifactId>
+            <version>3.4.0</version>
+        </dependency>
 
-		<dependency>
-			<groupId>com.jgoodies</groupId>
-			<artifactId>forms</artifactId>
-			<version>1.2.0</version>
-		</dependency>
+        <dependency>
+            <groupId>jrexx</groupId>
+            <artifactId>jrexx</artifactId>
+            <version>1.1.1</version>
+        </dependency>
 
-		<dependency>
-			<groupId>net.java.dev.glazedlists</groupId>
-			<artifactId>glazedlists_java15</artifactId>
-			<version>1.8.0</version>
-		</dependency>
+        <dependency>
+            <groupId>com.jgoodies</groupId>
+            <artifactId>forms</artifactId>
+            <version>1.2.0</version>
+        </dependency>
 
-		<dependency>
-			<groupId>com.esofthead.mycollab</groupId>
-			<artifactId>mycollab-server-runner</artifactId>
-			<version>4.5.1</version>
-			<exclusions>
-				<exclusion>
-					<groupId>com.esofthead.mycollab</groupId>
-					<artifactId>mycollab-test</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
+        <dependency>
+            <groupId>net.java.dev.glazedlists</groupId>
+            <artifactId>glazedlists_java15</artifactId>
+            <version>1.8.0</version>
+        </dependency>
 
-		<dependency>
-			<groupId>com.esofthead.mycollab</groupId>
-			<artifactId>mycollab-servlet</artifactId>
-			<version>4.5.1</version>
-		</dependency>
+        <!-- END ADD DEPENDENCIES FOR RUNNING SERVICES -->
 
-		<dependency>
-			<groupId>com.esofthead.mycollab</groupId>
-			<artifactId>mycollab-services-community</artifactId>
-			<version>4.5.1</version>
-		</dependency>
+        <dependency>
+            <groupId>com.esofthead.mycollab</groupId>
+            <artifactId>mycollab-server-runner</artifactId>
+            <version>4.5.1</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.esofthead.mycollab</groupId>
+                    <artifactId>mycollab-test</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
 
-		<dependency>
-			<groupId>com.esofthead.mycollab</groupId>
-			<artifactId>mycollab-mobile</artifactId>
-			<version>4.5.1</version>
-		</dependency>
+        <dependency>
+            <groupId>com.esofthead.mycollab</groupId>
+            <artifactId>mycollab-servlet</artifactId>
+            <version>4.5.1</version>
+        </dependency>
 
-		<dependency>
-			<groupId>com.esofthead.mycollab</groupId>
-			<artifactId>mycollab-web-community</artifactId>
-			<version>4.5.1</version>
-		</dependency>
+        <dependency>
+            <groupId>com.esofthead.mycollab</groupId>
+            <artifactId>mycollab-services-community</artifactId>
+            <version>4.5.1</version>
+        </dependency>
 
-		<dependency>
-			<groupId>org.codehaus.izpack</groupId>
-			<artifactId>izpack-standalone-compiler</artifactId>
-			<version>${izpackVersion}</version>
-			<scope>provided</scope>
-		</dependency>
+        <dependency>
+            <groupId>com.esofthead.mycollab</groupId>
+            <artifactId>mycollab-mobile</artifactId>
+            <version>4.5.1</version>
+        </dependency>
 
-		<!-- <dependency> <groupId>com.vaadin</groupId> <artifactId>vaadin-client-compiler</artifactId> 
-			<version>${vaadinVersion}</version> <scope>provided</scope> </dependency> -->
-	</dependencies>
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-war-plugin</artifactId>
-				<version>2.3</version>
-			</plugin>
+        <dependency>
+            <groupId>com.esofthead.mycollab</groupId>
+            <artifactId>mycollab-web-community</artifactId>
+            <version>4.5.1</version>
+        </dependency>
 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-eclipse-plugin</artifactId>
-				<version>2.9</version>
-				<configuration>
-					<wtpversion>2.0</wtpversion>
-				</configuration>
-			</plugin>
+        <dependency>
+            <groupId>org.codehaus.izpack</groupId>
+            <artifactId>izpack-standalone-compiler</artifactId>
+            <version>${izpackVersion}</version>
+            <scope>provided</scope>
+        </dependency>
 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-				<version>2.3.1</version>
-				<!-- The configuration of the plugin -->
-				<executions>
-					<execution>
-						<id>make-a-jar</id>
-						<phase>compile</phase>
-						<goals>
-							<goal>jar</goal>
-						</goals>
-						<configuration>
-							<finalName>runner</finalName>
-							<!-- Configuration of the archiver -->
-							<archive>
-								<!-- Manifest specific configuration -->
-								<manifest>
-									<!-- Classpath is added to the manifest of the created jar file. -->
-									<addClasspath>true</addClasspath>
-									<!-- Configures the classpath prefix. This configuration option 
-										is used to specify that all needed libraries are found under lib/ directory. -->
-									<classpathPrefix>lib/</classpathPrefix>
-									<!-- Specifies the main class of the application -->
-									<mainClass>com.esofthead.mycollab.jetty.CommunityServerRunner</mainClass>
-								</manifest>
-							</archive>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
+        <!-- <dependency> <groupId>com.vaadin</groupId> <artifactId>vaadin-client-compiler</artifactId> 
+            <version>${vaadinVersion}</version> <scope>provided</scope> </dependency> -->
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.3</version>
+            </plugin>
 
-			<!-- START SNIPPET: assembly -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-assembly-plugin</artifactId>
-				<configuration>
-					<descriptors>
-						<descriptor>src/main/assembly/src.xml</descriptor>
-					</descriptors>
-				</configuration>
-				<executions>
-					<execution>
-						<phase>package</phase>
-						<goals>
-							<goal>single</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<!-- END SNIPPET: assembly -->
-		</plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-eclipse-plugin</artifactId>
+                <version>2.9</version>
+                <configuration>
+                    <wtpversion>2.0</wtpversion>
+                </configuration>
+            </plugin>
 
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-war-plugin</artifactId>
-					<configuration>
-						<failOnMissingWebXml>false</failOnMissingWebXml>
-					</configuration>
-				</plugin>
-			</plugins>
-		</pluginManagement>
-	</build>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.3.1</version>
+                <!-- The configuration of the plugin -->
+                <executions>
+                    <execution>
+                        <id>make-a-jar</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                        <configuration>
+                            <finalName>runner</finalName>
+                            <!-- Configuration of the archiver -->
+                            <archive>
+                                <!-- Manifest specific configuration -->
+                                <manifest>
+                                    <!-- Classpath is added to the manifest 
+                                        of the created jar file. -->
+                                    <addClasspath>true</addClasspath>
+                                    <!-- Configures the classpath prefix. 
+                                        This configuration option is used to specify that all needed libraries are 
+                                        found under lib/ directory. -->
+                                    <classpathPrefix>lib/</classpathPrefix>
+                                    <!-- Specifies the main class of the 
+                                        application -->
+                                    <mainClass>com.esofthead.mycollab.jetty.CommunityServerRunner</mainClass>
+                                </manifest>
+                            </archive>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
 
-	<profiles>
-		<profile>
-			<id>dev</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-				<property>
-					<name>!environment</name>
-				</property>
-			</activation>
-			<build>
-			</build>
-		</profile>
-		<profile>
-			<id>production</id>
-			<activation>
-				<property>
-					<name>environment</name>
-					<value>production</value>
-				</property>
-			</activation>
-			<build>
-				<plugins>
-					<plugin>
-						<artifactId>maven-antrun-plugin</artifactId>
-						<executions>
-							<execution>
-								<id>create-staging-area</id>
-								<phase>process-resources</phase>
-								<goals>
-									<goal>run</goal>
-								</goals>
-								<configuration>
-									<tasks>
-										<copy todir="${staging.dir}">
-											<fileset dir="${basedir}/src/izpack" />
+            <!-- START SNIPPET: assembly -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                    <descriptors>
+                        <descriptor>src/main/assembly/src.xml</descriptor>
+                    </descriptors>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- END SNIPPET: assembly -->
+        </plugins>
 
-										</copy>
-										<copy todir="${staging.dir}/conf">
-											<fileset dir="${basedir}/src/main/conf" />
-										</copy>
-										<copy todir="${staging.dir}/logs">
-											<fileset dir="${basedir}/src/main/logs" />
-										</copy>
-										<copy todir="${staging.dir}/scripts">
-											<fileset dir="${basedir}/src/main/scripts" />
-										</copy>
-										<copy todir="${staging.dir}/txt">
-											<fileset dir="${basedir}/src/main/txt" />
-										</copy>
-										<copy todir="${staging.dir}/webapp">
-											<fileset dir="${basedir}/src/main/webapp" />
-										</copy>
-										<copy todir="${staging.dir}/webapp">
-											<fileset dir="${basedir}/src/main/webapp" />
-										</copy>
-										<copy todir="${staging.dir}/lib">
-											<fileset dir="${basedir}/src/main/lib" />
-										</copy>
-									</tasks>
-								</configuration>
-							</execution>
-						</executions>
-					</plugin>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-war-plugin</artifactId>
+                    <configuration>
+                        <failOnMissingWebXml>false</failOnMissingWebXml>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
 
-					<plugin>
-						<artifactId>maven-dependency-plugin</artifactId>
-						<configuration>
-							<excludeTransitive>false</excludeTransitive>
-							<stripVersion>false</stripVersion>
-							<overWriteReleases>true</overWriteReleases>
-							<overWriteSnapshots>true</overWriteSnapshots>
-							<overWriteIfNewer>true</overWriteIfNewer>
-						</configuration>
-						<executions>
-							<execution>
-								<!-- copy *application* jars to izpack staging lib -->
-								<id>copy-product-dependencies</id>
-								<phase>prepare-package</phase>
-								<goals>
-									<goal>copy-dependencies</goal>
-								</goals>
-								<configuration>
-									<outputDirectory>${staging.dir}/lib</outputDirectory>
-									<excludeScope>system</excludeScope>
-									<!-- this excludes tools.jar, e.g. -->
-									<excludeArtifactIds>mycustompanels</excludeArtifactIds>
-									<!-- IMPORTANT: don't copy custom panels where our application jars 
-										live -->
-									<excludeGroupIds>org.codehaus.izpack</excludeGroupIds>
-									<!-- IMPORTANT: we don't want to copy the izpack dependency where 
-										our application jars live -->
-								</configuration>
-							</execution>
-							<execution>
-								<!-- copy izpack custom (custom panels, etc.) jars to izpack staging 
-									custom -->
-								<id>copy-izpack-dependencies</id>
-								<phase>prepare-package</phase>
-								<goals>
-									<goal>copy-dependencies</goal>
-								</goals>
-								<configuration>
-									<outputDirectory>${staging.dir}/custom</outputDirectory>
-									<includeArtifactIds>mycustompanels</includeArtifactIds>
-									<!-- IMPORTANT: this causes *only* our custom panels to be copied -->
-								</configuration>
-							</execution>
-						</executions>
-					</plugin>
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+                <property>
+                    <name>!environment</name>
+                </property>
+            </activation>
+            <build>
+            </build>
+        </profile>
+        <profile>
+            <id>production</id>
+            <activation>
+                <property>
+                    <name>environment</name>
+                    <value>production</value>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>create-staging-area</id>
+                                <phase>process-resources</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                                <configuration>
+                                    <tasks>
+                                        <copy todir="${staging.dir}">
+                                            <fileset
+                                                dir="${basedir}/src/izpack" />
 
-					<plugin>
-						<groupId>org.codehaus.izpack</groupId>
-						<artifactId>izpack-maven-plugin</artifactId>
-						<version>1.0-alpha-5</version>
-						<executions>
-							<execution>
-								<phase>package</phase>
-								<goals>
-									<goal>izpack</goal>
-								</goals>
-								<configuration>
-									<izpackBasedir>${staging.dir}</izpackBasedir>
-									<installFile>${basedir}/src/izpack/install.xml</installFile>
-								</configuration>
-							</execution>
-						</executions>
-						<dependencies>
-							<dependency>
-								<groupId>org.codehaus.izpack</groupId>
-								<artifactId>izpack-standalone-compiler</artifactId>
-								<version>${izpackVersion}</version>
-							</dependency>
-						</dependencies>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-	</profiles>
+                                        </copy>
+                                        <copy todir="${staging.dir}/conf">
+                                            <fileset
+                                                dir="${basedir}/src/main/conf" />
+                                        </copy>
+                                        <copy todir="${staging.dir}/logs">
+                                            <fileset
+                                                dir="${basedir}/src/main/logs" />
+                                        </copy>
+                                        <copy todir="${staging.dir}/scripts">
+                                            <fileset
+                                                dir="${basedir}/src/main/scripts" />
+                                        </copy>
+                                        <copy todir="${staging.dir}/txt">
+                                            <fileset
+                                                dir="${basedir}/src/main/txt" />
+                                        </copy>
+                                        <copy todir="${staging.dir}/webapp">
+                                            <fileset
+                                                dir="${basedir}/src/main/webapp" />
+                                        </copy>
+                                        <copy todir="${staging.dir}/webapp">
+                                            <fileset
+                                                dir="${basedir}/src/main/webapp" />
+                                        </copy>
+                                        <copy todir="${staging.dir}/lib">
+                                            <fileset
+                                                dir="${basedir}/src/main/lib" />
+                                        </copy>
+                                    </tasks>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <plugin>
+                        <artifactId>maven-dependency-plugin</artifactId>
+                        <configuration>
+                            <excludeTransitive>false</excludeTransitive>
+                            <stripVersion>false</stripVersion>
+                            <overWriteReleases>true</overWriteReleases>
+                            <overWriteSnapshots>true</overWriteSnapshots>
+                            <overWriteIfNewer>true</overWriteIfNewer>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <!-- copy *application* jars to izpack staging 
+                                    lib -->
+                                <id>copy-product-dependencies</id>
+                                <phase>prepare-package</phase>
+                                <goals>
+                                    <goal>copy-dependencies</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>${staging.dir}/lib</outputDirectory>
+                                    <excludeScope>system</excludeScope>
+                                    <!-- this excludes tools.jar, e.g. -->
+                                    <excludeArtifactIds>mycustompanels</excludeArtifactIds>
+                                    <!-- IMPORTANT: don't copy custom panels 
+                                        where our application jars live -->
+                                    <excludeGroupIds>org.codehaus.izpack</excludeGroupIds>
+                                    <!-- IMPORTANT: we don't want to copy 
+                                        the izpack dependency where our application jars live -->
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <!-- copy izpack custom (custom panels, etc.) 
+                                    jars to izpack staging custom -->
+                                <id>copy-izpack-dependencies</id>
+                                <phase>prepare-package</phase>
+                                <goals>
+                                    <goal>copy-dependencies</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>${staging.dir}/custom</outputDirectory>
+                                    <includeArtifactIds>mycustompanels</includeArtifactIds>
+                                    <!-- IMPORTANT: this causes *only* our 
+                                        custom panels to be copied -->
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.codehaus.izpack</groupId>
+                        <artifactId>izpack-maven-plugin</artifactId>
+                        <version>1.0-alpha-5</version>
+                        <executions>
+                            <execution>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>izpack</goal>
+                                </goals>
+                                <configuration>
+                                    <izpackBasedir>${staging.dir}</izpackBasedir>
+                                    <installFile>${basedir}/src/izpack/install.xml</installFile>
+                                </configuration>
+                            </execution>
+                        </executions>
+                        <dependencies>
+                            <dependency>
+                                <groupId>org.codehaus.izpack</groupId>
+                                <artifactId>izpack-standalone-compiler</artifactId>
+                                <version>${izpackVersion}</version>
+                            </dependency>
+                        </dependencies>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
