@@ -16,9 +16,9 @@
   <classpathentry kind="var" path="M2_REPO/javax/persistence/persistence-api/1.0.2/persistence-api-1.0.2.jar" sourcepath="M2_REPO/javax/persistence/persistence-api/1.0.2/persistence-api-1.0.2-sources.jar"/>
   <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
   <classpathentry kind="var" path="M2_REPO/com/esofthead/mycollab/yajsw-wrapper/11.11-SNAPSHOT/yajsw-wrapper-11.11-SNAPSHOT.jar"/>
-  <classpathentry kind="var" path="M2_REPO/com/esofthead/mycollab/yajsw-wrapperApp/11.11-SNAPSHOT/yajsw-wrapperApp-11.11-SNAPSHOT.jar"/>
-  <classpathentry kind="var" path="M2_REPO/com/esofthead/mycollab/abeille-formsrt/11.11-SNAPSHOT/abeille-formsrt-11.11-SNAPSHOT.jar"/>
-  <classpathentry kind="var" path="M2_REPO/commons-cli/commons-cli/2.0-SNAPSHOT/commons-cli-2.0-SNAPSHOT.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/esofthead/mycollab/yajsw-wrapperApp/11.11/yajsw-wrapperApp-11.11.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/esofthead/mycollab/abeille-formsrt/11.11/abeille-formsrt-11.11.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/esofthead/mycollab/commons-cli/1.4/commons-cli-1.4.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/rzo/yajsw/srvmgr/11.11/srvmgr-11.11.jar" sourcepath="M2_REPO/org/rzo/yajsw/srvmgr/11.11/srvmgr-11.11-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/rzo/yajsw/ahessian/11.11/ahessian-11.11.jar" sourcepath="M2_REPO/org/rzo/yajsw/ahessian/11.11/ahessian-11.11-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/rzo/yajsw/hessian4/11.11/hessian4-11.11.jar" sourcepath="M2_REPO/org/rzo/yajsw/hessian4/11.11/hessian4-11.11-sources.jar"/>
@@ -159,7 +159,6 @@
   <classpathentry kind="src" path="/mycollab-web-community"/>
   <classpathentry kind="src" path="/mycollab-web"/>
   <classpathentry kind="src" path="/mycollab-reporting"/>
-  <classpathentry kind="var" path="M2_REPO/net/sourceforge/dynamicreports/dynamicreports-adhoc/3.2.1/dynamicreports-adhoc-3.2.1.jar" sourcepath="M2_REPO/net/sourceforge/dynamicreports/dynamicreports-adhoc/3.2.1/dynamicreports-adhoc-3.2.1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/net/sourceforge/dynamicreports/dynamicreports-core/3.2.1/dynamicreports-core-3.2.1.jar" sourcepath="M2_REPO/net/sourceforge/dynamicreports/dynamicreports-core/3.2.1/dynamicreports-core-3.2.1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/net/sf/jasperreports/jasperreports/5.5.1/jasperreports-5.5.1.jar" sourcepath="M2_REPO/net/sf/jasperreports/jasperreports/5.5.1/jasperreports-5.5.1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/lowagie/itext/2.1.7/itext-2.1.7.jar" sourcepath="M2_REPO/com/lowagie/itext/2.1.7/itext-2.1.7-sources.jar"/>
@@ -168,6 +167,7 @@
   <classpathentry kind="var" path="M2_REPO/org/codehaus/castor/castor/1.2/castor-1.2.jar" sourcepath="M2_REPO/org/codehaus/castor/castor/1.2/castor-1.2-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/net/sf/barcode4j/barcode4j/2.0/barcode4j-2.0.jar" sourcepath="M2_REPO/net/sf/barcode4j/barcode4j/2.0/barcode4j-2.0-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/avalon-framework/avalon-framework-impl/4.2.0/avalon-framework-impl-4.2.0.jar"/>
+  <classpathentry kind="var" path="M2_REPO/net/sourceforge/dynamicreports/dynamicreports-adhoc/3.2.1/dynamicreports-adhoc-3.2.1.jar" sourcepath="M2_REPO/net/sourceforge/dynamicreports/dynamicreports-adhoc/3.2.1/dynamicreports-adhoc-3.2.1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/net/sourceforge/dynamicreports/dynamicreports-googlecharts/3.2.1/dynamicreports-googlecharts-3.2.1.jar" sourcepath="M2_REPO/net/sourceforge/dynamicreports/dynamicreports-googlecharts/3.2.1/dynamicreports-googlecharts-3.2.1-sources.jar"/>
   <classpathentry kind="src" path="/mycollab-esb"/>
   <classpathentry kind="src" path="/mycollab-scheduler"/>
@@ -182,7 +182,7 @@
   <classpathentry kind="var" path="M2_REPO/org/vaadin/addons/buttongroup/2.3/buttongroup-2.3.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/vaadin/addons/popupbutton/2.3.0/popupbutton-2.3.0.jar" sourcepath="M2_REPO/org/vaadin/addons/popupbutton/2.3.0/popupbutton-2.3.0-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/vaadin/addons/ratingstars/2.1/ratingstars-2.1.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/vaadin/addons/dragdroplayouts/1.1/dragdroplayouts-1.1.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/vaadin/addons/dragdroplayouts/1.0.1/dragdroplayouts-1.0.1.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/vaadin/addons/tokenfield/7.0.1/tokenfield-7.0.1.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/vaadin/addons/stylecalendar/2.1.0/stylecalendar-2.1.0.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/vaadin/addon/easyuploads/7.0.3-SNAPSHOT/easyuploads-7.0.3-SNAPSHOT.jar" sourcepath="M2_REPO/org/vaadin/addon/easyuploads/7.0.3-SNAPSHOT/easyuploads-7.0.3-SNAPSHOT-sources.jar"/>

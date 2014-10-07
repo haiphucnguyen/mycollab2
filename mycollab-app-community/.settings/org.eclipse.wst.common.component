@@ -7,13 +7,13 @@
     <dependent-module archiveName="yajsw-wrapper-11.11-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/esofthead/mycollab/yajsw-wrapper/11.11-SNAPSHOT/yajsw-wrapper-11.11-SNAPSHOT.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="yajsw-wrapperApp-11.11-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/esofthead/mycollab/yajsw-wrapperApp/11.11-SNAPSHOT/yajsw-wrapperApp-11.11-SNAPSHOT.jar">
+    <dependent-module archiveName="yajsw-wrapperApp-11.11.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/esofthead/mycollab/yajsw-wrapperApp/11.11/yajsw-wrapperApp-11.11.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="abeille-formsrt-11.11-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/esofthead/mycollab/abeille-formsrt/11.11-SNAPSHOT/abeille-formsrt-11.11-SNAPSHOT.jar">
+    <dependent-module archiveName="abeille-formsrt-11.11.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/esofthead/mycollab/abeille-formsrt/11.11/abeille-formsrt-11.11.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="commons-cli-2.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/commons-cli/commons-cli/2.0-SNAPSHOT/commons-cli-2.0-SNAPSHOT.jar">
+    <dependent-module archiveName="commons-cli-1.4.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/esofthead/mycollab/commons-cli/1.4/commons-cli-1.4.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="srvmgr-11.11.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/rzo/yajsw/srvmgr/11.11/srvmgr-11.11.jar">
@@ -460,9 +460,6 @@
     <dependent-module archiveName="mycollab-reporting.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mycollab-reporting/mycollab-reporting">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="dynamicreports-adhoc-3.2.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/net/sourceforge/dynamicreports/dynamicreports-adhoc/3.2.1/dynamicreports-adhoc-3.2.1.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
     <dependent-module archiveName="dynamicreports-core-3.2.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/net/sourceforge/dynamicreports/dynamicreports-core/3.2.1/dynamicreports-core-3.2.1.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
@@ -485,6 +482,9 @@
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="avalon-framework-impl-4.2.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/avalon-framework/avalon-framework-impl/4.2.0/avalon-framework-impl-4.2.0.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="dynamicreports-adhoc-3.2.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/net/sourceforge/dynamicreports/dynamicreports-adhoc/3.2.1/dynamicreports-adhoc-3.2.1.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="dynamicreports-googlecharts-3.2.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/net/sourceforge/dynamicreports/dynamicreports-googlecharts/3.2.1/dynamicreports-googlecharts-3.2.1.jar">
@@ -529,7 +529,7 @@
     <dependent-module archiveName="ratingstars-2.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/vaadin/addons/ratingstars/2.1/ratingstars-2.1.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="dragdroplayouts-1.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/vaadin/addons/dragdroplayouts/1.1/dragdroplayouts-1.1.jar">
+    <dependent-module archiveName="dragdroplayouts-1.0.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/vaadin/addons/dragdroplayouts/1.0.1/dragdroplayouts-1.0.1.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="tokenfield-7.0.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/vaadin/addons/tokenfield/7.0.1/tokenfield-7.0.1.jar">
