@@ -13,6 +13,8 @@
     <project>mycollab-localization</project>
     <project>mycollab-migration</project>
     <project>mycollab-jackrabbit</project>
+    <project>mycollab-reporting-premium</project>
+    <project>mycollab-reporting</project>
     <project>mycollab-mobile</project>
     <project>mycollab-ui</project>
     <project>mycollab-services-premium</project>
@@ -21,7 +23,6 @@
     <project>mycollab-caching-premium</project>
     <project>mycollab-web-premium</project>
     <project>mycollab-web</project>
-    <project>mycollab-reporting</project>
     <project>mycollab-esb</project>
     <project>mycollab-scheduler</project>
     <project>mycollab-jetty-session-premium</project>
