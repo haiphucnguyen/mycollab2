@@ -40,7 +40,7 @@ import com.esofthead.mycollab.test.service.IntergrationServiceTest;
 @RunWith(SpringJUnit4ClassRunner.class)
 public class ComponentServiceTest extends IntergrationServiceTest {
 
-	private static final DateFormat DF = new SimpleDateFormat(
+	private static final DateFormat dateformat = new SimpleDateFormat(
 			"yyyy-MM-dd hh:mm:ss");
 
 	@Autowired
@@ -65,10 +65,14 @@ public class ComponentServiceTest extends IntergrationServiceTest {
 		assertThat(components).extracting("id", "description", "status",
 				"componentname", "numBugs", "numOpenBugs", "userLeadFullName",
 				"lastupdatedtime").contains(
-				tuple(1, "aaaaaaa", "Open", "com 1", 1, 1, "Nguyen Hai", DF.parse("2014-10-02 06:45:22")),
-				tuple(2, "bbbbbbb", "Closed", "com 2", 2, 1, "Nghiem Le", DF.parse("2014-10-02 07:45:22")),
-				tuple(3, "ccccccc", "Closed", "com 3", 1, 1, "Nguyen Hai", DF.parse("2014-10-03 06:45:22")),
-				tuple(4, "ddddddd", "Open", "com 4", 0, 0, "Nghiem Le", DF.parse("2014-10-02 06:32:22")));
+				tuple(1, "aaaaaaa", "Open", "com 1", 1, 1, "Nguyen Hai",
+						dateformat.parse("2014-10-02 06:45:22")),
+				tuple(2, "bbbbbbb", "Closed", "com 2", 2, 1, "Nghiem Le",
+						dateformat.parse("2014-10-02 07:45:22")),
+				tuple(3, "ccccccc", "Closed", "com 3", 1, 1, "Nguyen Hai",
+						dateformat.parse("2014-10-03 06:45:22")),
+				tuple(4, "ddddddd", "Open", "com 4", 0, 0, "Nghiem Le",
+						dateformat.parse("2014-10-02 06:32:22")));
 	}
 
 	@SuppressWarnings("unchecked")

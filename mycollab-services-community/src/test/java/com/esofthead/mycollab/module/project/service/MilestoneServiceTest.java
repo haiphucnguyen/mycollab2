@@ -40,7 +40,7 @@ import com.esofthead.mycollab.test.service.IntergrationServiceTest;
 @RunWith(SpringJUnit4ClassRunner.class)
 public class MilestoneServiceTest extends IntergrationServiceTest {
 
-	private static final DateFormat DF = new SimpleDateFormat(
+	private static final DateFormat dateformat = new SimpleDateFormat(
 			"yyyy-MM-dd hh:mm:ss");
 
 	@Autowired
@@ -72,7 +72,7 @@ public class MilestoneServiceTest extends IntergrationServiceTest {
 				"createdUserFullName", "createdtime", "ownerFullName",
 				"numTasks", "numOpenTasks", "numBugs", "numOpenBugs").contains(
 				tuple(1, "milestone no1", "Hai Nguyen",
-						DF.parse("2014-10-01 00:00:00"), "Hai Nguyen", 1, 0, 2,
+						dateformat.parse("2014-10-01 00:00:00"), "Hai Nguyen", 1, 0, 2,
 						2));
 	}
 
@@ -89,16 +89,16 @@ public class MilestoneServiceTest extends IntergrationServiceTest {
 				"createdUserFullName", "createdtime", "ownerFullName",
 				"numTasks", "numOpenTasks", "numBugs", "numOpenBugs").contains(
 				tuple(4, "milestone no4", "Nghiem Le",
-						DF.parse("2014-10-04 00:00:00"), "Nghiem Le", 0, 0, 3,
+						dateformat.parse("2014-10-04 00:00:00"), "Nghiem Le", 0, 0, 3,
 						3),
 				tuple(3, "milestone no3", "Nghiem Le",
-						DF.parse("2014-10-03 00:00:00"), "Nghiem Le", 0, 0, 1,
+						dateformat.parse("2014-10-03 00:00:00"), "Nghiem Le", 0, 0, 1,
 						1),
 				tuple(2, "milestone no2", "Hai Nguyen",
-						DF.parse("2014-10-02 00:00:00"), "Hai Nguyen", 5, 0, 0,
+						dateformat.parse("2014-10-02 00:00:00"), "Hai Nguyen", 5, 0, 0,
 						0),
 				tuple(1, "milestone no1", "Hai Nguyen",
-						DF.parse("2014-10-01 00:00:00"), "Hai Nguyen", 1, 0, 2,
+						dateformat.parse("2014-10-01 00:00:00"), "Hai Nguyen", 1, 0, 2,
 						2));
 	}
 
