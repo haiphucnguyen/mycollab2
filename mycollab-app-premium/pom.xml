@@ -233,7 +233,7 @@
                                     <!-- if you don't specify any modules, 
                                         the plugin will find them -->
                                     <modules>
-                                        <!-- <module>com.esofthead.mycollab.widgetset.MyCollabMobileWidgetSet</module> -->
+                                        <module>com.esofthead.mycollab.widgetset.MyCollabMobileWidgetSet</module>
                                         <module>com.esofthead.mycollab.widgetset.MyCollabWidgetSet</module>
                                     </modules>
                                 </configuration>
