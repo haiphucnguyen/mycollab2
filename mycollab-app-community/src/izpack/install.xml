@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
-
-<izpack:installation version="5.0"
-    xmlns:izpack="http://izpack.org/schema/installation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://izpack.org/schema/installation http://izpack.org/schema/5.0/izpack-installation-5.0.xsd">
+<installation version="1.0">
 
     <!-- The info section. The meaning of the tags should be natural ... -->
     <info>
@@ -19,6 +16,10 @@
         It will not be able to change the size. -->
     <guiprefs width="640" height="480" resizable="no">
         <splash>flash_install_8.png</splash>
+
+        <!-- <splash>images/peas_load.gif</splash> -->
+        <modifier key="useHeadingPanel" value="yes" />
+        <modifier key="layoutAnchor" value="CENTER" />
     </guiprefs>
 
     <!-- The locale section. Asks here to include the English and French 
@@ -49,12 +50,30 @@
     <packs>
         <pack name="Base" required="yes">
             <description>The MyCollab core files</description>
-            <file src="conf" targetdir="${INSTALL_PATH}" />
-            <file src="lib" targetdir="${INSTALL_PATH}" />
-            <file src="logs" targetdir="${INSTALL_PATH}" />
-            <fileset dir="scripts" includes="*" targetdir="${INSTALL_PATH}" />
-            <fileset dir="txt" includes="*" targetdir="${INSTALL_PATH}" />
-            <file src="webapp" targetdir="${INSTALL_PATH}" />
+            <file src="conf" targetdir="$INSTALL_PATH" />
+            <file src="lib" targetdir="$INSTALL_PATH" />
+            <file src="logs" targetdir="$INSTALL_PATH" />
+            <fileset dir="scripts" includes="*" targetdir="$INSTALL_PATH/bin" />
+            <fileset dir="txt" includes="*" targetdir="$INSTALL_PATH" />
+            <file src="webapp" targetdir="$INSTALL_PATH" />
+            <executable targetfile="$INSTALL_PATH/bin/installDaemon.sh"
+                stage="never" keep="true" />
+            <executable targetfile="$INSTALL_PATH/bin/installDaemonNoPriv.sh"
+                stage="never" keep="true" />
+            <executable targetfile="$INSTALL_PATH/bin/mycollab.sh"
+                stage="never" keep="true" />
+            <executable targetfile="$INSTALL_PATH/bin/setenv.sh"
+                stage="never" keep="true" />
+            <executable targetfile="$INSTALL_PATH/bin/shutdown.sh"
+                stage="never" keep="true" />
+            <executable targetfile="$INSTALL_PATH/bin/startup.sh"
+                stage="never" keep="true" />
+            <executable targetfile="$INSTALL_PATH/bin/uninstallDaemon.sh"
+                stage="never" keep="true" />
+            <executable targetfile="$INSTALL_PATH/bin/uninstallDaemonNoPriv.sh"
+                stage="never" keep="true" />
+            <executable targetfile="$INSTALL_PATH/bin/wrapper.sh"
+                stage="never" keep="true" />
         </pack>
     </packs>
-</izpack:installation>
+</installation>
