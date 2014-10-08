@@ -9,6 +9,7 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
+import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
@@ -40,7 +41,7 @@ public abstract class StandupReportFormLayoutFactory implements
 	}
 
 	@Override
-	public Layout getLayout() {
+	public ComponentContainer getLayout() {
 		final AddViewLayout reportAddLayout = new AddViewLayout(this.title,
 				MyCollabResource.newResource("icons/24/project/standup.png"));
 
