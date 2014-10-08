@@ -53,7 +53,6 @@ import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.CustomLayout;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.VerticalLayout;
@@ -298,7 +297,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements
 		previewLayout.setHeight("40px");
 		previewLayout.setWidth("520px");
 
-		Image currentLogo = AccountLogoFactory.createAccountLogoImageComponent(
+		Button currentLogo = AccountLogoFactory.createAccountLogoImageComponent(
 				accountTheme.getLogopath(), 150);
 		previewLayout.addComponent(currentLogo, "mainLogo");
 		final ServiceMenu serviceMenu = new ServiceMenu();
