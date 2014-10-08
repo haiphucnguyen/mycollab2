@@ -49,12 +49,12 @@
     <packs>
         <pack name="Base" required="yes">
             <description>The MyCollab core files</description>
-            <file src="conf" targetdir="$INSTALL_PATH" />
-            <file src="lib" targetdir="$INSTALL_PATH" />
-            <file src="logs" targetdir="$INSTALL_PATH" />
-            <fileset dir="scripts" includes="*" targetdir="$INSTALL_PATH" />
-            <fileset dir="txt" includes="*" targetdir="$INSTALL_PATH" />
-            <file src="webapp" targetdir="$INSTALL_PATH" />
+            <file src="conf" targetdir="${INSTALL_PATH}" />
+            <file src="lib" targetdir="${INSTALL_PATH}" />
+            <file src="logs" targetdir="${INSTALL_PATH}" />
+            <fileset dir="scripts" includes="*" targetdir="${INSTALL_PATH}" />
+            <fileset dir="txt" includes="*" targetdir="${INSTALL_PATH}" />
+            <file src="webapp" targetdir="${INSTALL_PATH}" />
         </pack>
     </packs>
 </izpack:installation>
