@@ -168,13 +168,6 @@
             <version>4.5.1</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.codehaus.izpack</groupId>
-            <artifactId>izpack-standalone-compiler</artifactId>
-            <version>${izpackVersion}</version>
-            <scope>provided</scope>
-        </dependency>
-
         <!-- <dependency> <groupId>com.vaadin</groupId> <artifactId>vaadin-client-compiler</artifactId> 
             <version>${vaadinVersion}</version> <scope>provided</scope> </dependency> -->
     </dependencies>
@@ -385,7 +378,7 @@
                     <plugin>
                         <groupId>org.codehaus.izpack</groupId>
                         <artifactId>izpack-maven-plugin</artifactId>
-                        <version>1.0-alpha-5</version>
+                        <version>${izpackVersion}</version>
                         <executions>
                             <execution>
                                 <phase>package</phase>
@@ -401,41 +394,20 @@
                         <dependencies>
                             <dependency>
                                 <groupId>org.codehaus.izpack</groupId>
-                                <artifactId>izpack-standalone-compiler</artifactId>
+                                <artifactId>izpack-compiler</artifactId>
                                 <version>${izpackVersion}</version>
                             </dependency>
                         </dependencies>
                     </plugin>
-                    
-                    <plugin>
-                        <artifactId>maven-antrun-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>create-macos-bundle</id>
-                                <phase>package</phase>
-                                <goals>
-                                    <goal>run</goal>
-                                </goals>
-                                <configuration>
-                                    <tasks>
-                                        <taskdef name="jarbundler"
-                                            classname="net.sourceforge.jarbundler.JarBundler"
-                                            classpathref="maven.plugin.classpath" />
-                                        <jarbundler dir="."
-                                            name="MyCollab" mainclass="com.izforge.izpack.installer.Installer"
-                                            jar="target/mycollab-app-community-4.5.1-standard.jar" />
-                                    </tasks>
-                                </configuration>
-                            </execution>
-                        </executions>
-                        <dependencies>
-                            <dependency>
-                                <groupId>com.esofthead.mycollab</groupId>
-                                <artifactId>jarbundler</artifactId>
-                                <version>2.3.1</version>
-                            </dependency>
-                        </dependencies>
-                    </plugin>
+                    <!-- <plugin> <artifactId>maven-antrun-plugin</artifactId> 
+                        <executions> <execution> <id>create-macos-bundle</id> <phase>package</phase> 
+                        <goals> <goal>run</goal> </goals> <configuration> <tasks> <taskdef name="jarbundler" 
+                        classname="net.sourceforge.jarbundler.JarBundler" classpathref="maven.plugin.classpath" 
+                        /> <jarbundler dir="." name="MyCollab" mainclass="com.izforge.izpack.installer.Installer" 
+                        jar="target/mycollab-app-community-4.5.1-standard.jar" /> </tasks> </configuration> 
+                        </execution> </executions> <dependencies> <dependency> <groupId>com.esofthead.mycollab</groupId> 
+                        <artifactId>jarbundler</artifactId> <version>2.3.1</version> </dependency> 
+                        </dependencies> </plugin> -->
                 </plugins>
             </build>
         </profile>
