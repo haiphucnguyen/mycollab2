@@ -31,5 +31,5 @@ if [ ! -x "$PRGDIR"/"$EXECUTABLE" ]; then
   exit 1
 fi
 
-exec "$PRGDIR"/"$EXECUTABLE" -i -t -y "$conf_file"
+echo exec "$PRGDIR"/"$EXECUTABLE" -i -t "$conf_file"
  

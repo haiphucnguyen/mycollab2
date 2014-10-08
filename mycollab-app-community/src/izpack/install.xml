@@ -33,6 +33,7 @@
     <resources>
         <res id="LicencePanel.licence" src="txt/LICENSE.txt" />
         <res id="InfoPanel.info" src="txt/Release_Notes.txt" />
+        <res id="FinishPanel." src="txt/Release_Notes.txt" />
     </resources>
 
     <!-- The panels section. We indicate here which panels we want to use. 
@@ -44,6 +45,7 @@
         <panel classname="PacksPanel" />
         <panel classname="InstallPanel" />
         <panel classname="FinishPanel" />
+        <panel classname="com.esofthead.mycollab.installer.FinishPanelMessage"/>
     </panels>
 
     <!-- The packs section. We specify here our packs. -->
@@ -53,27 +55,52 @@
             <file src="conf" targetdir="$INSTALL_PATH" />
             <file src="lib" targetdir="$INSTALL_PATH" />
             <file src="logs" targetdir="$INSTALL_PATH" />
-            <fileset dir="scripts" includes="*" targetdir="$INSTALL_PATH/bin" />
+            <fileset dir="scripts" includes="*.gv" targetdir="$INSTALL_PATH/bin" />
+            <fileset dir="scripts" includes="*.sh" targetdir="$INSTALL_PATH/bin">
+                <os family="unix|mac" />
+            </fileset>
+            <fileset dir="scripts" includes="*.bat" targetdir="$INSTALL_PATH/bin">
+                <os family="windows" />
+            </fileset>
             <fileset dir="txt" includes="*" targetdir="$INSTALL_PATH" />
             <file src="webapp" targetdir="$INSTALL_PATH" />
+
             <executable targetfile="$INSTALL_PATH/bin/installDaemon.sh"
-                stage="never" keep="true" />
+                stage="never" keep="true">
+                <os family="unix|mac" />
+            </executable>
             <executable targetfile="$INSTALL_PATH/bin/installDaemonNoPriv.sh"
-                stage="never" keep="true" />
+                stage="never" keep="true">
+                <os family="unix|mac" />
+            </executable>
             <executable targetfile="$INSTALL_PATH/bin/mycollab.sh"
-                stage="never" keep="true" />
+                stage="never" keep="true">
+                <os family="unix|mac" />
+            </executable>
             <executable targetfile="$INSTALL_PATH/bin/setenv.sh"
-                stage="never" keep="true" />
+                stage="never" keep="true">
+                <os family="unix|mac" />
+            </executable>
             <executable targetfile="$INSTALL_PATH/bin/shutdown.sh"
-                stage="never" keep="true" />
+                stage="never" keep="true">
+                <os family="unix|mac" />
+            </executable>
             <executable targetfile="$INSTALL_PATH/bin/startup.sh"
-                stage="never" keep="true" />
+                stage="never" keep="true">
+                <os family="unix|mac" />
+            </executable>
             <executable targetfile="$INSTALL_PATH/bin/uninstallDaemon.sh"
-                stage="never" keep="true" />
+                stage="never" keep="true">
+                <os family="unix|mac" />
+            </executable>
             <executable targetfile="$INSTALL_PATH/bin/uninstallDaemonNoPriv.sh"
-                stage="never" keep="true" />
+                stage="never" keep="true">
+                <os family="unix|mac" />
+            </executable>
             <executable targetfile="$INSTALL_PATH/bin/wrapper.sh"
-                stage="never" keep="true" />
+                stage="never" keep="true">
+                <os family="unix|mac" />
+            </executable>
         </pack>
     </packs>
 </installation>
