@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
 
-<installation version="1.0">
+<izpack:installation version="5.0"
+    xmlns:izpack="http://izpack.org/schema/installation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://izpack.org/schema/installation http://izpack.org/schema/5.0/izpack-installation-5.0.xsd">
 
     <!-- The info section. The meaning of the tags should be natural ... -->
     <info>
@@ -17,19 +19,6 @@
         It will not be able to change the size. -->
     <guiprefs width="640" height="480" resizable="no">
         <splash>flash_install_8.png</splash>
-
-        <!-- <splash>images/peas_load.gif</splash> -->
-        <laf name="substance">
-            <os family="windows" />
-            <os family="unix" />
-            <param name="variant" value="mist-silver" />
-        </laf>
-        <laf name="substance">
-            <os family="mac" />
-            <param name="variant" value="mist-aqua" />
-        </laf>
-        <modifier key="useHeadingPanel" value="yes" />
-        <modifier key="layoutAnchor" value="CENTER" />
     </guiprefs>
 
     <!-- The locale section. Asks here to include the English and French 
@@ -68,5 +57,4 @@
             <file src="webapp" targetdir="$INSTALL_PATH" />
         </pack>
     </packs>
-
-</installation>
+</izpack:installation>
