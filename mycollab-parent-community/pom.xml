@@ -18,6 +18,7 @@
         <vaadinVersion>7.3.2</vaadinVersion>
         <jettyVersion>9.2.3.v20140905</jettyVersion>
         <mysqlVersion>5.1.32</mysqlVersion>
+        <camelVersion>2.14.0</camelVersion>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.inceptionYear>2011</project.inceptionYear>
     </properties>
@@ -204,6 +205,19 @@
             <version>${servletVersion}</version>
         </dependency>
 
+        <!-- Camel dependency -->
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-core</artifactId>
+            <version>${camelVersion}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-spring</artifactId>
+            <version>${camelVersion}</version>
+        </dependency>
+
     </dependencies>
     <build>
         <plugins>
@@ -291,4 +305,10 @@
             <url>https://raw.githubusercontent.com/esofthead/mycollab-maven-repo/master</url>
         </repository>
     </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>mycollab-plugin-repo</id>
+            <url>https://raw.githubusercontent.com/esofthead/mycollab-maven-repo/master</url>
+        </pluginRepository>
+    </pluginRepositories>
 </project>
