@@ -45,6 +45,7 @@ public class MessageListPresenter
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		super.onGo(container, data);
+		doSearch((MessageSearchCriteria) data.getParams());
 		AppContext.addFragment(ProjectLinkGenerator
 				.generateMessagesLink(CurrentProjectVariables.getProjectId()),
 				AppContext.getMessage(MessageI18nEnum.VIEW_LIST_TITLE));

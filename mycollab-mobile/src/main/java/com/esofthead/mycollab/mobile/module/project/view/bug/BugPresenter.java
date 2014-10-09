@@ -54,13 +54,11 @@ public class BugPresenter extends AbstractMobilePresenter<BugContainer> {
 
 		if (data instanceof BugScreenData.Search) {
 			presenter = PresenterResolver.getPresenter(BugListPresenter.class);
-			// } else if (data instanceof BugScreenData.Add
-			// || data instanceof BugScreenData.Edit) {
-			// presenter =
-			// PresenterResolver.getPresenter(BugAddPresenter.class);
-			// } else if (data instanceof BugScreenData.Read) {
-			// presenter =
-			// PresenterResolver.getPresenter(BugReadPresenter.class);
+		} else if (data instanceof BugScreenData.Add
+				|| data instanceof BugScreenData.Edit) {
+			presenter = PresenterResolver.getPresenter(BugAddPresenter.class);
+		} else if (data instanceof BugScreenData.Read) {
+			presenter = PresenterResolver.getPresenter(BugReadPresenter.class);
 			// } else if (data == null) {
 			// BugSearchCriteria criteria = new BugSearchCriteria();
 			// criteria.setProjectId(new
@@ -74,7 +72,7 @@ public class BugPresenter extends AbstractMobilePresenter<BugContainer> {
 			throw new MyCollabException("Do not support screen data");
 		}
 
-		presenter.go(view, data);
+		presenter.go(container, data);
 	}
 
 }

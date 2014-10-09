@@ -11,9 +11,9 @@ import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.MassUpdateWindow;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.vaadin.ui.Alignment;
+import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
 
 /**
@@ -48,7 +48,7 @@ public class MassUpdateRiskWindow extends MassUpdateWindow<Risk> {
 		private GridFormLayoutHelper informationLayout;
 
 		@Override
-		public Layout getLayout() {
+		public ComponentContainer getLayout() {
 			VerticalLayout formLayout = new VerticalLayout();
 
 			Label organizationHeader = new Label("Risk Information");

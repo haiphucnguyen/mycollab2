@@ -498,6 +498,7 @@ div.v-button-link, div.v-button-link:focus, .v-button-link:active, div.v-disable
 .v-buttongroup .v-button.v-button-middle {
    /*  border-width: 1px 0px 1px 0px; */
     border-radius: 0px;
+    width: 100%;
 }
 .v-buttongroup .v-button.v-button-middle .v-button-wrap{
     border-left:1px solid #8F8F8F;
