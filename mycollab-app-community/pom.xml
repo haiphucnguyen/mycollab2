@@ -231,25 +231,10 @@
             </plugin>
 
             <!-- START SNIPPET: assembly -->
-            <!-- 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <configuration>
-                    <descriptors>
-                        <descriptor>src/main/assembly/src.xml</descriptor>
-                    </descriptors>
-                </configuration>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            -->
+            <!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-assembly-plugin</artifactId> 
+                <configuration> <descriptors> <descriptor>src/main/assembly/src.xml</descriptor> 
+                </descriptors> </configuration> <executions> <execution> <phase>package</phase> 
+                <goals> <goal>single</goal> </goals> </execution> </executions> </plugin> -->
             <!-- END SNIPPET: assembly -->
         </plugins>
 
@@ -349,6 +334,7 @@
                                 <configuration>
                                     <izpackBasedir>${staging.dir}</izpackBasedir>
                                     <installFile>${basedir}/src/izpack/install.xml</installFile>
+                                    <customPanelDirectory>${staging.dir}</customPanelDirectory>
                                 </configuration>
                             </execution>
                         </executions>
@@ -360,6 +346,49 @@
                             </dependency>
                         </dependencies>
                     </plugin>
+
+                    <plugin>
+                        <groupId>com.akathist.maven.plugins.launch4j</groupId>
+                        <artifactId>launch4j-maven-plugin</artifactId>
+                        <version>1.6</version>
+                        <executions>
+                            <execution>
+                                <id>l4j-clui</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>launch4j</goal>
+                                </goals>
+                                <configuration>
+                                    <headerType>gui</headerType>
+                                    <jar>target/mycollab-app-community-4.5.1-standard.jar</jar>
+                                    <outfile>target/MyCollab-Installer.exe</outfile>
+                                    <downloadUrl>http://java.com/download</downloadUrl>
+                                    <classPath>
+                                        <mainClass>com.izforge.izpack.installer.Installer</mainClass>
+                                        <preCp>anything</preCp>
+                                    </classPath>
+                                    <icon>application.ico</icon>
+                                    <jre>
+                                        <minVersion>1.7.0</minVersion>
+                                        <jdkPreference>preferJre</jdkPreference>
+                                    </jre>
+                                    <versionInfo>
+                                        <fileVersion>4.5.2</fileVersion>
+                                        <txtFileVersion>4.5.2</txtFileVersion>
+                                        <fileDescription>${project.name}</fileDescription>
+                                        <copyright>©2014, MyCollab</copyright>
+                                        <productVersion>4.5.2</productVersion>
+                                        <txtProductVersion>4.5.2</txtProductVersion>
+                                        <productName>MyCollab</productName>
+                                        <companyName>MyCollab</companyName>
+                                        <internalName>MyCollab</internalName>
+                                        <originalFilename>MyCollab</originalFilename>
+                                    </versionInfo>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-antrun-plugin</artifactId>

@@ -33,7 +33,6 @@
     <resources>
         <res id="LicencePanel.licence" src="txt/LICENSE.txt" />
         <res id="InfoPanel.info" src="txt/Release_Notes.txt" />
-        <res id="FinishPanel." src="txt/Release_Notes.txt" />
     </resources>
 
     <!-- The panels section. We indicate here which panels we want to use. 
@@ -45,7 +44,6 @@
         <panel classname="PacksPanel" />
         <panel classname="InstallPanel" />
         <panel classname="FinishPanel" />
-        <panel classname="com.esofthead.mycollab.installer.FinishPanelMessage"/>
     </panels>
 
     <!-- The packs section. We specify here our packs. -->
