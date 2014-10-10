@@ -265,7 +265,7 @@
                     </execution>
                 </executions>
             </plugin>
-            <!-- 
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -274,7 +274,7 @@
                     <argLine>${argLine}</argLine>
                 </configuration>
             </plugin>
-            -->
+
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
