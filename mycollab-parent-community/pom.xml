@@ -265,6 +265,7 @@
                     </execution>
                 </executions>
             </plugin>
+            <!-- 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -273,10 +274,11 @@
                     <argLine>${argLine}</argLine>
                 </configuration>
             </plugin>
+            -->
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.7.2.201409121644</version>
+                <version>0.5.8.201207111220</version>
                 <executions>
                     <execution>
                         <goals>
