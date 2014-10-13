@@ -63,7 +63,8 @@ public class AmazonRawContentServiceImpl implements RawContentService {
 			s3client.putObject(request
 					.withCannedAcl(CannedAccessControlList.PublicRead));
 		} catch (Exception e) {
-			throw new RuntimeException(e);
+			throw new RuntimeException("Can not save s3 object path "
+					+ objectPath, e);
 		}
 	}
 
@@ -77,17 +78,18 @@ public class AmazonRawContentServiceImpl implements RawContentService {
 
 			return obj.getObjectContent();
 		} catch (Exception e) {
-			throw new MyCollabException(e);
+			throw new MyCollabException(
+					"Can not get s3 resource " + objectPath, e);
 		}
 	}
 
 	@Override
-	public void removePath(String object) {
+	public void removePath(String objectPath) {
 		AmazonS3 s3client = storageConfiguration.newS3Client();
 
 		try {
 			ObjectListing listObjects = s3client.listObjects(
-					storageConfiguration.getBucket(), object);
+					storageConfiguration.getBucket(), objectPath);
 			for (S3ObjectSummary objectSummary : listObjects
 					.getObjectSummaries()) {
 				s3client.deleteObject(storageConfiguration.getBucket(),
@@ -95,7 +97,8 @@ public class AmazonRawContentServiceImpl implements RawContentService {
 			}
 
 		} catch (Exception e) {
-			throw new MyCollabException(e);
+			throw new MyCollabException("Can not remove object path "
+					+ objectPath, e);
 		}
 	}
 
@@ -125,7 +128,8 @@ public class AmazonRawContentServiceImpl implements RawContentService {
 			}
 
 		} catch (Exception e) {
-			throw new MyCollabException(e);
+			throw new MyCollabException("Can not remane from path " + oldPath
+					+ " to " + newPath, e);
 		}
 
 	}
@@ -152,7 +156,7 @@ public class AmazonRawContentServiceImpl implements RawContentService {
 			return size;
 
 		} catch (Exception e) {
-			throw new MyCollabException(e);
+			throw new MyCollabException("Can not get size of path " + path, e);
 		}
 	}
 }
