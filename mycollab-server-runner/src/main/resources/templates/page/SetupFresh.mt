@@ -3,7 +3,7 @@
 <html style="height: 100%;">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="icon" href="https://www.mycollab.com/favicon.ico" type="image/x-icon">
+<link rel="icon" href="${defaultUrls.app_url}assets/favicon.ico" type="image/x-icon">
 <link rel="shortcut icon" href="${defaultUrls.app_url}assets/favicon.ico" type="image/x-icon">
 <link rel="stylesheet" type="text/css" href="${defaultUrls.app_url}assets/css/cssVelocityPage.css">
 <style media="screen" type="text/css">
@@ -403,7 +403,7 @@ h3 {
 		      	 	if(data.length > 0){
 		      	 		if (data == "smtpError")
 		      	 		{
-		      	 			alert("Something was WRONG with SMTP. You can change your config later in mycollab.properties.");
+		      	 			alert("Something was wrong with SMTP parameters. You should check them again or You can change your config later in mycollab.properties.");
 		      	 			$('#post').html('<span>Update & Go</span>');
 		      	 			window.location.assign("/");
 		      	 		}
@@ -413,7 +413,7 @@ h3 {
 		      	 		}
 		      	 		
 		      	 	}else{
-		      	 		alert("Setting up finished. Redirect to app.");
+		      	 		alert("Setup finished. Redirect to app?");
 		      	 		$('#post').html('<span>Update & Go</span>');
 		      	 		window.location.assign("/");
 		      	 	}

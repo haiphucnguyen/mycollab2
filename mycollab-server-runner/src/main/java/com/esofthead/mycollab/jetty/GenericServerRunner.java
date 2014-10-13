@@ -165,7 +165,7 @@ public abstract class GenericServerRunner {
 							+ " and complete the steps to install MyCollab.");
 			installationContextHandler = new ServletContextHandler(
 					ServletContextHandler.SESSIONS);
-			// installationContextHandler.setContextPath("/");
+			installationContextHandler.setContextPath("/");
 
 			install = new InstallationServlet();
 			installationContextHandler.addServlet(new ServletHolder(install),
@@ -327,14 +327,15 @@ public abstract class GenericServerRunner {
 							}
 						}
 
-						install.setWaitFlag(false);
 						WebAppContext appContext = initWebAppContext();
 						contexts.addHandler(appContext);
-//						try {
-//							server.setHandler(contexts);
-//						} catch (Exception e) {
-//							log.error("Error while restarting server", e);
-//						}
+						try {
+							appContext.start();
+						} catch (Exception e) {
+							log.error("Error while starting server", e);
+						}
+						install.setWaitFlag(false);
+						contexts.removeHandler(installationContextHandler);
 					}
 				}
 			};
