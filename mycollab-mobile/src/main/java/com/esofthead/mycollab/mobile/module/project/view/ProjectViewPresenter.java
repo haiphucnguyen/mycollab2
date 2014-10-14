@@ -117,7 +117,8 @@ public class ProjectViewPresenter extends AbstractPresenter<ProjectView> {
 				ProjectMemberScreenData.Search.class,
 				ProjectMemberScreenData.Add.class,
 				ProjectMemberScreenData.InviteProjectMembers.class,
-				ProjectMemberScreenData.Read.class)) {
+				ProjectMemberScreenData.Read.class,
+				ProjectMemberScreenData.Edit.class)) {
 			presenter = PresenterResolver
 					.getPresenter(ProjectUserPresenter.class);
 		} else {

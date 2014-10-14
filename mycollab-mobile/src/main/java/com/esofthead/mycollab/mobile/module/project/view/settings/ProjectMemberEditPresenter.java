@@ -7,7 +7,6 @@ import com.esofthead.mycollab.mobile.shell.events.ShellEvent;
 import com.esofthead.mycollab.mobile.ui.AbstractMobilePresenter;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
-import com.esofthead.mycollab.module.project.i18n.MilestoneI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -68,8 +67,7 @@ public class ProjectMemberEditPresenter extends
 					"project/user/edit/"
 							+ GenericLinkUtils.encodeParam(new Object[] {
 									CurrentProjectVariables.getProjectId(),
-									member.getId() }),
-					AppContext.getMessage(MilestoneI18nEnum.FORM_NEW_TITLE));
+									member.getId() }), member.getDisplayName());
 		} else {
 			NotificationUtil.showMessagePermissionAlert();
 		}

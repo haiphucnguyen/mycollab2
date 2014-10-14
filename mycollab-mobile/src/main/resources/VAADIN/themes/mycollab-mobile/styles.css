@@ -58,12 +58,18 @@ html {
 .v-app input,
 .v-app button,
 .v-app textarea,
+.v-app select,
+.v-app option,
 .v-window input,
 .v-window button,
 .v-window textarea,
+.v-window select,
+.v-window option,
 .v-popupview-popup input,
 .v-popupview-popup button,
 .v-popupview-popup textarea,
+.v-popupview-popup select,
+.v-popupview-popup option,
 .v-filterselect-suggestpopup,
 .v-datefield-popup,
 .v-datefield-calendarpanel-header button,
@@ -1106,6 +1112,31 @@ div.v-vertical > .v-spacing, div.v-vertical > .v-expand > .v-spacing {
 .mycollab-mobile .member-list .list-item.member-row .member-info .user-name {
   font-size: 1.2rem;
   color: #959595;
+}
+.mycollab-mobile .member-edit-view .v-touchkit-componentgroup-row-full > .v-caption {
+  color: #060606;
+  text-align: right;
+  line-height: 2rem;
+  padding-right: 1rem;
+  overflow: hidden;
+}
+.mycollab-mobile .member-edit-view .v-touchkit-componentgroup-row .v-caption,
+.mycollab-mobile .member-edit-view .v-touchkit-componentgroup-cell > * {
+  margin: 1.3rem 0rem;
+}
+.mycollab-mobile .member-edit-view .v-touchkit-componentgroup-row-full > .v-touchkit-componentgroup-cell {
+  flex: 2 1 0%;
+}
+.mycollab-mobile .member-edit-view .editview-layout .v-label.h2 {
+  border-bottom: none;
+}
+.mycollab-mobile .member-edit-view .v-touchkit-verticalcomponentgroup {
+  box-shadow: none;
+  border-color: #dddddd;
+  margin: 0px;
+}
+.mycollab-mobile .member-edit-view .v-touchkit-verticalcomponentgroup .v-touchkit-componentgroup-row:before {
+  border-color: #dddddd;
 }
 .mycollab-mobile .milestones-list-view .milestones-list .list-item {
   padding: 1rem 1.4rem;

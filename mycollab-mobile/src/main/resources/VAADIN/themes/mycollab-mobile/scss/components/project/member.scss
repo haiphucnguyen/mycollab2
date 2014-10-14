@@ -21,4 +21,31 @@
 			}
 		}
 	}
+	.member-edit-view {
+		.v-touchkit-componentgroup-row-full > .v-caption {
+			color: $black-caption;
+			text-align: right;
+			line-height: 2rem;
+			padding-right: 1rem;
+			overflow: hidden;
+		}
+		.v-touchkit-componentgroup-row .v-caption,
+		.v-touchkit-componentgroup-cell > * {
+			margin: 1.3rem 0rem;
+		}
+		.v-touchkit-componentgroup-row-full > .v-touchkit-componentgroup-cell {
+			flex: 2 1 0%;
+		}
+		.editview-layout .v-label.h2 {
+			border-bottom: none;
+		}
+		.v-touchkit-verticalcomponentgroup {
+			box-shadow: none;
+			border-color: $light-gray-border;
+			margin: 0px;
+			.v-touchkit-componentgroup-row:before {
+				border-color: $light-gray-border;
+			}
+		}
+	}
 }
