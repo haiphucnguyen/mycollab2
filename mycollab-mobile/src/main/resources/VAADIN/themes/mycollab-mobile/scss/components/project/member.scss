@@ -21,7 +21,7 @@
 			}
 		}
 	}
-	.member-edit-view {
+	.member-edit-view, .member-invite-view {
 		.v-touchkit-componentgroup-row-full > .v-caption {
 			color: $black-caption;
 			text-align: right;
@@ -35,6 +35,10 @@
 		}
 		.v-touchkit-componentgroup-row-full > .v-touchkit-componentgroup-cell {
 			flex: 2 1 0%;
+		}
+		.v-touchkit-componentgroup-row:before {
+			left: 0px;
+			right: 0px;
 		}
 		.editview-layout .v-label.h2 {
 			border-bottom: none;

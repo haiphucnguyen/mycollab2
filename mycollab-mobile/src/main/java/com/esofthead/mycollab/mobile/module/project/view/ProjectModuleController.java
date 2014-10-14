@@ -521,6 +521,20 @@ public class ProjectModuleController extends AbstractController {
 			}
 
 		});
+		this.register(new ApplicationEventListener<ProjectMemberEvent.GotoInviteMembers>() {
+
+			private static final long serialVersionUID = -5406170172080742351L;
+
+			@Subscribe
+			@Override
+			public void handle(ProjectMemberEvent.GotoInviteMembers event) {
+				ProjectMemberScreenData.InviteProjectMembers data = new ProjectMemberScreenData.InviteProjectMembers();
+				ProjectUserPresenter presenter = PresenterResolver
+						.getPresenter(ProjectUserPresenter.class);
+				presenter.go(navManager, data);
+			}
+
+		});
 	}
 
 	public static void doLogin(String username, String password,

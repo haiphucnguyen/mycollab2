@@ -28,6 +28,7 @@ public class UserUrlResolver extends ProjectUrlResolver {
 		this.addSubResolver("list", new ListUrlResolver());
 		this.addSubResolver("preview", new PreviewUrlResolver());
 		this.addSubResolver("edit", new EditUrlResolver());
+		this.addSubResolver("invite", new InviteUrlResolver());
 	}
 
 	private static class ListUrlResolver extends ProjectUrlResolver {
@@ -79,6 +80,21 @@ public class UserUrlResolver extends ProjectUrlResolver {
 			PageActionChain chain = new PageActionChain(
 					new ProjectScreenData.Goto(projectId),
 					new ProjectMemberScreenData.Edit(member));
+			EventBusFactory.getInstance().post(
+					new ProjectEvent.GotoMyProject(this, chain));
+		}
+	}
+
+	private static class InviteUrlResolver extends ProjectUrlResolver {
+		@Override
+		protected void handlePage(String... params) {
+			UrlTokenizer token = new UrlTokenizer(params[0]);
+
+			int projectId = token.getInt();
+
+			PageActionChain chain = new PageActionChain(
+					new ProjectScreenData.Goto(projectId),
+					new ProjectMemberScreenData.InviteProjectMembers());
 			EventBusFactory.getInstance().post(
 					new ProjectEvent.GotoMyProject(this, chain));
 		}
