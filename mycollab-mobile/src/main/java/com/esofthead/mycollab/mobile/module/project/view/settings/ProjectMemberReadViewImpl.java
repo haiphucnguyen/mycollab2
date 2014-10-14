@@ -98,12 +98,9 @@ public class ProjectMemberReadViewImpl extends
 					memberRole = beanItem.getRoleName();
 				}
 				return new DefaultFormViewFieldFactory.FormViewField(memberRole);
-			} else if (propertyId.equals("numOpenBugs")) {
+			} else if (propertyId.equals("email")) {
 				return new DefaultFormViewFieldFactory.FormViewField(
-						beanItem.getNumOpenBugs() + "");
-			} else if (propertyId.equals("numOpenTasks")) {
-				return new DefaultFormViewFieldFactory.FormViewField(
-						beanItem.getNumOpenTasks() + "");
+						beanItem.getEmail());
 			}
 			return null;
 		}

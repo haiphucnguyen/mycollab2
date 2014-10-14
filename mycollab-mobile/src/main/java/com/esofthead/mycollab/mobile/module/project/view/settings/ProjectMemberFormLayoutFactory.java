@@ -31,7 +31,7 @@ public class ProjectMemberFormLayoutFactory implements IFormLayoutFactory {
 		header.setStyleName("h2");
 		layout.addComponent(header);
 
-		this.informationLayout = new GridFormLayoutHelper(1, 4, "100%",
+		this.informationLayout = new GridFormLayoutHelper(1, 3, "100%",
 				"150px", Alignment.TOP_LEFT);
 		this.informationLayout.getLayout().setWidth("100%");
 		this.informationLayout.getLayout().addStyleName("colored-gridlayout");
@@ -48,18 +48,14 @@ public class ProjectMemberFormLayoutFactory implements IFormLayoutFactory {
 			this.informationLayout.addComponent(field,
 					AppContext.getMessage(ProjectMemberI18nEnum.FORM_USER), 0,
 					0);
-		} else if (propertyId.equals("roleName")) {
+		} else if (propertyId.equals("email")) {
 			this.informationLayout.addComponent(field,
 					AppContext.getMessage(ProjectMemberI18nEnum.FORM_ROLE), 0,
 					1);
-		} else if (propertyId.equals("numOpenBugs")) {
+		} else if (propertyId.equals("roleName")) {
 			this.informationLayout.addComponent(field,
-					AppContext.getMessage(ProjectMemberI18nEnum.M_FORM_OPEN_BUG), 0,
-					2);
-		} else if (propertyId.equals("numOpenTasks")) {
-			this.informationLayout.addComponent(field,
-					AppContext.getMessage(ProjectMemberI18nEnum.M_FORM_OPEN_TASK),
-					0, 3);
+					AppContext.getMessage(ProjectMemberI18nEnum.M_FORM_EMAIL),
+					0, 2);
 		}
 	}
 
