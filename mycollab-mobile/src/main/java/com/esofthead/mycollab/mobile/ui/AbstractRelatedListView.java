@@ -14,15 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-mobile.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.mobile.module.crm.ui;
+package com.esofthead.mycollab.mobile.ui;
 
 import java.util.HashSet;
 import java.util.Set;
 
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
-import com.esofthead.mycollab.mobile.ui.AbstractMobilePageView;
-import com.esofthead.mycollab.mobile.ui.AbstractPagedBeanList;
 import com.esofthead.mycollab.vaadin.ui.IRelatedListHandlers;
 import com.esofthead.mycollab.vaadin.ui.RelatedListHandler;
 import com.vaadin.ui.Component;
@@ -68,7 +66,7 @@ public abstract class AbstractRelatedListView<T, S extends SearchCriteria>
 		}
 	}
 
-	protected void fireSelectedRelatedItems(final Set selectedItems) {
+	public void fireSelectedRelatedItems(final Set selectedItems) {
 		if (handlers != null) {
 			for (final RelatedListHandler handler : handlers) {
 				handler.selectAssociateItems(selectedItems);

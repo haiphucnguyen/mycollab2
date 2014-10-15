@@ -365,7 +365,7 @@ div.v-vertical > .v-spacing, div.v-vertical > .v-expand > .v-spacing {
 }
 .mycollab-mobile .v-touchkit-navpanel-wrapper .v-touchkit-tabbar-toolbar .v-button .v-button-wrap {
   font-size: 1.3rem;
-  line-height: 1;
+  line-height: 1.6rem;
 }
 .mycollab-mobile .v-touchkit-navpanel-wrapper .v-touchkit-tabbar-toolbar .v-button .v-button-wrap span[data-icon]:before {
   font-size: 2.1rem;
@@ -532,7 +532,7 @@ div.v-vertical > .v-spacing, div.v-vertical > .v-expand > .v-spacing {
 }
 .mycollab-mobile .v-touchkit-navpanel-wrapper .mobilenavview .v-touchkit-navview-toolbar .v-button .v-button-wrap {
   font-size: 1.3rem;
-  line-height: 1;
+  line-height: 1.6rem;
 }
 .mycollab-mobile .v-touchkit-navpanel-wrapper .mobilenavview .v-touchkit-navview-toolbar .v-button .v-button-wrap span[data-icon]:before {
   font-size: 2.1rem;
