@@ -701,6 +701,45 @@ div.v-vertical > .v-spacing, div.v-vertical > .v-expand > .v-spacing {
   position: relative;
   display: inline-block;
 }
+.mycollab-mobile .readview-layout .v-touchkit-verticalcomponentgroup, .mycollab-mobile .editview-layout .v-touchkit-verticalcomponentgroup {
+  box-shadow: none;
+  border-color: #dddddd;
+  border-top: none;
+  margin: 0px;
+}
+.mycollab-mobile .readview-layout .v-touchkit-verticalcomponentgroup .v-touchkit-componentgroup-row:before, .mycollab-mobile .editview-layout .v-touchkit-verticalcomponentgroup .v-touchkit-componentgroup-row:before {
+  border-color: #dddddd;
+  left: 0px;
+  right: 0px;
+}
+.mycollab-mobile .readview-layout .v-touchkit-verticalcomponentgroup .v-touchkit-componentgroup-row .v-caption, .mycollab-mobile .editview-layout .v-touchkit-verticalcomponentgroup .v-touchkit-componentgroup-row .v-caption {
+  margin: 1.3rem 0rem;
+}
+.mycollab-mobile .readview-layout .v-touchkit-verticalcomponentgroup .v-touchkit-componentgroup-row.v-touchkit-componentgroup-row-full > .v-caption, .mycollab-mobile .editview-layout .v-touchkit-verticalcomponentgroup .v-touchkit-componentgroup-row.v-touchkit-componentgroup-row-full > .v-caption {
+  color: #060606;
+  text-align: right;
+  line-height: 2rem;
+  padding-right: 1rem;
+  overflow: hidden;
+}
+.mycollab-mobile .readview-layout .v-touchkit-verticalcomponentgroup .v-touchkit-componentgroup-row.v-touchkit-componentgroup-row-full > .v-touchkit-componentgroup-cell, .mycollab-mobile .editview-layout .v-touchkit-verticalcomponentgroup .v-touchkit-componentgroup-row.v-touchkit-componentgroup-row-full > .v-touchkit-componentgroup-cell {
+  flex: 2 1 0%;
+}
+.mycollab-mobile .readview-layout .v-touchkit-verticalcomponentgroup .v-touchkit-componentgroup-cell > *, .mycollab-mobile .editview-layout .v-touchkit-verticalcomponentgroup .v-touchkit-componentgroup-cell > * {
+  margin: 1.3rem 0rem;
+}
+.mycollab-mobile .readview-layout .v-touchkit-verticalcomponentgroup .v-textfield, .mycollab-mobile .editview-layout .v-touchkit-verticalcomponentgroup .v-textfield {
+  height: auto;
+}
+.mycollab-mobile .readview-layout .v-touchkit-verticalcomponentgroup .v-textfield:focus,
+.mycollab-mobile .readview-layout .v-touchkit-verticalcomponentgroup .v-textarea:focus,
+.mycollab-mobile .readview-layout .v-touchkit-verticalcomponentgroup .v-touchkit-numberfield:focus,
+.mycollab-mobile .readview-layout .v-touchkit-verticalcomponentgroup .v-filterselect-input:focus, .mycollab-mobile .editview-layout .v-touchkit-verticalcomponentgroup .v-textfield:focus,
+.mycollab-mobile .editview-layout .v-touchkit-verticalcomponentgroup .v-textarea:focus,
+.mycollab-mobile .editview-layout .v-touchkit-verticalcomponentgroup .v-touchkit-numberfield:focus,
+.mycollab-mobile .editview-layout .v-touchkit-verticalcomponentgroup .v-filterselect-input:focus {
+  box-shadow: none;
+}
 .mycollab-mobile .readview-layout .gridform-field .v-button-wrap {
   text-align: left;
   padding: 0px;
@@ -1112,36 +1151,6 @@ div.v-vertical > .v-spacing, div.v-vertical > .v-expand > .v-spacing {
 .mycollab-mobile .member-list .list-item.member-row .member-info .user-name {
   font-size: 1.2rem;
   color: #959595;
-}
-.mycollab-mobile .member-edit-view .v-touchkit-componentgroup-row-full > .v-caption, .mycollab-mobile .member-invite-view .v-touchkit-componentgroup-row-full > .v-caption {
-  color: #060606;
-  text-align: right;
-  line-height: 2rem;
-  padding-right: 1rem;
-  overflow: hidden;
-}
-.mycollab-mobile .member-edit-view .v-touchkit-componentgroup-row .v-caption,
-.mycollab-mobile .member-edit-view .v-touchkit-componentgroup-cell > *, .mycollab-mobile .member-invite-view .v-touchkit-componentgroup-row .v-caption,
-.mycollab-mobile .member-invite-view .v-touchkit-componentgroup-cell > * {
-  margin: 1.3rem 0rem;
-}
-.mycollab-mobile .member-edit-view .v-touchkit-componentgroup-row-full > .v-touchkit-componentgroup-cell, .mycollab-mobile .member-invite-view .v-touchkit-componentgroup-row-full > .v-touchkit-componentgroup-cell {
-  flex: 2 1 0%;
-}
-.mycollab-mobile .member-edit-view .v-touchkit-componentgroup-row:before, .mycollab-mobile .member-invite-view .v-touchkit-componentgroup-row:before {
-  left: 0px;
-  right: 0px;
-}
-.mycollab-mobile .member-edit-view .editview-layout .v-label.h2, .mycollab-mobile .member-invite-view .editview-layout .v-label.h2 {
-  border-bottom: none;
-}
-.mycollab-mobile .member-edit-view .v-touchkit-verticalcomponentgroup, .mycollab-mobile .member-invite-view .v-touchkit-verticalcomponentgroup {
-  box-shadow: none;
-  border-color: #dddddd;
-  margin: 0px;
-}
-.mycollab-mobile .member-edit-view .v-touchkit-verticalcomponentgroup .v-touchkit-componentgroup-row:before, .mycollab-mobile .member-invite-view .v-touchkit-verticalcomponentgroup .v-touchkit-componentgroup-row:before {
-  border-color: #dddddd;
 }
 .mycollab-mobile .milestones-list-view .milestones-list .list-item {
   padding: 1rem 1.4rem;

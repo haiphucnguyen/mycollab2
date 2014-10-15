@@ -51,7 +51,6 @@ public class ProjectMemberInviteViewImpl extends AbstractMobilePageView
 		this.addStyleName("member-invite-view");
 		this.setCaption(AppContext
 				.getMessage(ProjectMemberI18nEnum.FORM_NEW_TITLE));
-		roleId = 0;
 
 		constructUI();
 	}
@@ -102,8 +101,6 @@ public class ProjectMemberInviteViewImpl extends AbstractMobilePageView
 
 		permissionsPanel = new VerticalComponentGroup();
 		mainLayout.addComponent(permissionsPanel);
-
-		displayRolePermission(roleId);
 
 		Button inviteBtn = new Button(
 				AppContext.getMessage(ProjectMemberI18nEnum.BUTTON_NEW_INVITEE),
@@ -163,6 +160,17 @@ public class ProjectMemberInviteViewImpl extends AbstractMobilePageView
 			}
 		}
 
+	}
+
+	@Override
+	public void display() {
+		roleId = 0;
+
+		displayRolePermission(roleId);
+		inviteEmailField.setValue("");
+		messageArea
+				.setValue(AppContext
+						.getMessage(ProjectMemberI18nEnum.MSG_DEFAULT_INVITATION_COMMENT));
 	}
 
 }

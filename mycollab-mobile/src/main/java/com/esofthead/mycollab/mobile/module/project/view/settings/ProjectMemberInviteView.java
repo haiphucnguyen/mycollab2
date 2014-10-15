@@ -8,4 +8,5 @@ import com.esofthead.mycollab.vaadin.mvp.PageView;
  * @since 4.5.2
  */
 public interface ProjectMemberInviteView extends PageView {
+	void display();
 }

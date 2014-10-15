@@ -516,6 +516,47 @@
 				}				
 			}
 		}
+		
+		.v-touchkit-verticalcomponentgroup {
+			box-shadow: none;
+			border-color: $light-gray-border;
+			border-top: none;
+			margin: 0px;
+			.v-touchkit-componentgroup-row { 
+				&:before {
+					border-color: $light-gray-border;
+					left: 0px;
+					right: 0px;
+				}
+				.v-caption {
+					margin: 1.3rem 0rem;
+				}
+				&.v-touchkit-componentgroup-row-full {
+					& > .v-caption {
+						color: $black-caption;
+						text-align: right;
+						line-height: 2rem;
+						padding-right: 1rem;
+						overflow: hidden;
+					}
+					& > .v-touchkit-componentgroup-cell {
+						flex: 2 1 0%;
+					}
+				}
+			}
+			.v-touchkit-componentgroup-cell > * {
+				margin: 1.3rem 0rem;
+			}
+			.v-textfield {
+				height: auto;
+			}
+			.v-textfield:focus,
+			.v-textarea:focus,
+			.v-touchkit-numberfield:focus,
+			.v-filterselect-input:focus {
+				box-shadow: none;
+			}
+		}
 	}
 
 	.readview-layout {

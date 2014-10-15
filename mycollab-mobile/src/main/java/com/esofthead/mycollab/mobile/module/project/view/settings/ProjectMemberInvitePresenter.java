@@ -69,7 +69,7 @@ public class ProjectMemberInvitePresenter extends
 		if (CurrentProjectVariables
 				.canWrite(ProjectRolePermissionCollections.USERS)) {
 			super.onGo(container, data);
-
+			view.display();
 			AppContext
 					.addFragment(
 							"project/user/invite/"
