@@ -58,6 +58,7 @@ public class MilestoneReadViewImpl extends
 
 	private ProjectCommentListDisplay associateComments;
 	private MilestoneRelatedBugView associateBugs;
+	private MilestoneRelatedTaskView associateTasks;
 
 	@Override
 	public HasPreviewFormHandlers<SimpleMilestone> getPreviewFormHandlers() {
@@ -111,25 +112,6 @@ public class MilestoneReadViewImpl extends
 		toolbarLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 		toolbarLayout.setSpacing(true);
 
-		Button relatedComments = new Button();
-		relatedComments.setCaption("<span aria-hidden=\"true\" data-icon=\""
-				+ IconConstants.PROJECT_MESSAGE
-				+ "\"></span><div class=\"screen-reader-text\">"
-				+ AppContext.getMessage(ProjectCommonI18nEnum.TAB_COMMENT)
-				+ "</div>");
-		relatedComments.setHtmlContentAllowed(true);
-		relatedComments.addClickListener(new Button.ClickListener() {
-
-			private static final long serialVersionUID = 2206489649468573076L;
-
-			@Override
-			public void buttonClick(ClickEvent arg0) {
-				EventBusFactory.getInstance().post(
-						new ShellEvent.PushView(this, associateComments));
-			}
-		});
-		toolbarLayout.addComponent(relatedComments);
-
 		Button relatedBugs = new Button();
 		relatedBugs.setCaption("<span aria-hidden=\"true\" data-icon=\""
 				+ IconConstants.PROJECT_BUG
@@ -149,6 +131,44 @@ public class MilestoneReadViewImpl extends
 		});
 		toolbarLayout.addComponent(relatedBugs);
 
+		Button relatedTasks = new Button();
+		relatedTasks.setCaption("<span aria-hidden=\"true\" data-icon=\""
+				+ IconConstants.PROJECT_TASK
+				+ "\"></span><div class=\"screen-reader-text\">"
+				+ AppContext.getMessage(ProjectCommonI18nEnum.VIEW_TASK)
+				+ "</div>");
+		relatedTasks.setHtmlContentAllowed(true);
+		relatedTasks.addClickListener(new Button.ClickListener() {
+
+			private static final long serialVersionUID = -9171495386840452500L;
+
+			@Override
+			public void buttonClick(ClickEvent arg0) {
+				EventBusFactory.getInstance().post(
+						new ShellEvent.PushView(this, getRelatedTasks()));
+			}
+		});
+		toolbarLayout.addComponent(relatedTasks);
+
+		Button relatedComments = new Button();
+		relatedComments.setCaption("<span aria-hidden=\"true\" data-icon=\""
+				+ IconConstants.PROJECT_MESSAGE
+				+ "\"></span><div class=\"screen-reader-text\">"
+				+ AppContext.getMessage(ProjectCommonI18nEnum.TAB_COMMENT)
+				+ "</div>");
+		relatedComments.setHtmlContentAllowed(true);
+		relatedComments.addClickListener(new Button.ClickListener() {
+
+			private static final long serialVersionUID = 2206489649468573076L;
+
+			@Override
+			public void buttonClick(ClickEvent arg0) {
+				EventBusFactory.getInstance().post(
+						new ShellEvent.PushView(this, associateComments));
+			}
+		});
+		toolbarLayout.addComponent(relatedComments);
+
 		return toolbarLayout;
 	}
 
@@ -157,6 +177,13 @@ public class MilestoneReadViewImpl extends
 			associateBugs = new MilestoneRelatedBugView();
 		associateBugs.displayBugs(beanItem);
 		return associateBugs;
+	}
+
+	private MilestoneRelatedTaskView getRelatedTasks() {
+		if (associateTasks == null)
+			associateTasks = new MilestoneRelatedTaskView();
+		associateTasks.displayTasks(beanItem);
+		return associateTasks;
 	}
 
 	private class MilestoneFormFieldFactory extends
