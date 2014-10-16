@@ -1,9 +1,12 @@
 package com.esofthead.vaadin.mobilecomponent.client.ui;
 
+import java.util.logging.Logger;
+
 import com.esofthead.vaadin.mobilecomponent.MobileNavigationManager;
 import com.esofthead.vaadin.mobilecomponent.client.VMobileNavigationManager;
 import com.esofthead.vaadin.mobilecomponent.client.shared.MobileNavigationManagerState;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.event.logical.shared.AttachEvent;
 import com.google.gwt.event.logical.shared.AttachEvent.Handler;
 import com.google.gwt.event.logical.shared.ResizeEvent;
@@ -14,6 +17,8 @@ import com.google.gwt.user.client.ui.Widget;
 import com.vaadin.addon.touchkit.gwt.client.vcom.navigation.NavigationManagerConnector;
 import com.vaadin.client.ComponentConnector;
 import com.vaadin.client.communication.StateChangeEvent;
+import com.vaadin.client.ui.layout.ElementResizeEvent;
+import com.vaadin.client.ui.layout.ElementResizeListener;
 import com.vaadin.shared.ui.Connect;
 
 @Connect(MobileNavigationManager.class)
@@ -23,6 +28,9 @@ public class MobileNavigationManagerConnector extends
 	private static final long serialVersionUID = 2649671282085312270L;
 
 	private HandlerRegistration resizeHandlerRegistration;
+
+	public static Logger logger = Logger
+			.getLogger(MobileNavigationManagerConnector.class.getName());
 
 	@Override
 	protected Widget createWidget() {
@@ -53,7 +61,9 @@ public class MobileNavigationManagerConnector extends
 			getWidget().setNavigationMenu(null);
 		}
 
-		getWidget().beResponsive();
+		if (stateChangeEvent.hasPropertyChanged("navigationMenu")) {
+			getWidget().beResponsive();
+		}
 
 		super.onStateChanged(stateChangeEvent);
 	}
@@ -71,9 +81,6 @@ public class MobileNavigationManagerConnector extends
 			VMobileNavigationManager.IS_TABLET = false;
 
 		getWidget().beResponsive();
-
-		this.getLayoutManager().setNeedsMeasureRecursively(this);
-
 	}
 
 	@Override
@@ -83,6 +90,34 @@ public class MobileNavigationManagerConnector extends
 		} else {
 			resizeHandlerRegistration.removeHandler();
 		}
+	}
+
+	private final ElementResizeListener listener = new ElementResizeListener() {
+		public void onElementResize(ElementResizeEvent e) {
+			Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
+
+				@Override
+				public void execute() {
+					MobileNavigationManagerConnector.this.getLayoutManager()
+							.setNeedsMeasureRecursively(
+									MobileNavigationManagerConnector.this);
+				}
+			});
+
+		}
+	};
+
+	@Override
+	protected void init() {
+		getLayoutManager().addElementResizeListener(
+				getWidget().getViewContainer(), listener);
+	}
+
+	@Override
+	public void onUnregister() {
+		super.onUnregister();
+		getLayoutManager().removeElementResizeListener(
+				getWidget().getViewContainer(), listener);
 	}
 
 }

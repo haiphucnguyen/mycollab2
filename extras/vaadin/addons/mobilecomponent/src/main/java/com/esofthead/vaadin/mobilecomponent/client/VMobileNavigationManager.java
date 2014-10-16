@@ -2,6 +2,7 @@ package com.esofthead.vaadin.mobilecomponent.client;
 
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.dom.client.DivElement;
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.client.Window;
@@ -28,6 +29,7 @@ public class VMobileNavigationManager extends VNavigationManager {
 		super();
 
 		content = getElement().cast();
+
 		wrapper = new SimplePanel();
 		wrapper.setStylePrimaryName("v-mobilecomponent");
 
@@ -37,6 +39,10 @@ public class VMobileNavigationManager extends VNavigationManager {
 		wrapper.getElement().appendChild(content);
 
 		setElement(wrapper.getElement());
+	}
+
+	public Element getViewContainer() {
+		return content;
 	}
 
 	public void setNavigationMenu(Widget widget) {
