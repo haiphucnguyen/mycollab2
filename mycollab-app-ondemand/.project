@@ -15,8 +15,6 @@
     <project>mycollab-jackrabbit</project>
     <project>mycollab-esb-ondemand</project>
     <project>mycollab-services-ondemand</project>
-    <project>mycollab-api</project>
-    <project>mycollab-api-impl</project>
     <project>mycollab-servlet-ondemand</project>
     <project>mycollab-caching-premium</project>
     <project>mycollab-web-premium</project>
@@ -27,6 +25,8 @@
     <project>mycollab-scheduler</project>
     <project>mycollab-web-ondemand</project>
     <project>mycollab-jetty-session-premium</project>
+    <project>mycollab-api</project>
+    <project>mycollab-api-impl</project>
     <project>mycollab-mobile</project>
     <project>mycollab-scheduler-ondemand</project>
     <project>mycollab-search</project>

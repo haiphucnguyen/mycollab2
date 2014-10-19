@@ -48,7 +48,7 @@ Version 4.5.2
 ** Library Upgrades
 
 * Upgrade Spring framework to 4.1.1.RELEASE
-* Upgrade Vaadin to 7.3.2
+* Upgrade Vaadin to 7.3.3
 * Upgrade Camel to 2.14.0
 
 **New Features**
@@ -66,6 +66,8 @@ Version 4.5.2
 * Revise the localization and date format associate to locale. It helps external developers can translate MyCollab to other languages easily
 * Refactor the test module, using assertJ and JUnit TestRule instead of the custom JUnitClassRunner to make unit tests more flexible in enhancements
 * Minor bug fixes and new features for mobile
+* Remove remote resources in setup assets. User can install MyCollab in their LAN network, we do not need an internet connection requires
+* Remove the warning message of Jackrabbit
 
 **Bug Fixes**
 
@@ -73,6 +75,8 @@ Version 4.5.2
 * Search time logging throws exception in several special input cases
 * Fix NPE exception when there is several options has null value
 * Minor bug fixes for file module
+* Fix issue of can not reload the web context when we upgrade Jetty to 9.2.3
+* Fix migration scripts could be failed with several MySQL versions
 
 Version 4.5.1
 -----------------------------

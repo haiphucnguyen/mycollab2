@@ -13,8 +13,6 @@
     <project>mycollab-localization</project>
     <project>mycollab-migration</project>
     <project>mycollab-jackrabbit</project>
-    <project>mycollab-api</project>
-    <project>mycollab-api-impl</project>
     <project>mycollab-web</project>
     <project>mycollab-ui</project>
     <project>mycollab-reporting</project>
