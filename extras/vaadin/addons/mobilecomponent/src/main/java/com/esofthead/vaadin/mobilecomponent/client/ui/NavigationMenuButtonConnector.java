@@ -2,6 +2,7 @@ package com.esofthead.vaadin.mobilecomponent.client.ui;
 
 import com.esofthead.vaadin.mobilecomponent.NavigationMenuButton;
 import com.esofthead.vaadin.mobilecomponent.client.VMobileNavigationManager;
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Widget;
@@ -21,6 +22,10 @@ public class NavigationMenuButtonConnector extends AbstractExtensionConnector {
 
 			@Override
 			public void onClick(ClickEvent event) {
+				if (!w.getElement().equals(
+						Element.as(event.getNativeEvent().getEventTarget())))
+					return;
+
 				Widget parent = w.getParent();
 				while (parent != null) {
 					if (parent instanceof VMobileNavigationManager) {
