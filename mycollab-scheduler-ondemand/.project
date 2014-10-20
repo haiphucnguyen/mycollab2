@@ -13,8 +13,6 @@
     <project>mycollab-migration</project>
     <project>mycollab-jackrabbit</project>
     <project>mycollab-services-ondemand</project>
-    <project>mycollab-api</project>
-    <project>mycollab-api-impl</project>
     <project>mycollab-scheduler</project>
   </projects>
   <buildSpec>

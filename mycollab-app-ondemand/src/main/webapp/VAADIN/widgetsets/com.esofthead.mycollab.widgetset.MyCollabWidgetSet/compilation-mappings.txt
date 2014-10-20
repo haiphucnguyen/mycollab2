@@ -1,4 +1,4 @@
-0FD91225E29D60AD67B5D202588B0A1D.cache.js
+A343457FECAF064DC77C477D7E9CFB59.cache.js
 ClientBundle.enableInlining true
 audioElementSupport maybe
 canvasElementSupport maybe
@@ -6,7 +6,7 @@ compiler.emulatedStack false
 compiler.predeclare.cross.fragment.references false
 compiler.stackMode native
 compiler.useSourceMaps false
-compiler.useSymbolMaps false
+compiler.useSymbolMaps true
 dragEventSupport maybe
 geolocationSupport maybe
 gwt.enableDebugId false
@@ -31,7 +31,7 @@ vaadin.profiler false
 videoElementSupport maybe
 webApiUsage modern
 
-0FD91225E29D60AD67B5D202588B0A1D.cache.js
+A343457FECAF064DC77C477D7E9CFB59.cache.js
 ClientBundle.enableInlining true
 audioElementSupport maybe
 canvasElementSupport maybe
@@ -39,7 +39,7 @@ compiler.emulatedStack false
 compiler.predeclare.cross.fragment.references false
 compiler.stackMode native
 compiler.useSourceMaps false
-compiler.useSymbolMaps false
+compiler.useSymbolMaps true
 dragEventSupport maybe
 geolocationSupport maybe
 gwt.enableDebugId false
@@ -64,7 +64,7 @@ vaadin.profiler false
 videoElementSupport maybe
 webApiUsage modern
 
-0FD91225E29D60AD67B5D202588B0A1D.cache.js
+A343457FECAF064DC77C477D7E9CFB59.cache.js
 ClientBundle.enableInlining true
 audioElementSupport maybe
 canvasElementSupport maybe
@@ -72,7 +72,7 @@ compiler.emulatedStack false
 compiler.predeclare.cross.fragment.references false
 compiler.stackMode native
 compiler.useSourceMaps false
-compiler.useSymbolMaps false
+compiler.useSymbolMaps true
 dragEventSupport maybe
 geolocationSupport maybe
 gwt.enableDebugId false
@@ -97,7 +97,7 @@ vaadin.profiler false
 videoElementSupport maybe
 webApiUsage modern
 
-0FD91225E29D60AD67B5D202588B0A1D.cache.js
+A343457FECAF064DC77C477D7E9CFB59.cache.js
 ClientBundle.enableInlining true
 audioElementSupport no
 canvasElementSupport no
@@ -105,7 +105,7 @@ compiler.emulatedStack false
 compiler.predeclare.cross.fragment.references false
 compiler.stackMode native
 compiler.useSourceMaps false
-compiler.useSymbolMaps false
+compiler.useSymbolMaps true
 dragEventSupport no
 geolocationSupport maybe
 gwt.enableDebugId false
@@ -130,7 +130,7 @@ vaadin.profiler false
 videoElementSupport no
 webApiUsage modern
 
-0FD91225E29D60AD67B5D202588B0A1D.cache.js
+A343457FECAF064DC77C477D7E9CFB59.cache.js
 ClientBundle.enableInlining true
 audioElementSupport maybe
 canvasElementSupport maybe
@@ -138,7 +138,7 @@ compiler.emulatedStack false
 compiler.predeclare.cross.fragment.references false
 compiler.stackMode native
 compiler.useSourceMaps false
-compiler.useSymbolMaps false
+compiler.useSymbolMaps true
 dragEventSupport maybe
 geolocationSupport maybe
 gwt.enableDebugId false
@@ -163,7 +163,7 @@ vaadin.profiler false
 videoElementSupport maybe
 webApiUsage modern
 
-0FD91225E29D60AD67B5D202588B0A1D.cache.js
+A343457FECAF064DC77C477D7E9CFB59.cache.js
 ClientBundle.enableInlining true
 audioElementSupport maybe
 canvasElementSupport maybe
@@ -171,7 +171,7 @@ compiler.emulatedStack false
 compiler.predeclare.cross.fragment.references false
 compiler.stackMode native
 compiler.useSourceMaps false
-compiler.useSymbolMaps false
+compiler.useSymbolMaps true
 dragEventSupport maybe
 geolocationSupport maybe
 gwt.enableDebugId false
@@ -196,7 +196,7 @@ vaadin.profiler false
 videoElementSupport maybe
 webApiUsage modern
 
-0FD91225E29D60AD67B5D202588B0A1D.cache.js
+A343457FECAF064DC77C477D7E9CFB59.cache.js
 ClientBundle.enableInlining true
 audioElementSupport maybe
 canvasElementSupport maybe
@@ -204,7 +204,7 @@ compiler.emulatedStack false
 compiler.predeclare.cross.fragment.references false
 compiler.stackMode native
 compiler.useSourceMaps false
-compiler.useSymbolMaps false
+compiler.useSymbolMaps true
 dragEventSupport maybe
 geolocationSupport maybe
 gwt.enableDebugId false
