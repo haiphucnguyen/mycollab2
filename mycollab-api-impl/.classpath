@@ -15,7 +15,7 @@
   <classpathentry kind="var" path="M2_REPO/javax/jcr/jcr/2.0/jcr-2.0.jar" sourcepath="M2_REPO/javax/jcr/jcr/2.0/jcr-2.0-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/javax/mail/mail/1.4.5/mail-1.4.5.jar" sourcepath="M2_REPO/javax/mail/mail/1.4.5/mail-1.4.5-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/javax/persistence/persistence-api/1.0.2/persistence-api-1.0.2.jar" sourcepath="M2_REPO/javax/persistence/persistence-api/1.0.2/persistence-api-1.0.2-sources.jar"/>
-  <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JDK 1.7.0_25"/>
+  <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
   <classpathentry kind="src" path="/mycollab-core"/>
   <classpathentry kind="src" path="/mycollab-test"/>
   <classpathentry kind="var" path="M2_REPO/junit/junit/4.11/junit-4.11.jar" sourcepath="M2_REPO/junit/junit/4.11/junit-4.11-sources.jar"/>
