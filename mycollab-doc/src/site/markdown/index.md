@@ -9,7 +9,7 @@ MyCollab has bundle three existing modules: Project Management, CRM and Document
 
 #### [Download and use MyCollab for free](download.html)
 
-[!["Hello World"](images/slides/macbook_1.png)](screenshots.html)
+[!["MyCollab Screenshots"](images/slides/macbook_1.png)](screenshots.html)
 
 Stable, high performance, and secure system that is accessible over all devices with the same experience.
 
@@ -37,6 +37,10 @@ We use MyCollab in our daily jobs to manage our customers information, projects.
 ---
 
 ### MyCollab News
+* **Oct 20th, 2014: MyCollab 4.5.2 released**
+
+    This release focus to the stability, ease of installation, upgrade third-party libraries versions, and compact the size of distribution. See the [release notes](release-notes.html) for more information.
+
 * **Sep 23th, 2014: MyCollab 4.5.1 released**
 
     This release  is an incremental feature release based on and compatible with earlier stable MyCollab releases. See the [release notes](release-notes.html) for more information.

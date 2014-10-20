@@ -4,13 +4,13 @@ We do very hard to make the installation ease for you. If you need any help duri
 
 ### System Requirements
 * **Java Runtime Environment 7+**: If you do not have installed java, you can get it here [http://java.com/en/download/index.jsp] (http://java.com/en/download/index.jsp), you should use the latest java version.
-* **MySQL database, version 5.5**: If you do not have installed MySQL instance, you can get it here [http://www.mysql.com/](http://www.mysql.com/), MyCollab is tested against MySQL 5.5, 5.6 and any higher version of MySQL in market.
+* **MySQL database, version 5.5+**: If you do not have installed MySQL instance, you can get it here [http://www.mysql.com/](http://www.mysql.com/), MyCollab is tested against MySQL 5.5, 5.6 and any higher version of MySQL in market.
 * **RAM**: you must have at least 2 GB RAM available
 
 ### Steps to installation
 
-#### Unzip binary files
-You go to MyCollab SourceForge site [https://sourceforge.net/projects/mycollab/files/?source=navbar]( https://sourceforge.net/projects/mycollab/files/?source=navbar) and select the latest version of MyCollab distribution of binary file. Download MyCollab binary to your computer and unzip it under your favorite folder. Here is screenshot we download MyCollab binary and unzip in a Window folder
+#### Download the installer file for your operating system
+You go to MyCollab SourceForge site [https://sourceforge.net/projects/mycollab/files/?source=navbar]( https://sourceforge.net/projects/mycollab/files/?source=navbar) and select the latest version of MyCollab distribution of binary file. To help you easy to install MyCollab, we have bundled MyCollab into many different formats associates to every popular platform: Windows, MacOS, Linux
 
 !["MyCollab Binary folder"](http://mycollab_assets.s3.amazonaws.com/wiki/installation/mycollab_binary_folder.png "MyCollab Binary Folder")
 
