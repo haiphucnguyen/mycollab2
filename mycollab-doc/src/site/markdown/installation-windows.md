@@ -1,26 +1,29 @@
-## Installation Guideline
-
-We do very hard work to make the installation ease for you. If you need any help during installation process, please send us a request via our form [https://www.mycollab.com/contact](https://www.mycollab.com/contact), we will try response to you as soon as possible. If there is any missing in our guidelines, we will update this page per your feedback to help our instruction precise and easy for all cases.
+## Install MyCollab on Windows
 
 ### System Requirements
-Check the system requirements at [here](requirements.html)
+Check the system requirements at [here](installation.html#System_Requirements)
 
 ### Steps to installation
 
-#### Unzip binary files
-You go to MyCollab SourceForge site [https://sourceforge.net/projects/mycollab/files/?source=navbar]( https://sourceforge.net/projects/mycollab/files/?source=navbar) and select the latest version of MyCollab distribution of binary file. Download MyCollab binary to your computer and unzip it under your favorite folder. Here is screenshot we download MyCollab binary and unzip in a Window folder
+#### Download and execute Windows installer
+You go to MyCollab SourceForge site [https://sourceforge.net/projects/mycollab/files/?source=navbar]( https://sourceforge.net/projects/mycollab/files/?source=navbar), select the latest version of MyCollab distribution of Windows installer file. Its format would be MyCollab-Installer-xxx.exe (xxx is the MyCollab version number). After downloading MyCollab, click the execution file to run the installer. MyCollab will display the install wizard to help you select the right folder to install MyCollab binary files
 
-!["MyCollab Binary folder"](http://mycollab_assets.s3.amazonaws.com/wiki/installation/mycollab_binary_folder.png "MyCollab Binary Folder")
+!["Select the target path"](https://farm6.staticflickr.com/5606/15411192540_5641f0abb7_o.png)
 
 #### Create database schema
 MyCollab needs a database to run, you must create a MySQL schema by following command:
 
-*CREATE SCHEMA "mycollab_live" DEFAULT CHARACTER SET utf8mb4 ;*
+*CREATE SCHEMA mycollab_live DEFAULT CHARACTER SET utf8mb4 ;*
 
 **Note**: We use character set uft8mb4 instead of utf8, you can review the difference of them at [http://dev.mysql.com/doc/refman/5.5/en/charset-unicode-utf8mb4.html](http://dev.mysql.com/doc/refman/5.5/en/charset-unicode-utf8mb4.html)
 
 #### Run MyCollab
-Open your terminal, go to MyCollab folder and click **startup.bat** (On Windows) or **startup.sh** (on Unix, MacOS). MyCollab will start service, and you open the browser then type [http://serveraddress:8080](http://serveraddress:8080) to setup MyCollab
+Open the terminal and navigate to MyCollab bin folder. You run the startup.sh script,
+MyCollab will start the service
+
+!["MyCollab bin folder"](https://farm4.staticflickr.com/3939/15594183111_ef24130822_b.jpg).
+
+You open the browser then type [http://serveraddress:8080](http://serveraddress:8080) to setup MyCollab
 
 MyCollab will show the installation page ask you several inputs to help you install MyCollab easily
 
