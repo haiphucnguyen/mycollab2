@@ -9,7 +9,7 @@ MyCollab has bundle three existing modules: Project Management, CRM and Document
 
 #### [Download and use MyCollab for free](download.html)
 
-[!["MyCollab Screenshots"](images/slides/macbook_1.png)](screenshots.html)
+[!["MyCollab Screenshots"](https://farm4.staticflickr.com/3954/15597971672_b43b82369c_b.jpg)](screenshots.html)
 
 Stable, high performance, and secure system that is accessible over all devices with the same experience.
 

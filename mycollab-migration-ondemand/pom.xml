@@ -6,7 +6,7 @@
     <artifactId>mycollab-migration-ondemand</artifactId>
     <parent>
         <groupId>com.esofthead.mycollab</groupId>
-        <artifactId>parent-community</artifactId>
+        <artifactId>parent-ondemand</artifactId>
         <version>4.5.2</version>
         <relativePath>../mycollab-parent-ondemand/pom.xml</relativePath>
     </parent>

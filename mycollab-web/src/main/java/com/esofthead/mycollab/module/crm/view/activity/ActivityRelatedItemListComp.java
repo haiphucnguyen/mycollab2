@@ -118,9 +118,9 @@ public class ActivityRelatedItemListComp extends
 				TaskI18nEnum.TABLE_TYPE_HEADER, "eventType",
 				UIConstants.TABLE_S_LABEL_WIDTH), new TableViewField(
 				TaskI18nEnum.FORM_START_DATE, "startDate",
-				UIConstants.TABLE_DATE_WIDTH), new TableViewField(
+				UIConstants.TABLE_DATE_TIME_WIDTH), new TableViewField(
 				TaskI18nEnum.TABLE_END_DATE_HEADER, "endDate",
-				UIConstants.TABLE_DATE_WIDTH)));
+				UIConstants.TABLE_DATE_TIME_WIDTH)));
 
 		tableItem.addTableListener(new TableClickListener() {
 			private static final long serialVersionUID = 1L;

@@ -1,14 +1,22 @@
-## Install MyCollab on Windows
+## Install MyCollab on Unix/Linux
 
 ### System Requirements
 Check the system requirements at [here](installation.html#System_Requirements)
 
 ### Steps to installation
 
-#### Download and execute Windows installer
-You go to MyCollab SourceForge site [https://sourceforge.net/projects/mycollab/files/?source=navbar]( https://sourceforge.net/projects/mycollab/files/?source=navbar), select the latest version of MyCollab distribution of Windows installer file. Its format would be MyCollab-Installer-xxx.exe (xxx is the MyCollab version number). After downloading MyCollab, click the execution file to run the installer. MyCollab will display the install wizard to help you select the right folder to install MyCollab binary files
+#### Download and execute the generic java installer
+You go to MyCollab SourceForge site [https://sourceforge.net/projects/mycollab/files/?source=navbar]( https://sourceforge.net/projects/mycollab/files/?source=navbar), select the latest version of MyCollab java installer. Its format would be MyCollab-Generic-xxx.jar (xxx is the MyCollab version number). After downloading MyCollab, open the terminal then type
 
-!["Select the target path"](https://farm6.staticflickr.com/5606/15411192540_5641f0abb7_o.png)
+*java -jar MyCollab-Generic-xxx.jar*
+
+MyCollab will display the install wizard to help you select the right folder to install MyCollab binary files
+
+!["Accept the license"](https://farm6.staticflickr.com/5610/14977099473_47c9c352dd_b.jpg)
+
+**Note**: If you want to install MyCollab in the headless mode OS, i.e without the graphic user interface, you can ask MyCollab installer run in the console mode
+
+*java -jar MyCollab-Generic-xxx.jar -console*
 
 #### Create database schema
 MyCollab needs a database to run, you must create a MySQL schema by following command:
@@ -18,10 +26,8 @@ MyCollab needs a database to run, you must create a MySQL schema by following co
 **Note**: We use character set uft8mb4 instead of utf8, you can review the difference of them at [http://dev.mysql.com/doc/refman/5.5/en/charset-unicode-utf8mb4.html](http://dev.mysql.com/doc/refman/5.5/en/charset-unicode-utf8mb4.html)
 
 #### Run MyCollab
-Open the terminal and navigate to MyCollab bin folder. You run the startup.sh script,
+Go to the MyCollab installation folder, and navigate to bin folder. You click to the startup.sh script,
 MyCollab will start the service
-
-!["MyCollab bin folder"](https://farm4.staticflickr.com/3939/15594183111_ef24130822_b.jpg).
 
 You open the browser then type [http://serveraddress:8080](http://serveraddress:8080) to setup MyCollab
 

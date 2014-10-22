@@ -2,7 +2,13 @@
 
 ##Version 4.5.2
 
-###New Features
+**Library Upgrades**
+
+* Upgrade Spring framework to 4.1.1.RELEASE
+* Upgrade Vaadin to 7.3.3
+* Upgrade Camel to 2.14.0
+
+**New Features**
 
 * Make the new MyCollab installer for every platform: Windows, MacOS, Linux
 * Install MyCollab as window service
@@ -16,13 +22,14 @@
 * Add more unit tests for crm, content, project services and use assertj instead of standard junit assert statements
 * Revise the localization and date format associate to locale. It helps external developers can translate MyCollab to other languages easily
 * Refactor the test module, using assertJ and JUnit TestRule instead of the custom JUnitClassRunner to make unit tests more flexible in enhancements
-* Minor bug fixes and new features for mobile edition
 * Remove remote resources in setup assets. User can install MyCollab in their LAN network, we do not need an internet connection requires
 * Remove the warning message of Jackrabbit
 
 **Bug Fixes**
 
-* Project Notification can not be sent in some special cases
+* Project Notification can not be sent in several special cases
+* Minor bug fixes and new features for mobile edition
+* Can not save audit log in several special cases
 * Search time logging throws exception in several special input cases
 * Fix NPE exception when there is several options has null value
 * Minor bug fixes for file module

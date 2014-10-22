@@ -10,13 +10,11 @@ MyCollab 4.5.2 focuses to enhance the project architect, testing and simplify th
 
 See the full [Release Notes](release-notes.html) for more details
 
-* Sources: [MyCollab-4.5.2-src](https://github.com/esofthead/mycollab/archive/Release_4.5.1.zip) (19.9 MB)
-* ![Window ](http://www.dragondisk.com/images/download-s3-client-backup-windows.png) 
-
-  [MyCollab-4.5.2-dist.zip](https://github.com/esofthead/mycollab/releases/download/Release_4.5.1/mycollab-dist-4.5.1.zip) (137.4 MB)  
-    [Installation Guideline](install-windows.html)
-* MacOS Installer: [MyCollab-4.5.2-dist.zip](https://github.com/esofthead/mycollab/releases/download/Release_4.5.1/mycollab-dist-4.5.1.zip) (137.4 MB)
-* Generic Archieve Installer: [MyCollab-4.5.2-dist.zip](https://github.com/esofthead/mycollab/releases/download/Release_4.5.1/mycollab-dist-4.5.1.zip) (137.4 MB)
+* Sources: [MyCollab-4.5.2-src](https://github.com/esofthead/mycollab/archive/Release_4.5.2.zip) (11.2 MB)
+* Binaries:
+    * Windows: [MyCollab-Installer-4.5.2.exe](a) - [Installation Guideline](installation-windows.html)
+    * MacOS: [MyCollab-MacOS-4.5.2.app.zip](b) - [Installation Guideline](installation-mac.html)
+    * Linux: [MyCollab-Generic-4.5.2.jar](c) - [Installation Guideline](installation-generic.html)
 
 ### Release Archive
 
