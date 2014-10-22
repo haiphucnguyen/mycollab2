@@ -22,6 +22,7 @@ import com.esofthead.mycollab.common.CommentType;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.mobile.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.mobile.module.project.ui.DefaultProjectFormViewFieldFactory.ProjectFormAttachmentDisplayField;
 import com.esofthead.mycollab.mobile.module.project.ui.ProjectCommentListDisplay;
 import com.esofthead.mycollab.mobile.module.project.ui.ProjectPreviewFormControlsGenerator;
 import com.esofthead.mycollab.mobile.shell.events.ShellEvent;
@@ -31,6 +32,7 @@ import com.esofthead.mycollab.mobile.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.mobile.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.mobile.ui.DefaultFormViewFieldFactory.FormContainerHorizontalViewField;
 import com.esofthead.mycollab.mobile.ui.IconConstants;
+import com.esofthead.mycollab.module.file.AttachmentType;
 import com.esofthead.mycollab.module.project.ProjectResources;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.i18n.BugI18nEnum;
@@ -387,6 +389,10 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug>
 			} else if (propertyId.equals("resolution")) {
 				return new DefaultFormViewFieldFactory.I18nFormViewField(
 						beanItem.getResolution(), BugResolution.class);
+			} else if (propertyId.equals("id")) {
+				return new ProjectFormAttachmentDisplayField(
+						beanItem.getProjectid(),
+						AttachmentType.PROJECT_BUG_TYPE, beanItem.getId());
 			}
 			return null;
 		}
