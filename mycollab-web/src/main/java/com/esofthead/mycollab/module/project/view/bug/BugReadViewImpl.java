@@ -63,13 +63,6 @@ import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.mvp.ViewScope;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
-import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
-import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormContainerHorizontalViewField;
-import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormContainerViewField;
-import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormDateViewField;
-import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormLinkViewField;
-import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormViewField;
-import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.I18nFormViewField;
 import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
@@ -78,6 +71,13 @@ import com.esofthead.mycollab.vaadin.ui.ProjectPreviewFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UserLink;
 import com.esofthead.mycollab.vaadin.ui.WebResourceIds;
+import com.esofthead.mycollab.vaadin.ui.form.field.FormContainerHorizontalViewField;
+import com.esofthead.mycollab.vaadin.ui.form.field.FormContainerViewField;
+import com.esofthead.mycollab.vaadin.ui.form.field.FormDateViewField;
+import com.esofthead.mycollab.vaadin.ui.form.field.FormDetectAndDisplayUrlViewField;
+import com.esofthead.mycollab.vaadin.ui.form.field.FormLinkViewField;
+import com.esofthead.mycollab.vaadin.ui.form.field.FormViewField;
+import com.esofthead.mycollab.vaadin.ui.form.field.I18nFormViewField;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.server.Resource;
 import com.vaadin.shared.ui.MarginInfo;
@@ -652,10 +652,10 @@ public class BugReadViewImpl extends AbstractPreviewItemComp2<SimpleBug>
 				}
 
 			} else if (propertyId.equals("environment")) {
-				return new DefaultFormViewFieldFactory.FormDetectAndDisplayUrlViewField(
+				return new FormDetectAndDisplayUrlViewField(
 						beanItem.getEnvironment());
 			} else if (propertyId.equals("description")) {
-				return new DefaultFormViewFieldFactory.FormDetectAndDisplayUrlViewField(
+				return new  FormDetectAndDisplayUrlViewField(
 						beanItem.getDescription());
 			} else if (propertyId.equals("status")) {
 				return new I18nFormViewField(beanItem.getStatus(),

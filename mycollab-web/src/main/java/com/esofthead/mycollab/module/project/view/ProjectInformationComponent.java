@@ -24,14 +24,13 @@ import com.esofthead.mycollab.module.project.i18n.ProjectI18nEnum;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
-import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
-import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormDetectAndDisplayUrlViewField;
-import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormUrlLinkViewField;
-import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormViewField;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.form.field.FormDetectAndDisplayUrlViewField;
+import com.esofthead.mycollab.vaadin.ui.form.field.FormUrlLinkViewField;
+import com.esofthead.mycollab.vaadin.ui.form.field.FormViewField;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -187,7 +186,7 @@ public class ProjectInformationComponent extends VerticalLayout {
 						@Override
 						protected Field<?> onCreateField(Object propertyId) {
 							if (propertyId.equals("actualstartdate")) {
-								return new DefaultFormViewFieldFactory.FormViewField(
+								return new FormViewField(
 										AppContext
 												.formatDate(ProjectInformationComponent.this.project
 														.getActualstartdate()));

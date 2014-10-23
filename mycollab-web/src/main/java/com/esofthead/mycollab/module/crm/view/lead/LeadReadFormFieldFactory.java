@@ -18,12 +18,12 @@ package com.esofthead.mycollab.module.crm.view.lead;
 
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
-import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
-import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormEmailLinkViewField;
-import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormLinkViewField;
-import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormViewField;
-import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.UserLinkViewField;
 import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
+import com.esofthead.mycollab.vaadin.ui.form.field.FormEmailLinkViewField;
+import com.esofthead.mycollab.vaadin.ui.form.field.FormLinkViewField;
+import com.esofthead.mycollab.vaadin.ui.form.field.FormUrlLinkViewField;
+import com.esofthead.mycollab.vaadin.ui.form.field.FormViewField;
+import com.esofthead.mycollab.vaadin.ui.form.field.UserLinkViewField;
 import com.vaadin.ui.Field;
 
 /**
@@ -55,7 +55,7 @@ class LeadReadFormFieldFactory extends
 
 			return new FormViewField(prefix + firstName);
 		} else if (propertyId.equals("website")) {
-			return new DefaultFormViewFieldFactory.FormUrlLinkViewField(
+			return new FormUrlLinkViewField(
 					lead.getWebsite());
 		} else if (propertyId.equals("email")) {
 			return new FormEmailLinkViewField(lead.getEmail());

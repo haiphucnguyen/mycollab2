@@ -54,9 +54,6 @@ import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.mvp.ViewScope;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
-import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
-import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormContainerHorizontalViewField;
-import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormDetectAndDisplayUrlViewField;
 import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
@@ -64,6 +61,10 @@ import com.esofthead.mycollab.vaadin.ui.ProjectPreviewFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.TabsheetLazyLoadComp;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UserLink;
+import com.esofthead.mycollab.vaadin.ui.form.field.FormContainerHorizontalViewField;
+import com.esofthead.mycollab.vaadin.ui.form.field.FormDetectAndDisplayUrlViewField;
+import com.esofthead.mycollab.vaadin.ui.form.field.FormLinkViewField;
+import com.esofthead.mycollab.vaadin.ui.form.field.FormViewField;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.server.Resource;
 import com.vaadin.shared.ui.MarginInfo;
@@ -312,25 +313,25 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp2<SimpleTask>
 						beanItem.getAssignUserAvatarId(),
 						beanItem.getAssignUserFullName());
 			} else if (propertyId.equals("taskListName")) {
-				return new DefaultFormViewFieldFactory.FormViewField(
+				return new FormViewField(
 						beanItem.getTaskListName());
 			} else if (propertyId.equals("startdate")) {
-				return new DefaultFormViewFieldFactory.FormViewField(
+				return new FormViewField(
 						AppContext.formatDate(beanItem.getStartdate()));
 			} else if (propertyId.equals("enddate")) {
-				return new DefaultFormViewFieldFactory.FormViewField(
+				return new FormViewField(
 						AppContext.formatDate(beanItem.getEnddate()));
 			} else if (propertyId.equals("actualstartdate")) {
-				return new DefaultFormViewFieldFactory.FormViewField(
+				return new FormViewField(
 						AppContext.formatDate(beanItem.getActualstartdate()));
 			} else if (propertyId.equals("actualenddate")) {
-				return new DefaultFormViewFieldFactory.FormViewField(
+				return new FormViewField(
 						AppContext.formatDate(beanItem.getActualenddate()));
 			} else if (propertyId.equals("deadline")) {
-				return new DefaultFormViewFieldFactory.FormViewField(
+				return new FormViewField(
 						AppContext.formatDate(beanItem.getDeadline()));
 			} else if (propertyId.equals("tasklistid")) {
-				return new DefaultFormViewFieldFactory.FormLinkViewField(
+				return new FormLinkViewField(
 						beanItem.getTaskListName(),
 						ProjectLinkBuilder.generateTaskGroupPreviewFullLink(
 								beanItem.getProjectid(),

@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
 
 import com.esofthead.mycollab.core.arguments.NotBindable;
 import com.esofthead.mycollab.core.utils.ClassUtils;
-import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormViewField;
+import com.esofthead.mycollab.vaadin.ui.form.field.FormViewField;
 import com.vaadin.ui.Field;
 
 /**

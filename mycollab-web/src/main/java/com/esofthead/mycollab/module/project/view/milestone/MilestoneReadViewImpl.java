@@ -51,8 +51,6 @@ import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.mvp.ViewScope;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
-import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
-import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormContainerHorizontalViewField;
 import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
@@ -62,6 +60,9 @@ import com.esofthead.mycollab.vaadin.ui.ProjectPreviewFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.TabsheetLazyLoadComp;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UserLink;
+import com.esofthead.mycollab.vaadin.ui.form.field.FormContainerHorizontalViewField;
+import com.esofthead.mycollab.vaadin.ui.form.field.FormDateViewField;
+import com.esofthead.mycollab.vaadin.ui.form.field.FormDetectAndDisplayUrlViewField;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
@@ -322,17 +323,17 @@ public class MilestoneReadViewImpl extends
 		protected Field<?> onCreateField(final Object propertyId) {
 			SimpleMilestone milestone = attachForm.getBean();
 			if (propertyId.equals("startdate")) {
-				return new DefaultFormViewFieldFactory.FormDateViewField(
+				return new FormDateViewField(
 						milestone.getStartdate());
 			} else if (propertyId.equals("enddate")) {
-				return new DefaultFormViewFieldFactory.FormDateViewField(
+				return new FormDateViewField(
 						milestone.getEnddate());
 			} else if (propertyId.equals("owner")) {
 				return new ProjectUserFormLinkField(milestone.getOwner(),
 						milestone.getOwnerAvatarId(),
 						milestone.getOwnerFullName());
 			} else if (propertyId.equals("description")) {
-				return new DefaultFormViewFieldFactory.FormDetectAndDisplayUrlViewField(
+				return new FormDetectAndDisplayUrlViewField(
 						milestone.getDescription());
 			} else if (propertyId.equals("numOpenTasks")) {
 				final FormContainerHorizontalViewField taskComp = new FormContainerHorizontalViewField();

@@ -34,12 +34,15 @@ import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout2;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
-import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
+import com.esofthead.mycollab.vaadin.ui.form.field.FormEmailLinkViewField;
+import com.esofthead.mycollab.vaadin.ui.form.field.FormUrlLinkViewField;
+import com.esofthead.mycollab.vaadin.ui.form.field.FormUrlSocialNetworkLinkViewField;
+import com.esofthead.mycollab.vaadin.ui.form.field.FormViewField;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -378,38 +381,38 @@ public class ProfileReadViewImpl extends AbstractPageView implements
 				String value = "";
 
 				if (propertyId.equals("email")) {
-					return new DefaultFormViewFieldFactory.FormEmailLinkViewField(
+					return new FormEmailLinkViewField(
 							PreviewForm.this.user.getEmail());
 				} else if (propertyId.equals("dateofbirth")) {
 					value = AppContext.formatDate(PreviewForm.this.user
 							.getDateofbirth());
-					return new DefaultFormViewFieldFactory.FormViewField(value);
+					return new FormViewField(value);
 				} else if (propertyId.equals("language")) {
 					value = AppContext.getMessage(LangI18Enum.class,
 							user.getLanguage());
-					return new DefaultFormViewFieldFactory.FormViewField(value);
+					return new FormViewField(value);
 				} else if (propertyId.equals("timezone")) {
 					value = TimezoneMapper.getTimezone(
 							PreviewForm.this.user.getTimezone())
 							.getDisplayName();
-					return new DefaultFormViewFieldFactory.FormViewField(value);
+					return new FormViewField(value);
 				} else if (propertyId.equals("website")) {
 					value = PreviewForm.this.user.getWebsite();
-					return new DefaultFormViewFieldFactory.FormUrlLinkViewField(
+					return new FormUrlLinkViewField(
 							value);
 				} else if (propertyId.equals("facebookaccount")) {
-					return new DefaultFormViewFieldFactory.FormUrlSocialNetworkLinkViewField(
+					return new FormUrlSocialNetworkLinkViewField(
 							PreviewForm.this.user.getFacebookaccount(),
 							"https://www.facebook.com/"
 									+ PreviewForm.this.user
 											.getFacebookaccount());
 				} else if (propertyId.equals("twitteraccount")) {
-					return new DefaultFormViewFieldFactory.FormUrlSocialNetworkLinkViewField(
+					return new FormUrlSocialNetworkLinkViewField(
 							PreviewForm.this.user.getTwitteraccount(),
 							"https://www.twitter.com/"
 									+ PreviewForm.this.user.getTwitteraccount());
 				} else if (propertyId.equals("skypecontact")) {
-					return new DefaultFormViewFieldFactory.FormUrlSocialNetworkLinkViewField(
+					return new FormUrlSocialNetworkLinkViewField(
 							PreviewForm.this.user.getSkypecontact(), "skype:"
 									+ PreviewForm.this.user.getSkypecontact()
 									+ "?chat");
