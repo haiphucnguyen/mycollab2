@@ -13,6 +13,7 @@ import com.vaadin.ui.VerticalLayout;
  * @since 4.5.3
  *
  */
+@SuppressWarnings("rawtypes")
 public class FormAttachmentUploadField extends CustomField implements
 		AttachmentUploadField {
 	private static final long serialVersionUID = 1L;
