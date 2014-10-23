@@ -256,7 +256,7 @@
                 <version>2.6</version>
                 <configuration>
                     <tag>${project.artifactId}-${project.version}</tag>
-                    <header>https://raw.github.com/mycila/license-maven-plugin/master/src/main/resources/com/mycila/maven/plugin/license/templates/GPL-3.txt</header>
+                    <header>com/mycila/maven/plugin/license/templates/GPL-3.txt</header>
                     <properties>
                         <owner>MyCollab</owner>
                         <email>support@mycollab.com</email>
