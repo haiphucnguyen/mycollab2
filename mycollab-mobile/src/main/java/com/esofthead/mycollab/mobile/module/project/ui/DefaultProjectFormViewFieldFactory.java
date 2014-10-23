@@ -68,9 +68,11 @@ public class DefaultProjectFormViewFieldFactory {
 									typeid));
 			if (CollectionUtils.isNotEmpty(attachments)) {
 				VerticalLayout comp = new VerticalLayout();
+				comp.setStyleName("attachment-view-panel");
 
 				for (Content attachment : attachments) {
 					Label l = new Label(attachment.getTitle());
+					l.setWidth("100%");
 					comp.addComponent(l);
 				}
 
@@ -99,6 +101,7 @@ public class DefaultProjectFormViewFieldFactory {
 
 		public ProjectFormAttachmentUploadField() {
 			content = new VerticalLayout();
+			content.setStyleName("attachment-field");
 
 			resourceService = ApplicationContextUtil
 					.getSpringBean(ResourceService.class);
@@ -139,6 +142,14 @@ public class DefaultProjectFormViewFieldFactory {
 		}
 
 		public void saveContentsToRepo() {
+			MobileAttachmentUtils
+					.saveContentsToRepo(attachmentPath, fileStores);
+		}
+
+		public void saveContentsToRepo(int projectId, AttachmentType type,
+				int typeid) {
+			attachmentPath = AttachmentUtils.getProjectEntityAttachmentPath(
+					AppContext.getAccountId(), projectId, type, typeid);
 			MobileAttachmentUtils
 					.saveContentsToRepo(attachmentPath, fileStores);
 		}

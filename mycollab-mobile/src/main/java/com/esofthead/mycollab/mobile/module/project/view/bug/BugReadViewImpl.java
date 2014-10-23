@@ -77,6 +77,13 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug>
 
 	private VerticalLayout bugWorkFlowControl;
 
+	private BugTimeLogComp bugTimeLogComp;
+
+	public BugReadViewImpl() {
+		super();
+		bugTimeLogComp = new BugTimeLogComp();
+	}
+
 	@Override
 	public HasPreviewFormHandlers<SimpleBug> getPreviewFormHandlers() {
 		return this.previewForm;
@@ -241,6 +248,8 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug>
 	protected void afterPreviewItem() {
 		associateComments.loadComments("" + beanItem.getId());
 		displayWorkflowControl();
+		bugTimeLogComp.displayTime(beanItem);
+		this.previewForm.addComponent(bugTimeLogComp);
 	}
 
 	@Override
