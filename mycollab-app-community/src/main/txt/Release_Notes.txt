@@ -42,6 +42,17 @@ If you need to understand more MyCollab advanced configuration settings, please 
 Last changelog
 ==============
 
+Version 4.5.3
+-----------------------------
+
+**Improvements**
+
+* All description supports rich text
+
+**Bug Fixes**
+
+* Custom layout throws NPE
+
 Version 4.5.2
 -----------------------------
 

@@ -19,6 +19,10 @@ package com.esofthead.mycollab.module.project.view.bug;
 
 import java.util.GregorianCalendar;
 
+import org.apache.commons.lang3.StringUtils;
+import org.jsoup.Jsoup;
+import org.jsoup.safety.Whitelist;
+
 import com.esofthead.mycollab.common.CommentType;
 import com.esofthead.mycollab.common.domain.Comment;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
@@ -41,6 +45,7 @@ import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.form.field.RichTextEditField;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -86,7 +91,7 @@ class ReOpenWindow extends Window {
 	private class EditForm extends AdvancedEditBeanForm<BugWithBLOBs> {
 
 		private static final long serialVersionUID = 1L;
-		private RichTextArea commentArea;
+		private RichTextEditField commentArea;
 
 		@Override
 		public void setBean(final BugWithBLOBs newDataSource) {
@@ -118,8 +123,7 @@ class ReOpenWindow extends Window {
 				layout.addComponent(controlsBtn);
 
 				final Button cancelBtn = new Button(
-						AppContext
-								.getMessage(GenericI18Enum.BUTTON_CANCEL),
+						AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL),
 						new Button.ClickListener() {
 							@Override
 							public void buttonClick(
@@ -133,8 +137,7 @@ class ReOpenWindow extends Window {
 						Alignment.MIDDLE_LEFT);
 
 				final Button wonFixBtn = new Button(
-						AppContext
-								.getMessage(GenericI18Enum.BUTTON_REOPEN),
+						AppContext.getMessage(GenericI18Enum.BUTTON_REOPEN),
 						new Button.ClickListener() {
 							@Override
 							public void buttonClick(
@@ -162,10 +165,11 @@ class ReOpenWindow extends Window {
 									// Save comment
 									final String commentValue = EditForm.this.commentArea
 											.getValue();
-									if (commentValue != null
-											&& !commentValue.trim().equals("")) {
+									if (StringUtils.isNotBlank(commentValue)) {
 										final Comment comment = new Comment();
-										comment.setComment(commentValue);
+										comment.setComment(Jsoup.clean(
+												commentValue,
+												Whitelist.relaxed()));
 										comment.setCreatedtime(new GregorianCalendar()
 												.getTime());
 										comment.setCreateduser(AppContext
@@ -246,9 +250,8 @@ class ReOpenWindow extends Window {
 
 					return ReOpenWindow.this.fixedVersionSelect;
 				} else if (propertyId.equals("comment")) {
-					EditForm.this.commentArea = new RichTextArea();
-					EditForm.this.commentArea.setNullRepresentation("");
-					return EditForm.this.commentArea;
+					commentArea = new RichTextEditField();
+					return commentArea;
 				}
 
 				return null;
