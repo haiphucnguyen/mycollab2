@@ -17,7 +17,7 @@
 package com.esofthead.mycollab.premium.module.crm.view.setting.customlayout;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
-import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.core.UnsupportedFeatureException;
 import com.esofthead.mycollab.form.view.builder.type.DynaSection;
 import com.esofthead.mycollab.module.crm.view.setting.ICrmCustomView;
 import com.esofthead.mycollab.premium.module.crm.view.setting.customlayout.fieldinfo.DetailFieldInfoPanel;
@@ -242,8 +242,8 @@ public class CreateCustomFieldWindow extends Window {
 			fieldPanel = new IntegerDetailFieldInfoPanel(candidateFieldName,
 					viewParent.getActiveSections());
 		} else {
-			throw new MyCollabException("Do not support customize field type "
-					+ type);
+			throw new UnsupportedFeatureException(
+					"Do not support customize field type " + type);
 		}
 
 		fieldLayoutWrapper.addComponent(fieldPanel);
