@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.vaadin.ui.form.field;
 
 import com.vaadin.data.Property;
+import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomField;
 import com.vaadin.ui.RichTextArea;
@@ -32,6 +33,13 @@ public class RichTextEditField extends CustomField<String> {
 			textArea.setValue("");
 		}
 		super.setPropertyDataSource(newDataSource);
+	}
+
+	@Override
+	public void commit() throws SourceException, InvalidValueException {
+		String value = textArea.getValue();
+		this.setInternalValue(value);
+		super.commit();
 	}
 
 	@Override
