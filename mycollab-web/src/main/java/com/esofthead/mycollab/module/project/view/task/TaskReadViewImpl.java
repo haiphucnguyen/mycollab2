@@ -61,10 +61,10 @@ import com.esofthead.mycollab.vaadin.ui.ProjectPreviewFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.TabsheetLazyLoadComp;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UserLink;
-import com.esofthead.mycollab.vaadin.ui.form.field.FormContainerHorizontalViewField;
-import com.esofthead.mycollab.vaadin.ui.form.field.FormDetectAndDisplayUrlViewField;
-import com.esofthead.mycollab.vaadin.ui.form.field.FormLinkViewField;
-import com.esofthead.mycollab.vaadin.ui.form.field.FormViewField;
+import com.esofthead.mycollab.vaadin.ui.form.field.ContainerHorizontalViewField;
+import com.esofthead.mycollab.vaadin.ui.form.field.RichTextViewField;
+import com.esofthead.mycollab.vaadin.ui.form.field.LinkViewField;
+import com.esofthead.mycollab.vaadin.ui.form.field.DefaultViewField;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.server.Resource;
 import com.vaadin.shared.ui.MarginInfo;
@@ -313,25 +313,25 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp2<SimpleTask>
 						beanItem.getAssignUserAvatarId(),
 						beanItem.getAssignUserFullName());
 			} else if (propertyId.equals("taskListName")) {
-				return new FormViewField(
+				return new DefaultViewField(
 						beanItem.getTaskListName());
 			} else if (propertyId.equals("startdate")) {
-				return new FormViewField(
+				return new DefaultViewField(
 						AppContext.formatDate(beanItem.getStartdate()));
 			} else if (propertyId.equals("enddate")) {
-				return new FormViewField(
+				return new DefaultViewField(
 						AppContext.formatDate(beanItem.getEnddate()));
 			} else if (propertyId.equals("actualstartdate")) {
-				return new FormViewField(
+				return new DefaultViewField(
 						AppContext.formatDate(beanItem.getActualstartdate()));
 			} else if (propertyId.equals("actualenddate")) {
-				return new FormViewField(
+				return new DefaultViewField(
 						AppContext.formatDate(beanItem.getActualenddate()));
 			} else if (propertyId.equals("deadline")) {
-				return new FormViewField(
+				return new DefaultViewField(
 						AppContext.formatDate(beanItem.getDeadline()));
 			} else if (propertyId.equals("tasklistid")) {
-				return new FormLinkViewField(
+				return new LinkViewField(
 						beanItem.getTaskListName(),
 						ProjectLinkBuilder.generateTaskGroupPreviewFullLink(
 								beanItem.getProjectid(),
@@ -353,7 +353,7 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp2<SimpleTask>
 					final Label lbPriority = new Label(AppContext.getMessage(
 							TaskPriority.class, beanItem.getPriority()));
 
-					final FormContainerHorizontalViewField containerField = new FormContainerHorizontalViewField();
+					final ContainerHorizontalViewField containerField = new ContainerHorizontalViewField();
 					containerField.addComponentField(iconEmbedded);
 					containerField.getLayout().setComponentAlignment(
 							iconEmbedded, Alignment.MIDDLE_LEFT);
@@ -363,7 +363,7 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp2<SimpleTask>
 					return containerField;
 				}
 			} else if (propertyId.equals("notes")) {
-				return new FormDetectAndDisplayUrlViewField(beanItem.getNotes());
+				return new RichTextViewField(beanItem.getNotes());
 			}
 			return null;
 		}

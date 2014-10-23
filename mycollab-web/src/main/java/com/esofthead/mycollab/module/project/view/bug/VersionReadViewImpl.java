@@ -52,7 +52,7 @@ import com.esofthead.mycollab.vaadin.ui.TabsheetLazyLoadComp;
 import com.esofthead.mycollab.vaadin.ui.ToggleButtonGroup;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.WebResourceIds;
-import com.esofthead.mycollab.vaadin.ui.form.field.FormDateViewField;
+import com.esofthead.mycollab.vaadin.ui.form.field.DateViewField;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -155,7 +155,7 @@ public class VersionReadViewImpl extends AbstractPreviewItemComp2<Version>
 			@Override
 			protected Field<?> onCreateField(Object propertyId) {
 				if (propertyId.equals("duedate")) {
-					return new FormDateViewField(
+					return new DateViewField(
 							beanItem.getDuedate());
 				}
 				return null;

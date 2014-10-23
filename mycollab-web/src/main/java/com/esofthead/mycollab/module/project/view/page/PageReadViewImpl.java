@@ -63,7 +63,7 @@ import com.esofthead.mycollab.vaadin.ui.ProjectPreviewFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.TabsheetLazyLoadComp;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
-import com.esofthead.mycollab.vaadin.ui.form.field.FormViewField;
+import com.esofthead.mycollab.vaadin.ui.form.field.DefaultViewField;
 import com.esofthead.mycollab.vaadin.ui.form.field.I18nFormViewField;
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Img;
@@ -273,7 +273,7 @@ public class PageReadViewImpl extends AbstractPreviewItemComp2<Page> implements
 				return new I18nFormViewField(attachForm.getBean().getStatus(),
 						WikiI18nEnum.class);
 			} else if (propertyId.equals("content")) {
-				return new FormViewField(attachForm.getBean().getContent(),
+				return new DefaultViewField(attachForm.getBean().getContent(),
 						ContentMode.HTML);
 			}
 			return null;

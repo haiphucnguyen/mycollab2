@@ -1,9 +1,8 @@
 package com.esofthead.mycollab.vaadin.ui.form.field;
 
-import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.CustomField;
+import com.vaadin.ui.HorizontalLayout;
 
 /**
  * 
@@ -11,18 +10,24 @@ import com.vaadin.ui.CustomField;
  * @since 4.5.3
  *
  */
-public class FormContainerViewField extends CustomField<Object> {
+@SuppressWarnings("rawtypes")
+public class ContainerHorizontalViewField extends CustomField {
 	private static final long serialVersionUID = 1L;
-	private CssLayout layout;
 
-	public FormContainerViewField() {
-		layout = new CssLayout();
+	private HorizontalLayout layout;
+
+	public ContainerHorizontalViewField() {
+		layout = new HorizontalLayout();
 		layout.setWidth("100%");
-		layout.setStyleName(UIConstants.FORM_CONTAINER_VIEW);
+		layout.setSpacing(true);
 	}
 
 	public void addComponentField(final Component component) {
 		layout.addComponent(component);
+	}
+
+	public HorizontalLayout getLayout() {
+		return layout;
 	}
 
 	@Override

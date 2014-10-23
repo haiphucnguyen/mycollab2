@@ -13,12 +13,12 @@ import com.vaadin.ui.Label;
  *
  */
 @SuppressWarnings("rawtypes")
-public class FormDetectAndDisplayUrlViewField extends CustomField {
+public class RichTextViewField extends CustomField {
 	private static final long serialVersionUID = 1L;
 
 	private String url;
 
-	public FormDetectAndDisplayUrlViewField(String url) {
+	public RichTextViewField(String url) {
 		this.url = url;
 	}
 

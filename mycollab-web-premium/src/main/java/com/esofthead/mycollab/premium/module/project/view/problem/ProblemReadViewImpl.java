@@ -34,8 +34,8 @@ import com.esofthead.mycollab.vaadin.ui.ProjectPreviewFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.TabsheetLazyLoadComp;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UserLink;
-import com.esofthead.mycollab.vaadin.ui.form.field.FormDetectAndDisplayUrlViewField;
-import com.esofthead.mycollab.vaadin.ui.form.field.FormViewField;
+import com.esofthead.mycollab.vaadin.ui.form.field.RichTextViewField;
+import com.esofthead.mycollab.vaadin.ui.form.field.DefaultViewField;
 import com.esofthead.mycollab.vaadin.ui.form.field.I18nFormViewField;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.ComponentContainer;
@@ -169,14 +169,14 @@ public class ProblemReadViewImpl extends
 				return new I18nFormViewField(problem.getStatus(),
 						StatusI18nEnum.class);
 			} else if (propertyId.equals("datedue")) {
-				return new FormViewField(AppContext.formatDate(problem
+				return new DefaultViewField(AppContext.formatDate(problem
 						.getDatedue()));
 			} else if (propertyId.equals("assigntouser")) {
 				return new ProjectUserFormLinkField(problem.getAssigntouser(),
 						problem.getAssignUserAvatarId(),
 						problem.getAssignedUserFullName());
 			} else if (propertyId.equals("description")) {
-				return new FormDetectAndDisplayUrlViewField(
+				return new RichTextViewField(
 						problem.getDescription());
 			}
 

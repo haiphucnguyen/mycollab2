@@ -11,13 +11,13 @@ import com.vaadin.ui.CustomField;
  * @since 4.5.3
  *
  */
-public class FormEmailLinkViewField extends CustomField<String> {
+public class EmailViewField extends CustomField<String> {
 
 	private static final long serialVersionUID = 1L;
 
 	private String email;
 
-	public FormEmailLinkViewField(final String email) {
+	public EmailViewField(final String email) {
 		this.email = email;
 	}
 

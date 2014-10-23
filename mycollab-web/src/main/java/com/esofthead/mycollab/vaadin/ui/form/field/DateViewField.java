@@ -15,12 +15,12 @@ import com.vaadin.ui.Label;
  *
  */
 @SuppressWarnings("rawtypes")
-public class FormDateViewField extends CustomField {
+public class DateViewField extends CustomField {
 	private static final long serialVersionUID = 1L;
 
 	private Date date;
 
-	public FormDateViewField(final Date date) {
+	public DateViewField(final Date date) {
 		this.date = date;
 	}
 

@@ -32,11 +32,11 @@ import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.vaadin.ui.form.field.FormEmailLinkViewField;
-import com.esofthead.mycollab.vaadin.ui.form.field.FormLinkViewField;
-import com.esofthead.mycollab.vaadin.ui.form.field.FormUrlLinkViewField;
-import com.esofthead.mycollab.vaadin.ui.form.field.FormUrlSocialNetworkLinkViewField;
-import com.esofthead.mycollab.vaadin.ui.form.field.FormViewField;
+import com.esofthead.mycollab.vaadin.ui.form.field.EmailViewField;
+import com.esofthead.mycollab.vaadin.ui.form.field.LinkViewField;
+import com.esofthead.mycollab.vaadin.ui.form.field.UrlLinkViewField;
+import com.esofthead.mycollab.vaadin.ui.form.field.UrlSocialNetworkLinkViewField;
+import com.esofthead.mycollab.vaadin.ui.form.field.DefaultViewField;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Field;
@@ -125,40 +125,40 @@ public class UserReadViewImpl extends AbstractPageView implements UserReadView {
 				protected Field<?> onCreateField(Object propertyId) {
 
 					if (propertyId.equals("email")) {
-						return new FormEmailLinkViewField(user.getEmail());
+						return new EmailViewField(user.getEmail());
 					} else if (propertyId.equals("roleid")) {
 						if (user.getIsAccountOwner() != null
 								&& user.getIsAccountOwner() == Boolean.TRUE) {
-							return new FormViewField("Account Owner");
+							return new DefaultViewField("Account Owner");
 						} else {
-							FormLinkViewField roleLink = new FormLinkViewField(
+							LinkViewField roleLink = new LinkViewField(
 									user.getRoleName(), AccountLinkBuilder
 											.generatePreviewFullRoleLink(user
 													.getRoleid()));
 							return roleLink;
 						}
 					} else if (propertyId.equals("website")) {
-						return new FormUrlLinkViewField(
+						return new UrlLinkViewField(
 								user.getWebsite());
 					} else if (propertyId.equals("dateofbirth")) {
-						return new FormViewField(
+						return new DefaultViewField(
 								AppContext.formatDate(user.getDateofbirth()));
 					} else if (propertyId.equals("timezone")) {
-						return new FormViewField(
+						return new DefaultViewField(
 								TimezoneMapper.getTimezone(user.getTimezone())
 										.getDisplayName());
 					} else if (propertyId.equals("facebookaccount")) {
-						return new FormUrlSocialNetworkLinkViewField(
+						return new UrlSocialNetworkLinkViewField(
 								user.getFacebookaccount(),
 								"https://www.facebook.com/"
 										+ user.getFacebookaccount());
 					} else if (propertyId.equals("twitteraccount")) {
-						return new FormUrlSocialNetworkLinkViewField(
+						return new UrlSocialNetworkLinkViewField(
 								user.getTwitteraccount(),
 								"https://www.twitter.com/"
 										+ user.getTwitteraccount());
 					} else if (propertyId.equals("skypecontact")) {
-						return new FormUrlSocialNetworkLinkViewField(
+						return new UrlSocialNetworkLinkViewField(
 								user.getSkypecontact(), "skype:"
 										+ user.getSkypecontact() + "?chat");
 					}

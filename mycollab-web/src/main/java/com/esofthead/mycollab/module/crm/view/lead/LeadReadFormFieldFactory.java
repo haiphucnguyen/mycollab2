@@ -17,12 +17,13 @@
 package com.esofthead.mycollab.module.crm.view.lead;
 
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
+import com.esofthead.mycollab.module.crm.i18n.AccountI18nEnum;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
-import com.esofthead.mycollab.vaadin.ui.form.field.FormEmailLinkViewField;
-import com.esofthead.mycollab.vaadin.ui.form.field.FormLinkViewField;
-import com.esofthead.mycollab.vaadin.ui.form.field.FormUrlLinkViewField;
-import com.esofthead.mycollab.vaadin.ui.form.field.FormViewField;
+import com.esofthead.mycollab.vaadin.ui.form.field.EmailViewField;
+import com.esofthead.mycollab.vaadin.ui.form.field.LinkViewField;
+import com.esofthead.mycollab.vaadin.ui.form.field.UrlLinkViewField;
+import com.esofthead.mycollab.vaadin.ui.form.field.DefaultViewField;
 import com.esofthead.mycollab.vaadin.ui.form.field.UserLinkViewField;
 import com.vaadin.ui.Field;
 
@@ -43,6 +44,7 @@ class LeadReadFormFieldFactory extends
 	@Override
 	protected Field<?> onCreateField(Object propertyId) {
 		SimpleLead lead = attachForm.getBean();
+
 		if (propertyId.equals("firstname")) {
 			String prefix = "", firstName = "";
 			if (lead.getPrefixname() != null) {
@@ -53,14 +55,13 @@ class LeadReadFormFieldFactory extends
 				firstName = lead.getFirstname();
 			}
 
-			return new FormViewField(prefix + firstName);
+			return new DefaultViewField(prefix + firstName);
 		} else if (propertyId.equals("website")) {
-			return new FormUrlLinkViewField(
-					lead.getWebsite());
+			return new UrlLinkViewField(lead.getWebsite());
 		} else if (propertyId.equals("email")) {
-			return new FormEmailLinkViewField(lead.getEmail());
+			return new EmailViewField(lead.getEmail());
 		} else if (propertyId.equals("accountid")) {
-			FormLinkViewField field = new FormLinkViewField(
+			LinkViewField field = new LinkViewField(
 					lead.getAccountname(), null, null);
 
 			return field;

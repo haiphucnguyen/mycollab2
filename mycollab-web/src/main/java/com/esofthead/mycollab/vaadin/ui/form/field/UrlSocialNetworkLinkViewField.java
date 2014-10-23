@@ -2,8 +2,8 @@ package com.esofthead.mycollab.vaadin.ui.form.field;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.esofthead.mycollab.vaadin.ui.SocialNetworkLink;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.vaadin.ui.UrlLink;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomField;
@@ -16,14 +16,16 @@ import com.vaadin.ui.Link;
  * @since 4.5.3
  *
  */
-public class FormUrlLinkViewField extends CustomField<String> {
+public class UrlSocialNetworkLinkViewField extends CustomField<String> {
 
 	private static final long serialVersionUID = 1L;
 
-	private String url;
+	private String caption;
+	private String linkAccount;
 
-	public FormUrlLinkViewField(String url) {
-		this.url = url;
+	public UrlSocialNetworkLinkViewField(String caption, String linkAccount) {
+		this.caption = caption;
+		this.linkAccount = linkAccount;
 	}
 
 	@Override
@@ -33,13 +35,14 @@ public class FormUrlLinkViewField extends CustomField<String> {
 
 	@Override
 	protected Component initContent() {
-		if (StringUtils.isBlank(url)) {
+		if (StringUtils.isBlank(caption)) {
 			Label lbl = new Label("&nbsp;");
 			lbl.setContentMode(ContentMode.HTML);
 			lbl.setWidth("100%");
 			return lbl;
 		} else {
-			final Link link = new UrlLink(url);
+			linkAccount = (linkAccount == null) ? "" : linkAccount;
+			final Link link = new SocialNetworkLink(caption, linkAccount);
 			link.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
 			return link;
 		}

@@ -13,18 +13,18 @@ import com.vaadin.ui.Label;
  * @since 4.5.3
  *
  */
-public class FormViewField extends CustomField<String> {
+public class DefaultViewField extends CustomField<String> {
 
 	private String value;
 	private ContentMode contentMode;
 
 	private static final long serialVersionUID = 1L;
 
-	public FormViewField(final String value) {
+	public DefaultViewField(final String value) {
 		this(value, ContentMode.TEXT);
 	}
 
-	public FormViewField(final String value, final ContentMode contentMode) {
+	public DefaultViewField(final String value, final ContentMode contentMode) {
 		this.value = value;
 		this.contentMode = contentMode;
 	}

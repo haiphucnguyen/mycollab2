@@ -14,7 +14,7 @@ import com.vaadin.ui.Label;
  * @since 4.5.3
  *
  */
-public class FormLinkViewField extends CustomField<String> {
+public class LinkViewField extends CustomField<String> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -22,11 +22,11 @@ public class FormLinkViewField extends CustomField<String> {
 	private String iconResourceLink;
 	private String href;
 
-	public FormLinkViewField(String value, String href) {
+	public LinkViewField(String value, String href) {
 		this(value, href, null);
 	}
 
-	public FormLinkViewField(String value, String href, String iconResourceLink) {
+	public LinkViewField(String value, String href, String iconResourceLink) {
 		this.value = value;
 		this.href = href;
 		this.iconResourceLink = iconResourceLink;
