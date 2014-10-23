@@ -365,6 +365,7 @@ public class AddTimeEntryWindow extends Window implements
 			timeLogging.setSaccountid(AppContext.getAccountId());
 			timeLogging.setCreatedtime(new GregorianCalendar().getTime());
 			timeLogging.setLastupdatedtime(new GregorianCalendar().getTime());
+			
 			if (selectionTask != null) {
 				timeLogging.setType(selectionTask.getType());
 				timeLogging.setTypeid(selectionTask.getTypeId());
