@@ -27,9 +27,6 @@ import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.mvp.ViewScope;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
-import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormDetectAndDisplayUrlViewField;
-import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormViewField;
-import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.I18nFormViewField;
 import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
@@ -37,6 +34,9 @@ import com.esofthead.mycollab.vaadin.ui.ProjectPreviewFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.TabsheetLazyLoadComp;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UserLink;
+import com.esofthead.mycollab.vaadin.ui.form.field.RichTextViewField;
+import com.esofthead.mycollab.vaadin.ui.form.field.DefaultViewField;
+import com.esofthead.mycollab.vaadin.ui.form.field.I18nFormViewField;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Field;
@@ -157,7 +157,7 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp2<SimpleRisk>
 		protected Field<?> onCreateField(Object propertyId) {
 			SimpleRisk risk = attachForm.getBean();
 			if (propertyId.equals("description")) {
-				return new FormDetectAndDisplayUrlViewField(
+				return new RichTextViewField(
 						risk.getDescription());
 			} else if (propertyId.equals("level")) {
 				final RatingStars tinyRs = new RatingStars();
@@ -168,7 +168,7 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp2<SimpleRisk>
 				return new I18nFormViewField(risk.getStatus(),
 						StatusI18nEnum.class);
 			} else if (propertyId.equals("datedue")) {
-				return new FormViewField(AppContext.formatDate(risk
+				return new DefaultViewField(AppContext.formatDate(risk
 						.getDatedue()));
 			} else if (propertyId.equals("raisedbyuser")) {
 				return new ProjectUserFormLinkField(risk.getRaisedbyuser(),
@@ -179,7 +179,7 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp2<SimpleRisk>
 						risk.getAssignToUserAvatarId(),
 						risk.getAssignedToUserFullName());
 			} else if (propertyId.equals("response")) {
-				return new FormDetectAndDisplayUrlViewField(risk.getResponse());
+				return new RichTextViewField(risk.getResponse());
 			}
 
 			return null;

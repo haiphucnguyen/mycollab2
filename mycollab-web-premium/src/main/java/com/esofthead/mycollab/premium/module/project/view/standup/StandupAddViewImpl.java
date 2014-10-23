@@ -13,9 +13,9 @@ import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
+import com.esofthead.mycollab.vaadin.ui.form.field.RichTextEditField;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Layout;
-import com.vaadin.ui.RichTextArea;
 
 /**
  * 
@@ -23,7 +23,7 @@ import com.vaadin.ui.RichTextArea;
  * @since 1.0
  * 
  */
-@ViewComponent(scope=ViewScope.PROTOTYPE)
+@ViewComponent(scope = ViewScope.PROTOTYPE)
 public class StandupAddViewImpl extends AbstractPageView implements
 		StandupAddView {
 
@@ -57,7 +57,7 @@ public class StandupAddViewImpl extends AbstractPageView implements
 			if (propertyId.equals("whatlastday")
 					|| propertyId.equals("whattoday")
 					|| propertyId.equals("whatproblem")) {
-				final RichTextArea richText = new RichTextArea();
+				final RichTextEditField richText = new RichTextEditField();
 				richText.setWidth("100%");
 				return richText;
 			}

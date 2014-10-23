@@ -29,8 +29,11 @@ import com.esofthead.mycollab.mobile.shell.events.ShellEvent;
 import com.esofthead.mycollab.mobile.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.esofthead.mycollab.mobile.ui.AbstractPreviewItemComp;
 import com.esofthead.mycollab.mobile.ui.AdvancedPreviewBeanForm;
-import com.esofthead.mycollab.mobile.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.mobile.ui.DefaultFormViewFieldFactory.FormContainerHorizontalViewField;
+import com.esofthead.mycollab.mobile.ui.DefaultFormViewFieldFactory.FormDateViewField;
+import com.esofthead.mycollab.mobile.ui.DefaultFormViewFieldFactory.FormDetectAndDisplayUrlViewField;
+import com.esofthead.mycollab.mobile.ui.DefaultFormViewFieldFactory.FormViewField;
+import com.esofthead.mycollab.mobile.ui.DefaultFormViewFieldFactory.I18nFormViewField;
 import com.esofthead.mycollab.mobile.ui.IconConstants;
 import com.esofthead.mycollab.module.file.AttachmentType;
 import com.esofthead.mycollab.module.project.ProjectResources;
@@ -334,33 +337,33 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug>
 		@Override
 		protected Field<?> onCreateField(Object propertyId) {
 			if (propertyId.equals("duedate")) {
-				return new DefaultFormViewFieldFactory.FormDateViewField(
+				return new FormDateViewField(
 						beanItem.getDuedate());
 			} else if (propertyId.equals("createdtime")) {
-				return new DefaultFormViewFieldFactory.FormDateViewField(
+				return new FormDateViewField(
 						beanItem.getCreatedtime());
 			} else if (propertyId.equals("assignuserFullName")) {
-				return new DefaultFormViewFieldFactory.FormViewField(
+				return new FormViewField(
 						beanItem.getAssignuserFullName());
 			} else if (propertyId.equals("loguserFullName")) {
-				return new DefaultFormViewFieldFactory.FormViewField(
+				return new FormViewField(
 						beanItem.getLoguserFullName());
 			} else if (propertyId.equals("milestoneid")) {
 				if (beanItem.getMilestoneid() != null) {
-					return new DefaultFormViewFieldFactory.FormViewField(
+					return new FormViewField(
 							beanItem.getMilestoneName());
 				} else {
-					return new DefaultFormViewFieldFactory.FormViewField("");
+					return new FormViewField("");
 				}
 
 			} else if (propertyId.equals("environment")) {
-				return new DefaultFormViewFieldFactory.FormDetectAndDisplayUrlViewField(
+				return new FormDetectAndDisplayUrlViewField(
 						beanItem.getEnvironment());
 			} else if (propertyId.equals("description")) {
-				return new DefaultFormViewFieldFactory.FormDetectAndDisplayUrlViewField(
+				return new FormDetectAndDisplayUrlViewField(
 						beanItem.getDescription());
 			} else if (propertyId.equals("status")) {
-				return new DefaultFormViewFieldFactory.I18nFormViewField(
+				return new I18nFormViewField(
 						beanItem.getStatus(), BugStatus.class);
 			} else if (propertyId.equals("priority")) {
 				if (StringUtils.isNotBlank(beanItem.getPriority())) {
@@ -396,7 +399,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug>
 					return containerField;
 				}
 			} else if (propertyId.equals("resolution")) {
-				return new DefaultFormViewFieldFactory.I18nFormViewField(
+				return new I18nFormViewField(
 						beanItem.getResolution(), BugResolution.class);
 			} else if (propertyId.equals("id")) {
 				return new ProjectFormAttachmentDisplayField(
