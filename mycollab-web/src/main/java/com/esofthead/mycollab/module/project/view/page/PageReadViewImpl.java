@@ -238,7 +238,7 @@ public class PageReadViewImpl extends AbstractPreviewItemComp2<Page> implements
 				beanItem.getSubject(), beanItem.getContent()));
 		renderer.layout();
 
-		File file = new File(beanItem.getSubject() + ".pdf");
+		File file = File.createTempFile(beanItem.getSubject(), "pdf");
 		file.deleteOnExit();
 		OutputStream os = new FileOutputStream(file);
 		renderer.createPDF(os);
