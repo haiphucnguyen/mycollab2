@@ -22,7 +22,7 @@
 	<sql id="extraQueryTaskSearchCriteria">
         <![CDATA[
         #ifnotnull($searchCriteria.summary)
-            ${searchCriteria.summary.operation} m_prj_task.taskname LIKE '%' @{searchCriteria.summary.value} '%'
+            ${searchCriteria.summary.operation} m_prj_task.taskname LIKE '%${searchCriteria.summary.value}%'
         #end
         ]]>
 	</sql>
@@ -30,7 +30,7 @@
 	<sql id="extraQueryBugSearchCriteria">
         <![CDATA[
         #ifnotnull($searchCriteria.summary)
-            ${searchCriteria.summary.operation} m_tracker_bug.summary LIKE '%' @{searchCriteria.summary.value} '%'
+            ${searchCriteria.summary.operation} m_tracker_bug.summary LIKE '%${searchCriteria.summary.value}%'
         #end
         ]]>
 	</sql>

@@ -19,7 +19,6 @@ package com.esofthead.mycollab.module.project.service.ibatis;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.esofthead.mycollab.common.domain.criteria.MonitorSearchCriteria;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultSearchService;
 import com.esofthead.mycollab.module.project.dao.ProjectFollowingTicketMapperExt;
