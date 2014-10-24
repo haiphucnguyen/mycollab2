@@ -53,6 +53,7 @@ Version 4.5.3
 **Bug Fixes**
 
 * Custom layout throws NPE
+* Fix NPE when user navigate the project time tracking list
 
 Version 4.5.2
 -----------------------------
