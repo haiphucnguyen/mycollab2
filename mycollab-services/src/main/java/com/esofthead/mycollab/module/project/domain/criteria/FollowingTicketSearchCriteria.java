@@ -6,7 +6,6 @@ import com.esofthead.mycollab.core.arguments.StringSearchField;
 public class FollowingTicketSearchCriteria extends MonitorSearchCriteria {
 	private static final long serialVersionUID = 1L;
 
-	
 	private StringSearchField summary;
 
 
