@@ -124,10 +124,11 @@ public class ImageUtil {
 
 	public static BufferedImage generateImageThumbnail(InputStream imageStream)
 			throws IOException {
-		int size = 64;
+		int idealWidth = 256;
 //		BufferedImage source = ImageIO.read(imageStream);
 //		int imgHeight = source.getHeight();
 //		int imgWidth = source.getWidth();
+//		
 //		BufferedImage rescaledImage = Scalr.resize(source, Method.BALANCED,
 //				Mode.AUTOMATIC, (int) width, (int) height);
 		return null;
