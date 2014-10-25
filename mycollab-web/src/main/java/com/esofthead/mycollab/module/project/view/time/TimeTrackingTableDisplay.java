@@ -101,7 +101,15 @@ public class TimeTrackingTableDisplay
 								ContentMode.HTML);
 					} else if (type.equals(ProjectTypeConstants.BUG)) {
 						System.out.println(BeanUtility
-								.printBeanObj(itemLogging));
+								.printBeanObj(itemLogging)
+								+ "----"
+								+ itemLogging.getSummary()
+								+ "---"
+								+ ProjectLinkBuilder.generateProjectItemLink(
+										itemLogging.getProjectShortName(),
+										itemLogging.getProjectid(),
+										itemLogging.getType(),
+										itemLogging.getTypeid()));
 						timeTrackingLink = new LabelLink(itemLogging
 								.getSummary(), ProjectLinkBuilder
 								.generateProjectItemLink(
