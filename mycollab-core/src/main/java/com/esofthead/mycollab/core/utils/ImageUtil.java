@@ -124,19 +124,25 @@ public class ImageUtil {
 
 	public static BufferedImage generateImageThumbnail(InputStream imageStream)
 			throws IOException {
-		int idealWidth = 256;
-//		BufferedImage source = ImageIO.read(imageStream);
-//		int imgHeight = source.getHeight();
-//		int imgWidth = source.getWidth();
-//		
-//		BufferedImage rescaledImage = Scalr.resize(source, Method.BALANCED,
-//				Mode.AUTOMATIC, (int) width, (int) height);
-		return null;
+		int idealWidth = 512;
+		BufferedImage source = ImageIO.read(imageStream);
+		int imgHeight = source.getHeight();
+		int imgWidth = source.getWidth();
+
+		float scale = imgWidth / idealWidth;
+		int height = (int) (imgHeight / scale);
+
+		BufferedImage rescaledImage = Scalr.resize(source, Method.QUALITY,
+				Mode.FIT_TO_WIDTH, idealWidth, (int) height);
+		return rescaledImage;
 	}
 
 	public static void main(String[] args) throws IOException {
 		BufferedImage thumbnail = generateImageThumbnail(new FileInputStream(
-				new File("/Users/haiphucnguyen/Desktop/Customer Dashboard.png")));
+				new File(
+						"/Users/haiphucnguyen/Downloads/FLO002_HomePage_V1.jpg")));
+		ImageIO.write(thumbnail, "png", new File(
+				"/Users/haiphucnguyen/Desktop/test.png"));
 		System.out.println("Thumb: " + thumbnail);
 	}
 }

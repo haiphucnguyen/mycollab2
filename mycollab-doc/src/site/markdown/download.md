@@ -12,9 +12,9 @@ See the full [Release Notes](release-notes.html) for more details
 
 * Sources: [MyCollab-4.5.2-src](https://github.com/esofthead/mycollab/archive/Release_4.5.2.zip) (11.2 MB)
 * Binaries:
-    * Windows: [MyCollab-Installer-4.5.2.exe](a) - [Installation Guideline](installation-windows.html)
-    * MacOS: [MyCollab-MacOS-4.5.2.app.zip](b) - [Installation Guideline](installation-mac.html)
-    * Linux: [MyCollab-Generic-4.5.2.jar](c) - [Installation Guideline](installation-generic.html)
+    * Windows: [MyCollab-Installer-4.5.2.exe](https://sourceforge.net/projects/mycollab/files/MyCollab_4.5.2/MyCollab-Installer-4.5.2.exe/download) - [Installation Guideline](installation-windows.html)
+    * MacOS: [MyCollab-MacOS-4.5.2.app.zip](https://sourceforge.net/projects/mycollab/files/MyCollab_4.5.2/MyCollab-Generic-4.5.2.jar/download) - [Installation Guideline](installation-mac.html)
+    * Linux: [MyCollab-Generic-4.5.2.jar](https://sourceforge.net/projects/mycollab/files/MyCollab_4.5.2/MyCollab-MacOS-4.5.2.app.zip/download) - [Installation Guideline](installation-generic.html)
 
 ### Release Archive
 
