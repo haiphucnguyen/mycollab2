@@ -88,7 +88,7 @@ public class TimeTrackingTableDisplay
 			@Override
 			public com.vaadin.ui.Component generateCell(final Table source,
 					final Object itemId, final Object columnId) {
-				final SimpleItemTimeLogging itemLogging = TimeTrackingTableDisplay.this
+				SimpleItemTimeLogging itemLogging = TimeTrackingTableDisplay.this
 						.getBeanByIndex(itemId);
 
 				try {
@@ -100,6 +100,8 @@ public class TimeTrackingTableDisplay
 						return new Label(itemLogging.getNote(),
 								ContentMode.HTML);
 					} else if (type.equals(ProjectTypeConstants.BUG)) {
+						System.out.println(BeanUtility
+								.printBeanObj(itemLogging));
 						timeTrackingLink = new LabelLink(itemLogging
 								.getSummary(), ProjectLinkBuilder
 								.generateProjectItemLink(
