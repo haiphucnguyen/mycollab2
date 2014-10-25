@@ -438,11 +438,6 @@ public class ComponentReadViewImpl extends
 		return this;
 	}
 
-	@Override
-	public void addViewListener(ViewListener listener) {
-
-	}
-
 	private class PeopleInfoComp extends VerticalLayout {
 		private static final long serialVersionUID = 1L;
 
