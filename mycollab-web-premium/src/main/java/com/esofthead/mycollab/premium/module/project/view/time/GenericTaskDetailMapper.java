@@ -93,7 +93,7 @@ public class GenericTaskDetailMapper {
 		} else if (ProjectTypeConstants.STANDUP.equals(type)) {
 			StandupReportService service = ApplicationContextUtil
 					.getSpringBean(StandupReportService.class);
-			SimpleStandupReport standup = service.findStandupReportById(typeid,
+			SimpleStandupReport standup = service.findById(typeid,
 					sAccountId);
 			if (standup != null) {
 				name = Jsoup.parse(

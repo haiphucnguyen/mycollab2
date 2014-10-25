@@ -3,6 +3,7 @@ package com.esofthead.mycollab.common.interceptor.aspect.cache;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -51,7 +52,7 @@ public class L2CacheAspect {
 		}
 
 		Object[] args = pjp.getArgs();
-		if (args != null && args.length > 0) {
+		if (ArrayUtils.isNotEmpty(args)) {
 			Annotation[][] parameterAnnotations = method
 					.getParameterAnnotations();
 			for (int i = 0; i < parameterAnnotations.length; i++) {
