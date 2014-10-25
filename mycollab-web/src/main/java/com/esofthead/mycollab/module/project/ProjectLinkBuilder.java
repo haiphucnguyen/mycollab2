@@ -243,8 +243,8 @@ public class ProjectLinkBuilder {
 						projectId, typeid);
 			}
 		} catch (Exception e) {
-			log.error("Error while generate link {} {} {} {}", prjShortName,
-					projectId, type, typeid);
+			log.error("Error while generate link {} {} {} {}", new Object[] {
+					prjShortName, projectId, type, typeid });
 		}
 
 		return "#" + result;
