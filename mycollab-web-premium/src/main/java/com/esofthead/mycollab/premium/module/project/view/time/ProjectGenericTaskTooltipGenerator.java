@@ -86,7 +86,7 @@ class ProjectGenericTaskTooltipGenerator {
 		} else if (ProjectTypeConstants.STANDUP.equals(type)) {
 			StandupReportService service = ApplicationContextUtil
 					.getSpringBean(StandupReportService.class);
-			SimpleStandupReport standup = service.findStandupReportById(typeid,
+			SimpleStandupReport standup = service.findById(typeid,
 					sAccountId);
 			html = ProjectTooltipGenerator.generateToolTipStandUp(
 					AppContext.getUserLocale(), standup, siteURL, timeZone);

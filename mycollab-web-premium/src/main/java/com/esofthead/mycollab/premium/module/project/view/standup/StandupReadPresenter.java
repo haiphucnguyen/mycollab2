@@ -28,7 +28,7 @@ public class StandupReadPresenter extends AbstractPresenter<StandupReadView> {
 			StandupReportService standupService = ApplicationContextUtil
 					.getSpringBean(StandupReportService.class);
 			SimpleStandupReport standupReport = standupService
-					.findStandupReportById((Integer) data.getParams(),
+					.findById((Integer) data.getParams(),
 							AppContext.getAccountId());
 			if (standupReport != null) {
 				StandupContainer standupContainer = (StandupContainer) container;

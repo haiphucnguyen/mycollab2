@@ -88,7 +88,7 @@ public class TimeTrackingTableDisplay
 			@Override
 			public com.vaadin.ui.Component generateCell(final Table source,
 					final Object itemId, final Object columnId) {
-				final SimpleItemTimeLogging itemLogging = TimeTrackingTableDisplay.this
+				SimpleItemTimeLogging itemLogging = TimeTrackingTableDisplay.this
 						.getBeanByIndex(itemId);
 
 				try {
