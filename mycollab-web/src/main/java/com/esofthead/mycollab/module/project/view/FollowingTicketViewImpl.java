@@ -16,24 +16,11 @@
  */
 package com.esofthead.mycollab.module.project.view;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang.StringUtils;
-
 import com.esofthead.mycollab.common.i18n.FollowerI18nEnum;
-import com.esofthead.mycollab.common.i18n.GenericI18Enum;
-import com.esofthead.mycollab.core.arguments.SearchField;
-import com.esofthead.mycollab.core.arguments.SetSearchField;
-import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.domain.FollowingTicket;
-import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.FollowingTicketSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ProjectFollowingTicketService;
-import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.reporting.ExportItemsStreamResource;
 import com.esofthead.mycollab.reporting.ReportExportType;
 import com.esofthead.mycollab.reporting.RpParameterBuilder;
@@ -41,28 +28,25 @@ import com.esofthead.mycollab.reporting.SimpleGridExportItemsStreamResource;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.resources.LazyStreamSource;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.SplitButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.vaadin.ui.UiUtils;
 import com.esofthead.mycollab.vaadin.ui.WebResourceIds;
+import com.esofthead.mycollab.vaadin.ui.table.AbstractPagedBeanTable;
 import com.vaadin.server.FileDownloader;
 import com.vaadin.server.StreamResource;
 import com.vaadin.server.StreamResource.StreamSource;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.ui.AbstractSelect.ItemCaptionMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.ListSelect;
-import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
 /**
@@ -80,15 +64,9 @@ public class FollowingTicketViewImpl extends AbstractPageView implements
 	private final FollowingTicketTableDisplay ticketTable;
 	private FollowingTicketSearchCriteria searchCriteria;
 
-	private UserInvolvedProjectsListSelect projectField;
-	private TextField summaryField;
-
-	private List<SimpleProject> projects;
+	private FollowingTicketSearchPanel searchPanel;
 
 	public FollowingTicketViewImpl() {
-		projects = ApplicationContextUtil.getSpringBean(ProjectService.class)
-				.getProjectsUserInvolved(AppContext.getUsername(),
-						AppContext.getAccountId());
 		this.setWidth("100%");
 
 		final VerticalLayout headerWrapper = new VerticalLayout();
@@ -132,7 +110,6 @@ public class FollowingTicketViewImpl extends AbstractPageView implements
 				EventBusFactory.getInstance().post(
 						new ShellEvent.GotoProjectModule(
 								FollowingTicketViewImpl.this, null));
-
 			}
 		});
 
@@ -150,7 +127,6 @@ public class FollowingTicketViewImpl extends AbstractPageView implements
 			@Override
 			public void buttonClick(ClickEvent event) {
 				exportButtonControl.setPopupVisible(true);
-
 			}
 		});
 		exportButtonControl = new SplitButton(exportBtn);
@@ -182,88 +158,13 @@ public class FollowingTicketViewImpl extends AbstractPageView implements
 
 		controlBtns.addComponent(exportButtonControl);
 
-		VerticalLayout selectionLayoutWrapper = new VerticalLayout();
-		selectionLayoutWrapper.setWidth("100%");
-		selectionLayoutWrapper
-				.addStyleName("time-tracking-summary-search-panel");
-		contentWrapper.addComponent(selectionLayoutWrapper);
-
-		final GridLayout selectionLayout = new GridLayout(3, 2);
-		selectionLayout.setSpacing(true);
-		selectionLayout.setDefaultComponentAlignment(Alignment.TOP_RIGHT);
-		selectionLayout.setMargin(true);
-		selectionLayoutWrapper.addComponent(selectionLayout);
-
-		VerticalLayout summaryLbWrapper = new VerticalLayout();
-		summaryLbWrapper.setWidth("100px");
-		Label summaryLb = new Label("Summary:");
-		summaryLb.setWidthUndefined();
-		UiUtils.addComponent(summaryLbWrapper, summaryLb, Alignment.TOP_RIGHT);
-		selectionLayout.addComponent(summaryLbWrapper, 0, 0);
-
-		this.summaryField = new TextField();
-		this.summaryField.setWidth("100%");
-		selectionLayout.addComponent(this.summaryField, 1, 0);
-
-		VerticalLayout projectLbWrapper = new VerticalLayout();
-		projectLbWrapper.setWidth("100px");
-		Label projectLb = new Label("Project:");
-		projectLb.setWidthUndefined();
-		UiUtils.addComponent(projectLbWrapper, projectLb, Alignment.TOP_RIGHT);
-		selectionLayout.addComponent(projectLbWrapper, 0, 1);
-
-		this.projectField = new UserInvolvedProjectsListSelect();
-		initListSelectStyle(this.projectField);
-		selectionLayout.addComponent(this.projectField, 1, 1);
-
-		final Button queryBtn = new Button(
-				AppContext.getMessage(GenericI18Enum.BUTTON_SUBMIT),
-				new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
-
-					@SuppressWarnings({ "unchecked", "rawtypes" })
-					@Override
-					public void buttonClick(final ClickEvent event) {
-						String summary = summaryField.getValue();
-						if (!StringUtils.isEmpty(summary)) {
-							searchCriteria.setSummary(new StringSearchField(
-									summary));
-						}
-						final Collection<Integer> selectedProjects = (Collection<Integer>) projectField
-								.getValue();
-						if (CollectionUtils.isNotEmpty(selectedProjects)) {
-							searchCriteria.setExtraTypeIds(new SetSearchField(
-									SearchField.AND, selectedProjects));
-						} else {
-							List<Integer> keys = new ArrayList<Integer>();
-							for (SimpleProject project : projects) {
-								keys.add(project.getId());
-							}
-							searchCriteria.setExtraTypeIds(new SetSearchField(
-									SearchField.AND, keys));
-						}
-						ticketTable.setSearchCriteria(searchCriteria);
-					}
-				});
-		queryBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
-
-		VerticalLayout queryBtnWrapper = new VerticalLayout();
-		queryBtnWrapper.setWidth("100px");
-		UiUtils.addComponent(queryBtnWrapper, queryBtn, Alignment.TOP_RIGHT);
-		selectionLayout.addComponent(queryBtnWrapper, 2, 0);
+		searchPanel = new FollowingTicketSearchPanel();
+		contentWrapper.addComponent(searchPanel);
 
 		this.ticketTable = new FollowingTicketTableDisplay();
 		this.ticketTable.addStyleName("full-border-table");
 		this.ticketTable.setMargin(new MarginInfo(true, false, false, false));
 		contentWrapper.addComponent(this.ticketTable);
-	}
-
-	private void initListSelectStyle(ListSelect listSelect) {
-		listSelect.setWidth("300px");
-		listSelect.setItemCaptionMode(ItemCaptionMode.EXPLICIT);
-		listSelect.setNullSelectionAllowed(false);
-		listSelect.setMultiSelect(true);
-		listSelect.setRows(4);
 	}
 
 	private StreamResource constructStreamResource(
@@ -290,25 +191,17 @@ public class FollowingTicketViewImpl extends AbstractPageView implements
 	}
 
 	@Override
-	public void displayFollowingTicket(final List<Integer> prjKeys) {
-		if (CollectionUtils.isNotEmpty(prjKeys)) {
-			searchCriteria = new FollowingTicketSearchCriteria();
-			searchCriteria.setExtraTypeIds(new SetSearchField<Integer>(prjKeys
-					.toArray(new Integer[0])));
-			searchCriteria.setUser(new StringSearchField(AppContext
-					.getUsername()));
-		}
+	public void displayTickets() {
+		searchPanel.doSearch();
 	}
 
-	private class UserInvolvedProjectsListSelect extends ListSelect {
-		private static final long serialVersionUID = 1L;
+	@Override
+	public HasSearchHandlers<FollowingTicketSearchCriteria> getSearchHandlers() {
+		return searchPanel;
+	}
 
-		public UserInvolvedProjectsListSelect() {
-			for (SimpleProject project : projects) {
-				this.addItem(project.getId());
-				this.setItemCaption(project.getId(), project.getName());
-			}
-		}
-
+	@Override
+	public AbstractPagedBeanTable<FollowingTicketSearchCriteria, FollowingTicket> getPagedBeanTable() {
+		return this.ticketTable;
 	}
 }

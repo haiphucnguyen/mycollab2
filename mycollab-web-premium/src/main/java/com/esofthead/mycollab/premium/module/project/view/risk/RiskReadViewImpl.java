@@ -19,6 +19,7 @@ import com.esofthead.mycollab.module.project.i18n.RiskI18nEnum;
 import com.esofthead.mycollab.module.project.ui.components.AbstractPreviewItemComp2;
 import com.esofthead.mycollab.module.project.ui.components.CommentDisplay;
 import com.esofthead.mycollab.module.project.ui.components.DateInfoComp;
+import com.esofthead.mycollab.module.project.ui.components.ProjectFollowersComp;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserFormLinkField;
 import com.esofthead.mycollab.schedule.email.project.ProjectRiskRelayEmailNotificationAction;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -65,6 +66,8 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp2<SimpleRisk>
 
 	private PeopleInfoComp peopleInfoComp;
 
+	private ProjectFollowersComp<SimpleRisk> followerSheet;
+
 	public RiskReadViewImpl() {
 		super(AppContext.getMessage(RiskI18nEnum.FORM_READ_TITLE),
 				MyCollabResource
@@ -103,6 +106,11 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp2<SimpleRisk>
 
 		peopleInfoComp = new PeopleInfoComp();
 		addToSideBar(peopleInfoComp);
+
+		followerSheet = new ProjectFollowersComp<SimpleRisk>(
+				ProjectTypeConstants.RISK,
+				ProjectRolePermissionCollections.RISKS);
+		addToSideBar(followerSheet);
 	}
 
 	@Override
@@ -116,6 +124,7 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp2<SimpleRisk>
 
 		dateInfoComp.displayEntryDateTime(beanItem);
 		peopleInfoComp.displayEntryPeople(beanItem);
+		followerSheet.displayFollowers(beanItem);
 	}
 
 	@Override
@@ -157,8 +166,7 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp2<SimpleRisk>
 		protected Field<?> onCreateField(Object propertyId) {
 			SimpleRisk risk = attachForm.getBean();
 			if (propertyId.equals("description")) {
-				return new RichTextViewField(
-						risk.getDescription());
+				return new RichTextViewField(risk.getDescription());
 			} else if (propertyId.equals("level")) {
 				final RatingStars tinyRs = new RatingStars();
 				tinyRs.setValue(risk.getLevel());

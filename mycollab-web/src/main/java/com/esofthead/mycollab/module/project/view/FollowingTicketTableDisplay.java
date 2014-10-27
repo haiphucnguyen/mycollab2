@@ -1,8 +1,23 @@
+/**
+ * This file is part of mycollab-web.
+ *
+ * mycollab-web is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * mycollab-web is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package com.esofthead.mycollab.module.project.view;
 
 import java.util.Arrays;
 import java.util.GregorianCalendar;
-import java.util.List;
 
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
@@ -12,7 +27,9 @@ import com.esofthead.mycollab.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.BugStatus;
 import com.esofthead.mycollab.module.project.service.ProjectFollowingTicketService;
 import com.esofthead.mycollab.module.project.view.parameters.BugScreenData;
+import com.esofthead.mycollab.module.project.view.parameters.ProblemScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData;
+import com.esofthead.mycollab.module.project.view.parameters.RiskScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.TaskScreenData;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -21,28 +38,27 @@ import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UserLink;
-import com.esofthead.mycollab.vaadin.ui.table.AbstractPagedBeanTable;
+import com.esofthead.mycollab.vaadin.ui.table.DefaultPagedBeanTable;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
-import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Table.ColumnGenerator;
 
-public class FollowingTicketTableDisplay extends
-		AbstractPagedBeanTable<FollowingTicketSearchCriteria, FollowingTicket> {
+public class FollowingTicketTableDisplay
+		extends
+		DefaultPagedBeanTable<ProjectFollowingTicketService, FollowingTicketSearchCriteria, FollowingTicket> {
 
 	private static final long serialVersionUID = 1L;
-	private ProjectFollowingTicketService projectFollowingTicketService;
 
 	public FollowingTicketTableDisplay() {
-		super(FollowingTicket.class, Arrays.asList(
-				FollowingTicketFieldDef.summary,
-				FollowingTicketFieldDef.project,
-				FollowingTicketFieldDef.assignee,
-				FollowingTicketFieldDef.createdDate));
-
-		this.projectFollowingTicketService = ApplicationContextUtil
-				.getSpringBean(ProjectFollowingTicketService.class);
+		super(ApplicationContextUtil
+				.getSpringBean(ProjectFollowingTicketService.class),
+				FollowingTicket.class, Arrays.asList(
+						FollowingTicketFieldDef.summary,
+						FollowingTicketFieldDef.project,
+						FollowingTicketFieldDef.assignee,
+						FollowingTicketFieldDef.createdDate));
 
 		this.addGeneratedColumn("summary", new ColumnGenerator() {
 			private static final long serialVersionUID = 1L;
@@ -113,6 +129,68 @@ public class FollowingTicketTableDisplay extends
 											chain));
 						}
 					});
+				} else if (ProjectTypeConstants.PROBLEM.equals(ticket.getType())) {
+					ticketLink.setIcon(MyCollabResource
+							.newResource("icons/16/project/problem.png"));
+
+					if ("Closed".equals(ticket.getStatus())) {
+						ticketLink.addStyleName(UIConstants.LINK_COMPLETED);
+					} else {
+						if ("Pending".equals(ticket.getStatus())) {
+							ticketLink.addStyleName(UIConstants.LINK_PENDING);
+						} else if (ticket.getDueDate() != null
+								&& ticket.getDueDate().before(
+										new GregorianCalendar().getTime())) {
+							ticketLink.addStyleName(UIConstants.LINK_OVERDUE);
+						}
+					}
+
+					ticketLink.addClickListener(new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void buttonClick(final ClickEvent event) {
+							final int projectId = ticket.getProjectId();
+							final int problemId = ticket.getTypeId();
+							final PageActionChain chain = new PageActionChain(
+									new ProjectScreenData.Goto(projectId),
+									new ProblemScreenData.Read(problemId));
+							EventBusFactory.getInstance()
+									.post(new ProjectEvent.GotoMyProject(this,
+											chain));
+						}
+					});
+				} else if (ProjectTypeConstants.RISK.equals(ticket.getType())) {
+					ticketLink.setIcon(MyCollabResource
+							.newResource("icons/16/project/risk.png"));
+
+					if ("Closed".equals(ticket.getStatus())) {
+						ticketLink.addStyleName(UIConstants.LINK_COMPLETED);
+					} else {
+						if ("Pending".equals(ticket.getStatus())) {
+							ticketLink.addStyleName(UIConstants.LINK_PENDING);
+						} else if (ticket.getDueDate() != null
+								&& ticket.getDueDate().before(
+										new GregorianCalendar().getTime())) {
+							ticketLink.addStyleName(UIConstants.LINK_OVERDUE);
+						}
+					}
+
+					ticketLink.addClickListener(new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void buttonClick(final ClickEvent event) {
+							final int projectId = ticket.getProjectId();
+							final int riskId = ticket.getTypeId();
+							final PageActionChain chain = new PageActionChain(
+									new ProjectScreenData.Goto(projectId),
+									new RiskScreenData.Read(riskId));
+							EventBusFactory.getInstance()
+									.post(new ProjectEvent.GotoMyProject(this,
+											chain));
+						}
+					});
 				}
 
 				return ticketLink;
@@ -155,10 +233,9 @@ public class FollowingTicketTableDisplay extends
 					final Object columnId) {
 				final FollowingTicket ticket = FollowingTicketTableDisplay.this
 						.getBeanByIndex(itemId);
-				final UserLink userLink = new UserLink(ticket.getAssignUser(),
-						ticket.getAssignUserAvatarId(), ticket
-								.getAssignUserFullName());
-				return userLink;
+				return new UserLink(ticket.getAssignUser(), ticket
+						.getAssignUserAvatarId(), ticket
+						.getAssignUserFullName());
 			}
 		});
 
@@ -170,24 +247,8 @@ public class FollowingTicketTableDisplay extends
 					final Object columnId) {
 				final FollowingTicket ticket = FollowingTicketTableDisplay.this
 						.getBeanByIndex(itemId);
-				Label lbl = new Label();
-				lbl.setValue(AppContext.formatDate(ticket.getMonitorDate()));
-				return lbl;
+				return new Label(AppContext.formatDate(ticket.getMonitorDate()));
 			}
 		});
 	}
-
-	@Override
-	protected int queryTotalCount() {
-		return this.projectFollowingTicketService
-				.getTotalCount(this.searchRequest.getSearchCriteria());
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	protected List<FollowingTicket> queryCurrentData() {
-		return this.projectFollowingTicketService
-				.findPagableListByCriteria(this.searchRequest);
-	}
-
 }

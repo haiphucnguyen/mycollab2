@@ -19,6 +19,7 @@ import com.esofthead.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.ui.components.AbstractPreviewItemComp2;
 import com.esofthead.mycollab.module.project.ui.components.CommentDisplay;
 import com.esofthead.mycollab.module.project.ui.components.DateInfoComp;
+import com.esofthead.mycollab.module.project.ui.components.ProjectFollowersComp;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserFormLinkField;
 import com.esofthead.mycollab.schedule.email.project.ProjectRiskRelayEmailNotificationAction;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -50,7 +51,7 @@ import com.vaadin.ui.VerticalLayout;
  * @since 1.0
  * 
  */
-@ViewComponent(scope=ViewScope.PROTOTYPE)
+@ViewComponent(scope = ViewScope.PROTOTYPE)
 public class ProblemReadViewImpl extends
 		AbstractPreviewItemComp2<SimpleProblem> implements ProblemReadView {
 
@@ -64,6 +65,8 @@ public class ProblemReadViewImpl extends
 
 	private DateInfoComp dateInfoComp;
 	private PeopleInfoComp peopleInfoComp;
+
+	private ProjectFollowersComp<SimpleProblem> followerSheet;
 
 	public ProblemReadViewImpl() {
 		super(AppContext.getMessage(ProblemI18nEnum.VIEW_READ_TITLE),
@@ -98,6 +101,11 @@ public class ProblemReadViewImpl extends
 
 		peopleInfoComp = new PeopleInfoComp();
 		addToSideBar(peopleInfoComp);
+
+		followerSheet = new ProjectFollowersComp<SimpleProblem>(
+				ProjectTypeConstants.PROBLEM,
+				ProjectRolePermissionCollections.PROBLEMS);
+		addToSideBar(followerSheet);
 	}
 
 	@Override
@@ -110,6 +118,7 @@ public class ProblemReadViewImpl extends
 
 		dateInfoComp.displayEntryDateTime(beanItem);
 		peopleInfoComp.displayEntryPeople(beanItem);
+		followerSheet.displayFollowers(beanItem);
 	}
 
 	@Override
@@ -176,8 +185,7 @@ public class ProblemReadViewImpl extends
 						problem.getAssignUserAvatarId(),
 						problem.getAssignedUserFullName());
 			} else if (propertyId.equals("description")) {
-				return new RichTextViewField(
-						problem.getDescription());
+				return new RichTextViewField(problem.getDescription());
 			}
 
 			return null;
