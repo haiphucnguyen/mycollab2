@@ -56,7 +56,7 @@ import com.vaadin.ui.CustomField;
 @SuppressWarnings("rawtypes")
 public class ProjectFormWatcherSelectField<V extends ValuedBean> extends
 		CustomField {
-	private static Logger log = LoggerFactory
+	private static final Logger LOG = LoggerFactory
 			.getLogger(ProjectFormWatcherSelectField.class);
 
 	private static final long serialVersionUID = 1L;
@@ -89,7 +89,7 @@ public class ProjectFormWatcherSelectField<V extends ValuedBean> extends
 			this.typeId = (Integer) PropertyUtils.getProperty(bean, "id");
 		} catch (IllegalAccessException | InvocationTargetException
 				| NoSuchMethodException e) {
-			log.error("Error", e);
+			LOG.error("Error", e);
 		}
 	}
 

@@ -19,7 +19,7 @@ import com.esofthead.mycollab.jgroups.service.DistributionLockService;
 import com.esofthead.mycollab.jgroups.service.DummyLock;
 
 public class DistributionLockServiceImpl implements DistributionLockService {
-	private static Logger log = LoggerFactory
+	private static final Logger LOG = LoggerFactory
 			.getLogger(DistributionLockServiceImpl.class);
 
 	@Override
@@ -57,7 +57,7 @@ public class DistributionLockServiceImpl implements DistributionLockService {
 					true, ProtocolStack.ABOVE, CENTRAL_LOCK.class);
 			return fork_ch;
 		} catch (Exception e) {
-			log.error("Can not init the distributed lock", e);
+			LOG.error("Can not init the distributed lock", e);
 			return null;
 		}
 	}

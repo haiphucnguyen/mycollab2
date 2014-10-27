@@ -45,7 +45,7 @@ import fi.jasoft.dragdroplayouts.events.VerticalLocationIs;
 class ActiveSectionComp extends GenericSectionComp {
 	private static final long serialVersionUID = 1L;
 
-	private static Logger log = LoggerFactory
+	private static final Logger LOG = LoggerFactory
 			.getLogger(ActiveSectionComp.class);
 
 	public ActiveSectionComp(DynaSection section) {
@@ -177,11 +177,11 @@ class ActiveSectionComp extends GenericSectionComp {
 			if (field.isMandatory())
 				fieldBtn.setMandatory(true);
 			if (originSection.getLayoutType() == LayoutType.ONE_COLUMN) {
-				log.debug("Add field " + field.getDisplayName()
+				LOG.debug("Add field " + field.getDisplayName()
 						+ " in (colum, row) " + 0 + ", " + j);
 				dragLayout.addComponent(fieldBtn, 0, j);
 			} else if (originSection.getLayoutType() == LayoutType.TWO_COLUMN) {
-				log.debug("Add field " + field.getDisplayName()
+				LOG.debug("Add field " + field.getDisplayName()
 						+ " in (colum, row) " + (j % 2) + ", " + (j / 2));
 				dragLayout.addComponent(fieldBtn, j % 2, j / 2);
 			}
@@ -191,11 +191,11 @@ class ActiveSectionComp extends GenericSectionComp {
 		emptyField.setWidth("100%");
 
 		if (originSection.getLayoutType() == LayoutType.ONE_COLUMN) {
-			log.debug("Add empty field in (column, row) " + 0 + ", "
+			LOG.debug("Add empty field in (column, row) " + 0 + ", "
 					+ (dragLayout.getRows() - 1));
 			dragLayout.addComponent(emptyField, 0, dragLayout.getRows() - 1);
 		} else if (originSection.getLayoutType() == LayoutType.TWO_COLUMN) {
-			log.debug("Add empty field in (column, row) " + 0 + ", "
+			LOG.debug("Add empty field in (column, row) " + 0 + ", "
 					+ (dragLayout.getRows() - 1));
 			dragLayout.addComponent(emptyField, 0, dragLayout.getRows() - 1, 1,
 					dragLayout.getRows() - 1);

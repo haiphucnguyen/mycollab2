@@ -73,7 +73,7 @@ import com.vaadin.ui.themes.Reindeer;
 public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 	private static final long serialVersionUID = 1L;
 
-	private static Logger log = LoggerFactory.getLogger(FileMainViewImpl.class);
+	private static final Logger LOG = LoggerFactory.getLogger(FileMainViewImpl.class);
 
 	private static final String illegalFileNamePattern = "[<>:&/\\|?*&]";
 
@@ -336,11 +336,11 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 						}
 
 						if (selectedFolder == null) {
-							log.error("Can not find folder with path "
+							LOG.error("Can not find folder with path "
 									+ criteria.getBaseFolder() + "--"
 									+ criteria.getRootFolder());
 						} else if (!(selectedFolder instanceof Folder)) {
-							log.error("Expect folder but the result is file "
+							LOG.error("Expect folder but the result is file "
 									+ criteria.getBaseFolder() + "--"
 									+ criteria.getRootFolder());
 						} else {

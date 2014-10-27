@@ -90,7 +90,7 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp2<SimpleTask>
 
 	private static final long serialVersionUID = 1L;
 
-	private static Logger log = LoggerFactory.getLogger(TaskReadViewImpl.class);
+	private static final Logger LOG = LoggerFactory.getLogger(TaskReadViewImpl.class);
 
 	private CommentDisplay commentList;
 
@@ -417,7 +417,7 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp2<SimpleTask>
 						assignUserAvatarId, assignUserDisplayName);
 				layout.addComponent(assignUserLink, 1, 1);
 			} catch (Exception e) {
-				log.error("Can not build user link {} ",
+				LOG.error("Can not build user link {} ",
 						BeanUtility.printBeanObj(bean));
 			}
 

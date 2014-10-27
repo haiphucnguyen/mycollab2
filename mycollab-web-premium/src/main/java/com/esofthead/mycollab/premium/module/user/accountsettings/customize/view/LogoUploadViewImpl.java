@@ -69,7 +69,7 @@ public class LogoUploadViewImpl extends AbstractPageView implements
 		LogoUploadView {
 	private static final long serialVersionUID = -5294741083557671011L;
 
-	private static Logger log = LoggerFactory
+	private static final Logger LOG = LoggerFactory
 			.getLogger(LogoUploadViewImpl.class);
 
 	private BufferedImage originalImage;
@@ -85,7 +85,7 @@ public class LogoUploadViewImpl extends AbstractPageView implements
 	public void editPhoto(final byte[] imageData,
 			final AccountTheme accountTheme) {
 		this.removeAllComponents();
-		log.debug("Receive logo upload with size: " + imageData.length);
+		LOG.debug("Receive logo upload with size: " + imageData.length);
 		try {
 			originalImage = ImageIO.read(new ByteArrayInputStream(imageData));
 		} catch (IOException e) {
@@ -206,7 +206,7 @@ public class LogoUploadViewImpl extends AbstractPageView implements
 						scaleImageData = outStream.toByteArray();
 						displayPreviewImage();
 					} catch (IOException e) {
-						log.error("Error while scale image: ", e);
+						LOG.error("Error while scale image: ", e);
 					}
 				}
 

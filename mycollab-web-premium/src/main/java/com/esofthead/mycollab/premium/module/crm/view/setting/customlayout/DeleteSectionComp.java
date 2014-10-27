@@ -42,7 +42,7 @@ import fi.jasoft.dragdroplayouts.events.VerticalLocationIs;
 class DeleteSectionComp extends GenericSectionComp {
 	private static final long serialVersionUID = 1L;
 
-	private static Logger log = LoggerFactory
+	private static final Logger LOG = LoggerFactory
 			.getLogger(DeleteSectionComp.class);
 
 	public DeleteSectionComp(DynaSection section) {
@@ -149,7 +149,7 @@ class DeleteSectionComp extends GenericSectionComp {
 			AbstractDynaField field = section.getField(j);
 			CustomFieldComponent fieldBtn = new CustomFieldComponent(field);
 			fieldBtn.setWidth("100%");
-			log.debug("Add field " + field.getDisplayName()
+			LOG.debug("Add field " + field.getDisplayName()
 					+ " in (colum, row) " + 0 + ", " + j);
 			dragLayout.addComponent(fieldBtn, 0, j);
 		}
@@ -157,7 +157,7 @@ class DeleteSectionComp extends GenericSectionComp {
 		CustomFieldComponent emptyField = new CustomFieldComponent(null);
 		emptyField.setWidth("100%");
 
-		log.debug("Add empty field in (column, row) " + 0 + ", "
+		LOG.debug("Add empty field in (column, row) " + 0 + ", "
 				+ (dragLayout.getRows() - 1));
 		dragLayout.addComponent(emptyField, 0, dragLayout.getRows() - 1);
 	}

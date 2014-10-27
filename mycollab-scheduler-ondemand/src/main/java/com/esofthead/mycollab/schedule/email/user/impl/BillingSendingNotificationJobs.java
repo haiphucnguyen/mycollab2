@@ -59,7 +59,7 @@ import com.esofthead.mycollab.schedule.jobs.GenericQuartzJobBean;
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class BillingSendingNotificationJobs extends GenericQuartzJobBean {
 
-	private static Logger log = LoggerFactory
+	private static final Logger LOG = LoggerFactory
 			.getLogger(BillingSendingNotificationJobs.class);
 
 	private static final Integer DATE_REMIND_FOR_FREEPLAN_1ST = 24;
@@ -103,7 +103,7 @@ public class BillingSendingNotificationJobs extends GenericQuartzJobBean {
 
 		if (trialAccountsWithOwners != null) {
 			for (BillingAccountWithOwners account : trialAccountsWithOwners) {
-				log.debug("Check whether account exceed 25 days to remind user upgrade account");
+				LOG.debug("Check whether account exceed 25 days to remind user upgrade account");
 				Date accCreatedDate = DateTimeUtils.trimHMSOfDate(account
 						.getCreatedtime());
 
@@ -122,7 +122,7 @@ public class BillingSendingNotificationJobs extends GenericQuartzJobBean {
 				} else if (accCreatedDate.before(dateRemind2nd)
 						&& (account.getReminderstatus() == AccountReminderStatusContants.REMIND_ACCOUNT_IS_ABOUT_END_1ST_TIME || account
 								.getReminderstatus() == null)) {
-					log.debug("Check whether account exceed 30 days to inform him it is the end of day to upgrade account");
+					LOG.debug("Check whether account exceed 30 days to inform him it is the end of day to upgrade account");
 					sendRemindEmailAskUpdateBillingAccount(account,
 							DATE_REMIND_FOR_FREEPLAN_2ND);
 
@@ -133,7 +133,7 @@ public class BillingSendingNotificationJobs extends GenericQuartzJobBean {
 					billingAccountService.updateSelectiveWithSession(
 							billingAccount, "");
 				} else if (accCreatedDate.before(dateExpire)) {
-					log.debug("Check whether account exceed 32 days to convert to basic plan");
+					LOG.debug("Check whether account exceed 32 days to convert to basic plan");
 					sendingEmailInformConvertToFreePlan(account);
 
 					BillingAccount billingAccount = new BillingAccount();
@@ -155,7 +155,7 @@ public class BillingSendingNotificationJobs extends GenericQuartzJobBean {
 			BillingAccountWithOwners account) {
 
 		for (SimpleUser user : account.getOwners()) {
-			log.info("Send mail after 32 days for username {} , mail {}",
+			LOG.info("Send mail after 32 days for username {} , mail {}",
 					user.getUsername(), user.getEmail());
 			contentGenerator.putVariable("account", account);
 			contentGenerator.putVariable("userName", user.getUsername());
@@ -186,7 +186,7 @@ public class BillingSendingNotificationJobs extends GenericQuartzJobBean {
 		DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
 
 		for (SimpleUser user : account.getOwners()) {
-			log.info("Send mail after " + afterDay
+			LOG.info("Send mail after " + afterDay
 					+ "days for username {} , mail {}", user.getUsername(),
 					user.getEmail());
 

@@ -22,7 +22,7 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
  */
 @Service
 public class BillingPlanCheckerServiceImpl implements BillingPlanCheckerService {
-	private static Logger log = LoggerFactory
+	private static final Logger LOG = LoggerFactory
 			.getLogger(BillingPlanCheckerServiceImpl.class);
 
 	@Override
@@ -65,7 +65,7 @@ public class BillingPlanCheckerServiceImpl implements BillingPlanCheckerService 
 				.getSpringBean(BillingService.class);
 		BillingPlan billingPlan = billingService.findBillingPlan(sAccountId);
 		if (billingPlan == null) {
-			log.error("Can not define the billing plan for account ",
+			LOG.error("Can not define the billing plan for account ",
 					sAccountId);
 			return;
 		}

@@ -47,7 +47,7 @@ public abstract class DefaultCloudDriveOAuthWindow extends
 		AbstractCloudDriveOAuthWindow {
 	private static final long serialVersionUID = 1L;
 
-	private static Logger log = LoggerFactory
+	private static final Logger LOG = LoggerFactory
 			.getLogger(DefaultCloudDriveOAuthWindow.class);
 
 	private TextField folderName;
@@ -79,7 +79,7 @@ public abstract class DefaultCloudDriveOAuthWindow extends
 				ui.setPollInterval(1000);
 				cloudDriveInfo = (CloudDriveInfo) event.getData();
 
-				log.debug("Receive cloud drive info: "
+				LOG.debug("Receive cloud drive info: "
 						+ BeanUtility.printBeanObj(cloudDriveInfo));
 
 				ui.access(new Runnable() {

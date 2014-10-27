@@ -57,7 +57,7 @@ public class ProblemReadViewImpl extends
 
 	private static final long serialVersionUID = 1L;
 
-	private static Logger log = LoggerFactory
+	private static final Logger LOG = LoggerFactory
 			.getLogger(ProblemReadViewImpl.class);
 
 	private CommentDisplay commentList;
@@ -255,7 +255,7 @@ public class ProblemReadViewImpl extends
 						assignUserAvatarId, assignUserDisplayName);
 				layout.addComponent(assignUserLink, 1, 1);
 			} catch (Exception e) {
-				log.error("Can not build user link {} ",
+				LOG.error("Can not build user link {} ",
 						BeanUtility.printBeanObj(bean));
 			}
 

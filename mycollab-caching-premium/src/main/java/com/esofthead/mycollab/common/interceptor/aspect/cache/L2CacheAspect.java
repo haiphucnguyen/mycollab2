@@ -33,7 +33,7 @@ import com.esofthead.mycollab.core.utils.BeanUtility;
 @Component
 @Configurable
 public class L2CacheAspect {
-	private Logger log = LoggerFactory.getLogger(L2CacheAspect.class);
+	private static final Logger LOG = LoggerFactory.getLogger(L2CacheAspect.class);
 
 	@Around("execution(public * com.esofthead.mycollab..service..*.*(..))")
 	public Object cacheGet(ProceedingJoinPoint pjp) throws Throwable {
@@ -80,13 +80,13 @@ public class L2CacheAspect {
 									return pjp.proceed();
 								}
 							} else {
-								log.error(
+								LOG.error(
 										"Cache key must be one of types [Integer, GroupableSearchCriteria, SearchRequest], now it has type {}",
 										arg);
 								return pjp.proceed();
 							}
 						} catch (Exception e) {
-							log.error("Error when retrieve cache key with "
+							LOG.error("Error when retrieve cache key with "
 									+ BeanUtility.printBeanObj(arg)
 									+ " in service class " + cls.getName()
 									+ "." + method.getName(), e);
@@ -108,15 +108,15 @@ public class L2CacheAspect {
 									return returnVal;
 								}
 								cache.put(key, returnVal);
-								log.debug(
+								LOG.debug(
 										"There is no exist value of key {}, query from database then put it to cache",
 										key);
 							} catch (Exception e) {
-								log.error("Error while put to cache", e);
+								LOG.error("Error while put to cache", e);
 							}
 							return returnVal;
 						} else {
-							log.debug(
+							LOG.debug(
 									"There is exist value of key {}, no need to query from database",
 									key);
 							return returnVal;
@@ -125,7 +125,7 @@ public class L2CacheAspect {
 				}
 			}
 
-			log.error(
+			LOG.error(
 					"Can not cache class {}, method {} because we can not detect cache key with args {}",
 					new Object[] { cls.getName(), method.getName(),
 							BeanUtility.printBeanObj(args) });

@@ -46,7 +46,7 @@ import com.esofthead.mycollab.servlet.GenericServletRequestHandler;
 public class UserAvatarHttpServletRequestHandler extends
 		GenericServletRequestHandler {
 
-	private static Logger log = LoggerFactory
+	private static final Logger LOG = LoggerFactory
 			.getLogger(UserAvatarHttpServletRequestHandler.class);
 
 	@Override
@@ -70,11 +70,11 @@ public class UserAvatarHttpServletRequestHandler extends
 				size = Integer.parseInt(params[2]);
 
 				if (size <= 0) {
-					log.error("Error to get avatar", new MyCollabException(
+					LOG.error("Error to get avatar", new MyCollabException(
 							"Invalid request for avatar " + path));
 				}
 			} else {
-				log.error("Error to get avatar", new MyCollabException(
+				LOG.error("Error to get avatar", new MyCollabException(
 						"Invalid request for avatar " + path));
 			}
 		}

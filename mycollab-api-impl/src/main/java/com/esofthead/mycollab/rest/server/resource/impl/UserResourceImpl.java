@@ -34,7 +34,7 @@ import com.google.gson.GsonBuilder;
 @Service
 public class UserResourceImpl implements UserResource {
 
-	private static Logger log = LoggerFactory.getLogger(UserResourceImpl.class);
+	private static final Logger LOG = LoggerFactory.getLogger(UserResourceImpl.class);
 
 	@Autowired
 	private BillingService billingService;
@@ -46,11 +46,11 @@ public class UserResourceImpl implements UserResource {
 		String[] result;
 		if (subdomains != null) {
 			result = subdomains.toArray(new String[0]);
-			log.debug("There are subdomains for user {} {}", username,
+			LOG.debug("There are subdomains for user {} {}", username,
 					BeanUtility.printBeanObj(result));
 
 		} else {
-			log.debug("There is no subdomain for user {}", username);
+			LOG.debug("There is no subdomain for user {}", username);
 			result = new String[0];
 		}
 

@@ -21,7 +21,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -40,7 +39,7 @@ import org.slf4j.LoggerFactory;
  * @since 1.0
  */
 public class ImageUtil {
-	private static Logger log = LoggerFactory.getLogger(ImageUtil.class);
+	private static final Logger LOG = LoggerFactory.getLogger(ImageUtil.class);
 
 	/**
 	 * 
@@ -98,7 +97,7 @@ public class ImageUtil {
 			ImageIO.write(image, "png", outStream);
 			return outStream.toByteArray();
 		} catch (Exception e) {
-			log.error("Exception to convert jpg file format to png", e);
+			LOG.error("Exception to convert jpg file format to png", e);
 			return null;
 		}
 	}
@@ -117,7 +116,7 @@ public class ImageUtil {
 			baos.close();
 			return imageInByte;
 		} catch (IOException e) {
-			log.error("Exception to convert Image to Byte Array: ", e);
+			LOG.error("Exception to convert Image to Byte Array: ", e);
 			return null;
 		}
 	}

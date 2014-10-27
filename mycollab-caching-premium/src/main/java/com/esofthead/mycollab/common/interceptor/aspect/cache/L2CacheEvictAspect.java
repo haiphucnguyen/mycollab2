@@ -31,7 +31,7 @@ import com.esofthead.mycollab.core.utils.BeanUtility;
 @Configurable
 public class L2CacheEvictAspect {
 
-	private Logger log = LoggerFactory.getLogger(L2CacheEvictAspect.class);
+	private static final Logger LOG = LoggerFactory.getLogger(L2CacheEvictAspect.class);
 
 	@AfterReturning("execution(public * com.esofthead.mycollab..service..*.*(..))")
 	public void cacheEvict(JoinPoint pjp) throws Throwable {
@@ -69,7 +69,7 @@ public class L2CacheEvictAspect {
 								groupId = (Integer) PropertyUtils.getProperty(
 										arg, "saccountid");
 							} catch (Exception e) {
-								log.error(
+								LOG.error(
 										"Can not define cache key of class {}, method {} with argument {}",
 										new Object[] { cls.getName(),
 												method.getName(),
@@ -94,7 +94,7 @@ public class L2CacheEvictAspect {
 
 							CacheArgs cacheable = method
 									.getAnnotation(CacheArgs.class);
-							log.debug("Method: " + method + "---" + cacheable);
+							LOG.debug("Method: " + method + "---" + cacheable);
 							if (cacheable != null) {
 								if (cacheable.values() != null
 										&& cacheable.values().length > 0) {
@@ -110,7 +110,7 @@ public class L2CacheEvictAspect {
 				}
 			}
 		} else {
-			log.error("Can not define the cache key of class {}, method {}",
+			LOG.error("Can not define the cache key of class {}, method {}",
 					cls.getName(), method.getName());
 		}
 	}

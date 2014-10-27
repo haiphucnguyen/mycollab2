@@ -48,7 +48,7 @@ import com.esofthead.mycollab.module.user.domain.User;
  */
 @Service(value = "userAvatarService")
 public class UserAvatarServiceImpl implements UserAvatarService {
-	private static Logger log = LoggerFactory
+	private static final Logger LOG = LoggerFactory
 			.getLogger(UserAvatarServiceImpl.class);
 
 	@Autowired
@@ -111,12 +111,12 @@ public class UserAvatarServiceImpl implements UserAvatarService {
 					resourceService.removeResource("avatar/" + avatarId + "_"
 							+ SUPPORT_SIZES[i] + ".png", username, null);
 				} catch (Exception e) {
-					log.error("Error while delete old avatar", e);
+					LOG.error("Error while delete old avatar", e);
 				}
 			}
 		}
 
-		log.debug("Notify user avatar change");
+		LOG.debug("Notify user avatar change");
 		EventBusFactory.getInstance().post(
 				new SessionEvent.UserProfileChangeEvent(
 						UserAvatarServiceImpl.this, "avatarid", newAvatarId));

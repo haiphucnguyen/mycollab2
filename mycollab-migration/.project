@@ -8,6 +8,8 @@
     <project>mycollab-dao</project>
     <project>mycollab-localization</project>
     <project>mycollab-config</project>
+    <project>mycollab-services</project>
+    <project>mycollab-caching</project>
   </projects>
   <buildSpec>
     <buildCommand>

@@ -33,7 +33,7 @@ import com.esofthead.mycollab.rest.server.resource.AccountResource;
 
 @Service
 public class AccountResourceImpl implements AccountResource {
-	private static Logger log = LoggerFactory
+	private static final Logger LOG = LoggerFactory
 			.getLogger(AccountResourceImpl.class);
 
 	@Autowired
@@ -42,7 +42,7 @@ public class AccountResourceImpl implements AccountResource {
 	@Override
 	public Response signup(@Form SignupForm entity) {
 		try {
-			log.debug("Start handling form request");
+			LOG.debug("Start handling form request");
 			String subdomain = entity.getSubdomain();
 			int planId = entity.getPlanId();
 			String password = entity.getPassword();
@@ -50,13 +50,13 @@ public class AccountResourceImpl implements AccountResource {
 			String timezoneId = entity.getTimezoneId();
 			boolean isEmailVerified = entity.isEmailVerified();
 
-			log.debug("Register account with subdomain {}, username {}",
+			LOG.debug("Register account with subdomain {}, username {}",
 					subdomain, email);
 			this.billingService.registerAccount(subdomain, planId, email,
 					password, email, timezoneId, isEmailVerified);
 
 			String siteUrl = SiteConfiguration.getSiteUrl(subdomain);
-			log.debug("Return site url {} to sign up user {}", siteUrl, email);
+			LOG.debug("Return site url {} to sign up user {}", siteUrl, email);
 
 			Response response = Response.status(200).entity(siteUrl)
 					.type(MediaType.TEXT_PLAIN_TYPE).build();
@@ -68,7 +68,7 @@ public class AccountResourceImpl implements AccountResource {
 			response.getHeaders().add("Access-Control-Allow-Origin", "*");
 			return response;
 		} catch (Exception e) {
-			log.error("Error while sign up", e);
+			LOG.error("Error while sign up", e);
 			Response response = Response.status(500).entity(e.getMessage())
 					.type(MediaType.TEXT_PLAIN_TYPE).build();
 			response.getHeaders().add("Access-Control-Allow-Origin", "*");

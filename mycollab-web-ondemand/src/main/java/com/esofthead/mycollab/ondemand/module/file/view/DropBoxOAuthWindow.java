@@ -27,7 +27,7 @@ import com.vaadin.server.WrappedHttpSession;
 public final class DropBoxOAuthWindow extends DefaultCloudDriveOAuthWindow {
 	private static final long serialVersionUID = 1L;
 
-	private static Logger log = LoggerFactory
+	private static final Logger LOG = LoggerFactory
 			.getLogger(DropBoxOAuthWindow.class);
 
 	@Override
@@ -41,7 +41,7 @@ public final class DropBoxOAuthWindow extends DefaultCloudDriveOAuthWindow {
 				userLocale);
 		DbxAppInfo appInfo = new DbxAppInfo("y43ga49m30dfu02",
 				"rheskqqb6f8fo6a");
-		log.debug("redirect URL : " + redirectUri);
+		LOG.debug("redirect URL : " + redirectUri);
 		WrappedHttpSession wrappedSession = (WrappedHttpSession) VaadinService
 				.getCurrentRequest().getWrappedSession();
 

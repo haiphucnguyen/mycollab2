@@ -49,7 +49,7 @@ import com.esofthead.mycollab.module.user.service.AccountThemeService;
 
 @Service
 public class AccountLogoServiceImpl implements AccountLogoService {
-	private static Logger log = LoggerFactory
+	private static final Logger LOG = LoggerFactory
 			.getLogger(AccountLogoServiceImpl.class);
 
 	@Autowired
@@ -102,7 +102,7 @@ public class AccountLogoServiceImpl implements AccountLogoService {
 							+ SUPPORT_SIZES[i] + ".png", uploadedUser,
 							saccountid);
 				} catch (Exception e) {
-					log.error("Error while delete old logo", e);
+					LOG.error("Error while delete old logo", e);
 				}
 			}
 		}

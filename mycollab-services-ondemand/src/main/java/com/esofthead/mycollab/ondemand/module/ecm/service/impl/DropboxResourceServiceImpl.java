@@ -51,7 +51,7 @@ import com.esofthead.mycollab.module.ecm.service.DropboxResourceService;
 
 @Service
 public class DropboxResourceServiceImpl implements DropboxResourceService {
-	private static Logger log = LoggerFactory
+	private static final Logger LOG = LoggerFactory
 			.getLogger(DropboxResourceServiceImpl.class);
 
 	@Override
@@ -82,12 +82,12 @@ public class DropboxResourceServiceImpl implements DropboxResourceService {
 						resource.setExternalDrive(drive);
 						resources.add(resource);
 					} else {
-						log.error("Do not support dropbox resource except file or folder");
+						LOG.error("Do not support dropbox resource except file or folder");
 					}
 				}
 			}
 		} catch (Exception e) {
-			log.error("Error when get dropbox resource", e);
+			LOG.error("Error when get dropbox resource", e);
 			throw new UserInvalidInputException(
 					"Error when retrieving dropbox files. The most possible issue is can not connect to dropbox server");
 		}
@@ -117,7 +117,7 @@ public class DropboxResourceServiceImpl implements DropboxResourceService {
 				}
 			}
 		} catch (Exception e) {
-			log.error("Error when get dropbox resource", e);
+			LOG.error("Error when get dropbox resource", e);
 		}
 
 		return subFolders;
@@ -155,7 +155,7 @@ public class DropboxResourceServiceImpl implements DropboxResourceService {
 			}
 			return res;
 		} catch (DbxException e) {
-			log.error("Error when get dropbox resource", e);
+			LOG.error("Error when get dropbox resource", e);
 			throw new UserInvalidInputException(e);
 		}
 
@@ -178,7 +178,7 @@ public class DropboxResourceServiceImpl implements DropboxResourceService {
 			client.createFolder(path);
 			return (Folder) this.getCurrentResourceByPath(drive, path);
 		} catch (DbxException e) {
-			log.error("Error when createdFolder dropbox resource", e);
+			LOG.error("Error when createdFolder dropbox resource", e);
 		}
 		return null;
 	}
@@ -191,7 +191,7 @@ public class DropboxResourceServiceImpl implements DropboxResourceService {
 		try {
 			client.uploadFile(content.getPath(), DbxWriteMode.add(), -1, in);
 		} catch (Exception e) {
-			log.error("Error when upload file to Dropbox", e);
+			LOG.error("Error when upload file to Dropbox", e);
 		}
 	}
 
@@ -204,7 +204,7 @@ public class DropboxResourceServiceImpl implements DropboxResourceService {
 			client.copy(oldPath, newPath);
 			client.delete(oldPath);
 		} catch (DbxException e) {
-			log.error("Error when rename dropbox resource", e);
+			LOG.error("Error when rename dropbox resource", e);
 		}
 	}
 
@@ -216,7 +216,7 @@ public class DropboxResourceServiceImpl implements DropboxResourceService {
 		try {
 			client.delete(path);
 		} catch (DbxException e) {
-			log.error("Error when Delete dropbox resource", e);
+			LOG.error("Error when Delete dropbox resource", e);
 		}
 	}
 
@@ -235,7 +235,7 @@ public class DropboxResourceServiceImpl implements DropboxResourceService {
 						client.getFile(path, null, out);
 						out.close();
 					} catch (Exception e) {
-						log.error("Error when get File from dropbox", e);
+						LOG.error("Error when get File from dropbox", e);
 					}
 				}
 			}).start();
@@ -258,7 +258,7 @@ public class DropboxResourceServiceImpl implements DropboxResourceService {
 		try {
 			client.move(fromPath, toPath);
 		} catch (DbxException e) {
-			log.error("Error when move dropbox resource", e);
+			LOG.error("Error when move dropbox resource", e);
 		}
 	}
 }

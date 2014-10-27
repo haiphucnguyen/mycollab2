@@ -82,7 +82,7 @@ public class ComponentReadViewImpl extends
 
 	private static final long serialVersionUID = 1L;
 
-	private static Logger log = LoggerFactory
+	private static final Logger LOG = LoggerFactory
 			.getLogger(ComponentReadViewImpl.class);
 
 	private RelatedBugComp relatedBugComp;
@@ -491,7 +491,7 @@ public class ComponentReadViewImpl extends
 						assignUserAvatarId, assignUserDisplayName);
 				layout.addComponent(assignUserLink, 1, 1);
 			} catch (Exception e) {
-				log.error("Can not build user link {} ",
+				LOG.error("Can not build user link {} ",
 						BeanUtility.printBeanObj(bean));
 			}
 

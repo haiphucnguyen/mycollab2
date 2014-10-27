@@ -39,7 +39,7 @@ import com.esofthead.mycollab.module.ecm.service.DriveInfoService;
  */
 @Component
 public class SaveContentCommandImpl implements SaveContentCommand {
-	private static Logger log = LoggerFactory
+	private static final Logger LOG = LoggerFactory
 			.getLogger(SaveContentCommandImpl.class);
 
 	@Autowired
@@ -48,7 +48,7 @@ public class SaveContentCommandImpl implements SaveContentCommand {
 	@Override
 	public void saveContent(Content content, String createdUser,
 			Integer sAccountId) {
-		log.debug("Save content {} by {}", BeanUtility.printBeanObj(content),
+		LOG.debug("Save content {} by {}", BeanUtility.printBeanObj(content),
 				createdUser);
 
 		Lock lock = DistributionLockUtil.getLock("ecm-" + sAccountId);
@@ -65,7 +65,7 @@ public class SaveContentCommandImpl implements SaveContentCommand {
 				driveInfoService.saveOrUpdateDriveInfo(driveInfo);
 			}
 		} catch (Exception e) {
-			log.error(
+			LOG.error(
 					"Error while save content "
 							+ BeanUtility.printBeanObj(content), e);
 		} finally {

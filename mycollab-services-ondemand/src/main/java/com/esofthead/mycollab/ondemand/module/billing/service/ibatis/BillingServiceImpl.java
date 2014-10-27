@@ -67,7 +67,7 @@ import com.esofthead.mycollab.security.PermissionMap;
 
 @Service(value = "billingService")
 public class BillingServiceImpl implements BillingService {
-	private static Logger log = LoggerFactory
+	private static final Logger LOG = LoggerFactory
 			.getLogger(BillingServiceImpl.class);
 
 	private static List<String> ACCOUNT_BLACK_LIST = Arrays.asList("api",
@@ -115,7 +115,7 @@ public class BillingServiceImpl implements BillingService {
 					subdomain));
 		}
 
-		log.debug("Check whether subdomain {} is existed", subdomain);
+		LOG.debug("Check whether subdomain {} is existed", subdomain);
 		final BillingAccountExample billingEx = new BillingAccountExample();
 		billingEx.createCriteria().andSubdomainEqualTo(subdomain);
 		if (this.billingAccountMapper.countByExample(billingEx) > 0) {
@@ -128,7 +128,7 @@ public class BillingServiceImpl implements BillingService {
 		final BillingPlan billingPlan = this.billingPlanMapper
 				.selectByPrimaryKey(billingPlanId);
 		// Save billing account
-		log.debug("Saving billing account for user {} with subdomain {}",
+		LOG.debug("Saving billing account for user {} with subdomain {}",
 				username, subdomain);
 		final BillingAccount billingAccount = new BillingAccount();
 		billingAccount.setBillingplanid(billingPlan.getId());
@@ -146,7 +146,7 @@ public class BillingServiceImpl implements BillingService {
 		int accountid = billingAccount.getId();
 
 		// Save to account setting
-		log.debug("Save account setting for subdomain domain {}", subdomain);
+		LOG.debug("Save account setting for subdomain domain {}", subdomain);
 		final AccountSettings accountSettings = new AccountSettings();
 		accountSettings.setSaccountid(accountid);
 		accountSettings.setDefaulttimezone(timezoneId);
@@ -170,7 +170,7 @@ public class BillingServiceImpl implements BillingService {
 			}
 		} else {
 			// Register the new user to this account
-			log.debug("Create new user {} in database", username);
+			LOG.debug("Create new user {} in database", username);
 			final User user = new User();
 			user.setEmail(email);
 			user.setPassword(encryptedPassword);
@@ -195,13 +195,13 @@ public class BillingServiceImpl implements BillingService {
 		}
 
 		// save default roles
-		log.debug("Save default roles for account of subdomain {}", subdomain);
+		LOG.debug("Save default roles for account of subdomain {}", subdomain);
 		saveEmployeeRole(accountid);
 		int adminRoleId = saveAdminRole(accountid);
 		saveGuestRole(accountid);
 
 		// save user account
-		log.debug("Register user {} to subdomain {}", username, subdomain);
+		LOG.debug("Register user {} to subdomain {}", username, subdomain);
 		UserAccount userAccount = new UserAccount();
 		userAccount.setAccountid(accountid);
 		userAccount.setIsaccountowner(true);
@@ -258,7 +258,7 @@ public class BillingServiceImpl implements BillingService {
 
 	@Override
 	public List<String> getSubdomainsOfUser(final String username) {
-		log.debug("Get subdomain of user {}", username);
+		LOG.debug("Get subdomain of user {}", username);
 		return this.billingAccountMapperExt.getSubdomainsOfUser(username);
 	}
 
@@ -305,7 +305,7 @@ public class BillingServiceImpl implements BillingService {
 			Integer billingplanid = billingAccount.getBillingplanid();
 			return billingPlanMapper.selectByPrimaryKey(billingplanid);
 		} else {
-			log.error("Can not find billing plan with account {}", sAccountId);
+			LOG.error("Can not find billing plan with account {}", sAccountId);
 			return getFreeBillingPlan();
 		}
 	}

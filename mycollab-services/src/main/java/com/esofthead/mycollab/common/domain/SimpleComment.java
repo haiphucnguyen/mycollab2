@@ -39,7 +39,7 @@ public class SimpleComment extends Comment {
 
 	private static final long serialVersionUID = 1L;
 
-	private static Logger log = LoggerFactory.getLogger(SimpleComment.class);
+	private static final Logger LOG = LoggerFactory.getLogger(SimpleComment.class);
 
 	private String ownerAvatarId;
 	private String ownerFullName;
@@ -138,7 +138,7 @@ public class SimpleComment extends Comment {
 				attachments = contentJcr.getContents(commentPath);
 			}
 		} catch (Exception e) {
-			log.error("Error while get attachments of comment " + getId()
+			LOG.error("Error while get attachments of comment " + getId()
 					+ "---" + getSaccountid() + "---" + getExtratypeid()
 					+ "---" + getTypeid(), e);
 		}

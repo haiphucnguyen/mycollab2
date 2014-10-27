@@ -48,9 +48,9 @@ import com.esofthead.mycollab.module.ecm.service.ContentActivityLogService;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
 import com.esofthead.mycollab.module.file.service.RawContentService;
 
-@Service
+@Service(value = "resourceService")
 public class ResourceServiceImpl implements ResourceService {
-	private static Logger log = LoggerFactory
+	private static final Logger LOG = LoggerFactory
 			.getLogger(ResourceServiceImpl.class);
 
 	@Autowired
@@ -114,7 +114,7 @@ public class ResourceServiceImpl implements ResourceService {
 			billingPlanCheckerService.validateAccountCanUploadMoreFiles(
 					sAccountId, fileSize);
 		} catch (IOException e) {
-			log.error("Can not get available bytes", e);
+			LOG.error("Can not get available bytes", e);
 		}
 
 		// detect mimeType and set to content

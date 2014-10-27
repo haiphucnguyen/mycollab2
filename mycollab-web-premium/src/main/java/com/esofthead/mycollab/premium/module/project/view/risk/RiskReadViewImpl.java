@@ -57,7 +57,7 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp2<SimpleRisk>
 
 	private static final long serialVersionUID = 1L;
 
-	private static Logger log = LoggerFactory.getLogger(RiskReadViewImpl.class);
+	private static final Logger LOG = LoggerFactory.getLogger(RiskReadViewImpl.class);
 
 	private CommentDisplay commentDisplay;
 	private RiskHistoryList historyList;
@@ -257,7 +257,7 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp2<SimpleRisk>
 						assignUserAvatarId, assignUserDisplayName);
 				layout.addComponent(assignUserLink, 1, 1);
 			} catch (Exception e) {
-				log.error("Can not build user link {} ",
+				LOG.error("Can not build user link {} ",
 						BeanUtility.printBeanObj(bean));
 			}
 

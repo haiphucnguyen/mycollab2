@@ -49,7 +49,7 @@ import com.esofthead.mycollab.module.user.service.UserService;
 @Component
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class SendingCountUserLoginByDateJob extends GenericQuartzJobBean {
-	private static Logger log = LoggerFactory
+	private static final Logger LOG = LoggerFactory
 			.getLogger(SendingCountUserLoginByDateJob.class);
 
 	@Autowired
@@ -97,7 +97,7 @@ public class SendingCountUserLoginByDateJob extends GenericQuartzJobBean {
 										.generateBodyContent(COUNT_USER_LOGIN_TEMPLATE),
 								null);
 			} catch (Exception e) {
-				log.error("Error whle generate template", e);
+				LOG.error("Error whle generate template", e);
 			}
 		}
 	}

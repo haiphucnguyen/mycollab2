@@ -24,7 +24,7 @@ public class RiskPresenter extends AbstractPresenter<IRiskContainer> implements
 		IRiskPresenter {
 
 	private static final long serialVersionUID = 1L;
-	private static Logger log = LoggerFactory.getLogger(RiskPresenter.class);
+	private static final Logger LOG = LoggerFactory.getLogger(RiskPresenter.class);
 
 	public RiskPresenter() {
 		super(IRiskContainer.class);
@@ -47,10 +47,10 @@ public class RiskPresenter extends AbstractPresenter<IRiskContainer> implements
 			presenter = PresenterResolver.getPresenter(RiskListPresenter.class);
 		} else if (data instanceof RiskScreenData.Add
 				|| data instanceof RiskScreenData.Edit) {
-			log.debug("Go to projectMember add view");
+			LOG.debug("Go to projectMember add view");
 			presenter = PresenterResolver.getPresenter(RiskAddPresenter.class);
 		} else if (data instanceof RiskScreenData.Read) {
-			log.debug("Go to projectMember preview view");
+			LOG.debug("Go to projectMember preview view");
 			presenter = PresenterResolver.getPresenter(RiskReadPresenter.class);
 		} else {
 			throw new MyCollabException("No support screen data " + data);

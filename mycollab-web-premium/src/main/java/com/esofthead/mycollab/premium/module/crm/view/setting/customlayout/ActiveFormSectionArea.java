@@ -38,7 +38,7 @@ import fi.jasoft.dragdroplayouts.events.LayoutBoundTransferable;
 class ActiveFormSectionArea extends DDVerticalLayout {
 	private static final long serialVersionUID = 1L;
 
-	private static Logger log = LoggerFactory
+	private static final Logger LOG = LoggerFactory
 			.getLogger(ActiveFormSectionArea.class);
 
 	public ActiveFormSectionArea() {
@@ -74,7 +74,7 @@ class ActiveFormSectionArea extends DDVerticalLayout {
 						ActiveFormSectionArea.this.getState();
 					}
 				}
-				log.debug("Target {}", event.getTargetDetails());
+				LOG.debug("Target {}", event.getTargetDetails());
 			}
 		});
 	}

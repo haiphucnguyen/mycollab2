@@ -40,7 +40,7 @@ import com.hp.gagawa.java.elements.Text;
  */
 public class ProjectLinkBuilder {
 
-	private static Logger log = LoggerFactory
+	private static final Logger LOG = LoggerFactory
 			.getLogger(ProjectLinkBuilder.class);
 
 	public static String generateProjectFullLink(Integer projectId) {
@@ -243,7 +243,7 @@ public class ProjectLinkBuilder {
 						projectId, typeid);
 			}
 		} catch (Exception e) {
-			log.error("Error while generate link {} {} {} {}", new Object[] {
+			LOG.error("Error while generate link {} {} {} {}", new Object[] {
 					prjShortName, projectId, type, typeid });
 		}
 

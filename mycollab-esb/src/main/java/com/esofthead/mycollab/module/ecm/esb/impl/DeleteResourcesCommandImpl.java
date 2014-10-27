@@ -39,7 +39,7 @@ import com.esofthead.mycollab.module.file.service.RawContentService;
 @Component
 public class DeleteResourcesCommandImpl implements DeleteResourcesCommand {
 
-	private static Logger log = LoggerFactory
+	private static final Logger LOG = LoggerFactory
 			.getLogger(DeleteResourcesCommandImpl.class);
 
 	@Autowired
@@ -51,7 +51,7 @@ public class DeleteResourcesCommandImpl implements DeleteResourcesCommand {
 	@Override
 	public void removeResource(String path, String userDelete,
 			Integer sAccountId) {
-		log.debug("Delete resource path {} by user {}", path, userDelete);
+		LOG.debug("Delete resource path {} by user {}", path, userDelete);
 
 		long size = rawContentService.getSize(path);
 		if (size > 0) {
@@ -62,7 +62,7 @@ public class DeleteResourcesCommandImpl implements DeleteResourcesCommand {
 							.getDriveInfo(sAccountId);
 					if (driveInfo.getUsedvolume() == null
 							|| (driveInfo.getUsedvolume() < size)) {
-						log.error(
+						LOG.error(
 								"Inconsistent storage volumne site of account {}, used storage is less than removed storage ",
 								sAccountId);
 						driveInfo.setUsedvolume(0L);
@@ -75,7 +75,7 @@ public class DeleteResourcesCommandImpl implements DeleteResourcesCommand {
 					rawContentService.removePath(path);
 				}
 			} catch (Exception e) {
-				log.error("Error while delete content " + path, e);
+				LOG.error("Error while delete content " + path, e);
 			} finally {
 				lock.unlock();
 			}

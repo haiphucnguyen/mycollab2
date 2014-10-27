@@ -63,7 +63,7 @@ import com.vaadin.ui.Window;
 @ViewComponent
 public class BillingSummaryViewImpl extends AbstractPageView implements
 		BillingSummaryView {
-	private static Logger log = LoggerFactory
+	private static final Logger LOG = LoggerFactory
 			.getLogger(BillingSummaryViewImpl.class);
 
 	private final BillingService billingService;
@@ -272,21 +272,21 @@ public class BillingSummaryViewImpl extends AbstractPageView implements
 		currentPlan.addComponent(currentBillingPrice);
 
 		String planInfo = "<div id='currentPlanInfo'><div class='infoBlock'><span class='infoTitle'>Projects:</span> %d of %d</div><div class='blockSeparator'>&nbsp;</div><div class='infoBlock'><span class='infoTitle'>Storage:</span> %s of %s</div><div class='blockSeparator'>&nbsp;</div><div class='infoBlock'><span class='infoTitle'>Users:</span> %d of %d</div></div>";
-		log.debug("Get number of active users in account {}",
+		LOG.debug("Get number of active users in account {}",
 				AppContext.getAccountId());
 		UserService userService = ApplicationContextUtil
 				.getSpringBean(UserService.class);
 		numOfActiveUsers = userService.getTotalActiveUsersInAccount(AppContext
 				.getAccountId());
 
-		log.debug("Get number of active projects in account {}",
+		LOG.debug("Get number of active projects in account {}",
 				AppContext.getAccountId());
 		ProjectService projectService = ApplicationContextUtil
 				.getSpringBean(ProjectService.class);
 		numOfActiveProjects = projectService
 				.getTotalActiveProjectsInAccount(AppContext.getAccountId());
 
-		log.debug("Get used storage volume");
+		LOG.debug("Get used storage volume");
 		DriveInfoService driveInfoService = ApplicationContextUtil
 				.getSpringBean(DriveInfoService.class);
 		usedStorageVolume = driveInfoService.getUsedStorageVolume(AppContext
@@ -400,12 +400,12 @@ public class BillingSummaryViewImpl extends AbstractPageView implements
 								return;
 							}
 
-							log.debug("It is possible to update plan");
+							LOG.debug("It is possible to update plan");
 							billingService.updateBillingPlan(
 									AppContext.getAccountId(),
 									chosenPlan.getId());
 
-							log.debug("Update the billing service");
+							LOG.debug("Update the billing service");
 							FormSenderBuilder
 									.create()
 									.withUI(getUI())

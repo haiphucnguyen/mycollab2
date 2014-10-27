@@ -30,7 +30,7 @@ import com.esofthead.mycollab.cache.LocalCacheManager;
  */
 public class MyCollabSession {
 
-	private static Logger log = LoggerFactory.getLogger(MyCollabSession.class);
+	private static final Logger LOG = LoggerFactory.getLogger(MyCollabSession.class);
 
 	public static final String EVENT_BUS_VAL = "eventBusVal";
 
@@ -84,7 +84,7 @@ public class MyCollabSession {
 					.getCache(getSessionId());
 			cache.remove(key);
 		} catch (Exception e) {
-			log.error("Can not remove cache key " + key, e);
+			LOG.error("Can not remove cache key " + key, e);
 		}
 	}
 

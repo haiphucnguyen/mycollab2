@@ -55,7 +55,7 @@ import com.google.common.eventbus.EventBus;
 @Component("dropboxAuthServlet")
 public class DropboxAuthServletRequestHandler extends
 		GenericServletRequestHandler {
-	private static Logger log = LoggerFactory
+	private static final Logger LOG = LoggerFactory
 			.getLogger(DropboxAuthServletRequestHandler.class);
 
 	private DbxWebAuth getWebAuth(final HttpServletRequest request) {
@@ -107,7 +107,7 @@ public class DropboxAuthServletRequestHandler extends
 		try {
 			authFinish = getWebAuth(request).finish(request.getParameterMap());
 		} catch (Exception e) {
-			log.error("Authorize dropbox request failed", e);
+			LOG.error("Authorize dropbox request failed", e);
 			PrintWriter out = response.getWriter();
 			out.println("<html>"
 					+ "<body></body>"
@@ -137,7 +137,7 @@ public class DropboxAuthServletRequestHandler extends
 			eventBus.post(new CloudDriveOAuthCallbackEvent.ReceiveCloudDriveInfo(
 					DropboxAuthServletRequestHandler.this, cloudDriveInfo));
 		} else {
-			log.error(
+			LOG.error(
 					"Can not find eventbus for session id {}, this session is not initialized by user yet",
 					appId);
 		}

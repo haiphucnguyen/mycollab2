@@ -106,7 +106,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp2<SimpleBug>
 
 	private static final long serialVersionUID = 1L;
 
-	private static Logger log = LoggerFactory.getLogger(BugReadViewImpl.class);
+	private static final Logger LOG = LoggerFactory.getLogger(BugReadViewImpl.class);
 
 	private HorizontalLayout bugWorkflowControl;
 
@@ -759,7 +759,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp2<SimpleBug>
 						assignUserAvatarId, assignUserDisplayName);
 				layout.addComponent(assignUserLink, 1, 1);
 			} catch (Exception e) {
-				log.error("Can not build user link {} ",
+				LOG.error("Can not build user link {} ",
 						BeanUtility.printBeanObj(bean));
 			}
 
