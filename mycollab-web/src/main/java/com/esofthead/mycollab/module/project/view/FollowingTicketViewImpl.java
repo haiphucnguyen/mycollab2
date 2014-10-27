@@ -16,25 +16,24 @@
  */
 package com.esofthead.mycollab.module.project.view;
 
-import java.util.Arrays;
-import java.util.GregorianCalendar;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.StringUtils;
 
 import com.esofthead.mycollab.common.i18n.FollowerI18nEnum;
+import com.esofthead.mycollab.common.i18n.GenericI18Enum;
+import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
-import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.FollowingTicket;
+import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.FollowingTicketSearchCriteria;
-import com.esofthead.mycollab.module.project.events.ProjectEvent;
-import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.BugStatus;
 import com.esofthead.mycollab.module.project.service.ProjectFollowingTicketService;
-import com.esofthead.mycollab.module.project.view.parameters.BugScreenData;
-import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData;
-import com.esofthead.mycollab.module.project.view.parameters.TaskScreenData;
+import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.reporting.ExportItemsStreamResource;
 import com.esofthead.mycollab.reporting.ReportExportType;
 import com.esofthead.mycollab.reporting.RpParameterBuilder;
@@ -43,28 +42,27 @@ import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
-import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.resources.LazyStreamSource;
-import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.SplitButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.vaadin.ui.UserLink;
+import com.esofthead.mycollab.vaadin.ui.UiUtils;
 import com.esofthead.mycollab.vaadin.ui.WebResourceIds;
-import com.esofthead.mycollab.vaadin.ui.table.AbstractPagedBeanTable;
 import com.vaadin.server.FileDownloader;
 import com.vaadin.server.StreamResource;
 import com.vaadin.server.StreamResource.StreamSource;
 import com.vaadin.shared.ui.MarginInfo;
+import com.vaadin.ui.AbstractSelect.ItemCaptionMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.Table;
-import com.vaadin.ui.Table.ColumnGenerator;
+import com.vaadin.ui.ListSelect;
+import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
 /**
@@ -79,10 +77,18 @@ public class FollowingTicketViewImpl extends AbstractPageView implements
 	private static final long serialVersionUID = 1L;
 
 	private SplitButton exportButtonControl;
-	private final FollowingTicketTable ticketTable;
+	private final FollowingTicketTableDisplay ticketTable;
 	private FollowingTicketSearchCriteria searchCriteria;
 
+	private UserInvolvedProjectsListSelect projectField;
+	private TextField summaryField;
+
+	private List<SimpleProject> projects;
+
 	public FollowingTicketViewImpl() {
+		projects = ApplicationContextUtil.getSpringBean(ProjectService.class)
+				.getProjectsUserInvolved(AppContext.getUsername(),
+						AppContext.getAccountId());
 		this.setWidth("100%");
 
 		final VerticalLayout headerWrapper = new VerticalLayout();
@@ -176,10 +182,88 @@ public class FollowingTicketViewImpl extends AbstractPageView implements
 
 		controlBtns.addComponent(exportButtonControl);
 
-		this.ticketTable = new FollowingTicketTable();
+		VerticalLayout selectionLayoutWrapper = new VerticalLayout();
+		selectionLayoutWrapper.setWidth("100%");
+		selectionLayoutWrapper
+				.addStyleName("time-tracking-summary-search-panel");
+		contentWrapper.addComponent(selectionLayoutWrapper);
+
+		final GridLayout selectionLayout = new GridLayout(3, 2);
+		selectionLayout.setSpacing(true);
+		selectionLayout.setDefaultComponentAlignment(Alignment.TOP_RIGHT);
+		selectionLayout.setMargin(true);
+		selectionLayoutWrapper.addComponent(selectionLayout);
+
+		VerticalLayout summaryLbWrapper = new VerticalLayout();
+		summaryLbWrapper.setWidth("100px");
+		Label summaryLb = new Label("Summary:");
+		summaryLb.setWidthUndefined();
+		UiUtils.addComponent(summaryLbWrapper, summaryLb, Alignment.TOP_RIGHT);
+		selectionLayout.addComponent(summaryLbWrapper, 0, 0);
+
+		this.summaryField = new TextField();
+		this.summaryField.setWidth("100%");
+		selectionLayout.addComponent(this.summaryField, 1, 0);
+
+		VerticalLayout projectLbWrapper = new VerticalLayout();
+		projectLbWrapper.setWidth("100px");
+		Label projectLb = new Label("Project:");
+		projectLb.setWidthUndefined();
+		UiUtils.addComponent(projectLbWrapper, projectLb, Alignment.TOP_RIGHT);
+		selectionLayout.addComponent(projectLbWrapper, 0, 1);
+
+		this.projectField = new UserInvolvedProjectsListSelect();
+		initListSelectStyle(this.projectField);
+		selectionLayout.addComponent(this.projectField, 1, 1);
+
+		final Button queryBtn = new Button(
+				AppContext.getMessage(GenericI18Enum.BUTTON_SUBMIT),
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
+					@SuppressWarnings({ "unchecked", "rawtypes" })
+					@Override
+					public void buttonClick(final ClickEvent event) {
+						String summary = summaryField.getValue();
+						if (!StringUtils.isEmpty(summary)) {
+							searchCriteria.setSummary(new StringSearchField(
+									summary));
+						}
+						final Collection<Integer> selectedProjects = (Collection<Integer>) projectField
+								.getValue();
+						if (CollectionUtils.isNotEmpty(selectedProjects)) {
+							searchCriteria.setExtraTypeIds(new SetSearchField(
+									SearchField.AND, selectedProjects));
+						} else {
+							List<Integer> keys = new ArrayList<Integer>();
+							for (SimpleProject project : projects) {
+								keys.add(project.getId());
+							}
+							searchCriteria.setExtraTypeIds(new SetSearchField(
+									SearchField.AND, keys));
+						}
+						ticketTable.setSearchCriteria(searchCriteria);
+					}
+				});
+		queryBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+
+		VerticalLayout queryBtnWrapper = new VerticalLayout();
+		queryBtnWrapper.setWidth("100px");
+		UiUtils.addComponent(queryBtnWrapper, queryBtn, Alignment.TOP_RIGHT);
+		selectionLayout.addComponent(queryBtnWrapper, 2, 0);
+
+		this.ticketTable = new FollowingTicketTableDisplay();
 		this.ticketTable.addStyleName("full-border-table");
 		this.ticketTable.setMargin(new MarginInfo(true, false, false, false));
 		contentWrapper.addComponent(this.ticketTable);
+	}
+
+	private void initListSelectStyle(ListSelect listSelect) {
+		listSelect.setWidth("300px");
+		listSelect.setItemCaptionMode(ItemCaptionMode.EXPLICIT);
+		listSelect.setNullSelectionAllowed(false);
+		listSelect.setMultiSelect(true);
+		listSelect.setRows(4);
 	}
 
 	private StreamResource constructStreamResource(
@@ -213,176 +297,17 @@ public class FollowingTicketViewImpl extends AbstractPageView implements
 					.toArray(new Integer[0])));
 			searchCriteria.setUser(new StringSearchField(AppContext
 					.getUsername()));
-			this.ticketTable.setSearchCriteria(searchCriteria);
 		}
 	}
 
-	private class FollowingTicketTable extends
-			AbstractPagedBeanTable<FollowingTicketSearchCriteria, FollowingTicket> {
-
+	private class UserInvolvedProjectsListSelect extends ListSelect {
 		private static final long serialVersionUID = 1L;
-		private ProjectFollowingTicketService projectFollowingTicketService;
 
-		public FollowingTicketTable() {
-			super(FollowingTicket.class, Arrays.asList(
-					FollowingTicketFieldDef.summary,
-					FollowingTicketFieldDef.project,
-					FollowingTicketFieldDef.assignee,
-					FollowingTicketFieldDef.createdDate));
-
-			this.projectFollowingTicketService = ApplicationContextUtil
-					.getSpringBean(ProjectFollowingTicketService.class);
-
-			this.addGeneratedColumn("summary", new ColumnGenerator() {
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public Object generateCell(final Table source,
-						final Object itemId, final Object columnId) {
-					final FollowingTicket ticket = FollowingTicketTable.this
-							.getBeanByIndex(itemId);
-					final ButtonLink ticketLink = new ButtonLink(ticket
-							.getSummary());
-
-					if (ProjectTypeConstants.BUG.equals(ticket.getType())) {
-						ticketLink.setIcon(MyCollabResource
-								.newResource("icons/16/project/bug.png"));
-
-						if (BugStatus.Verified.name()
-								.equals(ticket.getStatus())) {
-							ticketLink.addStyleName(UIConstants.LINK_COMPLETED);
-						} else if (ticket.getDueDate() != null
-								&& ticket.getDueDate().before(
-										new GregorianCalendar().getTime())) {
-							ticketLink.addStyleName(UIConstants.LINK_OVERDUE);
-						}
-
-						ticketLink.addClickListener(new Button.ClickListener() {
-							private static final long serialVersionUID = 1L;
-
-							@Override
-							public void buttonClick(final ClickEvent event) {
-								final int projectId = ticket.getProjectId();
-								final int bugId = ticket.getTypeId();
-								final PageActionChain chain = new PageActionChain(
-										new ProjectScreenData.Goto(projectId),
-										new BugScreenData.Read(bugId));
-								EventBusFactory.getInstance().post(
-										new ProjectEvent.GotoMyProject(this,
-												chain));
-							}
-						});
-					} else if (ProjectTypeConstants.TASK.equals(ticket
-							.getType())) {
-						ticketLink.setIcon(MyCollabResource
-								.newResource("icons/16/project/task.png"));
-
-						if ("Closed".equals(ticket.getStatus())) {
-							ticketLink.addStyleName(UIConstants.LINK_COMPLETED);
-						} else {
-							if ("Pending".equals(ticket.getStatus())) {
-								ticketLink
-										.addStyleName(UIConstants.LINK_PENDING);
-							} else if (ticket.getDueDate() != null
-									&& ticket.getDueDate().before(
-											new GregorianCalendar().getTime())) {
-								ticketLink
-										.addStyleName(UIConstants.LINK_OVERDUE);
-							}
-						}
-
-						ticketLink.addClickListener(new Button.ClickListener() {
-							private static final long serialVersionUID = 1L;
-
-							@Override
-							public void buttonClick(final ClickEvent event) {
-								final int projectId = ticket.getProjectId();
-								final int taskId = ticket.getTypeId();
-								final PageActionChain chain = new PageActionChain(
-										new ProjectScreenData.Goto(projectId),
-										new TaskScreenData.Read(taskId));
-								EventBusFactory.getInstance().post(
-										new ProjectEvent.GotoMyProject(this,
-												chain));
-
-							}
-						});
-					}
-
-					return ticketLink;
-				}
-			});
-
-			this.addGeneratedColumn("projectName", new ColumnGenerator() {
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public Object generateCell(final Table source,
-						final Object itemId, final Object columnId) {
-					final FollowingTicket ticket = FollowingTicketTable.this
-							.getBeanByIndex(itemId);
-					final ButtonLink projectLink = new ButtonLink(ticket
-							.getProjectName());
-					projectLink.addClickListener(new Button.ClickListener() {
-						private static final long serialVersionUID = 1L;
-
-						@Override
-						public void buttonClick(final ClickEvent event) {
-							final int projectId = ticket.getProjectId();
-							final PageActionChain chain = new PageActionChain(
-									new ProjectScreenData.Goto(projectId));
-							EventBusFactory.getInstance()
-									.post(new ProjectEvent.GotoMyProject(this,
-											chain));
-						}
-					});
-					projectLink.setIcon(MyCollabResource
-							.newResource("icons/16/project/project.png"));
-					return projectLink;
-				}
-			});
-
-			this.addGeneratedColumn("assignUser", new ColumnGenerator() {
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public Object generateCell(final Table source,
-						final Object itemId, final Object columnId) {
-					final FollowingTicket ticket = FollowingTicketTable.this
-							.getBeanByIndex(itemId);
-					final UserLink userLink = new UserLink(ticket
-							.getAssignUser(), ticket.getAssignUserAvatarId(),
-							ticket.getAssignUserFullName());
-					return userLink;
-				}
-			});
-
-			this.addGeneratedColumn("monitorDate", new ColumnGenerator() {
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public Object generateCell(final Table source,
-						final Object itemId, final Object columnId) {
-					final FollowingTicket ticket = FollowingTicketTable.this
-							.getBeanByIndex(itemId);
-					Label lbl = new Label();
-					lbl.setValue(AppContext.formatDate(ticket.getMonitorDate()));
-					return lbl;
-				}
-			});
-		}
-
-		@Override
-		protected int queryTotalCount() {
-			return this.projectFollowingTicketService
-					.getTotalCount(this.searchRequest.getSearchCriteria());
-		}
-
-		@SuppressWarnings("unchecked")
-		@Override
-		protected List<FollowingTicket> queryCurrentData() {
-			return this.projectFollowingTicketService
-					.findPagableListByCriteria(this.searchRequest);
+		public UserInvolvedProjectsListSelect() {
+			for (SimpleProject project : projects) {
+				this.addItem(project.getId());
+				this.setItemCaption(project.getId(), project.getName());
+			}
 		}
 
 	}
