@@ -18,6 +18,7 @@ package com.esofthead.mycollab.module.ecm.service.impl;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -69,9 +70,10 @@ public class ResourceServiceImpl implements ResourceService {
 		List<Resource> resources = contentJcrDao.getResources(path);
 		if (CollectionUtils.isNotEmpty(resources)) {
 			Collections.sort(resources);
+			return resources;
 		}
 
-		return resources;
+		return new ArrayList<Resource>();
 	}
 
 	@Override
