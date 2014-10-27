@@ -148,14 +148,15 @@ public class LogoUploadViewImpl extends AbstractPageView implements
 								AccountLogoService accountLogoService = ApplicationContextUtil
 										.getSpringBean(AccountLogoService.class);
 								String newlogoId = accountLogoService
-										.uploadLogo(image, logoId,
+										.uploadLogo(AppContext.getUsername(),
+												image, logoId,
 												AppContext.getAccountId());
 								accountTheme.setLogopath(newlogoId);
-								EventBusFactory.getInstance()
-										.post(
-												new AccountCustomizeEvent.GotoCustomize(
-														LogoUploadViewImpl.this,
-														accountTheme));
+								EventBusFactory
+										.getInstance()
+										.post(new AccountCustomizeEvent.GotoCustomize(
+												LogoUploadViewImpl.this,
+												accountTheme));
 							} catch (IOException e) {
 								throw new MyCollabException(
 										"Error when saving account logo", e);

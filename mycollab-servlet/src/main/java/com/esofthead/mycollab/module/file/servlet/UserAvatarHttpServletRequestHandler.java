@@ -29,14 +29,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.configuration.FileStorageConfiguration;
-import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.configuration.StorageManager;
 import com.esofthead.mycollab.core.MyCollabException;
-import com.esofthead.mycollab.module.file.service.ContentService;
 import com.esofthead.mycollab.servlet.GenericServletRequestHandler;
 
 /**
@@ -51,9 +48,6 @@ public class UserAvatarHttpServletRequestHandler extends
 
 	private static Logger log = LoggerFactory
 			.getLogger(UserAvatarHttpServletRequestHandler.class);
-
-	@Autowired
-	private ContentService contentService;
 
 	@Override
 	protected void onHandleRequest(HttpServletRequest request,
