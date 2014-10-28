@@ -15,6 +15,7 @@ public class MobileNavigationView extends NavigationView {
 		super();
 		backBtn = new BackButton();
 		backBtn.setCaption("Back");
+		backBtn.setStyleName("back");
 		setLeftComponent(backBtn);
 	}
 
