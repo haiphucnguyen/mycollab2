@@ -39,11 +39,11 @@ import com.esofthead.mycollab.ondemand.configuration.S3StorageConfiguration;
  * @since 1.0
  * 
  */
-public class AmazonRawContentServiceImpl implements RawContentService {
+public class S3RawContentServiceImpl implements RawContentService {
 
 	private S3StorageConfiguration storageConfiguration;
 
-	public AmazonRawContentServiceImpl() {
+	public S3RawContentServiceImpl() {
 		storageConfiguration = (S3StorageConfiguration) StorageManager
 				.getConfiguration();
 	}

@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beansProjectDescription>
 	<version>1</version>
-	<pluginVersion><![CDATA[3.6.0.201407080615-RELEASE]]></pluginVersion>
+	<pluginVersion><![CDATA[3.6.1.201408250730-RELEASE]]></pluginVersion>
 	<configSuffixes>
 		<configSuffix><![CDATA[xml]]></configSuffix>
 	</configSuffixes>
 	<enableImports><![CDATA[false]]></enableImports>
 	<configs>
 		<config>src/main/resources/META-INF/spring/form-context.xml</config>
-		<config>src/main/resources/META-INF/spring/camel-context.xml</config>
 		<config>src/main/resources/META-INF/spring/common-context.xml</config>
 		<config>src/main/resources/META-INF/spring/core-context.xml</config>
 		<config>src/main/resources/META-INF/spring/crm-context.xml</config>
