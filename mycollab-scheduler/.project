@@ -10,7 +10,6 @@
     <project>mycollab-services</project>
     <project>mycollab-caching</project>
     <project>mycollab-dao</project>
-    <project>mycollab-migration</project>
     <project>mycollab-jackrabbit</project>
   </projects>
   <buildSpec>

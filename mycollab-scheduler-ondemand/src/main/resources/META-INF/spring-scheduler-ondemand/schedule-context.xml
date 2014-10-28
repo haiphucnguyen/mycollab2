@@ -114,8 +114,7 @@
     </bean>
 
     <bean id="quartzScheduler"
-        class="org.springframework.scheduling.quartz.SchedulerFactoryBean"
-        depends-on="dbMigration">
+        class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
 
         <property name="configLocation" value="classpath:quartz.properties" />
         <property name="dataSource" ref="dataSource" />

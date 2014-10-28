@@ -30,6 +30,7 @@ public class Content extends Resource {
 	private Calendar lastModified;
 	private String lastModifiedBy;
 	private String mimeType;
+	private String thumbnail;
 
 	public Content() {
 		super();
@@ -78,6 +79,14 @@ public class Content extends Resource {
 
 	public void setMimeType(String mimeType) {
 		this.mimeType = mimeType;
+	}
+
+	public String getThumbnail() {
+		return thumbnail;
+	}
+
+	public void setThumbnail(String thumbnail) {
+		this.thumbnail = thumbnail;
 	}
 
 	public static Content buildContentInstance(Integer accountId,

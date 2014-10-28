@@ -123,7 +123,7 @@ public class ImageUtil {
 
 	public static BufferedImage generateImageThumbnail(InputStream imageStream)
 			throws IOException {
-		int idealWidth = 512;
+		int idealWidth = 256;
 		BufferedImage source = ImageIO.read(imageStream);
 		int imgHeight = source.getHeight();
 		int imgWidth = source.getWidth();
@@ -132,14 +132,17 @@ public class ImageUtil {
 		int height = (int) (imgHeight / scale);
 
 		BufferedImage rescaledImage = Scalr.resize(source, Method.QUALITY,
-				Mode.FIT_TO_WIDTH, idealWidth, (int) height);
+				Mode.AUTOMATIC, idealWidth, (int) height);
+		if (height > 400) {
+			rescaledImage = rescaledImage.getSubimage(0, 0, 256, 400);
+		}
 		return rescaledImage;
 	}
 
 	public static void main(String[] args) throws IOException {
 		BufferedImage thumbnail = generateImageThumbnail(new FileInputStream(
 				new File(
-						"/Users/haiphucnguyen/Downloads/FLO002_HomePage_V1.jpg")));
+						"/Users/haiphucnguyen/.mycollab/1/Documents/aaaa/Example/flash_install_8.png")));
 		ImageIO.write(thumbnail, "png", new File(
 				"/Users/haiphucnguyen/Desktop/test.png"));
 		System.out.println("Thumb: " + thumbnail);
