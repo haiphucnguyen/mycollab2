@@ -17,6 +17,7 @@
 
 package com.esofthead.mycollab.module.project.view.task;
 
+import java.util.Date;
 import java.util.GregorianCalendar;
 
 import org.apache.commons.beanutils.PropertyUtils;
@@ -90,7 +91,8 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp2<SimpleTask>
 
 	private static final long serialVersionUID = 1L;
 
-	private static final Logger LOG = LoggerFactory.getLogger(TaskReadViewImpl.class);
+	private static final Logger LOG = LoggerFactory
+			.getLogger(TaskReadViewImpl.class);
 
 	private CommentDisplay commentList;
 
@@ -158,17 +160,17 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp2<SimpleTask>
 				&& 100d == beanItem.getPercentagecomplete()) {
 			addLayoutStyleName(UIConstants.LINK_COMPLETED);
 		} else {
+			Date now = new GregorianCalendar().getTime();
+
 			if ("Pending".equals(beanItem.getStatus())) {
 				addLayoutStyleName(UIConstants.LINK_PENDING);
 			} else if ((beanItem.getEnddate() != null && (beanItem.getEnddate()
-					.before(new GregorianCalendar().getTime())))
+					.before(now)))
 					|| (beanItem.getActualenddate() != null && (beanItem
-							.getActualenddate().before(new GregorianCalendar()
-							.getTime())))
+							.getActualenddate().before(now)))
 					|| (beanItem.getDeadline() != null && (beanItem
-							.getDeadline().before(new GregorianCalendar()
-							.getTime())))) {
-				addLayoutStyleName(UIConstants.LINK_OVERDUE);
+							.getDeadline().before(now)))) {
+				previewLayout.setTitleStyleName("headerNameOverdue");
 			}
 		}
 
@@ -308,26 +310,24 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp2<SimpleTask>
 						beanItem.getAssignUserAvatarId(),
 						beanItem.getAssignUserFullName());
 			} else if (propertyId.equals("taskListName")) {
-				return new DefaultViewField(
-						beanItem.getTaskListName());
+				return new DefaultViewField(beanItem.getTaskListName());
 			} else if (propertyId.equals("startdate")) {
-				return new DefaultViewField(
-						AppContext.formatDate(beanItem.getStartdate()));
+				return new DefaultViewField(AppContext.formatDate(beanItem
+						.getStartdate()));
 			} else if (propertyId.equals("enddate")) {
-				return new DefaultViewField(
-						AppContext.formatDate(beanItem.getEnddate()));
+				return new DefaultViewField(AppContext.formatDate(beanItem
+						.getEnddate()));
 			} else if (propertyId.equals("actualstartdate")) {
-				return new DefaultViewField(
-						AppContext.formatDate(beanItem.getActualstartdate()));
+				return new DefaultViewField(AppContext.formatDate(beanItem
+						.getActualstartdate()));
 			} else if (propertyId.equals("actualenddate")) {
-				return new DefaultViewField(
-						AppContext.formatDate(beanItem.getActualenddate()));
+				return new DefaultViewField(AppContext.formatDate(beanItem
+						.getActualenddate()));
 			} else if (propertyId.equals("deadline")) {
-				return new DefaultViewField(
-						AppContext.formatDate(beanItem.getDeadline()));
+				return new DefaultViewField(AppContext.formatDate(beanItem
+						.getDeadline()));
 			} else if (propertyId.equals("tasklistid")) {
-				return new LinkViewField(
-						beanItem.getTaskListName(),
+				return new LinkViewField(beanItem.getTaskListName(),
 						ProjectLinkBuilder.generateTaskGroupPreviewFullLink(
 								beanItem.getProjectid(),
 								beanItem.getTasklistid()),

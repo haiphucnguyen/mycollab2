@@ -1,5 +1,8 @@
 package com.esofthead.mycollab.premium.module.project.view.risk;
 
+import java.util.Date;
+import java.util.GregorianCalendar;
+
 import org.apache.commons.beanutils.PropertyUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,7 +60,8 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp2<SimpleRisk>
 
 	private static final long serialVersionUID = 1L;
 
-	private static final Logger LOG = LoggerFactory.getLogger(RiskReadViewImpl.class);
+	private static final Logger LOG = LoggerFactory
+			.getLogger(RiskReadViewImpl.class);
 
 	private CommentDisplay commentDisplay;
 	private RiskHistoryList historyList;
@@ -117,6 +121,12 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp2<SimpleRisk>
 	protected void onPreviewItem() {
 		if (StatusI18nEnum.Closed.name().equals(beanItem.getStatus())) {
 			addLayoutStyleName(UIConstants.LINK_COMPLETED);
+		}
+
+		Date now = new GregorianCalendar().getTime();
+		if (beanItem.getDatedue() != null && beanItem.getDatedue().before(now)
+				&& "Open".equals(beanItem.getStatus())) {
+			previewLayout.setTitleStyleName("headerNameOverdue");
 		}
 
 		commentDisplay.loadComments("" + beanItem.getId());

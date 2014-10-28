@@ -106,7 +106,8 @@ public class BugReadViewImpl extends AbstractPreviewItemComp2<SimpleBug>
 
 	private static final long serialVersionUID = 1L;
 
-	private static final Logger LOG = LoggerFactory.getLogger(BugReadViewImpl.class);
+	private static final Logger LOG = LoggerFactory
+			.getLogger(BugReadViewImpl.class);
 
 	private HorizontalLayout bugWorkflowControl;
 
@@ -310,7 +311,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp2<SimpleBug>
 		if (BugStatus.Verified.name().equals(this.beanItem.getStatus())) {
 			this.previewLayout.addTitleStyleName(UIConstants.LINK_COMPLETED);
 		} else if (this.beanItem.isOverdue()) {
-			this.previewLayout.addTitleStyleName(UIConstants.LINK_OVERDUE);
+			this.previewLayout.setTitleStyleName("headerNameOverdue");
 		}
 	}
 
@@ -406,7 +407,8 @@ public class BugReadViewImpl extends AbstractPreviewItemComp2<SimpleBug>
 				});
 		assignBtn.setEnabled(CurrentProjectVariables
 				.canWrite(ProjectRolePermissionCollections.BUGS));
-		assignBtn.setIcon(MyCollabResource.newResource(WebResourceIds._16_assign));
+		assignBtn.setIcon(MyCollabResource
+				.newResource(WebResourceIds._16_assign));
 
 		assignBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 
@@ -652,11 +654,9 @@ public class BugReadViewImpl extends AbstractPreviewItemComp2<SimpleBug>
 				}
 
 			} else if (propertyId.equals("environment")) {
-				return new RichTextViewField(
-						beanItem.getEnvironment());
+				return new RichTextViewField(beanItem.getEnvironment());
 			} else if (propertyId.equals("description")) {
-				return new  RichTextViewField(
-						beanItem.getDescription());
+				return new RichTextViewField(beanItem.getDescription());
 			} else if (propertyId.equals("status")) {
 				return new I18nFormViewField(beanItem.getStatus(),
 						BugStatus.class);

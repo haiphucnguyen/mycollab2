@@ -1,5 +1,8 @@
 package com.esofthead.mycollab.premium.module.project.view.problem;
 
+import java.util.Date;
+import java.util.GregorianCalendar;
+
 import org.apache.commons.beanutils.PropertyUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -112,6 +115,15 @@ public class ProblemReadViewImpl extends
 	protected void onPreviewItem() {
 		if (StatusI18nEnum.Closed.name().equals(beanItem.getStatus())) {
 			addLayoutStyleName(UIConstants.LINK_COMPLETED);
+		}
+
+		Date now = new GregorianCalendar().getTime();
+		if ("Open".equals(beanItem.getStatus())
+				&& ((beanItem.getActualenddate() != null && beanItem
+						.getActualenddate().before(now)) || (beanItem
+						.getDatedue() != null && beanItem.getDatedue().before(
+						now)))) {
+			previewLayout.setTitleStyleName("headerNameOverdue");
 		}
 		commentList.loadComments("" + beanItem.getId());
 		historyList.loadHistory(beanItem.getId());
