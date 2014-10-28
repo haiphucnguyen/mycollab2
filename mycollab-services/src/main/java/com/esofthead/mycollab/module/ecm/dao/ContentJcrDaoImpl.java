@@ -27,6 +27,7 @@ import javax.jcr.RepositoryException;
 import javax.jcr.Session;
 import javax.jcr.nodetype.NodeType;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.jackrabbit.commons.JcrUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -125,6 +126,11 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 						addNode.setProperty("jcr:description",
 								content.getDescription());
 						addNode.setProperty("mycollab:createdUser", createdUser);
+						if (StringUtils.isNotBlank(content.getThumbnail())) {
+							addNode.setProperty("mycollab:thumbnailPath",
+									content.getThumbnail());
+						}
+
 						addNode.setProperty("mycollab:lastModifiedUser",
 								createdUser);
 						addNode.setProperty("mycollab:size", content.getSize());
@@ -390,6 +396,8 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 			content.setCreatedBy(NodesUtil.getString(node, "jcr:createdBy"));
 			content.setTitle(NodesUtil.getString(node, "jcr:title"));
 			content.setDescription(NodesUtil.getString(node, "jcr:description"));
+			content.setThumbnail(NodesUtil.getString(node,
+					"mycollab:thumbnailPath"));
 			content.setMimeType(NodesUtil.getString(node, "mycollab:mimeType",
 					MimeTypesUtil.BINARY_MIME_TYPE));
 			content.setSize(node.getProperty("mycollab:size").getLong());

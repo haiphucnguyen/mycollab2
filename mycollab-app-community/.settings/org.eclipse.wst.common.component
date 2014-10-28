@@ -169,7 +169,7 @@
     <dependent-module archiveName="httpcore-4.3.2.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/apache/httpcomponents/httpcore/4.3.2/httpcore-4.3.2.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="joda-time-2.4.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/joda-time/joda-time/2.4/joda-time-2.4.jar">
+    <dependent-module archiveName="joda-time-2.5.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/joda-time/joda-time/2.5/joda-time-2.5.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="spring-aop-4.1.1.RELEASE.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/springframework/spring-aop/4.1.1.RELEASE/spring-aop-4.1.1.RELEASE.jar">
@@ -217,13 +217,13 @@
     <dependent-module archiveName="asm-4.2.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/ow2/asm/asm/4.2/asm-4.2.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="jackson-core-2.4.2.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/fasterxml/jackson/core/jackson-core/2.4.2/jackson-core-2.4.2.jar">
+    <dependent-module archiveName="jackson-core-2.4.3.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/fasterxml/jackson/core/jackson-core/2.4.3/jackson-core-2.4.3.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="jackson-databind-2.4.2.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/fasterxml/jackson/core/jackson-databind/2.4.2/jackson-databind-2.4.2.jar">
+    <dependent-module archiveName="jackson-databind-2.4.3.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/fasterxml/jackson/core/jackson-databind/2.4.3/jackson-databind-2.4.3.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="jackson-annotations-2.4.2.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/fasterxml/jackson/core/jackson-annotations/2.4.2/jackson-annotations-2.4.2.jar">
+    <dependent-module archiveName="jackson-annotations-2.4.3.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/fasterxml/jackson/core/jackson-annotations/2.4.3/jackson-annotations-2.4.3.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="HikariCP-1.4.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/zaxxer/HikariCP/1.4.0/HikariCP-1.4.0.jar">
@@ -257,6 +257,15 @@
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="camel-spring-2.14.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/apache/camel/camel-spring/2.14.0/camel-spring-2.14.0.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="camel-spring-javaconfig-2.14.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/apache/camel/camel-spring-javaconfig/2.14.0/camel-spring-javaconfig-2.14.0.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="spring-test-3.2.11.RELEASE.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/springframework/spring-test/3.2.11.RELEASE/spring-test-3.2.11.RELEASE.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="org.apache.servicemix.bundles.cglib-2.1_3_7.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/apache/servicemix/bundles/org.apache.servicemix.bundles.cglib/2.1_3_7/org.apache.servicemix.bundles.cglib-2.1_3_7.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="jasypt-1.9.2.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/jasypt/jasypt/1.9.2/jasypt-1.9.2.jar">
@@ -371,12 +380,6 @@
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="jboss-marshalling-1.4.4.Final.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/jboss/marshalling/jboss-marshalling/1.4.4.Final/jboss-marshalling-1.4.4.Final.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="mycollab-migration.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mycollab-migration/mycollab-migration">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="flyway-core-3.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/flywaydb/flyway-core/3.0/flyway-core-3.0.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="mycollab-jackrabbit.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mycollab-jackrabbit/mycollab-jackrabbit">
@@ -544,7 +547,7 @@
     <dependent-module archiveName="stylecalendar-2.1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/vaadin/addons/stylecalendar/2.1.0/stylecalendar-2.1.0.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="easyuploads-7.0.3-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/vaadin/addon/easyuploads/7.0.3-SNAPSHOT/easyuploads-7.0.3-SNAPSHOT.jar">
+    <dependent-module archiveName="easyuploads-7.3.3.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/vaadin/addon/easyuploads/7.3.3/easyuploads-7.3.3.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="contextmenu-4.5.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/vaadin/addons/contextmenu/4.5.0/contextmenu-4.5.0.jar">

@@ -109,6 +109,15 @@ public class MyCollabContentSessionFactory extends JcrSessionFactory {
 		contentPathPropertyTemplate.setRequiredType(PropertyType.STRING);
 		contentTypeTemplate.getPropertyDefinitionTemplates().add(
 				contentPathPropertyTemplate);
+		
+		PropertyDefinitionTemplate thumbnailPathPropertyTemplate = manager
+				.createPropertyDefinitionTemplate();
+		thumbnailPathPropertyTemplate.setMultiple(false);
+		thumbnailPathPropertyTemplate.setName("mycollab:thumbnailPath");
+		thumbnailPathPropertyTemplate.setMandatory(false);
+		thumbnailPathPropertyTemplate.setRequiredType(PropertyType.STRING);
+		contentTypeTemplate.getPropertyDefinitionTemplates().add(
+				thumbnailPathPropertyTemplate);
 
 		PropertyDefinitionTemplate lastModifiedUserPropertyTemplate = manager
 				.createPropertyDefinitionTemplate();

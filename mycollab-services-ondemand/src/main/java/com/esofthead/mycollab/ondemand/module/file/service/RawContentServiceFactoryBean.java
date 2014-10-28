@@ -24,13 +24,13 @@ import com.esofthead.mycollab.configuration.StorageManager;
 import com.esofthead.mycollab.core.persistence.service.IService;
 import com.esofthead.mycollab.module.file.service.RawContentService;
 import com.esofthead.mycollab.module.file.service.impl.FileRawContentServiceImpl;
-import com.esofthead.mycollab.ondemand.module.file.service.impl.AmazonRawContentServiceImpl;
+import com.esofthead.mycollab.ondemand.module.file.service.impl.S3RawContentServiceImpl;
 
 /**
  * Factory spring bean to solve resolution of MyCollab raw content service
  * should be <code>FileRawContentServiceImpl</code> if MyCollab is installed in
  * local server (dev, community or premium mode) or
- * <code>AmazonRawContentServiceImpl</code> if MyCollab is installed on MyCollab
+ * <code>S3RawContentServiceImpl</code> if MyCollab is installed on MyCollab
  * server.
  * 
  */
@@ -43,7 +43,7 @@ public class RawContentServiceFactoryBean extends
 	protected RawContentService createInstance() throws Exception {
 		try {
 			if (StorageManager.isS3Storage()) {
-				return new AmazonRawContentServiceImpl();
+				return new S3RawContentServiceImpl();
 			} else {
 				return new FileRawContentServiceImpl();
 			}

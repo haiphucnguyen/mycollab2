@@ -30,9 +30,10 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
  * @since 1.0
  * 
  */
-@Component
+@Component("ecmRouteBuilder")
 public class EcmRouteBuilder extends SpringRouteBuilder {
-	private static final Logger LOG = LoggerFactory.getLogger(EcmRouteBuilder.class);
+	private static final Logger LOG = LoggerFactory
+			.getLogger(EcmRouteBuilder.class);
 
 	@Override
 	public void configure() throws Exception {

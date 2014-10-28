@@ -37,7 +37,7 @@ import com.esofthead.mycollab.module.ecm.service.DriveInfoService;
  * @since 1.0
  * 
  */
-@Component
+@Component("saveContentCommand")
 public class SaveContentCommandImpl implements SaveContentCommand {
 	private static final Logger LOG = LoggerFactory
 			.getLogger(SaveContentCommandImpl.class);
