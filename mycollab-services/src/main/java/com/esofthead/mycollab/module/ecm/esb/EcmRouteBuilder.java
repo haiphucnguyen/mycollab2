@@ -53,7 +53,7 @@ public class EcmRouteBuilder extends SpringRouteBuilder {
 				.threads()
 				.bean(ApplicationContextUtil
 						.getSpringBean(DeleteResourcesCommand.class),
-						"removeResource(String, String, int)");
+						"removeResource(String[], String, int)");
 
 	}
 

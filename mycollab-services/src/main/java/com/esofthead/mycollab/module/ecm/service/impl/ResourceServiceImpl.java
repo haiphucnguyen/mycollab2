@@ -173,12 +173,20 @@ public class ResourceServiceImpl implements ResourceService {
 		Resource res = contentJcrDao.getResource(path);
 		ContentActivityLogAction deleteResourceAction;
 
+		DeleteResourcesCommand deleteResourcesCommand = CamelProxyBuilderUtil
+				.build(EcmEndPoints.DELETE_RESOURCES_ENDPOINT,
+						DeleteResourcesCommand.class);
+
 		if (res instanceof Folder) {
 			deleteResourceAction = ContentActivityLogBuilder
 					.makeDeleteFolder(path);
+			deleteResourcesCommand.removeResource(new String[] { path,
+					((Content) res).getThumbnail() }, deleteUser, sAccountId);
 		} else {
 			deleteResourceAction = ContentActivityLogBuilder
 					.makeDeleteContent(path);
+			deleteResourcesCommand.removeResource(new String[] { path },
+					deleteUser, sAccountId);
 		}
 
 		contentJcrDao.removeResource(path);
@@ -189,10 +197,6 @@ public class ResourceServiceImpl implements ResourceService {
 		activityLog.setBasefolderpath(path);
 		contentActivityLogService.saveWithSession(activityLog, "");
 
-		DeleteResourcesCommand deleteResourcesCommand = CamelProxyBuilderUtil
-				.build(EcmEndPoints.DELETE_RESOURCES_ENDPOINT,
-						DeleteResourcesCommand.class);
-		deleteResourcesCommand.removeResource(path, deleteUser, sAccountId);
 	}
 
 	@Override
