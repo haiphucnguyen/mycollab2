@@ -19,6 +19,7 @@ package com.esofthead.mycollab.module.crm.view;
 
 import static com.esofthead.mycollab.html.DivLessFormatter.EMPTY_SPACE;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -71,6 +72,7 @@ import com.vaadin.ui.Button.ClickEvent;
  */
 public class ActivityStreamPanel extends CssLayout {
 	private static final long serialVersionUID = 1L;
+	private static final int MAX_NUMBER_DISPLAY = 20;
 
 	private final CrmActivityStreamPagedList activityStreamList;
 
@@ -94,7 +96,6 @@ public class ActivityStreamPanel extends CssLayout {
 	static class CrmActivityStreamPagedList extends VerticalLayout {
 
 		private static final long serialVersionUID = 1L;
-		private static final int MAX_NUMBER_DISPLAY = 20;
 
 		private final CssLayout listContainer = new CssLayout();
 		private CssLayout controlBarWrapper = new CssLayout();
@@ -128,20 +129,24 @@ public class ActivityStreamPanel extends CssLayout {
 			currentDate = new GregorianCalendar(2100, 1, 1).getTime();
 			currentFeedBlock = new CssLayout();
 
-			Integer currentItemsDisplay = 0, numberItemsQuery = MAX_NUMBER_DISPLAY;
+			Integer currentItemsDisplay = 0;
+			int numberItemsQuery = MAX_NUMBER_DISPLAY;
 			if (isSearchNext) {
 				currentIndex = firstIndex = lastIndex;
 			} else {
 				currentIndex = lastIndex = firstIndex;
-				currentIndex = firstIndex - MAX_NUMBER_DISPLAY;
+				firstIndex -= MAX_NUMBER_DISPLAY;
 			}
 
+			List<SimpleActivityStream> affectedListData = new ArrayList<SimpleActivityStream>();
 			try {
-				while (currentItemsDisplay < MAX_NUMBER_DISPLAY) {
-					int page = currentIndex / MAX_NUMBER_DISPLAY + 1;
+				while (currentItemsDisplay < MAX_NUMBER_DISPLAY
+						&& ((isSearchNext && hasNext()) || (!isSearchNext && currentIndex > 0))) {
 					final List<SimpleActivityStream> currentListData = this.activityStreamService
-							.findPagableListByCriteria(new SearchRequest<ActivityStreamSearchCriteria>(
-									searchCriteria, page, numberItemsQuery));
+							.findAbsoluteListByCriteria(
+									new SearchRequest<ActivityStreamSearchCriteria>(
+											searchCriteria), firstIndex,
+									numberItemsQuery);
 
 					if (currentListData.size() == 0) {
 						break;
@@ -149,82 +154,97 @@ public class ActivityStreamPanel extends CssLayout {
 
 					if (isSearchNext) {
 						for (SimpleActivityStream item : currentListData) {
-							this.currentIndex++;
-							currentItemsDisplay += showItem(item,
-									currentItemsDisplay) ? 1 : 0;
+							currentIndex++;
+							if (checkReadPermisson(item.getType())) {
+								currentItemsDisplay++;
+								affectedListData.add(item);
+							}
 							if (currentItemsDisplay == MAX_NUMBER_DISPLAY) {
 								break;
 							}
 						}
-						this.lastIndex = this.currentIndex;
+						lastIndex = currentIndex;
 					} else {
-						for (SimpleActivityStream item : currentListData) {
-							this.currentIndex--;
-							currentItemsDisplay += showItem(item,
-									currentItemsDisplay) ? 1 : 0;
+						for (int i = currentListData.size() - 1; i >= 0; i--) {
+							currentIndex--;
+							SimpleActivityStream item = currentListData.get(i);
+							if (checkReadPermisson(item.getType())) {
+								currentItemsDisplay++;
+								affectedListData.add(item);
+							}
 							if (currentItemsDisplay == MAX_NUMBER_DISPLAY) {
 								break;
 							}
 						}
 						if (currentItemsDisplay < MAX_NUMBER_DISPLAY) {
-							if (currentIndex - MAX_NUMBER_DISPLAY < 0) {
-								numberItemsQuery = currentIndex;
-								currentIndex = 0;
+							if (firstIndex - MAX_NUMBER_DISPLAY < 0) {
+								numberItemsQuery = firstIndex;
+								firstIndex = 0;
 							} else {
-								currentIndex = currentIndex
-										- MAX_NUMBER_DISPLAY;
+								firstIndex = firstIndex - MAX_NUMBER_DISPLAY;
 							}
 						}
-						firstIndex = currentIndex;
 					}
 				}
 			} catch (final Exception e) {
 				throw new MyCollabException(e);
 			}
 
-			this.addComponent(createPageControls());
+			if (affectedListData.size() > 0) {
+				if (isSearchNext) {
+					for (SimpleActivityStream affectedItem : affectedListData) {
+						showItem(affectedItem);
+					}
+				} else {
+					for (int i = affectedListData.size() - 1; i >= 0; i--) {
+						showItem(affectedListData.get(i));
+					}
+				}
+			}
+
+			if (hasPrevious() || hasNext()) {
+				this.addComponent(createPageControls());
+			}
 		}
 
-		private boolean showItem(final SimpleActivityStream activityStream,
-				Integer currentItemsDisplay) {
-
-			if (CrmTypeConstants.ACCOUNT.equals(activityStream.getType())
+		private boolean checkReadPermisson(String type) {
+			if (CrmTypeConstants.ACCOUNT.equals(type)
 					&& !AppContext
 							.canRead(RolePermissionCollections.CRM_ACCOUNT)) {
 				return false;
-			} else if (CrmTypeConstants.CONTACT
-					.equals(activityStream.getType())
+			} else if (CrmTypeConstants.CONTACT.equals(type)
 					&& !AppContext
 							.canRead(RolePermissionCollections.CRM_CONTACT)) {
 				return false;
-			} else if (CrmTypeConstants.CAMPAIGN.equals(activityStream
-					.getType())
+			} else if (CrmTypeConstants.CAMPAIGN.equals(type)
 					&& !AppContext
 							.canRead(RolePermissionCollections.CRM_CAMPAIGN)) {
 				return false;
-			} else if (CrmTypeConstants.LEAD.equals(activityStream.getType())
+			} else if (CrmTypeConstants.LEAD.equals(type)
 					&& !AppContext.canRead(RolePermissionCollections.CRM_LEAD)) {
 				return false;
-			} else if (CrmTypeConstants.OPPORTUNITY.equals(activityStream
-					.getType())
+			} else if (CrmTypeConstants.OPPORTUNITY.equals(type)
 					&& !AppContext
 							.canRead(RolePermissionCollections.CRM_OPPORTUNITY)) {
 				return false;
-			} else if (CrmTypeConstants.CASE.equals(activityStream.getType())
+			} else if (CrmTypeConstants.CASE.equals(type)
 					&& !AppContext.canRead(RolePermissionCollections.CRM_CASE)) {
 				return false;
-			} else if (CrmTypeConstants.TASK.equals(activityStream.getType())
+			} else if (CrmTypeConstants.TASK.equals(type)
 					&& !AppContext.canRead(RolePermissionCollections.CRM_TASK)) {
 				return false;
-			} else if (CrmTypeConstants.MEETING
-					.equals(activityStream.getType())
+			} else if (CrmTypeConstants.MEETING.equals(type)
 					&& !AppContext
 							.canRead(RolePermissionCollections.CRM_MEETING)) {
 				return false;
-			} else if (CrmTypeConstants.CALL.equals(activityStream.getType())
+			} else if (CrmTypeConstants.CALL.equals(type)
 					&& !AppContext.canRead(RolePermissionCollections.CRM_CALL)) {
 				return false;
 			}
+			return true;
+		}
+
+		private void showItem(final SimpleActivityStream activityStream) {
 
 			final Date itemCreatedDate = activityStream.getCreatedtime();
 
@@ -265,8 +285,6 @@ public class ActivityStreamPanel extends CssLayout {
 			streamWrapper.addStyleName("stream-wrapper");
 			streamWrapper.addComponent(activityLink);
 			currentFeedBlock.addComponent(streamWrapper);
-
-			return true;
 		}
 
 		private CssLayout createPageControls() {
@@ -321,12 +339,10 @@ public class ActivityStreamPanel extends CssLayout {
 		}
 
 		private boolean hasNext() {
-			int page = lastIndex / MAX_NUMBER_DISPLAY + 1;
-			int size = this.activityStreamService.findPagableListByCriteria(
+			return this.activityStreamService.findAbsoluteListByCriteria(
 					new SearchRequest<ActivityStreamSearchCriteria>(
-							this.searchCriteria, page, MAX_NUMBER_DISPLAY))
-					.size();
-			return size > 0 ? true : false;
+							this.searchCriteria), lastIndex, 1).size() > 0 ? true
+					: false;
 		}
 
 		private boolean hasPrevious() {
