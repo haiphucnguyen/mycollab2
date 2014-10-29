@@ -52,6 +52,9 @@ import com.vaadin.ui.UI;
 public class AttachmentDisplayComponent extends CssLayout {
 	private static final long serialVersionUID = 1L;
 
+	private static final Resource DEFAULT_SOURCE = MyCollabResource
+			.newResource("icons/docs-256.png");
+
 	public AttachmentDisplayComponent(List<Content> attachments) {
 		for (Content attachment : attachments) {
 			this.addComponent(constructAttachmentRow(attachment));
@@ -82,13 +85,13 @@ public class AttachmentDisplayComponent extends CssLayout {
 		thumbnailWrap.setStyleName("thumbnail-wrap");
 
 		Image thumbnail = new Image(null);
-		if (attachment.getThumbnail() == ""
-				|| attachment.getThumbnail() == null) {
-			thumbnail.setSource(MyCollabResource
-					.newResource("icons/docs-256.png"));
+		if (org.apache.commons.lang3.StringUtils.isBlank(attachment
+				.getThumbnail())) {
+			thumbnail.setSource(DEFAULT_SOURCE);
 		} else {
 			thumbnail.setSource(VaadinResourceManager.getResourceManager()
-					.getImagePreviewResource(attachment.getThumbnail()));
+					.getImagePreviewResource(attachment.getThumbnail(),
+							DEFAULT_SOURCE));
 		}
 		thumbnail.setWidth(UIConstants.DEFAULT_ATTACHMENT_THUMBNAIL_WIDTH);
 		thumbnailWrap.addComponent(thumbnail);
@@ -104,7 +107,7 @@ public class AttachmentDisplayComponent extends CssLayout {
 				public void click(MouseEvents.ClickEvent event) {
 					Resource previewResource = VaadinResourceManager
 							.getResourceManager().getImagePreviewResource(
-									attachment.getPath());
+									attachment.getPath(), DEFAULT_SOURCE);
 					UI.getCurrent().addWindow(
 							new AttachmentPreviewWindow(previewResource));
 				}
