@@ -1,1 +1,0 @@
-$wnd.com_esofthead_mycollab_widgetset_MyCollabMobileWidgetSet.runAsyncCallback2('Unb(1402,1,CRd);_.Ae=function uxc(){Ujc((!Njc&&(Njc=new $jc),Njc),this.b.e)};dJd(bq)(2);\n//# sourceURL=com.esofthead.mycollab.widgetset.MyCollabMobileWidgetSet-2.js\n')
