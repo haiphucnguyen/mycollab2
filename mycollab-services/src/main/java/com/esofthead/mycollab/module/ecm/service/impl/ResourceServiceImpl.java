@@ -139,13 +139,17 @@ public class ResourceServiceImpl implements ResourceService {
 						.getContentStream(contentPath);
 				BufferedImage image = ImageUtil
 						.generateImageThumbnail(newInputStream);
-				String thumbnailPath = String.format(".thumbnail/%d/%s.%s",
-						sAccountId, StringUtils.generateSoftUniqueId(), "png");
-				File tmpFile = File.createTempFile("tmp", "png");
-				ImageIO.write(image, "png", new FileOutputStream(tmpFile));
-				rawContentService.saveContent(thumbnailPath,
-						new FileInputStream(tmpFile));
-				content.setThumbnail(thumbnailPath);
+				if (image != null) {
+					String thumbnailPath = String.format(".thumbnail/%d/%s.%s",
+							sAccountId, StringUtils.generateSoftUniqueId(),
+							"png");
+					File tmpFile = File.createTempFile("tmp", "png");
+					ImageIO.write(image, "png", new FileOutputStream(tmpFile));
+					rawContentService.saveContent(thumbnailPath,
+							new FileInputStream(tmpFile));
+					content.setThumbnail(thumbnailPath);
+				}
+
 			} catch (Exception e) {
 				LOG.error("Error when generating thumbnail", e);
 			}
