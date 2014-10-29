@@ -11,10 +11,10 @@
     <project>mycollab-caching</project>
     <project>mycollab-dao</project>
     <project>mycollab-localization</project>
-    <project>mycollab-migration</project>
     <project>mycollab-jackrabbit</project>
     <project>mycollab-esb-ondemand</project>
     <project>mycollab-services-ondemand</project>
+    <project>mycollab-migration</project>
     <project>mycollab-servlet-ondemand</project>
     <project>mycollab-caching-premium</project>
     <project>mycollab-web-premium</project>
