@@ -11,13 +11,13 @@
     <project>mycollab-caching</project>
     <project>mycollab-dao</project>
     <project>mycollab-localization</project>
-    <project>mycollab-migration</project>
     <project>mycollab-jackrabbit</project>
     <project>mycollab-reporting-premium</project>
     <project>mycollab-reporting</project>
     <project>mycollab-mobile</project>
     <project>mycollab-ui</project>
     <project>mycollab-services-premium</project>
+    <project>mycollab-migration</project>
     <project>mycollab-search-server</project>
     <project>mycollab-search</project>
     <project>mycollab-caching-premium</project>

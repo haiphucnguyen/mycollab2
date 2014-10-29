@@ -52,7 +52,6 @@ public class V20141027_1__Generate_Image_Thumbnails implements
 		ContentJcrDao contentJcrDao = ApplicationContextUtil
 				.getSpringBean(ContentJcrDao.class);
 
-		System.out.println("RESOURCE : " + resourceService + "---" + path);
 		List<Resource> resources = resourceService.getResources(path);
 		if (CollectionUtils.isNotEmpty(resources)) {
 			for (Resource resource : resources) {
