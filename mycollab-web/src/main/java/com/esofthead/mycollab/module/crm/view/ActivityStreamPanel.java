@@ -50,7 +50,6 @@ import com.esofthead.mycollab.module.user.AccountLinkGenerator;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.ui.AbstractBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Div;
@@ -59,10 +58,11 @@ import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Button.ClickEvent;
 
 /**
  * 
@@ -71,8 +71,6 @@ import com.vaadin.ui.Label;
  */
 public class ActivityStreamPanel extends CssLayout {
 	private static final long serialVersionUID = 1L;
-
-	private static int MAX_NUMBER_DISPLAY = 20;
 
 	private final CrmActivityStreamPagedList activityStreamList;
 
@@ -93,167 +91,240 @@ public class ActivityStreamPanel extends CssLayout {
 		this.activityStreamList.setSearchCriteria(searchCriteria);
 	}
 
-	static class CrmActivityStreamPagedList
-			extends
-			AbstractBeanPagedList<ActivityStreamSearchCriteria, SimpleActivityStream> {
+	static class CrmActivityStreamPagedList extends VerticalLayout {
+
 		private static final long serialVersionUID = 1L;
+		private static final int MAX_NUMBER_DISPLAY = 10;
 
-		private final ActivityStreamService activityStreamService;
+		private final CssLayout listContainer;
+		private CssLayout controlBarWrapper;
 
-		private int currentIndex = 0;
+		private ActivityStreamService activityStreamService;
+		private ActivityStreamSearchCriteria searchCriteria;
+
+		private int currentIndex = 0, firstIndex = 0, lastIndex = 0;
 
 		public CrmActivityStreamPagedList() {
-			super(null, 20);
-			this.activityStreamService = ApplicationContextUtil
+			listContainer = new CssLayout();
+			listContainer.setStyleName("beanlist-content");
+			listContainer.setWidth("100%");
+			this.addComponent(listContainer);
+			activityStreamService = ApplicationContextUtil
 					.getSpringBean(ActivityStreamService.class);
-
 		}
 
-		@Override
 		public void setSearchCriteria(
 				final ActivityStreamSearchCriteria searchCriteria) {
-			listContainer.removeAllComponents();
-
-			searchRequest = new SearchRequest<ActivityStreamSearchCriteria>(
-					searchCriteria, currentIndex, MAX_NUMBER_DISPLAY);
-			doSearch();
+			this.listContainer.removeAllComponents();
+			this.searchCriteria = searchCriteria;
+			doSearch(true);
 		}
 
 		@SuppressWarnings("unchecked")
-		@Override
-		protected void doSearch() {
-			this.totalCount = this.activityStreamService
-					.getTotalCount(this.searchRequest.getSearchCriteria());
-			this.totalPage = (this.totalCount - 1)
-					/ this.searchRequest.getNumberOfItems() + 1;
-			if (this.searchRequest.getCurrentPage() > this.totalPage) {
-				this.searchRequest.setCurrentPage(this.totalPage);
-			}
-
-			if (this.totalPage > 1) {
-				// Define button layout
-				if (this.controlBarWrapper != null) {
-					this.removeComponent(this.controlBarWrapper);
-				}
-				this.addComponent(this.createPageControls());
-			} else {
-				if (this.getComponentCount() == 2) {
-					this.removeComponent(this.getComponent(1));
-				}
-			}
-
-			this.setCurrentPage(this.currentPage);
-			this.setTotalPage(this.totalPage);
-
-			final List<SimpleActivityStream> currentListData = this.activityStreamService
-					.findPagableListByCriteria(this.searchRequest);
+		private void doSearch(boolean isSearchNext) {
 			this.listContainer.removeAllComponents();
 
 			Date currentDate = new GregorianCalendar(2100, 1, 1).getTime();
 			CssLayout currentFeedBlock = new CssLayout();
 
-			int currentItemsDisplay = 0;
+			Integer currentItemsDisplay = 0, numberItemsQuery = MAX_NUMBER_DISPLAY;
+			if (isSearchNext) {
+				currentIndex = firstIndex = lastIndex;
+			} else {
+				currentIndex = lastIndex = firstIndex;
+				currentIndex = firstIndex - MAX_NUMBER_DISPLAY;
+			}
 
 			try {
-				for (final SimpleActivityStream activityStream : currentListData) {
+				while (currentItemsDisplay < MAX_NUMBER_DISPLAY) {
+					final List<SimpleActivityStream> currentListData = this.activityStreamService
+							.findPagableListByCriteria(new SearchRequest<ActivityStreamSearchCriteria>(
+									searchCriteria, currentIndex,
+									numberItemsQuery));
 
-					if (CrmTypeConstants.ACCOUNT.equals(activityStream
-							.getType())
-							&& !AppContext
-									.canRead(RolePermissionCollections.CRM_ACCOUNT)) {
-						continue;
-					} else if (CrmTypeConstants.CONTACT.equals(activityStream
-							.getType())
-							&& !AppContext
-									.canRead(RolePermissionCollections.CRM_CONTACT)) {
-						continue;
-					} else if (CrmTypeConstants.CAMPAIGN.equals(activityStream
-							.getType())
-							&& !AppContext
-									.canRead(RolePermissionCollections.CRM_CAMPAIGN)) {
-						continue;
-					} else if (CrmTypeConstants.LEAD.equals(activityStream
-							.getType())
-							&& !AppContext
-									.canRead(RolePermissionCollections.CRM_LEAD)) {
-						continue;
-					} else if (CrmTypeConstants.OPPORTUNITY
-							.equals(activityStream.getType())
-							&& !AppContext
-									.canRead(RolePermissionCollections.CRM_OPPORTUNITY)) {
-						continue;
-					} else if (CrmTypeConstants.CASE.equals(activityStream
-							.getType())
-							&& !AppContext
-									.canRead(RolePermissionCollections.CRM_CASE)) {
-						continue;
-					} else if (CrmTypeConstants.TASK.equals(activityStream
-							.getType())
-							&& !AppContext
-									.canRead(RolePermissionCollections.CRM_TASK)) {
-						continue;
-					} else if (CrmTypeConstants.MEETING.equals(activityStream
-							.getType())
-							&& !AppContext
-									.canRead(RolePermissionCollections.CRM_MEETING)) {
-						continue;
-					} else if (CrmTypeConstants.CALL.equals(activityStream
-							.getType())
-							&& !AppContext
-									.canRead(RolePermissionCollections.CRM_CALL)) {
-						continue;
+					int count = currentListData.size();
+					if (isSearchNext) {
+						for (int i = 0; i < count; i++) {
+							this.currentIndex++;
+							currentItemsDisplay += showItem(
+									currentListData.get(i), currentDate,
+									currentFeedBlock, currentItemsDisplay) ? 1
+									: 0;
+							if (currentItemsDisplay == MAX_NUMBER_DISPLAY) {
+								break;
+							}
+						}
+						this.lastIndex = this.currentIndex;
+					} else {
+						for (int i = count - 1; i >= 0; i--) {
+							this.currentIndex--;
+							currentItemsDisplay += showItem(
+									currentListData.get(i), currentDate,
+									currentFeedBlock, currentItemsDisplay) ? 1
+									: 0;
+							if (currentItemsDisplay == MAX_NUMBER_DISPLAY) {
+								break;
+							}
+						}
+						if (currentItemsDisplay < MAX_NUMBER_DISPLAY) {
+							if (currentIndex - MAX_NUMBER_DISPLAY < 0) {
+								numberItemsQuery = currentIndex;
+								currentIndex = 0;
+							} else {
+								currentIndex = currentIndex
+										- MAX_NUMBER_DISPLAY;
+							}
+						}
+						firstIndex = currentIndex;
 					}
-
-					final Date itemCreatedDate = activityStream
-							.getCreatedtime();
-
-					if (!DateUtils.isSameDay(currentDate, itemCreatedDate)) {
-						currentFeedBlock = new CssLayout();
-						currentFeedBlock.setStyleName("feed-block");
-						feedBlocksPut(currentDate, itemCreatedDate,
-								currentFeedBlock);
-						currentDate = itemCreatedDate;
-					}
-
-					CrmCommonI18nEnum action = null;
-
-					if (ActivityStreamConstants.ACTION_CREATE
-							.equals(activityStream.getAction())) {
-						action = CrmCommonI18nEnum.WIDGET_ACTIVITY_CREATE_ACTION;
-					} else if (ActivityStreamConstants.ACTION_UPDATE
-							.equals(activityStream.getAction())) {
-						action = CrmCommonI18nEnum.WIDGET_ACTIVITY_UPDATE_ACTION;
-					}
-					// --------------Item hidden div tooltip----------------
-					String uid = UUID.randomUUID().toString();
-					String itemType = AppContext
-							.getMessage(CrmLocalizationTypeMap
-									.getType(activityStream.getType()));
-					String assigneeValue = buildAssigneeValue(activityStream,
-							uid);
-					String itemValue = buildItemValue(activityStream, uid);
-
-					StringBuffer content = new StringBuffer(
-							AppContext.getMessage(action, assigneeValue,
-									itemType, itemValue));
-					if (activityStream.getAssoAuditLog() != null) {
-						content.append(CrmActivityStreamGenerator
-								.generatorDetailChangeOfActivity(activityStream));
-					}
-
-					final Label activityLink = new Label(content.toString(),
-							ContentMode.HTML);
-					final CssLayout streamWrapper = new CssLayout();
-					streamWrapper.setWidth("100%");
-					streamWrapper.addStyleName("stream-wrapper");
-					streamWrapper.addComponent(activityLink);
-					currentFeedBlock.addComponent(streamWrapper);
-
-					currentItemsDisplay++;
 				}
 			} catch (final Exception e) {
 				throw new MyCollabException(e);
 			}
+
+			this.addComponent(createPageControls());
+		}
+
+		private boolean showItem(final SimpleActivityStream activityStream,
+				Date currentDate, CssLayout currentFeedBlock,
+				Integer currentItemsDisplay) {
+
+			if (CrmTypeConstants.ACCOUNT.equals(activityStream.getType())
+					&& !AppContext
+							.canRead(RolePermissionCollections.CRM_ACCOUNT)) {
+				return false;
+			} else if (CrmTypeConstants.CONTACT
+					.equals(activityStream.getType())
+					&& !AppContext
+							.canRead(RolePermissionCollections.CRM_CONTACT)) {
+				return false;
+			} else if (CrmTypeConstants.CAMPAIGN.equals(activityStream
+					.getType())
+					&& !AppContext
+							.canRead(RolePermissionCollections.CRM_CAMPAIGN)) {
+				return false;
+			} else if (CrmTypeConstants.LEAD.equals(activityStream.getType())
+					&& !AppContext.canRead(RolePermissionCollections.CRM_LEAD)) {
+				return false;
+			} else if (CrmTypeConstants.OPPORTUNITY.equals(activityStream
+					.getType())
+					&& !AppContext
+							.canRead(RolePermissionCollections.CRM_OPPORTUNITY)) {
+				return false;
+			} else if (CrmTypeConstants.CASE.equals(activityStream.getType())
+					&& !AppContext.canRead(RolePermissionCollections.CRM_CASE)) {
+				return false;
+			} else if (CrmTypeConstants.TASK.equals(activityStream.getType())
+					&& !AppContext.canRead(RolePermissionCollections.CRM_TASK)) {
+				return false;
+			} else if (CrmTypeConstants.MEETING
+					.equals(activityStream.getType())
+					&& !AppContext
+							.canRead(RolePermissionCollections.CRM_MEETING)) {
+				return false;
+			} else if (CrmTypeConstants.CALL.equals(activityStream.getType())
+					&& !AppContext.canRead(RolePermissionCollections.CRM_CALL)) {
+				return false;
+			}
+
+			final Date itemCreatedDate = activityStream.getCreatedtime();
+
+			if (!DateUtils.isSameDay(currentDate, itemCreatedDate)) {
+				currentFeedBlock = new CssLayout();
+				currentFeedBlock.setStyleName("feed-block");
+				feedBlocksPut(currentDate, itemCreatedDate, currentFeedBlock);
+				currentDate = itemCreatedDate;
+			}
+
+			CrmCommonI18nEnum action = null;
+
+			if (ActivityStreamConstants.ACTION_CREATE.equals(activityStream
+					.getAction())) {
+				action = CrmCommonI18nEnum.WIDGET_ACTIVITY_CREATE_ACTION;
+			} else if (ActivityStreamConstants.ACTION_UPDATE
+					.equals(activityStream.getAction())) {
+				action = CrmCommonI18nEnum.WIDGET_ACTIVITY_UPDATE_ACTION;
+			}
+			// --------------Item hidden div tooltip----------------
+			String uid = UUID.randomUUID().toString();
+			String itemType = AppContext.getMessage(CrmLocalizationTypeMap
+					.getType(activityStream.getType()));
+			String assigneeValue = buildAssigneeValue(activityStream, uid);
+			String itemValue = buildItemValue(activityStream, uid);
+
+			StringBuffer content = new StringBuffer(AppContext.getMessage(
+					action, assigneeValue, itemType, itemValue));
+			if (activityStream.getAssoAuditLog() != null) {
+				content.append(CrmActivityStreamGenerator
+						.generatorDetailChangeOfActivity(activityStream));
+			}
+
+			final Label activityLink = new Label(content.toString(),
+					ContentMode.HTML);
+			final CssLayout streamWrapper = new CssLayout();
+			streamWrapper.setWidth("100%");
+			streamWrapper.addStyleName("stream-wrapper");
+			streamWrapper.addComponent(activityLink);
+			currentFeedBlock.addComponent(streamWrapper);
+
+			return true;
+		}
+
+		private CssLayout createPageControls() {
+			this.controlBarWrapper = new CssLayout();
+			this.controlBarWrapper.setWidth("100%");
+			this.controlBarWrapper.setStyleName("page-controls");
+			ButtonGroup controlBtns = new ButtonGroup();
+			controlBtns.setStyleName(UIConstants.THEME_GREEN_LINK);
+			Button prevBtn = new Button(
+					AppContext.getMessage(GenericI18Enum.BUTTON_NAV_NEWER),
+					new Button.ClickListener() {
+						private static final long serialVersionUID = -94021599166105307L;
+
+						@Override
+						public void buttonClick(ClickEvent event) {
+							doSearch(false);
+						}
+					});
+			if (hasPrevious()) {
+				prevBtn.setEnabled(false);
+			}
+			prevBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+			prevBtn.setWidth("64px");
+
+			Button nextBtn = new Button(
+					AppContext.getMessage(GenericI18Enum.BUTTON_NAV_OLDER),
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 3095522916508256018L;
+
+						@Override
+						public void buttonClick(ClickEvent event) {
+							doSearch(true);
+						}
+					});
+			if (hasNext()) {
+				prevBtn.setEnabled(false);
+			}
+			nextBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+			nextBtn.setWidth("64px");
+
+			controlBtns.addButton(prevBtn);
+			controlBtns.addButton(nextBtn);
+
+			this.controlBarWrapper.addComponent(controlBtns);
+
+			return this.controlBarWrapper;
+		}
+
+		private boolean hasNext() {
+			return this.activityStreamService.findPagableListByCriteria(
+					new SearchRequest<ActivityStreamSearchCriteria>(
+							this.searchCriteria, currentIndex, 1)).size() > 0 ? true
+					: false;
+		}
+
+		private boolean hasPrevious() {
+			return this.firstIndex > 0 ? true : false;
 		}
 
 		private String buildAssigneeValue(SimpleActivityStream activityStream,
@@ -383,65 +454,6 @@ public class ActivityStreamPanel extends CssLayout {
 			blockWrapper.setExpandRatio(currentBlock, 1.0f);
 
 			this.listContainer.addComponent(blockWrapper);
-		}
-
-		@Override
-		protected CssLayout createPageControls() {
-			this.controlBarWrapper = new CssLayout();
-			this.controlBarWrapper.setWidth("100%");
-			this.controlBarWrapper.setStyleName("page-controls");
-			ButtonGroup controlBtns = new ButtonGroup();
-			controlBtns.setStyleName(UIConstants.THEME_GREEN_LINK);
-			Button prevBtn = new Button(
-					AppContext.getMessage(GenericI18Enum.BUTTON_NAV_NEWER),
-					new Button.ClickListener() {
-						private static final long serialVersionUID = -94021599166105307L;
-
-						@Override
-						public void buttonClick(ClickEvent event) {
-							CrmActivityStreamPagedList.this
-									.pageChange(CrmActivityStreamPagedList.this.currentPage - 1);
-						}
-					});
-			if (currentPage == 1) {
-				prevBtn.setEnabled(false);
-			}
-			prevBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
-			prevBtn.setWidth("64px");
-
-			Button nextBtn = new Button(
-					AppContext.getMessage(GenericI18Enum.BUTTON_NAV_OLDER),
-					new Button.ClickListener() {
-						private static final long serialVersionUID = 3095522916508256018L;
-
-						@Override
-						public void buttonClick(ClickEvent event) {
-							CrmActivityStreamPagedList.this
-									.pageChange(CrmActivityStreamPagedList.this.currentPage + 1);
-						}
-					});
-			if (currentPage == totalPage) {
-				nextBtn.setEnabled(false);
-			}
-			nextBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
-			nextBtn.setWidth("64px");
-
-			controlBtns.addButton(prevBtn);
-			controlBtns.addButton(nextBtn);
-
-			this.controlBarWrapper.addComponent(controlBtns);
-
-			return this.controlBarWrapper;
-		}
-
-		@Override
-		protected int queryTotalCount() {
-			return 0;
-		}
-
-		@Override
-		protected List<SimpleActivityStream> queryCurrentData() {
-			return null;
 		}
 	}
 }
