@@ -60,7 +60,7 @@ public class SaveContentCommandImpl implements SaveContentCommand {
 		long totalSize = content.getSize();
 
 		if (StringUtils.isNotBlank(content.getThumbnail())) {
-
+			totalSize += rawContentService.getSize(content.getThumbnail());
 		}
 
 		try {

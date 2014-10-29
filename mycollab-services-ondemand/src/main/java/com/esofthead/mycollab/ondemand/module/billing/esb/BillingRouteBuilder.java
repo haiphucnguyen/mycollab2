@@ -2,9 +2,9 @@ package com.esofthead.mycollab.ondemand.module.billing.esb;
 
 import org.apache.camel.ExchangePattern;
 import org.apache.camel.spring.SpringRouteBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
-
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
 
 /**
  * 
@@ -13,7 +13,11 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
  *
  */
 @Component
+@Profile("!test")
 public class BillingRouteBuilder extends SpringRouteBuilder {
+
+	@Autowired
+	private ConvertPlanToFreeOneCommand convertPlanToFreeOneCommand;
 
 	@Override
 	public void configure() throws Exception {
@@ -21,8 +25,7 @@ public class BillingRouteBuilder extends SpringRouteBuilder {
 				ExchangePattern.InOnly).to("seda:convertFreePlan.queue");
 		from("seda:convertFreePlan.queue")
 				.threads()
-				.bean(ApplicationContextUtil
-						.getSpringBean(ConvertPlanToFreeOneCommand.class),
+				.bean(convertPlanToFreeOneCommand,
 						"convertToFreePlan(com.esofthead.mycollab.module.user.domain.BillingAccountWithOwners)");
 
 	}

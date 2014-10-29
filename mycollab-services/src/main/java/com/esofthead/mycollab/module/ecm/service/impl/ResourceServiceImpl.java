@@ -139,9 +139,8 @@ public class ResourceServiceImpl implements ResourceService {
 						.getContentStream(contentPath);
 				BufferedImage image = ImageUtil
 						.generateImageThumbnail(newInputStream);
-				String thumbnailPath = String.format("%d/.thumbnail/%s",
-						sAccountId, StringUtils.generateSoftUniqueId()
-								+ ".png ");
+				String thumbnailPath = String.format(".thumbnail/%d/%s.%s",
+						sAccountId, StringUtils.generateSoftUniqueId(), "png");
 				File tmpFile = File.createTempFile("tmp", "png");
 				ImageIO.write(image, "png", new FileOutputStream(tmpFile));
 				rawContentService.saveContent(thumbnailPath,
@@ -180,13 +179,13 @@ public class ResourceServiceImpl implements ResourceService {
 		if (res instanceof Folder) {
 			deleteResourceAction = ContentActivityLogBuilder
 					.makeDeleteFolder(path);
-			deleteResourcesCommand.removeResource(new String[] { path,
-					((Content) res).getThumbnail() }, deleteUser, sAccountId);
+			deleteResourcesCommand.removeResource(new String[] { path },
+					deleteUser, sAccountId);
 		} else {
 			deleteResourceAction = ContentActivityLogBuilder
 					.makeDeleteContent(path);
-			deleteResourcesCommand.removeResource(new String[] { path },
-					deleteUser, sAccountId);
+			deleteResourcesCommand.removeResource(new String[] { path,
+					((Content) res).getThumbnail() }, deleteUser, sAccountId);
 		}
 
 		contentJcrDao.removeResource(path);
