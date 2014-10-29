@@ -117,12 +117,14 @@ public class ResourceServiceImpl implements ResourceService {
 	public void saveContent(Content content, String createdUser,
 			InputStream refStream, Integer sAccountId) {
 		Integer fileSize = 0;
-		try {
-			fileSize = refStream.available();
-			billingPlanCheckerService.validateAccountCanUploadMoreFiles(
-					sAccountId, fileSize);
-		} catch (IOException e) {
-			LOG.error("Can not get available bytes", e);
+		if (sAccountId != null) {
+			try {
+				fileSize = refStream.available();
+				billingPlanCheckerService.validateAccountCanUploadMoreFiles(
+						sAccountId, fileSize);
+			} catch (IOException e) {
+				LOG.error("Can not get available bytes", e);
+			}
 		}
 
 		// detect mimeType and set to content
