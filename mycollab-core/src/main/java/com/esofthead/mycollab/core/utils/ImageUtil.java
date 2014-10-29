@@ -146,7 +146,7 @@ public class ImageUtil {
 
 	public static void main(String[] args) throws IOException {
 		BufferedImage thumbnail = generateImageThumbnail(new FileInputStream(
-				new File("/Users/haiphucnguyen/Downloads/favicon.ico")));
+				new File("/Users/haiphucnguyen/Downloads/Screen_Shot_2014_10_28_at_10.56.47_AM.png")));
 		ImageIO.write(thumbnail, "png", new File(
 				"/Users/haiphucnguyen/Desktop/test.png"));
 		System.out.println("Thumb: " + thumbnail);

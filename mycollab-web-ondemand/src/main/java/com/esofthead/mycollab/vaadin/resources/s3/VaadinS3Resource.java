@@ -20,7 +20,7 @@ public class VaadinS3Resource implements VaadinResource {
 	}
 
 	@Override
-	public Resource getImagePreviewResource(String documentPath) {
+	public Resource getImagePreviewResource(String documentPath, Resource failOverSource) {
 		StorageConfiguration storageConfiguration = StorageManager
 				.getConfiguration();
 
