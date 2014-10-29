@@ -94,18 +94,19 @@ public class ActivityStreamPanel extends CssLayout {
 	static class CrmActivityStreamPagedList extends VerticalLayout {
 
 		private static final long serialVersionUID = 1L;
-		private static final int MAX_NUMBER_DISPLAY = 10;
+		private static final int MAX_NUMBER_DISPLAY = 20;
 
-		private final CssLayout listContainer;
-		private CssLayout controlBarWrapper;
+		private final CssLayout listContainer = new CssLayout();
+		private CssLayout controlBarWrapper = new CssLayout();
+		private CssLayout currentFeedBlock;
 
 		private ActivityStreamService activityStreamService;
 		private ActivityStreamSearchCriteria searchCriteria;
 
 		private int currentIndex = 0, firstIndex = 0, lastIndex = 0;
+		private Date currentDate;
 
 		public CrmActivityStreamPagedList() {
-			listContainer = new CssLayout();
 			listContainer.setStyleName("beanlist-content");
 			listContainer.setWidth("100%");
 			this.addComponent(listContainer);
@@ -124,8 +125,8 @@ public class ActivityStreamPanel extends CssLayout {
 		private void doSearch(boolean isSearchNext) {
 			this.listContainer.removeAllComponents();
 
-			Date currentDate = new GregorianCalendar(2100, 1, 1).getTime();
-			CssLayout currentFeedBlock = new CssLayout();
+			currentDate = new GregorianCalendar(2100, 1, 1).getTime();
+			currentFeedBlock = new CssLayout();
 
 			Integer currentItemsDisplay = 0, numberItemsQuery = MAX_NUMBER_DISPLAY;
 			if (isSearchNext) {
@@ -137,31 +138,30 @@ public class ActivityStreamPanel extends CssLayout {
 
 			try {
 				while (currentItemsDisplay < MAX_NUMBER_DISPLAY) {
+					int page = currentIndex / MAX_NUMBER_DISPLAY + 1;
 					final List<SimpleActivityStream> currentListData = this.activityStreamService
 							.findPagableListByCriteria(new SearchRequest<ActivityStreamSearchCriteria>(
-									searchCriteria, currentIndex,
-									numberItemsQuery));
+									searchCriteria, page, numberItemsQuery));
 
-					int count = currentListData.size();
+					if (currentListData.size() == 0) {
+						break;
+					}
+
 					if (isSearchNext) {
-						for (int i = 0; i < count; i++) {
+						for (SimpleActivityStream item : currentListData) {
 							this.currentIndex++;
-							currentItemsDisplay += showItem(
-									currentListData.get(i), currentDate,
-									currentFeedBlock, currentItemsDisplay) ? 1
-									: 0;
+							currentItemsDisplay += showItem(item,
+									currentItemsDisplay) ? 1 : 0;
 							if (currentItemsDisplay == MAX_NUMBER_DISPLAY) {
 								break;
 							}
 						}
 						this.lastIndex = this.currentIndex;
 					} else {
-						for (int i = count - 1; i >= 0; i--) {
+						for (SimpleActivityStream item : currentListData) {
 							this.currentIndex--;
-							currentItemsDisplay += showItem(
-									currentListData.get(i), currentDate,
-									currentFeedBlock, currentItemsDisplay) ? 1
-									: 0;
+							currentItemsDisplay += showItem(item,
+									currentItemsDisplay) ? 1 : 0;
 							if (currentItemsDisplay == MAX_NUMBER_DISPLAY) {
 								break;
 							}
@@ -186,7 +186,6 @@ public class ActivityStreamPanel extends CssLayout {
 		}
 
 		private boolean showItem(final SimpleActivityStream activityStream,
-				Date currentDate, CssLayout currentFeedBlock,
 				Integer currentItemsDisplay) {
 
 			if (CrmTypeConstants.ACCOUNT.equals(activityStream.getType())
@@ -271,6 +270,7 @@ public class ActivityStreamPanel extends CssLayout {
 		}
 
 		private CssLayout createPageControls() {
+			this.removeComponent(controlBarWrapper);
 			this.controlBarWrapper = new CssLayout();
 			this.controlBarWrapper.setWidth("100%");
 			this.controlBarWrapper.setStyleName("page-controls");
@@ -287,6 +287,8 @@ public class ActivityStreamPanel extends CssLayout {
 						}
 					});
 			if (hasPrevious()) {
+				prevBtn.setEnabled(true);
+			} else {
 				prevBtn.setEnabled(false);
 			}
 			prevBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
@@ -303,7 +305,9 @@ public class ActivityStreamPanel extends CssLayout {
 						}
 					});
 			if (hasNext()) {
-				prevBtn.setEnabled(false);
+				nextBtn.setEnabled(true);
+			} else {
+				nextBtn.setEnabled(false);
 			}
 			nextBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 			nextBtn.setWidth("64px");
@@ -317,10 +321,12 @@ public class ActivityStreamPanel extends CssLayout {
 		}
 
 		private boolean hasNext() {
-			return this.activityStreamService.findPagableListByCriteria(
+			int page = lastIndex / MAX_NUMBER_DISPLAY + 1;
+			int size = this.activityStreamService.findPagableListByCriteria(
 					new SearchRequest<ActivityStreamSearchCriteria>(
-							this.searchCriteria, currentIndex, 1)).size() > 0 ? true
-					: false;
+							this.searchCriteria, page, MAX_NUMBER_DISPLAY))
+					.size();
+			return size > 0 ? true : false;
 		}
 
 		private boolean hasPrevious() {
