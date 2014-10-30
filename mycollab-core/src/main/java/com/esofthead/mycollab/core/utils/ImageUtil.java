@@ -136,7 +136,7 @@ public class ImageUtil {
 					Mode.AUTOMATIC, idealWidth, (int) height);
 			if (height > 400) {
 				rescaledImage = rescaledImage.getSubimage(0, 0,
-						Math.min(256, imgWidth), 400);
+						Math.min(256, rescaledImage.getWidth()), 400);
 			}
 			return rescaledImage;
 		} catch (Exception e) {
