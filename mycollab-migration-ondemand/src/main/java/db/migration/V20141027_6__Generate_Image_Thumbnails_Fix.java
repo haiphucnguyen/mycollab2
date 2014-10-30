@@ -26,7 +26,7 @@ import com.esofthead.mycollab.module.ecm.service.ResourceService;
 import com.esofthead.mycollab.module.file.service.RawContentService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 
-public class V20141027_5__Generate_Image_Thumbnails_Fix implements
+public class V20141027_6__Generate_Image_Thumbnails_Fix implements
 		SpringJdbcMigration {
 
 	private static final Logger LOG = LoggerFactory
@@ -59,7 +59,7 @@ public class V20141027_5__Generate_Image_Thumbnails_Fix implements
 					Content content = (Content) resource;
 					String mimeType = MimeTypesUtil.detectMimeType(content
 							.getPath());
-					LOG.debug("Check mimetype " + mimeType + "of content "
+					LOG.info("Check mimetype " + mimeType + "of content "
 							+ content.getPath() + "--" + content.getThumbnail()
 							+ ".");
 					if (MimeTypesUtil.isImageMimetype(mimeType)
