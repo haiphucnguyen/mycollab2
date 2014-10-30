@@ -65,6 +65,7 @@ public class V20141027_6__Generate_Image_Thumbnails_Fix implements
 					if (MimeTypesUtil.isImageMimetype(mimeType)
 							&& org.apache.commons.lang3.StringUtils
 									.isBlank(content.getThumbnail())) {
+						LOG.info("Generate thumbnail for " + content.getPath());
 						try {
 							BufferedImage image = ImageUtil
 									.generateImageThumbnail(resourceService
