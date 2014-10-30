@@ -26,7 +26,7 @@ import com.esofthead.mycollab.module.ecm.service.ResourceService;
 import com.esofthead.mycollab.module.file.service.RawContentService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 
-public class V20141027_7__Generate_Image_Thumbnails_Fix implements
+public class V20141027_8__Generate_Image_Thumbnails_Fix implements
 		SpringJdbcMigration {
 
 	private static final Logger LOG = LoggerFactory
@@ -71,10 +71,10 @@ public class V20141027_7__Generate_Image_Thumbnails_Fix implements
 									.generateImageThumbnail(resourceService
 											.getContentStream(resource
 													.getPath()));
-							String thumbnailPath = String.format(
-									"%d/.thumbnail/%s", accountId,
-									StringUtils.generateSoftUniqueId()
-											+ ".png ");
+							String thumbnailPath = String
+									.format("%d/.thumbnail/%s", accountId,
+											StringUtils.generateSoftUniqueId()
+													+ ".png");
 							content.setThumbnail(thumbnailPath);
 							contentJcrDao.saveContent(content, "");
 
