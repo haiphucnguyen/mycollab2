@@ -27,6 +27,7 @@
     <project>mycollab-jetty-session-premium</project>
     <project>mycollab-api</project>
     <project>mycollab-api-impl</project>
+    <project>mycollab-migration-ondemand</project>
     <project>mycollab-mobile</project>
     <project>mycollab-scheduler-ondemand</project>
     <project>mycollab-search</project>

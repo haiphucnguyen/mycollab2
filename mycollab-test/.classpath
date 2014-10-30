@@ -74,5 +74,4 @@
   <classpathentry kind="var" path="M2_REPO/com/sun/xml/fastinfoset/FastInfoset/1.2.12/FastInfoset-1.2.12.jar" sourcepath="M2_REPO/com/sun/xml/fastinfoset/FastInfoset/1.2.12/FastInfoset-1.2.12-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/apache/camel/camel-spring/2.14.0/camel-spring-2.14.0.jar" sourcepath="M2_REPO/org/apache/camel/camel-spring/2.14.0/camel-spring-2.14.0-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/apache/camel/camel-spring-javaconfig/2.14.0/camel-spring-javaconfig-2.14.0.jar" sourcepath="M2_REPO/org/apache/camel/camel-spring-javaconfig/2.14.0/camel-spring-javaconfig-2.14.0-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/apache/servicemix/bundles/org.apache.servicemix.bundles.cglib/2.1_3_7/org.apache.servicemix.bundles.cglib-2.1_3_7.jar"/>
 </classpath>
