@@ -64,10 +64,9 @@ public abstract class DefaultService<K extends Serializable, T, S extends Search
 	}
 
 	@Override
-	public List findAbsoluteListByCriteria(SearchRequest<S> searchRequest,
-			int firstIndex, int numberOfItems) {
-		return getSearchMapper().findPagableListByCriteria(
-				searchRequest.getSearchCriteria(),
+	public List findAbsoluteListByCriteria(S searchCriteria, int firstIndex,
+			int numberOfItems) {
+		return getSearchMapper().findPagableListByCriteria(searchCriteria,
 				new RowBounds(firstIndex, numberOfItems));
 	}
 
