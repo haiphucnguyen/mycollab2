@@ -77,7 +77,6 @@
 	<classpathentry kind="var" path="M2_REPO/com/sun/xml/fastinfoset/FastInfoset/1.2.12/FastInfoset-1.2.12.jar" sourcepath="M2_REPO/com/sun/xml/fastinfoset/FastInfoset/1.2.12/FastInfoset-1.2.12-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/apache/camel/camel-spring/2.14.0/camel-spring-2.14.0.jar" sourcepath="M2_REPO/org/apache/camel/camel-spring/2.14.0/camel-spring-2.14.0-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/apache/camel/camel-spring-javaconfig/2.14.0/camel-spring-javaconfig-2.14.0.jar" sourcepath="M2_REPO/org/apache/camel/camel-spring-javaconfig/2.14.0/camel-spring-javaconfig-2.14.0-sources.jar"/>
-	<classpathentry kind="var" path="M2_REPO/org/apache/servicemix/bundles/org.apache.servicemix.bundles.cglib/2.1_3_7/org.apache.servicemix.bundles.cglib-2.1_3_7.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/imgscalr/imgscalr-lib/4.2/imgscalr-lib-4.2.jar" sourcepath="M2_REPO/org/imgscalr/imgscalr-lib/4.2/imgscalr-lib-4.2-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/ch/qos/cal10n/cal10n-api/0.8.1/cal10n-api-0.8.1.jar" sourcepath="M2_REPO/ch/qos/cal10n/cal10n-api/0.8.1/cal10n-api-0.8.1-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/apache/velocity/velocity/1.7/velocity-1.7.jar" sourcepath="M2_REPO/org/apache/velocity/velocity/1.7/velocity-1.7-sources.jar"/>

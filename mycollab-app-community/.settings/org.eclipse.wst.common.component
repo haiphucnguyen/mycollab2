@@ -265,9 +265,6 @@
     <dependent-module archiveName="spring-test-3.2.11.RELEASE.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/springframework/spring-test/3.2.11.RELEASE/spring-test-3.2.11.RELEASE.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="org.apache.servicemix.bundles.cglib-2.1_3_7.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/apache/servicemix/bundles/org.apache.servicemix.bundles.cglib/2.1_3_7/org.apache.servicemix.bundles.cglib-2.1_3_7.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
     <dependent-module archiveName="jasypt-1.9.2.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/jasypt/jasypt/1.9.2/jasypt-1.9.2.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>

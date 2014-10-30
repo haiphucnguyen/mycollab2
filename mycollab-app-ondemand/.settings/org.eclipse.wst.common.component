@@ -217,9 +217,6 @@
     <dependent-module archiveName="spring-test-3.2.11.RELEASE.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/springframework/spring-test/3.2.11.RELEASE/spring-test-3.2.11.RELEASE.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="org.apache.servicemix.bundles.cglib-2.1_3_7.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/apache/servicemix/bundles/org.apache.servicemix.bundles.cglib/2.1_3_7/org.apache.servicemix.bundles.cglib-2.1_3_7.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
     <dependent-module archiveName="jasypt-1.9.2.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/jasypt/jasypt/1.9.2/jasypt-1.9.2.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
@@ -532,12 +529,6 @@
     <dependent-module archiveName="maddon-1.15.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/peimari/maddon/1.15/maddon-1.15.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="confirmdialog-2.0.5.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/vaadin/addon/confirmdialog/2.0.5/confirmdialog-2.0.5.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="markdown4j-2.2-cj-1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/commonjava/googlecode/markdown4j/markdown4j/2.2-cj-1.0/markdown4j-2.2-cj-1.0.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
     <dependent-module archiveName="contextmenu-4.5.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/vaadin/addons/contextmenu/4.5.0/contextmenu-4.5.0.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
@@ -554,6 +545,9 @@
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="gantt-addon-0.4.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/tltv/gantt/gantt-addon/0.4.0/gantt-addon-0.4.0.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="confirmdialog-2.0.5.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/vaadin/addon/confirmdialog/2.0.5/confirmdialog-2.0.5.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="cropField-1.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/esofthead/vaadin/cropField/1.0-SNAPSHOT/cropField-1.0-SNAPSHOT.jar">
@@ -674,6 +668,9 @@
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="licensing-core-1.1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/net/nicholaswilliams/java/licensing/licensing-core/1.1.0/licensing-core-1.1.0.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="mycollab-migration-ondemand.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mycollab-migration-ondemand/mycollab-migration-ondemand">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="mycollab-mobile.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mycollab-mobile/mycollab-mobile">

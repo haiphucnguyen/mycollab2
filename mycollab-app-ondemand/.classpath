@@ -83,7 +83,6 @@
   <classpathentry kind="var" path="M2_REPO/org/apache/camel/camel-spring/2.14.0/camel-spring-2.14.0.jar" sourcepath="M2_REPO/org/apache/camel/camel-spring/2.14.0/camel-spring-2.14.0-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/apache/camel/camel-spring-javaconfig/2.14.0/camel-spring-javaconfig-2.14.0.jar" sourcepath="M2_REPO/org/apache/camel/camel-spring-javaconfig/2.14.0/camel-spring-javaconfig-2.14.0-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/springframework/spring-test/3.2.11.RELEASE/spring-test-3.2.11.RELEASE.jar" sourcepath="M2_REPO/org/springframework/spring-test/3.2.11.RELEASE/spring-test-3.2.11.RELEASE-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/apache/servicemix/bundles/org.apache.servicemix.bundles.cglib/2.1_3_7/org.apache.servicemix.bundles.cglib-2.1_3_7.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/jasypt/jasypt/1.9.2/jasypt-1.9.2.jar" sourcepath="M2_REPO/org/jasypt/jasypt/1.9.2/jasypt-1.9.2-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/jasypt/jasypt-spring31/1.9.2/jasypt-spring31-1.9.2.jar" sourcepath="M2_REPO/org/jasypt/jasypt-spring31/1.9.2/jasypt-spring31-1.9.2-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/eclipse/jetty/jetty-server/9.2.3.v20140905/jetty-server-9.2.3.v20140905.jar" sourcepath="M2_REPO/org/eclipse/jetty/jetty-server/9.2.3.v20140905/jetty-server-9.2.3.v20140905-sources.jar"/>
@@ -183,14 +182,13 @@
   <classpathentry kind="var" path="M2_REPO/org/vaadin/addons/stylecalendar/2.1.0/stylecalendar-2.1.0.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/vaadin/addon/easyuploads/7.3.3/easyuploads-7.3.3.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/peimari/maddon/1.15/maddon-1.15.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/vaadin/addon/confirmdialog/2.0.5/confirmdialog-2.0.5.jar" sourcepath="M2_REPO/org/vaadin/addon/confirmdialog/2.0.5/confirmdialog-2.0.5-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/commonjava/googlecode/markdown4j/markdown4j/2.2-cj-1.0/markdown4j-2.2-cj-1.0.jar" sourcepath="M2_REPO/org/commonjava/googlecode/markdown4j/markdown4j/2.2-cj-1.0/markdown4j-2.2-cj-1.0-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/vaadin/addons/contextmenu/4.5.0/contextmenu-4.5.0.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/lexaden/components/breadcrumb/1.7.3/breadcrumb-1.7.3.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/vaadin/addons/listbuilder/0.7.3.v7/listbuilder-0.7.3.v7.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/vaadin/addons/formsender/2.1.0/formsender-2.1.0.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/esofthead/vaadin/popupbutton/1.0.0-SNAPSHOT/popupbutton-1.0.0-SNAPSHOT.jar" sourcepath="M2_REPO/com/esofthead/vaadin/popupbutton/1.0.0-SNAPSHOT/popupbutton-1.0.0-SNAPSHOT-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/tltv/gantt/gantt-addon/0.4.0/gantt-addon-0.4.0.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/vaadin/addon/confirmdialog/2.0.5/confirmdialog-2.0.5.jar" sourcepath="M2_REPO/org/vaadin/addon/confirmdialog/2.0.5/confirmdialog-2.0.5-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/esofthead/vaadin/cropField/1.0-SNAPSHOT/cropField-1.0-SNAPSHOT.jar" sourcepath="M2_REPO/com/esofthead/vaadin/cropField/1.0-SNAPSHOT/cropField-1.0-SNAPSHOT-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/esofthead/vaadin/calendarext/1.0.0-SNAPSHOT/calendarext-1.0.0-SNAPSHOT.jar" sourcepath="M2_REPO/com/esofthead/vaadin/calendarext/1.0.0-SNAPSHOT/calendarext-1.0.0-SNAPSHOT-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/vaadin/addons/animator/2.0.0/animator-2.0.0.jar"/>
@@ -212,7 +210,7 @@
   <classpathentry kind="var" path="M2_REPO/org/xhtmlrenderer/flying-saucer-core/9.0.6/flying-saucer-core-9.0.6.jar" sourcepath="M2_REPO/org/xhtmlrenderer/flying-saucer-core/9.0.6/flying-saucer-core-9.0.6-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/esofthead/vaadin/floatingcomponent/0.0.1-SNAPSHOT/floatingcomponent-0.0.1-SNAPSHOT.jar" sourcepath="M2_REPO/com/esofthead/vaadin/floatingcomponent/0.0.1-SNAPSHOT/floatingcomponent-0.0.1-SNAPSHOT-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/vaadin/addons/ckeditor-wrapper-for-vaadin/7.9.3/ckeditor-wrapper-for-vaadin-7.9.3.jar"/>
-  <classpathentry kind="var" path="M2_REPO/com/vaadin/vaadin-client/7.3.3/vaadin-client-7.3.3.jar" sourcepath="M2_REPO/com/vaadin/vaadin-client/7.3.3/vaadin-client-7.3.3-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/vaadin/vaadin-client/7.3.3/vaadin-client-7.3.3.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/vaadin/addon/vaadin-charts/1.1.7/vaadin-charts-1.1.7.jar"/>
   <classpathentry kind="src" path="/mycollab-web-ondemand"/>
   <classpathentry kind="src" path="/mycollab-jetty-session-premium"/>
@@ -230,6 +228,7 @@
   <classpathentry kind="src" path="/mycollab-api-impl"/>
   <classpathentry kind="var" path="M2_REPO/net/nicholaswilliams/java/licensing/licensing-licensor-base/1.1.0/licensing-licensor-base-1.1.0.jar" sourcepath="M2_REPO/net/nicholaswilliams/java/licensing/licensing-licensor-base/1.1.0/licensing-licensor-base-1.1.0-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/net/nicholaswilliams/java/licensing/licensing-core/1.1.0/licensing-core-1.1.0.jar" sourcepath="M2_REPO/net/nicholaswilliams/java/licensing/licensing-core/1.1.0/licensing-core-1.1.0-sources.jar"/>
+  <classpathentry kind="src" path="/mycollab-migration-ondemand"/>
   <classpathentry kind="src" path="/mycollab-mobile"/>
   <classpathentry kind="var" path="M2_REPO/com/esofthead/vaadin/mobilecomponent/1.0.0-SNAPSHOT/mobilecomponent-1.0.0-SNAPSHOT.jar" sourcepath="M2_REPO/com/esofthead/vaadin/mobilecomponent/1.0.0-SNAPSHOT/mobilecomponent-1.0.0-SNAPSHOT-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/esofthead/vaadin/navigationbar-quickmenu/1.0.0-SNAPSHOT/navigationbar-quickmenu-1.0.0-SNAPSHOT.jar" sourcepath="M2_REPO/com/esofthead/vaadin/navigationbar-quickmenu/1.0.0-SNAPSHOT/navigationbar-quickmenu-1.0.0-SNAPSHOT-sources.jar"/>
