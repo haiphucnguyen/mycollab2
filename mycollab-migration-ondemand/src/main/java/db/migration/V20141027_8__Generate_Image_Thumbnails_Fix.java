@@ -62,30 +62,17 @@ public class V20141027_8__Generate_Image_Thumbnails_Fix implements
 					LOG.info("Check mimetype " + mimeType + " of content "
 							+ content.getPath() + "--" + content.getThumbnail()
 							+ ".");
-					if (MimeTypesUtil.isImageMimetype(mimeType)
-							&& org.apache.commons.lang3.StringUtils
-									.isBlank(content.getThumbnail())) {
-
+					if (MimeTypesUtil.isImageMimetype(mimeType)) {
 						try {
 							BufferedImage image = ImageUtil
 									.generateImageThumbnail(resourceService
 											.getContentStream(resource
 													.getPath()));
-							String thumbnailPath = String
-									.format("%d/.thumbnail/%s", accountId,
-											StringUtils.generateSoftUniqueId()
-													+ ".png");
+							String thumbnailPath = String.format(
+									".thumbnail/%d/%s.%s", accountId,
+									StringUtils.generateSoftUniqueId(), "png");
 							content.setThumbnail(thumbnailPath);
 							contentJcrDao.saveContent(content, "");
-
-							LOG.info("Generate thumbnail for "
-									+ content.getPath()
-									+ "--"
-									+ content.getThumbnail()
-									+ "---"
-									+ ((Content) contentJcrDao
-											.getResource(content.getPath()))
-											.getThumbnail());
 
 							File tmpFile = File.createTempFile("tmp", "png");
 							ImageIO.write(image, "png", new FileOutputStream(
