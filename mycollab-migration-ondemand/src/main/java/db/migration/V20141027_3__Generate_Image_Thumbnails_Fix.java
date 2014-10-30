@@ -26,7 +26,7 @@ import com.esofthead.mycollab.module.ecm.service.ResourceService;
 import com.esofthead.mycollab.module.file.service.RawContentService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 
-public class V20141027_2__Generate_Image_Thumbnails_Fix implements
+public class V20141027_3__Generate_Image_Thumbnails_Fix implements
 		SpringJdbcMigration {
 
 	private static final Logger LOG = LoggerFactory
@@ -61,7 +61,7 @@ public class V20141027_2__Generate_Image_Thumbnails_Fix implements
 							.getPath());
 					if (MimeTypesUtil.isImageMimetype(mimeType)
 							&& org.apache.commons.lang3.StringUtils
-									.isNotBlank(content.getThumbnail())) {
+									.isBlank(content.getThumbnail())) {
 						try {
 							BufferedImage image = ImageUtil
 									.generateImageThumbnail(resourceService
