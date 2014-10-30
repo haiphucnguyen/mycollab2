@@ -3297,20 +3297,9 @@ div.v-splitbutton,div.v-splitbutton .v-button {
     color: gray;
 }
 
-.message-footer {
+.message .message-footer {
     border-top: 1px solid #CFCFCF;
-}
-.message-footer.v-margin-top {
-    padding-top: 7px;
-}
-.message-footer.v-margin-right {
-    padding-right: 10px;
-}
-.message-footer.v-margin-bottom {
-    padding-bottom: 7px;
-}
-.message-footer.v-margin-left {
-    padding-left: 10px;
+    padding: 7px 10px;
 }
 
 .comment-list .depotContent {
