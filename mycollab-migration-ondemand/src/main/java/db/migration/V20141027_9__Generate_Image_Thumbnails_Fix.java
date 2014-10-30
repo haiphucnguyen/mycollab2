@@ -30,7 +30,7 @@ public class V20141027_9__Generate_Image_Thumbnails_Fix implements
 		SpringJdbcMigration {
 
 	private static final Logger LOG = LoggerFactory
-			.getLogger(V20141027_1__Generate_Image_Thumbnails.class);
+			.getLogger(V20141027_9__Generate_Image_Thumbnails_Fix.class);
 
 	@Override
 	public void migrate(JdbcTemplate jdbcTemplate) throws Exception {

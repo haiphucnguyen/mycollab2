@@ -94,7 +94,7 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 						String path = content.getPath();
 						String[] pathStr = path.split("/");
 						Node parentNode = rootNode;
-						// create folder note
+						// create the folder node
 						for (int i = 0; i < pathStr.length - 1; i++) {
 							// move to lastest node of the path
 							Node childNode = getNode(parentNode, pathStr[i]);
@@ -103,8 +103,8 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 									// node must is folder
 									String errorString = "Invalid path. User want to create a content has path %s but there is a content has path %s. This node has type %s";
 									throw new ContentException(String.format(
-											errorString, content.getPath(),
-											childNode.getPath(), childNode
+											errorString, path, childNode
+													.getPath(), childNode
 													.getPrimaryNodeType()
 													.getName()));
 								}
