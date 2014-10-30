@@ -15,13 +15,17 @@
 		<tr>
 			<th>User name</th>
 			<th>Email</th>
+			<th>Registered time</th>
 			<th>Last accessed time</th>
+			<th>Subdomain</th>
 		</tr>
 		#foreach( $user in $lstUser )
 		<tr>
 			<th>$!user.username</th>
 			<th>$!user.email</th>
+			<th>$!user.registeredtime</th>
 			<th>$!user.lastaccessedtime</th>
+			<th>$!user.subdomain</th>
 		</tr>
 		#end
 	</table>

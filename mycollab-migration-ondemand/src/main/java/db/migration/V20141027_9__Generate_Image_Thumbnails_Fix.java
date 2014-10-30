@@ -26,11 +26,11 @@ import com.esofthead.mycollab.module.ecm.service.ResourceService;
 import com.esofthead.mycollab.module.file.service.RawContentService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 
-public class V20141027_2__Generate_Image_Thumbnails_Fix implements
+public class V20141027_9__Generate_Image_Thumbnails_Fix implements
 		SpringJdbcMigration {
 
 	private static final Logger LOG = LoggerFactory
-			.getLogger(V20141027_1__Generate_Image_Thumbnails.class);
+			.getLogger(V20141027_9__Generate_Image_Thumbnails_Fix.class);
 
 	@Override
 	public void migrate(JdbcTemplate jdbcTemplate) throws Exception {
@@ -59,18 +59,18 @@ public class V20141027_2__Generate_Image_Thumbnails_Fix implements
 					Content content = (Content) resource;
 					String mimeType = MimeTypesUtil.detectMimeType(content
 							.getPath());
-					if (MimeTypesUtil.isImageMimetype(mimeType)
-							&& org.apache.commons.lang3.StringUtils
-									.isNotBlank(content.getThumbnail())) {
+					LOG.info("Check mimetype " + mimeType + " of content "
+							+ content.getPath() + "--" + content.getThumbnail()
+							+ ".");
+					if (MimeTypesUtil.isImageMimetype(mimeType)) {
 						try {
 							BufferedImage image = ImageUtil
 									.generateImageThumbnail(resourceService
 											.getContentStream(resource
 													.getPath()));
 							String thumbnailPath = String.format(
-									"%d/.thumbnail/%s", accountId,
-									StringUtils.generateSoftUniqueId()
-											+ ".png ");
+									".thumbnail/%d/%s.%s", accountId,
+									StringUtils.generateSoftUniqueId(), "png");
 							content.setThumbnail(thumbnailPath);
 							contentJcrDao.saveContent(content, "");
 

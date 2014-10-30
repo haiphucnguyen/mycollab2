@@ -22,6 +22,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.slf4j.Logger;
@@ -75,12 +76,12 @@ public class SendingCountUserLoginByDateJob extends GenericQuartzJobBean {
 		criteria.setSaccountid(null);
 		criteria.setLastAccessTimeRange(from, to);
 
-		List<SimpleUser> lstSimpleUsers = userService
+		List<SimpleUser> accessedUsers = userService
 				.findPagableListByCriteria(new SearchRequest<UserSearchCriteria>(
 						criteria, 0, Integer.MAX_VALUE));
-		if (lstSimpleUsers != null && lstSimpleUsers.size() > 0) {
-			contentGenerator.putVariable("lstUser", lstSimpleUsers);
-			contentGenerator.putVariable("count", lstSimpleUsers.size());
+		if (CollectionUtils.isNotEmpty(accessedUsers)) {
+			contentGenerator.putVariable("lstUser", accessedUsers);
+			contentGenerator.putVariable("count", accessedUsers.size());
 
 			try {
 				extMailService
