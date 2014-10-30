@@ -36,10 +36,9 @@ import com.esofthead.mycollab.common.domain.criteria.ActivityStreamSearchCriteri
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.service.ActivityStreamService;
 import com.esofthead.mycollab.configuration.StorageManager;
-import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchField;
-import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.html.DivLessFormatter;
 import com.esofthead.mycollab.module.crm.CrmLinkGenerator;
@@ -58,11 +57,11 @@ import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Button.ClickEvent;
 
 /**
  * 
@@ -71,6 +70,7 @@ import com.vaadin.ui.Button.ClickEvent;
  */
 public class ActivityStreamPanel extends CssLayout {
 	private static final long serialVersionUID = 1L;
+	private static final int MAX_NUMBER_DISPLAY = 20;
 
 	private final CrmActivityStreamPagedList activityStreamList;
 
@@ -88,24 +88,26 @@ public class ActivityStreamPanel extends CssLayout {
 				new String[] { ModuleNameConstants.CRM }));
 		searchCriteria.setSaccountid(new NumberSearchField(AppContext
 				.getAccountId()));
+		searchCriteria.setOrderByField("createdTime");
+		searchCriteria.setSortDirection(SearchCriteria.DESC);
 		this.activityStreamList.setSearchCriteria(searchCriteria);
 	}
 
 	static class CrmActivityStreamPagedList extends VerticalLayout {
 
 		private static final long serialVersionUID = 1L;
-		private static final int MAX_NUMBER_DISPLAY = 10;
 
-		private final CssLayout listContainer;
-		private CssLayout controlBarWrapper;
+		private final CssLayout listContainer = new CssLayout();
+		private CssLayout controlBarWrapper = new CssLayout();
+		private CssLayout currentFeedBlock;
 
 		private ActivityStreamService activityStreamService;
 		private ActivityStreamSearchCriteria searchCriteria;
 
-		private int currentIndex = 0, firstIndex = 0, lastIndex = 0;
+		private int firstIndex = 0, lastIndex = 0;
+		private Date currentDate;
 
 		public CrmActivityStreamPagedList() {
-			listContainer = new CssLayout();
 			listContainer.setStyleName("beanlist-content");
 			listContainer.setWidth("100%");
 			this.addComponent(listContainer);
@@ -117,115 +119,101 @@ public class ActivityStreamPanel extends CssLayout {
 				final ActivityStreamSearchCriteria searchCriteria) {
 			this.listContainer.removeAllComponents();
 			this.searchCriteria = searchCriteria;
-			doSearch(true);
+			navigateToNext();
 		}
 
 		@SuppressWarnings("unchecked")
-		private void doSearch(boolean isSearchNext) {
+		private void doSearch(boolean isMoveForward) {
 			this.listContainer.removeAllComponents();
 
-			Date currentDate = new GregorianCalendar(2100, 1, 1).getTime();
-			CssLayout currentFeedBlock = new CssLayout();
+			currentDate = new GregorianCalendar(2100, 1, 1).getTime();
+			currentFeedBlock = new CssLayout();
 
-			Integer currentItemsDisplay = 0, numberItemsQuery = MAX_NUMBER_DISPLAY;
-			if (isSearchNext) {
-				currentIndex = firstIndex = lastIndex;
-			} else {
-				currentIndex = lastIndex = firstIndex;
-				currentIndex = firstIndex - MAX_NUMBER_DISPLAY;
-			}
+			Integer currentItemsDisplay = 0;
 
-			try {
-				while (currentItemsDisplay < MAX_NUMBER_DISPLAY) {
-					final List<SimpleActivityStream> currentListData = this.activityStreamService
-							.findPagableListByCriteria(new SearchRequest<ActivityStreamSearchCriteria>(
-									searchCriteria, currentIndex,
-									numberItemsQuery));
+			while (currentItemsDisplay < MAX_NUMBER_DISPLAY) {
+				final List<SimpleActivityStream> currentListData = this.activityStreamService
+						.findAbsoluteListByCriteria(searchCriteria, firstIndex,
+								MAX_NUMBER_DISPLAY);
 
-					int count = currentListData.size();
-					if (isSearchNext) {
-						for (int i = 0; i < count; i++) {
-							this.currentIndex++;
-							currentItemsDisplay += showItem(
-									currentListData.get(i), currentDate,
-									currentFeedBlock, currentItemsDisplay) ? 1
-									: 0;
-							if (currentItemsDisplay == MAX_NUMBER_DISPLAY) {
-								break;
-							}
-						}
-						this.lastIndex = this.currentIndex;
-					} else {
-						for (int i = count - 1; i >= 0; i--) {
-							this.currentIndex--;
-							currentItemsDisplay += showItem(
-									currentListData.get(i), currentDate,
-									currentFeedBlock, currentItemsDisplay) ? 1
-									: 0;
-							if (currentItemsDisplay == MAX_NUMBER_DISPLAY) {
-								break;
-							}
-						}
-						if (currentItemsDisplay < MAX_NUMBER_DISPLAY) {
-							if (currentIndex - MAX_NUMBER_DISPLAY < 0) {
-								numberItemsQuery = currentIndex;
-								currentIndex = 0;
-							} else {
-								currentIndex = currentIndex
-										- MAX_NUMBER_DISPLAY;
-							}
-						}
-						firstIndex = currentIndex;
+				if (currentListData.size() == 0) {
+					break;
+				}
+
+				for (SimpleActivityStream item : currentListData) {
+					if (checkReadPermisson(item.getType())) {
+						currentItemsDisplay++;
+						showItem(item);
+					}
+					if (currentItemsDisplay == MAX_NUMBER_DISPLAY) {
+						break;
 					}
 				}
-			} catch (final Exception e) {
-				throw new MyCollabException(e);
+
+				if (isMoveForward) {
+					firstIndex = lastIndex;
+					lastIndex = lastIndex + MAX_NUMBER_DISPLAY;
+				} else {
+					lastIndex = firstIndex;
+					firstIndex = firstIndex - MAX_NUMBER_DISPLAY;
+				}
 			}
 
-			this.addComponent(createPageControls());
+			if (hasPrevious() || hasNext()) {
+				this.addComponent(createPageControls());
+			}
 		}
 
-		private boolean showItem(final SimpleActivityStream activityStream,
-				Date currentDate, CssLayout currentFeedBlock,
-				Integer currentItemsDisplay) {
+		private void navigateToPrevious() {
+			lastIndex = firstIndex;
+			firstIndex = firstIndex - MAX_NUMBER_DISPLAY;
+			doSearch(false);
+		}
 
-			if (CrmTypeConstants.ACCOUNT.equals(activityStream.getType())
+		private void navigateToNext() {
+			firstIndex = lastIndex;
+			lastIndex = lastIndex + MAX_NUMBER_DISPLAY;
+			doSearch(true);
+		}
+
+		private boolean checkReadPermisson(String type) {
+			if (CrmTypeConstants.ACCOUNT.equals(type)
 					&& !AppContext
 							.canRead(RolePermissionCollections.CRM_ACCOUNT)) {
 				return false;
-			} else if (CrmTypeConstants.CONTACT
-					.equals(activityStream.getType())
+			} else if (CrmTypeConstants.CONTACT.equals(type)
 					&& !AppContext
 							.canRead(RolePermissionCollections.CRM_CONTACT)) {
 				return false;
-			} else if (CrmTypeConstants.CAMPAIGN.equals(activityStream
-					.getType())
+			} else if (CrmTypeConstants.CAMPAIGN.equals(type)
 					&& !AppContext
 							.canRead(RolePermissionCollections.CRM_CAMPAIGN)) {
 				return false;
-			} else if (CrmTypeConstants.LEAD.equals(activityStream.getType())
+			} else if (CrmTypeConstants.LEAD.equals(type)
 					&& !AppContext.canRead(RolePermissionCollections.CRM_LEAD)) {
 				return false;
-			} else if (CrmTypeConstants.OPPORTUNITY.equals(activityStream
-					.getType())
+			} else if (CrmTypeConstants.OPPORTUNITY.equals(type)
 					&& !AppContext
 							.canRead(RolePermissionCollections.CRM_OPPORTUNITY)) {
 				return false;
-			} else if (CrmTypeConstants.CASE.equals(activityStream.getType())
+			} else if (CrmTypeConstants.CASE.equals(type)
 					&& !AppContext.canRead(RolePermissionCollections.CRM_CASE)) {
 				return false;
-			} else if (CrmTypeConstants.TASK.equals(activityStream.getType())
+			} else if (CrmTypeConstants.TASK.equals(type)
 					&& !AppContext.canRead(RolePermissionCollections.CRM_TASK)) {
 				return false;
-			} else if (CrmTypeConstants.MEETING
-					.equals(activityStream.getType())
+			} else if (CrmTypeConstants.MEETING.equals(type)
 					&& !AppContext
 							.canRead(RolePermissionCollections.CRM_MEETING)) {
 				return false;
-			} else if (CrmTypeConstants.CALL.equals(activityStream.getType())
+			} else if (CrmTypeConstants.CALL.equals(type)
 					&& !AppContext.canRead(RolePermissionCollections.CRM_CALL)) {
 				return false;
 			}
+			return true;
+		}
+
+		private void showItem(final SimpleActivityStream activityStream) {
 
 			final Date itemCreatedDate = activityStream.getCreatedtime();
 
@@ -266,11 +254,10 @@ public class ActivityStreamPanel extends CssLayout {
 			streamWrapper.addStyleName("stream-wrapper");
 			streamWrapper.addComponent(activityLink);
 			currentFeedBlock.addComponent(streamWrapper);
-
-			return true;
 		}
 
 		private CssLayout createPageControls() {
+			this.removeComponent(controlBarWrapper);
 			this.controlBarWrapper = new CssLayout();
 			this.controlBarWrapper.setWidth("100%");
 			this.controlBarWrapper.setStyleName("page-controls");
@@ -283,12 +270,11 @@ public class ActivityStreamPanel extends CssLayout {
 
 						@Override
 						public void buttonClick(ClickEvent event) {
-							doSearch(false);
+							navigateToPrevious();
 						}
 					});
-			if (hasPrevious()) {
-				prevBtn.setEnabled(false);
-			}
+
+			prevBtn.setEnabled(hasPrevious());
 			prevBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 			prevBtn.setWidth("64px");
 
@@ -299,12 +285,11 @@ public class ActivityStreamPanel extends CssLayout {
 
 						@Override
 						public void buttonClick(ClickEvent event) {
-							doSearch(true);
+							navigateToNext();
 						}
 					});
-			if (hasNext()) {
-				prevBtn.setEnabled(false);
-			}
+
+			nextBtn.setEnabled(hasNext());
 			nextBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 			nextBtn.setWidth("64px");
 
@@ -317,14 +302,12 @@ public class ActivityStreamPanel extends CssLayout {
 		}
 
 		private boolean hasNext() {
-			return this.activityStreamService.findPagableListByCriteria(
-					new SearchRequest<ActivityStreamSearchCriteria>(
-							this.searchCriteria, currentIndex, 1)).size() > 0 ? true
-					: false;
+			return !this.activityStreamService.findAbsoluteListByCriteria(
+					this.searchCriteria, lastIndex, 1).isEmpty();
 		}
 
 		private boolean hasPrevious() {
-			return this.firstIndex > 0 ? true : false;
+			return (this.firstIndex > 0);
 		}
 
 		private String buildAssigneeValue(SimpleActivityStream activityStream,
