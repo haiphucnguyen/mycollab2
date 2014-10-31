@@ -52,8 +52,10 @@ import com.vaadin.ui.UI;
  */
 public class MobileAttachmentUtils {
 
-	private static final Logger LOG = Logger.getLogger(MobileAttachmentUtils.class
-			.getName());
+	private static final Logger LOG = Logger
+			.getLogger(MobileAttachmentUtils.class.getName());
+
+	public static String ATTACHMENT_NAME_PREFIX = "attachment_";
 
 	public static Component renderAttachmentRow(final Content attachment) {
 		// HorizontalLayout attachmentRow = new HorizontalLayout();
