@@ -16,6 +16,12 @@
  */
 package com.esofthead.mycollab.mobile.ui;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 4.5.3
+ *
+ */
 public class IconConstants {
 	public static final String OPEN_NEW_VIEW = "&#xE128;";
 	public static final String CIRCLE_CHECK = "&#xE042;";
