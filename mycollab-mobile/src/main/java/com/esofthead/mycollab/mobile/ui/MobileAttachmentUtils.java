@@ -55,6 +55,8 @@ public class MobileAttachmentUtils {
 	private static final Logger LOG = Logger
 			.getLogger(MobileAttachmentUtils.class.getName());
 
+	public static String ATTACHMENT_NAME_PREFIX = "attachment_";
+
 	public static Component renderAttachmentRow(final Content attachment) {
 
 		String docName = attachment.getPath();
