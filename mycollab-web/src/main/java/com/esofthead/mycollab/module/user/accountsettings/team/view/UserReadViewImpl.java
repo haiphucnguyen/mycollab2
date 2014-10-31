@@ -18,9 +18,11 @@
 package com.esofthead.mycollab.module.user.accountsettings.team.view;
 
 import org.apache.commons.lang3.StringUtils;
+import org.vaadin.maddon.layouts.MHorizontalLayout;
 
 import com.esofthead.mycollab.common.i18n.LangI18Enum;
 import com.esofthead.mycollab.core.utils.TimezoneMapper;
+import com.esofthead.mycollab.module.project.LabelLink;
 import com.esofthead.mycollab.module.user.AccountLinkBuilder;
 import com.esofthead.mycollab.module.user.accountsettings.localization.UserI18nEnum;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
@@ -144,8 +146,13 @@ public class UserReadViewImpl extends AbstractPageView implements UserReadView {
 				.getMessage(UserI18nEnum.FORM_BIRTHDAY)
 				+ ": "
 				+ AppContext.formatDate(user.getDateofbirth())));
-		basicLayout.addComponent(new Label(AppContext
-				.getMessage(UserI18nEnum.FORM_EMAIL) + ": " + user.getEmail()));
+		// basicLayout.addComponent(new Label(AppContext
+		// .getMessage(UserI18nEnum.FORM_EMAIL) + ": " + user.getEmail()));
+		basicLayout.addComponent(new MHorizontalLayout()
+				.add(new Label(AppContext.getMessage(UserI18nEnum.FORM_EMAIL)
+						+ ": ")).add(
+						new LabelLink(user.getEmail(), "mailto:"
+								+ user.getEmail())));
 		basicLayout.addComponent(new Label(AppContext
 				.getMessage(UserI18nEnum.FORM_TIMEZONE)
 				+ ": "
