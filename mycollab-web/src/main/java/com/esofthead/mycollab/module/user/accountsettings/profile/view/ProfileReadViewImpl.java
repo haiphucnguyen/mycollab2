@@ -18,6 +18,7 @@ package com.esofthead.mycollab.module.user.accountsettings.profile.view;
 
 import org.vaadin.easyuploads.UploadField;
 import org.vaadin.easyuploads.UploadField.FieldType;
+import org.vaadin.maddon.layouts.MHorizontalLayout;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.i18n.LangI18Enum;
@@ -26,6 +27,7 @@ import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.utils.ImageUtil;
 import com.esofthead.mycollab.core.utils.TimezoneMapper;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
+import com.esofthead.mycollab.module.project.LabelLink;
 import com.esofthead.mycollab.module.user.accountsettings.localization.UserI18nEnum;
 import com.esofthead.mycollab.module.user.accountsettings.view.events.ProfileEvent;
 import com.esofthead.mycollab.module.user.domain.User;
@@ -78,7 +80,7 @@ public class ProfileReadViewImpl extends AbstractPageView implements
 		this.userAvatar.setWidthUndefined();
 		this.userAvatar.setDefaultComponentAlignment(Alignment.TOP_LEFT);
 		this.avatarAndPass = new HorizontalLayout();
-		
+
 		this.formItem = new PreviewForm();
 		this.formItem.setWidth("100%");
 		this.addComponent(this.formItem);
@@ -132,8 +134,9 @@ public class ProfileReadViewImpl extends AbstractPageView implements
 				.getMessage(UserI18nEnum.FORM_BIRTHDAY)
 				+ ": "
 				+ AppContext.formatDate(user.getDateofbirth())));
-		passLayout.addComponent(new Label(AppContext
-				.getMessage(UserI18nEnum.FORM_EMAIL) + ": " + user.getEmail()));
+		passLayout.addComponent(new MHorizontalLayout(new Label(AppContext
+				.getMessage(UserI18nEnum.FORM_EMAIL) + ": "), new LabelLink(
+				user.getEmail(), "mailto:" + user.getEmail())));
 		passLayout.addComponent(new Label(AppContext
 				.getMessage(UserI18nEnum.FORM_TIMEZONE)
 				+ ": "
@@ -244,7 +247,7 @@ public class ProfileReadViewImpl extends AbstractPageView implements
 			public ComponentContainer getLayout() {
 				final VerticalLayout layout = new VerticalLayout();
 				layout.addComponent(avatarAndPass);
-				
+
 				contactInformationTitle.setWidth("250px");
 				advanceInformationTitle.setWidth("250px");
 
@@ -333,8 +336,7 @@ public class ProfileReadViewImpl extends AbstractPageView implements
 				btnChangeAdvanceInfoWrapper.addComponent(btnChangeAdvanceInfo);
 				btnChangeAdvanceInfoWrapper.setComponentAlignment(
 						btnChangeAdvanceInfo, Alignment.BOTTOM_RIGHT);
-				advanceInfoHeader
-						.addComponent(btnChangeAdvanceInfoWrapper);
+				advanceInfoHeader.addComponent(btnChangeAdvanceInfoWrapper);
 				return layout;
 			}
 
