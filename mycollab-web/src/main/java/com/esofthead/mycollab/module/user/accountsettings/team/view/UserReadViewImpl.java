@@ -113,6 +113,7 @@ public class UserReadViewImpl extends AbstractPageView implements UserReadView {
 		avatarAndPass.addComponent(userAvatar);
 
 		final VerticalLayout basicLayout = new VerticalLayout();
+		basicLayout.setSpacing(true);
 		final HorizontalLayout userWrapper = new HorizontalLayout();
 
 		String nickName = user.getNickname();
@@ -267,6 +268,12 @@ public class UserReadViewImpl extends AbstractPageView implements UserReadView {
 
 				contactInformationTitle.setWidth("250px");
 				advanceInformationTitle.setWidth("250px");
+				
+				contactInformationTitle.setSpacing(true);
+				advanceInformationTitle.setSpacing(true);
+				
+				contactInformation.setSpacing(true);
+				advanceInformation.setSpacing(true);
 
 				final HorizontalLayout contactInformationHeader = new HorizontalLayout();
 				final Label contactInformationHeaderLbl = new Label(

@@ -101,7 +101,8 @@ public class ProfileReadViewImpl extends AbstractPageView implements
 
 		User user = formItem.getUser();
 
-		final VerticalLayout passLayout = new VerticalLayout();
+		final VerticalLayout basicLayout = new VerticalLayout();
+		basicLayout.setSpacing(true);
 		final HorizontalLayout userWrapper = new HorizontalLayout();
 
 		final Label userName = new Label(AppContext.getSession()
@@ -127,22 +128,22 @@ public class ProfileReadViewImpl extends AbstractPageView implements
 		btnChangeBasicInfoWrapper.setComponentAlignment(btnChangeBasicInfo,
 				Alignment.MIDDLE_RIGHT);
 		userWrapper.addComponent(btnChangeBasicInfoWrapper);
-		passLayout.addComponent(userWrapper);
-		passLayout.setComponentAlignment(userWrapper, Alignment.MIDDLE_LEFT);
+		basicLayout.addComponent(userWrapper);
+		basicLayout.setComponentAlignment(userWrapper, Alignment.MIDDLE_LEFT);
 
-		passLayout.addComponent(new Label(AppContext
+		basicLayout.addComponent(new Label(AppContext
 				.getMessage(UserI18nEnum.FORM_BIRTHDAY)
 				+ ": "
 				+ AppContext.formatDate(user.getDateofbirth())));
-		passLayout.addComponent(new MHorizontalLayout(new Label(AppContext
+		basicLayout.addComponent(new MHorizontalLayout(new Label(AppContext
 				.getMessage(UserI18nEnum.FORM_EMAIL) + ": "), new LabelLink(
 				user.getEmail(), "mailto:" + user.getEmail())));
-		passLayout.addComponent(new Label(AppContext
+		basicLayout.addComponent(new Label(AppContext
 				.getMessage(UserI18nEnum.FORM_TIMEZONE)
 				+ ": "
 				+ TimezoneMapper.getTimezone(user.getTimezone())
 						.getDisplayName()));
-		passLayout
+		basicLayout
 				.addComponent(new Label(AppContext
 						.getMessage(UserI18nEnum.FORM_LANGUAGE)
 						+ ": "
@@ -170,13 +171,13 @@ public class ProfileReadViewImpl extends AbstractPageView implements
 		btnChangePasswordWrapper.setComponentAlignment(btnChangePassword,
 				Alignment.MIDDLE_RIGHT);
 		passwordWrapper.addComponent(btnChangePasswordWrapper);
-		passLayout.addComponent(passwordWrapper);
-		passLayout
+		basicLayout.addComponent(passwordWrapper);
+		basicLayout
 				.setComponentAlignment(passwordWrapper, Alignment.MIDDLE_LEFT);
 
-		avatarAndPass.addComponent(passLayout);
-		avatarAndPass.setComponentAlignment(passLayout, Alignment.TOP_LEFT);
-		avatarAndPass.setExpandRatio(passLayout, 1.0f);
+		avatarAndPass.addComponent(basicLayout);
+		avatarAndPass.setComponentAlignment(basicLayout, Alignment.TOP_LEFT);
+		avatarAndPass.setExpandRatio(basicLayout, 1.0f);
 
 		final UploadField avatarUploadField = new UploadField() {
 			private static final long serialVersionUID = 1L;
@@ -250,6 +251,12 @@ public class ProfileReadViewImpl extends AbstractPageView implements
 
 				contactInformationTitle.setWidth("250px");
 				advanceInformationTitle.setWidth("250px");
+				
+				contactInformationTitle.setSpacing(true);
+				advanceInformationTitle.setSpacing(true);
+				
+				contactInformation.setSpacing(true);
+				advanceInformation.setSpacing(true);
 
 				final HorizontalLayout contactInformationHeader = new HorizontalLayout();
 				final Label contactInformationHeaderLbl = new Label(
