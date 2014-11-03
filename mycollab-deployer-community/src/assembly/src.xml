@@ -32,6 +32,7 @@
                 <include>${project.groupId}:mycollab-services-community</include>
                 <include>${project.groupId}:mycollab-web-community</include>
                 <include>${project.groupId}:mycollab-app-community</include>
+                <include>${project.groupId}:mycollab-deployer-community</include>
             </includes>
             <sources>
                 <fileSets>

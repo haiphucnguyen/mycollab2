@@ -58,8 +58,8 @@ One of our critical goals is delivering not only the rich features but also an i
       <em>Detail Page</em>
     </td>
     <td align="center">
-      <a href="https://farm4.staticflickr.com/3908/14952042120_9fdb81749d_o.png" target="_blank" title="Detail Project Member">
-        <img src="https://farm4.staticflickr.com/3908/14952042120_b3c94c2aec_n.jpg" alt="Detail Project Member"/>
+      <a href="https://farm4.staticflickr.com/3937/15069140863_1fe9314378_o.png" target="_blank" title="Detail Project Member">
+        <img src="https://farm4.staticflickr.com/3937/15069140863_5b851e3323_n.jpg" alt="Detail Project Member"/>
       </a>
       <br />
       <em>Detail Project Member</em>
@@ -105,8 +105,8 @@ One of our critical goals is delivering not only the rich features but also an i
 <table>
   <tr>
     <td align="center">
-      <a href="https://farm4.staticflickr.com/3923/15135932071_aeffb2e07c_o.png" target="_blank" title="Detail User">
-        <img src="https://farm4.staticflickr.com/3923/15135932071_6603ced364_n.jpg" alt="Detail User"/>
+      <a href="https://farm8.staticflickr.com/7545/15068520834_0f04a027da_o.png" target="_blank" title="Detail User">
+        <img src="https://farm8.staticflickr.com/7545/15068520834_8ba4298214_n.jpg" alt="Detail User"/>
       </a>
       <br />
       <em>Detail User</em>
