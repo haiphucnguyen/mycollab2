@@ -1,5 +1,28 @@
 #Release Notes
 
+##Version 4.5.3
+
+**Library Upgrades**
+
+* Upgrade AspectJ library to 1.8.3
+
+**Improvements**
+
+* The new MyCollab mobile is released! This is the alpha release, use it at your own risk.
+* All description supports rich text
+* Clean html in rich text to help html display html string correctly
+* Display the crm activity stream properly when there is several items user can not access
+* Display attachments in thumbnail mode
+* Allow users can search in their following ticket list
+
+**Bug Fixes**
+
+* Custom layout throws NPE
+* Fix NPE when user navigate the project time tracking list
+* Throws error if user save the empty page content
+* Minor fixes in set the overdue title colors in project and crm items
+* Error when user upload the invalid file name
+
 ##Version 4.5.2
 
 **Library Upgrades**

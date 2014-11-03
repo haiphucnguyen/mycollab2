@@ -2,19 +2,19 @@
 
 MyCollab releases are available under the GPL Affero, Version 3.0 or any later version. Some MyCollab components contain external code with licenses that meet GPL v3.0 licensing policies. See the LICENSE.txt file contained in each release artifact for applicable licenses.
 
-### MyCollab 4.5.2
+### MyCollab 4.5.3
 
-MyCollab 4.5.2 is an incremental feature release based on and compatible with earlier stable MyCollab 4.0 releases. MyCollab 4.x.x releases are considered stable and targeted for production use.
+MyCollab 4.5.3 is an incremental feature release based on and compatible with earlier stable MyCollab 4.0 releases. MyCollab 4.x.x releases are considered stable and targeted for production use.
 
-MyCollab 4.5.2 focuses to enhance the project architect, testing and simplify the installation process. There are several minor buf fixes and improvements are done in this release.
+MyCollab 4.5.3 focuses to enhance the project functionalities, mobile distribution. There are several minor bug fixes and improvements are done in this release.
 
 See the full [Release Notes](release-notes.html) for more details
 
-* Sources: [MyCollab-4.5.2-src](https://github.com/esofthead/mycollab/archive/Release_4.5.2.zip) (11.2 MB)
+* Sources: [MyCollab-4.5.3-src](https://github.com/esofthead/mycollab/archive/Release_4.5.3.zip) (11.9 MB)
 * Binaries:
-    * Windows: [MyCollab-Installer-4.5.2.exe](https://sourceforge.net/projects/mycollab/files/MyCollab_4.5.2/MyCollab-Installer-4.5.2.exe/download) - [Installation Guideline](installation-windows.html)
-    * MacOS: [MyCollab-MacOS-4.5.2.app.zip](https://sourceforge.net/projects/mycollab/files/MyCollab_4.5.2/MyCollab-Generic-4.5.2.jar/download) - [Installation Guideline](installation-mac.html)
-    * Linux: [MyCollab-Generic-4.5.2.jar](https://sourceforge.net/projects/mycollab/files/MyCollab_4.5.2/MyCollab-MacOS-4.5.2.app.zip/download) - [Installation Guideline](installation-generic.html)
+    * Windows: [MyCollab-Installer-4.5.3.exe](https://sourceforge.net/projects/mycollab/files/MyCollab_4.5.3/MyCollab-Installer-4.5.3.exe/download) - [Installation Guideline](installation-windows.html)
+    * MacOS: [MyCollab-MacOS-4.5.3.app.zip](https://sourceforge.net/projects/mycollab/files/MyCollab_4.5.3/MyCollab-Generic-4.5.3.jar/download) - [Installation Guideline](installation-mac.html)
+    * Linux: [MyCollab-Generic-4.5.3.jar](https://sourceforge.net/projects/mycollab/files/MyCollab_4.5.3/MyCollab-MacOS-4.5.3.app.zip/download) - [Installation Guideline](installation-generic.html)
 
 ### Release Archive
 
