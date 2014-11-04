@@ -42,6 +42,25 @@ If you need to understand more MyCollab advanced configuration settings, please 
 Last changelog
 ==============
 
+Version 4.5.4
+-----------------------------
+
+**Library Upgrades**
+
+* Upgrade HirakiCP to 2.1.0
+
+**Improvements**
+
+* Make the back button associates to native back action to improve the navigation performance
+* Support assignee link on phone
+* Make the right widgets fly over when user scroll to the bottom in the task list view
+
+**Bug Fixes**
+
+* View title is not aligned center in iOS
+* Can only upload one file in iOS
+* Can not get the log date for time logging in several rare browsers
+
 Version 4.5.3
 -----------------------------
 

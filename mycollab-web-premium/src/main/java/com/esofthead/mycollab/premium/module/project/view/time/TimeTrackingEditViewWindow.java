@@ -10,13 +10,13 @@ import com.esofthead.mycollab.module.project.service.ItemTimeLoggingService;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberSelectionBox;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.ui.DateFieldExt;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.data.util.ObjectProperty;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CheckBox;
-import com.vaadin.ui.DateField;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.RichTextArea;
@@ -40,7 +40,7 @@ public class TimeTrackingEditViewWindow extends Window implements
 	private TimeTrackingListView parentView;
 	private ProjectGenericTask selectionTask;
 	private HorizontalLayout taskLayout;
-	private DateField dateField;
+	private DateFieldExt dateField;
 	private TextField timeField;
 	private SimpleItemTimeLogging item;
 	private ObjectProperty<Double> property;
@@ -56,7 +56,7 @@ public class TimeTrackingEditViewWindow extends Window implements
 		this.setCaption(AppContext
 				.getMessage(TimeTrackingI18nEnum.DIALOG_LOG_TIME_ENTRY_TITLE));
 
-		dateField = new DateField("Select date:", this.item.getLogforday());
+		dateField = new DateFieldExt("Select date:", this.item.getLogforday());
 
 		property = new ObjectProperty<Double>(item.getLogvalue());
 		timeField = new TextField("Hours:", property);

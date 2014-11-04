@@ -34,6 +34,7 @@ import com.esofthead.mycollab.module.project.view.settings.component.ProjectUser
 import com.esofthead.mycollab.module.project.view.time.TimeTableFieldDef;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.ui.DateFieldExt;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -73,7 +74,7 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends Window {
 	private Label totalSpentTimeLbl;
 	private NumbericTextField newTimeInputField;
 	private CheckBox isBillableField;
-	private DateField forDateField;
+	private DateFieldExt forDateField;
 
 	private NumbericTextField remainTimeInputField;
 	private Label remainTimeLbl;
@@ -250,10 +251,11 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends Window {
 		addLayout.setComponentAlignment(this.newTimeInputField,
 				Alignment.MIDDLE_LEFT);
 
-		this.forDateField = new DateField();
+		this.forDateField = new DateFieldExt();
 		this.forDateField.setValue(new GregorianCalendar().getTime());
 		addLayout.addComponent(this.forDateField);
-		addLayout.setComponentAlignment(this.forDateField, Alignment.MIDDLE_LEFT);
+		addLayout.setComponentAlignment(this.forDateField,
+				Alignment.MIDDLE_LEFT);
 
 		this.isBillableField = new CheckBox(
 				AppContext.getMessage(TimeTrackingI18nEnum.FORM_IS_BILLABLE),
@@ -262,8 +264,7 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends Window {
 		addLayout.setComponentAlignment(this.isBillableField,
 				Alignment.MIDDLE_LEFT);
 
-		btnAdd = new Button(
-				AppContext.getMessage(GenericI18Enum.BUTTON_ADD),
+		btnAdd = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_ADD),
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
@@ -278,10 +279,9 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends Window {
 									.showWarningNotification("You must enter a positive number value");
 						}
 						if (d > 0) {
-							TimeLogEditWindow.this.saveTimeInvest();
-							TimeLogEditWindow.this.loadTimeValue();
-							TimeLogEditWindow.this.newTimeInputField
-									.setValue("0.0");
+							saveTimeInvest();
+							loadTimeValue();
+							newTimeInputField.setValue("0.0");
 						}
 					}
 
@@ -336,18 +336,16 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends Window {
 						try {
 							double d = 0;
 							try {
-								d = Double
-										.parseDouble(TimeLogEditWindow.this.remainTimeInputField
-												.getValue().toString());
+								d = Double.parseDouble(remainTimeInputField
+										.getValue().toString());
 							} catch (Exception e) {
 								NotificationUtil
 										.showWarningNotification("You must enter a positive number value");
 							}
 							if (d >= 0) {
 								updateTimeRemain();
-								remainTimeLbl
-										.setValue(TimeLogEditWindow.this.remainTimeInputField
-												.getValue());
+								remainTimeLbl.setValue(remainTimeInputField
+										.getValue());
 								remainTimeInputField.setValue("0.0");
 							}
 						} catch (final Exception e) {
@@ -357,28 +355,23 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends Window {
 
 				});
 
-		TimeLogEditWindow.this.btnAdd.setEnabled(TimeLogEditWindow.this
-				.isEnableAdd());
-		TimeLogEditWindow.this.btnAdd
-				.setStyleName(UIConstants.THEME_GREEN_LINK);
-		addLayout.addComponent(TimeLogEditWindow.this.btnAdd);
-		addLayout.setComponentAlignment(TimeLogEditWindow.this.btnAdd,
-				Alignment.MIDDLE_LEFT);
+		btnAdd.setEnabled(TimeLogEditWindow.this.isEnableAdd());
+		btnAdd.setStyleName(UIConstants.THEME_GREEN_LINK);
+		addLayout.addComponent(btnAdd);
+		addLayout.setComponentAlignment(btnAdd, Alignment.MIDDLE_LEFT);
 	}
 
 	public void loadTimeValue() {
-		final ItemTimeLoggingSearchCriteria searchCriteria = TimeLogEditWindow.this
-				.getItemSearchCriteria();
-		TimeLogEditWindow.this.tableItem.setSearchCriteria(searchCriteria);
-		this.setTotalTimeValue();
-		this.setUpdateTimeValue();
+		final ItemTimeLoggingSearchCriteria searchCriteria = getItemSearchCriteria();
+		tableItem.setSearchCriteria(searchCriteria);
+		setTotalTimeValue();
+		setUpdateTimeValue();
 	}
 
 	@SuppressWarnings("unchecked")
 	private double getTotalInvest() {
 		double total = 0;
-		final ItemTimeLoggingSearchCriteria searchCriteria = TimeLogEditWindow.this
-				.getItemSearchCriteria();
+		final ItemTimeLoggingSearchCriteria searchCriteria = getItemSearchCriteria();
 		final List<SimpleItemTimeLogging> listTime = itemTimeLoggingService
 				.findPagableListByCriteria(new SearchRequest<ItemTimeLoggingSearchCriteria>(
 						searchCriteria, 0, Integer.MAX_VALUE));
@@ -389,15 +382,14 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends Window {
 	}
 
 	private void setUpdateTimeValue() {
-		if (TimeLogEditWindow.this.getEstimateRemainTime() > -1) {
-			this.remainTimeLbl.setValue(TimeLogEditWindow.this
-					.getEstimateRemainTime() + "");
+		if (getEstimateRemainTime() > -1) {
+			this.remainTimeLbl.setValue(getEstimateRemainTime() + "");
 		}
 	}
 
 	private void setTotalTimeValue() {
-		if (this.getTotalInvest() > 0) {
-			this.totalSpentTimeLbl.setValue(this.getTotalInvest() + "");
+		if (getTotalInvest() > 0) {
+			totalSpentTimeLbl.setValue(getTotalInvest() + "");
 		}
 	}
 
@@ -410,7 +402,8 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends Window {
 	}
 
 	protected Date forLogDate() {
-		return this.forDateField.getValue();
+		Date date = this.forDateField.getValue();
+		return (date != null) ? date : new GregorianCalendar().getTime();
 	}
 
 	protected abstract void saveTimeInvest();

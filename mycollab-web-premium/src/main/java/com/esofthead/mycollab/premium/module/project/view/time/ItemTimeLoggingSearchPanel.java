@@ -19,6 +19,7 @@ import com.esofthead.mycollab.module.project.i18n.TimeTrackingI18nEnum;
 import com.esofthead.mycollab.module.project.ui.components.ItemOrderComboBox;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberListSelect;
 import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.ui.DateFieldExt;
 import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
@@ -34,7 +35,6 @@ import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.DateField;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
@@ -84,7 +84,7 @@ class ItemTimeLoggingSearchPanel extends
 	@SuppressWarnings({ "serial", "rawtypes" })
 	private class TimeLoggingAdvancedSearchLayout extends AdvancedSearchLayout {
 
-		private DateField dateStart, dateEnd;
+		private DateFieldExt dateStart, dateEnd;
 
 		private ProjectMemberListSelect userField;
 		private ComboBox groupField, orderField;
@@ -147,8 +147,8 @@ class ItemTimeLoggingSearchPanel extends
 			grid.setWidth(nameFieldWidth);
 			grid.setSpacing(true);
 
-			this.dateStart = new DateField();
-			this.dateEnd = new DateField();
+			this.dateStart = new DateFieldExt();
+			this.dateEnd = new DateFieldExt();
 
 			setDateFormat(AppContext.getUserDateFormat());
 
