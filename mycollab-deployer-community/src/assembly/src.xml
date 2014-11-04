@@ -43,6 +43,7 @@
                             <exclude>**/repo-test/**</exclude>
                             <exclude>**/bin/**</exclude>
                             <exclude>**/*.log</exclude>
+                            <exclude>**/*.out*</exclude>
                             <exclude>**/.classpath</exclude>
                             <exclude>**/.project</exclude>
                             <exclude>**/.settings/**</exclude>
