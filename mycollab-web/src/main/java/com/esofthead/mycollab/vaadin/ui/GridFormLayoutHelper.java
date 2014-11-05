@@ -80,17 +80,6 @@ public class GridFormLayoutHelper implements Serializable {
 		this.layout.setRows(layout.getRows() + 1);
 	}
 
-	public Component addComponent(final boolean condition,
-			final Field<?> field, final String caption, final int columns,
-			final int rows, final Alignment alignment) {
-		if (condition) {
-			return this.addComponent(field, caption, columns, rows,
-					this.fieldControlWidth, alignment);
-		} else {
-			return null;
-		}
-	}
-
 	public Component addComponent(final Boolean condition,
 			final Component field, final String caption, final int columns,
 			final int rows, final int colspan) {
@@ -101,15 +90,14 @@ public class GridFormLayoutHelper implements Serializable {
 		}
 	}
 
-	public Component addComponent(final Component field, final String caption,
+	public void addComponent(final Component field, final String caption,
 			final int columns, final int rows) {
-		return this.addComponent(field, caption, columns, rows,
-				this.fieldControlWidth);
+		this.addComponent(field, caption, columns, rows, this.fieldControlWidth);
 	}
 
-	public Component addComponent(final Component field, final String caption,
+	public void addComponent(final Component field, final String caption,
 			final int columns, final int rows, final Alignment alignment) {
-		return this.addComponent(field, caption, columns, rows,
+		this.addComponent(field, caption, columns, rows,
 				this.fieldControlWidth, alignment);
 	}
 
@@ -231,13 +219,13 @@ public class GridFormLayoutHelper implements Serializable {
 		return field;
 	}
 
-	public Component addComponent(final Component field, final String caption,
+	public void addComponent(final Component field, final String caption,
 			final int columns, final int rows, final String width) {
-		return this.addComponent(field, caption, columns, rows, width,
+		this.addComponent(field, caption, columns, rows, width,
 				this.captionAlignment);
 	}
 
-	public Component addComponent(final Component field, final String caption,
+	public void addComponent(final Component field, final String caption,
 			final int columns, final int rows, final String width,
 			final Alignment alignment) {
 		if (caption != null) {
@@ -276,10 +264,9 @@ public class GridFormLayoutHelper implements Serializable {
 		}
 		this.layout.addComponent(fieldWrapper, 2 * columns + 1, rows);
 		this.layout.setColumnExpandRatio(2 * columns + 1, 1.0f);
-		return field;
 	}
 
-	public Component addComponentNoWrapper(final Component field,
+	public void addComponentNoWrapper(final Component field,
 			final String caption, final int columns, final int rows) {
 		if (caption != null) {
 			final Label l = new Label(caption);
@@ -298,11 +285,6 @@ public class GridFormLayoutHelper implements Serializable {
 
 		this.layout.addComponent(field, 2 * columns + 1, rows);
 		this.layout.setColumnExpandRatio(2 * columns + 1, 1.0f);
-		return field;
-	}
-
-	public void getComponent(final int column, final int row) {
-		this.layout.getComponent(2 * column + 1, row);
 	}
 
 	public GridLayout getLayout() {
