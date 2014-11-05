@@ -34,43 +34,43 @@ class RiskEditFormFieldFactory extends
 	@Override
 	protected Field<?> onCreateField(Object propertyId) {
 		Risk risk = attachForm.getBean();
-		if (propertyId.equals("description")) {
+		if (Risk.Field.description.equalTo(propertyId)) {
 			final RichTextArea desc = new RichTextArea();
 			desc.setRequired(true);
 			desc.setNullRepresentation("");
-			desc.setRequiredError("Please enter a Desciption");
+			desc.setRequiredError("Description must be not empty");
 			return desc;
-		} else if (propertyId.equals("raisedbyuser")) {
+		} else if (Risk.Field.raisedbyuser.equalTo(propertyId)) {
 			if (risk.getRaisedbyuser() == null) {
 				risk.setRaisedbyuser(AppContext.getUsername());
 			}
 			return new ProjectMemberSelectionField();
-		} else if (propertyId.equals("assigntouser")) {
+		} else if (Risk.Field.assigntouser.equalTo(propertyId)) {
 			return new ProjectMemberSelectionField();
-		} else if (propertyId.equals("response")) {
+		} else if (Risk.Field.response.equalTo(propertyId)) {
 			return new RichTextArea();
-		} else if (propertyId.equals("consequence")) {
+		} else if (Risk.Field.consequence.equalTo(propertyId)) {
 			if (risk.getConsequence() == null) {
 				risk.setConsequence("Marginal");
 			}
 			final ValueComboBox box = new ValueComboBox(false, "Catastrophic",
 					"Critical", "Marginal", "Negligible");
 			return box;
-		} else if (propertyId.equals("probalitity")) {
+		} else if (Risk.Field.probalitity.equalTo(propertyId)) {
 			if (risk.getProbalitity() == null) {
 				risk.setProbalitity("Possible");
 			}
 			final ValueComboBox box = new ValueComboBox(false, "Certain",
 					"Likely", "Possible", "Unlikely", "Rare");
 			return box;
-		} else if (propertyId.equals("status")) {
+		} else if (Risk.Field.status.equalTo(propertyId)) {
 			if (risk.getStatus() == null) {
 				risk.setStatus(StatusI18nEnum.Open.name());
 			}
 			final I18nValueComboBox box = new I18nValueComboBox(false,
 					StatusI18nEnum.Open, StatusI18nEnum.Closed);
 			return box;
-		} else if (propertyId.equals("level")) {
+		} else if (Risk.Field.level.equalTo(propertyId)) {
 			final RatingStars ratingField = new RatingStars();
 			ratingField.setMaxValue(5);
 			ratingField.setImmediate(true);
@@ -108,13 +108,11 @@ class RiskEditFormFieldFactory extends
 						}
 					});
 			return ratingField;
-		}
-
-		if (propertyId.equals("riskname")) {
+		} else if (Risk.Field.riskname.equalTo(propertyId)) {
 			final TextField tf = new TextField();
 			tf.setNullRepresentation("");
 			tf.setRequired(true);
-			tf.setRequiredError("Please enter a Summary");
+			tf.setRequiredError("Name must be not empty");
 			return tf;
 		}
 

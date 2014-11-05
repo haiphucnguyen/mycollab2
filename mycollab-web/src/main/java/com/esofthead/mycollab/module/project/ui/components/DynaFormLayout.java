@@ -57,13 +57,21 @@ public class DynaFormLayout implements IFormLayoutFactory {
 	private Map<String, AbstractDynaField> fieldMappings = new HashMap<String, AbstractDynaField>();
 	private Map<DynaSection, GridFormLayoutHelper> sectionMappings;
 
+	private String excludeField;
+
 	public DynaFormLayout(String moduleName, DynaForm defaultForm) {
+		this(moduleName, defaultForm, null);
+	}
+
+	public DynaFormLayout(String moduleName, DynaForm defaultForm,
+			String excludeField) {
 		MasterFormService formService = ApplicationContextUtil
 				.getSpringBean(MasterFormService.class);
 		DynaForm form = formService.findCustomForm(AppContext.getAccountId(),
 				moduleName);
 
 		this.dynaForm = (form != null) ? form : defaultForm;
+		this.excludeField = excludeField;
 
 		LOG.debug("Fill fields of originSection to map field");
 
@@ -116,9 +124,11 @@ public class DynaFormLayout implements IFormLayoutFactory {
 
 				for (int j = 0; i < section.getFieldCount(); j++) {
 					AbstractDynaField dynaField = section.getField(j);
-					gridLayout.buildCell(dynaField.getDisplayName(), 0,
-							dynaField.getFieldIndex(), 2, "100%",
-							Alignment.TOP_LEFT);
+					if (!dynaField.getFieldName().equals(excludeField)) {
+						gridLayout.buildCell(dynaField.getDisplayName(), 0,
+								dynaField.getFieldIndex(), 2, "100%",
+								Alignment.TOP_LEFT);
+					}
 				}
 			} else if (section.getLayoutType() == LayoutType.TWO_COLUMN) {
 				gridLayout = new GridFormLayoutHelper(2, 1, "100%", "167px",
@@ -126,26 +136,28 @@ public class DynaFormLayout implements IFormLayoutFactory {
 				int columnIndex = 0;
 				for (int j = 0; j < section.getFieldCount(); j++) {
 					AbstractDynaField dynaField = section.getField(j);
-					if (dynaField.isColSpan()) {
-						LOG.debug("Build cell {}",
-								new Object[] { dynaField.getDisplayName() });
-						gridLayout.buildCell(dynaField.getDisplayName(), 0,
-								gridLayout.getRows() - 1, 2, "100%",
-								Alignment.TOP_LEFT);
-						columnIndex = 0;
-						if (j < section.getFieldCount() - 1) {
-							gridLayout.appendRow();
-						}
-					} else {
-						LOG.debug("Build cell {}",
-								new Object[] { dynaField.getDisplayName() });
-						gridLayout.buildCell(dynaField.getDisplayName(),
-								columnIndex, gridLayout.getRows() - 1);
-						columnIndex++;
-						if (columnIndex == 2) {
+					if (!dynaField.getFieldName().equals(excludeField)) {
+						if (dynaField.isColSpan()) {
+							LOG.debug("Build cell {}",
+									new Object[] { dynaField.getDisplayName() });
+							gridLayout.buildCell(dynaField.getDisplayName(), 0,
+									gridLayout.getRows() - 1, 2, "100%",
+									Alignment.TOP_LEFT);
 							columnIndex = 0;
 							if (j < section.getFieldCount() - 1) {
 								gridLayout.appendRow();
+							}
+						} else {
+							LOG.debug("Build cell {}",
+									new Object[] { dynaField.getDisplayName() });
+							gridLayout.buildCell(dynaField.getDisplayName(),
+									columnIndex, gridLayout.getRows() - 1);
+							columnIndex++;
+							if (columnIndex == 2) {
+								columnIndex = 0;
+								if (j < section.getFieldCount() - 1) {
+									gridLayout.appendRow();
+								}
 							}
 						}
 					}
