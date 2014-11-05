@@ -425,22 +425,16 @@ public abstract class EntityImportWindow<E> extends Window {
 			Label header = new Label("Header");
 			header.addStyleName("h3");
 
-			Label crmLabel = new Label("CRM Fields");
-			crmLabel.addStyleName("h3");
 			Label colIndex = new Label("Colum Index");
 			colIndex.addStyleName("h3");
 			// IF has header
 			if (checkboxChecked)
-				gridCrmMapping.addComponent(header, new Label(), "0px",
-						"200px", 0, 0, Alignment.MIDDLE_CENTER);
+				gridCrmMapping.addComponent(new Label(), "Header", 0, 0);
 			else {
-				Label firstRowDataLabel = new Label("First Row Data");
-				firstRowDataLabel.addStyleName("h3");
-				gridCrmMapping.addComponent(firstRowDataLabel, new Label(),
-						"0px", "200px", 0, 0, Alignment.MIDDLE_CENTER);
+				gridCrmMapping
+						.addComponent(new Label(), "First Row Data", 0, 0);
 			}
-			gridCrmMapping.addComponent(crmLabel, colIndex, "200px", "200px",
-					1, 0, Alignment.MIDDLE_CENTER);
+			gridCrmMapping.addComponent(new Label(), "CRM Fields", 1, 0);
 			columnMappingCrmLayout.addComponent(gridCrmMapping.getLayout());
 
 			HorizontalLayout controlGroupBtn = new HorizontalLayout();
@@ -592,15 +586,15 @@ public abstract class EntityImportWindow<E> extends Window {
 					final CSVBeanFieldComboBox crmFieldComboBox = new CSVBeanFieldComboBox(
 							contactCrmFields);
 
-					String headerStr = stringHeader[i];
-					gridCrmMapping.addComponent(new Label(headerStr),
-							new Label(), "0px", "200px", 0, i + 1,
-							Alignment.MIDDLE_CENTER);
-					Label fieldCaptionColumnIndex = new Label("Column "
-							+ (i + 1));
-					gridCrmMapping.addComponent(crmFieldComboBox,
-							fieldCaptionColumnIndex, "200px", "200px", 1,
-							i + 1, Alignment.MIDDLE_CENTER);
+					// String headerStr = stringHeader[i];
+					// gridCrmMapping.addComponent(new Label(headerStr),
+					// new Label(), "0px", "200px", 0, i + 1,
+					// Alignment.MIDDLE_CENTER);
+					// Label fieldCaptionColumnIndex = new Label("Column "
+					// + (i + 1));
+					// gridCrmMapping.addComponent(crmFieldComboBox,
+					// fieldCaptionColumnIndex, "200px", "200px", 1,
+					// i + 1, Alignment.MIDDLE_CENTER);
 				}
 			} catch (IOException e) {
 				throw new MyCollabException(e);

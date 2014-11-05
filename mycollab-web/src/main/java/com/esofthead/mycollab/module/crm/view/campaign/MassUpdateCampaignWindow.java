@@ -117,9 +117,9 @@ public class MassUpdateCampaignWindow extends
 						AppContext.getMessage(CampaignI18nEnum.FORM_STATUS), 1,
 						0);
 			} else if (propertyId.equals("type")) {
-				this.informationLayout.addComponent(field,
-						AppContext.getMessage(CampaignI18nEnum.FORM_TYPE), 0,
-						1, 2);
+				this.informationLayout
+						.addComponent(field, AppContext
+								.getMessage(CampaignI18nEnum.FORM_TYPE), 0, 1);
 			} else if (propertyId.equals("currencyid")) {
 				this.campaignGoal.addComponent(field,
 						AppContext.getMessage(CampaignI18nEnum.FORM_CURRENCY),
