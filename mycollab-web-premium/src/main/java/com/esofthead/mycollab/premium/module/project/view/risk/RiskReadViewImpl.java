@@ -16,12 +16,14 @@ import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
+import com.esofthead.mycollab.module.project.domain.Risk;
 import com.esofthead.mycollab.module.project.domain.SimpleRisk;
 import com.esofthead.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.RiskI18nEnum;
 import com.esofthead.mycollab.module.project.ui.components.AbstractPreviewItemComp2;
 import com.esofthead.mycollab.module.project.ui.components.CommentDisplay;
 import com.esofthead.mycollab.module.project.ui.components.DateInfoComp;
+import com.esofthead.mycollab.module.project.ui.components.DynaFormLayout;
 import com.esofthead.mycollab.module.project.ui.components.ProjectFollowersComp;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserFormLinkField;
 import com.esofthead.mycollab.schedule.email.project.ProjectRiskRelayEmailNotificationAction;
@@ -38,6 +40,7 @@ import com.esofthead.mycollab.vaadin.ui.ProjectPreviewFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.TabsheetLazyLoadComp;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UserLink;
+import com.esofthead.mycollab.vaadin.ui.WebResourceIds;
 import com.esofthead.mycollab.vaadin.ui.form.field.RichTextViewField;
 import com.esofthead.mycollab.vaadin.ui.form.field.DefaultViewField;
 import com.esofthead.mycollab.vaadin.ui.form.field.I18nFormViewField;
@@ -75,7 +78,7 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp2<SimpleRisk>
 	public RiskReadViewImpl() {
 		super(AppContext.getMessage(RiskI18nEnum.FORM_READ_TITLE),
 				MyCollabResource
-						.newResource("icons/22/project/risk_selected.png"));
+						.newResource(WebResourceIds._22_project_risk_selected));
 	}
 
 	@Override
@@ -125,7 +128,7 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp2<SimpleRisk>
 
 		Date now = new GregorianCalendar().getTime();
 		if (beanItem.getDatedue() != null && beanItem.getDatedue().before(now)
-				&& "Open".equals(beanItem.getStatus())) {
+				&& StatusI18nEnum.Open.name().equals(beanItem.getStatus())) {
 			previewLayout.setTitleStyleName("headerNameOverdue");
 		}
 
@@ -139,7 +142,9 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp2<SimpleRisk>
 
 	@Override
 	protected IFormLayoutFactory initFormLayoutFactory() {
-		return new RiskFormLayoutFactory();
+		return new DynaFormLayout(ProjectTypeConstants.RISK,
+				RiskDefaultFormLayoutFactory.getForm(),
+				Risk.Field.riskname.name());
 	}
 
 	@Override
@@ -155,12 +160,12 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp2<SimpleRisk>
 		tabContainer.addTab(commentDisplay, AppContext
 				.getMessage(ProjectCommonI18nEnum.TAB_COMMENT),
 				MyCollabResource
-						.newResource("icons/16/project/gray/comment.png"));
+						.newResource(WebResourceIds._16_project_gray_comment));
 
 		tabContainer.addTab(historyList, AppContext
 				.getMessage(ProjectCommonI18nEnum.TAB_HISTORY),
 				MyCollabResource
-						.newResource("icons/16/project/gray/history.png"));
+						.newResource(WebResourceIds._16_project_gray_history));
 		return tabContainer;
 	}
 
@@ -175,28 +180,28 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp2<SimpleRisk>
 		@Override
 		protected Field<?> onCreateField(Object propertyId) {
 			SimpleRisk risk = attachForm.getBean();
-			if (propertyId.equals("description")) {
+			if (Risk.Field.description.equalTo(propertyId)) {
 				return new RichTextViewField(risk.getDescription());
-			} else if (propertyId.equals("level")) {
+			} else if (Risk.Field.level.equalTo(propertyId)) {
 				final RatingStars tinyRs = new RatingStars();
 				tinyRs.setValue(risk.getLevel());
 				tinyRs.setReadOnly(true);
 				return tinyRs;
-			} else if (propertyId.equals("status")) {
+			} else if (Risk.Field.status.equalTo(propertyId)) {
 				return new I18nFormViewField(risk.getStatus(),
 						StatusI18nEnum.class);
-			} else if (propertyId.equals("datedue")) {
+			} else if (Risk.Field.datedue.equalTo(propertyId)) {
 				return new DefaultViewField(AppContext.formatDate(risk
 						.getDatedue()));
-			} else if (propertyId.equals("raisedbyuser")) {
+			} else if (Risk.Field.raisedbyuser.equalTo(propertyId)) {
 				return new ProjectUserFormLinkField(risk.getRaisedbyuser(),
 						risk.getRaisedByUserAvatarId(),
 						risk.getRaisedByUserFullName());
-			} else if (propertyId.equals("assigntouser")) {
+			} else if (Risk.Field.assigntouser.equalTo(propertyId)) {
 				return new ProjectUserFormLinkField(risk.getAssigntouser(),
 						risk.getAssignToUserAvatarId(),
 						risk.getAssignedToUserFullName());
-			} else if (propertyId.equals("response")) {
+			} else if (Risk.Field.response.equalTo(propertyId)) {
 				return new RichTextViewField(risk.getResponse());
 			}
 

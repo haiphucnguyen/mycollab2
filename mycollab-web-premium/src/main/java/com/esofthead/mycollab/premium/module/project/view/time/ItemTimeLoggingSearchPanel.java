@@ -181,8 +181,8 @@ class ItemTimeLoggingSearchPanel extends
 
 			gridLayout.addComponent(grid, null, 0, 0);
 
-			this.userField = (ProjectMemberListSelect) gridLayout.addComponent(
-					new ProjectMemberListSelect(), "User", 1, 0);
+			this.userField = new ProjectMemberListSelect();
+			gridLayout.addComponent(userField, "User", 1, 0);
 			this.userField.setWidth(nameFieldWidth);
 
 			buttonControls = new HorizontalLayout();
