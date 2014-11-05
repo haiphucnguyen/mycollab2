@@ -1,3 +1,19 @@
+/**
+ * This file is part of mycollab-web.
+ *
+ * mycollab-web is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * mycollab-web is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package com.esofthead.mycollab.module.project.ui.components;
 
 import java.util.HashMap;
@@ -82,9 +98,9 @@ public class DynaFormLayout implements IFormLayoutFactory {
 			if (section.isDeletedSection()) {
 				continue;
 			}
-//			Label header = new Label(section.getHeader());
-//			header.setStyleName("h2");
-//			layout.addComponent(header);
+			// Label header = new Label(section.getHeader());
+			// header.setStyleName("h2");
+			// layout.addComponent(header);
 
 			GridFormLayoutHelper gridLayout;
 
@@ -93,13 +109,12 @@ public class DynaFormLayout implements IFormLayoutFactory {
 			}
 
 			if (section.getLayoutType() == LayoutType.ONE_COLUMN) {
-				gridLayout = new GridFormLayoutHelper(2,
-						section.getFieldCount(), "100%", "167px",
+				gridLayout = new GridFormLayoutHelper(2, 0, "100%", "167px",
 						Alignment.TOP_LEFT);
 			} else if (section.getLayoutType() == LayoutType.TWO_COLUMN) {
-				gridLayout = new GridFormLayoutHelper(2,
-						(section.getFieldCount() + 3) / 2, "100%", "167px",
+				gridLayout = new GridFormLayoutHelper(2, 0, "100%", "167px",
 						Alignment.TOP_LEFT);
+				
 			} else {
 				throw new MyCollabException(
 						"Does not support attachForm layout except 1 or 2 columns");
@@ -128,9 +143,15 @@ public class DynaFormLayout implements IFormLayoutFactory {
 						dynaField.getFieldIndex(), 2, "100%",
 						Alignment.TOP_LEFT);
 			} else if (section.getLayoutType() == LayoutType.TWO_COLUMN) {
-				gridLayout.addComponent(field, dynaField.getDisplayName(),
-						dynaField.getFieldIndex() % 2,
-						dynaField.getFieldIndex() / 2);
+				if (dynaField.isColSpan()) {
+					gridLayout.addComponent(field, dynaField.getDisplayName(),
+							0, dynaField.getFieldIndex() / 2, 2, "100%");
+				} else {
+					gridLayout.addComponent(field, dynaField.getDisplayName(),
+							dynaField.getFieldIndex() % 2,
+							dynaField.getFieldIndex() / 2);
+				}
+
 			}
 		}
 	}

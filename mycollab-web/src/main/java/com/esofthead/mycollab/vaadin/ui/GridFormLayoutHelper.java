@@ -42,6 +42,10 @@ public class GridFormLayoutHelper implements Serializable {
 	private final String defaultCaptionWidth;
 	private final Alignment captionAlignment;
 
+	public GridFormLayoutHelper() {
+		this(0, 0);
+	}
+
 	public GridFormLayoutHelper(final int columns, final int rows) {
 		this(columns, rows, UIConstants.DEFAULT_CAPTION_FORM_WIDTH);
 	}
@@ -70,6 +74,10 @@ public class GridFormLayoutHelper implements Serializable {
 		this.layout.setSpacing(false);
 
 		this.layout.setRowExpandRatio(0, 0);
+	}
+
+	public void appendRow() {
+		this.layout.setRows(layout.getRows() + 1);
 	}
 
 	public Component addComponent(final boolean condition,
@@ -161,7 +169,6 @@ public class GridFormLayoutHelper implements Serializable {
 			final String width, final Alignment alignment) {
 		if (caption != null) {
 			final Label l = new Label(caption + ":");
-			// l.setHeight("100%");
 			final HorizontalLayout captionWrapper = new HorizontalLayout();
 			captionWrapper.addComponent(l);
 			captionWrapper.setComponentAlignment(l, alignment);
@@ -294,15 +301,15 @@ public class GridFormLayoutHelper implements Serializable {
 		return field;
 	}
 
-	public Component getComponent(final int column, final int row) {
-		return this.layout.getComponent(2 * column + 1, row);
+	public void getComponent(final int column, final int row) {
+		this.layout.getComponent(2 * column + 1, row);
 	}
 
 	public GridLayout getLayout() {
 		return this.layout;
 	}
 
-	public Component addComponent(Component fieldValue, Component fieldCaption,
+	public void addComponent(Component fieldValue, Component fieldCaption,
 			String defaultCaptionWidth, String fieldValueWidth, int columns,
 			int rows, Alignment alignment) {
 		final HorizontalLayout captionWrapper = new HorizontalLayout();
@@ -338,15 +345,6 @@ public class GridFormLayoutHelper implements Serializable {
 		}
 		this.layout.addComponent(fieldWrapper, 2 * columns + 1, rows);
 		this.layout.setColumnExpandRatio(2 * columns + 1, 1.0f);
-		return fieldValue;
-	}
-
-	public Component addComponentSupportFieldCaption(
-			final Component fieldValue, final Component fieldCaption,
-			final String defaultCaptionWidth, final String fileValueWidth,
-			final int columns, final int rows, final Alignment alignment) {
-		return this.addComponent(fieldValue, fieldCaption, defaultCaptionWidth,
-				fileValueWidth, columns, rows, alignment);
 	}
 
 }
