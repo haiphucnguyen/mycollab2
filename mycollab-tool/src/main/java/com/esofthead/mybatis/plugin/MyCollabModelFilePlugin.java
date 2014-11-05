@@ -7,6 +7,7 @@ import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.dom.java.Field;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.InnerClass;
+import org.mybatis.generator.api.dom.java.InnerEnum;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.api.dom.java.Method;
@@ -47,6 +48,9 @@ public class MyCollabModelFilePlugin extends
 	public boolean modelFieldGenerated(Field field,
 			TopLevelClass topLevelClass, IntrospectedColumn introspectedColumn,
 			IntrospectedTable introspectedTable, ModelClassType modelClassType) {
+
+		InnerEnum enumFieldClass = getEnumFieldClass(topLevelClass);
+		enumFieldClass.addEnumConstant(field.getName());
 
 		if ("VARCHAR".equals(introspectedColumn.getJdbcTypeName())
 				|| "LONGVARCHAR".equals(introspectedColumn.getJdbcTypeName())) {
@@ -277,6 +281,28 @@ public class MyCollabModelFilePlugin extends
 		}
 
 		return true;
+	}
+
+	private static InnerEnum getEnumFieldClass(TopLevelClass topLevelClass) {
+		List<InnerEnum> innerEnums = topLevelClass.getInnerEnums();
+		if (innerEnums == null || innerEnums.size() == 0) {
+			InnerEnumEx enumFieldCls = new InnerEnumEx(
+					new FullyQualifiedJavaType("Field"));
+			enumFieldCls.setFinal(true);
+			enumFieldCls.setStatic(true);
+			enumFieldCls.setVisibility(JavaVisibility.PUBLIC);
+			topLevelClass.addInnerEnum(enumFieldCls);
+			Method equalToMethod = new Method("equalTo");
+			equalToMethod.setReturnType(new FullyQualifiedJavaType("boolean"));
+			equalToMethod.addParameter(new Parameter(
+					new FullyQualifiedJavaType("Object"), "value"));
+			equalToMethod.setVisibility(JavaVisibility.PUBLIC);
+			equalToMethod.addBodyLine("return name().equals(value);");
+			enumFieldCls.addMethod(equalToMethod);
+			return enumFieldCls;
+		} else {
+			return innerEnums.get(0);
+		}
 	}
 
 	private void generateInsertAndReturnKeyMethod(Interface interfaze,
