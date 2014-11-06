@@ -7,6 +7,8 @@
 
 /* Import our component styles */
 @import "components/attachment-preview.scss";
+@import "components/attachments-display.scss";
+@import "components/attachment-upload.scss";
 @import "components/project/dashboard.scss";
 @import "components/project/activities.scss";
 @import "components/project/bug.scss";
@@ -23,6 +25,8 @@
     
     /* Include common components */
     @include attachment-preview;
+    @include attachments-display;
+    @include attachment-upload;
     
     * {
 	   -webkit-tap-highlight-color: rgba(0,0,0,0);
@@ -783,32 +787,7 @@
 			text-overflow: ellipsis;
 			white-space: nowrap;
 		}
-	}
-	
-	.attachment-field {
-		.v-upload {
-			.v-button {
-				font-size: 1.5rem;
-				min-height: inherit;
-				line-height: normal;
-				.v-button-wrap {
-					padding: 0px;
-				}
-			}
-		}
-		.attachment-row {
-			.v-label {
-				font-size: 1.5rem;
-				white-space: nowrap;
-				text-overflow: ellipsis;
-			}
-			.v-button {
-				display: inline-block;
-				font-size: 1.5rem;
-			}
-		}
-	}
-	
+	}	
 	
 	/* Note List */
 	.noteList {
