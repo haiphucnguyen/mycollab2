@@ -41,7 +41,7 @@ class ProblemEditFormFieldFactory<B extends Problem> extends
 			final RichTextArea desc = new RichTextArea();
 			desc.setRequired(true);
 			desc.setNullRepresentation("");
-			desc.setRequiredError("Please enter a Desciption");
+			desc.setRequiredError("Description must be not empty");
 			return desc;
 		} else if (propertyId.equals("raisedbyuser")) {
 			if (problem.getRaisedbyuser() == null) {
@@ -72,7 +72,7 @@ class ProblemEditFormFieldFactory<B extends Problem> extends
 			ratingField.setDescription("Problem level");
 			ratingField.setValueCaption(ProblemAddViewImpl.getValueCaptions()
 					.values().toArray(new String[5]));
-			
+
 			if (problem.getLevel() != null) {
 				ratingField.setValue(problem.getLevel());
 			}
@@ -112,7 +112,7 @@ class ProblemEditFormFieldFactory<B extends Problem> extends
 			final TextField tf = new TextField();
 			tf.setNullRepresentation("");
 			tf.setRequired(true);
-			tf.setRequiredError("Please enter a Name");
+			tf.setRequiredError("Issue must not be empty");
 			return tf;
 		}
 

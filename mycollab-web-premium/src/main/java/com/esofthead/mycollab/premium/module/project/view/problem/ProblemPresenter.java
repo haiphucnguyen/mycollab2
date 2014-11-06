@@ -31,6 +31,7 @@ public class ProblemPresenter extends AbstractPresenter<IProblemContainer>
 		super.go(container, data, false);
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		ProjectView projectViewContainer = (ProjectView) container;
@@ -57,6 +58,7 @@ public class ProblemPresenter extends AbstractPresenter<IProblemContainer>
 		presenter.go(view, data);
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public void handleChain(ComponentContainer container,
 			PageActionChain pageActionChain) {

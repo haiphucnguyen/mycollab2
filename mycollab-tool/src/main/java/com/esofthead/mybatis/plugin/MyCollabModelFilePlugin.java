@@ -1,13 +1,14 @@
 package com.esofthead.mybatis.plugin;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.dom.java.Field;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.InnerClass;
-import org.mybatis.generator.api.dom.java.InnerEnum;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.api.dom.java.Method;
@@ -26,6 +27,8 @@ import org.mybatis.generator.api.dom.xml.XmlElement;
  */
 public class MyCollabModelFilePlugin extends
 		org.mybatis.generator.api.PluginAdapter {
+
+	private static Map<String, InnerEnumEx> enumOfBlobDomains = new HashMap<String, InnerEnumEx>();
 
 	@Override
 	public boolean validate(List<String> args) {
@@ -49,7 +52,15 @@ public class MyCollabModelFilePlugin extends
 			TopLevelClass topLevelClass, IntrospectedColumn introspectedColumn,
 			IntrospectedTable introspectedTable, ModelClassType modelClassType) {
 
-		InnerEnum enumFieldClass = getEnumFieldClass(topLevelClass);
+		InnerEnumEx enumFieldClass = enumOfBlobDomains.get(introspectedTable
+				.getAliasedFullyQualifiedTableNameAtRuntime());
+		if (enumFieldClass == null) {
+			enumFieldClass = buildEnumFieldClass();
+			enumOfBlobDomains.put(introspectedTable
+					.getAliasedFullyQualifiedTableNameAtRuntime(),
+					enumFieldClass);
+		}
+
 		enumFieldClass.addEnumConstant(field.getName());
 
 		if ("VARCHAR".equals(introspectedColumn.getJdbcTypeName())
@@ -65,6 +76,22 @@ public class MyCollabModelFilePlugin extends
 				introspectedColumn.getActualColumnName());
 		field.addAnnotation(columnAnnotation);
 		return true;
+	}
+
+	private static InnerEnumEx buildEnumFieldClass() {
+		InnerEnumEx enumFieldCls = new InnerEnumEx(new FullyQualifiedJavaType(
+				"Field"));
+		enumFieldCls.setFinal(true);
+		enumFieldCls.setStatic(true);
+		enumFieldCls.setVisibility(JavaVisibility.PUBLIC);
+		Method equalToMethod = new Method("equalTo");
+		equalToMethod.setReturnType(new FullyQualifiedJavaType("boolean"));
+		equalToMethod.addParameter(new Parameter(new FullyQualifiedJavaType(
+				"Object"), "value"));
+		equalToMethod.setVisibility(JavaVisibility.PUBLIC);
+		equalToMethod.addBodyLine("return name().equals(value);");
+		enumFieldCls.addMethod(equalToMethod);
+		return enumFieldCls;
 	}
 
 	private static boolean isPrimaryKeyOfTable(
@@ -226,6 +253,18 @@ public class MyCollabModelFilePlugin extends
 
 		if (!isBlobDomainGenerated(introspectedTable)) {
 			topLevelClass.setVisibility(JavaVisibility.PUBLIC);
+
+			InnerEnumEx enumFieldClass = enumOfBlobDomains
+					.get(introspectedTable
+							.getAliasedFullyQualifiedTableNameAtRuntime());
+			if (enumFieldClass == null) {
+				enumFieldClass = buildEnumFieldClass();
+				enumOfBlobDomains.put(introspectedTable
+						.getAliasedFullyQualifiedTableNameAtRuntime(),
+						enumFieldClass);
+			}
+			topLevelClass.addInnerEnum(enumFieldClass);
+
 		} else {
 			topLevelClass.setVisibility(JavaVisibility.DEFAULT);
 		}
@@ -251,6 +290,16 @@ public class MyCollabModelFilePlugin extends
 		staticField.setFinal(true);
 		staticField.setVisibility(JavaVisibility.PRIVATE);
 		topLevelClass.addField(staticField);
+
+		InnerEnumEx enumFieldClass = enumOfBlobDomains.get(introspectedTable
+				.getAliasedFullyQualifiedTableNameAtRuntime());
+		if (enumFieldClass == null) {
+			enumFieldClass = buildEnumFieldClass();
+			enumOfBlobDomains.put(introspectedTable
+					.getAliasedFullyQualifiedTableNameAtRuntime(),
+					enumFieldClass);
+		}
+		topLevelClass.addInnerEnum(enumFieldClass);
 
 		return super.modelRecordWithBLOBsClassGenerated(topLevelClass,
 				introspectedTable);
@@ -281,28 +330,6 @@ public class MyCollabModelFilePlugin extends
 		}
 
 		return true;
-	}
-
-	private static InnerEnum getEnumFieldClass(TopLevelClass topLevelClass) {
-		List<InnerEnum> innerEnums = topLevelClass.getInnerEnums();
-		if (innerEnums == null || innerEnums.size() == 0) {
-			InnerEnumEx enumFieldCls = new InnerEnumEx(
-					new FullyQualifiedJavaType("Field"));
-			enumFieldCls.setFinal(true);
-			enumFieldCls.setStatic(true);
-			enumFieldCls.setVisibility(JavaVisibility.PUBLIC);
-			topLevelClass.addInnerEnum(enumFieldCls);
-			Method equalToMethod = new Method("equalTo");
-			equalToMethod.setReturnType(new FullyQualifiedJavaType("boolean"));
-			equalToMethod.addParameter(new Parameter(
-					new FullyQualifiedJavaType("Object"), "value"));
-			equalToMethod.setVisibility(JavaVisibility.PUBLIC);
-			equalToMethod.addBodyLine("return name().equals(value);");
-			enumFieldCls.addMethod(equalToMethod);
-			return enumFieldCls;
-		} else {
-			return innerEnums.get(0);
-		}
 	}
 
 	private void generateInsertAndReturnKeyMethod(Interface interfaze,
@@ -355,13 +382,6 @@ public class MyCollabModelFilePlugin extends
 	}
 
 	@Override
-	public boolean clientUpdateByPrimaryKeyWithBLOBsMethodGenerated(
-			Method method, Interface interfaze,
-			IntrospectedTable introspectedTable) {
-		return true;
-	}
-
-	@Override
 	public boolean clientUpdateByPrimaryKeyWithoutBLOBsMethodGenerated(
 			Method method, Interface interfaze,
 			IntrospectedTable introspectedTable) {
@@ -391,21 +411,6 @@ public class MyCollabModelFilePlugin extends
 			IntrospectedTable introspectedTable) {
 		boolean result = isBlobDomainGenerated(introspectedTable);
 		return !result;
-	}
-
-	@Override
-	public boolean modelGetterMethodGenerated(Method method,
-			TopLevelClass topLevelClass, IntrospectedColumn introspectedColumn,
-			IntrospectedTable introspectedTable, ModelClassType modelClassType) {
-		return true;
-	}
-
-	@Override
-	public boolean modelSetterMethodGenerated(Method method,
-			TopLevelClass topLevelClass, IntrospectedColumn introspectedColumn,
-			IntrospectedTable introspectedTable, ModelClassType modelClassType) {
-		return super.modelSetterMethodGenerated(method, topLevelClass,
-				introspectedColumn, introspectedTable, modelClassType);
 	}
 
 	private boolean isTableHasIdPrimaryKey(IntrospectedTable introspectedTable) {

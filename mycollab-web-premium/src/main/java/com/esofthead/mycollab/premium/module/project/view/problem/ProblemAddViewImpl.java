@@ -3,9 +3,11 @@ package com.esofthead.mycollab.premium.module.project.view.problem;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.Problem;
 import com.esofthead.mycollab.module.project.i18n.ProblemI18nEnum;
 import com.esofthead.mycollab.module.project.ui.components.AbstractEditItemComp;
+import com.esofthead.mycollab.module.project.ui.components.DynaFormLayout;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.IFormAddView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
@@ -24,7 +26,7 @@ import com.vaadin.ui.Layout;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-@ViewComponent(scope=ViewScope.PROTOTYPE)
+@ViewComponent(scope = ViewScope.PROTOTYPE)
 public class ProblemAddViewImpl extends AbstractEditItemComp<Problem> implements
 		ProblemAddView, IFormAddView<Problem> {
 
@@ -78,7 +80,8 @@ public class ProblemAddViewImpl extends AbstractEditItemComp<Problem> implements
 
 	@Override
 	protected IFormLayoutFactory initFormLayoutFactory() {
-		return new ProblemFormLayoutFactory();
+		return new DynaFormLayout(ProjectTypeConstants.PROBLEM,
+				ProblemDefaultFormLayoutFactory.getForm());
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })

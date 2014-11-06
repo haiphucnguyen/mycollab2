@@ -23,7 +23,7 @@ public class RiskDefaultFormLayoutFactory {
 
 	static {
 		defaultForm = new DynaForm();
-		// Build block account information
+		
 		DynaSection mainSection = new DynaSectionBuilder().layoutType(
 				LayoutType.TWO_COLUMN).build();
 
