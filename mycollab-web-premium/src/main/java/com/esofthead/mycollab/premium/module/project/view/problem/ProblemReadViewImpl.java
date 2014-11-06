@@ -16,12 +16,14 @@ import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
+import com.esofthead.mycollab.module.project.domain.Problem;
 import com.esofthead.mycollab.module.project.domain.SimpleProblem;
 import com.esofthead.mycollab.module.project.i18n.ProblemI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.ui.components.AbstractPreviewItemComp2;
 import com.esofthead.mycollab.module.project.ui.components.CommentDisplay;
 import com.esofthead.mycollab.module.project.ui.components.DateInfoComp;
+import com.esofthead.mycollab.module.project.ui.components.DynaFormLayout;
 import com.esofthead.mycollab.module.project.ui.components.ProjectFollowersComp;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserFormLinkField;
 import com.esofthead.mycollab.schedule.email.project.ProjectRiskRelayEmailNotificationAction;
@@ -38,9 +40,10 @@ import com.esofthead.mycollab.vaadin.ui.ProjectPreviewFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.TabsheetLazyLoadComp;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UserLink;
-import com.esofthead.mycollab.vaadin.ui.form.field.RichTextViewField;
+import com.esofthead.mycollab.vaadin.ui.WebResourceIds;
 import com.esofthead.mycollab.vaadin.ui.form.field.DefaultViewField;
 import com.esofthead.mycollab.vaadin.ui.form.field.I18nFormViewField;
+import com.esofthead.mycollab.vaadin.ui.form.field.RichTextViewField;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Field;
@@ -140,7 +143,9 @@ public class ProblemReadViewImpl extends
 
 	@Override
 	protected IFormLayoutFactory initFormLayoutFactory() {
-		return new ProblemFormLayoutFactory();
+		return new DynaFormLayout(ProjectTypeConstants.PROBLEM,
+				ProblemDefaultFormLayoutFactory.getForm(),
+				Problem.Field.issuename.name());
 	}
 
 	@Override
@@ -156,12 +161,12 @@ public class ProblemReadViewImpl extends
 		tabContainer.addTab(commentList, AppContext
 				.getMessage(ProjectCommonI18nEnum.TAB_COMMENT),
 				MyCollabResource
-						.newResource("icons/16/project/gray/comment.png"));
+						.newResource(WebResourceIds._16_project_gray_comment));
 
 		tabContainer.addTab(historyList, AppContext
 				.getMessage(ProjectCommonI18nEnum.TAB_HISTORY),
 				MyCollabResource
-						.newResource("icons/16/project/gray/history.png"));
+						.newResource(WebResourceIds._16_project_gray_history));
 		return tabContainer;
 	}
 
