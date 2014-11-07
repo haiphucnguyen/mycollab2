@@ -21,7 +21,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
-import org.jfree.util.Log;
 
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
@@ -129,6 +128,7 @@ public class GridFormLayoutHelper implements Serializable {
 			captionWrapper.setStyleName("gridform-caption");
 			captionWrapper.setMargin(true);
 			captionWrapper.setWidth(this.defaultCaptionWidth);
+			captionWrapper.setHeight("100%");
 			if (columns == 0) {
 				captionWrapper.addStyleName("first-col");
 			}
@@ -138,12 +138,12 @@ public class GridFormLayoutHelper implements Serializable {
 			System.out.println("Add cell: " + caption + "--" + columns + "--"
 					+ rows);
 			this.layout.addComponent(captionWrapper, 2 * columns, rows);
-			captionWrapper.setHeight(width);
 		}
 		final GridCellWrapper fieldWrapper = new GridCellWrapper();
 
 		if (rows == 0) {
 			fieldWrapper.addStyleName("first-row");
+			fieldWrapper.setWidth(width);
 		}
 		this.layout.addComponent(fieldWrapper, 2 * columns + 1, rows,
 				2 * (columns + colspan - 1) + 1, rows);
