@@ -303,14 +303,27 @@ public class VNavigationBarQuickMenu extends SimplePanel implements
 		this.expanded = value;
 		final Style style = containerElement.getStyle();
 		if (this.expanded) {
-			this.addStyleName(EXPANDED);
+			Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
+
+				@Override
+				public void execute() {
+					VNavigationBarQuickMenu.this.addStyleName(EXPANDED);
+				}
+			});
+
 			style.setOpacity(1);
 			style.setProperty(Css3Propertynames.transform(),
 					"translate3d(0, 0, 0)");
 
 			showOverlays();
 		} else {
-			this.removeStyleName(EXPANDED);
+			Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
+
+				@Override
+				public void execute() {
+					VNavigationBarQuickMenu.this.removeStyleName(EXPANDED);
+				}
+			});
 
 			style.setProperty(Css3Propertynames.transform(), "translate3d(0, -"
 					+ containerElement.getOffsetHeight() + "px, 0)");
