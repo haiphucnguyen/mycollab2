@@ -28,7 +28,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.esofthead.mycollab.common.domain.CustomerFeedbackWithBLOBs;
-import com.esofthead.mycollab.common.i18n.WebExceptionI18nEnum;
+import com.esofthead.mycollab.common.i18n.ErrorI18nEnum;
 import com.esofthead.mycollab.configuration.PasswordEncryptHelper;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.UserInvalidInputException;
@@ -111,7 +111,7 @@ public class BillingServiceImpl implements BillingService {
 		if (ACCOUNT_BLACK_LIST.contains(subdomain)) {
 			throw new SubdomainExistedException(LocalizationHelper.getMessage(
 					LocalizationHelper.defaultLocale,
-					WebExceptionI18nEnum.EXISTING_DOMAIN_REGISTER_ERROR,
+					ErrorI18nEnum.EXISTING_DOMAIN_REGISTER_ERROR,
 					subdomain));
 		}
 
@@ -121,7 +121,7 @@ public class BillingServiceImpl implements BillingService {
 		if (this.billingAccountMapper.countByExample(billingEx) > 0) {
 			throw new SubdomainExistedException(LocalizationHelper.getMessage(
 					LocalizationHelper.defaultLocale,
-					WebExceptionI18nEnum.EXISTING_DOMAIN_REGISTER_ERROR,
+					ErrorI18nEnum.EXISTING_DOMAIN_REGISTER_ERROR,
 					subdomain));
 		}
 
