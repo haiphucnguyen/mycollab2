@@ -245,6 +245,16 @@
 	    		}
 	    	}	
 	    	.v-touchkit-navbar {
+	    		.toggle-nav-btn {
+	    			background: none;
+	    			@include icomoon;
+	    			
+	    			&:before {
+	    				content: "\e120";
+	    				line-height: 4rem;
+	    				font-size: 2.5rem;
+	    			}
+	    		} 
 	    		.v-touchkit-navbar-left {		    		
 		   			.v-touchkit-navbutton-back {
 		   				position: relative;
@@ -328,7 +338,7 @@
 	    					@include transform (rotate(90deg));
 	    					
 	    					&:before {
-								content: "\e619";
+								content: "\e61b";
 								font-size: 2rem;
 								display: block;
 		    				}
@@ -353,8 +363,8 @@
 	    					
 	    					.v-button-caption:before {
 	    						@include icomoon;
-								content: "\e60e";
-								font-size: 2rem;
+								content: "\e114";
+								font-size: 2.4rem;
 	    					}
 	    				}
     					
@@ -374,6 +384,13 @@
 	    	
 	    	.v-touchkit-navview-wrapper {
 				-webkit-tap-highlight-color: transparent;
+				& > div {
+					position: absolute;
+					top: 0px;
+					left: 0px;
+					right: 0px;
+					bottom: 0px;
+				}
 	    	}
 	    	
 	    	.v-touchkit-navview-toolbar {
@@ -483,11 +500,6 @@
 	/* Data List View */
 	.data-list-view {
 		background-color: rgb(255, 255, 255);
-		position: absolute;
-		top: 0px;
-		left: 0px;
-		right: 0px;
-		bottom: 0px;
 		.list-item {
 			&.v-touchkit-navbutton {
 				padding: 1rem 2.7rem 1rem 1.4rem;
