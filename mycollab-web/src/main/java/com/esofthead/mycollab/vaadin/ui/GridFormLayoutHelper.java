@@ -72,7 +72,6 @@ public class GridFormLayoutHelper implements Serializable {
 		this.layout = new GridLayout(2 * columns, rows);
 		this.layout.setMargin(new MarginInfo(true, false, false, false));
 		this.layout.setSpacing(false);
-
 		this.layout.setRowExpandRatio(0, 0);
 	}
 
@@ -135,8 +134,6 @@ public class GridFormLayoutHelper implements Serializable {
 			if (rows == 0) {
 				captionWrapper.addStyleName("first-row");
 			}
-			System.out.println("Add cell: " + caption + "--" + columns + "--"
-					+ rows);
 			this.layout.addComponent(captionWrapper, 2 * columns, rows);
 		}
 		final GridCellWrapper fieldWrapper = new GridCellWrapper();

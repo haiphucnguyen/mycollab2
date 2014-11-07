@@ -33,7 +33,8 @@ import com.esofthead.mycollab.core.utils.BeanUtility;
 @Component
 @Configurable
 public class L2CacheAspect {
-	private static final Logger LOG = LoggerFactory.getLogger(L2CacheAspect.class);
+	private static final Logger LOG = LoggerFactory
+			.getLogger(L2CacheAspect.class);
 
 	@Around("execution(public * com.esofthead.mycollab..service..*.*(..))")
 	public Object cacheGet(ProceedingJoinPoint pjp) throws Throwable {
@@ -81,8 +82,9 @@ public class L2CacheAspect {
 								}
 							} else {
 								LOG.error(
-										"Cache key must be one of types [Integer, GroupableSearchCriteria, SearchRequest], now it has type {}",
-										arg);
+										"Cache key must be one of types [Integer, GroupableSearchCriteria, SearchRequest], now it has type {}. Check class.method {} {}",
+										new Object[] { arg, cls.getName(),
+												method.getName() });
 								return pjp.proceed();
 							}
 						} catch (Exception e) {
