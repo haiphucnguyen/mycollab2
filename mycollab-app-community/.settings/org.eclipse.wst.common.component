@@ -205,10 +205,10 @@
     <dependent-module archiveName="spring-aspects-4.1.1.RELEASE.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/springframework/spring-aspects/4.1.1.RELEASE/spring-aspects-4.1.1.RELEASE.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="aspectjweaver-1.8.3.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/aspectj/aspectjweaver/1.8.3/aspectjweaver-1.8.3.jar">
+    <dependent-module archiveName="aspectjweaver-1.8.4.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/aspectj/aspectjweaver/1.8.4/aspectjweaver-1.8.4.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="aspectjrt-1.8.3.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/aspectj/aspectjrt/1.8.3/aspectjrt-1.8.3.jar">
+    <dependent-module archiveName="aspectjrt-1.8.4.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/aspectj/aspectjrt/1.8.4/aspectjrt-1.8.4.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="cglib-3.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/cglib/cglib/3.1/cglib-3.1.jar">
@@ -226,7 +226,7 @@
     <dependent-module archiveName="jackson-annotations-2.4.3.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/fasterxml/jackson/core/jackson-annotations/2.4.3/jackson-annotations-2.4.3.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="HikariCP-java6-2.1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/zaxxer/HikariCP-java6/2.1.0/HikariCP-java6-2.1.0.jar">
+    <dependent-module archiveName="HikariCP-java6-2.2.4.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/zaxxer/HikariCP-java6/2.2.4/HikariCP-java6-2.2.4.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="javassist-3.18.1-GA.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/javassist/javassist/3.18.1-GA/javassist-3.18.1-GA.jar">

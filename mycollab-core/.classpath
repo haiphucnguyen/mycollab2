@@ -62,14 +62,14 @@
   <classpathentry kind="var" path="M2_REPO/org/springframework/spring-tx/4.1.1.RELEASE/spring-tx-4.1.1.RELEASE.jar" sourcepath="M2_REPO/org/springframework/spring-tx/4.1.1.RELEASE/spring-tx-4.1.1.RELEASE-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/springframework/spring-web/4.1.1.RELEASE/spring-web-4.1.1.RELEASE.jar" sourcepath="M2_REPO/org/springframework/spring-web/4.1.1.RELEASE/spring-web-4.1.1.RELEASE-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/springframework/spring-aspects/4.1.1.RELEASE/spring-aspects-4.1.1.RELEASE.jar" sourcepath="M2_REPO/org/springframework/spring-aspects/4.1.1.RELEASE/spring-aspects-4.1.1.RELEASE-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/aspectj/aspectjweaver/1.8.3/aspectjweaver-1.8.3.jar" sourcepath="M2_REPO/org/aspectj/aspectjweaver/1.8.3/aspectjweaver-1.8.3-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/aspectj/aspectjrt/1.8.3/aspectjrt-1.8.3.jar" sourcepath="M2_REPO/org/aspectj/aspectjrt/1.8.3/aspectjrt-1.8.3-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/aspectj/aspectjweaver/1.8.4/aspectjweaver-1.8.4.jar" sourcepath="M2_REPO/org/aspectj/aspectjweaver/1.8.4/aspectjweaver-1.8.4-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/aspectj/aspectjrt/1.8.4/aspectjrt-1.8.4.jar" sourcepath="M2_REPO/org/aspectj/aspectjrt/1.8.4/aspectjrt-1.8.4-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/cglib/cglib/3.1/cglib-3.1.jar" sourcepath="M2_REPO/cglib/cglib/3.1/cglib-3.1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/ow2/asm/asm/4.2/asm-4.2.jar" sourcepath="M2_REPO/org/ow2/asm/asm/4.2/asm-4.2-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/fasterxml/jackson/core/jackson-core/2.4.3/jackson-core-2.4.3.jar" sourcepath="M2_REPO/com/fasterxml/jackson/core/jackson-core/2.4.3/jackson-core-2.4.3-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/fasterxml/jackson/core/jackson-databind/2.4.3/jackson-databind-2.4.3.jar" sourcepath="M2_REPO/com/fasterxml/jackson/core/jackson-databind/2.4.3/jackson-databind-2.4.3-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/fasterxml/jackson/core/jackson-annotations/2.4.3/jackson-annotations-2.4.3.jar" sourcepath="M2_REPO/com/fasterxml/jackson/core/jackson-annotations/2.4.3/jackson-annotations-2.4.3-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/com/zaxxer/HikariCP-java6/2.1.0/HikariCP-java6-2.1.0.jar" sourcepath="M2_REPO/com/zaxxer/HikariCP-java6/2.1.0/HikariCP-java6-2.1.0-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/zaxxer/HikariCP-java6/2.2.4/HikariCP-java6-2.2.4.jar" sourcepath="M2_REPO/com/zaxxer/HikariCP-java6/2.2.4/HikariCP-java6-2.2.4-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/javassist/javassist/3.18.1-GA/javassist-3.18.1-GA.jar" sourcepath="M2_REPO/org/javassist/javassist/3.18.1-GA/javassist-3.18.1-GA-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/apache/camel/camel-core/2.14.0/camel-core-2.14.0.jar" sourcepath="M2_REPO/org/apache/camel/camel-core/2.14.0/camel-core-2.14.0-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/sun/xml/bind/jaxb-impl/2.2.7/jaxb-impl-2.2.7.jar" sourcepath="M2_REPO/com/sun/xml/bind/jaxb-impl/2.2.7/jaxb-impl-2.2.7-sources.jar"/>
