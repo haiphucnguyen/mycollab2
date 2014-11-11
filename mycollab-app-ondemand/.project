@@ -17,13 +17,13 @@
     <project>mycollab-migration</project>
     <project>mycollab-servlet-ondemand</project>
     <project>mycollab-caching-premium</project>
-    <project>mycollab-web-premium</project>
+    <project>mycollab-web-ondemand</project>
+    <project>mycollab-web-pro</project>
     <project>mycollab-web</project>
     <project>mycollab-ui</project>
     <project>mycollab-reporting</project>
     <project>mycollab-esb</project>
     <project>mycollab-scheduler</project>
-    <project>mycollab-web-ondemand</project>
     <project>mycollab-jetty-session-premium</project>
     <project>mycollab-api</project>
     <project>mycollab-api-impl</project>
