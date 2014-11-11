@@ -693,6 +693,7 @@ div.v-vertical > .v-spacing, div.v-vertical > .v-expand > .v-spacing {
   content: "\e114";
   font-size: 2.2rem;
   line-height: 4rem;
+  color: white;
 }
 .mycollab-mobile .v-touchkit-navpanel-wrapper .mobilenavview .v-touchkit-navbar .v-touchkit-navbar-right .add-btn.v-navbar-quickmenu-button {
   font-family: 'icomoon';
