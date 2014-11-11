@@ -57,12 +57,6 @@
 
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
-            <artifactId>mycollab-web-premium</artifactId>
-            <version>4.5.3</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-web-ondemand</artifactId>
             <version>4.5.3</version>
         </dependency>

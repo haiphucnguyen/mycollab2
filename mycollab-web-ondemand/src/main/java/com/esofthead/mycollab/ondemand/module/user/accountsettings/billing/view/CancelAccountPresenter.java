@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.premium.module.user.accountsettings.billing.view;
+package com.esofthead.mycollab.ondemand.module.user.accountsettings.billing.view;
 
 import com.esofthead.mycollab.module.user.accountsettings.billing.view.IBillingContainer;
 import com.esofthead.mycollab.module.user.accountsettings.view.AccountSettingBreadcrumb;
@@ -33,12 +33,12 @@ import com.vaadin.ui.ComponentContainer;
  * 
  */
 @ViewPermission(permissionId = RolePermissionCollections.ACCOUNT_BILLING, impliedPermissionVal = BooleanPermissionFlag.TRUE)
-public class BillingSummaryPresenter extends
-		AbstractPresenter<BillingSummaryView> {
+public class CancelAccountPresenter extends
+		AbstractPresenter<CancelAccountView> {
 	private static final long serialVersionUID = 1L;
 
-	public BillingSummaryPresenter() {
-		super(BillingSummaryView.class);
+	public CancelAccountPresenter() {
+		super(CancelAccountView.class);
 	}
 
 	@Override
@@ -47,10 +47,9 @@ public class BillingSummaryPresenter extends
 		accountContainer.removeAllComponents();
 		accountContainer.addComponent(view.getWidget());
 
-		view.loadCurrentPlan();
 		AccountSettingBreadcrumb breadcrumb = ViewManager
 				.getCacheComponent(AccountSettingBreadcrumb.class);
-		breadcrumb.gotoBillingPage();
-
+		breadcrumb.gotoCancelAccountPage();
 	}
+
 }

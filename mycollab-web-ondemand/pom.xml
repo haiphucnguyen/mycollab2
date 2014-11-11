@@ -24,12 +24,7 @@
         </dependency>
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
-            <artifactId>mycollab-web</artifactId>
-            <version>4.5.3</version>
-        </dependency>
-        <dependency>
-            <groupId>com.esofthead.mycollab</groupId>
-            <artifactId>mycollab-web-premium</artifactId>
+            <artifactId>mycollab-web-pro</artifactId>
             <version>4.5.3</version>
         </dependency>
         <dependency>

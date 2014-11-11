@@ -13,13 +13,13 @@
     <project>mycollab-localization</project>
     <project>mycollab-jackrabbit</project>
     <project>mycollab-migration</project>
+    <project>mycollab-web-pro</project>
     <project>mycollab-web</project>
     <project>mycollab-ui</project>
     <project>mycollab-reporting</project>
     <project>mycollab-esb</project>
     <project>mycollab-scheduler</project>
     <project>mycollab-server-runner</project>
-    <project>mycollab-web-premium</project>
   </projects>
   <buildSpec>
     <buildCommand>

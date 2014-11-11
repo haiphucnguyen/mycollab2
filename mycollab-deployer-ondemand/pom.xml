@@ -40,7 +40,7 @@
         <module>../mycollab-api</module>
         <module>../mycollab-api-impl</module>
         <module>../mycollab-scheduler-ondemand</module>
-        <module>../mycollab-web-premium</module>
+        <module>../mycollab-web-pro</module>
         <module>../mycollab-web-ondemand</module>
         <module>../mycollab-app-ondemand</module>
     </modules>

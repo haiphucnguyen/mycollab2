@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-  <name>mycollab-web-premium</name>
+  <name>mycollab-web-pro</name>
   <comment>NO_M2ECLIPSE_SUPPORT: Project files created with the maven-eclipse-plugin are not supported in M2Eclipse.</comment>
   <projects>
-    <project>mycollab-web-pro</project>
     <project>mycollab-web</project>
     <project>mycollab-core</project>
     <project>mycollab-test</project>

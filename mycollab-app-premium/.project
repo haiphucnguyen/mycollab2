@@ -22,6 +22,7 @@
     <project>mycollab-search</project>
     <project>mycollab-caching-premium</project>
     <project>mycollab-web-premium</project>
+    <project>mycollab-web-pro</project>
     <project>mycollab-web</project>
     <project>mycollab-esb</project>
     <project>mycollab-scheduler</project>

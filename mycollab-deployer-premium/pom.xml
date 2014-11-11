@@ -32,6 +32,7 @@
         <module>../mycollab-mobile</module>
         <module>../mycollab-web</module>
         <module>../mycollab-services-premium</module>
+        <module>../mycollab-web-pro</module>
         <module>../mycollab-web-premium</module>
         <module>../mycollab-app-premium</module>
     </modules>
