@@ -88,7 +88,7 @@ public abstract class DefaultCloudDriveOAuthWindow extends
 						DefaultCloudDriveOAuthWindow.this.setHeight("210px");
 						messageBox.removeAllComponents();
 						messageBox.addComponent(new Label(
-								"Access token retrieved"));
+								"Access token is retrieved"));
 						ui.setPollInterval(-1);
 					}
 
@@ -174,7 +174,7 @@ public abstract class DefaultCloudDriveOAuthWindow extends
 									.trim();
 							if (StringUtils.isBlank(name)) {
 								NotificationUtil
-										.showWarningNotification("Please enter folder name");
+										.showWarningNotification("Please enter the folder name");
 								return;
 							}
 							ExternalDrive externalDrive = new ExternalDrive();

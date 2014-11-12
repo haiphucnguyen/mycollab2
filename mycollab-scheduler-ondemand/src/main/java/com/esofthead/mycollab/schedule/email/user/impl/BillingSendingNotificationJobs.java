@@ -62,10 +62,10 @@ public class BillingSendingNotificationJobs extends GenericQuartzJobBean {
 	private static final Logger LOG = LoggerFactory
 			.getLogger(BillingSendingNotificationJobs.class);
 
-	private static final Integer DATE_REMIND_FOR_FREEPLAN_1ST = 24;
-	private static final Integer DATE_REMIND_FOR_FREEPLAN_2ND = 29;
-	private static final Integer DATE_NOTIFY_EXPIRE = 32;
-	private static final Integer NUM_DAY_FREE_TRIAL = 30;
+	private static final Integer DATE_REMIND_FOR_FREEPLAN_1ST = 54;
+	private static final Integer DATE_REMIND_FOR_FREEPLAN_2ND = 59;
+	private static final Integer DATE_NOTIFY_EXPIRE = 62;
+	private static final Integer NUM_DAY_FREE_TRIAL = 60;
 
 	static final String INFORM_EXPIRE_ACCOUNT_TEMPLATE = "templates/email/billing/informAccountIsExpiredNotification.mt";
 	static final String INFORM_FILLING_BILLING_INFORMATION_TEMPLATE = "templates/email/billing/remindAccountIsAboutExpiredNotification.mt";
@@ -165,18 +165,19 @@ public class BillingSendingNotificationJobs extends GenericQuartzJobBean {
 					+ "account/billing";
 			contentGenerator.putVariable("link", link);
 
-			extMailService.sendHTMLMail(SiteConfiguration.getNoReplyEmail(),
-					SiteConfiguration.getSiteName(), Arrays
-							.asList(new MailRecipientField(user.getEmail(),
-									user.getDisplayName())), null, null,
-					contentGenerator
-							.generateSubjectContent("Your trial has been ended"),
-					contentGenerator.generateBodyContent(LocalizationHelper
-							.templatePath(INFORM_EXPIRE_ACCOUNT_TEMPLATE,
-									SiteConfiguration.getDefaultLocale())),
-					null);
-			
-			
+			extMailService
+					.sendHTMLMail(
+							SiteConfiguration.getNoReplyEmail(),
+							SiteConfiguration.getSiteName(),
+							Arrays.asList(new MailRecipientField(user
+									.getEmail(), user.getDisplayName())),
+							null,
+							null,
+							contentGenerator
+									.generateSubjectContent("Your trial has been ended"),
+							contentGenerator.generateBodyContent(
+									INFORM_EXPIRE_ACCOUNT_TEMPLATE,
+									SiteConfiguration.getDefaultLocale()), null);
 
 		}
 	}
@@ -215,11 +216,11 @@ public class BillingSendingNotificationJobs extends GenericQuartzJobBean {
 							null,
 							contentGenerator
 									.generateSubjectContent("Your trial is about to end"),
-							contentGenerator.generateBodyContent(LocalizationHelper
-									.templatePath(
+							contentGenerator
+									.generateBodyContent(
 											INFORM_FILLING_BILLING_INFORMATION_TEMPLATE,
 											SiteConfiguration
-													.getDefaultLocale())), null);
+													.getDefaultLocale()), null);
 		}
 
 	}

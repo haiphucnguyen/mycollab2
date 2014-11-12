@@ -293,7 +293,9 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug>
 			attachmentComp = new ProjectAttachmentDisplayComp(attachments);
 			this.previewForm.addComponent(attachmentComp);
 		} else {
-			this.previewForm.removeComponent(attachmentComp);
+			if (attachmentComp != null) {
+				this.previewForm.removeComponent(attachmentComp);
+			}
 		}
 	}
 

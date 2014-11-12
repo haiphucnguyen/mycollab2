@@ -24,7 +24,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.configuration.SiteConfiguration;
-import com.esofthead.mycollab.i18n.LocalizationHelper;
 import com.esofthead.mycollab.module.mail.IContentGenerator;
 import com.esofthead.mycollab.module.mail.service.MailRelayService;
 import com.esofthead.mycollab.rest.server.domain.ContactForm;
@@ -55,9 +54,8 @@ public class ContactResourceImpl implements ContactResource {
 		mailRelayService.saveRelayEmail(new String[] { "Sir" },
 				new String[] { "hainguyen@esofthead.com" }, contentGenerator
 						.generateSubjectContent("New guy wanna contact you!"),
-				contentGenerator.generateBodyContent(LocalizationHelper
-						.templatePath(contactUsTemplate,
-								SiteConfiguration.getDefaultLocale())));
+				contentGenerator.generateBodyContent(contactUsTemplate,
+						SiteConfiguration.getDefaultLocale()));
 		Response response = Response.status(200).entity("OK")
 				.type(MediaType.TEXT_PLAIN_TYPE).build();
 		response.getHeaders().add("Access-Control-Allow-Origin", "*");
