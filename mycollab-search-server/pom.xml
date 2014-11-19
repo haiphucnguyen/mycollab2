@@ -15,7 +15,7 @@
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-search</artifactId>
-            <version>4.5.3</version>
+            <version>4.5.4</version>
         </dependency>
 
         <dependency>
