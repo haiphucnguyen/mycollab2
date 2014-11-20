@@ -2,7 +2,7 @@ package com.esofthead.mycollab.jgroups.service.impl;
 
 import java.util.concurrent.locks.Lock;
 
-import org.infinispan.CacheImpl;
+import org.infinispan.cache.impl.CacheImpl;
 import org.infinispan.remoting.transport.Transport;
 import org.infinispan.remoting.transport.jgroups.JGroupsTransport;
 import org.jgroups.Channel;
