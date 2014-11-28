@@ -41,6 +41,21 @@ If you need to understand more MyCollab advanced configuration settings, please 
 Last changelog
 ==============
 
+Version 4.5.5
+-----------------------------
+**Library Upgrades**
+
+* Upgrade Vaadin to 7.3.5
+* Upgrade HirakiCP to 2.2.5
+* Upgrade Jackson to 2.4.4
+* Upgrade Infinispan to 7.0.2
+* Upgrade several Vaadin addons
+
+**Bug Fixes**
+* Not thread safe when saving bugs, tasks
+* Navigate user account throws exception
+
+
 Version 4.5.4
 -----------------------------
 

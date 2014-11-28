@@ -1,5 +1,8 @@
 package com.esofthead.mycollab.common.interceptor.aspect;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
+
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
@@ -28,6 +31,14 @@ public class ExceptionTracerAspect {
 		for (Object arg : args) {
 			errorMsg.append(BeanUtility.printBeanObj(arg));
 		}
+
+		StringWriter writer = new StringWriter();
+		PrintWriter printW = new PrintWriter(writer);
+		e.printStackTrace(printW);
+
+		errorMsg.append(". Exception: ");
+		errorMsg.append(writer.toString());
+
 		LOG.error(errorMsg.toString());
 	}
 }

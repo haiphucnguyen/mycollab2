@@ -14,6 +14,12 @@
     <dependencies>
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
+            <artifactId>mycollab-caching-premium</artifactId>
+            <version>4.5.4</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-config</artifactId>
             <version>4.5.4</version>
         </dependency>

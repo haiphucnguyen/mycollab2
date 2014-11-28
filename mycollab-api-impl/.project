@@ -13,6 +13,7 @@
     <project>mycollab-config</project>
     <project>mycollab-jackrabbit</project>
     <project>mycollab-services-ondemand</project>
+    <project>mycollab-caching-premium</project>
     <project>mycollab-migration</project>
   </projects>
   <buildSpec>

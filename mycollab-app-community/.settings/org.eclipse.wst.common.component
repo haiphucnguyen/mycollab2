@@ -220,10 +220,10 @@
     <dependent-module archiveName="jackson-core-2.4.3.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/fasterxml/jackson/core/jackson-core/2.4.3/jackson-core-2.4.3.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="jackson-databind-2.4.3.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/fasterxml/jackson/core/jackson-databind/2.4.3/jackson-databind-2.4.3.jar">
+    <dependent-module archiveName="jackson-databind-2.4.4.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/fasterxml/jackson/core/jackson-databind/2.4.4/jackson-databind-2.4.4.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="jackson-annotations-2.4.3.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/fasterxml/jackson/core/jackson-annotations/2.4.3/jackson-annotations-2.4.3.jar">
+    <dependent-module archiveName="jackson-annotations-2.4.4.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/fasterxml/jackson/core/jackson-annotations/2.4.4/jackson-annotations-2.4.4.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="HikariCP-java6-2.2.5.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/zaxxer/HikariCP-java6/2.2.5/HikariCP-java6-2.2.5.jar">
@@ -562,7 +562,13 @@
     <dependent-module archiveName="stylecalendar-2.1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/vaadin/addons/stylecalendar/2.1.0/stylecalendar-2.1.0.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="maddon-1.15.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/peimari/maddon/1.15/maddon-1.15.jar">
+    <dependent-module archiveName="maddon-1.19.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/peimari/maddon/1.19/maddon-1.19.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="confirmdialog-2.1.2.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/vaadin/addon/confirmdialog/2.1.2/confirmdialog-2.1.2.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="markdown4j-2.2-cj-1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/commonjava/googlecode/markdown4j/markdown4j/2.2-cj-1.0/markdown4j-2.2-cj-1.0.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="contextmenu-4.5.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/vaadin/addons/contextmenu/4.5.0/contextmenu-4.5.0.jar">
@@ -581,9 +587,6 @@
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="gantt-addon-0.4.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/tltv/gantt/gantt-addon/0.4.0/gantt-addon-0.4.0.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="confirmdialog-2.0.5.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/vaadin/addon/confirmdialog/2.0.5/confirmdialog-2.0.5.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="cropField-1.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/esofthead/vaadin/cropField/1.0-SNAPSHOT/cropField-1.0-SNAPSHOT.jar">

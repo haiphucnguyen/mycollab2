@@ -11,16 +11,13 @@ import org.jgroups.fork.ForkChannel;
 import org.jgroups.protocols.CENTRAL_LOCK;
 import org.jgroups.stack.Protocol;
 import org.jgroups.stack.ProtocolStack;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 import com.esofthead.mycollab.cache.LocalCacheManager;
-import com.esofthead.mycollab.jgroups.service.DistributionLockService;
-import com.esofthead.mycollab.jgroups.service.DummyLock;
+import com.esofthead.mycollab.lock.DistributionLockService;
 
+@Service
 public class DistributionLockServiceImpl implements DistributionLockService {
-	private static final Logger LOG = LoggerFactory
-			.getLogger(DistributionLockServiceImpl.class);
 
 	@Override
 	public Lock getLock(String lockName) {
@@ -36,28 +33,26 @@ public class DistributionLockServiceImpl implements DistributionLockService {
 			Lock lock = lock_service.getLock(lockName);
 			return lock;
 		} else {
-			return new DummyLock();
+			return null;
 		}
 	}
 
 	private static ForkChannel getChannel() {
-		CacheImpl<Object, Object> cache = (CacheImpl<Object, Object>) LocalCacheManager
-				.getCache();
-		Transport tp;
-		ForkChannel fork_ch;
 		try {
-			tp = cache.getAdvancedCache().getRpcManager().getTransport();
-		} catch (Exception e) {
-			return null;
-		}
+			CacheImpl<Object, Object> cache = (CacheImpl<Object, Object>) LocalCacheManager
+					.getCache();
+			Transport tp = cache.getAdvancedCache().getCacheManager()
+					.getTransport();
 
-		Channel main_ch = ((JGroupsTransport) tp).getChannel();
-		try {
+			ForkChannel fork_ch;
+
+			Channel main_ch = ((JGroupsTransport) tp).getChannel();
+
 			fork_ch = new ForkChannel(main_ch, "hijack-stack", "lead-hijacker",
 					true, ProtocolStack.ABOVE, CENTRAL_LOCK.class);
 			return fork_ch;
 		} catch (Exception e) {
-			LOG.error("Can not init the distributed lock", e);
+			// LOG.error("Can not init the distributed lock", e);
 			return null;
 		}
 	}
