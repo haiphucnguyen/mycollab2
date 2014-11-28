@@ -37,6 +37,10 @@ We use MyCollab in our daily jobs to manage our customers information, projects.
 ---
 
 ### MyCollab News
+* **Nov 21st, 2014: MyCollab 4.5.4 released**
+
+    We improve the stability of MyCollab mobile edition, and make the localization of any language show the friendly messages. See the [release notes](release-notes.html) for more information.
+
 * **Nov 1st, 2014: MyCollab 4.5.3 released**
 
     The new mobile module is included in this release. In addition, MyCollab generates thumbnails for every image attachment which helps user can preview attachment easily. Several bug fixes are addressed and fixed also. See the [release notes](release-notes.html) for more information.

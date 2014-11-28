@@ -21,7 +21,11 @@ Open your command line and go to folder you have checkout MyCollab sources. The 
 
 !["Project Structure"](https://mycollab_assets.s3.amazonaws.com/wiki/development/project_structure.png "Project Structure")
 
-Open your terminal, go to MyCollab source folder, and go to folder mycollab-deployer-community, then type
+Open your terminal, go to MyCollab source folder, and go to folder mycollab-deployer-community, and type
+
+`mvn clean install -Dmaven.test.skip=true`
+
+to install all MyCollab libraries to your local maven repository. Then you type
 
 `mvn eclipse:eclipse`
 

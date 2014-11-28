@@ -1,5 +1,50 @@
 #Release Notes
 
+Version 4.5.5
+-----------------------------
+**Library Upgrades**
+
+* Upgrade Vaadin to 7.3.5
+* Upgrade HirakiCP to 2.2.5
+* Upgrade Jackson to 2.4.4
+* Upgrade Infinispan to 7.0.2
+* Upgrade several Vaadin addons
+
+**Bug Fixes**
+
+* Not thread safe when saving bugs, tasks
+* Navigate user account throws exception
+
+##Version 4.5.4
+
+**Library Upgrades**
+
+* Upgrade Spring framework to 4.1.2.RELEASE
+* Upgrade HirakiCP to 2.2.4
+* Upgrade Vaadin to 7.3.4
+* Upgrade AspectJ library to 1.8.4
+
+**Improvements**
+
+* Make the right widgets fly over when user scroll to the bottom in the task list view
+* Revise Task, Bug, Risk, Problem, Milestone read views
+* [Mobile] Make the back button associates to native back action to improve the navigation performance
+* [Mobile] Support thumbnail for attachment
+* [Mobile] User can preview attachment easily
+* [Mobile] Support display hyperlinks for assignee, task, task group, milestone etc
+* [Mobile] Revise time logging component
+* [Mobile] Revise the mobile toolbar display
+* [Mobile] Replace icons for better UI experience
+
+**Bug Fixes**
+
+* Fix timezone issue for datefield component
+* Can not send email if user switch to the locale not in the supported list
+* Can not get the log date for time logging in several rare browsers
+* [Mobile] Back button does not work properly
+* [Mobile] View title is not aligned center in iOS
+* [Mobile] Can only upload one file in iOS
+
 ##Version 4.5.3
 
 **Library Upgrades**
