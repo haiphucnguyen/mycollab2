@@ -151,9 +151,9 @@ public class ProjectActivityStreamPagedList
 									ProjectCommonI18nEnum.FEED_USER_ACTIVITY_COMMENT_ACTION_TITLE,
 									assigneeParam, itemType, itemParam));
 					if (activityStream.getAssoAuditLog() != null) {
-						content.append("<p>\"")
+						content.append("<p><ul><li>\"")
 								.append(activityStream.getAssoAuditLog()
-										.getChangeset()).append("\"</p>");
+										.getChangeset()).append("\"</li></ul></p>");
 					}
 
 				}

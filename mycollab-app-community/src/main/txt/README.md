@@ -60,6 +60,7 @@ Version 4.5.5
 * Display the activity stream in CRM dashboard may show the duplicated items
 * Not thread safe when saving bugs, tasks
 * Navigate user account throws exception
+* Display full comment content are enclosed with crm note
 
 
 Version 4.5.4

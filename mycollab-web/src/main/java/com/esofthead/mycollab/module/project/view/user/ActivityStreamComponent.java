@@ -184,9 +184,9 @@ public class ActivityStreamComponent extends CssLayout {
 										projectLink));
 
 						if (activityStream.getAssoAuditLog() != null) {
-							content.append("<p>\"")
+							content.append("<p><ul><li>\"")
 									.append(activityStream.getAssoAuditLog()
-											.getChangeset()).append("\"</p>");
+											.getChangeset()).append("\"</li></ul></p>");
 						}
 					}
 
