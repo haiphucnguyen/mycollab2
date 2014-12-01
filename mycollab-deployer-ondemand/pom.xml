@@ -5,7 +5,7 @@
     <name>mycollab-deployer-ondemand</name>
     <groupId>com.esofthead.mycollab</groupId>
     <artifactId>mycollab-deployer-ondemand</artifactId>
-    <version>4.5.4</version>
+    <version>4.5.5</version>
     <packaging>pom</packaging>
     <modules>
         <module>../mycollab-parent</module>
