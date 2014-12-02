@@ -10,10 +10,16 @@ Version 4.5.5
 * Upgrade Infinispan to 7.0.2
 * Upgrade several Vaadin addons
 
+**Improvements**
+
+* Add user comment to the activity stream
+
 **Bug Fixes**
 
+* Display the activity stream in CRM dashboard may show the duplicated items
 * Not thread safe when saving bugs, tasks
 * Navigate user account throws exception
+* Display full comment content are enclosed with crm note
 
 ##Version 4.5.4
 

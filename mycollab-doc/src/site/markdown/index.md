@@ -37,27 +37,32 @@ We use MyCollab in our daily jobs to manage our customers information, projects.
 ---
 
 ### MyCollab News
+* **Dec 1st, 2014: MyCollab 4.5.5 released**
+
+    This minor release fixes the critical issue of threas-safe in saving bugs and tasks in multi thread accessing. In addition, we upgrade several important libraries up to date. See the [release notes](release-notes.html) for more information.
+
 * **Nov 21st, 2014: MyCollab 4.5.4 released**
 
-    We improve the stability of MyCollab mobile edition, and make the localization of any language show the friendly messages. See the [release notes](release-notes.html) for more information.
+    We improve the stability of MyCollab mobile edition, and make the localization of any language show the friendly messages.
 
 * **Nov 1st, 2014: MyCollab 4.5.3 released**
 
-    The new mobile module is included in this release. In addition, MyCollab generates thumbnails for every image attachment which helps user can preview attachment easily. Several bug fixes are addressed and fixed also. See the [release notes](release-notes.html) for more information.
+    The new mobile module is included in this release. In addition, MyCollab generates thumbnails for every image attachment which helps user can preview attachment easily. Several bug fixes are addressed and fixed also.
 
 * **Oct 20th, 2014: MyCollab 4.5.2 released**
 
-    This release focuses to the stability, ease of installation, upgrade third-party libraries versions, and compact the size of distribution. See the [release notes](release-notes.html) for more information.
+    This release focuses to the stability, ease of installation, upgrade third-party libraries versions, and compact the size of distribution.
 
 * **Sep 23th, 2014: MyCollab 4.5.1 released**
 
-    This release  is an incremental feature release based on and compatible with earlier stable MyCollab releases. See the [release notes](release-notes.html) for more information.
+    This release  is an incremental feature release based on and compatible with earlier stable MyCollab releases.
+
 * **Sep 5th, 2014: MyCollab 4.5.0 released**
 
     MyCollab development team is proud to announce the availability of MyCollab 4.5.0.
 
     This release mostly focuses into internal API improvements, minor bug fixes and other various UI polishes and improvements.
-    See the [release notes](release-notes.html) for more information.
+
 * **August 21st, 2014: MyCollab 4.4.0 released**
 * **August 6th, 2014: MyCollab 4.3.3 released**
 * **July 28th, 2014: MyCollab 4.3.2 released**
