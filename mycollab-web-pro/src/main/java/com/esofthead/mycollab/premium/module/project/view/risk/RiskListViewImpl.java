@@ -7,7 +7,6 @@ import org.vaadin.teemu.ratingstars.RatingStars;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
-import com.esofthead.mycollab.module.project.LabelLink;
 import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.ProjectTooltipGenerator;
@@ -27,6 +26,7 @@ import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.mvp.ViewScope;
 import com.esofthead.mycollab.vaadin.ui.CheckBoxDecor;
 import com.esofthead.mycollab.vaadin.ui.DefaultMassItemActionHandlersContainer;
+import com.esofthead.mycollab.vaadin.ui.LabelLink;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -290,7 +290,7 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
 			}
 		});
 		customizeViewBtn.setIcon(MyCollabResource
-				.newResource("icons/16/customize.png"));
+				.newResource(WebResourceIds._16_customize));
 		customizeViewBtn.setDescription("Layout Options");
 		customizeViewBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		customizeViewBtn.addStyleName(UIConstants.THEME_SMALL_PADDING);

@@ -78,7 +78,7 @@ class ActiveSectionComp extends GenericSectionComp {
 		Button deleteSectionBtn = new Button();
 		deleteSectionBtn.setDescription("Remove this Section");
 		deleteSectionBtn.setIcon(MyCollabResource
-				.newResource("icons/16/delete.png"));
+				.newResource(WebResourceIds._16_delete));
 		deleteSectionBtn.setStyleName("link");
 		header.addComponent(deleteSectionBtn);
 

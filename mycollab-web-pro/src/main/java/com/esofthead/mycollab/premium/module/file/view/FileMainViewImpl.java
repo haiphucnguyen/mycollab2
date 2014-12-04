@@ -46,6 +46,7 @@ import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.vaadin.ui.Separator;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
+import com.esofthead.mycollab.vaadin.ui.WebResourceIds;
 import com.vaadin.data.Container;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
@@ -692,7 +693,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 						});
 				saveBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
 				saveBtn.setIcon(MyCollabResource
-						.newResource("icons/16/save.png"));
+						.newResource(WebResourceIds._16_save));
 				layout.addComponent(saveBtn);
 
 				Button cancelBtn = new Button(

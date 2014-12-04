@@ -40,6 +40,7 @@ import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.WebResourceIds;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
@@ -428,7 +429,7 @@ public class BillingSummaryViewImpl extends AbstractPageView implements
 						}
 					});
 			saveBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
-			saveBtn.setIcon(MyCollabResource.newResource("icons/16/save.png"));
+			saveBtn.setIcon(MyCollabResource.newResource(WebResourceIds._16_save));
 			controlBtns.addComponent(saveBtn);
 			controlBtns.setComponentAlignment(saveBtn, Alignment.MIDDLE_CENTER);
 

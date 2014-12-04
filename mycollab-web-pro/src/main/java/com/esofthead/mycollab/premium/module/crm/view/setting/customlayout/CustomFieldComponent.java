@@ -110,7 +110,7 @@ public class CustomFieldComponent extends CssLayout {
 			}
 		});
 		saveBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
-		saveBtn.setIcon(MyCollabResource.newResource("icons/16/save.png"));
+		saveBtn.setIcon(MyCollabResource.newResource(WebResourceIds._16_save));
 		panelContentLayout.addComponent(saveBtn);
 		((VerticalLayout) fieldEditPanel.getContent()).setComponentAlignment(
 				saveBtn, Alignment.MIDDLE_CENTER);

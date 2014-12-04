@@ -6,13 +6,13 @@ import java.util.List;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
-import com.esofthead.mycollab.module.project.LabelLink;
 import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
 import com.esofthead.mycollab.module.project.i18n.StandupI18nEnum;
 import com.esofthead.mycollab.module.project.service.StandupReportService;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.ui.LabelLink;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.CssLayout;

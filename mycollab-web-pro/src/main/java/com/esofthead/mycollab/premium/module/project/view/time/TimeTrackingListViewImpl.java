@@ -36,6 +36,7 @@ import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.SplitButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.WebResourceIds;
 import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable.TableClickEvent;
 import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable.TableClickListener;
 import com.vaadin.server.FileDownloader;
@@ -128,7 +129,7 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements
 		exportButtonControl.setStyleName(UIConstants.THEME_GRAY_LINK);
 		exportButtonControl.addStyleName(UIConstants.SPLIT_BUTTON);
 		exportButtonControl.setIcon(MyCollabResource
-				.newResource("icons/16/export.png"));
+				.newResource(WebResourceIds._16_export));
 
 		VerticalLayout popupButtonsControl = new VerticalLayout();
 		exportButtonControl.setContent(popupButtonsControl);

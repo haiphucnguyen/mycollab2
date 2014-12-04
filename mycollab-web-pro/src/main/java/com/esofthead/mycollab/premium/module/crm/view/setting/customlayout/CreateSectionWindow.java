@@ -24,6 +24,7 @@ import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.WebResourceIds;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -84,7 +85,7 @@ public class CreateSectionWindow extends Window {
 					}
 				});
 		saveBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
-		saveBtn.setIcon(MyCollabResource.newResource("icons/16/save.png"));
+		saveBtn.setIcon(MyCollabResource.newResource(WebResourceIds._16_save));
 		controlLayout.addComponent(saveBtn);
 		controlLayout.setComponentAlignment(saveBtn, Alignment.MIDDLE_LEFT);
 

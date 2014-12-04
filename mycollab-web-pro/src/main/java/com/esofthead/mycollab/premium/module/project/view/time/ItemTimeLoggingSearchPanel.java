@@ -26,6 +26,7 @@ import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
 import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
+import com.esofthead.mycollab.vaadin.ui.WebResourceIds;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.datefield.Resolution;
 import com.vaadin.ui.Alignment;
@@ -202,7 +203,7 @@ class ItemTimeLoggingSearchPanel extends
 					Alignment.MIDDLE_LEFT);
 			searchBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 			searchBtn.setIcon(MyCollabResource
-					.newResource("icons/16/search.png"));
+					.newResource(WebResourceIds._16_search));
 
 			final Button clearBtn = new Button(
 					AppContext.getMessage(GenericI18Enum.BUTTON_CLEAR),

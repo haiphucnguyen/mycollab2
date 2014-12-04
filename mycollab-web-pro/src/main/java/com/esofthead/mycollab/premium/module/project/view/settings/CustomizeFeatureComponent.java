@@ -13,6 +13,7 @@ import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.BlockWidget;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.WebResourceIds;
 import com.vaadin.server.Resource;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
@@ -180,7 +181,7 @@ public class CustomizeFeatureComponent extends BlockWidget {
 		updateFeaturesBtn.setEnabled(CurrentProjectVariables.isAdmin());
 		updateFeaturesBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 		updateFeaturesBtn.setIcon(MyCollabResource
-				.newResource("icons/16/crm/refresh.png"));
+				.newResource(WebResourceIds._16_crm_refresh));
 		body.addComponent(updateFeaturesBtn);
 		this.addToBody(body);
 	}
