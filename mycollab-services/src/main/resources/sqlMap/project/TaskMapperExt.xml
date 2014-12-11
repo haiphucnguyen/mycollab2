@@ -140,12 +140,14 @@
                  s_user.avatarId AS assignUserAvatarId,
                  concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) AS assignUserFullName,
                  log_user.avatarId AS logByAvatarId,
-                 concat(log_user.firstname, ' ', LTRIM(concat(IFNULL(log_user.middlename, ''), ' ')), log_user.lastname) AS logByFullName
+                 concat(log_user.firstname, ' ', LTRIM(concat(IFNULL(log_user.middlename, ''), ' ')), log_user.lastname) AS logByFullName,
+                 parentTask.taskname AS parentTaskName, parentTask.taskkey AS parentTaskKey
           FROM m_prj_task
               LEFT OUTER JOIN m_prj_project ON (m_prj_task.projectid = m_prj_project.id) 
               LEFT OUTER JOIN m_prj_task_list ON (m_prj_task_list.id = m_prj_task.tasklistid)
               LEFT OUTER JOIN s_user ON (s_user.username = m_prj_task.assignUser)
               LEFT OUTER JOIN s_user AS log_user ON (log_user.username = m_prj_task.logBy)
+              LEFT OUTER JOIN m_prj_task AS parentTask ON (m_prj_task.parentTaskId=parentTask.id)
         ]]>
     </sql>
 

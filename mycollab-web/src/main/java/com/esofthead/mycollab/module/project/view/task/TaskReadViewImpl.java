@@ -68,6 +68,7 @@ import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.ProjectPreviewFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.TabsheetLazyLoadComp;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.vaadin.ui.UserLink;
 import com.esofthead.mycollab.vaadin.ui.WebResourceIds;
 import com.esofthead.mycollab.vaadin.ui.form.field.ContainerHorizontalViewField;
@@ -89,6 +90,7 @@ import com.vaadin.ui.Embedded;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
@@ -380,6 +382,7 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp2<SimpleTask>
 		}
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	class SubTasksComp extends CustomField {
 		private static final long serialVersionUID = 1L;
 
@@ -446,11 +449,20 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp2<SimpleTask>
 
 			layout.addComponent(checkBox);
 
-			String taskHtmlLink = String.format("<a href=\"%s\">%s</a>",
-					ProjectLinkGenerator.generateTaskPreviewFullLink(
-							AppContext.getSiteUrl(), subTask.getTaskkey(),
-							CurrentProjectVariables.getShortName()), subTask
-							.getTaskname());
+			Image assigneeRes = UserAvatarControlFactory
+					.createUserAvatarEmbeddedComponent(
+							subTask.getAssignUserAvatarId(), 16,
+							subTask.getAssignUserFullName());
+			layout.addComponent(assigneeRes);
+
+			String taskHtmlLink = String.format(
+					"<a href=\"%s\">[%s-%d] %s</a>", ProjectLinkGenerator
+							.generateTaskPreviewFullLink(
+									AppContext.getSiteUrl(),
+									subTask.getTaskkey(),
+									CurrentProjectVariables.getShortName()),
+					CurrentProjectVariables.getShortName(), subTask
+							.getTaskkey(), subTask.getTaskname());
 
 			Label taskLink = new Label(taskHtmlLink, ContentMode.HTML);
 			layout.addComponent(taskLink);

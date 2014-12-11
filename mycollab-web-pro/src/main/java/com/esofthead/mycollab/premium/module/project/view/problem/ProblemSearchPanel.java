@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.premium.module.project.view.problem;
 
+import org.vaadin.maddon.layouts.MHorizontalLayout;
+
 import com.esofthead.mycollab.common.MyCollabSession;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
@@ -20,7 +22,6 @@ import com.esofthead.mycollab.vaadin.ui.DefaultGenericSearchPanel;
 import com.esofthead.mycollab.vaadin.ui.DynamicQueryParamLayout;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.vaadin.ui.UiUtils;
 import com.esofthead.mycollab.vaadin.ui.WebResourceIds;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
@@ -67,10 +68,10 @@ public class ProblemSearchPanel extends
 	}
 
 	private HorizontalLayout constructHeader() {
-		Image titleIcon = new Image(null,
+		Image titleIcon = new Image(
+				null,
 				MyCollabResource
-						.newResource("icons/22/project/problem_selected.png"));
-		Label headerText = new Label("Problems");
+						.newResource(WebResourceIds._22_project_problem_selected));
 
 		final Button createBtn = new Button(
 				AppContext.getMessage(ProblemI18nEnum.BUTTON_NEW_PROBLEM),
@@ -89,18 +90,18 @@ public class ProblemSearchPanel extends
 		createBtn.setEnabled(CurrentProjectVariables
 				.canWrite(ProjectRolePermissionCollections.PROBLEMS));
 
-		HorizontalLayout header = new HorizontalLayout();
+		Label headerText = new Label("Problems");
 		headerText.setStyleName(UIConstants.HEADER_TEXT);
 
-		UiUtils.addComponent(header, titleIcon, Alignment.MIDDLE_LEFT);
-		UiUtils.addComponent(header, headerText, Alignment.MIDDLE_LEFT);
-		UiUtils.addComponent(header, createBtn, Alignment.MIDDLE_RIGHT);
-		header.setExpandRatio(headerText, 1.0f);
-
-		header.setStyleName(UIConstants.HEADER_VIEW);
-		header.setWidth("100%");
-		header.setSpacing(true);
-		header.setMargin(new MarginInfo(true, false, true, false));
+		MHorizontalLayout header = new MHorizontalLayout()
+				.withStyleName(UIConstants.HEADER_VIEW).withWidth("100%")
+				.withSpacing(true)
+				.withMargin(new MarginInfo(true, false, true, false))
+				.with(titleIcon, headerText, createBtn)
+				.withAlign(titleIcon, Alignment.MIDDLE_LEFT)
+				.withAlign(headerText, Alignment.MIDDLE_LEFT)
+				.withAlign(createBtn, Alignment.MIDDLE_RIGHT)
+				.expand(headerText);
 		return header;
 	}
 
@@ -117,22 +118,21 @@ public class ProblemSearchPanel extends
 
 		@Override
 		public ComponentContainer constructBody() {
-			final HorizontalLayout basicSearchBody = new HorizontalLayout();
-			basicSearchBody.setSpacing(true);
-			basicSearchBody.setMargin(true);
+			final MHorizontalLayout basicSearchBody = new MHorizontalLayout()
+					.withSpacing(true).withMargin(true);
 
 			this.nameField = this.createSeachSupportTextField(new TextField(),
 					"NameFieldOfBasicSearch");
 
 			this.nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
-			UiUtils.addComponent(basicSearchBody, this.nameField,
+			basicSearchBody.with(nameField).withAlign(nameField,
 					Alignment.MIDDLE_CENTER);
 
 			this.myItemCheckbox = new CheckBox(
 					AppContext
 							.getMessage(GenericI18Enum.SEARCH_MYITEMS_CHECKBOX));
 			this.myItemCheckbox.setWidth("75px");
-			UiUtils.addComponent(basicSearchBody, this.myItemCheckbox,
+			basicSearchBody.with(myItemCheckbox).withAlign(myItemCheckbox,
 					Alignment.MIDDLE_CENTER);
 
 			final Button searchBtn = new Button(
@@ -149,7 +149,7 @@ public class ProblemSearchPanel extends
 					ProblemBasicSearchLayout.this.callSearchAction();
 				}
 			});
-			UiUtils.addComponent(basicSearchBody, searchBtn,
+			basicSearchBody.with(searchBtn).withAlign(searchBtn,
 					Alignment.MIDDLE_LEFT);
 
 			final Button cancelBtn = new Button(
@@ -164,7 +164,7 @@ public class ProblemSearchPanel extends
 					ProblemBasicSearchLayout.this.nameField.setValue("");
 				}
 			});
-			UiUtils.addComponent(basicSearchBody, cancelBtn,
+			basicSearchBody.with(cancelBtn).withAlign(cancelBtn,
 					Alignment.MIDDLE_CENTER);
 
 			final Button advancedSearchBtn = new Button(
@@ -180,8 +180,8 @@ public class ProblemSearchPanel extends
 						}
 					});
 			advancedSearchBtn.setStyleName("link");
-			UiUtils.addComponent(basicSearchBody, advancedSearchBtn,
-					Alignment.MIDDLE_CENTER);
+			basicSearchBody.with(advancedSearchBtn).withAlign(
+					advancedSearchBtn, Alignment.MIDDLE_CENTER);
 			return basicSearchBody;
 		}
 

@@ -8,6 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.hene.popupbutton.PopupButton;
+import org.vaadin.maddon.layouts.MHorizontalLayout;
+import org.vaadin.maddon.layouts.MVerticalLayout;
 import org.vaadin.peter.buttongroup.ButtonGroup;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
@@ -45,7 +47,6 @@ import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.vaadin.ui.Separator;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.vaadin.ui.UiUtils;
 import com.esofthead.mycollab.vaadin.ui.WebResourceIds;
 import com.vaadin.data.Container;
 import com.vaadin.shared.ui.MarginInfo;
@@ -74,7 +75,8 @@ import com.vaadin.ui.themes.Reindeer;
 public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 	private static final long serialVersionUID = 1L;
 
-	private static final Logger LOG = LoggerFactory.getLogger(FileMainViewImpl.class);
+	private static final Logger LOG = LoggerFactory
+			.getLogger(FileMainViewImpl.class);
 
 	private static final String illegalFileNamePattern = "[<>:&/\\|?*&]";
 
@@ -168,21 +170,19 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 	}
 
 	private HorizontalLayout buildLeftColumn() {
-		final HorizontalLayout menuBarContainerHorizontalLayout = new HorizontalLayout();
-		menuBarContainerHorizontalLayout.setMargin(new MarginInfo(false, true,
-				true, true));
+		final MHorizontalLayout menuBarContainerHorizontalLayout = new MHorizontalLayout()
+				.withMargin(new MarginInfo(false, true, true, true));
 
-		final VerticalLayout menuLayout = new VerticalLayout();
-		menuLayout.setSpacing(true);
-		menuLayout.setWidth("250px");
+		final MVerticalLayout menuLayout = new MVerticalLayout().withSpacing(
+				true).withWidth("250px");
 
 		menuBarContainerHorizontalLayout.addComponent(menuLayout);
 
-		VerticalLayout topControlMenuWrapper = new VerticalLayout();
-		topControlMenuWrapper.setWidth("250px");
+		MVerticalLayout topControlMenuWrapper = new MVerticalLayout()
+				.withWidth("250px");
 
-		HorizontalLayout topControlMenu = new HorizontalLayout();
-		topControlMenu.setWidth("100%");
+		MHorizontalLayout topControlMenu = new MHorizontalLayout()
+				.withWidth("100%");
 		topControlMenu.addStyleName("border-box2-no-margin");
 		topControlMenu.addStyleName("file-topcontrols");
 
@@ -190,7 +190,8 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 
 		ButtonGroup navButton = new ButtonGroup();
 		navButton.addStyleName(UIConstants.THEME_GRAY_LINK);
-		UiUtils.addComponent(topControlMenu, navButton, Alignment.MIDDLE_RIGHT);
+		topControlMenu.with(navButton).withAlign(navButton,
+				Alignment.MIDDLE_RIGHT);
 
 		Button settingBtn = new Button();
 		settingBtn.setIcon(MyCollabResource
@@ -213,10 +214,9 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 		linkBtn.setIcon(MyCollabResource.newResource("icons/16/ecm/link.png"));
 		linkBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
 		linkBtn.setWidth("65px");
-		final VerticalLayout filterBtnLayout = new VerticalLayout();
-		filterBtnLayout.setMargin(true);
-		filterBtnLayout.setSpacing(true);
-		filterBtnLayout.setWidth("180px");
+
+		final MVerticalLayout filterBtnLayout = new MVerticalLayout()
+				.withMargin(true).withSpacing(true).withWidth("180px");
 
 		HorizontalLayout connectDropboxLayout = new HorizontalLayout();
 		connectDropboxLayout.setSpacing(true);
@@ -274,8 +274,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 						+ "</div><div id='right-side'>&nbsp;</div>");
 		usedVolumeInfo.setContentMode(ContentMode.HTML);
 		usedVolumeInfo.setWidth("100%");
-		topControlMenuWrapper.addComponent(usedVolumeInfo);
-		topControlMenuWrapper.setComponentAlignment(usedVolumeInfo,
+		topControlMenuWrapper.with(usedVolumeInfo).withAlign(usedVolumeInfo,
 				Alignment.TOP_CENTER);
 
 		menuLayout.addComponent(topControlMenuWrapper);
@@ -494,8 +493,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 					popupOptionActionLayout.setWidth("100px");
 
 					Button editBtn = new Button(
-							AppContext
-									.getMessage(GenericI18Enum.BUTTON_EDIT),
+							AppContext.getMessage(GenericI18Enum.BUTTON_EDIT),
 							new Button.ClickListener() {
 								private static final long serialVersionUID = 1L;
 
@@ -525,8 +523,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 					popupOptionActionLayout.addComponent(editBtn);
 
 					Button deleteBtn = new Button(
-							AppContext
-									.getMessage(GenericI18Enum.BUTTON_DELETE),
+							AppContext.getMessage(GenericI18Enum.BUTTON_DELETE),
 							new Button.ClickListener() {
 								private static final long serialVersionUID = 1L;
 
@@ -697,8 +694,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 				layout.addComponent(saveBtn);
 
 				Button cancelBtn = new Button(
-						AppContext
-								.getMessage(GenericI18Enum.BUTTON_CANCEL),
+						AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL),
 						new ClickListener() {
 							private static final long serialVersionUID = 1L;
 

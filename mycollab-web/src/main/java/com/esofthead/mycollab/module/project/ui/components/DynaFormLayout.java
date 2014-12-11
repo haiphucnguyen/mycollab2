@@ -75,6 +75,8 @@ public class DynaFormLayout implements IFormLayoutFactory {
 		this.dynaForm = defaultForm;
 		if (excludeField.length > 0) {
 			this.excludeFields = new HashSet<>(Arrays.asList(excludeField));
+		} else {
+			this.excludeFields = new HashSet<String>();
 		}
 
 		LOG.debug("Fill fields of originSection to map field");

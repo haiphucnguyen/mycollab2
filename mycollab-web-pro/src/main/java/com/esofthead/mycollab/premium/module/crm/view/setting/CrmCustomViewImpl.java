@@ -18,6 +18,9 @@ package com.esofthead.mycollab.premium.module.crm.view.setting;
 
 import java.util.List;
 
+import org.vaadin.maddon.layouts.MHorizontalLayout;
+import org.vaadin.maddon.layouts.MVerticalLayout;
+
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.form.service.MasterFormService;
@@ -43,7 +46,6 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.vaadin.ui.UiUtils;
 import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
 import com.esofthead.mycollab.vaadin.ui.WebResourceIds;
 import com.vaadin.data.Property;
@@ -57,6 +59,12 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 1.0
+ *
+ */
 @ViewComponent
 public class CrmCustomViewImpl extends AbstractPageView implements
 		ICrmCustomView {
@@ -72,26 +80,20 @@ public class CrmCustomViewImpl extends AbstractPageView implements
 		this.setSpacing(true);
 		this.setMargin(true);
 
-		VerticalLayout headerBox = new VerticalLayout();
-		headerBox.setWidth("100%");
-		headerBox.setSpacing(true);
-		// headerBox.addStyleName(UIConstants.HEADER_VIEW);
+		MVerticalLayout headerBox = new MVerticalLayout().withWidth("100%")
+				.withSpacing(true);
 
 		headerLbl = new Label("abcd");
 		Image titleIcon = new Image(null,
-				MyCollabResource.newResource("icons/22/crm/layout.png"));
+				MyCollabResource.newResource(WebResourceIds._22_crm_layout));
 
-		HorizontalLayout headerTitle = new HorizontalLayout();
-		headerTitle.setWidth("100%");
-		headerTitle.setMargin(false);
-		headerTitle.setSpacing(true);
+		MHorizontalLayout headerTitle = new MHorizontalLayout()
+				.withWidth("100%").withSpacing(false)
+				.withMargin(new MarginInfo(true, false, true, false));
 		headerTitle.addStyleName(UIConstants.HEADER_VIEW);
-		headerTitle.setMargin(new MarginInfo(true, false, true, false));
-
-		UiUtils.addComponent(headerTitle, titleIcon, Alignment.MIDDLE_LEFT);
-		headerTitle.addComponent(headerLbl);
-		headerTitle.setComponentAlignment(headerLbl, Alignment.MIDDLE_LEFT);
-		headerTitle.setExpandRatio(headerLbl, 1.0f);
+		headerTitle.with(titleIcon, headerLbl)
+				.withAlign(titleIcon, Alignment.MIDDLE_LEFT)
+				.withAlign(headerLbl, Alignment.MIDDLE_LEFT).expand(headerLbl);
 
 		headerBox.addComponent(headerTitle);
 

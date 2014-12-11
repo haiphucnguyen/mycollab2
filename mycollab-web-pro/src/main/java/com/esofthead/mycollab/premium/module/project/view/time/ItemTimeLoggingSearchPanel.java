@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Date;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.vaadin.maddon.layouts.MHorizontalLayout;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.Order;
@@ -24,7 +25,6 @@ import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.vaadin.ui.UiUtils;
 import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
 import com.esofthead.mycollab.vaadin.ui.WebResourceIds;
 import com.vaadin.shared.ui.MarginInfo;
@@ -37,7 +37,6 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.GridLayout;
-import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
@@ -89,7 +88,7 @@ class ItemTimeLoggingSearchPanel extends
 
 		private ProjectMemberListSelect userField;
 		private ComboBox groupField, orderField;
-		private HorizontalLayout buttonControls;
+		private MHorizontalLayout buttonControls;
 		private Button createBtn;
 		private VerticalLayout bodyWrap;
 
@@ -116,18 +115,15 @@ class ItemTimeLoggingSearchPanel extends
 			createBtn.setEnabled(!CurrentProjectVariables.isProjectArchived());
 			createBtn.addStyleName("v-button-caption-bool");
 
-			HorizontalLayout header = new HorizontalLayout();
-			headerText.setStyleName("hdr-text");
-
-			UiUtils.addComponent(header, titleIcon, Alignment.MIDDLE_LEFT);
-			UiUtils.addComponent(header, headerText, Alignment.MIDDLE_LEFT);
-			UiUtils.addComponent(header, createBtn, Alignment.MIDDLE_RIGHT);
-			header.setExpandRatio(headerText, 1.0f);
-
-			header.setStyleName("hdr-view");
-			header.setWidth("100%");
-			header.setSpacing(true);
-			header.setMargin(new MarginInfo(true, false, true, false));
+			MHorizontalLayout header = new MHorizontalLayout()
+					.withStyleName("hdr-view").withWidth("100%")
+					.withSpacing(true)
+					.withMargin(new MarginInfo(true, false, true, false))
+					.with(titleIcon, headerText, createBtn)
+					.withAlign(titleIcon, Alignment.MIDDLE_LEFT)
+					.withAlign(headerText, Alignment.MIDDLE_LEFT)
+					.withAlign(createBtn, Alignment.MIDDLE_RIGHT)
+					.expand(headerText);
 			return header;
 		}
 
@@ -186,8 +182,7 @@ class ItemTimeLoggingSearchPanel extends
 			gridLayout.addComponent(userField, "User", 1, 0);
 			this.userField.setWidth(nameFieldWidth);
 
-			buttonControls = new HorizontalLayout();
-			buttonControls.setSpacing(true);
+			buttonControls = new MHorizontalLayout().withSpacing(true);
 
 			final Button searchBtn = new Button(
 					AppContext.getMessage(GenericI18Enum.BUTTON_SEARCH),
@@ -199,8 +194,6 @@ class ItemTimeLoggingSearchPanel extends
 						}
 					});
 
-			UiUtils.addComponent(buttonControls, searchBtn,
-					Alignment.MIDDLE_LEFT);
 			searchBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 			searchBtn.setIcon(MyCollabResource
 					.newResource(WebResourceIds._16_search));
@@ -216,9 +209,9 @@ class ItemTimeLoggingSearchPanel extends
 						}
 					});
 			clearBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
-			UiUtils.addComponent(buttonControls, clearBtn,
-					Alignment.MIDDLE_LEFT);
-			buttonControls.setExpandRatio(clearBtn, 1.0f);
+
+			buttonControls.with(searchBtn, clearBtn)
+					.alignAll(Alignment.MIDDLE_LEFT).expand(clearBtn);
 
 			gridLayout.addComponent(buttonControls, null, 2, 0);
 
