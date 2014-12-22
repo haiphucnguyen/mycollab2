@@ -1,6 +1,9 @@
 package com.esofthead.mycollab.spring
 
 
-class AppConfiguration extends FunctionalConfiguration {
 
+object AppConfiguration {
+  def main (args: Array[String]) {
+    println("s")
+  }
 }

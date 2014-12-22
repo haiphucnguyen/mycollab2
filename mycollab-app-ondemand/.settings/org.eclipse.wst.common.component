@@ -97,16 +97,16 @@
     <dependent-module archiveName="guava-18.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/google/guava/guava/18.0/guava-18.0.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="slf4j-api-1.7.8.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/slf4j/slf4j-api/1.7.8/slf4j-api-1.7.8.jar">
+    <dependent-module archiveName="slf4j-api-1.7.9.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/slf4j/slf4j-api/1.7.9/slf4j-api-1.7.9.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="slf4j-log4j12-1.7.8.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/slf4j/slf4j-log4j12/1.7.8/slf4j-log4j12-1.7.8.jar">
+    <dependent-module archiveName="slf4j-log4j12-1.7.9.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/slf4j/slf4j-log4j12/1.7.9/slf4j-log4j12-1.7.9.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="log4j-1.2.17.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/log4j/log4j/1.2.17/log4j-1.2.17.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="jcl-over-slf4j-1.7.8.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/slf4j/jcl-over-slf4j/1.7.8/jcl-over-slf4j-1.7.8.jar">
+    <dependent-module archiveName="jcl-over-slf4j-1.7.9.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/slf4j/jcl-over-slf4j/1.7.9/jcl-over-slf4j-1.7.9.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="commons-io-2.4.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/commons-io/commons-io/2.4/commons-io-2.4.jar">
@@ -118,7 +118,7 @@
     <dependent-module archiveName="httpclient-4.3.5.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/apache/httpcomponents/httpclient/4.3.5/httpclient-4.3.5.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="httpcore-4.3.2.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/apache/httpcomponents/httpcore/4.3.2/httpcore-4.3.2.jar">
+    <dependent-module archiveName="httpcore-4.4.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/apache/httpcomponents/httpcore/4.4/httpcore-4.4.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="joda-time-2.6.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/joda-time/joda-time/2.6/joda-time-2.6.jar">
@@ -215,6 +215,9 @@
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="spring-test-3.2.11.RELEASE.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/springframework/spring-test/3.2.11.RELEASE/spring-test-3.2.11.RELEASE.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="scala-library-2.11.4.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/scala-lang/scala-library/2.11.4/scala-library-2.11.4.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="jasypt-1.9.2.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/jasypt/jasypt/1.9.2/jasypt-1.9.2.jar">
@@ -373,6 +376,9 @@
     <dependent-module archiveName="reflections-spring-0.9.9-RC1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/reflections/reflections-spring/0.9.9-RC1/reflections-spring-0.9.9-RC1.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
+    <dependent-module archiveName="spring-scala_2.10-1.0.0.RC1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/springframework/scala/spring-scala_2.10/1.0.0.RC1/spring-scala_2.10-1.0.0.RC1.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
     <dependent-module archiveName="mycollab-esb-ondemand.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mycollab-esb-ondemand/mycollab-esb-ondemand">
       <dependency-type>uses</dependency-type>
     </dependent-module>
@@ -421,28 +427,22 @@
     <dependent-module archiveName="scaladin-3.1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/vaadin/addons/scaladin/3.1.0/scaladin-3.1.0.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="maddon-1.20.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/peimari/maddon/1.20/maddon-1.20.jar">
+    <dependent-module archiveName="maddon-1.21.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/peimari/maddon/1.21/maddon-1.21.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="vaadin-server-7.3.6.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/vaadin/vaadin-server/7.3.6/vaadin-server-7.3.6.jar">
+    <dependent-module archiveName="vaadin-server-7.3.7.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/vaadin/vaadin-server/7.3.7/vaadin-server-7.3.7.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="vaadin-shared-7.3.7.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/vaadin/vaadin-shared/7.3.7/vaadin-shared-7.3.7.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="flute-1.3.0.gg2.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/vaadin/external/flute/flute/1.3.0.gg2/flute-1.3.0.gg2.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="vaadin-shared-7.3.6.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/vaadin/vaadin-shared/7.3.6/vaadin-shared-7.3.6.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="streamhtmlparser-jsilver-0.0.10.vaadin1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/vaadin/external/streamhtmlparser/streamhtmlparser-jsilver/0.0.10.vaadin1/streamhtmlparser-jsilver-0.0.10.vaadin1.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="json-0.0.20080701.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/vaadin/external/json/json/0.0.20080701/json-0.0.20080701.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="confirmdialog-2.1.2.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/vaadin/addon/confirmdialog/2.1.2/confirmdialog-2.1.2.jar">
-      <dependency-type>uses</dependency-type>
-    </dependent-module>
-    <dependent-module archiveName="markdown4j-2.2-cj-1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/commonjava/googlecode/markdown4j/markdown4j/2.2-cj-1.0/markdown4j-2.2-cj-1.0.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="mycollab-reporting.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mycollab-reporting/mycollab-reporting">
@@ -487,7 +487,7 @@
     <dependent-module archiveName="quartz-2.2.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/quartz-scheduler/quartz/2.2.1/quartz-2.2.1.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="vaadin-themes-7.3.6.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/vaadin/vaadin-themes/7.3.6/vaadin-themes-7.3.6.jar">
+    <dependent-module archiveName="vaadin-themes-7.3.7.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/vaadin/vaadin-themes/7.3.7/vaadin-themes-7.3.7.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="jetty-continuation-9.2.5.v20141112.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/jetty/jetty-continuation/9.2.5.v20141112/jetty-continuation-9.2.5.v20141112.jar">
@@ -545,6 +545,9 @@
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="gantt-addon-0.4.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/tltv/gantt/gantt-addon/0.4.0/gantt-addon-0.4.0.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="confirmdialog-2.1.2.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/vaadin/addon/confirmdialog/2.1.2/confirmdialog-2.1.2.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="cropField-1.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/esofthead/vaadin/cropField/1.0-SNAPSHOT/cropField-1.0-SNAPSHOT.jar">
@@ -691,7 +694,7 @@
     <dependent-module archiveName="httpclient-cache-4.2.2.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/apache/httpcomponents/httpclient-cache/4.2.2/httpclient-cache-4.2.2.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="solr-solrj-4.10.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/apache/solr/solr-solrj/4.10.1/solr-solrj-4.10.1.jar">
+    <dependent-module archiveName="solr-solrj-4.10.2.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/apache/solr/solr-solrj/4.10.2/solr-solrj-4.10.2.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="zookeeper-3.4.6.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/apache/zookeeper/zookeeper/3.4.6/zookeeper-3.4.6.jar">
