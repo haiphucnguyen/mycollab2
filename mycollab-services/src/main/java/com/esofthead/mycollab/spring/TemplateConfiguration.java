@@ -14,12 +14,26 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-services.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.module.crm.dao;
+package com.esofthead.mycollab.spring;
 
-import com.esofthead.mycollab.core.persistence.ISearchableDAO;
-import com.esofthead.mycollab.module.crm.domain.SimpleTask;
-import com.esofthead.mycollab.module.crm.domain.criteria.TodoSearchCriteria;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.ui.velocity.VelocityEngineFactoryBean;
 
-public interface TaskMapperExt extends ISearchableDAO<TodoSearchCriteria> {
-	SimpleTask findById(int taskId);
+/**
+ * 
+ * @author MyCollab Ltd.
+ * @since 4.6.0
+ *
+ */
+@Configuration
+public class TemplateConfiguration {
+
+	@Bean
+	public VelocityEngineFactoryBean velocityEngine() {
+		VelocityEngineFactoryBean bean = new VelocityEngineFactoryBean();
+		bean.setConfigLocation(new ClassPathResource("velocity.properties"));
+		return bean;
+	}
 }

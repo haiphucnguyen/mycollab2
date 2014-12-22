@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-services.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.module.ecm.dao;
+package com.esofthead.mycollab.module.ecm.service.impl;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -46,6 +46,7 @@ import com.esofthead.mycollab.module.ecm.NodesUtil;
 import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.module.ecm.domain.Folder;
 import com.esofthead.mycollab.module.ecm.domain.Resource;
+import com.esofthead.mycollab.module.ecm.service.ContentJcrDao;
 
 @Repository
 @Transactional

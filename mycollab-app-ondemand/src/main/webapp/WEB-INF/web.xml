@@ -40,19 +40,15 @@
         <param-name>contextConfigLocation</param-name>
         <param-value>
             classpath:/META-INF/spring/core-context.xml
-            classpath:/META-INF/spring/common-context.xml
             classpath:/META-INF/spring/datasource-context.xml
-            classpath:/META-INF/spring/mail-context.xml
-            classpath:/META-INF/spring/crm-context.xml
-            classpath:/META-INF/spring/ecm-context.xml
-            classpath:/META-INF/spring/page-context.xml
-            classpath:/META-INF/spring/form-context.xml
-            classpath:/META-INF/spring/project-context.xml
-            classpath:/META-INF/spring/tracker-context.xml
-            classpath:/META-INF/spring/user-context.xml
-            classpath:/META-INF/spring-cache/*-context.xml
+            classpath:/META-INF/spring-scheduler-standalone/*-context.xml
             classpath:/META-INF/spring-scheduler-ondemand/*-context.xml
         </param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>spring.profiles.default</param-name>
+        <param-value>production</param-value>
     </context-param>
 
     <!-- VAADIN PARAMS -->
@@ -139,7 +135,7 @@
         <servlet-name>userAvatarFSServlet</servlet-name>
         <url-pattern>/avatar/*</url-pattern>
     </servlet-mapping>
-    
+
     <servlet>
         <display-name>PageUploadServlet</display-name>
         <servlet-name>pageUploadServlet</servlet-name>
@@ -276,13 +272,13 @@
         <servlet-name>acceptMemberInvitationCreateAccountServlet</servlet-name>
         <url-pattern>/project/outside/createAccount/*</url-pattern>
     </servlet-mapping>
-    
+
     <servlet>
         <display-name>ActivateBillingAccountServlet</display-name>
         <servlet-name>activateBillingAccountServlet</servlet-name>
         <servlet-class>org.springframework.web.context.support.HttpRequestHandlerServlet</servlet-class>
     </servlet>
-    
+
     <servlet-mapping>
         <servlet-name>activateBillingAccountServlet</servlet-name>
         <url-pattern>/billing/activate</url-pattern>

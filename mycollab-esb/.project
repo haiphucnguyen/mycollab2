@@ -4,13 +4,13 @@
   <comment>NO_M2ECLIPSE_SUPPORT: Project files created with the maven-eclipse-plugin are not supported in M2Eclipse.</comment>
   <projects>
     <project>mycollab-core</project>
-    <project>mycollab-test</project>
     <project>mycollab-config</project>
     <project>mycollab-services</project>
     <project>mycollab-caching</project>
     <project>mycollab-dao</project>
     <project>mycollab-localization</project>
     <project>mycollab-jackrabbit</project>
+    <project>mycollab-test</project>
   </projects>
   <buildSpec>
     <buildCommand>

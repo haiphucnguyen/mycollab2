@@ -5,11 +5,11 @@
   <projects>
     <project>mycollab-caching</project>
     <project>mycollab-core</project>
-    <project>mycollab-test</project>
     <project>mycollab-dao</project>
     <project>mycollab-localization</project>
     <project>mycollab-config</project>
     <project>mycollab-jackrabbit</project>
+    <project>mycollab-test</project>
   </projects>
   <buildSpec>
     <buildCommand>
