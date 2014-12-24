@@ -13,6 +13,9 @@
   </projects>
   <buildSpec>
     <buildCommand>
+      <name>org.eclipse.wst.common.project.facet.core.builder</name>
+    </buildCommand>
+    <buildCommand>
       <name>org.scala-ide.sdt.core.scalabuilder</name>
     </buildCommand>
     <buildCommand>
@@ -22,5 +25,6 @@
   <natures>
     <nature>org.scala-ide.sdt.core.scalanature</nature>
     <nature>org.eclipse.jdt.core.javanature</nature>
+    <nature>org.eclipse.wst.common.project.facet.core.nature</nature>
   </natures>
 </projectDescription>

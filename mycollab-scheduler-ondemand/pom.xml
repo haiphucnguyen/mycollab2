@@ -38,5 +38,11 @@
             <artifactId>mycollab-scheduler</artifactId>
             <version>4.5.5</version>
         </dependency>
+        <dependency>
+            <groupId>com.esofthead.mycollab</groupId>
+            <artifactId>mycollab-test</artifactId>
+            <version>4.5.5</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 </project>

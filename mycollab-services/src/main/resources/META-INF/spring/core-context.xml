@@ -10,7 +10,6 @@
 
     <context:annotation-config />
     <context:spring-configured />
-    <!-- <context:component-scan base-package="com.esofthead.mycollab" /> -->
 
     <reflections:component-scan base-package="com.esofthead.mycollab"
         collect="false" save="false" parallel="false">
