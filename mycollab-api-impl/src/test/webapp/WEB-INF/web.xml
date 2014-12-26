@@ -15,13 +15,13 @@
     </listener>
 
     <context-param>
+        <param-name>contextClass</param-name>
+        <param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
+    </context-param>
+
+    <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>
-            classpath:/META-INF/spring/core-context.xml
-            classpath:/META-INF/spring-test/service-context-test.xml
-            classpath:META-INF/spring-test/ecm-context-test.xml
-            classpath:/META-INF/spring-test/page-context-test.xml
-        </param-value>
+        <param-value>com.esofthead.mycollab.spring.test.RootConfigurationTest</param-value>
     </context-param>
 
     <context-param>

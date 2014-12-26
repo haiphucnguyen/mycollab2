@@ -14,21 +14,22 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-services.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.module.ecm;
+package com.esofthead.mycollab.spring;
 
-import org.apache.jackrabbit.core.journal.DatabaseJournal;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.context.annotation.ImportResource;
+import org.springframework.context.annotation.Profile;
+import org.springframework.context.annotation.aspectj.EnableSpringConfigured;
 
 /**
- * 
  * @author MyCollab Ltd.
- * @since 1.0
- * 
+ * @since 4.6.0
  */
-public class MyCollabDatabaseJournal extends DatabaseJournal {
-
-	public MyCollabDatabaseJournal() {
-		this.setDriver("javax.naming.InitialContext");
-		this.setUrl("java:comp/env/jdbc/mycollabdatasource");
-		this.setDatabaseType("mysql");
-	}
+@Configuration
+@EnableSpringConfigured
+@EnableAspectJAutoProxy
+@ImportResource(value="classpath:META-INF/spring/core-context.xml")
+@Profile("production")
+public class RootConfiguration {
 }

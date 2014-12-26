@@ -26,6 +26,12 @@
         </dependency>
 
         <dependency>
+            <groupId>com.esofthead.mycollab</groupId>
+            <artifactId>mycollab-jackrabbit</artifactId>
+            <version>4.5.5</version>
+        </dependency>
+
+        <dependency>
             <groupId>com.jayway.restassured</groupId>
             <artifactId>rest-assured</artifactId>
             <version>2.3.3</version>

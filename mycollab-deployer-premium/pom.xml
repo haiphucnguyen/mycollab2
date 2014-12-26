@@ -12,11 +12,11 @@
         <module>../mycollab-parent-premium</module>
         <module>../mycollab-core</module>
         <module>../mycollab-dao</module>
+        <module>../mycollab-jackrabbit</module>
         <module>../mycollab-config</module>
         <module>../mycollab-test</module>
         <module>../mycollab-localization</module>
         <module>../mycollab-caching</module>
-        <module>../mycollab-jackrabbit</module>
         <module>../mycollab-migration</module>
         <module>../mycollab-services</module>
         <module>../mycollab-esb</module>
