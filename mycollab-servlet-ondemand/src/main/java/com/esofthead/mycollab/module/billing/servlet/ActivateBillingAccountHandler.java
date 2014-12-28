@@ -1,21 +1,19 @@
 package com.esofthead.mycollab.module.billing.servlet;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.esofthead.mycollab.servlet.GenericHttpServlet;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
-import org.springframework.stereotype.Component;
 
-import com.esofthead.mycollab.servlet.GenericServletRequestHandler;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
 /**
  * 
@@ -23,8 +21,8 @@ import com.esofthead.mycollab.servlet.GenericServletRequestHandler;
  * @since 4.5.1
  *
  */
-@Component("activateBillingAccountServlet")
-public class ActivateBillingAccountHandler extends GenericServletRequestHandler {
+@WebServlet(name = "activateBillingAccountServlet", urlPatterns = "/billing/activate")
+public class ActivateBillingAccountHandler extends GenericHttpServlet {
 
 	@Override
 	protected void onHandleRequest(HttpServletRequest request,

@@ -16,26 +16,7 @@
  */
 package com.esofthead.mycollab.module.file.servlet;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Locale;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
-import org.infinispan.commons.api.BasicCache;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
-
-import com.dropbox.core.DbxAppInfo;
-import com.dropbox.core.DbxAuthFinish;
-import com.dropbox.core.DbxRequestConfig;
-import com.dropbox.core.DbxSessionStore;
-import com.dropbox.core.DbxStandardSessionStore;
-import com.dropbox.core.DbxWebAuth;
+import com.dropbox.core.*;
 import com.esofthead.mycollab.cache.LocalCacheManager;
 import com.esofthead.mycollab.common.MyCollabSession;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
@@ -43,8 +24,20 @@ import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.ecm.StorageNames;
 import com.esofthead.mycollab.module.ecm.esb.CloudDriveOAuthCallbackEvent;
 import com.esofthead.mycollab.module.file.CloudDriveInfo;
-import com.esofthead.mycollab.servlet.GenericServletRequestHandler;
+import com.esofthead.mycollab.servlet.GenericHttpServlet;
 import com.google.common.eventbus.EventBus;
+import org.infinispan.commons.api.BasicCache;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Locale;
 
 /**
  * 
@@ -52,9 +45,9 @@ import com.google.common.eventbus.EventBus;
  * @since 1.0
  * 
  */
-@Component("dropboxAuthServlet")
+@WebServlet(name = "dropboxAuthServlet", urlPatterns = "/drive/dropboxAuth")
 public class DropboxAuthServletRequestHandler extends
-		GenericServletRequestHandler {
+		GenericHttpServlet {
 	private static final Logger LOG = LoggerFactory
 			.getLogger(DropboxAuthServletRequestHandler.class);
 
