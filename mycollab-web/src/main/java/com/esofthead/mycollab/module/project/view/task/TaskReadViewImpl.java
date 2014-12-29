@@ -116,7 +116,7 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp2<SimpleTask>
 
 	private DateInfoComp dateInfoComp;
 
-	private TaskTimeLogSheet timesheet;
+	private TaskTimeLogSheet timesheetComp;
 
 	private PeopleInfoComp peopleInfoComp;
 
@@ -163,8 +163,8 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp2<SimpleTask>
 				ProjectRolePermissionCollections.TASKS);
 		addToSideBar(followerSheet);
 
-		timesheet = new TaskTimeLogSheet();
-		addToSideBar(timesheet);
+		timesheetComp = new TaskTimeLogSheet();
+		addToSideBar(timesheetComp);
 	}
 
 	@Override
@@ -209,7 +209,7 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp2<SimpleTask>
 
 		peopleInfoComp.displayEntryPeople(beanItem);
 		dateInfoComp.displayEntryDateTime(beanItem);
-		timesheet.displayTime(beanItem);
+		timesheetComp.displayTime(beanItem);
 	}
 
 	@Override

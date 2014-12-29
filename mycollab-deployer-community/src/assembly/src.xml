@@ -52,6 +52,7 @@
                             <exclude>**/proguard.conf</exclude>
                             <exclude>**/.gitignore</exclude>
                             <exclude>**/*.versionsBackup</exclude>
+                            <exclude>**/*.iml</exclude>
                         </excludes>
                     </fileSet>
                 </fileSets>

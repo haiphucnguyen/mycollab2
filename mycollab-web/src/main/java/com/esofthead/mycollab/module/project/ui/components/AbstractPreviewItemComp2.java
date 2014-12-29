@@ -33,6 +33,7 @@ import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
+import org.vaadin.maddon.layouts.MVerticalLayout;
 
 /**
  * 
@@ -50,8 +51,8 @@ public abstract class AbstractPreviewItemComp2<B> extends VerticalLayout
 	protected MHorizontalLayout header;
 	private RightSidebarLayout bodyContainer;
 
-	private VerticalLayout sidebarContent;
-	private VerticalLayout bodyContent;
+	private MVerticalLayout sidebarContent;
+	private MVerticalLayout bodyContent;
 
 	protected Image titleIcon;
 
@@ -80,14 +81,10 @@ public abstract class AbstractPreviewItemComp2<B> extends VerticalLayout
 		bodyContainer.setSizeFull();
 		bodyContainer.addStyleName("readview-body-wrap");
 
-		bodyContent = new VerticalLayout();
-		bodyContent.addComponent(previewForm);
+		bodyContent = new MVerticalLayout().with(previewForm);
 		bodyContainer.setContent(bodyContent);
 
-		sidebarContent = new VerticalLayout();
-		sidebarContent.setWidth("250px");
-		sidebarContent.setSpacing(true);
-		sidebarContent.setStyleName("readview-sidebar");
+		sidebarContent = new MVerticalLayout().withWidth("250px").withSpacing(true).withStyleName("readview-sidebar");
 		bodyContainer.setSidebar(sidebarContent);
 
 		FloatingComponent floatSidebar = FloatingComponent
