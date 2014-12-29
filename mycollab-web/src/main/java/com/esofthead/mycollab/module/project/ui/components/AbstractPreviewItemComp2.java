@@ -81,7 +81,7 @@ public abstract class AbstractPreviewItemComp2<B> extends VerticalLayout
 		bodyContainer.setSizeFull();
 		bodyContainer.addStyleName("readview-body-wrap");
 
-		bodyContent = new MVerticalLayout().with(previewForm);
+		bodyContent = new MVerticalLayout().withSpacing(false).withMargin(false).with(previewForm);
 		bodyContainer.setContent(bodyContent);
 
 		sidebarContent = new MVerticalLayout().withWidth("250px").withSpacing(true).withStyleName("readview-sidebar");
@@ -130,8 +130,9 @@ public abstract class AbstractPreviewItemComp2<B> extends VerticalLayout
 	protected ComponentContainer constructHeader(String headerText) {
 		Label headerLbl = new Label(headerText);
 		headerLbl.setSizeUndefined();
-		header = new MHorizontalLayout();
 		headerLbl.setStyleName("hdr-text");
+
+		header = new MHorizontalLayout();
 
 		if (titleIcon != null) {
 			header.with(titleIcon).withAlign(titleIcon, Alignment.MIDDLE_LEFT);
