@@ -42,7 +42,7 @@ public class UserResourceImpl implements UserResource {
 	@Override
 	public Response getSubdomainsOfUser(String username) {
 		List<String> subdomains = this.billingService
-				.getSubdomainsOfUser(username);
+				.getSubDomainsOfUser(username);
 		String[] result;
 		if (subdomains != null) {
 			result = subdomains.toArray(new String[0]);

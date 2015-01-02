@@ -60,7 +60,7 @@ public class SendingRelayEmailJob extends GenericQuartzJobBean {
 		for (RelayEmailWithBLOBs relayEmail : relayEmails) {
 			if (relayEmail.getEmailhandlerbean() == null) {
 				String recipientVal = relayEmail.getRecipients();
-				String[][] recipientArr = (String[][]) JsonDeSerializer
+				String[][] recipientArr = JsonDeSerializer
 						.fromJson(recipientVal, String[][].class);
 
 				try {

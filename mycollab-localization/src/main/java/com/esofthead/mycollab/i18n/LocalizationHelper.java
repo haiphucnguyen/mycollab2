@@ -53,7 +53,7 @@ public class LocalizationHelper {
 			Locale.US);
 
 	static {
-		languageMap = new HashMap<Locale, IMessageConveyor>();
+		languageMap = new HashMap<>();
 		languageMap.put(Locale.US, defaultMessage);
 	}
 
@@ -144,13 +144,10 @@ public class LocalizationHelper {
 			return null;
 		}
 
-		Reader reader;
 		try {
-			reader = new InputStreamReader(resourceStream, "UTF-8");
+			return new InputStreamReader(resourceStream, "UTF-8");
 		} catch (UnsupportedEncodingException e) {
-			reader = new InputStreamReader(resourceStream);
+			return new InputStreamReader(resourceStream);
 		}
-
-		return reader;
 	}
 }

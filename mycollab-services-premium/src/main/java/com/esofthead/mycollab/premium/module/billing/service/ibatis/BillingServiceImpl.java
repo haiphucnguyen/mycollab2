@@ -60,7 +60,7 @@ public class BillingServiceImpl implements BillingService {
 	}
 
 	@Override
-	public List<String> getSubdomainsOfUser(final String username) {
+	public List<String> getSubDomainsOfUser(final String username) {
 		throw new UnsupportedFeatureException(
 				"This feature is not supported except onsite mode");
 	}
@@ -72,7 +72,7 @@ public class BillingServiceImpl implements BillingService {
 	}
 
 	@Override
-	public void updateBillingPlan(Integer accountid, int newBillingPlanId) {
+	public void updateBillingPlan(Integer accountId, int newBillingPlanId) {
 		throw new UnsupportedFeatureException(
 				"This feature is not supported except onsite mode");
 	}

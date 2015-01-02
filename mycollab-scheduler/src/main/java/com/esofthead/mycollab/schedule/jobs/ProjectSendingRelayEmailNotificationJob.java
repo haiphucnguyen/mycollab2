@@ -47,7 +47,7 @@ public class ProjectSendingRelayEmailNotificationJob extends
 
 	@Override
 	protected void executeJob(JobExecutionContext context) {
-		ProjectService projectService = (ProjectService) ApplicationContextUtil
+		ProjectService projectService = ApplicationContextUtil
 				.getSpringBean(ProjectService.class);
 		List<ProjectRelayEmailNotification> relayEmaiNotifications = projectService
 				.findProjectRelayEmailNotifications();

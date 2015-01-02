@@ -51,11 +51,11 @@ public class CrmSendingRelayEmailNotificationJob extends GenericQuartzJobBean {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	protected void executeJob(JobExecutionContext context) {
-		RelayEmailNotificationService relayEmailService = (RelayEmailNotificationService) ApplicationContextUtil
+		RelayEmailNotificationService relayEmailService = ApplicationContextUtil
 				.getSpringBean(RelayEmailNotificationService.class);
 
 		RelayEmailNotificationSearchCriteria criteria = new RelayEmailNotificationSearchCriteria();
-		criteria.setTypes(new SetSearchField<String>(new String[] {
+		criteria.setTypes(new SetSearchField<>(new String[] {
 				CrmTypeConstants.ACCOUNT, CrmTypeConstants.CONTACT,
 				CrmTypeConstants.CAMPAIGN, CrmTypeConstants.LEAD,
 				CrmTypeConstants.OPPORTUNITY, CrmTypeConstants.CASE,
@@ -63,7 +63,7 @@ public class CrmSendingRelayEmailNotificationJob extends GenericQuartzJobBean {
 				CrmTypeConstants.CALL }));
 
 		List<SimpleRelayEmailNotification> relayEmaiNotifications = relayEmailService
-				.findPagableListByCriteria(new SearchRequest<RelayEmailNotificationSearchCriteria>(
+				.findPagableListByCriteria(new SearchRequest<>(
 						criteria, 0, Integer.MAX_VALUE));
 
 		CrmDefaultSendingRelayEmailAction emailNotificationAction = null;

@@ -257,7 +257,7 @@ public class BillingServiceImpl implements BillingService {
 	}
 
 	@Override
-	public List<String> getSubdomainsOfUser(final String username) {
+	public List<String> getSubDomainsOfUser(final String username) {
 		LOG.debug("Get subdomain of user {}", username);
 		return this.billingAccountMapperExt.getSubdomainsOfUser(username);
 	}
@@ -268,9 +268,9 @@ public class BillingServiceImpl implements BillingService {
 	}
 
 	@Override
-	public void updateBillingPlan(Integer accountid, int newBillingPlanId) {
+	public void updateBillingPlan(Integer accountId, int newBillingPlanId) {
 		BillingAccount record = new BillingAccount();
-		record.setId(accountid);
+		record.setId(accountId);
 		record.setBillingplanid(newBillingPlanId);
 		billingAccountMapper.updateByPrimaryKeySelective(record);
 	}
