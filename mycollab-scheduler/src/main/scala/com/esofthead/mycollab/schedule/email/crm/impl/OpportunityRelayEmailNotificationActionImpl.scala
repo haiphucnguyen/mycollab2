@@ -1,3 +1,19 @@
+/**
+ * This file is part of mycollab-scheduler.
+ *
+ * mycollab-scheduler is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * mycollab-scheduler is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with mycollab-scheduler.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package com.esofthead.mycollab.schedule.email.crm.impl
 
 import com.esofthead.mycollab.common.MonitorTypeConstants
@@ -14,7 +30,7 @@ import com.esofthead.mycollab.module.user.AccountLinkGenerator
 import com.esofthead.mycollab.module.user.domain.SimpleUser
 import com.esofthead.mycollab.module.user.service.UserService
 import com.esofthead.mycollab.schedule.email.crm.OpportunityRelayEmailNotificationAction
-import com.esofthead.mycollab.schedule.email.format.{TagBuilder, CurrencyFieldFormat, DateFieldFormat, FieldFormat}
+import com.esofthead.mycollab.schedule.email.format.{CurrencyFieldFormat, DateFieldFormat, FieldFormat, TagBuilder}
 import com.esofthead.mycollab.schedule.email.{ItemFieldMapper, MailContext}
 import com.esofthead.mycollab.spring.ApplicationContextUtil
 import com.hp.gagawa.java.elements.{A, Img, Span}
@@ -54,14 +70,9 @@ class OpportunityRelayEmailNotificationActionImpl extends CrmDefaultSendingRelay
     val summaryLink: String = CrmLinkGenerator.generateOpportunityPreviewFullLink(siteUrl, bean.getId)
 
     val emailNotification: SimpleRelayEmailNotification = context.getEmailNotification
-
-    var avatarId: String = ""
-
     val user: SimpleUser = userService.findUserByUserNameInAccount(emailNotification.getChangeby, context.getSaccountid)
 
-    if (user != null) {
-      avatarId = user.getAvatarid
-    }
+    val avatarId: String = if (user != null) user.getAvatarid else ""
     val userAvatar: Img = new Img("", StorageManager.getAvatarLink(avatarId, 16))
     userAvatar.setWidth("16")
     userAvatar.setHeight("16")
@@ -84,20 +95,20 @@ class OpportunityRelayEmailNotificationActionImpl extends CrmDefaultSendingRelay
   }
 
   class OpportunityFieldNameMapper extends ItemFieldMapper {
-      put(Opportunity.Field.opportunityname, OpportunityI18nEnum.FORM_NAME)
-      put(Opportunity.Field.accountid, new AccountFieldFormat(Opportunity.Field.accountid.name, OpportunityI18nEnum.FORM_ACCOUNT_NAME))
-      put(Opportunity.Field.currencyid, new CurrencyFieldFormat(Opportunity.Field.currencyid.name, OpportunityI18nEnum.FORM_CURRENCY))
-      put(Opportunity.Field.expectedcloseddate, new DateFieldFormat(Opportunity.Field.expectedcloseddate.name,
-        OpportunityI18nEnum.FORM_EXPECTED_CLOSE_DATE))
-      put(Opportunity.Field.amount, OpportunityI18nEnum.FORM_AMOUNT)
-      put(Opportunity.Field.opportunitytype, OpportunityI18nEnum.FORM_TYPE)
-      put(Opportunity.Field.salesstage, OpportunityI18nEnum.FORM_SALE_STAGE)
-      put(Opportunity.Field.source, OpportunityI18nEnum.FORM_LEAD_SOURCE)
-      put(Opportunity.Field.probability, OpportunityI18nEnum.FORM_PROBABILITY)
-      put(Opportunity.Field.campaignid, new CampaignFieldFormat(Opportunity.Field.campaignid.name, OpportunityI18nEnum.FORM_CAMPAIGN_NAME))
-      put(Opportunity.Field.nextstep, OpportunityI18nEnum.FORM_NEXT_STEP)
-      put(Opportunity.Field.assignuser, new AssigneeFieldFormat(Opportunity.Field.assignuser.name, GenericI18Enum.FORM_ASSIGNEE))
-      put(Opportunity.Field.description, GenericI18Enum.FORM_DESCRIPTION, true)
+    put(Opportunity.Field.opportunityname, OpportunityI18nEnum.FORM_NAME)
+    put(Opportunity.Field.accountid, new AccountFieldFormat(Opportunity.Field.accountid.name, OpportunityI18nEnum.FORM_ACCOUNT_NAME))
+    put(Opportunity.Field.currencyid, new CurrencyFieldFormat(Opportunity.Field.currencyid.name, OpportunityI18nEnum.FORM_CURRENCY))
+    put(Opportunity.Field.expectedcloseddate, new DateFieldFormat(Opportunity.Field.expectedcloseddate.name,
+      OpportunityI18nEnum.FORM_EXPECTED_CLOSE_DATE))
+    put(Opportunity.Field.amount, OpportunityI18nEnum.FORM_AMOUNT)
+    put(Opportunity.Field.opportunitytype, OpportunityI18nEnum.FORM_TYPE)
+    put(Opportunity.Field.salesstage, OpportunityI18nEnum.FORM_SALE_STAGE)
+    put(Opportunity.Field.source, OpportunityI18nEnum.FORM_LEAD_SOURCE)
+    put(Opportunity.Field.probability, OpportunityI18nEnum.FORM_PROBABILITY)
+    put(Opportunity.Field.campaignid, new CampaignFieldFormat(Opportunity.Field.campaignid.name, OpportunityI18nEnum.FORM_CAMPAIGN_NAME))
+    put(Opportunity.Field.nextstep, OpportunityI18nEnum.FORM_NEXT_STEP)
+    put(Opportunity.Field.assignuser, new AssigneeFieldFormat(Opportunity.Field.assignuser.name, GenericI18Enum.FORM_ASSIGNEE))
+    put(Opportunity.Field.description, GenericI18Enum.FORM_DESCRIPTION, isColSpan = true)
   }
 
   class AccountFieldFormat(fieldName: String, displayName: Enum[_]) extends FieldFormat(fieldName, displayName) {
@@ -170,7 +181,7 @@ class OpportunityRelayEmailNotificationActionImpl extends CrmDefaultSendingRelay
           val img: Img = TagBuilder.newImg("icon", campaignIconLink)
           val campaignLink: String = CrmLinkGenerator.generateCampaignPreviewFullLink(context.siteUrl, campaign.getId)
           val link: A = TagBuilder.newA(campaignLink, campaign.getCampaignname)
-          TagBuilder.newLink(img, link).write
+          return TagBuilder.newLink(img, link).write
         }
       }
       catch {
@@ -200,17 +211,18 @@ class OpportunityRelayEmailNotificationActionImpl extends CrmDefaultSendingRelay
     def formatField(context: MailContext[_], value: String): String = {
       if (org.apache.commons.lang3.StringUtils.isBlank(value)) {
         new Span().write
+      } else {
+        val userService: UserService = ApplicationContextUtil.getSpringBean(classOf[UserService])
+        val user: SimpleUser = userService.findUserByUserNameInAccount(value, context.getUser.getAccountId)
+        if (user != null) {
+          val userAvatarLink: String = MailUtils.getAvatarLink(user.getAvatarid, 16)
+          val userLink: String = AccountLinkGenerator.generatePreviewFullUserLink(MailUtils.getSiteUrl(user.getAccountId), user.getUsername)
+          val img: Img = TagBuilder.newImg("avatar", userAvatarLink)
+          val link: A = TagBuilder.newA(userLink, user.getDisplayName)
+          TagBuilder.newLink(img, link).write
+        } else
+          value
       }
-      val userService: UserService = ApplicationContextUtil.getSpringBean(classOf[UserService])
-      val user: SimpleUser = userService.findUserByUserNameInAccount(value, context.getUser.getAccountId)
-      if (user != null) {
-        val userAvatarLink: String = MailUtils.getAvatarLink(user.getAvatarid, 16)
-        val userLink: String = AccountLinkGenerator.generatePreviewFullUserLink(MailUtils.getSiteUrl(user.getAccountId), user.getUsername)
-        val img: Img = TagBuilder.newImg("avatar", userAvatarLink)
-        val link: A = TagBuilder.newA(userLink, user.getDisplayName)
-        TagBuilder.newLink(img, link).write
-      }
-      value
     }
   }
 

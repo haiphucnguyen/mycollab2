@@ -1,3 +1,19 @@
+/**
+ * This file is part of mycollab-scheduler.
+ *
+ * mycollab-scheduler is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * mycollab-scheduler is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with mycollab-scheduler.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package com.esofthead.mycollab.schedule.email.crm.impl
 
 import com.esofthead.mycollab.common.MonitorTypeConstants
@@ -14,7 +30,7 @@ import com.esofthead.mycollab.module.user.AccountLinkGenerator
 import com.esofthead.mycollab.module.user.domain.SimpleUser
 import com.esofthead.mycollab.module.user.service.UserService
 import com.esofthead.mycollab.schedule.email.crm.TaskRelayEmailNotificationAction
-import com.esofthead.mycollab.schedule.email.format.{TagBuilder, DateFieldFormat, FieldFormat}
+import com.esofthead.mycollab.schedule.email.format.{DateFieldFormat, FieldFormat, TagBuilder}
 import com.esofthead.mycollab.schedule.email.{ItemFieldMapper, MailContext}
 import com.esofthead.mycollab.spring.ApplicationContextUtil
 import com.hp.gagawa.java.elements.{A, Img, Span}
@@ -40,15 +56,14 @@ import org.springframework.stereotype.Component
     val summary: String = bean.getSubject
     val summaryLink: String = CrmLinkGenerator.generateTaskPreviewFullLink(siteUrl, bean.getId)
     val emailNotification: SimpleRelayEmailNotification = context.getEmailNotification
-    var avatarId = ""
     val user: SimpleUser = userService.findUserByUserNameInAccount(emailNotification.getChangeby, context.getSaccountid)
-    if (user != null) {
-      avatarId = user.getAvatarid
-    }
+
+    val avatarId = if (user != null) user.getAvatarid else ""
     val userAvatar: Img = new Img("", StorageManager.getAvatarLink(avatarId, 16))
     userAvatar.setWidth("16")
     userAvatar.setHeight("16")
     userAvatar.setStyle("display: inline-block; vertical-align: top;")
+
     val makeChangeUser: String = userAvatar.toString + emailNotification.getChangeByUserFullName
     if (MonitorTypeConstants.CREATE_ACTION == emailNotification.getAction) {
       contentGenerator.putVariable("actionHeading", context.getMessage(TaskI18nEnum.MAIL_CREATE_ITEM_HEADING, makeChangeUser))
@@ -76,14 +91,14 @@ import org.springframework.stereotype.Component
   protected def getBeanInContext(context: MailContext[SimpleTask]): SimpleTask = taskService.findById(context.getTypeid.toInt, context.getSaccountid)
 
   class TaskFieldNameMapper extends ItemFieldMapper {
-    put(Task.Field.subject, TaskI18nEnum.FORM_SUBJECT, true)
+    put(Task.Field.subject, TaskI18nEnum.FORM_SUBJECT, isColSpan = true)
     put(Task.Field.status, TaskI18nEnum.FORM_STATUS)
     put(Task.Field.startdate, new DateFieldFormat(Task.Field.startdate.name, TaskI18nEnum.FORM_START_DATE))
     put(Task.Field.assignuser, new AssigneeFieldFormat(Task.Field.assignuser.name, GenericI18Enum.FORM_ASSIGNEE))
     put(Task.Field.duedate, new DateFieldFormat(Task.Field.duedate.name, TaskI18nEnum.FORM_DUE_DATE))
     put(Task.Field.contactid, new ContactFieldFormat(Task.Field.contactid.name, TaskI18nEnum.FORM_CONTACT))
     put(Task.Field.priority, TaskI18nEnum.FORM_PRIORITY)
-    put(Task.Field.description, GenericI18Enum.FORM_DESCRIPTION, true)
+    put(Task.Field.description, GenericI18Enum.FORM_DESCRIPTION, isColSpan = true)
   }
 
   class ContactFieldFormat(fieldName: String, displayName: Enum[_]) extends FieldFormat(fieldName, displayName) {
@@ -115,7 +130,7 @@ import org.springframework.stereotype.Component
           val img: Img = TagBuilder.newImg("icon", contactIconLink)
           val contactLink: String = CrmLinkGenerator.generateContactPreviewFullLink(context.siteUrl, contact.getId)
           val link: A = TagBuilder.newA(contactLink, contact.getDisplayName)
-          TagBuilder.newLink(img, link).write
+          return TagBuilder.newLink(img, link).write
         }
       }
       catch {
@@ -142,18 +157,19 @@ import org.springframework.stereotype.Component
 
     def formatField(context: MailContext[_], value: String): String = {
       if (org.apache.commons.lang3.StringUtils.isBlank(value)) {
-        return new Span().write
+        new Span().write
+      } else {
+        val userService: UserService = ApplicationContextUtil.getSpringBean(classOf[UserService])
+        val user: SimpleUser = userService.findUserByUserNameInAccount(value, context.getUser.getAccountId)
+        if (user != null) {
+          val userAvatarLink: String = MailUtils.getAvatarLink(user.getAvatarid, 16)
+          val userLink: String = AccountLinkGenerator.generatePreviewFullUserLink(MailUtils.getSiteUrl(user.getAccountId), user.getUsername)
+          val img: Img = TagBuilder.newImg("avatar", userAvatarLink)
+          val link: A = TagBuilder.newA(userLink, user.getDisplayName)
+          TagBuilder.newLink(img, link).write
+        } else
+          value
       }
-      val userService: UserService = ApplicationContextUtil.getSpringBean(classOf[UserService])
-      val user: SimpleUser = userService.findUserByUserNameInAccount(value, context.getUser.getAccountId)
-      if (user != null) {
-        val userAvatarLink: String = MailUtils.getAvatarLink(user.getAvatarid, 16)
-        val userLink: String = AccountLinkGenerator.generatePreviewFullUserLink(MailUtils.getSiteUrl(user.getAccountId), user.getUsername)
-        val img: Img = TagBuilder.newImg("avatar", userAvatarLink)
-        val link: A = TagBuilder.newA(userLink, user.getDisplayName)
-        return TagBuilder.newLink(img, link).write
-      }
-      value
     }
   }
 

@@ -1,3 +1,19 @@
+/**
+ * This file is part of mycollab-scheduler.
+ *
+ * mycollab-scheduler is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * mycollab-scheduler is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with mycollab-scheduler.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package com.esofthead.mycollab.schedule.email.user.impl
 
 import java.util.Arrays
@@ -35,15 +51,14 @@ class UserSignUpEmailNotificationJob extends GenericQuartzJobBean {
 
   @SuppressWarnings(Array("unchecked"))
   @throws(classOf[JobExecutionException])
-  protected def executeJob(context: JobExecutionContext) {
+  def executeJob(context: JobExecutionContext) {
     val criteria: UserSearchCriteria = new UserSearchCriteria
-    val statusField = new SetSearchField[String]()
-    statusField.setValues(Array(UserStatusConstants.EMAIL_NOT_VERIFIED))
+    val statusField = new SetSearchField[String](Array(UserStatusConstants.EMAIL_NOT_VERIFIED):_*)
     criteria.setStatuses(statusField)
     criteria.setSaccountid(null)
 
     import scala.collection.JavaConverters._
-    val users: List[SimpleUser] = userService.findPagableListByCriteria(new SearchRequest[UserSearchCriteria](criteria, 0, Integer.MAX_VALUE)).asScala.asInstanceOf[List[SimpleUser]]
+    val users: List[SimpleUser] = userService.findPagableListByCriteria(new SearchRequest[UserSearchCriteria](criteria, 0, Integer.MAX_VALUE)).asScala.toList.asInstanceOf[List[SimpleUser]]
     if (users != null && users.nonEmpty) {
       for (user <- users) {
         sendConfirmEmailToUser(user)

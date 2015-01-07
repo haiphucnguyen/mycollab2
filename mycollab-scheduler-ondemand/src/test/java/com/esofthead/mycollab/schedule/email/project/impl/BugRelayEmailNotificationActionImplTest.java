@@ -5,7 +5,6 @@ import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -20,6 +19,7 @@ import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.project.service.ProjectNotificationSettingService;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.schedule.email.GenericJobTest;
+import scala.collection.immutable.List;
 
 public class BugRelayEmailNotificationActionImplTest extends GenericJobTest {
 
@@ -38,7 +38,7 @@ public class BugRelayEmailNotificationActionImplTest extends GenericJobTest {
 		ProjectRelayEmailNotification prjRelayNotification = new ProjectRelayEmailNotification();
 		SimpleUser notUser1 = new SimpleUser();
 		notUser1.setUsername("hainguyen@esofthead.com");
-		List<SimpleUser> notifyUsers = new ArrayList<SimpleUser>();
+		java.util.List<SimpleUser> notifyUsers = new ArrayList<SimpleUser>();
 		prjRelayNotification.setNotifyUsers(notifyUsers);
 
 		ProjectNotificationSetting noSetting1 = new ProjectNotificationSetting();

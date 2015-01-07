@@ -1,3 +1,19 @@
+/**
+ * This file is part of mycollab-scheduler.
+ *
+ * mycollab-scheduler is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * mycollab-scheduler is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with mycollab-scheduler.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package com.esofthead.mycollab.schedule.email.project.impl
 
 import com.esofthead.mycollab.common.MonitorTypeConstants
@@ -9,7 +25,7 @@ import com.esofthead.mycollab.module.mail.MailUtils
 import com.esofthead.mycollab.module.project.ProjectLinkGenerator
 import com.esofthead.mycollab.module.project.domain.{Problem, SimpleProblem, SimpleProject, SimpleProjectMember}
 import com.esofthead.mycollab.module.project.i18n.ProblemI18nEnum
-import com.esofthead.mycollab.module.project.service.{ProblemService, ProjectMemberService, ProjectService}
+import com.esofthead.mycollab.module.project.service.{ProblemService, ProjectService}
 import com.esofthead.mycollab.module.user.AccountLinkGenerator
 import com.esofthead.mycollab.module.user.domain.SimpleUser
 import com.esofthead.mycollab.module.user.service.UserService
@@ -23,6 +39,8 @@ import org.springframework.beans.factory.config.BeanDefinition
 import org.springframework.context.annotation.Scope
 import org.springframework.stereotype.Component
 
+import scala.collection.mutable.ListBuffer
+
 /**
  * @author MyCollab Ltd.
  * @since 4.6.0
@@ -34,8 +52,6 @@ class ProjectProblemRelayEmailNotificationActionImpl extends SendMailToAllMember
   @Autowired var problemService: ProblemService = _
 
   @Autowired var projectService: ProjectService = _
-
-  @Autowired var projectMemberService: ProjectMemberService = _
 
   private val mapper = new ProjectFieldNameMapper
 
@@ -52,24 +68,24 @@ class ProjectProblemRelayEmailNotificationActionImpl extends SendMailToAllMember
   protected def getBeanInContext(context: MailContext[SimpleProblem]): SimpleProblem = problemService.findById(context.getTypeid.toInt, context.getSaccountid)
 
   protected def buildExtraTemplateVariables(context: MailContext[SimpleProblem]) {
-    val listOfTitles: List[Map[String, String]] = List[Map[String, String]]()
+    val listOfTitles: ListBuffer[Map[String, String]] = ListBuffer[Map[String, String]]()
     val emailNotification: SimpleRelayEmailNotification = context.getEmailNotification
     val relatedProject: SimpleProject = projectService.findById(bean.getProjectid, emailNotification.getSaccountid)
-    val currentProject: Map[String, String] = Map[String, String]()
-    currentProject.+("displayName" -> relatedProject.getName)
-    currentProject.+("webLink" -> ProjectLinkGenerator.generateProjectFullLink(siteUrl, bean.getProjectid))
-    listOfTitles.+:(currentProject)
+    val currentProject: Map[String, String] = Map[String, String]("displayName" -> relatedProject.getName, "webLink" -> ProjectLinkGenerator
+      .generateProjectFullLink(siteUrl, bean.getProjectid))
+
+    listOfTitles += currentProject
+
     val summary: String = bean.getIssuename
     val summaryLink: String = ProjectLinkGenerator.generateProblemPreviewFullLink(siteUrl, bean.getProjectid, bean.getId)
-    var avatarId: String = ""
     val projectMember: SimpleProjectMember = projectMemberService.findMemberByUsername(emailNotification.getChangeby, bean.getProjectid, emailNotification.getSaccountid)
-    if (projectMember != null) {
-      avatarId = projectMember.getMemberAvatarId
-    }
+
+    val avatarId: String = if (projectMember != null) projectMember.getMemberAvatarId else ""
     val userAvatar: Img = new Img("", StorageManager.getAvatarLink(avatarId, 16))
     userAvatar.setWidth("16")
     userAvatar.setHeight("16")
     userAvatar.setStyle("display: inline-block; vertical-align: top;")
+
     val makeChangeUser: String = userAvatar.toString + emailNotification.getChangeByUserFullName
     if (MonitorTypeConstants.CREATE_ACTION == emailNotification.getAction) {
       contentGenerator.putVariable("actionHeading", context.getMessage(ProblemI18nEnum.MAIL_CREATE_ITEM_HEADING, makeChangeUser))
@@ -80,21 +96,22 @@ class ProjectProblemRelayEmailNotificationActionImpl extends SendMailToAllMember
     else if (MonitorTypeConstants.ADD_COMMENT_ACTION == emailNotification.getAction) {
       contentGenerator.putVariable("actionHeading", context.getMessage(ProblemI18nEnum.MAIL_COMMENT_ITEM_HEADING, makeChangeUser))
     }
+
     contentGenerator.putVariable("titles", listOfTitles)
     contentGenerator.putVariable("summary", summary)
     contentGenerator.putVariable("summaryLink", summaryLink)
   }
 
   class ProjectFieldNameMapper extends ItemFieldMapper {
-    put(Problem.Field.issuename, ProblemI18nEnum.FORM_NAME, true)
-    put(Problem.Field.description, GenericI18Enum.FORM_DESCRIPTION, true)
+    put(Problem.Field.issuename, ProblemI18nEnum.FORM_NAME, isColSpan = true)
+    put(Problem.Field.description, GenericI18Enum.FORM_DESCRIPTION, isColSpan = true)
     put(Problem.Field.datedue, new DateFieldFormat(Problem.Field.datedue.name, ProblemI18nEnum.FORM_DATE_DUE))
     put(Problem.Field.status, new I18nFieldFormat(Problem.Field.status.name, ProblemI18nEnum.FORM_STATUS, classOf[OptionI18nEnum.StatusI18nEnum]))
     put(Problem.Field.impact, ProblemI18nEnum.FORM_IMPACT)
     put(Problem.Field.priority, ProblemI18nEnum.FORM_PRIORITY)
     put(Problem.Field.assigntouser, new AssigneeFieldFormat(Problem.Field.assigntouser.name, GenericI18Enum.FORM_ASSIGNEE))
     put(Problem.Field.raisedbyuser, new RaisedByFieldFormat(Problem.Field.raisedbyuser.name, ProblemI18nEnum.FORM_RAISED_BY))
-    put(Problem.Field.resolution, ProblemI18nEnum.FORM_RESOLUTION, true)
+    put(Problem.Field.resolution, ProblemI18nEnum.FORM_RESOLUTION, isColSpan = true)
   }
 
   class AssigneeFieldFormat(fieldName: String, displayName: Enum[_]) extends FieldFormat(fieldName, displayName) {
@@ -125,8 +142,8 @@ class ProjectProblemRelayEmailNotificationActionImpl extends SendMailToAllMember
         val img: Img = TagBuilder.newImg("avatar", userAvatarLink)
         val link: A = TagBuilder.newA(userLink, user.getDisplayName)
         return TagBuilder.newLink(img, link).write
-      }
-      value
+      } else
+        value
     }
   }
 
@@ -158,8 +175,8 @@ class ProjectProblemRelayEmailNotificationActionImpl extends SendMailToAllMember
         val img: Img = TagBuilder.newImg("avatar", userAvatarLink)
         val link: A = TagBuilder.newA(userLink, user.getDisplayName)
         TagBuilder.newLink(img, link).write
-      }
-      value
+      } else
+        value
     }
   }
 

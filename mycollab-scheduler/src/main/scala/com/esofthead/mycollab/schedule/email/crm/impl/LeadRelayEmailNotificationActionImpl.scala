@@ -1,3 +1,19 @@
+/**
+ * This file is part of mycollab-scheduler.
+ *
+ * mycollab-scheduler is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * mycollab-scheduler is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with mycollab-scheduler.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package com.esofthead.mycollab.schedule.email.crm.impl
 
 import com.esofthead.mycollab.common.MonitorTypeConstants
@@ -50,14 +66,9 @@ LeadRelayEmailNotificationAction {
     val summaryLink: String = CrmLinkGenerator.generateLeadPreviewFullLink(siteUrl, bean.getId)
 
     val emailNotification: SimpleRelayEmailNotification = context.getEmailNotification
-
-    var avatarId: String = ""
-
     val user: SimpleUser = userService.findUserByUserNameInAccount(emailNotification.getChangeby, context.getSaccountid)
 
-    if (user != null) {
-      avatarId = user.getAvatarid
-    }
+    val avatarId: String = if (user != null) user.getAvatarid else ""
     val userAvatar: Img = new Img("", StorageManager.getAvatarLink(avatarId, 16))
     userAvatar.setWidth("16")
     userAvatar.setHeight("16")
@@ -108,7 +119,7 @@ LeadRelayEmailNotificationAction {
     put(Lead.Field.otherpostalcode, LeadI18nEnum.FORM_OTHER_POSTAL_CODE)
     put(Lead.Field.primcountry, LeadI18nEnum.FORM_PRIMARY_COUNTRY)
     put(Lead.Field.othercountry, LeadI18nEnum.FORM_OTHER_COUNTRY)
-    put(Lead.Field.description, GenericI18Enum.FORM_DESCRIPTION, true)
+    put(Lead.Field.description, GenericI18Enum.FORM_DESCRIPTION, isColSpan = true)
   }
 
   class LeadAssigneeFieldFormat(fieldName: String, displayName: Enum[_]) extends FieldFormat(fieldName, displayName) {
@@ -130,17 +141,18 @@ LeadRelayEmailNotificationAction {
     def formatField(context: MailContext[_], value: String): String = {
       if (org.apache.commons.lang3.StringUtils.isBlank(value)) {
         new Span().write
+      } else {
+        val userService: UserService = ApplicationContextUtil.getSpringBean(classOf[UserService])
+        val user: SimpleUser = userService.findUserByUserNameInAccount(value, context.getUser.getAccountId)
+        if (user != null) {
+          val userAvatarLink: String = MailUtils.getAvatarLink(user.getAvatarid, 16)
+          val userLink: String = AccountLinkGenerator.generatePreviewFullUserLink(MailUtils.getSiteUrl(user.getAccountId), user.getUsername)
+          val img: Img = TagBuilder.newImg("avatar", userAvatarLink)
+          val link: A = TagBuilder.newA(userLink, user.getDisplayName)
+          TagBuilder.newLink(img, link).write
+        } else
+          value
       }
-      val userService: UserService = ApplicationContextUtil.getSpringBean(classOf[UserService])
-      val user: SimpleUser = userService.findUserByUserNameInAccount(value, context.getUser.getAccountId)
-      if (user != null) {
-        val userAvatarLink: String = MailUtils.getAvatarLink(user.getAvatarid, 16)
-        val userLink: String = AccountLinkGenerator.generatePreviewFullUserLink(MailUtils.getSiteUrl(user.getAccountId), user.getUsername)
-        val img: Img = TagBuilder.newImg("avatar", userAvatarLink)
-        val link: A = TagBuilder.newA(userLink, user.getDisplayName)
-        TagBuilder.newLink(img, link).write
-      }
-      value
     }
   }
 

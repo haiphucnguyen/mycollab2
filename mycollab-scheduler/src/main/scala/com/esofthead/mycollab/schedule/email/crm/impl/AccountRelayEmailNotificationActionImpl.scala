@@ -1,3 +1,19 @@
+/**
+ * This file is part of mycollab-scheduler.
+ *
+ * mycollab-scheduler is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * mycollab-scheduler is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with mycollab-scheduler.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package com.esofthead.mycollab.schedule.email.crm.impl
 
 import com.esofthead.mycollab.common.MonitorTypeConstants
@@ -14,7 +30,7 @@ import com.esofthead.mycollab.module.user.AccountLinkGenerator
 import com.esofthead.mycollab.module.user.domain.SimpleUser
 import com.esofthead.mycollab.module.user.service.UserService
 import com.esofthead.mycollab.schedule.email.crm.AccountRelayEmailNotificationAction
-import com.esofthead.mycollab.schedule.email.format.{TagBuilder, FieldFormat, I18nFieldFormat}
+import com.esofthead.mycollab.schedule.email.format.{FieldFormat, I18nFieldFormat, TagBuilder}
 import com.esofthead.mycollab.schedule.email.{ItemFieldMapper, MailContext}
 import com.esofthead.mycollab.spring.ApplicationContextUtil
 import com.hp.gagawa.java.elements.{A, Img, Span}
@@ -48,14 +64,9 @@ class AccountRelayEmailNotificationActionImpl extends CrmDefaultSendingRelayEmai
     val summaryLink: String = CrmLinkGenerator.generateAccountPreviewFullLink(siteUrl, bean.getId)
 
     val emailNotification: SimpleRelayEmailNotification = context.getEmailNotification
-
-    var avatarId: String = ""
-
     val user: SimpleUser = userService.findUserByUserNameInAccount(emailNotification.getChangeby, context.getSaccountid)
 
-    if (user != null) {
-      avatarId = user.getAvatarid
-    }
+    val avatarId: String = if (user != null) user.getAvatarid else ""
     val userAvatar: Img = new Img("", StorageManager.getAvatarLink(avatarId, 16))
     userAvatar.setWidth("16")
     userAvatar.setHeight("16")
@@ -102,7 +113,7 @@ class AccountRelayEmailNotificationActionImpl extends CrmDefaultSendingRelayEmai
     put(Account.Field.shippingpostalcode, AccountI18nEnum.FORM_SHIPPING_POSTAL_CODE)
     put(Account.Field.billingcountry, AccountI18nEnum.FORM_BILLING_COUNTRY)
     put(Account.Field.shippingcountry, AccountI18nEnum.FORM_SHIPPING_COUNTRY)
-    put(Account.Field.description, GenericI18Enum.FORM_DESCRIPTION, true)
+    put(Account.Field.description, GenericI18Enum.FORM_DESCRIPTION, isColSpan = true)
   }
 
   class AssigneeFieldFormat(fieldName: String, displayName: Enum[_]) extends FieldFormat(fieldName, displayName) {
@@ -124,17 +135,18 @@ class AccountRelayEmailNotificationActionImpl extends CrmDefaultSendingRelayEmai
     def formatField(context: MailContext[_], value: String): String = {
       if (org.apache.commons.lang3.StringUtils.isBlank(value)) {
         new Span().write
+      } else {
+        val userService: UserService = ApplicationContextUtil.getSpringBean(classOf[UserService])
+        val user: SimpleUser = userService.findUserByUserNameInAccount(value, context.getUser.getAccountId)
+        if (user != null) {
+          val userAvatarLink: String = MailUtils.getAvatarLink(user.getAvatarid, 16)
+          val userLink: String = AccountLinkGenerator.generatePreviewFullUserLink(MailUtils.getSiteUrl(user.getAccountId), user.getUsername)
+          val img: Img = TagBuilder.newImg("avatar", userAvatarLink)
+          val link: A = TagBuilder.newA(userLink, user.getDisplayName)
+          TagBuilder.newLink(img, link).write
+        } else
+          value
       }
-      val userService: UserService = ApplicationContextUtil.getSpringBean(classOf[UserService])
-      val user: SimpleUser = userService.findUserByUserNameInAccount(value, context.getUser.getAccountId)
-      if (user != null) {
-        val userAvatarLink: String = MailUtils.getAvatarLink(user.getAvatarid, 16)
-        val userLink: String = AccountLinkGenerator.generatePreviewFullUserLink(MailUtils.getSiteUrl(user.getAccountId), user.getUsername)
-        val img: Img = TagBuilder.newImg("avatar", userAvatarLink)
-        val link: A = TagBuilder.newA(userLink, user.getDisplayName)
-        TagBuilder.newLink(img, link).write
-      }
-      value
     }
   }
 

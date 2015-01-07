@@ -1,3 +1,19 @@
+/**
+ * This file is part of mycollab-services.
+ *
+ * mycollab-services is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * mycollab-services is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with mycollab-services.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package com.esofthead.mycollab.module.mail
 
 import java.io._
@@ -14,8 +30,6 @@ import org.springframework.beans.factory.config.BeanDefinition
 import org.springframework.context.annotation.Scope
 import org.springframework.stereotype.Component
 
-import scala.collection.immutable.HashMap
-
 /**
  * @author MyCollab Ltd.
  * @since 4.6.0
@@ -23,25 +37,25 @@ import scala.collection.immutable.HashMap
 @Component
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 class ContentGenerator extends IContentGenerator with InitializingBean {
-  private var templateContext: TemplateContext = null
+  private var templateContext: TemplateContext = _
   @Autowired private val templateEngine: VelocityEngine = null
 
   @throws(classOf[Exception])
   def afterPropertiesSet {
     templateContext = new TemplateContext
-    val defaultUrls: Map[String, String] = new HashMap[String, String]
-    val sharingOptions: SharingOptions = SharingOptions.getDefaultSharingOptions
-    defaultUrls.+(("cdn_url", SiteConfiguration.getCdnUrl), ("facebook_url", sharingOptions.getFacebookUrl),
-      ("google_url", sharingOptions.getGoogleplusUrl), ("linkedin_url", sharingOptions.getLinkedinUrl),
-      ("twitter_url", sharingOptions.getTwitterUrl))
+    val defaultUrls = scala.collection.mutable.Map[String, String]()
+    val sharingOptions = SharingOptions.getDefaultSharingOptions
+    defaultUrls += (("cdn_url" -> SiteConfiguration.getCdnUrl), ("facebook_url" -> sharingOptions.getFacebookUrl),
+      ("google_url" -> sharingOptions.getGoogleplusUrl), ("linkedin_url" -> sharingOptions.getLinkedinUrl),
+      ("twitter_url" -> sharingOptions.getTwitterUrl))
     templateContext.put("defaultUrls", defaultUrls)
   }
 
   override def putVariable(key: String, value: scala.Any): Unit = templateContext.put(key, value)
 
   override def generateBodyContent(templateFilePath: String): String = {
-    val writer: StringWriter = new StringWriter
-    val resourceStream: InputStream = classOf[LocalizationHelper].getClassLoader.getResourceAsStream(templateFilePath)
+    val writer = new StringWriter
+    val resourceStream = classOf[LocalizationHelper].getClassLoader.getResourceAsStream(templateFilePath)
 
     var reader: Reader = null
     try {
@@ -54,14 +68,14 @@ class ContentGenerator extends IContentGenerator with InitializingBean {
     }
 
     templateEngine.evaluate(templateContext.getVelocityContext, writer, "log task", reader)
-    return writer.toString
+    writer.toString
   }
 
   override def generateBodyContent(templateFilePath: String, currentLocale: Locale): String = this.generateBodyContent(templateFilePath, currentLocale, null)
 
   override def generateBodyContent(templateFilePath: String, currentLocale: Locale, defaultLocale: Locale): String = {
-    val writer: StringWriter = new StringWriter
-    var reader: Reader = LocalizationHelper.templateReader(templateFilePath, currentLocale)
+    val writer = new StringWriter
+    var reader = LocalizationHelper.templateReader(templateFilePath, currentLocale)
     if (reader == null) {
       if (defaultLocale == null) {
         throw new MyCollabException("Can not find file " + templateFilePath + " in locale " + currentLocale)
@@ -73,13 +87,13 @@ class ContentGenerator extends IContentGenerator with InitializingBean {
     }
 
     templateEngine.evaluate(templateContext.getVelocityContext, writer, "log task", reader)
-    return writer.toString
+    writer.toString
   }
 
   override def generateSubjectContent(subject: String): String = {
-    val writer: StringWriter = new StringWriter
-    val reader: Reader = new StringReader(subject)
+    val writer = new StringWriter
+    val reader = new StringReader(subject)
     templateEngine.evaluate(templateContext.getVelocityContext, writer, "log task", reader)
-    return writer.toString
+    writer.toString
   }
 }

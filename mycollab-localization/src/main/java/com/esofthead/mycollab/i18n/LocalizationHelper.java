@@ -88,8 +88,8 @@ public class LocalizationHelper {
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public static String getMessage(Locale locale, Class<? extends Enum> cls,
-			String option, Object... objects) {
+	public static String getMessageClsEnum(Locale locale, Class<? extends Enum> cls,
+										   String option, Object... objects) {
 		if (StringUtils.isBlank(option)) {
 			return "";
 		}

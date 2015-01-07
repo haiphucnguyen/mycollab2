@@ -1,3 +1,19 @@
+/**
+ * This file is part of mycollab-scheduler.
+ *
+ * mycollab-scheduler is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * mycollab-scheduler is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with mycollab-scheduler.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package com.esofthead.mycollab.schedule.email.crm.impl
 
 import com.esofthead.mycollab.common.MonitorTypeConstants
@@ -14,7 +30,7 @@ import com.esofthead.mycollab.module.user.AccountLinkGenerator
 import com.esofthead.mycollab.module.user.domain.SimpleUser
 import com.esofthead.mycollab.module.user.service.UserService
 import com.esofthead.mycollab.schedule.email.crm.CampaignRelayEmailNotificationAction
-import com.esofthead.mycollab.schedule.email.format.{TagBuilder, CurrencyFieldFormat, DateFieldFormat, FieldFormat}
+import com.esofthead.mycollab.schedule.email.format.{CurrencyFieldFormat, DateFieldFormat, FieldFormat, TagBuilder}
 import com.esofthead.mycollab.schedule.email.{ItemFieldMapper, MailContext}
 import com.esofthead.mycollab.spring.ApplicationContextUtil
 import com.hp.gagawa.java.elements.{A, Img}
@@ -30,7 +46,7 @@ import org.springframework.stereotype.Component
 @Component
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 class CampaignRelayEmailNotificationActionImpl extends CrmDefaultSendingRelayEmailAction[SimpleCampaign] with CampaignRelayEmailNotificationAction {
-  @Autowired  var campaignService: CampaignService = _
+  @Autowired var campaignService: CampaignService = _
   private val mapper: CampaignFieldNameMapper = new CampaignFieldNameMapper
 
   override protected def getBeanInContext(context: MailContext[SimpleCampaign]): SimpleCampaign = campaignService.findById(context.getTypeid.toInt, context.getSaccountid)
@@ -48,14 +64,9 @@ class CampaignRelayEmailNotificationActionImpl extends CrmDefaultSendingRelayEma
     val summaryLink: String = CrmLinkGenerator.generateCampaignPreviewFullLink(siteUrl, bean.getId)
 
     val emailNotification: SimpleRelayEmailNotification = context.getEmailNotification
-
-    var avatarId: String = ""
-
     val user: SimpleUser = userService.findUserByUserNameInAccount(emailNotification.getChangeby, context.getSaccountid)
 
-    if (user != null) {
-      avatarId = user.getAvatarid
-    }
+    val avatarId: String = if (user != null) user.getAvatarid else ""
     val userAvatar: Img = new Img("", StorageManager.getAvatarLink(avatarId, 16))
     userAvatar.setWidth("16")
     userAvatar.setHeight("16")
@@ -80,7 +91,7 @@ class CampaignRelayEmailNotificationActionImpl extends CrmDefaultSendingRelayEma
   override protected def getUpdateSubjectKey: Enum[_] = CampaignI18nEnum.MAIL_UPDATE_ITEM_SUBJECT
 
   class CampaignFieldNameMapper extends ItemFieldMapper {
-    put(CampaignWithBLOBs.Field.campaignname, CampaignI18nEnum.FORM_CAMPAIGN_NAME, true)
+    put(CampaignWithBLOBs.Field.campaignname, CampaignI18nEnum.FORM_CAMPAIGN_NAME, isColSpan = true)
     put(CampaignWithBLOBs.Field.status, CampaignI18nEnum.FORM_STATUS)
     put(CampaignWithBLOBs.Field.`type`, CampaignI18nEnum.FORM_TYPE)
     put(CampaignWithBLOBs.Field.currencyid, new CurrencyFieldFormat(CampaignWithBLOBs.Field.currencyid.name, CampaignI18nEnum.FORM_CURRENCY))
@@ -91,7 +102,7 @@ class CampaignRelayEmailNotificationActionImpl extends CrmDefaultSendingRelayEma
     put(CampaignWithBLOBs.Field.assignuser, new AssigneeFieldFormat(CampaignWithBLOBs.Field.assignuser.name, GenericI18Enum.FORM_ASSIGNEE))
     put(CampaignWithBLOBs.Field.startdate, new DateFieldFormat(CampaignWithBLOBs.Field.startdate.name, CampaignI18nEnum.FORM_START_DATE))
     put(CampaignWithBLOBs.Field.enddate, new DateFieldFormat(CampaignWithBLOBs.Field.enddate.name, CampaignI18nEnum.FORM_END_DATE))
-    put(CampaignWithBLOBs.Field.description, GenericI18Enum.FORM_DESCRIPTION, true)
+    put(CampaignWithBLOBs.Field.description, GenericI18Enum.FORM_DESCRIPTION, isColSpan = true)
   }
 
   class AssigneeFieldFormat(fieldName: String, displayName: Enum[_]) extends FieldFormat(fieldName, displayName) {
@@ -112,18 +123,19 @@ class CampaignRelayEmailNotificationActionImpl extends CrmDefaultSendingRelayEma
 
     def formatField(context: MailContext[_], value: String): String = {
       if (org.apache.commons.lang3.StringUtils.isBlank(value)) {
-        return ""
+        ""
+      } else {
+        val userService: UserService = ApplicationContextUtil.getSpringBean(classOf[UserService])
+        val user: SimpleUser = userService.findUserByUserNameInAccount(value, context.getUser.getAccountId)
+        if (user != null) {
+          val userAvatarLink: String = MailUtils.getAvatarLink(user.getAvatarid, 16)
+          val userLink: String = AccountLinkGenerator.generatePreviewFullUserLink(MailUtils.getSiteUrl(user.getAccountId), user.getUsername)
+          val img: Img = TagBuilder.newImg("avatar", userAvatarLink)
+          val link: A = TagBuilder.newA(userLink, user.getDisplayName)
+          TagBuilder.newLink(img, link).write
+        } else
+          value
       }
-      val userService: UserService = ApplicationContextUtil.getSpringBean(classOf[UserService])
-      val user: SimpleUser = userService.findUserByUserNameInAccount(value, context.getUser.getAccountId)
-      if (user != null) {
-        val userAvatarLink: String = MailUtils.getAvatarLink(user.getAvatarid, 16)
-        val userLink: String = AccountLinkGenerator.generatePreviewFullUserLink(MailUtils.getSiteUrl(user.getAccountId), user.getUsername)
-        val img: Img = TagBuilder.newImg("avatar", userAvatarLink)
-        val link: A = TagBuilder.newA(userLink, user.getDisplayName)
-        TagBuilder.newLink(img, link).write
-      }
-      value
     }
   }
 

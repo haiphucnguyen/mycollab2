@@ -1,3 +1,19 @@
+/**
+ * This file is part of mycollab-scheduler.
+ *
+ * mycollab-scheduler is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * mycollab-scheduler is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with mycollab-scheduler.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package com.esofthead.mycollab.schedule.email.crm.impl
 
 import com.esofthead.mycollab.common.MonitorTypeConstants
@@ -14,9 +30,11 @@ import com.esofthead.mycollab.module.mail.{IContentGenerator, MailUtils}
 import com.esofthead.mycollab.module.user.domain.SimpleUser
 import com.esofthead.mycollab.module.user.service.UserService
 import com.esofthead.mycollab.schedule.email.{ItemFieldMapper, MailContext, SendingRelayEmailNotificationAction}
+import org.apache.commons.lang3.StringUtils
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 
+import scala.collection.mutable
 import scala.util.control.Breaks._
 
 /**
@@ -43,7 +61,7 @@ abstract class CrmDefaultSendingRelayEmailAction[B <: ValuedBean] extends Sendin
       import scala.collection.JavaConversions._
       for (user <- notifiers) {
         val notifierFullName: String = user.getDisplayName
-        if (notifierFullName == null || notifierFullName.trim.length == 0) {
+        if (StringUtils.isBlank(notifierFullName)) {
           LOG.error("Can not find user {} of notification {}", Array[AnyRef](BeanUtility.printBeanObj(user), BeanUtility.printBeanObj(notification)))
           return
         }
@@ -57,8 +75,8 @@ abstract class CrmDefaultSendingRelayEmailAction[B <: ValuedBean] extends Sendin
           contentGenerator.putVariable("userName", notifierFullName)
           buildExtraTemplateVariables(context)
           val userMail: MailRecipientField = new MailRecipientField(user.getEmail, user.getUsername)
-          val lst: List[MailRecipientField] = List(userMail)
-          extMailService.sendHTMLMail(SiteConfiguration.getNoReplyEmail, SiteConfiguration.getSiteName, lst, null, null, contentGenerator.generateSubjectContent(subject), contentGenerator.generateBodyContent(getCreateContentPath, context.getLocale, SiteConfiguration.getDefaultLocale), null)
+          val recipients: List[MailRecipientField] = List(userMail)
+          extMailService.sendHTMLMail(SiteConfiguration.getNoReplyEmail, SiteConfiguration.getSiteName, recipients, null, null, contentGenerator.generateSubjectContent(subject), contentGenerator.generateBodyContent(getCreateContentPath, context.getLocale, SiteConfiguration.getDefaultLocale), null)
         }
       }
     }
@@ -82,13 +100,13 @@ abstract class CrmDefaultSendingRelayEmailAction[B <: ValuedBean] extends Sendin
           val subject: String = context.getMessage(getUpdateSubjectKey, context.getChangeByUserFullName, getItemName)
           val auditLog: SimpleAuditLog = auditLogService.findLatestLog(context.getTypeid.toInt, context.getSaccountid)
           contentGenerator.putVariable("historyLog", auditLog)
-          context.setWrappedBean(bean)
+          context.wrappedBean = bean
           buildExtraTemplateVariables(context)
           contentGenerator.putVariable("context", context)
           contentGenerator.putVariable("mapper", getItemFieldMapper)
           val userMail: MailRecipientField = new MailRecipientField(user.getEmail, user.getUsername)
-          val lst: List[MailRecipientField] = List(userMail)
-          extMailService.sendHTMLMail(SiteConfiguration.getNoReplyEmail, SiteConfiguration.getSiteName, lst, null, null, contentGenerator.generateSubjectContent(subject), contentGenerator.generateBodyContent(getUpdateContentPath, context.getLocale, SiteConfiguration.getDefaultLocale), null)
+          val recipients: List[MailRecipientField] = List(userMail)
+          extMailService.sendHTMLMail(SiteConfiguration.getNoReplyEmail, SiteConfiguration.getSiteName, recipients, null, null, contentGenerator.generateSubjectContent(subject), contentGenerator.generateBodyContent(getUpdateContentPath, context.getLocale, SiteConfiguration.getDefaultLocale), null)
         }
       }
     }
@@ -107,7 +125,7 @@ abstract class CrmDefaultSendingRelayEmailAction[B <: ValuedBean] extends Sendin
         breakable {
           if (notifierFullName == null) {
             LOG.error("Can not find user {} of notification {}", Array[AnyRef](BeanUtility.printBeanObj(user), BeanUtility.printBeanObj(notification)))
-            break() //todo: continue is not supported
+            break()
           }
         }
 
@@ -119,9 +137,9 @@ abstract class CrmDefaultSendingRelayEmailAction[B <: ValuedBean] extends Sendin
         contentGenerator.putVariable("comment", context.getEmailNotification)
         val subject: String = context.getMessage(getCommentSubjectKey, context.getChangeByUserFullName, getItemName)
         val userMail: MailRecipientField = new MailRecipientField(user.getEmail, user.getUsername)
-        val lst: List[MailRecipientField] = List(userMail)
+        val recipients: List[MailRecipientField] = List(userMail)
         extMailService.sendHTMLMail(SiteConfiguration.getNoReplyEmail, SiteConfiguration.getSiteName, seqAsJavaList
-          (lst), null, null,
+          (recipients), null, null,
           contentGenerator.generateSubjectContent(subject), contentGenerator.generateBodyContent(getNoteContentPath, context.getLocale, SiteConfiguration.getDefaultLocale), null)
       }
     }
@@ -132,20 +150,19 @@ abstract class CrmDefaultSendingRelayEmailAction[B <: ValuedBean] extends Sendin
 
     val notificationSettings: List[CrmNotificationSetting] = notificationService.findNotifications(notification
       .getSaccountid).asScala.toList
-    val inListUsers: List[SimpleUser] = notification.getNotifyUsers.asScala.toList
+    val inListUsers = notification.getNotifyUsers.asScala
     val noteSearchCriteria: NoteSearchCriteria = new NoteSearchCriteria
     noteSearchCriteria.setType(new StringSearchField(notification.getType))
     noteSearchCriteria.setTypeid(new NumberSearchField(notification.getTypeid.toInt))
     noteSearchCriteria.setSaccountid(new NumberSearchField(notification.getSaccountid))
     val lstNote: List[SimpleNote] = noteService.findPagableListByCriteria(new SearchRequest[NoteSearchCriteria]
     (noteSearchCriteria, 0, Integer.MAX_VALUE)).asScala.toList.asInstanceOf[List[SimpleNote]]
-    if (lstNote != null && lstNote.size > 0) {
-      import scala.collection.JavaConversions._
+    if (lstNote != null && lstNote.nonEmpty) {
       for (note <- lstNote) {
         if (note.getCreateduser != null) {
           val user: SimpleUser = userService.findUserByUserNameInAccount(note.getCreateduser, note.getSaccountid)
           if (user != null && !checkExistInList(inListUsers, user)) {
-            inListUsers.add(user)
+            inListUsers += user
           }
         }
       }
@@ -172,17 +189,17 @@ abstract class CrmDefaultSendingRelayEmailAction[B <: ValuedBean] extends Sendin
       }
     }
 
-    inListUsers
+    inListUsers.toList
   }
 
   private def onInitAction(notification: SimpleRelayEmailNotification) {
     siteUrl = MailUtils.getSiteUrl(notification.getSaccountid)
   }
 
-  private def checkExistInList(lst: List[SimpleUser], user: SimpleUser): Boolean = {
-    for (simpleUser <- lst) {
+  private def checkExistInList(users: mutable.Buffer[SimpleUser], user: SimpleUser): Boolean = {
+    for (simpleUser <- users) {
       if (simpleUser.getUsername != null && (simpleUser.getUsername == user.getUsername) || (simpleUser.getEmail == user.getUsername)) {
-        return true
+        true
       }
     }
     false

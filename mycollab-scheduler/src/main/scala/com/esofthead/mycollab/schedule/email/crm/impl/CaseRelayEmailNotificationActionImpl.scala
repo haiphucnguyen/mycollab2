@@ -1,3 +1,19 @@
+/**
+ * This file is part of mycollab-scheduler.
+ *
+ * mycollab-scheduler is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * mycollab-scheduler is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with mycollab-scheduler.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package com.esofthead.mycollab.schedule.email.crm.impl
 
 import com.esofthead.mycollab.common.MonitorTypeConstants
@@ -14,7 +30,7 @@ import com.esofthead.mycollab.module.user.AccountLinkGenerator
 import com.esofthead.mycollab.module.user.domain.SimpleUser
 import com.esofthead.mycollab.module.user.service.UserService
 import com.esofthead.mycollab.schedule.email.crm.CaseRelayEmailNotificationAction
-import com.esofthead.mycollab.schedule.email.format.{TagBuilder, FieldFormat}
+import com.esofthead.mycollab.schedule.email.format.{FieldFormat, TagBuilder}
 import com.esofthead.mycollab.schedule.email.{ItemFieldMapper, MailContext}
 import com.esofthead.mycollab.spring.ApplicationContextUtil
 import com.hp.gagawa.java.elements.{A, Img, Span}
@@ -30,7 +46,7 @@ import org.springframework.stereotype.Component
  */
 @Component
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-class CaseRelayEmailNotificationActionImpl extends CrmDefaultSendingRelayEmailAction[SimpleCase] with CaseRelayEmailNotificationAction{
+class CaseRelayEmailNotificationActionImpl extends CrmDefaultSendingRelayEmailAction[SimpleCase] with CaseRelayEmailNotificationAction {
   private val LOG = LoggerFactory.getLogger(classOf[CaseRelayEmailNotificationActionImpl])
   @Autowired var caseService: CaseService = _
   private val mapper = new CaseFieldNameMapper
@@ -50,14 +66,9 @@ class CaseRelayEmailNotificationActionImpl extends CrmDefaultSendingRelayEmailAc
     val summaryLink: String = CrmLinkGenerator.generateCasePreviewFullLink(siteUrl, bean.getId)
 
     val emailNotification: SimpleRelayEmailNotification = context.getEmailNotification
-
-    var avatarId: String = ""
-
     val user: SimpleUser = userService.findUserByUserNameInAccount(emailNotification.getChangeby, context.getSaccountid)
 
-    if (user != null) {
-      avatarId = user.getAvatarid
-    }
+    val avatarId: String = if (user != null) user.getAvatarid else ""
     val userAvatar: Img = new Img("", StorageManager.getAvatarLink(avatarId, 16))
     userAvatar.setWidth("16")
     userAvatar.setHeight("16")
@@ -82,19 +93,19 @@ class CaseRelayEmailNotificationActionImpl extends CrmDefaultSendingRelayEmailAc
   override protected def getUpdateSubjectKey: Enum[_] = CaseI18nEnum.MAIL_UPDATE_ITEM_SUBJECT
 
   class CaseFieldNameMapper extends ItemFieldMapper {
-      put(CaseWithBLOBs.Field.subject, CaseI18nEnum.FORM_SUBJECT, true)
-      put(CaseWithBLOBs.Field.description, GenericI18Enum.FORM_DESCRIPTION)
-      put(CaseWithBLOBs.Field.accountid, new AccountFieldFormat(CaseWithBLOBs.Field.accountid.name, CaseI18nEnum
-        .FORM_ACCOUNT))
-      put(CaseWithBLOBs.Field.priority, CaseI18nEnum.FORM_PRIORITY)
-      put(CaseWithBLOBs.Field.`type`, CaseI18nEnum.FORM_TYPE)
-      put(CaseWithBLOBs.Field.status, CaseI18nEnum.FORM_STATUS)
-      put(CaseWithBLOBs.Field.reason, CaseI18nEnum.FORM_REASON)
-      put(CaseWithBLOBs.Field.phonenumber, CaseI18nEnum.FORM_PHONE)
-      put(CaseWithBLOBs.Field.email, CaseI18nEnum.FORM_EMAIL)
-      put(CaseWithBLOBs.Field.origin, CaseI18nEnum.FORM_ORIGIN)
-      put(CaseWithBLOBs.Field.assignuser, new AssigneeFieldFormat(CaseWithBLOBs.Field.assignuser.name, GenericI18Enum.FORM_ASSIGNEE))
-      put(CaseWithBLOBs.Field.resolution, CaseI18nEnum.FORM_RESOLUTION, true)
+    put(CaseWithBLOBs.Field.subject, CaseI18nEnum.FORM_SUBJECT, isColSpan = true)
+    put(CaseWithBLOBs.Field.description, GenericI18Enum.FORM_DESCRIPTION)
+    put(CaseWithBLOBs.Field.accountid, new AccountFieldFormat(CaseWithBLOBs.Field.accountid.name, CaseI18nEnum
+      .FORM_ACCOUNT))
+    put(CaseWithBLOBs.Field.priority, CaseI18nEnum.FORM_PRIORITY)
+    put(CaseWithBLOBs.Field.`type`, CaseI18nEnum.FORM_TYPE)
+    put(CaseWithBLOBs.Field.status, CaseI18nEnum.FORM_STATUS)
+    put(CaseWithBLOBs.Field.reason, CaseI18nEnum.FORM_REASON)
+    put(CaseWithBLOBs.Field.phonenumber, CaseI18nEnum.FORM_PHONE)
+    put(CaseWithBLOBs.Field.email, CaseI18nEnum.FORM_EMAIL)
+    put(CaseWithBLOBs.Field.origin, CaseI18nEnum.FORM_ORIGIN)
+    put(CaseWithBLOBs.Field.assignuser, new AssigneeFieldFormat(CaseWithBLOBs.Field.assignuser.name, GenericI18Enum.FORM_ASSIGNEE))
+    put(CaseWithBLOBs.Field.resolution, CaseI18nEnum.FORM_RESOLUTION, isColSpan = true)
   }
 
   class AccountFieldFormat(fieldName: String, displayName: Enum[_]) extends FieldFormat(fieldName, displayName) {
@@ -106,16 +117,16 @@ class CaseRelayEmailNotificationActionImpl extends CrmDefaultSendingRelayEmailAc
         val img: Img = TagBuilder.newImg("avatar", accountIconLink)
         val accountLink: String = CrmLinkGenerator.generateAccountPreviewFullLink(context.siteUrl, simpleCase.getAccountid)
         val link: A = TagBuilder.newA(accountLink, simpleCase.getAccountName)
-         TagBuilder.newLink(img, link).write
+        TagBuilder.newLink(img, link).write
       }
       else {
-         new Span().write
+        new Span().write
       }
     }
 
     def formatField(context: MailContext[_], value: String): String = {
       if (org.apache.commons.lang3.StringUtils.isBlank(value)) {
-         new Span().write
+        new Span().write
       }
       try {
         val accountId: Integer = value.toInt
@@ -126,13 +137,13 @@ class CaseRelayEmailNotificationActionImpl extends CrmDefaultSendingRelayEmailAc
           val img: Img = TagBuilder.newImg("avatar", accountIconLink)
           val accountLink: String = CrmLinkGenerator.generateAccountPreviewFullLink(context.siteUrl, account.getId)
           val link: A = TagBuilder.newA(accountLink, account.getAccountname)
-           TagBuilder.newLink(img, link).write
+          return TagBuilder.newLink(img, link).write
         }
       }
       catch {
         case e: Exception => LOG.error("Error", e)
       }
-       value
+      value
     }
   }
 
@@ -145,27 +156,29 @@ class CaseRelayEmailNotificationActionImpl extends CrmDefaultSendingRelayEmailAc
         val img: Img = TagBuilder.newImg("avatar", userAvatarLink)
         val userLink: String = AccountLinkGenerator.generatePreviewFullUserLink(MailUtils.getSiteUrl(simpleCase.getSaccountid), simpleCase.getAssignuser)
         val link: A = TagBuilder.newA(userLink, simpleCase.getAssignUserFullName)
-         TagBuilder.newLink(img, link).write
+        TagBuilder.newLink(img, link).write
       }
       else {
-         new Span().write
+        new Span().write
       }
     }
 
     def formatField(context: MailContext[_], value: String): String = {
       if (org.apache.commons.lang3.StringUtils.isBlank(value)) {
-         new Span().write
+        new Span().write
+      } else {
+        val userService: UserService = ApplicationContextUtil.getSpringBean(classOf[UserService])
+        val user: SimpleUser = userService.findUserByUserNameInAccount(value, context.getUser.getAccountId)
+        if (user != null) {
+          val userAvatarLink: String = MailUtils.getAvatarLink(user.getAvatarid, 16)
+          val userLink: String = AccountLinkGenerator.generatePreviewFullUserLink(MailUtils.getSiteUrl(user.getAccountId), user.getUsername)
+          val img: Img = TagBuilder.newImg("avatar", userAvatarLink)
+          val link: A = TagBuilder.newA(userLink, user.getDisplayName)
+          TagBuilder.newLink(img, link).write
+        }
+        value
       }
-      val userService: UserService = ApplicationContextUtil.getSpringBean(classOf[UserService])
-      val user: SimpleUser = userService.findUserByUserNameInAccount(value, context.getUser.getAccountId)
-      if (user != null) {
-        val userAvatarLink: String = MailUtils.getAvatarLink(user.getAvatarid, 16)
-        val userLink: String = AccountLinkGenerator.generatePreviewFullUserLink(MailUtils.getSiteUrl(user.getAccountId), user.getUsername)
-        val img: Img = TagBuilder.newImg("avatar", userAvatarLink)
-        val link: A = TagBuilder.newA(userLink, user.getDisplayName)
-         TagBuilder.newLink(img, link).write
-      }
-       value
     }
   }
+
 }

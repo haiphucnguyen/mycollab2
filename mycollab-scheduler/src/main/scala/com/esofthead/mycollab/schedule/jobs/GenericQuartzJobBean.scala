@@ -14,35 +14,29 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-scheduler.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.schedule.jobs;
+package com.esofthead.mycollab.schedule.jobs
 
-import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.scheduling.quartz.QuartzJobBean;
+import org.quartz.{JobExecutionContext, JobExecutionException}
+import org.slf4j.{LoggerFactory, Logger}
+import org.springframework.scheduling.quartz.QuartzJobBean
 
 /**
- * 
  * @author MyCollab Ltd.
- * @since 4.3.0
- * 
+ * @since 4.6.0
  */
-public abstract class GenericQuartzJobBean extends QuartzJobBean {
-	private static final Logger LOG = LoggerFactory
-			.getLogger(GenericQuartzJobBean.class);
+abstract class GenericQuartzJobBean extends QuartzJobBean {
+  private val LOG: Logger = LoggerFactory.getLogger(classOf[GenericQuartzJobBean])
 
-	@Override
-	final protected void executeInternal(JobExecutionContext context)
-			throws JobExecutionException {
-		try {
-			executeJob(context);
-		} catch (Exception e) {
-			LOG.error("Exception in running schedule", e);
-		}
-	}
+  @throws(classOf[JobExecutionException])
+  protected def executeInternal(context: JobExecutionContext) {
+    try {
+      executeJob(context)
+    }
+    catch {
+      case e: Exception => LOG.error("Exception in running schedule", e)
+    }
+  }
 
-	abstract protected void executeJob(JobExecutionContext context)
-			throws JobExecutionException;
-
+  @throws(classOf[JobExecutionException])
+  protected def executeJob(context: JobExecutionContext): Unit
 }

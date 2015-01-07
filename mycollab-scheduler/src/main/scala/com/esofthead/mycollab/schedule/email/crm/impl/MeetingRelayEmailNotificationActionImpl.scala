@@ -1,3 +1,19 @@
+/**
+ * This file is part of mycollab-scheduler.
+ *
+ * mycollab-scheduler is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * mycollab-scheduler is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with mycollab-scheduler.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package com.esofthead.mycollab.schedule.email.crm.impl
 
 import com.esofthead.mycollab.common.MonitorTypeConstants
@@ -35,15 +51,14 @@ class MeetingRelayEmailNotificationActionImpl extends CrmDefaultSendingRelayEmai
     val summary: String = bean.getSubject
     val summaryLink: String = CrmLinkGenerator.generateMeetingPreviewFullLink(siteUrl, bean.getId)
     val emailNotification: SimpleRelayEmailNotification = context.getEmailNotification
-    var avatarId: String = ""
+
     val user: SimpleUser = userService.findUserByUserNameInAccount(emailNotification.getChangeby, context.getSaccountid)
-    if (user != null) {
-      avatarId = user.getAvatarid
-    }
+    val avatarId: String = if (user != null) user.getAvatarid else ""
     val userAvatar: Img = new Img("", StorageManager.getAvatarLink(avatarId, 16))
     userAvatar.setWidth("16")
     userAvatar.setHeight("16")
     userAvatar.setStyle("display: inline-block; vertical-align: top;")
+
     val makeChangeUser: String = userAvatar.toString + emailNotification.getChangeByUserFullName
     if (MonitorTypeConstants.CREATE_ACTION == emailNotification.getAction) {
       contentGenerator.putVariable("actionHeading", context.getMessage(MeetingI18nEnum.MAIL_CREATE_ITEM_HEADING, makeChangeUser))
@@ -54,6 +69,7 @@ class MeetingRelayEmailNotificationActionImpl extends CrmDefaultSendingRelayEmai
     else if (MonitorTypeConstants.ADD_COMMENT_ACTION == emailNotification.getAction) {
       contentGenerator.putVariable("actionHeading", context.getMessage(MeetingI18nEnum.MAIL_COMMENT_ITEM_HEADING, makeChangeUser))
     }
+
     contentGenerator.putVariable("summary", summary)
     contentGenerator.putVariable("summaryLink", summaryLink)
   }
@@ -71,12 +87,12 @@ class MeetingRelayEmailNotificationActionImpl extends CrmDefaultSendingRelayEmai
   protected def getBeanInContext(context: MailContext[SimpleMeeting]): SimpleMeeting = meetingService.findById(context.getTypeid.toInt, context.getSaccountid)
 
   class MeetingFieldNameMapper extends ItemFieldMapper {
-    put(MeetingWithBLOBs.Field.subject, MeetingI18nEnum.FORM_SUBJECT, true)
+    put(MeetingWithBLOBs.Field.subject, MeetingI18nEnum.FORM_SUBJECT, isColSpan = true)
     put(MeetingWithBLOBs.Field.status, MeetingI18nEnum.FORM_STATUS)
     put(MeetingWithBLOBs.Field.startdate, new DateTimeFieldFormat(MeetingWithBLOBs.Field.startdate.name, MeetingI18nEnum.FORM_START_DATE_TIME))
     put(MeetingWithBLOBs.Field.location, MeetingI18nEnum.FORM_LOCATION)
     put(MeetingWithBLOBs.Field.enddate, new DateTimeFieldFormat(MeetingWithBLOBs.Field.enddate.name, MeetingI18nEnum.FORM_END_DATE_TIME))
-    put(MeetingWithBLOBs.Field.description, GenericI18Enum.FORM_DESCRIPTION, true)
+    put(MeetingWithBLOBs.Field.description, GenericI18Enum.FORM_DESCRIPTION, isColSpan = true)
 
   }
 
