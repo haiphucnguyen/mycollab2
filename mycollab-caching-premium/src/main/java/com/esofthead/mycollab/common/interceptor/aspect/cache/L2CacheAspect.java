@@ -73,9 +73,9 @@ public class L2CacheAspect {
 								SearchCriteria criteria = ((SearchRequest) arg)
 										.getSearchCriteria();
 								if (criteria instanceof SearchCriteria
-										&& (((SearchCriteria) criteria)
+										&& (criteria
 												.getSaccountid() != null)) {
-									groupId = (Integer) ((SearchCriteria) criteria)
+									groupId = (Integer) criteria
 											.getSaccountid().getValue();
 								} else {
 									return pjp.proceed();
@@ -83,8 +83,8 @@ public class L2CacheAspect {
 							} else {
 								LOG.error(
 										"Cache key must be one of types [Integer, GroupableSearchCriteria, SearchRequest], now it has type {}. Check class.method {} {}",
-										new Object[] { arg, cls.getName(),
-												method.getName() });
+										arg, cls.getName(),
+										method.getName());
 								return pjp.proceed();
 							}
 						} catch (Exception e) {
@@ -129,8 +129,8 @@ public class L2CacheAspect {
 
 			LOG.error(
 					"Can not cache class {}, method {} because we can not detect cache key with args {}",
-					new Object[] { cls.getName(), method.getName(),
-							BeanUtility.printBeanObj(args) });
+					cls.getName(), method.getName(),
+					BeanUtility.printBeanObj(args));
 			return pjp.proceed();
 		} else {
 			return pjp.proceed();

@@ -40,7 +40,6 @@ import org.springframework.beans.factory.config.BeanDefinition
 import org.springframework.context.annotation.Scope
 import org.springframework.stereotype.Service
 
-import scala.collection.mutable.ListBuffer
 import scala.util.control.Breaks._
 
 /**
@@ -65,19 +64,17 @@ class ProjectTaskRelayEmailNotificationActionImpl extends SendMailToFollowersAct
   private val mapper = new TaskFieldNameMapper
 
   protected def buildExtraTemplateVariables(context: MailContext[SimpleTask]) {
-    val listOfTitles: ListBuffer[Map[String, String]] = ListBuffer[Map[String, String]]()
-    val currentProject: Map[String, String] = Map[String, String]("displayName" -> bean.getProjectName,"webLink" ->
-      ProjectLinkGenerator.generateProjectFullLink(siteUrl, bean.getProjectid))
-
-    listOfTitles += currentProject
+    val currentProject: Map[String, String] = Map[String, String](
+      "displayName" -> bean.getProjectName,
+      "webLink" -> ProjectLinkGenerator.generateProjectFullLink(siteUrl, bean.getProjectid))
 
     val emailNotification: SimpleRelayEmailNotification = context.getEmailNotification
     val relatedProject: SimpleProject = projectService.findById(bean.getProjectid, emailNotification.getSaccountid)
-    val taskCode: Map[String, String] = Map[String, String]("displayName" -> ("[" + relatedProject.getShortname + "-"
-      + bean.getTaskkey + "]"), "webLink" -> ProjectLinkGenerator.generateTaskPreviewFullLink(siteUrl, bean.getTaskkey, bean
-      .getProjectShortname))
+    val taskCode: Map[String, String] = Map[String, String](
+      "displayName" -> ("[" + relatedProject.getShortname + "-" + bean.getTaskkey + "]"),
+      "webLink" -> ProjectLinkGenerator.generateTaskPreviewFullLink(siteUrl, bean.getTaskkey, bean.getProjectShortname))
 
-    listOfTitles += (taskCode)
+    val listOfTitles: List[Map[String, String]] = List[Map[String, String]](currentProject, taskCode)
     val summary: String = bean.getTaskname
     val summaryLink: String = ProjectLinkGenerator.generateTaskPreviewFullLink(siteUrl, bean.getTaskkey, bean.getProjectShortname)
     val projectMember: SimpleProjectMember = projectMemberService.findMemberByUsername(emailNotification.getChangeby, bean.getProjectid, emailNotification.getSaccountid)
@@ -89,15 +86,13 @@ class ProjectTaskRelayEmailNotificationActionImpl extends SendMailToFollowersAct
     userAvatar.setStyle("display: inline-block; vertical-align: top;")
 
     val makeChangeUser: String = userAvatar.toString + emailNotification.getChangeByUserFullName
-    if (MonitorTypeConstants.CREATE_ACTION == emailNotification.getAction) {
-      contentGenerator.putVariable("actionHeading", context.getMessage(TaskI18nEnum.MAIL_CREATE_ITEM_HEADING, makeChangeUser))
+    val actionEnum: Enum[_] = emailNotification.getAction match {
+      case MonitorTypeConstants.CREATE_ACTION => TaskI18nEnum.MAIL_CREATE_ITEM_HEADING
+      case MonitorTypeConstants.UPDATE_ACTION => TaskI18nEnum.MAIL_UPDATE_ITEM_HEADING
+      case MonitorTypeConstants.ADD_COMMENT_ACTION => TaskI18nEnum.MAIL_COMMENT_ITEM_HEADING
     }
-    else if (MonitorTypeConstants.UPDATE_ACTION == emailNotification.getAction) {
-      contentGenerator.putVariable("actionHeading", context.getMessage(TaskI18nEnum.MAIL_UPDATE_ITEM_HEADING, makeChangeUser))
-    }
-    else if (MonitorTypeConstants.ADD_COMMENT_ACTION == emailNotification.getAction) {
-      contentGenerator.putVariable("actionHeading", context.getMessage(TaskI18nEnum.MAIL_COMMENT_ITEM_HEADING, makeChangeUser))
-    }
+
+    contentGenerator.putVariable("actionHeading", context.getMessage(actionEnum, makeChangeUser))
     contentGenerator.putVariable("titles", listOfTitles)
     contentGenerator.putVariable("summary", summary)
     contentGenerator.putVariable("summaryLink", summaryLink)
@@ -200,7 +195,7 @@ class ProjectTaskRelayEmailNotificationActionImpl extends SendMailToFollowersAct
   }
 
   class TaskFieldNameMapper extends ItemFieldMapper {
-    put(Task.Field.taskname, TaskI18nEnum.FORM_TASK_NAME, true)
+    put(Task.Field.taskname, TaskI18nEnum.FORM_TASK_NAME, isColSpan = true)
     put(Task.Field.startdate, new DateFieldFormat(Task.Field.startdate.name, TaskI18nEnum.FORM_START_DATE))
     put(Task.Field.actualstartdate, new DateFieldFormat(Task.Field.actualstartdate.name, TaskI18nEnum.FORM_ACTUAL_START_DATE))
     put(Task.Field.enddate, new DateFieldFormat(Task.Field.enddate.name, TaskI18nEnum.FORM_END_DATE))
@@ -231,20 +226,21 @@ class ProjectTaskRelayEmailNotificationActionImpl extends SendMailToFollowersAct
       }
     }
 
-    def formatField(context: MailContext[_], value: String):String = {
+    def formatField(context: MailContext[_], value: String): String = {
       if (org.apache.commons.lang3.StringUtils.isBlank(value)) {
         new Span().write
+      } else {
+        val userService: UserService = ApplicationContextUtil.getSpringBean(classOf[UserService])
+        val user: SimpleUser = userService.findUserByUserNameInAccount(value, context.getUser.getAccountId)
+        if (user != null) {
+          val userAvatarLink: String = MailUtils.getAvatarLink(user.getAvatarid, 16)
+          val userLink: String = AccountLinkGenerator.generatePreviewFullUserLink(MailUtils.getSiteUrl(user.getAccountId), user.getUsername)
+          val img: Img = TagBuilder.newImg("avatar", userAvatarLink)
+          val link: A = TagBuilder.newA(userLink, user.getDisplayName)
+          TagBuilder.newLink(img, link).write
+        } else
+          value
       }
-      val userService: UserService = ApplicationContextUtil.getSpringBean(classOf[UserService])
-      val user: SimpleUser = userService.findUserByUserNameInAccount(value, context.getUser.getAccountId)
-      if (user != null) {
-        val userAvatarLink: String = MailUtils.getAvatarLink(user.getAvatarid, 16)
-        val userLink: String = AccountLinkGenerator.generatePreviewFullUserLink(MailUtils.getSiteUrl(user.getAccountId), user.getUsername)
-        val img: Img = TagBuilder.newImg("avatar", userAvatarLink)
-        val link: A = TagBuilder.newA(userLink, user.getDisplayName)
-         TagBuilder.newLink(img, link).write
-      }
-      value
     }
   }
 

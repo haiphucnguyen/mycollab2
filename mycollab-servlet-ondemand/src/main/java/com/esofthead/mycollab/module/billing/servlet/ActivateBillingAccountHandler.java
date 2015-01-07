@@ -31,7 +31,7 @@ public class ActivateBillingAccountHandler extends GenericHttpServlet {
 
 	}
 
-	public static void main(String[] args) throws ClientProtocolException,
+	public static void main(String[] args) throws
 			IOException {
 		CloseableHttpClient httpClient = HttpClients.createDefault();
 		HttpGet httpGet = new HttpGet(

@@ -25,7 +25,7 @@ import scala.beans.BeanProperty
  * @since 4.6.0
  */
 abstract class FieldFormat(@BeanProperty var fieldName: String, @BeanProperty var displayName: Enum[_], @BeanProperty
-var isColSpan: Boolean = false) {
+var isColSpan: Boolean) {
   def this(fieldName: String, displayName: Enum[_]) = this(fieldName, displayName, false)
 
   def formatField(context: MailContext[_]): String

@@ -54,7 +54,7 @@ abstract class SendMailToAllMembersAction[B] extends SendingRelayEmailNotificati
     import scala.collection.JavaConverters._
     val usersInProject: mutable.Buffer[SimpleUser] = projectMemberService.getActiveUsersInProject(notification.getProjectId, notification.getSaccountid).asScala
     val notificationSettings: List[ProjectNotificationSetting] = projectNotificationService.findNotifications(notification.getProjectId, notification.getSaccountid).asScala.toList
-    if (notificationSettings != null && notificationSettings.size > 0) {
+    if (notificationSettings != null && notificationSettings.nonEmpty) {
       for (setting <- notificationSettings) {
         if ((NotificationType.None.name == setting.getLevel) || (NotificationType.Minimal.name == setting.getLevel)) {
           breakable {

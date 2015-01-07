@@ -71,9 +71,9 @@ public class L2CacheEvictAspect {
 							} catch (Exception e) {
 								LOG.error(
 										"Can not define cache key of class {}, method {} with argument {}",
-										new Object[] { cls.getName(),
-												method.getName(),
-												BeanUtility.printBeanObj(arg) });
+										cls.getName(),
+										method.getName(),
+										BeanUtility.printBeanObj(arg));
 								return;
 							}
 						}

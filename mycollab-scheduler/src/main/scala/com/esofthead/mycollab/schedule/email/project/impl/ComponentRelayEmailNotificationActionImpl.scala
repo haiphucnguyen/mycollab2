@@ -48,9 +48,8 @@ import scala.collection.mutable.ListBuffer
  * @since 4.6.0
  */
 @Service
-@Scope(BeanDefinition.SCOPE_PROTOTYPE) class ComponentRelayEmailNotificationActionImpl extends SendMailToAllMembersAction[SimpleComponent] with ComponentRelayEmailNotificationAction {
-
-
+@Scope(BeanDefinition.SCOPE_PROTOTYPE)
+class ComponentRelayEmailNotificationActionImpl extends SendMailToAllMembersAction[SimpleComponent] with ComponentRelayEmailNotificationAction {
   @Autowired var componentService: ComponentService = _
 
   @Autowired var projectService: ProjectService = _
@@ -58,15 +57,14 @@ import scala.collection.mutable.ListBuffer
   private val mapper: ComponentFieldNameMapper = new ComponentFieldNameMapper
 
   protected def buildExtraTemplateVariables(context: MailContext[SimpleComponent]) {
-    val listOfTitles: ListBuffer[Map[String, String]] = ListBuffer[Map[String, String]]()
-
     val emailNotification: SimpleRelayEmailNotification = context.getEmailNotification
     val project: SimpleProject = projectService.findById(bean.getProjectid, emailNotification.getSaccountid)
 
-    var currentProject: Map[String, String] = Map[String, String]("displayName" -> project.getName, "webLink" -> ProjectLinkGenerator.generateProjectFullLink
-      (siteUrl, bean.getProjectid))
-    
-    listOfTitles += currentProject
+    val currentProject: Map[String, String] = Map[String, String](
+      "displayName" -> project.getName,
+      "webLink" -> ProjectLinkGenerator.generateProjectFullLink(siteUrl, bean.getProjectid))
+
+    val listOfTitles: List[Map[String, String]] = List[Map[String, String]](currentProject)
 
     val summary: String = bean.getComponentname
     val summaryLink: String = ProjectLinkGenerator.generateBugComponentPreviewFullLink(siteUrl, bean.getProjectid, bean.getId)
@@ -79,16 +77,13 @@ import scala.collection.mutable.ListBuffer
     userAvatar.setStyle("display: inline-block; vertical-align: top;")
 
     val makeChangeUser: String = userAvatar.toString + emailNotification.getChangeByUserFullName
-    if (MonitorTypeConstants.CREATE_ACTION == emailNotification.getAction) {
-      contentGenerator.putVariable("actionHeading", context.getMessage(ComponentI18nEnum.MAIL_CREATE_ITEM_HEADING, makeChangeUser))
-    }
-    else if (MonitorTypeConstants.UPDATE_ACTION == emailNotification.getAction) {
-      contentGenerator.putVariable("actionHeading", context.getMessage(ComponentI18nEnum.MAIL_UPDATE_ITEM_HEADING, makeChangeUser))
-    }
-    else if (MonitorTypeConstants.ADD_COMMENT_ACTION == emailNotification.getAction) {
-      contentGenerator.putVariable("actionHeading", context.getMessage(ComponentI18nEnum.MAIL_COMMENT_ITEM_HEADING, makeChangeUser))
+    val actionEnum:Enum[_] = emailNotification.getAction match {
+      case MonitorTypeConstants.CREATE_ACTION => ComponentI18nEnum.MAIL_CREATE_ITEM_HEADING
+      case MonitorTypeConstants.UPDATE_ACTION => ComponentI18nEnum.MAIL_UPDATE_ITEM_HEADING
+      case MonitorTypeConstants.ADD_COMMENT_ACTION => ComponentI18nEnum.MAIL_COMMENT_ITEM_HEADING
     }
 
+    contentGenerator.putVariable("actionHeading", context.getMessage(actionEnum, makeChangeUser))
     contentGenerator.putVariable("titles", listOfTitles)
     contentGenerator.putVariable("summary", summary)
     contentGenerator.putVariable("summaryLink", summaryLink)

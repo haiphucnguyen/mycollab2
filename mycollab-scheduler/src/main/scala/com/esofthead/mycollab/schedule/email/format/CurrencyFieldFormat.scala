@@ -41,7 +41,7 @@ class CurrencyFieldFormat(fieldName: String, displayName: Enum[_]) extends Field
         new Span().write
       }
       else if (value.isInstanceOf[Currency]) {
-        new Span().appendText((value.asInstanceOf[Currency]).getSymbol).write
+        new Span().appendText(value.asInstanceOf[Currency].getSymbol).write
       }
       else {
         val currencyService: CurrencyService = ApplicationContextUtil.getSpringBean(classOf[CurrencyService])
@@ -66,12 +66,11 @@ class CurrencyFieldFormat(fieldName: String, displayName: Enum[_]) extends Field
       val currencyId: Int = value.toInt
       val currency: Currency = currencyService.findByPrimaryKey(currencyId, context.getUser.getAccountId)
       if (currency != null) {
-        currency.getFullname
+        return currency.getFullname
       }
     }
     catch {
-      case e: Exception =>
-        LOG.error("Error", e)
+      case e: Exception => LOG.error("Error", e)
     }
 
     value

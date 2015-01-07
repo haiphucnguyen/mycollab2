@@ -60,11 +60,13 @@ SendMailToAllMembersAction[SimpleMessage] with MessageRelayEmailNotificationActi
   protected def getBeanInContext(context: MailContext[SimpleMessage]): SimpleMessage = messageService.findById(context.getTypeid.toInt, context.getSaccountid)
 
   protected def buildExtraTemplateVariables(context: MailContext[SimpleMessage]) {
-    var listOfTitles: ListBuffer[Map[String, String]] = ListBuffer[Map[String, String]]()
     val emailNotification: SimpleRelayEmailNotification = context.getEmailNotification
-    val currentProject: Map[String, String] = Map[String, String] ("displayName" -> bean.getProjectName, "webLink" -> ProjectLinkGenerator.generateProjectFullLink(siteUrl, bean.getProjectid))
+    val currentProject: Map[String, String] = Map[String, String] (
+      "displayName" -> bean.getProjectName,
+      "webLink" -> ProjectLinkGenerator.generateProjectFullLink(siteUrl, bean.getProjectid))
 
-    listOfTitles += currentProject
+    val listOfTitles: List[Map[String, String]] = List[Map[String, String]](currentProject)
+
     val summary: String = bean.getTitle
     val summaryLink: String = ProjectLinkGenerator.generateMessagePreviewFullLink(siteUrl, bean.getProjectid, bean.getId)
     val projectMember: SimpleProjectMember = projectMemberService.findMemberByUsername(emailNotification.getChangeby, bean.getProjectid, emailNotification.getSaccountid)
@@ -76,16 +78,13 @@ SendMailToAllMembersAction[SimpleMessage] with MessageRelayEmailNotificationActi
     userAvatar.setStyle("display: inline-block; vertical-align: top;")
 
     val makeChangeUser: String = userAvatar.toString + emailNotification.getChangeByUserFullName
-    if (MonitorTypeConstants.CREATE_ACTION == emailNotification.getAction) {
-      contentGenerator.putVariable("actionHeading", context.getMessage(MessageI18nEnum.MAIL_CREATE_ITEM_HEADING, makeChangeUser))
-    }
-    else if (MonitorTypeConstants.UPDATE_ACTION == emailNotification.getAction) {
-      contentGenerator.putVariable("actionHeading", context.getMessage(MessageI18nEnum.MAIL_UPDATE_ITEM_HEADING, makeChangeUser))
-    }
-    else if (MonitorTypeConstants.ADD_COMMENT_ACTION == emailNotification.getAction) {
-      contentGenerator.putVariable("actionHeading", context.getMessage(MessageI18nEnum.MAIL_COMMENT_ITEM_HEADING, makeChangeUser))
+    val actionEnum:Enum[_] = emailNotification.getAction match {
+      case MonitorTypeConstants.CREATE_ACTION => MessageI18nEnum.MAIL_CREATE_ITEM_HEADING
+      case MonitorTypeConstants.UPDATE_ACTION => MessageI18nEnum.MAIL_UPDATE_ITEM_HEADING
+      case MonitorTypeConstants.ADD_COMMENT_ACTION =>  MessageI18nEnum.MAIL_COMMENT_ITEM_HEADING
     }
 
+    contentGenerator.putVariable("actionHeading", context.getMessage(actionEnum, makeChangeUser))
     contentGenerator.putVariable("titles", listOfTitles)
     contentGenerator.putVariable("summary", summary)
     contentGenerator.putVariable("summaryLink", summaryLink)

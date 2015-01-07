@@ -105,7 +105,7 @@ public class CustomFieldComponent extends CssLayout {
 			@Override
 			public void buttonClick(ClickEvent arg0) {
 				editFieldBtn.setPopupVisible(false);
-				CustomFieldComponent.this.setRequired((Boolean) isRequired
+				CustomFieldComponent.this.setRequired(isRequired
 						.getValue());
 			}
 		});

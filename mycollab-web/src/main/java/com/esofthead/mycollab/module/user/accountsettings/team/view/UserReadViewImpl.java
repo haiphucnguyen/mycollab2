@@ -256,11 +256,11 @@ public class UserReadViewImpl extends AbstractPageView implements UserReadView {
 		private class FormLayoutFactory implements IFormLayoutFactory {
 			private static final long serialVersionUID = 1L;
 
-			protected VerticalLayout contactInformation = new VerticalLayout();;
-			protected VerticalLayout contactInformationTitle = new VerticalLayout();;
+			protected VerticalLayout contactInformation = new VerticalLayout();
+			protected VerticalLayout contactInformationTitle = new VerticalLayout();
 
-			protected VerticalLayout advanceInformation = new VerticalLayout();;
-			protected VerticalLayout advanceInformationTitle = new VerticalLayout();;
+			protected VerticalLayout advanceInformation = new VerticalLayout();
+			protected VerticalLayout advanceInformationTitle = new VerticalLayout();
 
 			@Override
 			public ComponentContainer getLayout() {

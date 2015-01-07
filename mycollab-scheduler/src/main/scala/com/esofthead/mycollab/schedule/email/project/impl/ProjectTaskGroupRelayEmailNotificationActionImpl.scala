@@ -40,8 +40,6 @@ import org.springframework.beans.factory.config.BeanDefinition
 import org.springframework.context.annotation.Scope
 import org.springframework.stereotype.Service
 
-import scala.collection.mutable.ListBuffer
-
 /**
  * @author MyCollab Ltd.
  * @since 4.6.0
@@ -49,7 +47,6 @@ import scala.collection.mutable.ListBuffer
 @Service
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 class ProjectTaskGroupRelayEmailNotificationActionImpl extends SendMailToAllMembersAction[SimpleTaskList] with ProjectTaskGroupRelayEmailNotificationAction {
-
 
   private val LOG = LoggerFactory.getLogger(classOf[ProjectTaskGroupRelayEmailNotificationActionImpl])
 
@@ -72,14 +69,15 @@ class ProjectTaskGroupRelayEmailNotificationActionImpl extends SendMailToAllMemb
   protected def getBeanInContext(context: MailContext[SimpleTaskList]): SimpleTaskList = projectTaskListService.findById(context.getTypeid.toInt, context.getSaccountid)
 
   protected def buildExtraTemplateVariables(context: MailContext[SimpleTaskList]) {
-    val listOfTitles: ListBuffer[Map[String, String]] = ListBuffer[Map[String, String]]()
 
     val emailNotification: SimpleRelayEmailNotification = context.getEmailNotification
     val relatedProject: SimpleProject = projectService.findById(bean.getProjectid, emailNotification.getSaccountid)
 
-    val currentProject: Map[String, String] = Map[String, String]("displayName" -> relatedProject.getName, "webLink" -> ProjectLinkGenerator.generateProjectFullLink(siteUrl, bean.getProjectid))
+    val currentProject: Map[String, String] = Map[String, String](
+      "displayName" -> relatedProject.getName,
+      "webLink" -> ProjectLinkGenerator.generateProjectFullLink(siteUrl, bean.getProjectid))
 
-    listOfTitles += currentProject
+    val listOfTitles: List[Map[String, String]] = List[Map[String, String]](currentProject)
 
     val summary: String = bean.getName
     val summaryLink: String = ProjectLinkGenerator.generateTaskGroupPreviewFullLink(siteUrl, bean.getProjectid, bean.getId)
@@ -92,16 +90,13 @@ class ProjectTaskGroupRelayEmailNotificationActionImpl extends SendMailToAllMemb
     userAvatar.setStyle("display: inline-block; vertical-align: top;")
 
     val makeChangeUser: String = userAvatar.toString + emailNotification.getChangeByUserFullName
-    if (MonitorTypeConstants.CREATE_ACTION == emailNotification.getAction) {
-      contentGenerator.putVariable("actionHeading", context.getMessage(TaskGroupI18nEnum.MAIL_CREATE_ITEM_HEADING, makeChangeUser))
-    }
-    else if (MonitorTypeConstants.UPDATE_ACTION == emailNotification.getAction) {
-      contentGenerator.putVariable("actionHeading", context.getMessage(TaskGroupI18nEnum.MAIL_UPDATE_ITEM_HEADING, makeChangeUser))
-    }
-    else if (MonitorTypeConstants.ADD_COMMENT_ACTION == emailNotification.getAction) {
-      contentGenerator.putVariable("actionHeading", context.getMessage(TaskGroupI18nEnum.MAIL_COMMENT_ITEM_HEADING, makeChangeUser))
+    val headerEnum: Enum[_] = emailNotification.getAction match {
+      case MonitorTypeConstants.CREATE_ACTION => TaskGroupI18nEnum.MAIL_CREATE_ITEM_HEADING
+      case MonitorTypeConstants.UPDATE_ACTION => TaskGroupI18nEnum.MAIL_UPDATE_ITEM_HEADING
+      case MonitorTypeConstants.ADD_COMMENT_ACTION => TaskGroupI18nEnum.MAIL_COMMENT_ITEM_HEADING
     }
 
+    contentGenerator.putVariable("actionHeading", context.getMessage(headerEnum, makeChangeUser))
     contentGenerator.putVariable("titles", listOfTitles)
     contentGenerator.putVariable("summary", summary)
     contentGenerator.putVariable("summaryLink", summaryLink)
@@ -116,7 +111,6 @@ class ProjectTaskGroupRelayEmailNotificationActionImpl extends SendMailToAllMemb
   }
 
   class AssigneeFieldFormat(fieldName: String, displayName: Enum[_]) extends FieldFormat(fieldName, displayName) {
-
     def formatField(context: MailContext[_]): String = {
       val taskList: SimpleTaskList = context.getWrappedBean.asInstanceOf[SimpleTaskList]
       if (taskList.getOwner != null) {
@@ -142,14 +136,13 @@ class ProjectTaskGroupRelayEmailNotificationActionImpl extends SendMailToAllMemb
         val userLink: String = AccountLinkGenerator.generatePreviewFullUserLink(MailUtils.getSiteUrl(user.getAccountId), user.getUsername)
         val img: Img = TagBuilder.newImg("avatar", userAvatarLink)
         val link: A = TagBuilder.newA(userLink, user.getDisplayName)
-        return TagBuilder.newLink(img, link).write
-      }
-      value
+        TagBuilder.newLink(img, link).write
+      } else
+        value
     }
   }
 
   class MilestoneFieldFormat(fieldName: String, displayName: Enum[_], isColSpan: Boolean) extends FieldFormat(fieldName, displayName, isColSpan) {
-
     def formatField(context: MailContext[_]): String = {
       val taskList: SimpleTaskList = context.wrappedBean.asInstanceOf[SimpleTaskList]
       if (taskList.getMilestoneid != null) {

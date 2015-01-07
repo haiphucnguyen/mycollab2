@@ -68,19 +68,18 @@ class BugRelayEmailNotificationActionImpl extends SendMailToFollowersAction[Simp
   private val mapper = new BugFieldNameMapper
 
   protected def buildExtraTemplateVariables(context: MailContext[SimpleBug]) {
-    var listOfTitles = ListBuffer[Map[String, String]]()
-    val currentProject = Map[String, String]("displayName" -> bean.getProjectname, "webLink" -> ProjectLinkGenerator
-      .generateProjectFullLink(siteUrl, bean.getProjectid))
-
-    listOfTitles += currentProject
+    val currentProject = Map[String, String](
+      "displayName" -> bean.getProjectname,
+      "webLink" -> ProjectLinkGenerator.generateProjectFullLink(siteUrl, bean.getProjectid))
 
     val emailNotification: SimpleRelayEmailNotification = context.getEmailNotification
     val relatedProject: SimpleProject = projectService.findById(bean.getProjectid, emailNotification.getSaccountid)
-    var bugCode = Map[String, String]("displayName" -> ("[" + relatedProject.getShortname + "-" + bean.getBugkey +
-      "]"), "webLink" -> ProjectLinkGenerator.generateBugPreviewFullLink(siteUrl, bean.getBugkey, bean
-      .getProjectShortName))
 
-    listOfTitles += bugCode
+    val bugCode = Map[String, String](
+      "displayName" -> ("[" + relatedProject.getShortname + "-" + bean.getBugkey +"]"),
+      "webLink" -> ProjectLinkGenerator.generateBugPreviewFullLink(siteUrl, bean.getBugkey, bean.getProjectShortName))
+
+    val listOfTitles = List[Map[String, String]](currentProject, bugCode)
 
     val summary: String = bean.getSummary
     val summaryLink: String = ProjectLinkGenerator.generateBugPreviewFullLink(siteUrl, bean.getBugkey, bean.getProjectShortName)
@@ -94,16 +93,13 @@ class BugRelayEmailNotificationActionImpl extends SendMailToFollowersAction[Simp
 
     val makeChangeUser: String = userAvatar.toString + emailNotification.getChangeByUserFullName
 
-    if (MonitorTypeConstants.CREATE_ACTION == emailNotification.getAction) {
-      contentGenerator.putVariable("actionHeading", context.getMessage(BugI18nEnum.MAIL_CREATE_ITEM_HEADING, makeChangeUser))
-    }
-    else if (MonitorTypeConstants.UPDATE_ACTION == emailNotification.getAction) {
-      contentGenerator.putVariable("actionHeading", context.getMessage(BugI18nEnum.MAIL_UPDATE_ITEM_HEADING, makeChangeUser))
-    }
-    else if (MonitorTypeConstants.ADD_COMMENT_ACTION == emailNotification.getAction) {
-      contentGenerator.putVariable("actionHeading", context.getMessage(BugI18nEnum.MAIL_COMMENT_ITEM_HEADING, makeChangeUser))
+    val actionEnum:Enum[_] = emailNotification.getAction match {
+      case MonitorTypeConstants.CREATE_ACTION => BugI18nEnum.MAIL_CREATE_ITEM_HEADING
+      case MonitorTypeConstants.UPDATE_ACTION => BugI18nEnum.MAIL_UPDATE_ITEM_HEADING
+      case MonitorTypeConstants.ADD_COMMENT_ACTION => BugI18nEnum.MAIL_COMMENT_ITEM_HEADING
     }
 
+    contentGenerator.putVariable("actionHeading", context.getMessage(actionEnum, makeChangeUser))
     contentGenerator.putVariable("titles", listOfTitles.toList)
     contentGenerator.putVariable("summary", summary)
     contentGenerator.putVariable("summaryLink", summaryLink)
