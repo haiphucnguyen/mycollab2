@@ -41,8 +41,6 @@ import org.springframework.beans.factory.config.BeanDefinition
 import org.springframework.context.annotation.Scope
 import org.springframework.stereotype.Service
 
-import scala.collection.mutable.ListBuffer
-
 /**
  * @author MyCollab Ltd.
  * @since 4.6.0
@@ -102,7 +100,7 @@ class ComponentRelayEmailNotificationActionImpl extends SendMailToAllMembersActi
   protected def getItemFieldMapper: ItemFieldMapper = mapper
 
   class ComponentFieldNameMapper extends ItemFieldMapper {
-    put(Component.Field.description, GenericI18Enum.FORM_DESCRIPTION, true)
+    put(Component.Field.description, GenericI18Enum.FORM_DESCRIPTION, isColSpan = true)
     put(Component.Field.status, new I18nFieldFormat(Component.Field.status.name, ComponentI18nEnum.FORM_STATUS, classOf[OptionI18nEnum.StatusI18nEnum]))
     put(Component.Field.userlead, new LeadFieldFormat(Component.Field.userlead.name, ComponentI18nEnum.FORM_LEAD))
   }
@@ -123,7 +121,7 @@ class ComponentRelayEmailNotificationActionImpl extends SendMailToAllMembersActi
 
     def formatField(context: MailContext[_], value: String): String = {
       if (org.apache.commons.lang3.StringUtils.isBlank(value)) {
-        new Span().write
+        return new Span().write
       }
       val userService: UserService = ApplicationContextUtil.getSpringBean(classOf[UserService])
       val user: SimpleUser = userService.findUserByUserNameInAccount(value, context.getUser.getAccountId)

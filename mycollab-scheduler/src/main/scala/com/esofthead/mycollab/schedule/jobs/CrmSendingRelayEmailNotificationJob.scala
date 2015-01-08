@@ -40,7 +40,7 @@ import org.springframework.stereotype.Component
 class CrmSendingRelayEmailNotificationJob extends GenericQuartzJobBean {
   private val LOG: Logger = LoggerFactory.getLogger(classOf[CrmSendingRelayEmailNotificationJob])
 
-  @SuppressWarnings(Array("unchecked", "rawtypes"))
+  @SuppressWarnings(Array("unchecked"))
   def executeJob(context: JobExecutionContext) {
     val relayEmailService: RelayEmailNotificationService = ApplicationContextUtil.getSpringBean(classOf[RelayEmailNotificationService])
     val criteria: RelayEmailNotificationSearchCriteria = new RelayEmailNotificationSearchCriteria

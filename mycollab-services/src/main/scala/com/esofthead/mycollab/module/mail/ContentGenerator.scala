@@ -43,15 +43,24 @@ class ContentGenerator extends IContentGenerator with InitializingBean {
   @throws(classOf[Exception])
   def afterPropertiesSet {
     templateContext = new TemplateContext
-    val defaultUrls = scala.collection.mutable.Map[String, String]()
     val sharingOptions = SharingOptions.getDefaultSharingOptions
-    defaultUrls += (("cdn_url" -> SiteConfiguration.getCdnUrl), ("facebook_url" -> sharingOptions.getFacebookUrl),
-      ("google_url" -> sharingOptions.getGoogleplusUrl), ("linkedin_url" -> sharingOptions.getLinkedinUrl),
-      ("twitter_url" -> sharingOptions.getTwitterUrl))
+    val defaultUrls = Map[String, String](
+      "cdn_url" -> SiteConfiguration.getCdnUrl,
+      "facebook_url" -> sharingOptions.getFacebookUrl,
+      "google_url" -> sharingOptions.getGoogleplusUrl,
+      "linkedin_url" -> sharingOptions.getLinkedinUrl,
+      "twitter_url" -> sharingOptions.getTwitterUrl)
     templateContext.put("defaultUrls", defaultUrls)
   }
 
-  override def putVariable(key: String, value: scala.Any): Unit = templateContext.put(key, value)
+  override def putVariable(key: String, value: scala.Any): Unit = {
+    import scala.collection.JavaConversions._
+    value match {
+      case map: Map[_, _] => templateContext.put(key, mapAsJavaMap(map))
+      case list: List[_] => templateContext.put(key, seqAsJavaList(list))
+      case _ => templateContext.put(key, value)
+    }
+  }
 
   override def generateBodyContent(templateFilePath: String): String = {
     val writer = new StringWriter

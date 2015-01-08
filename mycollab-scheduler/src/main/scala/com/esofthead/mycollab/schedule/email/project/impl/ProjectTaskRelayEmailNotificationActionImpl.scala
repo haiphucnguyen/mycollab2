@@ -263,7 +263,7 @@ class ProjectTaskRelayEmailNotificationActionImpl extends SendMailToFollowersAct
 
     def formatField(context: MailContext[_], value: String): String = {
       if (org.apache.commons.lang3.StringUtils.isBlank(value)) {
-        new Span().write
+        return new Span().write
       }
       try {
         val taskgroupId: Int = value.toInt
@@ -275,7 +275,7 @@ class ProjectTaskRelayEmailNotificationActionImpl extends SendMailToFollowersAct
           val taskListLink: String = ProjectLinkGenerator.generateTaskGroupPreviewFullLink(context.siteUrl, taskgroup
             .getProjectid, taskgroup.getId)
           val link: A = TagBuilder.newA(taskListLink, taskgroup.getName)
-          TagBuilder.newLink(img, link).write
+          return TagBuilder.newLink(img, link).write
         }
       }
       catch {

@@ -92,7 +92,7 @@ class ProjectMilestoneRelayEmailNotificationActionImpl extends SendMailToAllMemb
 
     def formatField(context: MailContext[_], value: String): String = {
       if (org.apache.commons.lang3.StringUtils.isBlank(value)) {
-        new Span().write
+        return new Span().write
       }
       val userService: UserService = ApplicationContextUtil.getSpringBean(classOf[UserService])
       val user: SimpleUser = userService.findUserByUserNameInAccount(value, context.getUser.getAccountId)
@@ -126,7 +126,7 @@ class ProjectMilestoneRelayEmailNotificationActionImpl extends SendMailToAllMemb
     userAvatar.setStyle("display: inline-block; vertical-align: top;")
 
     val makeChangeUser: String = userAvatar.toString + emailNotification.getChangeByUserFullName
-    val actionEnum:Enum[_] = emailNotification.getAction match {
+    val actionEnum: Enum[_] = emailNotification.getAction match {
       case MonitorTypeConstants.CREATE_ACTION => MilestoneI18nEnum.MAIL_CREATE_ITEM_HEADING
       case MonitorTypeConstants.UPDATE_ACTION => MilestoneI18nEnum.MAIL_UPDATE_ITEM_HEADING
       case MonitorTypeConstants.ADD_COMMENT_ACTION => MilestoneI18nEnum.MAIL_COMMENT_ITEM_HEADING

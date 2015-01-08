@@ -295,7 +295,7 @@ class BugRelayEmailNotificationActionImpl extends SendMailToFollowersAction[Simp
 
     def formatField(context: MailContext[_], value: String): String = {
       if (org.apache.commons.lang3.StringUtils.isBlank(value))
-        new Span().write
+        return new Span().write
 
       val userService: UserService = ApplicationContextUtil.getSpringBean(classOf[UserService])
       val user: SimpleUser = userService.findUserByUserNameInAccount(value, context.getUser.getAccountId)
