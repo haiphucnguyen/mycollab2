@@ -19,8 +19,8 @@ package com.esofthead.mycollab.schedule.email.crm.impl
 import com.esofthead.mycollab.common.MonitorTypeConstants
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification
 import com.esofthead.mycollab.common.i18n.GenericI18Enum
-import com.esofthead.mycollab.configuration.StorageManager
 import com.esofthead.mycollab.core.utils.StringUtils
+import com.esofthead.mycollab.html.{LinkUtils, FormatUtils}
 import com.esofthead.mycollab.module.crm.domain.{SimpleContact, SimpleTask, Task}
 import com.esofthead.mycollab.module.crm.i18n.TaskI18nEnum
 import com.esofthead.mycollab.module.crm.service.{ContactService, TaskService}
@@ -30,7 +30,7 @@ import com.esofthead.mycollab.module.user.AccountLinkGenerator
 import com.esofthead.mycollab.module.user.domain.SimpleUser
 import com.esofthead.mycollab.module.user.service.UserService
 import com.esofthead.mycollab.schedule.email.crm.TaskRelayEmailNotificationAction
-import com.esofthead.mycollab.schedule.email.format.{DateFieldFormat, FieldFormat, TagBuilder}
+import com.esofthead.mycollab.schedule.email.format.{DateFieldFormat, FieldFormat}
 import com.esofthead.mycollab.schedule.email.{ItemFieldMapper, MailContext}
 import com.esofthead.mycollab.spring.ApplicationContextUtil
 import com.hp.gagawa.java.elements.{A, Img, Span}
@@ -59,10 +59,7 @@ import org.springframework.stereotype.Component
     val user: SimpleUser = userService.findUserByUserNameInAccount(emailNotification.getChangeby, context.getSaccountid)
 
     val avatarId = if (user != null) user.getAvatarid else ""
-    val userAvatar: Img = new Img("", StorageManager.getAvatarLink(avatarId, 16))
-    userAvatar.setWidth("16")
-    userAvatar.setHeight("16")
-    userAvatar.setStyle("display: inline-block; vertical-align: top;")
+    val userAvatar: Img = LinkUtils.newAvatar(avatarId)
 
     val makeChangeUser: String = userAvatar.toString + emailNotification.getChangeByUserFullName
     val actionEnum:Enum[_] = emailNotification.getAction match {
@@ -105,10 +102,10 @@ import org.springframework.stereotype.Component
       val task: SimpleTask = context.getWrappedBean.asInstanceOf[SimpleTask]
       if (task.getContactid != null) {
         val contactIconLink: String = CrmResources.getResourceLink(CrmTypeConstants.CONTACT)
-        val img: Img = TagBuilder.newImg("icon", contactIconLink)
+        val img: Img = FormatUtils.newImg("icon", contactIconLink)
         val contactLink: String = CrmLinkGenerator.generateContactPreviewFullLink(context.siteUrl, task.getContactid)
-        val link: A = TagBuilder.newA(contactLink, task.getContactName)
-        TagBuilder.newLink(img, link).write
+        val link: A = FormatUtils.newA(contactLink, task.getContactName)
+        FormatUtils.newLink(img, link).write
       }
       else {
         new Span().write
@@ -125,10 +122,10 @@ import org.springframework.stereotype.Component
         val contact: SimpleContact = contactService.findById(contactId, context.getUser.getAccountId)
         if (contact != null) {
           val contactIconLink: String = CrmResources.getResourceLink(CrmTypeConstants.CONTACT)
-          val img: Img = TagBuilder.newImg("icon", contactIconLink)
+          val img: Img = FormatUtils.newImg("icon", contactIconLink)
           val contactLink: String = CrmLinkGenerator.generateContactPreviewFullLink(context.siteUrl, contact.getId)
-          val link: A = TagBuilder.newA(contactLink, contact.getDisplayName)
-          return TagBuilder.newLink(img, link).write
+          val link: A = FormatUtils.newA(contactLink, contact.getDisplayName)
+          return FormatUtils.newLink(img, link).write
         }
       }
       catch {
@@ -143,10 +140,10 @@ import org.springframework.stereotype.Component
       val task: SimpleTask = context.getWrappedBean.asInstanceOf[SimpleTask]
       if (task.getAssignuser != null) {
         val userAvatarLink: String = MailUtils.getAvatarLink(task.getAssignUserAvatarId, 16)
-        val img: Img = TagBuilder.newImg("avatar", userAvatarLink)
+        val img: Img = FormatUtils.newImg("avatar", userAvatarLink)
         val userLink: String = AccountLinkGenerator.generatePreviewFullUserLink(MailUtils.getSiteUrl(task.getSaccountid), task.getAssignuser)
-        val link: A = TagBuilder.newA(userLink, task.getAssignUserFullName)
-        TagBuilder.newLink(img, link).write
+        val link: A = FormatUtils.newA(userLink, task.getAssignUserFullName)
+        FormatUtils.newLink(img, link).write
       }
       else {
         new Span().write
@@ -162,9 +159,9 @@ import org.springframework.stereotype.Component
         if (user != null) {
           val userAvatarLink: String = MailUtils.getAvatarLink(user.getAvatarid, 16)
           val userLink: String = AccountLinkGenerator.generatePreviewFullUserLink(MailUtils.getSiteUrl(user.getAccountId), user.getUsername)
-          val img: Img = TagBuilder.newImg("avatar", userAvatarLink)
-          val link: A = TagBuilder.newA(userLink, user.getDisplayName)
-          TagBuilder.newLink(img, link).write
+          val img: Img = FormatUtils.newImg("avatar", userAvatarLink)
+          val link: A = FormatUtils.newA(userLink, user.getDisplayName)
+          FormatUtils.newLink(img, link).write
         } else
           value
       }

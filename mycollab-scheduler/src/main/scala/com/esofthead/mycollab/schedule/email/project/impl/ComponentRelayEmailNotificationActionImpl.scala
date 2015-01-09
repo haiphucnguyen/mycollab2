@@ -19,8 +19,8 @@ package com.esofthead.mycollab.schedule.email.project.impl
 import com.esofthead.mycollab.common.MonitorTypeConstants
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification
 import com.esofthead.mycollab.common.i18n.{GenericI18Enum, OptionI18nEnum}
-import com.esofthead.mycollab.configuration.StorageManager
 import com.esofthead.mycollab.core.utils.StringUtils
+import com.esofthead.mycollab.html.{LinkUtils, FormatUtils}
 import com.esofthead.mycollab.module.mail.MailUtils
 import com.esofthead.mycollab.module.project.ProjectLinkGenerator
 import com.esofthead.mycollab.module.project.domain.{SimpleProject, SimpleProjectMember}
@@ -31,7 +31,7 @@ import com.esofthead.mycollab.module.tracker.service.ComponentService
 import com.esofthead.mycollab.module.user.AccountLinkGenerator
 import com.esofthead.mycollab.module.user.domain.SimpleUser
 import com.esofthead.mycollab.module.user.service.UserService
-import com.esofthead.mycollab.schedule.email.format.{FieldFormat, I18nFieldFormat, TagBuilder}
+import com.esofthead.mycollab.schedule.email.format.{FieldFormat, I18nFieldFormat, WebItem}
 import com.esofthead.mycollab.schedule.email.project.ComponentRelayEmailNotificationAction
 import com.esofthead.mycollab.schedule.email.{ItemFieldMapper, MailContext}
 import com.esofthead.mycollab.spring.ApplicationContextUtil
@@ -57,22 +57,14 @@ class ComponentRelayEmailNotificationActionImpl extends SendMailToAllMembersActi
   protected def buildExtraTemplateVariables(context: MailContext[SimpleComponent]) {
     val emailNotification: SimpleRelayEmailNotification = context.getEmailNotification
     val project: SimpleProject = projectService.findById(bean.getProjectid, emailNotification.getSaccountid)
-
-    val currentProject: Map[String, String] = Map[String, String](
-      "displayName" -> project.getName,
-      "webLink" -> ProjectLinkGenerator.generateProjectFullLink(siteUrl, bean.getProjectid))
-
-    val listOfTitles: List[Map[String, String]] = List[Map[String, String]](currentProject)
+    val currentProject = new WebItem(project.getName,ProjectLinkGenerator.generateProjectFullLink(siteUrl, bean.getProjectid))
 
     val summary: String = bean.getComponentname
     val summaryLink: String = ProjectLinkGenerator.generateBugComponentPreviewFullLink(siteUrl, bean.getProjectid, bean.getId)
     val projectMember: SimpleProjectMember = projectMemberService.findMemberByUsername(emailNotification.getChangeby, bean.getProjectid, emailNotification.getSaccountid)
 
     val avatarId: String = if (projectMember != null) projectMember.getMemberAvatarId else ""
-    val userAvatar: Img = new Img("", StorageManager.getAvatarLink(avatarId, 16))
-    userAvatar.setWidth("16")
-    userAvatar.setHeight("16")
-    userAvatar.setStyle("display: inline-block; vertical-align: top;")
+    val userAvatar: Img = LinkUtils.newAvatar(avatarId)
 
     val makeChangeUser: String = userAvatar.toString + emailNotification.getChangeByUserFullName
     val actionEnum:Enum[_] = emailNotification.getAction match {
@@ -82,7 +74,7 @@ class ComponentRelayEmailNotificationActionImpl extends SendMailToAllMembersActi
     }
 
     contentGenerator.putVariable("actionHeading", context.getMessage(actionEnum, makeChangeUser))
-    contentGenerator.putVariable("titles", listOfTitles)
+    contentGenerator.putVariable("titles", List(currentProject))
     contentGenerator.putVariable("summary", summary)
     contentGenerator.putVariable("summaryLink", summaryLink)
   }
@@ -110,10 +102,10 @@ class ComponentRelayEmailNotificationActionImpl extends SendMailToAllMembersActi
       val component: SimpleComponent = context.getWrappedBean.asInstanceOf[SimpleComponent]
       if (component.getUserlead != null) {
         val userAvatarLink: String = MailUtils.getAvatarLink(component.getUserLeadAvatarId, 16)
-        val img: Img = TagBuilder.newImg("avatar", userAvatarLink)
+        val img: Img = FormatUtils.newImg("avatar", userAvatarLink)
         val userLink: String = AccountLinkGenerator.generatePreviewFullUserLink(MailUtils.getSiteUrl(component.getSaccountid), component.getUserlead)
-        val link: A = TagBuilder.newA(userLink, component.getUserLeadFullName)
-        TagBuilder.newLink(img, link).write
+        val link: A = FormatUtils.newA(userLink, component.getUserLeadFullName)
+        FormatUtils.newLink(img, link).write
       }
       else
         new Span().write
@@ -128,9 +120,9 @@ class ComponentRelayEmailNotificationActionImpl extends SendMailToAllMembersActi
       if (user != null) {
         val userAvatarLink: String = MailUtils.getAvatarLink(user.getAvatarid, 16)
         val userLink: String = AccountLinkGenerator.generatePreviewFullUserLink(MailUtils.getSiteUrl(user.getAccountId), user.getUsername)
-        val img: Img = TagBuilder.newImg("avatar", userAvatarLink)
-        val link: A = TagBuilder.newA(userLink, user.getDisplayName)
-        TagBuilder.newLink(img, link).write
+        val img: Img = FormatUtils.newImg("avatar", userAvatarLink)
+        val link: A = FormatUtils.newA(userLink, user.getDisplayName)
+        FormatUtils.newLink(img, link).write
       } else
         value
     }

@@ -41,7 +41,7 @@ class ContentGenerator extends IContentGenerator with InitializingBean {
   @Autowired private val templateEngine: VelocityEngine = null
 
   @throws(classOf[Exception])
-  def afterPropertiesSet {
+  def afterPropertiesSet() {
     templateContext = new TemplateContext
     val sharingOptions = SharingOptions.getDefaultSharingOptions
     val defaultUrls = Map[String, String](
@@ -50,7 +50,7 @@ class ContentGenerator extends IContentGenerator with InitializingBean {
       "google_url" -> sharingOptions.getGoogleplusUrl,
       "linkedin_url" -> sharingOptions.getLinkedinUrl,
       "twitter_url" -> sharingOptions.getTwitterUrl)
-    templateContext.put("defaultUrls", defaultUrls)
+    putVariable("defaultUrls", defaultUrls)
   }
 
   override def putVariable(key: String, value: scala.Any): Unit = {
@@ -71,9 +71,7 @@ class ContentGenerator extends IContentGenerator with InitializingBean {
       reader = new InputStreamReader(resourceStream, "UTF-8")
     }
     catch {
-      case e: UnsupportedEncodingException => {
-        reader = new InputStreamReader(resourceStream)
-      }
+      case e: UnsupportedEncodingException => reader = new InputStreamReader(resourceStream)
     }
 
     templateEngine.evaluate(templateContext.getVelocityContext, writer, "log task", reader)

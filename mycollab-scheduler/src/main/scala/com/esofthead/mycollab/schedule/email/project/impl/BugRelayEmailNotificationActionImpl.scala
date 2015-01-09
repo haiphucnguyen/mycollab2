@@ -19,8 +19,8 @@ package com.esofthead.mycollab.schedule.email.project.impl
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification
 import com.esofthead.mycollab.common.i18n.GenericI18Enum
 import com.esofthead.mycollab.common.{MonitorTypeConstants, NotificationType}
-import com.esofthead.mycollab.configuration.StorageManager
 import com.esofthead.mycollab.core.utils.StringUtils
+import com.esofthead.mycollab.html.{LinkUtils, FormatUtils}
 import com.esofthead.mycollab.module.mail.MailUtils
 import com.esofthead.mycollab.module.project.domain._
 import com.esofthead.mycollab.module.project.i18n.{BugI18nEnum, OptionI18nEnum}
@@ -31,8 +31,8 @@ import com.esofthead.mycollab.module.tracker.service.BugService
 import com.esofthead.mycollab.module.user.AccountLinkGenerator
 import com.esofthead.mycollab.module.user.domain.SimpleUser
 import com.esofthead.mycollab.module.user.service.UserService
-import com.esofthead.mycollab.schedule.email.format.TagBuilder._
-import com.esofthead.mycollab.schedule.email.format.{DateFieldFormat, FieldFormat, I18nFieldFormat}
+import FormatUtils._
+import com.esofthead.mycollab.schedule.email.format._
 import com.esofthead.mycollab.schedule.email.project.BugRelayEmailNotificationAction
 import com.esofthead.mycollab.schedule.email.{ItemFieldMapper, MailContext}
 import com.esofthead.mycollab.spring.ApplicationContextUtil
@@ -44,7 +44,6 @@ import org.springframework.context.annotation.Scope
 import org.springframework.stereotype.Component
 
 import scala.collection.mutable
-import scala.collection.mutable.ListBuffer
 import scala.util.control.Breaks._
 
 /**
@@ -68,39 +67,28 @@ class BugRelayEmailNotificationActionImpl extends SendMailToFollowersAction[Simp
   private val mapper = new BugFieldNameMapper
 
   protected def buildExtraTemplateVariables(context: MailContext[SimpleBug]) {
-    val currentProject = Map[String, String](
-      "displayName" -> bean.getProjectname,
-      "webLink" -> ProjectLinkGenerator.generateProjectFullLink(siteUrl, bean.getProjectid))
+    val currentProject = new WebItem(bean.getProjectname, ProjectLinkGenerator.generateProjectFullLink(siteUrl, bean.getProjectid))
 
     val emailNotification: SimpleRelayEmailNotification = context.getEmailNotification
     val relatedProject: SimpleProject = projectService.findById(bean.getProjectid, emailNotification.getSaccountid)
+    val bugCode = new WebItem(("[" + relatedProject.getShortname + "-" + bean.getBugkey + "]"), ProjectLinkGenerator.generateBugPreviewFullLink(siteUrl, bean.getBugkey, bean.getProjectShortName))
 
-    val bugCode = Map[String, String](
-      "displayName" -> ("[" + relatedProject.getShortname + "-" + bean.getBugkey +"]"),
-      "webLink" -> ProjectLinkGenerator.generateBugPreviewFullLink(siteUrl, bean.getBugkey, bean.getProjectShortName))
-
-    val listOfTitles = List[Map[String, String]](currentProject, bugCode)
-
-    val summary: String = bean.getSummary
+    val summary = bean.getSummary
     val summaryLink: String = ProjectLinkGenerator.generateBugPreviewFullLink(siteUrl, bean.getBugkey, bean.getProjectShortName)
     val projectMember: SimpleProjectMember = projectMemberService.findMemberByUsername(emailNotification.getChangeby, bean.getProjectid, emailNotification.getSaccountid)
 
-    val avatarId: String = if (projectMember != null) projectMember.getMemberAvatarId else ""
-    val userAvatar: Img = new Img("", StorageManager.getAvatarLink(avatarId, 16))
-    userAvatar.setWidth("16")
-    userAvatar.setHeight("16")
-    userAvatar.setStyle("display: inline-block; vertical-align: top;")
+    val avatarId:String = if (projectMember != null) projectMember.getMemberAvatarId else ""
+    val userAvatar: Img = LinkUtils.newAvatar(avatarId)
 
     val makeChangeUser: String = userAvatar.toString + emailNotification.getChangeByUserFullName
-
-    val actionEnum:Enum[_] = emailNotification.getAction match {
+    val actionEnum: Enum[_] = emailNotification.getAction match {
       case MonitorTypeConstants.CREATE_ACTION => BugI18nEnum.MAIL_CREATE_ITEM_HEADING
       case MonitorTypeConstants.UPDATE_ACTION => BugI18nEnum.MAIL_UPDATE_ITEM_HEADING
       case MonitorTypeConstants.ADD_COMMENT_ACTION => BugI18nEnum.MAIL_COMMENT_ITEM_HEADING
     }
 
     contentGenerator.putVariable("actionHeading", context.getMessage(actionEnum, makeChangeUser))
-    contentGenerator.putVariable("titles", listOfTitles.toList)
+    contentGenerator.putVariable("titles", List(currentProject, bugCode))
     contentGenerator.putVariable("summary", summary)
     contentGenerator.putVariable("summaryLink", summaryLink)
   }

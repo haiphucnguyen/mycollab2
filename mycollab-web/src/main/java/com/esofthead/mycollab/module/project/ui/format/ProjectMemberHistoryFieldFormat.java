@@ -16,7 +16,7 @@
  */
 package com.esofthead.mycollab.module.project.ui.format;
 
-import com.esofthead.mycollab.schedule.email.format.TagBuilder;
+import com.esofthead.mycollab.html.FormatUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -69,7 +69,7 @@ public class ProjectMemberHistoryFieldFormat implements HistoryFieldFormat {
 			if (user != null) {
 				String userAvatarLink = MailUtils.getAvatarLink(
 						user.getAvatarid(), 16);
-				Img img = TagBuilder.newImg("avatar", userAvatarLink);
+				Img img = FormatUtils.newImg("avatar", userAvatarLink);
 
 				String userLink = AccountLinkGenerator
 						.generatePreviewFullUserLink(
@@ -84,8 +84,8 @@ public class ProjectMemberHistoryFieldFormat implements HistoryFieldFormat {
 							.extractNameFromEmail(displayName);
 				}
 
-				A link = TagBuilder.newA(userLink, userDisplayName);
-				return TagBuilder.newLink(img, link).write();
+				A link = FormatUtils.newA(userLink, userDisplayName);
+				return FormatUtils.newLink(img, link).write();
 			}
 		} catch (Exception e) {
 			LOG.error("Error", e);

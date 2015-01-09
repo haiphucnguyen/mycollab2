@@ -16,7 +16,7 @@
  */
 package com.esofthead.mycollab.module.project.ui.format;
 
-import com.esofthead.mycollab.schedule.email.format.TagBuilder;
+import com.esofthead.mycollab.html.FormatUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,8 +54,7 @@ public class MilestoneHistoryFieldFormat implements HistoryFieldFormat {
 			int milestoneId = Integer.parseInt(value);
 			String html = ProjectLinkBuilder
 					.generateMilestoneHtmlLink(milestoneId);
-			return (value != null) ? new Label(html, ContentMode.HTML)
-					: new Label("");
+			return new Label(html, ContentMode.HTML);
 		} catch (NumberFormatException e) {
 			return new Label("");
 		}
@@ -77,14 +76,14 @@ public class MilestoneHistoryFieldFormat implements HistoryFieldFormat {
 			if (milestone != null) {
 				String milestoneIconLink = ProjectResources
 						.getResourceLink(ProjectTypeConstants.MILESTONE);
-				Img img = TagBuilder.newImg("icon", milestoneIconLink);
+				Img img = FormatUtils.newImg("icon", milestoneIconLink);
 
 				String milestoneLink = ProjectLinkGenerator
 						.generateMilestonePreviewFullLink(
 								AppContext.getSiteUrl(),
 								milestone.getProjectid(), milestone.getId());
-				A link = TagBuilder.newA(milestoneLink, milestone.getName());
-				return TagBuilder.newLink(img, link).write();
+				A link = FormatUtils.newA(milestoneLink, milestone.getName());
+				return FormatUtils.newLink(img, link).write();
 			}
 		} catch (Exception e) {
 			LOG.error("Error", e);

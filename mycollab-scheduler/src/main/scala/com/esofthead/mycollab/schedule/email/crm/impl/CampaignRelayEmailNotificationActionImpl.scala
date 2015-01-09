@@ -19,8 +19,8 @@ package com.esofthead.mycollab.schedule.email.crm.impl
 import com.esofthead.mycollab.common.MonitorTypeConstants
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification
 import com.esofthead.mycollab.common.i18n.GenericI18Enum
-import com.esofthead.mycollab.configuration.StorageManager
 import com.esofthead.mycollab.core.utils.StringUtils
+import com.esofthead.mycollab.html.{LinkUtils, FormatUtils}
 import com.esofthead.mycollab.module.crm.CrmLinkGenerator
 import com.esofthead.mycollab.module.crm.domain.{CampaignWithBLOBs, SimpleCampaign}
 import com.esofthead.mycollab.module.crm.i18n.CampaignI18nEnum
@@ -30,7 +30,7 @@ import com.esofthead.mycollab.module.user.AccountLinkGenerator
 import com.esofthead.mycollab.module.user.domain.SimpleUser
 import com.esofthead.mycollab.module.user.service.UserService
 import com.esofthead.mycollab.schedule.email.crm.CampaignRelayEmailNotificationAction
-import com.esofthead.mycollab.schedule.email.format.{CurrencyFieldFormat, DateFieldFormat, FieldFormat, TagBuilder}
+import com.esofthead.mycollab.schedule.email.format.{CurrencyFieldFormat, DateFieldFormat, FieldFormat}
 import com.esofthead.mycollab.schedule.email.{ItemFieldMapper, MailContext}
 import com.esofthead.mycollab.spring.ApplicationContextUtil
 import com.hp.gagawa.java.elements.{A, Img}
@@ -67,10 +67,7 @@ class CampaignRelayEmailNotificationActionImpl extends CrmDefaultSendingRelayEma
     val user: SimpleUser = userService.findUserByUserNameInAccount(emailNotification.getChangeby, context.getSaccountid)
 
     val avatarId: String = if (user != null) user.getAvatarid else ""
-    val userAvatar: Img = new Img("", StorageManager.getAvatarLink(avatarId, 16))
-    userAvatar.setWidth("16")
-    userAvatar.setHeight("16")
-    userAvatar.setStyle("display: inline-block; vertical-align: top;")
+    val userAvatar: Img = LinkUtils.newAvatar(avatarId)
 
     val makeChangeUser: String = userAvatar.toString + emailNotification.getChangeByUserFullName
     val actionEnum: Enum[_] = emailNotification.getAction match {
@@ -107,10 +104,10 @@ class CampaignRelayEmailNotificationActionImpl extends CrmDefaultSendingRelayEma
       val campaign: SimpleCampaign = context.getWrappedBean.asInstanceOf[SimpleCampaign]
       if (campaign.getAssignuser != null) {
         val userAvatarLink: String = MailUtils.getAvatarLink(campaign.getAssignUserAvatarId, 16)
-        val img: Img = TagBuilder.newImg("avatar", userAvatarLink)
+        val img: Img = FormatUtils.newImg("avatar", userAvatarLink)
         val userLink: String = AccountLinkGenerator.generatePreviewFullUserLink(MailUtils.getSiteUrl(campaign.getSaccountid), campaign.getAssignuser)
-        val link: A = TagBuilder.newA(userLink, campaign.getAssignUserFullName)
-        TagBuilder.newLink(img, link).write
+        val link: A = FormatUtils.newA(userLink, campaign.getAssignUserFullName)
+        FormatUtils.newLink(img, link).write
       }
       else {
         ""
@@ -126,9 +123,9 @@ class CampaignRelayEmailNotificationActionImpl extends CrmDefaultSendingRelayEma
         if (user != null) {
           val userAvatarLink: String = MailUtils.getAvatarLink(user.getAvatarid, 16)
           val userLink: String = AccountLinkGenerator.generatePreviewFullUserLink(MailUtils.getSiteUrl(user.getAccountId), user.getUsername)
-          val img: Img = TagBuilder.newImg("avatar", userAvatarLink)
-          val link: A = TagBuilder.newA(userLink, user.getDisplayName)
-          TagBuilder.newLink(img, link).write
+          val img: Img = FormatUtils.newImg("avatar", userAvatarLink)
+          val link: A = FormatUtils.newA(userLink, user.getDisplayName)
+          FormatUtils.newLink(img, link).write
         } else
           value
       }

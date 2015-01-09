@@ -16,7 +16,7 @@
  */
 package com.esofthead.mycollab.module.project.ui.format;
 
-import com.esofthead.mycollab.schedule.email.format.TagBuilder;
+import com.esofthead.mycollab.html.FormatUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,8 +54,7 @@ public class TaskGroupHistoryFieldFormat implements HistoryFieldFormat {
 			int taskgroupId = Integer.parseInt(value);
 			String html = ProjectLinkBuilder
 					.generateTaskGroupHtmlLink(taskgroupId);
-			return (value != null) ? new Label(html, ContentMode.HTML)
-					: new Label("");
+			return new Label(html, ContentMode.HTML);
 		} catch (NumberFormatException e) {
 			return new Label("");
 		}
@@ -76,14 +75,14 @@ public class TaskGroupHistoryFieldFormat implements HistoryFieldFormat {
 			if (taskgroup != null) {
 				String taskgroupIconLink = ProjectResources
 						.getResourceLink(ProjectTypeConstants.TASK_LIST);
-				Img img = TagBuilder.newImg("icon", taskgroupIconLink);
+				Img img = FormatUtils.newImg("icon", taskgroupIconLink);
 
 				String taskgroupLink = ProjectLinkGenerator
 						.generateTaskGroupPreviewFullLink(
 								AppContext.getSiteUrl(),
 								taskgroup.getProjectid(), taskgroup.getId());
-				A link = TagBuilder.newA(taskgroupLink, taskgroup.getName());
-				return TagBuilder.newLink(img, link).write();
+				A link = FormatUtils.newA(taskgroupLink, taskgroup.getName());
+				return FormatUtils.newLink(img, link).write();
 			}
 		} catch (Exception e) {
 			LOG.error("Error", e);

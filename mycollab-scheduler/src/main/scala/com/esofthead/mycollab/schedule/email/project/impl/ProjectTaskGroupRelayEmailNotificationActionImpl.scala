@@ -19,8 +19,8 @@ package com.esofthead.mycollab.schedule.email.project.impl
 import com.esofthead.mycollab.common.MonitorTypeConstants
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification
 import com.esofthead.mycollab.common.i18n.GenericI18Enum
-import com.esofthead.mycollab.configuration.StorageManager
 import com.esofthead.mycollab.core.utils.StringUtils
+import com.esofthead.mycollab.html.{LinkUtils, FormatUtils}
 import com.esofthead.mycollab.module.mail.MailUtils
 import com.esofthead.mycollab.module.project.domain._
 import com.esofthead.mycollab.module.project.i18n.TaskGroupI18nEnum
@@ -29,7 +29,7 @@ import com.esofthead.mycollab.module.project.{ProjectLinkGenerator, ProjectResou
 import com.esofthead.mycollab.module.user.AccountLinkGenerator
 import com.esofthead.mycollab.module.user.domain.SimpleUser
 import com.esofthead.mycollab.module.user.service.UserService
-import com.esofthead.mycollab.schedule.email.format.{FieldFormat, TagBuilder}
+import com.esofthead.mycollab.schedule.email.format.{FieldFormat, WebItem}
 import com.esofthead.mycollab.schedule.email.project.ProjectTaskGroupRelayEmailNotificationAction
 import com.esofthead.mycollab.schedule.email.{ItemFieldMapper, MailContext}
 import com.esofthead.mycollab.spring.ApplicationContextUtil
@@ -69,25 +69,18 @@ class ProjectTaskGroupRelayEmailNotificationActionImpl extends SendMailToAllMemb
   protected def getBeanInContext(context: MailContext[SimpleTaskList]): SimpleTaskList = projectTaskListService.findById(context.getTypeid.toInt, context.getSaccountid)
 
   protected def buildExtraTemplateVariables(context: MailContext[SimpleTaskList]) {
-
     val emailNotification: SimpleRelayEmailNotification = context.getEmailNotification
     val relatedProject: SimpleProject = projectService.findById(bean.getProjectid, emailNotification.getSaccountid)
 
-    val currentProject: Map[String, String] = Map[String, String](
-      "displayName" -> relatedProject.getName,
-      "webLink" -> ProjectLinkGenerator.generateProjectFullLink(siteUrl, bean.getProjectid))
-
-    val listOfTitles: List[Map[String, String]] = List[Map[String, String]](currentProject)
+    val currentProject = new WebItem(relatedProject.getName, ProjectLinkGenerator.generateProjectFullLink(siteUrl,
+      bean.getProjectid))
 
     val summary: String = bean.getName
     val summaryLink: String = ProjectLinkGenerator.generateTaskGroupPreviewFullLink(siteUrl, bean.getProjectid, bean.getId)
     val projectMember: SimpleProjectMember = projectMemberService.findMemberByUsername(emailNotification.getChangeby, bean.getProjectid, emailNotification.getSaccountid)
 
     val avatarId: String = if (projectMember != null) projectMember.getMemberAvatarId else ""
-    val userAvatar: Img = new Img("", StorageManager.getAvatarLink(avatarId, 16))
-    userAvatar.setWidth("16")
-    userAvatar.setHeight("16")
-    userAvatar.setStyle("display: inline-block; vertical-align: top;")
+    val userAvatar: Img = LinkUtils.newAvatar(avatarId)
 
     val makeChangeUser: String = userAvatar.toString + emailNotification.getChangeByUserFullName
     val headerEnum: Enum[_] = emailNotification.getAction match {
@@ -97,7 +90,7 @@ class ProjectTaskGroupRelayEmailNotificationActionImpl extends SendMailToAllMemb
     }
 
     contentGenerator.putVariable("actionHeading", context.getMessage(headerEnum, makeChangeUser))
-    contentGenerator.putVariable("titles", listOfTitles)
+    contentGenerator.putVariable("titles", List(currentProject))
     contentGenerator.putVariable("summary", summary)
     contentGenerator.putVariable("summaryLink", summaryLink)
   }
@@ -115,10 +108,10 @@ class ProjectTaskGroupRelayEmailNotificationActionImpl extends SendMailToAllMemb
       val taskList: SimpleTaskList = context.getWrappedBean.asInstanceOf[SimpleTaskList]
       if (taskList.getOwner != null) {
         val userAvatarLink: String = MailUtils.getAvatarLink(taskList.getOwnerAvatarId, 16)
-        val img: Img = TagBuilder.newImg("avatar", userAvatarLink)
+        val img: Img = FormatUtils.newImg("avatar", userAvatarLink)
         val userLink: String = AccountLinkGenerator.generatePreviewFullUserLink(MailUtils.getSiteUrl(taskList.getSaccountid), taskList.getOwner)
-        val link: A = TagBuilder.newA(userLink, taskList.getOwnerFullName)
-        TagBuilder.newLink(img, link).write
+        val link: A = FormatUtils.newA(userLink, taskList.getOwnerFullName)
+        FormatUtils.newLink(img, link).write
       }
       else {
         new Span().write
@@ -134,9 +127,9 @@ class ProjectTaskGroupRelayEmailNotificationActionImpl extends SendMailToAllMemb
         if (user != null) {
           val userAvatarLink: String = MailUtils.getAvatarLink(user.getAvatarid, 16)
           val userLink: String = AccountLinkGenerator.generatePreviewFullUserLink(MailUtils.getSiteUrl(user.getAccountId), user.getUsername)
-          val img: Img = TagBuilder.newImg("avatar", userAvatarLink)
-          val link: A = TagBuilder.newA(userLink, user.getDisplayName)
-          TagBuilder.newLink(img, link).write
+          val img: Img = FormatUtils.newImg("avatar", userAvatarLink)
+          val link: A = FormatUtils.newA(userLink, user.getDisplayName)
+          FormatUtils.newLink(img, link).write
         } else
           value
       }
@@ -148,11 +141,11 @@ class ProjectTaskGroupRelayEmailNotificationActionImpl extends SendMailToAllMemb
       val taskList: SimpleTaskList = context.wrappedBean.asInstanceOf[SimpleTaskList]
       if (taskList.getMilestoneid != null) {
         val milestoneIconLink: String = ProjectResources.getResourceLink(ProjectTypeConstants.MILESTONE)
-        val img: Img = TagBuilder.newImg("icon", milestoneIconLink)
+        val img: Img = FormatUtils.newImg("icon", milestoneIconLink)
         val milestoneLink: String = ProjectLinkGenerator.generateMilestonePreviewFullLink(context.siteUrl, taskList
           .getProjectid, taskList.getMilestoneid)
-        val link: A = TagBuilder.newA(milestoneLink, taskList.getMilestoneName)
-        TagBuilder.newLink(img, link).write
+        val link: A = FormatUtils.newA(milestoneLink, taskList.getMilestoneName)
+        FormatUtils.newLink(img, link).write
       }
       else {
         new Span().write
@@ -169,11 +162,11 @@ class ProjectTaskGroupRelayEmailNotificationActionImpl extends SendMailToAllMemb
         val milestone: SimpleMilestone = milestoneService.findById(milestoneId, context.getUser.getAccountId)
         if (milestone != null) {
           val milestoneIconLink: String = ProjectResources.getResourceLink(ProjectTypeConstants.MILESTONE)
-          val img: Img = TagBuilder.newImg("icon", milestoneIconLink)
+          val img: Img = FormatUtils.newImg("icon", milestoneIconLink)
           val milestoneLink: String = ProjectLinkGenerator.generateMilestonePreviewFullLink(context.siteUrl, milestone
             .getProjectid, milestone.getId)
-          val link: A = TagBuilder.newA(milestoneLink, milestone.getName)
-          return TagBuilder.newLink(img, link).write
+          val link: A = FormatUtils.newA(milestoneLink, milestone.getName)
+          return FormatUtils.newLink(img, link).write
         }
       }
       catch {

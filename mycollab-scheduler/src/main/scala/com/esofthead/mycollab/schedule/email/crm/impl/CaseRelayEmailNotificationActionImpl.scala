@@ -19,8 +19,8 @@ package com.esofthead.mycollab.schedule.email.crm.impl
 import com.esofthead.mycollab.common.MonitorTypeConstants
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification
 import com.esofthead.mycollab.common.i18n.GenericI18Enum
-import com.esofthead.mycollab.configuration.StorageManager
 import com.esofthead.mycollab.core.utils.StringUtils
+import com.esofthead.mycollab.html.{LinkUtils, FormatUtils}
 import com.esofthead.mycollab.module.crm.domain.{CaseWithBLOBs, SimpleAccount, SimpleCase}
 import com.esofthead.mycollab.module.crm.i18n.CaseI18nEnum
 import com.esofthead.mycollab.module.crm.service.{AccountService, CaseService}
@@ -30,7 +30,7 @@ import com.esofthead.mycollab.module.user.AccountLinkGenerator
 import com.esofthead.mycollab.module.user.domain.SimpleUser
 import com.esofthead.mycollab.module.user.service.UserService
 import com.esofthead.mycollab.schedule.email.crm.CaseRelayEmailNotificationAction
-import com.esofthead.mycollab.schedule.email.format.{FieldFormat, TagBuilder}
+import com.esofthead.mycollab.schedule.email.format.FieldFormat
 import com.esofthead.mycollab.schedule.email.{ItemFieldMapper, MailContext}
 import com.esofthead.mycollab.spring.ApplicationContextUtil
 import com.hp.gagawa.java.elements.{A, Img, Span}
@@ -69,10 +69,7 @@ class CaseRelayEmailNotificationActionImpl extends CrmDefaultSendingRelayEmailAc
     val user: SimpleUser = userService.findUserByUserNameInAccount(emailNotification.getChangeby, context.getSaccountid)
 
     val avatarId: String = if (user != null) user.getAvatarid else ""
-    val userAvatar: Img = new Img("", StorageManager.getAvatarLink(avatarId, 16))
-    userAvatar.setWidth("16")
-    userAvatar.setHeight("16")
-    userAvatar.setStyle("display: inline-block; vertical-align: top;")
+    val userAvatar: Img = LinkUtils.newAvatar(avatarId)
 
     val makeChangeUser: String = userAvatar.toString + emailNotification.getChangeByUserFullName
     val actionEnum: Enum[_] = emailNotification.getAction match {
@@ -110,10 +107,10 @@ class CaseRelayEmailNotificationActionImpl extends CrmDefaultSendingRelayEmailAc
       val simpleCase: SimpleCase = context.getWrappedBean.asInstanceOf[SimpleCase]
       if (simpleCase.getAccountid != null) {
         val accountIconLink: String = CrmResources.getResourceLink(CrmTypeConstants.ACCOUNT)
-        val img: Img = TagBuilder.newImg("avatar", accountIconLink)
+        val img: Img = FormatUtils.newImg("avatar", accountIconLink)
         val accountLink: String = CrmLinkGenerator.generateAccountPreviewFullLink(context.siteUrl, simpleCase.getAccountid)
-        val link: A = TagBuilder.newA(accountLink, simpleCase.getAccountName)
-        TagBuilder.newLink(img, link).write
+        val link: A = FormatUtils.newA(accountLink, simpleCase.getAccountName)
+        FormatUtils.newLink(img, link).write
       }
       else {
         new Span().write
@@ -130,10 +127,10 @@ class CaseRelayEmailNotificationActionImpl extends CrmDefaultSendingRelayEmailAc
         val account: SimpleAccount = accountService.findById(accountId, context.getUser.getAccountId)
         if (account != null) {
           val accountIconLink: String = CrmResources.getResourceLink(CrmTypeConstants.ACCOUNT)
-          val img: Img = TagBuilder.newImg("avatar", accountIconLink)
+          val img: Img = FormatUtils.newImg("avatar", accountIconLink)
           val accountLink: String = CrmLinkGenerator.generateAccountPreviewFullLink(context.siteUrl, account.getId)
-          val link: A = TagBuilder.newA(accountLink, account.getAccountname)
-          return TagBuilder.newLink(img, link).write
+          val link: A = FormatUtils.newA(accountLink, account.getAccountname)
+          return FormatUtils.newLink(img, link).write
         }
       }
       catch {
@@ -149,10 +146,10 @@ class CaseRelayEmailNotificationActionImpl extends CrmDefaultSendingRelayEmailAc
       val simpleCase: SimpleCase = context.getWrappedBean.asInstanceOf[SimpleCase]
       if (simpleCase.getAssignuser != null) {
         val userAvatarLink: String = MailUtils.getAvatarLink(simpleCase.getAssignUserAvatarId, 16)
-        val img: Img = TagBuilder.newImg("avatar", userAvatarLink)
+        val img: Img = FormatUtils.newImg("avatar", userAvatarLink)
         val userLink: String = AccountLinkGenerator.generatePreviewFullUserLink(MailUtils.getSiteUrl(simpleCase.getSaccountid), simpleCase.getAssignuser)
-        val link: A = TagBuilder.newA(userLink, simpleCase.getAssignUserFullName)
-        TagBuilder.newLink(img, link).write
+        val link: A = FormatUtils.newA(userLink, simpleCase.getAssignUserFullName)
+        FormatUtils.newLink(img, link).write
       }
       else {
         new Span().write
@@ -168,9 +165,9 @@ class CaseRelayEmailNotificationActionImpl extends CrmDefaultSendingRelayEmailAc
         if (user != null) {
           val userAvatarLink: String = MailUtils.getAvatarLink(user.getAvatarid, 16)
           val userLink: String = AccountLinkGenerator.generatePreviewFullUserLink(MailUtils.getSiteUrl(user.getAccountId), user.getUsername)
-          val img: Img = TagBuilder.newImg("avatar", userAvatarLink)
-          val link: A = TagBuilder.newA(userLink, user.getDisplayName)
-          TagBuilder.newLink(img, link).write
+          val img: Img = FormatUtils.newImg("avatar", userAvatarLink)
+          val link: A = FormatUtils.newA(userLink, user.getDisplayName)
+          FormatUtils.newLink(img, link).write
         } else
           value
       }

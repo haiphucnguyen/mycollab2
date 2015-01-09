@@ -21,13 +21,14 @@ import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification
 import com.esofthead.mycollab.common.i18n.{GenericI18Enum, OptionI18nEnum}
 import com.esofthead.mycollab.configuration.StorageManager
 import com.esofthead.mycollab.core.utils.StringUtils
+import com.esofthead.mycollab.html.{LinkUtils, FormatUtils}
 import com.esofthead.mycollab.module.project.ProjectLinkGenerator
 import com.esofthead.mycollab.module.project.domain.{SimpleProject, SimpleProjectMember}
 import com.esofthead.mycollab.module.project.i18n.VersionI18nEnum
 import com.esofthead.mycollab.module.project.service.ProjectService
 import com.esofthead.mycollab.module.tracker.domain.{SimpleVersion, Version}
 import com.esofthead.mycollab.module.tracker.service.VersionService
-import com.esofthead.mycollab.schedule.email.format.{DateFieldFormat, I18nFieldFormat}
+import com.esofthead.mycollab.schedule.email.format.{WebItem, DateFieldFormat, I18nFieldFormat}
 import com.esofthead.mycollab.schedule.email.project.VersionRelayEmailNotificationAction
 import com.esofthead.mycollab.schedule.email.{ItemFieldMapper, MailContext}
 import com.hp.gagawa.java.elements.Img
@@ -54,21 +55,15 @@ class VersionRelayEmailNotificationActionImpl extends SendMailToAllMembersAction
     val emailNotification: SimpleRelayEmailNotification = context.getEmailNotification
     
     val project: SimpleProject = projectService.findById(bean.getProjectid, emailNotification.getSaccountid)
-    val currentProject: Map[String, String] = Map[String, String](
-      "displayName" -> project.getName,
-      "webLink" -> ProjectLinkGenerator.generateProjectFullLink(siteUrl, bean.getProjectid))
-
-    val listOfTitles:List[Map[String, String]] = List[Map[String, String]](currentProject)
+    val currentProject = new WebItem(project.getName, ProjectLinkGenerator.generateProjectFullLink(siteUrl, bean
+      .getProjectid))
 
     val summary: String = bean.getVersionname
     val summaryLink: String = ProjectLinkGenerator.generateBugComponentPreviewFullLink(siteUrl, bean.getProjectid, bean.getId)
     val projectMember: SimpleProjectMember = projectMemberService.findMemberByUsername(emailNotification.getChangeby, bean.getProjectid, emailNotification.getSaccountid)
 
     val avatarId: String =  if (projectMember != null) projectMember.getMemberAvatarId else ""
-    val userAvatar: Img = new Img("", StorageManager.getAvatarLink(avatarId, 16))
-    userAvatar.setWidth("16")
-    userAvatar.setHeight("16")
-    userAvatar.setStyle("display: inline-block; vertical-align: top;")
+    val userAvatar: Img = LinkUtils.newAvatar(avatarId)
 
     val makeChangeUser: String = userAvatar.toString + emailNotification.getChangeByUserFullName
     val actionEnum:Enum[_] = emailNotification.getAction match {
@@ -78,7 +73,7 @@ class VersionRelayEmailNotificationActionImpl extends SendMailToAllMembersAction
     }
 
     contentGenerator.putVariable("actionHeading", context.getMessage(actionEnum, makeChangeUser))
-    contentGenerator.putVariable("titles", listOfTitles)
+    contentGenerator.putVariable("titles", List(currentProject))
     contentGenerator.putVariable("summary", summary)
     contentGenerator.putVariable("summaryLink", summaryLink)
   }

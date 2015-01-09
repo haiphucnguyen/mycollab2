@@ -19,8 +19,8 @@ package com.esofthead.mycollab.schedule.email.crm.impl
 import com.esofthead.mycollab.common.MonitorTypeConstants
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification
 import com.esofthead.mycollab.common.i18n.GenericI18Enum
-import com.esofthead.mycollab.configuration.StorageManager
 import com.esofthead.mycollab.core.utils.StringUtils
+import com.esofthead.mycollab.html.{LinkUtils, FormatUtils}
 import com.esofthead.mycollab.module.crm.CrmLinkGenerator
 import com.esofthead.mycollab.module.crm.domain.{MeetingWithBLOBs, SimpleMeeting}
 import com.esofthead.mycollab.module.crm.i18n.MeetingI18nEnum
@@ -54,10 +54,7 @@ class MeetingRelayEmailNotificationActionImpl extends CrmDefaultSendingRelayEmai
 
     val user: SimpleUser = userService.findUserByUserNameInAccount(emailNotification.getChangeby, context.getSaccountid)
     val avatarId: String = if (user != null) user.getAvatarid else ""
-    val userAvatar: Img = new Img("", StorageManager.getAvatarLink(avatarId, 16))
-    userAvatar.setWidth("16")
-    userAvatar.setHeight("16")
-    userAvatar.setStyle("display: inline-block; vertical-align: top;")
+    val userAvatar: Img = LinkUtils.newAvatar(avatarId)
 
     val makeChangeUser: String = userAvatar.toString + emailNotification.getChangeByUserFullName
     val actionEnum:Enum[_] = emailNotification.getAction match {
@@ -90,7 +87,6 @@ class MeetingRelayEmailNotificationActionImpl extends CrmDefaultSendingRelayEmai
     put(MeetingWithBLOBs.Field.location, MeetingI18nEnum.FORM_LOCATION)
     put(MeetingWithBLOBs.Field.enddate, new DateTimeFieldFormat(MeetingWithBLOBs.Field.enddate.name, MeetingI18nEnum.FORM_END_DATE_TIME))
     put(MeetingWithBLOBs.Field.description, GenericI18Enum.FORM_DESCRIPTION, isColSpan = true)
-
   }
 
 }
