@@ -16,11 +16,6 @@
  */
 package com.esofthead.mycollab.premium.module.user.accountsettings.customize.view;
 
-import java.util.Iterator;
-
-import org.vaadin.easyuploads.UploadField;
-import org.vaadin.easyuploads.UploadField.FieldType;
-
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.utils.ImageUtil;
@@ -34,30 +29,17 @@ import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
-import com.esofthead.mycollab.vaadin.ui.AccountLogoFactory;
-import com.esofthead.mycollab.vaadin.ui.AddViewLayout2;
-import com.esofthead.mycollab.vaadin.ui.ButtonLink;
-import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
-import com.esofthead.mycollab.vaadin.ui.ServiceMenu;
-import com.esofthead.mycollab.vaadin.ui.ThemeManager;
-import com.esofthead.mycollab.vaadin.ui.ToggleButtonGroup;
-import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.vaadin.ui.VerticalTabsheet;
-import com.esofthead.mycollab.web.CustomLayoutLoader;
+import com.esofthead.mycollab.vaadin.ui.*;
+import com.esofthead.mycollab.web.CustomLayoutExt;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Button;
+import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Component;
-import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.CustomLayout;
-import com.vaadin.ui.GridLayout;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.TabSheet;
-import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.components.colorpicker.ColorChangeEvent;
 import com.vaadin.ui.components.colorpicker.ColorChangeListener;
+import org.vaadin.easyuploads.UploadField;
+import org.vaadin.easyuploads.UploadField.FieldType;
+
+import java.util.Iterator;
 
 /**
  * 
@@ -291,7 +273,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements
 
 		blockBody.addComponent(propertyLayout);
 
-		CustomLayout previewLayout = CustomLayoutLoader
+		CustomLayout previewLayout = CustomLayoutExt
 				.createLayout("topNavigation");
 		previewLayout.setStyleName("example-block");
 		previewLayout.setHeight("40px");

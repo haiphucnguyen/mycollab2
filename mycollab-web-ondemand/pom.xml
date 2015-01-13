@@ -27,15 +27,5 @@
             <artifactId>mycollab-web-pro</artifactId>
             <version>4.5.5</version>
         </dependency>
-        <dependency>
-            <groupId>com.vaadin.addon</groupId>
-            <artifactId>vaadin-charts</artifactId>
-            <version>1.1.7</version>
-        </dependency>
-        <dependency>
-            <groupId>org.vaadin.addons</groupId>
-            <artifactId>googleanalyticstracker</artifactId>
-            <version>2.1.0</version>
-        </dependency>
     </dependencies>
 </project>
