@@ -185,7 +185,7 @@ class ItemTimeLoggingSearchPanel extends
             clearBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
 
             buttonControls.with(searchBtn, clearBtn)
-                    .alignAll(Alignment.MIDDLE_LEFT).expand(clearBtn);
+                    .alignAll(Alignment.MIDDLE_LEFT);
 
             gridLayout.addComponent(buttonControls, null, 2, 0);
 

@@ -282,53 +282,53 @@ public class AddTimeEntryWindow extends Window implements
 		Calendar calendar = new GregorianCalendar();
 		calendar.setTime(monday);
 
-		List<ItemTimeLogging> timeLoggins = new ArrayList<>();
+		List<ItemTimeLogging> timeLoggings = new ArrayList<>();
 
 		ItemTimeLogging timeLogging = buildItemTimeLogging("Monday", calendar,
 				user);
 		if (timeLogging != null) {
-			timeLoggins.add(buildItemTimeLogging("Monday", calendar, user));
+			timeLoggings.add(buildItemTimeLogging("Monday", calendar, user));
 		}
 
 		calendar.add(Calendar.DAY_OF_YEAR, 1);
 		timeLogging = buildItemTimeLogging("Tuesday", calendar, user);
 		if (timeLogging != null) {
-			timeLoggins.add(timeLogging);
+			timeLoggings.add(timeLogging);
 		}
 
 		calendar.add(Calendar.DAY_OF_YEAR, 1);
 		timeLogging = buildItemTimeLogging("Wednesday", calendar, user);
 		if (timeLogging != null) {
-			timeLoggins.add(timeLogging);
+			timeLoggings.add(timeLogging);
 		}
 
 		calendar.add(Calendar.DAY_OF_YEAR, 1);
 		timeLogging = buildItemTimeLogging("Thursday", calendar, user);
 		if (timeLogging != null) {
-			timeLoggins.add(timeLogging);
+			timeLoggings.add(timeLogging);
 		}
 
 		calendar.add(Calendar.DAY_OF_YEAR, 1);
 		timeLogging = buildItemTimeLogging("Friday", calendar, user);
 		if (timeLogging != null) {
-			timeLoggins.add(timeLogging);
+			timeLoggings.add(timeLogging);
 		}
 
 		calendar.add(Calendar.DAY_OF_YEAR, 1);
 		timeLogging = buildItemTimeLogging("Saturday", calendar, user);
 		if (timeLogging != null) {
-			timeLoggins.add(timeLogging);
+			timeLoggings.add(timeLogging);
 		}
 
 		calendar.add(Calendar.DAY_OF_YEAR, 1);
 		timeLogging = buildItemTimeLogging("Sunday", calendar, user);
 		if (timeLogging != null) {
-			timeLoggins.add(timeLogging);
+			timeLoggings.add(timeLogging);
 		}
 
 		ItemTimeLoggingService itemTimeLoggingService = ApplicationContextUtil
 				.getSpringBean(ItemTimeLoggingService.class);
-		itemTimeLoggingService.batchSaveTimeLogging(timeLoggins,
+		itemTimeLoggingService.batchSaveTimeLogging(timeLoggings,
 				AppContext.getAccountId());
 		parentView.refresh();
 	}

@@ -161,10 +161,9 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements
                 ApplicationContextUtil
                         .getSpringBean(ItemTimeLoggingService.class),
                 TimeTrackingListViewImpl.this.itemTimeLogginSearchCriteria);
-        final StreamResource res = new StreamResource(exportStream,
+        return new StreamResource(exportStream,
                 ExportTimeLoggingStreamResource
                         .getDefaultExportFileName(exportType));
-        return res;
     }
 
     private void setTimeRange() {

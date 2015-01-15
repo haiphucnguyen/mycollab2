@@ -72,22 +72,21 @@ public class TimeTrackingEditViewWindow extends Window implements
 		VerticalLayout content = new VerticalLayout();
 		content.setSpacing(true);
 		content.setMargin(true);
-		HorizontalLayout grid = new HorizontalLayout();
-		grid.setSpacing(true);
 
-		HorizontalLayout isBillable = new HorizontalLayout();
-		isBillable.setSpacing(true);
-		isBillable.setDefaultComponentAlignment(Alignment.BOTTOM_LEFT);
+		HorizontalLayout isBillableBox = new HorizontalLayout();
+		isBillableBox.setSpacing(true);
+		isBillableBox.setDefaultComponentAlignment(Alignment.BOTTOM_LEFT);
 		Label billableTitle = new Label(
 				AppContext.getMessage(TimeTrackingI18nEnum.FORM_IS_BILLABLE));
-		isBillable.addComponent(billableTitle);
-		isBillable.addComponent(isBillableCheckBox);
-		isBillable.setCaption("");
+		isBillableBox.addComponent(billableTitle);
+		isBillableBox.addComponent(isBillableCheckBox);
 
+		HorizontalLayout grid = new HorizontalLayout();
+		grid.setSpacing(true);
 		grid.addComponent(projectMemberSelectionBox);
 		grid.addComponent(dateField);
 		grid.addComponent(timeField);
-		grid.addComponent(isBillable);
+		grid.addComponent(isBillableBox);
 
 		content.addComponent(grid);
 
