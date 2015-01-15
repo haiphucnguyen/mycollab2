@@ -58,7 +58,7 @@ public class TimeTrackingEditViewWindow extends Window implements
 
 		dateField = new DateFieldExt("Select date:", this.item.getLogforday());
 
-		property = new ObjectProperty<Double>(item.getLogvalue());
+		property = new ObjectProperty<>(item.getLogvalue());
 		timeField = new TextField("Hours:", property);
 
 		projectMemberSelectionBox = new ProjectMemberSelectionBox();
@@ -105,12 +105,11 @@ public class TimeTrackingEditViewWindow extends Window implements
 		taskLayout.setSpacing(true);
 		createLinkTaskButton();
 
-		String name = new String();
 		if (this.item.getType() != null && this.item.getTypeid() != null) {
 			ProjectGenericTask tempSelectionTask = new ProjectGenericTask();
 			tempSelectionTask.setType(this.item.getType());
 			tempSelectionTask.setTypeId(this.item.getTypeid());
-			name = new GenericTaskDetailMapper(tempSelectionTask.getType(),
+			String name = new GenericTaskDetailMapper(tempSelectionTask.getType(),
 					tempSelectionTask.getTypeId()).getName();
 
 			tempSelectionTask.setName(name);

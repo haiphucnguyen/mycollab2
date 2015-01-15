@@ -50,9 +50,9 @@
         </dependency>
 
         <dependency>
-            <groupId>org.vaadin</groupId>
-            <artifactId>viritin</artifactId>
-            <version>1.22</version>
+            <groupId>org.peimari</groupId>
+            <artifactId>maddon</artifactId>
+            <version>1.21</version>
         </dependency>
 
         <dependency>

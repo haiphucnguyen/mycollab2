@@ -1,12 +1,5 @@
 package com.esofthead.mycollab.premium.module.project.view.time;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
-
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
@@ -27,17 +20,13 @@ import com.vaadin.data.Property;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Button;
+import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.CheckBox;
-import com.vaadin.ui.GridLayout;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.RichTextArea;
-import com.vaadin.ui.Table;
-import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Window;
+import org.vaadin.maddon.layouts.MVerticalLayout;
+
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.Calendar;
 
 /**
  * 
@@ -68,9 +57,8 @@ public class AddTimeEntryWindow extends Window implements
 
 		selectedDate = new GregorianCalendar().getTime();
 
-		VerticalLayout content = new VerticalLayout();
-		content.setSpacing(true);
-		content.setMargin(true);
+		MVerticalLayout content = new MVerticalLayout().withSpacing(true).withMargin(true);
+
 		GridLayout grid = new GridLayout(3, 2);
 		grid.setMargin(new MarginInfo(false, false, true, false));
 		grid.setSpacing(true);
@@ -294,7 +282,7 @@ public class AddTimeEntryWindow extends Window implements
 		Calendar calendar = new GregorianCalendar();
 		calendar.setTime(monday);
 
-		List<ItemTimeLogging> timeLoggins = new ArrayList<ItemTimeLogging>();
+		List<ItemTimeLogging> timeLoggins = new ArrayList<>();
 
 		ItemTimeLogging timeLogging = buildItemTimeLogging("Monday", calendar,
 				user);

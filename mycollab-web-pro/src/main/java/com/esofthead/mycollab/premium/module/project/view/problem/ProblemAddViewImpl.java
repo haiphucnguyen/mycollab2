@@ -67,7 +67,7 @@ public class ProblemAddViewImpl extends AbstractEditItemComp<Problem> implements
 
 	@Override
 	protected ComponentContainer createButtonControls() {
-		final Layout controlButtons = (new EditFormControlsGenerator<Problem>(
+		final Layout controlButtons = (new EditFormControlsGenerator<>(
 				editForm)).createButtonControls();
 		controlButtons.setSizeUndefined();
 		return controlButtons;
@@ -75,7 +75,7 @@ public class ProblemAddViewImpl extends AbstractEditItemComp<Problem> implements
 
 	@Override
 	protected AdvancedEditBeanForm<Problem> initPreviewForm() {
-		return new AdvancedEditBeanForm<Problem>();
+		return new AdvancedEditBeanForm<>();
 	}
 
 	@Override

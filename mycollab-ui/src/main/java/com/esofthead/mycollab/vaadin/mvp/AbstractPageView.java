@@ -20,7 +20,7 @@ import java.io.Serializable;
 
 
 import com.vaadin.ui.ComponentContainer;
-import org.vaadin.viritin.layouts.MVerticalLayout;
+import org.vaadin.maddon.layouts.MVerticalLayout;
 
 /**
  * 

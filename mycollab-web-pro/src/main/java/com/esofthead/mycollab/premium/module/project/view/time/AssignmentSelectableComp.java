@@ -9,5 +9,6 @@ import com.esofthead.mycollab.module.project.domain.ProjectGenericTask;
  * 
  */
 public interface AssignmentSelectableComp {
+
 	void updateLinkTask(ProjectGenericTask task);
 }
