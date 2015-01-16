@@ -79,10 +79,10 @@
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    background: #fff;
+    background: white;
   }
   .gantt-content {
-    background: #fff;
+    background: white;
     overflow: hidden;
     position: relative;
     width: 100%;
@@ -149,7 +149,7 @@
 }
 
 .v-table-row.v-selected .v-button-link .v-button-caption, .v-table-row-odd.v-selected .v-button-link .v-button-caption {
-  color: #FFF;
+  color: white;
 }
 
 .gantt-chart {

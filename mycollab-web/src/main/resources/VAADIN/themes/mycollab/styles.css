@@ -2962,8 +2962,14 @@ input.v-textfield-errorField {
 .projectDashboardView .navigator-wrap .project-list-comp .project-name.v-margin-top {
   padding-top: 9px;
 }
+.projectDashboardView .navigator-wrap .project-list-comp .project-name.v-margin-right {
+  padding-right: 0px;
+}
 .projectDashboardView .navigator-wrap .project-list-comp .project-name.v-margin-bottom {
   padding-bottom: 9px;
+}
+.projectDashboardView .navigator-wrap .project-list-comp .project-name.v-margin-left {
+  padding-left: 0px;
 }
 .projectDashboardView .navigator-wrap .project-list-comp .project-description {
   color: white;
@@ -2992,20 +2998,29 @@ input.v-textfield-errorField {
   background-color: white;
   border-bottom: 1px solid #cfcfcf;
 }
-
-.projectDashboardView .container-wrap.main-content .top-panel.v-margin-top, .accountViewContainer .container-wrap.main-content .top-panel.v-margin-top {
+.accountViewContainer .container-wrap.main-content .top-panel.v-margin-top {
   padding-top: 10px;
 }
-
-.projectDashboardView .container-wrap.main-content .top-panel.v-margin-right, .accountViewContainer .container-wrap.main-content .top-panel.v-margin-right {
+.accountViewContainer .container-wrap.main-content .top-panel.v-margin-right {
   padding-right: 30px;
 }
-
-.projectDashboardView .container-wrap.main-content .top-panel.v-margin-bottom, .accountViewContainer .container-wrap.main-content .top-panel.v-margin-bottom {
+.accountViewContainer .container-wrap.main-content .top-panel.v-margin-bottom {
   padding-bottom: 10px;
 }
+.accountViewContainer .container-wrap.main-content .top-panel.v-margin-left {
+  padding-left: 30px;
+}
 
-.projectDashboardView .container-wrap.main-content .top-panel.v-margin-left, .accountViewContainer .container-wrap.main-content .top-panel.v-margin-left {
+.projectDashboardView .container-wrap.main-content .top-panel.v-margin-top {
+  padding-top: 10px;
+}
+.projectDashboardView .container-wrap.main-content .top-panel.v-margin-right {
+  padding-right: 30px;
+}
+.projectDashboardView .container-wrap.main-content .top-panel.v-margin-bottom {
+  padding-bottom: 10px;
+}
+.projectDashboardView .container-wrap.main-content .top-panel.v-margin-left {
   padding-left: 30px;
 }
 
@@ -3077,7 +3092,7 @@ input.v-textfield-errorField {
 .projectDashboardView .v-tabsheet-tabitem-selected {
   background-color: #F5F5F5;
 }
-.projectDashboardView .v-tabsheet-content, .projectDashboardView .Milestones .v-tabsheet-content {
+.projectDashboardView .v-tabsheet-content {
   background-color: white;
 }
 .projectDashboardView .addViewLayout {
@@ -4219,11 +4234,14 @@ div.v-splitbutton .v-button {
 .message-header.v-margin-top {
   padding-top: 10px;
 }
-.message-header.v-margin-left {
-  padding-left: 10px;
-}
 .message-header.v-margin-right {
   padding-right: 10px;
+}
+.message-header.v-margin-bottom {
+  padding-bottom: 0px;
+}
+.message-header.v-margin-left {
+  padding-left: 10px;
 }
 
 .message-body {
@@ -4766,6 +4784,12 @@ div.v-lazyloadingwrapper-loading {
 }
 .standupreport-list-content .depotComp .depotContent.v-margin-top {
   padding-top: 10px;
+}
+.standupreport-list-content .depotComp .depotContent.v-margin-right {
+  padding-right: 0px;
+}
+.standupreport-list-content .depotComp .depotContent.v-margin-bottom {
+  padding-bottom: 0px;
 }
 .standupreport-list-content .depotComp .depotContent.v-margin-left {
   padding-left: 10px;
@@ -5552,7 +5576,7 @@ div.v-stylecalendar .weekdays TD {
   padding-top: 5px;
 }
 .control-buttons.v-margin-right {
-  padding-right: 0;
+  padding-right: 0px;
 }
 .control-buttons.v-margin-bottom {
   padding-bottom: 5px;
@@ -5731,17 +5755,26 @@ div.v-stylecalendar .weekdays TD {
   padding-left: 15px;
 }
 
-.colored-gridlayout .gridform-caption.v-margin-top, .colored-gridlayout .gridform-field.v-margin-top {
+.colored-gridlayout .gridform-caption.v-margin-top {
   padding-top: 8px;
 }
-.colored-gridlayout .gridform-caption.v-margin-right, .colored-gridlayout .gridform-field.v-margin-right {
+.colored-gridlayout .gridform-caption.v-margin-right {
   padding-right: 18px;
 }
-.colored-gridlayout .gridform-caption.v-margin-bottom, .colored-gridlayout .gridform-field.v-margin-bottom {
+.colored-gridlayout .gridform-caption.v-margin-bottom {
   padding-bottom: 8px;
 }
 .colored-gridlayout .gridform-caption.v-margin-left {
   padding-left: 18px;
+}
+.colored-gridlayout .gridform-field.v-margin-top {
+  padding-top: 8px;
+}
+.colored-gridlayout .gridform-field.v-margin-right {
+  padding-right: 18px;
+}
+.colored-gridlayout .gridform-field.v-margin-bottom {
+  padding-bottom: 8px;
 }
 .colored-gridlayout .gridform-field.v-margin-left {
   padding-left: 18px;
@@ -5806,7 +5839,7 @@ div.v-stylecalendar .weekdays TD {
 .taskadd-popup .popup-header.v-margin-bottom {
   padding-bottom: 8px;
 }
-.taskadd-popup .popup-header.v-margin-right {
+.taskadd-popup .popup-header.v-margin-left {
   padding-left: 18px;
 }
 .taskadd-popup .v-tabsheet {
@@ -6972,15 +7005,12 @@ div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
 .gridform-caption.v-margin-top, .gridform-field.v-margin-top {
   padding-top: 0px;
 }
-
 .gridform-caption.v-margin-right, .gridform-field.v-margin-right {
   padding-right: 0px;
 }
-
 .gridform-caption.v-margin-bottom, .gridform-field.v-margin-bottom {
   padding-bottom: 0px;
 }
-
 .gridform-caption.v-margin-left, .gridform-field.v-margin-left {
   padding-left: 0px;
 }
@@ -7164,8 +7194,14 @@ div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
 .contactrole-row.v-margin-top {
   padding-top: 6px;
 }
+.contactrole-row.v-margin-right {
+  padding-right: 0px;
+}
 .contactrole-row.v-margin-bottom {
   padding-bottom: 6px;
+}
+.contactrole-row.v-margin-left {
+  padding-left: 0px;
 }
 .contactrole-row.odd {
   background-color: #d4dfef;
@@ -7235,23 +7271,19 @@ div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
 }
 
 /* New View's Styles */
-.hdr-view, .v-horizontallayout.hdr-view, .advSearchHeader .v-horizontallayout.hdr-view, .basicSearchHeader .hdr-view {
+.hdr-view, .v-horizontallayout.hdr-view, .advSearchHeader .hdr-view, .basicSearchHeader .hdr-view {
   background-color: white;
 }
-
-.hdr-view.v-margin-top, .advSearchHeader .hdr-view.v-margin-top, .basicSearchHeader .hdr-view.v-margin-top {
+.hdr-view.v-margin-top, .v-horizontallayout.hdr-view.v-margin-top, .advSearchHeader .hdr-view.v-margin-top, .basicSearchHeader .hdr-view.v-margin-top {
   padding-top: 12px;
 }
-
-.hdr-view.v-margin-right, .advSearchHeader .hdr-view.v-margin-right, .basicSearchHeader .hdr-view.v-margin-right {
+.hdr-view.v-margin-right, .v-horizontallayout.hdr-view.v-margin-right, .advSearchHeader .hdr-view.v-margin-right, .basicSearchHeader .hdr-view.v-margin-right {
   padding-right: 30px;
 }
-
-.hdr-view.v-margin-bottom, .advSearchHeader .hdr-view.v-margin-bottom, .basicSearchHeader .hdr-view.v-margin-bottom {
+.hdr-view.v-margin-bottom, .v-horizontallayout.hdr-view.v-margin-bottom, .advSearchHeader .hdr-view.v-margin-bottom, .basicSearchHeader .hdr-view.v-margin-bottom {
   padding-bottom: 12px;
 }
-
-.hdr-view.v-margin-left, .advSearchHeader .hdr-view.v-margin-left, .basicSearchHeader .hdr-view.v-margin-left {
+.hdr-view.v-margin-left, .v-horizontallayout.hdr-view.v-margin-left, .advSearchHeader .hdr-view.v-margin-left, .basicSearchHeader .hdr-view.v-margin-left {
   padding-left: 30px;
 }
 
@@ -7577,6 +7609,9 @@ div.v-csslayout.bean-block {
 }
 .intro-text-wrap.v-margin-right {
   padding-right: 10px;
+}
+.intro-text-wrap.v-margin-bottom {
+  padding-bottom: 0px;
 }
 .intro-text-wrap.v-margin-left {
   padding-left: 10px;

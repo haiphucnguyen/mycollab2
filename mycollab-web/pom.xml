@@ -395,4 +395,5 @@
             <url>https://raw.githubusercontent.com/esofthead/mycollab-maven-repo/master</url>
         </repository>
     </repositories>
+
 </project>

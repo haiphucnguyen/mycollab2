@@ -5,7 +5,23 @@
 @import "ganttstyle.scss";
 
 $border-color: #CFCFCF;
+$background-color: #F7F7F7
 $font-stack: Arial, Helvetica, sans-serif;
+
+@mixin margin-container($left, $top, $right, $bottom) {
+  &.v-margin-top {
+    padding-top: $top;
+  }
+  &.v-margin-right{
+    padding-right: $right;
+  }
+  &.v-margin-bottom {
+    padding-bottom: $bottom;
+  }
+  &.v-margin-left {
+    padding-left: $left;
+  }
+}
 
 @media only screen and (max-width: 1024px), only screen and (max-device-width: 1024px) {
   .projectDashboardView {
@@ -78,7 +94,7 @@ a {
 }
 
 .mycollab .v-richtextarea {
-  border: 1px solid $border_color;
+  border: 1px solid $border-color;
 }
 
 .v-button, .v-button-caption {
@@ -193,13 +209,13 @@ div.v-button .v-button-link .link .v-button-buttonlinkcenter .buttonlinkcenter .
 
 input.v-textfield, textarea.v-textarea, .v-filterselect {
   background: none no-repeat left top white;
-  border-color: $border_color;
+  border-color: $border-color;
 }
 
 .v-ie {
   input.v-textfield, textarea.v-textarea, .v-filterselect {
     background: none no-repeat left top white;
-    border-color: $border_color;
+    border-color: $border-color;
   }
 }
 
@@ -263,8 +279,8 @@ input.v-widget.v-textfield[type="text"], .v-filterselect {
     background-color: white;
   }
   .v-window-outerheader {
-    background-color: #F7F7F7;
-    padding: 0;
+    background-color: $background-color;
+    padding: 0px;
     .v-window-header {
       padding: 12px 30px 12px 10px;
       font-size: 14px;
@@ -321,7 +337,7 @@ body div > input.v-filterselect-input[type="text"] {
 
 select.v-select-select {
   background: none no-repeat left top white;
-  border: 1px solid $border_color;
+  border: 1px solid $border-color;
 }
 
 .v-table-table {
@@ -976,7 +992,7 @@ input.v-textfield-pagedtable-pagefield {
 
 .v-textfield {
   &.v-readonly {
-    border: 1px solid $border_color;
+    border: 1px solid $border-color;
   }
   &.noBorderRight {
     border-right-style: none;
@@ -1175,24 +1191,24 @@ input.v-textfield-pagedtable-pagefield {
 }
 
 .time-tracking-summary-search-panel {
-  border: 1px solid $border_color;
-  background-color: #F7F7F7;
+  border: 1px solid $border-color;
+  background-color: $background-color;
 }
 
 .advSearch {
   .advSearchBody {
-    border: 1px solid $border_color;
-    background-color: #F7F7F7;
+    border: 1px solid $border-color;
+    background-color: $background-color;
     .v-label {
       text-align: right;
     }
   }
   .advSearchFooterContainer {
     padding: 10px 0px 10px;
-    border-color: $border_color;
+    border-color: $border-color;
     border-width: 0px 1px 1px;
     border-style: solid;
-    background-color: #F7F7F7;
+    background-color: $background-color;
     .advSearchFooter {
       text-align: center;
       div:first-child {
@@ -1211,25 +1227,14 @@ input.v-textfield-pagedtable-pagefield {
 /* Basic Search Template */
 
 .basicSearch .basicSearchBody {
-  background-color: #F7F7F7;
-  border: 1px solid $border_color;
+  background-color: $background-color;
+  border: 1px solid $border-color;
   border-radius: 0;
   > .v-horizontallayout {
     .v-horizontallayout-margin {
       padding: 10px 15px;
     }
-    &.v-margin-top {
-      padding-top: 10px;
-    }
-    &.v-margin-right {
-      padding-right: 15px;
-    }
-    &.v-margin-bottom {
-      padding-bottom: 10px;
-    }
-    &.v-margin-left {
-      padding-left: 15px;
-    }
+    @include margin-container(15px, 10px, 15px, 10px);
   }
   .v-horizontallayout-search-comp .v-horizontallayout-margin {
     padding: 0px;
@@ -1260,7 +1265,7 @@ input.v-textfield-pagedtable-pagefield {
     background: none;
     border-radius: 3px 0px 0px 3px;
     border-right: medium none;
-    border-color: $border_color;
+    border-color: $border-color;
     border-width: 1px;
     padding: 1px 0px 0px;
     .v-button-wrap, &:active .v-button-wrap {
@@ -1335,7 +1340,7 @@ input.v-textfield-pagedtable-pagefield {
     }
     &:after {
       content: "";
-      border-bottom: 1px solid $border_color;
+      border-bottom: 1px solid $border-color;
       width: 221px;
       position: relative;
       height: 15px;
@@ -1441,7 +1446,7 @@ input.v-textfield-errorField {
     line-height: normal;
     color: rgb(80, 127, 140);
     padding: 0px 0px 5px;
-    border-bottom: 1px solid $border_color;
+    border-bottom: 1px solid $border-color;
     text-align: left;
   }
   #form-intro-text {
@@ -1704,35 +1709,24 @@ input.v-textfield-errorField {
 .addViewLayout {
   .addViewBody {
     background-color: white;
-    border-color: $border_color;
+    border-color: $border-color;
     border-style: solid;
     border-width: 1px 1px 0px;
   }
   .report-addview-layout {
-    border-bottom: 1px solid $border_color;
+    border-bottom: 1px solid $border-color;
   }
   .addViewTopControls {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     -webkit-box-sizing: border-box;
-    border-bottom: 1px solid $border_color;
+    border-bottom: 1px solid $border-color;
     .addNewControl {
       border-bottom: none;
     }
   }
   .addNewControl {
-    &.v-margin-top {
-      padding-top: 5px;
-    }
-    &.v-margin-right {
-      padding-right: 0px;
-    }
-    &.v-margin-bottom {
-      padding-bottom: 5px;
-    }
-    &.v-margin-left {
-      padding-left: 0px;
-    }
+    @include margin-container(0px, 5px, 0px, 5px);
   }
   .addViewTopControls {
     .edit-btn .v-horizontallayout-margin, .workflow-controls .v-horizontallayout-margin {
@@ -1744,7 +1738,7 @@ input.v-textfield-errorField {
 .addViewTitle {
   padding: 10px 5px 10px 18px;
   background: none repeat-x left top #EEEEEE;
-  border-color: $border_color;
+  border-color: $border-color;
   border-style: solid;
   border-width: 1px 1px 0px;
   font-size: 15px;
@@ -1786,7 +1780,7 @@ input.v-textfield-errorField {
     text-shadow: #F0F0F0 0 1px 0;
     padding: 8px 0px 8px 18px;
     font-size: 13px;
-    border-bottom: 1px solid $border_color;
+    border-bottom: 1px solid $border-color;
     color: rgb(69, 69, 69);
   }
 }
@@ -1803,9 +1797,9 @@ input.v-textfield-errorField {
 .addViewLayout .addViewBottomControls {
   border-width: 0px 1px;
   border-style: solid;
-  border-color: $border_color;
+  border-color: $border-color;
   .more-info {
-    border-bottom: 1px solid $border_color;
+    border-bottom: 1px solid $border-color;
   }
   .depotComp.collapsed .header-wrapper, .comment-list .depotContent {
     border-width: 0px 0px 1px 0px;
@@ -1844,23 +1838,23 @@ input.v-textfield-errorField {
     background: none;
   }
   .userInfoContainer .avatar-pass-wrapper {
-    border-bottom: 1px solid $border_color;
+    border-bottom: 1px solid $border-color;
     background-color: #E9F2F7;
   }
 }
 
 .avatar-pass-wrapper .v-upload .v-button {
   color: #525252;
-  border-color: $border_color;
+  border-color: $border-color;
   border-width: 1px;
 }
 
 .accountViewContainer {
   .addview-layout-body {
-    border: 1px solid $border_color;
+    border: 1px solid $border-color;
   }
   .userInfoContainer .addview-layout-body .info-block-header {
-    border-color: $border_color;
+    border-color: $border-color;
     border-width: 0px 0px 1px 0px;
     border-style: solid;
     padding: 8px 0px 8px 18px;
@@ -1886,7 +1880,7 @@ input.v-textfield-errorField {
   .depotComp .depotHeader {
     border-width: 0px 0px 1px 0px;
     border-style: solid;
-    border-color: $border_color;
+    border-color: $border-color;
   }
 }
 
@@ -1969,7 +1963,7 @@ input.v-textfield-errorField {
 
 .v-popupbutton-popup.v-popupbutton-popup-project-list-comp-hdr {
   padding: 0px;
-  border: 1px solid $border_color;
+  border: 1px solid $border-color;
 }
 
 .projectDashboardView .navigator-wrap .project-list-comp .project-list-comp-hdr {
@@ -1983,18 +1977,7 @@ input.v-textfield-errorField {
       vertical-align: middle;
     }
   }
-  &.v-margin-top {
-    padding-top: 8px;
-  }
-  &.v-margin-right {
-    padding-right: 13px;
-  }
-  &.v-margin-bottom {
-    padding-bottom: 8px;
-  }
-  &.v-margin-left {
-    padding-left: 13px;
-  }
+  @include margin-container(13px, 8px, 13px, 8px);
   .v-popup-indicator {
     position: relative;
     float: right;
@@ -2005,7 +1988,7 @@ input.v-textfield-errorField {
 }
 
 .project-list-comp-content .project-name {
-  background-color: #F7F7F7;
+  background-color: $background-color;
   cursor: pointer;
   .v-label {
     cursor: pointer;
@@ -2025,17 +2008,12 @@ input.v-textfield-errorField {
       .v-label {
         cursor: pointer;
       }
-      &.v-margin-top {
-        padding-top: 9px;
-      }
-      &.v-margin-bottom {
-        padding-bottom: 9px;
-      }
+      @include margin-container(0px, 9px, 0px, 9px);
     }
     .project-description {
       color: white;
       padding: 10px 0px 20px;
-      border-bottom: 1px solid $border_color;
+      border-bottom: 1px solid $border-color;
     }
   }
   .container-wrap.main-content .tab-content {
@@ -2055,29 +2033,19 @@ input.v-textfield-errorField {
   }
   .top-panel {
     background-color: white;
-    border-bottom: 1px solid $border_color;
+    border-bottom: 1px solid $border-color;
   }
 }
 
 .accountViewContainer .container-wrap.main-content .top-panel {
   background-color: white;
-  border-bottom: 1px solid $border_color;
+  border-bottom: 1px solid $border-color;
+
+  @include margin-container(30px, 10px, 30px, 10px)
 }
 
-.projectDashboardView .container-wrap.main-content .top-panel.v-margin-top, .accountViewContainer .container-wrap.main-content .top-panel.v-margin-top {
-  padding-top: 10px;
-}
-
-.projectDashboardView .container-wrap.main-content .top-panel.v-margin-right, .accountViewContainer .container-wrap.main-content .top-panel.v-margin-right {
-  padding-right: 30px;
-}
-
-.projectDashboardView .container-wrap.main-content .top-panel.v-margin-bottom, .accountViewContainer .container-wrap.main-content .top-panel.v-margin-bottom {
-  padding-bottom: 10px;
-}
-
-.projectDashboardView .container-wrap.main-content .top-panel.v-margin-left, .accountViewContainer .container-wrap.main-content .top-panel.v-margin-left {
-  padding-left: 30px;
+.projectDashboardView .container-wrap.main-content .top-panel {
+  @include margin-container(30px, 10px, 30px, 10px)
 }
 
 .projectDashboardView {
@@ -2151,7 +2119,7 @@ input.v-textfield-errorField {
   .v-tabsheet-tabitem-selected {
     background-color: #F5F5F5;
   }
-  .v-tabsheet-content, .Milestones .v-tabsheet-content {
+  .v-tabsheet-content {
     background-color: white;
   }
   .addViewLayout {
@@ -2200,7 +2168,7 @@ input.v-textfield-errorField {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
-  border: 1px solid $border_color;
+  border: 1px solid $border-color;
   background: none no-repeat left top white;
   border-radius: 0px;
 }
@@ -2209,14 +2177,14 @@ input.v-textfield-errorField {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
-  border: 1px solid $border_color;
-  background: none no-repeat left top #F7F7F7;
+  border: 1px solid $border-color;
+  background: none no-repeat left top $background-color;
   border-radius: 0px;
 }
 
 .projectinfo-header, .message-toppanel-header {
   font-size: 13px;
-  border-bottom: 1px solid $border_color;
+  border-bottom: 1px solid $border-color;
   padding-bottom: 0.2em;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
@@ -2226,33 +2194,11 @@ input.v-textfield-errorField {
 }
 
 .projectinfo-header {
-  &.v-margin-top {
-    padding-top: 7px;
-  }
-  &.v-margin-right {
-    padding-right: 10px;
-  }
-  &.v-margin-bottom {
-    padding-bottom: 7px;
-  }
-  &.v-margin-left {
-    padding-left: 18px;
-  }
+  @include margin-container(18px, 7px, 10px, 7px);
 }
 
 .message-toppanel-header {
-  &.v-margin-top {
-    padding-top: 3px;
-  }
-  &.v-margin-right {
-    padding-right: 10px;
-  }
-  &.v-margin-bottom {
-    padding-bottom: 2px;
-  }
-  &.v-margin-left {
-    padding-left: 18px;
-  }
+  @include margin-container(18px, 3px, 10px, 2px);
 }
 
 .projectinfo-header {
@@ -2267,18 +2213,7 @@ input.v-textfield-errorField {
 }
 
 .projectinfo-footer {
-  &.v-margin-top {
-    padding-top: 5px;
-  }
-  &.v-margin-right {
-    padding-right: 5px;
-  }
-  &.v-margin-bottom {
-    padding-bottom: 5px;
-  }
-  &.v-margin-left {
-    padding-left: 18px;
-  }
+  @include margin-container(18px, 5px, 5px, 5px);
 }
 
 .projectfeed-hdr-wrapper {
@@ -2378,7 +2313,7 @@ input.v-textfield-errorField {
   .depotHeader {
     border-width: 1px;
     border-style: solid;
-    border-color: $border_color;
+    border-color: $border-color;
     border-radius: 0px;
     background: none no-repeat 0 0 #F1F1F1;
   }
@@ -2416,18 +2351,7 @@ input.v-textfield-errorField {
     color: black;
   }
   .header-elements {
-    &.v-margin-top {
-      padding-top: 3px;
-    }
-    &.v-margin-right {
-      padding-right: 8px;
-    }
-    &.v-margin-bottom {
-      padding-bottom: 3px;
-    }
-    &.v-margin-left {
-      padding-left: 8px;
-    }
+    @include margin-container(8px, 3px, 8px, 3px);
   }
   &.collapsed .depotContent {
     padding: 0px;
@@ -2439,7 +2363,7 @@ input.v-textfield-errorField {
     box-sizing: border-box;
     display: block;
     &.empty {
-      border-bottom: 1px solid $border_color;
+      border-bottom: 1px solid $border-color;
     }
     .v-table-header-wrap {
       border-top: none;
@@ -2451,7 +2375,7 @@ input.v-textfield-errorField {
 }
 
 .filter-task-table {
-  border-color: $border_color;
+  border-color: $border-color;
   border-style: solid;
   border-width: 1px 0px 0px;
 }
@@ -2463,22 +2387,11 @@ input.v-textfield-errorField {
 }
 
 .depotContent.bordered {
-  border-color: $border_color;
+  border-color: $border-color;
   border-style: solid;
   border-width: 0px 1px 1px 1px;
   background-color: white;
-  &.v-margin-top {
-    padding-top: 5px;
-  }
-  &.v-margin-right {
-    padding-right: 5px;
-  }
-  &.v-margin-bottom {
-    padding-bottom: 5px;
-  }
-  &.v-margin-left {
-    padding-left: 5px;
-  }
+  @include margin-container(5px, 5px, 5px, 5px);
 }
 
 .addViewLayout .depotContent .v-button-link {
@@ -2487,21 +2400,10 @@ input.v-textfield-errorField {
 
 .bug-list .widget-footer {
   background-color: white;
-  border-color: $border_color;
+  border-color: $border-color;
   border-style: solid;
   border-width: 0px 1px 1px 1px;
-  &.v-margin-top {
-    padding-top: 5px;
-  }
-  &.v-margin-right {
-    padding-right: 5px;
-  }
-  &.v-margin-bottom {
-    padding-bottom: 5px;
-  }
-  &.v-margin-left {
-    padding-left: 5px;
-  }
+  @include margin-container(5px, 5px, 5px, 5px);
 }
 
 /* End Depot */
@@ -2553,7 +2455,7 @@ input.v-textfield-errorField {
   box-sizing: border-box;
   border-width: 0px 0px 1px;
   border-style: solid;
-  border-color: $border_color;
+  border-color: $border-color;
   .v-button {
     background: none;
     border: 0px;
@@ -2748,12 +2650,12 @@ input.v-textfield-errorField {
 }
 
 .v-tabsheet-content {
-  background-color: rgb(255, 255, 255);
+  background-color: white;
   border: none;
 }
 
 td.v-tabsheet-spacertd div {
-  border-color: $border_color;
+  border-color: $border-color;
 }
 
 .v-tabsheet-tabitem {
@@ -2772,16 +2674,16 @@ td.v-tabsheet-spacertd div {
       border-radius: 0px;
       background-image: none;
     }
-    background-color: rgb(255, 255, 255);
+    background-color: white;
     border-radius: 0px;
-    border-bottom-color: rgb(255, 255, 255);
+    border-bottom-color: white;
   }
   background: none repeat-x left top transparent;
   border-radius: 0px;
   padding: 0px;
   border-width: 0px 1px 1px 0px;
   border-style: solid;
-  border-color: $border_color;
+  border-color: $border-color;
 }
 
 .v-tabsheet-tabitemcell {
@@ -2822,7 +2724,7 @@ td.v-tabsheet-spacertd div {
 
 .activity-stream {
   background-color: white;
-  border-color: $border_color;
+  border-color: $border-color;
   border-width: 0px 1px 1px;
   border-style: solid;
   padding: 5px;
@@ -2867,13 +2769,14 @@ td.v-tabsheet-spacertd div {
 .v-panel-content-activity-panel {
   border: none;
   padding-top: 10px;
-  border-color: $border_color;
+  border-color: $border-color;
 }
 
 .v-panel-deco-activity-panel {
   border: none;
 }
 
+//Revise it
 .depotContent > .v-verticallayout > div > div > div > .v-lazyloadingwrapper > .v-verticallayout > div > div > div > .v-verticallayout .activity-stream {
   &.odd {
     background-color: rgb(212, 223, 239);
@@ -2886,7 +2789,7 @@ td.v-tabsheet-spacertd div {
   padding: 5px;
   border-width: 0px 1px 1px;
   border-style: solid;
-  border-color: $border_color;
+  border-color: $border-color;
   > .v-csslayout-margin {
     box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -2901,7 +2804,7 @@ td.v-tabsheet-spacertd div {
   padding: 0px 5px;
   border-width: 0px 1px 1px;
   border-style: solid;
-  border-color: $border_color;
+  border-color: $border-color;
   color: white;
   .v-label {
     font-size: 11px;
@@ -3122,7 +3025,7 @@ div.v-splitbutton {
   background: none no-repeat 0 0 #EEEEEE;
   border-radius: 0px;
   border-width: 0 1px 1px 1px;
-  border-bottom: 1px solid $border_color;
+  border-bottom: 1px solid $border-color;
 }
 
 .readViewBottomControls .v-table-header-wrap, .full-border-table .v-table .v-table-header-wrap {
@@ -3154,14 +3057,14 @@ div.v-splitbutton {
 }
 
 .v-table-row-odd, .v-table-striped .v-table-row-odd {
-  background: none repeat scroll 0% 0% #F7F7F7;
+  background: none repeat scroll 0% 0% $background-color;
 }
 
 .v-csslayout-listControl {
   padding: 2px;
   border-width: 0px 1px 1px;
   border-style: solid;
-  border-color: $border_color;
+  border-color: $border-color;
   border-radius: 0px 0px 3px 3px;
   background: none no-repeat 0 0 white;
 }
@@ -3179,8 +3082,8 @@ div.v-splitbutton {
 /* Token Field */
 
 .tokenfield {
-  border: 1px solid $border_color;
-  background: url("icons/input-bg.png") repeat-x scroll 0% 0% rgb(255, 255, 255);
+  border: 1px solid $border-color;
+  background: url("icons/input-bg.png") repeat-x scroll 0% 0% white;
   padding: 3px 2px 2px;
   border-radius: 3px;
   .v-filterselect {
@@ -3263,18 +3166,7 @@ div.v-splitbutton {
 }
 
 .message-toppanel-body {
-  &.v-margin-top {
-    padding-top: 7px;
-  }
-  &.v-margin-right {
-    padding-right: 5px;
-  }
-  &.v-margin-bottom {
-    padding-bottom: 7px;
-  }
-  &.v-margin-left {
-    padding-left: 18px;
-  }
+  @include margin-container(18px, 7px, 5px, 7px);
 }
 
 .v-horizontallayout-message-search .v-horizontallayout-margin {
@@ -3288,10 +3180,10 @@ div.v-splitbutton {
 .message-list {
   .beanlist-content {
     padding: 5px 15px;
-    background: none no-repeat left top rgb(255, 255, 255);
+    background: none no-repeat left top white;
     border-width: 0px 1px 1px;
     border-style: solid;
-    border-color: $border_color;
+    border-color: $border-color;
   }
   .v-csslayout-beanlist-content > .v-csslayout-margin > .v-csslayout-container > div {
     display: inline-block;
@@ -3326,7 +3218,7 @@ div.v-splitbutton {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
   background-color: #f2fafd;
-  border: 1px solid $border_color;
+  border: 1px solid $border-color;
   border-radius: 5px;
   position: relative;
   overflow: visible;
@@ -3350,7 +3242,7 @@ div.v-splitbutton {
       left: -11px;
       /* value = - border-left-width - border-right-width */
       border-width: 11px 11px 11px 0;
-      border-color: transparent $border_color;
+      border-color: transparent $border-color;
       border-radius: 0px;
     }
     &:after {
@@ -3382,15 +3274,8 @@ div.v-splitbutton {
   .post-owner {
     color: #525252;
   }
-  &.v-margin-top {
-    padding-top: 10px;
-  }
-  &.v-margin-left {
-    padding-left: 10px;
-  }
-  &.v-margin-right {
-    padding-right: 10px;
-  }
+
+  @include margin-container(10px, 10px, 10px, 0px);
 }
 
 .message-body {
@@ -3449,7 +3334,7 @@ div.v-splitbutton {
 }
 
 .message .message-footer {
-  border-top: 1px solid $border_color;
+  border-top: 1px solid $border-color;
   padding: 7px 10px;
 }
 
@@ -3459,7 +3344,7 @@ div.v-splitbutton {
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
     background: none no-repeat left top #f5f5f5;
-    border-color: $border_color;
+    border-color: $border-color;
     border-style: solid;
     border-width: 0px 1px 1px;
   }
@@ -3573,7 +3458,7 @@ div.v-button-link.xbreadcrumbbutton .v-button-wrap {
 
 .task-component {
   margin-bottom: 5px;
-  background-color: #F7F7F7;
+  background-color: $background-color;
   > .v-csslayout-margin {
     border: 1px solid rgba(0, 0, 0, 0.25);
     padding-left: 5px;
@@ -3608,22 +3493,11 @@ div.v-button-link.xbreadcrumbbutton .v-button-wrap {
 }
 
 .widget-row {
-  background-color: #F7F7F7;
+  background-color: $background-color;
   border-width: 0px 1px 1px 1px;
   border-style: solid;
-  border-color: $border_color;
-  &.v-margin-top {
-    padding-top: 3px;
-  }
-  &.v-margin-right {
-    padding-right: 5px;
-  }
-  &.v-margin-bottom {
-    padding-bottom: 3px;
-  }
-  &.v-margin-left {
-    padding-left: 5px;
-  }
+  border-color: $border-color;
+  @include margin-container(5px, 3px, 5px, 3px);
   &.odd {
     background-color: white;
   }
@@ -3639,7 +3513,7 @@ div.v-button-link.xbreadcrumbbutton .v-button-wrap {
   background: none no-repeat 0px 0px transparent;
   border-radius: 0px 2px 2px 0px;
   border-width: 1px 1px 1px 0px;
-  border-color: $border_color;
+  border-color: $border-color;
   position: relative;
   &::after {
     background: url('icons/sprites-black.png') no-repeat 0px -9px transparent;
@@ -3674,7 +3548,7 @@ div.v-button-link.xbreadcrumbbutton .v-button-wrap {
 }
 
 .v-window-outerheader {
-  border-bottom: 1px solid $border_color;
+  border-bottom: 1px solid $border-color;
   border-radius: 1px;
   min-height: 23px;
 }
@@ -3692,7 +3566,7 @@ div.v-window-header {
 }
 
 .v-window .v-table-header-wrap {
-  border-top: 1px solid $border_color;
+  border-top: 1px solid $border-color;
   .v-table-caption-container {
     color: black;
     text-shadow: 0px 1px 0px rgb(223, 223, 223);
@@ -3888,7 +3762,7 @@ div.v-lazyloadingwrapper-loading {
 /* StandUp Report List */
 
 .projectDashboardView .addViewLayout .depotContent .beanlist-content > .v-csslayout-margin {
-  border-top: 1px solid $border_color;
+  border-top: 1px solid $border-color;
 }
 
 .standup-calendar .selected-ext {
@@ -3943,7 +3817,7 @@ div.v-lazyloadingwrapper-loading {
 }
 
 .standupreport-list-header {
-  border: 1px solid $border_color;
+  border: 1px solid $border-color;
   border-radius: 3px 3px 0px 0px;
   background: url("icons/grad-light-top2.png") repeat-x left top rgb(228, 228, 228);
   padding: 3px 10px 3px 18px;
@@ -3978,34 +3852,18 @@ div.v-lazyloadingwrapper-loading {
       border-width: 0px 0px 1px 0px;
     }
     .depotContent {
-      &.v-margin-top {
-        padding-top: 10px;
-      }
-      &.v-margin-left {
-        padding-left: 10px;
-      }
+      @include margin-container(10px, 10px, 0px, 0px);
     }
   }
 }
 
 .standup-block {
-  background-color: #F7F7F7;
-  border: 1px solid $border_color;
+  background-color: $background-color;
+  border: 1px solid $border-color;
   .report-content {
-    border-left: 1px solid $border_color;
+    border-left: 1px solid $border-color;
     background-color: white;
-    &.v-margin-top {
-      padding-top: 20px;
-    }
-    &.v-margin-right {
-      padding-right: 20px;
-    }
-    &.v-margin-bottom {
-      padding-bottom: 20px;
-    }
-    &.v-margin-left {
-      padding-left: 20px;
-    }
+    @include margin-container(20px, 20px, 20px, 20px);
     .v-label.h2 {
       color: #a56116;
       font-size: 14px;
@@ -4031,7 +3889,7 @@ div.v-lazyloadingwrapper-loading {
 .v-csslayout.border-box {
   max-width: 400px;
   margin: 0 auto;
-  border: 1px solid $border_color;
+  border: 1px solid $border-color;
   padding-right: 5px;
 }
 
@@ -4044,14 +3902,14 @@ div.v-lazyloadingwrapper-loading {
 /* Border Box 2 */
 
 .border-box2 {
-  border: 1px solid $border_color;
+  border: 1px solid $border-color;
 }
 
 .v-horizontallayout.border-box2-no-margin {
   background-color: rgb(245, 245, 245);
   border-radius: 5px;
   padding: 0px;
-  border: 1px solid $border_color;
+  border: 1px solid $border-color;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
@@ -4062,7 +3920,7 @@ div.v-lazyloadingwrapper-loading {
   background-color: rgb(212, 223, 239);
   border-radius: 5px;
   padding: 0px;
-  border: 1px solid $border_color;
+  border: 1px solid $border-color;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
@@ -4109,7 +3967,7 @@ div.v-lazyloadingwrapper-loading {
 
 .footer {
   width: 100%;
-  border-top: 1px solid $border_color;
+  border-top: 1px solid $border-color;
   padding: 6px 0px;
   background-color: white;
 }
@@ -4143,7 +4001,7 @@ div.v-lazyloadingwrapper-loading {
 
 .footer-right .v-spacing {
   height: 18px;
-  border-right: 1px solid $border_color;
+  border-right: 1px solid $border-color;
   margin-right: 5px;
   &:before {
     content: "\a0";
@@ -4287,7 +4145,7 @@ table.legendBox {
   border-spacing: 0px;
   border-collapse: collapse;
   width: 100%;
-  border-top: 1px solid $border_color;
+  border-top: 1px solid $border-color;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
@@ -4304,7 +4162,7 @@ table.legendBox {
 
 .chart-wrapper {
   border-width: 0px 1px 1px 1px;
-  border-color: $border_color;
+  border-color: $border-color;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
@@ -4333,11 +4191,11 @@ div.v-csslayout.member-block {
 .member-block {
   .member-name {
     font-size: 14px;
-    border-bottom: 1px solid $border_color !important;
+    border-bottom: 1px solid $border-color !important;
     padding-bottom: 5px;
     &:focus {
       font-size: 14px;
-      border-bottom: 1px solid $border_color !important;
+      border-bottom: 1px solid $border-color !important;
       padding-bottom: 5px;
     }
   }
@@ -4390,7 +4248,7 @@ div.v-csslayout.member-block {
 .milestonelist-header {
   border-width: 1px 1px 0px;
   border-style: solid;
-  border-color: $border_color;
+  border-color: $border-color;
   border-radius: 3px 3px 0px 0px;
   padding: 3px 10px 3px 18px;
   background: url('icons/grad-light-top2.png') repeat-x left top rgb(228, 228, 228);
@@ -4405,7 +4263,7 @@ div.v-csslayout.member-block {
   height: 100%;
   border-width: 1px 0px 0px;
   border-style: solid;
-  border-color: $border_color;
+  border-color: $border-color;
 }
 
 .milestone-view-header {
@@ -4413,7 +4271,7 @@ div.v-csslayout.member-block {
   background: none repeat-x left top rgb(212, 223, 239);
   height: 30px;
   color: #5e5e5e;
-  border-bottom: 1px solid $border_color;
+  border-bottom: 1px solid $border-color;
   .v-label {
     font-size: 12px;
     text-shadow: 0px 1px 0px rgb(240, 240, 240);
@@ -4531,7 +4389,7 @@ div.v-stylecalendar .weekdays TD {
   background-color: #E9E9E9;
   -moz-border-radius: 15px;
   border-radius: 5px;
-  border-color: $border_color;
+  border-color: $border-color;
   border-width: 1px 1px 2px 1px;
   border-style: solid;
   -moz-box-sizing: border-box;
@@ -4546,29 +4404,18 @@ div.v-stylecalendar .weekdays TD {
 .readViewLayout {
   background-color: white;
   border-radius: 0px;
-  border: 1px solid $border_color;
+  border: 1px solid $border-color;
   .readViewTopControls {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     -webkit-box-sizing: border-box;
-    border-bottom: 1px solid $border_color;
+    border-bottom: 1px solid $border-color;
     .readNewControl {
       border-bottom: none;
     }
   }
   .readNewControl {
-    &.v-margin-top {
-      padding-top: 5px;
-    }
-    &.v-margin-right {
-      padding-right: 0px;
-    }
-    &.v-margin-bottom {
-      padding-bottom: 5px;
-    }
-    &.v-margin-left {
-      padding-left: 0px;
-    }
+    @include margin-container(0px, 5px, 0px, 5px);
   }
   .readViewTopControls {
     .edit-btn .v-horizontallayout-margin, .workflow-controls .v-horizontallayout-margin {
@@ -4581,7 +4428,7 @@ div.v-stylecalendar .weekdays TD {
   padding: 10px 5px 10px 18px;
   background: none repeat-x left top #EEEEEE;
   border-radius: 0px;
-  border-bottom: 1px solid $border_color;
+  border-bottom: 1px solid $border-color;
   .readViewHeaderLeft {
     float: left;
   }
@@ -4610,7 +4457,7 @@ div.v-stylecalendar .weekdays TD {
     text-shadow: #F0F0F0 0 1px 0;
     padding: 8px 0px 8px 18px;
     font-size: 13px;
-    border-bottom: 1px solid $border_color;
+    border-bottom: 1px solid $border-color;
     color: rgb(69, 69, 69);
   }
   .v-label-h2.no-border {
@@ -4690,7 +4537,7 @@ div.v-stylecalendar .weekdays TD {
         -moz-box-sizing: border-box;
         -webkit-box-sizing: border-box;
         box-sizing: border-box;
-        border: 1px solid $border_color;
+        border: 1px solid $border-color;
       }
     }
     .v-button {
@@ -4709,17 +4556,17 @@ div.v-stylecalendar .weekdays TD {
   .h2 {
     padding: 8px 0px 8px 18px;
     font-size: 13px;
-    border-bottom: 1px solid $border_color;
+    border-bottom: 1px solid $border-color;
     color: rgb(69, 69, 69);
   }
   .control-buttons {
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
-    border-bottom: 1px solid $border_color;
+    border-bottom: 1px solid $border-color;
   }
   .v-gridlayout-margin {
-    border-bottom: 1px solid $border_color;
+    border-bottom: 1px solid $border-color;
     .v-csslayout > .v-csslayout-margin {
       padding: 8px 5px 8px 18px;
       -moz-box-sizing: border-box;
@@ -4728,18 +4575,7 @@ div.v-stylecalendar .weekdays TD {
     }
   }
   .v-horizontallayout-gridform-caption {
-    &.v-margin-top {
-      padding-top: 5px;
-    }
-    &.v-margin-right {
-      padding-right: 5px;
-    }
-    &.v-margin-bottom {
-      padding-bottom: 5px;
-    }
-    &.v-margin-left {
-      padding-left: 18px;
-    }
+    @include margin-container(18px, 5px, 5px, 5px);
   }
   .v-horizontallayout-gridform-field .v-horizontallayout .v-horizontallayout-margin {
     padding: 0px;
@@ -4747,7 +4583,7 @@ div.v-stylecalendar .weekdays TD {
   .v-gridlayout-margin {
     .gridform-caption {
       background-color: #E0E0E0;
-      border-left: 1px solid $border_color;
+      border-left: 1px solid $border-color;
       border-right: 1px solid #c8c8c8;
       &.first-col {
         border-left: none;
@@ -4769,7 +4605,7 @@ div.v-stylecalendar .weekdays TD {
       padding: 0px 5px 0px 0px;
       border-width: 0px;
       border-style: solid;
-      border-color: $border_color;
+      border-color: $border-color;
     }
     .header-wrapper {
       border: none;
@@ -4818,7 +4654,7 @@ div.v-stylecalendar .weekdays TD {
 .addview-layout-header {
   background: url('icons/grad-light-top2.png') repeat-x 0 0 #e5e5e5;
   border-radius: 3px 3px 0px 0px;
-  border-bottom: 1px solid $border_color;
+  border-bottom: 1px solid $border-color;
   position: relative;
   z-index: 0;
   overflow: visible !important;
@@ -4841,36 +4677,25 @@ div.v-stylecalendar .weekdays TD {
 }
 
 .control-buttons {
-  &.v-margin-top {
-    padding-top: 5px;
-  }
-  &.v-margin-right {
-    padding-right: 0;
-  }
-  &.v-margin-bottom {
-    padding-bottom: 5px;
-  }
-  &.v-margin-left {
-    padding-left: 5px;
-  }
+  @include margin-container(5px, 5px, 0px, 5px);
 }
 
 .crm-edit-form .addview-layout-body {
   border-width: 1px 1px 0px;
-  border-color: $border_color;
+  border-color: $border-color;
   border-style: solid;
 }
 
 .addview-layout-body {
   .preview-form {
-    border-color: $border_color;
+    border-color: $border-color;
     border-width: 1px 1px 0px;
     border-style: solid;
   }
   .h2 {
     padding: 8px 0px 8px 18px;
     font-size: 13px;
-    border-bottom: 1px solid $border_color;
+    border-bottom: 1px solid $border-color;
     color: rgb(69, 69, 69);
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
@@ -4881,10 +4706,10 @@ div.v-stylecalendar .weekdays TD {
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
-    border-bottom: 1px solid $border_color;
+    border-bottom: 1px solid $border-color;
   }
   .v-gridlayout {
-    border-bottom: 1px solid $border_color;
+    border-bottom: 1px solid $border-color;
   }
 }
 
@@ -4894,22 +4719,11 @@ div.v-stylecalendar .weekdays TD {
 
 .addview-layout-body {
   .v-horizontallayout-gridform-caption {
-    &.v-margin-top {
-      padding-top: 5px;
-    }
-    &.v-margin-right {
-      padding-right: 5px;
-    }
-    &.v-margin-bottom {
-      padding-bottom: 5px;
-    }
-    &.v-margin-left {
-      padding-left: 18px;
-    }
+    @include margin-container(18px, 5px, 5px, 5px);
   }
   .gridform-caption {
     background-color: #E0E0E0;
-    border-left: 1px solid $border_color;
+    border-left: 1px solid $border-color;
     border-right: 1px solid #c8c8c8;
     &.first-col {
       border-left: none;
@@ -4922,18 +4736,7 @@ div.v-stylecalendar .weekdays TD {
     }
   }
   .v-horizontallayout-gridform-field {
-    &.v-margin-top {
-      padding-top: 5px;
-    }
-    &.v-margin-right {
-      padding-right: 8px;
-    }
-    &.v-margin-bottom {
-      padding-bottom: 5px;
-    }
-    &.v-margin-left {
-      padding-left: 10px;
-    }
+    @include margin-container(10px, 5px, 8px, 5px);
   }
   .depotComp {
     margin-top: 0px;
@@ -4969,8 +4772,8 @@ div.v-stylecalendar .weekdays TD {
 /* Richtext Editor */
 
 .v-richtextarea .gwt-RichTextToolbar {
-  background: none no-repeat left top #F7F7F7;
-  border-bottom: 1px solid $border_color;
+  background: none no-repeat left top $background-color;
+  border-bottom: 1px solid $border-color;
   padding: 3px;
   .gwt-ToggleButton, .gwt-PushButton {
     background: none;
@@ -4978,7 +4781,7 @@ div.v-stylecalendar .weekdays TD {
   .gwt-ListBox {
     margin-right: 3px;
     background: url('../../themes/base/common/img/sprites.png') no-repeat right -8px white;
-    border: 1px solid $border_color;
+    border: 1px solid $border-color;
     -moz-appearance: none;
     -webkit-appearance: none;
     text-indent: 0.01px;
@@ -4999,65 +4802,32 @@ div.v-stylecalendar .weekdays TD {
 /* The New GridLayout */
 
 .colored-gridlayout {
-  border-bottom: 1px solid $border_color;
+  border-bottom: 1px solid $border-color;
 }
 
 .task-list .colored-gridlayout {
   border-width: 0px 1px 1px 1px;
   border-style: solid;
-  border-color: $border_color;
+  border-color: $border-color;
 }
 
 .task-list-footer {
   border-width: 0px 1px 1px 1px;
   border-style: solid;
-  border-color: $border_color;
-  &.v-margin-top {
-    padding-top: 5px;
-  }
-  &.v-margin-right {
-    padding-right: 5px;
-  }
-  &.v-margin-bottom {
-    padding-bottom: 5px;
-  }
-  &.v-margin-left {
-    padding-left: 5px;
-  }
+  border-color: $border-color;
+  @include margin-container(5px, 5px, 5px, 5px);
 }
 
 .popup-footer {
-  &.v-margin-top {
-    padding-top: 5px;
-  }
-  &.v-margin-right {
-    padding-right: 5px;
-  }
-  &.v-margin-bottom {
-    padding-bottom: 5px;
-  }
-  &.v-margin-left {
-    padding-left: 15px;
-  }
+  @include margin-container(15px, 5px, 5px, 5px);
 }
 
 .colored-gridlayout {
-  .gridform-caption.v-margin-top, .gridform-field.v-margin-top {
-    padding-top: 8px;
-  }
-  .gridform-caption.v-margin-right, .gridform-field.v-margin-right {
-    padding-right: 18px;
-  }
-  .gridform-caption.v-margin-bottom, .gridform-field.v-margin-bottom {
-    padding-bottom: 8px;
-  }
-  .gridform-caption.v-margin-left {
-    padding-left: 18px;
+  .gridform-caption {
+    @include margin-container(18px, 8px, 18px, 8px);
   }
   .gridform-field {
-    &.v-margin-left {
-      padding-left: 18px;
-    }
+    @include margin-container(18px, 8px, 18px, 8px);
     .v-horizontallayout .v-horizontallayout-margin {
       padding: 0px;
     }
@@ -5067,7 +4837,7 @@ div.v-stylecalendar .weekdays TD {
   }
   .gridform-caption {
     background-color: #F9F9F9;
-    border-left: 1px solid $border_color;
+    border-left: 1px solid $border-color;
     border-right: 1px solid #c8c8c8;
     &.first-col {
       border-left: none;
@@ -5101,7 +4871,7 @@ div.v-stylecalendar .weekdays TD {
 
 .taskgroup-header {
   padding: 7px 10px 7px 18px;
-  border: 1px solid $border_color;
+  border: 1px solid $border-color;
   border-radius: 3px;
   background: url("icons/grad-light-top2.png") repeat-x left top rgb(228, 228, 228);
 }
@@ -5109,27 +4879,16 @@ div.v-stylecalendar .weekdays TD {
 .taskadd-popup {
   border-width: 0px 1px 1px 1px;
   border-style: solid;
-  border-color: $border_color;
+  border-color: $border-color;
   .popup-header {
-    &.v-margin-top {
-      padding-top: 8px;
-    }
-    &.v-margin-right {
-      padding-right: 0px;
-    }
-    &.v-margin-bottom {
-      padding-bottom: 8px;
-    }
-    &.v-margin-right {
-      padding-left: 18px;
-    }
-    border-bottom: 1px solid $border_color;
+    @include margin-container(18px, 8px, 0px, 8px);
+    border-bottom: 1px solid $border-color;
   }
   .v-tabsheet {
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
-    border-bottom: 1px solid $border_color;
+    border-bottom: 1px solid $border-color;
     .v-tabsheet-content {
       padding-bottom: 0px;
     }
@@ -5178,25 +4937,14 @@ div.v-stylecalendar .weekdays TD {
   .v-table-body {
     border-width: 1px 0px 1px 0px;
     border-style: solid;
-    border-color: $border_color;
+    border-color: $border-color;
   }
 }
 
 /* Related Bugs Component */
 
 .relatedbug-comp-header {
-  &.v-margin-top {
-    padding-top: 5px;
-  }
-  &.v-margin-right {
-    padding-right: 5px;
-  }
-  &.v-margin-bottom {
-    padding-bottom: 5px;
-  }
-  &.v-margin-left {
-    padding-left: 5px;
-  }
+  @include margin-container(5px, 5px, 5px, 5px);
 }
 
 .addViewLayout .addViewBottomControls .relatedbug-comp .depotComp .depotHeader, .readViewLayout .readViewBottomControls .relatedbug-comp .depotComp .depotHeader {
@@ -5241,14 +4989,14 @@ div.v-ratingstars-bar {
 }
 
 .v-window-contents .myprojectlist .bean-list {
-  border-top: 1px solid $border_color;
+  border-top: 1px solid $border-color;
 }
 
 .myprojectlist .stream-content {
   padding: 0px;
   .projectlink-wrapper {
-    border-right: 1px solid $border_color;
-    background-color: #F7F7F7;
+    border-right: 1px solid $border-color;
+    background-color: $background-color;
     padding: 10px 15px 8px;
     .project-name {
       .v-button-wrap, &:focus .v-button-wrap, &:active .v-button-wrap {
@@ -5264,18 +5012,7 @@ div.v-ratingstars-bar {
 
 .project-status {
   .v-verticallayout {
-    &.v-margin-top {
-      padding-top: 8px;
-    }
-    &.v-margin-right {
-      padding-right: 15px;
-    }
-    &.v-margin-bottom {
-      padding-bottom: 5px;
-    }
-    &.v-margin-left {
-      padding-left: 15px;
-    }
+    @include margin-container(15px, 8px, 15px, 5px);
   }
   .member-count-lbl .v-button-wrap {
     padding: 0px;
@@ -5372,7 +5109,7 @@ div.v-ratingstars-bar {
 div.v-button-link {
   &.buttonPaging {
     color: #525252;
-    background-color: #F7F7F7;
+    background-color: $background-color;
     .v-button-wrap {
       width: 17px;
       padding: 4px 0px 3px;
@@ -5398,13 +5135,13 @@ div.v-button-link {
 }
 
 .v-label.separator {
-  border-right: 1px solid $border_color;
+  border-right: 1px solid $border-color;
 }
 
 .v-label-hr {
   display: block;
   > hr {
-    border-color: $border_color;
+    border-color: $border-color;
     border-style: solid;
     border-width: 0px 0px 1px;
     -moz-box-sizing: border-box;
@@ -5432,7 +5169,7 @@ div.v-button-link {
   font-size: 13px;
   border-width: 1px 1px 0px;
   border-style: solid;
-  border-color: $border_color;
+  border-color: $border-color;
   background: url('icons/grad-light-top2.png') repeat-x left top rgb(229, 229, 229);
   border-radius: 3px 3px 0px 0px;
   padding: 3px 5px 3px 15px;
@@ -5441,7 +5178,7 @@ div.v-button-link {
 .v-verticallayout-component-body {
   border-width: 0px 1px 1px;
   border-style: solid;
-  border-color: $border_color;
+  border-color: $border-color;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
@@ -5516,7 +5253,7 @@ div.v-button-link {
   }
   .warning-message {
     float: left;
-    border-left: 1px dotted $border_color;
+    border-left: 1px dotted $border-color;
     height: 97px;
     width: 412px;
     text-align: center;
@@ -5539,7 +5276,7 @@ div.v-button-link {
 .billing-setting {
   border-width: 1px;
   border-style: solid;
-  border-color: $border_color;
+  border-color: $border-color;
   border-radius: 3px;
   background-color: rgb(245, 245, 245);
   .faq-layout {
@@ -5553,7 +5290,7 @@ div.v-button-link {
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
-    border-left: 2px dotted $border_color;
+    border-left: 2px dotted $border-color;
     .faq-header {
       font-weight: bold;
     }
@@ -5758,7 +5495,7 @@ div.v-button-link {
     display: block;
     width: 100%;
     background: url('icons/grad-light-top.png') repeat-x left top rgb(228, 228, 228);
-    border-bottom: 1px solid $border_color;
+    border-bottom: 1px solid $border-color;
     font-size: 13px;
     color: rgb(68, 68, 68);
     padding: 3px 10px;
@@ -5919,8 +5656,8 @@ div.v-button-link {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
-  background-color: #F7F7F7;
-  border-bottom: 1px solid $border_color;
+  background-color: $background-color;
+  border-bottom: 1px solid $border-color;
   .popup-header {
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
@@ -5930,7 +5667,7 @@ div.v-button-link {
     font-weight: bold;
     text-align: left;
     padding-top: 8px;
-    border-bottom: 1px solid $border_color;
+    border-bottom: 1px solid $border-color;
   }
   .popup-groupBtn {
     -moz-box-sizing: border-box;
@@ -5983,18 +5720,7 @@ div.v-button-link {
     font-style: italic;
   }
   .headerTitle {
-    &.v-margin-top {
-      padding-top: 4px;
-    }
-    &.v-margin-right {
-      padding-right: 10px;
-    }
-    &.v-margin-bottom {
-      padding-bottom: 4px;
-    }
-    &.v-margin-left {
-      padding-left: 15px;
-    }
+    @include margin-container(15px, 4px, 10px, 4px);
     .control-buttons .v-horizontallayout-margin {
       padding: 0px;
     }
@@ -6141,18 +5867,7 @@ div.v-button-link {
   color: white;
   padding: 3px 13px;
   text-shadow: 1px 1px 0 #000000;
-  &.v-margin-top {
-    padding-top: 3px;
-  }
-  &.v-margin-right {
-    padding-right: 10px;
-  }
-  &.v-margin-bottom {
-    padding-bottom: 3px;
-  }
-  &.v-margin-left {
-    padding-left: 10px;
-  }
+  @include margin-container(10px, 3px, 10px, 3px);
 }
 
 /* Create Custome Field Window */
@@ -6197,33 +5912,11 @@ div.v-button-link {
 }
 
 .addview-layout-header {
-  &.v-margin-top {
-    padding-top: 4px;
-  }
-  &.v-margin-right {
-    padding-right: 5px;
-  }
-  &.v-margin-bottom {
-    padding-bottom: 4px;
-  }
-  &.v-margin-left {
-    padding-left: 15px;
-  }
+  @include margin-container(15px, 4px, 5px, 4px);
 }
 
 .readview-layout-header {
-  &.v-margin-top {
-    padding-top: 2px;
-  }
-  &.v-margin-right {
-    padding-right: 5px;
-  }
-  &.v-margin-bottom {
-    padding-bottom: 0px;
-  }
-  &.v-margin-left {
-    padding-left: 8px;
-  }
+  @include margin-container(8px, 2px, 5px, 0px);
 }
 
 .readview-header-left {
@@ -6391,20 +6084,8 @@ div.v-button-link {
 
 /* Normal Gridlayout */
 
-.gridform-caption.v-margin-top, .gridform-field.v-margin-top {
-  padding-top: 0px;
-}
-
-.gridform-caption.v-margin-right, .gridform-field.v-margin-right {
-  padding-right: 0px;
-}
-
-.gridform-caption.v-margin-bottom, .gridform-field.v-margin-bottom {
-  padding-bottom: 0px;
-}
-
-.gridform-caption.v-margin-left, .gridform-field.v-margin-left {
-  padding-left: 0px;
+.gridform-caption, .gridform-field {
+  @include margin-container(0px, 0px, 0px, 0px);
 }
 
 /* Entity Import Window */
@@ -6424,7 +6105,7 @@ div.v-button-link {
 .h2-style2 {
   padding: 8px 0px 8px 18px;
   font-size: 13px;
-  border-bottom: 1px solid $border_color;
+  border-bottom: 1px solid $border-color;
   color: rgb(69, 69, 69);
   font-weight: bold;
 }
@@ -6436,14 +6117,14 @@ div.v-button-link {
     tbody > tr > {
       .v-tabsheet-tabitemcell {
         > .v-tabsheet-tabitem {
-          background: none repeat-x scroll left bottom #F7F7F7;
+          background: none repeat-x scroll left bottom $background-color;
           border-width: 0px 1px 0px 0px;
           border-style: solid;
-          border-color: $border_color;
+          border-color: $border-color;
           position: relative;
           .v-caption {
             padding: 8px 17px 9px;
-            border-bottom: 1px solid $border_color;
+            border-bottom: 1px solid $border-color;
             .v-captiontext {
               font-size: 13px;
               text-shadow: none;
@@ -6500,7 +6181,7 @@ div.v-button-link {
 /* History Log Component */
 
 .historylog-component .bean-list {
-  border-top: 1px solid $border_color;
+  border-top: 1px solid $border-color;
 }
 
 /* Account Settings - Role's depot header fix */
@@ -6520,18 +6201,7 @@ div.v-button-link {
     border-width: 1px 0px 0px;
   }
   .comp-header {
-    &.v-margin-top {
-      padding-top: 5px;
-    }
-    &.v-margin-right {
-      padding-right: 5px;
-    }
-    &.v-margin-bottom {
-      padding-bottom: 5px;
-    }
-    &.v-margin-left {
-      padding-left: 5px;
-    }
+    @include margin-container(5px, 5px, 5px, 5px);
   }
 }
 
@@ -6591,7 +6261,7 @@ div.v-button-link {
 }
 
 .contactopp-list-header {
-  border-bottom: 1px solid $border_color;
+  border-bottom: 1px solid $border-color;
   > .v-expand > .v-slot:first-child .v-label {
     border-left: none;
     padding-left: 0px;
@@ -6599,7 +6269,7 @@ div.v-button-link {
   .v-label {
     font-weight: bold;
     padding: 4px 0px 4px 12px;
-    border-left: 1px solid $border_color;
+    border-left: 1px solid $border-color;
   }
 }
 
@@ -6607,16 +6277,11 @@ div.v-button-link {
   &.no-child {
     border-bottom: none;
   }
-  border-bottom: 1px solid $border_color;
+  border-bottom: 1px solid $border-color;
 }
 
 .contactrole-row {
-  &.v-margin-top {
-    padding-top: 6px;
-  }
-  &.v-margin-bottom {
-    padding-bottom: 6px;
-  }
+  @include margin-container(0px, 6px, 0px, 6px);
   &.odd {
     background-color: rgb(212, 223, 239);
   }
@@ -6650,11 +6315,11 @@ div.v-button-link {
     border: 0 !important;
   }
   .parent-button.action-button {
-    border-color: $border_color;
+    border-color: $border-color;
     border-radius: 2px;
     background-color: #F9F9F9;
     &:focus {
-      border-color: $border_color;
+      border-color: $border-color;
       border-radius: 2px;
       background-color: #F9F9F9;
     }
@@ -6665,7 +6330,7 @@ div.v-button-link {
     height: 100%;
     border-width: 0;
     &:active {
-      border-color: $border_color;
+      border-color: $border-color;
     }
     .v-button-wrap {
       padding: 6px 12px 6px 12px !important;
@@ -6695,24 +6360,9 @@ div.v-button-link {
 
 /* New View's Styles */
 
-.hdr-view, .v-horizontallayout.hdr-view, .advSearchHeader .v-horizontallayout.hdr-view, .basicSearchHeader .hdr-view {
+.hdr-view, .v-horizontallayout.hdr-view, .advSearchHeader .hdr-view, .basicSearchHeader .hdr-view {
   background-color: white;
-}
-
-.hdr-view.v-margin-top, .advSearchHeader .hdr-view.v-margin-top, .basicSearchHeader .hdr-view.v-margin-top {
-  padding-top: 12px;
-}
-
-.hdr-view.v-margin-right, .advSearchHeader .hdr-view.v-margin-right, .basicSearchHeader .hdr-view.v-margin-right {
-  padding-right: 30px;
-}
-
-.hdr-view.v-margin-bottom, .advSearchHeader .hdr-view.v-margin-bottom, .basicSearchHeader .hdr-view.v-margin-bottom {
-  padding-bottom: 12px;
-}
-
-.hdr-view.v-margin-left, .advSearchHeader .hdr-view.v-margin-left, .basicSearchHeader .hdr-view.v-margin-left {
-  padding-left: 30px;
+  @include margin-container(30px, 12px, 30px, 12px);
 }
 
 .hdr-view {
@@ -6806,9 +6456,9 @@ img.icon-btn {
 }
 
 .feed-block {
-  background-color: #F7F7F7;
+  background-color: $background-color;
   padding: 3px 10px;
-  border: 1px solid $border_color;
+  border: 1px solid $border-color;
   border-radius: 3px;
   position: relative;
   overflow: visible;
@@ -6822,7 +6472,7 @@ img.icon-btn {
     top: 9px;
     left: -12px;
     border-width: 11px 11px 11px 0;
-    border-color: transparent $border_color;
+    border-color: transparent $border-color;
     border-radius: 0px;
   }
   &:after {
@@ -6834,13 +6484,13 @@ img.icon-btn {
     top: 10px;
     left: -10px;
     border-width: 10px 10px 10px 0;
-    border-color: transparent #F7F7F7;
+    border-color: transparent $background-color;
     border-radius: 0px;
   }
   .stream-wrapper {
     border-width: 1px 0px 0px;
     padding-bottom: 8px;
-    background-color: #F7F7F7;
+    background-color: $background-color;
     &:first-child {
       border-width: 0px;
     }
@@ -6891,7 +6541,7 @@ img.icon-btn {
 /* New Project Member View */
 
 .member-preview-form {
-  border: 1px solid $border_color;
+  border: 1px solid $border-color;
   padding: 30px;
   background-color: #E9F2F7;
   div.v-csslayout.member-block {
@@ -6907,7 +6557,7 @@ img.icon-btn {
 }
 
 .member-preview-bottom {
-  border-color: $border_color;
+  border-color: $border-color;
   border-style: solid;
   border-width: 0px 1px 1px;
   .v-table-header-wrap {
@@ -6921,10 +6571,10 @@ img.icon-btn {
 /* Standup Missing Comp */
 
 .standup-missing-comp {
-  border: 1px solid $border_color;
+  border: 1px solid $border-color;
   .header-wrap {
-    border-bottom: 1px solid $border_color;
-    background-color: #F7F7F7;
+    border-bottom: 1px solid $border-color;
+    background-color: $background-color;
     padding: 7px 10px;
     .v-label {
       font-size: 14px;
@@ -7000,7 +6650,7 @@ div.v-csslayout.bean-block {
     }
   }
   .stylecalendar-ext {
-    border-top: 1px solid $border_color;
+    border-top: 1px solid $border-color;
     &.v-margin-top {
       padding-top: 10px;
     }
@@ -7046,7 +6696,7 @@ div.v-csslayout.bean-block {
 
 .note-view {
   border-width: 0px 1px 1px 1px;
-  border-color: $border_color;
+  border-color: $border-color;
   border-style: solid;
 }
 
@@ -7055,24 +6705,16 @@ div.v-csslayout.bean-block {
 .intro-text-wrap {
   .v-label {
     color: white;
-    border-bottom: 1px solid $border_color;
+    border-bottom: 1px solid $border-color;
     padding-bottom: 13px;
   }
-  &.v-margin-top {
-    padding-top: 13px;
-  }
-  &.v-margin-right {
-    padding-right: 10px;
-  }
-  &.v-margin-left {
-    padding-left: 10px;
-  }
+  @include margin-container(10px, 13px, 10px, 0px);
 }
 
 /* Opportunity Contact Role Edit */
 
 .oppcontact-role-edit .addview-layout-body {
-  border: 1px solid $border_color;
+  border: 1px solid $border-color;
 }
 
 /* Bean Block Different Styles */
@@ -7291,7 +6933,7 @@ div.v-csslayout.bean-block.olive-block {
 .accountViewContainer .theme-customize-view .addview-layout-body {
   border-top: none;
   .h2 {
-    border-top: 1px solid $border_color;
+    border-top: 1px solid $border-color;
   }
 }
 
@@ -7317,11 +6959,11 @@ div.v-csslayout.bean-block.olive-block {
 /* Gantt Table */
 
 .gantt-view {
-  border: 1px solid $border_color;
+  border: 1px solid $border-color;
 }
 
 .gantt-wrap {
-  border-top: 1px solid $border_color;
+  border-top: 1px solid $border-color;
 }
 
 .gantt-table {
@@ -7364,7 +7006,7 @@ div.v-csslayout.bean-block.olive-block {
 
 .phase-simple-view {
   .v-slot:first-child + div .bean-list {
-    border-bottom: 1px solid $border_color;
+    border-bottom: 1px solid $border-color;
   }
   .bean-list {
     padding: 8px 0px 8px 18px;
@@ -7636,14 +7278,14 @@ div.v-csslayout.bean-block.olive-block {
   .attachment-name-wrap .v-label {
     white-space: nowrap;
     text-overflow: ellipsis;
-    color: rgb(255, 255, 255);
+    color: white;
     font-weight: bold;
   }
   .attachment-control {
     border-radius: 3px;
     background-color: rgb(0, 0, 0);
     opacity: 0;
-    color: rgb(255, 255, 255);
+    color: white;
     -webkit-transition: opacity 218ms ease 0s;
     -moz-transition: opacity 218ms ease 0s;
     -o-transition: opacity 218ms ease 0s;
