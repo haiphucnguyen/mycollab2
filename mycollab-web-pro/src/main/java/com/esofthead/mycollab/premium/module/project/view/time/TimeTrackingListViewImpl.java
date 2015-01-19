@@ -116,7 +116,6 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements
         });
         exportButtonControl = new SplitButton(exportBtn);
         exportButtonControl.setStyleName(UIConstants.THEME_GRAY_LINK);
-        exportButtonControl.addStyleName(UIConstants.SPLIT_BUTTON);
         exportButtonControl.setIcon(MyCollabResource
                 .newResource(WebResourceIds._16_export));
 
