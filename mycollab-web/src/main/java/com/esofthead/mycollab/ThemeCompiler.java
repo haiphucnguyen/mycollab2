@@ -18,6 +18,8 @@ package com.esofthead.mycollab;
 
 import com.vaadin.sass.SassCompiler;
 
+import java.nio.file.*;
+
 /**
  * @author MyCollab Ltd.
  * @since 4.6.0
@@ -26,6 +28,9 @@ public class ThemeCompiler {
     public static void main(String args[]) throws Exception {
         SassCompiler.main(new String[]{"src/main/resources/VAADIN/themes/mycollab/styles.scss",
                 "src/main/resources/VAADIN/themes/mycollab/styles.css"});
+        Path source = FileSystems.getDefault().getPath("src/main/resources/VAADIN/themes/mycollab/", "styles.css");
+        Path dest = FileSystems.getDefault().getPath("target/classes/VAADIN/themes/mycollab/", "styles.css");
+        Files.copy(source, dest, StandardCopyOption.REPLACE_EXISTING);
 
     }
 }

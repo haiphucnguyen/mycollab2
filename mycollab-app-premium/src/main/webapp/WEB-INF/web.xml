@@ -12,7 +12,7 @@
     <listener>
         <listener-class>com.esofthead.mycollab.servlet.MyCollabHttpSessionListener</listener-class>
     </listener>
-
+<!--
     <filter>
         <filter-name>ExpiresFilter</filter-name>
         <filter-class>fr.xebia.servlet.filter.ExpiresFilter</filter-class>
@@ -30,7 +30,7 @@
         <url-pattern>/assets/*</url-pattern>
         <dispatcher>REQUEST</dispatcher>
     </filter-mapping>
-
+-->
     <context-param>
         <param-name>contextClass</param-name>
         <param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
