@@ -1,0 +1,46 @@
+.v-table-body-noselection {
+  height: 100% !important;
+}
+
+.v-table tr.v-selected {
+  background-image: url("icons/grad-light-top2.png");
+  background-position: left top;
+  background-repeat: repeat-x;
+}
+
+.v-table-table {
+  th, td {
+    height: 30px;
+  }
+}
+
+.v-table-row-odd {
+  background: none repeat scroll 0% 0% rgb(219, 222, 227);
+}
+
+.v-table-body-wrapper.v-table-body {
+  height: 100% !important;
+  border-width: 0px 1px 1px 1px;
+}
+
+.v-table-cell-wrapper {
+  white-space: normal;
+}
+
+.v-table-caption-container, .v-table-header-drag {
+  padding-top: 0px;
+  line-height: 18px;
+}
+
+.v-table-cell-wrapper .v-button-link.v-button-wordWrap {
+  .v-button-wrap {
+    display: table;
+  }
+  .v-button-caption {
+    display: table-cell;
+  }
+}
+
+.pagedtable .v-table-header td:last-child .v-table-resizer {
+  border-right-width: 0px;
+}
